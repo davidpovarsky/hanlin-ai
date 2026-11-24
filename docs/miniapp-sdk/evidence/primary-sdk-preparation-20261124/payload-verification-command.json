@@ -1,0 +1,14 @@
+{
+  "startedAt": "2026-11-24T20:33:03.108043+00:00",
+  "finishedAt": "2026-11-24T20:33:03.510063+00:00",
+  "argv": [
+    "/usr/bin/python3",
+    "/mnt/development/projects/worktrees/hanlin-primary-sdk-preparation-20261124/docs/miniapp-sdk/evidence/primary-sdk-preparation-20261124/verify_payload.py"
+  ],
+  "scriptSHA256": "a8d0e2727cef180e89b663623666c9b467dd6579ee43f6d1d070240373b3e17c",
+  "cwd": "/mnt/development/projects/worktrees/hanlin-primary-sdk-preparation-20261124",
+  "exitCode": 0,
+  "stdout": "{\n  \"payload\": {\n    \"status\": \"VERIFIED\",\n    \"rowCount\": 188,\n    \"totalPayloadBytes\": 17349363,\n    \"categories\": {\n      \"xcode-swift-package-resolution\": 1,\n      \"generated-expo-fixture-archive\": 16,\n      \"original-expo-widgets-runtime-receipt\": 1,\n      \"prepared-nativescript-shared-runtime\": 167,\n      \"generated-sdk-provenance-document\": 3\n    },\n    \"contentChangedRowCount\": 187,\n    \"identicalContentRowCount\": 1,\n    \"observedTransferredPermissionDifferences\": [\n      {\n        \"path\": \"Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/css-tree/lib/data.js\",\n        \"beforeGitMode\": \"100644\",\n        \"transferredPermissionOctal\": \"0755\",\n        \"contentChanged\": false\n      }\n    ],\n    \"canonicalPayloadBinding\": \"69f9f9702ba336b8504a19ed80c17922ec0585767b2e7fb8d76508bf7aa8cfbf\",\n    \"protectedPathOverlap\": [],\n    \"failures\": []\n  },\n  \"pins\": {\n    \"pinCounts\": {\n      \"before\": 39,\n      \"after\": 39,\n      \"unchanged\": 30,\n      \"changed\": 9,\n      \"added\": 0,\n      \"removed\": 0\n    },\n    \"revisionChanges\": [],\n    \"versionChanges\": [\n      \"corexlsx\",\n      \"latexswiftui\",\n      \"llm.swift\",\n      \"markdownui\",\n      \"richtextkit\",\n      \"swcompression\",\n      \"swift-log\",\n      \"swift-sdk\",\n      \"swiftsoup\"\n    ],\n    \"locationChanges\": [\n      \"corexlsx\",\n      \"swiftsoup\"\n    ],\n    \"kindChanges\": []\n  },\n  \"outputs\": [\n    {\n      \"path\": \"/mnt/development/projects/worktrees/hanlin-primary-sdk-preparation-20261124/docs/miniapp-sdk/evidence/primary-sdk-preparation-20261124/payload-verification.json\",\n      \"bytes\": 329625,\n      \"sha256\": \"0911b95e91bc71bdb2375e9e2c7e58f3eb9e4f5cbf3fdd26e766a347fedcb774\"\n    },\n    {\n      \"path\": \"/mnt/development/projects/worktrees/hanlin-primary-sdk-preparation-20261124/docs/miniapp-sdk/evidence/primary-sdk-preparation-20261124/package-resolved-comparison.json\",\n      \"bytes\": 31170,\n      \"sha256\": \"8a4c74b79ca969fdffca707f8b495f3a2a0dce710c15b7b7072733451489e4cf\"\n    }\n  ]\n}\n",
+  "stderr": "",
+  "boundary": "Artifact/Git data inspection only; initial classifier correction retained, no compiler/tests/build/generation/source application."
+}

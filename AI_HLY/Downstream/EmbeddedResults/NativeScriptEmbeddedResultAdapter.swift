@@ -31,39 +31,43 @@ public enum NativeScriptEmbeddedResultAdapter {
             return nil
         }
 
+        // Tool results retain their installed generation. A package update must
+        // not silently reinterpret old output in a different renderer.
+        if let metadata = payload?.metadata,
+           metadata["installedPackageID"] != nil || metadata["generation"] != nil {
+            guard metadata["installedPackageID"] == package.record.installedPackageID.rawValue,
+                  metadata["generation"] == String(package.record.activeGeneration) else { return nil }
+        }
+
         // Strict match: must correspond to a declared embedded-capable entrypoint
         guard let entrypoint = package.entrypoints.first(where: {
-            $0.id == handler && $0.runtimeProfile == .hanlinNativeScript
+            $0.id == handler && $0.kind == .embeddedResult && $0.runtimeProfile == .hanlinNativeScript
         }) else {
             return nil
         }
 
+        let sessionID = UUID().uuidString.lowercased()
+        var ownedSession: HanlinNativeScriptSession?
         do {
             guard let artifactRoot = platform.activeArtifactURL(for: package) else {
                 return nil
             }
             let entrypointURL = artifactRoot.appending(path: entrypoint.sourcePath, directoryHint: .notDirectory)
-            let sessionID = UUID().uuidString.lowercased()
-
             let adapter = NativeScriptHostServicesAdapter(
                 appID: package.appID,
                 installedPackageID: package.record.installedPackageID,
                 grantedCapabilities: Set(package.grantedCapabilities.map(\.rawValue)),
                 sessionID: sessionID
             )
-            HanlinNativeServicesBridge.register(adapter, forSessionID: sessionID)
-
-            var env = ProcessInfo.processInfo.environment
-            env["HANLIN_EMBEDDED"] = "1"
-            env["HANLIN_HANDLER"] = handler
-            if let ref = payload?.resultReference {
-                env["HANLIN_RESULT_REF"] = ref
-            }
-            if let json = payload?.payload,
-               let data = try? JSONEncoder().encode(json),
-               let str = String(data: data, encoding: .utf8) {
-                env["HANLIN_PAYLOAD"] = str
-            }
+            // Own only this renderer's environment keys. Explicit empty values
+            // prevent a missing field from inheriting another session's payload.
+            let env: [String: String] = [
+                "HANLIN_APP_ID": package.appID.rawValue,
+                "HANLIN_EMBEDDED": "1",
+                "HANLIN_HANDLER": handler,
+                "HANLIN_RESULT_REF": payload?.resultReference ?? "",
+                "HANLIN_PAYLOAD": try payloadJSON(payload?.payload ?? .null)
+            ]
 
             let session = try HanlinNativeScriptSession(
                 applicationRoot: entrypointURL.deletingLastPathComponent(),
@@ -71,6 +75,8 @@ public enum NativeScriptEmbeddedResultAdapter {
                 sessionID: sessionID
             )
 
+            ownedSession = session
+            HanlinNativeServicesBridge.register(adapter, forSessionID: sessionID)
             try session.start()
 
             let wrapper = UIViewControllerHostView(controller: session.containerController)
@@ -81,12 +87,20 @@ public enum NativeScriptEmbeddedResultAdapter {
                 appID: package.appID,
                 rootView: AnyView(wrapper),
                 onTearDown: {
-                    session.shutdown()
                     HanlinNativeServicesBridge.unregisterProvider(forSessionID: sessionID)
+                    session.shutdown()
                 }
             )
         } catch {
+            // Release JS handler blocks before a partially started VM closes.
+            HanlinNativeServicesBridge.unregisterProvider(forSessionID: sessionID)
+            ownedSession?.shutdown()
             return nil
         }
+    }
+
+    static func payloadJSON(_ value: HanlinValue) throws -> String {
+        let bytes = try value.jsonValue(destination: .javaScriptBinary64).canonicalJSONData(limits: .unbounded)
+        return String(decoding: bytes, as: UTF8.self)
     }
 }

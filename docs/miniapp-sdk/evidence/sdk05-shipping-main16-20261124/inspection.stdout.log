@@ -1,0 +1,68 @@
+{
+  "status": "PASS_EXPECTED_README_AND_REACHABILITY_DELTA",
+  "outerArtifact": {
+    "path": "/tmp/hanlin-native-gate-evidence-45430463243/app-split-45430463243.zip",
+    "artifactID": 14942495736,
+    "bytes": 335922163,
+    "sha256": "ad546a720f976eef8d7af40c8187a287b56382af6caba614ad9e35aa5491b95f"
+  },
+  "nested": {
+    "member": "runtime-host/RuntimeHostResources.zip",
+    "bytes": 81812157,
+    "sha256": "c3705e8c98c66f9664004ea87236fb62eb7133cec854709f3071b034de2d4ed0"
+  },
+  "sdk": {
+    "manifestSHA256": "f84b79a3d9c4f7dc541d6912753cd1be95bfa3ed1876cc4d0ead365aadab12fc",
+    "previousManifestSHA256": "ab7900fbb6009606800a7d4beda2bef2cee6ef8492928bea90ad5d0460abff8b",
+    "manifestBytes": 5219260,
+    "manifestByteIdentical": false,
+    "inputSHA256": "307f689d68445cae8cb4f049f015c9bf55904d0de40a96e69fb59fa622d0a863",
+    "computedInputSHA256": "307f689d68445cae8cb4f049f015c9bf55904d0de40a96e69fb59fa622d0a863",
+    "previousInputSHA256": "91128b0831f2d90374bc7889acb9cbbd695d49187520ee23a7a75e3c2bcef6fc",
+    "sourceInputs": 222,
+    "unchangedInputCount": 219,
+    "changedInputs": 3,
+    "fileRows": 25661,
+    "unchangedFileRows": 25658,
+    "changedFileRows": 3,
+    "sameOrderedPaths": true,
+    "engineMetadataIdentical": true,
+    "upstreamMetadataIdentical": true
+  },
+  "sourceApplicability": {
+    "priorSource": "e2227ccdfe0c3111d1c17ef2b4bb1653ac24bb9c",
+    "testedSource": "7d1efaa6ada43dd80c57133c09e6a8fb327075cf",
+    "evidenceBase": "1bc0360cb204796a092c9101df980028f2963459",
+    "gitChangedInputPaths": [
+      "docs/miniapp-sdk/README.md",
+      "docs/miniapp-sdk/extension-reachability.json",
+      "docs/miniapp-sdk/extension-reachability.md"
+    ],
+    "gitChangedInputPathsAfterTestedSource": []
+  },
+  "reusedManifestRowCoverage": {
+    "docs": 25,
+    "unchangedDocs": 22,
+    "changedDocsFreshlyRead": 3,
+    "examplesIncludingIndex": 29,
+    "exampleRowsIdentical": true,
+    "declarations": 5210,
+    "declarationRowsIdentical": true,
+    "sourceInventoryRowIdentical": true
+  },
+  "snippet": {
+    "sha256": "072bc4f6838752f542fe140e95fd04267d55967826dbadbdbcb7e635f92b644f",
+    "status": "EXECUTED_PASS",
+    "sourceBlocks": 14,
+    "jsonBlocks": 7,
+    "excluded": 8,
+    "projects": 4,
+    "diagnostics": 0,
+    "changedDocumentationRows": [
+      "docs/miniapp-sdk/README.md"
+    ],
+    "checkerInputsIdentical": true,
+    "registrationIdentical": true
+  },
+  "boundary": "Only nested manifest plus exactly three changed documentation bodies were opened. Prior unchanged member/type/example proof is reused by identical records. Native MiniApps build success, AI build failure and unexecuted application cases are separate facts from SDK preparation/typecheck success. No repeated112-member inspection/compiler/tests/build/download/generator."
+}

@@ -1,0 +1,55 @@
+{
+  "status": "PASS",
+  "manifestSHA256": "1d51c86e55ca79792b6b31176de6363008e5874dec4f919e5ef96c789a6d53f9",
+  "inputSHA256": "5deb2605a46b128985a0f6bb59414aed8167d872cc09deaf24b49fd9ab4fce04",
+  "sourceInputs": 222,
+  "files": 25661,
+  "changedInputs": 4,
+  "changedMembers": 4,
+  "docProjects": 4,
+  "diagnostics": 0,
+  "nativeScriptDelta": {
+    "json-values-equal": 8,
+    "javascript-body-changed": 154,
+    "json-values-changed": 1,
+    "identical-content-observed-mode-row": 1,
+    "line-endings-only": 3
+  },
+  "originalIdentity": {
+    "exact-original-bytes": 105,
+    "original-plus-existing-preparation-transforms": 62
+  },
+  "materializationGroups": {
+    "resolved-Swift-package-lock": 1,
+    "actual-generated-expo-fixture-archive": 16,
+    "original-Expo-Widgets-preparation-receipt": 1,
+    "nativescript-prepared-runtime": 167,
+    "shipped-source-provenance": 3
+  },
+  "reuseGroups": {
+    "declarations": {
+      "members": 5210,
+      "unchanged": 5210,
+      "changed": []
+    },
+    "examples": {
+      "members": 29,
+      "unchanged": 29,
+      "changed": []
+    },
+    "public-docs": {
+      "members": 25,
+      "unchanged": 22,
+      "changed": [
+        "docs/miniapp-sdk/extension-reachability.json",
+        "docs/miniapp-sdk/extension-reachability.md",
+        "docs/miniapp-sdk/source-inventory.json"
+      ]
+    },
+    "original-compilers": {
+      "members": 2,
+      "unchanged": 2,
+      "changed": []
+    }
+  }
+}

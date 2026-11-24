@@ -1,0 +1,153 @@
+{
+  "source": "d3ba6ae6428d65ad29854fbde4dfc64e80e686e5",
+  "producer": "fd81d602d3b25f09162a659e1e0cf0582e91a93a",
+  "nativeInputMatches": 16,
+  "testStatus": "NOT_A_TEST_PASS",
+  "status": "DEPENDENCY_BYTES_VERIFIED",
+  "reused": [
+    {
+      "target": "ReactNativeHeaders",
+      "archiveSHA256": "2caf25a408560b400c00eca977a96f5bdcbed6eb520e742ac1175649a4e51a23",
+      "paths": [
+        "Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework"
+      ]
+    },
+    {
+      "target": "React",
+      "archiveSHA256": "6162481ee94054c8e03a9e4559aa6381a5a631ecc8f78bb7203b6e221b5efe01",
+      "paths": [
+        "Packages/HanlinExpoRuntime/Artifacts/React.xcframework"
+      ]
+    },
+    {
+      "target": "ReactNativeDependencies",
+      "archiveSHA256": "39f90b4a8875af5b817e6383f54a8d1ed0557e0e77022222f329e117bfca12d8",
+      "paths": [
+        "Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework"
+      ]
+    },
+    {
+      "target": "hermesvm",
+      "archiveSHA256": "f11b12dbb34160d16398787089c77a1b66e6e4c66fd8524f555bd6c7d71a4bd3",
+      "paths": [
+        "Packages/HanlinExpoRuntime/Artifacts/hermesvm.xcframework"
+      ]
+    },
+    {
+      "target": "ExpoModulesJSI",
+      "archiveSHA256": "26ee01b215d9ddb7a70eb85744e8a1b81460c0e657eb136f84c257224e401671",
+      "paths": [
+        "Packages/HanlinExpoRuntime/Artifacts/ExpoModulesJSI.xcframework"
+      ]
+    },
+    {
+      "target": "ExpoModulesCore",
+      "archiveSHA256": "b3a6f07a8100094076f06d6bb1f0e25b8381d01915eac4b9174eb77ded04ce4a",
+      "paths": [
+        "Packages/HanlinExpoRuntime/Artifacts/ExpoModulesCore.xcframework"
+      ]
+    },
+    {
+      "target": "ExpoModulesWorklets",
+      "archiveSHA256": "c4dbb6691c248dd652a9028c3cbb24fb1a9d2c41831750a619b0df50a9e5abbd",
+      "paths": [
+        "Packages/HanlinExpoRuntime/Artifacts/ExpoModulesWorklets.xcframework"
+      ]
+    },
+    {
+      "target": "ExpoUI",
+      "archiveSHA256": "52ef0cabd978f8d483576f9c54110594f2e4a2505af749d28fb64b6bc8053dc3",
+      "paths": [
+        "Packages/HanlinExpoRuntime/Artifacts/ExpoUI.xcframework"
+      ]
+    },
+    {
+      "target": "ExpoBrownfield",
+      "archiveSHA256": "5624ddbeb566108b83416538d69ed405e3502bd40d416d751bb43d9ce1a1fa70",
+      "paths": [
+        "Packages/HanlinExpoRuntime/Artifacts/ExpoBrownfield.xcframework"
+      ]
+    },
+    {
+      "target": "Libffi",
+      "archiveSHA256": "6a50e1bc7fb52c15372278b54e721e4f22887a50ba7bdd9bf93bb6c3507795cf",
+      "paths": [
+        "Packages/HanlinExpoNativeAPI/Artifacts/Libffi.xcframework"
+      ]
+    },
+    {
+      "target": "TNSWidgets",
+      "archiveSHA256": "861178adca25cb37cbc9372566da3ab7bbb09ee81a552a667c78025b257f214e",
+      "paths": [
+        "Packages/HanlinNativeScriptRuntime/Artifacts/TNSWidgets.xcframework"
+      ]
+    },
+    {
+      "target": "NSCWinterTC",
+      "archiveSHA256": "2399fcd150e44cf6fff99beb2d3ddc483c6c527830d176293852f44378e83190",
+      "paths": [
+        "Packages/HanlinNativeScriptRuntime/Artifacts/NSCWinterTC.xcframework"
+      ]
+    },
+    {
+      "target": "NodeMobile",
+      "archiveSHA256": "755769361a77d53ac930ff0b28526a6a9085619f15dc7bd169fcadcc3ee290fc",
+      "paths": [
+        "Vendor/NodeMobile/NodeMobile.xcframework"
+      ]
+    },
+    {
+      "target": "Python",
+      "archiveSHA256": "cd0978e95d2b68ac234cf2bad7d8ac83e4ed3afd6266bee402141e3ed9eb2d13",
+      "paths": [
+        "Vendor/Python/Python.xcframework"
+      ]
+    },
+    {
+      "target": "HanlinExpoHeaderSupport",
+      "archiveSHA256": "90b3af259a3347adffb021f56e66ff82e926ea1e8668d5774b1d384650394c45",
+      "paths": [
+        "Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks",
+        "Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders"
+      ]
+    },
+    {
+      "target": "HanlinExpoWidgetRuntimeSupport",
+      "archiveSHA256": "0b43a5d047eb3d9b812c4e65c94753162808713afa27a8a5aba8984eac0b7b4b",
+      "paths": [
+        "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle"
+      ]
+    },
+    {
+      "target": "HanlinNativeScriptHostSupport",
+      "archiveSHA256": "e5e2e937e033ac46558c4de29113f0fd964a7098fe817d4f74a386b615a0fb10",
+      "paths": [
+        "Packages/HanlinNativeScriptRuntime/Artifacts/native-api-usage.json",
+        "Packages/HanlinNativeScriptRuntime/Artifacts/dependency-closure.json",
+        "build/nativescript-metadata-tool/bin",
+        "build/nativescript-metadata-tool/provenance.json",
+        "Scripts/NativeScript/node_modules/@nativescript/ios/framework/internal/metadata-generator-arm64/bin/build-step-metadata-generator.py",
+        "Scripts/NativeScript/node_modules/@nativescript/ios/framework/internal/metadata-generator-arm64/bin/build-step-metadata-generator-upstream.py"
+      ]
+    },
+    {
+      "target": "HanlinPythonHostSupport",
+      "archiveSHA256": "9a69b3ab8a633dfa68df54bc94a780593372eec8305ca6df6962d4ff0aae89a8",
+      "paths": [
+        "Vendor/Python/Python-VERSIONS"
+      ]
+    }
+  ],
+  "createdAtUTC": "2026-11-24T22:53:15.685825+00:00",
+  "npmCopies": [
+    {
+      "path": "Scripts/Expo/node_modules",
+      "method": "APFS independent clone; original graph verification still required"
+    },
+    {
+      "path": "Scripts/NativeScript/node_modules",
+      "method": "APFS independent clone; original graph verification still required"
+    }
+  ],
+  "finishedAtUTC": "2026-11-24T22:53:26.352836+00:00"
+}

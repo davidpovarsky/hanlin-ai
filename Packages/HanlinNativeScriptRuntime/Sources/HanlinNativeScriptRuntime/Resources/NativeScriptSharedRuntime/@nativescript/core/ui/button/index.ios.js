@@ -1,7 +1,7 @@
 import { ControlStateChangeListener } from '../core/control-state-change';
 import { ButtonBase } from './button-common';
 import { View, PseudoClassHandler } from '../core/view';
-import { borderTopWidthProperty, borderRightWidthProperty, borderBottomWidthProperty, borderLeftWidthProperty, directionProperty, paddingInternalProperty, paddingTopProperty, paddingRightProperty, paddingBottomProperty, paddingLeftProperty, _hasPaddingSetNativeOverrides } from '../styling/style-properties';
+import { borderTopWidthProperty, borderRightWidthProperty, borderBottomWidthProperty, borderLeftWidthProperty, directionProperty, paddingInternalProperty } from '../styling/style-properties';
 import { textAlignmentProperty, whiteSpaceProperty, textOverflowProperty } from '../text-base';
 import { layout } from '../../utils';
 import { CoreTypes } from '../../core-types';
@@ -124,104 +124,13 @@ export class Button extends ButtonBase {
             right: inset.right,
         });
     }
-    [paddingTopProperty.getDefault]() {
-        return {
-            value: this.nativeViewProtected.contentEdgeInsets.top,
-            unit: 'px',
-        };
-    }
-    [paddingTopProperty.setNative](_value) {
-        if (this._pendingPadding) {
-            this._pendingPadding.top = layout.toDeviceIndependentPixels(this.effectivePaddingTop + this.effectiveBorderTopWidth);
-        }
-        else if (_hasPaddingSetNativeOverrides(this, Button.prototype)) {
-            const nativeView = this.nativeViewProtected;
-            const inset = nativeView.contentEdgeInsets;
-            nativeView.contentEdgeInsets = new UIEdgeInsets({
-                top: layout.toDeviceIndependentPixels(this.effectivePaddingTop + this.effectiveBorderTopWidth),
-                right: inset.right,
-                bottom: inset.bottom,
-                left: inset.left,
-            });
-        }
-    }
-    [paddingRightProperty.getDefault]() {
-        return {
-            value: this.nativeViewProtected.contentEdgeInsets.right,
-            unit: 'px',
-        };
-    }
-    [paddingRightProperty.setNative](_value) {
-        if (this._pendingPadding) {
-            this._pendingPadding.right = layout.toDeviceIndependentPixels(this.effectivePaddingRight + this.effectiveBorderRightWidth);
-        }
-        else if (_hasPaddingSetNativeOverrides(this, Button.prototype)) {
-            const nativeView = this.nativeViewProtected;
-            const inset = nativeView.contentEdgeInsets;
-            nativeView.contentEdgeInsets = new UIEdgeInsets({
-                top: inset.top,
-                right: layout.toDeviceIndependentPixels(this.effectivePaddingRight + this.effectiveBorderRightWidth),
-                bottom: inset.bottom,
-                left: inset.left,
-            });
-        }
-    }
-    [paddingBottomProperty.getDefault]() {
-        return {
-            value: this.nativeViewProtected.contentEdgeInsets.bottom,
-            unit: 'px',
-        };
-    }
-    [paddingBottomProperty.setNative](_value) {
-        if (this._pendingPadding) {
-            this._pendingPadding.bottom = layout.toDeviceIndependentPixels(this.effectivePaddingBottom + this.effectiveBorderBottomWidth);
-        }
-        else if (_hasPaddingSetNativeOverrides(this, Button.prototype)) {
-            const nativeView = this.nativeViewProtected;
-            const inset = nativeView.contentEdgeInsets;
-            nativeView.contentEdgeInsets = new UIEdgeInsets({
-                top: inset.top,
-                right: inset.right,
-                bottom: layout.toDeviceIndependentPixels(this.effectivePaddingBottom + this.effectiveBorderBottomWidth),
-                left: inset.left,
-            });
-        }
-    }
-    [paddingLeftProperty.getDefault]() {
-        return {
-            value: this.nativeViewProtected.contentEdgeInsets.left,
-            unit: 'px',
-        };
-    }
-    [paddingLeftProperty.setNative](_value) {
-        if (this._pendingPadding) {
-            this._pendingPadding.left = layout.toDeviceIndependentPixels(this.effectivePaddingLeft + this.effectiveBorderLeftWidth);
-        }
-        else if (_hasPaddingSetNativeOverrides(this, Button.prototype)) {
-            const nativeView = this.nativeViewProtected;
-            const inset = nativeView.contentEdgeInsets;
-            nativeView.contentEdgeInsets = new UIEdgeInsets({
-                top: inset.top,
-                right: inset.right,
-                bottom: inset.bottom,
-                left: layout.toDeviceIndependentPixels(this.effectivePaddingLeft + this.effectiveBorderLeftWidth),
-            });
-        }
-    }
     [paddingInternalProperty.setNative](_value) {
-        if (_hasPaddingSetNativeOverrides(this, Button.prototype)) {
-            // An override owns padding application; each side applies through its own handler.
-            return;
-        }
-        const nativeView = this.nativeViewProtected;
-        const inset = nativeView.contentEdgeInsets;
-        this._pendingPadding = { top: inset.top, right: inset.right, bottom: inset.bottom, left: inset.left };
-        this[paddingTopProperty.setNative](this.style.paddingTop);
-        this[paddingRightProperty.setNative](this.style.paddingRight);
-        this[paddingBottomProperty.setNative](this.style.paddingBottom);
-        this[paddingLeftProperty.setNative](this.style.paddingLeft);
-        nativeView.contentEdgeInsets = new UIEdgeInsets(this._pendingPadding);
-        this._pendingPadding = null;
+        this.nativeViewProtected.contentEdgeInsets = new UIEdgeInsets({
+            top: layout.toDeviceIndependentPixels(this.effectivePaddingTop + this.effectiveBorderTopWidth),
+            left: layout.toDeviceIndependentPixels(this.effectivePaddingLeft + this.effectiveBorderLeftWidth),
+            bottom: layout.toDeviceIndependentPixels(this.effectivePaddingBottom + this.effectiveBorderBottomWidth),
+            right: layout.toDeviceIndependentPixels(this.effectivePaddingRight + this.effectiveBorderRightWidth),
+        });
     }
     [textAlignmentProperty.setNative](value) {
         switch (value) {

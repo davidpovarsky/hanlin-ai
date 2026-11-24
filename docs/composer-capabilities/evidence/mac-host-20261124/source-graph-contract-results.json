@@ -1,0 +1,22 @@
+{
+  "sourceBeforeGeneration": "f26503a2cc1dae8c4910ffdfb4d64e5029fabd67",
+  "sourceWithGeneratedGraph": "d3ba6ae6428d65ad29854fbde4dfc64e80e686e5",
+  "generatedFiles": [
+    "AI_HLY.xcodeproj/project.pbxproj",
+    "Package.swift",
+    "docs/agent-sdk/unified-package-manifest.json"
+  ],
+  "status": "EXECUTED_PASS",
+  "nodeContractCases": 6,
+  "manifestAuditCases": 1,
+  "logs": {
+    "generate-manifest.log": "b680a517f773a34e0a102cbd4c113cb18ccd4f31be97d442ab51318bdf40bc20",
+    "update-project.log": "7b205399ea53f72db8afa2fe3d77370cd6f0ac3d9ea8d19cea47a806236d4d18",
+    "generate-manifest-check.log": "b680a517f773a34e0a102cbd4c113cb18ccd4f31be97d442ab51318bdf40bc20",
+    "update-project-check.log": "7b205399ea53f72db8afa2fe3d77370cd6f0ac3d9ea8d19cea47a806236d4d18",
+    "assistant-contract-node.log": "4f4af87ed583ee7566b1c75b896d97301976acb26ca50b88b45e4ae126789436",
+    "manifest-contract-node.log": "f669e53811fb2d18df3161fda4f358ec839863177d3328a4e76678ab7982c713"
+  },
+  "toolchain": "Xcode 27.0\nBuild version 27A266a\nApple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)\nTarget: arm64-apple-macosx27.0.0\nv24.5.0\n",
+  "finishedAtUTC": "2026-11-24T22:46:14.335033+00:00"
+}

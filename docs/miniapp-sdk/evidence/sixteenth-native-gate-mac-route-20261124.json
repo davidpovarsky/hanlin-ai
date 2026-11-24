@@ -1,0 +1,42 @@
+{
+  "atUTC": "2026-11-24T15:49:06.627029+00:00",
+  "xcodeApplications": [
+    {
+      "path": "/Applications/Xcode.app",
+      "version": "27.0",
+      "bundleVersion": "25183.107.5"
+    }
+  ],
+  "selectedXcode": {
+    "argv": [
+      "xcodebuild",
+      "-version"
+    ],
+    "exit": 0,
+    "stdout": "Xcode 27.0\nBuild version 27A266a",
+    "stderr": ""
+  },
+  "swift": {
+    "argv": [
+      "xcrun",
+      "swift",
+      "--version"
+    ],
+    "exit": 0,
+    "stdout": "Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)\nTarget: arm64-apple-macosx27.0.0",
+    "stderr": "swift-driver version: 1.168.6"
+  },
+  "simulatorSDK": {
+    "argv": [
+      "xcrun",
+      "--sdk",
+      "iphonesimulator",
+      "--show-sdk-version"
+    ],
+    "exit": 0,
+    "stdout": "27.0",
+    "stderr": ""
+  },
+  "freeBytes": 320048205824,
+  "activeBuildProcesses": []
+}

@@ -2,11 +2,13 @@
 //  NativeTool.swift
 //  AI_HLY
 //
-//  Swift-only native tool protocol. No JS/TS runtime is used.
+//  Swift host boundary for native tools and selected MiniApp assistant adapters.
+//  Modern MiniApp adapters invoke their original runtime only during execution.
 //
 
 import Foundation
 import SwiftData
+import HanlinPlatformContracts
 
 @MainActor
 protocol NativeTool {
@@ -28,6 +30,8 @@ struct NativeToolExecutionContext {
     var isTemporaryChat: Bool
     var requestID: String?
     var capabilitySession: AssistantCapabilitySession?
+    /// Immutable user settings selected before sending; distinct from model arguments.
+    var composerConfiguration: HanlinJSONValue?
     var attachmentResolver: (@Sendable (String) async throws -> Data)?
 
     init(
@@ -38,6 +42,7 @@ struct NativeToolExecutionContext {
         isTemporaryChat: Bool = false,
         requestID: String? = nil,
         capabilitySession: AssistantCapabilitySession? = nil,
+        composerConfiguration: HanlinJSONValue? = nil,
         attachmentResolver: (@Sendable (String) async throws -> Data)? = nil
     ) {
         self.localeIdentifier = localeIdentifier
@@ -47,6 +52,7 @@ struct NativeToolExecutionContext {
         self.isTemporaryChat = isTemporaryChat
         self.requestID = requestID
         self.capabilitySession = capabilitySession
+        self.composerConfiguration = composerConfiguration
         self.attachmentResolver = attachmentResolver
     }
 

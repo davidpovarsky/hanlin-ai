@@ -13,6 +13,9 @@ export const manifestSources = {
   nsSession: 'Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptSession.swift',
   expoSession: 'Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoSession.swift',
   authoring: 'AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs',
+  assistantAuthoring: 'AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-assistant-tools.mjs',
+  assistantDeclaration: 'Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinAssistantToolDeclaration.swift',
+  composerConfiguration: 'Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinComposerConfiguration.swift',
   widgetSchema: 'Scripts/MiniApps/scriptwidget/widget-manifest.schema.json',
   widgetGenerator: 'Scripts/MiniApps/generate-scriptwidget-manifest.mjs',
   widgetValidator: 'Scripts/MiniApps/scriptwidget/manifest-validation.mjs',
@@ -148,10 +151,43 @@ export async function auditManifestContracts({source}) {
   const prepared = between(r.analyzer, '    private static func preparedEntrypoints(', '    private func discoverEntrypoints(');
   addDictionary(rows, prepared, 'fields', 'entrypoints[].', {
     id: ['string', true, 'Unique nonempty ID, excluding reserved app/widget.'],
-    kind: ['appIntent | embeddedResult | share | translationUI | liveActivity', true, 'Only these modern explicit kinds are accepted; engine-specific source requirements still apply.'],
+    kind: ['assistantTool | appIntent | embeddedResult | share | translationUI | liveActivity', true, 'Explicit kinds; assistantTool additionally requires a dedicated prepared program and declared action metadata.'],
     sourcePath: ['string', true, 'Existing normalized package path; embeddedResult must use discovered foreground bundle.'],
     exportedSymbol: ['string', false, 'Optional exported symbol; non-string/absent values resolve to nil.'],
+    assistantTool: ['HanlinAssistantToolDeclaration', 'required for assistantTool', 'Dedicated assistant action declaration, schemas and optional composer configuration.'],
   });
+  addRecord(rows, r.assistantDeclaration, 'HanlinAssistantToolDeclaration', 'entrypoints[].assistantTool.', {
+    title: 'Nonempty title displayed before selection.', summary: 'Nonempty description supplied to the model.',
+    actions: 'Nonempty declared action table; validation does not execute it.',
+    configuration: 'Optional versioned user configuration rendered in the shared composer bubble.'
+  });
+  addRecord(rows, r.assistantDeclaration, 'HanlinAssistantToolAction', 'entrypoints[].assistantTool.actions[].', {
+    id: 'Unique canonical action ID used by the existing action transport.',
+    title: 'Nonempty display title.', summary: 'Nonempty model description.',
+    inputSchema: 'Raw JSON Schema object with type object; applies to model arguments.',
+    outputSchema: 'Optional raw JSON Schema describing returned data.',
+    exportedSymbol: 'Named source export; defaults to action ID. Never the app entrypoint.',
+    embeddedResultID: 'Optional exact declared embeddedResult entrypoint in this package.'
+  });
+  addRecord(rows, r.composerConfiguration, 'HanlinComposerConfiguration', 'entrypoints[].assistantTool.configuration.', {
+    schemaVersion: 'Version 1; unknown versions rejected.', panels: 'Nonempty list of named configuration panels.'
+  }, {schemaVersion: 1});
+  addRecord(rows, r.composerConfiguration, 'HanlinComposerPanel', 'entrypoints[].assistantTool.configuration.panels[].', {
+    id: 'Unique nonempty panel ID.', title: 'Panel display title.',
+    fields: 'Structured configuration fields, unique by key across all panels.',
+    customViewID: 'Optional embedding-host view key. Provider owns validation of additional custom fields.'
+  }, {fields: []});
+  addRecord(rows, r.composerConfiguration, 'HanlinComposerField', 'entrypoints[].assistantTool.configuration.panels[].fields[].', {
+    key: 'Stable structured configuration key, separate from model arguments.',
+    title: 'Field display title.', kind: 'text, toggle, number, choice, multiChoice, catalog, or location.',
+    required: 'Whether a value is required before sending.', defaultValue: 'Optional valid JSON default copied into each new attachment.',
+    options: 'Unique selection/catalog option IDs; nested options supported.',
+    minimum: 'Numeric minimum, or minimum radiusMeters for location.',
+    maximum: 'Numeric maximum, or maximum radiusMeters for location.', placeholder: 'Optional text placeholder.'
+  }, {required: false, options: []});
+  addRecord(rows, r.composerConfiguration, 'HanlinComposerOption', 'entrypoints[].assistantTool.configuration.options[].', {
+    id: 'Unique stable selected value.', title: 'Display label.', children: 'Optional nested catalog options.'
+  }, {children: []});
   addRecord(rows, r.presentation, 'HanlinNativePresentationMetadata', 'nativePresentations.*.', {
     engine: 'Original expo/scriptwidget renderer; preparePresentation rejects legacy.',
     sourcePath: 'Normalized existing source path; compilation scoped to its source directory.',
@@ -263,7 +299,8 @@ export async function auditManifestContracts({source}) {
   const packages = [packageRows('nativescript', ns, r.nsSession), packageRows('expo', expo, r.expoSession)];
 
   const authorRows = [];
-  const authorProperties = sorted([...r.authoring.text.matchAll(/\bauthor\??\.([A-Za-z_$]\w*)/g)].map(m => m[1]));
+  const authorProperties = sorted([r.authoring, r.assistantAuthoring].flatMap(record =>
+    [...record.text.matchAll(/\bauthor\??\.([A-Za-z_$]\w*)/g)].map(m => m[1])));
   const authorGroupNotes = {
     schemaVersion: ['integer', false, 'When supplied must equal 1; successful builder emits 1.'],
     engine: ['expo | nativescript | scriptwidget', false, 'Must agree with requested/inferred engine; required if inference unavailable.'],
@@ -271,11 +308,13 @@ export async function auditManifestContracts({source}) {
     tsconfig: ['string', false, 'Source-relative original compiler configuration, default tsconfig.json; installed TypeScript interprets options.'],
     resources: ['string[]', false, 'Explicit retained source-relative files/directories; ownership and cyclic-directory checks apply.'],
     sourceRoot: ['string', false, 'Packaged source root confined to imported project; inner descriptor overrides source-project settings.'],
+    assistantTools: ['record<string, string>', 'required for declared assistantTool', 'Maps assistantTool entrypoint IDs to dedicated source files; existing original compiler builds separate prepared programs.'],
   };
   assertKeys(authorProperties, Object.keys(authorGroupNotes), 'hanlin.authoring.json source fields');
   for (const [key, [type, required, note]] of Object.entries(authorGroupNotes)) {
-    const match = requireMatch(r.authoring, new RegExp('\\bauthor\\??\\.' + key + '\\b'), 'author.' + key);
-    authorRows.push(field(key, type, required, note, [ref(r.authoring, match[0])]));
+    const authority = key === 'assistantTools' ? r.assistantAuthoring : r.authoring;
+    const match = requireMatch(authority, new RegExp('\\bauthor\\??\\.' + key + '\\b'), 'author.' + key);
+    authorRows.push(field(key, type, required, note, [ref(authority, match[0])]));
   }
   const consistency = between(r.authoring, 'async function packageConsistency(', 'async function parseProject(');
   const identities = [...consistency.text.matchAll(/\['(\w+)', input\./g)].map(m => m[1]);

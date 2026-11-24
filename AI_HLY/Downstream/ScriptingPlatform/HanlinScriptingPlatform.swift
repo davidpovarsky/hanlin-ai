@@ -409,6 +409,23 @@ final class HanlinScriptingPlatform {
         }
     }
 
+    /// Share the established store/transfer lifetime with request-owned tool sessions.
+    func withAssistantToolExecution(
+        _ operation: @MainActor () async throws -> HanlinValue
+    ) async throws -> HanlinValue {
+        guard !isTransferringProductData else { throw HanlinProductTransferError.busy }
+        activeStoreOperations += 1
+        defer { activeStoreOperations -= 1 }
+        return try await operation()
+    }
+
+    /// Read-only admission snapshot; unlike restore(), this never processes queued actions.
+    func assistantToolPackages() async throws -> [HanlinStoredPackageSnapshot] {
+        guard !isTransferringProductData else { throw HanlinProductTransferError.busy }
+        guard let store else { throw HanlinMiniAppRequestError.routeNotFound }
+        return try await store.snapshots()
+    }
+
     func activeArtifactURL(for package: HanlinStoredPackageSnapshot) -> URL? {
         guard let installedRoot else { return nil }
         return installedRoot

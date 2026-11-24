@@ -1,0 +1,161 @@
+{
+  "schemaVersion": 1,
+  "status": "FOCUSED_COMMAND_SOURCE_AND_SYNTAX_PASS_NATIVE_MECHANISM_REUSED",
+  "owner": "/root/control_authoring",
+  "baseCommit": "ce876c32a9dd0f3c324222f549c4642c13f8a700",
+  "productionFiles": [
+    ".github/workflows/build-ios26-unsigned-ipa.yml"
+  ],
+  "workflowSHA256": {
+    "before": "826fae0402f057955529b0fb626993256c28c3e28e37b87b8f1eeab8f14f0500",
+    "after": "8db985018d69ed5879533028f8f6d15b4d40bd6a2c49abf866cc2930603ba838"
+  },
+  "change": "Remove exactly four command-line SWIFT_ENABLE_EXPLICIT_MODULES=NO arguments so the proven native consumer target settings apply. No global YES is substituted.",
+  "scope": [
+    {
+      "job": "build-ios26-unsigned-ipa",
+      "stepIndex": 34,
+      "stepName": "Build unsigned iOS 26 app",
+      "project": "AI_HLY.xcodeproj",
+      "scheme": "AI_HLY",
+      "configuration": "Release",
+      "beforeSHA256": "ad65e5dc184c4dcafef27b7bdc279ad32a7de894db828f14298cb7287a883e91",
+      "afterSHA256": "70ca630c8b7f1599c8f121c7fb8b238b5f028523f0b7e03cb58f8e80af9bb29d",
+      "removedArgument": "SWIFT_ENABLE_EXPLICIT_MODULES=NO",
+      "allOtherRunBytesUnchanged": true,
+      "syntaxCommand": [
+        "bash",
+        "--noprofile",
+        "--norc",
+        "-n",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-host-services-20261124/docs/miniapp-sdk/evidence/original-header-build-entrypoints-20261124/1-syntax.sh"
+      ],
+      "syntaxExitCode": 0
+    },
+    {
+      "job": "build-ios26-unsigned-ipa",
+      "stepIndex": 35,
+      "stepName": "Measure same-run device no-op rebuild",
+      "project": "AI_HLY.xcodeproj",
+      "scheme": "AI_HLY",
+      "configuration": "Release",
+      "beforeSHA256": "5996b4892d87c27a53d6db3b0fc3e68cb065c88f6f84511feeca14f37282e2e6",
+      "afterSHA256": "594b034cfa97c55dac1d20fb352351a2df16e8bec5abdf4bccb1fd86c97fe867",
+      "removedArgument": "SWIFT_ENABLE_EXPLICIT_MODULES=NO",
+      "allOtherRunBytesUnchanged": true,
+      "syntaxCommand": [
+        "bash",
+        "--noprofile",
+        "--norc",
+        "-n",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-host-services-20261124/docs/miniapp-sdk/evidence/original-header-build-entrypoints-20261124/2-syntax.sh"
+      ],
+      "syntaxExitCode": 0
+    },
+    {
+      "job": "full-app-simulator-smoke",
+      "stepIndex": 30,
+      "stepName": "Build full arm64 simulator app",
+      "project": "AI_HLY.xcodeproj",
+      "scheme": "AI_HLY",
+      "configuration": "${{ needs.plan-affected-validation.outputs.simulator_configuration || ((inputs.fast_validation_only || inputs.nativescript_poc_only) && 'Debug' || 'Release') }}",
+      "beforeSHA256": "ed19f47f14d1a3bc5d22f603cca567e3d710b7671d70e6ae90ccecc77eba43a7",
+      "afterSHA256": "4a05cbfd9269aedf0cf106aaa34702aa1e31d7a5ed83f566cccfa878fe679f4e",
+      "removedArgument": "SWIFT_ENABLE_EXPLICIT_MODULES=NO",
+      "allOtherRunBytesUnchanged": true,
+      "syntaxCommand": [
+        "bash",
+        "--noprofile",
+        "--norc",
+        "-n",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-host-services-20261124/docs/miniapp-sdk/evidence/original-header-build-entrypoints-20261124/3-syntax.sh"
+      ],
+      "syntaxExitCode": 0
+    },
+    {
+      "job": "full-app-simulator-smoke",
+      "stepIndex": 31,
+      "stepName": "Measure same-run simulator no-op rebuild",
+      "project": "AI_HLY.xcodeproj",
+      "scheme": "AI_HLY",
+      "configuration": "${{ needs.plan-affected-validation.outputs.simulator_configuration || ((inputs.fast_validation_only || inputs.nativescript_poc_only) && 'Debug' || 'Release') }}",
+      "beforeSHA256": "c130ef53825ecd5f3363eb860e33fe8bcc27f7ac98f9b3510e65b3c1daa11b80",
+      "afterSHA256": "a73ff27b431fe5c143aeccd3ac3fa43fd860c77aa1c63efa08b4806ef0bfc4b9",
+      "removedArgument": "SWIFT_ENABLE_EXPLICIT_MODULES=NO",
+      "allOtherRunBytesUnchanged": true,
+      "syntaxCommand": [
+        "bash",
+        "--noprofile",
+        "--norc",
+        "-n",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-host-services-20261124/docs/miniapp-sdk/evidence/original-header-build-entrypoints-20261124/4-syntax.sh"
+      ],
+      "syntaxExitCode": 0
+    }
+  ],
+  "preserved": [
+    "Global Config.xcconfig/default module-loading policy",
+    "All other command arguments, build actions, test filters, search paths and compiler flags",
+    "Workflow inputs, routing, job conditions, concurrency, permissions, signing, upload and artifact behavior",
+    "Unrelated target settings"
+  ],
+  "verification": {
+    "yamlParse": "PASS",
+    "exactSourceDelta": "Only the four entire NO-argument lines were removed",
+    "parsedWorkflowDelta": "Only those four run bodies differ; every other parsed value unchanged",
+    "bashSyntax": {
+      "changedBodies": 4,
+      "passed": 4,
+      "failed": 0,
+      "githubExpressions": "Replaced by inert text only for bash -n parsing; original before/after source retained.",
+      "shellBodiesExecuted": false
+    },
+    "log": "validation.stdout.log",
+    "details": "validation.json"
+  },
+  "reusedCompilerProof": {
+    "commit": "ce876c32a9dd0f3c324222f549c4642c13f8a700",
+    "receipt": "../widget-original-header-closure-20261124/receipt.json",
+    "receiptSHA256": "b3720f78e0d8a7db05757e2276a2ab8fadb5efecc01f9a622f5e3a18894ef9db",
+    "scope": "Genuine original ExpoModulesCore fresh-cache import; implicit reproduces4missingheaders, explicit succeeds; Xcode27.0/Swift6.4. No compiler probe repeated for this companion."
+  },
+  "independentReview": {
+    "reviewer": "/root/entrypoints",
+    "status": "PASS_NO_CONCRETE_BLOCKER",
+    "details": "independent-review.json",
+    "callPathMap": "original-entrypoint-map.json"
+  },
+  "provenanceImpact": "Workflow path is not a direct SDK/source-inventory/reachability input. No additional regeneration beyond the parent project change's existing reachability write/check.",
+  "nativeAppBuild": "NOT_RUN",
+  "nativeAcceptance": "NOT_RUN",
+  "ciDispatch": "NONE",
+  "rawEvidenceSHA256": {
+    "1-after.sh": "70ca630c8b7f1599c8f121c7fb8b238b5f028523f0b7e03cb58f8e80af9bb29d",
+    "1-before.sh": "ad65e5dc184c4dcafef27b7bdc279ad32a7de894db828f14298cb7287a883e91",
+    "1-syntax.sh": "5fa54ce5e534078f9d7241dffaface860c804daefd3acf88e297f338df2d78a7",
+    "1-syntax.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "1-syntax.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "2-after.sh": "594b034cfa97c55dac1d20fb352351a2df16e8bec5abdf4bccb1fd86c97fe867",
+    "2-before.sh": "5996b4892d87c27a53d6db3b0fc3e68cb065c88f6f84511feeca14f37282e2e6",
+    "2-syntax.sh": "594b034cfa97c55dac1d20fb352351a2df16e8bec5abdf4bccb1fd86c97fe867",
+    "2-syntax.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "2-syntax.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "3-after.sh": "4a05cbfd9269aedf0cf106aaa34702aa1e31d7a5ed83f566cccfa878fe679f4e",
+    "3-before.sh": "ed19f47f14d1a3bc5d22f603cca567e3d710b7671d70e6ae90ccecc77eba43a7",
+    "3-syntax.sh": "c5542170a26e3d062906aae37a27d93f43be590e81875d9a01e54d87cede3060",
+    "3-syntax.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "3-syntax.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "4-after.sh": "a73ff27b431fe5c143aeccd3ac3fa43fd860c77aa1c63efa08b4806ef0bfc4b9",
+    "4-before.sh": "c130ef53825ecd5f3363eb860e33fe8bcc27f7ac98f9b3510e65b3c1daa11b80",
+    "4-syntax.sh": "fc023a2a009c17fdd658707ea33033d397a63d7c31c2c3eab50a75122cc335f7",
+    "4-syntax.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "4-syntax.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "independent-review.json": "2b7d9021108bf328dd65b5d2b797b593989a76b1efdfa25f550e7188f1c2c82d",
+    "original-entrypoint-map.json": "e648d6e7c3d90b704eb8a3c62f8e38698d5c2c80c0b791599c780e169ee66cc2",
+    "validate-command-delta.py": "4d530112d68a81979c7ca8eb884de1ecdd7cebb4b3b26446432dae07e2cdd32f",
+    "validation-command.json": "50b5f6651c33d02629561617622aaf467df46a49216c407e067cc06e0e768db7",
+    "validation.json": "6006c7aa4b131c31fd86d0f346110fbaa8325a6d22c1b2a266e87a821a01c663",
+    "validation.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "validation.stdout.log": "734266a3cb8ffc9b9afca13849cb94177c2fa27141671f0c8674bbdf5f2151d4"
+  }
+}

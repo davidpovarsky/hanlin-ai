@@ -1,0 +1,290 @@
+{
+  "schemaVersion": 1,
+  "task": "HANLIN-COMPOSER-CAPABILITIES",
+  "asanaTask": "1220882717750164",
+  "sourceBase": "0929e07a6a6adae3a27cab5c514623c7cc0f157c",
+  "sourceSnapshot": "8a67e7aee83c6b12673db1348b7f550a2805de50",
+  "finalSource": "recorded per execution receipt after generated-source refresh",
+  "runner": {
+    "host": "scaleway-mac",
+    "transport": "SentinelX direct",
+    "xcode": "selected Xcode 27.0, verify at execution",
+    "platforms": [
+      "macOS host",
+      "iOS Simulator iPhone",
+      "iOS Simulator iPad"
+    ]
+  },
+  "obligations": [
+    {
+      "id": "dedicated_entrypoint",
+      "behavior": "Selecting a MiniApp executes no app/index or tool code; model action loads only declared assistantTool source with original NativeScript/Expo runtime."
+    },
+    {
+      "id": "explicit_selection",
+      "behavior": "Tools/MiniApps/Skills/MCP attach to one message through picker/@/slash; general preferences unchanged; original model mentions preserved."
+    },
+    {
+      "id": "configuration",
+      "behavior": "Manifest panels/catalog/location and registered host views produce validated immutable configuration, separate from approved model arguments."
+    },
+    {
+      "id": "persistence",
+      "behavior": "Original draft/home/history/retry/headless SDK use snapshots without cross-request leakage."
+    },
+    {
+      "id": "skill_policy",
+      "behavior": "User-selected model-hidden Skill loads first step under original user policy; revocation remains authoritative."
+    },
+    {
+      "id": "rich_result",
+      "behavior": "Original embedded renderer receives plain exact JSON linked to installed package generation; cancellation settles and later sessions work."
+    }
+  ],
+  "dependencyGraph": {
+    "contracts": [
+      "HanlinPlatformContracts",
+      "HanlinScriptContracts",
+      "HanlinScriptCompiler",
+      "HanlinScriptStore"
+    ],
+    "selection": [
+      "HanlinComposerDraft",
+      "ChatViewBottom",
+      "NativeMultilineTextEditor",
+      "HanlinActiveComposerSessionBridge",
+      "HanlinConversationController",
+      "AssistantCapabilitySession",
+      "AssistantToolBridge",
+      "HanlinAISDKToolAdapter",
+      "NativeToolBridge"
+    ],
+    "runtime": [
+      "miniapp-authoring.mjs",
+      "miniapp-assistant-tools.mjs",
+      "HanlinMiniAppAssistantToolRuntime",
+      "NativeScriptHostServicesAdapter",
+      "HanlinMiniAppActionChannel",
+      "ExpoEmbeddedResultAdapter",
+      "NativeScriptEmbeddedResultAdapter"
+    ],
+    "storage": [
+      "ChatMessages",
+      "ChatRecords",
+      "HanlinConversationMessageSnapshot",
+      "HanlinConversationStreamProjection"
+    ]
+  },
+  "groups": [
+    {
+      "id": "source_graph",
+      "why": "New shared contract dependencies and explicit source membership require canonical graph refresh.",
+      "commands": [
+        "python3 Scripts/SDK/generate_manifest.py",
+        "python3 Scripts/SDK/update_project.py",
+        "both generators --check"
+      ],
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "runtime_host",
+      "why": "New wrappers, staged types/schema and authoring imports invalidate old RuntimeHostResources.zip; original packager requires its actual Node tests and JITless archive verification.",
+      "command": "RUNNER_TEMP=<isolated>/build/tmp bash Scripts/Runtime/prepare-runtime-host.sh",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "manifest_audit",
+      "why": "Manifest assistantTool shape changes require positive/negative original audit tests.",
+      "selectors": [
+        "Scripts/Audit/Tests/manifest-contracts.test.mjs",
+        "miniapp-assistant-tools.test.mjs",
+        "miniapp-authoring.test.mjs dedicated assistant case"
+      ],
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "shared_contracts",
+      "why": "New metadata/config validation and importer semantics invalidate focused contract/analyzer tests.",
+      "selectors": [
+        "HanlinCapabilityAttachmentTests",
+        "HanlinScriptAnalyzerTests"
+      ],
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "composer_shared",
+      "why": "Draft/token changes require focused shared tests and actual UIKit caret/IME regressions.",
+      "selectors": [
+        "HanlinComposerCapabilityQueryTests",
+        "HanlinComposerCapabilityDraftTests",
+        "HanlinCapabilityCustomPanelProviderTests",
+        "NativeComposerLineSizingTests/equalStringOwnerSwitchKeepsPendingInputAndLateDelegateScoped",
+        "NativeComposerLineSizingTests/canonicalEquivalentOwnerAndNativeReplacementsPreserveExactText",
+        "NativeComposerLineSizingTests/markedTextOwnerSwitchPreservesCompositionAndAuthoritativeClear",
+        "NativeComposerLineSizingTests/programmaticDraftUpdatesWhileEditing"
+      ],
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "app_compilation",
+      "why": "Changed app/SDK/runtime/shared embedded adapters require actual iOS compile of app and companion host, with isolated cache.",
+      "schemes": [
+        "AI_HLY",
+        "HanlinMiniApps"
+      ],
+      "configuration": "Debug build-for-testing",
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "app_scope",
+      "why": "New selection scope, snapshot storage, native dispatch and user Skill policy require actual original-host integration tests.",
+      "selectors": [
+        "HanlinComposerCapabilityIntegrationTests",
+        "HanlinMiniAppAssistantToolTests",
+        "SkillOpenClawPolicyTests/currentOriginalPolicyControlsLoadReadAndActualSDKContinuation"
+      ],
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "native_engines",
+      "why": "Dedicated source loading, action/config/reply/cancellation and rich payload are new engine behavior; wrapper tests cannot prove them.",
+      "selectors": [
+        "HanlinUnifiedHostServicesE2ETests/actualNativeScriptAssistantUsesDedicatedSourceAndImmutableConfiguration",
+        "HanlinUnifiedHostServicesE2ETests/actualExpoAssistantUsesDedicatedSourceAndImmutableConfiguration",
+        "HanlinUnifiedHostServicesE2ETests/nativeScriptAssistantRepliesSettleOnceAndRejectMalformedJSON",
+        "HanlinUnifiedHostServicesE2ETests/nativeScriptAssistantCancellationAndInvalidationReleaseWaiters"
+      ],
+      "status": "NOT_RUN"
+    },
+    {
+      "id": "ui",
+      "why": "Changed original Morph UI/editor needs real iPhone and iPad actions; metadata fixture has no executor and is not runtime evidence.",
+      "selectors": [
+        "HanlinComposerCapabilitiesUITests",
+        "HanlinMorphComposerUITests/testDismissModelPickerKeepsSelectedModelAndDraft"
+      ],
+      "devices": [
+        "isolated iPhone iOS27",
+        "isolated iPad iOS27"
+      ],
+      "status": "NOT_RUN"
+    }
+  ],
+  "reuse": {
+    "testCasePasses": [],
+    "nativeBinaries": {
+      "producer": "fd81d602d3b25f09162a659e1e0cf0582e91a93a",
+      "reason": "All16 original native preparation inputs compared equal; verify catalog checksums and provenance before copying. This is dependency byte reuse, not a test-case PASS."
+    },
+    "excludedDuplicateRun": {
+      "owner": "/root/native_execution",
+      "scope": "original52-case MiniApp suite attempt7",
+      "reason": "Independent owner attempt7 finished FAIL in paired acceptance. Do not duplicate/repair its baseline suite; this lane executes changed shared boundaries and new affected cases."
+    }
+  },
+  "rules": [
+    "No compilation outside Mac",
+    "No simultaneous heavy build with active native owner; wait for capacity",
+    "No automatic source fixes in other owners' dirty trees",
+    "Keep raw exit/log/result bundle hashes and actual case status",
+    "Recheck source differences after any fix; invalidate only affected results",
+    "Do not claim full suite/native UI/physical device from static checks"
+  ],
+  "createdAtUTC": "2026-11-24T22:41:09.158933+00:00",
+  "affectedFiles": [
+    "AI_HLY/ChatView.swift",
+    "AI_HLY/Downstream/AgentSkills/AssistantCapabilitySession+Selections.swift",
+    "AI_HLY/Downstream/AgentSkills/AssistantCapabilitySession.swift",
+    "AI_HLY/Downstream/AgentSkills/HanlinAISDKToolAdapter.swift",
+    "AI_HLY/Downstream/AgentSkills/ReadSkillResourceTool.swift",
+    "AI_HLY/Downstream/ChatCore/HanlinAppHostIntegration.swift",
+    "AI_HLY/Downstream/ChatCore/HanlinConversationStreamProjection.swift",
+    "AI_HLY/Downstream/ChatInput/HanlinComposerCapabilities.swift",
+    "AI_HLY/Downstream/ChatInput/HanlinComposerCapabilityPage.swift",
+    "AI_HLY/Downstream/ChatInput/HanlinComposerPopupCoordinator.swift",
+    "AI_HLY/Downstream/ChatInput/HanlinComposerPopupView.swift",
+    "AI_HLY/Downstream/ChatInput/HanlinDraftPersistence.swift",
+    "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinCompactChatWorkspace.swift",
+    "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinComposerSessionBridge.swift",
+    "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinPendingFirstTurn.swift",
+    "AI_HLY/Downstream/EmbeddedResults/ExpoEmbeddedResultAdapter.swift",
+    "AI_HLY/Downstream/EmbeddedResults/NativeScriptEmbeddedResultAdapter.swift",
+    "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
+    "AI_HLY/Downstream/MCP/ToolIntegration/AssistantToolBridge.swift",
+    "AI_HLY/Downstream/MCP/ToolIntegration/AssistantToolRequestScope.swift",
+    "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-assistant-tools.test.mjs",
+    "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-authoring.test.mjs",
+    "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-assistant-tools.mjs",
+    "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
+    "AI_HLY/Downstream/SDK/HanlinConversationComposerView.swift",
+    "AI_HLY/Downstream/SDK/HanlinConversationController.swift",
+    "AI_HLY/Downstream/SDK/HanlinConversationMessageSnapshot.swift",
+    "AI_HLY/Downstream/SDK/HanlinMountedComposerContent.swift",
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppAssistantToolRuntime.swift",
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+    "AI_HLY/Model/ChatMessages.swift",
+    "AI_HLY/Model/ChatRecords.swift",
+    "AI_HLY/NativeAgentExtensions/ChatIntegration/NativeToolBridge.swift",
+    "AI_HLY/NativeAgentExtensions/ToolCatalog/NativeToolCatalogEntry.swift",
+    "AI_HLY/NativeAgentExtensions/ToolRuntime/NativeTool.swift",
+    "AI_HLY/NativeAgentExtensions/Tools/HanlinMiniAppAssistantToolExports.swift",
+    "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsHubView.swift",
+    "AI_HLY/NativeAppPlatform/BuiltinApps/Sefaria/Assistant/NativeAppSefariaTools.swift",
+    "AI_HLY/Services/ChatServices/APIManager+LegacyTools.swift",
+    "AI_HLY/Services/ChatServices/APIManager.swift",
+    "AI_HLY/Services/ChatServices/MapServices.swift",
+    "AI_HLY/Views/Components/ChatViewBottom.swift",
+    "AI_HLYTests/HanlinComposerCapabilityIntegrationTests.swift",
+    "AI_HLYTests/HanlinMiniAppAssistantToolAcceptanceTests.swift",
+    "AI_HLYTests/HanlinMiniAppAssistantToolTests.swift",
+    "AI_HLYTests/SkillOpenClawPolicyTests.swift",
+    "AI_HLYUITests/HanlinComposerCapabilitiesUITests.swift",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinAssistantToolDeclaration.swift",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinCapabilityAttachment.swift",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinComposerConfiguration.swift",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinDescriptors.swift",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
+    "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
+    "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinWidgetPackagePreparation.swift",
+    "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinInstallContracts.swift",
+    "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
+    "Packages/HanlinPlatform/Tests/HanlinPlatformContractsTests/HanlinCapabilityAttachmentTests.swift",
+    "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinScriptAnalyzerTests.swift",
+    "Packages/HanlinPresentationSDK/Package.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/HanlinCapabilityAttachmentChips.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/HanlinCapabilityConfigurationView.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/HanlinCapabilityLocationField.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/HanlinCapabilityPicker.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/HanlinComposerCapabilityQuery.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/HanlinComposerDraft.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/NativeMultilineTextEditor.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/Localizable.xcstrings",
+    "Packages/HanlinPresentationSDK/Tests/HanlinChatUITests/HanlinComposerCapabilityTests.swift",
+    "Scripts/Audit/miniapp-manifest-contracts.mjs",
+    "Scripts/Expo/miniapps/modular-text-search/assistant-tool.ts",
+    "Scripts/Expo/miniapps/modular-text-search/hanlin.authoring.json",
+    "Scripts/Expo/miniapps/modular-text-search/script.json",
+    "Scripts/MiniApps/AssistantExamples/index.json",
+    "Scripts/MiniApps/AssistantExamples/map-places/README.md",
+    "Scripts/MiniApps/AssistantExamples/map-places/hanlin.authoring.json",
+    "Scripts/MiniApps/AssistantExamples/map-places/index.ts",
+    "Scripts/MiniApps/AssistantExamples/map-places/package.json",
+    "Scripts/MiniApps/AssistantExamples/map-places/places.ts",
+    "Scripts/MiniApps/AssistantExamples/map-places/script.json",
+    "Scripts/MiniApps/AssistantExamples/map-places/tsconfig.json",
+    "Scripts/MiniApps/assistant-tools.d.ts",
+    "Scripts/MiniApps/assistant-tools.schema.json",
+    "Scripts/MiniApps/stage-sdk.mjs",
+    "docs/hanlin-composer-capability-ui.md",
+    "docs/miniapp-sdk/ASSISTANT_TOOLS_AND_COMPOSER.md"
+  ],
+  "integratedBeforeValidation": {
+    "waveRoot": "8a1c9fd657030181aa6eb891b988f03eba3b82a3",
+    "merge": "8a67e7aee83c6b12673db1348b7f550a2805de50",
+    "sdkResolution": "Already present through fd81d602; ba68f7ea2 is identical patch",
+    "headerMaps": "Already present; exact source blob equal to 8fcae2add",
+    "completionDocumentationOnly": "635bc66274436d21236500cda4c2e873b1abe1bd",
+    "activeDraftExcluded": "PR18 remains with original owner"
+  },
+  "updatedAtUTC": "2026-11-24T23:01:52.356000+00:00"
+}

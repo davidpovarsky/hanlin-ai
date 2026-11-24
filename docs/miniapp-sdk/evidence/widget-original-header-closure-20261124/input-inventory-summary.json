@@ -1,0 +1,57 @@
+{
+  "outerArtifact": {
+    "path": "/tmp/hanlin-native-gate-evidence-45412939674/app-split-45412939674.zip",
+    "bytes": 333459051,
+    "sha256": "1c7b453087a1bb7d2e1a07fa2ec94898afc0e0b2dbee6f3ac2dc5d691c80d574"
+  },
+  "selectedArchives": [
+    {
+      "outerMember": "app-split-evidence/prepared-native/HanlinExpoHeaderSupport.zip",
+      "sha256": "90b3af259a3347adffb021f56e66ff82e926ea1e8668d5774b1d384650394c45",
+      "selectedMembers": 6049,
+      "selectedBytes": 48512102,
+      "selectionSHA256": "71448bb74a21fa6497d9c5a4f78e2ef65244bab640c91f76b227457398958079"
+    },
+    {
+      "outerMember": "app-split-evidence/prepared-native/ExpoModulesCore.xcframework.zip",
+      "sha256": "e9f12a1a26bed8cbe166b2db0bd06c5ccb5a25b41732c8ffcc09a9986bc6f716",
+      "selectedMembers": 91,
+      "selectedBytes": 6497860,
+      "selectionSHA256": "668874fe25743299c4ea1de474994b86cbde78a4fa680fa03ce73d014363046d"
+    },
+    {
+      "outerMember": "app-split-evidence/prepared-native/ExpoModulesJSI.xcframework.zip",
+      "sha256": "61ed3cbbbc7416c720f7aaefa9c27478eadda61f883ef2d8922f5df3a22ae671",
+      "selectedMembers": 11,
+      "selectedBytes": 5170457,
+      "selectionSHA256": "678a1b6626c39564595c9ff3b042c0c92a5df83a505fa75ec385b3e345c962c5"
+    },
+    {
+      "outerMember": "app-split-evidence/prepared-native/ExpoModulesWorklets.xcframework.zip",
+      "sha256": "cc818ed3f8fc97fcfcb16cfe36a0823e92401fd8fc67da4198ffe66dfb1fad88",
+      "selectedMembers": 19,
+      "selectedBytes": 120361,
+      "selectionSHA256": "9613eedb5931afac76e89706b97ee16a7a5dfe9702d62623736bc08d8216f7ed"
+    },
+    {
+      "outerMember": "app-split-evidence/prepared-native/React.xcframework.zip",
+      "sha256": "8e53681a6120627bcdee81cf430d59de751a848c0c313c22aeff7fe2e344f516",
+      "selectedMembers": 3356,
+      "selectedBytes": 25084540,
+      "selectionSHA256": "0eed452f977124b253685734079ec65ad934500eb36c37bfc9d97a4f2db04cdf"
+    },
+    {
+      "outerMember": "app-split-evidence/prepared-native/ReactNativeDependencies.xcframework.zip",
+      "sha256": "0aa5236bb92e64617b23b179a9e0d5f01e2ebcd81252971c31cb4b3a6f8f36dc",
+      "selectedMembers": 1701,
+      "selectedBytes": 20207730,
+      "selectionSHA256": "76101b9523310fdac0370ba782edf5958c2c90e2f3df8f75cc21ee2b65afbc6d"
+    }
+  ],
+  "copiedFileCount": 11251,
+  "copiedBytes": 107834176,
+  "inputManifestSHA256": "7d0ba79bce3051a24aef83eee18f926a5d8696ea0cb0e219f4b3105f1ab39aa9",
+  "bundleSHA256": "5b54ad85e3aa7bba894eeafab2c4a7d61eff5483eea26ab27c5268e5fe08e455",
+  "bundleBytes": 13908924,
+  "scope": "Unmodified headers/module metadata only; simulator framework headers/modules plus authenticated original header support and dependency common headers. No binary/framework code is rebuilt or linked."
+}

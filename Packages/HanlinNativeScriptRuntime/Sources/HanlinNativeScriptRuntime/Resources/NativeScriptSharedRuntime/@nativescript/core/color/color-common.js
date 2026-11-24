@@ -1,6 +1,6 @@
 import * as types from '../utils/types';
 import * as knownColors from './known-colors';
-import { HEX_REGEX, argbFromColorMix, argbFromHslOrHsla, argbFromHsvOrHsva, argbFromRgbOrRgba, hslToRgb, hsvToRgb, isCssColorMixExpression, isHslOrHsla, isHsvOrHsva, isRgbOrRgba, rgbToHsl, rgbToHsv, argbFromString } from './color-utils';
+import { HEX_REGEX, argbFromColorMix, argbFromCssColor, argbFromHslOrHsla, argbFromHsvOrHsva, argbFromRgbOrRgba, hslToRgb, hsvToRgb, isCssColorFunction, isCssColorMixExpression, isHslOrHsla, isHsvOrHsva, isModernRgbOrHsl, isRgbOrRgba, rgbToHsl, rgbToHsv, argbFromString } from './color-utils';
 export class ColorBase {
     static [Symbol.hasInstance](value) {
         return super[Symbol.hasInstance](value) || (value != null && (value._isColor === true || (typeof value.r === 'number' && typeof value.g === 'number' && typeof value.b === 'number' && typeof value.a === 'number') || (value.ios && (typeof value.hex === 'string' || typeof value.argb === 'number'))));
@@ -12,10 +12,10 @@ export class ColorBase {
             const arg = args[0];
             if (types.isString(arg)) {
                 const lowered = arg.toLowerCase();
-                if (isRgbOrRgba(lowered)) {
+                if (isRgbOrRgba(lowered) && !isModernRgbOrHsl(lowered)) {
                     this._argb = argbFromRgbOrRgba(lowered);
                 }
-                else if (isHslOrHsla(lowered)) {
+                else if (isHslOrHsla(lowered) && !isModernRgbOrHsl(lowered)) {
                     this._argb = argbFromHslOrHsla(lowered);
                 }
                 else if (isHsvOrHsva(lowered)) {
@@ -28,13 +28,24 @@ export class ColorBase {
                     this._argb = argb;
                 }
                 else if (isCssColorMixExpression(lowered)) {
-                    this._argb = argbFromColorMix(lowered);
+                    const argb = argbFromColorMix(lowered);
+                    if (argb === null) {
+                        throw new Error('Invalid color: ' + arg);
+                    }
+                    this._argb = argb;
                 }
                 else if (arg[0].charAt(0) === '#' && (arg.length === 4 || arg.length === 5 || arg.length === 7 || arg.length === 9)) {
                     // we dont use the regexp as it is quite slow. Instead we expect it to be a valid hex format
                     // strange that it would not be. And if it is not a thrown error seems best
                     // The parameter is a "#RRGGBBAA" formatted string
                     this._argb = this._argbFromString(arg);
+                }
+                else if (isCssColorFunction(lowered) || isRgbOrRgba(lowered) || isHslOrHsla(lowered)) {
+                    const argb = argbFromCssColor(lowered);
+                    if (argb === null) {
+                        throw new Error('Invalid color: ' + arg);
+                    }
+                    this._argb = argb >>> 0;
                 }
                 else {
                     throw new Error('Invalid color: ' + arg);
@@ -142,7 +153,7 @@ export class ColorBase {
         if (knownColors.isKnownName(lowered)) {
             return true;
         }
-        return HEX_REGEX.test(value) || isRgbOrRgba(lowered) || isHslOrHsla(lowered);
+        return HEX_REGEX.test(value) || isRgbOrRgba(lowered) || isHslOrHsla(lowered) || isCssColorFunction(lowered) || isCssColorMixExpression(lowered);
     }
     static fromHSL(a, h, s, l) {
         return new ColorBase(a, h, s, l, 'hsl');

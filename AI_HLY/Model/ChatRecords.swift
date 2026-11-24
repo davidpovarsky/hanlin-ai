@@ -23,6 +23,7 @@ public struct CanvasData: Codable, Hashable, Sendable {
 
 @Model
 class ChatRecords {
+    var capabilityDraftData: Data? = nil
     /// Conversation-specific versioned presentation. Nil keeps the original default.
     var presentationAssignmentData: Data? = nil
     var id: UUID? = UUID()

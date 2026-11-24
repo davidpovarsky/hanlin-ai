@@ -137,21 +137,80 @@ struct SkillOpenClawPolicyTests {
             session: session, catalog: catalog, store: store)
         #expect(!missing.contains(id.rawValue), "Model-hidden metadata must not leak through discovery suggestions")
 
+        let authority = try HanlinCanonicalToolAuthority.build(nativeSources: [], mcpTools: [])
+        var executionCount = 0
+        let executors = AssistantToolBridge.Executors(
+            executeNative: { _, _, _, _ in
+                executionCount += 1
+                return NativeToolResult(modelText: "Not invoked by policy inspection", outcome: .failed)
+            },
+            executeScripting: { _, _ in
+                executionCount += 1
+                return NativeToolResult(modelText: "Not invoked by policy inspection", outcome: .failed)
+            })
+        let prepared = AssistantToolBridge.PreparedTools(authority: authority, executors: executors)
+        let selectedDescriptor = HanlinComposerCapabilityDescriptor(
+            reference: .init(kind: .skill, sourceID: "hanlin.skills", capabilityID: id.rawValue),
+            title: "Explicit original policy")
+        let selectedAttachment = selectedDescriptor.makeAttachment()
+        let selectedSession = AssistantCapabilitySession(isTemporaryChat: true,
+            capabilityAttachments: [selectedAttachment])
+        try await selectedSession.prepareExplicitSelections(using: prepared, catalog: catalog, store: store,
+            capabilityCatalog: [selectedDescriptor])
+        #expect(selectedSession.isSkillLoaded(id))
+        #expect(selectedSession.explicitlySelectedSkillIDs == [id])
+        #expect(executionCount == 0, "Attaching a Skill loads instructions without executing a tool")
+
+        let selectedAdapter = HanlinAISDKToolAdapter(session: selectedSession,
+            preparedTools: prepared, catalog: catalog, skillStore: store)
+        let selectedFirstStep = await selectedAdapter.prepareStep(stepNumber: 0)
+        #expect(selectedFirstStep.loadedSkillIDs == [id.rawValue])
+        #expect(selectedFirstStep.loadedSkillInstructions.contains(instructions),
+                "A user-invocable Skill must survive the first SDK step even when hidden from model discovery")
+        #expect(selectedFirstStep.loadedSkillInstructions.contains { $0.contains(selectedAttachment.id.uuidString) })
+        #expect(await catalog.modelVisibleSkills(store: store).isEmpty)
+        #expect(try await !catalog.permitsInvocation(id, source: .model, store: store))
+        let readArgs = #"{"skill_id":""# + id.rawValue + #"","relative_path":"guide.md"}"#
+        let selectedRead = await ReadSkillResourceTool.execute(argumentsJSON: readArgs,
+            session: selectedSession, catalog: catalog, store: store)
+        #expect(selectedRead.contains("CURRENT_RESOURCE_" + nonce),
+                "Resources inherit the explicit selection's .user invocation source")
+        #expect(!session.isSkillLoaded(id) && session.explicitlySelectedSkillIDs.isEmpty,
+                "Explicit loading must not leak into another capability session")
+
+        // Revoke only user invocation, without changing the Store's enabled bit.
+        // Resource access must re-evaluate policy before the next SDK step prunes it.
+        try publish(modelDisabled: true, userInvocable: false)
+        let revokedRead = await ReadSkillResourceTool.execute(argumentsJSON: readArgs,
+            session: selectedSession, catalog: catalog, store: store)
+        #expect(revokedRead.hasPrefix("Error:") && !revokedRead.contains(nonce))
+        let selectedAfterRevocation = await selectedAdapter.prepareStep(stepNumber: 1)
+        #expect(selectedAfterRevocation.loadedSkillIDs.isEmpty)
+        #expect(!selectedAfterRevocation.loadedSkillInstructions.contains(instructions))
+        #expect(selectedSession.explicitlySelectedSkillIDs.isEmpty && selectedSession.activeSkillToolHints.isEmpty)
+        let revokedSelection = AssistantCapabilitySession(isTemporaryChat: true,
+            capabilityAttachments: [selectedAttachment])
+        await #expect(throws: HanlinComposerCapabilityError.self) {
+            try await revokedSelection.prepareExplicitSelections(using: prepared, catalog: catalog, store: store,
+                capabilityCatalog: [selectedDescriptor])
+        }
+        #expect(!revokedSelection.isSkillLoaded(id) && executionCount == 0)
+
+        try publish(modelDisabled: true, userInvocable: true)
+        let selectedAfterReenable = await selectedAdapter.prepareStep(stepNumber: 2)
+        #expect(selectedAfterReenable.loadedSkillIDs.isEmpty,
+                "Re-enabling user invocation cannot revive a previously revoked selection")
+
         // A source edit must invalidate the original policy, even without a Store revision.
         try publish(modelDisabled: false, userInvocable: false)
         #expect(try await !catalog.permitsInvocation(id, source: .user, store: store))
         let loaded = await LoadSkillTool.execute(argumentsJSON: args, session: session, catalog: catalog, store: store)
         #expect(!loaded.hasPrefix("Error:") && session.isSkillLoaded(id))
-        let readArgs = #"{"skill_id":""# + id.rawValue + #"","relative_path":"guide.md"}"#
         let read = await ReadSkillResourceTool.execute(argumentsJSON: readArgs, session: session, catalog: catalog, store: store)
         #expect(read.contains("CURRENT_RESOURCE_" + nonce))
 
-        let authority = try HanlinCanonicalToolAuthority.build(nativeSources: [], mcpTools: [])
-        let executors = AssistantToolBridge.Executors(
-            executeNative: { _, _, _, _ in NativeToolResult(modelText: "Not invoked by policy inspection", outcome: .failed) },
-            executeScripting: { _, _ in NativeToolResult(modelText: "Not invoked by policy inspection", outcome: .failed) })
         let adapter = HanlinAISDKToolAdapter(session: session,
-            preparedTools: .init(authority: authority, executors: executors),
+            preparedTools: prepared,
             catalog: catalog, skillStore: store)
         let before = await adapter.prepareStep(stepNumber: 0)
         #expect(before.loadedSkillIDs == [id.rawValue] && before.loadedSkillInstructions == [instructions])
@@ -166,6 +225,7 @@ struct SkillOpenClawPolicyTests {
         store.setSkillEnabled(id: id, enabled: true)
         #expect(try await catalog.permitsInvocation(id, source: .model, store: store))
         #expect(!session.isSkillLoaded(id), "Re-enabling must require a new load instead of reviving stale instructions")
+        #expect(executionCount == 0)
     }
 
     @Test func pruningOneSkillRetainsSharedInstructionsOwnedByAnotherSkill() throws {

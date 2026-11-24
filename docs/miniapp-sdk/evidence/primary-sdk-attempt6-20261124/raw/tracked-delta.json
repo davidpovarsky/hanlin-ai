@@ -1,0 +1,32 @@
+[
+  {
+    "path": "docs/miniapp-sdk/extension-reachability.json",
+    "headSHA256": "152806a609b662c373eedd382758f1298bf945883f0c467dc5595050f8f0fa29",
+    "headMode": "100644",
+    "kind": "file",
+    "bytes": 147521,
+    "sha256": "9028752022b0e28a3d1f533c5ec4d0d85e6e9736b0c19b2c47c926cf3481e66a",
+    "mode": "0o644",
+    "contentFrom": "tracked-delta/docs/miniapp-sdk/extension-reachability.json"
+  },
+  {
+    "path": "docs/miniapp-sdk/extension-reachability.md",
+    "headSHA256": "f2cd972c7366043028bbaea078291717ae363b288d29ecf242fd358103f7a9b1",
+    "headMode": "100644",
+    "kind": "file",
+    "bytes": 21494,
+    "sha256": "2825bae8731c9c8674d746feb913ed890f880c4fc5ee65ff57f9d85171a9dc1a",
+    "mode": "0o644",
+    "contentFrom": "tracked-delta/docs/miniapp-sdk/extension-reachability.md"
+  },
+  {
+    "path": "docs/miniapp-sdk/source-inventory.json",
+    "headSHA256": "b126e18f8a228e2235ef8ef324a31f0b9b6e3384e6af0f82755e35c4bcccaeef",
+    "headMode": "100644",
+    "kind": "file",
+    "bytes": 493266,
+    "sha256": "03a4c8fec52f59a8737e870364773c43b1de4e15a4b0ffe0195e3ff5dea18cfd",
+    "mode": "0o644",
+    "contentFrom": "tracked-delta/docs/miniapp-sdk/source-inventory.json"
+  }
+]

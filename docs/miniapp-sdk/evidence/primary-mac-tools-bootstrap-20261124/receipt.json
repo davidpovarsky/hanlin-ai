@@ -1,0 +1,294 @@
+{
+  "schemaVersion": 1,
+  "owner": "/root/entrypoints",
+  "nativeOwner": "/root/control_authoring",
+  "sourceCommit": "ce49e30d69466e44b0aa26582beaa57ee7a91a9b",
+  "host": "scaleway-mac",
+  "taskRoot": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools",
+  "pid": 45317,
+  "status": "READY",
+  "startedAtUTC": "2026-11-24T17:34:11.320967+00:00",
+  "commands": [
+    {
+      "name": "node-official-checksums",
+      "argv": [
+        "/usr/bin/curl",
+        "--fail",
+        "--location",
+        "--connect-timeout",
+        "15",
+        "--max-time",
+        "180",
+        "--retry",
+        "1",
+        "--output",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/downloads/node-SHASUMS256.txt",
+        "https://nodejs.org/dist/v24.5.0/SHASUMS256.txt"
+      ],
+      "startedAtUTC": "2026-11-24T17:34:11.321461+00:00",
+      "timeoutSeconds": 195,
+      "stdout": "logs/node-official-checksums.stdout.log",
+      "stderr": "logs/node-official-checksums.stderr.log",
+      "status": "COMPLETED",
+      "pid": 45318,
+      "exitCode": 0,
+      "durationSeconds": 0.0501700000022538,
+      "completedAtUTC": "2026-11-24T17:34:11.371635+00:00"
+    },
+    {
+      "name": "node-official-archive",
+      "argv": [
+        "/usr/bin/curl",
+        "--fail",
+        "--location",
+        "--connect-timeout",
+        "15",
+        "--max-time",
+        "180",
+        "--retry",
+        "1",
+        "--output",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/downloads/node-v24.5.0-darwin-arm64.tar.gz",
+        "https://nodejs.org/dist/v24.5.0/node-v24.5.0-darwin-arm64.tar.gz"
+      ],
+      "startedAtUTC": "2026-11-24T17:34:11.372010+00:00",
+      "timeoutSeconds": 195,
+      "stdout": "logs/node-official-archive.stdout.log",
+      "stderr": "logs/node-official-archive.stderr.log",
+      "status": "COMPLETED",
+      "pid": 45319,
+      "exitCode": 0,
+      "durationSeconds": 0.5217690829995263,
+      "completedAtUTC": "2026-11-24T17:34:11.893782+00:00"
+    },
+    {
+      "name": "node-extract",
+      "argv": [
+        "/usr/bin/tar",
+        "-xzf",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/downloads/node-v24.5.0-darwin-arm64.tar.gz",
+        "-C",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools"
+      ],
+      "startedAtUTC": "2026-11-24T17:34:11.918497+00:00",
+      "timeoutSeconds": 60,
+      "stdout": "logs/node-extract.stdout.log",
+      "stderr": "logs/node-extract.stderr.log",
+      "status": "COMPLETED",
+      "pid": 45320,
+      "exitCode": 0,
+      "durationSeconds": 0.6906366250004794,
+      "completedAtUTC": "2026-11-24T17:34:12.609134+00:00"
+    },
+    {
+      "name": "node-version",
+      "argv": [
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/bin/node",
+        "--version"
+      ],
+      "startedAtUTC": "2026-11-24T17:34:12.609709+00:00",
+      "timeoutSeconds": 10,
+      "stdout": "logs/node-version.stdout.log",
+      "stderr": "logs/node-version.stderr.log",
+      "status": "COMPLETED",
+      "pid": 45321,
+      "exitCode": 0,
+      "durationSeconds": 1.2128852089990687,
+      "completedAtUTC": "2026-11-24T17:34:13.822602+00:00"
+    },
+    {
+      "name": "npm-version",
+      "argv": [
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/bin/npm",
+        "--version"
+      ],
+      "startedAtUTC": "2026-11-24T17:34:13.823964+00:00",
+      "timeoutSeconds": 15,
+      "stdout": "logs/npm-version.stdout.log",
+      "stderr": "logs/npm-version.stderr.log",
+      "status": "COMPLETED",
+      "pid": 45323,
+      "exitCode": 0,
+      "durationSeconds": 0.21148729099877528,
+      "completedAtUTC": "2026-11-24T17:34:14.035452+00:00"
+    },
+    {
+      "name": "python-version",
+      "argv": [
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/bin/python3",
+        "--version"
+      ],
+      "startedAtUTC": "2026-11-24T17:34:14.036028+00:00",
+      "timeoutSeconds": 10,
+      "stdout": "logs/python-version.stdout.log",
+      "stderr": "logs/python-version.stderr.log",
+      "status": "COMPLETED",
+      "pid": 45324,
+      "exitCode": 0,
+      "durationSeconds": 0.012809708998247515,
+      "completedAtUTC": "2026-11-24T17:34:14.048840+00:00"
+    },
+    {
+      "name": "cmake-homebrew-metadata",
+      "argv": [
+        "/opt/homebrew/bin/brew",
+        "info",
+        "--json=v2",
+        "cmake"
+      ],
+      "startedAtUTC": "2026-11-24T17:34:14.049377+00:00",
+      "timeoutSeconds": 90,
+      "stdout": "logs/cmake-homebrew-metadata.stdout.log",
+      "stderr": "logs/cmake-homebrew-metadata.stderr.log",
+      "status": "COMPLETED",
+      "pid": 45325,
+      "exitCode": 0,
+      "durationSeconds": 1.5313864999989164,
+      "completedAtUTC": "2026-11-24T17:34:15.580764+00:00"
+    },
+    {
+      "name": "cmake-official-checksums",
+      "argv": [
+        "/usr/bin/curl",
+        "--fail",
+        "--location",
+        "--connect-timeout",
+        "15",
+        "--max-time",
+        "180",
+        "--retry",
+        "1",
+        "--output",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/downloads/cmake-4.5.1-SHA-256.txt",
+        "https://github.com/Kitware/CMake/releases/download/v4.5.1/cmake-4.5.1-SHA-256.txt"
+      ],
+      "startedAtUTC": "2026-11-24T17:34:15.581739+00:00",
+      "timeoutSeconds": 195,
+      "stdout": "logs/cmake-official-checksums.stdout.log",
+      "stderr": "logs/cmake-official-checksums.stderr.log",
+      "status": "COMPLETED",
+      "pid": 45384,
+      "exitCode": 0,
+      "durationSeconds": 0.22902412500116043,
+      "completedAtUTC": "2026-11-24T17:34:15.810769+00:00"
+    },
+    {
+      "name": "cmake-official-archive",
+      "argv": [
+        "/usr/bin/curl",
+        "--fail",
+        "--location",
+        "--connect-timeout",
+        "15",
+        "--max-time",
+        "180",
+        "--retry",
+        "1",
+        "--output",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/downloads/cmake-4.5.1-macos-universal.tar.gz",
+        "https://github.com/Kitware/CMake/releases/download/v4.5.1/cmake-4.5.1-macos-universal.tar.gz"
+      ],
+      "startedAtUTC": "2026-11-24T17:34:15.812321+00:00",
+      "timeoutSeconds": 195,
+      "stdout": "logs/cmake-official-archive.stdout.log",
+      "stderr": "logs/cmake-official-archive.stderr.log",
+      "status": "COMPLETED",
+      "pid": 45385,
+      "exitCode": 0,
+      "durationSeconds": 1.9284157080001023,
+      "completedAtUTC": "2026-11-24T17:34:17.740731+00:00"
+    },
+    {
+      "name": "cmake-extract",
+      "argv": [
+        "/usr/bin/tar",
+        "-xzf",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/downloads/cmake-4.5.1-macos-universal.tar.gz",
+        "-C",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools"
+      ],
+      "startedAtUTC": "2026-11-24T17:34:17.785746+00:00",
+      "timeoutSeconds": 60,
+      "stdout": "logs/cmake-extract.stdout.log",
+      "stderr": "logs/cmake-extract.stderr.log",
+      "status": "COMPLETED",
+      "pid": 45386,
+      "exitCode": 0,
+      "durationSeconds": 1.2026285419997294,
+      "completedAtUTC": "2026-11-24T17:34:18.988373+00:00"
+    },
+    {
+      "name": "cmake-version",
+      "argv": [
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/bin/cmake",
+        "--version"
+      ],
+      "startedAtUTC": "2026-11-24T17:34:18.989306+00:00",
+      "timeoutSeconds": 15,
+      "stdout": "logs/cmake-version.stdout.log",
+      "stderr": "logs/cmake-version.stderr.log",
+      "status": "COMPLETED",
+      "pid": 45387,
+      "exitCode": 0,
+      "durationSeconds": 0.8415680830003112,
+      "completedAtUTC": "2026-11-24T17:34:19.830876+00:00"
+    },
+    {
+      "name": "tool-binary-types",
+      "argv": [
+        "/usr/bin/file",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/node-v24.5.0-darwin-arm64/bin/node",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/cmake-4.5.1-macos-universal/CMake.app/Contents/bin/cmake"
+      ],
+      "startedAtUTC": "2026-11-24T17:34:19.832110+00:00",
+      "timeoutSeconds": 10,
+      "stdout": "logs/tool-binary-types.stdout.log",
+      "stderr": "logs/tool-binary-types.stderr.log",
+      "status": "COMPLETED",
+      "pid": 45388,
+      "exitCode": 0,
+      "durationSeconds": 0.017143332999694394,
+      "completedAtUTC": "2026-11-24T17:34:19.849256+00:00"
+    }
+  ],
+  "nativeBuilds": 0,
+  "tests": 0,
+  "globalNodePythonChanges": false,
+  "sourceCompilation": false,
+  "activeCommand": null,
+  "nodeIntegrity": {
+    "archiveURL": "https://nodejs.org/dist/v24.5.0/node-v24.5.0-darwin-arm64.tar.gz",
+    "manifestURL": "https://nodejs.org/dist/v24.5.0/SHASUMS256.txt",
+    "archivePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/downloads/node-v24.5.0-darwin-arm64.tar.gz",
+    "archiveBytes": 50983559,
+    "expectedSHA256": "2a4172474565ecb8f0c87a1520590e00d6b28a78594c220d38eef991763dc276",
+    "actualSHA256": "2a4172474565ecb8f0c87a1520590e00d6b28a78594c220d38eef991763dc276",
+    "officialManifestSHA256": "16988564d18cce79ef0db0f3e645df921cfdcab3467ec36dcd0ff3d2ce6603b4",
+    "verified": true
+  },
+  "nodeVersion": "v24.5.0",
+  "npmVersion": "11.5.1",
+  "pythonVersion": "Python 3.12.16",
+  "cmakeMetadata": {
+    "authority": "Existing Homebrew formula metadata; version only",
+    "version": "4.5.1",
+    "metadataSHA256": "f044678026bb8845ae6841bd91b3c6822a22d2163e2c74d879fbce530eb538d6",
+    "buildFromSource": false
+  },
+  "cmakeIntegrity": {
+    "archiveURL": "https://github.com/Kitware/CMake/releases/download/v4.5.1/cmake-4.5.1-macos-universal.tar.gz",
+    "manifestURL": "https://github.com/Kitware/CMake/releases/download/v4.5.1/cmake-4.5.1-SHA-256.txt",
+    "archivePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/downloads/cmake-4.5.1-macos-universal.tar.gz",
+    "archiveBytes": 92792874,
+    "expectedSHA256": "e1fb288543e4eb2a410e385ecebc64323bda51f0205782f2b094ccd5d572ca2d",
+    "actualSHA256": "e1fb288543e4eb2a410e385ecebc64323bda51f0205782f2b094ccd5d572ca2d",
+    "officialManifestSHA256": "3ee8e6c91ca39eeaf78b99008198ddde4e266f8f608ebd73fe8e92476dfeaf08",
+    "verified": true
+  },
+  "cmakeVersion": "cmake version 4.5.1\n\nCMake suite maintained and supported by Kitware (kitware.com/cmake).",
+  "toolBinaryTypes": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/node-v24.5.0-darwin-arm64/bin/node:                       Mach-O 64-bit executable arm64\n/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/cmake-4.5.1-macos-universal/CMake.app/Contents/bin/cmake: Mach-O universal binary with 2 architectures: [x86_64:Mach-O 64-bit executable x86_64] [arm64]\n/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/cmake-4.5.1-macos-universal/CMake.app/Contents/bin/cmake (for architecture x86_64):\tMach-O 64-bit executable x86_64\n/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/cmake-4.5.1-macos-universal/CMake.app/Contents/bin/cmake (for architecture arm64):\tMach-O 64-bit executable arm64",
+  "pathPrefix": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/bin",
+  "environmentScript": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/env.sh",
+  "completedAtUTC": "2026-11-24T17:34:19.850839+00:00",
+  "boundary": "Official prebuilt tools downloaded, checksum-verified, extracted and queried for versions. No app/native compilation, tests, signing or source changes. No Homebrew installation/global tool changes."
+}

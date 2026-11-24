@@ -1,0 +1,73 @@
+{
+  "capturedAt": "2026-11-24T15:18:26.236656+00:00",
+  "owner": "/root/control_authoring",
+  "purpose": "Focused genuine original framework/header import diagnosis; no app build",
+  "xcode": {
+    "argv": [
+      "xcodebuild",
+      "-version"
+    ],
+    "exit": 0,
+    "stdout": "Xcode 27.0\nBuild version 27A266a\n",
+    "stderr": ""
+  },
+  "swift": {
+    "argv": [
+      "xcrun",
+      "swiftc",
+      "--version"
+    ],
+    "exit": 0,
+    "stdout": "Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)\nTarget: arm64-apple-macosx27.0.0\n",
+    "stderr": "swift-driver version: 1.168.6 "
+  },
+  "simulatorSDK": {
+    "argv": [
+      "xcrun",
+      "--sdk",
+      "iphonesimulator",
+      "--show-sdk-version"
+    ],
+    "exit": 0,
+    "stdout": "27.0\n",
+    "stderr": ""
+  },
+  "simulatorSDKPath": {
+    "argv": [
+      "xcrun",
+      "--sdk",
+      "iphonesimulator",
+      "--show-sdk-path"
+    ],
+    "exit": 0,
+    "stdout": "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk\n",
+    "stderr": ""
+  },
+  "memory": {
+    "argv": [
+      "sysctl",
+      "-n",
+      "hw.memsize"
+    ],
+    "exit": 0,
+    "stdout": "17179869184\n",
+    "stderr": ""
+  },
+  "vmStat": {
+    "argv": [
+      "vm_stat"
+    ],
+    "exit": 0,
+    "stdout": "Mach Virtual Memory Statistics: (page size of 16384 bytes)\nPages free:                                     4116.\nPages active:                                 376648.\nPages inactive:                               370036.\nPages speculative:                              5654.\nPages throttled:                                   0.\nPages wired down:                             157874.\nPages purgeable:                                2638.\n\"Translation faults\":                      832321849.\nPages copy-on-write:                         6588111.\nPages zero filled:                         724687068.\nPages reactivated:                           3364013.\nPages purged:                                 443615.\nFile-backed pages:                            465857.\nAnonymous pages:                              286481.\nPages stored in compressor:                   269858.\nPages occupied by compressor:                 100720.\nDecompressions:                              1304799.\nCompressions:                                3269025.\nPageins:                                     9214421.\nPageouts:                                       5313.\nSwapins:                                           0.\nSwapouts:                                          0.\n",
+    "stderr": ""
+  },
+  "xcodeApplications": [
+    "/Applications/Xcode.app"
+  ],
+  "disk": {
+    "total": 494384795648,
+    "used": 148663144448,
+    "free": 345721651200
+  },
+  "activeBuildProcesses": []
+}

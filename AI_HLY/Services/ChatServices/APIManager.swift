@@ -2487,8 +2487,12 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
         let stableChatID = assistantToolScope.chatID?.uuidString ?? groupID.uuidString
         let session = capabilitySession ?? AssistantCapabilitySession(
             chatID: stableChatID,
-            isTemporaryChat: assistantToolScope.isTemporaryChat
+            isTemporaryChat: assistantToolScope.isTemporaryChat,
+            capabilityAttachments: assistantToolScope.capabilityAttachments
         )
+        guard session.capabilityAttachments == assistantToolScope.capabilityAttachments else {
+            throw HanlinHostError.staleContext
+        }
         let currentRunID = runID ?? session.id
         if let original = agentSDKRequest {
             guard original.uiRunID == currentRunID, original.conversationID.uuidString == stableChatID,
@@ -2747,8 +2751,15 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
                             }
                         }
 
+                        if let prepared = preparedAssistantTools {
+                            try await session.prepareExplicitSelections(using: prepared)
+                        }
                         let modelSkills = await HanlinSkillCatalog.shared.modelVisibleSkills()
-                        session.retainLoadedSkills(allowedIDs: Set(modelSkills.map(\.id)))
+                        await session.retainCurrentlyEligibleSkills(modelSkills: modelSkills)
+                        if let selection = session.explicitSelectionInstruction,
+                           !finalFormattedMessages.contains(where: { ($0["content"] as? String) == selection }) {
+                            finalFormattedMessages.append(["role": "user", "content": selection])
+                        }
 
                         // Inject compact Skill Index once when depth == 0
                         if depth == 0 {
@@ -3703,6 +3714,10 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
                            agentSDKRequest: HanlinAppAgentSessionOwner.Request? = nil
     ) async throws -> AsyncThrowingStream<StreamData, Error> {
         // 取消当前任务
+        if !assistantToolScope.capabilityAttachments.isEmpty && !ifToolUse {
+            throw HanlinComposerCapabilityError.toolsUnsupported
+        }
+        try HanlinComposerCapabilities.validate(assistantToolScope.capabilityAttachments)
         initializingRunID = runID
         if let agentSDKRequest, agentSDKRequest.uiRunID != runID { throw HanlinHostError.resultMismatch }
         self.agentSDKRequest = agentSDKRequest

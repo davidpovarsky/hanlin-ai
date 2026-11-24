@@ -1,0 +1,6636 @@
+{
+  "cLanguageStandard" : "gnu11",
+  "cxxLanguageStandard" : "gnu++20",
+  "defaultLocalization" : "zh-Hans",
+  "dependencies" : [
+    {
+      "sourceControl" : [
+        {
+          "identity" : "a2ui",
+          "location" : {
+            "remote" : [
+              {
+                "urlString" : "https://github.com/a2ui-project/a2ui"
+              }
+            ]
+          },
+          "productFilter" : null,
+          "requirement" : {
+            "revision" : [
+              "3ed9601862ecc78027e20ac80ad8b1b98a5d9079"
+            ]
+          },
+          "traits" : [
+            {
+              "name" : "default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceControl" : [
+        {
+          "identity" : "corexlsx",
+          "location" : {
+            "remote" : [
+              {
+                "urlString" : "https://github.com/CoreOffice/CoreXLSX"
+              }
+            ]
+          },
+          "productFilter" : null,
+          "requirement" : {
+            "revision" : [
+              "1391f3832ea2eeee5186ea8abb81ea49ed0609cc"
+            ]
+          },
+          "traits" : [
+            {
+              "name" : "default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceControl" : [
+        {
+          "identity" : "hanlin-streaming-markdown",
+          "location" : {
+            "remote" : [
+              {
+                "urlString" : "https://github.com/davidpovarsky/hanlin-streaming-markdown"
+              }
+            ]
+          },
+          "productFilter" : null,
+          "requirement" : {
+            "revision" : [
+              "5cbb4b6c950051f98f02a0b0ae56756f5174a9b8"
+            ]
+          },
+          "traits" : [
+            {
+              "name" : "default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceControl" : [
+        {
+          "identity" : "ios-spm",
+          "location" : {
+            "remote" : [
+              {
+                "urlString" : "https://github.com/NativeScript/ios-spm.git"
+              }
+            ]
+          },
+          "productFilter" : null,
+          "requirement" : {
+            "exact" : [
+              "9.1.1"
+            ]
+          },
+          "traits" : [
+            {
+              "name" : "default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceControl" : [
+        {
+          "identity" : "latexswiftui",
+          "location" : {
+            "remote" : [
+              {
+                "urlString" : "https://github.com/colinc86/LaTeXSwiftUI"
+              }
+            ]
+          },
+          "productFilter" : null,
+          "requirement" : {
+            "revision" : [
+              "c45e0fd45f64923c49c5904a9f9626bc8939f05f"
+            ]
+          },
+          "traits" : [
+            {
+              "name" : "default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceControl" : [
+        {
+          "identity" : "llm.swift",
+          "location" : {
+            "remote" : [
+              {
+                "urlString" : "https://github.com/eastriverlee/LLM.swift/"
+              }
+            ]
+          },
+          "productFilter" : null,
+          "requirement" : {
+            "revision" : [
+              "4b2517839f24498bea0695bae8967b359b9a35c4"
+            ]
+          },
+          "traits" : [
+            {
+              "name" : "default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceControl" : [
+        {
+          "identity" : "markdownui",
+          "location" : {
+            "remote" : [
+              {
+                "urlString" : "https://github.com/gonzalezreal/MarkdownUI.git"
+              }
+            ]
+          },
+          "productFilter" : null,
+          "requirement" : {
+            "revision" : [
+              "5f613358148239d0292c0cef674a3c2314737f9e"
+            ]
+          },
+          "traits" : [
+            {
+              "name" : "default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceControl" : [
+        {
+          "identity" : "richtextkit",
+          "location" : {
+            "remote" : [
+              {
+                "urlString" : "https://github.com/danielsaidi/RichTextKit.git"
+              }
+            ]
+          },
+          "productFilter" : null,
+          "requirement" : {
+            "revision" : [
+              "8aa44cfa645404ad84e52e3ab7723ecf4b82f92b"
+            ]
+          },
+          "traits" : [
+            {
+              "name" : "default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceControl" : [
+        {
+          "identity" : "swcompression",
+          "location" : {
+            "remote" : [
+              {
+                "urlString" : "https://github.com/tsolomko/SWCompression.git"
+              }
+            ]
+          },
+          "productFilter" : null,
+          "requirement" : {
+            "revision" : [
+              "c729f0baa49e91bafef3921fea663db2b75acc46"
+            ]
+          },
+          "traits" : [
+            {
+              "name" : "default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceControl" : [
+        {
+          "identity" : "swift-ai-sdk",
+          "location" : {
+            "remote" : [
+              {
+                "urlString" : "https://github.com/davidpovarsky/swift-ai-sdk.git"
+              }
+            ]
+          },
+          "productFilter" : null,
+          "requirement" : {
+            "revision" : [
+              "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8"
+            ]
+          },
+          "traits" : [
+            {
+              "name" : "default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceControl" : [
+        {
+          "identity" : "swift-log",
+          "location" : {
+            "remote" : [
+              {
+                "urlString" : "https://github.com/apple/swift-log.git"
+              }
+            ]
+          },
+          "productFilter" : null,
+          "requirement" : {
+            "revision" : [
+              "96a2f8a0fa41e9e09af4585e2724c4e825410b91"
+            ]
+          },
+          "traits" : [
+            {
+              "name" : "default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceControl" : [
+        {
+          "identity" : "swift-sdk",
+          "location" : {
+            "remote" : [
+              {
+                "urlString" : "https://github.com/modelcontextprotocol/swift-sdk.git"
+              }
+            ]
+          },
+          "productFilter" : null,
+          "requirement" : {
+            "revision" : [
+              "a0ae212ebf6eab5f754c3129608bc5557637e605"
+            ]
+          },
+          "traits" : [
+            {
+              "name" : "default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceControl" : [
+        {
+          "identity" : "swift-tree-sitter",
+          "location" : {
+            "remote" : [
+              {
+                "urlString" : "https://github.com/tree-sitter/swift-tree-sitter"
+              }
+            ]
+          },
+          "productFilter" : null,
+          "requirement" : {
+            "revision" : [
+              "08ef81eb8620617b55b08868126707ad72bf754f"
+            ]
+          },
+          "traits" : [
+            {
+              "name" : "default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceControl" : [
+        {
+          "identity" : "swiftsoup",
+          "location" : {
+            "remote" : [
+              {
+                "urlString" : "https://github.com/scinfu/SwiftSoup"
+              }
+            ]
+          },
+          "productFilter" : null,
+          "requirement" : {
+            "revision" : [
+              "bba848db50462894e7fc0891d018dfecad4ef11e"
+            ]
+          },
+          "traits" : [
+            {
+              "name" : "default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceControl" : [
+        {
+          "identity" : "swiftyjson",
+          "location" : {
+            "remote" : [
+              {
+                "urlString" : "https://github.com/SwiftyJSON/SwiftyJSON.git"
+              }
+            ]
+          },
+          "productFilter" : null,
+          "requirement" : {
+            "exact" : [
+              "5.0.1"
+            ]
+          },
+          "traits" : [
+            {
+              "name" : "default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceControl" : [
+        {
+          "identity" : "tree-sitter",
+          "location" : {
+            "remote" : [
+              {
+                "urlString" : "https://github.com/tree-sitter/tree-sitter"
+              }
+            ]
+          },
+          "productFilter" : null,
+          "requirement" : {
+            "revision" : [
+              "da6fe9beb4f7f67beb75914ca8e0d48ae48d6406"
+            ]
+          },
+          "traits" : [
+            {
+              "name" : "default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceControl" : [
+        {
+          "identity" : "tree-sitter-bash",
+          "location" : {
+            "remote" : [
+              {
+                "urlString" : "https://github.com/tree-sitter/tree-sitter-bash"
+              }
+            ]
+          },
+          "productFilter" : null,
+          "requirement" : {
+            "revision" : [
+              "a06c2e4415e9bc0346c6b86d401879ffb44058f7"
+            ]
+          },
+          "traits" : [
+            {
+              "name" : "default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceControl" : [
+        {
+          "identity" : "yams",
+          "location" : {
+            "remote" : [
+              {
+                "urlString" : "https://github.com/jpsim/Yams.git"
+              }
+            ]
+          },
+          "productFilter" : null,
+          "requirement" : {
+            "exact" : [
+              "6.2.2"
+            ]
+          },
+          "traits" : [
+            {
+              "name" : "default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceControl" : [
+        {
+          "identity" : "zipfoundation",
+          "location" : {
+            "remote" : [
+              {
+                "urlString" : "https://github.com/weichsel/ZIPFoundation.git"
+              }
+            ]
+          },
+          "productFilter" : null,
+          "requirement" : {
+            "exact" : [
+              "0.9.19"
+            ]
+          },
+          "traits" : [
+            {
+              "name" : "default"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "name" : "HanlinSDK",
+  "packageKind" : {
+    "root" : [
+      "/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs"
+    ]
+  },
+  "pkgConfig" : null,
+  "platforms" : [
+    {
+      "options" : [
+
+      ],
+      "platformName" : "ios",
+      "version" : "27.0"
+    },
+    {
+      "options" : [
+
+      ],
+      "platformName" : "macos",
+      "version" : "26.0"
+    }
+  ],
+  "products" : [
+    {
+      "name" : "HanlinHostContracts",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "HanlinHostContracts"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "HanlinAgentCore",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "HanlinAgentCore"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "HanlinPersistenceAdapters",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "HanlinPersistenceAdapters"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "HanlinShareExtensionUI",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "HanlinShareExtensionUI"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "HanlinNotificationExtension",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "HanlinNotificationExtension"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "HanlinTranslationUI",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "HanlinTranslationUI"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "HanlinExpoNativeAPI",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "HanlinExpoNativeAPI",
+        "HanlinExpoNativeAPICore",
+        "HanlinExpoWorklets"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "HanlinExpoWidgetNative",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "HanlinExpoWidgetNative"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "HanlinExpoWidgetsOriginal",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "ExpoWidgets"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "HanlinExpoRuntime",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "HanlinExpoRuntime"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "HanlinExpoWidgetSubset",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "HanlinExpoWidgetSubset"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "HanlinMiniAppsBridge",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "HanlinMiniAppsBridge"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "HanlinMiniAppsPicker",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "HanlinMiniAppsPicker"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "HanlinNativeScriptRuntime",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "HanlinNativeScriptRuntime"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "HanlinParityMiniApp",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "HanlinParityMiniApp"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "HanlinExtensionContracts",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "HanlinExtensionContracts"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "HanlinPlatformContracts",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "HanlinPlatformContracts"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "HanlinMiniAppCore",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "HanlinMiniAppCore"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "HanlinScriptContracts",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "HanlinScriptContracts"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "HanlinScriptCompiler",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "HanlinScriptCompiler"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "HanlinScriptStore",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "HanlinScriptStore"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "HanlinScriptRuntime",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "HanlinScriptRuntime"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "HanlinScriptingSDK",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "HanlinScriptingSDK"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "HanlinScriptUI",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "HanlinScriptUI"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "HanlinScriptServices",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "HanlinScriptServices"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "HanlinScriptDeviceServices",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "HanlinScriptDeviceServices"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "HanlinScriptExtensions",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "HanlinScriptExtensions"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "HanlinChatCore",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "HanlinChatCore"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "HanlinScriptingApplicationRuntime",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "HanlinScriptingApplicationRuntime"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "HanlinLocalization",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "HanlinLocalization"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "HanlinAgentActivityCore",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "HanlinAgentActivityCore"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "HanlinAgentActivityUI",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "HanlinAgentActivityUI"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "HanlinPresentationKit",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "HanlinPresentationKit"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "HanlinRichUI",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "HanlinRichUI"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "HanlinChatUI",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "HanlinChatUI"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "HanlinA2UI",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "HanlinA2UI"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "HanlinMiniAppsUI",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "HanlinMiniAppsUI"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "HanlinProductSplit",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "HanlinProductSplit"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "HanlinQuickJS",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "CQuickJS"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "HanlinSefariaMiniApp",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "HanlinSefariaMiniApp"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "HanlinSkillFormat",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "HanlinSkillFormat"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "HanlinTextStudioMiniApp",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "HanlinTextStudioMiniApp"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "HanlinWidgetUI",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "HanlinWidgetUI"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "HanlinWikipediaMiniApp",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "HanlinWikipediaMiniApp"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "IOSSystemLite",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "IOSSystemLite"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "TorahLibraryKit",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "TorahLibraryKit"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "HanlinApplication",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "AI_Hanlin"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    }
+  ],
+  "providers" : null,
+  "swiftLanguageVersions" : [
+    "6"
+  ],
+  "targets" : [
+    {
+      "dependencies" : [
+
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "JSON",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "JSON",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "JSONRegexRuntime",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONRegexRuntime",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "JSON",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "JSONRegexRuntime",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinExactJSONSchema",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSONSchema",
+      "resources" : [
+        {
+          "path" : "Resources/Draft2020-12",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        }
+      ],
+      "settings" : [
+
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinPlatformContracts",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinHostContracts",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinAgentSDK/Sources/HanlinHostContracts",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinHostContracts",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinChatCore",
+            null
+          ]
+        },
+        {
+          "product" : [
+            "AISDKProvider",
+            "swift-ai-sdk",
+            null,
+            null
+          ]
+        },
+        {
+          "product" : [
+            "SwiftAISDK",
+            "swift-ai-sdk",
+            null,
+            null
+          ]
+        },
+        {
+          "target" : [
+            "JSON",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinExactJSONSchema",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinAgentCore",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinAgentSDK/Sources/HanlinAgentCore",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinHostContracts",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinPersistenceAdapters",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinAgentSDK/Sources/HanlinPersistenceAdapters",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinHostContracts",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinSDKTestFixtures",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinAgentSDK/Tests/Fixtures",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinAgentCore",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinPersistenceAdapters",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinSDKTestFixtures",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinFixtureHost",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinAgentSDK/Examples/FixtureHost",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "executable"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinAgentCore",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinPersistenceAdapters",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinSDKTestFixtures",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinSDKPortableProof",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinAgentSDK/Tests/PortableProof",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "executable"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinHostContracts",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinHostContractsTests",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinAgentSDK/Tests/HanlinHostContractsTests",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "test"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinHostContracts",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinPlatformContracts",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinHostConcurrencyTests",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinAgentSDK/Tests/HanlinHostConcurrencyTests",
+      "resources" : [
+
+      ],
+      "settings" : [
+        {
+          "kind" : {
+            "enableUpcomingFeature" : {
+              "_0" : "NonisolatedNonsendingByDefault"
+            }
+          },
+          "tool" : "swift"
+        }
+      ],
+      "type" : "test"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinAgentCore",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinPersistenceAdapters",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinSDKTestFixtures",
+            null
+          ]
+        },
+        {
+          "product" : [
+            "AISDKProvider",
+            "swift-ai-sdk",
+            null,
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinAgentCoreTests",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "test"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinPersistenceAdapters",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinPersistenceAdaptersTests",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinAgentSDK/Tests/HanlinPersistenceAdaptersTests",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "test"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinExtensionContracts",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinScriptStore",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinLocalization",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinShareExtensionUI",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinAppExtensionsSDK/Sources/HanlinShareExtensionUI",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinExtensionContracts",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinNotificationExtension",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinAppExtensionsSDK/Sources/HanlinNotificationExtension",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinExpoWidgetNative",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinScriptContracts",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinExtensionContracts",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinPlatformContracts",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinScriptExtensions",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinScriptUI",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinChatCore",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinLocalization",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinTranslationUI",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinAppExtensionsSDK/Sources/HanlinTranslationUI",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinExpoNativeAPICore",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinExpoWorklets",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinExpoNativeAPI",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPI",
+      "resources" : [
+        {
+          "path" : "Resources/metadata",
+          "rule" : {
+            "process" : {
+
+            }
+          }
+        }
+      ],
+      "settings" : [
+        {
+          "kind" : {
+            "unsafeFlags" : {
+              "_0" : [
+                "-F/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinExpoNativeAPI/../HanlinExpoRuntime/Artifacts/ModularFrameworks",
+                "-Xlinker",
+                "-undefined",
+                "-Xlinker",
+                "dynamic_lookup"
+              ]
+            }
+          },
+          "tool" : "linker"
+        }
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinExpoWorklets",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinExpoNativeAPI/Sources/HanlinExpoWorklets",
+      "publicHeadersPath" : "include",
+      "resources" : [
+
+      ],
+      "settings" : [
+        {
+          "kind" : {
+            "unsafeFlags" : {
+              "_0" : [
+                "-std=gnu++20",
+                "-fobjc-arc",
+                "-DFOLLY_NO_CONFIG",
+                "-DFOLLY_MOBILE=1",
+                "-DFOLLY_USE_LIBCPP=1",
+                "-DREACT_NATIVE_PRODUCTION=1",
+                "-DRN_DEBUG_STRING_CONVERTIBLE=0",
+                "-DWORKLETS_VERSION=\"0.13.1\"",
+                "-Wno-quoted-include-in-framework-header",
+                "-Wno-non-modular-include-in-framework-module",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoWorklets/include",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoWorklets/Common/cpp",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoWorklets/apple",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoWorklets/generated",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoWorklets/generated/rnworklets",
+                "-F/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinExpoNativeAPI/../HanlinExpoRuntime/Artifacts/ModularFrameworks",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinExpoNativeAPI/../HanlinExpoRuntime/Artifacts/ReactModularHeaders",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinExpoNativeAPI/../HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinExpoNativeAPI/../HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinExpoNativeAPI/../HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers"
+              ]
+            }
+          },
+          "tool" : "cxx"
+        },
+        {
+          "kind" : {
+            "linkedFramework" : {
+              "_0" : "UIKit"
+            }
+          },
+          "tool" : "linker"
+        },
+        {
+          "kind" : {
+            "linkedFramework" : {
+              "_0" : "Foundation"
+            }
+          },
+          "tool" : "linker"
+        },
+        {
+          "kind" : {
+            "linkedFramework" : {
+              "_0" : "QuartzCore"
+            }
+          },
+          "tool" : "linker"
+        },
+        {
+          "kind" : {
+            "unsafeFlags" : {
+              "_0" : [
+                "-F/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinExpoNativeAPI/../HanlinExpoRuntime/Artifacts/ModularFrameworks",
+                "-Xlinker",
+                "-undefined",
+                "-Xlinker",
+                "dynamic_lookup"
+              ]
+            }
+          },
+          "tool" : "linker"
+        }
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinExpoWorklets",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "Libffi",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+        "nativescript/native-api/ffi/objc/shared",
+        "nativescript/native-api/ffi/objc/hermes/NativeApiJsiGsd.mm"
+      ],
+      "name" : "HanlinExpoNativeAPICore",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore",
+      "publicHeadersPath" : "include",
+      "resources" : [
+
+      ],
+      "settings" : [
+        {
+          "kind" : {
+            "unsafeFlags" : {
+              "_0" : [
+                "-std=gnu++20",
+                "-fno-objc-arc",
+                "-DFOLLY_NO_CONFIG",
+                "-DFOLLY_MOBILE=1",
+                "-DFOLLY_USE_LIBCPP=1",
+                "-DFOLLY_CFG_NO_COROUTINES=1",
+                "-DTARGET_ENGINE_HERMES=1",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinExpoNativeAPI/../HanlinExpoRuntime/Artifacts/ExpoModulesCore.xcframework/ios-arm64/ExpoModulesCore.framework/Headers",
+                "-DNS_GSD_BACKEND_HERMES=1",
+                "-DNATIVESCRIPT_REACT_NATIVE=1",
+                "-DREACT_NATIVE_PRODUCTION=1",
+                "-DRN_DEBUG_STRING_CONVERTIBLE=0",
+                "-Wno-quoted-include-in-framework-header",
+                "-Wno-non-modular-include-in-framework-module",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/include",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/bridge",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/nativescript",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/nativescript/ios",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/nativescript/native-api",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/nativescript/native-api/ffi/objc/hermes",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/nativescript/native-api/ffi/objc/shared",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/nativescript/native-api/ffi/objc/shared/bridge",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/nativescript/native-api/metadata/include",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/nativescript/ios/vendor/libffi/include",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/generated",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/generated/NativeScriptNativeApiSpec",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoWorklets/include",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoWorklets/Common/cpp",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoWorklets/apple",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoWorklets/generated",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoWorklets/generated/rnworklets",
+                "-F/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinExpoNativeAPI/../HanlinExpoRuntime/Artifacts/ModularFrameworks",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinExpoNativeAPI/../HanlinExpoRuntime/Artifacts/ReactModularHeaders",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinExpoNativeAPI/../HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinExpoNativeAPI/../HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinExpoNativeAPI/../HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers"
+              ]
+            }
+          },
+          "tool" : "cxx"
+        },
+        {
+          "kind" : {
+            "linkedFramework" : {
+              "_0" : "UIKit"
+            }
+          },
+          "tool" : "linker"
+        },
+        {
+          "kind" : {
+            "linkedFramework" : {
+              "_0" : "Foundation"
+            }
+          },
+          "tool" : "linker"
+        },
+        {
+          "kind" : {
+            "linkedFramework" : {
+              "_0" : "QuartzCore"
+            }
+          },
+          "tool" : "linker"
+        },
+        {
+          "kind" : {
+            "unsafeFlags" : {
+              "_0" : [
+                "-F/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinExpoNativeAPI/../HanlinExpoRuntime/Artifacts/ModularFrameworks",
+                "-Xlinker",
+                "-undefined",
+                "-Xlinker",
+                "dynamic_lookup"
+              ]
+            }
+          },
+          "tool" : "linker"
+        }
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "Libffi",
+      "packageAccess" : false,
+      "path" : "Packages/HanlinExpoNativeAPI/Artifacts/Libffi.xcframework",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "binary"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinExpoWidgetSubset",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+        "LICENSE-EXPO.txt"
+      ],
+      "name" : "HanlinExpoWidgetNative",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinExpoRuntime/Sources/HanlinExpoWidgetNative",
+      "resources" : [
+
+      ],
+      "settings" : [
+        {
+          "kind" : {
+            "unsafeFlags" : {
+              "_0" : [
+                "-application-extension"
+              ]
+            }
+          },
+          "tool" : "swift"
+        },
+        {
+          "kind" : {
+            "linkedFramework" : {
+              "_0" : "SwiftUI"
+            }
+          },
+          "tool" : "linker"
+        },
+        {
+          "kind" : {
+            "linkedFramework" : {
+              "_0" : "WidgetKit"
+            }
+          },
+          "tool" : "linker"
+        }
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "ReactNativeHeaders",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinPlatformContracts",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "React",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "ReactNativeDependencies",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "hermesvm",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "ExpoModulesJSI",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "ExpoModulesCore",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "ExpoModulesWorklets",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "ExpoUI",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "ExpoWidgets",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "ExpoBrownfield",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinExpoNativeAPI",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinExpoNativeAPICore",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinExpoWorklets",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinExpoRuntime",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime",
+      "resources" : [
+
+      ],
+      "settings" : [
+        {
+          "kind" : {
+            "interoperabilityMode" : {
+              "_0" : "Cxx"
+            }
+          },
+          "tool" : "swift"
+        },
+        {
+          "kind" : {
+            "unsafeFlags" : {
+              "_0" : [
+                "-Xcc",
+                "-std=gnu++20",
+                "-Xcc",
+                "-DREACT_NATIVE_PRODUCTION=1",
+                "-Xcc",
+                "-DRN_DEBUG_STRING_CONVERTIBLE=0",
+                "-Xcc",
+                "-Wno-quoted-include-in-framework-header",
+                "-Xcc",
+                "-Wno-non-modular-include-in-framework-module",
+                "-Xcc",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinExpoRuntime/../HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/include",
+                "-Xcc",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinExpoRuntime/../HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/bridge",
+                "-Xcc",
+                "-F/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks",
+                "-Xcc",
+                "-F../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks",
+                "-Xcc",
+                "-FArtifacts/ModularFrameworks",
+                "-Xcc",
+                "-FPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks",
+                "-Xcc",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders",
+                "-Xcc",
+                "-I../Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders",
+                "-Xcc",
+                "-IArtifacts/ReactModularHeaders",
+                "-Xcc",
+                "-IPackages/HanlinExpoRuntime/Artifacts/ReactModularHeaders",
+                "-Xcc",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers",
+                "-Xcc",
+                "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers",
+                "-Xcc",
+                "-IArtifacts/ModularFrameworks/react.framework/Headers",
+                "-Xcc",
+                "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers",
+                "-Xcc",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react",
+                "-Xcc",
+                "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react",
+                "-Xcc",
+                "-IArtifacts/ModularFrameworks/react.framework/Headers/react",
+                "-Xcc",
+                "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react",
+                "-Xcc",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers",
+                "-Xcc",
+                "-I../Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers",
+                "-Xcc",
+                "-IArtifacts/ReactNativeDependencies.xcframework/Headers",
+                "-Xcc",
+                "-IPackages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers"
+              ]
+            }
+          },
+          "tool" : "swift"
+        },
+        {
+          "kind" : {
+            "linkedFramework" : {
+              "_0" : "UIKit"
+            }
+          },
+          "tool" : "linker"
+        },
+        {
+          "kind" : {
+            "linkedFramework" : {
+              "_0" : "SwiftUI"
+            }
+          },
+          "tool" : "linker"
+        }
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "ReactNativeHeaders",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "React",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "ReactNativeDependencies",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "hermesvm",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "ExpoModulesJSI",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "ExpoModulesCore",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "ExpoModulesWorklets",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "ExpoUI",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "ExpoWidgets",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinExpoRuntime/Sources/ExpoWidgets",
+      "resources" : [
+        {
+          "path" : "Resources/ExpoWidgets.bundle",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        }
+      ],
+      "settings" : [
+        {
+          "kind" : {
+            "swiftLanguageMode" : {
+              "_0" : "5"
+            }
+          },
+          "tool" : "swift"
+        },
+        {
+          "kind" : {
+            "interoperabilityMode" : {
+              "_0" : "Cxx"
+            }
+          },
+          "tool" : "swift"
+        },
+        {
+          "kind" : {
+            "unsafeFlags" : {
+              "_0" : [
+                "-Xcc",
+                "-std=gnu++20",
+                "-Xcc",
+                "-DREACT_NATIVE_PRODUCTION=1",
+                "-Xcc",
+                "-DRN_DEBUG_STRING_CONVERTIBLE=0",
+                "-Xcc",
+                "-Wno-quoted-include-in-framework-header",
+                "-Xcc",
+                "-Wno-non-modular-include-in-framework-module",
+                "-Xcc",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinExpoRuntime/../HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/include",
+                "-Xcc",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinExpoRuntime/../HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/bridge",
+                "-Xcc",
+                "-F/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks",
+                "-Xcc",
+                "-F../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks",
+                "-Xcc",
+                "-FArtifacts/ModularFrameworks",
+                "-Xcc",
+                "-FPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks",
+                "-Xcc",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders",
+                "-Xcc",
+                "-I../Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders",
+                "-Xcc",
+                "-IArtifacts/ReactModularHeaders",
+                "-Xcc",
+                "-IPackages/HanlinExpoRuntime/Artifacts/ReactModularHeaders",
+                "-Xcc",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers",
+                "-Xcc",
+                "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers",
+                "-Xcc",
+                "-IArtifacts/ModularFrameworks/react.framework/Headers",
+                "-Xcc",
+                "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers",
+                "-Xcc",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react",
+                "-Xcc",
+                "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react",
+                "-Xcc",
+                "-IArtifacts/ModularFrameworks/react.framework/Headers/react",
+                "-Xcc",
+                "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react",
+                "-Xcc",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers",
+                "-Xcc",
+                "-I../Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers",
+                "-Xcc",
+                "-IArtifacts/ReactNativeDependencies.xcframework/Headers",
+                "-Xcc",
+                "-IPackages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers"
+              ]
+            }
+          },
+          "tool" : "swift"
+        },
+        {
+          "kind" : {
+            "linkedFramework" : {
+              "_0" : "Foundation"
+            }
+          },
+          "tool" : "linker"
+        },
+        {
+          "kind" : {
+            "linkedFramework" : {
+              "_0" : "SwiftUI"
+            }
+          },
+          "tool" : "linker"
+        },
+        {
+          "kind" : {
+            "linkedFramework" : {
+              "_0" : "UIKit"
+            }
+          },
+          "tool" : "linker"
+        },
+        {
+          "kind" : {
+            "linkedFramework" : {
+              "_0" : "WidgetKit"
+            }
+          },
+          "tool" : "linker"
+        },
+        {
+          "kind" : {
+            "linkedFramework" : {
+              "_0" : "ActivityKit"
+            }
+          },
+          "tool" : "linker"
+        },
+        {
+          "kind" : {
+            "linkedFramework" : {
+              "_0" : "JavaScriptCore"
+            }
+          },
+          "tool" : "linker"
+        }
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "ReactNativeHeaders",
+      "packageAccess" : false,
+      "path" : "Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "binary"
+    },
+    {
+      "dependencies" : [
+
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "React",
+      "packageAccess" : false,
+      "path" : "Packages/HanlinExpoRuntime/Artifacts/React.xcframework",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "binary"
+    },
+    {
+      "dependencies" : [
+
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "ReactNativeDependencies",
+      "packageAccess" : false,
+      "path" : "Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "binary"
+    },
+    {
+      "dependencies" : [
+
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "hermesvm",
+      "packageAccess" : false,
+      "path" : "Packages/HanlinExpoRuntime/Artifacts/hermesvm.xcframework",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "binary"
+    },
+    {
+      "dependencies" : [
+
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "ExpoModulesJSI",
+      "packageAccess" : false,
+      "path" : "Packages/HanlinExpoRuntime/Artifacts/ExpoModulesJSI.xcframework",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "binary"
+    },
+    {
+      "dependencies" : [
+
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "ExpoModulesCore",
+      "packageAccess" : false,
+      "path" : "Packages/HanlinExpoRuntime/Artifacts/ExpoModulesCore.xcframework",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "binary"
+    },
+    {
+      "dependencies" : [
+
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "ExpoModulesWorklets",
+      "packageAccess" : false,
+      "path" : "Packages/HanlinExpoRuntime/Artifacts/ExpoModulesWorklets.xcframework",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "binary"
+    },
+    {
+      "dependencies" : [
+
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "ExpoUI",
+      "packageAccess" : false,
+      "path" : "Packages/HanlinExpoRuntime/Artifacts/ExpoUI.xcframework",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "binary"
+    },
+    {
+      "dependencies" : [
+
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "ExpoBrownfield",
+      "packageAccess" : false,
+      "path" : "Packages/HanlinExpoRuntime/Artifacts/ExpoBrownfield.xcframework",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "binary"
+    },
+    {
+      "dependencies" : [
+
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinExpoWidgetSubset",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset",
+      "resources" : [
+
+      ],
+      "settings" : [
+        {
+          "kind" : {
+            "swiftLanguageMode" : {
+              "_0" : "5"
+            }
+          },
+          "tool" : "swift"
+        },
+        {
+          "kind" : {
+            "unsafeFlags" : {
+              "_0" : [
+                "-application-extension"
+              ]
+            }
+          },
+          "tool" : "swift"
+        }
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinMiniAppsBridge",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinMiniAppsBridge/Sources/HanlinMiniAppsBridge",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinMiniAppsBridge",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinMiniAppsPicker",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinMiniAppsBridge/Sources/HanlinMiniAppsPicker",
+      "resources" : [
+        {
+          "path" : "Resources",
+          "rule" : {
+            "process" : {
+
+            }
+          }
+        }
+      ],
+      "settings" : [
+
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinMiniAppsBridge",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinMiniAppsBridgeTests",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinMiniAppsBridge/Tests/HanlinMiniAppsBridgeTests",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "test"
+    },
+    {
+      "dependencies" : [
+        {
+          "product" : [
+            "NativeScript",
+            "ios-spm",
+            null,
+            null
+          ]
+        },
+        {
+          "target" : [
+            "TNSWidgets",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "NSCWinterTC",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinNativeScriptCoreSupport",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport",
+      "publicHeadersPath" : "include",
+      "resources" : [
+
+      ],
+      "settings" : [
+        {
+          "kind" : {
+            "linkedFramework" : {
+              "_0" : "UIKit"
+            }
+          },
+          "tool" : "linker"
+        }
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinNativeScriptCoreSupport",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinPlatformContracts",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinNativeScriptRuntime",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime",
+      "resources" : [
+        {
+          "path" : "Resources/NativeScriptSharedRuntime",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        }
+      ],
+      "settings" : [
+
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "TNSWidgets",
+      "packageAccess" : false,
+      "path" : "Packages/HanlinNativeScriptRuntime/Artifacts/TNSWidgets.xcframework",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "binary"
+    },
+    {
+      "dependencies" : [
+
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "NSCWinterTC",
+      "packageAccess" : false,
+      "path" : "Packages/HanlinNativeScriptRuntime/Artifacts/NSCWinterTC.xcframework",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "binary"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinPlatformContracts",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinMiniAppCore",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinScriptUI",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinParityMiniApp",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinParityMiniApp/Sources/HanlinParityMiniApp",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinParityMiniApp",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinParityMiniAppTests",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinParityMiniApp/Tests/HanlinParityMiniAppTests",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "test"
+    },
+    {
+      "dependencies" : [
+
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinExtensionContracts",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinPlatform/Sources/HanlinExtensionContracts",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinPlatformContracts",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinPlatform/Sources/HanlinPlatformContracts",
+      "resources" : [
+        {
+          "path" : "Resources",
+          "rule" : {
+            "process" : {
+
+            }
+          }
+        }
+      ],
+      "settings" : [
+        {
+          "condition" : {
+            "platformNames" : [
+              "ios"
+            ]
+          },
+          "kind" : {
+            "unsafeFlags" : {
+              "_0" : [
+                "-application-extension"
+              ]
+            }
+          },
+          "tool" : "swift"
+        },
+        {
+          "condition" : {
+            "platformNames" : [
+              "ios"
+            ]
+          },
+          "kind" : {
+            "unsafeFlags" : {
+              "_0" : [
+                "-Xlinker",
+                "-application_extension"
+              ]
+            }
+          },
+          "tool" : "linker"
+        }
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinPlatformContracts",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinPlatformContractsTests",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinPlatform/Tests/HanlinPlatformContractsTests",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "test"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinPlatformContracts",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinMiniAppCore",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinPlatform/Sources/HanlinMiniAppCore",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinMiniAppCore",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinPlatformContracts",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinMiniAppCoreTests",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinPlatform/Tests/HanlinMiniAppCoreTests",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "test"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinPlatformContracts",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinScriptContracts",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinPlatform/Sources/HanlinScriptContracts",
+      "resources" : [
+        {
+          "path" : "Resources",
+          "rule" : {
+            "process" : {
+
+            }
+          }
+        }
+      ],
+      "settings" : [
+
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinScriptContracts",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinScriptContractsTests",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinPlatform/Tests/HanlinScriptContractsTests",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "test"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinPlatformContracts",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinScriptContracts",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinScriptWidgetOriginal",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinWidgetCompiler",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler",
+      "resources" : [
+        {
+          "path" : "Resources/core.js",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        },
+        {
+          "path" : "Resources/prepare-widget.js",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        }
+      ],
+      "settings" : [
+        {
+          "condition" : {
+            "platformNames" : [
+              "ios",
+              "macos"
+            ]
+          },
+          "kind" : {
+            "linkedFramework" : {
+              "_0" : "JavaScriptCore"
+            }
+          },
+          "tool" : "linker"
+        }
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinWidgetCompiler",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinPlatformContracts",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinScriptContracts",
+            null
+          ]
+        },
+        {
+          "product" : [
+            "ZIPFoundation",
+            "ZIPFoundation",
+            null,
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinScriptCompiler",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinPlatform/Sources/HanlinScriptCompiler",
+      "resources" : [
+        {
+          "path" : "Resources",
+          "rule" : {
+            "process" : {
+
+            }
+          }
+        }
+      ],
+      "settings" : [
+
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinScriptCompiler",
+            null
+          ]
+        },
+        {
+          "product" : [
+            "ZIPFoundation",
+            "ZIPFoundation",
+            null,
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinScriptCompilerTests",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "test"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinPlatformContracts",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinScriptContracts",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinMiniAppCore",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinScriptStore",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinPlatform/Sources/HanlinScriptStore",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinScriptStore",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinMiniAppCore",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinScriptStoreTests",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinPlatform/Tests/HanlinScriptStoreTests",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "test"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinPlatformContracts",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinScriptContracts",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinScriptRuntime",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinPlatform/Sources/HanlinScriptRuntime",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinScriptRuntime",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinScriptRuntimeTests",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinPlatform/Tests/HanlinScriptRuntimeTests",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "test"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinScriptContracts",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinScriptingSDK",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinPlatform/Sources/HanlinScriptingSDK",
+      "resources" : [
+        {
+          "path" : "Resources",
+          "rule" : {
+            "process" : {
+
+            }
+          }
+        }
+      ],
+      "settings" : [
+
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinScriptingSDK",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinScriptingSDKTests",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinPlatform/Tests/HanlinScriptingSDKTests",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "test"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinPlatformContracts",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinScriptContracts",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinChatCore",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinScriptUI",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinPlatform/Sources/HanlinScriptUI",
+      "resources" : [
+        {
+          "path" : "Resources",
+          "rule" : {
+            "process" : {
+
+            }
+          }
+        }
+      ],
+      "settings" : [
+
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinScriptUI",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinScriptUITests",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinPlatform/Tests/HanlinScriptUITests",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "test"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinPlatformContracts",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinScriptContracts",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinScriptServices",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinPlatform/Sources/HanlinScriptServices",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinScriptServices",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinScriptServicesTests",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinPlatform/Tests/HanlinScriptServicesTests",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "test"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinPlatformContracts",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinScriptServices",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+        "README.md"
+      ],
+      "name" : "HanlinScriptDeviceServices",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinPlatform/Sources/HanlinScriptDeviceServices",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinScriptDeviceServices",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinScriptDeviceServicesTests",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinPlatform/Tests/HanlinScriptDeviceServicesTests",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "test"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinPlatformContracts",
+            null
+          ]
+        },
+        {
+          "product" : [
+            "SwiftAISDK",
+            "swift-ai-sdk",
+            null,
+            null
+          ]
+        },
+        {
+          "product" : [
+            "AISDKProvider",
+            "swift-ai-sdk",
+            null,
+            null
+          ]
+        },
+        {
+          "product" : [
+            "AISDKProviderUtils",
+            "swift-ai-sdk",
+            null,
+            null
+          ]
+        },
+        {
+          "product" : [
+            "OpenAIProvider",
+            "swift-ai-sdk",
+            null,
+            null
+          ]
+        },
+        {
+          "product" : [
+            "AnthropicProvider",
+            "swift-ai-sdk",
+            null,
+            null
+          ]
+        },
+        {
+          "product" : [
+            "GoogleProvider",
+            "swift-ai-sdk",
+            null,
+            null
+          ]
+        },
+        {
+          "product" : [
+            "OpenAICompatibleProvider",
+            "swift-ai-sdk",
+            null,
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinChatCore",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinPlatform/Sources/HanlinChatCore",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinChatCore",
+            null
+          ]
+        },
+        {
+          "product" : [
+            "SwiftAISDK",
+            "swift-ai-sdk",
+            null,
+            null
+          ]
+        },
+        {
+          "product" : [
+            "AISDKProvider",
+            "swift-ai-sdk",
+            null,
+            null
+          ]
+        },
+        {
+          "product" : [
+            "AISDKProviderUtils",
+            "swift-ai-sdk",
+            null,
+            null
+          ]
+        },
+        {
+          "product" : [
+            "OpenAIProvider",
+            "swift-ai-sdk",
+            null,
+            null
+          ]
+        },
+        {
+          "product" : [
+            "AnthropicProvider",
+            "swift-ai-sdk",
+            null,
+            null
+          ]
+        },
+        {
+          "product" : [
+            "GoogleProvider",
+            "swift-ai-sdk",
+            null,
+            null
+          ]
+        },
+        {
+          "product" : [
+            "OpenAICompatibleProvider",
+            "swift-ai-sdk",
+            null,
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinChatCoreTests",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinPlatform/Tests/HanlinChatCoreTests",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "test"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinExtensionContracts",
+            null
+          ]
+        },
+        {
+          "product" : [
+            "ZIPFoundation",
+            "ZIPFoundation",
+            null,
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+        "Original/LICENSE.txt",
+        "Original/NOTICE.txt"
+      ],
+      "name" : "HanlinScriptWidgetOriginal",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal",
+      "resources" : [
+        {
+          "path" : "Resources/support.bundle",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        }
+      ],
+      "settings" : [
+        {
+          "kind" : {
+            "swiftLanguageMode" : {
+              "_0" : "5"
+            }
+          },
+          "tool" : "swift"
+        },
+        {
+          "kind" : {
+            "linkedFramework" : {
+              "_0" : "JavaScriptCore"
+            }
+          },
+          "tool" : "linker"
+        }
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinScriptWidgetOriginal",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinExtensionContracts",
+            null
+          ]
+        },
+        {
+          "product" : [
+            "SwiftyJSON",
+            "SwiftyJSON",
+            null,
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinPlatformContracts",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinScriptContracts",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinScriptStore",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinScriptUI",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinChatCore",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+        "ScriptWidget/Original/MIT-previous.txt",
+        "ScriptWidget/Original/LICENSE.txt",
+        "ScriptWidget/Original/NOTICE.txt",
+        "ScriptWidget/Original/Component/Attributes/Animation/ClockHandKit-LICENSE.txt"
+      ],
+      "name" : "HanlinScriptExtensions",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinPlatform/Sources/HanlinScriptExtensions",
+      "resources" : [
+        {
+          "path" : "Resources/support.bundle",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        },
+        {
+          "path" : "Resources/ExpoWidgets.bundle",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        }
+      ],
+      "settings" : [
+        {
+          "kind" : {
+            "linkedFramework" : {
+              "_0" : "JavaScriptCore"
+            }
+          },
+          "tool" : "linker"
+        }
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinScriptExtensions",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinChatCore",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinScriptCompiler",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinScriptStore",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinLegacyWidgetStoreFixture",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinScriptExtensionsTests",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "test"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinPlatformContracts",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinScriptUI",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+        "PROVENANCE.txt"
+      ],
+      "name" : "HanlinLegacyWidgetStoreFixture",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinPlatform/Tests/Fixtures/LegacyWidgetStore",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinPlatformContracts",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinScriptUI",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinMiniAppCore",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinScriptingApplicationRuntime",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinPlatform/Sources/HanlinScriptingApplicationRuntime",
+      "resources" : [
+
+      ],
+      "settings" : [
+        {
+          "kind" : {
+            "linkedFramework" : {
+              "_0" : "JavaScriptCore"
+            }
+          },
+          "tool" : "linker"
+        },
+        {
+          "kind" : {
+            "linkedFramework" : {
+              "_0" : "UniformTypeIdentifiers"
+            }
+          },
+          "tool" : "linker"
+        },
+        {
+          "kind" : {
+            "linkedLibrary" : {
+              "_0" : "sqlite3"
+            }
+          },
+          "tool" : "linker"
+        }
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinPlatformContracts",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinMiniAppCore",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinScriptingApplicationRuntime",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinScriptingApplicationRuntimeTests",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "test"
+    },
+    {
+      "dependencies" : [
+
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinLocalization",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinPresentationSDK/Sources/HanlinLocalization",
+      "resources" : [
+        {
+          "path" : "Resources",
+          "rule" : {
+            "process" : {
+
+            }
+          }
+        }
+      ],
+      "settings" : [
+
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinLocalization",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinMiniAppCore",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinPlatformContracts",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinMiniAppsUI",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinPresentationSDK/Sources/HanlinMiniAppsUI",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinPresentationKit",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinPresentationSDK/Sources/HanlinPresentationKit",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinPresentationKit",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinLocalization",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinPlatformContracts",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinAgentActivityCore",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinAgentActivityCore",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinChatUI",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinPresentationKit",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinLocalization",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinAgentActivityUI",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityUI",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinPresentationKit",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinLocalization",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinRichUI",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinPresentationSDK/Sources/HanlinRichUI",
+      "resources" : [
+        {
+          "path" : "Resources/OpenUI",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        }
+      ],
+      "settings" : [
+
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinPresentationKit",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinRichUI",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinLocalization",
+            null
+          ]
+        },
+        {
+          "product" : [
+            "SwiftStreamingMarkdown",
+            "hanlin-streaming-markdown",
+            null,
+            {
+              "platformNames" : [
+                "ios"
+              ]
+            }
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinChatUI",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinPresentationSDK/Sources/HanlinChatUI",
+      "resources" : [
+        {
+          "path" : "CodeFences/Resources/HanlinCodeFenceAssets.json",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        },
+        {
+          "path" : "CodeFences/Resources/HanlinCodeFenceRenderer.js",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        },
+        {
+          "path" : "CodeFences/Resources/HanlinCodeFenceRenderer.css",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        },
+        {
+          "path" : "CodeFences/Resources/HanlinCodeFenceRenderer.js.LEGAL.txt",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        },
+        {
+          "path" : "CodeFences/Resources/HanlinCodeFenceThirdPartyLicenses.txt",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        }
+      ],
+      "settings" : [
+
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinPresentationKit",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinLocalization",
+            null
+          ]
+        },
+        {
+          "product" : [
+            "A2UISwiftCore",
+            "a2ui",
+            null,
+            null
+          ]
+        },
+        {
+          "product" : [
+            "A2UISwiftUI",
+            "a2ui",
+            null,
+            null
+          ]
+        },
+        {
+          "product" : [
+            "BasicCatalog",
+            "a2ui",
+            null,
+            null
+          ]
+        },
+        {
+          "product" : [
+            "BasicCatalogSwiftUI",
+            "a2ui",
+            null,
+            null
+          ]
+        },
+        {
+          "product" : [
+            "SwiftSoup",
+            "SwiftSoup",
+            null,
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinA2UI",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinPresentationSDK/Sources/HanlinA2UI",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinLocalization",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinLocalizationTests",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinPresentationSDK/Tests/HanlinLocalizationTests",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "test"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinChatUI",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinChatUITests",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinPresentationSDK/Tests/HanlinChatUITests",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "test"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinPresentationKit",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinPresentationKitTests",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinPresentationSDK/Tests/HanlinPresentationKitTests",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "test"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinPlatformContracts",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinMiniAppCore",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+        "SplitFixtureStore.swift",
+        "SplitReceiverFixturePersistence.swift",
+        "SplitMigrationFixturePersistence.swift"
+      ],
+      "name" : "HanlinProductSplit",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinProductSplit/Sources/HanlinProductSplit",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinProductSplit",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinPlatformContracts",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinMiniAppCore",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "RegisteredIntegrationTests",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinProductSplit/Tests/RegisteredIntegrationTests",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "test"
+    },
+    {
+      "dependencies" : [
+
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "CQuickJS",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinQuickJS/Sources/CQuickJS",
+      "publicHeadersPath" : "include",
+      "resources" : [
+
+      ],
+      "settings" : [
+        {
+          "kind" : {
+            "define" : {
+              "_0" : "QUICKJS_NG_BUILD"
+            }
+          },
+          "tool" : "c"
+        },
+        {
+          "kind" : {
+            "define" : {
+              "_0" : "_GNU_SOURCE"
+            }
+          },
+          "tool" : "c"
+        },
+        {
+          "kind" : {
+            "unsafeFlags" : {
+              "_0" : [
+                "-funsigned-char"
+              ]
+            }
+          },
+          "tool" : "c"
+        }
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinPlatformContracts",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinMiniAppCore",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinSefariaMiniApp",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinSefariaMiniApp/Sources/HanlinSefariaMiniApp",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinSefariaMiniApp",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinSefariaMiniAppTests",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinSefariaMiniApp/Tests/HanlinSefariaMiniAppTests",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "test"
+    },
+    {
+      "dependencies" : [
+        {
+          "product" : [
+            "Yams",
+            "Yams",
+            null,
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinSkillFormat",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinSkillFormat/Sources/HanlinSkillFormat",
+      "resources" : [
+
+      ],
+      "settings" : [
+        {
+          "kind" : {
+            "define" : {
+              "_0" : "YAML_DECLARE_STATIC"
+            }
+          },
+          "tool" : "c"
+        }
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinSkillFormat",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinSkillFormatTests",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinSkillFormat/Tests/HanlinSkillFormatTests",
+      "resources" : [
+        {
+          "path" : "Fixtures",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        }
+      ],
+      "settings" : [
+
+      ],
+      "type" : "test"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinPlatformContracts",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinMiniAppCore",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinTextStudioMiniApp",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinTextStudioMiniApp/Sources/HanlinTextStudioMiniApp",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinTextStudioMiniApp",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinTextStudioMiniAppTests",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinTextStudioMiniApp/Tests/HanlinTextStudioMiniAppTests",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "test"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinScriptingWidgets",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinWidgetUI",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinWidgetSDK/Sources/HanlinWidgetUI",
+      "resources" : [
+
+      ],
+      "settings" : [
+        {
+          "kind" : {
+            "interoperabilityMode" : {
+              "_0" : "Cxx"
+            }
+          },
+          "tool" : "swift"
+        },
+        {
+          "kind" : {
+            "unsafeFlags" : {
+              "_0" : [
+                "-Xcc",
+                "-std=gnu++20",
+                "-Xcc",
+                "-DREACT_NATIVE_PRODUCTION=1",
+                "-Xcc",
+                "-DRN_DEBUG_STRING_CONVERTIBLE=0",
+                "-Xcc",
+                "-Wno-quoted-include-in-framework-header",
+                "-Xcc",
+                "-Wno-non-modular-include-in-framework-module",
+                "-Xcc",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinWidgetSDK/../HanlinExpoRuntime/../HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/include",
+                "-Xcc",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinWidgetSDK/../HanlinExpoRuntime/../HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/bridge",
+                "-Xcc",
+                "-F/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinWidgetSDK/../HanlinExpoRuntime/Artifacts/ModularFrameworks",
+                "-Xcc",
+                "-F../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks",
+                "-Xcc",
+                "-FArtifacts/ModularFrameworks",
+                "-Xcc",
+                "-FPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks",
+                "-Xcc",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinWidgetSDK/../HanlinExpoRuntime/Artifacts/ReactModularHeaders",
+                "-Xcc",
+                "-I../Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders",
+                "-Xcc",
+                "-IArtifacts/ReactModularHeaders",
+                "-Xcc",
+                "-IPackages/HanlinExpoRuntime/Artifacts/ReactModularHeaders",
+                "-Xcc",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinWidgetSDK/../HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers",
+                "-Xcc",
+                "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers",
+                "-Xcc",
+                "-IArtifacts/ModularFrameworks/react.framework/Headers",
+                "-Xcc",
+                "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers",
+                "-Xcc",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinWidgetSDK/../HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react",
+                "-Xcc",
+                "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react",
+                "-Xcc",
+                "-IArtifacts/ModularFrameworks/react.framework/Headers/react",
+                "-Xcc",
+                "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react",
+                "-Xcc",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinWidgetSDK/../HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers",
+                "-Xcc",
+                "-I../Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers",
+                "-Xcc",
+                "-IArtifacts/ReactNativeDependencies.xcframework/Headers",
+                "-Xcc",
+                "-IPackages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers"
+              ]
+            }
+          },
+          "tool" : "swift"
+        }
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinExtensionContracts",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinPlatformContracts",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinScriptExtensions",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinScriptUI",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinExpoWidgetNative",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "ExpoWidgets",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinLocalization",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinScriptingWidgets",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets",
+      "resources" : [
+
+      ],
+      "settings" : [
+        {
+          "kind" : {
+            "interoperabilityMode" : {
+              "_0" : "Cxx"
+            }
+          },
+          "tool" : "swift"
+        },
+        {
+          "kind" : {
+            "unsafeFlags" : {
+              "_0" : [
+                "-Xcc",
+                "-std=gnu++20",
+                "-Xcc",
+                "-DREACT_NATIVE_PRODUCTION=1",
+                "-Xcc",
+                "-DRN_DEBUG_STRING_CONVERTIBLE=0",
+                "-Xcc",
+                "-Wno-quoted-include-in-framework-header",
+                "-Xcc",
+                "-Wno-non-modular-include-in-framework-module",
+                "-Xcc",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinWidgetSDK/../HanlinExpoRuntime/../HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/include",
+                "-Xcc",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinWidgetSDK/../HanlinExpoRuntime/../HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/bridge",
+                "-Xcc",
+                "-F/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinWidgetSDK/../HanlinExpoRuntime/Artifacts/ModularFrameworks",
+                "-Xcc",
+                "-F../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks",
+                "-Xcc",
+                "-FArtifacts/ModularFrameworks",
+                "-Xcc",
+                "-FPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks",
+                "-Xcc",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinWidgetSDK/../HanlinExpoRuntime/Artifacts/ReactModularHeaders",
+                "-Xcc",
+                "-I../Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders",
+                "-Xcc",
+                "-IArtifacts/ReactModularHeaders",
+                "-Xcc",
+                "-IPackages/HanlinExpoRuntime/Artifacts/ReactModularHeaders",
+                "-Xcc",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinWidgetSDK/../HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers",
+                "-Xcc",
+                "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers",
+                "-Xcc",
+                "-IArtifacts/ModularFrameworks/react.framework/Headers",
+                "-Xcc",
+                "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers",
+                "-Xcc",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinWidgetSDK/../HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react",
+                "-Xcc",
+                "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react",
+                "-Xcc",
+                "-IArtifacts/ModularFrameworks/react.framework/Headers/react",
+                "-Xcc",
+                "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react",
+                "-Xcc",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinWidgetSDK/../HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers",
+                "-Xcc",
+                "-I../Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers",
+                "-Xcc",
+                "-IArtifacts/ReactNativeDependencies.xcframework/Headers",
+                "-Xcc",
+                "-IPackages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers"
+              ]
+            }
+          },
+          "tool" : "swift"
+        }
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinPlatformContracts",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "HanlinMiniAppCore",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinWikipediaMiniApp",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinWikipediaMiniApp/Sources/HanlinWikipediaMiniApp",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "HanlinWikipediaMiniApp",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinWikipediaMiniAppTests",
+      "packageAccess" : true,
+      "path" : "Packages/HanlinWikipediaMiniApp/Tests/HanlinWikipediaMiniAppTests",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "test"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "IOSSystemStreamBridge",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "ios_system",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "files",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "text",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "tar",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "curl_ios",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "libssh2",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "openssl",
+            null
+          ]
+        },
+        {
+          "target" : [
+            "awk",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "IOSSystemLite",
+      "packageAccess" : true,
+      "path" : "Packages/IOSSystemLite/Sources/IOSSystemLite",
+      "resources" : [
+        {
+          "path" : "Resources",
+          "rule" : {
+            "process" : {
+
+            }
+          }
+        }
+      ],
+      "settings" : [
+
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "ios_system",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "IOSSystemStreamBridge",
+      "packageAccess" : true,
+      "path" : "Packages/IOSSystemLite/Sources/IOSSystemStreamBridge",
+      "publicHeadersPath" : "include",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "regular"
+    },
+    {
+      "checksum" : "d429e68102926f58bedd8e8b7105dcd169478cd6da1cef494a5f468482d1c8f5",
+      "dependencies" : [
+
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "ios_system",
+      "packageAccess" : false,
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "binary",
+      "url" : "https://github.com/holzschu/ios_system/releases/download/v3.0.5/ios_system.xcframework.zip"
+    },
+    {
+      "checksum" : "b0ee1f58c65ba306f178cd559fd6bce79ec8f275280526908c2a992bfcafedd5",
+      "dependencies" : [
+
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "files",
+      "packageAccess" : false,
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "binary",
+      "url" : "https://github.com/holzschu/ios_system/releases/download/v3.0.5/files.xcframework.zip"
+    },
+    {
+      "checksum" : "6fed763c6e941817b2a2af2051871bdfb8a1af4177fad1ab7837f72023dffb79",
+      "dependencies" : [
+
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "text",
+      "packageAccess" : false,
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "binary",
+      "url" : "https://github.com/holzschu/ios_system/releases/download/v3.0.5/text.xcframework.zip"
+    },
+    {
+      "checksum" : "207ab260f8dfb3101938c9e2a949cfd7b76f0e90a000637bbfd6aff47b014a68",
+      "dependencies" : [
+
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "tar",
+      "packageAccess" : false,
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "binary",
+      "url" : "https://github.com/holzschu/ios_system/releases/download/v3.0.5/tar.xcframework.zip"
+    },
+    {
+      "checksum" : "d7e2f05c9f2689d103db32f83ab045bfb6ab28ce84e3017e0c23e4b4db7ab169",
+      "dependencies" : [
+
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "curl_ios",
+      "packageAccess" : false,
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "binary",
+      "url" : "https://github.com/holzschu/ios_system/releases/download/v3.0.5/curl_ios.xcframework.zip"
+    },
+    {
+      "checksum" : "cacfe1789b197b727119f7e32f561eaf9acc27bf38cd19975b74fce107f868a6",
+      "dependencies" : [
+
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "libssh2",
+      "packageAccess" : false,
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "binary",
+      "url" : "https://github.com/holzschu/libssh2-apple/releases/download/v1.11.0/libssh2-dynamic.xcframework.zip"
+    },
+    {
+      "checksum" : "329e8317cf9bee8e138da5d032330a7a1bd2473cf44c9c083cb2f0636abb8b80",
+      "dependencies" : [
+
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "openssl",
+      "packageAccess" : false,
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "binary",
+      "url" : "https://github.com/holzschu/openssl-apple/releases/download/v1.1.1w/openssl-dynamic.xcframework.zip"
+    },
+    {
+      "checksum" : "283f368df6c44ed9d49d15651ca4281706cdd86eb2b6ddb81808c8a3b18a4f7d",
+      "dependencies" : [
+
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "awk",
+      "packageAccess" : false,
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "binary",
+      "url" : "https://github.com/holzschu/ios_system/releases/download/v3.0.5/awk.xcframework.zip"
+    },
+    {
+      "dependencies" : [
+
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "TorahLibraryKit",
+      "packageAccess" : true,
+      "path" : "Packages/TorahLibraryKit/Sources/TorahLibraryKit",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "target" : [
+            "TorahLibraryKit",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "TorahLibraryKitTests",
+      "packageAccess" : true,
+      "path" : "Packages/TorahLibraryKit/Tests/TorahLibraryKitTests",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "test"
+    },
+    {
+      "dependencies" : [
+
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "NodeMobile",
+      "packageAccess" : false,
+      "path" : "Vendor/NodeMobile/NodeMobile.xcframework",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "binary"
+    },
+    {
+      "dependencies" : [
+
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "Python",
+      "packageAccess" : false,
+      "path" : "Vendor/Python/Python.xcframework",
+      "resources" : [
+
+      ],
+      "settings" : [
+
+      ],
+      "type" : "binary"
+    },
+    {
+      "dependencies" : [
+        {
+          "byName" : [
+            "NodeMobile",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+        "NodeRuntimeBridge.swift"
+      ],
+      "name" : "HanlinNodeBridge",
+      "packageAccess" : true,
+      "path" : "AI_HLY/Downstream/RuntimeCore/Node/Native",
+      "publicHeadersPath" : ".",
+      "resources" : [
+
+      ],
+      "settings" : [
+        {
+          "kind" : {
+            "linkedFramework" : {
+              "_0" : "Foundation"
+            }
+          },
+          "tool" : "linker"
+        }
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "byName" : [
+            "Python",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinPythonBridge",
+      "packageAccess" : true,
+      "path" : "AI_HLY/Downstream/RuntimeCore/Python/Native",
+      "publicHeadersPath" : ".",
+      "resources" : [
+
+      ],
+      "settings" : [
+        {
+          "kind" : {
+            "linkedFramework" : {
+              "_0" : "Foundation"
+            }
+          },
+          "tool" : "linker"
+        }
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "byName" : [
+            "HanlinPresentationKit",
+            null
+          ]
+        },
+        {
+          "byName" : [
+            "HanlinRichUI",
+            null
+          ]
+        },
+        {
+          "byName" : [
+            "HanlinChatUI",
+            null
+          ]
+        },
+        {
+          "product" : [
+            "A2UISwiftCore",
+            "a2ui",
+            null,
+            null
+          ]
+        },
+        {
+          "product" : [
+            "A2UISwiftUI",
+            "a2ui",
+            null,
+            null
+          ]
+        },
+        {
+          "product" : [
+            "BasicCatalog",
+            "a2ui",
+            null,
+            null
+          ]
+        },
+        {
+          "product" : [
+            "BasicCatalogSwiftUI",
+            "a2ui",
+            null,
+            null
+          ]
+        },
+        {
+          "product" : [
+            "SwiftTreeSitter",
+            "swift-tree-sitter",
+            null,
+            null
+          ]
+        },
+        {
+          "product" : [
+            "TreeSitter",
+            "tree-sitter",
+            null,
+            null
+          ]
+        },
+        {
+          "product" : [
+            "TreeSitterBash",
+            "tree-sitter-bash",
+            null,
+            null
+          ]
+        },
+        {
+          "byName" : [
+            "HanlinSkillFormat",
+            null
+          ]
+        },
+        {
+          "byName" : [
+            "HanlinHostContracts",
+            null
+          ]
+        },
+        {
+          "byName" : [
+            "HanlinAgentCore",
+            null
+          ]
+        },
+        {
+          "byName" : [
+            "HanlinPersistenceAdapters",
+            null
+          ]
+        },
+        {
+          "byName" : [
+            "HanlinParityMiniApp",
+            null
+          ]
+        },
+        {
+          "byName" : [
+            "HanlinSefariaMiniApp",
+            null
+          ]
+        },
+        {
+          "byName" : [
+            "TorahLibraryKit",
+            null
+          ]
+        },
+        {
+          "byName" : [
+            "HanlinWikipediaMiniApp",
+            null
+          ]
+        },
+        {
+          "byName" : [
+            "HanlinTextStudioMiniApp",
+            null
+          ]
+        },
+        {
+          "byName" : [
+            "HanlinMiniAppCore",
+            null
+          ]
+        },
+        {
+          "byName" : [
+            "HanlinNativeScriptRuntime",
+            null
+          ]
+        },
+        {
+          "byName" : [
+            "HanlinExpoRuntime",
+            null
+          ]
+        },
+        {
+          "byName" : [
+            "HanlinExpoNativeAPI",
+            null
+          ]
+        },
+        {
+          "byName" : [
+            "HanlinExpoNativeAPICore",
+            null
+          ]
+        },
+        {
+          "byName" : [
+            "HanlinExpoWorklets",
+            null
+          ]
+        },
+        {
+          "byName" : [
+            "HanlinScriptDeviceServices",
+            null
+          ]
+        },
+        {
+          "byName" : [
+            "HanlinScriptingApplicationRuntime",
+            null
+          ]
+        },
+        {
+          "byName" : [
+            "HanlinScriptExtensions",
+            null
+          ]
+        },
+        {
+          "byName" : [
+            "HanlinScriptingSDK",
+            null
+          ]
+        },
+        {
+          "byName" : [
+            "HanlinScriptStore",
+            null
+          ]
+        },
+        {
+          "byName" : [
+            "HanlinScriptCompiler",
+            null
+          ]
+        },
+        {
+          "byName" : [
+            "HanlinScriptContracts",
+            null
+          ]
+        },
+        {
+          "byName" : [
+            "CQuickJS",
+            null
+          ]
+        },
+        {
+          "byName" : [
+            "HanlinPlatformContracts",
+            null
+          ]
+        },
+        {
+          "byName" : [
+            "IOSSystemLite",
+            null
+          ]
+        },
+        {
+          "product" : [
+            "MCP",
+            "swift-sdk",
+            null,
+            null
+          ]
+        },
+        {
+          "product" : [
+            "SWCompression",
+            "SWCompression",
+            null,
+            null
+          ]
+        },
+        {
+          "product" : [
+            "Logging",
+            "swift-log",
+            null,
+            null
+          ]
+        },
+        {
+          "product" : [
+            "CoreXLSX",
+            "CoreXLSX",
+            null,
+            null
+          ]
+        },
+        {
+          "product" : [
+            "RichTextKit",
+            "RichTextKit",
+            null,
+            null
+          ]
+        },
+        {
+          "product" : [
+            "LaTeXSwiftUI",
+            "LaTeXSwiftUI",
+            null,
+            null
+          ]
+        },
+        {
+          "product" : [
+            "ZIPFoundation",
+            "ZIPFoundation",
+            null,
+            null
+          ]
+        },
+        {
+          "product" : [
+            "MarkdownUI",
+            "MarkdownUI",
+            null,
+            null
+          ]
+        },
+        {
+          "product" : [
+            "SwiftStreamingMarkdown",
+            "hanlin-streaming-markdown",
+            null,
+            null
+          ]
+        },
+        {
+          "product" : [
+            "SwiftSoup",
+            "SwiftSoup",
+            null,
+            null
+          ]
+        },
+        {
+          "product" : [
+            "LLM",
+            "LLM.swift",
+            null,
+            null
+          ]
+        },
+        {
+          "byName" : [
+            "HanlinProductSplit",
+            null
+          ]
+        },
+        {
+          "byName" : [
+            "HanlinA2UI",
+            null
+          ]
+        },
+        {
+          "byName" : [
+            "HanlinLocalization",
+            null
+          ]
+        },
+        {
+          "byName" : [
+            "HanlinExtensionContracts",
+            null
+          ]
+        },
+        {
+          "byName" : [
+            "HanlinTranslationUI",
+            null
+          ]
+        },
+        {
+          "byName" : [
+            "ExpoWidgets",
+            null
+          ]
+        },
+        {
+          "byName" : [
+            "HanlinNodeBridge",
+            null
+          ]
+        },
+        {
+          "byName" : [
+            "HanlinPythonBridge",
+            null
+          ]
+        },
+        {
+          "byName" : [
+            "HanlinAgentActivityCore",
+            null
+          ]
+        },
+        {
+          "byName" : [
+            "HanlinAgentActivityUI",
+            null
+          ]
+        },
+        {
+          "byName" : [
+            "HanlinWidgetUI",
+            null
+          ]
+        },
+        {
+          "byName" : [
+            "HanlinMiniAppsUI",
+            null
+          ]
+        },
+        {
+          "byName" : [
+            "HanlinMiniAppsBridge",
+            null
+          ]
+        },
+        {
+          "byName" : [
+            "HanlinMiniAppsPicker",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+        "AI_HLY.swift",
+        "AI_HLY.entitlements",
+        "Assets.xcassets",
+        "Base.lproj",
+        "mul.lproj"
+      ],
+      "name" : "AI_Hanlin",
+      "packageAccess" : true,
+      "path" : "AI_HLY",
+      "resources" : [
+        {
+          "path" : "RuntimeHostResources.zip",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        },
+        {
+          "path" : "Downstream/AgentDiagnostics/HanlinDiagnosticsBuildProvenance.json",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        },
+        {
+          "path" : "Downstream/AgentSkills/Analysis/Resources/LICENSE.OpenClaw.JSON5.txt",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        },
+        {
+          "path" : "Downstream/AgentSkills/Analysis/Resources/LICENSE.OpenClaw.Semver.txt",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        },
+        {
+          "path" : "Downstream/AgentSkills/Analysis/Resources/LICENSE.OpenClaw.txt",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        },
+        {
+          "path" : "Downstream/AgentSkills/Analysis/Resources/hanlin_openclaw_native_contract.mjs",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        },
+        {
+          "path" : "Downstream/AgentSkills/Analysis/Resources/hanlin_openclaw_native_probe.mjs",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        },
+        {
+          "path" : "Downstream/AgentSkills/Analysis/Resources/hanlin_openclaw_policy.mjs",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        },
+        {
+          "path" : "Downstream/AgentSkills/Analysis/Resources/hanlin_openclaw_policy_native_contract.mjs",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        },
+        {
+          "path" : "Downstream/AgentSkills/Analysis/Resources/hanlin_openclaw_policy_native_probe.mjs",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        },
+        {
+          "path" : "Downstream/AgentSkills/Analysis/Resources/hanlin_openclaw_policy_probe.mjs",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        },
+        {
+          "path" : "Downstream/AgentSkills/Analysis/Resources/hanlin_openclaw_policy_provenance.json",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        },
+        {
+          "path" : "Downstream/AgentSkills/Analysis/Resources/hanlin_openclaw_policy_test_selection.json",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        },
+        {
+          "path" : "Downstream/AgentSkills/Analysis/Resources/hanlin_openclaw_policy_upstream_shim.mjs",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        },
+        {
+          "path" : "Downstream/AgentSkills/Analysis/Resources/hanlin_openclaw_policy_upstream_tests.mjs",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        },
+        {
+          "path" : "Downstream/AgentSkills/Analysis/Resources/hanlin_openclaw_provenance.json",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        },
+        {
+          "path" : "Downstream/AgentSkills/Analysis/Resources/hanlin_openclaw_requirements.js",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        },
+        {
+          "path" : "Downstream/AgentSkills/Analysis/Resources/hanlin_openclaw_upstream_requirements_tests.js",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        },
+        {
+          "path" : "Downstream/AgentSkills/Analysis/Resources/hanlin_python_ast.py",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        },
+        {
+          "path" : "Downstream/AgentSkills/Analysis/Resources/hanlin_python_manifest.py",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        },
+        {
+          "path" : "Downstream/AgentSkills/Analysis/Resources/hanlin_typescript_ast.mjs",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        },
+        {
+          "path" : "Downstream/RuntimeCore/Python/Resources/HanlinPythonCACertificates.LICENSE.txt",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        },
+        {
+          "path" : "Downstream/RuntimeCore/Python/Resources/HanlinPythonCACertificates.json",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        },
+        {
+          "path" : "Downstream/RuntimeCore/Python/Resources/HanlinPythonCACertificates.pem",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        },
+        {
+          "path" : "Downstream/RuntimeCore/Python/Resources/HanlinPythonExecution.py",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        },
+        {
+          "path" : "Downstream/RuntimeCore/Python/Resources/HanlinPythonNativeExtensions.json",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        },
+        {
+          "path" : "Downstream/RuntimeCore/Python/Resources/HanlinPythonPackaging.lock.json",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        },
+        {
+          "path" : "Downstream/RuntimeCore/Python/Resources/HanlinPythonPackaging.py",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        },
+        {
+          "path" : "Downstream/RuntimeCore/Python/Resources/Vendor/installer-1.1.0-py3-none-any.whl",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        },
+        {
+          "path" : "Downstream/RuntimeCore/Python/Resources/Vendor/packaging-26.3-py3-none-any.whl",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        },
+        {
+          "path" : "Downstream/RuntimeCore/Python/Resources/Vendor/pyproject_hooks-1.3.3-py3-none-any.whl",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        },
+        {
+          "path" : "Downstream/RuntimeCore/Python/Resources/Vendor/resolvelib-1.2.1-py3-none-any.whl",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        },
+        {
+          "path" : "Downstream/RuntimeCore/Python/Resources/hanlin_native-1.0.0-py3-none-any.whl",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        },
+        {
+          "path" : "Downstream/RuntimeCore/Resources/RuntimeLinkDependencyNotices.txt",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        },
+        {
+          "path" : "Downstream/RuntimeCore/Resources/RuntimeManifest.json",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        },
+        {
+          "path" : "Resource/Refinement.json",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        },
+        {
+          "path" : "Resource/UpdateNotes.json",
+          "rule" : {
+            "copy" : {
+
+            }
+          }
+        }
+      ],
+      "settings" : [
+        {
+          "kind" : {
+            "define" : {
+              "_0" : "HANLIN_A2UI_POC"
+            }
+          },
+          "tool" : "swift"
+        },
+        {
+          "kind" : {
+            "define" : {
+              "_0" : "HANLIN_SKILL_ANALYSIS_POC"
+            }
+          },
+          "tool" : "swift"
+        },
+        {
+          "kind" : {
+            "interoperabilityMode" : {
+              "_0" : "Cxx"
+            }
+          },
+          "tool" : "swift"
+        },
+        {
+          "kind" : {
+            "enableUpcomingFeature" : {
+              "_0" : "NonisolatedNonsendingByDefault"
+            }
+          },
+          "tool" : "swift"
+        },
+        {
+          "kind" : {
+            "linkedLibrary" : {
+              "_0" : "icucore"
+            }
+          },
+          "tool" : "linker"
+        },
+        {
+          "kind" : {
+            "linkedLibrary" : {
+              "_0" : "z"
+            }
+          },
+          "tool" : "linker"
+        },
+        {
+          "kind" : {
+            "linkedLibrary" : {
+              "_0" : "c++"
+            }
+          },
+          "tool" : "linker"
+        }
+      ],
+      "sources" : [
+        "ChatView.swift",
+        "Downstream/AgentActivity/AgentActivityModels.swift",
+        "Downstream/AgentActivity/AgentActivityPersistence.swift",
+        "Downstream/AgentActivity/AgentActivityStepView.swift",
+        "Downstream/AgentActivity/AgentEvent.swift",
+        "Downstream/AgentActivity/AgentEventAccumulator.swift",
+        "Downstream/AgentActivity/AgentRunLifecycleCoordinator.swift",
+        "Downstream/AgentActivity/Evidence/AgentEvidenceAccumulator.swift",
+        "Downstream/AgentActivity/Evidence/AgentEvidenceDeduplicator.swift",
+        "Downstream/AgentActivity/Evidence/AgentEvidenceExtractor.swift",
+        "Downstream/AgentActivity/Evidence/AgentEvidenceItem.swift",
+        "Downstream/AgentActivity/Evidence/AgentEvidenceRow.swift",
+        "Downstream/AgentActivity/Evidence/AgentEvidenceSheet.swift",
+        "Downstream/AgentActivity/Evidence/LegacyResourcesEvidenceAdapter.swift",
+        "Downstream/AgentActivity/LegacyAgentActivityAdapter.swift",
+        "Downstream/AgentActivity/Presentation/AgentActivityComposer.swift",
+        "Downstream/AgentActivity/Presentation/AgentActivityCompositionPolicy.swift",
+        "Downstream/AgentActivity/Presentation/AgentActivityDeduplicator.swift",
+        "Downstream/AgentActivity/Presentation/AgentActivityDetailPolicy.swift",
+        "Downstream/AgentActivity/Presentation/AgentActivityHeaderPhase.swift",
+        "Downstream/AgentActivity/Presentation/AgentActivityTitleBuilder.swift",
+        "Downstream/AgentActivity/Presentation/AgentActivityVisibilityPolicy.swift",
+        "Downstream/AgentActivity/Presentation/AgentDisplayActivity.swift",
+        "Downstream/AgentActivity/Presentation/AgentDisplayRound.swift",
+        "Downstream/AgentActivity/ProviderCapabilities.swift",
+        "Downstream/AgentActivity/ProviderEventAdapter.swift",
+        "Downstream/AgentActivity/ReportProgressController.swift",
+        "Downstream/AgentActivity/Scrolling/AgentRunScrollFingerprint.swift",
+        "Downstream/AgentActivity/Scrolling/ChatAutoFollowController.swift",
+        "Downstream/AgentActivity/Scrolling/ChatAutoFollowValidation.swift",
+        "Downstream/AgentActivity/Scrolling/ChatScrollViewHandle.swift",
+        "Downstream/AgentActivity/ToolPresentation/LegacyToolPresentationAdapter.swift",
+        "Downstream/AgentActivity/ToolPresentation/ToolInvocationMetadata.swift",
+        "Downstream/AgentActivity/ToolPresentation/ToolPresentationProfile.swift",
+        "Downstream/AgentActivity/ToolPresentation/ToolPresentationValidation.swift",
+        "Downstream/AgentActivity/ToolPresentation/ToolResultPresentationCoordinator.swift",
+        "Downstream/AgentActivity/ToolPresentationRegistry.swift",
+        "Downstream/AgentActivity/ToolSchemaDecorator.swift",
+        "Downstream/AgentActivity/Transcript/AgentTranscriptAccumulator.swift",
+        "Downstream/AgentActivity/Transcript/AgentTranscriptItem.swift",
+        "Downstream/AgentActivity/Transcript/AgentTranscriptTextView.swift",
+        "Downstream/AgentActivity/Transcript/AgentTranscriptToolResultView.swift",
+        "Downstream/AgentActivity/Transcript/AgentTranscriptValidation.swift",
+        "Downstream/AgentDiagnostics/AgentDiagnosticsConfiguration.swift",
+        "Downstream/AgentDiagnostics/AgentDiagnosticsExport.swift",
+        "Downstream/AgentDiagnostics/AgentDiagnosticsJournal.swift",
+        "Downstream/AgentDiagnostics/AgentDiagnosticsRawReview.swift",
+        "Downstream/AgentDiagnostics/AgentDiagnosticsRecorder.swift",
+        "Downstream/AgentDiagnostics/AgentDiagnosticsRedactor.swift",
+        "Downstream/AgentDiagnostics/AgentDiagnosticsSession.swift",
+        "Downstream/AgentDiagnostics/AgentDiagnosticsView.swift",
+        "Downstream/AgentDiagnostics/AgentRuntimeUIAcceptanceProvider.swift",
+        "Downstream/AgentDiagnostics/AgentTokenUsage.swift",
+        "Downstream/AgentSkills/Analysis/BashSkillSyntaxAnalyzer.swift",
+        "Downstream/AgentSkills/Analysis/SkillSyntaxFindings.swift",
+        "Downstream/AgentSkills/AssistantCapabilitySession.swift",
+        "Downstream/AgentSkills/AssistantToolExposurePlanner.swift",
+        "Downstream/AgentSkills/HanlinAISDKToolAdapter.swift",
+        "Downstream/AgentSkills/HanlinSkillCatalog+InvocationPolicy.swift",
+        "Downstream/AgentSkills/HanlinSkillCatalog.swift",
+        "Downstream/AgentSkills/HanlinSkillIndex.swift",
+        "Downstream/AgentSkills/LoadSkillTool.swift",
+        "Downstream/AgentSkills/ReadSkillResourceTool.swift",
+        "Downstream/AgentSkills/ReadToolResultTool.swift",
+        "Downstream/AgentSkills/SkillDownloadTransfer.swift",
+        "Downstream/AgentSkills/SkillImporter.swift",
+        "Downstream/AgentSkills/SkillModels.swift",
+        "Downstream/AgentSkills/SkillStore.swift",
+        "Downstream/AgentSkills/SystemSkillsProvider.swift",
+        "Downstream/AgentSkills/ToolResultStore.swift",
+        "Downstream/AgentSkills/ToolSearchTool.swift",
+        "Downstream/AgentSkills/UI/SkillCenterView.swift",
+        "Downstream/AgentSkills/UI/SkillCompatibilityUnknownSection.swift",
+        "Downstream/AgentSkills/UI/SkillDetailView.swift",
+        "Downstream/AgentSkills/UI/SkillEditorView.swift",
+        "Downstream/AgentSkills/UI/SkillExecutionPlanSection.swift",
+        "Downstream/AgentSkills/UI/SkillImportPresentationState.swift",
+        "Downstream/AgentSkills/UI/SkillImportView.swift",
+        "Downstream/AgentSkills/UI/SkillL10n.swift",
+        "Downstream/CanonicalAdapters/HanlinFoundationJSONShadowAdapter.swift",
+        "Downstream/CanonicalAdapters/MCPCanonicalShadowAdapter.swift",
+        "Downstream/CanonicalAdapters/NativeAppCanonicalShadowAdapter.swift",
+        "Downstream/CanonicalAdapters/NativeToolCanonicalShadowAdapter.swift",
+        "Downstream/CanonicalAdapters/RuntimeCoreCanonicalShadowAdapter.swift",
+        "Downstream/CanonicalShadow/CanonicalShadowReport.swift",
+        "Downstream/CanonicalShadow/HanlinCanonicalShadowCoordinator.swift",
+        "Downstream/CanonicalTools/HanlinCanonicalToolAuthority.swift",
+        "Downstream/CanonicalTools/Legacy/LegacyToolCanonicalAdapter.swift",
+        "Downstream/CanonicalTools/Legacy/LegacyToolExecutor.swift",
+        "Downstream/ChatCore/HanlinAIReceivingWindowRoot.swift",
+        "Downstream/ChatCore/HanlinAppAgentPresentationContracts.swift",
+        "Downstream/ChatCore/HanlinAppAgentSessionOwner.swift",
+        "Downstream/ChatCore/HanlinAppConversationStore.swift",
+        "Downstream/ChatCore/HanlinAppHostIntegration.swift",
+        "Downstream/ChatCore/HanlinAppHostSplitTool.swift",
+        "Downstream/ChatCore/HanlinAppSplitOriginCoordinator.swift",
+        "Downstream/ChatCore/HanlinAppToolConsent.swift",
+        "Downstream/ChatCore/HanlinConversationMutation.swift",
+        "Downstream/ChatCore/HanlinConversationRunLease.swift",
+        "Downstream/ChatCore/HanlinConversationStreamProjection.swift",
+        "Downstream/ChatCore/HanlinDefaultChatPolicy.swift",
+        "Downstream/ChatCore/HanlinInlineToolError.swift",
+        "Downstream/ChatCore/HanlinNativeA2UIAcceptanceProvider.swift",
+        "Downstream/ChatCore/HanlinToolApprovalScopeFactory.swift",
+        "Downstream/ChatCore/HanlinToolApprovalStore.swift",
+        "Downstream/ChatInput/HanlinComposerActionBridge.swift",
+        "Downstream/ChatInput/HanlinComposerPopupCoordinator.swift",
+        "Downstream/ChatInput/HanlinComposerPopupView.swift",
+        "Downstream/ChatInput/HanlinDetachedCapabilityChips.swift",
+        "Downstream/ChatInput/HanlinDraftPersistence.swift",
+        "Downstream/ChatInput/HanlinFeedback.swift",
+        "Downstream/ChatInput/HanlinModelPickerPopover.swift",
+        "Downstream/ChatInput/HanlinModelZoomPopover.swift",
+        "Downstream/ChatInput/HanlinMorphComposer.swift",
+        "Downstream/ChatInput/NativeMultilineTextEditor.swift",
+        "Downstream/ChatInput/OrganizerDock/HanlinCompactChatWorkspace.swift",
+        "Downstream/ChatInput/OrganizerDock/HanlinCompactConversationLibrary.swift",
+        "Downstream/ChatInput/OrganizerDock/HanlinCompactRecentChats.swift",
+        "Downstream/ChatInput/OrganizerDock/HanlinComposerSessionBridge.swift",
+        "Downstream/ChatInput/OrganizerDock/HanlinOrganizerDock.swift",
+        "Downstream/ChatInput/OrganizerDock/HanlinOrganizerDockState.swift",
+        "Downstream/ChatInput/OrganizerDock/HanlinPendingFirstTurn.swift",
+        "Downstream/ChatPresentation/A2UI/HanlinA2UIContentLimits.swift",
+        "Downstream/ChatPresentation/A2UI/HanlinA2UIFrameLifetime.swift",
+        "Downstream/ChatPresentation/A2UI/HanlinA2UIIngress.swift",
+        "Downstream/ChatPresentation/A2UI/HanlinA2UILocalMedia.swift",
+        "Downstream/ChatPresentation/A2UI/HanlinA2UIResultOwner.swift",
+        "Downstream/ChatPresentation/A2UI/HanlinA2UIResultProjectionSource.swift",
+        "Downstream/ChatPresentation/A2UI/HanlinA2UIResultView.swift",
+        "Downstream/ChatPresentation/A2UI/HanlinA2UISession.swift",
+        "Downstream/ChatPresentation/A2UI/HanlinChatContentProjection.swift",
+        "Downstream/ChatPresentation/A2UI/HanlinMediaCatalog.swift",
+        "Downstream/ChatPresentation/AgentSDK/HanlinA2UIAcceptanceStatusView.swift",
+        "Downstream/ChatPresentation/AgentSDK/HanlinA2UIAgentPresentationAdapter.swift",
+        "Downstream/ChatPresentation/AgentSDK/HanlinA2UIAppPresentation.swift",
+        "Downstream/ChatPresentation/AgentSDK/HanlinA2UICompleteBatchValidator.swift",
+        "Downstream/ChatPresentation/AgentSDK/HanlinOfficialA2UIToolPayload.swift",
+        "Downstream/ChatPresentation/AgentSDK/HanlinToolConsentSheet.swift",
+        "Downstream/ChatPresentation/AgentSDK/HanlinToolPermissionsView.swift",
+        "Downstream/ChatPresentation/AgentSDK/PresentA2UITool.swift",
+        "Downstream/ChatPresentation/ChatEmbeddedResultHost.swift",
+        "Downstream/ChatPresentation/ChatHostPresentationPolicy.swift",
+        "Downstream/ChatPresentation/ChatMarkdownView.swift",
+        "Downstream/ChatPresentation/ChatMessagePreview.swift",
+        "Downstream/ChatPresentation/ChatMessagePreviewMetrics.swift",
+        "Downstream/ChatPresentation/ChatPresentationBridge.swift",
+        "Downstream/ChatPresentation/ChatSavedExcerpt.swift",
+        "Downstream/ChatPresentation/ChatSavedExcerptsView.swift",
+        "Downstream/ChatPresentation/ClassicChatAgentProjection.swift",
+        "Downstream/ChatPresentation/CodeFences/ChatCodeFenceDocument.swift",
+        "Downstream/ChatPresentation/CodeFences/ChatCodeFenceEngine.swift",
+        "Downstream/ChatPresentation/CodeFences/ChatCodeFenceView.swift",
+        "Downstream/ChatPresentation/CodeFences/ChatCodeFenceWebView.swift",
+        "Downstream/ChatPresentation/HanlinAgentRunReadCache.swift",
+        "Downstream/ChatPresentation/HanlinChatContentView.swift",
+        "Downstream/ChatPresentation/HanlinChatStreamBuffer.swift",
+        "Downstream/ChatPresentation/HanlinDesignCatalogBridge.swift",
+        "Downstream/ChatPresentation/HanlinMessageCitations.swift",
+        "Downstream/ChatPresentation/HanlinModelDisplayName.swift",
+        "Downstream/ChatPresentation/HanlinOpenUIPresentation.swift",
+        "Downstream/ChatPresentation/HanlinPersonalLibraryView.swift",
+        "Downstream/ChatPresentation/Media/HanlinA2UIMediaURLGate.swift",
+        "Downstream/ChatPresentation/Media/HanlinMediaAddressPolicy.swift",
+        "Downstream/ChatPresentation/Media/HanlinMediaCatalogImplementation.swift",
+        "Downstream/ChatPresentation/Media/HanlinRemoteMediaURL.swift",
+        "Downstream/ChatPresentation/Media/HanlinRichMediaStore.swift",
+        "Downstream/ChatPresentation/Media/HanlinRichMediaViews.swift",
+        "Downstream/ChatPresentation/Media/HanlinYouTubeDocument.swift",
+        "Downstream/ChatPresentation/Media/HanlinYouTubePlayerView.swift",
+        "Downstream/ChatPresentation/Media/HanlinYouTubeVideo.swift",
+        "Downstream/ChatPresentation/ProviderModelCatalogMetadata.swift",
+        "Downstream/Compatibility/AppleFoundationModelsProvider.swift",
+        "Downstream/Compatibility/CoreAILanguageModelProvider.swift",
+        "Downstream/Compatibility/LocalLLMStreamingAdapter.swift",
+        "Downstream/EmbeddedResults/ExpoEmbeddedResultAdapter.swift",
+        "Downstream/EmbeddedResults/HanlinEmbeddedResultResolver.swift",
+        "Downstream/EmbeddedResults/HanlinEmbeddedResultSession.swift",
+        "Downstream/EmbeddedResults/HanlinEmbeddedResultSurface.swift",
+        "Downstream/EmbeddedResults/NativeScriptEmbeddedResultAdapter.swift",
+        "Downstream/EmbeddedResults/ScriptUIEmbeddedResultAdapter.swift",
+        "Downstream/EmbeddedResults/SwiftEmbeddedResultAdapter.swift",
+        "Downstream/HostServices/Adapters/AgentHostServicesAdapter.swift",
+        "Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift",
+        "Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
+        "Downstream/HostServices/Adapters/ScriptUIHostServicesAdapter.swift",
+        "Downstream/HostServices/Adapters/SwiftMiniAppHostServicesAdapter.swift",
+        "Downstream/HostServices/Capabilities/HanlinHostCapabilityAuthority.swift",
+        "Downstream/HostServices/Capabilities/HanlinHostCapabilityMetadata.swift",
+        "Downstream/HostServices/Core/HanlinHostCallContext.swift",
+        "Downstream/HostServices/Core/HanlinHostServiceError.swift",
+        "Downstream/HostServices/Core/HanlinHostServicesBroker.swift",
+        "Downstream/HostServices/Data/HanlinFileService.swift",
+        "Downstream/HostServices/Data/HanlinSQLiteHostAdapter.swift",
+        "Downstream/HostServices/Runtime/HanlinRuntimeBroker.swift",
+        "Downstream/HostServices/Runtime/HanlinRuntimeWireProtocol.swift",
+        "Downstream/HostServices/Runtime/RuntimeAvailabilityStore.swift",
+        "Downstream/HostServices/System/HanlinSystemServicesBroker.swift",
+        "Downstream/MCP/Core/MCPChatSelection.swift",
+        "Downstream/MCP/Core/MCPCompatibilityReport.swift",
+        "Downstream/MCP/Core/MCPEnvironmentDraft.swift",
+        "Downstream/MCP/Core/MCPError.swift",
+        "Downstream/MCP/Core/MCPFeatureConfiguration.swift",
+        "Downstream/MCP/Core/MCPInstallState.swift",
+        "Downstream/MCP/Core/MCPServerConfiguration.swift",
+        "Downstream/MCP/Core/MCPServerDescriptor.swift",
+        "Downstream/MCP/Core/MCPServerRuntimeState.swift",
+        "Downstream/MCP/Core/MCPServerSettings.swift",
+        "Downstream/MCP/Diagnostics/MCPLogRedactor.swift",
+        "Downstream/MCP/Diagnostics/MCPTraceLogger.swift",
+        "Downstream/MCP/Installer/MCPInstallProgress.swift",
+        "Downstream/MCP/Installer/MCPPackageImportDocument.swift",
+        "Downstream/MCP/Installer/MCPPackageInstallService.swift",
+        "Downstream/MCP/Installer/MCPPackageManifestPreview.swift",
+        "Downstream/MCP/Installer/MCPPackageSpec.swift",
+        "Downstream/MCP/Persistence/MCPChatSelectionStore.swift",
+        "Downstream/MCP/Persistence/MCPFileLayout.swift",
+        "Downstream/MCP/Persistence/MCPInstalledPackageManifest.swift",
+        "Downstream/MCP/Persistence/MCPSecretStore.swift",
+        "Downstream/MCP/Persistence/MCPServerPathResolver.swift",
+        "Downstream/MCP/Persistence/MCPServerRegistryStore.swift",
+        "Downstream/MCP/Runtime/EmbeddedNodeMCPTransport.swift",
+        "Downstream/MCP/Runtime/MCPClientSession.swift",
+        "Downstream/MCP/Runtime/MCPRuntimeAcceptance.swift",
+        "Downstream/MCP/Runtime/MCPRuntimeController.swift",
+        "Downstream/MCP/Runtime/MCPRuntimeProvider.swift",
+        "Downstream/MCP/Runtime/MCPRuntimeSnapshot.swift",
+        "Downstream/MCP/Runtime/MCPServerLifecycleSlot.swift",
+        "Downstream/MCP/Runtime/MCPServerPathResolverAcceptance.swift",
+        "Downstream/MCP/Runtime/NodeRuntimeService+MCP.swift",
+        "Downstream/MCP/ToolIntegration/AssistantToolBridge.swift",
+        "Downstream/MCP/ToolIntegration/AssistantToolRequestScope.swift",
+        "Downstream/MCP/ToolIntegration/MCPToolBridge.swift",
+        "Downstream/MCP/ToolIntegration/MCPToolCatalog.swift",
+        "Downstream/MCP/ToolIntegration/MCPToolDescriptor.swift",
+        "Downstream/MCP/ToolIntegration/MCPToolNameCodec.swift",
+        "Downstream/MCP/ToolIntegration/MCPToolResolutionResult.swift",
+        "Downstream/MCP/UI/Chat/MCPChatServerButton.swift",
+        "Downstream/MCP/UI/Chat/MCPChatServerSheet.swift",
+        "Downstream/MCP/UI/MCPL10n.swift",
+        "Downstream/MCP/UI/Settings/MCPInstallProgressView.swift",
+        "Downstream/MCP/UI/Settings/MCPRuntimeStatusView.swift",
+        "Downstream/MCP/UI/Settings/MCPServerDetailView.swift",
+        "Downstream/MCP/UI/Settings/MCPServerDiagnosticsView.swift",
+        "Downstream/MCP/UI/Settings/MCPServerEnvironmentView.swift",
+        "Downstream/MCP/UI/Settings/MCPServerInstallView.swift",
+        "Downstream/MCP/UI/Settings/MCPServerLogsView.swift",
+        "Downstream/MCP/UI/Settings/MCPServerToolsView.swift",
+        "Downstream/MCP/UI/Settings/MCPServersSettingsView.swift",
+        "Downstream/MiniApps/CompiledMiniAppExposureRegistry.swift",
+        "Downstream/MiniApps/HanlinMiniAppHost.swift",
+        "Downstream/NativeScript/HanlinNativeScriptPOCView.swift",
+        "Downstream/NativeScript/HanlinNativeScriptProductionBootstrap.swift",
+        "Downstream/NativeScript/HanlinNativeServicesBridge.swift",
+        "Downstream/ProductSplit/HanlinSplitForegroundTransport.swift",
+        "Downstream/ProductSplit/HanlinSplitLiveTarget.swift",
+        "Downstream/ProductSplit/HanlinSplitMailbox.swift",
+        "Downstream/ProductSplitIntegration/HanlinExternalMiniAppSession.swift",
+        "Downstream/ProductSplitIntegration/HanlinMiniAppsBootstrap.swift",
+        "Downstream/ProductSplitIntegration/HanlinMiniAppsCatalogView.swift",
+        "Downstream/ProductSplitIntegration/HanlinMiniAppsForegroundBridge.swift",
+        "Downstream/ProductSplitIntegration/HanlinMiniAppsProvider.swift",
+        "Downstream/ProductSplitIntegration/MiniAppAuthoringDelivery.swift",
+        "Downstream/RuntimeCore/Core/AppRuntimeCore.swift",
+        "Downstream/RuntimeCore/Core/HanlinApplicationRuntimeConfiguration.swift",
+        "Downstream/RuntimeCore/Core/MiniAppAuthoringService.swift",
+        "Downstream/RuntimeCore/Core/RuntimeBackgroundContinuation.swift",
+        "Downstream/RuntimeCore/Core/RuntimeCapabilityContract.swift",
+        "Downstream/RuntimeCore/Core/RuntimeDiagnostics.swift",
+        "Downstream/RuntimeCore/Core/RuntimeExecutionInputArtifact.swift",
+        "Downstream/RuntimeCore/Core/RuntimeFileLayout.swift",
+        "Downstream/RuntimeCore/Core/RuntimeJobStore.swift",
+        "Downstream/RuntimeCore/Core/RuntimeLifecycleBridge.swift",
+        "Downstream/RuntimeCore/Core/RuntimeModels.swift",
+        "Downstream/RuntimeCore/Core/RuntimePolicy.swift",
+        "Downstream/RuntimeCore/Core/RuntimeQueuedExecution.swift",
+        "Downstream/RuntimeCore/Core/RuntimeUserOperation.swift",
+        "Downstream/RuntimeCore/Core/Skills/SkillOpenClawProjection.swift",
+        "Downstream/RuntimeCore/Core/Skills/SkillRuntimeAnalysis.swift",
+        "Downstream/RuntimeCore/Core/Skills/SkillRuntimeContract.swift",
+        "Downstream/RuntimeCore/Core/Skills/SkillRuntimeFactsProvider.swift",
+        "Downstream/RuntimeCore/Core/Skills/SkillRuntimeInstalledIdentity.swift",
+        "Downstream/RuntimeCore/Core/Skills/SkillRuntimeNodeCapabilityAdapter.swift",
+        "Downstream/RuntimeCore/Core/Skills/SkillRuntimeOpenClaw.swift",
+        "Downstream/RuntimeCore/Core/Skills/SkillRuntimePlanner.swift",
+        "Downstream/RuntimeCore/Core/Skills/SkillRuntimeRegistry.swift",
+        "Downstream/RuntimeCore/Core/Skills/SkillRuntimeRequirements.swift",
+        "Downstream/RuntimeCore/Core/Skills/SkillRuntimeService.swift",
+        "Downstream/RuntimeCore/Environment/RuntimeEnvironment.swift",
+        "Downstream/RuntimeCore/JavaScriptCore/JavaScriptCoreOutputCapture.swift",
+        "Downstream/RuntimeCore/JavaScriptCore/JavaScriptCoreRuntimeService.swift",
+        "Downstream/RuntimeCore/Lifecycle/LifecycleExecutionBroker.swift",
+        "Downstream/RuntimeCore/Node/Native/NodeRuntimeBridge.swift",
+        "Downstream/RuntimeCore/Node/NodePackageManager.swift",
+        "Downstream/RuntimeCore/Node/NodeRuntimeService.swift",
+        "Downstream/RuntimeCore/Node/RuntimeCommandDispatcher.swift",
+        "Downstream/RuntimeCore/Node/RuntimeHostConnection+Operations.swift",
+        "Downstream/RuntimeCore/Node/TypeScriptRuntimeService.swift",
+        "Downstream/RuntimeCore/Python/PythonNativeExtensions.swift",
+        "Downstream/RuntimeCore/Python/PythonPackageManager.swift",
+        "Downstream/RuntimeCore/Python/PythonQueuedExecution.swift",
+        "Downstream/RuntimeCore/Python/PythonRuntimeBridge.swift",
+        "Downstream/RuntimeCore/Python/PythonRuntimeService.swift",
+        "Downstream/RuntimeCore/Shell/ShellRuntimeAcceptance.swift",
+        "Downstream/RuntimeCore/Shell/ShellRuntimeDiagnostics.swift",
+        "Downstream/RuntimeCore/Shell/ShellRuntimeService.swift",
+        "Downstream/RuntimeCore/Shell/ShellRuntimeSmokeSuite.swift",
+        "Downstream/RuntimeCore/Tools/ExecuteJavaScriptTool.swift",
+        "Downstream/RuntimeCore/Tools/ExecuteLocalPythonTool.swift",
+        "Downstream/RuntimeCore/Tools/ExecuteShellCommandTool.swift",
+        "Downstream/RuntimeCore/Tools/ExecuteSkillResourceTool.swift",
+        "Downstream/RuntimeCore/Tools/ExecuteTypeScriptTool.swift",
+        "Downstream/RuntimeCore/Tools/GetRuntimeCapabilitiesTool.swift",
+        "Downstream/RuntimeCore/Tools/GetRuntimeJobTool.swift",
+        "Downstream/RuntimeCore/Tools/ListToolsTool.swift",
+        "Downstream/RuntimeCore/Tools/ManageMCPServersTool.swift",
+        "Downstream/RuntimeCore/Tools/ManageRuntimePackagesTool.swift",
+        "Downstream/RuntimeCore/Tools/MiniAppAuthoringTool.swift",
+        "Downstream/RuntimeCore/Tools/NativeToolCatalog+RuntimeTools.swift",
+        "Downstream/RuntimeCore/Tools/RuntimeToolSupport.swift",
+        "Downstream/RuntimeCore/UI/NodePackagesView.swift",
+        "Downstream/RuntimeCore/UI/PythonPackagesView.swift",
+        "Downstream/RuntimeCore/UI/RuntimeCenterView.swift",
+        "Downstream/RuntimeCore/UI/RuntimeEnvironmentView.swift",
+        "Downstream/RuntimeCore/UI/RuntimeL10n.swift",
+        "Downstream/RuntimeCore/UI/RuntimeLogsView.swift",
+        "Downstream/RuntimeCore/UI/ShellCapabilitiesView.swift",
+        "Downstream/SDK/HanlinApplicationComponents.swift",
+        "Downstream/SDK/HanlinApplicationConfiguration.swift",
+        "Downstream/SDK/HanlinApplicationContext.swift",
+        "Downstream/SDK/HanlinApplicationConversationManagement.swift",
+        "Downstream/SDK/HanlinApplicationData.swift",
+        "Downstream/SDK/HanlinApplicationLifecycle.swift",
+        "Downstream/SDK/HanlinApplicationMCP.swift",
+        "Downstream/SDK/HanlinApplicationModelConfiguration.swift",
+        "Downstream/SDK/HanlinApplicationResources.swift",
+        "Downstream/SDK/HanlinApplicationScene.swift",
+        "Downstream/SDK/HanlinConversationComposerView.swift",
+        "Downstream/SDK/HanlinConversationController.swift",
+        "Downstream/SDK/HanlinConversationMessageSnapshot.swift",
+        "Downstream/SDK/HanlinConversationView.swift",
+        "Downstream/SDK/HanlinMountedComposerContent.swift",
+        "Downstream/SDK/HanlinToolActivityView.swift",
+        "Downstream/SDK/MiniAppRepairCoordinator.swift",
+        "Downstream/Scripting/HanlinJavaScriptCoreSession.swift",
+        "Downstream/Scripting/HanlinQuickJSSession.swift",
+        "Downstream/Scripting/HanlinScriptCanonicalAdapter.swift",
+        "Downstream/Scripting/HanlinScriptPackageLoader.swift",
+        "Downstream/Scripting/HanlinScriptValueBridge.swift",
+        "Downstream/Scripting/HanlinScriptingError.swift",
+        "Downstream/Scripting/HanlinScriptingPerformanceSignposts.swift",
+        "Downstream/Scripting/HanlinScriptingProviderRegistry.swift",
+        "Downstream/Scripting/HanlinWorkerScriptingSessions.swift",
+        "Downstream/ScriptingPlatform/HanlinAppleDeviceSnapshotProvider.swift",
+        "Downstream/ScriptingPlatform/HanlinNodeMobileScriptingCompiler.swift",
+        "Downstream/ScriptingPlatform/HanlinScriptingApplicationRuntimeBridge.swift",
+        "Downstream/ScriptingPlatform/HanlinScriptingAssistantProviderAdapter.swift",
+        "Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+        "Downstream/ScriptingPlatform/HanlinScriptingPlatformAIIntegration.swift",
+        "Downstream/ScriptingPlatform/HanlinScriptingSystemUI.swift",
+        "Downstream/ScriptingPlatform/MiniAppImportDiagnosticsView.swift",
+        "Downstream/ScriptingPlatform/ScriptingPackageCardView.swift",
+        "Downstream/ScriptingPlatform/ScriptingPackageCenterViews.swift",
+        "Downstream/SystemIntegrations/ChavrusaShareActionTarget.swift",
+        "Downstream/SystemIntegrations/ChavrusaShareInbox.swift",
+        "Downstream/SystemIntegrations/ChavrusaShareInboxView.swift",
+        "Downstream/SystemIntegrations/ChavrusaSystemIntegrations.swift",
+        "Downstream/TorahStudy/AuthorizedAttachmentRegistry.swift",
+        "Downstream/TorahStudy/TorahOCRService.swift",
+        "Downstream/TorahStudy/TorahPhotoStudyCaptureView.swift",
+        "Downstream/TorahStudy/TorahSourceReaderView.swift",
+        "Downstream/TorahStudy/TorahStudyNativeTools.swift",
+        "Downstream/TorahStudy/TorahStudyNavigationRouter.swift",
+        "KnowledgeListView.swift",
+        "ListView.swift",
+        "MainTabView.swift",
+        "Model/APIKeys.swift",
+        "Model/AllModels.swift",
+        "Model/ChatMessages.swift",
+        "Model/ChatRecords.swift",
+        "Model/HanlinAppleModelCatalogAdapter.swift",
+        "Model/KnowledgeChunk.swift",
+        "Model/KnowledgeRecords.swift",
+        "Model/MemoryArchive.swift",
+        "Model/PromptRepo.swift",
+        "Model/SearchKeys.swift",
+        "Model/ToolKeys.swift",
+        "Model/TranslationDic.swift",
+        "Model/UserInfo.swift",
+        "ModelsView.swift",
+        "NativeAgentExtensions/ChatIntegration/ChatMessages+NativeUI.swift",
+        "NativeAgentExtensions/ChatIntegration/NativeToolBridge.swift",
+        "NativeAgentExtensions/Core/NativeToolJSON.swift",
+        "NativeAgentExtensions/Diagnostics/NativeToolTraceLogger.swift",
+        "NativeAgentExtensions/Presentation/ModernCards/ModernNativeToolResultRenderer.swift",
+        "NativeAgentExtensions/Presentation/ModernCards/NativeToolEntityCard.swift",
+        "NativeAgentExtensions/Presentation/ModernCards/NativeToolErrorCard.swift",
+        "NativeAgentExtensions/Presentation/ModernCards/NativeToolResultCardContainer.swift",
+        "NativeAgentExtensions/Presentation/ModernCards/NativeToolResultCardStyle.swift",
+        "NativeAgentExtensions/Presentation/ModernCards/NativeToolSearchResultCard.swift",
+        "NativeAgentExtensions/ToolCatalog/NativeAssistantToolGroup.swift",
+        "NativeAgentExtensions/ToolCatalog/NativeToolCatalog.swift",
+        "NativeAgentExtensions/ToolCatalog/NativeToolCatalogEntry.swift",
+        "NativeAgentExtensions/ToolRuntime/NativeTool.swift",
+        "NativeAgentExtensions/ToolRuntime/NativeToolResult.swift",
+        "NativeAgentExtensions/Tools/QuickCalculateTool.swift",
+        "NativeAgentExtensions/UI/NativeAssistantToolGroupSettingsView.swift",
+        "NativeAgentExtensions/UI/NativeUIBlock.swift",
+        "NativeAgentExtensions/UI/NativeUIRenderer.swift",
+        "NativeAppPlatform/Actions/NativeAppAction.swift",
+        "NativeAppPlatform/Actions/NativeAppActionBus.swift",
+        "NativeAppPlatform/AppsHub/MiniAppCardView.swift",
+        "NativeAppPlatform/AppsHub/NativeAppCardView.swift",
+        "NativeAppPlatform/AppsHub/NativeAppDetailView.swift",
+        "NativeAppPlatform/AppsHub/NativeAppSessionContainerView.swift",
+        "NativeAppPlatform/AppsHub/NativeAppsAddSheet.swift",
+        "NativeAppPlatform/AppsHub/NativeAppsCatalogView.swift",
+        "NativeAppPlatform/AppsHub/NativeAppsHubView.swift",
+        "NativeAppPlatform/BuiltinApps/BuiltinAppsIndex.swift",
+        "NativeAppPlatform/BuiltinApps/BuiltinCanonicalRegistrations.swift",
+        "NativeAppPlatform/BuiltinApps/NativeBuiltinRuntimeBinding.swift",
+        "NativeAppPlatform/BuiltinApps/Sefaria/Assistant/NativeAppSefariaTools.swift",
+        "NativeAppPlatform/BuiltinApps/Sefaria/Chat/NativeAppSefariaChatCardProvider.swift",
+        "NativeAppPlatform/BuiltinApps/Sefaria/NativeAppSefariaAppModule.swift",
+        "NativeAppPlatform/BuiltinApps/Sefaria/NativeAppSefariaExports.swift",
+        "NativeAppPlatform/BuiltinApps/Sefaria/NativeAppSefariaImports.swift",
+        "NativeAppPlatform/BuiltinApps/Sefaria/NativeAppSefariaIndex.swift",
+        "NativeAppPlatform/BuiltinApps/TextStudio/Assistant/NativeAppTextStudioTools.swift",
+        "NativeAppPlatform/BuiltinApps/TextStudio/Chat/NativeAppTextStudioChatCardProvider.swift",
+        "NativeAppPlatform/BuiltinApps/TextStudio/NativeAppTextStudioAppModule.swift",
+        "NativeAppPlatform/BuiltinApps/TextStudio/NativeAppTextStudioExports.swift",
+        "NativeAppPlatform/BuiltinApps/TextStudio/NativeAppTextStudioImports.swift",
+        "NativeAppPlatform/BuiltinApps/TextStudio/NativeAppTextStudioIndex.swift",
+        "NativeAppPlatform/BuiltinApps/Wikipedia/Assistant/NativeAppWikipediaTools.swift",
+        "NativeAppPlatform/BuiltinApps/Wikipedia/Chat/NativeAppWikipediaChatCardProvider.swift",
+        "NativeAppPlatform/BuiltinApps/Wikipedia/NativeAppWikipediaAppModule.swift",
+        "NativeAppPlatform/BuiltinApps/Wikipedia/NativeAppWikipediaExports.swift",
+        "NativeAppPlatform/BuiltinApps/Wikipedia/NativeAppWikipediaImports.swift",
+        "NativeAppPlatform/BuiltinApps/Wikipedia/NativeAppWikipediaIndex.swift",
+        "NativeAppPlatform/Capabilities/NativeCapabilityRegistry.swift",
+        "NativeAppPlatform/Capabilities/NativeCapabilityRequest.swift",
+        "NativeAppPlatform/Core/NativeAppAppearance.swift",
+        "NativeAppPlatform/Core/NativeAppCategory.swift",
+        "NativeAppPlatform/Core/NativeAppContext.swift",
+        "NativeAppPlatform/Core/NativeAppEntryPointKind.swift",
+        "NativeAppPlatform/Core/NativeAppManifest.swift",
+        "NativeAppPlatform/Core/NativeAppModule.swift",
+        "NativeAppPlatform/Core/NativeAppPresentation.swift",
+        "NativeAppPlatform/Core/NativeAppRegistry.swift",
+        "NativeAppPlatform/Core/NativeAppSession.swift",
+        "NativeAppPlatform/Core/NativeAppSessionEnvironment.swift",
+        "NativeAppPlatform/Core/NativeToolCatalog+NativeApps.swift",
+        "NativeAppPlatform/Routing/NativeAppRoute.swift",
+        "NativeAppPlatform/Routing/NativeAppRouter.swift",
+        "NativeAppPlatform/Services/NativeAppNetworkBroker.swift",
+        "NativeAppPlatform/Services/NativeAppOpenURLBroker.swift",
+        "NativeAppPlatform/Services/NativeAppPasteboardBroker.swift",
+        "NativeAppPlatform/Services/NativeAppPlatformServices.swift",
+        "NativeAppPlatform/Services/NativeAppStorageBroker.swift",
+        "NativeAppPlatform/Support/NativeAppColor.swift",
+        "NativeAppPlatform/Support/NativeAppJSON.swift",
+        "Services/APIServices/APIBalance.swift",
+        "Services/APIServices/APITest.swift",
+        "Services/APIServices/ModelRefreshService.swift",
+        "Services/ChatServices/APIManager+LegacyTools.swift",
+        "Services/ChatServices/APIManager.swift",
+        "Services/ChatServices/AutomaticSearch/AutomaticSearchMigration.swift",
+        "Services/ChatServices/AutomaticSearch/AutomaticWebSearchCoordinator.swift",
+        "Services/ChatServices/AutomaticSearch/KeenablePublicSearchAdapter.swift",
+        "Services/ChatServices/AutomaticSearch/TavilyKeylessSearchAdapter.swift",
+        "Services/ChatServices/AutomaticSearch/WebSearchProviderProtocol.swift",
+        "Services/ChatServices/AutomaticSearch/WebSearchRelevanceEvaluator.swift",
+        "Services/ChatServices/AutomaticSearch/WebSearchResult.swift",
+        "Services/ChatServices/AutomaticSearch/YouKeylessSearchAdapter.swift",
+        "Services/ChatServices/CalendarService.swift",
+        "Services/ChatServices/CanvasServices.swift",
+        "Services/ChatServices/ChatTools.swift",
+        "Services/ChatServices/CodeServices.swift",
+        "Services/ChatServices/FileContentExtraction.swift",
+        "Services/ChatServices/HealthServices.swift",
+        "Services/ChatServices/MapServices.swift",
+        "Services/ChatServices/SystemOptimizer.swift",
+        "Services/ChatServices/TextToSpeech.swift",
+        "Services/ChatServices/ToolsAPI.swift",
+        "Services/ChatServices/WeatherServices.swift",
+        "Services/ChatServices/WebReadTool.swift",
+        "Services/ChatServices/WebSearchTool.swift",
+        "Services/DataServices/HanlinAppProviderCredentials.swift",
+        "Services/DataServices/InfoServices.swift",
+        "Services/DataServices/PreLoad.swift",
+        "Services/KnowledgeServices/KnowledgeAPI.swift",
+        "Services/ModelServices/ModelDown.swift",
+        "Services/ModelServices/ModelServices.swift",
+        "Services/VisionServices/VisionAPI.swift",
+        "SettingsView.swift",
+        "Views/Components/APISettingView.swift",
+        "Views/Components/ChatViewBottom.swift",
+        "Views/Components/ChatViewComponents.swift",
+        "Views/Components/ChatandFile.swift",
+        "Views/Components/DocumentPicker.swift",
+        "Views/Components/HanlinHelpView.swift",
+        "Views/Components/ImagePicker.swift",
+        "Views/Components/KnowledgeWritingView.swift",
+        "Views/Components/ListViewComponents.swift",
+        "Views/Components/MemoryArchiveView.swift",
+        "Views/Components/ModelManagementView.swift",
+        "Views/Components/ModelsViewComponents.swift",
+        "Views/Components/PromptRepoView.swift",
+        "Views/Components/QuickToolsView.swift",
+        "Views/Components/SettingsViewComponents.swift",
+        "Views/Components/TranslationDicView.swift",
+        "Views/Components/VoiceInputView.swift",
+        "VisionIntent.swift",
+        "VisionView.swift"
+      ],
+      "type" : "regular"
+    }
+  ],
+  "toolsVersion" : {
+    "_version" : "6.2.0"
+  },
+  "traits" : [
+
+  ]
+}

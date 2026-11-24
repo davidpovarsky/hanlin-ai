@@ -22,16 +22,28 @@ export function parseHexColor(text, start = 0) {
     const end = hexColorRegEx.lastIndex;
     return { start, end, value: new Color('#' + result[1]) };
 }
-const cssColorRegEx = /\s*((?:rgb|rgba|hsl|hsla|hsv|hsva)\([^\(\)]*\))/gy;
+const cssColorRegEx = /\s*(rgba?|hsla?|hsva?|oklch|oklab|lab|lch|hwb|color-mix|color)\(/gy;
 export function parseCssColor(text, start = 0) {
     cssColorRegEx.lastIndex = start;
     const result = cssColorRegEx.exec(text);
     if (!result) {
         return null;
     }
-    const end = cssColorRegEx.lastIndex;
+    let end = cssColorRegEx.lastIndex;
+    for (let depth = 1; depth > 0; end++) {
+        if (end >= text.length) {
+            return null;
+        }
+        const char = text[end];
+        if (char === '(') {
+            depth++;
+        }
+        else if (char === ')') {
+            depth--;
+        }
+    }
     try {
-        return { start, end, value: new Color(result[1]) };
+        return { start, end, value: new Color(text.substring(cssColorRegEx.lastIndex - result[1].length - 1, end)) };
     }
     catch {
         return null;
@@ -502,6 +514,11 @@ export function parseBackground(text, start = 0) {
         if (url) {
             value.image = url.value;
             end = url.end;
+            continue;
+        }
+        if (keyword && keyword.value.toLowerCase() === 'none') {
+            value.image = 'none';
+            end = keyword.end;
             continue;
         }
         const gradient = parseLinearGradient(text, end);

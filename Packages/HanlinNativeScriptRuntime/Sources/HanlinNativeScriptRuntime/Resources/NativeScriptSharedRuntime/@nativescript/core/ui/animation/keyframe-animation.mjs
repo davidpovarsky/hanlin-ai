@@ -1,3 +1,4 @@
+import { Color } from '../../color';
 import { CoreTypes } from '../../core-types';
 import { Trace } from '../../trace';
 // Types.
@@ -24,6 +25,26 @@ export class KeyframeAnimationInfo {
         this.isReverse = false;
     }
 }
+const KEYFRAME_PROPERTIES = ['backgroundColor', 'scale', 'translate', 'rotate', 'opacity', 'width', 'height'];
+function getKeyframeValue(view, property) {
+    switch (property) {
+        case 'backgroundColor':
+            return view.backgroundColor instanceof Color ? view.backgroundColor : new Color(0, 0, 0, 0);
+        case 'scale':
+            return { x: view.scaleX ?? 1, y: view.scaleY ?? 1 };
+        case 'translate':
+            return { x: view.translateX ?? 0, y: view.translateY ?? 0 };
+        case 'rotate':
+            return { x: view.rotateX ?? 0, y: view.rotateY ?? 0, z: view.rotate ?? 0 };
+        case 'opacity':
+            return view.opacity ?? 1;
+        case 'width':
+        case 'height': {
+            const value = view[property];
+            return value == null || value === 'auto' ? undefined : value;
+        }
+    }
+}
 export class KeyframeAnimation {
     constructor() {
         this.delay = 0;
@@ -34,19 +55,38 @@ export class KeyframeAnimation {
             Trace.write(`No keyframes found for animation '${info.name}'.`, Trace.categories.Animation, Trace.messageType.warn);
             return null;
         }
-        const length = info.keyframes.length;
+        const keyframes = info.keyframes.slice();
+        const implicitInfos = new Array();
+        if (keyframes[0].duration > 0) {
+            const from = { duration: 0, declarations: [] };
+            implicitInfos.push(from);
+            keyframes.unshift(from);
+        }
+        if (keyframes[keyframes.length - 1].duration < 1) {
+            const to = { duration: 1, declarations: [] };
+            implicitInfos.push(to);
+            keyframes.push(to);
+        }
+        const length = keyframes.length;
         const animations = new Array();
+        const implicitKeyframes = new Array();
         let startDuration = 0;
         if (info.isReverse) {
             for (let index = length - 1; index >= 0; index--) {
-                const keyframe = info.keyframes[index];
+                const keyframe = keyframes[index];
                 startDuration = KeyframeAnimation.parseKeyframe(info, keyframe, animations, startDuration);
+                if (implicitInfos.includes(keyframe)) {
+                    implicitKeyframes.push(animations[animations.length - 1]);
+                }
             }
         }
         else {
             for (let index = 0; index < length; index++) {
-                const keyframe = info.keyframes[index];
+                const keyframe = keyframes[index];
                 startDuration = KeyframeAnimation.parseKeyframe(info, keyframe, animations, startDuration);
+                if (implicitInfos.includes(keyframe)) {
+                    implicitKeyframes.push(animations[animations.length - 1]);
+                }
             }
             for (let index = length - 1; index > 0; index--) {
                 const a1 = animations[index];
@@ -63,6 +103,9 @@ export class KeyframeAnimation {
         animation.iterations = info.iterations;
         animation.animations = animations;
         animation._isForwards = info.isForwards;
+        if (implicitKeyframes.length) {
+            animation._implicitKeyframes = implicitKeyframes;
+        }
         return animation;
     }
     static parseKeyframe(info, keyframe, animations, startDuration) {
@@ -119,6 +162,7 @@ export class KeyframeAnimation {
         this._isPlaying = true;
         this._nativeAnimations = new Array();
         this._target = view;
+        this._fillImplicitKeyframes(view);
         if (this.delay !== 0) {
             setTimeout(() => this.animate(view, 0, this.iterations), this.delay);
         }
@@ -196,6 +240,31 @@ export class KeyframeAnimation {
                 .catch((error) => {
                 Trace.write(typeof error === 'string' ? error : error.message, Trace.categories.Animation, Trace.messageType.warn);
             }); // tslint:disable-line
+        }
+    }
+    _fillImplicitKeyframes(view) {
+        const implicitKeyframes = this._implicitKeyframes;
+        if (!implicitKeyframes) {
+            return;
+        }
+        const animated = new Set();
+        for (const animation of this.animations) {
+            for (const property of KEYFRAME_PROPERTIES) {
+                if (property in animation && !implicitKeyframes.includes(animation)) {
+                    animated.add(property);
+                }
+            }
+        }
+        for (const keyframe of implicitKeyframes) {
+            for (const property of animated) {
+                const value = getKeyframeValue(view, property);
+                if (value === undefined) {
+                    delete keyframe[property];
+                }
+                else {
+                    keyframe[property] = value;
+                }
+            }
         }
     }
     _resolveAnimationFinishedPromise() {

@@ -73,13 +73,15 @@ export const sdkInputs = [
 const excludedSDKInputNames = new Set(['node_modules','Tests','evidence','.git']);
 const includesSDKInputName = name => !excludedSDKInputNames.has(name) && !name.includes('.bak.');
 const exampleSourceRoot = 'Scripts/MiniApps/Examples';
+const assistantExampleSourceRoot = 'Scripts/MiniApps/AssistantExamples';
 // These are output roots of the public authoring/Metro tools, not arbitrary
 // resource names. Authored build/dist directories and resource ZIPs survive.
 const exampleOutputRoots = new Set(['.hanlin-build','.hanlin-authoring','.metro-cache']);
 const includesSDKSourcePath = relative => {
   if (!relative.split('/').every(includesSDKInputName)) return false;
-  if (!relative.startsWith(exampleSourceRoot+'/')) return true;
-  const [,projectChild] = relative.slice(exampleSourceRoot.length+1).split('/');
+  const sourceRoot=[exampleSourceRoot,assistantExampleSourceRoot].find(root=>relative.startsWith(root+'/'));
+  if (!sourceRoot) return true;
+  const [,projectChild] = relative.slice(sourceRoot.length+1).split('/');
   return !exampleOutputRoots.has(projectChild);
 };
 
@@ -100,7 +102,7 @@ export async function collectSDKSourceInputs(source,prefix) {
 }
 
 /** Export complete authored projects unchanged, with paths in this exact SDK. */
-export async function copySDKExamples(source,destination,requestedEngines=['expo','nativescript']) {
+export async function copySDKExamples(source,destination,requestedEngines=['expo','nativescript'],exportPrefix='examples') {
   const catalog=await readJSON(path.join(source,'index.json'));
   if(catalog.schemaVersion!==1 || !Array.isArray(catalog.projects)) throw new Error('Unsupported SDK example index');
   const projects=[],ids=new Set();
@@ -124,7 +126,7 @@ export async function copySDKExamples(source,destination,requestedEngines=['expo
     await cp(canonicalRoot,path.join(destination,project.directory),{recursive:true,
       filter:entry=>includesSDKSourcePath(path.posix.join(exampleSourceRoot,project.directory,
         path.relative(canonicalRoot,entry).split(path.sep).join('/')))});
-    projects.push({...project,path:'examples/'+project.directory,entry:author.entry});
+    projects.push({...project,path:exportPrefix+'/'+project.directory,entry:author.entry});
   }
   await writeJSON(path.join(destination,'index.json'),{schemaVersion:1,projects});
   return projects;
@@ -186,6 +188,16 @@ export async function stageSDK({root=repositoryRoot,output,engines:requestedEngi
         graph.versions['@hanlin/host-services']=(await readJSON(path.join(hostServices,'package.json'))).version;
       }
 
+      const assistantTypesRoot=path.join(destination,'node_modules/@hanlin/assistant-tools');
+      await mkdir(assistantTypesRoot,{recursive:true});
+      await cp(path.join(root,'Scripts/MiniApps/assistant-tools.d.ts'),path.join(assistantTypesRoot,'index.d.ts'));
+      await writeJSON(path.join(assistantTypesRoot,'package.json'),{
+        name:'@hanlin/assistant-tools',version:'1.0.0',types:'index.d.ts',private:true,
+        description:'Data and function signatures for the existing Hanlin assistant tool transports; type-only.'
+      });
+      graph.versions['@hanlin/assistant-tools']='1.0.0';
+      await cp(path.join(root,'Scripts/MiniApps/assistant-tools.schema.json'),path.join(staging,'assistant-tools.schema.json'));
+
       for(const name of ['package.json','package-lock.json',...(engine==='expo'?['babel.config.cjs','metro.config.cjs']:[])]) {
         const bytes=await readFile(path.join(source,name));
         await writeFile(path.join(destination,name),bytes);
@@ -221,6 +233,8 @@ export async function stageSDK({root=repositoryRoot,output,engines:requestedEngi
           explanation:engine==='expo'?'Original declarations and source are checked.':'Original NativeScript consumer mode: source is strict; original declaration bodies are not revalidated. Set skipLibCheck:false for SDK declaration diagnostics.'},
         docs:engine==='expo'?['docs/hanlin-expo-runtime.md','docs/miniapp-sdk/README.md','docs/miniapp-sdk/EXPO_WIDGETS_ORIGINAL.md']:['docs/hanlin-nativescript-guide.md','docs/miniapp-sdk/README.md'],
         capabilities:engine==='expo'?['foreground','native-ui','host-services','prepared-widgets','original-widget-api','original-live-activity-api']:['foreground','native-ui','host-services','esm-package'],
+        assistantTools:{manifestSchemaPath:'assistant-tools.schema.json',typesPackage:'@hanlin/assistant-tools',
+          module:'Dedicated prepared program, separate from foreground app',configurationVersion:1},
         build:{nativeHostRebuildRequiredForNativeDependencyChanges:true}};
     }
     const expected={
@@ -233,9 +247,11 @@ export async function stageSDK({root=repositoryRoot,output,engines:requestedEngi
       if(engines[engine] && engines[engine].packageVersions[name]!==version)throw new Error('Native/author SDK mismatch: '+engine+' '+name);
     }
     const exampleProjects=await copySDKExamples(path.join(root,exampleSourceRoot),path.join(staging,'examples'),requestedEngines);
+    const assistantExamples=await copySDKExamples(path.join(root,assistantExampleSourceRoot),path.join(staging,'assistant-examples'),requestedEngines,'assistant-examples');
     for(const engine of ['expo','nativescript']) if(engines[engine]) {
       engines[engine].examples=exampleProjects.filter(project=>project.engine===engine);
-      engines[engine].docs.push('docs/miniapp-sdk/EXAMPLES.md');
+      engines[engine].assistantToolExamples=assistantExamples.filter(project=>project.engine===engine);
+      engines[engine].docs.push('docs/miniapp-sdk/EXAMPLES.md','docs/miniapp-sdk/ASSISTANT_TOOLS_AND_COMPOSER.md');
     }
     await copySDKDocumentation(path.join(root,'docs/miniapp-sdk'),path.join(staging,'docs/miniapp-sdk'));
     for(const file of ['hanlin-expo-runtime.md','hanlin-nativescript-guide.md']) {
@@ -278,7 +294,7 @@ export async function stageSDK({root=repositoryRoot,output,engines:requestedEngi
       }
     }
     await collect(staging);
-    const manifest={schemaVersion:1,inputSHA256:inputs.sha256,engines,examplesIndexPath:'examples/index.json',
+    const manifest={schemaVersion:1,inputSHA256:inputs.sha256,engines,examplesIndexPath:'examples/index.json',assistantExamplesIndexPath:'assistant-examples/index.json',
       upstream:{expo:expoLock.expo,nativescript:nativeLock.nativeScript,scriptwidget:engines.scriptwidget?.packageVersions},
       files:files.sort((a,b)=>a.path.localeCompare(b.path)),
       sourceInputs:inputs.files,

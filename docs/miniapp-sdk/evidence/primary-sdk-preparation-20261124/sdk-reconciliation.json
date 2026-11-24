@@ -1,0 +1,356 @@
+{
+  "executionSource": "340018ddc9ea2395ffabedbf179369b5bdb791af",
+  "evidenceBase": "b3a7c56fa6b691503fff04a0ddd5a1eeb6f736be",
+  "archivePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/prepared-snapshot-attempt5/files/build/runtime-host/RuntimeHostResources.zip",
+  "archiveBytes": 81812167,
+  "archiveSHA256": "5d6d60076fc95165b7c3d330d4202388dc88c3084899291918c69fef3ba92c53",
+  "manifestSHA256": "1d51c86e55ca79792b6b31176de6363008e5874dec4f919e5ef96c789a6d53f9",
+  "manifestBytes": 5219288,
+  "inputSHA256": "5deb2605a46b128985a0f6bb59414aed8167d872cc09deaf24b49fd9ab4fce04",
+  "sourceInputCount": 222,
+  "fileCount": 25661,
+  "prior": {
+    "source": "7d1efaa6ada43dd80c57133c09e6a8fb327075cf",
+    "evidencePath": "docs/miniapp-sdk/evidence/sdk05-shipping-main16-20261124/",
+    "manifestSHA256": "f84b79a3d9c4f7dc541d6912753cd1be95bfa3ed1876cc4d0ead365aadab12fc",
+    "inputSHA256": "307f689d68445cae8cb4f049f015c9bf55904d0de40a96e69fb59fa622d0a863"
+  },
+  "sourceInputs": {
+    "changed": [
+      {
+        "path": "docs/miniapp-sdk/extension-reachability.json",
+        "before": {
+          "path": "docs/miniapp-sdk/extension-reachability.json",
+          "sha256": "ec572302a10f97d59007a121d53382a9b80e4fd7b33817a8cdad61e64f3eb7db"
+        },
+        "after": {
+          "path": "docs/miniapp-sdk/extension-reachability.json",
+          "sha256": "152806a609b662c373eedd382758f1298bf945883f0c467dc5595050f8f0fa29"
+        }
+      },
+      {
+        "path": "docs/miniapp-sdk/extension-reachability.md",
+        "before": {
+          "path": "docs/miniapp-sdk/extension-reachability.md",
+          "sha256": "d7db7ef02feb948b836b55d069dd6766a9fb8c9d560120ac72c703bd227e2c7c"
+        },
+        "after": {
+          "path": "docs/miniapp-sdk/extension-reachability.md",
+          "sha256": "f2cd972c7366043028bbaea078291717ae363b288d29ecf242fd358103f7a9b1"
+        }
+      },
+      {
+        "path": "docs/miniapp-sdk/source-inventory.json",
+        "before": {
+          "path": "docs/miniapp-sdk/source-inventory.json",
+          "sha256": "7a9def87c5bf71226b1d120c6f8bd9856732828e8bcdfd7d36a4633d8c9b6b45"
+        },
+        "after": {
+          "path": "docs/miniapp-sdk/source-inventory.json",
+          "sha256": "b126e18f8a228e2235ef8ef324a31f0b9b6e3384e6af0f82755e35c4bcccaeef"
+        }
+      },
+      {
+        "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/package.json",
+        "before": {
+          "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/package.json",
+          "sha256": "ebe6634d2e019c9da759ac280c1269d721e2105681fdbc8a1796f464d0b9ee9e"
+        },
+        "after": {
+          "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/package.json",
+          "sha256": "c42e3fe3eb38b7289ba3cf49ca0b56bcbd7ac2d27d68955f27e3d5e33e642a7e"
+        }
+      }
+    ],
+    "unchanged": 218,
+    "added": [],
+    "removed": []
+  },
+  "members": {
+    "changed": [
+      {
+        "path": "docs/miniapp-sdk/extension-reachability.json",
+        "before": {
+          "path": "docs/miniapp-sdk/extension-reachability.json",
+          "sha256": "ec572302a10f97d59007a121d53382a9b80e4fd7b33817a8cdad61e64f3eb7db",
+          "bytes": 147521
+        },
+        "after": {
+          "path": "docs/miniapp-sdk/extension-reachability.json",
+          "sha256": "152806a609b662c373eedd382758f1298bf945883f0c467dc5595050f8f0fa29",
+          "bytes": 147521
+        },
+        "actualMemberVerified": true,
+        "retained": {
+          "path": "raw/changed-sdk/docs/miniapp-sdk/extension-reachability.json",
+          "bytes": 147521,
+          "sha256": "152806a609b662c373eedd382758f1298bf945883f0c467dc5595050f8f0fa29"
+        }
+      },
+      {
+        "path": "docs/miniapp-sdk/extension-reachability.md",
+        "before": {
+          "path": "docs/miniapp-sdk/extension-reachability.md",
+          "sha256": "d7db7ef02feb948b836b55d069dd6766a9fb8c9d560120ac72c703bd227e2c7c",
+          "bytes": 21494
+        },
+        "after": {
+          "path": "docs/miniapp-sdk/extension-reachability.md",
+          "sha256": "f2cd972c7366043028bbaea078291717ae363b288d29ecf242fd358103f7a9b1",
+          "bytes": 21494
+        },
+        "actualMemberVerified": true,
+        "retained": {
+          "path": "raw/changed-sdk/docs/miniapp-sdk/extension-reachability.md",
+          "bytes": 21494,
+          "sha256": "f2cd972c7366043028bbaea078291717ae363b288d29ecf242fd358103f7a9b1"
+        }
+      },
+      {
+        "path": "docs/miniapp-sdk/source-inventory.json",
+        "before": {
+          "path": "docs/miniapp-sdk/source-inventory.json",
+          "sha256": "7a9def87c5bf71226b1d120c6f8bd9856732828e8bcdfd7d36a4633d8c9b6b45",
+          "bytes": 493266
+        },
+        "after": {
+          "path": "docs/miniapp-sdk/source-inventory.json",
+          "sha256": "b126e18f8a228e2235ef8ef324a31f0b9b6e3384e6af0f82755e35c4bcccaeef",
+          "bytes": 493266
+        },
+        "actualMemberVerified": true,
+        "retained": {
+          "path": "raw/changed-sdk/docs/miniapp-sdk/source-inventory.json",
+          "bytes": 493266,
+          "sha256": "b126e18f8a228e2235ef8ef324a31f0b9b6e3384e6af0f82755e35c4bcccaeef"
+        }
+      },
+      {
+        "path": "nativescript/node_modules/@hanlin/host-services/package.json",
+        "before": {
+          "path": "nativescript/node_modules/@hanlin/host-services/package.json",
+          "sha256": "ebe6634d2e019c9da759ac280c1269d721e2105681fdbc8a1796f464d0b9ee9e",
+          "bytes": 147
+        },
+        "after": {
+          "path": "nativescript/node_modules/@hanlin/host-services/package.json",
+          "sha256": "c42e3fe3eb38b7289ba3cf49ca0b56bcbd7ac2d27d68955f27e3d5e33e642a7e",
+          "bytes": 147
+        },
+        "actualMemberVerified": true,
+        "retained": {
+          "path": "raw/changed-sdk/nativescript/node_modules/@hanlin/host-services/package.json",
+          "bytes": 147,
+          "sha256": "c42e3fe3eb38b7289ba3cf49ca0b56bcbd7ac2d27d68955f27e3d5e33e642a7e"
+        }
+      }
+    ],
+    "unchanged": 25657,
+    "added": [],
+    "removed": []
+  },
+  "reuseGroups": {
+    "declarations": {
+      "members": 5210,
+      "unchanged": 5210,
+      "changed": []
+    },
+    "examples": {
+      "members": 29,
+      "unchanged": 29,
+      "changed": []
+    },
+    "public-docs": {
+      "members": 25,
+      "unchanged": 22,
+      "changed": [
+        "docs/miniapp-sdk/extension-reachability.json",
+        "docs/miniapp-sdk/extension-reachability.md",
+        "docs/miniapp-sdk/source-inventory.json"
+      ]
+    },
+    "original-compilers": {
+      "members": 2,
+      "unchanged": 2,
+      "changed": []
+    }
+  },
+  "upstream": {
+    "expo": {
+      "sdkVersion": "58.0.26",
+      "uiVersion": "58.0.29",
+      "widgetsVersion": "58.0.29",
+      "brownfieldVersion": "58.0.20",
+      "modulesCoreVersion": "58.1.0",
+      "reactNativeVersion": "0.88.1",
+      "reactVersion": "19.3.0",
+      "hermesVersion": "260318099.0.5"
+    },
+    "nativescript": {
+      "coreVersion": "9.1.4",
+      "iosRuntimeVersion": "9.1.1",
+      "iosSPMRepository": "https://github.com/NativeScript/ios-spm.git",
+      "iosSPMTagRevision": "33605a91197dc86bd9f15fecaad6e897223caa8a"
+    },
+    "scriptwidget": {
+      "everettjf/scriptwidget": "4da256d58247bbafb9a5cd443a285250b97b3c4b,68f04194f00222558c44d5a832e7617a96f62574"
+    }
+  },
+  "toolchains": {
+    "expo": {
+      "typescript": {
+        "packageName": "@typescript/typescript6",
+        "packageVersion": "6.0.2",
+        "compilerVersion": "6.0.3"
+      },
+      "installationInputs": {
+        "schemaVersion": 1,
+        "packageSHA256": "db6fd60dbc8f2b15eac5fee7029781cf14834ffbad53f0c8948fc4c2945c1e91",
+        "lockSHA256": "95d2a560d4eb01de64fcd0d43875a4ef2392e9747ed9fa79c2e0a0e58abececf",
+        "policySHA256": "6fb5f130d1a381d628ffa5042eff7ce36d48431ed7636a36c28fec20e5b79120",
+        "node": "24.5.0",
+        "platform": "darwin",
+        "architecture": "arm64"
+      },
+      "typeCheckingPolicy": {
+        "strictSource": true,
+        "checkOriginalDeclarationBodies": true,
+        "explanation": "Original declarations and source are checked."
+      }
+    },
+    "nativescript": {
+      "typescript": {
+        "packageName": "typescript",
+        "packageVersion": "5.9.3",
+        "compilerVersion": "5.9.3"
+      },
+      "installationInputs": {
+        "schemaVersion": 1,
+        "packageSHA256": "08fc03bfa87cd78f4f21f80e9324a4840061105f6e9ab081ed794c569ca7324b",
+        "lockSHA256": "16f569f4bfa6f8806cfe72449866a0dc9a9331f33d2c67170d5292455c48b60b",
+        "policySHA256": "6fb5f130d1a381d628ffa5042eff7ce36d48431ed7636a36c28fec20e5b79120",
+        "node": "24.5.0",
+        "platform": "darwin",
+        "architecture": "arm64"
+      },
+      "typeCheckingPolicy": {
+        "strictSource": true,
+        "checkOriginalDeclarationBodies": false,
+        "explanation": "Original NativeScript consumer mode: source is strict; original declaration bodies are not revalidated. Set skipLibCheck:false for SDK declaration diagnostics."
+      }
+    },
+    "scriptwidget": {
+      "typescript": {
+        "packageName": "@typescript/typescript6",
+        "packageVersion": "6.0.2",
+        "compilerVersion": "6.0.3"
+      },
+      "installationInputs": null,
+      "typeCheckingPolicy": null
+    }
+  },
+  "hostMetadata": {
+    "nodeVersion": "v24.5.0",
+    "archiveSha256": "5d6d60076fc95165b7c3d330d4202388dc88c3084899291918c69fef3ba92c53",
+    "sourceInputsHash": "15b6e0c2af8c3447bd6a04f201dd11b7d655b9ba90399f7ebcf60445a7999903",
+    "jitlessArchiveSmoke": "passed",
+    "npmInstall": "npm ci --omit=dev --ignore-scripts --workspaces=false --no-audit --no-fund",
+    "tests": "passed"
+  },
+  "phaseReceipts": {
+    "split-native-preparation": {
+      "status": "PASS",
+      "startedAt": "2026-11-24T19:59:47.518522+00:00",
+      "argv": [
+        "/bin/bash",
+        "-e",
+        "-o",
+        "pipefail",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-native-preparation.sh"
+      ],
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt5/split-native-preparation.log",
+      "scriptSHA256": "47635289bc9238f28f65b6f72d4980b5cf0aa6def2cf146cd236261260f65a3e",
+      "pid": 36135,
+      "elapsedSeconds": 257.2639884579985,
+      "logBytes": 31023,
+      "exitCode": 0,
+      "finishedAt": "2026-11-24T20:04:04.781086+00:00",
+      "logSHA256": "935c498bc535025d0857e3851bc85d19a20e63de0b7c25a927f26baea66aa7d1"
+    },
+    "split-native-artifacts": {
+      "status": "PASS",
+      "startedAt": "2026-11-24T20:04:04.783629+00:00",
+      "argv": [
+        "/bin/bash",
+        "-e",
+        "-o",
+        "pipefail",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-native-artifacts.sh"
+      ],
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt5/split-native-artifacts.log",
+      "scriptSHA256": "eb0405f89f5da3d48e1591650d42e2f7a8ff8f86eebac9b82ded2e5c70cefebd",
+      "pid": 39040,
+      "elapsedSeconds": 40.79924879199825,
+      "logBytes": 1504,
+      "exitCode": 0,
+      "finishedAt": "2026-11-24T20:04:45.583599+00:00",
+      "logSHA256": "620451222f385a197c57758b6ac4021f2c7419c27929669129a3f544ce1397bc"
+    },
+    "split-restore-inputs": {
+      "status": "PASS",
+      "startedAt": "2026-11-24T20:04:45.588000+00:00",
+      "argv": [
+        "/bin/bash",
+        "-e",
+        "-o",
+        "pipefail",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-restore-inputs.sh"
+      ],
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt5/split-restore-inputs.log",
+      "scriptSHA256": "f848273286ad9fdcecc9635ee01148c5f54b45230a5199938ef3d362a709f39a",
+      "pid": 39219,
+      "exitCode": 0,
+      "elapsedSeconds": 0.17616395799996099,
+      "finishedAt": "2026-11-24T20:04:45.765987+00:00",
+      "logBytes": 46,
+      "logSHA256": "11083745170de91dcbe17fa5b4e18d24f0cbc6923d8d241af153c25d718f94ef"
+    },
+    "split-inputs": {
+      "status": "PASS",
+      "startedAt": "2026-11-24T20:04:45.767199+00:00",
+      "argv": [
+        "/bin/bash",
+        "-e",
+        "-o",
+        "pipefail",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-inputs.sh"
+      ],
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt5/split-inputs.log",
+      "scriptSHA256": "03a05318e9c17e6b2a3fc91dc40ee908b81ee204fb961cda64687179778621bc",
+      "pid": 39222,
+      "exitCode": 0,
+      "elapsedSeconds": 14.627761415998975,
+      "finishedAt": "2026-11-24T20:05:00.395903+00:00",
+      "logBytes": 102,
+      "logSHA256": "b50c1306238bc3c0c7478af8920b02a639345930b2beb42a995d637405ceb510"
+    }
+  },
+  "nativeBoundary": {
+    "miniAppsBuild": "FAILED",
+    "miniAppsExitCode": 65,
+    "miniAppsFinishedAt": "2026-11-24T20:09:11Z",
+    "miniAppsElapsedSecondsApprox": 202.4,
+    "statusAuthority": "Parent correction after owner read terminal result; root owns exact native failure receipt.",
+    "aiBuild": "NOT_RUN",
+    "selected52AppCases": "NOT_RUN",
+    "physicalDevice": "NOT_RUN",
+    "rawSnapshotAppAcceptance": "RUNNING; no application case result inferred from preparation.",
+    "supersedes": "The raw snapshot RUNNING text was stale at capture; preserve it as raw and do not use it as current status."
+  },
+  "inspectionBoundary": [
+    "No compiler, generator, app build, test, CI poll, network request, or SDK staging was executed.",
+    "Archive inspected in place; no SDK/archive/payload duplicate created.",
+    "Four changed SDK bodies and six guide bodies were read; this is not a new112-member audit.",
+    "Unchanged previous member proof reused only for exact matching manifest entries; no native OS semantic success inferred."
+  ]
+}
