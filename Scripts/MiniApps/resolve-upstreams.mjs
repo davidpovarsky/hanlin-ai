@@ -34,6 +34,28 @@ export function expoRanges(expo,bundled) {
   if(!expo.dependencies?.['expo-modules-core'])throw new Error('Expo publication does not specify expo-modules-core');
   return Object.fromEntries([...required.map(name=>[name,bundled[name]]),['expo-modules-core',expo.dependencies['expo-modules-core']]]);
 }
+export function reactTypesSelection(expo,reactNative,pinned) {
+  const constraints=[
+    {source:'react-native@'+reactNative.version+' peerDependencies',range:reactNative.peerDependencies?.['@types/react']},
+    {source:'expo@'+expo.version+' devDependencies',range:expo.devDependencies?.['@types/react']}
+  ].filter(item=>typeof item.range==='string'&&item.range.trim());
+  if(!constraints.length)return {mode:'explicit-pin',requested:pinned,constraints,reason:'Original selected publications provide no React declaration version constraint.'};
+  // Semver has conjunction and || but no grouping. Distribute the conjunction
+  // so that neither original publication's compatibility range is weakened.
+  let alternatives=[''];
+  for(const {range} of constraints)alternatives=alternatives.flatMap(left=>range.split('||').map(right=>(left+' '+right.trim()).trim()));
+  return {mode:'original-compatible-range',requested:alternatives.join(' || '),constraints};
+}
+export function compilerSelections(expoPackage,nsPackage,publications) {
+  return {
+    expo:{mode:'explicit-verified-host-toolchain',requested:expoPackage.devDependencies.typescript,
+      upstreamPeerRange:publications.get('expo')?.peerDependencies?.typescript??null,
+      reason:'Retain the explicitly verified host compiler. Original consumer peer constraints remain part of npm graph resolution; an absent or unconstrained peer does not select an arbitrary newest compiler.'},
+    nativescript:{mode:'explicit-verified-host-toolchain',requested:nsPackage.devDependencies.typescript,
+      upstreamPeerRange:publications.get('@nativescript/vite')?.peerDependencies?.typescript??null,
+      reason:'Retain the verified NativeScript host compiler; an unconstrained original Vite peer does not select an arbitrary newest compiler.'}
+  };
+}
 async function fileDigest(file,algorithm='sha256',encoding='hex') {
   const digest=createHash(algorithm);for await(const chunk of createReadStream(file))digest.update(chunk);return digest.digest(encoding);
 }
@@ -112,6 +134,9 @@ export async function resolveUpstreams({root=path.resolve(here,'../..'),cache=pa
   await resolvePackage('@nativescript/react-native');
   for(const name of ['@nativescript/core','@nativescript/ios','@nativescript/swift-ui','@nativescript/types','@nativescript/vite'])await resolvePackage(name);
   const rn=publications.get('react-native');
+  const reactTypes=reactTypesSelection(expo,rn,expoPackage.devDependencies['@types/react']);
+  if(reactTypes.mode==='original-compatible-range')await resolvePackage('@types/react',reactTypes.requested);
+  const compilers=compilerSelections(expoPackage,nsPackage,publications);
   for(const name of ['@react-native/codegen','@react-native/metro-config'])await resolvePackage(name,rn.version);
   await resolvePackage('babel-preset-expo',expo.dependencies['babel-preset-expo']);
   const rnArchive=await archive('react-native');
@@ -215,7 +240,7 @@ export async function resolveUpstreams({root=path.resolve(here,'../..'),cache=pa
   }
   run(process.execPath,[path.join(candidate,'Scripts/MiniApps/generate-scriptwidget-types.mjs')],{stdio:'inherit'});
   files.set('Scripts/MiniApps/scriptwidget/components.d.ts',await readFile(path.join(candidate,'Scripts/MiniApps/scriptwidget/components.d.ts')));
-  const receipt={schemaVersion:1,versions,hermesVersion:hermes,originals,iosSPM:{repository:nsLock.nativeScript.iosSPMRepository,version:nsIOS,revision:nsSPMRevision},sourceUpdates:sourceUpdate.receipt,nativeArtifacts:updatedExpo.artifacts};
+  const receipt={schemaVersion:1,typingSelection:{react:reactTypes,compilers},versions,hermesVersion:hermes,originals,iosSPM:{repository:nsLock.nativeScript.iosSPMRepository,version:nsIOS,revision:nsSPMRevision},sourceUpdates:sourceUpdate.receipt,nativeArtifacts:updatedExpo.artifacts};
   files.set('Scripts/MiniApps/upstream-resolution.json',pretty(receipt));
   const changes=[];
   for(const [name,content] of files) {const before=existsSync(path.join(root,name))?await readFile(path.join(root,name)):Buffer.alloc(0);if(hash(before)!==hash(content))changes.push({path:name,beforeSHA256:hash(before),afterSHA256:hash(content)});}

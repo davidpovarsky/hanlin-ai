@@ -4,6 +4,7 @@ import {readFile, writeFile, mkdir} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import path from 'node:path';
 import {syncOriginalUIExports} from './sync-original-ui-exports.mjs';
+import {resealInstalledTooling,verifyInstalledGraph} from '../MiniApps/install-tooling.mjs';
 
 const root = path.resolve(import.meta.dirname, '../..');
 const rn = path.join(import.meta.dirname, 'node_modules/react-native');
@@ -49,6 +50,7 @@ const patches = [
     reason: 'Apple exposes the ObjC description selector, but the actual JS host object explicitly resolves description to a string before method lookup. Match that JS boundary and inherited NSObject property.'},
 ];
 const provenance = [];
+const installationChanges = [];
 for (const patch of patches) {
   const base = patch.package ? nativeAPI : rn;
   const file = path.join(base, patch.package ? 'types/ios' : 'types_generated', patch.file);
@@ -76,10 +78,13 @@ for (const patch of patches) {
   }
   if (process.argv.includes('--check') && current !== corrected) throw new Error(`Declaration correction not applied: ${patch.file}`);
   if (current !== corrected) await writeFile(file, corrected);
+  installationChanges.push({path:path.relative(import.meta.dirname,file).split(path.sep).join('/'),beforeSHA256:sha(current),afterSHA256:sha(corrected)});
   provenance.push({package: patch.package ?? 'react-native', file: patch.file, originalSHA256: patch.originalSHA256, correctedSHA256: sha(corrected),
     source: patch.source, sourceSHA256, reason: patch.reason});
 }
 const originalUIExports = await syncOriginalUIExports({root, check:process.argv.includes('--check')});
+if (process.argv.includes('--check')) await verifyInstalledGraph(import.meta.dirname);
+else await resealInstalledTooling(import.meta.dirname,installationChanges);
 const output = path.join(root, 'build/acceptance/expo-type-declarations');
 await mkdir(output, {recursive: true});
 await writeFile(path.join(output, 'corrections.json'), JSON.stringify({schemaVersion: 1, reactNative: rnVersion, nativeAPI: nativeAPIVersion,

@@ -3,32 +3,31 @@
 import {createHash} from 'node:crypto';
 import {cp, mkdir, readFile, readdir, realpath, rename, rm, stat, writeFile} from 'node:fs/promises';
 import path from 'node:path';
+import {createRequire} from 'node:module';
 import {fileURLToPath, pathToFileURL} from 'node:url';
+import {isAuthoringFile,excludedDirectories,isNativeDirectory,verifyInstalledGraph} from './install-tooling.mjs';
+export {verifyInstalledGraph,inspectInstalledGraph} from './install-tooling.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 export const repositoryRoot = path.resolve(here, '../..');
 const sha = value => createHash('sha256').update(value).digest('hex');
 const readJSON = async p => JSON.parse(await readFile(p, 'utf8'));
 const writeJSON = async (p, data) => writeFile(p, JSON.stringify(data, null, 2) + '\n');
-const noNative = /(?:\.(?:a|o|dylib|so|node|dll|exe|pdb|xcframework|framework|app|tgz|tar|gz|zip)$)/i;
-const sourceFile = /(?:\.(?:[cm]?js|jsx|tsx?|json|map|md|txt|yaml|yml|css|html|wasm|png|jpe?g|webp|gif|svg|ttf|otf)$|(?:^|\/)(?:LICENSE|NOTICE|COPYING|AUTHORS)(?:\.[^/]*)?$)/i;
-const excludedDirectories = new Set(['.git', '.bin', '.cache', 'prebuilds', 'Pods', 'DerivedData']);
-const isNativeDirectory = name => /\.(?:xcframework|framework|app)$/.test(name);
 
 /** No rewrites: every retained source byte is copied from the installed upstream. */
-export async function copyAuthoringTree(source, destination, receipt, label, ancestors = new Set()) {
+export async function copyAuthoringTree(source, destination, receipt, label, ancestors = new Set(), excludeDependencyTrees = false) {
   const canonical = await realpath(source);
   if (ancestors.has(canonical)) throw new Error('SDK source symlink cycle: ' + label);
   const nextAncestors = new Set(ancestors).add(canonical);
   await mkdir(destination, {recursive:true});
   for (const item of (await readdir(source, {withFileTypes:true})).sort((a,b)=>a.name.localeCompare(b.name))) {
-    if (excludedDirectories.has(item.name) || isNativeDirectory(item.name)) continue;
+    if (excludedDirectories.has(item.name) || isNativeDirectory(item.name) || (excludeDependencyTrees && item.name === 'node_modules')) continue;
     const src = path.join(source,item.name), dest = path.join(destination,item.name);
     const relative = path.posix.join(label,item.name);
     const info = item.isSymbolicLink() ? await stat(src) : item;
     if (info.isDirectory()) {
-      await copyAuthoringTree(src,dest,receipt,relative,nextAncestors);
-    } else if (info.isFile() && !noNative.test(item.name) && sourceFile.test(item.name)) {
+      await copyAuthoringTree(src,dest,receipt,relative,nextAncestors,excludeDependencyTrees);
+    } else if (info.isFile() && isAuthoringFile(item.name)) {
       const bytes = await readFile(src);
       await writeFile(dest,bytes);
       receipt.push({path:relative,sha256:sha(bytes),bytes:bytes.length});
@@ -36,22 +35,25 @@ export async function copyAuthoringTree(source, destination, receipt, label, anc
   }
 }
 
-export async function verifyInstalledGraph(toolingRoot) {
-  const lock = await readJSON(path.join(toolingRoot,'package-lock.json'));
-  const root = await readJSON(path.join(toolingRoot,'package.json'));
-  const direct = {...root.dependencies,...root.devDependencies};
-  const versions = {};
-  for (const [name, requested] of Object.entries(direct)) {
-    const packagePath = path.join(toolingRoot,'node_modules',name,'package.json');
-    const installed = await readJSON(packagePath);
-    const locked = lock.packages?.['node_modules/' + name];
-    // Local Hanlin packages are versioned by their source digest, npm packages by integrity.
-    if (!requested.startsWith('file:') && (!locked?.integrity || locked.version !== installed.version)) {
-      throw new Error('Installed SDK package differs from package-lock: ' + name);
-    }
-    versions[name] = installed.version;
+export async function compilerIdentity(toolingRoot) {
+  const packageFile=path.join(toolingRoot,'node_modules/typescript/package.json');
+  const installed=await readJSON(packageFile);
+  const compiler=createRequire(packageFile)('./lib/typescript.js');
+  if(typeof compiler.version!=='string')throw new Error('Installed TypeScript compiler has no version');
+  return {packageName:installed.name,packageVersion:installed.version,compilerVersion:compiler.version};
+}
+
+/** Keep npm alias implementations with the actual compiler, also in a partial SDK. */
+export async function copyCompilerClosure(source,destination,files,label,ancestors=new Set()) {
+  const canonical=await realpath(source);
+  if(ancestors.has(canonical))throw new Error('Compiler dependency cycle: '+canonical);
+  const next=new Set(ancestors).add(canonical);
+  await copyAuthoringTree(source,destination,files,label,new Set(),true);
+  const packageFile=path.join(source,'package.json'),pkg=await readJSON(packageFile),require=createRequire(packageFile);
+  for(const name of Object.keys(pkg.dependencies??{})) {
+    const dependency=path.dirname(require.resolve(name+'/package.json'));
+    await copyCompilerClosure(dependency,path.join(destination,'node_modules',name),files,path.posix.join(label,'node_modules',name),next);
   }
-  return {root,lock,versions};
 }
 
 export const sdkInputs = [
@@ -150,7 +152,7 @@ export async function stageSDK({root=repositoryRoot,output,engines:requestedEngi
       await writeJSON(path.join(destination,'tsconfig.json'),{compilerOptions});
       engines[engine]={toolingRoot:engine,tsconfigPath:engine+'/tsconfig.json',
         typescriptPath:engine+'/node_modules/typescript/lib/typescript.js',
-        packageVersions:graph.versions,
+        packageVersions:graph.versions,typescript:await compilerIdentity(source),installation:graph.installation,
         ...(engine==='expo'?{hostContract:{runtimeVersion:expoLock.expo.uiVersion,expoSDKVersion:expoLock.expo.sdkVersion,
           bridgeVersion:bridgeConfiguration.bridgeVersion,nativeApiContractVersion,
           nativeApiAbiIdentity:`rn${expoLock.expo.reactNativeVersion}-hermes${expoLock.expo.hermesVersion}`,
@@ -186,9 +188,13 @@ export async function stageSDK({root=repositoryRoot,output,engines:requestedEngi
     const serviceTypes=await generateScriptWidgetServiceTypes({root,output:path.join(staging,'scriptwidget')});
     const {generateScriptWidgetManifest}=await import(pathToFileURL(path.join(root,'Scripts/MiniApps/generate-scriptwidget-manifest.mjs')).href);
     await generateScriptWidgetManifest({root,output:path.join(staging,'scriptwidget')});
-    if(!engines.expo)await copyAuthoringTree(path.join(root,'Scripts/Expo/node_modules/typescript'),path.join(staging,'scriptwidget/typescript'),files,'scriptwidget/typescript');
+    if(!engines.expo) {
+      await verifyInstalledGraph(path.join(root,'Scripts/Expo'));
+      await copyCompilerClosure(path.join(root,'Scripts/Expo/node_modules/typescript'),path.join(staging,'scriptwidget/typescript'),files,'scriptwidget/typescript');
+    }
     engines.scriptwidget={toolingRoot:'scriptwidget',tsconfigPath:'scriptwidget/tsconfig.json',
-      typescriptPath:engines.expo?.typescriptPath??'scriptwidget/typescript/lib/typescript.js',packageVersions:{'everettjf/scriptwidget':widgetCommits.join(',')},
+      typescriptPath:engines.expo?.typescriptPath??'scriptwidget/typescript/lib/typescript.js',
+      typescript:engines.expo?.typescript??await compilerIdentity(path.join(root,'Scripts/Expo')),packageVersions:{'everettjf/scriptwidget':widgetCommits.join(',')},
       docs:['docs/miniapp-sdk/SCRIPTWIDGET_AUTHORING.md','docs/miniapp-sdk/SCRIPTWIDGET_CONTROLS.md'],capabilities:['prepared-widgets','original-native-services','original-control-widgets'],
       packageManifestSchemaPath:'scriptwidget/widget-manifest.schema.json',
       packageManifestValidatorPath:'scriptwidget/manifest-validation.mjs',

@@ -333,9 +333,9 @@ jobs:
           split_phase_start=$SECONDS
           trap 'printf "%s\n" "$(( SECONDS - split_phase_start ))" > "$SPLIT_EVIDENCE/native-dependencies-duration-seconds.txt"' EXIT
           {
-          npm ci --ignore-scripts --no-audit --no-fund --prefix Scripts/NativeScript
+          node Scripts/MiniApps/install-tooling.mjs --engine=nativescript --ignore-scripts
           npm run prepare:ios-dependencies --prefix Scripts/NativeScript
-          npm ci --ignore-scripts --no-audit --no-fund --prefix Scripts/Expo
+          node Scripts/MiniApps/install-tooling.mjs --engine=expo --ignore-scripts
           node Scripts/Expo/prepare-ios-dependencies.mjs
           node Scripts/Expo/prepare-types.mjs
           node Scripts/Expo/build-probe.mjs
@@ -426,6 +426,14 @@ jobs:
           python3 Scripts/CI/generate_performance_report.py \
             --log-dir "$SPLIT_EVIDENCE" --run-id "$GITHUB_RUN_ID" --commit-sha "$GITHUB_SHA" \
             --output-json "$SPLIT_EVIDENCE/ci-performance-report.json" --step-summary "$GITHUB_STEP_SUMMARY"
+      - name: Upload MiniApp authoring UI attachments
+        if: ${{ always() && inputs.paired_product_acceptance && inputs.paired_test_scope == 'miniapp_authoring' }}
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: miniapp-authoring-ui-${{ github.run_id }}
+          path: ${{ env.SPLIT_EVIDENCE }}/paired-product/*-attachments
+          if-no-files-found: ignore
+          retention-days: 14
       - name: Upload evidence
         if: always()
         uses: actions/upload-artifact@v7.0.2

@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-24T02:00:46.246454+00:00",
+  "baseGitSHA": "0f29e0a3399151dc111b28adc3487b784badeccf",
+  "sourceHashes": {
+    ".github/workflows/build-expo-native-search-miniapp.yml": "1570c52bbb4cb7c899bd4f0c108bd39a898f4d22e8521906014e1b33bbad5501",
+    ".github/workflows/build-ios26-unsigned-ipa.yml": "826fae0402f057955529b0fb626993256c28c3e28e37b87b8f1eeab8f14f0500",
+    ".github/workflows/testflight.yml": "8dddf6cd2dfde006faf899601579f1c9a0e6de759e11affb22a7e79e1e3cc1b9",
+    ".github/workflows/validate-app-split.yml": "74d677502c09d3f8bc16d540074964f90f2d52bd0e26e73e12fdfdce964b1bb5",
+    ".github/workflows/validate-expo-runtime-spike.yml": "410596b035e364b7e8b9111673b04c33ed7d1bd917179060e4a75d3538521295",
+    ".github/workflows/validate-performance-regression.yml": "90ce9ef75b3349f21d82b4b4bf807b2944a050758b9e945b7f33a146cded15bd",
+    "Scripts/Expo/miniapps/modular-text-search/build.ps1": "394476bb932e3608709fe455af351585fc692d4255acd2f6dc41a1471a7fcd1f",
+    "Scripts/Expo/prepare-types.mjs": "e32603c7fd4a24f2c5223155185e35bc59ad87455859cf3bf321a23a5e6f878e",
+    "Scripts/MiniApps/Tests/installed-tooling.test.mjs": "11306650aaa851c988674dd9eab4e470f5b5ad0e0a27e871351230142b0744fe",
+    "Scripts/MiniApps/Tests/stage-sdk.test.mjs": "64ec04cb4beaa8a3648b21cefc92a7eb7b87596e04231fb5c93722520c961bb2",
+    "Scripts/MiniApps/Tests/upstream-resolution.test.mjs": "9c8a0dd6bc1408cd515f93549e7f155298ac6eb6eab6fde2424aecea50bf75c3",
+    "Scripts/MiniApps/install-tooling.mjs": "2bc799f7d89b662b2553d43dc39303987c6be3a3748ff042271b224d73c8c885",
+    "Scripts/MiniApps/resolve-upstreams.mjs": "f3e44b2e0b59f9432d34b06e1b88f4cf32a69b9d047bbdd393d30c9de80c9277",
+    "Scripts/MiniApps/stage-sdk.mjs": "f129f2563169c926a0217551627a7972c1dbb2e27801a2c09f5361aaed975ff1",
+    "Scripts/Runtime/prepare-runtime-host.sh": "1116efd0aacd1b0891287d5a9afc8b67f45186fad82f4a0c8a6a35eb17b7519c"
+  },
+  "verification": [
+    {
+      "status": "EXECUTED_PASS",
+      "scope": "Real npm-ci install receipts, missing declarations, transitive version and same-version byte drift, local source copies, changed lock integrity, authenticated declaration reseal and exact-input reuse",
+      "command": "node --test Scripts/MiniApps/Tests/installed-tooling.test.mjs",
+      "tests": 8,
+      "log": "installed-tooling-tests.log"
+    },
+    {
+      "status": "EXECUTED_PASS",
+      "scope": "SDK source retention, alias compiler identity and standalone closure, coherent original React typing constraints, source merge and native version metadata",
+      "command": "node --test Scripts/MiniApps/Tests/stage-sdk.test.mjs Scripts/MiniApps/Tests/upstream-resolution.test.mjs",
+      "tests": 17,
+      "log": "sdk-resolver-tests.log"
+    },
+    {
+      "status": "EXECUTED_PASS",
+      "scope": "Read-only metadata and current local-source comparison for the existing original Expo graph",
+      "packages": 643,
+      "log": "existing-original-graph.log"
+    },
+    {
+      "status": "EXECUTED_PASS",
+      "scope": "Six edited workflow YAML documents parse, runtime preparation shell syntax, and git diff whitespace"
+    }
+  ],
+  "originalCompiler": {
+    "packageName": "@typescript/typescript6",
+    "packageVersion": "6.0.2",
+    "compilerVersion": "6.0.3",
+    "fileSHA256": {
+      "typescript/package.json": "d9b8fb53c67c947fece83bcb73fa8512227ea6a12b110e096fdab8ecdc02b655",
+      "typescript/lib/typescript.js": "d3f3cd2b04b7f466f4484df921b744223f7bd1f3e353ec9110bdf52695b983d5",
+      "@typescript/old/package.json": "9332e97c30d3e53ed54910b89207ed657fb444066484df6e5b6965bf130865e9",
+      "@typescript/old/lib/typescript.js": "569177652966bd528c319171c7dd22860dbf72bde116cbc4f644f1d02bb12e39"
+    }
+  },
+  "reactDeclarations": {
+    "originalConstraints": {
+      "react-native@0.88.1.peerDependencies.@types/react": "^19.1.1",
+      "expo@58.0.26.devDependencies.@types/react": "~19.3.0"
+    },
+    "query": "npm view @types/react@^19.1.1 ~19.3.0 version --json --registry=https://registry.npmjs.org",
+    "selectedCurrentPublication": "19.3.0",
+    "log": "current-react-types.json"
+  },
+  "nativeAcceptance": {
+    "status": "NOT_RUN",
+    "scope": "This focused portable change does not establish Xcode compilation or application runtime acceptance; parent owns the native gate."
+  },
+  "logSHA256": {
+    "existing-original-graph.log": "216c531cb649611f4476f2d82b5b001d28ce59effa256be42ef94086304eaa86",
+    "sdk-resolver-tests.log": "3a528c1017e7e44481c5da0852f49c13756555be223abdac1757a1533ec48991",
+    "current-react-types.json": "6c1f47056849659f6e28b3b30f352ad3770ca51ab9b0892ac6f44c63eba547f4",
+    "installed-tooling-tests.log": "d07d3450952173b3f636bac73fe8edfd36696ab7a05a53c987815f69be393098",
+    "actual-compiler.json": "778c2c8ef47c3bc6f7b2bcfa62a9103aa87eea6ba122e642dd819a11c8005816"
+  }
+}

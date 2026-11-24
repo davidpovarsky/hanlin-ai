@@ -210,11 +210,19 @@ jobs:
           device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
+      - name: Resolve current original MiniApp sources before native preparation
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$LOG_DIR" build/acceptance/miniapp-upstreams
+          trap 'cp build/acceptance/miniapp-upstreams/resolution.json "$LOG_DIR/miniapp-upstream-resolution.json" 2>/dev/null || true; git diff --binary > "$LOG_DIR/miniapp-upstream-inputs.patch"' EXIT
+          node Scripts/MiniApps/resolve-upstreams.mjs --apply --cache="$RUNNER_TEMP/hanlin-miniapp-upstreams" 2>&1 | tee "$LOG_DIR/miniapp-upstream-resolution.log"
+
       - name: Install Expo tooling dependencies
         shell: bash
         run: |
           set -euxo pipefail
-          npm ci --prefix Scripts/Expo
+          node Scripts/MiniApps/install-tooling.mjs --engine=expo
 
       - name: Live Activity · refresh
         uses: davidpovarsky/github-automation/live-refresh@main
@@ -293,7 +301,7 @@ jobs:
         shell: bash
         run: |
           set -euxo pipefail
-          npm ci --ignore-scripts --no-audit --no-fund --prefix Scripts/NativeScript
+          node Scripts/MiniApps/install-tooling.mjs --engine=nativescript --ignore-scripts
           npm run prepare:ios-dependencies --prefix Scripts/NativeScript
 
       - name: Live Activity · refresh

@@ -1,0 +1,15 @@
+# Original SDK input freshness — 2026-11-24
+
+The common installer now establishes a content receipt through the real original `npm ci`. Reuse verifies the exact package and lock inputs, every installed transitive package identity, retained original JavaScript/declaration bytes, and current local Hanlin source bytes. Missing files, unchanged-version byte drift, stale copied local packages, and changed locks cannot pass a version-only check. The existing five declaration corrections update that receipt only after their original implementation/declaration hash checks; an unrelated changed file rejects resealing.
+
+Eight real npm regression cases passed using small local package tarballs, including successful original reinstall recovery and reuse without another install. Seventeen SDK/resolver cases passed, including an actual CommonJS alias dependency closure. The existing original Expo graph (643 installed packages) passed a separate read-only structural and local-source check. Full file receipts for that shared graph were not forged or backfilled.
+
+The original npm package is `@typescript/typescript6@6.0.2`; its real compiler implementation reports TypeScript 6.0.3. Both values are now exposed separately in the SDK descriptor. ScriptWidget-only SDK staging keeps the alias implementation dependency instead of copying only the 45-byte forwarding module. Full Expo SDK staging already retains that graph.
+
+React declarations now resolve from the intersection of the selected original React Native peer and Expo development declaration ranges. The actual selected baseline ranges are `^19.1.1` and `~19.3.0`; the bounded original-registry lookup returned 19.3.0. The separately verified Expo and NativeScript compiler pins remain explicit; the NativeScript Vite publication accepts `typescript: "*"` and does not justify selecting an unrelated newest compiler.
+
+The existing installer calls in shipping, paired, simulator, performance, Expo validation and canonical package-building workflows use the common helper. Both older app-producing validation paths now resolve current original inputs before native preparation; the performance path also prepares matching Expo native inputs. The runtime-host resource fingerprint is taken after authenticated type/export preparation. The relocated Host test receives the actual repository root through `HANLIN_MINIAPP_REPOSITORY_ROOT`.
+
+Direct Xcode and the generic apple-devtools `apple-build` command still consume a prepared graph. The correct developer sequence is to resolve original inputs, install through this helper, prepare NativeScript/Expo native inputs and RuntimeHost resources, then invoke xcodebuild or open the prepared project. A late Xcode target build phase is not used to mutate an already resolved package graph. Existing repository manual app workflows are the canonical complete build entrypoints.
+
+[Machine receipt](result.json) binds source hashes, original compiler bytes, actual commands, logs and their hashes. These are portable Linux results. Native Apple application acceptance remains a separate gate owned by the integration agent.

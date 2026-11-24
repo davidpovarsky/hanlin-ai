@@ -28,7 +28,7 @@ jobs:
           cache-dependency-path: Scripts/Expo/package-lock.json
 
       - name: Install original host-matching Expo tooling
-        run: npm ci --prefix Scripts/Expo --no-audit --no-fund
+        run: node Scripts/MiniApps/install-tooling.mjs --engine=expo
 
       - name: Prepare original types and author SDK
         run: |

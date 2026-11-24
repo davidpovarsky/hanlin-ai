@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {mkdtemp,rm} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import path from 'node:path';
-import {expoRanges,latestMetadata,generatedHostVersions,generatedExpoHostVersions,generatedNativeAPIHostVersions} from '../resolve-upstreams.mjs';
+import {expoRanges,latestMetadata,reactTypesSelection,compilerSelections,generatedHostVersions,generatedExpoHostVersions,generatedNativeAPIHostVersions} from '../resolve-upstreams.mjs';
 import {mergeOriginal,originalInHostTarget} from '../refresh-original-sources.mjs';
 import {sourceBuildIdentity} from '../../Expo/build-original-expo-source.mjs';
 
@@ -68,4 +68,17 @@ test('public Native API metadata uses the same real Worklets and React Native ve
   assert.match(source,/workletsVersion = "0\.13\.0"/);
   assert.match(source,/reactNativeVersion = "0\.88\.1"/);
   assert.throws(()=>generatedNativeAPIHostVersions({expo:{}}),/Missing exact/);
+});
+
+test('React declaration resolution intersects original Expo and RN ranges including disjunctions',()=>{
+  const selection=reactTypesSelection({version:'58.0.26',devDependencies:{'@types/react':'~19.3.0'}},{version:'0.88.1',peerDependencies:{'@types/react':'^19.1.1 || ^20.0.0'}},'19.2.0');
+  assert.equal(selection.requested,'^19.1.1 ~19.3.0 || ^20.0.0 ~19.3.0');
+  assert.equal(selection.mode,'original-compatible-range');
+  assert.deepEqual(selection.constraints.map(item=>item.source),['react-native@0.88.1 peerDependencies','expo@58.0.26 devDependencies']);
+  assert.deepEqual(reactTypesSelection({version:'x'},{version:'y'},'19.3.0').mode,'explicit-pin');
+});
+test('an unconstrained original NativeScript compiler peer preserves the verified per-engine toolchains',()=>{
+  const selected=compilerSelections({devDependencies:{typescript:'npm:@typescript/typescript6@6.0.2'}},{devDependencies:{typescript:'5.9.3'}},new Map([['@nativescript/vite',{peerDependencies:{typescript:'*'}}]]));
+  assert.equal(selected.expo.requested,'npm:@typescript/typescript6@6.0.2');
+  assert.equal(selected.nativescript.requested,'5.9.3');assert.equal(selected.nativescript.upstreamPeerRange,'*');
 });

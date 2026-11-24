@@ -3,6 +3,8 @@ $repo = (Resolve-Path (Join-Path $PSScriptRoot '..\..\..\..')).Path
 $sdk = Join-Path $repo 'build\MiniAppSDK-Expo'
 $report = Join-Path $PSScriptRoot '.hanlin-authoring\build-report.json'
 $dist = Join-Path $PSScriptRoot 'dist'
+& node (Join-Path $repo 'Scripts\MiniApps\install-tooling.mjs') '--engine=expo'
+if ($LASTEXITCODE -ne 0) { throw 'Original Expo dependency preparation failed' }
 & node (Join-Path $repo 'Scripts\Expo\prepare-types.mjs')
 if ($LASTEXITCODE -ne 0) { throw 'Original Expo type preparation failed' }
 & node (Join-Path $repo 'Scripts\MiniApps\stage-sdk.mjs') "--output=$sdk" '--engines=expo,scriptwidget'

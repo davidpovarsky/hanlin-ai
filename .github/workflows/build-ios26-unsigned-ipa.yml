@@ -262,7 +262,7 @@ jobs:
           set -euo pipefail
           SECONDS=0
           trap 'echo "$SECONDS" > build/skill-format-app-resolution/nativescript-install-duration-seconds.txt' EXIT
-          npm ci --ignore-scripts --no-audit --no-fund --prefix Scripts/NativeScript 2>&1 | tee build/skill-format-app-resolution/nativescript-install.log
+          node Scripts/MiniApps/install-tooling.mjs --engine=nativescript --ignore-scripts 2>&1 | tee build/skill-format-app-resolution/nativescript-install.log
       - name: Restore or prepare the existing declaration-only metadata compiler
         timeout-minutes: 12
         uses: ./.github/actions/prepare-nativescript-metadata-tool
@@ -274,7 +274,7 @@ jobs:
           trap 'echo "$SECONDS" > build/skill-format-app-resolution/native-staging-duration-seconds.txt' EXIT
           {
             npm run prepare:ios-dependencies --prefix Scripts/NativeScript
-            npm ci --prefix Scripts/Expo
+            node Scripts/MiniApps/install-tooling.mjs --engine=expo
             node Scripts/Expo/prepare-ios-dependencies.mjs
           } 2>&1 | tee build/skill-format-app-resolution/native-staging.log
       - name: Resolve app dependencies without building or testing
@@ -525,7 +525,7 @@ jobs:
           test -n "$selected_xcode"
           echo "DEVELOPER_DIR=$selected_xcode/Contents/Developer" >> "$GITHUB_ENV"
       - name: Install existing pinned NativeScript tooling
-        run: npm ci --prefix Scripts/NativeScript --ignore-scripts --no-audit --no-fund
+        run: node Scripts/MiniApps/install-tooling.mjs --engine=nativescript --ignore-scripts
       - name: Prepare declaration-only metadata tool
         uses: ./.github/actions/prepare-nativescript-metadata-tool
       - name: Compare real SDK metadata parser modes
@@ -759,7 +759,7 @@ jobs:
         run: |
           set -euxo pipefail
           mkdir -p "$LOG_DIR"
-          npm ci --ignore-scripts --no-audit --no-fund --prefix Scripts/NativeScript
+          node Scripts/MiniApps/install-tooling.mjs --engine=nativescript --ignore-scripts
           npm run prepare:ios-dependencies --prefix Scripts/NativeScript
           node Scripts/NativeScript/prepare-fixture.mjs
           npm run preflight:ios-dependencies --prefix Scripts/NativeScript
@@ -1227,11 +1227,11 @@ jobs:
         run: |
           set -euxo pipefail
           mkdir -p "$LOG_DIR"
-          npm ci --ignore-scripts --no-audit --no-fund --prefix Scripts/NativeScript
+          node Scripts/MiniApps/install-tooling.mjs --engine=nativescript --ignore-scripts
           npm run prepare:ios-dependencies --prefix Scripts/NativeScript
           node Scripts/NativeScript/prepare-fixture.mjs
           npm run preflight:ios-dependencies --prefix Scripts/NativeScript
-          npm ci --prefix Scripts/Expo
+          node Scripts/MiniApps/install-tooling.mjs --engine=expo
           node Scripts/Expo/prepare-ios-dependencies.mjs
           node Scripts/Expo/prepare-types.mjs
           node Scripts/Expo/build-probe.mjs
@@ -2138,9 +2138,9 @@ jobs:
         run: |
           set -euxo pipefail
           mkdir -p "$LOG_DIR"
-          npm ci --ignore-scripts --no-audit --no-fund --prefix Scripts/NativeScript
+          node Scripts/MiniApps/install-tooling.mjs --engine=nativescript --ignore-scripts
           npm run prepare:ios-dependencies --prefix Scripts/NativeScript
-          npm ci --prefix Scripts/Expo
+          node Scripts/MiniApps/install-tooling.mjs --engine=expo
           node Scripts/Expo/prepare-ios-dependencies.mjs
           node Scripts/Expo/prepare-types.mjs
           node Scripts/Expo/build-probe.mjs
