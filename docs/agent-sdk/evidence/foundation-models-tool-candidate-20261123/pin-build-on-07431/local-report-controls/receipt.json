@@ -1,0 +1,19 @@
+{
+  "utc": "2026-11-24T00:52:59.822589+00:00",
+  "scope": "Four new local admission controls; synthetic current build, authentic immutable old outcomes; no Apple execution",
+  "command": [
+    "python3",
+    "Scripts/CI/Tests/test_native_tool_pin_build_report.py",
+    "-v"
+  ],
+  "exit_code": 0,
+  "source_sha256": {
+    "Scripts/CI/IntegrationValidation/verify_native_tool_pin_build.py": "910f10cda646baa74c2c0840c621e4fff3fb0faf9c47218b22c4bf3e7909d3a0",
+    "Scripts/CI/IntegrationValidation/run_native_tool_pin_build.py": "1ac7c3d7b21aa972ce6482fc2b34e4d2cf9e169832df90186a1ae2217176981e",
+    "Scripts/CI/Tests/test_native_tool_pin_build_report.py": "6072bd10bab8ada3c3eb410f111171c4fb3cb2af699244790e84593660588e0b"
+  },
+  "output_sha256": {
+    "stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr.log": "bc13bcf583b40742277375e5cef788ed5e8d0c7a6382da5c2ada8b6c8a0c5711"
+  }
+}
