@@ -1,0 +1,7 @@
+{
+  "reviewer": "/root/entrypoints",
+  "mode": "read-only",
+  "sourceSHA256": "0e7e2a2c38ed4449869ea61e5e9757cd4dc67e66258ae340958ebe617c93a829",
+  "status": "NO_CONCRETE_BLOCKER",
+  "conclusion": "Exact public throwing constructor accepts Dictionary members; resulting HanlinValue is compared to unchanged props in the original XCTest equality. No lossy comparison, assertion removal or neighboring receipt/consumer change. No test/build/CI rerun by reviewer."
+}

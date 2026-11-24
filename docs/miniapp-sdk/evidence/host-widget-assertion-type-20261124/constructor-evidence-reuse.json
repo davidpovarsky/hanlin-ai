@@ -1,0 +1,30 @@
+{
+  "priorCommit": "2c167de391896001963e0a44b4cdea1ddd6fc5a4",
+  "priorReceipt": "docs/miniapp-sdk/evidence/expo-widget-props-value-20261124/receipt.json",
+  "priorReceiptSHA256": "2f925f07fba0dfa9ba01192499684e21dc8b3418a8c1759092fddc4249eb220a",
+  "priorCompilerResult": "docs/miniapp-sdk/evidence/expo-widget-props-value-20261124/mac-probe.json",
+  "actualPriorScope": "Real public HanlinObject(uniqueMembers:Array(props)) construction compiled and executed against the unchanged actual value/error source closure, where props is [String:HanlinValue].",
+  "currentScope": "Same throwing constructor for state.values declared [String:HanlinValue]; only type construction is reused. XCTest autoclosure/whole hosted method and app test execution are NOT_RUN and are not certified by this reuse.",
+  "sourceIdentities": [
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinValue.swift",
+      "previousSHA256": "cd266a8b820ae8673fd576697bc30d77ba5dd563feaa670f7e5b2f18319ff3d8",
+      "currentSHA256": "cd266a8b820ae8673fd576697bc30d77ba5dd563feaa670f7e5b2f18319ff3d8",
+      "status": "IDENTICAL"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinContractError.swift",
+      "previousSHA256": "ad59a698345d7c218b3787c721b93fc6104ae462f7f11000d9204b1dd03e8518",
+      "currentSHA256": "ad59a698345d7c218b3787c721b93fc6104ae462f7f11000d9204b1dd03e8518",
+      "status": "IDENTICAL"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinDescriptors.swift",
+      "scope": "Verbatim HanlinManifestIssueCode/HanlinManifestIssue declarations used only by the prior source-closure module",
+      "previousProjectionSHA256": "55bfe2a2ab836cfd4d00e19b36bddcf4b9d5dbc307701e930f1150c8bea0fc0e",
+      "currentProjectionSHA256": "55bfe2a2ab836cfd4d00e19b36bddcf4b9d5dbc307701e930f1150c8bea0fc0e",
+      "status": "IDENTICAL"
+    }
+  ],
+  "newExecution": "NONE"
+}

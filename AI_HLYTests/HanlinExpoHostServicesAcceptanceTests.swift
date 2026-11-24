@@ -74,7 +74,7 @@ final class HanlinExpoHostServicesAcceptanceTests: XCTestCase {
         XCTAssertEqual(receipt["osRendered"], .null)
         let reopened = HanlinScriptExtensions.HanlinScriptExtensionStore(root: fixture.extensions.root)
         let state = try XCTUnwrap(reopened.load()?.widgetStates.first(where: { $0.identity == instance.identity && $0.engine == .expo }))
-        XCTAssertEqual(.object(state.values), props)
+        XCTAssertEqual(try .object(HanlinObject(uniqueMembers: Array(state.values))), props)
         XCTAssertEqual(receipt["revision"], .integer(Int64(state.revision)))
         XCTAssertEqual(state.artifactSHA256, originalDigest)
         let prepared = HanlinWidgetPreparation.prepare(store: reopened, entityID: instance.entityID, family: "systemMedium")
