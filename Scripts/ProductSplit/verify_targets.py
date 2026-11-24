@@ -54,9 +54,16 @@ def native_ui_typecheck_command(architecture, sdk_path, platform_path, sources):
     command = ["xcrun", "--sdk", "iphonesimulator", "swiftc", "-typecheck",
                "-module-name", "HanlinMiniAppsUITests", "-swift-version", swift_version,
                "-target", f"{architecture}-apple-ios{deployment}-simulator", "-sdk", str(sdk_path),
+               # XCTest's Swift overlay is outside XCTest.framework. Preserve
+               # Xcode's system import path; framework-only imports expose the
+               # Objective-C assertion macros, which Swift cannot call.
+               "-Isystem", str(Path(platform_path) / "Developer/usr/lib"),
+               "-module-alias", "Testing=_Testing_Unavailable",
                "-F", str(Path(platform_path) / "Developer/Library/Frameworks"),
                "-F", str(Path(sdk_path) / "Developer/Library/Frameworks"),
                "-enable-experimental-feature", "DebugDescriptionMacro"]
+    if settings.get("ENABLE_TESTABILITY") == "YES":
+        command.append("-enable-testing")
     conditions = settings.get("SWIFT_ACTIVE_COMPILATION_CONDITIONS", "").split()
     for condition in conditions:
         if condition != "$(inherited)":
