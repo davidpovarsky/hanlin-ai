@@ -1357,7 +1357,7 @@
     }
   ],
   "recordingOutcome": "Four scoped tasks completed with readback; next current52 native gate ready to dispatch. No main merge, release, app/device PASS or broader80E2E claim.",
-  "updatedAtUTC": "2026-11-24T11:59:36.975721+00:00",
+  "updatedAtUTC": "2026-11-24T12:08:32.063052+00:00",
   "currentIntegrationBase": "df07b8da7933e66180df8bfa8838a8617b6be00d",
   "gateHistory": [
     {
@@ -1722,5 +1722,15 @@
     "observed": "0 present Apple USB VID_05AC devices; no matching Apple Mobile Device/usbmux service; named iOS-device tools absent from queried PATH. Existing apple-test-focused dispatches GitHub CI and was not executed.",
     "unknown": "Python-module availability not established after launcher/shell timeouts. No inference that the user owns no iPad or no alternative route exists.",
     "boundary": "Read-only current Windows observation; no pairing/install/software/device/service/signing/CI mutation."
+  },
+  "dedicatedMacPhysicalRouteFollowup": {
+    "receipt": {
+      "path": "docs/miniapp-sdk/evidence/scaleway-physical-device-inventory-20261124/receipt.json",
+      "sha256": "63c8929bc7daf066b9ece36fa9d64eedf25c17e5d7ead2f4c87f4a728a4172f2"
+    },
+    "observedAtUTC": "2026-11-24T12:06:44+00:00",
+    "status": "NO_REACHABLE_PHYSICAL_IPAD_OR_IPHONE_IDENTIFIED_IN_SNAPSHOT",
+    "observed": "Two CoreSimulator devices explicitly simulated; xctrace11simulators and one unclassified opaque Devices entry",
+    "boundary": "No physical app/device acceptance or absence-of-devices-elsewhere claim."
   }
 }
