@@ -63,6 +63,65 @@ final class MiniAppsCrossAppPreferencesUITests: XCTestCase {
         XCTAssertTrue(app.buttons["miniapps-preferences"].waitForExistence(timeout: 10),
                       "The editor's own dismissal action must close the actual preferences sheet.")
     }
+    func testPreferencesUsesEnglishAndHebrewNativeToolbarLayouts() {
+        // Package title/row/dismissal strings come from the real en/he resources.
+        // Native EditButton may render a symbol: never guess its translated label.
+        let variants: [(language: String, locale: String, title: String,
+                        newWindow: String, dismissal: String, isRTL: Bool)] = [
+            ("en", "en_US", "Apps", "Open shared MiniApps in a new window", "Done", false),
+            ("he", "he_IL", "אפליקציות", "פתיחת מיני־אפליקציות משותפות בחלון חדש", "סיום", true)
+        ]
+        for (index, variant) in variants.enumerated() {
+            if index > 0 {
+                app.terminate()
+                app.launchArguments = ["-AppleLanguages", "(\(variant.language))",
+                                       "-AppleLocale", variant.locale]
+                app.launch()
+            }
+            openPreferences()
+            let edit = app.buttons["miniapps-editor-edit"]
+            let close = app.buttons["miniapps-editor-dismiss"]
+            XCTAssertTrue(edit.waitForExistence(timeout: 15))
+            XCTAssertTrue(close.waitForExistence(timeout: 15))
+            let toolbar = app.navigationBars.containing(.button, identifier: "miniapps-editor-edit").firstMatch
+            XCTAssertTrue(toolbar.waitForExistence(timeout: 10))
+            XCTAssertTrue(toolbar.staticTexts[variant.title].waitForExistence(timeout: 10),
+                          "The actual preferences sheet must show its package-localized title.")
+            let newWindow = app.switches["miniapps-new-window"]
+            XCTAssertTrue(newWindow.waitForExistence(timeout: 10))
+            XCTAssertEqual(newWindow.label, variant.newWindow)
+            XCTAssertEqual(close.label, variant.dismissal)
+            XCTAssertTrue(close.isHittable)
+            XCTAssertTrue(edit.isHittable)
+            if variant.isRTL {
+                XCTAssertGreaterThan(close.frame.midX, edit.frame.midX,
+                                     "Hebrew must place leading dismissal on the right and trailing Edit on the left.")
+            } else {
+                XCTAssertLessThan(close.frame.midX, edit.frame.midX,
+                                  "English must place leading dismissal on the left and trailing Edit on the right.")
+            }
+            let normal = XCTAttachment(screenshot: app.screenshot())
+            normal.name = "MiniApps \(variant.language) native toolbar"
+            normal.lifetime = .keepAlways
+            self.add(normal)
+            edit.tap()
+            XCTAssertTrue(close.waitForNonExistence(timeout: 10))
+            XCTAssertEqual(toolbar.buttons.count, 1,
+                           "Editing must expose exactly one native toolbar confirmation.")
+            XCTAssertEqual(toolbar.buttons.matching(identifier: "miniapps-editor-edit").count, 1)
+            XCTAssertEqual(app.buttons.matching(identifier: "miniapps-editor-dismiss").count, 0)
+            let editing = XCTAttachment(screenshot: app.screenshot())
+            editing.name = "MiniApps \(variant.language) one native confirmation"
+            editing.lifetime = .keepAlways
+            self.add(editing)
+            edit.tap()
+            XCTAssertTrue(close.waitForExistence(timeout: 10))
+            close.tap()
+            XCTAssertTrue(app.buttons["miniapps-preferences"].waitForExistence(timeout: 10),
+                          "The localized editor must dismiss its actual sheet.")
+        }
+    }
+
     private func tapNativeSwitch(in row: XCUIElement) {
         // SwiftUI exposes a labeled switch row and its actual UISwitch as a
         // nested switch. The row's center is its label, not the control thumb.
