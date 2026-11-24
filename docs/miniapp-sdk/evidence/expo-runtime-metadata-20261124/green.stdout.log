@@ -1,0 +1,14 @@
+✔ actual importer and sessions reconcile independent original versions and the bridge baseline (32.199265ms)
+✔ future independent Core iOS and SwiftUI updates reach both generated consumers (20.865161ms)
+✔ stale direct-session runtime and using iOS as the Core ceiling both fail the audit (17.933104ms)
+✔ original dependency drift and public runtime metadata drift remain rejected separately (22.086768ms)
+✔ Native API facade versions follow the resolved graph and reject an actual exported mismatch (34.66308ms)
+✔ Expo UI public runtime metadata follows the installed original runtime across every mirror (58.364417ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 278.905848

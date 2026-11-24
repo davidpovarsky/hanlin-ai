@@ -15,52 +15,23 @@
     "absenceBoundary": "A missing matched receipt means not established within the requested evidence set, not proof that the implementation or a receipt elsewhere does not exist."
   },
   "activeGate": {
-    "runID": 45354940642,
-    "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45354940642",
-    "sourceCommit": "a12eb646aeb5c484f746c07ecffafc7d9f34f167",
-    "status": "COMPLETED_FAILURE",
-    "result": "failure",
-    "selectedCases": 42,
-    "executionObserved": false,
-    "dispatchReceipt": {
-      "path": "docs/miniapp-sdk/evidence/tenth-native-gate-dispatch-20261124.json",
-      "sha256": "7f6133da96839300e663e2536c272b88d7b22ddac8e6cd9f194bd10e55db28d7"
-    },
-    "lastObservationRecordedAtUTC": "2026-11-24T09:06:34.077745+00:00",
+    "runID": 45365620977,
+    "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45365620977",
+    "sourceCommit": "6d9a59bfc1bd1830a8d56e694c42b19c6bd7d468",
+    "jobID": 138346476075,
     "scope": "miniapp_authoring",
-    "boundary": "Preparation/export and Host component tests passed; AI build and all42 app/UI cases NOT_RUN.",
+    "status": "IN_PROGRESS",
+    "selectedCases": 42,
     "aiCases": 25,
     "miniAppsCases": 17,
-    "acceptanceRequires": [
-      "Fresh original library/native and shippingSDK/document identity preparation",
-      "All42selected cases pass with no failures/skips",
-      "Actual diagnostic-sheet and repaired-native-app attachments",
-      "Exact original archive/report handoff and nonempty installedPackageID receipt"
-    ],
-    "executedAppCases": 0,
-    "passed": 0,
-    "failed": 0,
-    "skipped": 0,
-    "caseStatus": "NOT_RUN",
-    "failureStage": "First MiniApps build-for-testing exited65 after1203.752s",
-    "confirmedCause": "HanlinTranslationUI/HanlinNativePresentationView.swift lines13/16: unqualified ButtonRole ambiguous between SwiftUI and original Expo UI; minimal source fix in progress.",
-    "artifact": {
-      "id": 14905155493,
-      "bytes": 333706641,
-      "sha256": "9064980406b7c59be8fe5f80113039609faed17e351dd9193ef329e933c6b4c8"
+    "dispatchReceipt": {
+      "path": "docs/miniapp-sdk/evidence/eleventh-native-gate-dispatch-20261124.json",
+      "sha256": "a8ce4e857f0d3ef7697b2ed8e82ed34317928a5311094c103d35342c2e534549"
     },
-    "failureEvidence": {
-      "path": "docs/miniapp-sdk/evidence/native-gate-10-button-role-20261124/receipt.json",
-      "sha256": "77fc9a4be0dfc93bc8d9a3fa7aeae84ed7a22c7886a3abbdc9fb5ee4b0d272a5"
-    },
-    "sourceFix": {
-      "rootCommit": "baabea9c",
-      "independentReview": {
-        "path": "docs/miniapp-sdk/evidence/native-gate-10-button-role-20261124/independent-review.json",
-        "sha256": "4f26b8550800d55955ffa8989927c873d106a9c9f9650a911688065de05808de"
-      },
-      "correctedAppleExecution": "NOT_RUN"
-    }
+    "lastObservationRecordedAtUTC": "2026-11-24T10:00:12.531176+00:00",
+    "observedPhase": "Actual paired product build/test step active after successful original native dependencies and shipping SDK preparation/export.",
+    "caseStatus": "NO_COMPLETED_APP_CASE_RECEIPT_YET",
+    "boundary": "No native/UI PASS inferred from source preparation. New public-runtime metadata and followup adapter/HostServices changes after this source require their own focused execution."
   },
   "userScope": {
     "activeOriginalEngines": [
@@ -935,6 +906,41 @@
       "requiredAuthorities": 3,
       "rejectedProvenanceMutations": 5,
       "nativeChanges": false
+    },
+    "apple_original_scriptwidget_2": {
+      "receipt": {
+        "path": "docs/miniapp-sdk/evidence/native-scriptwidget-pass-20261124/receipt.json",
+        "sha256": "db4d887569a9c3b04ddea5332a4ad77e78985b63eb64566db1819aa7bc39cdf1"
+      },
+      "result": "EXECUTED_PASS",
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "runID": 45364761765,
+      "scope": "Original ScriptWidget compiler, element constraints, large allowed material and root Fragment behavior on Apple."
+    },
+    "paired_build_phase_reporter": {
+      "receipt": {
+        "path": "docs/miniapp-sdk/evidence/paired-build-phase-status-20261124/receipt.json",
+        "sha256": "f6f5bcee3c6ced46586f86288751136e45013fad02f4a35f024fd2965e1595c4"
+      },
+      "sourceCommit": "6d9a59bfc1bd1830a8d56e694c42b19c6bd7d468",
+      "result": "EXECUTED_PASS",
+      "portableCases": 8,
+      "boundary": "Journal/reporter validation; not a native app test result."
+    },
+    "expo_public_runtime_metadata": {
+      "receipt": {
+        "path": "docs/miniapp-sdk/evidence/expo-runtime-metadata-20261124/receipt.json",
+        "sha256": "824b095964bfa9dc392986cffdde87daa8c4ae03cb3e251bd69c3ec0f42d7b0d"
+      },
+      "sourceCommit": "fcf88190ca930130a035ef9150947543713616d1",
+      "result": "EXECUTED_PASS",
+      "portableCases": 6,
+      "publicRuntime": "58.0.29",
+      "bridgeABI": "3.0.0",
+      "reviewedCoverageInput": "58.0.3",
+      "boundary": "Atomic original graph update and source contract; actual public/native getter UI pending focused followup."
     }
   },
   "criteria": [
@@ -1184,8 +1190,8 @@
     }
   ],
   "recordingOutcome": "Evidence mapping only. No task closure, new test result, native application success, physical-device success, main merge, release or TestFlight publication is asserted.",
-  "updatedAtUTC": "2026-11-24T09:22:55.440783+00:00",
-  "currentIntegrationBase": "7b21953bf9a27727935bcfec1adcfc8702c1b8af",
+  "updatedAtUTC": "2026-11-24T10:00:12.531176+00:00",
+  "currentIntegrationBase": "fcf88190ca930130a035ef9150947543713616d1",
   "gateHistory": [
     {
       "runID": 45335292541,
@@ -1235,6 +1241,54 @@
         "path": "docs/miniapp-sdk/evidence/ninth-native-gate-20261124.json",
         "sha256": "9a61f28d66abd52e4289c1dcaef6ad92a2926e43b7db9f58ec2c6d7ca2e4534d"
       }
+    },
+    {
+      "runID": 45354940642,
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45354940642",
+      "sourceCommit": "a12eb646aeb5c484f746c07ecffafc7d9f34f167",
+      "status": "COMPLETED_FAILURE",
+      "result": "failure",
+      "selectedCases": 42,
+      "executionObserved": false,
+      "dispatchReceipt": {
+        "path": "docs/miniapp-sdk/evidence/tenth-native-gate-dispatch-20261124.json",
+        "sha256": "7f6133da96839300e663e2536c272b88d7b22ddac8e6cd9f194bd10e55db28d7"
+      },
+      "lastObservationRecordedAtUTC": "2026-11-24T09:06:34.077745+00:00",
+      "scope": "miniapp_authoring",
+      "boundary": "Preparation/export and Host component tests passed; AI build and all42 app/UI cases NOT_RUN.",
+      "aiCases": 25,
+      "miniAppsCases": 17,
+      "acceptanceRequires": [
+        "Fresh original library/native and shippingSDK/document identity preparation",
+        "All42selected cases pass with no failures/skips",
+        "Actual diagnostic-sheet and repaired-native-app attachments",
+        "Exact original archive/report handoff and nonempty installedPackageID receipt"
+      ],
+      "executedAppCases": 0,
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0,
+      "caseStatus": "NOT_RUN",
+      "failureStage": "First MiniApps build-for-testing exited65 after1203.752s",
+      "confirmedCause": "HanlinTranslationUI/HanlinNativePresentationView.swift lines13/16: unqualified ButtonRole ambiguous between SwiftUI and original Expo UI; minimal source fix in progress.",
+      "artifact": {
+        "id": 14905155493,
+        "bytes": 333706641,
+        "sha256": "9064980406b7c59be8fe5f80113039609faed17e351dd9193ef329e933c6b4c8"
+      },
+      "failureEvidence": {
+        "path": "docs/miniapp-sdk/evidence/native-gate-10-button-role-20261124/receipt.json",
+        "sha256": "77fc9a4be0dfc93bc8d9a3fa7aeae84ed7a22c7886a3abbdc9fb5ee4b0d272a5"
+      },
+      "sourceFix": {
+        "rootCommit": "baabea9c",
+        "independentReview": {
+          "path": "docs/miniapp-sdk/evidence/native-gate-10-button-role-20261124/independent-review.json",
+          "sha256": "4f26b8550800d55955ffa8989927c873d106a9c9f9650a911688065de05808de"
+        },
+        "correctedAppleExecution": "NOT_RUN"
+      }
     }
   ],
   "modernContractGate": {
@@ -1250,7 +1304,7 @@
     "skipped": 0,
     "receipt": "docs/miniapp-sdk/evidence/apple-modern-contracts-20261124/receipt.json"
   },
-  "currentScopeNote": "Original-library SDK completion and selected native acceptance; broad canonical Host-runtime matrix is separately bounded. Historical evidence retains its own exact input applicability.",
+  "currentScopeNote": "Main11 has42 selected app/native cases still active at its exact source. Original ScriptWidget2, modern8 and store1 already have actual Apple PASS receipts. Followup generated view/modifier behavior and modern HostServices publication expose further source/behavior gaps; they are tracked separately and not inferred from declaration counts.",
   "modernContractGateHistory": [
     {
       "runID": 45348880385,
@@ -1343,25 +1397,44 @@
     }
   ],
   "scriptWidgetParityGate": {
-    "runID": 45360272675,
-    "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45360272675",
-    "sourceCommit": "74ba980dbb91f3a38d4531f043801f5e742c283a",
-    "jobID": 138328276796,
-    "status": "EXECUTED_FAILED",
+    "runID": 45364761765,
+    "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45364761765",
+    "sourceCommit": "71d176315dea14e4db524f9da642bfdca5a46618",
+    "jobID": 138343532787,
+    "status": "EXECUTED_PASS",
     "selectedCases": 2,
     "executed": 2,
-    "passed": 0,
-    "failed": 2,
+    "passed": 2,
+    "failed": 0,
     "skipped": 0,
-    "cause": "Both methods throw Invalid network host declaration: *. Session synthesizes unrestricted* and network policy accepts it; duplicated manifest validator rejects it. Production correction in progress; assertions not weakened.",
-    "initialFailureEvidence": {
-      "path": "docs/miniapp-sdk/evidence/scriptwidget-host-validation-20261124/initial-native-failure.json",
-      "sha256": "431a154a4e320128c1d9a4d14970db8925bc8622ed627092f293e3ffc4c6d217"
+    "receipt": {
+      "path": "docs/miniapp-sdk/evidence/native-scriptwidget-pass-20261124/receipt.json",
+      "sha256": "db4d887569a9c3b04ddea5332a4ad77e78985b63eb64566db1819aa7bc39cdf1"
     },
-    "sourceFixEvidenceID": "scriptwidget_host_validation_fix"
+    "currentSourceApplicability": "Exact original ScriptWidget implementation and tests match through6d9; these2 component results do not prove app UI, all APIs or physical device."
   },
   "physicalDeviceRouteEvidence": {
     "path": "docs/miniapp-sdk/evidence/available-device-test-route-20261124.json",
     "sha256": "db2fdba20d3810a0550948a8174ff511cb7c253fa23441afa89796ba1a1a7de1"
-  }
+  },
+  "scriptWidgetParityGateHistory": [
+    {
+      "runID": 45360272675,
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45360272675",
+      "sourceCommit": "74ba980dbb91f3a38d4531f043801f5e742c283a",
+      "jobID": 138328276796,
+      "status": "EXECUTED_FAILED",
+      "selectedCases": 2,
+      "executed": 2,
+      "passed": 0,
+      "failed": 2,
+      "skipped": 0,
+      "cause": "Both methods throw Invalid network host declaration: *. Session synthesizes unrestricted* and network policy accepts it; duplicated manifest validator rejects it. Production correction in progress; assertions not weakened.",
+      "initialFailureEvidence": {
+        "path": "docs/miniapp-sdk/evidence/scriptwidget-host-validation-20261124/initial-native-failure.json",
+        "sha256": "431a154a4e320128c1d9a4d14970db8925bc8622ed627092f293e3ffc4c6d217"
+      },
+      "sourceFixEvidenceID": "scriptwidget_host_validation_fix"
+    }
+  ]
 }
