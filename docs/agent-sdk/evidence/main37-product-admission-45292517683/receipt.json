@@ -1,0 +1,57 @@
+{
+  "recordedUTC": "2026-11-24T00:52:02.250240+00:00",
+  "run": 45292517683,
+  "attempt": 1,
+  "source": "a051e6a2076db8f0783f8c1a62fd6470e21b3d71",
+  "workflowConclusion": "FAIL",
+  "runURL": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45292517683",
+  "artifactID": 14877902206,
+  "artifactBytes": 3287009,
+  "artifactSHA256": "fff55f6c75917fcc851acf468ca6f3491d593a751a422ca0659c7631d5a29296",
+  "acquisitionCount": 1,
+  "archiveMembers": 91,
+  "crcAndMemberSHA256": "PASS",
+  "originalArchive": "/mnt/development/projects/worktrees/hanlin-sdk02-interface-capture-20261123/build/sdk-main-calendar-readiness-45292517683/original-smoke-artifact.zip",
+  "originalBuildXCResult": "RETAINED_IN_ORIGINAL_ZIP",
+  "unitAndUIResults": "ABSENT_NOT_EXECUTED",
+  "executedTestOrCalendarPreparationCommands": [],
+  "fullAppAndTestBuild": "PASS",
+  "initialCurrentProducts": "SEALED_PASS",
+  "runTimeCurrentProductsAdmission": "FAIL_GIT_HEAD_30_SECOND_TIMEOUT",
+  "resources": "PASS_37_CHECKED_2_EQUAL_COPIES",
+  "localization": "PASS_3683_CATALOG_177_PACKAGED_VALUES_4_EQUAL_COPIES",
+  "localizationFilesPerCopy": 15,
+  "localizationEntriesPerCopy": 19,
+  "calendarPrivacyGrants": "NOT_RUN",
+  "actualEventKitMethod": "NOT_RUN",
+  "nativeConfigurationMethods": "NOT_SELECTED_UNCHANGED_PRIOR_EVIDENCE",
+  "currentCases": {
+    "PASS": 0,
+    "FAIL": 0,
+    "NOT_RUN": 37
+  },
+  "earlier37History": {
+    "PASS": 18,
+    "FAIL": 7,
+    "NOT_RUN": 12
+  },
+  "retained305OtherPasses": "HISTORICAL_SOURCE_QUALIFIED_NOT_EXECUTED_HERE",
+  "preparedNative": {
+    "artifactID": 14875618230,
+    "bytes": 184427383,
+    "status": "INELIGIBLE_UNACQUIRED_FAILED_PRODUCER"
+  },
+  "rootOwnedLog": {
+    "path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-main-calendar-readiness-20261123/terminal/native-job.log",
+    "bytes": 29925615,
+    "sha256": "0bc51ca4a2aec91da3aa76f1ec4ca1ccd9b2c94d83552ae1d07835ce61773682",
+    "redownloaded": false
+  },
+  "requestSHA256": "c6461528b7bb0799e9dc4047afc09d4d886045c8c9ec782eb0739a53f093eea7",
+  "admissionSHA256": "c7a13857cf07f66c315815c289afb44e377824261e32bda3b656bd057ec6bf2e",
+  "planSHA256": "1f6d46967d4557accb6eca3172eaf769abb2b999a3c9e03690b88dc582257361",
+  "reconciliationSHA256": "4b67068d652824b6769bbd9938186b64e9a830b97f905a9951410c2c585a9168",
+  "expectedIdentitySHA256": "495ea09bc6d34209b6f70fe42c2584eea70df8090a98625012a65548b74efd5b",
+  "testSourceFilesQualified": 8,
+  "nativeOrLocalTestReplay": false
+}

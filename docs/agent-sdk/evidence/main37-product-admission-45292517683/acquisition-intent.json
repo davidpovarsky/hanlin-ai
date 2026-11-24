@@ -1,0 +1,48 @@
+{
+  "utc": "2026-11-24T00:49:09.697870+00:00",
+  "run": 45292517683,
+  "attempt": 1,
+  "source": "a051e6a2076db8f0783f8c1a62fd6470e21b3d71",
+  "artifact": {
+    "id": 14877902206,
+    "node_id": "MDg6QXJ0aWZhY3QxNDg3NzkwMjIwNg==",
+    "name": "AI_Hanlin-iOS26-simulator-smoke-logs",
+    "size_in_bytes": 3287009,
+    "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/14877902206",
+    "archive_download_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/14877902206/zip",
+    "expired": false,
+    "digest": "sha256:fff55f6c75917fcc851acf468ca6f3491d593a751a422ca0659c7631d5a29296",
+    "created_at": "2026-11-24T00:44:12Z",
+    "updated_at": "2026-11-24T00:44:12Z",
+    "expires_at": "2026-12-08T00:44:07Z",
+    "workflow_run": {
+      "id": 45292517683,
+      "repository_id": 1295277723,
+      "head_repository_id": 1295277723,
+      "head_branch": "codex/hanlin-sdk-unification-20261123",
+      "head_sha": "a051e6a2076db8f0783f8c1a62fd6470e21b3d71"
+    }
+  },
+  "expectedSHA256": "fff55f6c75917fcc851acf468ca6f3491d593a751a422ca0659c7631d5a29296",
+  "expectedBytes": 3287009,
+  "destinationDevice": 2064,
+  "availableBeforeBytes": 2162212864,
+  "command": [
+    "sudo",
+    "-u",
+    "ubuntu",
+    "env",
+    "TMPDIR=/mnt/development/projects/worktrees/hanlin-sdk02-interface-capture-20261123/build/sdk-main-calendar-readiness-45292517683/tmp",
+    "XDG_CACHE_HOME=/mnt/development/projects/worktrees/hanlin-sdk02-interface-capture-20261123/build/sdk-main-calendar-readiness-45292517683/cache",
+    "gh",
+    "api",
+    "repos/davidpovarsky/hanlin-ai/actions/artifacts/14877902206/zip"
+  ],
+  "rootMetadataSHA256": {
+    "run.json": "3f1b4ba02c3b95d6d759a8468c33cc434ca0c1e5c2c44f635a545e1b36ddff67",
+    "jobs.json": "64536e40c88bb5659b90a59247a3c39432081f0952e7a4bd1d13f7c10407efb1",
+    "artifacts.json": "362017345699b2eaa0fd6dc0594af0466504605feba579a58b92a9364c98ecaf",
+    "acquisition.json": "f932c5950e6d3b7be12bc6ccb80c12ee4a46cd00e9f426e55b80f8794005a979"
+  },
+  "preparedNativeAcquisition": "NOT_AUTHORIZED_FAILED_PRODUCER"
+}

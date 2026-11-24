@@ -1,0 +1,15 @@
+{
+  "utc": "2026-11-24T00:49:13.125281+00:00",
+  "run": 45292517683,
+  "attempt": 1,
+  "source": "a051e6a2076db8f0783f8c1a62fd6470e21b3d71",
+  "artifactID": 14877902206,
+  "archiveBytes": 3287009,
+  "archiveSHA256": "fff55f6c75917fcc851acf468ca6f3491d593a751a422ca0659c7631d5a29296",
+  "members": 91,
+  "expandedMemberBytes": 21317503,
+  "status": "PASS_ARCHIVE_AUTHENTICATION_ONLY",
+  "memberInventorySHA256": "1dcca61171fb00a42b03209c912fdd5da49538fb8c0e29005d176510fb85a775",
+  "downloadCount": 1,
+  "preparedNative": "INELIGIBLE_UNACQUIRED"
+}
