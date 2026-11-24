@@ -343,3 +343,26 @@ The existing original-Expo native conformance case now also writes actual
 original enum records, restores option entities, verifies type preservation and
 enum precedence through the original JavaScript renderer, and checks stale,
 foreign and conflicting option handling. The Apple case count is unchanged.
+
+
+### Original Expo Live Activity push support
+
+Both containing apps enable the original `ExpoWidgets_EnablePushNotifications`
+Info.plist switch. The original `LiveActivityFactory` then requests an ActivityKit
+push token, and the original module observes its push-to-start token updates.
+MiniApps declares `aps-environment = $(APS_ENVIRONMENT)`, matching the existing AI
+app convention. The target build configuration supplies `development` for Debug
+and `production` for Release; the existing App Group and product identities remain
+the original storage destinations.
+
+Local Live Activity creation, updates, termination and original API calls can be
+validated in the simulator. Actual APNs token issuance and remote delivery require
+a signed app in the configured Apple push environment and a real delivery test.
+Enabling the original switch and entitlement is configuration evidence; it is not
+evidence that APNs issued a token or delivered a notification. No such delivery
+result is claimed by the simulator acceptance gate.
+
+The source contract is `expo-widgets@58.0.29`:
+`plugin/src/ios/withPushNotifications.ts`,
+`ios/LiveActivity/LiveActivityFactory.swift`, and
+`ios/WidgetsModule.swift` in the original npm publication.
