@@ -99,7 +99,8 @@
     "AI_HLY/Downstream/RuntimeCore/Resources/RuntimeLinkDependencyNotices.txt",
     "AI_HLY/Downstream/RuntimeCore/Resources/RuntimeManifest.json",
     "AI_HLY/RuntimeHostResources.zip",
-    "AI_HLY/Assets.xcassets"
+    "AI_HLY/Assets.xcassets",
+    "Packages/HanlinWidgetSDK/HostResources/HanlinAppIntents.xcstrings"
   ],
   "products": [
     "HanlinA2UI",
@@ -133,7 +134,8 @@
     "TorahLibraryKit",
     "ZIPFoundation",
     "HanlinTranslationUI",
-    "HanlinExpoWidgetsOriginal"
+    "HanlinExpoWidgetsOriginal",
+    "HanlinWidgetUI"
   ],
   "native_framework_refs": [
     "A10000000000000000000020",

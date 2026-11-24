@@ -21,7 +21,21 @@ class ProjectGraphTests(unittest.TestCase):
                          if value.get("isa") == "PBXNativeTarget" and value.get("name") == "HanlinMiniApps")
 
     def test_registered_graph(self):
-        validate_graph(self.project, self.manifest)
+        result = validate_graph(self.project, self.manifest)
+        self.assertIn("HanlinWidgetUI", result["miniapps_products"])
+        source = (ROOT / "HanlinMiniAppsApp/HanlinMiniAppsApp.swift").read_text()
+        self.assertIn("import HanlinWidgetUI", source)
+        self.assertIn("HanlinWidgetIntentsPackage.self", source)
+        # The entity-backed action opens the app; both it and its Widget metadata
+        # need the existing .main localization table, not only the shared binary.
+        for name in ["HanlinMiniApps", "HanlinMiniAppsWidgets"]:
+            target = next(value for value in self.objects.values()
+                          if value.get("isa") == "PBXNativeTarget" and value.get("name") == name)
+            resources = {self.objects[self.objects[key]["fileRef"]]["path"]
+                         for phase in target["buildPhases"]
+                         if self.objects[phase]["isa"] == "PBXResourcesBuildPhase"
+                         for key in self.objects[phase]["files"]}
+            self.assertIn("Packages/HanlinWidgetSDK/HostResources/HanlinAppIntents.xcstrings", resources)
 
     def test_agent_sdk_actual_linkage(self):
         validate_agent_sdk_linkage(self.project, ROOT)
@@ -134,8 +148,11 @@ class ProjectGraphTests(unittest.TestCase):
     def test_reject_declared_but_unlinked_product(self):
         phase = next(self.objects[key] for key in self.mini["buildPhases"]
                      if self.objects[key]["isa"] == "PBXFrameworksBuildPhase")
-        phase["files"].pop()
-        with self.assertRaises(AssertionError):
+        widget_links = [key for key in phase["files"]
+                        if self.objects.get(self.objects[key].get("productRef"), {}).get("productName") == "HanlinWidgetUI"]
+        self.assertEqual(len(widget_links), 1)
+        phase["files"].remove(widget_links[0])
+        with self.assertRaisesRegex(AssertionError, "Every declared MiniApps product must actually be linked"):
             validate_graph(self.project, self.manifest)
 
     def test_reject_duplicate_project_key(self):

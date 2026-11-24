@@ -34,12 +34,13 @@ EXTRA_PRODUCT_BUILDS = {
     ("HanlinApp", "HanlinExpoWidgetsOriginal"): "AC1900000000000000000051",
     ("HanlinMiniApps", "HanlinExpoWidgetsOriginal"): "AC1900000000000000000052",
     ("AI_HLYTests", "HanlinExpoWidgetsOriginal"): "AC1900000000000000000053",
-    ("HanlinScriptingWidgets", "HanlinExpoWidgetsOriginal"): "AC1900000000000000000054"
+    ("HanlinScriptingWidgets", "HanlinExpoWidgetsOriginal"): "AC1900000000000000000054",
+    ("HanlinMiniApps", "HanlinWidgetUI"): "AC1900000000000000000055"
 }
 TARGET_PRODUCTS={
     "HanlinApp": ["HanlinApplication"],
     "AI_HLYTests": ["HanlinApplication"],
-    "HanlinMiniApps": ["HanlinA2UI", "HanlinLocalization", "HanlinAgentActivityCore", "HanlinExtensionContracts", "HanlinMiniAppsUI", "HanlinPresentationKit", "TorahLibraryKit", "HanlinTranslationUI", "HanlinExpoWidgetsOriginal"],
+    "HanlinMiniApps": ["HanlinA2UI", "HanlinLocalization", "HanlinAgentActivityCore", "HanlinExtensionContracts", "HanlinMiniAppsUI", "HanlinPresentationKit", "TorahLibraryKit", "HanlinTranslationUI", "HanlinExpoWidgetsOriginal", "HanlinWidgetUI"],
     "ChavrusaChatShare": ["HanlinShareExtensionUI", "HanlinExtensionContracts"],
     "ChavrusaChatNotificationService": ["HanlinNotificationExtension", "HanlinExtensionContracts"],
     "ChavrusaChatTranslationProvider": ["HanlinTranslationUI", "HanlinExtensionContracts"],
@@ -316,7 +317,8 @@ def update(package=None):
         "\t\t\tpath = \"Packages/HanlinWidgetSDK/HostResources/HanlinAppIntents.xcstrings\";\n"
         "\t\t\tsourceTree = SOURCE_ROOT;\n")
     for name, build in [("HanlinApp", "AC1900000000000000000131"),
-                        ("HanlinScriptingWidgets", "AC1900000000000000000132")]:
+                        ("HanlinScriptingWidgets", "AC1900000000000000000132"),
+                        ("HanlinMiniApps", "AC1900000000000000000133")]:
         target=targets[name][1]
         phase=next(k for k in target["buildPhases"] if objects[k]["isa"]=="PBXResourcesBuildPhase")
         files=list(objects[phase]["files"])

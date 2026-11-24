@@ -806,6 +806,14 @@
 			isa = PBXBuildFile;
 			fileRef = 865725CC287EA6A3C2986ABB;
 		};
+		AC1900000000000000000055 = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000044;
+		};
+		AC1900000000000000000133 = {
+			isa = PBXBuildFile;
+			fileRef = AC1900000000000000000130;
+		};
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2456,6 +2464,7 @@
 				"AC1900000000000000000048" ,
 				"AC190000000000000000004A" ,
 				"AC1900000000000000000052" ,
+				"AC1900000000000000000055" ,
 			);
 			"runOnlyForDeploymentPostprocessing" = "0";
 		};
@@ -2894,6 +2903,7 @@
 				"F70000000000000000000051" ,
 				"AC1900000000000000000043" ,
 				"AC1900000000000000000050" ,
+				"AC1900000000000000000044" ,
 			);
 			"productName" = "HanlinMiniApps";
 			"productReference" = "F80000000000000000000002";
@@ -3164,6 +3174,7 @@
 				"F97F2034C82C07A1C253F2D2" ,
 				"F946FB32616C40A65485DF3D" ,
 				"F99926B4C8149320C8634158" ,
+				"AC1900000000000000000133" ,
 			);
 			"runOnlyForDeploymentPostprocessing" = "0";
 		};

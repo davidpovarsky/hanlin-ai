@@ -2,6 +2,7 @@ import AppIntents
 import ExpoWidgets
 import HanlinTranslationUI
 import HanlinScriptExtensions
+import HanlinWidgetUI
 import SwiftUI
 import HanlinProductSplit
 import HanlinMiniAppsBridge
@@ -216,6 +217,6 @@ private struct HanlinMiniAppsReadyRoot: View {
 /// Index the original shared actions in the foreground app that executes them.
 struct HanlinMiniAppsIntents: AppIntentsPackage {
     static var includedPackages: [any AppIntentsPackage.Type] {
-        [HanlinScriptExtensionIntentsPackage.self, HanlinNativePresentationIntentsPackage.self, HanlinExpoWidgetsIntentsPackage.self]
+        [HanlinWidgetIntentsPackage.self, HanlinNativePresentationIntentsPackage.self, HanlinExpoWidgetsIntentsPackage.self]
     }
 }

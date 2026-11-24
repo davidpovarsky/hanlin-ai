@@ -56,6 +56,47 @@ def command(argv, name, timeout=60, allow_failure=False):
     return code, output.decode(errors="replace")
 
 
+def capture_app_intents_metadata(app):
+    """Preserve compiler output without interpreting its schema or claiming execution."""
+    destination = EVIDENCE / "app-intents-metadata" / app.name
+    receipt = destination.parent / (app.name + ".json")
+    result = {"source_app": str(app), "status": "NOT_PRESENT", "directories": [],
+              "intent_execution": "NOT_RUN", "receipt": receipt.relative_to(EVIDENCE).as_posix()}
+    try:
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        if not app.is_dir():
+            result["status"] = "APP_BUNDLE_MISSING"
+        else:
+            metadata = []
+            for directory, children, _ in os.walk(app):
+                for name in list(children):
+                    if name.casefold() == "metadata.appintents":
+                        metadata.append(Path(directory) / name)
+                        children.remove(name)
+            for original in sorted(metadata):
+                relative = original.relative_to(app)
+                copied = destination / relative
+                shutil.copytree(original, copied)
+                files = []
+                for file in sorted(copied.rglob("*")):
+                    if file.is_file():
+                        contents = file.read_bytes()
+                        files.append({"path": file.relative_to(destination).as_posix(),
+                                      "bytes": len(contents), "sha256": hashlib.sha256(contents).hexdigest()})
+                result["directories"].append({"path": relative.as_posix(),
+                    "evidence_path": copied.relative_to(EVIDENCE).as_posix(), "files": files})
+            if metadata:
+                result["status"] = "CAPTURED"
+    except Exception as error:
+        result.update(status="CAPTURE_ERROR", error=str(error))
+    try:
+        receipt.write_text(json.dumps(result, indent=2) + "\n")
+    except OSError as error:
+        result["receipt_error"] = str(error)
+    print("App Intents metadata evidence: " + app.name + " " + result["status"], flush=True)
+    return result
+
+
 def fixture_archive(sha):
     source = ROOT / "Tests/ProductSplit/TransferFixture"
     destination = EVIDENCE / "HanlinTransferAcceptance.zip"
@@ -196,6 +237,11 @@ def main():
         command(["xcrun", "simctl", "boot", simulator], "boot.log")
         command(["xcrun", "simctl", "bootstatus", simulator, "-b"], "bootstatus.log", timeout=300)
         derived = Path(os.environ["SPLIT_DERIVED_DATA"])
+        products = {
+            "com.itorah.chavrusachat": derived / "Build/Products/Debug-iphonesimulator/AI_Hanlin.app",
+            "com.itorah.hanlinminiapps": derived / "Build/Products/Debug-iphonesimulator/HanlinMiniApps.app"
+        }
+        state["app_intents_metadata"] = {}
         base = ["xcodebuild", "-project", "AI_HLY.xcodeproj",
             "-destination", "platform=iOS Simulator,id=" + simulator,
             "-parallel-testing-enabled", "NO", "-derivedDataPath", str(derived),
@@ -213,6 +259,7 @@ def main():
         command(base + ["-scheme", "HanlinMiniApps", mini_action,
             "-resultBundlePath", str(EVIDENCE / "MiniBuild.xcresult")], "mini-build.log", timeout=2400)
         state["mini_build"] = "EXECUTED_PASS"
+        state["app_intents_metadata"]["com.itorah.hanlinminiapps"] = capture_app_intents_metadata(products["com.itorah.hanlinminiapps"])
         # The original full-app workflow uses this exact pinned upstream generator:
         # Xcode 27.2 advertises its outputs but can omit the generator build commands.
         # The helper verifies every input against the resolved commit before running it.
@@ -226,12 +273,9 @@ def main():
         command(base + ["-scheme", "AI_HLY", "build-for-testing",
             "-resultBundlePath", str(EVIDENCE / "AIBuild.xcresult")], "ai-build.log", timeout=1800)
         state["ai_build"] = "EXECUTED_PASS"
+        state["app_intents_metadata"]["com.itorah.chavrusachat"] = capture_app_intents_metadata(products["com.itorah.chavrusachat"])
         state["build"] = "EXECUTED_PASS"
         state["status"] = "INFRA_ERROR"
-        products = {
-            "com.itorah.chavrusachat": derived / "Build/Products/Debug-iphonesimulator/AI_Hanlin.app",
-            "com.itorah.hanlinminiapps": derived / "Build/Products/Debug-iphonesimulator/HanlinMiniApps.app"
-        }
         expected_names = {"com.itorah.chavrusachat": "Hanlin AI",
                           "com.itorah.hanlinminiapps": "Hanlin MiniApps"}
         state["product_identity"] = {}
