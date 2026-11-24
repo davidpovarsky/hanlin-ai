@@ -16,7 +16,8 @@ function zipDir(sourceDir, targetZip) {
   }
 }
 
-async function buildFixture({ name, displayName, description, bundleCode, isCore = true }) {
+async function buildFixture({ name, displayName, description, bundleCode, isCore = true, windowFactory = false }) {
+  if (process.argv.includes('--window-factories-only') && !windowFactory) return;
   const sourceDir = resolve(fixturesDir, `${name}-source`);
   const appDir = resolve(sourceDir, 'nativescript', 'app');
   const targetZip = resolve(fixturesDir, `${name}.hanlinNativeScript`);
@@ -35,6 +36,8 @@ async function buildFixture({ name, displayName, description, bundleCode, isCore
       '@nativescript/core': '9.1.0'
     }
   };
+
+  if (windowFactory) packageJSON.hanlinNativeScript = { runtimeVersion: '9.1.0', windowFactory: 1 };
 
   const scriptJSON = {
     name: displayName,
@@ -116,7 +119,8 @@ try {
 `;
 
 // 1. Fixture A: Unbundled Core TabView Only (No Frame)
-const coreFixtureACode = `import {
+const coreFixtureACode = `import { registerWindowFactory } from "@hanlin/window-factory";
+import {
   Application,
   TabView,
   TabViewItem,
@@ -181,13 +185,12 @@ export function createRoot() {
   return tabView;
 }
 
-Application.run({
-  create: () => createRoot()
-});
+registerWindowFactory(() => createRoot());
 `;
 
 // 2. Fixture B: Unbundled Core Frame Only (Navigation Stack)
-const coreFixtureBCode = `import {
+const coreFixtureBCode = `import { registerWindowFactory } from "@hanlin/window-factory";
+import {
   Application,
   Frame,
   Page,
@@ -266,13 +269,12 @@ export function createRoot() {
   return frame;
 }
 
-Application.run({
-  create: () => createRoot()
-});
+registerWindowFactory(() => createRoot());
 `;
 
 // 3. Fixture C: Unbundled Core TabView + Frame (Sefaria Architecture)
-const coreFixtureCCode = `import {
+const coreFixtureCCode = `import { registerWindowFactory } from "@hanlin/window-factory";
+import {
   Application,
   TabView,
   TabViewItem,
@@ -387,9 +389,7 @@ export function createRoot() {
   return tabView;
 }
 
-Application.run({
-  create: () => createRoot()
-});
+registerWindowFactory(() => createRoot());
 `;
 
 await buildFixture({
@@ -405,7 +405,8 @@ await buildFixture({
   displayName: 'Hanlin NativeScript Core TabView A E2E',
   description: 'Unbundled Core TabView without Frame verification fixture.',
   bundleCode: coreFixtureACode,
-  isCore: true
+  isCore: true,
+  windowFactory: true
 });
 
 await buildFixture({
@@ -413,7 +414,8 @@ await buildFixture({
   displayName: 'Hanlin NativeScript Core Frame B E2E',
   description: 'Unbundled Core Frame navigation verification fixture.',
   bundleCode: coreFixtureBCode,
-  isCore: true
+  isCore: true,
+  windowFactory: true
 });
 
 await buildFixture({
@@ -421,7 +423,8 @@ await buildFixture({
   displayName: 'Hanlin NativeScript Core TabView+Frame C E2E',
   description: 'Unbundled Core TabView containing Frames verification fixture.',
   bundleCode: coreFixtureCCode,
-  isCore: true
+  isCore: true,
+  windowFactory: true
 });
 
 console.log('All controller fixtures built successfully.');

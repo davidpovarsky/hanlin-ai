@@ -2,6 +2,7 @@
 #import <UIKit/UIKit.h>
 #import "HanlinNativeScriptCompatibility.h"
 #import "HanlinNativeServicesBridge.h"
+#import "HanlinNativeScriptWindowFactory.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
