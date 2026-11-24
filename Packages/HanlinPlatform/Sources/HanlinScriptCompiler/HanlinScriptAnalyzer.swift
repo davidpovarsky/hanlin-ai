@@ -456,6 +456,14 @@ public struct HanlinScriptAnalyzer: Sendable {
                         ? "Expo action exposure uses the foreground app's registered Host Services handlers."
                         : "Expo exposure '\(candidate.kind.rawValue)' is unsupported until it references the prepared foreground bundle containing the registered handlers.",
                     code: prepared ? "MINIAPP_EXPO_ACTION_READY" : "MINIAPP_EXPO_ACTION_BUNDLE_REQUIRED"))
+            case .embeddedResult:
+                let prepared = appEntrypoints.first?.sourcePath == candidate.sourcePath
+                findings.append(.init(state: prepared ? .supported : .unsupported,
+                    severity: prepared ? .information : .error, sourcePath: candidate.sourcePath,
+                    message: prepared
+                        ? "Embedded results use the installed Expo app bundle and its declared handler identity."
+                        : "An embedded result exposure must reference the prepared foreground app bundle.",
+                    code: prepared ? "MINIAPP_EMBEDDED_RESULT_READY" : "MINIAPP_EMBEDDED_RESULT_BUNDLE_REQUIRED"))
             case .liveActivity:
                 let prepared = appEntrypoints.first?.sourcePath == candidate.sourcePath
                 findings.append(.init(state: prepared ? .supported : .unsupported,
@@ -748,12 +756,13 @@ public struct HanlinScriptAnalyzer: Sendable {
                   case let .string(id)? = fields["id"], !id.isEmpty,
                   case let .string(rawKind)? = fields["kind"],
                   let kind = HanlinPackageEntrypointKind(rawValue: rawKind),
-                  [.appIntent, .share, .translationUI, .liveActivity].contains(kind),
+                  [.appIntent, .embeddedResult, .share, .translationUI, .liveActivity].contains(kind),
                   case let .string(path)? = fields["sourcePath"],
                   HanlinArchivePolicy.normalizedRelativePath(path) == path, files[path] != nil,
+                  (kind != .embeddedResult || discovered.contains(where: { $0.kind == .app && $0.sourcePath == path })),
                   identifiers.insert(id).inserted, id != "app", id != "widget" else {
                 findings.append(.init(state: .unsupported, severity: .error, sourcePath: "script.json",
-                    message: "entrypoints[\(index)] requires a unique id, supported kind (appIntent, share, translationUI, liveActivity), and existing package-relative sourcePath.",
+                    message: "entrypoints[\(index)] requires a unique id, supported kind (appIntent, embeddedResult, share, translationUI, liveActivity), and existing package-relative sourcePath. embeddedResult must reference the prepared foreground app bundle.",
                     code: "MINIAPP_ENTRYPOINT_DECLARATION_INVALID"))
                 continue
             }
@@ -764,8 +773,13 @@ public struct HanlinScriptAnalyzer: Sendable {
             default: .mainApplication
             }
             let symbol: String? = if case let .string(value)? = fields["exportedSymbol"] { value } else { nil }
+            let policy: String = switch kind {
+            case .liveActivity: "prepared-system-surface-v1"
+            case .embeddedResult: "embedded-result-v1"
+            default: "prepared-foreground-action-v1"
+            }
             declared.append(.init(id: id, kind: kind, sourcePath: path, exportedSymbol: symbol,
-                supportedContexts: [context, .mainApplication], runtimePolicyID: kind == .liveActivity ? "prepared-system-surface-v1" : "prepared-foreground-action-v1",
+                supportedContexts: [context, .mainApplication], runtimePolicyID: policy,
                 runtimeProfile: runtime, compatibility: .partial))
         }
         let declaredKinds = Set(declared.map(\.kind))
