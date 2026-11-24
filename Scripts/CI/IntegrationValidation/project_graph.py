@@ -166,7 +166,7 @@ def validate_agent_sdk_linkage(project, repository):
     targets = {objects[key]["name"]: (key, objects[key]) for key in root["targets"]}
     assert {"HanlinApp", "AI_HLYTests", "HanlinMiniApps"} <= targets.keys()
     for name, (_, target) in targets.items():
-        required = expected if name == "HanlinApp" else {"HanlinAgentCore", "HanlinApplication"} if name == "AI_HLYTests" else set()
+        required = {"HanlinApplication"} if name in {"HanlinApp", "AI_HLYTests"} else set()
         declared = [products[key] for key in target.get("packageProductDependencies", []) if key in products]
         linked = [products[objects[file]["productRef"]]
                   for phase in target["buildPhases"] if objects[phase]["isa"] == "PBXFrameworksBuildPhase"
@@ -175,6 +175,8 @@ def validate_agent_sdk_linkage(project, repository):
         required_linked = {"HanlinApplication"} if name in {"HanlinApp", "AI_HLYTests"} else set()
         assert len(linked) == len(required_linked) and set(linked) == required_linked, name + ": SDK image ownership mismatch"
         if required_linked:
+            all_declared = [objects[key]["productName"] for key in target.get("packageProductDependencies", [])]
+            assert all_declared == ["HanlinApplication"], name + ": duplicate Application product dependency"
             all_linked = [objects[objects[file]["productRef"]]["productName"]
                           for phase in target["buildPhases"] if objects[phase]["isa"] == "PBXFrameworksBuildPhase"
                           for file in objects[phase]["files"] if "productRef" in objects[file]]
@@ -207,7 +209,7 @@ def validate_agent_sdk_linkage(project, repository):
     for sibling in ("HanlinAgentSDK", "HanlinPlatform"):
         for filename in ("Package.swift", "Package.resolved"):
             assert (repository / "Packages" / sibling / filename).is_file(), "Incomplete canonical module definition"
-    return {"ai_products": sorted(expected), "unit_test_products": ["HanlinAgentCore", "HanlinApplication"],
+    return {"ai_products": ["HanlinApplication"], "unit_test_products": ["HanlinApplication"],
             "miniapps_agent_products": [], "sdk_application_sources": len(sources),
             "host_sources": sorted(host_swift), "native_adapter": adapter,
             "linked_application_products": {"HanlinApp": ["HanlinApplication"], "AI_HLYTests": ["HanlinApplication"]},

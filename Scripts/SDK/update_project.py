@@ -29,8 +29,8 @@ EXTRA_PRODUCT_BUILDS = {
     ("HanlinMiniApps", "TorahLibraryKit"): "AC1900000000000000000048"
 }
 TARGET_PRODUCTS={
-    "HanlinApp": ["HanlinApplication", "HanlinA2UI", "HanlinLocalization", "HanlinExtensionContracts"],
-    "AI_HLYTests": ["HanlinApplication", "HanlinA2UI", "HanlinLocalization", "HanlinExtensionContracts"],
+    "HanlinApp": ["HanlinApplication"],
+    "AI_HLYTests": ["HanlinApplication"],
     "HanlinMiniApps": ["HanlinA2UI", "HanlinLocalization", "HanlinAgentActivityCore", "HanlinExtensionContracts", "HanlinMiniAppsUI", "HanlinPresentationKit", "TorahLibraryKit"],
     "ChavrusaChatShare": ["HanlinShareExtensionUI", "HanlinExtensionContracts"],
     "ChavrusaChatNotificationService": ["HanlinNotificationExtension", "HanlinExtensionContracts"],
@@ -87,9 +87,9 @@ def insert_object(text,section,key,body):
     rendered="\t\t"+key+" = {\n"+body+"\t\t};\n"
     return text.replace(marker,rendered+marker,1)
 
-# Keep the original declarations available to the SDK manifest generator and
-# compiler. Only the original Application image owns their linked implementation
-# in these two processes; other executables retain their independent products.
+# The SDK implementation dependencies live in application_products.json.
+# These thin hosts declare and link only their owning Application image;
+# other executables retain their independent products.
 HOST_LINK_OWNERS = {"HanlinApp": "HanlinApplication", "AI_HLYTests": "HanlinApplication"}
 
 
@@ -153,12 +153,20 @@ def update(package=None):
     for name,key in PRODUCTS.items():
         text=insert_object(text,"XCSwiftPackageProductDependency",key,
             "\t\t\tisa = XCSwiftPackageProductDependency;\n\t\t\tpackage = "+ROOT_PACKAGE+";\n\t\t\tproductName = "+name+";\n")
+    objects=parse_project(text)["objects"]
     targets={v["name"]:(k,v) for k,v in objects.items() if v.get("isa")=="PBXNativeTarget"}
     for index,(name,required) in enumerate(TARGET_PRODUCTS.items()):
         key,target=targets[name]
         products=list(target.get("packageProductDependencies",[]))
         for product in required:
             if PRODUCTS[product] not in products:products.append(PRODUCTS[product])
+        owner = HOST_LINK_OWNERS.get(name)
+        if owner:
+            # Xcode also derives product graph/link inputs from declarations.
+            # Keep independent products; only remove proven Application members.
+            products = [ref for ref in products
+                        if objects[ref]["productName"] == owner
+                        or not product_is_covered(objects[ref], objects, closure)]
         def set_products(block):
             if "packageProductDependencies" not in block:
                 marker = "\t\t\tproductType = "
@@ -168,11 +176,8 @@ def update(package=None):
         text=edit_object(text,key,set_products)
         phase=next(k for k in target["buildPhases"] if objects[k]["isa"]=="PBXFrameworksBuildPhase")
         linked=list(objects[phase]["files"])
-        owner = HOST_LINK_OWNERS.get(name)
         if owner:
-            # Removing a declaration here would also remove its original SDK
-            # implementation on the next manifest generation. Drop only the
-            # redundant linker input, and retain independent/unknown products.
+            # Preserve native/system references and independent host products.
             linked = [key for key in linked
                       if "productRef" not in objects[key]
                       or objects[objects[key]["productRef"]]["productName"] == owner

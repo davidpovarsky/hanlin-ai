@@ -1,0 +1,531 @@
+{
+  "base": "f870abda090a7ac0f382b7b9396599d1b474a7ef",
+  "profiles": [
+    {
+      "profile": "full",
+      "products": null,
+      "sha256": "9d479c23f1e3609f4da4252abf120f9ce0349948bd0367955099168e5a3f9ed1",
+      "byteIdentical": true,
+      "targets": 108,
+      "applicationSourceCount": 507
+    },
+    {
+      "profile": "HanlinHostContracts",
+      "products": [
+        "HanlinHostContracts"
+      ],
+      "sha256": "80f4c4461bad0f824ae183e0e9e2dbd6659980dfc2f4850142d44eb23f4ecad8",
+      "byteIdentical": true,
+      "targets": 2,
+      "applicationSourceCount": 0
+    },
+    {
+      "profile": "HanlinAgentCore",
+      "products": [
+        "HanlinAgentCore"
+      ],
+      "sha256": "e31888b55735c8224fcb0aa78aa5d6a52ea3ca01f43c06e2e02860ea46bd3534",
+      "byteIdentical": true,
+      "targets": 7,
+      "applicationSourceCount": 0
+    },
+    {
+      "profile": "HanlinPersistenceAdapters",
+      "products": [
+        "HanlinPersistenceAdapters"
+      ],
+      "sha256": "d45a34ab8d90c23a0a3556d07210e0a98c85557ea08597fe188042b84a683090",
+      "byteIdentical": true,
+      "targets": 3,
+      "applicationSourceCount": 0
+    },
+    {
+      "profile": "HanlinShareExtensionUI",
+      "products": [
+        "HanlinShareExtensionUI"
+      ],
+      "sha256": "3544c607c0bfbed46ac5417d7a958f6cfc5285faffea5d58b7848a5f5175f0d8",
+      "byteIdentical": true,
+      "targets": 7,
+      "applicationSourceCount": 0
+    },
+    {
+      "profile": "HanlinNotificationExtension",
+      "products": [
+        "HanlinNotificationExtension"
+      ],
+      "sha256": "2051fa18445783579051df2d4cb2f98c6ed467008a1036f28adbc4424e69c986",
+      "byteIdentical": true,
+      "targets": 2,
+      "applicationSourceCount": 0
+    },
+    {
+      "profile": "HanlinTranslationUI",
+      "products": [
+        "HanlinTranslationUI"
+      ],
+      "sha256": "2af82501ce2244ad3d467524020e4938404e5fd68ca99c1688f9171809490169",
+      "byteIdentical": true,
+      "targets": 10,
+      "applicationSourceCount": 0
+    },
+    {
+      "profile": "HanlinExpoNativeAPI",
+      "products": [
+        "HanlinExpoNativeAPI"
+      ],
+      "sha256": "23dea15bfcdc5d30d300b4780dcffb4d01a0aff4212b85b96302f1139112119e",
+      "byteIdentical": true,
+      "targets": 4,
+      "applicationSourceCount": 0
+    },
+    {
+      "profile": "HanlinExpoWidgetNative",
+      "products": [
+        "HanlinExpoWidgetNative"
+      ],
+      "sha256": "7101518553339040ecc98933b2aa46818920108df4643b694986e7a2c9a6b941",
+      "byteIdentical": true,
+      "targets": 2,
+      "applicationSourceCount": 0
+    },
+    {
+      "profile": "HanlinExpoRuntime",
+      "products": [
+        "HanlinExpoRuntime"
+      ],
+      "sha256": "636b019c3fd164894336fd84dc66fdd6956d88c11c8ed875f677c3fccbd37e87",
+      "byteIdentical": true,
+      "targets": 15,
+      "applicationSourceCount": 0
+    },
+    {
+      "profile": "HanlinExpoWidgetSubset",
+      "products": [
+        "HanlinExpoWidgetSubset"
+      ],
+      "sha256": "daa675219d77c0e6fb86a3ee1bca520fcce054391735a4021c2d524e27a2202a",
+      "byteIdentical": true,
+      "targets": 1,
+      "applicationSourceCount": 0
+    },
+    {
+      "profile": "HanlinNativeScriptRuntime",
+      "products": [
+        "HanlinNativeScriptRuntime"
+      ],
+      "sha256": "7f12425f217ded2970c1f68bc5a4a5a62f9f87ba37fe7ec4dcf298bb89e76b19",
+      "byteIdentical": true,
+      "targets": 5,
+      "applicationSourceCount": 0
+    },
+    {
+      "profile": "HanlinParityMiniApp",
+      "products": [
+        "HanlinParityMiniApp"
+      ],
+      "sha256": "541d5ebfb572a0faf92f3682135b9d1dc4282799248086e7d841f1b64b3e2c90",
+      "byteIdentical": true,
+      "targets": 6,
+      "applicationSourceCount": 0
+    },
+    {
+      "profile": "HanlinExtensionContracts",
+      "products": [
+        "HanlinExtensionContracts"
+      ],
+      "sha256": "53adeb4d3811553a4d0e9a6e1b569d9352e37ef53e646db770b9b055c7149ae4",
+      "byteIdentical": true,
+      "targets": 1,
+      "applicationSourceCount": 0
+    },
+    {
+      "profile": "HanlinPlatformContracts",
+      "products": [
+        "HanlinPlatformContracts"
+      ],
+      "sha256": "885dfe354a1d394dfeb706a4ba1842d08504b0dea14c1092864ac7056e89cf76",
+      "byteIdentical": true,
+      "targets": 1,
+      "applicationSourceCount": 0
+    },
+    {
+      "profile": "HanlinMiniAppCore",
+      "products": [
+        "HanlinMiniAppCore"
+      ],
+      "sha256": "3a65174c4786119808696269b9d34283ee57b058d4076163a0b6f3e458037965",
+      "byteIdentical": true,
+      "targets": 2,
+      "applicationSourceCount": 0
+    },
+    {
+      "profile": "HanlinScriptContracts",
+      "products": [
+        "HanlinScriptContracts"
+      ],
+      "sha256": "aef5dd5988799129307878c2cdaea619996340204bcc10983aded58b9dd00c6c",
+      "byteIdentical": true,
+      "targets": 2,
+      "applicationSourceCount": 0
+    },
+    {
+      "profile": "HanlinScriptCompiler",
+      "products": [
+        "HanlinScriptCompiler"
+      ],
+      "sha256": "0c899d6465aea9650c6679ad8f4b87366796e2273c55558aaea08da3c0c372fc",
+      "byteIdentical": true,
+      "targets": 4,
+      "applicationSourceCount": 0
+    },
+    {
+      "profile": "HanlinScriptStore",
+      "products": [
+        "HanlinScriptStore"
+      ],
+      "sha256": "2df2898be518d7a0eee66eb4b874262a4af91cdd03fe04b800f7e6bd07861866",
+      "byteIdentical": true,
+      "targets": 4,
+      "applicationSourceCount": 0
+    },
+    {
+      "profile": "HanlinScriptRuntime",
+      "products": [
+        "HanlinScriptRuntime"
+      ],
+      "sha256": "f4a9df71bbf777f66db55694fd91c3d2da022f78dddc2da30c9c23d74da3dc2d",
+      "byteIdentical": true,
+      "targets": 3,
+      "applicationSourceCount": 0
+    },
+    {
+      "profile": "HanlinScriptingSDK",
+      "products": [
+        "HanlinScriptingSDK"
+      ],
+      "sha256": "fd030f6a6691363551a520d2d5aeac7dd9d43744f7af55b69c00f3f5b0c0123d",
+      "byteIdentical": true,
+      "targets": 3,
+      "applicationSourceCount": 0
+    },
+    {
+      "profile": "HanlinScriptUI",
+      "products": [
+        "HanlinScriptUI"
+      ],
+      "sha256": "9d9e6994d21cab68b055f1952f24cfbd5b191d3a21d1c8f740d188db8d1ae59c",
+      "byteIdentical": true,
+      "targets": 4,
+      "applicationSourceCount": 0
+    },
+    {
+      "profile": "HanlinScriptServices",
+      "products": [
+        "HanlinScriptServices"
+      ],
+      "sha256": "1a996894db3e0b96ff513dc0a5ca7b16cd3b0a29509879dc36d913a76ccdbd7d",
+      "byteIdentical": true,
+      "targets": 3,
+      "applicationSourceCount": 0
+    },
+    {
+      "profile": "HanlinScriptDeviceServices",
+      "products": [
+        "HanlinScriptDeviceServices"
+      ],
+      "sha256": "69f56b1af24f595345f5ad97e8711880c6f779527ceeb89d97099b2876030299",
+      "byteIdentical": true,
+      "targets": 4,
+      "applicationSourceCount": 0
+    },
+    {
+      "profile": "HanlinScriptExtensions",
+      "products": [
+        "HanlinScriptExtensions"
+      ],
+      "sha256": "ecdb70f33afeb8cd98ac15d5c4b7660e6d1b06db581c4b35613ba1e08fb25e3a",
+      "byteIdentical": true,
+      "targets": 8,
+      "applicationSourceCount": 0
+    },
+    {
+      "profile": "HanlinChatCore",
+      "products": [
+        "HanlinChatCore"
+      ],
+      "sha256": "56b95c62f84f0da9b841f01bdc3210bd36b253609223f2d87f3bd44c9737d04f",
+      "byteIdentical": true,
+      "targets": 2,
+      "applicationSourceCount": 0
+    },
+    {
+      "profile": "HanlinScriptingApplicationRuntime",
+      "products": [
+        "HanlinScriptingApplicationRuntime"
+      ],
+      "sha256": "e0348ba9b34a3bfc6d6e77c622b40a89671be6a0f3cdda0eeb1968ef79a84ab1",
+      "byteIdentical": true,
+      "targets": 6,
+      "applicationSourceCount": 0
+    },
+    {
+      "profile": "HanlinLocalization",
+      "products": [
+        "HanlinLocalization"
+      ],
+      "sha256": "99bcbbb39efa1b6facd435c76a7f8d735fb80cb37cc90697064d6e80600396b3",
+      "byteIdentical": true,
+      "targets": 1,
+      "applicationSourceCount": 0
+    },
+    {
+      "profile": "HanlinAgentActivityCore",
+      "products": [
+        "HanlinAgentActivityCore"
+      ],
+      "sha256": "e60ffe75a11567eb6d08e94df2c977e194a7256e3bc10e2eec6406e65a163962",
+      "byteIdentical": true,
+      "targets": 4,
+      "applicationSourceCount": 0
+    },
+    {
+      "profile": "HanlinAgentActivityUI",
+      "products": [
+        "HanlinAgentActivityUI"
+      ],
+      "sha256": "aec16083895355a5951de79ea5ac94b8d15ca6ba6ee87f6acd99fe461aef3fca",
+      "byteIdentical": true,
+      "targets": 7,
+      "applicationSourceCount": 0
+    },
+    {
+      "profile": "HanlinPresentationKit",
+      "products": [
+        "HanlinPresentationKit"
+      ],
+      "sha256": "189288123700cb8a1e80ea99ea28c4e94dfbf14aea4aca689ff706b71115398d",
+      "byteIdentical": true,
+      "targets": 1,
+      "applicationSourceCount": 0
+    },
+    {
+      "profile": "HanlinRichUI",
+      "products": [
+        "HanlinRichUI"
+      ],
+      "sha256": "7670b2a89a10deed57b0b4d935f3e2d849146afa823a0c20600b694e3acef504",
+      "byteIdentical": true,
+      "targets": 3,
+      "applicationSourceCount": 0
+    },
+    {
+      "profile": "HanlinChatUI",
+      "products": [
+        "HanlinChatUI"
+      ],
+      "sha256": "67bd5ca5a9e9c368886949f8fd178d11d502f858f5fe411b11540f8df238d2f4",
+      "byteIdentical": true,
+      "targets": 4,
+      "applicationSourceCount": 0
+    },
+    {
+      "profile": "HanlinA2UI",
+      "products": [
+        "HanlinA2UI"
+      ],
+      "sha256": "9c24a0cda2c0482db0eb50c2c1b8b124bd5a0b4fe883f70d933a38ee1618807f",
+      "byteIdentical": true,
+      "targets": 3,
+      "applicationSourceCount": 0
+    },
+    {
+      "profile": "HanlinMiniAppsUI",
+      "products": [
+        "HanlinMiniAppsUI"
+      ],
+      "sha256": "78882f3659ba2d102589a27c745258b489ed757c80c9fbebd1fa77932da5fdbf",
+      "byteIdentical": true,
+      "targets": 4,
+      "applicationSourceCount": 0
+    },
+    {
+      "profile": "HanlinProductSplit",
+      "products": [
+        "HanlinProductSplit"
+      ],
+      "sha256": "83850c84e591029a36791e7276e6cfd84119e4b98c4d1c1c31050210beacb4a2",
+      "byteIdentical": true,
+      "targets": 3,
+      "applicationSourceCount": 0
+    },
+    {
+      "profile": "HanlinQuickJS",
+      "products": [
+        "HanlinQuickJS"
+      ],
+      "sha256": "ea50f33c1e482c869aaae0a7f2a7cef68ff4ff76c1a9a12ccb77f9b47081a7eb",
+      "byteIdentical": true,
+      "targets": 1,
+      "applicationSourceCount": 0
+    },
+    {
+      "profile": "HanlinSefariaMiniApp",
+      "products": [
+        "HanlinSefariaMiniApp"
+      ],
+      "sha256": "3d3bfa4efee2a6b31d88ede655a77571d4d049c21842ba3a92cf4e5ab342eba4",
+      "byteIdentical": true,
+      "targets": 3,
+      "applicationSourceCount": 0
+    },
+    {
+      "profile": "HanlinSkillFormat",
+      "products": [
+        "HanlinSkillFormat"
+      ],
+      "sha256": "2105f795387d395a045c4ad0e00f8d2e85e175db5cd3ccaf2c74ddeb1c1ceb09",
+      "byteIdentical": true,
+      "targets": 1,
+      "applicationSourceCount": 0
+    },
+    {
+      "profile": "HanlinTextStudioMiniApp",
+      "products": [
+        "HanlinTextStudioMiniApp"
+      ],
+      "sha256": "3e238f16430872d4f92a472a52c7c8bb8f318a020f4d885bbaa930e29aa64c86",
+      "byteIdentical": true,
+      "targets": 3,
+      "applicationSourceCount": 0
+    },
+    {
+      "profile": "HanlinWidgetUI",
+      "products": [
+        "HanlinWidgetUI"
+      ],
+      "sha256": "8af58daa2d1e2a2f8cec5d9171e0aef18d445012d25a392c681009ca5ca5cd22",
+      "byteIdentical": true,
+      "targets": 13,
+      "applicationSourceCount": 0
+    },
+    {
+      "profile": "HanlinWikipediaMiniApp",
+      "products": [
+        "HanlinWikipediaMiniApp"
+      ],
+      "sha256": "a8595ef7d806bcd4fda8e8b04e0fa690f297b1b7285856d9443e1cdefabf99d2",
+      "byteIdentical": true,
+      "targets": 3,
+      "applicationSourceCount": 0
+    },
+    {
+      "profile": "IOSSystemLite",
+      "products": [
+        "IOSSystemLite"
+      ],
+      "sha256": "5d20058fcab34c40ee55662b2fef86950f8bdb4f97c8063d3d2c48c444b63e44",
+      "byteIdentical": true,
+      "targets": 10,
+      "applicationSourceCount": 0
+    },
+    {
+      "profile": "TorahLibraryKit",
+      "products": [
+        "TorahLibraryKit"
+      ],
+      "sha256": "f4a7f8348a23ee3e1b911b3430ad3003fa0ac9d98f04166c17fa1e5905d98e99",
+      "byteIdentical": true,
+      "targets": 1,
+      "applicationSourceCount": 0
+    },
+    {
+      "profile": "HanlinApplication",
+      "products": [
+        "HanlinApplication"
+      ],
+      "sha256": "10539b30f7135783112a61099773c5e68fdcfe4a5c484b4b0714c70ce0c9f8e1",
+      "byteIdentical": true,
+      "targets": 73,
+      "applicationSourceCount": 507
+    }
+  ],
+  "projectChanges": [
+    {
+      "id": "D7B6C3C02D50A55D004E3AD6",
+      "name": "HanlinApp",
+      "beforeCount": 49,
+      "afterCount": 1
+    },
+    {
+      "id": "B10000000000000000000007",
+      "name": "AI_HLYTests",
+      "beforeCount": 18,
+      "afterCount": 1
+    }
+  ],
+  "projectGeneratorIdempotent": true,
+  "agentSdkLinkage": {
+    "ai_products": [
+      "HanlinApplication"
+    ],
+    "unit_test_products": [
+      "HanlinApplication"
+    ],
+    "miniapps_agent_products": [],
+    "sdk_application_sources": 507,
+    "host_sources": [
+      "AI_HLY.swift"
+    ],
+    "native_adapter": "Model/HanlinAppleModelCatalogAdapter.swift",
+    "linked_application_products": {
+      "HanlinApp": [
+        "HanlinApplication"
+      ],
+      "AI_HLYTests": [
+        "HanlinApplication"
+      ]
+    },
+    "apple_compilation": "NOT_RUN"
+  },
+  "projectGraph": {
+    "miniapps_products": [
+      "HanlinA2UI",
+      "HanlinAgentActivityCore",
+      "HanlinExpoNativeAPI",
+      "HanlinExpoRuntime",
+      "HanlinExtensionContracts",
+      "HanlinLocalization",
+      "HanlinMiniAppCore",
+      "HanlinMiniAppsUI",
+      "HanlinNativeScriptRuntime",
+      "HanlinParityMiniApp",
+      "HanlinPlatformContracts",
+      "HanlinPresentationKit",
+      "HanlinProductSplit",
+      "HanlinScriptCompiler",
+      "HanlinScriptContracts",
+      "HanlinScriptDeviceServices",
+      "HanlinScriptExtensions",
+      "HanlinScriptStore",
+      "HanlinScriptUI",
+      "HanlinScriptingApplicationRuntime",
+      "HanlinScriptingSDK",
+      "HanlinSefariaMiniApp",
+      "HanlinTextStudioMiniApp",
+      "HanlinWikipediaMiniApp",
+      "IOSSystemLite",
+      "SWCompression",
+      "TorahLibraryKit",
+      "ZIPFoundation"
+    ],
+    "miniapps_source_groups": [
+      "HanlinMiniAppsApp"
+    ],
+    "deployment_target": "27.0",
+    "signed_or_install_proof": false
+  },
+  "sourceFilesChanged": [],
+  "nativeLinkIdentity": "NOT_RUN",
+  "nativeFocusAcceptance": "NOT_RUN"
+}
