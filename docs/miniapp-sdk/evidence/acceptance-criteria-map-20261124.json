@@ -15,43 +15,38 @@
     "absenceBoundary": "A missing matched receipt means not established within the requested evidence set, not proof that the implementation or a receipt elsewhere does not exist."
   },
   "activeGate": {
-    "runID": 45365620977,
-    "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45365620977",
-    "sourceCommit": "6d9a59bfc1bd1830a8d56e694c42b19c6bd7d468",
-    "jobID": 138346476075,
-    "scope": "miniapp_authoring",
-    "status": "COMPLETED_FAILURE",
-    "selectedCases": 42,
-    "aiCases": 25,
-    "miniAppsCases": 17,
-    "dispatchReceipt": {
-      "path": "docs/miniapp-sdk/evidence/eleventh-native-gate-dispatch-20261124.json",
-      "sha256": "a8ce4e857f0d3ef7697b2ed8e82ed34317928a5311094c103d35342c2e534549"
-    },
-    "lastObservationRecordedAtUTC": "2026-11-24T10:18:44.476260+00:00",
-    "observedPhase": "Actual paired product build/test step active after successful original native dependencies and shipping SDK preparation/export.",
+    "runID": 45375410965,
+    "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45375410965",
+    "sourceCommit": "999599c242c064564c40866a1979c463f1d0e95f",
+    "jobID": 138380242016,
+    "scope": "miniapp_complete",
+    "status": "IN_PROGRESS",
+    "selectedCases": 52,
+    "miniAppsCases": 25,
+    "aiCases": 27,
     "caseStatus": "NOT_RUN",
-    "boundary": "Fresh preparation/export passed; full first MiniApps build failed, AI and all42app cases NOT_RUN. New52-case combined scope will follow actual source correction.",
-    "result": "failure",
-    "executedAppCases": 0,
-    "passed": 0,
-    "failed": 0,
-    "skipped": 0,
-    "failureStage": "First MiniApps build-for-testing exited65 after1411.22278seconds",
-    "confirmedCause": "HanlinScriptingWidgets imports original ExpoWidgets compiled with C++ interoperability, but this consumer in the unified HanlinSDK manifest has no C++ interoperability setting.",
-    "failureEvidence": {
-      "path": "docs/miniapp-sdk/evidence/native-gate-11-widget-interop-20261124/receipt.json",
-      "bytes": 4657,
-      "sha256": "e31bbeec10d9f5572ed550f7cb1c87b6ccef975b22b37ce358b9dc441155e942"
+    "dispatchReceipt": {
+      "path": "docs/miniapp-sdk/evidence/twelfth-native-gate-dispatch-20261124.json",
+      "bytes": 1182,
+      "sha256": "0ad778c2cd72706868481870f25e216fd209ceef55240a600c2149ed950b213f"
     },
-    "sourceFix": {
-      "rootCommit": "b07527ea9a9493a9dbc8d2c6fe2c699db86fc7a2",
-      "receipt": {
-        "path": "docs/miniapp-sdk/evidence/widget-cxx-interop-20261124/receipt.json",
-        "sha256": "6eef50d8f7bbc30af1cdf13d5a5353b5ba560354de199966f37453320684f251"
-      },
-      "actualAppleExecution": "NOT_RUN"
-    }
+    "observationReceipt": {
+      "path": "docs/miniapp-sdk/evidence/twelfth-native-gate-observation-20261124.json",
+      "bytes": 9850,
+      "sha256": "5f30ac1326812ce44639cdcfce871a9a6fa3a0ab0689f95477900ead650e65fe"
+    },
+    "lastObservationRecordedAtUTC": "2026-11-24T10:37:26.948070+00:00",
+    "observedPhase": [
+      "Prepare existing native dependencies and Runtime host"
+    ],
+    "acceptanceRequires": [
+      "Fresh original library/native and shipping SDK/document identity preparation",
+      "Both product builds",
+      "All52 selected cases pass with no failures/skips",
+      "Actual diagnostic-sheet and repaired-native-app attachments",
+      "Exact original archive/report handoff and nonempty installedPackageID receipt"
+    ],
+    "boundary": "Current preparation has progressed to original native dependencies/RuntimeHost. No current application case PASS is established by dispatch or source review."
   },
   "userScope": {
     "activeOriginalEngines": [
@@ -1034,6 +1029,17 @@
       },
       "result": "RECONCILED_SOURCE_SCOPE",
       "scope": "Historical42/10 snapshot preserved; current main11failure/next52plan supersede native status."
+    },
+    "complete_52_selection_review": {
+      "status": "SOURCE_REVIEW_PASS",
+      "receipt": {
+        "path": "docs/miniapp-sdk/evidence/sdk04-focused-scope-20261124/independent-complete-selection-review.json",
+        "bytes": 5865,
+        "sha256": "4966ac259bf116681d61aed800d574a918d3b0c01758373bba441ef7f6cc610b"
+      },
+      "nativeExecution": "NOT_RUN",
+      "sourceCommit": "b07527ea9a9493a9dbc8d2c6fe2c699db86fc7a2",
+      "selectionCommit": "658fb7903a5e560f17a017e2cffad4b77d373822"
     }
   },
   "criteria": [
@@ -1298,8 +1304,8 @@
     }
   ],
   "recordingOutcome": "Evidence mapping only. No task closure, new test result, native application success, physical-device success, main merge, release or TestFlight publication is asserted.",
-  "updatedAtUTC": "2026-11-24T10:28:21.428094+00:00",
-  "currentIntegrationBase": "b07527ea9a9493a9dbc8d2c6fe2c699db86fc7a2",
+  "updatedAtUTC": "2026-11-24T10:37:26.948070+00:00",
+  "currentIntegrationBase": "999599c242c064564c40866a1979c463f1d0e95f",
   "gateHistory": [
     {
       "runID": 45335292541,
@@ -1397,6 +1403,45 @@
         },
         "correctedAppleExecution": "NOT_RUN"
       }
+    },
+    {
+      "runID": 45365620977,
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45365620977",
+      "sourceCommit": "6d9a59bfc1bd1830a8d56e694c42b19c6bd7d468",
+      "jobID": 138346476075,
+      "scope": "miniapp_authoring",
+      "status": "COMPLETED_FAILURE",
+      "selectedCases": 42,
+      "aiCases": 25,
+      "miniAppsCases": 17,
+      "dispatchReceipt": {
+        "path": "docs/miniapp-sdk/evidence/eleventh-native-gate-dispatch-20261124.json",
+        "sha256": "a8ce4e857f0d3ef7697b2ed8e82ed34317928a5311094c103d35342c2e534549"
+      },
+      "lastObservationRecordedAtUTC": "2026-11-24T10:18:44.476260+00:00",
+      "observedPhase": "Completed first MiniApps build-for-testing failure; AI build and all42 application cases never started.",
+      "caseStatus": "NOT_RUN",
+      "boundary": "Fresh preparation/export passed; full first MiniApps build failed, AI and all42app cases NOT_RUN. New52-case combined scope will follow actual source correction.",
+      "result": "failure",
+      "executedAppCases": 0,
+      "passed": 0,
+      "failed": 0,
+      "skipped": 0,
+      "failureStage": "First MiniApps build-for-testing exited65 after1411.22278seconds",
+      "confirmedCause": "HanlinScriptingWidgets imports original ExpoWidgets compiled with C++ interoperability, but this consumer in the unified HanlinSDK manifest has no C++ interoperability setting.",
+      "failureEvidence": {
+        "path": "docs/miniapp-sdk/evidence/native-gate-11-widget-interop-20261124/receipt.json",
+        "bytes": 4657,
+        "sha256": "e31bbeec10d9f5572ed550f7cb1c87b6ccef975b22b37ce358b9dc441155e942"
+      },
+      "sourceFix": {
+        "rootCommit": "b07527ea9a9493a9dbc8d2c6fe2c699db86fc7a2",
+        "receipt": {
+          "path": "docs/miniapp-sdk/evidence/widget-cxx-interop-20261124/receipt.json",
+          "sha256": "6eef50d8f7bbc30af1cdf13d5a5353b5ba560354de199966f37453320684f251"
+        },
+        "actualAppleExecution": "NOT_RUN"
+      }
     }
   ],
   "modernContractGate": {
@@ -1412,7 +1457,7 @@
     "skipped": 0,
     "receipt": "docs/miniapp-sdk/evidence/apple-modern-contracts-20261124/receipt.json"
   },
-  "currentScopeNote": "Current original library/type/source graph reconciled after concrete public-runtime metadata, GroupBox children, modern widget publication, return-acknowledgement and native widget C++ consumer corrections. First main11 MiniApps build failed; AI and42casesNOT_RUN. Next combined52 plan is prepared; no native/UI/device PASS inferred.",
+  "currentScopeNote": "Current source999599c2 is published and actual complete52 main12 is in progress after original source resolution. Source audit93/176/334/80 and public original compiler/Metro build passed; current native/application/device outcomes remain separately recorded. Main11 failure and source fix remain in gateHistory.",
   "modernContractGateHistory": [
     {
       "runID": 45348880385,
@@ -1547,7 +1592,7 @@
   ],
   "candidateGate": {
     "scope": "miniapp_complete",
-    "status": "READY_TO_DISPATCH_AFTER_PUSH",
+    "status": "DISPATCHED",
     "selectedCases": 52,
     "MiniApps": 25,
     "AI": 27,
@@ -1556,6 +1601,13 @@
       "sha256": "1a142468795f59db1d4e7fd410a2dbf6b73d3d5c1d1eb3cfe335c768c3498542"
     },
     "reason": "Previous main11 first MiniApps build failed before all42 app cases; one combined current gate includes previous42 plus new11 minus1overlap.",
-    "actualExecution": "NOT_RUN"
+    "actualExecution": "PREPARATION_IN_PROGRESS; APP_CASES_NOT_RUN",
+    "runID": 45375410965,
+    "sourceCommit": "999599c242c064564c40866a1979c463f1d0e95f",
+    "independentReview": {
+      "path": "docs/miniapp-sdk/evidence/sdk04-focused-scope-20261124/independent-complete-selection-review.json",
+      "bytes": 5865,
+      "sha256": "4966ac259bf116681d61aed800d574a918d3b0c01758373bba441ef7f6cc610b"
+    }
   }
 }
