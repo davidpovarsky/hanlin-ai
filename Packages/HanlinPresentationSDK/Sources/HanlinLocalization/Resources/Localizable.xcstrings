@@ -205,19 +205,19 @@
         }
       }
     },
-    "This package does not include an authoring project. Package compatibility was inspected, but original TypeScript types cannot be reconstructed from compiled JavaScript.": {
+    "TypeScript validation has not run because a complete authoring project was not recognized. Package compatibility was inspected. If only compiled JavaScript is available, original TypeScript types cannot be reconstructed.": {
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "This package does not include an authoring project. Package compatibility was inspected, but original TypeScript types cannot be reconstructed from compiled JavaScript."
+            "value": "TypeScript validation has not run because a complete authoring project was not recognized. Package compatibility was inspected. If only compiled JavaScript is available, original TypeScript types cannot be reconstructed."
           }
         },
         "he": {
           "stringUnit": {
             "state": "translated",
-            "value": "החבילה אינה כוללת פרויקט מקור לעריכה. נבדקה תאימות החבילה, אך אי אפשר לשחזר טיפוסי TypeScript מקוריים מקוד JavaScript שכבר קומפל."
+            "value": "לא בוצעה בדיקת טיפוסי TypeScript, כי לא זוהה פרויקט מקור מלא. נבדקה תאימות החבילה. אם זמין רק קוד JavaScript שכבר קומפל, אי אפשר לשחזר ממנו את טיפוסי TypeScript המקוריים."
           }
         }
       }

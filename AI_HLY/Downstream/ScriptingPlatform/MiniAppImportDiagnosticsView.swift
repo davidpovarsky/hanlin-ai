@@ -39,7 +39,7 @@ struct MiniAppImportDiagnosticsView: View {
                         .font(HanlinTypography.footnote)
                         .foregroundStyle(.secondary)
                 } else {
-                    Text("This package does not include an authoring project. Package compatibility was inspected, but original TypeScript types cannot be reconstructed from compiled JavaScript.", bundle: HanlinLocalization.bundle)
+                    Text("TypeScript validation has not run because a complete authoring project was not recognized. Package compatibility was inspected. If only compiled JavaScript is available, original TypeScript types cannot be reconstructed.", bundle: HanlinLocalization.bundle)
                         .font(HanlinTypography.footnote)
                         .foregroundStyle(.secondary)
                 }

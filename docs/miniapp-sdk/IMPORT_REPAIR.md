@@ -8,6 +8,8 @@ Expo/React Native/Expo UI, NativeScript, and ScriptWidget use their original hos
 
 `HanlinScriptingPlatform.importPackage` keeps an owned copy of the original archive before staging, so an invalid ZIP or manifest can still be sent for repair. A source-bearing archive with `hanlin.authoring.json` is revalidated through `MiniAppAuthoringService` and the installed original Node/TypeScript SDK. The import path does not trust a build report bundled by the sender.
 
+Source files alone do not trigger the original compiler check. The root `hanlin.authoring.json` descriptor identifies the recognized authoring project and its configuration; every successful `build_miniapp` build supplies it automatically. Archives without that descriptor receive package and runtime compatibility inspection, even if they retain `.ts` or `.tsx` files. They are not reported as having passed original-source TypeScript validation.
+
 The native `MiniAppImportDiagnosticsView` presents package findings and compiler diagnostics together, grouped by file. It exposes stable diagnostic codes, severity, one-based line/column, the original message, and available remediation. Errors automatically open an item-based SwiftUI sheet after import completes; the same sheet can be reopened from the importer. A failed source typecheck prevents installation of that candidate.
 
 A bundle-only JavaScript archive cannot reveal erased TypeScript types. Its compatibility findings are displayed honestly; the UI does not label this as a successful original-source typecheck. Invalid archive and validation-execution failures also remain distinct from source diagnostics.
