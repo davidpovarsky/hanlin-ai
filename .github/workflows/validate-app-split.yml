@@ -45,7 +45,7 @@ on:
         required: false
         default: baseline
       paired_test_scope:
-        description: Original cross-product, shared ingress, authoring or isolated MiniApp contracts
+        description: Original cross-product, shared ingress, authoring or isolated MiniApp checks
         type: string
         required: false
         default: cross_product
@@ -99,9 +99,9 @@ on:
         required: false
         default: baseline
       paired_test_scope:
-        description: Original cross-product, shared ingress, authoring or isolated MiniApp contracts
+        description: Original cross-product, shared ingress, authoring or isolated MiniApp checks
         type: choice
-        options: [cross_product, shared_ingress, product_and_share, miniapp_authoring, miniapp_contracts, miniapp_lifecycle]
+        options: [cross_product, shared_ingress, product_and_share, miniapp_authoring, miniapp_contracts, miniapp_lifecycle, miniapp_scriptwidget]
         required: false
         default: cross_product
 
@@ -198,8 +198,18 @@ jobs:
       test_filter: HanlinAtomicScriptStoreTests/lifecycle
     secrets: inherit
 
+  miniapp-scriptwidget:
+    name: Verify original ScriptWidget adapter semantics
+    if: ${{ !inputs.audit_release_resources && !inputs.prepare_miniapps_registration && inputs.paired_product_acceptance && inputs.paired_test_scope == 'miniapp_scriptwidget' }}
+    uses: ./.github/workflows/validate-scripting-runtime.yml
+    with:
+      runtime_job_foundation_only: false
+      force_clean_build: true
+      test_filter: HanlinDualWidgetEnginesTests/(rootFragmentsPreserveOriginalElementAllowances|scriptWidgetUsesOriginalElementLimitsWithoutExtraMaterialQuotas)
+    secrets: inherit
+
   miniapps:
-    if: ${{ !inputs.audit_release_resources && !inputs.prepare_miniapps_registration && !(inputs.paired_product_acceptance && (inputs.paired_test_scope == 'miniapp_contracts' || inputs.paired_test_scope == 'miniapp_lifecycle')) }}
+    if: ${{ !inputs.audit_release_resources && !inputs.prepare_miniapps_registration && !(inputs.paired_product_acceptance && (inputs.paired_test_scope == 'miniapp_contracts' || inputs.paired_test_scope == 'miniapp_lifecycle' || inputs.paired_test_scope == 'miniapp_scriptwidget')) }}
     runs-on: xcode-27
     # Include both bounded cold builds, unchanged UI deadlines and evidence upload.
     timeout-minutes: ${{ inputs.signed_release_archives && 150 || inputs.paired_product_acceptance && 150 || 90 }}
