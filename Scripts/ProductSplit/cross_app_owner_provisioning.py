@@ -209,6 +209,63 @@ def _resolve_native_groups(plan, snapshots):
     return result
 
 
+def _automatic_archive_signing_settings(team):
+    # Xcode's automatic provisioning accepts the symbolic development identity,
+    # not a manually pinned certificate hash (native run 45297066926).
+    # The resulting binary is checked against the selected certificate below.
+    return ["CODE_SIGN_STYLE=Automatic", "DEVELOPMENT_TEAM=" + team,
+            "CODE_SIGN_IDENTITY=Apple Development",
+            "PROVISIONING_PROFILE_SPECIFIER=", "PROVISIONING_PROFILE="]
+
+
+def _development_archive_fact(bundle, profile, signed, leaf, expected, team, certificate_sha):
+    actual_sha = hashlib.sha256(leaf).hexdigest()
+    expiration = profile.get("ExpirationDate")
+    if expiration is not None and expiration.tzinfo is None:
+        expiration = expiration.replace(tzinfo=timezone.utc)
+    required = expected["entitlements"]
+    granted = profile.get("Entitlements", {})
+    missing_signed = sorted(key for key, value in required.items()
+                            if not entitlement_allows(signed.get(key), value))
+    missing_profile = sorted(key for key, value in required.items()
+                             if not entitlement_allows(granted.get(key), value))
+    identifier = team + "." + expected["bundle_id"]
+    checks = {
+        "binary_bundle_matches": bundle.get("CFBundleIdentifier") == expected["bundle_id"],
+        "signed_application_identifier_matches": signed.get("application-identifier") == identifier,
+        "profile_application_identifier_matches": granted.get("application-identifier") == identifier,
+        "profile_owner_team_matches": team in profile.get("TeamIdentifier", []),
+        "profile_not_expired": expiration is not None and expiration > datetime.now(timezone.utc),
+        "profile_includes_actual_leaf": any(hashlib.sha256(value).hexdigest() == actual_sha
+                                            for value in profile.get("DeveloperCertificates", [])),
+        "selected_development_certificate_matches": certificate_sha is None or actual_sha == certificate_sha,
+        "development_profile_has_registered_devices": bool(profile.get("ProvisionedDevices")),
+        "development_profile_allows_debugging": granted.get("get-task-allow") is True,
+        "signed_entitlements_cover_plan": not missing_signed,
+        "profile_entitlements_cover_plan": not missing_profile,
+    }
+    return {"status": "DEVELOPMENT_ARCHIVE_READBACK_PASS" if all(checks.values())
+                    else "DEVELOPMENT_ARCHIVE_READBACK_FAILED",
+            "checks": checks, "public_certificate_sha256": actual_sha,
+            "selected_public_certificate_sha256": certificate_sha,
+            "profile_uuid": profile.get("UUID"),
+            "app_groups": granted.get("com.apple.security.application-groups", []),
+            "missing_signed_entitlement_keys": missing_signed,
+            "missing_profile_entitlement_keys": missing_profile}
+
+
+def _read_development_archive(app, expected, team, certificate_sha, certificate_prefix):
+    bundle = plistlib.loads((app / "Info.plist").read_bytes())
+    profile = plistlib.loads(_private_output(["security", "cms", "-D", "-i", app / "embedded.mobileprovision"]))
+    signed = plistlib.loads(_private_output(["codesign", "-d", "--entitlements", ":-", app]))
+    _private_output(["codesign", "--verify", "--strict", app])
+    _private_output(["codesign", "-d", "--extract-certificates=" + str(certificate_prefix), app])
+    leaf = Path(str(certificate_prefix) + "0").read_bytes()
+    fact = _development_archive_fact(bundle, profile, signed, leaf, expected, team, certificate_sha)
+    fact["native_codesign_verify_passed"] = True
+    return fact
+
+
 def _read_signed_probe(app, expected, team, certificate_sha, certificate_prefix):
     bundle = plistlib.loads((app / "Info.plist").read_bytes())
     payload = plistlib.loads(_private_output(["security", "cms", "-D", "-i", app / "embedded.mobileprovision"]))
@@ -332,7 +389,8 @@ def run_cross_app_owner_provisioning(folder, plan_path, *, team, identity, certi
     development_before_ids = {value["id"] for value in development_records_before}
     receipt["development_identities_before_count"] = len(development_before_ids)
     receipt["signing_flow"] = "AUTOMATIC_DEVELOPMENT_ARCHIVE_THEN_EXISTING_DISTRIBUTION_EXPORT"
-    development_identity = "Apple Development"
+    development_certificate_sha = None
+    receipt["automatic_development_selector"] = "Apple Development"
     owned_identity = {}
     try:
         identity_mode = plan.get("development_identity_mode", "xcode-managed")
@@ -350,17 +408,17 @@ def run_cross_app_owner_provisioning(folder, plan_path, *, team, identity, certi
                         if value["owner_team_matches"] and value["valid_dates"]
                         and value["private_identity_available_in_existing_search_list"]]
             if reusable:
-                chosen = next(value for value in development_records_before if value["id"] == reusable[0]["resource_id"])
-                development_identity = hashlib.sha1(decode(chosen["attributes"]["certificateContent"])).hexdigest().upper()
+                development_certificate_sha = reusable[0]["public_certificate_sha256"]
                 receipt["selected_existing_development_identity"] = reusable[0]
             else:
                 if not keychain_password:
                     raise ValueError("The existing owned temporary keychain is required")
                 receipt["documented_api_development_identity"] = owned_identity
                 try:
-                    development_identity = create_task_development_identity(
+                    create_task_development_identity(
                         work, keychain=keychain, keychain_password=keychain_password,
                         team=team, before_ids=development_before_ids, receipt=owned_identity)
+                    development_certificate_sha = owned_identity["public_certificate_sha256"]
                 except Exception:
                     receipt["status"] = "DEVELOPMENT_IDENTITY_API_UNAVAILABLE"
                     raise
@@ -404,8 +462,7 @@ def run_cross_app_owner_provisioning(folder, plan_path, *, team, identity, certi
                      "-configuration", "Release", "-destination", "generic/platform=iOS",
                      "-derivedDataPath", work / "DerivedData", "-archivePath", archive, *auth, "archive",
                      "PRODUCT_BUNDLE_IDENTIFIER=" + product["bundle_id"],
-                     "CODE_SIGN_STYLE=Automatic", "DEVELOPMENT_TEAM=" + team,
-                     "CODE_SIGN_IDENTITY=" + development_identity, "PROVISIONING_PROFILE_SPECIFIER=", "PROVISIONING_PROFILE=",
+                     *_automatic_archive_signing_settings(team),
                      "CODE_SIGN_ENTITLEMENTS=" + str(entitlements_path), "REGISTER_APP_GROUPS=YES"],
                     "owner-groups-" + product["role"] + "-archive", timeout=300, required=False)
                 entry["xcode_archive_exit"] = code
@@ -428,10 +485,14 @@ def run_cross_app_owner_provisioning(folder, plan_path, *, team, identity, certi
                 applications = list((archive / "Products/Applications").glob("*.app"))
                 if len(applications) != 1:
                     raise RuntimeError("The archive must contain the one requested probe application")
-                development_profile = plistlib.loads(_private_output(
-                    ["security", "cms", "-D", "-i", applications[0] / "embedded.mobileprovision"]))
-                entry["development_archive_app_groups"] = development_profile.get(
-                    "Entitlements", {}).get("com.apple.security.application-groups", [])
+                development_fact = _read_development_archive(
+                    applications[0], dict(product, entitlements=archive_required), team,
+                    development_certificate_sha, work / (product["role"] + "-development-leaf-"))
+                entry["development_archive_readback"] = development_fact
+                entry["development_archive_app_groups"] = development_fact["app_groups"]
+                if development_fact["status"] != "DEVELOPMENT_ARCHIVE_READBACK_PASS":
+                    entry["status"] = "DEVELOPMENT_ARCHIVE_READBACK_FAILED"
+                    continue
 
                 # Registration used automatic signing; distribution remains bound to
                 # the original certificate and a read-back profile covering every key.

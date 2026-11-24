@@ -1,0 +1,272 @@
+{
+  "schema_version": 1,
+  "scope": "SOURCE_EXACT_OWNER_SIGNING_PROBE",
+  "run_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45297066926",
+  "run_id": 45297066926,
+  "job_id": 138120047564,
+  "source_sha": "b3b6f26be95e9c1a198745131b8d411efb69b456",
+  "artifact_id": 14878756935,
+  "artifact_sha256": "8fbe8ce9e559b5dfa344a036eac45ab00486affdc4bdf2ebee465e9999c1a72e",
+  "observed_status": "AUTOMATIC_SIGNING_COMMAND_CONFLICT_BEFORE_GROUP_PROVISIONING",
+  "existing_distribution_identity": {
+    "status": "READY_RESOURCE",
+    "checks": {
+      "private_key_matches": true,
+      "valid_dates": true,
+      "team_matches": true,
+      "distribution_identity": true
+    },
+    "expiration": "2027-09-07T07:25:00+00:00",
+    "public_certificate_sha256": "5aefaf80b344410af7da85678fcb19de9a4be6885a846644df974b1ee38eba4b",
+    "os_codesigning_trust": "VERIFIED"
+  },
+  "documented_api_development_identity": {
+    "status": "TASK_DEVELOPMENT_IDENTITY_READY",
+    "public_key_sha256": "f4a9b3452efb36c3a8c3d8f94c1c2b980ed95b93d92df7ab5b5907eab01b7d52",
+    "private_key_export": "NOT_REQUESTED",
+    "existing_certificate_ids_preserved": [
+      "4463XN2M8B",
+      "5GW6H43S3X",
+      "5KB3B562BF",
+      "5NN7H8WKW4",
+      "677T64NRZW",
+      "H7R943HC42",
+      "K8SLGSH78Z",
+      "SU3BZ54R4A",
+      "UX9K878SMM",
+      "VK5UM266KA",
+      "VML26TFJR2",
+      "YUKY93WZX6"
+    ],
+    "source": "DOCUMENTED_POST_V1_CERTIFICATES_CURRENT_DEVELOPMENT_TYPE",
+    "resource_id": "2CLYB6DK86",
+    "certificate_type": "DEVELOPMENT",
+    "public_certificate_sha256": "eff1e360f391cddd03cbdd71a879d699e23be6a94379ed8ee23d7bd1bd4ff46a",
+    "public_certificate_sha1": "CDAD91DFA43E7059C8B89E464054D9856249536B",
+    "expiration": "2027-11-24T00:46:15+00:00",
+    "created_after_probe_started": true,
+    "owner_team_matches": true,
+    "public_key_matches_task_owned_private_key": true,
+    "private_key_in_owned_temporary_keychain": true,
+    "certificate_cleanup": "REVOKED_EXACT_TASK_CREATED_CERTIFICATE",
+    "private_key_cleanup": "REMOVED_EXACT_TASK_KEY"
+  },
+  "existing_development_identity_count": 12,
+  "actual_reusable_development_private_identity_count": 0,
+  "registered_devices": {
+    "source": "APP_STORE_CONNECT_REGISTERED_DEVICES_API",
+    "inventory_complete": true,
+    "registered_device_count": 1,
+    "status_counts": {
+      "ENABLED": 1
+    },
+    "platform_counts": {
+      "IOS": 1
+    },
+    "enabled_platform_counts": {
+      "IOS": 1
+    },
+    "device_names_and_identifiers_retained": false,
+    "registration": "NOT_REQUESTED"
+  },
+  "temporary_development_identity_cleanup": "PASS",
+  "overall_owned_keychain_cleanup": "PASS",
+  "products": [
+    {
+      "role": "otzaria",
+      "registered_bundle_id": "com.davidpovarsky.chavrusatext",
+      "native_archive_exit": 65,
+      "archive_log_sha256": "09fce55c0e868ceddcb619e41968e4aef5148698c7a20dc89d4276d2c61e0663",
+      "diagnostic": "/Users/runner/work/_temp/hanlin-authorized-signing-40880pcu/cross-app-owner/ProfileDiscovery.xcodeproj: error: ProfileDiscovery has conflicting provisioning settings. ProfileDiscovery is automatically signed, but code signing identity CDAD91DFA43E7059C8B89E464054D9856249536B has been manually specified. Set the code signing identity value to \"Apple Development\" in the build settings editor, or switch to manual signing in the Signing & Capabilities editor. (in target 'ProfileDiscovery' from project 'ProfileDiscovery')",
+      "fresh_profile_resource_id": "86K6DRP8V3",
+      "fresh_profile_uuid": "b12a9f10-abb2-43a6-9cb8-dd120418d015",
+      "fresh_profile_sha256": "68a54ddfbf37a3e95a6f7c2c81c8bcc3b2b7f2da4a9d4b61a59ba5279179cb54",
+      "actual_groups": [
+        "group.com.davidpovarsky.chavrusatext",
+        "group.com.davidpovarsky.itorah"
+      ],
+      "actual_required_key_grants": {
+        "aps-environment": "production",
+        "com.apple.developer.icloud-container-identifiers": [
+          "iCloud.com.davidpovarsky.chavrusatext"
+        ],
+        "com.apple.developer.icloud-services": "*",
+        "com.apple.developer.ubiquity-container-identifiers": [
+          "iCloud.com.davidpovarsky.chavrusatext"
+        ],
+        "com.apple.developer.ubiquity-kvstore-identifier": "NA6HPWARQ2.*",
+        "com.apple.security.application-groups": [
+          "group.com.davidpovarsky.itorah",
+          "group.com.davidpovarsky.chavrusatext"
+        ]
+      },
+      "missing_source_required_entitlement_keys": [
+        "com.apple.security.application-groups"
+      ],
+      "source_capability_preparation": {
+        "required_public_capabilities": [
+          "PUSH_NOTIFICATIONS"
+        ],
+        "operations": [],
+        "observed_capabilities": [
+          "APP_GROUPS",
+          "ICLOUD",
+          "ICLOUD_EXTENDED_SHARE_ACCESS",
+          "IN_APP_PURCHASE",
+          "PUSH_NOTIFICATIONS"
+        ],
+        "missing_public_capabilities": [],
+        "existing_capabilities_preserved": true,
+        "managed_entitlements": [],
+        "managed_entitlement_status": "REQUIRES_ACTUAL_XCODE_AND_PROFILE_GRANT_READBACK"
+      }
+    },
+    {
+      "role": "anytype",
+      "registered_bundle_id": "io.anytype.app.NA6HPWARQ2",
+      "native_archive_exit": 65,
+      "archive_log_sha256": "362b66047780cf71573c3c126c1ffd1afcfecd5d0842713bcb22838d836f7162",
+      "diagnostic": "/Users/runner/work/_temp/hanlin-authorized-signing-40880pcu/cross-app-owner/ProfileDiscovery.xcodeproj: error: ProfileDiscovery has conflicting provisioning settings. ProfileDiscovery is automatically signed, but code signing identity CDAD91DFA43E7059C8B89E464054D9856249536B has been manually specified. Set the code signing identity value to \"Apple Development\" in the build settings editor, or switch to manual signing in the Signing & Capabilities editor. (in target 'ProfileDiscovery' from project 'ProfileDiscovery')",
+      "fresh_profile_resource_id": "9729DT5394",
+      "fresh_profile_uuid": "379ce3e2-b3a8-4c31-abbf-d0eda8c53b17",
+      "fresh_profile_sha256": "6c975b1f33dd9ed085d727a59afb614de3d4770e4d6028189473bcf946b0f3e4",
+      "actual_groups": [],
+      "actual_required_key_grants": {
+        "aps-environment": "production",
+        "com.apple.developer.associated-domains": "*",
+        "com.apple.developer.networking.multicast": null,
+        "com.apple.developer.usernotifications.communication": null,
+        "com.apple.security.application-groups": []
+      },
+      "missing_source_required_entitlement_keys": [
+        "com.apple.developer.networking.multicast",
+        "com.apple.developer.usernotifications.communication",
+        "com.apple.security.application-groups"
+      ],
+      "source_capability_preparation": {
+        "required_public_capabilities": [
+          "ASSOCIATED_DOMAINS",
+          "PUSH_NOTIFICATIONS"
+        ],
+        "operations": [
+          {
+            "capability": "ASSOCIATED_DOMAINS",
+            "status": "API_ACCEPTED"
+          },
+          {
+            "capability": "PUSH_NOTIFICATIONS",
+            "status": "API_ACCEPTED"
+          }
+        ],
+        "observed_capabilities": [
+          "APP_GROUPS",
+          "ASSOCIATED_DOMAINS",
+          "IN_APP_PURCHASE",
+          "PUSH_NOTIFICATIONS"
+        ],
+        "missing_public_capabilities": [],
+        "existing_capabilities_preserved": true,
+        "managed_entitlements": [
+          "com.apple.developer.networking.multicast",
+          "com.apple.developer.usernotifications.communication"
+        ],
+        "managed_entitlement_status": "REQUIRES_ACTUAL_XCODE_AND_PROFILE_GRANT_READBACK"
+      }
+    },
+    {
+      "role": "anytype_share",
+      "registered_bundle_id": "io.anytype.app.NA6HPWARQ2.AnytypeShareExtension",
+      "native_archive_exit": 65,
+      "archive_log_sha256": "a42fab503b7e86a797ac9799008fcc8b2ba382b6f2d3921739582fad3efc6a7c",
+      "diagnostic": "/Users/runner/work/_temp/hanlin-authorized-signing-40880pcu/cross-app-owner/ProfileDiscovery.xcodeproj: error: ProfileDiscovery has conflicting provisioning settings. ProfileDiscovery is automatically signed, but code signing identity CDAD91DFA43E7059C8B89E464054D9856249536B has been manually specified. Set the code signing identity value to \"Apple Development\" in the build settings editor, or switch to manual signing in the Signing & Capabilities editor. (in target 'ProfileDiscovery' from project 'ProfileDiscovery')",
+      "fresh_profile_resource_id": "X6AUXGPMRF",
+      "fresh_profile_uuid": "9dd6fd1b-fdd5-4ee4-8b11-4f432cf695e1",
+      "fresh_profile_sha256": "f4c1b4022aef75a865310dbf6637ad52023bd4f77728a7c97a7ce9c13a76d8a8",
+      "actual_groups": [],
+      "actual_required_key_grants": {
+        "com.apple.security.application-groups": []
+      },
+      "missing_source_required_entitlement_keys": [
+        "com.apple.security.application-groups"
+      ],
+      "source_capability_preparation": {
+        "required_public_capabilities": [],
+        "operations": [],
+        "observed_capabilities": [
+          "APP_GROUPS",
+          "IN_APP_PURCHASE"
+        ],
+        "missing_public_capabilities": [],
+        "existing_capabilities_preserved": true,
+        "managed_entitlements": [],
+        "managed_entitlement_status": "REQUIRES_ACTUAL_XCODE_AND_PROFILE_GRANT_READBACK"
+      }
+    },
+    {
+      "role": "anytype_notification",
+      "registered_bundle_id": "io.anytype.app.NA6HPWARQ2.AnytypeNotificationExtension",
+      "native_archive_exit": 65,
+      "archive_log_sha256": "b63f21159647a4cb4b6307b2327864b5cf391e1fea5d86e2060c4e624c119a93",
+      "diagnostic": "/Users/runner/work/_temp/hanlin-authorized-signing-40880pcu/cross-app-owner/ProfileDiscovery.xcodeproj: error: ProfileDiscovery has conflicting provisioning settings. ProfileDiscovery is automatically signed, but code signing identity CDAD91DFA43E7059C8B89E464054D9856249536B has been manually specified. Set the code signing identity value to \"Apple Development\" in the build settings editor, or switch to manual signing in the Signing & Capabilities editor. (in target 'ProfileDiscovery' from project 'ProfileDiscovery')",
+      "fresh_profile_resource_id": "7GN4XJ98G8",
+      "fresh_profile_uuid": "31248f29-2add-4b42-8b7d-d3137b4079b5",
+      "fresh_profile_sha256": "896b41278ad91865450ba49f52dbbf3cc2957dc3b804cc1c9d7ddde43ae46864",
+      "actual_groups": [],
+      "actual_required_key_grants": {
+        "com.apple.security.application-groups": []
+      },
+      "missing_source_required_entitlement_keys": [
+        "com.apple.security.application-groups"
+      ],
+      "source_capability_preparation": {
+        "required_public_capabilities": [],
+        "operations": [],
+        "observed_capabilities": [
+          "APP_GROUPS",
+          "IN_APP_PURCHASE"
+        ],
+        "missing_public_capabilities": [],
+        "existing_capabilities_preserved": true,
+        "managed_entitlements": [],
+        "managed_entitlement_status": "REQUIRES_ACTUAL_XCODE_AND_PROFILE_GRANT_READBACK"
+      }
+    },
+    {
+      "role": "anytype_widget",
+      "registered_bundle_id": "io.anytype.app.NA6HPWARQ2.homewidget",
+      "native_archive_exit": 65,
+      "archive_log_sha256": "e1e438606fe4e946db57a290b6408966e7790184ab9bda680f1f41bff1d3ffa6",
+      "diagnostic": "/Users/runner/work/_temp/hanlin-authorized-signing-40880pcu/cross-app-owner/ProfileDiscovery.xcodeproj: error: ProfileDiscovery has conflicting provisioning settings. ProfileDiscovery is automatically signed, but code signing identity CDAD91DFA43E7059C8B89E464054D9856249536B has been manually specified. Set the code signing identity value to \"Apple Development\" in the build settings editor, or switch to manual signing in the Signing & Capabilities editor. (in target 'ProfileDiscovery' from project 'ProfileDiscovery')",
+      "fresh_profile_resource_id": "NVG9HUHDN6",
+      "fresh_profile_uuid": "96311b3b-ceb3-461d-9f28-b343ca780c75",
+      "fresh_profile_sha256": "57feb03c52900e7d312b748d1798456e3929308a6bac8aac608e4822b92a5694",
+      "actual_groups": [],
+      "actual_required_key_grants": {},
+      "missing_source_required_entitlement_keys": [],
+      "source_capability_preparation": {
+        "required_public_capabilities": [],
+        "operations": [],
+        "observed_capabilities": [
+          "APP_GROUPS",
+          "IN_APP_PURCHASE"
+        ],
+        "missing_public_capabilities": [],
+        "existing_capabilities_preserved": true,
+        "managed_entitlements": [],
+        "managed_entitlement_status": "REQUIRES_ACTUAL_XCODE_AND_PROFILE_GRANT_READBACK"
+      }
+    }
+  ],
+  "signed_probe": "NOT_PROVEN",
+  "physical_device": "NOT_RUN",
+  "corrective_action": "Use Xcode automatic CODE_SIGN_IDENTITY=Apple Development; verify archived leaf against selected identity and all source entitlements before original-certificate distribution export.",
+  "focused_repair_test_receipt": "automatic-development-archive-tests.txt",
+  "notes": [
+    "Current DEVELOPMENT CSR and trusted native keychain import succeeded; the previous Xcode managed-certificate quota path is not an API rejection.",
+    "Only exact task-created certificate 2CLYB6DK86 was revoked, and its private key was removed. No existing identity was revoked.",
+    "Anytype owner PUSH_NOTIFICATIONS and ASSOCIATED_DOMAINS were enabled by documented capability API and independently present in fresh profile grants.",
+    "No current profile includes the requested new shared/private group grants.",
+    "Multicast and communication-notification entitlement grants remain absent; full original source claims are retained.",
+    "This probe did not compile/install the original consumer apps."
+  ]
+}

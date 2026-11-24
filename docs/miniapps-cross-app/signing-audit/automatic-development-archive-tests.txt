@@ -1,0 +1,10 @@
+Command: python3 Tests/ProductSplit/test_automatic_owner_archive.py -v
+Scope: only 3 new archive-selector/readback checks; existing passing suites retained.
+test_automatic_selection_uses_development_class_then_verifies_exact_leaf (__main__.AutomaticOwnerArchiveTests.test_automatic_selection_uses_development_class_then_verifies_exact_leaf) ... ok
+test_distribution_profile_cannot_impersonate_development_archive (__main__.AutomaticOwnerArchiveTests.test_distribution_profile_cannot_impersonate_development_archive) ... ok
+test_valid_profile_does_not_mask_missing_signed_source_group (__main__.AutomaticOwnerArchiveTests.test_valid_profile_does_not_mask_missing_signed_source_group) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.001s
+
+OK
