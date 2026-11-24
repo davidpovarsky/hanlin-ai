@@ -9,6 +9,7 @@
     "AI_HLY/Downstream/HostServices/Core/HanlinHostCallContext.swift",
     "AI_HLY/Downstream/HostServices/Core/HanlinHostServiceError.swift",
     "AI_HLY/Downstream/HostServices/Core/HanlinHostServicesBroker.swift",
+    "AI_HLY/Downstream/HostServices/Core/HanlinMiniAppAssistantService.swift",
     "AI_HLY/Downstream/HostServices/Data/HanlinFileService.swift",
     "AI_HLY/Downstream/HostServices/Data/HanlinSQLiteHostAdapter.swift",
     "AI_HLY/Downstream/HostServices/Runtime/HanlinRuntimeBroker.swift",

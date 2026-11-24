@@ -814,6 +814,10 @@
 			isa = PBXBuildFile;
 			fileRef = AC1900000000000000000130;
 		};
+		2055B00D12EEBAA26EE85766 = {
+			isa = PBXBuildFile;
+			fileRef = 0F0C0D4423D193171AB03815;
+		};
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1596,6 +1600,12 @@
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.swift;
 			path = HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		0F0C0D4423D193171AB03815 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "AI_HLY/Downstream/HostServices/Core/HanlinMiniAppAssistantService.swift";
 			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXFileReference section */
@@ -2607,6 +2617,7 @@
 				"F9061B29280C18C55699611D" ,
 				"F906889EE8DD5D2169D6158F" ,
 				"F93D6670699B3C28444E241B" ,
+				"0F0C0D4423D193171AB03815" ,
 				"F917CA751184E20BD6524A38" ,
 				"F989DEF1DBD097C985F528CE" ,
 				"F9243749B55B2307F654AFD9" ,
@@ -3411,6 +3422,7 @@
 				"F93B6615FF3AA28B4EE9FB52" ,
 				"F91A2CD0E4C773FACD1057CC" ,
 				"F93292CE6C9A8178EBCFF431" ,
+				"2055B00D12EEBAA26EE85766" ,
 				"F978CD6315961BA5F213AA17" ,
 				"F937D1B81E0F6C9BDBC18F54" ,
 				"F9549CA14D22D01A0091E9F0" ,
