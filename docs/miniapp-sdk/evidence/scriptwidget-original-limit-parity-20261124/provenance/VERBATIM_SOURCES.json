@@ -1,0 +1,18 @@
+{
+  "archive": "verbatim-original-sources.tar.gz",
+  "bytes": 16933,
+  "sha256": "877fd8bdb7bd51ac9a25cdc6f729ef33534f65fd4dfe8237012bc8240cb9eac7",
+  "members": [
+    {
+      "path": "ScriptWidgetRuntime.upstream.swift",
+      "bytes": 70509,
+      "sha256": "7040cab9a460f5845ee96114c396b7e27e46caf8c9e62614a717e25adb1af574"
+    },
+    {
+      "path": "upstream-to-local-runtime.diff",
+      "bytes": 22663,
+      "sha256": "0e3a8d0f9d0ac61bac7f4aea61d99b385f57d7892e104574835c2523dd9bfdc1"
+    }
+  ],
+  "reason": "Preserve authoritative original bytes and original comparison diff exactly, including upstream trailing spaces. The earlier receipt and all other proof files are unchanged; these names resolve to members inside this archive."
+}

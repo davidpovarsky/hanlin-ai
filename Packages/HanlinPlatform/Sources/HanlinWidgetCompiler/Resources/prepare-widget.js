@@ -3,6 +3,15 @@
  * Shared/ScriptWidgetRuntime/Widget/Runtime/ScriptWidgetRuntime.swift (Apache-2.0).
  * Expo modules use the pinned widgets JSX/global ABI, not the Scripting ABI. */
 function __hanlinCompileWidget(input) {
+  function transformScriptWidget(source, options) {
+    // The original compiler gives every operation its own deadline. Keep its
+    // guard without imposing a package-wide allowance on independent sources.
+    __scriptWidgetBeginCompile();
+    if (!__scriptWidgetCompileActive()) throw new Error('Compilation time limit exceeded');
+    const result = Babel.transform(source, options);
+    if (!__scriptWidgetCompileActive()) throw new Error('Compilation time limit exceeded');
+    return result;
+  }
   const guardName = '__scriptWidgetCheckExecution';
   const guardPlugin = function ({ types: t }) {
     const check = () => t.expressionStatement(t.callExpression(t.identifier(guardName), []));
@@ -67,7 +76,7 @@ function __hanlinCompileWidget(input) {
         }
       } });
       const typed = /\.tsx?$/.test(path);
-      compiled[path] = Babel.transform(input.files[path], {
+      compiled[path] = transformScriptWidget(input.files[path], {
         filename: path, presets: typed ? ['typescript', 'scriptwidget'] : ['scriptwidget'],
         plugins: [dependencyPlugin, 'transform-modules-commonjs', guardPlugin]
       }).code;
@@ -94,10 +103,10 @@ function __hanlinCompileWidget(input) {
   }
   globalThis.__hanlinWidgetUsesModules = false;
   if (input.engine === 'scriptwidget-import') {
-    return Babel.transform(input.files[input.entry], { presets:['scriptwidget'], plugins:[guardPlugin] }).code;
+    return transformScriptWidget(input.files[input.entry], { presets:['scriptwidget'], plugins:[guardPlugin] }).code;
   }
   if (input.engine === 'scriptwidget') {
-    const sourceAST = Babel.transform(input.files[input.entry], {
+    const sourceAST = transformScriptWidget(input.files[input.entry], {
       filename: input.entry, ast: true, code: false,
       presets: input.format === 'tsx' ? ['typescript', 'scriptwidget'] : input.format === 'jsx' ? ['scriptwidget'] : []
     }).ast;
@@ -115,7 +124,7 @@ function __hanlinCompileWidget(input) {
       '\nif (__hanlinAction) { switch(__hanlinAction) {\n' + calls +
       '\ndefault: throw new Error("Undeclared widget action"); } }\n' +
       '} catch(e) { $error(String(e)); } }';
-    return Babel.transform(wrapped, {
+    return transformScriptWidget(wrapped, {
       presets: input.format === 'tsx' ? ['typescript', 'scriptwidget'] : input.format === 'jsx' ? ['scriptwidget'] : [],
       plugins: [guardPlugin]
     }).code;

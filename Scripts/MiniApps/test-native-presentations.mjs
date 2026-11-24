@@ -9,7 +9,7 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 const compilerRoot = path.join(root, 'Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/Resources');
 const babel = fs.readFileSync(path.join(compilerRoot, 'core.js'), 'utf8');
 const compiler = fs.readFileSync(path.join(compilerRoot, 'prepare-widget.js'), 'utf8');
-const compilerVM = vm.createContext({ __scriptWidgetCompileActive: () => true });
+const compilerVM = vm.createContext({ __scriptWidgetBeginCompile() {}, __scriptWidgetCompileActive: () => true });
 vm.runInContext(babel, compilerVM);
 vm.runInContext(compiler, compilerVM);
 

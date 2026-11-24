@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "git",
+    "diff",
+    "--cached",
+    "--check"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-scriptwidget-original-limit-parity-20261124",
+  "exitCode": 0,
+  "atUTC": "2026-11-24T08:44:18.398899+00:00"
+}

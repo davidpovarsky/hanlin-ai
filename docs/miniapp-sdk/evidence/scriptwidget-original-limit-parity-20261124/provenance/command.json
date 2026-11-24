@@ -1,0 +1,9 @@
+{
+  "argv": [
+    "gh",
+    "api",
+    "repos/everettjf/scriptwidget/git/blobs/1504079272e64447a0cba422492ab6a8313c80c9"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123",
+  "exitCode": 4
+}

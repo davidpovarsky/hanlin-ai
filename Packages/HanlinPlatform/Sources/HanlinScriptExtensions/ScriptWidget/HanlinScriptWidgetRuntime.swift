@@ -282,13 +282,35 @@ public struct HanlinScriptWidgetRuntime: Sendable {
         }
     }
 
+    private func singleFragmentElement(_ values: [Any], budget: FreezeBudget) throws -> ScriptWidgetRuntimeElement? {
+        var flattened: [Any] = []
+        var activeArrays: Set<ObjectIdentifier> = []
+        func append(_ value: Any) throws {
+            try budget.checkTime()
+            if let nested = value as? NSArray {
+                let identifier = ObjectIdentifier(nested)
+                guard activeArrays.insert(identifier).inserted else {
+                    throw HanlinScriptWidgetError("Widget child array contains a cycle")
+                }
+                defer { activeArrays.remove(identifier) }
+                for child in nested { try append(child) }
+            } else {
+                flattened.append(value)
+            }
+        }
+        for value in values { try append(value) }
+        guard flattened.count == 1 else { return nil }
+        return flattened[0] as? ScriptWidgetRuntimeElement
+    }
+
     // Source-derived component resolution, performed only by the VM owner.
     private func freeze(_ input: ScriptWidgetRuntimeElement, depth: Int, budget: inout FreezeBudget,
-                        active: inout Set<ObjectIdentifier>, context: JSContext) throws -> HanlinScriptWidgetPreparedNode {
+                        active: inout Set<ObjectIdentifier>, context: JSContext,
+                        unwrapFragment: Bool = true) throws -> HanlinScriptWidgetPreparedNode {
         guard depth <= HanlinOriginalScriptWidgetSession.maximumElementDepth else {
             throw HanlinScriptWidgetError("Original ScriptWidget element-depth limit exceeded")
         }
-        try budget.node()
+        try budget.checkTime()
         var element = input
         var inserted: [ObjectIdentifier] = []
         defer { inserted.forEach { active.remove($0) } }
@@ -305,8 +327,17 @@ public struct HanlinScriptWidgetRuntime: Sendable {
             }
             element = result
         }
-        guard let tag = element.tagAsString(),
-              element.getProps().count <= HanlinOriginalScriptWidgetSession.maximumPropsPerElement else {
+        guard let tag = element.tagAsString() else {
+            throw HanlinScriptWidgetError("Invalid native widget element")
+        }
+        // Upstream normalizes only a single-element root Fragment, keeping the
+        // same depth. Its discarded wrapper must not consume an element slot.
+        if unwrapFragment, tag == "Fragment",
+           let child = try singleFragmentElement(element.getChildren(), budget: budget) {
+            return try freeze(child, depth: depth, budget: &budget, active: &active, context: context)
+        }
+        try budget.node()
+        guard element.getProps().count <= HanlinOriginalScriptWidgetSession.maximumPropsPerElement else {
             throw HanlinScriptWidgetError("Invalid native widget element")
         }
         var props: [String: HanlinValue] = [:]
@@ -319,7 +350,7 @@ public struct HanlinScriptWidgetRuntime: Sendable {
         func append(_ value: Any) throws {
             try budget.checkTime()
             if let child = value as? ScriptWidgetRuntimeElement {
-                children.append(.element(try freeze(child, depth: depth + 1, budget: &budget, active: &active, context: context)))
+                children.append(.element(try freeze(child, depth: depth + 1, budget: &budget, active: &active, context: context, unwrapFragment: false)))
             } else if let nested = value as? NSArray {
                 let identifier = ObjectIdentifier(nested)
                 guard activeArrays.insert(identifier).inserted else {

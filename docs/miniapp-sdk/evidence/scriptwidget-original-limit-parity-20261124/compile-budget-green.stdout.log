@@ -1,0 +1,11 @@
+✔ P3-03/P3-24: ScriptWidget source functions preserve typed state (79.430451ms)
+✔ ScriptWidget starts an independent original compile budget for every Babel operation (106.156203ms)
+✔ P3-12: reserved guard identifiers and malformed JSX fail compilation (12.26639ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 461.920023

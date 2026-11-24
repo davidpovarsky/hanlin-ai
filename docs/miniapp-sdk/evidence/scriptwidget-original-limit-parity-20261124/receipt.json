@@ -1,0 +1,179 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-24T08:41:24.222543+00:00",
+  "baseSHA": "25b14790e5c79b8ddd821984ed97d37e6af0bfa4",
+  "branch": "codex/hanlin-scriptwidget-original-limit-parity-20261124",
+  "worktree": "/mnt/development/projects/worktrees/hanlin-scriptwidget-original-limit-parity-20261124",
+  "scope": "Two Hanlin enforcement discrepancies only: per-original-compilation deadline and upstream root-only Fragment normalization. Seven original constants and original runtime implementation stay unchanged.",
+  "changes": [
+    "The native compiler retains original compileTimeout, starts a new deadline at every real ScriptWidget Babel operation, and avoids a last-operation timeout on package assembly. Compiler bootstrap retains its original deadline check.",
+    "Root single-element Fragments normalize after component resolution and flattened child-array inspection, at unchanged depth and before element/property accounting. Non-root and multiple-child/scalar Fragments retain original behavior. Existing cycle detection remains.",
+    "Two portable harnesses bind the private compiler callback. A lifecycle regression observes actual Babel operations without fake time or sleep.",
+    "A focused test in the existing Apple suite compiles typed local module source through actual HanlinWidgetCompiler/JSC, then exercises root normalization at original 1000-node and depth64 limits, excess rejection, nested/root nuances, component cycles, and three independent Dynamic Island regions.",
+    "Only the two changed Hanlin host-adapter manifest digests/descriptions are reconciled; source authority and refresh algorithm are unchanged."
+  ],
+  "sourceInputs": [
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/HanlinWidgetCompiler.swift",
+      "bytes": 10164,
+      "sha256": "d33e755c68ea9440fc68c9d42cd695cc3815ede7b9873e010200375c8b38293f"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/Resources/prepare-widget.js",
+      "bytes": 11782,
+      "sha256": "5053e0587036008a1ae85d24b4d469271d5f6c880e1a1244e752ec436b32813c"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/HanlinScriptWidgetRuntime.swift",
+      "bytes": 23944,
+      "sha256": "d3735e19e7e2603d17449acd0c57c22bc676ee022bfe3152a20d2d846dd58afd"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinScriptWidgetOriginalLimitParityTests.swift",
+      "bytes": 5431,
+      "sha256": "1bb84b5decffcd17ddf54d9283f6871e85f4dd83a4fc67fa95dcaa3ef00bf148"
+    },
+    {
+      "path": "Scripts/Widgets/Tests/compiler-and-actions.test.mjs",
+      "bytes": 7879,
+      "sha256": "0c639cc68bf8d9acc9ead622c2d58a40845f072ccaec041388a1e1931a5d98dc"
+    },
+    {
+      "path": "Scripts/MiniApps/test-native-presentations.mjs",
+      "bytes": 8911,
+      "sha256": "e2eb617fcecdb7b0d0dee8b7dec10c287c23f7d38fb0d765c458f2a35dda1fd7"
+    },
+    {
+      "path": "docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json",
+      "bytes": 210987,
+      "sha256": "ddbed82d8b5ab54941772979355dec4b61a9186ce6b260edd0d12b417872ea7d"
+    }
+  ],
+  "unchangedAuthorityAndRefresh": [
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/ScriptWidgetRuntime.swift",
+      "bytes": 69622,
+      "sha256": "15a60ffc1a6171dde86fa442a7a51764fd073eee4f615e329b6593dc5cf9b34a",
+      "baseSHA256": "15a60ffc1a6171dde86fa442a7a51764fd073eee4f615e329b6593dc5cf9b34a",
+      "byteEqualToBase": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/HanlinOriginalScriptWidgetSession.swift",
+      "bytes": 13303,
+      "sha256": "aaba22894ddd8bf7863a5ddd4e1e61cece90081b579bb8ce7b2a084f751f8f9b",
+      "baseSHA256": "aaba22894ddd8bf7863a5ddd4e1e61cece90081b579bb8ce7b2a084f751f8f9b",
+      "byteEqualToBase": true
+    },
+    {
+      "path": "Scripts/MiniApps/refresh-original-sources.mjs",
+      "bytes": 31410,
+      "sha256": "9b367c79ece68771e1ab193cc22c218feb72d2f519ffb410fc560b6fca59a7e8",
+      "baseSHA256": "9b367c79ece68771e1ab193cc22c218feb72d2f519ffb410fc560b6fca59a7e8",
+      "byteEqualToBase": true
+    }
+  ],
+  "hostManifestReconciliation": [
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/HanlinScriptWidgetRuntime.swift",
+      "bytes": 23944,
+      "sha256": "d3735e19e7e2603d17449acd0c57c22bc676ee022bfe3152a20d2d846dd58afd",
+      "manifestSHA256": "d3735e19e7e2603d17449acd0c57c22bc676ee022bfe3152a20d2d846dd58afd",
+      "latestUpstreamContractHostSHA256": "d3735e19e7e2603d17449acd0c57c22bc676ee022bfe3152a20d2d846dd58afd",
+      "identityMatches": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/Resources/prepare-widget.js",
+      "bytes": 11782,
+      "sha256": "5053e0587036008a1ae85d24b4d469271d5f6c880e1a1244e752ec436b32813c",
+      "manifestSHA256": "5053e0587036008a1ae85d24b4d469271d5f6c880e1a1244e752ec436b32813c",
+      "latestUpstreamContractHostSHA256": "5053e0587036008a1ae85d24b4d469271d5f6c880e1a1244e752ec436b32813c",
+      "identityMatches": true
+    }
+  ],
+  "validation": {
+    "initialRed": {
+      "test": "ScriptWidget starts an independent original compile budget for every Babel operation",
+      "executed": 1,
+      "failed": 1,
+      "reason": "The old actual adapter entered a Babel operation without beginning an independent operation budget. This is a deterministic lifecycle assertion, not an observed 10-second timing expiration.",
+      "command": "compile-budget-red.command.json",
+      "sourceSHA256": "3e6e923ea151b55a28b47d165647fb3a2c6090f399a4de487aac803af51919b8",
+      "source": "compile-budget-red.test-source.mjs"
+    },
+    "portableGreen": {
+      "executed": 7,
+      "passed": 7,
+      "cases": [
+        "P3-03/P3-24: ScriptWidget source functions preserve typed state",
+        "ScriptWidget starts an independent original compile budget for every Babel operation",
+        "P3-12: reserved guard identifiers and malformed JSX fail compilation",
+        "original ScriptWidget compiler bundles typed local modules and action parameters",
+        "module closure does not resolve framework imports into the frozen Scripting engine",
+        "ordinary original ScriptWidget top-level async source remains executable",
+        "ported attachment executes grouped search, version expansion, full text, pagination and replacement"
+      ],
+      "commands": [
+        "compile-budget-green.command.json",
+        "native-presentations-affected.command.json"
+      ],
+      "scope": "Original vendored Babel plus production prepare-widget.js in Node VM. Existing portable render/service fixtures are test harnesses; these are not native UI or Apple clock proofs."
+    },
+    "swiftSyntax": {
+      "status": "PASS_PARSE_ONLY",
+      "compiler": "Swift 6.4.3 (swift-6.4.3-RELEASE), aarch64-unknown-linux-gnu",
+      "commands": [
+        "swift-parse.command.json",
+        "swift-final-test-parse.command.json",
+        "swift-final-compiler-parse.command.json"
+      ],
+      "scope": "Final runtime syntax is covered by unchanged input in the initial parse. Final compiler and Apple test syntax each have their own final parse receipt. Imports/macros/Apple framework semantics were not typechecked."
+    },
+    "nativeApple": {
+      "status": "NOT_RUN",
+      "suite": "HanlinDualWidgetEnginesTests",
+      "existingSuiteDeclaredMethods": 33,
+      "newMethod": "rootFragmentsPreserveOriginalElementAllowances",
+      "relatedExistingMethod": "scriptWidgetUsesOriginalElementLimitsWithoutExtraMaterialQuotas",
+      "requestedMethods": 2,
+      "testFilter": "HanlinDualWidgetEnginesTests/(rootFragmentsPreserveOriginalElementAllowances|scriptWidgetUsesOriginalElementLimitsWithoutExtraMaterialQuotas)",
+      "scope": "Actual original JavaScriptCore/Apple compiler callback and native frozen-node behavior. Root owns any future native execution."
+    },
+    "CI": "NOT_RUN",
+    "timingOrPerformanceTest": "NOT_RUN",
+    "reusedNativePasses": 0,
+    "evidenceWhitespace": {
+      "initialExitCode": 2,
+      "initialCommand": "verbatim-whitespace.command.json",
+      "resolution": "Archive the two original text payloads without changing any content; do not normalize provenance.",
+      "rawLogFormattingCommand": "raw-log-whitespace.command.json"
+    },
+    "rawDiagnosticStorage": "RAW_LOG_STORAGE.json"
+  },
+  "provenance": {
+    "directory": "provenance",
+    "readOnlyReceiptSHA256": "9a03b4fdecf72805a7dd2c544522efbe7c6fda80dc6db0d0a81d930a1483b4a6",
+    "originalBlob": "1504079272e64447a0cba422492ab6a8313c80c9",
+    "originalSHA256": "7040cab9a460f5845ee96114c396b7e27e46caf8c9e62614a717e25adb1af574",
+    "sevenDeclarationsUnchanged": true,
+    "rawGhAuthenticationError": "provenance/github-blob.stderr.log",
+    "frozenSDKOnlyProof": "UNTOUCHED",
+    "verbatimSourceArchive": {
+      "archive": "verbatim-original-sources.tar.gz",
+      "bytes": 16933,
+      "sha256": "877fd8bdb7bd51ac9a25cdc6f729ef33534f65fd4dfe8237012bc8240cb9eac7",
+      "members": [
+        {
+          "path": "ScriptWidgetRuntime.upstream.swift",
+          "bytes": 70509,
+          "sha256": "7040cab9a460f5845ee96114c396b7e27e46caf8c9e62614a717e25adb1af574"
+        },
+        {
+          "path": "upstream-to-local-runtime.diff",
+          "bytes": 22663,
+          "sha256": "0e3a8d0f9d0ac61bac7f4aea61d99b385f57d7892e104574835c2523dd9bfdc1"
+        }
+      ],
+      "reason": "Preserve authoritative original bytes and original comparison diff exactly, including upstream trailing spaces. The earlier receipt and all other proof files are unchanged; these names resolve to members inside this archive."
+    }
+  }
+}

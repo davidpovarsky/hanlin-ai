@@ -77,12 +77,22 @@ public enum HanlinWidgetCompiler {
 #if canImport(JavaScriptCore)
         // One invocation owns the VM; neither compiler contexts nor JSValues are cached.
         guard let context = JSContext() else { throw HanlinWidgetProgramError.missingCompiler }
-        let deadline: ContinuousClock.Instant? = engine == .scriptwidget
+        var deadline: ContinuousClock.Instant? = engine == .scriptwidget
             ? ContinuousClock.now.advanced(by: .seconds(HanlinOriginalScriptWidgetSession.compileTimeout)) : nil
+        // Upstream starts this deadline for each compiler invocation. A package
+        // can contain independently compiled modules and $import sources.
+        let begin: @convention(block) () -> Void = {
+            deadline = engine == .scriptwidget
+                ? ContinuousClock.now.advanced(by: .seconds(HanlinOriginalScriptWidgetSession.compileTimeout)) : nil
+        }
         let active: @convention(block) () -> Bool = { deadline.map { ContinuousClock.now < $0 } ?? true }
+        context.setObject(begin, forKeyedSubscript: "__scriptWidgetBeginCompile" as NSString)
         context.setObject(active, forKeyedSubscript: "__scriptWidgetCompileActive" as NSString)
         context.evaluateScript(babel)
         context.evaluateScript(adapter)
+        guard active() else {
+            throw HanlinWidgetProgramError.compilationFailed("Compiler exceeded the original ScriptWidget time limit")
+        }
         let actionsData = try JSONEncoder().encode(metadata.actions)
         let actionObjects = try JSONSerialization.jsonObject(with: actionsData)
         let result = context.objectForKeyedSubscript("__hanlinCompileWidget")?.call(withArguments: [[
@@ -91,8 +101,10 @@ public enum HanlinWidgetCompiler {
             "sourceByteLimit": engine == .scriptwidget ? HanlinOriginalScriptWidgetSession.maximumSourceBytes as Any : NSNull()
         ]])
         if let exception = context.exception { throw HanlinWidgetProgramError.compilationFailed(exception.toString() ?? "Unknown compiler exception") }
-        guard active(), let javaScript = result?.toString(), !javaScript.isEmpty else {
-            throw HanlinWidgetProgramError.compilationFailed("Compiler produced no output or exceeded its budget")
+        // Every original transform checked its own deadline. Packaging the
+        // resulting modules must not be charged to the last module's clock.
+        guard let javaScript = result?.toString(), !javaScript.isEmpty else {
+            throw HanlinWidgetProgramError.compilationFailed("Compiler produced no output")
         }
         if engine == .scriptwidget { try HanlinOriginalScriptWidgetSession.validatePreparedJavaScript(javaScript) }
         var imports: [String: String] = [:]
@@ -103,7 +115,7 @@ public enum HanlinWidgetCompiler {
                     "engine": "scriptwidget-import", "format": "jsx", "entry": path, "files": sources, "actions": []
                 ]])
                 if let exception = context.exception { throw HanlinWidgetProgramError.compilationFailed(exception.toString() ?? "Import compilation failed") }
-                guard active(), let text = output?.toString() else { throw HanlinWidgetProgramError.invalidSource }
+                guard let text = output?.toString() else { throw HanlinWidgetProgramError.invalidSource }
                 try HanlinOriginalScriptWidgetSession.validatePreparedJavaScript(text)
                 imports[path] = text
             }
