@@ -37,12 +37,12 @@ public enum ExpoEmbeddedResultAdapter {
             return nil
         }
 
+        let sessionID = UUID().uuidString.lowercased()
         do {
             guard let artifactRoot = platform.activeArtifactURL(for: package) else {
                 return nil
             }
             let entrypointURL = artifactRoot.appending(path: entrypoint.sourcePath, directoryHint: .notDirectory)
-            let sessionID = UUID().uuidString.lowercased()
 
             let adapter = ExpoHostServicesAdapter(
                 appID: package.appID,
@@ -52,24 +52,28 @@ public enum ExpoEmbeddedResultAdapter {
             )
             HanlinExpoHostServicesBridge.register(provider: adapter, forSessionID: sessionID)
 
-            var env = ProcessInfo.processInfo.environment
-            env["HANLIN_EMBEDDED"] = "1"
-            env["HANLIN_HANDLER"] = handler
-            if let ref = payload?.resultReference {
-                env["HANLIN_RESULT_REF"] = ref
+            var context: [String: Any] = [
+                "kind": "embeddedResult", "handler": handler,
+                "ownerID": package.record.packageID.rawValue,
+                "installedPackageID": package.record.installedPackageID.rawValue,
+                "generation": package.record.activeGeneration
+            ]
+            if let reference = payload?.resultReference {
+                context["resultReference"] = reference
             }
-            if let json = payload?.payload,
-               let data = try? JSONEncoder().encode(json),
-               let str = String(data: data, encoding: .utf8) {
-                env["HANLIN_PAYLOAD"] = str
+            if let value = payload?.payload {
+                context["payload"] = try JSONSerialization.jsonObject(
+                    with: value.canonicalJSONData(), options: [.fragmentsAllowed])
             }
 
             let session = try HanlinExpoSession(
                 applicationRoot: entrypointURL.deletingLastPathComponent(),
-                sessionID: sessionID
+                sessionID: sessionID,
+                packageID: package.record.packageID.rawValue,
+                isNativeAPIGranted: true
             )
 
-            try session.start()
+            try session.start(initialProperties: ["hanlin": context])
 
             let wrapper = ExpoHostViewControllerView(controller: session.containerController)
 
@@ -79,10 +83,12 @@ public enum ExpoEmbeddedResultAdapter {
                 appID: package.appID,
                 rootView: AnyView(wrapper),
                 onTearDown: {
+                    session.shutdown()
                     HanlinExpoHostServicesBridge.unregister(sessionID: sessionID)
                 }
             )
         } catch {
+            HanlinExpoHostServicesBridge.unregister(sessionID: sessionID)
             return nil
         }
     }

@@ -211,7 +211,7 @@ public final class HanlinExpoSession {
         self.containerController.view.backgroundColor = .systemBackground
     }
 
-    public func start(moduleName: String = "main") throws {
+    public func start(moduleName: String = "main", initialProperties: [String: Any]? = nil) throws {
         guard !isActive else { return }
 
         do {
@@ -250,7 +250,7 @@ public final class HanlinExpoSession {
 
             let rootView = factory.rootViewFactory.view(
                 withModuleName: moduleName,
-                initialProperties: nil,
+                initialProperties: initialProperties,
                 launchOptions: nil
             )
             NSLog("%@", "HANLIN_EXPO_ROOTVIEW_CREATED")

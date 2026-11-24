@@ -2,7 +2,7 @@ import type { MiniAppLiveActivities } from "./system-surfaces";
 export type { NativeSurfaceJSON, NativeSurfaceAction, NativeSurfaceNode, NativeSurfaceProperties, LiveActivityStart, NativeSurfaceLiveActivityStart, ScriptWidgetLiveActivityStart, LiveActivityUpdate, LiveActivityEnd, MiniAppLiveActivities } from "./system-surfaces";
 import { requireNativeModule } from 'expo';
 import { fromByteArray, toByteArray } from 'base64-js';
-import { serveMiniAppActions, type MiniAppActionHandlers } from './miniapp-actions';
+import { serveMiniAppActions, type MiniAppActionHandlers, type MiniAppJSONValue } from './miniapp-actions';
 export type { MiniAppActionInvocation, MiniAppActionHandler, MiniAppActionHandlers, MiniAppJSONValue } from './miniapp-actions';
 
 interface NativeHostServicesModule {
@@ -10,6 +10,19 @@ interface NativeHostServicesModule {
   hasCapability(capability: string): Promise<boolean>;
 }
 const NativeHostServices = requireNativeModule<NativeHostServicesModule>('HanlinHostServices');
+
+/** Standard React Native root props supplied to a declared embedded-result entrypoint. */
+export interface HanlinExpoRootProps {
+  hanlin?: {
+    kind: 'embeddedResult';
+    handler: string;
+    ownerID: string;
+    installedPackageID: string;
+    generation: number;
+    resultReference?: string;
+    payload?: MiniAppJSONValue;
+  };
+}
 
 export type HanlinRuntimeKind = 'node' | 'typeScript' | 'localPython' | 'javaScriptCore' | 'shell';
 export type MiniAppOperation = 'display' | 'insert' | 'replaceSelection' | 'replaceDocument' | 'custom';

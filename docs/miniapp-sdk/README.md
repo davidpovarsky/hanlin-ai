@@ -92,3 +92,7 @@ The imported modular-search sample retains its editable original logic modules, 
 Native acceptance is defined by the `miniapp_authoring` scope of `validate-app-split.yml`. It builds both actual products and exercises original NativeScript/Expo controls, embedded authoring tools, a malformed archive, real source diagnostics, the sheet and repair/import handoff on one iPad Simulator. Its recorded run and xcresult determine PASS/FAIL; source wiring, portable tests and syntax parsing do not establish native success.
 
 Older [source inventory](source-inventory.json), [reachability audit](extension-reachability.md), and dated handoffs remain historical snapshots. Their old version numbers and disconnected-surface findings must not override the installed SDK manifest or current source/evidence.
+
+### Embedded Expo results
+
+Declared Expo embedded-result entrypoints receive ordinary React Native root props typed as `HanlinExpoRootProps` from `@hanlin/expo-ui`. The optional `hanlin` object contains `kind: "embeddedResult"`, the declared handler, canonical package ID, actual installed ID/generation, original JSON payload, and an optional result reference. The original Expo session owns the React root for that presentation and shuts down when the embedded result is dismissed. Foreground Expo entrypoints continue to receive ordinary root props.
