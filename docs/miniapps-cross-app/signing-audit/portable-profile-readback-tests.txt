@@ -1,0 +1,10 @@
+/usr/lib/python3/dist-packages/cryptography/hazmat/primitives/serialization/pkcs7.py:179: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  return rust_pkcs7.sign_and_serialize(self, encoding, options)
+test_linux_inventory_does_not_invent_keychain_availability (__main__.PortableOwnerProfileReadbackTests.test_linux_inventory_does_not_invent_keychain_availability) ... ok
+test_modified_cms_signature_is_rejected (__main__.PortableOwnerProfileReadbackTests.test_modified_cms_signature_is_rejected) ... ok
+test_real_openssl_verifies_and_decodes_cms_content (__main__.PortableOwnerProfileReadbackTests.test_real_openssl_verifies_and_decodes_cms_content) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 1.341s
+
+OK

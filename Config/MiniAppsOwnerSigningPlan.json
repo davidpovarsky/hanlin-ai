@@ -187,5 +187,12 @@
     "This optional plan activates only the existing signing-preflight workflow in this isolated branch."
   ],
   "operation": "refresh-profile-readback",
-  "previous_provisioning_run": 45286408333
+  "previous_provisioning_run": 45286408333,
+  "readback_executor": "documented-api-linux",
+  "existing_distribution_identity_pin": {
+    "owner_team": "NA6HPWARQ2",
+    "public_certificate_sha256": "5aefaf80b344410af7da85678fcb19de9a4be6885a846644df974b1ee38eba4b",
+    "private_identity_validated_run": 45286408333,
+    "artifact_sha256": "e4865da596a66022b0d594c7a159d2012caff17b01e7a3ba4db4ec2c2dc29529"
+  }
 }

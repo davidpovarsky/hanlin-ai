@@ -72,11 +72,13 @@ def _identity_fingerprints(listing):
     return {value.upper() for value in re.findall(r"(?m)^\s*\d+\)\s+([A-Fa-f0-9]{40})\s", listing)}
 
 
-def _existing_development_identity_availability(team):
+def _existing_development_identity_availability(team, *, inspect_local_keychain=True):
     from cryptography import x509
     from cryptography.x509.oid import NameOID
-    listing = _private_output(["security", "find-identity", "-v", "-p", "codesigning"]).decode()
-    local = _identity_fingerprints(listing)
+    local = None
+    if inspect_local_keychain:
+        listing = _private_output(["security", "find-identity", "-v", "-p", "codesigning"]).decode()
+        local = _identity_fingerprints(listing)
     now = datetime.now(timezone.utc)
     facts = []
     for row in _development_certificates():
@@ -84,16 +86,19 @@ def _existing_development_identity_availability(team):
         certificate = x509.load_der_x509_certificate(raw)
         teams = [attribute.value for attribute in
                  certificate.subject.get_attributes_for_oid(NameOID.ORGANIZATIONAL_UNIT_NAME)]
+        not_before = getattr(certificate, "not_valid_before_utc", None) or certificate.not_valid_before.replace(tzinfo=timezone.utc)
+        not_after = getattr(certificate, "not_valid_after_utc", None) or certificate.not_valid_after.replace(tzinfo=timezone.utc)
         facts.append({"resource_id": row["id"], "certificate_type": row["attributes"]["certificateType"],
                       "public_certificate_sha256": hashlib.sha256(raw).hexdigest(),
                       "owner_team_matches": team in teams,
-                      "valid_dates": certificate.not_valid_before_utc <= now < certificate.not_valid_after_utc,
-                      "expiration": certificate.not_valid_after_utc.isoformat(),
+                      "valid_dates": not_before <= now < not_after,
+                      "expiration": not_after.isoformat(),
                       "private_identity_available_in_existing_search_list":
-                          hashlib.sha1(raw).hexdigest().upper() in local})
-    return {"source": "APPLE_PUBLIC_CERTIFICATES_AND_EXISTING_KEYCHAIN_IDENTITY_METADATA",
+                          None if local is None else hashlib.sha1(raw).hexdigest().upper() in local})
+    return {"source": "APPLE_PUBLIC_CERTIFICATES",
+            "local_keychain_inspection": "PERFORMED" if inspect_local_keychain else "NOT_INSPECTED_ON_LINUX",
             "inventory_complete": True, "registered_development_certificate_count": len(facts),
-            "reusable_valid_owner_development_identity_count": sum(
+            "reusable_valid_owner_development_identity_count": None if local is None else sum(
                 fact["owner_team_matches"] and fact["valid_dates"]
                 and fact["private_identity_available_in_existing_search_list"] for fact in facts),
             "certificates": facts, "creation": "NOT_REQUESTED", "revocation": "NOT_REQUESTED"}
@@ -109,7 +114,8 @@ def _expanded(value, team, bundle):
     return value
 
 
-def run_cross_app_owner_readback(folder, plan_path, *, team, certificate_sha, receipt):
+def run_cross_app_owner_readback(folder, plan_path, *, team, certificate_sha, receipt,
+                                inspect_local_keychain=True, decode_profile=None):
     from resolve_signing_profiles import original_certificate_id
     plan_bytes = Path(plan_path).read_bytes()
     plan = json.loads(plan_bytes)
@@ -134,7 +140,8 @@ def run_cross_app_owner_readback(folder, plan_path, *, team, certificate_sha, re
     # Read identity metadata before any profile issuance; no private key material
     # is exported from the current runner keychain or retained in the report.
     receipt["registered_devices"] = _registered_devices()
-    receipt["development_identity_availability"] = _existing_development_identity_availability(team)
+    receipt["development_identity_availability"] = _existing_development_identity_availability(
+        team, inspect_local_keychain=inspect_local_keychain)
     snapshots = []
     decoded_profiles = []
     for product in products:
@@ -145,7 +152,7 @@ def run_cross_app_owner_readback(folder, plan_path, *, team, certificate_sha, re
         receipt["products"].append(entry)
         entry["current_capabilities"] = _capabilities(product["apple_bundle_resource_id"])
         profile, fact = _fresh_profile(product, work, team, certificate_sha, certificate_id,
-                                       os.environ["GITHUB_RUN_ID"])
+                                       os.environ["GITHUB_RUN_ID"], decode_profile=decode_profile)
         entry["fresh_profile"] = fact
         snapshots.append((product, fact))
         decoded_profiles.append(profile)

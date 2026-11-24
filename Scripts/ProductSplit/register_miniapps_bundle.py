@@ -2,7 +2,9 @@
 
 This manual operation sends only the original identifier/name and the two
 documented capability types. It does not create/export credentials, profiles,
-App Store listings, builds, notifications or a release.
+App Store listings, builds, notifications or a release. An explicit separate
+owner profile-readback plan may select owner_profile_readback_entry instead of
+the original registration operation; its actual scope is retained in the report.
 """
 import base64
 from datetime import datetime, timezone
@@ -150,4 +152,9 @@ def main():
     return 0 if report.get("registration_scope_passed") else 1
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    # The separately recorded cross-app owner task can use this existing
+    # authenticated Linux job for profile/device readback. Original registration
+    # and its reviewed mutation guard remain unchanged when not opted in.
+    from owner_profile_readback_entry import run_if_explicit_owner_readback
+    owner_readback_exit = run_if_explicit_owner_readback(ROOT)
+    raise SystemExit(main() if owner_readback_exit is None else owner_readback_exit)
