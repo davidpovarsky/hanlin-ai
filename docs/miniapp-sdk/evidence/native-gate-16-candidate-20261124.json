@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "sequence": 16,
+  "atUTC": "2026-11-24T15:50:54.372088+00:00",
+  "status": "READY_FOR_SINGLE_NATIVE_GATE",
+  "implementationSource": "e3a187c36d26aedb746fc6e3b69dccbd29d114b3",
+  "scope": "miniapp_complete",
+  "selectedCases": 52,
+  "MiniApps": 25,
+  "AI": 27,
+  "priorRun": 45412939674,
+  "priorApplicationStatus": "ALL52_NOT_RUN",
+  "completeNonDocumentationDeltaFromPriorRun": [
+    ".github/workflows/build-ios26-unsigned-ipa.yml",
+    "AI_HLY.xcodeproj/project.pbxproj",
+    "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests.swift",
+    "Scripts/SDK/tests/test_widget_cxx_imports.py",
+    "Scripts/SDK/update_project.py"
+  ],
+  "selectionAndHarness": "Existing52 selection, fixture sources and paired harness/workflow unchanged. One reviewed XCTest expression is corrected without changing equality or assertions.",
+  "whyExecute": "Actual first-build original React/Expo import failure is corrected. Both application builds and all52 selected cases remain missing. Use the original full preparation and same acceptance scope.",
+  "sourceFixCommit": "89b27bcf1d1decd835ee3d1dacc7ac90af617372",
+  "sourceProof": {
+    "path": "docs/miniapp-sdk/evidence/widget-original-header-closure-20261124/receipt.json",
+    "sha256": "b3720f78e0d8a7db05757e2276a2ab8fadb5efecc01f9a622f5e3a18894ef9db"
+  },
+  "sourceProofScope": "Real fresh-cache original Core interface implicitFAIL\u2192explicitPASS on primary27.0; one existing producer/consumer configuration casePASS. Exact12 configs across6 proven native consumers. Not full27.2/app proof.",
+  "fullBuildCompanionCommit": "dc56cea1f4910cea131c6e3afc7c818e4595cabb",
+  "fullBuildCompanion": {
+    "path": "docs/miniapp-sdk/evidence/original-header-build-entrypoints-20261124/receipt.json",
+    "sha256": "361e364c5258d3928e6792e4eda54d5498ae86166244e2011250af052f89bbc3"
+  },
+  "companionScope": "Four actual overriding CLI NO arguments removed; allotherworkflowbytespreserved; YAML/delta/fourchangedBash syntaxchecksPASS. Five original full-host routes and four helpers independently mapped.",
+  "independentTestCorrection": {
+    "path": "docs/miniapp-sdk/evidence/host-widget-assertion-type-20261124/receipt.json",
+    "sha256": "3a97d2e45669796c39f534e6c5d51aed5f1cf37cf906445bba24fda13200fa12"
+  },
+  "sourceAuthorityRefresh": {
+    "path": "docs/miniapp-sdk/evidence/widget-header-source-refresh-20261124/receipt.json",
+    "sha256": "9ab36513dbe428493b041f2cfd7b9423010c61835076901d865e3a151bb722e2"
+  },
+  "sourceRefreshCommit": "e3a187c36d26aedb746fc6e3b69dccbd29d114b3",
+  "routing": {
+    "primary": "Scaleway M2Pro",
+    "observation": {
+      "path": "docs/miniapp-sdk/evidence/sixteenth-native-gate-mac-route-20261124.json",
+      "sha256": "597dacad6c134827108cde53edbc3ca6d1848bca80affa4e1f48ab391bdf1a7a"
+    },
+    "observedAtUTC": "2026-11-24T15:49:06.627029+00:00",
+    "available": "Xcode27.0/27A266a,Swift6.4.0.34.1,SDK27.0 only; no activebuildprocesses",
+    "required": "Existing full gate Xcode27.2/27B52 and iOS27.2",
+    "decision": "Use existing GitHub lane because primary lacks the required installed SDK; no downgrade/duplicate heavybuild"
+  },
+  "workflowSHA256": "677ba19c3a2e281e850b182b3bef8bcde709ee167f58d601c1c3aa6ade665982",
+  "budgets": {
+    "firstMiniAppsBuildSeconds": 3600,
+    "aiBuildSeconds": 1800,
+    "runtimeSeconds": 1200,
+    "pairedTestsSeconds": 2100,
+    "pairedJobMinutes": 210
+  },
+  "reusedEvidence": "Unchanged scoped component proofs retain their actual original source/run. Original import mechanism proof and configuration check are reused without rerun. No application PASS reused.",
+  "boundary": "Full native/app/device results pending; no main merge/release. Original APIs and producer declarations are preserved. Current normalSDKstage must capture latest README/project-provenance bytes."
+}
