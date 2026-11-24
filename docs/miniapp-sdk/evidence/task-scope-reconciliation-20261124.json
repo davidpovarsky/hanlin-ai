@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "atUTC": "2026-11-24T11:57:04.728860+00:00",
+  "atUTC": "2026-11-24T11:59:36.975721+00:00",
   "implementationSource": "999599c242c064564c40866a1979c463f1d0e95f",
   "reviewedRepository": "df07b8da7933e66180df8bfa8838a8617b6be00d",
   "independentReviewer": "sdk_only_author",
@@ -108,13 +108,11 @@
     }
   ],
   "nativeGate": {
-    "runID": 45375410965,
-    "sourceCommit": "999599c242c064564c40866a1979c463f1d0e95f",
+    "runID": 45389020875,
+    "sourceCommit": "2cb851067c4339125ab6fb515522796bceb80c35",
     "selectedCases": 52,
-    "status": "COMPLETED_FAILURE",
-    "boundary": "Fresh shipping preparation passed; first build hit2400s; Apple compilation of corrected consumers remains unproven. Next candidate changes only two execution budgets.",
-    "firstMiniAppsBuild": "TIMED_OUT",
-    "all52ApplicationCases": "NOT_RUN"
+    "status": "IN_PROGRESS",
+    "boundary": "All actual application outcomes pending; earlier scoped completions remain independently supported."
   },
   "additionalCxxClosureReview": {
     "reviewer": "control_authoring",
@@ -155,5 +153,16 @@
     "method": "Free project task pagination reached next_page=null after quick lookup returnedempty and premium search was unavailable",
     "result": "No clearly dedicated active legacy Scripting/ScriptUI development task identified. Freeze is explicitly recorded in the existing parent/current task notes.",
     "preserved": "Active original ScriptWidget/Expo tasks and shared infrastructure remain active. No duplicate task or unrelated status mutation."
-  }
+  },
+  "nativeGateHistory": [
+    {
+      "runID": 45375410965,
+      "sourceCommit": "999599c242c064564c40866a1979c463f1d0e95f",
+      "selectedCases": 52,
+      "status": "COMPLETED_FAILURE",
+      "boundary": "Fresh shipping preparation passed; first build hit2400s; Apple compilation of corrected consumers remains unproven. Next candidate changes only two execution budgets.",
+      "firstMiniAppsBuild": "TIMED_OUT",
+      "all52ApplicationCases": "NOT_RUN"
+    }
+  ]
 }
