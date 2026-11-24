@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "atUTC": "2026-11-24T13:01:35.906255+00:00",
+  "atUTC": "2026-11-24T14:02:03.559473+00:00",
   "implementationSource": "999599c242c064564c40866a1979c463f1d0e95f",
   "reviewedRepository": "df07b8da7933e66180df8bfa8838a8617b6be00d",
   "independentReviewer": "sdk_only_author",
@@ -111,8 +111,10 @@
     "runID": 45398772829,
     "sourceCommit": "cf9c18903c03264265557efb446207efa7226912",
     "selectedCases": 52,
-    "status": "IN_PROGRESS",
-    "boundary": "Focused publication type/JSON proof passed; all current application/device outcomes pending."
+    "status": "COMPLETED_FAILURE",
+    "firstMiniAppsBuild": "EXECUTED_FAIL_EXIT65",
+    "all52ApplicationCases": "NOT_RUN",
+    "boundary": "Two actual WidgetOptions compiler diagnostics. Focused correction pending; four scoped completed tasks retain their independent proof."
   },
   "additionalCxxClosureReview": {
     "reviewer": "control_authoring",
@@ -133,7 +135,7 @@
     ],
     "boundary": "Existing non-widget consumers do not duplicate every unsafeFlag. No universal flag equality or actual Apple compilation inferred; no new tests/builds/edits."
   },
-  "result": "4 scoped original DoDs completed and read back in Asana; full native integration/device acceptance remains open",
+  "result": "Four scoped original DoDs completed/read back; main14 first app build failed with two widget-option diagnostics; focused correction underway.",
   "sdk04Clarification": {
     "reviewer": "sdk_only_author",
     "atUTC": "2026-11-24T10:48:31.748551+00:00",
@@ -172,6 +174,15 @@
       "boundary": "Focused actual publication type fix pending; existing four scoped completions remain independently supported.",
       "firstMiniAppsBuild": "EXECUTED_FAIL_EXIT65",
       "all52ApplicationCases": "NOT_RUN"
+    },
+    {
+      "runID": 45398772829,
+      "sourceCommit": "cf9c18903c03264265557efb446207efa7226912",
+      "selectedCases": 52,
+      "status": "COMPLETED_FAILURE",
+      "firstMiniAppsBuild": "EXECUTED_FAIL_EXIT65",
+      "all52ApplicationCases": "NOT_RUN",
+      "boundary": "Two actual WidgetOptions compiler diagnostics. Focused correction pending; four scoped completed tasks retain their independent proof."
     }
   ]
 }

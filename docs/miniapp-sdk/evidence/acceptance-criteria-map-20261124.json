@@ -19,11 +19,11 @@
     "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45398772829",
     "sourceCommit": "cf9c18903c03264265557efb446207efa7226912",
     "scope": "miniapp_complete",
-    "status": "IN_PROGRESS",
+    "status": "COMPLETED_FAILURE",
     "selectedCases": 52,
     "miniAppsCases": 25,
     "aiCases": 27,
-    "caseStatus": "NOT_RUN_AT_DISPATCH",
+    "caseStatus": "NOT_RUN",
     "dispatchReceipt": {
       "path": "docs/miniapp-sdk/evidence/fourteenth-native-gate-dispatch-20261124.json",
       "sha256": "c824e52da3cc48d29f826a3c5c750642717a27ea8a6827fb3571233537511c92"
@@ -35,7 +35,14 @@
       "Actual diagnostic-sheet and repaired-native-app attachments",
       "Exact original archive/report handoff and nonempty installedPackageID receipt"
     ],
-    "boundary": "Actual current native build/case outcomes pending. Focused real value-type probe and source checks do not establish full app/UI acceptance."
+    "boundary": "Actual native preparation/export passed; first MiniApps build failed at WidgetOptions.swift lines45/129. All52 app cases NOT_RUN. No physical/UI pass.",
+    "firstMiniAppsBuild": "EXECUTED_FAIL_EXIT65",
+    "aiBuild": "NOT_RUN",
+    "miniBuildSeconds": 1387.076741917,
+    "failureReceipt": {
+      "path": "docs/miniapp-sdk/evidence/native-gate-14-widget-options-20261124/receipt.json",
+      "sha256": "ec1c1d798649a7fa66f74f4a1f040ad5902495929f7079cf0395ceea79fa0574"
+    }
   },
   "userScope": {
     "activeOriginalEngines": [
@@ -1376,9 +1383,9 @@
       }
     }
   ],
-  "recordingOutcome": "Four scoped tasks completed with readback; next current52 native gate ready to dispatch. No main merge, release, app/device PASS or broader80E2E claim.",
-  "updatedAtUTC": "2026-11-24T13:01:35.906255+00:00",
-  "currentIntegrationBase": "23502f5430d0f57876f10d26c239b533fb181cf1",
+  "recordingOutcome": "Four scoped tasks completed with readback; actual main14 failure retained and correction in progress. No main merge, release, application/device PASS or blanket80E2E claim.",
+  "updatedAtUTC": "2026-11-24T14:02:03.559473+00:00",
+  "currentIntegrationBase": "2a8dc394d279c40997319d2b2b692e1c14e0f34e",
   "gateHistory": [
     {
       "runID": 45335292541,
@@ -1593,6 +1600,36 @@
         "sha256": "a52bda79b49f50b204c39ed61e97b350300c6561e3debfa943274acb4fab600b"
       },
       "priorWidgetCxxConsumerResult": "Swift compilation not started for either affected target; configuration fix remains pending Apple consumer validation"
+    },
+    {
+      "runID": 45398772829,
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45398772829",
+      "sourceCommit": "cf9c18903c03264265557efb446207efa7226912",
+      "scope": "miniapp_complete",
+      "status": "COMPLETED_FAILURE",
+      "selectedCases": 52,
+      "miniAppsCases": 25,
+      "aiCases": 27,
+      "caseStatus": "NOT_RUN",
+      "dispatchReceipt": {
+        "path": "docs/miniapp-sdk/evidence/fourteenth-native-gate-dispatch-20261124.json",
+        "sha256": "c824e52da3cc48d29f826a3c5c750642717a27ea8a6827fb3571233537511c92"
+      },
+      "acceptanceRequires": [
+        "Fresh original library/native and shipping SDK/document identity preparation",
+        "Both product builds",
+        "All52 selected cases pass with no failures/skips",
+        "Actual diagnostic-sheet and repaired-native-app attachments",
+        "Exact original archive/report handoff and nonempty installedPackageID receipt"
+      ],
+      "boundary": "Actual native preparation/export passed; first MiniApps build failed at WidgetOptions.swift lines45/129. All52 app cases NOT_RUN. No physical/UI pass.",
+      "firstMiniAppsBuild": "EXECUTED_FAIL_EXIT65",
+      "aiBuild": "NOT_RUN",
+      "miniBuildSeconds": 1387.076741917,
+      "failureReceipt": {
+        "path": "docs/miniapp-sdk/evidence/native-gate-14-widget-options-20261124/receipt.json",
+        "sha256": "ec1c1d798649a7fa66f74f4a1f040ad5902495929f7079cf0395ceea79fa0574"
+      }
     }
   ],
   "modernContractGate": {
@@ -1608,7 +1645,7 @@
     "skipped": 0,
     "receipt": "docs/miniapp-sdk/evidence/apple-modern-contracts-20261124/receipt.json"
   },
-  "currentScopeNote": "Main14 exact52 dispatched with reviewed one-expression property conversion and current generated source authority. Main13firstbuildexit65 and all52NOT_RUN retained; main12/13SDKmanifestreuse is exact, but next changed provenance docs require fresh normal shipping identity. Four scoped tasks complete; native/device acceptance pending.",
+  "currentScopeNote": "Main14 native preparation/export PASS; first application build exit65 with two actual WidgetOptions diagnostics, all52 app cases NOT_RUN. Focused correction/source review and actual new shipping SDK identity reconciliation proceed in parallel. Four scoped tasks remain complete; device acceptance open.",
   "modernContractGateHistory": [
     {
       "runID": 45348880385,
@@ -1744,7 +1781,7 @@
   "candidateGate": {
     "sequence": 14,
     "scope": "miniapp_complete",
-    "status": "DISPATCHED",
+    "status": "COMPLETED_FAILURE",
     "selectedCases": 52,
     "MiniApps": 25,
     "AI": 27,
@@ -1761,7 +1798,7 @@
       "path": "docs/miniapp-sdk/evidence/publication-value-source-refresh-20261124/receipt.json",
       "sha256": "31119656c2f196b6d2e3dbe9cf6acc8ee79adb405216458b23bbc88a0f6d1f97"
     },
-    "actualExecution": "PENDING_ACTUAL_BUILD_AND_CASE_RESULTS",
+    "actualExecution": "FIRST_MINIAPPS_BUILD_EXIT65; AI_AND_ALL52_NOT_RUN",
     "routing": {
       "decision": "Existing GitHub Xcode27.2 lane; primary Mac lacks required27.2toolchain",
       "freshObservation": {
@@ -1776,7 +1813,7 @@
   },
   "taskClosureDecisions": {
     "path": "docs/miniapp-sdk/evidence/task-scope-reconciliation-20261124.json",
-    "sha256": "e4224bd65556cfb8faff79855c08fbe63a0bdcc2687c01e8684e247d45845c3a"
+    "sha256": "b1986bdf500fe3fbff4dc9419eee6fb3233fcc44f6047586b32f334d3fd93292"
   },
   "physicalDeviceRouteFollowup": {
     "receipt": {
@@ -1799,5 +1836,14 @@
     "status": "NO_REACHABLE_PHYSICAL_IPAD_OR_IPHONE_IDENTIFIED_IN_SNAPSHOT",
     "observed": "Two CoreSimulator devices explicitly simulated; xctrace11simulators and one unclassified opaque Devices entry",
     "boundary": "No physical app/device acceptance or absence-of-devices-elsewhere claim."
+  },
+  "nextCorrection": {
+    "status": "IN_PROGRESS",
+    "source": "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinOriginalExpoWidgetOptions.swift",
+    "scope": "Use actual IntentParameterDependency unwrapped widget and convert canonical HanlinObject to required dictionary without changing option semantics",
+    "author": "control_authoring",
+    "independentReviewer": "entrypoints",
+    "shippingSDKReviewer": "sdk_only_author",
+    "newCIStarted": false
   }
 }
