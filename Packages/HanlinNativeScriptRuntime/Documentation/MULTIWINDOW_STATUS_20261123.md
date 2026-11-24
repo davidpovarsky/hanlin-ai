@@ -95,6 +95,49 @@ roots additionally needs explicit module/path/bootstrap ownership; the current
 upstream wrapper still has one application base directory. Removing the guard or
 changing the active provider cannot supply those semantics.
 
+### Exact implementation seams (proposal, not implemented)
+
+| Existing class or source | Required bounded adaptation |
+| --- | --- |
+| `HanlinNativeScriptSession.start/shutdown` | Split process runtime ownership from per-window lifetime. Keep the existing main-VM guard; a compatible same-package factory acquires another window lease on its owner instead of constructing another runtime. |
+| `HanlinNativeScriptRuntimeHost` | Today exposes only initialize, bind one bridge, run main, shutdown. Add a host-owned factory-registration callback, following the existing NativeScript-to-ObjC block registration pattern used by `registerRequestHandler`. This is a new Hanlin API, not an existing upstream evaluate/factory method. |
+| `HanlinNativeScriptPresenter` and `NativeScriptEmbedderDelegate` | Replace sole-guest routing for factory windows with a request/window ID to container-controller registry. Add an explicit tagged presentation callback; retain the legacy callback for the existing single-window route. |
+| Shipped `native-window/native-window.ios.js` and `.mjs` | The embedded branch currently forwards only a controller, losing its window ID. A compatible optional embedder callback must forward `this.id`, or the Hanlin wrapper must supply an equivalent explicit binding. This is a pinned JS embedding adaptation, not a native engine rebuild. Preserve generated/mirrored source flow. |
+| `Scripts/NativeScript/host-services.ts` and `NativeScriptHostServicesAdapter` | The window factory receives a bound facade/native bridge as an argument. Each provider captures that request's existing `externalMiniAppOperation`. Do not change a global active bridge to choose asynchronous recipients. |
+| `HanlinScriptingPlatform.launchInstalledApplication` and `HanlinExternalMiniAppSession` | The owner registry can admit a compatible factory into the requesting scene and return its own container. Admission cancellation closes that lease only; other windows and the runtime remain active. Legacy whole-app entrypoints retain the existing guard until migrated. |
+
+The native factory-registration callback is useful because the current Host has no
+public JavaScript-evaluation/factory API. It can retain a JS-originated block just
+as registered native action handlers already do; the block receives the explicit
+window context and services. That avoids inventing an unsupported wrapper method.
+The native lifecycle and callback retention still need actual Apple execution.
+
+The public upstream window resolver is designed for NativeScript's own scene
+configuration. Hanlin currently owns scenes through SwiftUI. A bare
+`Application.openWindow()` does not automatically attach the new scene to Hanlin's
+request model, and forwarding every scene to NativeScript would take over other
+engine windows. The embedded adapter must bind only the requested Host container;
+using the public API is not a substitute for that integration.
+
+### Existing shipping fixture migration candidates
+
+`Scripts/NativeScript/prepare-production-package.mjs` copies the following source
+fixtures into the production E2E package set when present. This inventory describes
+source readiness, not an executed multiwindow proof.
+
+| Fixture | Observed source contract | Migration work |
+| --- | --- | --- |
+| `core-fixture-a-tabview` | Exported `createRoot()` creates a new TabView and children. | Pass explicit window services/context and register that factory. |
+| `core-fixture-b-frame` | Exported `createRoot()` creates a new Frame; page callbacks capture that Frame. | Same factory registration; useful navigation isolation case. |
+| `core-fixture-c-tabview-frame` | Exported `createRoot()` creates fresh tabs and per-tab Frames. | Same factory registration; useful nested-controller case. |
+| `sefaria-reader-core` | Exported `createSefariaCoreRoot()` creates fresh tabs/Frames; `launchSefariaCoreApp()` immediately calls Application.run. | Separate one-time bootstrap from per-window factory and bind requested return operations. Shared caches may intentionally stay package-wide. |
+| `core-unbundled` | Local `createRootPage()` creates a new page but is not exported. | Export/register the function and pass explicit context. |
+| Prepared `core-package` / `Fixtures/Source/app.ts` | Application.run contains an inline fresh-view factory; package/resource diagnostics are top-level. | Extract the view factory while retaining one-time diagnostics. |
+| Prepared `swiftui-package` / `Fixtures/Source/swiftui-app.ts` | UI factory exists, but module-level polling and `globalDriver` retain the latest SwiftUI driver. | Move event driver and polling ownership into each window. A second root alone is insufficient. |
+| `uikit-tabbar-bridge` | Top-level singleton UIKit controllers are sent directly to the sole embedder delegate. | Wrap controller allocation in the tagged factory; cannot reuse its existing controller in two parents. |
+
+No production fixture or entrypoint was changed during this design review.
+
 Primary API reference (read 2026-11-24):
 https://docs.nativescript.org/guide/multi-window
 
