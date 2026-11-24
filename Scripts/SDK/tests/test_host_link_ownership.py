@@ -133,7 +133,18 @@ class HostLinkOwnershipTests(unittest.TestCase):
         definition = json.loads(generate_manifest.APPLICATION_PRODUCTS.read_text())
         self.assertEqual(definition["module"], "AI_Hanlin")
         self.assertEqual(len(definition["products"]), 51)
+        app_packages = {item["url"].rstrip("/").removesuffix(".git").rsplit("/", 1)[-1].lower()
+                        for item in definition.get("externalPackages", [])}
+        app_target = next(target for target in manifest["targets"] if target["name"] == "AI_Hanlin")
         for entry in definition["products"]:
+            if entry["package"].lower() in app_packages:
+                # New app-owned libraries are linked by the canonical SDK target,
+                # never duplicated on the thin Xcode host.
+                self.assertTrue(any("product" in dependency
+                                    and dependency["product"][0] == entry["product"]
+                                    and dependency["product"][1].lower() == entry["package"].lower()
+                                    for dependency in app_target["dependencies"]), entry)
+                continue
             matches = [obj for obj in objects.values()
                        if obj.get("isa") == "XCSwiftPackageProductDependency"
                        and obj["productName"] == entry["product"]
