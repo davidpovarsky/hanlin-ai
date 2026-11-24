@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-24T10:34:35.280014+00:00",
+  "reviewer": "/root/entrypoints",
+  "reviewType": "Independent read-only source and selection review",
+  "recordPurpose": "Persist the already-completed review without repeating tests, builds, CI queries or source review.",
+  "selectionCommit": "658fb7903a5e560f17a017e2cffad4b77d373822",
+  "reviewedIntegratedSourceCommit": "b07527ea9a9493a9dbc8d2c6fe2c699db86fc7a2",
+  "scope": "miniapp_complete",
+  "outcome": "NO_CONCRETE_SOURCE_SELECTION_OR_FIXTURE_BLOCKER_FOUND",
+  "sourceHashes": {
+    "Scripts/ProductSplit/run_paired_acceptance.py": "b48c400b492b8f664e2df03bcb38883d51326597b766642bcc396962569c9e44",
+    ".github/workflows/validate-app-split.yml": "66925933cc7bc68aa343c40ad49866bfc6a4a86ad6d90d58ddd774217345fea6",
+    "docs/miniapp-sdk/evidence/sdk04-focused-scope-20261124/complete-selection.json": "1a142468795f59db1d4e7fd410a2dbf6b73d3d5c1d1eb3cfe335c768c3498542",
+    "Scripts/Expo/build-probe.mjs": "cdead47d9914543725e0e3160a14a13d91b31b2d584b737f0eb95c1b5539618c",
+    "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests.swift": "206953a80ed6258043315e18e18e3a2be2bd44d0afffe93581a51b604093cfd3",
+    "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift": "732bc4e23f4f72d8978cdce54e99fe87a7cec9ac9070f0b479524b42fdd50695",
+    "HanlinMiniAppsTests/CrossAppInvocationTests.swift": "22f91c12d0953f0d1e08ee1a1157bd595a6da01adb85ac8a104c069c4073b936"
+  },
+  "selection": {
+    "originalMiniAppsCases": 17,
+    "focusedMiniAppsCases": 9,
+    "duplicateMiniAppsCasesRemoved": 1,
+    "miniAppsUnionCases": 25,
+    "originalAICases": 25,
+    "newHostedAICases": 2,
+    "aiUnionCases": 27,
+    "totalUniqueCases": 52,
+    "onlyOverlap": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents",
+    "receiptMiniAppsSelectorsMatchRunner": true,
+    "receiptAISelectorsMatchRunner": true,
+    "allSelectedMethodsExistInReviewedSource": true,
+    "wholeSuiteCaseCounts": {
+      "HanlinOriginalScriptWidgetAPITests": 4,
+      "HanlinNativePresentationTests": 5,
+      "HanlinOriginalScriptWidgetLiveActivityTests": 3,
+      "HanlinOriginalScriptWidgetControlTests": 3,
+      "HanlinMiniAppStorageCapacityTests": 1,
+      "HanlinOriginalExpoWidgetTests": 1,
+      "MiniAppAuthoringUITests": 2
+    },
+    "explicitExistingAISelectors": 6,
+    "explicitNewHostedAISelectors": 2,
+    "countNote": "Current NativePresentation suite has five cases and OriginalExpoWidget suite has one; the combined AI count remains twenty-seven."
+  },
+  "preservedFixtures": {
+    "authoringInputs": [
+      "InvalidMiniApp.zip",
+      "MiniAppTypeError.hanlinNativeScript"
+    ],
+    "runtimeInputs": [
+      "DemoMiniApps/hanlin-script-parity.hanlinNativeScript",
+      "AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo",
+      "AI_HLYUITests/Fixtures/ExpoNativeAPIProbeA.hanlinExpo",
+      "AI_HLYUITests/Fixtures/ExpoWidgetsProbeA.hanlinExpo",
+      "AI_HLYUITests/Fixtures/ExpoWidgetsProbeB.hanlinExpo",
+      "paired-product/ModularTextSearch.hanlinExpo",
+      "paired-product/SDKOnlyDepartureBudget.hanlinExpo",
+      "paired-product/SDKOnlyTableShare.hanlinNativeScript"
+    ],
+    "authoringPreparation": "Unchanged authoring_fixtures uses the actual shipping RuntimeHostResources.zip SDK, creates the malformed/type-error inputs and rebuilds modular search plus both SDK-only source projects.",
+    "manualAdapterAssets": "Existing HTTP asset server is started for the complete scope; actual /pixel.png 200 and /missing.png 404 requests remain mandatory.",
+    "externalModal": "Existing stage_external_modal_fixture.py stages the original fixture; returned verify_command is executed against its same group.com.itorah.shared container after the native run.",
+    "hostedFixture": "build-probe.mjs copies freshly built ExpoSwiftUIProbeA.hanlinExpo into AI_HLYTests/Fixtures/HostServicesProbe.bundle during workflow preparation before either Xcode build.",
+    "hostedResourceMembership": "AI_HLYTests uses its synchronized root group with no exception excluding HostServicesProbe.bundle; the hosted test loads that resource and requires the archive to exist."
+  },
+  "preservedRunnerContracts": {
+    "priorTestPlansUnchanged": true,
+    "unchangedNonMainFunctions": [
+      "command",
+      "command_phase_status",
+      "record_build_phases",
+      "capture_app_intents_metadata",
+      "fixture_archive",
+      "authoring_fixtures",
+      "verify_native_result",
+      "start_native_adapter_assets"
+    ],
+    "functionComparison": "These eight non-main function source segments are byte-identical to the selection commit parent.",
+    "simulator": "Existing owned iPad simulator; -parallel-testing-enabled NO.",
+    "build": "Complete scope retains MiniApps build-for-testing and the existing AI build-for-testing.",
+    "acceptance": "Existing requested-selector verification, exact expected pass counts, zero failures and zero skips are retained.",
+    "attachments": "Existing OriginalRuntimes and Paired xcresult attachment export is retained; workflow upload includes paired-product/*-attachments.",
+    "deadlinesAndJournaling": "No deadline or command-journal change in the reviewed selection delta."
+  },
+  "executionBoundary": {
+    "testsRunByReview": false,
+    "buildsRunByReview": false,
+    "ciQueriedOrChangedByReview": false,
+    "sourceChangedByReview": false,
+    "nativeAcceptanceClaimed": false,
+    "previousMainRun": "45365620977",
+    "previousMainRunState": "First MiniApps build failed; AI build and all forty-two previously selected native cases did not execute.",
+    "applicability": "This record binds the historical source commits and exact hashes above. It proves source/selection consistency only, not native execution, physical-device acceptance, or all original-library API behavior."
+  }
+}
