@@ -11,6 +11,7 @@ import {tmpdir} from 'node:os';
 import path from 'node:path';
 import {fileURLToPath, pathToFileURL} from 'node:url';
 import {refreshOriginalSources} from './refresh-original-sources.mjs';
+import {fetchOriginalResponse} from './upstream-fetch.mjs';
 
 const here=path.dirname(fileURLToPath(import.meta.url));
 const json=async file=>JSON.parse(await readFile(file,'utf8'));
@@ -37,8 +38,7 @@ async function fileDigest(file,algorithm='sha256',encoding='hex') {
   const digest=createHash(algorithm);for await(const chunk of createReadStream(file))digest.update(chunk);return digest.digest(encoding);
 }
 async function request(url) {
-  const response=await fetch(url,{headers:{'User-Agent':'Hanlin-MiniApp-Upstream-Resolver','Accept':'application/json'},signal:AbortSignal.timeout(120000)});
-  if(!response.ok)throw new Error(`Original source fetch failed (${response.status}): ${url}`);return response;
+  return fetchOriginalResponse(url,{timeoutMs:120000,accept:'application/json'});
 }
 async function download(url,file) {
   await mkdir(path.dirname(file),{recursive:true});

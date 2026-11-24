@@ -5,6 +5,7 @@ import {existsSync} from 'node:fs';
 import {mkdir,readFile,writeFile,rm,readdir} from 'node:fs/promises';
 import {execFileSync,spawnSync} from 'node:child_process';
 import path from 'node:path';
+import {fetchOriginalResponse} from './upstream-fetch.mjs';
 
 const sha=bytes=>createHash('sha256').update(bytes).digest('hex');
 const blob=bytes=>createHash('sha1').update(`blob ${Buffer.byteLength(bytes)}\0`).update(bytes).digest('hex');
@@ -13,8 +14,7 @@ const json=async file=>JSON.parse(await readFile(file,'utf8'));
 async function source(url,cache) {
   const cached=cache?path.join(cache,'immutable-originals',sha(url)):null;
   if(cached&&existsSync(cached))return readFile(cached);
-  const response=await fetch(url,{headers:{'User-Agent':'Hanlin-MiniApp-Upstream-Resolver'},signal:AbortSignal.timeout(60000)});
-  if(!response.ok)throw new Error(`Original source fetch failed (${response.status}): ${url}`);
+  const response=await fetchOriginalResponse(url);
   const bytes=Buffer.from(await response.arrayBuffer());
   if(cached){await mkdir(path.dirname(cached),{recursive:true});await writeFile(cached,bytes);}
   return bytes;
