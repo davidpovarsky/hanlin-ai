@@ -12,6 +12,8 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "Scripts/CI/IntegrationValidation"))
 from project_graph import parse_project
 
+APPLICATION_PRODUCTS = ROOT / "Scripts/SDK/application_products.json"
+
 def quoted(value):
     # Absolute package-directory arguments are evaluated at consumer location.
     encoded = json.dumps(value, ensure_ascii=False)
@@ -107,6 +109,37 @@ def target(value, folder, local_products):
         if values: args.append(key+": "+array(values))
     return "."+functions[kind]+"(\n            "+",\n            ".join(args)+"\n        )"
 
+def application_dependencies(local_products, dependencies):
+    """The SDK implementation owns its dependencies, independently of thin hosts."""
+    definition = json.loads(APPLICATION_PRODUCTS.read_text())
+    if definition.get("schemaVersion") != 1 or definition.get("module") != "AI_Hanlin":
+        raise ValueError("Unsupported canonical application dependency definition")
+    entries = definition.get("products")
+    if not isinstance(entries, list) or not entries:
+        raise ValueError("Canonical application products must not be empty")
+    result, seen = [], set()
+    for entry in entries:
+        if not isinstance(entry, dict) or set(entry) != {"product", "package"}:
+            raise ValueError("Malformed canonical application product")
+        name, owner = entry["product"], entry["package"]
+        if not isinstance(name, str) or not name or not isinstance(owner, str) or not owner:
+            raise ValueError("Canonical application product requires a name and package")
+        identity = (name, owner.lower())
+        if identity in seen or name == "HanlinApplication":
+            raise ValueError("Duplicate or recursive application product: " + name)
+        seen.add(identity)
+        if owner == "HanlinSDK":
+            matches = [products[name] for products in local_products.values() if name in products]
+            if len(matches) != 1:
+                raise ValueError("Missing or ambiguous canonical application product: " + name)
+            result.extend(quoted(target_name) for target_name in matches[0])
+        else:
+            if owner.lower() not in dependencies:
+                raise ValueError("Missing canonical application package: " + owner)
+            result.append(".product(name: " + quoted(name) + ", package: " + quoted(owner) + ")")
+    return result
+
+
 def generate(selected_products=None):
     manifests=get_manifests()
     products={};local_products={};targets=[];deps={};product_targets={};target_edges={};target_remote={}
@@ -154,24 +187,7 @@ def generate(selected_products=None):
             target_edges[t["name"]]=edges
             target_remote[t["name"]]=remote
             targets.append(target(t,folder,local_products))
-    app=next(o for o in objects.values() if o.get("isa")=="PBXNativeTarget" and o.get("name")=="HanlinApp")
-    app_deps=[]
-    for ref in app["packageProductDependencies"]:
-        product=objects[ref]
-        name=product["productName"]
-        if name=="HanlinApplication": continue
-        package=objects[product["package"]]
-        if package.get("isa")=="XCLocalSwiftPackageReference":
-            owner=Path(package["relativePath"]).name.lower()
-            # Root reference is already unified after Xcode migration.
-            if owner in {"",".","hanlin-sdk-unification-20261123"} or package["relativePath"]==".":
-                target_names=next((ps[name] for ps in local_products.values() if name in ps),None)
-            else: target_names=local_products[owner][name]
-            if target_names is None: raise ValueError("Missing original product "+name)
-            app_deps.extend(quoted(n) for n in target_names)
-        else:
-            identity=package["repositoryURL"].rstrip("/").removesuffix(".git").split("/")[-1]
-            app_deps.append(".product(name: "+quoted(name)+", package: "+quoted(identity)+")")
+    app_deps=application_dependencies(local_products, deps)
     app_deps.extend([quoted("HanlinNodeBridge"),quoted("HanlinPythonBridge"),quoted("HanlinA2UI"),quoted("HanlinLocalization"),
                      quoted("HanlinAgentActivityCore"),quoted("HanlinAgentActivityUI"),quoted("HanlinExtensionContracts"),quoted("HanlinWidgetUI"),quoted("HanlinMiniAppsUI")])
     # Every original application Swift file remains a single authoritative
@@ -242,7 +258,8 @@ def generate(selected_products=None):
              "selectedProducts":list(selected_products) if selected_products else None,
              "products":list(products),"targets":len(targets),
              "localPackageEdgesRemaining":0,
-             "inputs":{folder+"/Package.swift":hashlib.sha256((ROOT/folder/"Package.swift").read_bytes()).hexdigest() for folder,_ in manifests}}
+             "inputs":{**{folder+"/Package.swift":hashlib.sha256((ROOT/folder/"Package.swift").read_bytes()).hexdigest() for folder,_ in manifests},
+                       APPLICATION_PRODUCTS.relative_to(ROOT).as_posix(): hashlib.sha256(APPLICATION_PRODUCTS.read_bytes()).hexdigest()}}
     return text,receipt
 
 if __name__=="__main__":

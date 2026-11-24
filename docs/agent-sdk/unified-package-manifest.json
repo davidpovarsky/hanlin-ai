@@ -70,6 +70,7 @@
     "Packages/HanlinWidgetSDK/Package.swift": "7621588d8da3037defe51a66839b0b703ae5464e90446c13ebc00e853daf523d",
     "Packages/HanlinWikipediaMiniApp/Package.swift": "01b8cc014f8a5e853b644947fd6684df56b65b37feb08ef23f410fb56c902d8e",
     "Packages/IOSSystemLite/Package.swift": "06c6721c4b59328ba4f78997c9a8b23330357db12d3a619207dc1bac8cb76bab",
-    "Packages/TorahLibraryKit/Package.swift": "4423074f870fe146b8914dc275db77aedef4cc1b6c0b856dfad844b65c3a21d6"
+    "Packages/TorahLibraryKit/Package.swift": "4423074f870fe146b8914dc275db77aedef4cc1b6c0b856dfad844b65c3a21d6",
+    "Scripts/SDK/application_products.json": "183c975c1783ee5ea017d9e9164c6611dde9d9987a15022521ce2dcd8971406b"
   }
 }
