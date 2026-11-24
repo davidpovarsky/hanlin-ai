@@ -221,6 +221,9 @@ public actor HanlinAISDKAgentEngine {
                     var seenApprovalCallIDs = Set<String>()
 
                     while true {
+                        // A final catalog lookup may suspend after the last stream event.
+                        // Observe cancellation before constructing another provider task.
+                        try Task.checkCancellation()
                         let currentNames = Set(currentDefinitions.map(\.name))
                         let toolReload = ToolReloadDecision()
                         // The pinned SDK replaces an empty list with stepCountIs(1).
