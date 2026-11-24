@@ -1,6 +1,167 @@
 {
   "sourceLanguage" : "zh-Hans",
   "strings" : {
+    "Prompt cache" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prompt cache"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "מטמון ההנחיות"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "提示缓存"
+          }
+        }
+      }
+    },
+    "Reported cache read tokens" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reported cache read tokens"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "טוקנים שנקראו מהמטמון לפי דיווח הספק"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "供应商报告的缓存读取令牌"
+          }
+        }
+      }
+    },
+    "Reported cache write tokens" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reported cache write tokens"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "טוקנים שנכתבו למטמון לפי דיווח הספק"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "供应商报告的缓存写入令牌"
+          }
+        }
+      }
+    },
+    "Cache read fraction of input" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cache read fraction of input"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "שיעור הקלט שנקרא מהמטמון"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "输入中的缓存读取比例"
+          }
+        }
+      }
+    },
+    "Rounds with cache read data" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rounds with cache read data"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "סבבים עם נתוני קריאה מהמטמון"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "含缓存读取数据的轮次"
+          }
+        }
+      }
+    },
+    "Rounds with cache write data" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rounds with cache write data"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "סבבים עם נתוני כתיבה למטמון"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "含缓存写入数据的轮次"
+          }
+        }
+      }
+    },
+    "Cache tokens are provider-reported input tokens. Missing data is unavailable, not zero. These counts are not a price or a cost estimate." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cache tokens are provider-reported input tokens. Missing data is unavailable, not zero. These counts are not a price or a cost estimate."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "נתוני המטמון הם טוקני קלט שהספק דיווח עליהם. נתון חסר אינו אפס. הספירות אינן מחיר או אומדן עלות."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "缓存令牌是供应商报告的输入令牌。缺失数据表示不可用，而不是零。这些计数不是价格或费用估算。"
+          }
+        }
+      }
+    },
     "Search settings" : {
       "extractionState" : "manual",
       "localizations" : {
