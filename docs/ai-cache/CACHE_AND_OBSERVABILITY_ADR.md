@@ -71,6 +71,16 @@ Invalidation lets already waiting callers finish while preventing their older ge
 
 Current adapters perform public search. Authenticated, tenant-specific, locale-sensitive or otherwise parameterized search requires extending key scope before results may be shared across those contexts.
 
+## Native model settings
+
+The existing model editor exposes automatic, provider-default and no-explicit-controls policies. The last label explicitly allows provider implicit caching. Anthropic offers a one-hour option. Native OpenAI HTTPS endpoints offer 24-hour retention only for documented legacy model families; explicit 30-minute/12-hour presets are limited to supported modern families using Responses. Gateways, plan transport and local/on-device models do not acquire those native-provider presets.
+
+The settings helper recognizes the native singular OpenAI-Response dialect as well as its plural SDK spelling. It recognizes documented dated legacy snapshots without assuming every similarly named mini/nano variant supports extended retention. Future major model families require review before paid TTL presets appear.
+
+An untouched custom or historical policy is not rewritten. Selecting automatic deliberately stores the historical nil default. Model preferences expose neither scoped Google resource references nor comparison response IDs. Validation occurs before other model-field edits, and validation/persistence errors remain visible in the editor instead of dismissing as success. Agent copying and unrelated model editing retain their existing behavior.
+
+Five focused preset tests cover migration/custom preservation, old/new OpenAI lifetime differences, Responses restrictions, endpoint/transport boundaries, malformed identifiers and Anthropic/local availability. They are separate from view rendering and persistence verification.
+
 ## Provider accounting and native diagnostics
 
 `cachedInputTokens` measures provider cache reads; `cacheWriteTokens` measures writes. They are input-token components, not additional tokens to add again to a total. Provider-normalized reasoning tokens similarly belong within output totals.
