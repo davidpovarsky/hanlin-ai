@@ -1,0 +1,191 @@
+{
+  "current_packages_source_commit": "2381719e4a6ed2a2c5520d017980123121fba058",
+  "expected_current_source_files": 404,
+  "compared_source_deltas": {
+    "c93": {
+      "Packages/HanlinAgentSDK/Package.resolved": {
+        "before": "9ed17ca6cd2647c50e17521ea6c69c326b551a1ee13f2e1f87c658f92e55d2ea",
+        "after": "b771042794841f2e759cffc68181ca37214794b4fc9c02981a1c86176a9bde83"
+      },
+      "Packages/HanlinAgentSDK/Package.swift": {
+        "before": "9af2a15811e934e4082360e46f368ea2b0d5ba5d97a77d8bb0ddb34d48e0666b",
+        "after": "9373a783d26e514b2dba8e11e52b8d2ae6f3b5bb7c5edbeddd8a563c5584c4d8"
+      },
+      "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleToolSessionBridge.swift": {
+        "before": "52b011d931fcae6c9be2da94ade98e00a13b5fd8379812f8ad293cd9bcbf98ab",
+        "after": "2f3441ea603b186f71bbb13b5faf37f4e1b01c475dd0a0e7df7faeb97dbff418"
+      },
+      "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests.swift": {
+        "before": "484933369535fd96b5c17d77532ec9e63c2481a1d46b8515c3e8dcb50078988c",
+        "after": "1296391072e837f04d05423ecc7c611f59556b414fd5ab085b0096c140e54f57"
+      },
+      "Packages/HanlinPlatform/Package.resolved": {
+        "before": "7882ef847a4aaa1bfa2ee128122393cf718f393485d9658bb93f402f740f2c17",
+        "after": "8f67ee59e5ba54c1d9bdd312efff89ddc946e00443fef8faddfeb4e7eb5387c8"
+      },
+      "Packages/HanlinPlatform/Package.swift": {
+        "before": "e27c872f7b9972be7667ea0f8e126131d42379d2a8b66527887ee97a32616e41",
+        "after": "a22b7948988b776de98f51d6a9c493b9b2f9db62deae097f31ced5971b842665"
+      },
+      "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift": {
+        "before": "7738b399f1eff40ddd5e99ac9e3976c47f384d94ddb9ba8b37901080a49b3d45",
+        "after": "8abb757a9a9e7da9f90d474b1b036158b01e1f594ca2fb33d28d803cc2be91e8"
+      },
+      "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests.swift": {
+        "before": "4658930f64a61adbbcd888e17124497f28177ab81bb70ebab3cb20e7e4011f05",
+        "after": "0c24a0b2cb54e5ed7589d20f18325e5b93a5946aa68dee1ffcef05ee9fab8815"
+      }
+    },
+    "header": {
+      "Packages/HanlinAgentSDK/Package.resolved": {
+        "before": "9ed17ca6cd2647c50e17521ea6c69c326b551a1ee13f2e1f87c658f92e55d2ea",
+        "after": "b771042794841f2e759cffc68181ca37214794b4fc9c02981a1c86176a9bde83"
+      },
+      "Packages/HanlinAgentSDK/Package.swift": {
+        "before": "9af2a15811e934e4082360e46f368ea2b0d5ba5d97a77d8bb0ddb34d48e0666b",
+        "after": "9373a783d26e514b2dba8e11e52b8d2ae6f3b5bb7c5edbeddd8a563c5584c4d8"
+      },
+      "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleToolSessionBridge.swift": {
+        "before": "0ec97844b22e808240bda44715c02c23576c96a91d3eaa4e458afb45085e1c18",
+        "after": "2f3441ea603b186f71bbb13b5faf37f4e1b01c475dd0a0e7df7faeb97dbff418"
+      },
+      "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests.swift": {
+        "before": "74cc8de390b586e4aa4826755375bcc0d3f4f05c1c6404ed725c846b3f9a15ef",
+        "after": "1296391072e837f04d05423ecc7c611f59556b414fd5ab085b0096c140e54f57"
+      },
+      "Packages/HanlinPlatform/Package.resolved": {
+        "before": "7882ef847a4aaa1bfa2ee128122393cf718f393485d9658bb93f402f740f2c17",
+        "after": "8f67ee59e5ba54c1d9bdd312efff89ddc946e00443fef8faddfeb4e7eb5387c8"
+      },
+      "Packages/HanlinPlatform/Package.swift": {
+        "before": "e27c872f7b9972be7667ea0f8e126131d42379d2a8b66527887ee97a32616e41",
+        "after": "a22b7948988b776de98f51d6a9c493b9b2f9db62deae097f31ced5971b842665"
+      },
+      "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift": {
+        "before": "7738b399f1eff40ddd5e99ac9e3976c47f384d94ddb9ba8b37901080a49b3d45",
+        "after": "8abb757a9a9e7da9f90d474b1b036158b01e1f594ca2fb33d28d803cc2be91e8"
+      },
+      "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests.swift": {
+        "before": "4658930f64a61adbbcd888e17124497f28177ab81bb70ebab3cb20e7e4011f05",
+        "after": "0c24a0b2cb54e5ed7589d20f18325e5b93a5946aa68dee1ffcef05ee9fab8815"
+      }
+    },
+    "bridge": {
+      "Packages/HanlinAgentSDK/Package.resolved": {
+        "before": "9ed17ca6cd2647c50e17521ea6c69c326b551a1ee13f2e1f87c658f92e55d2ea",
+        "after": "b771042794841f2e759cffc68181ca37214794b4fc9c02981a1c86176a9bde83"
+      },
+      "Packages/HanlinAgentSDK/Package.swift": {
+        "before": "9af2a15811e934e4082360e46f368ea2b0d5ba5d97a77d8bb0ddb34d48e0666b",
+        "after": "9373a783d26e514b2dba8e11e52b8d2ae6f3b5bb7c5edbeddd8a563c5584c4d8"
+      },
+      "Packages/HanlinPlatform/Package.resolved": {
+        "before": "7882ef847a4aaa1bfa2ee128122393cf718f393485d9658bb93f402f740f2c17",
+        "after": "8f67ee59e5ba54c1d9bdd312efff89ddc946e00443fef8faddfeb4e7eb5387c8"
+      },
+      "Packages/HanlinPlatform/Package.swift": {
+        "before": "e27c872f7b9972be7667ea0f8e126131d42379d2a8b66527887ee97a32616e41",
+        "after": "a22b7948988b776de98f51d6a9c493b9b2f9db62deae097f31ced5971b842665"
+      },
+      "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift": {
+        "before": "7738b399f1eff40ddd5e99ac9e3976c47f384d94ddb9ba8b37901080a49b3d45",
+        "after": "8abb757a9a9e7da9f90d474b1b036158b01e1f594ca2fb33d28d803cc2be91e8"
+      },
+      "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests.swift": {
+        "before": "4658930f64a61adbbcd888e17124497f28177ab81bb70ebab3cb20e7e4011f05",
+        "after": "0c24a0b2cb54e5ed7589d20f18325e5b93a5946aa68dee1ffcef05ee9fab8815"
+      }
+    },
+    "delta": {
+      "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleToolSessionBridge.swift": {
+        "before": "0ec97844b22e808240bda44715c02c23576c96a91d3eaa4e458afb45085e1c18",
+        "after": "2f3441ea603b186f71bbb13b5faf37f4e1b01c475dd0a0e7df7faeb97dbff418"
+      },
+      "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests.swift": {
+        "before": "74cc8de390b586e4aa4826755375bcc0d3f4f05c1c6404ed725c846b3f9a15ef",
+        "after": "1296391072e837f04d05423ecc7c611f59556b414fd5ab085b0096c140e54f57"
+      },
+      "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift": {
+        "before": "7738b399f1eff40ddd5e99ac9e3976c47f384d94ddb9ba8b37901080a49b3d45",
+        "after": "8abb757a9a9e7da9f90d474b1b036158b01e1f594ca2fb33d28d803cc2be91e8"
+      }
+    }
+  },
+  "snapshot_paths": {
+    "current": {
+      "Packages/HanlinAgentSDK/Package.resolved": "source-snapshots/current/00-Package.resolved",
+      "Packages/HanlinAgentSDK/Package.swift": "source-snapshots/current/01-Package.swift",
+      "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleToolSessionBridge.swift": "source-snapshots/current/02-HanlinAppleToolSessionBridge.swift",
+      "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests.swift": "source-snapshots/current/03-HanlinAppleToolSessionBridgeTests.swift",
+      "Packages/HanlinPlatform/Package.resolved": "source-snapshots/current/04-Package.resolved",
+      "Packages/HanlinPlatform/Package.swift": "source-snapshots/current/05-Package.swift",
+      "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift": "source-snapshots/current/06-HanlinAISDKAgentEngine.swift",
+      "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests.swift": "source-snapshots/current/07-HanlinAppleToolInputBoundaryTests.swift"
+    },
+    "c93": {
+      "Packages/HanlinAgentSDK/Package.resolved": "source-snapshots/c93/00-Package.resolved",
+      "Packages/HanlinAgentSDK/Package.swift": "source-snapshots/c93/01-Package.swift",
+      "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleToolSessionBridge.swift": "source-snapshots/c93/02-HanlinAppleToolSessionBridge.swift",
+      "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests.swift": "source-snapshots/c93/03-HanlinAppleToolSessionBridgeTests.swift",
+      "Packages/HanlinPlatform/Package.resolved": "source-snapshots/c93/04-Package.resolved",
+      "Packages/HanlinPlatform/Package.swift": "source-snapshots/c93/05-Package.swift",
+      "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift": "source-snapshots/c93/06-HanlinAISDKAgentEngine.swift",
+      "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests.swift": "source-snapshots/c93/07-HanlinAppleToolInputBoundaryTests.swift"
+    },
+    "header": {
+      "Packages/HanlinAgentSDK/Package.resolved": "source-snapshots/header/00-Package.resolved",
+      "Packages/HanlinAgentSDK/Package.swift": "source-snapshots/header/01-Package.swift",
+      "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleToolSessionBridge.swift": "source-snapshots/header/02-HanlinAppleToolSessionBridge.swift",
+      "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests.swift": "source-snapshots/header/03-HanlinAppleToolSessionBridgeTests.swift",
+      "Packages/HanlinPlatform/Package.resolved": "source-snapshots/header/04-Package.resolved",
+      "Packages/HanlinPlatform/Package.swift": "source-snapshots/header/05-Package.swift",
+      "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift": "source-snapshots/header/06-HanlinAISDKAgentEngine.swift",
+      "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests.swift": "source-snapshots/header/07-HanlinAppleToolInputBoundaryTests.swift"
+    },
+    "bridge": {
+      "Packages/HanlinAgentSDK/Package.resolved": "source-snapshots/bridge/00-Package.resolved",
+      "Packages/HanlinAgentSDK/Package.swift": "source-snapshots/bridge/01-Package.swift",
+      "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleToolSessionBridge.swift": "source-snapshots/bridge/02-HanlinAppleToolSessionBridge.swift",
+      "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests.swift": "source-snapshots/bridge/03-HanlinAppleToolSessionBridgeTests.swift",
+      "Packages/HanlinPlatform/Package.resolved": "source-snapshots/bridge/04-Package.resolved",
+      "Packages/HanlinPlatform/Package.swift": "source-snapshots/bridge/05-Package.swift",
+      "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift": "source-snapshots/bridge/06-HanlinAISDKAgentEngine.swift",
+      "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests.swift": "source-snapshots/bridge/07-HanlinAppleToolInputBoundaryTests.swift"
+    },
+    "delta": {
+      "Packages/HanlinAgentSDK/Package.resolved": "source-snapshots/delta/00-Package.resolved",
+      "Packages/HanlinAgentSDK/Package.swift": "source-snapshots/delta/01-Package.swift",
+      "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleToolSessionBridge.swift": "source-snapshots/delta/02-HanlinAppleToolSessionBridge.swift",
+      "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests.swift": "source-snapshots/delta/03-HanlinAppleToolSessionBridgeTests.swift",
+      "Packages/HanlinPlatform/Package.resolved": "source-snapshots/delta/04-Package.resolved",
+      "Packages/HanlinPlatform/Package.swift": "source-snapshots/delta/05-Package.swift",
+      "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift": "source-snapshots/delta/06-HanlinAISDKAgentEngine.swift",
+      "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests.swift": "source-snapshots/delta/07-HanlinAppleToolInputBoundaryTests.swift"
+    }
+  },
+  "producer_before": "e7bf34111e603ca977becd007dd4e5bb109af857",
+  "producer_after": "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8",
+  "only_changed_producer_path": "Sources/SwiftAISDK/GenerateText/StreamTextActor.swift",
+  "actor_bytes_outside_changed_method_sha256": "8995b4233d447950fb3de2e4cfd7f959fd89a14386f6d1829140da5480f9183e",
+  "production_maps_except_changed_method_equal": true,
+  "current_invocations": 15,
+  "current_groups": 7,
+  "reused_invocations": 21,
+  "partition": {
+    "native_Core10": "New appleOnDevice abortSignal reaches original producer options; execute both exact parameter methods (2+8).",
+    "native_bridge4": "Native-only nonnil abortSignal enters existing FoundationModels task group; execute allow, deny, numeric sibling, cancellation with unchanged assertions/deadlines.",
+    "native_Delta1": "Same new native settings reach the original numeric .stop boundary; execute unchanged providerCalls1/zero-effect case.",
+    "cloud_Core2": "Original settings have nil abortSignal. Fixture has no cancellation; setStopper registration precedes the engine iteration and all finish/error paths, so alreadyStopped remains false at registration. Original .toolCalls tool step and no-tool .stop final step have identical continuation decisions across e7 to07431; pure stop predicates, no deferred provider tools or dynamicTools callback.",
+    "cloud_Delta2": "Already executed on07431; same finite no-cancel fixture and unchanged cloud settings. The moved already-stopped callback branch is unreachable before registration. Exact allowed/denied assertions and fixtures retained.",
+    "Schema13_and_pure2": "Original schema/history implementations and helper method bodies do not enter original engine or native profile.",
+    "Authorization1": "Exact early header guard rejects before history/session/profile or engine. Its original helper/immutable fixture remain unchanged.",
+    "doGenerate1": "Same original provider, bridge, helper and immutable fixture as6b. Direct doGenerate aggregates doStream, never constructs HanlinAISDKAgentEngine or StreamTextActor; e7 to07431 sole guard is not reached.",
+    "baseline12": "Historical original e7 negative control only. It is never claimed as current07431 execution or a current07431 baseline equivalence."
+  },
+  "limits": [
+    "No shipping native-tool gate enabled",
+    "No SystemLanguageModel execution",
+    "No admission of later producer sources",
+    "No existing frozen proof helper changed"
+  ]
+}

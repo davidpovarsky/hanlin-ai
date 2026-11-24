@@ -1,0 +1,287 @@
+{
+  "total_count": 3,
+  "jobs": [
+    {
+      "id": 138072844307,
+      "run_id": 45283243206,
+      "workflow_name": "Validate standalone MiniApps target",
+      "head_branch": "codex/hanlin-sdk-paired3-corrections-20261123",
+      "run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/runs/45283243206",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOTTRem88AAAAgJchoEw",
+      "head_sha": "4cfa52348e80cf635caf04c541fd84ee1ddb50bd",
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/jobs/138072844307",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45283243206/job/138072844307",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-11-23T22:49:05Z",
+      "started_at": "2026-11-23T23:00:50Z",
+      "completed_at": "2026-11-24T00:15:30Z",
+      "name": "miniapps",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-11-23T23:00:52Z",
+          "completed_at": "2026-11-23T23:00:53Z"
+        },
+        {
+          "name": "Run actions/checkout@v7.0.1",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-11-23T23:00:53Z",
+          "completed_at": "2026-11-23T23:01:02Z"
+        },
+        {
+          "name": "Run actions/setup-node@v7.1.0",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-11-23T23:01:02Z",
+          "completed_at": "2026-11-23T23:01:08Z"
+        },
+        {
+          "name": "Validate requested signing preflight scope",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 4,
+          "started_at": "2026-11-23T23:01:08Z",
+          "completed_at": "2026-11-23T23:01:08Z"
+        },
+        {
+          "name": "Verify actual Mac toolchain, disk and installed simulator tooling",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-11-23T23:01:08Z",
+          "completed_at": "2026-11-23T23:01:22Z"
+        },
+        {
+          "name": "Restore existing Swift package dependency cache",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-11-23T23:01:22Z",
+          "completed_at": "2026-11-23T23:01:23Z"
+        },
+        {
+          "name": "Restore compatible standalone compiler state",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-11-23T23:01:23Z",
+          "completed_at": "2026-11-23T23:01:25Z"
+        },
+        {
+          "name": "Validate authentic unchanged Host and foreground proofs before reuse",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-11-23T23:01:25Z",
+          "completed_at": "2026-11-23T23:01:41Z"
+        },
+        {
+          "name": "Execute strict foreground route and ledger cases on the actual Mac",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 9,
+          "started_at": "2026-11-23T23:01:41Z",
+          "completed_at": "2026-11-23T23:01:41Z"
+        },
+        {
+          "name": "Reproduce and verify affected package lifecycle on the actual Mac first",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 10,
+          "started_at": "2026-11-23T23:01:41Z",
+          "completed_at": "2026-11-23T23:01:41Z"
+        },
+        {
+          "name": "Prepare the existing pinned metadata tool",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11,
+          "started_at": "2026-11-23T23:01:41Z",
+          "completed_at": "2026-11-23T23:02:29Z"
+        },
+        {
+          "name": "Prepare existing native dependencies and Runtime host",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12,
+          "started_at": "2026-11-23T23:02:29Z",
+          "completed_at": "2026-11-23T23:04:56Z"
+        },
+        {
+          "name": "Restore verified input timestamps for incremental compilation",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-11-23T23:04:56Z",
+          "completed_at": "2026-11-23T23:04:57Z"
+        },
+        {
+          "name": "Capture exact standalone compiler inputs",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14,
+          "started_at": "2026-11-23T23:04:57Z",
+          "completed_at": "2026-11-23T23:05:07Z"
+        },
+        {
+          "name": "Execute actual standalone target XCUITests",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 15,
+          "started_at": "2026-11-23T23:05:07Z",
+          "completed_at": "2026-11-23T23:05:07Z"
+        },
+        {
+          "name": "Exercise actual request, return, cancellation and transfer across both products",
+          "status": "completed",
+          "conclusion": "failure",
+          "number": 16,
+          "started_at": "2026-11-23T23:05:07Z",
+          "completed_at": "2026-11-24T00:13:33Z"
+        },
+        {
+          "name": "Prepare isolated signing inspection dependencies",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 17,
+          "started_at": "2026-11-24T00:13:35Z",
+          "completed_at": "2026-11-24T00:13:35Z"
+        },
+        {
+          "name": "Build original device archives and export with the existing distribution identity",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 18,
+          "started_at": "2026-11-24T00:13:35Z",
+          "completed_at": "2026-11-24T00:13:35Z"
+        },
+        {
+          "name": "Keep original logs, status and xcresult even after early failure",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 19,
+          "started_at": "2026-11-24T00:13:35Z",
+          "completed_at": "2026-11-24T00:13:45Z"
+        },
+        {
+          "name": "Upload evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 20,
+          "started_at": "2026-11-24T00:13:45Z",
+          "completed_at": "2026-11-24T00:13:52Z"
+        },
+        {
+          "name": "Save changed compiler state without treating it as test evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 21,
+          "started_at": "2026-11-24T00:13:52Z",
+          "completed_at": "2026-11-24T00:14:45Z"
+        },
+        {
+          "name": "Save changed Swift package dependency cache",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 22,
+          "started_at": "2026-11-24T00:14:45Z",
+          "completed_at": "2026-11-24T00:15:23Z"
+        },
+        {
+          "name": "Post Run actions/setup-node@v7.1.0",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 43,
+          "started_at": "2026-11-24T00:15:23Z",
+          "completed_at": "2026-11-24T00:15:23Z"
+        },
+        {
+          "name": "Post Run actions/checkout@v7.0.1",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 44,
+          "started_at": "2026-11-24T00:15:23Z",
+          "completed_at": "2026-11-24T00:15:24Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 45,
+          "started_at": "2026-11-24T00:15:24Z",
+          "completed_at": "2026-11-24T00:15:28Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/check-runs/138072844307",
+      "labels": [
+        "xcode-27"
+      ],
+      "runner_id": 1000025184,
+      "runner_name": "GitHub Actions 1000025184",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 138072846272,
+      "run_id": 45283243206,
+      "workflow_name": "Validate standalone MiniApps target",
+      "head_branch": "codex/hanlin-sdk-paired3-corrections-20261123",
+      "run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/runs/45283243206",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOTTRem88AAAAgJchvwA",
+      "head_sha": "4cfa52348e80cf635caf04c541fd84ee1ddb50bd",
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/jobs/138072846272",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45283243206/job/138072846272",
+      "status": "completed",
+      "conclusion": "skipped",
+      "created_at": "2026-11-23T22:49:05Z",
+      "started_at": "2026-11-23T22:49:05Z",
+      "completed_at": "2026-11-23T22:49:05Z",
+      "name": "release-resource-audit",
+      "steps": [],
+      "check_run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/check-runs/138072846272",
+      "labels": [
+        "xcode-27"
+      ],
+      "runner_id": null,
+      "runner_name": null,
+      "runner_group_id": null,
+      "runner_group_name": null
+    },
+    {
+      "id": 138072846653,
+      "run_id": 45283243206,
+      "workflow_name": "Validate standalone MiniApps target",
+      "head_branch": "codex/hanlin-sdk-paired3-corrections-20261123",
+      "run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/runs/45283243206",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOTTRem88AAAAgJchxPQ",
+      "head_sha": "4cfa52348e80cf635caf04c541fd84ee1ddb50bd",
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/jobs/138072846653",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45283243206/job/138072846653",
+      "status": "completed",
+      "conclusion": "skipped",
+      "created_at": "2026-11-23T22:49:05Z",
+      "started_at": "2026-11-23T22:49:05Z",
+      "completed_at": "2026-11-23T22:49:05Z",
+      "name": "register-original-product",
+      "steps": [],
+      "check_run_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/check-runs/138072846653",
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "runner_id": null,
+      "runner_name": null,
+      "runner_group_id": null,
+      "runner_group_name": null
+    }
+  ]
+}

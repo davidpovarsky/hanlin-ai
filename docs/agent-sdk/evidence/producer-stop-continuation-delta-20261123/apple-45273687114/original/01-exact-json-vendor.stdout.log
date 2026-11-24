@@ -1,0 +1,8 @@
+{
+  "status": "VERIFIED_SOURCE_IDENTITY",
+  "revision": "f2a0d12da7028edfbcb0cb307f19a921a3a12d03",
+  "files": 132,
+  "adaptations": {
+    "Sources/JSONSchema/Document/JSONSchemaBuiltins.swift": "Resource bundle lookup spelling only: Swift-JSON_JSONSchema -> HanlinExactJSONSchema target in standalone HanlinAgentSDK or aggregate HanlinSDK packages. The checked resolver recognizes Apple .bundle and Linux .resources layouts, preferring the aggregate name within each existing candidate. Existing byte counts, SHA-256 pins, resource bounds, cancellation checks and fail-closed selection are unchanged. The WASI command-relative standalone layout is unchanged."
+  }
+}

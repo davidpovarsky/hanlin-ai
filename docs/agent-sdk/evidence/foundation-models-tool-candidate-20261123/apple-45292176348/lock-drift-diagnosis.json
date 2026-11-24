@@ -1,0 +1,4509 @@
+{
+  "version": 1,
+  "utc": "2026-11-24T00:32:00.378995+00:00",
+  "run_id": 45292176348,
+  "source": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+  "artifact_id": 14877495539,
+  "status": "REAL_DEPENDENCY_DRIFT_STRICT_GATE_PRESERVED",
+  "current_actual_case_counts": {
+    "PASS": 15,
+    "FAIL": 0,
+    "NOT_RUN": 0
+  },
+  "current_ios_process_exit": 0,
+  "current_strict_ios_qualification": "BLOCKED",
+  "current_strict_summary_unchanged": true,
+  "lock_deltas": [
+    {
+      "package": "sdk",
+      "pre_file": "sdk-Package.resolved",
+      "post_file": "raw-locks/00-Package.resolved",
+      "pre_sha256": "b771042794841f2e759cffc68181ca37214794b4fc9c02981a1c86176a9bde83",
+      "post_sha256": "ecddc1432961f62d5f8f883e2884fffb6dad193f41867324d9124223c0e44f72",
+      "raw_equal": false,
+      "pin_differences": [
+        {
+          "identity": "zipfoundation",
+          "before": {
+            "identity": "zipfoundation",
+            "kind": "remoteSourceControl",
+            "location": "https://github.com/weichsel/ZIPFoundation.git",
+            "state": {
+              "revision": "02b6abe5f6eef7e3cbd5f247c5cc24e246efcfe0",
+              "version": "0.9.19"
+            }
+          },
+          "after": {
+            "identity": "zipfoundation",
+            "kind": "remoteSourceControl",
+            "location": "https://github.com/weichsel/ZIPFoundation.git",
+            "state": {
+              "revision": "e7048f0569f0ba37df26f8357f560b9d25e9a284",
+              "version": "0.9.21"
+            }
+          }
+        }
+      ],
+      "other_json_differences": {
+        "originHash": {
+          "before": "9af2a15811e934e4082360e46f368ea2b0d5ba5d97a77d8bb0ddb34d48e0666b",
+          "after": "9373a783d26e514b2dba8e11e52b8d2ae6f3b5bb7c5edbeddd8a563c5584c4d8"
+        }
+      }
+    },
+    {
+      "package": "core",
+      "pre_file": "core-Package.resolved",
+      "post_file": "raw-locks/01-Package.resolved",
+      "pre_sha256": "8f67ee59e5ba54c1d9bdd312efff89ddc946e00443fef8faddfeb4e7eb5387c8",
+      "post_sha256": "8f67ee59e5ba54c1d9bdd312efff89ddc946e00443fef8faddfeb4e7eb5387c8",
+      "raw_equal": true,
+      "pin_differences": [],
+      "other_json_differences": {}
+    }
+  ],
+  "command_graphs": [
+    {
+      "command": "NativeCoreTests",
+      "exit_code": 0,
+      "stdout": {
+        "file": "16-NativeCoreTests.stdout.log",
+        "sha256": "1af2cfda38b5fd945b1d341dbf8cbed50291b339298ae3567a5d90cdf6b72461"
+      },
+      "root": [
+        "HanlinChatCoreTests-product",
+        "HanlinPlatform"
+      ],
+      "graph_node_count": 73,
+      "target_graph": [
+        {
+          "target": [
+            "HanlinScriptingApplicationRuntime-product",
+            "HanlinPlatform"
+          ],
+          "dependencies": [
+            [
+              "HanlinScriptingApplicationRuntime",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinPlatformContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinScriptContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinChatCore",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinScriptUI",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinMiniAppCore",
+              "HanlinPlatform"
+            ],
+            [
+              "SwiftAISDK-product",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProviderUtils-product",
+              "SwiftAISDK"
+            ],
+            [
+              "OpenAIProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "AnthropicProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "GoogleProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "OpenAICompatibleProvider-product",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinChatCore-product",
+            "HanlinPlatform"
+          ],
+          "dependencies": [
+            [
+              "HanlinChatCore",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinPlatformContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "SwiftAISDK-product",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProviderUtils-product",
+              "SwiftAISDK"
+            ],
+            [
+              "OpenAIProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "AnthropicProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "GoogleProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "OpenAICompatibleProvider-product",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinScriptExtensions-product",
+            "HanlinPlatform"
+          ],
+          "dependencies": [
+            [
+              "HanlinScriptExtensions",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinPlatform_HanlinScriptExtensions",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinExtensionContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinPlatformContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinScriptContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinMiniAppCore",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinScriptStore",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinChatCore",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinScriptUI",
+              "HanlinPlatform"
+            ],
+            [
+              "SwiftAISDK-product",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProviderUtils-product",
+              "SwiftAISDK"
+            ],
+            [
+              "OpenAIProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "AnthropicProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "GoogleProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "OpenAICompatibleProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "SwiftyJSON-product",
+              "SwiftyJSON"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinScriptDeviceServices-product",
+            "HanlinPlatform"
+          ],
+          "dependencies": [
+            [
+              "HanlinScriptDeviceServices",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinPlatformContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinScriptContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinScriptServices",
+              "HanlinPlatform"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinScriptServices-product",
+            "HanlinPlatform"
+          ],
+          "dependencies": [
+            [
+              "HanlinScriptServices",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinPlatformContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinScriptContracts",
+              "HanlinPlatform"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinScriptUI-product",
+            "HanlinPlatform"
+          ],
+          "dependencies": [
+            [
+              "HanlinScriptUI",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinPlatform_HanlinScriptUI",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinPlatformContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinScriptContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinChatCore",
+              "HanlinPlatform"
+            ],
+            [
+              "SwiftAISDK-product",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProviderUtils-product",
+              "SwiftAISDK"
+            ],
+            [
+              "OpenAIProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "AnthropicProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "GoogleProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "OpenAICompatibleProvider-product",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinScriptingSDK-product",
+            "HanlinPlatform"
+          ],
+          "dependencies": [
+            [
+              "HanlinScriptingSDK",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinPlatform_HanlinScriptingSDK",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinPlatformContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinScriptContracts",
+              "HanlinPlatform"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinScriptRuntime-product",
+            "HanlinPlatform"
+          ],
+          "dependencies": [
+            [
+              "HanlinScriptRuntime",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinPlatformContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinScriptContracts",
+              "HanlinPlatform"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinScriptStore-product",
+            "HanlinPlatform"
+          ],
+          "dependencies": [
+            [
+              "HanlinScriptStore",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinPlatformContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinScriptContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinMiniAppCore",
+              "HanlinPlatform"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinScriptCompiler-product",
+            "HanlinPlatform"
+          ],
+          "dependencies": [
+            [
+              "HanlinScriptCompiler",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinPlatform_HanlinScriptCompiler",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinPlatformContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinScriptContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinWidgetCompiler",
+              "HanlinPlatform"
+            ],
+            [
+              "ZIPFoundation-product",
+              "ZIPFoundation"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinScriptContracts-product",
+            "HanlinPlatform"
+          ],
+          "dependencies": [
+            [
+              "HanlinScriptContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinPlatform_HanlinScriptContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinPlatformContracts",
+              "HanlinPlatform"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinMiniAppCore-product",
+            "HanlinPlatform"
+          ],
+          "dependencies": [
+            [
+              "HanlinMiniAppCore",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinPlatformContracts",
+              "HanlinPlatform"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinPlatformContracts-product",
+            "HanlinPlatform"
+          ],
+          "dependencies": [
+            [
+              "HanlinPlatformContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinPlatform_HanlinPlatformContracts",
+              "HanlinPlatform"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinExtensionContracts-product",
+            "HanlinPlatform"
+          ],
+          "dependencies": [
+            [
+              "HanlinExtensionContracts",
+              "HanlinPlatform"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinChatCoreTests-product",
+            "HanlinPlatform"
+          ],
+          "dependencies": [
+            [
+              "HanlinPlatformContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinChatCore",
+              "HanlinPlatform"
+            ],
+            [
+              "SwiftAISDK-product",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProviderUtils-product",
+              "SwiftAISDK"
+            ],
+            [
+              "OpenAIProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "AnthropicProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "GoogleProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "OpenAICompatibleProvider-product",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinMiniAppCoreTests-product",
+            "HanlinPlatform"
+          ],
+          "dependencies": [
+            [
+              "HanlinPlatformContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinMiniAppCore",
+              "HanlinPlatform"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinPlatformContractsTests-product",
+            "HanlinPlatform"
+          ],
+          "dependencies": [
+            [
+              "HanlinPlatformContracts",
+              "HanlinPlatform"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinScriptCompilerTests-product",
+            "HanlinPlatform"
+          ],
+          "dependencies": [
+            [
+              "HanlinPlatformContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinScriptContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinWidgetCompiler",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinScriptCompiler",
+              "HanlinPlatform"
+            ],
+            [
+              "ZIPFoundation-product",
+              "ZIPFoundation"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinScriptContractsTests-product",
+            "HanlinPlatform"
+          ],
+          "dependencies": [
+            [
+              "HanlinPlatformContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinScriptContracts",
+              "HanlinPlatform"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinScriptDeviceServicesTests-product",
+            "HanlinPlatform"
+          ],
+          "dependencies": [
+            [
+              "HanlinPlatformContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinScriptContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinScriptServices",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinScriptDeviceServices",
+              "HanlinPlatform"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinScriptDeviceServices",
+            "HanlinPlatform"
+          ],
+          "dependencies": [
+            [
+              "HanlinPlatformContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinScriptContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinScriptServices",
+              "HanlinPlatform"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinScriptExtensionsTests-product",
+            "HanlinPlatform"
+          ],
+          "dependencies": [
+            [
+              "HanlinExtensionContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinPlatformContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinScriptContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinMiniAppCore",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinScriptStore",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinChatCore",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinScriptUI",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinScriptExtensions",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinWidgetCompiler",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinScriptCompiler",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinLegacyWidgetStoreFixture",
+              "HanlinPlatform"
+            ],
+            [
+              "SwiftAISDK-product",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProviderUtils-product",
+              "SwiftAISDK"
+            ],
+            [
+              "OpenAIProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "AnthropicProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "GoogleProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "OpenAICompatibleProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "SwiftyJSON-product",
+              "SwiftyJSON"
+            ],
+            [
+              "ZIPFoundation-product",
+              "ZIPFoundation"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinLegacyWidgetStoreFixture",
+            "HanlinPlatform"
+          ],
+          "dependencies": [
+            [
+              "HanlinPlatformContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinScriptContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinChatCore",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinScriptUI",
+              "HanlinPlatform"
+            ],
+            [
+              "SwiftAISDK-product",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProviderUtils-product",
+              "SwiftAISDK"
+            ],
+            [
+              "OpenAIProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "AnthropicProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "GoogleProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "OpenAICompatibleProvider-product",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinScriptCompiler",
+            "HanlinPlatform"
+          ],
+          "dependencies": [
+            [
+              "HanlinPlatform_HanlinScriptCompiler",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinPlatformContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinScriptContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinWidgetCompiler",
+              "HanlinPlatform"
+            ],
+            [
+              "ZIPFoundation-product",
+              "ZIPFoundation"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "ZIPFoundation-product",
+            "ZIPFoundation"
+          ],
+          "dependencies": [
+            [
+              "ZIPFoundation",
+              "ZIPFoundation"
+            ],
+            [
+              "ZIPFoundation_ZIPFoundation",
+              "ZIPFoundation"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "ZIPFoundation",
+            "ZIPFoundation"
+          ],
+          "dependencies": [
+            [
+              "ZIPFoundation_ZIPFoundation",
+              "ZIPFoundation"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "ZIPFoundation_ZIPFoundation",
+            "ZIPFoundation"
+          ],
+          "dependencies": []
+        },
+        {
+          "target": [
+            "HanlinPlatform_HanlinScriptCompiler",
+            "HanlinPlatform"
+          ],
+          "dependencies": []
+        },
+        {
+          "target": [
+            "HanlinWidgetCompiler",
+            "HanlinPlatform"
+          ],
+          "dependencies": [
+            [
+              "HanlinPlatform_HanlinWidgetCompiler",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinPlatformContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinScriptContracts",
+              "HanlinPlatform"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinPlatform_HanlinWidgetCompiler",
+            "HanlinPlatform"
+          ],
+          "dependencies": []
+        },
+        {
+          "target": [
+            "HanlinScriptExtensions",
+            "HanlinPlatform"
+          ],
+          "dependencies": [
+            [
+              "HanlinPlatform_HanlinScriptExtensions",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinExtensionContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinPlatformContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinScriptContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinMiniAppCore",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinScriptStore",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinChatCore",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinScriptUI",
+              "HanlinPlatform"
+            ],
+            [
+              "SwiftAISDK-product",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProviderUtils-product",
+              "SwiftAISDK"
+            ],
+            [
+              "OpenAIProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "AnthropicProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "GoogleProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "OpenAICompatibleProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "SwiftyJSON-product",
+              "SwiftyJSON"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "SwiftyJSON-product",
+            "SwiftyJSON"
+          ],
+          "dependencies": [
+            [
+              "SwiftyJSON",
+              "SwiftyJSON"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "SwiftyJSON",
+            "SwiftyJSON"
+          ],
+          "dependencies": []
+        },
+        {
+          "target": [
+            "HanlinPlatform_HanlinScriptExtensions",
+            "HanlinPlatform"
+          ],
+          "dependencies": []
+        },
+        {
+          "target": [
+            "HanlinExtensionContracts",
+            "HanlinPlatform"
+          ],
+          "dependencies": []
+        },
+        {
+          "target": [
+            "HanlinScriptRuntimeTests-product",
+            "HanlinPlatform"
+          ],
+          "dependencies": [
+            [
+              "HanlinPlatformContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinScriptContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinScriptRuntime",
+              "HanlinPlatform"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinScriptRuntime",
+            "HanlinPlatform"
+          ],
+          "dependencies": [
+            [
+              "HanlinPlatformContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinScriptContracts",
+              "HanlinPlatform"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinScriptServicesTests-product",
+            "HanlinPlatform"
+          ],
+          "dependencies": [
+            [
+              "HanlinPlatformContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinScriptContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinScriptServices",
+              "HanlinPlatform"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinScriptServices",
+            "HanlinPlatform"
+          ],
+          "dependencies": [
+            [
+              "HanlinPlatformContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinScriptContracts",
+              "HanlinPlatform"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinScriptStoreTests-product",
+            "HanlinPlatform"
+          ],
+          "dependencies": [
+            [
+              "HanlinPlatformContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinScriptContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinMiniAppCore",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinScriptStore",
+              "HanlinPlatform"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinScriptStore",
+            "HanlinPlatform"
+          ],
+          "dependencies": [
+            [
+              "HanlinPlatformContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinScriptContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinMiniAppCore",
+              "HanlinPlatform"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinScriptUITests-product",
+            "HanlinPlatform"
+          ],
+          "dependencies": [
+            [
+              "HanlinPlatformContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinScriptContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinChatCore",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinScriptUI",
+              "HanlinPlatform"
+            ],
+            [
+              "SwiftAISDK-product",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProviderUtils-product",
+              "SwiftAISDK"
+            ],
+            [
+              "OpenAIProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "AnthropicProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "GoogleProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "OpenAICompatibleProvider-product",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinScriptingApplicationRuntimeTests-product",
+            "HanlinPlatform"
+          ],
+          "dependencies": [
+            [
+              "HanlinPlatformContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinMiniAppCore",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinScriptContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinChatCore",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinScriptUI",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinScriptingApplicationRuntime",
+              "HanlinPlatform"
+            ],
+            [
+              "SwiftAISDK-product",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProviderUtils-product",
+              "SwiftAISDK"
+            ],
+            [
+              "OpenAIProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "AnthropicProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "GoogleProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "OpenAICompatibleProvider-product",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinScriptingApplicationRuntime",
+            "HanlinPlatform"
+          ],
+          "dependencies": [
+            [
+              "HanlinPlatformContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinScriptContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinChatCore",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinScriptUI",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinMiniAppCore",
+              "HanlinPlatform"
+            ],
+            [
+              "SwiftAISDK-product",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProviderUtils-product",
+              "SwiftAISDK"
+            ],
+            [
+              "OpenAIProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "AnthropicProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "GoogleProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "OpenAICompatibleProvider-product",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinScriptUI",
+            "HanlinPlatform"
+          ],
+          "dependencies": [
+            [
+              "HanlinPlatform_HanlinScriptUI",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinPlatformContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinScriptContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinChatCore",
+              "HanlinPlatform"
+            ],
+            [
+              "SwiftAISDK-product",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProviderUtils-product",
+              "SwiftAISDK"
+            ],
+            [
+              "OpenAIProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "AnthropicProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "GoogleProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "OpenAICompatibleProvider-product",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinPlatform_HanlinScriptUI",
+            "HanlinPlatform"
+          ],
+          "dependencies": []
+        },
+        {
+          "target": [
+            "HanlinChatCore",
+            "HanlinPlatform"
+          ],
+          "dependencies": [
+            [
+              "HanlinPlatformContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "SwiftAISDK-product",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProviderUtils-product",
+              "SwiftAISDK"
+            ],
+            [
+              "OpenAIProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "AnthropicProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "GoogleProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "OpenAICompatibleProvider-product",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "OpenAICompatibleProvider-product",
+            "SwiftAISDK"
+          ],
+          "dependencies": [
+            [
+              "OpenAICompatibleProvider",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProvider",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKZodAdapter",
+              "SwiftAISDK"
+            ],
+            [
+              "EventSourceParser",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProviderUtils",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "OpenAICompatibleProvider",
+            "SwiftAISDK"
+          ],
+          "dependencies": [
+            [
+              "AISDKProvider",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKZodAdapter",
+              "SwiftAISDK"
+            ],
+            [
+              "EventSourceParser",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProviderUtils",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "GoogleProvider-product",
+            "SwiftAISDK"
+          ],
+          "dependencies": [
+            [
+              "GoogleProvider",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProvider",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKZodAdapter",
+              "SwiftAISDK"
+            ],
+            [
+              "EventSourceParser",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProviderUtils",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "GoogleProvider",
+            "SwiftAISDK"
+          ],
+          "dependencies": [
+            [
+              "AISDKProvider",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKZodAdapter",
+              "SwiftAISDK"
+            ],
+            [
+              "EventSourceParser",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProviderUtils",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "AnthropicProvider-product",
+            "SwiftAISDK"
+          ],
+          "dependencies": [
+            [
+              "AnthropicProvider",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProvider",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKZodAdapter",
+              "SwiftAISDK"
+            ],
+            [
+              "EventSourceParser",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProviderUtils",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "AnthropicProvider",
+            "SwiftAISDK"
+          ],
+          "dependencies": [
+            [
+              "AISDKProvider",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKZodAdapter",
+              "SwiftAISDK"
+            ],
+            [
+              "EventSourceParser",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProviderUtils",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "OpenAIProvider-product",
+            "SwiftAISDK"
+          ],
+          "dependencies": [
+            [
+              "OpenAIProvider",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProvider",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKZodAdapter",
+              "SwiftAISDK"
+            ],
+            [
+              "EventSourceParser",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProviderUtils",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "OpenAIProvider",
+            "SwiftAISDK"
+          ],
+          "dependencies": [
+            [
+              "AISDKProvider",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKZodAdapter",
+              "SwiftAISDK"
+            ],
+            [
+              "EventSourceParser",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProviderUtils",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "AISDKProviderUtils-product",
+            "SwiftAISDK"
+          ],
+          "dependencies": [
+            [
+              "AISDKProviderUtils",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProvider",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKZodAdapter",
+              "SwiftAISDK"
+            ],
+            [
+              "EventSourceParser",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "AISDKProvider-product",
+            "SwiftAISDK"
+          ],
+          "dependencies": [
+            [
+              "AISDKProvider",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "SwiftAISDK-product",
+            "SwiftAISDK"
+          ],
+          "dependencies": [
+            [
+              "SwiftAISDK",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProvider",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKZodAdapter",
+              "SwiftAISDK"
+            ],
+            [
+              "EventSourceParser",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProviderUtils",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKJSONSchema",
+              "SwiftAISDK"
+            ],
+            [
+              "GatewayProvider",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "SwiftAISDK",
+            "SwiftAISDK"
+          ],
+          "dependencies": [
+            [
+              "AISDKProvider",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKZodAdapter",
+              "SwiftAISDK"
+            ],
+            [
+              "EventSourceParser",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProviderUtils",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKJSONSchema",
+              "SwiftAISDK"
+            ],
+            [
+              "GatewayProvider",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "GatewayProvider",
+            "SwiftAISDK"
+          ],
+          "dependencies": [
+            [
+              "AISDKProvider",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKZodAdapter",
+              "SwiftAISDK"
+            ],
+            [
+              "EventSourceParser",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProviderUtils",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "AISDKJSONSchema",
+            "SwiftAISDK"
+          ],
+          "dependencies": [
+            [
+              "AISDKProvider",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKZodAdapter",
+              "SwiftAISDK"
+            ],
+            [
+              "EventSourceParser",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProviderUtils",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "AISDKProviderUtils",
+            "SwiftAISDK"
+          ],
+          "dependencies": [
+            [
+              "AISDKProvider",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKZodAdapter",
+              "SwiftAISDK"
+            ],
+            [
+              "EventSourceParser",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "EventSourceParser",
+            "SwiftAISDK"
+          ],
+          "dependencies": []
+        },
+        {
+          "target": [
+            "AISDKZodAdapter",
+            "SwiftAISDK"
+          ],
+          "dependencies": [
+            [
+              "AISDKProvider",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "AISDKProvider",
+            "SwiftAISDK"
+          ],
+          "dependencies": []
+        },
+        {
+          "target": [
+            "HanlinMiniAppCore",
+            "HanlinPlatform"
+          ],
+          "dependencies": [
+            [
+              "HanlinPlatformContracts",
+              "HanlinPlatform"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinScriptingSDKTests-product",
+            "HanlinPlatform"
+          ],
+          "dependencies": [
+            [
+              "HanlinPlatformContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinScriptContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinScriptingSDK",
+              "HanlinPlatform"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinScriptingSDK",
+            "HanlinPlatform"
+          ],
+          "dependencies": [
+            [
+              "HanlinPlatform_HanlinScriptingSDK",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinPlatformContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinScriptContracts",
+              "HanlinPlatform"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinPlatform_HanlinScriptingSDK",
+            "HanlinPlatform"
+          ],
+          "dependencies": []
+        },
+        {
+          "target": [
+            "HanlinScriptContracts",
+            "HanlinPlatform"
+          ],
+          "dependencies": [
+            [
+              "HanlinPlatform_HanlinScriptContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinPlatformContracts",
+              "HanlinPlatform"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinPlatform_HanlinScriptContracts",
+            "HanlinPlatform"
+          ],
+          "dependencies": []
+        },
+        {
+          "target": [
+            "HanlinPlatformContracts",
+            "HanlinPlatform"
+          ],
+          "dependencies": [
+            [
+              "HanlinPlatform_HanlinPlatformContracts",
+              "HanlinPlatform"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinPlatform_HanlinPlatformContracts",
+            "HanlinPlatform"
+          ],
+          "dependencies": []
+        }
+      ],
+      "focused_closure": [
+        [
+          "AISDKJSONSchema",
+          "SwiftAISDK"
+        ],
+        [
+          "AISDKProvider",
+          "SwiftAISDK"
+        ],
+        [
+          "AISDKProvider-product",
+          "SwiftAISDK"
+        ],
+        [
+          "AISDKProviderUtils",
+          "SwiftAISDK"
+        ],
+        [
+          "AISDKProviderUtils-product",
+          "SwiftAISDK"
+        ],
+        [
+          "AISDKZodAdapter",
+          "SwiftAISDK"
+        ],
+        [
+          "AnthropicProvider",
+          "SwiftAISDK"
+        ],
+        [
+          "AnthropicProvider-product",
+          "SwiftAISDK"
+        ],
+        [
+          "EventSourceParser",
+          "SwiftAISDK"
+        ],
+        [
+          "GatewayProvider",
+          "SwiftAISDK"
+        ],
+        [
+          "GoogleProvider",
+          "SwiftAISDK"
+        ],
+        [
+          "GoogleProvider-product",
+          "SwiftAISDK"
+        ],
+        [
+          "HanlinChatCore",
+          "HanlinPlatform"
+        ],
+        [
+          "HanlinChatCoreTests-product",
+          "HanlinPlatform"
+        ],
+        [
+          "HanlinPlatformContracts",
+          "HanlinPlatform"
+        ],
+        [
+          "HanlinPlatform_HanlinPlatformContracts",
+          "HanlinPlatform"
+        ],
+        [
+          "OpenAICompatibleProvider",
+          "SwiftAISDK"
+        ],
+        [
+          "OpenAICompatibleProvider-product",
+          "SwiftAISDK"
+        ],
+        [
+          "OpenAIProvider",
+          "SwiftAISDK"
+        ],
+        [
+          "OpenAIProvider-product",
+          "SwiftAISDK"
+        ],
+        [
+          "SwiftAISDK",
+          "SwiftAISDK"
+        ],
+        [
+          "SwiftAISDK-product",
+          "SwiftAISDK"
+        ]
+      ],
+      "zip_in_focused_closure": false,
+      "zip_in_complete_build_graph": true,
+      "original_resolution_lines": [
+        {
+          "line": 13,
+          "text": "Fetching from https://github.com/weichsel/ZIPFoundation.git (cached)"
+        },
+        {
+          "line": 29,
+          "text": "Creating working copy of package \u2018ZIPFoundation\u2019"
+        },
+        {
+          "line": 31,
+          "text": "Checking out 0.9.19 of package \u2018ZIPFoundation\u2019"
+        },
+        {
+          "line": 35,
+          "text": "  ZIPFoundation: https://github.com/weichsel/ZIPFoundation.git @ 0.9.19"
+        },
+        {
+          "line": 39,
+          "text": "  SwiftAISDK: https://github.com/davidpovarsky/swift-ai-sdk.git @ 07431ab"
+        }
+      ],
+      "zip_outside_resolution": [
+        {
+          "line": 141,
+          "text": "        \u279c Explicit dependency on target 'ZIPFoundation-product' in project 'ZIPFoundation'"
+        },
+        {
+          "line": 174,
+          "text": "        \u279c Explicit dependency on target 'ZIPFoundation-product' in project 'ZIPFoundation'"
+        },
+        {
+          "line": 207,
+          "text": "        \u279c Explicit dependency on target 'ZIPFoundation-product' in project 'ZIPFoundation'"
+        },
+        {
+          "line": 225,
+          "text": "        \u279c Explicit dependency on target 'ZIPFoundation-product' in project 'ZIPFoundation'"
+        },
+        {
+          "line": 226,
+          "text": "    Target 'ZIPFoundation-product' in project 'ZIPFoundation'"
+        },
+        {
+          "line": 227,
+          "text": "        \u279c Explicit dependency on target 'ZIPFoundation' in project 'ZIPFoundation'"
+        },
+        {
+          "line": 228,
+          "text": "        \u279c Explicit dependency on target 'ZIPFoundation_ZIPFoundation' in project 'ZIPFoundation'"
+        },
+        {
+          "line": 229,
+          "text": "    Target 'ZIPFoundation' in project 'ZIPFoundation'"
+        },
+        {
+          "line": 230,
+          "text": "        \u279c Explicit dependency on target 'ZIPFoundation_ZIPFoundation' in project 'ZIPFoundation'"
+        },
+        {
+          "line": 231,
+          "text": "    Target 'ZIPFoundation_ZIPFoundation' in project 'ZIPFoundation' (no dependencies)"
+        },
+        {
+          "line": 507,
+          "text": "WriteAuxiliaryFile /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation_ZIPFoundation-b.build/empty-ZIPFoundation_ZIPFoundation.plist (in target 'ZIPFoundation_ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 508,
+          "text": "    cd /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation"
+        },
+        {
+          "line": 509,
+          "text": "    write-file /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation_ZIPFoundation-b.build/empty-ZIPFoundation_ZIPFoundation.plist"
+        },
+        {
+          "line": 511,
+          "text": "WriteAuxiliaryFile /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation_ZIPFoundation-b.build/ZIPFoundation_ZIPFoundation.DependencyStaticMetadataFileList (in target 'ZIPFoundation_ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 512,
+          "text": "    cd /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation"
+        },
+        {
+          "line": 513,
+          "text": "    write-file /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation_ZIPFoundation-b.build/ZIPFoundation_ZIPFoundation.DependencyStaticMetadataFileList"
+        },
+        {
+          "line": 515,
+          "text": "WriteAuxiliaryFile /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation_ZIPFoundation-b.build/ZIPFoundation_ZIPFoundation.DependencyMetadataFileList (in target 'ZIPFoundation_ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 516,
+          "text": "    cd /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation"
+        },
+        {
+          "line": 517,
+          "text": "    write-file /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation_ZIPFoundation-b.build/ZIPFoundation_ZIPFoundation.DependencyMetadataFileList"
+        },
+        {
+          "line": 519,
+          "text": "WriteAuxiliaryFile /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation-t.build/ZIPFoundation.modulemap (in target 'ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 520,
+          "text": "    cd /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation"
+        },
+        {
+          "line": 521,
+          "text": "    write-file /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation-t.build/ZIPFoundation.modulemap"
+        },
+        {
+          "line": 523,
+          "text": "WriteAuxiliaryFile /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation-t.build/ZIPFoundation.DependencyStaticMetadataFileList (in target 'ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 524,
+          "text": "    cd /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation"
+        },
+        {
+          "line": 525,
+          "text": "    write-file /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation-t.build/ZIPFoundation.DependencyStaticMetadataFileList"
+        },
+        {
+          "line": 527,
+          "text": "WriteAuxiliaryFile /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation-t.build/ZIPFoundation.DependencyMetadataFileList (in target 'ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 528,
+          "text": "    cd /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation"
+        },
+        {
+          "line": 529,
+          "text": "    write-file /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation-t.build/ZIPFoundation.DependencyMetadataFileList"
+        },
+        {
+          "line": 531,
+          "text": "WriteAuxiliaryFile /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation-t.build/Objects-normal/arm64/ZIPFoundation_const_extract_protocols.json (in target 'ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 532,
+          "text": "    cd /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation"
+        },
+        {
+          "line": 533,
+          "text": "    write-file /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation-t.build/Objects-normal/arm64/ZIPFoundation_const_extract_protocols.json"
+        },
+        {
+          "line": 535,
+          "text": "WriteAuxiliaryFile /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation-t.build/Objects-normal/arm64/ZIPFoundation.SwiftFileList (in target 'ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 536,
+          "text": "    cd /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation"
+        },
+        {
+          "line": 537,
+          "text": "    write-file /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation-t.build/Objects-normal/arm64/ZIPFoundation.SwiftFileList"
+        },
+        {
+          "line": 539,
+          "text": "WriteAuxiliaryFile /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation-t.build/Objects-normal/arm64/ZIPFoundation.SwiftConstValuesFileList (in target 'ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 540,
+          "text": "    cd /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation"
+        },
+        {
+          "line": 541,
+          "text": "    write-file /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation-t.build/Objects-normal/arm64/ZIPFoundation.SwiftConstValuesFileList"
+        },
+        {
+          "line": 543,
+          "text": "WriteAuxiliaryFile /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation-t.build/Objects-normal/arm64/ZIPFoundation.LinkFileList (in target 'ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 544,
+          "text": "    cd /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation"
+        },
+        {
+          "line": 545,
+          "text": "    write-file /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation-t.build/Objects-normal/arm64/ZIPFoundation.LinkFileList"
+        },
+        {
+          "line": 547,
+          "text": "WriteAuxiliaryFile /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation-t.build/Objects-normal/arm64/ZIPFoundation-OutputFileMap.json (in target 'ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 548,
+          "text": "    cd /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation"
+        },
+        {
+          "line": 549,
+          "text": "    write-file /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation-t.build/Objects-normal/arm64/ZIPFoundation-OutputFileMap.json"
+        },
+        {
+          "line": 551,
+          "text": "WriteAuxiliaryFile /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation-t.build/DerivedSources/resource_bundle_accessor.swift (in target 'ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 552,
+          "text": "    cd /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation"
+        },
+        {
+          "line": 553,
+          "text": "    write-file /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation-t.build/DerivedSources/resource_bundle_accessor.swift"
+        },
+        {
+          "line": 555,
+          "text": "Copy /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Intermediates.noindex/GeneratedModuleMaps/ZIPFoundation.modulemap /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation-t.build/ZIPFoundation.modulemap (in target 'ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 556,
+          "text": "    cd /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation"
+        },
+        {
+          "line": 557,
+          "text": "    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation-t.build/ZIPFoundation.modulemap /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Intermediates.noindex/GeneratedModuleMaps"
+        },
+        {
+          "line": 559,
+          "text": "MkDir /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Products/Debug/ZIPFoundation_ZIPFoundation.bundle/Contents/Resources (in target 'ZIPFoundation_ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 560,
+          "text": "    cd /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation"
+        },
+        {
+          "line": 561,
+          "text": "    /bin/mkdir -p /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Products/Debug/ZIPFoundation_ZIPFoundation.bundle/Contents/Resources"
+        },
+        {
+          "line": 563,
+          "text": "MkDir /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Products/Debug/ZIPFoundation_ZIPFoundation.bundle/Contents (in target 'ZIPFoundation_ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 564,
+          "text": "    cd /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation"
+        },
+        {
+          "line": 565,
+          "text": "    /bin/mkdir -p /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Products/Debug/ZIPFoundation_ZIPFoundation.bundle/Contents"
+        },
+        {
+          "line": 567,
+          "text": "MkDir /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Products/Debug/ZIPFoundation_ZIPFoundation.bundle (in target 'ZIPFoundation_ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 568,
+          "text": "    cd /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation"
+        },
+        {
+          "line": 569,
+          "text": "    /bin/mkdir -p /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Products/Debug/ZIPFoundation_ZIPFoundation.bundle"
+        },
+        {
+          "line": 2399,
+          "text": "ProcessInfoPlistFile /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Products/Debug/ZIPFoundation_ZIPFoundation.bundle/Contents/Info.plist /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation_ZIPFoundation-b.build/empty-ZIPFoundation_ZIPFoundation.plist (in target 'ZIPFoundation_ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 2400,
+          "text": "    cd /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation"
+        },
+        {
+          "line": 2401,
+          "text": "    builtin-infoPlistUtility /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation_ZIPFoundation-b.build/empty-ZIPFoundation_ZIPFoundation.plist -producttype com.apple.product-type.bundle -expandbuildsettings -platform macosx -o /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Products/Debug/ZIPFoundation_ZIPFoundation.bundle/Contents/Info.plist"
+        },
+        {
+          "line": 2403,
+          "text": "CpResource /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Products/Debug/ZIPFoundation_ZIPFoundation.bundle/Contents/Resources/PrivacyInfo.xcprivacy /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation/Sources/ZIPFoundation/Resources/PrivacyInfo.xcprivacy (in target 'ZIPFoundation_ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 2404,
+          "text": "    cd /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation"
+        },
+        {
+          "line": 2405,
+          "text": "    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation/Sources/ZIPFoundation/Resources/PrivacyInfo.xcprivacy /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Products/Debug/ZIPFoundation_ZIPFoundation.bundle/Contents/Resources"
+        },
+        {
+          "line": 2419,
+          "text": "RegisterExecutionPolicyException /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Products/Debug/ZIPFoundation_ZIPFoundation.bundle (in target 'ZIPFoundation_ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 2420,
+          "text": "    cd /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation"
+        },
+        {
+          "line": 2421,
+          "text": "    builtin-RegisterExecutionPolicyException /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Products/Debug/ZIPFoundation_ZIPFoundation.bundle"
+        },
+        {
+          "line": 2423,
+          "text": "Touch /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Products/Debug/ZIPFoundation_ZIPFoundation.bundle (in target 'ZIPFoundation_ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 2424,
+          "text": "    cd /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation"
+        },
+        {
+          "line": 2425,
+          "text": "    /usr/bin/touch -c /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Products/Debug/ZIPFoundation_ZIPFoundation.bundle"
+        },
+        {
+          "line": 2563,
+          "text": "SwiftDriver ZIPFoundation normal arm64 com.apple.xcode.tools.swift.compiler (in target 'ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 2565,
+          "text": "    builtin-SwiftDriver -- /Applications/Xcode_27.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -parse-as-library -module-name ZIPFoundation -Onone @/Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation-t.build/Objects-normal/arm64/ZIPFoundation.SwiftFileList -DSWIFT_PACKAGE -DDEBUG -DSWIFT_MODULE_RESOURCE_BUNDLE_AVAILABLE -DXcode -plugin-path /Applications/Xcode_27.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode_27.2.app/Contents/Developer/Platforms/Mac"
+        },
+        {
+          "line": 2791,
+          "text": "SwiftEmitModule normal arm64 Emitting\\ module\\ for\\ ZIPFoundation (in target 'ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 2793,
+          "text": "SwiftCompile normal arm64 (in target 'ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 2821,
+          "text": "SwiftDriverJobDiscovery normal arm64 Emitting module for ZIPFoundation (in target 'ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 2823,
+          "text": "SwiftDriver\\ Compilation\\ Requirements ZIPFoundation normal arm64 com.apple.xcode.tools.swift.compiler (in target 'ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 2825,
+          "text": "    builtin-Swift-Compilation-Requirements -- /Applications/Xcode_27.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -parse-as-library -module-name ZIPFoundation -Onone @/Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation-t.build/Objects-normal/arm64/ZIPFoundation.SwiftFileList -DSWIFT_PACKAGE -DDEBUG -DSWIFT_MODULE_RESOURCE_BUNDLE_AVAILABLE -DXcode -plugin-path /Applications/Xcode_27.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode_27.2.app/Contents/Deve"
+        },
+        {
+          "line": 2831,
+          "text": "SwiftMergeGeneratedHeaders /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Intermediates.noindex/GeneratedModuleMaps/ZIPFoundation-Swift.h /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation-t.build/Objects-normal/arm64/ZIPFoundation-Swift.h (in target 'ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 2832,
+          "text": "    cd /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation"
+        },
+        {
+          "line": 2833,
+          "text": "    builtin-swiftHeaderTool -arch arm64 /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation-t.build/Objects-normal/arm64/ZIPFoundation-Swift.h -o /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Intermediates.noindex/GeneratedModuleMaps/ZIPFoundation-Swift.h"
+        },
+        {
+          "line": 2835,
+          "text": "Copy /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Products/Debug/ZIPFoundation.swiftmodule/arm64-apple-macos.swiftmodule /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation-t.build/Objects-normal/arm64/ZIPFoundation.swiftmodule (in target 'ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 2836,
+          "text": "    cd /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation"
+        },
+        {
+          "line": 2837,
+          "text": "    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation-t.build/Objects-normal/arm64/ZIPFoundation.swiftmodule /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Products/Debug/ZIPFoundation.swiftmodule/arm64-apple-macos.swiftmodule"
+        },
+        {
+          "line": 2839,
+          "text": "Copy /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Products/Debug/ZIPFoundation.swiftmodule/arm64-apple-macos.swiftdoc /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation-t.build/Objects-normal/arm64/ZIPFoundation.swiftdoc (in target 'ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 2840,
+          "text": "    cd /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation"
+        },
+        {
+          "line": 2841,
+          "text": "    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation-t.build/Objects-normal/arm64/ZIPFoundation.swiftdoc /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Products/Debug/ZIPFoundation.swiftmodule/arm64-apple-macos.swiftdoc"
+        },
+        {
+          "line": 2843,
+          "text": "Copy /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Products/Debug/ZIPFoundation.swiftmodule/arm64-apple-macos.abi.json /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation-t.build/Objects-normal/arm64/ZIPFoundation.abi.json (in target 'ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 2844,
+          "text": "    cd /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation"
+        },
+        {
+          "line": 2845,
+          "text": "    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation-t.build/Objects-normal/arm64/ZIPFoundation.abi.json /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Products/Debug/ZIPFoundation.swiftmodule/arm64-apple-macos.abi.json"
+        },
+        {
+          "line": 2847,
+          "text": "Copy /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Products/Debug/ZIPFoundation.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation-t.build/Objects-normal/arm64/ZIPFoundation.swiftsourceinfo (in target 'ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 2848,
+          "text": "    cd /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation"
+        },
+        {
+          "line": 2849,
+          "text": "    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation-t.build/Objects-normal/arm64/ZIPFoundation.swiftsourceinfo /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Products/Debug/ZIPFoundation.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo"
+        },
+        {
+          "line": 2873,
+          "text": "SwiftCompile normal arm64 Compiling\\ Date+ZIP.swift,\\ Entry+Serialization.swift,\\ Entry+ZIP64.swift,\\ Entry.swift,\\ FileManager+ZIP.swift,\\ FileManager+ZIPDeprecated.swift,\\ URL+ZIP.swift /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation/Sources/ZIPFoundation/Date+ZIP.swift /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation/Sources/ZIPFoundation/Entry+Serialization.swift /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation/Sources/ZIPFoundation/Entry+ZIP64.swift /Users/runner/work/_temp/hanlin-stop-continuatio"
+        },
+        {
+          "line": 2875,
+          "text": "SwiftCompile normal arm64 /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation/Sources/ZIPFoundation/Date+ZIP.swift (in target 'ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 2879,
+          "text": "SwiftCompile normal arm64 /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation/Sources/ZIPFoundation/Entry+Serialization.swift (in target 'ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 2883,
+          "text": "SwiftCompile normal arm64 /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation/Sources/ZIPFoundation/Entry+ZIP64.swift (in target 'ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 2887,
+          "text": "SwiftCompile normal arm64 /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation/Sources/ZIPFoundation/Entry.swift (in target 'ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 2891,
+          "text": "SwiftCompile normal arm64 /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation/Sources/ZIPFoundation/FileManager+ZIP.swift (in target 'ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 2895,
+          "text": "SwiftCompile normal arm64 /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation/Sources/ZIPFoundation/FileManager+ZIPDeprecated.swift (in target 'ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 2899,
+          "text": "SwiftCompile normal arm64 /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation/Sources/ZIPFoundation/URL+ZIP.swift (in target 'ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 2993,
+          "text": "SwiftCompile normal arm64 Compiling\\ Archive+Writing.swift,\\ Archive+WritingDeprecated.swift,\\ Archive+ZIP64.swift,\\ Archive.swift,\\ Data+Compression.swift,\\ Data+CompressionDeprecated.swift,\\ Data+Serialization.swift /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation/Sources/ZIPFoundation/Archive+Writing.swift /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation/Sources/ZIPFoundation/Archive+WritingDeprecated.swift /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation/Sources/ZIPFoundation/Archive+ZIP64.swift /Us"
+        },
+        {
+          "line": 2995,
+          "text": "SwiftCompile normal arm64 /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation/Sources/ZIPFoundation/Archive+Writing.swift (in target 'ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 2999,
+          "text": "SwiftCompile normal arm64 /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation/Sources/ZIPFoundation/Archive+WritingDeprecated.swift (in target 'ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 3003,
+          "text": "SwiftCompile normal arm64 /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation/Sources/ZIPFoundation/Archive+ZIP64.swift (in target 'ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 3007,
+          "text": "SwiftCompile normal arm64 /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation/Sources/ZIPFoundation/Archive.swift (in target 'ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 3011,
+          "text": "SwiftCompile normal arm64 /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation/Sources/ZIPFoundation/Data+Compression.swift (in target 'ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 3015,
+          "text": "SwiftCompile normal arm64 /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation/Sources/ZIPFoundation/Data+CompressionDeprecated.swift (in target 'ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 3019,
+          "text": "SwiftCompile normal arm64 /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation/Sources/ZIPFoundation/Data+Serialization.swift (in target 'ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 3023,
+          "text": "SwiftCompile normal arm64 Compiling\\ resource_bundle_accessor.swift,\\ Archive+BackingConfiguration.swift,\\ Archive+Deprecated.swift,\\ Archive+Helpers.swift,\\ Archive+MemoryFile.swift,\\ Archive+Progress.swift,\\ Archive+Reading.swift,\\ Archive+ReadingDeprecated.swift /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation-t.build/DerivedSources/resource_bundle_accessor.swift /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation/Sources/ZIPFoundation/Archive+BackingConfiguration.swift /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerive"
+        },
+        {
+          "line": 3025,
+          "text": "SwiftCompile normal arm64 /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation-t.build/DerivedSources/resource_bundle_accessor.swift (in target 'ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 3029,
+          "text": "SwiftCompile normal arm64 /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation/Sources/ZIPFoundation/Archive+BackingConfiguration.swift (in target 'ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 3033,
+          "text": "SwiftCompile normal arm64 /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation/Sources/ZIPFoundation/Archive+Deprecated.swift (in target 'ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 3037,
+          "text": "SwiftCompile normal arm64 /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation/Sources/ZIPFoundation/Archive+Helpers.swift (in target 'ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 3041,
+          "text": "SwiftCompile normal arm64 /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation/Sources/ZIPFoundation/Archive+MemoryFile.swift (in target 'ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 3045,
+          "text": "SwiftCompile normal arm64 /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation/Sources/ZIPFoundation/Archive+Progress.swift (in target 'ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 3049,
+          "text": "SwiftCompile normal arm64 /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation/Sources/ZIPFoundation/Archive+Reading.swift (in target 'ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 3053,
+          "text": "SwiftCompile normal arm64 /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation/Sources/ZIPFoundation/Archive+ReadingDeprecated.swift (in target 'ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 3063,
+          "text": "SwiftDriverJobDiscovery normal arm64 Compiling resource_bundle_accessor.swift, Archive+BackingConfiguration.swift, Archive+Deprecated.swift, Archive+Helpers.swift, Archive+MemoryFile.swift, Archive+Progress.swift, Archive+Reading.swift, Archive+ReadingDeprecated.swift (in target 'ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 3075,
+          "text": "SwiftDriverJobDiscovery normal arm64 Compiling Archive+Writing.swift, Archive+WritingDeprecated.swift, Archive+ZIP64.swift, Archive.swift, Data+Compression.swift, Data+CompressionDeprecated.swift, Data+Serialization.swift (in target 'ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 3123,
+          "text": "SwiftDriverJobDiscovery normal arm64 Compiling Date+ZIP.swift, Entry+Serialization.swift, Entry+ZIP64.swift, Entry.swift, FileManager+ZIP.swift, FileManager+ZIPDeprecated.swift, URL+ZIP.swift (in target 'ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 3159,
+          "text": "SwiftDriver\\ Compilation ZIPFoundation normal arm64 com.apple.xcode.tools.swift.compiler (in target 'ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 3161,
+          "text": "    builtin-Swift-Compilation -- /Applications/Xcode_27.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -parse-as-library -module-name ZIPFoundation -Onone @/Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Intermediates.noindex/ZIPFoundation.build/Debug/ZIPFoundation-t.build/Objects-normal/arm64/ZIPFoundation.SwiftFileList -DSWIFT_PACKAGE -DDEBUG -DSWIFT_MODULE_RESOURCE_BUNDLE_AVAILABLE -DXcode -plugin-path /Applications/Xcode_27.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode_27.2.app/Contents/Developer/Platfor"
+        },
+        {
+          "line": 3809,
+          "text": "Ld /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Products/Debug/ZIPFoundation.o normal (in target 'ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 3810,
+          "text": "    cd /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation"
+        },
+        {
+          "line": 3811,
+          "text": "    /Applications/Xcode_27.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-macos12.0 -r -isysroot /Applications/Xcode_27.2.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.2.sdk -O0 -w -Xlinker -no_warn_duplicate_libraries -F/Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Intermediates.noindex/EagerLinkingTBDs/Debug -F/Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Products/Debug -iframework /Applications/Xcode_27.2.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks -filelist /Users/runner/work/_temp/hanlin-st"
+        },
+        {
+          "line": 3817,
+          "text": "ExtractAppIntentsMetadata (in target 'ZIPFoundation' from project 'ZIPFoundation')"
+        },
+        {
+          "line": 3818,
+          "text": "    cd /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/SourcePackages/checkouts/ZIPFoundation"
+        },
+        {
+          "line": 3819,
+          "text": "    /Applications/Xcode_27.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/appintentsmetadataprocessor --toolchain-dir /var/run/com.apple.security.cryptexd/mnt/com.apple.MobileAsset.MetalToolchain-v27.2.47.0.vjqOVy/Metal.xctoolchain --module-name ZIPFoundation --sdk-root /Applications/Xcode_27.2.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.2.sdk --xcode-version 27B52 --platform-family macOS --deployment-target 12.0 --bundle-identifier zipfoundation.ZIPFoundation --output /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Products/Debug/ZIPFoundation.appintents --target-triple arm64-apple-macos12.0 --binary-file /Us"
+        },
+        {
+          "line": 6829,
+          "text": "Copy /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Products/Debug/HanlinScriptCompilerTests.xctest/Contents/Resources/ZIPFoundation_ZIPFoundation.bundle /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Products/Debug/ZIPFoundation_ZIPFoundation.bundle (in target 'HanlinScriptCompilerTests-product' from project 'HanlinPlatform')"
+        },
+        {
+          "line": 6831,
+          "text": "    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Products/Debug/ZIPFoundation_ZIPFoundation.bundle /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Products/Debug/HanlinScriptCompilerTests.xctest/Contents/Resources"
+        },
+        {
+          "line": 6857,
+          "text": "    builtin-infoPlistUtility /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Intermediates.noindex/HanlinPlatform.build/Debug/HanlinScriptCompilerTests-p.build/empty-HanlinScriptCompilerTests.plist -producttype com.apple.product-type.bundle.unit-test -expandbuildsettings -platform macosx -scanforprivacyfile /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Products/Debug/HanlinScriptCompilerTests.xctest/Contents/Resources/HanlinPlatform_HanlinPlatformContracts.bundle -scanforprivacyfile /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Products/Debug/HanlinScriptCompilerTests.xctest/Contents/Resources"
+        },
+        {
+          "line": 9214,
+          "text": "Copy /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Products/Debug/HanlinScriptExtensionsTests.xctest/Contents/Resources/ZIPFoundation_ZIPFoundation.bundle /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Products/Debug/ZIPFoundation_ZIPFoundation.bundle (in target 'HanlinScriptExtensionsTests-product' from project 'HanlinPlatform')"
+        },
+        {
+          "line": 9216,
+          "text": "    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Products/Debug/ZIPFoundation_ZIPFoundation.bundle /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Products/Debug/HanlinScriptExtensionsTests.xctest/Contents/Resources"
+        },
+        {
+          "line": 9246,
+          "text": "    builtin-infoPlistUtility /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Intermediates.noindex/HanlinPlatform.build/Debug/HanlinScriptExtensionsTests-p.build/empty-HanlinScriptExtensionsTests.plist -producttype com.apple.product-type.bundle.unit-test -expandbuildsettings -platform macosx -scanforprivacyfile /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Products/Debug/HanlinScriptExtensionsTests.xctest/Contents/Resources/HanlinPlatform_HanlinPlatformContracts.bundle -scanforprivacyfile /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/MacDerivedData/Build/Products/Debug/HanlinScriptExtensionsTests.xctest/Contents/R"
+        }
+      ]
+    },
+    {
+      "command": "NativeSDKTests",
+      "exit_code": 0,
+      "stdout": {
+        "file": "20-NativeSDKTests.stdout.log",
+        "sha256": "4f7703ac057393676e1b25334b2ae8bb467b863bc8fc3da7560582af40636f67"
+      },
+      "root": [
+        "HanlinAgentCoreTests-product",
+        "HanlinAgentSDK"
+      ],
+      "graph_node_count": 40,
+      "target_graph": [
+        {
+          "target": [
+            "HanlinSDKPortableProof-product",
+            "HanlinAgentSDK"
+          ],
+          "dependencies": [
+            [
+              "HanlinHostContracts",
+              "HanlinAgentSDK"
+            ],
+            [
+              "JSON",
+              "HanlinAgentSDK"
+            ],
+            [
+              "JSONRegexRuntime",
+              "HanlinAgentSDK"
+            ],
+            [
+              "HanlinExactJSONSchema",
+              "HanlinAgentSDK"
+            ],
+            [
+              "HanlinAgentCore",
+              "HanlinAgentSDK"
+            ],
+            [
+              "HanlinPersistenceAdapters",
+              "HanlinAgentSDK"
+            ],
+            [
+              "HanlinSDKTestFixtures",
+              "HanlinAgentSDK"
+            ],
+            [
+              "HanlinPlatformContracts-product",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinChatCore-product",
+              "HanlinPlatform"
+            ],
+            [
+              "AISDKProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "SwiftAISDK-product",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinFixtureHost-product",
+            "HanlinAgentSDK"
+          ],
+          "dependencies": [
+            [
+              "HanlinHostContracts",
+              "HanlinAgentSDK"
+            ],
+            [
+              "JSON",
+              "HanlinAgentSDK"
+            ],
+            [
+              "JSONRegexRuntime",
+              "HanlinAgentSDK"
+            ],
+            [
+              "HanlinExactJSONSchema",
+              "HanlinAgentSDK"
+            ],
+            [
+              "HanlinAgentCore",
+              "HanlinAgentSDK"
+            ],
+            [
+              "HanlinPersistenceAdapters",
+              "HanlinAgentSDK"
+            ],
+            [
+              "HanlinSDKTestFixtures",
+              "HanlinAgentSDK"
+            ],
+            [
+              "HanlinPlatformContracts-product",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinChatCore-product",
+              "HanlinPlatform"
+            ],
+            [
+              "AISDKProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "SwiftAISDK-product",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinPersistenceAdapters-product",
+            "HanlinAgentSDK"
+          ],
+          "dependencies": [
+            [
+              "HanlinPersistenceAdapters",
+              "HanlinAgentSDK"
+            ],
+            [
+              "HanlinHostContracts",
+              "HanlinAgentSDK"
+            ],
+            [
+              "HanlinPlatformContracts-product",
+              "HanlinPlatform"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinAgentCore-product",
+            "HanlinAgentSDK"
+          ],
+          "dependencies": [
+            [
+              "HanlinAgentCore",
+              "HanlinAgentSDK"
+            ],
+            [
+              "HanlinHostContracts",
+              "HanlinAgentSDK"
+            ],
+            [
+              "JSON",
+              "HanlinAgentSDK"
+            ],
+            [
+              "JSONRegexRuntime",
+              "HanlinAgentSDK"
+            ],
+            [
+              "HanlinExactJSONSchema",
+              "HanlinAgentSDK"
+            ],
+            [
+              "HanlinPlatformContracts-product",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinChatCore-product",
+              "HanlinPlatform"
+            ],
+            [
+              "AISDKProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "SwiftAISDK-product",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinHostContracts-product",
+            "HanlinAgentSDK"
+          ],
+          "dependencies": [
+            [
+              "HanlinHostContracts",
+              "HanlinAgentSDK"
+            ],
+            [
+              "HanlinPlatformContracts-product",
+              "HanlinPlatform"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinAgentCoreTests-product",
+            "HanlinAgentSDK"
+          ],
+          "dependencies": [
+            [
+              "HanlinHostContracts",
+              "HanlinAgentSDK"
+            ],
+            [
+              "JSON",
+              "HanlinAgentSDK"
+            ],
+            [
+              "JSONRegexRuntime",
+              "HanlinAgentSDK"
+            ],
+            [
+              "HanlinExactJSONSchema",
+              "HanlinAgentSDK"
+            ],
+            [
+              "HanlinAgentCore",
+              "HanlinAgentSDK"
+            ],
+            [
+              "HanlinPersistenceAdapters",
+              "HanlinAgentSDK"
+            ],
+            [
+              "HanlinSDKTestFixtures",
+              "HanlinAgentSDK"
+            ],
+            [
+              "HanlinPlatformContracts-product",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinChatCore-product",
+              "HanlinPlatform"
+            ],
+            [
+              "AISDKProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "SwiftAISDK-product",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinSDKTestFixtures",
+            "HanlinAgentSDK"
+          ],
+          "dependencies": [
+            [
+              "HanlinHostContracts",
+              "HanlinAgentSDK"
+            ],
+            [
+              "HanlinPlatformContracts-product",
+              "HanlinPlatform"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinAgentCore",
+            "HanlinAgentSDK"
+          ],
+          "dependencies": [
+            [
+              "HanlinHostContracts",
+              "HanlinAgentSDK"
+            ],
+            [
+              "JSON",
+              "HanlinAgentSDK"
+            ],
+            [
+              "JSONRegexRuntime",
+              "HanlinAgentSDK"
+            ],
+            [
+              "HanlinExactJSONSchema",
+              "HanlinAgentSDK"
+            ],
+            [
+              "HanlinPlatformContracts-product",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinChatCore-product",
+              "HanlinPlatform"
+            ],
+            [
+              "AISDKProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "SwiftAISDK-product",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinChatCore-product",
+            "HanlinPlatform"
+          ],
+          "dependencies": [
+            [
+              "HanlinChatCore",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinPlatformContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "SwiftAISDK-product",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProviderUtils-product",
+              "SwiftAISDK"
+            ],
+            [
+              "OpenAIProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "AnthropicProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "GoogleProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "OpenAICompatibleProvider-product",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinChatCore",
+            "HanlinPlatform"
+          ],
+          "dependencies": [
+            [
+              "HanlinPlatformContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "SwiftAISDK-product",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProviderUtils-product",
+              "SwiftAISDK"
+            ],
+            [
+              "OpenAIProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "AnthropicProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "GoogleProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "OpenAICompatibleProvider-product",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "OpenAICompatibleProvider-product",
+            "SwiftAISDK"
+          ],
+          "dependencies": [
+            [
+              "OpenAICompatibleProvider",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProvider",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKZodAdapter",
+              "SwiftAISDK"
+            ],
+            [
+              "EventSourceParser",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProviderUtils",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "OpenAICompatibleProvider",
+            "SwiftAISDK"
+          ],
+          "dependencies": [
+            [
+              "AISDKProvider",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKZodAdapter",
+              "SwiftAISDK"
+            ],
+            [
+              "EventSourceParser",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProviderUtils",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "GoogleProvider-product",
+            "SwiftAISDK"
+          ],
+          "dependencies": [
+            [
+              "GoogleProvider",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProvider",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKZodAdapter",
+              "SwiftAISDK"
+            ],
+            [
+              "EventSourceParser",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProviderUtils",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "GoogleProvider",
+            "SwiftAISDK"
+          ],
+          "dependencies": [
+            [
+              "AISDKProvider",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKZodAdapter",
+              "SwiftAISDK"
+            ],
+            [
+              "EventSourceParser",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProviderUtils",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "AnthropicProvider-product",
+            "SwiftAISDK"
+          ],
+          "dependencies": [
+            [
+              "AnthropicProvider",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProvider",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKZodAdapter",
+              "SwiftAISDK"
+            ],
+            [
+              "EventSourceParser",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProviderUtils",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "AnthropicProvider",
+            "SwiftAISDK"
+          ],
+          "dependencies": [
+            [
+              "AISDKProvider",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKZodAdapter",
+              "SwiftAISDK"
+            ],
+            [
+              "EventSourceParser",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProviderUtils",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "OpenAIProvider-product",
+            "SwiftAISDK"
+          ],
+          "dependencies": [
+            [
+              "OpenAIProvider",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProvider",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKZodAdapter",
+              "SwiftAISDK"
+            ],
+            [
+              "EventSourceParser",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProviderUtils",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "OpenAIProvider",
+            "SwiftAISDK"
+          ],
+          "dependencies": [
+            [
+              "AISDKProvider",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKZodAdapter",
+              "SwiftAISDK"
+            ],
+            [
+              "EventSourceParser",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProviderUtils",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "AISDKProviderUtils-product",
+            "SwiftAISDK"
+          ],
+          "dependencies": [
+            [
+              "AISDKProviderUtils",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProvider",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKZodAdapter",
+              "SwiftAISDK"
+            ],
+            [
+              "EventSourceParser",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "AISDKProvider-product",
+            "SwiftAISDK"
+          ],
+          "dependencies": [
+            [
+              "AISDKProvider",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "SwiftAISDK-product",
+            "SwiftAISDK"
+          ],
+          "dependencies": [
+            [
+              "SwiftAISDK",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProvider",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKZodAdapter",
+              "SwiftAISDK"
+            ],
+            [
+              "EventSourceParser",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProviderUtils",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKJSONSchema",
+              "SwiftAISDK"
+            ],
+            [
+              "GatewayProvider",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "SwiftAISDK",
+            "SwiftAISDK"
+          ],
+          "dependencies": [
+            [
+              "AISDKProvider",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKZodAdapter",
+              "SwiftAISDK"
+            ],
+            [
+              "EventSourceParser",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProviderUtils",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKJSONSchema",
+              "SwiftAISDK"
+            ],
+            [
+              "GatewayProvider",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "GatewayProvider",
+            "SwiftAISDK"
+          ],
+          "dependencies": [
+            [
+              "AISDKProvider",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKZodAdapter",
+              "SwiftAISDK"
+            ],
+            [
+              "EventSourceParser",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProviderUtils",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "AISDKJSONSchema",
+            "SwiftAISDK"
+          ],
+          "dependencies": [
+            [
+              "AISDKProvider",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKZodAdapter",
+              "SwiftAISDK"
+            ],
+            [
+              "EventSourceParser",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProviderUtils",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "AISDKProviderUtils",
+            "SwiftAISDK"
+          ],
+          "dependencies": [
+            [
+              "AISDKProvider",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKZodAdapter",
+              "SwiftAISDK"
+            ],
+            [
+              "EventSourceParser",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "EventSourceParser",
+            "SwiftAISDK"
+          ],
+          "dependencies": []
+        },
+        {
+          "target": [
+            "AISDKZodAdapter",
+            "SwiftAISDK"
+          ],
+          "dependencies": [
+            [
+              "AISDKProvider",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "AISDKProvider",
+            "SwiftAISDK"
+          ],
+          "dependencies": []
+        },
+        {
+          "target": [
+            "HanlinExactJSONSchema",
+            "HanlinAgentSDK"
+          ],
+          "dependencies": [
+            [
+              "HanlinAgentSDK_HanlinExactJSONSchema",
+              "HanlinAgentSDK"
+            ],
+            [
+              "JSON",
+              "HanlinAgentSDK"
+            ],
+            [
+              "JSONRegexRuntime",
+              "HanlinAgentSDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinAgentSDK_HanlinExactJSONSchema",
+            "HanlinAgentSDK"
+          ],
+          "dependencies": []
+        },
+        {
+          "target": [
+            "JSONRegexRuntime",
+            "HanlinAgentSDK"
+          ],
+          "dependencies": [
+            [
+              "JSON",
+              "HanlinAgentSDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "JSON",
+            "HanlinAgentSDK"
+          ],
+          "dependencies": []
+        },
+        {
+          "target": [
+            "HanlinHostConcurrencyTests-product",
+            "HanlinAgentSDK"
+          ],
+          "dependencies": [
+            [
+              "HanlinHostContracts",
+              "HanlinAgentSDK"
+            ],
+            [
+              "HanlinPlatformContracts-product",
+              "HanlinPlatform"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinHostContractsTests-product",
+            "HanlinAgentSDK"
+          ],
+          "dependencies": [
+            [
+              "HanlinHostContracts",
+              "HanlinAgentSDK"
+            ],
+            [
+              "HanlinPlatformContracts-product",
+              "HanlinPlatform"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinPersistenceAdaptersTests-product",
+            "HanlinAgentSDK"
+          ],
+          "dependencies": [
+            [
+              "HanlinHostContracts",
+              "HanlinAgentSDK"
+            ],
+            [
+              "HanlinPersistenceAdapters",
+              "HanlinAgentSDK"
+            ],
+            [
+              "HanlinPlatformContracts-product",
+              "HanlinPlatform"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinPersistenceAdapters",
+            "HanlinAgentSDK"
+          ],
+          "dependencies": [
+            [
+              "HanlinHostContracts",
+              "HanlinAgentSDK"
+            ],
+            [
+              "HanlinPlatformContracts-product",
+              "HanlinPlatform"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinHostContracts",
+            "HanlinAgentSDK"
+          ],
+          "dependencies": [
+            [
+              "HanlinPlatformContracts-product",
+              "HanlinPlatform"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinPlatformContracts-product",
+            "HanlinPlatform"
+          ],
+          "dependencies": [
+            [
+              "HanlinPlatformContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinPlatform_HanlinPlatformContracts",
+              "HanlinPlatform"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinPlatformContracts",
+            "HanlinPlatform"
+          ],
+          "dependencies": [
+            [
+              "HanlinPlatform_HanlinPlatformContracts",
+              "HanlinPlatform"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinPlatform_HanlinPlatformContracts",
+            "HanlinPlatform"
+          ],
+          "dependencies": []
+        }
+      ],
+      "focused_closure": [
+        [
+          "AISDKJSONSchema",
+          "SwiftAISDK"
+        ],
+        [
+          "AISDKProvider",
+          "SwiftAISDK"
+        ],
+        [
+          "AISDKProvider-product",
+          "SwiftAISDK"
+        ],
+        [
+          "AISDKProviderUtils",
+          "SwiftAISDK"
+        ],
+        [
+          "AISDKProviderUtils-product",
+          "SwiftAISDK"
+        ],
+        [
+          "AISDKZodAdapter",
+          "SwiftAISDK"
+        ],
+        [
+          "AnthropicProvider",
+          "SwiftAISDK"
+        ],
+        [
+          "AnthropicProvider-product",
+          "SwiftAISDK"
+        ],
+        [
+          "EventSourceParser",
+          "SwiftAISDK"
+        ],
+        [
+          "GatewayProvider",
+          "SwiftAISDK"
+        ],
+        [
+          "GoogleProvider",
+          "SwiftAISDK"
+        ],
+        [
+          "GoogleProvider-product",
+          "SwiftAISDK"
+        ],
+        [
+          "HanlinAgentCore",
+          "HanlinAgentSDK"
+        ],
+        [
+          "HanlinAgentCoreTests-product",
+          "HanlinAgentSDK"
+        ],
+        [
+          "HanlinAgentSDK_HanlinExactJSONSchema",
+          "HanlinAgentSDK"
+        ],
+        [
+          "HanlinChatCore",
+          "HanlinPlatform"
+        ],
+        [
+          "HanlinChatCore-product",
+          "HanlinPlatform"
+        ],
+        [
+          "HanlinExactJSONSchema",
+          "HanlinAgentSDK"
+        ],
+        [
+          "HanlinHostContracts",
+          "HanlinAgentSDK"
+        ],
+        [
+          "HanlinPersistenceAdapters",
+          "HanlinAgentSDK"
+        ],
+        [
+          "HanlinPlatformContracts",
+          "HanlinPlatform"
+        ],
+        [
+          "HanlinPlatformContracts-product",
+          "HanlinPlatform"
+        ],
+        [
+          "HanlinPlatform_HanlinPlatformContracts",
+          "HanlinPlatform"
+        ],
+        [
+          "HanlinSDKTestFixtures",
+          "HanlinAgentSDK"
+        ],
+        [
+          "JSON",
+          "HanlinAgentSDK"
+        ],
+        [
+          "JSONRegexRuntime",
+          "HanlinAgentSDK"
+        ],
+        [
+          "OpenAICompatibleProvider",
+          "SwiftAISDK"
+        ],
+        [
+          "OpenAICompatibleProvider-product",
+          "SwiftAISDK"
+        ],
+        [
+          "OpenAIProvider",
+          "SwiftAISDK"
+        ],
+        [
+          "OpenAIProvider-product",
+          "SwiftAISDK"
+        ],
+        [
+          "SwiftAISDK",
+          "SwiftAISDK"
+        ],
+        [
+          "SwiftAISDK-product",
+          "SwiftAISDK"
+        ]
+      ],
+      "zip_in_focused_closure": false,
+      "zip_in_complete_build_graph": false,
+      "original_resolution_lines": [
+        {
+          "line": 13,
+          "text": "Updating from https://github.com/weichsel/ZIPFoundation.git"
+        },
+        {
+          "line": 17,
+          "text": "Checking out 0.9.21 of package \u2018ZIPFoundation\u2019"
+        },
+        {
+          "line": 22,
+          "text": "  ZIPFoundation: https://github.com/weichsel/ZIPFoundation.git @ 0.9.21"
+        },
+        {
+          "line": 26,
+          "text": "  SwiftAISDK: https://github.com/davidpovarsky/swift-ai-sdk.git @ 07431ab"
+        }
+      ],
+      "zip_outside_resolution": []
+    },
+    {
+      "command": "IOSBuild",
+      "exit_code": 0,
+      "stdout": {
+        "file": "22-IOSBuild.stdout.log",
+        "sha256": "3130f1009025aa693807ab50a890f863606393ddfb2403512e0ce73a4e470e46"
+      },
+      "root": [
+        "HanlinAgentCore-product",
+        "HanlinAgentSDK"
+      ],
+      "graph_node_count": 30,
+      "target_graph": [
+        {
+          "target": [
+            "HanlinAgentCore-product",
+            "HanlinAgentSDK"
+          ],
+          "dependencies": [
+            [
+              "HanlinAgentCore",
+              "HanlinAgentSDK"
+            ],
+            [
+              "HanlinHostContracts",
+              "HanlinAgentSDK"
+            ],
+            [
+              "JSON",
+              "HanlinAgentSDK"
+            ],
+            [
+              "JSONRegexRuntime",
+              "HanlinAgentSDK"
+            ],
+            [
+              "HanlinExactJSONSchema",
+              "HanlinAgentSDK"
+            ],
+            [
+              "HanlinPlatformContracts-product",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinChatCore-product",
+              "HanlinPlatform"
+            ],
+            [
+              "AISDKProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "SwiftAISDK-product",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinAgentCore",
+            "HanlinAgentSDK"
+          ],
+          "dependencies": [
+            [
+              "HanlinHostContracts",
+              "HanlinAgentSDK"
+            ],
+            [
+              "JSON",
+              "HanlinAgentSDK"
+            ],
+            [
+              "JSONRegexRuntime",
+              "HanlinAgentSDK"
+            ],
+            [
+              "HanlinExactJSONSchema",
+              "HanlinAgentSDK"
+            ],
+            [
+              "HanlinPlatformContracts-product",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinChatCore-product",
+              "HanlinPlatform"
+            ],
+            [
+              "AISDKProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "SwiftAISDK-product",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinChatCore-product",
+            "HanlinPlatform"
+          ],
+          "dependencies": [
+            [
+              "HanlinChatCore",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinPlatformContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "SwiftAISDK-product",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProviderUtils-product",
+              "SwiftAISDK"
+            ],
+            [
+              "OpenAIProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "AnthropicProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "GoogleProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "OpenAICompatibleProvider-product",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinChatCore",
+            "HanlinPlatform"
+          ],
+          "dependencies": [
+            [
+              "HanlinPlatformContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "SwiftAISDK-product",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProviderUtils-product",
+              "SwiftAISDK"
+            ],
+            [
+              "OpenAIProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "AnthropicProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "GoogleProvider-product",
+              "SwiftAISDK"
+            ],
+            [
+              "OpenAICompatibleProvider-product",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "OpenAICompatibleProvider-product",
+            "SwiftAISDK"
+          ],
+          "dependencies": [
+            [
+              "OpenAICompatibleProvider",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProvider",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKZodAdapter",
+              "SwiftAISDK"
+            ],
+            [
+              "EventSourceParser",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProviderUtils",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "OpenAICompatibleProvider",
+            "SwiftAISDK"
+          ],
+          "dependencies": [
+            [
+              "AISDKProvider",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKZodAdapter",
+              "SwiftAISDK"
+            ],
+            [
+              "EventSourceParser",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProviderUtils",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "GoogleProvider-product",
+            "SwiftAISDK"
+          ],
+          "dependencies": [
+            [
+              "GoogleProvider",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProvider",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKZodAdapter",
+              "SwiftAISDK"
+            ],
+            [
+              "EventSourceParser",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProviderUtils",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "GoogleProvider",
+            "SwiftAISDK"
+          ],
+          "dependencies": [
+            [
+              "AISDKProvider",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKZodAdapter",
+              "SwiftAISDK"
+            ],
+            [
+              "EventSourceParser",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProviderUtils",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "AnthropicProvider-product",
+            "SwiftAISDK"
+          ],
+          "dependencies": [
+            [
+              "AnthropicProvider",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProvider",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKZodAdapter",
+              "SwiftAISDK"
+            ],
+            [
+              "EventSourceParser",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProviderUtils",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "AnthropicProvider",
+            "SwiftAISDK"
+          ],
+          "dependencies": [
+            [
+              "AISDKProvider",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKZodAdapter",
+              "SwiftAISDK"
+            ],
+            [
+              "EventSourceParser",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProviderUtils",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "OpenAIProvider-product",
+            "SwiftAISDK"
+          ],
+          "dependencies": [
+            [
+              "OpenAIProvider",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProvider",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKZodAdapter",
+              "SwiftAISDK"
+            ],
+            [
+              "EventSourceParser",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProviderUtils",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "OpenAIProvider",
+            "SwiftAISDK"
+          ],
+          "dependencies": [
+            [
+              "AISDKProvider",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKZodAdapter",
+              "SwiftAISDK"
+            ],
+            [
+              "EventSourceParser",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProviderUtils",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "AISDKProviderUtils-product",
+            "SwiftAISDK"
+          ],
+          "dependencies": [
+            [
+              "AISDKProviderUtils",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProvider",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKZodAdapter",
+              "SwiftAISDK"
+            ],
+            [
+              "EventSourceParser",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "AISDKProvider-product",
+            "SwiftAISDK"
+          ],
+          "dependencies": [
+            [
+              "AISDKProvider",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "SwiftAISDK-product",
+            "SwiftAISDK"
+          ],
+          "dependencies": [
+            [
+              "SwiftAISDK",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProvider",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKZodAdapter",
+              "SwiftAISDK"
+            ],
+            [
+              "EventSourceParser",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProviderUtils",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKJSONSchema",
+              "SwiftAISDK"
+            ],
+            [
+              "GatewayProvider",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "SwiftAISDK",
+            "SwiftAISDK"
+          ],
+          "dependencies": [
+            [
+              "AISDKProvider",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKZodAdapter",
+              "SwiftAISDK"
+            ],
+            [
+              "EventSourceParser",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProviderUtils",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKJSONSchema",
+              "SwiftAISDK"
+            ],
+            [
+              "GatewayProvider",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "GatewayProvider",
+            "SwiftAISDK"
+          ],
+          "dependencies": [
+            [
+              "AISDKProvider",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKZodAdapter",
+              "SwiftAISDK"
+            ],
+            [
+              "EventSourceParser",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProviderUtils",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "AISDKJSONSchema",
+            "SwiftAISDK"
+          ],
+          "dependencies": [
+            [
+              "AISDKProvider",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKZodAdapter",
+              "SwiftAISDK"
+            ],
+            [
+              "EventSourceParser",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKProviderUtils",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "AISDKProviderUtils",
+            "SwiftAISDK"
+          ],
+          "dependencies": [
+            [
+              "AISDKProvider",
+              "SwiftAISDK"
+            ],
+            [
+              "AISDKZodAdapter",
+              "SwiftAISDK"
+            ],
+            [
+              "EventSourceParser",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "EventSourceParser",
+            "SwiftAISDK"
+          ],
+          "dependencies": []
+        },
+        {
+          "target": [
+            "AISDKZodAdapter",
+            "SwiftAISDK"
+          ],
+          "dependencies": [
+            [
+              "AISDKProvider",
+              "SwiftAISDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "AISDKProvider",
+            "SwiftAISDK"
+          ],
+          "dependencies": []
+        },
+        {
+          "target": [
+            "HanlinExactJSONSchema",
+            "HanlinAgentSDK"
+          ],
+          "dependencies": [
+            [
+              "HanlinAgentSDK_HanlinExactJSONSchema",
+              "HanlinAgentSDK"
+            ],
+            [
+              "JSON",
+              "HanlinAgentSDK"
+            ],
+            [
+              "JSONRegexRuntime",
+              "HanlinAgentSDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinAgentSDK_HanlinExactJSONSchema",
+            "HanlinAgentSDK"
+          ],
+          "dependencies": []
+        },
+        {
+          "target": [
+            "JSONRegexRuntime",
+            "HanlinAgentSDK"
+          ],
+          "dependencies": [
+            [
+              "JSON",
+              "HanlinAgentSDK"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "JSON",
+            "HanlinAgentSDK"
+          ],
+          "dependencies": []
+        },
+        {
+          "target": [
+            "HanlinHostContracts",
+            "HanlinAgentSDK"
+          ],
+          "dependencies": [
+            [
+              "HanlinPlatformContracts-product",
+              "HanlinPlatform"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinPlatformContracts-product",
+            "HanlinPlatform"
+          ],
+          "dependencies": [
+            [
+              "HanlinPlatformContracts",
+              "HanlinPlatform"
+            ],
+            [
+              "HanlinPlatform_HanlinPlatformContracts",
+              "HanlinPlatform"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinPlatformContracts",
+            "HanlinPlatform"
+          ],
+          "dependencies": [
+            [
+              "HanlinPlatform_HanlinPlatformContracts",
+              "HanlinPlatform"
+            ]
+          ]
+        },
+        {
+          "target": [
+            "HanlinPlatform_HanlinPlatformContracts",
+            "HanlinPlatform"
+          ],
+          "dependencies": []
+        }
+      ],
+      "focused_closure": [
+        [
+          "AISDKJSONSchema",
+          "SwiftAISDK"
+        ],
+        [
+          "AISDKProvider",
+          "SwiftAISDK"
+        ],
+        [
+          "AISDKProvider-product",
+          "SwiftAISDK"
+        ],
+        [
+          "AISDKProviderUtils",
+          "SwiftAISDK"
+        ],
+        [
+          "AISDKProviderUtils-product",
+          "SwiftAISDK"
+        ],
+        [
+          "AISDKZodAdapter",
+          "SwiftAISDK"
+        ],
+        [
+          "AnthropicProvider",
+          "SwiftAISDK"
+        ],
+        [
+          "AnthropicProvider-product",
+          "SwiftAISDK"
+        ],
+        [
+          "EventSourceParser",
+          "SwiftAISDK"
+        ],
+        [
+          "GatewayProvider",
+          "SwiftAISDK"
+        ],
+        [
+          "GoogleProvider",
+          "SwiftAISDK"
+        ],
+        [
+          "GoogleProvider-product",
+          "SwiftAISDK"
+        ],
+        [
+          "HanlinAgentCore",
+          "HanlinAgentSDK"
+        ],
+        [
+          "HanlinAgentCore-product",
+          "HanlinAgentSDK"
+        ],
+        [
+          "HanlinAgentSDK_HanlinExactJSONSchema",
+          "HanlinAgentSDK"
+        ],
+        [
+          "HanlinChatCore",
+          "HanlinPlatform"
+        ],
+        [
+          "HanlinChatCore-product",
+          "HanlinPlatform"
+        ],
+        [
+          "HanlinExactJSONSchema",
+          "HanlinAgentSDK"
+        ],
+        [
+          "HanlinHostContracts",
+          "HanlinAgentSDK"
+        ],
+        [
+          "HanlinPlatformContracts",
+          "HanlinPlatform"
+        ],
+        [
+          "HanlinPlatformContracts-product",
+          "HanlinPlatform"
+        ],
+        [
+          "HanlinPlatform_HanlinPlatformContracts",
+          "HanlinPlatform"
+        ],
+        [
+          "JSON",
+          "HanlinAgentSDK"
+        ],
+        [
+          "JSONRegexRuntime",
+          "HanlinAgentSDK"
+        ],
+        [
+          "OpenAICompatibleProvider",
+          "SwiftAISDK"
+        ],
+        [
+          "OpenAICompatibleProvider-product",
+          "SwiftAISDK"
+        ],
+        [
+          "OpenAIProvider",
+          "SwiftAISDK"
+        ],
+        [
+          "OpenAIProvider-product",
+          "SwiftAISDK"
+        ],
+        [
+          "SwiftAISDK",
+          "SwiftAISDK"
+        ],
+        [
+          "SwiftAISDK-product",
+          "SwiftAISDK"
+        ]
+      ],
+      "zip_in_focused_closure": false,
+      "zip_in_complete_build_graph": false,
+      "original_resolution_lines": [
+        {
+          "line": 9,
+          "text": "Fetching from https://github.com/weichsel/ZIPFoundation.git (cached)"
+        },
+        {
+          "line": 19,
+          "text": "Creating working copy of package \u2018ZIPFoundation\u2019"
+        },
+        {
+          "line": 21,
+          "text": "Checking out 0.9.21 of package \u2018ZIPFoundation\u2019"
+        },
+        {
+          "line": 39,
+          "text": "  ZIPFoundation: https://github.com/weichsel/ZIPFoundation.git @ 0.9.21"
+        },
+        {
+          "line": 40,
+          "text": "  SwiftAISDK: https://github.com/davidpovarsky/swift-ai-sdk.git @ 07431ab"
+        }
+      ],
+      "zip_outside_resolution": []
+    }
+  ],
+  "interpretation": "NativeCore11 ran with resolved ZIPFoundation0.9.19; NativeSDK4 and iOS build resolved0.9.21. ZIPFoundation is absent from each selected test/build target closure, and absent from the complete NativeSDK40 and IOSBuild30 target graphs. Whole Core73 graph includes ZIPFoundation for unrelated ScriptCompiler products. No pin change or replay has been performed."
+}

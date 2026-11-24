@@ -1,0 +1,54 @@
+[
+  {
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "Scripts/CI/IntegrationValidation",
+      "-p",
+      "test_project_graph.py",
+      "-v"
+    ],
+    "exitCode": 1,
+    "seconds": 0.697,
+    "log": "sdk-merge-check-1.log"
+  },
+  {
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "-v",
+      "test_project_graph.ProjectGraphTests.test_agent_sdk_test_import_requires_owning_application_product",
+      "test_project_graph.ProjectGraphTests.test_native_surfaces_share_only_miniapps_namespace"
+    ],
+    "cwd": "Scripts/CI/IntegrationValidation",
+    "exitCode": 0,
+    "seconds": 0.12,
+    "log": "sdk-merge-check-2.log"
+  },
+  {
+    "command": [
+      "python3",
+      "Scripts/SDK/generate_manifest.py",
+      "--check"
+    ],
+    "cwd": ".",
+    "exitCode": 0,
+    "seconds": 2.126,
+    "log": "sdk-merge-check-3.log"
+  },
+  {
+    "command": [
+      "python3",
+      "Scripts/SDK/update_project.py",
+      "--check"
+    ],
+    "cwd": ".",
+    "exitCode": 0,
+    "seconds": 0.568,
+    "log": "sdk-merge-check-4.log"
+  }
+]

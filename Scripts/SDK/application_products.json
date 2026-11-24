@@ -1,0 +1,206 @@
+{
+  "schemaVersion": 1,
+  "module": "AI_Hanlin",
+  "products": [
+    {
+      "product": "HanlinPresentationKit",
+      "package": "HanlinSDK"
+    },
+    {
+      "product": "HanlinRichUI",
+      "package": "HanlinSDK"
+    },
+    {
+      "product": "HanlinChatUI",
+      "package": "HanlinSDK"
+    },
+    {
+      "product": "A2UISwiftCore",
+      "package": "a2ui"
+    },
+    {
+      "product": "A2UISwiftUI",
+      "package": "a2ui"
+    },
+    {
+      "product": "BasicCatalog",
+      "package": "a2ui"
+    },
+    {
+      "product": "BasicCatalogSwiftUI",
+      "package": "a2ui"
+    },
+    {
+      "product": "SwiftTreeSitter",
+      "package": "swift-tree-sitter"
+    },
+    {
+      "product": "TreeSitter",
+      "package": "tree-sitter"
+    },
+    {
+      "product": "TreeSitterBash",
+      "package": "tree-sitter-bash"
+    },
+    {
+      "product": "HanlinSkillFormat",
+      "package": "HanlinSDK"
+    },
+    {
+      "product": "HanlinHostContracts",
+      "package": "HanlinSDK"
+    },
+    {
+      "product": "HanlinAgentCore",
+      "package": "HanlinSDK"
+    },
+    {
+      "product": "HanlinPersistenceAdapters",
+      "package": "HanlinSDK"
+    },
+    {
+      "product": "HanlinParityMiniApp",
+      "package": "HanlinSDK"
+    },
+    {
+      "product": "HanlinSefariaMiniApp",
+      "package": "HanlinSDK"
+    },
+    {
+      "product": "TorahLibraryKit",
+      "package": "HanlinSDK"
+    },
+    {
+      "product": "HanlinWikipediaMiniApp",
+      "package": "HanlinSDK"
+    },
+    {
+      "product": "HanlinTextStudioMiniApp",
+      "package": "HanlinSDK"
+    },
+    {
+      "product": "HanlinMiniAppCore",
+      "package": "HanlinSDK"
+    },
+    {
+      "product": "HanlinNativeScriptRuntime",
+      "package": "HanlinSDK"
+    },
+    {
+      "product": "HanlinExpoRuntime",
+      "package": "HanlinSDK"
+    },
+    {
+      "product": "HanlinExpoNativeAPI",
+      "package": "HanlinSDK"
+    },
+    {
+      "product": "HanlinScriptDeviceServices",
+      "package": "HanlinSDK"
+    },
+    {
+      "product": "HanlinScriptingApplicationRuntime",
+      "package": "HanlinSDK"
+    },
+    {
+      "product": "HanlinScriptExtensions",
+      "package": "HanlinSDK"
+    },
+    {
+      "product": "HanlinScriptingSDK",
+      "package": "HanlinSDK"
+    },
+    {
+      "product": "HanlinScriptStore",
+      "package": "HanlinSDK"
+    },
+    {
+      "product": "HanlinScriptCompiler",
+      "package": "HanlinSDK"
+    },
+    {
+      "product": "HanlinScriptContracts",
+      "package": "HanlinSDK"
+    },
+    {
+      "product": "HanlinQuickJS",
+      "package": "HanlinSDK"
+    },
+    {
+      "product": "HanlinPlatformContracts",
+      "package": "HanlinSDK"
+    },
+    {
+      "product": "IOSSystemLite",
+      "package": "HanlinSDK"
+    },
+    {
+      "product": "MCP",
+      "package": "swift-sdk"
+    },
+    {
+      "product": "SWCompression",
+      "package": "SWCompression"
+    },
+    {
+      "product": "Logging",
+      "package": "swift-log"
+    },
+    {
+      "product": "CoreXLSX",
+      "package": "CoreXLSX"
+    },
+    {
+      "product": "RichTextKit",
+      "package": "RichTextKit"
+    },
+    {
+      "product": "LaTeXSwiftUI",
+      "package": "LaTeXSwiftUI"
+    },
+    {
+      "product": "ZIPFoundation",
+      "package": "ZIPFoundation"
+    },
+    {
+      "product": "MarkdownUI",
+      "package": "MarkdownUI"
+    },
+    {
+      "product": "SwiftStreamingMarkdown",
+      "package": "hanlin-streaming-markdown"
+    },
+    {
+      "product": "SwiftSoup",
+      "package": "SwiftSoup"
+    },
+    {
+      "product": "LLM",
+      "package": "LLM.swift"
+    },
+    {
+      "product": "HanlinProductSplit",
+      "package": "HanlinSDK"
+    },
+    {
+      "product": "HanlinA2UI",
+      "package": "HanlinSDK"
+    },
+    {
+      "product": "HanlinLocalization",
+      "package": "HanlinSDK"
+    },
+    {
+      "product": "HanlinExtensionContracts",
+      "package": "HanlinSDK"
+    },
+    {
+      "product": "HanlinTranslationUI",
+      "package": "HanlinSDK"
+    },
+    {
+      "product": "HanlinExpoWidgetsOriginal",
+      "package": "HanlinSDK"
+    }
+  ]
+}

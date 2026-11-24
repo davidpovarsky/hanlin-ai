@@ -1,0 +1,30 @@
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der --strip-disallowed-xattrs /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/AI_HLYUITests-Runner.app
+/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/AI_HLYUITests-Runner.app: replacing existing signature
+
+RegisterExecutionPolicyException /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/AI_HLYUITests-Runner.app/PlugIns/AI_HLYUITests.xctest (in target 'AI_HLYUITests' from project 'AI_HLY')
+    cd /Users/runner/work/hanlin-ai/hanlin-ai
+    builtin-RegisterExecutionPolicyException /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/AI_HLYUITests-Runner.app/PlugIns/AI_HLYUITests.xctest
+
+Touch /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/AI_HLYUITests-Runner.app/PlugIns/AI_HLYUITests.xctest (in target 'AI_HLYUITests' from project 'AI_HLY')
+    cd /Users/runner/work/hanlin-ai/hanlin-ai
+    /usr/bin/touch -c /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/AI_HLYUITests-Runner.app/PlugIns/AI_HLYUITests.xctest
+
+PruneExplicitPrecompiledModules /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/SDKExplicitPrecompiledModules
+
+PruneExplicitPrecompiledModules /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/ExplicitPrecompiledModules
+
+PruneExplicitPrecompiledModules /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules
+
+/Users/runner/work/hanlin-ai/hanlin-ai/build/SourcePackages/checkouts/swift-cmark/Package.swift: warning: DEFINES_MODULE was set, but no umbrella header could be found to generate the module map (in target 'cmark-gfm' from project 'cmark-gfm')
+/Users/runner/work/hanlin-ai/hanlin-ai/Package.swift: warning: DEFINES_MODULE was set, but no umbrella header could be found to generate the module map (in target 'HanlinExpoWorklets' from project 'HanlinSDK')
+note: Run script build phase 'Generate NativeScript metadata' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'AI_Hanlin' from project 'AI_HLY')
+note: Run script build phase 'Process Python libraries' will be run during every build because the option to run the script phase "Based on dependency analysis" is unchecked. (in target 'AI_Hanlin' from project 'AI_HLY')
+/Users/runner/work/hanlin-ai/hanlin-ai/Package.swift: warning: DEFINES_MODULE was set, but no umbrella header could be found to generate the module map (in target 'HanlinNativeScriptCoreSupport' from project 'HanlinSDK')
+/Users/runner/work/hanlin-ai/hanlin-ai/Package.swift: warning: DEFINES_MODULE was set, but no umbrella header could be found to generate the module map (in target 'HanlinExpoNativeAPICore' from project 'HanlinSDK')
+
+Result bundle written to path:
+	/Users/runner/work/hanlin-ai/hanlin-ai/build/app-split-evidence/paired-product/AIBuild.xcresult
+
+** TEST BUILD SUCCEEDED **
+
+Resolve Package Graph

@@ -1,0 +1,863 @@
+Command line invocation:
+    /Applications/Xcode_27.2.app/Contents/Developer/usr/bin/xcodebuild -project AI_HLY.xcodeproj -destination "platform=iOS Simulator,id=554B2148-31B2-4079-B9A4-295CFC33D2EE" -parallel-testing-enabled NO -derivedDataPath /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData -clonedSourcePackagesDirPath /Users/runner/work/hanlin-ai/hanlin-ai/build/SourcePackages -skipPackagePluginValidation -skipMacroValidation CODE_SIGNING_ALLOWED=YES CODE_SIGNING_REQUIRED=YES CODE_SIGN_IDENTITY=- -scheme AI_HLY test-without-building -resultBundlePath /Users/runner/work/hanlin-ai/hanlin-ai/build/app-split-evidence/paired-product/Paired.xcresult -test-timeouts-enabled YES -maximum-test-execution-time-allowance 600 "-only-testing:AI_HLYUITests/HanlinPairedProductUITests"
+
+Build settings from command line:
+    CODE_SIGN_IDENTITY = -
+    CODE_SIGNING_ALLOWED = YES
+    CODE_SIGNING_REQUIRED = YES
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  SwiftSoup: https://github.com/scinfu/SwiftSoup @ bba848d
+  RichTextKit: https://github.com/danielsaidi/RichTextKit.git @ 8aa44cf
+  swift-syntax: https://github.com/swiftlang/swift-syntax.git @ 603.0.2
+  HighlightSwift: https://github.com/appstefan/highlightswift @ 99c431b
+  mcp-swift-sdk: https://github.com/modelcontextprotocol/swift-sdk.git @ a0ae212
+  swift-atomics: https://github.com/apple/swift-atomics.git @ 1.3.0
+  swift-json-schema: https://github.com/ajevans99/swift-json-schema @ 0.13.2
+  SwiftAISDK: https://github.com/davidpovarsky/swift-ai-sdk.git @ e7bf341
+  NativeScriptSDK: https://github.com/NativeScript/ios-spm.git @ 9.1.0
+  NetworkImage: https://github.com/gonzalezreal/NetworkImage @ 6.0.1
+  SwiftStreamingMarkdown: https://github.com/davidpovarsky/hanlin-streaming-markdown @ 5cbb4b6
+  ZIPFoundation: https://github.com/weichsel/ZIPFoundation @ 0.9.19
+  SwiftUI-Shimmer: https://github.com/markiv/SwiftUI-Shimmer @ 1.5.1
+  A2UISwiftCore: https://github.com/a2ui-project/a2ui @ 3ed9601
+  HTMLEntities: https://github.com/Kitura/swift-html-entities @ 4.0.1
+  swift-argument-parser: https://github.com/apple/swift-argument-parser @ 1.8.2
+  iosMath: https://github.com/junyan72/iosMath @ ba9ab77
+  SwiftTreeSitter: https://github.com/tree-sitter/swift-tree-sitter @ 08ef81e
+  TreeSitter: https://github.com/tree-sitter/tree-sitter @ da6fe9b
+  EventSource: https://github.com/mattt/eventsource.git @ 1.1.0
+  SwiftDraw: https://github.com/swhitty/SwiftDraw @ 0.21.0
+  swift-collections: https://github.com/apple/swift-collections.git @ 1.3.0
+  swift-markdown: https://github.com/swiftlang/swift-markdown.git @ 0.7.3
+  XMLCoder: https://github.com/maxdesiatov/XMLCoder.git @ 0.14.0
+  LLM: https://github.com/eastriverlee/LLM.swift/ @ 4b25178
+  swift-nio: https://github.com/apple/swift-nio.git @ 2.94.0
+  SwiftyJSON: https://github.com/SwiftyJSON/SwiftyJSON.git @ 5.0.1
+  Yams: https://github.com/jpsim/Yams.git @ 6.2.2
+  swift-system: https://github.com/apple/swift-system.git @ 1.4.0
+  CoreXLSX: https://github.com/CoreOffice/CoreXLSX @ 1391f38
+  TreeSitterBash: https://github.com/tree-sitter/tree-sitter-bash @ a06c2e4
+  Equatable: https://github.com/ordo-one/equatable @ 1.4.1
+  HanlinSDK: /Users/runner/work/hanlin-ai/hanlin-ai @ local
+  MathJaxSwift: https://github.com/colinc86/MathJaxSwift @ 3.4.0
+  swift-log: https://github.com/apple/swift-log.git @ 96a2f8a
+  LaTeXSwiftUI: https://github.com/colinc86/LaTeXSwiftUI @ c45e0fd
+  SWCompression: https://github.com/tsolomko/SWCompression.git @ c729f0b
+  BitByteData: https://github.com/tsolomko/BitByteData @ 2.1.0
+  swift-markdown-ui: https://github.com/gonzalezreal/MarkdownUI.git @ 5f61335
+  cmark-gfm: https://github.com/swiftlang/swift-cmark @ 0.9.0
+
+Writing result bundle at path:
+	/Users/runner/work/hanlin-ai/hanlin-ai/build/app-split-evidence/paired-product/Paired.xcresult
+
+Resolve Package Graph
+2026-11-23 21:39:53.948616+0000 AI_HLYUITests-Runner[66702:401855] [Default] Running tests...
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-11-23 21:40:11.535.
+Test Suite 'AI_HLYUITests.xctest' started at 2026-11-23 21:40:11.542.
+Test Suite 'HanlinPairedProductUITests' started at 2026-11-23 21:40:11.543.
+Test Case '-[AI_HLYUITests.HanlinPairedProductUITests testCompanionCancellationReturnsWithoutChangingPrivateState]' started.
+    t =     0.02s Start Test at 2026-11-23 21:40:11.563
+    t =     0.96s Set Up
+    t =     0.96s Open com.itorah.hanlinminiapps
+    t =     0.96s     Launch com.itorah.hanlinminiapps
+2026-11-23 21:40:14.587 xcodebuild[62488:391872] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-23 21:40:14.587 xcodebuild[62488:391872] [MT] IDELaunchParametersSnapshot: no debugger version
+objc[66702]: Class UIAccessibilityLoaderWebShared is implemented in both /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.tH5ZPN/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x105270310) and /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.tH5ZPN/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x1052a4398). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+
+Resolve Package Graph
+    t =    16.36s         Setting up automation session
+
+    t =    25.39s         Wait for com.itorah.hanlinminiapps to idle
+    t =    29.45s Waiting 45.0s for "hanlin-package-card-Swift Parity" Any to exist
+    t =    30.50s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-card-Swift Parity" Any`
+    t =    30.50s         Checking existence of `"hanlin-package-card-Swift Parity" Any`
+    t =    32.59s Terminate com.itorah.hanlinminiapps:67452
+    t =    33.64s Open com.itorah.chavrusachat
+    t =    33.64s     Launch com.itorah.chavrusachat
+2026-11-23 21:40:45.564 xcodebuild[62488:391872] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-23 21:40:45.564 xcodebuild[62488:391872] [MT] IDELaunchParametersSnapshot: no debugger version
+Resolve Package Graph
+    t =    52.36s         Setting up automation session
+    t =    63.94s         Wait for com.itorah.chavrusachat to idle
+    t =    70.67s Waiting 10.0s for "hanlin-compact-view-all-button" Button to exist
+    t =    71.71s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-compact-view-all-button" Button`
+    t =    71.71s         Checking existence of `"hanlin-compact-view-all-button" Button`
+    t =    78.78s Waiting 10.0s for "hanlin-compact-recent-row-0" Button to exist
+    t =    79.83s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-compact-recent-row-0" Button`
+    t =    79.83s         Checking existence of `"hanlin-compact-recent-row-0" Button`
+    t =    80.41s Find the "hanlin-compact-recent-row-0" Button
+    t =    80.96s Tap "hanlin-compact-recent-row-0" Button
+    t =    80.96s     Wait for com.itorah.chavrusachat to idle
+    t =    80.96s     Find the "hanlin-compact-recent-row-0" Button
+    t =    81.64s     Check for interrupting elements affecting "hanlin-compact-recent-row-0" Button
+    t =    81.87s     Synthesize event
+    t =    82.55s     Wait for com.itorah.chavrusachat to idle
+
+    t =    87.14s Checking existence of `"hanlin-chat-input" TextView`
+    t =    87.51s Waiting 20.0s for "hanlin-chat-input" TextView to exist
+    t =    88.54s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-chat-input" TextView`
+    t =    88.54s         Checking existence of `"hanlin-chat-input" TextView`
+    t =    88.94s Waiting 10.0s for "hanlin-phase2-chat-id" StaticText to exist
+    t =    89.97s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-phase2-chat-id" StaticText`
+    t =    89.97s         Checking existence of `"hanlin-phase2-chat-id" StaticText`
+    t =    90.33s Find the "hanlin-phase2-chat-id" StaticText
+    t =    90.66s Checking existence of `"hanlin-chat-input" TextView`
+    t =    91.78s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "hanlin-chat-input" TextView`
+    t =    91.79s     Checking existence of `"hanlin-chat-input" TextView`
+    t =    91.91s     Find the "hanlin-chat-input" TextView
+    t =    91.99s     Find the "hanlin-chat-input" TextView
+    t =    92.27s Tap "hanlin-chat-input" TextView
+    t =    92.27s     Wait for com.itorah.chavrusachat to idle
+    t =    92.28s     Find the "hanlin-chat-input" TextView
+    t =    92.37s     Check for interrupting elements affecting "hanlin-chat-input" TextView
+    t =    92.53s     Synthesize event
+    t =    92.87s     Wait for com.itorah.chavrusachat to idle
+    t =   101.39s Checking `Expect predicate `value != "Message"` for object "hanlin-chat-input" TextView`
+    t =   101.40s     Find the "hanlin-chat-input" TextView
+    t =   105.94s Type 'PAIRED' into "hanlin-chat-input" TextView
+    t =   105.94s     Wait for com.itorah.chavrusachat to idle
+    t =   105.95s     Find the "hanlin-chat-input" TextView
+    t =   106.99s     Check for interrupting elements affecting "hanlin-chat-input" TextView
+    t =   108.61s     Synthesize event
+    t =   109.07s     Wait for com.itorah.chavrusachat to idle
+    t =   110.36s Checking `Expect predicate `value == "PAIRED"` for object "hanlin-chat-input" TextView`
+    t =   110.36s     Find the "hanlin-chat-input" TextView
+    t =   110.82s Type '_' into "hanlin-chat-input" TextView
+    t =   110.82s     Wait for com.itorah.chavrusachat to idle
+    t =   110.82s     Find the "hanlin-chat-input" TextView
+    t =   111.34s     Check for interrupting elements affecting "hanlin-chat-input" TextView
+    t =   111.48s     Synthesize event
+    t =   111.72s     Wait for com.itorah.chavrusachat to idle
+    t =   112.79s Checking `Expect predicate `value == "PAIRED_"` for object "hanlin-chat-input" TextView`
+    t =   112.79s     Find the "hanlin-chat-input" TextView
+    t =   113.55s Type 'CANCEL' into "hanlin-chat-input" TextView
+    t =   113.55s     Wait for com.itorah.chavrusachat to idle
+    t =   113.56s     Find the "hanlin-chat-input" TextView
+    t =   113.97s     Check for interrupting elements affecting "hanlin-chat-input" TextView
+    t =   114.21s     Synthesize event
+    t =   114.61s     Wait for com.itorah.chavrusachat to idle
+    t =   115.65s Checking `Expect predicate `value == "PAIRED_CANCEL"` for object "hanlin-chat-input" TextView`
+    t =   115.65s     Find the "hanlin-chat-input" TextView
+    t =   116.00s Type '_' into "hanlin-chat-input" TextView
+    t =   116.00s     Wait for com.itorah.chavrusachat to idle
+    t =   116.01s     Find the "hanlin-chat-input" TextView
+    t =   116.58s     Check for interrupting elements affecting "hanlin-chat-input" TextView
+    t =   116.80s     Synthesize event
+    t =   117.05s     Wait for com.itorah.chavrusachat to idle
+    t =   118.10s Checking `Expect predicate `value == "PAIRED_CANCEL_"` for object "hanlin-chat-input" TextView`
+    t =   118.11s     Find the "hanlin-chat-input" TextView
+    t =   118.74s Type '30110A4E-F4B' into "hanlin-chat-input" TextView
+    t =   118.74s     Wait for com.itorah.chavrusachat to idle
+    t =   118.74s     Find the "hanlin-chat-input" TextView
+    t =   119.16s     Check for interrupting elements affecting "hanlin-chat-input" TextView
+    t =   119.26s     Synthesize event
+    t =   119.70s     Wait for com.itorah.chavrusachat to idle
+    t =   120.83s Checking `Expect predicate `value == "PAIRED_CANCEL_30110A4E-F4B"` for object "hanlin-chat-input" TextView`
+    t =   120.83s     Find the "hanlin-chat-input" TextView
+    t =   121.49s Type '7-4C3F-BAE4-' into "hanlin-chat-input" TextView
+    t =   121.49s     Wait for com.itorah.chavrusachat to idle
+    t =   121.51s     Find the "hanlin-chat-input" TextView
+    t =   122.28s     Check for interrupting elements affecting "hanlin-chat-input" TextView
+    t =   122.49s     Synthesize event
+    t =   122.92s     Wait for com.itorah.chavrusachat to idle
+    t =   123.96s Checking `Expect predicate `value == "PAIRED_CANCEL_30110A4E-F4B7-4C3F-BAE4-"` for object "hanlin-chat-input" TextView`
+    t =   123.96s     Find the "hanlin-chat-input" TextView
+    t =   124.23s Type 'D155611102B9' into "hanlin-chat-input" TextView
+    t =   124.23s     Wait for com.itorah.chavrusachat to idle
+    t =   124.24s     Find the "hanlin-chat-input" TextView
+    t =   124.65s     Check for interrupting elements affecting "hanlin-chat-input" TextView
+    t =   124.85s     Synthesize event
+    t =   125.28s     Wait for com.itorah.chavrusachat to idle
+    t =   126.36s Checking `Expect predicate `value == "PAIRED_CANCEL_30110A4E-F4B7-4C3F-BAE4-D155611102B9"` for object "hanlin-chat-input" TextView`
+    t =   126.37s     Find the "hanlin-chat-input" TextView
+    t =   126.69s Find the "hanlin-chat-input" TextView
+    t =   128.03s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "hanlin-chat-send" Any`
+    t =   128.03s     Checking existence of `"hanlin-chat-send" Any`
+    t =   129.68s     Find the "hanlin-chat-send" Any
+    t =   130.31s     Find the "hanlin-chat-send" Button
+    t =   130.89s Tap "hanlin-chat-send" Button
+    t =   130.89s     Wait for com.itorah.chavrusachat to idle
+    t =   130.89s     Find the "hanlin-chat-send" Button
+    t =   131.54s     Check for interrupting elements affecting "hanlin-chat-send" Button
+    t =   131.81s     Synthesize event
+    t =   132.16s     Wait for com.itorah.chavrusachat to idle
+<unknown>:0: warning: -[AI_HLYUITests.HanlinPairedProductUITests testCompanionCancellationReturnsWithoutChangingPrivateState] : This method can lead to UI unresponsiveness if called on the main thread. Consider using the asynchronous activate/deactivate API instead for calls from the main thread.
+<unknown>:0: warning: -[AI_HLYUITests.HanlinPairedProductUITests testCompanionCancellationReturnsWithoutChangingPrivateState] : This method can lead to UI unresponsiveness if called on the main thread while the audio session is active.
+    t =   134.72s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "hanlin-tool-consent-review-toggle" Any`
+    t =   134.72s     Checking existence of `"hanlin-tool-consent-review-toggle" Any`
+    t =   137.00s     Capturing element debug description
+    t =   137.72s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "hanlin-tool-consent-review-toggle" Any`
+    t =   137.73s     Checking existence of `"hanlin-tool-consent-review-toggle" Any`
+    t =   141.09s     Capturing element debug description
+    t =   141.71s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "hanlin-tool-consent-review-toggle" Any`
+    t =   141.72s     Checking existence of `"hanlin-tool-consent-review-toggle" Any`
+    t =   144.39s     Find the "hanlin-tool-consent-review-toggle" Any
+    t =   147.22s     Find the "hanlin-tool-consent-review-toggle" Button
+    t =   149.96s     Capturing element debug description
+    t =   151.06s         Requesting snapshot of accessibility hierarchy for app with pid 68226
+    t =   151.47s         Requesting snapshot of accessibility hierarchy for app with pid 68226
+    t =   151.69s         Find: Descendants matching type Any
+    t =   151.69s         Find: Elements matching predicate '"hanlin-tool-consent-review-toggle" IN identifiers'
+    t =   151.70s         Requesting snapshot of accessibility hierarchy for app with pid 68226
+    t =   151.91s         Find: Descendants matching type Any
+    t =   151.91s         Requesting snapshot of accessibility hierarchy for app with pid 68226
+    t =   156.72s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "hanlin-tool-consent-review-toggle" Any`
+    t =   156.72s     Checking existence of `"hanlin-tool-consent-review-toggle" Button`
+    t =   158.76s     Find the "hanlin-tool-consent-review-toggle" Button
+    t =   159.96s     Find the "hanlin-tool-consent-review-toggle" Button
+    t =   161.24s     Capturing element debug description
+    t =   161.80s         Requesting snapshot of accessibility hierarchy for app with pid 68226
+    t =   162.24s         Requesting snapshot of accessibility hierarchy for app with pid 68226
+    t =   162.64s         Find: Descendants matching type Any
+    t =   162.64s         Find: Elements matching predicate '"hanlin-tool-consent-review-toggle" IN identifiers'
+    t =   162.65s         Requesting snapshot of accessibility hierarchy for app with pid 68226
+    t =   162.90s         Find: Descendants matching type Any
+    t =   162.91s         Requesting snapshot of accessibility hierarchy for app with pid 68226
+    t =   166.71s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "hanlin-tool-consent-review-toggle" Any`
+    t =   166.71s     Checking existence of `"hanlin-tool-consent-review-toggle" Button`
+    t =   169.33s     Find the "hanlin-tool-consent-review-toggle" Button
+    t =   170.78s     Find the "hanlin-tool-consent-review-toggle" Button
+    t =   175.10s     Requesting snapshot of accessibility hierarchy for app with pid 68226
+/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinPairedProductUITests.swift:220: error: -[AI_HLYUITests.HanlinPairedProductUITests testCompanionCancellationReturnsWithoutChangingPrivateState] : Failed to determine hittability of "hanlin-tool-consent-review-toggle" Button: Activation point invalid and no suggested hit points based on element frame
+    t =   177.60s     Capturing element debug description
+    t =   177.76s         Requesting snapshot of accessibility hierarchy for app with pid 68226
+    t =   178.11s         Requesting snapshot of accessibility hierarchy for app with pid 68226
+    t =   178.36s         Find: Descendants matching type Any
+    t =   178.36s         Find: Elements matching predicate '"hanlin-tool-consent-review-toggle" IN identifiers'
+    t =   178.37s         Requesting snapshot of accessibility hierarchy for app with pid 68226
+    t =   178.63s         Find: Descendants matching type Any
+    t =   178.64s         Requesting snapshot of accessibility hierarchy for app with pid 68226
+    t =   179.88s Tear Down
+    t =   179.88s     Find the Target Application 'com.itorah.chavrusachat'
+    t =   181.61s     Added attachment named 'AI-paired-product'
+    t =   181.61s     Requesting snapshot of accessibility hierarchy for app with pid 68226
+    t =   182.64s     Requesting snapshot of accessibility hierarchy for app with pid 68226
+    t =   182.87s     Added attachment named 'AI-paired-accessibility'
+    t =   182.88s     Terminate com.itorah.chavrusachat:68226
+Test Case '-[AI_HLYUITests.HanlinPairedProductUITests testCompanionCancellationReturnsWithoutChangingPrivateState]' failed (184.762 seconds).
+Test Case '-[AI_HLYUITests.HanlinPairedProductUITests testCompanionReturnsActualPrivateValueToOriginalChat]' started.
+    t =     0.00s Start Test at 2026-11-23 21:43:16.327
+    t =     0.19s Set Up
+    t =     0.19s Open com.itorah.hanlinminiapps
+    t =     0.19s     Launch com.itorah.hanlinminiapps
+2026-11-23 21:43:16.744 xcodebuild[62488:391872] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-23 21:43:16.744 xcodebuild[62488:391872] [MT] IDELaunchParametersSnapshot: no debugger version
+Resolve Package Graph
+    t =     1.67s         Setting up automation session
+    t =    11.80s         Wait for com.itorah.hanlinminiapps to idle
+    t =    14.03s Waiting 45.0s for "hanlin-package-card-Swift Parity" Any to exist
+    t =    15.05s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-card-Swift Parity" Any`
+    t =    15.05s         Checking existence of `"hanlin-package-card-Swift Parity" Any`
+    t =    16.15s Terminate com.itorah.hanlinminiapps:72126
+    t =    17.18s Open com.itorah.chavrusachat
+    t =    17.18s     Launch com.itorah.chavrusachat
+2026-11-23 21:43:33.535 xcodebuild[62488:391872] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-23 21:43:33.539 xcodebuild[62488:391872] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =    17.79s         Setting up automation session
+
+Resolve Package Graph
+    t =    30.06s         Wait for com.itorah.chavrusachat to idle
+    t =    35.93s Waiting 10.0s for "hanlin-compact-view-all-button" Button to exist
+    t =    36.98s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-compact-view-all-button" Button`
+    t =    36.98s         Checking existence of `"hanlin-compact-view-all-button" Button`
+    t =    39.86s Waiting 10.0s for "hanlin-compact-recent-row-0" Button to exist
+    t =    40.86s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-compact-recent-row-0" Button`
+    t =    40.86s         Checking existence of `"hanlin-compact-recent-row-0" Button`
+
+    t =    43.64s Find the "hanlin-compact-recent-row-0" Button
+    t =    44.51s Tap "hanlin-compact-recent-row-0" Button
+    t =    44.51s     Wait for com.itorah.chavrusachat to idle
+    t =    44.51s     Find the "hanlin-compact-recent-row-0" Button
+    t =    44.90s     Check for interrupting elements affecting "hanlin-compact-recent-row-0" Button
+    t =    45.03s     Synthesize event
+    t =    45.47s     Wait for com.itorah.chavrusachat to idle
+    t =    46.80s Checking existence of `"hanlin-chat-input" TextView`
+    t =    48.23s Waiting 20.0s for "hanlin-chat-input" TextView to exist
+    t =    49.24s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-chat-input" TextView`
+    t =    49.25s         Checking existence of `"hanlin-chat-input" TextView`
+    t =    49.37s Waiting 10.0s for "hanlin-phase2-chat-id" StaticText to exist
+    t =    50.41s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-phase2-chat-id" StaticText`
+    t =    50.42s         Checking existence of `"hanlin-phase2-chat-id" StaticText`
+    t =    50.67s Find the "hanlin-phase2-chat-id" StaticText
+    t =    50.95s Checking existence of `"hanlin-chat-input" TextView`
+    t =    52.04s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "hanlin-chat-input" TextView`
+    t =    52.04s     Checking existence of `"hanlin-chat-input" TextView`
+    t =    52.14s     Find the "hanlin-chat-input" TextView
+    t =    52.19s     Find the "hanlin-chat-input" TextView
+    t =    52.28s Tap "hanlin-chat-input" TextView
+    t =    52.28s     Wait for com.itorah.chavrusachat to idle
+    t =    52.28s     Find the "hanlin-chat-input" TextView
+    t =    52.40s     Check for interrupting elements affecting "hanlin-chat-input" TextView
+    t =    52.51s     Synthesize event
+    t =    52.83s     Wait for com.itorah.chavrusachat to idle
+    t =    56.27s Checking `Expect predicate `value != "Message"` for object "hanlin-chat-input" TextView`
+    t =    56.27s     Find the "hanlin-chat-input" TextView
+    t =    56.58s Type 'PAIRED' into "hanlin-chat-input" TextView
+    t =    56.58s     Wait for com.itorah.chavrusachat to idle
+    t =    56.58s     Find the "hanlin-chat-input" TextView
+    t =    56.85s     Check for interrupting elements affecting "hanlin-chat-input" TextView
+    t =    57.09s     Synthesize event
+    t =    57.44s     Wait for com.itorah.chavrusachat to idle
+    t =    58.51s Checking `Expect predicate `value == "PAIRED"` for object "hanlin-chat-input" TextView`
+    t =    58.51s     Find the "hanlin-chat-input" TextView
+    t =    58.92s Type '_' into "hanlin-chat-input" TextView
+    t =    58.92s     Wait for com.itorah.chavrusachat to idle
+    t =    58.97s     Find the "hanlin-chat-input" TextView
+    t =    59.25s     Check for interrupting elements affecting "hanlin-chat-input" TextView
+    t =    59.39s     Synthesize event
+    t =    59.62s     Wait for com.itorah.chavrusachat to idle
+    t =    60.66s Checking `Expect predicate `value == "PAIRED_"` for object "hanlin-chat-input" TextView`
+    t =    60.66s     Find the "hanlin-chat-input" TextView
+    t =    60.85s Type 'OPEN' into "hanlin-chat-input" TextView
+    t =    60.85s     Wait for com.itorah.chavrusachat to idle
+    t =    60.85s     Find the "hanlin-chat-input" TextView
+    t =    61.17s     Check for interrupting elements affecting "hanlin-chat-input" TextView
+    t =    61.36s     Synthesize event
+    t =    61.72s     Wait for com.itorah.chavrusachat to idle
+    t =    62.73s Checking `Expect predicate `value == "PAIRED_OPEN"` for object "hanlin-chat-input" TextView`
+    t =    62.73s     Find the "hanlin-chat-input" TextView
+    t =    62.93s Type '_' into "hanlin-chat-input" TextView
+    t =    62.93s     Wait for com.itorah.chavrusachat to idle
+    t =    62.93s     Find the "hanlin-chat-input" TextView
+    t =    63.25s     Check for interrupting elements affecting "hanlin-chat-input" TextView
+    t =    63.39s     Synthesize event
+    t =    63.64s     Wait for com.itorah.chavrusachat to idle
+    t =    64.71s Checking `Expect predicate `value == "PAIRED_OPEN_"` for object "hanlin-chat-input" TextView`
+    t =    64.71s     Find the "hanlin-chat-input" TextView
+    t =    64.89s Type 'A93C7C3D-988' into "hanlin-chat-input" TextView
+    t =    64.89s     Wait for com.itorah.chavrusachat to idle
+    t =    64.89s     Find the "hanlin-chat-input" TextView
+    t =    65.04s     Check for interrupting elements affecting "hanlin-chat-input" TextView
+    t =    65.16s     Synthesize event
+    t =    65.59s     Wait for com.itorah.chavrusachat to idle
+    t =    66.65s Checking `Expect predicate `value == "PAIRED_OPEN_A93C7C3D-988"` for object "hanlin-chat-input" TextView`
+    t =    66.65s     Find the "hanlin-chat-input" TextView
+    t =    67.04s Type '5-4B4B-B60A-' into "hanlin-chat-input" TextView
+    t =    67.04s     Wait for com.itorah.chavrusachat to idle
+    t =    67.04s     Find the "hanlin-chat-input" TextView
+    t =    67.31s     Check for interrupting elements affecting "hanlin-chat-input" TextView
+    t =    67.43s     Synthesize event
+    t =    67.85s     Wait for com.itorah.chavrusachat to idle
+    t =    68.88s Checking `Expect predicate `value == "PAIRED_OPEN_A93C7C3D-9885-4B4B-B60A-"` for object "hanlin-chat-input" TextView`
+    t =    68.88s     Find the "hanlin-chat-input" TextView
+    t =    69.08s Type '4929E60482D3' into "hanlin-chat-input" TextView
+    t =    69.08s     Wait for com.itorah.chavrusachat to idle
+    t =    69.08s     Find the "hanlin-chat-input" TextView
+    t =    69.35s     Check for interrupting elements affecting "hanlin-chat-input" TextView
+    t =    69.49s     Synthesize event
+    t =    69.93s     Wait for com.itorah.chavrusachat to idle
+    t =    70.98s Checking `Expect predicate `value == "PAIRED_OPEN_A93C7C3D-9885-4B4B-B60A-4929E60482D3"` for object "hanlin-chat-input" TextView`
+    t =    70.98s     Find the "hanlin-chat-input" TextView
+    t =    71.23s Find the "hanlin-chat-input" TextView
+    t =    72.46s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "hanlin-chat-send" Any`
+    t =    72.46s     Checking existence of `"hanlin-chat-send" Any`
+    t =    73.70s     Find the "hanlin-chat-send" Any
+    t =    74.54s     Find the "hanlin-chat-send" Button
+    t =    75.34s Tap "hanlin-chat-send" Button
+    t =    75.34s     Wait for com.itorah.chavrusachat to idle
+    t =    75.35s     Find the "hanlin-chat-send" Button
+    t =    76.12s     Check for interrupting elements affecting "hanlin-chat-send" Button
+    t =    76.30s     Synthesize event
+    t =    76.63s     Wait for com.itorah.chavrusachat to idle
+<unknown>:0: warning: -[AI_HLYUITests.HanlinPairedProductUITests testCompanionReturnsActualPrivateValueToOriginalChat] : This method can lead to UI unresponsiveness if called on the main thread. Consider using the asynchronous activate/deactivate API instead for calls from the main thread.
+<unknown>:0: warning: -[AI_HLYUITests.HanlinPairedProductUITests testCompanionReturnsActualPrivateValueToOriginalChat] : This method can lead to UI unresponsiveness if called on the main thread while the audio session is active.
+    t =    78.60s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "hanlin-tool-consent-review-toggle" Any`
+    t =    78.60s     Checking existence of `"hanlin-tool-consent-review-toggle" Any`
+    t =    80.26s     Capturing element debug description
+    t =    80.58s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "hanlin-tool-consent-review-toggle" Any`
+    t =    80.58s     Checking existence of `"hanlin-tool-consent-review-toggle" Any`
+    t =    81.77s     Capturing element debug description
+    t =    82.63s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "hanlin-tool-consent-review-toggle" Any`
+    t =    82.63s     Checking existence of `"hanlin-tool-consent-review-toggle" Any`
+    t =    84.21s     Capturing element debug description
+    t =    84.59s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "hanlin-tool-consent-review-toggle" Any`
+    t =    84.59s     Checking existence of `"hanlin-tool-consent-review-toggle" Any`
+    t =    85.76s     Capturing element debug description
+    t =    86.61s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "hanlin-tool-consent-review-toggle" Any`
+    t =    86.61s     Checking existence of `"hanlin-tool-consent-review-toggle" Any`
+    t =    87.62s     Find the "hanlin-tool-consent-review-toggle" Any
+    t =    88.38s     Find the "hanlin-tool-consent-review-toggle" Button
+    t =    89.80s     Capturing element debug description
+    t =    90.67s         Requesting snapshot of accessibility hierarchy for app with pid 72555
+    t =    91.00s         Requesting snapshot of accessibility hierarchy for app with pid 72555
+    t =    91.30s         Find: Descendants matching type Any
+    t =    91.30s         Find: Elements matching predicate '"hanlin-tool-consent-review-toggle" IN identifiers'
+    t =    91.32s         Requesting snapshot of accessibility hierarchy for app with pid 72555
+    t =    91.66s         Find: Descendants matching type Any
+    t =    91.67s         Requesting snapshot of accessibility hierarchy for app with pid 72555
+    t =    95.58s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "hanlin-tool-consent-review-toggle" Any`
+    t =    95.58s     Checking existence of `"hanlin-tool-consent-review-toggle" Button`
+    t =    96.98s     Find the "hanlin-tool-consent-review-toggle" Button
+    t =    98.60s     Find the "hanlin-tool-consent-review-toggle" Button
+    t =    99.77s     Capturing element debug description
+    t =   100.37s         Requesting snapshot of accessibility hierarchy for app with pid 72555
+    t =   100.64s         Requesting snapshot of accessibility hierarchy for app with pid 72555
+    t =   100.81s         Find: Descendants matching type Any
+    t =   100.82s         Find: Elements matching predicate '"hanlin-tool-consent-review-toggle" IN identifiers'
+    t =   100.83s         Requesting snapshot of accessibility hierarchy for app with pid 72555
+    t =   101.03s         Find: Descendants matching type Any
+    t =   101.04s         Requesting snapshot of accessibility hierarchy for app with pid 72555
+    t =   104.64s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "hanlin-tool-consent-review-toggle" Any`
+    t =   104.64s     Checking existence of `"hanlin-tool-consent-review-toggle" Button`
+    t =   105.65s     Find the "hanlin-tool-consent-review-toggle" Button
+    t =   106.58s     Find the "hanlin-tool-consent-review-toggle" Button
+    t =   107.67s     Capturing element debug description
+    t =   108.19s         Requesting snapshot of accessibility hierarchy for app with pid 72555
+    t =   108.50s         Requesting snapshot of accessibility hierarchy for app with pid 72555
+    t =   108.74s         Find: Descendants matching type Any
+    t =   108.75s         Find: Elements matching predicate '"hanlin-tool-consent-review-toggle" IN identifiers'
+    t =   108.76s         Requesting snapshot of accessibility hierarchy for app with pid 72555
+    t =   109.02s         Find: Descendants matching type Any
+    t =   109.03s         Requesting snapshot of accessibility hierarchy for app with pid 72555
+    t =   113.58s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "hanlin-tool-consent-review-toggle" Any`
+    t =   113.58s     Checking existence of `"hanlin-tool-consent-review-toggle" Button`
+    t =   114.35s     Find the "hanlin-tool-consent-review-toggle" Button
+    t =   116.60s     Find the "hanlin-tool-consent-review-toggle" Button
+    t =   118.69s     Capturing element debug description
+    t =   119.65s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "hanlin-tool-consent-review-toggle" Any`
+    t =   119.65s     Checking existence of `"hanlin-tool-consent-review-toggle" Any`
+    t =   122.85s     Checking existence of `"hanlin-tool-consent-review-toggle" Any` (retry 1)
+    t =   122.85s     Checking existence of `"hanlin-tool-consent-review-toggle" Any` (retry 2)
+    t =   122.86s     Capturing element debug description
+/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinPairedProductUITests.swift:220: error: -[AI_HLYUITests.HanlinPairedProductUITests testCompanionReturnsActualPrivateValueToOriginalChat] : XCTAssertEqual failed: ("XCTWaiterResult(rawValue: 2)") is not equal to ("XCTWaiterResult(rawValue: 1)") - Unreachable product control: hanlin-tool-consent-review-toggle
+    t =   122.93s Tear Down
+    t =   122.93s     Find the Target Application 'com.itorah.chavrusachat'
+    t =   129.25s     Added attachment named 'AI-paired-product'
+    t =   129.25s     Requesting snapshot of accessibility hierarchy for app with pid 72555
+    t =   130.07s     Requesting snapshot of accessibility hierarchy for app with pid 72555
+    t =   130.34s     Added attachment named 'AI-paired-accessibility'
+    t =   130.34s     Terminate com.itorah.chavrusachat:72555
+Test Case '-[AI_HLYUITests.HanlinPairedProductUITests testCompanionReturnsActualPrivateValueToOriginalChat]' failed (131.560 seconds).
+Test Case '-[AI_HLYUITests.HanlinPairedProductUITests testOriginalPackageAndSavedStateTransferThenRollback]' started.
+    t =     0.00s Start Test at 2026-11-23 21:45:27.888
+    t =     0.05s Set Up
+    t =     0.05s Open com.itorah.chavrusachat
+    t =     0.05s     Launch com.itorah.chavrusachat
+2026-11-23 21:45:27.951 xcodebuild[62488:391872] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-23 21:45:27.951 xcodebuild[62488:391872] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     0.72s         Setting up automation session
+Resolve Package Graph
+
+Resolve Package Graph
+    t =    14.44s         Wait for com.itorah.chavrusachat to idle
+    t =    21.77s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "hanlin-apps-add" Any`
+    t =    21.77s     Checking existence of `"hanlin-apps-add" Any`
+    t =    22.65s     Find the "hanlin-apps-add" Any
+    t =    23.05s     Find the "hanlin-apps-add" Button
+    t =    23.42s Tap "hanlin-apps-add" Button
+    t =    23.42s     Wait for com.itorah.chavrusachat to idle
+    t =    23.45s     Find the "hanlin-apps-add" Button
+    t =    23.72s     Check for interrupting elements affecting "hanlin-apps-add" Button
+    t =    24.20s     Synthesize event
+    t =    24.58s     Wait for com.itorah.chavrusachat to idle
+    t =    26.94s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "hanlin-import-script-package" Any`
+    t =    26.94s     Checking existence of `"hanlin-import-script-package" Any`
+    t =    28.50s     Find the "hanlin-import-script-package" Any
+    t =    29.76s     Find the "hanlin-import-script-package" Button
+
+    t =    31.80s Tap "hanlin-import-script-package" Button
+    t =    31.80s     Wait for com.itorah.chavrusachat to idle
+    t =    31.81s     Find the "hanlin-import-script-package" Button
+    t =    33.21s     Check for interrupting elements affecting "hanlin-import-script-package" Button
+    t =    33.56s     Synthesize event
+    t =    33.89s     Wait for com.itorah.chavrusachat to idle
+    t =    35.10s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "HanlinTransferAcceptance" Any`
+    t =    35.10s     Checking existence of `"HanlinTransferAcceptance" Any`
+    t =    36.00s     Find the "HanlinTransferAcceptance" Any
+    t =    37.00s     Find the "HanlinTransferAcceptance" Button
+    t =    37.88s Tap "HanlinTransferAcceptance" Button
+    t =    37.88s     Wait for com.itorah.chavrusachat to idle
+    t =    37.88s     Find the "HanlinTransferAcceptance" Button
+    t =    38.80s     Check for interrupting elements affecting "HanlinTransferAcceptance" Button
+    t =    39.13s     Synthesize event
+    t =    39.46s     Wait for com.itorah.chavrusachat to idle
+    t =    39.77s Waiting 30.0s for "hanlin-package-install" Button to exist
+    t =    40.79s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+    t =    40.79s         Checking existence of `"hanlin-package-install" Button`
+    t =    41.90s Find the "hanlin-package-install" Button
+    t =    42.89s Tap "hanlin-package-install" Button
+    t =    42.89s     Wait for com.itorah.chavrusachat to idle
+    t =    42.89s     Find the "hanlin-package-install" Button
+    t =    43.85s     Check for interrupting elements affecting "hanlin-package-install" Button
+    t =    44.08s     Synthesize event
+    t =    44.40s     Wait for com.itorah.chavrusachat to idle
+    t =    44.66s Waiting 60.0s for "hanlin-file-importer" Button to exist
+    t =    45.68s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-file-importer" Button`
+    t =    45.68s         Checking existence of `"hanlin-file-importer" Button`
+    t =    47.57s         Capturing element debug description
+    t =    47.67s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-file-importer" Button`
+    t =    47.67s         Checking existence of `"hanlin-file-importer" Button`
+    t =    49.49s         Capturing element debug description
+    t =    49.68s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-file-importer" Button`
+    t =    49.68s         Checking existence of `"hanlin-file-importer" Button`
+    t =    51.75s         Capturing element debug description
+    t =    52.68s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-file-importer" Button`
+    t =    52.69s         Checking existence of `"hanlin-file-importer" Button`
+    t =    53.60s Checking existence of `"hanlin-import-error-message" Any`
+    t =    55.10s Checking existence of `"Script App Error" Alert`
+    t =    55.29s Terminate com.itorah.chavrusachat:76713
+    t =    57.30s Open com.itorah.chavrusachat
+    t =    57.30s     Launch com.itorah.chavrusachat
+2026-11-23 21:46:25.207 xcodebuild[62488:391872] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-23 21:46:25.208 xcodebuild[62488:391872] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =    58.17s         Setting up automation session
+    t =    70.30s         Wait for com.itorah.chavrusachat to idle
+    t =    76.06s Waiting 30.0s for "Search Apps" SearchField to exist
+    t =    77.08s     Checking `Expect predicate `existsNoRetry == 1` for object "Search Apps" SearchField`
+    t =    77.08s         Checking existence of `"Search Apps" SearchField`
+    t =    79.37s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "Search Apps" Any`
+    t =    79.37s     Checking existence of `"Search Apps" Any`
+    t =    80.09s     Find the "Search Apps" Any
+    t =    80.75s     Find the "Search Apps" SearchField
+    t =    81.38s Tap "Search Apps" SearchField
+    t =    81.38s     Wait for com.itorah.chavrusachat to idle
+    t =    81.39s     Find the "Search Apps" SearchField
+    t =    82.02s     Check for interrupting elements affecting "Search Apps" SearchField
+    t =    82.29s     Synthesize event
+    t =    82.64s     Wait for com.itorah.chavrusachat to idle
+    t =    84.99s Type 'Hanlin Transfer Ac...' into "Search Apps" SearchField
+    t =    85.00s     Wait for com.itorah.chavrusachat to idle
+    t =    85.03s     Find the "Search Apps" SearchField
+    t =    85.89s     Check for interrupting elements affecting "Search Apps" SearchField
+    t =    86.13s     Synthesize event
+    t =    86.80s     Wait for com.itorah.chavrusachat to idle
+    t =    87.84s Checking `Expect predicate `value == "Hanlin Transfer Acceptance"` for object "Search Apps" SearchField`
+    t =    87.84s     Find the "Search Apps" SearchField
+    t =    89.27s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "hanlin-package-card-Hanlin Transfer Acceptance" Any`
+    t =    89.27s     Checking existence of `"hanlin-package-card-Hanlin Transfer Acceptance" Any`
+    t =    91.97s     Find the "hanlin-package-card-Hanlin Transfer Acceptance" Any
+    t =    93.36s     Find the "hanlin-package-card-Hanlin Transfer Acceptance" Button
+    t =    94.89s Tap "hanlin-package-card-Hanlin Transfer Acceptance" Button
+    t =    94.89s     Wait for com.itorah.chavrusachat to idle
+    t =    94.90s     Find the "hanlin-package-card-Hanlin Transfer Acceptance" Button
+    t =    96.76s     Check for interrupting elements affecting "hanlin-package-card-Hanlin Transfer Acceptance" Button
+    t =    97.30s     Synthesize event
+    t =    97.70s     Wait for com.itorah.chavrusachat to idle
+    t =    98.29s Waiting 30.0s for "Not saved" StaticText to exist
+    t =    99.35s     Checking `Expect predicate `existsNoRetry == 1` for object "Not saved" StaticText`
+    t =    99.35s         Checking existence of `"Not saved" StaticText`
+    t =   102.15s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "Save transfer value" Any`
+    t =   102.16s     Checking existence of `"Save transfer value" Any`
+    t =   103.16s     Find the "Save transfer value" Any
+    t =   104.15s     Find the "Save transfer value" Button
+    t =   105.16s Tap "Save transfer value" Button
+    t =   105.16s     Wait for com.itorah.chavrusachat to idle
+    t =   105.17s     Find the "Save transfer value" Button
+    t =   105.96s     Check for interrupting elements affecting "Save transfer value" Button
+    t =   106.54s     Synthesize event
+    t =   106.97s     Wait for com.itorah.chavrusachat to idle
+    t =   106.97s Waiting 60.0s for Any (First Match) to exist
+    t =   108.02s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   108.02s         Checking existence of `Any (First Match)`
+    t =   108.46s Terminate com.itorah.chavrusachat:78442
+    t =   109.52s Open com.itorah.chavrusachat
+    t =   109.52s     Launch com.itorah.chavrusachat
+2026-11-23 21:47:17.413 xcodebuild[62488:391872] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-23 21:47:17.413 xcodebuild[62488:391872] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =   109.74s         Setting up automation session
+    t =   117.01s         Wait for com.itorah.chavrusachat to idle
+    t =   122.04s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "hanlin-settings-tab" Any`
+    t =   122.04s     Checking existence of `"hanlin-settings-tab" Any`
+    t =   122.94s     Find the "hanlin-settings-tab" Any
+    t =   123.39s     Find the "hanlin-settings-tab" Button
+    t =   123.95s Tap "hanlin-settings-tab" Button
+    t =   123.95s     Wait for com.itorah.chavrusachat to idle
+    t =   123.96s     Find the "hanlin-settings-tab" Button
+    t =   124.65s     Check for interrupting elements affecting "hanlin-settings-tab" Button
+    t =   124.95s     Synthesize event
+    t =   125.31s     Wait for com.itorah.chavrusachat to idle
+    t =   126.86s Find the "hanlin-transfer-link" Any
+    t =   130.17s     Find the "hanlin-transfer-link" Any (retry 1)
+    t =   132.77s     Find the "hanlin-transfer-link" Any (retry 2)
+    t =   133.81s Swipe up "hanlin-settings-list" Any
+    t =   133.81s     Wait for com.itorah.chavrusachat to idle
+    t =   133.82s     Find the "hanlin-settings-list" Any
+    t =   134.01s     Check for interrupting elements affecting "hanlin-settings-list" CollectionView
+    t =   134.29s     Synthesize event
+    t =   134.86s     Wait for com.itorah.chavrusachat to idle
+    t =   137.31s Find the "hanlin-transfer-link" Any
+    t =   140.22s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "hanlin-transfer-link" Any`
+    t =   140.22s     Checking existence of `"hanlin-transfer-link" Any`
+    t =   141.68s     Find the "hanlin-transfer-link" Any
+    t =   143.45s     Find the "hanlin-transfer-link" Button
+    t =   145.34s Tap "hanlin-transfer-link" Button
+    t =   145.34s     Wait for com.itorah.chavrusachat to idle
+    t =   145.35s     Find the "hanlin-transfer-link" Button
+    t =   147.31s     Check for interrupting elements affecting "hanlin-transfer-link" Button
+    t =   147.69s     Synthesize event
+    t =   148.02s     Wait for com.itorah.chavrusachat to idle
+    t =   149.42s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "hanlin-transfer-prepare" Any`
+    t =   149.42s     Checking existence of `"hanlin-transfer-prepare" Any`
+    t =   150.82s     Find the "hanlin-transfer-prepare" Any
+    t =   151.95s     Find the "hanlin-transfer-prepare" Button
+    t =   153.51s Tap "hanlin-transfer-prepare" Button
+    t =   153.51s     Wait for com.itorah.chavrusachat to idle
+    t =   153.51s     Find the "hanlin-transfer-prepare" Button
+    t =   154.78s     Check for interrupting elements affecting "hanlin-transfer-prepare" Button
+    t =   155.17s     Synthesize event
+    t =   155.58s     Wait for com.itorah.chavrusachat to idle
+    t =   155.93s Waiting 60.0s for Any (First Match) to exist
+    t =   156.95s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   156.95s         Checking existence of `Any (First Match)`
+    t =   158.55s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "hanlin-transfer-open-companion" Any`
+    t =   158.55s     Checking existence of `"hanlin-transfer-open-companion" Any`
+    t =   159.58s     Find the "hanlin-transfer-open-companion" Any
+    t =   160.44s     Find the "hanlin-transfer-open-companion" Button
+    t =   161.30s Tap "hanlin-transfer-open-companion" Button
+    t =   161.31s     Wait for com.itorah.chavrusachat to idle
+    t =   161.31s     Find the "hanlin-transfer-open-companion" Button
+    t =   162.38s     Check for interrupting elements affecting "hanlin-transfer-open-companion" Button
+    t =   162.72s     Synthesize event
+    t =   163.48s     Wait for com.itorah.chavrusachat to idle
+    t =   163.54s Wait for com.itorah.hanlinminiapps to become Running Foreground
+    t =   163.76s Terminate com.itorah.hanlinminiapps:82333
+    t =   164.82s Open com.itorah.hanlinminiapps
+    t =   164.82s     Launch com.itorah.hanlinminiapps
+2026-11-23 21:48:13.286 xcodebuild[62488:391872] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-23 21:48:13.286 xcodebuild[62488:391872] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =   166.85s         Setting up automation session
+    t =   175.13s         Wait for com.itorah.hanlinminiapps to idle
+    t =   178.62s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "hanlin-miniapps-transfer" Any`
+    t =   178.62s     Checking existence of `"hanlin-miniapps-transfer" Any`
+    t =   179.14s     Find the "hanlin-miniapps-transfer" Any
+    t =   179.45s     Find the "hanlin-miniapps-transfer" Button
+    t =   179.84s Tap "hanlin-miniapps-transfer" Button
+    t =   179.84s     Wait for com.itorah.hanlinminiapps to idle
+    t =   179.85s     Find the "hanlin-miniapps-transfer" Button
+    t =   180.33s     Check for interrupting elements affecting "hanlin-miniapps-transfer" Button
+    t =   180.50s     Synthesize event
+    t =   180.83s     Wait for com.itorah.hanlinminiapps to idle
+    t =   182.84s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "hanlin-transfer-import" Any`
+    t =   182.84s     Checking existence of `"hanlin-transfer-import" Any`
+    t =   183.77s     Find the "hanlin-transfer-import" Any
+    t =   184.22s     Find the "hanlin-transfer-import" Button
+    t =   184.86s Tap "hanlin-transfer-import" Button
+    t =   184.86s     Wait for com.itorah.hanlinminiapps to idle
+    t =   184.86s     Find the "hanlin-transfer-import" Button
+    t =   185.32s     Check for interrupting elements affecting "hanlin-transfer-import" Button
+    t =   185.46s     Synthesize event
+    t =   185.78s     Wait for com.itorah.hanlinminiapps to idle
+    t =   186.04s Waiting 60.0s for Any (First Match) to exist
+    t =   187.08s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   187.09s         Checking existence of `Any (First Match)`
+    t =   187.58s         Capturing element debug description
+    t =   188.10s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   188.10s         Checking existence of `Any (First Match)`
+    t =   188.50s         Capturing element debug description
+    t =   189.10s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   189.10s         Checking existence of `Any (First Match)`
+    t =   189.49s         Capturing element debug description
+    t =   190.11s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   190.11s         Checking existence of `Any (First Match)`
+    t =   190.73s         Capturing element debug description
+    t =   191.10s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   191.10s         Checking existence of `Any (First Match)`
+    t =   191.66s         Capturing element debug description
+    t =   192.07s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   192.07s         Checking existence of `Any (First Match)`
+    t =   192.47s         Capturing element debug description
+    t =   193.08s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   193.08s         Checking existence of `Any (First Match)`
+    t =   193.49s         Capturing element debug description
+    t =   194.10s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   194.10s         Checking existence of `Any (First Match)`
+    t =   194.52s         Capturing element debug description
+    t =   195.10s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   195.10s         Checking existence of `Any (First Match)`
+    t =   195.51s         Capturing element debug description
+    t =   196.11s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   196.11s         Checking existence of `Any (First Match)`
+    t =   196.66s         Capturing element debug description
+    t =   197.05s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   197.05s         Checking existence of `Any (First Match)`
+    t =   197.49s         Capturing element debug description
+    t =   198.08s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   198.08s         Checking existence of `Any (First Match)`
+    t =   199.05s         Capturing element debug description
+    t =   200.08s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   200.08s         Checking existence of `Any (First Match)`
+    t =   200.63s         Capturing element debug description
+    t =   201.05s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   201.05s         Checking existence of `Any (First Match)`
+    t =   201.47s         Capturing element debug description
+    t =   202.08s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   202.08s         Checking existence of `Any (First Match)`
+    t =   202.41s         Capturing element debug description
+    t =   203.12s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   203.12s         Checking existence of `Any (First Match)`
+    t =   203.56s         Capturing element debug description
+    t =   204.08s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   204.08s         Checking existence of `Any (First Match)`
+    t =   204.60s         Capturing element debug description
+    t =   205.11s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   205.11s         Checking existence of `Any (First Match)`
+    t =   205.46s         Capturing element debug description
+    t =   206.08s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   206.08s         Checking existence of `Any (First Match)`
+    t =   206.65s         Capturing element debug description
+    t =   207.08s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   207.08s         Checking existence of `Any (First Match)`
+    t =   207.65s         Capturing element debug description
+    t =   208.04s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   208.04s         Checking existence of `Any (First Match)`
+    t =   208.36s         Capturing element debug description
+    t =   209.09s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   209.09s         Checking existence of `Any (First Match)`
+    t =   209.40s         Capturing element debug description
+    t =   210.11s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   210.11s         Checking existence of `Any (First Match)`
+    t =   210.43s         Capturing element debug description
+    t =   211.05s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   211.05s         Checking existence of `Any (First Match)`
+    t =   211.49s         Capturing element debug description
+    t =   212.11s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   212.11s         Checking existence of `Any (First Match)`
+    t =   212.65s         Capturing element debug description
+    t =   213.05s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   213.05s         Checking existence of `Any (First Match)`
+    t =   213.38s         Capturing element debug description
+    t =   214.10s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   214.10s         Checking existence of `Any (First Match)`
+    t =   214.41s         Capturing element debug description
+    t =   215.05s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   215.05s         Checking existence of `Any (First Match)`
+    t =   215.34s         Capturing element debug description
+    t =   216.05s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   216.05s         Checking existence of `Any (First Match)`
+    t =   216.46s         Capturing element debug description
+    t =   217.09s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   217.09s         Checking existence of `Any (First Match)`
+    t =   217.41s         Capturing element debug description
+    t =   218.05s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   218.05s         Checking existence of `Any (First Match)`
+    t =   218.40s         Capturing element debug description
+    t =   219.11s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   219.11s         Checking existence of `Any (First Match)`
+    t =   219.43s         Capturing element debug description
+    t =   220.05s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   220.05s         Checking existence of `Any (First Match)`
+    t =   220.39s         Capturing element debug description
+    t =   221.10s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   221.10s         Checking existence of `Any (First Match)`
+    t =   221.54s         Capturing element debug description
+    t =   222.05s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   222.05s         Checking existence of `Any (First Match)`
+    t =   222.51s         Capturing element debug description
+    t =   223.08s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   223.08s         Checking existence of `Any (First Match)`
+    t =   223.48s         Capturing element debug description
+    t =   224.10s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   224.10s         Checking existence of `Any (First Match)`
+    t =   224.38s         Capturing element debug description
+    t =   225.08s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   225.08s         Checking existence of `Any (First Match)`
+    t =   225.44s         Capturing element debug description
+    t =   226.05s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   226.05s         Checking existence of `Any (First Match)`
+    t =   226.48s         Capturing element debug description
+    t =   227.08s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   227.08s         Checking existence of `Any (First Match)`
+    t =   227.47s         Capturing element debug description
+    t =   228.08s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   228.08s         Checking existence of `Any (First Match)`
+    t =   228.52s         Capturing element debug description
+    t =   229.05s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   229.05s         Checking existence of `Any (First Match)`
+    t =   229.72s         Capturing element debug description
+    t =   230.08s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   230.08s         Checking existence of `Any (First Match)`
+    t =   230.44s         Capturing element debug description
+    t =   231.07s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   231.07s         Checking existence of `Any (First Match)`
+    t =   231.42s         Capturing element debug description
+    t =   232.05s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   232.05s         Checking existence of `Any (First Match)`
+    t =   232.31s         Capturing element debug description
+    t =   233.05s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   233.05s         Checking existence of `Any (First Match)`
+    t =   233.56s         Capturing element debug description
+    t =   234.08s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   234.08s         Checking existence of `Any (First Match)`
+    t =   234.54s         Capturing element debug description
+    t =   235.07s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   235.07s         Checking existence of `Any (First Match)`
+    t =   235.45s         Capturing element debug description
+    t =   236.05s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   236.05s         Checking existence of `Any (First Match)`
+    t =   236.40s         Capturing element debug description
+    t =   237.05s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   237.05s         Checking existence of `Any (First Match)`
+    t =   237.43s         Capturing element debug description
+    t =   238.04s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   238.04s         Checking existence of `Any (First Match)`
+    t =   238.50s         Capturing element debug description
+    t =   239.05s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   239.05s         Checking existence of `Any (First Match)`
+    t =   239.44s         Capturing element debug description
+    t =   240.07s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   240.07s         Checking existence of `Any (First Match)`
+    t =   240.44s         Capturing element debug description
+    t =   241.06s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   241.07s         Checking existence of `Any (First Match)`
+    t =   241.71s         Capturing element debug description
+    t =   242.08s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   242.08s         Checking existence of `Any (First Match)`
+    t =   242.54s         Capturing element debug description
+    t =   243.05s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   243.05s         Checking existence of `Any (First Match)`
+    t =   243.82s         Capturing element debug description
+    t =   244.10s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   244.10s         Checking existence of `Any (First Match)`
+    t =   244.59s         Capturing element debug description
+    t =   245.08s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   245.08s         Checking existence of `Any (First Match)`
+    t =   245.55s         Capturing element debug description
+    t =   246.05s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   246.05s         Checking existence of `Any (First Match)`
+    t =   246.35s         Capturing element debug description
+    t =   246.35s     Checking existence of `Any (First Match)`
+    t =   246.96s Collecting debug information to assist test failure triage
+    t =   246.96s     Requesting snapshot of accessibility hierarchy for app with pid 82342
+/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinPairedProductUITests.swift:304: error: -[AI_HLYUITests.HanlinPairedProductUITests testOriginalPackageAndSavedStateTransferThenRollback] : XCTAssertTrue failed - Missing actual product result: Transfer complete. Your mini apps are ready.
+    t =   247.20s Tear Down
+    t =   247.20s     Find the Application 'com.itorah.hanlinminiapps'
+    t =   247.53s     Added attachment named 'MiniApps-paired-product'
+    t =   247.53s     Requesting snapshot of accessibility hierarchy for app with pid 82342
+    t =   248.06s     Requesting snapshot of accessibility hierarchy for app with pid 82342
+    t =   248.24s     Added attachment named 'MiniApps-paired-accessibility'
+    t =   248.24s     Terminate com.itorah.chavrusachat:80347
+    t =   249.25s     Terminate com.itorah.hanlinminiapps:82342
+Test Case '-[AI_HLYUITests.HanlinPairedProductUITests testOriginalPackageAndSavedStateTransferThenRollback]' failed (255.519 seconds).
+Test Suite 'HanlinPairedProductUITests' failed at 2026-11-23 21:49:43.408.
+	 Executed 3 tests, with 3 failures (0 unexpected) in 571.841 (571.865) seconds
+Test Suite 'AI_HLYUITests.xctest' failed at 2026-11-23 21:49:43.416.
+	 Executed 3 tests, with 3 failures (0 unexpected) in 571.841 (571.874) seconds
+Test Suite 'Selected tests' failed at 2026-11-23 21:49:43.416.
+	 Executed 3 tests, with 3 failures (0 unexpected) in 571.841 (571.882) seconds
+Resolve Package Graph
+
+Resolve Package Graph
+
+Resolve Package Graph
+
+Resolve Package Graph
+2026-11-23 21:50:20.879 xcodebuild[62488:391872] [MT] IDETestOperationsObserverDebug: 634.909 elapsed -- Testing started completed.
+2026-11-23 21:50:20.880 xcodebuild[62488:391872] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-23 21:50:20.880 xcodebuild[62488:391872] [MT] IDETestOperationsObserverDebug: 634.909 sec, +634.909 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/runner/work/hanlin-ai/hanlin-ai/build/app-split-evidence/paired-product/Paired.xcresult
+
+Failing tests:
+	HanlinPairedProductUITests.testCompanionCancellationReturnsWithoutChangingPrivateState()
+	HanlinPairedProductUITests.testCompanionReturnsActualPrivateValueToOriginalChat()
+	HanlinPairedProductUITests.testOriginalPackageAndSavedStateTransferThenRollback()
+
+** TEST EXECUTE FAILED **
+
+Testing started

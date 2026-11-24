@@ -74,7 +74,7 @@ let package = Package(
         .package(url: "https://github.com/tree-sitter/tree-sitter", revision: "da6fe9beb4f7f67beb75914ca8e0d48ae48d6406"),
         .package(url: "https://github.com/tree-sitter/tree-sitter-bash", revision: "a06c2e4415e9bc0346c6b86d401879ffb44058f7"),
         .package(url: "https://github.com/jpsim/Yams.git", exact: "6.2.2"),
-        .package(url: "https://github.com/weichsel/ZIPFoundation.git", "0.9.19"..<"0.10.0")
+        .package(url: "https://github.com/weichsel/ZIPFoundation.git", exact: "0.9.19")
     ],
     targets: [
         .target(

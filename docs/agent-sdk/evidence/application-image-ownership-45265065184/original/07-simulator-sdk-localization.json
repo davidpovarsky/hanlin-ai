@@ -1,0 +1,32 @@
+{
+  "status": "PASS",
+  "catalog_values": 3683,
+  "packaged_values": 177,
+  "errors": [],
+  "bundleCopies": [
+    {
+      "path": "HanlinSDK_HanlinLocalization.bundle",
+      "inventorySHA256": "a9e8fa19105202206a6e6bf7c51b725d97ed5ba55499ceee7d171a54fbc6d42d",
+      "entries": 19,
+      "files": 15
+    },
+    {
+      "path": "Extensions/ChavrusaChatTranslationProvider.appex/HanlinSDK_HanlinLocalization.bundle",
+      "inventorySHA256": "a9e8fa19105202206a6e6bf7c51b725d97ed5ba55499ceee7d171a54fbc6d42d",
+      "entries": 19,
+      "files": 15
+    },
+    {
+      "path": "PlugIns/ChavrusaChatShare.appex/HanlinSDK_HanlinLocalization.bundle",
+      "inventorySHA256": "a9e8fa19105202206a6e6bf7c51b725d97ed5ba55499ceee7d171a54fbc6d42d",
+      "entries": 19,
+      "files": 15
+    },
+    {
+      "path": "PlugIns/HanlinScriptingWidgets.appex/HanlinSDK_HanlinLocalization.bundle",
+      "inventorySHA256": "a9e8fa19105202206a6e6bf7c51b725d97ed5ba55499ceee7d171a54fbc6d42d",
+      "entries": 19,
+      "files": 15
+    }
+  ]
+}

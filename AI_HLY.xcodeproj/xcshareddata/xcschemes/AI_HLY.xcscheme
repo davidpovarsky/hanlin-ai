@@ -17,7 +17,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D7B6C3C02D50A55D004E3AD6"
                BuildableName = "AI_Hanlin.app"
-               BlueprintName = "AI_Hanlin"
+               BlueprintName = "HanlinApp"
                ReferencedContainer = "container:AI_HLY.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -107,7 +107,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D7B6C3C02D50A55D004E3AD6"
             BuildableName = "AI_Hanlin.app"
-            BlueprintName = "AI_Hanlin"
+            BlueprintName = "HanlinApp"
             ReferencedContainer = "container:AI_HLY.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -131,7 +131,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D7B6C3C02D50A55D004E3AD6"
             BuildableName = "AI_Hanlin.app"
-            BlueprintName = "AI_Hanlin"
+            BlueprintName = "HanlinApp"
             ReferencedContainer = "container:AI_HLY.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

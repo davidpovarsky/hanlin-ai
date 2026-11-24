@@ -1,0 +1,10 @@
+{
+  "run": 45272858701,
+  "attempt": 1,
+  "artifact_id": 14865599937,
+  "artifact_bytes": 11426785,
+  "artifact_sha256": "18827fd1472e4212f084592c9a399d97933b2ffca4ad6f8c3db3ace816228cb9",
+  "api_digest_and_size_match": true,
+  "zip_crc": "PASS",
+  "member_count": 9
+}

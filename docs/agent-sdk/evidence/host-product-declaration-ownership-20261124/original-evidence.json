@@ -1,0 +1,61 @@
+{
+  "run": 45283243206,
+  "attempt": 1,
+  "source": "4cfa52348e80cf635caf04c541fd84ee1ddb50bd",
+  "artifact": {
+    "id": 14876925398,
+    "bytes": 104017911,
+    "sha256": "8cab07eaf965d1f7a62731b6bf678dc22d849f441407f2e2c5dc7708f013a220"
+  },
+  "buildLog": {
+    "path": "/mnt/development/projects/worktrees/hanlin-sdk-paired3-corrections-20261123/build/paired3-corrections-20261123/native/app-split-evidence/paired-product/ai-build.log",
+    "bytes": 15542046,
+    "sha256": "8326c0652586f4a5cef310d495e9613363572fc594c9f08dc8864ece84b18210",
+    "dependencyGraphLines": [
+      143,
+      196
+    ]
+  },
+  "appConsole": {
+    "path": "/mnt/development/projects/worktrees/hanlin-sdk-paired3-corrections-20261123/build/paired3-corrections-20261123/cancel-focus-review/StandardOutputAndStandardError-com.itorah.chavrusachat.txt",
+    "bytes": 60064886,
+    "sha256": "d9f48598a9f613f03e8edbb55fff20c221bf7418a33e1d8f956bc92a6221a2d0"
+  },
+  "warnings": [
+    {
+      "line": 77,
+      "text": "objc[74334]: Class _TtCV12HanlinChatUI25NativeMultilineTextEditor11Coordinator is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11d66c9f8) and /Users/runner/Library/Developer/CoreSimulator/Devices/9B6403BE-C0D2-4791-9FDE-CB99B22CC5FB/data/Containers/Bundle/Application/62CF4BFA-B519-4E6D-8869-CF35084C50E5/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x1038f8110). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 78,
+      "text": "objc[74334]: Class _TtC12HanlinChatUI22MultilineInnerTextView is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11d66cb18) and /Users/runner/Library/Developer/CoreSimulator/Devices/9B6403BE-C0D2-4791-9FDE-CB99B22CC5FB/data/Containers/Bundle/Application/62CF4BFA-B519-4E6D-8869-CF35084C50E5/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x1038f8230). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 83,
+      "text": "objc[74334]: Class _TtC12HanlinChatUI24ChatAutoFollowController is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11d6aeaf8) and /Users/runner/Library/Developer/CoreSimulator/Devices/9B6403BE-C0D2-4791-9FDE-CB99B22CC5FB/data/Containers/Bundle/Application/62CF4BFA-B519-4E6D-8869-CF35084C50E5/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x10390c288). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 85,
+      "text": "objc[74334]: Class _TtC12HanlinChatUI20ChatScrollViewHandle is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11d6aecc0) and /Users/runner/Library/Developer/CoreSimulator/Devices/9B6403BE-C0D2-4791-9FDE-CB99B22CC5FB/data/Containers/Bundle/Application/62CF4BFA-B519-4E6D-8869-CF35084C50E5/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x10390c450). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 22190,
+      "text": "objc[76409]: Class _TtCV12HanlinChatUI25NativeMultilineTextEditor11Coordinator is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11f5bc9f8) and /Users/runner/Library/Developer/CoreSimulator/Devices/9B6403BE-C0D2-4791-9FDE-CB99B22CC5FB/data/Containers/Bundle/Application/62CF4BFA-B519-4E6D-8869-CF35084C50E5/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x105848110). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 22191,
+      "text": "objc[76409]: Class _TtC12HanlinChatUI22MultilineInnerTextView is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11f5bcb18) and /Users/runner/Library/Developer/CoreSimulator/Devices/9B6403BE-C0D2-4791-9FDE-CB99B22CC5FB/data/Containers/Bundle/Application/62CF4BFA-B519-4E6D-8869-CF35084C50E5/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x105848230). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 22196,
+      "text": "objc[76409]: Class _TtC12HanlinChatUI24ChatAutoFollowController is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11f5feaf8) and /Users/runner/Library/Developer/CoreSimulator/Devices/9B6403BE-C0D2-4791-9FDE-CB99B22CC5FB/data/Containers/Bundle/Application/62CF4BFA-B519-4E6D-8869-CF35084C50E5/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x10585c288). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 22198,
+      "text": "objc[76409]: Class _TtC12HanlinChatUI20ChatScrollViewHandle is implemented in both /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct (0x11f5fecc0) and /Users/runner/Library/Developer/CoreSimulator/Devices/9B6403BE-C0D2-4791-9FDE-CB99B22CC5FB/data/Containers/Bundle/Application/62CF4BFA-B519-4E6D-8869-CF35084C50E5/AI_Hanlin.app/AI_Hanlin.debug.dylib (0x10585c450). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    }
+  ],
+  "linkCommandPayloadSHA256": "aabf8810f204b164ccede17be9846f8816687506bd3d0dba609d81eeaa91e561",
+  "linkFileListRetained": false,
+  "limit": "Actual LinkFileList payloads are absent from the retained artifact. Duplicate loaded class implementations and explicit native product graph edges are observed; exact object membership and repaired runtime identity require a native execution."
+}

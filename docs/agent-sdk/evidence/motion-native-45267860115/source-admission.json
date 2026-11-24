@@ -1,0 +1,74 @@
+{
+  "source": "35bfa9509ed4660d2c189b1935ed7725d0bae9f2",
+  "parent": "ade2f626e37102abde83050c94d524d19e0726bb",
+  "branch": "codex/hanlin-sdk-motion-b-retained-20261123",
+  "exact_tree": "98793028821b27a85b9cf9c67a3bc0f70f1d4575",
+  "remote_oracle_tree_equality": "PASS",
+  "original_native_source": "9575dd15e816009e11d84ab7f4e21b45cb67c5e8",
+  "selected_products": [
+    "HanlinChatUI"
+  ],
+  "selected_source_resource_count": 364,
+  "selected_source_resource_changes": [
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinAnimatedDisclosure.swift",
+      "before": "91d60f960fd1ca1dea34b1ce34a6a5e99b4e60c2a030be78ac9f996a2533d084",
+      "after": "ce949b1acce2bf4339f3a2c0a93b3028c50ef918ab9db7dc1d7b0e063c166eef"
+    }
+  ],
+  "fixture_bytes_and_recorded_revision": "PASS",
+  "project_spec_unchanged": true,
+  "no_native_binary_targets": true,
+  "generated_hashes_equal_to_last_native": false,
+  "current_generated_hashes": {
+    "Package.swift": "67bd5ca5a9e9c368886949f8fd178d11d502f858f5fe411b11540f8df238d2f4",
+    "docs/agent-sdk/unified-package-manifest.json": "34e46751fd4075cd97f262afdd063ed222e38a34195671244bbb279c61555dcd"
+  },
+  "old_generated_hashes": {
+    "Package.swift": "67bd5ca5a9e9c368886949f8fd178d11d502f858f5fe411b11540f8df238d2f4",
+    "docs/agent-sdk/unified-package-manifest.json": "41eeb2e6c87be6dee04f652afcff1be839c5a4dce0f412aa72ff172eb11191ff"
+  },
+  "portable_profile_path": "/tmp/hanlin-motion-b-profile-20261123-5mrk_0ca/proof",
+  "native_B": "NOT_RUN",
+  "dispatch_performed": false,
+  "selected_external_pin_identities_unchanged": [
+    "equatable",
+    "hanlin-streaming-markdown",
+    "highlightswift",
+    "iosmath",
+    "swift-cmark",
+    "swift-markdown",
+    "swift-syntax",
+    "swiftui-shimmer"
+  ],
+  "selected_generated_package_bytes_identical": true,
+  "manifest_only_accounting_change": "Selected generated Package.swift is byte-identical. Only input hashes for unselected AgentSDK/Platform producer manifests differ in the accounting manifest.",
+  "app_lock_changed_pin_identities": [
+    "swift-ai-sdk"
+  ],
+  "existing_location_spelling_difference_not_new": [
+    {
+      "identity": "swift-cmark",
+      "unchanged_app_location": "https://github.com/swiftlang/swift-cmark",
+      "previous_native_location": "https://github.com/swiftlang/swift-cmark.git",
+      "state_identical": true
+    }
+  ],
+  "admitted_at": "2026-11-23T21:15:32.971837+00:00",
+  "selected_scope": "Original B only",
+  "job_envelope_minutes": 35,
+  "unchanged_native_allowances_seconds": [
+    600,
+    720
+  ],
+  "motion_overlap_found": false,
+  "active_other_runs": [
+    {
+      "run": 45265065184,
+      "branch": "codex/hanlin-sdk-unification-20261123",
+      "active_jobs": [
+        "Launch full app on iPad Simulator"
+      ]
+    }
+  ]
+}

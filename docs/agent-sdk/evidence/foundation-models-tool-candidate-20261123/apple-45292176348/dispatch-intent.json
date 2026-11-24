@@ -1,0 +1,45 @@
+{
+  "utc": "2026-11-23T23:50:06.919286+00:00",
+  "source": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+  "remote_sha": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+  "workflow": "build-ios26-unsigned-ipa.yml",
+  "plan_sha256": "286ed744eb299ecfcfe61c7335be1dd38c4c08ac140516a2676f511f5b07b0c5",
+  "request": {
+    "ref": "codex/hanlin-sdk02-stop-continuation-20261123",
+    "inputs": {
+      "composer_validation_only": "false",
+      "nativescript_metadata_validation_only": "false",
+      "runtime_job_foundation_only": "false",
+      "markdown_renderer_validation_only": "false",
+      "code_fence_webkit_validation_only": "false",
+      "diagnostics_capture_validation_only": "false",
+      "testflight_upload": "false",
+      "runtime_bundle_only": "false",
+      "runtime_publish_release": "false",
+      "phase1_validation_only": "false",
+      "fast_validation_only": "false",
+      "nativescript_poc_only": "false",
+      "force_clean_build": "false",
+      "measure_warm_rebuild": "false",
+      "simulator_e2e_only": "false",
+      "full_validation": "false",
+      "target_validation_group": "agent_sdk_exact_source_proof",
+      "exact_test_selector": "HanlinNativeToolCancellationRecheck"
+    }
+  },
+  "prior_run_ids": [
+    45273687114,
+    45270966473
+  ],
+  "authorization": "Root final review authorizes exactly one Native15 dispatch at this immutable source; independent peer review found no blocker.",
+  "scope": {
+    "current_native_core": 11,
+    "current_native_sdk": 4,
+    "current_ios_build": true,
+    "reused_product_invocations": 21,
+    "baseline": "HISTORICAL_REFERENCE_ONLY",
+    "simulator_launch": false,
+    "producer": "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8",
+    "shipping_gates": "ALL_FOUR_CLOSED"
+  }
+}

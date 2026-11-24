@@ -1,0 +1,147 @@
+[
+  {
+    "path": "README.md",
+    "bytes": 3139,
+    "sha256": "55dff9a285595217581028069623559a2f9a7bdc33f2a97f6b09fbdb54ff8670"
+  },
+  {
+    "path": "acquisition.json",
+    "bytes": 689,
+    "sha256": "e03c8a98edb8c5f7ccfea955ae80d704edd1f13f316499efd8ec592424761d73"
+  },
+  {
+    "path": "frozen-selection/admission.json",
+    "bytes": 13592,
+    "sha256": "b696e479e61703d6a52652a3162490355d5cbbbc142bb374df9c54aee2d1f2e5"
+  },
+  {
+    "path": "frozen-selection/plan.json",
+    "bytes": 334038,
+    "sha256": "b910fe3db8de3392ff8c001ccfef0371aaf2e60f73cf939ea6da377a0b691d0d"
+  },
+  {
+    "path": "frozen-selection/request.json",
+    "bytes": 1909,
+    "sha256": "c6461528b7bb0799e9dc4047afc09d4d886045c8c9ec782eb0739a53f093eea7"
+  },
+  {
+    "path": "github-original/artifacts.json",
+    "bytes": 4440,
+    "sha256": "d126d3b2e7b5a4dd937f59354068fc89cae86a3b91037f6b81695313b8611dd6"
+  },
+  {
+    "path": "github-original/jobs.json",
+    "bytes": 39678,
+    "sha256": "c083d6a4c29bb2d652c9e88e800d8b04f635c22498abbb1ae34428a514ed1bab"
+  },
+  {
+    "path": "github-original/run.json",
+    "bytes": 14924,
+    "sha256": "a6119d90917aa4714102337784b8297412d4891e74906210e42c84c89fb450f7"
+  },
+  {
+    "path": "original/build/acceptance/nativescript-metadata/iphonesimulator-arm64/visibility.json",
+    "bytes": 928,
+    "sha256": "90ea7b7c2c1ce782f58f2ddf55bd56349af2723f5e9a4835bf39ce4e8d372bff"
+  },
+  {
+    "path": "original/simulator-logs/06-app-compilation-duration-seconds.txt",
+    "bytes": 4,
+    "sha256": "be41cde8c9abcde3699cd84c112b27b0dd5a2dffa30cef105fb3cec659c25bfa"
+  },
+  {
+    "path": "original/simulator-logs/06-current-unit-xctestrun.json",
+    "bytes": 3854,
+    "sha256": "4cc7b1ff6f53b8fd4980e5b43d1551203fc32ddea1d1d07bbc231ad428978417"
+  },
+  {
+    "path": "original/simulator-logs/06-diagnostics-build-provenance.json",
+    "bytes": 6712,
+    "sha256": "136c74e44dccbc6241bb38881dda053435f3aa9d36d10b8b6c603403b546835e"
+  },
+  {
+    "path": "original/simulator-logs/06-generated-unit-manifests.json",
+    "bytes": 171,
+    "sha256": "959331b9eb6806e06b0cdcba7ab68d3e336d28684113491c73255b2b8e3e7dab"
+  },
+  {
+    "path": "original/simulator-logs/06-generated-unit.xctestrun",
+    "bytes": 10400,
+    "sha256": "89ea1b243da5ce812ea8a63d069a2a2bfeb44c420addf6aa02c0b89d3b5a3fa2"
+  },
+  {
+    "path": "original/simulator-logs/07-simulator-runtime-signature.log",
+    "bytes": 203,
+    "sha256": "a2bb1fc2e22d6b52e1cb3e4fcd48e7c0031d1d300cfc2ea505da7281016bff55"
+  },
+  {
+    "path": "original/simulator-logs/07-simulator-sdk-bundle-resources.json",
+    "bytes": 10518,
+    "sha256": "4f2173d64077235b0c79e8dfd3e70a7649a0f98b506e64baef096cc105f36da0"
+  },
+  {
+    "path": "original/simulator-logs/07-simulator-sdk-localization.json",
+    "bytes": 1025,
+    "sha256": "cd0846f26d9d6147f912ea06bb8d7a0f5dd84b63065294c8a52320b5dfc8f88d"
+  },
+  {
+    "path": "original/simulator-logs/08-bootstatus.log",
+    "bytes": 1064,
+    "sha256": "09716cc8b9dcc37bfcd35b3c1b3a202c12e7b1c1d35768064054c20212af8875"
+  },
+  {
+    "path": "original/simulator-logs/08-calendar-native-staging.json",
+    "bytes": 996,
+    "sha256": "61fa365e344bff712e1aaac4947469485a050b5c3db0ad409b177079ea866a1d"
+  },
+  {
+    "path": "original/simulator-logs/08-current-unit-xctestrun-admission.json",
+    "bytes": 4006,
+    "sha256": "b381a4a10c738474336b7825cd53d2e4446eb28a6e5afe0f50c3ee83b3328602"
+  },
+  {
+    "path": "original/simulator-logs/08-owned-simulator-boot.json",
+    "bytes": 465,
+    "sha256": "f3396e4de8ab0559d09de443f610c394ea67057af080c1cd8dd81a5d46323a40"
+  },
+  {
+    "path": "original/simulator-logs/09-simulator-system.log",
+    "bytes": 23,
+    "sha256": "7cc696892ead085e269b266d5259c63eb9277f5623eb75d2a12dcb5e0032f4cc"
+  },
+  {
+    "path": "original/simulator-logs/app-executable.txt",
+    "bytes": 10,
+    "sha256": "0aadda1cb8a292e1e5e08d32e3d79694a777b60244661e1f8f9a7eac00646952"
+  },
+  {
+    "path": "original/simulator-logs/app-intents-metadata/receipt.json",
+    "bytes": 2836,
+    "sha256": "d12369d6c1debb1eddf69248710d6982185e09e4eae7bfa78413698d4b7d9100"
+  },
+  {
+    "path": "original/simulator-logs/app-path.txt",
+    "bytes": 40,
+    "sha256": "a3b4a5197338b3663fa72b98194a1ea3f5bd5fe8266af768aa9a4cd871b71cab"
+  },
+  {
+    "path": "original-failure-log-excerpt.txt",
+    "bytes": 5304,
+    "sha256": "8805699c53e3841226818a600deb2d1a15ee92acd03bade524eaecef2a28ec4d"
+  },
+  {
+    "path": "receipt.json",
+    "bytes": 6857,
+    "sha256": "4aa672708df2a9f347280462394b2cb24f6a12067d2b2b858b360bf64fc3d872"
+  },
+  {
+    "path": "reconciliation.json",
+    "bytes": 32185,
+    "sha256": "87cd3771cf47e4e04cb4bc25fb0f524bd11907a0d2be475b11e2faae87e908d9"
+  },
+  {
+    "path": "zip-members.json",
+    "bytes": 22726,
+    "sha256": "79a22e2829461abbbf8e8ac5691324a94e0693951e3c99d0c536df22e7429444"
+  }
+]

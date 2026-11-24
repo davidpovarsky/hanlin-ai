@@ -1,0 +1,23 @@
+{
+  "utc": "2026-11-23T23:52:38.343171+00:00",
+  "reviewer": "/root/release_hosts",
+  "status": "NO_CONCRETE_BLOCKER",
+  "source": "a051e6a2076db8f0783f8c1a62fd6470e21b3d71",
+  "admission_sha256": "c7a13857cf07f66c315815c289afb44e377824261e32bda3b656bd057ec6bf2e",
+  "reviewed": {
+    "method_definitions": 33,
+    "unit_invocations": 26,
+    "ui_invocations": 11,
+    "total": 37,
+    "unchanged_test_sources": 8,
+    "unchanged_execution_outputs": true,
+    "unrelated_flags_false": 16,
+    "prior_current_counts": {
+      "PASS": 0,
+      "FAIL": 0,
+      "NOT_RUN": 37
+    },
+    "exact_identity_sha256": "495ea09bc6d34209b6f70fe42c2584eea70df8090a98625012a65548b74efd5b"
+  },
+  "new_test_or_planner_execution": false
+}

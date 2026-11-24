@@ -1,0 +1,74 @@
+{
+  "scope": "Three new original-engine controls for non-toolCalls finish labels on the composed07431 candidate",
+  "status": "PASS",
+  "source_commit": "e1a295ba60396997a6127c6c2e2c4e6e75f508b3",
+  "producer_commit": "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8",
+  "expected_invocations": 3,
+  "expected_method_groups": 3,
+  "cases": [
+    {
+      "result": "StopContinuationTests",
+      "method": "HanlinProducerStopContinuationTests/allowedStopToolContinuesThroughOriginalEngine",
+      "arguments": null,
+      "id": "HanlinProducerStopContinuationTests/allowedStopToolContinuesThroughOriginalEngine",
+      "status": "PASS",
+      "expected_status": "PASS",
+      "node_identifier_url": "test://com.apple.xcode/HanlinPlatform/HanlinChatCoreTests/HanlinProducerStopContinuationTests/allowedStopToolContinuesThroughOriginalEngine()",
+      "argument_display": "An authorized tool without an additional approval prompt continues after stop with its canonical output"
+    },
+    {
+      "result": "StopContinuationTests",
+      "method": "HanlinProducerStopContinuationTests/deniedStopToolContinuesWithCorrelatedResult",
+      "arguments": null,
+      "id": "HanlinProducerStopContinuationTests/deniedStopToolContinuesWithCorrelatedResult",
+      "status": "PASS",
+      "expected_status": "PASS",
+      "node_identifier_url": "test://com.apple.xcode/HanlinPlatform/HanlinChatCoreTests/HanlinProducerStopContinuationTests/deniedStopToolContinuesWithCorrelatedResult()",
+      "argument_display": "Denied stop-labeled tool continues with a correlated denial and no host effect"
+    },
+    {
+      "result": "StopContinuationTests",
+      "method": "HanlinProducerStopContinuationTests/nativeNumericStopToolCannotContinueOrReachHost",
+      "arguments": null,
+      "id": "HanlinProducerStopContinuationTests/nativeNumericStopToolCannotContinueOrReachHost",
+      "status": "PASS",
+      "expected_status": "PASS",
+      "node_identifier_url": "test://com.apple.xcode/HanlinPlatform/HanlinChatCoreTests/HanlinProducerStopContinuationTests/nativeNumericStopToolCannotContinueOrReachHost()",
+      "argument_display": "Rejected native numeric stop-labeled tool cannot reach approval, effect or another provider request"
+    }
+  ],
+  "methods": [
+    {
+      "result": "StopContinuationTests",
+      "id": "HanlinProducerStopContinuationTests/allowedStopToolContinuesThroughOriginalEngine()",
+      "status": "PASS",
+      "expected_status": "PASS"
+    },
+    {
+      "result": "StopContinuationTests",
+      "id": "HanlinProducerStopContinuationTests/deniedStopToolContinuesWithCorrelatedResult()",
+      "status": "PASS",
+      "expected_status": "PASS"
+    },
+    {
+      "result": "StopContinuationTests",
+      "id": "HanlinProducerStopContinuationTests/nativeNumericStopToolCannotContinueOrReachHost()",
+      "status": "PASS",
+      "expected_status": "PASS"
+    }
+  ],
+  "errors": [],
+  "process_status": {
+    "preparation_exit": 0,
+    "delta_test_exit": 0,
+    "ios_build_exit": 0,
+    "baseline_core_exit": null,
+    "core_test_exit": null,
+    "sdk_test_exit": null
+  },
+  "reused_cases": [],
+  "prior_e7_acceptance": "SEPARATE_HISTORICAL_EVIDENCE_NOT_RELABELED_AS_CURRENT_EXECUTION",
+  "ios_agent_core_compile": "PASS",
+  "shipping_native_tool_capability": false,
+  "system_model_generation": "NOT_RUN"
+}

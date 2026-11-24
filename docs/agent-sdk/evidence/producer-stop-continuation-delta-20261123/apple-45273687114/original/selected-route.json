@@ -1,0 +1,7 @@
+{
+  "exact_test_selector": "HanlinStopContinuationDelta",
+  "target_validation_group": "agent_sdk_exact_source_proof",
+  "baseline": "NOT_SELECTED",
+  "run_id": "45273687114",
+  "run_attempt": "1"
+}

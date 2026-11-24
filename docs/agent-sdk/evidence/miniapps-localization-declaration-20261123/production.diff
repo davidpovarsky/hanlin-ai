@@ -1,0 +1,11 @@
+diff --git a/HanlinMiniAppsApp/Info.plist b/HanlinMiniAppsApp/Info.plist
+index 1c7f4a2d..d0368727 100644
+--- a/HanlinMiniAppsApp/Info.plist
++++ b/HanlinMiniAppsApp/Info.plist
+@@ -8,0 +9,6 @@
++	<key>CFBundleLocalizations</key>
++	<array>
++		<string>en</string>
++		<string>he</string>
++		<string>zh-Hans</string>
++	</array>

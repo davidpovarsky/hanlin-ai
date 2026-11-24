@@ -1,0 +1,2 @@
+# Preserve the exact original native boot receipt, including its terminal blank line.
+native/paired-product/bootstatus.log -whitespace

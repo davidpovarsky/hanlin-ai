@@ -1,0 +1,179 @@
+{
+  "status": "PENDING_NATIVE15_RESULTS",
+  "preparedUTC": "2026-11-24T00:12:46.529288+00:00",
+  "baseCommit": "7d97aacf136a75f326caef094b0afe99f3d4fd67",
+  "baseTree": "5942183fad18d1223160fd700c87398f82c9bd8d",
+  "codeTreeBeforeProofDocumentation": "cacc752e568d5dad606412cbbf33a97337495845",
+  "candidateSource": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+  "nativeHistoricalSupportSource": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+  "producer": "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8",
+  "nativeRunAwaitingOriginalResults": 45292176348,
+  "sourceInventorySHA256": "6f95a767c5ad364d587c3a3ea04b24259c66ae300aa0ae555e1e3138fb2c5a33",
+  "sourceFiles": [
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleOnDeviceProvider.swift",
+      "preimage": {
+        "mode": "100644",
+        "blob": "1762ce03bcbdd6533d5d8411979853876964b7df"
+      },
+      "postimage": {
+        "mode": "100644",
+        "blob": "1d420c6ccd19c07ebedf0ce881b8ab0ae1449dce"
+      },
+      "postimageSHA256": "65b14d1853f09c600643cbbc9016723916f56baf95c7a223d8808ed765cadde1",
+      "preimageSHA256": "e9cce91de6ae2ad7b93d86efe81d3ee8c550c504fe167c0a6bc17098f7ded22f"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleToolHistory.swift",
+      "preimage": null,
+      "postimage": {
+        "mode": "100644",
+        "blob": "7f493137649cca6442c1bf5905ced6801a95fd0a"
+      },
+      "postimageSHA256": "623c15f05db11d4830685a665f765aa53a11c143a51436a73fd1942fdf2b72e1"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleToolSchema.swift",
+      "preimage": null,
+      "postimage": {
+        "mode": "100644",
+        "blob": "c16522e5e4273146c10346062641e2a8c38b0f8a"
+      },
+      "postimageSHA256": "8cffe156a8f8346f6b2fa25b8d5b237382d3185b2e24ff7e72bcb98684edafaf"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleToolSessionBridge.swift",
+      "preimage": null,
+      "postimage": {
+        "mode": "100644",
+        "blob": "6594e319623d993c60e0f12fcfe56e84b3965e3d"
+      },
+      "postimageSHA256": "2f3441ea603b186f71bbb13b5faf37f4e1b01c475dd0a0e7df7faeb97dbff418"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSchemaTests.swift",
+      "preimage": null,
+      "postimage": {
+        "mode": "100644",
+        "blob": "f1a1443bb061c36687be2072e1ce5d5d4650ddea"
+      },
+      "postimageSHA256": "7cf017f5f196455239011846ee529057eb17e5bc45821450ea4ed4aedadbe423"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests.swift",
+      "preimage": null,
+      "postimage": {
+        "mode": "100644",
+        "blob": "2327b6f3b423e54ec7f9de789a45ba888547d5ee"
+      },
+      "postimageSHA256": "1296391072e837f04d05423ecc7c611f59556b414fd5ab085b0096c140e54f57"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift",
+      "preimage": {
+        "mode": "100644",
+        "blob": "d8b353bc455addd30e850a7324127314ae935bf0"
+      },
+      "postimage": {
+        "mode": "100644",
+        "blob": "bb03b564e9aaaf964a33a69df8a8df5f5243c2f9"
+      },
+      "postimageSHA256": "8abb757a9a9e7da9f90d474b1b036158b01e1f594ca2fb33d28d803cc2be91e8",
+      "preimageSHA256": "aaf8ae687d478710c2b4388f19350164a606facd02b70375743c808629cbe524"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKModels.swift",
+      "preimage": {
+        "mode": "100644",
+        "blob": "2e4e4c2317dc1d7348e9ca4a94d6fcd1f7978110"
+      },
+      "postimage": {
+        "mode": "100644",
+        "blob": "b30506bc6f3569aa72cbd53d621ae1cf14e27b61"
+      },
+      "postimageSHA256": "39e14e004a2b1d894ded12b666160dadc2900a00aafafa33974caa56c5a31a06",
+      "preimageSHA256": "c8e0ecfdda95960195c3454f76d35fa5bd6c48c08781e920d39903157416eb92"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests.swift",
+      "preimage": null,
+      "postimage": {
+        "mode": "100644",
+        "blob": "a59d9f086f174c79683cea13bc5a2946170d04ba"
+      },
+      "postimageSHA256": "0c24a0b2cb54e5ed7589d20f18325e5b93a5946aa68dee1ffcef05ee9fab8815"
+    }
+  ],
+  "exactPackageRecords": 404,
+  "packageTreesEqualToCandidate": {
+    "Packages/HanlinAgentSDK": "b594a6a93ec43993dc79933e05e752f7f31fe672",
+    "Packages/HanlinPlatform": "a6092a686f6d2dcd62fe0a9c9c48e0523c24afa7"
+  },
+  "compositionPathCount": 298,
+  "compositionKinds": {
+    "reviewed-product-or-test-source": 9,
+    "native-historical-runner-or-verifier": 6,
+    "additive-router-glue": 1,
+    "composed-current-runner-or-verifier": 3,
+    "immutable-original-reference": 274,
+    "existing-report-control": 3,
+    "authorized-integration-control-compatibility": 2
+  },
+  "immutableReferenceFiles": 274,
+  "protectedUnchangedSHA256": {
+    ".github/workflows/build-ios26-unsigned-ipa.yml": "307bc9bf8cad8f305eee296e3b9ea574d7e1de6a4a233d246f7e2248610eba9b",
+    "AI_HLY.xcodeproj/project.pbxproj": "fd9a3ce112321a37438d2f12f29ea41848a144bb1dc27fb1a371174a54c4ac93",
+    "Package.swift": "9d479c23f1e3609f4da4252abf120f9ce0349948bd0367955099168e5a3f9ed1",
+    "Packages/HanlinAgentSDK/Package.resolved": "b771042794841f2e759cffc68181ca37214794b4fc9c02981a1c86176a9bde83",
+    "Packages/HanlinAgentSDK/Package.swift": "9373a783d26e514b2dba8e11e52b8d2ae6f3b5bb7c5edbeddd8a563c5584c4d8",
+    "Packages/HanlinAppExtensionsSDK/Package.swift": "9cfaec8b4158dc6b099765b800bcc35834d1ad2283717d82882b60b1d97a27b1",
+    "Packages/HanlinExpoNativeAPI/Package.swift": "1bf2b967d85c4759f94f39330b1b435148a9d3956ec6b8e645cec7dd65bec83d",
+    "Packages/HanlinExpoRuntime/Package.swift": "3c63a7cc0751b86e445e4048413c61553269e0d0fd087d01544c24dccb8f379c",
+    "Packages/HanlinExpoWidgetSubset/Package.swift": "ed50b8b4f6ee4532ff3ed2af82d7994c7718e958387495280f9a939218323a41",
+    "Packages/HanlinNativeScriptRuntime/Package.swift": "f2798b093e8df72923abc135e4999f2614c32e8de1d495c480e6fd8fd4db9b34",
+    "Packages/HanlinParityMiniApp/Package.swift": "66025f0b1fb7db7db9b8a24426319b651858f3454295780ee807edd335cec90b",
+    "Packages/HanlinPlatform/Package.resolved": "8f67ee59e5ba54c1d9bdd312efff89ddc946e00443fef8faddfeb4e7eb5387c8",
+    "Packages/HanlinPlatform/Package.swift": "a22b7948988b776de98f51d6a9c493b9b2f9db62deae097f31ced5971b842665",
+    "Packages/HanlinPresentationSDK/Package.swift": "462479a3660edd652181ad339238c29f270ec9bfd8203d2f1310681d8029ecc4",
+    "Packages/HanlinProductSplit/Package.swift": "31234398119e82e9895391040f281e9c9895c2cc73f962c12f1b37489e7f5e3a",
+    "Packages/HanlinQuickJS/Package.swift": "3b3e64732c71724b027fd28236f635073d02a3c208cbd9060fafaf802a47480e",
+    "Packages/HanlinSefariaMiniApp/Package.swift": "7ac94c46688313d32e03c2ffa3bb74c1f1dc00fc8b0b8b7322ae1286b918d50c",
+    "Packages/HanlinSkillFormat/Package.swift": "3878f654329884843943a463a901537c45f894b198a4bc9b9b9169410dc66741",
+    "Packages/HanlinTextStudioMiniApp/Package.swift": "d2049eb9401b85c9ab1734a369b818f930db964aee7ce7bb7bf865ec21af291d",
+    "Packages/HanlinWidgetSDK/Package.swift": "7621588d8da3037defe51a66839b0b703ae5464e90446c13ebc00e853daf523d",
+    "Packages/HanlinWikipediaMiniApp/Package.swift": "01b8cc014f8a5e853b644947fd6684df56b65b37feb08ef23f410fb56c902d8e",
+    "Packages/IOSSystemLite/Package.swift": "06c6721c4b59328ba4f78997c9a8b23330357db12d3a619207dc1bac8cb76bab",
+    "Packages/TorahLibraryKit/Package.swift": "4423074f870fe146b8914dc275db77aedef4cc1b6c0b856dfad844b65c3a21d6",
+    "Scripts/CI/IntegrationValidation/xcresult_to_xunit.py": "41720f0fa414875f05a3b96e9364e6659c230f96a4d5cbb708fad801eb3b3afb",
+    "Scripts/CI/select_stable_xcode.py": "531237772eeeb10888359064302a5980f42ad47cad135e5bb0b544afe289f05f",
+    "Scripts/CI/verify_exact_json_vendor.py": "67d90e3bcb9660c719c89f4b54ee62d56bb11aeaae6650d5996c10bc4179165b",
+    "docs/agent-sdk/unified-package-manifest.json": "f47539c6d4eaede9a942402a88f45fddaa34bed98353e8a1d4a0fe3b29b2cf58"
+  },
+  "manifestGraphChanges": false,
+  "workflowChanges": false,
+  "producerPinChanges": false,
+  "fourShippingCapabilityGates": "UNCHANGED_CLOSED",
+  "genericBodySHA256": "ee37607c24716d2669d527d5d4ef5a2dde50563d38b75d55a7aa388293d53d62",
+  "genericBodyRestoredByRemovingOnlyPreambles": true,
+  "twoAffectedLocalControls": {
+    "before": {
+      "FAIL": 2,
+      "ERROR": 0,
+      "PASS": 0
+    },
+    "after": {
+      "PASS": 2,
+      "FAIL": 0,
+      "ERROR": 0
+    },
+    "methods": [
+      "Scripts.CI.Tests.test_native_tool_candidate_report.NativeToolCandidateReportTests.test_inventory_is_bound_to_authored_swift_arguments_and_methods",
+      "Scripts.CI.Tests.test_stop_continuation_delta_report.StopContinuationDeltaReportTests.test_frozen_fixture_inventory_retains_exact_stop_labels_and_no_old_suite_selection"
+    ],
+    "otherControlsExecuted": false,
+    "nativeTestsExecuted": false
+  },
+  "syntaxCheck": "PASS_BASH_N_ONLY",
+  "publication": "NOT_PUSHED",
+  "integrationDecision": "ROOT_OWNS_AFTER_ORIGINAL_NATIVE_RESULTS"
+}

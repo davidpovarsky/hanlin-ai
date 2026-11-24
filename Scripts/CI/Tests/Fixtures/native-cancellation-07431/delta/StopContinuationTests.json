@@ -1,0 +1,71 @@
+{
+  "devices" : [
+    {
+      "architecture" : "arm64",
+      "deviceId" : "e12c67c3be7075feda476ff7b7693f4be24e1419",
+      "deviceName" : "My Mac",
+      "modelName" : "Virtual Machine",
+      "osBuildNumber" : "26A434",
+      "osVersion" : "27.0.1",
+      "platform" : "macOS"
+    }
+  ],
+  "testNodes" : [
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "duration" : "0.22s",
+                  "durationInSeconds" : 0.22295475006103516,
+                  "name" : "Rejected native numeric stop-labeled tool cannot reach approval, effect or another provider request",
+                  "nodeIdentifier" : "HanlinProducerStopContinuationTests/nativeNumericStopToolCannotContinueOrReachHost()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinPlatform/HanlinChatCoreTests/HanlinProducerStopContinuationTests/nativeNumericStopToolCannotContinueOrReachHost()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.39s",
+                  "durationInSeconds" : 0.3914830684661865,
+                  "name" : "An authorized tool without an additional approval prompt continues after stop with its canonical output",
+                  "nodeIdentifier" : "HanlinProducerStopContinuationTests/allowedStopToolContinuesThroughOriginalEngine()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinPlatform/HanlinChatCoreTests/HanlinProducerStopContinuationTests/allowedStopToolContinuesThroughOriginalEngine()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.39s",
+                  "durationInSeconds" : 0.3902871608734131,
+                  "name" : "Denied stop-labeled tool continues with a correlated denial and no host effect",
+                  "nodeIdentifier" : "HanlinProducerStopContinuationTests/deniedStopToolContinuesWithCorrelatedResult()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinPlatform/HanlinChatCoreTests/HanlinProducerStopContinuationTests/deniedStopToolContinuesWithCorrelatedResult()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "Original engine continuation after a completed tool labeled stop",
+              "nodeIdentifierURL" : "test://com.apple.xcode/HanlinPlatform/HanlinChatCoreTests/HanlinProducerStopContinuationTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            }
+          ],
+          "name" : "HanlinChatCoreTests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/HanlinPlatform/HanlinChatCoreTests",
+          "nodeType" : "Unit test bundle",
+          "result" : "Passed"
+        }
+      ],
+      "name" : "HanlinPlatform-Package",
+      "nodeType" : "Test Plan",
+      "result" : "Passed"
+    }
+  ],
+  "testPlanConfigurations" : [
+    {
+      "configurationId" : "1",
+      "configurationName" : "Test Scheme Action"
+    }
+  ]
+}

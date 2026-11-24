@@ -1,0 +1,9 @@
+test_no_current_test_or_compile_claim_without_its_process_and_graph (__main__.NativePinBuildAdmissionTests.test_no_current_test_or_compile_claim_without_its_process_and_graph) ... ok
+test_original_fifteen_and_prior_twentyone_keep_sources_with_zero_current_tests (__main__.NativePinBuildAdmissionTests.test_original_fifteen_and_prior_twentyone_keep_sources_with_zero_current_tests) ... ok
+test_post_build_pin_or_origin_drift_cannot_be_relabelled (__main__.NativePinBuildAdmissionTests.test_post_build_pin_or_origin_drift_cannot_be_relabelled) ... ok
+test_source_case_and_producer_tampering_reject_reuse (__main__.NativePinBuildAdmissionTests.test_source_case_and_producer_tampering_reject_reuse) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 1.904s
+
+OK

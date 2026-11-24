@@ -1,0 +1,12 @@
+{
+  "run": 45290086669,
+  "source": "51f56b49fe7add4eafa1d8b2443f1adf3b82157f",
+  "allow_original_artifact_acquisition": true,
+  "authorization": "Root approved one finite B-only watcher/terminal collector after actual destination capacity guards",
+  "time": "2026-11-23T23:36:40.723702+00:00",
+  "destination": "/mnt/development/projects/worktrees/hanlin-sdk-motion-resume-20261123/build/motion-b-containment-20261123",
+  "destination_device": 2064,
+  "free_bytes_now": 2021392384,
+  "owned_tmpdir": "/mnt/development/projects/worktrees/hanlin-sdk-motion-resume-20261123/build/motion-b-containment-20261123/tmp",
+  "capacity_requirement": "3*actual API artifact size+256MiB, then actual ZIP uncompressed size+256MiB"
+}

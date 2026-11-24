@@ -1,0 +1,18 @@
+{
+  "utc": "2026-11-23T22:40:36.541598+00:00",
+  "retired_path": "/mnt/development/projects/worktrees/hanlin-sdk-ci-proof-integration-20261123-2123",
+  "owner": "root completed CI/API integration",
+  "tracked_checkout_commit": "09ec56ffd372bfc121b24b7836cebd3bf4efd30e",
+  "commit_published": true,
+  "final_integrated_commit": "4cfa52348e80cf635caf04c541fd84ee1ddb50bd",
+  "final_tree": "62f3717f31fd633333697bdca0b87a56f298ee20",
+  "untracked_files": 0,
+  "ignored_files": 0,
+  "observed_open_process_references": [],
+  "allocated_bytes_in_retired_checkout": 227094528,
+  "files": 7364,
+  "git_refs_and_objects_preserved": true,
+  "free_before": 544043008,
+  "free_after": 544043008,
+  "qualification": "Only a clean fully reproducible root-owned checkout retired; final source, local prepared commits, published object staging commit and all original evidence retained. Concurrent activity means free-space delta is not a standalone reclaimed-byte claim."
+}

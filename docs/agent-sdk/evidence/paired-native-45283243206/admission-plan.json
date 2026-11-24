@@ -1,0 +1,86 @@
+{
+  "prepared_at": "2026-11-23T22:45:23.470083+00:00",
+  "source": "4cfa52348e80cf635caf04c541fd84ee1ddb50bd",
+  "tree": "62f3717f31fd633333697bdca0b87a56f298ee20",
+  "branch": "codex/hanlin-sdk-paired3-corrections-20261123",
+  "workflow": "validate-app-split.yml",
+  "workflow_sha256": "46db5962886dccc53f852a77e4facbcd8a2c431f9c9d928a4c03752a4c0a57b0",
+  "workflow_unchanged_vs_prior": true,
+  "previous_actual_execution": {
+    "run": 45260265662,
+    "source": "e59256e8325bcdb71c0e683f6b19e7641642aad8",
+    "result": "0 PASS / 3 FAIL",
+    "build": "Both original shipping products EXECUTED_PASS",
+    "baseline_reuse": "Both strict native guards REUSED_VERIFIED_PASS"
+  },
+  "execute": [
+    {
+      "identity": "AI_HLYUITests/HanlinPairedProductUITests/testCompanionReturnsActualPrivateValueToOriginalChat",
+      "prior": "FAIL",
+      "why": "Original missing acceptance; corrected shared compact padding/consent visibility or MiniApps host localization. Current retained disclosure and producer/packaging integration are also exercised."
+    },
+    {
+      "identity": "AI_HLYUITests/HanlinPairedProductUITests/testCompanionCancellationReturnsWithoutChangingPrivateState",
+      "prior": "FAIL",
+      "why": "Original missing acceptance; corrected shared compact padding/consent visibility or MiniApps host localization. Current retained disclosure and producer/packaging integration are also exercised."
+    },
+    {
+      "identity": "AI_HLYUITests/HanlinPairedProductUITests/testOriginalPackageAndSavedStateTransferThenRollback",
+      "prior": "FAIL",
+      "why": "Original missing acceptance; corrected shared compact padding/consent visibility or MiniApps host localization. Current retained disclosure and producer/packaging integration are also exercised."
+    }
+  ],
+  "scope": "Existing cross_product route; exactly three original methods with unchanged tests, fixtures, timeouts and assertions. Both current shipping builds and actual shared App Group validation remain required.",
+  "reuse": [
+    {
+      "origin_run": 45133337462,
+      "count": 53,
+      "source_inputs": 35,
+      "current_source": "IDENTICAL",
+      "native_environment": "REQUIRED_FAIL_STOP_GATE"
+    },
+    {
+      "origin_run": 44351078724,
+      "count": 159,
+      "original_skipped": 1,
+      "source_inputs": 139,
+      "current_source": "IDENTICAL",
+      "native_environment": "REQUIRED_FAIL_STOP_GATE"
+    }
+  ],
+  "runtime_artifact_run": 42926628418,
+  "product_changes": [
+    "Shared original ChatView external padding clamp/fallback225 to24; standalone and public explicit inset preserved",
+    "MiniApps declares existing en/he/zh-Hans support; canonical tables/default and main metadata untouched",
+    "Current shared disclosure retains mounted children and hides collapsed AX at the child boundary",
+    "Current canonical producer and host/SDK linker ownership integrated. Xcode executable target/module is HanlinApp; AI_Hanlin is the preserved SDK implementation module. Product/executable remain AI_Hanlin.app/AI_Hanlin."
+  ],
+  "native_bounds": {
+    "job_minutes": 150,
+    "boot_seconds": 300,
+    "mini_build_seconds": 2400,
+    "ai_build_seconds": 1800,
+    "ui_and_routing_assertion_deadlines": "UNCHANGED"
+  },
+  "watcher": {
+    "owner": "/root/motion_acceptance",
+    "initial_single_finite_seconds": 3300,
+    "sentinel_job_seconds": 3600,
+    "terminal_collection_seconds": 180,
+    "continuation_rule": "If the bounded watcher ends while the native run remains active, preserve its receipt and continue sequentially on the same run after phase/bound review; no duplicate observer or native dispatch"
+  },
+  "evidence": "One final metadata and original artifact acquisition on terminal. Original failed-run provenance and decoded attachments preserved.",
+  "model_boundary": "Existing opt-in simulator HTTP acceptance provider; Host/permission/OS transitions/storage/results use native original products. This is not real external LLM service execution.",
+  "other_runs": "Motion452784 on d8e4327f remains separately owned and unchanged; A/C/D not selected here",
+  "status": "DISPATCHED_NATIVE_NOT_RUN",
+  "dispatch_performed": true,
+  "target_identity": {
+    "xcode_target": "HanlinApp",
+    "executable_module": "HanlinApp",
+    "sdk_implementation_module": "AI_Hanlin",
+    "product": "AI_Hanlin.app",
+    "executable": "AI_Hanlin"
+  },
+  "review": "Root approved one existing cross_product dispatch at this exact source; target/module wording clarified before intent. No source, selector or assertion change.",
+  "run": 45283243206
+}

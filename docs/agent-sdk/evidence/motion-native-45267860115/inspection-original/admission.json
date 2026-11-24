@@ -1,0 +1,20 @@
+{
+  "time": "2026-11-23T21:45:04.587861+00:00",
+  "source_run": 45267860115,
+  "source_sha": "35bfa9509ed4660d2c189b1935ed7725d0bae9f2",
+  "branch": "codex/hanlin-sdk-motion-b-retained-20261123",
+  "operation": "Existing original B xcresult export only",
+  "build_simulator_test_replay": false,
+  "source_artifact": {
+    "run": 45267860115,
+    "attempt": 1,
+    "artifact_id": 14864559913,
+    "artifact_bytes": 58170086,
+    "artifact_sha256": "99ba9280bb2db635ed1932cbe676ab7a9a27916b8b1aa6389fe4af67223d46a5",
+    "api_digest_and_size_match": true,
+    "zip_crc": "PASS",
+    "member_count": 52
+  },
+  "owner": "/root/motion_acceptance",
+  "overlap": []
+}

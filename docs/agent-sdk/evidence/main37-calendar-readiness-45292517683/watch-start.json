@@ -1,0 +1,21 @@
+{
+  "utc": "2026-11-23T23:53:16.274351+00:00",
+  "run": 45292517683,
+  "source": "a051e6a2076db8f0783f8c1a62fd6470e21b3d71",
+  "owner": "root",
+  "command": [
+    "gh",
+    "run",
+    "watch",
+    "45292517683",
+    "--repo",
+    "davidpovarsky/hanlin-ai",
+    "--compact",
+    "--interval",
+    "60",
+    "--exit-status"
+  ],
+  "bounded_seconds": 3300,
+  "scope": "One finite watcher; original terminal metadata/log only after completed identity check",
+  "owned_TMPDIR": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-main-calendar-readiness-20261123/owned-temporary-files"
+}

@@ -1,0 +1,200 @@
+{
+  "sourceSHA": "7523f45cf8ea180a8e30f511ff0fbd3bb5ccae6d",
+  "test_source_equivalence": [
+    {
+      "path": "AI_HLYTests/A2UITests.swift",
+      "equal": true,
+      "sha256": "c66ab3fbd7e6087208336737c8ea6dcfa28c26c3215cdfc9ffe0d00fb6774f89"
+    },
+    {
+      "path": "AI_HLYTests/AgentActivityHeaderPhaseTests.swift",
+      "equal": true,
+      "sha256": "b05aea3e3b2a17d0f45872f7a30475713968b6fd9255fae3907cb231bd143bf7"
+    },
+    {
+      "path": "AI_HLYTests/AgentRoundPresentationTests.swift",
+      "equal": true,
+      "sha256": "9d10254f721147bd29b862ed7999cff0a4a19a1283cf23fc377d91542b151ff9"
+    },
+    {
+      "path": "AI_HLYTests/CalendarToolTests.swift",
+      "equal": true,
+      "sha256": "10e2b95d046e55089073f9095822ee8df8cee977b9f524648914889d0cb106da"
+    },
+    {
+      "path": "AI_HLYTests/ChatAutoFollowTests.swift",
+      "equal": true,
+      "sha256": "c36ac17d0ac2503376ac757cfdaf1b5e4022cc473d8aa8ecc1a5a1968b37b03a"
+    },
+    {
+      "path": "AI_HLYTests/ChatCodeFenceTests.swift",
+      "equal": true,
+      "sha256": "0a441d9eb856ee5b7b5c87dd09872d280b81b842801a12367ce6ec4f75ac8fce"
+    },
+    {
+      "path": "AI_HLYTests/ChatPresentationTests.swift",
+      "equal": true,
+      "sha256": "6540c94c86d790efe9d0394f8b68596cd1687e0c04d7efde6f16003e6a7bd5a6"
+    },
+    {
+      "path": "AI_HLYTests/ChatScrollViewHandleTests.swift",
+      "equal": true,
+      "sha256": "ec51b892bd3cd3d8db5bb1fb2480a687159916d871a2918668f49efa7e8b306f"
+    },
+    {
+      "path": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "equal": true,
+      "sha256": "9ee86ec88ce723c8257cef8a26ff46865408ec3b50568314875a5608c7ddfc0a"
+    },
+    {
+      "path": "AI_HLYTests/HanlinApplicationEmbeddingTests.swift",
+      "equal": false,
+      "sha256": "d647361dbef8f576f18e13fc852df7f61b7d06a7f5757e5b29bfd503aafc4463"
+    },
+    {
+      "path": "AI_HLYTests/HanlinApplicationSystemIntegrationTests.swift",
+      "equal": true,
+      "sha256": "617d5472d978fde04ca74400267cb1bb92244b84fbe224545896bddb26bfa802"
+    },
+    {
+      "path": "AI_HLYTests/HanlinCapabilityObservationTests.swift",
+      "equal": true,
+      "sha256": "207b4bb7e2821ff0b3e563dde4131922fceb25c2d6b4142084e1461586a95ac4"
+    },
+    {
+      "path": "AI_HLYTests/HanlinConversationProjectionTests.swift",
+      "equal": true,
+      "sha256": "5689f0ed337357edaabe99cb7fa1ea0c9d7d9792614a39c5dd6ff56e8f5d2da6"
+    },
+    {
+      "path": "AI_HLYTests/HanlinMCPEmbeddingTests.swift",
+      "equal": true,
+      "sha256": "2774f4a60882be0a8eec456f8e6e75ede049981c58f412931311c1db509f6592"
+    },
+    {
+      "path": "AI_HLYTests/HanlinNativeWidgetRendererTests.swift",
+      "equal": true,
+      "sha256": "c43cd512bb45c120fd06f2903b80c1092220efd1ed85045b9513c88a13c055f6"
+    },
+    {
+      "path": "AI_HLYTests/HanlinOrganizerDockParityTests.swift",
+      "equal": true,
+      "sha256": "0e7366d161edcb410ab9707c408540bf5a4d22eb4c7710d09d2adf06530a6d16"
+    },
+    {
+      "path": "AI_HLYTests/HanlinRemoteMediaURLTests.swift",
+      "equal": true,
+      "sha256": "8d529ef1da665e792f9e56b92f746659eb26be6c790765c6f233b81016247059"
+    },
+    {
+      "path": "AI_HLYTests/NativeComposerLineSizingTests.swift",
+      "equal": true,
+      "sha256": "6eb5c1a7f623dac590311d3040c6c0f81cdbb6baec98fdd943d6617151d0f248"
+    },
+    {
+      "path": "AI_HLYTests/RuntimeAutonomyV3Tests.swift",
+      "equal": true,
+      "sha256": "b72a5d8ec0c51144e864776a2e1d4537cbfd0e28e27074b47280af5b108fba7d"
+    },
+    {
+      "path": "AI_HLYTests/ShareInboxHostIntegrationTests.swift",
+      "equal": true,
+      "sha256": "c6ba09129bdab7fadcae8ac02468081332a8f7296a656a84df650b78e8db0195"
+    },
+    {
+      "path": "AI_HLYTests/VoiceRecordingLifecycleTests.swift",
+      "equal": true,
+      "sha256": "6140722d3090e41c7465601624a0fa389509c91bd23054e9a91bd80c0fe4c7c1"
+    },
+    {
+      "path": "AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+      "equal": true,
+      "sha256": "3d9755248a7ac026c2d2a0293d744d45e3c7454c9bd154a7a35e91d65175454a"
+    },
+    {
+      "path": "AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+      "equal": true,
+      "sha256": "11b3cb74033aa95a3a37521ee013a1e05245b4a01a0e974bb147a0e259e70edc"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Tests/HanlinLocalizationTests/HanlinLocalizationTests.swift",
+      "equal": true,
+      "sha256": "4b20056ba96ba0ed9561d32c3b8e8e93bd89d5a6aa093eb5a1a4d8a1b9f0951e"
+    }
+  ],
+  "argument_rows_count": 50,
+  "argument_examples": [
+    {
+      "identifier": "CalendarToolTests/failedReadProducesStructuredOutcomeWithoutPoisoningNextCall(kind:)",
+      "methodURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CalendarToolTests/failedReadProducesStructuredOutcomeWithoutPoisoningNextCall(kind:)",
+      "invocationURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CalendarToolTests/failedReadProducesStructuredOutcomeWithoutPoisoningNextCall(kind:)?args=e5532718eccbf3b707efcf5696a3347b6ac2fad00fe3417fbcf4fe6786394821",
+      "result": "Failure",
+      "orderInTestCaseRun": 0,
+      "parameterName": null,
+      "debugDescription": "\"denied\"",
+      "description": "\"denied\"",
+      "fullyQualifiedTypeName": "Swift.String"
+    },
+    {
+      "identifier": "CalendarToolTests/failedReadProducesStructuredOutcomeWithoutPoisoningNextCall(kind:)",
+      "methodURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CalendarToolTests/failedReadProducesStructuredOutcomeWithoutPoisoningNextCall(kind:)",
+      "invocationURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CalendarToolTests/failedReadProducesStructuredOutcomeWithoutPoisoningNextCall(kind:)?args=492bd0204b74443b7d8d36be9d38f139bd23776b1b1762051c15b89705768595",
+      "result": "Failure",
+      "orderInTestCaseRun": 0,
+      "parameterName": null,
+      "debugDescription": "\"timeout\"",
+      "description": "\"timeout\"",
+      "fullyQualifiedTypeName": "Swift.String"
+    },
+    {
+      "identifier": "CalendarToolTests/failedReadProducesStructuredOutcomeWithoutPoisoningNextCall(kind:)",
+      "methodURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CalendarToolTests/failedReadProducesStructuredOutcomeWithoutPoisoningNextCall(kind:)",
+      "invocationURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CalendarToolTests/failedReadProducesStructuredOutcomeWithoutPoisoningNextCall(kind:)?args=06234c1cf33df85364aedb5de2e65dc2fcb144ff65a249457c5f140fde7ee1d4",
+      "result": "Success",
+      "orderInTestCaseRun": 0,
+      "parameterName": null,
+      "debugDescription": "\"cancelled\"",
+      "description": "\"cancelled\"",
+      "fullyQualifiedTypeName": "Swift.String"
+    },
+    {
+      "identifier": "ChatPresentationTests/mixedMarkdownMathAndStreamingHaveFiniteLayout(width:)",
+      "methodURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatPresentationTests/mixedMarkdownMathAndStreamingHaveFiniteLayout(width:)",
+      "invocationURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatPresentationTests/mixedMarkdownMathAndStreamingHaveFiniteLayout(width:)?args=88820462180e5c893eff2ed73f4ec33e205d1cd5acc4d17fa7b2bca2495d3448",
+      "result": "Success",
+      "orderInTestCaseRun": 0,
+      "parameterName": null,
+      "debugDescription": "320.0",
+      "description": "320.0",
+      "fullyQualifiedTypeName": "Swift.Double"
+    },
+    {
+      "identifier": "ChatPresentationTests/mixedMarkdownMathAndStreamingHaveFiniteLayout(width:)",
+      "methodURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatPresentationTests/mixedMarkdownMathAndStreamingHaveFiniteLayout(width:)",
+      "invocationURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatPresentationTests/mixedMarkdownMathAndStreamingHaveFiniteLayout(width:)?args=d829857eb1366e70be857a69886d1555af0d32681beab068afb93492c2e2b843",
+      "result": "Success",
+      "orderInTestCaseRun": 0,
+      "parameterName": null,
+      "debugDescription": "720.0",
+      "description": "720.0",
+      "fullyQualifiedTypeName": "Swift.Double"
+    },
+    {
+      "identifier": "HanlinAppAgentSessionOwnerTests/originalProviderCredentialRowsReopenAndRecoverWithoutSchemaChanges(kind:)",
+      "methodURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/originalProviderCredentialRowsReopenAndRecoverWithoutSchemaChanges(kind:)",
+      "invocationURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/originalProviderCredentialRowsReopenAndRecoverWithoutSchemaChanges(kind:)?args=18fb9fa0b971b807a1312d3702d18747a3b1b39a129df8c5d1a8f68d512bd1fd",
+      "result": "Success",
+      "orderInTestCaseRun": 0,
+      "parameterName": null,
+      "debugDescription": "HanlinScriptExtensions.HanlinKeychainCredentialStore.Kind.model",
+      "description": ".model",
+      "fullyQualifiedTypeName": "HanlinScriptExtensions.HanlinKeychainCredentialStore.Kind"
+    }
+  ],
+  "all_sources_equal": false,
+  "qualification": "23 files byte-identical to inventory source; one exact added try within existing unchanged method/assertion, with inverse restoring original bytes. Names/arguments/counts unchanged.",
+  "only_syntax_delta": {
+    "path": "AI_HLYTests/HanlinApplicationEmbeddingTests.swift",
+    "added_inner_try_exact_inverse": true
+  }
+}

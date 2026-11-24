@@ -1,0 +1,41 @@
+{
+  "run": 45278413617,
+  "source": "d8e4327f6d4097ac5a206f2acf2bf654a7ee9c13",
+  "source_path": "Vendor/HanlinSDK/Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinAnimatedDisclosure.swift",
+  "original_owned_source_sha256": "bb621c8312e153ac65a963da25ee845a35f46c40ccd13fe66540404f0ad626f2",
+  "original_archive_equals_reviewed_source": true,
+  "compiler_target": "HanlinChatUI from HanlinSDK",
+  "compile_line_count": 1,
+  "fresh_collapsed_app_snapshot": "2026-11-23T22:51:38.125569Z",
+  "app_pid": 23854,
+  "summary_ax_id": "4593262880.54",
+  "immediate_container_ax_id": "4593264320.53",
+  "same_ids_in_expanded_snapshot": true,
+  "collapsed_snapshot_observations": [
+    "expanded=false",
+    "actions=2",
+    "v1.relaxed",
+    "shimmer=true;numeric=true",
+    "proof-summary present",
+    "plain source-call2 and source-call3 Text present",
+    "nested Repeated tool name button present"
+  ],
+  "runner_fresh_query_end": "2026-11-23T22:51:38.132Z",
+  "provider_class": "NOT_ESTABLISHED: original description identifies AX types/IDs, not concrete provider class for these IDs",
+  "visual_review": {
+    "status": "PASS_ONLY_FOR_PREWARM_VISUAL_COLLAPSE",
+    "original_video_sha256": "d778e9a4865a2105577e76d89588e470f4ad40a3d10a2765df7ec9d3217583d0",
+    "original_video_bytes": 9197423,
+    "observations": "Original video PTS10s shows expanded/actions=1 with summary, nested header, two source labels; PTS11s and12s show collapsed/actions=2, footer directly below header, no displayed child details.",
+    "scope": "Cropped contact sheet from original capture, one frame per second for PTS9–14; not frame timing/performance acceptance or complete Motion B result."
+  },
+  "conclusion": "Original retained subtree survives fresh AX query after visually settled collapse; private SwiftUI cause unproven. No new source acceptance.",
+  "unexecuted": [
+    "exact baseline callback assertion",
+    "triple burst and intermediate reversal",
+    "later nested state/presets/drag/persistence/Reduce Motion",
+    "A",
+    "C",
+    "D"
+  ]
+}

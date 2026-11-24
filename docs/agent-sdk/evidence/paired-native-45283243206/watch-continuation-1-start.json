@@ -1,0 +1,9 @@
+{
+  "time": "2026-11-23T23:46:47.013279+00:00",
+  "run": 45283243206,
+  "source": "4cfa52348e80cf635caf04c541fd84ee1ddb50bd",
+  "owner": "/root/motion_acceptance",
+  "maximum_watch_seconds": 3300,
+  "interval_seconds": 60,
+  "collector_seconds": 180
+}

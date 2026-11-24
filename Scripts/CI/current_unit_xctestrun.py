@@ -23,6 +23,7 @@ import re
 import shutil
 import subprocess
 import sys
+import time
 import uuid
 
 try:
@@ -37,6 +38,7 @@ TARGET = "AI_HLYTests"
 HOST_NAME = "AI_Hanlin.app"
 HOST_ID = "com.itorah.chavrusachat"
 TEST_ID = HOST_ID + ".tests"
+GIT_CONTEXT_TIMEOUT_SECONDS = 120
 
 
 def require(condition, message):
@@ -174,7 +176,29 @@ def build_context(repository, products, log, configuration, selectors):
             "Current GitHub run and attempt are required")
 
     def command(arguments):
-        return subprocess.check_output(arguments, cwd=repository, timeout=30)
+        # Re-read actual Git state at every phase. Allow a bounded cold process
+        # launch after simulator boot; never substitute cached/environment state.
+        started = time.monotonic()
+        status = "ERROR"
+        try:
+            value = subprocess.check_output(
+                arguments, cwd=repository, timeout=GIT_CONTEXT_TIMEOUT_SECONDS)
+            status = "PASS"
+            return value
+        except subprocess.TimeoutExpired:
+            status = "TIMEOUT"
+            raise
+        except subprocess.CalledProcessError:
+            status = "FAIL"
+            raise
+        finally:
+            print(json.dumps({
+                "event": "current_unit_git_context",
+                "command": arguments,
+                "timeout_seconds": GIT_CONTEXT_TIMEOUT_SECONDS,
+                "elapsed_seconds": round(time.monotonic() - started, 6),
+                "status": status,
+            }), file=sys.stderr)
 
     head = command(["git", "rev-parse", "HEAD"]).decode().strip()
     require(head == os.environ.get("GITHUB_SHA"), "Checkout differs from this run's source SHA")

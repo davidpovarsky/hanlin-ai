@@ -1,0 +1,11 @@
+# Compose the reviewed Native SDK source and exact dependency pin
+
+The development branch now contains the nine reviewed original Native implementation/test files and the additive acceptance helpers. All 404 HanlinAgentSDK and HanlinPlatform files match frozen f428747a02c41da1d51bae263d1f652c8753156c. The original raw package locks are unchanged. The generated full SDK changes only the ZIPFoundation requirement from the existing 0.9.19 range to exact 0.9.19, retaining 44 public products, 108 targets and 507 original application Swift files. The 18 module manifests plus the canonical application dependency file are recorded inputs.
+
+The central generic Agent SDK runner body is preserved byte-for-byte. Three opt-in route blocks add 25 lines; their shell syntax passes. The previous two integration controls and four exact-pin controls retain their original PASS evidence and were not rerun. The old isolated preparation packet remains historical; its literal control patch is stored losslessly as gzip with both hashes in its file index.
+
+Actual run45292176348 executed15 passing cases, but its original strict iOS result remains BLOCKED because the SDK post-build lock changed. Current build-only run45303091700 on f428 must authenticate its original command, source, actual resolver locks, toolchain, producer checkouts and 30-target graph before current iOS acceptance is credited. The new route executes zero current tests and separates qualified15+21 reuse from the historical e7 baseline. This integration does not declare that current build passed. All four Native tool shipping gates stay closed; physical SystemLanguageModel generation is NOT_RUN.
+
+Root and independent release peer reviewed the full runner/verifier and all19 plan hashes. The full generated manifest and complete package map were checked once on this composed source; root-review.json and composition.json record the exact boundaries. No release, Host final-pin acceptance or PR merge is claimed.
+
+Whitespace inspection passes for production, new controls and new documentation. Ten authenticated historical fixture files retain their original compiler/log whitespace or source-guard final blank lines; their exact paths and hashes are recorded. Those immutable bytes were deliberately not normalized, and the complete raw diff is not described as whitespace-clean.

@@ -13,6 +13,12 @@
 	<array>
 		<string>$(PRODUCT_BUNDLE_IDENTIFIER).runtime.*</string>
 	</array>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>en</string>
+		<string>he</string>
+		<string>zh-Hans</string>
+	</array>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>

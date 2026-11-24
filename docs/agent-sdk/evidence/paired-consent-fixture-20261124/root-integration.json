@@ -1,0 +1,11 @@
+{
+  "utc": "2026-11-24T01:11:32.441456+00:00",
+  "donor": "bc54684d93f084c9e49e96d002a3d69fd973508f",
+  "productionAndOriginalReceipt": "EXACT_DONOR_POSTIMAGES",
+  "rawPatchSHA256": "71bf933c2e056ab1d15baf759c27f914a88932b9831c21070cea895b3212b81d",
+  "compressedPatchSHA256": "858531f0dfa92bcc7b9418593ce0c82ecd841acd2fca633d9b176ec410f9d70d",
+  "rawPatchBytes": 7439,
+  "losslessDecompression": "PASS",
+  "reason": "Preserve literal diff whitespace without introducing trailing whitespace into repository checks",
+  "newNativeTests": "NOT_RUN"
+}

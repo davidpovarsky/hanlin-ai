@@ -143,3 +143,13 @@ Original C **PASSed** in40.883938s. All4 original screenshots were exported thro
 ## 2026-11-23 — Original disclosure content retention prepared
 
 The shared `HanlinAnimatedDisclosure` now retains already-mounted content across animated collapse/reversal, removing the completion that destroyed the complex child and its obsolete revision bookkeeping. The natural-height/layout implementation, clipping, accessibility, hit-testing, presets, curves, times, original test bodies and Host visibility propagation are unchanged. Existing onAppear/no-motion settle still resets mounted state. [The call-site/lifecycle audit and exact source checks](../../docs/agent-sdk/evidence/motion-retained-content-20261123/README.md) document retained child state/memory and generic Host task implications. Syntax parsing is **PASS**; native acceptance remains **NOT_RUN**. One original B-only experiment requires review before dispatch; prior B FAIL and C's source9575 PASS remain distinct.
+
+
+## 2026-11-23 — Retained content reaches collapse but fails original AX absence
+
+[Original B-only run45267860115](https://github.com/davidpovarsky/hanlin-ai/actions/runs/45267860115) at35bfa950 passed owned readiness (161.712s), selected SDK build and source/macro admission. The unchanged B case **FAILed** after44.487626s at line121: following the second prewarm tap and collapsed-geometry check, proof-summary still existed in accessibility. Exact baseline callback count, triple burst, intermediate geometry and all later B scenarios are **NOT_RUN**. A/C/D were not selected. [Source-bound receipts and failure logs](../../docs/agent-sdk/evidence/motion-native-45267860115/README.md) preserve the regression and finalized xcresult. A+C remains held while the original accessibility boundary is diagnosed. The single attachment export performs no native replay.
+
+
+## 2026-11-23 — Original B video isolates collapsed accessibility leak
+
+The single read-only [inspection 45272858701](https://github.com/davidpovarsky/hanlin-ai/actions/runs/45272858701) PASSed and preserved all 9 original exported members. Original video shows expanded/actions1 at 37.8s and collapsed/actions2 with no visible details at 40.5s, while native activities prove the summary-existence failure after collapsed geometry. Both frames retain the relaxed preset and active motion. [Exact review and derived frames](../../docs/agent-sdk/evidence/motion-native-45267860115/inspection-original/README.md) distinguish actual event bplists/video from the absent full AX snapshot. The candidate is a retained-child AX boundary, with original animation/test semantics preserved; native acceptance remains pending.

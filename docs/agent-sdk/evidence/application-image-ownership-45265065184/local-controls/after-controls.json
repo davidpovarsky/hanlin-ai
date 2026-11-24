@@ -1,0 +1,16 @@
+{
+  "utc": "2026-11-23T22:18:12.063506+00:00",
+  "command": [
+    "sudo",
+    "-u",
+    "ubuntu",
+    "python3",
+    "-m",
+    "unittest",
+    "-v",
+    "test_host_link_ownership"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-sdk-link-ownership-20261123/Scripts/SDK/tests",
+  "exit": 0,
+  "scope": "Only three new link ownership/source closure controls; no native execution."
+}

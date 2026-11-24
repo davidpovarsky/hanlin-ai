@@ -1,0 +1,21 @@
+{
+  "source": "d8e4327f6d4097ac5a206f2acf2bf654a7ee9c13",
+  "base": "35bfa9509ed4660d2c189b1935ed7725d0bae9f2",
+  "approved_component": "137370de890125c1b1231e096684ea8da6b12350",
+  "selected": "MotionUITests/testBRapidReversalPresetSwitchAndPersistence",
+  "scope": "One original B-only validation of reviewed two-line retained-child accessibility boundary",
+  "selected_production_input_count": 364,
+  "selected_production_changes": [
+    "HanlinAnimatedDisclosure.swift two accessibility modifiers"
+  ],
+  "fixture_runner_graph_generated_manifest_unchanged": true,
+  "whole_workflow_unchanged_from_executed35bfa": true,
+  "job_minutes": 35,
+  "test_deadline_seconds": 600,
+  "native_runner_allowance_seconds": 720,
+  "watch_maximum_seconds": 3300,
+  "single_terminal_collection_seconds": 180,
+  "A_C_D": "NOT_SELECTED",
+  "motion_overlap_found": false,
+  "other_active_runs": []
+}

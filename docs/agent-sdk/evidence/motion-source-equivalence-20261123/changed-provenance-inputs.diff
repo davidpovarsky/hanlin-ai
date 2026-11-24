@@ -1,0 +1,140 @@
+diff --git a/.github/workflows/testflight.yml b/.github/workflows/testflight.yml
+index 9f3054bd..a77dc5b4 100644
+--- a/.github/workflows/testflight.yml
++++ b/.github/workflows/testflight.yml
+@@ -463 +463 @@ jobs:
+-          check_target AI_Hanlin "$APP_BUNDLE_ID" "$MAIN_PROFILE_SPECIFIER" AI_HLY/AI_HLY.entitlements
++          check_target HanlinApp "$APP_BUNDLE_ID" "$MAIN_PROFILE_SPECIFIER" AI_HLY/AI_HLY.entitlements
+diff --git a/AI_HLY.xcodeproj/project.pbxproj b/AI_HLY.xcodeproj/project.pbxproj
+index 64a38f53..cd51333a 100644
+--- a/AI_HLY.xcodeproj/project.pbxproj
++++ b/AI_HLY.xcodeproj/project.pbxproj
+@@ -676 +676 @@
+-			remoteInfo = AI_Hanlin;
++			remoteInfo = HanlinApp;
+@@ -683 +683 @@
+-			remoteInfo = AI_Hanlin;
++			remoteInfo = HanlinApp;
+@@ -2070,32 +2069,0 @@
+-				"AC1800000000000000000012" ,
+-				"AC1800000000000000000013" ,
+-				"AC1800000000000000000014" ,
+-				"AC1700000000000000000003" ,
+-				"AC1700000000000000000006" ,
+-				"AC1700000000000000000009" ,
+-				"AC170000000000000000000C" ,
+-				"AC1700000000000000000010" ,
+-				"AC1700000000000000000014" ,
+-				"AC1700000000000000000018" ,
+-				"AC1600000000000000000003" ,
+-				"AC1500000000000000000005" ,
+-				"AC1500000000000000000006" ,
+-				"AC1500000000000000000007" ,
+-				"F70000000000000000000002" ,
+-				"F70000000000000000000022" ,
+-				"F70000000000000000000052" ,
+-				"F70000000000000000000032" ,
+-				"F70000000000000000000042" ,
+-				"F70000000000000000000001" ,
+-				"A10000000000000000000079" ,
+-				"A1000000000000000000007A" ,
+-				"A1000000000000000000007B" ,
+-				"A10000000000000000000078" ,
+-				"A10000000000000000000077" ,
+-				"A10000000000000000000076" ,
+-				"A10000000000000000000075" ,
+-				"A10000000000000000000074" ,
+-				"A10000000000000000000073" ,
+-				"A10000000000000000000072" ,
+-				"A10000000000000000000071" ,
+-				"A10000000000000000000070" ,
+@@ -2103,13 +2070,0 @@
+-				"A10000000000000000000008" ,
+-				"A10000000000000000000003" ,
+-				"A10000000000000000000002" ,
+-				"A10000000000000000000001" ,
+-				"D7D5EE3F2DD58D0600B89AAD" ,
+-				"D7D5EE3C2DD58CF000B89AAD" ,
+-				"D7D5EE4B2DD590A100B89AAD" ,
+-				"C60000000000000000000001" ,
+-				"D7D5EE422DD58D3800B89AAD" ,
+-				"D786F6B02E63DE70004DAC20" ,
+-				"D7D5EE482DD58D7F00B89AAD" ,
+-				"D7D5EE4E2DD590C500B89AAD" ,
+-				"AC3139BD8057681628A31947" ,
+@@ -2117,3 +2071,0 @@
+-				"AC190000000000000000000B" ,
+-				"AC190000000000000000000C" ,
+-				"AC190000000000000000000D" ,
+@@ -2127,14 +2078,0 @@
+-				"AC1700000000000000000004" ,
+-				"AC1700000000000000000007" ,
+-				"AC170000000000000000000A" ,
+-				"AC170000000000000000000D" ,
+-				"AC1700000000000000000011" ,
+-				"AC1700000000000000000015" ,
+-				"AC1700000000000000000019" ,
+-				"AC1600000000000000000004" ,
+-				"AC1500000000000000000008" ,
+-				"B10000000000000000000001" ,
+-				"B10000000000000000000079" ,
+-				"B1000000000000000000007A" ,
+-				"E3A100000000000000000003" ,
+-				"AC6F756EE053382F7A9B5864" ,
+@@ -2142,3 +2079,0 @@
+-				"AC190000000000000000000F" ,
+-				"AC1900000000000000000010" ,
+-				"AC1900000000000000000011" ,
+@@ -2409 +2344 @@
+-			"name" = "AI_Hanlin";
++			"name" = HanlinApp;
+@@ -3127 +3062 @@
+-				TEST_TARGET_NAME = AI_Hanlin;
++				TEST_TARGET_NAME = HanlinApp;
+@@ -3146 +3081 @@
+-				TEST_TARGET_NAME = AI_Hanlin;
++				TEST_TARGET_NAME = HanlinApp;
+@@ -3419 +3354 @@
+-				PRODUCT_NAME = "$(TARGET_NAME)";
++				PRODUCT_NAME = AI_Hanlin;
+@@ -3721 +3656 @@
+-				PRODUCT_NAME = "$(TARGET_NAME)";
++				PRODUCT_NAME = AI_Hanlin;
+diff --git a/Scripts/CI/IntegrationValidation/project_graph.py b/Scripts/CI/IntegrationValidation/project_graph.py
+index a88a958a..0e4b5617 100644
+--- a/Scripts/CI/IntegrationValidation/project_graph.py
++++ b/Scripts/CI/IntegrationValidation/project_graph.py
+@@ -63 +63 @@ def validate_graph(project, provider_manifest=None):
+-    ai = next(target for target in targets if target["name"] == "AI_Hanlin")
++    ai = next(target for target in targets if target["name"] == "HanlinApp")
+@@ -167 +167 @@ def validate_agent_sdk_linkage(project, repository):
+-    assert {"AI_Hanlin", "AI_HLYTests", "HanlinMiniApps"} <= targets.keys()
++    assert {"HanlinApp", "AI_HLYTests", "HanlinMiniApps"} <= targets.keys()
+@@ -169 +169 @@ def validate_agent_sdk_linkage(project, repository):
+-        required = expected if name == "AI_Hanlin" else {"HanlinAgentCore", "HanlinApplication"} if name == "AI_HLYTests" else set()
++        required = expected if name == "HanlinApp" else {"HanlinAgentCore", "HanlinApplication"} if name == "AI_HLYTests" else set()
+@@ -175,2 +175,8 @@ def validate_agent_sdk_linkage(project, repository):
+-        assert len(linked) == len(required) and set(linked) == required, name + ": SDK product is not actually linked"
+-    ai_id, ai = targets["AI_Hanlin"]
++        required_linked = {"HanlinApplication"} if name in {"HanlinApp", "AI_HLYTests"} else set()
++        assert len(linked) == len(required_linked) and set(linked) == required_linked, name + ": SDK image ownership mismatch"
++        if required_linked:
++            all_linked = [objects[objects[file]["productRef"]]["productName"]
++                          for phase in target["buildPhases"] if objects[phase]["isa"] == "PBXFrameworksBuildPhase"
++                          for file in objects[phase]["files"] if "productRef" in objects[file]]
++            assert all_linked == ["HanlinApplication"], name + ": duplicate implementation linked beside the Application image"
++    ai_id, ai = targets["HanlinApp"]
+@@ -199,0 +206 @@ def validate_agent_sdk_linkage(project, repository):
++        assert objects[key]["buildSettings"].get("PRODUCT_NAME") == "AI_Hanlin", "Host target rename must preserve the original app product"
+@@ -205 +212,3 @@ def validate_agent_sdk_linkage(project, repository):
+-            "host_sources": sorted(host_swift), "native_adapter": adapter, "apple_compilation": "NOT_RUN"}
++            "host_sources": sorted(host_swift), "native_adapter": adapter,
++            "linked_application_products": {"HanlinApp": ["HanlinApplication"], "AI_HLYTests": ["HanlinApplication"]},
++            "apple_compilation": "NOT_RUN"}
+diff --git a/Scripts/SDK/generate_manifest.py b/Scripts/SDK/generate_manifest.py
+index 95a00985..c1dcbbdf 100644
+--- a/Scripts/SDK/generate_manifest.py
++++ b/Scripts/SDK/generate_manifest.py
+@@ -157 +157 @@ def generate(selected_products=None):
+-    app=next(o for o in objects.values() if o.get("isa")=="PBXNativeTarget" and o.get("name")=="AI_Hanlin")
++    app=next(o for o in objects.values() if o.get("isa")=="PBXNativeTarget" and o.get("name")=="HanlinApp")
