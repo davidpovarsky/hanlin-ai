@@ -1377,7 +1377,7 @@
     }
   ],
   "recordingOutcome": "Four scoped tasks complete; main15 exact52 gate active. No application/device/release PASS or blanket80E2E claim.",
-  "updatedAtUTC": "2026-11-24T14:21:51.686295+00:00",
+  "updatedAtUTC": "2026-11-24T14:34:07.155496+00:00",
   "currentIntegrationBase": "e2227ccdfe0c3111d1c17ef2b4bb1653ac24bb9c",
   "gateHistory": [
     {
@@ -1895,5 +1895,15 @@
     "actualSnippetProjects": 4,
     "actualSnippetDiagnostics": 0,
     "boundary": "SDK proof only; all52 application cases NOT_RUN. Later adapter correction changes source-authority hashes and requires existing provenance refresh."
+  },
+  "postDispatchDocumentationClarification": {
+    "receipt": {
+      "path": "docs/miniapp-sdk/evidence/readme-scope-source-refresh-20261124/receipt.json",
+      "sha256": "97f09879fc579faeccb4461a80590763e5d92b31db80693ab7b9bb37bc9bf0e4"
+    },
+    "activeRunSourceUnchanged": "e2227ccdfe0c3111d1c17ef2b4bb1653ac24bb9c",
+    "nativeSourceFixturesAndAssertionsChanged": false,
+    "futureSDKIdentityChanges": true,
+    "scope": "Current paragraph distinguishes42 authoring subset from52 complete selection; no pass claims or new test selection"
   }
 }

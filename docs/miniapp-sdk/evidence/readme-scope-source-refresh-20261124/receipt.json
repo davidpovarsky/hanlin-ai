@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "atUTC": "2026-11-24T14:34:07.154262+00:00",
+  "status": "PASS",
+  "documentationIntegrationCommit": "8d0c44a63f954dae178e70c73c977db898670e21",
+  "activeRun": {
+    "runID": 45412939674,
+    "sourceCommit": "e2227ccdfe0c3111d1c17ef2b4bb1653ac24bb9c",
+    "unchangedByThisCorrection": true
+  },
+  "sourceDifference": "One README prose line clarifies42 authoring subset vs52 complete scope. All snippets, native source, fixtures, workflow and assertions remain unchanged.",
+  "readmeSHA256": "90068db0d87718cc9f995f9d45c1e2e8a7bd670aa8b8f3b324f0bf4cfc591d95",
+  "impactReceipt": {
+    "path": "docs/miniapp-sdk/evidence/readme-acceptance-scope-clarification-20261124/receipt.json",
+    "sha256": "9a47ad3266712dd713eff2c41b5bf153eff8aa929433416654aef5a44a8a7a11"
+  },
+  "commands": [
+    {
+      "argv": [
+        "python3",
+        "Scripts/Audit/audit_miniapp_reachability.py"
+      ],
+      "atUTC": "2026-11-24T14:34:04.215675+00:00",
+      "seconds": 1.4719846388325095,
+      "exit": 0,
+      "stdout": "1-stdout.log",
+      "stderr": "1-stderr.log"
+    },
+    {
+      "argv": [
+        "python3",
+        "Scripts/Audit/audit_miniapp_reachability.py",
+        "--check"
+      ],
+      "atUTC": "2026-11-24T14:34:05.687663+00:00",
+      "seconds": 1.4468495342880487,
+      "exit": 0,
+      "stdout": "2-stdout.log",
+      "stderr": "2-stderr.log"
+    }
+  ],
+  "before": {
+    "docs/miniapp-sdk/extension-reachability.json": "e51ed2435da117bdb77900c5643f1b2c72456d4dda094cffcd1b38e311a34571",
+    "docs/miniapp-sdk/extension-reachability.md": "961d8d49d036182f7abe167b6b97a1fc473724c6a546d2459af58dea1d35ca8d",
+    "docs/miniapp-sdk/source-inventory.json": "7a9def87c5bf71226b1d120c6f8bd9856732828e8bcdfd7d36a4633d8c9b6b45",
+    "docs/miniapp-sdk/MANIFEST_REFERENCE.md": "ad9c59d1962d516cd480de78cf5ee01fad11159cc0a73ee1a9cb3ea2f324b8a1"
+  },
+  "after": {
+    "docs/miniapp-sdk/extension-reachability.json": "677b3cd271dea49659eccfe960baeda45aec7a504aaecb7c4da3d07635007876",
+    "docs/miniapp-sdk/extension-reachability.md": "868414b6948afd557b713477c3132088028881c58b913c2b6c285759f02a9d8a",
+    "docs/miniapp-sdk/source-inventory.json": "7a9def87c5bf71226b1d120c6f8bd9856732828e8bcdfd7d36a4633d8c9b6b45",
+    "docs/miniapp-sdk/MANIFEST_REFERENCE.md": "ad9c59d1962d516cd480de78cf5ee01fad11159cc0a73ee1a9cb3ea2f324b8a1"
+  },
+  "changedGeneratedFiles": [
+    "docs/miniapp-sdk/extension-reachability.json",
+    "docs/miniapp-sdk/extension-reachability.md"
+  ],
+  "sourceInventoryAndManifestReference": "UNCHANGED; not read from README and not regenerated",
+  "codeTestAndFixtureDelta": [],
+  "boundary": "No compiler/tests/build/CI restarted. The active source and its future artifact retain original source attribution. Revised README/derived provenance change future normally staged SDK identity; no claim that new prose is in the active run binary or that every prior check is wholesale reusable."
+}
