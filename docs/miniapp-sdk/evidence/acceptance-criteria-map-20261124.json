@@ -19,11 +19,11 @@
     "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45430463243",
     "sourceCommit": "7d1efaa6ada43dd80c57133c09e6a8fb327075cf",
     "scope": "miniapp_complete",
-    "status": "IN_PROGRESS",
+    "status": "COMPLETED_FAILURE",
     "selectedCases": 52,
     "miniAppsCases": 25,
     "aiCases": 27,
-    "caseStatus": "NOT_RUN_AT_DISPATCH",
+    "caseStatus": "NOT_RUN",
     "dispatchReceipt": {
       "path": "docs/miniapp-sdk/evidence/sixteenth-native-gate-dispatch-20261124.json",
       "sha256": "0b84d5cceeff6dbe032f67c9ca0bb290a94fec3fd46161804f06db817f811401"
@@ -35,7 +35,15 @@
       "Actual diagnostic-sheet/repaired-native-app attachments",
       "Exact original archive/report handoff and nonempty installedPackageID receipt"
     ],
-    "boundary": "Current native/application outcomes pending. Focused original interface red/green and consumer settings checks do not establish full app/UI proof."
+    "boundary": "MiniApps full build-for-testing, original package/object/widget/app links and signing PASS on required Xcode27.2. AI build fails at exactly two test-source diagnostics; all52 application cases NOT_RUN. No UI/physical-device/release pass.",
+    "firstMiniAppsBuild": "EXECUTED_PASS_EXIT0",
+    "aiBuild": "EXECUTED_FAIL_EXIT65",
+    "miniBuildSeconds": 785.0861333329999,
+    "aiBuildSeconds": 488.93014395800014,
+    "resultReceipt": {
+      "path": "docs/miniapp-sdk/evidence/native-gate-16-ai-test-compilation-20261124/receipt.json",
+      "sha256": "9d9065c8da17fcbd5fec5129e5055e56f70c06bfe342ac239daaf32ba30cfa35"
+    }
   },
   "userScope": {
     "activeOriginalEngines": [
@@ -1061,6 +1069,13 @@
     "sdk05_main13_exact_reuse": {
       "path": "docs/miniapp-sdk/evidence/sdk05-shipping-reuse-main13-20261124/receipt.json",
       "sha256": "309252f29fe6ffccb8aef3d783233ce80894efa7089316cd2ee825203297cb7e"
+    },
+    "native_gate_16_miniapps_build_and_ai_test_compile": {
+      "status": "MINIAPPS_BUILD_PASS_AI_BUILD_FAIL_APPLICATIONS_NOT_RUN",
+      "path": "docs/miniapp-sdk/evidence/native-gate-16-ai-test-compilation-20261124/receipt.json",
+      "sha256": "9d9065c8da17fcbd5fec5129e5055e56f70c06bfe342ac239daaf32ba30cfa35",
+      "sourceCommit": "7d1efaa6ada43dd80c57133c09e6a8fb327075cf",
+      "runID": 45430463243
     }
   },
   "criteria": [
@@ -1376,9 +1391,9 @@
       }
     }
   ],
-  "recordingOutcome": "Four scoped tasks complete; main15 exact52 gate active. No application/device/release PASS or blanket80E2E claim.",
-  "updatedAtUTC": "2026-11-24T14:34:07.155496+00:00",
-  "currentIntegrationBase": "e2227ccdfe0c3111d1c17ef2b4bb1653ac24bb9c",
+  "recordingOutcome": "Four scoped tasks complete. MAIN16 MiniApps full build PASS; AI test-target compile FAIL at two exact source lines; all52 application cases NOT_RUN. No physical-device/release or blanket80E2E claim.",
+  "updatedAtUTC": "2026-11-24T16:37:08.880466+00:00",
+  "currentIntegrationBase": "20707fef7e6d0393ef31706fd8aabf67eab8e0a2",
   "gateHistory": [
     {
       "runID": 45335292541,
@@ -1638,7 +1653,7 @@
     "skipped": 0,
     "receipt": "docs/miniapp-sdk/evidence/apple-modern-contracts-20261124/receipt.json"
   },
-  "currentScopeNote": "MAIN16 exact52 dispatched on corrected6consumer explicit imports, original producer flags, four releaseCLI override removals and preserved equality assertion. Required reachability write/check passed. Current normal preparation must supply current README/project SDK identity. MAIN15 failure and actual SDK proof remain attributed to e222. Four scoped tasks complete; app/device evidence pending.",
+  "currentScopeNote": "MAIN16 proves the previous original-header correction in the full MiniApps application build, including actual object/widget/app links and signing. Independent repair targets only two AI test-source compiler errors; all52 cases and physical acceptance remain open. Actual MAIN16 SDK reconciliation proceeds separately; no prior identity is substituted.",
   "modernContractGateHistory": [
     {
       "runID": 45348880385,
@@ -1775,7 +1790,7 @@
     "schemaVersion": 1,
     "sequence": 16,
     "atUTC": "2026-11-24T15:50:54.372088+00:00",
-    "status": "DISPATCHED",
+    "status": "COMPLETED_FAILURE",
     "implementationSource": "e3a187c36d26aedb746fc6e3b69dccbd29d114b3",
     "scope": "miniapp_complete",
     "selectedCases": 52,
@@ -1840,7 +1855,11 @@
     },
     "sourceCommit": "7d1efaa6ada43dd80c57133c09e6a8fb327075cf",
     "runID": 45430463243,
-    "actualExecution": "PENDING_CURRENT_BUILD_AND_CASE_RESULTS"
+    "actualExecution": "MINIAPPS_BUILD_PASS_AI_TEST_COMPILE_FAIL_ALL52_NOT_RUN",
+    "resultReceipt": {
+      "path": "docs/miniapp-sdk/evidence/native-gate-16-ai-test-compilation-20261124/receipt.json",
+      "sha256": "9d9065c8da17fcbd5fec5129e5055e56f70c06bfe342ac239daaf32ba30cfa35"
+    }
   },
   "taskClosureDecisions": {
     "path": "docs/miniapp-sdk/evidence/task-scope-reconciliation-20261124.json",
@@ -1915,36 +1934,67 @@
       },
       "integrationCommit": "b8d3caee19485c4ef4448be9e68dfeb2449d38da",
       "sourceRefreshCommit": "88fdce7e632a065c1d2f4c2e4eaab28402952c44"
+    },
+    {
+      "status": "INTEGRATED_REVIEWED_AND_FOCUSED_PROOF_PASS",
+      "author": "control_authoring",
+      "independentReviewer": "entrypoints",
+      "shippingSDKReviewer": "sdk_only_author",
+      "actualFailureRun": 45412939674,
+      "failedTarget": "HanlinMiniAppsWidgets",
+      "originalHeaders": [
+        "RCTDeprecation/RCTDeprecation.h",
+        "ReactCommon/CallInvoker.h",
+        "yoga/YGConfig.h",
+        "yoga/Yoga.h"
+      ],
+      "boundary": "Original flags already present; verify actual header/module closure. No stubs, API weakening or blanket Swift-version diagnosis.",
+      "originalHeaderPresence": {
+        "status": "AUTHOR_AUTHENTICATED_ORIGINAL_HEADERS_PRESENT",
+        "headerSupportArchiveSHA256": "90b3af259a3347adffb021f56e66ff82e926ea1e8668d5774b1d384650394c45",
+        "locations": [
+          "ReactModularHeaders",
+          "ModularFrameworks/react.framework/Headers"
+        ],
+        "allFourReportedHeadersPresent": true
+      },
+      "consumerDifferenceUnderInvestigation": "Original Cxx roots/defines are present after normalization in both. Successful package drivers use explicit module builds; the failed widget extension reconstructs implicit imports. Real isolated fresh-cache comparison is being prepared.",
+      "integrationCommit": "89b27bcf1d1decd835ee3d1dacc7ac90af617372",
+      "fullBuildCompanionCommit": "dc56cea1f4910cea131c6e3afc7c818e4595cabb",
+      "sourceRefreshCommit": "e3a187c36d26aedb746fc6e3b69dccbd29d114b3",
+      "scope": "TargetexplicitYES+originalproducerflags for6actualconsumers/12configs; four defeating releaseCLIargsremoved; nooriginalheader/APIchange",
+      "fullNativeFollowup": {
+        "runID": 45430463243,
+        "sourceCommit": "7d1efaa6ada43dd80c57133c09e6a8fb327075cf",
+        "scope": "MiniApps full build-for-testing PASS; no application execution",
+        "receipt": "docs/miniapp-sdk/evidence/native-gate-16-ai-test-compilation-20261124/receipt.json"
+      }
     }
   ],
   "nextCorrection": {
-    "status": "INTEGRATED_REVIEWED_AND_FOCUSED_PROOF_PASS",
+    "status": "IN_PROGRESS_TWO_AI_TEST_SOURCE_COMPILATION_FIXES",
+    "actualFailureRun": 45430463243,
+    "failedTarget": "AI_HLYTests",
     "author": "control_authoring",
     "independentReviewer": "entrypoints",
     "shippingSDKReviewer": "sdk_only_author",
-    "actualFailureRun": 45412939674,
-    "failedTarget": "HanlinMiniAppsWidgets",
-    "originalHeaders": [
-      "RCTDeprecation/RCTDeprecation.h",
-      "ReactCommon/CallInvoker.h",
-      "yoga/YGConfig.h",
-      "yoga/Yoga.h"
+    "diagnostics": [
+      {
+        "log": "ai-build.log",
+        "line": 102885,
+        "text": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYTests/HanlinNativePresentationTests.swift:231:27: error: type 'Void' cannot conform to 'Sequence' [#ProtocolTypeNonConformance]"
+      },
+      {
+        "log": "ai-build.log",
+        "line": 102957,
+        "text": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYTests/HanlinOriginalExpoWidgetTests.swift:16:39: error: reference to static property 'appGroupIdentifier' is not concurrency-safe because it involves shared mutable state"
+      }
     ],
-    "boundary": "Original flags already present; verify actual header/module closure. No stubs, API weakening or blanket Swift-version diagnosis.",
-    "originalHeaderPresence": {
-      "status": "AUTHOR_AUTHENTICATED_ORIGINAL_HEADERS_PRESENT",
-      "headerSupportArchiveSHA256": "90b3af259a3347adffb021f56e66ff82e926ea1e8668d5774b1d384650394c45",
-      "locations": [
-        "ReactModularHeaders",
-        "ModularFrameworks/react.framework/Headers"
-      ],
-      "allFourReportedHeadersPresent": true
-    },
-    "consumerDifferenceUnderInvestigation": "Original Cxx roots/defines are present after normalization in both. Successful package drivers use explicit module builds; the failed widget extension reconstructs implicit imports. Real isolated fresh-cache comparison is being prepared.",
-    "integrationCommit": "89b27bcf1d1decd835ee3d1dacc7ac90af617372",
-    "fullBuildCompanionCommit": "dc56cea1f4910cea131c6e3afc7c818e4595cabb",
-    "sourceRefreshCommit": "e3a187c36d26aedb746fc6e3b69dccbd29d114b3",
-    "scope": "TargetexplicitYES+originalproducerflags for6actualconsumers/12configs; four defeating releaseCLIargsremoved; nooriginalheader/APIchange"
+    "plannedRepair": [
+      "Explicit [String] closure result and returns in recursive presentation text collector",
+      "UUID-scoped roundtrip from declared UserDefaults app group through genuine original WidgetsStorage.getString; defer cleanup"
+    ],
+    "boundary": "Preserve original library, all test assertions and52 selection. No concurrency suppression or duplicate application build. Full paired acceptance still required."
   },
   "postDispatchTestCorrection": {
     "commit": "788354f8e9e863eb5e4c9007a8b58ea71d028b19",
