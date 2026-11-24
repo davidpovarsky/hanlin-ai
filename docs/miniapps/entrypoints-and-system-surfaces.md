@@ -364,5 +364,5 @@ result is claimed by the simulator acceptance gate.
 
 The source contract is `expo-widgets@58.0.29`:
 `plugin/src/ios/withPushNotifications.ts`,
-`ios/LiveActivity/LiveActivityFactory.swift`, and
+`ios/LiveActivityFactory.swift`, and
 `ios/WidgetsModule.swift` in the original npm publication.
