@@ -132,7 +132,7 @@ class HostLinkOwnershipTests(unittest.TestCase):
         objects = self.project["objects"]
         definition = json.loads(generate_manifest.APPLICATION_PRODUCTS.read_text())
         self.assertEqual(definition["module"], "AI_Hanlin")
-        self.assertEqual(len(definition["products"]), 50)
+        self.assertEqual(len(definition["products"]), 51)
         for entry in definition["products"]:
             matches = [obj for obj in objects.values()
                        if obj.get("isa") == "XCSwiftPackageProductDependency"

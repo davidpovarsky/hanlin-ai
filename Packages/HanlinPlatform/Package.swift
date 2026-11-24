@@ -64,7 +64,10 @@ let package = Package(
         )
     ],
     dependencies: [
+                .product(name: "OpenTelemetryApi", package: "opentelemetry-swift-core"),
+                .product(name: "OpenTelemetrySdk", package: "opentelemetry-swift-core"),
         .package(url: "https://github.com/SwiftyJSON/SwiftyJSON.git", exact: "5.0.1"),
+        .package(url: "https://github.com/open-telemetry/opentelemetry-swift-core.git", exact: "2.6.0"),
         .package(
             url: "https://github.com/davidpovarsky/swift-ai-sdk.git",
             revision: "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8"
@@ -212,6 +215,8 @@ let package = Package(
         .testTarget(
             name: "HanlinChatCoreTests",
             dependencies: [
+                .product(name: "OpenTelemetryApi", package: "opentelemetry-swift-core"),
+                .product(name: "OpenTelemetrySdk", package: "opentelemetry-swift-core"),
                 "HanlinChatCore",
                 .product(name: "SwiftAISDK", package: "swift-ai-sdk"),
                 .product(name: "AISDKProvider", package: "swift-ai-sdk"),
