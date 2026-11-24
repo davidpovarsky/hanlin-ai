@@ -35,7 +35,7 @@
       },
       "boundary": "TypeScript checks only; Metro/native adapter/physical acceptance are separate."
     },
-    "resolverTests": 8,
+    "resolverTests": 9,
     "nativeArtifactIntegrityTests": 9,
     "swiftParseFiles": 29
   },
@@ -192,5 +192,11 @@
         }
       }
     }
-  ]
+  ],
+  "sourceNamespaceCorrection": {
+    "falseForegroundDependenciesRemoved": 83,
+    "reason": "UIKit aliases, generic associated names and live React/JSI context are not dependencies of a prepared dictionary namespace. The complete original ExpoWidgets module remains compiled against genuine Core/UI.",
+    "actualResolutionPlan": "Fresh original-source resolution completed; the only remaining discovered Core file was its wholly macOS-conditional Platform.swift, now excluded for the actual iOS target.",
+    "additionalUpstreamReleaseObserved": "@nativescript/vite 8.0.24 appeared after the coherent8.0.23 baseline; the next build resolver will incorporate it with its original exact lock."
+  }
 }

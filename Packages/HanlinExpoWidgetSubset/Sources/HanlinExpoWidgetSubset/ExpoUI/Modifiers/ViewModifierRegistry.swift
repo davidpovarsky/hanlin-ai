@@ -2262,10 +2262,6 @@ extension ViewModifierRegistry {
       return try ImageScaleModifier(from: params, appContext: appContext)
     }
 
-    register("searchable") { params, appContext, eventDispatcher in
-      return try SearchableModifier(from: params, appContext: appContext, eventDispatcher: eventDispatcher)
-    }
-
     register("searchToolbarBehavior") { params, appContext, _ in
       return try SearchToolbarBehaviorModifier(from: params, appContext: appContext)
     }
@@ -2314,8 +2310,5 @@ extension ViewModifierRegistry {
       return try SymbolEffectModifier(from: params, appContext: appContext)
     }
 
-    register("onHingeChange") { params, appContext, eventDispatcher in
-      return try OnHingeChangeModifier(from: params, appContext: appContext, eventDispatcher: eventDispatcher)
-    }
   }
 }

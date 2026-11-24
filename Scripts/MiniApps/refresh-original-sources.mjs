@@ -72,6 +72,16 @@ export function originalInHostTarget(bytes,local) {
     // that existing separation when upstream edits its registration builder.
     const registration=text.indexOf('/**\n Common UI Builder in expo-ui.');
     if(registration!==-1)text=text.slice(0,registration).trimEnd()+'\n';
+    // Yoga positioning belongs to the real foreground Core/ExpoUI framework.
+    // This prepared SwiftUI tree has no React shadow node to publish an origin to.
+    text=text.replace(/^\s*\.publishZeroContentOrigin\(props\.shadowNodeProxy\)\r?\n/gm,'');
+    const shadowHook=text.indexOf('func publishZeroContentOrigin(');
+    if(shadowHook!==-1) {
+      const start=text.lastIndexOf('extension View {',shadowHook);
+      if(start<0)throw new Error('Original shadow-origin hook changed its declaration context');
+      text=text.slice(0,start)+text.slice(swiftBlockEnd(text,text.indexOf('{',start)));
+    }
+
   }
   if(local.endsWith('/ExpoUI/Modifiers/WidgetModifiers.swift'))text=text.replace('internal func registerWidgetModifiers()', 'public func registerWidgetModifiers()');
   if(local.endsWith('/Core/Upstream/Core/Coding/JavaScriptCodable+Color.swift')) {
@@ -121,6 +131,11 @@ async function swiftFiles(root) {
 }
 const swiftCode=text=>text.replace(/"""[\s\S]*?"""|"(?:\\.|[^"\\])*"/g,' ').replace(/\/\*[\s\S]*?\*\/|\/\/[^\n]*/g,' ');
 const declaredTypes=text=>[...swiftCode(text).matchAll(/\b(?:class|struct|enum|protocol|typealias)\s+([A-Za-z_]\w*)/g)].map(match=>match[1]);
+// Imported platform types and generic associated names are not missing Expo
+// declarations. In particular, UIKit UIView, SwiftUI State and Array.Element
+// must not pull alternate-platform aliases or nested registry types into here.
+const externalSwiftTypes=new Set(['UIView','NSView','NSLabel','State','Element','Key','Value','Content','Body','ID','Iterator','Index','Indices','SubSequence','RawValue']);
+
 
 async function closeOriginalWidgetTypes({root,cache,files,manifest,changes,publications,archives}) {
   const prefix='Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/';
@@ -149,10 +164,15 @@ async function closeOriginalWidgetTypes({root,cache,files,manifest,changes,publi
     const available=new Set(texts.flatMap(declaredTypes));
     const requested=new Set(texts.flatMap(text=>[...swiftCode(text).matchAll(/\b[A-Z][A-Za-z0-9_]*\b/g)].map(match=>match[0])));
     for(const type of requested) {
-      if(available.has(type))continue;
+      if(available.has(type)||externalSwiftTypes.has(type))continue;
       const candidates=[...new Set(index.get(type)??[])];
       if(candidates.length!==1)continue; // Swift/SDK names and ambiguous nested names remain compiler-resolved.
       const item=candidates[0];
+      // This iOS target already imports UIKit. Core's macOS-only UIKit aliases
+      // are not an iOS dependency merely because they redeclare UIColor etc.
+      if(item.name==='expo-modules-core'&&item.relative==='ios/Platform/Platform.swift'&&
+         item.bytes.toString().trim().startsWith('#if os(macOS)')&&
+         item.bytes.toString().trim().endsWith('#endif // os(macOS)'))continue;
       const upstream='packages/'+(item.name==='@expo/ui'?'expo-ui':item.name)+'/'+item.relative;
       if(manifest.files.some(entry=>entry.repository==='expo/expo'&&entry.upstream===upstream))continue;
       const local=prefix+item.folder+'/'+item.relative.slice('ios/'.length);
@@ -225,9 +245,14 @@ export async function refreshOriginalSources({root,cache,publications,archives})
     if(entry.local.endsWith('/ExpoUI/Modifiers/ViewModifierRegistry.swift')) {
       const localKeys=new Set(registrationBlocks(local.toString()).map(block=>block.key));
       const removedKeys=new Set(registrationBlocks(previous.toString()).map(block=>block.key).filter(key=>!localKeys.has(key)));
+      // These original callbacks require the real React/JSI state/worklet
+      // context. They stay in the complete original ExpoUI framework and
+      // original ExpoWidgets module, not the existing prepared JSON namespace.
+      removedKeys.add('onHingeChange');removedKeys.add('searchable');
+
       // Preserve existing target registrations, update their original bodies,
       // and include every newly introduced upstream registration and its source.
-      mergeLocal=originalWidgetRegistry(local,new Set());mergePrevious=originalWidgetRegistry(mergePrevious,removedKeys);mergeNext=originalWidgetRegistry(mergeNext,removedKeys);
+      mergeLocal=originalWidgetRegistry(local,new Set(['onHingeChange','searchable']));mergePrevious=originalWidgetRegistry(mergePrevious,removedKeys);mergeNext=originalWidgetRegistry(mergeNext,removedKeys);
     }
     const merged=await mergeOriginal({local:mergeLocal,previous:mergePrevious,next:mergeNext,cache,label:entry.local+' <- '+entry.upstream});
     files.set(entry.local,merged);

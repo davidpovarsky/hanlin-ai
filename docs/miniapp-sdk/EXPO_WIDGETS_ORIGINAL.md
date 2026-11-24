@@ -24,6 +24,9 @@ The original `WidgetLiveActivity` renders original `LiveActivityAttributes`. `Ha
 
 ## Runtime boundaries
 
+The older prepared JSON view namespace and the complete original module have different inputs. The former receives frozen native properties and Hanlin intent actions; it does not own a React shadow tree or JSI worklet state. Its source updater preserves that namespace and does not import React registry classes because of a platform alias or a generic type name. Live React/JSI callbacks and Yoga bookkeeping stay in the genuine foreground Core/UI module. Packages using the public original Widgets API run the original Widgets renderer and original Core context.
+
+
 Expo's widget layout is evaluated in its original isolated synchronous JavaScriptCore environment. Its original Expo UI components, pure functions, environment, timeline data and interaction handlers are available there. Foreground React Native APIs and asynchronous app operations execute in the MiniApp's foreground Expo runtime. This follows the upstream renderer architecture.
 
 Native operation errors are returned by the original module and appear in the probe and normal authoring/runtime diagnostics. ActivityKit authorization and platform support are determined by the actual operating system.

@@ -55,3 +55,10 @@ test('actual native host ABI metadata changes with the original React Native and
   assert.match(text,/runtimeVersion = "58\.0\.29"/);
   assert.match(text,/nativeApiAbiIdentity = "rn0\.88\.1-hermes260318099\.0\.5"/);
 });
+
+test('prepared widget namespace keeps original universal layout without importing the React Yoga hook',()=>{
+  const source=Buffer.from('public struct UIBaseView {\n  var body: some View {\n    UniversalPercentageParentBoundary(content: innerView)\n      .publishZeroContentOrigin(props.shadowNodeProxy)\n  }\n}\nextension View {\n  func publishZeroContentOrigin(_ shadowNodeProxy: ExpoSwiftUI.ShadowNodeProxy) -> some View { self }\n}\n');
+  const result=originalInHostTarget(source,'Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/UIBaseView.swift').toString();
+  assert.match(result,/UniversalPercentageParentBoundary/);
+  assert.doesNotMatch(result,/publishZeroContentOrigin|ShadowNodeProxy/);
+});
