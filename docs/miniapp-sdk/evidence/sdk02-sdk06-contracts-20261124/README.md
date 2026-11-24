@@ -34,13 +34,13 @@ The portable harness adds one missing-manifest case and an optional filter witho
 
 ## Exact Apple route for eight Analyzer methods
 
-Use the existing validate-scripting-runtime.yml workflow directly at the integrated intended source, with runtime_job_foundation_only=false, force_clean_build=true and this test_filter:
+Use the registered validate-app-split.yml workflow at the integrated intended source with paired_product_acceptance=true and paired_test_scope=miniapp_contracts. Its conditional miniapp-contracts job calls the existing local reusable validate-scripting-runtime.yml at the same commit, with runtime_job_foundation_only=false, force_clean_build=true and this test_filter:
 
     HanlinScriptAnalyzerTests/(expoMainMustMatchTheInspectedForegroundEntrypoint|nativeScriptPreparedEntrypointIsAlwaysTheCanonicalBundle|nativeScriptSwiftUIContract|nativeScriptCoreContract|expoSwiftUIContract|expoMultiExposureMatrix|malformedPreparedEntrypointsFailWithStableDiagnostic|unavailableModernNativePluginsFailBeforeImport)
 
 Its actual command is swift test --package-path Packages/HanlinPlatform --filter "$TEST_FILTER". The package test target exists in both manifests but is absent from both shipping app schemes; adding its selectors to the main app gate does not make them run.
 
-The workflow has no configured concurrency group or cancel-in-progress rule, so a direct dispatch does not share the standalone MiniApps group. It selects Xcode 27 on a Mac runner, resolves SwiftPM dependencies, and has a 20-minute timeout. Legacy inventory/bootstrap/runtime preparation is conditional on the exact legacy-suite filter and will not execute for this modern filter. The required compiler resources are already tracked.
+Root observed HTTP 404 when looking up validate-scripting-runtime.yml directly: it is not registered on the default branch. No dispatch occurred. The registered caller has workflow ID 419196373. Its existing branch-plus-scope group produces paired-miniapp_contracts, distinct from paired-miniapp_authoring; the concurrency and cancel-in-progress settings are unchanged. The local callee adds no concurrency group. It selects Xcode 27 on a Mac runner, resolves SwiftPM dependencies, and has a 20-minute timeout. Legacy inventory/bootstrap/runtime preparation is conditional on the exact legacy-suite filter and will not execute for this modern filter. The required compiler resources are already tracked. See ../miniapp-contract-routing-20261124/ for the root-observed preflight and source checks.
 
 The normal branch does not upload a dedicated result artifact. Preserve the completed raw job log and intended source SHA. Require all eight exact Swift Testing pass rows and total 8 with no failures/cancellations/skips; swift test exit 0 or the XCTest wrapper's zero-test line is insufficient. This proves pre-import Analyzer behavior against real staged files, not archive extraction or application UI.
 

@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "/root/entrypoints",
+  "mode": "independent read-only source review",
+  "baseSourceSHA": "58306a098611d3691904f2a37a61b72634f48c6a",
+  "reviewedWorkflowSHA256": "6ca46214a3c7175353eb503062ce8e58f12f0bc833047c871cb9078ff0ec53c3",
+  "result": "NO_CONCRETE_BLOCKER",
+  "findings": [
+    "Local reusable call supplies all three declared inputs with correct types; callee checks out the calling commit and passes quoted TEST_FILTER directly to swift test.",
+    "All eight exact named methods exist in HanlinScriptAnalyzerTests.",
+    "Routing predicate and main exclusion are complementary under existing !audit/!registration precedence.",
+    "Default modes, top-level concurrency/cancel-in-progress, permissions and lower preparation remain unchanged."
+  ],
+  "checksNotPerformed": [
+    "Tests",
+    "Workflow dispatch/CI",
+    "Mutations"
+  ],
+  "sourceChangedAfterReview": false
+}

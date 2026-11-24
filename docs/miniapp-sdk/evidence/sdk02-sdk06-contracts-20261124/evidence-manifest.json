@@ -3,8 +3,8 @@
   "files": [
     {
       "path": "README.md",
-      "bytes": 6806,
-      "sha256": "a9c37fa9acb9c2a89370fe53a76cd4eeee7721f5be4c3c0903c59fc4204a8c97"
+      "bytes": 7353,
+      "sha256": "d40a62e29f6c7847f7768256b80261587cb081c490baea80151fc51d5c76689b"
     },
     {
       "path": "analyzer-test-syntax.json",
@@ -33,8 +33,8 @@
     },
     {
       "path": "gap-map.json",
-      "bytes": 10906,
-      "sha256": "af6148285ad4e1599e9c689ed9fad6e44a9a6955e4e2e86f7e2cc4fbf2b459cc"
+      "bytes": 11750,
+      "sha256": "9f62ccf8cfa0d8a66432d5c6b6d2ea7c0ebefe85da94394d485dba9634021fe7"
     },
     {
       "path": "missing-manifest/archive-import-policy.json",

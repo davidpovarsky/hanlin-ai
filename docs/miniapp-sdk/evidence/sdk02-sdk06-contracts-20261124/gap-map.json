@@ -96,7 +96,7 @@
   "appleExecutionPlan": {
     "workflow": ".github/workflows/validate-scripting-runtime.yml",
     "workflowSHA256": "395ea6430af04b1ca8c66386af45073a1b0abc4d0c6ed20a1c46b30854fe0016",
-    "dispatch": "Root-owned only; no dispatch performed in this lane.",
+    "dispatch": "Root-owned via registered validate-app-split.yml with paired_product_acceptance=true and paired_test_scope=miniapp_contracts. Direct callee preflight returned HTTP404; no dispatch occurred.",
     "inputs": {
       "runtime_job_foundation_only": false,
       "force_clean_build": true,
@@ -139,16 +139,29 @@
       "force_clean_build=true bypasses .build restoration for this first source-correct proof; it does not change product or runtime behavior."
     ],
     "concurrency": {
-      "declaredInWorkflow": false,
-      "collidesWithStandaloneMiniAppsGroup": false,
-      "scope": "Direct workflow_dispatch of this file has no configured concurrency group or cancel-in-progress expression. Do not infer an external cancellation cause."
+      "declaredInCalleeWorkflow": false,
+      "callerConcurrencyUnchanged": true,
+      "newScopeSuffix": "paired-miniapp_contracts",
+      "activeAuthoringScopeSuffix": "paired-miniapp_authoring",
+      "sameBranchGroupsDistinct": true,
+      "scope": "Registered caller retains its existing branch-plus-scope group and cancel-in-progress expression. Local reusable workflow has no additional group. No cancellation cause is inferred."
     },
     "receiptRequirements": [
       "Do not treat swift test exit0 or the XCTest wrapper reporting0tests as sufficient.",
       "Require the eight exact Swift Testing method/display-name pass rows, total8, failures0, cancellations0 and skips0.",
       "This normal workflow branch has no upload-artifact step; retain the exact completed job raw log and source SHA as the receipt.",
       "No selected execution result exists yet."
-    ]
+    ],
+    "dispatchWorkflow": ".github/workflows/validate-app-split.yml",
+    "registeredWorkflowID": 419196373,
+    "dispatchInputs": {
+      "paired_product_acceptance": true,
+      "paired_test_scope": "miniapp_contracts"
+    },
+    "localReusableJob": "miniapp-contracts",
+    "localReusableReference": "./.github/workflows/validate-scripting-runtime.yml",
+    "routingEvidence": "../miniapp-contract-routing-20261124/source-validation.json",
+    "preflightEvidence": "../miniapp-contract-routing-20261124/root-preflight.json"
   },
   "historicalAnalyzerEvidence": {
     "path": "docs/hanlin-platform/personal-runtime-completion/evidence/phase1-swift-test.log",
