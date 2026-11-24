@@ -92,6 +92,25 @@ struct HanlinMiniAppAssistantToolTests {
         }
     }
 
+    @Test func modernRenderersReceivePlainExactJavaScriptJSON() throws {
+        let value: HanlinValue = .object([
+            "query": .string("שלום"), "configuration": .object(["scope": .string("chosen")]),
+            "count": .integer(42), "items": .array([.bool(true), .null])
+        ])
+        let expected = try value.jsonValue(destination: .javaScriptBinary64)
+        let native = try NativeScriptEmbeddedResultAdapter.payloadJSON(value)
+        #expect(try HanlinJSONValue.decodeCanonicalJSON(Data(native.utf8)) == expected)
+        let expo = try ExpoEmbeddedResultAdapter.payloadProperty(value)
+        let expoBytes = try JSONSerialization.data(withJSONObject: expo, options: [.fragmentsAllowed])
+        #expect(try HanlinJSONValue.decodeCanonicalJSON(expoBytes) == expected)
+        let integralDouble = try ExpoEmbeddedResultAdapter.payloadProperty(.number(42.0))
+        #expect((integralDouble as? NSNumber)?.doubleValue == 42.0)
+        for invalid in [HanlinValue.integer(9_007_199_254_740_992), .data(Data([1]))] {
+            #expect(throws: (any Error).self) { try NativeScriptEmbeddedResultAdapter.payloadJSON(invalid) }
+            #expect(throws: (any Error).self) { try ExpoEmbeddedResultAdapter.payloadProperty(invalid) }
+        }
+    }
+
     private func fixture(enabled: Bool = true, generation: UInt64 = 7,
                          sourcePath: String = "tools/assistant/bundle.mjs") throws -> HanlinStoredPackageSnapshot {
         let schema = try HanlinJSONSchemaDocument.decodeCanonicalJSON(
