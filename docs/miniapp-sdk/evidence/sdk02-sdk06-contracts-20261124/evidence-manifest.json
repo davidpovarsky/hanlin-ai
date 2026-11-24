@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 4765,
+      "sha256": "53e6c6a416a35178d50926597afa0e1c9a1bb9f275ed037b6407ecb6ec4f8889"
+    },
+    {
+      "path": "archive-reuse.json",
+      "bytes": 2655,
+      "sha256": "4f150cd473d98dc91410f370aafbac089adcd1d43b8e81393ef764b353d82f22"
+    },
+    {
+      "path": "expected-version-bindings.diff",
+      "bytes": 1364,
+      "sha256": "0724e3db4d7422b8d3e8b2f0ad5b139d39028ad329b087f837e7328667d22671"
+    },
+    {
+      "path": "expected-version-bindings.json",
+      "bytes": 1669,
+      "sha256": "9318b0051a29df6205b386d265cff80b26858963fdeb464d22cf8c60099daede"
+    },
+    {
+      "path": "gap-map.json",
+      "bytes": 9679,
+      "sha256": "b1a3379ff4e72fd47cda765d6bf3e6ecae422c7588481ba1214cfd709057a298"
+    },
+    {
+      "path": "original-permission-contract.json",
+      "bytes": 5051,
+      "sha256": "3321e9bcf7a66beff4e711f79dc0549c06810c6ec476e679a5413367b184153c"
+    },
+    {
+      "path": "original-permission-contract.tap.txt",
+      "bytes": 571,
+      "sha256": "77d3b0e37971c54bf78861804be054708129a741d5c2f71936316ba509126d3b"
+    },
+    {
+      "path": "validation-plan.json",
+      "bytes": 2493,
+      "sha256": "b08432305f683307ca2ee35f81745b086c106591a2999d726058d148a4ca394e"
+    }
+  ]
+}

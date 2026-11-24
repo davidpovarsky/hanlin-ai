@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "status": "REUSED_VERIFIED_PASS",
+  "currentSourceSHA": "4ea670e120a3217423bc73db68dab514c78079de",
+  "reusedScope": [
+    "HanlinArchivePolicyTests/ambiguousManifest",
+    "HanlinArchivePolicyTests/retainedSourcesAndAssets"
+  ],
+  "originalReceipt": "docs/miniapp-sdk/evidence/widget-path-module-20261124/archive-policy/archive-import-policy.json",
+  "originalReceiptSHA256": "c12cb9ca1e18055138a5733383c3fc92b9af31977bbf7283c540284eb776a6c7",
+  "originalRawLog": "docs/miniapp-sdk/evidence/widget-path-module-20261124/archive-policy/archive-import-policy.txt",
+  "originalRawLogSHA256": "2d6dbd38377ce1e8c125cc6f819994d4882a2c53e04ba5066505640044151480",
+  "inputs": [
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinPackageContracts.swift",
+      "recordedSHA256": "25122dd11c471950514e717ffb5f17bbcefaa7219183a0e838c71e02129c94ac",
+      "currentSHA256": "25122dd11c471950514e717ffb5f17bbcefaa7219183a0e838c71e02129c94ac"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinArchivePolicy.swift",
+      "recordedSHA256": "57b142d4770a8f8916d3d651f1a727a0ae55254cc05a082db12e1c5d22f30ba2",
+      "currentSHA256": "57b142d4770a8f8916d3d651f1a727a0ae55254cc05a082db12e1c5d22f30ba2"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPackagePath.swift",
+      "recordedSHA256": "ab230354fd913397dfb2cb776bdde629fe0cf603b17729a7b9dc7cd9aab98c76",
+      "currentSHA256": "ab230354fd913397dfb2cb776bdde629fe0cf603b17729a7b9dc7cd9aab98c76"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinPackageCenter.swift",
+      "recordedSHA256": "cd98b6ffb24ec4c0463d021a30204b68bcb96f1bd8dc3e2749ca5862f21dac2b",
+      "currentSHA256": "cd98b6ffb24ec4c0463d021a30204b68bcb96f1bd8dc3e2749ca5862f21dac2b"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinArchivePolicyTests.swift",
+      "recordedSHA256": "ec941d33c0a715be42ad9b21c09791a5c8ced721c99c8d2fbe1c667332a91816",
+      "currentSHA256": "ec941d33c0a715be42ad9b21c09791a5c8ced721c99c8d2fbe1c667332a91816"
+    },
+    {
+      "path": "Scripts/MiniApps/Tests/test_archive_import_policy.py",
+      "recordedSHA256": "296b96b3a70d2fa6b9657cebb0e4b9f98a29d78b43343f66e5ff1e1450fc62f8",
+      "currentSHA256": "296b96b3a70d2fa6b9657cebb0e4b9f98a29d78b43343f66e5ff1e1450fc62f8"
+    }
+  ],
+  "originalExecutedMethods": 12,
+  "newExecutedMethods": 0,
+  "boundary": "Portable actual ArchivePolicy/parser only; absence of script.json was not an asserted case and is not inferred from the multi-manifest result."
+}

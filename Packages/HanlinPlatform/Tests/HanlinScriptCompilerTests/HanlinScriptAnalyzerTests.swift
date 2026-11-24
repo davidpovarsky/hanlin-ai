@@ -252,7 +252,7 @@ struct HanlinScriptAnalyzerTests {
         ))
         let supportedPreview = try analyzer.analyze(supported)
         #expect(supportedPreview.canInstall)
-        #expect(supportedPreview.findings.contains { $0.message.contains("supported by embedded runtime 9.1.0") })
+        #expect(supportedPreview.findings.contains { $0.message.contains("supported by embedded runtime \(HanlinMiniAppHostVersions.nativeScriptCoreVersion)") })
 
         let unsupported = try package(files: [
             "script.json": #"{"name":"Unsupported Core Fixture","version":"1.0.0","entry":"nativescript/app/bundle.mjs","hanlinRuntime":"hanlin-nativescript"}"#,
@@ -263,7 +263,7 @@ struct HanlinScriptAnalyzerTests {
         let unsupportedPreview = try analyzer.analyze(unsupported)
         #expect(!unsupportedPreview.canInstall)
         #expect(unsupportedPreview.findings.contains {
-            $0.message == "This Hanlin build supports @nativescript/core 9.1.0, but the package requires ^10.0.0."
+            $0.message == "This Hanlin build supports @nativescript/core \(HanlinMiniAppHostVersions.nativeScriptCoreVersion), but the package requires ^10.0.0."
         })
     }
 
@@ -315,7 +315,7 @@ struct HanlinScriptAnalyzerTests {
         let unsupportedPreview = try analyzer.analyze(unsupported)
         #expect(!unsupportedPreview.canInstall)
         #expect(unsupportedPreview.findings.contains {
-            $0.message.contains("supports @expo/ui 58.0.3") && $0.message.contains("@expo/ui 99.0.0")
+            $0.message.contains("supports @expo/ui \(HanlinMiniAppHostVersions.expoUIVersion)") && $0.message.contains("@expo/ui 99.0.0")
         })
     }
 
