@@ -30,9 +30,17 @@ public enum ExpoEmbeddedResultAdapter {
             return nil
         }
 
+        // Tool results retain their installed generation. A package update must
+        // not silently reinterpret old output in a different renderer.
+        if let metadata = payload?.metadata,
+           metadata["installedPackageID"] != nil || metadata["generation"] != nil {
+            guard metadata["installedPackageID"] == package.record.installedPackageID.rawValue,
+                  metadata["generation"] == String(package.record.activeGeneration) else { return nil }
+        }
+
         // Strict match: must correspond to a declared embedded-capable entrypoint
         guard let entrypoint = package.entrypoints.first(where: {
-            $0.id == handler && $0.runtimeProfile == .hanlinExpo
+            $0.id == handler && $0.kind == .embeddedResult && $0.runtimeProfile == .hanlinExpo
         }) else {
             return nil
         }

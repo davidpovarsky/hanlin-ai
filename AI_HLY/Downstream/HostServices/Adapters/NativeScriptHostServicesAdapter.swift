@@ -22,11 +22,42 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
         let invoke: InvokeFn
     }
 
+    /// One reply per native invocation. Cancellation may precede continuation
+    /// installation, and misbehaving JavaScript may reply more than once.
+    private final class ActionInvocationReply: @unchecked Sendable {
+        private let lock = NSLock()
+        private var continuation: CheckedContinuation<HanlinValue, any Error>?
+        private var result: Result<HanlinValue, any Error>?
+
+        var isFinished: Bool { lock.withLock { result != nil } }
+
+        func install(_ continuation: CheckedContinuation<HanlinValue, any Error>) {
+            let completed = lock.withLock {
+                if let result { return result }
+                self.continuation = continuation
+                return nil as Result<HanlinValue, any Error>?
+            }
+            if let completed { continuation.resume(with: completed) }
+        }
+
+        func finish(_ result: Result<HanlinValue, any Error>) {
+            let pending = lock.withLock {
+                guard self.result == nil else { return nil as CheckedContinuation<HanlinValue, any Error>? }
+                self.result = result
+                let pending = continuation
+                continuation = nil
+                return pending
+            }
+            pending?.resume(with: result)
+        }
+    }
+
     private let lock = NSLock()
     private var registeredActionIDs: Set<HanlinActionID> = []
     private var registeredActionHandlers: [HanlinActionID: RegisteredActionHandler] = [:]
     private var runtimeRequests: [String: Task<Void, Never>] = [:]
     private var runtimeRequestsInvalidated = false
+    private var actionInvocations: [UUID: ActionInvocationReply] = [:]
 
     public init(
         appID: HanlinAppID,
@@ -138,9 +169,12 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
             let handlers = registeredActionHandlers
             registeredActionHandlers.removeAll()
             registeredActionIDs.removeAll()
-            return (tasks: Array(runtimeRequests.values), handlers: handlers)
+            let invocations = Array(actionInvocations.values)
+            actionInvocations.removeAll()
+            return (tasks: Array(runtimeRequests.values), handlers: handlers, invocations: invocations)
         }
         for task in retired.tasks { task.cancel() }
+        for reply in retired.invocations { reply.finish(.failure(CancellationError())) }
         // Release JS-owned handler blocks outside the lock, before the caller
         // tears down its VM. Runtime tasks retain their existing cancellation
         // and completion behavior; the installed Host router remains untouched.
@@ -477,42 +511,54 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
         payload: HanlinValue
     ) async throws -> HanlinValue {
         let payloadJSON = try Self.serializeUntaggedJSON(payload)
-        return try await withCheckedThrowingContinuation { continuation in
-            do {
-                // NativeScript handlers and VM teardown use the main actor.
-                // Resolve immediately before invocation, and keep the JS block
-                // inside this synchronous closure rather than across the await.
-                let invokeHandler: RegisteredActionHandler.InvokeFn = try lock.withLock {
-                    guard !runtimeRequestsInvalidated,
-                          let registration = registeredActionHandlers[action] else {
-                        throw HanlinMiniAppRequestError.routeNotFound
-                    }
-                    guard registration.capability == capability else {
-                        throw HanlinMiniAppRequestError.capabilityMismatch
-                    }
-                    return registration.invoke
-                }
-                invokeHandler(caller.rawValue, payloadJSON) { responseJSON, errorString in
-                    if let errorString {
-                        continuation.resume(throwing: NSError(
-                            domain: "HanlinMiniAppRequest",
-                            code: 1,
-                            userInfo: [NSLocalizedDescriptionKey: errorString]
-                        ))
-                    } else if let responseJSON {
-                        do {
-                            let value = try Self.decodeJSONPayload(responseJSON)
-                            continuation.resume(returning: value)
-                        } catch {
-                            continuation.resume(returning: .null)
+        let invocationID = UUID()
+        let reply = ActionInvocationReply()
+        let admitted = lock.withLock {
+            guard !runtimeRequestsInvalidated else { return false }
+            actionInvocations[invocationID] = reply
+            return true
+        }
+        guard admitted else { throw HanlinMiniAppRequestError.routeNotFound }
+        defer { _ = lock.withLock { actionInvocations.removeValue(forKey: invocationID) } }
+        return try await withTaskCancellationHandler {
+            try Task.checkCancellation()
+            return try await withCheckedThrowingContinuation { continuation in
+                reply.install(continuation)
+                guard !reply.isFinished else { return }
+                do {
+                    // Resolve the JS-owned block synchronously on the main actor.
+                    // No callback block is retained by a suspended Swift frame.
+                    let invokeHandler: RegisteredActionHandler.InvokeFn = try lock.withLock {
+                        guard !runtimeRequestsInvalidated,
+                              let registration = registeredActionHandlers[action] else {
+                            throw HanlinMiniAppRequestError.routeNotFound
                         }
-                    } else {
-                        continuation.resume(returning: .null)
+                        guard registration.capability == capability else {
+                            throw HanlinMiniAppRequestError.capabilityMismatch
+                        }
+                        return registration.invoke
                     }
+                    invokeHandler(caller.rawValue, payloadJSON) { responseJSON, errorString in
+                        if let errorString {
+                            reply.finish(.failure(NSError(
+                                domain: "HanlinMiniAppRequest", code: 1,
+                                userInfo: [NSLocalizedDescriptionKey: errorString])))
+                        } else if let responseJSON {
+                            do {
+                                reply.finish(.success(try Self.decodeJSONPayload(responseJSON)))
+                            } catch {
+                                reply.finish(.failure(error))
+                            }
+                        } else {
+                            reply.finish(.success(.null))
+                        }
+                    }
+                } catch {
+                    reply.finish(.failure(error))
                 }
-            } catch {
-                continuation.resume(throwing: error)
             }
+        } onCancel: {
+            reply.finish(.failure(CancellationError()))
         }
     }
 }
