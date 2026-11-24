@@ -10,7 +10,7 @@
     "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptWindowSession.swift": "85f349e9e1a39e494c301c5c111d8c0d0f1d6fa17a95f90c95f8eb12156ec44d",
     "Scripts/NativeScript/window-factory.mjs": "ec747a6b573daa335ecc7caccd72ef6e25d4a3e4b1627207f5573f9760ce51a6",
     "Scripts/NativeScript/host-services.ts": "81aefd90acf499f3301abdb9597ef92c8c7f1e03c0bcd05243295d3e98ff4bd1",
-    "Scripts/NativeScript/Fixtures/window-factory.hanlinNativeScript": "e568bf11960a4d6dbd970d8362844420bc3dc7d131f0e458ed3f2ff8518de8cf"
+    "Scripts/NativeScript/Fixtures/window-factory.hanlinNativeScript": "e528ee7db79dbe9cecc76a71b4c8c4e65939e4f90c4a3970f855966c2da7e0d7"
   },
   "javascript_checks": {
     "new_window_cases": 5,
@@ -24,5 +24,12 @@
   "legacy_entry_behavior": "PRESERVED",
   "independent_different_package_main_vms": "NOT_IMPLEMENTED",
   "native_acceptance_owner": "root producer gate",
-  "physical_signed_sharing": "NOT_PROVEN_BY_THIS_LANE"
+  "physical_signed_sharing": "NOT_PROVEN_BY_THIS_LANE",
+  "fixture_keyboard_followup": {
+    "prepare_dismisses_soft_input": true,
+    "prepare_precedes_text_view": true,
+    "method_verified_in_pinned_core": "@nativescript/core9.1.0/ui/editable-text-base/index.ios.mjs:dismissSoftInput calls resignFirstResponder",
+    "generated_fixture_syntax": "PASS",
+    "unchanged_helper_tests": "REUSED_PREVIOUS_7_PASS; NOT_RERUN"
+  }
 }
