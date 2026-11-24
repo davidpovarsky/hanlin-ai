@@ -1,0 +1,16 @@
+{
+  "reviewer": "/root/entrypoints",
+  "mode": "independent read-only source review",
+  "result": "NO_CONCRETE_BLOCKER",
+  "workflowSHA256": "dbd1e6d3b6519001be6c83cc79c9cc21465a9a1ffe91e92b907e988a553a26ba",
+  "findings": [
+    "New scope uses the same-commit reusable runtime job with exact HanlinAtomicScriptStoreTests/lifecycle filter.",
+    "Existing audit/registration precedence is preserved.",
+    "Only the explicit new paired scope is additionally excluded from the ordinary app job.",
+    "Existing miniapp_contracts routing, concurrency and defaults remain intact."
+  ],
+  "notPerformed": [
+    "Tests",
+    "CI dispatch or polling"
+  ]
+}

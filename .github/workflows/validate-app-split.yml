@@ -101,7 +101,7 @@ on:
       paired_test_scope:
         description: Original cross-product, shared ingress, authoring or isolated MiniApp contracts
         type: choice
-        options: [cross_product, shared_ingress, product_and_share, miniapp_authoring, miniapp_contracts]
+        options: [cross_product, shared_ingress, product_and_share, miniapp_authoring, miniapp_contracts, miniapp_lifecycle]
         required: false
         default: cross_product
 
@@ -188,8 +188,18 @@ jobs:
       test_filter: HanlinScriptAnalyzerTests/(expoMainMustMatchTheInspectedForegroundEntrypoint|nativeScriptPreparedEntrypointIsAlwaysTheCanonicalBundle|nativeScriptSwiftUIContract|nativeScriptCoreContract|expoSwiftUIContract|expoMultiExposureMatrix|malformedPreparedEntrypointsFailWithStableDiagnostic|unavailableModernNativePluginsFailBeforeImport)
     secrets: inherit
 
+  miniapp-lifecycle:
+    name: Verify MiniApp store lifecycle
+    if: ${{ !inputs.audit_release_resources && !inputs.prepare_miniapps_registration && inputs.paired_product_acceptance && inputs.paired_test_scope == 'miniapp_lifecycle' }}
+    uses: ./.github/workflows/validate-scripting-runtime.yml
+    with:
+      runtime_job_foundation_only: false
+      force_clean_build: true
+      test_filter: HanlinAtomicScriptStoreTests/lifecycle
+    secrets: inherit
+
   miniapps:
-    if: ${{ !inputs.audit_release_resources && !inputs.prepare_miniapps_registration && !(inputs.paired_product_acceptance && inputs.paired_test_scope == 'miniapp_contracts') }}
+    if: ${{ !inputs.audit_release_resources && !inputs.prepare_miniapps_registration && !(inputs.paired_product_acceptance && (inputs.paired_test_scope == 'miniapp_contracts' || inputs.paired_test_scope == 'miniapp_lifecycle')) }}
     runs-on: xcode-27
     # Include both bounded cold builds, unchanged UI deadlines and evidence upload.
     timeout-minutes: ${{ inputs.signed_release_archives && 150 || inputs.paired_product_acceptance && 150 || 90 }}
