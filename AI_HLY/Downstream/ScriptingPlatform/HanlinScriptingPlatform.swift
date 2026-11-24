@@ -2849,18 +2849,19 @@ final class HanlinScriptingPlatform {
         preview: HanlinImportPreview
     ) throws -> HanlinScriptingBundle {
         let metadata = try HanlinScriptingSDK.metadata()
+        let runtimeIdentity = "NativeScript-\(HanlinMiniAppHostVersions.nativeScriptRuntimeVersion)"
         let optionsHash = SHA256.hash(data: Data("nativescript-source-v1".utf8))
             .map { String(format: "%02x", $0) }.joined()
         let fingerprint = SHA256.hash(data: Data([
             preview.source.contentSHA256,
-            "NativeScript-9.1.0",
+            runtimeIdentity,
             metadata.baselineID,
             metadata.baselineDigest,
             optionsHash,
         ].joined(separator: "\n").utf8)).map { String(format: "%02x", $0) }.joined()
         return .init(
             manifest: .init(
-                compilerVersion: "NativeScript-9.1.0-prepared",
+                compilerVersion: "\(runtimeIdentity)-prepared",
                 compilerIntegrity: preview.source.contentSHA256,
                 compilerOptionsHash: optionsHash,
                 baselineID: metadata.baselineID,

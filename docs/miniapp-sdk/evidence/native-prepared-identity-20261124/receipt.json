@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-11-24T05:30:34.725915+00:00",
+  "baseCommit": "8c3aaa5895d26076bd98060244beb03c71a3ede7",
+  "scope": "Bind only active NativeScript prepared-source fingerprint/compiler label to generated installed iOS runtime identity.",
+  "changedSource": {
+    "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+    "beforeSHA256": "3d447b4b3f85303684f6321be3f13ecbb5cd713935f241a4aa1b02d743d1d94f",
+    "afterSHA256": "ac49e5bd03c4a6b6d341aa4fa90cfe2aca673fa77ac11f950e6bcd91ed3ab28a"
+  },
+  "installed": {
+    "iosRuntimeVersion": "9.1.1",
+    "coreVersion": "9.1.4"
+  },
+  "checks": [
+    {
+      "name": "unchanged surrounding implementation",
+      "pass": true
+    },
+    {
+      "name": "one generated iOS identity feeds both cache material and compilerVersion",
+      "pass": true
+    },
+    {
+      "name": "actual generated current iOS version differs from Core and old cache identity",
+      "pass": true,
+      "currentCompilerVersion": "NativeScript-9.1.1-prepared",
+      "currentFingerprintProbe": "6361dbef8a7370e0764f056c5146537bfe804b9c5862441c3dc7d1a62df4df49",
+      "priorFingerprintProbe": "ba18dda37f00aa37204f3e0fe1103c7be705fa8db6af4030643dba77ee52e0fe"
+    },
+    {
+      "name": "controlled future iOS update changes same cache material and compiler label",
+      "pass": true,
+      "controlledUnpublishedIOSVersion": "9.2.1",
+      "futureCompilerVersion": "NativeScript-9.2.1-prepared",
+      "futureFingerprintProbe": "d1cd4cc61849e94bad4ef418ad69fbe13144df24266c57a34a5b5905b7840c0d",
+      "scope": "Source binding and SHA-256 material projection; not Apple runtime execution."
+    }
+  ],
+  "commands": [
+    {
+      "argv": [
+        "swiftc",
+        "-frontend",
+        "-parse",
+        "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "traceSourceSHA256": {
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinScriptContracts.swift": "e92224cd4a0a1b5ed8e49bd85881c647595337b95ccbb20e6a6684110977679c",
+    "AI_HLY/Downstream/Scripting/HanlinScriptPackageLoader.swift": "084bede17f6b72f32a285d4e6158a1fbf514ec59a75d030147010d85c699d2bf",
+    "AI_HLY/Downstream/Scripting/HanlinScriptingProviderRegistry.swift": "6fe94ff6f1b91ef4d937219f97bbc75787abd98b4060a346a871c15b5bfc1a7b",
+    "Scripts/ScriptingCompiler/compile-scripting-fixtures.mjs": "122f8fe1992eaf49dc3d59481a630b563a1011634122fd71ace34b7c4c7adc5b",
+    "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
+    "Scripts/MiniApps/resolve-upstreams.mjs": "9d1e19f0da2274b72523274f0745e98513e6f66b32a81634ee72b5fab9e820ee",
+    "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinMiniAppHostVersions.swift": "a31357ce803c24ba80aed6f4c81b7e31f82abde1ec6c2ef00c6ee4a57c272717",
+    "Scripts/NativeScript/dependency-lock.json": "8499976a4ea0a069ed654b09b597d8fabede4bbbfb62227451a68707b851e8e5"
+  },
+  "descriptorDecision": {
+    "unchanged": [
+      "HanlinScriptContractSupport.multiRuntime native descriptor literals",
+      "hanlin-script.json exact engine/version policy",
+      "HanlinScript ABI1.0",
+      "frozen Scripting compiler/registry"
+    ],
+    "evidence": [
+      "HanlinScriptPackageLoader.support reads the multiRuntime map and validates hanlin-script.json.",
+      "The only tracked hanlin-script.json producer is compile-scripting-fixtures.mjs; it emits JavaScriptCore/Apple.",
+      "HanlinScriptingProviderRegistry rejects hanlinNativeScript/hanlinExpo interactive native profiles with interactive_ui_is_foreground_only.",
+      "Active package producer miniapp-authoring.mjs emits package.json hanlinNativeScript/hanlinExpo, consumed by Analyzer and Session.",
+      "Active Expo preparedSourceBundle already uses HanlinExpoBridgeMetadata.runtimeVersion, the installed UI identity."
+    ],
+    "reason": "No active native descriptor producer exists for a joint migration; frozen map is not current installed-version reporting."
+  },
+  "validationBoundary": "Focused source/cache-material check and Swift syntax parse only. No full audit/test rerun, Apple compile or native execution; root owns final inventory generation."
+}
