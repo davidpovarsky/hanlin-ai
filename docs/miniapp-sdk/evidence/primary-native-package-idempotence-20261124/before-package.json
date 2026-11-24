@@ -1,0 +1,8 @@
+{
+  "type": "module",
+  "name": "@hanlin/host-services",
+  "version": "1.0.0",
+  "private": true,
+  "main": "index.mjs",
+  "types": "index.d.ts"
+}
