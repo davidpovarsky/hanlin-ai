@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "baseCommit": "c2fe34037531462a23ce1e69c5de0890e3a35911",
+  "source": "AI_HLYUITests/HanlinExpoProductionE2ETests.swift",
+  "beforeSHA256": "25b73aa6979e69cc21ea6ce71c7527f8b4f5b5f6a9389ae0ad8a65c16ced5414",
+  "afterSHA256": "f1448ad05a503f71c1e7324f8b67064ab4ab22b9bf3f13f0a5f58816c14e2dee",
+  "change": "Require complete hanlin query and submit count1; remove disjunctions accepting partial ha and unchanged count0. Actual native keyboard interaction is byte-identical.",
+  "validation": "READ_ONLY_DIFF_REVIEW",
+  "nativeExecution": "NOT_RUN",
+  "currentAuthoring40Scope": "This AI selector is not in the selected40; new standalone manual adapter selectors will provide current scope coverage."
+}
