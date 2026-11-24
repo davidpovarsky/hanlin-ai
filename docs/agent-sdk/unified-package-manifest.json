@@ -64,7 +64,7 @@
     "Packages/HanlinMiniAppsBridge/Package.swift": "579cdb6febf974d7f463aee0cd6592cdf0cfd5a4c8e53840009ff170e52b6e2e",
     "Packages/HanlinNativeScriptRuntime/Package.swift": "88a4926e884e6804246a7d077efed3837271886a9825585b1e561b4ce1576120",
     "Packages/HanlinParityMiniApp/Package.swift": "66025f0b1fb7db7db9b8a24426319b651858f3454295780ee807edd335cec90b",
-    "Packages/HanlinPlatform/Package.swift": "7a973138b0ac0aa3086c8698ad3e11312f5879848f7e77b2eb403d2ce0381c23",
+    "Packages/HanlinPlatform/Package.swift": "8c4239e0b6bc4f3e48ea8617c674f4f67ffd2cdfefb1207a9baa1c380c2c5053",
     "Packages/HanlinPresentationSDK/Package.swift": "462479a3660edd652181ad339238c29f270ec9bfd8203d2f1310681d8029ecc4",
     "Packages/HanlinProductSplit/Package.swift": "31234398119e82e9895391040f281e9c9895c2cc73f962c12f1b37489e7f5e3a",
     "Packages/HanlinQuickJS/Package.swift": "3b3e64732c71724b027fd28236f635073d02a3c208cbd9060fafaf802a47480e",

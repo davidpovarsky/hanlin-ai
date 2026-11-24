@@ -13,6 +13,8 @@ struct HanlinScriptingWidgetBundle: WidgetBundle {
         HanlinOriginalScriptWidgetLiveActivityWidget()
         HanlinOriginalExpoWidget()
         ExpoWidgets.WidgetLiveActivity()
+        ScriptWidgetButtonControlWidget()
+        ScriptWidgetControlWidget()
     }
 }
 

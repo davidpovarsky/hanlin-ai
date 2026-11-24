@@ -13,6 +13,8 @@ struct HanlinMiniAppsWidgetBundle: WidgetBundle {
         HanlinOriginalScriptWidgetLiveActivityWidget()
         HanlinOriginalExpoWidget()
         ExpoWidgets.WidgetLiveActivity()
+        ScriptWidgetButtonControlWidget()
+        ScriptWidgetControlWidget()
     }
 }
 

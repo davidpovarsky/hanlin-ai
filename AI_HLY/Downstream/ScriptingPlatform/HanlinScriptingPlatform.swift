@@ -838,6 +838,8 @@ final class HanlinScriptingPlatform {
         guard let extensionStore else { throw HanlinScriptExtensionStoreError.appGroupUnavailable }
         try extensionStore.createWidgetInstance(from: entityID, displayName: name)
         WidgetCenter.shared.reloadTimelines(ofKind: HanlinWidgetActionExecutor.widgetKind)
+        ControlCenter.shared.reloadControls(ofKind: HanlinScriptWidgetControlCatalog.buttonKind)
+        ControlCenter.shared.reloadControls(ofKind: HanlinScriptWidgetControlCatalog.toggleKind)
     }
 
     func setCapabilityGranted(
@@ -1802,6 +1804,8 @@ final class HanlinScriptingPlatform {
         lastWidgetStorageDiagnostic = packageDiagnostics.values.first
         if previousSnapshot?.widgets != newSnapshot.widgets || previousSnapshot?.widgetInstances != newSnapshot.widgetInstances {
             WidgetCenter.shared.reloadTimelines(ofKind: HanlinWidgetActionExecutor.widgetKind)
+            ControlCenter.shared.reloadControls(ofKind: HanlinScriptWidgetControlCatalog.buttonKind)
+            ControlCenter.shared.reloadControls(ofKind: HanlinScriptWidgetControlCatalog.toggleKind)
         }
         await publishCompactAgentConfig()
     }

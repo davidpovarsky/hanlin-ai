@@ -107,7 +107,7 @@ let package = Package(
         ),
         .target(
             name: "HanlinWidgetCompiler",
-            dependencies: ["HanlinPlatformContracts", "HanlinScriptContracts"],
+            dependencies: ["HanlinPlatformContracts", "HanlinScriptContracts", "HanlinScriptWidgetOriginal"],
             resources: [.copy("Resources/core.js"), .copy("Resources/prepare-widget.js")],
             linkerSettings: [.linkedFramework("JavaScriptCore", .when(platforms: [.iOS, .macOS]))]
         ),
