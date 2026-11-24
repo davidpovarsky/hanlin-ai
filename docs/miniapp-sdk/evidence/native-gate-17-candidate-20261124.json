@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "sequence": 17,
+  "atUTC": "2026-11-24T16:46:31.480919+00:00",
+  "status": "READY_REVIEWED_SOURCE_FIXES",
+  "implementationSource": "812fff05f8f4f9509e180a737c70b95ce76251dc",
+  "scope": "miniapp_complete",
+  "selectedCases": 52,
+  "MiniApps": 25,
+  "AI": 27,
+  "priorRun": 45430463243,
+  "priorSourceCommit": "7d1efaa6ada43dd80c57133c09e6a8fb327075cf",
+  "priorNativeResult": {
+    "miniAppsBuild": "EXECUTED_PASS",
+    "aiBuild": "EXECUTED_FAIL",
+    "applicationCases": "ALL52_NOT_RUN"
+  },
+  "completeNonDocumentationDeltaFromPriorRun": [
+    "AI_HLYTests/HanlinNativePresentationTests.swift",
+    "AI_HLYTests/HanlinOriginalExpoWidgetTests.swift"
+  ],
+  "fix": {
+    "path": "docs/miniapp-sdk/evidence/main16-test-compiler-20261124/receipt.json",
+    "sha256": "485aed31ca6edbac14f50aa3151ed4bf06fd89a436acd847622403ab49adbdd8"
+  },
+  "fixIntegrationCommit": "812fff05f8f4f9509e180a737c70b95ce76251dc",
+  "independentReview": "Final two source hashes and all six method names / ordered 27+28 assertion calls reviewed by entrypoints and root; preserved52 selectors.",
+  "focusedCompilerCheck": "NOT_RUN_PRIMARY_MAC_BUSY; not treated as pass. Required full27.2 gate remains.",
+  "routing": {
+    "path": "docs/miniapp-sdk/evidence/seventeenth-native-gate-mac-route-20261124.json",
+    "sha256": "189c0ce8e70ab5a1bad667e784ce6f51142faf570dd3885a8e4dd7daab66574a"
+  },
+  "workflow": {
+    "path": ".github/workflows/validate-app-split.yml",
+    "sha256": "677ba19c3a2e281e850b182b3bef8bcde709ee167f58d601c1c3aa6ade665982"
+  },
+  "runner": {
+    "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+    "sha256": "b27ca38423d3d0eb179f2b8bb7f25568d8ee9a7a70a36da7dd9e57e243ca004c"
+  },
+  "budgets": {
+    "firstMiniAppsBuildSeconds": 3600,
+    "aiBuildSeconds": 1800,
+    "runtimeSeconds": 1200,
+    "pairedTestsSeconds": 2100,
+    "pairedJobMinutes": 210
+  },
+  "sourceAuthority": {
+    "reviewer": "sdk_only_author",
+    "changedTestFiles": [
+      "AI_HLYTests/HanlinNativePresentationTests.swift",
+      "AI_HLYTests/HanlinOriginalExpoWidgetTests.swift"
+    ],
+    "sdkInputMembership": "Both absent from actual MAIN16 222 SDK input records and shipped-file records",
+    "inventoryAndReachability": "Both absent from source-inventory sources, reachability sdkSources/sourceRefs and applicable symbol scans",
+    "generatorWriteOrCheckRequired": false,
+    "expectedUnchangedInputs": 222,
+    "conditionalExpectedInputSHA256": "307f689d68445cae8cb4f049f015c9bf55904d0de40a96e69fb59fa622d0a863",
+    "boundary": "Source-input equivalence only. Next resolved original preparation outputs must be attributed to actual next artifact."
+  },
+  "main16ActualSDK": {
+    "path": "docs/miniapp-sdk/evidence/sdk05-shipping-main16-20261124/receipt.json",
+    "sha256": "8c3d5b0fc58e0a3e26e5aa0ebeb88630fcbde7e88f94ce7db5dc11c13e4264a4"
+  },
+  "reusedEvidence": "Scoped prior component passes and exact unaffected SDK proof retained; no redundant compiler/112-member checks or component CI.",
+  "whyExecute": "AI compilation errors are corrected; both current product builds and all52 cases must now complete.",
+  "boundary": "No corrected native-test or app/runtime/device PASS claimed before next actual result. No main merge or release."
+}

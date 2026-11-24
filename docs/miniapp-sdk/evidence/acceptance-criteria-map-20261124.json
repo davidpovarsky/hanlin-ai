@@ -1076,6 +1076,22 @@
       "sha256": "9d9065c8da17fcbd5fec5129e5055e56f70c06bfe342ac239daaf32ba30cfa35",
       "sourceCommit": "7d1efaa6ada43dd80c57133c09e6a8fb327075cf",
       "runID": 45430463243
+    },
+    "sdk05_main16_actual_shipping": {
+      "status": "PASS_EXPECTED_DOCUMENTATION_DELTA",
+      "receipt": {
+        "path": "docs/miniapp-sdk/evidence/sdk05-shipping-main16-20261124/receipt.json",
+        "sha256": "8c3d5b0fc58e0a3e26e5aa0ebeb88630fcbde7e88f94ce7db5dc11c13e4264a4"
+      },
+      "testedSourceCommit": "7d1efaa6ada43dd80c57133c09e6a8fb327075cf",
+      "manifestSHA256": "f84b79a3d9c4f7dc541d6912753cd1be95bfa3ed1876cc4d0ead365aadab12fc",
+      "inputSHA256": "307f689d68445cae8cb4f049f015c9bf55904d0de40a96e69fb59fa622d0a863",
+      "changedShippingDocuments": 3,
+      "unchangedInputs": 219,
+      "unchangedFileRecords": 25658,
+      "actualSnippetProjects": 4,
+      "actualSnippetDiagnostics": 0,
+      "boundary": "SDK proof is separate from MiniApps build PASS, AI test compilation FAIL, and all52 application cases NOT_RUN."
     }
   },
   "criteria": [
@@ -1391,9 +1407,9 @@
       }
     }
   ],
-  "recordingOutcome": "Four scoped tasks complete. MAIN16 MiniApps full build PASS; AI test-target compile FAIL at two exact source lines; all52 application cases NOT_RUN. No physical-device/release or blanket80E2E claim.",
-  "updatedAtUTC": "2026-11-24T16:37:08.880466+00:00",
-  "currentIntegrationBase": "20707fef7e6d0393ef31706fd8aabf67eab8e0a2",
+  "recordingOutcome": "Four scoped tasks complete. MAIN16 MiniApps full build and actual shipping SDK PASS; AI test compilation failed and all52 application cases NOT_RUN. Reviewed two-file MAIN17 candidate is ready, not yet dispatched.",
+  "updatedAtUTC": "2026-11-24T16:46:31.480919+00:00",
+  "currentIntegrationBase": "812fff05f8f4f9509e180a737c70b95ce76251dc",
   "gateHistory": [
     {
       "runID": 45335292541,
@@ -1653,7 +1669,7 @@
     "skipped": 0,
     "receipt": "docs/miniapp-sdk/evidence/apple-modern-contracts-20261124/receipt.json"
   },
-  "currentScopeNote": "MAIN16 proves the previous original-header correction in the full MiniApps application build, including actual object/widget/app links and signing. Independent repair targets only two AI test-source compiler errors; all52 cases and physical acceptance remain open. Actual MAIN16 SDK reconciliation proceeds separately; no prior identity is substituted.",
+  "currentScopeNote": "Only two AI test-source files change from MAIN16. Original libraries, Swift concurrency checks, assertions, fixtures, workflow, runner, budgets and52 selection remain. No SDK source refresh is required for these excluded test paths. Current native validation pending; physical acceptance still unavailable.",
   "modernContractGateHistory": [
     {
       "runID": 45348880385,
@@ -1788,58 +1804,44 @@
   ],
   "candidateGate": {
     "schemaVersion": 1,
-    "sequence": 16,
-    "atUTC": "2026-11-24T15:50:54.372088+00:00",
-    "status": "COMPLETED_FAILURE",
-    "implementationSource": "e3a187c36d26aedb746fc6e3b69dccbd29d114b3",
+    "sequence": 17,
+    "atUTC": "2026-11-24T16:46:31.480919+00:00",
+    "status": "READY_REVIEWED_SOURCE_FIXES",
+    "implementationSource": "812fff05f8f4f9509e180a737c70b95ce76251dc",
     "scope": "miniapp_complete",
     "selectedCases": 52,
     "MiniApps": 25,
     "AI": 27,
-    "priorRun": 45412939674,
-    "priorApplicationStatus": "ALL52_NOT_RUN",
+    "priorRun": 45430463243,
+    "priorSourceCommit": "7d1efaa6ada43dd80c57133c09e6a8fb327075cf",
+    "priorNativeResult": {
+      "miniAppsBuild": "EXECUTED_PASS",
+      "aiBuild": "EXECUTED_FAIL",
+      "applicationCases": "ALL52_NOT_RUN"
+    },
     "completeNonDocumentationDeltaFromPriorRun": [
-      ".github/workflows/build-ios26-unsigned-ipa.yml",
-      "AI_HLY.xcodeproj/project.pbxproj",
-      "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests.swift",
-      "Scripts/SDK/tests/test_widget_cxx_imports.py",
-      "Scripts/SDK/update_project.py"
+      "AI_HLYTests/HanlinNativePresentationTests.swift",
+      "AI_HLYTests/HanlinOriginalExpoWidgetTests.swift"
     ],
-    "selectionAndHarness": "Existing52 selection, fixture sources and paired harness/workflow unchanged. One reviewed XCTest expression is corrected without changing equality or assertions.",
-    "whyExecute": "Actual first-build original React/Expo import failure is corrected. Both application builds and all52 selected cases remain missing. Use the original full preparation and same acceptance scope.",
-    "sourceFixCommit": "89b27bcf1d1decd835ee3d1dacc7ac90af617372",
-    "sourceProof": {
-      "path": "docs/miniapp-sdk/evidence/widget-original-header-closure-20261124/receipt.json",
-      "sha256": "b3720f78e0d8a7db05757e2276a2ab8fadb5efecc01f9a622f5e3a18894ef9db"
+    "fix": {
+      "path": "docs/miniapp-sdk/evidence/main16-test-compiler-20261124/receipt.json",
+      "sha256": "485aed31ca6edbac14f50aa3151ed4bf06fd89a436acd847622403ab49adbdd8"
     },
-    "sourceProofScope": "Real fresh-cache original Core interface implicitFAIL→explicitPASS on primary27.0; one existing producer/consumer configuration casePASS. Exact12 configs across6 proven native consumers. Not full27.2/app proof.",
-    "fullBuildCompanionCommit": "dc56cea1f4910cea131c6e3afc7c818e4595cabb",
-    "fullBuildCompanion": {
-      "path": "docs/miniapp-sdk/evidence/original-header-build-entrypoints-20261124/receipt.json",
-      "sha256": "361e364c5258d3928e6792e4eda54d5498ae86166244e2011250af052f89bbc3"
-    },
-    "companionScope": "Four actual overriding CLI NO arguments removed; allotherworkflowbytespreserved; YAML/delta/fourchangedBash syntaxchecksPASS. Five original full-host routes and four helpers independently mapped.",
-    "independentTestCorrection": {
-      "path": "docs/miniapp-sdk/evidence/host-widget-assertion-type-20261124/receipt.json",
-      "sha256": "3a97d2e45669796c39f534e6c5d51aed5f1cf37cf906445bba24fda13200fa12"
-    },
-    "sourceAuthorityRefresh": {
-      "path": "docs/miniapp-sdk/evidence/widget-header-source-refresh-20261124/receipt.json",
-      "sha256": "9ab36513dbe428493b041f2cfd7b9423010c61835076901d865e3a151bb722e2"
-    },
-    "sourceRefreshCommit": "e3a187c36d26aedb746fc6e3b69dccbd29d114b3",
+    "fixIntegrationCommit": "812fff05f8f4f9509e180a737c70b95ce76251dc",
+    "independentReview": "Final two source hashes and all six method names / ordered 27+28 assertion calls reviewed by entrypoints and root; preserved52 selectors.",
+    "focusedCompilerCheck": "NOT_RUN_PRIMARY_MAC_BUSY; not treated as pass. Required full27.2 gate remains.",
     "routing": {
-      "primary": "Scaleway M2Pro",
-      "observation": {
-        "path": "docs/miniapp-sdk/evidence/sixteenth-native-gate-mac-route-20261124.json",
-        "sha256": "597dacad6c134827108cde53edbc3ca6d1848bca80affa4e1f48ab391bdf1a7a"
-      },
-      "observedAtUTC": "2026-11-24T15:49:06.627029+00:00",
-      "available": "Xcode27.0/27A266a,Swift6.4.0.34.1,SDK27.0 only; no activebuildprocesses",
-      "required": "Existing full gate Xcode27.2/27B52 and iOS27.2",
-      "decision": "Use existing GitHub lane because primary lacks the required installed SDK; no downgrade/duplicate heavybuild"
+      "path": "docs/miniapp-sdk/evidence/seventeenth-native-gate-mac-route-20261124.json",
+      "sha256": "189c0ce8e70ab5a1bad667e784ce6f51142faf570dd3885a8e4dd7daab66574a"
     },
-    "workflowSHA256": "677ba19c3a2e281e850b182b3bef8bcde709ee167f58d601c1c3aa6ade665982",
+    "workflow": {
+      "path": ".github/workflows/validate-app-split.yml",
+      "sha256": "677ba19c3a2e281e850b182b3bef8bcde709ee167f58d601c1c3aa6ade665982"
+    },
+    "runner": {
+      "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+      "sha256": "b27ca38423d3d0eb179f2b8bb7f25568d8ee9a7a70a36da7dd9e57e243ca004c"
+    },
     "budgets": {
       "firstMiniAppsBuildSeconds": 3600,
       "aiBuildSeconds": 1800,
@@ -1847,18 +1849,29 @@
       "pairedTestsSeconds": 2100,
       "pairedJobMinutes": 210
     },
-    "reusedEvidence": "Unchanged scoped component proofs retain their actual original source/run. Original import mechanism proof and configuration check are reused without rerun. No application PASS reused.",
-    "boundary": "Full native/app/device results pending; no main merge/release. Original APIs and producer declarations are preserved. Current normalSDKstage must capture latest README/project-provenance bytes.",
-    "candidateReceipt": {
-      "path": "docs/miniapp-sdk/evidence/native-gate-16-candidate-20261124.json",
-      "sha256": "00e7c48bdd113ac98b52f0c02d8f7ec4069d2b278d042ab5c0a63f28b171c47a"
+    "sourceAuthority": {
+      "reviewer": "sdk_only_author",
+      "changedTestFiles": [
+        "AI_HLYTests/HanlinNativePresentationTests.swift",
+        "AI_HLYTests/HanlinOriginalExpoWidgetTests.swift"
+      ],
+      "sdkInputMembership": "Both absent from actual MAIN16 222 SDK input records and shipped-file records",
+      "inventoryAndReachability": "Both absent from source-inventory sources, reachability sdkSources/sourceRefs and applicable symbol scans",
+      "generatorWriteOrCheckRequired": false,
+      "expectedUnchangedInputs": 222,
+      "conditionalExpectedInputSHA256": "307f689d68445cae8cb4f049f015c9bf55904d0de40a96e69fb59fa622d0a863",
+      "boundary": "Source-input equivalence only. Next resolved original preparation outputs must be attributed to actual next artifact."
     },
-    "sourceCommit": "7d1efaa6ada43dd80c57133c09e6a8fb327075cf",
-    "runID": 45430463243,
-    "actualExecution": "MINIAPPS_BUILD_PASS_AI_TEST_COMPILE_FAIL_ALL52_NOT_RUN",
-    "resultReceipt": {
-      "path": "docs/miniapp-sdk/evidence/native-gate-16-ai-test-compilation-20261124/receipt.json",
-      "sha256": "9d9065c8da17fcbd5fec5129e5055e56f70c06bfe342ac239daaf32ba30cfa35"
+    "main16ActualSDK": {
+      "path": "docs/miniapp-sdk/evidence/sdk05-shipping-main16-20261124/receipt.json",
+      "sha256": "8c3d5b0fc58e0a3e26e5aa0ebeb88630fcbde7e88f94ce7db5dc11c13e4264a4"
+    },
+    "reusedEvidence": "Scoped prior component passes and exact unaffected SDK proof retained; no redundant compiler/112-member checks or component CI.",
+    "whyExecute": "AI compilation errors are corrected; both current product builds and all52 cases must now complete.",
+    "boundary": "No corrected native-test or app/runtime/device PASS claimed before next actual result. No main merge or release.",
+    "candidateReceipt": {
+      "path": "docs/miniapp-sdk/evidence/native-gate-17-candidate-20261124.json",
+      "sha256": "038ba2b0319f89598b44532b0cd7421dbf148b501ae31b22c3465fcbd18c16b0"
     }
   },
   "taskClosureDecisions": {
@@ -1972,7 +1985,7 @@
     }
   ],
   "nextCorrection": {
-    "status": "IN_PROGRESS_TWO_AI_TEST_SOURCE_COMPILATION_FIXES",
+    "status": "INTEGRATED_INDEPENDENTLY_REVIEWED_NATIVE_VALIDATION_PENDING",
     "actualFailureRun": 45430463243,
     "failedTarget": "AI_HLYTests",
     "author": "control_authoring",
@@ -1994,7 +2007,26 @@
       "Explicit [String] closure result and returns in recursive presentation text collector",
       "UUID-scoped roundtrip from declared UserDefaults app group through genuine original WidgetsStorage.getString; defer cleanup"
     ],
-    "boundary": "Preserve original library, all test assertions and52 selection. No concurrency suppression or duplicate application build. Full paired acceptance still required."
+    "boundary": "Preserve original library, all test assertions and52 selection. No concurrency suppression or duplicate application build. Full paired acceptance still required.",
+    "integrationCommit": "812fff05f8f4f9509e180a737c70b95ce76251dc",
+    "receipt": {
+      "path": "docs/miniapp-sdk/evidence/main16-test-compiler-20261124/receipt.json",
+      "sha256": "485aed31ca6edbac14f50aa3151ed4bf06fd89a436acd847622403ab49adbdd8"
+    },
+    "sourceAuthority": {
+      "reviewer": "sdk_only_author",
+      "changedTestFiles": [
+        "AI_HLYTests/HanlinNativePresentationTests.swift",
+        "AI_HLYTests/HanlinOriginalExpoWidgetTests.swift"
+      ],
+      "sdkInputMembership": "Both absent from actual MAIN16 222 SDK input records and shipped-file records",
+      "inventoryAndReachability": "Both absent from source-inventory sources, reachability sdkSources/sourceRefs and applicable symbol scans",
+      "generatorWriteOrCheckRequired": false,
+      "expectedUnchangedInputs": 222,
+      "conditionalExpectedInputSHA256": "307f689d68445cae8cb4f049f015c9bf55904d0de40a96e69fb59fa622d0a863",
+      "boundary": "Source-input equivalence only. Next resolved original preparation outputs must be attributed to actual next artifact."
+    },
+    "focusedCompilerCheck": "NOT_RUN_PRIMARY_MAC_BUSY; not treated as pass. Required full27.2 gate remains."
   },
   "postDispatchTestCorrection": {
     "commit": "788354f8e9e863eb5e4c9007a8b58ea71d028b19",
@@ -2057,5 +2089,21 @@
         "sha256": "eaf062a0cbeed95d5b275628eaa5550ee1fb9c343aca64aff4c16d7ab5cd3cea"
       }
     }
-  ]
+  ],
+  "main16ShippingSDK": {
+    "status": "PASS_EXPECTED_DOCUMENTATION_DELTA",
+    "receipt": {
+      "path": "docs/miniapp-sdk/evidence/sdk05-shipping-main16-20261124/receipt.json",
+      "sha256": "8c3d5b0fc58e0a3e26e5aa0ebeb88630fcbde7e88f94ce7db5dc11c13e4264a4"
+    },
+    "testedSourceCommit": "7d1efaa6ada43dd80c57133c09e6a8fb327075cf",
+    "manifestSHA256": "f84b79a3d9c4f7dc541d6912753cd1be95bfa3ed1876cc4d0ead365aadab12fc",
+    "inputSHA256": "307f689d68445cae8cb4f049f015c9bf55904d0de40a96e69fb59fa622d0a863",
+    "changedShippingDocuments": 3,
+    "unchangedInputs": 219,
+    "unchangedFileRecords": 25658,
+    "actualSnippetProjects": 4,
+    "actualSnippetDiagnostics": 0,
+    "boundary": "SDK proof is separate from MiniApps build PASS, AI test compilation FAIL, and all52 application cases NOT_RUN."
+  }
 }
