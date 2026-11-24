@@ -64,6 +64,49 @@
   "rawEvidenceArtifact": {
     "id": 14883333386,
     "name": "app-split-45310162809",
-    "sizeInBytes": 353790
+    "sizeInBytes": 353790,
+    "downloadedFilesSHA256": {
+      "acceptance.json": "dcb4ec9fa76bc17628ed6fdc99881300f201affe6786fe51a1f1d98c694d75be",
+      "upstream-resolution.json": "8bcb97b1de98bb11248af4ee161b51f2dc6584d1b7b3a690872d8cc25f1f05cc",
+      "upstream-inputs.patch": "ae131daede5e211c3ed7b8e283852c7d45747fa7794e6eac576b0e3d950ce032",
+      "native-dependencies.log": "2b1e086d99fb434d69c75b4f1a9e9b61615630fd69052adf7e8db16c0e1e1941",
+      "preflight.log": "4e094f46642a68c513c7229d979301fae9c9cf88cc6c5884abfc7145d6021cf7",
+      "ci-performance-report.json": "7ba34456b332f3ba4d23b3c55d30269228b654e3e1549306d8e4d6a605e1746b"
+    }
+  },
+  "upstreamVersions": {
+    "expo": {
+      "expo": "58.0.26",
+      "@expo/ui": "58.0.29",
+      "expo-brownfield": "58.0.20",
+      "react": "19.3.0",
+      "react-native": "0.88.1",
+      "react-native-worklets": "0.13.0",
+      "expo-modules-core": "58.1.0",
+      "expo-modules-jsi": "58.0.23",
+      "expo-widgets": "58.0.29",
+      "@nativescript/react-native": "9.1.2",
+      "@types/react": "19.3.0",
+      "@react-native/codegen": "0.88.1",
+      "@react-native/metro-config": "0.88.1",
+      "babel-preset-expo": "58.0.26"
+    },
+    "nativescript": {
+      "@nativescript/core": "9.1.4",
+      "@nativescript/ios": "9.1.1",
+      "@nativescript/swift-ui": "4.0.2",
+      "@nativescript/types": "9.1.4",
+      "@nativescript/vite": "8.0.24"
+    },
+    "scriptwidget": {
+      "revision": "4da256d58247bbafb9a5cd443a285250b97b3c4b"
+    }
+  },
+  "acceptance": {
+    "status": "INFRA_ERROR",
+    "ui": "NOT_RUN",
+    "xcresult": "NOT_CREATED: native test step not reached",
+    "sha": "565ec85a5baeb05e4146fafefdfc0e5b0eaa457e",
+    "reason": "preflight/dependency preparation failed; inspect original job logs"
   }
 }
