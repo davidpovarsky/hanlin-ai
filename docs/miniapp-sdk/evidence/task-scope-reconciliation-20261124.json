@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "atUTC": "2026-11-24T14:02:03.559473+00:00",
+  "atUTC": "2026-11-24T14:21:51.686295+00:00",
   "implementationSource": "999599c242c064564c40866a1979c463f1d0e95f",
   "reviewedRepository": "df07b8da7933e66180df8bfa8838a8617b6be00d",
   "independentReviewer": "sdk_only_author",
@@ -108,13 +108,11 @@
     }
   ],
   "nativeGate": {
-    "runID": 45398772829,
-    "sourceCommit": "cf9c18903c03264265557efb446207efa7226912",
+    "runID": 45412939674,
+    "sourceCommit": "e2227ccdfe0c3111d1c17ef2b4bb1653ac24bb9c",
     "selectedCases": 52,
-    "status": "COMPLETED_FAILURE",
-    "firstMiniAppsBuild": "EXECUTED_FAIL_EXIT65",
-    "all52ApplicationCases": "NOT_RUN",
-    "boundary": "Two actual WidgetOptions compiler diagnostics. Focused correction pending; four scoped completed tasks retain their independent proof."
+    "status": "IN_PROGRESS",
+    "boundary": "Corrected exact two production files; focused real API/source-closure proof and existing four provenance checks passed. All current application/device outcomes pending."
   },
   "additionalCxxClosureReview": {
     "reviewer": "control_authoring",
@@ -135,7 +133,7 @@
     ],
     "boundary": "Existing non-widget consumers do not duplicate every unsafeFlag. No universal flag equality or actual Apple compilation inferred; no new tests/builds/edits."
   },
-  "result": "Four scoped original DoDs completed/read back; main14 first app build failed with two widget-option diagnostics; focused correction underway.",
+  "result": "Four scoped original tasks complete/read back; corrected main15 exact52 application gate dispatched; current native/device acceptance pending.",
   "sdk04Clarification": {
     "reviewer": "sdk_only_author",
     "atUTC": "2026-11-24T10:48:31.748551+00:00",
@@ -184,5 +182,6 @@
       "all52ApplicationCases": "NOT_RUN",
       "boundary": "Two actual WidgetOptions compiler diagnostics. Focused correction pending; four scoped completed tasks retain their independent proof."
     }
-  ]
+  ],
+  "currentImplementationSource": "e2227ccdfe0c3111d1c17ef2b4bb1653ac24bb9c"
 }
