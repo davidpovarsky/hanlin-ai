@@ -48,6 +48,7 @@ public enum ExpoEmbeddedResultAdapter {
         let sessionID = UUID().uuidString.lowercased()
         var ownedSession: HanlinExpoSession?
         var ownedActionChannel: HanlinMiniAppActionChannel?
+        var ownedAdapter: ExpoHostServicesAdapter?
         do {
             guard let artifactRoot = platform.activeArtifactURL(for: package) else {
                 return nil
@@ -58,9 +59,11 @@ public enum ExpoEmbeddedResultAdapter {
                 appID: package.appID,
                 installedPackageID: package.record.installedPackageID,
                 grantedCapabilities: Set(package.grantedCapabilities.map(\.rawValue)),
-                sessionID: sessionID
+                sessionID: sessionID,
+                assistantServiceFactory: platform.assistantServiceFactory
             )
             ownedActionChannel = adapter.actionChannel
+            ownedAdapter = adapter
             var context: [String: Any] = [
                 "kind": "embeddedResult", "handler": handler,
                 "ownerID": package.record.packageID.rawValue,
@@ -95,12 +98,14 @@ public enum ExpoEmbeddedResultAdapter {
                 appID: package.appID,
                 rootView: AnyView(wrapper),
                 onTearDown: {
+                    adapter.invalidateAssistantRequests()
                     HanlinExpoHostServicesBridge.unregister(sessionID: sessionID)
                     Task { await adapter.actionChannel.close() }
                     session.shutdown()
                 }
             )
         } catch {
+            ownedAdapter?.invalidateAssistantRequests()
             HanlinExpoHostServicesBridge.unregister(sessionID: sessionID)
             if let ownedActionChannel { Task { await ownedActionChannel.close() } }
             ownedSession?.shutdown()

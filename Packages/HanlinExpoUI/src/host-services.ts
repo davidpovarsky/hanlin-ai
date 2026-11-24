@@ -1,3 +1,5 @@
+import { createMiniAppAssistant } from './miniapp-assistant';
+export type { MiniAppAssistant, MiniAppAssistantRequest, MiniAppAssistantPart, MiniAppAssistantModel, MiniAppAssistantEvent, MiniAppAssistantUsage, MiniAppAssistantRun, MiniAppAssistantResult, MiniAppAssistantOptions, MiniAppAssistantAbortSignal, MiniAppAssistantJSON } from './miniapp-assistant';
 import type { MiniAppLiveActivities } from "./system-surfaces";
 export type { NativeSurfaceJSON, NativeSurfaceAction, NativeSurfaceNode, NativeSurfaceProperties, LiveActivityStart, NativeSurfaceLiveActivityStart, ScriptWidgetLiveActivityStart, LiveActivityUpdate, LiveActivityEnd, MiniAppLiveActivities } from "./system-surfaces";
 import { requireNativeModule } from 'expo';
@@ -153,6 +155,7 @@ function publishWidget(request: ExpoWidgetPublicationRequest | string, family?: 
 }
 
 export const hostServices = {
+  assistant: createMiniAppAssistant(invoke),
   actions: {
     /** Call once after loading the complete action table. Runs until session teardown. */
     register: (handlers: MiniAppActionHandlers): Promise<void> => serveMiniAppActions(invoke, handlers),
