@@ -109,7 +109,9 @@ extension HanlinStoredPackageSnapshot: HanlinMiniAppRegistration {
 
         let mappedEntryPoints: [HanlinEntryPointDescriptor] = entrypoints.compactMap { ep in
             guard let canonicalKind = ep.kind.canonicalKind else { return nil }
-            let contexts = ep.supportedContexts.isEmpty ? [.mainApplication] : Array(ep.supportedContexts)
+            let contexts = ep.supportedContexts.isEmpty
+                ? [.mainApplication]
+                : ep.supportedContexts.sorted { $0.rawValue < $1.rawValue }
             let epRuntime = ep.runtimeProfile
             return HanlinEntryPointDescriptor(
                 kind: canonicalKind,
@@ -122,7 +124,10 @@ extension HanlinStoredPackageSnapshot: HanlinMiniAppRegistration {
 
         let finalEntryPoints: [HanlinEntryPointDescriptor]
         if !mappedEntryPoints.isEmpty {
-            finalEntryPoints = mappedEntryPoints
+            // Distinct package action IDs may expose the same canonical handler.
+            // Preserve differing descriptors so validation still rejects conflicts.
+            var seenEntryPoints = Set<HanlinEntryPointDescriptor>()
+            finalEntryPoints = mappedEntryPoints.filter { seenEntryPoints.insert($0).inserted }
         } else if entrypoints.isEmpty {
             // Legacy script package with no explicit entrypoints.
             // Synthesize foreground app entrypoint when the legacy manifest represents an app.

@@ -1,0 +1,75 @@
+{
+  "observedAt": "2026-11-24T23:26:37.587365+00:00",
+  "sourceBase": "23821e5a2657f4a468d2b3ec07e819fc367e53ac",
+  "schemaPath": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
+  "beforeSHA256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+  "afterSHA256": "690edfb30aca14647b39c8d6f53273558700943051699893ee3ef052c9349a97",
+  "validator": "jsonschema 4.10.3 Draft202012Validator",
+  "semanticChange": "Only action.id reference and actionIdentifier definition; general identifier unchanged.",
+  "positive": [
+    {
+      "id": "hostServicesEcho",
+      "baselineErrors": [
+        "'hostServicesEcho' does not match '^[a-z0-9](?:[a-z0-9]|[._-](?=[a-z0-9]))*[a-z0-9]$|^[a-z0-9]$'"
+      ],
+      "candidate": "PASS",
+      "genericIdentifier": "REJECTED"
+    },
+    {
+      "id": "hostServicesFail",
+      "baselineErrors": [
+        "'hostServicesFail' does not match '^[a-z0-9](?:[a-z0-9]|[._-](?=[a-z0-9]))*[a-z0-9]$|^[a-z0-9]$'"
+      ],
+      "candidate": "PASS",
+      "genericIdentifier": "REJECTED"
+    },
+    {
+      "id": "hostServicesPublishWidget",
+      "baselineErrors": [
+        "'hostServicesPublishWidget' does not match '^[a-z0-9](?:[a-z0-9]|[._-](?=[a-z0-9]))*[a-z0-9]$|^[a-z0-9]$'"
+      ],
+      "candidate": "PASS",
+      "genericIdentifier": "REJECTED"
+    }
+  ],
+  "negative": [
+    {
+      "id": "",
+      "result": "REJECTED"
+    },
+    {
+      "id": ".hostServices",
+      "result": "REJECTED"
+    },
+    {
+      "id": "hostServices.",
+      "result": "REJECTED"
+    },
+    {
+      "id": "host..Services",
+      "result": "REJECTED"
+    },
+    {
+      "id": "host/Services",
+      "result": "REJECTED"
+    },
+    {
+      "id": "host Services",
+      "result": "REJECTED"
+    },
+    {
+      "id": "שלום",
+      "result": "REJECTED"
+    },
+    {
+      "id": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "result": "REJECTED"
+    },
+    {
+      "id": "hostServices\n",
+      "result": "REJECTED"
+    }
+  ],
+  "status": "PASS",
+  "scope": "JSON schema resource, no Swift/compiler/native/UI rerun"
+}
