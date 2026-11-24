@@ -11,6 +11,7 @@ const swiftSources = {
   HanlinExpoNativeAPIMetadata: 'Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPI/HanlinExpoNativeAPIManager.swift',
   HanlinExpoBridgeMetadata: 'Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoBridgeMetadata.swift',
   HanlinGeneratedBridgeMetadata: 'Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/Generated/HanlinGeneratedViews.swift',
+  HanlinCanonicalGeneratedBridgeMetadata: 'Generated/SwiftUIBridge/HanlinGeneratedViews.swift',
 };
 
 function resolveSwiftVersion(records, namespace, name, ancestry = []) {
@@ -171,15 +172,43 @@ export async function auditPreparedRuntimeContract({source, json, nsLock, nsPack
     importer: versions.expoUIBridgeVersion, session: expoSession.bridgeVersion,
     generated: version('HanlinGeneratedBridgeMetadata', 'bridgeVersion'), configuration: bridge.bridgeVersion,
   });
-  // The Apple API bridge generator's reviewed baseline is distinct from the
-  // current original Expo package versions installed by the upstream producer.
-  const bridgeGenerationBaseline = {
-    source: 'Tools/SwiftUIBridge/configuration.json', runtimeVersion: bridge.runtimeVersion,
-    expoUIVersion: bridge.expoUIVersion, generatedRuntimeVersion: version('HanlinGeneratedBridgeMetadata', 'runtimeVersion'),
-  };
-  requireAgreement('Expo bridge generation baseline', {
-    configuration: bridgeGenerationBaseline.runtimeVersion, generated: bridgeGenerationBaseline.generatedRuntimeVersion,
+  const tsMetadataPaths = [
+    'Generated/SwiftUIBridge/bridge-manifest.ts',
+    'Packages/HanlinExpoUI/src/generated/bridge-manifest.ts',
+  ];
+  const tsMetadata = await Promise.all(tsMetadataPaths.map(file => source(file)));
+  const publicRuntimeVersions = tsMetadata.map(record => {
+    const declarations = [...record.text.matchAll(/^export const HANLIN_EXPO_RUNTIME_VERSION = '(\d+\.\d+\.\d+(?:[-+][\w.-]+)?)' as const;$/gm)];
+    if (declarations.length !== 1) throw new Error('Unreviewed Expo public runtime metadata in '+record.path);
+    return declarations[0][1];
   });
+  requireAgreement('Expo public runtime metadata', {
+    installedOriginalUI: expoLock.expo.uiVersion,
+    nativeRuntime: expoSession.runtimeVersion,
+    configuration: bridge.runtimeVersion,
+    generatedSwift: version('HanlinGeneratedBridgeMetadata', 'runtimeVersion'),
+    canonicalSwift: version('HanlinCanonicalGeneratedBridgeMetadata', 'runtimeVersion'),
+    canonicalTypeScript: publicRuntimeVersions[0],
+    installedTypeScript: publicRuntimeVersions[1],
+  });
+  if (tsMetadata[0].text !== tsMetadata[1].text ||
+      records.HanlinCanonicalGeneratedBridgeMetadata.text !== records.HanlinGeneratedBridgeMetadata.text) {
+    throw new Error('Expo bridge metadata mirrors differ from their canonical generated sources');
+  }
+  const expoBridgeRuntimeMetadata = {
+    runtimeVersion: expoSession.runtimeVersion,
+    configuration: 'Tools/SwiftUIBridge/configuration.json',
+    typescriptSources: tsMetadataPaths,
+    swiftSources: [swiftSources.HanlinCanonicalGeneratedBridgeMetadata, swiftSources.HanlinGeneratedBridgeMetadata],
+    originalRuntimeSource: 'Scripts/Expo/dependency-lock.json',
+  };
+  // Coverage records identify the reviewed Apple API input. Updating an original
+  // runtime does not itself prove newly introduced APIs or change the bridge ABI.
+  const bridgeGenerationBaseline = {
+    source: 'Tools/SwiftUIBridge/configuration.json',
+    expoUIVersion: bridge.expoUIVersion,
+    purpose: 'reviewed Apple API coverage input; not the installed runtime version',
+  };
   const nativeAPI = await auditNativeAPIVersionContract({source, json, version});
-  return {versions, nativeSession, expoSession, nativeAPI, bridgeGenerationBaseline, versionSources: swiftSources};
+  return {versions, nativeSession, expoSession, nativeAPI, expoBridgeRuntimeMetadata, bridgeGenerationBaseline, versionSources: swiftSources};
 }

@@ -136,6 +136,39 @@ export function updatedNativeAPIFacadeVersions(source, versions) {
   return source;
 }
 
+// Runtime identity follows the installed original Expo UI graph. The reviewed
+// Apple API inventory and the independent Hanlin bridge ABI remain unchanged.
+export const expoBridgeRuntimeMetadataPaths = Object.freeze([
+  'Tools/SwiftUIBridge/configuration.json',
+  'Generated/SwiftUIBridge/bridge-manifest.ts',
+  'Packages/HanlinExpoUI/src/generated/bridge-manifest.ts',
+  'Generated/SwiftUIBridge/HanlinGeneratedViews.swift',
+  'Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/Generated/HanlinGeneratedViews.swift',
+]);
+
+export async function updatedExpoBridgeRuntimeMetadata(read, versions) {
+  const runtimeVersion = versions.expo?.['@expo/ui'];
+  if (!/^\d+\.\d+\.\d+(?:[-+][\w.-]+)?$/.test(runtimeVersion ?? '')) {
+    throw new Error('Missing exact Expo UI runtime version');
+  }
+  const files = new Map();
+  for (const file of expoBridgeRuntimeMetadataPaths) {
+    const source = await read(file);
+    let pattern;
+    if (file.endsWith('.json')) {
+      if (typeof JSON.parse(source).runtimeVersion !== 'string') throw new Error('Missing Expo public runtime metadata: '+file);
+      pattern = /^([ \t]*"runtimeVersion"\s*:\s*")[^"\r\n]+(")/gm;
+    } else if (file.endsWith('.ts')) {
+      pattern = /^(export const HANLIN_EXPO_RUNTIME_VERSION = ')[^'\r\n]+(' as const;)$/gm;
+    } else {
+      pattern = /^([ \t]*public static let runtimeVersion = ")[^"\r\n]+(")$/gm;
+    }
+    if ([...source.matchAll(pattern)].length !== 1) throw new Error('Expected one Expo public runtime metadata declaration: '+file);
+    files.set(file, source.replace(pattern, (_, prefix, suffix) => prefix+runtimeVersion+suffix));
+  }
+  return files;
+}
+
 export async function resolveUpstreams({root=path.resolve(here,'../..'),cache=path.join(tmpdir(),'hanlin-miniapp-upstreams'),apply=false,report=path.join(root,'build/acceptance/miniapp-upstreams/resolution.json')}={}) {
   await mkdir(cache,{recursive:true});
   const expoPackage=await json(path.join(root,'Scripts/Expo/package.json'));
@@ -221,6 +254,7 @@ export async function resolveUpstreams({root=path.resolve(here,'../..'),cache=pa
     ['Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPI/HanlinExpoNativeAPIHostVersions.swift',generatedNativeAPIHostVersions(versions)],
     ['Packages/HanlinExpoNativeAPIJS/src/index.ts',updatedNativeAPIFacadeVersions(await readFile(path.join(root,'Packages/HanlinExpoNativeAPIJS/src/index.ts'),'utf8'),versions)]
   ]);
+  for(const [file,content] of await updatedExpoBridgeRuntimeMetadata(file=>readFile(path.join(root,file),'utf8'),versions))files.set(file,content);
   for(const name of ['Packages/HanlinExpoUI/package.json','Packages/HanlinExpoNativeAPIJS/package.json']) {
     const local=await json(path.join(root,name));for(const dependency of Object.keys(local.peerDependencies??{}))if(versions.expo[dependency])local.peerDependencies[dependency]=versions.expo[dependency];files.set(name,pretty(local));
   }

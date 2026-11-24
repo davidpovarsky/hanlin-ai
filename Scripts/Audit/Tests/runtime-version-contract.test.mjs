@@ -36,7 +36,7 @@ test('actual importer and sessions reconcile independent original versions and t
   assert.equal((await input.source(paths.native)).text, generatedNativeScriptHostVersions(versions(input)));
   assert.equal(result.expoSession.runtimeVersion, input.tooling.dependencies['@expo/ui']);
   assert.equal(result.expoSession.sdkVersion, input.tooling.dependencies.expo);
-  assert.equal(result.bridgeGenerationBaseline.generatedRuntimeVersion, input.bridge.runtimeVersion);
+  assert.equal(result.expoBridgeRuntimeMetadata.runtimeVersion, input.bridge.runtimeVersion);
   assert.equal(result.expoSession.bridgeVersion, input.bridge.bridgeVersion);
 });
 
@@ -70,13 +70,13 @@ test('stale direct-session runtime and using iOS as the Core ceiling both fail t
   await assert.rejects(auditPreparedRuntimeContract(conflated), /policy changed: importer Core minimum/);
 });
 
-test('original dependency drift and bridge baseline drift remain rejected separately', async () => {
+test('original dependency drift and public runtime metadata drift remain rejected separately', async () => {
   const input = await fixture();
   input.nsLock.nativeScript.coreVersion = '99.0.0';
   await assert.rejects(auditPreparedRuntimeContract(input), /versions disagree for NativeScript Core/);
   const bridge = await fixture();
   bridge.bridge.runtimeVersion = '99.0.0';
-  await assert.rejects(auditPreparedRuntimeContract(bridge), /versions disagree for Expo bridge generation baseline/);
+  await assert.rejects(auditPreparedRuntimeContract(bridge), /versions disagree for Expo public runtime metadata/);
   const expo = await fixture();
   expo.tooling.dependencies['@expo/ui'] = '99.0.0';
   await assert.rejects(auditPreparedRuntimeContract(expo), /versions disagree for Expo UI/);
@@ -114,4 +114,37 @@ test('Native API facade versions follow the resolved graph and reject an actual 
   assert.equal(upstreamResolver.updatedNativeAPIFacadeVersions(updated, future), updated);
   assert.throws(() => upstreamResolver.updatedNativeAPIFacadeVersions(facade, {expo: {}}), /Missing exact Native API facade version/);
   assert.throws(() => upstreamResolver.updatedNativeAPIFacadeVersions(facade + '\nexport const WORKLETS_VERSION = "0.13.0";\n', future), /Expected one exported Native API facade version/);
+});
+
+
+test('Expo UI public runtime metadata follows the installed original runtime across every mirror', async () => {
+  const input = await fixture();
+  const expected = input.tooling.dependencies['@expo/ui'];
+  assert.equal(input.bridge.runtimeVersion, expected, 'public generator runtime identity must match installed original Expo UI');
+  const contract = await auditPreparedRuntimeContract(input);
+  assert.equal(contract.expoBridgeRuntimeMetadata.runtimeVersion, expected);
+  const read = async file => (await input.source(file)).text;
+  const original = new Map(await Promise.all(upstreamResolver.expoBridgeRuntimeMetadataPaths.map(async file => [file, await read(file)])));
+  const same = await upstreamResolver.updatedExpoBridgeRuntimeMetadata(read, versions(input));
+  assert.deepEqual(same, original, 'resolving the same original graph is byte-idempotent');
+  const future = {expo: {...versions(input).expo, '@expo/ui': '58.0.99'}};
+  const updated = await upstreamResolver.updatedExpoBridgeRuntimeMetadata(read, future);
+  assert.equal(updated.size, 5);
+  for (const [file, before] of original) {
+    const after = updated.get(file);
+    if (file.endsWith('.json')) {
+      const previous = JSON.parse(before), next = JSON.parse(after);
+      assert.equal(next.runtimeVersion, '58.0.99');
+      assert.deepEqual({...next, runtimeVersion: previous.runtimeVersion}, previous,
+        'reviewed coverage, bridge ABI and all other configuration stay unchanged');
+    } else {
+      assert.equal(after.replace('58.0.99', expected), before,
+        'only the runtime identity changes in the original generated mirror: ' + file);
+    }
+    const stale = before.replace(expected, '999.0.0');
+    assert.notEqual(stale, before);
+    await assert.rejects(auditPreparedRuntimeContract(await fixture(new Map([[file, stale]]))),
+      /Expo public runtime metadata|Expo bridge metadata mirrors differ/, file);
+  }
+  await assert.rejects(upstreamResolver.updatedExpoBridgeRuntimeMetadata(read, {expo: {}}), /Missing exact Expo UI runtime/);
 });
