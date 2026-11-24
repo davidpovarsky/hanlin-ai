@@ -1,0 +1,827 @@
+{
+  "schemaVersion": 1,
+  "createdAtUTC": "2026-11-24T06:26:06.366901+00:00",
+  "sourceCommit": "ee3b0ede43fcb4aac02def04d469eae542ba035b",
+  "scope": "Map already-read SDK02/03/04/06/07 acceptance criteria to existing evidence and exact reviewed source applicability. This is an evidence record, not a new test run or broad audit.",
+  "method": {
+    "asanaCurrentBlockTimestamp": "2026-11-24 05:44 UTC",
+    "criteriaAuthority": "Original task acceptance criteria retained below historical separators, interpreted with the latest explicit user scope.",
+    "recordingActions": "Read exact existing receipt/log/source bytes to record paths and digests; write this single JSON file in an isolated branch.",
+    "newTestsRun": false,
+    "newBuildsRun": false,
+    "ciPolled": false,
+    "asanaChanged": false,
+    "sourceComparisons": "Source comparisons were completed during the preceding read-only map. Present source or exact tracked commit blobs were used for sparse paths.",
+    "absenceBoundary": "A missing matched receipt means not established within the requested evidence set, not proof that the implementation or a receipt elsewhere does not exist."
+  },
+  "activeGate": {
+    "runID": 45335292541,
+    "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45335292541",
+    "sourceCommit": "ee3b0ede43fcb4aac02def04d469eae542ba035b",
+    "status": "IN_PROGRESS",
+    "statusAuthority": "Parent-reported active state for this mapping; no CI polling was performed.",
+    "selectedCases": 38,
+    "aiCases": 25,
+    "miniAppsCases": 13,
+    "result": null,
+    "acceptanceRequires": [
+      "Exact successful test rows for all selected cases, no failures or skips in that selected gate",
+      "Actual exported diagnostic-sheet and repaired-application screenshots",
+      "Original composer repair handoff, corrected native result 42, and installed receipt with installedPackageID"
+    ],
+    "doesNotEstablish": [
+      "Physical iPad acceptance",
+      "Complete 80-cell extension/runtime E2E matrix",
+      "Fresh-agent SDK/docs-only authoring",
+      "Every public adapter merely because it is declared or compiled"
+    ]
+  },
+  "userScope": {
+    "activeOriginalEngines": [
+      "Expo",
+      "NativeScript",
+      "ScriptWidget"
+    ],
+    "legacyScriptingJSCAndScriptUI": "FROZEN; retain existing data, compatibility and shared implementation. No renewed legacy-engine development.",
+    "customHomeEntrypoint": "EXCLUDED",
+    "optionalFullAppleSDKGeneratorExpansion": "DEFERRED; not a blocking requirement for this approved original-library SDK scope.",
+    "newHanlinApprovalGates": "DO_NOT_ADD",
+    "newArtificialHanlinQuotas": "DO_NOT_ADD",
+    "originalEngineAndOSContracts": "Preserve truthful original engine/API/version contracts and report actual operating-system behavior; do not invent success or introduce another Hanlin consent gate.",
+    "historicalInstructions": "Earlier task instructions to stop or request approval do not revoke the current explicit implementation authorization."
+  },
+  "evidence": {
+    "mac_host_authoring_13": {
+      "receipt": {
+        "path": "docs/miniapp-sdk/evidence/seventh-native-gate-20261124.json",
+        "sha256": "e50713ad1b5b274efa19bbdb08cc10833971b0c27c6a1a7a474f55dbfb5e32a4"
+      },
+      "testedSourceCommit": "c31c9c5f3bb7172598bc579c33de95ee06ca79b9",
+      "runID": 45324257778,
+      "runOverallResult": "CANCELLED; application acceptance NOT_VERIFIED",
+      "componentResult": "EXECUTED_PASS",
+      "hostSuite": {
+        "total": 166,
+        "passed": 165,
+        "failed": 0,
+        "skipped": 1,
+        "skippedCase": "actual Node job crosses 300 seconds with no hidden deadline"
+      },
+      "authoringCases": {
+        "passed": 13,
+        "failed": 0,
+        "skipped": 0,
+        "rawRows": [
+          {
+            "line": 20984,
+            "text": "✔ integrity mismatch fails closed (2.156ms)"
+          },
+          {
+            "line": 20985,
+            "text": "✔ install cancellation aborts work (0.608ms)"
+          },
+          {
+            "line": 20986,
+            "text": "✔ multiple package bins are listed and an explicit path preserves its bin name (1.627375ms)"
+          },
+          {
+            "line": 20987,
+            "text": "✔ unknown legacy transactions preserve both the installed package and its backup (16.592167ms)"
+          },
+          {
+            "line": 20988,
+            "text": "✔ host redirects npm state before preview and install modules initialize (14955.870875ms)"
+          },
+          {
+            "line": 20989,
+            "text": "✔ worker terminal status is observable only after its actual atomic journal rename (71.987666ms)"
+          },
+          {
+            "line": 20990,
+            "text": "✔ operation terminal status is observable only after its actual atomic journal rename (21.953292ms)"
+          },
+          {
+            "line": 20991,
+            "text": "✔ actual MCP installation executes lifecycle before initialize/tools-list and preserves the prior server after failure (3573.8405ms)"
+          },
+          {
+            "line": 20992,
+            "text": "✔ actual MCP tools/list above the former one-MiB probe cap passes by default (99.676167ms)"
+          },
+          {
+            "line": 20993,
+            "text": "✔ ordinary installation probes a real >one-MiB schema after the former thirty-second deadline and journals exact output (31581.609958ms)"
+          },
+          {
+            "line": 20994,
+            "text": "✔ a stopped probe cancels its actual Worker without waiting for a protocol timeout (1168.759083ms)"
+          },
+          {
+            "line": 20995,
+            "text": "✔ exit zero without a protocol response fails promptly instead of waiting forever (42.950541ms)"
+          },
+          {
+            "line": 20996,
+            "text": "✔ complete protocol reply immediately followed by exit zero remains a valid probe (76.997916ms)"
+          }
+        ]
+      },
+      "rawLog": {
+        "localRetainedPath": "/dev/shm/hanlin-native-gate-evidence-45324257778/app-split-evidence/native-dependencies.log",
+        "sha256": "c6b184e7b004158b1fac6ee663abeeaf35643064bd3a43d0ebf88c68fb246d13",
+        "bytes": 2810882,
+        "artifactID": 14890517656
+      },
+      "sourceApplicability": {
+        "status": "RELEVANT_SOURCE_UNCHANGED",
+        "fromCommit": "c31c9c5f3bb7172598bc579c33de95ee06ca79b9",
+        "toCommit": "ee3b0ede43fcb4aac02def04d469eae542ba035b",
+        "comparedPaths": [
+          "AI_HLY/Downstream/RuntimeCore/Node/Host",
+          "Scripts/MiniApps/miniapp.mjs"
+        ],
+        "changedPaths": []
+      },
+      "keyCurrentSources": [
+        {
+          "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
+          "sha256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856"
+        },
+        {
+          "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-authoring.test.mjs",
+          "sha256": "bef93d623bae3ffa7ba5320d71cfaaed09d6316c46ec1715d16275e36b535dce"
+        },
+        {
+          "path": "Scripts/MiniApps/miniapp.mjs",
+          "sha256": "1c256c00392c626a54ebee2abe3ededaa792c5bfa6dd9b6c5aceb89be84e5b30"
+        }
+      ],
+      "scope": "Actual Mac Node24.5 Host component tests and public CLI, using original compiler and test SDK fixtures.",
+      "remainingBoundary": "Not embedded iOS execution or full application UI acceptance; successful component rows remain valid even though the later paired application step was cancelled."
+    },
+    "mac_expo_strict_types": {
+      "receipt": {
+        "path": "docs/miniapp-sdk/evidence/seventh-native-gate-20261124.json",
+        "sha256": "e50713ad1b5b274efa19bbdb08cc10833971b0c27c6a1a7a474f55dbfb5e32a4"
+      },
+      "rawLogReference": "mac_host_authoring_13.rawLog",
+      "rawRows": [
+        {
+          "line": 20839,
+          "text": "[HanlinExpoNativeAPI] Generating rnworklets into: /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoWorklets/generated"
+        },
+        {
+          "line": 20841,
+          "text": "[HanlinExpoNativeAPI] Codegen artifacts generated successfully (iOS-only targets)."
+        }
+      ],
+      "compilerVersion": "6.0.3",
+      "strict": true,
+      "skipLibCheck": false,
+      "uiNegativeCodes": [
+        2322,
+        2322,
+        2339,
+        2353,
+        7006
+      ],
+      "uiNegativeCases": [
+        "Unknown TextEditorProps property",
+        "Wrong TextEditorProps value",
+        "Wrong onValueChange parameter type",
+        "hostServices.methodThatDoesNotExist()",
+        "Implicit parameter any"
+      ],
+      "widgetNegativeCodes": [
+        2322,
+        2322,
+        2339
+      ],
+      "sourceApplicability": {
+        "status": "RELEVANT_SOURCE_UNCHANGED",
+        "fromCommit": "c31c9c5f3bb7172598bc579c33de95ee06ca79b9",
+        "toCommit": "ee3b0ede43fcb4aac02def04d469eae542ba035b",
+        "comparedPaths": [
+          "Scripts/Expo/check-ui-type-contract.mjs",
+          "Scripts/Expo/prepare-types.mjs",
+          "Scripts/Expo/package.json",
+          "Scripts/Expo/package-lock.json",
+          "Fixtures/ExpoSwiftUIProbe",
+          "Fixtures/ExpoNativeAPIProbe",
+          "Packages/HanlinExpoUI/src",
+          "Packages/HanlinExpoNativeAPIJS"
+        ],
+        "changedPaths": []
+      },
+      "keyCurrentSources": [
+        {
+          "path": "Scripts/Expo/check-ui-type-contract.mjs",
+          "sha256": "5271bdb790f0053b44d912ff227a4fdf63b5cbf50f99999f750893a3798df143"
+        },
+        {
+          "path": "Scripts/Expo/prepare-types.mjs",
+          "sha256": "e32603c7fd4a24f2c5223155185e35bc59ad87455859cf3bf321a23a5e6f878e"
+        },
+        {
+          "path": "Scripts/Expo/package.json",
+          "sha256": "db6fd60dbc8f2b15eac5fee7029781cf14834ffbad53f0c8948fc4c2945c1e91"
+        },
+        {
+          "path": "Scripts/Expo/package-lock.json",
+          "sha256": "e3da3f23bf663dd927d1db5f34750053c611603cc968f200f51c309f3f8ccf60"
+        }
+      ],
+      "scope": "Strict original UI and Widgets declarations, valid programs with zero diagnostics, exact intentional consumer diagnostics.",
+      "remainingBoundary": "The checked TS2339 is a missing hostServices method, not a missing SwiftUI modifier. No all-adapter native or physical-device pass is implied."
+    },
+    "archive_policy_12": {
+      "receipt": {
+        "path": "docs/miniapp-sdk/evidence/import-capacity-2026-11-24/archive-import-policy.json",
+        "sha256": "33f8fdf802a2ea9543c8510e03f3ac6676f2745103b057cd6af34b822dcc9f80"
+      },
+      "rawLog": {
+        "path": "docs/miniapp-sdk/evidence/import-capacity-2026-11-24/archive-import-policy.txt",
+        "sha256": "e25744241db965b8c7050ff9c2fe785d55555f47a2021d58559742b5e90f5231"
+      },
+      "result": "EXECUTED_PASS",
+      "testCount": 12,
+      "platform": "Linux aarch64 / Swift6.4.3",
+      "sourceApplicability": {
+        "status": "ALL_FIVE_RECORDED_INPUT_HASHES_MATCH",
+        "sourceCommit": "ee3b0ede43fcb4aac02def04d469eae542ba035b",
+        "inputs": [
+          {
+            "path": "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinPackageContracts.swift",
+            "sha256": "25122dd11c471950514e717ffb5f17bbcefaa7219183a0e838c71e02129c94ac"
+          },
+          {
+            "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinArchivePolicy.swift",
+            "sha256": "fd64e17ee460d33743e2d2d51a967ee8b30616f1181068c4369a6c99bc88b9df"
+          },
+          {
+            "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinPackageCenter.swift",
+            "sha256": "cd98b6ffb24ec4c0463d021a30204b68bcb96f1bd8dc3e2749ca5862f21dac2b"
+          },
+          {
+            "path": "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinArchivePolicyTests.swift",
+            "sha256": "ec941d33c0a715be42ad9b21c09791a5c8ced721c99c8d2fbe1c667332a91816"
+          },
+          {
+            "path": "Scripts/MiniApps/Tests/test_archive_import_policy.py",
+            "sha256": "625eaf60ea73c4882bd62100069817ca4abe25dbedd7fe3c209449a1fa5dc6dc"
+          }
+        ]
+      },
+      "covered": [
+        "Ambiguous manifests and case collisions",
+        "Four escaping path forms",
+        "Links and hidden encrypted entries",
+        "Explicit caller ratio budget",
+        "Prepared NativeScript ESM",
+        "Retained source manifests and ordinary resources",
+        "ZIP64 65536 entries, classic ZIP65535, five malformed ZIP64 cases",
+        "No default artificial archive count/size limits"
+      ],
+      "remainingBoundary": [
+        "ZIPFoundation extraction NOT_RUN in this component proof",
+        "Apple compilation NOT_RUN in this component proof",
+        "No missing-manifest assertion was identified in this executed policy test file"
+      ]
+    },
+    "prepared_version_4": {
+      "receipt": {
+        "path": "docs/miniapp-sdk/evidence/2026-11-23-authoring-integration/summary.json",
+        "sha256": "64ca2ce46f445e16052156ad1b1e6ca36af9116e923b9977d4700259bde9d6b9"
+      },
+      "rawLog": {
+        "path": "docs/miniapp-sdk/evidence/2026-11-23-authoring-integration/swift-contract-tests.log",
+        "sha256": "473ee6fa976f570bc901cc444297e4b33c595280deaca0a679b8da3b2ad83960"
+      },
+      "result": "EXECUTED_PASS",
+      "testCount": 4,
+      "tests": [
+        "malformedInstalledAuthorityNeverBecomesACompatibleDefault",
+        "releasedRuntimeMinimumsCannotAdmitMalformedFutureOrPrereleaseVersions",
+        "javascriptRuntimeCompatibilityAcceptsOnlyCurrentOrOlderSameMinorPatches",
+        "explicitBackwardBridgeCompatibilityStillRequiresCompleteStableVersions"
+      ],
+      "sourceApplicability": {
+        "status": "IMPLEMENTATION_AND_TEST_UNCHANGED",
+        "fromCommit": "23a44b982c6785b2d748389cf30251c9c2945971",
+        "toCommit": "ee3b0ede43fcb4aac02def04d469eae542ba035b",
+        "changedPaths": []
+      },
+      "currentSources": [
+        {
+          "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPreparedRuntimeVersion.swift",
+          "sha256": "e7e6dcb882b853a086c8ea33023de3a3f6889eefd6ed7c7075ba26d1ba511134"
+        },
+        {
+          "path": "Packages/HanlinPlatform/Tests/HanlinPlatformContractsTests/HanlinPreparedRuntimeVersionTests.swift",
+          "sha256": "db340c65cf8fe48486a3a2fe4f0e509cc0c82082e2c434b90bbc8f96c5fc2ecf"
+        }
+      ],
+      "scope": "Real original Foundation-compatible semantic-version functions; malformed/future/prerelease, backward bridge and same-minor patch behavior.",
+      "remainingBoundary": "Not a receipt for all importer plugin/exposure cases or Apple session execution."
+    },
+    "version_and_operation_audit_6": {
+      "receipt": {
+        "path": "docs/miniapp-sdk/evidence/runtime-version-audit-20261124/summary.json",
+        "sha256": "f35a06083c9c5942de28e3148bb4059ca65172aca76b444d4e9ff7c88969aa38"
+      },
+      "result": "EXECUTED_PASS",
+      "versionCases": 4,
+      "operationCases": 2,
+      "sourceApplicability": {
+        "status": "HELPERS_TESTS_AND_VERSION_CONSUMERS_MATCH",
+        "paths": [
+          "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptHostVersions.swift",
+          "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptSession.swift",
+          "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
+          "Scripts/MiniApps/resolve-upstreams.mjs",
+          "Scripts/Audit/miniapp-runtime-contract.mjs",
+          "Scripts/Audit/miniapp-expo-operations.mjs",
+          "Scripts/Audit/Tests/runtime-version-contract.test.mjs",
+          "Scripts/Audit/Tests/expo-operation-contract.test.mjs"
+        ],
+        "mainAuditScript": "Changed after this component receipt; the later source reconciliation supplies the final full-audit result."
+      },
+      "scope": "Independent NativeScript iOS/Core/SwiftUI identity extraction, strict grouped/delegated Expo operation extraction and linkage checks.",
+      "remainingBoundary": "Source-level audit and syntax evidence do not establish Apple compilation or native runtime behavior."
+    },
+    "source_reconciliation": {
+      "receipt": {
+        "path": "docs/miniapp-sdk/evidence/source-inventory-reconciliation-20261124.json",
+        "sha256": "377d7261dbd710d23056ad238f39d9b7020de5682658f4a43de0084a968f7836"
+      },
+      "result": "PASS",
+      "commands": [
+        "node Scripts/Audit/audit-miniapp-sdk.mjs --check",
+        "python3 Scripts/Audit/audit_miniapp_reachability.py --check"
+      ],
+      "sourceCount": 72,
+      "localPublicExports": 173,
+      "canonicalReachabilityCells": 80,
+      "sourceApplicability": {
+        "status": "ALL_THREE_RECORDED_OUTPUT_HASHES_MATCH",
+        "files": [
+          {
+            "path": "docs/miniapp-sdk/source-inventory.json",
+            "sha256": "8ff66f669edb8d264ccfb55f139048f64d5553c94d2be190d6a7495bdd88eb6b"
+          },
+          {
+            "path": "docs/miniapp-sdk/extension-reachability.json",
+            "sha256": "7f2ffa4ce5ed33d65d8ed1347b0c7e9f24eca87850b19168bcd1730cbe29a0af"
+          },
+          {
+            "path": "docs/miniapp-sdk/extension-reachability.md",
+            "sha256": "3e9df426903d9929f69e1746965a61c118465622c9cb4219e3656c1dc9300f9b"
+          }
+        ]
+      },
+      "scope": "Final source-backed inventory and reachability/document drift reconciliation; previous failed attempts retained.",
+      "remainingBoundary": "80 source reachability cells are not 80 E2E passes."
+    },
+    "original_nativescript_910": {
+      "receipt": {
+        "path": "docs/miniapp-sdk/evidence/2026-11-23-authoring-integration/summary.json",
+        "sha256": "64ca2ce46f445e16052156ad1b1e6ca36af9116e923b9977d4700259bde9d6b9"
+      },
+      "reports": [
+        {
+          "path": "docs/miniapp-sdk/evidence/2026-11-23-authoring-integration/nativescript-original-types.json",
+          "sha256": "b7dad3948f4569a90100ea0eb0a94b8a51d0258b149b494390d4a01664bbcc03"
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/2026-11-23-authoring-integration/nativescript-uikit-invalid.json",
+          "sha256": "de553845c9fcf9e837f6e785f1e74d17db7b7796b42573fa88c8b8a434f93b9a"
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/2026-11-23-authoring-integration/nativescript-swiftui-build.json",
+          "sha256": "f9fe67f3b3ac72c84becaec6b8852eaee5ca56bf46790e3f6e247b11f3d2fea8"
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/2026-11-23-authoring-integration/native-repair-fixture.json",
+          "sha256": "254d10d87e1767a2aaf02f1e88ec1a36a9c3945e676f41210e4e5666d3b4b011"
+        }
+      ],
+      "result": "EXECUTED_PASS_HISTORICAL_GRAPH",
+      "versions": {
+        "core": "9.1.0",
+        "ios": "9.1.0",
+        "types": "9.1.0",
+        "swiftUI": "4.0.2",
+        "compiler": "5.9.3"
+      },
+      "typeCheckingPolicy": {
+        "strictSource": true,
+        "skipLibCheck": true,
+        "dependencyDeclarationBodiesChecked": false
+      },
+      "covered": [
+        "Valid original Core/UIKit consumer has zero diagnostics",
+        "UIView.hanlinMissingProperty rejects with TS2339 at index.ts:6:44",
+        "Original SwiftUI JS closure remains byte-identical and shared Core is not duplicated",
+        "Stale retained repair source produces real TS2322 plus changed-source diagnostic"
+      ],
+      "sourceApplicability": {
+        "status": "HISTORICAL_ORIGINAL_GRAPH_NOT_CURRENT_EXPORTED_SDK",
+        "currentSourceContract": {
+          "ios": "9.1.1",
+          "core": "9.1.4",
+          "swiftUI": "4.0.2"
+        },
+        "currentRunExport": "PENDING actual run8 artifact; do not construct current proof from the old local NativeScript cache."
+      },
+      "remainingBoundary": "This record is not current Core9.1.4/iOS9.1.1 authoring or UI proof. Full Apple SDK generator expansion is deferred."
+    },
+    "nativescript_facade": {
+      "receipt": {
+        "path": "docs/miniapp-sdk/evidence/seventh-native-gate-20261124.json",
+        "sha256": "e50713ad1b5b274efa19bbdb08cc10833971b0c27c6a1a7a474f55dbfb5e32a4"
+      },
+      "rawLogReference": "mac_host_authoring_13.rawLog",
+      "rawRow": {
+        "line": 10,
+        "text": "PASS: TypeScript5.9.3 strict native facade, declarations and JS unchanged; native execution is a separate gate."
+      },
+      "result": "EXECUTED_PASS",
+      "compilerVersion": "5.9.3",
+      "sourceApplicability": {
+        "status": "RELEVANT_SOURCE_UNCHANGED",
+        "fromCommit": "c31c9c5f3bb7172598bc579c33de95ee06ca79b9",
+        "toCommit": "ee3b0ede43fcb4aac02def04d469eae542ba035b",
+        "paths": [
+          "Scripts/NativeScript/host-services.ts",
+          "Scripts/NativeScript/build-host-services.mjs"
+        ],
+        "changedPaths": []
+      },
+      "scope": "Strict native host-service facade and unchanged generated JavaScript/declarations.",
+      "remainingBoundary": "Not all original Core/UIKit declaration bodies, VM behavior or device providers."
+    },
+    "original_expo_graph_and_metro": {
+      "receipt": {
+        "path": "docs/miniapp-sdk/evidence/2026-11-24-current-original-graph/evidence.json",
+        "sha256": "7f2579a1c70cc0b25186e41cca6f2a7c7018b6f8dcb35505d7a9c3e0f35f1c12"
+      },
+      "rawLogs": [
+        {
+          "path": "docs/miniapp-sdk/evidence/2026-11-24-current-original-graph/canonical-current-build.log",
+          "sha256": "1805e1e52439fa92a04a62f8c9a6b12648f5eb765f85ef730d403548a8c46c4f"
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/2026-11-24-current-original-graph/current-sdk-integration.log",
+          "sha256": "5bddd0b523452a915c37d9ea24a90709428bfa928c8f8b63abd5ac5b576388e9"
+        }
+      ],
+      "result": "EXECUTED_PASS",
+      "platform": "Linux aarch64 / Node24.22.0",
+      "integrationCases": 5,
+      "versions": {
+        "expo": "58.0.26",
+        "expoUI": "58.0.29",
+        "expoWidgets": "58.0.29",
+        "reactNative": "0.88.1",
+        "worklets": "0.13.0",
+        "metro": "0.87.1",
+        "compiler": "6.0.3"
+      },
+      "typeCheckingPolicy": {
+        "strict": true,
+        "skipLibCheck": false,
+        "dependencyDeclarationsChecked": true
+      },
+      "covered": [
+        "Canonical ModularTextSearch1.4 actual Metro bundle",
+        "Isolated Expo and native ScriptWidget JSX type environments",
+        "Root-adjacent native entry configuration isolation",
+        "Invalid native JSX property with original file/line",
+        "Missing/invalid native layout and unsupported renderer diagnostics",
+        "Original Metro configuration failure is preserved without transformer substitution",
+        "35 retained source hashes,18 compiled hashes and ZIP CRC"
+      ],
+      "artifact": {
+        "name": "ModularTextSearch-1.4.0.hanlinExpo",
+        "bytes": 2197878,
+        "sha256": "9e31b10560bb3ce335cdde7c7fd7ca9582b3e1acae3ec946cada01f547a96b07"
+      },
+      "sourceApplicability": {
+        "status": "UNCHANGED_EXPO_AND_NATIVE_PRESENTATION_HELPERS_WITH_DISCLOSED_OTHER_CHANGES",
+        "fromCommit": "3016c3349076d661bc36336a92bb63877ef3b8a0",
+        "toCommit": "ee3b0ede43fcb4aac02def04d469eae542ba035b",
+        "laterAuthoringChanges": "Original ScriptWidget widget.json validation/checkJs/packaging and report.checkJs metadata; buildExpo and native-presentation helpers unchanged."
+      },
+      "remainingBoundary": "Portable compiler/bundle proof; no Apple UI, all-public-adapter or physical-device pass. The SDK snapshot is specifically Expo+ScriptWidget, not current three-engine export proof."
+    },
+    "historical_expo_native_api": {
+      "receipt": {
+        "path": "docs/miniapp-sdk/evidence/EXPO_SDK_TYPES_2026-11-14.json",
+        "sha256": "1f1dc104daf5ce74637a49be2080b07a677075c46abf417c32e383208cb86254"
+      },
+      "result": "EXECUTED_PASS_HISTORICAL_COMPONENTS",
+      "covered": [
+        "Strict native API valid declarations",
+        "Seven expected consumer diagnostics",
+        "Original Metro A/B outputs and explicit facade fixtures"
+      ],
+      "sourceApplicability": {
+        "status": "CHANGED_INPUTS_NOT_REUSABLE_AS_A_WHOLE_CURRENT_PROOF",
+        "changedInputs": [
+          "Packages/HanlinExpoUI/src/host-services.ts",
+          "Packages/HanlinExpoUI/package.json",
+          "Scripts/Expo/package.json",
+          "Scripts/Expo/package-lock.json",
+          "Scripts/Expo/prepare-types.mjs",
+          "Scripts/Expo/check-ui-type-contract.mjs",
+          "Scripts/Expo/build-probe.mjs"
+        ]
+      },
+      "allPublicNativeAdapters": "NOT_RUN in the original receipt",
+      "remainingBoundary": "Current UIKit/Worklets probe is a selected native proof, not automatic coverage of every public adapter."
+    },
+    "cli_relocation": {
+      "receipt": {
+        "path": "docs/miniapp-sdk/evidence/2026-11-24-cli-module-resolution/result.json",
+        "sha256": "d6c68a4f49263abec70f76e63b2e75c4e93ca50f749bd69b8f8cccb1fc4f1d2f"
+      },
+      "result": "EXECUTED_PASS",
+      "sourceApplicability": {
+        "status": "BOTH_RECORDED_INPUT_HASHES_MATCH",
+        "inputs": {
+          "Scripts/MiniApps/miniapp.mjs": "1c256c00392c626a54ebee2abe3ededaa792c5bfa6dd9b6c5aceb89be84e5b30",
+          "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-authoring.test.mjs": "bef93d623bae3ffa7ba5320d71cfaaed09d6316c46ec1715d16275e36b535dce"
+        }
+      },
+      "scope": "Existing relocated CLI case resolves a bare npm compiler, builds an actual archive, then validates through SDK loading without a compiler override; before/after raw evidence retained.",
+      "remainingBoundary": "No new execution performed for this map."
+    },
+    "sdk_input_freshness": {
+      "receipt": {
+        "path": "docs/miniapp-sdk/evidence/2026-11-24-sdk-input-freshness/result.json",
+        "sha256": "09c74e2453d039c125d66cce19774572daeb021816200068cbf3a5df88eea793"
+      },
+      "followup": {
+        "path": "docs/miniapp-sdk/evidence/2026-11-24-sdk-input-freshness/native-output-seam.json",
+        "sha256": "97b8babd2c7771e55bc25695448570f4bc6f0b438dcc1506a3656c877781657d"
+      },
+      "result": "EXECUTED_PASS_COMPONENTS",
+      "scope": "Real npm-ci receipts for absent declarations, transitive version and same-version byte drift, local source copies, changed integrity, authenticated reseal and verified reuse; original JSI native output exceptions separately exercised.",
+      "sourceApplicability": {
+        "status": "FOLLOWUP_HELPER_STAGER_AND_TEST_HASHES_MATCH",
+        "inputs": {
+          "Scripts/MiniApps/install-tooling.mjs": "6fb5f130d1a381d628ffa5042eff7ce36d48431ed7636a36c28fec20e5b79120",
+          "Scripts/MiniApps/stage-sdk.mjs": "8085dab33f14e9a67a26f329f9c0efb16b1059448134573e961bcca844f1a3dc",
+          "Scripts/MiniApps/Tests/installed-tooling.test.mjs": "76bd5330e9a052739a4001e81a8ac17219f6c794ca687356b19b8b31c5946577"
+        },
+        "otherOriginalReceiptInputs": "Several workflow/resolver inputs subsequently changed; do not treat the entire earlier receipt as unchanged current-source proof."
+      },
+      "remainingBoundary": "Does not by itself prove the future exported run8 SDK or application runtime."
+    },
+    "historical_expo_ownership": {
+      "receipt": {
+        "path": "docs/miniapp-sdk/evidence/2026-11-24-owner-integration/cross-existing-ownership-receipt-check.json",
+        "sha256": "6fdd77c3a48128aab23e7ea04f63c9f0b211fc661c5f764e6f8bf88001d9b88e"
+      },
+      "originalReceiptPath": "docs/miniapps-cross-app/expo-multiscene/apple-xctest-receipt-45278987498.json",
+      "result": "HISTORICAL_TARGET_PASS_SAME_SOURCE",
+      "configuredCases": 12,
+      "sourceApplicability": {
+        "status": "ALL_EIGHT_RECORDED_INPUT_HASHES_MATCH",
+        "inputs": [
+          {
+            "path": "Packages/HanlinExpoNativeAPI/bridge-source/HanlinExpoNativeAPIGate.h",
+            "sha256": "5de9a8692962be0f0bd8d7f86b80d48f655af40c09b593b0ddc418a68f083274"
+          },
+          {
+            "path": "Packages/HanlinExpoNativeAPI/bridge-source/HanlinExpoNativeAPIGate.mm",
+            "sha256": "80c57c694b80acc568c6fdfadad2a555e684bcbac2ba65f1caea3133f9f27329"
+          },
+          {
+            "path": "Packages/HanlinExpoNativeAPI/bridge-source/HanlinExpoSessionRuntimeRegistry.h",
+            "sha256": "22b0fdf40fdb8fa705bed498f2800a50d4188e6c9f348019bad88d973ff9c166"
+          },
+          {
+            "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoModifierOwnership.swift",
+            "sha256": "c09d74d45f650b1bc4aa8348052e2594163cb6bc28b6d747a958d67db96446f2"
+          },
+          {
+            "path": "Tests/ExpoMultiScene/HanlinExpoNativeAPISessionTests.mm",
+            "sha256": "3673ea5d326f651a7aab00330197e080ec35baf9b87d1cad62b4c44253338fba"
+          },
+          {
+            "path": "Tests/ExpoMultiScene/HanlinExpoModifierOwnershipTests.swift",
+            "sha256": "06f68cfbb660e2c33d6c423a45e4f7bc34aec815a0e680b82b7e84a86a8b41eb"
+          },
+          {
+            "path": "Tests/ExpoMultiScene/HanlinExpoMultiSceneTests.xcodeproj/project.pbxproj",
+            "sha256": "e152452fe1a796760368ab60ab40f36d4c698e7af04b3b30a50374940d9553f0"
+          },
+          {
+            "path": "Tests/ExpoMultiScene/HanlinExpoMultiSceneTests.xcodeproj/xcshareddata/xcschemes/HanlinExpoMultiSceneTests.xcscheme",
+            "sha256": "c0993bdc5180b592cb4085c641a52d34bfc33ba3f35d16f12c39eb5a4f0440be"
+          }
+        ]
+      },
+      "scope": "Existing owner target-level XCTest proof for session NativeAPI/worklet gate and modifier ownership.",
+      "remainingBoundary": "No retained per-case xcresult, no new native execution, and worklet doubles do not prove two complete Expo/Hermes applications."
+    }
+  },
+  "criteria": [
+    {
+      "task": "SDK-02",
+      "taskID": "1220373483150660",
+      "url": "https://app.asana.com/0/0/1220373483150660",
+      "exactCriterion": "DoD: schema validation, negative cases (missing/ambiguous manifest, incompatible version, unsupported exposure, missing plugin, path traversal), backward/current handling שמבוסס רק על החוזים הנתמכים, CI fail on contract drift.",
+      "evidenceIDs": [
+        "archive_policy_12",
+        "prepared_version_4",
+        "version_and_operation_audit_6",
+        "source_reconciliation"
+      ],
+      "establishedScope": [
+        "Ambiguous manifests, collisions, escaping paths and archive integrity policy",
+        "Real version-boundary behavior with unchanged implementation/tests",
+        "Source/operation/version drift checks"
+      ],
+      "remainingRequirements": [
+        "Match an existing executed receipt for missing manifest, unsupported exposure and missing/incompatible plugin importer cases; the reviewed evidence set does not establish these all.",
+        "Apple import integration remains subject to actual gate results."
+      ],
+      "existingTestsWithoutMatchedExecutionReceipt": {
+        "path": "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinScriptAnalyzerTests.swift",
+        "tests": [
+          "expoMainMustMatchTheInspectedForegroundEntrypoint",
+          "nativeScriptSwiftUIContract",
+          "nativeScriptCoreContract",
+          "expoSwiftUIContract",
+          "expoMultiExposureMatrix",
+          "malformedPreparedEntrypointsFailWithStableDiagnostic"
+        ]
+      },
+      "closure": "CONDITIONAL; 38 selected passes alone do not establish all listed negative contract cases."
+    },
+    {
+      "task": "SDK-03",
+      "taskID": "1220373608755846",
+      "url": "https://app.asana.com/0/0/1220373608755846",
+      "exactCriteria": [
+        "תבנית .hanlinNativeScript קומפילבילית עם @nativescript/core ותבנית Direct Bridge; דוגמת Hybrid/SwiftUI רק כשנתמכת במארח.",
+        "DoD: 0 diagnostics בתבניות, invalid props/events/missing bridge APIs fail early, אין any/ts-ignore שמסתירים בעיות; public declarations מול source + tests."
+      ],
+      "evidenceIDs": [
+        "original_nativescript_910",
+        "nativescript_facade",
+        "mac_host_authoring_13",
+        "prepared_version_4",
+        "version_and_operation_audit_6"
+      ],
+      "establishedScope": [
+        "Historical original Core/UIKit typechecking and SwiftUI JS closure",
+        "Current-source strict host facade and generated declarations",
+        "Unchanged authoring/ESM/dependency-retention behavior on actual Mac Host",
+        "Independent iOS/Core/SwiftUI source identity and unchanged compatibility functions"
+      ],
+      "remainingRequirements": [
+        "Current exported run8 SDK proof for original Core9.1.4/iOS9.1.1 authoring; do not use the old9.1.0 local cache as current proof.",
+        "Actual selected Core/direct-runtime application behavior from gate38, with case results.",
+        "Do not claim complete original declaration-body checking: original NativeScript consumer policy is strict source with skipLibCheck=true."
+      ],
+      "closure": "CONDITIONAL; optional full Apple SDK generator work is explicitly deferred, not an extra gate."
+    },
+    {
+      "task": "SDK-04",
+      "taskID": "1220373832827086",
+      "url": "https://app.asana.com/0/0/1220373832827086",
+      "exactCriterion": "DoD: תוכן .d.ts מדויק + tooling שמגלה drift, typecheck strict ו-Metro bundle, tests לכל public exported adapter, תיעוד מגבלות מכשיר.",
+      "evidenceIDs": [
+        "mac_expo_strict_types",
+        "original_expo_graph_and_metro",
+        "historical_expo_native_api",
+        "historical_expo_ownership",
+        "source_reconciliation"
+      ],
+      "establishedScope": [
+        "Current-source strict Expo UI and Widgets valid/negative consumer checks on Mac",
+        "Real original Metro build, current graph artifact and source/resource identity",
+        "Bounded historical NativeAPI and same-source ownership component evidence"
+      ],
+      "remainingRequirements": [
+        "All-public-exported-adapter native coverage is NOT_ESTABLISHED by the inspected receipts.",
+        "Current selected UIKit/Worklets/Widgets application results remain subject to gate38.",
+        "Historical native API declaration receipt has changed inputs and cannot become a whole current-source PASS."
+      ],
+      "closure": "CONDITIONAL; no all-adapter false PASS from a probe, declarations, bundle or selected suite."
+    },
+    {
+      "task": "SDK-06",
+      "taskID": "1220373592513501",
+      "url": "https://app.asana.com/0/0/1220373592513501",
+      "exactCriterion": "DoD: property לא ידוע (TS2353), implicit any (TS7006), React/SwiftUI modifier חסר, version mismatch, wrong entry, permission mismatch — כולם מפיקים שגיאה טרם יבוא; בדיקה חוזרת דטרמיניסטית.",
+      "evidenceIDs": [
+        "mac_host_authoring_13",
+        "cli_relocation",
+        "mac_expo_strict_types",
+        "prepared_version_4",
+        "archive_policy_12",
+        "original_expo_graph_and_metro"
+      ],
+      "establishedScope": [
+        "TS2353 and TS7006 intentional consumer failures already have real recorded proof",
+        "Original semantic diagnostics with file/line/column, retained-source recheck, compiled-hash rejection and refusal to emit a failed package",
+        "Real CLI packaging, archive revalidation and bare-module compiler resolution",
+        "No fabricated source typecheck for bundle-only imports",
+        "Native presentation missing-source/invalid-layout/unsupported-renderer errors and original Metro failure propagation"
+      ],
+      "remainingRequirements": [
+        "An executed receipt for a missing React/SwiftUI modifier: the checked TS2339 is a missing hostServices method.",
+        "Matched executed wrong-entry, full importer version/plugin, and permission-mismatch cases beyond the proven pure version functions.",
+        "Permission evidence must reflect actual existing OS/host contracts; no new Hanlin approval or grant gate is authorized."
+      ],
+      "closure": "CONDITIONAL; the core13 authoring component cases are already proven and need not be rerun merely for this mapping."
+    },
+    {
+      "task": "SDK-07",
+      "taskID": "1220373832815088",
+      "url": "https://app.asana.com/0/0/1220373832815088",
+      "exactCriteria": [
+        "להריץ CLI/preflight, actual builds, analyzer+import/preview/install/run and events/lifecycle, isolation/update/reinstall/rollback/uninstall.",
+        "DoD: 100% tests required to claim READY pass; output shows exact tested host build/versions and reproduction command."
+      ],
+      "evidenceIDs": [
+        "mac_host_authoring_13",
+        "archive_policy_12",
+        "original_expo_graph_and_metro",
+        "original_nativescript_910",
+        "historical_expo_ownership",
+        "source_reconciliation"
+      ],
+      "establishedScope": [
+        "Golden and negative compiler/archive/CLI component evidence",
+        "Original Metro artifact and retained-source identity",
+        "Bounded same-source historical ownership evidence"
+      ],
+      "remainingRequirements": [
+        "Actual gate38 rows/screenshots/installation receipt for its selected application scope.",
+        "No matched executed receipt was found in the requested evidence set for the complete update/reinstall/rollback/uninstall cycle or permission revocation.",
+        "Existing applicable receipts from another established owner may be linked without new testing after exact source/toolchain/input verification.",
+        "Selected38-case application proof is not the complete80-cell extension/runtime E2E proof."
+      ],
+      "closure": "CONDITIONAL; reconcile existing required evidence rather than interpreting source presence, count38, or cancellation as product acceptance."
+    }
+  ],
+  "additionalDeliveryConditions": [
+    {
+      "task": "SDK-05",
+      "taskID": "1220373832827017",
+      "url": "https://app.asana.com/0/0/1220373832827017",
+      "exactCriterion": "DoD: מבחן 'סוכן חדש מקבל רק התיעוד וה-SDK' מסוגל לבנות שתי חבילות אמיתיות ללא ניחוש/עיון בקוד פנימי; כל snippet נבדק אוטומטית.",
+      "status": "PENDING_FRESH_AGENT_AND_SNIPPET_EVIDENCE",
+      "planBoundary": "Parent plans a fresh builtin agent with fork none using the actual exported run8 SDK/docs/types and public CLI. Do not provide internal source recipes or pre-authored fixtures; do not build a supposed current SDK from local NativeScript9.1.0.",
+      "notEquivalent": "A scripted HTTP repair response demonstrates the original product pipeline, not independent fresh-agent authoring of both engines.",
+      "publicReferences": [
+        "docs/miniapp-sdk/README.md:9-15",
+        "docs/miniapp-sdk/README.md:37-59",
+        "Scripts/MiniApps/miniapp.mjs",
+        "Scripts/MiniApps/stage-sdk.mjs",
+        "Scripts/Runtime/prepare-runtime-host.sh"
+      ],
+      "cliPackagingBoundary": "The public CLI wrapper imports its existing Host miniapp-authoring.mjs by relative layout. MiniAppSDK alone does not contain that wrapper; preserve its executable dependency layout without supplying internal authoring recipes."
+    },
+    {
+      "task": "SDK-08",
+      "taskID": "1220373635419168",
+      "url": "https://app.asana.com/0/0/1220373635419168",
+      "exactCriteria": [
+        "שני סוגי חבילות שנבנו מאפס עם ה-kit בלבד, imported/run/interactive in host.",
+        "Simulator runs + מסלול בעלים להתקנת/אימות iPad פיזי",
+        "raw CI+device evidence",
+        "gate CLOSED only if all mandatory executable evidence exists."
+      ],
+      "status": "OPEN; fresh-agent and physical-device conditions are not established by gate38."
+    },
+    {
+      "task": "MINIAPP-SDK parent",
+      "taskID": "1220373592380175",
+      "url": "https://app.asana.com/0/0/1220373592380175",
+      "exactCriteria": [
+        "מוכח end-to-end לפחות על iPad Simulator ונתיב בדיקת בעלים על iPad פיזי; לא לתאר סימולטור כבדיקה פיזית.",
+        "כל רכיב שהוצהר supported עבר בדיקת תפקוד ממוקדת."
+      ],
+      "status": "OPEN; physical iPad evidence remains BLOCKED_EXTERNAL in the recorded current Asana block."
+    },
+    {
+      "task": "Extension Runtime E2E",
+      "taskID": "1220374212463856",
+      "url": "https://app.asana.com/0/0/1220374212463856",
+      "exactCriteria": [
+        "לכל תא Supported/Deferred/NotApplicable/BLOCKED עם נימוק ומקור; לא לדווח PASS בהיעדר executor או הרשאת מערכת.",
+        "כל 5 runtimes מה-Host במצב foreground, ונסיונות מתוך כל Surface עם status אמיתי.",
+        "Device iPad+iPhone/simulator as relevant; signed IPA (Apple SDK/Xcode exact), AppGroup/entitlements each extension, behavior on-device; raw logs/screenshots SHA/CI URLs."
+      ],
+      "status": "OPEN_BROADER_SCOPE",
+      "boundary": "80 current source-reachability cells and native original-library surfaces have separate scopes. Legitimate Deferred/NotApplicable/BLOCKED dispositions require reasons; neither source wiring nor38selected tests becomes80E2Epasses."
+    }
+  ],
+  "recordingOutcome": "Evidence mapping only. No task closure, new test result, native application success, physical-device success, main merge, release or TestFlight publication is asserted."
+}
