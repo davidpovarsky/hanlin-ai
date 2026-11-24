@@ -1,0 +1,125 @@
+{
+  "schemaVersion": 1,
+  "atUTC": "2026-11-24T14:18:30.871052+00:00",
+  "status": "PASS",
+  "integrationCommit": "b8d3caee19485c4ef4448be9e68dfeb2449d38da",
+  "sourceCorrectionCommit": "b1b8f18687c4cb0dac3bdc1cfdb655c8e87ef291",
+  "productionSHA256": {
+    "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinOriginalExpoWidgetOptions.swift": "6ca742d0e0413a2f219723ec65caab7df5a485257ba75277603ec132a7a6deac",
+    "AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift": "024bd8bcb47d43ace64fb410938f393effb3c6e8bd327506cf9065851de8073c"
+  },
+  "why": "ExpoHostServicesAdapter is explicitly hashed by existing inventory and reachability sdkSources/sourceRefs. Options-only source does not contribute a direct or hashed SDK input. Run the existing required write/check sequence once after both corrections.",
+  "commands": [
+    {
+      "argv": [
+        "/usr/local/bin/node",
+        "Scripts/Audit/audit-miniapp-sdk.mjs",
+        "--write"
+      ],
+      "atUTC": "2026-11-24T14:18:26.650111+00:00",
+      "seconds": 0.6272018337622285,
+      "exit": 0,
+      "stdout": "1-stdout.log",
+      "stderr": "1-stderr.log"
+    },
+    {
+      "argv": [
+        "/usr/local/bin/node",
+        "Scripts/Audit/audit-miniapp-sdk.mjs",
+        "--check"
+      ],
+      "atUTC": "2026-11-24T14:18:27.277344+00:00",
+      "seconds": 0.5070753926411271,
+      "exit": 0,
+      "stdout": "2-stdout.log",
+      "stderr": "2-stderr.log"
+    },
+    {
+      "argv": [
+        "python3",
+        "Scripts/Audit/audit_miniapp_reachability.py"
+      ],
+      "atUTC": "2026-11-24T14:18:27.784438+00:00",
+      "seconds": 1.6449664821848273,
+      "exit": 0,
+      "stdout": "3-stdout.log",
+      "stderr": "3-stderr.log"
+    },
+    {
+      "argv": [
+        "python3",
+        "Scripts/Audit/audit_miniapp_reachability.py",
+        "--check"
+      ],
+      "atUTC": "2026-11-24T14:18:29.429424+00:00",
+      "seconds": 1.4371789442375302,
+      "exit": 0,
+      "stdout": "4-stdout.log",
+      "stderr": "4-stderr.log"
+    }
+  ],
+  "before": {
+    "docs/miniapp-sdk/source-inventory.json": "1c4129ad6174891c1085eb3cc99e8e4face1689898116d0648a9a12b0ba59d4c",
+    "docs/miniapp-sdk/extension-reachability.json": "b315a5c0724192dbd500b259e7eb2e3446347910e2b121d8ee4df2a990079921",
+    "docs/miniapp-sdk/extension-reachability.md": "db5b13d3d47bfbe6a97887a51795446378a046ae8d295281aa8aa8452a4eb415",
+    "docs/miniapp-sdk/MANIFEST_REFERENCE.md": "ad9c59d1962d516cd480de78cf5ee01fad11159cc0a73ee1a9cb3ea2f324b8a1"
+  },
+  "after": {
+    "docs/miniapp-sdk/source-inventory.json": "7a9def87c5bf71226b1d120c6f8bd9856732828e8bcdfd7d36a4633d8c9b6b45",
+    "docs/miniapp-sdk/extension-reachability.json": "e51ed2435da117bdb77900c5643f1b2c72456d4dda094cffcd1b38e311a34571",
+    "docs/miniapp-sdk/extension-reachability.md": "961d8d49d036182f7abe167b6b97a1fc473724c6a546d2459af58dea1d35ca8d",
+    "docs/miniapp-sdk/MANIFEST_REFERENCE.md": "ad9c59d1962d516cd480de78cf5ee01fad11159cc0a73ee1a9cb3ea2f324b8a1"
+  },
+  "changedGeneratedFiles": [
+    "docs/miniapp-sdk/source-inventory.json",
+    "docs/miniapp-sdk/extension-reachability.json",
+    "docs/miniapp-sdk/extension-reachability.md"
+  ],
+  "unchangedGeneratedFiles": [
+    "docs/miniapp-sdk/MANIFEST_REFERENCE.md"
+  ],
+  "sourceCount": 93,
+  "scope": "Existing source-authority regeneration/checks only. No new test/build/CI, no application or device PASS. Changed shipped provenance documents require the next normal preparation to capture its new SDK identity.",
+  "evidenceFiles": [
+    {
+      "path": "1-stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "1-stdout.log",
+      "bytes": 80,
+      "sha256": "0b4ad7481d5f4c0e6960056b1bbfd238f9be5d020165e2b88b750540591ebe65"
+    },
+    {
+      "path": "2-stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "2-stdout.log",
+      "bytes": 76,
+      "sha256": "f572ecebbc3912d585bf2afedabf9dc180c67a427b03ca60f73b879dab78b0c9"
+    },
+    {
+      "path": "3-stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "3-stdout.log",
+      "bytes": 130,
+      "sha256": "25235e2042af248e065488522e1e5aba9995de6ebb75ade7cbcfbd507c1d271e"
+    },
+    {
+      "path": "4-stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "4-stdout.log",
+      "bytes": 72,
+      "sha256": "bc234237931951c0e0e70dc212b9f47da2f6c76a61109e41c235f0f7f0eabcef"
+    }
+  ]
+}

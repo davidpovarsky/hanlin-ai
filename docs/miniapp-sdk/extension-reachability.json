@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "42cd5c3e94c1ad69780183f2f348c51961cdffbc",
+  "sourceCommit": "b8d3caee19485c4ef4448be9e68dfeb2449d38da",
   "snapshotIdentity": "Base commit plus exact current hashes; uncommitted audit sources are listed separately",
   "uncommittedSourcePaths": [],
   "status": "IN_PROGRESS_SOURCE_AUDIT",
@@ -8,7 +8,7 @@
   "sdkSources": [
     {
       "path": "AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift",
-      "sha256": "d5da33a324659acd3952e5f4225c264992551ab713036dad169cdb2215708d19"
+      "sha256": "024bd8bcb47d43ace64fb410938f393effb3c6e8bd327506cf9065851de8073c"
     },
     {
       "path": "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
@@ -749,7 +749,7 @@
       "file": "AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift",
       "line": 98,
       "anchor": "case \"runtime.execute\":",
-      "sha256": "d5da33a324659acd3952e5f4225c264992551ab713036dad169cdb2215708d19"
+      "sha256": "024bd8bcb47d43ace64fb410938f393effb3c6e8bd327506cf9065851de8073c"
     },
     "runtimeBroker": {
       "file": "AI_HLY/Downstream/HostServices/Runtime/HanlinRuntimeBroker.swift",
@@ -821,7 +821,7 @@
       "file": "AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift",
       "line": 99,
       "anchor": "HanlinRuntimeWireProtocol.execute(",
-      "sha256": "d5da33a324659acd3952e5f4225c264992551ab713036dad169cdb2215708d19"
+      "sha256": "024bd8bcb47d43ace64fb410938f393effb3c6e8bd327506cf9065851de8073c"
     },
     "nativePresentationExecutor": {
       "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNativePresentation.swift",
