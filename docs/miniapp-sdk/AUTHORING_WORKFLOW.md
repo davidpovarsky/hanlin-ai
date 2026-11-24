@@ -18,11 +18,12 @@ Supported authoring engines are `expo`, `nativescript`, and `scriptwidget`. Lega
 2. Call `write_miniapp` with source files. Omit `project_path` to create a dedicated writable project. Each file has a relative `path` and exactly one of `content` (UTF-8 text, including empty text) or `base64` (binary bytes).
 3. Supply `script.json`, `package.json`, `tsconfig.json`, and `hanlin.authoring.json`. The latter declares the source entry, not the prepared JavaScript bundle:
 
+<!-- miniapp-snippet: workflow.descriptor -->
 ```json
 {
   "schemaVersion": 1,
   "engine": "expo",
-  "entry": "index.tsx",
+  "entry": "index.ts",
   "tsconfig": "tsconfig.json",
   "resources": ["data/catalog.json"]
 }
@@ -97,6 +98,7 @@ Compiler-used source files remain retained even when their path includes names s
 
 The same production Node module is used by the CLI:
 
+<!-- miniapp-snippet: workflow.commands -->
 ```bash
 node Scripts/MiniApps/stage-sdk.mjs --output=/absolute/MiniAppSDK
 node Scripts/MiniApps/miniapp.mjs validate --sdk /absolute/MiniAppSDK --engine expo --project /absolute/project
@@ -106,3 +108,28 @@ node Scripts/MiniApps/miniapp.mjs build --sdk /absolute/MiniAppSDK --engine expo
 Staging requires the exact original npm graphs installed by the host build and their declaration preparation steps. The desktop CLI archives with Python's standard ZIP library; the app uses its existing ZIPFoundation integration. Both invoke the same compiler/build implementation.
 
 The modular text-search producer and its CI workflow use this source-preserving route. Portable compiler, archive, and Metro evidence is stored in `docs/miniapp-sdk/evidence/`. Native Apple runtime acceptance is recorded separately; portable test success is never reported as device installation or rendering success.
+
+
+## Automatically checked guide examples
+
+The current Expo, NativeScript and ScriptWidget guides, this workflow, the SDK
+overview and the original Control Widgets guide have an explicit fenced-example
+inventory. The checker reads their actual Markdown source. It submits the code
+to the public authoring validator with the exported original SDK, including real
+JavaScript semantic checking for the NativeScript and original control examples.
+Independent examples are compiled as separate modules; their native objects and
+provider parameters are visible in the example rather than supplied as invented
+global declarations.
+
+The Expo registration example also has a source-contract check against the
+foreground host's actual default root name. TypeScript alone cannot detect a
+valid React registration under the wrong name.
+
+CI checks the exact SDK from the verified RuntimeHost archive and requires the
+shipped guide bytes to match the checked documents. New, removed or unclassified
+fenced blocks fail the coverage gate. The report distinguishes source
+typechecking, authoring descriptors/compiler configuration, parsed metadata
+excerpts and the original widget.json semantic validator. Shell instructions,
+internal Swift host implementation, diagrams and directory layouts are listed
+as unexecuted context. Static checks do not run network/device APIs, launch a
+MiniApp, or substitute for native import and UI acceptance.

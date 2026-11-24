@@ -370,6 +370,9 @@ jobs:
           bash Scripts/Runtime/prepare-runtime-core.sh
           bash Scripts/Runtime/prepare-runtime-host.sh
           cp build/runtime-host/RuntimeHostResources.zip AI_HLY/RuntimeHostResources.zip
+          # Check the actual public guide blocks against the exact SDK in the verified shipping ZIP.
+          # Static authoring checks do not imply a MiniApp launched or a native service executed.
+          node Scripts/MiniApps/check-authoring-examples.mjs --sdk-archive build/runtime-host/RuntimeHostResources.zip --require-sdk-docs --report "$SPLIT_EVIDENCE/miniapp-documentation-snippets.json"
           # The verified ZIP above is the shipping payload. The lifecycle check's
           # temporary npm tree must not enter Xcode's synchronized app resources.
           rm -rf AI_HLY/Downstream/RuntimeCore/Node/Host/node_modules

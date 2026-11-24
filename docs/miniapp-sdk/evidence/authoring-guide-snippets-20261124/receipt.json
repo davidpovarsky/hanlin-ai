@@ -1,0 +1,176 @@
+{
+  "schemaVersion": 1,
+  "scope": "SDK05 current public authoring examples, bounded to six guides and 21 JS/TS/TSX/JSON blocks",
+  "baseSource": "4ea670e120a3217423bc73db68dab514c78079de",
+  "publicRegistrationErratum": "52ca4d0d9a8d3aad225f4557a6b2065431ddceb2",
+  "sdkOrigin": {
+    "nativeRun": "45335292541",
+    "path": "/dev/shm/hanlin-sdk-only-kit-45335292541/AI_HLY/Downstream/RuntimeCore/Node/Host/MiniAppSDK",
+    "manifestSHA256": "fa1e737ec63e640175cdb5c9dad51903cd86d50ae7b340ba5b8ec1ff4e408d85"
+  },
+  "execution": {
+    "originalCompilerFirstRun": {
+      "status": "FAILED",
+      "detail": "Expo and both ScriptWidget projects passed; NativeScript reported two missing console globals and one NSArray assignment diagnostic. Preserved before correction."
+    },
+    "affectedNativeScriptCorrection": {
+      "status": "EXECUTED_PASS",
+      "sourceModules": 8,
+      "strict": true,
+      "checkJs": true,
+      "skipLibCheck": true
+    },
+    "focusedRegressions": {
+      "status": "EXECUTED_PASS",
+      "distinctCases": 6,
+      "commands": [
+        {
+          "command": "node --test Scripts/MiniApps/Tests/authoring-examples.test.mjs",
+          "casesExecuted": 5,
+          "log": "focused-first.stdout.log"
+        },
+        {
+          "command": "node --test --test-name-pattern=the verified Host archive adapter Scripts/MiniApps/Tests/authoring-examples.test.mjs",
+          "casesExecuted": 1,
+          "log": "archive-adapter.stdout.log"
+        }
+      ],
+      "note": "Five cases executed before the archive-only case was added; the later filtered command executed only the new sixth case. The final projected compiler input equality is separately proven; these are not six tests rerun in one final command."
+    },
+    "finalCodeAndConfigInputs": {
+      "status": "REUSED_VERIFIED_PASS",
+      "report": "final-input-reconciliation.json",
+      "sourceBlocks": 14,
+      "jsonBlocks": 7,
+      "excludedContextBlocks": 8,
+      "explanation": "Final projected source/config bytes equal the actual original-compiler passing inputs, without rerunning unaffected compiler checks."
+    },
+    "workflow": {
+      "status": "SOURCE_CHECKED",
+      "yamlParsed": true,
+      "invocationsAdded": 1,
+      "placement": "After the verified RuntimeHost ZIP is prepared; uses the actual SDK from that ZIP and requires shipped guide-byte equality."
+    }
+  },
+  "proofBoundaries": {
+    "nativeOrDeviceExecution": "NOT_RUN",
+    "shellInstructionExecution": "NOT_RUN",
+    "networkCalls": "NOT_RUN",
+    "initialSDKOnlyAuthor": "Not contacted; independently produced source and initial build evidence remain separate.",
+    "json": "Descriptors/configurations and metadata are separately identified. Only original widget.json has full exported original semantic-validator proof; parsed script/package excerpts are not presented as complete native prepared-manifest validation."
+  },
+  "artifacts": [
+    {
+      "path": "initial.stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "initial.stderr.log",
+      "sha256": "11ffecb560568549f925910c4c856826ab0e279cf79f7efe30b0fc73bb89567a",
+      "bytes": 1209
+    },
+    {
+      "path": "first-original-compiler.json",
+      "sha256": "c244f7902557344e89def662034f564d92b17dfac6fcac049ab0002de13084fb",
+      "bytes": 20486
+    },
+    {
+      "path": "first-original-compiler.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "focused-first.stdout.log",
+      "sha256": "8c589af05ed48acf0fa6e47d5d89ec3ee6967e1f6c4ade2b13611b7f4b36ca98",
+      "bytes": 646
+    },
+    {
+      "path": "focused-first.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "nativescript-guide-green.json",
+      "sha256": "a4d5b64f73ba2d947d4762e87b0d2c40a71294f000996a79c7a2285a9ed91acf",
+      "bytes": 5031
+    },
+    {
+      "path": "registration-drift.json",
+      "sha256": "64713680a0cf121cd7c27f0b6306e31084d2dbf5a42a808594fd426f1c91e762",
+      "bytes": 568
+    },
+    {
+      "path": "coverage-and-shipping-guards.json",
+      "sha256": "9d65bb2249bf455991a36b426722e4e3868331a5b920948e8fe2a3c84a0f957e",
+      "bytes": 231
+    },
+    {
+      "path": "nativescript-guide-negative.json",
+      "sha256": "e7e767477842ce1537119ef2663a4330daedccdebfb1740b5c336135ac6e77c0",
+      "bytes": 1626
+    },
+    {
+      "path": "control-manifest-negative.json",
+      "sha256": "a9195de922fb53c85e961603e3aeaa0fb4cadb6f71a81386e3a0f45121c078e0",
+      "bytes": 2972
+    },
+    {
+      "path": "archive-adapter.stdout.log",
+      "sha256": "fc9ecfcefe57d60d7e0bbc5f6c35efec880b088cc290bfb480b9b3f54d5b4b4c",
+      "bytes": 229
+    },
+    {
+      "path": "archive-adapter.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "archive-adapter.json",
+      "sha256": "52a9cf05eca08b7f03365b67c633fa4d4d9c40f33048a3e20ac956b71d32338e",
+      "bytes": 236
+    },
+    {
+      "path": "final-input-reconciliation.json",
+      "sha256": "0708456d1d8d6681ff569f950bad849945a4d857b804a5f83e98f4f8102a905e",
+      "bytes": 15510
+    },
+    {
+      "path": "final-input-reconciliation.stdout.log",
+      "sha256": "6291d2fafd054722d6c26ab9d7ae1243671c857b85467bd134dbcb3fe680873d",
+      "bytes": 277
+    },
+    {
+      "path": "final-input-reconciliation.stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "final-input-reconciliation.mjs",
+      "sha256": "6badf45bf83905d3f31209effa27ee6474750491c2b240379cf075984e8eba1c",
+      "bytes": 3768
+    }
+  ],
+  "finalSourceInputs": [
+    {
+      "path": "Scripts/MiniApps/check-authoring-examples.mjs",
+      "sha256": "c45efa90c82f09c2377916ecce9176317c4b50215c87629e246e4a1b073d7a0f"
+    },
+    {
+      "path": "Scripts/MiniApps/authoring-examples.json",
+      "sha256": "3ff3b2272bb77eb22fcc3df81063aab3994ec555b1e78562ee9e256b3cd0aa26"
+    },
+    {
+      "path": "Scripts/MiniApps/Tests/authoring-examples.test.mjs",
+      "sha256": "a3cf6e7df5432a78f327fd453bca177b6d7d4a8543e8b310a97f2509476316b2"
+    },
+    {
+      "path": ".github/workflows/validate-app-split.yml",
+      "sha256": "4eb7d491daebfd4c91737714ec0809e331666e5a226820c9b896a96b0747380a"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
+      "sha256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856"
+    }
+  ]
+}

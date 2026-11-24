@@ -24,27 +24,36 @@ The original service objects include alarms, calendar, contacts, device, documen
 
 The original `ScriptWidgetRuntimePromise` exposes `then(resolve, reject) -> Void`. It is awaitable. It does not implement native `catch`, `finally`, or promise chaining. The declaration preserves that behavior instead of pretending that the native result is a full JavaScript Promise.
 
+<!-- miniapp-snippet: widget.services -->
 ```tsx
-const events = await $calendar.events({limit: 5});
-const weather = await $weather.forecast({latitude: 31.8, longitude: 35.2});
-const currentTitle: string | null = (await $music.current()).title;
+async function renderWidget() {
+  const events = await $calendar.events({limit: 5});
+  const weather = await $weather.forecast({latitude: 31.8, longitude: 35.2});
+  const currentTitle: string | null = (await $music.current()).title;
 
-$render(
-  <vstack>
-    <text>{events.items.length} events</text>
-    <text>{weather.hours[0].temperatureC}°</text>
-    <text>{currentTitle ?? "No current item"}</text>
-  </vstack>
-);
+  $render(
+    <vstack>
+      <text>{events.items.length} events</text>
+      <text>{weather.hours[0].temperatureC}°</text>
+      <text>{currentTitle ?? "No current item"}</text>
+    </vstack>
+  );
+}
+void renderWidget();
 ```
 
 HTTP returns response text or base64, not a browser Response object:
 
+<!-- miniapp-snippet: widget.http -->
 ```ts
-const text: string = await $fetch("https://example.com/data");
-const response = await $http.getResponse("https://example.com/data");
-const status: number = response.status;
-const header: string | undefined = response.headers["content-type"];
+async function readResponse() {
+  const text: string = await $fetch("https://example.com/data");
+  const response = await $http.getResponse("https://example.com/data");
+  const status: number = response.status;
+  const header: string | undefined = response.headers["content-type"];
+  return {text, status, header};
+}
+void readResponse();
 ```
 
 Storage `get/set` are Hanlin additions around original installed storage. All original `getString/setString/getJSON/setJSON/compareAndSet*/remove/keys/clear` methods still call their native implementation. Missing Hanlin `get` values are null; native JSON reads return JSON objects.
@@ -68,6 +77,7 @@ Original catalogs contain example payloads. The generator widens sample primitiv
 
 The installed Hanlin runtime supplies `$presentation.expandSheet()` and `$presentation.finish(replacementText?)` for its native translation presentation. The native controller determines whether replacement is available. `$getenv("presentation")` returns the exact presentation context when one exists and the original empty-string fallback otherwise; `$widget.presentation` is optional. The context includes `kind`, `sessionID`, `inputText`, JSON `parameters`, and `allowsReplacement`.
 
+<!-- miniapp-snippet: widget.presentation -->
 ```tsx
 const context = $getenv("presentation");
 if (context) {
@@ -94,6 +104,7 @@ The main app prepares widget source and resources. WidgetKit uses the installed 
 
 ## Declaration regeneration and evidence
 
+<!-- miniapp-snippet: widget.regeneration-commands -->
 ```bash
 node Scripts/MiniApps/generate-scriptwidget-service-types.mjs
 node Scripts/MiniApps/generate-scriptwidget-service-types.mjs --check

@@ -16,6 +16,7 @@ Hanlin AI features a multi-engine runtime platform capable of hosting isolated M
 * **`hanlinNativeScript`**: Original NativeScript runtime with the installed native metadata and Core UI.
 * **`hanlinExpo`**: Original Expo/React Native runtime executing on Hermes, with native declarative UI components backed by Apple's SwiftUI through Expo UI. `get_miniapp_sdk` returns the exact versions selected for the installed host.
 
+<!-- miniapp-snippet: expo.architecture -->
 ```mermaid
 flowchart TD
     subgraph Package [Installed MiniApp Package]
@@ -69,6 +70,7 @@ flowchart TD
 
 The production bridge follows one reproducible path:
 
+<!-- miniapp-snippet: expo.inventory-flow -->
 ```text
 stable Xcode 27 iPhoneOS SwiftUI + SwiftUICore interfaces
   -> SwiftSyntax inventory and per-signature classification
@@ -99,6 +101,7 @@ are rejected before launch.
 
 In standard Expo/React Native brownfield setups, `bundleURL()` typically points to a resource bundled inside `Bundle.main`. In Hanlin, `HanlinExpoReactNativeFactoryDelegate` dynamically provides the installed package bundle URL:
 
+<!-- miniapp-snippet: expo.host-delegate -->
 ```swift
 final class HanlinExpoReactNativeFactoryDelegate: ExpoReactNativeFactoryDelegate {
     private let appBundleURL: URL
@@ -138,6 +141,7 @@ final class HanlinExpoReactNativeFactoryDelegate: ExpoReactNativeFactoryDelegate
 Expo UI supports registering custom Swift modifier factories using its public `ViewModifierRegistry`. Hanlin implements the `navigationBarTitleDisplayMode` modifier:
 
 ### Swift Implementation:
+<!-- miniapp-snippet: expo.host-modifier -->
 ```swift
 import ExpoUI
 import SwiftUI
@@ -163,17 +167,25 @@ public enum HanlinExpoModifierRegistry {
 }
 ```
 
-### TypeScript Usage:
-```typescript
+### TypeScript Usage (complete `App.tsx`):
+<!-- miniapp-snippet: expo.app -->
+```tsx
+import { Host, NavigationSplitView, Text } from '@expo/ui/swift-ui';
 import { createModifier } from '@expo/ui/swift-ui/modifiers';
 
 export const navigationBarTitleDisplayMode = (mode: 'inline' | 'large' | 'automatic' = 'inline') =>
   createModifier('navigationBarTitleDisplayMode', { displayMode: mode });
 
-// Applied in JSX:
-<NavigationSplitView modifiers={[navigationBarTitleDisplayMode('inline')]}>
-  ...
-</NavigationSplitView>
+export default function App() {
+  return (
+    <Host style={{flex: 1}}>
+      <NavigationSplitView modifiers={[navigationBarTitleDisplayMode('inline')]}>
+        <NavigationSplitView.Sidebar><Text>Library</Text></NavigationSplitView.Sidebar>
+        <NavigationSplitView.Detail><Text>Select an item</Text></NavigationSplitView.Detail>
+      </NavigationSplitView>
+    </Host>
+  );
+}
 ```
 
 ---
@@ -188,6 +200,7 @@ A `.hanlinExpo` package is a standard ZIP archive containing:
 * `source/` and `hanlin.authoring.json`: Retained authoring input and source/output identity used by validation and repair.
 
 ### Example `script.json`:
+<!-- miniapp-snippet: expo.script -->
 ```json
 {
   "name": "Expo SwiftUI Probe A",
@@ -267,6 +280,7 @@ Prior spike closure verification (run `35473839956` on the isolated spike branch
 ## 7. Developer Guide: Creating an Expo SwiftUI MiniApp
 
 ### 7.1 Directory Layout
+<!-- miniapp-snippet: expo.layout -->
 ```
 MyMiniApp/
 ├── script.json         # Hanlin manifest
@@ -278,6 +292,7 @@ MyMiniApp/
 ```
 
 ### 7.2 Entrypoint Registration (`index.ts`)
+<!-- miniapp-snippet: expo.registration -->
 ```typescript
 import { AppRegistry } from 'react-native';
 import App from './App';
@@ -313,8 +328,8 @@ Starting in contract version `1.0.0`, Hanlin Expo MiniApps can optionally declar
 
 ### 8.1 Capability & Dependency Contract
 - **Manifest Declaration**: MiniApps requiring native API access must specify `"ios-native-api"` in `script.json.capabilities`.
-- **TypeScript Facade**: `@hanlin/expo-native-api` (re-exporting upstream `@nativescript/react-native@9.1.2`).
-- **Worklets Engine**: `react-native-worklets@0.13.1` enabling high-performance UI thread execution via `runOnUI`.
+- **TypeScript Facade**: `@hanlin/expo-native-api` re-exports the original `@nativescript/react-native` installed in the SDK. Read both exact npm versions from `selectedEngine.packageVersions`.
+- **Worklets Engine**: use the exact `react-native-worklets` version in `selectedEngine.packageVersions` and the host contract. Its original `runOnUI` API schedules UI-thread work; a historical version in an example is not the installed contract.
 - **UI Composition**: Native UIKit views defined with `defineUIKitView` or view controllers with `defineUIViewController` can be embedded into the native SwiftUI view tree using `<RNHostView matchContents={true}>` from `@hanlin/expo-ui`.
 
 ### 8.2 Security & Isolation Boundary

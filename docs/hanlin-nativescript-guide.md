@@ -32,32 +32,36 @@
 מנוע ה-Runtime משתמש בהצהרות שנכללו ב-metadata של הבנייה. זמינות מחלקה וחתימה מסוימת נבדקת מול ה-Host המותקן; הרשאות מערכת והקשר ההרצה נשארים תנאי להפעלתה.
 
 ### א. יצירת אובייקטים (Class Instantiation)
-כל מחלקת Objective-C / Swift עם `@objc` זמינה כמשתנה גלובלי:
+מחלקות Objective-C וחתימות `@objc` שנכללו ב־metadata של ה־host חשופות דרך הגשר:
 * **בנאי ברירת מחדל (`init`):**
+  <!-- miniapp-snippet: ns.construction -->
   ```javascript
   const label = UILabel.new();
-  // או:
-  const label = UILabel.alloc().init();
+  // אותה פעולת init בכתיבה מפורשת:
+  const explicitlyInitializedLabel = UILabel.alloc().init();
   ```
 * **בנאי עם פרמטרים מותאמים אישית (`initWith...`):**
+  <!-- miniapp-snippet: ns.initializers -->
   ```javascript
+  const vc = UIViewController.new();
   // ב-ObjC: [[UINavigationController alloc] initWithRootViewController:vc]
   const nav = UINavigationController.alloc().initWithRootViewController(vc);
 
-  // ב-ObjC: [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleMedium]
-  const impact = UIImpactFeedbackGenerator.alloc().initWithStyle(UIImpactFeedbackStyleMedium);
+  // ב-ObjC: [[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyle.Medium]
+  const impact = UIImpactFeedbackGenerator.alloc().initWithStyle(UIImpactFeedbackStyle.Medium);
   ```
 * **פונקציות Factory (שיטות סטטיות של מחלקה):**
+  <!-- miniapp-snippet: ns.factories -->
   ```javascript
-  const btn = UIButton.buttonWithType(UIButtonTypeSystem);
-  const blur = UIBlurEffect.effectWithStyle(UIBlurEffectStyleSystemMaterial);
+  const btn = UIButton.buttonWithType(UIButtonType.System);
+  const blur = UIBlurEffect.effectWithStyle(UIBlurEffectStyle.SystemMaterial);
   const symbolImg = UIImage.systemImageNamed("sparkles");
   ```
 
 ### ב. המרת שמות פונקציות (Selectors to camelCase)
 ב-Objective-C שמות פונקציות מורכבים מחלקים המופרדים בנקודתיים. ב-NativeScript כל החלקים מתחברים לשם פונקציה אחד בסגנון **camelCase**:
-* ב-ObjC: `[button setTitle:@"שלום" forState:UIControlStateNormal];`
-* ב-JS/TS: `button.setTitleForState("שלום", UIControlStateNormal);`
+* ב-ObjC: `[button setTitle:@"שלום" forState:UIControlState.Normal];`
+* ב-JS/TS: `button.setTitleForState("שלום", UIControlState.Normal);`
 * ב-ObjC: `[stackView addArrangedSubview:myView];`
 * ב-JS/TS: `stackView.addArrangedSubview(myView);`
 * ב-ObjC: `[NSLayoutConstraint activateConstraints:@[c1, c2]];`
@@ -65,7 +69,10 @@
 
 ### ג. מאפיינים (Properties)
 מאפייני Objective-C ממפים ישירות ל-Getters ו-Setters של JS:
+<!-- miniapp-snippet: ns.properties -->
 ```javascript
+const view = UIView.new();
+const label = UILabel.new();
 view.backgroundColor = UIColor.systemBackgroundColor;
 view.layer.cornerRadius = 14;
 view.translatesAutoresizingMaskIntoConstraints = false;
@@ -76,10 +83,10 @@ label.font = UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline);
 
 ### ד. קבועים, Enums וערכי מערכת
 כל ה-Enums והקבועים של אפל חשופים כמשתנים גלובליים:
-* `UIButtonTypeSystem`
-* `UIControlStateNormal`
-* `UILayoutConstraintAxisVertical`, `UILayoutConstraintAxisHorizontal`
-* `UIModalPresentationPageSheet`, `UIModalPresentationPopover`
+* `UIButtonType.System`
+* `UIControlState.Normal`
+* `UILayoutConstraintAxis.Vertical`, `UILayoutConstraintAxis.Horizontal`
+* `UIModalPresentationStyle.PageSheet`, `UIModalPresentationStyle.Popover`
 * `UIFontTextStyleLargeTitle`, `UIFontTextStyleHeadline`, `UIFontTextStyleBody`
 * `UIColor.systemBlueColor`, `UIColor.secondarySystemGroupedBackgroundColor`
 
@@ -93,13 +100,18 @@ label.font = UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline);
 * `CGAffineTransformIdentity`
 
 ### ו. בלוקים ו-Callbacks (Objective-C Blocks)
-פונקציות חץ סטנדרטיות של JavaScript מומרות אוטומטית ל-Blocks של Objective-C:
+פונקציות חץ סטנדרטיות של JavaScript מומרות ל־Blocks של Objective-C. דוגמת הרישום משתמשת ב־Trace המקורי; הפלט מוצג כאשר קטגוריית Debug מופעלת בהגדרות Trace:
+<!-- miniapp-snippet: ns.callbacks -->
 ```javascript
+import { Trace } from '@nativescript/core';
+
+const button = UIButton.buttonWithType(UIButtonType.System);
+const heroView = UIView.new();
 // שימוש ב-UIAction (הדרך המודרנית ללחיצות כפתור):
 const action = UIAction.actionWithHandler(() => {
-  console.log("הכפתור נלחץ!");
+  Trace.write("הכפתור נלחץ!", Trace.categories.Debug);
 });
-button.addActionForControlEvents(action, UIControlEventTouchUpInside);
+button.addActionForControlEvents(action, UIControlEvents.TouchUpInside);
 
 // אנימציות UIView:
 UIView.animateWithDurationAnimations(0.3, () => {
@@ -113,7 +125,9 @@ UIView.animateWithDurationAnimations(0.3, () => {
 
 באפליקציית Hanlin AI, מנוע ה-Host תופס את התצוגה המרכזית דרך ה-`NativeScriptEmbedder`:
 
+<!-- miniapp-snippet: ns.presentation -->
 ```javascript
+const rootViewController = UIViewController.new();
 const embedder = NativeScriptEmbedder.sharedInstance();
 if (!embedder || !embedder.delegate) {
   throw new Error("Hanlin NativeScript presenter delegate is unavailable");
@@ -124,7 +138,15 @@ embedder.delegate.presentNativeScriptApp(rootViewController);
 ```
 
 ### מבנה הטאבים המומלץ (UITabBarController + UINavigationController):
+<!-- miniapp-snippet: ns.tabs -->
 ```javascript
+const screen1VC = UIViewController.new();
+const screen2VC = UIViewController.new();
+const embedder = NativeScriptEmbedder.sharedInstance();
+if (!embedder || !embedder.delegate) {
+  throw new Error("Hanlin NativeScript presenter delegate is unavailable");
+}
+
 // 1. יצירת בקרים לכל מסך
 const tab1Nav = UINavigationController.alloc().initWithRootViewController(screen1VC);
 tab1Nav.navigationBar.prefersLargeTitles = true;
@@ -144,7 +166,7 @@ tab2Nav.tabBarItem = UITabBarItem.alloc().initWithTitleImageSelectedImage(
 
 // 2. יצירת בקר הטאבים המרכזי של אפל
 const tabs = UITabBarController.new();
-tabs.viewControllers = [tab1Nav, tab2Nav];
+tabs.viewControllers = NSArray.arrayWithArray([tab1Nav, tab2Nav]);
 tabs.selectedIndex = 0;
 
 // 3. הגשה ל-Hanlin
@@ -153,40 +175,35 @@ embedder.delegate.presentNativeScriptApp(tabs);
 
 ---
 
-## 4. שילוב רכיבי SwiftUI 4.0 מקוריים
+## 4. שילוב ספק SwiftUI דרך הספרייה המקורית
 
-ב-Hanlin מובנה בקר Swift רשמי המייצא רכיב SwiftUI ל-Objective-C תחת השם **`HanlinNativeScriptSwiftUIFixtureProvider`**.
-בקר זה הוא למעשה **`UIViewController`** לכל דבר שמארח SwiftUI View (`UIHostingController`):
+הספרייה המקורית @nativescript/swift-ui מגדירה את ISwiftUIProvider ואת
+UIDataDriver. הדוגמה הבאה מקבלת ספק native אמיתי שה־host יצר, ורושמת אותו
+לממשק המקורי. היא אינה מייצרת ספק SwiftUI או metadata מתוך הגדרת טיפוס.
+המחלקה HanlinNativeScriptSwiftUIFixtureProvider משמשת את בדיקות ה־host;
+אין להניח שהיא טיפוס authoring ציבורי או להוסיף הצהרה מקומית שממציאה לה API.
 
-```javascript
-// 1. אתחול ספק ה-SwiftUI
-const ProviderClass = NSClassFromString("HanlinNativeScriptSwiftUIFixtureProvider");
-const swiftController = ProviderClass.alloc().init();
+הפרמטר provider הוא ההקשר הדרוש לדוגמה. לאחר שה־host מספק אותו, הפונקציה
+מחזירה View מקורי שאפשר לשלב ב־Page של NativeScript:
 
-// 2. עטיפה ב-NavigationController או הטמעה כ-Child View Controller
-const swiftNav = UINavigationController.alloc().initWithRootViewController(swiftController);
-swiftNav.tabBarItem = UITabBarItem.alloc().initWithTitleImageSelectedImage(
-  "SwiftUI",
-  UIImage.systemImageNamed("swift"),
-  null
-);
+<!-- miniapp-snippet: ns.swiftui-provider -->
+```typescript
+import { Trace } from '@nativescript/core';
+import {
+  registerSwiftUI, SwiftUI, UIDataDriver,
+  type ISwiftUIProvider, type SwiftUIEventData
+} from '@nativescript/swift-ui';
 
-// 3. סנכרון נתונים דו-כיווני:
-// שליחה מ-JavaScript ל-SwiftUI:
-const data = NSMutableDictionary.new();
-data.setObjectForKey("כותרת חדשה מ-JS", "title");
-swiftController.updateData(data);
-
-// קבלת אירועים מ-SwiftUI ל-JavaScript:
-NSNotificationCenter.defaultCenter.addObserverForNameObjectQueueUsingBlock(
-  "HanlinSwiftUIEventNotification",
-  null,
-  NSOperationQueue.mainQueue,
-  (notification) => {
-    const count = notification.userInfo.objectForKey("count");
-    console.log(`אירוע התקבל מ-SwiftUI! מונה: ${count}`);
-  }
-);
+export function makeSwiftUIView(provider: ISwiftUIProvider) {
+  registerSwiftUI('provided-native-view', view => new UIDataDriver(provider, view));
+  const view = new SwiftUI<{count: number}, {title: string}>();
+  view.swiftId = 'provided-native-view';
+  view.updateData({title: 'כותרת חדשה מ-JS'});
+  view.on(SwiftUI.swiftUIEventEvent, (event: SwiftUIEventData<{count: number}>) => {
+    Trace.write('אירוע התקבל מ-SwiftUI: ' + event.data.count, Trace.categories.Debug);
+  });
+  return view;
+}
 ```
 
 ---
@@ -197,18 +214,24 @@ NSNotificationCenter.defaultCenter.addObserverForNameObjectQueueUsingBlock(
 * חבילת NPM: **`@nativescript/types-ios`**
 
 ### הגדרת `tsconfig.json`:
+
+ב־validate_miniapp וב־CLI המשותף, הגדרות ה־SDK המקוריות מצטרפות אוטומטית
+להגדרות הפרויקט. הדוגמה מפעילה גם בדיקה סמנטית של קובצי JavaScript. היא אינה
+משנה את מדיניות NativeScript המקורית: המקור נבדק ב־strict, וגופי קובצי ההצהרות
+אינם נבדקים מחדש (skipLibCheck של ה־SDK). לעורך או tsc חיצוני מגדירים extends
+לנתיב tsconfig המדויק שהוחזר עם ה־SDK, לצד נתיבי המודולים המקוריים שלו.
+<!-- miniapp-snippet: ns.tsconfig -->
 ```json
 {
   "compilerOptions": {
-    "module": "ESNext",
-    "target": "ES2022",
-    "moduleResolution": "Bundler",
-    "lib": ["ESNext"],
-    "types": ["@nativescript/types-ios"],
     "strict": true,
-    "skipLibCheck": true
+    "allowJs": true,
+    "checkJs": true,
+    "moduleDetection": "force"
   },
-  "include": ["src/**/*"]
+  "include": [
+    "src/**/*"
+  ]
 }
 ```
 
@@ -220,6 +243,7 @@ NSNotificationCenter.defaultCenter.addObserverForNameObjectQueueUsingBlock(
 
 חבילת יישומון מוכנה לייבוא ב-Hanlin AI צריכה להכיל את הקבצים הבאים:
 
+<!-- miniapp-snippet: ns.layout -->
 ```
 my-miniapp/
 ├── script.json
@@ -230,6 +254,7 @@ my-miniapp/
 ```
 
 ### א. `script.json` (שורש החבילה)
+<!-- miniapp-snippet: ns.script -->
 ```json
 {
   "name": "Hanlin iPadOS System UI Gallery",
@@ -244,6 +269,7 @@ my-miniapp/
 ```
 
 ### ב. `nativescript/app/package.json`
+<!-- miniapp-snippet: ns.package -->
 ```json
 {
   "name": "hanlin-ipados-system-ui-gallery",

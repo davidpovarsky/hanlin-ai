@@ -45,6 +45,7 @@ The five tools use the original tool catalog and agent execution pipeline. They 
 
 A minimal authoring descriptor is:
 
+<!-- miniapp-snippet: readme.descriptor -->
 ```json
 {
   "schemaVersion": 1,

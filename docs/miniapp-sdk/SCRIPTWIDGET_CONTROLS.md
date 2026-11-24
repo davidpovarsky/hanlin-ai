@@ -35,6 +35,7 @@ validator, including Foundation's platform checks.
 
 The widget source and the authoring entry are both main.jsx:
 
+<!-- miniapp-snippet: controls.manifest -->
 ~~~json
 {
   "formatVersion": 2,
@@ -87,6 +88,7 @@ step.
 
 ## Handler and state semantics
 
+<!-- miniapp-snippet: controls.handler -->
 ~~~jsx
 // @ts-check
 function toggleFocus() {
