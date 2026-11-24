@@ -1,0 +1,109 @@
+{
+  "date": "2026-11-24",
+  "scope": "BOUNDED_READ_ONLY_PUBLIC_SCHEMA_AND_RETAINED_SIGNING_EVIDENCE",
+  "conclusion": "No additional documented headless assignment operation identified for the current API-key/Xcode route. Existing group assignment is distinct from enabling APP_GROUPS.",
+  "official_schema": {
+    "url": "https://developer.apple.com/sample-code/app-store-connect/app-store-connect-openapi-specification.zip",
+    "version": "4.6.1",
+    "path_count": 1032,
+    "zip_sha256": "528ebf253c4fea45d619f8576bca14a418a1a878080e4bcdef833e932a7abcef",
+    "json_sha256": "ba2ab338aa3ecb68948aefa5514d56d22df933422b9d8b5b25f17569e0d3e259",
+    "fresh_download_matches_retained": true,
+    "app_group_resource_or_relationship_paths": [],
+    "app_group_component_schemas": [],
+    "APP_GROUPS_is_a_CapabilityType": true,
+    "CapabilitySetting_key_enum": [
+      "ICLOUD_VERSION",
+      "DATA_PROTECTION_PERMISSION_LEVEL",
+      "APPLE_ID_AUTH_APP_CONSENT"
+    ],
+    "CapabilityOption_key_enum": [
+      "XCODE_5",
+      "XCODE_6",
+      "COMPLETE_PROTECTION",
+      "PROTECTED_UNLESS_OPEN",
+      "PROTECTED_UNTIL_FIRST_USER_AUTH",
+      "PRIMARY_APP_CONSENT"
+    ],
+    "BundleId_relationships": [
+      "profiles",
+      "bundleIdCapabilities",
+      "app"
+    ],
+    "BundleIdCapabilityCreateRequest_relationships": [
+      "bundleId"
+    ],
+    "BundleIdCapabilityUpdateRequest_data_fields": [
+      "type",
+      "id",
+      "attributes"
+    ],
+    "BundleIdCapabilityUpdateRequest_attribute_fields": [
+      "capabilityType",
+      "settings"
+    ]
+  },
+  "retained_account_evidence": {
+    "run_id": 45303145908,
+    "receipt": "owner-automatic-provisioning-receipt-45303145908.json",
+    "APP_GROUPS_enabled_for_consumers": true,
+    "fresh_otzaria_profile_groups": [
+      "group.com.davidpovarsky.chavrusatext",
+      "group.com.davidpovarsky.itorah"
+    ],
+    "fresh_anytype_main_share_notification_profile_groups": [],
+    "capability_response_retention": "The retained audits preserve capability types, not the raw settings arrays. No raw APP_GROUPS settings response is claimed.",
+    "key_has_demonstrated": [
+      "Read registered bundle IDs/capability types/profile grants",
+      "Create and remove only an exact task-owned DEVELOPMENT certificate",
+      "Enable documented push and associated-domain capabilities",
+      "Authenticate actual automatic Xcode development signing and distribution export for the no-group widget identity"
+    ],
+    "key_has_not_demonstrated": [
+      "Assign existing group.com.itorah.shared to a consumer",
+      "Create/assign group.io.anytype.app.NA6HPWARQ2",
+      "Full-source signed Anytype archive including multicast",
+      "Physical cross-app container sharing"
+    ],
+    "key_role": "NOT_ESTABLISHED_BY_THIS_REVIEW; successful public operations do not prove every account privilege",
+    "app_group_assignment_explicit_authorization_denial": "NOT_PRESENT_IN_RETAINED_XCODE_DIAGNOSTICS"
+  },
+  "xcode": {
+    "actual_version": "27.2 (27B52)",
+    "documented_already_used": [
+      "-allowProvisioningUpdates",
+      "-authenticationKeyPath",
+      "-authenticationKeyID",
+      "-authenticationKeyIssuerID",
+      "CODE_SIGN_STYLE=Automatic",
+      "CODE_SIGN_IDENTITY=Apple Development",
+      "REGISTER_APP_GROUPS=YES",
+      "Full per-product CODE_SIGN_ENTITLEMENTS"
+    ],
+    "register_app_groups_primary_definition": "Current Apple build-settings reference defines REGISTER_APP_GROUPS for registering groups in profiles.",
+    "additional_documented_assignment_switch_found": false,
+    "project_key_source_verified": "TargetAttributes.A10000000000000000000009.SystemCapabilities.com.apple.ApplicationGroups.iOS.enabled=1",
+    "project_key_current_Xcode_primary_recognition_proof": "NOT_RETAINED; current Apple primary documentation located does not define this literal PBX project key. Source presence is established, and is not a claim of observing Xcode27 internal capability parsing.",
+    "metadata_omission": "The exact frozen generator does include the target capability field and matches the actual target once.",
+    "new_build_or_retry": "NOT_STARTED"
+  },
+  "documented_account_assignment_route": {
+    "developer_account": "Certificates, Identifiers & Profiles: select existing App ID; App Groups Configure; select groups; Continue; Assign.",
+    "xcode_UI": "Signing & Capabilities: App Groups; select the existing group checkbox to add membership; retain all existing required groups.",
+    "required_account_role": "Account Holder or Admin according to Apple account help.",
+    "existing_browser_or_Xcode_account_session": "NOT_PROBED",
+    "new_group_creation": "Only the authorized owner-private group is proposed if no existing native group is attached; never substitute an App ID for an App Group.",
+    "completion_evidence": "Fresh profile grants for every full source entitlement, actual signed products, then physical two-app sharing."
+  },
+  "primary_sources": [
+    "https://developer.apple.com/documentation/appstoreconnectapi/",
+    "https://developer.apple.com/documentation/appstoreconnectapi/capabilitysetting",
+    "https://developer.apple.com/documentation/appstoreconnectapi/capabilityoption",
+    "https://developer.apple.com/help/account/identifiers/enable-app-capabilities",
+    "https://developer.apple.com/help/account/identifiers/register-an-app-group/",
+    "https://developer.apple.com/documentation/xcode/configuring-app-groups",
+    "https://developer.apple.com/documentation/xcode/build-settings-reference",
+    "https://developer.apple.com/documentation/xcode-release-notes/xcode-13-release-notes"
+  ],
+  "mutations": "Documentation receipt only. No credential reads, sessions, account operations, certificate changes, entitlement removal or native runs."
+}
