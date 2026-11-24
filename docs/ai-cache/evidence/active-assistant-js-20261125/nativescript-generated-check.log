@@ -1,0 +1,1 @@
+PASS: TypeScript5.9.3 strict native facade, declarations and JS unchanged; native execution is a separate gate.
