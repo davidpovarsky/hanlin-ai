@@ -755,6 +755,22 @@
       "result": "SOURCE_SYNTAX_PASS_APPLE_RETEST_PENDING",
       "scope": "Exact two test-source edits retain assertions/selectors; both full failed job logs retained.",
       "currentIntegrationBase": "098fbb64aca02227327e0d517030d969e73c0a44"
+    },
+    "apple_modern_contracts": {
+      "receipt": "docs/miniapp-sdk/evidence/apple-modern-contracts-20261124/receipt.json",
+      "result": "EXECUTED_PASS_APPLE",
+      "sourceCommit": "25b14790e5c79b8ddd821984ed97d37e6af0bfa4",
+      "passed": 8,
+      "failed": 0,
+      "skipped": 0
+    },
+    "apple_store_lifecycle": {
+      "receipt": "docs/miniapp-sdk/evidence/apple-store-lifecycle-20261124/receipt.json",
+      "result": "EXECUTED_PASS_APPLE",
+      "sourceCommit": "a12eb646aeb5c484f746c07ecffafc7d9f34f167",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0
     }
   },
   "criteria": [
@@ -771,31 +787,19 @@
         "archive_policy_12_after_module_fix",
         "sdk02_sdk06_portable_gaps",
         "integrated_source_reconciliation",
-        "surface_test_compilation_fix"
+        "surface_test_compilation_fix",
+        "apple_modern_contracts"
       ],
       "establishedScope": [
         "Ambiguous manifests, collisions, escaping paths and archive integrity policy",
         "Real version-boundary behavior with unchanged implementation/tests",
         "Source/operation/version drift checks",
-        "Actual missing-manifest ZIP rejected with production ambiguousManifest/error; one new portable case passed."
+        "Actual missing-manifest ZIP rejected with production ambiguousManifest/error; one new portable case passed.",
+        "Actual Apple eight-case Analyzer contract pass in45356338624, including wrong entries, unsupported exposures and unavailable/incompatible plugin policy."
       ],
       "remainingRequirements": [
-        "Eight actual Analyzer method results in active eight-case Mac run45354885323 must establish unsupported exposure, wrong entry and missing/incompatible plugin contracts.",
         "Apple import integration remains subject to actual app gate results."
       ],
-      "existingTestsWithoutMatchedExecutionReceipt": {
-        "path": "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinScriptAnalyzerTests.swift",
-        "tests": [
-          "expoMainMustMatchTheInspectedForegroundEntrypoint",
-          "nativeScriptPreparedEntrypointIsAlwaysTheCanonicalBundle",
-          "nativeScriptSwiftUIContract",
-          "nativeScriptCoreContract",
-          "expoSwiftUIContract",
-          "expoMultiExposureMatrix",
-          "malformedPreparedEntrypointsFailWithStableDiagnostic",
-          "unavailableModernNativePluginsFailBeforeImport"
-        ]
-      },
       "closure": "CONDITIONAL; 42 selected passes alone do not establish all listed negative contract cases."
     },
     {
@@ -874,7 +878,8 @@
         "sdk_only_current",
         "sdk02_sdk06_portable_gaps",
         "integrated_source_reconciliation",
-        "surface_test_compilation_fix"
+        "surface_test_compilation_fix",
+        "apple_modern_contracts"
       ],
       "establishedScope": [
         "TS2353 and TS7006 intentional consumer failures already have real recorded proof",
@@ -883,10 +888,10 @@
         "No fabricated source typecheck for bundle-only imports",
         "Native presentation missing-source/invalid-layout/unsupported-renderer errors and original Metro failure propagation",
         "Current exported SDK-only authoring/build/source retention, with actual original Expo modifier and UIKit property diagnostics; exact scope in sdk_only_current.",
-        "Original ScriptWidget valid/missing-storage permission-contract cases passed against exported original validator and compiler; source locations preserved."
+        "Original ScriptWidget valid/missing-storage permission-contract cases passed against exported original validator and compiler; source locations preserved.",
+        "Actual Apple eight-case Analyzer contract pass in45356338624, including wrong entries, unsupported exposures and unavailable/incompatible plugin policy."
       ],
       "remainingRequirements": [
-        "Actual wrong-entry and full importer version/plugin Analyzer results in isolated eight-case Mac active eight-case Mac run45354885323.",
         "Native diagnostic presentation/repair/installation receipt remain subject to actual paired app gate. No generic OS permission behavior is inferred from manifest validation."
       ],
       "closure": "CONDITIONAL; the core13 authoring component cases are already proven and need not be rerun merely for this mapping."
@@ -911,19 +916,21 @@
         "integrated_source_reconciliation",
         "actual_store_lifecycle_portable",
         "active_action_capacity",
-        "manual13_ui_candidate"
+        "manual13_ui_candidate",
+        "apple_store_lifecycle"
       ],
       "establishedScope": [
         "Golden and negative compiler/archive/CLI component evidence",
         "Original Metro artifact and retained-source identity",
         "Bounded same-source historical ownership evidence",
-        "Current exported SDK-only authoring/build/source retention, with actual original Expo modifier and UIKit property diagnostics; exact scope in sdk_only_current."
+        "Current exported SDK-only authoring/build/source retention, with actual original Expo modifier and UIKit property diagnostics; exact scope in sdk_only_current.",
+        "Actual Apple existing lifecycle method passed on current store/test bytes in45354891567."
       ],
       "remainingRequirements": [
         "Actual active42-case run45354940642 rows/screenshots/installation receipt for its selected application scope.",
         "Existing applicable receipts from another established owner may be linked without new testing after exact source/toolchain/input verification.",
         "Selected42-case application proof is not the complete80-cell extension/runtime E2E proof.",
-        "Actual Apple lifecycle method must run after test-compilation repair; portable projected-source lifecycle proof exists. OS permission revocation remains outside those receipts."
+        "OS permission revocation is not established by the successful storage lifecycle receipt."
       ],
       "closure": "CONDITIONAL; reconcile existing required evidence rather than interpreting source presence, count38, or cancellation as product acceptance."
     }
@@ -986,10 +993,15 @@
       ],
       "status": "OPEN_BROADER_SCOPE",
       "boundary": "80 current source-reachability cells and native original-library surfaces have separate scopes. Legitimate Deferred/NotApplicable/BLOCKED dispositions require reasons; neither source wiring nor38selected tests becomes80E2Epasses."
+    },
+    {
+      "task": "SDK01/SDK05 source-delivery reconciliation",
+      "status": "IN_PROGRESS",
+      "scope": "Complete consumed manifest-field/source map and export/index complete source-only examples; these are source/delivery criteria, not a new native gate."
     }
   ],
   "recordingOutcome": "Evidence mapping only. No task closure, new test result, native application success, physical-device success, main merge, release or TestFlight publication is asserted.",
-  "updatedAtUTC": "2026-11-24T08:21:48.418353+00:00",
+  "updatedAtUTC": "2026-11-24T08:37:54.070952+00:00",
   "currentIntegrationBase": "098fbb64aca02227327e0d517030d969e73c0a44",
   "gateHistory": [
     {
@@ -1043,20 +1055,17 @@
     }
   ],
   "modernContractGate": {
-    "runID": 45354885323,
-    "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45354885323",
-    "sourceCommit": "a12eb646aeb5c484f746c07ecffafc7d9f34f167",
-    "status": "IN_PROGRESS",
-    "result": null,
+    "runID": 45356338624,
+    "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45356338624",
+    "sourceCommit": "25b14790e5c79b8ddd821984ed97d37e6af0bfa4",
+    "status": "COMPLETED",
+    "result": "EXECUTED_PASS_APPLE",
     "selectedCases": 8,
-    "executionObserved": false,
-    "dispatchReceipt": {
-      "path": "docs/miniapp-sdk/evidence/miniapp-contract-gate-fourth-dispatch-20261124.json",
-      "sha256": "e1aa21698d273acb8a968d63b859a8ed620a38eb361d9aaf435c63df460a87d8"
-    },
-    "lastObservationRecordedAtUTC": "2026-11-24T08:21:48.418353+00:00",
-    "scope": "miniapp_contracts",
-    "boundary": "Require actual selected-case rows and0failure/skip/cancel. Dispatch or compilation alone is not acceptance; no physical-device success inferred."
+    "executedCases": 8,
+    "passed": 8,
+    "failed": 0,
+    "skipped": 0,
+    "receipt": "docs/miniapp-sdk/evidence/apple-modern-contracts-20261124/receipt.json"
   },
   "currentScopeNote": "Original-library SDK completion and selected native acceptance; broad canonical Host-runtime matrix is separately bounded. Historical evidence retains its own exact input applicability.",
   "modernContractGateHistory": [
@@ -1088,23 +1097,48 @@
         "sha256": "dc394cd61c478d9ad2e2ded0b1034ff5c7bf7103891959c0960474f5244da9c6"
       },
       "next": "Reviewed two-edit test fix integrated; re-execution pending."
+    },
+    {
+      "runID": 45354885323,
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45354885323",
+      "sourceCommit": "a12eb646aeb5c484f746c07ecffafc7d9f34f167",
+      "status": "COMPLETED",
+      "result": "EXECUTED_7PASS_1FAIL",
+      "selectedCases": 8,
+      "executionObserved": false,
+      "dispatchReceipt": {
+        "path": "docs/miniapp-sdk/evidence/miniapp-contract-gate-fourth-dispatch-20261124.json",
+        "sha256": "e1aa21698d273acb8a968d63b859a8ed620a38eb361d9aaf435c63df460a87d8"
+      },
+      "lastObservationRecordedAtUTC": "2026-11-24T08:21:48.418353+00:00",
+      "scope": "miniapp_contracts",
+      "boundary": "Require actual selected-case rows and0failure/skip/cancel. Dispatch or compilation alone is not acceptance; no physical-device success inferred.",
+      "passed": 7,
+      "failed": 1,
+      "skipped": 0,
+      "executedCases": 8,
+      "evidence": "docs/miniapp-sdk/evidence/native-runtime-message-authority-20261124/receipt.json"
     }
   ],
   "lifecycleGate": {
     "runID": 45354891567,
     "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45354891567",
     "sourceCommit": "a12eb646aeb5c484f746c07ecffafc7d9f34f167",
-    "status": "IN_PROGRESS",
-    "result": null,
+    "status": "COMPLETED",
+    "result": "EXECUTED_PASS_APPLE",
     "selectedCases": 1,
-    "executionObserved": false,
     "dispatchReceipt": {
       "path": "docs/miniapp-sdk/evidence/miniapp-lifecycle-gate-second-dispatch-20261124.json",
       "sha256": "fb7924070bc0cf1f4a5a359cdd432dea1232b810c48fef8a3141191c165edf90"
     },
     "lastObservationRecordedAtUTC": "2026-11-24T08:21:48.418353+00:00",
     "scope": "miniapp_lifecycle",
-    "boundary": "Require actual selected-case rows and0failure/skip/cancel. Dispatch or compilation alone is not acceptance; no physical-device success inferred."
+    "boundary": "Require actual selected-case rows and0failure/skip/cancel. Dispatch or compilation alone is not acceptance; no physical-device success inferred.",
+    "executedCases": 1,
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "receipt": "docs/miniapp-sdk/evidence/apple-store-lifecycle-20261124/receipt.json"
   },
   "lifecycleGateHistory": [
     {
