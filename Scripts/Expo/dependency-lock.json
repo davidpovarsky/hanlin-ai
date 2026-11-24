@@ -3,6 +3,7 @@
   "expo": {
     "sdkVersion": "58.0.26",
     "uiVersion": "58.0.29",
+    "assetVersion": "58.0.21",
     "widgetsVersion": "58.0.29",
     "brownfieldVersion": "58.0.20",
     "modulesCoreVersion": "58.1.0",
@@ -22,6 +23,19 @@
       "sourceBuild": {
         "producer": "original-cocoapods",
         "packageIntegrity": "sha512-+zeaoDU1zS1rKe1afVsH8sh7+b+HNZyq93ZL0BRJ03RtrxZyYxKljqOcl78Q9NkX1oOO8CdQxzhFa8Dl6o52ug=="
+      }
+    },
+    {
+      "name": "ExpoAsset",
+      "source": "npm-source",
+      "package": "expo-asset",
+      "version": "58.0.21",
+      "tarball": "https://registry.npmjs.org/expo-asset/-/expo-asset-58.0.21.tgz",
+      "sha256": "2bfbb115da9111702530e5df550eac7e2a074aa12b6297fcc332744767623126",
+      "target": "Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework",
+      "sourceBuild": {
+        "producer": "original-cocoapods",
+        "packageIntegrity": "sha512-qaJmuTtswggXdBQfiUdpxrVGM7l+tH8iEDHwVDMuxyCF/kAau8sUGVuWrDKYNW4yAx7Z8ncgsT8s27pXjRH5GA=="
       }
     },
     {

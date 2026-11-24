@@ -1,0 +1,15 @@
+{
+  "name": "table-share",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "bundle.mjs",
+  "hanlinRuntime": "hanlin-nativescript",
+  "dependencies": {
+    "@nativescript/core": "9.1.4"
+  },
+  "hanlinNativeScript": {
+    "runtimeVersion": "9.1.1",
+    "plugins": {}
+  }
+}

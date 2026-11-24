@@ -430,13 +430,17 @@ async function copyResources(input, root, didCopy) {
   for (const resource of input.author.resources ?? []) await copy(resource);
 }
 
-function relativeImportTransformer(ts, parsed, input) {
+function relativeImportTransformer(ts, parsed, input, sourceOutputs) {
   return context => {
     const rewrite = (specifier, sourceFile) => {
       if (!ts.isStringLiteral(specifier)) return specifier;
       const resolved = parsed.compilerHost.resolveModuleNames([specifier.text], sourceFile.fileName)[0];
       if (!resolved || !inside(input.sourceRoot, resolved.resolvedFileName) || resolved.resolvedFileName.endsWith('.d.ts')) return specifier;
-      const relative = slash(path.relative(path.dirname(sourceFile.fileName), resolved.resolvedFileName)).replace(/\.mts$/, '.mjs').replace(/\.cts$/, '.cjs').replace(/\.(tsx?|jsx?)$/, '.js');
+      const importerOutput = sourceOutputs.get(path.resolve(sourceFile.fileName));
+      const targetOutput = sourceOutputs.get(path.resolve(resolved.resolvedFileName));
+      const relative = targetOutput && importerOutput
+        ? slash(path.relative(path.dirname(importerOutput), targetOutput))
+        : slash(path.relative(path.dirname(sourceFile.fileName), resolved.resolvedFileName));
       return ts.factory.createStringLiteral(relative.startsWith('.') ? relative : './' + relative);
     };
     return sourceFile => {
@@ -586,15 +590,41 @@ async function buildNativeScript(ts, input, parsed, stage, sdkEngine) {
   const diagnostics = ts.getPreEmitDiagnostics(program);
   if (diagnostics.some(item => item.category === ts.DiagnosticCategory.Error))
     return diagnostics.map(item => normalizedDiagnostic(ts, item, input.sourceRoot));
+  // Plan from actual compiler output: the original iOS loader recognizes .mjs
+  // as ESM, while authored CommonJS .js must retain its original module mode.
+  const moduleOutputs = new Map();
+  const sourceOutputs = new Map();
+  const planning = program.emit(undefined, (file, text, _bom, _error, sources) => {
+    if (!/\.[cm]?js$/.test(file)) return;
+    const isESM = ts.isExternalModule(ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.JS));
+    const output = isESM ? file.replace(/\.js$/, '.mjs') : file;
+    moduleOutputs.set(file, output);
+    for (const source of sources ?? []) sourceOutputs.set(path.resolve(source.fileName), output);
+  });
+  if (planning.diagnostics.some(item => item.category === ts.DiagnosticCategory.Error))
+    return planning.diagnostics.map(item => normalizedDiagnostic(ts, item, input.sourceRoot));
+
   const pending = [];
   const emittedSources = [];
   const emitted = program.emit(undefined, (file, text) => {
     if (!inside(modules, path.resolve(file))) throw new Error('Compiler output leaves the prepared app.');
-    if (/\.[cm]?js$/.test(file)) emittedSources.push([file, text]);
-    pending.push(fs.mkdir(path.dirname(file), {recursive: true}).then(() => fs.writeFile(file, text)));
-  }, undefined, undefined, {before: [relativeImportTransformer(ts, parsed, input)]});
+    const output = file.endsWith('.map')
+      ? (moduleOutputs.get(file.slice(0, -4)) ?? file.slice(0, -4)) + '.map'
+      : moduleOutputs.get(file) ?? file;
+    if (output !== file && file.endsWith('.map')) {
+      const map = JSON.parse(text);
+      map.file = path.basename(output.slice(0, -4));
+      text = JSON.stringify(map);
+    } else if (output !== file) {
+      text = text.replace(/(\/\/# sourceMappingURL=[^\r\n]+)\.js\.map(\r?\n)?$/, '$1.mjs.map$2');
+    }
+    if (/\.[cm]?js$/.test(output)) emittedSources.push([output, text]);
+    pending.push(fs.mkdir(path.dirname(output), {recursive: true}).then(() => fs.writeFile(output, text)));
+  }, undefined, undefined, {before: [relativeImportTransformer(ts, parsed, input, sourceOutputs)]});
   await Promise.all(pending);
-  const entry = slash(input.entry).replace(/\.mts$/, '.mjs').replace(/\.cts$/, '.cjs').replace(/\.(tsx?|jsx?)$/, '.js');
+  const entryOutput = sourceOutputs.get(path.resolve(input.sourceRoot, input.entry));
+  if (!entryOutput) throw new Error('The compiler did not emit the NativeScript entry module.');
+  const entry = slash(path.relative(modules, entryOutput));
   await fs.mkdir(app, {recursive: true});
   await fs.writeFile(path.join(app, 'bundle.mjs'), 'import ' + JSON.stringify('./modules/' + entry) + ';\n');
   const dependencies = await copyNativeScriptDependencies(ts, input, parsed, app, emittedSources);

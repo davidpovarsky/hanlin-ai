@@ -25,7 +25,7 @@ ROOT = Path(__file__).resolve().parents[2]
 TARGETS = {
     **{name: f"Packages/HanlinExpoRuntime/Artifacts/{name}.xcframework" for name in (
         "ReactNativeHeaders", "React", "ReactNativeDependencies", "hermesvm",
-        "ExpoModulesJSI", "ExpoModulesCore", "ExpoModulesWorklets", "ExpoUI", "ExpoBrownfield")},
+        "ExpoModulesJSI", "ExpoModulesCore", "ExpoModulesWorklets", "ExpoUI", "ExpoAsset", "ExpoBrownfield")},
     "Libffi": "Packages/HanlinExpoNativeAPI/Artifacts/Libffi.xcframework",
     "TNSWidgets": "Packages/HanlinNativeScriptRuntime/Artifacts/TNSWidgets.xcframework",
     "NSCWinterTC": "Packages/HanlinNativeScriptRuntime/Artifacts/NSCWinterTC.xcframework",
