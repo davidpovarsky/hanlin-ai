@@ -1,0 +1,10 @@
+{
+  ".github/workflows/build-ios26-unsigned-ipa.yml": "afeed29d2451d17f835230166cb2da894d574aa4474ca296b770ebb68e1f3d8c",
+  "Scripts/CI/IntegrationValidation/run_agent_sdk.sh": "e64a578132b6b113a0b1497dbdb4cba4ae6977464cdbbc79037564d3e0b6b2e5",
+  "Scripts/CI/IntegrationValidation/run_stop_continuation_delta.py": "5e50a41525c928d5e40ba80b5decdac3872045e2867bc27b3debbf614d0cc22a",
+  "Scripts/CI/IntegrationValidation/verify_native_tool_candidate.py": "3543dcc8bb30ac050e8203aa4d05cfdc39f7d175308c336a66794482a25c81da",
+  "Scripts/CI/IntegrationValidation/verify_stop_continuation_delta.py": "74f5f2e4beb3b96bb11de1842be661586cffa51e04f9730919d3014535f52f75",
+  "Scripts/CI/verify_exact_json_vendor.py": "67d90e3bcb9660c719c89f4b54ee62d56bb11aeaae6650d5996c10bc4179165b",
+  "Scripts/CI/IntegrationValidation/xcresult_to_xunit.py": "41720f0fa414875f05a3b96e9364e6659c230f96a4d5cbb708fad801eb3b3afb",
+  "Scripts/CI/select_stable_xcode.py": "531237772eeeb10888359064302a5980f42ad47cad135e5bb0b544afe289f05f"
+}

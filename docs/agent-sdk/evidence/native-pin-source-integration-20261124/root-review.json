@@ -1,0 +1,56 @@
+{
+  "utc": "2026-11-24T01:23:11.381106+00:00",
+  "base": "912e8278f3e6f3b64a33ca7b106ffb20c1c9bd23",
+  "sourceCandidates": [
+    "59abac09eb3b3b81a83260bf339b964fa591fd9d",
+    "0a424ef62a7e981b37a9ce5980358a449b3b9249",
+    "25a4ee7cfacefebb8a3bbd5ecaca304a99093295",
+    "f428747a02c41da1d51bae263d1f652c8753156c"
+  ],
+  "rootAndReleasePeer": "NO_CONCRETE_SOURCE_OR_ROUTE_BLOCKER",
+  "packageFileCount": 404,
+  "packageSource": "EXACT_f428",
+  "all19PinPlanHashesVerified": true,
+  "rawSourceLocksUnchanged": true,
+  "originalCoreAndSDKPinArrays": "BOTH_EXACT_SAME4_PINS",
+  "currentBuild": {
+    "run": 45303091700,
+    "attempt": 1,
+    "source": "f428747a02c41da1d51bae263d1f652c8753156c",
+    "status": "PENDING_ORIGINAL_TERMINAL_PROOF"
+  },
+  "existingNative15": {
+    "run": 45292176348,
+    "source": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+    "PASS": 15,
+    "FAIL": 0,
+    "NOT_RUN": 0,
+    "strictIOSStatus": "BLOCKED_POST_BUILD_LOCK_CHANGED"
+  },
+  "prior21": "SEPARATELY_ATTRIBUTED_REUSE_ONLY_AFTER_GUARDS",
+  "physicalSystemLanguageModel": "NOT_RUN",
+  "shippingGates": "ALL_FOUR_CLOSED",
+  "newNativeTestExecutions": 0,
+  "losslessHistoricalControlPatch": {
+    "uncompressedSHA256": "6d9b1f0b15494167f810df15a96fac918990020961c88720eede924926fd2e00",
+    "compressedSHA256": "b17c5de736c5e0fe0ec41bcf61d7f73d632eefad8d2f2f83f1656253daf97592"
+  },
+  "centralPublication": "DEVELOPMENT_SOURCE_INTEGRATION_NOT_RELEASE_ACCEPTANCE",
+  "whitespaceCheck": {
+    "productionAndNewDocumentation": "PASS",
+    "completeDiff": "ORIGINAL_IMMUTABLE_FIXTURE_WHITESPACE_RETAINED",
+    "exactOriginalPaths": {
+      "Scripts/CI/Tests/Fixtures/native-cancellation-07431/bridge/06-swift.stderr.log": "bbc8b176d3c74d4c5a7fd00b40280f98168e116d5272273bfe8e71407625540e",
+      "Scripts/CI/Tests/Fixtures/native-cancellation-07431/c93/06-swift.stderr.log": "bbc8b176d3c74d4c5a7fd00b40280f98168e116d5272273bfe8e71407625540e",
+      "Scripts/CI/Tests/Fixtures/native-cancellation-07431/delta/05-swift.stderr.log": "bbc8b176d3c74d4c5a7fd00b40280f98168e116d5272273bfe8e71407625540e",
+      "Scripts/CI/Tests/Fixtures/native-cancellation-07431/header/06-swift.stderr.log": "bbc8b176d3c74d4c5a7fd00b40280f98168e116d5272273bfe8e71407625540e",
+      "Scripts/CI/Tests/Fixtures/native-cancellation-07431/producer-07431-guard.swift": "e3204508d5ce56ccbb9b43c6663fda3300a0abaebb57aac0009793813a5df08a",
+      "Scripts/CI/Tests/Fixtures/native-cancellation-07431/producer-e7-guard.swift": "9886a95b59c5ce10d25cbd59cb0314fcf99bf916410633a3ba9f3b1821487273",
+      "Scripts/CI/Tests/Fixtures/native-tool-bridge-45273580428/06-swift.stderr.log": "bbc8b176d3c74d4c5a7fd00b40280f98168e116d5272273bfe8e71407625540e",
+      "Scripts/CI/Tests/Fixtures/native-tool-header-45259715158/06-swift.stderr.log": "bbc8b176d3c74d4c5a7fd00b40280f98168e116d5272273bfe8e71407625540e",
+      "Scripts/CI/Tests/Fixtures/native-tool-header-compile-45268041311/06-swift.stderr.log": "bbc8b176d3c74d4c5a7fd00b40280f98168e116d5272273bfe8e71407625540e",
+      "Scripts/CI/Tests/Fixtures/native-tool-header-compile-45268041311/17-IOSBuild.stdout.log": "3f3195225c3822a91a366b22884add507335fb58c53a1221a67b07760ff5b726"
+    },
+    "reason": "Do not normalize authenticated original command outputs or frozen producer source guards; their exact bytes and historical hashes are required by strict evidence verification"
+  }
+}

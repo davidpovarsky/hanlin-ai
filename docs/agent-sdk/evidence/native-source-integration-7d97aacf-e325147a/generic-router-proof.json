@@ -1,0 +1,11 @@
+{
+  "base_body_sha256": "ee37607c24716d2669d527d5d4ef5a2dde50563d38b75d55a7aa388293d53d62",
+  "composed_sha256": "12fdebd950bd4a87a50e38f7f1bb2c568175cb00d25af4a6afbbba630c5b44d6",
+  "remove_only_added_preambles_restores_exact_original": true,
+  "stop_preamble_bytes": 505,
+  "native_preamble_bytes": 544,
+  "stop_source": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+  "native_source": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+  "generic_producer": "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8",
+  "historical_frozen_guards_changed": false
+}
