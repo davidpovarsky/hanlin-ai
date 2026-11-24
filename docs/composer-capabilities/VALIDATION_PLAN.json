@@ -109,7 +109,8 @@
         "HanlinCapabilityAttachmentTests",
         "HanlinScriptAnalyzerTests"
       ],
-      "status": "NOT_RUN"
+      "status": "NOT_RUN",
+      "expectedCases": 31
     },
     {
       "id": "composer_shared",
@@ -118,12 +119,14 @@
         "HanlinComposerCapabilityQueryTests",
         "HanlinComposerCapabilityDraftTests",
         "HanlinCapabilityCustomPanelProviderTests",
+        "HanlinCapabilityNumberInputTests",
         "NativeComposerLineSizingTests/equalStringOwnerSwitchKeepsPendingInputAndLateDelegateScoped",
         "NativeComposerLineSizingTests/canonicalEquivalentOwnerAndNativeReplacementsPreserveExactText",
         "NativeComposerLineSizingTests/markedTextOwnerSwitchPreservesCompositionAndAuthoritativeClear",
         "NativeComposerLineSizingTests/programmaticDraftUpdatesWhileEditing"
       ],
-      "status": "NOT_RUN"
+      "status": "NOT_RUN",
+      "expectedSDKCases": 11
     },
     {
       "id": "app_compilation",
@@ -286,5 +289,23 @@
     "completionDocumentationOnly": "635bc66274436d21236500cda4c2e873b1abe1bd",
     "activeDraftExcluded": "PR18 remains with original owner"
   },
-  "updatedAtUTC": "2026-11-24T23:01:52.356000+00:00"
+  "updatedAtUTC": "2026-11-24T23:31:52.166799+00:00",
+  "failureCorrections": [
+    {
+      "boundary": "manifest ordinary JSON",
+      "reason": "Actual shared31 predecessor29run had25PASS4FAIL; fix schema/defaultValue wire codec and archive-relative package sibling paths, retain original global codecs/version authority"
+    },
+    {
+      "boundary": "numeric composer editing",
+      "reason": "Preserve decimal/negative intermediate text, invalidate nonnumeric draft values, synchronize external map updates"
+    },
+    {
+      "boundary": "standalone SDK macro build",
+      "reason": "Remove global -sdk; canonical Xcode destination-only route keeps compiler plugins on macOS"
+    },
+    {
+      "boundary": "model history projection",
+      "reason": "Persistent typed snapshots project ordinary immutable configuration JSON to model history"
+    }
+  ]
 }

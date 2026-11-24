@@ -223,29 +223,70 @@ private extension HanlinComposerOption {
     var composerChildren: [HanlinComposerOption]? { children.isEmpty ? nil : children }
 }
 
-/// Retains invalid intermediate text as a string value so schema validation
-/// cannot silently send an older number while the field shows invalid input.
+/// Keeps the exact native edit until a different bound value arrives. Echoing
+/// a parsed value must not turn "0.0" into "0" before the next digit is entered.
+struct HanlinCapabilityNumberInputState {
+    private(set) var text: String
+    private let locale: Locale
+
+    init(value: HanlinJSONValue?, locale: Locale = .current) {
+        self.locale = locale
+        text = Self.display(value, locale: locale)
+    }
+
+    var value: HanlinJSONValue? {
+        if text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty { return nil }
+        if let number = try? Double(text, format: .number.locale(locale), lenient: false),
+           number.isFinite {
+            return .number(number)
+        }
+        // Invalid and intermediate edits reach the schema validator immediately;
+        // the field never leaves the previous valid number in the outgoing draft.
+        return .string(text)
+    }
+
+    mutating func edit(_ text: String) {
+        self.text = text
+    }
+
+    mutating func synchronize(with value: HanlinJSONValue?) {
+        guard self.value != value else { return }
+        text = Self.display(value, locale: locale)
+    }
+
+    private static func display(_ value: HanlinJSONValue?, locale: Locale) -> String {
+        switch value {
+        case let .string(raw)?: return raw
+        case let .integer(number)?:
+            return number.formatted(.number.grouping(.never).locale(locale))
+        case let .number(number)?:
+            // External map changes retain enough precision to round-trip the
+            // coordinate instead of displaying a different three-decimal value.
+            return number.formatted(.number.grouping(.never).precision(.significantDigits(1...17)).locale(locale))
+        default: return ""
+        }
+    }
+}
+
+/// The shared numeric control keeps raw text locally while the draft receives
+/// the parsed number or the actual invalid value on every edit.
 struct HanlinCapabilityNumberField: View {
     let title: String
     @Binding var value: HanlinJSONValue?
     var accessibilityID: String = ""
+    @State private var input: HanlinCapabilityNumberInputState
+
+    init(title: String, value: Binding<HanlinJSONValue?>, accessibilityID: String = "") {
+        self.title = title
+        _value = value
+        self.accessibilityID = accessibilityID
+        _input = State(initialValue: HanlinCapabilityNumberInputState(value: value.wrappedValue))
+    }
 
     private var text: Binding<String> {
-        Binding(get: {
-            if case let .string(raw)? = value { return raw }
-            if let number = value?.composerNumber { return number.formatted(.number.grouping(.never)) }
-            return ""
-        }, set: { raw in
-            if raw.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                value = nil
-            } else {
-                // Parsing validates the entire string and respects the user's locale.
-                if let number = try? Double(raw, format: .number.locale(.current), lenient: false), number.isFinite {
-                    value = .number(number)
-                } else {
-                    value = .string(raw)
-                }
-            }
+        Binding(get: { input.text }, set: { raw in
+            input.edit(raw)
+            value = input.value
         })
     }
 
@@ -259,6 +300,9 @@ struct HanlinCapabilityNumberField: View {
                 #if canImport(UIKit)
                 .keyboardType(.numbersAndPunctuation)
                 #endif
+        }
+        .onChange(of: value) { _, updated in
+            input.synchronize(with: updated)
         }
     }
 }

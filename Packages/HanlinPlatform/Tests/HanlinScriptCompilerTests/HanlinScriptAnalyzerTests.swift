@@ -13,7 +13,12 @@ struct HanlinScriptAnalyzerTests {
             let declaration: [String: Any] = [
                 "title": "Search", "summary": "Search selected books",
                 "actions": [["id": "search", "title": "Search", "summary": "Find text",
-                             "inputSchema": ["type": "object", "properties": ["query": ["type": "string"]]]]]
+                             "inputSchema": ["type": "object", "properties": ["query": ["type": "string"]]],
+                             "outputSchema": ["type": "object", "properties": ["found": ["type": "boolean"]]]]],
+                "configuration": ["panels": [["id": "search", "title": "Search", "fields": [[
+                    "key": "books", "title": "Books", "kind": "catalog", "defaultValue": ["tanakh"],
+                    "options": [["id": "tanakh", "title": "Tanakh"]]
+                ]]]]]
             ]
             let manifest: [String: Any] = [
                 "name": "Dedicated assistant", "version": "1.0.0",
@@ -28,7 +33,7 @@ struct HanlinScriptAnalyzerTests {
                 "tool/\(bundle)": "console.log('dedicated tool')", "tool/package.json": prepared])
             defer { try? FileManager.default.removeItem(at: fixture.stagingRoot) }
             let preview = try analyzer.analyze(fixture)
-            #expect(preview.canInstall)
+            #expect(preview.canInstall, "Prepared assistant \(runtime): \(preview.findings)")
             let entry = try #require(preview.entrypoints.first { $0.kind == .assistantTool })
             #expect(entry.id == "search-tool")
             #expect(entry.sourcePath == "tool/\(bundle)")
@@ -37,6 +42,10 @@ struct HanlinScriptAnalyzerTests {
             let stored = try #require(installed.first { $0.kind == .assistantTool })
             #expect(stored.sourcePath == "source/tool/\(bundle)")
             #expect(stored.assistantTool == entry.assistantTool)
+            #expect(stored.assistantTool?.configuration?.defaultValues == .object(["books": .array([.string("tanakh")])]))
+            #expect(stored.assistantTool?.actions[0].outputSchema != nil)
+            let restored = try JSONDecoder().decode(type(of: stored), from: JSONEncoder().encode(stored))
+            #expect(restored.assistantTool == stored.assistantTool)
         }
     }
 
@@ -134,8 +143,15 @@ struct HanlinScriptAnalyzerTests {
             #expect(preview.canInstall == expected, "Expo required version \(version)")
             if !expected { #expect(preview.findings.contains { $0.code == "MINIAPP_EXPO_VERSION_MISMATCH" }) }
         }
-        for (version, expected) in ["9.1.0": true, "^9.0.0": true, "9.10.0": false, "^9.999.0": false,
-                                    "9.1.invalid": false, "9.1.1": false, "*": false, "latest": false] {
+        let installedCore = HanlinMiniAppHostVersions.nativeScriptCoreVersion
+        let coreParts = installedCore.split(separator: ".")
+        try #require(coreParts.count == 3)
+        let patch = try #require(Int(coreParts[2]))
+        var coreCases = ["9.1.0": true, "^9.0.0": true, "9.10.0": false, "^9.999.0": false,
+                         "9.1.invalid": false, "9.1.1": true, "*": false, "latest": false]
+        coreCases[installedCore] = true
+        coreCases["\(coreParts[0]).\(coreParts[1]).\(patch + 1)"] = false
+        for (version, expected) in coreCases {
             let prepared = try JSONSerialization.data(withJSONObject: ["name": "fixture", "main": "bundle.mjs", "hanlinRuntime": "hanlin-nativescript",
                 "dependencies": ["@nativescript/core": version]])
             let fixture = try package(files: [
@@ -600,7 +616,7 @@ struct HanlinScriptAnalyzerTests {
             ])
             defer { try? FileManager.default.removeItem(at: fixture.stagingRoot) }
             let preview = try analyzer.analyze(fixture)
-            #expect(preview.canInstall)
+            #expect(preview.canInstall, "Root prepared bundle \(runtime): \(preview.findings)")
             #expect(Set(preview.entrypoints.map(\.id)) == ["app", "appIntents", "intent", "share", "translation", "chat"])
             #expect(preview.entrypoints.filter { $0.kind == .appIntent }.count == 2)
             #expect(preview.entrypoints.first { $0.kind == .translationUI }?.exportedSymbol == "search")

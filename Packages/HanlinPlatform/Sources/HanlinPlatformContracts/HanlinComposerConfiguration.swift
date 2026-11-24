@@ -1,7 +1,8 @@
 import Foundation
 
 /// Declarative configuration rendered inside the existing composer bubble.
-/// Field keys carry structured user configuration into the assistant-tool\n/// context. They are separate from the model's arguments and never executable source.
+/// Field keys carry structured user configuration into the assistant-tool
+/// context. They are separate from the model's arguments and never executable source.
 public struct HanlinComposerConfiguration: Codable, Hashable, Sendable {
     public var schemaVersion: Int
     public var panels: [HanlinComposerPanel]
@@ -103,7 +104,7 @@ public struct HanlinComposerConfiguration: Codable, Hashable, Sendable {
 
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        schemaVersion = try values.decodeIfPresent(Int.self, forKey: .schemaVersion) ?? 1
+        schemaVersion = try values.decodeManifestValueIfDeclared(Int.self, forKey: .schemaVersion) ?? 1
         panels = try values.decode([HanlinComposerPanel].self, forKey: .panels)
     }
 }
@@ -129,8 +130,8 @@ public struct HanlinComposerPanel: Codable, Hashable, Sendable, Identifiable {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         id = try values.decode(String.self, forKey: .id)
         title = try values.decode(String.self, forKey: .title)
-        fields = try values.decodeIfPresent([HanlinComposerField].self, forKey: .fields) ?? []
-        customViewID = try values.decodeIfPresent(String.self, forKey: .customViewID)
+        fields = try values.decodeManifestValueIfDeclared([HanlinComposerField].self, forKey: .fields) ?? []
+        customViewID = try values.decodeManifestValueIfDeclared(String.self, forKey: .customViewID)
     }
 }
 
@@ -153,7 +154,7 @@ public struct HanlinComposerOption: Codable, Hashable, Sendable, Identifiable {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         id = try values.decode(String.self, forKey: .id)
         title = try values.decode(String.self, forKey: .title)
-        children = try values.decodeIfPresent([HanlinComposerOption].self, forKey: .children) ?? []
+        children = try values.decodeManifestValueIfDeclared([HanlinComposerOption].self, forKey: .children) ?? []
     }
 }
 
@@ -265,12 +266,25 @@ public struct HanlinComposerField: Codable, Hashable, Sendable, Identifiable {
         key = try values.decode(String.self, forKey: .key)
         title = try values.decode(String.self, forKey: .title)
         kind = try values.decode(Kind.self, forKey: .kind)
-        required = try values.decodeIfPresent(Bool.self, forKey: .required) ?? false
-        defaultValue = values.contains(.defaultValue) ? try values.decode(HanlinJSONValue.self, forKey: .defaultValue) : nil
-        options = try values.decodeIfPresent([HanlinComposerOption].self, forKey: .options) ?? []
-        minimum = try values.decodeIfPresent(Double.self, forKey: .minimum)
-        maximum = try values.decodeIfPresent(Double.self, forKey: .maximum)
-        placeholder = try values.decodeIfPresent(String.self, forKey: .placeholder)
+        required = try values.decodeManifestValueIfDeclared(Bool.self, forKey: .required) ?? false
+        defaultValue = try values.decodeManifestValueIfDeclared(HanlinManifestJSONValue.self, forKey: .defaultValue)?.value
+        options = try values.decodeManifestValueIfDeclared([HanlinComposerOption].self, forKey: .options) ?? []
+        minimum = try values.decodeManifestValueIfDeclared(Double.self, forKey: .minimum)
+        maximum = try values.decodeManifestValueIfDeclared(Double.self, forKey: .maximum)
+        placeholder = try values.decodeManifestValueIfDeclared(String.self, forKey: .placeholder)
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var values = encoder.container(keyedBy: CodingKeys.self)
+        try values.encode(key, forKey: .key)
+        try values.encode(title, forKey: .title)
+        try values.encode(kind, forKey: .kind)
+        try values.encode(required, forKey: .required)
+        try values.encodeIfPresent(defaultValue.map { HanlinManifestJSONValue($0) }, forKey: .defaultValue)
+        try values.encode(options, forKey: .options)
+        try values.encodeIfPresent(minimum, forKey: .minimum)
+        try values.encodeIfPresent(maximum, forKey: .maximum)
+        try values.encodeIfPresent(placeholder, forKey: .placeholder)
     }
 }
 
