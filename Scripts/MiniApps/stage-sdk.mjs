@@ -72,6 +72,63 @@ export const sdkInputs = [
 
 const excludedSDKInputNames = new Set(['node_modules','Tests','evidence','.git']);
 const includesSDKInputName = name => !excludedSDKInputNames.has(name) && !name.includes('.bak.');
+const exampleSourceRoot = 'Scripts/MiniApps/Examples';
+// These are output roots of the public authoring/Metro tools, not arbitrary
+// resource names. Authored build/dist directories and resource ZIPs survive.
+const exampleOutputRoots = new Set(['.hanlin-build','.hanlin-authoring','.metro-cache']);
+const includesSDKSourcePath = relative => {
+  if (!relative.split('/').every(includesSDKInputName)) return false;
+  if (!relative.startsWith(exampleSourceRoot+'/')) return true;
+  const [,projectChild] = relative.slice(exampleSourceRoot.length+1).split('/');
+  return !exampleOutputRoots.has(projectChild);
+};
+
+export async function collectSDKSourceInputs(source,prefix) {
+  const files=[];
+  async function walk(src,relative) {
+    if (!includesSDKSourcePath(relative)) return;
+    const info=await stat(src);
+    if(info.isFile()) {
+      files.push({path:relative,sha256:sha(await readFile(src))});return;
+    }
+    for(const entry of (await readdir(src,{withFileTypes:true})).sort((a,b)=>a.name.localeCompare(b.name))) {
+      await walk(path.join(src,entry.name),path.posix.join(relative,entry.name));
+    }
+  }
+  await walk(source,prefix);
+  return files;
+}
+
+/** Export complete authored projects unchanged, with paths in this exact SDK. */
+export async function copySDKExamples(source,destination,requestedEngines=['expo','nativescript']) {
+  const catalog=await readJSON(path.join(source,'index.json'));
+  if(catalog.schemaVersion!==1 || !Array.isArray(catalog.projects)) throw new Error('Unsupported SDK example index');
+  const projects=[],ids=new Set();
+  await mkdir(destination,{recursive:true});
+  for(const project of catalog.projects) {
+    if(!['expo','nativescript'].includes(project.engine) || typeof project.directory!=='string' ||
+      !project.directory || project.directory!==path.basename(project.directory) ||
+      ['.','..'].includes(project.directory) || ids.has(project.id)) throw new Error('Invalid SDK example index entry');
+    ids.add(project.id);
+    if(!requestedEngines.includes(project.engine)) continue;
+    const projectRoot=path.join(source,project.directory);
+    const author=await readJSON(path.join(projectRoot,'hanlin.authoring.json'));
+    if(author.schemaVersion!==1 || author.engine!==project.engine) throw new Error('SDK example authoring engine mismatch: '+project.id);
+    for(const file of ['script.json','package.json',author.tsconfig,author.entry]) {
+      if(typeof file!=='string' || !file) throw new Error('Incomplete SDK example: '+project.id);
+      const relative=path.relative(projectRoot,path.resolve(projectRoot,file));
+      if(relative==='..' || relative.startsWith('..'+path.sep) || path.isAbsolute(relative)) throw new Error('SDK example source leaves its project: '+project.id);
+      if(!(await stat(path.join(projectRoot,file))).isFile()) throw new Error('Missing SDK example file: '+project.id+'/'+file);
+    }
+    const canonicalRoot=path.resolve(projectRoot);
+    await cp(canonicalRoot,path.join(destination,project.directory),{recursive:true,
+      filter:entry=>includesSDKSourcePath(path.posix.join(exampleSourceRoot,project.directory,
+        path.relative(canonicalRoot,entry).split(path.sep).join('/')))});
+    projects.push({...project,path:'examples/'+project.directory,entry:author.entry});
+  }
+  await writeJSON(path.join(destination,'index.json'),{schemaVersion:1,projects});
+  return projects;
+}
 
 // Ship the same public documentation tree that contributes to the SDK identity.
 // Build evidence stays in the repository; original API/type packages are separate.
@@ -93,17 +150,7 @@ export async function inputReceipt(root=repositoryRoot) {
     'Packages/HanlinExpoRuntime/Sources/ExpoWidgets',
     'Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/HanlinScriptWidgetRuntime.swift',
     'docs/miniapp-sdk','docs/hanlin-nativescript-guide.md','docs/hanlin-expo-runtime.md']) {
-    async function walk(src,prefix) {
-      const info=await stat(src);
-      if(info.isFile()) {
-        files.push({path:prefix,sha256:sha(await readFile(src))});return;
-      }
-      for(const entry of (await readdir(src,{withFileTypes:true})).sort((a,b)=>a.name.localeCompare(b.name))) {
-        if(!includesSDKInputName(entry.name))continue;
-        await walk(path.join(src,entry.name),path.posix.join(prefix,entry.name));
-      }
-    }
-    await walk(path.join(root,relative),relative);
+    files.push(...await collectSDKSourceInputs(path.join(root,relative),relative));
   }
   const unique=[...new Map(files.map(f=>[f.path,f])).values()].sort((a,b)=>a.path.localeCompare(b.path));
   return {files:unique,sha256:sha(JSON.stringify(unique))};
@@ -185,6 +232,11 @@ export async function stageSDK({root=repositoryRoot,output,engines:requestedEngi
     for(const [engine,packages] of Object.entries(expected))for(const [name,version]of Object.entries(packages)) {
       if(engines[engine] && engines[engine].packageVersions[name]!==version)throw new Error('Native/author SDK mismatch: '+engine+' '+name);
     }
+    const exampleProjects=await copySDKExamples(path.join(root,exampleSourceRoot),path.join(staging,'examples'),requestedEngines);
+    for(const engine of ['expo','nativescript']) if(engines[engine]) {
+      engines[engine].examples=exampleProjects.filter(project=>project.engine===engine);
+      engines[engine].docs.push('docs/miniapp-sdk/EXAMPLES.md');
+    }
     await copySDKDocumentation(path.join(root,'docs/miniapp-sdk'),path.join(staging,'docs/miniapp-sdk'));
     for(const file of ['hanlin-expo-runtime.md','hanlin-nativescript-guide.md']) {
       await cp(path.join(root,'docs',file),path.join(staging,'docs',file));
@@ -226,7 +278,7 @@ export async function stageSDK({root=repositoryRoot,output,engines:requestedEngi
       }
     }
     await collect(staging);
-    const manifest={schemaVersion:1,inputSHA256:inputs.sha256,engines,
+    const manifest={schemaVersion:1,inputSHA256:inputs.sha256,engines,examplesIndexPath:'examples/index.json',
       upstream:{expo:expoLock.expo,nativescript:nativeLock.nativeScript,scriptwidget:engines.scriptwidget?.packageVersions},
       files:files.sort((a,b)=>a.path.localeCompare(b.path)),
       sourceInputs:inputs.files,

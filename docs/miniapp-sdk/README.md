@@ -97,6 +97,8 @@ The imported modular-search sample retains its editable original logic modules, 
 
 - [Expo authoring](../hanlin-expo-runtime.md)
 - [NativeScript authoring](../hanlin-nativescript-guide.md)
+- [Complete SDK source examples](EXAMPLES.md)
+- [Manifest field reference](MANIFEST_REFERENCE.md)
 - [ScriptWidget authoring](SCRIPTWIDGET_AUTHORING.md)
 - [Hanlin Expo UI facade](../../Packages/HanlinExpoUI/README.md)
 - [Original-library build and provenance](ORIGINAL_UPSTREAM_BUILD.md)

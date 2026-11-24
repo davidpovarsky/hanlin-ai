@@ -1,0 +1,10 @@
+{
+  "name": "NativeScript Hello World",
+  "version": "1.0.0",
+  "description": "A minimal original NativeScript Core screen with a native event and iOS metadata value.",
+  "entry": "nativescript/app/bundle.mjs",
+  "runInApp": true,
+  "hanlinRuntime": "hanlin-nativescript",
+  "icon": "hand.wave",
+  "color": "#315ACB"
+}

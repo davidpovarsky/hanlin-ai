@@ -1,0 +1,6 @@
+{
+  "schemaVersion": 1,
+  "engine": "nativescript",
+  "entry": "index.ts",
+  "tsconfig": "tsconfig.json"
+}

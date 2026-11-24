@@ -14,6 +14,8 @@ Supported authoring engines are `expo`, `nativescript`, and `scriptwidget`. Lega
 
 ## Author a project
 
+For complete starting projects, read [the installed SDK example index](EXAMPLES.md). It supplies a Hello World and a complete application for both Expo and NativeScript, with every required source/configuration file.
+
 1. Read `get_miniapp_sdk` for the intended engine. Read relevant original package declarations through `resource`. The compact default response includes a link to the full SDK inventory at `miniapp-sdk.json`; the complete inventory is available on request.
 2. Call `write_miniapp` with source files. Omit `project_path` to create a dedicated writable project. Each file has a relative `path` and exactly one of `content` (UTF-8 text, including empty text) or `base64` (binary bytes).
 3. Supply `script.json`, `package.json`, `tsconfig.json`, and `hanlin.authoring.json`. The latter declares the source entry, not the prepared JavaScript bundle:

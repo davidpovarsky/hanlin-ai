@@ -96,7 +96,7 @@ export function select(event: ScriptWidgetActionEvent<{text: string}>) {
 
 ## Build and repair
 
-Use `get_miniapp_sdk(engine: "scriptwidget")` to find the exact installed declaration and documentation paths, then `write_miniapp`, `validate_miniapp` and `build_miniapp`. The package retains original editable sources. An import with retained TypeScript reruns the real compiler and reports file/line/column diagnostics; an archived success report is not treated as a fresh typecheck.
+Use `get_miniapp_sdk(engine: "scriptwidget")` to find the exact installed declaration and documentation paths, then `write_miniapp`, `validate_miniapp` and `build_miniapp`. The package retains original editable sources. An import with retained source and a complete recognized authoring project, identified by the root `hanlin.authoring.json`, reruns the real compiler and reports file/line/column diagnostics. Source files alone do not establish that contract; an archived success report is not treated as a fresh typecheck.
 
 The `.scripting` extension remains an accepted archive container for existing ScriptWidget widgets. It does not reactivate the frozen Scripting-JSC MiniApp engine.
 

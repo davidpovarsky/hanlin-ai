@@ -68,9 +68,10 @@ test('compiler metadata distinguishes original npm alias version from real compi
 }));
 
 
-test('SDK documentation staging retains exact guides without excluded evidence', async () => {
+test('SDK documentation and complete example staging retain exact source without known outputs', async () => {
   const fs = await import('node:fs/promises');
-  const {copySDKDocumentation} = await import('../stage-sdk.mjs');
+  const {copySDKDocumentation,copySDKExamples,collectSDKSourceInputs} = await import('../stage-sdk.mjs');
+  const {createHash} = await import('node:crypto');
   const {tmpdir} = await import('node:os');
   const work = await fs.mkdtemp(path.join(tmpdir(), 'hanlin-sdk-docs-'));
   const source = path.join(work, 'source'), destination = path.join(work, 'sdk-docs');
@@ -94,6 +95,64 @@ test('SDK documentation staging retains exact guides without excluded evidence',
     for (const excluded of ['evidence', 'reference/evidence', 'Tests', 'node_modules', '.git', 'README.bak.old.md']) {
       await assert.rejects(fs.access(path.join(destination, excluded)), {code:'ENOENT'}, excluded+' is outside the existing SDK source-input policy');
     }
+
+    const examples=path.join(work,'source-examples'),sdkExamples=path.join(work,'sdk','examples');
+    await fs.cp(new URL('../Examples/',import.meta.url),examples,{recursive:true});
+    const prefix='Scripts/MiniApps/Examples';
+    const initialInputs=await collectSDKSourceInputs(examples,prefix);
+    const catalog=JSON.parse(await fs.readFile(path.join(examples,'index.json'),'utf8'));
+    assert.equal(catalog.projects.length,4);
+    const first=catalog.projects[0].directory;
+    const excludedOutputs=['.hanlin-build/run/package/bundle.js','.hanlin-build/run/MiniApp.hanlinExpo',
+      '.hanlin-authoring/validation.json','.metro-cache/data','node_modules/installed/index.js',
+      '.git/index','evidence/raw.log','README.bak.old.md'];
+    for(const file of excludedOutputs) {
+      const target=path.join(examples,first,file);
+      await fs.mkdir(path.dirname(target),{recursive:true});
+      await fs.writeFile(target,'generated output must not become authored source');
+    }
+    assert.deepEqual(await collectSDKSourceInputs(examples,prefix),initialInputs,
+      'Known output/cache bytes must not alter the actual SDK input fingerprint');
+    // A ZIP resource is data. Neither its suffix nor an authored build/dist
+    // directory makes it generated output. Preserve explicit resources too.
+    const resourceZIP=Buffer.from('UEsFBgAAAAAAAAAAAAAAAAAAAAAAAA==','base64');
+    const resources=new Map([['assets/catalog.zip',resourceZIP],['build/source.txt',Buffer.from('authored build resource')],
+      ['dist/source.txt',Buffer.from('authored dist resource')]]);
+    for(const [file,bytes] of resources) {
+      const target=path.join(examples,first,file);
+      await fs.mkdir(path.dirname(target),{recursive:true});await fs.writeFile(target,bytes);
+    }
+    const descriptorPath=path.join(examples,first,'hanlin.authoring.json');
+    const author=JSON.parse(await fs.readFile(descriptorPath,'utf8'));
+    await fs.writeFile(descriptorPath,JSON.stringify({...author,resources:['assets','build','dist']},null,2)+'\n');
+    const expectedInputs=await collectSDKSourceInputs(examples,prefix);
+    for(const [file,bytes] of resources) assert.ok(expectedInputs.some(input=>input.path===prefix+'/'+first+'/'+file &&
+      input.sha256===createHash('sha256').update(bytes).digest('hex')));
+    const projects=await copySDKExamples(examples,sdkExamples,['expo','nativescript','scriptwidget']);
+    assert.deepEqual(projects.map(project=>[project.engine,project.level]),[
+      ['expo','hello-world'],['expo','complete-app'],['nativescript','hello-world'],['nativescript','complete-app']]);
+    const emitted=JSON.parse(await fs.readFile(path.join(sdkExamples,'index.json'),'utf8'));
+    assert.deepEqual(emitted,{schemaVersion:1,projects});
+    for(const project of projects) {
+      assert.equal(project.path,'examples/'+project.directory);
+      const descriptor=JSON.parse(await fs.readFile(path.join(sdkExamples,project.directory,'hanlin.authoring.json'),'utf8'));
+      assert.equal(project.entry,descriptor.entry);
+      assert.equal(project.engine,descriptor.engine);
+    }
+    for(const input of expectedInputs) {
+      const relative=input.path.slice(prefix.length+1);
+      if(relative==='index.json') continue; // Index adds actual exported paths/entry metadata.
+      const actual=await fs.readFile(path.join(sdkExamples,relative));
+      assert.deepEqual(actual,await fs.readFile(path.join(examples,relative)),relative+' must remain byte-identical');
+      assert.equal(createHash('sha256').update(actual).digest('hex'),input.sha256);
+    }
+    for(const file of excludedOutputs) await assert.rejects(fs.access(path.join(sdkExamples,first,file)),{code:'ENOENT'});
+    const expoOnly=path.join(work,'expo-only');
+    assert.equal((await copySDKExamples(examples,expoOnly,['expo'])).length,2);
+    await assert.rejects(fs.access(path.join(expoOnly,'sdk-only-table-share')),{code:'ENOENT'});
+    const widgetsOnly=path.join(work,'widgets-only');
+    assert.deepEqual(await copySDKExamples(examples,widgetsOnly,['scriptwidget']),[]);
+    assert.deepEqual(await fs.readdir(widgetsOnly),['index.json']);
   } finally {
     await fs.rm(work, {recursive:true,force:true});
   }

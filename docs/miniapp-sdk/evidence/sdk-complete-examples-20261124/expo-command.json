@@ -1,0 +1,24 @@
+{
+  "command": [
+    "/usr/local/bin/node",
+    "Scripts/MiniApps/miniapp.mjs",
+    "build",
+    "--sdk",
+    "/dev/shm/hanlin-sdk-only-kit-45335292541/AI_HLY/Downstream/RuntimeCore/Node/Host/MiniAppSDK",
+    "--engine",
+    "expo",
+    "--project",
+    "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-examples-20261124/Scripts/MiniApps/Examples/expo-hello-world",
+    "--archive",
+    "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-examples-20261124/docs/miniapp-sdk/evidence/sdk-complete-examples-20261124/ExpoHelloWorld.hanlinExpo",
+    "--report",
+    "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-examples-20261124/docs/miniapp-sdk/evidence/sdk-complete-examples-20261124/expo-build.json"
+  ],
+  "exitCode": 0,
+  "seconds": 32.67223525047302,
+  "status": "EXECUTED_PASS",
+  "report": "expo-build.json",
+  "archive": "ExpoHelloWorld.hanlinExpo",
+  "archiveSHA256": "1bada72ffd3d1394232d52f593e5222c74d16eff383eba552d57af4a26eb73c6",
+  "archiveBytes": 1948120
+}
