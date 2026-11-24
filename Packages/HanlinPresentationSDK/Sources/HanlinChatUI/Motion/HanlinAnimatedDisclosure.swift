@@ -23,6 +23,9 @@ public enum ChatDisclosureGeometry {
 #if canImport(SwiftUI)
 import SwiftUI
 import HanlinPresentationKit
+#if canImport(UIKit)
+import UIKit
+#endif
 
 /// Original implementation informed by Fatbobman's height/spacing discussion:
 /// https://fatbobman.com/en/posts/taming-row-height-and-spacing-jumps/
@@ -44,7 +47,7 @@ public struct HanlinAnimatedDisclosure<Content: View>: View {
     public var body: some View {
         ChatDisclosureLayout(progress: progress, spacing: spacing) {
             if mounted {
-                VStack(alignment: .leading, spacing: 6, content: content)
+                retainedContent
                     .transition(.identity)
             }
         }
@@ -62,6 +65,16 @@ public struct HanlinAnimatedDisclosure<Content: View>: View {
         .onChange(of: motion.isAnimated) { _, animated in
             if !animated { settle() }
         }
+    }
+
+    @ViewBuilder
+    private var retainedContent: some View {
+        #if canImport(UIKit)
+        ChatDisclosureAccessibilityScope(isHidden: !isExpanded,
+            content: VStack(alignment: .leading, spacing: 6, content: content))
+        #else
+        VStack(alignment: .leading, spacing: 6, content: content)
+        #endif
     }
 
     private func settle() {
@@ -93,6 +106,55 @@ public struct HanlinAnimatedDisclosure<Content: View>: View {
         }
     }
 }
+
+#if canImport(UIKit)
+/// Own the native semantic boundary for the retained content. On iOS, the
+/// transparent SwiftUI clip can still expose native-backed accessibility nodes.
+/// This root is created once while mounted; closing never replaces its type or
+/// controller, and reopening restores only this root's accessibility visibility.
+@MainActor
+private struct ChatDisclosureAccessibilityScope<Content: View>: UIViewControllerRepresentable {
+    let isHidden: Bool
+    let content: Content
+
+    struct Root: View {
+        let content: Content
+        let environment: EnvironmentValues
+
+        var body: some View {
+            // Forward the complete environment, including custom chat values.
+            content.environment(\.self, environment)
+        }
+    }
+
+    func makeUIViewController(context: Context) -> UIHostingController<Root> {
+        let controller = UIHostingController(rootView: Root(content: content, environment: context.environment))
+        controller.safeAreaRegions = []
+        controller.sizingOptions = [.intrinsicContentSize]
+        controller.view.backgroundColor = .clear
+        controller.view.isAccessibilityElement = false
+        controller.view.accessibilityElementsHidden = isHidden
+        return controller
+    }
+
+    func updateUIViewController(_ controller: UIHostingController<Root>, context: Context) {
+        withTransaction(context.transaction) {
+            controller.rootView = Root(content: content, environment: context.environment)
+        }
+        controller.view.accessibilityElementsHidden = isHidden
+    }
+
+    func sizeThatFits(_ proposal: ProposedViewSize, uiViewController controller: UIHostingController<Root>,
+                      context: Context) -> CGSize? {
+        // Unspecified width uses the hosting view's native intrinsic sizing.
+        // Height is always natural, never the collapsing viewport's height.
+        guard let width = proposal.width, width.isFinite else { return nil }
+        let natural = controller.sizeThatFits(in: CGSize(width: max(0, width), height: .greatestFiniteMagnitude))
+        return CGSize(width: ChatDisclosureGeometry.extent(Double(natural.width)),
+            height: ChatDisclosureGeometry.extent(Double(natural.height)))
+    }
+}
+#endif
 
 /// Keep native DisclosureGroup ownership/identity, sharing only its presentation.
 public struct HanlinMotionDisclosureStyle: DisclosureGroupStyle {
