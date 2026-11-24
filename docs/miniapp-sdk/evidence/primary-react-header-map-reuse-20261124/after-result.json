@@ -1,0 +1,15 @@
+{
+  "startedAt": "2026-11-24T20:36:22.388226+00:00",
+  "elapsedSeconds": 32.89520112797618,
+  "argv": [
+    "node",
+    "--test",
+    "Scripts/Expo/Tests/react-header-map-reuse.test.mjs"
+  ],
+  "exitCode": 0,
+  "sourceSHA256": "072c3432d299e4081d11d052b4bfe74d195e5775ace19362aaaea25652137dbb",
+  "testSHA256": "4e3ea95d816169a71f78fdff27e631578c7564e0f791ffbfcca8235b2284a63e",
+  "node": "v24.22.0",
+  "stdoutSHA256": "e56372bc1fe2167bd4a1acb77f11aee7ec15828823e91bd57cb70129cf9aa143",
+  "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}
