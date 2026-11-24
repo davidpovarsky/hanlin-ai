@@ -432,7 +432,7 @@ jobs:
         if: always()
         shell: bash
         env:
-          SPLIT_WORKFLOW_CANCELLED: ${{ cancelled() }}
+          SPLIT_WORKFLOW_CANCELLED: ${{ job.status == 'cancelled' }}
           SPLIT_STEP_OUTCOMES: >-
             {"platform": "${{ steps.split-platform.outcome }}",
              "upstreams": "${{ steps.split-upstreams.outcome }}",
