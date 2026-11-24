@@ -1,0 +1,3 @@
+EXECUTED_PASS production generator output equals Generated/SwiftUIBridge/views.tsx
+EXECUTED_PASS production generator output equals Packages/HanlinExpoUI/src/generated/views.tsx
+Recorded inventory: xcode-27.0-ios-27.0-arm64e-apple-ios; declarations: 1950

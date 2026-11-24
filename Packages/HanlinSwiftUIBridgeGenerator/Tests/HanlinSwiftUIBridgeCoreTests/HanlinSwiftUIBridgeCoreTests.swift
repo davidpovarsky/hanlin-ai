@@ -126,6 +126,8 @@ struct HanlinSwiftUIBridgeCoreTests {
         #expect(swiftViews.contains("public init(props: HanlinGeneratedGroupProps)"))
         #expect(swiftViews.contains("namedSlot(\"content\")"))
         #expect(typeScriptViews.contains("label?: React.ReactNode"))
+        #expect(typeScriptViews.contains("GroupBox({ modifiers, children, content = children, label, ...props }"))
+        #expect(typeScriptViews.contains("content === undefined ? null : <HanlinGeneratedSlot name=\"content\">{content}</HanlinGeneratedSlot>"))
         #expect(swiftViews.contains("HanlinGenerated_AllowedViewView"))
         #expect(typeScriptViews.contains("export function _AllowedView"))
         #expect(!swiftViews.contains("HanlinGeneratedPrivateViewView"))

@@ -1,0 +1,10 @@
+{
+  "Packages/HanlinSwiftUIBridgeGenerator/Sources/HanlinSwiftUIBridgeCore/OutputGenerator.swift": "936e7c000c5a3170b47450d57a7a7fbac7416e94da92fc548333966f0222f6a4",
+  "Packages/HanlinSwiftUIBridgeGenerator/Tests/HanlinSwiftUIBridgeCoreTests/HanlinSwiftUIBridgeCoreTests.swift": "0a1055ac5e512e93fad962d1ae773bc6c548f5f1ef45fee68f5ac8c842c27ba7",
+  "Generated/SwiftUIBridge/views.tsx": "7c3bf97da0a680dc80d1a1d19f915b67778e17f42021355c5d99ea4f99c85c74",
+  "Packages/HanlinExpoUI/src/generated/views.tsx": "7c3bf97da0a680dc80d1a1d19f915b67778e17f42021355c5d99ea4f99c85c74",
+  "Packages/HanlinExpoUI/tests/generated-views.test.mjs": "03c46a995205ca0b1730fc8aa26bac97771c1f4cd3951665c13f7c2fa2c046fa",
+  "Generated/SwiftUIBridge/swiftui-inventory.json": "844e7a3ea8cffc2d5638b9bbb91dccf1817f9543b653fc6528cd233059e585be",
+  "Tools/SwiftUIBridge/configuration.json": "a8711bcfc51ae85ee58cf8ebd5a5724c6a142994dcbe3d558e8644d9c48fda8a",
+  "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/Generated/HanlinGeneratedViews.swift": "838154d4e8a44b07eb312dee19df283b217842633c6dbeb84bc369edba77699e"
+}

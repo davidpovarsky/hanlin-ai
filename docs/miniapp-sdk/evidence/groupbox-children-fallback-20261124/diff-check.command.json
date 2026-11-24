@@ -1,0 +1,13 @@
+{
+  "argv": [
+    "git",
+    "diff",
+    "--cached",
+    "--check",
+    "--",
+    ".",
+    ":!docs/miniapp-sdk/evidence/groupbox-children-fallback-20261124/*.log"
+  ],
+  "exitCode": 0,
+  "note": "Raw Node assertion output contains two whitespace-only lines. Original log bytes are retained, so this source/evidence metadata check excludes raw .log files only."
+}
