@@ -1,0 +1,30 @@
+{
+  "actual_failure_run": 45283243206,
+  "actual_failure_source": "4cfa52348e80cf635caf04c541fd84ee1ddb50bd",
+  "authoring_parent": "5c82f2e1a16811c6f90f295f2890f33b1991034a",
+  "source_preimages_equal_executed_producer": true,
+  "inverse_diagnostic_edits_restore_exact_preimages": true,
+  "gates": [
+    "DEBUG || HANLIN_TESTING",
+    "HANLIN_COMPOSER_EDIT_DIAGNOSTICS == 1"
+  ],
+  "stack_max_frames": 24,
+  "stack_max_symbol_characters": 512,
+  "super_resign_calls_per_invocation": 1,
+  "native_acceptance": "NOT_RUN",
+  "production_behavior_repair": "NONE",
+  "files": [
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/NativeMultilineTextEditor.swift",
+      "before_sha256": "a65249e7f297817a1961d9275545f13710b7ab614bddcf71310d0d44495fee38",
+      "after_sha256": "9bbd793909b526987c49ef48f4f36c6bad4a831882db5d1b8af007325ccac183"
+    },
+    {
+      "path": "AI_HLY/Views/Components/ChatViewBottom.swift",
+      "before_sha256": "79cd7118bd94b01a18f291067566692279a7c0d3eb75e7acf782ad4ff95bfc47",
+      "after_sha256": "7ae22aafa3c8e61341e773ba627cc1ce804e5cb5f739c3ee60bd21915a70192e"
+    }
+  ],
+  "linux_swift_parser_exit": 0,
+  "validation_boundary": "Linux Swift syntax parser only; UIKit/SwiftUI native compilation and runtime caller evidence remain NOT_RUN."
+}
