@@ -271,6 +271,8 @@ Prior spike closure verification (run `35473839956` on the isolated spike branch
 MyMiniApp/
 ├── script.json         # Hanlin manifest
 ├── package.json        # Dependencies declaration
+├── tsconfig.json       # Portable source typechecking configuration
+├── hanlin.authoring.json # Source entry and retained-source contract
 ├── App.tsx             # Root SwiftUI component tree
 └── index.ts            # Entrypoint registering App with AppRegistry
 ```
@@ -280,15 +282,27 @@ MyMiniApp/
 import { AppRegistry } from 'react-native';
 import App from './App';
 
-AppRegistry.registerComponent('ExpoSwiftUIProbe', () => App);
+AppRegistry.registerComponent('main', () => App);
 ```
 
+The foreground host calls `HanlinExpoSession.start()` with the root module name
+`main`. Register that exact name in the authoring entry selected by
+`hanlin.authoring.json`. This React root name is independent of the npm package's
+`name` and of `package.json.main`, which identifies the prepared JavaScript file.
+The package builder preserves the registration written in source; it does not
+rename an `AppRegistry` key or read a package field to override the host root name.
+
 ### 7.3 Building & Packaging
-Run `build-probe.mjs` to produce standalone `.hanlinExpo` packages using Metro:
-```bash
-node Scripts/Expo/build-probe.mjs
-```
-The resulting `.hanlinExpo` archive can be directly imported via the **Add Apps** sheet or staged into the test simulator environment.
+Validate and build the source project with `validate_miniapp` and `build_miniapp`
+using `engine: "expo"` and the project's path. The same operations are available
+through the [shared authoring CLI](miniapp-sdk/AUTHORING_WORKFLOW.md#desktop-and-ci).
+Use the successful build report's `archivePath` for import through **Add Apps** or
+`import_miniapp`, then inspect the actual receiver receipt.
+
+The repository command `node Scripts/Expo/build-probe.mjs` builds the tracked
+Expo probe fixtures for validation. TypeScript and Metro success establish
+compilation and packaging; native launch and rendering require their own runtime
+check, including the root registration above.
 
 
 ---

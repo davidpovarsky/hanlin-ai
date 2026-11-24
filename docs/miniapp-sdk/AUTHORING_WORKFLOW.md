@@ -58,6 +58,14 @@ The builder copies the actual native compiler source closure to the prepared pac
 
 ### Expo
 
+Register the application with `AppRegistry.registerComponent('main', () => App)`
+in the declared source entry. The foreground host requests the React root named
+`main`; the npm package name and the prepared `package.json.main` file path do
+not select another React root. See the complete
+[entrypoint registration example](../hanlin-expo-runtime.md#72-entrypoint-registration-indexts).
+The builder preserves source registration, so a successful typecheck and Metro
+build do not by themselves prove that the requested root launches or renders.
+
 The builder invokes the original Metro and Babel packages from the installed SDK, including the host's original NativeScript/Worklets transforms. Metro runs with its Node filesystem crawler and one worker, without desktop Watchman or child worker processes. The original Metro result provides `bundle.js` and `bundle.js.map`. Assets are copied by React Native's original iOS asset packaging helper. Prepared version and bridge metadata comes from the actual SDK host contract.
 
 ### NativeScript
