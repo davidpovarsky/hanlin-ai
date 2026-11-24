@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "timestampUTC": "2026-11-24T10:18:36.457489+00:00",
+  "command": [
+    "swiftc",
+    "-frontend",
+    "-parse",
+    "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift"
+  ],
+  "exitCode": 0,
+  "reason": "The same generated GroupBox method now also asserts ordinary children and explicit-content/null precedence after the real public forwarding fix.",
+  "file": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+  "sha256": "732bc4e23f4f72d8978cdce54e99fe87a7cec9ac9070f0b479524b42fdd50695",
+  "baselineMethods": 15,
+  "newMethods": [
+    "testStandaloneExpoGeneratedEditButtonEditsOriginalList",
+    "testStandaloneExpoGeneratedEmptyViewReportsNativeLayout",
+    "testStandaloneExpoGeneratedGroupBoxSlotsAndInstalledMetadata",
+    "testStandaloneExpoGeneratedModifierAccessibilityAndGeometry",
+    "testStandaloneExpoGeneratedModifierHitTestingAndSubmitScope",
+    "testStandaloneExpoGeneratedModifierNativeContainerContexts",
+    "testStandaloneExpoHostServicesUseRealStorageRuntimeAndWidgetPublication"
+  ],
+  "deletedOrReplacedBaselineLines": 0,
+  "status": "SYNTAX_AND_SOURCE_CHECK_PASS",
+  "boundary": "Linux syntax/source preservation only. Apple compile/native UI NOT_RUN."
+}

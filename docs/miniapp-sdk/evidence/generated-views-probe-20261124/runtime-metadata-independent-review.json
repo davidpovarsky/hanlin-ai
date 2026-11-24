@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "reviewedCommit": "fcf88190ca930130a035ef9150947543713616d1",
+  "reviewedAtUTC": "2026-11-24T10:00:44.855308+00:00",
+  "reviewer": "entrypoints",
+  "status": "NO_PRODUCTION_BLOCKER",
+  "scope": [
+    "All five runtime identity fields derive from resolved original @expo/ui and enter the existing rollback set.",
+    "Audit requires native/configuration/canonical and installed TS+Swift equality and complete mirror byte identity.",
+    "Future/same-version and per-mirror stale mutations are covered by the owner sixth regression; no tests rerun by reviewer.",
+    "Bridge ABI3.0.0, inventory identity and reviewed expoUIVersion58.0.3 remain unchanged."
+  ],
+  "evidencePackagingFinding": {
+    "finding": "Four raw red/green log files were present and receipt-hashed but ignored by Git in the initial commit.",
+    "resolutionReportedByOwner": "Force-added unchanged in b27a639d; no rerun required.",
+    "resolutionVerified": {
+      "commit": "b27a639d23c250c6227ab967507d243e4a53d29f",
+      "exactRawFiles": [
+        {
+          "path": "docs/miniapp-sdk/evidence/expo-runtime-metadata-20261124/green.stderr.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/expo-runtime-metadata-20261124/green.stdout.log",
+          "bytes": 747,
+          "sha256": "1fc3a75b84ab05b8239e61157006331a089b423e07a71e86dc446cab1e184401"
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/expo-runtime-metadata-20261124/red.stderr.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/expo-runtime-metadata-20261124/red.stdout.log",
+          "bytes": 1079,
+          "sha256": "0ffc50833aeee974a8e464f823e0172a4388de6a29a1dd2e104aadd750a463b4"
+        }
+      ],
+      "allReceiptHashesMatch": true
+    }
+  },
+  "sources": [
+    {
+      "path": "Scripts/MiniApps/resolve-upstreams.mjs",
+      "sha256": "b2222aad85f1a6c5ba38a6d52282674bb37627e05ab484b637614dfc7b9892f8"
+    },
+    {
+      "path": "Scripts/Audit/miniapp-runtime-contract.mjs",
+      "sha256": "61f5e1b1bbf09236ee000388ca0c7451e5d151b7712f9420abcfea5bb4c7dd0f"
+    },
+    {
+      "path": "Scripts/Audit/Tests/runtime-version-contract.test.mjs",
+      "sha256": "8384cf0b94173a56ddfa5eb4140683587b2442acfbace5cde0873ce3058dc8d9"
+    },
+    {
+      "path": "Tools/SwiftUIBridge/configuration.json",
+      "sha256": "a8711bcfc51ae85ee58cf8ebd5a5724c6a142994dcbe3d558e8644d9c48fda8a"
+    },
+    {
+      "path": "Generated/SwiftUIBridge/bridge-manifest.ts",
+      "sha256": "a56c8a16334bfe76ebe6489fc1f018f25f28f7cadba6c1ef11a268e5336f3b37"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/generated/bridge-manifest.ts",
+      "sha256": "a56c8a16334bfe76ebe6489fc1f018f25f28f7cadba6c1ef11a268e5336f3b37"
+    },
+    {
+      "path": "Generated/SwiftUIBridge/HanlinGeneratedViews.swift",
+      "sha256": "838154d4e8a44b07eb312dee19df283b217842633c6dbeb84bc369edba77699e"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/Generated/HanlinGeneratedViews.swift",
+      "sha256": "838154d4e8a44b07eb312dee19df283b217842633c6dbeb84bc369edba77699e"
+    }
+  ],
+  "boundary": "Read-only source review. Owner6/6 portable results were not repeated. Native metadata UI execution remains NOT_RUN."
+}

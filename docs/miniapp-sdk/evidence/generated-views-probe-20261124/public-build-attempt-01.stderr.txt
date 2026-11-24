@@ -1,0 +1,8 @@
+file:///mnt/development/projects/worktrees/hanlin-generated-views-probe-20261124/docs/miniapp-sdk/evidence/generated-views-probe-20261124/run-public-authoring-build.mjs:35
+    const indices = map.sources.flatMap((name, index) => name.endsWith('/' + suffix) || name === suffix ? [index] : []);
+                                ^
+
+TypeError: Cannot read properties of undefined (reading 'flatMap')
+    at file:///mnt/development/projects/worktrees/hanlin-generated-views-probe-20261124/docs/miniapp-sdk/evidence/generated-views-probe-20261124/run-public-authoring-build.mjs:35:33
+
+Node.js v24.22.0

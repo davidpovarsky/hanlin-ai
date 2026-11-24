@@ -315,6 +315,12 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
         let variantAPredicate = NSPredicate(format: "label CONTAINS 'Expo Dynamic A' OR label CONTAINS 'Variant A'")
         let variantALabel = app.descendants(matching: .any).matching(variantAPredicate).firstMatch
         XCTAssertTrue(variantALabel.waitForExistence(timeout: 15), "Dynamic Variant A indicator did not render")
+        let hostFiles = app.descendants(matching: .any).matching(
+            NSPredicate(format: "label == 'HOST_FILES_PASS:131073'")
+        ).firstMatch
+        XCTAssertTrue(hostFiles.waitForExistence(timeout: 45),
+                      "The standalone production JS facade must preserve empty/all-byte/131073-byte files and missing-file status.")
+
 
         let genesisTextPredicate = NSPredicate(format: "label CONTAINS 'בראשית ברא' OR label CONTAINS 'בְּרֵאשִׁ֖ית' OR label CONTAINS 'Genesis'")
         let genesisText = app.descendants(matching: .any).matching(genesisTextPredicate).firstMatch
@@ -688,6 +694,313 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
         tapAdapterButton("Adapter menu")
         tapAdapterButton("Close manual adapters")
         closeExpoApp()
+    }
+
+    func testStandaloneExpoGeneratedGroupBoxSlotsAndInstalledMetadata() throws {
+        openAdditionalExpoProbe("Open Generated Views Probe")
+        tapAdapterButton("Generated GroupBox slots")
+        expectAdapterText("Generated group label 0")
+        expectAdapterText("Generated group content 0")
+        expectAdapterText("Generated ordinary child group")
+        expectAdapterText("Generated ordinary child content 0")
+        expectAdapterText("Generated explicit empty group")
+        XCTAssertFalse(sdkOnlyText("GENERATED_GROUP_IGNORED_CHILD").exists,
+                       "Explicit named content must take precedence over JSX children.")
+        XCTAssertFalse(sdkOnlyText("GENERATED_GROUP_NULL_CHILD").exists,
+                       "Explicit null content must suppress the JSX child fallback.")
+        tapAdapterButton("Change generated group slots")
+        expectAdapterText("Generated group label 1")
+        expectAdapterText("Generated group content 1")
+        expectAdapterText("Generated ordinary child content 1")
+        XCTAssertFalse(sdkOnlyText("GENERATED_GROUP_IGNORED_CHILD").exists)
+        XCTAssertFalse(sdkOnlyText("GENERATED_GROUP_NULL_CHILD").exists)
+        capture(name: "generated-group-box-native-slots")
+        tapAdapterButton("Generated view menu")
+
+        tapAdapterButton("Installed bridge metadata")
+        expectAdapterText("METADATA_READS:0")
+        expectAdapterText("METADATA_STATUS:NOT_READ")
+        tapAdapterButton("Read native bridge metadata")
+        expectAdapterText("METADATA_READS:1")
+        expectAdapterText("METADATA_STATUS:MATCH")
+        let expectedRuntime = app.descendants(matching: .any).matching(
+            NSPredicate(format: "label BEGINSWITH 'METADATA_EXPECTED_RUNTIME:'")
+        ).firstMatch
+        XCTAssertTrue(expectedRuntime.waitForExistence(timeout: 10))
+        let runtime = String(expectedRuntime.label.dropFirst("METADATA_EXPECTED_RUNTIME:".count))
+        XCTAssertFalse(runtime.isEmpty)
+        expectAdapterText("METADATA_RUNTIME:" + runtime)
+        tapAdapterButton("Read native bridge metadata")
+        expectAdapterText("METADATA_READS:2")
+        expectAdapterText("METADATA_STATUS:MATCH")
+        capture(name: "generated-installed-native-bridge-metadata")
+        tapAdapterButton("Generated view menu")
+        tapAdapterButton("Close generated views")
+        closeExpoApp()
+    }
+
+    func testStandaloneExpoGeneratedEditButtonEditsOriginalList() throws {
+        openAdditionalExpoProbe("Open Generated Views Probe")
+        tapAdapterButton("Generated EditButton list")
+        expectAdapterText("EDIT_DELETE_EVENTS:0")
+        expectAdapterText("EDIT_ROWS:alpha,beta")
+        let edit = app.buttons["generated-edit-button"].firstMatch
+        XCTAssertTrue(edit.waitForExistence(timeout: 15))
+        XCTAssertEqual(edit.label, "Edit")
+        XCTAssertTrue(edit.isHittable)
+        edit.tap()
+        XCTAssertTrue(waitUntil(timeout: 10) { edit.label == "Done" },
+                      "The generated SwiftUI EditButton must change the actual native edit mode.")
+
+        let row = app.cells.containing(.staticText, identifier: "Generated Alpha").firstMatch
+        XCTAssertTrue(row.waitForExistence(timeout: 10))
+        let delete = row.buttons.matching(NSPredicate(format: "label BEGINSWITH[c] 'Delete'")).firstMatch
+        XCTAssertTrue(delete.waitForExistence(timeout: 10),
+                      "The original List.ForEach onDelete must expose native editing controls.")
+        XCTAssertTrue(delete.isHittable)
+        delete.tap()
+        let event = sdkOnlyText("EDIT_DELETE_EVENTS:1")
+        let confirm = row.buttons.matching(NSPredicate(format: "label == 'Delete'")).firstMatch
+        XCTAssertTrue(waitUntil(timeout: 10) { event.exists || (confirm.exists && confirm.isHittable) })
+        if !event.exists { confirm.tap() }
+        expectAdapterText("EDIT_DELETE_EVENTS:1")
+        expectAdapterText("EDIT_ROWS:beta")
+        XCTAssertFalse(sdkOnlyText("Generated Alpha").exists)
+        XCTAssertTrue(sdkOnlyText("Generated Beta").exists)
+        edit.tap()
+        XCTAssertTrue(waitUntil(timeout: 10) { edit.label == "Edit" })
+        capture(name: "generated-edit-button-original-delete-event")
+        tapAdapterButton("Generated view menu")
+        tapAdapterButton("Close generated views")
+        closeExpoApp()
+    }
+
+    func testStandaloneExpoGeneratedEmptyViewReportsNativeLayout() throws {
+        openAdditionalExpoProbe("Open Generated Views Probe")
+        tapAdapterButton("Generated EmptyView measurement")
+        expectAdapterText("EMPTY_NATIVE_SIZE:120.0x44.0")
+        XCTAssertTrue(sdkOnlyText("Visible measurement control").exists)
+        let initialEvents = try generatedEventCount("EMPTY_LAYOUT_EVENTS:")
+        XCTAssertGreaterThan(initialEvents, 0)
+        tapAdapterButton("Replace measured content with EmptyView")
+        expectAdapterText("EMPTY_NATIVE_SIZE:0.0x0.0")
+        XCTAssertFalse(sdkOnlyText("Visible measurement control").exists)
+        let emptyEvents = try generatedEventCount("EMPTY_LAYOUT_EVENTS:")
+        XCTAssertGreaterThan(emptyEvents, initialEvents,
+                             "EmptyView size must come from a fresh original Host native layout event.")
+        capture(name: "generated-empty-view-zero-native-size")
+        tapAdapterButton("Restore measured content")
+        expectAdapterText("EMPTY_NATIVE_SIZE:120.0x44.0")
+        XCTAssertTrue(sdkOnlyText("Visible measurement control").exists)
+        XCTAssertGreaterThan(try generatedEventCount("EMPTY_LAYOUT_EVENTS:"), emptyEvents)
+        capture(name: "generated-empty-view-restored-native-size")
+        tapAdapterButton("Generated view menu")
+        tapAdapterButton("Close generated views")
+        closeExpoApp()
+    }
+
+    func testStandaloneExpoGeneratedModifierAccessibilityAndGeometry() throws {
+        openAdditionalExpoProbe("Open Generated Modifiers Probe")
+        tapAdapterButton("Modifiers: Accessibility")
+        expectAdapterText("MODIFIER_NATIVE_CONTEXT:Accessibility:appeared")
+        let allowance = app.descendants(matching: .any)["generated-accessibility-value"].firstMatch
+        XCTAssertTrue(allowance.waitForExistence(timeout: 10))
+        XCTAssertEqual(allowance.value as? String, "Allowance 7")
+        tapAdapterButton("Increase modifier allowance")
+        XCTAssertTrue(waitUntil(timeout: 10) { allowance.value as? String == "Allowance 8" },
+                      "The generated accessibility value must update the actual native accessibility element.")
+        tapAdapterButton("Generated accessibility action")
+        expectAdapterText("MODIFIER_ACCESSIBILITY_ACTIONS:1")
+        capture(name: "generated-modifier-native-accessibility-value")
+        tapAdapterButton("Generated modifier menu")
+
+        tapAdapterButton("Modifiers: Geometry")
+        expectAdapterText("MODIFIER_NATIVE_CONTEXT:Geometry:appeared")
+        let positioned = app.descendants(matching: .any)["generated-position-text"].firstMatch
+        let tracked = app.descendants(matching: .any)["generated-tracking-text"].firstMatch
+        XCTAssertTrue(positioned.waitForExistence(timeout: 10))
+        XCTAssertTrue(tracked.waitForExistence(timeout: 10))
+        let initialX = positioned.frame.midX
+        let initialWidth = tracked.frame.width
+        XCTAssertGreaterThan(initialWidth, 0)
+        tapAdapterButton("Change modifier geometry")
+        expectAdapterText("MODIFIER_GEOMETRY_STATE:changed")
+        XCTAssertTrue(waitUntil(timeout: 10) {
+            abs(positioned.frame.midX - initialX - 120) < 2 && tracked.frame.width > initialWidth + 1
+        }, "The generated position and tracking modifiers must change native geometry, not only React labels.")
+        XCTAssertEqual(positioned.frame.midX - initialX, 120, accuracy: 2)
+        XCTAssertGreaterThan(tracked.frame.width, initialWidth + 1)
+        capture(name: "generated-modifier-native-position-and-tracking")
+        tapAdapterButton("Generated modifier menu")
+        tapAdapterButton("Exit Generated Modifiers Probe")
+        closeExpoApp()
+    }
+
+    func testStandaloneExpoGeneratedModifierHitTestingAndSubmitScope() throws {
+        openAdditionalExpoProbe("Open Generated Modifiers Probe")
+        tapAdapterButton("Modifiers: Input")
+        expectAdapterText("MODIFIER_NATIVE_CONTEXT:Input:appeared")
+        expectAdapterText("MODIFIER_HIT_COUNTS:front=0;back=0")
+        let back = app.buttons["Generated back target"].firstMatch
+        XCTAssertTrue(back.waitForExistence(timeout: 10))
+        XCTAssertGreaterThan(back.frame.width, 0)
+        let nativeTarget = back.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+        nativeTarget.tap()
+        expectAdapterText("MODIFIER_HIT_COUNTS:front=0;back=1")
+        tapAdapterButton("Enable generated front target")
+        XCTAssertTrue(app.buttons["Generated front target enabled"].firstMatch.waitForExistence(timeout: 10))
+        nativeTarget.tap()
+        expectAdapterText("MODIFIER_HIT_COUNTS:front=1;back=1")
+        capture(name: "generated-modifier-native-hit-testing")
+
+        let field = app.textFields["generated-modifier-input"].firstMatch
+        XCTAssertTrue(field.waitForExistence(timeout: 10))
+        XCTAssertTrue(field.isHittable)
+        field.tap()
+        field.typeText("native input\n")
+        expectAdapterText("MODIFIER_INPUT:native input")
+        XCTAssertFalse(waitUntil(timeout: 2) { self.sdkOnlyText("MODIFIER_SUBMITS:1").exists },
+                       "Blocking submitScope must prevent the real ancestor onSubmit callback.")
+        expectAdapterText("MODIFIER_SUBMITS:0")
+        tapAdapterButton("Allow generated submit")
+        XCTAssertTrue(app.buttons["Generated submit allowed"].firstMatch.waitForExistence(timeout: 10))
+        field.tap()
+        field.typeText("\n")
+        expectAdapterText("MODIFIER_SUBMITS:1")
+        capture(name: "generated-modifier-native-submit-scope")
+        tapAdapterButton("Generated modifier menu")
+        tapAdapterButton("Exit Generated Modifiers Probe")
+        closeExpoApp()
+    }
+
+    func testStandaloneExpoGeneratedModifierNativeContainerContexts() throws {
+        openAdditionalExpoProbe("Open Generated Modifiers Probe")
+        tapAdapterButton("Modifiers: Containers")
+        expectAdapterText("MODIFIER_NATIVE_CONTEXT:Containers:appeared")
+        let header = app.descendants(matching: .any).matching(
+            NSPredicate(format: "label == 'Generated item header'")
+        ).firstMatch
+        XCTAssertTrue(header.waitForExistence(timeout: 10))
+        tapAdapterButton("Toggle generated headers")
+        XCTAssertTrue(waitUntil(timeout: 10) { !header.exists },
+                      "tableColumnHeaders must hide the native header.")
+        tapAdapterButton("Toggle generated headers")
+        XCTAssertTrue(header.waitForExistence(timeout: 10))
+        let selectable = sdkOnlyText("Generated selectable row")
+        XCTAssertTrue(selectable.waitForExistence(timeout: 10))
+        selectable.tap()
+        XCTAssertFalse(waitUntil(timeout: 2) { self.sdkOnlyText("MODIFIER_LIST_SELECTION:invoice").exists })
+        expectAdapterText("MODIFIER_LIST_SELECTION:none")
+        tapAdapterButton("Allow generated selection")
+        XCTAssertTrue(app.buttons["Generated selection allowed"].firstMatch.waitForExistence(timeout: 10))
+        selectable.tap()
+        expectAdapterText("MODIFIER_LIST_SELECTION:invoice")
+        let swipeRow = sdkOnlyText("Generated swipe row")
+        XCTAssertTrue(swipeRow.waitForExistence(timeout: 10))
+        swipeRow.swipeLeft()
+        tapAdapterButton("Record generated swipe")
+        expectAdapterText("MODIFIER_SWIPE_ACTIONS:1")
+        capture(name: "generated-modifier-native-table-list-and-swipe")
+
+        tapAdapterButton("Generated search context")
+        let query = app.searchFields.firstMatch
+        XCTAssertTrue(query.waitForExistence(timeout: 10))
+        query.tap()
+        let suggestion = app.descendants(matching: .any).matching(
+            NSPredicate(format: "label == 'Generated suggestion Isaiah'")
+        ).firstMatch
+        XCTAssertTrue(suggestion.waitForExistence(timeout: 10))
+        XCTAssertTrue(suggestion.isHittable)
+        suggestion.tap()
+        expectAdapterText("MODIFIER_SEARCH_QUERY:Isaiah")
+        query.tap()
+        query.typeText("\n")
+        expectAdapterText("MODIFIER_SEARCH_SUBMITTED:Isaiah")
+        capture(name: "generated-modifier-native-search-completion")
+        tapAdapterButton("Generated modifier menu")
+
+        tapAdapterButton("Modifiers: Containers")
+        tapAdapterButton("Generated navigation context")
+        tapAdapterButton("Open generated detail")
+        expectAdapterText("GENERATED_MODIFIER_DETAIL")
+        let navigationBar = app.navigationBars["Generated detail"].firstMatch
+        XCTAssertTrue(navigationBar.waitForExistence(timeout: 10))
+        XCTAssertFalse(navigationBar.buttons.firstMatch.exists,
+                       "The generated back-button modifier must hide the actual native navigation control.")
+        tapAdapterButton("Show generated native back")
+        let nativeBack = navigationBar.buttons.firstMatch
+        XCTAssertTrue(nativeBack.waitForExistence(timeout: 10))
+        XCTAssertTrue(nativeBack.isHittable)
+        nativeBack.tap()
+        expectAdapterText("MODIFIER_NAVIGATION_PATH:")
+        XCTAssertFalse(sdkOnlyText("GENERATED_MODIFIER_DETAIL").exists)
+        capture(name: "generated-modifier-native-navigation-back")
+        tapAdapterButton("Generated modifier menu")
+
+        tapAdapterButton("Modifiers: Containers")
+        tapAdapterButton("Generated inspector context")
+        tapAdapterButton("Open generated inspector")
+        expectAdapterText("GENERATED_MODIFIER_INSPECTOR")
+        capture(name: "generated-modifier-original-inspector-context")
+        tapAdapterButton("Close generated inspector")
+        XCTAssertTrue(waitUntil(timeout: 10) { !self.sdkOnlyText("GENERATED_MODIFIER_INSPECTOR").exists })
+        expectAdapterText("MODIFIER_INSPECTOR_PRESENTED:false")
+        tapAdapterButton("Generated modifier menu")
+
+        tapAdapterButton("Modifiers: Host Context")
+        expectAdapterText("MODIFIER_NATIVE_CONTEXT:Host Context:appeared")
+        expectAdapterText("No document scene or file presenter is created by this probe.")
+        capture(name: "generated-modifier-host-context-boundary")
+        tapAdapterButton("Generated modifier menu")
+        tapAdapterButton("Exit Generated Modifiers Probe")
+        closeExpoApp()
+    }
+
+    func testStandaloneExpoHostServicesUseRealStorageRuntimeAndWidgetPublication() throws {
+        openAdditionalExpoProbe("Open Host Services Probe")
+        tapAdapterButton("Run Host Services Files")
+        expectAdapterText("HOST_SERVICES_FILES_PASS")
+        tapAdapterButton("Run Host Services Runtime")
+        expectAdapterText("HOST_SERVICES_RUNTIME_PASS")
+        tapAdapterButton("Read Host Live Activity Status")
+        let activityStatus = app.descendants(matching: .any).matching(NSPredicate(
+            format: "label BEGINSWITH 'HOST_SERVICES_ACTIVITY_READS_PASS:enabled='"
+        )).firstMatch
+        XCTAssertTrue(activityStatus.waitForExistence(timeout: 15),
+                      "The original ActivityKit status/list result must be read; this does not assert an activity was started.")
+        tapAdapterButton("Publish Prepared Expo Widget")
+        expectAdapterText("HOST_SERVICES_WIDGET_STATE_PASS")
+        capture(name: "host-services-actual-storage-runtime-and-prepared-widget-state")
+        // The typed receipt proves committed state/catalog/reload only. Rendering
+        // by WidgetKit and the installed action request/ack have separate cases.
+        tapAdapterButton("Close Host Services Probe")
+        closeExpoApp()
+    }
+
+    private func generatedEventCount(_ prefix: String) throws -> Int {
+        let value = app.descendants(matching: .any).matching(
+            NSPredicate(format: "label BEGINSWITH %@", prefix)
+        ).firstMatch
+        XCTAssertTrue(value.waitForExistence(timeout: 10))
+        return try XCTUnwrap(Int(value.label.dropFirst(prefix.count)))
+    }
+
+    private func openAdditionalExpoProbe(_ label: String) {
+        openApps()
+        importAndInstall(archive: "ExpoSwiftUIProbeA")
+        launchInstalledPackage(named: probeAPackageName)
+        let open = app.buttons[label].firstMatch
+        if !open.waitForExistence(timeout: 5) || !open.isHittable {
+            let sidebar = app.buttons.matching(NSPredicate(format:
+                "label == 'Show Sidebar' OR identifier == 'ToggleSidebar' OR label CONTAINS[c] 'Sidebar'")).firstMatch
+            if sidebar.exists && sidebar.isHittable {
+                sidebar.tap()
+            } else {
+                app.coordinate(withNormalizedOffset: CGVector(dx: 0.01, dy: 0.5))
+                    .press(forDuration: 0.1, thenDragTo: app.coordinate(withNormalizedOffset: CGVector(dx: 0.45, dy: 0.5)))
+            }
+        }
+        tapAdapterButton(label)
     }
 
     private func openManualAdapterProbe() {

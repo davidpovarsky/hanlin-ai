@@ -24,6 +24,9 @@ import {
 } from '@hanlin/expo-ui';
 import { renderWidget } from './widget';
 import { ManualAdapterProbe } from './ManualAdapterProbe';
+import { GeneratedViewsProbe } from './GeneratedViewsProbe';
+import { GeneratedModifiersProbe } from './GeneratedModifiersProbe';
+import { HostServicesProbe } from './HostServicesProbe';
 import {
   navigationTitle,
   padding,
@@ -78,6 +81,9 @@ export default function App({ variant = 'A' }: AppProps) {
   const [counter, setCounter] = useState<number>(7);
   const [showSearchProbe, setShowSearchProbe] = useState<boolean>(false);
   const [showManualAdapters, setShowManualAdapters] = useState(false);
+  const [showGeneratedViews, setShowGeneratedViews] = useState(false);
+  const [showGeneratedModifiers, setShowGeneratedModifiers] = useState(false);
+  const [showHostServices, setShowHostServices] = useState(false);
   const [searchProbeText, setSearchProbeText] = useState<string>('');
   const [searchProbeSubmits, setSearchProbeSubmits] = useState<number>(0);
   const [searchProbeActions, setSearchProbeActions] = useState<number>(0);
@@ -133,6 +139,9 @@ export default function App({ variant = 'A' }: AppProps) {
   const currentBook = TORAH_BOOKS.find((b) => b.id === selectedBookId) ?? TORAH_BOOKS[0];
 
   if (showManualAdapters) return <ManualAdapterProbe close={() => setShowManualAdapters(false)} />;
+  if (showGeneratedViews) return <GeneratedViewsProbe close={() => setShowGeneratedViews(false)} />;
+  if (showGeneratedModifiers) return <GeneratedModifiersProbe close={() => setShowGeneratedModifiers(false)} />;
+  if (showHostServices) return <HostServicesProbe close={() => setShowHostServices(false)} />;
 
   if (showSearchProbe) {
     return (
@@ -182,6 +191,9 @@ export default function App({ variant = 'A' }: AppProps) {
                 <Section title="ספרי תורה">
                   <Button label="Open Searchable Probe" onPress={() => setShowSearchProbe(true)} />
                   <Button label="Open Manual Adapter Probe" onPress={() => setShowManualAdapters(true)} />
+                  <Button label="Open Generated Views Probe" onPress={() => setShowGeneratedViews(true)} />
+                  <Button label="Open Generated Modifiers Probe" onPress={() => setShowGeneratedModifiers(true)} />
+                  <Button label="Open Host Services Probe" onPress={() => setShowHostServices(true)} />
                   {TORAH_BOOKS.map((book) => (
                     <Button
                       key={book.id}

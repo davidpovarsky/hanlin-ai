@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "status": "HARNESS_SETUP_ERROR",
+  "operation": "Write temporary authoring-context receipt before any compiler/build invocation",
+  "observedError": "FileNotFoundError: SDK/sdk-manifest.json; the initial setup code guessed two filenames instead of reading the public reader.",
+  "sentinelJob": "job_790bbab3f07a401db32abb6973f18bb2",
+  "resolution": "Read actual miniapp-authoring.mjs:53, which uses miniapp-sdk.json; no SDK/source mutation needed. Existing own temp descriptor/link were retained.",
+  "productTestInvoked": false,
+  "countAsProductRed": false
+}
