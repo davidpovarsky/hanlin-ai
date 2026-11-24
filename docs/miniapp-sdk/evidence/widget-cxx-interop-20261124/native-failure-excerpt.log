@@ -1,0 +1,8 @@
+SwiftEmitModule normal arm64 Emitting\ module\ for\ HanlinScriptingWidgets (in target 'HanlinScriptingWidgets' from project 'HanlinSDK')
+/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinOriginalExpoWidget.swift:2:24: error: module 'ExpoWidgets' was built with C++ interoperability enabled, but current compilation does not enable C++ interoperability
+  1 | import AppIntents
+  2 | @preconcurrency import ExpoWidgets
+    |                        |- error: module 'ExpoWidgets' was built with C++ interoperability enabled, but current compilation does not enable C++ interoperability
+    |                        `- note: visit https://www.swift.org/documentation/cxx-interop/project-build-setup to learn how to enable C++ interoperability
+  3 | import Foundation
+  4 | import HanlinLocalization

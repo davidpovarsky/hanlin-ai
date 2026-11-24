@@ -1,0 +1,9 @@
+{
+  "argv": [
+    "python3",
+    "Scripts/SDK/update_project.py"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-miniapps-host-services-20261124",
+  "startedAt": "2026-11-24T10:22:29.141064+00:00",
+  "exitCode": 0
+}

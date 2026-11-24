@@ -2,7 +2,7 @@
 """Wire the original Hanlin executable to its single shared SDK implementation."""
 from pathlib import Path
 import subprocess
-import argparse,json,re,sys
+import argparse,json,os,re,shlex,sys
 ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(ROOT/"Scripts/CI/IntegrationValidation"))
 from project_graph import parse_project
@@ -140,6 +140,55 @@ def product_is_covered(product, objects, closure):
         identity = package["repositoryURL"].rstrip("/").removesuffix(".git").rsplit("/", 1)[-1].lower()
         return (product["productName"], identity) in closure[1]
     return False
+
+
+
+def widget_cxx_import_flags(package):
+    # Read the genuine original producer from the evaluated unified manifest.
+    producers = [target for target in package["targets"] if target["name"] == "ExpoWidgets"]
+    if len(producers) != 1:
+        raise ValueError("Expected the original ExpoWidgets producer")
+    settings = [value["kind"] for value in producers[0]["settings"] if value["tool"] == "swift"]
+    modes = [value["interoperabilityMode"]["_0"] for value in settings if "interoperabilityMode" in value]
+    if modes != ["Cxx"]:
+        raise ValueError("Expected ExpoWidgets' original C++ interoperability contract")
+    flags = [flag for value in settings if "unsafeFlags" in value for flag in value["unsafeFlags"]["_0"]]
+    # Package-relative absolute paths become repository-relative Xcode inputs;
+    # retain the producer's flags, definitions and fallback search paths.
+    return [(flag[:2] + os.path.normpath(flag[2:]) if flag.startswith(("-I/", "-F/")) else flag)
+            .replace(str(ROOT), "$(SRCROOT)") for flag in flags]
+
+
+def wire_widget_cxx_imports(text, package):
+    flags = widget_cxx_import_flags(package)
+    if len(flags) % 2 or any(flags[index] != "-Xcc" for index in range(0, len(flags), 2)):
+        raise ValueError("Unexpected ExpoWidgets Clang import flag shape")
+    objects = parse_project(text)["objects"]
+    host = next(value for value in objects.values()
+                if value.get("isa") == "PBXNativeTarget" and value.get("name") == "HanlinScriptingWidgets")
+    for key in objects[host["buildConfigurationList"]]["buildConfigurations"]:
+        current = objects[key]["buildSettings"].get("OTHER_SWIFT_FLAGS", ["$(inherited)"])
+        values = shlex.split(current) if isinstance(current, str) else list(current)
+        for index in range(0, len(flags), 2):
+            pair = flags[index:index + 2]
+            if not any(values[offset:offset + 2] == pair for offset in range(len(values) - 1)):
+                values.extend(pair)
+        def settings(block):
+            replacements = {
+                "SWIFT_OBJC_INTEROP_MODE": "objcxx",
+                "OTHER_SWIFT_FLAGS": "(" + ", ".join(json.dumps(value) for value in values) + ",)",
+            }
+            for name, value in replacements.items():
+                line = name + " = " + value + ";"
+                pattern = r'"?' + name + r'"? = [^;]+;'
+                if re.search(pattern, block):
+                    block = re.sub(pattern, lambda _: line, block, count=1)
+                else:
+                    block = re.sub(r'("?buildSettings"? = \{)',
+                                   lambda match: match[1] + "\n\t\t\t\t" + line, block, count=1)
+            return block
+        text = edit_object(text, key, settings)
+    return text
 
 
 def update(package=None):
@@ -332,6 +381,9 @@ def update(package=None):
     text=edit_object(text,group,lambda b:replace_list(b,"children",children))
     sys.path.insert(0, str(ROOT / "Scripts/ProductSplit"))
     from miniapps_extensions import wire_miniapps_extensions
+    # The original widget host is configured first; its real standalone
+    # MiniApps counterpart is then cloned with the same import contract.
+    text = wire_widget_cxx_imports(text, package)
     text = wire_miniapps_extensions(text, edit_object, replace_list, insert_object)
     parse_project(text)
     return text
