@@ -155,11 +155,13 @@ public final class HanlinNativeScriptWindowSession {
         func stop() {
             guard !stopped else { return }
             stopped = true
+            // Registry callbacks, neutral-provider handlers and pending bridge
+            // completions can own JS blocks. Retire them while their VM is live.
             HanlinNativeScriptWindowFactoryRegistry.endRuntime(sessionID: session.sessionID)
-            session.shutdown()
             HanlinNativeServicesBridge.unregisterProvider(forSessionID: session.sessionID)
             HanlinNativeServicesBridge.clearLegacyProvider(ifMatches: provider)
             release(session.sessionID)
+            session.shutdown()
         }
 
         deinit { MainActor.assumeIsolated { stop() } }
