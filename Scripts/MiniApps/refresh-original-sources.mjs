@@ -68,6 +68,12 @@ function swiftBlockEnd(text,opening) {
   if(depth)throw new Error('Unbalanced original Swift declaration');return index;
 }
 export function originalInHostTarget(bytes,local) {
+  if(local==='Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Attributes/Animation/ClockHandRotationEffect.swift') {
+    // These original immutable closures capture no state. Preserve every original
+    // body while giving the Swift 6 host the closure's actual Sendable contract.
+    // Project all merge sides so an unchanged upstream also repairs older copies.
+    return Buffer.from(bytes.toString().replace('private static let forms: [(', 'private static let forms: [@Sendable ('));
+  }
   if(!local.startsWith('Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/'))return bytes;
   // This existing extension target compiles the original Core/UI widget types
   // together in one module. The original source's imports of those same modules

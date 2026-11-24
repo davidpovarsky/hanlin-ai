@@ -809,8 +809,8 @@
       "upstream": "Shared/ScriptWidgetRuntime/Widget/Component/Attributes/Animation/ClockHandRotationEffect.swift",
       "upstreamBlob": "75a6f1301cfed1a5a7e95c7f7cf5f704eddbd778",
       "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Attributes/Animation/ClockHandRotationEffect.swift",
-      "adaptation": "Public SwiftUI clock helper copied; MainActor annotation for native view composition.",
-      "localSHA256": "dc092536d71aeb07dd66bd3678ed52c1066bce20d6db3201af350bc3b9cda218",
+      "adaptation": "Original SwiftUI clock helper, with existing MainActor composition annotation and Sendable type annotation for its immutable capture-free format closures; original behavior retained.",
+      "localSHA256": "5055ea7277afe42bf3fc914bd1fe4462722cf68a1e67ca24b8177f8900b3772e",
       "byteIdentical": false
     },
     {

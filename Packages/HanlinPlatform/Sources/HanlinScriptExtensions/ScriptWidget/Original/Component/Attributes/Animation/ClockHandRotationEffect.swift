@@ -44,7 +44,7 @@ enum WidgetKitClockHand {
     /// period as the seconds of one full turn and the anchor as `[x, y]`; earlier systems
     /// used a `{"custom": {"_0": n}}` style period and an `{"x", "y"}` anchor. A custom
     /// interval `n` has always been half a turn. The first form that decodes is remembered.
-    private static let forms: [(ClockHandPeriod, UnitPoint) -> (Any, Any)] = [
+    private static let forms: [@Sendable (ClockHandPeriod, UnitPoint) -> (Any, Any)] = [
         { period, anchor in (fullTurnSeconds(period), [Double(anchor.x), Double(anchor.y)]) },
         { period, anchor in (enumPeriod(period), [Double(anchor.x), Double(anchor.y)]) },
         { period, anchor in (enumPeriod(period), ["x": Double(anchor.x), "y": Double(anchor.y)]) },
