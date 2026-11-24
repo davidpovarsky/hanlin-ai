@@ -1,0 +1,13 @@
+{
+  "utc": "2026-11-24T00:53:01.323145+00:00",
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "Scripts.CI.Tests.test_current_unit_xctestrun.CurrentUnitXctestrunTests.test_build_context_reads_actual_git_revision_dirty_diff_and_provenance"
+  ],
+  "exit_code": 0,
+  "source_sha256": "f2b5dfbe1238840de1b421f48c2953c4e1851ecb3c8bccd605fe51a879085dcc",
+  "only_affected_existing_control": true,
+  "native_tests_run": 0
+}
