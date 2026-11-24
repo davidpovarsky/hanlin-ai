@@ -130,7 +130,10 @@ struct ScriptingPackageImportView: View {
             }
         }
         .toolbar {
-            ToolbarItem(placement: .confirmationAction) { Button(hanlin: "Done") { dismiss() } }
+            ToolbarItem(placement: .confirmationAction) {
+                Button(hanlin: "Done") { dismiss() }
+                    .accessibilityIdentifier("hanlin-package-import-done")
+            }
         }
     }
 }

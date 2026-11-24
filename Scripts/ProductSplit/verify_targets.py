@@ -11,7 +11,29 @@ sys.path.insert(0, str(ROOT / "Scripts/CI/IntegrationValidation"))
 from project_graph import parse_project, validate_graph, validate_agent_sdk_linkage
 
 
+def validate_native_test_membership():
+    """Catch an omitted XCTest file before an expensive real application build."""
+    project = parse_project((ROOT / "AI_HLY.xcodeproj/project.pbxproj").read_text(encoding="utf-8"))
+    objects = project["objects"]
+    target = next(value for value in objects.values()
+                  if value.get("isa") == "PBXNativeTarget" and value.get("name") == "HanlinMiniAppsUITests")
+    source_phases = [objects[key] for key in target["buildPhases"]
+                     if objects[key].get("isa") == "PBXSourcesBuildPhase"]
+    paths = [objects[objects[key]["fileRef"]]["path"]
+             for phase in source_phases for key in phase["files"]]
+    expected = {path.relative_to(ROOT).as_posix()
+                for path in (ROOT / "HanlinMiniAppsUITests").glob("*.swift")}
+    # The original provider test is intentionally shared outside the target directory.
+    expected.add("Scripts/CI/IntegrationValidation/MiniAppsProviderUITests.swift")
+    if not expected or len(paths) != len(set(paths)) or set(paths) != expected:
+        raise RuntimeError("MiniApps UI-test target membership mismatch: " + json.dumps({
+            "omitted": sorted(expected - set(paths)), "unexpected": sorted(set(paths) - expected),
+            "duplicates": len(paths) != len(set(paths))}))
+    return sorted(paths)
+
+
 def main():
+    validate_native_test_membership()
     # The parser rejects duplicate IDs/keys and reads quoted and ordinary OpenStep alike.
     project_text = (ROOT / "AI_HLY.xcodeproj/project.pbxproj").read_text(encoding="utf-8")
     project = parse_project(project_text)

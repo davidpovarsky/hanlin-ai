@@ -671,6 +671,7 @@
 		FD2B21070BBD04C64242ADD1 = {isa = PBXBuildFile; fileRef = 6B236C9460137676E26D4468; };
 		D50F4D163E01EE6798757607 = {isa = PBXBuildFile; productRef = D7532BF517832175AD2CF8EE; };
 		9D281EC999A9E368745F917A = {isa = PBXBuildFile; productRef = 499632C6BDF7BBBDF296C7D6; };
+		D0AD25D376AEA6B0A4824621 = {isa = PBXBuildFile; fileRef = 865725CC287EA6A3C2986ABB; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1366,6 +1367,7 @@
 		};
 		10D8B14397FF408416D24D50 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/Downstream/ProductSplitIntegration/HanlinExternalMiniAppSession.swift"; sourceTree = SOURCE_ROOT; };
 		6B236C9460137676E26D4468 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HanlinMiniAppsUITests/MiniAppsCrossAppPreferencesUITests.swift; sourceTree = SOURCE_ROOT; };
+		865725CC287EA6A3C2986ABB = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -3112,7 +3114,7 @@
 			"isa" = "PBXSourcesBuildPhase";
 			"buildActionMask" = "2147483647";
 			"files" = (
-				"FD2B21070BBD04C64242ADD1","F927041F0B429D7A68AD6E86", "AC4F02D6D50561F3F8BF1799", );
+				"D0AD25D376AEA6B0A4824621","FD2B21070BBD04C64242ADD1","F927041F0B429D7A68AD6E86", "AC4F02D6D50561F3F8BF1799", );
 			"runOnlyForDeploymentPostprocessing" = "0";
 		};
 		FA30C73C6864055FEECAD847 /* W1-007 bootstrap */ = {

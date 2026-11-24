@@ -1,0 +1,91 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "BFF3FAA5-E612-49E6-B39C-6313A5177ED7",
+        "deviceName" : "HanlinSplit-45294462656",
+        "modelName" : "iPad mini (A20 Pro)",
+        "osBuildNumber" : "24B8117",
+        "osVersion" : "27.2",
+        "platform" : "iOS Simulator"
+      },
+      "expectedFailures" : 0,
+      "failedTests" : 4,
+      "passedTests" : 9,
+      "skippedTests" : 0,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "HanlinMiniApps · Built with macOS 27.0.1",
+  "expectedFailures" : 0,
+  "failedTests" : 4,
+  "finishTime" : 1795484045.386,
+  "passedTests" : 9,
+  "result" : "Failed",
+  "runtimeWarnings" : [
+    {
+      "issueType" : "Runtime Warning",
+      "message" : "Update the Info.plist: Support for all orientations will soon be required."
+    },
+    {
+      "issueType" : "Runtime Warning",
+      "message" : "Update the Info.plist: Support for all orientations will soon be required."
+    },
+    {
+      "issueType" : "Runtime Warning",
+      "message" : "Update the Info.plist: Support for all orientations will soon be required."
+    },
+    {
+      "issueType" : "Runtime Warning",
+      "message" : "Update the Info.plist: Support for all orientations will soon be required."
+    }
+  ],
+  "skippedTests" : 0,
+  "startTime" : 1795483643.557,
+  "statistics" : [
+
+  ],
+  "testFailures" : [
+    {
+      "failureText" : "XCTAssertEqual failed: (\"0\") is not equal to (\"1\") - Editing must show one native Done, without a second sheet-dismissal action.",
+      "targetName" : "HanlinMiniAppsUITests",
+      "testIdentifier" : 1,
+      "testIdentifierString" : "MiniAppsCrossAppPreferencesUITests/testAppleStyleEditorAddsFavoriteWithNativeEditControls()",
+      "testIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsCrossAppPreferencesUITests/testAppleStyleEditorAddsFavoriteWithNativeEditControls",
+      "testName" : "testAppleStyleEditorAddsFavoriteWithNativeEditControls()"
+    },
+    {
+      "failureText" : "XCTAssertEqual failed: (\"XCTWaiterResult(rawValue: 2)\") is not equal to (\"XCTWaiterResult(rawValue: 1)\")",
+      "targetName" : "HanlinMiniAppsUITests",
+      "testIdentifier" : 2,
+      "testIdentifierString" : "MiniAppsCrossAppPreferencesUITests/testSharedNewWindowPreferencePersistsAfterProcessRestart()",
+      "testIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsCrossAppPreferencesUITests/testSharedNewWindowPreferencePersistsAfterProcessRestart",
+      "testName" : "testSharedNewWindowPreferencePersistsAfterProcessRestart()"
+    },
+    {
+      "failureText" : "XCTAssertTrue failed",
+      "targetName" : "HanlinMiniAppsUITests",
+      "testIdentifier" : 3,
+      "testIdentifierString" : "MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents()",
+      "testIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents",
+      "testName" : "testStandaloneExpoRendersNativeControlsAndRunsReactEvents()"
+    },
+    {
+      "failureText" : "XCTAssertTrue failed",
+      "targetName" : "HanlinMiniAppsUITests",
+      "testIdentifier" : 4,
+      "testIdentifierString" : "MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch()",
+      "testIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch",
+      "testName" : "testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch()"
+    }
+  ],
+  "title" : "Test - HanlinMiniApps",
+  "topInsights" : [
+
+  ],
+  "totalTestCount" : 13
+}

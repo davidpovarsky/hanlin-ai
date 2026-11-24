@@ -50,7 +50,7 @@ final class MiniAppsExternalModalLifetimeUITests: XCTestCase {
         XCTAssertTrue(install.isEnabled)
         install.tap()
         XCTAssertTrue(install.waitForNonExistence(timeout: 60), "The original compiler and installer must finish")
-        let previewDone = app.navigationBars["Script Package"].buttons["Done"]
+        let previewDone = app.buttons["hanlin-package-import-done"]
         XCTAssertTrue(previewDone.waitForExistence(timeout: 15))
         previewDone.tap()
         let closeAdd = app.buttons["hanlin-apps-add-done"].firstMatch

@@ -11,6 +11,7 @@ import sys
 import time
 
 from simulator_entitlements import read_simulator_entitlements
+from verify_targets import validate_native_test_membership
 
 ROOT = Path(__file__).resolve().parents[2]
 EVIDENCE = Path(os.environ['SPLIT_EVIDENCE'])
@@ -65,6 +66,7 @@ def main():
         if TEST_SCOPE not in UI_PLANS:
             raise RuntimeError('Unknown standalone native acceptance scope')
         selectors, expected_tests = UI_PLANS[TEST_SCOPE]
+        state['ui_target_sources'] = validate_native_test_membership()
         state['test_scope'] = TEST_SCOPE
         state['selectors'] = selectors
         state['scope'] = 'Actual standalone MiniApps target: ' + TEST_SCOPE + '; paired/signing/device acceptance separate'
@@ -328,6 +330,11 @@ def main():
             passed, failed = summary.get('passedTests',0), summary.get('failedTests',0)
             command(['xcrun', 'xcresulttool', 'get', 'test-results', 'tests',
                 '--path', str(result)], 'test-nodes.json')
+            # Preserve actual failures even if a separately requested case was
+            # omitted from the test bundle. That is incomplete execution, never
+            # NOT_RUN for the cases present in the authentic xcresult.
+            state.update(status='INCOMPLETE_TEST_SELECTION',
+                         ui='TEST_FAILED' if failed else 'AWAITING_SELECTION_VERIFICATION')
             command([sys.executable, 'Scripts/CI/verify_selected_tests.py',
                 '--results', str(EVIDENCE/'test-nodes.json'), '--selectors', ','.join(selectors)],
                 'requested-tests.log')

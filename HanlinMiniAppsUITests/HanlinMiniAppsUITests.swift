@@ -90,7 +90,7 @@ final class HanlinMiniAppsUITests: XCTestCase {
         install.tap()
         let installed = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == false"), object: install)
         XCTAssertEqual(XCTWaiter.wait(for: [installed], timeout: 60), .completed)
-        app.navigationBars["Script Package"].buttons["Done"].tap()
+        app.buttons["hanlin-package-import-done"].tap()
         let close = app.buttons["hanlin-apps-add-done"]
         XCTAssertTrue(close.waitForExistence(timeout: 15))
         close.tap()
@@ -445,7 +445,7 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
                       "The existing installer must complete in the companion's own namespace")
         XCTAssertFalse(importError.exists, "The original installer failed: \(importError.exists ? importError.label : "")")
         XCTAssertFalse(install.exists, "Successful installation must consume the original preview")
-        let done = app.navigationBars["Script Package"].buttons["Done"].firstMatch
+        let done = app.buttons["hanlin-package-import-done"].firstMatch
         XCTAssertTrue(done.waitForExistence(timeout: 10))
         done.tap()
         let close = app.buttons["hanlin-apps-add-done"].firstMatch

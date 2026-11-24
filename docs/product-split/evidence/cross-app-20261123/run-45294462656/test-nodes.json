@@ -1,0 +1,241 @@
+{
+  "devices" : [
+    {
+      "architecture" : "arm64",
+      "deviceId" : "BFF3FAA5-E612-49E6-B39C-6313A5177ED7",
+      "deviceName" : "HanlinSplit-45294462656",
+      "modelName" : "iPad mini (A20 Pro)",
+      "osBuildNumber" : "24B8117",
+      "osVersion" : "27.2",
+      "platform" : "iOS Simulator"
+    }
+  ],
+  "testNodes" : [
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "children" : [
+                    {
+                      "name" : "XCTAssertEqual failed: (\"0\") is not equal to (\"1\") - Editing must show one native Done, without a second sheet-dismissal action.",
+                      "nodeType" : "Failure Message",
+                      "sourceLocation" : {
+                        "filePath" : "/Users/runner/work/hanlin-ai/hanlin-ai/HanlinMiniAppsUITests/MiniAppsCrossAppPreferencesUITests.swift",
+                        "lineNumber" : 44
+                      }
+                    },
+                    {
+                      "name" : "Update the Info.plist: Support for all orientations will soon be required.",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "1m",
+                  "durationInSeconds" : 60.93366003036499,
+                  "name" : "testAppleStyleEditorAddsFavoriteWithNativeEditControls()",
+                  "nodeIdentifier" : "MiniAppsCrossAppPreferencesUITests/testAppleStyleEditorAddsFavoriteWithNativeEditControls()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsCrossAppPreferencesUITests/testAppleStyleEditorAddsFavoriteWithNativeEditControls",
+                  "nodeType" : "Test Case",
+                  "result" : "Failed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "XCTAssertEqual failed: (\"XCTWaiterResult(rawValue: 2)\") is not equal to (\"XCTWaiterResult(rawValue: 1)\")",
+                      "nodeType" : "Failure Message",
+                      "sourceLocation" : {
+                        "filePath" : "/Users/runner/work/hanlin-ai/hanlin-ai/HanlinMiniAppsUITests/MiniAppsCrossAppPreferencesUITests.swift",
+                        "lineNumber" : 25
+                      }
+                    },
+                    {
+                      "name" : "Update the Info.plist: Support for all orientations will soon be required.",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "35s",
+                  "durationInSeconds" : 35.09614598751068,
+                  "name" : "testSharedNewWindowPreferencePersistsAfterProcessRestart()",
+                  "nodeIdentifier" : "MiniAppsCrossAppPreferencesUITests/testSharedNewWindowPreferencePersistsAfterProcessRestart()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsCrossAppPreferencesUITests/testSharedNewWindowPreferencePersistsAfterProcessRestart",
+                  "nodeType" : "Test Case",
+                  "result" : "Failed"
+                }
+              ],
+              "name" : "MiniAppsCrossAppPreferencesUITests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsCrossAppPreferencesUITests",
+              "nodeType" : "Test Suite",
+              "result" : "Failed"
+            },
+            {
+              "children" : [
+                {
+                  "children" : [
+                    {
+                      "name" : "XCTAssertTrue failed",
+                      "nodeType" : "Failure Message",
+                      "sourceLocation" : {
+                        "filePath" : "/Users/runner/work/hanlin-ai/hanlin-ai/HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+                        "lineNumber" : 449
+                      }
+                    },
+                    {
+                      "name" : "Update the Info.plist: Support for all orientations will soon be required.",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "1m 2s",
+                  "durationInSeconds" : 62.27038490772247,
+                  "name" : "testStandaloneExpoRendersNativeControlsAndRunsReactEvents()",
+                  "nodeIdentifier" : "MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents",
+                  "nodeType" : "Test Case",
+                  "result" : "Failed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "XCTAssertTrue failed",
+                      "nodeType" : "Failure Message",
+                      "sourceLocation" : {
+                        "filePath" : "/Users/runner/work/hanlin-ai/hanlin-ai/HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+                        "lineNumber" : 449
+                      }
+                    },
+                    {
+                      "name" : "Update the Info.plist: Support for all orientations will soon be required.",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "1m 14s",
+                  "durationInSeconds" : 74.62065005302429,
+                  "name" : "testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch()",
+                  "nodeIdentifier" : "MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch",
+                  "nodeType" : "Test Case",
+                  "result" : "Failed"
+                }
+              ],
+              "name" : "MiniAppsProductionRuntimeUITests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests",
+              "nodeType" : "Test Suite",
+              "result" : "Failed"
+            }
+          ],
+          "name" : "HanlinMiniAppsUITests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests",
+          "nodeType" : "UI test bundle",
+          "result" : "Failed"
+        },
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "duration" : "4s",
+                  "durationInSeconds" : 4.27707302570343,
+                  "name" : "testActualIncomingRequestsCreateDistinctIPadScenes()",
+                  "nodeIdentifier" : "CrossAppInvocationTests/testActualIncomingRequestsCreateDistinctIPadScenes()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsTests/CrossAppInvocationTests/testActualIncomingRequestsCreateDistinctIPadScenes",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.24s",
+                  "durationInSeconds" : 0.23922204971313477,
+                  "name" : "testActualProducerAttachmentOperationsPreserveBytes()",
+                  "nodeIdentifier" : "CrossAppInvocationTests/testActualProducerAttachmentOperationsPreserveBytes()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsTests/CrossAppInvocationTests/testActualProducerAttachmentOperationsPreserveBytes",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.03s",
+                  "durationInSeconds" : 0.030230045318603516,
+                  "name" : "testCancelAndDisplayDoneReturnNoDocumentMutation()",
+                  "nodeIdentifier" : "CrossAppInvocationTests/testCancelAndDisplayDoneReturnNoDocumentMutation()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsTests/CrossAppInvocationTests/testCancelAndDisplayDoneReturnNoDocumentMutation",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.014s",
+                  "durationInSeconds" : 0.013749957084655762,
+                  "name" : "testCompletionIsSavedBeforeSourceOpensAndSurvivesColdRestore()",
+                  "nodeIdentifier" : "CrossAppInvocationTests/testCompletionIsSavedBeforeSourceOpensAndSurvivesColdRestore()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsTests/CrossAppInvocationTests/testCompletionIsSavedBeforeSourceOpensAndSurvivesColdRestore",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.011s",
+                  "durationInSeconds" : 0.011049985885620117,
+                  "name" : "testRemovingInvocationOwnerCancelsWhileSessionIsStillRetained()",
+                  "nodeIdentifier" : "CrossAppInvocationTests/testRemovingInvocationOwnerCancelsWhileSessionIsStillRetained()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsTests/CrossAppInvocationTests/testRemovingInvocationOwnerCancelsWhileSessionIsStillRetained",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.0017s",
+                  "durationInSeconds" : 0.0017179250717163086,
+                  "name" : "testReusingValueWindowKeepsItsInvocationBindingCurrent()",
+                  "nodeIdentifier" : "CrossAppInvocationTests/testReusingValueWindowKeepsItsInvocationBindingCurrent()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsTests/CrossAppInvocationTests/testReusingValueWindowKeepsItsInvocationBindingCurrent",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.02s",
+                  "durationInSeconds" : 0.019965052604675293,
+                  "name" : "testTextStudioWindowsRestoreTheirOwnDrafts()",
+                  "nodeIdentifier" : "CrossAppInvocationTests/testTextStudioWindowsRestoreTheirOwnDrafts()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsTests/CrossAppInvocationTests/testTextStudioWindowsRestoreTheirOwnDrafts",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.027s",
+                  "durationInSeconds" : 0.026920080184936523,
+                  "name" : "testTwoWindowsKeepTheirOwnInputOutputAndCallbacks()",
+                  "nodeIdentifier" : "CrossAppInvocationTests/testTwoWindowsKeepTheirOwnInputOutputAndCallbacks()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsTests/CrossAppInvocationTests/testTwoWindowsKeepTheirOwnInputOutputAndCallbacks",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.013s",
+                  "durationInSeconds" : 0.013370990753173828,
+                  "name" : "testUnavailableCallbackRetainsResultForSourceRecovery()",
+                  "nodeIdentifier" : "CrossAppInvocationTests/testUnavailableCallbackRetainsResultForSourceRecovery()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsTests/CrossAppInvocationTests/testUnavailableCallbackRetainsResultForSourceRecovery",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "CrossAppInvocationTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsTests/CrossAppInvocationTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            }
+          ],
+          "name" : "HanlinMiniAppsTests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsTests",
+          "nodeType" : "Unit test bundle",
+          "result" : "Passed"
+        }
+      ],
+      "name" : "HanlinMiniApps",
+      "nodeType" : "Test Plan",
+      "result" : "Failed"
+    }
+  ],
+  "testPlanConfigurations" : [
+    {
+      "configurationId" : "1",
+      "configurationName" : "Test Scheme Action"
+    }
+  ]
+}

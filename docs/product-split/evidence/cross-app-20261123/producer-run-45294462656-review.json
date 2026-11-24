@@ -1,0 +1,119 @@
+{
+  "recorded_at_utc": "2026-11-24T01:55:00Z",
+  "source_sha": "a774de24926ca13d563c45c42917d03b8c04296f",
+  "run_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45294462656",
+  "run_conclusion": "failure",
+  "raw_acceptance_status": "INFRA_ERROR",
+  "build": "EXECUTED_PASS",
+  "producer_export": "EXECUTED_PASS",
+  "artifact": {
+    "id": 14881066965,
+    "name": "app-split-45294462656",
+    "bytes": 310801759,
+    "sha256": "a618c629f9f335a0e58a4ae9053de6f99e3cc60bd4a086b9774e0564f23f61d3",
+    "full_download_hash_verified": true
+  },
+  "actual_test_cases": [
+    {
+      "name": "CrossAppInvocationTests/testActualIncomingRequestsCreateDistinctIPadScenes()",
+      "identifierURL": "test://com.apple.xcode/AI_HLY/HanlinMiniAppsTests/CrossAppInvocationTests/testActualIncomingRequestsCreateDistinctIPadScenes",
+      "result": "Passed"
+    },
+    {
+      "name": "CrossAppInvocationTests/testActualProducerAttachmentOperationsPreserveBytes()",
+      "identifierURL": "test://com.apple.xcode/AI_HLY/HanlinMiniAppsTests/CrossAppInvocationTests/testActualProducerAttachmentOperationsPreserveBytes",
+      "result": "Passed"
+    },
+    {
+      "name": "CrossAppInvocationTests/testCancelAndDisplayDoneReturnNoDocumentMutation()",
+      "identifierURL": "test://com.apple.xcode/AI_HLY/HanlinMiniAppsTests/CrossAppInvocationTests/testCancelAndDisplayDoneReturnNoDocumentMutation",
+      "result": "Passed"
+    },
+    {
+      "name": "CrossAppInvocationTests/testCompletionIsSavedBeforeSourceOpensAndSurvivesColdRestore()",
+      "identifierURL": "test://com.apple.xcode/AI_HLY/HanlinMiniAppsTests/CrossAppInvocationTests/testCompletionIsSavedBeforeSourceOpensAndSurvivesColdRestore",
+      "result": "Passed"
+    },
+    {
+      "name": "CrossAppInvocationTests/testRemovingInvocationOwnerCancelsWhileSessionIsStillRetained()",
+      "identifierURL": "test://com.apple.xcode/AI_HLY/HanlinMiniAppsTests/CrossAppInvocationTests/testRemovingInvocationOwnerCancelsWhileSessionIsStillRetained",
+      "result": "Passed"
+    },
+    {
+      "name": "CrossAppInvocationTests/testReusingValueWindowKeepsItsInvocationBindingCurrent()",
+      "identifierURL": "test://com.apple.xcode/AI_HLY/HanlinMiniAppsTests/CrossAppInvocationTests/testReusingValueWindowKeepsItsInvocationBindingCurrent",
+      "result": "Passed"
+    },
+    {
+      "name": "CrossAppInvocationTests/testTextStudioWindowsRestoreTheirOwnDrafts()",
+      "identifierURL": "test://com.apple.xcode/AI_HLY/HanlinMiniAppsTests/CrossAppInvocationTests/testTextStudioWindowsRestoreTheirOwnDrafts",
+      "result": "Passed"
+    },
+    {
+      "name": "CrossAppInvocationTests/testTwoWindowsKeepTheirOwnInputOutputAndCallbacks()",
+      "identifierURL": "test://com.apple.xcode/AI_HLY/HanlinMiniAppsTests/CrossAppInvocationTests/testTwoWindowsKeepTheirOwnInputOutputAndCallbacks",
+      "result": "Passed"
+    },
+    {
+      "name": "CrossAppInvocationTests/testUnavailableCallbackRetainsResultForSourceRecovery()",
+      "identifierURL": "test://com.apple.xcode/AI_HLY/HanlinMiniAppsTests/CrossAppInvocationTests/testUnavailableCallbackRetainsResultForSourceRecovery",
+      "result": "Passed"
+    },
+    {
+      "name": "MiniAppsCrossAppPreferencesUITests/testAppleStyleEditorAddsFavoriteWithNativeEditControls()",
+      "identifierURL": "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsCrossAppPreferencesUITests/testAppleStyleEditorAddsFavoriteWithNativeEditControls",
+      "result": "Failed"
+    },
+    {
+      "name": "MiniAppsCrossAppPreferencesUITests/testSharedNewWindowPreferencePersistsAfterProcessRestart()",
+      "identifierURL": "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsCrossAppPreferencesUITests/testSharedNewWindowPreferencePersistsAfterProcessRestart",
+      "result": "Failed"
+    },
+    {
+      "name": "MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents()",
+      "identifierURL": "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents",
+      "result": "Failed"
+    },
+    {
+      "name": "MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch()",
+      "identifierURL": "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch",
+      "result": "Failed"
+    }
+  ],
+  "actual_counts": {
+    "passed": 9,
+    "failed": 4,
+    "skipped": 0,
+    "total": 13
+  },
+  "missing_selected_suite": "MiniAppsExternalModalLifetimeUITests",
+  "diagnosis": {
+    "preferences_edit": "Native EditButton exists; Done label lookup was language-dependent. Screenshot shows exactly one native confirmation control in edit mode.",
+    "preferences_window_toggle": "SwiftUI row center is the label. Tap the nested actual UISwitch, retain changed-value and process-restart assertions.",
+    "production_runtime_import": "Real import completed. Original confirmation label is localized; use its stable accessibility identifier. Runtime checks beyond dismissal have not executed.",
+    "missing_modal": "UITest target uses explicit PBXSources membership. Add omitted file and prebuild membership validation; do not relax selected-test verification."
+  },
+  "physical_device_or_distribution_signing": "NOT_VALIDATED",
+  "raw_files": {
+    "acceptance.json": {
+      "bytes": 28599,
+      "sha256": "e115f565fc8c42791f2e5f88d9753f4a2c889da5fbf3a83095f90a942949fe59"
+    },
+    "test-summary.json": {
+      "bytes": 3881,
+      "sha256": "625f05e74e526ba0af24cc604d288f1384629fc1f5e948cfec9addaeacfb7035"
+    },
+    "test-nodes.json": {
+      "bytes": 12799,
+      "sha256": "c3f1eb07caaf920c784aa3938215e16a17103d36f66437746c5e1a775633fd40"
+    },
+    "producer-manifest.json": {
+      "bytes": 655,
+      "sha256": "a7e20fd5cced407516386ab5fb958d73996270e28304c996a660bc246b6e9a18"
+    },
+    "requested-tests.log": {
+      "bytes": 92,
+      "sha256": "07cee63cd926ecd1a698f8263ebe2d537765647535b05444bdf514d9194eed6d"
+    }
+  }
+}
