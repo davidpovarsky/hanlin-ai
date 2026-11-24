@@ -65,6 +65,12 @@ struct HanlinComposerCapabilityIntegrationTests {
         #expect(projected.hasPrefix(request.text))
         #expect(projected.contains(sent[0].id.uuidString))
         #expect(projected.contains("generation-7") && !projected.contains("generation-8"))
+        let selectionJSON = try #require(projected.components(separatedBy: "\n").last)
+        let projectedSelections = try #require(
+            JSONSerialization.jsonObject(with: Data(selectionJSON.utf8)) as? [[String: Any]])
+        let projectedConfiguration = try #require(projectedSelections.first?["configuration"] as? [String: Any])
+        #expect(projectedConfiguration["collections"] as? [String] == ["tanakh"],
+                "Model history receives ordinary configuration JSON from the immutable sent snapshot")
         let oldID = oldUser.id
         let oldStored = try #require(verification.fetch(
             FetchDescriptor<ChatMessages>(predicate: #Predicate { $0.id == oldID })).first)

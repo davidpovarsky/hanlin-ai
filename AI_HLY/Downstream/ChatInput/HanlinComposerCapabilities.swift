@@ -11,8 +11,23 @@ enum HanlinComposerCapabilities {
         guard row.role == "user", let data = row.capabilityAttachmentsData,
               let attachments = try? JSONDecoder().decode([HanlinCapabilityAttachment].self, from: data),
               !attachments.isEmpty else { return text }
+        // Keep the durable typed codec in storage, and project ordinary JSON
+        // for the model just as the active request's selection instruction does.
+        let selections = HanlinJSONValue.array(attachments.map { attachment in
+            .object([
+                "attachmentID": .string(attachment.id.uuidString),
+                "kind": .string(attachment.reference.kind.rawValue),
+                "sourceID": .string(attachment.reference.sourceID),
+                "capabilityID": .string(attachment.reference.capabilityID),
+                "revision": attachment.reference.revision.map(HanlinJSONValue.string) ?? .null,
+                "title": .string(attachment.title),
+                "actionID": attachment.actionID.map(HanlinJSONValue.string) ?? .null,
+                "configuration": attachment.configuration
+            ])
+        })
+        guard let projection = try? selections.canonicalJSONData() else { return text }
         return text + "\n\n[Capabilities explicitly attached to this message; selection metadata, not execution results]\n"
-            + String(decoding: data, as: UTF8.self)
+            + String(decoding: projection, as: UTF8.self)
     }
 
     static func catalog() -> [HanlinComposerCapabilityDescriptor] {
