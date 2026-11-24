@@ -103,24 +103,39 @@ var UITabBarControllerDelegateImpl = (function (_super) {
         return delegate;
     };
     UITabBarControllerDelegateImpl.prototype.tabBarControllerShouldSelectViewController = function (tabBarController, viewController) {
-        var _a;
         if (Trace.isEnabled()) {
             Trace.write("TabView.delegate.SHOULD_select(" + tabBarController + ", " + viewController + ");", Trace.categories.Debug);
         }
+        return this._shouldSelect(tabBarController, tabBarController.selectedViewController === viewController);
+    };
+    UITabBarControllerDelegateImpl.prototype.tabBarControllerDidSelectViewController = function (tabBarController, viewController) {
+        if (Trace.isEnabled()) {
+            Trace.write("TabView.delegate.DID_select(" + tabBarController + ", " + viewController + ");", Trace.categories.Debug);
+        }
+        this._didSelect(tabBarController, viewController);
+    };
+    UITabBarControllerDelegateImpl.prototype.tabBarControllerShouldSelectTab = function (tabBarController, tab) {
+        if (tabBarController.viewControllers) {
+            return true;
+        }
+        return this._shouldSelect(tabBarController, tabBarController.selectedTab === tab);
+    };
+    UITabBarControllerDelegateImpl.prototype.tabBarControllerDidSelectTabPreviousTab = function (tabBarController, selectedTab, previousTab) {
+        if (tabBarController.viewControllers) {
+            return;
+        }
+        this._didSelect(tabBarController, selectedTab.viewController);
+    };
+    UITabBarControllerDelegateImpl.prototype._shouldSelect = function (tabBarController, isAlreadySelected) {
+        var _a;
         var owner = (_a = this._owner) === null || _a === void 0 ? void 0 : _a.deref();
         if (owner) {
             owner._handleTwoNavigationBars(false);
         }
-        if (tabBarController.selectedViewController === viewController) {
-            return false;
-        }
-        return true;
+        return !isAlreadySelected;
     };
-    UITabBarControllerDelegateImpl.prototype.tabBarControllerDidSelectViewController = function (tabBarController, viewController) {
+    UITabBarControllerDelegateImpl.prototype._didSelect = function (tabBarController, viewController) {
         var _a;
-        if (Trace.isEnabled()) {
-            Trace.write("TabView.delegate.DID_select(" + tabBarController + ", " + viewController + ");", Trace.categories.Debug);
-        }
         var owner = (_a = this._owner) === null || _a === void 0 ? void 0 : _a.deref();
         if (owner) {
             var moreNav = tabBarController.moreNavigationController;
@@ -144,13 +159,13 @@ var UINavigationControllerDelegateImpl = (function (_super) {
         return delegate;
     };
     UINavigationControllerDelegateImpl.prototype.navigationControllerWillShowViewControllerAnimated = function (navigationController, viewController, animated) {
-        var _a, _b, _c;
+        var _a;
         if (Trace.isEnabled()) {
             Trace.write("TabView.moreNavigationController.WILL_show(" + navigationController + ", " + viewController + ", " + animated + ");", Trace.categories.Debug);
         }
         var owner = (_a = this._owner) === null || _a === void 0 ? void 0 : _a.deref();
         if (owner) {
-            var backToMoreWillBeVisible = (_c = (_b = navigationController.tabBarController) === null || _b === void 0 ? void 0 : _b.viewControllers) === null || _c === void 0 ? void 0 : _c.containsObject(viewController);
+            var backToMoreWillBeVisible = owner._indexOfViewController(navigationController.tabBarController, viewController) > -1;
             owner._handleTwoNavigationBars(backToMoreWillBeVisible);
         }
     };
@@ -336,13 +351,14 @@ export class TabView extends TabViewBase {
     get ios() {
         return this._ios;
     }
-    layoutNativeView(left, top, right, bottom) {
-        //
-    }
     _setNativeViewFrame(nativeView, frame) {
-        if (nativeView) {
-            nativeView.frame = frame;
+        // UIKit lays out the controller's view inside a container controller, but not inside a NativeScript view.
+        if (IOSHelper.isHostedInView(this)) {
+            super._setNativeViewFrame(nativeView, frame);
         }
+    }
+    applySafeAreaInsets(frame) {
+        return IOSHelper.extendUnderContainerSafeArea(this.nativeViewProtected, frame);
     }
     onSelectedIndexChanged(oldIndex, newIndex) {
         const items = this.items;
@@ -377,14 +393,32 @@ export class TabView extends TabViewBase {
         if (Trace.isEnabled()) {
             Trace.write('TabView._onViewControllerShown(' + viewController + ');', Trace.categories.Debug);
         }
-        if (tabBarController?.viewControllers && tabBarController.viewControllers.containsObject(viewController)) {
-            this.selectedIndex = tabBarController.viewControllers.indexOfObject(viewController);
+        const index = this._indexOfViewController(tabBarController, viewController);
+        if (index > -1) {
+            this.selectedIndex = index;
         }
         else {
             if (Trace.isEnabled()) {
                 Trace.write('TabView._onViewControllerShown: viewController is not one of our viewControllers', Trace.categories.Debug);
             }
         }
+    }
+    _indexOfViewController(tabBarController, viewController) {
+        if (!tabBarController || !viewController) {
+            return -1;
+        }
+        if (tabBarController.viewControllers) {
+            return tabBarController.viewControllers.containsObject(viewController) ? tabBarController.viewControllers.indexOfObject(viewController) : -1;
+        }
+        // Controllers configured through tabs are not reported by viewControllers.
+        const tabs = SDK_VERSION >= 18 ? tabBarController.tabs : null;
+        for (let i = 0; i < (tabs?.count ?? 0); i++) {
+            const tab = tabs.objectAtIndex(i);
+            if (tab.viewController === viewController) {
+                return parseInt(tab.identifier);
+            }
+        }
+        return -1;
     }
     _handleTwoNavigationBars(backToMoreWillBeVisible) {
         if (Trace.isEnabled()) {
@@ -596,6 +630,11 @@ export class TabView extends TabViewBase {
     [itemsProperty.setNative](value) {
         this.setViewControllers(value);
         selectedIndexProperty.coerce(this);
+        // Items added to a loaded TabView were loaded before their controllers existed.
+        const selectedItem = value?.[this.selectedIndex];
+        if (selectedItem) {
+            selectedItem.loadView(selectedItem.view);
+        }
     }
     [tabTextFontSizeProperty.getDefault]() {
         return null;

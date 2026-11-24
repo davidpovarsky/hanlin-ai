@@ -4,6 +4,7 @@ import { ViewHelper } from './view-helper-common';
 import { SDK_VERSION } from '../../../../utils/constants';
 import { layout, Trace } from './view-helper-shared';
 import { ios as iosUtils, getWindow } from '../../../../utils';
+import { CoreTypes } from '../../../../core-types';
 export * from './view-helper-common';
 export const AndroidHelper = 0;
 var UILayoutViewController = (function (_super) {
@@ -67,9 +68,6 @@ var UILayoutViewController = (function (_super) {
             }
             IOSHelper.layoutView(this, owner);
         }
-        // Without this, iOS may use this controller's own preferredStatusBarStyle,
-        // which can be unrelated to the currently shown Page.
-        // @ts-ignore
     };
     UILayoutViewController.prototype.viewWillAppear = function (animated) {
         var _a;
@@ -182,13 +180,133 @@ var UIPopoverPresentationControllerDelegateImp = (function (_super) {
     UIPopoverPresentationControllerDelegateImp.ObjCProtocols = [UIPopoverPresentationControllerDelegate];
     return UIPopoverPresentationControllerDelegateImp;
 }(NSObject));
+// UIRectEdge values; the enum lives in the UIUtilities typings.
+const RECT_EDGES = { top: 1, left: 2, bottom: 4, right: 8 };
+/**
+ * Bars a scroll view's content passes beneath, registered with UIKit so its
+ * scroll edge effect covers them (iOS 26+). A bar may load after the scroll
+ * view, be recreated, or live in another window (a keyboard accessory), so
+ * entries are kept per NativeScript view and registered whenever both native
+ * views exist.
+ */
+export class ScrollEdgeContainers {
+    constructor(owner) {
+        this.owner = owner;
+        this.entries = new Map();
+        this.onContainerLoaded = () => this.attach();
+        this.onContainerUnloaded = (args) => {
+            const view = args.object;
+            const entry = this.entries.get(view);
+            if (entry) {
+                this.release(view, entry);
+            }
+        };
+    }
+    add(view, edge) {
+        this.remove(view);
+        this.entries.set(view, { edge, interaction: null });
+        view.on('loaded', this.onContainerLoaded);
+        view.on('unloaded', this.onContainerUnloaded);
+        this.attach();
+    }
+    remove(view) {
+        const entry = this.entries.get(view);
+        if (!entry) {
+            return;
+        }
+        view.off('loaded', this.onContainerLoaded);
+        view.off('unloaded', this.onContainerUnloaded);
+        this.release(view, entry);
+        this.entries.delete(view);
+    }
+    /** Registers every entry whose native views exist. */
+    attach() {
+        const scrollView = this.owner.nativeViewProtected;
+        if (!scrollView || SDK_VERSION < 26) {
+            return;
+        }
+        this.entries.forEach((entry, view) => {
+            const container = view.nativeViewProtected;
+            if (entry.interaction || !container) {
+                return;
+            }
+            const interaction = UIScrollEdgeElementContainerInteraction.new();
+            interaction.scrollView = scrollView;
+            interaction.edge = RECT_EDGES[entry.edge];
+            container.addInteraction(interaction);
+            entry.interaction = interaction;
+        });
+    }
+    /** Unregisters every entry; they register again on the next attach. */
+    detach() {
+        this.entries.forEach((entry, view) => this.release(view, entry));
+    }
+    release(view, entry) {
+        if (!entry.interaction) {
+            return;
+        }
+        view.nativeViewProtected?.removeInteraction(entry.interaction);
+        entry.interaction = null;
+    }
+}
 export class IOSHelper {
+    /**
+     * Styles the scroll edge effect on every edge of a scroll view, or hides
+     * them all for `none`. No-op before iOS 26.
+     */
+    static setScrollEdgeEffect(scrollView, effect) {
+        if (!scrollView || SDK_VERSION < 26) {
+            return;
+        }
+        const hidden = effect === CoreTypes.ScrollEdgeEffect.none;
+        let style = UIScrollEdgeEffectStyle.automaticStyle;
+        if (effect === CoreTypes.ScrollEdgeEffect.soft) {
+            style = UIScrollEdgeEffectStyle.softStyle;
+        }
+        else if (effect === CoreTypes.ScrollEdgeEffect.hard) {
+            style = UIScrollEdgeEffectStyle.hardStyle;
+        }
+        for (const edgeEffect of [scrollView.topEdgeEffect, scrollView.bottomEdgeEffect, scrollView.leftEdgeEffect, scrollView.rightEdgeEffect]) {
+            edgeEffect.hidden = hidden;
+            if (!hidden) {
+                edgeEffect.style = style;
+            }
+        }
+    }
     static getParentWithViewController(view) {
         while (view && !view.viewController) {
             view = view.parent;
         }
         // Note: Might return undefined if no parent with viewController is found
         return view;
+    }
+    static isHostedInView(view) {
+        const container = view.nativeViewProtected?.superview;
+        if (!container) {
+            return false;
+        }
+        let parent = view.parent;
+        while (parent && !parent.nativeViewProtected) {
+            parent = parent.parent;
+        }
+        return container === parent?.nativeViewProtected;
+    }
+    static extendUnderContainerSafeArea(nativeView, frame) {
+        const container = nativeView?.superview;
+        if (!container) {
+            return null;
+        }
+        // Edges laid out against the container's safe area move out to its bounds; a controller's view insets its own content.
+        const safeArea = container.safeAreaLayoutGuide.layoutFrame;
+        const bounds = container.bounds;
+        const tolerance = 0.5;
+        const left = frame.origin.x <= safeArea.origin.x + tolerance ? bounds.origin.x : frame.origin.x;
+        const top = frame.origin.y <= safeArea.origin.y + tolerance ? bounds.origin.y : frame.origin.y;
+        const frameRight = frame.origin.x + frame.size.width;
+        const frameBottom = frame.origin.y + frame.size.height;
+        const right = frameRight >= safeArea.origin.x + safeArea.size.width - tolerance ? bounds.origin.x + bounds.size.width : frameRight;
+        const bottom = frameBottom >= safeArea.origin.y + safeArea.size.height - tolerance ? bounds.origin.y + bounds.size.height : frameBottom;
+        return CGRectMake(left, top, right - left, bottom - top);
     }
     static invalidateStatusBarAppearance(controller, reason = '') {
         try {
@@ -268,6 +386,21 @@ export class IOSHelper {
             rootView.safeAreaLayoutGuide = layoutGuide;
         }
         return rootView.safeAreaLayoutGuide;
+    }
+    static insertNativeSubview(parentNativeView, childNativeView, atIndex) {
+        // Reading subviews copies the array, so appends skip it.
+        if (typeof atIndex !== 'number') {
+            parentNativeView.addSubview(childNativeView);
+            return;
+        }
+        const subviews = parentNativeView.subviews;
+        if (atIndex >= subviews.count) {
+            parentNativeView.addSubview(childNativeView);
+        }
+        else {
+            // insertSubview:atIndex: also counts non-view sublayers, e.g. gradient backgrounds
+            parentNativeView.insertSubviewBelowSubview(childNativeView, subviews.objectAtIndex(atIndex));
+        }
     }
     static layoutView(controller, owner) {
         let layoutGuide = controller.view.safeAreaLayoutGuide;

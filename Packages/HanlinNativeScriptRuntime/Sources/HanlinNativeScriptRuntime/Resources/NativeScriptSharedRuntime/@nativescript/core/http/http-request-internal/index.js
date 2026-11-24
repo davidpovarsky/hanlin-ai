@@ -3,7 +3,7 @@ import { isRealDevice } from '../../utils/native-helper';
 import * as types from '../../utils/types';
 import * as domainDebugger from '../../debugger';
 import { HttpResponseEncoding } from '../http-interfaces';
-import { addHeader } from './http-request-internal-common';
+import { addHeader, getDebugRequestMethodAndBody } from './http-request-internal-common';
 export { addHeader } from './http-request-internal-common';
 const currentDevice = UIDevice.currentDevice;
 const device = currentDevice.userInterfaceIdiom === 0 /* UIUserInterfaceIdiom.Phone */ ? 'Phone' : 'Pad';
@@ -151,7 +151,7 @@ export function requestInternal(options, contentHandler) {
                 timestamp = Date.now() / 1000;
                 const request = {
                     url: options.url,
-                    method: 'GET',
+                    ...getDebugRequestMethodAndBody(options),
                     headers: options.headers,
                     timestamp,
                     headersSize: options?.headers?.length ?? -1,

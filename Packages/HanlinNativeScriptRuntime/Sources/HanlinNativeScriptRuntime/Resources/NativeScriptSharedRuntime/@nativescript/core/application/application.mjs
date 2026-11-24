@@ -9,7 +9,7 @@ import { getWindow } from '../utils/native-helper';
 import { SDK_VERSION } from '../utils/constants';
 import { ios as iosUtils, dataSerialize, dataDeserialize } from '../utils/native-helper';
 import { ApplicationCommon } from './application-common';
-import { deliverShortcutItem, forwardContinueUserActivity, forwardOpenURLContexts, oneShotCompletion } from './scene-delegate-bridge';
+import { deliverShortcutItem, forwardContinueUserActivity, forwardOpenURLContexts, getLaunchUserActivities, oneShotCompletion } from './scene-delegate-bridge';
 import { Observable } from '../data/observable';
 import { Trace } from '../trace';
 import { IOSNativeWindow } from '../native-window/native-window.ios';
@@ -198,6 +198,90 @@ function getSceneConnectionData(connectionOptions) {
     const activity = activities.allObjects.objectAtIndex(0);
     return activity?.userInfo ? dataDeserialize(activity.userInfo) : undefined;
 }
+/**
+ * The activity type `openWindow()` uses to hand its data to the scene it opens.
+ */
+function getSceneActivityType() {
+    return `${NSBundle.mainBundle.bundleIdentifier}.scene`;
+}
+function deliverOpenURLContexts(windowScene, nativeWindow, URLContexts) {
+    if (nativeWindow) {
+        nativeWindow.notify({
+            eventName: NativeWindowEvents.sceneOpenURLContexts,
+            object: nativeWindow,
+            window: nativeWindow,
+            scene: windowScene,
+            urlContexts: URLContexts,
+        });
+    }
+    Application.ios.notify({
+        eventName: NativeWindowEvents.sceneOpenURLContexts,
+        object: Application.ios,
+        window: nativeWindow,
+        scene: windowScene,
+        urlContexts: URLContexts,
+    });
+    forwardOpenURLContexts(Application.ios.delegate, UIApplication.sharedApplication, URLContexts);
+}
+function deliverUserActivity(windowScene, nativeWindow, userActivity) {
+    if (nativeWindow) {
+        nativeWindow.notify({
+            eventName: NativeWindowEvents.sceneContinueUserActivity,
+            object: nativeWindow,
+            window: nativeWindow,
+            scene: windowScene,
+            userActivity,
+        });
+    }
+    Application.ios.notify({
+        eventName: NativeWindowEvents.sceneContinueUserActivity,
+        object: Application.ios,
+        window: nativeWindow,
+        scene: windowScene,
+        userActivity,
+    });
+    forwardContinueUserActivity(Application.ios.delegate, UIApplication.sharedApplication, userActivity);
+}
+function deliverShortcutAction(windowScene, nativeWindow, shortcutItem, completionHandler) {
+    // Shared by the listeners and the legacy handler, so it has to tolerate several callers.
+    const deliver = oneShotCompletion(completionHandler);
+    if (nativeWindow) {
+        nativeWindow.notify({
+            eventName: NativeWindowEvents.scenePerformActionForShortcutItem,
+            object: nativeWindow,
+            window: nativeWindow,
+            scene: windowScene,
+            shortcutItem,
+            completionHandler: deliver,
+        });
+    }
+    Application.ios.notify({
+        eventName: NativeWindowEvents.scenePerformActionForShortcutItem,
+        object: Application.ios,
+        window: nativeWindow,
+        scene: windowScene,
+        shortcutItem,
+        completionHandler: deliver,
+    });
+    deliverShortcutItem(Application.ios.delegate, UIApplication.sharedApplication, shortcutItem, deliver);
+}
+/**
+ * UIKit hands the URLs, continuation activities and quick action that launched a scene only to
+ * `scene:willConnectToSession:options:`; the scene callbacks that carry them later never fire for
+ * the launch itself, so they are delivered here the same way.
+ */
+function deliverLaunchPayloads(windowScene, nativeWindow, connectionOptions) {
+    if (connectionOptions?.URLContexts?.count) {
+        deliverOpenURLContexts(windowScene, nativeWindow, connectionOptions.URLContexts);
+    }
+    for (const userActivity of getLaunchUserActivities(connectionOptions, getSceneActivityType())) {
+        deliverUserActivity(windowScene, nativeWindow, userActivity);
+    }
+    if (connectionOptions?.shortcutItem) {
+        // A launch has no completion handler to report back to.
+        deliverShortcutAction(windowScene, nativeWindow, connectionOptions.shortcutItem, undefined);
+    }
+}
 var SceneDelegate = (function (_super) {
     __extends(SceneDelegate, _super);
     function SceneDelegate() {
@@ -271,6 +355,12 @@ var SceneDelegate = (function (_super) {
                 ios: { connectionOptions: connectionOptions },
             });
         }
+        deliverLaunchPayloads(windowScene, nativeWindow, connectionOptions);
+        /**
+         * Detect if the app supports scenes.
+         * When an app configures UIApplicationSceneManifest in Info.plist
+         * it will use scene lifecycle management.
+         */
     };
     SceneDelegate.prototype.sceneDidBecomeActive = function (scene) {
         var windowScene = scene;
@@ -290,6 +380,7 @@ var SceneDelegate = (function (_super) {
             window: nativeWindow,
             scene: windowScene,
         });
+        Application.ios._setWindowActive(nativeWindow, true, windowScene);
         var rootView = nativeWindow === null || nativeWindow === void 0 ? void 0 : nativeWindow.rootView;
         if (rootView && !rootView.isLoaded) {
             rootView.callLoaded();
@@ -313,6 +404,7 @@ var SceneDelegate = (function (_super) {
             window: nativeWindow,
             scene: windowScene,
         });
+        Application.ios._setWindowActive(nativeWindow, false, windowScene);
     };
     SceneDelegate.prototype.sceneWillEnterForeground = function (scene) {
         var windowScene = scene;
@@ -332,6 +424,7 @@ var SceneDelegate = (function (_super) {
             window: nativeWindow,
             scene: windowScene,
         });
+        Application.ios._setWindowInForeground(nativeWindow, true, windowScene);
     };
     SceneDelegate.prototype.sceneDidEnterBackground = function (scene) {
         var windowScene = scene;
@@ -351,6 +444,7 @@ var SceneDelegate = (function (_super) {
             window: nativeWindow,
             scene: windowScene,
         });
+        Application.ios._setWindowInForeground(nativeWindow, false, windowScene);
         var rootView = nativeWindow === null || nativeWindow === void 0 ? void 0 : nativeWindow.rootView;
         if (rootView && rootView.isLoaded) {
             rootView.callUnloaded();
@@ -359,7 +453,10 @@ var SceneDelegate = (function (_super) {
     SceneDelegate.prototype.sceneDidDisconnect = function (scene) {
         var windowScene = scene;
         var nativeWindow = Application.ios._getWindowForScene(windowScene);
+        Application.ios._setWindowActive(nativeWindow, false, windowScene);
+        Application.ios._setWindowInForeground(nativeWindow, false, windowScene);
         if (nativeWindow) {
+            nativeWindow._surfaceGone = true;
             var isClosing = nativeWindow._closeRequested || !nativeWindow._hasSessionIdentity;
             if (isClosing) {
                 nativeWindow._notifyEvent(NativeWindowEvents.close);
@@ -386,68 +483,22 @@ var SceneDelegate = (function (_super) {
     };
     SceneDelegate.prototype.sceneOpenURLContexts = function (scene, URLContexts) {
         var windowScene = scene;
-        var nativeWindow = Application.ios._getWindowForScene(windowScene);
-        if (nativeWindow) {
-            nativeWindow.notify({
-                eventName: NativeWindowEvents.sceneOpenURLContexts,
-                object: nativeWindow,
-                window: nativeWindow,
-                scene: windowScene,
-                urlContexts: URLContexts,
-            });
-        }
-        Application.ios.notify({
-            eventName: NativeWindowEvents.sceneOpenURLContexts,
-            object: Application.ios,
-            window: nativeWindow,
-            scene: windowScene,
-            urlContexts: URLContexts,
-        });
-        forwardOpenURLContexts(Application.ios.delegate, UIApplication.sharedApplication, URLContexts);
+        deliverOpenURLContexts(windowScene, Application.ios._getWindowForScene(windowScene), URLContexts);
     };
     SceneDelegate.prototype.sceneContinueUserActivity = function (scene, userActivity) {
         var windowScene = scene;
-        var nativeWindow = Application.ios._getWindowForScene(windowScene);
-        if (nativeWindow) {
-            nativeWindow.notify({
-                eventName: NativeWindowEvents.sceneContinueUserActivity,
-                object: nativeWindow,
-                window: nativeWindow,
-                scene: windowScene,
-                userActivity: userActivity,
-            });
-        }
-        Application.ios.notify({
-            eventName: NativeWindowEvents.sceneContinueUserActivity,
-            object: Application.ios,
-            window: nativeWindow,
-            scene: windowScene,
-            userActivity: userActivity,
-        });
-        forwardContinueUserActivity(Application.ios.delegate, UIApplication.sharedApplication, userActivity);
+        deliverUserActivity(windowScene, Application.ios._getWindowForScene(windowScene), userActivity);
+    };
+    SceneDelegate.prototype.windowSceneDidUpdateEffectiveGeometry = function (windowScene, previousEffectiveGeometry) {
+        var _a;
+        (_a = Application.ios._getWindowForScene(windowScene)) === null || _a === void 0 ? void 0 : _a._syncOrientation();
+    };
+    SceneDelegate.prototype.windowSceneDidUpdateCoordinateSpaceInterfaceOrientationTraitCollection = function (windowScene, previousCoordinateSpace, previousInterfaceOrientation, previousTraitCollection) {
+        var _a;
+        (_a = Application.ios._getWindowForScene(windowScene)) === null || _a === void 0 ? void 0 : _a._syncOrientation();
     };
     SceneDelegate.prototype.windowScenePerformActionForShortcutItemCompletionHandler = function (windowScene, shortcutItem, completionHandler) {
-        var nativeWindow = Application.ios._getWindowForScene(windowScene);
-        var deliver = oneShotCompletion(completionHandler);
-        if (nativeWindow) {
-            nativeWindow.notify({
-                eventName: NativeWindowEvents.scenePerformActionForShortcutItem,
-                object: nativeWindow,
-                window: nativeWindow,
-                scene: windowScene,
-                shortcutItem: shortcutItem,
-                completionHandler: deliver,
-            });
-        }
-        Application.ios.notify({
-            eventName: NativeWindowEvents.scenePerformActionForShortcutItem,
-            object: Application.ios,
-            window: nativeWindow,
-            scene: windowScene,
-            shortcutItem: shortcutItem,
-            completionHandler: deliver,
-        });
-        deliverShortcutItem(Application.ios.delegate, UIApplication.sharedApplication, shortcutItem, deliver);
+        deliverShortcutAction(windowScene, Application.ios._getWindowForScene(windowScene), shortcutItem, completionHandler);
     };
     SceneDelegate.ObjCProtocols = [UIWindowSceneDelegate];
     return SceneDelegate;
@@ -461,6 +512,10 @@ export class iOSApplication extends ApplicationCommon {
     constructor() {
         super();
         this._delegateHandlers = new Map();
+        // Application-role windows currently in the foreground / currently active. Membership,
+        // not a count, so a repeated or missing scene callback cannot drift the aggregate.
+        this._foregroundWindows = new Set();
+        this._activeWindows = new Set();
         this._notificationObservers = [];
         this._softRebootSceneDelegates = new Map();
         this.displayedOnce = false;
@@ -1032,13 +1087,15 @@ export class iOSApplication extends ApplicationCommon {
             this._pendingWindowContentResolve = null;
             pendingWindowContentResolve();
         }
-        const additionalData = {
-            ios: UIApplication.sharedApplication,
-        };
-        this.setInBackground(false, additionalData);
-        this.setSuspended(false, additionalData);
-        // In scene mode the root view belongs to a window, so the scene delegate loads it.
+        // A scene app derives app-level state from its windows, so this notification must not
+        // drive it as well. In scene mode the root view belongs to a window too, so the scene
+        // delegate loads it.
         if (!this.supportsScenes()) {
+            const additionalData = {
+                ios: UIApplication.sharedApplication,
+            };
+            this.setInBackground(false, additionalData);
+            this.setSuspended(false, additionalData);
             const rootView = this._rootView;
             if (rootView && !rootView.isLoaded) {
                 rootView.callLoaded();
@@ -1046,12 +1103,13 @@ export class iOSApplication extends ApplicationCommon {
         }
     }
     didEnterBackground(notification) {
-        const additionalData = {
-            ios: UIApplication.sharedApplication,
-        };
-        this.setInBackground(true, additionalData);
-        this.setSuspended(true, additionalData);
+        // See didBecomeActive: in scene mode the windows drive app-level state.
         if (!this.supportsScenes()) {
+            const additionalData = {
+                ios: UIApplication.sharedApplication,
+            };
+            this.setInBackground(true, additionalData);
+            this.setSuspended(true, additionalData);
             const rootView = this._rootView;
             if (rootView && rootView.isLoaded) {
                 rootView.callUnloaded();
@@ -1080,11 +1138,7 @@ export class iOSApplication extends ApplicationCommon {
         // The notification is app-wide, but scenes rotate independently, so every attached
         // window is refreshed from its own scene.
         for (const nativeWindow of this._windows) {
-            if (nativeWindow.state !== 'attached') {
-                continue;
-            }
-            const orientation = nativeWindow.ios?.scene?.interfaceOrientation ?? UIApplication.sharedApplication.statusBarOrientation;
-            nativeWindow._setOrientation(this.getOrientationValue(orientation));
+            nativeWindow._syncOrientation();
         }
     }
     // --- App-level root view mirror ---
@@ -1116,29 +1170,72 @@ export class iOSApplication extends ApplicationCommon {
     }
     // --- NativeWindow registry ---
     /**
-     * @internal - iOS reports discarded sessions for windows this JS context may never
-     * have seen (they can arrive on a later launch), so unknown ids are ignored.
+     * @internal - hands the discarded sessions' ids to the window registry, which decides
+     * which of them name a window that is actually finished with.
      */
     _onSceneSessionsDiscarded(sessions) {
         const all = sessions?.allObjects;
         if (!all) {
             return;
         }
+        const ids = [];
         for (let i = 0; i < all.count; i++) {
             const persistentIdentifier = all.objectAtIndex(i)?.persistentIdentifier;
-            const nativeWindow = persistentIdentifier ? this.getWindowById(`${persistentIdentifier}`) : undefined;
-            if (!nativeWindow) {
-                continue;
+            if (persistentIdentifier) {
+                ids.push(`${persistentIdentifier}`);
             }
-            nativeWindow._notifyEvent(NativeWindowEvents.close);
-            this._unregisterWindow(nativeWindow);
         }
+        this._retireDiscardedWindows(ids);
     }
     /**
      * @internal - Get a NativeWindow by its scene.
      */
     _getWindowForScene(scene) {
         return this._windows.find((nw) => nw.ios?.scene === scene);
+    }
+    /**
+     * @internal - Feeds a window's foreground state into the application-level
+     * 'foreground'/'background' events, which describe the app as a whole: they are raised
+     * when the first application-role window enters the foreground and when the last one
+     * leaves it. Windows in any other role never speak for the app.
+     */
+    _setWindowInForeground(nativeWindow, inForeground, scene) {
+        if (this._trackWindowState(this._foregroundWindows, nativeWindow, inForeground)) {
+            this.setInBackground(!inForeground, {
+                ios: UIApplication.sharedApplication,
+                scene,
+            });
+        }
+    }
+    /**
+     * @internal - Feeds a window's active state into the application-level 'resume'/'suspend'
+     * events, raised when the first application-role window becomes active and when the last
+     * active one resigns.
+     */
+    _setWindowActive(nativeWindow, active, scene) {
+        if (this._trackWindowState(this._activeWindows, nativeWindow, active)) {
+            this.setSuspended(!active, {
+                ios: UIApplication.sharedApplication,
+                scene,
+            });
+        }
+    }
+    /**
+     * @returns whether the set flipped between empty and non-empty, which is the only point
+     * at which app-level state changes.
+     */
+    _trackWindowState(windows, nativeWindow, member) {
+        if (nativeWindow?.role !== 'application') {
+            return false;
+        }
+        const wasPopulated = windows.size > 0;
+        if (member) {
+            windows.add(nativeWindow);
+        }
+        else {
+            windows.delete(nativeWindow);
+        }
+        return wasPopulated !== windows.size > 0;
     }
     _onWindowRegistered(nativeWindow) {
         if (nativeWindow.isPrimary) {
@@ -1212,7 +1309,7 @@ export class iOSApplication extends ApplicationCommon {
                 let request;
                 try {
                     request = UISceneSessionActivationRequest.requestWithRole(UIWindowSceneSessionRoleApplication);
-                    const activity = NSUserActivity.alloc().initWithActivityType(`${NSBundle.mainBundle.bundleIdentifier}.scene`);
+                    const activity = NSUserActivity.alloc().initWithActivityType(getSceneActivityType());
                     activity.userInfo = dataSerialize(options?.data ?? {});
                     request.userActivity = activity;
                     const activationOptions = UISceneActivationRequestOptions.new();
@@ -1384,7 +1481,7 @@ export class iOSApplication extends ApplicationCommon {
             return;
         }
         // Create user activity for the new scene
-        const userActivity = NSUserActivity.alloc().initWithActivityType(`${NSBundle.mainBundle.bundleIdentifier}.scene`);
+        const userActivity = NSUserActivity.alloc().initWithActivityType(getSceneActivityType());
         userActivity.userInfo = dataSerialize(data ?? {});
         // Use the legacy API
         const options = UISceneActivationRequestOptions.new();
