@@ -1,4 +1,5 @@
 import Foundation
+import ExpoAsset
 import ExpoBrownfield
 import ExpoModulesCore
 import ExpoUI
@@ -81,6 +82,7 @@ private final class HanlinExpoReactNativeFactoryDelegate: RCTDefaultReactNativeF
 public final class HanlinExpoModulesProvider: ModulesProvider {
     public override func getModuleClasses() -> [ExpoModuleTupleType] {
         return [
+            (module: ExpoAsset.AssetModule.self, name: nil),
             (module: ExpoUIModule.self, name: "ExpoUI"),
             (module: ExpoWidgets.WidgetsModule.self, name: "ExpoWidgets"),
             (module: HanlinExpoUIModule.self, name: "HanlinExpoUI"),

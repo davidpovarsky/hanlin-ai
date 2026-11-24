@@ -31,8 +31,9 @@ export async function resolvePublication(name,range='latest') {
 export function expoRanges(expo,bundled) {
   const required=['@expo/ui','expo-brownfield','react','react-native','react-native-worklets'];
   for(const name of required)if(!bundled[name])throw new Error(`Original Expo ${expo.version} matrix does not specify ${name}`);
-  if(!expo.dependencies?.['expo-modules-core'])throw new Error('Expo publication does not specify expo-modules-core');
-  return Object.fromEntries([...required.map(name=>[name,bundled[name]]),['expo-modules-core',expo.dependencies['expo-modules-core']]]);
+  const expoOwned=['expo-modules-core','expo-asset'];
+  for(const name of expoOwned)if(!expo.dependencies?.[name])throw new Error('Expo publication does not specify '+name);
+  return Object.fromEntries([...required.map(name=>[name,bundled[name]]),...expoOwned.map(name=>[name,expo.dependencies[name]])]);
 }
 export function reactTypesSelection(expo,reactNative,pinned) {
   const constraints=[
@@ -201,18 +202,18 @@ export async function resolveUpstreams({root=path.resolve(here,'../..'),cache=pa
   const versions={expo:{},nativescript:{}};
   for(const [name,publication] of publications)versions[name.startsWith('@nativescript/')&&name!=='@nativescript/react-native'?'nativescript':'expo'][name]=publication.version;
   const originals={};
-  for(const name of ['expo','@expo/ui','expo-brownfield','expo-modules-core','expo-modules-jsi','expo-widgets','react-native','react-native-worklets','@nativescript/react-native','@nativescript/swift-ui'])originals[name]=sourceRecord(publications.get(name),await archive(name));
+  for(const name of ['expo','@expo/ui','expo-asset','expo-brownfield','expo-modules-core','expo-modules-jsi','expo-widgets','react-native','react-native-worklets','@nativescript/react-native','@nativescript/swift-ui'])originals[name]=sourceRecord(publications.get(name),await archive(name));
   const updatedExpo=structuredClone(expoLock);
-  updatedExpo.expo={sdkVersion:expo.version,uiVersion:versions.expo['@expo/ui'],widgetsVersion:versions.expo['expo-widgets'],brownfieldVersion:versions.expo['expo-brownfield'],modulesCoreVersion:versions.expo['expo-modules-core'],reactNativeVersion:rn.version,reactVersion:versions.expo.react,hermesVersion:hermes};
+  updatedExpo.expo={sdkVersion:expo.version,uiVersion:versions.expo['@expo/ui'],assetVersion:versions.expo['expo-asset'],widgetsVersion:versions.expo['expo-widgets'],brownfieldVersion:versions.expo['expo-brownfield'],modulesCoreVersion:versions.expo['expo-modules-core'],reactNativeVersion:rn.version,reactVersion:versions.expo.react,hermesVersion:hermes};
   for(const item of updatedExpo.artifacts) {
     if(item.package) {
       const publication=publications.get(item.package),input=await archive(item.package);
       Object.assign(item,{version:publication.version,tarball:publication.dist.tarball,sha256:input.sha256});
-      const expectedSubpath=item.subpath??(item.name==='ExpoUI'?'package/prebuilds/output/release/xcframeworks/ExpoUI.tar.gz':item.name==='ExpoModulesJSI'?'package/apple/Products/ExpoModulesJSI.xcframework':undefined);
+      const expectedSubpath=item.subpath??(['ExpoUI','ExpoAsset'].includes(item.name)?'package/prebuilds/output/release/xcframeworks/'+item.name+'.tar.gz':item.name==='ExpoModulesJSI'?'package/apple/Products/ExpoModulesJSI.xcframework':undefined);
       if(!expectedSubpath)throw new Error(`Original native artifact layout is unknown: ${item.name}`);
       if(![...input.paths].some(value=>value===expectedSubpath||value.startsWith(expectedSubpath+'/'))) {
-        if(!['ExpoUI','ExpoModulesJSI'].includes(item.name))throw new Error(`Original ${item.package}@${item.version} removed ${item.subpath}; no source producer for ${item.name}`);
-        item.source='npm-source';item.sourceBuild={producer:item.name==='ExpoUI'?'original-cocoapods':'original-swiftpm',packageIntegrity:publication.dist.integrity};
+        if(!['ExpoUI','ExpoAsset','ExpoModulesJSI'].includes(item.name))throw new Error(`Original ${item.package}@${item.version} removed ${item.subpath}; no source producer for ${item.name}`);
+        item.source='npm-source';item.sourceBuild={producer:item.name==='ExpoModulesJSI'?'original-swiftpm':'original-cocoapods',packageIntegrity:publication.dist.integrity};
         delete item.subpath;
       } else {item.subpath=expectedSubpath;item.source=item.name==='ExpoModulesJSI'?'npm-extract':'npm';delete item.sourceBuild;}
     } else {

@@ -453,7 +453,7 @@ async function prepare() {
       }
       if (item.source === 'npm-source') {
         if (process.platform !== 'darwin') throw new Error(`[HanlinExpo] ${item.name}@${item.version} is source-only; the current original native artifact must be built with Xcode. An older binary is not compatible.`);
-        if (!['ExpoUI', 'ExpoModulesJSI'].includes(item.name)) throw new Error(`[HanlinExpo] Missing original source producer for ${item.name}`);
+        if (!['ExpoUI', 'ExpoAsset', 'ExpoModulesJSI'].includes(item.name)) throw new Error(`[HanlinExpo] Missing original source producer for ${item.name}`);
         console.log(`[HanlinExpo] ${item.name}@${item.version} will be built from its original installed sources.`);
         continue;
       }

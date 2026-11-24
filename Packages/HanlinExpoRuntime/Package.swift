@@ -40,6 +40,7 @@ let package = Package(
                 "ExpoModulesCore",
                 "ExpoModulesWorklets",
                 "ExpoUI",
+                "ExpoAsset",
                 "ExpoWidgets",
                 "ExpoBrownfield",
                 .product(name: "HanlinExpoNativeAPI", package: "HanlinExpoNativeAPI")
@@ -132,6 +133,7 @@ let package = Package(
         .binaryTarget(name: "ExpoModulesCore", path: "Artifacts/ExpoModulesCore.xcframework"),
         .binaryTarget(name: "ExpoModulesWorklets", path: "Artifacts/ExpoModulesWorklets.xcframework"),
         .binaryTarget(name: "ExpoUI", path: "Artifacts/ExpoUI.xcframework"),
+        .binaryTarget(name: "ExpoAsset", path: "Artifacts/ExpoAsset.xcframework"),
         .binaryTarget(name: "ExpoBrownfield", path: "Artifacts/ExpoBrownfield.xcframework"),
     ],
     swiftLanguageModes: [.v6]
