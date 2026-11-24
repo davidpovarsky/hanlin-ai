@@ -1,0 +1,281 @@
+{
+  "schemaVersion": 1,
+  "capturedAt": "2026-11-24T21:52:24.055691+00:00",
+  "sourceAtNativeExecution": "bd6da170da7936fe3c5353ddaf8b25c97477a380",
+  "baselineModuleSHA256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
+  "positiveModuleSHA256": "1928091c166895c98a6527ddb2c28fad2ccde56dd698497e5d80781d0d4d58a8",
+  "finalModuleSHA256": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9",
+  "regressionTestSHA256": "958d0e0a71f47fa7677e412cd1a0ed40da43feb898b182df84e63256a05e5865",
+  "toolchain": {
+    "nodeVersion": "v24.5.0",
+    "compilerPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/original-authoring-sdk/MiniAppSDK/expo/node_modules/typescript/lib/typescript.js",
+    "compilerSHA256": "d3f3cd2b04b7f466f4484df921b744223f7bd1f3e353ec9110bdf52695b983d5",
+    "compilerPackageVersion": "6.0.2",
+    "compilerReportedVersion": "6.0.3",
+    "versionEvidence": "Package metadata reports6.0.2; the actual compiler API reports6.0.3 in candidate-build.json. Both use the exact captured TypeScript library SHA."
+  },
+  "positiveProofReuse": {
+    "unchangedFunctions": [
+      {
+        "name": "buildExpo",
+        "positiveSHA256": "1c07ef5466b525431d7da1683de04bc865f5dbd73bff6c02980220b6a964ddcd",
+        "finalSHA256": "1c07ef5466b525431d7da1683de04bc865f5dbd73bff6c02980220b6a964ddcd",
+        "unchanged": true
+      },
+      {
+        "name": "runMiniAppOperation",
+        "positiveSHA256": "0bcf847843ec0c4ace908c1e3ee985dd1f0dfe1a3c2ca387cef46836fac998bb",
+        "finalSHA256": "0bcf847843ec0c4ace908c1e3ee985dd1f0dfe1a3c2ca387cef46836fac998bb",
+        "unchanged": true
+      },
+      {
+        "name": "validateNativePresentations",
+        "positiveSHA256": "08a0380e73730dae142dba7e2cfa6c4fad330a2c818756f4c5c99d28b691dec8",
+        "finalSHA256": "08a0380e73730dae142dba7e2cfa6c4fad330a2c818756f4c5c99d28b691dec8",
+        "unchanged": true
+      },
+      {
+        "name": "parseProject module/type resolution block",
+        "positiveSHA256": "1ff76f2d7e274fbbc993c29870492c98acb59bc736b1cce3a799d4e7351cb525",
+        "finalSHA256": "1ff76f2d7e274fbbc993c29870492c98acb59bc736b1cce3a799d4e7351cb525",
+        "unchanged": true
+      }
+    ],
+    "actualProjectConfigInputs": [
+      {
+        "path": "tsconfig.json",
+        "sha256": "55a7c670ed7cbb03772ab431e18904fe7a66b801541bd4c6133e87a26685ae8e",
+        "extends": null
+      },
+      {
+        "path": "native/tsconfig.json",
+        "sha256": "04f9897c1e27a4f1bfb0b948d70c482618c84961a61567447ef110ea43dcce93",
+        "extends": null
+      }
+    ],
+    "remainingDelta": "Bound canonical config return paths (actual positive projects have no extends), return internal authority set, and align NativeScript-only emit/package copy. The original Expo compiler/bundler paths for this project are unchanged."
+  },
+  "nativeStatus": {
+    "MiniAppsBuild": "EXECUTED_PASS",
+    "AIBuild": "EXECUTED_PASS",
+    "pairedStatus": "INFRA_ERROR",
+    "appCases": "NOT_RUN",
+    "reason": "node exit 1; inspect modular-search-build.log",
+    "physicalDevice": "NOT_RUN"
+  },
+  "proofStatus": {
+    "originalFailedBuildDiagnosticCount": 16,
+    "candidateOriginalBuild": "PASS",
+    "candidateSourceNegative": "EXPECTED_TS2322",
+    "finalRegression": {
+      "pass": 3,
+      "fail": 0,
+      "skipped": 0
+    },
+    "baselineRegression": {
+      "pass": 0,
+      "fail": 3,
+      "skipped": 0
+    }
+  },
+  "members": [
+    {
+      "path": "attempt6-controller-state.json",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/state.json",
+      "bytes": 19090,
+      "sha256": "37f4177a7a28be886eb47dd6099bec2fc131bdeab7f7aeade3eca3d939817dd9",
+      "rawBytes": 19090,
+      "rawSHA256": "37f4177a7a28be886eb47dd6099bec2fc131bdeab7f7aeade3eca3d939817dd9",
+      "encoding": "raw"
+    },
+    {
+      "path": "attempt6-acceptance.json",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/acceptance.json",
+      "bytes": 11920,
+      "sha256": "289ec3e653b8236f7fa1acca4f79b35955a32a34df52508178ce60442594fdba",
+      "rawBytes": 11920,
+      "rawSHA256": "289ec3e653b8236f7fa1acca4f79b35955a32a34df52508178ce60442594fdba",
+      "encoding": "raw"
+    },
+    {
+      "path": "attempt6-command-events.jsonl",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/command-events.jsonl",
+      "bytes": 69748,
+      "sha256": "0e9d9872e61d48f8c244a7508c0a97a948eb3cefe3e4d044e750ddfb61b03a8d",
+      "rawBytes": 69748,
+      "rawSHA256": "0e9d9872e61d48f8c244a7508c0a97a948eb3cefe3e4d044e750ddfb61b03a8d",
+      "encoding": "raw"
+    },
+    {
+      "path": "attempt6-commands.jsonl",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/commands.jsonl",
+      "bytes": 10709,
+      "sha256": "12f38b63e95b0595299d998ee296d3dad3b13962cf94c37e7a77abd1b221046d",
+      "rawBytes": 10709,
+      "rawSHA256": "12f38b63e95b0595299d998ee296d3dad3b13962cf94c37e7a77abd1b221046d",
+      "encoding": "raw"
+    },
+    {
+      "path": "attempt6-paired-phase.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt6/split-paired-acceptance.log",
+      "bytes": 1226,
+      "sha256": "73ad66a19337d8dca947cffe2b858061edfddae29e26ac6caea04c9995d3c8de",
+      "rawBytes": 12913,
+      "rawSHA256": "ad5834f439bad59678020192ce22dabd548f97cc0dc418f86a7e6cbc5acfbfa0",
+      "encoding": "gzip"
+    },
+    {
+      "path": "attempt6-mini-build.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/mini-build.log",
+      "bytes": 266419,
+      "sha256": "7ea97d6ba4e8fa1aaa78599975d3594eac1e729ec844a455cab65f7c0a131b9f",
+      "rawBytes": 7079343,
+      "rawSHA256": "12c73f8d83c369caef80bd0472c3b758548250e7f2b4d5adccfecf635b261ab1",
+      "encoding": "gzip"
+    },
+    {
+      "path": "attempt6-ai-build.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/ai-build.log",
+      "bytes": 394354,
+      "sha256": "60124aadc60bff7247984ffda478765c0bec6fd5d069cd8eea4511628439b82a",
+      "rawBytes": 10100169,
+      "rawSHA256": "cf3f07001531acd5591315d79c6e58b51d8995ba8d991c5b7d04ea1b8de68a4b",
+      "encoding": "gzip"
+    },
+    {
+      "path": "attempt6-modular-search-build.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/modular-search-build.log",
+      "bytes": 1715,
+      "sha256": "ea078f37c51bad9582e6127c34e9df1391ae031e0cbb5eb9cdeb848cc90e7480",
+      "rawBytes": 8365,
+      "rawSHA256": "75f8f38e12608c5f16947e965b1107befc71eee5a352592c9c5d091289575a50",
+      "encoding": "gzip"
+    },
+    {
+      "path": "attempt6-authoring-fixture-build.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/authoring-fixture-build.log",
+      "bytes": 946,
+      "sha256": "c72e79f4a2bd2375dad92c847bf99a15831894b52d98b7ace6bf67c73cdb0418",
+      "rawBytes": 3132,
+      "rawSHA256": "c976fdfa15e26a64b095d1f0b19cac25a2d3d83e2213ba00a588d953f1c9cdd5",
+      "encoding": "gzip"
+    },
+    {
+      "path": "focused-proof-state.json",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/sdk-resolution-proof/state.json",
+      "bytes": 5826,
+      "sha256": "49631d4c5ecc1bad95b8961b3940db4a59ca9f9540d4548037539f665fcd7da4",
+      "rawBytes": 5826,
+      "rawSHA256": "49631d4c5ecc1bad95b8961b3940db4a59ca9f9540d4548037539f665fcd7da4",
+      "encoding": "raw"
+    },
+    {
+      "path": "collector-error-after-positive.json",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/sdk-resolution-proof/state-after-positive-collector-error.json",
+      "bytes": 1938,
+      "sha256": "be49149792bdd70be3da95d19a62e09be5e4c740361f5dd95ab43f88a6a23e14",
+      "rawBytes": 1938,
+      "rawSHA256": "be49149792bdd70be3da95d19a62e09be5e4c740361f5dd95ab43f88a6a23e14",
+      "encoding": "raw"
+    },
+    {
+      "path": "candidate-build.json",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/sdk-resolution-proof/candidate-build.json",
+      "bytes": 1571,
+      "sha256": "53f646d79dd0a9d4e32d5cae736066c9c8e7b8a4931a3d87706025b4b577d8d8",
+      "rawBytes": 1571,
+      "rawSHA256": "53f646d79dd0a9d4e32d5cae736066c9c8e7b8a4931a3d87706025b4b577d8d8",
+      "encoding": "raw"
+    },
+    {
+      "path": "candidate-build.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/sdk-resolution-proof/candidate-build.log",
+      "bytes": 671,
+      "sha256": "ddbf0d9ecce48c5b72275706d2619afe287080135420c2ffe3a4d0c8dbe66db2",
+      "rawBytes": 1571,
+      "rawSHA256": "53f646d79dd0a9d4e32d5cae736066c9c8e7b8a4931a3d87706025b4b577d8d8",
+      "encoding": "gzip"
+    },
+    {
+      "path": "candidate-negative.json",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/sdk-resolution-proof/candidate-negative.json",
+      "bytes": 1497,
+      "sha256": "1d6bdf49e1fc7775d07ef1759499f2af8cafd38aebe7c1e4b902c0b532c7261a",
+      "rawBytes": 1497,
+      "rawSHA256": "1d6bdf49e1fc7775d07ef1759499f2af8cafd38aebe7c1e4b902c0b532c7261a",
+      "encoding": "raw"
+    },
+    {
+      "path": "candidate-negative.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/sdk-resolution-proof/candidate-negative.log",
+      "bytes": 683,
+      "sha256": "3409a62bcba72b7d39b56778f8e3205fa7bbdaac01d0cd89ca6768e016b53181",
+      "rawBytes": 1497,
+      "rawSHA256": "1d6bdf49e1fc7775d07ef1759499f2af8cafd38aebe7c1e4b902c0b532c7261a",
+      "encoding": "gzip"
+    },
+    {
+      "path": "bundle-sources.json.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/sdk-resolution-proof/bundle-sources.json",
+      "bytes": 8112,
+      "sha256": "669ead949dba1e679125edd02e2309d5ffe2974f451c96e0aa0062d4cccea89c",
+      "rawBytes": 168530,
+      "rawSHA256": "73b407ee7011465b54d34eb97cc3d1f9d169758ab0701abb6cadd16a163a754b",
+      "encoding": "gzip"
+    },
+    {
+      "path": "regression-state.json",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/sdk-resolution-proof/regression-state.json",
+      "bytes": 1916,
+      "sha256": "d3cc65397f078b906b76749f4143fd5d2e636ab17ff320e3b359b28d30703ea1",
+      "rawBytes": 1916,
+      "rawSHA256": "d3cc65397f078b906b76749f4143fd5d2e636ab17ff320e3b359b28d30703ea1",
+      "encoding": "raw"
+    },
+    {
+      "path": "baseline-regression.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/sdk-resolution-proof/baseline-regression.log",
+      "bytes": 1113,
+      "sha256": "eb8957304f96eba3de59951cff4e58322ff5b726e3bbabe196efc6d9388304ab",
+      "rawBytes": 4027,
+      "rawSHA256": "2ebbaab7ed23680f6cd6b8ca653a797660720a6090e41deb6f7cf288241a9b0b",
+      "encoding": "gzip"
+    },
+    {
+      "path": "final-regression.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/sdk-resolution-proof/final-regression.log",
+      "bytes": 378,
+      "sha256": "a1781a1d35c0f888c20c5410a49b673c38a5615afd906345458ad37a7fd5669d",
+      "rawBytes": 949,
+      "rawSHA256": "90b845533f587b1115b3c33d4e4021190f6bacd36653d10368c0d9bc551bc2ad",
+      "encoding": "gzip"
+    },
+    {
+      "path": "positive-candidate-module.mjs.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/sdk-resolution-proof/candidate/AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
+      "bytes": 12507,
+      "sha256": "311ccbe7471ff57d526ea2ff4ce0336b8121dd301bc1a05d1716071e59de2c53",
+      "rawBytes": 47723,
+      "rawSHA256": "1928091c166895c98a6527ddb2c28fad2ccde56dd698497e5d80781d0d4d58a8",
+      "encoding": "gzip"
+    },
+    {
+      "path": "source-advance-bd6da170.json",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/source-advance-bd6da170/receipt.json",
+      "bytes": 111458,
+      "sha256": "11b1e7efb1e66e0394274d8ad38c394050dbe4204d76a9278cea23a680cd4f36",
+      "rawBytes": 111458,
+      "rawSHA256": "11b1e7efb1e66e0394274d8ad38c394050dbe4204d76a9278cea23a680cd4f36",
+      "encoding": "raw"
+    },
+    {
+      "path": "capacity-admission-attempt6.json",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/capacity-admission-attempt6.json",
+      "bytes": 1919,
+      "sha256": "5e93683c61dd335fb5d0b6e3f32e9769a49f4ddb858427af1fc6243f8b41eab5",
+      "rawBytes": 1919,
+      "rawSHA256": "5e93683c61dd335fb5d0b6e3f32e9769a49f4ddb858427af1fc6243f8b41eab5",
+      "encoding": "raw"
+    }
+  ]
+}

@@ -8,6 +8,8 @@ import { pathToFileURL } from 'node:url';
 const engines = new Set(['expo', 'nativescript', 'scriptwidget']);
 const ignoredDirectories = new Set(['node_modules', '.git', '.hanlin-build', '.hanlin-authoring']);
 const slash = value => value.split(path.sep).join('/');
+const packageName = name => name.startsWith('.') || path.isAbsolute(name) ? null
+  : name.startsWith('@') ? name.split('/').slice(0, 2).join('/') : name.split('/')[0];
 const sha256 = value => createHash('sha256').update(value).digest('hex');
 const inside = (root, file) => {
   const relative = path.relative(root, file);
@@ -174,6 +176,8 @@ async function parseProject(ts, input, sdkRoot, sdkEngine, fallbackConfig, usePr
     base.errors = base.errors.filter(item => item.code !== 18003);
   }
   const toolingRoot = child(sdkRoot, sdkEngine.toolingRoot);
+  const originalPackages = new Set(Object.keys(sdkEngine.packageVersions ?? {}));
+  const isOriginalPackage = name => originalPackages.has(packageName(name));
   const configPath = child(input.sourceRoot, input.author.tsconfig ?? 'tsconfig.json');
   const sourceConfig = fallbackConfig && (!useProjectConfig || !ts.sys.fileExists(configPath))
     ? {config: fallbackConfig} : ts.readConfigFile(configPath, ts.sys.readFile);
@@ -182,14 +186,20 @@ async function parseProject(ts, input, sdkRoot, sdkEngine, fallbackConfig, usePr
     config.compilerOptions = {...config.compilerOptions, allowJs: true, checkJs: true};
   const resolveExtendedConfig = value => {
     if (typeof value !== 'string' || value.startsWith('.') || path.isAbsolute(value)) return value;
-    for (const root of [input.sourceRoot, toolingRoot]) {
+    if (isOriginalPackage(value) && !ts.sys.fileExists(path.join(toolingRoot, 'node_modules', packageName(value), 'package.json')))
+      return path.join(toolingRoot, 'node_modules', value);
+    const roots = isOriginalPackage(value) ? [toolingRoot] : [input.sourceRoot, toolingRoot];
+    for (const root of roots) {
       const resolve = createRequire(path.join(root, 'package.json')).resolve;
       for (const specifier of [value, path.join(root, 'node_modules', value)]) {
-        try { return resolve(specifier); }
-        catch (error) { if (!['MODULE_NOT_FOUND', 'ERR_PACKAGE_PATH_NOT_EXPORTED'].includes(error.code)) throw error; }
+        try {
+          const resolved = resolve(specifier);
+          if (!isOriginalPackage(value) || inside(ts.sys.realpath(path.join(toolingRoot, 'node_modules', packageName(value))), resolved)) return resolved;
+        } catch (error) { if (!['MODULE_NOT_FOUND', 'ERR_PACKAGE_PATH_NOT_EXPORTED'].includes(error.code)) throw error; }
       }
     }
-    return value; // Preserve the original compiler's missing-config diagnostic.
+    // A missing canonical config must not fall back to another checkout's package.
+    return isOriginalPackage(value) ? path.join(toolingRoot, 'node_modules', value) : value;
   };
   if (config.extends) config.extends = Array.isArray(config.extends)
     ? config.extends.map(resolveExtendedConfig) : resolveExtendedConfig(config.extends);
@@ -206,22 +216,46 @@ async function parseProject(ts, input, sdkRoot, sdkEngine, fallbackConfig, usePr
     paths: {...base.options.paths, ...parsed.options.paths}
   };
   const compilerHost = ts.createCompilerHost(options);
-  const sdkOptions = {...options, baseUrl: undefined, paths: undefined};
+  const sdkOptions = {...options, baseUrl: undefined, paths: undefined,
+    typeRoots: [...new Set([...(base.options.typeRoots ?? []), path.join(toolingRoot, 'node_modules', '@types')])]};
   const sdkContainingFile = path.join(toolingRoot, '__hanlin_authoring__.ts');
-  // Resolve bare names from an SDK containing file so original package.exports,
-  // conditional types and subpath exports are honored by TypeScript itself.
-  // Wildcard path aliases to node_modules would bypass those package exports.
-  compilerHost.resolveModuleNames = (names, containingFile) => names.map(name =>
-    ts.resolveModuleName(name, containingFile, options, compilerHost).resolvedModule
-    ?? (!name.startsWith('.') && !path.isAbsolute(name)
-      ? ts.resolveModuleName(name, sdkContainingFile, sdkOptions, compilerHost).resolvedModule : undefined));
+  // TypeScript normally walks every ancestor node_modules directory. SDK
+  // dependencies may use their own nested packages, but never another checkout.
+  const sdkLookup = file => !path.resolve(file).split(path.sep).includes('node_modules') || inside(toolingRoot, path.resolve(file));
+  const sdkResolutionHost = {...compilerHost,
+    fileExists: file => sdkLookup(file) && compilerHost.fileExists(file),
+    readFile: file => sdkLookup(file) ? compilerHost.readFile(file) : undefined,
+    directoryExists: directory => sdkLookup(directory) && compilerHost.directoryExists(directory),
+    getDirectories: directory => sdkLookup(directory) ? compilerHost.getDirectories(directory).filter(sdkLookup) : []
+  };
+  const sdkSource = file => file && inside(toolingRoot, file);
+  const resolveModule = (name, containingFile) => {
+    const fromSDK = sdkSource(containingFile);
+    const original = isOriginalPackage(name);
+    // The supplied host owns its canonical React/Expo/NativeScript packages.
+    // Keep SDK-local nested dependencies, relative imports and project aliases;
+    // never satisfy a missing canonical export from an ancestor installation.
+    if (fromSDK || original) {
+      return (fromSDK ? ts.resolveModuleName(name, containingFile, sdkOptions, sdkResolutionHost).resolvedModule : undefined)
+        ?? (packageName(name) ? ts.resolveModuleName(name, sdkContainingFile, sdkOptions, sdkResolutionHost).resolvedModule : undefined);
+    }
+    return ts.resolveModuleName(name, containingFile, options, compilerHost).resolvedModule
+      ?? (packageName(name) ? ts.resolveModuleName(name, sdkContainingFile, sdkOptions, sdkResolutionHost).resolvedModule : undefined);
+  };
+  compilerHost.resolveModuleNames = (names, containingFile) => names.map(name => resolveModule(name, containingFile));
   compilerHost.resolveTypeReferenceDirectives = (names, containingFile, redirectedReference, compilerOptions) =>
     names.map(name => {
       const requested = typeof name === 'string' ? name : name.fileName;
-      const resolved = ts.resolveTypeReferenceDirective(requested, containingFile, compilerOptions ?? options, compilerHost, redirectedReference).resolvedTypeReferenceDirective
-        ?? ts.resolveTypeReferenceDirective(requested, sdkContainingFile, sdkOptions, compilerHost, redirectedReference).resolvedTypeReferenceDirective;
-      if (resolved) return resolved;
-      const module = ts.resolveModuleName(requested, sdkContainingFile, sdkOptions, compilerHost).resolvedModule;
+      const fromSDK = sdkSource(containingFile);
+      const original = isOriginalPackage(requested) || originalPackages.has('@types/' + requested.replace(/^@/, '').replace('/', '__'));
+      const origins = fromSDK ? [[containingFile, sdkOptions], [sdkContainingFile, sdkOptions]]
+        : original ? [[sdkContainingFile, sdkOptions]]
+        : [[containingFile, compilerOptions ?? options], [sdkContainingFile, sdkOptions]];
+      for (const [origin, settings] of origins) {
+        const resolved = ts.resolveTypeReferenceDirective(requested, origin, settings, settings === sdkOptions ? sdkResolutionHost : compilerHost, redirectedReference).resolvedTypeReferenceDirective;
+        if (resolved) return resolved;
+      }
+      const module = ts.resolveModuleName(requested, sdkContainingFile, sdkOptions, sdkResolutionHost).resolvedModule;
       return module && /\.d\.[cm]?ts$/.test(module.resolvedFileName)
         ? {primary: false, resolvedFileName: module.resolvedFileName, packageId: module.packageId, isExternalLibraryImport: true}
         : undefined;
@@ -231,7 +265,7 @@ async function parseProject(ts, input, sdkRoot, sdkEngine, fallbackConfig, usePr
   const program = ts.createProgram({rootNames, options, host: compilerHost, projectReferences: parsed.projectReferences});
   const diagnostics = [...base.errors, ...(sourceConfig.error ? [sourceConfig.error] : []),
     ...parsed.errors, ...ts.getPreEmitDiagnostics(program)];
-  return {program, compilerHost, options, sdkOptions, toolingRoot,
+  return {program, compilerHost, options, sdkOptions, toolingRoot, originalPackages,
     diagnostics: deduplicate(diagnostics.map(item => normalizedDiagnostic(ts, item, input.sourceRoot)))};
 }
 
@@ -385,7 +419,7 @@ function relativeImportTransformer(ts, parsed, input) {
   return context => {
     const rewrite = (specifier, sourceFile) => {
       if (!ts.isStringLiteral(specifier)) return specifier;
-      const resolved = ts.resolveModuleName(specifier.text, sourceFile.fileName, parsed.options, parsed.compilerHost).resolvedModule;
+      const resolved = parsed.compilerHost.resolveModuleNames([specifier.text], sourceFile.fileName)[0];
       if (!resolved || !inside(input.sourceRoot, resolved.resolvedFileName) || resolved.resolvedFileName.endsWith('.d.ts')) return specifier;
       const relative = slash(path.relative(path.dirname(sourceFile.fileName), resolved.resolvedFileName)).replace(/\.mts$/, '.mjs').replace(/\.cts$/, '.cjs').replace(/\.(tsx?|jsx?)$/, '.js');
       return ts.factory.createStringLiteral(relative.startsWith('.') ? relative : './' + relative);
@@ -430,11 +464,13 @@ function runtimeImports(ts, emittedSources) {
   }
   return packages;
 }
-async function installedPackage(name, from, fallback) {
-  for (const start of [from, fallback]) {
+async function installedPackage(name, from, fallback, boundary) {
+  // A supplied SDK fallback is a complete installed graph, not a starting point
+  // for searching unrelated ancestor installations.
+  for (const [start, limit] of [[from, boundary], [fallback, fallback]]) {
     if (!start) continue;
     let directory = start;
-    while (true) {
+    while (!limit || inside(limit, directory)) {
       const candidate = path.join(directory, 'node_modules', name);
       if (await optionalJSON(path.join(candidate, 'package.json'))) return fs.realpath(candidate);
       const parent = path.dirname(directory);
@@ -491,7 +527,12 @@ async function copyNativeScriptDependencies(ts, input, parsed, app, emittedSourc
       if (info.optional) { optional[peer] = required[peer]; delete required[peer]; }
     for (const dependency of new Set([...Object.keys(required), ...Object.keys(optional)])) {
       if (provided.has(dependency)) continue;
-      const resolved = await installedPackage(dependency, source, parsed.toolingRoot);
+      const sdkSource = inside(parsed.toolingRoot, source) || parsed.originalPackages.has(name);
+      const resolved = sdkSource
+        ? await installedPackage(dependency, source, parsed.toolingRoot, inside(parsed.toolingRoot, source) ? parsed.toolingRoot : source)
+        : parsed.originalPackages.has(dependency)
+          ? await installedPackage(dependency, parsed.toolingRoot, undefined, parsed.toolingRoot)
+          : await installedPackage(dependency, source, parsed.toolingRoot);
       if (!resolved) {
         if (dependency in optional) continue;
         throw new Error('Original runtime dependency is not installed: ' + dependency + ' (used by ' + name + ').');
@@ -502,7 +543,9 @@ async function copyNativeScriptDependencies(ts, input, parsed, app, emittedSourc
   // Reserve/copy direct modules first, then each actual installed dependency graph.
   for (const name of names) {
     if (provided.has(name)) continue;
-    const source = await installedPackage(name, input.sourceRoot, parsed.toolingRoot);
+    const source = parsed.originalPackages.has(name)
+      ? await installedPackage(name, parsed.toolingRoot, undefined, parsed.toolingRoot)
+      : await installedPackage(name, input.sourceRoot, parsed.toolingRoot);
     if (!source) throw new Error('Original runtime package is not installed in the project or host SDK: ' + name);
     directSources.set(name, source);
     locations.set(path.join(rootModules, name), source);
@@ -576,12 +619,27 @@ async function buildExpo(input, parsed, stage, sdkEngine) {
   });
   const original = hasOriginalConfig ? requireSDK(configPath)
     : requireSDK('expo/metro-config').getDefaultConfig(parsed.toolingRoot);
+  const originalPackages = new Set(Object.keys(sdkEngine.packageVersions ?? {}));
+  const originalResolveRequest = original.resolver?.resolveRequest;
   const config = mergeConfig(original, {
     projectRoot: parsed.toolingRoot,
     watchFolders: [input.sourceRoot, parsed.toolingRoot],
     maxWorkers: 1,
     resolver: {useWatchman: false,
-      nodeModulesPaths: [path.join(input.sourceRoot, 'node_modules'), path.join(parsed.toolingRoot, 'node_modules')]},
+      nodeModulesPaths: [path.join(input.sourceRoot, 'node_modules'), path.join(parsed.toolingRoot, 'node_modules')],
+      resolveRequest(context, name, platform) {
+        const fromSDK = inside(parsed.toolingRoot, context.originModulePath);
+        if (fromSDK || originalPackages.has(packageName(name))) {
+          const originModulePath = fromSDK ? context.originModulePath : path.join(parsed.toolingRoot, '__hanlin_authoring__.js');
+          const nodeModulesPaths = [];
+          for (let directory = path.dirname(originModulePath); inside(parsed.toolingRoot, directory); directory = path.dirname(directory)) {
+            nodeModulesPaths.push(path.join(directory, 'node_modules'));
+            if (directory === parsed.toolingRoot) break;
+          }
+          context = {...context, originModulePath, disableHierarchicalLookup: true, nodeModulesPaths};
+        }
+        return (originalResolveRequest ?? context.resolveRequest)(context, name, platform);
+      }},
     watcher: {healthCheck: {enabled: false}},
     fileMapCacheDirectory: path.join(stage, '.metro-cache'),
     cacheStores: [],

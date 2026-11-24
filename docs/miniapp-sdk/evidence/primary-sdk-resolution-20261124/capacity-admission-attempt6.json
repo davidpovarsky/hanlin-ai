@@ -1,0 +1,20 @@
+{
+  "owner": "/root/native_execution",
+  "source": "bd6da170da7936fe3c5353ddaf8b25c97477a380",
+  "startedAt": "2026-11-24T21:03:24.871794+00:00",
+  "status": "ADMITTED_CONTROLLER_STARTED",
+  "pid": 72682,
+  "maximumWaitSeconds": 3500,
+  "observedAt": "2026-11-24T21:08:25.986594+00:00",
+  "elapsedSeconds": 301.11553958300647,
+  "blockers": [],
+  "admission": {
+    "toolchain": "Xcode 27.0\nBuild version 27A266a",
+    "sdk": "27.0",
+    "freeDiskBytes": 128243589120,
+    "memory": "Mach Virtual Memory Statistics: (page size of 16384 bytes)\nPages free:                                    24010.\nPages active:                                 314423.\nPages inactive:                               431811.\nPages speculative:                             49858.\nPages throttled:                                   0.\nPages wired down:                             142747.\nPages purgeable:                                3379.\n\"Translation faults\":                     2533467397.\nPages copy-on-write:                        35734530.\nPages zero filled:                        1848999425.\nPages reactivated:                          32836743.\nPages purged:                                1750979.\nFile-backed pages:                            566266.\nAnonymous pages:                              229826.\nPages stored in compressor:                   102874.\nPages occupied by compressor:                  52199.\nDecompressions:                             16308610.\nCompressions:                               29419123.\nPageins:                                    55469729.\nPageouts:                                      43040.\nSwapins:                                          12.\nSwapouts:                                        120.\n",
+    "uptime": "22:08  up 10:39, 1 user, load averages: 130.44 93.16 75.08"
+  },
+  "controllerPID": 75925,
+  "finishedAt": "2026-11-24T21:08:26.893027+00:00"
+}
