@@ -17,12 +17,13 @@
   "activeGate": {
     "route": "PRIMARY_SCALEWAY_MAC",
     "owner": "control_authoring",
-    "sourceCommit": "7de3a280bcd4e6202b7246735e5a9204e6a1d186",
-    "sourceRole": "Target of attempt4 staging; not an executed native result",
+    "sourceCommit": "340018ddc9ea2395ffabedbf179369b5bdb791af",
+    "sourceRole": "Staged attempt5 source; execution has not started at the reported checkpoint",
     "scope": "miniapp_complete",
-    "attempt": 4,
-    "status": "STAGING_NOT_STARTED",
+    "attempt": 5,
+    "status": "WAITING_FOR_NATIVE_CAPACITY",
     "startedAtUTC": null,
+    "controllerPID": null,
     "selectedCases": 52,
     "miniAppsCases": 25,
     "aiCases": 27,
@@ -33,25 +34,39 @@
       "Fresh original native and shipping SDK identity preparation",
       "Both product builds",
       "All52 selected cases pass without failures/skips",
-      "Actual diagnostic-sheet/repaired-native-app attachments",
-      "Exact original archive/report handoff and nonempty installedPackageID receipt"
+      "Actual diagnostic-sheet/repaired-native-app attachments inspected from Paired.xcresult or a verified export; test PASS alone does not prove export success",
+      "Actual original archive/report handoff and installed tool receipt with nonempty installedPackageID, as verified by the existing UI/provider assertion; no invented standalone receipt JSON"
     ],
     "runtimeCoreArtifactRunID": 42926628418,
-    "reactNativeSelection": "Own Scripts/Expo graph0.88.1 through supported original REACT_NATIVE_PATH binding",
-    "provenanceRefresh": {
-      "path": "docs/miniapp-sdk/evidence/primary-ns-package-source-refresh-20261124/receipt.json",
-      "sha256": "7db27ada713bb4046c065598447f48416b04b95e5bb33dfc275676de202d85d5",
-      "commit": "7de3a280bcd4e6202b7246735e5a9204e6a1d186"
+    "reactNativeSelection": "Own Scripts/Expo graph0.88.1, actually selected by original JSI producer in attempt4",
+    "runtimeCoreInput": {
+      "kind": "Explicit local original archive",
+      "environmentKey": "RUNTIME_CORE_BUNDLE_ARCHIVE",
+      "bytes": 86253335,
+      "sha256": "196a35562a31229b1bcf05afbe49f76470ced90a7fbf0494ecebd5c06d07440f",
+      "acquisitionEvidenceID": "primary_runtimecore_authenticated_transfer"
     },
-    "executionObservation": "Root published exact7de3a280 and authorized the sole owner to stage attempt4. No controller start has been observed in this record; no poll was made for this update.",
+    "executionObservation": {
+      "status": "WAITING_FOR_NATIVE_CAPACITY",
+      "observedAtUTC": "2026-11-24T19:42:56.964982+00:00",
+      "authority": "Reported by sole native execution owner control_authoring and forwarded by root; this map update performs no live query.",
+      "controllerState": "READY",
+      "nativeControllerPID": null,
+      "observer": "ACTIVE_REPORTED",
+      "sourceStagedAtUTC": "2026-11-24T19:42:01+00:00",
+      "verifiedSourceHashes": 7,
+      "preparedTrackedPathsPreserved": 184,
+      "receiptStatus": "OWNER_REPORTED_OBSERVATION_NO_NEW_COMMITTED_RECEIPT",
+      "boundary": "Staging/capacity waiting is not native execution; no attempt5 start or application PASS is claimed."
+    },
     "lastExecutedAttempt": {
-      "attempt": 3,
-      "sourceCommit": "312472e91c05a7d32bbef4e936c001d713409370",
+      "attempt": 4,
+      "sourceCommit": "7de3a280bcd4e6202b7246735e5a9204e6a1d186",
       "status": "FAILED_NATIVE_PREPARATION",
-      "finishedAtUTC": "2026-11-24T18:46:42.284434+00:00",
-      "evidenceID": "primary_native_attempt3"
+      "finishedAtUTC": "2026-11-24T19:31:11.745430+00:00",
+      "evidenceID": "primary_native_attempt4"
     },
-    "boundary": "Attempt4 is pending, not running or passed. Last attempt3 did not reach corrected JSI/Core; both current app builds/all52cases remain NOT_RUN. Focused correction and source-audit passes are separate component evidence."
+    "boundary": "Attempt5 remains a reported capacity wait with no native PID. Attempt4 corrected original JSI and NativeScript strict checks passed, but RuntimeCore acquisition failed. Subsequent authenticated transfer/archive verification passed separately; common Core/Host/SDK preparation, both current app builds/all52 cases remain NOT_RUN."
   },
   "userScope": {
     "activeOriginalEngines": [
@@ -1333,6 +1348,151 @@
       "sourceCount": 93,
       "scope": "Existing inventory write/check and reachability write/check after reviewed manifest idempotence fix. All four commands exited0, source normalizer hash is b5114a3b…6ebd9, canonical facade manifest is147bytes with original c42e3fe3…642a7e hash.",
       "boundary": "Source provenance reconciliation only. No repeated compiler/native suite, SDK/archive assembly, app build or52-case pass is inferred."
+    },
+    "primary_native_attempt4": {
+      "receipt": {
+        "path": "docs/miniapp-sdk/evidence/primary-runtimecore-authenticated-transfer-20261124/receipt.json",
+        "sha256": "8b1498dea9aa9c41b4a6cc7db2d80565604d1c3234260d8b65ac0ebcd92f7486",
+        "verifiedAtCommit": "340018ddc9ea2395ffabedbf179369b5bdb791af"
+      },
+      "result": "EXECUTED_FAIL_NATIVE_PREPARATION",
+      "sourceCommit": "7de3a280bcd4e6202b7246735e5a9204e6a1d186",
+      "historyLabel": 4,
+      "rawStateAttemptCounter": 3,
+      "identityAuthority": "Exact source, plan, startedAt, logs-attempt4 path; historical raw counter was retained unchanged.",
+      "startedAtUTC": "2026-11-24T19:30:04.935524+00:00",
+      "finishedAtUTC": "2026-11-24T19:31:11.745430+00:00",
+      "elapsedSeconds": 66.8095447079977,
+      "exitCode": 1,
+      "rawLog": {
+        "path": "docs/miniapp-sdk/evidence/primary-runtimecore-authenticated-transfer-20261124/attempt4-native-preparation.log",
+        "bytes": 12801,
+        "sha256": "8fef5f53d38578167740c2a446aeb1498a06704700b016df4fd4b5aa0aaf5839",
+        "verifiedAtCommit": "340018ddc9ea2395ffabedbf179369b5bdb791af"
+      },
+      "completedComponents": {
+        "NativeScriptStrictGenerator": "EXECUTED_PASS existing original strict check; actual log line6",
+        "ExpoModulesJSI": {
+          "actualSelectedRoot": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/Expo/node_modules/react-native",
+          "reactNativeVersion": "0.88.1",
+          "packageSHA256": "3f2bf69ed883e97a295b1de43f5a2d75d112ab45495153360c2fb521023c7f3f",
+          "rawLogLines": [
+            30,
+            31,
+            32,
+            36,
+            41,
+            42,
+            43,
+            44
+          ],
+          "observed": "Original producer selected the own graph, invalidated stale build state, built device and simulator slices in25s, then staged/normalized/signed/verified the framework.",
+          "boundary": "Original native component preparation; not an application or test execution claim."
+        }
+      },
+      "failure": {
+        "component": "RuntimeCore acquisition",
+        "cause": "Primary Mac gh has no authenticated account; original artifact helper gh invocation exited4 before download. The enclosing preparation phase exited1.",
+        "ghExitCode": 4,
+        "download": "NOT_STARTED_ON_PRIMARY_MAC"
+      },
+      "fullRuntimeCorePreparation": "NOT_RUN",
+      "currentRuntimeHostSDKPreparation": "NOT_RUN",
+      "firstMiniAppsBuild": "NOT_RUN",
+      "aiBuild": "NOT_RUN",
+      "selected52Cases": "NOT_RUN",
+      "boundary": "Original NativeScript strict and corrected original JSI component preparation passed; full native preparation failed before RuntimeCore acquisition. No application, selected-test or physical acceptance is inferred."
+    },
+    "primary_runtimecore_authenticated_transfer": {
+      "receipt": {
+        "path": "docs/miniapp-sdk/evidence/primary-runtimecore-authenticated-transfer-20261124/receipt.json",
+        "sha256": "8b1498dea9aa9c41b4a6cc7db2d80565604d1c3234260d8b65ac0ebcd92f7486",
+        "verifiedAtCommit": "340018ddc9ea2395ffabedbf179369b5bdb791af"
+      },
+      "result": "ORIGINAL_ACQUISITION_TRANSFER_AND_ARCHIVE_VALIDATION_PASS_FULL_PREPARATION_PENDING",
+      "acquisition": {
+        "status": "ORIGINAL_HELPER_VERIFIED",
+        "runID": 42926628418,
+        "artifactID": 13813704965,
+        "completedAtUTC": "2026-11-24T19:36:44.830122+00:00",
+        "exitCode": 0,
+        "originalHelperSHA256": "059f37520387b3cf49d7d08fd22c81e5c9bd4050ca90cd76f2b5989aafcb7038"
+      },
+      "transferredArchive": {
+        "bytes": 86253335,
+        "sha256": "196a35562a31229b1bcf05afbe49f76470ced90a7fbf0494ecebd5c06d07440f",
+        "verifiedAtUTC": "2026-11-24T19:37:58.917452+00:00",
+        "originalArchiveVerifier": "PASS",
+        "credentialsTransferred": false
+      },
+      "transportCorrection": {
+        "path": "Scripts/Runtime/prepare-runtime-core.sh",
+        "sha256": "1ff99fabcbf8f40d515f3f1b944299286c1094a19520f9892a97f99cf8b64540",
+        "verifiedAtCommit": "340018ddc9ea2395ffabedbf179369b5bdb791af",
+        "localInput": "RUNTIME_CORE_BUNDLE_ARCHIVE",
+        "commonValidationBodyByteIdentical": true,
+        "scope": "Only the acquisition transport changes. Explicit local file is copied into the existing private work directory; every common lock/native-input/archive/provenance/ownership-smoke/install validation stays mandatory and unchanged.",
+        "reviews": [
+          {
+            "agent": "/root",
+            "sourceSHA256": "1ff99fabcbf8f40d515f3f1b944299286c1094a19520f9892a97f99cf8b64540",
+            "result": "NO_CONCRETE_SOURCE_BLOCKER"
+          },
+          {
+            "agent": "/root/sdk_only_author",
+            "sourceSHA256": "1ff99fabcbf8f40d515f3f1b944299286c1094a19520f9892a97f99cf8b64540",
+            "result": "NO_CONCRETE_SOURCE_BLOCKER"
+          }
+        ]
+      },
+      "boundary": "The original authenticated Linux helper and original Mac archive verifier passed. Full common RuntimeCore preparation, current RuntimeHost/SDK assembly, both app builds and all52 application cases are still NOT_RUN after this transport correction. No locally computed outer artifact digest or credentials transfer is claimed."
+    },
+    "acceptance_attachment_export_review": {
+      "result": "SOURCE_CONFIRMED_NONFATAL_ATTACHMENT_EXPORT",
+      "reviewer": "entrypoints",
+      "reviewedSourceCommit": "7de3a280bcd4e6202b7246735e5a9204e6a1d186",
+      "unchangedSourceVerifiedAtCommit": "340018ddc9ea2395ffabedbf179369b5bdb791af",
+      "recordedAtUTC": "2026-11-24T19:48:24.817608+00:00",
+      "sourceReferences": [
+        {
+          "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+          "sha256": "b27ca38423d3d0eb179f2b8bb7f25568d8ee9a7a70a36da7dd9e57e243ca004c",
+          "verifiedAtCommit": "340018ddc9ea2395ffabedbf179369b5bdb791af"
+        },
+        {
+          "path": "AI_HLYUITests/MiniAppAuthoringUITests.swift",
+          "sha256": "f60502af88a5e4b1166146cf5834e5d54eaa0451159b11f95ff26207f210fd72",
+          "verifiedAtCommit": "340018ddc9ea2395ffabedbf179369b5bdb791af"
+        },
+        {
+          "path": "AI_HLY/Downstream/AgentDiagnostics/AgentRuntimeUIAcceptanceProvider.swift",
+          "sha256": "1de8600e13a011aa35d4f7fbb748b42f971e9b9008b17bbe98cf113702691203",
+          "verifiedAtCommit": "340018ddc9ea2395ffabedbf179369b5bdb791af"
+        }
+      ],
+      "finding": "All52 selected tests can pass while attachment export fails: run_paired_acceptance.py715-729 records non-fatal export results; return741 depends only on test status.",
+      "actualAttachmentProducers": {
+        "method": "AI_HLYUITests/MiniAppAuthoringUITests/testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport",
+        "sourceLines": [
+          [
+            64,
+            67
+          ],
+          [
+            102,
+            105
+          ]
+        ],
+        "lifetime": "keepAlways",
+        "names": [
+          "MiniApp original TypeScript diagnostics",
+          "MiniApp repaired native result"
+        ]
+      },
+      "requiredFollowup": "Before closing Repair/SDK07, inspect the actual retained Paired.xcresult or successful paired-attachments export and the two real screenshots. Failed export can be retried from the retained result bundle without rerunning passing tests.",
+      "installedReceiptBoundary": "AgentRuntimeUIAcceptanceProvider.swift494-498 emits MINIAPP_AUTHORING_INSTALLED_VERIFIED only after the actual tool result has status installed and nonempty installedPackageID; MiniAppAuthoringUITests.swift107-111 requires that marker. This source review does not create or claim a separately exported installation-receipt JSON.",
+      "otherScopedFindings": "No additional concrete product assertion gap found within reconciled Repair/Upstream/SDK03/SDK04/SDK07/ScriptWidget scope. Original provider registration, selected original behavior and broader OS effects remain distinct.",
+      "execution": "READ_ONLY_SOURCE_REVIEW_NO_TEST_BUILD_OR_CI"
     }
   },
   "criteria": [
@@ -1645,7 +1805,7 @@
         "raw CI+device evidence",
         "gate CLOSED only if all mandatory executable evidence exists."
       ],
-      "status": "OPEN; last primary attempt3/source312472 failed native preparation. Focused correction and current provenance refresh passed separately; attempt4 target7de3a280 is staging/not started, both builds/all52cases NOT_RUN.18:25primary inventory returned7explicit simulators and0physical/opaque entries; physical acceptance remains BLOCKED_EXTERNAL on the observed route."
+      "status": "OPEN; actual attempt4/source7de3 passed original NativeScript strict and corrected own-graph JSI preparation, then failed unauthenticated Mac gh before RuntimeCore download. Original authenticated helper/transfer/Mac archive verification passed separately. Attempt5 exact340018 is reported WAITING_FOR_NATIVE_CAPACITY at19:42:56.964982UTC with controllerREADY/noPID. Common Core/Host/SDK preparation, both builds/all52cases remain NOT_RUN.18:25primary inventory remains7explicit simulators and0physical/opaque entries; physical acceptance stays BLOCKED_EXTERNAL on the observed route."
     },
     {
       "task": "MINIAPP-SDK parent",
@@ -1690,9 +1850,9 @@
       }
     }
   ],
-  "recordingOutcome": "Four scoped tasks remain complete and nine remain open. Attempt3 failure and separate focused correction/four-audit passes are retained. Attempt4 on7de3a280 is pending staging/admission, not an executed native pass; both builds/all52cases NOT_RUN. Latest physical inventory is7explicit simulators,0physical/opaque devices.",
-  "updatedAtUTC": "2026-11-24T19:13:49.674459+00:00",
-  "currentIntegrationBase": "7de3a280bcd4e6202b7246735e5a9204e6a1d186",
+  "recordingOutcome": "Four scoped tasks remain complete and nine remain open. All prior evidence is retained; actual attempt4 failure, corrected original component passes and separate authenticated archive acquisition/transfer validation are appended. Attempt5 is a reported capacity wait, not running or passed. Actual repair screenshots must be inspected even after52PASS because attachment export is non-fatal. No standalone installation-receipt JSON or physical acceptance is invented.",
+  "updatedAtUTC": "2026-11-24T19:48:24.817608+00:00",
+  "currentIntegrationBase": "340018ddc9ea2395ffabedbf179369b5bdb791af",
   "gateHistory": [
     {
       "runID": 45335292541,
@@ -1952,7 +2112,7 @@
     "skipped": 0,
     "receipt": "docs/miniapp-sdk/evidence/apple-modern-contracts-20261124/receipt.json"
   },
-  "currentScopeNote": "Last actual primary attempt3/source312472 failed at generated HostServices package byte verification before corrected JSI/Core. Focused original generator/normalizer correction passed19:08:27.521UTC; all four required root provenance commands then passed19:11:02.959–08.007UTC. Attempt4 target7de3a280 is staging, not started in this record. Both app builds/all52cases NOT_RUN;4closed/9open and80/83source-only boundaries preserved.",
+  "currentScopeNote": "Last actual primary attempt4/source7de3 failed19:31:11.745430UTC after66.8095s because Mac gh was unauthenticated; original NativeScript strict and ownRN0.88.1 JSI device/simulator preparation passed. Original authenticated acquisition completed19:36:44.830122UTC; exact86,253,335-byte archive transfer and original Mac verifier passed19:37:58.917452UTC. Attempt5 target340018 is staged and reported waiting for native capacity19:42:56.964982UTC, controllerREADY/noPID. Core/Host/SDK common preparation and both builds/all52cases remain NOT_RUN. Fourclosed/nineopen,80source/83modifier and physical7sim0physical boundaries remain.",
   "modernContractGateHistory": [
     {
       "runID": 45348880385,
@@ -2545,6 +2705,89 @@
         "status": "FOCUSED_GENERATOR_AND_NORMALIZER_PASS_NATIVE_RESUME_PENDING",
         "nativeExecution": "NOT_RUN_AFTER_FIX"
       }
+    },
+    {
+      "route": "PRIMARY_SCALEWAY_MAC",
+      "owner": "control_authoring",
+      "sourceCommit": "7de3a280bcd4e6202b7246735e5a9204e6a1d186",
+      "sourceRole": "Target of attempt4 staging; not an executed native result",
+      "scope": "miniapp_complete",
+      "attempt": 4,
+      "status": "STAGING_NOT_STARTED",
+      "startedAtUTC": null,
+      "selectedCases": 52,
+      "miniAppsCases": 25,
+      "aiCases": 27,
+      "caseStatus": "NOT_RUN",
+      "firstMiniAppsBuild": "NOT_RUN",
+      "aiBuild": "NOT_RUN",
+      "acceptanceRequires": [
+        "Fresh original native and shipping SDK identity preparation",
+        "Both product builds",
+        "All52 selected cases pass without failures/skips",
+        "Actual diagnostic-sheet/repaired-native-app attachments",
+        "Exact original archive/report handoff and nonempty installedPackageID receipt"
+      ],
+      "runtimeCoreArtifactRunID": 42926628418,
+      "reactNativeSelection": "Own Scripts/Expo graph0.88.1 through supported original REACT_NATIVE_PATH binding",
+      "provenanceRefresh": {
+        "path": "docs/miniapp-sdk/evidence/primary-ns-package-source-refresh-20261124/receipt.json",
+        "sha256": "7db27ada713bb4046c065598447f48416b04b95e5bb33dfc275676de202d85d5",
+        "commit": "7de3a280bcd4e6202b7246735e5a9204e6a1d186"
+      },
+      "executionObservation": "Root published exact7de3a280 and authorized the sole owner to stage attempt4. No controller start has been observed in this record; no poll was made for this update.",
+      "lastExecutedAttempt": {
+        "attempt": 3,
+        "sourceCommit": "312472e91c05a7d32bbef4e936c001d713409370",
+        "status": "FAILED_NATIVE_PREPARATION",
+        "finishedAtUTC": "2026-11-24T18:46:42.284434+00:00",
+        "evidenceID": "primary_native_attempt3"
+      },
+      "boundary": "Attempt4 is pending, not running or passed. Last attempt3 did not reach corrected JSI/Core; both current app builds/all52cases remain NOT_RUN. Focused correction and source-audit passes are separate component evidence.",
+      "observationBoundary": "Historical attempt4 staging checkpoint, superseded by the retained actual attempt4 failure and pending attempt5."
+    },
+    {
+      "route": "PRIMARY_SCALEWAY_MAC",
+      "owner": "control_authoring",
+      "sourceCommit": "7de3a280bcd4e6202b7246735e5a9204e6a1d186",
+      "sourceRole": "Actual failed attempt4 source",
+      "scope": "miniapp_complete",
+      "attempt": 4,
+      "status": "FAILED_NATIVE_PREPARATION",
+      "startedAtUTC": "2026-11-24T19:30:04.935524+00:00",
+      "selectedCases": 52,
+      "miniAppsCases": 25,
+      "aiCases": 27,
+      "caseStatus": "NOT_RUN",
+      "firstMiniAppsBuild": "NOT_RUN",
+      "aiBuild": "NOT_RUN",
+      "acceptanceRequires": [
+        "Fresh original native and shipping SDK identity preparation",
+        "Both product builds",
+        "All52 selected cases pass without failures/skips",
+        "Actual diagnostic-sheet/repaired-native-app attachments",
+        "Exact original archive/report handoff and nonempty installedPackageID receipt"
+      ],
+      "runtimeCoreArtifactRunID": 42926628418,
+      "reactNativeSelection": "Own Scripts/Expo graph0.88.1 through supported original REACT_NATIVE_PATH binding",
+      "provenanceRefresh": {
+        "path": "docs/miniapp-sdk/evidence/primary-ns-package-source-refresh-20261124/receipt.json",
+        "sha256": "7db27ada713bb4046c065598447f48416b04b95e5bb33dfc275676de202d85d5",
+        "commit": "7de3a280bcd4e6202b7246735e5a9204e6a1d186"
+      },
+      "executionObservation": "Actual retained phase state and12801-byte log from the committed authenticated-transfer receipt; no native query performed by this map update.",
+      "lastExecutedAttempt": {
+        "attempt": 3,
+        "sourceCommit": "312472e91c05a7d32bbef4e936c001d713409370",
+        "status": "FAILED_NATIVE_PREPARATION",
+        "finishedAtUTC": "2026-11-24T18:46:42.284434+00:00",
+        "evidenceID": "primary_native_attempt3"
+      },
+      "boundary": "Original NativeScript strict and corrected original JSI component preparation passed; full native preparation failed before RuntimeCore acquisition. No application, selected-test or physical acceptance is inferred.",
+      "finishedAtUTC": "2026-11-24T19:31:11.745430+00:00",
+      "exitCode": 1,
+      "elapsedSeconds": 66.8095447079977,
+      "evidenceID": "primary_native_attempt4"
     }
   ],
   "main16ShippingSDK": {
@@ -2570,36 +2813,60 @@
   "primaryNativeExecution": {
     "owner": "control_authoring",
     "location": "primary Scaleway M2Pro",
-    "sourceCommit": "7de3a280bcd4e6202b7246735e5a9204e6a1d186",
-    "sourceRole": "Pending attempt4 staging target",
-    "state": "ATTEMPT4_STAGING_NOT_STARTED",
-    "attempt": 4,
+    "sourceCommit": "340018ddc9ea2395ffabedbf179369b5bdb791af",
+    "sourceRole": "Exact staged attempt5 target",
+    "state": "ATTEMPT5_WAITING_FOR_NATIVE_CAPACITY",
+    "attempt": 5,
     "startedAtUTC": null,
+    "controllerPID": null,
     "destination": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete",
     "scope": "Original miniapp_complete52 cases:25MiniApps+27AI, no app/test/selector/budget changes",
     "toolchain": "Primary Xcode27.0 route remains version-eligible; actual resumed preparation/toolchain identity will be recorded by execution owner.",
     "inputs": {
-      "reactNative": "Own Scripts/Expo graph0.88.1 via supported original selector",
+      "reactNative": "Own Scripts/Expo graph0.88.1; corrected original producer verified in attempt4",
       "runtimeCoreArtifactRunID": 42926628418,
+      "runtimeCoreLocalArchiveBytes": 86253335,
+      "runtimeCoreLocalArchiveSHA256": "196a35562a31229b1bcf05afbe49f76470ced90a7fbf0494ecebd5c06d07440f",
       "canonicalFacadePackageSHA256": "c42e3fe3eb38b7289ba3cf49ca0b56bcbd7ac2d27d68955f27e3d5e33e642a7e"
+    },
+    "sourceAdvanceObservation": {
+      "status": "WAITING_FOR_NATIVE_CAPACITY",
+      "observedAtUTC": "2026-11-24T19:42:56.964982+00:00",
+      "authority": "Reported by sole native execution owner control_authoring and forwarded by root; this map update performs no live query.",
+      "controllerState": "READY",
+      "nativeControllerPID": null,
+      "observer": "ACTIVE_REPORTED",
+      "sourceStagedAtUTC": "2026-11-24T19:42:01+00:00",
+      "verifiedSourceHashes": 7,
+      "preparedTrackedPathsPreserved": 184,
+      "receiptStatus": "OWNER_REPORTED_OBSERVATION_NO_NEW_COMMITTED_RECEIPT",
+      "boundary": "Staging/capacity waiting is not native execution; no attempt5 start or application PASS is claimed."
+    },
+    "lastCommittedPreparationEvidence": {
+      "path": "docs/miniapp-sdk/evidence/primary-runtimecore-authenticated-transfer-20261124/receipt.json",
+      "sha256": "8b1498dea9aa9c41b4a6cc7db2d80565604d1c3234260d8b65ac0ebcd92f7486",
+      "verifiedAtCommit": "340018ddc9ea2395ffabedbf179369b5bdb791af"
     },
     "latestSourceRefresh": {
       "path": "docs/miniapp-sdk/evidence/primary-ns-package-source-refresh-20261124/receipt.json",
       "sha256": "7db27ada713bb4046c065598447f48416b04b95e5bb33dfc275676de202d85d5",
       "commit": "7de3a280bcd4e6202b7246735e5a9204e6a1d186"
     },
+    "sourceRefreshBoundary": "The new acquisition wrapper does not change direct SDK inventory/reachability or engine-native identity inputs; normal final Host provenance hook remains mandatory. This map ran no audits.",
     "previousActualAttempt": {
-      "attempt": 3,
-      "sourceCommit": "312472e91c05a7d32bbef4e936c001d713409370",
-      "finishedAtUTC": "2026-11-24T18:46:42.284434+00:00",
+      "attempt": 4,
+      "sourceCommit": "7de3a280bcd4e6202b7246735e5a9204e6a1d186",
+      "finishedAtUTC": "2026-11-24T19:31:11.745430+00:00",
       "status": "EXECUTED_FAIL",
-      "evidenceID": "primary_native_attempt3"
+      "evidenceID": "primary_native_attempt4"
     },
+    "fullRuntimeCorePreparationAfterTransportFix": "NOT_RUN",
+    "currentRuntimeHostSDKAssembly": "NOT_RUN",
     "firstMiniAppsBuild": "NOT_RUN",
     "aiBuild": "NOT_RUN",
     "selected52Cases": "NOT_RUN",
     "nativePass": "NOT_CLAIMED",
-    "boundary": "Root-authorized staging is not native execution. Four provenance commands and focused idempotence proof passed separately; corrected full preparation, JSI/Core and application acceptance remain pending."
+    "boundary": "Attempt5 remains a reported capacity wait with no native PID. Attempt4 corrected original JSI and NativeScript strict checks passed, but RuntimeCore acquisition failed. Subsequent authenticated transfer/archive verification passed separately; common Core/Host/SDK preparation, both current app builds/all52 cases remain NOT_RUN."
   },
   "primaryNativeExecutionHistory": [
     {
@@ -2673,6 +2940,40 @@
       "failureEvidenceID": "primary_native_attempt3",
       "focusedFixEvidenceID": "primary_native_package_idempotence_fix",
       "boundary": "Last actual attempt3/source312472 failed before corrected JSI/Core. Focused original-generator/normalizer proof passed after source correction16c50; full preparation has not resumed in this record. Both app builds/all52cases remain NOT_RUN."
+    },
+    {
+      "owner": "control_authoring",
+      "location": "primary Scaleway M2Pro",
+      "sourceCommit": "7de3a280bcd4e6202b7246735e5a9204e6a1d186",
+      "sourceRole": "Pending attempt4 staging target",
+      "state": "ATTEMPT4_STAGING_NOT_STARTED",
+      "attempt": 4,
+      "startedAtUTC": null,
+      "destination": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete",
+      "scope": "Original miniapp_complete52 cases:25MiniApps+27AI, no app/test/selector/budget changes",
+      "toolchain": "Primary Xcode27.0 route remains version-eligible; actual resumed preparation/toolchain identity will be recorded by execution owner.",
+      "inputs": {
+        "reactNative": "Own Scripts/Expo graph0.88.1 via supported original selector",
+        "runtimeCoreArtifactRunID": 42926628418,
+        "canonicalFacadePackageSHA256": "c42e3fe3eb38b7289ba3cf49ca0b56bcbd7ac2d27d68955f27e3d5e33e642a7e"
+      },
+      "latestSourceRefresh": {
+        "path": "docs/miniapp-sdk/evidence/primary-ns-package-source-refresh-20261124/receipt.json",
+        "sha256": "7db27ada713bb4046c065598447f48416b04b95e5bb33dfc275676de202d85d5",
+        "commit": "7de3a280bcd4e6202b7246735e5a9204e6a1d186"
+      },
+      "previousActualAttempt": {
+        "attempt": 3,
+        "sourceCommit": "312472e91c05a7d32bbef4e936c001d713409370",
+        "finishedAtUTC": "2026-11-24T18:46:42.284434+00:00",
+        "status": "EXECUTED_FAIL",
+        "evidenceID": "primary_native_attempt3"
+      },
+      "firstMiniAppsBuild": "NOT_RUN",
+      "aiBuild": "NOT_RUN",
+      "selected52Cases": "NOT_RUN",
+      "nativePass": "NOT_CLAIMED",
+      "boundary": "Root-authorized staging is not native execution. Four provenance commands and focused idempotence proof passed separately; corrected full preparation, JSI/Core and application acceptance remain pending."
     }
   ],
   "dedicatedMacPhysicalRouteHistory": [
@@ -2770,5 +3071,15 @@
     "priorProofsAndClosuresPreserved": true,
     "countsAreNotAcceptance": "80canonical Host-runtime source cells and83effective modifier source mappings do not imply E2E/device/API-effect passes.",
     "latestTerminalObservation": "Attempt3 failure retained; focused16c50 correction and subsequent root7de3 source refresh passed. Attempt4 pending, no start awaited or inferred."
+  },
+  "attachmentEvidenceRequirement": {
+    "status": "PENDING_ACTUAL_RESULTS_AND_VISUAL_REVIEW",
+    "evidenceID": "acceptance_attachment_export_review",
+    "appliesTo": [
+      "MINIAPP-REPAIR",
+      "SDK-07"
+    ],
+    "criterion": "Inspect the two keepAlways diagnostic/repaired-result screenshots from the actual paired result. A failed non-fatal attachment export must not be mistaken for missing screenshots or successful delivery; re-export the retained xcresult as necessary.",
+    "doesNotCreate": "No extra test selector, new product behavior gate or standalone installation-receipt JSON."
   }
 }
