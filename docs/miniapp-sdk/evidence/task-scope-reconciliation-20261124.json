@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "atUTC": "2026-11-24T11:59:36.975721+00:00",
+  "atUTC": "2026-11-24T12:48:44.799017+00:00",
   "implementationSource": "999599c242c064564c40866a1979c463f1d0e95f",
   "reviewedRepository": "df07b8da7933e66180df8bfa8838a8617b6be00d",
   "independentReviewer": "sdk_only_author",
@@ -111,8 +111,10 @@
     "runID": 45389020875,
     "sourceCommit": "2cb851067c4339125ab6fb515522796bceb80c35",
     "selectedCases": 52,
-    "status": "IN_PROGRESS",
-    "boundary": "All actual application outcomes pending; earlier scoped completions remain independently supported."
+    "status": "COMPLETED_FAILURE",
+    "boundary": "Focused actual publication type fix pending; existing four scoped completions remain independently supported.",
+    "firstMiniAppsBuild": "EXECUTED_FAIL_EXIT65",
+    "all52ApplicationCases": "NOT_RUN"
   },
   "additionalCxxClosureReview": {
     "reviewer": "control_authoring",

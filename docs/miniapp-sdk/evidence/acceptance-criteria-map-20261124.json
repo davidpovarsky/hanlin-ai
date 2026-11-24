@@ -19,11 +19,11 @@
     "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45389020875",
     "sourceCommit": "2cb851067c4339125ab6fb515522796bceb80c35",
     "scope": "miniapp_complete",
-    "status": "IN_PROGRESS",
+    "status": "COMPLETED_FAILURE",
     "selectedCases": 52,
     "miniAppsCases": 25,
     "aiCases": 27,
-    "caseStatus": "NOT_RUN_AT_DISPATCH",
+    "caseStatus": "NOT_RUN",
     "dispatchReceipt": {
       "path": "docs/miniapp-sdk/evidence/thirteenth-native-gate-dispatch-20261124.json",
       "sha256": "5db81c1a069603d28722e719253bdab05cec97c9310cdd87619a6f7cfb2cae9b"
@@ -35,7 +35,18 @@
       "Actual diagnostic-sheet and repaired-native-app attachments",
       "Exact original archive/report handoff and nonempty installedPackageID receipt"
     ],
-    "boundary": "Dispatch and watcher start are not a native PASS. Final raw native results required."
+    "boundary": "Dispatch and watcher start are not a native PASS. Final raw native results required.",
+    "result": "failure",
+    "executedAppCases": 0,
+    "passed": 0,
+    "failed": 0,
+    "skipped": 0,
+    "observedPhase": "Original preparation/export passed; first MiniApps build exited65 after1260.912584583s; AI/all52NOT_RUN",
+    "confirmedCause": "HanlinExpoWidgetPublication.swift26:36 passes dictionary instead of HanlinObject<HanlinValue>",
+    "failureEvidence": {
+      "path": "docs/miniapp-sdk/evidence/native-gate-13-publication-type-20261124/receipt.json",
+      "sha256": "a52bda79b49f50b204c39ed61e97b350300c6561e3debfa943274acb4fab600b"
+    }
   },
   "userScope": {
     "activeOriginalEngines": [
@@ -1041,6 +1052,10 @@
     "paired_cold_build_budget_review": {
       "path": "docs/miniapp-sdk/evidence/paired-cold-build-budget-20261124/independent-review.json",
       "sha256": "37d07e339cd0302f759a44ff7283e448267045dd2ac2d34432a0270b30d2c2f8"
+    },
+    "native_gate_13_publication_type": {
+      "path": "docs/miniapp-sdk/evidence/native-gate-13-publication-type-20261124/receipt.json",
+      "sha256": "a52bda79b49f50b204c39ed61e97b350300c6561e3debfa943274acb4fab600b"
     }
   },
   "criteria": [
@@ -1357,7 +1372,7 @@
     }
   ],
   "recordingOutcome": "Four scoped tasks completed with readback; next current52 native gate ready to dispatch. No main merge, release, app/device PASS or broader80E2E claim.",
-  "updatedAtUTC": "2026-11-24T12:08:32.063052+00:00",
+  "updatedAtUTC": "2026-11-24T12:48:44.799017+00:00",
   "currentIntegrationBase": "df07b8da7933e66180df8bfa8838a8617b6be00d",
   "gateHistory": [
     {
@@ -1553,7 +1568,7 @@
     "skipped": 0,
     "receipt": "docs/miniapp-sdk/evidence/apple-modern-contracts-20261124/receipt.json"
   },
-  "currentScopeNote": "Main13 current52 gate dispatched on exact published2cb85106 with reviewed3600second firstbuild and210minute job budget. Main12 shipping docs identity complete; SDK01/02/05/06 closed. Main12 firstbuildTIMED_OUT and all52NOT_RUN retained. Dedicated Mac27.0 lacks current27.2lane; GitHub fallback qualified. Physical route not established.",
+  "currentScopeNote": "Main13 prepared current original SDK but failed first app build at a single Swift publication value type conversion. Focused fix and independent review in progress. Four scoped tasks remain complete; no app/device success.",
   "modernContractGateHistory": [
     {
       "runID": 45348880385,
@@ -1688,7 +1703,7 @@
   ],
   "candidateGate": {
     "scope": "miniapp_complete",
-    "status": "DISPATCHED",
+    "status": "CORRECTION_IN_PROGRESS_BEFORE_NEXT_DISPATCH",
     "selectedCases": 52,
     "MiniApps": 25,
     "AI": 27,
@@ -1700,16 +1715,17 @@
       "path": "docs/miniapp-sdk/evidence/paired-cold-build-budget-20261124/independent-review.json",
       "sha256": "37d07e339cd0302f759a44ff7283e448267045dd2ac2d34432a0270b30d2c2f8"
     },
-    "actualExecution": "PENDING_ACTUAL_BUILD_AND_CASE_RESULTS",
+    "actualExecution": "Main13firstbuildFAILED; AI/all52NOT_RUN",
     "runnerRouting": {
       "path": "docs/miniapp-sdk/evidence/native-gate-13-runner-routing-20261124/receipt.json",
       "sha256": "48c55dc24ba83bb920132e4265ad571b06a2334c981de2c5d9b80a0ee38c53f9"
     },
-    "runID": 45389020875
+    "runID": 45389020875,
+    "reason": "Actual production value-container type conversion; no selection/deadline change required"
   },
   "taskClosureDecisions": {
     "path": "docs/miniapp-sdk/evidence/task-scope-reconciliation-20261124.json",
-    "sha256": "76119113042ce1065e93abcc9b770c73d25144813bebfd6b2df35c7327baeb8d"
+    "sha256": "d5baa9c448f66fe986d8da9f5fa8bd2d07a4b5486c78c26f8baccf7542af9dc8"
   },
   "physicalDeviceRouteFollowup": {
     "receipt": {
