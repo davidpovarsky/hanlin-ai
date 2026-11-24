@@ -3,7 +3,7 @@
   "task": "HANLIN-COMPOSER-CAPABILITIES",
   "asanaTask": "1220882717750164",
   "sourceBase": "0929e07a6a6adae3a27cab5c514623c7cc0f157c",
-  "sourceSnapshot": "796889fdec657286f37b885478d9f95405d3f995",
+  "sourceSnapshot": "8a67e7aee83c6b12673db1348b7f550a2805de50",
   "finalSource": "recorded per execution receipt after generated-source refresh",
   "runner": {
     "host": "scaleway-mac",
@@ -117,6 +117,7 @@
       "selectors": [
         "HanlinComposerCapabilityQueryTests",
         "HanlinComposerCapabilityDraftTests",
+        "HanlinCapabilityCustomPanelProviderTests",
         "NativeComposerLineSizingTests/equalStringOwnerSwitchKeepsPendingInputAndLateDelegateScoped",
         "NativeComposerLineSizingTests/canonicalEquivalentOwnerAndNativeReplacementsPreserveExactText",
         "NativeComposerLineSizingTests/markedTextOwnerSwitchPreservesCompositionAndAuthoritativeClear",
@@ -178,7 +179,7 @@
     "excludedDuplicateRun": {
       "owner": "/root/native_execution",
       "scope": "original52-case MiniApp suite attempt7",
-      "reason": "Active independent owner; do not duplicate or repair its active failures. Changed shared boundaries are covered by this lane's targeted new/impacted tests."
+      "reason": "Independent owner attempt7 finished FAIL in paired acceptance. Do not duplicate/repair its baseline suite; this lane executes changed shared boundaries and new affected cases."
     }
   },
   "rules": [
@@ -276,5 +277,14 @@
     "Scripts/MiniApps/stage-sdk.mjs",
     "docs/hanlin-composer-capability-ui.md",
     "docs/miniapp-sdk/ASSISTANT_TOOLS_AND_COMPOSER.md"
-  ]
+  ],
+  "integratedBeforeValidation": {
+    "waveRoot": "8a1c9fd657030181aa6eb891b988f03eba3b82a3",
+    "merge": "8a67e7aee83c6b12673db1348b7f550a2805de50",
+    "sdkResolution": "Already present through fd81d602; ba68f7ea2 is identical patch",
+    "headerMaps": "Already present; exact source blob equal to 8fcae2add",
+    "completionDocumentationOnly": "635bc66274436d21236500cda4c2e873b1abe1bd",
+    "activeDraftExcluded": "PR18 remains with original owner"
+  },
+  "updatedAtUTC": "2026-11-24T23:01:52.356000+00:00"
 }
