@@ -1,0 +1,45 @@
+TAP version 13
+# Subtest: NativeScript package emits a runnable ESM graph and retains exact editable sources
+not ok 1 - NativeScript package emits a runnable ESM graph and retains exact editable sources
+  ---
+  duration_ms: 830.669875
+  type: 'test'
+  location: '/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ns-esm-regression-attempt7/repository/AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-authoring.test.mjs:79:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'import "./modules/index.js";\n'
+    - 'import "./modules/index.mjs";\n'
+                               ^
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: |-
+    import "./modules/index.mjs";
+    
+  actual: |-
+    import "./modules/index.js";
+    
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ns-esm-regression-attempt7/repository/AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-authoring.test.mjs:98:10)
+    async Test.run (node:internal/test_runner/test:1088:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:332:3)
+  ...
+# Subtest: NativeScript preserves authored CommonJS JavaScript and its source-map mode
+ok 2 - NativeScript preserves authored CommonJS JavaScript and its source-map mode
+  ---
+  duration_ms: 814.030125
+  type: 'test'
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 1
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1907.632667
