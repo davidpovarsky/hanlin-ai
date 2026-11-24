@@ -1,0 +1,21 @@
+{
+  "base": "bea35c3c2a435d1cc5f7ce93b08a649b104bc10f",
+  "sourceFiles": {
+    "AI_HLY/ChatView.swift": "b4d68a7caae8776b1e109117200b593846f825d60f8d8ae57371dbffb2c8209d",
+    "AI_HLY/Downstream/ChatCore/HanlinNativeA2UIAcceptanceProvider.swift": "7b4b99829c3aa07ea3d1afe6f26713c97ea9be5eb99f1f93a59d4da966421119",
+    "AI_HLY/Downstream/SDK/HanlinApplicationData.swift": "61c03ce7ce4e2b845801ef745802c6107aaa5e3d857d2d3db3c069941c9ae627",
+    "AI_HLYTests/HanlinOpenUIBridgeTests.swift": "cb4993e71aa9e3135401a42f0d4e46bcbe1687b0b9e6bdac5558f0cb5ff70328",
+    "AI_HLYUITests/HanlinNativeA2UIChatUITests.swift": "de13a72409ca5d83db85fba2eb45fd660769c74774bd28e3ef38be1ecb177bc6"
+  },
+  "generatedDiff": [
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinRichUI/Resources/OpenUI/bridge.js",
+      "before": "3872c6b0ce3b03752796d42d8cb1331f1262dcd359472ba137f034b3783c2eb4",
+      "after": "a1e800746e8281f6e487a0dc279e502bda9d2ae35c5a910a19a28375f9b1c9de"
+    }
+  ],
+  "nativeCompile": "NOT_RUN",
+  "originalAppUI": "NOT_RUN",
+  "WKWebViewCases": "NOT_RUN",
+  "sourceDiffCheck": "PASS"
+}
