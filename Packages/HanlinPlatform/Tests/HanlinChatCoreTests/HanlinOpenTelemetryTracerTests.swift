@@ -39,6 +39,7 @@ struct HanlinOpenTelemetryTracerTests {
             "ai.usage.outputTokens": .int(25),
             "ai.usage.cachedInputTokens": .int(100),
             "ai.usage.cacheWriteTokens": .int(30),
+            "ai.usage.noCacheTokens": .int(20),
             "ai.usage.reasoningTokens": .int(5),
             "ai.response.text": .string("PRIVATE_RESPONSE"),
             "ai.toolCall.args": .string("PRIVATE_TOOL_ARGUMENT"),
@@ -61,6 +62,7 @@ struct HanlinOpenTelemetryTracerTests {
         #expect(data.attributes["ai.usage.inputTokens"] == .int(150))
         #expect(data.attributes["ai.usage.cachedInputTokens"] == .int(100))
         #expect(data.attributes["ai.usage.cacheWriteTokens"] == .int(30))
+        #expect(data.attributes["ai.usage.noCacheTokens"] == .int(20))
         #expect(data.attributes["gen_ai.usage.input_tokens"] == .int(150))
         #expect(data.attributes["gen_ai.usage.output_tokens"] == .int(25))
         #expect(data.attributes["gen_ai.usage.cache_read.input_tokens"] == .int(100))

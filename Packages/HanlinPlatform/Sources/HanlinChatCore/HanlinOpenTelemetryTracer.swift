@@ -287,6 +287,7 @@ private enum HanlinTelemetryPrivacy {
         "ai.usage.inputTokens", "ai.usage.outputTokens", "ai.usage.totalTokens",
         "ai.usage.promptTokens", "ai.usage.completionTokens",
         "ai.usage.reasoningTokens", "ai.usage.cachedInputTokens", "ai.usage.cacheWriteTokens",
+        "ai.usage.noCacheTokens",
         "gen_ai.usage.input_tokens", "gen_ai.usage.output_tokens",
         "gen_ai.usage.reasoning.output_tokens", "gen_ai.usage.cache_read.input_tokens",
         "gen_ai.usage.cache_write.input_tokens"
