@@ -84,3 +84,18 @@ interface ScriptWidgetCloudJSONStatus {
 }
 interface ScriptWidgetCloudJSONSync { state: string; materializedRevisions: number; downloadedRevisions: number; uploaded: null; }
 interface ScriptWidgetXMLNode { name: string; attributes: Record<string, string>; text: string; children: ScriptWidgetXMLNode[]; }
+
+interface ScriptWidgetPresentationContext extends ScriptWidgetJSONObject {
+  kind: "snippet" | "translationUI"; sessionID: string; inputText: string;
+  parameters: ScriptWidgetJSON; allowsReplacement: boolean;
+}
+interface ScriptWidgetActionEvent<Parameters = ScriptWidgetJSON> { parameters: Parameters; value?: boolean; }
+interface ScriptWidgetDynamicIslandRegions {
+  expanded?: {leading?: JSX.Element | null; trailing?: JSX.Element | null; center?: JSX.Element | null; bottom?: JSX.Element | null};
+  compactLeading?: JSX.Element | null; compactTrailing?: JSX.Element | null; minimal?: JSX.Element | null;
+}
+
+interface ScriptWidgetWeatherForecast {
+  provider: string; attribution: {text: string; url: string}; latitude: number; longitude: number; fetchedAt: string; isStale: boolean;
+  hours: {time: string; temperatureC: number; windMetersPerSecond: number; precipitationMM: number | null; condition: string | null}[];
+}

@@ -163,7 +163,7 @@ async function packageConsistency(input) {
   return diagnostics;
 }
 
-async function parseProject(ts, input, sdkRoot, sdkEngine) {
+async function parseProject(ts, input, sdkRoot, sdkEngine, fallbackConfig, useProjectConfig = true) {
   const basePath = sdkEngine.tsconfigPath ? child(sdkRoot, sdkEngine.tsconfigPath) : null;
   let base = {options: {}, errors: []};
   if (basePath) {
@@ -175,7 +175,8 @@ async function parseProject(ts, input, sdkRoot, sdkEngine) {
   }
   const toolingRoot = child(sdkRoot, sdkEngine.toolingRoot);
   const configPath = child(input.sourceRoot, input.author.tsconfig ?? 'tsconfig.json');
-  const sourceConfig = ts.readConfigFile(configPath, ts.sys.readFile);
+  const sourceConfig = fallbackConfig && (!useProjectConfig || !ts.sys.fileExists(configPath))
+    ? {config: fallbackConfig} : ts.readConfigFile(configPath, ts.sys.readFile);
   const config = {...sourceConfig.config};
   const resolveExtendedConfig = value => {
     if (typeof value !== 'string' || value.startsWith('.') || path.isAbsolute(value)) return value;
@@ -231,8 +232,81 @@ async function parseProject(ts, input, sdkRoot, sdkEngine) {
     diagnostics: deduplicate(diagnostics.map(item => normalizedDiagnostic(ts, item, input.sourceRoot)))};
 }
 
-async function retainSources(input, stage, parsed) {
-  const compilerFiles = parsed.program.getSourceFiles().map(file => path.resolve(file.fileName));
+
+async function validateNativePresentations(input, sdk, compiler) {
+  const declarations = input.script.nativePresentations;
+  if (!declarations) return {programs: [], diagnostics: []};
+  if (typeof declarations !== 'object' || Array.isArray(declarations))
+    return {programs: [], diagnostics: [finding('MINIAPP_NATIVE_PRESENTATIONS_INVALID',
+      'nativePresentations must map entrypoint IDs to native presentation descriptors.', 'script.json')]};
+  const programs = [];
+  const diagnostics = [];
+  const visited = new Set();
+  for (const [identifier, presentation] of Object.entries(declarations)) {
+    if (!presentation || !engines.has(presentation.engine) || typeof presentation.sourcePath !== 'string') {
+      diagnostics.push(finding('MINIAPP_NATIVE_PRESENTATION_INVALID',
+        'Native presentation ' + identifier + ' must declare an installed engine and sourcePath.', 'script.json'));
+      continue;
+    }
+    // Declarative Expo-layout JSON is validated by the original native layout decoder.
+    if (presentation.sourceFormat === 'expo-layout') continue;
+    const entryFile = child(input.sourceRoot, presentation.sourcePath);
+    const identity = presentation.engine + ':' + entryFile;
+    if (visited.has(identity)) continue;
+    visited.add(identity);
+    const descriptor = sdk.engines[presentation.engine];
+    if (!descriptor) {
+      diagnostics.push(finding('MINIAPP_PRESENTATION_SDK_MISSING',
+        'The installed author SDK lacks the native presentation engine: ' + presentation.engine, presentation.sourcePath,
+        'Stage the original ' + presentation.engine + ' SDK from the same host build, then validate again.'));
+      continue;
+    }
+    if (!await fs.stat(entryFile).then(info => info.isFile(), () => false)) {
+      diagnostics.push(finding('MINIAPP_PRESENTATION_SOURCE_MISSING',
+        'Native presentation source does not exist: ' + presentation.sourcePath, presentation.sourcePath));
+      continue;
+    }
+    let nativeRoot = path.dirname(entryFile);
+    // Use a native subtree config when present, never inherit the outer Expo/React
+    // JSX config into a different native renderer's TypeScript environment.
+    let directory = nativeRoot;
+    while (directory !== input.sourceRoot && inside(input.sourceRoot, directory)) {
+      if (await fs.stat(path.join(directory, 'tsconfig.json')).then(info => info.isFile(), () => false)) {
+        nativeRoot = directory;
+        break;
+      }
+      directory = path.dirname(directory);
+    }
+    const nativeInput = {...input, sourceRoot: nativeRoot, entryFile,
+      entry: slash(path.relative(nativeRoot, entryFile)),
+      author: {engine: presentation.engine, tsconfig: 'tsconfig.json'}};
+    const ts = compiler ?? (await import(pathToFileURL(child(sdk.sdkRoot, descriptor.typescriptPath)).href)).default;
+    const parsed = await parseProject(ts, nativeInput, sdk.sdkRoot, descriptor,
+      {files: [nativeInput.entry], compilerOptions: {strict: true, allowJs: true}},
+      presentation.engine === input.engine || nativeRoot !== input.sourceRoot);
+    programs.push(parsed.program);
+    diagnostics.push(...parsed.diagnostics.map(diagnostic => ({...diagnostic,
+      ...(diagnostic.file ? {file: slash(path.relative(input.sourceRoot,
+        path.resolve(nativeRoot, diagnostic.file)))} : {})})));
+  }
+  return {programs, diagnostics: deduplicate(diagnostics)};
+}
+
+async function copyNativePresentationSources(input, programs, stage) {
+  const copied = new Set();
+  for (const program of programs) for (const source of program.getSourceFiles()) {
+    if (source.isDeclarationFile || !inside(input.sourceRoot, source.fileName) ||
+        source.fileName.includes(path.sep + 'node_modules' + path.sep) || copied.has(source.fileName)) continue;
+    copied.add(source.fileName);
+    const target = child(stage, path.relative(input.sourceRoot, source.fileName));
+    await fs.mkdir(path.dirname(target), {recursive: true});
+    await fs.copyFile(source.fileName, target);
+  }
+  if (programs.length && input.engine === 'nativescript') await copyResources(input, stage);
+}
+
+async function retainSources(input, stage, parsed, nativePrograms = []) {
+  const compilerFiles = [parsed.program, ...nativePrograms].flatMap(program => program.getSourceFiles()).map(file => path.resolve(file.fileName));
   const destination = path.join(stage, 'source');
   const hashes = {};
   async function walk(directory, relative = '', ancestors = new Set()) {
@@ -258,26 +332,32 @@ async function retainSources(input, stage, parsed) {
     }
   }
   await walk(input.sourceRoot);
-  for (const resource of input.author.resources ?? []) {
-    const source = child(input.sourceRoot, resource);
-    const actual = await fs.realpath(source);
-    if (!inside(input.sourceRoot, actual)) throw new Error('Resource leaves the project: ' + resource);
-    const bytes = await fs.readFile(actual);
-    const target = child(destination, resource);
-    await fs.mkdir(path.dirname(target), {recursive: true});
-    await fs.writeFile(target, bytes);
-    hashes[resource] = sha256(bytes);
-  }
+  await copyResources(input, destination, (name, bytes) => { hashes[name] = sha256(bytes); });
   return hashes;
 }
 
-async function copyResources(input, root) {
-  for (const resource of input.author.resources ?? []) {
-    const from = child(input.sourceRoot, resource);
-    const to = child(root, resource);
-    await fs.mkdir(path.dirname(to), {recursive: true});
-    await fs.copyFile(from, to);
-  }
+async function copyResources(input, root, didCopy) {
+  const copy = async (relative, ancestors = new Set()) => {
+    const actual = await fs.realpath(child(input.sourceRoot, relative));
+    if (!inside(input.sourceRoot, actual)) throw new Error('Resource leaves the project: ' + relative);
+    // An explicitly selected containing directory must never recursively copy
+    // this build's own output into itself.
+    if (inside(root, actual)) return;
+    const info = await fs.stat(actual);
+    if (info.isDirectory()) {
+      if (ancestors.has(actual)) throw new Error('Resource contains a circular directory link: ' + relative);
+      const next = new Set([...ancestors, actual]);
+      for (const name of (await fs.readdir(actual)).sort()) await copy(path.posix.join(relative, name), next);
+      return;
+    }
+    if (!info.isFile()) throw new Error('Resource must be a regular file or directory: ' + relative);
+    const bytes = await fs.readFile(actual);
+    const target = child(root, relative);
+    await fs.mkdir(path.dirname(target), {recursive: true});
+    await fs.writeFile(target, bytes);
+    didCopy?.(relative, bytes);
+  };
+  for (const resource of input.author.resources ?? []) await copy(resource);
 }
 
 function relativeImportTransformer(ts, parsed, input) {
@@ -550,7 +630,8 @@ export async function runMiniAppOperation(request, {sdkRoot, compiler} = {}) {
     const parsed = await parseProject(ts, input, sdk.sdkRoot, descriptor);
     report.typecheck = {strict: parsed.options.strict === true, skipLibCheck: parsed.options.skipLibCheck === true,
       dependencyDeclarationsChecked: parsed.options.skipLibCheck !== true};
-    report.diagnostics = [...parsed.diagnostics, ...await packageConsistency(input)];
+    const native = await validateNativePresentations(input, sdk, compiler);
+    report.diagnostics = [...parsed.diagnostics, ...native.diagnostics, ...await packageConsistency(input)];
     if (report.diagnostics.some(item => item.category === 'error')) return report;
     if (request.operation === 'validate') { report.succeeded = true; return report; }
     stage = request.outputDirectory ? path.resolve(request.outputDirectory)
@@ -560,11 +641,12 @@ export async function runMiniAppOperation(request, {sdkRoot, compiler} = {}) {
     await fs.mkdir(path.dirname(stage), {recursive: true});
     await fs.mkdir(stage, {recursive: false});
     ownsStage = true;
-    const sourceHashes = await retainSources(input, stage, parsed);
+    const sourceHashes = await retainSources(input, stage, parsed, native.programs);
     if (input.engine === 'nativescript')
       report.diagnostics.push(...await buildNativeScript(ts, input, parsed, stage, descriptor));
     else if (input.engine === 'expo') await buildExpo(input, parsed, stage, descriptor);
     else await buildScriptWidget(input, parsed, stage);
+    await copyNativePresentationSources(input, native.programs, stage);
     if (report.diagnostics.some(item => item.category === 'error')) return report;
     await writeJSON(path.join(stage, 'hanlin.authoring.json'), {
       schemaVersion: 1, engine: input.engine, entry: input.entry,

@@ -128,6 +128,32 @@ export async function generateScriptWidgetServiceTypes({root = repositoryRoot, o
   }
   for (const name of Object.keys(argumentTypes)) if (!usedArguments.has(name)) throw new Error('Native argument refinement no longer matches an installed API: ' + name);
   for (const name of Object.keys(resultTypes)) if (!usedResults.has(name)) throw new Error('Native result refinement no longer matches an installed API: ' + name);
+
+  const hostGlobalsInstalled = [];
+  const assertBlock = (name, signature) => {
+    const escaped = name.replaceAll('$', '\\$');
+    const binding = host.match(new RegExp('context\\.setObject\\((\\w+),\\s*forKeyedSubscript:\\s*"' + escaped + '"'));
+    if (!binding) return false;
+    if (!host.replace(/\s/g, '').includes('let' + binding[1] + ':@convention(block)' + signature))
+      throw new Error('Native host signature changed: ' + name);
+    hostGlobalsInstalled.push(name);
+    return true;
+  };
+  if (assertBlock('$component', '(String,JSValue)->Void')) outputLines.push(
+    '/** Original registration diagnostic; function JSX components resolve their own builder. */',
+    'declare function $component<P>(name: string, builder: (props: P) => JSX.Element): void;', '');
+  if (assertBlock('$dynamic_island', '(NSDictionary)->Void')) outputLines.push(
+    '/** Captures the actual original native element for each supplied Dynamic Island region. */',
+    'declare function $dynamic_island(regions: ScriptWidgetDynamicIslandRegions): void;', '');
+  if (host.includes('globalThis.$presentation = {')) {
+    if (!host.includes('expandSheet: __hanlinPresentationExpand') || !host.includes('finish: text => __hanlinPresentationFinish'))
+      throw new Error('Native presentation command binding changed.');
+    hostGlobalsInstalled.push('$presentation');
+    outputLines.push('declare const $presentation: {expandSheet(): void; finish(replacementText?: string | null): void};', '');
+  }
+  if (host.includes('actionParameters: HanlinValue') && host.includes('"parameters": actionParameters.toAny()'))
+    outputLines.push('declare namespace JSX { interface GlobalProperties { actionParameters?: ScriptWidgetJSON; } }', '');
+
   const hostGlobals = await read('Scripts/MiniApps/scriptwidget/host-globals.d.ts');
   for (const name of ['$import', '$render', '$error', '$getenv', '$widget'])
     if (!host.includes('forKeyedSubscript: "' + name + '"')) throw new Error('Declared Hanlin global is not installed: ' + name);
@@ -136,13 +162,13 @@ export async function generateScriptWidgetServiceTypes({root = repositoryRoot, o
   for (const name of ['$gradient', '$animation', '$json', '$type_of_object'])
     if (!util.includes('function ' + name + '(')) throw new Error('Declared original utility does not exist: ' + name);
   if (!util.includes('const $xml = Object.freeze(')) throw new Error('Original XML utility was not found.');
-  const globals = [...new Set([...inventory.map(item => item.global),
+  const globals = [...new Set([...hostGlobalsInstalled, ...inventory.map(item => item.global),
     ...[...hostGlobals.matchAll(/declare\s+(?:function|const|class)\s+([$\w]+)/g)].map(match => match[1])])].sort();
   const manifest = {schemaVersion: 1, globals, nativeObjectCount: inventory.length,
     nativeMethodCount: inventory.reduce((sum, item) => sum + item.methods.length, 0), bindings: inventory,
     sources: [...sources.values()].sort((a, b) => a.path.localeCompare(b.path)),
     originalCatalog: provenance, nativeAwaitable: 'then(resolve,reject) returns void; await works; no native catch/finally/chaining',
-    unavailableOriginalRendererGlobals: ['$component', '$dynamic_island'],
+    unavailableOriginalRendererGlobals: ['$component', '$dynamic_island'].filter(name => !hostGlobalsInstalled.includes(name)),
     note: 'Only actual installed native objects and evaluated utility/host additions are declared. Catalogs describe result shapes, not mock execution.'};
   await mkdir(output, {recursive: true});
   for (const [name, content] of [['original-api.d.ts', outputLines.join('\n')],

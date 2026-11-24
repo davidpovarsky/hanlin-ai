@@ -4,11 +4,13 @@
     "$alarms",
     "$animation",
     "$calendar",
+    "$component",
     "$console",
     "$contacts",
     "$dataSource",
     "$device",
     "$documents",
+    "$dynamic_island",
     "$element",
     "$error",
     "$fetch",
@@ -26,6 +28,7 @@
     "$music",
     "$notifications",
     "$photos",
+    "$presentation",
     "$reminders",
     "$render",
     "$runtime",
@@ -1630,10 +1633,10 @@
               "type": "ScriptWidgetWeatherOptions"
             }
           ],
-          "returnType": "ScriptWidgetNativePromise<{\"provider\": string; \"attribution\": {\"text\": string; \"url\": string}; \"latitude\": number; \"longitude\": number; \"fetchedAt\": string; \"isStale\": boolean; \"hours\": ({\"time\": string; \"temperatureC\": number; \"windMetersPerSecond\": number; \"precipitationMM\": number; \"condition\": string})[]}>",
+          "returnType": "ScriptWidgetNativePromise<ScriptWidgetWeatherForecast>",
           "nativeSignature": "static func forecast(_ options: [String: Any]?) -> ScriptWidgetRuntimePromise",
           "asynchronous": true,
-          "resultAuthority": "original editor catalog, primitive values widened"
+          "resultAuthority": "native semantic refinement"
         }
       ]
     },
@@ -1678,7 +1681,7 @@
   "sources": [
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/HanlinScriptWidgetRuntime.swift",
-      "sha256": "ad3e0c03cd4fe577b5458c953f30e398529007c9cd4325ccdeb905b3103c6e6c"
+      "sha256": "fd95fbae7ecd7f917c6ef0be9d002d84010d8f25210759ac214d29538da15a15"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptWidgetCloudJSON.swift",
@@ -1838,7 +1841,7 @@
     },
     {
       "path": "Scripts/MiniApps/scriptwidget/host-globals.d.ts",
-      "sha256": "1a96d08a3bc1ceb4ec0bd3a73f9849338127eeb405f4863256d7fa50b21d00e3"
+      "sha256": "30062f23e7e441a9e1aeeb19861c06ce7168bf2e6251aca8c6011b16b93d5ace"
     }
   ],
   "originalCatalog": {
@@ -1889,9 +1892,6 @@
     ]
   },
   "nativeAwaitable": "then(resolve,reject) returns void; await works; no native catch/finally/chaining",
-  "unavailableOriginalRendererGlobals": [
-    "$component",
-    "$dynamic_island"
-  ],
+  "unavailableOriginalRendererGlobals": [],
   "note": "Only actual installed native objects and evaluated utility/host additions are declared. Catalogs describe result shapes, not mock execution."
 }

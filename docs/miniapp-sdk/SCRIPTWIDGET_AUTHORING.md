@@ -6,7 +6,7 @@ ScriptWidget is an active widget engine. Legacy Scripting/ScriptUI remains froze
 
 The author SDK retains the original ScriptWidget editor catalogs, Apache-2.0 license, notice, source revision and file digests. The component generator produces 29 native JSX tag declarations from that catalog. The service generator reads the **actual Swift JSExport protocols and installBaseAPIs bindings** included in the host, checks the original catalog's argument count and synchronous/asynchronous contract, and emits the matching callable declarations.
 
-The current source baseline has 24 installed native objects and 118 exported methods, including the two console aliases. Evaluated support utilities and Hanlin additions complete the authoring globals. The generated `scriptwidget/native-api.json` contains the exact names, method signatures, source paths and SHA-256 values for the host that was built. Counts are inventory facts, not feature limits.
+The current source baseline has 24 installed native objects and 118 exported methods, including the two console aliases. Evaluated support utilities and Hanlin additions complete 41 declared globals, including the current native presentation bindings. The generated `scriptwidget/native-api.json` contains the exact names, method signatures, source paths and SHA-256 values for the host that was built. Counts are inventory facts, not feature limits.
 
 | SDK resource | Purpose |
 | --- | --- |
@@ -60,9 +60,29 @@ Examples rejected by the real compiler include:
 - `$home.setPower({id: "lamp", on: "yes"})`: on must be Boolean.
 - `$health.dailyStatistics({metric: "cpu"})`: the original Health metrics are a finite native set.
 - `$http.get(url).catch(...)`: catch is not a native exported method.
-- Assigning a nullable music title or native Health reading directly to a non-null value is an error.
+- Assigning a nullable music title, native Health reading, or weather precipitation/condition field directly to a non-null value is an error.
 
 Original catalogs contain example payloads. The generator widens sample primitive values and uses verified native refinements for dynamic JSON, missing values, nullable fields, empty collections and strict option schemas. It never infers that a sample username, coordinate or document key is the only permitted value. A newly added native promise method without a reviewed result shape stops declaration generation with an actionable method name.
+
+## Native presentations and region programs
+
+The installed Hanlin runtime supplies `$presentation.expandSheet()` and `$presentation.finish(replacementText?)` for its native translation presentation. The native controller determines whether replacement is available. `$getenv("presentation")` returns the exact presentation context when one exists and the original empty-string fallback otherwise; `$widget.presentation` is optional. The context includes `kind`, `sessionID`, `inputText`, JSON `parameters`, and `allowsReplacement`.
+
+```tsx
+const context = $getenv("presentation");
+if (context) {
+  $render(<button onClick="select" actionParameters={{text: context.inputText}}>
+    <text>{context.inputText}</text>
+  </button>);
+}
+export function select(event: ScriptWidgetActionEvent<{text: string}>) {
+  $presentation.finish(event.parameters.text);
+}
+```
+
+`actionParameters` is JSON and the native handler receives `parameters` plus an optional Boolean `value`. The original native element tree is used for seven `$dynamic_island` regions: expanded leading/trailing/center/bottom, compact leading/trailing, and minimal. The function captures the original program's region trees; it does not independently start an ActivityKit activity. The Expo/NativeScript `hostServices.liveActivities` API selects the installed ScriptWidget entrypoint for that purpose.
+
+`$component(name, builder)` is the installed diagnostic registration hook. Function components are already resolved by the JSX compiler; this hook does not create another component registry. These declarations are emitted only when the generator finds the corresponding actual host bindings. There is no `$miniapp` global.
 
 ## Build and repair
 
@@ -83,4 +103,4 @@ HANLIN_AUTHORING_TYPESCRIPT=/absolute/path/to/original/typescript/lib/typescript
 
 SDK staging invokes service generation against the actual host source before recording the output digest inventory. Source updates and generated declarations therefore share one build identity. The catalog generator remains separate and preserves the original component catalog.
 
-The focused original TypeScript tests verify every generated native method reference, valid native option/result use and JSX, eleven independently expected consumer errors, and refusal to fabricate a result schema for a newly introduced native method. Portable compiler evidence is separate from the combined Apple runtime/UI acceptance.
+The focused original TypeScript tests verify every generated native method reference, valid native option/result use and JSX, sixteen independently expected consumer errors across native services and presentation bindings, and refusal to fabricate a result schema for a newly introduced native method. Portable compiler evidence is separate from the combined Apple runtime/UI acceptance.

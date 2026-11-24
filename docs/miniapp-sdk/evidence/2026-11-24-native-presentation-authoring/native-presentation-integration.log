@@ -1,0 +1,12 @@
+✔ Expo React types and original ScriptWidget JSX validate in isolated actual SDK environments (3638.080933ms)
+✔ a native entry beside the primary project config keeps its own renderer environment (2577.88742ms)
+✔ an invalid native JSX property blocks packaging and reports the original native source location (1923.805248ms)
+✔ actual compiler-discovered native presentation modules survive prepared output and source retention (14918.401658ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 23532.018557

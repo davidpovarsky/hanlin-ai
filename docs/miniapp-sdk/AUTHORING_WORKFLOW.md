@@ -40,9 +40,17 @@ Module resolution is performed by the original TypeScript resolver, including pa
 
 The report records the effective `typecheck.strict`, `skipLibCheck`, and `dependencyDeclarationsChecked` values. Expo's checked template uses strict source checking and checks declaration bodies. NativeScript uses its original consumer configuration: strict source checking, original Core/platform globals, and `skipLibCheck: true`. This still typechecks project code against the original NativeScript and UIKit declarations. It does not certify that the upstream declaration packages are internally free of errors. An explicit project `skipLibCheck: false` remains honored and reports those library diagnostics.
 
-ScriptWidget's environment includes the original component catalog and declarations tied to the actually embedded component implementations, plus separately identified Hanlin host globals. It is not an assertion that every service from the standalone upstream ScriptWidget application is embedded.
+ScriptWidget's environment includes the original component catalog and declarations generated from actual installed Swift JSExport protocols and service bindings, plus separately identified Hanlin host globals. The generated native inventory records the exact callable methods and source identities for that host.
 
 Type errors carry the original TypeScript code and source location. No successful archived validation receipt substitutes for a fresh import check.
+
+## Packages with native presentations
+
+An Expo application and a ScriptWidget system presentation use separate JSX environments. Declare the native source in `script.json` under `nativePresentations`, include its resources in the authoring descriptor, and give the native subtree its own portable `tsconfig.json` when it needs additional compiler options. The validator loads the actual declared engine SDK independently, including its original global declarations. A native source file placed beside the application entry also receives its own renderer environment; the outer React config is not inherited by a different engine.
+
+Each native source and the modules imported by it are checked before packaging. Errors retain the original project-relative path, such as `native/search.tsx`, with the real TypeScript code and location. The application config should select application source files and exclude the native subtree, so the same JSX file is not mistakenly compiled as a React view. The canonical modular search project demonstrates both configurations. Its original copied JavaScript adapters use `allowJs: true` with `checkJs: false`; the native TSX entry and its typed consumers are strict.
+
+The builder copies the actual native compiler source closure to the prepared package, preserving manifest source paths, and retains it again in editable `source/`. Authoring `resources` accepts files and directory trees, including binary assets. Resources are copied recursively with exact bytes, and their retained-source and prepared-output digests are recorded.
 
 ## What each builder produces
 

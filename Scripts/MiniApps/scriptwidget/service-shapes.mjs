@@ -36,6 +36,7 @@ export const argumentTypes = {
   '$element.createElement': ['string | ((props: Record<string, unknown>) => JSX.Element)', 'Record<string, unknown> | null', 'JSX.Child[] | null'],
 };
 export const resultTypes = {
+  '$weather.forecast': 'ScriptWidgetWeatherForecast',
   '$http.get': 'string', '$http.post': 'string', '$http.put': 'string',
   '$http.patch': 'string', '$http.delete': 'string', '$http.getResponse': 'ScriptWidgetHTTPResponse',
   '$storage.getJSON': 'ScriptWidgetJSONObject', '$file.readJSON': 'ScriptWidgetJSONObject',

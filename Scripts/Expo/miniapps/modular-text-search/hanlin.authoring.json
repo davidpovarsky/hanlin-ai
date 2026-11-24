@@ -2,5 +2,8 @@
   "schemaVersion": 1,
   "engine": "expo",
   "entry": "index.ts",
-  "tsconfig": "tsconfig.json"
+  "tsconfig": "tsconfig.json",
+  "resources": [
+    "native"
+  ]
 }

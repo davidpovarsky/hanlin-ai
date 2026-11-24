@@ -309,7 +309,7 @@ declare const $system: {
 /** Original native implementation: Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeWeather.swift */
 declare const $weather: {
   /** Original catalog: $weather.forecast; runtime 1.6. */
-  forecast(options: ScriptWidgetWeatherOptions): ScriptWidgetNativePromise<{"provider": string; "attribution": {"text": string; "url": string}; "latitude": number; "longitude": number; "fetchedAt": string; "isStale": boolean; "hours": ({"time": string; "temperatureC": number; "windMetersPerSecond": number; "precipitationMM": number; "condition": string})[]}>;
+  forecast(options: ScriptWidgetWeatherOptions): ScriptWidgetNativePromise<ScriptWidgetWeatherForecast>;
 };
 
 /** Original native implementation: Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeConsole.swift */
@@ -317,3 +317,13 @@ declare const console: {
   log(string: string): void;
   error(string: string): void;
 };
+
+/** Original registration diagnostic; function JSX components resolve their own builder. */
+declare function $component<P>(name: string, builder: (props: P) => JSX.Element): void;
+
+/** Captures the actual original native element for each supplied Dynamic Island region. */
+declare function $dynamic_island(regions: ScriptWidgetDynamicIslandRegions): void;
+
+declare const $presentation: {expandSheet(): void; finish(replacementText?: string | null): void};
+
+declare namespace JSX { interface GlobalProperties { actionParameters?: ScriptWidgetJSON; } }

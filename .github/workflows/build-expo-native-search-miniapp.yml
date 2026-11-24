@@ -33,7 +33,7 @@ jobs:
       - name: Prepare original types and author SDK
         run: |
           node Scripts/Expo/prepare-types.mjs
-          node Scripts/MiniApps/stage-sdk.mjs --output=build/MiniAppSDK-Expo --engines=expo
+          node Scripts/MiniApps/stage-sdk.mjs --output=build/MiniAppSDK-Expo --engines=expo,scriptwidget
 
       - name: Native UI regression checks
         run: node Scripts/Expo/miniapps/modular-text-search/tests/ui-regression.test.cjs
