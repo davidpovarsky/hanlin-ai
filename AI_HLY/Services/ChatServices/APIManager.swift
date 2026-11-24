@@ -2825,6 +2825,7 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
                     )
 
                     if modelInfo.agentCapabilities.supportsNativeToolCalling
+                        || HanlinAISDKProviderFactory.descriptor(for: chatConfig).kind == .openAIResponses
                         || self.agentSessionOwner.canRequestNativeStructured(chatConfig) {
                         await self.agentDiagnosticsRecorder?.setAgentEngineKind("swift_ai_sdk")
                         try await self.processSDKAgentEngine(
