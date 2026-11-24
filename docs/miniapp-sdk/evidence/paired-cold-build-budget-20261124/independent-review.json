@@ -1,0 +1,15 @@
+{
+  "reviewer": "entrypoints",
+  "sourceCommit": "713e6966a0d1b440680667a5bfe5b4b963ec44ca",
+  "integratedCommit": "e143f88222c6dacad8c960b38cda9780e9e16c2b",
+  "result": "No concrete blocker in full non-evidence diff. First MiniApps build 2400→3600s, paired job150→210min, one existing expectation; all52 selectors/native commands/order/other deadlines/reporting/cache/preflight unchanged.",
+  "newTests": 0,
+  "newBuilds": 0,
+  "newCI": 0,
+  "recordedAtUTC": "2026-11-24T11:57:04.728860+00:00",
+  "sourceHashes": {
+    "Scripts/ProductSplit/run_paired_acceptance.py": "b27ca38423d3d0eb179f2b8bb7f25568d8ee9a7a70a36da7dd9e57e243ca004c",
+    ".github/workflows/validate-app-split.yml": "677ba19c3a2e281e850b182b3bef8bcde709ee167f58d601c1c3aa6ade665982",
+    "Scripts/ProductSplit/test_run_paired_acceptance.py": "6682d0983f3d031939bba98225b57056ced9a64a1f661f8fd636926bc352152f"
+  }
+}

@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "atUTC": "2026-11-24T10:44:55.329622+00:00",
+  "atUTC": "2026-11-24T11:57:04.728860+00:00",
   "implementationSource": "999599c242c064564c40866a1979c463f1d0e95f",
-  "reviewedRepository": "6af858400134f6a0dd350cf31ca89f15a7cc5a39",
+  "reviewedRepository": "df07b8da7933e66180df8bfa8838a8617b6be00d",
   "independentReviewer": "sdk_only_author",
   "reviewScope": "Original13 task criteria, current source hashes, retained receipts and selected52 source; no tests/builds/CI/source mutation performed by reviewer",
   "auditReceipt": {
@@ -37,6 +37,18 @@
       "evidence": "docs/miniapp-sdk/evidence/acceptance-criteria-map-20261124.json (SDK-06); docs/miniapp-sdk/evidence/tenth-host-authoring-20261124/receipt.json; docs/miniapp-sdk/evidence/generated-views-probe-20261124/receipt.json",
       "completed": true,
       "completed_at": "2026-11-24T10:43:11.664Z"
+    },
+    {
+      "id": "1220373832827017",
+      "completed": true,
+      "completed_at": "2026-11-24T11:56:19.175Z",
+      "key": "SDK-05",
+      "label": "תיעוד, דוגמאות ומבחן מחבר SDK בלבד",
+      "why": "Actual main12 shipping docs/snippets/types/example source identity PASS; prior actual two HelloWorld and two independent complex package builds remain attributed to their original SDK. No native-app PASS inferred.",
+      "evidence": {
+        "path": "docs/miniapp-sdk/evidence/sdk05-current-shipping-20261124/receipt.json",
+        "sha256": "f8c940f0ae15dd3ec5a8778a5028c937da4e6ef3f7c3b37ed8a095eb9b623ecf"
+      }
     }
   ],
   "remainingTasks": [
@@ -51,12 +63,6 @@
       "id": "1220373832827086",
       "status": "SELECTED_NATIVE_ACCEPTANCE_AND_BOUNDED_COVERAGE_PENDING",
       "condition": "Execute the selected native Expo/manual/generated/metadata/action/publication/return cases; keep per-group type/forwarding/actual-effect evidence separate. DefaultDocumentGroupLaunchActions requires a genuine document host and is documented as contextual; no optional scene expansion is added."
-    },
-    {
-      "key": "SDK-05",
-      "id": "1220373832827017",
-      "status": "CURRENT_SHIPPING_IDENTITY_PENDING",
-      "condition": "Fresh full SDK must retain exact current docs/examples and pass actual snippet check. Existing independent SDK-only authoring proof need not be repeated."
     },
     {
       "key": "SDK-07",
@@ -105,8 +111,10 @@
     "runID": 45375410965,
     "sourceCommit": "999599c242c064564c40866a1979c463f1d0e95f",
     "selectedCases": 52,
-    "status": "IN_PROGRESS",
-    "boundary": "No new native outcome follows from this task-scope review"
+    "status": "COMPLETED_FAILURE",
+    "boundary": "Fresh shipping preparation passed; first build hit2400s; Apple compilation of corrected consumers remains unproven. Next candidate changes only two execution budgets.",
+    "firstMiniAppsBuild": "TIMED_OUT",
+    "all52ApplicationCases": "NOT_RUN"
   },
   "additionalCxxClosureReview": {
     "reviewer": "control_authoring",
@@ -127,7 +135,7 @@
     ],
     "boundary": "Existing non-widget consumers do not duplicate every unsafeFlag. No universal flag equality or actual Apple compilation inferred; no new tests/builds/edits."
   },
-  "result": "3 scoped original DoDs completed and read back in Asana; current full integration and device acceptance remain open",
+  "result": "4 scoped original DoDs completed and read back in Asana; full native integration/device acceptance remains open",
   "sdk04Clarification": {
     "reviewer": "sdk_only_author",
     "atUTC": "2026-11-24T10:48:31.748551+00:00",

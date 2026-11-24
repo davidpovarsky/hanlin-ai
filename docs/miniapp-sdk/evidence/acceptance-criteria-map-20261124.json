@@ -1049,6 +1049,18 @@
       "nativeExecution": "NOT_RUN",
       "sourceCommit": "b07527ea9a9493a9dbc8d2c6fe2c699db86fc7a2",
       "selectionCommit": "658fb7903a5e560f17a017e2cffad4b77d373822"
+    },
+    "sdk05_current_shipping": {
+      "path": "docs/miniapp-sdk/evidence/sdk05-current-shipping-20261124/receipt.json",
+      "sha256": "f8c940f0ae15dd3ec5a8778a5028c937da4e6ef3f7c3b37ed8a095eb9b623ecf"
+    },
+    "paired_cold_build_budget": {
+      "path": "docs/miniapp-sdk/evidence/paired-cold-build-budget-20261124/receipt.json",
+      "sha256": "93e32d391ccccb3dddeefa1da61306091e2d5cbf1cf2b3ba38e023bfacb98b36"
+    },
+    "paired_cold_build_budget_review": {
+      "path": "docs/miniapp-sdk/evidence/paired-cold-build-budget-20261124/independent-review.json",
+      "sha256": "37d07e339cd0302f759a44ff7283e448267045dd2ac2d34432a0270b30d2c2f8"
     }
   },
   "criteria": [
@@ -1283,7 +1295,7 @@
       "taskID": "1220373832827017",
       "url": "https://app.asana.com/0/0/1220373832827017",
       "exactCriterion": "DoD: מבחן 'סוכן חדש מקבל רק התיעוד וה-SDK' מסוגל לבנות שתי חבילות אמיתיות ללא ניחוש/עיון בקוד פנימי; כל snippet נבדק אוטומטית.",
-      "status": "SDK_ONLY_PORTABLE_AND_COMPLETE_SOURCE_EXAMPLES_PASS_CURRENT_FULL_SHIPPING_DOC_MATCH_PENDING",
+      "status": "COMPLETED_SCOPED_DOCS_EXAMPLES_SDK_ONLY_AUTHORING",
       "planBoundary": "Four indexed complete source projects exported; two new public CLI HelloWorld builds passed; independent two complex builds retained. Next corrected app run must stage full current original SDK and prove source/docs/example byte identity.",
       "notEquivalent": "A scripted HTTP repair response demonstrates the original product pipeline, not independent fresh-agent authoring of both engines.",
       "publicReferences": [
@@ -1301,7 +1313,18 @@
         "path": "docs/miniapp-sdk/evidence/sdk-documentation-staging-20261124/receipt.json",
         "sha256": "749179da2753a6135e99312efa23913fd6758f432cc1659592e1b23bc34b79a3"
       },
-      "completeExamplesEvidence": "complete_source_examples"
+      "completeExamplesEvidence": "complete_source_examples",
+      "previousStatus": "SDK_ONLY_PORTABLE_AND_COMPLETE_SOURCE_EXAMPLES_PASS_CURRENT_FULL_SHIPPING_DOC_MATCH_PENDING",
+      "currentShippingEvidence": {
+        "path": "docs/miniapp-sdk/evidence/sdk05-current-shipping-20261124/receipt.json",
+        "sha256": "f8c940f0ae15dd3ec5a8778a5028c937da4e6ef3f7c3b37ed8a095eb9b623ecf"
+      },
+      "asanaReadback": {
+        "id": "1220373832827017",
+        "completed": true,
+        "completed_at": "2026-11-24T11:56:19.175Z"
+      },
+      "boundary": "Actual shipping docs/snippets/identity and prior independently authored package proofs satisfy this task; current native app/device acceptance remains separate."
     },
     {
       "task": "SDK-08",
@@ -1353,9 +1376,9 @@
       }
     }
   ],
-  "recordingOutcome": "Task-scoped evidence reconciliation:SDK01/02/06 completed in Asana with readback. No new native application/device result, main merge, release or TestFlight publication is asserted.",
-  "updatedAtUTC": "2026-11-24T11:47:14.820860+00:00",
-  "currentIntegrationBase": "999599c242c064564c40866a1979c463f1d0e95f",
+  "recordingOutcome": "Four scoped tasks completed with readback; next current52 native gate ready to dispatch. No main merge, release, app/device PASS or broader80E2E claim.",
+  "updatedAtUTC": "2026-11-24T11:57:04.728860+00:00",
+  "currentIntegrationBase": "df07b8da7933e66180df8bfa8838a8617b6be00d",
   "gateHistory": [
     {
       "runID": 45335292541,
@@ -1507,7 +1530,7 @@
     "skipped": 0,
     "receipt": "docs/miniapp-sdk/evidence/apple-modern-contracts-20261124/receipt.json"
   },
-  "currentScopeNote": "Main12/source999599c2 preparedcurrentoriginalnativeSDK but firstappbuildhit2400seconddeadline; AI/all52NOT_RUN. Narrowbuildbudgetcorrection andactual27.2runnerfallbackqualification underway. Three scoped source/contract/validator taskscompleted independently.",
+  "currentScopeNote": "Main12 prepared current original SDK and passed actual documentation checks; first app build timed out and all52 app cases NOT_RUN. Budget-only correction integrated and independently reviewed; SDK01/02/05/06 complete. Dedicated Mac27.0 inspected; required27.2 gate uses justified GitHub fallback. No physical-device execution route established.",
   "modernContractGateHistory": [
     {
       "runID": 45348880385,
@@ -1642,27 +1665,27 @@
   ],
   "candidateGate": {
     "scope": "miniapp_complete",
-    "status": "NEXT_GATE_REQUIRES_SCOPED_BUILD_BUDGET_CORRECTION",
+    "status": "READY_FOR_PUBLISH_AND_DISPATCH",
     "selectedCases": 52,
     "MiniApps": 25,
     "AI": 27,
-    "selection": {
-      "path": "docs/miniapp-sdk/evidence/sdk04-focused-scope-20261124/complete-selection.json",
-      "sha256": "1a142468795f59db1d4e7fd410a2dbf6b73d3d5c1d1eb3cfe335c768c3498542"
-    },
-    "reason": "Previous main11 first MiniApps build failed before all42 app cases; one combined current gate includes previous42 plus new11 minus1overlap.",
-    "actualExecution": "MAIN12_FIRST_BUILD_TIMED_OUT; ALL52_APP_CASES_NOT_RUN",
-    "runID": 45375410965,
-    "sourceCommit": "999599c242c064564c40866a1979c463f1d0e95f",
+    "sourceCommit": "df07b8da7933e66180df8bfa8838a8617b6be00d",
+    "firstMiniAppsBuildSeconds": 3600,
+    "pairedJobMinutes": 210,
+    "selection": "Unchanged exact52 from prior complete selection review",
     "independentReview": {
-      "path": "docs/miniapp-sdk/evidence/sdk04-focused-scope-20261124/independent-complete-selection-review.json",
-      "bytes": 5865,
-      "sha256": "4966ac259bf116681d61aed800d574a918d3b0c01758373bba441ef7f6cc610b"
+      "path": "docs/miniapp-sdk/evidence/paired-cold-build-budget-20261124/independent-review.json",
+      "sha256": "37d07e339cd0302f759a44ff7283e448267045dd2ac2d34432a0270b30d2c2f8"
+    },
+    "actualExecution": "NOT_RUN",
+    "runnerRouting": {
+      "path": "docs/miniapp-sdk/evidence/native-gate-13-runner-routing-20261124/receipt.json",
+      "sha256": "48c55dc24ba83bb920132e4265ad571b06a2334c981de2c5d9b80a0ee38c53f9"
     }
   },
   "taskClosureDecisions": {
     "path": "docs/miniapp-sdk/evidence/task-scope-reconciliation-20261124.json",
-    "sha256": "7b279ee8af9f7ed5d9ab5de03a8301628676ca6be2e473f6d78fc3e5d1ba3335"
+    "sha256": "2eb20b08a12b173afa155dc78a70e2d77d7f0f18d89a86aa8234988e8a3185cd"
   },
   "physicalDeviceRouteFollowup": {
     "receipt": {
