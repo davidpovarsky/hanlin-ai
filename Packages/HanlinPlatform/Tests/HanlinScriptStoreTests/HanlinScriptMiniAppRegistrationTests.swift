@@ -2,6 +2,7 @@
 // HanlinScriptStoreTests
 
 import Foundation
+import HanlinMiniAppCore
 import HanlinPlatformContracts
 import HanlinScriptContracts
 import HanlinScriptStore
@@ -688,6 +689,110 @@ struct HanlinScriptMiniAppRegistrationTests {
             #expect(expression.firstMatch(in: name, range: range) == nil)
         }
         #expect(actionIdentity["maxLength"] as? Int == 255)
+    }
+
+    @Test("Several dedicated assistant tools preserve their sources, configuration and installed identities")
+    func preparedAssistantEntrypointsRemainDistinctInCatalog() async throws {
+        for runtime in [HanlinRuntimeProfile.hanlinExpo, .hanlinNativeScript] {
+            let snapshot = try preparedAssistantSnapshot(runtime: runtime)
+            let descriptor = try snapshot.appDescriptor()
+            let tools = descriptor.entryPoints.filter { $0.kind == .assistantTool }
+            #expect(tools.count == 2)
+            #expect(snapshot.entrypoints.map(\.id) == ["app", "catalog", "places"])
+            #expect(tools.map(\.handler) == snapshot.entrypoints.dropFirst().map(\.sourcePath))
+            #expect(tools.map(\.assistantTool) == snapshot.entrypoints.dropFirst().map(\.assistantTool))
+            #expect(tools.compactMap { $0.assistantTool?.configuration?.defaultValues } == [
+                .object(["scope": .string("catalog")]), .object(["scope": .string("places")])
+            ])
+            // Reusing an action name in independent tools is not a collision.
+            #expect(tools.compactMap { $0.assistantTool?.actions.first?.id } == ["search", "search"])
+            let restored = try HanlinAppDescriptor.decodeAndValidate(descriptor.canonicalJSONData())
+            #expect(restored.entryPoints == descriptor.entryPoints)
+            let catalog = HanlinCanonicalMiniAppCatalog(
+                discovery: HanlinScriptPackageDiscovery(snapshots: [snapshot]))
+            let items = try await catalog.items()
+            let item = try #require(items.first)
+            #expect(items.count == 1)
+            #expect(item.id == snapshot.appID)
+            #expect(item.descriptor.entryPoints == descriptor.entryPoints)
+            #expect(try HanlinMiniAppLaunchPlan(descriptor: descriptor).entryPoint.kind == .app)
+        }
+    }
+
+    @Test("Ambiguous assistant kinds need an exact registered handler without foreground fallback")
+    func assistantEntrypointResolutionRequiresExactHandler() throws {
+        let snapshot = try preparedAssistantSnapshot()
+        let descriptor = try snapshot.appDescriptor()
+        #expect(throws: HanlinMiniAppCatalogError.ambiguousEntrypoint(snapshot.appID, .assistantTool)) {
+            try HanlinMiniAppLaunchPlan(descriptor: descriptor, entryPointKind: .assistantTool)
+        }
+        for entry in descriptor.entryPoints where entry.kind == .assistantTool {
+            let plan = try HanlinMiniAppLaunchPlan(descriptor: descriptor,
+                entryPointKind: .assistantTool, entryPointHandler: entry.handler)
+            #expect(plan.entryPoint == entry)
+            #expect(plan.engine == .expo)
+        }
+        for missing in ["source/assistant/missing/bundle.js", "source/app/bundle.js"] {
+            #expect(throws: HanlinMiniAppCatalogError.missingEntrypoint(snapshot.appID, .assistantTool)) {
+                try HanlinMiniAppLaunchPlan(descriptor: descriptor,
+                    entryPointKind: .assistantTool, entryPointHandler: missing)
+            }
+        }
+        let toolsOnly = try preparedAssistantSnapshot(includeApp: false).appDescriptor()
+        // Classifying a shared engine never chooses a tool to execute.
+        #expect(HanlinCanonicalMiniAppCatalog.foregroundEngine(for: toolsOnly) == .expo)
+        #expect(throws: HanlinMiniAppCatalogError.ambiguousEntrypoint(snapshot.appID, .assistantTool)) {
+            try HanlinMiniAppLaunchPlan(descriptor: toolsOnly, entryPointKind: .assistantTool)
+        }
+        let mixedTools = try preparedAssistantSnapshot(
+            includeApp: false, secondaryRuntime: .hanlinNativeScript).appDescriptor()
+        #expect(HanlinCanonicalMiniAppCatalog.foregroundEngine(for: mixedTools) == nil)
+        let native = try HanlinMiniAppLaunchPlan(descriptor: mixedTools, entryPointKind: .assistantTool,
+            entryPointHandler: "source/assistant/places/bundle.mjs")
+        #expect(native.engine == .nativeScript)
+    }
+
+    @Test("Different assistant identities cannot alias the same dedicated handler")
+    func duplicateAssistantHandlersRemainInvalid() throws {
+        let snapshot = try preparedAssistantSnapshot(duplicateHandler: true)
+        do {
+            _ = try snapshot.appDescriptor()
+            Issue.record("Assistant entrypoints require distinct registered handler paths")
+        } catch HanlinContractError.invalidManifest(let issues) {
+            #expect(issues.contains { $0.code == .duplicateEntryPoint })
+        }
+    }
+
+    private func preparedAssistantSnapshot(
+        runtime: HanlinRuntimeProfile = .hanlinExpo,
+        duplicateHandler: Bool = false,
+        includeApp: Bool = true,
+        secondaryRuntime: HanlinRuntimeProfile? = nil
+    ) throws -> HanlinStoredPackageSnapshot {
+        let main = runtime == .hanlinNativeScript ? "bundle.mjs" : "bundle.js"
+        let inputSchema = try HanlinJSONSchemaDocument.decodeCanonicalJSON(Data(#"{"type":"object"}"#.utf8))
+        let app = HanlinPackageEntrypointDescriptor(
+            id: "app", kind: .app, sourcePath: "source/app/\(main)",
+            supportedContexts: [.mainApplication], runtimePolicyID: "foreground-app-v1",
+            runtimeProfile: runtime, compatibility: .supported)
+        let tools = ["catalog", "places"].map { id in
+            let sourceID = duplicateHandler ? "shared" : id
+            let toolRuntime = id == "places" ? secondaryRuntime ?? runtime : runtime
+            let toolMain = toolRuntime == .hanlinNativeScript ? "bundle.mjs" : "bundle.js"
+            return HanlinPackageEntrypointDescriptor(
+                id: id, kind: .assistantTool, sourcePath: "source/assistant/\(sourceID)/\(toolMain)",
+                supportedContexts: [.mainApplication], runtimePolicyID: "prepared-assistant-tool-v1",
+                runtimeProfile: toolRuntime, compatibility: .supported,
+                assistantTool: .init(title: id, summary: "Search \(id)", actions: [
+                    .init(id: "search", title: "Search", summary: "Search \(id)", inputSchema: inputSchema)
+                ], configuration: .init(panels: [
+                    .init(id: "options", title: "Options", fields: [
+                        .init(key: "scope", title: "Scope", kind: .text,
+                            required: true, defaultValue: .string(id))
+                    ])
+                ])))
+        }
+        return try preparedActionSnapshot(entrypoints: (includeApp ? [app] : []) + tools, runtime: runtime)
     }
 
     private func preparedActionSnapshot(

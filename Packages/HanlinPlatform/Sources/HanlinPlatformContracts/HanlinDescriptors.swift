@@ -972,8 +972,17 @@ public struct HanlinAppDescriptor: Codable, Identifiable, Hashable, Sendable {
                 into: &issues
             )
         }
+        // A package may publish several dedicated assistant tools. Their
+        // registered handler paths distinguish them; all other entrypoint kinds
+        // retain the existing single-route contract.
         Self.appendDuplicateIssues(
-            values: entryPoints.map(\.kind),
+            values: entryPoints.filter { $0.kind != .assistantTool }.map(\.kind),
+            code: .duplicateEntryPoint,
+            path: "entryPoints",
+            into: &issues
+        )
+        Self.appendDuplicateIssues(
+            values: entryPoints.filter { $0.kind == .assistantTool }.map(\.handler),
             code: .duplicateEntryPoint,
             path: "entryPoints",
             into: &issues
