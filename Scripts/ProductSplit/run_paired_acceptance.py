@@ -233,9 +233,50 @@ def authoring_fixtures(documents):
     sample_report = json.loads((EVIDENCE / "modular-search-build.json").read_text())
     if not sample_report.get("succeeded"):
         raise RuntimeError("The actual original modular-search source did not build for this host")
+    # Independent SDK-only projects are rebuilt against the exact SDK embedded
+    # in this host, then imported by the real MiniApps UI below. Keep their source
+    # identity separate from portable authoring proof and observed native results.
+    sdk_only_archives = []
+    sdk_only_provenance = []
+    independent_sources = json.loads((ROOT / "docs/miniapp-sdk/evidence/sdk-only-authoring-20261124/repository-source-provenance.json").read_text())["projects"]
+    for engine, project_name, archive_name in [
+        ("expo", "sdk-only-departure-budget", "SDKOnlyDepartureBudget.hanlinExpo"),
+        ("nativescript", "sdk-only-table-share", "SDKOnlyTableShare.hanlinNativeScript"),
+    ]:
+        project = ROOT / "Scripts/MiniApps/Examples" / project_name
+        archive = EVIDENCE / archive_name
+        report_path = EVIDENCE / (project_name + "-build.json")
+        # The public CLI writes its private .hanlin-build staging under a project.
+        # Capture only actual authored inputs before invoking it; ordinary source
+        # directories called build or dist are not excluded.
+        source_hashes = {str(file.relative_to(project)): hashlib.sha256(file.read_bytes()).hexdigest()
+                         for file in sorted(project.rglob("*"))
+                         if file.is_file() and ".hanlin-build" not in file.relative_to(project).parts}
+        independent = next(item for item in independent_sources
+                           if item["repositoryProject"] == str(project.relative_to(ROOT)))
+        expected_hashes = {item["path"]: item["sha256"] for item in independent["files"]}
+        if source_hashes != expected_hashes:
+            raise RuntimeError("SDK-only inputs differ from the retained independent source proof: " + project_name)
+        command(["node", "Scripts/MiniApps/miniapp.mjs", "build",
+            "--sdk", str(sdk_extract / "MiniAppSDK"), "--engine", engine,
+            "--project", str(project), "--archive", str(archive),
+            "--report", str(report_path)], project_name + "-build.log", timeout=300)
+        report = json.loads(report_path.read_text())
+        if not report.get("succeeded"):
+            raise RuntimeError("The independent SDK-only " + engine + " source did not build for this host")
+        sdk_only_archives.append(archive)
+        sdk_only_provenance.append({
+            "engine": engine, "source_project": str(project.relative_to(ROOT)),
+            "source_hashes": source_hashes,
+            "archive": archive.name, "archive_sha256": hashlib.sha256(archive.read_bytes()).hexdigest(),
+            "report": report_path.name, "report_sha256": hashlib.sha256(report_path.read_bytes()).hexdigest(),
+            "sdk_manifest_sha256": hashlib.sha256((sdk_extract / "MiniAppSDK/miniapp-sdk.json").read_bytes()).hexdigest(),
+            "native_result": "NOT_RUN; requires the selected real importer and native interaction cases",
+        })
+    (EVIDENCE / "sdk-only-package-provenance.json").write_text(json.dumps(sdk_only_provenance, indent=2) + "\n")
     (EVIDENCE / "sample-package-hashes.json").write_text(json.dumps({
         file.name: hashlib.sha256(file.read_bytes()).hexdigest()
-        for file in [valid_archive, EVIDENCE / "ModularTextSearch.hanlinExpo"]
+        for file in [valid_archive, EVIDENCE / "ModularTextSearch.hanlinExpo", *sdk_only_archives]
     }, indent=2) + "\n")
     # The SDK already lives in the shipping app/archive; this extraction is only
     # the fixture producer's temporary compiler input, never an installed result.
@@ -418,7 +459,9 @@ def main():
                 ROOT / "AI_HLYUITests/Fixtures/ExpoNativeAPIProbeA.hanlinExpo",
                 ROOT / "AI_HLYUITests/Fixtures/ExpoWidgetsProbeA.hanlinExpo",
                 ROOT / "AI_HLYUITests/Fixtures/ExpoWidgetsProbeB.hanlinExpo",
-                EVIDENCE / "ModularTextSearch.hanlinExpo"]
+                EVIDENCE / "ModularTextSearch.hanlinExpo",
+                EVIDENCE / "SDKOnlyDepartureBudget.hanlinExpo",
+                EVIDENCE / "SDKOnlyTableShare.hanlinNativeScript"]
             state["runtime_inputs"] = []
             for source in runtime_inputs:
                 destination = documents / source.name
@@ -443,6 +486,8 @@ def main():
                 "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoNativeAPIUsesActualUIKitAndWorklets",
                 "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoWidgetsUsesOriginalTimelinesAndLiveActivities",
                 "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneModularSearchLoadsActualSefariaText",
+                "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyExpoPackageImportsRendersAndHandlesEvents",
+                "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyNativeScriptPackageImportsRendersAndHandlesEvents",
                 "HanlinMiniAppsTests/CrossAppInvocationTests/testCancelAndDisplayDoneReturnNoDocumentMutation",
                 "HanlinMiniAppsTests/CrossAppInvocationTests/testReusingValueWindowKeepsItsInvocationBindingCurrent",
                 "HanlinMiniAppsTests/CrossAppInvocationTests/testRemovingInvocationOwnerCancelsWhileSessionIsStillRetained",
@@ -457,7 +502,7 @@ def main():
             argv += ["-only-testing:" + selector for selector in runtime_selectors]
             code, _ = command(argv, "original-runtimes.log", timeout=1200, allow_failure=True)
             state["original_runtime_summary"] = verify_native_result(runtime_result, "original-runtimes",
-                runtime_selectors, 13, code)
+                runtime_selectors, 15, code)
             _, raw = command(modal_fixture["verify_command"], "external-modal-result.json")
             state["external_modal_result"] = json.loads(raw)
         if TEST_SCOPE in {"cross_product", "product_and_share"}:

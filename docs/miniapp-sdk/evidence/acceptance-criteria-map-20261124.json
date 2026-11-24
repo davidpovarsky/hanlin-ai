@@ -15,34 +15,17 @@
     "absenceBoundary": "A missing matched receipt means not established within the requested evidence set, not proof that the implementation or a receipt elsewhere does not exist."
   },
   "activeGate": {
-    "runID": 45335292541,
-    "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45335292541",
-    "sourceCommit": "ee3b0ede43fcb4aac02def04d469eae542ba035b",
-    "status": "COMPLETED",
-    "statusAuthority": "Authenticated run8 job/artifact retained in eighth-native-gate-20261124.json; xcodebuild exit65, no selected tests started.",
+    "runID": 45343362337,
+    "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45343362337",
+    "sourceCommit": "4ea670e120a3217423bc73db68dab514c78079de",
+    "status": "IN_PROGRESS",
+    "statusAuthority": "Root-owned45-second run watcher observed original resolution passed and native preparation active.",
     "selectedCases": 38,
     "aiCases": 25,
     "miniAppsCases": 13,
-    "result": "BUILD_FAILED",
-    "acceptanceRequires": [
-      "Exact successful test rows for all selected cases, no failures or skips in that selected gate",
-      "Actual exported diagnostic-sheet and repaired-application screenshots",
-      "Original composer repair handoff, corrected native result 42, and installed receipt with installedPackageID"
-    ],
-    "doesNotEstablish": [
-      "Physical iPad acceptance",
-      "Complete 80-cell extension/runtime E2E matrix",
-      "Fresh-agent SDK/docs-only authoring",
-      "Every public adapter merely because it is declared or compiled"
-    ],
-    "priorObservation": {
-      "status": "IN_PROGRESS",
-      "statusAuthority": "Parent-reported active state for this mapping; no CI polling was performed.",
-      "result": null
-    },
-    "completedObservationAtUTC": "2026-11-24T06:46:38.460345+00:00",
-    "evidence": "docs/miniapp-sdk/evidence/eighth-native-gate-20261124.json",
-    "executedCases": 0
+    "result": null,
+    "nextCandidateCases": 40,
+    "nextCandidateBoundary": "Two added independent SDK-only native cases are prepared, not part of the active38-case run."
   },
   "userScope": {
     "activeOriginalEngines": [
@@ -633,6 +616,45 @@
       },
       "scope": "Existing owner target-level XCTest proof for session NativeAPI/worklet gate and modifier ownership.",
       "remainingBoundary": "No retained per-case xcresult, no new native execution, and worklet doubles do not prove two complete Expo/Hermes applications."
+    },
+    "sdk_only_current": {
+      "status": "PORTABLE_PASS_AFTER_PUBLIC_DOCUMENTATION_ERRATUM",
+      "receipt": "docs/miniapp-sdk/evidence/sdk-only-authoring-20261124/sdk-only-results.json",
+      "readableReport": "docs/miniapp-sdk/evidence/sdk-only-authoring-20261124/SDK_ONLY_ACCEPTANCE_REPORT.txt",
+      "completeBundleSHA256": "5cd6d9c8a4234fc38faffe8f00b8f6b45c6eb025623f835955e53766366e7b7f",
+      "originalFrozenBundleSHA256": "fc811673f17fb0aa64088fc227ae41ce309bf3661eb178ecc83f137110b0ec06",
+      "sdkManifestSHA256": "fa1e737ec63e640175cdb5c9dad51903cd86d50ae7b340ba5b8ec1ff4e408d85",
+      "sdkInputSHA256": "4028f9fc58e1a9a95937ed7b4eb223c3caa2a94714bbbdaae4ddc7b0aa6de795",
+      "sdkSourceCommit": "ee3b0ede43fcb4aac02def04d469eae542ba035b",
+      "publicErratumCommit": "729fdf04910e418d194d0a1a167f8fae94af46d1",
+      "realBuilds": [
+        "Corrected Expo with original Metro, compiler6.0.3, strict source and original declaration bodies",
+        "NativeScript Core9.1.4/iOS9.1.1, compiler5.9.3, strict source/original skipLibCheck=true policy"
+      ],
+      "diagnostics": [
+        {
+          "kind": "nonexistent original Expo SwiftUI modifier",
+          "code": "TS2305",
+          "file": "App.tsx",
+          "line": 6,
+          "column": 66
+        },
+        {
+          "kind": "nonexistent UIKit UILabel property",
+          "code": "TS2339",
+          "file": "index.ts",
+          "line": 136,
+          "column": 23
+        }
+      ],
+      "nativeImportAndUI": "NOT_RUN; the current source now prepares two actual native cases for a later gate."
+    },
+    "archive_policy_12_after_module_fix": {
+      "status": "EXECUTED_PASS",
+      "receipt": "docs/miniapp-sdk/evidence/widget-path-module-20261124/receipt.json",
+      "integratedFix": "f4cd9d4b14bcfb4927015ec99c35de43e32a84a1",
+      "scope": "12 existing archive/parser cases after moving verbatim path bodies into public Contracts, plus original24-source target build and actual separate-module typecheck.",
+      "nativeBoundary": "No full Apple application pass inferred."
     }
   },
   "criteria": [
@@ -645,7 +667,8 @@
         "archive_policy_12",
         "prepared_version_4",
         "version_and_operation_audit_6",
-        "source_reconciliation"
+        "source_reconciliation",
+        "archive_policy_12_after_module_fix"
       ],
       "establishedScope": [
         "Ambiguous manifests, collisions, escaping paths and archive integrity policy",
@@ -682,16 +705,17 @@
         "nativescript_facade",
         "mac_host_authoring_13",
         "prepared_version_4",
-        "version_and_operation_audit_6"
+        "version_and_operation_audit_6",
+        "sdk_only_current"
       ],
       "establishedScope": [
         "Historical original Core/UIKit typechecking and SwiftUI JS closure",
         "Current-source strict host facade and generated declarations",
         "Unchanged authoring/ESM/dependency-retention behavior on actual Mac Host",
-        "Independent iOS/Core/SwiftUI source identity and unchanged compatibility functions"
+        "Independent iOS/Core/SwiftUI source identity and unchanged compatibility functions",
+        "Current exported SDK-only authoring/build/source retention, with actual original Expo modifier and UIKit property diagnostics; exact scope in sdk_only_current."
       ],
       "remainingRequirements": [
-        "Current exported run8 SDK proof for original Core9.1.4/iOS9.1.1 authoring; do not use the old9.1.0 local cache as current proof.",
         "Actual selected Core/direct-runtime application behavior from gate38, with case results.",
         "Do not claim complete original declaration-body checking: original NativeScript consumer policy is strict source with skipLibCheck=true."
       ],
@@ -707,12 +731,14 @@
         "original_expo_graph_and_metro",
         "historical_expo_native_api",
         "historical_expo_ownership",
-        "source_reconciliation"
+        "source_reconciliation",
+        "sdk_only_current"
       ],
       "establishedScope": [
         "Current-source strict Expo UI and Widgets valid/negative consumer checks on Mac",
         "Real original Metro build, current graph artifact and source/resource identity",
-        "Bounded historical NativeAPI and same-source ownership component evidence"
+        "Bounded historical NativeAPI and same-source ownership component evidence",
+        "Current exported SDK-only authoring/build/source retention, with actual original Expo modifier and UIKit property diagnostics; exact scope in sdk_only_current."
       ],
       "remainingRequirements": [
         "All-public-exported-adapter native coverage is NOT_ESTABLISHED by the inspected receipts.",
@@ -732,17 +758,19 @@
         "mac_expo_strict_types",
         "prepared_version_4",
         "archive_policy_12",
-        "original_expo_graph_and_metro"
+        "original_expo_graph_and_metro",
+        "archive_policy_12_after_module_fix",
+        "sdk_only_current"
       ],
       "establishedScope": [
         "TS2353 and TS7006 intentional consumer failures already have real recorded proof",
         "Original semantic diagnostics with file/line/column, retained-source recheck, compiled-hash rejection and refusal to emit a failed package",
         "Real CLI packaging, archive revalidation and bare-module compiler resolution",
         "No fabricated source typecheck for bundle-only imports",
-        "Native presentation missing-source/invalid-layout/unsupported-renderer errors and original Metro failure propagation"
+        "Native presentation missing-source/invalid-layout/unsupported-renderer errors and original Metro failure propagation",
+        "Current exported SDK-only authoring/build/source retention, with actual original Expo modifier and UIKit property diagnostics; exact scope in sdk_only_current."
       ],
       "remainingRequirements": [
-        "An executed receipt for a missing React/SwiftUI modifier: the checked TS2339 is a missing hostServices method.",
         "Matched executed wrong-entry, full importer version/plugin, and permission-mismatch cases beyond the proven pure version functions.",
         "Permission evidence must reflect actual existing OS/host contracts; no new Hanlin approval or grant gate is authorized."
       ],
@@ -762,12 +790,15 @@
         "original_expo_graph_and_metro",
         "original_nativescript_910",
         "historical_expo_ownership",
-        "source_reconciliation"
+        "source_reconciliation",
+        "archive_policy_12_after_module_fix",
+        "sdk_only_current"
       ],
       "establishedScope": [
         "Golden and negative compiler/archive/CLI component evidence",
         "Original Metro artifact and retained-source identity",
-        "Bounded same-source historical ownership evidence"
+        "Bounded same-source historical ownership evidence",
+        "Current exported SDK-only authoring/build/source retention, with actual original Expo modifier and UIKit property diagnostics; exact scope in sdk_only_current."
       ],
       "remainingRequirements": [
         "Actual gate38 rows/screenshots/installation receipt for its selected application scope.",
@@ -784,8 +815,8 @@
       "taskID": "1220373832827017",
       "url": "https://app.asana.com/0/0/1220373832827017",
       "exactCriterion": "DoD: מבחן 'סוכן חדש מקבל רק התיעוד וה-SDK' מסוגל לבנות שתי חבילות אמיתיות ללא ניחוש/עיון בקוד פנימי; כל snippet נבדק אוטומטית.",
-      "status": "FRESH_AGENT_IN_PROGRESS; exported SDK hashes and all25791 files verified",
-      "planBoundary": "Parent plans a fresh builtin agent with fork none using the actual exported run8 SDK/docs/types and public CLI. Do not provide internal source recipes or pre-authored fixtures; do not build a supposed current SDK from local NativeScript9.1.0.",
+      "status": "SDK_ONLY_PORTABLE_PASS_AFTER_PUBLIC_DOC_ERRATUM; AUTOMATIC_GUIDE_SNIPPET_CHECKER_IN_PROGRESS",
+      "planBoundary": "Fresh agent completed with original exported SDK/docs/public CLI only, preserving initial documentation gap before a separate public-doc-guided Expo correction. Current author-facing snippet automation remains a distinct requirement.",
       "notEquivalent": "A scripted HTTP repair response demonstrates the original product pipeline, not independent fresh-agent authoring of both engines.",
       "publicReferences": [
         "docs/miniapp-sdk/README.md:9-15",
@@ -795,7 +826,8 @@
         "Scripts/Runtime/prepare-runtime-host.sh"
       ],
       "cliPackagingBoundary": "The public CLI wrapper imports its existing Host miniapp-authoring.mjs by relative layout. MiniAppSDK alone does not contain that wrapper; preserve its executable dependency layout without supplying internal authoring recipes.",
-      "kitPreparationEvidence": "docs/miniapp-sdk/evidence/eighth-native-gate-20261124/sdk-only-kit-preparation.json"
+      "kitPreparationEvidence": "docs/miniapp-sdk/evidence/eighth-native-gate-20261124/sdk-only-kit-preparation.json",
+      "proof": "docs/miniapp-sdk/evidence/sdk-only-authoring-20261124/sdk-only-results.json"
     },
     {
       "task": "SDK-08",
@@ -807,7 +839,7 @@
         "raw CI+device evidence",
         "gate CLOSED only if all mandatory executable evidence exists."
       ],
-      "status": "OPEN; fresh-agent and physical-device conditions are not established by gate38."
+      "status": "OPEN; two kit-only packages built, actual importer/native interaction cases prepared but NOT_RUN; physical-device condition BLOCKED_EXTERNAL."
     },
     {
       "task": "MINIAPP-SDK parent",
@@ -832,5 +864,39 @@
       "boundary": "80 current source-reachability cells and native original-library surfaces have separate scopes. Legitimate Deferred/NotApplicable/BLOCKED dispositions require reasons; neither source wiring nor38selected tests becomes80E2Epasses."
     }
   ],
-  "recordingOutcome": "Evidence mapping only. No task closure, new test result, native application success, physical-device success, main merge, release or TestFlight publication is asserted."
+  "recordingOutcome": "Evidence mapping only. No task closure, new test result, native application success, physical-device success, main merge, release or TestFlight publication is asserted.",
+  "updatedAtUTC": "2026-11-24T07:08:07.666241+00:00",
+  "currentIntegrationBase": "729fdf04910e418d194d0a1a167f8fae94af46d1",
+  "gateHistory": [
+    {
+      "runID": 45335292541,
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45335292541",
+      "sourceCommit": "ee3b0ede43fcb4aac02def04d469eae542ba035b",
+      "status": "COMPLETED",
+      "statusAuthority": "Authenticated run8 job/artifact retained in eighth-native-gate-20261124.json; xcodebuild exit65, no selected tests started.",
+      "selectedCases": 38,
+      "aiCases": 25,
+      "miniAppsCases": 13,
+      "result": "BUILD_FAILED",
+      "acceptanceRequires": [
+        "Exact successful test rows for all selected cases, no failures or skips in that selected gate",
+        "Actual exported diagnostic-sheet and repaired-application screenshots",
+        "Original composer repair handoff, corrected native result 42, and installed receipt with installedPackageID"
+      ],
+      "doesNotEstablish": [
+        "Physical iPad acceptance",
+        "Complete 80-cell extension/runtime E2E matrix",
+        "Fresh-agent SDK/docs-only authoring",
+        "Every public adapter merely because it is declared or compiled"
+      ],
+      "priorObservation": {
+        "status": "IN_PROGRESS",
+        "statusAuthority": "Parent-reported active state for this mapping; no CI polling was performed.",
+        "result": null
+      },
+      "completedObservationAtUTC": "2026-11-24T06:46:38.460345+00:00",
+      "evidence": "docs/miniapp-sdk/evidence/eighth-native-gate-20261124.json",
+      "executedCases": 0
+    }
+  ]
 }

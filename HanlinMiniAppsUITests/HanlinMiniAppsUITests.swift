@@ -515,6 +515,98 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
         closeExpoApp()
     }
 
+    // These two independent source projects were authored by a fresh agent using
+    // only the exported original SDK and public documentation. The runner builds
+    // their unchanged sources with this app's actual SDK before the real importer
+    // installs them. Portable compilation alone is not this native acceptance.
+    func testStandaloneSDKOnlyExpoPackageImportsRendersAndHandlesEvents() throws {
+        openApps()
+        importAndInstall(archive: "SDKOnlyDepartureBudget")
+        launchInstalledPackage(named: "Departure Budget")
+
+        let initial = sdkOnlyText("55 minutes reserved before the target")
+        XCTAssertTrue(initial.waitForExistence(timeout: 30), "SDK-authored Expo root did not render")
+        revealSDKOnlyElement(initial, scrollTowardEnd: false)
+        let city = app.buttons["City"].firstMatch
+        revealSDKOnlyElement(city, scrollTowardEnd: true)
+        city.tap()
+        let cityBudget = sdkOnlyText("70 minutes reserved before the target")
+        revealSDKOnlyElement(cityBudget, scrollTowardEnd: false)
+        XCTAssertTrue(cityBudget.exists, "Native City button did not update the React calculation")
+        capture(name: "SDK-only Expo native City result")
+
+        let local = app.buttons["Local"].firstMatch
+        revealSDKOnlyElement(local, scrollTowardEnd: true)
+        local.tap()
+        let localBudget = sdkOnlyText("35 minutes reserved before the target")
+        revealSDKOnlyElement(localBudget, scrollTowardEnd: false)
+        XCTAssertTrue(localBudget.exists, "Native Local button did not update the React calculation")
+        capture(name: "SDK-only Expo native Local result")
+        closeExpoApp()
+
+        app.terminate()
+        app.launch()
+        openApps()
+        launchInstalledPackage(named: "Departure Budget")
+        XCTAssertTrue(initial.waitForExistence(timeout: 30), "Installed SDK-authored Expo package did not relaunch")
+        capture(name: "SDK-only Expo installed package relaunch")
+        closeExpoApp()
+    }
+
+    func testStandaloneSDKOnlyNativeScriptPackageImportsRendersAndHandlesEvents() throws {
+        openApps()
+        importAndInstall(archive: "SDKOnlyTableShare")
+        launchInstalledPackage(named: "Table Share")
+        XCTAssertTrue(sdkOnlyText("Table Share").waitForExistence(timeout: 30),
+                      "SDK-authored NativeScript Core page did not render")
+        let total = sdkOnlyText("$106.26 total")
+        revealSDKOnlyElement(total, scrollTowardEnd: true)
+        XCTAssertTrue(total.exists)
+        let initialShares = sdkOnlyText("3 people pay $35.42 each.")
+        revealSDKOnlyElement(initialShares, scrollTowardEnd: true)
+        XCTAssertTrue(initialShares.exists)
+
+        let more = app.buttons["+"].firstMatch
+        revealSDKOnlyElement(more, scrollTowardEnd: false)
+        more.tap()
+        let fourShares = sdkOnlyText("2 pay $26.57; 2 pay $26.56.")
+        revealSDKOnlyElement(fourShares, scrollTowardEnd: true)
+        XCTAssertTrue(fourShares.exists, "Original NativeScript tap event did not recalculate cents")
+        let rounding = app.switches.firstMatch
+        revealSDKOnlyElement(rounding, scrollTowardEnd: false)
+        XCTAssertTrue(rounding.isEnabled)
+        rounding.tap()
+        let rounded = sdkOnlyText("4 people pay $27.00 each.")
+        revealSDKOnlyElement(rounded, scrollTowardEnd: true)
+        XCTAssertTrue(rounded.exists, "Original NativeScript checkedChange event did not recalculate contributions")
+        let extra = sdkOnlyText("Whole-dollar rounding collects $1.74 extra. Decide together where that goes.")
+        revealSDKOnlyElement(extra, scrollTowardEnd: true)
+        XCTAssertTrue(extra.exists)
+        capture(name: "SDK-only NativeScript native rounded result")
+
+        let reset = app.buttons["Reset to example bill"].firstMatch
+        revealSDKOnlyElement(reset, scrollTowardEnd: true)
+        reset.tap()
+        revealSDKOnlyElement(initialShares, scrollTowardEnd: false)
+        XCTAssertTrue(initialShares.exists, "NativeScript reset did not restore the actual model")
+        capture(name: "SDK-only NativeScript native reset result")
+        closeNativeScriptApp()
+    }
+
+    private func sdkOnlyText(_ text: String) -> XCUIElement {
+        app.staticTexts.matching(NSPredicate(format: "label == %@", text)).firstMatch
+    }
+
+    private func revealSDKOnlyElement(_ element: XCUIElement, scrollTowardEnd: Bool,
+                                      file: StaticString = #filePath, line: UInt = #line) {
+        for _ in 0..<8 {
+            if element.exists && element.isHittable { return }
+            if scrollTowardEnd { app.swipeUp() } else { app.swipeDown() }
+        }
+        XCTAssertTrue(element.waitForExistence(timeout: 10), "SDK-authored native content was missing", file: file, line: line)
+        XCTAssertTrue(element.isHittable, "SDK-authored native content was not reachable by scrolling", file: file, line: line)
+    }
+
     func testStandaloneModularSearchLoadsActualSefariaText() throws {
         openApps()
         importAndInstall(archive: "ModularTextSearch")
@@ -661,9 +753,14 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
         importButton.tap()
         let list = app.collectionViews["hanlin-package-import-list"].firstMatch
         XCTAssertTrue(list.waitForExistence(timeout: 15))
-        let source = app.buttons[archive].firstMatch
+        let source = list.buttons[archive].firstMatch
+        // The native List creates accessibility rows lazily. Search within that
+        // list before requiring existence, including the later SDK-only inputs.
+        for _ in 0..<8 {
+            if source.exists && source.isHittable { break }
+            list.swipeUp()
+        }
         XCTAssertTrue(source.waitForExistence(timeout: 15))
-        if !source.isHittable { list.swipeUp() }
         XCTAssertTrue(source.isHittable)
         source.tap()
         let install = app.buttons["hanlin-package-install"].firstMatch

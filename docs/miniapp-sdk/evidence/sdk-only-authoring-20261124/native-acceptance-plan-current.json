@@ -1,0 +1,179 @@
+{
+  "status": "PLANNED, NOT EXECUTED. Expected values are derived from source; corrected Expo registration follows public erratum. No native success claimed.",
+  "sharedPrerequisites": [
+    "Use the actual Hanlin importer and retain its receiver result; a queued transfer is not installed.",
+    "Import the exact archive hash from sdk-only-results.json into a compatible native host.",
+    "Record device/simulator OS, host build, import receipt, screenshots and observed interactions separately.",
+    "The public erratum documents the Expo foreground root as main. Use the separately corrected archive; preserve and identify the original acceptance package separately."
+  ],
+  "expo": {
+    "packageName": "Departure Budget",
+    "archive": "archives/expo-departure-budget-main.hanlinExpo",
+    "nativeControls": [
+      "Host",
+      "Form",
+      "Section",
+      "DatePicker",
+      "Stepper",
+      "Toggle",
+      "Button",
+      "HStack",
+      "VStack",
+      "Text"
+    ],
+    "uiLabels": [
+      "Departure Budget",
+      "Leave by",
+      "Your arrival",
+      "Target date and time",
+      "Travel: 30 min",
+      "Get ready: 15 min",
+      "Arrive early",
+      "Arrival buffer: 10 min",
+      "Quick starting points",
+      "Local",
+      "City",
+      "Long trip",
+      "Your timeline",
+      "Start getting ready",
+      "Leave",
+      "Expected arrival",
+      "Before you go \u00b7 0/3 ready",
+      "Keys and wallet",
+      "Ticket or address",
+      "Phone and charger",
+      "Clear checklist",
+      "Reset planner"
+    ],
+    "steps": [
+      {
+        "action": "Launch with defaults, then set Target date and time to 2026-12-01 09:00 in the device's local timezone.",
+        "expected": [
+          "Travel 30 min, preparation 15 min, buffer 10 min, Arrive early on.",
+          "Leave by 08:20 on Dec 1; start getting ready 08:05; expected arrival 08:50.",
+          "55 minutes reserved before the target; 10 minutes spare at your destination."
+        ]
+      },
+      {
+        "action": "Tap City.",
+        "expected": [
+          "Travel 45 min, preparation 15 min, buffer 10 min.",
+          "Leave by 08:05; start getting ready 07:50; expected arrival 08:50; total 70 minutes."
+        ]
+      },
+      {
+        "action": "Turn Arrive early off.",
+        "expected": [
+          "Arrival buffer stepper disabled.",
+          "Leave by 08:15; start getting ready 08:00; expected arrival 09:00; total 60 minutes.",
+          "No arrival buffer included."
+        ]
+      },
+      {
+        "action": "Toggle Keys and wallet and Ticket or address, then tap Clear checklist.",
+        "expected": [
+          "Header first shows Before you go \u00b7 2/3 ready.",
+          "After clearing, all three toggles are off, header shows 0/3 ready, and Clear checklist is disabled."
+        ]
+      },
+      {
+        "action": "Set arrival to 2026-12-01 00:20, then tap Local.",
+        "expected": [
+          "Travel 20 min, preparation 10 min, buffer 5 min, Arrive early on.",
+          "Leave by 23:55 on Nov 30; start getting ready 23:45 on Nov 30; expected arrival 00:15 on Dec 1; total 35 minutes."
+        ]
+      },
+      {
+        "action": "Tap Reset planner.",
+        "expected": [
+          "Travel 30, preparation 15, buffer 10 and Arrive early on; checklist empty.",
+          "Target arrival becomes the top of the hour two hours after the reset's current local clock hour."
+        ]
+      }
+    ],
+    "formattingNote": "Time/date display follows native locale; compare semantic dates and clock values, not a fixed AM/PM string.",
+    "archiveSHA256": "a2eb3f8034c221b9ebd46b3ad02a293bfddb29a2dd7b8b421790bd24bba95f7e",
+    "registration": "main",
+    "sourceChangeFromOriginal": "Only index.ts line 4 registration key changed. App.tsx and model.ts are byte-identical; all UI labels and expected interactions remain the same."
+  },
+  "nativescript": {
+    "packageName": "Table Share",
+    "archive": "archives/nativescript-table-share.hanlinNativeScript",
+    "nativeControls": [
+      "Page",
+      "ScrollView",
+      "StackLayout",
+      "Label",
+      "TextField",
+      "Button",
+      "Switch"
+    ],
+    "uiLabels": [
+      "Table Share",
+      "Subtotal \u00b7 USD",
+      "Tax \u00b7 %",
+      "Tip \u00b7 %",
+      "People at the table",
+      "\u2212",
+      "+",
+      "Round each contribution up to a whole dollar",
+      "Reset to example bill"
+    ],
+    "steps": [
+      {
+        "action": "Launch with defaults.",
+        "expected": [
+          "Subtotal 84.00, tax 8.5%, tip 18%, people 3, whole-dollar switch off.",
+          "$106.26 total.",
+          "3 people pay $35.42 each.",
+          "Breakdown: Subtotal $84.00; Tax $7.14; Tip $15.12."
+        ]
+      },
+      {
+        "action": "Tap + once to reach four people.",
+        "expected": [
+          "$106.26 total remains unchanged.",
+          "2 pay $26.57; 2 pay $26.56."
+        ]
+      },
+      {
+        "action": "Turn whole-dollar rounding on at four people.",
+        "expected": [
+          "4 people pay $27.00 each.",
+          "Whole-dollar rounding collects $1.74 extra. Decide together where that goes."
+        ]
+      },
+      {
+        "action": "Turn rounding off; set subtotal 100, tax 0, tip 0; reduce to three people.",
+        "expected": [
+          "$100.00 total.",
+          "1 pay $33.34; 2 pay $33.33.",
+          "The contributions add up exactly to the total; any remaining cents are distributed."
+        ]
+      },
+      {
+        "action": "Clear Subtotal.",
+        "expected": [
+          "Check the amounts.",
+          "Use nonnegative numbers with at most two decimal places.",
+          "Subtotal limit: $1,000,000 \u00b7 Tax: 0\u201350% \u00b7 Tip: 0\u2013100%."
+        ]
+      },
+      {
+        "action": "Tap Reset to example bill.",
+        "expected": [
+          "Default values and the initial $106.26 / three \u00d7 $35.42 results are restored.",
+          "Whole-dollar switch is off."
+        ]
+      },
+      {
+        "action": "Decrease to one person, then increase to twelve.",
+        "expected": [
+          "Minus button is disabled at one; plus button is disabled at twelve.",
+          "Displayed contribution calculations update with each allowed change."
+        ]
+      }
+    ],
+    "archiveSHA256": "0babb546f9dd876a6fe245280863021307389eded8cb61a053968597bf0e8253"
+  }
+}

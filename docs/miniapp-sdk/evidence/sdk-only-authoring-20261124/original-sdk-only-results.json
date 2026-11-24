@@ -1,0 +1,416 @@
+{
+  "recordKind": "ORIGINAL SDK-ONLY ACCEPTANCE, before reading any superseding documentation",
+  "createdUTC": "2026-11-24T06:56:31.824143+00:00",
+  "workspace": "/dev/shm/hanlin-sdk-only-kit-45335292541/author-work",
+  "status": "PASS for SDK-only strict source validation, original-engine portable builds, source/hash retention and targeted source diagnostics. Native launch is untested; the original Expo registration documentation gap remains unresolved.",
+  "sdk": {
+    "sdkRoot": "/dev/shm/hanlin-sdk-only-kit-45335292541/AI_HLY/Downstream/RuntimeCore/Node/Host/MiniAppSDK",
+    "manifestSHA256": "fa1e737ec63e640175cdb5c9dad51903cd86d50ae7b340ba5b8ec1ff4e408d85",
+    "inputSHA256": "4028f9fc58e1a9a95937ed7b4eb223c3caa2a94714bbbdaae4ddc7b0aa6de795",
+    "hostPlatform": "Linux-6.17.0-1020-oracle-aarch64-with-glibc2.39",
+    "hostMachine": "aarch64",
+    "nodeCommand": [
+      "/usr/local/bin/node",
+      "--version"
+    ],
+    "nodeVersion": "v24.22.0",
+    "providedProvenance": {
+      "ciRun": "45335292541",
+      "sourceCommitPrefix": "ee3b0ede",
+      "independentlyQueriedCI": false
+    },
+    "engines": {
+      "expo": {
+        "packageVersions": {
+          "@expo/ui": "58.0.29",
+          "@hanlin/expo-native-api": "1.0.0",
+          "@hanlin/expo-ui": "1.0.0",
+          "@nativescript/react-native": "9.1.2",
+          "expo": "58.0.26",
+          "expo-brownfield": "58.0.20",
+          "expo-modules-core": "58.1.0",
+          "expo-modules-jsi": "58.0.23",
+          "react": "19.3.0",
+          "react-native": "0.88.1",
+          "react-native-worklets": "0.13.0",
+          "expo-widgets": "58.0.29",
+          "@babel/core": "7.29.7",
+          "@react-native-community/cli": "20.2.0",
+          "@react-native/codegen": "0.88.1",
+          "@react-native/metro-config": "0.88.1",
+          "@types/react": "19.3.0",
+          "babel-preset-expo": "58.0.26",
+          "esbuild": "0.25.12",
+          "typescript": "6.0.2"
+        },
+        "manifestSHA256": "fa1e737ec63e640175cdb5c9dad51903cd86d50ae7b340ba5b8ec1ff4e408d85",
+        "compilerVersion": "6.0.3"
+      },
+      "nativescript": {
+        "packageVersions": {
+          "@nativescript/core": "9.1.4",
+          "@nativescript/swift-ui": "4.0.2",
+          "@nativescript/ios": "9.1.1",
+          "@nativescript/types": "9.1.4",
+          "@nativescript/vite": "8.0.24",
+          "typescript": "5.9.3",
+          "vite": "8.0.0",
+          "@hanlin/host-services": "1.0.0"
+        },
+        "manifestSHA256": "fa1e737ec63e640175cdb5c9dad51903cd86d50ae7b340ba5b8ec1ff4e408d85",
+        "compilerVersion": "5.9.3"
+      }
+    }
+  },
+  "originalProjects": [
+    "/dev/shm/hanlin-sdk-only-kit-45335292541/author-work/expo-departure-budget",
+    "/dev/shm/hanlin-sdk-only-kit-45335292541/author-work/nativescript-table-share"
+  ],
+  "archives": [
+    {
+      "engine": "expo",
+      "path": "/dev/shm/hanlin-sdk-only-kit-45335292541/author-work/archives/expo-departure-budget.hanlinExpo",
+      "bytes": 1954745,
+      "sha256": "76ed7a2797855cab2a12d67d61796e257eab7b172a4bfa84214b994431131249"
+    },
+    {
+      "engine": "nativescript",
+      "path": "/dev/shm/hanlin-sdk-only-kit-45335292541/author-work/archives/nativescript-table-share.hanlinNativeScript",
+      "bytes": 12895,
+      "sha256": "0babb546f9dd876a6fe245280863021307389eded8cb61a053968597bf0e8253"
+    }
+  ],
+  "checks": [
+    {
+      "name": "expo-validate-initial",
+      "command": [
+        "/usr/local/bin/node",
+        "/dev/shm/hanlin-sdk-only-kit-45335292541/Scripts/MiniApps/miniapp.mjs",
+        "validate",
+        "--sdk",
+        "/dev/shm/hanlin-sdk-only-kit-45335292541/AI_HLY/Downstream/RuntimeCore/Node/Host/MiniAppSDK",
+        "--engine",
+        "expo",
+        "--project",
+        "/dev/shm/hanlin-sdk-only-kit-45335292541/author-work/expo-departure-budget",
+        "--report",
+        "/dev/shm/hanlin-sdk-only-kit-45335292541/author-work/evidence/expo-validate-initial/report.json"
+      ],
+      "commandText": "/usr/local/bin/node /dev/shm/hanlin-sdk-only-kit-45335292541/Scripts/MiniApps/miniapp.mjs validate --sdk /dev/shm/hanlin-sdk-only-kit-45335292541/AI_HLY/Downstream/RuntimeCore/Node/Host/MiniAppSDK --engine expo --project /dev/shm/hanlin-sdk-only-kit-45335292541/author-work/expo-departure-budget --report /dev/shm/hanlin-sdk-only-kit-45335292541/author-work/evidence/expo-validate-initial/report.json",
+      "exitCode": 0,
+      "succeeded": true,
+      "diagnostics": [],
+      "reportSHA256": "5b4189b79dae312a7eca78905d11106f73c73c3c116b716b1071484f8c55b175",
+      "typecheck": {
+        "strict": true,
+        "checkJs": false,
+        "skipLibCheck": false,
+        "dependencyDeclarationsChecked": true
+      }
+    },
+    {
+      "name": "nativescript-validate-initial",
+      "command": [
+        "/usr/local/bin/node",
+        "/dev/shm/hanlin-sdk-only-kit-45335292541/Scripts/MiniApps/miniapp.mjs",
+        "validate",
+        "--sdk",
+        "/dev/shm/hanlin-sdk-only-kit-45335292541/AI_HLY/Downstream/RuntimeCore/Node/Host/MiniAppSDK",
+        "--engine",
+        "nativescript",
+        "--project",
+        "/dev/shm/hanlin-sdk-only-kit-45335292541/author-work/nativescript-table-share",
+        "--report",
+        "/dev/shm/hanlin-sdk-only-kit-45335292541/author-work/evidence/nativescript-validate-initial/report.json"
+      ],
+      "commandText": "/usr/local/bin/node /dev/shm/hanlin-sdk-only-kit-45335292541/Scripts/MiniApps/miniapp.mjs validate --sdk /dev/shm/hanlin-sdk-only-kit-45335292541/AI_HLY/Downstream/RuntimeCore/Node/Host/MiniAppSDK --engine nativescript --project /dev/shm/hanlin-sdk-only-kit-45335292541/author-work/nativescript-table-share --report /dev/shm/hanlin-sdk-only-kit-45335292541/author-work/evidence/nativescript-validate-initial/report.json",
+      "exitCode": 0,
+      "succeeded": true,
+      "diagnostics": [],
+      "reportSHA256": "dc5ae91c21c79819e52ee333fd05075e1fe3f027e63c86b785bfa1217de66813",
+      "typecheck": {
+        "strict": true,
+        "checkJs": false,
+        "skipLibCheck": true,
+        "dependencyDeclarationsChecked": false
+      }
+    },
+    {
+      "name": "expo-build",
+      "command": [
+        "/usr/local/bin/node",
+        "/dev/shm/hanlin-sdk-only-kit-45335292541/Scripts/MiniApps/miniapp.mjs",
+        "build",
+        "--sdk",
+        "/dev/shm/hanlin-sdk-only-kit-45335292541/AI_HLY/Downstream/RuntimeCore/Node/Host/MiniAppSDK",
+        "--engine",
+        "expo",
+        "--project",
+        "/dev/shm/hanlin-sdk-only-kit-45335292541/author-work/expo-departure-budget",
+        "--report",
+        "/dev/shm/hanlin-sdk-only-kit-45335292541/author-work/evidence/expo-build/report.json",
+        "--archive",
+        "/dev/shm/hanlin-sdk-only-kit-45335292541/author-work/archives/expo-departure-budget.hanlinExpo"
+      ],
+      "commandText": "/usr/local/bin/node /dev/shm/hanlin-sdk-only-kit-45335292541/Scripts/MiniApps/miniapp.mjs build --sdk /dev/shm/hanlin-sdk-only-kit-45335292541/AI_HLY/Downstream/RuntimeCore/Node/Host/MiniAppSDK --engine expo --project /dev/shm/hanlin-sdk-only-kit-45335292541/author-work/expo-departure-budget --report /dev/shm/hanlin-sdk-only-kit-45335292541/author-work/evidence/expo-build/report.json --archive /dev/shm/hanlin-sdk-only-kit-45335292541/author-work/archives/expo-departure-budget.hanlinExpo",
+      "exitCode": 0,
+      "succeeded": true,
+      "diagnostics": [],
+      "reportSHA256": "2178bd5ad74df04c0c4bb70b81c061b73aecec66d8bbd6809c57ce6d8ee858f2",
+      "typecheck": {
+        "strict": true,
+        "checkJs": false,
+        "skipLibCheck": false,
+        "dependencyDeclarationsChecked": true
+      }
+    },
+    {
+      "name": "nativescript-build",
+      "command": [
+        "/usr/local/bin/node",
+        "/dev/shm/hanlin-sdk-only-kit-45335292541/Scripts/MiniApps/miniapp.mjs",
+        "build",
+        "--sdk",
+        "/dev/shm/hanlin-sdk-only-kit-45335292541/AI_HLY/Downstream/RuntimeCore/Node/Host/MiniAppSDK",
+        "--engine",
+        "nativescript",
+        "--project",
+        "/dev/shm/hanlin-sdk-only-kit-45335292541/author-work/nativescript-table-share",
+        "--report",
+        "/dev/shm/hanlin-sdk-only-kit-45335292541/author-work/evidence/nativescript-build/report.json",
+        "--archive",
+        "/dev/shm/hanlin-sdk-only-kit-45335292541/author-work/archives/nativescript-table-share.hanlinNativeScript"
+      ],
+      "commandText": "/usr/local/bin/node /dev/shm/hanlin-sdk-only-kit-45335292541/Scripts/MiniApps/miniapp.mjs build --sdk /dev/shm/hanlin-sdk-only-kit-45335292541/AI_HLY/Downstream/RuntimeCore/Node/Host/MiniAppSDK --engine nativescript --project /dev/shm/hanlin-sdk-only-kit-45335292541/author-work/nativescript-table-share --report /dev/shm/hanlin-sdk-only-kit-45335292541/author-work/evidence/nativescript-build/report.json --archive /dev/shm/hanlin-sdk-only-kit-45335292541/author-work/archives/nativescript-table-share.hanlinNativeScript",
+      "exitCode": 0,
+      "succeeded": true,
+      "diagnostics": [],
+      "reportSHA256": "7de52726964a67c85046a05d06440b724efdbf98f939813dc12967c69a122f90",
+      "typecheck": {
+        "strict": true,
+        "checkJs": false,
+        "skipLibCheck": true,
+        "dependencyDeclarationsChecked": false
+      }
+    },
+    {
+      "name": "expo-validate-negative",
+      "command": [
+        "/usr/local/bin/node",
+        "/dev/shm/hanlin-sdk-only-kit-45335292541/Scripts/MiniApps/miniapp.mjs",
+        "validate",
+        "--sdk",
+        "/dev/shm/hanlin-sdk-only-kit-45335292541/AI_HLY/Downstream/RuntimeCore/Node/Host/MiniAppSDK",
+        "--engine",
+        "expo",
+        "--project",
+        "/dev/shm/hanlin-sdk-only-kit-45335292541/author-work/negative-expo-modifier",
+        "--report",
+        "/dev/shm/hanlin-sdk-only-kit-45335292541/author-work/evidence/expo-validate-negative/report.json"
+      ],
+      "commandText": "/usr/local/bin/node /dev/shm/hanlin-sdk-only-kit-45335292541/Scripts/MiniApps/miniapp.mjs validate --sdk /dev/shm/hanlin-sdk-only-kit-45335292541/AI_HLY/Downstream/RuntimeCore/Node/Host/MiniAppSDK --engine expo --project /dev/shm/hanlin-sdk-only-kit-45335292541/author-work/negative-expo-modifier --report /dev/shm/hanlin-sdk-only-kit-45335292541/author-work/evidence/expo-validate-negative/report.json",
+      "exitCode": 1,
+      "succeeded": false,
+      "diagnostics": [
+        {
+          "code": "TS2305",
+          "category": "error",
+          "message": "Module '\"@expo/ui/swift-ui/modifiers\"' has no exported member 'nonexistentDepartureGlow'.",
+          "file": "App.tsx",
+          "line": 6,
+          "column": 66,
+          "endLine": 6,
+          "endColumn": 90
+        }
+      ],
+      "reportSHA256": "b3bee07b803bfa6eec9f9ce229494920b225ebed5eaee78ee59b165c2b28b3b0",
+      "typecheck": {
+        "strict": true,
+        "checkJs": false,
+        "skipLibCheck": false,
+        "dependencyDeclarationsChecked": true
+      }
+    },
+    {
+      "name": "nativescript-validate-negative",
+      "command": [
+        "/usr/local/bin/node",
+        "/dev/shm/hanlin-sdk-only-kit-45335292541/Scripts/MiniApps/miniapp.mjs",
+        "validate",
+        "--sdk",
+        "/dev/shm/hanlin-sdk-only-kit-45335292541/AI_HLY/Downstream/RuntimeCore/Node/Host/MiniAppSDK",
+        "--engine",
+        "nativescript",
+        "--project",
+        "/dev/shm/hanlin-sdk-only-kit-45335292541/author-work/negative-nativescript-property",
+        "--report",
+        "/dev/shm/hanlin-sdk-only-kit-45335292541/author-work/evidence/nativescript-validate-negative/report.json"
+      ],
+      "commandText": "/usr/local/bin/node /dev/shm/hanlin-sdk-only-kit-45335292541/Scripts/MiniApps/miniapp.mjs validate --sdk /dev/shm/hanlin-sdk-only-kit-45335292541/AI_HLY/Downstream/RuntimeCore/Node/Host/MiniAppSDK --engine nativescript --project /dev/shm/hanlin-sdk-only-kit-45335292541/author-work/negative-nativescript-property --report /dev/shm/hanlin-sdk-only-kit-45335292541/author-work/evidence/nativescript-validate-negative/report.json",
+      "exitCode": 1,
+      "succeeded": false,
+      "diagnostics": [
+        {
+          "code": "TS2339",
+          "category": "error",
+          "message": "Property 'nonexistentReceiptTotal' does not exist on type 'UILabel'.",
+          "file": "index.ts",
+          "line": 136,
+          "column": 23,
+          "endLine": 136,
+          "endColumn": 46
+        }
+      ],
+      "reportSHA256": "4df1c66a8aec9ff91d7757404fd0cc0c5ddafc0990b45bea17cfe268a26740b1",
+      "typecheck": {
+        "strict": true,
+        "checkJs": false,
+        "skipLibCheck": true,
+        "dependencyDeclarationsChecked": false
+      }
+    },
+    {
+      "name": "expo-validate-final",
+      "command": [
+        "/usr/local/bin/node",
+        "/dev/shm/hanlin-sdk-only-kit-45335292541/Scripts/MiniApps/miniapp.mjs",
+        "validate",
+        "--sdk",
+        "/dev/shm/hanlin-sdk-only-kit-45335292541/AI_HLY/Downstream/RuntimeCore/Node/Host/MiniAppSDK",
+        "--engine",
+        "expo",
+        "--project",
+        "/dev/shm/hanlin-sdk-only-kit-45335292541/author-work/expo-departure-budget",
+        "--report",
+        "/dev/shm/hanlin-sdk-only-kit-45335292541/author-work/evidence/expo-validate-final/report.json"
+      ],
+      "commandText": "/usr/local/bin/node /dev/shm/hanlin-sdk-only-kit-45335292541/Scripts/MiniApps/miniapp.mjs validate --sdk /dev/shm/hanlin-sdk-only-kit-45335292541/AI_HLY/Downstream/RuntimeCore/Node/Host/MiniAppSDK --engine expo --project /dev/shm/hanlin-sdk-only-kit-45335292541/author-work/expo-departure-budget --report /dev/shm/hanlin-sdk-only-kit-45335292541/author-work/evidence/expo-validate-final/report.json",
+      "exitCode": 0,
+      "succeeded": true,
+      "diagnostics": [],
+      "reportSHA256": "5b4189b79dae312a7eca78905d11106f73c73c3c116b716b1071484f8c55b175",
+      "typecheck": {
+        "strict": true,
+        "checkJs": false,
+        "skipLibCheck": false,
+        "dependencyDeclarationsChecked": true
+      }
+    },
+    {
+      "name": "nativescript-validate-final",
+      "command": [
+        "/usr/local/bin/node",
+        "/dev/shm/hanlin-sdk-only-kit-45335292541/Scripts/MiniApps/miniapp.mjs",
+        "validate",
+        "--sdk",
+        "/dev/shm/hanlin-sdk-only-kit-45335292541/AI_HLY/Downstream/RuntimeCore/Node/Host/MiniAppSDK",
+        "--engine",
+        "nativescript",
+        "--project",
+        "/dev/shm/hanlin-sdk-only-kit-45335292541/author-work/nativescript-table-share",
+        "--report",
+        "/dev/shm/hanlin-sdk-only-kit-45335292541/author-work/evidence/nativescript-validate-final/report.json"
+      ],
+      "commandText": "/usr/local/bin/node /dev/shm/hanlin-sdk-only-kit-45335292541/Scripts/MiniApps/miniapp.mjs validate --sdk /dev/shm/hanlin-sdk-only-kit-45335292541/AI_HLY/Downstream/RuntimeCore/Node/Host/MiniAppSDK --engine nativescript --project /dev/shm/hanlin-sdk-only-kit-45335292541/author-work/nativescript-table-share --report /dev/shm/hanlin-sdk-only-kit-45335292541/author-work/evidence/nativescript-validate-final/report.json",
+      "exitCode": 0,
+      "succeeded": true,
+      "diagnostics": [],
+      "reportSHA256": "dc5ae91c21c79819e52ee333fd05075e1fe3f027e63c86b785bfa1217de66813",
+      "typecheck": {
+        "strict": true,
+        "checkJs": false,
+        "skipLibCheck": true,
+        "dependencyDeclarationsChecked": false
+      }
+    }
+  ],
+  "integrity": [
+    {
+      "engine": "expo",
+      "sourceHashCount": 8,
+      "compiledHashCount": 4,
+      "mismatches": [],
+      "embeddedValidationSucceeded": true,
+      "embeddedTypecheck": {
+        "strict": true,
+        "checkJs": false,
+        "skipLibCheck": false,
+        "dependencyDeclarationsChecked": true
+      }
+    },
+    {
+      "engine": "nativescript",
+      "sourceHashCount": 7,
+      "compiledHashCount": 7,
+      "mismatches": [],
+      "embeddedValidationSucceeded": true,
+      "embeddedTypecheck": {
+        "strict": true,
+        "checkJs": false,
+        "skipLibCheck": true,
+        "dependencyDeclarationsChecked": false
+      },
+      "generatedBootstrap": "import \"./modules/index.js\";\n",
+      "generatedIndexImports": [
+        "import { Application, Button, Color, Label, Page, ScrollView, StackLayout, Switch, TextField, } from '@nativescript/core';",
+        "import { dollars, readNonNegative, splitBill } from \"./model.js\";",
+        "export function createTableSharePage() {",
+        "    const page = new Page();",
+        "    page.actionBarHidden = true;"
+      ]
+    }
+  ],
+  "sourceAndReportStability": "Original source input inventories and validation reports are byte-identical between initial and final validation for each engine.",
+  "documentationFindings": [
+    {
+      "id": "G1",
+      "severity": "unresolved launch-contract documentation gap",
+      "resource": "docs/hanlin-expo-runtime.md",
+      "section": "7.2 (AppRegistry registration), compared with 4 (package contract)",
+      "finding": "The guide demonstrates AppRegistry.registerComponent('ExpoSwiftUIProbe', () => App) but does not explain how a custom registration key is associated with Hanlin package launch. The original authored source registers DepartureBudget. Generated script.json and package.json have no moduleName/componentName/appKey association.",
+      "handling": "Kept the original custom registration key unchanged. Both validation and build pass, but those public results do not establish which key the native host will select. Did not read internal host code or request an API recipe from the parent.",
+      "status": "UNRESOLVED; requires authoritative documentation or separate native acceptance. This is not proof of a launch failure."
+    },
+    {
+      "id": "G2",
+      "severity": "documentation ambiguity resolved for portable authoring",
+      "resource": "docs/hanlin-nativescript-guide.md",
+      "section": "5 (TypeScript configuration)",
+      "finding": "The standalone guide snippet names @nativescript/types-ios, while the actual exported SDK config names @nativescript/core/global-types and @nativescript/types.",
+      "handling": "Followed the newer authoring workflow: project tsconfig selects source files only, and the original SDK configuration supplies its actual global declarations. Did not infer that @nativescript/types-ios is missing; no dependency installation or compiler override was attempted.",
+      "status": "RESOLVED for these projects using exported SDK config and successful source validation."
+    },
+    {
+      "id": "G3",
+      "severity": "stale informational version",
+      "resource": "docs/hanlin-expo-runtime.md",
+      "section": "8.1 (Native API hybrid extension)",
+      "finding": "The guide mentions react-native-worklets@0.13.1, while this exact SDK manifest reports react-native-worklets@0.13.0.",
+      "handling": "Used exact manifest versions as instructed. The authored Expo app does not directly import worklets or the Native API extension.",
+      "status": "No build blocker encountered; documentation version discrepancy retained."
+    },
+    {
+      "id": "G4",
+      "severity": "legacy build example outside portable SDK workflow",
+      "resource": "docs/hanlin-expo-runtime.md",
+      "section": "7.3 (Building & Packaging)",
+      "finding": "The guide points to Scripts/Expo/build-probe.mjs for packaging, whereas PUBLIC_TRANSPORT.txt and AUTHORING_WORKFLOW.md provide the current SDK-only public miniapp CLI route.",
+      "handling": "Used only the supplied public miniapp CLI. Did not open build-probe.mjs or copy any fixture.",
+      "status": "RESOLVED for this acceptance via the explicit public transport/current authoring workflow."
+    }
+  ],
+  "nativeAcceptancePlanFile": "native-acceptance-plan.json",
+  "boundaries": {
+    "readScope": "PUBLIC_TRANSPORT.txt; exported SDK manifest, normal authoring docs, original library sources/declarations; own workspace; public CLI outputs.",
+    "internalImplementationReads": false,
+    "priorFixtureOrEvidenceReads": false,
+    "networkDocumentationReads": false,
+    "dependencyInstallation": false,
+    "sdkModification": false,
+    "compilerPolicyOverrides": false,
+    "authoredSuppressions": false,
+    "nativeImportLaunchOrDeviceTests": false,
+    "providedCIOriginIndependentlyQueried": false
+  },
+  "independentReview": "A separate reviewer examined only the newly authored source supplied in context. No definite calculation or event-wiring blocker; Expo registration association was the sole material launch-contract uncertainty. No extra tests or file mutations."
+}
