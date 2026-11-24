@@ -45,6 +45,7 @@ public struct HanlinAnimatedDisclosure<Content: View>: View {
         ChatDisclosureLayout(progress: progress, spacing: spacing) {
             if mounted {
                 VStack(alignment: .leading, spacing: 6, content: content)
+                    .modifier(ChatDisclosureContentVisibility(progress: progress))
                     .transition(.identity)
             }
         }
@@ -91,6 +92,22 @@ public struct HanlinAnimatedDisclosure<Content: View>: View {
             if expanding { mounted = true }
             progress = expanding ? 1 : 0
         }
+    }
+}
+
+/// Keep the retained subtree render-hidden at the fully collapsed endpoint.
+/// Interpolated progress preserves the preset's opacity for every visible frame;
+/// using the target state here would change the entire collapse's fade curve.
+private struct ChatDisclosureContentVisibility: ViewModifier, Animatable {
+    var progress: CGFloat
+
+    var animatableData: CGFloat {
+        get { progress }
+        set { progress = newValue }
+    }
+
+    func body(content: Content) -> some View {
+        content.opacity(ChatDisclosureGeometry.fraction(Double(progress)) > 0 ? 1 : 0)
     }
 }
 
