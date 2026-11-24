@@ -49,12 +49,8 @@ public struct HanlinInvokeScriptActionIntent: AppIntent {
     }
 
     public func perform() async throws -> some IntentResult & ReturnsValue<String> & ShowsSnippetIntent {
-        guard generation >= 0, parametersJSON.utf8.count <= 256 * 1_024,
-              let data = parametersJSON.data(using: .utf8) else {
-            throw HanlinScriptAppIntentBridgeError.invalidParameters
-        }
-        let object = try JSONSerialization.jsonObject(with: data)
-        let parameters = try Self.value(object, depth: 0)
+        guard generation >= 0 else { throw HanlinScriptAppIntentBridgeError.invalidParameters }
+        let parameters = try Self.decodeParameters(parametersJSON)
         let identity = HanlinScriptExtensionIdentity(
             installedPackageID: try .init(validating: installedPackageID),
             packageID: try .init(validating: packageID),
@@ -71,8 +67,12 @@ public struct HanlinInvokeScriptActionIntent: AppIntent {
         return .result(value: command.id.uuidString, snippetIntent: HanlinInvocationSnippetIntent(invocationID: command.id))
     }
 
-    private static func value(_ object: Any, depth: Int) throws -> HanlinValue {
-        guard depth <= 64 else { throw HanlinScriptAppIntentBridgeError.invalidParameters }
+    static func decodeParameters(_ json: String) throws -> HanlinValue {
+        guard let data = json.data(using: .utf8) else { throw HanlinScriptAppIntentBridgeError.invalidParameters }
+        return try value(JSONSerialization.jsonObject(with: data))
+    }
+
+    private static func value(_ object: Any) throws -> HanlinValue {
         switch object {
         case is NSNull:
             return .null
@@ -87,10 +87,10 @@ public struct HanlinInvokeScriptActionIntent: AppIntent {
             }
             return try .finiteNumber(value)
         case let array as [Any]:
-            return .array(try array.map { try value($0, depth: depth + 1) })
+            return .array(try array.map { try value($0) })
         case let dictionary as [String: Any]:
             return .object(try .init(uniqueMembers: dictionary.map {
-                (key: $0.key, value: try value($0.value, depth: depth + 1))
+                (key: $0.key, value: try value($0.value))
             }))
         default:
             throw HanlinScriptAppIntentBridgeError.invalidParameters

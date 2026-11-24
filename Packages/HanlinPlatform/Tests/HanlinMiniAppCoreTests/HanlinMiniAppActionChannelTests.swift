@@ -10,15 +10,24 @@ struct HanlinMiniAppActionChannelTests {
         let channel = HanlinMiniAppActionChannel()
         try await channel.register(actions: ["search"])
         let id = UUID()
+        var nested: HanlinValue = .bool(true)
+        for _ in 0..<65 { nested = .array([nested]) }
+        let parameters: HanlinValue = .object([
+            "query": .string("שלום {{origin}}"),
+            "document": .string(String(repeating: "x", count: 1_048_577)),
+            "nested": nested,
+            "items": .array(Array(repeating: .null, count: 100_001))
+        ])
         let task = Task { try await channel.invoke(id: id, action: "search", caller: "hanlin.host",
-            parameters: .object(["query": .string("שלום {{origin}}")])) }
+            parameters: parameters) }
         let request = try await channel.next()
         #expect(request.id == id)
         #expect(request.action == "search")
-        #expect(request.parameters == .object(["query": .string("שלום {{origin}}")]))
-        let wire = try HanlinJSONValue.decodeCanonicalJSON(request.jsonData())
+        #expect(request.parameters == parameters)
+        let wire = try HanlinJSONValue.decodeCanonicalJSON(request.jsonData(), limits: .unbounded)
         guard case let .object(object) = wire else { Issue.record("Expected object"); return }
         #expect(object["caller"] == .string("hanlin.host"))
+        #expect(try HanlinValue(jsonValue: #require(object["parameters"])) == parameters)
         try await channel.complete(id: id, result: .success(.object(["total": .integer(7)])))
         #expect(try await task.value == .object(["total": .integer(7)]))
         await channel.close()

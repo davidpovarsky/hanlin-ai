@@ -17,7 +17,7 @@ public actor HanlinMiniAppActionChannel {
                 "action": .string(action),
                 "caller": .string(caller),
                 "parameters": parameters.jsonValue(destination: .javaScriptBinary64)
-            ]).canonicalJSONData()
+            ]).canonicalJSONData(limits: .unbounded)
         }
     }
 

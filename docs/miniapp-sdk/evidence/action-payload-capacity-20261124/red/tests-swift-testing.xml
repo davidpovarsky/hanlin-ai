@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="TestResults" errors="0" tests="2" failures="4" skipped="0" time="0.364483629">
+    <testcase classname="ActionPayloadCapacityTests.HanlinMiniAppRequestLifetimeTests" name="explicitlyRequestedDeadlinesAndSizeBudgetsAreStillEnforced()" time="0.147211867" >
+      <failure message="Expectation failed: HanlinMiniAppRequestBroker.Limits.personalHost.maximumPayloadBytes == .max (error)" />
+      <failure message="Expectation failed: HanlinMiniAppRequestBroker.Limits.personalHost.maximumResponseBytes == .max (error)" />
+      <failure message="Caught error: .payloadTooLarge (error)" />
+    </testcase>
+    <testcase classname="ActionPayloadCapacityTests.HanlinMiniAppActionChannelTests" name="requestReplyPreservesIdentityAndPayload()" time="0.363866225" >
+      <failure message="Caught error: .sizeLimitExceeded(kind: &quot;string UTF-8 bytes&quot;, measured: 1048577, maximum: 1048576, path: &quot;/parameters/document&quot;) (error)" />
+    </testcase>
+  </testsuite>
+</testsuites>

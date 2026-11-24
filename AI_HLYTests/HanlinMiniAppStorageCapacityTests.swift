@@ -1,6 +1,6 @@
 import Foundation
 import HanlinPlatformContracts
-import HanlinScriptExtensions
+@testable import HanlinScriptExtensions
 import Testing
 
 struct HanlinMiniAppStorageCapacityTests {
@@ -36,6 +36,36 @@ struct HanlinMiniAppStorageCapacityTests {
                 revision: 1, values: ["document": .string(document)])])
         try store.save(snapshot)
         #expect(try HanlinScriptExtensionStore(root: root).load() == snapshot)
+
+        // The same active ingress stores large/deep action data and more than
+        // 128 pending commands; the existing read limit remains a batch size.
+        let nestedJSON = String(repeating: "[", count: 65) + "true" + String(repeating: "]", count: 65)
+        let parametersJSON = "{\"document\":\"" + document + "\",\"nested\":" + nestedJSON + "}"
+        let parameters = try HanlinInvokeScriptActionIntent.decodeParameters(parametersJSON)
+        var nested: HanlinValue = .bool(true)
+        for _ in 0..<65 { nested = .array([nested]) }
+        #expect(parameters == .object(["document": .string(document), "nested": nested]))
+        #expect(throws: (any Error).self) { try HanlinInvokeScriptActionIntent.decodeParameters("[") }
+        let now = Date(timeIntervalSince1970: 1_700_000_000)
+        let first = HanlinScriptResumeCommand(createdAt: now,
+            invocation: .init(identity: identity, entityID: "action.capacity", parameters: parameters))
+        try store.enqueue(first)
+        var commandIDs = Set([first.id])
+        for ordinal in 1..<129 {
+            let next = HanlinScriptResumeCommand(createdAt: now,
+                invocation: .init(identity: identity, entityID: "action.capacity", parameters: .integer(Int64(ordinal))))
+            try store.enqueue(next)
+            commandIDs.insert(next.id)
+        }
+        #expect(try store.pendingCommands().count == 64)
+        let scan = try store.scanPendingCommands(limit: 129)
+        #expect(scan.rejections.isEmpty && Set(scan.commands.map(\.id)) == commandIDs)
+        let claim = try #require(try store.claim(first.id, now: now))
+        try store.complete(claim, status: .succeeded, value: parameters, now: now)
+        let reopened = HanlinScriptExtensionStore(root: root)
+        #expect(try reopened.command(for: first.id)?.invocation.parameters == parameters)
+        #expect(try reopened.receipt(for: first.id)?.value == parameters)
+        #expect(try reopened.scanPendingCommands(limit: 129).commands.count == 128)
 
         #expect(throws: HanlinScriptExtensionStoreError.invalidArtifactReference) {
             try store.materializeResources(["../outside.bin": Data([1])], identity: identity)

@@ -191,7 +191,7 @@ public struct HanlinShowMiniAppSnippetIntent: AppIntent {
     public init() {}
 
     public func perform() async throws -> some IntentResult & ReturnsValue<String> & ShowsSnippetIntent {
-        let json = try HanlinJSONValue.decodeCanonicalJSON(Data(parametersJSON.utf8))
+        let json = try HanlinJSONValue.decodeCanonicalJSON(Data(parametersJSON.utf8), limits: .unbounded)
         let parameters = try HanlinValue(jsonValue: json)
         let request = HanlinNativePresentationRequest(identity: miniApp.identity, kind: .snippet,
             actionName: miniApp.actionName, inputText: text, parameters: parameters)

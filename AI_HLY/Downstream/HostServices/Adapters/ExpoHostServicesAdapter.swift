@@ -73,7 +73,7 @@ public final class ExpoHostServicesAdapter: NSObject, @unchecked Sendable, Hanli
             return String(decoding: try request.jsonData(), as: UTF8.self)
 
         case "actions.complete":
-            guard case let .object(object) = try HanlinJSONValue.decodeCanonicalJSON(payloadData),
+            guard case let .object(object) = try HanlinJSONValue.decodeCanonicalJSON(payloadData, limits: .unbounded),
                   case let .string(rawID)? = object["id"], let id = UUID(uuidString: rawID) else {
                 throw HanlinHostServiceError.invalidRequest("Action completion requires a valid invocation id")
             }
