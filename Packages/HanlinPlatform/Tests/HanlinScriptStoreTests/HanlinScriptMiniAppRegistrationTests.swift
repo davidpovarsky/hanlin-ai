@@ -649,6 +649,47 @@ struct HanlinScriptMiniAppRegistrationTests {
         }
     }
 
+    @Test("Prepared action identifiers preserve export case, round trip, and reject malformed values")
+    func preparedActionIdentifiersPreserveCaseAndRejectMalformedValues() throws {
+        let names = ["hostServicesEcho", "hostServicesFail", "hostServicesPublishWidget"]
+        for name in names {
+            let actionID = try HanlinActionID(validating: name)
+            #expect(actionID.rawValue == name)
+            #expect(actionID != HanlinActionID(rawValue: name.lowercased()))
+            let encoded = try JSONEncoder().encode(actionID)
+            #expect(try JSONDecoder().decode(HanlinActionID.self, from: encoded) == actionID)
+            #expect(HanlinAppID(rawValue: name) == nil)
+            #expect(HanlinCapabilityID(rawValue: name) == nil)
+        }
+        let invalidNames = ["", ".Echo", "Echo-", "Echo..Value", "Echo/_Value",
+                            "Echo Value", "Echo\n", "הד", String(repeating: "A", count: 256)]
+        for name in invalidNames {
+            #expect(HanlinActionID(rawValue: name) == nil)
+            let encoded = try JSONEncoder().encode(name)
+            #expect(throws: HanlinContractError.self) {
+                try JSONDecoder().decode(HanlinActionID.self, from: encoded)
+            }
+        }
+        let schema = try #require(JSONSerialization.jsonObject(with: HanlinManifestSchema.data()) as? [String: Any])
+        let definitions = try #require(schema["$defs"] as? [String: Any])
+        let action = try #require(definitions["action"] as? [String: Any])
+        let properties = try #require(action["properties"] as? [String: Any])
+        let identity = try #require(properties["id"] as? [String: Any])
+        #expect(identity["$ref"] as? String == "#/$defs/actionIdentifier")
+        let actionIdentity = try #require(definitions["actionIdentifier"] as? [String: Any])
+        let pattern = try #require(actionIdentity["pattern"] as? String)
+        let expression = try NSRegularExpression(pattern: pattern)
+        for name in names + ["share.value", "Action_1", "A"] {
+            let range = NSRange(name.startIndex..., in: name)
+            #expect(expression.firstMatch(in: name, range: range)?.range == range)
+        }
+        for name in invalidNames.dropLast() {
+            let range = NSRange(name.startIndex..., in: name)
+            #expect(expression.firstMatch(in: name, range: range) == nil)
+        }
+        #expect(actionIdentity["maxLength"] as? Int == 255)
+    }
+
     private func preparedActionSnapshot(
         entrypoints: [HanlinPackageEntrypointDescriptor],
         runtime: HanlinRuntimeProfile = .hanlinExpo
