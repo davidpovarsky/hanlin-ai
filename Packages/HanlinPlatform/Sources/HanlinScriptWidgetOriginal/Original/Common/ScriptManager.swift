@@ -506,7 +506,7 @@ final class ScriptWidgetPackageStorageContext: @unchecked Sendable {
 /// One bounded execution image. Resource lifetime follows the package retained
 /// by the renderer, while identity validation always checks the original binding.
 final class ScriptWidgetExecutionSnapshot {
-    static let maximumSourceBytes = 2 * 1024 * 1024 // Hanlin snapshots store already-prepared JavaScript; raw input is checked by the authoring compiler.
+    static let maximumSourceBytes = ScriptWidgetRuntimeContract.maximumTranspiledBytes // Hanlin snapshots store already-prepared JavaScript; raw input is checked by the authoring compiler.
     let package: ScriptWidgetPackage
     let source: String
     let hasUnsavedEntry: Bool

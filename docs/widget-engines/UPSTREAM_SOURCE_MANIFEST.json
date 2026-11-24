@@ -2410,7 +2410,7 @@
       "upstream": "Shared/ScriptWidgetRuntime/Common/ScriptManager.swift",
       "upstreamBlob": "1f5c8257450a152370d9296b8de15dcb5fcf850a",
       "local": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptManager.swift",
-      "localSHA256": "23f8b73e8e49d5b7a58dfa8874386e7c1b561e39386d667b5458b94659ee8926",
+      "localSHA256": "facae6f7b15611a71869ab87fe077c542be22ce58b4c09b280fb7e29236bbe7f",
       "byteIdentical": false,
       "adaptation": "Original API/core source compiled in an isolated Swift 5 module. Host adaptations configure product storage, native bundle resources, the existing ZIPFoundation archive backend, and externally prepared JavaScript sessions. Original OS providers and JSExport contracts are retained. Trailing-space normalization preserves native source behavior."
     },
