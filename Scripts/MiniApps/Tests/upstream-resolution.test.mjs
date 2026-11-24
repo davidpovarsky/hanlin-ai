@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {mkdtemp,rm} from 'node:fs/promises';
+import {mkdtemp,readFile,rm} from 'node:fs/promises';
 import {tmpdir} from 'node:os';
 import path from 'node:path';
 import {expoRanges,latestMetadata,reactTypesSelection,compilerSelections,generatedHostVersions,generatedExpoHostVersions,generatedNativeAPIHostVersions} from '../resolve-upstreams.mjs';
@@ -81,4 +81,32 @@ test('an unconstrained original NativeScript compiler peer preserves the verifie
   const selected=compilerSelections({devDependencies:{typescript:'npm:@typescript/typescript6@6.0.2'}},{devDependencies:{typescript:'5.9.3'}},new Map([['@nativescript/vite',{peerDependencies:{typescript:'*'}}]]));
   assert.equal(selected.expo.requested,'npm:@typescript/typescript6@6.0.2');
   assert.equal(selected.nativescript.requested,'5.9.3');assert.equal(selected.nativescript.upstreamPeerRange,'*');
+});
+
+// Exact original @expo/ui58.0.29 input that failed the real WidgetKit target.
+// The next input below changes only a default to exercise a later refresh.
+test('SlotView refresh preserves native children and upstream changes without a React shadow hook',async()=>{
+  const original=await readFile(new URL('./Fixtures/expo-ui-58.0.29/SlotView.swift',import.meta.url));
+  const target='Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/SlotView.swift';
+  const cache=await mkdtemp(path.join(tmpdir(),'hanlin-slot-refresh-'));
+  const local=Buffer.from(original.toString()+'\n// Existing host customization.\n');
+  try {
+    const unchanged=await mergeOriginal({local,previous:original,next:original,cache,label:'same original SlotView',target});
+    assert.doesNotMatch(unchanged.toString(),/publishZeroContentOrigin|shadowNodeProxy/);
+    assert.match(unchanged.toString(),/public var body: some View \{\s+Children\(\)\s+\}/);
+    assert.match(unchanged.toString(),/@Field var name: String = ""/);
+    assert.match(unchanged.toString(),/@Field var extraProps: \[String: Any\]\?/);
+    const helpers=original.toString().slice(original.toString().indexOf('  func extra<T>')).trimEnd();
+    assert.ok(unchanged.toString().includes(helpers),'all original extra/slot/filter helpers must be retained');
+    assert.match(unchanged.toString(),/Existing host customization/);
+    const next=Buffer.from(original.toString().replace('@Field var name: String = ""','@Field var name: String = "updated original default"'));
+    const advanced=await mergeOriginal({local:unchanged,previous:original,next,cache,label:'advanced original SlotView',target});
+    assert.match(advanced.toString(),/@Field var name: String = "updated original default"/);
+    assert.match(advanced.toString(),/Children\(\)/);
+    assert.ok(advanced.toString().includes(helpers));
+    assert.match(advanced.toString(),/Existing host customization/);
+    assert.doesNotMatch(advanced.toString(),/publishZeroContentOrigin|shadowNodeProxy/);
+    const foreground=await mergeOriginal({local:original,previous:original,next:original,cache,label:'foreground SlotView',target:'Packages/HanlinExpoRuntime/OriginalExpoUI/SlotView.swift'});
+    assert.deepEqual(foreground,original,'the complete foreground React implementation must remain unchanged');
+  } finally {await rm(cache,{recursive:true,force:true});}
 });

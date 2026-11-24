@@ -16,7 +16,6 @@ public struct SlotView: ExpoSwiftUI.View {
 
   public var body: some View {
     Children()
-      .publishZeroContentOrigin(props.shadowNodeProxy)
   }
 
   func extra<T>(_ key: String, as type: T.Type = T.self) -> T? {

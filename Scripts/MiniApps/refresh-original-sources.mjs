@@ -22,7 +22,14 @@ async function source(url,cache) {
 const raw=(repository,commit,file)=>`https://raw.githubusercontent.com/${repository}/${commit}/${file}`;
 function tarMember(archive,relative) {return execFileSync('tar',['-xOf',archive,'package/'+relative],{maxBuffer:16*1024*1024});}
 
-export async function mergeOriginal({local,previous,next,cache,label}) {
+export async function mergeOriginal({local,previous,next,cache,label,target}) {
+  // Project every side before equality shortcuts too: a newly required host
+  // adaptation must repair an existing copy even when upstream is unchanged.
+  if(target) {
+    local=originalInHostTarget(local,target);
+    previous=originalInHostTarget(previous,target);
+    next=originalInHostTarget(next,target);
+  }
   if(Buffer.compare(previous,next)===0)return local;
   if(Buffer.compare(local,previous)===0)return next;
   const directory=path.join(cache,'merge-'+sha(label));await mkdir(directory,{recursive:true});
@@ -66,15 +73,20 @@ export function originalInHostTarget(bytes,local) {
   // together in one module. The original source's imports of those same modules
   // are namespace changes, not replacements for their implementation.
   let text=bytes.toString().replace(/^import (ExpoModulesCore|ExpoUI)\r?\n/gm,'');
+  if(local.includes('/ExpoUI/')) {
+    // This callback only reports an origin to React's bound Yoga shadow node.
+    // Widgets construct dictionary props and render original SwiftUI children
+    // directly, so there is no React measurement callback to invoke. Preserve
+    // all native layout and slot behavior; the full ExpoUI framework keeps it.
+    text=text.replace(/^[ \t]*\.publishZeroContentOrigin\(props\.shadowNodeProxy\)\r?\n/gm,'');
+  }
   if(local.endsWith('/ExpoUI/UIBaseView.swift')) {
     // The existing extension target owns SwiftUI rendering, while the original
     // foreground ExpoUI framework owns Expo Module view registration. Preserve
     // that existing separation when upstream edits its registration builder.
     const registration=text.indexOf('/**\n Common UI Builder in expo-ui.');
     if(registration!==-1)text=text.slice(0,registration).trimEnd()+'\n';
-    // Yoga positioning belongs to the real foreground Core/ExpoUI framework.
-    // This prepared SwiftUI tree has no React shadow node to publish an origin to.
-    text=text.replace(/^\s*\.publishZeroContentOrigin\(props\.shadowNodeProxy\)\r?\n/gm,'');
+    // The React-only helper belongs to the complete foreground ExpoUI framework.
     const shadowHook=text.indexOf('func publishZeroContentOrigin(');
     if(shadowHook!==-1) {
       const start=text.lastIndexOf('extension View {',shadowHook);
@@ -234,7 +246,7 @@ export async function refreshOriginalSources({root,cache,publications,archives})
       adapterContracts.push(contract);entry.sourceRole='host-adapter';entry.latestUpstreamContract=contract;entry.localSHA256=sha(local);
       continue;
     }
-    let mergeLocal=local,mergePrevious=originalInHostTarget(previous,entry.local),mergeNext=originalInHostTarget(next,entry.local);
+    let mergeLocal=local,mergePrevious=previous,mergeNext=next;
     if(entry.local.endsWith('/Core/Convertibles+Color.swift')&&next.toString().includes('return try uiColorFromAny(value)')) {
       // Upstream moved this implementation to JavaScriptCodable+Color.swift.
       // The two existing numeric conversion guards move with that exact code.
@@ -254,7 +266,7 @@ export async function refreshOriginalSources({root,cache,publications,archives})
       // and include every newly introduced upstream registration and its source.
       mergeLocal=originalWidgetRegistry(local,new Set(['onHingeChange','searchable']));mergePrevious=originalWidgetRegistry(mergePrevious,removedKeys);mergeNext=originalWidgetRegistry(mergeNext,removedKeys);
     }
-    const merged=await mergeOriginal({local:mergeLocal,previous:mergePrevious,next:mergeNext,cache,label:entry.local+' <- '+entry.upstream});
+    const merged=await mergeOriginal({local:mergeLocal,previous:mergePrevious,next:mergeNext,cache,label:entry.local+' <- '+entry.upstream,target:entry.local});
     files.set(entry.local,merged);
     const changed=sha(previous)!==sha(next);
     if(changed)changes.push({path:entry.local,originalBeforeSHA256:sha(previous),originalAfterSHA256:sha(next),adapted:Buffer.compare(merged,next)!==0});

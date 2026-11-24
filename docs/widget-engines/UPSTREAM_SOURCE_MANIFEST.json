@@ -835,9 +835,9 @@
       "upstream": "packages/expo-ui/ios/SlotView.swift",
       "upstreamBlob": "f6645b2990a7cfd6a8cee8aeee20e671744ff556",
       "local": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/SlotView.swift",
-      "localSHA256": "136d5f77582de7690d7ec3d2a3a43678d1fc89e6784b52698dab7e04c24d79ae",
+      "localSHA256": "fc5e06f90d624fb6e5a4dc88857f0744b47ee476d17bbd3ebb4a2558c105379d",
       "byteIdentical": false,
-      "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
+      "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored. SlotView retains original native children and slot helpers; the React-only shadow-origin callback is omitted in this WidgetKit dictionary context.",
       "upstreamPublication": {
         "package": "@expo/ui",
         "version": "58.0.29",
