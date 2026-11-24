@@ -18,6 +18,7 @@ export const manifestSources = {
   widgetValidator: 'Scripts/MiniApps/scriptwidget/manifest-validation.mjs',
   widgetMetadata: 'Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptMetadata.swift',
   widgetPackage: 'Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptWidgetPackage.swift',
+  widgetNetworkPolicy: 'Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeFetch.swift',
   widgetControls: 'Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/HanlinOriginalScriptWidgetControls.swift',
   canonicalSchema: 'Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json',
 };
@@ -325,9 +326,13 @@ export async function auditManifestContracts({source}) {
 
   const widgetSchema = JSON.parse(r.widgetSchema.text);
   const originalSources = widgetSchema['x-original-contract']?.sources;
-  if (!Array.isArray(originalSources) || originalSources.length !== 2) throw new Error('Original widget provenance is missing.');
+  const expectedOriginalSources = [r.widgetMetadata, r.widgetPackage, r.widgetNetworkPolicy];
+  if (!Array.isArray(originalSources) || originalSources.length !== expectedOriginalSources.length)
+    throw new Error('Original widget provenance is missing or has unexpected sources.');
+  assertKeys(originalSources.map(original => original?.path), expectedOriginalSources.map(record => record.path),
+    'original widget provenance sources');
   for (const original of originalSources) {
-    const record = Object.values(r).find(record => record.path === original.path);
+    const record = expectedOriginalSources.find(record => record.path === original.path);
     if (!record || record.sha256 !== original.sha256) throw new Error('Original widget manifest source/schema drift: ' + original.path);
   }
   for (const name of ['WidgetPackageAuthor', 'WidgetPackageAction', 'WidgetPackageControl', 'WidgetPackagePushUpdates', 'WidgetPackageTimeline', 'WidgetPackageManifest'])
@@ -369,7 +374,8 @@ export async function auditManifestContracts({source}) {
     source: r.widgetSchema.path, upstream: widgetSchema['x-original-contract'],
     ...schemaRows(widgetSchema, r.widgetSchema, 'the original-derived ScriptWidget schema'),
     additionalAuthorities: [ref(r.widgetMetadata, 'struct WidgetPackageManifest:'), ref(r.widgetMetadata, 'enum WidgetPackageManifestValidator'),
-      ref(r.widgetPackage, 'func readManifest()'), ref(r.widgetControls, 'read('), ref(r.widgetValidator, 'validateScriptWidgetManifest')],
+      ref(r.widgetPackage, 'func readManifest()'), ref(r.widgetNetworkPolicy, 'static func isValidDomainDeclaration('),
+      ref(r.widgetControls, 'read('), ref(r.widgetValidator, 'validateScriptWidgetManifest')],
     boundary: 'Root widget.json is retained for main ScriptWidget compilation; entry must match widget source. Original control actions are derived; separate nativePresentations do not derive root controls. Original permission declarations add no Hanlin approval flow. Upstream schema constraints are not new host limits.'};
   const canonical = JSON.parse(r.canonicalSchema.text);
   const compiled = {family: 'canonical compiled Hanlin app', engines: ['canonical descriptor; separate format'], owner: 'HanlinPlatformContracts schema',

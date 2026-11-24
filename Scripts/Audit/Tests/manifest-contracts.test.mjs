@@ -54,6 +54,11 @@ test('all current manifest fields have source authorities and future reader/sche
   assert(script.fields.find(item => item.field === 'contributors[].homepage').semantics.includes('not contributors'));
   const widgets = family('original ScriptWidget widget.json');
   assert(widgets.fields.some(item => item.field === '#/$defs/WidgetPackageControl/properties/actionID'));
+  const expectedOriginalPaths = [manifestSources.widgetMetadata, manifestSources.widgetPackage, manifestSources.widgetNetworkPolicy];
+  assert.deepEqual(widgets.upstream.sources.map(item => item.path).sort(), expectedOriginalPaths.toSorted());
+  for (const authority of widgets.upstream.sources)
+    assert.equal(authority.sha256, sha(original.get(authority.path)));
+  assert(widgets.additionalAuthorities.some(item => item.path === manifestSources.widgetNetworkPolicy && item.line));
   const canonical = family('canonical compiled Hanlin app');
   assert(canonical.fields.some(item => item.field === '#/$defs/tool/properties/presentation/properties/embeddedPresentation/properties/expansion/properties/expandedHandler'));
   assert(!canonical.fields.some(item => item.field === '#/$defs/schema/properties/properties/type'),
@@ -84,6 +89,20 @@ test('all current manifest fields have source authorities and future reader/sche
     "const pkg = await json(path.join(source, 'package.json')); void pkg.futureDependencyContract;");
   await assert.rejects(auditManifestContracts({source: reader(original, new Map([[manifestSources.authoring, changedDependency]]))}),
     /Unmapped manifest field drift: NativeScript installed dependency package.json reads/);
+  const originalSchema = JSON.parse(original.get(manifestSources.widgetSchema));
+  const provenanceCases = [
+    ['missing helper', sources => sources.filter(item => item.path !== manifestSources.widgetNetworkPolicy), /Original widget provenance is missing/],
+    ['extra authority', sources => [...sources, {path: manifestSources.widgetValidator, sha256: sha(original.get(manifestSources.widgetValidator))}], /Original widget provenance is missing/],
+    ['duplicate replacing helper', sources => sources.map(item => item.path === manifestSources.widgetNetworkPolicy ? sources[0] : item), /Unmapped manifest field drift: original widget provenance sources/],
+    ['different registered authority', sources => sources.map(item => item.path === manifestSources.widgetNetworkPolicy ? {path: manifestSources.widgetValidator, sha256: sha(original.get(manifestSources.widgetValidator))} : item), /Unmapped manifest field drift: original widget provenance sources/],
+    ['incorrect helper hash', sources => sources.map(item => item.path === manifestSources.widgetNetworkPolicy ? {...item, sha256: '0'.repeat(64)} : item), /Original widget manifest source\/schema drift/],
+  ];
+  for (const [label, mutate, diagnostic] of provenanceCases) {
+    const changed = structuredClone(originalSchema);
+    changed['x-original-contract'].sources = mutate(changed['x-original-contract'].sources);
+    await assert.rejects(auditManifestContracts({source: reader(original,
+      new Map([[manifestSources.widgetSchema, JSON.stringify(changed)]]))}), diagnostic, label);
+  }
   const changedOriginalSchema = JSON.parse(original.get(manifestSources.widgetSchema));
   changedOriginalSchema.$defs.WidgetPackageControl.properties.futureAction = {type: 'string'};
   await assert.rejects(auditManifestContracts({source: reader(original, new Map([[manifestSources.widgetSchema, JSON.stringify(changedOriginalSchema)]]))}),
@@ -99,6 +118,7 @@ test('all current manifest fields have source authorities and future reader/sche
   console.log(JSON.stringify({sourceOnly: true, nativeAcceptance: 'NOT_INFERRED',
     fields: coverage.fieldCount, families: coverage.families.map(item => ({family: item.family, fields: item.fields.length})),
     sourceSHA256: Object.fromEntries([...original].map(([file, text]) => [file, sha(text)])),
+    originalProvenanceSources: expectedOriginalPaths, provenanceMutationsRejected: provenanceCases.map(([label]) => label),
     driftCases: ['new retained-field consumer rejected', 'renamed native input field rejected',
       'new prepared package reader field rejected', 'new installed-dependency field rejected', 'original schema/Codable mismatch rejected',
       'new canonical schema property automatically reaches checked outputs']}));
