@@ -76,15 +76,25 @@ enum AssistantToolBridge {
 
     static func live(
       scriptingRegistry: HanlinScriptingProviderRegistry,
+      explicitlySelectedNativeNames: Set<String> = [],
+      miniAppTools: [NativeTool] = [],
       executeLegacy: (@MainActor (String, String, NativeToolExecutionContext) async -> NativeToolResult)? = nil
     ) -> Self {
-      Self(
+      let miniAppsByName = Dictionary(miniAppTools.map { ($0.name, $0) }, uniquingKeysWith: { first, _ in first })
+      return Self(
         executeNative: { providerInstanceID, toolName, argumentsJSON, context in
-          await NativeToolBridge.executeCanonical(
+          if let tool = miniAppsByName[toolName] {
+            guard (try? NativeToolCanonicalShadowAdapter.providerInstanceID(for: tool.catalogEntry)) == providerInstanceID else {
+              return NativeToolResult(modelText: "The selected MiniApp route changed.", outcome: .rejectedByAvailability)
+            }
+            return await tool.execute(argumentsJSON: argumentsJSON, context: context)
+          }
+          return await NativeToolBridge.executeCanonical(
             providerInstanceID: providerInstanceID,
             toolName: toolName,
             argumentsJSON: argumentsJSON,
-            context: context
+            context: context,
+            explicitlySelected: explicitlySelectedNativeNames.contains(toolName)
           )
         },
         executeMCP: { serverID, toolName, resultTitle, argumentsJSON in
@@ -235,7 +245,10 @@ enum AssistantToolBridge {
       scope: AssistantToolRequestScope,
       scriptingRegistry: HanlinScriptingProviderRegistry = .shared
     ) async throws -> PreparedTools {
-      let nativeSources = try NativeToolBridge.canonicalSourcesForRequest()
+      try HanlinComposerCapabilities.validate(scope.capabilityAttachments)
+      var nativeSources = try NativeToolBridge.canonicalSourcesForRequest(
+        explicitToolNames: HanlinComposerCapabilities.explicitNativeNames(in: scope.capabilityAttachments))
+      nativeSources += AssistantToolBridge.miniAppSources(HanlinMiniAppAssistantToolExports.tools(attachments: scope.capabilityAttachments))
       let mcpTools = await MCPToolBridge.resolveDescriptors(scope: scope)
       let scriptSources = try HanlinScriptCanonicalAdapter.project(
         await scriptingRegistry.snapshots()
@@ -368,13 +381,15 @@ enum AssistantToolBridge {
         return nil
       }
       var result: NativeToolResult
+      var executionContext = context
+      executionContext.composerConfiguration = context.capabilitySession?.composerConfiguration(for: alias)
       switch resolution.backend {
       case .native(let providerInstanceID, let toolName):
         result = await executors.executeNative(
           providerInstanceID,
           toolName,
           argumentsJSON,
-          context
+          executionContext
         )
       case .mcp(let serverID, let toolName):
         result = await executors.executeMCP(
@@ -386,7 +401,7 @@ enum AssistantToolBridge {
       case .scripting(let route):
         result = await executors.executeScripting(route, argumentsJSON)
       case .legacy(let toolName):
-        result = await executors.executeLegacy(toolName, argumentsJSON, context)
+        result = await executors.executeLegacy(toolName, argumentsJSON, executionContext)
       }
       let logicalID = resolution.route.logicalToolID
       result.diagnostics.canonicalLogicalToolID =
@@ -429,13 +444,23 @@ enum AssistantToolBridge {
     scriptingRegistry: HanlinScriptingProviderRegistry = .shared
   ) async throws -> PreparedTools {
     do {
-      let nativeSources = try NativeToolBridge.canonicalSourcesForRequest()
+      try HanlinComposerCapabilities.validate(scope.capabilityAttachments)
+      let explicitNames = HanlinComposerCapabilities.explicitNativeNames(in: scope.capabilityAttachments)
+      var selectedLegacySources = legacySources
+      let existingLegacyIDs = Set(legacySources.map { $0.descriptor.logicalID })
+      selectedLegacySources += HanlinComposerCapabilities.explicitLegacySources(in: scope.capabilityAttachments)
+        .filter { !existingLegacyIDs.contains($0.descriptor.logicalID) }
+      let miniAppTools = HanlinMiniAppAssistantToolExports.tools(attachments: scope.capabilityAttachments)
+      var nativeSources = try NativeToolBridge.canonicalSourcesForRequest(explicitToolNames: explicitNames)
+      nativeSources += miniAppSources(miniAppTools)
       let mcpTools = await MCPToolBridge.resolveDescriptors(scope: scope)
       let scriptSources = try HanlinScriptCanonicalAdapter.project(
         await scriptingRegistry.snapshots()
       )
       let executors = Executors.live(
         scriptingRegistry: scriptingRegistry,
+        explicitlySelectedNativeNames: explicitNames,
+        miniAppTools: miniAppTools,
         executeLegacy: legacyExecutor
       )
       return PreparedTools(
@@ -443,10 +468,10 @@ enum AssistantToolBridge {
           nativeSources: nativeSources,
           mcpTools: mcpTools,
           scriptSources: scriptSources,
-          legacySources: legacySources
+          legacySources: selectedLegacySources
         ),
         executors: executors,
-        legacySources: legacySources
+        legacySources: selectedLegacySources
       )
     } catch {
       NativeToolTraceLogger.shared.log(
@@ -457,6 +482,14 @@ enum AssistantToolBridge {
         ]
       )
       throw error
+    }
+  }
+
+  private static func miniAppSources(_ tools: [NativeTool]) -> [HanlinCanonicalToolAuthority.NativeSource] {
+    tools.map { tool in
+      .init(entry: tool.catalogEntry, canonicalSchema: tool.openAIToolSchema(),
+            modelSchema: ToolSchemaDecorator.decorate(schema: tool.openAIToolSchema(),
+              profile: tool.catalogEntry.presentationProfile, progressSummaryRequired: false))
     }
   }
 }

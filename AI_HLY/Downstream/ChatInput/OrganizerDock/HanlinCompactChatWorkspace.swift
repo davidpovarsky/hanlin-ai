@@ -482,7 +482,9 @@ struct HanlinCompactChatWorkspace: View {
             readCurrentMessageState: {
                 if let endpoint { return endpoint.readCurrentMessageState?() }
                 return sessionBridge.homeDraft.snapshot
-            }
+            },
+            capabilityDraft: endpoint?.capabilityDraft ?? sessionBridge.homeDraft,
+            composerCapabilities: HanlinComposerCapabilities.catalog()
         )
         .onGeometryChange(for: CGFloat.self) { geo in
             geo.size.height

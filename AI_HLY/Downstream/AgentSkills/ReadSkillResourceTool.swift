@@ -64,7 +64,8 @@ public enum ReadSkillResourceTool {
         }
 
         do {
-            guard try await catalog.permitsInvocation(skillID, source: .model, store: store) else {
+            let source: SkillInvocationSource = session.explicitlySelectedSkillIDs.contains(skillID) ? .user : .model
+            guard try await catalog.permitsInvocation(skillID, source: source, store: store) else {
                 return "Error: This Skill is no longer available for model invocation."
             }
             try Task.checkCancellation()
