@@ -1,0 +1,108 @@
+{
+  "date": "2026-11-25",
+  "timezone": "Asia/Hebron",
+  "repository": "davidpovarsky/hanlin-ai",
+  "branch": "codex/hanlin-ai-cache-integration-20261125",
+  "baseline": "a6738f1ebbaec4a767c790c7842a0168ef4b93ee",
+  "parents": [
+    "d65c6ab6ccd4fc535f32ffac1f9ad095f6d514b1",
+    "a27e1a36e1272e17413c283ad928916f0489c1b5",
+    "635bc66274436d21236500cda4c2e873b1abe1bd"
+  ],
+  "task": "1220884079387447",
+  "phases": [
+    {
+      "id": "C0",
+      "title": "בסיס עדכני ובעלות",
+      "owner": "איתן + תומר",
+      "contract": "לאתר ראשים מרוחקים ומקומיים, dirty state וקומיטים פעילים; להתחיל מהראש העדכני ולאחד את composer/wave/SDK הרלוונטיים בעותק מבודד. לשמור SHA מלא, תוכנית בעלות ומפת קבצים. קבלה: בסיס משולב נקי, אין דריסה/force-push של עבודת אחרים, נקודות סנכרון מתועדות.",
+      "asana": "1220884041271966",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "C1",
+      "title": "הכרעת ספריות, גרסאות ומפת יכולות מקוריות",
+      "owner": "יעל + איתן",
+      "contract": "לאמת מה מתוחזק ונדרש בפועל: Swift AI SDK, MCP, OTel; להחליט מפורשות על Vercel/LRUCache/NSCache/GRDB/Redis/Valkey/RediStack/LiteLLM/Langfuse/SwiftMetrics. למפות capabilities נגישים, ממשקי מוצר, מגבלות ומניעת כפילות; לעדכן pin רק בהיקף נחוץ עם הבדלי source. קבלה: ADR ומטריצה עם primary sources, צרכן לכל dependency שנוספה.",
+      "asana": "1220884041330206",
+      "status": "IN_PROGRESS"
+    },
+    {
+      "id": "C2",
+      "title": "מדיניות מטמון וכל אפשרויות הספקים",
+      "owner": "נועם",
+      "contract": "HanlinChatModelConfiguration/ProviderFactory/AgentEngine/RequestBuilder/Parser: חוזה טיפוסי, options merging עם reasoning, scope יציב שאינו כולל סודות, OpenAI controls נתמכים, Anthropic TTL/breakpoints, Google reference. SIWC ו-compatible לא מקבלים שדות לא נתמכים. לעדכן פורק SDK המקורי אם serializer חסר. קבלה: wire + stream tests ב-Mac, מסלול רגיל וכלים/structured, unknown/zero והגדרות לא נתמכות.",
+      "asana": "1220884143828951",
+      "status": "IN_PROGRESS"
+    },
+    {
+      "id": "C3",
+      "title": "קידומת יציבה ושימור ההקשר הדינמי",
+      "owner": "נועם",
+      "contract": "לסדר identity/guidelines/presentation/skills/tools לפני time/query memory; להבטיח סדר דטרמיניסטי ושימור מלוא המשמעות. להעביר cacheScope מהשיחה המקורית; לא להוסיף cache של תשובות משתנות. קבלה: prompt invariants, שינוי clock/query אינו משנה prefix קבוע, עדכון skill/tool/policy כן מבטל זהות מתאימה.",
+      "asana": "1220884194759247",
+      "status": "IN_PROGRESS"
+    },
+    {
+      "id": "C4",
+      "title": "מדידת קריאה וכתיבה במטמון ואבחון",
+      "owner": "נועם + רוני",
+      "contract": "cache-read/cache-write לאורך SDK→APIManager→AgentTokenUsage→Recorder→JSON/readable/UI; תיקון unavailable≠0; יחס hit עם מכנה תקין ומידע מסופק בלבד. לחבר telemetry מקורי לפי החלטת C1 ללא prompts/keys או ייצוא אוטומטי. קבלה: decoding ישן, aggregation, export, privacy והצגה, בלי טענת חסכון שאינה מדודה.",
+      "asana": "1220884041034869",
+      "status": "IN_PROGRESS"
+    },
+    {
+      "id": "C5",
+      "title": "מטמון חיפוש מקומי: TTL, LRU, coalescing וביטול",
+      "owner": "נועם",
+      "contract": "שיפור AutomaticWebSearchCoordinator המקורי: TTL מתחילת השלמה, LRU מוגבל, איחוד בקשות זהות, per-waiter cancellation, כשל לא נשמר, bypass/invalidation וסטטיסטיקה לא רגישה. מאגרי תוצאות כלים נשארים עמידים. קבלה: בדיקות התנהגות עם provider נשלט/clock מוזרק, בלי sleep, כולל ביטול ושינוי generation תוך כדי בקשה.",
+      "asana": "1220884013934618",
+      "status": "IN_PROGRESS"
+    },
+    {
+      "id": "C6",
+      "title": "מסלול AI מקורי ל־Expo ול־NativeScript",
+      "owner": "נועם",
+      "contract": "למפות בפועל את ה-Host services של שני המנועים הפעילים; לחבר שירות assistant משותף ל-Swift AI SDK/ChatCore המקורי לפי מנגנוני invoke/sendRequest הקיימים, עם session-bound context, הרשאות, ביטול/streaming ושגיאות. לעדכן declarations והמקור הקנוני, לא להרחיב legacy ScriptUI. קבלה: native host routing + public contract tests, סוכן/consumer לא עוקף credential/tool policy; הוכחת reachability בשני המנועים או חסימה מפורשת.",
+      "asana": "1220884013885908",
+      "status": "IN_PROGRESS"
+    },
+    {
+      "id": "C7",
+      "title": "מחזור חיים מפורש ל־Google cachedContent",
+      "owner": "נועם",
+      "contract": "מנהל native מצומצם דרך API המקורי התומך create/get/updateTTL/delete; model eligibility, קשירת endpoint/model/scope, reference expiry, ביטול ושגיאות. רק explicit opt-in; implicit נשאר ברירת מחדל. הגנה ממידע stale ומסכמת tools/system לא תואמת. קבלה: חוזה REST ובדיקות lifecycle; live provider receipt כאשר חשבון מורשה זמין.",
+      "asana": "1220884013901248",
+      "status": "IN_PROGRESS"
+    },
+    {
+      "id": "C8",
+      "title": "אינטגרציה ובדיקות Native במק",
+      "owner": "תומר + רוני",
+      "contract": "לרענן ראשים ולשלב קומיטים שהושלמו, לפתור קונפליקטים סמנטית, לעדכן source graphs/pins. להריץ פעם אחת בדיקות מושפעות על SHA מדויק במרחב Mac נפרד ובהתאם לעומס; reuse רק לפי ראיות מקור עם dependency closure. קבלה: build/tests, commands/raw logs/hashes, כיסוי failure/cancellation/isolation/streaming וכל קבלה חיה בנפרד. אין כפילות suite של סוכן אחר.",
+      "asana": "1220884040998180",
+      "status": "IN_PROGRESS"
+    },
+    {
+      "id": "C9",
+      "title": "סנכרון אחרון, פרסום וקבלת התוכנית",
+      "owner": "תומר",
+      "contract": "לבדוק שוב latest branches ועבודת הסוכנים, לפרסם normal push/PR עם תיאור scope, שינויים, בדיקות ומגבלות; לעדכן תיעוד שימוש, rollback/config ומטריצת קבלה. לעדכן Asana אחרי כל שלב; לסגור רק שלבים שקבלתם מולאה. קבלה מלאה דורשת כל תנאי תוכנית; blocker נשאר פתוח עם ראיה ופעולה ברורה.",
+      "asana": "1220884144031583",
+      "status": "IN_PROGRESS"
+    }
+  ],
+  "ownership": {
+    "provider_cache": "HanlinChatCore policy/config/Factory/Engine/RequestBuilder/Parser; original Swift AI SDK serializer changes",
+    "native_bridge": "APIManager prompts/scopes/usage mapping; HanlinAgentSession; active Expo/NativeScript assistant Host service and declarations",
+    "cache_observability": "AutomaticWebSearchCoordinator; AgentDiagnostics; OpenTelemetry adapter; dependency ADR",
+    "root": "Google explicit resource lifecycle; manifest/dependency/lock updates; integration; all Native validation; Asana; publication"
+  },
+  "validation": {
+    "runner": "Scaleway Mac, Xcode 27.0 / Swift 6.4; inspect capacity before dispatch",
+    "policy": "Execute affected/new/unknown checks; reuse only authenticated unchanged evidence; fixtures are not live provider hits",
+    "live": "No existing account credential has been accessed; locate intended runtime channel before live calls; never expose credentials",
+    "other_work": "Preserve other active branches/worktrees and running jobs; synchronize completed source changes after each stage",
+    "publication": "Normal push only; no main force/rewrite; exact reviewable commits"
+  }
+}
