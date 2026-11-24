@@ -1,3 +1,4 @@
+import HanlinLocalization
 import SwiftUI
 import UniformTypeIdentifiers
 import HanlinPlatformContracts
@@ -88,7 +89,7 @@ struct SkillImportView: View {
 
     private var inputView: some View {
         VStack(spacing: 0) {
-            Picker("", selection: $selectedTab) {
+            Picker(hanlin: "", selection: $selectedTab) {
                 Text(SkillL10n.string("Import File")).tag(0)
                     .accessibilityIdentifier("hanlin-skill-import-tab-zip")
                 Text(SkillL10n.string("Install from HTTPS URL")).tag(1)
@@ -125,7 +126,7 @@ struct SkillImportView: View {
 
     private func previewView(_ staged: StagedSkillPackage) -> some View {
         List {
-            Section(header: Text("Skill Metadata")) {
+            Section(header: Text("Skill Metadata", bundle: HanlinLocalization.bundle)) {
                 VStack(alignment: .leading, spacing: 6) {
                     HStack {
                         Text(staged.parsedMarkdown.name)
@@ -152,7 +153,7 @@ struct SkillImportView: View {
             SkillCompatibilityUnknownSection(identifierScope: "import")
 
             if !staged.metadata.preferredToolIDs.isEmpty {
-                Section(header: Text("Preferred Tools")) {
+                Section(header: Text("Preferred Tools", bundle: HanlinLocalization.bundle)) {
                     ForEach(staged.metadata.preferredToolIDs, id: \.self) { tool in
                         HStack {
                             Image(systemName: "wrench.and.screwdriver")
@@ -166,7 +167,7 @@ struct SkillImportView: View {
             }
 
             if !staged.metadata.triggerHints.isEmpty {
-                Section(header: Text("Trigger Hints")) {
+                Section(header: Text("Trigger Hints", bundle: HanlinLocalization.bundle)) {
                     ForEach(staged.metadata.triggerHints, id: \.self) { hint in
                         Text(hint)
                             .font(HanlinTypography.footnote)
@@ -174,9 +175,9 @@ struct SkillImportView: View {
                 }
             }
 
-            Section(header: Text("Included Resources (\(staged.resources.count))")) {
+            Section(header: Text("Included Resources (\(staged.resources.count))", bundle: HanlinLocalization.bundle)) {
                 if staged.resources.isEmpty {
-                    Text("No additional resources.")
+                    Text("No additional resources.", bundle: HanlinLocalization.bundle)
                         .font(HanlinTypography.footnote)
                         .foregroundColor(.secondary)
                         .accessibilityIdentifier("hanlin-skill-import-preview-resources-empty")
@@ -192,7 +193,7 @@ struct SkillImportView: View {
                             }
                             Spacer()
                             if res.isBinary {
-                                Text("Binary")
+                                Text("Binary", bundle: HanlinLocalization.bundle)
                                     .font(HanlinTypography.caption2)
                                     .foregroundColor(.secondary)
                             }
@@ -201,13 +202,13 @@ struct SkillImportView: View {
                 }
             }
 
-            Section(header: Text("Package Origin & Integrity")) {
+            Section(header: Text("Package Origin & Integrity", bundle: HanlinLocalization.bundle)) {
                 if let origin = staged.originURL {
-                    LabeledContent("Origin URL", value: origin)
+                    LabeledContent(hanlin: "Origin URL", value: origin)
                         .accessibilityIdentifier("hanlin-skill-import-origin-url")
                 }
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("SHA-256")
+                    Text("SHA-256", bundle: HanlinLocalization.bundle)
                         .font(HanlinTypography.caption)
                         .foregroundColor(.secondary)
                     Text(staged.sha256)
@@ -284,7 +285,7 @@ struct SkillImportView: View {
             Button {
                 loadTestFixtureZip()
             } label: {
-                Label("Load Test Fixture ZIP", systemImage: "shippingbox")
+                Label(hanlin: "Load Test Fixture ZIP", systemImage: "shippingbox")
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 8)
             }
@@ -296,7 +297,7 @@ struct SkillImportView: View {
                 Button {
                     loadTestFixtureMarkdown()
                 } label: {
-                    Label("Load Markdown Acceptance Fixture", systemImage: "doc.text")
+                    Label(hanlin: "Load Markdown Acceptance Fixture", systemImage: "doc.text")
                 }
                 .disabled(isProcessing)
                 .accessibilityIdentifier("hanlin-skill-import-markdown-fixture-button")
@@ -321,7 +322,7 @@ struct SkillImportView: View {
                     .font(HanlinTypography.caption)
                     .foregroundColor(.secondary)
 
-                TextField("https://example.com/skill-bundle.zip", text: $urlString)
+                TextField(hanlin: "https://example.com/skill-bundle.zip", text: $urlString)
                     .textFieldStyle(.roundedBorder)
                     .autocorrectionDisabled()
                     .textInputAutocapitalization(.never)

@@ -1,0 +1,1 @@
+{"name": "bootstatus-attempt-1", "command": ["xcrun", "simctl", "bootstatus", "52478FC2-3CC6-4A2B-AFD3-F74F54F09E75", "-b"], "timeout_seconds": 180.0, "return_code": 124, "timed_out": true, "elapsed_seconds": 180.906, "output_file": "bootstatus-attempt-1.log"}

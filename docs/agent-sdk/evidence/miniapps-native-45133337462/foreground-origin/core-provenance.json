@@ -1,0 +1,148 @@
+{
+  "inputs": {
+    "compiler": {
+      "path": "/usr/bin/swiftc",
+      "bytes": 200560,
+      "sha256": "34129c71a01a74f7f3b2443521519b2e5447553fa187f5fcafaaf8c42cc192e2"
+    },
+    "toolchain": "Apple Swift version 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)\nTarget: arm64-apple-macosx27.0.0\n",
+    "argv": [
+      "/usr/bin/swiftc",
+      "-v",
+      "-swift-version",
+      "6",
+      "-strict-concurrency=complete",
+      "-warnings-as-errors",
+      "-parse-as-library",
+      "-emit-library",
+      "-emit-module",
+      "-module-name",
+      "HanlinMiniAppCore",
+      "-I",
+      "/Users/runner/work/hanlin-ai/hanlin-ai/Tests/ProductSplit/.build",
+      "-L",
+      "/Users/runner/work/hanlin-ai/hanlin-ai/Tests/ProductSplit/.build",
+      "-lHanlinPlatformContracts",
+      "/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinMiniAppCore/HanlinMiniAppRequestBroker.swift",
+      "/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinMiniAppCore/HanlinCanonicalMiniAppCatalog.swift",
+      "-emit-module-path",
+      "/Users/runner/work/hanlin-ai/hanlin-ai/Tests/ProductSplit/.build/HanlinMiniAppCore.swiftmodule",
+      "-o",
+      "/Users/runner/work/hanlin-ai/hanlin-ai/Tests/ProductSplit/.build/libHanlinMiniAppCore.dylib"
+    ],
+    "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+    "sources": [
+      {
+        "path": "/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinMiniAppCore/HanlinMiniAppRequestBroker.swift",
+        "bytes": 8289,
+        "sha256": "7a344d2f428cf8bdef9cdb74b4754f5da16890538799309e84d733c9abc73e06"
+      },
+      {
+        "path": "/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinMiniAppCore/HanlinCanonicalMiniAppCatalog.swift",
+        "bytes": 5732,
+        "sha256": "b254b91bbb4729edae5b16618519440c7b99f1669318e1c113e25c5a6ec11613"
+      }
+    ],
+    "dependency_outputs": [
+      {
+        "path": "/usr/bin/swiftc",
+        "bytes": 200560,
+        "sha256": "34129c71a01a74f7f3b2443521519b2e5447553fa187f5fcafaaf8c42cc192e2"
+      },
+      {
+        "path": "/Users/runner/work/hanlin-ai/hanlin-ai/Tests/ProductSplit/.build/libHanlinPlatformContracts.dylib",
+        "bytes": 4890672,
+        "sha256": "97982c7b3ae59aceae4f7cb37af8c38a9587a725d50d82696f27b6ce4fcfd842"
+      },
+      {
+        "path": "/Users/runner/work/hanlin-ai/hanlin-ai/Tests/ProductSplit/.build/HanlinPlatformContracts.swiftmodule",
+        "bytes": 1974092,
+        "sha256": "de2f21e642b89ba1a106d3afe1d316b9b0934b3a16deade9ba6c0f33499792d1"
+      },
+      {
+        "path": "/Users/runner/work/hanlin-ai/hanlin-ai/Tests/ProductSplit/.build/HanlinPlatformContracts.swiftdoc",
+        "bytes": 33636,
+        "sha256": "e30a7c161c6c69a8131913479c5cea11d3b40b8da5f62f2ff5fa8d5c2bd148a6"
+      },
+      {
+        "path": "/Users/runner/work/hanlin-ai/hanlin-ai/Tests/ProductSplit/.build/HanlinPlatformContracts.swiftsourceinfo",
+        "bytes": 294056,
+        "sha256": "c96a02237ddd1d6eaff0aad843bf24fde984801440bd63f59062d05a00fdbd07"
+      }
+    ]
+  },
+  "outputs": [
+    {
+      "path": "/Users/runner/work/hanlin-ai/hanlin-ai/Tests/ProductSplit/.build/libHanlinMiniAppCore.dylib",
+      "bytes": 291096,
+      "sha256": "bc1ab4f8d53376e00f85668f06527305594aed8f91fcda870d3a838d0bafd510"
+    },
+    {
+      "path": "/Users/runner/work/hanlin-ai/hanlin-ai/Tests/ProductSplit/.build/HanlinMiniAppCore.swiftmodule",
+      "bytes": 107572,
+      "sha256": "69e6f10e410cde630480803a76f274cc279d0c260a58a8fe2a9eec00c4fff147"
+    },
+    {
+      "path": "/Users/runner/work/hanlin-ai/hanlin-ai/Tests/ProductSplit/.build/HanlinMiniAppCore.swiftdoc",
+      "bytes": 2264,
+      "sha256": "327173a47f4246319d08d54fe6d3a8fbbe5636d4a10e502c27d8ae746d690f86"
+    },
+    {
+      "path": "/Users/runner/work/hanlin-ai/hanlin-ai/Tests/ProductSplit/.build/HanlinMiniAppCore.swiftsourceinfo",
+      "bytes": 15716,
+      "sha256": "9a73eb1a7f2719381ddf97a79380641bdd184f1586bbe8d5a383aace3bf9c052"
+    }
+  ],
+  "origin_logs": [
+    {
+      "path": "/Users/runner/work/hanlin-ai/hanlin-ai/docs/product-split/evidence/durability-fix/64388883-3e8e-4eaa-914c-45a9d723400e/raw-003-compile-core.stdout.log",
+      "bytes": 7585,
+      "sha256": "0d5d404baa862d394ed62c756e189139a2c6919eada593978426d239f38bce78"
+    },
+    {
+      "path": "/Users/runner/work/hanlin-ai/hanlin-ai/docs/product-split/evidence/durability-fix/64388883-3e8e-4eaa-914c-45a9d723400e/raw-003-compile-core.stderr.log",
+      "bytes": 98,
+      "sha256": "4b59da256292ae42e3f04ef6d06ea3e139678613a3cd3d0dc37a6757c0bd290a"
+    }
+  ],
+  "compile_event": {
+    "kind": "completed",
+    "argv": [
+      "/usr/bin/swiftc",
+      "-v",
+      "-swift-version",
+      "6",
+      "-strict-concurrency=complete",
+      "-warnings-as-errors",
+      "-parse-as-library",
+      "-emit-library",
+      "-emit-module",
+      "-module-name",
+      "HanlinMiniAppCore",
+      "-I",
+      "/Users/runner/work/hanlin-ai/hanlin-ai/Tests/ProductSplit/.build",
+      "-L",
+      "/Users/runner/work/hanlin-ai/hanlin-ai/Tests/ProductSplit/.build",
+      "-lHanlinPlatformContracts",
+      "/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinMiniAppCore/HanlinMiniAppRequestBroker.swift",
+      "/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinMiniAppCore/HanlinCanonicalMiniAppCatalog.swift",
+      "-emit-module-path",
+      "/Users/runner/work/hanlin-ai/hanlin-ai/Tests/ProductSplit/.build/HanlinMiniAppCore.swiftmodule",
+      "-o",
+      "/Users/runner/work/hanlin-ai/hanlin-ai/Tests/ProductSplit/.build/libHanlinMiniAppCore.dylib"
+    ],
+    "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+    "exit_code": 0,
+    "pid": null,
+    "stdout": {
+      "path": "/Users/runner/work/hanlin-ai/hanlin-ai/docs/product-split/evidence/durability-fix/64388883-3e8e-4eaa-914c-45a9d723400e/raw-003-compile-core.stdout.log",
+      "bytes": 7585,
+      "sha256": "0d5d404baa862d394ed62c756e189139a2c6919eada593978426d239f38bce78"
+    },
+    "stderr": {
+      "path": "/Users/runner/work/hanlin-ai/hanlin-ai/docs/product-split/evidence/durability-fix/64388883-3e8e-4eaa-914c-45a9d723400e/raw-003-compile-core.stderr.log",
+      "bytes": 98,
+      "sha256": "4b59da256292ae42e3f04ef6d06ea3e139678613a3cd3d0dc37a6757c0bd290a"
+    }
+  }
+}

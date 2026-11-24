@@ -1,3 +1,4 @@
+import HanlinLocalization
 import SwiftData
 import SwiftUI
 
@@ -18,21 +19,21 @@ struct HanlinWorkspaceActions: ToolbarContent {
         ToolbarItem(placement: .topBarTrailing) {
             Menu {
                 Button(action: onOpenMiniApps) {
-                    Label("Open MiniApps", systemImage: "square.grid.2x2")
+                    Label(hanlin: "Open MiniApps", systemImage: "square.grid.2x2")
                 }
                 .accessibilityIdentifier("hanlin-open-miniapps")
                 Button(action: onOpenVision) {
-                    Label(String(localized: "视觉"), systemImage: "eye")
+                    Label(String(localized: "视觉", bundle: HanlinLocalization.bundle), systemImage: "eye")
                 }
                 .accessibilityIdentifier("hanlin-vision-tab")
             } label: {
-                Label("More", systemImage: "ellipsis")
+                Label(hanlin: "More", systemImage: "ellipsis")
             }
             .accessibilityIdentifier("hanlin-workspace-actions")
         }
         ToolbarItem(placement: .topBarTrailing) {
             Button(action: onOpenProfile) {
-                Label("Profile", systemImage: "person.crop.circle")
+                Label(hanlin: "Profile", systemImage: "person.crop.circle")
             }
             .accessibilityIdentifier("hanlin-settings-tab")
         }
@@ -54,32 +55,32 @@ struct HanlinPersonalLibraryView: View {
     var body: some View {
         NavigationStack {
             List {
-                Section("Personal library") {
+                Section(hanlin: "Personal library") {
                     Button { sheet = .knowledge } label: {
-                        Label("Knowledge", systemImage: "books.vertical")
+                        Label(hanlin: "Knowledge", systemImage: "books.vertical")
                     }
                     .accessibilityIdentifier("hanlin-library-knowledge")
                     NavigationLink { MemoryArchiveView() } label: {
-                        Label("Memory", systemImage: "archivebox")
+                        Label(hanlin: "Memory", systemImage: "archivebox")
                     }
                     .accessibilityIdentifier("hanlin-library-memory")
                     NavigationLink { PromptRepoView() } label: {
-                        Label("Prompts", systemImage: "text.bubble")
+                        Label(hanlin: "Prompts", systemImage: "text.bubble")
                     }
                     .accessibilityIdentifier("hanlin-library-prompts")
                     NavigationLink {
                         HanlinCanvasLibraryView(onOpenConversation: onOpenConversation)
                     } label: {
-                        Label("Canvas", systemImage: "doc.richtext")
+                        Label(hanlin: "Canvas", systemImage: "doc.richtext")
                     }
                     .accessibilityIdentifier("hanlin-library-canvas")
                     Button { sheet = .saved } label: {
-                        Label("Saved messages", systemImage: "bookmark")
+                        Label(hanlin: "Saved messages", systemImage: "bookmark")
                     }
                     .accessibilityIdentifier("hanlin-library-saved")
                 }
             }
-            .navigationTitle("Library")
+            .navigationTitle(Text("Library", bundle: HanlinLocalization.bundle))
             .accessibilityIdentifier("hanlin-personal-library")
             .toolbar {
                 HanlinWorkspaceActions(onOpenProfile: onOpenProfile,
@@ -124,21 +125,21 @@ private struct HanlinCanvasLibraryView: View {
                 onOpenConversation(.init(conversationID: id, messageID: message?.id))
             } label: {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text((record.canvas?.title.isEmpty == false ? record.canvas?.title : nil) ?? String(localized: "Canvas"))
-                    Text(record.name ?? String(localized: "Chat"))
+                    Text((record.canvas?.title.isEmpty == false ? record.canvas?.title : nil) ?? String(localized: "Canvas", bundle: HanlinLocalization.bundle))
+                    Text(record.name ?? String(localized: "Chat", bundle: HanlinLocalization.bundle))
                         .font(HanlinTypography.caption).foregroundStyle(.secondary)
-                    Text("Open in conversation").font(HanlinTypography.caption2).foregroundStyle(.secondary)
+                    Text("Open in conversation", bundle: HanlinLocalization.bundle).font(HanlinTypography.caption2).foregroundStyle(.secondary)
                 }
             }
             .accessibilityIdentifier("hanlin-library-canvas-\(record.id?.uuidString ?? "unavailable")")
         }
-        .navigationTitle("Canvas")
+        .navigationTitle(Text("Canvas", bundle: HanlinLocalization.bundle))
         .accessibilityIdentifier("hanlin-canvas-library")
         .searchable(text: $query)
         .overlay {
             if records.isEmpty {
-                ContentUnavailableView("No canvases", systemImage: "doc.richtext",
-                    description: Text("Canvases remain in their original conversations."))
+                ContentUnavailableView(hanlin: "No canvases", systemImage: "doc.richtext",
+                    description: Text("Canvases remain in their original conversations.", bundle: HanlinLocalization.bundle))
             }
         }
     }

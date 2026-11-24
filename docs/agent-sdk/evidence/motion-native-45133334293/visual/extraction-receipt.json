@@ -1,0 +1,27 @@
+{
+  "method": "Read unchanged PNG chunks embedded in native xcresult data entries; no image retouching",
+  "images": [
+    {
+      "entry": "Motion.xcresult/Data/data.0~uEXUmsQXnadc43azzO-RBl2zgMDrF4KY_UlvC60CvA0ErTziTT1qRb72ppd32lPQESgSrGv2Of0dHoNSsGNn4g==",
+      "offset": 0,
+      "image_bytes": 210831,
+      "sha256": "6aa76d91593c0923c377390319bceae2248fb979678454d632b6ed612d863698",
+      "path": "/mnt/development/projects/evidence/hanlin-sdk-ui-20261123/Motion/native-6772dce6-affected/visual/xcresult-native-images/6aa76d91593c0923c377.png"
+    },
+    {
+      "entry": "Motion.xcresult/Data/data.0~LhV_AFnJQ8oSQl7d2dz2G44UzLK5XVLdoEHzAkgFZI3wWKrLX_xNLXn_GXl1r8CT__GcBoLkbvEYC1Jm-V5QEA==",
+      "offset": 0,
+      "image_bytes": 159053,
+      "sha256": "028ef51d26d10d663300097c49a88ff80a683eb3a896f6e27a115206369885d9",
+      "path": "/mnt/development/projects/evidence/hanlin-sdk-ui-20261123/Motion/native-6772dce6-affected/visual/xcresult-native-images/028ef51d26d10d663300.png"
+    },
+    {
+      "entry": "Motion.xcresult/Data/data.0~Q_Jh7EjnwyHQWynFbWFr7dtg_dtb6AM_QKSmxW8oRhdNZ5gUTWLz51ae6OZO97yag4XSKQjCVuS-M3lTBUawVQ==",
+      "offset": 0,
+      "image_bytes": 546936,
+      "sha256": "faa4ee413e06f3c844b6a5104846919210db2a5d230fa1d4ba69b4b50181b6b2",
+      "path": "/mnt/development/projects/evidence/hanlin-sdk-ui-20261123/Motion/native-6772dce6-affected/visual/xcresult-native-images/faa4ee413e06f3c844b6.png"
+    }
+  ],
+  "text_matches": []
+}

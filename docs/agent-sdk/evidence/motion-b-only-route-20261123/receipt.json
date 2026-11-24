@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "at": "2026-11-23T16:32:24.302031+00:00",
+  "base_sha": "5d0ea90d98b405d38b66bb735198b945225877ba",
+  "purpose": "Failed B can execute alone without replaying previously passed C",
+  "checks": [
+    {
+      "name": "bash syntax",
+      "status": "PASS"
+    },
+    {
+      "name": "workflow YAML parse",
+      "status": "PASS"
+    },
+    {
+      "name": "real shell selectors/result validator cycles",
+      "status": "PASS",
+      "selectors": [
+        "-only-testing:ChatMotionProofUITests/MotionUITests/testAAllFivePresetsTwentyCompleteCyclesEach"
+      ]
+    },
+    {
+      "name": "real shell selectors/result validator input-diagnostic",
+      "status": "PASS",
+      "selectors": [
+        "-only-testing:ChatMotionProofUITests/MotionUITests/testDRapidInputDiagnosticOnly"
+      ]
+    },
+    {
+      "name": "real shell selectors/result validator visual-c",
+      "status": "PASS",
+      "selectors": [
+        "-only-testing:ChatMotionProofUITests/MotionUITests/testCReadableLongContentRTLTypeOrientationAndCompletion"
+      ]
+    },
+    {
+      "name": "real shell selectors/result validator reversal-b",
+      "status": "PASS",
+      "selectors": [
+        "-only-testing:ChatMotionProofUITests/MotionUITests/testBRapidReversalPresetSwitchAndPersistence"
+      ]
+    },
+    {
+      "name": "real shell selectors/result validator affected",
+      "status": "PASS",
+      "selectors": [
+        "-only-testing:ChatMotionProofUITests/MotionUITests/testBRapidReversalPresetSwitchAndPersistence",
+        "-only-testing:ChatMotionProofUITests/MotionUITests/testCReadableLongContentRTLTypeOrientationAndCompletion"
+      ]
+    },
+    {
+      "name": "workflow has only assigned name/scope changes",
+      "status": "PASS"
+    },
+    {
+      "name": "original UI/test/provenance/simulator inputs unchanged",
+      "status": "PASS",
+      "paths": [
+        "docs/chat-motion/MotionUI",
+        "Packages/HanlinPresentationSDK",
+        "Scripts/CI/boot_motion_simulator.py",
+        "docs/chat-motion/prepare_motion_ui.py",
+        "docs/chat-motion/record_sdk_inputs.py"
+      ]
+    }
+  ],
+  "new_native_execution": "NOT_RUN",
+  "source_hashes": {
+    "docs/chat-motion/run_motion_ui.sh": "0c1b71a5db380c1e14e3210be62a004ff4a993ea913702a03407b6b482b643c7",
+    ".github/workflows/build-ios26-unsigned-ipa.yml": "199726123e0311e43447fd2577a811b520eef5a285e753e7e3c2b922a66040d8"
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "dispatch-intent.json": {
+    "bytes": 2562,
+    "sha256": "b19de9aa9b9f982bb2678c6e7e0d75876a3e049ff6449eef02d55883a30681b0",
+    "original_oracle_path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-settings-continuation-20261123/dispatch-intent.json"
+  },
+  "dispatch.json": {
+    "bytes": 176,
+    "sha256": "9ea29ceff6f71e0460a84fcd7f6465d17f29c42b6b34a35a1860c0a869f65af8",
+    "original_oracle_path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-settings-continuation-20261123/dispatch.json"
+  },
+  "dispatch-readback.json": {
+    "bytes": 327,
+    "sha256": "f2f0df93b07b8b7c2f4c9460e21153712a88e6dd0959ef83d7f96a42c697dc70",
+    "original_oracle_path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-settings-continuation-20261123/dispatch-readback.json"
+  },
+  "watch-owner.json": {
+    "bytes": 207,
+    "sha256": "473b84289b669a98fce54fe4ac7e17e1121743c0bc24d5e117bcc75a8b5407a2",
+    "original_oracle_path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-settings-continuation-20261123/watch-owner.json"
+  },
+  "watch-completion.json": {
+    "bytes": 124,
+    "sha256": "22adec006a6f52eb50120d50d3b78c9afca13e0614a4b7460f9e2d290962b8f0",
+    "original_oracle_path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-settings-continuation-20261123/watch-completion.json"
+  },
+  "final-readback.json": {
+    "bytes": 14359,
+    "sha256": "785b54ddc96ff2e10ac29412d365f3a48ccb4159181380fca8a016ca4d243303",
+    "original_oracle_path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-settings-continuation-20261123/final-readback.json"
+  },
+  "queued-native-job.json": {
+    "bytes": 904,
+    "sha256": "e9c9e2c78d80ce6351f343d858bb47eabb781e01383fd24a904d56b5b0ca9c4b",
+    "original_oracle_path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-settings-continuation-20261123/native-allocation-readback-1235.json"
+  },
+  "native-job.json": {
+    "bytes": 922,
+    "sha256": "23ee7d78fa1172cdcdee5609aacfac2a5498f93fcc416a797c3931c53cdf0195",
+    "original_oracle_path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-settings-continuation-20261123/attempt1-terminal/native-job.json"
+  },
+  "native-annotations.json": {
+    "bytes": 345,
+    "sha256": "a5ae01414b4cd72a3fef51a458dddb1a41a32232dd72f66c7bda2b04c4149333",
+    "original_oracle_path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-settings-continuation-20261123/attempt1-terminal/native-annotations.json"
+  },
+  "artifacts.json": {
+    "bytes": 2216,
+    "sha256": "eba14670a47454eb7c2c47c329ed98ef91484d9a81a4380046c7ba69849bb5b4",
+    "original_oracle_path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-settings-continuation-20261123/attempt1-terminal/artifacts.json"
+  }
+}

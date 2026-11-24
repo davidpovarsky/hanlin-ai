@@ -1,0 +1,62 @@
+[
+  {
+    "rowid": 1,
+    "name": "App UI hierarchy for com.itorah.chavrusachat",
+    "type": "public.plain-text",
+    "payload": "0~91NrP_GrxNRWuZWAqzWjsgeJlsY-oqyGnXutzMs29m2jBhTb5aFCWKHhuvP5lWL6P-894h6sKcVmcUbfJyW7Iw==",
+    "timestamp": 817171559.4449999,
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-paired3-corrections-20261123/build/paired3-corrections-20261123/native/app-split-evidence/paired-product/Paired.xcresult/Data/data.0~91NrP_GrxNRWuZWAqzWjsgeJlsY-oqyGnXutzMs29m2jBhTb5aFCWKHhuvP5lWL6P-894h6sKcVmcUbfJyW7Iw==",
+    "source_sha256": "08e3c3e8442bda8007d629cd376d75f5b6ffea94c6ee43728a8361b1ec067353",
+    "path": "/mnt/development/projects/worktrees/hanlin-sdk-paired3-corrections-20261123/build/paired3-corrections-20261123/cancel-focus-review/attachment-1.txt",
+    "sha256": "28ebb0356f049a8be467898921f9f3f4b4d6934cc056d67a9f34ad92813d9b03",
+    "bytes": 15779
+  },
+  {
+    "rowid": 4,
+    "name": "kXCTAttachmentLegacySynthesizedEvent",
+    "type": "com.apple.dt.xctest.synthesized-event-record",
+    "payload": "0~vhF0xYXZf4aMB1SqT1PS3WFmKHjm-KZfpmeOXGo6V6GixIMt2tvu1LZ7_U2bf3quhXiB_A929YkneebNKuIguQ==",
+    "timestamp": 817171513.0810001,
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-paired3-corrections-20261123/build/paired3-corrections-20261123/native/app-split-evidence/paired-product/Paired.xcresult/Data/data.0~vhF0xYXZf4aMB1SqT1PS3WFmKHjm-KZfpmeOXGo6V6GixIMt2tvu1LZ7_U2bf3quhXiB_A929YkneebNKuIguQ==",
+    "source_sha256": "c9ed7c7b5b37371287a2d8e2f98ee13168f872ae5f5d8727183ca0aa9e757725",
+    "path": "/mnt/development/projects/worktrees/hanlin-sdk-paired3-corrections-20261123/build/paired3-corrections-20261123/cancel-focus-review/attachment-4.plist",
+    "sha256": "7ea8f4d9a292d08bd3a3386693393fb357ec1b9ada62a5912b40cfec66c50373",
+    "bytes": 1881
+  },
+  {
+    "rowid": 5,
+    "name": "kXCTAttachmentLegacySynthesizedEvent",
+    "type": "com.apple.dt.xctest.synthesized-event-record",
+    "payload": "0~KUWDeShcFMijPacw5VaiAlcwNjf7tJIz93Ly9YRGQ6eQUXXKWxzi3GY44sZspNcpS-OX-2BRBcRoKtJcq3XU4g==",
+    "timestamp": 817171520.0929999,
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-paired3-corrections-20261123/build/paired3-corrections-20261123/native/app-split-evidence/paired-product/Paired.xcresult/Data/data.0~KUWDeShcFMijPacw5VaiAlcwNjf7tJIz93Ly9YRGQ6eQUXXKWxzi3GY44sZspNcpS-OX-2BRBcRoKtJcq3XU4g==",
+    "source_sha256": "9cd77c1bd72e82af83f8a04ed6108c0d2b268ad801a0899972d6696986919e0c",
+    "path": "/mnt/development/projects/worktrees/hanlin-sdk-paired3-corrections-20261123/build/paired3-corrections-20261123/cancel-focus-review/attachment-5.plist",
+    "sha256": "48ed6c6db24ce92b5718f17c0c410dd422ed6aa70d2ff0c9d7c2c9a2f6fa2fa6",
+    "bytes": 1881
+  },
+  {
+    "rowid": 6,
+    "name": "AI-paired-accessibility",
+    "type": "public.plain-text",
+    "payload": "0~fwkw6NIuPfFWbKU2MGyxOq9napWfBi63CbI8_IV7yhhCBxs_twWHig1vUBlhfOZyph6k7jmVG1Vs9AJhPKjpdw==",
+    "timestamp": 817171561.9189999,
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-paired3-corrections-20261123/build/paired3-corrections-20261123/native/app-split-evidence/paired-product/Paired.xcresult/Data/data.0~fwkw6NIuPfFWbKU2MGyxOq9napWfBi63CbI8_IV7yhhCBxs_twWHig1vUBlhfOZyph6k7jmVG1Vs9AJhPKjpdw==",
+    "source_sha256": "592ccb1bb9c5617d5b72a11936800c232b3f9585c9b911aa61f41ee4b45a7178",
+    "path": "/mnt/development/projects/worktrees/hanlin-sdk-paired3-corrections-20261123/build/paired3-corrections-20261123/cancel-focus-review/attachment-6.txt",
+    "sha256": "0d25b39205affabd623c6a5e288d801c7c6553a731d942b4f67a7570027e51ae",
+    "bytes": 10075
+  },
+  {
+    "rowid": 7,
+    "name": "AI-paired-product",
+    "type": "public.png",
+    "payload": "0~Vj2lyjtpR25lXgWUaet2XAlkd6XDlEAqZV9se85i04cu6mocY-QiYWtaaGpKULkDfIjJRVfpi44gPKoJVLzaDA==",
+    "timestamp": 817171561.208,
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-paired3-corrections-20261123/build/paired3-corrections-20261123/native/app-split-evidence/paired-product/Paired.xcresult/Data/data.0~Vj2lyjtpR25lXgWUaet2XAlkd6XDlEAqZV9se85i04cu6mocY-QiYWtaaGpKULkDfIjJRVfpi44gPKoJVLzaDA==",
+    "source_sha256": "821d13237b9d3d9b26bf45329a1f97a656fd2f3e857ab19858fb1dfc191a3a8b",
+    "path": "/mnt/development/projects/worktrees/hanlin-sdk-paired3-corrections-20261123/build/paired3-corrections-20261123/cancel-focus-review/attachment-7.png",
+    "sha256": "821d13237b9d3d9b26bf45329a1f97a656fd2f3e857ab19858fb1dfc191a3a8b",
+    "bytes": 210511
+  }
+]

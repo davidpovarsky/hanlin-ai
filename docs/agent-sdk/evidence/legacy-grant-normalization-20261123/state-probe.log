@@ -1,0 +1,6 @@
+PASS: init-identical-whole-record-and-revocations
+PASS: replace-identical-whole-record-and-revocations
+PASS: identical-original-upsert-revoke-and-empty-replace
+PASS: init-conflicting-whole-record-and-revocations
+PASS: replace-conflicting-whole-record-and-revocations
+PASS: conflicting-original-upsert-revoke-and-empty-replace

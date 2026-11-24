@@ -1,3 +1,4 @@
+import HanlinLocalization
 //
 //  NativeUIRenderer.swift
 //  AI_HLY
@@ -41,7 +42,7 @@ struct NativeUIToolResultContainer: View {
     }
 
     private var title: String {
-        blocks.compactMap(\.title).first ?? String(localized: "Tool Result")
+        blocks.compactMap(\.title).first ?? String(localized: "Tool Result", bundle: HanlinLocalization.bundle)
     }
 
     var body: some View {
@@ -62,11 +63,11 @@ struct NativeUIToolResultContainer: View {
                     } label: {
                         Image(systemName: "arrow.down.backward.and.arrow.up.forward")
                             .font(HanlinTypography.fixed(size: 16, weight: .medium))
-                            .foregroundColor(temporaryRecord ? .primary : .hlBluefont)
+                            .foregroundColor(temporaryRecord ? .primary : .hanlinHLBluefont)
                             .padding(8)
                             .background(BlurView(style: .systemUltraThinMaterial))
                             .clipShape(Circle())
-                            .shadow(color: temporaryRecord ? .primary : .hlBlue, radius: 1)
+                            .shadow(color: temporaryRecord ? .primary : .hanlinHLBlue, radius: 1)
                     }
                     .buttonStyle(.plain)
                 }
@@ -77,10 +78,10 @@ struct NativeUIToolResultContainer: View {
         .background(
             BlurView(style: .systemThinMaterial)
                 .cornerRadius(20)
-                .shadow(color: temporaryRecord ? .primary : .hlBlue, radius: 1)
+                .shadow(color: temporaryRecord ? .primary : .hanlinHLBlue, radius: 1)
         )
         .frame(maxWidth: effectiveWidth * 0.95, alignment: .leading)
-        .foregroundColor(temporaryRecord ? .primary : .hlBluefont)
+        .foregroundColor(temporaryRecord ? .primary : .hanlinHLBluefont)
         .sheet(item: $sheetPayload) { payload in
             NativeUIExpandedView(payload: payload, onLaunchRequest: onLaunchRequest)
                 .presentationDetents([.large])
@@ -151,7 +152,7 @@ private struct NativeUIExpandedView: View {
                     Button {
                         dismiss()
                     } label: {
-                        Label(String(localized: "Close"), systemImage: "xmark")
+                        Label(String(localized: "Close", bundle: HanlinLocalization.bundle), systemImage: "xmark")
                     }
                 }
             }
@@ -267,7 +268,7 @@ private struct NativeCardView: View {
                     Image(uiImage: image)
                         .resizable()
                         .scaledToFit()
-                        .accessibilityLabel(block.title ?? String(localized: "Image"))
+                        .accessibilityLabel(block.title ?? String(localized: "Image", bundle: HanlinLocalization.bundle))
                 }
                 if !block.keyValues.isEmpty {
                     NativeKeyValueRows(block: block, presentationMode: presentationMode)
@@ -300,11 +301,11 @@ private struct NativeCardView: View {
 
     private func defaultTitle(for type: NativeUIBlockType) -> String {
         switch type {
-        case .source: return String(localized: "Source")
+        case .source: return String(localized: "Source", bundle: HanlinLocalization.bundle)
         case .wikipediaSummary: return "Wikipedia"
-        case .calculation: return String(localized: "Calculation")
-        case .error: return String(localized: "Error")
-        default: return String(localized: "Result")
+        case .calculation: return String(localized: "Calculation", bundle: HanlinLocalization.bundle)
+        case .error: return String(localized: "Error", bundle: HanlinLocalization.bundle)
+        default: return String(localized: "Result", bundle: HanlinLocalization.bundle)
         }
     }
 
@@ -351,7 +352,7 @@ private struct NativeSearchResultsView: View {
                 if presentationMode == .compact, block.items.count > visibleItems.count {
                     Text(
                         String(
-                            format: String(localized: "%lld more results"),
+                            format: String(localized: "%lld more results", bundle: HanlinLocalization.bundle),
                             Int64(block.items.count - visibleItems.count)
                         )
                     )
@@ -363,7 +364,7 @@ private struct NativeSearchResultsView: View {
             }
         } label: {
             Label(
-                block.title ?? String(localized: "Search Results"),
+                block.title ?? String(localized: "Search Results", bundle: HanlinLocalization.bundle),
                 systemImage: block.systemImage ?? "magnifyingglass"
             )
         }
@@ -422,7 +423,7 @@ private struct NativeSearchResultsView: View {
         return [
             NativeUIAction(
                 type: .openURL,
-                title: String(localized: "Open"),
+                title: String(localized: "Open", bundle: HanlinLocalization.bundle),
                 systemImage: "safari",
                 url: url
             )

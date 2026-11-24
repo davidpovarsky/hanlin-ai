@@ -216,6 +216,7 @@ public enum HanlinAISDKStreamEvent: Sendable {
 public enum HanlinAISDKError: LocalizedError, Sendable {
     case nativeProviderInjectionRequired
     case nativeUnsupportedContent
+    case nativeUnsupportedToolInput
     case invalidToolSchema(name: String)
     case invalidConversation(String)
     case emptyProviderResponse(attempts: Int)
@@ -227,6 +228,8 @@ public enum HanlinAISDKError: LocalizedError, Sendable {
             return "The on-device provider must be injected locally. No network provider was selected."
         case .nativeUnsupportedContent:
             return "This on-device provider accepts text messages only. No attachment was downloaded."
+        case .nativeUnsupportedToolInput:
+            return "The on-device model cannot supply verified original numeric tool input. No host operation was dispatched."
         case .invalidToolSchema(let name):
             return "Invalid JSON schema for tool '\(name)'."
         case .invalidConversation(let detail):

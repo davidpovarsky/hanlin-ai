@@ -1,0 +1,125 @@
+{
+  "status": "PASS_EXPECTED_VULNERABLE",
+  "buildReturncode": 0,
+  "swiftVersion": "Swift version 6.4.3 (swift-6.4.3-RELEASE)\nTarget: aarch64-unknown-linux-gnu",
+  "cases": {
+    "duplicate": {
+      "returncode": -5,
+      "events": [
+        {
+          "case": "duplicate",
+          "installedIDs": [
+            "fixture-install",
+            "fixture-install"
+          ],
+          "registryBytesUnchanged": true,
+          "status": "ADMITTED_ORIGINAL_SNAPSHOTS"
+        }
+      ],
+      "primarySHA256": "14510d110e4354358160753035f96d26ef60955822e8710709a5cf01597695f3",
+      "backupSHA256": "e8de9ca36b916fb35fc35116194feba702160fcd00da91f218cc243dec6a75f3",
+      "stderrSHA256": "929e05eaca30c1668c2829bc4f854a75912bc4d0e86e7ec55d55de35aff9e122"
+    },
+    "mismatch": {
+      "returncode": 0,
+      "events": [
+        {
+          "case": "mismatch",
+          "installedIDs": [
+            "fixture-install"
+          ],
+          "registryBytesUnchanged": true,
+          "status": "ADMITTED_ORIGINAL_SNAPSHOTS"
+        },
+        {
+          "case": "mismatch",
+          "identities": 1,
+          "registryBytesUnchanged": true,
+          "status": "FALLBACK_EXPRESSION_COMPLETED"
+        }
+      ],
+      "primarySHA256": "d0dc7d238502be120d0465b1e1522bbc77f5ccb981557a44244d6795c7bd45f0",
+      "backupSHA256": "e8de9ca36b916fb35fc35116194feba702160fcd00da91f218cc243dec6a75f3",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "backup-invalid": {
+      "returncode": -5,
+      "events": [
+        {
+          "case": "backup-invalid",
+          "installedIDs": [
+            "fixture-install",
+            "fixture-install"
+          ],
+          "registryBytesUnchanged": true,
+          "status": "ADMITTED_ORIGINAL_SNAPSHOTS"
+        }
+      ],
+      "primarySHA256": "62b8125a6f6d924ec53345b5fcd58ca3ed3f5e7d51e2e146e5f1346508acce69",
+      "backupSHA256": "14510d110e4354358160753035f96d26ef60955822e8710709a5cf01597695f3",
+      "stderrSHA256": "d08b45d2b21b72a4236de1bbc454750f826da840d8edd85376ba6ef47aec29e7"
+    },
+    "valid-primary": {
+      "returncode": 0,
+      "events": [
+        {
+          "case": "valid-primary",
+          "installedIDs": [
+            "fixture-alternate",
+            "fixture-install"
+          ],
+          "registryBytesUnchanged": true,
+          "status": "ADMITTED_ORIGINAL_SNAPSHOTS"
+        },
+        {
+          "case": "valid-primary",
+          "identities": 2,
+          "registryBytesUnchanged": true,
+          "status": "FALLBACK_EXPRESSION_COMPLETED"
+        }
+      ],
+      "primarySHA256": "e8de9ca36b916fb35fc35116194feba702160fcd00da91f218cc243dec6a75f3",
+      "backupSHA256": "14510d110e4354358160753035f96d26ef60955822e8710709a5cf01597695f3",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "valid-backup": {
+      "returncode": 0,
+      "events": [
+        {
+          "case": "valid-backup",
+          "installedIDs": [
+            "fixture-alternate",
+            "fixture-install"
+          ],
+          "registryBytesUnchanged": true,
+          "status": "ADMITTED_ORIGINAL_SNAPSHOTS"
+        },
+        {
+          "case": "valid-backup",
+          "identities": 2,
+          "registryBytesUnchanged": true,
+          "status": "FALLBACK_EXPRESSION_COMPLETED"
+        }
+      ],
+      "primarySHA256": "62b8125a6f6d924ec53345b5fcd58ca3ed3f5e7d51e2e146e5f1346508acce69",
+      "backupSHA256": "e8de9ca36b916fb35fc35116194feba702160fcd00da91f218cc243dec6a75f3",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "unsupported": {
+      "returncode": 0,
+      "events": [
+        {
+          "case": "unsupported",
+          "error": "unsupportedRegistryVersion(2)",
+          "registryBytesUnchanged": true,
+          "status": "THREW_EXISTING_ERROR"
+        }
+      ],
+      "primarySHA256": "3d96e21e323414e8d795a060e0d3edd2e6452118ffd8d9698d03e4a847485216",
+      "backupSHA256": "e8de9ca36b916fb35fc35116194feba702160fcd00da91f218cc243dec6a75f3",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "nativeTestsExecuted": 0,
+  "scope": "EXACT_PRODUCTION_COLD_LOAD_SNAPSHOTS_AND_DICTIONARY_EXPRESSION_NOT_FULL_APP_OR_WIDGETKIT"
+}

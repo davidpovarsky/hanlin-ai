@@ -1,0 +1,24 @@
+{
+  "command": [
+    "sudo",
+    "-u",
+    "ubuntu",
+    "/usr/local/bin/swiftc",
+    "-frontend",
+    "-parse",
+    "/mnt/development/projects/worktrees/hanlin-sdk-paired-consent-20261124/AI_HLYUITests/HanlinPairedProductUITests.swift"
+  ],
+  "startedUTC": "2026-11-24T00:59:54.489003+00:00",
+  "finishedUTC": "2026-11-24T00:59:54.546956+00:00",
+  "exitCode": 0,
+  "sourceSHA256": "4c578e22ccd2b7e6ade0346ac91b20e9a4b92c28d3f42d0bbdc0fd1881636832",
+  "status": "PASS_SYNTAX_ONLY",
+  "reason": "Final reviewed readiness45 and real Profile Done navigation",
+  "notProven": [
+    "XCTest API typecheck",
+    "Apple compilation",
+    "UI behavior",
+    "paired return",
+    "autofollow"
+  ]
+}

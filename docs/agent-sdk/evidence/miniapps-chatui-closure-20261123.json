@@ -1,0 +1,11 @@
+{
+  "compared_to_native_run": 45122303559,
+  "source": "65fdc2ed9cd1ed563b86d98cee2dab7f665f714c",
+  "unchanged_selected_manifest_sha256": "67bd5ca5a9e9c368886949f8fd178d11d502f858f5fe411b11540f8df238d2f4",
+  "unchanged_source_resource_files": 363,
+  "original_sdk_source_resource_sha256": "cc2f9cdd3a4918a4aed1c1c109bfd5a76a345381a142b6f41a209a25ad593db0",
+  "miniapps_selected_target_count": 4,
+  "miniapps_profile_binary_targets": 0,
+  "miniapps_profile_owns_ai_or_javascript_runtime": false,
+  "scope": "Manifest and source bytes only; failed Motion run did not compile or execute tests."
+}

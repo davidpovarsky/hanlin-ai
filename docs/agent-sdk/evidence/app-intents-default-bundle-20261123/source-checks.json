@@ -1,0 +1,50 @@
+{
+  "checks": [
+    {
+      "command": [
+        "swiftc",
+        "-frontend",
+        "-parse",
+        "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinScriptingAppIntents.swift"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "swiftc",
+        "-frontend",
+        "-parse",
+        "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinScriptingWidgets.swift"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "swiftc",
+        "-frontend",
+        "-parse",
+        "AI_HLY/VisionIntent.swift"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "swiftc",
+        "-frontend",
+        "-parse",
+        "AI_HLY/Downstream/SystemIntegrations/ChavrusaSystemIntegrations.swift"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "diagnosticPythonSyntax": "PASS",
+  "scope": "Source syntax only; no AppIntents native metadata proof"
+}

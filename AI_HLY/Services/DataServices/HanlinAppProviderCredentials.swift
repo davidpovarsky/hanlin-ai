@@ -1,3 +1,4 @@
+import HanlinLocalization
 import Foundation
 import HanlinScriptExtensions
 import SwiftData
@@ -5,12 +6,9 @@ import SwiftData
 /// The original host owns credential policy. Neither an SDK namespace nor a
 /// fabricated account identifier grants Keychain access.
 struct HanlinAppProviderCredentials: Sendable {
-    static let shared = HanlinAppProviderCredentials(keychain: .init(
-        service: "com.itorah.chavrusachat.provider-credentials",
-        accessGroup: "group.com.itorah.chavrusachat",
-        synchronizable: true,
-        accessibility: .afterFirstUnlock
-    ))
+    /// The original record's container chooses the credential service. A shared
+    /// helper must not redirect another account when a second SDK view mounts.
+    static let shared = HanlinAppProviderCredentials()
 
     enum Failure: LocalizedError {
         case staleRecord, commitVerificationFailed, migrationUnavailable
@@ -31,13 +29,26 @@ struct HanlinAppProviderCredentials: Sendable {
         if let error = error as? HanlinKeychainCredentialStore.Failure { return error.localizedDescription }
         if let error = error as? Failure { return error.localizedDescription }
         // Core Data / provider errors can carry object values in their descriptions.
-        return String(localized: "The key could not be saved or verified. Reopen its settings and try again.")
+        return String(localized: "The key could not be saved or verified. Reopen its settings and try again.", bundle: HanlinLocalization.bundle)
     }
 
-    let keychain: HanlinKeychainCredentialStore
+    private let configuredKeychain: HanlinKeychainCredentialStore?
+
+    init(keychain: HanlinKeychainCredentialStore? = nil) {
+        configuredKeychain = keychain
+    }
+
+    /// Retains the explicit-store API used by existing host/test integrations.
+    var keychain: HanlinKeychainCredentialStore {
+        configuredKeychain ?? HanlinApplicationCredentials.currentHost.store
+    }
+
+    private func keychain(for container: ModelContainer?) -> HanlinKeychainCredentialStore {
+        configuredKeychain ?? HanlinApplicationCredentialRegistry.shared.credentials(for: container).store
+    }
 
     func resolve<Record: HanlinProviderCredentialRecord>(_ record: Record) throws -> String? {
-        try keychain.resolve(record.storedCredential, kind: Record.credentialKind)
+        try keychain(for: record.modelContext?.container).resolve(record.storedCredential, kind: Record.credentialKind)
     }
 
     func matches<Record: HanlinProviderCredentialRecord>(_ value: String, for record: Record) throws -> Bool {
@@ -126,7 +137,7 @@ struct HanlinAppProviderCredentials: Sendable {
         try requireDurableValue(record, expectedStoredValue: expectedStoredValue, in: context)
         if context.hasChanges { try context.save() }
         try requireDurableValue(record, expectedStoredValue: expectedStoredValue, in: context)
-        let reference = try keychain.stage(value, kind: Record.credentialKind,
+        let reference = try keychain(for: context.container).stage(value, kind: Record.credentialKind,
                                            previousStoredValue: expectedStoredValue)
         try requireCurrent(record, expectedStoredValue: expectedStoredValue, in: context)
         try requireDurableValue(record, expectedStoredValue: expectedStoredValue, in: context)
@@ -150,7 +161,7 @@ struct HanlinAppProviderCredentials: Sendable {
     ) throws {
         guard record.modelContext == nil else { throw Failure.staleRecord }
         if context.hasChanges { try context.save() }
-        let reference = try keychain.stage(value, kind: Record.credentialKind,
+        let reference = try keychain(for: context.container).stage(value, kind: Record.credentialKind,
                                            previousStoredValue: record.storedCredential)
         record.storedCredential = reference
         context.insert(record)
@@ -175,7 +186,7 @@ struct HanlinAppProviderCredentials: Sendable {
         try requireDurableValue(record, expectedStoredValue: expectedReference, in: context)
         if context.hasChanges { try context.save() }
         try requireDurableValue(record, expectedStoredValue: expectedReference, in: context)
-        let previous = try keychain.previousStoredValue(for: expectedReference, kind: Record.credentialKind)
+        let previous = try keychain(for: context.container).previousStoredValue(for: expectedReference, kind: Record.credentialKind)
         record.storedCredential = previous
         do {
             try context.save()

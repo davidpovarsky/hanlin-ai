@@ -1,0 +1,27 @@
+{"status": "NOT_REQUESTED", "scope": "Host prerequisites only"}
+{"status": "NOT_REQUESTED", "scope": "Native foreground prerequisites only"}
+{"status": "NOT_REQUESTED", "scope": "Host prerequisites only"}
+{"status": "INVALIDATED", "origin_run": "45133337462", "reason": "source changed", "next": "Execute actual foreground53 prerequisites"}
+test_changed_actual_compiler_bytes_invalidates (__main__.ForegroundProofTests.test_changed_actual_compiler_bytes_invalidates) ... ok
+test_changed_platform_invalidates (__main__.ForegroundProofTests.test_changed_platform_invalidates) ... ok
+test_changed_runner_invalidates (__main__.ForegroundProofTests.test_changed_runner_invalidates) ... ok
+test_changed_source_digest_invalidates (__main__.ForegroundProofTests.test_changed_source_digest_invalidates) ... ok
+test_changed_swift_toolchain_invalidates (__main__.ForegroundProofTests.test_changed_swift_toolchain_invalidates) ... ok
+test_default_does_not_request_or_skip_native_foreground (__main__.ForegroundProofTests.test_default_does_not_request_or_skip_native_foreground) ... ok
+test_duplicate_archive_member_invalidates (__main__.ForegroundProofTests.test_duplicate_archive_member_invalidates) ... ok
+test_failed_admission_emits_false_and_keeps_actual_execution_required (__main__.ForegroundProofTests.test_failed_admission_emits_false_and_keeps_actual_execution_required) ... ok
+test_missing_provenance_runner_invalidates (__main__.ForegroundProofTests.test_missing_provenance_runner_invalidates) ... ok
+test_missing_raw_trace_invalidates (__main__.ForegroundProofTests.test_missing_raw_trace_invalidates) ... ok
+test_missing_source_invalidates_even_with_53_pass_claim (__main__.ForegroundProofTests.test_missing_source_invalidates_even_with_53_pass_claim) ... ok
+test_original_raw_foreground53_is_admitted (__main__.ForegroundProofTests.test_original_raw_foreground53_is_admitted) ... ok
+test_raw_result_corruption_invalidates (__main__.ForegroundProofTests.test_raw_result_corruption_invalidates) ... ok
+test_rehashed_canonical_dependency_mismatch_still_invalidates (__main__.ForegroundProofTests.test_rehashed_canonical_dependency_mismatch_still_invalidates) ... ok
+test_rehashed_different_executed_binary_still_invalidates (__main__.ForegroundProofTests.test_rehashed_different_executed_binary_still_invalidates) ... ok
+test_rehashed_failed_native_command_still_invalidates (__main__.ForegroundProofTests.test_rehashed_failed_native_command_still_invalidates) ... ok
+test_rehashed_incomplete_raw_result_still_invalidates (__main__.ForegroundProofTests.test_rehashed_incomplete_raw_result_still_invalidates) ... ok
+test_wrong_origin_source_invalidates (__main__.ForegroundProofTests.test_wrong_origin_source_invalidates) ... ok
+
+----------------------------------------------------------------------
+Ran 18 tests in 0.089s
+
+OK

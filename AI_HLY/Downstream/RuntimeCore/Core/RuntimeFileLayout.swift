@@ -11,14 +11,8 @@ struct RuntimeFileLayout: Sendable {
 
     let root: URL
 
-    static let `default`: RuntimeFileLayout = {
-        let applicationSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
-        return RuntimeFileLayout(
-            root: applicationSupport
-                .appending(path: "HanlinRuntime", directoryHint: .isDirectory)
-                .appending(path: "v1", directoryHint: .isDirectory)
-        )
-    }()
+    static let `default` = RuntimeFileLayout(
+        root: HanlinApplicationProcessRuntime.shared.configuration.directory)
 
     static let legacyMCPRoot: URL = FileManager.default
         .urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]

@@ -1,3 +1,4 @@
+import HanlinLocalization
 import SwiftUI
 import SwiftStreamingMarkdown
 import UIKit
@@ -127,7 +128,9 @@ struct ChatMarkdownView: View {
         case "diff", "patch": kind = "diff"
         default: return nil
         }
-        return AnyView(ChatCodeFenceView(blockID: block.id, kind: kind, source: block.code))
+        return AnyView(ChatCodeFenceView(blockID: block.id, kind: kind, source: block.code, onTrace: { event, fields in
+            NativeToolTraceLogger.shared.log(event, fields)
+        }))
     }
 
     private func updateHighlightLifetime() async {
@@ -182,8 +185,8 @@ struct ChatMarkdownView: View {
 
     private var contextMenuItems: [TextContextMenuItem] {
         var items: [TextContextMenuItem] = []
-        if savePersonal != nil { items.append(TextContextMenuItem(id: "hanlin.savePersonal", title: String(localized: "Save for myself"), image: UIImage(systemName: "bookmark"))) }
-        if saveKnowledge != nil { items.append(TextContextMenuItem(id: "hanlin.saveKnowledge", title: String(localized: "Save to knowledge"), image: UIImage(systemName: "backpack"))) }
+        if savePersonal != nil { items.append(TextContextMenuItem(id: "hanlin.savePersonal", title: String(localized: "Save for myself", bundle: HanlinLocalization.bundle), image: UIImage(systemName: "bookmark"))) }
+        if saveKnowledge != nil { items.append(TextContextMenuItem(id: "hanlin.saveKnowledge", title: String(localized: "Save to knowledge", bundle: HanlinLocalization.bundle), image: UIImage(systemName: "backpack"))) }
         return items
     }
 
@@ -217,7 +220,7 @@ struct ChatLinkPresentation: ViewModifier {
             })
             .sheet(item: $link) { SafariView(url: $0).ignoresSafeArea() }
             .sheet(item: $citationGroup) { group in
-                HanlinSourcesList(sources: group.sources, title: String(localized: "reference_materials")) { source in
+                HanlinSourcesList(sources: group.sources, title: String(localized: "reference_materials", bundle: HanlinLocalization.bundle)) { source in
                     if let url = source.url, Self.isWebURL(url) { citationLink = url }
                 }
                 .sheet(item: $citationLink) { SafariView(url: $0).ignoresSafeArea() }

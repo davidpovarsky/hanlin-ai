@@ -1,191 +1,34 @@
-//
-//  App.swift
-//  AI_HLY
-//
-//  Created by zhiyuan20002 on 3/2/25.
-//
-
+import AI_Hanlin
 import AppIntents
-import Foundation
-import HanlinExpoRuntime
-import SwiftData
 import SwiftUI
-import TorahLibraryKit
-
-// MARK: - 安全数组访问扩展
-extension Collection {
-    /// 安全下标访问，越界时返回 nil 而非崩溃
-    subscript(safe index: Index) -> Element? {
-        return indices.contains(index) ? self[index] : nil
-    }
-}
-
-extension MutableCollection {
-    /// 安全下标访问（可变集合），越界时返回 nil
-    subscript(safe index: Index) -> Element? {
-        get {
-            return indices.contains(index) ? self[index] : nil
-        }
-        set {
-            if indices.contains(index), let newValue = newValue {
-                self[index] = newValue
-            }
-        }
-    }
-}
-
-class AppDataManager: ObservableObject {
-    let modelContainer: ModelContainer
-    
-    init() {
-        do {
-            let isTesting = ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
-                || NSClassFromString("XCTestCase") != nil
-                || ProcessInfo.processInfo.environment["HANLIN_EXPO_E2E"] != nil
-                || ProcessInfo.processInfo.environment["HANLIN_NATIVESCRIPT_E2E"] != nil
-                || ProcessInfo.processInfo.environment["HANLIN_SCRIPTUI_E2E"] != nil
-            let nativeAcceptance = HanlinNativeA2UIAcceptanceProvider.isEnabled
-            let config: ModelConfiguration
-            if let fixtureID = AgentRuntimeUIAcceptanceProvider.phase2StoreID {
-                let root = try FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-                    .appending(path: "Phase2Acceptance/" + fixtureID.uuidString, directoryHint: .isDirectory)
-                try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
-                config = ModelConfiguration(url: root.appending(path: "Chat.store"), cloudKitDatabase: .none)
-            } else {
-                config = ModelConfiguration(isStoredInMemoryOnly: nativeAcceptance, cloudKitDatabase: (isTesting || nativeAcceptance) ? .none : .automatic)
-            }
-            modelContainer = try ModelContainer(
-                for: ChatMessages.self,
-                ChatSavedExcerpt.self,
-                APIKeys.self,
-                SearchKeys.self,
-                AllModels.self,
-                ChatRecords.self,
-                UserInfo.self,
-                PromptRepo.self,
-                KnowledgeRecords.self,
-                KnowledgeChunk.self,
-                MemoryArchive.self,
-                TranslationDic.self,
-                ToolKeys.self,
-                configurations: config
-            )
-        } catch {
-            fatalError("无法初始化 ModelContainer: \(error)")
-        }
-    }
-    
-    // 异步预加载所有数据
-    @MainActor func preloadDataIfNeeded() {
-        let context = modelContainer.mainContext
-        if HanlinNativeA2UIAcceptanceProvider.isEnabled {
-            do { try HanlinNativeA2UIAcceptanceProvider.configureIfRequested(context: context) }
-            catch { fatalError("Native A2UI isolated fixture bootstrap failed") }
-            return
-        }
-        if AgentRuntimeUIAcceptanceProvider.phase2StoreID != nil {
-            AgentRuntimeUIAcceptanceProvider.configureIfRequested(context: context)
-            return
-        }
-        // 确保模型数据优先加载完成
-        preloadModelDataIfNeeded(context: context)
-        preloadAPIKeysIfNeeded(context: context)
-        preloadSearchKeysIfNeeded(context: context)
-        preloadToolKeysIfNeeded(context: context)
-        preloadUserInfoIfNeeded(context: context)
-        preloadPromptIfNeeded(context: context)
-        clearOrphanData(context: context)
-        AgentRuntimeUIAcceptanceProvider.configureIfRequested(context: context)
-    }
-}
 
 #if HANLIN_NATIVESCRIPT_POC
 @main
 struct HanlinNativeScriptPOCApp: App {
     var body: some Scene {
-        WindowGroup {
-            HanlinNativeScriptPOCView()
-        }
+        WindowGroup { HanlinNativeScriptAcceptanceView() }
     }
 }
 #else
 @main
+@MainActor
 struct MyApp: App {
-    @MainActor @StateObject private var appDataManager = AppDataManager()
-    @State private var deepLinkTarget: String? = nil
-    @Environment(\.scenePhase) private var scenePhase
+    private let context: HanlinApplicationContext
+
+    init() {
+        do { context = try HanlinApplicationContext(configuration: .hanlin) }
+        catch { fatalError("Unable to initialize Hanlin: \(error)") }
+    }
 
     var body: some Scene {
-        WindowGroup {
-            HanlinAIReceivingWindowRoot(onDisappear: { windowID in
-                HanlinAppSplitOriginCoordinator.shared.revokeReceivingWindow(windowID)
-            }) { receivingWindowID in
-            MainTabView(deepLinkTarget: $deepLinkTarget)
-                .modelContainer(appDataManager.modelContainer)
-                .task {
-                    if HanlinNativeA2UIAcceptanceProvider.isEnabled {
-                        appDataManager.preloadDataIfNeeded()
-                        return
-                    }
-                    HanlinExpoSession.ensureAppDefinesLoaded()
-                    ChavrusaSystemIntegrationBootstrap.configure()
-                    HanlinNativeScriptProductionBootstrap.prepareEmbeddedProviders()
-                    appDataManager.preloadDataIfNeeded()
-                    HanlinScriptingPlatform.shared.configure(modelContext: appDataManager.modelContainer.mainContext)
-                    await HanlinScriptingPlatform.shared.publishCompactAgentConfig()
-                    await RuntimeLifecycleBridge.prepareApplication()
-                    await RuntimeLifecycleBridge.handleScenePhase(scenePhase)
-                }
-                .onChange(of: scenePhase) { _, newPhase in
-                    guard !HanlinNativeA2UIAcceptanceProvider.isEnabled else { return }
-                    Task {
-                        await RuntimeLifecycleBridge.handleScenePhase(newPhase)
-                        if newPhase == .active {
-                            await HanlinScriptingPlatform.shared.publishCompactAgentConfig()
-                        }
-                    }
-                }
-                .onReceive(NotificationCenter.default.publisher(for: ModelContext.didSave)) { _ in
-                    guard !HanlinNativeA2UIAcceptanceProvider.isEnabled else { return }
-                    Task {
-                        await HanlinScriptingPlatform.shared.publishCompactAgentConfig()
-                    }
-                }
-                .onOpenURL { url in
-                    if url.scheme?.lowercased() == "chavrusachat", url.host?.lowercased() == "split" {
-                        let receiver = HanlinAppSplitOriginCoordinator.shared
-                        if let claimID = receiver.claimReturn(url, receivingWindowID: receivingWindowID) {
-                            Task { @MainActor in
-                                await receiver.receiveReturn(url, modelContext: appDataManager.modelContainer.mainContext,
-                                    receivingWindowID: receivingWindowID, claimID: claimID)
-                            }
-                        }
-                    } else if url.host == "openVisionView" {
-                        deepLinkTarget = "vision"
-                    } else if url.host == "study", let link = TorahStudyDeepLink.parse(url: url) {
-                        TorahStudyNavigationRouter.shared.navigate(to: link)
-                        NotificationCenter.default.post(
-                            name: Notification.Name("TorahStudyDeepLinkNotification"),
-                            object: link
-                        )
-                    }
-                }
-            }
-        }
-
-        WindowGroup("Mini App", for: NativeAppLaunchRequest.self) { $request in
-            if let request {
-                NativeAppSessionContainerView(request: request)
-                    .modelContainer(appDataManager.modelContainer)
-            } else {
-                ContentUnavailableView(
-                    "No App Selected",
-                    systemImage: "square.grid.2x2",
-                    description: Text("Choose a mini app from Hanlin.")
-                )
-                .modelContainer(appDataManager.modelContainer)
-            }
-        }
+        HanlinApplicationScene(context: context)
     }
 }
 #endif
+
+/// Register the original SDK's system actions with this application's metadata.
+struct HanlinAppIntents: AppIntentsPackage {
+    static var includedPackages: [any AppIntentsPackage.Type] {
+        [HanlinApplicationIntentsPackage.self]
+    }
+}

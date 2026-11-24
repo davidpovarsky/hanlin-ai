@@ -1,3 +1,4 @@
+import HanlinLocalization
 //
 //  MemoryArchiveView.swift
 //  AI_Hanlin
@@ -51,28 +52,28 @@ struct MemoryArchiveView: View {
             backgroundView
             memoryListView
         }
-        .navigationTitle(String(localized: "记忆档案"))
+        .navigationTitle(String(localized: "记忆档案", bundle: HanlinLocalization.bundle))
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("hanlin-memory-archive")
-        .searchable(text: $searchText, prompt: String(localized: "搜索记忆"))
+        .searchable(text: $searchText, prompt: String(localized: "搜索记忆", bundle: HanlinLocalization.bundle))
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: {
                     showClearAllAlert = true
                 }) {
-                    Text(String(localized: "清空所有"))
+                    Text(String(localized: "清空所有", bundle: HanlinLocalization.bundle))
                 }
             }
         }
-        .alert(String(localized: "确定要清除所有记忆吗？"), isPresented: $showClearAllAlert) {
-            Button(String(localized: "取消"), role: .cancel) {}
-            Button(String(localized: "清除"), role: .destructive, action: clearAllMemories)
+        .alert(String(localized: "确定要清除所有记忆吗？", bundle: HanlinLocalization.bundle), isPresented: $showClearAllAlert) {
+            Button(String(localized: "取消", bundle: HanlinLocalization.bundle), role: .cancel) {}
+            Button(String(localized: "清除", bundle: HanlinLocalization.bundle), role: .destructive, action: clearAllMemories)
         }
         .sheet(isPresented: $showMemorySheet) {
             NavigationView {
                 ZStack {
                     LinearGradient(
-                        gradient: Gradient(colors: [Color.hlBlue.opacity(0.2), Color.hlPurple.opacity(0.2)]),
+                        gradient: Gradient(colors: [Color.hanlinHLBlue.opacity(0.2), Color.hanlinHLPurple.opacity(0.2)]),
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
                     )
@@ -82,14 +83,14 @@ struct MemoryArchiveView: View {
                         TextEditor(text: $memoryContent)
                             .scrollContentBackground(.hidden)    // 隐藏默认滚动视图背景
                             .background(Color.clear)             // 背景设为透明
-                            .foregroundColor(.hlBluefont)        // 文本颜色
+                            .foregroundColor(.hanlinHLBluefont)        // 文本颜色
                     }
                     .padding(.horizontal, 12)
                     .visualEffect { content, proxy in
                         content.hueRotation(Angle(degrees: proxy.frame(in: .global).origin.y / 20))
                     }
                 }
-                .navigationTitle(String(localized: "记忆编辑"))
+                .navigationTitle(String(localized: "记忆编辑", bundle: HanlinLocalization.bundle))
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItemGroup(placement: .navigationBarLeading) {
@@ -101,14 +102,14 @@ struct MemoryArchiveView: View {
                         } label: {
                             HStack {
                                 Image(systemName: "xmark")
-                                Text(String(localized: "取消"))
+                                Text(String(localized: "取消", bundle: HanlinLocalization.bundle))
                             }
                             .font(HanlinTypography.caption)
-                            .foregroundColor(.hlBluefont)
+                            .foregroundColor(.hanlinHLBluefont)
                             .padding(6)
                             .background(BlurView(style: .systemUltraThinMaterial))
                             .clipShape(Capsule())
-                            .shadow(color: .hlBlue, radius: 1)
+                            .shadow(color: .hanlinHLBlue, radius: 1)
                         }
                         .hanlinFeedback(.impact, trigger: isFeedBack)
                     }
@@ -128,15 +129,15 @@ struct MemoryArchiveView: View {
                         } label: {
                             HStack {
                                 Image(systemName: "checkmark")
-                                Text(String(localized: "保存"))
+                                Text(String(localized: "保存", bundle: HanlinLocalization.bundle))
                             }
                             .font(HanlinTypography.caption)
                             .foregroundColor(.white)
                             .padding(6)
-                            .background(.hlBlue)
+                            .background(.hanlinHLBlue)
                             .background(BlurView(style: .systemUltraThinMaterial))
                             .clipShape(Capsule())
-                            .shadow(color: .hlBlue, radius: 1)
+                            .shadow(color: .hanlinHLBlue, radius: 1)
                         }
                         .hanlinFeedback(.impact, trigger: isFeedBack)
                     }
@@ -147,7 +148,7 @@ struct MemoryArchiveView: View {
 
     private var backgroundView: some View {
         LinearGradient(
-            gradient: Gradient(colors: [Color.hlBlue.opacity(0.2), Color.hlPurple.opacity(0.2)]),
+            gradient: Gradient(colors: [Color.hanlinHLBlue.opacity(0.2), Color.hanlinHLPurple.opacity(0.2)]),
             startPoint: .topLeading,
             endPoint: .bottomTrailing
         )
@@ -174,17 +175,17 @@ struct MemoryArchiveView: View {
                     Image(systemName: "archivebox")
                         .font(HanlinTypography.largeTitle)
                         .fontWeight(.bold)
-                        .foregroundColor(.hlBluefont)
+                        .foregroundColor(.hanlinHLBluefont)
                         .padding()
                     
-                    Text(String(localized: "记忆档案功能用于聊天，受支持的模型会自动在聊天时记住你的喜好并在需要的时候主动回忆这些喜好。"))
+                    Text(String(localized: "记忆档案功能用于聊天，受支持的模型会自动在聊天时记住你的喜好并在需要的时候主动回忆这些喜好。", bundle: HanlinLocalization.bundle))
                         .font(HanlinTypography.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
                     
                     HStack {
-                        Toggle(String(localized: "启用记忆功能"), isOn: memoryEnabledBinding)
-                            .tint(.hlBlue)
+                        Toggle(String(localized: "启用记忆功能", bundle: HanlinLocalization.bundle), isOn: memoryEnabledBinding)
+                            .tint(.hanlinHLBlue)
                     }
                     
 //                    HStack {
@@ -199,7 +200,7 @@ struct MemoryArchiveView: View {
                 .background(
                     BlurView(style: .systemThinMaterial)
                         .clipShape(RoundedRectangle(cornerRadius: 20))
-                        .shadow(color: .hlBlue, radius: 1)
+                        .shadow(color: .hanlinHLBlue, radius: 1)
                 )
                 .visualEffect { content, proxy in
                     content.hueRotation(Angle(degrees: proxy.frame(in: .global).origin.y / 15))
@@ -215,9 +216,9 @@ struct MemoryArchiveView: View {
                             Button(role: .destructive) {
                                 deleteMemory(memory)
                             } label: {
-                                Label(String(localized: "忘记"), systemImage: "heart.slash")
+                                Label(String(localized: "忘记", bundle: HanlinLocalization.bundle), systemImage: "heart.slash")
                             }
-                            .tint(Color(.hlRed))
+                            .tint(Color(.hanlinHLRed))
                         }
                         .swipeActions(edge: .leading, allowsFullSwipe: true) {
                             Button {
@@ -225,9 +226,9 @@ struct MemoryArchiveView: View {
                                 memoryContent = memory.content ?? ""
                                 showMemorySheet = true
                             } label: {
-                                Label(String(localized: "更新"), systemImage: "arrow.trianglehead.clockwise.heart")
+                                Label(String(localized: "更新", bundle: HanlinLocalization.bundle), systemImage: "arrow.trianglehead.clockwise.heart")
                             }
-                            .tint(Color(.hlGreen))
+                            .tint(Color(.hanlinHLGreen))
                         }
                 }
                 
@@ -239,16 +240,16 @@ struct MemoryArchiveView: View {
                     VStack {
                         HStack {
                             Image(systemName: "arrow.up.heart")
-                            Text(String(localized: "灌输新记忆"))
+                            Text(String(localized: "灌输新记忆", bundle: HanlinLocalization.bundle))
                         }
-                        .foregroundColor(.hlBluefont)
+                        .foregroundColor(.hanlinHLBluefont)
                         .padding()
                     }
                     .frame(maxWidth: .infinity)
                     .background(
                         BlurView(style: .systemThinMaterial)
                             .clipShape(RoundedRectangle(cornerRadius: 20))
-                            .shadow(color: .hlBlue, radius: 1)
+                            .shadow(color: .hanlinHLBlue, radius: 1)
                     )
                     .visualEffect { content, proxy in
                         content.hueRotation(Angle(degrees: proxy.frame(in: .global).origin.y / 15))
@@ -260,9 +261,9 @@ struct MemoryArchiveView: View {
             } else {
                 HStack {
                     Image(systemName: "heart.slash")
-                    Text(String(localized: "记忆功能已关闭"))
+                    Text(String(localized: "记忆功能已关闭", bundle: HanlinLocalization.bundle))
                 }
-                .foregroundColor(.hlBluefont)
+                .foregroundColor(.hanlinHLBluefont)
                 .listRowSeparator(.hidden)
                 .listRowBackground(Color.clear)
                 .padding()
@@ -294,7 +295,7 @@ struct MemoryArchiveView: View {
         .background(
             BlurView(style: .systemThinMaterial)
                 .clipShape(RoundedRectangle(cornerRadius: 20))
-                .shadow(color: .hlBlue, radius: 1)
+                .shadow(color: .hanlinHLBlue, radius: 1)
         )
         .visualEffect { content, proxy in
             content.hueRotation(Angle(degrees: proxy.frame(in: .global).origin.y / 15))
@@ -317,7 +318,7 @@ struct MemoryArchiveView: View {
         while let found = lowerContent.range(of: lowerSearch, options: .caseInsensitive, range: range) {
             let nsRange = NSRange(found, in: content)
             if let attrRange = Range(nsRange, in: attributed) {
-                attributed[attrRange].foregroundColor = .hlBlue
+                attributed[attrRange].foregroundColor = .hanlinHLBlue
             }
             range = found.upperBound..<lowerContent.endIndex
             matchFound = true
@@ -341,7 +342,7 @@ struct MemoryArchiveView: View {
                         let idx = content.index(content.startIndex, offsetBy: i)
                         let nsRange = NSRange(idx...idx, in: content)
                         if let attrRange = Range(nsRange, in: attributed) {
-                            attributed[attrRange].foregroundColor = .hlBluefont
+                            attributed[attrRange].foregroundColor = .hanlinHLBluefont
                         }
                     }
                 }

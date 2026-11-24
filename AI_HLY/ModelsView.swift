@@ -1,3 +1,4 @@
+import HanlinLocalization
 //
 //  ModelSync.swift
 //  AI_HLY
@@ -87,18 +88,18 @@ struct ModelsView: View {
                     modelsListSection
                 }
             }
-            .navigationTitle(selectedIdentity.lowercased() == "agent" ? String(localized: "智能体") : String(localized: "模型"))
+            .navigationTitle(selectedIdentity.lowercased() == "agent" ? String(localized: "智能体", bundle: HanlinLocalization.bundle) : String(localized: "模型", bundle: HanlinLocalization.bundle))
             .accessibilityElement(children: .contain)
             .accessibilityIdentifier("hanlin-models-list")
             .safeAreaInset(edge: .bottom) {
                 // 底部额外留白区域
                 Color.clear.frame(height: 75)
             }
-            .searchable(text: $searchText, prompt: selectedIdentity.lowercased() == "agent" ? String(localized: "搜索智能体") : String(localized: "搜索模型"))
+            .searchable(text: $searchText, prompt: selectedIdentity.lowercased() == "agent" ? String(localized: "搜索智能体", bundle: HanlinLocalization.bundle) : String(localized: "搜索模型", bundle: HanlinLocalization.bundle))
             .toolbar {
                 if isPresentedInSheet {
                     ToolbarItem(placement: .cancellationAction) {
-                        Button(String(localized: "完成")) {
+                        Button(String(localized: "完成", bundle: HanlinLocalization.bundle)) {
                             dismiss()
                         }
                         .accessibilityIdentifier("hanlin-models-done")
@@ -106,9 +107,9 @@ struct ModelsView: View {
                 }
                 // 中间 Picker 选择身份
                 ToolbarItem(placement: .principal) {
-                    Picker(String(localized: "身份选择"), selection: $selectedIdentity) {
-                        Text(String(localized: "模型")).tag("model")
-                        Text(String(localized: "智能体")).tag("agent")
+                    Picker(String(localized: "身份选择", bundle: HanlinLocalization.bundle), selection: $selectedIdentity) {
+                        Text(String(localized: "模型", bundle: HanlinLocalization.bundle)).tag("model")
+                        Text(String(localized: "智能体", bundle: HanlinLocalization.bundle)).tag("agent")
                     }
                     .pickerStyle(SegmentedPickerStyle())
                     .frame(width: 200)
@@ -125,27 +126,27 @@ struct ModelsView: View {
                         Button {
                             resetModelPositionToDefault(context: context)
                         } label: {
-                            Label(String(localized: "恢复默认排序"), systemImage: "arrow.up.arrow.down")
+                            Label(String(localized: "恢复默认排序", bundle: HanlinLocalization.bundle), systemImage: "arrow.up.arrow.down")
                         }
                     } else {
                         Menu {
                             Button {
                                 showOnlineModelView = true
                             } label: {
-                                Label(String(localized: "添加在线模型"), systemImage: "link.badge.plus")
+                                Label(String(localized: "添加在线模型", bundle: HanlinLocalization.bundle), systemImage: "link.badge.plus")
                             }
                             Button {
                                 showLocalModelDownloadView = true
                             } label: {
-                                Label(String(localized: "添加本地模型"), systemImage: "externaldrive.badge.plus")
+                                Label(String(localized: "添加本地模型", bundle: HanlinLocalization.bundle), systemImage: "externaldrive.badge.plus")
                             }
                             Button {
                                 showAddAgentView = true
                             } label: {
-                                Label(String(localized: "添加新智能体"), systemImage: "person.badge.plus")
+                                Label(String(localized: "添加新智能体", bundle: HanlinLocalization.bundle), systemImage: "person.badge.plus")
                             }
                             NavigationLink(destination: APIKeysView()) {
-                                Label(String(localized: "模型厂商设置"), systemImage: "key.2.on.ring")
+                                Label(String(localized: "模型厂商设置", bundle: HanlinLocalization.bundle), systemImage: "key.2.on.ring")
                             }
                         } label: {
                             Image(systemName: "plus")
@@ -155,9 +156,9 @@ struct ModelsView: View {
             }
             .environment(\.editMode, .constant(isEditing ? .active : .inactive))
             // 删除确认弹窗
-            .alert(String(localized: "确定要删除此模型吗？"), isPresented: $showDeleteAlert, presenting: modelToDelete) { model in
-                Button(String(localized: "取消"), role: .cancel) {}
-                Button(String(localized: "删除"), role: .destructive) {
+            .alert(String(localized: "确定要删除此模型吗？", bundle: HanlinLocalization.bundle), isPresented: $showDeleteAlert, presenting: modelToDelete) { model in
+                Button(String(localized: "取消", bundle: HanlinLocalization.bundle), role: .cancel) {}
+                Button(String(localized: "删除", bundle: HanlinLocalization.bundle), role: .destructive) {
                     deleteModel(model)
                 }
             }
@@ -197,8 +198,8 @@ struct ModelsView: View {
         .onAppear {
             initializeModelStates()
         }
-        .alert(String(localized: "API Key 缺失"), isPresented: $showAPIKeyError) {
-            Button(String(localized: "确定"), role: .cancel) {}
+        .alert(String(localized: "API Key 缺失", bundle: HanlinLocalization.bundle), isPresented: $showAPIKeyError) {
+            Button(String(localized: "确定", bundle: HanlinLocalization.bundle), role: .cancel) {}
         } message: {
             Text(errorMessage)
         }
@@ -209,7 +210,7 @@ struct ModelsView: View {
         // 如果 displayName 不存在或为空，直接返回 “Unknown”
         guard let displayName = model.displayName, !displayName.isEmpty else {
             return AnyView(
-                Text("Unknown")
+                Text("Unknown", bundle: HanlinLocalization.bundle)
                     .font(HanlinTypography.headline)
                     .foregroundColor(.primary)
             )
@@ -237,7 +238,7 @@ struct ModelsView: View {
                 let nsRange = NSRange(range, in: displayName)
                 if let attrRange = Range<AttributedString.Index>(nsRange, in: attributedName) {
                     // 设置高亮颜色 (请确保 .hlBlue 在项目中存在或自行替换成别的颜色)
-                    attributedName[attrRange].foregroundColor = .hlBlue
+                    attributedName[attrRange].foregroundColor = .hanlinHLBlue
                 }
                 // 继续向后搜索
                 startIndex = range.upperBound
@@ -317,8 +318,8 @@ struct ModelsView: View {
     }
     
     private func priceText(for price: Int16) -> String {
-        if price < 0 { return String(localized: "Price unknown") }
-        if price == 4 { return String(localized: "Paid") }
+        if price < 0 { return String(localized: "Price unknown", bundle: HanlinLocalization.bundle) }
+        if price == 4 { return String(localized: "Paid", bundle: HanlinLocalization.bundle) }
         let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
         if currentLanguage.hasPrefix("zh") {
             switch price {
@@ -377,7 +378,7 @@ struct ModelRowView: View {
     var body: some View {
         HStack {
             if model.identity == "model" {
-                Image(getCompanyIcon(for: model.company ?? "Unknown"))
+                Image(hanlinAsset: getCompanyIcon(for: model.company ?? "Unknown"))
                     .resizable()
                     .frame(width: size_30, height: size_30)
             } else {
@@ -405,7 +406,7 @@ struct ModelRowView: View {
                         highlightDisplayName(model)
                         if model.identity == "agent" {
                             let baseName = restoreBaseModelName(from: model.name ?? "Unknown")
-                            Text("基于\(baseName)模型")
+                            Text("基于\(baseName)模型", bundle: HanlinLocalization.bundle)
                                 .font(HanlinTypography.caption)
                                 .foregroundColor(.gray)
                         }
@@ -414,43 +415,43 @@ struct ModelRowView: View {
                 HStack {
                     
                     if model.supportsToolUse {
-                        Text(String(localized: "工具"))
+                        Text(String(localized: "工具", bundle: HanlinLocalization.bundle))
                             .font(HanlinTypography.caption)
-                            .foregroundColor(.hlBrown)
+                            .foregroundColor(.hanlinHLBrown)
                     }
                     
                     if model.supportsMultimodal {
-                        Text(String(localized: "视觉"))
+                        Text(String(localized: "视觉", bundle: HanlinLocalization.bundle))
                             .font(HanlinTypography.caption)
-                            .foregroundColor(.hlTeal)
+                            .foregroundColor(.hanlinHLTeal)
                     } else if model.supportsTextGen {
-                        Text(String(localized: "文本"))
+                        Text(String(localized: "文本", bundle: HanlinLocalization.bundle))
                             .font(HanlinTypography.caption)
                             .foregroundColor(.gray)
                     }
                     
                     if model.hasVerifiedImageOutput {
-                        Text(String(localized: "生图"))
+                        Text(String(localized: "生图", bundle: HanlinLocalization.bundle))
                             .font(HanlinTypography.caption)
-                            .foregroundColor(.hlGreen)
+                            .foregroundColor(.hanlinHLGreen)
                     }
                     
                     if model.supportsVoiceGen {
-                        Text(String(localized: "语音"))
+                        Text(String(localized: "语音", bundle: HanlinLocalization.bundle))
                             .font(HanlinTypography.caption)
-                            .foregroundColor(.hlPink)
+                            .foregroundColor(.hanlinHLPink)
                     }
                     
                     if model.supportsReasoning {
-                        Text(String(localized: "思考"))
+                        Text(String(localized: "思考", bundle: HanlinLocalization.bundle))
                             .font(HanlinTypography.caption)
-                            .foregroundColor(.hlPurple)
+                            .foregroundColor(.hanlinHLPurple)
                     }
                     
                     if model.company?.uppercased() == "LOCAL" {
-                        Text(String(localized: "本地"))
+                        Text(String(localized: "本地", bundle: HanlinLocalization.bundle))
                             .font(HanlinTypography.caption)
-                            .foregroundColor(.hlOrange)
+                            .foregroundColor(.hanlinHLOrange)
                     }
                     
                     Text(model.catalogPriceDescription ?? priceText(model.catalogPriceTier))
@@ -460,7 +461,7 @@ struct ModelRowView: View {
             }
             Spacer()
             
-            Toggle("", isOn: Binding(
+            Toggle(hanlin: "", isOn: Binding(
                 get: { !model.isHidden },
                 set: { newValue in
                     if hasValidAPIKey(model) {
@@ -473,7 +474,7 @@ struct ModelRowView: View {
                 }
             ))
             .labelsHidden()
-            .tint(.hlBlue)
+            .tint(.hanlinHLBlue)
         }
         .padding(5)
         // 左滑编辑和右滑删除操作
@@ -482,9 +483,9 @@ struct ModelRowView: View {
                 Button(role: .destructive) {
                     onDelete()
                 } label: {
-                    Label(String(localized: "删除"), systemImage: "trash")
+                    Label(String(localized: "删除", bundle: HanlinLocalization.bundle), systemImage: "trash")
                 }
-                .tint(Color(.hlRed))
+                .tint(Color(.hanlinHLRed))
             }
         }
         .swipeActions(edge: .leading) {
@@ -492,9 +493,9 @@ struct ModelRowView: View {
                 // 直接打开本行的编辑 sheet
                 showEditSheet = true
             } label: {
-                Label(String(localized: "编辑"), systemImage: "square.and.pencil")
+                Label(String(localized: "编辑", bundle: HanlinLocalization.bundle), systemImage: "square.and.pencil")
             }
-            .tint(Color(.hlBlue))
+            .tint(Color(.hanlinHLBlue))
         }
         // 本行独立的编辑 sheet
         .sheet(isPresented: $showEditSheet) {

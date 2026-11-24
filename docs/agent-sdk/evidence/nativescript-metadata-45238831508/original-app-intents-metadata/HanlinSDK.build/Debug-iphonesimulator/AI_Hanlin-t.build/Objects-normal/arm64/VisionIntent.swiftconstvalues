@@ -1,0 +1,208 @@
+[
+  {
+    "typeName": "AI_Hanlin.OpenVisionIntent",
+    "mangledTypeName": "9AI_Hanlin16OpenVisionIntentV",
+    "kind": "struct",
+    "file": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/VisionIntent.swift",
+    "line": 13,
+    "conformances": [
+      "AppIntents.AppIntent",
+      "AppIntents.PersistentlyIdentifiable",
+      "AppIntents._SupportsAppDependencies",
+      "Swift.Sendable",
+      "Swift.SendableMetatype"
+    ],
+    "allConformances": [
+      {
+        "protocolName": "AppIntents.AppIntent",
+        "conformanceDefiningModule": "AI_Hanlin"
+      },
+      {
+        "protocolName": "AppIntents.PersistentlyIdentifiable",
+        "conformanceDefiningModule": "AI_Hanlin"
+      },
+      {
+        "protocolName": "AppIntents._SupportsAppDependencies",
+        "conformanceDefiningModule": "AI_Hanlin"
+      },
+      {
+        "protocolName": "Swift.Sendable",
+        "conformanceDefiningModule": "AI_Hanlin"
+      },
+      {
+        "protocolName": "Swift.SendableMetatype",
+        "conformanceDefiningModule": "AI_Hanlin"
+      }
+    ],
+    "associatedTypeAliases": [
+      {
+        "typeAliasName": "PerformResult",
+        "substitutedTypeName": "some AppIntents.IntentResult",
+        "substitutedMangledTypeName": "9AI_Hanlin16OpenVisionIntentV7performQryYaKFQOy_Qo_",
+        "opaqueTypeProtocolRequirements": [
+          "AppIntents.IntentResult"
+        ],
+        "opaqueTypeSameTypeRequirements": []
+      },
+      {
+        "typeAliasName": "SummaryContent",
+        "substitutedTypeName": "some AppIntents.ParameterSummary",
+        "substitutedMangledTypeName": "10AppIntents0A6IntentPAAE16parameterSummaryQrvpZQOy9AI_Hanlin010OpenVisionC0V_Qo_",
+        "opaqueTypeProtocolRequirements": [
+          "AppIntents.ParameterSummary"
+        ],
+        "opaqueTypeSameTypeRequirements": []
+      }
+    ],
+    "properties": [
+      {
+        "label": "openAppWhenRun",
+        "type": "Swift.Bool",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "false",
+        "file": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/VisionIntent.swift",
+        "line": 14,
+        "valueKind": "RawLiteral",
+        "value": "true"
+      },
+      {
+        "label": "title",
+        "type": "Foundation.LocalizedStringResource",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "false",
+        "file": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/VisionIntent.swift",
+        "line": 15,
+        "valueKind": "InitCall",
+        "value": {
+          "type": "Foundation.LocalizedStringResource",
+          "arguments": [
+            {
+              "label": "",
+              "type": "Swift.String.LocalizationValue",
+              "valueKind": "RawLiteral",
+              "value": "Open Hanlin Camera"
+            },
+            {
+              "label": "table",
+              "type": "Swift.Optional<Swift.String>",
+              "valueKind": "RawLiteral",
+              "value": "HanlinAppIntents"
+            },
+            {
+              "label": "locale",
+              "type": "Foundation.Locale",
+              "valueKind": "Runtime"
+            },
+            {
+              "label": "bundle",
+              "type": "Foundation.LocalizedStringResource.BundleDescription",
+              "valueKind": "Runtime"
+            },
+            {
+              "label": "comment",
+              "type": "Swift.Optional<Swift.StaticString>",
+              "valueKind": "NilLiteral"
+            }
+          ]
+        }
+      },
+      {
+        "label": "description",
+        "type": "AppIntents.IntentDescription",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "false",
+        "file": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/VisionIntent.swift",
+        "line": 16,
+        "valueKind": "InitCall",
+        "value": {
+          "type": "AppIntents.IntentDescription",
+          "arguments": [
+            {
+              "label": "",
+              "type": "Foundation.LocalizedStringResource",
+              "valueKind": "InitCall",
+              "value": {
+                "type": "Foundation.LocalizedStringResource",
+                "arguments": [
+                  {
+                    "label": "",
+                    "type": "Swift.String.LocalizationValue",
+                    "valueKind": "RawLiteral",
+                    "value": "Opens Hanlin’s camera and visual analysis."
+                  },
+                  {
+                    "label": "table",
+                    "type": "Swift.Optional<Swift.String>",
+                    "valueKind": "RawLiteral",
+                    "value": "HanlinAppIntents"
+                  },
+                  {
+                    "label": "locale",
+                    "type": "Foundation.Locale",
+                    "valueKind": "Runtime"
+                  },
+                  {
+                    "label": "bundle",
+                    "type": "Foundation.LocalizedStringResource.BundleDescription",
+                    "valueKind": "Runtime"
+                  },
+                  {
+                    "label": "comment",
+                    "type": "Swift.Optional<Swift.StaticString>",
+                    "valueKind": "NilLiteral"
+                  }
+                ]
+              }
+            },
+            {
+              "label": "categoryName",
+              "type": "Swift.Optional<Foundation.LocalizedStringResource>",
+              "valueKind": "NilLiteral"
+            },
+            {
+              "label": "searchKeywords",
+              "type": "Swift.Array<Foundation.LocalizedStringResource>",
+              "valueKind": "Runtime"
+            }
+          ]
+        }
+      },
+      {
+        "label": "supportsWidget",
+        "type": "Swift.Bool",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "false",
+        "file": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/VisionIntent.swift",
+        "line": 17,
+        "valueKind": "RawLiteral",
+        "value": "true"
+      },
+      {
+        "label": "supportsForegroundExecution",
+        "type": "Swift.Bool",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "false",
+        "file": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/VisionIntent.swift",
+        "line": 18,
+        "valueKind": "RawLiteral",
+        "value": "true"
+      },
+      {
+        "label": "suggestedInvocationPhrase",
+        "type": "Swift.Optional<Swift.String>",
+        "mangledTypeName": "n/a - deprecated",
+        "isStatic": "true",
+        "isComputed": "false",
+        "file": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/VisionIntent.swift",
+        "line": 19,
+        "valueKind": "RawLiteral",
+        "value": "Open Hanlin Camera"
+      }
+    ]
+  }
+]

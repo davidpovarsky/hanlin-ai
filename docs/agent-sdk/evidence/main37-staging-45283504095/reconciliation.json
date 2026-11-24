@@ -1,0 +1,657 @@
+{
+  "run": 45283504095,
+  "attempt": 1,
+  "source": "4cfa52348e80cf635caf04c541fd84ee1ddb50bd",
+  "status": "NOT_RUN_PRE_TEST_STAGING",
+  "expectedMethods": 33,
+  "expectedInvocations": 37,
+  "expectedUnitInvocations": 26,
+  "expectedUIInvocations": 11,
+  "counts": {
+    "PASS": 0,
+    "FAIL": 0,
+    "NOT_RUN": 37
+  },
+  "priorHistoryPartition": {
+    "PASS": 18,
+    "FAIL": 7,
+    "NOT_RUN": 12
+  },
+  "expectedIdentitySHA256": "495ea09bc6d34209b6f70fe42c2584eea70df8090a98625012a65548b74efd5b",
+  "identityEncoding": "Sorted objects {source,method,argumentSwift}, null for absent arguments; UTF-8 compact JSON with sorted keys and ensure_ascii=false.",
+  "historicalReconciliation": {
+    "path": "docs/agent-sdk/evidence/main-result-reconciliation-45265065184/reconciliation.json",
+    "sha256": "fe7bd668d81837fbd80ce1960c3f83495939b0ed6bf8a3e2896140f0aded46a5"
+  },
+  "sourceQualification": [
+    {
+      "path": "AI_HLYTests/CalendarToolTests.swift",
+      "sha256": "10e2b95d046e55089073f9095822ee8df8cee977b9f524648914889d0cb106da",
+      "compared_sources": [
+        "ade2f626e37102abde83050c94d524d19e0726bb",
+        "4cfa52348e80cf635caf04c541fd84ee1ddb50bd"
+      ],
+      "status": "BYTE_IDENTICAL"
+    },
+    {
+      "path": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "sha256": "9ee86ec88ce723c8257cef8a26ff46865408ec3b50568314875a5608c7ddfc0a",
+      "compared_sources": [
+        "ade2f626e37102abde83050c94d524d19e0726bb",
+        "4cfa52348e80cf635caf04c541fd84ee1ddb50bd"
+      ],
+      "status": "BYTE_IDENTICAL"
+    },
+    {
+      "path": "AI_HLYTests/HanlinApplicationSystemIntegrationTests.swift",
+      "sha256": "617d5472d978fde04ca74400267cb1bb92244b84fbe224545896bddb26bfa802",
+      "compared_sources": [
+        "ade2f626e37102abde83050c94d524d19e0726bb",
+        "4cfa52348e80cf635caf04c541fd84ee1ddb50bd"
+      ],
+      "status": "BYTE_IDENTICAL"
+    },
+    {
+      "path": "AI_HLYTests/HanlinMCPEmbeddingTests.swift",
+      "sha256": "2774f4a60882be0a8eec456f8e6e75ede049981c58f412931311c1db509f6592",
+      "compared_sources": [
+        "ade2f626e37102abde83050c94d524d19e0726bb",
+        "4cfa52348e80cf635caf04c541fd84ee1ddb50bd"
+      ],
+      "status": "BYTE_IDENTICAL"
+    },
+    {
+      "path": "AI_HLYTests/RuntimeAutonomyV3Tests.swift",
+      "sha256": "b72a5d8ec0c51144e864776a2e1d4537cbfd0e28e27074b47280af5b108fba7d",
+      "compared_sources": [
+        "ade2f626e37102abde83050c94d524d19e0726bb",
+        "4cfa52348e80cf635caf04c541fd84ee1ddb50bd"
+      ],
+      "status": "BYTE_IDENTICAL"
+    },
+    {
+      "path": "AI_HLYTests/ShareInboxHostIntegrationTests.swift",
+      "sha256": "c6ba09129bdab7fadcae8ac02468081332a8f7296a656a84df650b78e8db0195",
+      "compared_sources": [
+        "ade2f626e37102abde83050c94d524d19e0726bb",
+        "4cfa52348e80cf635caf04c541fd84ee1ddb50bd"
+      ],
+      "status": "BYTE_IDENTICAL"
+    },
+    {
+      "path": "AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+      "sha256": "3d9755248a7ac026c2d2a0293d744d45e3c7454c9bd154a7a35e91d65175454a",
+      "compared_sources": [
+        "ade2f626e37102abde83050c94d524d19e0726bb",
+        "4cfa52348e80cf635caf04c541fd84ee1ddb50bd"
+      ],
+      "status": "BYTE_IDENTICAL"
+    },
+    {
+      "path": "AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+      "sha256": "11b3cb74033aa95a3a37521ee013a1e05245b4a01a0e974bb147a0e259e70edc",
+      "compared_sources": [
+        "ade2f626e37102abde83050c94d524d19e0726bb",
+        "4cfa52348e80cf635caf04c541fd84ee1ddb50bd"
+      ],
+      "status": "BYTE_IDENTICAL"
+    }
+  ],
+  "invocations": [
+    {
+      "source": "AI_HLYTests/CalendarToolTests.swift",
+      "method": "CalendarToolTests/failedReadProducesStructuredOutcomeWithoutPoisoningNextCall(kind:)",
+      "selector": "AI_HLYTests/CalendarToolTests/failedReadProducesStructuredOutcomeWithoutPoisoningNextCall(kind:)",
+      "kind": "unit",
+      "expectedArgumentSwift": "\"cancelled\"",
+      "status": "NOT_RUN",
+      "reason": "Calendar privacy staging exited124 before test-without-building; no execution result exists.",
+      "prior": {
+        "run": 45265065184,
+        "source": "ade2f626e37102abde83050c94d524d19e0726bb",
+        "status": "PASS",
+        "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CalendarToolTests/failedReadProducesStructuredOutcomeWithoutPoisoningNextCall(kind:)?args=06234c1cf33df85364aedb5de2e65dc2fcb144ff65a249457c5f140fde7ee1d4"
+      }
+    },
+    {
+      "source": "AI_HLYTests/CalendarToolTests.swift",
+      "method": "CalendarToolTests/failedReadProducesStructuredOutcomeWithoutPoisoningNextCall(kind:)",
+      "selector": "AI_HLYTests/CalendarToolTests/failedReadProducesStructuredOutcomeWithoutPoisoningNextCall(kind:)",
+      "kind": "unit",
+      "expectedArgumentSwift": "\"denied\"",
+      "status": "NOT_RUN",
+      "reason": "Calendar privacy staging exited124 before test-without-building; no execution result exists.",
+      "prior": {
+        "run": 45265065184,
+        "source": "ade2f626e37102abde83050c94d524d19e0726bb",
+        "status": "FAIL",
+        "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CalendarToolTests/failedReadProducesStructuredOutcomeWithoutPoisoningNextCall(kind:)?args=e5532718eccbf3b707efcf5696a3347b6ac2fad00fe3417fbcf4fe6786394821"
+      }
+    },
+    {
+      "source": "AI_HLYTests/CalendarToolTests.swift",
+      "method": "CalendarToolTests/failedReadProducesStructuredOutcomeWithoutPoisoningNextCall(kind:)",
+      "selector": "AI_HLYTests/CalendarToolTests/failedReadProducesStructuredOutcomeWithoutPoisoningNextCall(kind:)",
+      "kind": "unit",
+      "expectedArgumentSwift": "\"timeout\"",
+      "status": "NOT_RUN",
+      "reason": "Calendar privacy staging exited124 before test-without-building; no execution result exists.",
+      "prior": {
+        "run": 45265065184,
+        "source": "ade2f626e37102abde83050c94d524d19e0726bb",
+        "status": "FAIL",
+        "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CalendarToolTests/failedReadProducesStructuredOutcomeWithoutPoisoningNextCall(kind:)?args=492bd0204b74443b7d8d36be9d38f139bd23776b1b1762051c15b89705768595"
+      }
+    },
+    {
+      "source": "AI_HLYTests/CalendarToolTests.swift",
+      "method": "CalendarToolTests/failedWriteIsNeverReportedAsCommitted",
+      "selector": "AI_HLYTests/CalendarToolTests/failedWriteIsNeverReportedAsCommitted()",
+      "kind": "unit",
+      "expectedArgumentSwift": null,
+      "status": "NOT_RUN",
+      "reason": "Calendar privacy staging exited124 before test-without-building; no execution result exists.",
+      "prior": {
+        "run": 45265065184,
+        "source": "ade2f626e37102abde83050c94d524d19e0726bb",
+        "status": "FAIL",
+        "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CalendarToolTests/failedWriteIsNeverReportedAsCommitted()"
+      }
+    },
+    {
+      "source": "AI_HLYTests/CalendarToolTests.swift",
+      "method": "CalendarToolTests/malformedWriteIsRejectedBeforeExecutorAndCommittedWriteIsRetained",
+      "selector": "AI_HLYTests/CalendarToolTests/malformedWriteIsRejectedBeforeExecutorAndCommittedWriteIsRetained()",
+      "kind": "unit",
+      "expectedArgumentSwift": null,
+      "status": "NOT_RUN",
+      "reason": "Calendar privacy staging exited124 before test-without-building; no execution result exists.",
+      "prior": {
+        "run": 45265065184,
+        "source": "ade2f626e37102abde83050c94d524d19e0726bb",
+        "status": "PASS",
+        "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CalendarToolTests/malformedWriteIsRejectedBeforeExecutorAndCommittedWriteIsRetained()"
+      }
+    },
+    {
+      "source": "AI_HLYTests/CalendarToolTests.swift",
+      "method": "CalendarToolTests/reversedDatesDoNotDispatchAndNextSearchCanComplete",
+      "selector": "AI_HLYTests/CalendarToolTests/reversedDatesDoNotDispatchAndNextSearchCanComplete()",
+      "kind": "unit",
+      "expectedArgumentSwift": null,
+      "status": "NOT_RUN",
+      "reason": "Calendar privacy staging exited124 before test-without-building; no execution result exists.",
+      "prior": {
+        "run": 45265065184,
+        "source": "ade2f626e37102abde83050c94d524d19e0726bb",
+        "status": "PASS",
+        "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CalendarToolTests/reversedDatesDoNotDispatchAndNextSearchCanComplete()"
+      }
+    },
+    {
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "method": "HanlinAppAgentSessionOwnerTests/actualEventKitToolRecoversTheOriginalChatAndReadsTheFullDateWindow",
+      "selector": "AI_HLYTests/HanlinAppAgentSessionOwnerTests/actualEventKitToolRecoversTheOriginalChatAndReadsTheFullDateWindow()",
+      "kind": "unit",
+      "expectedArgumentSwift": null,
+      "status": "NOT_RUN",
+      "reason": "Calendar privacy staging exited124 before test-without-building; no execution result exists.",
+      "prior": {
+        "run": 45265065184,
+        "source": "ade2f626e37102abde83050c94d524d19e0726bb",
+        "status": "FAIL",
+        "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/actualEventKitToolRecoversTheOriginalChatAndReadsTheFullDateWindow()"
+      }
+    },
+    {
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "method": "HanlinAppAgentSessionOwnerTests/originalCredentialHandlesFailClosedAndPreserveCurrentRequestAuthority",
+      "selector": "AI_HLYTests/HanlinAppAgentSessionOwnerTests/originalCredentialHandlesFailClosedAndPreserveCurrentRequestAuthority()",
+      "kind": "unit",
+      "expectedArgumentSwift": null,
+      "status": "NOT_RUN",
+      "reason": "Calendar privacy staging exited124 before test-without-building; no execution result exists.",
+      "prior": {
+        "run": 45265065184,
+        "source": "ade2f626e37102abde83050c94d524d19e0726bb",
+        "status": "FAIL",
+        "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/originalCredentialHandlesFailClosedAndPreserveCurrentRequestAuthority()"
+      }
+    },
+    {
+      "source": "AI_HLYTests/HanlinApplicationSystemIntegrationTests.swift",
+      "method": "HanlinApplicationSystemIntegrationTests/widgetIntentMetadataLoadsTheOriginalHostTranslations(language:)",
+      "selector": "AI_HLYTests/HanlinApplicationSystemIntegrationTests/widgetIntentMetadataLoadsTheOriginalHostTranslations(language:)",
+      "kind": "unit",
+      "expectedArgumentSwift": "\"en\"",
+      "status": "NOT_RUN",
+      "reason": "Calendar privacy staging exited124 before test-without-building; no execution result exists.",
+      "prior": {
+        "run": 45265065184,
+        "source": "ade2f626e37102abde83050c94d524d19e0726bb",
+        "status": "PASS",
+        "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinApplicationSystemIntegrationTests/widgetIntentMetadataLoadsTheOriginalHostTranslations(language:)?args=50eac10e7966a04e139902940a2a8e129a4597574c709cb8d01939ace56ff9c3"
+      }
+    },
+    {
+      "source": "AI_HLYTests/HanlinApplicationSystemIntegrationTests.swift",
+      "method": "HanlinApplicationSystemIntegrationTests/widgetIntentMetadataLoadsTheOriginalHostTranslations(language:)",
+      "selector": "AI_HLYTests/HanlinApplicationSystemIntegrationTests/widgetIntentMetadataLoadsTheOriginalHostTranslations(language:)",
+      "kind": "unit",
+      "expectedArgumentSwift": "\"he\"",
+      "status": "NOT_RUN",
+      "reason": "Calendar privacy staging exited124 before test-without-building; no execution result exists.",
+      "prior": {
+        "run": 45265065184,
+        "source": "ade2f626e37102abde83050c94d524d19e0726bb",
+        "status": "PASS",
+        "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinApplicationSystemIntegrationTests/widgetIntentMetadataLoadsTheOriginalHostTranslations(language:)?args=e03fc3fe6107496bd2d57f8f79990cae5e4da37f71d6a346612807c379bcd405"
+      }
+    },
+    {
+      "source": "AI_HLYTests/HanlinApplicationSystemIntegrationTests.swift",
+      "method": "HanlinApplicationSystemIntegrationTests/widgetIntentMetadataLoadsTheOriginalHostTranslations(language:)",
+      "selector": "AI_HLYTests/HanlinApplicationSystemIntegrationTests/widgetIntentMetadataLoadsTheOriginalHostTranslations(language:)",
+      "kind": "unit",
+      "expectedArgumentSwift": "\"zh-Hans\"",
+      "status": "NOT_RUN",
+      "reason": "Calendar privacy staging exited124 before test-without-building; no execution result exists.",
+      "prior": {
+        "run": 45265065184,
+        "source": "ade2f626e37102abde83050c94d524d19e0726bb",
+        "status": "PASS",
+        "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinApplicationSystemIntegrationTests/widgetIntentMetadataLoadsTheOriginalHostTranslations(language:)?args=0e73b77b50d66fb7b294e5fe27afb94adb7b95d73750557086bf8c87fcfcde28"
+      }
+    },
+    {
+      "source": "AI_HLYTests/HanlinMCPEmbeddingTests.swift",
+      "method": "HanlinMCPEmbeddingTests/cancellationBeforeInstallerProgressDoesNotStartRuntimeAndReleasesOnlyItsLease",
+      "selector": "AI_HLYTests/HanlinMCPEmbeddingTests/cancellationBeforeInstallerProgressDoesNotStartRuntimeAndReleasesOnlyItsLease()",
+      "kind": "unit",
+      "expectedArgumentSwift": null,
+      "status": "NOT_RUN",
+      "reason": "Calendar privacy staging exited124 before test-without-building; no execution result exists.",
+      "prior": {
+        "run": 45265065184,
+        "source": "ade2f626e37102abde83050c94d524d19e0726bb",
+        "status": "PASS",
+        "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMCPEmbeddingTests/cancellationBeforeInstallerProgressDoesNotStartRuntimeAndReleasesOnlyItsLease()"
+      }
+    },
+    {
+      "source": "AI_HLYTests/HanlinMCPEmbeddingTests.swift",
+      "method": "HanlinMCPEmbeddingTests/conversationSelectionKeepsOriginalDefaultsExplicitEmptyAndOtherChats",
+      "selector": "AI_HLYTests/HanlinMCPEmbeddingTests/conversationSelectionKeepsOriginalDefaultsExplicitEmptyAndOtherChats()",
+      "kind": "unit",
+      "expectedArgumentSwift": null,
+      "status": "NOT_RUN",
+      "reason": "Calendar privacy staging exited124 before test-without-building; no execution result exists.",
+      "prior": {
+        "run": 45265065184,
+        "source": "ade2f626e37102abde83050c94d524d19e0726bb",
+        "status": "PASS",
+        "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMCPEmbeddingTests/conversationSelectionKeepsOriginalDefaultsExplicitEmptyAndOtherChats()"
+      }
+    },
+    {
+      "source": "AI_HLYTests/HanlinMCPEmbeddingTests.swift",
+      "method": "HanlinMCPEmbeddingTests/disabledRuntimeOperationsReturnTheirOwnFailure",
+      "selector": "AI_HLYTests/HanlinMCPEmbeddingTests/disabledRuntimeOperationsReturnTheirOwnFailure()",
+      "kind": "unit",
+      "expectedArgumentSwift": null,
+      "status": "NOT_RUN",
+      "reason": "Calendar privacy staging exited124 before test-without-building; no execution result exists.",
+      "prior": {
+        "run": 45265065184,
+        "source": "ade2f626e37102abde83050c94d524d19e0726bb",
+        "status": "PASS",
+        "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMCPEmbeddingTests/disabledRuntimeOperationsReturnTheirOwnFailure()"
+      }
+    },
+    {
+      "source": "AI_HLYTests/HanlinMCPEmbeddingTests.swift",
+      "method": "HanlinMCPEmbeddingTests/duplicateEnvironmentNamesFailBeforePersistenceAndCannotCrashRuntimeAssembly",
+      "selector": "AI_HLYTests/HanlinMCPEmbeddingTests/duplicateEnvironmentNamesFailBeforePersistenceAndCannotCrashRuntimeAssembly()",
+      "kind": "unit",
+      "expectedArgumentSwift": null,
+      "status": "NOT_RUN",
+      "reason": "Calendar privacy staging exited124 before test-without-building; no execution result exists.",
+      "prior": {
+        "run": 45265065184,
+        "source": "ade2f626e37102abde83050c94d524d19e0726bb",
+        "status": "PASS",
+        "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMCPEmbeddingTests/duplicateEnvironmentNamesFailBeforePersistenceAndCannotCrashRuntimeAssembly()"
+      }
+    },
+    {
+      "source": "AI_HLYTests/HanlinMCPEmbeddingTests.swift",
+      "method": "HanlinMCPEmbeddingTests/duplicatePersistentIdentitiesProduceErrorsInsteadOfTrapsOrAmbiguousRows",
+      "selector": "AI_HLYTests/HanlinMCPEmbeddingTests/duplicatePersistentIdentitiesProduceErrorsInsteadOfTrapsOrAmbiguousRows()",
+      "kind": "unit",
+      "expectedArgumentSwift": null,
+      "status": "NOT_RUN",
+      "reason": "Calendar privacy staging exited124 before test-without-building; no execution result exists.",
+      "prior": {
+        "run": 45265065184,
+        "source": "ade2f626e37102abde83050c94d524d19e0726bb",
+        "status": "PASS",
+        "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMCPEmbeddingTests/duplicatePersistentIdentitiesProduceErrorsInsteadOfTrapsOrAmbiguousRows()"
+      }
+    },
+    {
+      "source": "AI_HLYTests/HanlinMCPEmbeddingTests.swift",
+      "method": "HanlinMCPEmbeddingTests/failedFeatureCommitDoesNotPublishSuccessOrStartRuntime",
+      "selector": "AI_HLYTests/HanlinMCPEmbeddingTests/failedFeatureCommitDoesNotPublishSuccessOrStartRuntime()",
+      "kind": "unit",
+      "expectedArgumentSwift": null,
+      "status": "NOT_RUN",
+      "reason": "Calendar privacy staging exited124 before test-without-building; no execution result exists.",
+      "prior": {
+        "run": 45265065184,
+        "source": "ade2f626e37102abde83050c94d524d19e0726bb",
+        "status": "PASS",
+        "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMCPEmbeddingTests/failedFeatureCommitDoesNotPublishSuccessOrStartRuntime()"
+      }
+    },
+    {
+      "source": "AI_HLYTests/HanlinMCPEmbeddingTests.swift",
+      "method": "HanlinMCPEmbeddingTests/failedSelectionReadCannotRestoreDefaultMCPAuthority",
+      "selector": "AI_HLYTests/HanlinMCPEmbeddingTests/failedSelectionReadCannotRestoreDefaultMCPAuthority()",
+      "kind": "unit",
+      "expectedArgumentSwift": null,
+      "status": "NOT_RUN",
+      "reason": "Calendar privacy staging exited124 before test-without-building; no execution result exists.",
+      "prior": {
+        "run": 45265065184,
+        "source": "ade2f626e37102abde83050c94d524d19e0726bb",
+        "status": "PASS",
+        "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMCPEmbeddingTests/failedSelectionReadCannotRestoreDefaultMCPAuthority()"
+      }
+    },
+    {
+      "source": "AI_HLYTests/HanlinMCPEmbeddingTests.swift",
+      "method": "HanlinMCPEmbeddingTests/overlappingAdministrationCannotReplaceCredentialsOrDisableAnAdmittedOperation",
+      "selector": "AI_HLYTests/HanlinMCPEmbeddingTests/overlappingAdministrationCannotReplaceCredentialsOrDisableAnAdmittedOperation()",
+      "kind": "unit",
+      "expectedArgumentSwift": null,
+      "status": "NOT_RUN",
+      "reason": "Calendar privacy staging exited124 before test-without-building; no execution result exists.",
+      "prior": {
+        "run": 45265065184,
+        "source": "ade2f626e37102abde83050c94d524d19e0726bb",
+        "status": "PASS",
+        "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMCPEmbeddingTests/overlappingAdministrationCannotReplaceCredentialsOrDisableAnAdmittedOperation()"
+      }
+    },
+    {
+      "source": "AI_HLYTests/HanlinMCPEmbeddingTests.swift",
+      "method": "HanlinMCPEmbeddingTests/selectionAcknowledgementRejectsAConversationDeletedDuringCommit",
+      "selector": "AI_HLYTests/HanlinMCPEmbeddingTests/selectionAcknowledgementRejectsAConversationDeletedDuringCommit()",
+      "kind": "unit",
+      "expectedArgumentSwift": null,
+      "status": "NOT_RUN",
+      "reason": "Calendar privacy staging exited124 before test-without-building; no execution result exists.",
+      "prior": {
+        "run": 45265065184,
+        "source": "ade2f626e37102abde83050c94d524d19e0726bb",
+        "status": "PASS",
+        "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMCPEmbeddingTests/selectionAcknowledgementRejectsAConversationDeletedDuringCommit()"
+      }
+    },
+    {
+      "source": "AI_HLYTests/HanlinMCPEmbeddingTests.swift",
+      "method": "HanlinMCPEmbeddingTests/staleEditableSettingsPreserveCurrentEnvironmentAndPackageIdentity",
+      "selector": "AI_HLYTests/HanlinMCPEmbeddingTests/staleEditableSettingsPreserveCurrentEnvironmentAndPackageIdentity()",
+      "kind": "unit",
+      "expectedArgumentSwift": null,
+      "status": "NOT_RUN",
+      "reason": "Calendar privacy staging exited124 before test-without-building; no execution result exists.",
+      "prior": {
+        "run": 45265065184,
+        "source": "ade2f626e37102abde83050c94d524d19e0726bb",
+        "status": "FAIL",
+        "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMCPEmbeddingTests/staleEditableSettingsPreserveCurrentEnvironmentAndPackageIdentity()"
+      }
+    },
+    {
+      "source": "AI_HLYTests/RuntimeAutonomyV3Tests.swift",
+      "method": "RuntimeAutonomyV3Tests/actualMCPTransportPreservesLargeStructuredResultsThroughTheOriginalRendererAndStore",
+      "selector": "AI_HLYTests/RuntimeAutonomyV3Tests/actualMCPTransportPreservesLargeStructuredResultsThroughTheOriginalRendererAndStore()",
+      "kind": "unit",
+      "expectedArgumentSwift": null,
+      "status": "NOT_RUN",
+      "reason": "Calendar privacy staging exited124 before test-without-building; no execution result exists.",
+      "prior": {
+        "run": 45265065184,
+        "source": "ade2f626e37102abde83050c94d524d19e0726bb",
+        "status": "NOT_RUN",
+        "url": null
+      }
+    },
+    {
+      "source": "AI_HLYTests/ShareInboxHostIntegrationTests.swift",
+      "method": "ShareInboxHostIntegrationTests/cancelledDraftPreparationKeepsTheOriginalFile",
+      "selector": "AI_HLYTests/ShareInboxHostIntegrationTests/cancelledDraftPreparationKeepsTheOriginalFile()",
+      "kind": "unit",
+      "expectedArgumentSwift": null,
+      "status": "NOT_RUN",
+      "reason": "Calendar privacy staging exited124 before test-without-building; no execution result exists.",
+      "prior": {
+        "run": 45265065184,
+        "source": "ade2f626e37102abde83050c94d524d19e0726bb",
+        "status": "PASS",
+        "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ShareInboxHostIntegrationTests/cancelledDraftPreparationKeepsTheOriginalFile()"
+      }
+    },
+    {
+      "source": "AI_HLYTests/ShareInboxHostIntegrationTests.swift",
+      "method": "ShareInboxHostIntegrationTests/invalidCapacityRejectedItemsAndTamperedBytesCannotChangeTheSourceBatch",
+      "selector": "AI_HLYTests/ShareInboxHostIntegrationTests/invalidCapacityRejectedItemsAndTamperedBytesCannotChangeTheSourceBatch()",
+      "kind": "unit",
+      "expectedArgumentSwift": null,
+      "status": "NOT_RUN",
+      "reason": "Calendar privacy staging exited124 before test-without-building; no execution result exists.",
+      "prior": {
+        "run": 45265065184,
+        "source": "ade2f626e37102abde83050c94d524d19e0726bb",
+        "status": "FAIL",
+        "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ShareInboxHostIntegrationTests/invalidCapacityRejectedItemsAndTamperedBytesCannotChangeTheSourceBatch()"
+      }
+    },
+    {
+      "source": "AI_HLYTests/ShareInboxHostIntegrationTests.swift",
+      "method": "ShareInboxHostIntegrationTests/mixedBatchBecomesNamedVerifiedChatAttachmentsWithoutConsumingTheInbox",
+      "selector": "AI_HLYTests/ShareInboxHostIntegrationTests/mixedBatchBecomesNamedVerifiedChatAttachmentsWithoutConsumingTheInbox()",
+      "kind": "unit",
+      "expectedArgumentSwift": null,
+      "status": "NOT_RUN",
+      "reason": "Calendar privacy staging exited124 before test-without-building; no execution result exists.",
+      "prior": {
+        "run": 45265065184,
+        "source": "ade2f626e37102abde83050c94d524d19e0726bb",
+        "status": "PASS",
+        "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ShareInboxHostIntegrationTests/mixedBatchBecomesNamedVerifiedChatAttachmentsWithoutConsumingTheInbox()"
+      }
+    },
+    {
+      "source": "AI_HLYTests/ShareInboxHostIntegrationTests.swift",
+      "method": "ShareInboxHostIntegrationTests/providerBatchSurvivesSourceDeletionAndIsReadByTheRealHostInbox",
+      "selector": "AI_HLYTests/ShareInboxHostIntegrationTests/providerBatchSurvivesSourceDeletionAndIsReadByTheRealHostInbox()",
+      "kind": "unit",
+      "expectedArgumentSwift": null,
+      "status": "NOT_RUN",
+      "reason": "Calendar privacy staging exited124 before test-without-building; no execution result exists.",
+      "prior": {
+        "run": 45265065184,
+        "source": "ade2f626e37102abde83050c94d524d19e0726bb",
+        "status": "PASS",
+        "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ShareInboxHostIntegrationTests/providerBatchSurvivesSourceDeletionAndIsReadByTheRealHostInbox()"
+      }
+    },
+    {
+      "source": "AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+      "method": "AgentRuntimeConversationUITests/testOriginalChatActivitySurvivesKeyboardRotationAndConversationReattachment",
+      "selector": "AI_HLYUITests/AgentRuntimeConversationUITests/testOriginalChatActivitySurvivesKeyboardRotationAndConversationReattachment",
+      "kind": "UI",
+      "expectedArgumentSwift": null,
+      "status": "NOT_RUN",
+      "reason": "Calendar privacy staging exited124 before test-without-building; no execution result exists.",
+      "prior": {
+        "run": 45265065184,
+        "source": "ade2f626e37102abde83050c94d524d19e0726bb",
+        "status": "NOT_RUN",
+        "url": null
+      }
+    },
+    {
+      "source": "AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+      "method": "AgentRuntimeConversationUITests/testUI03HebrewRTLSearchMessageAndDeduplicatedCitations",
+      "selector": "AI_HLYUITests/AgentRuntimeConversationUITests/testUI03HebrewRTLSearchMessageAndDeduplicatedCitations",
+      "kind": "UI",
+      "expectedArgumentSwift": null,
+      "status": "NOT_RUN",
+      "reason": "Calendar privacy staging exited124 before test-without-building; no execution result exists.",
+      "prior": {
+        "run": 45265065184,
+        "source": "ade2f626e37102abde83050c94d524d19e0726bb",
+        "status": "NOT_RUN",
+        "url": null
+      }
+    },
+    {
+      "source": "AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+      "method": "AgentRuntimeConversationUITests/testUI03SearchMessageAndDeduplicatedCitations",
+      "selector": "AI_HLYUITests/AgentRuntimeConversationUITests/testUI03SearchMessageAndDeduplicatedCitations",
+      "kind": "UI",
+      "expectedArgumentSwift": null,
+      "status": "NOT_RUN",
+      "reason": "Calendar privacy staging exited124 before test-without-building; no execution result exists.",
+      "prior": {
+        "run": 45265065184,
+        "source": "ade2f626e37102abde83050c94d524d19e0726bb",
+        "status": "NOT_RUN",
+        "url": null
+      }
+    },
+    {
+      "source": "AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+      "method": "AgentRuntimeConversationUITests/testUI06ComposerMultilineAttachmentsModelSelectorNoOverlap",
+      "selector": "AI_HLYUITests/AgentRuntimeConversationUITests/testUI06ComposerMultilineAttachmentsModelSelectorNoOverlap",
+      "kind": "UI",
+      "expectedArgumentSwift": null,
+      "status": "NOT_RUN",
+      "reason": "Calendar privacy staging exited124 before test-without-building; no execution result exists.",
+      "prior": {
+        "run": 45265065184,
+        "source": "ade2f626e37102abde83050c94d524d19e0726bb",
+        "status": "NOT_RUN",
+        "url": null
+      }
+    },
+    {
+      "source": "AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+      "method": "HanlinNativeA2UIChatUITests/testExpandedDismissalRetainsTheOriginalFormAndDoesNotIssueARequest",
+      "selector": "AI_HLYUITests/HanlinNativeA2UIChatUITests/testExpandedDismissalRetainsTheOriginalFormAndDoesNotIssueARequest",
+      "kind": "UI",
+      "expectedArgumentSwift": null,
+      "status": "NOT_RUN",
+      "reason": "Calendar privacy staging exited124 before test-without-building; no execution result exists.",
+      "prior": {
+        "run": 45265065184,
+        "source": "ade2f626e37102abde83050c94d524d19e0726bb",
+        "status": "NOT_RUN",
+        "url": null
+      }
+    },
+    {
+      "source": "AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+      "method": "HanlinNativeA2UIChatUITests/testNewConversationWorksWithoutOptimizationModel",
+      "selector": "AI_HLYUITests/HanlinNativeA2UIChatUITests/testNewConversationWorksWithoutOptimizationModel",
+      "kind": "UI",
+      "expectedArgumentSwift": null,
+      "status": "NOT_RUN",
+      "reason": "Calendar privacy staging exited124 before test-without-building; no execution result exists.",
+      "prior": {
+        "run": 45265065184,
+        "source": "ade2f626e37102abde83050c94d524d19e0726bb",
+        "status": "NOT_RUN",
+        "url": null
+      }
+    },
+    {
+      "source": "AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+      "method": "HanlinNativeA2UIChatUITests/testOriginalFormSubmitsEditedValueAndPreservesUnsentComposerDraft",
+      "selector": "AI_HLYUITests/HanlinNativeA2UIChatUITests/testOriginalFormSubmitsEditedValueAndPreservesUnsentComposerDraft",
+      "kind": "UI",
+      "expectedArgumentSwift": null,
+      "status": "NOT_RUN",
+      "reason": "Calendar privacy staging exited124 before test-without-building; no execution result exists.",
+      "prior": {
+        "run": 45265065184,
+        "source": "ade2f626e37102abde83050c94d524d19e0726bb",
+        "status": "NOT_RUN",
+        "url": null
+      }
+    },
+    {
+      "source": "AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+      "method": "HanlinNativeA2UIChatUITests/testOriginalGalleryAndLinkRetainSourcesAndReadOnlyHistory",
+      "selector": "AI_HLYUITests/HanlinNativeA2UIChatUITests/testOriginalGalleryAndLinkRetainSourcesAndReadOnlyHistory",
+      "kind": "UI",
+      "expectedArgumentSwift": null,
+      "status": "NOT_RUN",
+      "reason": "Calendar privacy staging exited124 before test-without-building; no execution result exists.",
+      "prior": {
+        "run": 45265065184,
+        "source": "ade2f626e37102abde83050c94d524d19e0726bb",
+        "status": "NOT_RUN",
+        "url": null
+      }
+    },
+    {
+      "source": "AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+      "method": "HanlinNativeA2UIChatUITests/testOriginalMixedOpenUIReactAndNativeShareStateAndKeepDraft",
+      "selector": "AI_HLYUITests/HanlinNativeA2UIChatUITests/testOriginalMixedOpenUIReactAndNativeShareStateAndKeepDraft",
+      "kind": "UI",
+      "expectedArgumentSwift": null,
+      "status": "NOT_RUN",
+      "reason": "Calendar privacy staging exited124 before test-without-building; no execution result exists.",
+      "prior": {
+        "run": 45265065184,
+        "source": "ade2f626e37102abde83050c94d524d19e0726bb",
+        "status": "NOT_RUN",
+        "url": null
+      }
+    },
+    {
+      "source": "AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+      "method": "HanlinNativeA2UIChatUITests/testSameProcessReopenRestoresCanonicalReadOnlyMediaWithoutAnotherModelRequest",
+      "selector": "AI_HLYUITests/HanlinNativeA2UIChatUITests/testSameProcessReopenRestoresCanonicalReadOnlyMediaWithoutAnotherModelRequest",
+      "kind": "UI",
+      "expectedArgumentSwift": null,
+      "status": "NOT_RUN",
+      "reason": "Calendar privacy staging exited124 before test-without-building; no execution result exists.",
+      "prior": {
+        "run": 45265065184,
+        "source": "ade2f626e37102abde83050c94d524d19e0726bb",
+        "status": "NOT_RUN",
+        "url": null
+      }
+    },
+    {
+      "source": "AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+      "method": "HanlinNativeA2UIChatUITests/testSurfaceOnlyNativeResponseUsesTheOriginalAssistantRow",
+      "selector": "AI_HLYUITests/HanlinNativeA2UIChatUITests/testSurfaceOnlyNativeResponseUsesTheOriginalAssistantRow",
+      "kind": "UI",
+      "expectedArgumentSwift": null,
+      "status": "NOT_RUN",
+      "reason": "Calendar privacy staging exited124 before test-without-building; no execution result exists.",
+      "prior": {
+        "run": 45265065184,
+        "source": "ade2f626e37102abde83050c94d524d19e0726bb",
+        "status": "NOT_RUN",
+        "url": null
+      }
+    }
+  ]
+}

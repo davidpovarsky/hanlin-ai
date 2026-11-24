@@ -1,0 +1,123 @@
+{
+  "base_commit": "2549bb1395045e1514ec6c273239fcdaf18af207",
+  "compressed_crash_logs_uncompressed_sha256": {
+    "original-cli/cross-module-enum.stderr.log.gz": "0a3a4c93589185d98e0054e524c668cdcc29c0a55a56a38acf035e8543119cd5",
+    "original-cli/cross-module-optionset.stderr.log.gz": "072cb7ef26d15e42a46840b72f7900336d0e94bde953e4358ab97c63d3dbc4a1",
+    "original-cli/duplicate-module.stderr.log.gz": "a55b61c8b557ebe49648f2028f012cac8abf23dd46e018644d4122bb1a2d0fb0",
+    "original-public/api-classify-enum.stderr.log.gz": "d88aa3cd2e8cb2566ad5414b99de062305762b527a42691caaa1cb4bc0e9cac1",
+    "original-public/api-classify-identical-repeat.stderr.log.gz": "de704cce9ff16c3dae1a0f4842f0c013746852fcbc97240c10caf84a1e28c32a",
+    "original-public/api-classify-optionset.stderr.log.gz": "a8908f8c8cd1e5d5e6bcc89b892b04c2e46b4f06032bc41e86fcb68796ee770b",
+    "original-public/api-write-duplicate-module.stderr.log.gz": "69780a87e5f53e1f48b55a61f47c529616a1b07acfc3eacc3f23ddb4e7eb7f97",
+    "original-public/api-write-enum.stderr.log.gz": "719c0af456e4daaee924dc1cef86c77dd10a42753570f0beef1d77b3b6f97848",
+    "original-public/api-write-optionset.stderr.log.gz": "c7307df458fd7cfde9ef0def02824a104f4503ca9e2af86dc83b3ccb8a66c6e7"
+  },
+  "execution_scope": "Complete actual core plus actual CLI/public client; real installed SwiftSyntax host modules. No pinned SwiftPM/Xcode graph or generated UIKit code execution claimed.",
+  "fixed_controls": 11,
+  "new_module_aware_resolution": false,
+  "not_run": [
+    "Pinned SwiftSyntax603.0.2 SwiftPM graph",
+    "Apple/Xcode compile",
+    "Generated SwiftUI/UIKit application execution",
+    "Existing generator test suite",
+    "Native CI"
+  ],
+  "original_traps": {
+    "cli": 3,
+    "public": 6,
+    "signal": "SIGTRAP"
+  },
+  "peer_review": {
+    "agent": "/root/sdk_presentation",
+    "result": "No blocker; guards precede parse/write, nonthrowing terminal flags retained, admitted unique enum mapping and sorted output behavior retained.",
+    "scope": "Read-only original three production-file diff; no edits/tests/CI."
+  },
+  "policy": {
+    "ambiguous_enum_or_optionset": "Reject symbol-only batch with exact symbol and module diagnostic; no winner or merged cases.",
+    "duplicate_modules": "Existing NSError domain HanlinSwiftUIBridgeGenerator/code2 before parsing or writing.",
+    "public_inventory_writer": "Independent admission before directory creation, inventory output, or any other mutation.",
+    "public_nonthrowing_classifier": "Existing unsupported declaration/signature/aggregate/public-surface classifications for complete rejected batch; exports false."
+  },
+  "preserved_original_source_sha256": {
+    "Packages/HanlinSwiftUIBridgeGenerator/Package.swift": "e11b7f704d956a7ef293b8ed309c3f715b2797daada2a14d4a0cdadf4dcbc378",
+    "Packages/HanlinSwiftUIBridgeGenerator/Sources/HanlinSwiftUIBridgeCore/InterfaceParser.swift": "4c319a394593ce051e46991547530db09cdc9e2afd88e07d2df35c9d63fe3fe8",
+    "Packages/HanlinSwiftUIBridgeGenerator/Sources/HanlinSwiftUIBridgeCore/SHA256.swift": "adf254fa5e62a43dd010a9eba664725a62aa1a358dbfceb1b9c399e0938c1c99",
+    "Packages/HanlinSwiftUIBridgeGenerator/Sources/HanlinSwiftUIBridgeGenerator/main.swift": "998b0b2b310474c6a1e52ee5211981844146d61bde0c6c890413c47962cd4c24"
+  },
+  "prior_native_settings_receipt_sha256": "5012c54bb6aa6eb62725939b0f16320e5f7be2a76029d1a52710e1a46a211b4d",
+  "production_paths_changed": [
+    "Packages/HanlinSwiftUIBridgeGenerator/Sources/HanlinSwiftUIBridgeCore/Classifier.swift",
+    "Packages/HanlinSwiftUIBridgeGenerator/Sources/HanlinSwiftUIBridgeCore/Inventory.swift",
+    "Packages/HanlinSwiftUIBridgeGenerator/Sources/HanlinSwiftUIBridgeCore/OutputGenerator.swift"
+  ],
+  "public_signature_changes": false,
+  "reproduction": [
+    "sudo -n -u ubuntu python3 Scripts/SDK/check_bridge_input_boundary.py --output build/bridge-input-admission-20261123/before-public --expect original --reuse-binaries build/bridge-input-admission-20261123/before --original-ref 2549bb1395045e1514ec6c273239fcdaf18af207 --cases public",
+    "sudo -n -u ubuntu python3 Scripts/SDK/check_bridge_input_boundary.py --output build/bridge-input-admission-20261123/after --expect fixed --baseline build/bridge-input-admission-20261123/before/result.json"
+  ],
+  "result": "PASS",
+  "retained_files_sha256": {
+    "fixed/api-classify-enum.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "fixed/api-classify-enum.stdout.log": "1a24f23d961cb227287b03915d3a64f1cff10e97a44d0fcd296e3969fb49469a",
+    "fixed/api-classify-identical-repeat.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "fixed/api-classify-identical-repeat.stdout.log": "ac11ac0c4afd0cd766155811a956ddce2e29d6fcc0f9890e5e7bed026cb2a8c1",
+    "fixed/api-classify-optionset.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "fixed/api-classify-optionset.stdout.log": "4111b430dadf5f3487a3c23c0bf379b0d63b331aeadbad1e88d772a5d2dc05fc",
+    "fixed/api-write-duplicate-module.stderr.log": "d1922d67f0c7c649cb4c5f4701a7dd216928d5570f0d4b1647d8d194f588b229",
+    "fixed/api-write-duplicate-module.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "fixed/api-write-enum.stderr.log": "4cda76611f3f197bebe395595ef60f3dbe6aea39c8a5fcd40986cfaa02211106",
+    "fixed/api-write-enum.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "fixed/api-write-optionset.stderr.log": "b8b80b54a327f6294d10cb42a329aae1408fd7fdee3f59d8e7091982a1a7196a",
+    "fixed/api-write-optionset.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "fixed/cli-before-parse.stderr.log": "2b6a6a5226a5f48c3f6684df2975617a80ccfa6dd61719c82e4ef290920da80e",
+    "fixed/cli-before-parse.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "fixed/cli-compile.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "fixed/cli-cross-module-enum.stderr.log": "4cda76611f3f197bebe395595ef60f3dbe6aea39c8a5fcd40986cfaa02211106",
+    "fixed/cli-cross-module-enum.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "fixed/cli-cross-module-optionset.stderr.log": "b8b80b54a327f6294d10cb42a329aae1408fd7fdee3f59d8e7091982a1a7196a",
+    "fixed/cli-cross-module-optionset.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "fixed/cli-duplicate-module.stderr.log": "d1922d67f0c7c649cb4c5f4701a7dd216928d5570f0d4b1647d8d194f588b229",
+    "fixed/cli-duplicate-module.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "fixed/core-compile.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "fixed/public-client-compile.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "fixed/receipt.json": "bd59a8ba5acf6cedb046c38906a9f617032e6f693ce62f32d0e00d04abc3e983",
+    "fixed/valid-original-fixtures.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "fixed/valid-original-fixtures.stdout.log": "66301bce0b76d77ec28318b5afd796308f53254563f610f0bffaf0210f4469a6",
+    "original-cli/cli-compile.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "original-cli/cli-link-setup-first-attempt.log": "27619b9c4629c25db8d3988504ba5d2e8ad6dec30a88046c74a7989234493bcd",
+    "original-cli/core-compile.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "original-cli/cross-module-enum.stderr.log.gz": "71220668f50df3fc5f0bac9cc12c3bd3e062d19ceb03c50e790f3e78bfa93b56",
+    "original-cli/cross-module-enum.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "original-cli/cross-module-optionset.stderr.log.gz": "bbd686aa20fe66f5774ab88e048e21f1a18bb8f546e825e2765dadfc9d539e6f",
+    "original-cli/cross-module-optionset.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "original-cli/duplicate-module.stderr.log.gz": "e0b82d70d4194e60d590cc16c632e2a1f57d9dfeaca01f1329b8aa30c0ad8cd6",
+    "original-cli/duplicate-module.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "original-cli/result.json": "d5f183e466200ef494bb2f8440f8bd72467dfff129039adf2739d0f0e75ee7ec",
+    "original-cli/valid-original-fixtures.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "original-cli/valid-original-fixtures.stdout.log": "66301bce0b76d77ec28318b5afd796308f53254563f610f0bffaf0210f4469a6",
+    "original-public/api-classify-enum.stderr.log.gz": "c95b7483593183a36376aa40cadc3809609eccc330e079f69f275ffa7f44d403",
+    "original-public/api-classify-enum.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "original-public/api-classify-identical-repeat.stderr.log.gz": "2306a5a143acdd08316c4afd72150cb85a4dcfc99eda018eefbb81245d4cb704",
+    "original-public/api-classify-identical-repeat.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "original-public/api-classify-optionset.stderr.log.gz": "a454aa5325d266d9019a672b7baeb9504e7ba9422bb5561cb4443642620f3e5d",
+    "original-public/api-classify-optionset.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "original-public/api-write-duplicate-module.stderr.log.gz": "58819b09c659ed2cee6b68b2d526c029775424062290f05ff104ceffe042b678",
+    "original-public/api-write-duplicate-module.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "original-public/api-write-enum.stderr.log.gz": "21f773cfaa4c43adbcb663383a0ca4f072c6b612d7b34a6826bf7164be73c7f4",
+    "original-public/api-write-enum.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "original-public/api-write-optionset.stderr.log.gz": "3dee481f530231985bd08370d33ab3cd904f7f6e97854ad1f50ac623acea29bd",
+    "original-public/api-write-optionset.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "original-public/public-client-compile.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "original-public/receipt.json": "4391e0bbf603d148a72fc39bce614d3d80081b5f118917a34658bc5509c989af"
+  },
+  "schema_version": 1,
+  "unchanged_unique_input_outputs": {
+    "HanlinGeneratedModifiers.swift": "e8bd617d157369432218901c5d53de475570876a656135bd0977701135032076",
+    "HanlinGeneratedViews.swift": "ee1f05d681f2601464a02f93f8d6d726a66a07bd0ca8e3f4b9339434cbcd35ab",
+    "bridge-manifest.ts": "7b8085c995c61b5a208570dfc0daf63060056cab1ff0bb207c13d55ea1cd4c7e",
+    "coverage.json": "d4165867556d6b499d39d242c224a691ca404990058c40c71c27784301cce7cb",
+    "coverage.md": "46c669d86f91dd572784d17c71d25db4b35a74b68d50f775efc0817ef1e313fc",
+    "modifiers.ts": "77c18d416d1f83ded44598abe8336112e9839925e755fc25b7bb67f0b04401fe",
+    "swiftui-inventory.json": "3c824ff153734c5f94082f8ebe7b98cd806d5c691293e085745e1d22eab20dbb",
+    "views.tsx": "d98a93f63a339a9cc14ebf10ab2511a271c79cc46df45f81d011f0b85cf8aed7"
+  }
+}

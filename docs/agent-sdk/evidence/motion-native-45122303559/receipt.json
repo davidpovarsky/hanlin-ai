@@ -1,0 +1,47 @@
+{
+  "run_id": 45122303559,
+  "run_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45122303559",
+  "source": "65fdc2ed9cd1ed563b86d98cee2dab7f665f714c",
+  "job_id": 137518637716,
+  "workflow_conclusion": "failure",
+  "classification": "NATIVE_BUILD_ADMISSION_BLOCKED_BEFORE_COMPILATION_AND_TESTS",
+  "build_failure": "EquatableMacros from Equatable must be enabled before use; ComputeTargetDependencyGraph",
+  "process_exit_code": 65,
+  "phase": "build",
+  "cases": {
+    "B": "NOT_RUN",
+    "C": "NOT_RUN",
+    "A": "NOT_DISPATCHED",
+    "D": "NOT_DISPATCHED"
+  },
+  "executed_test_count": 0,
+  "artifact": {
+    "artifact_id": 14794797787,
+    "run_id": 45122303559,
+    "source": "65fdc2ed9cd1ed563b86d98cee2dab7f665f714c",
+    "size": 15318937,
+    "sha256": "28e31d77849b03c564245f39017c1c4ec4c5d4c8c05d5cf9f1284fdd5b9984a6",
+    "member_count": 30,
+    "matches_api_digest": true
+  },
+  "artifact_log_sha256": "f494e67b37d1a96525c2bdaf33db6d0a99a2fcb5fd11ac79877bde49a78fff61",
+  "fixture_matches_recorded_revision": true,
+  "selected_sdk_source_files": 363,
+  "selected_sdk_source_resource_sha256": "cc2f9cdd3a4918a4aed1c1c109bfd5a76a345381a142b6f41a209a25ad593db0",
+  "selected_sdk_manifest_sha256": "67bd5ca5a9e9c368886949f8fd178d11d502f858f5fe411b11540f8df238d2f4",
+  "expected_original_equatable_pin": {
+    "revision": "597c2bb34af0c51331eb3b5e705f942d8ee20daa",
+    "version": "1.4.1",
+    "authority": "Original app Package.resolved; native resolver log reports the same version"
+  },
+  "resolved_checkout_and_packaged_bundle_accounting": "NOT_REACHED_BECAUSE_BUILD_STOPPED",
+  "repair": "Normal resolve-only step; verify original app lock and actual exact reviewed macro checkout before using existing command-scoped -skipMacroValidation; disable automatic resolution during build/test; reject subsequent lock changes. No global preference change.",
+  "original_mechanism": [
+    ".github/workflows/build-ios26-unsigned-ipa.yml",
+    "Scripts/CI/ChatRegressionValidation/run_native.py",
+    "docs/continuation-20261117/PAIRED_BUILD_PLUGIN_GATE_20261118.json"
+  ],
+  "product_animation_changes": false,
+  "acceptance": "NOT_ACCEPTED_PENDING_ACTUAL_B_C_EXECUTION",
+  "archived_native_build_log": "build-log.txt"
+}

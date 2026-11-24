@@ -1,0 +1,15 @@
+{
+  "utc": "2026-11-24T00:16:42.066588+00:00",
+  "reviewer": "/root",
+  "candidate": "59abac09eb3b3b81a83260bf339b964fa591fd9d",
+  "tree": "0de67bb1e4e15e1a4056bb4f8d6944c5cd26f751",
+  "parent": "7d97aacf136a75f326caef094b0afe99f3d4fd67",
+  "status": "NO_CONCRETE_SOURCE_BLOCKER_PENDING_NATIVE15_RESULTS",
+  "package_snapshot_equal": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+  "generic_body_inverse_sha256": "ee37607c24716d2669d527d5d4ef5a2dde50563d38b75d55a7aa388293d53d62",
+  "router_preambles": 2,
+  "control_changes": "Named-suite authored inventory and exact two-selector route only; directly affected controls2FAIL before/2PASS after retained from peer, not rerun.",
+  "product_test_execution": false,
+  "central_branch_modified": false,
+  "pushed": false
+}

@@ -327,6 +327,117 @@ private final class ProviderCredentialTestFixture {
         #expect(phasesAtEvent == [.awaitingApproval, .waitingForResponse, .awaitingApproval, .waitingForResponse])
     }
 
+
+    #if targetEnvironment(simulator)
+    @Test(.timeLimit(.minutes(2)))
+    func actualEventKitToolRecoversTheOriginalChatAndReadsTheFullDateWindow() async throws {
+        let fixture = try HanlinEventKitAcceptanceFixture()
+        defer { fixture.removeOwnedItems() }
+        let container = try ModelContainer(for: ChatRecords.self, ToolKeys.self,
+            configurations: ModelConfiguration(isStoredInMemoryOnly: true))
+        let context = container.mainContext
+        let row = ChatRecords(name: "Native calendar continuation", type: "chat")
+        context.insert(row); try context.save()
+        let id = try #require(row.id), scene = UUID()
+        let rows = [UUID(), UUID()], runs = [UUID(), UUID()]
+        let queue = AppPartQueue(try rows.map {
+            try HanlinChatStructuredPart(messageID: $0, partID: UUID(), sequence: 0,
+                payload: .textDelta("Original chat continues after the native calendar tool"))
+        })
+        let owner = HanlinAppAgentSessionOwner(), recorder = AppPresentationRecorder()
+        owner.presentation = recorder
+        defer { owner.cancel() }
+        let api = APIManager(context: context)
+        let sources = LegacyToolCanonicalAdapter.sources(memoryEnabled: false, mapEnabled: false,
+            calendarEnabled: true, searchEnabled: false, knowledgeEnabled: false, codeEnabled: false,
+            healthEnabled: false, weatherEnabled: false, canvasEnabled: false)
+        let authority = try HanlinCanonicalToolAuthority.build(
+            nativeSources: [], mcpTools: [], legacySources: sources)
+        var dispatchedOutcomes: [NativeToolExecutionOutcome] = []
+        let executors = AssistantToolBridge.Executors(executeNative: { _, _, _, _ in
+            Issue.record("Calendar escaped the original legacy route")
+            return .init(modelText: "Unexpected native route", outcome: .failed)
+        }, executeScripting: { _, _ in
+            Issue.record("Calendar escaped the original legacy route")
+            return .init(modelText: "Unexpected scripting route", outcome: .failed)
+        }, executeLegacy: { name, arguments, toolContext in
+            // The production default invokes the shared SDK EventKit service.
+            let result = await api.executeLegacyTool(name: name, argumentsJSON: arguments,
+                context: toolContext, continuation: nil)
+            dispatchedOutcomes.append(result.outcome)
+            return result
+        })
+        let adapter = HanlinAISDKToolAdapter(session: .init(chatID: id.uuidString, isTemporaryChat: false),
+            preparedTools: .init(authority: authority, executors: executors, legacySources: sources))
+        let config = configuration()
+        var constructions = 0
+        let arguments: HanlinJSONValue = .object([
+            "keyword": .string(fixture.marker), "event_type": .string("both")
+        ])
+        let approve: @MainActor (AgentEvent) -> Void = { event in
+            if case .toolApprovalChanged(let approval) = event, approval.disposition == .awaiting {
+                Task { @MainActor in
+                    guard let pending = owner.consent.pending,
+                          pending.tool == "search_calendar_and_reminders" else { return }
+                    owner.consent.answer(id: pending.id, allowed: true)
+                }
+            }
+        }
+        for index in 0..<2 {
+            let stream = try await owner.stream(request: .init(conversation: row, conversationID: id,
+                sceneID: scene, rowID: rows[index], uiRunID: runs[index], temporary: false, interaction: nil),
+                modelContext: context, configuration: config,
+                engineFactory: { constructions += 1; return factory(config, queue: queue) },
+                toolAdapter: adapter, messages: [.init(role: .user, text: "Read my calendar, then continue")],
+                systemPrompt: nil)
+            for try await event in stream { try owner.receive(event, uiRunID: runs[index]) }
+            try owner.producerStreamDrained(uiRunID: runs[index])
+            if index == 0 {
+                let result = try await owner.executeInlineTool(rowID: rows[0], partID: "native-calendar-read",
+                    alias: "search_calendar_and_reminders", arguments: arguments, onEvent: approve)
+                for title in fixture.titles { #expect(result.contains(title)) }
+                #expect(dispatchedOutcomes == [.succeeded])
+                #expect(!owner.inlineToolIsRunning)
+                do {
+                    _ = try await owner.executeInlineTool(rowID: rows[0], partID: "native-calendar-invalid",
+                        alias: "search_calendar_and_reminders", arguments: .object([
+                            "start_date": .string("2026-12-23"), "end_date": .string("2026-11-23"),
+                            "event_type": .string("calendar")
+                        ]), onEvent: approve)
+                    Issue.record("Reversed native dates unexpectedly succeeded")
+                } catch {}
+                #expect(dispatchedOutcomes.last == .invalidArguments)
+                #expect(!owner.inlineToolIsRunning)
+                let cancelled = Task { @MainActor in
+                    await api.executeLegacyTool(name: "search_calendar_and_reminders",
+                        argumentsJSON: String(decoding: try arguments.canonicalJSONData(), as: UTF8.self),
+                        context: .init(localeIdentifier: "en"), continuation: nil)
+                }
+                cancelled.cancel()
+                let cancelledResult = try await cancelled.value
+                #expect(cancelledResult.outcome == .cancelled && cancelledResult.isError)
+                let recovered = try await owner.executeInlineTool(rowID: rows[0], partID: "native-calendar-recovered",
+                    alias: "search_calendar_and_reminders", arguments: arguments, onEvent: approve)
+                for title in fixture.titles { #expect(recovered.contains(title)) }
+                #expect(dispatchedOutcomes == [.succeeded, .invalidArguments, .succeeded])
+                #expect(!owner.inlineToolIsRunning)
+            }
+        }
+        #expect(constructions == 1 && recorder.installed.count == 1)
+        #expect(recorder.live.map(\.reference.rowID) == rows)
+        #expect(Set(recorder.live.map(\.canonicalRunID)).count == 2)
+        #expect(owner.session != nil && !owner.inlineToolIsRunning)
+        let lease = try HanlinConversationRunLease.acquire(container: container, conversationID: id)
+        lease.release()
+        await owner.invalidate()
+        let reopened = HanlinAppAgentSessionOwner(), replay = AppPresentationRecorder()
+        reopened.presentation = replay
+        try await reopened.restoreHistory(conversation: row, conversationID: id, sceneID: scene,
+            temporary: false, modelContext: context)
+        #expect(Set(replay.replayed.map(\.reference.rowID)) == Set(rows))
+    }
+    #endif
+
     private func database() throws -> ModelContainer {
         try ModelContainer(for: ChatRecords.self, configurations: ModelConfiguration(isStoredInMemoryOnly: true))
     }
@@ -1402,6 +1513,125 @@ private final class ProviderCredentialTestFixture {
             try owner.requireDataAccess(nextAccess, request: next, modelContext: context)
         }
         #expect(owner.session == nil && row.agentSDKRecordData == committed)
+    }
+
+    @Test func deletingConversationDuringOriginalEnginePreparationCannotAdmitLateSession() async throws {
+        let container = try database(), context = container.mainContext
+        let row = ChatRecords(name: "Original suspended preparation", type: "chat")
+        context.insert(row); try context.save()
+        let id = try #require(row.id), owner = HanlinAppAgentSessionOwner()
+        let recorder = AppPresentationRecorder(), gate = AppHistoryWriteGate()
+        owner.presentation = recorder
+        let request = HanlinAppAgentSessionOwner.Request(conversation: row, conversationID: id,
+            sceneID: UUID(), rowID: UUID(), uiRunID: UUID(), temporary: false, interaction: nil)
+        let config = configuration()
+        let queue = AppPartQueue([try .init(messageID: request.rowID, partID: UUID(), sequence: 0,
+            payload: .textDelta("Late preparation must not install"))])
+        let pending = Task { @MainActor in
+            try await owner.stream(request: request, modelContext: context, configuration: config,
+                engineFactory: {
+                    await gate.pause()
+                    return factory(config, queue: queue)
+                }, toolAdapter: nil, messages: [.init(role: .user, text: "Original")], systemPrompt: nil)
+        }
+        await gate.waitUntilPaused()
+        do { try HanlinConversationMutation.delete(row, in: context) }
+        catch { gate.release(); _ = try? await pending.value; throw error }
+        gate.release()
+        do {
+            _ = try await pending.value
+            Issue.record("A deleted original conversation admitted delayed engine preparation")
+        } catch { #expect(error as? HanlinHostError == .staleContext) }
+        #expect(owner.session == nil && recorder.installed.isEmpty)
+        #expect(try context.fetch(FetchDescriptor<ChatRecords>()).isEmpty)
+        #expect(try context.fetch(FetchDescriptor<ChatMessages>()).isEmpty)
+    }
+
+    @Test(.timeLimit(.minutes(1)))
+    func stoppingInlineToolReleasesOnlyItsLeaseBeforeNonCooperativeExecutorDrains() async throws {
+        let container = try database(), context = container.mainContext
+        let row = ChatRecords(name: "Original inline Stop", type: "chat")
+        context.insert(row); try context.save()
+        let id = try #require(row.id), owner = HanlinAppAgentSessionOwner()
+        let request = HanlinAppAgentSessionOwner.Request(conversation: row, conversationID: id,
+            sceneID: UUID(), rowID: UUID(), uiRunID: UUID(), temporary: false, interaction: nil)
+        let alias = "fixture_inline_" + UUID().uuidString.replacingOccurrences(of: "-", with: "").lowercased()
+        let gate = AppHistoryWriteGate()
+        let (phases, phaseWriter) = AsyncStream<Bool>.makeStream()
+        let schema = NativeToolSchema.function(name: alias, description: "Synthetic paused original executor",
+            parameters: ["type": "object", "properties": [:], "additionalProperties": false])
+        let source = HanlinCanonicalToolAuthority.NativeSource(
+            entry: .init(name: alias, title: alias, summary: "Synthetic lifecycle fixture",
+                presentationProfile: .generic(toolName: alias)),
+            canonicalSchema: schema, modelSchema: schema, preferredAlias: alias)
+        let authority = try HanlinCanonicalToolAuthority.build(nativeSources: [source], mcpTools: [])
+        let executors = AssistantToolBridge.Executors(executeNative: { _, _, _, _ in
+            phaseWriter.yield(true)
+            // Deliberately ignores cancellation until this original executor is released.
+            await gate.pause()
+            return NativeToolResult(modelText: "Synthetic original executor drained", outcome: .succeeded)
+        }, executeScripting: { _, _ in
+            NativeToolResult(modelText: "Unexpected scripting", outcome: .failed)
+        })
+        let adapter = HanlinAISDKToolAdapter(session: .init(chatID: id.uuidString, isTemporaryChat: false),
+            preparedTools: .init(authority: authority, executors: executors), currentRoundID: UUID())
+        let config = configuration()
+        let queue = AppPartQueue([try .init(messageID: request.rowID, partID: UUID(), sequence: 0,
+            payload: .textDelta("Original inline source"))])
+        let stream = try await owner.stream(request: request, modelContext: context, configuration: config,
+            engineFactory: { factory(config, queue: queue) }, toolAdapter: adapter,
+            messages: [.init(role: .user, text: "Original")], systemPrompt: nil)
+        for try await event in stream { try owner.receive(event, uiRunID: request.uiRunID) }
+        try owner.producerStreamDrained(uiRunID: request.uiRunID)
+        var observedEvents = 0
+        let pending = Task { @MainActor in
+            defer { phaseWriter.yield(false); phaseWriter.finish() }
+            return try await owner.executeInlineTool(rowID: request.rowID, partID: "synthetic-query",
+                alias: alias, arguments: .object([:])) { event in
+                observedEvents += 1
+                if case .toolApprovalChanged(let approval) = event,
+                   approval.disposition == .awaiting {
+                    Task { @MainActor in
+                        guard let pending = owner.consent.pending, pending.tool == alias else { return }
+                        owner.consent.answer(id: pending.id, allowed: true)
+                    }
+                }
+            }
+        }
+        defer {
+            gate.release()
+            pending.cancel()
+            owner.cancel()
+            for grant in HanlinToolApprovalStore.shared.grants
+                where grant.scope.toolID == alias || grant.toolTitle == alias {
+                _ = HanlinToolApprovalStore.shared.revoke(id: grant.id)
+            }
+        }
+        var iterator = phases.makeAsyncIterator()
+        let entered = try #require(await iterator.next())
+        guard entered else {
+            _ = try? await pending.value
+            Issue.record("The original inline fixture did not enter its native executor")
+            return
+        }
+        await gate.waitUntilPaused()
+        #expect(owner.inlineToolIsRunning)
+        owner.cancel()
+        #expect(!owner.inlineToolIsRunning && owner.session == nil)
+        let countAfterStop = observedEvents
+        // This must succeed while the old non-cooperative executor is still paused.
+        let nextLease = try HanlinConversationRunLease.acquire(container: container, conversationID: id)
+        defer { nextLease.release() }
+        gate.release()
+        do {
+            _ = try await pending.value
+            Issue.record("The cancelled original inline operation reported live completion")
+        } catch {}
+        #expect(observedEvents == countAfterStop)
+        #expect(!nextLease.isRevoked)
+        #expect(throws: HanlinHostError.duplicateInvocation) {
+            try HanlinConversationRunLease.acquire(container: container, conversationID: id)
+        }
     }
 
     @Test func originalTypedAttachmentStorePreservesBytesAndRejectsForeignSessionMetadataAndTurn() async throws {

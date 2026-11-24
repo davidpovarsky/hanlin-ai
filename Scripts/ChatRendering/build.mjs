@@ -5,7 +5,7 @@ import {fileURLToPath} from 'node:url';
 import path from 'node:path';
 
 const root = path.dirname(fileURLToPath(import.meta.url));
-const output = path.resolve(root, '../../AI_HLY/Downstream/ChatPresentation/CodeFences/Resources');
+const output = path.resolve(root, '../../Packages/HanlinPresentationSDK/Sources/HanlinChatUI/CodeFences/Resources');
 await mkdir(output, {recursive: true});
 await build({entryPoints: [path.join(root, 'renderer.mjs')], outfile: path.join(output, 'HanlinCodeFenceRenderer.js'),
   bundle: true, format: 'iife', platform: 'browser', target: ['safari18'], minify: true,

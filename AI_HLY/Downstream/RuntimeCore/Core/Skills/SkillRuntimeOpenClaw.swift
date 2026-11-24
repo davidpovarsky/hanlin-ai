@@ -112,7 +112,7 @@ enum SkillRuntimeOpenClaw {
             ("hanlin_openclaw_policy", "policy.mjs", artifactSHA256),
             ("hanlin_openclaw_policy_probe", "policy-probe.mjs", SkillOpenClawProjection.probeSHA256)
         ] {
-            guard let url = Bundle.main.url(forResource: resource, withExtension: "mjs") else {
+            guard let url = HanlinApplicationResources.bundle.url(forResource: resource, withExtension: "mjs") else {
                 throw RuntimeCoreError.invalidRequest("Original OpenClaw policy artifact missing")
             }
             let bytes = try Data(contentsOf: url)

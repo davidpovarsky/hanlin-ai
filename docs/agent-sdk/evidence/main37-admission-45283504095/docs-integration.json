@@ -1,0 +1,26 @@
+[
+  {
+    "source": "fcb18ded72eeead39dccde6d7406a9b70e7ade3f",
+    "integrated": "93fd7caad478655cf05a7525eb71fa2804e48674",
+    "files": 7,
+    "all_original_blobs_equal": true
+  },
+  {
+    "source": "ba9f679f22bcf91ed76293fe73b7a9af117102f6",
+    "integrated": "0c914896f294a2f0f671d94fb341a64162179577",
+    "files": 4,
+    "all_original_blobs_equal": true
+  },
+  {
+    "source": "f8d640718271b159685cc1d9a8cf0ff935ebdc43",
+    "integrated": "5428ab5ccbd17c3db673233738cb07906353555b",
+    "files": 56,
+    "all_original_blobs_equal": true
+  },
+  {
+    "source": "95e6e71fca4bced2e2b1cbcf549e82a27eada6a9",
+    "integrated": "7a7d059763e16d719b2d038208efce65d24a0c7a",
+    "files": 68,
+    "all_original_blobs_equal": true
+  }
+]

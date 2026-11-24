@@ -1,0 +1,18 @@
+{
+  "status": "DISPATCHED_SOURCE_CONFIRMED",
+  "recorded_at": "2026-11-23T10:32:48.936443+00:00",
+  "run_id": 45157020895,
+  "run_attempt": 1,
+  "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45157020895",
+  "head_sha": "646b22918b1c56e5a6a16addcb1d3ebd982d3846",
+  "branch": "codex/hanlin-sdk-unification-20261123",
+  "created_at": "2026-11-23T10:32:25Z",
+  "run_status": "queued",
+  "native_job_id": 137632459705,
+  "native_job_name": "Original Motion visual capture (C)",
+  "native_job_status": "queued",
+  "dispatch_posts": 1,
+  "native_scope": "visual-c",
+  "A_B_D": "NOT_SELECTED",
+  "root26_run_preserved": 45156789463
+}

@@ -1,0 +1,68 @@
+Swift/NativeDictionary.swift:823: Fatal error: Duplicate values for key: 'grant.shared'
+
+*** Signal 5: Backtracing from 0xf45475cdd7e4... done ***
+
+*** Program crashed: System trap at 0x0000f45475cdd7e4 ***
+
+Platform: arm64 Linux (Ubuntu 24.04.4 LTS)
+
+Thread 0 "OriginalBoundar" crashed:
+
+ 0                  0x0000f45475cdd7e4 _assertionFailure(_:_:file:line:flags:) + 208 in libswiftCore.so
+ 1 [ra]             0x0000f45475c9b1e0 specialized _NativeDictionary.merge<A>(trappingOnDuplicates:) + 1207 in libswiftCore.so
+ 2 [ra] [thunk]     0x0000f45475d1bb40 Dictionary.init<A>(uniqueKeysWithValues:) + 271 in libswiftCore.so
+ 3 [ra]             0x0000bfe6c7baff5c HanlinScriptPermissionAuthority.init(grants:revokedGrantIDs:now:) + 387 in OriginalBoundaryProbe at /mnt/development/projects/worktrees/hanlin-sdk-host-api-20261123/build/permission-authority-duplicates-20261123/package/Sources/HanlinScriptServices/HanlinScriptPermissionAuthority.swift:14:23
+ 4 [ra] [thunk]     0x0000bfe6c7bafdc8 HanlinScriptPermissionAuthority.__allocating_init(grants:revokedGrantIDs:now:) + 79 in OriginalBoundaryProbe at /mnt/development/projects/worktrees/hanlin-sdk-host-api-20261123/build/permission-authority-duplicates-20261123/package/Sources/HanlinScriptServices/HanlinScriptPermissionAuthority.swift
+ 5 [ra]             0x0000bfe6c7949efc static OriginalBoundaryProbe.main() + 711 in OriginalBoundaryProbe at /mnt/development/projects/worktrees/hanlin-sdk-host-api-20261123/build/permission-authority-duplicates-20261123/package/Sources/OriginalBoundaryProbe/main.swift:24:25
+ 6 [async] [system] 0x0000bfe6c794b3c0 static OriginalBoundaryProbe.$main() in OriginalBoundaryProbe at //<compiler-generated>
+ 7 [async] [system] 0x0000bfe6c794b574 async_MainTQ0_ in OriginalBoundaryProbe at //<compiler-generated>
+ 8 [async] [thunk]  0x0000bfe6c794b63c thunk for @escaping @convention(thin) @async () -> () in OriginalBoundaryProbe at //<compiler-generated>
+ 9 [async] [thunk]  0x0000bfe6c794b748 partial apply for thunk for @escaping @convention(thin) @async () -> () in OriginalBoundaryProbe at //<compiler-generated>
+10 [async] [system] 0x0000f45475990548 completeTaskWithClosure(swift::AsyncContext*, swift::SwiftError*) in libswift_Concurrency.so
+
+
+Registers:
+
+ x0 0x0000000200000003  8589934595
+ x1 0x0000000000000003  3
+ x2 0x0000bfe6f58cbbb8  03 00 00 00 00 00 00 00 40 00 00 00 00 00 00 00  ········@·······
+ x3 0x0000bfe6f58b6010  05 00 02 00 01 00 02 00 02 00 01 00 00 00 02 00  ················
+ x4 0x0000000000000004  4
+ x5 0x0000bfe6f58cba10  cb 58 6f fe 0b 00 00 00 04 c0 e8 07 4c d5 6c b6  ËXoþ·····Àè·LÕl¶
+ x6 0xb66cd54c07e8c004  13145115934914560004
+ x7 0x707544203a726f72  8103458009733295986
+ x8 0x0000000000000000  0
+ x9 0x0000000000000000  0
+x10 0x0000000000000020  32
+x11 0x0000000000000000  0
+x12 0x0000f4547615dd40  00 00 a1 75 54 f4 00 00 e0 dc 15 76 54 f4 00 00  ··¡uTô··àÜ·vTô··
+x13 0x000000000000002d  45
+x14 0x0000000000000001  1
+x15 0x0000bfe6c79aec4c  ff 03 01 d1 fd 7b 03 a9 fd c3 00 91 e0 0f 00 f9  ÿ··Ñý{·©ýÃ··à··ù
+x16 0x0000000000000001  1
+x17 0x0000f454745c6d70  a0 08 00 b4 fd 7b bc a9 fd 03 00 91 f5 5b 02 a9   ··´ý{¼©ý···õ[·©
+x18 0x0000000000000016  22
+x19 0xf000000000000028  17293822569102704680
+x20 0x0000bfe6f58cbbb0  f8 62 fa 75 54 f4 00 00 03 00 00 00 00 00 00 00  øbúuTô··········
+x21 0x0000bfe6f58cbbb0  f8 62 fa 75 54 f4 00 00 03 00 00 00 00 00 00 00  øbúuTô··········
+x22 0x8000f45475fbd6a0  53 77 69 66 74 2f 44 69 63 74 69 6f 6e 61 72 79  Swift/Dictionary
+x23 0x0000000000000001  1
+x24 0x0000bfe6c7c83e68  00 02 00 00 00 00 00 00 30 79 ca c7 e6 bf 00 00  ········0yÊÇæ¿··
+x25 0x0000f45475fbd6a0  53 77 69 66 74 2f 44 69 63 74 69 6f 6e 61 72 79  Swift/Dictionary
+x26 0x0000000000000000  0
+x27 0x0000fffff9d9df10  67 72 61 6e 74 2e 73 68 61 72 65 64 00 00 00 ec  grant.shared···ì
+x28 0x0000f454760b1a70  74 39 ca c7 e6 bf 00 00 98 1a 0b 76 54 f4 00 00  t9ÊÇæ¿·····vTô··
+ fp 0x0000fffff9d9de40  10 e0 d9 f9 ff ff 00 00 e0 b1 c9 75 54 f4 00 00  ·àÙùÿÿ··à±ÉuTô··
+ lr 0x0000f45475cdd7e4  20 00 20 d4 28 00 80 52 89 12 80 52 00 17 00 90   · Ô(··R···R····
+ sp 0x0000fffff9d9de20  01 00 00 00 00 00 00 00 a0 d6 fb 75 54 f4 00 00  ········ ÖûuTô··
+ pc 0x0000f45475cdd7e4  20 00 20 d4 28 00 80 52 89 12 80 52 00 17 00 90   · Ô(··R···R····
+
+
+Images (19 omitted):
+
+0x0000bfe6c7890000–0x0000bfe6c7c61b00 dca70070258f68dcb7dd88478668e12377109132 OriginalBoundaryProbe   /mnt/development/projects/worktrees/hanlin-sdk-host-api-20261123/build/permission-authority-duplicates-20261123/package/.build/out/Products/Debug-linux-aarch64/OriginalBoundaryProbe
+0x0000f45475920000–0x0000f454759abdc8 3e129d59f180f871dc171ec36504020ae8cfc011 libswift_Concurrency.so /mnt/development/tooling/swiftly/toolchains/6.4.3/usr/lib/swift/linux/libswift_Concurrency.so
+0x0000f45475a10000–0x0000f45475f71278 c8eb38b987655b2f302b3bb0c137deae316b4e0b libswiftCore.so         /mnt/development/tooling/swiftly/toolchains/6.4.3/usr/lib/swift/linux/libswiftCore.so
+
+Backtrace took 0.23s
+

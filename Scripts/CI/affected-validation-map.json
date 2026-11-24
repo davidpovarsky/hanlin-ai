@@ -23,7 +23,18 @@
     "test-results.jsonl",
     ".codex/**",
     ".agents/**",
-    "Tools/ai-team/**"
+    "Tools/ai-team/**",
+    "Docs/SDK/HanlinMessageBubblePreservation.json",
+    "Docs/SDK/HanlinNavigationIntegration20261123.json",
+    "Docs/SDK/HanlinMCPPublicModelVerification20261123.json",
+    "Docs/SDK/HanlinSelectedProfileIdentity20261123.json",
+    "Docs/SDK/HanlinAnytypeNativeConsumerReadback20261123.json",
+    "Docs/SDK/HanlinScriptRegistryBoundary20261123.json",
+    "Docs/SDK/registry-identity-20261123/**",
+    "Docs/SDK/HanlinNativeArtifactProvenance20261123.json",
+    "Docs/SDK/NativeArtifactProvenanceEvidence20261123/**",
+    "Docs/SDK/AppIntentsInstallationEvidence20261123/**",
+    "Docs/SDK/validation/provider-summary-count-20261123/**"
   ],
   "components": {
     "ci_router": {
@@ -50,7 +61,8 @@
         "docs/hanlin-platform/personal-runtime-completion/*.json",
         "docs/hanlin-platform/contract-audit/**",
         "docs/hanlin-platform/personal-runtime-completion/evidence/**",
-        "Scripts/Runtime/verify-runtime-job-foundation.sh"
+        "Scripts/Runtime/verify-runtime-job-foundation.sh",
+        "Scripts/SDK/**"
       ],
       "direct_validation_groups": [
         "ci_router"
@@ -446,6 +458,7 @@
         "Scripts/Runtime/runtime_host_archive.py",
         "Scripts/Runtime/prepare-runtime-core.sh",
         "Scripts/Runtime/preflight-runtime-core.sh",
+        "Scripts/Runtime/validate_runtime_host_source_exclusion.py",
         "Scripts/Runtime/run-with-heartbeat.py",
         "Scripts/Runtime/runtime_bundle_source.py",
         "Scripts/Runtime/runtime_native_identity.py",
@@ -1702,6 +1715,80 @@
         "AI_HLYUITests/HanlinShareInboxUITests"
       ],
       "consumers": []
+    },
+    "hanlin_application_sdk": {
+      "description": "Original full application source assembly, injected host facade and public source ownership graph",
+      "patterns": [
+        "AI_HLY/Downstream/SDK/**",
+        "Package.swift",
+        "AI_HLYTests/HanlinApplicationEmbeddingTests.swift",
+        "AI_HLYTests/HanlinConversationControllerTests.swift",
+        "AI_HLYTests/HanlinConversationProjectionTests.swift",
+        "AI_HLYTests/HanlinApplicationSystemIntegrationTests.swift",
+        "AI_HLYTests/HanlinMCPEmbeddingTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/HanlinApplicationEmbeddingTests",
+        "AI_HLYTests/HanlinConversationProjectionTests",
+        "AI_HLYTests/HanlinApplicationSystemIntegrationTests",
+        "AI_HLYTests/HanlinMCPEmbeddingTests"
+      ],
+      "consumers": [
+        "app_core"
+      ]
+    },
+    "calendar_tool_recovery": {
+      "description": "Original calendar adapter and malformed-input/cancelled callback regressions",
+      "patterns": [
+        "AI_HLYTests/CalendarToolTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/CalendarToolTests"
+      ],
+      "consumers": []
+    },
+    "hanlin_localization_sdk": {
+      "description": "Original shared language tables, images, colors and exact native-control resource routing",
+      "patterns": [
+        "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/**",
+        "Packages/HanlinPresentationSDK/Tests/HanlinLocalizationTests/**",
+        "Scripts/Localization/**"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/HanlinLocalizationTests",
+        "AI_HLYTests/HanlinLocalizedControlTests",
+        "AI_HLYTests/HanlinOriginalAssetTests"
+      ],
+      "consumers": [
+        "app_core"
+      ]
+    },
+    "canonical_extension_sdk": {
+      "description": "Original share, notification, translation and WidgetKit implementations; real embedded extension targets are built with the host app",
+      "patterns": [
+        "Packages/HanlinAppExtensionsSDK/**",
+        "Packages/HanlinWidgetSDK/**",
+        "Scripts/Extensions/**"
+      ],
+      "direct_validation_groups": [
+        "device_build",
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/HanlinApplicationSystemIntegrationTests"
+      ],
+      "consumers": [
+        "project_packaging"
+      ]
     }
   },
   "validation_groups": {

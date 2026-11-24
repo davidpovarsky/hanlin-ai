@@ -1,0 +1,7 @@
+error: link command failed with exit code 1 (use -v to see invocation)
+/usr/bin/ld.gold: error: cannot find -lSwiftSyntax
+/usr/bin/ld.gold: error: cannot find -lSwiftParserDiagnostics
+/usr/bin/ld.gold: error: cannot find -lSwiftParser
+/usr/bin/ld.gold: error: cannot find -lSwiftDiagnostics
+/usr/bin/ld.gold: error: cannot find -lSwiftBasicFormat
+clang: error: linker command failed with exit code 1 (use -v to see invocation)

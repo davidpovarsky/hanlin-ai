@@ -1,0 +1,16 @@
+{
+  "sdk": "27.2",
+  "model": "iPad Pro 13-inch (M5)",
+  "runtime": {
+    "isAvailable": true,
+    "version": "27.2",
+    "isInternal": false,
+    "buildversion": "24B8117",
+    "identifier": "com.apple.CoreSimulator.SimRuntime.iOS-27-2",
+    "platform": "iOS",
+    "bundlePath": "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.VJKG8I/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime",
+    "runtimeRoot": "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.VJKG8I/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot",
+    "name": "iOS 27.2"
+  },
+  "original_environment_sha256": "966b44d08d7f380f6dfc7d15c2215537c2c47ea33d4d7989c8a4a37c872db6bb"
+}

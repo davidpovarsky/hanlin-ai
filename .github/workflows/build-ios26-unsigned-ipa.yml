@@ -185,14 +185,14 @@ jobs:
           retention-days: 14
   chat-motion-product:
     if: ${{ github.event_name == 'workflow_dispatch' && inputs.target_validation_group == 'chat_motion_product' && !inputs.testflight_upload }}
-    name: ${{ inputs.exact_test_selector == 'MotionUITests/testDRapidInputDiagnosticOnly' && 'Original Motion input diagnostic (D)' || inputs.exact_test_selector == 'MotionUITests/testAAllFivePresetsTwentyCompleteCyclesEach' && 'Original Motion preset cycles (A)' || 'Original Motion interaction acceptance (B and C)' }}
+    name: ${{ inputs.exact_test_selector == 'MotionUITests/testDRapidInputDiagnosticOnly' && 'Original Motion input diagnostic (D)' || inputs.exact_test_selector == 'MotionUITests/testAAllFivePresetsTwentyCompleteCyclesEach' && 'Original Motion preset cycles (A)' || inputs.exact_test_selector == 'MotionUITests/testCReadableLongContentRTLTypeOrientationAndCompletion' && 'Original Motion visual capture (C)' || inputs.exact_test_selector == 'MotionUITests/testBRapidReversalPresetSwitchAndPersistence' && 'Original Motion reversal acceptance (B)' || 'Original Motion interaction acceptance (B and C)' }}
     runs-on: xcode-27
-    timeout-minutes: 25
+    timeout-minutes: 35
     steps:
       - uses: actions/checkout@v7.0.1
       - name: Exercise the selected original Motion UI scope
         env:
-          HANLIN_MOTION_SCOPE: ${{ inputs.exact_test_selector == 'MotionUITests/testAAllFivePresetsTwentyCompleteCyclesEach' && 'cycles' || inputs.exact_test_selector == 'MotionUITests/testDRapidInputDiagnosticOnly' && 'input-diagnostic' || 'affected' }}
+          HANLIN_MOTION_SCOPE: ${{ inputs.exact_test_selector == 'MotionUITests/testAAllFivePresetsTwentyCompleteCyclesEach' && 'cycles' || inputs.exact_test_selector == 'MotionUITests/testDRapidInputDiagnosticOnly' && 'input-diagnostic' || inputs.exact_test_selector == 'MotionUITests/testCReadableLongContentRTLTypeOrientationAndCompletion' && 'visual-c' || inputs.exact_test_selector == 'MotionUITests/testBRapidReversalPresetSwitchAndPersistence' && 'reversal-b' || 'affected' }}
           HANLIN_MOTION_DEVICE_STRATEGY: fresh
         run: bash docs/chat-motion/run_motion_ui.sh
       - uses: actions/upload-artifact@v7.0.2
@@ -1400,6 +1400,31 @@ jobs:
           unzip -p AI_HLY/RuntimeHostResources.zip server-worker.mjs | grep -F 'registerHooks'
           unzip -p AI_HLY/RuntimeHostResources.zip package-compatibility.mjs | grep -F 'inspectArchiveSafety'
 
+      # Exactly one original Apple job retains the complete prepared SDK input.
+      # Export reuses the verified RuntimeCore and prepared Expo/NativeScript trees.
+      - name: Export original prepared Hanlin SDK native artifacts
+        if: ${{ needs.plan-affected-validation.outputs.run_simulator_job != 'true' }}
+        id: sdk-native-export
+        run: |
+          set -euo pipefail
+          python3 Scripts/SDK/native_artifacts.py export \
+            --root . --output build/hanlin-sdk-native-prepared \
+            2>&1 | tee "$LOG_DIR/sdk-native-export.log"
+          python3 Scripts/SDK/native_artifacts.py verify \
+            --catalog build/hanlin-sdk-native-prepared/native-artifacts.json \
+            --assets build/hanlin-sdk-native-prepared \
+            2>&1 | tee "$LOG_DIR/sdk-native-verify.log"
+
+      - name: Retain prepared Hanlin SDK native artifacts
+        if: ${{ needs.plan-affected-validation.outputs.run_simulator_job != 'true' }}
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: hanlin-sdk-native-prepared
+          path: build/hanlin-sdk-native-prepared
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 30
+
       - name: Run RuntimeCore fast preflight
         run: |
           set -euxo pipefail
@@ -1705,9 +1730,11 @@ jobs:
             test -f "$APP_PATH/Frameworks/NodeMobile.framework/NodeMobile"
             test -f "$APP_PATH/Frameworks/Python.framework/Python"
             test -d "$APP_PATH/python/lib/python3.14"
-            test -f "$APP_PATH/RuntimeHostResources.zip"
-            test -f "$APP_PATH/RuntimeManifest.json"
-            test -f "$APP_PATH/RuntimeLinkDependencyNotices.txt"
+            python3 Scripts/SDK/verify_bundle_resources.py \
+              --repository-root . --app "$APP_PATH" \
+              --json-output "$LOG_DIR/08-sdk-bundle-resources.json"
+            python3 Scripts/CI/validate_chat_localization.py \
+              --app "$APP_PATH" --output "$LOG_DIR/08-sdk-localization.json"
             nm "$APP_PATH/$APP_NAME" | grep -E '(_ios_system$|_HanlinPythonExecute$|_HanlinNodeStart$)' | tee "$LOG_DIR/08-runtime-symbols.txt"
 
             echo
@@ -1820,6 +1847,11 @@ jobs:
           ditto -x -k "$IPA_NAME" "$packaged_root"
           PACKAGED_APP_PATH="$(find "$packaged_root/Payload" -maxdepth 1 -type d -name '*.app' -print -quit)"
           test -n "$PACKAGED_APP_PATH"
+          python3 Scripts/SDK/verify_bundle_resources.py \
+            --repository-root . --app "$PACKAGED_APP_PATH" \
+            --json-output "$LOG_DIR/09-packaged-sdk-bundle-resources.json"
+          python3 Scripts/CI/validate_chat_localization.py \
+            --app "$PACKAGED_APP_PATH" --output "$LOG_DIR/09-packaged-sdk-localization.json"
           python3 Scripts/Runtime/validate-app-dyld-closure.py \
             --app "$PACKAGED_APP_PATH" \
             --platform iphoneos \
@@ -2046,6 +2078,19 @@ jobs:
             exit 1
           fi
 
+      - name: Read the installed FoundationModels tool continuation interface
+        if: ${{ inputs.target_validation_group == 'exact_test_selector' }}
+        run: python3 Scripts/CI/inspect_foundation_models_interface.py --output "$LOG_DIR/foundation-models-interface" --query-availability
+
+      - name: Retain FoundationModels declarations before the application build
+        if: ${{ inputs.target_validation_group == 'exact_test_selector' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: hanlin-foundation-models-interface
+          path: simulator-logs/foundation-models-interface
+          if-no-files-found: error
+          retention-days: 14
+
       - name: Prepare declaration-only metadata tool
         uses: ./.github/actions/prepare-nativescript-metadata-tool
 
@@ -2193,6 +2238,29 @@ jobs:
         run: |
           set -euxo pipefail
           bash Scripts/Runtime/preflight-runtime-core.sh 2>&1 | tee "$LOG_DIR/04-runtime-preflight.log"
+
+      # Exactly one original Apple job retains the complete prepared SDK input.
+      # Export reuses the verified RuntimeCore and prepared Expo/NativeScript trees.
+      - name: Export original prepared Hanlin SDK native artifacts
+        id: sdk-native-export
+        run: |
+          set -euo pipefail
+          python3 Scripts/SDK/native_artifacts.py export \
+            --root . --output build/hanlin-sdk-native-prepared \
+            2>&1 | tee "$LOG_DIR/sdk-native-export.log"
+          python3 Scripts/SDK/native_artifacts.py verify \
+            --catalog build/hanlin-sdk-native-prepared/native-artifacts.json \
+            --assets build/hanlin-sdk-native-prepared \
+            2>&1 | tee "$LOG_DIR/sdk-native-verify.log"
+
+      - name: Retain prepared Hanlin SDK native artifacts
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: hanlin-sdk-native-prepared
+          path: build/hanlin-sdk-native-prepared
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 30
 
       - name: Resolve Swift Package dependencies
         run: |
@@ -2508,6 +2576,11 @@ jobs:
           set -euxo pipefail
           APP_PATH="build/SimulatorRuntimeApp/AI_Hanlin.app"
           test -d "$APP_PATH"
+          python3 Scripts/SDK/verify_bundle_resources.py \
+            --repository-root . --app "$APP_PATH" \
+            --json-output "$LOG_DIR/07-simulator-sdk-bundle-resources.json"
+          python3 Scripts/CI/validate_chat_localization.py \
+            --app "$APP_PATH" --output "$LOG_DIR/07-simulator-sdk-localization.json"
           echo "$APP_PATH" > "$LOG_DIR/app-path.txt"
           test -f "$APP_PATH/Frameworks/libssh2.framework/libssh2"
           test -f "$APP_PATH/Frameworks/openssl.framework/openssl"
@@ -2680,6 +2753,11 @@ jobs:
                 --configuration "$CONFIGURATION" \
                 --selectors "${SIMULATOR_UNIT_FILTER:-AI_HLYTests}" \
                 --simulator-udid "$SIMULATOR_UDID")"
+              python3 Scripts/CI/prepare_calendar_acceptance.py \
+                --selectors "${SIMULATOR_UNIT_FILTER:-AI_HLYTests}" \
+                --xctestrun "$unit_xctestrun" \
+                --derived-data "$DERIVED_DATA_PATH" \
+                --log-dir "$LOG_DIR"
               set +e
               xcodebuild test-without-building \
               -xctestrun "$unit_xctestrun" \
@@ -3292,6 +3370,7 @@ jobs:
             vm_stat
             ps -axo pid,ppid,%cpu,%mem,etime,comm
           } > "$LOG_DIR/09-host-resources.log" 2>&1
+          python3 Scripts/CI/retain_app_intents_metadata.py --derived-data build/SimulatorDerivedData --output "$LOG_DIR/app-intents-metadata"
           if [ -f "$LOG_DIR/simulator-udid.txt" ]; then
             SIMULATOR_UDID="$(cat "$LOG_DIR/simulator-udid.txt")"
             python3 - "$SIMULATOR_UDID" <<'PY'

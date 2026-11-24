@@ -1,0 +1,198 @@
+{
+  "observed_at": "2026-11-19T16:25:12.807198+00:00",
+  "source_head": "080d1a2b264ead9e3f9df690f2dd0d3e81ebd07e",
+  "status": "EXECUTED_PASS_PORTABLE_CONTRACT",
+  "process_exit": 0,
+  "toolchain": "Swift version 6.3.3 (swift-6.3.3-RELEASE)\nTarget: x86_64-unknown-windows-msvc\nBuild config: +assertions",
+  "command": [
+    "swift",
+    "test",
+    "--scratch-path",
+    "C:\\Users\\DAVID\\Code\\hanlin-otzaria-navigation-20261119\\build\\nav",
+    "-j",
+    "1",
+    "-Xswiftc",
+    "-strict-concurrency=complete",
+    "--filter",
+    "NavigationTransitionTests",
+    "--xunit-output",
+    "C:\\Users\\DAVID\\Code\\hanlin-otzaria-navigation-20261119\\build\\navigation-transition-20261119\\portable-02\\tests.xml"
+  ],
+  "input_files": 30,
+  "expected": [
+    "alreadyStaleAndRevokedSessionsNeverNavigate",
+    "cancellationAfterEffectSuppressesAckButRetainsReceipt",
+    "cancellationDuringInitialContextAwaitPreventsHostEntry",
+    "cancellationDuringSuccessorContextAwaitCannotReceiveAck",
+    "cancelledReceiptCannotAuthorizeItsUndeliveredSuccessor",
+    "capabilityVersionIsRequiredBeforeAnyHostEntry",
+    "changedContextWithoutASuccessorStillFailsFreshness",
+    "foreignDestinationContextNeverNavigates",
+    "inFlightTransitionBlocksAnotherOriginalSessionOperation",
+    "originRevokedAfterEffectSuppressesAckButRetainsReceipt",
+    "originRevokedDuringSuccessorContextAwaitCannotReceiveAck",
+    "originalOpenStillRejectsAChangedContentContext",
+    "originalRequestAndFreshSuccessorAreAcknowledgedExactly",
+    "queuedCannotIssueASuccessor",
+    "queuedIsNotPresentationAndCannotBeReentered",
+    "receiptRoundTripPreservesCorrelationWithoutGrantingCurrentAuthority",
+    "requestTargetBlockAndOriginMustAllMatchExactly",
+    "reservedRequestRejectsChangedOpaqueDestinationBytes",
+    "retiredOriginCannotBecomeValidByReplayingItsOldContext",
+    "returnedSuccessorMustBeRegisteredByTheLiveHost",
+    "revocationDuringInitialContextAwaitPreventsHostEntry",
+    "stablePresentationRetainsTheOriginalSession",
+    "successorCannotChangeAccountWorkspaceBackendAppSceneOrConversation",
+    "successorRequiresNewSessionAndGeneration",
+    "successorRevokedDuringItsContextAwaitCannotReceiveAck",
+    "thrownPostEffectResultCannotBeRetriedEvenIfOldContextReappears",
+    "unrelatedAuthorityChangeAfterEffectCannotReceiveAck",
+    "versionAloneCannotInventTheHostCapability"
+  ],
+  "cases": [
+    {
+      "name": "requestTargetBlockAndOriginMustAllMatchExactly()",
+      "class": "HanlinAgentCoreTests.NavigationTransitionTests",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "name": "successorCannotChangeAccountWorkspaceBackendAppSceneOrConversation()",
+      "class": "HanlinAgentCoreTests.NavigationTransitionTests",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "name": "returnedSuccessorMustBeRegisteredByTheLiveHost()",
+      "class": "HanlinAgentCoreTests.NavigationTransitionTests",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "name": "thrownPostEffectResultCannotBeRetriedEvenIfOldContextReappears()",
+      "class": "HanlinAgentCoreTests.NavigationTransitionTests",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "name": "queuedCannotIssueASuccessor()",
+      "class": "HanlinAgentCoreTests.NavigationTransitionTests",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "name": "versionAloneCannotInventTheHostCapability()",
+      "class": "HanlinAgentCoreTests.NavigationTransitionTests",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "name": "successorRevokedDuringItsContextAwaitCannotReceiveAck()",
+      "class": "HanlinAgentCoreTests.NavigationTransitionTests",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "name": "inFlightTransitionBlocksAnotherOriginalSessionOperation()",
+      "class": "HanlinAgentCoreTests.NavigationTransitionTests",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "name": "alreadyStaleAndRevokedSessionsNeverNavigate()",
+      "class": "HanlinAgentCoreTests.NavigationTransitionTests",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "name": "cancelledReceiptCannotAuthorizeItsUndeliveredSuccessor()",
+      "class": "HanlinAgentCoreTests.NavigationTransitionTests",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "name": "revocationDuringInitialContextAwaitPreventsHostEntry()",
+      "class": "HanlinAgentCoreTests.NavigationTransitionTests",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "name": "stablePresentationRetainsTheOriginalSession()",
+      "class": "HanlinAgentCoreTests.NavigationTransitionTests",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "name": "originalRequestAndFreshSuccessorAreAcknowledgedExactly()",
+      "class": "HanlinAgentCoreTests.NavigationTransitionTests",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "name": "unrelatedAuthorityChangeAfterEffectCannotReceiveAck()",
+      "class": "HanlinAgentCoreTests.NavigationTransitionTests",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "name": "receiptRoundTripPreservesCorrelationWithoutGrantingCurrentAuthority()",
+      "class": "HanlinAgentCoreTests.NavigationTransitionTests",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "name": "successorRequiresNewSessionAndGeneration()",
+      "class": "HanlinAgentCoreTests.NavigationTransitionTests",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "name": "queuedIsNotPresentationAndCannotBeReentered()",
+      "class": "HanlinAgentCoreTests.NavigationTransitionTests",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "name": "reservedRequestRejectsChangedOpaqueDestinationBytes()",
+      "class": "HanlinAgentCoreTests.NavigationTransitionTests",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "name": "originRevokedDuringSuccessorContextAwaitCannotReceiveAck()",
+      "class": "HanlinAgentCoreTests.NavigationTransitionTests",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "name": "originRevokedAfterEffectSuppressesAckButRetainsReceipt()",
+      "class": "HanlinAgentCoreTests.NavigationTransitionTests",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "name": "cancellationAfterEffectSuppressesAckButRetainsReceipt()",
+      "class": "HanlinAgentCoreTests.NavigationTransitionTests",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "name": "changedContextWithoutASuccessorStillFailsFreshness()",
+      "class": "HanlinAgentCoreTests.NavigationTransitionTests",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "name": "foreignDestinationContextNeverNavigates()",
+      "class": "HanlinAgentCoreTests.NavigationTransitionTests",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "name": "capabilityVersionIsRequiredBeforeAnyHostEntry()",
+      "class": "HanlinAgentCoreTests.NavigationTransitionTests",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "name": "cancellationDuringSuccessorContextAwaitCannotReceiveAck()",
+      "class": "HanlinAgentCoreTests.NavigationTransitionTests",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "name": "originalOpenStillRejectsAChangedContentContext()",
+      "class": "HanlinAgentCoreTests.NavigationTransitionTests",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "name": "retiredOriginCannotBecomeValidByReplayingItsOldContext()",
+      "class": "HanlinAgentCoreTests.NavigationTransitionTests",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "name": "cancellationDuringInitialContextAwaitPreventsHostEntry()",
+      "class": "HanlinAgentCoreTests.NavigationTransitionTests",
+      "status": "EXECUTED_PASS"
+    }
+  ],
+  "warnings": 0,
+  "boundary": "Complete original Platform/Host contracts and whole dispatcher, with an explicit host double. AgentSession/engine/provider and native application are not executed here.",
+  "native_passes": 0,
+  "full_sdk_graph": "NOT_RUN"
+}

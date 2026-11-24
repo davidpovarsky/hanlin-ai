@@ -1,3 +1,4 @@
+import HanlinLocalization
 import SwiftUI
 import HanlinPlatformContracts
 
@@ -82,7 +83,7 @@ struct SkillDetailView: View {
             Text(SkillL10n.string("Are you sure you want to delete this skill?"))
         }
         .confirmationDialog(
-            "Delete Resource",
+            Text("Delete Resource", bundle: HanlinLocalization.bundle),
             isPresented: Binding(
                 get: { resourceToDelete != nil },
                 set: { if !$0 { resourceToDelete = nil } }
@@ -99,7 +100,7 @@ struct SkillDetailView: View {
                 resourceToDelete = nil
             }
         } message: {
-            Text("Are you sure you want to delete this resource?")
+            Text("Are you sure you want to delete this resource?", bundle: HanlinLocalization.bundle)
         }
     }
 
@@ -133,7 +134,7 @@ struct SkillDetailView: View {
             HStack {
                 Text(SkillL10n.string("Enabled"))
                 Spacer()
-                Toggle("", isOn: Binding(
+                Toggle(hanlin: "", isOn: Binding(
                     get: { isEnabled },
                     set: { newValue in
                         isEnabled = newValue
@@ -158,7 +159,7 @@ struct SkillDetailView: View {
     private var instructionsSection: some View {
         Section(header: Text(SkillL10n.string("Instructions"))) {
             if instructionsText.isEmpty {
-                Text("No instructions provided.")
+                Text("No instructions provided.", bundle: HanlinLocalization.bundle)
                     .font(HanlinTypography.footnote)
                     .foregroundColor(.secondary)
             } else {
@@ -173,7 +174,7 @@ struct SkillDetailView: View {
         Section(header: Text(SkillL10n.string("Preferred Tools"))) {
             let tools = descriptor?.preferredToolIDs ?? []
             if tools.isEmpty {
-                Text("None specified.")
+                Text("None specified.", bundle: HanlinLocalization.bundle)
                     .font(HanlinTypography.footnote)
                     .foregroundColor(.secondary)
             } else {
@@ -245,7 +246,7 @@ struct SkillDetailView: View {
                         Spacer()
 
                         if !res.isBinary {
-                            Button("View") {
+                            Button(hanlin: "View") {
                                 previewResource = res
                             }
                             .buttonStyle(.bordered)
@@ -253,7 +254,7 @@ struct SkillDetailView: View {
                             .accessibilityIdentifier("hanlin-skill-detail-view-resource-\(res.relativePath)")
 
                             if isCustomOrImported {
-                                Button("Edit") {
+                                Button(hanlin: "Edit") {
                                     startEditingResource(res)
                                 }
                                 .buttonStyle(.bordered)
@@ -264,7 +265,7 @@ struct SkillDetailView: View {
                             Button {
                                 binaryMetadataResource = res
                             } label: {
-                                Text("Binary")
+                                Text("Binary", bundle: HanlinLocalization.bundle)
                                     .font(HanlinTypography.caption2)
                                     .padding(.horizontal, 6)
                                     .padding(.vertical, 2)
@@ -295,14 +296,14 @@ struct SkillDetailView: View {
     @ViewBuilder
     private var sourceMetadataSection: some View {
         if let rec = record, (rec.originURL != nil || rec.sha256 != nil) {
-            Section(header: Text("Package Origin & Integrity")) {
+            Section(header: Text("Package Origin & Integrity", bundle: HanlinLocalization.bundle)) {
                 if let origin = rec.originURL {
-                    LabeledContent("Origin URL", value: origin)
+                    LabeledContent(hanlin: "Origin URL", value: origin)
                         .accessibilityIdentifier("hanlin-skill-detail-origin-url")
                 }
                 if let sha = rec.sha256 {
                     VStack(alignment: .leading, spacing: 4) {
-                        Text("SHA-256")
+                        Text("SHA-256", bundle: HanlinLocalization.bundle)
                             .font(HanlinTypography.caption)
                             .foregroundColor(.secondary)
                         Text(sha)
@@ -311,8 +312,8 @@ struct SkillDetailView: View {
                     }
                     .accessibilityIdentifier("hanlin-skill-detail-sha256")
                 }
-                LabeledContent("Installed", value: rec.installedAt.formatted(date: .abbreviated, time: .shortened))
-                LabeledContent("Updated", value: rec.updatedAt.formatted(date: .abbreviated, time: .shortened))
+                LabeledContent(hanlin: "Installed", value: rec.installedAt.formatted(date: .abbreviated, time: .shortened))
+                LabeledContent(hanlin: "Updated", value: rec.updatedAt.formatted(date: .abbreviated, time: .shortened))
             }
         }
     }
@@ -434,7 +435,7 @@ struct SkillDetailView: View {
                         .padding()
                         .frame(maxWidth: .infinity, alignment: .leading)
                 } else {
-                    Text("Unable to load resource.")
+                    Text("Unable to load resource.", bundle: HanlinLocalization.bundle)
                         .foregroundColor(.secondary)
                         .padding()
                 }
@@ -462,30 +463,30 @@ struct SkillDetailView: View {
                     }
                 }
 
-                Section(header: Text("Resource Relative Path")) {
-                    TextField("references/guide.md", text: $newResourcePath)
+                Section(header: Text("Resource Relative Path", bundle: HanlinLocalization.bundle)) {
+                    TextField(hanlin: "references/guide.md", text: $newResourcePath)
                         .autocorrectionDisabled()
                         .textInputAutocapitalization(.never)
                         .accessibilityIdentifier("hanlin-skill-resource-path-input")
                 }
 
-                Section(header: Text("Content")) {
+                Section(header: Text("Content", bundle: HanlinLocalization.bundle)) {
                     TextEditor(text: $newResourceContent)
                         .frame(minHeight: 180)
                         .font(HanlinTypography.body.monospaced())
                         .accessibilityIdentifier("hanlin-skill-resource-content-input")
                 }
             }
-            .navigationTitle("Add Resource")
+            .navigationTitle(Text("Add Resource", bundle: HanlinLocalization.bundle))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") {
+                    Button(hanlin: "Cancel") {
                         showAddResource = false
                     }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Save") {
+                    Button(hanlin: "Save") {
                         saveNewResource()
                     }
                     .bold()
@@ -499,18 +500,18 @@ struct SkillDetailView: View {
     private func binaryMetadataSheet(_ res: SkillResourceFile) -> some View {
         NavigationStack {
             List {
-                Section(header: Text("Binary Resource Info")) {
-                    LabeledContent("Relative Path", value: res.relativePath)
-                    LabeledContent("File Size", value: ByteCountFormatter.string(fromByteCount: res.byteCount, countStyle: .file))
-                    LabeledContent("Bytes", value: "\(res.byteCount)")
-                    LabeledContent("MIME Type", value: res.mimeType)
+                Section(header: Text("Binary Resource Info", bundle: HanlinLocalization.bundle)) {
+                    LabeledContent(hanlin: "Relative Path", value: res.relativePath)
+                    LabeledContent(hanlin: "File Size", value: ByteCountFormatter.string(fromByteCount: res.byteCount, countStyle: .file))
+                    LabeledContent(hanlin: "Bytes", value: "\(res.byteCount)")
+                    LabeledContent(hanlin: "MIME Type", value: res.mimeType)
                 }
             }
             .navigationTitle(res.relativePath)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Close") {
+                    Button(hanlin: "Close") {
                         binaryMetadataResource = nil
                     }
                 }
@@ -536,17 +537,17 @@ struct SkillDetailView: View {
                         .accessibilityIdentifier("hanlin-skill-resource-edit-content-input")
                 }
             }
-            .navigationTitle("Edit Resource")
+            .navigationTitle(Text("Edit Resource", bundle: HanlinLocalization.bundle))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel") {
+                    Button(hanlin: "Cancel") {
                         editingResource = nil
                     }
                     .accessibilityIdentifier("hanlin-skill-detail-edit-resource-cancel")
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Save") {
+                    Button(hanlin: "Save") {
                         saveEditedResource(res)
                     }
                     .bold()

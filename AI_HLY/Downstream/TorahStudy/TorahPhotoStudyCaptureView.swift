@@ -1,3 +1,5 @@
+import HanlinLocalization
+import HanlinPresentationKit
 import SwiftUI
 import PhotosUI
 import UniformTypeIdentifiers
@@ -21,7 +23,12 @@ public struct TorahPhotoStudyCaptureView: View {
     @State private var isEditingTranscription = false
     @State private var editedText: String = ""
 
-    public init() {}
+    let presentsSourceReader: Bool
+    @State private var localSource: TorahStudyDeepLink?
+
+    public init(presentsSourceReader: Bool = false) {
+        self.presentsSourceReader = presentsSourceReader
+    }
 
     public var body: some View {
         NavigationStack {
@@ -33,12 +40,15 @@ public struct TorahPhotoStudyCaptureView: View {
                 }
 
                 if isProcessing {
-                    ProgressView(String(localized: "מזהה קטע ומאתר מקור בספריה..."))
+                    ProgressView(String(localized: "מזהה קטע ומאתר מקור בספריה...", bundle: HanlinLocalization.bundle))
                         .padding()
                 }
 
                 if let bookTitle = identifiedBookTitle {
                     resultCardView(title: bookTitle)
+                } else if presentsSourceReader, let identificationStatus {
+                    Text(identificationStatus)
+                        .foregroundStyle(.secondary)
                 }
 
                 Spacer()
@@ -46,11 +56,11 @@ public struct TorahPhotoStudyCaptureView: View {
                 bottomActionToolbar
             }
             .padding()
-            .navigationTitle(String(localized: "צילום ולימוד ספר"))
+            .navigationTitle(String(localized: "צילום ולימוד ספר", bundle: HanlinLocalization.bundle))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button(String(localized: "סגור")) {
+                    Button(String(localized: "סגור", bundle: HanlinLocalization.bundle)) {
                         dismiss()
                     }
                 }
@@ -62,6 +72,20 @@ public struct TorahPhotoStudyCaptureView: View {
                 #if canImport(UIKit)
                 CameraPicker(selectedImage: $selectedImage)
                 #endif
+            }
+            .sheet(isPresented: Binding(
+                get: { localSource != nil },
+                set: { if !$0 { localSource = nil } }
+            )) {
+                if let localSource { TorahSourceReaderView(deepLink: localSource) }
+            }
+            .alert(Text("Maktabah", bundle: HanlinLocalization.bundle), isPresented: Binding(
+                get: { statusMessage != nil },
+                set: { if !$0 { statusMessage = nil } }
+            )) {
+                Button(hanlin: "OK") { statusMessage = nil }
+            } message: {
+                Text(statusMessage ?? "")
             }
             .sheet(isPresented: $isEditingTranscription) {
                 transcriptionEditorSheet
@@ -78,14 +102,14 @@ public struct TorahPhotoStudyCaptureView: View {
                 .frame(width: 80, height: 80)
                 .foregroundColor(.secondary)
 
-            Text(String(localized: "צלם קטע מתוך ספר פיזי או בחר תמונה מגלריה"))
+            Text(String(localized: "צלם קטע מתוך ספר פיזי או בחר תמונה מגלריה", bundle: HanlinLocalization.bundle))
                 .font(HanlinTypography.headline)
                 .multilineTextAlignment(.center)
                 .foregroundColor(.primary)
 
             HStack(spacing: 16) {
                 Button(action: { showPhotoPicker = true }) {
-                    Label(String(localized: "בחר תמונה"), systemImage: "photo.on.rectangle")
+                    Label(String(localized: "בחר תמונה", bundle: HanlinLocalization.bundle), systemImage: "photo.on.rectangle")
                         .padding(.horizontal, 16)
                         .padding(.vertical, 10)
                         .background(Color.accentColor.opacity(0.1))
@@ -176,12 +200,12 @@ public struct TorahPhotoStudyCaptureView: View {
 
             HStack(spacing: 12) {
                 Button(action: openHere) {
-                    Label(String(localized: "פתח כאן"), systemImage: "book")
+                    Label(String(localized: "פתח כאן", bundle: HanlinLocalization.bundle), systemImage: "book")
                         .font(HanlinTypography.subheadline)
                 }
 
                 Button(action: openInMaktabah) {
-                    Label(String(localized: "פתח ב-Maktabah"), systemImage: "arrow.up.forward.app")
+                    Label(String(localized: "פתח ב-Maktabah", bundle: HanlinLocalization.bundle), systemImage: "arrow.up.forward.app")
                         .font(HanlinTypography.subheadline)
                 }
 
@@ -203,17 +227,17 @@ public struct TorahPhotoStudyCaptureView: View {
     private var bottomActionToolbar: some View {
         HStack(spacing: 12) {
             Button(action: { showPhotoPicker = true }) {
-                Label(String(localized: "גלריה"), systemImage: "photo")
+                Label(String(localized: "גלריה", bundle: HanlinLocalization.bundle), systemImage: "photo")
             }
             .buttonStyle(.bordered)
 
             Button(action: { showCamera = true }) {
-                Label(String(localized: "צלם"), systemImage: "camera")
+                Label(String(localized: "צלם", bundle: HanlinLocalization.bundle), systemImage: "camera")
             }
             .buttonStyle(.bordered)
 
             Button(action: processIdentification) {
-                Label(String(localized: "זהה מקור"), systemImage: "sparkle.magnifyingglass")
+                Label(String(localized: "זהה מקור", bundle: HanlinLocalization.bundle), systemImage: "sparkle.magnifyingglass")
                     .frame(maxWidth: .infinity)
             }
             .buttonStyle(.borderedProminent)
@@ -226,18 +250,18 @@ public struct TorahPhotoStudyCaptureView: View {
             VStack {
                 TextEditor(text: $editedText)
                     .padding()
-                    .navigationTitle(String(localized: "תיקון תמלול"))
+                    .navigationTitle(String(localized: "תיקון תמלול", bundle: HanlinLocalization.bundle))
                     .navigationBarTitleDisplayMode(.inline)
                     .toolbar {
                         ToolbarItem(placement: .confirmationAction) {
-                            Button(String(localized: "זהה מחדש")) {
+                            Button(String(localized: "זהה מחדש", bundle: HanlinLocalization.bundle)) {
                                 ocrText = editedText
                                 isEditingTranscription = false
                                 processIdentificationWithText(editedText)
                             }
                         }
                         ToolbarItem(placement: .cancellationAction) {
-                            Button(String(localized: "ביטול")) {
+                            Button(String(localized: "ביטול", bundle: HanlinLocalization.bundle)) {
                                 isEditingTranscription = false
                             }
                         }
@@ -355,7 +379,11 @@ public struct TorahPhotoStudyCaptureView: View {
         guard let locStr = identifiedLocator,
               let locator = SourceLocator.parse(persistenceKey: locStr) else { return }
         let link = TorahStudyDeepLink(action: .open, locator: locator, workTitle: identifiedBookTitle, highlightText: ocrText)
-        TorahStudyNavigationRouter.shared.navigate(to: link)
+        if presentsSourceReader {
+            localSource = link
+        } else {
+            TorahStudyNavigationRouter.shared.navigate(to: link)
+        }
     }
 
     private func openInMaktabah() {

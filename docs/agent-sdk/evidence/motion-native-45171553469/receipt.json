@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-11-23T12:28:07.552395+00:00",
+  "run_id": 45171553469,
+  "attempt": 1,
+  "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45171553469",
+  "source_sha": "32b3168d73a9b92c3a774bcbb97f95941d8a4db7",
+  "workflow_conclusion": "failure",
+  "native_job_id": 137682098060,
+  "native_job_conclusion": "cancelled",
+  "native_job_started_at": "2026-11-23T12:09:03Z",
+  "native_job_completed_at": "2026-11-23T12:24:03Z",
+  "runner_id": 0,
+  "runner_name": "",
+  "executed_steps": 0,
+  "original_annotation": "The job was not acquired by Runner of type hosted even after multiple attempts",
+  "dispatch_posts": 1,
+  "selector": "ChatMotionProofUITests/MotionUITests/testDRapidInputDiagnosticOnly",
+  "scope": "input-diagnostic",
+  "requested_variants_per_phase": 6,
+  "requested_scroll_phases": [
+    "native-default",
+    "immediate-touch-down"
+  ],
+  "independent_coordinate_variant_requested": true,
+  "actual_case_count": 0,
+  "case_receipts": "NOT_CREATED",
+  "aggregate_diagnostic_receipt": "NOT_CREATED",
+  "native_preparation": "NOT_RUN",
+  "boot": "NOT_RUN",
+  "build": "NOT_RUN",
+  "XCTest": "NOT_RUN",
+  "visual_evidence": "NOT_CAPTURED",
+  "artifact_count": 0,
+  "A_B_C": "NOT_SELECTED",
+  "prior_capacity_evidence": {
+    "run_id": 45166004801,
+    "fresh_boot": "READY_FROM_NATIVE_BOOTSTATUS",
+    "C": "1/1 Passed with original screenshot visual review",
+    "limitation": "Prior actual readiness did not guarantee allocation of this subsequent hosted job."
+  },
+  "source_admission": "Local exact-source checks only; D and its following helpers and fixture App.swift matched6772, selected product sources/resources and Motion paths matched C3a9e. No native source/dependency execution occurred.",
+  "watcher": {
+    "job_id": "job_3ef994396911",
+    "status": "ENDED",
+    "ended_at": "2026-11-23T12:24:22.958916+00:00",
+    "pid_exists_after_exit": {
+      "2756249": false,
+      "2756250": false
+    }
+  },
+  "followup": "No retry, no capacity probe, no source change. Await root native runner/readiness evidence and explicit bounded continuation authorization.",
+  "remaining": "B original failure unresolved; D observation missing; A unexecuted on current source; paired3 held for full app compile qualification."
+}

@@ -1,0 +1,9 @@
+{
+  "errors": [
+    {
+      "reason": "Expected one AI_Hanlin SDK resource bundle, found 2: Frameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinSDK_AI_Hanlin.bundle, HanlinSDK_AI_Hanlin.bundle"
+    }
+  ],
+  "module": "AI_Hanlin",
+  "status": "FAIL"
+}

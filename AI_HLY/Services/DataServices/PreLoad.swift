@@ -11,23 +11,23 @@ import Foundation
 // MARK: - 模型数据预加载
 @MainActor
 func preloadModelDataIfNeeded(context: ModelContext) {
+    var checkpointEstablished = false
     do {
+        if context.hasChanges { try context.save() }
+        checkpointEstablished = true
         let fetchDescriptor = FetchDescriptor<AllModels>()
         let existingData = try context.fetch(fetchDescriptor)
-        
-        // 删除无效数据：如果 name 为空，则视为无效
-        var validModelsMap: [String: AllModels] = [:]
+
+        // Model UUIDs, not equal routing/display names, identify stored rows.
+        // Preserve custom and ambiguous legacy rows instead of selecting one by
+        // fetch order. Only an unambiguous catalog-owned row may be refreshed.
+        var validModelsMap: [String: [AllModels]] = [:]
         var modelsToDelete: [AllModels] = []
         for model in existingData {
             if HanlinAppleModelCatalogAdapter.isNative(model) { continue }
             if let name = model.name, !name.isEmpty {
-                // 如果同名记录已存在，则保留第一个，其他重复的记录标记删除
-                if validModelsMap[name] == nil {
-                    validModelsMap[name] = model
-                } else {
-                    modelsToDelete.append(model)
-                }
-            } else {
+                validModelsMap[name, default: []].append(model)
+            } else if model.systemProvision {
                 modelsToDelete.append(model)
             }
         }
@@ -35,7 +35,8 @@ func preloadModelDataIfNeeded(context: ModelContext) {
         // 更新或插入预定义模型数据
         let predefinedModels = getModelList()  // 预定义模型列表
         for model in predefinedModels {
-            if let name = model.name, let existingModel = validModelsMap[name] {
+            if let name = model.name, let matches = validModelsMap[name] {
+                guard matches.count == 1, let existingModel = matches.first else { continue }
                 // 若记录已存在，则更新（系统预置的才更新部分字段）
                 if existingModel.systemProvision {
 //                    existingModel.displayName = model.displayName
@@ -46,17 +47,17 @@ func preloadModelDataIfNeeded(context: ModelContext) {
                         existingModel.icon = model.icon
                         existingModel.briefDescription = model.briefDescription
                     }
+                    existingModel.price = model.price
+                    existingModel.company = model.company
+                    existingModel.supportsSearch = model.supportsSearch
+                    existingModel.supportsTextGen = model.supportsTextGen
+                    existingModel.supportsMultimodal = model.supportsMultimodal
+                    existingModel.supportsReasoning = model.supportsReasoning
+                    existingModel.supportReasoningChange = model.supportReasoningChange
+                    existingModel.supportsImageGen = model.supportsImageGen
+                    existingModel.supportsVoiceGen = model.supportsVoiceGen
+                    existingModel.supportsToolUse = model.supportsToolUse
                 }
-                existingModel.price = model.price
-                existingModel.company = model.company
-                existingModel.supportsSearch = model.supportsSearch
-                existingModel.supportsTextGen = model.supportsTextGen
-                existingModel.supportsMultimodal = model.supportsMultimodal
-                existingModel.supportsReasoning = model.supportsReasoning
-                existingModel.supportReasoningChange = model.supportReasoningChange
-                existingModel.supportsImageGen = model.supportsImageGen
-                existingModel.supportsVoiceGen = model.supportsVoiceGen
-                existingModel.supportsToolUse = model.supportsToolUse
             } else {
                 // 插入记录
                 context.insert(model)
@@ -79,6 +80,7 @@ func preloadModelDataIfNeeded(context: ModelContext) {
         for model in existingData {
             if model.systemProvision,
                let name = model.name,
+               validModelsMap[name]?.count == 1,
                !predefinedModelNames.contains(name),
                model.company != "LOCAL" {
                 context.delete(model)
@@ -86,10 +88,10 @@ func preloadModelDataIfNeeded(context: ModelContext) {
             }
         }
         
-        // 删除前面标记的无效或重复数据
+        // 仅删除前面标记的无效系统数据
         for model in modelsToDelete {
             context.delete(model)
-            print("删除无效/重复模型：\(model.name ?? "Unknown")")
+            print("删除无效系统模型：\(model.name ?? "Unknown")")
         }
         
         try context.save()
@@ -97,135 +99,66 @@ func preloadModelDataIfNeeded(context: ModelContext) {
         print("模型数据同步完成")
         
     } catch {
-        print("读取/更新/插入模型数据失败：\(error)")
+        if checkpointEstablished { context.rollback() }
+        print("读取/更新/插入模型数据失败")
     }
 }
 
-// MARK: - APIKeys 预加载（去重时保留最新数据，删除旧数据，最后插入预定义数据）
+// MARK: - APIKeys 预加载（以稳定的 company 标识同步预定义数据）
+@MainActor
 func preloadAPIKeysIfNeeded(context: ModelContext) {
+    var checkpointEstablished = false
     do {
-        // 获取所有 APIKeys 数据
-        let fetchDescriptor = FetchDescriptor<APIKeys>()
-        var existingData = try context.fetch(fetchDescriptor)
-        
-        // 按 timestamp 升序排序，确保较早的数据先处理
-        existingData.sort { $0.timestamp < $1.timestamp }
-        
-        // 用于记录每个 name 对应保留的记录
-        var retainedMap: [String: APIKeys] = [:]
-        // 存放需要删除的重复记录
-        var keysToDelete: [APIKeys] = []
-        
-        // 第一阶段：去重
-        for key in existingData {
-            guard let name = key.name, !name.isEmpty else { continue }
-            
-            if let oldRecord = retainedMap[name] {
-                // 已存在该 name 的较早记录，则判断保留哪一条
-                // 优先保护 custom 类型的记录
-                if oldRecord.from == .custom {
-                    // 如果老记录是 custom 类型，保留老记录，删除新记录（除非新记录也是 custom 且非空）
-                    if key.from == .custom, let newKey = key.key, !newKey.isEmpty, oldRecord.key?.isEmpty != false {
-                        keysToDelete.append(oldRecord)
-                        retainedMap[name] = key
-                    } else {
-                        keysToDelete.append(key)
-                    }
-                } else if key.from == .custom {
-                    // 如果新记录是 custom 类型，保留新记录，删除老记录
-                    keysToDelete.append(oldRecord)
-                    retainedMap[name] = key
-                } else {
-                    // 两者都是 system 类型，按原逻辑处理
-                    if let oldKey = oldRecord.key, !oldKey.isEmpty {
-                        // 老记录非空，则无论当前记录如何，都保留老记录，删除新记录
-                        keysToDelete.append(key)
-                    } else {
-                        // 老记录为空
-                        if let newKey = key.key, !newKey.isEmpty {
-                            // 当前记录非空，则删除老记录，保留新记录
-                            keysToDelete.append(oldRecord)
-                            retainedMap[name] = key
-                        } else {
-                            // 两者均为空，则保留老记录，删除新记录
-                            keysToDelete.append(key)
-                        }
-                    }
-                }
-            } else {
-                // 第一次遇到该 name 时，直接保留
-                retainedMap[name] = key
-            }
-        }
-        
-        // 删除所有需要删除的重复记录
-        for key in keysToDelete {
-            context.delete(key)
-            print("删除旧 API Key：\(key.name ?? "Unknown")")
-        }
-        
-        // 第二阶段：比对预定义 API Keys 列表（通过 getKeyList() 获取）
+        // A failed catalog save must not leave partial mutations for a later host
+        // save, or roll back host edits that preceded this refresh.
+        if context.hasChanges { try context.save() }
+        checkpointEstablished = true
+        let existingData = try context.fetch(FetchDescriptor<APIKeys>())
+        let byCompany = Dictionary(grouping: existingData.compactMap { key -> (String, APIKeys)? in
+            guard let company = key.company, !company.isEmpty else { return nil }
+            return (company, key)
+        }, by: { $0.0 }).mapValues { $0.map { $0.1 } }
         let predefinedAPIKeys = getKeyList()
+        let predefinedCompanies = Set(predefinedAPIKeys.compactMap(\.company))
+
         for predefinedKey in predefinedAPIKeys {
-            if let name = predefinedKey.name, !name.isEmpty {
-                if retainedMap[name] == nil {
-                    context.insert(predefinedKey)
-                    print("新增 API Key：\(name)")
-                }
+            guard let company = predefinedKey.company, !company.isEmpty else { continue }
+            guard let existing = byCompany[company] else {
+                context.insert(predefinedKey)
+                continue
             }
-        }
-        
-        // 第三阶段：更新已存在记录的 requestURL 和 key（仅更新 system 类型）
-        for (name, existingKey) in retainedMap {
-            if let predefinedKey = predefinedAPIKeys.first(where: { $0.name == name }),
-               existingKey.from == .system,
-               predefinedKey.from == .system {
-                // 对于 company 不为 "LAN" 或 "LOCAL" 的记录，若 requestURL 不同且预定义数据中有有效 URL，则更新 requestURL
-                if let company = existingKey.company?.uppercased(), company != "LAN", company != "LOCAL" {
-                    if existingKey.requestURL != predefinedKey.requestURL,
-                       let newURL = predefinedKey.requestURL, !newURL.isEmpty {
-                        existingKey.requestURL = newURL
-                        print("更新 API Key \(name) 的 requestURL 为：\(newURL)")
-                    }
-                    if existingKey.help != predefinedKey.help {
-                        existingKey.help = predefinedKey.help
-                        print("更新 API Key \(name) 的 help 为：\(predefinedKey.help)")
-                    }
-                    if existingKey.apiType != predefinedKey.apiType {
-                        existingKey.apiType = predefinedKey.apiType
-                        print("更新 API Key \(name) 的 apiType 为：\(predefinedKey.apiType.rawValue)")
-                    }
-                    if existingKey.from != predefinedKey.from {
-                        existingKey.from = predefinedKey.from
-                        print("更新 API Key \(name) 的 from 为：\(predefinedKey.from.rawValue)")
-                    }
-                }
+            // Display names are editable and need not be unique. Never choose or
+            // delete a credential-bearing row to resolve an ambiguous legacy
+            // routing identity; the normal duplicate-provider guard stays visible.
+            guard existing.count == 1, let key = existing.first, key.from == .system else { continue }
+            let routingCompany = company.uppercased()
+            guard routingCompany != "LAN", routingCompany != "LOCAL" else { continue }
+            // Only catalog-owned metadata follows a built-in update. The original
+            // row, routing identity, name, credential, visibility and probe choice
+            // remain intact. Explicit host request overrides are custom-owned.
+            if let newURL = predefinedKey.requestURL, !newURL.isEmpty {
+                key.requestURL = newURL
             }
+            key.help = predefinedKey.help
+            key.apiType = predefinedKey.apiType
         }
 
-        // 第四阶段：删除数据库中多余的系统预置 API Keys
-        // 构建预定义 API Keys 名称的集合
-        let predefinedNames = Set(predefinedAPIKeys.compactMap { $0.name })
-
-        // 遍历保留的记录，删除不在预定义列表中的系统预置记录
-        for (name, existingKey) in retainedMap {
-            // 仅删除系统预置的记录，且不在预定义列表中，且不是 LAN 或 LOCAL 类型
-            if existingKey.from == .system,
-               !predefinedNames.contains(name),
-               let company = existingKey.company?.uppercased(),
-               company != "LAN",
-               company != "LOCAL" {
-                context.delete(existingKey)
-                print("删除冗余系统 API Key：\(name)")
-            }
+        // Retire only an unambiguous, unused catalog definition. Retain custom
+        // rows, malformed legacy identities and every stored credential/reference;
+        // refreshing a catalog is never a credential migration or erasure request.
+        for (company, rows) in byCompany {
+            guard rows.count == 1, let key = rows.first, key.from == .system,
+                  !predefinedCompanies.contains(company),
+                  company.uppercased() != "LAN", company.uppercased() != "LOCAL",
+                  (key.key ?? "").isEmpty else { continue }
+            context.delete(key)
         }
-
-        // 保存更改
         try context.save()
         print("API 密钥同步完成")
-        
     } catch {
-        print("API 密钥同步失败：\(error)")
+        if checkpointEstablished { context.rollback() }
+        // SwiftData errors may contain original row values. Do not print secrets.
+        print("API 密钥同步失败")
     }
 }
 

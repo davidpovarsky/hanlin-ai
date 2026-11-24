@@ -1,0 +1,11 @@
+{
+  "archivePreserved": true,
+  "case": "check-pinned-input",
+  "controlSHA256": "a9fee2d128b62e5b75f783fd5f3d94c7f2c721960d8cf228c0292ee5b7bfa3ae",
+  "error": "Hanlin native artifacts: Native preparation input differs from published catalog: RuntimeDependencies.lock.json",
+  "gitRevision": "8aa5588f1a5e5045ec365cf4fb17d734c6a11973",
+  "installerSHA256": "e449630d2c861c338f5406cbc659dec904a30b2200d9674d0162231c3e7ae9d2",
+  "nativeScriptSHA256": "ecb76ee7aaec7938fefbe16c2627b5ed1a9a1ba6b9145a49a823216b34ab15e6",
+  "receiptPreserved": true,
+  "scope": "ACTUAL_GIT_CONTROLLER_CONTROL_NOT_NATIVE_ACCEPTANCE"
+}

@@ -1,3 +1,4 @@
+import HanlinLocalization
 //
 //  SettingsViewComponents.swift
 //  AI_HLY
@@ -31,10 +32,10 @@ struct UserInfoView: View {
                     Image(systemName: "person")
                         .font(HanlinTypography.largeTitle)
                         .fontWeight(.bold)
-                        .foregroundColor(.hlBluefont)
+                        .foregroundColor(.hanlinHLBluefont)
                         .padding()
                     
-                    Text(String(localized: "设定个性化内容，使得模型在对话时了解你的需求与偏好，更好的进行回复。"))
+                    Text(String(localized: "设定个性化内容，使得模型在对话时了解你的需求与偏好，更好的进行回复。", bundle: HanlinLocalization.bundle))
                         .font(HanlinTypography.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
@@ -42,41 +43,41 @@ struct UserInfoView: View {
                 .frame(maxWidth: .infinity, alignment: .center)
             }
             
-            Section(header: Text(String(localized: "模型应该怎么称呼你？"))) {
-                TextField(String(localized: "请输入你的昵称"), text: $name)
+            Section(header: Text(String(localized: "模型应该怎么称呼你？", bundle: HanlinLocalization.bundle))) {
+                TextField(String(localized: "请输入你的昵称", bundle: HanlinLocalization.bundle), text: $name)
             }
 
-            Section(header: Text(String(localized: "做一段自我介绍吧！"))) {
+            Section(header: Text(String(localized: "做一段自我介绍吧！", bundle: HanlinLocalization.bundle))) {
                 TextEditor(text: $userInfo)
                     .frame(height: 100)
             }
 
-            Section(header: Text(String(localized: "模型需要注意什么？"))) {
+            Section(header: Text(String(localized: "模型需要注意什么？", bundle: HanlinLocalization.bundle))) {
                 TextEditor(text: $userRequirements)
                     .frame(height: 160)
             }
 
-            Section(header: Text(String(localized: "注意：用户信息的设置会让模型的回复更符合你的习惯，但是会消耗更多的tokens。"))) {
-                Button(String(localized: "保存")) {
+            Section(header: Text(String(localized: "注意：用户信息的设置会让模型的回复更符合你的习惯，但是会消耗更多的tokens。", bundle: HanlinLocalization.bundle))) {
+                Button(String(localized: "保存", bundle: HanlinLocalization.bundle)) {
                     saveUserInfo()
                 }
             }
         }
-        .navigationTitle(String(localized: "用户信息"))
+        .navigationTitle(String(localized: "用户信息", bundle: HanlinLocalization.bundle))
         .onAppear {
             loadUserInfo()
         }
         // 弹窗反馈
-        .alert(String(localized: "保存成功"), isPresented: $showToast) {
-            Button(String(localized: "确定"), role: .cancel) { }
+        .alert(String(localized: "保存成功", bundle: HanlinLocalization.bundle), isPresented: $showToast) {
+            Button(String(localized: "确定", bundle: HanlinLocalization.bundle), role: .cancel) { }
         } message: {
-            Text(String(localized: "您的用户信息已成功更新。"))
+            Text(String(localized: "您的用户信息已成功更新。", bundle: HanlinLocalization.bundle))
         }
         // 弹窗反馈
-        .alert(String(localized: "保存失败"), isPresented: $showToast) {
-            Button(String(localized: "确定"), role: .cancel) { }
+        .alert(String(localized: "保存失败", bundle: HanlinLocalization.bundle), isPresented: $showToast) {
+            Button(String(localized: "确定", bundle: HanlinLocalization.bundle), role: .cancel) { }
         } message: {
-            Text(String(localized: "您的用户信息更新失败！"))
+            Text(String(localized: "您的用户信息更新失败！", bundle: HanlinLocalization.bundle))
         }
     }
 
@@ -122,13 +123,13 @@ struct FeedBackView: View {
     var body: some View {
         Form {
             Section {
-                Toggle(String(localized: "文本内容生成反馈"), isOn: Binding(
+                Toggle(String(localized: "文本内容生成反馈", bundle: HanlinLocalization.bundle), isOn: Binding(
                     get: { outPutFeedBack },
                     set: { outPutFeedBack = $0 }))
-                .tint(.hlBlue)
+                .tint(.hanlinHLBlue)
             }
         }
-        .navigationTitle(String(localized: "触感反馈"))
+        .navigationTitle(String(localized: "触感反馈", bundle: HanlinLocalization.bundle))
         .onAppear {
             loadUserInfo()
         }
@@ -167,7 +168,7 @@ struct VersionInfoView: View {
     var body: some View {
         ZStack {
             LinearGradient(
-                gradient: Gradient(colors: [Color.hlBlue.opacity(0.2), Color.hlPurple.opacity(0.2)]),
+                gradient: Gradient(colors: [Color.hanlinHLBlue.opacity(0.2), Color.hanlinHLPurple.opacity(0.2)]),
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )
@@ -177,7 +178,7 @@ struct VersionInfoView: View {
                 
                 Spacer()
                 
-                Image("applogo")
+                Image(hanlinAsset: "applogo")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 140, height: 140)
@@ -188,7 +189,7 @@ struct VersionInfoView: View {
                     .bold()
                     .foregroundColor(.primary)
                 
-                Text("版本：\(getAppVersion())")
+                Text("版本：\(getAppVersion())", bundle: HanlinLocalization.bundle)
                     .font(HanlinTypography.footnote)
                     .foregroundColor(.primary)
                     .multilineTextAlignment(.center)
@@ -198,17 +199,17 @@ struct VersionInfoView: View {
                     .frame(width: 200)
                     .background(Color.gray.opacity(0.5))
                 
-                Text(String(localized: "软件含有AI生成信息，请注意鉴别"))
+                Text(String(localized: "软件含有AI生成信息，请注意鉴别", bundle: HanlinLocalization.bundle))
                     .font(HanlinTypography.footnote)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
                 
-                Text(String(localized: "本软件对生成结果不负有任何责任"))
+                Text(String(localized: "本软件对生成结果不负有任何责任", bundle: HanlinLocalization.bundle))
                     .font(HanlinTypography.footnote)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
                 
-                Text(String(localized: "Thank you for using Hanlin"))
+                Text(String(localized: "Thank you for using Hanlin", bundle: HanlinLocalization.bundle))
                     .font(HanlinTypography.footnote)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
@@ -216,18 +217,18 @@ struct VersionInfoView: View {
                 Spacer()
                 
                 VStack(spacing: 8) {
-                    Text(String(localized: "项目创建于2025年2月·新加坡"))
+                    Text(String(localized: "项目创建于2025年2月·新加坡", bundle: HanlinLocalization.bundle))
                         .font(HanlinTypography.footnote)
                         .foregroundColor(.secondary)
                     
-                    Text(String(localized: "© 2026 Hylic.AI 保留所有权利"))
+                    Text(String(localized: "© 2026 Hylic.AI 保留所有权利", bundle: HanlinLocalization.bundle))
                         .font(HanlinTypography.footnote)
                         .foregroundColor(.secondary)
                 }
             }
             .padding()
         }
-        .navigationTitle(String(localized: "软件信息"))
+        .navigationTitle(String(localized: "软件信息", bundle: HanlinLocalization.bundle))
         .navigationBarTitleDisplayMode(.inline)
     }
     
@@ -264,21 +265,21 @@ struct SelectEmbeddingModelView: View {
                     Image(systemName: "compass.drawing")
                         .font(HanlinTypography.largeTitle)
                         .fontWeight(.bold)
-                        .foregroundColor(.hlBluefont)
+                        .foregroundColor(.hanlinHLBluefont)
                         .padding()
                     
-                    Text(String(localized: "向量模型将被用于知识背包文档索引的构建与知识背包查找功能，优秀的向量模型能带来精确、全面的查找效果，提高信息的召回率。"))
+                    Text(String(localized: "向量模型将被用于知识背包文档索引的构建与知识背包查找功能，优秀的向量模型能带来精确、全面的查找效果，提高信息的召回率。", bundle: HanlinLocalization.bundle))
                         .font(HanlinTypography.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
                 }
                 .frame(maxWidth: .infinity, alignment: .center)
             }
-            Section(header: Text(String(localized: "选择向量模型（仅启用一个）"))) {
+            Section(header: Text(String(localized: "选择向量模型（仅启用一个）", bundle: HanlinLocalization.bundle))) {
                 ForEach(models, id: \.name) { model in
                     HStack {
                         
-                        Image(getCompanyIcon(for: model.company))
+                        Image(hanlinAsset: getCompanyIcon(for: model.company))
                             .resizable()
                             .frame(width: 24, height: 24)
                         
@@ -291,11 +292,11 @@ struct SelectEmbeddingModelView: View {
                         
                         ScrollView(.horizontal, showsIndicators: false) {
                             if model.price > 0 {
-                                Text("¥\(String(format: "%.4f", model.price))/Ktokens")
+                                Text("¥\(String(format: "%.4f", model.price))/Ktokens", bundle: HanlinLocalization.bundle)
                                     .font(HanlinTypography.caption)
                                     .foregroundColor(.orange)
                             } else {
-                                Text(String(localized: "免费"))
+                                Text(String(localized: "免费", bundle: HanlinLocalization.bundle))
                                     .font(HanlinTypography.caption)
                                     .foregroundColor(.green)
                             }
@@ -305,7 +306,7 @@ struct SelectEmbeddingModelView: View {
                         if loadingModel == model.name {
                             ProgressView()
                         } else {
-                            Toggle("", isOn: Binding(
+                            Toggle(hanlin: "", isOn: Binding(
                                 get: {
                                     // 如果用户信息中的 chooseEmbeddingModel 等于当前模型名称，则为启用状态
                                     userInfos.first?.chooseEmbeddingModel == model.name
@@ -315,16 +316,16 @@ struct SelectEmbeddingModelView: View {
                                 }
                             ))
                             .labelsHidden()
-                            .tint(.hlBlue)
+                            .tint(.hanlinHLBlue)
                         }
                     }
                     .padding(.vertical, 2)
                 }
             }
         }
-        .navigationTitle(String(localized: "向量模型"))
+        .navigationTitle(String(localized: "向量模型", bundle: HanlinLocalization.bundle))
         .alert(errorMessage, isPresented: $showError) {
-            Button(String(localized: "确定"), role: .cancel) { }
+            Button(String(localized: "确定", bundle: HanlinLocalization.bundle), role: .cancel) { }
         }
     }
     
@@ -399,10 +400,10 @@ struct SelectTTSModelView: View {
                     Image(systemName: "waveform")
                         .font(HanlinTypography.largeTitle)
                         .fontWeight(.bold)
-                        .foregroundColor(.hlBluefont)
+                        .foregroundColor(.hanlinHLBluefont)
                         .padding()
                     
-                    Text(String(localized: "语音模型将用于合成语音。选择 Siri 模型可使用本地合成，而选择大模型合成将通过 API 请求生成语音，后者需要配置有效的 API Key。"))
+                    Text(String(localized: "语音模型将用于合成语音。选择 Siri 模型可使用本地合成，而选择大模型合成将通过 API 请求生成语音，后者需要配置有效的 API Key。", bundle: HanlinLocalization.bundle))
                         .font(HanlinTypography.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
@@ -411,11 +412,11 @@ struct SelectTTSModelView: View {
             }
             
             // 列表选择区域
-            Section(header: Text(String(localized: "选择语音模型（仅启用一个）"))) {
+            Section(header: Text(String(localized: "选择语音模型（仅启用一个）", bundle: HanlinLocalization.bundle))) {
                 ForEach(models, id: \.name) { model in
                     HStack {
                         
-                        Image(getCompanyIcon(for: model.company))
+                        Image(hanlinAsset: getCompanyIcon(for: model.company))
                             .resizable()
                             .frame(width: 24, height: 24)
                         
@@ -428,11 +429,11 @@ struct SelectTTSModelView: View {
                         
                         ScrollView(.horizontal, showsIndicators: false) {
                             if model.price > 0 {
-                                Text(String(format: String(localized: "¥%.4f/分钟"), model.price))
+                                Text(String(format: String(localized: "¥%.4f/分钟", bundle: HanlinLocalization.bundle), model.price))
                                     .font(HanlinTypography.caption)
                                     .foregroundColor(.orange)
                             } else {
-                                Text(String(localized: "免费"))
+                                Text(String(localized: "免费", bundle: HanlinLocalization.bundle))
                                     .font(HanlinTypography.caption)
                                     .foregroundColor(.green)
                             }
@@ -442,7 +443,7 @@ struct SelectTTSModelView: View {
                         if loadingModel == model.name {
                             ProgressView()
                         } else {
-                            Toggle("", isOn: Binding(
+                            Toggle(hanlin: "", isOn: Binding(
                                 get: {
                                     // 如果用户信息中的 textToSpeechModel 与当前模型名称匹配则视为启用状态
                                     userInfos.first?.textToSpeechModel == model.name
@@ -452,16 +453,16 @@ struct SelectTTSModelView: View {
                                 }
                             ))
                             .labelsHidden()
-                            .tint(.hlBlue)
+                            .tint(.hanlinHLBlue)
                         }
                     }
                     .padding(.vertical, 2)
                 }
             }
         }
-        .navigationTitle(String(localized: "语音模型"))
+        .navigationTitle(String(localized: "语音模型", bundle: HanlinLocalization.bundle))
         .alert(errorMessage, isPresented: $showError) {
-            Button(String(localized: "确定"), role: .cancel) { }
+            Button(String(localized: "确定", bundle: HanlinLocalization.bundle), role: .cancel) { }
         }
     }
     
@@ -534,7 +535,7 @@ struct UpdateNotesView: View {
     var body: some View {
         ZStack {
             LinearGradient(
-                gradient: Gradient(colors: [Color.hlBlue.opacity(0.2), Color.hlPurple.opacity(0.2)]),
+                gradient: Gradient(colors: [Color.hanlinHLBlue.opacity(0.2), Color.hanlinHLPurple.opacity(0.2)]),
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )
@@ -549,7 +550,7 @@ struct UpdateNotesView: View {
                 .padding(.horizontal, 5)
             }
         }
-        .navigationTitle(String(localized: "更新说明"))
+        .navigationTitle(String(localized: "更新说明", bundle: HanlinLocalization.bundle))
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             loadUpdateNotes()
@@ -562,7 +563,7 @@ struct UpdateNotesView: View {
         let languageKey = currentLanguage.hasPrefix("zh") ? "zh-Hans" : "en"
         
         // 读取 JSON 数据
-        if let url = Bundle.main.url(forResource: "UpdateNotes", withExtension: "json") {
+        if let url = HanlinApplicationResources.bundle.url(forResource: "UpdateNotes", withExtension: "json") {
             do {
                 let data = try Data(contentsOf: url)
                 let jsonResult = try JSONDecoder().decode([String: [UpdateNote]].self, from: data)
@@ -630,10 +631,10 @@ struct GeneralSettingsView: View {
                     Image(systemName: "gearshape")
                         .font(HanlinTypography.largeTitle)
                         .fontWeight(.bold)
-                        .foregroundColor(.hlBluefont)
+                        .foregroundColor(.hanlinHLBluefont)
                         .padding()
 
-                    Text(String(localized: "通用设置包含语言和触感反馈等基础配置项。"))
+                    Text(String(localized: "通用设置包含语言和触感反馈等基础配置项。", bundle: HanlinLocalization.bundle))
                         .font(HanlinTypography.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
@@ -644,7 +645,7 @@ struct GeneralSettingsView: View {
             Section {
                 Button(action: openLanguageSettings) {
                     Label {
-                        Text(String(localized: "语言设置"))
+                        Text(String(localized: "语言设置", bundle: HanlinLocalization.bundle))
                             .foregroundColor(.primary)
                     } icon: {
                         Image(systemName: "globe")
@@ -652,14 +653,14 @@ struct GeneralSettingsView: View {
                 }
 
                 NavigationLink(destination: FeedBackView().onAppear { isPushed = true }.onDisappear { isPushed = false }) {
-                    Label(String(localized: "触感反馈"), systemImage: "iphone.gen3.radiowaves.left.and.right")
+                    Label(String(localized: "触感反馈", bundle: HanlinLocalization.bundle), systemImage: "iphone.gen3.radiowaves.left.and.right")
                 }
 
                 ChatMotionPresetPicker()
             }
 
         }
-        .navigationTitle(String(localized: "通用"))
+        .navigationTitle(String(localized: "通用", bundle: HanlinLocalization.bundle))
     }
 
     /// 打开系统的"语言与地区"设置
@@ -718,23 +719,23 @@ struct SelectOptimizationModelView: View {
     
     var body: some View {
         Form {
-            Section(header: Text(String(localized: "文本优化模型"))) {
+            Section(header: Text(String(localized: "文本优化模型", bundle: HanlinLocalization.bundle))) {
                 
                 VStack(alignment: .center) {
                     Image(systemName: "paintbrush.pointed")
                         .font(HanlinTypography.largeTitle)
                         .fontWeight(.bold)
-                        .foregroundColor(.hlBluefont)
+                        .foregroundColor(.hanlinHLBluefont)
                         .padding()
                     
-                    Text(String(localized: "文本优化模型将被广泛用于软件的提示词优化、文章内容优化、联网搜索提问优化、知识背包检索优化、图片生成提示词优化、自动生成群聊标题、自动生成智能体设定、翻译文本等功能上，优秀的文本优化模型能带来更好的产品体验。"))
+                    Text(String(localized: "文本优化模型将被广泛用于软件的提示词优化、文章内容优化、联网搜索提问优化、知识背包检索优化、图片生成提示词优化、自动生成群聊标题、自动生成智能体设定、翻译文本等功能上，优秀的文本优化模型能带来更好的产品体验。", bundle: HanlinLocalization.bundle))
                         .font(HanlinTypography.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
                 }
                 .frame(maxWidth: .infinity, alignment: .center)
                 
-                Picker(String(localized: "选择文本优化模型"), selection: $selectedTextModel) {
+                Picker(String(localized: "选择文本优化模型", bundle: HanlinLocalization.bundle), selection: $selectedTextModel) {
                     ForEach(textOptimizationModels, id: \.id) { model in
                         Text(model.displayName ?? "Unknown")
                             .tag(model as AllModels?)
@@ -743,7 +744,7 @@ struct SelectOptimizationModelView: View {
                 
                 if let model = selectedTextModel {
                     HStack {
-                        Image(getCompanyIcon(for: model.company ?? "UNKNOWN"))
+                        Image(hanlinAsset: getCompanyIcon(for: model.company ?? "UNKNOWN"))
                             .resizable()
                             .frame(width: 30, height: 30)
                         VStack(alignment: .leading) {
@@ -752,11 +753,11 @@ struct SelectOptimizationModelView: View {
                             }
                             HStack {
                                 if model.supportsMultimodal {
-                                    Text(String(localized: "视觉"))
+                                    Text(String(localized: "视觉", bundle: HanlinLocalization.bundle))
                                         .font(HanlinTypography.caption)
                                         .foregroundColor(.teal)
                                 } else {
-                                    Text(String(localized: "文本"))
+                                    Text(String(localized: "文本", bundle: HanlinLocalization.bundle))
                                         .font(HanlinTypography.caption)
                                         .foregroundColor(.gray)
                                 }
@@ -772,22 +773,22 @@ struct SelectOptimizationModelView: View {
                 }
             }
             
-            Section(header: Text(String(localized: "视觉优化模型"))) {
+            Section(header: Text(String(localized: "视觉优化模型", bundle: HanlinLocalization.bundle))) {
                 VStack(alignment: .center) {
                     Image(systemName: "paintbrush")
                         .font(HanlinTypography.largeTitle)
                         .fontWeight(.bold)
-                        .foregroundColor(.hlBluefont)
+                        .foregroundColor(.hanlinHLBluefont)
                         .padding()
                     
-                    Text(String(localized: "视觉优化模型将被广泛用于软件的联网搜索提问优化、知识背包检索优化、图片生成提示词优化、OCR扫描文本、文本及推理模型分析图片等功能上，优秀的视觉优化模型能带来更好的产品体验。"))
+                    Text(String(localized: "视觉优化模型将被广泛用于软件的联网搜索提问优化、知识背包检索优化、图片生成提示词优化、OCR扫描文本、文本及推理模型分析图片等功能上，优秀的视觉优化模型能带来更好的产品体验。", bundle: HanlinLocalization.bundle))
                         .font(HanlinTypography.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
                 }
                 .frame(maxWidth: .infinity, alignment: .center)
                 
-                Picker(String(localized: "选择视觉优化模型"), selection: $selectedVisualModel) {
+                Picker(String(localized: "选择视觉优化模型", bundle: HanlinLocalization.bundle), selection: $selectedVisualModel) {
                     ForEach(visualOptimizationModels, id: \.id) { model in
                         Text(model.displayName ?? "Unknown")
                             .tag(model as AllModels?)
@@ -795,7 +796,7 @@ struct SelectOptimizationModelView: View {
                 }
                 if let model = selectedVisualModel {
                     HStack {
-                        Image(getCompanyIcon(for: model.company ?? "UNKNOWN"))
+                        Image(hanlinAsset: getCompanyIcon(for: model.company ?? "UNKNOWN"))
                             .resizable()
                             .frame(width: 30, height: 30)
                         VStack(alignment: .leading) {
@@ -803,7 +804,7 @@ struct SelectOptimizationModelView: View {
                                 Text(model.displayName ?? "Unknown")
                             }
                             HStack {
-                                Text(String(localized: "视觉"))
+                                Text(String(localized: "视觉", bundle: HanlinLocalization.bundle))
                                     .font(HanlinTypography.caption)
                                     .foregroundColor(.teal)
                                 
@@ -818,7 +819,7 @@ struct SelectOptimizationModelView: View {
                 }
             }
         }
-        .navigationTitle(String(localized: "优化模型"))
+        .navigationTitle(String(localized: "优化模型", bundle: HanlinLocalization.bundle))
         .onAppear {
             // 从 UserInfo 中加载已保存的模型名称，并在当前模型列表中查找对应模型
             if let user = try? modelContext.fetch(FetchDescriptor<UserInfo>()).first {
@@ -832,7 +833,7 @@ struct SelectOptimizationModelView: View {
         }
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
-                Button(String(localized: "保存")) {
+                Button(String(localized: "保存", bundle: HanlinLocalization.bundle)) {
                     // 保存选择到 UserInfo 中
                     if let user = try? modelContext.fetch(FetchDescriptor<UserInfo>()).first {
                         user.optimizationTextModel = selectedTextModel?.name ?? user.optimizationTextModel
@@ -846,16 +847,16 @@ struct SelectOptimizationModelView: View {
             }
         }
         // 弹窗反馈
-        .alert(String(localized: "保存成功"), isPresented: $showSaveSuccessAlert) {
-            Button(String(localized: "确定"), role: .cancel) { }
+        .alert(String(localized: "保存成功", bundle: HanlinLocalization.bundle), isPresented: $showSaveSuccessAlert) {
+            Button(String(localized: "确定", bundle: HanlinLocalization.bundle), role: .cancel) { }
         } message: {
-            Text(String(localized: "您的优化模型已成功更新。"))
+            Text(String(localized: "您的优化模型已成功更新。", bundle: HanlinLocalization.bundle))
         }
         // 弹窗反馈
-        .alert(String(localized: "保存失败"), isPresented: $showSaveErrorAlert) {
-            Button(String(localized: "确定"), role: .cancel) { }
+        .alert(String(localized: "保存失败", bundle: HanlinLocalization.bundle), isPresented: $showSaveErrorAlert) {
+            Button(String(localized: "确定", bundle: HanlinLocalization.bundle), role: .cancel) { }
         } message: {
-            Text(String(localized: "您的优化模型更新失败！"))
+            Text(String(localized: "您的优化模型更新失败！", bundle: HanlinLocalization.bundle))
         }
     }
 }

@@ -1,0 +1,47 @@
+[
+  {
+    "path": "README.md",
+    "bytes": 3934,
+    "sha256": "404981a37af7aac1aeec4c64a5a0f0d814eb5a439840b49c7fb06735f7b58fe2"
+  },
+  {
+    "path": "contract-source-readback.json",
+    "bytes": 2244,
+    "sha256": "309f60a89fb42a3ab9d111c09c4964cd814eb9f0e062c294efcf6afe546b6d14"
+  },
+  {
+    "path": "receipt.json",
+    "bytes": 4147,
+    "sha256": "02e851c210bc0124d65db833583f8140bc2ee5b170ed8e12ceaf2ed8fb06c52c"
+  },
+  {
+    "path": "root-integration.json",
+    "bytes": 548,
+    "sha256": "1578645afd2c90b8abef5c22ce687b534e1d004befad427466022a1fbcad9135"
+  },
+  {
+    "path": "source.patch.gz",
+    "bytes": 2256,
+    "sha256": "858531f0dfa92bcc7b9418593ce0c82ecd841acd2fca633d9b176ec410f9d70d"
+  },
+  {
+    "path": "swift-parse-initial.json",
+    "bytes": 615,
+    "sha256": "4b07179aea1a7348c68b7ac87f5bf587c745226248b194b39db81b10cbe8108e"
+  },
+  {
+    "path": "swift-parse.json",
+    "bytes": 690,
+    "sha256": "278dbf614eff0a90d68dbb5d438debb7d4bb8c5c6e677e8c815b4c327af15c6f"
+  },
+  {
+    "path": "swift-parse.stderr.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "swift-parse.stdout.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+]

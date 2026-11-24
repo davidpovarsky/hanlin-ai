@@ -18,8 +18,8 @@ actor PythonRuntimeService {
     /// Original requirements/TOML helper and pinned packaging parser only. No Skill
     /// path is added to sys.path and no declaration is installed or imported.
     func analyzeSkillManifest(payload: Data, workspace: URL) async throws -> RuntimeExecutionResult {
-        guard let helperURL = Bundle.main.url(forResource: "hanlin_python_manifest", withExtension: "py"),
-              let wheel = Bundle.main.url(forResource: "packaging-26.3-py3-none-any", withExtension: "whl") else {
+        guard let helperURL = HanlinApplicationResources.bundle.url(forResource: "hanlin_python_manifest", withExtension: "py"),
+              let wheel = HanlinApplicationResources.bundle.url(forResource: "packaging-26.3-py3-none-any", withExtension: "whl") else {
             throw RuntimeCoreError.invalidRequest("Bundled original manifest parser unavailable")
         }
         let wheelBytes = try Data(contentsOf: wheel)
@@ -180,7 +180,7 @@ actor PythonRuntimeService {
     /// The analyzed source remains data. Module resolution requires loaded
     /// original dependencies; this is not an arbitrary-interpreter security boundary.
     func analyzeSkillSyntax(payload: Data, workspace: URL) async throws -> RuntimeExecutionResult {
-        guard let url = Bundle.main.url(forResource: "hanlin_python_ast", withExtension: "py") else {
+        guard let url = HanlinApplicationResources.bundle.url(forResource: "hanlin_python_ast", withExtension: "py") else {
             throw RuntimeCoreError.invalidRequest("Bundled Python syntax helper unavailable")
         }
         let helper = try String(contentsOf: url, encoding: .utf8)

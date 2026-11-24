@@ -1,11 +1,4 @@
-// TranslationRoute.swift
-// ChavrusaChatTranslationProvider
+import HanlinTranslationUI
 
-import Foundation
-import HanlinScriptExtensions
-
-enum TranslationRoute: Hashable {
-    case apps
-    case miniApp(HanlinScriptTranslationUISnapshot)
-    case chat
-}
+// Source compatibility; implementation lives only in the shared SDK.
+typealias TranslationRoute = HanlinTranslationUI.TranslationRoute

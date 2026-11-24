@@ -1,0 +1,44 @@
+Fetching https://github.com/davidpovarsky/swift-ai-sdk.git
+[1/13453] Fetching swift-ai-sdk
+Fetched https://github.com/davidpovarsky/swift-ai-sdk.git (1.55s)
+Fetching https://github.com/SwiftyJSON/SwiftyJSON.git
+Fetching https://github.com/weichsel/ZIPFoundation.git
+[1/7709] Fetching zipfoundation
+[2/14029] Fetching zipfoundation, swiftyjson
+Fetched https://github.com/SwiftyJSON/SwiftyJSON.git (1.39s)
+Fetched https://github.com/weichsel/ZIPFoundation.git (1.39s)
+Fetching https://github.com/apple/swift-argument-parser
+[1/19442] Fetching swift-argument-parser
+Fetched https://github.com/apple/swift-argument-parser (1.48s)
+Computing version for https://github.com/apple/swift-argument-parser
+Computed https://github.com/apple/swift-argument-parser at 1.8.2 (3.52s)
+Computing version for https://github.com/weichsel/ZIPFoundation.git
+warning: 'zipfoundation': /Package@swift-5.9.swift:23:61: warning: 'v4' is deprecated: watchOS 9.0 is the oldest supported version [#DeprecatedDeclaration]
+21 |     name: "ZIPFoundation",
+22 |     platforms: [
+23 |         .macOS(.v10_13), .iOS(.v12), .tvOS(.v12), .watchOS(.v4), .visionOS(.v1)
+   |                                                             `- warning: 'v4' is deprecated: watchOS 9.0 is the oldest supported version [#DeprecatedDeclaration]
+24 |     ],
+25 |     products: [
+
+[#DeprecatedDeclaration]: <https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration>
+Computed https://github.com/weichsel/ZIPFoundation.git at 0.9.19 (0.97s)
+Computing version for https://github.com/SwiftyJSON/SwiftyJSON.git
+Computed https://github.com/SwiftyJSON/SwiftyJSON.git at 5.0.1 (4.91s)
+Creating working copy for https://github.com/weichsel/ZIPFoundation.git
+Working copy of https://github.com/weichsel/ZIPFoundation.git resolved at 0.9.19
+Creating working copy for https://github.com/apple/swift-argument-parser
+Working copy of https://github.com/apple/swift-argument-parser resolved at 1.8.2
+Creating working copy for https://github.com/SwiftyJSON/SwiftyJSON.git
+Working copy of https://github.com/SwiftyJSON/SwiftyJSON.git resolved at 5.0.1
+Creating working copy for https://github.com/davidpovarsky/swift-ai-sdk.git
+Working copy of https://github.com/davidpovarsky/swift-ai-sdk.git resolved at 07431abccbfb151ca2dab67bca6cf86fcb2bd3b8
+warning: 'zipfoundation': /Users/runner/work/_temp/hanlin-stop-continuation.egblddke/Packages/HanlinAgentSDK/.build/checkouts/ZIPFoundation/Package@swift-5.9.swift:23:61: warning: 'v4' is deprecated: watchOS 9.0 is the oldest supported version [#DeprecatedDeclaration]
+21 |     name: "ZIPFoundation",
+22 |     platforms: [
+23 |         .macOS(.v10_13), .iOS(.v12), .tvOS(.v12), .watchOS(.v4), .visionOS(.v1)
+   |                                                             `- warning: 'v4' is deprecated: watchOS 9.0 is the oldest supported version [#DeprecatedDeclaration]
+24 |     ],
+25 |     products: [
+
+[#DeprecatedDeclaration]: <https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration>

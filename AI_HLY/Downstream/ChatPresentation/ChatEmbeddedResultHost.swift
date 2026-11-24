@@ -1,3 +1,4 @@
+import HanlinLocalization
 //
 //  ChatEmbeddedResultHost.swift
 //  AI_HLY
@@ -162,11 +163,11 @@ struct ChatEmbeddedResultHost<Content: View, ExpandedContent: View>: View {
           expandedContent()
             .padding()
         }
-        .navigationTitle(title ?? String(localized: "Result"))
+        .navigationTitle(title ?? String(localized: "Result", bundle: HanlinLocalization.bundle))
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
           ToolbarItem(placement: .topBarTrailing) {
-            Button(String(localized: "Done")) {
+            Button(String(localized: "Done", bundle: HanlinLocalization.bundle)) {
               isSheetPresented = false
             }
           }
@@ -181,11 +182,11 @@ struct ChatEmbeddedResultHost<Content: View, ExpandedContent: View>: View {
           expandedContent()
             .padding()
         }
-        .navigationTitle(title ?? String(localized: "Result"))
+        .navigationTitle(title ?? String(localized: "Result", bundle: HanlinLocalization.bundle))
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
           ToolbarItem(placement: .topBarTrailing) {
-            Button(String(localized: "Done")) {
+            Button(String(localized: "Done", bundle: HanlinLocalization.bundle)) {
               isFullScreenPresented = false
             }
           }
@@ -215,11 +216,11 @@ struct ChatEmbeddedResultHost<Content: View, ExpandedContent: View>: View {
         } label: {
           Image(systemName: action.systemImage ?? "arrow.up.right.square")
             .font(HanlinTypography.fixed(size: 16, weight: .medium))
-            .foregroundColor(.hlBluefont)
+            .foregroundColor(.hanlinHLBluefont)
             .padding(8)
             .background(BlurView(style: .systemUltraThinMaterial))
             .clipShape(Circle())
-            .shadow(color: .hlBlue, radius: 1)
+            .shadow(color: .hanlinHLBlue, radius: 1)
         }
         .buttonStyle(.plain)
         .accessibilityLabel(action.title)
@@ -233,11 +234,11 @@ struct ChatEmbeddedResultHost<Content: View, ExpandedContent: View>: View {
         } label: {
           Image(systemName: iconName(for: expansion.mode))
             .font(HanlinTypography.fixed(size: 16, weight: .medium))
-            .foregroundColor(.hlBluefont)
+            .foregroundColor(.hanlinHLBluefont)
             .padding(8)
             .background(BlurView(style: .systemUltraThinMaterial))
             .clipShape(Circle())
-            .shadow(color: .hlBlue, radius: 1)
+            .shadow(color: .hanlinHLBlue, radius: 1)
         }
         .buttonStyle(.plain)
         .accessibilityLabel(accessibilityLabel(for: expansion.mode))
@@ -260,11 +261,11 @@ struct ChatEmbeddedResultHost<Content: View, ExpandedContent: View>: View {
   private func accessibilityLabel(for mode: HanlinExpansionMode) -> String {
     switch mode {
     case .sheet:
-      return String(localized: "Expand into sheet")
+      return String(localized: "Expand into sheet", bundle: HanlinLocalization.bundle)
     case .fullScreen:
-      return String(localized: "Open full screen")
+      return String(localized: "Open full screen", bundle: HanlinLocalization.bundle)
     case .window:
-      return String(localized: "Open in new window")
+      return String(localized: "Open in new window", bundle: HanlinLocalization.bundle)
     }
   }
 
@@ -316,7 +317,7 @@ struct ChatEmbeddedResultHost<Content: View, ExpandedContent: View>: View {
     .background(
       BlurView(style: .systemThinMaterial)
         .cornerRadius(20)
-        .shadow(color: .hlBlue, radius: 1)
+        .shadow(color: .hanlinHLBlue, radius: 1)
     )
   }
 

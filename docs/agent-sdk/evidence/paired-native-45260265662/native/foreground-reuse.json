@@ -1,0 +1,14 @@
+{
+  "status": "REUSED_VERIFIED_PASS",
+  "origin_run": "45133337462",
+  "origin_sha": "6772dce6304fc6761a2200314f7d2020dc782e47",
+  "current_sha": "e59256e8325bcdb71c0e683f6b19e7641642aad8",
+  "origin_job": 137553675193,
+  "artifact_id": 14803354012,
+  "artifact_sha256": "sha256:83ecd7184113a12e058b5211637105ef10ec151abd0e9058686af90df567ca50",
+  "count": 53,
+  "source_files": 35,
+  "runner_sources": 2,
+  "toolchain": "Apple Swift version 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)\nTarget: arm64-apple-macosx27.0.0",
+  "scope": "Original native foreground prerequisites only; both products still build and paired UI NOT_RUN"
+}

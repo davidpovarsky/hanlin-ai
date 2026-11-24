@@ -1,3 +1,4 @@
+import HanlinLocalization
 import SwiftUI
 
 struct NativeToolResultCardContainer<Content: View>: View {
@@ -59,7 +60,7 @@ struct NativeToolResultCardContainer<Content: View>: View {
                         )
                         if let onViewAll {
                             Button(action: onViewAll) {
-                                Label(String(localized: "View all"), systemImage: "list.bullet")
+                                Label(String(localized: "View all", bundle: HanlinLocalization.bundle), systemImage: "list.bullet")
                             }
                             .buttonStyle(.bordered)
                             .controlSize(.small)

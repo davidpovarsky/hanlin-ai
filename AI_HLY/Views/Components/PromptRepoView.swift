@@ -1,3 +1,4 @@
+import HanlinLocalization
 //
 //  PromptRepoView.swift
 //  AI_Hanlin
@@ -31,10 +32,10 @@ struct PromptRepoView: View {
             backgroundView
             promptListView
         }
-        .navigationTitle(String(localized: "提示词库"))
+        .navigationTitle(String(localized: "提示词库", bundle: HanlinLocalization.bundle))
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("hanlin-prompt-library")
-        .searchable(text: $searchText, prompt: String(localized: "搜索提示词"))
+        .searchable(text: $searchText, prompt: String(localized: "搜索提示词", bundle: HanlinLocalization.bundle))
         .toolbar { toolbarContent }
         .sheet(isPresented: $showRenameDialog) {
             renameSheet
@@ -53,7 +54,7 @@ struct PromptRepoView: View {
     /// 背景渐变视图
     private var backgroundView: some View {
         LinearGradient(
-            gradient: Gradient(colors: [Color.hlBlue.opacity(0.2), Color.hlPurple.opacity(0.2)]),
+            gradient: Gradient(colors: [Color.hanlinHLBlue.opacity(0.2), Color.hanlinHLPurple.opacity(0.2)]),
             startPoint: .topLeading,
             endPoint: .bottomTrailing
         )
@@ -85,10 +86,10 @@ struct PromptRepoView: View {
                     Image(systemName: "tray.full")
                         .font(HanlinTypography.largeTitle)
                         .fontWeight(.bold)
-                        .foregroundColor(.hlBluefont)
+                        .foregroundColor(.hanlinHLBluefont)
                         .padding()
                     
-                    Text(String(localized: "在提示词库中提前编辑好提示词，在群聊中快速应用，提升对话效率并保持聊天记录的简洁清晰。"))
+                    Text(String(localized: "在提示词库中提前编辑好提示词，在群聊中快速应用，提升对话效率并保持聊天记录的简洁清晰。", bundle: HanlinLocalization.bundle))
                         .font(HanlinTypography.footnote)
                         .multilineTextAlignment(.center)
                         .padding(.bottom)
@@ -100,7 +101,7 @@ struct PromptRepoView: View {
                 .background(
                     BlurView(style: .systemThinMaterial)
                         .clipShape(RoundedRectangle(cornerRadius: 20))
-                        .shadow(color: .hlBlue, radius: 1)
+                        .shadow(color: .hanlinHLBlue, radius: 1)
                 )
                 .visualEffect { content, proxy in
                     content.hueRotation(Angle(degrees: proxy.frame(in: .global).origin.y / 15))
@@ -112,9 +113,9 @@ struct PromptRepoView: View {
                     .listRowSeparator(.hidden)
                     .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                         Button(role: .destructive) { deleteItem(item) } label: {
-                            Label(String(localized: "删除"), systemImage: "trash")
+                            Label(String(localized: "删除", bundle: HanlinLocalization.bundle), systemImage: "trash")
                         }
-                        .tint(Color(.hlRed))
+                        .tint(Color(.hanlinHLRed))
                     }
             }
             .onMove(perform: move)
@@ -143,7 +144,7 @@ struct PromptRepoView: View {
                 modelContext.insert(newPrompt)
                 try? modelContext.save()
             }) {
-                Text(String(localized: "新增"))
+                Text(String(localized: "新增", bundle: HanlinLocalization.bundle))
             }
         }
     }
@@ -228,7 +229,7 @@ struct PromptRepoView: View {
         while let range = lowerName.range(of: lowerSearch, options: .caseInsensitive, range: searchRange) {
             let nsRange = NSRange(range, in: name)
             if let attrRange = Range(nsRange, in: attributedString) {
-                attributedString[attrRange].foregroundColor = .hlBlue
+                attributedString[attrRange].foregroundColor = .hanlinHLBlue
             }
             searchRange = range.upperBound..<lowerName.endIndex
             matchFound = true
@@ -259,7 +260,7 @@ struct PromptRepoView: View {
                         let charIndex = name.index(name.startIndex, offsetBy: i)
                         let nsRange = NSRange(charIndex...charIndex, in: name)
                         if let attrRange = Range(nsRange, in: attributedString) {
-                            attributedString[attrRange].foregroundColor = .hlBlue
+                            attributedString[attrRange].foregroundColor = .hanlinHLBlue
                         }
                     }
                 }
@@ -275,12 +276,12 @@ struct PromptRepoView: View {
             
             // 标题（带图标）
             HStack {
-                Image("prompt") // 使用自定义图片
+                Image(hanlinAsset: "prompt") // 使用自定义图片
                     .renderingMode(.template)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 24, height: 24) // 调整大小
-                    .foregroundColor(.hlBluefont) // 颜色变为 .hlBlue
+                    .foregroundColor(.hanlinHLBluefont) // 颜色变为 .hlBlue
                 
                 Text(highlightedName(for: item))
                     .font(HanlinTypography.title2)
@@ -296,7 +297,7 @@ struct PromptRepoView: View {
             .hanlinFeedback(.impact, trigger: isFeedBack)
             
             // 内容简介
-            Text(item.content ?? String(localized: "暂无内容"))
+            Text(item.content ?? String(localized: "暂无内容", bundle: HanlinLocalization.bundle))
                 .font(HanlinTypography.body)
                 .foregroundColor(.secondary)
                 .lineLimit(2) // 限制最多 2 行
@@ -318,12 +319,12 @@ struct PromptRepoView: View {
                         showDetail = true
                     }
                 }) {
-                    Text(String(localized: "编辑内容"))
+                    Text(String(localized: "编辑内容", bundle: HanlinLocalization.bundle))
                         .font(HanlinTypography.footnote)
                         .fontWeight(.bold)
                         .padding(.horizontal, 20)
                         .padding(.vertical, 8)
-                        .background(Color.hlBlue)
+                        .background(Color.hanlinHLBlue)
                         .foregroundColor(.white)
                         .clipShape(Capsule())
                 }
@@ -334,7 +335,7 @@ struct PromptRepoView: View {
         .background(
             BlurView(style: .systemThinMaterial) // 毛玻璃背景
                 .clipShape(RoundedRectangle(cornerRadius: 20))
-                .shadow(color: .hlBlue, radius: 1)
+                .shadow(color: .hanlinHLBlue, radius: 1)
         )
         .visualEffect { content, proxy in
             content
@@ -360,24 +361,24 @@ struct PromptTitleEditView: View {
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text(String(localized: "标题"))) {
+                Section(header: Text(String(localized: "标题", bundle: HanlinLocalization.bundle))) {
                     // 使用 TextField 编辑标题
-                    TextField(String(localized: "请输入新的标题"), text: $title)
+                    TextField(String(localized: "请输入新的标题", bundle: HanlinLocalization.bundle), text: $title)
                         .autocapitalization(.none)
                 }
             }
-            .navigationTitle(String(localized: "编辑标题"))
+            .navigationTitle(String(localized: "编辑标题", bundle: HanlinLocalization.bundle))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 // 左侧：取消按钮
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Button(String(localized: "取消")) {
+                    Button(String(localized: "取消", bundle: HanlinLocalization.bundle)) {
                         isPresented = false
                     }
                 }
                 // 右侧：保存按钮
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(String(localized: "保存")) {
+                    Button(String(localized: "保存", bundle: HanlinLocalization.bundle)) {
                         isPresented = false
                     }
                 }
@@ -465,9 +466,9 @@ struct PromptDetailView: View {
                 tokenCounter()
             }
             if showPhotoSourceOptions {
-                Text(String(localized: "选择OCR的图片来源"))
+                Text(String(localized: "选择OCR的图片来源", bundle: HanlinLocalization.bundle))
                     .font(HanlinTypography.caption.bold())
-                    .foregroundColor(.hlBluefont)
+                    .foregroundColor(.hanlinHLBluefont)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.top, 12)
                 sourceSelector
@@ -482,7 +483,7 @@ struct PromptDetailView: View {
         .background(
             BlurView(style: .systemThinMaterial) // 毛玻璃背景
                 .clipShape(RoundedRectangle(cornerRadius: 26))
-                .shadow(color: .hlBlue, radius: 1)
+                .shadow(color: .hanlinHLBlue, radius: 1)
         )
         .animation(.spring(response: 0.5, dampingFraction: 0.6, blendDuration: 0.4), value: showPhotoSourceOptions)
         .hanlinFeedback(.impact, trigger: isFeedBack)
@@ -531,7 +532,7 @@ struct PromptDetailView: View {
                     .frame(width: size_30, height: size_30)
                     .foregroundColor(Color(.systemGray))
             } else {
-                Image("translate_circle")
+                Image(hanlinAsset: "translate_circle")
                     .resizable()
                     .renderingMode(.template)
                     .frame(width: size_30, height: size_30)
@@ -573,7 +574,7 @@ struct PromptDetailView: View {
                 Image(systemName: isSourceOptionsVisible ? "xmark.circle" :"viewfinder.circle")
                     .resizable()
                     .frame(width: size_30, height: size_30)
-                    .foregroundColor(isSourceOptionsVisible ? .hlRed : Color(.systemGray))
+                    .foregroundColor(isSourceOptionsVisible ? .hanlinHLRed : Color(.systemGray))
                     .contentTransition(.symbolEffect(.replace))
             }
         }
@@ -597,9 +598,9 @@ struct PromptDetailView: View {
                 .frame(width: size_30, height: size_30)
                 .foregroundColor(Color(.systemGray))
         }
-        .alert(String(localized: "确认清空所有文本？"), isPresented: $showAlert) {
-            Button(String(localized: "取消"), role: .cancel) { }
-            Button(String(localized: "清空"), role: .destructive) { content = "" }
+        .alert(String(localized: "确认清空所有文本？", bundle: HanlinLocalization.bundle), isPresented: $showAlert) {
+            Button(String(localized: "取消", bundle: HanlinLocalization.bundle), role: .cancel) { }
+            Button(String(localized: "清空", bundle: HanlinLocalization.bundle), role: .destructive) { content = "" }
         }
     }
 
@@ -619,8 +620,8 @@ struct PromptDetailView: View {
     // MARK: - 计算 Token 数量
     private func tokenCounter() -> some View {
         VStack(alignment: .trailing) {
-            Text("\(content.count) 字").font(HanlinTypography.caption).foregroundColor(.gray)
-            Text("约 \(estimatedTokens) tokens").font(HanlinTypography.caption).foregroundColor(.gray)
+            Text("\(content.count) 字", bundle: HanlinLocalization.bundle).font(HanlinTypography.caption).foregroundColor(.gray)
+            Text("约 \(estimatedTokens) tokens", bundle: HanlinLocalization.bundle).font(HanlinTypography.caption).foregroundColor(.gray)
         }
     }
 
@@ -728,16 +729,16 @@ struct PromptDetailView: View {
                         .resizable()
                         .scaledToFit()
                         .frame(width: 30, height: 30)
-                        .foregroundColor(.hlBluefont)
+                        .foregroundColor(.hanlinHLBluefont)
                         .symbolEffect(.bounce, value: showCameraPicker)
-                    Text(String(localized: "拍摄照片"))
+                    Text(String(localized: "拍摄照片", bundle: HanlinLocalization.bundle))
                         .font(HanlinTypography.caption.bold())
-                        .foregroundColor(.hlBluefont)
+                        .foregroundColor(.hanlinHLBluefont)
                         .padding(.top, 3)
                 }
                 .padding(12)
                 .frame(maxWidth: .infinity)
-                .background(Color.hlBlue.opacity(0.1))
+                .background(Color.hanlinHLBlue.opacity(0.1))
                 .cornerRadius(size_20)
             }
             .hanlinFeedback(.impact, trigger: isFeedBack)
@@ -758,16 +759,16 @@ struct PromptDetailView: View {
                         .resizable()
                         .scaledToFit()
                         .frame(width: 30, height: 30)
-                        .foregroundColor(.hlBluefont)
+                        .foregroundColor(.hanlinHLBluefont)
                         .symbolEffect(.bounce, value: showImagePicker)
-                    Text(String(localized: "相册选择"))
+                    Text(String(localized: "相册选择", bundle: HanlinLocalization.bundle))
                         .font(HanlinTypography.caption.bold())
-                        .foregroundColor(.hlBluefont)
+                        .foregroundColor(.hanlinHLBluefont)
                         .padding(.top, 3)
                 }
                 .padding(12)
                 .frame(maxWidth: .infinity)
-                .background(Color.hlBlue.opacity(0.1))
+                .background(Color.hanlinHLBlue.opacity(0.1))
                 .cornerRadius(size_20)
             }
             .hanlinFeedback(.impact, trigger: isFeedBack)

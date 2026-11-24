@@ -1,0 +1,17 @@
+{
+  "at": "2026-11-23T09:22:28.607708+00:00",
+  "branch": "codex/hanlin-motion-d-20261123",
+  "source": "6772dce6304fc6761a2200314f7d2020dc782e47",
+  "source_tree": "b72f662d7ed0660783687c51ec7a3665ef5f4e39",
+  "new_validation_ref_only": true,
+  "shared_full_app_ref_unchanged": true,
+  "same_exact_commit_as_BC_run": 45133334293,
+  "isolated_concurrency_suffix": "refs/heads/codex/hanlin-motion-d-20261123-chat_motion_product",
+  "canonical_input_receipt": "../native-6772dce6-affected/selected/proof-inputs.json",
+  "fixture_and_product_changes": [],
+  "verified_remote_ref": "6772dce6304fc6761a2200314f7d2020dc782e47\trefs/heads/codex/hanlin-motion-d-20261123",
+  "command_scoped_configuration": [
+    "remote.origin.mirror=false",
+    "credential.helper uses existing connected gh account; no global configuration change"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "utc": "2026-11-23T22:19:26.815043+00:00",
+  "argv": [
+    "sudo",
+    "-u",
+    "ubuntu",
+    "python3",
+    "Scripts/SDK/generate_manifest.py",
+    "--check"
+  ],
+  "exit": 0,
+  "changed_input": "Xcode app/test Frameworks phase; declarations remain intact."
+}

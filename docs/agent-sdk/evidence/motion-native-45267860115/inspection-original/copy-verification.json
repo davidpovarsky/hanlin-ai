@@ -1,0 +1,162 @@
+{
+  "copied_at": "2026-11-23T22:06:45.540155+00:00",
+  "files": [
+    {
+      "path": "docs/agent-sdk/evidence/motion-native-45267860115/inspection-original/dispatch-intent.json",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-retained-20261123/build/motion-b-retained-inspection-20261123/dispatch-intent.json",
+      "bytes": 220,
+      "sha256": "c8deed6ed8012ab1f2b66ac6897f132c3edf202c5f869f4e776503dde7812d2a"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/motion-native-45267860115/inspection-original/dispatch-request.json",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-retained-20261123/build/motion-b-retained-inspection-20261123/dispatch-request.json",
+      "bytes": 420,
+      "sha256": "c3b8a5b2ad79b57a416724aadef459dd3136ce773a08c1197ac7603f424b47cc"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/motion-native-45267860115/inspection-original/dispatch-ack.json",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-retained-20261123/build/motion-b-retained-inspection-20261123/dispatch-ack.json",
+      "bytes": 100,
+      "sha256": "8509d7974183840a0f488bfb9a5b865dd6fc002d1a3f035855625f53097d8cb4"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/motion-native-45267860115/inspection-original/run-readback.json",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-retained-20261123/build/motion-b-retained-inspection-20261123/run-readback.json",
+      "bytes": 15636,
+      "sha256": "fe009bcffde4e980cffd1fa54660003cbb587318074be02e65165b1c7e29e524"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/motion-native-45267860115/inspection-original/admission.json",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-retained-20261123/build/motion-b-retained-inspection-20261123/admission.json",
+      "bytes": 661,
+      "sha256": "34ad977978151b6a223c84bebeddd2d217a1732592e9770f639ede281703b8e1"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/motion-native-45267860115/inspection-original/ref-admission.json",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-retained-20261123/build/motion-b-retained-inspection-20261123/ref-admission.json",
+      "bytes": 516,
+      "sha256": "fb6ad64525ad7a87f53d68a270fd9538463dbeb981c62491fda40b4be7963672"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/motion-native-45267860115/inspection-original/terminal-run.json",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-retained-20261123/build/motion-b-retained-inspection-20261123/terminal-run.json",
+      "bytes": 15644,
+      "sha256": "ed4ceb7053ad35879d1c42ea365382503d40cfb37d215820a250246aaa1a82ec"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/motion-native-45267860115/inspection-original/terminal-jobs.json",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-retained-20261123/build/motion-b-retained-inspection-20261123/terminal-jobs.json",
+      "bytes": 33419,
+      "sha256": "ef43d70f1e5a00acbaa9ef75d6c3f981b2abdecad9d905b1ae6a3209209423c4"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/motion-native-45267860115/inspection-original/terminal-annotations.json",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-retained-20261123/build/motion-b-retained-inspection-20261123/terminal-annotations.json",
+      "bytes": 3,
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/motion-native-45267860115/inspection-original/terminal-artifacts.json",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-retained-20261123/build/motion-b-retained-inspection-20261123/terminal-artifacts.json",
+      "bytes": 959,
+      "sha256": "41f492d8a8498e9cfc3bc8c2984f240e829bfd0ff3367bcf93bee626654ffa1f"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/motion-native-45267860115/inspection-original/artifact-verification.json",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-retained-20261123/build/motion-b-retained-inspection-20261123/artifact-verification.json",
+      "bytes": 269,
+      "sha256": "132004753bb7a84fd152d537dc8b2f21bfe6f77fec1e71a110cdc93e6179894d"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/motion-native-45267860115/inspection-original/collection-result.json",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-retained-20261123/build/motion-b-retained-inspection-20261123/collection-result.json",
+      "bytes": 3535,
+      "sha256": "d2c18383f4456e4c1a758c4800a4bba767db1eb5b22da7b2c30b4800ec6f410b"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/motion-native-45267860115/inspection-original/watch-start.json",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-retained-20261123/build/motion-b-retained-inspection-20261123/watch-start.json",
+      "bytes": 355,
+      "sha256": "ea512f5432f275f1a2f3ced5585be608379c29effeaa5f4b41b2f23c58124963"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/motion-native-45267860115/inspection-original/watch-ended.json",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-retained-20261123/build/motion-b-retained-inspection-20261123/watch-ended.json",
+      "bytes": 90,
+      "sha256": "8447dfd86450ebf7ca41b9583663f7ee635c23a70f1b36f585b277eff195fce0"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/motion-native-45267860115/inspection-original/collector-start.json",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-retained-20261123/build/motion-b-retained-inspection-20261123/collector-start.json",
+      "bytes": 71,
+      "sha256": "4a2fa2582e1b07183ce2861cd455d349c95d5f0dfa7326245d8c49026a59f26d"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/motion-native-45267860115/inspection-original/collector-ended.json",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-retained-20261123/build/motion-b-retained-inspection-20261123/collector-ended.json",
+      "bytes": 90,
+      "sha256": "09696b6ba920c4c89962f8e12ad490b3d1c24f5ab2e8366d466dae9cb1f183c4"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/motion-native-45267860115/inspection-original/native/case-0/D0E9A126-779C-45A1-BE75-EDA258AD2EBE",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-retained-20261123/build/motion-b-retained-inspection-20261123/native/case-0/D0E9A126-779C-45A1-BE75-EDA258AD2EBE",
+      "bytes": 1891,
+      "sha256": "ec28a3618bdc4baf91f340043e37666bde08543a583e5fd4b7b08b4fb0aaeb84"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/motion-native-45267860115/inspection-original/native/case-0/E80BFC0B-9BB4-45E1-A22C-D5B8AA5D60E9",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-retained-20261123/build/motion-b-retained-inspection-20261123/native/case-0/E80BFC0B-9BB4-45E1-A22C-D5B8AA5D60E9",
+      "bytes": 1891,
+      "sha256": "ec28a3618bdc4baf91f340043e37666bde08543a583e5fd4b7b08b4fb0aaeb84"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/motion-native-45267860115/inspection-original/native/case-0/manifest.json",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-retained-20261123/build/motion-b-retained-inspection-20261123/native/case-0/manifest.json",
+      "bytes": 1553,
+      "sha256": "b7fc83f9bd63ca22cd35a0bdc88e8aea387a66dfc18b07c3ca312afb7280d206"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/motion-native-45267860115/inspection-original/native/case-0-activities.json",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-retained-20261123/build/motion-b-retained-inspection-20261123/native/case-0-activities.json",
+      "bytes": 15258,
+      "sha256": "9ef75e5f2c672fd78c12aaf347fa48d30f8a83e32fe142a5504a1612cfca2ca9"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/motion-native-45267860115/inspection-original/native/selected-test-origins.json",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-retained-20261123/build/motion-b-retained-inspection-20261123/native/selected-test-origins.json",
+      "bytes": 166,
+      "sha256": "97d34c4e73d4a49b347cdd4914cf7756b6c181d5dba035eef77a86033d663dcd"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/motion-native-45267860115/inspection-original/native/selected-tests.json",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-retained-20261123/build/motion-b-retained-inspection-20261123/native/selected-tests.json",
+      "bytes": 68,
+      "sha256": "32874bc03a3247cbd003423f93acc91c02a32aa370f44e5a5c2f60130fe190a9"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/motion-native-45267860115/inspection-original/native/source-run.json",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-retained-20261123/build/motion-b-retained-inspection-20261123/native/source-run.json",
+      "bytes": 107,
+      "sha256": "f1888a6b66972f5ebc0e769ed6fafa8769bb494cb0002e85aef8edc610825b9f"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/motion-native-45267860115/inspection-original/native/tests.json",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-retained-20261123/build/motion-b-retained-inspection-20261123/native/tests.json",
+      "bytes": 2394,
+      "sha256": "b91702356da342b8ade07c318c2e3ad770517d4874ac56ad45101d0053a2accd"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/motion-native-45267860115/inspection-original/review/original-b-37_8s-top.jpg",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-retained-20261123/build/motion-b-retained-inspection-20261123/review/original-b-37_8s-top.jpg",
+      "bytes": 23084,
+      "sha256": "302fc02709812907bc8e7e9b6f6f6ba4589c09b4f758a2f9e9849755a7fc9074"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/motion-native-45267860115/inspection-original/review/original-b-40_5s-top.jpg",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-retained-20261123/build/motion-b-retained-inspection-20261123/review/original-b-40_5s-top.jpg",
+      "bytes": 14682,
+      "sha256": "8190802013712370ccd33f46691f2a46e3080885bcbc93d04af3348063cd3fa3"
+    }
+  ],
+  "native_replay": false
+}

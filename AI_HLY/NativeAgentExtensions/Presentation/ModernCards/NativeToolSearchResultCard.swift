@@ -1,3 +1,4 @@
+import HanlinLocalization
 import SwiftUI
 
 struct NativeToolSearchResultCard: View {
@@ -11,7 +12,7 @@ struct NativeToolSearchResultCard: View {
 
     var body: some View {
         NativeToolResultCardContainer(
-            title: block.title ?? String(localized: "Search Results"),
+            title: block.title ?? String(localized: "Search Results", bundle: HanlinLocalization.bundle),
             subtitle: resultCount,
             systemImage: block.systemImage ?? "magnifyingglass",
             actions: block.actions,
@@ -53,7 +54,7 @@ struct NativeToolSearchResultCard: View {
 
     private var resultCount: String? {
         guard !block.items.isEmpty else { return block.subtitle }
-        return String(format: String(localized: "%lld results"), Int64(block.items.count))
+        return String(format: String(localized: "%lld results", bundle: HanlinLocalization.bundle), Int64(block.items.count))
     }
 
     private func itemActions(_ item: NativeUIListItem) -> [NativeUIAction] {
@@ -62,7 +63,7 @@ struct NativeToolSearchResultCard: View {
         return item.actions + [
             NativeUIAction(
                 type: .openURL,
-                title: String(localized: "Open"),
+                title: String(localized: "Open", bundle: HanlinLocalization.bundle),
                 systemImage: "arrow.up.right.square",
                 url: url
             )

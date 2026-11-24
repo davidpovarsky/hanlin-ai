@@ -1,3 +1,4 @@
+import HanlinLocalization
 //
 //  AgentEventAccumulator.swift
 //  AI_HLY
@@ -107,7 +108,7 @@ struct AgentEventAccumulator {
 
     case .reasoningDelta(let id, let text):
       append(
-        text, to: id, keyPath: \.output, kind: .reasoning, title: String(localized: "Thinking"))
+        text, to: id, keyPath: \.output, kind: .reasoning, title: String(localized: "Thinking", bundle: HanlinLocalization.bundle))
       transcript.appendText(text, to: id)
 
     case .reasoningCompleted(let id):
@@ -333,12 +334,12 @@ struct AgentEventAccumulator {
         switch approval.disposition {
         case .awaiting, .providerRequired:
           step.status = .pending
-          step.userFacingSummary = String(localized: "Awaiting approval")
-        case .allowedOnce: step.userFacingSummary = String(localized: "Allowed once")
-        case .allowedAlways: step.userFacingSummary = String(localized: "Allowed and remembered")
+          step.userFacingSummary = String(localized: "Awaiting approval", bundle: HanlinLocalization.bundle)
+        case .allowedOnce: step.userFacingSummary = String(localized: "Allowed once", bundle: HanlinLocalization.bundle)
+        case .allowedAlways: step.userFacingSummary = String(localized: "Allowed and remembered", bundle: HanlinLocalization.bundle)
         case .notApproved:
           step.status = .cancelled; step.completedAt = Date()
-          step.userFacingSummary = String(localized: "Not approved")
+          step.userFacingSummary = String(localized: "Not approved", bundle: HanlinLocalization.bundle)
           step.errorDescription = nil
         }
       }
@@ -351,12 +352,12 @@ struct AgentEventAccumulator {
         step.status = notApproved ? .cancelled : .failed
         if let failedTitle { step.title = failedTitle }
         step.errorDescription = notApproved ? nil : error.message
-        if notApproved { step.title = String(localized: "Not approved"); step.userFacingSummary = step.title }
+        if notApproved { step.title = String(localized: "Not approved", bundle: HanlinLocalization.bundle); step.userFacingSummary = step.title }
         step.completedAt = Date()
       }
       if let transcriptID = toolTranscriptIDByCallID[callID] {
         transcript.update(externalID: transcriptID) { item in
-          item.text = notApproved ? String(localized: "Not approved") : error.message
+          item.text = notApproved ? String(localized: "Not approved", bundle: HanlinLocalization.bundle) : error.message
         }
         transcript.complete(externalID: transcriptID, status: notApproved ? .cancelled : .failed)
       }
@@ -455,7 +456,7 @@ struct AgentEventAccumulator {
         externalID: "cancel:\(run.id.uuidString)",
         sequence: sequence,
         kind: .cancellation,
-        title: String(localized: "Cancelled"),
+        title: String(localized: "Cancelled", bundle: HanlinLocalization.bundle),
         status: .cancelled,
         startedAt: timestamp,
         completedAt: timestamp
@@ -466,7 +467,7 @@ struct AgentEventAccumulator {
         activityStepID: stepID,
         startedAt: timestamp,
         status: .cancelled,
-        text: String(localized: "Cancelled"),
+        text: String(localized: "Cancelled", bundle: HanlinLocalization.bundle),
         visibility: .collapseIntoThinking,
         sequence: sequence
       )
@@ -511,11 +512,11 @@ struct AgentEventAccumulator {
     switch outcome {
     case .succeeded: profile.activity.completedTitle
     case .failed: profile.activity.failedTitle
-    case .invalidArguments: String(localized: "Invalid arguments")
-    case .rejectedByCapability: String(localized: "Denied")
-    case .rejectedByAvailability: String(localized: "Unavailable")
-    case .timedOut: String(localized: "Timed out")
-    case .cancelled: String(localized: "Cancelled")
+    case .invalidArguments: String(localized: "Invalid arguments", bundle: HanlinLocalization.bundle)
+    case .rejectedByCapability: String(localized: "Denied", bundle: HanlinLocalization.bundle)
+    case .rejectedByAvailability: String(localized: "Unavailable", bundle: HanlinLocalization.bundle)
+    case .timedOut: String(localized: "Timed out", bundle: HanlinLocalization.bundle)
+    case .cancelled: String(localized: "Cancelled", bundle: HanlinLocalization.bundle)
     }
   }
 

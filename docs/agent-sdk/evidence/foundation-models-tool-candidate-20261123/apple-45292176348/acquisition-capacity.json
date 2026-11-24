@@ -1,0 +1,9 @@
+{
+  "path": "/mnt/development/projects/worktrees/hanlin-sdk02-stop-continuation-20261123",
+  "device": 2064,
+  "free_bytes": 2262294528,
+  "archive_bytes": 5423867,
+  "small_exports_budget": 67108864,
+  "reserve_bytes": 268435456,
+  "tmpdir": "/mnt/development/projects/worktrees/hanlin-sdk02-stop-continuation-20261123/build/sdk02-native-cancellation-acceptance/attempt-1/tmp"
+}

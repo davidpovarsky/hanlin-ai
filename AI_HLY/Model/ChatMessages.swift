@@ -11,92 +11,97 @@ import SwiftData
 import PhotosUI
 
 // 资源数据结构体
-struct Resource: Codable {
-    var icon: String
-    var title: String
-    var link: String
+public struct Resource: Codable, Sendable {
+    public var icon: String
+    public var title: String
+    public var link: String
 }
 
 // 提示卡片数据结构体
-struct PromptCard: Codable, Hashable {
-    var name: String
-    var content: String
+public struct PromptCard: Codable, Hashable, Sendable {
+    public var name: String
+    public var content: String
+
+    public init(name: String, content: String) {
+        self.name = name
+        self.content = content
+    }
 }
 
 // 定位数据结构体
-struct Location: Codable, Hashable {
-    var id: UUID?
-    var identifier: String?
-    var name: String
-    var latitude: Double
-    var longitude: Double
-    var style: String
+public struct Location: Codable, Hashable, Sendable {
+    public var id: UUID?
+    public var identifier: String?
+    public var name: String
+    public var latitude: Double
+    public var longitude: Double
+    public var style: String
 }
 
 // 坐标数据结构体
-struct Coordinate: Codable, Hashable {
-    var latitude: Double
-    var longitude: Double
+public struct Coordinate: Codable, Hashable, Sendable {
+    public var latitude: Double
+    public var longitude: Double
 }
 
 // 路线数据结构体
-struct RouteInfo: Codable, Hashable {
-    var distance: Double               // 路线总距离，单位：米
-    var expectedTravelTime: Double     // 预计行驶时间，单位：秒
-    var instructions: [String]         // 导航步骤说明
-    var routePoints: [Coordinate]      // 路线折线坐标点
+public struct RouteInfo: Codable, Hashable, Sendable {
+    public var distance: Double               // 路线总距离，单位：米
+    public var expectedTravelTime: Double     // 预计行驶时间，单位：秒
+    public var instructions: [String]         // 导航步骤说明
+    public var routePoints: [Coordinate]      // 路线折线坐标点
 }
 
 // 音频数据结构体
-struct AudioAsset: Codable, Hashable {
-    var data: Data                   // 音频原始数据
-    var fileName: String            // 文件名（例如 audio1.m4a）
-    var fileType: String            // 格式（例如 m4a、mp3）
-    var modelName: String           // 模型名称
-    var duration: TimeInterval?     // 可选：时长（秒）
+public struct AudioAsset: Codable, Hashable, Sendable {
+    public var data: Data                   // 音频原始数据
+    public var fileName: String            // 文件名（例如 audio1.m4a）
+    public var fileType: String            // 格式（例如 m4a、mp3）
+    public var modelName: String           // 模型名称
+    public var duration: TimeInterval?     // 可选：时长（秒）
 }
 
 // 事件数据结构体
-struct EventItem: Codable, Hashable, Sendable {
-    var type: String               // calendar / reminder
-    var title: String
-    var startDate: Date?           // 仅 calendar 用
-    var endDate: Date?             // 仅 calendar 用
-    var dueDate: Date?             // 仅 reminder 用
-    var location: String?
-    var notes: String?
-    var priority: Int?             // 仅 reminder 用
-    var completed: Bool?           // 仅 reminder 用
-    var calendarIdentifier: String?
+public struct EventItem: Codable, Hashable, Sendable {
+    public var type: String               // calendar / reminder
+    public var title: String
+    public var startDate: Date?           // 仅 calendar 用
+    public var endDate: Date?             // 仅 calendar 用
+    public var dueDate: Date?             // 仅 reminder 用
+    public var location: String?
+    public var notes: String?
+    public var priority: Int?             // 仅 reminder 用
+    public var completed: Bool?           // 仅 reminder 用
+    public var calendarIdentifier: String?
 }
 
 // 健康数据结构体
-struct HealthData: Codable, Hashable {
-    var id: UUID = UUID()
-    var date: Date
-    var proteinGrams: Double?
-    var carbohydratesGrams: Double?
-    var fatGrams: Double?
-    var energyKilocalories: Double?
-    var isWritten: Bool? = false   // 写入状态
+public struct HealthData: Codable, Hashable, Sendable {
+    public var id: UUID = UUID()
+    public var date: Date
+    public var proteinGrams: Double?
+    public var carbohydratesGrams: Double?
+    public var fatGrams: Double?
+    public var energyKilocalories: Double?
+    public var isWritten: Bool? = false   // 写入状态
 }
 
 // python代码块
-struct CodeBlock: Identifiable, Codable, Hashable {
-    var id: UUID = UUID()
-    var codeType: String              // 代码类型
-    var code: String                  // 输入的 Python 代码
-    var output: String = ""           // 执行后的输出结果
-    var isRunning: Bool = false       // 是否正在执行（控制 loading 状态）
-    var hasError: Bool = false        // 是否出错（控制红色提示）
-    var isExpanded: Bool = true       // 输出区域是否展开
+public struct CodeBlock: Identifiable, Codable, Hashable, Sendable {
+    public var id: UUID = UUID()
+    public var codeType: String              // 代码类型
+    public var code: String                  // 输入的 Python 代码
+    public var output: String = ""           // 执行后的输出结果
+    public var isRunning: Bool = false       // 是否正在执行（控制 loading 状态）
+    public var hasError: Bool = false        // 是否出错（控制红色提示）
+    public var isExpanded: Bool = true       // 输出区域是否展开
 }
 
-struct KnowledgeCard: Identifiable, Codable, Hashable {
-    var id: UUID = UUID()
-    var title: String
-    var content: String
-    var isWritten: Bool? = false
+public struct KnowledgeCard: Identifiable, Codable, Hashable, Sendable {
+    public var id: UUID = UUID()
+    public var title: String
+    public var content: String
+    public var isWritten: Bool? = false
 }
 
 @Model

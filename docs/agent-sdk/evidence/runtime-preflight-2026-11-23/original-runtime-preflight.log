@@ -1,0 +1,36 @@
+Validated /Users/runner/work/hanlin-ai/hanlin-ai/RuntimeDependencies.lock.json.
+Validated 8 IOSSystemLite binary targets and complete curl_ios link closure.
+{
+  "approvedCommandCount": 23,
+  "approvedCommands": [
+    "awk",
+    "cat",
+    "cp",
+    "curl",
+    "grep",
+    "head",
+    "ln",
+    "ls",
+    "mkdir",
+    "mv",
+    "readlink",
+    "rm",
+    "rmdir",
+    "sed",
+    "sort",
+    "stat",
+    "tail",
+    "tar",
+    "touch",
+    "tr",
+    "uniq",
+    "unlink",
+    "wc"
+  ],
+  "commandDictionarySHA256": "bc70ee9fce71b624c9f80c55be93d8a7c7d67bd06d48902ebe9fef32a906173b",
+  "extraDictionarySHA256": "97704a8960b4facceef54397a08fb5d0a456247c3627359215aa2a27df22656c",
+  "unexpectedCommands": []
+}
+Validated 196 RuntimeL10n localization keys for en, he, zh-Hans.
+Validated 129 MCPL10n localization keys for en, he, zh-Hans.
+RuntimeCore preflight requires Node Host node_modules to be excluded from the synchronized AI_HLY target.

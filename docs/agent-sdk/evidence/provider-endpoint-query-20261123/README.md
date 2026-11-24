@@ -1,0 +1,13 @@
+# Provider endpoint duplicate-query crash — 23 November 2026
+
+The original shared `HanlinAISDKProviderFactory.descriptor(for:)` used `Dictionary(uniqueKeysWithValues:)` on decoded URL query items. Repeated names are representable in `URLComponents` but not in the descriptor's existing `[String: String]` contract. A repeated name therefore terminated Swift before any provider request.
+
+The actual original full factory enum, complete model-configuration file and original provider-kind/descriptor definitions were compiled together on Oracle with Swift6. The old code compiled and the regression process exited **-5**, reporting `Swift/NativeDictionary.swift:823: Fatal error: Duplicate values for key: 'team'`. No mocked provider or copied algorithm was involved. Only the unrelated external transport imports/extension and unrelated value definitions were outside this Foundation-only partial module.
+
+The canonical fix supplies the dictionary's conflict resolver. **The last explicit value for each decoded name wins.** Existing nil-valued query items remain ignored, so `x=1&x` keeps `1` while `x=1&x=` retains the explicit empty string. Case-sensitive names remain distinct; percent-encoded names keep URLComponents' existing decoded identity. This is the SDK descriptor's documented duplicate policy, not a claim about all HTTP servers. Public descriptor and downstream OpenAICompatibleProvider queryParams signatures are unchanged.
+
+Two actual Foundation-only cases pass after the fix: the existing unique-key behavior and a repeated-name case containing nil flags, an explicit empty value, percent-decoded duplicate names, a Hebrew value and differently cased names. Production enum/configuration compilation and both changed Swift files' parsing pass. The new `ProviderRoutingTests.testRepeatedQueryParametersDoNotCrash` is also retained in the original package test suite, but its Apple/Swift Testing execution is **NOT_RUN**. The two portable cases must not be represented as native app, transport or live-model acceptance.
+
+[The exact before/after receipt](receipt.json) includes source/declaration and log hashes. Independent review confirmed the original descriptor/consumer contract; that reviewer did not duplicate execution. The actual old source is `226ca1fd6edc788fc5b1c8c29ec3c8aaf38940a2`. The [reproducer](reproduce.py) accepts an immutable revision and a scratch output path, extracts the original declarations from Git, compiles them and checks either the original crash or corrected result.
+
+This repair follows Lorvex's SDK0dae UI-only pin; do not retroactively include it in that run's unchanged-source receipt.

@@ -1,0 +1,9 @@
+{
+  "sha": "e59256e8325bcdb71c0e683f6b19e7641642aad8",
+  "sources": {
+    "Tests/ProductSplit/TransferFixture/script.json": "0dbae2862300eb574d5620d04568b8f554db845fbbda2a525baf859fc86061cc",
+    "Tests/ProductSplit/TransferFixture/index.tsx": "1e1ac0652ca1bbbff785ea24c1aed86eb1322a89a66867bd6b62313d8bae944d"
+  },
+  "archive_sha256": "025b085b019ec61deeacc31b8cc19e3213500ddecbe8b504ef0ea9ec4e099406",
+  "scope": "Original source package input only; installation and saved state are produced through the shipping importer and runtime UI."
+}

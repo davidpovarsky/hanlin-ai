@@ -34,7 +34,7 @@ scratch,evidence=map(Path,sys.argv[1:])
 paths=subprocess.check_output(['git','ls-files','Packages/HanlinAgentSDK','Packages/HanlinPlatform'],text=True).splitlines()
 (evidence/'tested-source-sha256.json').write_text(json.dumps({p:hashlib.sha256((scratch/p).read_bytes()).hexdigest() for p in paths},indent=2))
 expected=[]
-for rel,suite in [('HanlinAgentCoreTests/HostSchemaValidationTests.swift','HostSchemaValidationTests'),('HanlinAgentCoreTests/AgentSessionTests.swift','AgentSessionTests'),('HanlinHostContractsTests/ContextTests.swift','ContextTests'),('HanlinHostConcurrencyTests/HostCallbackConventionTests.swift','HostCallbackConventionTests')]:
+for rel,suite in [('HanlinAgentCoreTests/HostSchemaValidationTests.swift','HostSchemaValidationTests'),('HanlinAgentCoreTests/AgentSessionTests.swift','AgentSessionTests'),('HanlinHostContractsTests/ContextTests.swift','ContextTests'),('HanlinHostConcurrencyTests/HostCallbackConventionTests.swift','HostCallbackConventionTests'),('HanlinAgentCoreTests/NavigationTransitionTests.swift','NavigationTransitionTests')]:
     source=(scratch/'Packages/HanlinAgentSDK/Tests'/rel).read_text();pending=False;current=None
     for line in source.splitlines():
         decl=re.search(r'^(?:@Suite\s+)?(?:private\s+)?(?:struct|actor|class)\s+(\w+)',line)
@@ -67,7 +67,7 @@ for p in scratch.rglob('Package.resolved'):
     records.append({'path':str(p.relative_to(scratch)),'raw_file':name,'sha256':hashlib.sha256(raw).hexdigest(),'resolved':json.loads(raw)})
 (evidence/'resolution.json').write_text(json.dumps(records,indent=2))
 pins=json.loads((scratch/'Packages/HanlinAgentSDK/Package.resolved').read_text())['pins']
-assert next(p for p in pins if p['identity']=='swift-ai-sdk')['state']['revision']=='e7bf34111e603ca977becd007dd4e5bb109af857'
+assert next(p for p in pins if p['identity']=='swift-ai-sdk')['state']['revision']=='07431abccbfb151ca2dab67bca6cf86fcb2bd3b8'
 vendor=scratch/'Packages/HanlinAgentSDK/Vendor/Swift-JSON'
 provenance=json.loads((vendor/'PROVENANCE.json').read_text())
 assert provenance['revision']=='f2a0d12da7028edfbcb0cb307f19a921a3a12d03'
@@ -86,11 +86,13 @@ PY_SCHEME
 )"
 selected_tests=(-only-testing:HanlinAgentCoreTests/HostSchemaValidationTests
   -only-testing:HanlinAgentCoreTests/AgentSessionTests -only-testing:HanlinHostContractsTests/ContextTests
-  -only-testing:HanlinHostConcurrencyTests/HostCallbackConventionTests)
+  -only-testing:HanlinHostConcurrencyTests/HostCallbackConventionTests
+  -only-testing:HanlinAgentCoreTests/NavigationTransitionTests)
 if [[ "${HANLIN_SDK_ASSOCIATION_ONLY:-0}" == 1 ]]; then
   selected_tests=('-only-testing:HanlinAgentCoreTests/HostSchemaValidationTests/dispatcherRetainsOriginalBytesAndNeverReplaysAChangedRoundedValue()'
     -only-testing:HanlinAgentCoreTests/AgentSessionTests -only-testing:HanlinHostContractsTests/ContextTests
-    -only-testing:HanlinHostConcurrencyTests/HostCallbackConventionTests)
+    -only-testing:HanlinHostConcurrencyTests/HostCallbackConventionTests
+    -only-testing:HanlinAgentCoreTests/NavigationTransitionTests)
 elif [[ "${HANLIN_SDK_WRITER_ONLY:-0}" == 1 ]]; then
   selected_tests=('-only-testing:HanlinAgentCoreTests/HostSchemaValidationTests/deterministicWriterKeepsExactDecimalsScalarKeysAndStableOrdering()')
 fi

@@ -1,3 +1,4 @@
+import HanlinLocalization
 import SwiftUI
 import UIKit
 
@@ -13,7 +14,7 @@ struct AgentTranscriptTextView: View {
             Button {
                 UIPasteboard.general.string = markdownToPlainText(text)
             } label: {
-                Label(String(localized: "Copy Content"), systemImage: "square.on.square")
+                Label(String(localized: "Copy Content", bundle: HanlinLocalization.bundle), systemImage: "square.on.square")
             }
         }
     }

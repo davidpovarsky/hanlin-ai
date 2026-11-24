@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-23T17:29:13.664166+00:00",
+  "portableControls": {
+    "status": "PASS",
+    "methods": 3,
+    "seconds": 0.529,
+    "command": [
+      "python3",
+      "Scripts/CI/test_foundation_models_availability_inspector.py",
+      "-v"
+    ],
+    "scope": "Diagnostic opt-in, actual subprocess bounds and fixture receipt admission; no Apple model"
+  },
+  "swiftSyntax": {
+    "status": "PASS",
+    "command": [
+      "swiftc",
+      "-frontend",
+      "-parse",
+      "availability.swift"
+    ],
+    "scope": "Linux syntax only; no Apple SDK typecheck or execution"
+  },
+  "nativeCompilation": "NOT_RUN",
+  "availability": "NOT_QUERIED",
+  "modelExecution": "NOT_RUN",
+  "toolExecution": "NOT_RUN",
+  "sources": {
+    "Scripts/CI/inspect_foundation_models_interface.py": "074697f9c4e2ca92b990e63bfcc818a3d46a79ea7f321561f1e26686d8cf5995",
+    "Scripts/CI/test_foundation_models_availability_inspector.py": "0c5d512c50c1aa98a341943e71c916c7e2594eca2a5ce262ee0199d94e8abc6c"
+  },
+  "embeddedSwiftSHA256": "27b70911b258ba1eaa53502eef3e61f9efe594a6cdf87341fb8d104c70cdaba6",
+  "evidenceFiles": {
+    "README.md": "f38d4fb81f7b9df17b2c8f70559f185a8e59a59a94771b6cc46f9d81912d4728",
+    "controls.log": "4dce14e22b6b0fa3216d2375a87348632d0d97f77d204844fe6e5e75d71eaa53"
+  }
+}

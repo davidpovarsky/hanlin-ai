@@ -1,3 +1,5 @@
+import HanlinLocalization
+import HanlinChatUI
 //
 //  HanlinComposerSessionBridge.swift
 //  AI_HLY
@@ -48,22 +50,8 @@ extension EnvironmentValues {
 
 // MARK: - Original ChatView Draft Owner
 
-@MainActor
-@Observable
-final class HanlinComposerDraft {
-    private(set) var snapshot: NativeMultilineTextEditor.TextState
-
-    var text: String {
-        get { snapshot.text }
-        set {
-            snapshot = .init(ownerID: snapshot.ownerID, revision: UUID(), text: newValue)
-        }
-    }
-
-    init(text: String = "") {
-        snapshot = .init(ownerID: UUID(), revision: UUID(), text: text)
-    }
-}
+// Compatibility name for original app call sites; implementation lives in HanlinChatUI.
+typealias HanlinComposerDraft = HanlinChatUI.HanlinComposerDraft
 
 // MARK: - Per-Chat Transient Draft & Attachment Cache
 
@@ -214,7 +202,7 @@ final class HanlinActiveComposerSessionBridge {
     /// Unpersisted placeholder record used only for binding compatibility while on the compact Home root.
     /// Never inserted into SwiftData `ModelContext`.
     let homePlaceholderRecord = ChatRecords(
-        name: String(localized: "New Group Chat"),
+        name: String(localized: "New Group Chat", bundle: HanlinLocalization.bundle),
         type: "chat",
         lastEdited: Date()
     )

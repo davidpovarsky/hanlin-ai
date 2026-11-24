@@ -1,0 +1,35 @@
+{
+  "sha": "d8e4327f6d4097ac5a206f2acf2bf654a7ee9c13",
+  "node_id": "C_kwDOTTRem9oAKGQ4ZTQzMjdmNmQ0MDk3YWM1YTIwNmYyYWNmMmJmNjU0YTdlZTljMTM",
+  "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/git/commits/d8e4327f6d4097ac5a206f2acf2bf654a7ee9c13",
+  "html_url": "https://github.com/davidpovarsky/hanlin-ai/commit/d8e4327f6d4097ac5a206f2acf2bf654a7ee9c13",
+  "author": {
+    "name": "ChatGPT",
+    "email": "noreply@openai.com",
+    "date": "2026-11-23T22:14:16Z"
+  },
+  "committer": {
+    "name": "ChatGPT",
+    "email": "noreply@openai.com",
+    "date": "2026-11-23T22:16:55Z"
+  },
+  "tree": {
+    "sha": "0176b233862131ec975706032931a7a4ffde8445",
+    "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/git/trees/0176b233862131ec975706032931a7a4ffde8445"
+  },
+  "message": "fix(motion): hide retained collapsed children at their accessibility boundary",
+  "parents": [
+    {
+      "sha": "35bfa9509ed4660d2c189b1935ed7725d0bae9f2",
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/git/commits/35bfa9509ed4660d2c189b1935ed7725d0bae9f2",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/commit/35bfa9509ed4660d2c189b1935ed7725d0bae9f2"
+    }
+  ],
+  "verification": {
+    "verified": false,
+    "reason": "unsigned",
+    "signature": null,
+    "payload": null,
+    "verified_at": null
+  }
+}

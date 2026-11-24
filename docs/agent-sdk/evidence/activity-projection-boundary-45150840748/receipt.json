@@ -1,0 +1,47 @@
+{
+  "recorded_at": "2026-11-23T10:23:15.466973+00:00",
+  "run_id": 45150840748,
+  "job_id": 137611700396,
+  "producer_commit": "ab46931b776f1701d554b230aa3dd7d8166dfa76",
+  "result": "FAILURE_FULL_APP_COMPILE",
+  "selected_test_groups_status": "NOT_RUN",
+  "artifact": {
+    "id": 14807767611,
+    "name": "AI_Hanlin-iOS26-simulator-smoke-logs",
+    "size_bytes": 1329748,
+    "sha256": "c95eb7b9af4eea50de1207e97ace4ff7c2e1baeb2a67cac477c5da524cd08198",
+    "all_zip_member_crc_verified": true
+  },
+  "original_log": {
+    "member": "simulator-logs/06-xcodebuild-simulator.log",
+    "size_bytes": 10596484,
+    "sha256": "d08647bc877a6cca0251a6f449f6595ecaa08521e605418e6ac511153116a64b"
+  },
+  "diagnostics": [
+    "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY/Downstream/ChatPresentation/ClassicChatAgentProjection.swift:154:52: error: type 'ClassicChatAgentProjection' has no member 'isToolProjectionStep'",
+    "    |                                                    `- error: type 'ClassicChatAgentProjection' has no member 'isToolProjectionStep'",
+    "** TEST BUILD FAILED **"
+  ],
+  "failed_native_prepared_artifact_not_downloaded": 14807431166,
+  "repair": {
+    "source_paths": [
+      "AI_HLY/Downstream/ChatPresentation/ClassicChatAgentProjection.swift",
+      "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Projection/AgentActivityToolProjection.swift"
+    ],
+    "implementation_body_unchanged": true,
+    "original_extraction_parent_helper_identical": true,
+    "single_canonical_filter": true,
+    "syntax_parse": {
+      "return_code": 0,
+      "scope": "syntax only; not Apple compile/typecheck"
+    },
+    "before_sha256": {
+      "AI_HLY/Downstream/ChatPresentation/ClassicChatAgentProjection.swift": "704a951a5864de1d02237b4d071fc45f41ebedb3597cd13caea7b7056cfcf0f3",
+      "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Projection/AgentActivityToolProjection.swift": "30759dfa50fb6b454ec94347046a6edbf2945bcc0732ecd1d68490a909e7269b"
+    },
+    "after_sha256": {
+      "AI_HLY/Downstream/ChatPresentation/ClassicChatAgentProjection.swift": "202da0fe6bfbe7294e0be3091fa6036134a066289c4f65da9663bb942bac88ad",
+      "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Projection/AgentActivityToolProjection.swift": "34636442e01a2b5a579129eb1f2ef768adad60b2280252b7dc09a4e64e3e5bb3"
+    }
+  }
+}

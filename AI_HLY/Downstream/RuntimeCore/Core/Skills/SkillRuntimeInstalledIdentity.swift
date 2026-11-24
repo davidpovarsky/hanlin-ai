@@ -18,7 +18,7 @@ actor SkillRuntimeInstalledIdentity {
                 urls.append(binary)
             }
         }
-        if let host = Bundle.main.url(forResource: "RuntimeHostResources", withExtension: "zip") { urls.append(host) }
+        if let host = HanlinApplicationResources.bundle.url(forResource: "RuntimeHostResources", withExtension: "zip") { urls.append(host) }
         var hash = SHA256()
         hash.update(data: Data(ProcessInfo.processInfo.operatingSystemVersionString.utf8))
         for url in urls.sorted(by: { $0.path < $1.path }) {

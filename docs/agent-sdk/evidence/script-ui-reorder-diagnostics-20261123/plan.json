@@ -1,0 +1,197 @@
+{
+  "recorded_at": "2026-11-23T11:05:35.946360+00:00",
+  "source_parent": "dcc017c0ccbac18841644711ad0fe5a1282ea8b3",
+  "change": "One private Set-based uniqueness validator identifies the first actual repeated key, used by old/new diff and current/requested reorder validation",
+  "selected_cases": [
+    "nonFirstDuplicateCurrentReorderKeyIsReported",
+    "nonFirstDuplicateNewDiffKeyIsReported",
+    "nonFirstDuplicateOldDiffKeyIsReported",
+    "nonFirstDuplicateRequestedReorderKeyIsReported",
+    "validReorderPreservesNodesAndPropertyPatches"
+  ],
+  "selection_reason": "Four new non-first-duplicate diagnostics plus the directly affected existing valid reorder/property/empty control; no other previous cases selected",
+  "prior_six_case_evidence": "Unmodified historical dcc017c0 receipt; not relabeled as executing on this source",
+  "prior_evidence_sha256": {
+    "README.md": "cab1444264f0dbc3541b7489bdcc1ea4f6015f6df6bea2414165a6bba7a5966b",
+    "RESULT.json": "bd722e77a5a12195b7bf70ec4b4ae4bdc9c5d3f3180646094e0f803416728f35",
+    "baseline-build.json": "d276859cd7b1ac6e9295ffa9511cf8ec675f8819ee48002e9beeff9bb94db779",
+    "baseline-build.log": "a55766e45d17330012697714441e96558a679095e95a9a17b3003b16585640f1",
+    "baseline-child-stderr.txt": "9d566ce31bb9a16ac1657dd515caf997b08c3538bb95cb921cca22d3f7b1386d",
+    "baseline-reproduction.json": "6bf04987f65e3fd6b4170436a3cb18d35f7e5aaec239371ec67d7c26a2f2ca44",
+    "fixed-inputs.json": "2ba4723e40d630c2680cf5a9ba8f5b3c8d83e5d9b4f8cc7d7835096e3dba0234",
+    "plan.json": "d0cad1d5f008fbc1a311842f5a31834c7c4f27f79ab4d3e8f81a9e9da82b3517",
+    "product.patch": "064e8ed1bba72b09e0ab765126145d717f1a79a83b90a937affcd87291b9353d",
+    "proof-Package.swift": "0e94efa9d08e8354319e8fa71286ae7d8069a537faa13fc929e5ae90851d0168",
+    "receipt.json": "b6605571b8a28a25826abbeac1cdb95de74c74ccfabff28bb924a4677732e627",
+    "reproduce.swift": "19d98e7db99805d30068a6a44aef34cde5f7e7fb4556877bcfd3a8b0fb41da4b",
+    "swift-test.log": "286091066e86112378b4db8ad764bbb215b8fdc37f14a6658920f6d4b53d20f7",
+    "tests-swift-testing.xml": "472a6cda9ef9a5e39bed546ce663326ea4867819a85ae3f7ac18065a5f652846"
+  },
+  "native_or_CI_runs": 0,
+  "not_run": [
+    "Full Apple HanlinScriptUI module",
+    "SwiftUI model execution",
+    "Other prior test methods",
+    "Broad suites"
+  ],
+  "compiled_inputs": [
+    {
+      "source": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinCatalogContracts.swift",
+      "staged": "Sources/HanlinPlatformContracts/HanlinCatalogContracts.swift",
+      "bytes": 9413,
+      "sha256": "757478b238a1fc3144ef51c70275539502f959dd2aca9e67dbbf2449b24f7473"
+    },
+    {
+      "source": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinChatStructuredPart.swift",
+      "staged": "Sources/HanlinPlatformContracts/HanlinChatStructuredPart.swift",
+      "bytes": 3784,
+      "sha256": "07479b91a7ce77a8fdf5d53f3cb16939d9d46b0287efbd50b8b20b446c8ea2fa"
+    },
+    {
+      "source": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinContractError.swift",
+      "staged": "Sources/HanlinPlatformContracts/HanlinContractError.swift",
+      "bytes": 5423,
+      "sha256": "ad59a698345d7c218b3787c721b93fc6104ae462f7f11000d9204b1dd03e8518"
+    },
+    {
+      "source": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinDescriptors.swift",
+      "staged": "Sources/HanlinPlatformContracts/HanlinDescriptors.swift",
+      "bytes": 44148,
+      "sha256": "48fe15520f4758ad6d856c2deb40b2e5437392131c16717088f32edc3d163b64"
+    },
+    {
+      "source": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinExposureContracts.swift",
+      "staged": "Sources/HanlinPlatformContracts/HanlinExposureContracts.swift",
+      "bytes": 21524,
+      "sha256": "e7a39ee73d27678fd8a5405a6a176b31c68eab76c1828fbe02fa02f63c7decea"
+    },
+    {
+      "source": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinIdentifiers.swift",
+      "staged": "Sources/HanlinPlatformContracts/HanlinIdentifiers.swift",
+      "bytes": 15313,
+      "sha256": "3b3651705d4ee066324e623f284718d985ce7e44d1b01d4a9c3a437ed3d7410a"
+    },
+    {
+      "source": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinJSONSchemaDocument.swift",
+      "staged": "Sources/HanlinPlatformContracts/HanlinJSONSchemaDocument.swift",
+      "bytes": 4842,
+      "sha256": "d763b95edd959241d4c6931892802eb20f1bf90bd21037ed6371c4d68a5e661a"
+    },
+    {
+      "source": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinManifestSchema.swift",
+      "staged": "Sources/HanlinPlatformContracts/HanlinManifestSchema.swift",
+      "bytes": 565,
+      "sha256": "c1dd837d01913bc58b72d62cf47a9a21ef4bf1f23a1b3ccdaf93858e987c4d23"
+    },
+    {
+      "source": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinMiniAppContracts.swift",
+      "staged": "Sources/HanlinPlatformContracts/HanlinMiniAppContracts.swift",
+      "bytes": 6472,
+      "sha256": "eb880c3c00a789bcd21d8e0cbc353018e32b4e7d7f781415809781751515ae63"
+    },
+    {
+      "source": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPermissionContracts.swift",
+      "staged": "Sources/HanlinPlatformContracts/HanlinPermissionContracts.swift",
+      "bytes": 8912,
+      "sha256": "f0911d44d578d35f2714b30e4aa925a953475d54fb4f9ee2da39cf0f8590fed3"
+    },
+    {
+      "source": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPreparedRuntimeVersion.swift",
+      "staged": "Sources/HanlinPlatformContracts/HanlinPreparedRuntimeVersion.swift",
+      "bytes": 1109,
+      "sha256": "122b1d09c68e28907fdbce19986824d9bd6596d36bd6f08074c670a386f2f19c"
+    },
+    {
+      "source": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPresentationContracts.swift",
+      "staged": "Sources/HanlinPlatformContracts/HanlinPresentationContracts.swift",
+      "bytes": 11820,
+      "sha256": "96cde68f978ef19a5de552835be8c6dc2c62741f4aeab38c40f27586272e99b4"
+    },
+    {
+      "source": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinRuntimeProfiles.swift",
+      "staged": "Sources/HanlinPlatformContracts/HanlinRuntimeProfiles.swift",
+      "bytes": 5825,
+      "sha256": "43bffad1d4245d9a00924aab08ffd498a622d32321b5165ff036f0e425140262"
+    },
+    {
+      "source": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinScriptContracts.swift",
+      "staged": "Sources/HanlinPlatformContracts/HanlinScriptContracts.swift",
+      "bytes": 24544,
+      "sha256": "e92224cd4a0a1b5ed8e49bd85881c647595337b95ccbb20e6a6684110977679c"
+    },
+    {
+      "source": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinSessionContracts.swift",
+      "staged": "Sources/HanlinPlatformContracts/HanlinSessionContracts.swift",
+      "bytes": 6805,
+      "sha256": "03493cb4f2f414088282d97b2b4c0a01a918c0df1db78451974400bbfcba7386"
+    },
+    {
+      "source": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinSkillContracts.swift",
+      "staged": "Sources/HanlinPlatformContracts/HanlinSkillContracts.swift",
+      "bytes": 3494,
+      "sha256": "cb8910c6d12ac4cc0f8546e89a0a514151fc9d3cd53d30aacd8abc479f2af99f"
+    },
+    {
+      "source": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinStoreFileAccess.swift",
+      "staged": "Sources/HanlinPlatformContracts/HanlinStoreFileAccess.swift",
+      "bytes": 523,
+      "sha256": "ee87c52bc778c1a3848c37e125a709378f69e032ca91f80cc58f250a3c81a3f5"
+    },
+    {
+      "source": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinToolApprovalDescriptor.swift",
+      "staged": "Sources/HanlinPlatformContracts/HanlinToolApprovalDescriptor.swift",
+      "bytes": 2265,
+      "sha256": "f091f9d83f629f5ba94b4fd30c6775255226f13a671eb047a1dc40f3c3a30ca7"
+    },
+    {
+      "source": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinToolContracts.swift",
+      "staged": "Sources/HanlinPlatformContracts/HanlinToolContracts.swift",
+      "bytes": 7298,
+      "sha256": "8ce9c0771689e43f24b42fb16b0f1bf2a545628e99f972b625af57314257156d"
+    },
+    {
+      "source": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinValue.swift",
+      "staged": "Sources/HanlinPlatformContracts/HanlinValue.swift",
+      "bytes": 56729,
+      "sha256": "8284d64b8d9f0fc9212d6178860db6ce75dd15b212fb9214fea33fe1e51b9750"
+    },
+    {
+      "source": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinVersions.swift",
+      "staged": "Sources/HanlinPlatformContracts/HanlinVersions.swift",
+      "bytes": 15847,
+      "sha256": "014a9f0d5d078b84cda43d805e8b95b89203cabd834254f4e30030805e8dad0f"
+    },
+    {
+      "source": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinWireProtocol.swift",
+      "staged": "Sources/HanlinPlatformContracts/HanlinWireProtocol.swift",
+      "bytes": 6725,
+      "sha256": "13fc4ffbffef08ac7d439f6e9f961b4b94b05d6d0e45ba3cec6522709b7870d7"
+    },
+    {
+      "source": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
+      "staged": "Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
+      "bytes": 20993,
+      "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d"
+    },
+    {
+      "source": "Packages/HanlinPlatform/Sources/HanlinScriptUI/HanlinScriptUIContracts.swift",
+      "staged": "Sources/HanlinScriptUI/HanlinScriptUIContracts.swift",
+      "bytes": 6153,
+      "sha256": "0d1f1692bf0eefacbe6ec2a55aaed952effffc1e3ff9fdd3b2cbce01604143aa"
+    },
+    {
+      "source": "Packages/HanlinPlatform/Sources/HanlinScriptUI/HanlinScriptUIReconciler.swift",
+      "staged": "Sources/HanlinScriptUI/HanlinScriptUIReconciler.swift",
+      "bytes": 7364,
+      "sha256": "e4def17533c90877b481dba6da9ab09dbf55a54f4a6979376637cc39cda1fbc6"
+    },
+    {
+      "source": "Packages/HanlinPlatform/Tests/HanlinScriptUITests/HanlinScriptUIReorderAdmissionTests.swift",
+      "staged": "Tests/HanlinScriptUITests/HanlinScriptUIReorderAdmissionTests.swift",
+      "bytes": 6183,
+      "sha256": "dfbe577980027d639d47db513c299c8e1db05c5aca0911eff59b4f4206554157"
+    }
+  ],
+  "manifest_sha256": "5179e9c0c3da151e74b9438759aad861977a26232f72fbdcd9be93b96015aabe",
+  "toolchain": "Swift version 6.4.3 (swift-6.4.3-RELEASE)\nTarget: aarch64-unknown-linux-gnu"
+}

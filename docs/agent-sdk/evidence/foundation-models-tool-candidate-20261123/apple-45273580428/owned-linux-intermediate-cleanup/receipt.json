@@ -1,0 +1,13 @@
+{
+  "utc": "2026-11-23T21:54:20.255495+00:00",
+  "removed_target": "/mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/out",
+  "logical_bytes": 213203768,
+  "allocated_bytes": 223670272,
+  "file_count": 4172,
+  "removed_generated_symlink": "/mnt/development/projects/worktrees/hanlin-sdk02-native-tool-adapter-20261123/build/sdk02-input-boundary/.build/debug",
+  "symlink_target": "out/Products/Debug-linux-aarch64",
+  "retained_hashes_verified": 8,
+  "removed_plan_sha256": "8cf662493d746b0c31a2a92cba0f127da31b263d508b02a7fffe223ff6dc07e9",
+  "free_mnt_bytes": 624222208,
+  "diagnostic_status_unchanged": "NOT_RUN: producer compilation failed before test execution"
+}

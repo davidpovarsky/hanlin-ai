@@ -7,7 +7,7 @@ import {createHash} from 'node:crypto';
 import {chromium} from 'playwright-core';
 
 const root = path.dirname(fileURLToPath(import.meta.url));
-const resources = path.resolve(root, '../../AI_HLY/Downstream/ChatPresentation/CodeFences/Resources');
+const resources = path.resolve(root, '../../Packages/HanlinPresentationSDK/Sources/HanlinChatUI/CodeFences/Resources');
 const evidence = path.resolve(root, '../../build/code-fence-browser-evidence');
 let browser, page, requests = [];
 before(async () => {

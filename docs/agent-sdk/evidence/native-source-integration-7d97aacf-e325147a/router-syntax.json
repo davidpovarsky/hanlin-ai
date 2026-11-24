@@ -1,0 +1,11 @@
+{
+  "command": [
+    "bash",
+    "-n",
+    "Scripts/CI/IntegrationValidation/run_agent_sdk.sh"
+  ],
+  "exit_code": 0,
+  "stdout": "",
+  "stderr": "",
+  "scope": "New additive shell glue syntax only; no runner executed"
+}

@@ -1,0 +1,174 @@
+Command line invocation:
+    /Applications/Xcode_27.2.app/Contents/Developer/usr/bin/xcodebuild build-for-testing -project ChatMotionProof.xcodeproj -scheme ChatMotionProof -destination "platform=iOS Simulator,id=E43D7380-D8A4-4F77-BFD4-FEBA434D5CF8" -destination-timeout 90 -derivedDataPath /Users/runner/work/_temp/hanlin-motion-ui.yY1Y6ENc/DerivedData CODE_SIGNING_ALLOWED=NO
+
+Build settings from command line:
+    CODE_SIGNING_ALLOWED = NO
+
+Resolve Package Graph
+
+Fetching from https://github.com/davidpovarsky/hanlin-streaming-markdown
+
+Fetching from https://github.com/appstefan/highlightswift
+
+Fetching from https://github.com/junyan72/iosMath
+
+Fetching from https://github.com/markiv/SwiftUI-Shimmer
+
+Fetching from https://github.com/swiftlang/swift-markdown.git
+
+Fetching from https://github.com/ordo-one/equatable
+
+Fetching from https://github.com/swiftlang/swift-cmark.git
+
+Fetching from https://github.com/swiftlang/swift-syntax.git
+
+Creating working copy of package ‘swift-markdown’
+
+Checking out 0.7.3 of package ‘swift-markdown’
+
+Creating working copy of package ‘SwiftUI-Shimmer’
+
+Checking out 1.5.1 of package ‘SwiftUI-Shimmer’
+
+Creating working copy of package ‘swift-syntax’
+
+Checking out 603.0.2 of package ‘swift-syntax’
+
+Creating working copy of package ‘highlightswift’
+
+Checking out 99c431b38a1444a5fd6a4978307fbbefe3a7af53 of package ‘highlightswift’
+
+Creating working copy of package ‘swift-cmark’
+
+Checking out 0.9.0 of package ‘swift-cmark’
+
+Creating working copy of package ‘iosMath’
+
+Checking out ba9ab7729b151329c54fd895a7c1859981d9484c of package ‘iosMath’
+
+Creating working copy of package ‘equatable’
+
+Checking out 1.4.1 of package ‘equatable’
+
+Creating working copy of package ‘hanlin-streaming-markdown’
+
+Checking out 5cbb4b6c950051f98f02a0b0ae56756f5174a9b8 of package ‘hanlin-streaming-markdown’
+
+Downloading package prebuilt https://download.swift.org/prebuilts/swift-syntax/603.0.2/swiftlang-6.4.2.1.9-macosx27.2-MacroSupport.zip
+
+
+Resolved source packages:
+  iosMath: https://github.com/junyan72/iosMath @ ba9ab77
+  swift-syntax: https://github.com/swiftlang/swift-syntax.git @ 603.0.2
+  HanlinSDK: /Users/runner/work/_temp/hanlin-motion-ui.yY1Y6ENc/proof/Vendor/HanlinSDK
+  HighlightSwift: https://github.com/appstefan/highlightswift @ 99c431b
+  Equatable: https://github.com/ordo-one/equatable @ 1.4.1
+  SwiftStreamingMarkdown: https://github.com/davidpovarsky/hanlin-streaming-markdown @ 5cbb4b6
+  swift-markdown: https://github.com/swiftlang/swift-markdown.git @ 0.7.3
+  SwiftUI-Shimmer: https://github.com/markiv/SwiftUI-Shimmer @ 1.5.1
+  cmark-gfm: https://github.com/swiftlang/swift-cmark.git @ 0.9.0
+
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+/Users/runner/work/_temp/hanlin-motion-ui.yY1Y6ENc/DerivedData/SourcePackages/checkouts/equatable/Package.swift:PACKAGE-TARGET:EquatableMacros: error: Macro “EquatableMacros” from package “Equatable” must be enabled before it can be used
+note: Building targets in dependency order
+note: Target dependency graph (31 targets)
+    Target 'ChatMotionProofUITests' in project 'ChatMotionProof'
+        ➜ Explicit dependency on target 'ChatMotionProof' in project 'ChatMotionProof'
+    Target 'ChatMotionProof' in project 'ChatMotionProof'
+        ➜ Explicit dependency on target 'HanlinChatUI-product' in project 'HanlinSDK'
+    Target 'HanlinChatUI-product' in project 'HanlinSDK'
+        ➜ Explicit dependency on target 'HanlinChatUI' in project 'HanlinSDK'
+        ➜ Explicit dependency on target 'HanlinSDK_HanlinChatUI' in project 'HanlinSDK'
+        ➜ Explicit dependency on target 'HanlinPresentationKit' in project 'HanlinSDK'
+        ➜ Explicit dependency on target 'HanlinLocalization' in project 'HanlinSDK'
+        ➜ Explicit dependency on target 'HanlinRichUI' in project 'HanlinSDK'
+        ➜ Explicit dependency on target 'SwiftStreamingMarkdown-product' in project 'SwiftStreamingMarkdown'
+    Target 'HanlinChatUI' in project 'HanlinSDK'
+        ➜ Explicit dependency on target 'HanlinSDK_HanlinChatUI' in project 'HanlinSDK'
+        ➜ Explicit dependency on target 'HanlinPresentationKit' in project 'HanlinSDK'
+        ➜ Explicit dependency on target 'HanlinLocalization' in project 'HanlinSDK'
+        ➜ Explicit dependency on target 'HanlinRichUI' in project 'HanlinSDK'
+        ➜ Explicit dependency on target 'SwiftStreamingMarkdown-product' in project 'SwiftStreamingMarkdown'
+    Target 'SwiftStreamingMarkdown-product' in project 'SwiftStreamingMarkdown'
+        ➜ Explicit dependency on target 'SwiftStreamingMarkdown' in project 'SwiftStreamingMarkdown'
+        ➜ Explicit dependency on target 'SwiftStreamingMarkdown_SwiftStreamingMarkdown' in project 'SwiftStreamingMarkdown'
+        ➜ Explicit dependency on target 'Equatable-product' in project 'Equatable'
+        ➜ Explicit dependency on target 'Markdown-product' in project 'swift-markdown'
+        ➜ Explicit dependency on target 'HighlightSwift-product' in project 'HighlightSwift'
+        ➜ Explicit dependency on target 'iosMath-product' in project 'iosMath'
+        ➜ Explicit dependency on target 'Shimmer-product' in project 'SwiftUI-Shimmer'
+    Target 'SwiftStreamingMarkdown' in project 'SwiftStreamingMarkdown'
+        ➜ Explicit dependency on target 'SwiftStreamingMarkdown_SwiftStreamingMarkdown' in project 'SwiftStreamingMarkdown'
+        ➜ Explicit dependency on target 'Equatable-product' in project 'Equatable'
+        ➜ Explicit dependency on target 'Markdown-product' in project 'swift-markdown'
+        ➜ Explicit dependency on target 'HighlightSwift-product' in project 'HighlightSwift'
+        ➜ Explicit dependency on target 'iosMath-product' in project 'iosMath'
+        ➜ Explicit dependency on target 'Shimmer-product' in project 'SwiftUI-Shimmer'
+    Target 'Shimmer-product' in project 'SwiftUI-Shimmer'
+        ➜ Explicit dependency on target 'Shimmer' in project 'SwiftUI-Shimmer'
+    Target 'Shimmer' in project 'SwiftUI-Shimmer' (no dependencies)
+    Target 'iosMath-product' in project 'iosMath'
+        ➜ Explicit dependency on target 'iosMath' in project 'iosMath'
+        ➜ Explicit dependency on target 'iosMath_iosMath' in project 'iosMath'
+    Target 'iosMath' in project 'iosMath'
+        ➜ Explicit dependency on target 'iosMath_iosMath' in project 'iosMath'
+    Target 'iosMath_iosMath' in project 'iosMath' (no dependencies)
+    Target 'HighlightSwift-product' in project 'HighlightSwift'
+        ➜ Explicit dependency on target 'HighlightSwift' in project 'HighlightSwift'
+        ➜ Explicit dependency on target 'HighlightSwift_HighlightSwift' in project 'HighlightSwift'
+    Target 'HighlightSwift' in project 'HighlightSwift'
+        ➜ Explicit dependency on target 'HighlightSwift_HighlightSwift' in project 'HighlightSwift'
+    Target 'HighlightSwift_HighlightSwift' in project 'HighlightSwift' (no dependencies)
+    Target 'Markdown-product' in project 'swift-markdown'
+        ➜ Explicit dependency on target 'Markdown' in project 'swift-markdown'
+        ➜ Explicit dependency on target 'CAtomic' in project 'swift-markdown'
+        ➜ Explicit dependency on target 'cmark-gfm-product' in project 'cmark-gfm'
+        ➜ Explicit dependency on target 'cmark-gfm-extensions-product' in project 'cmark-gfm'
+    Target 'Markdown' in project 'swift-markdown'
+        ➜ Explicit dependency on target 'CAtomic' in project 'swift-markdown'
+        ➜ Explicit dependency on target 'cmark-gfm-product' in project 'cmark-gfm'
+        ➜ Explicit dependency on target 'cmark-gfm-extensions-product' in project 'cmark-gfm'
+    Target 'cmark-gfm-extensions-product' in project 'cmark-gfm'
+        ➜ Explicit dependency on target 'cmark-gfm-extensions' in project 'cmark-gfm'
+        ➜ Explicit dependency on target 'cmark-gfm' in project 'cmark-gfm'
+    Target 'cmark-gfm-extensions' in project 'cmark-gfm'
+        ➜ Explicit dependency on target 'cmark-gfm' in project 'cmark-gfm'
+    Target 'cmark-gfm-product' in project 'cmark-gfm'
+        ➜ Explicit dependency on target 'cmark-gfm' in project 'cmark-gfm'
+    Target 'cmark-gfm' in project 'cmark-gfm' (no dependencies)
+    Target 'CAtomic' in project 'swift-markdown' (no dependencies)
+    Target 'Equatable-product' in project 'Equatable'
+        ➜ Explicit dependency on target 'Equatable' in project 'Equatable'
+        ➜ Explicit dependency on target 'EquatableMacros' in project 'Equatable'
+    Target 'Equatable' in project 'Equatable'
+        ➜ Explicit dependency on target 'EquatableMacros' in project 'Equatable'
+    Target 'EquatableMacros' in project 'Equatable' (no dependencies)
+    Target 'SwiftStreamingMarkdown_SwiftStreamingMarkdown' in project 'SwiftStreamingMarkdown' (no dependencies)
+    Target 'HanlinRichUI' in project 'HanlinSDK'
+        ➜ Explicit dependency on target 'HanlinSDK_HanlinRichUI' in project 'HanlinSDK'
+        ➜ Explicit dependency on target 'HanlinPresentationKit' in project 'HanlinSDK'
+        ➜ Explicit dependency on target 'HanlinLocalization' in project 'HanlinSDK'
+    Target 'HanlinSDK_HanlinRichUI' in project 'HanlinSDK' (no dependencies)
+    Target 'HanlinLocalization' in project 'HanlinSDK'
+        ➜ Explicit dependency on target 'HanlinSDK_HanlinLocalization' in project 'HanlinSDK'
+    Target 'HanlinSDK_HanlinLocalization' in project 'HanlinSDK' (no dependencies)
+    Target 'HanlinPresentationKit' in project 'HanlinSDK' (no dependencies)
+    Target 'HanlinSDK_HanlinChatUI' in project 'HanlinSDK' (no dependencies)
+
+** TEST BUILD FAILED **
+
+
+The following build commands failed:
+	ComputeTargetDependencyGraph
+	Building project ChatMotionProof for testing with scheme ChatMotionProof
+(2 failures)

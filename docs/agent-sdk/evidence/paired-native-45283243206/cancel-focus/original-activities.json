@@ -1,0 +1,898 @@
+[
+  {
+    "rowid": 1,
+    "parent_fk": null,
+    "title": "Start Test at 2026-11-24 00:04:00.430",
+    "startTime": 817171440.4300001,
+    "finishTime": 817171441.54
+  },
+  {
+    "rowid": 2,
+    "parent_fk": null,
+    "title": "Set Up",
+    "startTime": 817171441.5409999,
+    "finishTime": 817171441.543
+  },
+  {
+    "rowid": 3,
+    "parent_fk": null,
+    "title": "Open com.itorah.hanlinminiapps",
+    "startTime": 817171441.543,
+    "finishTime": 817171466.27
+  },
+  {
+    "rowid": 4,
+    "parent_fk": 3,
+    "title": "Launch com.itorah.hanlinminiapps",
+    "startTime": 817171441.5439999,
+    "finishTime": 817171466.269
+  },
+  {
+    "rowid": 6,
+    "parent_fk": 4,
+    "title": "Setting up automation session",
+    "startTime": 817171454.6229999,
+    "finishTime": 817171463.1110001
+  },
+  {
+    "rowid": 5,
+    "parent_fk": 4,
+    "title": "Wait for com.itorah.hanlinminiapps to idle",
+    "startTime": 817171463.112,
+    "finishTime": 817171465.2579999
+  },
+  {
+    "rowid": 7,
+    "parent_fk": null,
+    "title": "Waiting 45.0s for \"hanlin-package-card-Swift Parity\" Any to exist",
+    "startTime": 817171466.277,
+    "finishTime": 817171468.585
+  },
+  {
+    "rowid": 8,
+    "parent_fk": 7,
+    "title": "Checking `Expect predicate `existsNoRetry == 1` for object \"hanlin-package-card-Swift Parity\" Any`",
+    "startTime": 817171467.359,
+    "finishTime": 817171468.5840001
+  },
+  {
+    "rowid": 9,
+    "parent_fk": 8,
+    "title": "Checking existence of `\"hanlin-package-card-Swift Parity\" Any`",
+    "startTime": 817171467.3599999,
+    "finishTime": 817171468.5840001
+  },
+  {
+    "rowid": 10,
+    "parent_fk": null,
+    "title": "Terminate com.itorah.hanlinminiapps:73369",
+    "startTime": 817171468.585,
+    "finishTime": 817171469.628
+  },
+  {
+    "rowid": 11,
+    "parent_fk": null,
+    "title": "Open com.itorah.chavrusachat",
+    "startTime": 817171469.629,
+    "finishTime": 817171501.411
+  },
+  {
+    "rowid": 12,
+    "parent_fk": 11,
+    "title": "Launch com.itorah.chavrusachat",
+    "startTime": 817171469.629,
+    "finishTime": 817171501.408
+  },
+  {
+    "rowid": 14,
+    "parent_fk": 12,
+    "title": "Setting up automation session",
+    "startTime": 817171484.763,
+    "finishTime": 817171496.1530001
+  },
+  {
+    "rowid": 13,
+    "parent_fk": 12,
+    "title": "Wait for com.itorah.chavrusachat to idle",
+    "startTime": 817171496.1530001,
+    "finishTime": 817171500.398
+  },
+  {
+    "rowid": 15,
+    "parent_fk": null,
+    "title": "Waiting 10.0s for \"hanlin-compact-view-all-button\" Button to exist",
+    "startTime": 817171501.415,
+    "finishTime": 817171506.757
+  },
+  {
+    "rowid": 16,
+    "parent_fk": 15,
+    "title": "Checking `Expect predicate `existsNoRetry == 1` for object \"hanlin-compact-view-all-button\" Button`",
+    "startTime": 817171502.497,
+    "finishTime": 817171506.757
+  },
+  {
+    "rowid": 17,
+    "parent_fk": 16,
+    "title": "Checking existence of `\"hanlin-compact-view-all-button\" Button`",
+    "startTime": 817171502.4979999,
+    "finishTime": 817171506.756
+  },
+  {
+    "rowid": 18,
+    "parent_fk": null,
+    "title": "Waiting 10.0s for \"hanlin-compact-recent-row-0\" Button to exist",
+    "startTime": 817171506.7579999,
+    "finishTime": 817171509.7219999
+  },
+  {
+    "rowid": 19,
+    "parent_fk": 18,
+    "title": "Checking `Expect predicate `existsNoRetry == 1` for object \"hanlin-compact-recent-row-0\" Button`",
+    "startTime": 817171507.7850001,
+    "finishTime": 817171509.721
+  },
+  {
+    "rowid": 20,
+    "parent_fk": 19,
+    "title": "Checking existence of `\"hanlin-compact-recent-row-0\" Button`",
+    "startTime": 817171507.786,
+    "finishTime": 817171509.721
+  },
+  {
+    "rowid": 21,
+    "parent_fk": null,
+    "title": "Find the \"hanlin-compact-recent-row-0\" Button",
+    "startTime": 817171509.7219999,
+    "finishTime": 817171511.036
+  },
+  {
+    "rowid": 22,
+    "parent_fk": null,
+    "title": "Tap \"hanlin-compact-recent-row-0\" Button",
+    "startTime": 817171511.0450001,
+    "finishTime": 817171514.562
+  },
+  {
+    "rowid": 27,
+    "parent_fk": 22,
+    "title": "Wait for com.itorah.chavrusachat to idle",
+    "startTime": 817171511.046,
+    "finishTime": 817171511.0510001
+  },
+  {
+    "rowid": 26,
+    "parent_fk": 22,
+    "title": "Find the \"hanlin-compact-recent-row-0\" Button",
+    "startTime": 817171511.052,
+    "finishTime": 817171511.994
+  },
+  {
+    "rowid": 25,
+    "parent_fk": 22,
+    "title": "Check for interrupting elements affecting \"hanlin-compact-recent-row-0\" Button",
+    "startTime": 817171511.9949999,
+    "finishTime": 817171512.3399999
+  },
+  {
+    "rowid": 24,
+    "parent_fk": 22,
+    "title": "Synthesize event",
+    "startTime": 817171512.342,
+    "finishTime": 817171513.082
+  },
+  {
+    "rowid": 23,
+    "parent_fk": 22,
+    "title": "Wait for com.itorah.chavrusachat to idle",
+    "startTime": 817171513.082,
+    "finishTime": 817171514.562
+  },
+  {
+    "rowid": 28,
+    "parent_fk": null,
+    "title": "Checking existence of `\"hanlin-chat-input\" TextView`",
+    "startTime": 817171514.563,
+    "finishTime": 817171514.9909999
+  },
+  {
+    "rowid": 29,
+    "parent_fk": null,
+    "title": "Waiting 20.0s for \"hanlin-chat-input\" TextView to exist",
+    "startTime": 817171514.9920001,
+    "finishTime": 817171516.188
+  },
+  {
+    "rowid": 30,
+    "parent_fk": 29,
+    "title": "Checking `Expect predicate `existsNoRetry == 1` for object \"hanlin-chat-input\" TextView`",
+    "startTime": 817171516.0280001,
+    "finishTime": 817171516.188
+  },
+  {
+    "rowid": 31,
+    "parent_fk": 30,
+    "title": "Checking existence of `\"hanlin-chat-input\" TextView`",
+    "startTime": 817171516.029,
+    "finishTime": 817171516.188
+  },
+  {
+    "rowid": 32,
+    "parent_fk": null,
+    "title": "Waiting 10.0s for \"hanlin-phase2-chat-id\" StaticText to exist",
+    "startTime": 817171516.1889999,
+    "finishTime": 817171517.6040001
+  },
+  {
+    "rowid": 33,
+    "parent_fk": 32,
+    "title": "Checking `Expect predicate `existsNoRetry == 1` for object \"hanlin-phase2-chat-id\" StaticText`",
+    "startTime": 817171517.2320001,
+    "finishTime": 817171517.602
+  },
+  {
+    "rowid": 34,
+    "parent_fk": 33,
+    "title": "Checking existence of `\"hanlin-phase2-chat-id\" StaticText`",
+    "startTime": 817171517.233,
+    "finishTime": 817171517.602
+  },
+  {
+    "rowid": 35,
+    "parent_fk": null,
+    "title": "Find the \"hanlin-phase2-chat-id\" StaticText",
+    "startTime": 817171517.6040001,
+    "finishTime": 817171517.8570001
+  },
+  {
+    "rowid": 36,
+    "parent_fk": null,
+    "title": "Checking existence of `\"hanlin-chat-input\" TextView`",
+    "startTime": 817171517.865,
+    "finishTime": 817171517.9549999
+  },
+  {
+    "rowid": 37,
+    "parent_fk": null,
+    "title": "Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object \"hanlin-chat-input\" TextView`",
+    "startTime": 817171518.9590001,
+    "finishTime": 817171519.5250001
+  },
+  {
+    "rowid": 40,
+    "parent_fk": 37,
+    "title": "Checking existence of `\"hanlin-chat-input\" TextView`",
+    "startTime": 817171518.961,
+    "finishTime": 817171519.0639999
+  },
+  {
+    "rowid": 39,
+    "parent_fk": 37,
+    "title": "Find the \"hanlin-chat-input\" TextView",
+    "startTime": 817171519.065,
+    "finishTime": 817171519.256
+  },
+  {
+    "rowid": 38,
+    "parent_fk": 37,
+    "title": "Find the \"hanlin-chat-input\" TextView",
+    "startTime": 817171519.2579999,
+    "finishTime": 817171519.4260001
+  },
+  {
+    "rowid": 41,
+    "parent_fk": null,
+    "title": "Tap \"hanlin-chat-input\" TextView",
+    "startTime": 817171519.5250001,
+    "finishTime": 817171540.8169999
+  },
+  {
+    "rowid": 46,
+    "parent_fk": 41,
+    "title": "Wait for com.itorah.chavrusachat to idle",
+    "startTime": 817171519.526,
+    "finishTime": 817171519.556
+  },
+  {
+    "rowid": 45,
+    "parent_fk": 41,
+    "title": "Find the \"hanlin-chat-input\" TextView",
+    "startTime": 817171519.556,
+    "finishTime": 817171519.6630001
+  },
+  {
+    "rowid": 44,
+    "parent_fk": 41,
+    "title": "Check for interrupting elements affecting \"hanlin-chat-input\" TextView",
+    "startTime": 817171519.664,
+    "finishTime": 817171519.7809999
+  },
+  {
+    "rowid": 43,
+    "parent_fk": 41,
+    "title": "Synthesize event",
+    "startTime": 817171519.7820001,
+    "finishTime": 817171520.0929999
+  },
+  {
+    "rowid": 42,
+    "parent_fk": 41,
+    "title": "Wait for com.itorah.chavrusachat to idle",
+    "startTime": 817171520.0940001,
+    "finishTime": 817171540.816
+  },
+  {
+    "rowid": 47,
+    "parent_fk": null,
+    "title": "Checking `Expect predicate `value != \"Message\"` for object \"hanlin-chat-input\" TextView`",
+    "startTime": 817171541.826,
+    "finishTime": 817171542.941
+  },
+  {
+    "rowid": 48,
+    "parent_fk": 47,
+    "title": "Find the \"hanlin-chat-input\" TextView",
+    "startTime": 817171541.8269999,
+    "finishTime": 817171542.941
+  },
+  {
+    "rowid": 49,
+    "parent_fk": null,
+    "title": "Type 'PAIRED' into \"hanlin-chat-input\" TextView",
+    "startTime": 817171542.944,
+    "finishTime": null
+  },
+  {
+    "rowid": 128,
+    "parent_fk": 49,
+    "title": "Wait for com.itorah.chavrusachat to idle",
+    "startTime": 817171542.9449999,
+    "finishTime": 817171542.977
+  },
+  {
+    "rowid": 127,
+    "parent_fk": 49,
+    "title": "Find the \"hanlin-chat-input\" TextView",
+    "startTime": 817171542.977,
+    "finishTime": 817171544.9330001
+  },
+  {
+    "rowid": 126,
+    "parent_fk": 49,
+    "title": "Check for interrupting elements affecting \"hanlin-chat-input\" TextView",
+    "startTime": 817171544.9330001,
+    "finishTime": 817171545.122
+  },
+  {
+    "rowid": 107,
+    "parent_fk": 49,
+    "title": "Synthesize event",
+    "startTime": 817171545.1240001,
+    "finishTime": 817171549.7969999
+  },
+  {
+    "rowid": 125,
+    "parent_fk": 107,
+    "title": "Get number of matches for: Elements containing elements matching predicate 'hasKeyboardFocus == 1'",
+    "startTime": 817171545.1259999,
+    "finishTime": 817171546.3210001
+  },
+  {
+    "rowid": 124,
+    "parent_fk": 107,
+    "title": "Requesting snapshot of accessibility hierarchy for app with pid 74334",
+    "startTime": 817171546.322,
+    "finishTime": 817171546.4849999
+  },
+  {
+    "rowid": 123,
+    "parent_fk": 107,
+    "title": "Requesting snapshot of accessibility hierarchy for app with pid 74334",
+    "startTime": 817171547.1530001,
+    "finishTime": 817171547.279
+  },
+  {
+    "rowid": 122,
+    "parent_fk": 107,
+    "title": "Requesting snapshot of accessibility hierarchy for app with pid 74334",
+    "startTime": 817171547.2820001,
+    "finishTime": 817171547.391
+  },
+  {
+    "rowid": 121,
+    "parent_fk": 107,
+    "title": "Find: Descendants matching type TextView",
+    "startTime": 817171547.391,
+    "finishTime": 817171547.3929999
+  },
+  {
+    "rowid": 120,
+    "parent_fk": 107,
+    "title": "Find: Elements matching predicate '\"hanlin-chat-input\" IN identifiers'",
+    "startTime": 817171547.3929999,
+    "finishTime": 817171547.3929999
+  },
+  {
+    "rowid": 119,
+    "parent_fk": 107,
+    "title": "Requesting snapshot of accessibility hierarchy for app with pid 74334",
+    "startTime": 817171547.3959999,
+    "finishTime": 817171547.549
+  },
+  {
+    "rowid": 118,
+    "parent_fk": 107,
+    "title": "Find: Descendants matching type TextView",
+    "startTime": 817171547.55,
+    "finishTime": 817171547.5510001
+  },
+  {
+    "rowid": 117,
+    "parent_fk": 107,
+    "title": "Requesting snapshot of accessibility hierarchy for app with pid 74334",
+    "startTime": 817171547.5539999,
+    "finishTime": 817171547.7290001
+  },
+  {
+    "rowid": 116,
+    "parent_fk": 107,
+    "title": "Requesting snapshot of accessibility hierarchy for app with pid 74334",
+    "startTime": 817171547.872,
+    "finishTime": 817171548.0239999
+  },
+  {
+    "rowid": 115,
+    "parent_fk": 107,
+    "title": "Requesting snapshot of accessibility hierarchy for app with pid 74334",
+    "startTime": 817171548.7390001,
+    "finishTime": 817171548.8699999
+  },
+  {
+    "rowid": 114,
+    "parent_fk": 107,
+    "title": "Requesting snapshot of accessibility hierarchy for app with pid 74334",
+    "startTime": 817171548.8829999,
+    "finishTime": 817171549.049
+  },
+  {
+    "rowid": 113,
+    "parent_fk": 107,
+    "title": "Find: Descendants matching type TextView",
+    "startTime": 817171549.049,
+    "finishTime": 817171549.05
+  },
+  {
+    "rowid": 112,
+    "parent_fk": 107,
+    "title": "Find: Elements matching predicate '\"hanlin-chat-input\" IN identifiers'",
+    "startTime": 817171549.0510001,
+    "finishTime": 817171549.0510001
+  },
+  {
+    "rowid": 111,
+    "parent_fk": 107,
+    "title": "Requesting snapshot of accessibility hierarchy for app with pid 74334",
+    "startTime": 817171549.056,
+    "finishTime": 817171549.237
+  },
+  {
+    "rowid": 110,
+    "parent_fk": 107,
+    "title": "Find: Descendants matching type TextView",
+    "startTime": 817171549.237,
+    "finishTime": 817171549.2379999
+  },
+  {
+    "rowid": 109,
+    "parent_fk": 107,
+    "title": "Requesting snapshot of accessibility hierarchy for app with pid 74334",
+    "startTime": 817171549.2420001,
+    "finishTime": 817171549.368
+  },
+  {
+    "rowid": 108,
+    "parent_fk": 107,
+    "title": "Failed: Neither element nor any descendant has keyboard focus. Event dispatch snapshot: TextView, {{91.0, 732.0}, {282.0, 38.0}}, identifier: 'hanlin-chat-input', value: Ask any questions.\nElement debug description:\nAttributes: TextView, 0x10b781400, {{91.0, 732.0}, {282.0, 38.0}}, identifier: 'hanlin-chat-input', value: Ask any questions.\nElement subtree:\n \u2192TextView, 0x10b781400, {{91.0, 732.0}, {282.0, 38.0}}, identifier: 'hanlin-chat-input', value: Ask any questions.\n    Other, 0x10b781540, {{91.0, 732.0}, {0.0, 0.0}}, identifier: '_UITextSelectionRangeAdjustmentContainerView'\n      Other, 0x10b781680, {{91.0, 732.0}, {0.0, 0.0}}, identifier: 'com.apple.text.grabber.leading'\n        Other, 0x10b7817c0, {{83.8, 718.5}, {16.5, 16.5}}\n        Other, 0x10b781900, {{91.0, 732.0}, {2.0, 0.0}}\n      Other, 0x10b781a40, {{91.0, 732.0}, {0.0, 0.0}}, identifier: 'com.apple.text.grabber.leading'\n        Other, 0x10b781b80, {{83.8, 718.5}, {16.5, 16.5}}\n        Other, 0x10b781cc0, {{91.0, 732.0}, {2.0, 0.0}}\n    Other, 0x10b781e00, {{340.0, 732.0}, {30.0, 38.0}}, label: 'Vertical scroll bar, 1 page', value: 0%\n      Other, 0x10b781f40, {{367.0, 731.0}, {3.0, 36.0}}\n    Other, 0x10b782080, {{91.0, 748.0}, {282.0, 19.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%\n      Other, 0x10b7821c0, {{94.0, 764.0}, {276.0, 3.0}}\nPath to element:\n \u2192Application, 0x10b753980, pid: 74334, label: 'Hanlin AI'\n  \u21b3Window (Main), 0x10b753ac0, {{0.0, 0.0}, {402.0, 874.0}}\n   \u21b3Other, 0x10b751900, {{0.0, 0.0}, {402.0, 874.0}}\n    \u21b3Other, 0x10b751a40, {{0.0, 0.0}, {402.0, 874.0}}\n     \u21b3Other, 0x10b751b80, {{0.0, 0.0}, {402.0, 874.0}}\n      \u21b3Other, 0x10b751180, {{0.0, 0.0}, {402.0, 874.0}}\n       \u21b3Other, 0x10b7512c0, {{0.0, 0.0}, {402.0, 874.0}}\n        \u21b3Other, 0x10b753200, {{0.0, 0.0}, {402.0, 874.0}}\n         \u21b3Other, 0x10b753340, {{0.0, 0.0}, {402.0, 874.0}}\n          \u21b3Other, 0x10b753480, {{0.0, 0.0}, {402.0, 874.0}}\n           \u21b3Other, 0x10b7535c0, {{0.0, 0.0}, {402.0, 874.0}}\n            \u21b3Other, 0x10b753700, {{0.0, 0.0}, {402.0, 897.0}}, identifier: 'hanlin-compact-chat-workspace'\n             \u21b3Other, 0x10b7812c0, {{88.0, 732.0}, {285.0, 86.0}}, identifier: 'hanlin-composer-surface'\n              \u21b3TextView, 0x10b781400, {{91.0, 732.0}, {282.0, 38.0}}, identifier: 'hanlin-chat-input', value: Ask any questions.\nQuery chain:\n \u2192Find: Target Application 'com.itorah.chavrusachat'\n  Output: {\n    Application, 0x10a83e440, pid: 74334, label: 'Hanlin AI'\n  }\n  \u21aa\ufe0eFind: Descendants matching type TextView\n    Output: {\n      TextView, 0x10a8330c0, {{91.0, 732.0}, {282.0, 38.0}}, identifier: 'hanlin-chat-input', value: Ask any questions.\n    }\n    \u21aa\ufe0eFind: Elements matching predicate '\"hanlin-chat-input\" IN identifiers'\n      Output: {\n        TextView, 0x10a813700, {{91.0, 732.0}, {282.0, 38.0}}, identifier: 'hanlin-chat-input', value: Ask any questions.\n      }\n      \u21aa\ufe0eFind: First Match\n        Output: {\n          TextView, 0x10b7503c0, {{91.0, 732.0}, {282.0, 38.0}}, identifier: 'hanlin-chat-input', value: Ask any questions.\n        }\n",
+    "startTime": 817171549.7409999,
+    "finishTime": 817171549.796
+  },
+  {
+    "rowid": 106,
+    "parent_fk": 49,
+    "title": "Wait for com.itorah.chavrusachat to idle",
+    "startTime": 817171549.8010001,
+    "finishTime": 817171549.8069999
+  },
+  {
+    "rowid": 82,
+    "parent_fk": 49,
+    "title": "Retrying `Type 'PAIRED' into \"hanlin-chat-input\" TextView` (attempt #2)",
+    "startTime": 817171550.813,
+    "finishTime": 817171555.7969999
+  },
+  {
+    "rowid": 105,
+    "parent_fk": 82,
+    "title": "Wait for com.itorah.chavrusachat to idle",
+    "startTime": 817171550.8139999,
+    "finishTime": 817171550.8169999
+  },
+  {
+    "rowid": 104,
+    "parent_fk": 82,
+    "title": "Find the \"hanlin-chat-input\" TextView",
+    "startTime": 817171550.8180001,
+    "finishTime": 817171552.1129999
+  },
+  {
+    "rowid": 103,
+    "parent_fk": 82,
+    "title": "Check for interrupting elements affecting \"hanlin-chat-input\" TextView",
+    "startTime": 817171552.1129999,
+    "finishTime": 817171552.2880001
+  },
+  {
+    "rowid": 84,
+    "parent_fk": 82,
+    "title": "Synthesize event",
+    "startTime": 817171552.289,
+    "finishTime": 817171555.79
+  },
+  {
+    "rowid": 102,
+    "parent_fk": 84,
+    "title": "Get number of matches for: Elements containing elements matching predicate 'hasKeyboardFocus == 1'",
+    "startTime": 817171552.29,
+    "finishTime": 817171552.963
+  },
+  {
+    "rowid": 101,
+    "parent_fk": 84,
+    "title": "Requesting snapshot of accessibility hierarchy for app with pid 74334",
+    "startTime": 817171552.963,
+    "finishTime": 817171553.0469999
+  },
+  {
+    "rowid": 100,
+    "parent_fk": 84,
+    "title": "Requesting snapshot of accessibility hierarchy for app with pid 74334",
+    "startTime": 817171554.1029999,
+    "finishTime": 817171554.22
+  },
+  {
+    "rowid": 99,
+    "parent_fk": 84,
+    "title": "Requesting snapshot of accessibility hierarchy for app with pid 74334",
+    "startTime": 817171554.224,
+    "finishTime": 817171554.338
+  },
+  {
+    "rowid": 98,
+    "parent_fk": 84,
+    "title": "Find: Descendants matching type TextView",
+    "startTime": 817171554.338,
+    "finishTime": 817171554.339
+  },
+  {
+    "rowid": 97,
+    "parent_fk": 84,
+    "title": "Find: Elements matching predicate '\"hanlin-chat-input\" IN identifiers'",
+    "startTime": 817171554.339,
+    "finishTime": 817171554.3399999
+  },
+  {
+    "rowid": 96,
+    "parent_fk": 84,
+    "title": "Requesting snapshot of accessibility hierarchy for app with pid 74334",
+    "startTime": 817171554.342,
+    "finishTime": 817171554.473
+  },
+  {
+    "rowid": 95,
+    "parent_fk": 84,
+    "title": "Find: Descendants matching type TextView",
+    "startTime": 817171554.474,
+    "finishTime": 817171554.474
+  },
+  {
+    "rowid": 94,
+    "parent_fk": 84,
+    "title": "Requesting snapshot of accessibility hierarchy for app with pid 74334",
+    "startTime": 817171554.477,
+    "finishTime": 817171554.595
+  },
+  {
+    "rowid": 93,
+    "parent_fk": 84,
+    "title": "Requesting snapshot of accessibility hierarchy for app with pid 74334",
+    "startTime": 817171554.654,
+    "finishTime": 817171554.776
+  },
+  {
+    "rowid": 92,
+    "parent_fk": 84,
+    "title": "Requesting snapshot of accessibility hierarchy for app with pid 74334",
+    "startTime": 817171555.207,
+    "finishTime": 817171555.3310001
+  },
+  {
+    "rowid": 91,
+    "parent_fk": 84,
+    "title": "Requesting snapshot of accessibility hierarchy for app with pid 74334",
+    "startTime": 817171555.335,
+    "finishTime": 817171555.4649999
+  },
+  {
+    "rowid": 90,
+    "parent_fk": 84,
+    "title": "Find: Descendants matching type TextView",
+    "startTime": 817171555.4649999,
+    "finishTime": 817171555.4660001
+  },
+  {
+    "rowid": 89,
+    "parent_fk": 84,
+    "title": "Find: Elements matching predicate '\"hanlin-chat-input\" IN identifiers'",
+    "startTime": 817171555.4660001,
+    "finishTime": 817171555.4660001
+  },
+  {
+    "rowid": 88,
+    "parent_fk": 84,
+    "title": "Requesting snapshot of accessibility hierarchy for app with pid 74334",
+    "startTime": 817171555.4679999,
+    "finishTime": 817171555.6029999
+  },
+  {
+    "rowid": 87,
+    "parent_fk": 84,
+    "title": "Find: Descendants matching type TextView",
+    "startTime": 817171555.6040001,
+    "finishTime": 817171555.605
+  },
+  {
+    "rowid": 86,
+    "parent_fk": 84,
+    "title": "Requesting snapshot of accessibility hierarchy for app with pid 74334",
+    "startTime": 817171555.6070001,
+    "finishTime": 817171555.7219999
+  },
+  {
+    "rowid": 85,
+    "parent_fk": 84,
+    "title": "Failed: Neither element nor any descendant has keyboard focus. Event dispatch snapshot: TextView, {{91.0, 732.0}, {282.0, 38.0}}, identifier: 'hanlin-chat-input', value: Ask any questions.\nElement debug description:\nAttributes: TextView, 0x1073a3700, {{91.0, 732.0}, {282.0, 38.0}}, identifier: 'hanlin-chat-input', value: Ask any questions.\nElement subtree:\n \u2192TextView, 0x1073a3700, {{91.0, 732.0}, {282.0, 38.0}}, identifier: 'hanlin-chat-input', value: Ask any questions.\n    Other, 0x1073a3980, {{91.0, 732.0}, {0.0, 0.0}}, identifier: '_UITextSelectionRangeAdjustmentContainerView'\n      Other, 0x1073a3340, {{91.0, 732.0}, {0.0, 0.0}}, identifier: 'com.apple.text.grabber.leading'\n        Other, 0x1073a35c0, {{83.8, 718.5}, {16.5, 16.5}}\n        Other, 0x1073a3480, {{91.0, 732.0}, {2.0, 0.0}}\n      Other, 0x1073a2f80, {{91.0, 732.0}, {0.0, 0.0}}, identifier: 'com.apple.text.grabber.leading'\n        Other, 0x10b7f2d00, {{83.8, 718.5}, {16.5, 16.5}}\n        Other, 0x10b7f2e40, {{91.0, 732.0}, {2.0, 0.0}}\n    Other, 0x10b7f2f80, {{340.0, 732.0}, {30.0, 38.0}}, label: 'Vertical scroll bar, 1 page', value: 0%\n      Other, 0x10b7f2800, {{367.0, 731.0}, {3.0, 36.0}}\n    Other, 0x10b7f2940, {{91.0, 748.0}, {282.0, 19.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%\n      Other, 0x10b7f2bc0, {{94.0, 764.0}, {276.0, 3.0}}\nPath to element:\n \u2192Application, 0x10a851680, pid: 74334, label: 'Hanlin AI'\n  \u21b3Window (Main), 0x10a8517c0, {{0.0, 0.0}, {402.0, 874.0}}\n   \u21b3Other, 0x10a851a40, {{0.0, 0.0}, {402.0, 874.0}}\n    \u21b3Other, 0x10a851b80, {{0.0, 0.0}, {402.0, 874.0}}\n     \u21b3Other, 0x10a851cc0, {{0.0, 0.0}, {402.0, 874.0}}\n      \u21b3Other, 0x10a851e00, {{0.0, 0.0}, {402.0, 874.0}}\n       \u21b3Other, 0x10a851f40, {{0.0, 0.0}, {402.0, 874.0}}\n        \u21b3Other, 0x10a852080, {{0.0, 0.0}, {402.0, 874.0}}\n         \u21b3Other, 0x10a8521c0, {{0.0, 0.0}, {402.0, 874.0}}\n          \u21b3Other, 0x10a852300, {{0.0, 0.0}, {402.0, 874.0}}\n           \u21b3Other, 0x10a852440, {{0.0, 0.0}, {402.0, 874.0}}\n            \u21b3Other, 0x10a852580, {{0.0, 0.0}, {402.0, 897.0}}, identifier: 'hanlin-compact-chat-workspace'\n             \u21b3Other, 0x1073a3200, {{88.0, 732.0}, {285.0, 86.0}}, identifier: 'hanlin-composer-surface'\n              \u21b3TextView, 0x1073a3700, {{91.0, 732.0}, {282.0, 38.0}}, identifier: 'hanlin-chat-input', value: Ask any questions.\nQuery chain:\n \u2192Find: Target Application 'com.itorah.chavrusachat'\n  Output: {\n    Application, 0x10a813d40, pid: 74334, label: 'Hanlin AI'\n  }\n  \u21aa\ufe0eFind: Descendants matching type TextView\n    Output: {\n      TextView, 0x10a83d040, {{91.0, 732.0}, {282.0, 38.0}}, identifier: 'hanlin-chat-input', value: Ask any questions.\n    }\n    \u21aa\ufe0eFind: Elements matching predicate '\"hanlin-chat-input\" IN identifiers'\n      Output: {\n        TextView, 0x10a81c000, {{91.0, 732.0}, {282.0, 38.0}}, identifier: 'hanlin-chat-input', value: Ask any questions.\n      }\n      \u21aa\ufe0eFind: First Match\n        Output: {\n          TextView, 0x10a85ef80, {{91.0, 732.0}, {282.0, 38.0}}, identifier: 'hanlin-chat-input', value: Ask any questions.\n        }\n",
+    "startTime": 817171555.783,
+    "finishTime": 817171555.7880001
+  },
+  {
+    "rowid": 83,
+    "parent_fk": 82,
+    "title": "Wait for com.itorah.chavrusachat to idle",
+    "startTime": 817171555.792,
+    "finishTime": 817171555.7969999
+  },
+  {
+    "rowid": 58,
+    "parent_fk": 49,
+    "title": "Retrying `Type 'PAIRED' into \"hanlin-chat-input\" TextView` (attempt #3)",
+    "startTime": 817171556.8010001,
+    "finishTime": 817171559.355
+  },
+  {
+    "rowid": 81,
+    "parent_fk": 58,
+    "title": "Wait for com.itorah.chavrusachat to idle",
+    "startTime": 817171556.802,
+    "finishTime": 817171556.8039999
+  },
+  {
+    "rowid": 80,
+    "parent_fk": 58,
+    "title": "Find the \"hanlin-chat-input\" TextView",
+    "startTime": 817171556.8039999,
+    "finishTime": 817171557.5239999
+  },
+  {
+    "rowid": 79,
+    "parent_fk": 58,
+    "title": "Check for interrupting elements affecting \"hanlin-chat-input\" TextView",
+    "startTime": 817171557.5250001,
+    "finishTime": 817171557.612
+  },
+  {
+    "rowid": 60,
+    "parent_fk": 58,
+    "title": "Synthesize event",
+    "startTime": 817171557.6129999,
+    "finishTime": 817171559.3499999
+  },
+  {
+    "rowid": 78,
+    "parent_fk": 60,
+    "title": "Get number of matches for: Elements containing elements matching predicate 'hasKeyboardFocus == 1'",
+    "startTime": 817171557.6159999,
+    "finishTime": 817171557.79
+  },
+  {
+    "rowid": 77,
+    "parent_fk": 60,
+    "title": "Requesting snapshot of accessibility hierarchy for app with pid 74334",
+    "startTime": 817171557.7909999,
+    "finishTime": 817171557.8859999
+  },
+  {
+    "rowid": 76,
+    "parent_fk": 60,
+    "title": "Requesting snapshot of accessibility hierarchy for app with pid 74334",
+    "startTime": 817171558.0699999,
+    "finishTime": 817171558.167
+  },
+  {
+    "rowid": 75,
+    "parent_fk": 60,
+    "title": "Requesting snapshot of accessibility hierarchy for app with pid 74334",
+    "startTime": 817171558.178,
+    "finishTime": 817171558.2909999
+  },
+  {
+    "rowid": 74,
+    "parent_fk": 60,
+    "title": "Find: Descendants matching type TextView",
+    "startTime": 817171558.2909999,
+    "finishTime": 817171558.292
+  },
+  {
+    "rowid": 73,
+    "parent_fk": 60,
+    "title": "Find: Elements matching predicate '\"hanlin-chat-input\" IN identifiers'",
+    "startTime": 817171558.292,
+    "finishTime": 817171558.292
+  },
+  {
+    "rowid": 72,
+    "parent_fk": 60,
+    "title": "Requesting snapshot of accessibility hierarchy for app with pid 74334",
+    "startTime": 817171558.2950001,
+    "finishTime": 817171558.3889999
+  },
+  {
+    "rowid": 71,
+    "parent_fk": 60,
+    "title": "Find: Descendants matching type TextView",
+    "startTime": 817171558.3900001,
+    "finishTime": 817171558.3900001
+  },
+  {
+    "rowid": 70,
+    "parent_fk": 60,
+    "title": "Requesting snapshot of accessibility hierarchy for app with pid 74334",
+    "startTime": 817171558.392,
+    "finishTime": 817171558.4979999
+  },
+  {
+    "rowid": 69,
+    "parent_fk": 60,
+    "title": "Requesting snapshot of accessibility hierarchy for app with pid 74334",
+    "startTime": 817171558.5439999,
+    "finishTime": 817171558.6459999
+  },
+  {
+    "rowid": 68,
+    "parent_fk": 60,
+    "title": "Requesting snapshot of accessibility hierarchy for app with pid 74334",
+    "startTime": 817171558.838,
+    "finishTime": 817171558.9560001
+  },
+  {
+    "rowid": 67,
+    "parent_fk": 60,
+    "title": "Requesting snapshot of accessibility hierarchy for app with pid 74334",
+    "startTime": 817171558.96,
+    "finishTime": 817171559.059
+  },
+  {
+    "rowid": 66,
+    "parent_fk": 60,
+    "title": "Find: Descendants matching type TextView",
+    "startTime": 817171559.059,
+    "finishTime": 817171559.06
+  },
+  {
+    "rowid": 65,
+    "parent_fk": 60,
+    "title": "Find: Elements matching predicate '\"hanlin-chat-input\" IN identifiers'",
+    "startTime": 817171559.06,
+    "finishTime": 817171559.06
+  },
+  {
+    "rowid": 64,
+    "parent_fk": 60,
+    "title": "Requesting snapshot of accessibility hierarchy for app with pid 74334",
+    "startTime": 817171559.062,
+    "finishTime": 817171559.204
+  },
+  {
+    "rowid": 63,
+    "parent_fk": 60,
+    "title": "Find: Descendants matching type TextView",
+    "startTime": 817171559.208,
+    "finishTime": 817171559.208
+  },
+  {
+    "rowid": 62,
+    "parent_fk": 60,
+    "title": "Requesting snapshot of accessibility hierarchy for app with pid 74334",
+    "startTime": 817171559.21,
+    "finishTime": 817171559.3139999
+  },
+  {
+    "rowid": 61,
+    "parent_fk": 60,
+    "title": "Failed: Neither element nor any descendant has keyboard focus. Event dispatch snapshot: TextView, {{91.0, 732.0}, {282.0, 38.0}}, identifier: 'hanlin-chat-input', value: Ask any questions.\nElement debug description:\nAttributes: TextView, 0x10a85ebc0, {{91.0, 732.0}, {282.0, 38.0}}, identifier: 'hanlin-chat-input', value: Ask any questions.\nElement subtree:\n \u2192TextView, 0x10a85ebc0, {{91.0, 732.0}, {282.0, 38.0}}, identifier: 'hanlin-chat-input', value: Ask any questions.\n    Other, 0x10a85ea80, {{91.0, 732.0}, {0.0, 0.0}}, identifier: '_UITextSelectionRangeAdjustmentContainerView'\n      Other, 0x10a85e6c0, {{91.0, 732.0}, {0.0, 0.0}}, identifier: 'com.apple.text.grabber.leading'\n        Other, 0x10a85e440, {{83.8, 718.5}, {16.5, 16.5}}\n        Other, 0x10a85e580, {{91.0, 732.0}, {2.0, 0.0}}\n      Other, 0x10a85e300, {{91.0, 732.0}, {0.0, 0.0}}, identifier: 'com.apple.text.grabber.leading'\n        Other, 0x10b750140, {{83.8, 718.5}, {16.5, 16.5}}\n        Other, 0x10b750000, {{91.0, 732.0}, {2.0, 0.0}}\n    Other, 0x10b751400, {{340.0, 732.0}, {30.0, 38.0}}, label: 'Vertical scroll bar, 1 page', value: 0%\n      Other, 0x10b752e40, {{367.0, 731.0}, {3.0, 36.0}}\n    Other, 0x10b752a80, {{91.0, 748.0}, {282.0, 19.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%\n      Other, 0x10b751900, {{94.0, 764.0}, {276.0, 3.0}}\nPath to element:\n \u2192Application, 0x10a83fc00, pid: 74334, label: 'Hanlin AI'\n  \u21b3Window (Main), 0x10a83f700, {{0.0, 0.0}, {402.0, 874.0}}\n   \u21b3Other, 0x10aad8280, {{0.0, 0.0}, {402.0, 874.0}}\n    \u21b3Other, 0x10aad83c0, {{0.0, 0.0}, {402.0, 874.0}}\n     \u21b3Other, 0x10aad8000, {{0.0, 0.0}, {402.0, 874.0}}\n      \u21b3Other, 0x1073a3200, {{0.0, 0.0}, {402.0, 874.0}}\n       \u21b3Other, 0x1073a3700, {{0.0, 0.0}, {402.0, 874.0}}\n        \u21b3Other, 0x1073a3980, {{0.0, 0.0}, {402.0, 874.0}}\n         \u21b3Other, 0x1073a2f80, {{0.0, 0.0}, {402.0, 874.0}}\n          \u21b3Other, 0x1073a3340, {{0.0, 0.0}, {402.0, 874.0}}\n           \u21b3Other, 0x1073a3480, {{0.0, 0.0}, {402.0, 874.0}}\n            \u21b3Other, 0x1073a35c0, {{0.0, 0.0}, {402.0, 897.0}}, identifier: 'hanlin-compact-chat-workspace'\n             \u21b3Other, 0x10a85ed00, {{88.0, 732.0}, {285.0, 86.0}}, identifier: 'hanlin-composer-surface'\n              \u21b3TextView, 0x10a85ebc0, {{91.0, 732.0}, {282.0, 38.0}}, identifier: 'hanlin-chat-input', value: Ask any questions.\nQuery chain:\n \u2192Find: Target Application 'com.itorah.chavrusachat'\n  Output: {\n    Application, 0x10a83f0c0, pid: 74334, label: 'Hanlin AI'\n  }\n  \u21aa\ufe0eFind: Descendants matching type TextView\n    Output: {\n      TextView, 0x10aae7840, {{91.0, 732.0}, {282.0, 38.0}}, identifier: 'hanlin-chat-input', value: Ask any questions.\n    }\n    \u21aa\ufe0eFind: Elements matching predicate '\"hanlin-chat-input\" IN identifiers'\n      Output: {\n        TextView, 0x10a81c280, {{91.0, 732.0}, {282.0, 38.0}}, identifier: 'hanlin-chat-input', value: Ask any questions.\n      }\n      \u21aa\ufe0eFind: First Match\n        Output: {\n          TextView, 0x10a832580, {{91.0, 732.0}, {282.0, 38.0}}, identifier: 'hanlin-chat-input', value: Ask any questions.\n        }\n",
+    "startTime": 817171559.348,
+    "finishTime": 817171559.3499999
+  },
+  {
+    "rowid": 59,
+    "parent_fk": 58,
+    "title": "Wait for com.itorah.chavrusachat to idle",
+    "startTime": 817171559.352,
+    "finishTime": 817171559.355
+  },
+  {
+    "rowid": 57,
+    "parent_fk": 49,
+    "title": "Requesting snapshot of accessibility hierarchy for app with pid 74334",
+    "startTime": 817171559.359,
+    "finishTime": 817171559.444
+  },
+  {
+    "rowid": 50,
+    "parent_fk": 49,
+    "title": "Tear Down",
+    "startTime": 817171560.754,
+    "finishTime": 817171563.0869999
+  },
+  {
+    "rowid": 56,
+    "parent_fk": 50,
+    "title": "Find the Target Application 'com.itorah.chavrusachat'",
+    "startTime": 817171560.7550001,
+    "finishTime": 817171560.8440001
+  },
+  {
+    "rowid": 55,
+    "parent_fk": 50,
+    "title": "Added attachment named 'AI-paired-product'",
+    "startTime": 817171561.208,
+    "finishTime": 817171561.208
+  },
+  {
+    "rowid": 54,
+    "parent_fk": 50,
+    "title": "Requesting snapshot of accessibility hierarchy for app with pid 74334",
+    "startTime": 817171561.2090001,
+    "finishTime": 817171561.369
+  },
+  {
+    "rowid": 53,
+    "parent_fk": 50,
+    "title": "Requesting snapshot of accessibility hierarchy for app with pid 74334",
+    "startTime": 817171561.79,
+    "finishTime": 817171561.912
+  },
+  {
+    "rowid": 52,
+    "parent_fk": 50,
+    "title": "Added attachment named 'AI-paired-accessibility'",
+    "startTime": 817171561.9189999,
+    "finishTime": 817171561.9200001
+  },
+  {
+    "rowid": 51,
+    "parent_fk": 50,
+    "title": "Terminate com.itorah.chavrusachat:74334",
+    "startTime": 817171561.9200001,
+    "finishTime": 817171562.927
+  }
+]

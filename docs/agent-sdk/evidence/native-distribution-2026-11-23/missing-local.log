@@ -1,0 +1,7 @@
+Fetching http://127.0.0.1:45433/missing-local.git
+Fetched http://127.0.0.1:45433/missing-local.git (0.04s)
+Computing version for http://127.0.0.1:45433/missing-local.git
+Computed http://127.0.0.1:45433/missing-local.git at 1.0.0 (0.27s)
+Creating working copy for http://127.0.0.1:45433/missing-local.git
+Working copy of http://127.0.0.1:45433/missing-local.git resolved at 1.0.0
+error: local binary target 'ios_system' at '/mnt/development/projects/hanlin-sdk-artifacts-20261123/product-closure-proof/missing-local-consumer/.build/checkouts/missing-local/Artifacts/Missing.xcframework' does not contain a binary artifact.

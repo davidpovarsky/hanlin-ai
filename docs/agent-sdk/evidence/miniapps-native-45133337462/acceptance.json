@@ -1,0 +1,27 @@
+{
+  "status": "BUILD_FAILED",
+  "ui": "NOT_RUN",
+  "build": "EXECUTED_FAIL",
+  "physical_device": "NOT_RUN",
+  "provisioned_distribution": "NOT_RUN",
+  "scope": "Two shipping targets, actual App Group, original Host request/return/cancel, original ScriptUI import and private-data transfer/rollback",
+  "model_boundary": "Existing opt-in simulator HTTP acceptance provider; all Host, permission, OS transitions, storage and result handling are real.",
+  "started_at": 1795422658.6583092,
+  "test_scope": "cross_product",
+  "selected_tests": [
+    "AI_HLYUITests/HanlinPairedProductUITests"
+  ],
+  "sha": "6772dce6304fc6761a2200314f7d2020dc782e47",
+  "simulator": "1511FA8F-8B17-4F33-9694-86B8E46B039E",
+  "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-27-2",
+  "device": "iPhone 18 Pro",
+  "mini_build": "EXECUTED_PASS",
+  "ai_build": "EXECUTED_FAIL",
+  "error": "xcodebuild exit 65; inspect ai-build.log",
+  "diagnostic_errors": [],
+  "result_bundles": [
+    "AIBuild.xcresult",
+    "MiniBuild.xcresult"
+  ],
+  "duration_seconds": 3075.615841627121
+}

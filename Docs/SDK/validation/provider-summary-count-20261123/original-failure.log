@@ -1,0 +1,24 @@
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.6912355Z ........F.F
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.6912901Z ======================================================================
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.6914230Z FAIL: test_gate_fails_on_76_pass_1_not_run (Scripts.CI.test_generate_provider_conformance_summary.TestGateEnforcement.test_gate_fails_on_76_pass_1_not_run)
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.6915683Z When 76 tests PASS and 1 is NOT_RUN, --gate must exit with code 1.
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.6916443Z ----------------------------------------------------------------------
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.6917129Z Traceback (most recent call last):
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.6923464Z   File "/home/runner/work/hanlin-ai/hanlin-ai/Scripts/CI/test_generate_provider_conformance_summary.py", line 287, in test_gate_fails_on_76_pass_1_not_run
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.6924278Z     self.assertEqual(len(tests), 77)
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.6924609Z AssertionError: 78 != 77
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.6924770Z 
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.6924904Z ======================================================================
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.6925622Z FAIL: test_gate_passes_when_all_pass (Scripts.CI.test_generate_provider_conformance_summary.TestGateEnforcement.test_gate_passes_when_all_pass)
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.6926342Z When all tests pass, --gate must exit with code 0.
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.6926731Z ----------------------------------------------------------------------
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.6927360Z Traceback (most recent call last):
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.6928132Z   File "/home/runner/work/hanlin-ai/hanlin-ai/Scripts/CI/test_generate_provider_conformance_summary.py", line 318, in test_gate_passes_when_all_pass
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.6928876Z     self.assertEqual(len(tests), 77)
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.6929175Z AssertionError: 78 != 77
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.6929339Z 
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.6929493Z ----------------------------------------------------------------------
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.6929849Z Ran 11 tests in 0.125s
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.6930003Z 
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.6930102Z FAILED (failures=2)
+Verify provider conformance test summary	Generate provider conformance summary	2026-11-23T16:52:30.7026868Z ##[error]Process completed with exit code 1.

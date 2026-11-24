@@ -3,22 +3,22 @@ import HanlinPlatformContracts
 import HanlinPresentationKit
 import MCP
 
-struct MCPToolDescriptor: Codable, Hashable, Sendable, Identifiable {
-    var id: String { exposedName }
-    var serverID: UUID
-    var serverSlug: String
-    var serverDisplayName: String
-    var originalName: String
-    var exposedName: String
-    var title: String?
-    var summary: String?
-    var inputSchemaJSON: Data
-    var originalInputSchemaVerified: Bool? = nil
-    var readOnlyHint: Bool? = nil
-    var destructiveHint: Bool? = nil
-    var requiresApproval: Bool? = nil
-    var executionPresentation: HanlinToolExecutionPresentationDescriptor? = nil
-    var presentationIcons: HanlinToolIconSet? = nil
+public struct MCPToolDescriptor: Codable, Hashable, Sendable, Identifiable {
+    public var id: String { exposedName }
+    public internal(set) var serverID: UUID
+    public internal(set) var serverSlug: String
+    public internal(set) var serverDisplayName: String
+    public internal(set) var originalName: String
+    public internal(set) var exposedName: String
+    public internal(set) var title: String?
+    public internal(set) var summary: String?
+    public internal(set) var inputSchemaJSON: Data
+    public internal(set) var originalInputSchemaVerified: Bool? = nil
+    public internal(set) var readOnlyHint: Bool? = nil
+    public internal(set) var destructiveHint: Bool? = nil
+    public internal(set) var requiresApproval: Bool? = nil
+    public internal(set) var executionPresentation: HanlinToolExecutionPresentationDescriptor? = nil
+    public internal(set) var presentationIcons: HanlinToolIconSet? = nil
 
     /// The pinned MCP SDK already decodes these declarations. Retain only
     /// bounded HTTPS artwork from this exact tool and its connected server.
@@ -32,7 +32,7 @@ struct MCPToolDescriptor: Codable, Hashable, Sendable, Identifiable {
         return HanlinToolIconSet(tool: admitted(tool), server: admitted(server))
     }
 
-    func openAIToolSchema() throws -> [String: Any] {
+    public func openAIToolSchema() throws -> [String: Any] {
         let parameters = try JSONSerialization.jsonObject(with: inputSchemaJSON)
         return [
             "type": "function",

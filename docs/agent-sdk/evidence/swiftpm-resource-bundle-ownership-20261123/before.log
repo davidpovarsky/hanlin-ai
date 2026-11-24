@@ -1,0 +1,20 @@
+test_identical_swiftpm_main_and_framework_bundle_copies_are_validated (Scripts.SDK.tests.test_bundle_resources.BundleResourceTests.test_identical_swiftpm_main_and_framework_bundle_copies_are_validated) ... ERROR
+
+======================================================================
+ERROR: test_identical_swiftpm_main_and_framework_bundle_copies_are_validated (Scripts.SDK.tests.test_bundle_resources.BundleResourceTests.test_identical_swiftpm_main_and_framework_bundle_copies_are_validated)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/Scripts/SDK/tests/test_bundle_resources.py", line 76, in test_identical_swiftpm_main_and_framework_bundle_copies_are_validated
+    result = resources.validate(root, app, "AI_Hanlin", manifest)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/Scripts/SDK/verify_bundle_resources.py", line 39, in validate
+    bundle = module_bundle(app, module)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/Scripts/SDK/verify_bundle_resources.py", line 23, in module_bundle
+    raise ValueError(f"Expected one {module} SDK resource bundle, found {len(matches)}: "
+ValueError: Expected one AI_Hanlin SDK resource bundle, found 2: Frameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinSDK_AI_Hanlin.bundle, HanlinSDK_AI_Hanlin.bundle
+
+----------------------------------------------------------------------
+Ran 1 test in 0.007s
+
+FAILED (errors=1)

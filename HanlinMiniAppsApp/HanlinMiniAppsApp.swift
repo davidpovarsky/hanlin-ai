@@ -1,3 +1,5 @@
+import AppIntents
+import HanlinScriptExtensions
 import SwiftUI
 import HanlinProductSplit
 
@@ -126,7 +128,7 @@ private struct HanlinMiniAppsReadyRoot: View {
     @Environment(\.scenePhase) private var scenePhase
 
     var body: some View {
-        MiniAppsLibrary(services: .connected(to: provider))
+        MiniAppsLibrary(provider: provider)
                 .task {
                     await AppRuntimeCore.shared.handleForegroundIfLaunched()
                 }
@@ -135,5 +137,12 @@ private struct HanlinMiniAppsReadyRoot: View {
                         Task { await AppRuntimeCore.shared.handleForegroundIfLaunched() }
                     }
                 }
+    }
+}
+
+/// Index the original shared actions in the foreground app that executes them.
+struct HanlinMiniAppsIntents: AppIntentsPackage {
+    static var includedPackages: [any AppIntentsPackage.Type] {
+        [HanlinScriptExtensionIntentsPackage.self]
     }
 }

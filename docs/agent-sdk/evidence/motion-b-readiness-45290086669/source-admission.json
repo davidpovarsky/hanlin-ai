@@ -1,0 +1,18 @@
+{
+  "time": "2026-11-23T23:26:36.061438+00:00",
+  "branch": "codex/hanlin-sdk-motion-b-containment-20261123",
+  "parent": "4cfa52348e80cf635caf04c541fd84ee1ddb50bd",
+  "expected_tree": "80429251d1e8e3b121d344345802a37db31dfc0c",
+  "authorization": "Root reviewed exact80429251 tree; one original B-only dispatch after remote identity/admission",
+  "native_acceptance": "NOT_RUN",
+  "no_full_checkout_created": true,
+  "source": "51f56b49fe7add4eafa1d8b2443f1adf3b82157f",
+  "remote_equal": true,
+  "tree": "80429251d1e8e3b121d344345802a37db31dfc0c",
+  "capacity": {
+    "path": "/mnt/development/projects/worktrees/hanlin-sdk-motion-resume-20261123/build/motion-b-containment-20261123",
+    "device": 2064,
+    "free_bytes": 2111791104,
+    "owned_tmpdir": "/mnt/development/projects/worktrees/hanlin-sdk-motion-resume-20261123/build/motion-b-containment-20261123/tmp"
+  }
+}

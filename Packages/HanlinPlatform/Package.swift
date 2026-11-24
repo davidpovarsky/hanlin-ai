@@ -9,6 +9,7 @@ let package = Package(
         .iOS("27.0")
     ],
     products: [
+        .library(name: "HanlinExtensionContracts", targets: ["HanlinExtensionContracts"]),
         .library(
             name: "HanlinPlatformContracts",
             targets: ["HanlinPlatformContracts"]
@@ -66,14 +67,15 @@ let package = Package(
         .package(url: "https://github.com/SwiftyJSON/SwiftyJSON.git", exact: "5.0.1"),
         .package(
             url: "https://github.com/davidpovarsky/swift-ai-sdk.git",
-            revision: "e7bf34111e603ca977becd007dd4e5bb109af857"
+            revision: "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8"
         ),
         .package(
             url: "https://github.com/weichsel/ZIPFoundation.git",
-            .upToNextMinor(from: "0.9.19")
+            exact: "0.9.19"
         )
     ],
     targets: [
+        .target(name: "HanlinExtensionContracts"),
         .target(
             name: "HanlinPlatformContracts",
             resources: [
@@ -223,6 +225,7 @@ let package = Package(
         .target(
             name: "HanlinScriptExtensions",
             dependencies: [
+                "HanlinExtensionContracts",
                 .product(name: "SwiftyJSON", package: "SwiftyJSON"),
                 "HanlinPlatformContracts",
                 "HanlinScriptContracts",

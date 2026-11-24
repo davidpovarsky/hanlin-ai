@@ -1,3 +1,4 @@
+import HanlinLocalization
 import Foundation
 import HanlinPlatformContracts
 import SwiftUI
@@ -29,14 +30,14 @@ struct SkillExecutionPlanSection: View {
 
     var body: some View {
         Section(SkillL10n.string("Compatibility")) {
-            Picker("Action", selection: $path) {
-                Text("Instructions").tag("")
+            Picker(hanlin: "Action", selection: $path) {
+                Text("Instructions", bundle: HanlinLocalization.bundle).tag("")
                 ForEach(scripts) { Text($0.relativePath).tag($0.relativePath) }
             }
             .pickerStyle(.menu)
             .accessibilityIdentifier("hanlin-skill-action-picker")
             if !path.isEmpty {
-                Picker("Engine", selection: $engine) {
+                Picker(hanlin: "Engine", selection: $engine) {
                     ForEach(RuntimeKind.allCases) { Text($0.rawValue).tag($0) }
                 }
                 .pickerStyle(.menu)
@@ -46,9 +47,9 @@ struct SkillExecutionPlanSection: View {
                 .accessibilityValue(status)
                 .accessibilityIdentifier("hanlin-skill-detail-compatibility-status")
             if let plan {
-                LabeledContent("Source", value: String(plan.action.actionFingerprint.prefix(12)))
+                LabeledContent(hanlin: "Source", value: String(plan.action.actionFingerprint.prefix(12)))
                 if let binding = plan.binding {
-                    LabeledContent("Observed engine", value: binding.engineVersion)
+                    LabeledContent(hanlin: "Observed engine", value: binding.engineVersion)
                 }
                 ForEach(plan.missingRequirements, id: \.id) { requirement in
                     Label(requirement.key.name, systemImage: "exclamationmark.circle")
@@ -80,16 +81,16 @@ struct SkillExecutionPlanSection: View {
             }
             ForEach(Array(findings.prefix(64).enumerated()), id: \.offset) { _, finding in
                 VStack(alignment: .leading) {
-                    Text("\(finding.source.file):\(finding.source.line):\(finding.source.utf8Column)")
+                    Text("\(finding.source.file):\(finding.source.line):\(finding.source.utf8Column)", bundle: HanlinLocalization.bundle)
                     Text(finding.value ?? finding.reason).textSelection(.enabled)
-                    Text("\(finding.confidence.rawValue) · \(finding.reason)").foregroundStyle(.secondary)
+                    Text("\(finding.confidence.rawValue) · \(finding.reason)", bundle: HanlinLocalization.bundle).foregroundStyle(.secondary)
                 }.font(HanlinTypography.caption)
             }
             LabeledContent(SkillL10n.string("Last tested"), value: lastTest)
                 .accessibilityValue(lastTest)
                 .accessibilityIdentifier("hanlin-skill-detail-compatibility-last-tested")
             if let receipt {
-                Text("\(receiptIsCurrent ? receipt.status.rawValue : "Historical \(receipt.status.rawValue) — source or engine changed") · \(receipt.result.executionID.uuidString.prefix(8))")
+                Text("\(receiptIsCurrent ? receipt.status.rawValue : "Historical \(receipt.status.rawValue) — source or engine changed") · \(receipt.result.executionID.uuidString.prefix(8))", bundle: HanlinLocalization.bundle)
                     .font(HanlinTypography.caption).textSelection(.enabled)
                     .accessibilityIdentifier("hanlin-skill-execution-receipt")
             }
@@ -100,21 +101,21 @@ struct SkillExecutionPlanSection: View {
                     .disabled(working || !SkillStore.shared.isSkillEnabled(id: skillID))
             }
             if !path.isEmpty {
-                Button("Run with approval") { confirmRun = true }
+                Button(hanlin: "Run with approval") { confirmRun = true }
                     .accessibilityIdentifier("hanlin-skill-run")
                     .disabled(working || !SkillStore.shared.isSkillEnabled(id: skillID)
                               || originalPolicy?.invocation.userInvocable == false)
             }
             if working {
                 ProgressView()
-                Button("Cancel", role: .cancel) { operation?.cancel() }
+                Button(hanlin: "Cancel", role: .cancel) { operation?.cancel() }
                     .accessibilityIdentifier("hanlin-skill-cancel-execution")
             }
             if !output.isEmpty {
                 Text(output).font(HanlinTypography.body.monospaced()).textSelection(.enabled)
                     .accessibilityIdentifier("hanlin-skill-execution-output")
             }
-            Text("Compatibility is evaluated without running imported code. Run executes code with this app’s access after your approval.")
+            Text("Compatibility is evaluated without running imported code. Run executes code with this app’s access after your approval.", bundle: HanlinLocalization.bundle)
                 .font(HanlinTypography.footnote).foregroundStyle(.secondary)
         }
         .task(id: selectionID) {
@@ -142,10 +143,10 @@ struct SkillExecutionPlanSection: View {
                let kind = SkillRuntimeRequirements.kind(suggestion) { engine = kind }
         }
         .onDisappear { revision = UUID(); operation?.cancel() }
-        .confirmationDialog("Run imported code?", isPresented: $confirmRun, titleVisibility: .visible) {
-            Button("Allow once") { begin(run: true) }
-            Button("Cancel", role: .cancel) {}
-        } message: { Text("\(skillID.rawValue) · \(path) · \(engine.rawValue)") }
+        .confirmationDialog(Text("Run imported code?", bundle: HanlinLocalization.bundle), isPresented: $confirmRun, titleVisibility: .visible) {
+            Button(hanlin: "Allow once") { begin(run: true) }
+            Button(hanlin: "Cancel", role: .cancel) {}
+        } message: { Text("\(skillID.rawValue) · \(path) · \(engine.rawValue)", bundle: HanlinLocalization.bundle) }
     }
 
     private var status: String {

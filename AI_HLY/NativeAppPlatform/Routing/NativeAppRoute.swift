@@ -1,45 +1,9 @@
+// Original shared implementation is owned by the SDK.
+import HanlinAgentActivityCore
+
+typealias NativeAppRoute = HanlinAgentActivityCore.NativeAppRoute
+typealias NativeAppRoutePayload = HanlinAgentActivityCore.NativeAppRoutePayload
 import Foundation
-
-struct NativeAppRoute: Identifiable, Codable, Hashable {
-    var id: String {
-        [appID, screen, stablePayloadID].filter { !$0.isEmpty }.joined(separator: ":")
-    }
-
-    let appID: String
-    let screen: String
-    let payload: NativeAppRoutePayload
-
-    init(appID: String, screen: String, payload: NativeAppRoutePayload = .empty) {
-        self.appID = appID
-        self.screen = screen
-        self.payload = payload
-    }
-
-    private var stablePayloadID: String {
-        switch payload {
-        case .empty:
-            return ""
-        case .dictionary(let values):
-            return values.sorted { $0.key < $1.key }
-                .map { "\($0.key)=\($0.value)" }
-                .joined(separator: "&")
-        }
-    }
-}
-
-enum NativeAppRoutePayload: Codable, Hashable {
-    case empty
-    case dictionary([String: String])
-
-    var values: [String: String] {
-        switch self {
-        case .empty: return [:]
-        case .dictionary(let values): return values
-        }
-    }
-
-    func string(_ key: String) -> String? { values[key] }
-}
 
 extension NativeAppRoute {
     static func textStudioEditor(text: String) -> NativeAppRoute {

@@ -1,0 +1,7 @@
+test_shared_source_cache_borrows_existing_objects_and_preserves_canonical_origin (__main__.SDKInstallTests.test_shared_source_cache_borrows_existing_objects_and_preserves_canonical_origin) ... ok
+test_revision_update_reuses_the_canonical_checkout (__main__.SDKInstallTests.test_revision_update_reuses_the_canonical_checkout) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 2.809s
+
+OK

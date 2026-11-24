@@ -1,0 +1,231 @@
+[
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-paired3-corrections-20261123/build/paired3-corrections-20261123/admission-plan.json",
+    "path": "admission-plan.json",
+    "sha256": "f453bb4f8d95550fb2526318cb48f0734eefe69960cddebcd9658217cbd93512",
+    "bytes": 4569,
+    "transform": "none"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-paired3-corrections-20261123/build/paired3-corrections-20261123/dispatch-request.json",
+    "path": "dispatch-request.json",
+    "sha256": "9d4ef847342b2b4cb64ce0f99c61c6c0246e09bdb1fd0d08d62b7b95ece4e809",
+    "bytes": 466,
+    "transform": "none"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-paired3-corrections-20261123/build/paired3-corrections-20261123/dispatch-intent.json",
+    "path": "dispatch-intent.json",
+    "sha256": "cf8ae215802f52a0247919ce1dd95ed5965a3d5e957beff8affdb4a887e8af7e",
+    "bytes": 508,
+    "transform": "none"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-paired3-corrections-20261123/build/paired3-corrections-20261123/dispatch-ack.json",
+    "path": "dispatch-ack.json",
+    "sha256": "43b0314686ffd5041e49904eebe4b87e151c2b09b19ebde0fa099c37bfe84382",
+    "bytes": 94,
+    "transform": "none"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-paired3-corrections-20261123/build/paired3-corrections-20261123/dispatch-reconciled-readback.json",
+    "path": "dispatch-reconciled-readback.json",
+    "sha256": "26edb8169a7134ec8e07473fade2b75b92eef5e84897dd0d935af63fc8d96435",
+    "bytes": 15343,
+    "transform": "none"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-paired3-corrections-20261123/build/paired3-corrections-20261123/terminal-run.json",
+    "path": "terminal-run.json",
+    "sha256": "b70c83566e9df28d29394971facbe624d653f3e267fe4404d3f114247929432a",
+    "bytes": 14406,
+    "transform": "none"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-paired3-corrections-20261123/build/paired3-corrections-20261123/terminal-jobs.json",
+    "path": "terminal-jobs.json",
+    "sha256": "2217ad4c6f722b1c8c53738919535d5801917f0530c60c928893287370aac309",
+    "bytes": 10490,
+    "transform": "none"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-paired3-corrections-20261123/build/paired3-corrections-20261123/terminal-artifacts.json",
+    "path": "terminal-artifacts.json",
+    "sha256": "a1905a3f12f299037cc5ad50de895ec41196d6d263de368eb16a7bf70a33b015",
+    "bytes": 947,
+    "transform": "none"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-paired3-corrections-20261123/build/paired3-corrections-20261123/terminal-annotations.json",
+    "path": "terminal-annotations.json",
+    "sha256": "e05025689c957d82c9ddcdf275bdc7224f4b5c5925bd813664ecb9f9a22c0503",
+    "bytes": 372,
+    "transform": "none"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-paired3-corrections-20261123/build/paired3-corrections-20261123/artifact-verification.json",
+    "path": "artifact-verification.json",
+    "sha256": "635c4afbb14ad09b6e7a241b79888433689784a05b1eb371b4ca24c63e3e786f",
+    "bytes": 273,
+    "transform": "none"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-paired3-corrections-20261123/build/paired3-corrections-20261123/collection-storage-status.json",
+    "path": "collection-storage-status.json",
+    "sha256": "b462ddfb0bf9482049c74d836ef5f33f669d461ff67c7e5c081d972ea8fd1992",
+    "bytes": 334,
+    "transform": "none"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-paired3-corrections-20261123/build/paired3-corrections-20261123/collector-ended.json",
+    "path": "collector-ended.json",
+    "sha256": "30fe1464d7fdace95a5ff2f9f5e61b16ecc2e6f586c75deba6f38a3a37d792c4",
+    "bytes": 89,
+    "transform": "none"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-paired3-corrections-20261123/build/paired3-corrections-20261123/watch-start.json",
+    "path": "watch-start.json",
+    "sha256": "8eb3c74d9894035608ea0b8ab94dd445381f8aabe33aeabbdb0f4ab6d8b0b06f",
+    "bytes": 359,
+    "transform": "none"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-paired3-corrections-20261123/build/paired3-corrections-20261123/watch-ended.json",
+    "path": "watch-ended.json",
+    "sha256": "cb6668d87a91c6817ed7bddb378a665765c6a5ceb6aeba636836bbd17c0d3834",
+    "bytes": 110,
+    "transform": "none"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-paired3-corrections-20261123/build/paired3-corrections-20261123/old-observer-termination.json",
+    "path": "old-observer-termination.json",
+    "sha256": "3b804cb13b9e4ccf654943e48bf023d6346f511b442459b930c4e03b76c2437d",
+    "bytes": 865,
+    "transform": "none"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-paired3-corrections-20261123/build/paired3-corrections-20261123/watch-continuation-1-start.json",
+    "path": "watch-continuation-1-start.json",
+    "sha256": "02d1f8e61a99f21d9520274d6322d9c214e64790cbdfa1b9a4b2dbd1fbf08838",
+    "bytes": 252,
+    "transform": "none"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-paired3-corrections-20261123/build/paired3-corrections-20261123/watch-continuation-1-ended.json",
+    "path": "watch-continuation-1-ended.json",
+    "sha256": "705634410e6b5c339c147df6a4cc1ba70fd7477d989af399c30990535809820b",
+    "bytes": 126,
+    "transform": "none"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-paired3-corrections-20261123/build/paired3-corrections-20261123/native/app-split-evidence/paired-product/acceptance.json",
+    "path": "native-acceptance.json",
+    "sha256": "97984edd2026f645cac7a5fa59992c09c0dc77bac96bc8dfcbfc1310f499132a",
+    "bytes": 8121,
+    "transform": "none"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-paired3-corrections-20261123/build/paired3-corrections-20261123/native/app-split-evidence/paired-product/test-summary.json",
+    "path": "native-test-summary.json",
+    "sha256": "5a16e45e7ab99f62f821068faaf2e3eac418040d9de04fb641f6a4a48380eeb8",
+    "bytes": 5692,
+    "transform": "none"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-paired3-corrections-20261123/build/paired3-corrections-20261123/native/app-split-evidence/paired-product/test-nodes.json",
+    "path": "native-test-nodes.json",
+    "sha256": "8f0495525daf3bf93a791d1c6caa094600bdb2f3db7773cc42df194cbac5c2f8",
+    "bytes": 7289,
+    "transform": "none"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-paired3-corrections-20261123/build/paired3-corrections-20261123/native/app-split-evidence/paired-product/fixture-provenance.json",
+    "path": "native-fixture-provenance.json",
+    "sha256": "d7964adf2b95e70088f40d6673e3f471d054be148c24d06eb080872d5fb163fb",
+    "bytes": 543,
+    "transform": "none"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-paired3-corrections-20261123/build/paired3-corrections-20261123/native/app-split-evidence/paired-product/source-sha.txt",
+    "path": "native-source-sha.txt",
+    "sha256": "7e0aede0fddfa01af849fd0a769f49e8271ead20295dc74cb64cc4cccd6b1ea6",
+    "bytes": 41,
+    "transform": "none"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-paired3-corrections-20261123/build/paired3-corrections-20261123/native/app-split-evidence/foreground-reuse.json",
+    "path": "foreground-reuse.json",
+    "sha256": "3d69524aeaa179f68c9ded8fefa47e66868da4939073e44db9a95d48aecf7d5c",
+    "bytes": 633,
+    "transform": "none"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-paired3-corrections-20261123/build/paired3-corrections-20261123/native/app-split-evidence/host-reuse.json",
+    "path": "host-reuse.json",
+    "sha256": "5ab5133e9ee2099ef9fdce656923c29684082b0bcb249308c001a25d93716ee2",
+    "bytes": 903,
+    "transform": "none"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-paired3-corrections-20261123/build/paired3-corrections-20261123/native/app-split-evidence/paired-product/paired-tests.log",
+    "path": "original-paired-tests.log.gz",
+    "original_sha256": "9afa482b79d02e0465564973b249db6c0076ff96aca2b71329b12eda0bd7752a",
+    "original_bytes": 71120,
+    "stored_sha256": "9c1d48ae383c11e0841d83609f1db0ad84195f76e3338cd1095d04a98773b38d",
+    "transform": "lossless gzip, mtime0"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-paired3-corrections-20261123/build/paired3-corrections-20261123/cancel-focus-review/attachment-1.txt",
+    "path": "cancel-focus/attachment-1.txt.gz",
+    "original_sha256": "28ebb0356f049a8be467898921f9f3f4b4d6934cc056d67a9f34ad92813d9b03",
+    "original_bytes": 15779,
+    "stored_sha256": "beec65e66a26e0071e95097083695a11ab978defc7b2870cd5e27edb41be9a49",
+    "transform": "lossless gzip, mtime0"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-paired3-corrections-20261123/build/paired3-corrections-20261123/cancel-focus-review/attachment-4.plist",
+    "path": "cancel-focus/attachment-4.plist.gz",
+    "original_sha256": "7ea8f4d9a292d08bd3a3386693393fb357ec1b9ada62a5912b40cfec66c50373",
+    "original_bytes": 1881,
+    "stored_sha256": "13bd14230d093c48a61be65b32a563e93307031f5e625ce7b538919602c7b4b3",
+    "transform": "lossless gzip, mtime0"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-paired3-corrections-20261123/build/paired3-corrections-20261123/cancel-focus-review/attachment-5.plist",
+    "path": "cancel-focus/attachment-5.plist.gz",
+    "original_sha256": "48ed6c6db24ce92b5718f17c0c410dd422ed6aa70d2ff0c9d7c2c9a2f6fa2fa6",
+    "original_bytes": 1881,
+    "stored_sha256": "344fed14b778493530cfc8dfec0c0d2a0d417f51ee7da7a13e8428269e79e119",
+    "transform": "lossless gzip, mtime0"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-paired3-corrections-20261123/build/paired3-corrections-20261123/cancel-focus-review/attachment-6.txt",
+    "path": "cancel-focus/attachment-6.txt.gz",
+    "original_sha256": "0d25b39205affabd623c6a5e288d801c7c6553a731d942b4f67a7570027e51ae",
+    "original_bytes": 10075,
+    "stored_sha256": "f2ae8fc25076f8e47e1da1f485a96b602db3fef1a7d9748268e7d1ccc6aeebb4",
+    "transform": "lossless gzip, mtime0"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-paired3-corrections-20261123/build/paired3-corrections-20261123/cancel-focus-review/attachment-7.png",
+    "path": "cancel-focus/attachment-7.png",
+    "sha256": "821d13237b9d3d9b26bf45329a1f97a656fd2f3e857ab19858fb1dfc191a3a8b",
+    "bytes": 210511,
+    "transform": "none"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-paired3-corrections-20261123/build/paired3-corrections-20261123/cancel-focus-review/attachment-index.json",
+    "path": "cancel-focus/attachment-index.json",
+    "sha256": "000027b1bda47c04ad7b400ec0d7b32b04e295e2ba9f0e9b7aaaf81b6528220c",
+    "bytes": 4495,
+    "transform": "none"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-paired3-corrections-20261123/build/paired3-corrections-20261123/cancel-focus-review/cancel-input-contact.jpg",
+    "path": "cancel-focus/cancel-input-contact.jpg",
+    "sha256": "d27f1389a7030d27b4605e2d752447da1fbd2fbd931cbd28f6b43c20a82998a0",
+    "bytes": 102788,
+    "transform": "none"
+  }
+]

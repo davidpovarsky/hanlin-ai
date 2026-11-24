@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "Scripts.CI.Tests.test_chat_localization_bundles",
+    "-v"
+  ],
+  "exit": 0,
+  "validatorSHA256": "315c436ea9024ccf5dee53429e3d050ef1f0260f8c992df0b854b5323bb2b6a4",
+  "sharedVerifierSHA256": "321fd8cf770b4461de8514394c1a1397539c483b893a96890a25f9a0c6f5bb5d"
+}

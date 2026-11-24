@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-11-23T10:49:46.420760+00:00",
+  "run_id": 45157020895,
+  "run_attempt": 1,
+  "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45157020895",
+  "head_sha": "646b22918b1c56e5a6a16addcb1d3ebd982d3846",
+  "workflow_result": "failure",
+  "native_job_id": 137632459705,
+  "native_job_name": "Original Motion visual capture (C)",
+  "native_job_result": "cancelled",
+  "native_job_started_at": "2026-11-23T10:32:27Z",
+  "native_job_completed_at": "2026-11-23T10:47:27Z",
+  "runner_id": 0,
+  "runner_name": "",
+  "steps_executed": 0,
+  "artifact_count": 0,
+  "annotation": "The job was not acquired by Runner of type hosted even after multiple attempts",
+  "selected_scope": "visual-c",
+  "selected_tests": [
+    "ChatMotionProofUITests/MotionUITests/testCReadableLongContentRTLTypeOrientationAndCompletion"
+  ],
+  "C_result": "NOT_RUN",
+  "C_visual_result": "NOT_CAPTURED",
+  "A_B_D": "NOT_SELECTED",
+  "dispatch_posts": 1,
+  "watcher": {
+    "job_id": "job_c6999ad41ae9",
+    "owner": "sdk_presentation",
+    "finite_seconds": 3300,
+    "ended_at": "2026-11-23T10:47:58.671356+00:00"
+  },
+  "retained_source_inputs": [
+    {
+      "path": "docs/chat-motion/MotionUI/MotionUITests.swift",
+      "bytes": 24196,
+      "sha256": "ed053de2cf5013ef001fc198f4d730f7d8d7bf9d55991e784dbc454b90c46724"
+    },
+    {
+      "path": "docs/chat-motion/run_motion_ui.sh",
+      "bytes": 9866,
+      "sha256": "60d90bab987b83ea985bfe1fbed6e59abbe8bc3ad3c81a81871e919a55133d4d"
+    },
+    {
+      "path": ".github/workflows/build-ios26-unsigned-ipa.yml",
+      "bytes": 207406,
+      "sha256": "d8523462b044a399724eca2b510827939f6ed896f7cb4ff7cd8af0b3b5d63fd1"
+    }
+  ],
+  "build_macro_dependency_resource_provenance": "NOT_RUN: no native runner was assigned",
+  "native_screenshots_video_xcresult": "NOT_PRODUCED",
+  "product_animation_change": false,
+  "prior_C_automated_pass": {
+    "run_id": 45133334293,
+    "head_sha": "6772dce6304fc6761a2200314f7d2020dc782e47",
+    "status": "EXECUTED_PASS",
+    "landscape_visual": "UNRESOLVED_CLIPPED_APP_BOUNDARY_CAPTURE"
+  },
+  "retry_submitted": false
+}

@@ -1,0 +1,16 @@
+{
+  "utc": "2026-11-23T23:46:24.090170+00:00",
+  "reviewer": "/root/release_hosts",
+  "status": "NO_CONCRETE_BLOCKER",
+  "source_sha256": "0ca416d1359901e9d0bad818a7bd3691126c690c4c36ad7f1a8b31aa6e5c634d",
+  "source_review_sha256": "4f8b11170ad28e32b121f490c0c52da88f03d3d641b072d5b378311fd8fb3393",
+  "protected_current_files_independently_verified": 13,
+  "scope": "Two native privacy command allowances become120s, with monotonic elapsed and configured timeout recorded for each attempted command.",
+  "retained": "Owned simulator, manifest, host bundle, install180s, command order, exactly one command invocation and fail-before-tests on nonzero.",
+  "not_claimed": [
+    "TCC root cause",
+    "native runtime resolution",
+    "any current product test PASS"
+  ],
+  "test_replay": false
+}

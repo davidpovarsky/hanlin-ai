@@ -1,3 +1,4 @@
+import HanlinLocalization
 import HanlinPresentationKit
 import SwiftUI
 import UIKit
@@ -37,7 +38,7 @@ private struct ChatMessagePreviewSource: ViewModifier {
             .background { ChatMessagePreviewAnchor(reference: anchor) }
             .contentShape(Rectangle())
             .onLongPressGesture(minimumDuration: 1.0, maximumDistance: 10) { present() }
-            .accessibilityAction(named: Text("Message actions")) { present() }
+            .accessibilityAction(named: Text("Message actions", bundle: HanlinLocalization.bundle)) { present() }
     }
 
     private func present() {

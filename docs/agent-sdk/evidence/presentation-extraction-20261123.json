@@ -1,0 +1,80 @@
+{
+  "baseSHA": "603576fa0aec5af1eea403d402f9ff676f3f09c8",
+  "status": "SOURCE_IMPLEMENTED_APPLE_ACCEPTANCE_PENDING",
+  "portable": {
+    "status": "EXECUTED_PASS",
+    "testCount": 14,
+    "originalAssertionTests": 12,
+    "publicHostIsolationTests": 2,
+    "toolchain": "Swift 6.4.3 RELEASE, Swift 6 language mode, aarch64 Linux",
+    "command": "swift test --package-path /mnt/development/projects/evidence/hanlin-sdk-ui-20261123/PortableAutoFollow --parallel",
+    "logSHA256": "b2e5da37c2e0543398f5f96f672b1a3a544fb5eb24e481350db62e32c9ff2133",
+    "inputs": [
+      {
+        "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinPresentationDiagnostics.swift",
+        "sha256": "30db36f46bc50709716c0422f0ac19d74e09404d5ce197e97fe6c6a65cb8afd5"
+      },
+      {
+        "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Scrolling/ChatAutoFollowController.swift",
+        "sha256": "bcd1d6ff927c54bb9adad2a331a82d2607fd8d0a35023b7f8f2a042636a28173"
+      },
+      {
+        "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Scrolling/ChatAutoFollowValidation.swift",
+        "sha256": "acff6190820537c5c751f24d7809faa471f6370db86601f3683aa4a1d176a6e4"
+      },
+      {
+        "path": "AI_HLYTests/ChatAutoFollowTests.swift",
+        "sha256": "c36ac17d0ac2503376ac757cfdaf1b5e4022cc473d8aa8ecc1a5a1968b37b03a",
+        "adaptation": "Only import AI_Hanlin -> import HanlinChatUI; original 12 tests/assertions unchanged; no @testable used."
+      },
+      {
+        "path": "Packages/HanlinPresentationSDK/Tests/HanlinChatUITests/PresentationHostIsolationTests.swift",
+        "sha256": "def2dd095687b7a987d0bffa5871af9cddaecda23ae7c541e9849d9722ec9011"
+      }
+    ]
+  },
+  "assetParity": [
+    {
+      "file": "HanlinCodeFenceAssets.json",
+      "bytes": 849,
+      "sha256": "83fa172883bf5bcb46546cc9d080b9be3550ca348c01ad894d437c37df1b168d",
+      "status": "BYTE_IDENTICAL_MOVE"
+    },
+    {
+      "file": "HanlinCodeFenceRenderer.css",
+      "bytes": 18118,
+      "sha256": "e6804c928b954fe3d2945c45b6c45c1c57b631712914c203974f9933216b1648",
+      "status": "BYTE_IDENTICAL_MOVE"
+    },
+    {
+      "file": "HanlinCodeFenceRenderer.js",
+      "bytes": 5413583,
+      "sha256": "4a07872b5b1f65ac9003185bd48d258b0a4a0d9590a208bf0efb38bfcba6052e",
+      "status": "BYTE_IDENTICAL_MOVE"
+    },
+    {
+      "file": "HanlinCodeFenceRenderer.js.LEGAL.txt",
+      "bytes": 1811,
+      "sha256": "722c5c4b2a604b4fb9a53cf03bed346136f00e4e26d8f0972a2e27538482798e",
+      "status": "BYTE_IDENTICAL_MOVE"
+    },
+    {
+      "file": "HanlinCodeFenceThirdPartyLicenses.txt",
+      "bytes": 233740,
+      "sha256": "f399606a509628e5e55c41ddbc5464ccf3b648b358c8aa18f13935b24107ec45",
+      "status": "BYTE_IDENTICAL_MOVE"
+    }
+  ],
+  "codeFenceStaging": {
+    "status": "PASSED",
+    "authenticatedInputCount": 18,
+    "manifestSHA256": "be7c77b73c6746deedf161bd93cf22aa524c5078e0b1302757d65290ff77deab"
+  },
+  "swiftSyntax": "PASSED_NOT_APPLE_TYPECHECK",
+  "remaining": [
+    "Root must wire HanlinChatUI resources and HanlinChatUITests into existing package manifest.",
+    "Root must inject original app diagnostics into ChatView auto-follow initializer and ChatMarkdownView code-fence factory.",
+    "Focused Apple compilation and unchanged original WebKit/UIKit tests must execute because module and resource boundaries changed.",
+    "Full original transcript/activity/A2UI extraction and real consumer acceptance are not completed by this lane."
+  ]
+}

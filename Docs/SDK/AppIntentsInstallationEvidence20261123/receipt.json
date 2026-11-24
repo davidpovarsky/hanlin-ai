@@ -1,0 +1,23 @@
+{
+  "schema": "hanlin-app-intents-installation-v1",
+  "source_dependency": "b6c3d250ce28149a3170f7a04bdb021c8784d285",
+  "change": "Select original host-resource directory for HanlinScriptingWidgets, then verify canonical projection during install/check. Source-only execution path unchanged.",
+  "original_failure": "Two methods: missing table for both WidgetUI/Application and stale projected translations incorrectly admitted; original after-pin table missing. 3 failing assertions plus1 missing-file error.",
+  "actual_after": {
+    "methods": 2,
+    "failures": 0,
+    "errors": 0,
+    "seconds": 2.917
+  },
+  "original_methods_reexecuted": 0,
+  "native_builds_or_tests": 0,
+  "scope": "Actual real-Git sparse installer and pinned original projection generator; fixture Swift targets/translation values are explicit controller inputs, not original app/native acceptance.",
+  "hashes": {
+    "Scripts/SDK/install.py": "4cf99955317a83e3d882834fe0235f505af41e335fd1e84e475524081d301677",
+    "Scripts/SDK/tests/test_app_intents_install.py": "f1c9903bd3cb3786102c884c4651ee6d5a14840e6c41b04b4874feeb3b8b2ffc",
+    "Scripts/SDK/generate_app_intents_resources.py": "8a540888de190dcec5d9e80a7127eccf48322473213cd78a157a6574a72dfd9f",
+    "Docs/SDK/AppIntentsInstallationEvidence20261123/before.log": "b1cadec29b389bdf2966f7dfa49d9f453d0b5abe76fa15d30bf83b6d5e25abcc",
+    "Docs/SDK/AppIntentsInstallationEvidence20261123/after.log": "a497994c868802e98ccfbad1d47bceddce3dfda469b5cef7dc4fa3df6e7798c5",
+    "Docs/SDK/AppIntentsInstallationEvidence20261123/before-after.json": "346d72f83760f4568ee4543ca2dc008af7a27d843055799ade0efd76fce986c7"
+  }
+}

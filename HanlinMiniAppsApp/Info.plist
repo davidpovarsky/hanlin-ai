@@ -6,6 +6,12 @@
 	<array>
 		<string>$(PRODUCT_BUNDLE_IDENTIFIER).runtime.*</string>
 	</array>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>en</string>
+		<string>he</string>
+		<string>zh-Hans</string>
+	</array>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
@@ -66,6 +72,7 @@
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>chavrusachat</string>
+		<string>maktabah</string>
 	</array>
 	<key>CFBundleURLTypes</key>
 	<array>
@@ -80,5 +87,14 @@
 			</array>
 		</dict>
 	</array>
+	<key>HanlinExtensionHost</key>
+	<dict>
+		<key>AppGroupIdentifier</key>
+		<string>group.com.itorah.chavrusachat</string>
+		<key>WidgetKind</key>
+		<string>com.hanlin.scripting.widget</string>
+		<key>NotificationCategoryIdentifier</key>
+		<string>CHAVRUSA_REMINDER</string>
+	</dict>
 </dict>
 </plist>

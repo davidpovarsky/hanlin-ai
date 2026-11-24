@@ -207,7 +207,7 @@ public final class HanlinSkillCatalog {
                         case .resource(let path):
                             let providerBundle: Bundle? = (type(of: provider) as? AnyClass).map { Bundle(for: $0) }
                             if let url = providerBundle?.url(forResource: path, withExtension: nil)
-                                ?? Bundle.main.url(forResource: path, withExtension: nil),
+                                ?? HanlinApplicationResources.bundle.url(forResource: path, withExtension: nil),
                                let content = try? String(contentsOf: url, encoding: .utf8) {
                                 return content
                             }
@@ -254,7 +254,7 @@ public final class HanlinSkillCatalog {
                                let content = try? String(contentsOf: resURL, encoding: .utf8) {
                                 return content
                             }
-                            if let url = Bundle.main.url(forResource: path, withExtension: nil),
+                            if let url = HanlinApplicationResources.bundle.url(forResource: path, withExtension: nil),
                                let content = try? String(contentsOf: url, encoding: .utf8) {
                                 return content
                             }
@@ -409,7 +409,7 @@ public final class HanlinSkillCatalog {
         if let storeURL = SkillStore.shared.safeResourceURL(for: skillID, relativePath: relativePath) {
             return storeURL
         }
-        if let bundleURL = Bundle.main.url(forResource: relativePath, withExtension: nil) {
+        if let bundleURL = HanlinApplicationResources.bundle.url(forResource: relativePath, withExtension: nil) {
             return bundleURL
         }
         return nil
@@ -462,7 +462,7 @@ public final class HanlinSkillCatalog {
             return text
         case .resource(let path):
             // Check main bundle or return title + summary fallback
-            if let url = Bundle.main.url(forResource: path, withExtension: nil),
+            if let url = HanlinApplicationResources.bundle.url(forResource: path, withExtension: nil),
                let content = try? String(contentsOf: url, encoding: .utf8) {
                 return content
             }

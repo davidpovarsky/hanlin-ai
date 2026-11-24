@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="TestResults" errors="0" tests="28" failures="0" skipped="0" time="0.0132243">
+    <testcase classname="HanlinAgentCoreTests.NavigationTransitionTests" name="requestTargetBlockAndOriginMustAllMatchExactly()" time="0.0108463" />
+    <testcase classname="HanlinAgentCoreTests.NavigationTransitionTests" name="successorCannotChangeAccountWorkspaceBackendAppSceneOrConversation()" time="0.0112616" />
+    <testcase classname="HanlinAgentCoreTests.NavigationTransitionTests" name="returnedSuccessorMustBeRegisteredByTheLiveHost()" time="0.0076373" />
+    <testcase classname="HanlinAgentCoreTests.NavigationTransitionTests" name="thrownPostEffectResultCannotBeRetriedEvenIfOldContextReappears()" time="0.0091371" />
+    <testcase classname="HanlinAgentCoreTests.NavigationTransitionTests" name="queuedCannotIssueASuccessor()" time="0.0072248" />
+    <testcase classname="HanlinAgentCoreTests.NavigationTransitionTests" name="versionAloneCannotInventTheHostCapability()" time="0.0083125" />
+    <testcase classname="HanlinAgentCoreTests.NavigationTransitionTests" name="successorRevokedDuringItsContextAwaitCannotReceiveAck()" time="0.0089421" />
+    <testcase classname="HanlinAgentCoreTests.NavigationTransitionTests" name="inFlightTransitionBlocksAnotherOriginalSessionOperation()" time="0.0090004" />
+    <testcase classname="HanlinAgentCoreTests.NavigationTransitionTests" name="alreadyStaleAndRevokedSessionsNeverNavigate()" time="0.0087079" />
+    <testcase classname="HanlinAgentCoreTests.NavigationTransitionTests" name="cancelledReceiptCannotAuthorizeItsUndeliveredSuccessor()" time="0.0097075" />
+    <testcase classname="HanlinAgentCoreTests.NavigationTransitionTests" name="revocationDuringInitialContextAwaitPreventsHostEntry()" time="0.0085395" />
+    <testcase classname="HanlinAgentCoreTests.NavigationTransitionTests" name="stablePresentationRetainsTheOriginalSession()" time="0.0079078" />
+    <testcase classname="HanlinAgentCoreTests.NavigationTransitionTests" name="originalRequestAndFreshSuccessorAreAcknowledgedExactly()" time="0.0075302" />
+    <testcase classname="HanlinAgentCoreTests.NavigationTransitionTests" name="unrelatedAuthorityChangeAfterEffectCannotReceiveAck()" time="0.0095957" />
+    <testcase classname="HanlinAgentCoreTests.NavigationTransitionTests" name="receiptRoundTripPreservesCorrelationWithoutGrantingCurrentAuthority()" time="0.0081545" />
+    <testcase classname="HanlinAgentCoreTests.NavigationTransitionTests" name="successorRequiresNewSessionAndGeneration()" time="0.0091617" />
+    <testcase classname="HanlinAgentCoreTests.NavigationTransitionTests" name="queuedIsNotPresentationAndCannotBeReentered()" time="0.0083613" />
+    <testcase classname="HanlinAgentCoreTests.NavigationTransitionTests" name="reservedRequestRejectsChangedOpaqueDestinationBytes()" time="0.0085228" />
+    <testcase classname="HanlinAgentCoreTests.NavigationTransitionTests" name="originRevokedDuringSuccessorContextAwaitCannotReceiveAck()" time="0.0090891" />
+    <testcase classname="HanlinAgentCoreTests.NavigationTransitionTests" name="originRevokedAfterEffectSuppressesAckButRetainsReceipt()" time="0.0096118" />
+    <testcase classname="HanlinAgentCoreTests.NavigationTransitionTests" name="cancellationAfterEffectSuppressesAckButRetainsReceipt()" time="0.009564" />
+    <testcase classname="HanlinAgentCoreTests.NavigationTransitionTests" name="changedContextWithoutASuccessorStillFailsFreshness()" time="0.0079188" />
+    <testcase classname="HanlinAgentCoreTests.NavigationTransitionTests" name="foreignDestinationContextNeverNavigates()" time="0.0078458" />
+    <testcase classname="HanlinAgentCoreTests.NavigationTransitionTests" name="capabilityVersionIsRequiredBeforeAnyHostEntry()" time="0.0074402" />
+    <testcase classname="HanlinAgentCoreTests.NavigationTransitionTests" name="cancellationDuringSuccessorContextAwaitCannotReceiveAck()" time="0.0094429" />
+    <testcase classname="HanlinAgentCoreTests.NavigationTransitionTests" name="originalOpenStillRejectsAChangedContentContext()" time="0.0063087" />
+    <testcase classname="HanlinAgentCoreTests.NavigationTransitionTests" name="retiredOriginCannotBecomeValidByReplayingItsOldContext()" time="0.0082114" />
+    <testcase classname="HanlinAgentCoreTests.NavigationTransitionTests" name="cancellationDuringInitialContextAwaitPreventsHostEntry()" time="0.0088165" />
+  </testsuite>
+</testsuites>

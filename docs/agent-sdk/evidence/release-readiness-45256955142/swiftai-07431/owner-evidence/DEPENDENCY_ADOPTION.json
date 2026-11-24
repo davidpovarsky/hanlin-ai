@@ -1,0 +1,72 @@
+{
+  "base": "e00498e33f106cc43be0476ffa2e09329c8ca300",
+  "candidate": "ca3c91f2233bf5c77990643b29a874aac8704639",
+  "tree": "0c8a63f6b0afdf91bb570261127fee66345c51d9",
+  "previous_candidate": "4138ad87d9dab0a8970acf3968a2af89c1c67047",
+  "swift_ai_sdk_source": "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8",
+  "paths": [
+    {
+      "path": "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "before_sha256": "aabb429fa9f62273e681917748c5d4528fbac58596245216dec36f4bc27d224a",
+      "after_sha256": "e6b0a1132811da113152d523a62bec4066e59877935b4eaf35c8c1c1dfb8b141",
+      "whole_inverse_exact": true
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Package.resolved",
+      "before_sha256": "9ed17ca6cd2647c50e17521ea6c69c326b551a1ee13f2e1f87c658f92e55d2ea",
+      "after_sha256": "b771042794841f2e759cffc68181ca37214794b4fc9c02981a1c86176a9bde83",
+      "whole_inverse_exact": true
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Package.swift",
+      "before_sha256": "9af2a15811e934e4082360e46f368ea2b0d5ba5d97a77d8bb0ddb34d48e0666b",
+      "after_sha256": "9373a783d26e514b2dba8e11e52b8d2ae6f3b5bb7c5edbeddd8a563c5584c4d8",
+      "whole_inverse_exact": true
+    },
+    {
+      "path": "Packages/HanlinParityMiniApp/Package.resolved",
+      "before_sha256": "64abcc6af574107b111a5facbc00f70259aa0a809ab2fc6a5c0a571b5b10ea04",
+      "after_sha256": "c0024cb387495e6cf71d8531e3c4ab31a1a267c02c23ab0e5623fa12ff054033",
+      "whole_inverse_exact": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Package.resolved",
+      "before_sha256": "7882ef847a4aaa1bfa2ee128122393cf718f393485d9658bb93f402f740f2c17",
+      "after_sha256": "8f67ee59e5ba54c1d9bdd312efff89ddc946e00443fef8faddfeb4e7eb5387c8",
+      "whole_inverse_exact": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Package.swift",
+      "before_sha256": "e9ea19d4bc3fe3873137e0c2e32cda50892ecd39103f3a63250acaa8f373e458",
+      "after_sha256": "838bf6f92975b2c5ba65003d1dbf95a1d05c0bbd5bc76fa26bf78c77eb0de086",
+      "whole_inverse_exact": true
+    },
+    {
+      "path": "Packages/HanlinSefariaMiniApp/Package.resolved",
+      "before_sha256": "6c7a3f29ad73f35a20ed25f838c673cf2970398c18c4b0429f55b56a98a9f3ac",
+      "after_sha256": "8f3040315aeb3f9bb2ec5fcfa157b8a7690edad9c5a467ad045cd7decd1b1817",
+      "whole_inverse_exact": true
+    },
+    {
+      "path": "Packages/HanlinTextStudioMiniApp/Package.resolved",
+      "before_sha256": "402e58427b5cffccf4e2ca1cfc82785266433a62b8fbb96ba6711cff75dc2a28",
+      "after_sha256": "a0ffa2ef3f7017786cb546187af1e47d0feeda8d58d47bc97d1fc10f78a71e13",
+      "whole_inverse_exact": true
+    },
+    {
+      "path": "Packages/HanlinWikipediaMiniApp/Package.resolved",
+      "before_sha256": "3591fbb4df85047710671391b83116e4725b44cceebb315aadd6d08dc48c555c",
+      "after_sha256": "fdbd916f9477bec043a492da7572ad9e4ad858dadf1b42428a877ebe283c4cdb",
+      "whole_inverse_exact": true
+    }
+  ],
+  "apple_verification": "ROOT_AUTHENTICATED_FULL_PACKAGE_PASS_45246940299",
+  "core_artifact": 14854169874,
+  "core_artifact_sha256": "da9e526111151bdf15fd910a4e57a3679a1a2df23b235f4009dfbdb2cb81125d",
+  "core_full_suite_methods": 4185,
+  "core_full_suite_failed": 0,
+  "core_full_suite_skipped": 0,
+  "live_result": "NOT_RUN",
+  "final_dependency_adoption": "FULL_QUALIFIED_CORE_REVISION_EXACT_IN_ALL9_OPERATIVE_PINS",
+  "remote_exact_and_clean": true
+}

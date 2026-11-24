@@ -1,5 +1,6 @@
 """Read the checked-in OpenStep project without Xcode or third-party packages."""
 import re
+import json
 import hashlib
 from pathlib import Path
 
@@ -59,7 +60,7 @@ def validate_graph(project, provider_manifest=None):
     root = objects[project["rootObject"]]
     targets = [objects[key] for key in root["targets"]]
     mini = next(target for target in targets if target["name"] == "HanlinMiniApps")
-    ai = next(target for target in targets if target["name"] == "AI_Hanlin")
+    ai = next(target for target in targets if target["name"] == "HanlinApp")
     assert mini["productType"] == "com.apple.product-type.application"
     assert mini["dependencies"] == [], "MiniApps must not depend on the AI app/extensions"
     groups = [objects[key]["path"] for key in mini["fileSystemSynchronizedGroups"]]
@@ -87,7 +88,15 @@ def validate_graph(project, provider_manifest=None):
             assert {k: v for k, v in clone.items() if k != "files"} == expected, \
                 "Native preparation must reuse the existing build command and declared IO"
             if "files" in original:
-                assert [objects[key] for key in clone["files"]] == [objects[key] for key in original["files"]]
+                if original_id == "D79AD5752DB545F9000646D4" and not original["files"]:
+                    # Hanlin now embeds these through its SDK binary targets.
+                    # MiniApps retains the same original explicit runtime pair.
+                    expected_refs = {"A10000000000000000000020", "A10000000000000000000021"}
+                    assert {objects[key]["fileRef"] for key in clone["files"]} == expected_refs
+                    assert all(objects[key]["settings"]["ATTRIBUTES"] == ["CodeSignOnCopy", "RemoveHeadersOnCopy"]
+                               for key in clone["files"])
+                else:
+                    assert [objects[key] for key in clone["files"]] == [objects[key] for key in original["files"]]
         actual_clones = {key for key in mini["buildPhases"]
                          if objects[key]["isa"] in {"PBXShellScriptBuildPhase", "PBXCopyFilesBuildPhase"}}
         assert actual_clones == expected_clones, "Unreviewed native build phase"
@@ -140,43 +149,68 @@ def validate_graph(project, provider_manifest=None):
 
 
 def validate_agent_sdk_linkage(project, repository):
-    """Verify real target membership, without claiming Xcode compilation."""
+    """Validate one canonical implementation and actual host linkage, not a build."""
     objects = project["objects"]
     root = objects[project["rootObject"]]
     packages = [key for key in root["packageReferences"]
-                if objects[key].get("relativePath") == "Packages/HanlinAgentSDK"]
+                if objects[key].get("relativePath") == "."]
     assert len(packages) == 1, "Exactly one canonical local SDK package is required"
     package = packages[0]
-    expected = {"HanlinHostContracts", "HanlinAgentCore", "HanlinPersistenceAdapters"}
+    assert all(objects[key].get("isa") != "XCLocalSwiftPackageReference" or key == package
+               for key in root["packageReferences"]), "A second local graph duplicates SDK modules"
+    expected = {"HanlinHostContracts", "HanlinAgentCore", "HanlinPersistenceAdapters", "HanlinApplication"}
     products = {key: value["productName"] for key, value in objects.items()
                 if value.get("isa") == "XCSwiftPackageProductDependency"
-                and value.get("package") == package}
-    assert len(products) == 3 and set(products.values()) == expected, "SDK product identity mismatch"
+                and value.get("package") == package and value["productName"] in expected}
+    assert set(products.values()) == expected, "SDK product identity mismatch"
     targets = {objects[key]["name"]: (key, objects[key]) for key in root["targets"]}
-    assert {"AI_Hanlin", "AI_HLYTests", "HanlinMiniApps"} <= targets.keys()
+    assert {"HanlinApp", "AI_HLYTests", "HanlinMiniApps"} <= targets.keys()
     for name, (_, target) in targets.items():
-        required = expected if name == "AI_Hanlin" else {"HanlinAgentCore"} if name == "AI_HLYTests" else set()
+        required = {"HanlinApplication"} if name in {"HanlinApp", "AI_HLYTests"} else set()
         declared = [products[key] for key in target.get("packageProductDependencies", []) if key in products]
         linked = [products[objects[file]["productRef"]]
                   for phase in target["buildPhases"] if objects[phase]["isa"] == "PBXFrameworksBuildPhase"
                   for file in objects[phase]["files"] if objects[file].get("productRef") in products]
         assert len(declared) == len(required) and set(declared) == required, name + ": unexpected SDK dependency"
-        assert len(linked) == len(required) and set(linked) == required, name + ": SDK product is not actually linked"
-    ai_id, ai = targets["AI_Hanlin"]
+        required_linked = {"HanlinApplication"} if name in {"HanlinApp", "AI_HLYTests"} else set()
+        assert len(linked) == len(required_linked) and set(linked) == required_linked, name + ": SDK image ownership mismatch"
+        if required_linked:
+            all_declared = [objects[key]["productName"] for key in target.get("packageProductDependencies", [])]
+            assert all_declared == ["HanlinApplication"], name + ": duplicate Application product dependency"
+            all_linked = [objects[objects[file]["productRef"]]["productName"]
+                          for phase in target["buildPhases"] if objects[phase]["isa"] == "PBXFrameworksBuildPhase"
+                          for file in objects[phase]["files"] if "productRef" in objects[file]]
+            assert all_linked == ["HanlinApplication"], name + ": duplicate implementation linked beside the Application image"
+    ai_id, ai = targets["HanlinApp"]
     groups = [objects[key] for key in ai["fileSystemSynchronizedGroups"]
               if objects[key].get("path") == "AI_HLY"]
-    assert len(groups) == 1, "AI must retain its synchronized source folder"
-    adapter = "Model/HanlinAppleModelCatalogAdapter.swift"
-    for exception_id in groups[0].get("exceptions", []):
-        exception = objects[exception_id]
-        if exception.get("target") == ai_id:
-            assert not any(adapter == path or adapter.startswith(path.rstrip("/") + "/")
-                           for path in exception.get("membershipExceptions", [])), "Native adapter excluded from AI"
+    assert len(groups) == 1, "AI must retain its original executable/resource folder"
+    excluded = set()
+    for key in groups[0].get("exceptions", []):
+        if objects[key].get("target") == ai_id:
+            excluded.update(objects[key].get("membershipExceptions", []))
     repository = Path(repository)
-    assert (repository / "AI_HLY" / adapter).is_file(), "Canonical native adapter source is missing"
+    all_swift = {p.relative_to(repository / "AI_HLY").as_posix()
+                 for p in (repository / "AI_HLY").rglob("*.swift")}
+    host_swift = {path for path in all_swift if not any(path == item or path.startswith(item.rstrip("/") + "/")
+                                                        for item in excluded)}
+    assert host_swift == {"AI_HLY.swift"}, "Shared sources must compile only once, in the SDK"
+    manifest = (repository / "Package.swift").read_text()
+    block = re.search(r'\.target\(name: "AI_Hanlin",[\s\S]*?sources: (\[[^\n]*\]),\n', manifest)
+    assert block, "Original AI_Hanlin module is missing from the SDK"
+    sources = json.loads(block[1])
+    assert len(sources) == len(set(sources)), "Duplicate SDK source ownership"
+    assert set(sources) == all_swift - {"AI_HLY.swift"}, "Original source omitted from the SDK"
+    adapter = "Model/HanlinAppleModelCatalogAdapter.swift"
+    assert adapter in sources and (repository / "AI_HLY" / adapter).is_file(), "Native adapter excluded from SDK"
+    for key in objects[ai["buildConfigurationList"]]["buildConfigurations"]:
+        assert objects[key]["buildSettings"].get("PRODUCT_MODULE_NAME") == "HanlinApp", "Host must preserve AI_Hanlin model module identity"
+        assert objects[key]["buildSettings"].get("PRODUCT_NAME") == "AI_Hanlin", "Host target rename must preserve the original app product"
     for sibling in ("HanlinAgentSDK", "HanlinPlatform"):
         for filename in ("Package.swift", "Package.resolved"):
-            assert (repository / "Packages" / sibling / filename).is_file(), "Incomplete literal sibling package graph"
-    return {"ai_products": sorted(expected), "unit_test_products": ["HanlinAgentCore"],
-            "miniapps_sdk_products": [], "synchronized_adapter": adapter,
+            assert (repository / "Packages" / sibling / filename).is_file(), "Incomplete canonical module definition"
+    return {"ai_products": ["HanlinApplication"], "unit_test_products": ["HanlinApplication"],
+            "miniapps_agent_products": [], "sdk_application_sources": len(sources),
+            "host_sources": sorted(host_swift), "native_adapter": adapter,
+            "linked_application_products": {"HanlinApp": ["HanlinApplication"], "AI_HLYTests": ["HanlinApplication"]},
             "apple_compilation": "NOT_RUN"}

@@ -1,0 +1,532 @@
+{
+  "status": "EXECUTED_PASS",
+  "scope": "exact selected SDK controls and iOS package compile; actual app NOT_RUN",
+  "process_status": {
+    "test_exit": 0,
+    "ios_build_exit": 0
+  },
+  "cases": [
+    {
+      "duration": "0.021s",
+      "durationInSeconds": 0.020977020263671875,
+      "name": "persistedPresentationCarriesNoExecutionAuthority()",
+      "nodeIdentifier": "ContextTests/persistedPresentationCarriesNoExecutionAuthority()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinHostContractsTests/ContextTests/persistedPresentationCarriesNoExecutionAuthority()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.02s",
+      "durationInSeconds": 0.020138978958129883,
+      "name": "structuredReplayRejectsForeignScopeConflictsAndPartKindChanges()",
+      "nodeIdentifier": "ContextTests/structuredReplayRejectsForeignScopeConflictsAndPartKindChanges()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinHostContractsTests/ContextTests/structuredReplayRejectsForeignScopeConflictsAndPartKindChanges()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.021s",
+      "durationInSeconds": 0.0209500789642334,
+      "name": "canonicalStructuredReplayKeepsExactBytesGlobalOrderAndDeduplicates()",
+      "nodeIdentifier": "ContextTests/canonicalStructuredReplayKeepsExactBytesGlobalOrderAndDeduplicates()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinHostContractsTests/ContextTests/canonicalStructuredReplayKeepsExactBytesGlobalOrderAndDeduplicates()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.0016s",
+      "durationInSeconds": 0.0015671253204345703,
+      "name": "previousMetadataFormatRemainsReadableWithoutMutation()",
+      "nodeIdentifier": "ContextTests/previousMetadataFormatRemainsReadableWithoutMutation()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinHostContractsTests/ContextTests/previousMetadataFormatRemainsReadableWithoutMutation()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.00012s",
+      "durationInSeconds": 0.00011777877807617188,
+      "name": "decodedNamespacesCannotBypassValidation()",
+      "nodeIdentifier": "ContextTests/decodedNamespacesCannotBypassValidation()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinHostContractsTests/ContextTests/decodedNamespacesCannotBypassValidation()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.013s",
+      "durationInSeconds": 0.012822866439819336,
+      "name": "hostManagedMutationRequiresExplicitMinorVersionAndRoundTripsWithoutDowngrade()",
+      "nodeIdentifier": "ContextTests/hostManagedMutationRequiresExplicitMinorVersionAndRoundTripsWithoutDowngrade()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinHostContractsTests/ContextTests/hostManagedMutationRequiresExplicitMinorVersionAndRoundTripsWithoutDowngrade()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.0032s",
+      "durationInSeconds": 0.003197908401489258,
+      "name": "importedHostWitnessSupportsTheOriginalAppsConcurrencyConvention()",
+      "nodeIdentifier": "HostCallbackConventionTests/importedHostWitnessSupportsTheOriginalAppsConcurrencyConvention()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinHostConcurrencyTests/HostCallbackConventionTests/importedHostWitnessSupportsTheOriginalAppsConcurrencyConvention()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.0047s",
+      "durationInSeconds": 0.004689931869506836,
+      "name": "generalMutationProgressAndReceiptKeepOriginalContextAndStep()",
+      "nodeIdentifier": "AgentSessionTests/generalMutationProgressAndReceiptKeepOriginalContextAndStep()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/AgentSessionTests/generalMutationProgressAndReceiptKeepOriginalContextAndStep()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.15s",
+      "durationInSeconds": 0.15256094932556152,
+      "name": "nativeSchemaPartsPersistBeforeDeliveryWithOriginalSessionIdentity()",
+      "nodeIdentifier": "AgentSessionTests/nativeSchemaPartsPersistBeforeDeliveryWithOriginalSessionIdentity()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/AgentSessionTests/nativeSchemaPartsPersistBeforeDeliveryWithOriginalSessionIdentity()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.18s",
+      "durationInSeconds": 0.1825096607208252,
+      "name": "failedAssociationSaveNeverStartsExternalEffect()",
+      "nodeIdentifier": "AgentSessionTests/failedAssociationSaveNeverStartsExternalEffect()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/AgentSessionTests/failedAssociationSaveNeverStartsExternalEffect()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.18s",
+      "durationInSeconds": 0.18007612228393555,
+      "name": "inlinePresentationFailedDurableAssociationPreventsHostEffect()",
+      "nodeIdentifier": "AgentSessionTests/inlinePresentationFailedDurableAssociationPreventsHostEffect()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/AgentSessionTests/inlinePresentationFailedDurableAssociationPreventsHostEffect()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.0012s",
+      "durationInSeconds": 0.0011949539184570312,
+      "name": "nativeSnapshotsEmitOnlyNewSuffixAndRejectRevision()",
+      "nodeIdentifier": "AgentSessionTests/nativeSnapshotsEmitOnlyNewSuffixAndRejectRevision()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/AgentSessionTests/nativeSnapshotsEmitOnlyNewSuffixAndRejectRevision()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.094s",
+      "durationInSeconds": 0.09449982643127441,
+      "name": "concurrentStartIsReservedBeforeInitialContextAwait()",
+      "nodeIdentifier": "AgentSessionTests/concurrentStartIsReservedBeforeInitialContextAwait()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/AgentSessionTests/concurrentStartIsReservedBeforeInitialContextAwait()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.13s",
+      "durationInSeconds": 0.126417875289917,
+      "name": "interruptedStructuredOutputIsDurableButCannotRestoreLiveAdmission()",
+      "nodeIdentifier": "AgentSessionTests/interruptedStructuredOutputIsDurableButCannotRestoreLiveAdmission()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/AgentSessionTests/interruptedStructuredOutputIsDurableButCannotRestoreLiveAdmission()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.19s",
+      "durationInSeconds": 0.18906784057617188,
+      "name": "inlinePresentationUsesOriginalWriterAndCannotRestoreOrReuseAuthority()",
+      "nodeIdentifier": "AgentSessionTests/inlinePresentationUsesOriginalWriterAndCannotRestoreOrReuseAuthority()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/AgentSessionTests/inlinePresentationUsesOriginalWriterAndCannotRestoreOrReuseAuthority()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.17s",
+      "durationInSeconds": 0.16978001594543457,
+      "name": "existingEngineRunsHostToolOnceAndPersistsCorrelation()",
+      "nodeIdentifier": "AgentSessionTests/existingEngineRunsHostToolOnceAndPersistsCorrelation()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/AgentSessionTests/existingEngineRunsHostToolOnceAndPersistsCorrelation()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.16s",
+      "durationInSeconds": 0.15838003158569336,
+      "name": "invalidationDuringPostReceiptContextSuppressesCallbackButKeepsReceipt()",
+      "nodeIdentifier": "AgentSessionTests/invalidationDuringPostReceiptContextSuppressesCallbackButKeepsReceipt()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/AgentSessionTests/invalidationDuringPostReceiptContextSuppressesCallbackButKeepsReceipt()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.0052s",
+      "durationInSeconds": 0.005171060562133789,
+      "name": "generalMutationPolicyDenialAndPostDispatchUncertaintyStayDistinct()",
+      "nodeIdentifier": "AgentSessionTests/generalMutationPolicyDenialAndPostDispatchUncertaintyStayDistinct()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/AgentSessionTests/generalMutationPolicyDenialAndPostDispatchUncertaintyStayDistinct()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.26s",
+      "durationInSeconds": 0.2559788227081299,
+      "name": "originalNumericInputSurvivesCanonicalEngineSessionAndScopedReceipt()",
+      "nodeIdentifier": "AgentSessionTests/originalNumericInputSurvivesCanonicalEngineSessionAndScopedReceipt()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/AgentSessionTests/originalNumericInputSurvivesCanonicalEngineSessionAndScopedReceipt()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.13s",
+      "durationInSeconds": 0.12856388092041016,
+      "name": "invalidationDuringCapturedEventContextSuppressesDelivery()",
+      "nodeIdentifier": "AgentSessionTests/invalidationDuringCapturedEventContextSuppressesDelivery()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/AgentSessionTests/invalidationDuringCapturedEventContextSuppressesDelivery()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.1s",
+      "durationInSeconds": 0.10414361953735352,
+      "name": "providerMustAdvertiseStructuredChannelAndProseCannotEnterIt()",
+      "nodeIdentifier": "AgentSessionTests/providerMustAdvertiseStructuredChannelAndProseCannotEnterIt()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/AgentSessionTests/providerMustAdvertiseStructuredChannelAndProseCannotEnterIt()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.19s",
+      "durationInSeconds": 0.18650293350219727,
+      "name": "interactionAfterProducerEOFCreatesNewTurnAndReplayCannotRestoreAuthority()",
+      "nodeIdentifier": "AgentSessionTests/interactionAfterProducerEOFCreatesNewTurnAndReplayCannotRestoreAuthority()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/AgentSessionTests/interactionAfterProducerEOFCreatesNewTurnAndReplayCannotRestoreAuthority()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.16s",
+      "durationInSeconds": 0.1600029468536377,
+      "name": "invalidationDuringInteractionPreparationRejectsCapturedAdmission()",
+      "nodeIdentifier": "AgentSessionTests/invalidationDuringInteractionPreparationRejectsCapturedAdmission()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/AgentSessionTests/invalidationDuringInteractionPreparationRejectsCapturedAdmission()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.2s",
+      "durationInSeconds": 0.20277619361877441,
+      "name": "unsupportedOriginalNumericInputNeverCreatesPendingOrHostEffect()",
+      "nodeIdentifier": "AgentSessionTests/unsupportedOriginalNumericInputNeverCreatesPendingOrHostEffect()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/AgentSessionTests/unsupportedOriginalNumericInputNeverCreatesPendingOrHostEffect()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.0029s",
+      "durationInSeconds": 0.0028536319732666016,
+      "name": "generalMutationDuplicateAndChangedArgumentsCannotRedispatch()",
+      "nodeIdentifier": "AgentSessionTests/generalMutationDuplicateAndChangedArgumentsCannotRedispatch()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/AgentSessionTests/generalMutationDuplicateAndChangedArgumentsCannotRedispatch()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.16s",
+      "durationInSeconds": 0.16320228576660156,
+      "name": "structuredChannelPreservesInterleavingAndDeduplicatesExactReplay()",
+      "nodeIdentifier": "AgentSessionTests/structuredChannelPreservesInterleavingAndDeduplicatesExactReplay()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/AgentSessionTests/structuredChannelPreservesInterleavingAndDeduplicatesExactReplay()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.091s",
+      "durationInSeconds": 0.09144711494445801,
+      "name": "duplicateReceiptRetainsIdentityAndNewRunSeparatesProviderCallID()",
+      "nodeIdentifier": "AgentSessionTests/duplicateReceiptRetainsIdentityAndNewRunSeparatesProviderCallID()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/AgentSessionTests/duplicateReceiptRetainsIdentityAndNewRunSeparatesProviderCallID()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.19s",
+      "durationInSeconds": 0.18684172630310059,
+      "name": "hostAssociationUsesOrderedSaveBeforeEffectAndOriginalReceiptIdentity()",
+      "nodeIdentifier": "AgentSessionTests/hostAssociationUsesOrderedSaveBeforeEffectAndOriginalReceiptIdentity()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/AgentSessionTests/hostAssociationUsesOrderedSaveBeforeEffectAndOriginalReceiptIdentity()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.0011s",
+      "durationInSeconds": 0.001100778579711914,
+      "name": "structuredChannelRejectsConflictingReplayOrderAndInvalidVersion()",
+      "nodeIdentifier": "AgentSessionTests/structuredChannelRejectsConflictingReplayOrderAndInvalidVersion()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/AgentSessionTests/structuredChannelRejectsConflictingReplayOrderAndInvalidVersion()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.0028s",
+      "durationInSeconds": 0.002836942672729492,
+      "name": "dispatcherRetainsOriginalBytesAndNeverReplaysAChangedRoundedValue()",
+      "nodeIdentifier": "HostSchemaValidationTests/dispatcherRetainsOriginalBytesAndNeverReplaysAChangedRoundedValue()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HostSchemaValidationTests/dispatcherRetainsOriginalBytesAndNeverReplaysAChangedRoundedValue()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.02s",
+      "durationInSeconds": 0.019551992416381836,
+      "name": "successorRevokedDuringItsContextAwaitCannotReceiveAck()",
+      "nodeIdentifier": "NavigationTransitionTests/successorRevokedDuringItsContextAwaitCannotReceiveAck()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/NavigationTransitionTests/successorRevokedDuringItsContextAwaitCannotReceiveAck()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.019s",
+      "durationInSeconds": 0.019359111785888672,
+      "name": "originRevokedAfterEffectSuppressesAckButRetainsReceipt()",
+      "nodeIdentifier": "NavigationTransitionTests/originRevokedAfterEffectSuppressesAckButRetainsReceipt()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/NavigationTransitionTests/originRevokedAfterEffectSuppressesAckButRetainsReceipt()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.049s",
+      "durationInSeconds": 0.04921269416809082,
+      "name": "unrelatedAuthorityChangeAfterEffectCannotReceiveAck()",
+      "nodeIdentifier": "NavigationTransitionTests/unrelatedAuthorityChangeAfterEffectCannotReceiveAck()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/NavigationTransitionTests/unrelatedAuthorityChangeAfterEffectCannotReceiveAck()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.014s",
+      "durationInSeconds": 0.013740062713623047,
+      "name": "returnedSuccessorMustBeRegisteredByTheLiveHost()",
+      "nodeIdentifier": "NavigationTransitionTests/returnedSuccessorMustBeRegisteredByTheLiveHost()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/NavigationTransitionTests/returnedSuccessorMustBeRegisteredByTheLiveHost()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.015s",
+      "durationInSeconds": 0.014757871627807617,
+      "name": "revocationDuringInitialContextAwaitPreventsHostEntry()",
+      "nodeIdentifier": "NavigationTransitionTests/revocationDuringInitialContextAwaitPreventsHostEntry()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/NavigationTransitionTests/revocationDuringInitialContextAwaitPreventsHostEntry()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.094s",
+      "durationInSeconds": 0.09413504600524902,
+      "name": "successorCannotChangeAccountWorkspaceBackendAppSceneOrConversation()",
+      "nodeIdentifier": "NavigationTransitionTests/successorCannotChangeAccountWorkspaceBackendAppSceneOrConversation()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/NavigationTransitionTests/successorCannotChangeAccountWorkspaceBackendAppSceneOrConversation()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.012s",
+      "durationInSeconds": 0.0121612548828125,
+      "name": "originalOpenStillRejectsAChangedContentContext()",
+      "nodeIdentifier": "NavigationTransitionTests/originalOpenStillRejectsAChangedContentContext()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/NavigationTransitionTests/originalOpenStillRejectsAChangedContentContext()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.084s",
+      "durationInSeconds": 0.08404397964477539,
+      "name": "inFlightTransitionBlocksAnotherOriginalSessionOperation()",
+      "nodeIdentifier": "NavigationTransitionTests/inFlightTransitionBlocksAnotherOriginalSessionOperation()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/NavigationTransitionTests/inFlightTransitionBlocksAnotherOriginalSessionOperation()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.012s",
+      "durationInSeconds": 0.01215815544128418,
+      "name": "foreignDestinationContextNeverNavigates()",
+      "nodeIdentifier": "NavigationTransitionTests/foreignDestinationContextNeverNavigates()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/NavigationTransitionTests/foreignDestinationContextNeverNavigates()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.016s",
+      "durationInSeconds": 0.016238927841186523,
+      "name": "retiredOriginCannotBecomeValidByReplayingItsOldContext()",
+      "nodeIdentifier": "NavigationTransitionTests/retiredOriginCannotBecomeValidByReplayingItsOldContext()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/NavigationTransitionTests/retiredOriginCannotBecomeValidByReplayingItsOldContext()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.019s",
+      "durationInSeconds": 0.018805980682373047,
+      "name": "cancellationDuringInitialContextAwaitPreventsHostEntry()",
+      "nodeIdentifier": "NavigationTransitionTests/cancellationDuringInitialContextAwaitPreventsHostEntry()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/NavigationTransitionTests/cancellationDuringInitialContextAwaitPreventsHostEntry()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.014s",
+      "durationInSeconds": 0.01359415054321289,
+      "name": "receiptRoundTripPreservesCorrelationWithoutGrantingCurrentAuthority()",
+      "nodeIdentifier": "NavigationTransitionTests/receiptRoundTripPreservesCorrelationWithoutGrantingCurrentAuthority()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/NavigationTransitionTests/receiptRoundTripPreservesCorrelationWithoutGrantingCurrentAuthority()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.014s",
+      "durationInSeconds": 0.013525962829589844,
+      "name": "versionAloneCannotInventTheHostCapability()",
+      "nodeIdentifier": "NavigationTransitionTests/versionAloneCannotInventTheHostCapability()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/NavigationTransitionTests/versionAloneCannotInventTheHostCapability()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.019s",
+      "durationInSeconds": 0.018585920333862305,
+      "name": "cancellationDuringSuccessorContextAwaitCannotReceiveAck()",
+      "nodeIdentifier": "NavigationTransitionTests/cancellationDuringSuccessorContextAwaitCannotReceiveAck()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/NavigationTransitionTests/cancellationDuringSuccessorContextAwaitCannotReceiveAck()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.014s",
+      "durationInSeconds": 0.01400613784790039,
+      "name": "stablePresentationRetainsTheOriginalSession()",
+      "nodeIdentifier": "NavigationTransitionTests/stablePresentationRetainsTheOriginalSession()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/NavigationTransitionTests/stablePresentationRetainsTheOriginalSession()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.083s",
+      "durationInSeconds": 0.08340692520141602,
+      "name": "capabilityVersionIsRequiredBeforeAnyHostEntry()",
+      "nodeIdentifier": "NavigationTransitionTests/capabilityVersionIsRequiredBeforeAnyHostEntry()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/NavigationTransitionTests/capabilityVersionIsRequiredBeforeAnyHostEntry()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.085s",
+      "durationInSeconds": 0.08510804176330566,
+      "name": "cancelledReceiptCannotAuthorizeItsUndeliveredSuccessor()",
+      "nodeIdentifier": "NavigationTransitionTests/cancelledReceiptCannotAuthorizeItsUndeliveredSuccessor()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/NavigationTransitionTests/cancelledReceiptCannotAuthorizeItsUndeliveredSuccessor()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.017s",
+      "durationInSeconds": 0.01659393310546875,
+      "name": "queuedIsNotPresentationAndCannotBeReentered()",
+      "nodeIdentifier": "NavigationTransitionTests/queuedIsNotPresentationAndCannotBeReentered()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/NavigationTransitionTests/queuedIsNotPresentationAndCannotBeReentered()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.049s",
+      "durationInSeconds": 0.04873490333557129,
+      "name": "cancellationAfterEffectSuppressesAckButRetainsReceipt()",
+      "nodeIdentifier": "NavigationTransitionTests/cancellationAfterEffectSuppressesAckButRetainsReceipt()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/NavigationTransitionTests/cancellationAfterEffectSuppressesAckButRetainsReceipt()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.014s",
+      "durationInSeconds": 0.014256715774536133,
+      "name": "originRevokedDuringSuccessorContextAwaitCannotReceiveAck()",
+      "nodeIdentifier": "NavigationTransitionTests/originRevokedDuringSuccessorContextAwaitCannotReceiveAck()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/NavigationTransitionTests/originRevokedDuringSuccessorContextAwaitCannotReceiveAck()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.014s",
+      "durationInSeconds": 0.013857841491699219,
+      "name": "originalRequestAndFreshSuccessorAreAcknowledgedExactly()",
+      "nodeIdentifier": "NavigationTransitionTests/originalRequestAndFreshSuccessorAreAcknowledgedExactly()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/NavigationTransitionTests/originalRequestAndFreshSuccessorAreAcknowledgedExactly()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.083s",
+      "durationInSeconds": 0.08328080177307129,
+      "name": "alreadyStaleAndRevokedSessionsNeverNavigate()",
+      "nodeIdentifier": "NavigationTransitionTests/alreadyStaleAndRevokedSessionsNeverNavigate()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/NavigationTransitionTests/alreadyStaleAndRevokedSessionsNeverNavigate()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.1s",
+      "durationInSeconds": 0.10118699073791504,
+      "name": "requestTargetBlockAndOriginMustAllMatchExactly()",
+      "nodeIdentifier": "NavigationTransitionTests/requestTargetBlockAndOriginMustAllMatchExactly()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/NavigationTransitionTests/requestTargetBlockAndOriginMustAllMatchExactly()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.013s",
+      "durationInSeconds": 0.012897968292236328,
+      "name": "queuedCannotIssueASuccessor()",
+      "nodeIdentifier": "NavigationTransitionTests/queuedCannotIssueASuccessor()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/NavigationTransitionTests/queuedCannotIssueASuccessor()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.013s",
+      "durationInSeconds": 0.012887001037597656,
+      "name": "changedContextWithoutASuccessorStillFailsFreshness()",
+      "nodeIdentifier": "NavigationTransitionTests/changedContextWithoutASuccessorStillFailsFreshness()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/NavigationTransitionTests/changedContextWithoutASuccessorStillFailsFreshness()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.048s",
+      "durationInSeconds": 0.0482180118560791,
+      "name": "thrownPostEffectResultCannotBeRetriedEvenIfOldContextReappears()",
+      "nodeIdentifier": "NavigationTransitionTests/thrownPostEffectResultCannotBeRetriedEvenIfOldContextReappears()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/NavigationTransitionTests/thrownPostEffectResultCannotBeRetriedEvenIfOldContextReappears()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.019s",
+      "durationInSeconds": 0.018593788146972656,
+      "name": "successorRequiresNewSessionAndGeneration()",
+      "nodeIdentifier": "NavigationTransitionTests/successorRequiresNewSessionAndGeneration()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/NavigationTransitionTests/successorRequiresNewSessionAndGeneration()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    },
+    {
+      "duration": "0.014s",
+      "durationInSeconds": 0.014148950576782227,
+      "name": "reservedRequestRejectsChangedOpaqueDestinationBytes()",
+      "nodeIdentifier": "NavigationTransitionTests/reservedRequestRejectsChangedOpaqueDestinationBytes()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/NavigationTransitionTests/reservedRequestRejectsChangedOpaqueDestinationBytes()",
+      "nodeType": "Test Case",
+      "result": "Passed"
+    }
+  ]
+}

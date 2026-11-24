@@ -1,0 +1,54 @@
+{
+  "status": "PREPARED_VALIDATED",
+  "origin_run": 45133337462,
+  "origin_source": "6772dce6304fc6761a2200314f7d2020dc782e47",
+  "original_foreground53": "REUSED_ORIGIN_VERIFIED",
+  "origin_outer_artifact": {
+    "origin_run": 45133337462,
+    "head_sha": "6772dce6304fc6761a2200314f7d2020dc782e47",
+    "artifact_id": 14803354012,
+    "digest": "sha256:83ecd7184113a12e058b5211637105ef10ec151abd0e9058686af90df567ca50",
+    "bytes": 18239253,
+    "zip_crc": "PASS",
+    "actual_original_raw_cases": 53,
+    "runner_input_match": [
+      "Scripts/ProductSplit/run_portable.py",
+      "Scripts/ProductSplit/provenance.py"
+    ]
+  },
+  "offline_validation": {
+    "actual_original_archive_and_raw_execution": "PASS",
+    "positive_and_negative_guard_controls": {
+      "status": "PASS",
+      "count": 18
+    },
+    "original_host_restore_function_unchanged": "PASS",
+    "workflow_semantics_unchanged_outside_declared_input_env_name_foreground_condition": "PASS"
+  },
+  "current_apple_environment_gate": "NOT_RUN",
+  "paired3": "NOT_RUN",
+  "dispatch_gate": "Root full application compile PASS required",
+  "implementation_sha256": {
+    "Scripts/ProductSplit/restore_host_proof.py": "9fe6f20579c7f7457a09573e0259f7021e80db6ed1872a22e629ec67cb3a6116",
+    "Scripts/ProductSplit/test_restore_host_proof.py": "eb0ad54e5054d3880d8bc270022a063807d17e908c50a21ebb6b58d8868e9367",
+    ".github/workflows/validate-app-split.yml": "b265cecbe4e63f7951f9822c0ee0d91ec9d9af0243bc838f99d71a1d5b8ea608"
+  },
+  "scope": "Reuse exact original native foreground53 prerequisite proof only; normal current-source MiniApps and Hanlin builds and original paired3 tests remain required",
+  "retained_original_raw_files": {
+    "original-raw/raw-007-working-tree.stdout.log": "b1468ff190e3d17c538dd0ab1e4cdd15d9809f4e9c1d18cef5198afa548b0602",
+    "original-raw/raw-006-commit-base.stdout.log": "c764ff6c0e255e5815a66e05a0b0bb6a6b528420eaaa5399b1a30c0d6479ab14",
+    "original-raw/raw-002-compile-contracts.stdout.log": "5f0978ade78cc8264feadea37722a1610d66f3001dd4dc61818d9e780eb45e30",
+    "original-raw/raw-006-commit-base.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "original-raw/commands.jsonl": "bf0ed06c1e1066b48b06a41b2534c525f8efa03f2a19ebe1a51728591e49a153",
+    "original-raw/raw-005-tests-foreground.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "original-raw/raw-003-compile-core.stderr.log": "4b59da256292ae42e3f04ef6d06ea3e139678613a3cd3d0dc37a6757c0bd290a",
+    "original-raw/raw-001-toolchain.stdout.log": "4b59da256292ae42e3f04ef6d06ea3e139678613a3cd3d0dc37a6757c0bd290a",
+    "original-raw/raw-005-tests-foreground.stdout.log": "c617624f4096a37fa8807b3c145449ce20cff0eeae45d1d760bfda13b3bae810",
+    "original-raw/raw-002-compile-contracts.stderr.log": "4b59da256292ae42e3f04ef6d06ea3e139678613a3cd3d0dc37a6757c0bd290a",
+    "original-raw/raw-001-toolchain.stderr.log": "bbc8b176d3c74d4c5a7fd00b40280f98168e116d5272273bfe8e71407625540e",
+    "original-raw/raw-003-compile-core.stdout.log": "0d5d404baa862d394ed62c756e189139a2c6919eada593978426d239f38bce78",
+    "original-raw/raw-004-link-foreground.stdout.log": "b4b5bd97ce9e7baf43ad87e79b2cc041bd45f63d8794906e34c3a77578e9c058",
+    "original-raw/raw-007-working-tree.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "original-raw/raw-004-link-foreground.stderr.log": "4b59da256292ae42e3f04ef6d06ea3e139678613a3cd3d0dc37a6757c0bd290a"
+  }
+}

@@ -1,3 +1,4 @@
+import HanlinLocalization
 import SwiftUI
 import SwiftData
 
@@ -34,7 +35,7 @@ struct ListView: View {
     @State private var showIconSheet = false
     @State private var editingRecord: ChatRecords? = nil
     @State private var editingIcon: String = "bubble.left.circle"
-    @State private var editingColor: Color = .hlBlue
+    @State private var editingColor: Color = .hanlinHLBlue
     @State private var editingTitle: String = "title"
     
     @State private var navigationPath: [ChatRecords] = []
@@ -115,7 +116,7 @@ struct ListView: View {
             if !useCompactWorkspace {
                 NavigationSplitView {
                     sidebarContent
-                        .navigationTitle("Hanlin")
+                        .navigationTitle(Text("Hanlin", bundle: HanlinLocalization.bundle))
                         .safeAreaInset(edge: .bottom) {
                             Color.clear.frame(height: 75)
                         }
@@ -131,7 +132,7 @@ struct ListView: View {
                         }
                         .id(selected.id)
                     } else {
-                        ContentUnavailableView("请选择一个对话", systemImage: "bubble.left.and.bubble.right")
+                        ContentUnavailableView(hanlin: "请选择一个对话", systemImage: "bubble.left.and.bubble.right")
                     }
                 }
             } else {
@@ -154,6 +155,25 @@ struct ListView: View {
                     onOpenVision: onOpenVision
                 )
             }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: HanlinConversationMutation.didChange)) { notification in
+            guard let change = HanlinConversationMutation.change(from: notification, in: modelContext.container) else { return }
+            if case .deleted = change.kind {
+                if let selectedChatRecord, ObjectIdentifier(selectedChatRecord) == change.originalRow {
+                    self.selectedChatRecord = nil
+                }
+                compactWorkspacePath.removeAll { route in
+                    if case .chat(let id) = route { return id == change.conversationID }
+                    return false
+                }
+                if sessionBridge.expectedActiveSessionID == change.conversationID {
+                    sessionBridge.expectedActiveSessionID = nil
+                }
+                sessionBridge.clearCachedDraft(for: change.conversationID)
+                matchedSnippets.removeValue(forKey: change.conversationID)
+                infoDescriptionCache.removeValue(forKey: change.conversationID)
+            }
+            forceRefresh.toggle()
         }
         .task(id: requestedSelection?.id) {
             guard let request = requestedSelection else { return }
@@ -186,9 +206,9 @@ struct ListView: View {
                 requestedSelection = nil
             }
         }
-        .alert("Conversation unavailable", isPresented: $conversationUnavailable) {
-            Button("OK", role: .cancel) {}
-        } message: { Text("The original conversation could not be opened. Your library item is kept.") }
+        .alert(Text("Conversation unavailable", bundle: HanlinLocalization.bundle), isPresented: $conversationUnavailable) {
+            Button(hanlin: "OK", role: .cancel) {}
+        } message: { Text("The original conversation could not be opened. Your library item is kept.", bundle: HanlinLocalization.bundle) }
         .task(id: splitCoordinator.acceptedOrigin(forReceivingWindowID: receivingWindowID)?.id) {
             guard !Task.isCancelled,
                   let request = splitCoordinator.acceptedOrigin(forReceivingWindowID: receivingWindowID) else { return }
@@ -287,13 +307,9 @@ struct ListView: View {
             .onDisappear {
                 // 当编辑面板关闭时，将编辑好的 icon/color 回写到对应 record
                 guard let editingRecord = editingRecord else { return }
-                editingRecord.icon = editingIcon
-                editingRecord.color = editingColor.name
-                editingRecord.name = editingTitle
                 do {
-                    try modelContext.save()
-                    // 切换 forceRefresh 强制刷新列表
-                    forceRefresh.toggle()
+                    try HanlinConversationMutation.updateAppearance(editingRecord, title: editingTitle,
+                        icon: editingIcon, color: editingColor.name, in: modelContext)
                 } catch {
                     print("Error saving icon or color: \(error.localizedDescription)")
                 }
@@ -302,11 +318,11 @@ struct ListView: View {
         .sheet(isPresented: $showSafariGuide) {
             NavigationStack { HanlinHelpView(topic: .guide) }
         }
-        .alert("无法新建对话", isPresented: $showValidationAlert) {
-            Button("前往设置") {
+        .alert(Text("无法新建对话", bundle: HanlinLocalization.bundle), isPresented: $showValidationAlert) {
+            Button(hanlin: "前往设置") {
                 showSettingSheet = true
             }
-            Button("取消", role: .cancel) { }
+            Button(hanlin: "取消", role: .cancel) { }
         } message: {
             Text(validationAlertMessage)
         }
@@ -326,7 +342,7 @@ struct ListView: View {
                 }
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        Button("完成") {
+                        Button(hanlin: "完成") {
                             showSettingSheet = false
                         }
                     }
@@ -341,7 +357,7 @@ struct ListView: View {
             onOpenMiniApps: onOpenMiniApps, onOpenVision: onOpenVision)
         ToolbarItem(placement: .topBarTrailing) {
             Button { showsSavedMessages = true } label: {
-                Label("Saved messages", systemImage: "bookmark")
+                Label(hanlin: "Saved messages", systemImage: "bookmark")
             }
             .accessibilityIdentifier("hanlin-saved-messages-open")
         }
@@ -349,7 +365,7 @@ struct ListView: View {
             Button {
                 addNewChat()
             } label: {
-                Label("New chat", systemImage: "plus.bubble")
+                Label(hanlin: "New chat", systemImage: "plus.bubble")
             }
             .accessibilityIdentifier("hanlin-new-chat-button")
         }
@@ -357,7 +373,7 @@ struct ListView: View {
             if loadHistoryMessages {
                 HStack {
                     ProgressView().font(HanlinTypography.caption)
-                    Text("正在加载...").font(HanlinTypography.caption)
+                    Text("正在加载...", bundle: HanlinLocalization.bundle).font(HanlinTypography.caption)
                 }
             } else {
                 HStack {
@@ -365,7 +381,7 @@ struct ListView: View {
                         showSafariGuide = true
                     }) {
                         Label {
-                            Text("软件指南")
+                            Text("软件指南", bundle: HanlinLocalization.bundle)
                                 .font(HanlinTypography.caption)
                         } icon: {
                             Image(systemName: "text.rectangle.page")
@@ -385,7 +401,7 @@ struct ListView: View {
             chatRecordsSection
         }
         .listStyle(.plain)
-        .searchable(text: $searchText, prompt: "搜索聊天与消息内容")
+        .searchable(text: $searchText, prompt: Text("搜索聊天与消息内容", bundle: HanlinLocalization.bundle))
         .onChange(of: searchText) {
             searchTask?.cancel()
             searchTask = Task {
@@ -408,7 +424,7 @@ struct ListView: View {
             chatRecordsSection
         }
         .listStyle(.plain)
-        .searchable(text: $searchText, prompt: "搜索聊天与消息内容")
+        .searchable(text: $searchText, prompt: Text("搜索聊天与消息内容", bundle: HanlinLocalization.bundle))
         .onChange(of: searchText) {
             // 取消上一次搜索任务
             searchTask?.cancel()
@@ -474,7 +490,7 @@ struct ListView: View {
                     editingTitle  = record.name ?? ""
                     showIconSheet = true
                 } label: {
-                    Label("编辑图标", systemImage: "paintbrush")
+                    Label(hanlin: "编辑图标", systemImage: "paintbrush")
                 }
                 
                 Button {
@@ -486,7 +502,7 @@ struct ListView: View {
                 Button(role: .destructive) {
                     deleteChat(record)
                 } label: {
-                    Label("删除消息", systemImage: "trash")
+                    Label(hanlin: "删除消息", systemImage: "trash")
                 }
             }
         }
@@ -499,9 +515,9 @@ struct ListView: View {
             Button(role: .destructive) {
                 deleteChat(record)
             } label: {
-                Label("删除消息", systemImage: "trash")
+                Label(hanlin: "删除消息", systemImage: "trash")
             }
-            .tint(Color(.hlRed))
+            .tint(Color(.hanlinHLRed))
         }
         .swipeActions(edge: .leading, allowsFullSwipe: true) {
             Button {
@@ -512,7 +528,7 @@ struct ListView: View {
                     systemImage: record.isPinned ? "pin.slash" : "pin"
                 )
             }
-            .tint(Color(.hlBlue))
+            .tint(Color(.hanlinHLBlue))
             
             Button {
                 // 进入编辑模式
@@ -522,9 +538,9 @@ struct ListView: View {
                 editingTitle  = record.name ?? ""
                 showIconSheet = true
             } label: {
-                Label("编辑图标", systemImage: "paintbrush")
+                Label(hanlin: "编辑图标", systemImage: "paintbrush")
             }
-            .tint(.hlGreen)
+            .tint(.hanlinHLGreen)
         }
         .tag(record)
         .id((record.id?.uuidString ?? "") + String(forceRefresh))
@@ -618,7 +634,7 @@ struct ListView: View {
                 if let subRange = snippetString.range(of: searchText, options: .caseInsensitive) {
                     let nsRange = NSRange(subRange, in: snippetString)
                     if let attrRange = Range(nsRange, in: attributed) {
-                        attributed[attrRange].foregroundColor = .hlBlue
+                        attributed[attrRange].foregroundColor = .hanlinHLBlue
                         attributed[attrRange].font = .caption.bold()
                     }
                 }
@@ -629,24 +645,18 @@ struct ListView: View {
     }
     
     private func togglePin(_ record: ChatRecords) {
-        record.isPinned.toggle()
         do {
-            try modelContext.save()
-            // 置顶后强制刷新列表视图
-            forceRefresh.toggle()
+            try HanlinConversationMutation.setPinned(record, isPinned: !record.isPinned, in: modelContext)
         } catch {
             print("Error saving pin state: \(error.localizedDescription)")
         }
     }
-    
+
     private func deleteChat(_ record: ChatRecords) {
-        DispatchQueue.main.async {
-            modelContext.delete(record)
-            do {
-                try modelContext.save()
-            } catch {
-                print("Error deleting chat: \(error.localizedDescription)")
-            }
+        do {
+            try HanlinConversationMutation.delete(record, in: modelContext)
+        } catch {
+            print("Error deleting chat: \(error.localizedDescription)")
         }
     }
     
@@ -661,32 +671,12 @@ struct ListView: View {
     @discardableResult
     private func createAuthorizedNewChatRecord() -> ChatRecords? {
         do {
-            // Use the SAME original catalog order as ChatView's saved useModel index.
-            // A ready native provider needs no remote API key; downloaded LOCAL models
-            // still require their original provider to be enabled.
-            let models = try modelContext.fetch(FetchDescriptor<AllModels>(
-                sortBy: [SortDescriptor(\AllModels.position, order: .forward)]))
-            guard let selectedIndex = HanlinDefaultChatPolicy.creationModelIndex(
-                in: models, providers: apiKeys) else {
-                validationAlertMessage = String(localized: "No chat model is ready. Enable a provider or make an on-device model available in Settings.")
-                validationSettingType = .apiKeys
-                showValidationAlert = true
-                return nil
-            }
-
-            // Optimization remains optional; its own actions validate their model.
-            let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
-            let chatName = currentLanguage.hasPrefix("zh") ? "新群聊" : "New Group Chat"
-            let welcomeText = currentLanguage.hasPrefix("zh")
-                ? "欢迎加入新群聊👏" : "Welcome to the new group chat! 👏"
-            let newChat = ChatRecords(name: chatName, type: "chat", lastEdited: Date(),
-                                      useModel: selectedIndex)
-            let welcomeMessage = ChatMessages(role: "information", text: welcomeText,
-                reasoning: "", modelDisplayName: "System", timestamp: Date(), record: newChat)
-            modelContext.insert(newChat)
-            modelContext.insert(welcomeMessage)
-            try modelContext.save()
-            return newChat
+            return try HanlinConversationCreation.create(in: modelContext)
+        } catch HanlinApplicationError.noChatModelReady {
+            validationAlertMessage = String(localized: "No chat model is ready. Enable a provider or make an on-device model available in Settings.", bundle: HanlinLocalization.bundle)
+            validationSettingType = .apiKeys
+            showValidationAlert = true
+            return nil
         } catch {
             print("Error saving new chat: \(error.localizedDescription)")
             return nil

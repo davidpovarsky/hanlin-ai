@@ -1,3 +1,4 @@
+import HanlinLocalization
 #if HANLIN_A2UI_POC
 import HanlinPlatformContracts
 import SwiftUI
@@ -40,8 +41,8 @@ struct HanlinChatContentView: View {
             .accessibilityElement(children: .contain)
             .accessibilityIdentifier("hanlin-a2ui-model-part-\(part.id.uuidString)")
         } else {
-            ContentUnavailableView("Content unavailable", systemImage: "rectangle.slash",
-                description: Text("This content could not be displayed."))
+            ContentUnavailableView(hanlin: "Content unavailable", systemImage: "rectangle.slash",
+                description: Text("This content could not be displayed.", bundle: HanlinLocalization.bundle))
                 .accessibilityIdentifier("hanlin-a2ui-model-fallback")
         }
     }

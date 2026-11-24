@@ -1,0 +1,9 @@
+# Exact shared continuation adoption and original Live continuation
+
+The complete shared SwiftAI revision 07431abccbfb151ca2dab67bca6cf86fcb2bd3b8 passed its actual Apple full package suite: all 4,185 original methods, zero failures and zero skips. The original six focused scenario invocations passed, and the authentic original red regression is retained without replay. The qualified revision includes the real source repair and the separately reviewed deterministic abort test fixture correction.
+
+Hanlin ca3c91f2233bf5c77990643b29a874aac8704639 adopts exactly that complete revision in all nine operative package pins. Its original application and SDK code, UI and resources are byte-preserved outside those revision literals. The Host application source is 07845de8c335a975027fd375f287a85754da51ab; its entire difference from the previous Live source is the Hanlin gitlink and the one matching Host resolved dependency revision.
+
+The source chain retains previous application 41f4242, SDK adoption fb5abff, and original Live source 96c5b1b. This CI child preserves the original provider/model/endpoint, original live case, 180-second source-button wait, 600-second case timeout, consent operations, diagnostic behavior, and manual workflow. The sole workflow edit selects this exact source-admission guard. The frozen source packet binds all 286 actual execution inputs.
+
+The prior actual Live failure and owned temporary-secret cleanup remain immutable evidence. Preparation has called no provider, accessed no credential, configured no secret and dispatched no new Live attempt. This source admission does not claim current native Live success. The owned Windows controller must pass its exact final preflight before its one authorized manual dispatch, then preserve terminal evidence and verify cleanup of only its own unchanged temporary secret.

@@ -1,0 +1,8 @@
+test_changed_nested_resource_is_rejected (test_bundle_resources.BundleResourceTests.test_changed_nested_resource_is_rejected) ... ok
+test_duplicate_module_bundle_is_ambiguous (test_bundle_resources.BundleResourceTests.test_duplicate_module_bundle_is_ambiguous) ... ok
+test_original_resources_are_verified_in_sdk_bundle_and_main_copy_cannot_mask_loss (test_bundle_resources.BundleResourceTests.test_original_resources_are_verified_in_sdk_bundle_and_main_copy_cannot_mask_loss) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.007s
+
+OK

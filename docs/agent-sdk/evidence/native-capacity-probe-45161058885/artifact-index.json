@@ -1,0 +1,25 @@
+{
+  "total_count": 1,
+  "artifacts": [
+    {
+      "id": 14812490420,
+      "node_id": "MDg6QXJ0aWZhY3QxNDgxMjQ5MDQyMA==",
+      "name": "simulator-environment-45161058885",
+      "size_in_bytes": 9496,
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/14812490420",
+      "archive_download_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/14812490420/zip",
+      "expired": false,
+      "digest": "sha256:8ee248816d71591a8f020bfe0c7bd18ed9c36a5bcf520746d29b771301342ab0",
+      "created_at": "2026-11-23T11:05:28Z",
+      "updated_at": "2026-11-23T11:05:28Z",
+      "expires_at": "2026-12-07T11:05:27Z",
+      "workflow_run": {
+        "id": 45161058885,
+        "repository_id": 1295277723,
+        "head_repository_id": 1295277723,
+        "head_branch": "codex/hanlin-sdk-unification-20261123",
+        "head_sha": "624f36e07209f4639252c48ec06397fb7a4f79a4"
+      }
+    }
+  ]
+}

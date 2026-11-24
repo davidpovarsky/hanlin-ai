@@ -27,6 +27,11 @@ on:
         type: string
         required: false
         default: ''
+      foreground_proof_run_id:
+        description: Completed original native foreground53 proof to validate for paired reuse
+        type: string
+        required: false
+        default: ''
       runtime_bundle_artifact_run_id:
         type: string
         required: true
@@ -76,6 +81,11 @@ on:
         type: string
         default: ''
         required: false
+      foreground_proof_run_id:
+        description: Completed original native foreground53 proof to validate for paired reuse
+        type: string
+        required: false
+        default: ''
       runtime_bundle_artifact_run_id:
         description: Existing successful checksum-pinned RuntimeCore candidate
         type: string
@@ -178,6 +188,8 @@ jobs:
       GH_TOKEN: ${{ github.token }}
       RUNTIME_CORE_ARTIFACT_RUN_ID: ${{ inputs.runtime_bundle_artifact_run_id }}
       HOST_PROOF_RUN_ID: ${{ inputs.host_proof_run_id }}
+      FOREGROUND_PROOF_RUN_ID: ${{ inputs.paired_product_acceptance && inputs.foreground_proof_run_id || '' }}
+      PAIRED_PROOF_REUSE_REQUIRED: ${{ inputs.paired_product_acceptance && inputs.host_proof_run_id != '' && inputs.foreground_proof_run_id != '' }}
       SPLIT_DERIVED_DATA: ${{ github.workspace }}/build/AppSplitDerivedData
       SPLIT_NATIVE_TEST_SCOPE: ${{ inputs.native_test_scope || 'baseline' }}
     steps:
@@ -256,13 +268,13 @@ jobs:
           key: split-derived-v2-${{ runner.os }}-${{ steps.split-platform.outputs.arch }}-${{ steps.split-platform.outputs.xcode_build }}-${{ steps.split-platform.outputs.sdk }}-${{ hashFiles('AI_HLY.xcodeproj/project.pbxproj', 'AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/**/Package.swift', 'RuntimeDependencies.lock.json', 'Scripts/NativeScript/dependency-lock.json', 'Scripts/Expo/dependency-lock.json', 'Scripts/CI/xcode_cache_inputs.py') }}-${{ hashFiles('AI_HLY/**/*.swift', 'AI_HLYTests/**/*.swift', 'AI_HLYUITests/**/*.swift', 'HanlinMiniAppsApp/**/*.swift', 'HanlinMiniAppsUITests/**/*.swift', 'HanlinMiniAppsTests/**/*.swift', 'Packages/**/*.swift') }}
           restore-keys: |
             split-derived-v2-${{ runner.os }}-${{ steps.split-platform.outputs.arch }}-${{ steps.split-platform.outputs.xcode_build }}-${{ steps.split-platform.outputs.sdk }}-${{ hashFiles('AI_HLY.xcodeproj/project.pbxproj', 'AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Packages/**/Package.swift', 'RuntimeDependencies.lock.json', 'Scripts/NativeScript/dependency-lock.json', 'Scripts/Expo/dependency-lock.json', 'Scripts/CI/xcode_cache_inputs.py') }}-
-      - name: Validate authentic unchanged Host proof before reuse
+      - name: Validate authentic unchanged Host and foreground proofs before reuse
         if: ${{ !inputs.signed_release_archives }}
         id: host-proof
         shell: bash
         run: python3 Scripts/ProductSplit/restore_host_proof.py
       - name: Execute strict foreground route and ledger cases on the actual Mac
-        if: ${{ !inputs.signed_release_archives }}
+        if: ${{ !inputs.signed_release_archives && steps.host-proof.outputs.foreground_reused != 'true' }}
         shell: bash
         run: |
           set -euo pipefail

@@ -9,9 +9,26 @@ public enum HanlinSwiftUIClassifier {
         let expoModifiers = Set(configuration.expoModifiers)
         let reviewedExpoViews = Set(configuration.expoReviewedViews)
         let reviewedExpoModifiers = Set(configuration.expoReviewedModifiers)
-        let enums = Dictionary(uniqueKeysWithValues: declarations
-            .filter { !$0.enumCases.isEmpty || !$0.optionSetCases.isEmpty }
-            .map { ($0.symbol, $0.enumCases + $0.optionSetCases) })
+        let enums: [String: [String]]
+        do {
+            enums = try HanlinSwiftUIInputAdmission.enumDeclarations(declarations)
+                .mapValues { $0.enumCases + $0.optionSetCases }
+        } catch {
+            // Keep this public API nonthrowing. No surface from an ambiguous
+            // symbol-only batch can be claimed as classified or safe to export.
+            return declarations.map { declaration in
+                var item = declaration
+                applyTerminal(
+                    to: &item,
+                    status: .unsupported,
+                    signatureStatus: .unsupported,
+                    aggregate: .unsupported,
+                    surface: .unsupported,
+                    reason: error.localizedDescription
+                )
+                return finalized(item)
+            }
+        }
 
         return declarations.map { declaration in
             var item = declaration

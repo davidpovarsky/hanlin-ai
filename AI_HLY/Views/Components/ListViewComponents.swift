@@ -1,3 +1,4 @@
+import HanlinLocalization
 //
 //  ListViewComponents.swift
 //  AI_HLY
@@ -64,7 +65,7 @@ struct ChatRowView: View {
                             .truncationMode(.tail)
                             .multilineTextAlignment(.leading)
                     } else {
-                        Text(String(localized: "暂无消息"))
+                        Text(String(localized: "暂无消息", bundle: HanlinLocalization.bundle))
                             .font(HanlinTypography.caption)
                             .foregroundColor(Color(.systemGray))
                             .lineLimit(2)
@@ -86,10 +87,10 @@ struct ChatRowView: View {
             dateFormatter.dateFormat = "HH:mm"
             return dateFormatter.string(from: date)
         } else if calendar.isDateInYesterday(date) {
-            return String(localized: "Yesterday")
+            return String(localized: "Yesterday", bundle: HanlinLocalization.bundle)
         } else if let twoDaysAgo = calendar.date(byAdding: .day, value: -2, to: Date()),
                   calendar.isDate(date, inSameDayAs: twoDaysAgo) {
-            return String(localized: "Two days ago")
+            return String(localized: "Two days ago", bundle: HanlinLocalization.bundle)
         } else {
             // 超过前天，显示“月-日”
             dateFormatter.dateFormat = "MM-dd"
@@ -100,8 +101,8 @@ struct ChatRowView: View {
     private func highlightedText(_ text: String, searchText: String) -> AttributedString? {
         // Older conversations persisted Chinese markers. Localize only those
         // exact leading markers for display, preserving the saved draft itself.
-        let draftMarker = "[\(String(localized: "Draft"))]"
-        let imageMarker = "[\(String(localized: "Image"))]"
+        let draftMarker = "[\(String(localized: "Draft", bundle: HanlinLocalization.bundle))]"
+        let imageMarker = "[\(String(localized: "Image", bundle: HanlinLocalization.bundle))]"
         let displayText: String
         if text.hasPrefix("[草稿]") {
             displayText = draftMarker + text.dropFirst("[草稿]".count)
@@ -116,18 +117,18 @@ struct ChatRowView: View {
         // 检查开头是否为 "[草稿]" 或 "[图像]" 并做颜色处理
         if displayText.hasPrefix(draftMarker) {
             if let draftRange = attributedString.range(of: draftMarker) {
-                attributedString[draftRange].foregroundColor = .hlRed
+                attributedString[draftRange].foregroundColor = .hanlinHLRed
             }
         } else if displayText.hasPrefix(imageMarker) {
             if let imageRange = attributedString.range(of: imageMarker) {
-                attributedString[imageRange].foregroundColor = .hlGreen
+                attributedString[imageRange].foregroundColor = .hanlinHLGreen
             }
         }
         
         // 如果 searchText 非空，则对其中匹配的部分进行高亮
         if !searchText.isEmpty,
            let range = attributedString.range(of: searchText, options: .caseInsensitive) {
-            attributedString[range].foregroundColor = Color(.hlBlue)
+            attributedString[range].foregroundColor = Color(.hanlinHLBlue)
             attributedString[range].font = .systemFont(ofSize: UIFont.systemFontSize, weight: .bold)
         }
         
@@ -137,7 +138,7 @@ struct ChatRowView: View {
     private func highlightedChatName() -> Text {
         // 如果名称为空，则返回默认“Unknown”
         guard let name = record.name, !name.isEmpty else {
-            return Text("Unknown")
+            return Text("Unknown", bundle: HanlinLocalization.bundle)
                 .font(HanlinTypography.headline)
                 .foregroundColor(.primary)
         }
@@ -156,7 +157,7 @@ struct ChatRowView: View {
         while let foundRange = name.range(of: trimmedSearch, options: .caseInsensitive, range: searchRange) {
             let nsRange = NSRange(foundRange, in: name)
             if let attrRange = Range(nsRange, in: attributedName) {
-                attributedName[attrRange].foregroundColor = .hlBlue
+                attributedName[attrRange].foregroundColor = .hanlinHLBlue
                 attributedName[attrRange].font = .headline.bold()
             }
             searchRange = foundRange.upperBound..<name.endIndex
@@ -215,12 +216,12 @@ struct IconAndColorPicker: View {
                         .clipShape(Circle())
                     
                     VStack(alignment: .leading) {
-                        TextField(String(localized: "请输入标题"), text: $title)
+                        TextField(String(localized: "请输入标题", bundle: HanlinLocalization.bundle), text: $title)
                             .font(HanlinTypography.headline)
                             .foregroundColor(.primary)
                             .textFieldStyle(PlainTextFieldStyle())
                         
-                        Text(String(localized: "这是一段示例消息内容..."))
+                        Text(String(localized: "这是一段示例消息内容...", bundle: HanlinLocalization.bundle))
                             .font(HanlinTypography.caption)
                             .foregroundColor(.secondary)
                             .lineLimit(1)
@@ -232,7 +233,7 @@ struct IconAndColorPicker: View {
                 .background(
                     RoundedRectangle(cornerRadius: 20)
                         .fill(.thinMaterial)
-                        .shadow(color: Color.hlBlue, radius: 1)
+                        .shadow(color: Color.hanlinHLBlue, radius: 1)
                 )
                 .padding(.horizontal)
                 
@@ -262,7 +263,7 @@ struct IconAndColorPicker: View {
                 .background(
                     RoundedRectangle(cornerRadius: 20)
                         .fill(.thinMaterial)
-                        .shadow(color: Color.hlBlue, radius: 1)
+                        .shadow(color: Color.hanlinHLBlue, radius: 1)
                 )
                 .padding(.horizontal)
                 
@@ -291,14 +292,14 @@ struct IconAndColorPicker: View {
                 .background(
                     RoundedRectangle(cornerRadius: 20)
                         .fill(.thinMaterial)
-                        .shadow(color: Color.hlBlue, radius: 1)
+                        .shadow(color: Color.hanlinHLBlue, radius: 1)
                 )
                 .padding(.horizontal)
                 .padding(.bottom)
             }
             .background(.background)
-            .navigationTitle(String(localized: "自定义"))
-            .navigationBarItems(trailing: Button(String(localized: "完成")) {
+            .navigationTitle(String(localized: "自定义", bundle: HanlinLocalization.bundle))
+            .navigationBarItems(trailing: Button(String(localized: "完成", bundle: HanlinLocalization.bundle)) {
                 if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
                    let window = scene.windows.first {
                     window.rootViewController?.dismiss(animated: true)

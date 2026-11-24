@@ -1,3 +1,4 @@
+import HanlinLocalization
 //
 //  LegacyAgentActivityAdapter.swift
 //  AI_HLY
@@ -34,7 +35,7 @@ enum LegacyAgentActivityAdapter {
         }
 
         if let reasoning = assistantMessages.compactMap(\.reasoning).first(where: { !$0.isEmpty }) {
-            appendStep(AgentActivityStep(externalID: "legacy-reasoning:\(first.id.uuidString)", sequence: sequence, kind: .reasoning, title: String(localized: "Thinking"), status: .completed, startedAt: first.timestamp, completedAt: first.timestamp, output: reasoning))
+            appendStep(AgentActivityStep(externalID: "legacy-reasoning:\(first.id.uuidString)", sequence: sequence, kind: .reasoning, title: String(localized: "Thinking", bundle: HanlinLocalization.bundle), status: .completed, startedAt: first.timestamp, completedAt: first.timestamp, output: reasoning))
         }
 
         for searchMessage in sortedMessages where searchMessage.role == "search" {
@@ -44,7 +45,7 @@ enum LegacyAgentActivityAdapter {
                 externalID: "legacy-search:\(searchMessage.id.uuidString)",
                 sequence: sequence,
                 kind: .webSearch,
-                title: String(localized: "Searching the web"),
+                title: String(localized: "Searching the web", bundle: HanlinLocalization.bundle),
                 subtitle: searchMessage.searchEngine,
                 status: .completed,
                 startedAt: searchMessage.timestamp,
@@ -73,14 +74,14 @@ enum LegacyAgentActivityAdapter {
                     richResultBlocks: message.nativeUIBlocks
                 ))
             } else if !message.nativeUIBlocks.isEmpty {
-                appendStep(AgentActivityStep(sequence: sequence, kind: .result, title: String(localized: "Done"), status: .completed, startedAt: message.timestamp, completedAt: message.timestamp, richResultBlocks: message.nativeUIBlocks))
+                appendStep(AgentActivityStep(sequence: sequence, kind: .result, title: String(localized: "Done", bundle: HanlinLocalization.bundle), status: .completed, startedAt: message.timestamp, completedAt: message.timestamp, richResultBlocks: message.nativeUIBlocks))
             }
 
             if let resources = message.resources, !resources.isEmpty {
                 appendStep(AgentActivityStep(
                     sequence: sequence,
                     kind: .sourceRead,
-                    title: String(localized: "Reading a source"),
+                    title: String(localized: "Reading a source", bundle: HanlinLocalization.bundle),
                     status: .completed,
                     startedAt: message.timestamp,
                     completedAt: message.timestamp,
@@ -90,27 +91,27 @@ enum LegacyAgentActivityAdapter {
             }
 
             if let code = message.codeBlockData, !code.isEmpty {
-                appendStep(AgentActivityStep(sequence: sequence, kind: .codeExecution, title: String(localized: "Running code"), status: .completed, startedAt: message.timestamp, completedAt: message.timestamp, input: code.map(\.code).joined(separator: "\n\n"), output: code.map(\.output).joined(separator: "\n\n")))
+                appendStep(AgentActivityStep(sequence: sequence, kind: .codeExecution, title: String(localized: "Running code", bundle: HanlinLocalization.bundle), status: .completed, startedAt: message.timestamp, completedAt: message.timestamp, input: code.map(\.code).joined(separator: "\n\n"), output: code.map(\.output).joined(separator: "\n\n")))
             }
 
             if let document = message.document_text, !document.isEmpty {
-                appendStep(AgentActivityStep(sequence: sequence, kind: .documentRead, title: String(localized: "Reading a document"), status: .completed, startedAt: message.timestamp, completedAt: message.timestamp, output: document))
+                appendStep(AgentActivityStep(sequence: sequence, kind: .documentRead, title: String(localized: "Reading a document", bundle: HanlinLocalization.bundle), status: .completed, startedAt: message.timestamp, completedAt: message.timestamp, output: document))
             }
 
             if message.locationsInfo?.isEmpty == false || message.routeInfos?.isEmpty == false {
-                appendStep(AgentActivityStep(sequence: sequence, kind: .map, title: String(localized: "Searching locations"), status: .completed, startedAt: message.timestamp, completedAt: message.timestamp))
+                appendStep(AgentActivityStep(sequence: sequence, kind: .map, title: String(localized: "Searching locations", bundle: HanlinLocalization.bundle), status: .completed, startedAt: message.timestamp, completedAt: message.timestamp))
             }
 
             if message.events?.isEmpty == false {
-                appendStep(AgentActivityStep(sequence: sequence, kind: .calendar, title: String(localized: "Checking the calendar"), status: .completed, startedAt: message.timestamp, completedAt: message.timestamp))
+                appendStep(AgentActivityStep(sequence: sequence, kind: .calendar, title: String(localized: "Checking the calendar", bundle: HanlinLocalization.bundle), status: .completed, startedAt: message.timestamp, completedAt: message.timestamp))
             }
 
             if message.healthData?.isEmpty == false {
-                appendStep(AgentActivityStep(sequence: sequence, kind: .health, title: String(localized: "Using a tool"), status: .completed, startedAt: message.timestamp, completedAt: message.timestamp))
+                appendStep(AgentActivityStep(sequence: sequence, kind: .health, title: String(localized: "Using a tool", bundle: HanlinLocalization.bundle), status: .completed, startedAt: message.timestamp, completedAt: message.timestamp))
             }
 
             if message.knowledgeCard?.isEmpty == false || message.htmlContent?.isEmpty == false || message.showCanvas == true {
-                appendStep(AgentActivityStep(sequence: sequence, kind: .result, title: String(localized: "Done"), status: .completed, startedAt: message.timestamp, completedAt: message.timestamp))
+                appendStep(AgentActivityStep(sequence: sequence, kind: .result, title: String(localized: "Done", bundle: HanlinLocalization.bundle), status: .completed, startedAt: message.timestamp, completedAt: message.timestamp))
             }
         }
 

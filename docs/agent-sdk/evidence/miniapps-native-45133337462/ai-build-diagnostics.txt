@@ -1,0 +1,32 @@
+58921:SwiftEmitModule normal arm64 Emitting\ module\ for\ HanlinScriptingWidgets (in target 'HanlinScriptingWidgets' from project 'HanlinSDK')
+60388:
+60389:SwiftEmitModule normal arm64 Emitting\ module\ for\ HanlinScriptingWidgetsHost (in target 'HanlinScriptingWidgets' from project 'AI_HLY')
+60390:/Users/runner/work/hanlin-ai/hanlin-ai/HanlinScriptingWidgets/HanlinScriptingWidgets.swift:6:1: error: 'HanlinScriptingWidgetBundle' is annotated with '@main' and must provide a main static function of type () -> Void, () throws -> Void, () async -> Void, or () async throws -> Void
+60391: 4 | import WidgetKit
+60392: 5 | 
+60393: 6 | @main
+60394:   | |- error: 'HanlinScriptingWidgetBundle' is annotated with '@main' and must provide a main static function of type () -> Void, () throws -> Void, () async -> Void, or () async throws -> Void
+60395:   | |- note: add 'static func main()'
+60396:   | |- note: add 'static func main() throws'
+60397:   | |- note: add 'static func main() async'
+60398:   | `- note: add 'static func main() async throws'
+60400: 8 |     var body: some Widget {
+60401:
+60402:/Users/runner/work/hanlin-ai/hanlin-ai/HanlinScriptingWidgets/HanlinScriptingWidgets.swift:8:20: error: cannot find type 'Widget' in scope
+60403: 6 | @main
+60404: 7 | struct HanlinScriptingWidgetBundle: WidgetBundle {
+60405: 8 |     var body: some Widget {
+60406:   |                    `- error: cannot find type 'Widget' in scope
+60407: 9 |         HanlinScriptingWidget(kind: HanlinExtensionHostConfiguration.hanlinWidgetKind)
+60408:10 |         HanlinScriptingLiveActivityWidget()
+60409:
+60410:/Users/runner/work/hanlin-ai/hanlin-ai/HanlinScriptingWidgets/HanlinScriptingWidgets.swift:7:37: error: cannot find type 'WidgetBundle' in scope
+60411: 5 | 
+60412: 6 | @main
+60413: 7 | struct HanlinScriptingWidgetBundle: WidgetBundle {
+60414:   |                                     `- error: cannot find type 'WidgetBundle' in scope
+60415: 8 |     var body: some Widget {
+60416: 9 |         HanlinScriptingWidget(kind: HanlinExtensionHostConfiguration.hanlinWidgetKind)
+60417:Failed frontend command:
+60446:** TEST BUILD FAILED **
+60450:	SwiftEmitModule normal arm64 Emitting\ module\ for\ HanlinScriptingWidgetsHost (in target 'HanlinScriptingWidgets' from project 'AI_HLY')

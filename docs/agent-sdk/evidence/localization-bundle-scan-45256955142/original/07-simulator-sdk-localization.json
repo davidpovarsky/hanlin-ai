@@ -1,0 +1,892 @@
+{
+  "status": "FAIL",
+  "catalog_values": 3683,
+  "packaged_values": 0,
+  "errors": [
+    {
+      "table": "Localizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "Localizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "RuntimeLocalizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "RuntimeLocalizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "RuntimeLocalizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "RuntimeLocalizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "RuntimeLocalizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "RuntimeLocalizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "RuntimeLocalizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "RuntimeLocalizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "RuntimeLocalizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "RuntimeLocalizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "RuntimeLocalizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "RuntimeLocalizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "RuntimeLocalizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "RuntimeLocalizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "RuntimeLocalizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "RuntimeLocalizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "RuntimeLocalizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "RuntimeLocalizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "RuntimeLocalizable",
+      "locale": "en",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "RuntimeLocalizable",
+      "locale": "he",
+      "reason": "canonical packaged table missing or ambiguous"
+    },
+    {
+      "table": "RuntimeLocalizable",
+      "locale": "zh-Hans",
+      "reason": "canonical packaged table missing or ambiguous"
+    }
+  ]
+}

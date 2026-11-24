@@ -1,0 +1,190 @@
+{
+  "run": 45236783905,
+  "attempt": 2,
+  "source": "0b74c6c1df60926c09a00560598af478bafb3e75",
+  "run_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45236783905",
+  "workflow_conclusion": "failure",
+  "native_job": 137919914818,
+  "native_conclusion": "failure",
+  "runner": "GitHub Actions 1000024859",
+  "tests": [],
+  "artifact": {
+    "run": 45236783905,
+    "attempt": 2,
+    "artifact_id": 14851835918,
+    "artifact_bytes": 13377,
+    "artifact_sha256": "5366219320b17b05ec7a78e0cfc0fbc0ad8dd4a50c0027a52676765f74d3c017",
+    "api_digest_and_size_match": true,
+    "zip_crc": "PASS",
+    "member_count": 19
+  },
+  "collected_at": "2026-11-23T18:40:52.274642+00:00",
+  "raw-result-status.json": null,
+  "result-validation.json": null,
+  "sdk-input-verification.json": null,
+  "macro-input-verification.json": null,
+  "motion-boot-readiness.json": {
+    "schema_version": 1,
+    "status": "NOT_READY",
+    "device": "23F8B166-D370-4128-AD85-0386DD9C1242",
+    "strategy": "fresh",
+    "run_id": "45236783905",
+    "run_attempt": "2",
+    "attempts": [
+      {
+        "name": "boot-initial",
+        "command": [
+          "xcrun",
+          "simctl",
+          "boot",
+          "23F8B166-D370-4128-AD85-0386DD9C1242"
+        ],
+        "timeout_seconds": 15.0,
+        "return_code": 0,
+        "timed_out": false,
+        "elapsed_seconds": 3.874,
+        "output_file": "boot-initial.log",
+        "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "bootstatus-attempt-1",
+        "command": [
+          "xcrun",
+          "simctl",
+          "bootstatus",
+          "23F8B166-D370-4128-AD85-0386DD9C1242",
+          "-b"
+        ],
+        "timeout_seconds": 180.0,
+        "return_code": 124,
+        "timed_out": true,
+        "elapsed_seconds": 181.964,
+        "output_file": "bootstatus-attempt-1.log",
+        "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "shutdown-recovery",
+        "command": [
+          "xcrun",
+          "simctl",
+          "shutdown",
+          "23F8B166-D370-4128-AD85-0386DD9C1242"
+        ],
+        "timeout_seconds": 20.0,
+        "return_code": 124,
+        "timed_out": true,
+        "elapsed_seconds": 25.674,
+        "output_file": "shutdown-recovery.log",
+        "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "recovery_count": 1,
+    "scope": "Simulator readiness only; Motion product tests NOT_RUN",
+    "ownership": {
+      "simulator": "23F8B166-D370-4128-AD85-0386DD9C1242",
+      "run_id": "45236783905",
+      "run_attempt": "2",
+      "name": "Hanlin-Phase2-Motion-45236783905",
+      "selection_sha256": "bcc4c0cf879814b1cab0da330d220967186c3682fcb8b93282c1cdc324ffc6c0"
+    },
+    "recovery_reason": "FIRST_NATIVE_BOOTSTATUS_TIMEOUT",
+    "error": "Owned Motion recovery shutdown failed"
+  },
+  "original_member_hashes": [
+    {
+      "path": "boot-initial.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "bootstatus-attempt-1.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "bootstatus.log",
+      "bytes": 261,
+      "sha256": "739e9f145ce63bf5e0377220c0e5c1a8b55bf260d414b1596c054f3342c6521b"
+    },
+    {
+      "path": "ci-performance-report.json",
+      "bytes": 2035,
+      "sha256": "f78aa6c6f9a8689f383c830757590f5b23b5fda37b5c2d1cfac0d12b8a87a5b6"
+    },
+    {
+      "path": "core-simulator-log.timeout",
+      "bytes": 24,
+      "sha256": "380338e6873abcf07093e46530492652b7bc8aadd3fd6ba7ee4a2a69b85814cb"
+    },
+    {
+      "path": "device-strategy.txt",
+      "bytes": 6,
+      "sha256": "02db0d2659c9d48bc15f81a388594fc0e3cf4c780fdc27ea21e0671afc37de19"
+    },
+    {
+      "path": "devices-after.timeout",
+      "bytes": 24,
+      "sha256": "380338e6873abcf07093e46530492652b7bc8aadd3fd6ba7ee4a2a69b85814cb"
+    },
+    {
+      "path": "devices.json",
+      "bytes": 22084,
+      "sha256": "98d36717798ad15b8cfe7d3facd4f815d3326cfd90b7a24ff03266b84e364b32"
+    },
+    {
+      "path": "motion-boot-readiness.json",
+      "bytes": 1961,
+      "sha256": "0a127fb697b0374f9209109063fcc85d9285170f03ca3bcd16333109ea822f93"
+    },
+    {
+      "path": "owned-simulator-cleanup.log",
+      "bytes": 1683,
+      "sha256": "2d19c3d8a6a1738152a107726046d54bf2b2a8559b534f2998a13d294a234d1e"
+    },
+    {
+      "path": "preflight-duration-seconds.txt",
+      "bytes": 4,
+      "sha256": "20b7863224b7cb6edbc009c2ef30a14a585fca79b285595a11f066bbd8b54bc6"
+    },
+    {
+      "path": "preflight.txt",
+      "bytes": 962,
+      "sha256": "f284b4ef718929a36b93576892c9e6c599ed58ea7aa7e9d4a2693b1bd433d032"
+    },
+    {
+      "path": "process-status.txt",
+      "bytes": 28,
+      "sha256": "5fecb30c9edeef67794fce1856d1b70fc392c560e8e3459bc2662c377e2f0b3d"
+    },
+    {
+      "path": "requested-scope.txt",
+      "bytes": 9,
+      "sha256": "686459f77bbf90b61ad584226ca79c956786b2dc7621d683393cfaf66a594430"
+    },
+    {
+      "path": "runtimes.json",
+      "bytes": 60604,
+      "sha256": "d8dadcf0615ca905cda2b54661e589ed5331ca022a22e729cb268636276d60c2"
+    },
+    {
+      "path": "shutdown-recovery.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "source-sha.txt",
+      "bytes": 41,
+      "sha256": "7d8a25b03c0940c46d8cceec3535fef1cd23cdda3bf97957d501884914286a2b"
+    },
+    {
+      "path": "verified-environment.json",
+      "bytes": 81347,
+      "sha256": "bcc4c0cf879814b1cab0da330d220967186c3682fcb8b93282c1cdc324ffc6c0"
+    },
+    {
+      "path": "xcodegen-install.log",
+      "bytes": 327,
+      "sha256": "5543c39402b2867d94bc6d9c2f8f3108dd11a86c87515448a3a3d4932506347d"
+    }
+  ]
+}

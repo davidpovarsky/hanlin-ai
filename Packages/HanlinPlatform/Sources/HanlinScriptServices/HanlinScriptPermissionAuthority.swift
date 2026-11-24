@@ -11,14 +11,23 @@ public actor HanlinScriptPermissionAuthority {
         revokedGrantIDs: Set<HanlinGrantID> = [],
         now: @escaping @Sendable () -> Date = { Date() }
     ) {
-        self.grants = Dictionary(uniqueKeysWithValues: grants.map { ($0.id, $0) })
+        self.grants = Self.indexLegacyGrants(grants)
         revoked = revokedGrantIDs
         self.now = now
     }
 
     public func replace(grants: [HanlinPermissionGrant], revokedGrantIDs: Set<HanlinGrantID> = []) {
-        self.grants = Dictionary(uniqueKeysWithValues: grants.map { ($0.id, $0) })
+        self.grants = Self.indexLegacyGrants(grants)
         revoked = revokedGrantIDs
+    }
+
+    // Bulk legacy metadata follows the same ordered, whole-record assignment as upsert.
+    // Identical repeats coalesce; a later same-ID record replaces all earlier fields.
+    // The caller's explicit revocation set is assigned separately and is never cleared here.
+    static func indexLegacyGrants(_ grants: [HanlinPermissionGrant]) -> [HanlinGrantID: HanlinPermissionGrant] {
+        grants.reduce(into: [:]) { indexed, grant in
+            indexed[grant.id] = grant
+        }
     }
 
     public func revoke(_ id: HanlinGrantID) { revoked.insert(id) }

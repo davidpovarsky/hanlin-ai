@@ -1,8 +1,14 @@
 import Foundation
 
-struct MCPEnvironmentDraft: Identifiable, Hashable, Sendable {
-    var id = UUID()
-    var name: String
-    var value: String
-    var isSecret: Bool
+public struct MCPEnvironmentDraft: Identifiable, Hashable, Sendable {
+    public var id = UUID()
+    public var name: String
+    public var value: String
+    public var isSecret: Bool
+    public init(id: UUID = UUID(), name: String, value: String, isSecret: Bool = false) {
+        self.id = id
+        self.name = name
+        self.value = value
+        self.isSecret = isSecret
+    }
 }

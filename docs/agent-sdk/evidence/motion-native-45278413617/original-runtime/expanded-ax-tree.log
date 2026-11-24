@@ -1,0 +1,60 @@
+2026-11-23 22:51:36.414509+0000 ChatMotionProof[23854:72582] [Default] Current tree:
+Application, 0x10a6dd2c0, pid: 23854, label: 'ChatMotionProof' <App element pid: 23854>
+  Window (Main), 0x10a6dfac0 <AX element pid: 23854, elementOrHash.elementID: 4419010560.4>
+    Other, 0x10a6dc8c0 <AX element pid: 23854, elementOrHash.elementID: 4464006784.6>
+      Other, 0x10a6dda40 <AX element pid: 23854, elementOrHash.elementID: 4464008064.8>
+        Other, 0x10a6df980 <AX element pid: 23854, elementOrHash.elementID: 4419062272.10>
+          Other, 0x10a6dc640 <AX element pid: 23854, elementOrHash.elementID: 4593261120.11>
+            CollectionView, 0x10a6dd680 <AX element pid: 23854, elementOrHash.elementID: 4467507200.12>
+              Other, 0x10a6dfe80 <AX element pid: 23854, elementOrHash.elementID: 4463979136.24>
+              Other, 0x10a6dcc80 <AX element pid: 23854, elementOrHash.elementID: 4419897536.25>
+                Other, 0x10a6ded00 <AX element pid: 23854, elementOrHash.elementID: 4419901120.31>
+              Other, 0x10a6dd400 <AX element pid: 23854, elementOrHash.elementID: 4419897088.26>
+              Cell, 0x10a6de6c0 <AX element pid: 23854, elementOrHash.elementID: 4419064832.27>
+                Other, 0x10a307d40 <AX element pid: 23854, elementOrHash.elementID: 4463680384.32>
+                  Other, 0x10a3052c0 <AX element pid: 23854, elementOrHash.elementID: 4419902016.37>
+                Other, 0x10a304dc0 <AX element pid: 23854, elementOrHash.elementID: 4419901568.33>
+                  Other, 0x10a304c80 <AX element pid: 23854, elementOrHash.elementID: 4418456576.38>
+                    Other, 0x10a3048c0 <AX element pid: 23854, elementOrHash.elementID: 4593262560.42>
+                      Button, 0x10763b0c0, identifier: 'hanlin-chat-motion-preset', label: 'Chat animations, Smooth and relaxed' <AX element pid: 23854, elementOrHash.elementID: 4463558656.47>
+                        StaticText, 0x10763b340, label: 'Smooth and relaxed' <AX element pid: 23854, elementOrHash.elementID: 4463955968.50>
+                      Image, 0x10763bac0, identifier: 'sparkles', label: 'Sparkle' <AX element pid: 23854, elementOrHash.elementID: 4593261280.48>
+                      StaticText, 0x10763b840, label: 'Chat animations' <AX element pid: 23854, elementOrHash.elementID: 4593261440.49>
+              Other, 0x10763b5c0, label: 'Vertical scroll bar, 2 pages', value: 0% <AX element pid: 23854, elementOrHash.elementID: 4463951872.28>
+                Other, 0x10763ad00 <AX element pid: 23854, elementOrHash.elementID: 4419899776.34>
+              Other, 0x10a2b4dc0, label: 'Vertical scroll bar, 2 pages', value: 0% <AX element pid: 23854, elementOrHash.elementID: 4463951872.28>
+                Other, 0x10a2b5180 <AX element pid: 23854, elementOrHash.elementID: 4419899776.34>
+            StaticText, 0x10a2b4b40, identifier: 'proof-persisted-preset', label: 'v1.relaxed' <AX element pid: 23854, elementOrHash.elementID: 4593257600.13>
+            Button, 0x111cdc3c0, identifier: 'proof-count', label: 'Count' <AX element pid: 23854, elementOrHash.elementID: 4593258080.14>
+            Button, 0x111cded00, identifier: 'proof-finish', label: 'Finish' <AX element pid: 23854, elementOrHash.elementID: 4593258240.15>
+            Button, 0x111cdfe80, identifier: 'proof-long', label: 'Long text' <AX element pid: 23854, elementOrHash.elementID: 4593258400.16>
+            Button, 0x111cdf980, identifier: 'proof-rtl', label: 'RTL' <AX element pid: 23854, elementOrHash.elementID: 4593258560.17>
+            Button, 0x111cdda40, identifier: 'proof-type', label: 'Large type' <AX element pid: 23854, elementOrHash.elementID: 4593258720.18>
+            StaticText, 0x111cdebc0, identifier: 'proof-geometry-state', label: 'expanded', value: expanded=true;orie... <AX element pid: 23854, elementOrHash.elementID: 4593258880.19>
+            StaticText, 0x111cdfd40, identifier: 'proof-action-receipt', label: 'actions=1', value: actions=1;expanded... <AX element pid: 23854, elementOrHash.elementID: 4593259040.20>
+            StaticText, 0x111cdd040, identifier: 'proof-effective-motion', label: 'shimmer=true;numeric=true' <AX element pid: 23854, elementOrHash.elementID: 4593259200.21>
+            ScrollView, 0x111cdfac0 <AX element pid: 23854, elementOrHash.elementID: 4465819648.22>
+              Other, 0x111cdf0c0 <AX element pid: 23854, elementOrHash.elementID: 4420734080.29>
+                Other, 0x111cdc780 <AX element pid: 23854, elementOrHash.elementID: 4593260640.35>
+                  Button, 0x111cdf480, identifier: 'proof-thinking', label: 'Thinking, 0' <AX element pid: 23854, elementOrHash.elementID: 4593260160.39>
+                    StaticText, 0x111cdf840, label: 'Thinking' <AX element pid: 23854, elementOrHash.elementID: 4593259520.43>
+                    Other, 0x111cdf340 <AX element pid: 23854, elementOrHash.elementID: 4593259680.44>
+                    StaticText, 0x111cdfc00, label: '0' <AX element pid: 23854, elementOrHash.elementID: 4593259840.45>
+                    Image, 0x111cdd7c0, identifier: 'chevron.down', label: 'Go Down' <AX element pid: 23854, elementOrHash.elementID: 4593260000.46>
+                  Other, 0x111cdd540 <AX element pid: 23854, elementOrHash.elementID: 4593264320.53>
+                    StaticText, 0x111cdef80, identifier: 'proof-summary', label: 'A short visible reasoning summary. שלום עולם. مرحبًا بالعالم.' <AX element pid: 23854, elementOrHash.elementID: 4593262880.54>
+                    Button, 0x111cdcdc0, label: 'Repeated tool name', value: Collapsed <AX element pid: 23854, elementOrHash.elementID: 4593263680.55>
+                      StaticText, 0x111cde080, label: 'Repeated tool name' <AX element pid: 23854, elementOrHash.elementID: 4593263360.59>
+                      Image, 0x111cdea80, identifier: 'chevron.down', label: 'Go Down' <AX element pid: 23854, elementOrHash.elementID: 4593263520.60>
+                    Other, 0x111cde300 <AX element pid: 23854, elementOrHash.elementID: 4593263840.56>
+                    StaticText, 0x111cde6c0, label: 'source call-2: Repeated tool name — cancelled' <AX element pid: 23854, elementOrHash.elementID: 4593264000.57>
+                    StaticText, 0x111cde1c0, label: 'source call-3: Repeated tool name — failed; no output' <AX element pid: 23854, elementOrHash.elementID: 4593264160.58>
+                  StaticText, 0x111cde580, identifier: 'proof-footer', label: 'Original content after details' <AX element pid: 23854, elementOrHash.elementID: 4593260480.41>
+              Other, 0x111cdf700, label: 'Vertical scroll bar, 1 page', value: 0% <AX element pid: 23854, elementOrHash.elementID: 4463952896.30>
+                Other, 0x111cdee40 <AX element pid: 23854, elementOrHash.elementID: 4419900224.36>
+              Other, 0x111cdf200, label: 'Vertical scroll bar, 1 page', value: 0% <AX element pid: 23854, elementOrHash.elementID: 4463952896.30>
+                Other, 0x111cde800 <AX element pid: 23854, elementOrHash.elementID: 4419900224.36>
+            Button, 0x111cde940, identifier: 'proof-save-timeline', label: 'Save geometry timeline' <AX element pid: 23854, elementOrHash.elementID: 4593260960.23>
+  Window, 0x111cdf5c0 <AX element pid: 23854, elementOrHash.elementID: 4419066112.5>
+    Other, 0x111fb8000 <AX element pid: 23854, elementOrHash.elementID: 4463961088.7>
+      Other, 0x111fb8140 <AX element pid: 23854, elementOrHash.elementID: 4463962112.9>

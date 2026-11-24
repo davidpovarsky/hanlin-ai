@@ -1,3 +1,4 @@
+import HanlinLocalization
 //
 //  VoiceInputView.swift
 //  AI_Hanlin
@@ -6,6 +7,7 @@
 //
 
 import SwiftUI
+import SwiftData
 @preconcurrency import Speech
 @preconcurrency import AVFoundation
 import Combine
@@ -40,7 +42,7 @@ struct VoiceInputView: View {
                 ScrollView(.horizontal) {
                     Text(speechRecognizer.recognizedText)
                         .lineLimit(1)
-                        .foregroundColor(.hlBluefont)
+                        .foregroundColor(.hanlinHLBluefont)
                         .padding(12)
                 }
                 .defaultScrollAnchor(.trailing)
@@ -51,16 +53,16 @@ struct VoiceInputView: View {
             HStack {
                 Menu {
                     Button(action: { speechRecognizer.changeLocale(to: SpeechRecognizer.resolveDefaultLocale()) }) {
-                        Text(String(localized: "系统默认"))
+                        Text(String(localized: "系统默认", bundle: HanlinLocalization.bundle))
                     }
                     Button(action: { speechRecognizer.changeLocale(to: Locale(identifier: "he-IL")) }) {
-                        Text("עברית (ישראל)")
+                        Text("עברית (ישראל)", bundle: HanlinLocalization.bundle)
                     }
                     Button(action: { speechRecognizer.changeLocale(to: Locale(identifier: "en-US")) }) {
-                        Text("English (US)")
+                        Text("English (US)", bundle: HanlinLocalization.bundle)
                     }
                     Button(action: { speechRecognizer.changeLocale(to: Locale(identifier: "zh-CN")) }) {
-                        Text("简体中文")
+                        Text("简体中文", bundle: HanlinLocalization.bundle)
                     }
                 } label: {
                     HStack(spacing: 4) {
@@ -98,10 +100,10 @@ struct VoiceInputView: View {
                         .foregroundColor(.secondary)
                     Spacer()
                     Button(action: openSettings) {
-                        Text(String(localized: "打开“设置”"))
+                        Text(String(localized: "打开“设置”", bundle: HanlinLocalization.bundle))
                             .font(HanlinTypography.caption)
                             .fontWeight(.medium)
-                            .foregroundColor(.hlBluefont)
+                            .foregroundColor(.hanlinHLBluefont)
                     }
                 }
                 .padding(.horizontal)
@@ -109,15 +111,15 @@ struct VoiceInputView: View {
                 HStack(spacing: 8) {
                     Image(systemName: "lock.shield.fill")
                         .foregroundColor(.secondary)
-                    Text(String(localized: "语音识别已被系统限制使用"))
+                    Text(String(localized: "语音识别已被系统限制使用", bundle: HanlinLocalization.bundle))
                         .font(HanlinTypography.caption)
                         .foregroundColor(.secondary)
                     Spacer()
                     Button(action: openSettings) {
-                        Text(String(localized: "打开“设置”"))
+                        Text(String(localized: "打开“设置”", bundle: HanlinLocalization.bundle))
                             .font(HanlinTypography.caption)
                             .fontWeight(.medium)
-                            .foregroundColor(.hlBluefont)
+                            .foregroundColor(.hanlinHLBluefont)
                     }
                 }
                 .padding(.horizontal)
@@ -153,11 +155,11 @@ struct VoiceInputView: View {
                     .scaledToFit()
                     .frame(width: 40, height: 40)
                     .font(HanlinTypography.fixed(size: 40))
-                    .foregroundColor(speechRecognizer.isRecording ? .hlRed : isOptimizing ? .gray : .hlBluefont)
+                    .foregroundColor(speechRecognizer.isRecording ? .hanlinHLRed : isOptimizing ? .gray : .hanlinHLBluefont)
                     .padding(12)
                 }
                 .disabled(isOptimizing)
-                .accessibilityLabel(speechRecognizer.isRecording ? String(localized: "停止录音") : String(localized: "开始录音"))
+                .accessibilityLabel(speechRecognizer.isRecording ? String(localized: "停止录音", bundle: HanlinLocalization.bundle) : String(localized: "开始录音", bundle: HanlinLocalization.bundle))
 
                 Spacer()
 
@@ -187,7 +189,7 @@ struct VoiceInputView: View {
                             ProgressView()
                                 .frame(width: 40, height: 40)
                                 .font(HanlinTypography.fixed(size: 40))
-                                .background(Capsule().fill(Color(.hlBluefont).opacity(0.1)))
+                                .background(Capsule().fill(Color(.hanlinHLBluefont).opacity(0.1)))
                                 .padding(.vertical, 12)
                         } else if optimized {
                             Image(systemName: "arrow.uturn.backward.circle")
@@ -195,7 +197,7 @@ struct VoiceInputView: View {
                                 .scaledToFit()
                                 .frame(width: 40, height: 40)
                                 .font(HanlinTypography.fixed(size: 40))
-                                .foregroundColor(.hlBluefont)
+                                .foregroundColor(.hanlinHLBluefont)
                                 .padding(.vertical, 12)
                         } else {
                             Image(systemName: "hammer.circle")
@@ -203,12 +205,12 @@ struct VoiceInputView: View {
                                 .scaledToFit()
                                 .frame(width: 40, height: 40)
                                 .font(HanlinTypography.fixed(size: 40))
-                                .foregroundColor(speechRecognizer.isRecording ? .gray : .hlBluefont)
+                                .foregroundColor(speechRecognizer.isRecording ? .gray : .hanlinHLBluefont)
                                 .padding(.vertical, 12)
                         }
                     }
                     .disabled(isOptimizing || speechRecognizer.isRecording)
-                    .accessibilityLabel(String(localized: "优化提示词"))
+                    .accessibilityLabel(String(localized: "优化提示词", bundle: HanlinLocalization.bundle))
                     .onChange(of: message) {
                         if optimized && (message != optimizedMessage) {
                             optimized = false
@@ -234,16 +236,16 @@ struct VoiceInputView: View {
                         .scaledToFit()
                         .frame(width: 40, height: 40)
                         .font(HanlinTypography.fixed(size: 40))
-                        .foregroundColor(speechRecognizer.isRecording ? .gray : .hlBluefont)
+                        .foregroundColor(speechRecognizer.isRecording ? .gray : .hanlinHLBluefont)
                         .padding(12)
                 }
                 .disabled(isOptimizing || speechRecognizer.isRecording)
-                .accessibilityLabel(String(localized: "插入"))
+                .accessibilityLabel(String(localized: "插入", bundle: HanlinLocalization.bundle))
             }
             .background(
                 BlurView(style: .systemUltraThinMaterial)
                     .clipShape(RoundedRectangle(cornerRadius: 32))
-                    .shadow(color: .hlBlue, radius: 1)
+                    .shadow(color: .hanlinHLBlue, radius: 1)
             )
             .padding(.horizontal)
             .hanlinFeedback(.impact, trigger: isFeedBack)
@@ -326,7 +328,7 @@ struct WaveformBarsView: View {
                     let normalized = max(0.1, min(amplitude * 35, 1.0))
 
                     RoundedRectangle(cornerRadius: 6)
-                        .fill(Color.hlBluefont)
+                        .fill(Color.hanlinHLBluefont)
                         .frame(
                             width: barWidth,
                             height: min(CGFloat(normalized) * geometry.size.height, 40)
@@ -522,7 +524,7 @@ final class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDele
         } else {
             self.speechRecognizer = nil
             self.effectiveLocale = nil
-            self.errorMessage = String(localized: "当前语言不支持语音识别")
+            self.errorMessage = String(localized: "当前语言不支持语音识别", bundle: HanlinLocalization.bundle)
         }
 
         // 监听音频中断与硬件路由变更
@@ -582,7 +584,7 @@ final class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDele
             recognizer.delegate = self
         } else {
             effectiveLocale = nil
-            let msg = String(localized: "当前语言不支持语音识别")
+            let msg = String(localized: "当前语言不支持语音识别", bundle: HanlinLocalization.bundle)
             errorMessage = msg
         }
     }
@@ -624,9 +626,9 @@ final class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDele
                 stopRecording()
             }
             if speechStatus == .denied {
-                permissionStatus = .denied(String(localized: "语音识别权限未开启，请在“设置”中允许使用语音识别"))
+                permissionStatus = .denied(String(localized: "语音识别权限未开启，请在“设置”中允许使用语音识别", bundle: HanlinLocalization.bundle))
             } else {
-                permissionStatus = .denied(String(localized: "麦克风权限未开启，请在“设置”中允许使用麦克风"))
+                permissionStatus = .denied(String(localized: "麦克风权限未开启，请在“设置”中允许使用麦克风", bundle: HanlinLocalization.bundle))
             }
         }
     }
@@ -665,10 +667,10 @@ final class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDele
             // owned tap only while its microphone, format and engine still match.
             guard !recordingInputIsUnchanged else { return }
             stopRecording()
-            errorMessage = String(localized: "音频输入路由已更改，录音已停止")
+            errorMessage = String(localized: "音频输入路由已更改，录音已停止", bundle: HanlinLocalization.bundle)
         case .noSuitableRouteForCategory:
             stopRecording()
-            errorMessage = String(localized: "音频输入路由已更改，录音已停止")
+            errorMessage = String(localized: "音频输入路由已更改，录音已停止", bundle: HanlinLocalization.bundle)
         default:
             break
         }
@@ -715,23 +717,23 @@ final class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDele
                         self.checkMicrophonePermission(attemptId: attemptId)
                     } else if status == .restricted {
                         self.permissionStatus = .restricted
-                        self.phase = .failed(attemptId: attemptId, reason: String(localized: "语音识别已被系统限制使用"))
+                        self.phase = .failed(attemptId: attemptId, reason: String(localized: "语音识别已被系统限制使用", bundle: HanlinLocalization.bundle))
                     } else {
-                        let reason = String(localized: "语音识别权限未开启，请在“设置”中允许使用语音识别")
+                        let reason = String(localized: "语音识别权限未开启，请在“设置”中允许使用语音识别", bundle: HanlinLocalization.bundle)
                         self.permissionStatus = .denied(reason)
                         self.phase = .failed(attemptId: attemptId, reason: reason)
                     }
                 }
             }
         case .denied:
-            let reason = String(localized: "语音识别权限未开启，请在“设置”中允许使用语音识别")
+            let reason = String(localized: "语音识别权限未开启，请在“设置”中允许使用语音识别", bundle: HanlinLocalization.bundle)
             permissionStatus = .denied(reason)
             phase = .failed(attemptId: attemptId, reason: reason)
         case .restricted:
             permissionStatus = .restricted
-            phase = .failed(attemptId: attemptId, reason: String(localized: "语音识别已被系统限制使用"))
+            phase = .failed(attemptId: attemptId, reason: String(localized: "语音识别已被系统限制使用", bundle: HanlinLocalization.bundle))
         @unknown default:
-            let reason = String(localized: "语音识别权限未开启，请在“设置”中允许使用语音识别")
+            let reason = String(localized: "语音识别权限未开启，请在“设置”中允许使用语音识别", bundle: HanlinLocalization.bundle)
             permissionStatus = .denied(reason)
             phase = .failed(attemptId: attemptId, reason: reason)
         }
@@ -754,19 +756,19 @@ final class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDele
                         self.permissionStatus = .authorized
                         self.startRecordingSession(attemptId: attemptId)
                     } else {
-                        let reason = String(localized: "麦克风权限未开启，请在“设置”中允许使用麦克风")
+                        let reason = String(localized: "麦克风权限未开启，请在“设置”中允许使用麦克风", bundle: HanlinLocalization.bundle)
                         self.permissionStatus = .denied(reason)
                         self.phase = .failed(attemptId: attemptId, reason: reason)
                     }
                 }
             }
         case .denied:
-            let reason = String(localized: "麦克风权限未开启，请在“设置”中允许使用麦克风")
+            let reason = String(localized: "麦克风权限未开启，请在“设置”中允许使用麦克风", bundle: HanlinLocalization.bundle)
             permissionStatus = .denied(reason)
             phase = .failed(attemptId: attemptId, reason: reason)
         case .restricted:
             permissionStatus = .restricted
-            phase = .failed(attemptId: attemptId, reason: String(localized: "麦克风已被系统限制使用"))
+            phase = .failed(attemptId: attemptId, reason: String(localized: "麦克风已被系统限制使用", bundle: HanlinLocalization.bundle))
         }
     }
 
@@ -798,12 +800,12 @@ final class SpeechRecognizer: NSObject, ObservableObject, SFSpeechRecognizerDele
 
         // 1. 语言与识别器校验
         guard let recognizer = speechRecognizer ?? resolveRecognizer(for: selectedLocale) else {
-            let errorMsg = String(localized: "当前语言不支持语音识别")
+            let errorMsg = String(localized: "当前语言不支持语音识别", bundle: HanlinLocalization.bundle)
             rollbackPartialStart(attemptId: attemptId, reason: errorMsg)
             return
         }
         guard recognizer.isAvailable else {
-            let errorMsg = String(localized: "语音识别服务暂不可用")
+            let errorMsg = String(localized: "语音识别服务暂不可用", bundle: HanlinLocalization.bundle)
             rollbackPartialStart(attemptId: attemptId, reason: errorMsg)
             return
         }

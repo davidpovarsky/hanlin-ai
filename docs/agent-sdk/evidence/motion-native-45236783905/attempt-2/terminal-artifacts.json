@@ -1,0 +1,45 @@
+{
+  "total_count": 2,
+  "artifacts": [
+    {
+      "id": 14851835918,
+      "node_id": "MDg6QXJ0aWZhY3QxNDg1MTgzNTkxOA==",
+      "name": "chat-motion-ui-45236783905",
+      "size_in_bytes": 13377,
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/14851835918",
+      "archive_download_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/14851835918/zip",
+      "expired": false,
+      "digest": "sha256:5366219320b17b05ec7a78e0cfc0fbc0ad8dd4a50c0027a52676765f74d3c017",
+      "created_at": "2026-11-23T18:39:44Z",
+      "updated_at": "2026-11-23T18:39:44Z",
+      "expires_at": "2026-12-23T18:39:36Z",
+      "workflow_run": {
+        "id": 45236783905,
+        "repository_id": 1295277723,
+        "head_repository_id": 1295277723,
+        "head_branch": "codex/hanlin-sdk-motion-integrated-row-20261123",
+        "head_sha": "0b74c6c1df60926c09a00560598af478bafb3e75"
+      }
+    },
+    {
+      "id": 14850721902,
+      "node_id": "MDg6QXJ0aWZhY3QxNDg1MDcyMTkwMg==",
+      "name": "chat-motion-ui-45236783905",
+      "size_in_bytes": 13385,
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/14850721902",
+      "archive_download_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/14850721902/zip",
+      "expired": false,
+      "digest": "sha256:79f2d9d72b3d9bfcf644aaae210c563044760b06954cc5a0f80878d7653e6858",
+      "created_at": "2026-11-23T18:23:49Z",
+      "updated_at": "2026-11-23T18:23:49Z",
+      "expires_at": "2026-12-23T18:23:47Z",
+      "workflow_run": {
+        "id": 45236783905,
+        "repository_id": 1295277723,
+        "head_repository_id": 1295277723,
+        "head_branch": "codex/hanlin-sdk-motion-integrated-row-20261123",
+        "head_sha": "0b74c6c1df60926c09a00560598af478bafb3e75"
+      }
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+test_plist_conversion_is_still_rejected (Scripts.Runtime.Tests.test_ios_system_project_resources.IOSSystemProjectResourceValidationTests.test_plist_conversion_is_still_rejected) ... FAIL
+test_stale_comments_cannot_replace_actual_app_membership (Scripts.Runtime.Tests.test_ios_system_project_resources.IOSSystemProjectResourceValidationTests.test_stale_comments_cannot_replace_actual_app_membership) ... FAIL
+test_valid_target_resources_do_not_require_pbx_comments (Scripts.Runtime.Tests.test_ios_system_project_resources.IOSSystemProjectResourceValidationTests.test_valid_target_resources_do_not_require_pbx_comments) ... ERROR
+test_widget_membership_does_not_supply_the_application_resource (Scripts.Runtime.Tests.test_ios_system_project_resources.IOSSystemProjectResourceValidationTests.test_widget_membership_does_not_supply_the_application_resource) ... FAIL
+
+======================================================================
+ERROR: test_valid_target_resources_do_not_require_pbx_comments (Scripts.Runtime.Tests.test_ios_system_project_resources.IOSSystemProjectResourceValidationTests.test_valid_target_resources_do_not_require_pbx_comments)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/Scripts/Runtime/Tests/test_ios_system_project_resources.py", line 42, in test_valid_target_resources_do_not_require_pbx_comments
+    self.assertEqual(validate_source_resources(self.root)["approvedCommandCount"], 23)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/Scripts/Runtime/validate_ios_system_resources.py", line 107, in validate_source_resources
+    raise ResourceValidationError(f"Xcode Copy Bundle Resources entry is missing: {resource_name}")
+Scripts.Runtime.validate_ios_system_resources.ResourceValidationError: Xcode Copy Bundle Resources entry is missing: commandDictionary.plist in Resources
+
+======================================================================
+FAIL: test_plist_conversion_is_still_rejected (Scripts.Runtime.Tests.test_ios_system_project_resources.IOSSystemProjectResourceValidationTests.test_plist_conversion_is_still_rejected)
+----------------------------------------------------------------------
+Scripts.Runtime.validate_ios_system_resources.ResourceValidationError: Xcode Copy Bundle Resources entry is missing: commandDictionary.plist in Resources
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/Scripts/Runtime/Tests/test_ios_system_project_resources.py", line 71, in test_plist_conversion_is_still_rejected
+    with self.assertRaisesRegex(ResourceValidationError, "raw text"):
+AssertionError: "raw text" does not match "Xcode Copy Bundle Resources entry is missing: commandDictionary.plist in Resources"
+
+======================================================================
+FAIL: test_stale_comments_cannot_replace_actual_app_membership (Scripts.Runtime.Tests.test_ios_system_project_resources.IOSSystemProjectResourceValidationTests.test_stale_comments_cannot_replace_actual_app_membership)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/Scripts/Runtime/Tests/test_ios_system_project_resources.py", line 57, in test_stale_comments_cannot_replace_actual_app_membership
+    with self.assertRaisesRegex(ResourceValidationError, "Copy Bundle Resources"):
+AssertionError: ResourceValidationError not raised
+
+======================================================================
+FAIL: test_widget_membership_does_not_supply_the_application_resource (Scripts.Runtime.Tests.test_ios_system_project_resources.IOSSystemProjectResourceValidationTests.test_widget_membership_does_not_supply_the_application_resource)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/Scripts/Runtime/Tests/test_ios_system_project_resources.py", line 64, in test_widget_membership_does_not_supply_the_application_resource
+    with self.assertRaisesRegex(ResourceValidationError, "Copy Bundle Resources"):
+AssertionError: ResourceValidationError not raised
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.075s
+
+FAILED (failures=3, errors=1)

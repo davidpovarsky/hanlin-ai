@@ -1,0 +1,53 @@
+{
+  "files": [
+    {
+      "path": "AI_HLY/Downstream/AgentDiagnostics/AgentRuntimeUIAcceptanceProvider.swift",
+      "source": "c33ab645b7a436b0fbc39977b1177f5b4ffb762e",
+      "sha256": "7ea4263920fbb5f8f70b16f8b85b369d480caa98ab0124260cb0fb89ed4b312c"
+    },
+    {
+      "path": "AI_HLY/Downstream/SDK/HanlinConversationController.swift",
+      "source": "c33ab645b7a436b0fbc39977b1177f5b4ffb762e",
+      "sha256": "10ba61e87fe89a7fc5558ac4611264e396f8bcfa041dac4e1e456ea692fe41ff"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Diagnostics/AgentDiagnosticsRedactor.swift",
+      "source": "c33ab645b7a436b0fbc39977b1177f5b4ffb762e",
+      "sha256": "75f6d979a43af6b641d31685c353df0568816ba97bea8a98851c7c0e848c1dc3"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinAppHostIntegration.swift",
+      "source": "c33ab645b7a436b0fbc39977b1177f5b4ffb762e",
+      "sha256": "9e0aede19c18b052630ab134554665780f57d97cba07b5c57acd90de109f15c9"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinAppToolConsent.swift",
+      "source": "c33ab645b7a436b0fbc39977b1177f5b4ffb762e",
+      "sha256": "c43051e7a5681c507e69ce8aed378d391fcd1f617f515f6557d910e8dfb50316"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/AgentSDK/HanlinToolPermissionsView.swift",
+      "source": "c33ab645b7a436b0fbc39977b1177f5b4ffb762e",
+      "sha256": "8cdea344d47d19c087ec0661a1e539c50025370226fe42969972e45a331258bf"
+    },
+    {
+      "path": "AI_HLY/SettingsView.swift",
+      "source": "c33ab645b7a436b0fbc39977b1177f5b4ffb762e",
+      "sha256": "250cf1afa83bcfeb6646e2ac9f93ae853420292bd7b78609dcfdfa6a084f5a19"
+    },
+    {
+      "path": "AI_HLY/MainTabView.swift",
+      "source": "c33ab645b7a436b0fbc39977b1177f5b4ffb762e",
+      "sha256": "7735ad40eacbfbf48ec3448f13cbb23fa6aa26f20bee46833e4a076aab13d9da"
+    }
+  ],
+  "authoredArguments": {
+    "target": "hanlin.demo.swift-parity",
+    "action": "share.value",
+    "payload": null
+  },
+  "sanitizerEffect": "No secret key, URL or credential pattern matches these three fields; JSON order is not asserted",
+  "homeIdentifier": "hanlin-home-tab",
+  "profileDoneIdentifier": "hanlin-profile-done",
+  "runtimeReviewJSON": "NOT_RUN"
+}

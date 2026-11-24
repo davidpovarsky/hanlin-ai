@@ -1,3 +1,4 @@
+import HanlinLocalization
 import Foundation
 
 import HanlinPlatformContracts
@@ -194,7 +195,7 @@ enum AssistantToolBridge {
         case .image(let base64, let mimeType):
           return NativeUIBlock(
             type: .card,
-            title: String(localized: "Image"),
+            title: String(localized: "Image", bundle: HanlinLocalization.bundle),
             systemImage: "photo",
             embeddedImageBase64: base64,
             embeddedImageMIMEType: mimeType

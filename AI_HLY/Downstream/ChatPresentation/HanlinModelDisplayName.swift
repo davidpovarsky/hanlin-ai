@@ -1,3 +1,4 @@
+import HanlinLocalization
 import Foundation
 
 /// Routing identifiers are persisted separately from the label shown to people.
@@ -12,7 +13,7 @@ enum HanlinModelDisplayName {
         return original
     }
 
-    static func resolve(displayName: String?, modelName: String?, fallback: String = String(localized: "Model")) -> String {
+    static func resolve(displayName: String?, modelName: String?, fallback: String = String(localized: "Model", bundle: HanlinLocalization.bundle)) -> String {
         if let displayName, !displayName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             let label = clean(displayName)
             if !label.isEmpty { return label }

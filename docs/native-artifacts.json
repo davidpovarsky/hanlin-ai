@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "state": "unpublished",
+  "repository": "davidpovarsky/hanlin-ai",
+  "requiredTargets": [
+    "ReactNativeHeaders",
+    "React",
+    "ReactNativeDependencies",
+    "hermesvm",
+    "ExpoModulesJSI",
+    "ExpoModulesCore",
+    "ExpoModulesWorklets",
+    "ExpoUI",
+    "ExpoBrownfield",
+    "Libffi",
+    "TNSWidgets",
+    "NSCWinterTC",
+    "NodeMobile",
+    "Python"
+  ],
+  "missingTargets": [
+    "ReactNativeHeaders",
+    "React",
+    "ReactNativeDependencies",
+    "hermesvm",
+    "ExpoModulesJSI",
+    "ExpoModulesCore",
+    "ExpoModulesWorklets",
+    "ExpoUI",
+    "ExpoBrownfield",
+    "Libffi",
+    "TNSWidgets",
+    "NSCWinterTC",
+    "NodeMobile",
+    "Python"
+  ],
+  "artifacts": [],
+  "supportArtifacts": [],
+  "preparedSource": {
+    "workflowRunID": 42926628418,
+    "sourceCommit": "4784dd99c3e5892ef726e7a3cce6587eb7847997",
+    "runtimeBundleSHA256": "196a35562a31229b1bcf05afbe49f76470ced90a7fbf0494ecebd5c06d07440f"
+  },
+  "publicationCommands": [
+    "python3 Scripts/SDK/native_artifacts.py export --root . --output build/sdk-native-prepared",
+    "python3 Scripts/SDK/native_artifacts.py publish --catalog build/sdk-native-prepared/native-artifacts.json --assets build/sdk-native-prepared"
+  ],
+  "acceptanceBoundary": "No remote native URL is accepted until exporter + publisher readback completes. Source-only products use a pruned manifest and need no native artifacts."
+}

@@ -1,3 +1,7 @@
+// Original shared implementation is owned by the SDK.
+import HanlinAgentActivityCore
+
+typealias AgentToolApproval = HanlinAgentActivityCore.AgentToolApproval
 //
 //  AgentEvent.swift
 //  AI_HLY
@@ -110,17 +114,6 @@ enum AgentAnswerDisposition: String, Codable, Hashable, Sendable {
   case provisional
   case interim
   case final
-}
-/// A receipt of a real approval request. Persisted presentation never grants
-/// permission; only the current Host consent continuation can answer it.
-struct AgentToolApproval: Codable, Hashable, Sendable, Identifiable {
-  enum Disposition: String, Codable, Sendable { case awaiting, allowedOnce, allowedAlways, notApproved, providerRequired }
-  let id: String
-  let canonicalRunID: UUID?
-  let callID: String
-  let toolName: String
-  let reviewText: String
-  var disposition: Disposition
 }
 enum AgentEvent: @unchecked Sendable {
   case runStarted(AgentRunMetadata)

@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-11-23T07:27:20.410360+00:00",
+  "run_id": 45127145735,
+  "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45127145735",
+  "source": "705f1bd81587d7133aec4d1cd7f9a2b802e7ded6",
+  "job_id": 137533999401,
+  "workflow_conclusion": "failure",
+  "native_test_build": "EXECUTED_PASS",
+  "selected_tests": [
+    "MotionUITests/testBRapidReversalPresetSwitchAndPersistence",
+    "MotionUITests/testCReadableLongContentRTLTypeOrientationAndCompletion"
+  ],
+  "xctest_status": "NOT_RUN",
+  "visual_review": "NOT_RUN: no test screenshots or recordings were produced",
+  "macro_admission": "EXACT_ORIGINAL_MACRO_INPUT_ADMITTED",
+  "postbuild_guard": {
+    "result": "FAILED",
+    "exception": "ValueError: A recorded SDK input is not materialized: .claude/skills",
+    "cause": "Tracked directory symlink in the real pinned hanlin-streaming-markdown checkout was treated as a regular file. The guard rejected original metadata after successful compilation.",
+    "dependency_revision": "5cbb4b6c950051f98f02a0b0ae56756f5174a9b8",
+    "mode": "120000",
+    "target": "../.agents/skills",
+    "git_blob": "2b7a412b8fa0fb7e985b0793321bd4e698f2b6cd"
+  },
+  "artifact": {
+    "id": 14797212185,
+    "name": "chat-motion-ui-45127145735",
+    "size": 15386345,
+    "sha256": "e11f2069644a5dcb5bbb912b4ff19442568cf58d29f4365d2f8b69d4313688b8",
+    "full_download_digest_verified": true,
+    "members": 38
+  },
+  "original_job_log_sha256": "13413a9c92d46529c3e8acb0522cfe17e42edd33137530fc2cf5cfc44e23ba35",
+  "source_binding": {
+    "fixture_matches_recorded_revision": true,
+    "sdk_source_resource_files": 363,
+    "sdk_source_resource_sha256": "cc2f9cdd3a4918a4aed1c1c109bfd5a76a345381a142b6f41a209a25ad593db0",
+    "selected_manifest_sha256": "67bd5ca5a9e9c368886949f8fd178d11d502f858f5fe411b11540f8df238d2f4",
+    "postbuild_dependency_bundle_byte_accounting": "NOT_COMPLETED due described guard failure",
+    "canonical_resource_bundle_copies_observed_in_build_log": 3
+  },
+  "fix": {
+    "scope": "Git-mode-aware symlink provenance only; hash raw link target bytes and verify against its indexed Git blob, never follow its destination",
+    "files": [
+      "docs/chat-motion/record_sdk_inputs.py",
+      "Scripts/CI/Tests/test_motion_input_provenance.py"
+    ],
+    "all_resolved_upstream_trees_audited": 8,
+    "tracked_symlinks": 3,
+    "gitlinks": 0,
+    "tracked_symlinks_retained": true,
+    "production_ui_changed": false,
+    "test_semantics_changed": false,
+    "focused_controls": {
+      "tests": 6,
+      "failures": 0,
+      "command": "python3 -m unittest discover -s Scripts/CI/Tests -p test_motion_input_provenance.py -v",
+      "scope": "Temporary Git index with original upstream link bytes plus rejection controls; not Apple or Motion behavior proof"
+    }
+  },
+  "remaining": "Native B/C execution on the corrected exact fixture; A after B/C considered, D diagnostic only if necessary"
+}

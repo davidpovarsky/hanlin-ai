@@ -1,0 +1,6 @@
+{
+  "source": "39a10b1cbf4645b629f556ea312e2576a4e566db",
+  "ref": "codex/hanlin-sdk-unification-20261123",
+  "workflow": "build-ios26-unsigned-ipa.yml",
+  "startedAt": "2026-11-23T18:28:47.672327+00:00"
+}

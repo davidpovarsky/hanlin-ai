@@ -1,0 +1,303 @@
+{
+  "recordedAt": "2026-11-23T20:30:13.383457+00:00",
+  "expectedConsumer": "06613ffcff6d53985318341f9d8adc3246df7fd5",
+  "expectedSDK": "32da9e314e22bbf22391fcf8902302acfbb281e2",
+  "remoteRef": "refs/heads/codex/otzaria-canonical-sdk-20261123",
+  "remoteReadback": "06613ffcff6d53985318341f9d8adc3246df7fd5\trefs/heads/codex/otzaria-canonical-sdk-20261123",
+  "queries": {
+    "workflow": {
+      "endpoint": "repos/davidpovarsky/Maktabah/actions/workflows/otzaria-hanlin-live-native.yml",
+      "exitCode": 0,
+      "data": {
+        "id": 426279845,
+        "name": "Original Hanlin live consumer native acceptance",
+        "path": ".github/workflows/otzaria-hanlin-live-native.yml",
+        "state": "active"
+      },
+      "error": null
+    },
+    "liveRuns": {
+      "endpoint": "repos/davidpovarsky/Maktabah/actions/workflows/otzaria-hanlin-live-native.yml/runs?per_page=100",
+      "exitCode": 0,
+      "data": {
+        "runs": [
+          {
+            "conclusion": null,
+            "created_at": "2026-11-23T19:53:30Z",
+            "head_branch": "codex/otzaria-hanlin-stream-continuation-20261123",
+            "head_sha": "0123b569d489984ade291b5c065eb5fe6500dec6",
+            "html_url": "https://github.com/davidpovarsky/Maktabah/actions/runs/45253606271",
+            "id": 45253606271,
+            "run_attempt": 1,
+            "status": "in_progress"
+          },
+          {
+            "conclusion": "failure",
+            "created_at": "2026-11-23T11:46:46Z",
+            "head_branch": "codex/otzaria-hanlin-live-consent-20261123",
+            "head_sha": "96c5b1b60c15a9a0cf1c4356f9822c64d9864c86",
+            "html_url": "https://github.com/davidpovarsky/Maktabah/actions/runs/45168227740",
+            "id": 45168227740,
+            "run_attempt": 1,
+            "status": "completed"
+          },
+          {
+            "conclusion": "failure",
+            "created_at": "2026-11-23T09:15:31Z",
+            "head_branch": "codex/otzaria-hanlin-live13-20261123",
+            "head_sha": "aa7741b16d00fbee8dea8ff67a25cf1cc7c0a9e3",
+            "html_url": "https://github.com/davidpovarsky/Maktabah/actions/runs/45145388957",
+            "id": 45145388957,
+            "run_attempt": 1,
+            "status": "completed"
+          },
+          {
+            "conclusion": "failure",
+            "created_at": "2026-11-23T07:07:50Z",
+            "head_branch": "codex/otzaria-hanlin-live13-20261123",
+            "head_sha": "aa7741b16d00fbee8dea8ff67a25cf1cc7c0a9e3",
+            "html_url": "https://github.com/davidpovarsky/Maktabah/actions/runs/45128868702",
+            "id": 45128868702,
+            "run_attempt": 1,
+            "status": "completed"
+          },
+          {
+            "conclusion": "failure",
+            "created_at": "2026-11-23T06:01:10Z",
+            "head_branch": "codex/otzaria-canonical-sdk-20261123",
+            "head_sha": "e44053bfb7c6a9fdc29c64537a2bfad02e695871",
+            "html_url": "https://github.com/davidpovarsky/Maktabah/actions/runs/45121359772",
+            "id": 45121359772,
+            "run_attempt": 1,
+            "status": "completed"
+          },
+          {
+            "conclusion": "failure",
+            "created_at": "2026-11-23T04:53:09Z",
+            "head_branch": "codex/otzaria-hanlin-live12-20261123",
+            "head_sha": "9bee6104e2938767b4e4e1047c56da8991d621fb",
+            "html_url": "https://github.com/davidpovarsky/Maktabah/actions/runs/45114449674",
+            "id": 45114449674,
+            "run_attempt": 1,
+            "status": "completed"
+          },
+          {
+            "conclusion": "failure",
+            "created_at": "2026-11-23T03:02:24Z",
+            "head_branch": "codex/otzaria-hanlin-live11-20261123",
+            "head_sha": "fdb78a44778c318b277506f0b09ba91c3b678e91",
+            "html_url": "https://github.com/davidpovarsky/Maktabah/actions/runs/45103578190",
+            "id": 45103578190,
+            "run_attempt": 1,
+            "status": "completed"
+          },
+          {
+            "conclusion": "failure",
+            "created_at": "2026-11-22T19:04:31Z",
+            "head_branch": "codex/otzaria-hanlin-live-20261121",
+            "head_sha": "9533a8017adadecf770b19811e72b495f32e90f7",
+            "html_url": "https://github.com/davidpovarsky/Maktabah/actions/runs/45058647581",
+            "id": 45058647581,
+            "run_attempt": 1,
+            "status": "completed"
+          },
+          {
+            "conclusion": "failure",
+            "created_at": "2026-11-22T17:20:36Z",
+            "head_branch": "codex/otzaria-hanlin-live-20261121",
+            "head_sha": "4624635d0f29e3bda7ff1f0ecd1097f8b2d37db1",
+            "html_url": "https://github.com/davidpovarsky/Maktabah/actions/runs/45048898269",
+            "id": 45048898269,
+            "run_attempt": 1,
+            "status": "completed"
+          },
+          {
+            "conclusion": "failure",
+            "created_at": "2026-11-22T07:57:53Z",
+            "head_branch": "codex/otzaria-hanlin-live-20261121",
+            "head_sha": "ce5d11335c4b4769a25e0e8f48ba1d6f7efc6749",
+            "html_url": "https://github.com/davidpovarsky/Maktabah/actions/runs/45000580919",
+            "id": 45000580919,
+            "run_attempt": 1,
+            "status": "completed"
+          },
+          {
+            "conclusion": "failure",
+            "created_at": "2026-11-22T06:20:48Z",
+            "head_branch": "codex/otzaria-hanlin-live-20261121",
+            "head_sha": "77c7df82ef5f822bf0b1dd7e08ff2b4b98d425d2",
+            "html_url": "https://github.com/davidpovarsky/Maktabah/actions/runs/44993301949",
+            "id": 44993301949,
+            "run_attempt": 1,
+            "status": "completed"
+          },
+          {
+            "conclusion": "failure",
+            "created_at": "2026-11-22T02:00:18Z",
+            "head_branch": "codex/otzaria-hanlin-live-20261121",
+            "head_sha": "9c66b4ccc06340a04de53a4c3370182873ed18bc",
+            "html_url": "https://github.com/davidpovarsky/Maktabah/actions/runs/44974028362",
+            "id": 44974028362,
+            "run_attempt": 1,
+            "status": "completed"
+          },
+          {
+            "conclusion": "failure",
+            "created_at": "2026-11-22T01:03:41Z",
+            "head_branch": "codex/otzaria-hanlin-live-20261121",
+            "head_sha": "b16c157f09c60599527bf67b6dc17e4ab68fd46b",
+            "html_url": "https://github.com/davidpovarsky/Maktabah/actions/runs/44969637013",
+            "id": 44969637013,
+            "run_attempt": 1,
+            "status": "completed"
+          },
+          {
+            "conclusion": "failure",
+            "created_at": "2026-11-22T00:44:29Z",
+            "head_branch": "codex/otzaria-hanlin-live-20261121",
+            "head_sha": "f955a3677f70ae61a8f3f40b7c3caa73fb9a541e",
+            "html_url": "https://github.com/davidpovarsky/Maktabah/actions/runs/44968087855",
+            "id": 44968087855,
+            "run_attempt": 1,
+            "status": "completed"
+          },
+          {
+            "conclusion": "cancelled",
+            "created_at": "2026-11-21T22:56:33Z",
+            "head_branch": "codex/otzaria-hanlin-live-20261121",
+            "head_sha": "34d06949e7fedbda6e0d256a769b3d0b8659c211",
+            "html_url": "https://github.com/davidpovarsky/Maktabah/actions/runs/44959295674",
+            "id": 44959295674,
+            "run_attempt": 1,
+            "status": "completed"
+          },
+          {
+            "conclusion": "failure",
+            "created_at": "2026-11-21T21:51:28Z",
+            "head_branch": "codex/otzaria-hanlin-live-20261121",
+            "head_sha": "17be5b0abdd6c3b71a340320010e658a5595e9b6",
+            "html_url": "https://github.com/davidpovarsky/Maktabah/actions/runs/44953692820",
+            "id": 44953692820,
+            "run_attempt": 1,
+            "status": "completed"
+          },
+          {
+            "conclusion": "failure",
+            "created_at": "2026-11-21T20:35:49Z",
+            "head_branch": "codex/otzaria-hanlin-live-20261121",
+            "head_sha": "633ea6e1d6153a27841b6cb899fa73be8a869ef8",
+            "html_url": "https://github.com/davidpovarsky/Maktabah/actions/runs/44947117347",
+            "id": 44947117347,
+            "run_attempt": 1,
+            "status": "completed"
+          }
+        ],
+        "total_count": 17
+      },
+      "error": null
+    },
+    "access": {
+      "endpoint": "repos/davidpovarsky/Maktabah",
+      "exitCode": 0,
+      "data": {
+        "archived": false,
+        "disabled": false,
+        "full_name": "davidpovarsky/Maktabah",
+        "permissions": {
+          "admin": true,
+          "maintain": true,
+          "pull": true,
+          "push": true,
+          "triage": true
+        }
+      },
+      "error": null
+    },
+    "artifact-14596463166": {
+      "endpoint": "repos/davidpovarsky/Maktabah/actions/artifacts/14596463166",
+      "exitCode": 0,
+      "data": {
+        "digest": "sha256:efc73de90d74fdd380ffecfa334fe9dcece38519832b89cf3fb2a5741dcc25ad",
+        "expired": false,
+        "expires_at": "2027-02-18T02:34:34Z",
+        "id": 14596463166,
+        "name": "ios-build-otzaria-xcframework",
+        "size_in_bytes": 201330360,
+        "workflow_run": {
+          "head_branch": "codex/otzaria-occurrence-framework-20261120",
+          "head_repository_id": 1280062128,
+          "head_sha": "99f7927e4da72f2463417f5c2de2c4d20c6aa168",
+          "id": 44661774024,
+          "repository_id": 1280062128
+        }
+      },
+      "error": null
+    },
+    "artifact-14595389912": {
+      "endpoint": "repos/davidpovarsky/Maktabah/actions/artifacts/14595389912",
+      "exitCode": 0,
+      "data": {
+        "digest": "sha256:64f4ba7b8d6cfced525732699fd1958ca0cc5ec836369dcf839d91df855914d7",
+        "expired": false,
+        "expires_at": "2027-02-18T02:34:34Z",
+        "id": 14595389912,
+        "name": "ios-build-zayit-xcframework",
+        "size_in_bytes": 123727544,
+        "workflow_run": {
+          "head_branch": "codex/otzaria-occurrence-framework-20261120",
+          "head_repository_id": 1280062128,
+          "head_sha": "99f7927e4da72f2463417f5c2de2c4d20c6aa168",
+          "id": 44661774024,
+          "repository_id": 1280062128
+        }
+      },
+      "error": null
+    },
+    "artifact-12763481138": {
+      "endpoint": "repos/davidpovarsky/Maktabah/actions/artifacts/12763481138",
+      "exitCode": 0,
+      "data": {
+        "digest": "sha256:9c0eb8afe950b93d40ed78507da45a7050babc39945f7fa3ae47d29db1686fdd",
+        "expired": false,
+        "expires_at": "2027-01-25T19:07:38Z",
+        "id": 12763481138,
+        "name": "ios-build-swift-packages",
+        "size_in_bytes": 229319830,
+        "workflow_run": {
+          "head_branch": "fix/build-8601-ipad-backend-toc-otzaria-index-20261027",
+          "head_repository_id": 1280062128,
+          "head_sha": "41c278ac67f0c03e19270ed65b891b242a1a3f2e",
+          "id": 40566258679,
+          "repository_id": 1280062128
+        }
+      },
+      "error": null
+    },
+    "artifact-13658066283": {
+      "endpoint": "repos/davidpovarsky/Maktabah/actions/artifacts/13658066283",
+      "exitCode": 0,
+      "data": {
+        "digest": "sha256:12cc781436c0459acb05060211ef5f3e109791e7f5297d8bf61e1b38c74f8cda",
+        "expired": false,
+        "expires_at": "2027-02-07T07:41:01Z",
+        "id": 13658066283,
+        "name": "sefaria-embedded-validation-manifests",
+        "size_in_bytes": 1484533,
+        "workflow_run": {
+          "head_branch": "experiment/ipad-ui-faithful-from-9401",
+          "head_repository_id": 1280062128,
+          "head_sha": "70810eec46ad1fec6f30d983bf31e5f922dacb61",
+          "id": 42577170165,
+          "repository_id": 1280062128
+        }
+      },
+      "error": null
+    }
+  },
+  "testsExecuted": 0,
+  "artifactsDownloaded": 0,
+  "secretValuesRead": false,
+  "dispatchExecuted": false,
+  "owner": "/root/release_hosts",
+  "parentAuthorization": "One original narrow live method after exact source/ref and no active owner/run admission."
+}

@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Reject damaged UI translations and verify the values actually packaged in an app."""
 import argparse
+import hashlib
+import importlib.util
 import json
 import plistlib
 import re
@@ -9,7 +11,7 @@ import sys
 from pathlib import Path
 
 CATALOGS = {
-    "Localizable": ("AI_HLY/Resource/Localizable.xcstrings", [
+    "Localizable": ("Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/Localizable.xcstrings", [
         "The permission change could not be saved. Please try again.",
         "Remembered permissions apply across your conversations on this device. System permissions remain controlled in Settings.",
         "Revoke all tool permissions", "Revoke permission for %@", "Revoke permission",
@@ -26,13 +28,59 @@ CATALOGS = {
         "Searching the calendar", "Searched the calendar", "Updating the calendar", "Updated the calendar",
         "Draft", "Image", "Yesterday", "Two days ago", "Response interrupted", "Response error: %@",
     ]),
-    "RuntimeLocalizable": ("AI_HLY/Downstream/RuntimeCore/Resources/RuntimeLocalizable.xcstrings", [
+    "RuntimeLocalizable": ("Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/RuntimeLocalizable.xcstrings", [
         "Background continuation was not available before the system suspended the app.",
         "Waiting for a response", "Thinking", "Writing the response",
         "Waiting for your approval", "Response complete", "Response stopped",
     ]),
 }
 LOCALES = ("en", "he", "zh-Hans")
+LEGACY_CATALOGS = {
+    "Localizable": "AI_HLY/Resource/Localizable.xcstrings",
+    "RuntimeLocalizable": "AI_HLY/Downstream/RuntimeCore/Resources/RuntimeLocalizable.xcstrings",
+}
+SHARED_BUNDLES = ("HanlinSDK_HanlinLocalization.bundle", "HanlinPresentationSDK_HanlinLocalization.bundle")
+
+def catalog_bytes(root, revision, table, relative):
+    if not revision:
+        return (root / relative).read_bytes(), True
+    available = subprocess.run(["git", "cat-file", "-e", revision + ":" + relative], cwd=root,
+                               stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL).returncode == 0
+    path = relative if available else LEGACY_CATALOGS[table]
+    return subprocess.check_output(["git", "show", revision + ":" + path], cwd=root), available
+
+def shared_bundle(app, copies):
+    """Resolve one SDK identity after checking every embedded copy in full."""
+    verifier_path = Path(__file__).resolve().parents[1] / "SDK/verify_bundle_resources.py"
+    spec = importlib.util.spec_from_file_location("sdk_bundle_resources", verifier_path)
+    verifier = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(verifier)
+    if app.name in SHARED_BUNDLES:
+        if not app.is_dir():
+            raise ValueError("Canonical localization bundle is not a directory")
+        inventory = verifier.bundle_inventory(app)
+        encoded = json.dumps(inventory, sort_keys=True, separators=(",", ":")).encode()
+        copies.append({"path": ".", "inventorySHA256": hashlib.sha256(encoded).hexdigest(),
+                       "entries": len(inventory),
+                       "files": sum(row["kind"] == "file" for row in inventory.values())})
+        return app
+    bundle = verifier.module_bundle(app, "HanlinLocalization", copies=copies)
+    if bundle.name not in SHARED_BUNDLES:
+        raise ValueError("Unexpected canonical localization bundle identity: " + bundle.name)
+    return bundle
+
+
+def packaged_table(app, locale, table, shared, bundles):
+    if not shared:
+        return app / (locale + ".lproj") / (table + ".strings")
+    if len(bundles) != 1:
+        return None
+    # iOS resource bundles are flat; macOS bundles can have Contents/Resources.
+    candidates = [bundles[0] / (locale + ".lproj") / (table + ".strings"),
+                  bundles[0] / "Contents/Resources" / (locale + ".lproj") / (table + ".strings")]
+    matches = [path for path in candidates if path.is_file()]
+    return matches[0] if len(matches) == 1 else None
+
 
 def unique_object(pairs):
     result = {}
@@ -60,9 +108,16 @@ def validate(root, revision=None, app=None):
     errors = []
     checked_values = 0
     checked_packaged_values = 0
+    bundles = None
+    bundle_copies = []
     for table, (relative, required_keys) in CATALOGS.items():
-        raw = (subprocess.check_output(["git", "show", revision + ":" + relative], cwd=root)
-               if revision else (root / relative).read_bytes())
+        raw, shared = catalog_bytes(root, revision, table, relative)
+        if app and shared and bundles is None:
+            try:
+                bundles = [shared_bundle(app, bundle_copies)]
+            except (OSError, RuntimeError, ValueError) as error:
+                bundles = []
+                errors.append({"table": table, "reason": str(error)})
         data = json.loads(raw.decode("utf-8"), object_pairs_hook=unique_object)
         for key, entry in data["strings"].items():
             for locale, localization in entry.get("localizations", {}).items():
@@ -83,23 +138,24 @@ def validate(root, revision=None, app=None):
                 if locale == "zh-Hans" and not re.search(r"[\u3400-\u9fff]", value):
                     errors.append({"table": table, "key": key, "locale": locale, "reason": "Chinese text missing"})
                 if app:
-                    resource = app / (locale + ".lproj") / (table + ".strings")
-                    if not resource.is_file():
-                        errors.append({"table": table, "locale": locale, "reason": "packaged table missing"})
+                    resource = packaged_table(app, locale, table, shared, bundles)
+                    if resource is None or not resource.is_file():
+                        errors.append({"table": table, "locale": locale, "reason": "canonical packaged table missing or ambiguous"})
                         continue
                     packaged = plistlib.loads(resource.read_bytes())
                     checked_packaged_values += 1
                     if packaged.get(key) != value:
                         errors.append({"table": table, "key": key, "locale": locale, "reason": "packaged value differs from source"})
     result = {"status": "PASS" if not errors else "FAIL", "catalog_values": checked_values,
-              "packaged_values": checked_packaged_values, "errors": errors}
+              "packaged_values": checked_packaged_values, "errors": errors,
+              "bundleCopies": bundle_copies}
     return result
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path, default=Path(__file__).resolve().parents[2])
     parser.add_argument("--git-ref", help="Read a historical revision without changing the worktree")
-    parser.add_argument("--app", type=Path, help="Also verify compiled tables in this actual app bundle")
+    parser.add_argument("--app", type=Path, help="Verify compiled tables in the SDK resource bundle embedded in this actual app (historical refs retain their original app-bundle layout)")
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()
     result = validate(args.root, args.git_ref, args.app)

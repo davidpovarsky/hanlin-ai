@@ -1,0 +1,220 @@
+{
+  "run": 45290086669,
+  "attempt": 1,
+  "source": "51f56b49fe7add4eafa1d8b2443f1adf3b82157f",
+  "run_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45290086669",
+  "workflow_conclusion": "failure",
+  "native_job": 138096309442,
+  "native_conclusion": "failure",
+  "runner": "GitHub Actions 1000025371",
+  "tests": [],
+  "artifact": {
+    "run": 45290086669,
+    "attempt": 1,
+    "artifact_id": 14877566989,
+    "artifact_bytes": 14996,
+    "artifact_sha256": "2830d3c3749e8bd08dbfb36cfe1b75172f5036d895e26192c84daab9dbd4c53e",
+    "api_digest_and_size_match": true,
+    "zip_crc": "PASS",
+    "member_count": 25
+  },
+  "collected_at": "2026-11-24T00:37:59.013346+00:00",
+  "raw-result-status.json": null,
+  "result-validation.json": null,
+  "sdk-input-verification.json": null,
+  "macro-input-verification.json": null,
+  "motion-boot-readiness.json": {
+    "schema_version": 1,
+    "status": "NOT_READY",
+    "device": "956664C0-2DE2-4859-A652-3E1E0E75BF81",
+    "strategy": "fresh",
+    "run_id": "45290086669",
+    "run_attempt": "1",
+    "attempts": [
+      {
+        "name": "boot-initial",
+        "command": [
+          "xcrun",
+          "simctl",
+          "boot",
+          "956664C0-2DE2-4859-A652-3E1E0E75BF81"
+        ],
+        "timeout_seconds": 15.0,
+        "return_code": 0,
+        "timed_out": false,
+        "elapsed_seconds": 3.931,
+        "output_file": "boot-initial.log",
+        "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "bootstatus-attempt-1",
+        "command": [
+          "xcrun",
+          "simctl",
+          "bootstatus",
+          "956664C0-2DE2-4859-A652-3E1E0E75BF81",
+          "-b"
+        ],
+        "timeout_seconds": 300.0,
+        "return_code": 124,
+        "timed_out": true,
+        "elapsed_seconds": 310.071,
+        "output_file": "bootstatus-attempt-1.log",
+        "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "shutdown-recovery",
+        "command": [
+          "xcrun",
+          "simctl",
+          "shutdown",
+          "956664C0-2DE2-4859-A652-3E1E0E75BF81"
+        ],
+        "timeout_seconds": 20.0,
+        "return_code": 124,
+        "timed_out": true,
+        "elapsed_seconds": 29.192,
+        "output_file": "shutdown-recovery.log",
+        "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "recovery_count": 1,
+    "scope": "Simulator readiness only; Motion product tests NOT_RUN",
+    "ownership": {
+      "simulator": "956664C0-2DE2-4859-A652-3E1E0E75BF81",
+      "run_id": "45290086669",
+      "run_attempt": "1",
+      "name": "Hanlin-Phase2-Motion-45290086669",
+      "selection_sha256": "d5ff3b989384c89e46b36ac67d019abcab288aff60e8ab38ecd80cbd154d393b"
+    },
+    "recovery_reason": "FIRST_NATIVE_BOOTSTATUS_TIMEOUT",
+    "error": "Owned Motion recovery shutdown failed"
+  },
+  "original_member_hashes": [
+    {
+      "path": "boot-initial.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "bootstatus-attempt-1.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "bootstatus.log",
+      "bytes": 261,
+      "sha256": "0a98d78697ac3f58f010c677a258c400b9adafe5d48829e104b6547c0f7c3522"
+    },
+    {
+      "path": "ci-performance-report.json",
+      "bytes": 2034,
+      "sha256": "204ea6e91ffdde2b864e3cb4a6d8e53dc55b8954838a4f7fb27085d6a09bdda3"
+    },
+    {
+      "path": "core-simulator-log.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "core-simulator-log.stdout",
+      "bytes": 44,
+      "sha256": "9f56fca152030dba9e8ee76dee4fc8967ab667507b5878f0f9ab819d55b6b9a6"
+    },
+    {
+      "path": "device-strategy.txt",
+      "bytes": 6,
+      "sha256": "02db0d2659c9d48bc15f81a388594fc0e3cf4c780fdc27ea21e0671afc37de19"
+    },
+    {
+      "path": "devices-after.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "devices-after.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "devices-after.timeout",
+      "bytes": 24,
+      "sha256": "380338e6873abcf07093e46530492652b7bc8aadd3fd6ba7ee4a2a69b85814cb"
+    },
+    {
+      "path": "devices.json",
+      "bytes": 22084,
+      "sha256": "98d36717798ad15b8cfe7d3facd4f815d3326cfd90b7a24ff03266b84e364b32"
+    },
+    {
+      "path": "motion-boot-readiness.json",
+      "bytes": 1961,
+      "sha256": "123a40ad74f8ce3308d672a92663e38e644d9135e0a392902ef3e642440113bf"
+    },
+    {
+      "path": "motion-startup-context.json",
+      "bytes": 672,
+      "sha256": "37ffa017eaa318f1d81c251de171f2b2cbe101ac35f5fc0ac9039b5cabccc72e"
+    },
+    {
+      "path": "owned-simulator-cleanup.log",
+      "bytes": 1681,
+      "sha256": "66fc5b4e08590ecba59ecc331ff4651fa6ec63c558e992ed4bfdb25c9e369438"
+    },
+    {
+      "path": "preflight-duration-seconds.txt",
+      "bytes": 4,
+      "sha256": "a739c9f8c9968c03553730c28210af55c32a2748834e750b889d63dc4e7545ea"
+    },
+    {
+      "path": "preflight.txt",
+      "bytes": 962,
+      "sha256": "f284b4ef718929a36b93576892c9e6c599ed58ea7aa7e9d4a2693b1bd433d032"
+    },
+    {
+      "path": "process-status.txt",
+      "bytes": 28,
+      "sha256": "5fecb30c9edeef67794fce1856d1b70fc392c560e8e3459bc2662c377e2f0b3d"
+    },
+    {
+      "path": "requested-scope.txt",
+      "bytes": 11,
+      "sha256": "d8dba5cf11d918468abd1a23c703efde392a35659de1e9622bb66c874d133666"
+    },
+    {
+      "path": "runtimes.json",
+      "bytes": 60604,
+      "sha256": "d85afde1e1258a50943e4c8e09d6d72f29e575491b8a1eab39495283354561bc"
+    },
+    {
+      "path": "shutdown-recovery.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "simctl-tool-path.log",
+      "bytes": 63,
+      "sha256": "887a054e45a5aa90839e2dd2273ff492549d196193751ec9f8b85ac36e51035a"
+    },
+    {
+      "path": "simulator-process-observation.json",
+      "bytes": 923,
+      "sha256": "c235d60495336ed0c94d95847efc46b591d9857d5e2547c1cac6398251761d8c"
+    },
+    {
+      "path": "source-sha.txt",
+      "bytes": 41,
+      "sha256": "eb9e78c5779e7afd17e625dd1d6f099add2aee798a3a74a3426ce5283bdac50c"
+    },
+    {
+      "path": "verified-environment.json",
+      "bytes": 81347,
+      "sha256": "d5ff3b989384c89e46b36ac67d019abcab288aff60e8ab38ecd80cbd154d393b"
+    },
+    {
+      "path": "xcodegen-install.log",
+      "bytes": 327,
+      "sha256": "5543c39402b2867d94bc6d9c2f8f3108dd11a86c87515448a3a3d4932506347d"
+    }
+  ]
+}

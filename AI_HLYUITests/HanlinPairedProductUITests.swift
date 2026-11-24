@@ -56,6 +56,7 @@ final class HanlinPairedProductUITests: XCTestCase {
         XCTAssertEqual(ai.staticTexts["hanlin-phase2-chat-id"].label, originalChat)
         XCTAssertFalse(ai.alerts["Mini App result unavailable"].exists)
         XCTAssertFalse(ai.buttons["hanlin-tool-consent-allow-once"].exists)
+        XCTAssertFalse(ai.buttons["hanlin-tool-consent-allow-remember"].exists)
     }
 
     func testCompanionCancellationReturnsWithoutChangingPrivateState() throws {
@@ -73,9 +74,9 @@ final class HanlinPairedProductUITests: XCTestCase {
         XCTAssertEqual(ai.staticTexts["hanlin-phase2-chat-id"].label, originalChat)
         XCTAssertFalse(ai.alerts["Mini App result unavailable"].exists)
         XCTAssertFalse(ai.buttons["hanlin-tool-consent-allow-once"].exists)
+        XCTAssertFalse(ai.buttons["hanlin-tool-consent-allow-remember"].exists)
         mini.terminate(); mini.launch()
-        tap(mini, "hanlin-miniapp-hanlin.demo.swift-parity")
-        tap(mini, "hanlin-miniapps-open")
+        tap(mini, "hanlin-package-card-Swift Parity")
         XCTAssertTrue(name.waitForExistence(timeout: 15))
         XCTAssertEqual(name.value as? String, before)
     }
@@ -125,9 +126,14 @@ final class HanlinPairedProductUITests: XCTestCase {
         assertText(mini, "Transfer complete. Your mini apps are ready.")
         mini.terminate(); mini.launch()
         let imported = mini.descendants(matching: .any).matching(NSPredicate(
-            format: "identifier BEGINSWITH 'hanlin-miniapp-' AND label CONTAINS %@", "Hanlin Transfer Acceptance")).firstMatch
+            format: "identifier BEGINSWITH 'hanlin-package-card-' AND label CONTAINS %@", "Hanlin Transfer Acceptance")).firstMatch
+        for _ in 0..<5 {
+            if imported.exists && imported.isHittable { break }
+            mini.swipeUp()
+        }
         XCTAssertTrue(imported.waitForExistence(timeout: 30))
-        imported.tap(); tap(mini, "hanlin-miniapps-open")
+        XCTAssertTrue(imported.isHittable)
+        imported.tap()
         assertText(mini, "Saved by the original ScriptUI runtime")
 
         // Fresh process guarantees every old runtime owner has finished before rollback.
@@ -137,7 +143,7 @@ final class HanlinPairedProductUITests: XCTestCase {
         tap(mini, "Restore previous data")
         assertText(mini, "Previous data restored. The original copy in Hanlin is unchanged.")
         mini.terminate(); mini.launch()
-        XCTAssertTrue(item(mini, "hanlin-miniapps-management").waitForExistence(timeout: 30))
+        XCTAssertTrue(item(mini, "hanlin-apps-add").waitForExistence(timeout: 30))
         XCTAssertFalse(imported.exists, "Rollback must restore the actual pre-transfer catalog")
 
         ai.terminate(); ai.launchEnvironment["HANLIN_SCRIPTUI_E2E"] = "1"; ai.launch()
@@ -162,11 +168,12 @@ final class HanlinPairedProductUITests: XCTestCase {
     private func beginOriginalRequest(_ prompt: String) throws -> String {
         // Publish the real companion catalog before the original Host resolves it.
         mini.launch()
-        XCTAssertTrue(item(mini, "hanlin-miniapp-hanlin.demo.swift-parity").waitForExistence(timeout: 45))
+        XCTAssertTrue(item(mini, "hanlin-package-card-Swift Parity").waitForExistence(timeout: 45))
         mini.terminate()
         ai.launchEnvironment["HANLIN_AGENT_RUNTIME_UI_ACCEPTANCE"] = "1"
         ai.launchEnvironment["HANLIN_PHASE2_STORE_ID"] = UUID().uuidString
         ai.launch()
+        try revokeRememberedSplitPermission()
         // Compact Home has its own persistent composer. Select the original
         // seeded conversation explicitly before recording its durable identity.
         let home = ai.buttons["hanlin-compact-view-all-button"].firstMatch
@@ -188,16 +195,71 @@ final class HanlinPairedProductUITests: XCTestCase {
         typeNativeText(prompt, into: editor, failureMessage: "Native typing must preserve the original request before Send")
         XCTAssertEqual(editor.value as? String, prompt, "Native typing must preserve the original request before Send")
         tap(ai, "hanlin-chat-send")
+        let allow = ai.buttons["hanlin-tool-consent-allow-remember"].firstMatch
+        XCTAssertTrue(allow.waitForExistence(timeout: 45),
+            "The original Host request must expose its scoped remembered permission")
+        XCTAssertFalse(allow.isEnabled, "The original request must be reviewed before it can be approved")
+        XCTAssertFalse(ai.buttons["hanlin-tool-consent-allow-once"].exists,
+            "This Host-scoped request must not be mistaken for provider-only one-use consent")
         tap(ai, "hanlin-tool-consent-review-toggle")
         let originalRequest = ai.staticTexts["hanlin-tool-consent-original-request"].firstMatch
         XCTAssertTrue(originalRequest.waitForExistence(timeout: 15),
             "Review the actual cross-product request before allowing its original continuation")
         XCTAssertFalse(originalRequest.label.isEmpty)
-        tap(ai, "hanlin-tool-consent-allow-once")
+        let arguments = try XCTUnwrap(
+            try JSONSerialization.jsonObject(with: Data(originalRequest.label.utf8)) as? [String: Any],
+            "The visible original request must be reviewable JSON")
+        XCTAssertEqual(Set(arguments.keys), Set(["target", "action", "payload"]))
+        XCTAssertEqual(arguments["target"] as? String, "hanlin.demo.swift-parity")
+        XCTAssertEqual(arguments["action"] as? String, "share.value")
+        XCTAssertTrue(arguments["payload"] is NSNull)
+        tap(ai, "hanlin-tool-consent-allow-remember")
         pairedRequestStartedAt = Date()
         XCTAssertTrue(mini.wait(for: .runningForeground, timeout: 45))
         XCTAssertTrue(mini.buttons["miniapps.return-to-origin"].waitForExistence(timeout: 30))
         return originalChat
+    }
+
+    /// The original Host grant spans conversations; a fresh SwiftData fixture
+    /// does not reset it. Revoke only this tool through its shipping Settings UI.
+    private func revokeRememberedSplitPermission() throws {
+        tap(ai, "hanlin-settings-tab")
+        let settings = item(ai, "hanlin-settings-list")
+        _ = try XCTUnwrap(settings.waitForExistence(timeout: 10) ? settings : nil,
+            "Original Settings must open before preparing the paired consent fixture")
+        reveal(ai, identifier: "hanlin-tool-permissions-link", container: "hanlin-settings-list")
+        tap(ai, "hanlin-tool-permissions-link")
+        let permissions = item(ai, "hanlin-tool-permissions-list")
+        _ = try XCTUnwrap(permissions.waitForExistence(timeout: 10) ? permissions : nil,
+            "The original per-tool permission controls must open")
+        let matching = permissions.buttons.matching(NSPredicate(
+            format: "label == %@", "Revoke permission for open_mini_app"))
+        for _ in 0..<8 {
+            if matching.count > 0 || item(ai, "hanlin-tool-permissions-empty").exists { break }
+            permissions.swipeUp()
+        }
+        let scoped = try XCTUnwrap(matching.count <= 1 ? matching : nil,
+            "Multiple indistinguishable split-tool grants cannot be revoked by this fixture")
+        if scoped.count == 1 {
+            let revoke = scoped.firstMatch
+            for _ in 0..<8 where !revoke.isHittable { permissions.swipeUp() }
+            let reachable = try XCTUnwrap(revoke.isHittable ? revoke : nil,
+                "The original split-tool revocation must be reachable")
+            reachable.tap()
+            _ = try XCTUnwrap(revoke.waitForNonExistence(timeout: 10) ? permissions : nil,
+                "The original split-tool permission must be revoked before a fresh request")
+        }
+        let back = ai.navigationBars["Tool permissions"].buttons.element(boundBy: 0)
+        _ = try XCTUnwrap(back.waitForExistence(timeout: 5) && back.isHittable ? back : nil,
+            "The original permission screen must return through its own Back control")
+        back.tap()
+        _ = try XCTUnwrap(settings.waitForExistence(timeout: 5) ? settings : nil,
+            "Permission revocation must return to the original Settings screen")
+        let done = ai.buttons["hanlin-profile-done"].firstMatch
+        tap(ai, "hanlin-profile-done")
+        _ = try XCTUnwrap(done.waitForNonExistence(timeout: 5) ? settings : nil,
+            "The original Profile sheet must dismiss before primary navigation")
+        tap(ai, "hanlin-home-tab")
     }
 
     private func input() -> XCUIElement {
@@ -359,7 +421,8 @@ final class HanlinPairedProductUITests: XCTestCase {
             format: "label CONTAINS %@ OR value CONTAINS %@", "PAIRED_RESULT_NOT_VERIFIED", "PAIRED_RESULT_NOT_VERIFIED")).firstMatch
         if failedElement.exists { return "paired_result_not_verified" }
         if ai.alerts["Mini App result unavailable"].exists { return "alert_result_unavailable" }
-        if ai.buttons["hanlin-tool-consent-allow-once"].exists { return "consent_still_pending" }
+        if ai.buttons["hanlin-tool-consent-allow-once"].exists
+            || ai.buttons["hanlin-tool-consent-allow-remember"].exists { return "consent_still_pending" }
         return "pending_or_missing"
     }
 

@@ -1,3 +1,4 @@
+import HanlinLocalization
 //
 //  ChatViewBottom.swift
 //  AI_HLY
@@ -10,13 +11,14 @@ import SwiftData
 import UniformTypeIdentifiers
 import UIKit
 import HanlinPresentationKit
+import HanlinChatUI
 
 
 struct InputTextField: UIViewRepresentable {
 
     // MARK: – Public API
     @Binding var text: String
-    var placeholder: String = String(localized: "Message")
+    var placeholder: String = String(localized: "Message", bundle: HanlinLocalization.bundle)
     var onPasteImage: ((UIImage) -> Void)?
     var onPasteText: ((String) -> Void)?
     var onPasteFile: ((URL) -> Void)?
@@ -380,19 +382,19 @@ struct ChatViewBottom: View {
                             HStack(spacing: 6) {
                                 Image(systemName: "pencil.and.outline")
                                     .font(HanlinTypography.fixed(size: size_16, weight: .medium))
-                                Text("画布 \(chatRecord.canvas?.title ?? "")")
+                                Text("画布 \(chatRecord.canvas?.title ?? "")", bundle: HanlinLocalization.bundle)
                                     .font(HanlinTypography.fixed(size: size_16, weight: .medium))
                                     .lineLimit(1)
                                     .truncationMode(.tail)
                             }
-                            .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
+                            .foregroundColor(TemporaryRecord ? .primary : .hanlinHLBluefont)
                             .frame(height: buttonHeight)
                             .padding(.horizontal, 10)
                             .clipShape(Capsule())
                             .background(
                                 GlassView(style: .systemUltraThinMaterial)
                                     .clipShape(Capsule())
-                                    .shadow(color: TemporaryRecord ? .primary : .hlBlue, radius: 1)
+                                    .shadow(color: TemporaryRecord ? .primary : .hanlinHLBlue, radius: 1)
                             )
                         }
                         .transition(.move(edge: .bottom).combined(with: .opacity))
@@ -487,7 +489,7 @@ struct ChatViewBottom: View {
                 })
                 .toolbar {
                     ToolbarItem(placement: .cancellationAction) {
-                        Button("Cancel") { showShareInbox = false; shareDraftContext = nil }
+                        Button(hanlin: "Cancel") { showShareInbox = false; shareDraftContext = nil }
                             .accessibilityIdentifier("hanlin-share-inbox-cancel")
                     }
                 }
@@ -498,27 +500,27 @@ struct ChatViewBottom: View {
                 SelectEmbeddingModelView()
                     .toolbar {
                         ToolbarItem(placement: .navigationBarTrailing) {
-                            Button("完成") {
+                            Button(hanlin: "完成") {
                                 showEmbeddingSettingSheet = false
                             }
                         }
                     }
             }
         }
-        .alert("知识背包错误", isPresented: $showKnowledgeAlert) {
+        .alert(Text("知识背包错误", bundle: HanlinLocalization.bundle), isPresented: $showKnowledgeAlert) {
             if isEmbeddingModelError {
-                Button("前往设置") {
+                Button(hanlin: "前往设置") {
                     showEmbeddingSettingSheet = true
                 }
             }
-            Button("取消", role: .cancel) { }
+            Button(hanlin: "取消", role: .cancel) { }
         } message: {
             Text(knowledgeAlertMessage)
         }
-        .alert("未启用搜索引擎", isPresented: $showSearchAlert) {
-            Button("确定", role: .cancel) { }
+        .alert(Text("未启用搜索引擎", bundle: HanlinLocalization.bundle), isPresented: $showSearchAlert) {
+            Button(hanlin: "确定", role: .cancel) { }
         } message: {
-            Text("当前未启用任何搜索引擎，请前往 设置-工具-搜索设置 中开启。")
+            Text("当前未启用任何搜索引擎，请前往 设置-工具-搜索设置 中开启。", bundle: HanlinLocalization.bundle)
         }
         .onAppear {
             syncDockGeometryAndContext()
@@ -554,7 +556,12 @@ struct ChatViewBottom: View {
             popupCoordinator.dockState.attachmentOverheadHeight = max(measuredAttachmentPreviewHeight, newOverhead)
         }
         .onDisappear { debounceWorkItem?.cancel() }
-        .onChange(of: isInputActive.wrappedValue) { _, focused in
+        .onChange(of: isInputActive.wrappedValue) { previousFocus, focused in
+            #if DEBUG || HANLIN_TESTING
+            if ProcessInfo.processInfo.environment["HANLIN_COMPOSER_EDIT_DIAGNOSTICS"] == "1" {
+                print("HANLIN_COMPOSER_HOST_FOCUS event=binding-change before=\(previousFocus) after=\(focused)")
+            }
+            #endif
             popupCoordinator.dockState.handleInputFocusChange(focused, preserveExpandedDrawer: true)
         }
         .onChange(of: isMultiSelectMode) {
@@ -659,7 +666,7 @@ struct ChatViewBottom: View {
                     Image(systemName: "trash.circle.fill")
                         .resizable()
                         .frame(width: size_40, height: size_40)
-                        .foregroundColor(selectedMessageIDs.isEmpty ? .gray : .hlRed)
+                        .foregroundColor(selectedMessageIDs.isEmpty ? .gray : .hanlinHLRed)
                         .cornerRadius(20)
                 }
                 .disabled(selectedMessageIDs.isEmpty)
@@ -673,7 +680,7 @@ struct ChatViewBottom: View {
                     Image(systemName: "checkmark.circle.fill")
                         .resizable()
                         .frame(width: size_40, height: size_40)
-                        .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
+                        .foregroundColor(TemporaryRecord ? .primary : .hanlinHLBluefont)
                         .cornerRadius(20)
                 }
             }
@@ -681,7 +688,7 @@ struct ChatViewBottom: View {
             .background(
                 GlassView(style: .systemUltraThinMaterial) // 毛玻璃背景
                     .clipShape(RoundedRectangle(cornerRadius: 26))
-                    .shadow(color: TemporaryRecord ? .primary : .hlBlue, radius: 1)
+                    .shadow(color: TemporaryRecord ? .primary : .hanlinHLBlue, radius: 1)
             )
             .offset(y: isMultiSelectMode ? 0 : 60) // **初次进入时滑入**
             .opacity(isMultiSelectMode ? 1 : 0)    // **初次进入时淡入**
@@ -840,22 +847,22 @@ struct ChatViewBottom: View {
                 inputHeight: layout.inputHeight,
                 title: { page in
                     switch page {
-                    case nil: return String(localized: "Action Center")
-                    case .general(.search): return String(localized: "Search & Knowledge")
-                    case .general(.thinking): return String(localized: "Thinking & Planning")
-                    case .general(.creative): return String(localized: "Creative & Audio")
-                    case .general(.prompts): return String(localized: "Prompt Templates")
-                    case .general(.parameters): return String(localized: "Model Parameters")
-                    case .general(.imageSize): return String(localized: "Image Settings")
-                    case .general(.miniApps): return String(localized: "hanlin.morph.miniAppsTitle")
-                    case .tools(.none): return String(localized: "Tools, Skills & MCP")
-                    case .tools(.some(.toolsCatalog)): return String(localized: "Tools")
-                    case .tools(.some(.skillsCenter)): return String(localized: "Skills")
-                    case .tools(.some(.mcpServers)): return String(localized: "MCP Servers")
-                    case .tools(.some(.runtimeCenter)): return String(localized: "Runtimes")
+                    case nil: return String(localized: "Action Center", bundle: HanlinLocalization.bundle)
+                    case .general(.search): return String(localized: "Search & Knowledge", bundle: HanlinLocalization.bundle)
+                    case .general(.thinking): return String(localized: "Thinking & Planning", bundle: HanlinLocalization.bundle)
+                    case .general(.creative): return String(localized: "Creative & Audio", bundle: HanlinLocalization.bundle)
+                    case .general(.prompts): return String(localized: "Prompt Templates", bundle: HanlinLocalization.bundle)
+                    case .general(.parameters): return String(localized: "Model Parameters", bundle: HanlinLocalization.bundle)
+                    case .general(.imageSize): return String(localized: "Image Settings", bundle: HanlinLocalization.bundle)
+                    case .general(.miniApps): return String(localized: "hanlin.morph.miniAppsTitle", bundle: HanlinLocalization.bundle)
+                    case .tools(.none): return String(localized: "Tools, Skills & MCP", bundle: HanlinLocalization.bundle)
+                    case .tools(.some(.toolsCatalog)): return String(localized: "Tools", bundle: HanlinLocalization.bundle)
+                    case .tools(.some(.skillsCenter)): return String(localized: "Skills", bundle: HanlinLocalization.bundle)
+                    case .tools(.some(.mcpServers)): return String(localized: "MCP Servers", bundle: HanlinLocalization.bundle)
+                    case .tools(.some(.runtimeCenter)): return String(localized: "Runtimes", bundle: HanlinLocalization.bundle)
                     }
                 },
-                subtitle: { _ in String(localized: "Choose a capability and continue this conversation") },
+                subtitle: { _ in String(localized: "Choose a capability and continue this conversation", bundle: HanlinLocalization.bundle) },
                 backIdentifier: { page in
                     switch page {
                     case .general: return "hanlin-general-subpage-back"
@@ -887,11 +894,11 @@ struct ChatViewBottom: View {
         .onChange(of: popupCoordinator.dockState.mode) { _, mode in
             popupCoordinator.syncFromDockModeChange(mode)
         }
-        .alert(String(localized: "Could not update capability"), isPresented: Binding(
+        .alert(String(localized: "Could not update capability", bundle: HanlinLocalization.bundle), isPresented: Binding(
             get: { capabilityUpdateError != nil },
             set: { if !$0 { capabilityUpdateError = nil } }
         )) {
-            Button(String(localized: "OK"), role: .cancel) { capabilityUpdateError = nil }
+            Button(String(localized: "OK", bundle: HanlinLocalization.bundle), role: .cancel) { capabilityUpdateError = nil }
         } message: {
             Text(capabilityUpdateError ?? "")
         }
@@ -1064,11 +1071,11 @@ struct ChatViewBottom: View {
     private func capabilityActionTitle(_ capability: HanlinDetachedCapability) -> String {
         switch capability.contextAction(imageGenerationActive: currentModelSnapshot.supportsImageGen) {
         case .disableChatToolUse:
-            return String(localized: "Turn off tool use in this chat")
+            return String(localized: "Turn off tool use in this chat", bundle: HanlinLocalization.bundle)
         case .chooseModel:
-            return String(localized: "Change model to disable image generation")
+            return String(localized: "Change model to disable image generation", bundle: HanlinLocalization.bundle)
         default:
-            return String(format: String(localized: "Turn off %@"), capability.title)
+            return String(format: String(localized: "Turn off %@", bundle: HanlinLocalization.bundle), capability.title)
         }
     }
 
@@ -1120,7 +1127,7 @@ struct ChatViewBottom: View {
                     guard !Task.isCancelled, activeMCPCountContext?.chatID == chatID,
                           activeMCPCountContext?.temporary == temporary,
                           capabilityMCPProvider.selectionRevision(chatID: chatID, temporary: temporary) == revision else { return }
-                    if !actual.isEmpty { capabilityUpdateError = String(localized: "MCP selection could not be updated.") }
+                    if !actual.isEmpty { capabilityUpdateError = String(localized: "MCP selection could not be updated.", bundle: HanlinLocalization.bundle) }
                 } catch {
                     guard !Task.isCancelled, activeMCPCountContext?.chatID == chatID,
                           activeMCPCountContext?.temporary == temporary,
@@ -1153,7 +1160,7 @@ struct ChatViewBottom: View {
                                     selectedImages.remove(at: index)
                                 }) {
                                     Image(systemName: "xmark.circle.fill")
-                                        .foregroundColor(Color(.hlRed))
+                                        .foregroundColor(Color(.hanlinHLRed))
                                         .background(.background)
                                         .clipShape(Circle())
                                 }
@@ -1171,14 +1178,14 @@ struct ChatViewBottom: View {
                                     showPhotoSourceOptions = true
                                     showCameraPicker = true
                                 }) {
-                                    Label("拍摄照片", systemImage: "camera")
+                                    Label(hanlin: "拍摄照片", systemImage: "camera")
                                 }
                                 Button(action: {
                                     isFeedBack.toggle()
                                     showPhotoSourceOptions = true
                                     showImagePicker = true
                                 }) {
-                                    Label("相册选择", systemImage: "photo")
+                                    Label(hanlin: "相册选择", systemImage: "photo")
                                 }
                             } label: {
                                 VStack {
@@ -1186,12 +1193,12 @@ struct ChatViewBottom: View {
                                         .resizable()
                                         .scaledToFit()
                                         .frame(width: 30, height: 30)
-                                        .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
+                                        .foregroundColor(TemporaryRecord ? .primary : .hanlinHLBluefont)
                                         .symbolEffect(.bounce, value: showImagePicker)
                                 }
                                 .padding(12)
                                 .frame(width: size_80, height: size_80)
-                                .background(TemporaryRecord ? Color.primary.opacity(0.1) : Color.hlBlue.opacity(0.1))
+                                .background(TemporaryRecord ? Color.primary.opacity(0.1) : Color.hanlinHLBlue.opacity(0.1))
                                 .cornerRadius(size_20)
                             }
                             .hanlinFeedback(.impact, trigger: isFeedBack)
@@ -1222,7 +1229,7 @@ struct ChatViewBottom: View {
                         ForEach(selectedDocumentURLs, id: \.self) { document in
                             HStack {
                                 Image(systemName: "doc.text")
-                                    .foregroundColor(TemporaryRecord ? .primary : Color(.hlBluefont))
+                                    .foregroundColor(TemporaryRecord ? .primary : Color(.hanlinHLBluefont))
                                     .font(HanlinTypography.footnote)
                                 Text(document.lastPathComponent)
                                     .font(HanlinTypography.footnote)
@@ -1236,7 +1243,7 @@ struct ChatViewBottom: View {
                                     }
                                 }) {
                                     Image(systemName: "xmark.circle.fill")
-                                        .foregroundColor(Color(.hlRed))
+                                        .foregroundColor(Color(.hanlinHLRed))
                                 }
                                 .accessibilityIdentifier("hanlin-remove-document-attachment")
                                 .hanlinFeedback(.impact, trigger: isFeedBack)
@@ -1267,7 +1274,7 @@ struct ChatViewBottom: View {
                             ForEach(selectedURLs, id: \.self) { url in
                                 HStack {
                                     Image(systemName: "link")
-                                        .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
+                                        .foregroundColor(TemporaryRecord ? .primary : .hanlinHLBluefont)
                                         .font(HanlinTypography.footnote)
                                     Text(url)
                                         .font(HanlinTypography.footnote)
@@ -1282,7 +1289,7 @@ struct ChatViewBottom: View {
                                         selectedURLs.removeAll { $0 == url } // 从解析出的链接中删除
                                     }) {
                                         Image(systemName: "xmark.circle.fill")
-                                            .foregroundColor(Color(.hlRed))
+                                            .foregroundColor(Color(.hanlinHLRed))
                                     }
                                     .hanlinFeedback(.impact, trigger: isFeedBack)
                                 }
@@ -1312,15 +1319,15 @@ struct ChatViewBottom: View {
                             ForEach(selectedPrompts, id: \.id) { item in
                                 HStack(spacing: 6) {
                                     // 使用自定义图片作为提示词图标
-                                    Image("prompt")
+                                    Image(hanlinAsset: "prompt")
                                         .renderingMode(.template)
                                         .resizable()
                                         .scaledToFit()
                                         .frame(width: 20, height: 20)
-                                        .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
+                                        .foregroundColor(TemporaryRecord ? .primary : .hanlinHLBluefont)
                                     Text(item.name ?? "未命名提示词")
                                         .font(HanlinTypography.body)
-                                        .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
+                                        .foregroundColor(TemporaryRecord ? .primary : .hanlinHLBluefont)
                                         .lineLimit(1)
                                         .truncationMode(.tail)
                                     Button(action: {
@@ -1329,7 +1336,7 @@ struct ChatViewBottom: View {
                                         removePrompt(item)
                                     }) {
                                         Image(systemName: "pencil.circle.fill")
-                                            .foregroundColor(Color(.hlGreen))
+                                            .foregroundColor(Color(.hanlinHLGreen))
                                     }
                                     .hanlinFeedback(.impact, trigger: isFeedBack)
                                     Button(action: {
@@ -1337,12 +1344,12 @@ struct ChatViewBottom: View {
                                         removePrompt(item)
                                     }) {
                                         Image(systemName: "xmark.circle.fill")
-                                            .foregroundColor(Color(.hlRed))
+                                            .foregroundColor(Color(.hanlinHLRed))
                                     }
                                     .hanlinFeedback(.impact, trigger: isFeedBack)
                                 }
                                 .padding(12)
-                                .background(TemporaryRecord ? Color.primary.opacity(0.1) : Color.hlBlue.opacity(0.1))
+                                .background(TemporaryRecord ? Color.primary.opacity(0.1) : Color.hanlinHLBlue.opacity(0.1))
                                 .cornerRadius(20)
                             }
                         }
@@ -1373,7 +1380,7 @@ struct ChatViewBottom: View {
                                     isFeedBack.toggle()
                                 }) {
                                     Image(systemName: "at")
-                                        .foregroundColor(TemporaryRecord ? .primary : .hlBluefont)
+                                        .foregroundColor(TemporaryRecord ? .primary : .hanlinHLBluefont)
                                         .font(HanlinTypography.footnote)
                                     highlightedModelText(for: model.presentationName)
                                         .font(HanlinTypography.footnote)
@@ -1407,7 +1414,7 @@ struct ChatViewBottom: View {
             NativeMultilineTextEditor(
                 text: $message,
                 textHeight: $textEditorHeight,
-                placeholderText: String(localized: "Message"),
+                placeholderText: String(localized: "Message", bundle: HanlinLocalization.bundle),
                 minHeight: editorMinimum,
                 maxHeight: editorMaximum,
                 usesAutomaticLineLimits: !inputExpanded,
@@ -1424,6 +1431,11 @@ struct ChatViewBottom: View {
                 },
                 onMentionTriggered: { updateModelSuggestions() },
                 onFocusChange: { focused in
+                    #if DEBUG || HANLIN_TESTING
+                    if ProcessInfo.processInfo.environment["HANLIN_COMPOSER_EDIT_DIAGNOSTICS"] == "1" {
+                        print("HANLIN_COMPOSER_HOST_FOCUS event=native-callback nativeFocused=\(focused) boundFocused=\(isInputActive.wrappedValue)")
+                    }
+                    #endif
                     popupCoordinator.dockState.handleInputFocusChange(focused, preserveExpandedDrawer: true)
                 },
                 onLifecycleEvent: onNativeEditorLifecycle,
@@ -1504,13 +1516,13 @@ struct ChatViewBottom: View {
                 .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
-        .accessibilityLabel(inputExpanded ? String(localized: "Collapse") : String(localized: "Expand Long Text Editor"))
+        .accessibilityLabel(inputExpanded ? String(localized: "Collapse", bundle: HanlinLocalization.bundle) : String(localized: "Expand Long Text Editor", bundle: HanlinLocalization.bundle))
         .accessibilityIdentifier("hanlin-composer-expand-editor")
         .hanlinFeedback(.impact, trigger: isFeedBack)
     }
 
     private var composerToolsControl: some View {
-        let accent: Color = TemporaryRecord ? .primary : .hlBluefont
+        let accent: Color = TemporaryRecord ? .primary : .hanlinHLBluefont
         let isToolsOpen = popupCoordinator.dockState.mode == .tools
         let isToolsActive = ifToolUse && currentModelSnapshot.supportsToolUse
         let toolsActiveBadgeCount = HanlinComposerActionBridge.activeToolsShortcutCount(
@@ -1526,12 +1538,12 @@ struct ChatViewBottom: View {
                 Image(systemName: (isToolsOpen || isToolsActive) ? "hammer.circle.fill" : "hammer.circle")
                     .font(HanlinTypography.fixed(size: min(size_20 + 5, 36), weight: .regular))
                     .foregroundStyle(
-                        isToolsOpen ? accent : (isToolsActive ? (TemporaryRecord ? Color.primary : Color.hlBrown) : Color.secondary)
+                        isToolsOpen ? accent : (isToolsActive ? (TemporaryRecord ? Color.primary : Color.hanlinHLBrown) : Color.secondary)
                     )
                     .frame(width: composerActionSize, height: composerActionSize)
                     .background(
                         (isToolsOpen || isToolsActive)
-                        ? (isToolsActive ? Color.hlBrown : (TemporaryRecord ? Color.primary : Color.hlBlue)).opacity(0.14)
+                        ? (isToolsActive ? Color.hanlinHLBrown : (TemporaryRecord ? Color.primary : Color.hanlinHLBlue)).opacity(0.14)
                         : Color.secondary.opacity(0.08),
                         in: Circle()
                     )
@@ -1539,7 +1551,7 @@ struct ChatViewBottom: View {
                         Circle()
                             .stroke(
                                 (isToolsOpen || isToolsActive)
-                                ? (isToolsActive ? Color.hlBrown : accent).opacity(0.32)
+                                ? (isToolsActive ? Color.hanlinHLBrown : accent).opacity(0.32)
                                 : Color.clear,
                                 lineWidth: 0.8
                             )
@@ -1547,7 +1559,7 @@ struct ChatViewBottom: View {
 
                 if toolsActiveBadgeCount > 0 {
                     Circle()
-                        .fill(isToolsActive ? Color.hlBrown : accent)
+                        .fill(isToolsActive ? Color.hanlinHLBrown : accent)
                         .frame(width: 7, height: 7)
                         .offset(x: -1, y: 1)
                 }
@@ -1556,13 +1568,13 @@ struct ChatViewBottom: View {
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
-        .accessibilityLabel(String(localized: "Tools, Skills & MCP"))
+        .accessibilityLabel(String(localized: "Tools, Skills & MCP", bundle: HanlinLocalization.bundle))
         .accessibilityIdentifier("hanlin-composer-tools-direct")
         .hanlinFeedback(.impact, trigger: isFeedBack)
     }
 
     private var composerModelControl: some View {
-        let accent: Color = TemporaryRecord ? .primary : .hlBluefont
+        let accent: Color = TemporaryRecord ? .primary : .hanlinHLBluefont
         let isModelOpen = popupCoordinator.isModelPresented
         return HanlinModelZoomPopover(
             isPresented: popupCoordinator.binding(for: .model),
@@ -1611,7 +1623,7 @@ struct ChatViewBottom: View {
                 .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
-        .accessibilityLabel(String(localized: "开始录音"))
+        .accessibilityLabel(String(localized: "开始录音", bundle: HanlinLocalization.bundle))
         .accessibilityIdentifier("hanlin-chat-mic")
         .hanlinFeedback(.impact, trigger: isFeedBack)
     }
@@ -1624,7 +1636,7 @@ struct ChatViewBottom: View {
                         .font(HanlinTypography.fixed(size: 15, weight: .bold))
                         .foregroundStyle(.white)
                         .frame(width: composerActionSize, height: composerActionSize)
-                        .background(Color.hlRed, in: Circle())
+                        .background(Color.hanlinHLRed, in: Circle())
                 }
                 .accessibilityIdentifier("hanlin-chat-stop")
                 .animation(.spring(response: 0.4, dampingFraction: 0.78), value: isResponding)
@@ -1674,7 +1686,7 @@ struct ChatViewBottom: View {
         HStack(spacing: 5) {
             if let model {
                 if model.identity == "model" {
-                    Image(getCompanyIcon(for: model.company ?? "Unknown"))
+                    Image(hanlinAsset: getCompanyIcon(for: model.company ?? "Unknown"))
                         .renderingMode(.original)
                         .resizable()
                         .scaledToFit()
@@ -1711,7 +1723,7 @@ struct ChatViewBottom: View {
         .padding(.vertical, 5)
         .frame(minHeight: 28)
         .background(
-            (TemporaryRecord ? Color.primary : Color.hlBlue).opacity(isOpen ? 0.2 : 0.11),
+            (TemporaryRecord ? Color.primary : Color.hanlinHLBlue).opacity(isOpen ? 0.2 : 0.11),
             in: Capsule()
         )
         .overlay(
@@ -1732,8 +1744,8 @@ struct ChatViewBottom: View {
     }
 
     private var observeButtonColor: Color {
-        if respondIndex == 2 { return .hlRed }
-        return canObserveCurrentChat ? (TemporaryRecord ? .primary : .hlBluefont) : .gray
+        if respondIndex == 2 { return .hanlinHLRed }
+        return canObserveCurrentChat ? (TemporaryRecord ? .primary : .hanlinHLBluefont) : .gray
     }
 
     private func checkSearchAvailability() -> Bool {
@@ -1849,7 +1861,7 @@ struct ChatViewBottom: View {
             let match = String(fullText[matchRange])
             let suffix = String(fullText[matchRange.upperBound...])
             // 根据 TemporaryRecord 状态选择颜色
-            let matchColor: Color = TemporaryRecord ? .primary : .hlBluefont
+            let matchColor: Color = TemporaryRecord ? .primary : .hanlinHLBluefont
             return Text(prefix) + Text(match).bold().foregroundColor(matchColor) + Text(suffix)
         } else {
             return Text(fullText)

@@ -17,10 +17,10 @@ python3 "${SCRIPT_DIR}/validate_ios_system_resources.py" \
   --repository-root "${REPOSITORY_ROOT}"
 node "${SCRIPT_DIR}/validate-runtime-localization.mjs" \
   "${REPOSITORY_ROOT}/AI_HLY/Downstream/RuntimeCore" \
-  "${REPOSITORY_ROOT}/AI_HLY/Downstream/RuntimeCore/Resources/RuntimeLocalizable.xcstrings"
+  "${REPOSITORY_ROOT}/Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/RuntimeLocalizable.xcstrings"
 node "${SCRIPT_DIR}/validate-runtime-localization.mjs" \
   "${REPOSITORY_ROOT}/AI_HLY/Downstream/MCP" \
-  "${REPOSITORY_ROOT}/AI_HLY/Downstream/MCP/Resources/MCPLocalizable.xcstrings" \
+  "${REPOSITORY_ROOT}/Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/MCPLocalizable.xcstrings" \
   "MCPL10n"
 generated_manifest="$(mktemp)"
 trap 'rm -f "${generated_manifest}"' EXIT
@@ -57,12 +57,8 @@ for required_path in "${required_paths[@]}"; do
   test -e "${required_path}" || { echo "RuntimeCore preflight is missing ${required_path}." >&2; exit 1; }
 done
 
-grep -Fq \
-  'Downstream/RuntimeCore/Node/Host/node_modules,' \
-  "${REPOSITORY_ROOT}/AI_HLY.xcodeproj/project.pbxproj" || {
-    echo "RuntimeCore preflight requires Node Host node_modules to be excluded from the synchronized AI_HLY target." >&2
-    exit 1
-  }
+python3 "${SCRIPT_DIR}/validate_runtime_host_source_exclusion.py" \
+  --project "${REPOSITORY_ROOT}/AI_HLY.xcodeproj/project.pbxproj"
 
 plutil -lint "${NODE_FRAMEWORK}/Info.plist"
 plutil -lint "${PYTHON_FRAMEWORK}/Info.plist"

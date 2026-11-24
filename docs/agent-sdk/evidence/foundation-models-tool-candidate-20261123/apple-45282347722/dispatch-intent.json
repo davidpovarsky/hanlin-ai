@@ -1,0 +1,10 @@
+{
+  "utc": "2026-11-23T22:43:19.624159+00:00",
+  "source": "6b0030926cd771f2dd9995fd01aecd1efe8bcf4e",
+  "branch": "codex/hanlin-sdk02-native-tool-adapter-20261123",
+  "workflow": "build-ios26-unsigned-ipa.yml",
+  "approved_scope": "ONE Bridge5 plus current iOS build; e7;27+1 andbaseline12 reused separately",
+  "plan_sha256": "7a950f0d7f98685e686ad8454d1009eb7f71882c7a946de81024dab2b82193a1",
+  "request_sha256": "e76b6379c0144c007ea221c4152ba2bb29914538cb59bac69f22b87c7c15f06c",
+  "post_attempts": 1
+}

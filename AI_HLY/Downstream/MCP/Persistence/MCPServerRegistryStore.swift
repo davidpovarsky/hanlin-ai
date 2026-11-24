@@ -52,7 +52,8 @@ actor MCPServerRegistryStore {
         try loadDocument(repairCopies: true).servers
     }
 
-    func save(_ servers: [MCPServerDescriptor]) throws {
+    @discardableResult
+    func save(_ servers: [MCPServerDescriptor]) throws -> [MCPServerDescriptor] {
         try fileLayout.prepareIfNeeded()
         let current = try loadDocument(repairCopies: true)
         let sorted = servers.sorted { $0.id.uuidString < $1.id.uuidString }
@@ -75,6 +76,9 @@ actor MCPServerRegistryStore {
         _ = try verifyCopy(at: fileLayout.serverRegistryBackup)
         try writeAtomically(data, fileLayout.serverRegistry)
         _ = try verifyCopy(at: fileLayout.serverRegistry)
+        // Return the same representation that was committed. The existing ISO-8601
+        // format normalizes Date precision, so callers must not publish pre-encode values.
+        return verified.servers
     }
 
     func upsert(_ server: MCPServerDescriptor) throws -> [MCPServerDescriptor] {
@@ -84,8 +88,19 @@ actor MCPServerRegistryStore {
         } else {
             servers.append(server)
         }
-        try save(servers)
-        return servers.sorted { $0.id.uuidString < $1.id.uuidString }
+        return try save(servers)
+    }
+
+    /// Apply original editable fields to the actual current registry row.
+    /// Environment references and installed package identity are never accepted
+    /// from a stale UI/host settings snapshot.
+    func updateSettings(for id: UUID, settings: MCPServerSettings) throws -> [MCPServerDescriptor] {
+        var servers = try load()
+        guard let index = servers.firstIndex(where: { $0.id == id }) else {
+            throw MCPError.serverNotFound
+        }
+        try settings.apply(to: &servers[index])
+        return try save(servers)
     }
 
     /// Commit only the edited environment, preserving newer descriptor metadata.
@@ -102,8 +117,7 @@ actor MCPServerRegistryStore {
         }
         servers[index].environment = environment
         servers[index].updatedAt = .now
-        try save(servers)
-        return servers.sorted { $0.id.uuidString < $1.id.uuidString }
+        return try save(servers)
     }
 
     /// Read both persisted generations without repair. A backup can already
@@ -129,8 +143,7 @@ actor MCPServerRegistryStore {
     func remove(id: UUID) throws -> [MCPServerDescriptor] {
         var servers = try load()
         servers.removeAll { $0.id == id }
-        try save(servers)
-        return servers.sorted { $0.id.uuidString < $1.id.uuidString }
+        return try save(servers)
     }
 
     private func loadDocument(repairCopies: Bool) throws -> MCPServerRegistryDocument {
@@ -204,10 +217,18 @@ actor MCPServerRegistryStore {
             guard document.schemaVersion == MCPServerRegistryDocument.currentSchemaVersion else {
                 throw MCPServerRegistryError.unsupportedSchema(document.schemaVersion)
             }
+            try verifyUniqueServerIDs(document.servers)
             return document
         }
         let legacy = try JSONDecoder.mcp.decode([MCPServerDescriptor].self, from: data)
+        try verifyUniqueServerIDs(legacy)
         return MCPServerRegistryDocument(schemaVersion: 0, generation: 0, servers: legacy)
+    }
+
+    private func verifyUniqueServerIDs(_ servers: [MCPServerDescriptor]) throws {
+        guard Set(servers.map(\.id)).count == servers.count else {
+            throw MCPServerRegistryError.writeVerificationFailed("Duplicate MCP server identifiers.")
+        }
     }
 
     private func repairCopy(_ url: URL, candidate: Candidate, with data: Data) throws {

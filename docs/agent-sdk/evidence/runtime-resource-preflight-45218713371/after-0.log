@@ -1,0 +1,9 @@
+test_plist_conversion_is_still_rejected (Scripts.Runtime.Tests.test_ios_system_project_resources.IOSSystemProjectResourceValidationTests.test_plist_conversion_is_still_rejected) ... ok
+test_stale_comments_cannot_replace_actual_app_membership (Scripts.Runtime.Tests.test_ios_system_project_resources.IOSSystemProjectResourceValidationTests.test_stale_comments_cannot_replace_actual_app_membership) ... ok
+test_valid_target_resources_do_not_require_pbx_comments (Scripts.Runtime.Tests.test_ios_system_project_resources.IOSSystemProjectResourceValidationTests.test_valid_target_resources_do_not_require_pbx_comments) ... ok
+test_widget_membership_does_not_supply_the_application_resource (Scripts.Runtime.Tests.test_ios_system_project_resources.IOSSystemProjectResourceValidationTests.test_widget_membership_does_not_supply_the_application_resource) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.142s
+
+OK

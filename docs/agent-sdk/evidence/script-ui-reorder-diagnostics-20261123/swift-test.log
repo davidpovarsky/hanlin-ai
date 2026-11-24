@@ -1,0 +1,34 @@
+Building for debugging...
+[Computing dependencies]
+[Pre-planning 1 / 153]
+[Planning deferred tasks]
+[28 / 67] HanlinScriptUIReorderDiagnosticProof_HanlinPlatformContracts
+[40 / 71] HanlinPlatformContracts
+[41 / 71] HanlinPlatformContracts
+[43 / 71] HanlinPlatformContracts
+[50 / 72] HanlinPlatformContracts
+[53 / 76] HanlinScriptUI
+[56 / 76] HanlinScriptUI
+[64 / 81] HanlinScriptUITests-product
+[70 / 82] HanlinScriptUITests-test-runner
+[74 / 82] HanlinScriptUITests-product
+[78 / 85] HanlinScriptUITests-test-runner
+[79 / 85] HanlinScriptUITests-test-runner
+[86 / 86] AllIncludingTests
+Build complete! (32.60 secs)
+◇ Test run started.
+↳ Testing Library Version: 6.4.3 (ba0861fb203553c)
+↳ Target Platform: aarch64-unknown-linux-gnu
+◇ Suite "ScriptUI reorder admission" started.
+◇ Test "A non-first duplicate in requested reorder keys is identified accurately" started.
+◇ Test "Valid keyed reordering preserves full nodes and subsequent property patches" started.
+◇ Test "A non-first duplicate in the old diff tree is identified accurately" started.
+◇ Test "A non-first duplicate in current reorder children is identified accurately" started.
+◇ Test "A non-first duplicate in the new diff tree is identified accurately" started.
+✔ Test "A non-first duplicate in requested reorder keys is identified accurately" passed after 0.003 seconds.
+✔ Test "Valid keyed reordering preserves full nodes and subsequent property patches" passed after 0.003 seconds.
+✔ Test "A non-first duplicate in the old diff tree is identified accurately" passed after 0.004 seconds.
+✔ Test "A non-first duplicate in current reorder children is identified accurately" passed after 0.003 seconds.
+✔ Test "A non-first duplicate in the new diff tree is identified accurately" passed after 0.003 seconds.
+✔ Suite "ScriptUI reorder admission" passed after 0.004 seconds.
+✔ Test run with 5 tests in 1 suite passed after 0.004 seconds.

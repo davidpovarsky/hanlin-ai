@@ -1,0 +1,10 @@
+{
+  "selected": [
+    "HanlinAgentCore",
+    "HanlinChatUI"
+  ],
+  "targets": 10,
+  "binaryTargets": 0,
+  "fullApplicationIncluded": false,
+  "nativeConsumer": "NOT_RUN"
+}

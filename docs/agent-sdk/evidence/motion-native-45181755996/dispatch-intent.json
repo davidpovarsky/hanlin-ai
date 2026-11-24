@@ -1,0 +1,30 @@
+{
+  "recorded_at": "2026-11-23T13:13:16.679059+00:00",
+  "status": "PREPARED_FOR_SINGLE_POST",
+  "repo": "davidpovarsky/hanlin-ai",
+  "workflow": "build-ios26-unsigned-ipa.yml",
+  "branch": "codex/hanlin-sdk-unification-20261123",
+  "expected_sha": "5d0ea90d98b405d38b66bb735198b945225877ba",
+  "inputs": {
+    "target_validation_group": "chat_motion_product",
+    "exact_test_selector": "MotionUITests/testDRapidInputDiagnosticOnly",
+    "testflight_upload": "false",
+    "runtime_bundle_only": "false",
+    "runtime_publish_release": "false",
+    "full_validation": "false"
+  },
+  "native_scope": "input-diagnostic",
+  "selected_tests": [
+    "ChatMotionProofUITests/MotionUITests/testDRapidInputDiagnosticOnly"
+  ],
+  "original_variants_per_phase": 6,
+  "phases": [
+    "native-default",
+    "immediate-touch-down"
+  ],
+  "delivery_includes_independent_coordinate_variant": true,
+  "A_B_C": "NOT_SELECTED",
+  "guards": "fresh owned simulator; original input/timing/assertions/cleanup; exact source/macro/dependency/resource admission; raw result and video",
+  "prior_D_attempts": "45146657017 attempts1/2 and45171553469 attempt1: zero executed tests, simulator or hosted-runner admission failures",
+  "no_product_code_changes": true
+}

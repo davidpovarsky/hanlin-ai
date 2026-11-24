@@ -1,0 +1,8 @@
+{
+  "ended_at": "2026-11-23T11:52:39.306649+00:00",
+  "run_id": 45166004801,
+  "watcher_exit_code": 0,
+  "status": "WATCH_ENDED",
+  "workflow_status": "completed",
+  "workflow_conclusion": "success"
+}

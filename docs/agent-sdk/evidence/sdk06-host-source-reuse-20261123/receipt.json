@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "sourceComparison": "PASS",
+  "testExecution": "NOT_RUN",
+  "files": {
+    "README.md": {
+      "bytes": 5430,
+      "sha256": "7d9c7b6c2d28cf868c844d4031c21aeea0a3b40c446061add1d1a7be04ca0e2d"
+    },
+    "common-host-component-records.json": {
+      "bytes": 111550,
+      "sha256": "8a018c192e88da0e65db1dd63a56ccd934af6d26b7c41cd8c52ca36353117827"
+    },
+    "qualification.json": {
+      "bytes": 20800,
+      "sha256": "181b4b1b15dce6475c2a7812776ff765724cd490c5cc22e86dab90fc00200d88"
+    },
+    "sdk-selected-source-records.json": {
+      "bytes": 279829,
+      "sha256": "7b75b1c6b42f605de70b739133d2e766e06c14b9c8d17ffa7bf68d57d54ae5a5"
+    }
+  }
+}

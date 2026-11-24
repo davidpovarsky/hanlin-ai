@@ -1,3 +1,4 @@
+import HanlinLocalization
 import Foundation
 
 enum LegacyResourcesEvidenceAdapter {
@@ -51,7 +52,7 @@ enum LegacyResourcesEvidenceAdapter {
     private static func resolvedTitle(_ title: String, url: String) -> String {
         let trimmed = title.trimmingCharacters(in: .whitespacesAndNewlines)
         if !trimmed.isEmpty { return trimmed }
-        return domain(for: url) ?? String(localized: "Source")
+        return domain(for: url) ?? String(localized: "Source", bundle: HanlinLocalization.bundle)
     }
 
     private static func domain(for value: String) -> String? {

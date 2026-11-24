@@ -1,0 +1,1 @@
+error: Ambiguous enum/OptionSet symbols in input batch: SharedMode (modules: ModuleA, ModuleB). The bridge uses symbol-only type resolution; this batch is unsupported.

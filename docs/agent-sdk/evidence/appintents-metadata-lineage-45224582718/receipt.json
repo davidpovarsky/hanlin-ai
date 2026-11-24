@@ -1,0 +1,111 @@
+{
+  "schemaVersion": 1,
+  "reviewedAtUTC": "2026-11-23T17:43:47.934915+00:00",
+  "sourceCommit": "8429dbb6cb66e266504b8d055586829ba7aa61f7",
+  "appIntentsFixCommit": "b6c3d250ce28149a3170f7a04bdb021c8784d285",
+  "runID": 45224582718,
+  "runStatus": "FAIL",
+  "appIntentsExtraction": "FAIL",
+  "selectedScopes": 32,
+  "selectedScopeExecution": "NOT_RUN",
+  "publication": "BLOCKED",
+  "rawJobLog": {
+    "bytes": 13020471,
+    "sha256": "04d5be6c44cb0bf512516540ed10ed1efd4a69008cd2cc8537b03fa93d4f2e4b",
+    "acquisition": "Reused root-owned local download"
+  },
+  "artifact": {
+    "id": 14847381090,
+    "bytes": 1266108,
+    "sha256": "be88328bf26dfa0e4f7c6661fd5070e5e9138f81186515603ad00310860e641b",
+    "crcStatus": "PASS",
+    "acquiredOnce": true
+  },
+  "sources": [
+    {
+      "path": "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinScriptingAppIntents.swift",
+      "gitBlob": "d37d65d90eb8d3840fc7087f577efe3eca7f7759",
+      "sha256": "287928fc80351a2d1f6219333bb668790560f2e67013666bed54ba9cf2c415a8",
+      "bytes": 4157,
+      "byteEqualToAppIntentsFix": true,
+      "declarations": [
+        {
+          "line": 14,
+          "text": "    public static let typeDisplayRepresentation = TypeDisplayRepresentation(name: LocalizedStringResource(\"Script Action\", table: \"HanlinAppIntents\", bundle: .main))"
+        },
+        {
+          "line": 75,
+          "text": "    public static let title = LocalizedStringResource(\"Run Script Action\", table: \"HanlinAppIntents\", bundle: .main)"
+        },
+        {
+          "line": 76,
+          "text": "    public static let description = IntentDescription(LocalizedStringResource(\"Runs an action from an installed Hanlin Script package.\", table: \"HanlinAppIntents\", bundle: .main))"
+        },
+        {
+          "line": 79,
+          "text": "    @Parameter(title: LocalizedStringResource(\"Action\", table: \"HanlinAppIntents\", bundle: .main))"
+        },
+        {
+          "line": 82,
+          "text": "    @Parameter(title: LocalizedStringResource(\"Input\", table: \"HanlinAppIntents\", bundle: .main), default: \"\")"
+        }
+      ]
+    },
+    {
+      "path": "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinScriptingWidgets.swift",
+      "gitBlob": "35c39c68891155a7aa6d59874a0a1f5f2b7f3512",
+      "sha256": "073807ac316fecb215e310e85137f073887b941c1beafff8fcd52d2e6e7ab84a",
+      "bytes": 12838,
+      "byteEqualToAppIntentsFix": true,
+      "declarations": [
+        {
+          "line": 13,
+          "text": "    public static let typeDisplayRepresentation = TypeDisplayRepresentation(name: LocalizedStringResource(\"Widget instance\", table: \"HanlinAppIntents\", bundle: .main))"
+        },
+        {
+          "line": 82,
+          "text": "    public static let title = LocalizedStringResource(\"Widget instance\", table: \"HanlinAppIntents\", bundle: .main)"
+        },
+        {
+          "line": 83,
+          "text": "    public static let description = IntentDescription(LocalizedStringResource(\"Choose an installed instance. Placements using the same instance share state.\", table: \"HanlinAppIntents\", bundle: .main))"
+        },
+        {
+          "line": 85,
+          "text": "    @Parameter(title: LocalizedStringResource(\"Widget instance\", table: \"HanlinAppIntents\", bundle: .main))"
+        }
+      ]
+    }
+  ],
+  "compiledSourceBytesIndependentlyArchived": false,
+  "rawConstValuePayloadArchived": false,
+  "cache": {
+    "sourcePackages": "exact-hit",
+    "derivedData": "miss",
+    "mode": "cold",
+    "inputMetadataRestore": "no-manifest",
+    "failedDerivedDataSaved": false
+  },
+  "resolvedDependencies": {
+    "sameRevisionCount": 39,
+    "changedRevisionCount": 0,
+    "trackedLockByteChange": true
+  },
+  "sourceRewriteFound": false,
+  "sourceRewriteReviewScope": "Recorded preparatory path and exact local compile paths; raw post-preparation Swift file snapshots not retained",
+  "evidenceFiles": {
+    "01-cache-mode.log": "f0d639c249409279df9dff0e861f19f934e22989486f7d342a18a44b7cc47569",
+    "05-cache-input-capture.log": "eedbe4bba410427c619be79200a130f320200376b4890d95a170dfd5736b9eb1",
+    "05-cache-input-restore.log": "11083745170de91dcbe17fa5b4e18d24f0cbc6923d8d241af153c25d718f94ef",
+    "05-resolve-packages.log": "cbb112d4c71930d48fd07f74aae4bcd09bb0fc73820cafc5ab72d4cf4b466afc",
+    "06-diagnostics-build-provenance.json": "03a0fafa02a04b23df1ea97e0cb9224daee3c6ff8cb4fde822d65b13589902c7",
+    "README.md": "159774896b513083c4b5345d4114fae8ac9dcb05c85441bb6ec9482c3f6cadc3",
+    "Resolved-Package.resolved": "6634fc599022b6cee5d3c1a5b6f6395f2aba9ab5cd565cde4b0f0712bdaf4b0e",
+    "artifact-file-manifest.json": "228b21f6d6179f9c61edadc35f09aa65924269dd916de5fb6bd17055c5a0ddb0",
+    "compilation-source-entries.json": "9a70ae3424c9d100c3f1cea8bfc3f64158e5345eb5d038eef12ca1bf5c8aa173",
+    "metadata-extractor.log": "6e4cbd1bdf8e69796604abc6bdb32e6271ab0df689a3a4f766e685aa8957c587",
+    "native-job-selected-lines.json": "2bda1a220f501c5c370f24f2fb10874cf327f8af65fc35ce7a92449aa6a7b521",
+    "resolved-dependency-comparison.json": "336e317e497014b8ef1dfcac5608481f987a3eba1ead04570286d15cafb5020e",
+    "xcresult-inspection.json": "f6f187573507c9b27278df348cf228cb4f1f7c49bf1955f906ffc3d6887235d2"
+  }
+}

@@ -130,6 +130,10 @@ public actor HanlinAtomicScriptStore {
         var enabled: Bool
         var grantedCapabilities: [HanlinCapabilityID]?
         var manifest: HanlinScriptingManifest?
+
+        func isIndexed(by key: String) -> Bool {
+            record.installedPackageID.rawValue == key
+        }
     }
 
     private struct GenerationMetadata: Codable, Sendable {
@@ -497,7 +501,7 @@ public actor HanlinAtomicScriptStore {
         for (key, entry) in value.packages {
             let id = try HanlinInstalledPackageID(validating: key)
             _ = try HanlinPackageID(validating: entry.record.packageID.rawValue)
-            guard entry.record.installedPackageID == id, entry.record.activeGeneration > 0 else {
+            guard entry.isIndexed(by: id.rawValue), entry.record.activeGeneration > 0 else {
                 throw HanlinProductTransferError.invalidCheckpoint
             }
             let generationsRoot = directory.appending(path: "packages/\(key)/generations")
@@ -761,6 +765,9 @@ public actor HanlinAtomicScriptStore {
         guard let loaded else { throw HanlinAtomicScriptStoreError.corruptRegistry }
         guard loaded.schemaVersion == 1 else {
             throw HanlinAtomicScriptStoreError.unsupportedRegistryVersion(loaded.schemaVersion)
+        }
+        guard loaded.packages.allSatisfy({ $0.value.isIndexed(by: $0.key) }) else {
+            throw HanlinAtomicScriptStoreError.corruptRegistry
         }
         return loaded
     }

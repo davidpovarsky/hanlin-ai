@@ -1,0 +1,522 @@
+[
+  {
+    "actionTimeGaps" : [
+      0.050028041666564604,
+      0.0666743750000478
+    ],
+    "control" : "rapid-native-outside",
+    "delivery" : "multi-tap",
+    "diagnosticOnly" : true,
+    "expectedActions" : 3,
+    "laterActionsAtIntermediateGeometry" : [
+      false,
+      false
+    ],
+    "observationSemantics" : "single-native-snapshot-after-gesture;not-a-five-second-delivery-deadline",
+    "observedActions" : 3,
+    "phase" : "native-default",
+    "receiptLabel" : "3",
+    "receiptObservedThree" : true,
+    "samples" : [
+      {
+        "control" : "rapid-native-outside",
+        "uptime" : 1209.2844285833335
+      },
+      {
+        "control" : "rapid-native-outside",
+        "uptime" : 1209.334456625
+      },
+      {
+        "control" : "rapid-native-outside",
+        "uptime" : 1209.401131
+      }
+    ],
+    "scrollConfiguration" : {
+      "canCancelContentTouches" : true,
+      "delaysContentTouches" : true,
+      "isScrollEnabled" : true,
+      "originalDelaysContentTouches" : true,
+      "phase" : "native-default"
+    }
+  },
+  {
+    "actionTimeGaps" : [
+      0.1167704166666681
+    ],
+    "control" : "rapid-native-scroll",
+    "delivery" : "multi-tap",
+    "diagnosticOnly" : true,
+    "expectedActions" : 3,
+    "laterActionsAtIntermediateGeometry" : [
+      false
+    ],
+    "observationSemantics" : "single-native-snapshot-after-gesture;not-a-five-second-delivery-deadline",
+    "observedActions" : 2,
+    "phase" : "native-default",
+    "receiptLabel" : "2",
+    "receiptObservedThree" : false,
+    "samples" : [
+      {
+        "control" : "rapid-native-scroll",
+        "uptime" : 1212.2358305833334
+      },
+      {
+        "control" : "rapid-native-scroll",
+        "uptime" : 1212.352601
+      }
+    ],
+    "scrollConfiguration" : {
+      "canCancelContentTouches" : true,
+      "delaysContentTouches" : true,
+      "isScrollEnabled" : true,
+      "originalDelaysContentTouches" : true,
+      "phase" : "native-default"
+    }
+  },
+  {
+    "actionTimeGaps" : [
+      0.11749279166656379
+    ],
+    "control" : "rapid-native-plain",
+    "delivery" : "multi-tap",
+    "diagnosticOnly" : true,
+    "expectedActions" : 3,
+    "laterActionsAtIntermediateGeometry" : [
+      false
+    ],
+    "observationSemantics" : "single-native-snapshot-after-gesture;not-a-five-second-delivery-deadline",
+    "observedActions" : 2,
+    "phase" : "native-default",
+    "receiptLabel" : "2",
+    "receiptObservedThree" : false,
+    "samples" : [
+      {
+        "control" : "rapid-native-plain",
+        "uptime" : 1215.0012702916667
+      },
+      {
+        "control" : "rapid-native-plain",
+        "uptime" : 1215.1187630833333
+      }
+    ],
+    "scrollConfiguration" : {
+      "canCancelContentTouches" : true,
+      "delaysContentTouches" : true,
+      "isScrollEnabled" : true,
+      "originalDelaysContentTouches" : true,
+      "phase" : "native-default"
+    }
+  },
+  {
+    "actionTimeGaps" : [
+      0.11584362500002499
+    ],
+    "control" : "rapid-production-static",
+    "delivery" : "multi-tap",
+    "diagnosticOnly" : true,
+    "expectedActions" : 3,
+    "laterActionsAtIntermediateGeometry" : [
+      false
+    ],
+    "observationSemantics" : "single-native-snapshot-after-gesture;not-a-five-second-delivery-deadline",
+    "observedActions" : 2,
+    "phase" : "native-default",
+    "receiptLabel" : "2",
+    "receiptObservedThree" : false,
+    "samples" : [
+      {
+        "control" : "rapid-production-static",
+        "isExpanded" : true,
+        "naturalHeight" : 0,
+        "uptime" : 1219.352457375,
+        "visibleHeight" : 0,
+        "wasExpanded" : false
+      },
+      {
+        "control" : "rapid-production-static",
+        "isExpanded" : false,
+        "naturalHeight" : 64.5,
+        "uptime" : 1219.468301,
+        "visibleHeight" : 70.5,
+        "wasExpanded" : true
+      }
+    ],
+    "scrollConfiguration" : {
+      "canCancelContentTouches" : true,
+      "delaysContentTouches" : true,
+      "isScrollEnabled" : true,
+      "originalDelaysContentTouches" : true,
+      "phase" : "native-default"
+    }
+  },
+  {
+    "actionTimeGaps" : [
+      0.11690979166678517
+    ],
+    "control" : "rapid-production-animated",
+    "delivery" : "multi-tap",
+    "diagnosticOnly" : true,
+    "expectedActions" : 3,
+    "laterActionsAtIntermediateGeometry" : [
+      true
+    ],
+    "observationSemantics" : "single-native-snapshot-after-gesture;not-a-five-second-delivery-deadline",
+    "observedActions" : 2,
+    "phase" : "native-default",
+    "receiptLabel" : "2",
+    "receiptObservedThree" : false,
+    "samples" : [
+      {
+        "control" : "rapid-production-animated",
+        "isExpanded" : true,
+        "naturalHeight" : 0,
+        "uptime" : 1223.2678738333334,
+        "visibleHeight" : 0,
+        "wasExpanded" : false
+      },
+      {
+        "control" : "rapid-production-animated",
+        "isExpanded" : false,
+        "naturalHeight" : 64.5,
+        "uptime" : 1223.3847836250002,
+        "visibleHeight" : 3.7614755630493164,
+        "wasExpanded" : true
+      }
+    ],
+    "scrollConfiguration" : {
+      "canCancelContentTouches" : true,
+      "delaysContentTouches" : true,
+      "isScrollEnabled" : true,
+      "originalDelaysContentTouches" : true,
+      "phase" : "native-default"
+    }
+  },
+  {
+    "actionTimeGaps" : [
+      0.7836722916665622,
+      1.1327530000000934
+    ],
+    "control" : "rapid-production-animated",
+    "delivery" : "independent-coordinate-taps",
+    "diagnosticOnly" : true,
+    "expectedActions" : 3,
+    "laterActionsAtIntermediateGeometry" : [
+      false,
+      false
+    ],
+    "observationSemantics" : "single-native-snapshot-after-gesture;not-a-five-second-delivery-deadline",
+    "observedActions" : 3,
+    "phase" : "native-default",
+    "receiptLabel" : "3",
+    "receiptObservedThree" : true,
+    "samples" : [
+      {
+        "control" : "rapid-production-animated",
+        "isExpanded" : true,
+        "naturalHeight" : 64.5,
+        "uptime" : 1225.9513873333335,
+        "visibleHeight" : 0,
+        "wasExpanded" : false
+      },
+      {
+        "control" : "rapid-production-animated",
+        "isExpanded" : false,
+        "naturalHeight" : 64.5,
+        "uptime" : 1226.735059625,
+        "visibleHeight" : 70.5,
+        "wasExpanded" : true
+      },
+      {
+        "control" : "rapid-production-animated",
+        "isExpanded" : true,
+        "naturalHeight" : 64.5,
+        "uptime" : 1227.8678126250002,
+        "visibleHeight" : 0,
+        "wasExpanded" : false
+      }
+    ],
+    "scrollConfiguration" : {
+      "canCancelContentTouches" : true,
+      "delaysContentTouches" : true,
+      "isScrollEnabled" : true,
+      "originalDelaysContentTouches" : true,
+      "phase" : "native-default"
+    }
+  },
+  {
+    "actionTimeGaps" : [
+      0.049872666666715304,
+      0.06684833333338247
+    ],
+    "control" : "rapid-native-outside",
+    "delivery" : "multi-tap",
+    "diagnosticOnly" : true,
+    "expectedActions" : 3,
+    "laterActionsAtIntermediateGeometry" : [
+      false,
+      false
+    ],
+    "observationSemantics" : "single-native-snapshot-after-gesture;not-a-five-second-delivery-deadline",
+    "observedActions" : 3,
+    "phase" : "immediate-touch-down",
+    "receiptLabel" : "3",
+    "receiptObservedThree" : true,
+    "samples" : [
+      {
+        "control" : "rapid-native-outside",
+        "uptime" : 1231.385278875
+      },
+      {
+        "control" : "rapid-native-outside",
+        "uptime" : 1231.4351515416668
+      },
+      {
+        "control" : "rapid-native-outside",
+        "uptime" : 1231.5019998750001
+      }
+    ],
+    "scrollConfiguration" : {
+      "canCancelContentTouches" : true,
+      "delaysContentTouches" : false,
+      "isScrollEnabled" : true,
+      "originalDelaysContentTouches" : true,
+      "phase" : "immediate-touch-down"
+    }
+  },
+  {
+    "actionTimeGaps" : [
+      0.03307029166671782,
+      0.08382841666661989
+    ],
+    "control" : "rapid-native-scroll",
+    "delivery" : "multi-tap",
+    "diagnosticOnly" : true,
+    "expectedActions" : 3,
+    "laterActionsAtIntermediateGeometry" : [
+      false,
+      false
+    ],
+    "observationSemantics" : "single-native-snapshot-after-gesture;not-a-five-second-delivery-deadline",
+    "observedActions" : 3,
+    "phase" : "immediate-touch-down",
+    "receiptLabel" : "3",
+    "receiptObservedThree" : true,
+    "samples" : [
+      {
+        "control" : "rapid-native-scroll",
+        "uptime" : 1233.9513837916668
+      },
+      {
+        "control" : "rapid-native-scroll",
+        "uptime" : 1233.9844540833335
+      },
+      {
+        "control" : "rapid-native-scroll",
+        "uptime" : 1234.0682825000001
+      }
+    ],
+    "scrollConfiguration" : {
+      "canCancelContentTouches" : true,
+      "delaysContentTouches" : false,
+      "isScrollEnabled" : true,
+      "originalDelaysContentTouches" : true,
+      "phase" : "immediate-touch-down"
+    }
+  },
+  {
+    "actionTimeGaps" : [
+      0.0659442083333488,
+      0.050340666666670586
+    ],
+    "control" : "rapid-native-plain",
+    "delivery" : "multi-tap",
+    "diagnosticOnly" : true,
+    "expectedActions" : 3,
+    "laterActionsAtIntermediateGeometry" : [
+      false,
+      false
+    ],
+    "observationSemantics" : "single-native-snapshot-after-gesture;not-a-five-second-delivery-deadline",
+    "observedActions" : 3,
+    "phase" : "immediate-touch-down",
+    "receiptLabel" : "3",
+    "receiptObservedThree" : true,
+    "samples" : [
+      {
+        "control" : "rapid-native-plain",
+        "uptime" : 1236.35217925
+      },
+      {
+        "control" : "rapid-native-plain",
+        "uptime" : 1236.4181234583334
+      },
+      {
+        "control" : "rapid-native-plain",
+        "uptime" : 1236.468464125
+      }
+    ],
+    "scrollConfiguration" : {
+      "canCancelContentTouches" : true,
+      "delaysContentTouches" : false,
+      "isScrollEnabled" : true,
+      "originalDelaysContentTouches" : true,
+      "phase" : "immediate-touch-down"
+    }
+  },
+  {
+    "actionTimeGaps" : [
+      0.050064249999877575,
+      0.06695495833332643
+    ],
+    "control" : "rapid-production-static",
+    "delivery" : "multi-tap",
+    "diagnosticOnly" : true,
+    "expectedActions" : 3,
+    "laterActionsAtIntermediateGeometry" : [
+      false,
+      false
+    ],
+    "observationSemantics" : "single-native-snapshot-after-gesture;not-a-five-second-delivery-deadline",
+    "observedActions" : 3,
+    "phase" : "immediate-touch-down",
+    "receiptLabel" : "3",
+    "receiptObservedThree" : true,
+    "samples" : [
+      {
+        "control" : "rapid-production-static",
+        "isExpanded" : true,
+        "naturalHeight" : 64.5,
+        "uptime" : 1238.7177495416668,
+        "visibleHeight" : 0,
+        "wasExpanded" : false
+      },
+      {
+        "control" : "rapid-production-static",
+        "isExpanded" : false,
+        "naturalHeight" : 64.5,
+        "uptime" : 1238.7678137916666,
+        "visibleHeight" : 70.5,
+        "wasExpanded" : true
+      },
+      {
+        "control" : "rapid-production-static",
+        "isExpanded" : true,
+        "naturalHeight" : 64.5,
+        "uptime" : 1238.83476875,
+        "visibleHeight" : 0,
+        "wasExpanded" : false
+      }
+    ],
+    "scrollConfiguration" : {
+      "canCancelContentTouches" : true,
+      "delaysContentTouches" : false,
+      "isScrollEnabled" : true,
+      "originalDelaysContentTouches" : true,
+      "phase" : "immediate-touch-down"
+    }
+  },
+  {
+    "actionTimeGaps" : [
+      0.04851987500001087,
+      0.06721029166669723
+    ],
+    "control" : "rapid-production-animated",
+    "delivery" : "multi-tap",
+    "diagnosticOnly" : true,
+    "expectedActions" : 3,
+    "laterActionsAtIntermediateGeometry" : [
+      false,
+      true
+    ],
+    "observationSemantics" : "single-native-snapshot-after-gesture;not-a-five-second-delivery-deadline",
+    "observedActions" : 3,
+    "phase" : "immediate-touch-down",
+    "receiptLabel" : "3",
+    "receiptObservedThree" : true,
+    "samples" : [
+      {
+        "control" : "rapid-production-animated",
+        "isExpanded" : true,
+        "naturalHeight" : 64.5,
+        "uptime" : 1241.2357954583333,
+        "visibleHeight" : 0,
+        "wasExpanded" : false
+      },
+      {
+        "control" : "rapid-production-animated",
+        "isExpanded" : false,
+        "naturalHeight" : 64.5,
+        "uptime" : 1241.2843153333333,
+        "visibleHeight" : 0,
+        "wasExpanded" : true
+      },
+      {
+        "control" : "rapid-production-animated",
+        "isExpanded" : true,
+        "naturalHeight" : 64.5,
+        "uptime" : 1241.351525625,
+        "visibleHeight" : 1.9684074031019918,
+        "wasExpanded" : false
+      }
+    ],
+    "scrollConfiguration" : {
+      "canCancelContentTouches" : true,
+      "delaysContentTouches" : false,
+      "isScrollEnabled" : true,
+      "originalDelaysContentTouches" : true,
+      "phase" : "immediate-touch-down"
+    }
+  },
+  {
+    "actionTimeGaps" : [
+      0.8175725833332308,
+      0.7992608333333919
+    ],
+    "control" : "rapid-production-animated",
+    "delivery" : "independent-coordinate-taps",
+    "diagnosticOnly" : true,
+    "expectedActions" : 3,
+    "laterActionsAtIntermediateGeometry" : [
+      false,
+      false
+    ],
+    "observationSemantics" : "single-native-snapshot-after-gesture;not-a-five-second-delivery-deadline",
+    "observedActions" : 3,
+    "phase" : "immediate-touch-down",
+    "receiptLabel" : "3",
+    "receiptObservedThree" : true,
+    "samples" : [
+      {
+        "control" : "rapid-production-animated",
+        "isExpanded" : true,
+        "naturalHeight" : 64.5,
+        "uptime" : 1243.9013843333335,
+        "visibleHeight" : 0,
+        "wasExpanded" : false
+      },
+      {
+        "control" : "rapid-production-animated",
+        "isExpanded" : false,
+        "naturalHeight" : 64.5,
+        "uptime" : 1244.7189569166667,
+        "visibleHeight" : 70.5,
+        "wasExpanded" : true
+      },
+      {
+        "control" : "rapid-production-animated",
+        "isExpanded" : true,
+        "naturalHeight" : 64.5,
+        "uptime" : 1245.51821775,
+        "visibleHeight" : 0,
+        "wasExpanded" : false
+      }
+    ],
+    "scrollConfiguration" : {
+      "canCancelContentTouches" : true,
+      "delaysContentTouches" : false,
+      "isScrollEnabled" : true,
+      "originalDelaysContentTouches" : true,
+      "phase" : "immediate-touch-down"
+    }
+  }
+]

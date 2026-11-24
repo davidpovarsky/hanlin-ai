@@ -11,14 +11,14 @@ import HanlinChatCore
 import SwiftData
 import SwiftUI
 
-struct CanvasData: Codable, Hashable {
-    var title: String = ""       // 画布标题
-    var content: String = ""     // 画布文字
-    var type: String = ""        // 画布类型
-    var saved: Bool = false      // 是否已经保存
-    var id: UUID? = nil          // 画布知识编号
-    var history: [String]? = []
-    var index: Int? = 0
+public struct CanvasData: Codable, Hashable, Sendable {
+    public var title: String = ""       // 画布标题
+    public var content: String = ""     // 画布文字
+    public var type: String = ""        // 画布类型
+    public var saved: Bool = false      // 是否已经保存
+    public var id: UUID? = nil          // 画布知识编号
+    public var history: [String]? = []
+    public var index: Int? = 0
 }
 
 @Model

@@ -1,0 +1,67 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "9B6403BE-C0D2-4791-9FDE-CB99B22CC5FB",
+        "deviceName" : "HanlinPaired-45283243206",
+        "modelName" : "iPhone 18 Pro",
+        "osBuildNumber" : "24B8117",
+        "osVersion" : "27.2",
+        "platform" : "iOS Simulator"
+      },
+      "expectedFailures" : 0,
+      "failedTests" : 2,
+      "passedTests" : 1,
+      "skippedTests" : 0,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "AI_HLY · Built with macOS 27.0.1",
+  "expectedFailures" : 0,
+  "failedTests" : 2,
+  "finishTime" : 1795479196.812,
+  "passedTests" : 1,
+  "result" : "Failed",
+  "runtimeWarnings" : [
+    {
+      "issueType" : "Runtime Warning",
+      "message" : "This method can lead to UI unresponsiveness if called on the main thread while the audio session is active."
+    },
+    {
+      "issueType" : "Runtime Warning",
+      "message" : "This method can lead to UI unresponsiveness if called on the main thread. Consider using the asynchronous activate/deactivate API instead for calls from the main thread."
+    }
+  ],
+  "skippedTests" : 0,
+  "startTime" : 1795478616.768,
+  "statistics" : [
+
+  ],
+  "testFailures" : [
+    {
+      "failureText" : "Failed to synthesize event: Neither element nor any descendant has keyboard focus. Event dispatch snapshot: TextView, {{91.0, 732.0}, {282.0, 38.0}}, identifier: 'hanlin-chat-input', value: Ask any questions.\nElement debug description:\nAttributes: TextView, 0x10a85ebc0, {{91.0, 732.0}, {282.0, 38.0}}, identifier: 'hanlin-chat-input', value: Ask any questions.\nElement subtree:\n →TextView, 0x10a85ebc0, {{91.0, 732.0}, {282.0, 38.0}}, identifier: 'hanlin-chat-input', value: Ask any questions.\n    Other, 0x10a85ea80, {{91.0, 732.0}, {0.0, 0.0}}, identifier: '_UITextSelectionRangeAdjustmentContainerView'\n      Other, 0x10a85e6c0, {{91.0, 732.0}, {0.0, 0.0}}, identifier: 'com.apple.text.grabber.leading'\n        Other, 0x10a85e440, {{83.8, 718.5}, {16.5, 16.5}}\n        Other, 0x10a85e580, {{91.0, 732.0}, {2.0, 0.0}}\n      Other, 0x10a85e300, {{91.0, 732.0}, {0.0, 0.0}}, identifier: 'com.apple.text.grabber.leading'\n        Other, 0x10b750140, {{83.8, 718.5}, {16.5, 16.5}}\n        Other, 0x10b750000, {{91.0, 732.0}, {2.0, 0.0}}\n    Other, 0x10b751400, {{340.0, 732.0}, {30.0, 38.0}}, label: 'Vertical scroll bar, 1 page', value: 0%\n      Other, 0x10b752e40, {{367.0, 731.0}, {3.0, 36.0}}\n    Other, 0x10b752a80, {{91.0, 748.0}, {282.0, 19.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%\n      Other, 0x10b751900, {{94.0, 764.0}, {276.0, 3.0}}\nPath to element:\n →Application, 0x10a83fc00, pid: 74334, label: 'Hanlin AI'\n  ↳Window (Main), 0x10a83f700, {{0.0, 0.0}, {402.0, 874.0}}\n   ↳Other, 0x10aad8280, {{0.0, 0.0}, {402.0, 874.0}}\n    ↳Other, 0x10aad83c0, {{0.0, 0.0}, {402.0, 874.0}}\n     ↳Other, 0x10aad8000, {{0.0, 0.0}, {402.0, 874.0}}\n      ↳Other, 0x1073a3200, {{0.0, 0.0}, {402.0, 874.0}}\n       ↳Other, 0x1073a3700, {{0.0, 0.0}, {402.0, 874.0}}\n        ↳Other, 0x1073a3980, {{0.0, 0.0}, {402.0, 874.0}}\n         ↳Other, 0x1073a2f80, {{0.0, 0.0}, {402.0, 874.0}}\n          ↳Other, 0x1073a3340, {{0.0, 0.0}, {402.0, 874.0}}\n           ↳Other, 0x1073a3480, {{0.0, 0.0}, {402.0, 874.0}}\n            ↳Other, 0x1073a35c0, {{0.0, 0.0}, {402.0, 897.0}}, identifier: 'hanlin-compact-chat-workspace'\n             ↳Other, 0x10a85ed00, {{88.0, 732.0}, {285.0, 86.0}}, identifier: 'hanlin-composer-surface'\n              ↳TextView, 0x10a85ebc0, {{91.0, 732.0}, {282.0, 38.0}}, identifier: 'hanlin-chat-input', value: Ask any questions.\nQuery chain:\n →Find: Target Application 'com.itorah.chavrusachat'\n  Output: {\n    Application, 0x10a83f0c0, pid: 74334, label: 'Hanlin AI'\n  }\n  ↪︎Find: Descendants matching type TextView\n    Output: {\n      TextView, 0x10aae7840, {{91.0, 732.0}, {282.0, 38.0}}, identifier: 'hanlin-chat-input', value: Ask any questions.\n    }\n    ↪︎Find: Elements matching predicate '\"hanlin-chat-input\" IN identifiers'\n      Output: {\n        TextView, 0x10a81c280, {{91.0, 732.0}, {282.0, 38.0}}, identifier: 'hanlin-chat-input', value: Ask any questions.\n      }\n      ↪︎Find: First Match\n        Output: {\n          TextView, 0x10a832580, {{91.0, 732.0}, {282.0, 38.0}}, identifier: 'hanlin-chat-input', value: Ask any questions.\n        }\n",
+      "targetName" : "AI_HLYUITests",
+      "testIdentifier" : 1,
+      "testIdentifierString" : "HanlinPairedProductUITests/testCompanionCancellationReturnsWithoutChangingPrivateState()",
+      "testIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinPairedProductUITests/testCompanionCancellationReturnsWithoutChangingPrivateState",
+      "testName" : "testCompanionCancellationReturnsWithoutChangingPrivateState()"
+    },
+    {
+      "failureText" : "XCTAssertEqual failed: (\"XCTWaiterResult(rawValue: 2)\") is not equal to (\"XCTWaiterResult(rawValue: 1)\") - Unreachable product control: hanlin-tool-consent-review-toggle",
+      "targetName" : "AI_HLYUITests",
+      "testIdentifier" : 2,
+      "testIdentifierString" : "HanlinPairedProductUITests/testCompanionReturnsActualPrivateValueToOriginalChat()",
+      "testIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinPairedProductUITests/testCompanionReturnsActualPrivateValueToOriginalChat",
+      "testName" : "testCompanionReturnsActualPrivateValueToOriginalChat()"
+    }
+  ],
+  "title" : "Test - AI_HLY",
+  "topInsights" : [
+
+  ],
+  "totalTestCount" : 3
+}

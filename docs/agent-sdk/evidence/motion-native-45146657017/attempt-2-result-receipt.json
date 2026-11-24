@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-11-23T10:01:05.124484+00:00",
+  "run_id": 45146657017,
+  "run_attempt": 2,
+  "job_id": 137605591076,
+  "source": "6772dce6304fc6761a2200314f7d2020dc782e47",
+  "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45146657017/attempts/2",
+  "workflow_conclusion": "failure",
+  "job_conclusion": "cancelled",
+  "native_status": "BLOCKED_INFRASTRUCTURE",
+  "reason": "HOSTED_RUNNER_NOT_ACQUIRED",
+  "original_check_annotation": "The job was not acquired by Runner of type hosted even after multiple attempts",
+  "runner_id": 0,
+  "job_step_count": 0,
+  "build": "NOT_RUN",
+  "XCTest_D": "NOT_RUN",
+  "native_comparisons": "NOT_RUN",
+  "artifact_for_attempt_2": "NONE_CREATED",
+  "existing_run_artifact": {
+    "id": 14804394578,
+    "created_at": "2026-11-23T09:36:33Z",
+    "belongs_to_attempt": 1,
+    "not_downloaded_again": true
+  },
+  "watcher": {
+    "job_id": "job_f7f64966d305",
+    "exit_code": 1,
+    "ended_at": "2026-11-23T09:54:54.663973+00:00",
+    "no_replacement_watcher_started": true
+  },
+  "further_dispatch": "NONE",
+  "limits": [
+    "This is the exact job acquisition failure, not proof of a global outage.",
+    "No test result or Motion product failure can be inferred from zero executed steps.",
+    "B remains FAILED and its later obligations NOT_RUN; C automated PASS remains separate from landscape visual acceptance."
+  ]
+}

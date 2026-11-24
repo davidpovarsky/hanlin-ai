@@ -1,0 +1,113 @@
+{
+  "created_utc": "2026-11-23T12:58:57.621036+00:00",
+  "run_id": 45168227740,
+  "run_attempt": 1,
+  "source_sha": "96c5b1b60c15a9a0cf1c4356f9822c64d9864c86",
+  "application_source_sha": "7841f4af33142f72936ca97428733b3059f806b0",
+  "hanlin_sdk_sha": "e00498e33f106cc43be0476ffa2e09329c8ca300",
+  "workflow_conclusion": "failure",
+  "artifact_id": 14819742506,
+  "artifact_zip_sha256": "4aaf199c96721ccca88e541a378432ea174d5a1f2a9cd2002a4df7171719e58f",
+  "admission_manifest_files_verified": 22,
+  "source_before_after_byte_equal": true,
+  "actual_git_application_trees": {
+    "Source": "4b2abd687328725fb7a7f0ca635b2cab9e0f0c0b",
+    "Vendor": "4065c0e62af325e83a65fe0c70270985229807ae",
+    "Maktabah.xcodeproj": "8c0fa1ccfbcfae01fae3c267512864e00efcf078"
+  },
+  "actual_ui_counts": {
+    "pass": 0,
+    "fail": 1,
+    "skip": 0,
+    "executed": 1
+  },
+  "actual_case": "HanlinLiveProviderAcceptanceTests/testOriginalLiveProviderUsesCanonicalCoreAndRevokesReadConsent",
+  "native_case_seconds": 307.7033200263977,
+  "failed_source_line": 727,
+  "failure": "XCTAssertTrue failed: original Host source receipt button did not appear within unchanged180s wait.",
+  "proven_immediate_boundary": "No reference Host result or sourceLinkCreated occurred. Exactly one successful non-reference Host result was retained and consumed; one tool result was observed; stream finished stop, original SDK completion succeeded, and no assistant text/source existed at sendSettled.",
+  "observed_counts": {
+    "stream_run_started": 1,
+    "stream_step_started": 1,
+    "tool_call_events": 1,
+    "host_result_events": 1,
+    "successful_host_results": 1,
+    "reference_host_results": 0,
+    "tool_result_events": 1,
+    "source_link_created": 0,
+    "stream_text_observed": 0,
+    "sdk_run_completion_events": 1,
+    "verified_completed_provider_conversations": 0
+  },
+  "actual_nonreference_tool_alias": "NOT_RETAINED_IN_FINITE_DIAGNOSTIC; do not infer search solely from referenceResult=false.",
+  "provider_http_request_count": "NOT_MEASURED; one SDK step/completion is not a counted HTTP request receipt.",
+  "consent": "Actual original switch wait/row assertion progressed; consent captured and consumed, read reopen/configure/send observed.",
+  "remaining_acceptance": "Reference tool/source receipt, final marker/transcript, saved two-tool conversation, source navigation and read-consent revocation assertions NOT_REACHED/NOT_QUALIFIED.",
+  "source_stage_cause": {
+    "host_predicate": "MaktabahNativeRoutingComposition.swift638–659 permits source only from catalog.resolve-reference confirmedNoEffect completed exact current Core result; observed non-reference event correctly returns nil.",
+    "engine_completion": "Pinned HanlinAISDKAgentEngine.swift336–399 reports finished on final SDK event and allows hasSuccessfulToolAction without text. Dynamic-tool continuation there requires normalized toolCalls and changed tool names; this run journal exposes stop and no second step.",
+    "limit": "Finite diagnostics do not expose raw provider payload, exact nonreference alias, or normalized-vs-raw finish split. Provider behavior versus pinned swift-ai-sdk continuation/finish normalization is not proven from this packet."
+  },
+  "recommended_followup": "Read the exact e7bf34111e603ca977becd007dd4e5bb109af857 streamText/OpenAI-compatible finish normalization and continuation source. If a concrete tool-result+stop termination defect is established, propose a narrow original SDK repair and focused affected control before another live attempt. Preserve prompt/model/consent/180s/600s and original source receipt predicate.",
+  "cleanup": {
+    "owned_simulator": "PASS",
+    "private_input_consumed": true,
+    "private_input_removed": true,
+    "artifact_allowlist_scan": "PASS",
+    "root_secret_cleanup": "DELETE204/GET40412:49:33, independent Oracle GET40412:52:05; root-owned, no new request by this agent",
+    "independent_absence_receipt_sha256": "c8b255050c9ff4a410d2ce99b64ea201e26c7459faa02fb824c42b8f06fbcd1a"
+  },
+  "privacy": "Only authenticated scanned allowlist artifact downloaded. Raw xcresult/attachments/video/provider input excluded by publisher. No credential value requested or logged; no raw private settings hierarchy printed.",
+  "source_files": [
+    {
+      "revision": "7841f4af33142f72936ca97428733b3059f806b0",
+      "path": "Maktabah-iOSUITests/HanlinConsumerAcceptanceTests.swift",
+      "git_blob": "0ea8241d50712b3e01f2790ae7927047df0e49a4",
+      "bytes": 51279,
+      "sha256": "c8810b3f3c9ca42e71286f75dc255825b1a107f6baaf35ca45c93e7ff126b593",
+      "copy": "review/source/7841f4af/Maktabah-iOSUITests/HanlinConsumerAcceptanceTests.swift"
+    },
+    {
+      "revision": "7841f4af33142f72936ca97428733b3059f806b0",
+      "path": "Source/ChavrusaText/HanlinHostAdapter/OtzariaHanlinChatSession.swift",
+      "git_blob": "28167e2212c50df668df96ba8ae96fbcda69109d",
+      "bytes": 38814,
+      "sha256": "249135ca8ff3936f10f7ab599d447eaab77367c55b3cddc9e6a1d31c6962d012",
+      "copy": "review/source/7841f4af/Source/ChavrusaText/HanlinHostAdapter/OtzariaHanlinChatSession.swift"
+    },
+    {
+      "revision": "7841f4af33142f72936ca97428733b3059f806b0",
+      "path": "Source/ChavrusaText/HanlinHostAdapter/OtzariaHanlinChatOwner.swift",
+      "git_blob": "880911a12cdbd6bec23db7f8c75c2857d60dbdbb",
+      "bytes": 20221,
+      "sha256": "2fbf538c29d4c243e455cd7e126f9676d9a3ae84879764706284f8e2e7742706",
+      "copy": "review/source/7841f4af/Source/ChavrusaText/HanlinHostAdapter/OtzariaHanlinChatOwner.swift"
+    },
+    {
+      "revision": "7841f4af33142f72936ca97428733b3059f806b0",
+      "path": "Source/ChavrusaText/UIRoutingHost/Integration/MaktabahNativeRoutingComposition.swift",
+      "git_blob": "df28f34439dd0d22f1c8d5ad13326adb6ed686f7",
+      "bytes": 152357,
+      "sha256": "89a4a7dd90d458dfc91e69c9d840530372b42702182a77864487a5eb30fde93d",
+      "copy": "review/source/7841f4af/Source/ChavrusaText/UIRoutingHost/Integration/MaktabahNativeRoutingComposition.swift"
+    },
+    {
+      "revision": "e00498e33f106cc43be0476ffa2e09329c8ca300",
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift",
+      "git_blob": "d8b353bc455addd30e850a7324127314ae935bf0",
+      "bytes": 35975,
+      "sha256": "aaf8ae687d478710c2b4388f19350164a606facd02b70375743c808629cbe524",
+      "copy": "review/source/e00498e3/Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift"
+    },
+    {
+      "revision": "e00498e33f106cc43be0476ffa2e09329c8ca300",
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinAgentSession.swift",
+      "git_blob": "2f93f21a4b49c9205ba1da60779626cebebf7512",
+      "bytes": 35047,
+      "sha256": "179e222f04e185d941c0f42416f6df6d391cf308bd79b63af341093c460d1e1b",
+      "copy": "review/source/e00498e3/Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinAgentSession.swift"
+    }
+  ],
+  "new_tests_builds_generators_dispatches": 0,
+  "lookup_note": "API commit96c5 was not in local Git; no fetch was performed. Source review used exact artifact-admitted application7841 and its native test blob0ea8241, plus actual built Hanlin SDK e004 blobs. Two failed local path/object lookups were nonmutating."
+}

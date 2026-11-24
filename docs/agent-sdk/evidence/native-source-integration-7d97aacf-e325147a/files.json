@@ -1,0 +1,74 @@
+[
+  {
+    "path": "README.md",
+    "bytes": 3109,
+    "sha256": "85e744aae16e31687e3424d1a9821a4689b5b119f2fb3e91c5cba69997d15815"
+  },
+  {
+    "path": "control-compatibility.patch.gz",
+    "bytes": 975,
+    "sha256": "b17c5de736c5e0fe0ec41bcf61d7f73d632eefad8d2f2f83f1656253daf97592",
+    "uncompressedBytes": 2847,
+    "uncompressedSHA256": "6d9b1f0b15494167f810df15a96fac918990020961c88720eede924926fd2e00"
+  },
+  {
+    "path": "controls-after/receipt.json",
+    "bytes": 1256,
+    "sha256": "62394b97cb0dfe3fc4e1ab77d058d7a3b31e0a20e2fa2b7215564ee201939bc0"
+  },
+  {
+    "path": "controls-after/stderr.log",
+    "bytes": 578,
+    "sha256": "1e8e6230f011ee6e456bca109344d197384b41728305df291fa63c084d072913"
+  },
+  {
+    "path": "controls-after/stdout.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "controls-before/receipt.json",
+    "bytes": 1257,
+    "sha256": "e1e91134f9d67df61575a17c2784f27c7c26ad7ef44ac62d1176f4837a565d8b"
+  },
+  {
+    "path": "controls-before/stderr.log",
+    "bytes": 20110,
+    "sha256": "92354af92bd0e51d7b901fb3d1a79fb215b5464c7ff31d4b30f351035c59a168"
+  },
+  {
+    "path": "controls-before/stdout.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "generic-router-proof.json",
+    "bytes": 542,
+    "sha256": "b16bde7a4db6712bc5bfe2f259ff00df545105fde312e36dbe283a1b6950b96c"
+  },
+  {
+    "path": "package-source-sha256.json",
+    "bytes": 66667,
+    "sha256": "b9dcaf9f525ba1e572aa18105818501d9fe180ef913f31a12d8fb33db193573e"
+  },
+  {
+    "path": "path-manifest.json",
+    "bytes": 123624,
+    "sha256": "9a1a01d053ccb2e191f6cec4aec9c84e0e26ec1f5ec1d4dffbd30517785f7bda"
+  },
+  {
+    "path": "receipt.json",
+    "bytes": 9146,
+    "sha256": "a583195ebd0155a060d7f6f080e7b64e691e6d3fa3920ca4c09a5d7aa9d638bf"
+  },
+  {
+    "path": "router-syntax.json",
+    "bytes": 221,
+    "sha256": "ee48a5dce356d1668f12fe0d4538324c3cd26ad0e0600f6539a5435def96923c"
+  },
+  {
+    "path": "source-integration-original.json",
+    "bytes": 4279,
+    "sha256": "6f95a767c5ad364d587c3a3ea04b24259c66ae300aa0ae555e1e3138fb2c5a33"
+  }
+]

@@ -1,0 +1,25 @@
+{
+  "utc": "2026-11-23T23:49:52.446840+00:00",
+  "command": [
+    "python3",
+    "Scripts/CI/plan_affected_validation.py",
+    "--repository",
+    "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123",
+    "--event-name",
+    "workflow_dispatch",
+    "--event-path",
+    "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-main-calendar-readiness-20261123/event.json",
+    "--base-sha",
+    "603576fa0aec5af1eea403d402f9ff676f3f09c8",
+    "--head-sha",
+    "a051e6a2076db8f0783f8c1a62fd6470e21b3d71",
+    "--target-group",
+    "exact_test_selector",
+    "--exact-test-selector",
+    "AI_HLYTests/CalendarToolTests,AI_HLYTests/HanlinAppAgentSessionOwnerTests/actualEventKitToolRecoversTheOriginalChatAndReadsTheFullDateWindow(),AI_HLYTests/HanlinAppAgentSessionOwnerTests/originalCredentialHandlesFailClosedAndPreserveCurrentRequestAuthority(),AI_HLYTests/HanlinMCPEmbeddingTests,AI_HLYTests/ShareInboxHostIntegrationTests,AI_HLYTests/RuntimeAutonomyV3Tests/actualMCPTransportPreservesLargeStructuredResultsThroughTheOriginalRendererAndStore(),AI_HLYTests/HanlinApplicationSystemIntegrationTests/widgetIntentMetadataLoadsTheOriginalHostTranslations(language:),AI_HLYUITests/HanlinNativeA2UIChatUITests,AI_HLYUITests/AgentRuntimeConversationUITests/testOriginalChatActivitySurvivesKeyboardRotationAndConversationReattachment,AI_HLYUITests/AgentRuntimeConversationUITests/testUI06ComposerMultilineAttachmentsModelSelectorNoOverlap,AI_HLYUITests/AgentRuntimeConversationUITests/testUI03SearchMessageAndDeduplicatedCitations,AI_HLYUITests/AgentRuntimeConversationUITests/testUI03HebrewRTLSearchMessageAndDeduplicatedCitations",
+    "--json-output",
+    "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-main-calendar-readiness-20261123/plan.json"
+  ],
+  "bound_seconds": 180,
+  "source": "a051e6a2076db8f0783f8c1a62fd6470e21b3d71"
+}

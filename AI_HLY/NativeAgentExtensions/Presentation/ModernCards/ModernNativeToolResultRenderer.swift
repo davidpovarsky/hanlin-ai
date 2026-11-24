@@ -1,3 +1,4 @@
+import HanlinLocalization
 import SwiftUI
 
 struct ModernNativeToolResultRenderer: View {
@@ -38,7 +39,7 @@ struct ModernNativeToolResultRenderer: View {
                     )
                     .padding()
                 }
-                .navigationTitle(block.title ?? String(localized: "Result card"))
+                .navigationTitle(block.title ?? String(localized: "Result card", bundle: HanlinLocalization.bundle))
                 .navigationBarTitleDisplayMode(.inline)
                 .presentationDragIndicator(.visible)
             }

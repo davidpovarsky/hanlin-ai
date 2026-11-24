@@ -1,3 +1,4 @@
+import HanlinLocalization
 import SwiftUI
 import UIKit
 
@@ -14,51 +15,51 @@ struct AgentDiagnosticsView: View {
 
     var body: some View {
         List {
-            Section(String(localized: "Detailed Agent Logs")) {
-                Picker(String(localized: "Recording level"), selection: $levelRaw) {
-                    Text(String(localized: "Off")).tag(AgentDiagnosticsLevel.off.rawValue)
-                    Text(String(localized: "Metadata only")).tag(AgentDiagnosticsLevel.metadataOnly.rawValue)
-                    Text(String(localized: "Full detailed logs")).tag(AgentDiagnosticsLevel.fullLocalDebug.rawValue)
+            Section(String(localized: "Detailed Agent Logs", bundle: HanlinLocalization.bundle)) {
+                Picker(String(localized: "Recording level", bundle: HanlinLocalization.bundle), selection: $levelRaw) {
+                    Text(String(localized: "Off", bundle: HanlinLocalization.bundle)).tag(AgentDiagnosticsLevel.off.rawValue)
+                    Text(String(localized: "Metadata only", bundle: HanlinLocalization.bundle)).tag(AgentDiagnosticsLevel.metadataOnly.rawValue)
+                    Text(String(localized: "Full detailed logs", bundle: HanlinLocalization.bundle)).tag(AgentDiagnosticsLevel.fullLocalDebug.rawValue)
                 }
-                Text(String(localized: "Complete chat diagnostics are saved automatically on this device, including after upgrading. Readable logs include conversation text, prompts and tool content with credentials redacted. Exact source bytes are encrypted with a device-only key. Nothing is uploaded automatically. You can reduce or turn off recording here."))
+                Text(String(localized: "Complete chat diagnostics are saved automatically on this device, including after upgrading. Readable logs include conversation text, prompts and tool content with credentials redacted. Exact source bytes are encrypted with a device-only key. Nothing is uploaded automatically. You can reduce or turn off recording here.", bundle: HanlinLocalization.bundle))
                     .font(HanlinTypography.caption)
                     .foregroundStyle(.secondary)
 
-                Picker(String(localized: "Keep sessions"), selection: Binding(get: { retention }, set: { value in
+                Picker(String(localized: "Keep sessions", bundle: HanlinLocalization.bundle), selection: Binding(get: { retention }, set: { value in
                     if value > 0 { proposedRetention = value } else { retention = 0 }
                 })) {
-                    Text("10").tag(10)
-                    Text("25").tag(25)
-                    Text("50").tag(50)
-                    Text("100").tag(100)
-                    Text(String(localized: "No automatic deletion")).tag(0)
+                    Text("10", bundle: HanlinLocalization.bundle).tag(10)
+                    Text("25", bundle: HanlinLocalization.bundle).tag(25)
+                    Text("50", bundle: HanlinLocalization.bundle).tag(50)
+                    Text("100", bundle: HanlinLocalization.bundle).tag(100)
+                    Text(String(localized: "No automatic deletion", bundle: HanlinLocalization.bundle)).tag(0)
                 }
-                Text(String(localized: "Sessions are kept until you delete them. Choosing a session limit automatically deletes older sessions and all their companion files when a new session starts."))
+                Text(String(localized: "Sessions are kept until you delete them. Choosing a session limit automatically deletes older sessions and all their companion files when a new session starts.", bundle: HanlinLocalization.bundle))
                     .font(HanlinTypography.caption).foregroundStyle(.secondary)
             }
 
-            Section(String(localized: "Log folder")) {
-                LabeledContent(String(localized: "Storage used"), value: ByteCountFormatter.string(fromByteCount: storageBytes, countStyle: .file))
+            Section(String(localized: "Log folder", bundle: HanlinLocalization.bundle)) {
+                LabeledContent(String(localized: "Storage used", bundle: HanlinLocalization.bundle), value: ByteCountFormatter.string(fromByteCount: storageBytes, countStyle: .file))
                 if storageBytes > 512 * 1024 * 1024 {
-                    Label(String(localized: "Diagnostic files use substantial storage. Review and delete sessions you no longer need."), systemImage: "externaldrive.badge.exclamationmark")
+                    Label(String(localized: "Diagnostic files use substantial storage. Review and delete sessions you no longer need.", bundle: HanlinLocalization.bundle), systemImage: "externaldrive.badge.exclamationmark")
                         .foregroundStyle(.orange)
                 }
                 if let directoryURL {
                     Text(directoryURL.path)
                         .font(HanlinTypography.caption.monospaced())
                         .textSelection(.enabled)
-                    Button(String(localized: "Open in Files")) {
+                    Button(String(localized: "Open in Files", bundle: HanlinLocalization.bundle)) {
                         UIApplication.shared.open(directoryURL)
                     }
-                    Button(String(localized: "Copy log folder path")) {
+                    Button(String(localized: "Copy log folder path", bundle: HanlinLocalization.bundle)) {
                         UIPasteboard.general.string = directoryURL.path
                     }
                 }
             }
 
-            Section(String(localized: "Sessions")) {
+            Section(String(localized: "Sessions", bundle: HanlinLocalization.bundle)) {
                 if sessions.isEmpty {
-                    Text(String(localized: "No detailed agent logs"))
+                    Text(String(localized: "No detailed agent logs", bundle: HanlinLocalization.bundle))
                         .foregroundStyle(.secondary)
                 }
                 ForEach(sessions) { file in
@@ -67,7 +68,7 @@ struct AgentDiagnosticsView: View {
                     } label: {
                         VStack(alignment: .leading, spacing: 3) {
                             Text(file.session.modelID)
-                            Text("\(file.session.startedAt.formatted()) · \(file.session.rounds.count) rounds · \(file.session.status)")
+                            Text("\(file.session.startedAt.formatted()) · \(file.session.rounds.count) rounds · \(file.session.status)", bundle: HanlinLocalization.bundle)
                                 .font(HanlinTypography.caption)
                                 .foregroundStyle(.secondary)
                         }
@@ -75,31 +76,31 @@ struct AgentDiagnosticsView: View {
                     .accessibilityIdentifier("hanlin-diagnostics-session-\(file.session.runID.uuidString)")
                     .swipeActions {
                         Button(role: .destructive) { delete(file) } label: {
-                            Label(String(localized: "Delete"), systemImage: "trash")
+                            Label(String(localized: "Delete", bundle: HanlinLocalization.bundle), systemImage: "trash")
                         }
                     }
                 }
-                Button(String(localized: "Delete all detailed agent logs"), role: .destructive) {
+                Button(String(localized: "Delete all detailed agent logs", bundle: HanlinLocalization.bundle), role: .destructive) {
                     confirmsDeleteAll = true
                 }
             }
         }
-        .navigationTitle(String(localized: "Agent Diagnostics"))
+        .navigationTitle(String(localized: "Agent Diagnostics", bundle: HanlinLocalization.bundle))
         .task { _ = AgentDiagnosticsConfiguration.level; _ = AgentDiagnosticsConfiguration.retentionLimit; reload() }
-        .confirmationDialog(String(localized: "Automatically delete older diagnostic sessions?"), isPresented: Binding(get: { proposedRetention != nil }, set: { if !$0 { proposedRetention = nil } }), titleVisibility: .visible) {
-            Button(String(localized: "Enable automatic deletion"), role: .destructive) {
+        .confirmationDialog(String(localized: "Automatically delete older diagnostic sessions?", bundle: HanlinLocalization.bundle), isPresented: Binding(get: { proposedRetention != nil }, set: { if !$0 { proposedRetention = nil } }), titleVisibility: .visible) {
+            Button(String(localized: "Enable automatic deletion", bundle: HanlinLocalization.bundle), role: .destructive) {
                 if let value = proposedRetention { retention = value }
                 proposedRetention = nil
             }
         } message: {
-            Text(String(localized: "This deletes older conversations and their encrypted source files when the selected session limit is exceeded. Export anything you want to keep first."))
+            Text(String(localized: "This deletes older conversations and their encrypted source files when the selected session limit is exceeded. Export anything you want to keep first.", bundle: HanlinLocalization.bundle))
         }
         .confirmationDialog(
-            String(localized: "Delete all detailed agent logs?"),
+            String(localized: "Delete all detailed agent logs?", bundle: HanlinLocalization.bundle),
             isPresented: $confirmsDeleteAll,
             titleVisibility: .visible
         ) {
-            Button(String(localized: "Delete all"), role: .destructive) { deleteAll() }
+            Button(String(localized: "Delete all", bundle: HanlinLocalization.bundle), role: .destructive) { deleteAll() }
         }
     }
 
@@ -157,24 +158,24 @@ private struct AgentDiagnosticsSessionView: View {
 
     var body: some View {
         List {
-            Section(String(localized: "Overview")) {
-                LabeledContent(String(localized: "Provider"), value: file.session.providerID)
-                LabeledContent(String(localized: "Model"), value: file.session.modelID)
-                LabeledContent(String(localized: "Status"), value: file.session.status)
-                LabeledContent(String(localized: "Rounds"), value: "\(file.session.rounds.count)")
-                LabeledContent(String(localized: "Tools"), value: "\(file.session.efficiency.toolCallCount)")
-                LabeledContent(String(localized: "Tokens"), value: file.session.totals.totalTokens.map(String.init) ?? String(localized: "Unavailable"))
+            Section(String(localized: "Overview", bundle: HanlinLocalization.bundle)) {
+                LabeledContent(String(localized: "Provider", bundle: HanlinLocalization.bundle), value: file.session.providerID)
+                LabeledContent(String(localized: "Model", bundle: HanlinLocalization.bundle), value: file.session.modelID)
+                LabeledContent(String(localized: "Status", bundle: HanlinLocalization.bundle), value: file.session.status)
+                LabeledContent(String(localized: "Rounds", bundle: HanlinLocalization.bundle), value: "\(file.session.rounds.count)")
+                LabeledContent(String(localized: "Tools", bundle: HanlinLocalization.bundle), value: "\(file.session.efficiency.toolCallCount)")
+                LabeledContent(String(localized: "Tokens", bundle: HanlinLocalization.bundle), value: file.session.totals.totalTokens.map(String.init) ?? String(localized: "Unavailable", bundle: HanlinLocalization.bundle))
             }
-            Section(String(localized: "Model rounds")) {
+            Section(String(localized: "Model rounds", bundle: HanlinLocalization.bundle)) {
                 ForEach(file.session.rounds.sorted(by: { $0.index < $1.index })) { round in
                     DisclosureGroup("Round \(round.index) — \(round.trigger)") {
-                        Text("Input: \(round.usage.inputTokens.map(String.init) ?? "—") · Output: \(round.usage.outputTokens.map(String.init) ?? "—") · \(round.usage.source.rawValue)")
+                        Text("Input: \(round.usage.inputTokens.map(String.init) ?? "—") · Output: \(round.usage.outputTokens.map(String.init) ?? "—") · \(round.usage.source.rawValue)", bundle: HanlinLocalization.bundle)
                             .font(HanlinTypography.caption)
                         if let request = round.request.sanitizedJSON {
-                            diagnosticsBlock(String(localized: "Request"), request)
+                            diagnosticsBlock(String(localized: "Request", bundle: HanlinLocalization.bundle), request)
                         }
                         if let response = round.response.visibleContent {
-                            diagnosticsBlock(String(localized: "Response"), response)
+                            diagnosticsBlock(String(localized: "Response", bundle: HanlinLocalization.bundle), response)
                         }
                         ForEach(round.toolCalls) { tool in
                             diagnosticsBlock(tool.toolName, tool.resultForModel ?? tool.status)
@@ -182,14 +183,14 @@ private struct AgentDiagnosticsSessionView: View {
                     }
                 }
             }
-            Section(String(localized: "Files")) {
-                Picker(String(localized: "Offline replay API format"), selection: $replayAPIType) {
+            Section(String(localized: "Files", bundle: HanlinLocalization.bundle)) {
+                Picker(String(localized: "Offline replay API format", bundle: HanlinLocalization.bundle), selection: $replayAPIType) {
                     ForEach(["OpenAI", "Anthropic", "Gemini"], id: \.self) { Text($0).tag($0) }
                 }
-                Text(String(localized: "Choose the format actually used by the recorded provider. This response-only replay does not recreate the original request or timing."))
+                Text(String(localized: "Choose the format actually used by the recorded provider. This response-only replay does not recreate the original request or timing.", bundle: HanlinLocalization.bundle))
                     .font(HanlinTypography.caption).foregroundStyle(.secondary)
                 Button { showsRawConfirmation = true } label: {
-                    Label(String(localized: "Review encrypted capture"), systemImage: "lock.doc")
+                    Label(String(localized: "Review encrypted capture", bundle: HanlinLocalization.bundle), systemImage: "lock.doc")
                 }
                 .accessibilityIdentifier("hanlin-diagnostics-review-encrypted")
                 .disabled(isExporting)
@@ -205,22 +206,22 @@ private struct AgentDiagnosticsSessionView: View {
                                 preparedExport = result
                             }
                         } catch is CancellationError { } catch {
-                            exportError = String(localized: "The local archive could not be created. No files were shared. Check available storage and try again after the session finishes.")
+                            exportError = String(localized: "The local archive could not be created. No files were shared. Check available storage and try again after the session finishes.", bundle: HanlinLocalization.bundle)
                         }
                     }
                 } label: {
-                    Label(String(localized: "Prepare sanitized ZIP"), systemImage: "archivebox")
+                    Label(String(localized: "Prepare sanitized ZIP", bundle: HanlinLocalization.bundle), systemImage: "archivebox")
                 }
                 .disabled(isExporting)
                 if isExporting { ProgressView() }
                 if let exportError {
                     Text(exportError).foregroundStyle(.red).accessibilityIdentifier("hanlin-diagnostics-export-error")
                 }
-                ShareLink(item: file.jsonURL) { Label(String(localized: "Open JSON"), systemImage: "curlybraces") }
-                ShareLink(item: file.textURL) { Label(String(localized: "Open readable log"), systemImage: "doc.text") }
+                ShareLink(item: file.jsonURL) { Label(String(localized: "Open JSON", bundle: HanlinLocalization.bundle), systemImage: "curlybraces") }
+                ShareLink(item: file.textURL) { Label(String(localized: "Open readable log", bundle: HanlinLocalization.bundle), systemImage: "doc.text") }
             }
             if !file.session.efficiency.warnings.isEmpty {
-                Section(String(localized: "Warnings")) {
+                Section(String(localized: "Warnings", bundle: HanlinLocalization.bundle)) {
                     ForEach(file.session.efficiency.warnings, id: \.self) { warning in
                         Text(warning)
                     }
@@ -229,8 +230,8 @@ private struct AgentDiagnosticsSessionView: View {
         }
         .navigationTitle(file.session.modelID)
         .onDisappear { exportTask?.cancel() }
-        .confirmationDialog(String(localized: "Open encrypted capture locally?"), isPresented: $showsRawConfirmation) {
-            Button(String(localized: "Open local review")) {
+        .confirmationDialog(String(localized: "Open encrypted capture locally?", bundle: HanlinLocalization.bundle), isPresented: $showsRawConfirmation) {
+            Button(String(localized: "Open local review", bundle: HanlinLocalization.bundle)) {
                 let input = file.jsonURL, runID = file.session.runID, modelID = file.session.modelID, apiType = replayAPIType
                 isExporting = true
                 exportError = nil
@@ -241,13 +242,13 @@ private struct AgentDiagnosticsSessionView: View {
                             sessionJSON: input, runID: runID, modelID: modelID, apiType: apiType)
                         if !Task.isCancelled { rawReview = review }
                     } catch is CancellationError { } catch {
-                        exportError = String(localized: "The capture could not be authenticated or exceeds the local review budget. The original files remain unchanged.")
+                        exportError = String(localized: "The capture could not be authenticated or exceeds the local review budget. The original files remain unchanged.", bundle: HanlinLocalization.bundle)
                     }
                 }
             }
             .accessibilityIdentifier("hanlin-diagnostics-confirm-local-review")
         } message: {
-            Text(String(localized: "Only this run will be decrypted in memory with this device's key. Requests and conversation text may contain private information. Nothing is uploaded or executed. Credentials are masked before review; sharing the reviewed report is optional."))
+            Text(String(localized: "Only this run will be decrypted in memory with this device's key. Requests and conversation text may contain private information. Nothing is uploaded or executed. Credentials are masked before review; sharing the reviewed report is optional.", bundle: HanlinLocalization.bundle))
         }
         .sheet(item: $preparedExport, onDismiss: {
             if let exportDirectory { try? FileManager.default.removeItem(at: exportDirectory) }
@@ -256,48 +257,48 @@ private struct AgentDiagnosticsSessionView: View {
         }) { export in
             NavigationStack {
                 List {
-                    Section(String(localized: "Review before sharing")) {
+                    Section(String(localized: "Review before sharing", bundle: HanlinLocalization.bundle)) {
                         Text(export.preview).font(HanlinTypography.caption).textSelection(.enabled)
                     }
-                    Section(String(localized: "Conversation preview")) {
-                        Text(String(localized: "Preview shows up to 65,536 characters from the readable log. The archive may contain additional conversation content."))
+                    Section(String(localized: "Conversation preview", bundle: HanlinLocalization.bundle)) {
+                        Text(String(localized: "Preview shows up to 65,536 characters from the readable log. The archive may contain additional conversation content.", bundle: HanlinLocalization.bundle))
                             .font(HanlinTypography.caption).foregroundStyle(.secondary)
                         Text(export.conversationPreview).font(HanlinTypography.caption.monospaced()).textSelection(.enabled)
                     }
-                    Section(String(localized: "Files")) {
+                    Section(String(localized: "Files", bundle: HanlinLocalization.bundle)) {
                         ForEach(export.includedFiles, id: \.self) { Text($0).font(HanlinTypography.caption) }
                         ForEach(export.missingFiles, id: \.self) { Text($0).font(HanlinTypography.caption).foregroundStyle(.orange) }
                     }
                     ShareLink(item: export.archive) {
-                        Label(String(localized: "Share reviewed archive"), systemImage: "square.and.arrow.up")
+                        Label(String(localized: "Share reviewed archive", bundle: HanlinLocalization.bundle), systemImage: "square.and.arrow.up")
                     }
                 }
-                .navigationTitle(String(localized: "Diagnostic export"))
+                .navigationTitle(String(localized: "Diagnostic export", bundle: HanlinLocalization.bundle))
                 .toolbar { ToolbarItem(placement: .confirmationAction) {
-                    Button(String(localized: "Done")) { export.discard(); preparedExport = nil }
+                    Button(String(localized: "Done", bundle: HanlinLocalization.bundle)) { export.discard(); preparedExport = nil }
                 } }
             }
         }
         .sheet(item: $rawReview) { review in
             NavigationStack {
                 List {
-                    Section(String(localized: "Review before sharing")) {
-                        Text(String(localized: "Preview shows up to 65,536 characters. Sharing includes the full redacted report, not the encrypted source or device key."))
+                    Section(String(localized: "Review before sharing", bundle: HanlinLocalization.bundle)) {
+                        Text(String(localized: "Preview shows up to 65,536 characters. Sharing includes the full redacted report, not the encrypted source or device key.", bundle: HanlinLocalization.bundle))
                             .font(HanlinTypography.caption).foregroundStyle(.secondary)
                         Text(String(review.text.prefix(65_536))).font(HanlinTypography.caption.monospaced()).textSelection(.enabled)
                             .accessibilityIdentifier("hanlin-diagnostics-local-review-text")
                     }
                 }
-                .navigationTitle(String(localized: "Local capture review"))
+                .navigationTitle(String(localized: "Local capture review", bundle: HanlinLocalization.bundle))
                 .toolbar {
                     ToolbarItem(placement: .primaryAction) {
                         ShareLink(item: review.text) {
-                            Label(String(localized: "Share reviewed report"), systemImage: "square.and.arrow.up")
+                            Label(String(localized: "Share reviewed report", bundle: HanlinLocalization.bundle), systemImage: "square.and.arrow.up")
                         }
                         .accessibilityIdentifier("hanlin-diagnostics-share-reviewed-report")
                     }
                     ToolbarItem(placement: .confirmationAction) {
-                        Button(String(localized: "Done")) { rawReview = nil }
+                        Button(String(localized: "Done", bundle: HanlinLocalization.bundle)) { rawReview = nil }
                     }
                 }
             }

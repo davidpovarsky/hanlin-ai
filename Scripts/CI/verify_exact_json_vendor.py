@@ -16,8 +16,22 @@ def verify(root: Path) -> dict:
         data = (vendor / name).read_bytes()
         assert hashlib.sha256(data).hexdigest() == record["local_sha256"], name
         if name == adapted:
+            # Reverse only the exact reviewed lookup adaptation, then verify the
+            # complete upstream file hash; validation changes remain forbidden.
+            packaged_lookup = b"""            // Both public package layouts, in SwiftPM's Apple and Linux spellings.
+            // Prefer the aggregate SDK without bypassing any present corrupt bundle.
+            for name in [
+                "HanlinSDK_HanlinExactJSONSchema.bundle",
+                "HanlinSDK_HanlinExactJSONSchema.resources",
+                "HanlinAgentSDK_HanlinExactJSONSchema.bundle",
+                "HanlinAgentSDK_HanlinExactJSONSchema.resources",
+            ] {"""
+            upstream_lookup = b"""            // SwiftPM's Apple/Swift Build and Linux resource directory spellings.
+            for name in ["Swift-JSON_JSONSchema.bundle", "Swift-JSON_JSONSchema.resources"] {"""
+            assert data.count(packaged_lookup) == 1, name
+            data = data.replace(packaged_lookup, upstream_lookup)
+            # Preserve the original WASI command-relative standalone adaptation.
             data = data.replace(b"HanlinAgentSDK_HanlinExactJSONSchema.bundle", b"Swift-JSON_JSONSchema.bundle")
-            data = data.replace(b"HanlinAgentSDK_HanlinExactJSONSchema.resources", b"Swift-JSON_JSONSchema.resources")
         assert hashlib.sha256(data).hexdigest() == record["upstream_sha256"], name
     return {"status": "VERIFIED_SOURCE_IDENTITY", "revision": proof["revision"],
             "files": len(proof["files"]), "adaptations": proof["adaptations"]}

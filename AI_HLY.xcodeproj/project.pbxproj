@@ -513,6 +513,158 @@
 			isa = PBXBuildFile;
 			fileRef = F9D13E533BA075330ABABCC1;
 		};
+		AC190000000000000000000A = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000002;
+		};
+		AC190000000000000000000B = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000003;
+		};
+		AC190000000000000000000E = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000002;
+		};
+		AC190000000000000000000F = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000003;
+		};
+		AC1900000000000000000012 = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000003;
+		};
+		AC190000000000000000000C = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000004;
+		};
+		AC1900000000000000000010 = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000004;
+		};
+		AC1900000000000000000013 = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000004;
+		};
+		AC1900000000000000000101 = {
+			isa = PBXBuildFile;
+			fileRef = AC1900000000000000000100;
+		};
+		AC1900000000000000000103 = {
+			isa = PBXBuildFile;
+			fileRef = AC1900000000000000000102;
+		};
+		AC1900000000000000000121 = {
+			isa = PBXBuildFile;
+			fileRef = AC1900000000000000000120;
+		};
+		AC1900000000000000000014 = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000005;
+		};
+		AC190000000000000000000D = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000040;
+		};
+		AC1900000000000000000011 = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000040;
+		};
+		AC1900000000000000000015 = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000040;
+		};
+		AC1900000000000000000016 = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000041;
+		};
+		AC1900000000000000000017 = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000040;
+		};
+		AC190000000000000000001A = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000042;
+		};
+		AC190000000000000000001B = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000040;
+		};
+		AC190000000000000000001E = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000043;
+		};
+		AC190000000000000000001F = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000040;
+		};
+		AC1900000000000000000022 = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000044;
+		};
+		AC1900000000000000000023 = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000040;
+		};
+		AC1900000000000000000046 = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000045;
+		};
+		AC1900000000000000000105 = {
+			isa = PBXBuildFile;
+			fileRef = AC1900000000000000000104;
+		};
+		AC1900000000000000000047 = {
+			isa = PBXBuildFile;
+			productRef = AC1800000000000000000002;
+		};
+		AC1900000000000000000048 = {
+			isa = PBXBuildFile;
+			productRef = F70000000000000000000051;
+		};
+		AC1900000000000000000107 = {
+			isa = PBXBuildFile;
+			fileRef = AC1900000000000000000106;
+		};
+		AC1900000000000000000109 = {
+			isa = PBXBuildFile;
+			fileRef = AC1900000000000000000108;
+		};
+		AC190000000000000000010B = {
+			isa = PBXBuildFile;
+			fileRef = AC190000000000000000010A;
+		};
+		AC190000000000000000010D = {
+			isa = PBXBuildFile;
+			fileRef = AC190000000000000000010C;
+		};
+		AC190000000000000000010F = {
+			isa = PBXBuildFile;
+			fileRef = AC190000000000000000010E;
+		};
+		AC1900000000000000000111 = {
+			isa = PBXBuildFile;
+			fileRef = AC1900000000000000000110;
+		};
+		AC1900000000000000000113 = {
+			isa = PBXBuildFile;
+			fileRef = AC1900000000000000000112;
+		};
+		AC1900000000000000000115 = {
+			isa = PBXBuildFile;
+			fileRef = AC1900000000000000000114;
+		};
+		AC1900000000000000000117 = {
+			isa = PBXBuildFile;
+			fileRef = AC1900000000000000000116;
+		};
+		AC1900000000000000000131 = {
+			isa = PBXBuildFile;
+			fileRef = AC1900000000000000000130;
+		};
+		AC1900000000000000000132 = {
+			isa = PBXBuildFile;
+			fileRef = AC1900000000000000000130;
+		};
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -521,14 +673,14 @@
 			containerPortal = D7B6C3B92D50A55D004E3AD6 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = D7B6C3C02D50A55D004E3AD6;
-			remoteInfo = AI_Hanlin;
+			remoteInfo = HanlinApp;
 		};
 		E3000000000000000000000A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D7B6C3B92D50A55D004E3AD6 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = D7B6C3C02D50A55D004E3AD6;
-			remoteInfo = AI_Hanlin;
+			remoteInfo = HanlinApp;
 		};
 		D20000000000000000000010 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -598,8 +750,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				A10000000000000000000005 /* NodeMobile.xcframework in Embed Frameworks */,
-				A10000000000000000000007 /* Python.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1124,6 +1274,90 @@
 			path = AI_HLY/Assets.xcassets;
 			sourceTree = SOURCE_ROOT;
 		};
+		AC1900000000000000000100 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "AI_HLY/Downstream/SDK/HanlinApplicationResources.swift";
+			sourceTree = SOURCE_ROOT;
+		};
+		AC1900000000000000000102 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "AI_HLY/Downstream/RuntimeCore/Core/HanlinApplicationRuntimeConfiguration.swift";
+			sourceTree = SOURCE_ROOT;
+		};
+		AC1900000000000000000120 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "Packages/HanlinPresentationSDK/Tests/HanlinLocalizationTests/HanlinLocalizationTests.swift";
+			sourceTree = SOURCE_ROOT;
+		};
+		AC1900000000000000000104 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsForegroundBridge.swift";
+			sourceTree = SOURCE_ROOT;
+		};
+		AC1900000000000000000106 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsCatalogView.swift";
+			sourceTree = SOURCE_ROOT;
+		};
+		AC1900000000000000000108 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "AI_HLY/Downstream/TorahStudy/TorahOCRService.swift";
+			sourceTree = SOURCE_ROOT;
+		};
+		AC190000000000000000010A = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "AI_HLY/Downstream/TorahStudy/TorahPhotoStudyCaptureView.swift";
+			sourceTree = SOURCE_ROOT;
+		};
+		AC190000000000000000010C = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "AI_HLY/Downstream/TorahStudy/TorahSourceReaderView.swift";
+			sourceTree = SOURCE_ROOT;
+		};
+		AC190000000000000000010E = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "AI_HLY/Downstream/TorahStudy/TorahStudyNavigationRouter.swift";
+			sourceTree = SOURCE_ROOT;
+		};
+		AC1900000000000000000110 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "AI_HLY/NativeAppPlatform/AppsHub/MiniAppCardView.swift";
+			sourceTree = SOURCE_ROOT;
+		};
+		AC1900000000000000000112 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsAddSheet.swift";
+			sourceTree = SOURCE_ROOT;
+		};
+		AC1900000000000000000114 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsCatalogView.swift";
+			sourceTree = SOURCE_ROOT;
+		};
+		AC1900000000000000000116 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "AI_HLY/NativeAppPlatform/Support/NativeAppColor.swift";
+			sourceTree = SOURCE_ROOT;
+		};
+		AC1900000000000000000130 = {
+			isa = PBXFileReference;
+			lastKnownFileType = text.json.xcstrings;
+			path = "Packages/HanlinWidgetSDK/HostResources/HanlinAppIntents.xcstrings";
+			sourceTree = SOURCE_ROOT;
+		};
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -1162,91 +1396,608 @@
 		A10000000000000000000030 /* Exceptions for AI_HLY folder in AI_Hanlin target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Downstream/RuntimeCore/Node/Host/node_modules,
-				Downstream/RuntimeCore/Node/Host,
-				Downstream/RuntimeCore/README.md,
-				Downstream/MCP/README.md,
-				Downstream/Scripting/README.md,
-				Downstream/RuntimeCore/Node/Host/Tests/cablate-google-map.integration.mjs,
-				Downstream/RuntimeCore/Node/Host/Tests/compatibility.test.mjs,
-				Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/child-process-bypass/package.json,
-				Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/child-process-bypass/server.mjs,
-				Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/commonjs-spawn-call/package.json,
-				Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/commonjs-spawn-call/server.cjs,
-				Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/esm-import-only/package.json,
-				Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/esm-import-only/server.mjs,
-				Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/exec-call/package.json,
-				Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/exec-call/server.mjs,
-				Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/exec-file-call/package.json,
-				Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/exec-file-call/server.mjs,
-				Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/exec-file-sync-call/package.json,
-				Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/exec-file-sync-call/server.mjs,
-				Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/exec-sync-call/package.json,
-				Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/exec-sync-call/server.mjs,
-				Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/fork-call/package.json,
-				Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/fork-call/server.mjs,
-				Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/fork-child-call/package.json,
-				Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/fork-child-call/server.mjs,
-				Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/get-builtin-call/package.json,
-				Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/get-builtin-call/server.mjs,
-				Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/process-wrap-blocked/package.json,
-				Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/process-wrap-blocked/server.mjs,
-				Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/spawn-call/package.json,
-				Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/spawn-call/server.mjs,
-				Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/spawn-sync-call/package.json,
-				Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/spawn-sync-call/server.mjs,
-				Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/transitive-call/module-a.mjs,
-				Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/transitive-call/package.json,
-				Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/transitive-call/server.mjs,
-				Downstream/RuntimeCore/Node/Host/Tests/Fixtures/binding-blocked/package.json,
-				Downstream/RuntimeCore/Node/Host/Tests/Fixtures/binding-blocked/server.mjs,
-				Downstream/RuntimeCore/Node/Host/Tests/Fixtures/cluster-blocked/package.json,
-				Downstream/RuntimeCore/Node/Host/Tests/Fixtures/cluster-blocked/server.mjs,
-				Downstream/RuntimeCore/Node/Host/Tests/Fixtures/commonjs-blocked/package.json,
-				Downstream/RuntimeCore/Node/Host/Tests/Fixtures/commonjs-blocked/server.cjs,
-				Downstream/RuntimeCore/Node/Host/Tests/Fixtures/direct-blocked/package.json,
-				Downstream/RuntimeCore/Node/Host/Tests/Fixtures/direct-blocked/server.mjs,
-				Downstream/RuntimeCore/Node/Host/Tests/Fixtures/dynamic-blocked/package.json,
-				Downstream/RuntimeCore/Node/Host/Tests/Fixtures/dynamic-blocked/server.mjs,
-				Downstream/RuntimeCore/Node/Host/Tests/Fixtures/false-positive-sdk/node_modules/cross-spawn/index.js,
-				Downstream/RuntimeCore/Node/Host/Tests/Fixtures/false-positive-sdk/node_modules/cross-spawn/package.json,
-				Downstream/RuntimeCore/Node/Host/Tests/Fixtures/false-positive-sdk/node_modules/fake-sdk/client/stdio.js,
-				Downstream/RuntimeCore/Node/Host/Tests/Fixtures/false-positive-sdk/node_modules/fake-sdk/package.json,
-				Downstream/RuntimeCore/Node/Host/Tests/Fixtures/false-positive-sdk/node_modules/fake-sdk/server/stdio.js,
-				Downstream/RuntimeCore/Node/Host/Tests/Fixtures/false-positive-sdk/package.json,
-				Downstream/RuntimeCore/Node/Host/Tests/Fixtures/false-positive-sdk/server.mjs,
-				Downstream/RuntimeCore/Node/Host/Tests/Fixtures/get-builtin-blocked/package.json,
-				Downstream/RuntimeCore/Node/Host/Tests/Fixtures/get-builtin-blocked/server.mjs,
-				Downstream/RuntimeCore/Node/Host/Tests/Fixtures/reachable-native/addon.node,
-				Downstream/RuntimeCore/Node/Host/Tests/Fixtures/reachable-native/package.json,
-				Downstream/RuntimeCore/Node/Host/Tests/Fixtures/reachable-native/server.cjs,
-				Downstream/RuntimeCore/Node/Host/Tests/Fixtures/transitive-blocked/module-a.mjs,
-				Downstream/RuntimeCore/Node/Host/Tests/Fixtures/transitive-blocked/package.json,
-				Downstream/RuntimeCore/Node/Host/Tests/Fixtures/transitive-blocked/server.mjs,
-				Downstream/RuntimeCore/Node/Host/Tests/Fixtures/typescript-selected/package.json,
-				Downstream/RuntimeCore/Node/Host/Tests/Fixtures/typescript-selected/server.ts,
-				Downstream/RuntimeCore/Node/Host/Tests/Fixtures/unreachable-native/package.json,
-				Downstream/RuntimeCore/Node/Host/Tests/Fixtures/unreachable-native/server.mjs,
-				Downstream/RuntimeCore/Node/Host/Tests/Fixtures/unreachable-native/unused/addon.node,
-				Downstream/RuntimeCore/Node/Host/Tests/Fixtures/unreachable-native/unused/binding.gyp,
-				Downstream/RuntimeCore/Node/Host/Tests/host.test.mjs,
-				Downstream/RuntimeCore/Node/Host/Tests/lifecycle.integration.mjs,
-				Downstream/RuntimeCore/Node/Host/Tests/mcp-server-regression.integration.mjs,
-				Downstream/RuntimeCore/Node/Host/Tests/runtime.test.mjs,
-				Downstream/RuntimeCore/Node/Host/Tests/server-everything.integration.mjs,
-				Downstream/RuntimeCore/Node/Host/execution-worker.mjs,
-				Downstream/RuntimeCore/Node/Host/execution-jobs.mjs,
-				Downstream/RuntimeCore/Node/Host/Tests/execution-jobs.test.mjs,
-				Downstream/RuntimeCore/Node/Host/global-package-manager.mjs,
-				Downstream/RuntimeCore/Node/Host/host.mjs,
-				Downstream/RuntimeCore/Node/Host/lifecycle-planner.mjs,
-				Downstream/RuntimeCore/Node/Host/package-compatibility.mjs,
-				Downstream/RuntimeCore/Node/Host/package-installer.mjs,
-				Downstream/RuntimeCore/Node/Host/package-lock.json,
-				Downstream/RuntimeCore/Node/Host/package.json,
-				Downstream/RuntimeCore/Node/Host/runtime-dependency-overrides.json,
-				Downstream/RuntimeCore/Node/Host/runtime-probe.mjs,
-				Downstream/RuntimeCore/Node/Host/server-worker.mjs,
+				"ChatView.swift" ,
+				"Downstream" ,
+				"Downstream/AgentActivity/AgentActivityModels.swift" ,
+				"Downstream/AgentActivity/AgentActivityPersistence.swift" ,
+				"Downstream/AgentActivity/AgentActivityStepView.swift" ,
+				"Downstream/AgentActivity/AgentEvent.swift" ,
+				"Downstream/AgentActivity/AgentEventAccumulator.swift" ,
+				"Downstream/AgentActivity/AgentRunLifecycleCoordinator.swift" ,
+				"Downstream/AgentActivity/Evidence/AgentEvidenceAccumulator.swift" ,
+				"Downstream/AgentActivity/Evidence/AgentEvidenceDeduplicator.swift" ,
+				"Downstream/AgentActivity/Evidence/AgentEvidenceExtractor.swift" ,
+				"Downstream/AgentActivity/Evidence/AgentEvidenceItem.swift" ,
+				"Downstream/AgentActivity/Evidence/AgentEvidenceRow.swift" ,
+				"Downstream/AgentActivity/Evidence/AgentEvidenceSheet.swift" ,
+				"Downstream/AgentActivity/Evidence/LegacyResourcesEvidenceAdapter.swift" ,
+				"Downstream/AgentActivity/LegacyAgentActivityAdapter.swift" ,
+				"Downstream/AgentActivity/Presentation/AgentActivityComposer.swift" ,
+				"Downstream/AgentActivity/Presentation/AgentActivityCompositionPolicy.swift" ,
+				"Downstream/AgentActivity/Presentation/AgentActivityDeduplicator.swift" ,
+				"Downstream/AgentActivity/Presentation/AgentActivityDetailPolicy.swift" ,
+				"Downstream/AgentActivity/Presentation/AgentActivityHeaderPhase.swift" ,
+				"Downstream/AgentActivity/Presentation/AgentActivityTitleBuilder.swift" ,
+				"Downstream/AgentActivity/Presentation/AgentActivityVisibilityPolicy.swift" ,
+				"Downstream/AgentActivity/Presentation/AgentDisplayActivity.swift" ,
+				"Downstream/AgentActivity/Presentation/AgentDisplayRound.swift" ,
+				"Downstream/AgentActivity/ProviderCapabilities.swift" ,
+				"Downstream/AgentActivity/ProviderEventAdapter.swift" ,
+				"Downstream/AgentActivity/ReportProgressController.swift" ,
+				"Downstream/AgentActivity/Scrolling/AgentRunScrollFingerprint.swift" ,
+				"Downstream/AgentActivity/Scrolling/ChatAutoFollowController.swift" ,
+				"Downstream/AgentActivity/Scrolling/ChatAutoFollowValidation.swift" ,
+				"Downstream/AgentActivity/Scrolling/ChatScrollViewHandle.swift" ,
+				"Downstream/AgentActivity/ToolPresentation/LegacyToolPresentationAdapter.swift" ,
+				"Downstream/AgentActivity/ToolPresentation/ToolInvocationMetadata.swift" ,
+				"Downstream/AgentActivity/ToolPresentation/ToolPresentationProfile.swift" ,
+				"Downstream/AgentActivity/ToolPresentation/ToolPresentationValidation.swift" ,
+				"Downstream/AgentActivity/ToolPresentation/ToolResultPresentationCoordinator.swift" ,
+				"Downstream/AgentActivity/ToolPresentationRegistry.swift" ,
+				"Downstream/AgentActivity/ToolSchemaDecorator.swift" ,
+				"Downstream/AgentActivity/Transcript/AgentTranscriptAccumulator.swift" ,
+				"Downstream/AgentActivity/Transcript/AgentTranscriptItem.swift" ,
+				"Downstream/AgentActivity/Transcript/AgentTranscriptTextView.swift" ,
+				"Downstream/AgentActivity/Transcript/AgentTranscriptToolResultView.swift" ,
+				"Downstream/AgentActivity/Transcript/AgentTranscriptValidation.swift" ,
+				"Downstream/AgentDiagnostics/AgentDiagnosticsConfiguration.swift" ,
+				"Downstream/AgentDiagnostics/AgentDiagnosticsExport.swift" ,
+				"Downstream/AgentDiagnostics/AgentDiagnosticsJournal.swift" ,
+				"Downstream/AgentDiagnostics/AgentDiagnosticsRawReview.swift" ,
+				"Downstream/AgentDiagnostics/AgentDiagnosticsRecorder.swift" ,
+				"Downstream/AgentDiagnostics/AgentDiagnosticsRedactor.swift" ,
+				"Downstream/AgentDiagnostics/AgentDiagnosticsSession.swift" ,
+				"Downstream/AgentDiagnostics/AgentDiagnosticsView.swift" ,
+				"Downstream/AgentDiagnostics/AgentRuntimeUIAcceptanceProvider.swift" ,
+				"Downstream/AgentDiagnostics/AgentTokenUsage.swift" ,
+				"Downstream/AgentSkills/Analysis/BashSkillSyntaxAnalyzer.swift" ,
+				"Downstream/AgentSkills/Analysis/SkillSyntaxFindings.swift" ,
+				"Downstream/AgentSkills/AssistantCapabilitySession.swift" ,
+				"Downstream/AgentSkills/AssistantToolExposurePlanner.swift" ,
+				"Downstream/AgentSkills/HanlinAISDKToolAdapter.swift" ,
+				"Downstream/AgentSkills/HanlinSkillCatalog+InvocationPolicy.swift" ,
+				"Downstream/AgentSkills/HanlinSkillCatalog.swift" ,
+				"Downstream/AgentSkills/HanlinSkillIndex.swift" ,
+				"Downstream/AgentSkills/LoadSkillTool.swift" ,
+				"Downstream/AgentSkills/ReadSkillResourceTool.swift" ,
+				"Downstream/AgentSkills/ReadToolResultTool.swift" ,
+				"Downstream/AgentSkills/SkillDownloadTransfer.swift" ,
+				"Downstream/AgentSkills/SkillImporter.swift" ,
+				"Downstream/AgentSkills/SkillModels.swift" ,
+				"Downstream/AgentSkills/SkillStore.swift" ,
+				"Downstream/AgentSkills/SystemSkillsProvider.swift" ,
+				"Downstream/AgentSkills/ToolResultStore.swift" ,
+				"Downstream/AgentSkills/ToolSearchTool.swift" ,
+				"Downstream/AgentSkills/UI/SkillCenterView.swift" ,
+				"Downstream/AgentSkills/UI/SkillCompatibilityUnknownSection.swift" ,
+				"Downstream/AgentSkills/UI/SkillDetailView.swift" ,
+				"Downstream/AgentSkills/UI/SkillEditorView.swift" ,
+				"Downstream/AgentSkills/UI/SkillExecutionPlanSection.swift" ,
+				"Downstream/AgentSkills/UI/SkillImportPresentationState.swift" ,
+				"Downstream/AgentSkills/UI/SkillImportView.swift" ,
+				"Downstream/AgentSkills/UI/SkillL10n.swift" ,
+				"Downstream/CanonicalAdapters/HanlinFoundationJSONShadowAdapter.swift" ,
+				"Downstream/CanonicalAdapters/MCPCanonicalShadowAdapter.swift" ,
+				"Downstream/CanonicalAdapters/NativeAppCanonicalShadowAdapter.swift" ,
+				"Downstream/CanonicalAdapters/NativeToolCanonicalShadowAdapter.swift" ,
+				"Downstream/CanonicalAdapters/RuntimeCoreCanonicalShadowAdapter.swift" ,
+				"Downstream/CanonicalShadow/CanonicalShadowReport.swift" ,
+				"Downstream/CanonicalShadow/HanlinCanonicalShadowCoordinator.swift" ,
+				"Downstream/CanonicalTools/HanlinCanonicalToolAuthority.swift" ,
+				"Downstream/CanonicalTools/Legacy/LegacyToolCanonicalAdapter.swift" ,
+				"Downstream/CanonicalTools/Legacy/LegacyToolExecutor.swift" ,
+				"Downstream/ChatCore/HanlinAIReceivingWindowRoot.swift" ,
+				"Downstream/ChatCore/HanlinAppAgentPresentationContracts.swift" ,
+				"Downstream/ChatCore/HanlinAppAgentSessionOwner.swift" ,
+				"Downstream/ChatCore/HanlinAppConversationStore.swift" ,
+				"Downstream/ChatCore/HanlinAppHostIntegration.swift" ,
+				"Downstream/ChatCore/HanlinAppHostSplitTool.swift" ,
+				"Downstream/ChatCore/HanlinAppSplitOriginCoordinator.swift" ,
+				"Downstream/ChatCore/HanlinAppToolConsent.swift" ,
+				"Downstream/ChatCore/HanlinConversationMutation.swift" ,
+				"Downstream/ChatCore/HanlinConversationRunLease.swift" ,
+				"Downstream/ChatCore/HanlinConversationStreamProjection.swift" ,
+				"Downstream/ChatCore/HanlinDefaultChatPolicy.swift" ,
+				"Downstream/ChatCore/HanlinInlineToolError.swift" ,
+				"Downstream/ChatCore/HanlinNativeA2UIAcceptanceProvider.swift" ,
+				"Downstream/ChatCore/HanlinToolApprovalScopeFactory.swift" ,
+				"Downstream/ChatCore/HanlinToolApprovalStore.swift" ,
+				"Downstream/ChatInput/HanlinComposerActionBridge.swift" ,
+				"Downstream/ChatInput/HanlinComposerPopupCoordinator.swift" ,
+				"Downstream/ChatInput/HanlinComposerPopupView.swift" ,
+				"Downstream/ChatInput/HanlinDetachedCapabilityChips.swift" ,
+				"Downstream/ChatInput/HanlinDraftPersistence.swift" ,
+				"Downstream/ChatInput/HanlinFeedback.swift" ,
+				"Downstream/ChatInput/HanlinModelPickerPopover.swift" ,
+				"Downstream/ChatInput/HanlinModelZoomPopover.swift" ,
+				"Downstream/ChatInput/HanlinMorphComposer.swift" ,
+				"Downstream/ChatInput/NativeMultilineTextEditor.swift" ,
+				"Downstream/ChatInput/OrganizerDock/HanlinCompactChatWorkspace.swift" ,
+				"Downstream/ChatInput/OrganizerDock/HanlinCompactConversationLibrary.swift" ,
+				"Downstream/ChatInput/OrganizerDock/HanlinCompactRecentChats.swift" ,
+				"Downstream/ChatInput/OrganizerDock/HanlinComposerSessionBridge.swift" ,
+				"Downstream/ChatInput/OrganizerDock/HanlinOrganizerDock.swift" ,
+				"Downstream/ChatInput/OrganizerDock/HanlinOrganizerDockState.swift" ,
+				"Downstream/ChatInput/OrganizerDock/HanlinPendingFirstTurn.swift" ,
+				"Downstream/ChatPresentation/A2UI/HanlinA2UIContentLimits.swift" ,
+				"Downstream/ChatPresentation/A2UI/HanlinA2UIFrameLifetime.swift" ,
+				"Downstream/ChatPresentation/A2UI/HanlinA2UIIngress.swift" ,
+				"Downstream/ChatPresentation/A2UI/HanlinA2UILocalMedia.swift" ,
+				"Downstream/ChatPresentation/A2UI/HanlinA2UIResultOwner.swift" ,
+				"Downstream/ChatPresentation/A2UI/HanlinA2UIResultProjectionSource.swift" ,
+				"Downstream/ChatPresentation/A2UI/HanlinA2UIResultView.swift" ,
+				"Downstream/ChatPresentation/A2UI/HanlinA2UISession.swift" ,
+				"Downstream/ChatPresentation/A2UI/HanlinChatContentProjection.swift" ,
+				"Downstream/ChatPresentation/A2UI/HanlinMediaCatalog.swift" ,
+				"Downstream/ChatPresentation/AgentSDK/HanlinA2UIAcceptanceStatusView.swift" ,
+				"Downstream/ChatPresentation/AgentSDK/HanlinA2UIAgentPresentationAdapter.swift" ,
+				"Downstream/ChatPresentation/AgentSDK/HanlinA2UIAppPresentation.swift" ,
+				"Downstream/ChatPresentation/AgentSDK/HanlinA2UICompleteBatchValidator.swift" ,
+				"Downstream/ChatPresentation/AgentSDK/HanlinOfficialA2UIToolPayload.swift" ,
+				"Downstream/ChatPresentation/AgentSDK/HanlinToolConsentSheet.swift" ,
+				"Downstream/ChatPresentation/AgentSDK/HanlinToolPermissionsView.swift" ,
+				"Downstream/ChatPresentation/AgentSDK/PresentA2UITool.swift" ,
+				"Downstream/ChatPresentation/ChatEmbeddedResultHost.swift" ,
+				"Downstream/ChatPresentation/ChatHostPresentationPolicy.swift" ,
+				"Downstream/ChatPresentation/ChatMarkdownView.swift" ,
+				"Downstream/ChatPresentation/ChatMessagePreview.swift" ,
+				"Downstream/ChatPresentation/ChatMessagePreviewMetrics.swift" ,
+				"Downstream/ChatPresentation/ChatPresentationBridge.swift" ,
+				"Downstream/ChatPresentation/ChatSavedExcerpt.swift" ,
+				"Downstream/ChatPresentation/ChatSavedExcerptsView.swift" ,
+				"Downstream/ChatPresentation/ClassicChatAgentProjection.swift" ,
+				"Downstream/ChatPresentation/CodeFences/ChatCodeFenceDocument.swift" ,
+				"Downstream/ChatPresentation/CodeFences/ChatCodeFenceEngine.swift" ,
+				"Downstream/ChatPresentation/CodeFences/ChatCodeFenceView.swift" ,
+				"Downstream/ChatPresentation/CodeFences/ChatCodeFenceWebView.swift" ,
+				"Downstream/ChatPresentation/HanlinAgentRunReadCache.swift" ,
+				"Downstream/ChatPresentation/HanlinChatContentView.swift" ,
+				"Downstream/ChatPresentation/HanlinChatStreamBuffer.swift" ,
+				"Downstream/ChatPresentation/HanlinDesignCatalogBridge.swift" ,
+				"Downstream/ChatPresentation/HanlinMessageCitations.swift" ,
+				"Downstream/ChatPresentation/HanlinModelDisplayName.swift" ,
+				"Downstream/ChatPresentation/HanlinOpenUIPresentation.swift" ,
+				"Downstream/ChatPresentation/HanlinPersonalLibraryView.swift" ,
+				"Downstream/ChatPresentation/Media/HanlinA2UIMediaURLGate.swift" ,
+				"Downstream/ChatPresentation/Media/HanlinMediaAddressPolicy.swift" ,
+				"Downstream/ChatPresentation/Media/HanlinMediaCatalogImplementation.swift" ,
+				"Downstream/ChatPresentation/Media/HanlinRemoteMediaURL.swift" ,
+				"Downstream/ChatPresentation/Media/HanlinRichMediaStore.swift" ,
+				"Downstream/ChatPresentation/Media/HanlinRichMediaViews.swift" ,
+				"Downstream/ChatPresentation/Media/HanlinYouTubeDocument.swift" ,
+				"Downstream/ChatPresentation/Media/HanlinYouTubePlayerView.swift" ,
+				"Downstream/ChatPresentation/Media/HanlinYouTubeVideo.swift" ,
+				"Downstream/ChatPresentation/ProviderModelCatalogMetadata.swift" ,
+				"Downstream/Compatibility/AppleFoundationModelsProvider.swift" ,
+				"Downstream/Compatibility/CoreAILanguageModelProvider.swift" ,
+				"Downstream/Compatibility/LocalLLMStreamingAdapter.swift" ,
+				"Downstream/EmbeddedResults/ExpoEmbeddedResultAdapter.swift" ,
+				"Downstream/EmbeddedResults/HanlinEmbeddedResultResolver.swift" ,
+				"Downstream/EmbeddedResults/HanlinEmbeddedResultSession.swift" ,
+				"Downstream/EmbeddedResults/HanlinEmbeddedResultSurface.swift" ,
+				"Downstream/EmbeddedResults/NativeScriptEmbeddedResultAdapter.swift" ,
+				"Downstream/EmbeddedResults/ScriptUIEmbeddedResultAdapter.swift" ,
+				"Downstream/EmbeddedResults/SwiftEmbeddedResultAdapter.swift" ,
+				"Downstream/HostServices/Adapters/AgentHostServicesAdapter.swift" ,
+				"Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift" ,
+				"Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift" ,
+				"Downstream/HostServices/Adapters/ScriptUIHostServicesAdapter.swift" ,
+				"Downstream/HostServices/Adapters/SwiftMiniAppHostServicesAdapter.swift" ,
+				"Downstream/HostServices/Capabilities/HanlinHostCapabilityAuthority.swift" ,
+				"Downstream/HostServices/Capabilities/HanlinHostCapabilityMetadata.swift" ,
+				"Downstream/HostServices/Core/HanlinHostCallContext.swift" ,
+				"Downstream/HostServices/Core/HanlinHostServiceError.swift" ,
+				"Downstream/HostServices/Core/HanlinHostServicesBroker.swift" ,
+				"Downstream/HostServices/Data/HanlinFileService.swift" ,
+				"Downstream/HostServices/Data/HanlinSQLiteHostAdapter.swift" ,
+				"Downstream/HostServices/Runtime/HanlinRuntimeBroker.swift" ,
+				"Downstream/HostServices/Runtime/HanlinRuntimeWireProtocol.swift" ,
+				"Downstream/HostServices/Runtime/RuntimeAvailabilityStore.swift" ,
+				"Downstream/HostServices/System/HanlinSystemServicesBroker.swift" ,
+				"Downstream/MCP/Core/MCPChatSelection.swift" ,
+				"Downstream/MCP/Core/MCPCompatibilityReport.swift" ,
+				"Downstream/MCP/Core/MCPEnvironmentDraft.swift" ,
+				"Downstream/MCP/Core/MCPError.swift" ,
+				"Downstream/MCP/Core/MCPFeatureConfiguration.swift" ,
+				"Downstream/MCP/Core/MCPInstallState.swift" ,
+				"Downstream/MCP/Core/MCPServerConfiguration.swift" ,
+				"Downstream/MCP/Core/MCPServerDescriptor.swift" ,
+				"Downstream/MCP/Core/MCPServerRuntimeState.swift" ,
+				"Downstream/MCP/Core/MCPServerSettings.swift" ,
+				"Downstream/MCP/Diagnostics/MCPLogRedactor.swift" ,
+				"Downstream/MCP/Diagnostics/MCPTraceLogger.swift" ,
+				"Downstream/MCP/Installer/MCPInstallProgress.swift" ,
+				"Downstream/MCP/Installer/MCPPackageImportDocument.swift" ,
+				"Downstream/MCP/Installer/MCPPackageInstallService.swift" ,
+				"Downstream/MCP/Installer/MCPPackageManifestPreview.swift" ,
+				"Downstream/MCP/Installer/MCPPackageSpec.swift" ,
+				"Downstream/MCP/Persistence/MCPChatSelectionStore.swift" ,
+				"Downstream/MCP/Persistence/MCPFileLayout.swift" ,
+				"Downstream/MCP/Persistence/MCPInstalledPackageManifest.swift" ,
+				"Downstream/MCP/Persistence/MCPSecretStore.swift" ,
+				"Downstream/MCP/Persistence/MCPServerPathResolver.swift" ,
+				"Downstream/MCP/Persistence/MCPServerRegistryStore.swift" ,
+				"Downstream/MCP/README.md" ,
+				"Downstream/MCP/Runtime/EmbeddedNodeMCPTransport.swift" ,
+				"Downstream/MCP/Runtime/MCPClientSession.swift" ,
+				"Downstream/MCP/Runtime/MCPRuntimeAcceptance.swift" ,
+				"Downstream/MCP/Runtime/MCPRuntimeController.swift" ,
+				"Downstream/MCP/Runtime/MCPRuntimeProvider.swift" ,
+				"Downstream/MCP/Runtime/MCPRuntimeSnapshot.swift" ,
+				"Downstream/MCP/Runtime/MCPServerLifecycleSlot.swift" ,
+				"Downstream/MCP/Runtime/MCPServerPathResolverAcceptance.swift" ,
+				"Downstream/MCP/Runtime/NodeRuntimeService+MCP.swift" ,
+				"Downstream/MCP/ToolIntegration/AssistantToolBridge.swift" ,
+				"Downstream/MCP/ToolIntegration/AssistantToolRequestScope.swift" ,
+				"Downstream/MCP/ToolIntegration/MCPToolBridge.swift" ,
+				"Downstream/MCP/ToolIntegration/MCPToolCatalog.swift" ,
+				"Downstream/MCP/ToolIntegration/MCPToolDescriptor.swift" ,
+				"Downstream/MCP/ToolIntegration/MCPToolNameCodec.swift" ,
+				"Downstream/MCP/ToolIntegration/MCPToolResolutionResult.swift" ,
+				"Downstream/MCP/UI/Chat/MCPChatServerButton.swift" ,
+				"Downstream/MCP/UI/Chat/MCPChatServerSheet.swift" ,
+				"Downstream/MCP/UI/MCPL10n.swift" ,
+				"Downstream/MCP/UI/Settings/MCPInstallProgressView.swift" ,
+				"Downstream/MCP/UI/Settings/MCPRuntimeStatusView.swift" ,
+				"Downstream/MCP/UI/Settings/MCPServerDetailView.swift" ,
+				"Downstream/MCP/UI/Settings/MCPServerDiagnosticsView.swift" ,
+				"Downstream/MCP/UI/Settings/MCPServerEnvironmentView.swift" ,
+				"Downstream/MCP/UI/Settings/MCPServerInstallView.swift" ,
+				"Downstream/MCP/UI/Settings/MCPServerLogsView.swift" ,
+				"Downstream/MCP/UI/Settings/MCPServerToolsView.swift" ,
+				"Downstream/MCP/UI/Settings/MCPServersSettingsView.swift" ,
+				"Downstream/MiniApps/CompiledMiniAppExposureRegistry.swift" ,
+				"Downstream/MiniApps/HanlinMiniAppHost.swift" ,
+				"Downstream/NativeScript/HanlinNativeScriptPOCView.swift" ,
+				"Downstream/NativeScript/HanlinNativeScriptProductionBootstrap.swift" ,
+				"Downstream/NativeScript/HanlinNativeServicesBridge.swift" ,
+				"Downstream/ProductSplit/HanlinSplitForegroundTransport.swift" ,
+				"Downstream/ProductSplit/HanlinSplitLiveTarget.swift" ,
+				"Downstream/ProductSplit/HanlinSplitMailbox.swift" ,
+				"Downstream/ProductSplitIntegration/HanlinMiniAppsBootstrap.swift" ,
+				"Downstream/ProductSplitIntegration/HanlinMiniAppsCatalogView.swift" ,
+				"Downstream/ProductSplitIntegration/HanlinMiniAppsForegroundBridge.swift" ,
+				"Downstream/ProductSplitIntegration/HanlinMiniAppsProvider.swift" ,
+				"Downstream/RuntimeCore/Core/AppRuntimeCore.swift" ,
+				"Downstream/RuntimeCore/Core/HanlinApplicationRuntimeConfiguration.swift" ,
+				"Downstream/RuntimeCore/Core/RuntimeBackgroundContinuation.swift" ,
+				"Downstream/RuntimeCore/Core/RuntimeCapabilityContract.swift" ,
+				"Downstream/RuntimeCore/Core/RuntimeDiagnostics.swift" ,
+				"Downstream/RuntimeCore/Core/RuntimeExecutionInputArtifact.swift" ,
+				"Downstream/RuntimeCore/Core/RuntimeFileLayout.swift" ,
+				"Downstream/RuntimeCore/Core/RuntimeJobStore.swift" ,
+				"Downstream/RuntimeCore/Core/RuntimeLifecycleBridge.swift" ,
+				"Downstream/RuntimeCore/Core/RuntimeModels.swift" ,
+				"Downstream/RuntimeCore/Core/RuntimePolicy.swift" ,
+				"Downstream/RuntimeCore/Core/RuntimeQueuedExecution.swift" ,
+				"Downstream/RuntimeCore/Core/RuntimeUserOperation.swift" ,
+				"Downstream/RuntimeCore/Core/Skills/SkillOpenClawProjection.swift" ,
+				"Downstream/RuntimeCore/Core/Skills/SkillRuntimeAnalysis.swift" ,
+				"Downstream/RuntimeCore/Core/Skills/SkillRuntimeContract.swift" ,
+				"Downstream/RuntimeCore/Core/Skills/SkillRuntimeFactsProvider.swift" ,
+				"Downstream/RuntimeCore/Core/Skills/SkillRuntimeInstalledIdentity.swift" ,
+				"Downstream/RuntimeCore/Core/Skills/SkillRuntimeNodeCapabilityAdapter.swift" ,
+				"Downstream/RuntimeCore/Core/Skills/SkillRuntimeOpenClaw.swift" ,
+				"Downstream/RuntimeCore/Core/Skills/SkillRuntimePlanner.swift" ,
+				"Downstream/RuntimeCore/Core/Skills/SkillRuntimeRegistry.swift" ,
+				"Downstream/RuntimeCore/Core/Skills/SkillRuntimeRequirements.swift" ,
+				"Downstream/RuntimeCore/Core/Skills/SkillRuntimeService.swift" ,
+				"Downstream/RuntimeCore/Environment/RuntimeEnvironment.swift" ,
+				"Downstream/RuntimeCore/JavaScriptCore/JavaScriptCoreOutputCapture.swift" ,
+				"Downstream/RuntimeCore/JavaScriptCore/JavaScriptCoreRuntimeService.swift" ,
+				"Downstream/RuntimeCore/Lifecycle/LifecycleExecutionBroker.swift" ,
+				"Downstream/RuntimeCore/Node/Host" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/child-process-bypass/package.json" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/child-process-bypass/server.mjs" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/commonjs-spawn-call/package.json" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/commonjs-spawn-call/server.cjs" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/esm-import-only/package.json" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/esm-import-only/server.mjs" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/exec-call/package.json" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/exec-call/server.mjs" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/exec-file-call/package.json" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/exec-file-call/server.mjs" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/exec-file-sync-call/package.json" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/exec-file-sync-call/server.mjs" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/exec-sync-call/package.json" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/exec-sync-call/server.mjs" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/fork-call/package.json" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/fork-call/server.mjs" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/fork-child-call/package.json" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/fork-child-call/server.mjs" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/get-builtin-call/package.json" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/get-builtin-call/server.mjs" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/process-wrap-blocked/package.json" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/process-wrap-blocked/server.mjs" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/spawn-call/package.json" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/spawn-call/server.mjs" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/spawn-sync-call/package.json" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/spawn-sync-call/server.mjs" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/transitive-call/module-a.mjs" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/transitive-call/package.json" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/transitive-call/server.mjs" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/Fixtures/binding-blocked/package.json" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/Fixtures/binding-blocked/server.mjs" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/Fixtures/cluster-blocked/package.json" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/Fixtures/cluster-blocked/server.mjs" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/Fixtures/commonjs-blocked/package.json" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/Fixtures/commonjs-blocked/server.cjs" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/Fixtures/direct-blocked/package.json" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/Fixtures/direct-blocked/server.mjs" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/Fixtures/dynamic-blocked/package.json" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/Fixtures/dynamic-blocked/server.mjs" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/Fixtures/false-positive-sdk/node_modules/cross-spawn/index.js" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/Fixtures/false-positive-sdk/node_modules/cross-spawn/package.json" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/Fixtures/false-positive-sdk/node_modules/fake-sdk/client/stdio.js" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/Fixtures/false-positive-sdk/node_modules/fake-sdk/package.json" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/Fixtures/false-positive-sdk/node_modules/fake-sdk/server/stdio.js" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/Fixtures/false-positive-sdk/package.json" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/Fixtures/false-positive-sdk/server.mjs" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/Fixtures/get-builtin-blocked/package.json" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/Fixtures/get-builtin-blocked/server.mjs" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/Fixtures/reachable-native/addon.node" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/Fixtures/reachable-native/package.json" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/Fixtures/reachable-native/server.cjs" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/Fixtures/transitive-blocked/module-a.mjs" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/Fixtures/transitive-blocked/package.json" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/Fixtures/transitive-blocked/server.mjs" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/Fixtures/typescript-selected/package.json" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/Fixtures/typescript-selected/server.ts" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/Fixtures/unreachable-native/package.json" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/Fixtures/unreachable-native/server.mjs" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/Fixtures/unreachable-native/unused/addon.node" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/Fixtures/unreachable-native/unused/binding.gyp" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/cablate-google-map.integration.mjs" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/compatibility.test.mjs" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/execution-jobs.test.mjs" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/host.test.mjs" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/lifecycle.integration.mjs" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/mcp-server-regression.integration.mjs" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/runtime.test.mjs" ,
+				"Downstream/RuntimeCore/Node/Host/Tests/server-everything.integration.mjs" ,
+				"Downstream/RuntimeCore/Node/Host/execution-jobs.mjs" ,
+				"Downstream/RuntimeCore/Node/Host/execution-worker.mjs" ,
+				"Downstream/RuntimeCore/Node/Host/global-package-manager.mjs" ,
+				"Downstream/RuntimeCore/Node/Host/host.mjs" ,
+				"Downstream/RuntimeCore/Node/Host/lifecycle-planner.mjs" ,
+				"Downstream/RuntimeCore/Node/Host/node_modules" ,
+				"Downstream/RuntimeCore/Node/Host/package-compatibility.mjs" ,
+				"Downstream/RuntimeCore/Node/Host/package-installer.mjs" ,
+				"Downstream/RuntimeCore/Node/Host/package-lock.json" ,
+				"Downstream/RuntimeCore/Node/Host/package.json" ,
+				"Downstream/RuntimeCore/Node/Host/runtime-dependency-overrides.json" ,
+				"Downstream/RuntimeCore/Node/Host/runtime-probe.mjs" ,
+				"Downstream/RuntimeCore/Node/Host/server-worker.mjs" ,
+				"Downstream/RuntimeCore/Node/Native/NodeRunner.h" ,
+				"Downstream/RuntimeCore/Node/Native/NodeRunner.mm" ,
+				"Downstream/RuntimeCore/Node/Native/NodeRuntimeBridge.swift" ,
+				"Downstream/RuntimeCore/Node/NodePackageManager.swift" ,
+				"Downstream/RuntimeCore/Node/NodeRuntimeService.swift" ,
+				"Downstream/RuntimeCore/Node/RuntimeCommandDispatcher.swift" ,
+				"Downstream/RuntimeCore/Node/RuntimeHostConnection+Operations.swift" ,
+				"Downstream/RuntimeCore/Node/TypeScriptRuntimeService.swift" ,
+				"Downstream/RuntimeCore/Python/Native/HanlinPythonNativeExtensions.mm" ,
+				"Downstream/RuntimeCore/Python/Native/PythonCancellationContext.hpp" ,
+				"Downstream/RuntimeCore/Python/Native/PythonRuntimeBridge.h" ,
+				"Downstream/RuntimeCore/Python/Native/PythonRuntimeBridge.mm" ,
+				"Downstream/RuntimeCore/Python/Native/PythonThreadOwnership.hpp" ,
+				"Downstream/RuntimeCore/Python/PythonNativeExtensions.swift" ,
+				"Downstream/RuntimeCore/Python/PythonPackageManager.swift" ,
+				"Downstream/RuntimeCore/Python/PythonQueuedExecution.swift" ,
+				"Downstream/RuntimeCore/Python/PythonRuntimeBridge.swift" ,
+				"Downstream/RuntimeCore/Python/PythonRuntimeService.swift" ,
+				"Downstream/RuntimeCore/README.md" ,
+				"Downstream/RuntimeCore/Shell/ShellRuntimeAcceptance.swift" ,
+				"Downstream/RuntimeCore/Shell/ShellRuntimeDiagnostics.swift" ,
+				"Downstream/RuntimeCore/Shell/ShellRuntimeService.swift" ,
+				"Downstream/RuntimeCore/Shell/ShellRuntimeSmokeSuite.swift" ,
+				"Downstream/RuntimeCore/Tools/ExecuteJavaScriptTool.swift" ,
+				"Downstream/RuntimeCore/Tools/ExecuteLocalPythonTool.swift" ,
+				"Downstream/RuntimeCore/Tools/ExecuteShellCommandTool.swift" ,
+				"Downstream/RuntimeCore/Tools/ExecuteSkillResourceTool.swift" ,
+				"Downstream/RuntimeCore/Tools/ExecuteTypeScriptTool.swift" ,
+				"Downstream/RuntimeCore/Tools/GetRuntimeCapabilitiesTool.swift" ,
+				"Downstream/RuntimeCore/Tools/GetRuntimeJobTool.swift" ,
+				"Downstream/RuntimeCore/Tools/ListToolsTool.swift" ,
+				"Downstream/RuntimeCore/Tools/ManageMCPServersTool.swift" ,
+				"Downstream/RuntimeCore/Tools/ManageRuntimePackagesTool.swift" ,
+				"Downstream/RuntimeCore/Tools/NativeToolCatalog+RuntimeTools.swift" ,
+				"Downstream/RuntimeCore/Tools/RuntimeToolSupport.swift" ,
+				"Downstream/RuntimeCore/UI/NodePackagesView.swift" ,
+				"Downstream/RuntimeCore/UI/PythonPackagesView.swift" ,
+				"Downstream/RuntimeCore/UI/RuntimeCenterView.swift" ,
+				"Downstream/RuntimeCore/UI/RuntimeEnvironmentView.swift" ,
+				"Downstream/RuntimeCore/UI/RuntimeL10n.swift" ,
+				"Downstream/RuntimeCore/UI/RuntimeLogsView.swift" ,
+				"Downstream/RuntimeCore/UI/ShellCapabilitiesView.swift" ,
+				"Downstream/SDK/HanlinApplicationComponents.swift" ,
+				"Downstream/SDK/HanlinApplicationConfiguration.swift" ,
+				"Downstream/SDK/HanlinApplicationContext.swift" ,
+				"Downstream/SDK/HanlinApplicationConversationManagement.swift" ,
+				"Downstream/SDK/HanlinApplicationData.swift" ,
+				"Downstream/SDK/HanlinApplicationLifecycle.swift" ,
+				"Downstream/SDK/HanlinApplicationMCP.swift" ,
+				"Downstream/SDK/HanlinApplicationModelConfiguration.swift" ,
+				"Downstream/SDK/HanlinApplicationResources.swift" ,
+				"Downstream/SDK/HanlinApplicationScene.swift" ,
+				"Downstream/SDK/HanlinConversationComposerView.swift" ,
+				"Downstream/SDK/HanlinConversationController.swift" ,
+				"Downstream/SDK/HanlinConversationMessageSnapshot.swift" ,
+				"Downstream/SDK/HanlinConversationView.swift" ,
+				"Downstream/SDK/HanlinMountedComposerContent.swift" ,
+				"Downstream/SDK/HanlinToolActivityView.swift" ,
+				"Downstream/Scripting/HanlinJavaScriptCoreSession.swift" ,
+				"Downstream/Scripting/HanlinQuickJSSession.swift" ,
+				"Downstream/Scripting/HanlinScriptCanonicalAdapter.swift" ,
+				"Downstream/Scripting/HanlinScriptPackageLoader.swift" ,
+				"Downstream/Scripting/HanlinScriptValueBridge.swift" ,
+				"Downstream/Scripting/HanlinScriptingError.swift" ,
+				"Downstream/Scripting/HanlinScriptingPerformanceSignposts.swift" ,
+				"Downstream/Scripting/HanlinScriptingProviderRegistry.swift" ,
+				"Downstream/Scripting/HanlinWorkerScriptingSessions.swift" ,
+				"Downstream/Scripting/README.md" ,
+				"Downstream/ScriptingPlatform/HanlinAppleDeviceSnapshotProvider.swift" ,
+				"Downstream/ScriptingPlatform/HanlinNodeMobileScriptingCompiler.swift" ,
+				"Downstream/ScriptingPlatform/HanlinScriptingApplicationRuntimeBridge.swift" ,
+				"Downstream/ScriptingPlatform/HanlinScriptingAssistantProviderAdapter.swift" ,
+				"Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift" ,
+				"Downstream/ScriptingPlatform/HanlinScriptingPlatformAIIntegration.swift" ,
+				"Downstream/ScriptingPlatform/HanlinScriptingSystemUI.swift" ,
+				"Downstream/ScriptingPlatform/ScriptingPackageCardView.swift" ,
+				"Downstream/ScriptingPlatform/ScriptingPackageCenterViews.swift" ,
+				"Downstream/SystemIntegrations/ChavrusaShareActionTarget.swift" ,
+				"Downstream/SystemIntegrations/ChavrusaShareInbox.swift" ,
+				"Downstream/SystemIntegrations/ChavrusaShareInboxView.swift" ,
+				"Downstream/SystemIntegrations/ChavrusaSystemIntegrations.swift" ,
+				"Downstream/TorahStudy/AuthorizedAttachmentRegistry.swift" ,
+				"Downstream/TorahStudy/TorahOCRService.swift" ,
+				"Downstream/TorahStudy/TorahPhotoStudyCaptureView.swift" ,
+				"Downstream/TorahStudy/TorahSourceReaderView.swift" ,
+				"Downstream/TorahStudy/TorahStudyNativeTools.swift" ,
+				"Downstream/TorahStudy/TorahStudyNavigationRouter.swift" ,
+				"KnowledgeListView.swift" ,
+				"ListView.swift" ,
+				"MainTabView.swift" ,
+				"Model/APIKeys.swift" ,
+				"Model/AllModels.swift" ,
+				"Model/ChatMessages.swift" ,
+				"Model/ChatRecords.swift" ,
+				"Model/HanlinAppleModelCatalogAdapter.swift" ,
+				"Model/KnowledgeChunk.swift" ,
+				"Model/KnowledgeRecords.swift" ,
+				"Model/MemoryArchive.swift" ,
+				"Model/PromptRepo.swift" ,
+				"Model/SearchKeys.swift" ,
+				"Model/ToolKeys.swift" ,
+				"Model/TranslationDic.swift" ,
+				"Model/UserInfo.swift" ,
+				"ModelsView.swift" ,
+				"NativeAgentExtensions/ChatIntegration/ChatMessages+NativeUI.swift" ,
+				"NativeAgentExtensions/ChatIntegration/NativeToolBridge.swift" ,
+				"NativeAgentExtensions/Core/NativeToolJSON.swift" ,
+				"NativeAgentExtensions/Diagnostics/NativeToolTraceLogger.swift" ,
+				"NativeAgentExtensions/Presentation/ModernCards/ModernNativeToolResultRenderer.swift" ,
+				"NativeAgentExtensions/Presentation/ModernCards/NativeToolEntityCard.swift" ,
+				"NativeAgentExtensions/Presentation/ModernCards/NativeToolErrorCard.swift" ,
+				"NativeAgentExtensions/Presentation/ModernCards/NativeToolResultCardContainer.swift" ,
+				"NativeAgentExtensions/Presentation/ModernCards/NativeToolResultCardStyle.swift" ,
+				"NativeAgentExtensions/Presentation/ModernCards/NativeToolSearchResultCard.swift" ,
+				"NativeAgentExtensions/ToolCatalog/NativeAssistantToolGroup.swift" ,
+				"NativeAgentExtensions/ToolCatalog/NativeToolCatalog.swift" ,
+				"NativeAgentExtensions/ToolCatalog/NativeToolCatalogEntry.swift" ,
+				"NativeAgentExtensions/ToolRuntime/NativeTool.swift" ,
+				"NativeAgentExtensions/ToolRuntime/NativeToolResult.swift" ,
+				"NativeAgentExtensions/Tools/QuickCalculateTool.swift" ,
+				"NativeAgentExtensions/UI/NativeAssistantToolGroupSettingsView.swift" ,
+				"NativeAgentExtensions/UI/NativeUIBlock.swift" ,
+				"NativeAgentExtensions/UI/NativeUIRenderer.swift" ,
+				"NativeAppPlatform/Actions/NativeAppAction.swift" ,
+				"NativeAppPlatform/Actions/NativeAppActionBus.swift" ,
+				"NativeAppPlatform/AppsHub/MiniAppCardView.swift" ,
+				"NativeAppPlatform/AppsHub/NativeAppCardView.swift" ,
+				"NativeAppPlatform/AppsHub/NativeAppDetailView.swift" ,
+				"NativeAppPlatform/AppsHub/NativeAppSessionContainerView.swift" ,
+				"NativeAppPlatform/AppsHub/NativeAppsAddSheet.swift" ,
+				"NativeAppPlatform/AppsHub/NativeAppsCatalogView.swift" ,
+				"NativeAppPlatform/AppsHub/NativeAppsHubView.swift" ,
+				"NativeAppPlatform/BuiltinApps/BuiltinAppsIndex.swift" ,
+				"NativeAppPlatform/BuiltinApps/BuiltinCanonicalRegistrations.swift" ,
+				"NativeAppPlatform/BuiltinApps/NativeBuiltinRuntimeBinding.swift" ,
+				"NativeAppPlatform/BuiltinApps/Sefaria/Assistant/NativeAppSefariaTools.swift" ,
+				"NativeAppPlatform/BuiltinApps/Sefaria/Chat/NativeAppSefariaChatCardProvider.swift" ,
+				"NativeAppPlatform/BuiltinApps/Sefaria/NativeAppSefariaAppModule.swift" ,
+				"NativeAppPlatform/BuiltinApps/Sefaria/NativeAppSefariaExports.swift" ,
+				"NativeAppPlatform/BuiltinApps/Sefaria/NativeAppSefariaImports.swift" ,
+				"NativeAppPlatform/BuiltinApps/Sefaria/NativeAppSefariaIndex.swift" ,
+				"NativeAppPlatform/BuiltinApps/TextStudio/Assistant/NativeAppTextStudioTools.swift" ,
+				"NativeAppPlatform/BuiltinApps/TextStudio/Chat/NativeAppTextStudioChatCardProvider.swift" ,
+				"NativeAppPlatform/BuiltinApps/TextStudio/NativeAppTextStudioAppModule.swift" ,
+				"NativeAppPlatform/BuiltinApps/TextStudio/NativeAppTextStudioExports.swift" ,
+				"NativeAppPlatform/BuiltinApps/TextStudio/NativeAppTextStudioImports.swift" ,
+				"NativeAppPlatform/BuiltinApps/TextStudio/NativeAppTextStudioIndex.swift" ,
+				"NativeAppPlatform/BuiltinApps/Wikipedia/Assistant/NativeAppWikipediaTools.swift" ,
+				"NativeAppPlatform/BuiltinApps/Wikipedia/Chat/NativeAppWikipediaChatCardProvider.swift" ,
+				"NativeAppPlatform/BuiltinApps/Wikipedia/NativeAppWikipediaAppModule.swift" ,
+				"NativeAppPlatform/BuiltinApps/Wikipedia/NativeAppWikipediaExports.swift" ,
+				"NativeAppPlatform/BuiltinApps/Wikipedia/NativeAppWikipediaImports.swift" ,
+				"NativeAppPlatform/BuiltinApps/Wikipedia/NativeAppWikipediaIndex.swift" ,
+				"NativeAppPlatform/Capabilities/NativeCapabilityRegistry.swift" ,
+				"NativeAppPlatform/Capabilities/NativeCapabilityRequest.swift" ,
+				"NativeAppPlatform/Core/NativeAppAppearance.swift" ,
+				"NativeAppPlatform/Core/NativeAppCategory.swift" ,
+				"NativeAppPlatform/Core/NativeAppContext.swift" ,
+				"NativeAppPlatform/Core/NativeAppEntryPointKind.swift" ,
+				"NativeAppPlatform/Core/NativeAppManifest.swift" ,
+				"NativeAppPlatform/Core/NativeAppModule.swift" ,
+				"NativeAppPlatform/Core/NativeAppPresentation.swift" ,
+				"NativeAppPlatform/Core/NativeAppRegistry.swift" ,
+				"NativeAppPlatform/Core/NativeAppSession.swift" ,
+				"NativeAppPlatform/Core/NativeAppSessionEnvironment.swift" ,
+				"NativeAppPlatform/Core/NativeToolCatalog+NativeApps.swift" ,
+				"NativeAppPlatform/Routing/NativeAppRoute.swift" ,
+				"NativeAppPlatform/Routing/NativeAppRouter.swift" ,
+				"NativeAppPlatform/Services/NativeAppNetworkBroker.swift" ,
+				"NativeAppPlatform/Services/NativeAppOpenURLBroker.swift" ,
+				"NativeAppPlatform/Services/NativeAppPasteboardBroker.swift" ,
+				"NativeAppPlatform/Services/NativeAppPlatformServices.swift" ,
+				"NativeAppPlatform/Services/NativeAppStorageBroker.swift" ,
+				"NativeAppPlatform/Support/NativeAppColor.swift" ,
+				"NativeAppPlatform/Support/NativeAppJSON.swift" ,
+				"Resource" ,
+				"RuntimeHostResources.zip" ,
+				"Services/APIServices/APIBalance.swift" ,
+				"Services/APIServices/APITest.swift" ,
+				"Services/APIServices/ModelRefreshService.swift" ,
+				"Services/ChatServices/APIManager+LegacyTools.swift" ,
+				"Services/ChatServices/APIManager.swift" ,
+				"Services/ChatServices/AutomaticSearch/AutomaticSearchMigration.swift" ,
+				"Services/ChatServices/AutomaticSearch/AutomaticWebSearchCoordinator.swift" ,
+				"Services/ChatServices/AutomaticSearch/KeenablePublicSearchAdapter.swift" ,
+				"Services/ChatServices/AutomaticSearch/TavilyKeylessSearchAdapter.swift" ,
+				"Services/ChatServices/AutomaticSearch/WebSearchProviderProtocol.swift" ,
+				"Services/ChatServices/AutomaticSearch/WebSearchRelevanceEvaluator.swift" ,
+				"Services/ChatServices/AutomaticSearch/WebSearchResult.swift" ,
+				"Services/ChatServices/AutomaticSearch/YouKeylessSearchAdapter.swift" ,
+				"Services/ChatServices/CalendarService.swift" ,
+				"Services/ChatServices/CanvasServices.swift" ,
+				"Services/ChatServices/ChatTools.swift" ,
+				"Services/ChatServices/CodeServices.swift" ,
+				"Services/ChatServices/FileContentExtraction.swift" ,
+				"Services/ChatServices/HealthServices.swift" ,
+				"Services/ChatServices/MapServices.swift" ,
+				"Services/ChatServices/SystemOptimizer.swift" ,
+				"Services/ChatServices/TextToSpeech.swift" ,
+				"Services/ChatServices/ToolsAPI.swift" ,
+				"Services/ChatServices/WeatherServices.swift" ,
+				"Services/ChatServices/WebReadTool.swift" ,
+				"Services/ChatServices/WebSearchTool.swift" ,
+				"Services/DataServices/HanlinAppProviderCredentials.swift" ,
+				"Services/DataServices/InfoServices.swift" ,
+				"Services/DataServices/PreLoad.swift" ,
+				"Services/KnowledgeServices/KnowledgeAPI.swift" ,
+				"Services/ModelServices/ModelDown.swift" ,
+				"Services/ModelServices/ModelServices.swift" ,
+				"Services/VisionServices/VisionAPI.swift" ,
+				"SettingsView.swift" ,
+				"Views/Components/APISettingView.swift" ,
+				"Views/Components/ChatViewBottom.swift" ,
+				"Views/Components/ChatViewComponents.swift" ,
+				"Views/Components/ChatandFile.swift" ,
+				"Views/Components/DocumentPicker.swift" ,
+				"Views/Components/HanlinHelpView.swift" ,
+				"Views/Components/ImagePicker.swift" ,
+				"Views/Components/KnowledgeWritingView.swift" ,
+				"Views/Components/ListViewComponents.swift" ,
+				"Views/Components/MemoryArchiveView.swift" ,
+				"Views/Components/ModelManagementView.swift" ,
+				"Views/Components/ModelsViewComponents.swift" ,
+				"Views/Components/PromptRepoView.swift" ,
+				"Views/Components/QuickToolsView.swift" ,
+				"Views/Components/SettingsViewComponents.swift" ,
+				"Views/Components/TranslationDicView.swift" ,
+				"Views/Components/VoiceInputView.swift" ,
+				"VisionIntent.swift" ,
+				"VisionView.swift" ,
 			);
 			target = D7B6C3C02D50A55D004E3AD6 /* AI_Hanlin */;
 		};
@@ -1315,13 +2066,18 @@
 		D7B6C3BE2D50A55D004E3AD6 = {
 			"isa" = "PBXFrameworksBuildPhase";
 			"buildActionMask" = "2147483647";
-			"files" = ("AC1800000000000000000012", "AC1800000000000000000013", "AC1800000000000000000014", "AC1700000000000000000003", "AC1700000000000000000006", "AC1700000000000000000009", "AC170000000000000000000C", "AC1700000000000000000010", "AC1700000000000000000014", "AC1700000000000000000018", "AC1600000000000000000003", "AC1500000000000000000005", "AC1500000000000000000006", "AC1500000000000000000007", "F70000000000000000000002", "F70000000000000000000022", "F70000000000000000000052", "F70000000000000000000032", "F70000000000000000000042", "F70000000000000000000001", "A10000000000000000000079", "A1000000000000000000007A", "A1000000000000000000007B", "A10000000000000000000078", "A10000000000000000000077", "A10000000000000000000076", "A10000000000000000000075", "A10000000000000000000074", "A10000000000000000000073", "A10000000000000000000072", "A10000000000000000000071", "A10000000000000000000070", "A10000000000000000000009", "A10000000000000000000008", "A10000000000000000000006", "A10000000000000000000004", "A10000000000000000000003", "A10000000000000000000002", "A10000000000000000000001", "D7D5EE3F2DD58D0600B89AAD", "D7D5EE3C2DD58CF000B89AAD", "D7D5EE4B2DD590A100B89AAD", "C60000000000000000000001", "D7D5EE422DD58D3800B89AAD", "D786F6B02E63DE70004DAC20", "D7D5EE482DD58D7F00B89AAD", "D7D5EE4E2DD590C500B89AAD", "AC3139BD8057681628A31947", );
+			files = (
+				"A10000000000000000000009" ,
+				"AC190000000000000000000A" ,
+			);
 			"runOnlyForDeploymentPostprocessing" = "0";
 		};
 		B10000000000000000000004 = {
 			"isa" = "PBXFrameworksBuildPhase";
 			"buildActionMask" = "2147483647";
-			"files" = ("AC1700000000000000000004", "AC1700000000000000000007", "AC170000000000000000000A", "AC170000000000000000000D", "AC1700000000000000000011", "AC1700000000000000000015", "AC1700000000000000000019", "AC1600000000000000000004", "AC1500000000000000000008", "B10000000000000000000001", "B10000000000000000000079", "B1000000000000000000007A", "E3A100000000000000000003", "AC6F756EE053382F7A9B5864", );
+			files = (
+				"AC190000000000000000000E" ,
+			);
 			"runOnlyForDeploymentPostprocessing" = "0";
 		};
 		E30000000000000000000005 /* Frameworks */ = {
@@ -1335,10 +2091,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D20000000000000000000004 /* HanlinPlatformContracts in Frameworks */,
-				D20000000000000000000003 /* HanlinScriptUI in Frameworks */,
-				D20000000000000000000002 /* HanlinScriptExtensions in Frameworks */,
-				E3A100000000000000000001 /* HanlinExpoWidgetNative in Frameworks */,
+				"D20000000000000000000004" ,
+				"D20000000000000000000003" ,
+				"D20000000000000000000002" ,
+				"E3A100000000000000000001" ,
+				"AC1900000000000000000022" ,
+				"AC1900000000000000000023" ,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1346,7 +2104,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E40000000000000000000002 /* HanlinScriptStore in Share Frameworks */,
+				"E40000000000000000000002" ,
+				"AC1900000000000000000016" ,
+				"AC1900000000000000000017" ,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1354,9 +2114,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E50000000000000000000005 /* HanlinPlatformContracts in Frameworks */,
-				E50000000000000000000004 /* HanlinScriptUI in Frameworks */,
-				E50000000000000000000003 /* HanlinScriptExtensions in Frameworks */,
+				"E50000000000000000000005" ,
+				"E50000000000000000000004" ,
+				"E50000000000000000000003" ,
+				"AC190000000000000000001E" ,
+				"AC190000000000000000001F" ,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1364,13 +2126,46 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				"AC190000000000000000001A" ,
+				"AC190000000000000000001B" ,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F8000000000000000000000B = {
 			"isa" = "PBXFrameworksBuildPhase";
 			"buildActionMask" = "2147483647";
-			"files" = ("F800000000000000000000B5", "F800000000000000000000B6", "F800000000000000000000B7", "F974C6DF76408B8D4FA4E173", "F9E0F90E8E1333FCDF98B861", "F906995653CCC6211D86C5DD", "F937A4DFA40FA4AD3B3EBAD2", "F9FCD3BDA06CFA30E4AA730C", "F9ABE43F511370758F07C7E8", "F93EB89B0A963CC198D1BFC8", "F9DC0A1E7E850A29CDA11B12", "F9FCF937B1D033EEF88BC791", "F9608CD25321EC39B0BCAF25", "F9D0C9DC8117CA25356B50EE", "F924615C7CFBE9C736214744", "F9ECED70DC2E4A54C64B7B88", "F9858E7B262BF62A8990F179", "F92433DD2BCE9985EC02A861", "F9DAF64522DA27E9836174A8", "F9DC71D30D21C657388AE279", "F9489FCED2036A226176F456", "F940E259EEB6D25937BE92C4", "F9C1C5A10B68BC2E49F340AC", );
+			files = (
+				"F800000000000000000000B5" ,
+				"F800000000000000000000B6" ,
+				"F800000000000000000000B7" ,
+				"F974C6DF76408B8D4FA4E173" ,
+				"F9E0F90E8E1333FCDF98B861" ,
+				"F906995653CCC6211D86C5DD" ,
+				"F937A4DFA40FA4AD3B3EBAD2" ,
+				"F9FCD3BDA06CFA30E4AA730C" ,
+				"F9ABE43F511370758F07C7E8" ,
+				"F93EB89B0A963CC198D1BFC8" ,
+				"F9DC0A1E7E850A29CDA11B12" ,
+				"F9FCF937B1D033EEF88BC791" ,
+				"F9608CD25321EC39B0BCAF25" ,
+				"F9D0C9DC8117CA25356B50EE" ,
+				"F924615C7CFBE9C736214744" ,
+				"F9ECED70DC2E4A54C64B7B88" ,
+				"F9858E7B262BF62A8990F179" ,
+				"F92433DD2BCE9985EC02A861" ,
+				"F9DAF64522DA27E9836174A8" ,
+				"F9DC71D30D21C657388AE279" ,
+				"F9489FCED2036A226176F456" ,
+				"F940E259EEB6D25937BE92C4" ,
+				"F9C1C5A10B68BC2E49F340AC" ,
+				"AC1900000000000000000012" ,
+				"AC1900000000000000000013" ,
+				"AC1900000000000000000014" ,
+				"AC1900000000000000000015" ,
+				"AC1900000000000000000046" ,
+				"AC1900000000000000000047" ,
+				"AC1900000000000000000048" ,
+			);
 			"runOnlyForDeploymentPostprocessing" = "0";
 		};
 		F971AEEB7DD0AA1E3AAE7639 /* W1-007 UI */ = {
@@ -1409,7 +2204,30 @@
 		};
 		D7B6C3B82D50A55D004E3AD6 = {
 			"isa" = "PBXGroup";
-			"children" = ("F80000000000000000000003", "D7B6C3C32D50A55D004E3AD6", "B10000000000000000000003", "E30000000000000000000002", "D20000000000000000000030", "E40000000000000000000030", "E50000000000000000000030", "E60000000000000000000030", "A10000000000000000000064", "D73E23062D817B1300ACC644", "D7B6C3C22D50A55D004E3AD6", "D7C6558C2E6C731A0041F1C7", "F9F4C452EBF2FA6B1274B4D7", "F9B7E7C84FC34223BA56BFA6", "FA8159CB799005F585B0200D", "FAF7E5E7F0B960B85183BF07", "C1D9E69575D3B7BC691961CD", "ACCCFD5137817301A7EC3EC5", "ACA8D477BCA603356FFD1FB6", "AC5329707A767DC9898843A8", "ACD98DDA0CD38EB99694E203", );
+			children = (
+				"F80000000000000000000003" ,
+				"D7B6C3C32D50A55D004E3AD6" ,
+				"B10000000000000000000003" ,
+				"E30000000000000000000002" ,
+				"D20000000000000000000030" ,
+				"E40000000000000000000030" ,
+				"E50000000000000000000030" ,
+				"E60000000000000000000030" ,
+				"A10000000000000000000064" ,
+				"D73E23062D817B1300ACC644" ,
+				"D7B6C3C22D50A55D004E3AD6" ,
+				"D7C6558C2E6C731A0041F1C7" ,
+				"F9F4C452EBF2FA6B1274B4D7" ,
+				"F9B7E7C84FC34223BA56BFA6" ,
+				"FA8159CB799005F585B0200D" ,
+				"FAF7E5E7F0B960B85183BF07" ,
+				"C1D9E69575D3B7BC691961CD" ,
+				"ACCCFD5137817301A7EC3EC5" ,
+				"ACA8D477BCA603356FFD1FB6" ,
+				"AC5329707A767DC9898843A8" ,
+				"ACD98DDA0CD38EB99694E203" ,
+				"AC1900000000000000000130" ,
+			);
 			"sourceTree" = "<group>";
 		};
 		D7B6C3C22D50A55D004E3AD6 = {
@@ -1420,7 +2238,96 @@
 		};
 		F9F4C452EBF2FA6B1274B4D7 /* W1-007 */ = {
 			"isa" = "PBXGroup";
-			"children" = ("F941CCAECB1339E350064E9C", "F99C028C1BEDFB7ED7A9413C", "F9B37F729D5A935EE38EB9DF", "F9191879C1C53D93BAB6B49E", "F9F994EA627000C0D4E3437D", "F9061B29280C18C55699611D", "F906889EE8DD5D2169D6158F", "F93D6670699B3C28444E241B", "F917CA751184E20BD6524A38", "F989DEF1DBD097C985F528CE", "F9243749B55B2307F654AFD9", "F97162CC4DC3CEB4C48D931B", "F9FEC42CECB9938EBB89CB1C", "F9B2004098C1F18CA07FA1D0", "F9409C4DA063B95734F89A25", "F9F9F6EC4411E84815231210", "F9EACA4E50B512A5F8B9A243", "F97DAF836FAE515689F63530", "F93EE5CA287939E7B23D6ED4", "F925A7C73C9E573AFB0D51AD", "F957D85796EE9B5127EE705C", "F90E5CFC5FC9D7179D9EAF3D", "F90353D47FC1553218C97065", "F9C2EBA8497E39AA76E2B493", "F996452DE60C13D09E600A9D", "F9EF6BC155457DD73D5F2DCE", "F9AE00EFBE479C82EA56DE45", "F9FE17629CC354C8FDD78705", "F95D166440EF0D9E022E8DFC", "F96D73DA7E56C32BB3517D43", "F95EBFEE57DB00428A43BA91", "F9B71480FB9E997714628617", "F97189E5E14A556783C10802", "F924DF99EBC22E09EA3A278A", "F90B0E8A8295990D23159B2D", "F97522232A79E50E63C53A05", "F91130AF8F44CFF864A56CBA", "F901D12815CA2B59E918975E", "F96FC86557E62553EB630364", "F921C7FD2F551E31A04B411A", "F9A7F8D015CC907B8FE211EC", "F9415FFFD1AC1AE5AE9952A5", "F9595F7D8F26600EA36321D2", "F9116AE43189427BB7CBF225", "F920652523B64B0B76E91592", "F9D3D40A095AF7CDCEF31280", "F941675901BB82DB8BF84659", "F99900BD4709971816C29FD8", "F99657AB9B8FB8BAE81DD275", "F9D282FD3FA832B7C20A6C34", "F9BB20C2A2B42D250EE7C619", "F9363FB7EB6D146290FAA257", "F97BDC8C07A02A59DBAF7651", "F953F2DE50D5B41F8FE782D1", "F9B938C8C4343C19E0C725A2", "F98E21000F8A914656F4B896", "F91FF405054C84F145BAB8A0", "F913125480E8702112576DCF", "F993D52DBB145170376AC62D", "F967D092C0B9BACC43F79BF1", "F90B0035CE48D56B62D876D0", "F91A39054E62188FF23F5F4F", "F9FD92492251A588A4622B02", "F934D5F5D981393869B07EA5", "F9F13C94DEC6B2AE6C3F84D3", "F90C6A351FCA59A4E0013A70", "F97B211181351BED04A3723A", "F9FBF15EC4ECF2E3A54420CC", "F94ED49DF22908056F02FCDB", "F96BB46318B6DEA4140F2013", "F9DBD852951B6228203FC716", "F9DE05773B2A6CA032B53169", "F96A6FD9A21D4AAA3A3597DF", "F93DF06BAE1A515FE7381A2D", "F9EC1A38176104300FFEFEF2", "F9D13E533BA075330ABABCC1", );
+			children = (
+				"F941CCAECB1339E350064E9C" ,
+				"F99C028C1BEDFB7ED7A9413C" ,
+				"F9B37F729D5A935EE38EB9DF" ,
+				"F9191879C1C53D93BAB6B49E" ,
+				"F9F994EA627000C0D4E3437D" ,
+				"F9061B29280C18C55699611D" ,
+				"F906889EE8DD5D2169D6158F" ,
+				"F93D6670699B3C28444E241B" ,
+				"F917CA751184E20BD6524A38" ,
+				"F989DEF1DBD097C985F528CE" ,
+				"F9243749B55B2307F654AFD9" ,
+				"F97162CC4DC3CEB4C48D931B" ,
+				"F9FEC42CECB9938EBB89CB1C" ,
+				"F9B2004098C1F18CA07FA1D0" ,
+				"F9409C4DA063B95734F89A25" ,
+				"F9F9F6EC4411E84815231210" ,
+				"F9EACA4E50B512A5F8B9A243" ,
+				"F97DAF836FAE515689F63530" ,
+				"F93EE5CA287939E7B23D6ED4" ,
+				"F925A7C73C9E573AFB0D51AD" ,
+				"F957D85796EE9B5127EE705C" ,
+				"F90E5CFC5FC9D7179D9EAF3D" ,
+				"F90353D47FC1553218C97065" ,
+				"F9C2EBA8497E39AA76E2B493" ,
+				"F996452DE60C13D09E600A9D" ,
+				"F9EF6BC155457DD73D5F2DCE" ,
+				"F9AE00EFBE479C82EA56DE45" ,
+				"F9FE17629CC354C8FDD78705" ,
+				"F95D166440EF0D9E022E8DFC" ,
+				"F96D73DA7E56C32BB3517D43" ,
+				"F95EBFEE57DB00428A43BA91" ,
+				"F9B71480FB9E997714628617" ,
+				"F97189E5E14A556783C10802" ,
+				"F924DF99EBC22E09EA3A278A" ,
+				"F90B0E8A8295990D23159B2D" ,
+				"F97522232A79E50E63C53A05" ,
+				"F91130AF8F44CFF864A56CBA" ,
+				"F901D12815CA2B59E918975E" ,
+				"F96FC86557E62553EB630364" ,
+				"F921C7FD2F551E31A04B411A" ,
+				"F9A7F8D015CC907B8FE211EC" ,
+				"F9415FFFD1AC1AE5AE9952A5" ,
+				"F9595F7D8F26600EA36321D2" ,
+				"F9116AE43189427BB7CBF225" ,
+				"F920652523B64B0B76E91592" ,
+				"F9D3D40A095AF7CDCEF31280" ,
+				"F941675901BB82DB8BF84659" ,
+				"F99900BD4709971816C29FD8" ,
+				"F99657AB9B8FB8BAE81DD275" ,
+				"F9D282FD3FA832B7C20A6C34" ,
+				"F9BB20C2A2B42D250EE7C619" ,
+				"F9363FB7EB6D146290FAA257" ,
+				"F97BDC8C07A02A59DBAF7651" ,
+				"F953F2DE50D5B41F8FE782D1" ,
+				"F9B938C8C4343C19E0C725A2" ,
+				"F98E21000F8A914656F4B896" ,
+				"F91FF405054C84F145BAB8A0" ,
+				"F913125480E8702112576DCF" ,
+				"F993D52DBB145170376AC62D" ,
+				"F967D092C0B9BACC43F79BF1" ,
+				"F90B0035CE48D56B62D876D0" ,
+				"F91A39054E62188FF23F5F4F" ,
+				"F9FD92492251A588A4622B02" ,
+				"F934D5F5D981393869B07EA5" ,
+				"F9F13C94DEC6B2AE6C3F84D3" ,
+				"F90C6A351FCA59A4E0013A70" ,
+				"F97B211181351BED04A3723A" ,
+				"F9FBF15EC4ECF2E3A54420CC" ,
+				"F94ED49DF22908056F02FCDB" ,
+				"F96BB46318B6DEA4140F2013" ,
+				"F9DBD852951B6228203FC716" ,
+				"F9DE05773B2A6CA032B53169" ,
+				"F96A6FD9A21D4AAA3A3597DF" ,
+				"F93DF06BAE1A515FE7381A2D" ,
+				"F9EC1A38176104300FFEFEF2" ,
+				"F9D13E533BA075330ABABCC1" ,
+				"AC1900000000000000000100" ,
+				"AC1900000000000000000102" ,
+				"AC1900000000000000000104" ,
+				"AC1900000000000000000106" ,
+				"AC1900000000000000000108" ,
+				"AC190000000000000000010A" ,
+				"AC190000000000000000010C" ,
+				"AC190000000000000000010E" ,
+				"AC1900000000000000000110" ,
+				"AC1900000000000000000112" ,
+				"AC1900000000000000000114" ,
+				"AC1900000000000000000116" ,
+			);
 			"name" = "MiniApps Shared Implementation";
 			"sourceTree" = "<group>";
 		};
@@ -1434,8 +2341,10 @@
 			"buildRules" = ();
 			"dependencies" = ("D20000000000000000000060", "E40000000000000000000060", "E50000000000000000000060", "E60000000000000000000060", );
 			"fileSystemSynchronizedGroups" = ("D7B6C3C32D50A55D004E3AD6", );
-			"name" = "AI_Hanlin";
-			"packageProductDependencies" = ("AC1800000000000000000002", "AC1800000000000000000003", "AC1800000000000000000004", "AC1700000000000000000002", "AC1700000000000000000005", "AC1700000000000000000008", "AC170000000000000000000B", "AC170000000000000000000F", "AC1700000000000000000013", "AC1700000000000000000017", "AC1600000000000000000002", "AC1500000000000000000002", "AC1500000000000000000003", "AC1500000000000000000004", "F70000000000000000000012", "F70000000000000000000021", "F70000000000000000000051", "F70000000000000000000031", "F70000000000000000000041", "F70000000000000000000011", "C10000000000000000000025", "C10000000000000000000026", "C10000000000000000000027", "C10000000000000000000024", "C10000000000000000000023", "C10000000000000000000021", "C10000000000000000000020", "C10000000000000000000019", "C10000000000000000000018", "C10000000000000000000017", "A10000000000000000000016", "A10000000000000000000015", "A10000000000000000000014", "A10000000000000000000011", "A10000000000000000000012", "A10000000000000000000013", "D7D5EE3B2DD58CF000B89AAD", "D7D5EE3E2DD58D0600B89AAD", "D7D5EE412DD58D3800B89AAD", "D7D5EE472DD58D7F00B89AAD", "D7D5EE4A2DD590A100B89AAD", "C60000000000000000000002", "D7D5EE4D2DD590C500B89AAD", "D786F6AF2E63DE70004DAC20", "F80000000000000000000053", );
+			"name" = HanlinApp;
+			packageProductDependencies = (
+				"AC1900000000000000000002" ,
+			);
 			"productName" = "AI_HLY";
 			"productReference" = "D7B6C3C12D50A55D004E3AD6";
 			"productType" = "com.apple.product-type.application";
@@ -1448,7 +2357,9 @@
 			"dependencies" = ("B1000000000000000000000C", );
 			"fileSystemSynchronizedGroups" = ("B10000000000000000000003", );
 			"name" = "AI_HLYTests";
-			"packageProductDependencies" = ("AC1700000000000000000002", "AC1700000000000000000005", "AC1700000000000000000008", "AC170000000000000000000B", "AC170000000000000000000F", "AC1700000000000000000013", "AC1700000000000000000017", "AC1600000000000000000002", "AC1500000000000000000003", "E3A100000000000000000004", "A10000000000000000000015", "C10000000000000000000025", "C10000000000000000000026", "F80000000000000000000053", );
+			packageProductDependencies = (
+				"AC1900000000000000000002" ,
+			);
 			"productName" = "AI_HLYTests";
 			"productReference" = "B10000000000000000000002";
 			"productType" = "com.apple.product-type.bundle.unit-test";
@@ -1493,10 +2404,12 @@
 			);
 			name = HanlinScriptingWidgets;
 			packageProductDependencies = (
-				E3A100000000000000000002 /* HanlinExpoWidgetNative */,
-				C10000000000000000000021 /* HanlinScriptExtensions */,
-				C10000000000000000000022 /* HanlinScriptUI */,
-				A10000000000000000000015 /* HanlinPlatformContracts */,
+				"E3A100000000000000000002" ,
+				"C10000000000000000000021" ,
+				"C10000000000000000000022" ,
+				"A10000000000000000000015" ,
+				"AC1900000000000000000044" ,
+				"AC1900000000000000000040" ,
 			);
 			productName = HanlinScriptingWidgets;
 			productReference = D20000000000000000000020 /* HanlinScriptingWidgets.appex */;
@@ -1519,7 +2432,9 @@
 			);
 			name = ChavrusaChatShare;
 			packageProductDependencies = (
-				C10000000000000000000019 /* HanlinScriptStore */,
+				"C10000000000000000000019" ,
+				"AC1900000000000000000041" ,
+				"AC1900000000000000000040" ,
 			);
 			productName = ChavrusaChatShare;
 			productReference = E40000000000000000000020 /* ChavrusaChatShare.appex */;
@@ -1542,9 +2457,11 @@
 			);
 			name = ChavrusaChatTranslationProvider;
 			packageProductDependencies = (
-				C10000000000000000000021 /* HanlinScriptExtensions */,
-				C10000000000000000000022 /* HanlinScriptUI */,
-				A10000000000000000000015 /* HanlinPlatformContracts */,
+				"C10000000000000000000021" ,
+				"C10000000000000000000022" ,
+				"A10000000000000000000015" ,
+				"AC1900000000000000000043" ,
+				"AC1900000000000000000040" ,
 			);
 			productName = ChavrusaChatTranslationProvider;
 			productReference = E50000000000000000000020 /* ChavrusaChatTranslationProvider.appex */;
@@ -1567,6 +2484,8 @@
 			);
 			name = ChavrusaChatNotificationService;
 			packageProductDependencies = (
+				"AC1900000000000000000042" ,
+				"AC1900000000000000000040" ,
 			);
 			productName = ChavrusaChatNotificationService;
 			productReference = E60000000000000000000020 /* ChavrusaChatNotificationService.appex */;
@@ -1580,7 +2499,36 @@
 			"dependencies" = ();
 			"fileSystemSynchronizedGroups" = ("F80000000000000000000003", );
 			"name" = "HanlinMiniApps";
-			"packageProductDependencies" = ("F80000000000000000000051", "F80000000000000000000052", "F80000000000000000000053", "C10000000000000000000027", "C10000000000000000000026", "C10000000000000000000025", "F70000000000000000000012", "C10000000000000000000018", "C10000000000000000000017", "C10000000000000000000024", "C10000000000000000000021", "C10000000000000000000019", "C10000000000000000000022", "C10000000000000000000023", "C10000000000000000000020", "F70000000000000000000021", "F70000000000000000000041", "F70000000000000000000031", "A10000000000000000000014", "A10000000000000000000012", "D7D5EE472DD58D7F00B89AAD", );
+			packageProductDependencies = (
+				"F80000000000000000000051" ,
+				"F80000000000000000000052" ,
+				"F80000000000000000000053" ,
+				"C10000000000000000000027" ,
+				"C10000000000000000000026" ,
+				"C10000000000000000000025" ,
+				"F70000000000000000000012" ,
+				"C10000000000000000000018" ,
+				"C10000000000000000000017" ,
+				"C10000000000000000000024" ,
+				"C10000000000000000000021" ,
+				"C10000000000000000000019" ,
+				"C10000000000000000000022" ,
+				"C10000000000000000000023" ,
+				"C10000000000000000000020" ,
+				"F70000000000000000000021" ,
+				"F70000000000000000000041" ,
+				"F70000000000000000000031" ,
+				"A10000000000000000000014" ,
+				"A10000000000000000000012" ,
+				"D7D5EE472DD58D7F00B89AAD" ,
+				"AC1900000000000000000003" ,
+				"AC1900000000000000000004" ,
+				"AC1900000000000000000005" ,
+				"AC1900000000000000000040" ,
+				"AC1900000000000000000045" ,
+				"AC1800000000000000000002" ,
+				"F70000000000000000000051" ,
+			);
 			"productName" = "HanlinMiniApps";
 			"productReference" = "F80000000000000000000002";
 			"productType" = "com.apple.product-type.application";
@@ -1654,7 +2602,24 @@
 			"knownRegions" = ("en", "zh-Hans", "Base", "he", );
 			"mainGroup" = "D7B6C3B82D50A55D004E3AD6";
 			"minimizedProjectReferenceProxies" = "1";
-			"packageReferences" = ("AC1800000000000000000001", "AC1700000000000000000001", "AC170000000000000000000E", "AC1700000000000000000012", "AC1700000000000000000016", "AC1600000000000000000001", "AC1500000000000000000001", "F8000000000000000000005A", "F70000000000000000000010", "F70000000000000000000020", "F70000000000000000000050", "F70000000000000000000030", "F70000000000000000000040", "A10000000000000000000046", "A10000000000000000000047", "A10000000000000000000048", "A10000000000000000000045", "A10000000000000000000044", "A10000000000000000000043", "A10000000000000000000040", "A10000000000000000000041", "A10000000000000000000042", "D7D5EE3A2DD58CF000B89AAD", "D7D5EE3D2DD58D0600B89AAD", "D7D5EE402DD58D3800B89AAD", "D7D5EE462DD58D7F00B89AAD", "D7D5EE492DD590A100B89AAD", "C60000000000000000000003", "D7D5EE4C2DD590C500B89AAD", "D786F6AE2E63DE70004DAC20", );
+			packageReferences = (
+				"AC1700000000000000000001" ,
+				"AC170000000000000000000E" ,
+				"AC1700000000000000000012" ,
+				"AC1700000000000000000016" ,
+				"A10000000000000000000040" ,
+				"A10000000000000000000041" ,
+				"A10000000000000000000042" ,
+				"D7D5EE3A2DD58CF000B89AAD" ,
+				"D7D5EE3D2DD58D0600B89AAD" ,
+				"D7D5EE402DD58D3800B89AAD" ,
+				"D7D5EE462DD58D7F00B89AAD" ,
+				"D7D5EE492DD590A100B89AAD" ,
+				"C60000000000000000000003" ,
+				"D7D5EE4C2DD590C500B89AAD" ,
+				"D786F6AE2E63DE70004DAC20" ,
+				"AC1900000000000000000001" ,
+			);
 			"preferredProjectObjectVersion" = "77";
 			"productRefGroup" = "D7B6C3C22D50A55D004E3AD6";
 			"projectDirPath" = "";
@@ -1668,8 +2633,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A10000000000000000000060 /* commandDictionary.plist in Resources */,
-				A10000000000000000000061 /* extraCommandsDictionary.plist in Resources */,
+				"A10000000000000000000060" ,
+				"A10000000000000000000061" ,
+				"AC1900000000000000000131" ,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1691,6 +2657,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				"AC1900000000000000000132" ,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1718,7 +2685,24 @@
 		F8000000000000000000000C /* W1-007 */ = {
 			"isa" = "PBXResourcesBuildPhase";
 			"buildActionMask" = "2147483647";
-			"files" = ("F93152CA8290D60376A9B40F", "F9C46B1A91E2E1457C183213", "F9A28E238B623A30D27ABB2A", "F9B67C381C184CA75861D454", "F9C3D4462172F4DB1DF60D68", "F9D25962D2C3AD3EBF8BA23E", "F97D901B8D1F022C7307B5AF", "F978CE1ED732017D707A34EC", "F9ED8779AECBAFC9F475598C", "F9CD865D0FD59DC731C24571", "F943BC9C1402B938E6F0D23B", "F991FE49F9098223972B6DF0", "F9DF01B0CFA63784555EF624", "F987671FAFD2F47C4B1CFA7D", "F97F2034C82C07A1C253F2D2", "F946FB32616C40A65485DF3D", "F99926B4C8149320C8634158", );
+			files = (
+				"F93152CA8290D60376A9B40F" ,
+				"F9C46B1A91E2E1457C183213" ,
+				"F9A28E238B623A30D27ABB2A" ,
+				"F9B67C381C184CA75861D454" ,
+				"F9C3D4462172F4DB1DF60D68" ,
+				"F9D25962D2C3AD3EBF8BA23E" ,
+				"F97D901B8D1F022C7307B5AF" ,
+				"F978CE1ED732017D707A34EC" ,
+				"F9ED8779AECBAFC9F475598C" ,
+				"F9CD865D0FD59DC731C24571" ,
+				"F943BC9C1402B938E6F0D23B" ,
+				"F991FE49F9098223972B6DF0" ,
+				"F9DF01B0CFA63784555EF624" ,
+				"F97F2034C82C07A1C253F2D2" ,
+				"F946FB32616C40A65485DF3D" ,
+				"F99926B4C8149320C8634158" ,
+			);
 			"runOnlyForDeploymentPostprocessing" = "0";
 		};
 		F976DBE4F612C3D1CD89E778 /* W1-007 UI */ = {
@@ -1852,6 +2836,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				"AC1900000000000000000121" ,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1900,7 +2885,83 @@
 		F8000000000000000000000A = {
 			"isa" = "PBXSourcesBuildPhase";
 			"buildActionMask" = "2147483647";
-			"files" = ("F926BAA61CFBBF736F943D1C", "F919A2D150582186EC03055E", "F9A7168DD69AF06B26512861", "F924378CF26D00CB7F7EEC23", "F9BAF3C36F75176BE813FFBA", "F93B6615FF3AA28B4EE9FB52", "F91A2CD0E4C773FACD1057CC", "F93292CE6C9A8178EBCFF431", "F978CD6315961BA5F213AA17", "F937D1B81E0F6C9BDBC18F54", "F9549CA14D22D01A0091E9F0", "F9C58D54CA9B97BC2846CBFB", "F9E2E6A0B1E8E8B235B363D9", "F9797E6100CE6FFBBD6B8947", "F9DD8F610DA246042014D33D", "F9568B82BD5983916B5309AB", "F94B5188BE52897CECBB7E56", "F9014111B255B287E01020A9", "F930FE7EC9C8BD035663686F", "F99489AAEC2699DE5F73F639", "F96E1FCEED46248D2FB31892", "F94D8701F8392350AD1F80BA", "F9B572CF6993E3A12672F972", "F9DAE7385ADBBC89CDE5E536", "F9F9D30968EEEDA3F3800C18", "F971AB5DAC663C5C5BABC3D0", "F9065951FE09690D10FD86BA", "F9075F667C6F2B3907F93CF6", "F9AC7BF5796F643240613A34", "F9FEBF450F73E6A11708D706", "F98FCF35F66BDB75D2BD2C26", "F92AED25CA3A893A88D96539", "F9F93B75F14013482FAEC8D1", "F95C461012941560A18E2A86", "F91C97CAD705D02EB824679C", "F9AF9779156078049ADD9DA2", "F9F48510BE6A8237708F2D98", "F9CC6BD0EA34622482CEC93F", "F91E2798A602F51E762BA695", "F911B798265DB9D6AE886819", "F966B6F6468D8452FFBDB068", "F9ABE08ECC49366EB7FC88ED", "F9E89A53572165B5CB293AE3", "F9EEC1079179DE7EFAAB8D69", "F99E1BAD79EEC034BC463E5E", "F95271399D6B54662B8A092E", "F9F64CADDE7E75DEDCB05CFB", "F9756D2C1FF0ECE8B74A8AB0", "F9177D0AF8E6DED4A308A0DB", "F922B22F23B0A6225B65497E", "F92551E2D7B5EE512BC1A77D", "F94C943A8C4DA36C05990D69", "F9AB7BA0C54C9DBD568F7CD4", "F9BD2F0E145BA5C6B07BE658", "F943ACF1738E427FD8AB181D", "F9DFDDAC9FCE9C9E5446BA7D", "F933B01A1F03F60E0A178CDB", "F9FCC45A8C50D4F479FBE6D4", "F9DBD6D3816E8F1C48D231D1", "FAACFC4C448ECDB673402CC0", "AC95FF04420A1A5455AF9E69", "ACD9BC9FE5A34A5611441057", "ACA931B7202707E9925B1262", );
+			files = (
+				"F926BAA61CFBBF736F943D1C" ,
+				"F919A2D150582186EC03055E" ,
+				"F9A7168DD69AF06B26512861" ,
+				"F924378CF26D00CB7F7EEC23" ,
+				"F9BAF3C36F75176BE813FFBA" ,
+				"F93B6615FF3AA28B4EE9FB52" ,
+				"F91A2CD0E4C773FACD1057CC" ,
+				"F93292CE6C9A8178EBCFF431" ,
+				"F978CD6315961BA5F213AA17" ,
+				"F937D1B81E0F6C9BDBC18F54" ,
+				"F9549CA14D22D01A0091E9F0" ,
+				"F9C58D54CA9B97BC2846CBFB" ,
+				"F9E2E6A0B1E8E8B235B363D9" ,
+				"F9797E6100CE6FFBBD6B8947" ,
+				"F9DD8F610DA246042014D33D" ,
+				"F9568B82BD5983916B5309AB" ,
+				"F94B5188BE52897CECBB7E56" ,
+				"F9014111B255B287E01020A9" ,
+				"F930FE7EC9C8BD035663686F" ,
+				"F99489AAEC2699DE5F73F639" ,
+				"F96E1FCEED46248D2FB31892" ,
+				"F94D8701F8392350AD1F80BA" ,
+				"F9B572CF6993E3A12672F972" ,
+				"F9DAE7385ADBBC89CDE5E536" ,
+				"F9F9D30968EEEDA3F3800C18" ,
+				"F971AB5DAC663C5C5BABC3D0" ,
+				"F9065951FE09690D10FD86BA" ,
+				"F9075F667C6F2B3907F93CF6" ,
+				"F9AC7BF5796F643240613A34" ,
+				"F9FEBF450F73E6A11708D706" ,
+				"F98FCF35F66BDB75D2BD2C26" ,
+				"F92AED25CA3A893A88D96539" ,
+				"F9F93B75F14013482FAEC8D1" ,
+				"F95C461012941560A18E2A86" ,
+				"F91C97CAD705D02EB824679C" ,
+				"F9AF9779156078049ADD9DA2" ,
+				"F9F48510BE6A8237708F2D98" ,
+				"F9CC6BD0EA34622482CEC93F" ,
+				"F91E2798A602F51E762BA695" ,
+				"F911B798265DB9D6AE886819" ,
+				"F966B6F6468D8452FFBDB068" ,
+				"F9ABE08ECC49366EB7FC88ED" ,
+				"F9E89A53572165B5CB293AE3" ,
+				"F9EEC1079179DE7EFAAB8D69" ,
+				"F99E1BAD79EEC034BC463E5E" ,
+				"F95271399D6B54662B8A092E" ,
+				"F9F64CADDE7E75DEDCB05CFB" ,
+				"F9756D2C1FF0ECE8B74A8AB0" ,
+				"F9177D0AF8E6DED4A308A0DB" ,
+				"F922B22F23B0A6225B65497E" ,
+				"F92551E2D7B5EE512BC1A77D" ,
+				"F94C943A8C4DA36C05990D69" ,
+				"F9AB7BA0C54C9DBD568F7CD4" ,
+				"F9BD2F0E145BA5C6B07BE658" ,
+				"F943ACF1738E427FD8AB181D" ,
+				"F9DFDDAC9FCE9C9E5446BA7D" ,
+				"F933B01A1F03F60E0A178CDB" ,
+				"F9FCC45A8C50D4F479FBE6D4" ,
+				"F9DBD6D3816E8F1C48D231D1" ,
+				"FAACFC4C448ECDB673402CC0" ,
+				"AC95FF04420A1A5455AF9E69" ,
+				"ACD9BC9FE5A34A5611441057" ,
+				"ACA931B7202707E9925B1262" ,
+				"AC1900000000000000000101" ,
+				"AC1900000000000000000103" ,
+				"AC1900000000000000000105" ,
+				"AC1900000000000000000107" ,
+				"AC1900000000000000000109" ,
+				"AC190000000000000000010B" ,
+				"AC190000000000000000010D" ,
+				"AC190000000000000000010F" ,
+				"AC1900000000000000000111" ,
+				"AC1900000000000000000113" ,
+				"AC1900000000000000000115" ,
+				"AC1900000000000000000117" ,
+			);
 			"runOnlyForDeploymentPostprocessing" = "0";
 		};
 		F96EF6D85246FA36B39BE515 = {
@@ -1933,7 +2994,7 @@
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = AI_Hanlin;
+				TEST_TARGET_NAME = HanlinApp;
 			};
 			name = Debug;
 		};
@@ -1952,7 +3013,7 @@
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = AI_Hanlin;
+				TEST_TARGET_NAME = HanlinApp;
 			};
 			name = Release;
 		};
@@ -2225,7 +3286,8 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.itorah.chavrusachat;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = AI_Hanlin;
+				PRODUCT_MODULE_NAME = HanlinApp;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
@@ -2400,6 +3462,7 @@
 				MARKETING_VERSION = 0.7.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.itorah.chavrusachat.widgets;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_MODULE_NAME = HanlinScriptingWidgetsHost;
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -2428,6 +3491,7 @@
 				MARKETING_VERSION = 0.7.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.itorah.chavrusachat.widgets;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_MODULE_NAME = HanlinScriptingWidgetsHost;
 				PROVISIONING_PROFILE_SPECIFIER = "ChavrusaChat Widgets App Store";
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -2524,7 +3588,8 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.itorah.chavrusachat;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = AI_Hanlin;
+				PRODUCT_MODULE_NAME = HanlinApp;
 				PROVISIONING_PROFILE_SPECIFIER = "ChavrusaChat App Store";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -2809,59 +3874,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		AC1800000000000000000001 /* HanlinPresentationSDK */ = {isa = XCLocalSwiftPackageReference; relativePath = Packages/HanlinPresentationSDK; };
-		AC1600000000000000000001 /* HanlinSkillFormat */ = {isa = XCLocalSwiftPackageReference; relativePath = Packages/HanlinSkillFormat; };
-		AC1500000000000000000001 /* XCLocalSwiftPackageReference "HanlinAgentSDK" */ = {
+		AC1900000000000000000001 = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = Packages/HanlinAgentSDK;
-		};
-		F70000000000000000000010 /* XCLocalSwiftPackageReference "HanlinParityMiniApp" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = Packages/HanlinParityMiniApp;
-		};
-		F70000000000000000000020 /* XCLocalSwiftPackageReference "HanlinSefariaMiniApp" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = Packages/HanlinSefariaMiniApp;
-		};
-		F70000000000000000000050 /* XCLocalSwiftPackageReference "TorahLibraryKit" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = Packages/TorahLibraryKit;
-		};
-		F70000000000000000000030 /* XCLocalSwiftPackageReference "HanlinWikipediaMiniApp" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = Packages/HanlinWikipediaMiniApp;
-		};
-		F70000000000000000000040 /* XCLocalSwiftPackageReference "HanlinTextStudioMiniApp" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = Packages/HanlinTextStudioMiniApp;
-		};
-		A10000000000000000000045 /* XCLocalSwiftPackageReference "HanlinQuickJS" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = Packages/HanlinQuickJS;
-		};
-		A10000000000000000000046 /* XCLocalSwiftPackageReference "HanlinNativeScriptRuntime" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = Packages/HanlinNativeScriptRuntime;
-		};
-		A10000000000000000000048 /* XCLocalSwiftPackageReference "HanlinExpoNativeAPI" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = Packages/HanlinExpoNativeAPI;
-		};
-		A10000000000000000000047 /* XCLocalSwiftPackageReference "HanlinExpoRuntime" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = Packages/HanlinExpoRuntime;
-		};
-		A10000000000000000000044 /* XCLocalSwiftPackageReference "HanlinPlatform" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = Packages/HanlinPlatform;
-		};
-		A10000000000000000000043 /* XCLocalSwiftPackageReference "IOSSystemLite" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = Packages/IOSSystemLite;
-		};
-		F8000000000000000000005A /* W1-006 */ = {
-			"isa" = "XCLocalSwiftPackageReference";
-			"relativePath" = "Packages/HanlinProductSplit";
+			relativePath = ".";
 		};
 /* End XCLocalSwiftPackageReference section */
 
@@ -2958,122 +3973,122 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		AC1800000000000000000002 /* HanlinPresentationKit */ = {isa = XCSwiftPackageProductDependency; package = AC1800000000000000000001; productName = HanlinPresentationKit; };
-		AC1800000000000000000003 /* HanlinRichUI */ = {isa = XCSwiftPackageProductDependency; package = AC1800000000000000000001; productName = HanlinRichUI; };
-		AC1800000000000000000004 /* HanlinChatUI */ = {isa = XCSwiftPackageProductDependency; package = AC1800000000000000000001; productName = HanlinChatUI; };
-		AC1600000000000000000002 /* HanlinSkillFormat */ = {isa = XCSwiftPackageProductDependency; package = AC1600000000000000000001 /* HanlinSkillFormat */; productName = HanlinSkillFormat; };
-		AC1500000000000000000002 /* HanlinHostContracts */ = {isa = XCSwiftPackageProductDependency; package = AC1500000000000000000001 /* HanlinAgentSDK */; productName = HanlinHostContracts; };
-		AC1500000000000000000003 /* HanlinAgentCore */ = {isa = XCSwiftPackageProductDependency; package = AC1500000000000000000001 /* HanlinAgentSDK */; productName = HanlinAgentCore; };
-		AC1500000000000000000004 /* HanlinPersistenceAdapters */ = {isa = XCSwiftPackageProductDependency; package = AC1500000000000000000001 /* HanlinAgentSDK */; productName = HanlinPersistenceAdapters; };
+		AC1800000000000000000002 /* HanlinPresentationKit */ = {isa = XCSwiftPackageProductDependency; package = AC1900000000000000000001 /* HanlinSDK */; productName = HanlinPresentationKit; };
+		AC1800000000000000000003 /* HanlinRichUI */ = {isa = XCSwiftPackageProductDependency; package = AC1900000000000000000001 /* HanlinSDK */; productName = HanlinRichUI; };
+		AC1800000000000000000004 /* HanlinChatUI */ = {isa = XCSwiftPackageProductDependency; package = AC1900000000000000000001 /* HanlinSDK */; productName = HanlinChatUI; };
+		AC1600000000000000000002 /* HanlinSkillFormat */ = {isa = XCSwiftPackageProductDependency; package = AC1900000000000000000001 /* HanlinSDK */; productName = HanlinSkillFormat; };
+		AC1500000000000000000002 /* HanlinHostContracts */ = {isa = XCSwiftPackageProductDependency; package = AC1900000000000000000001 /* HanlinSDK */; productName = HanlinHostContracts; };
+		AC1500000000000000000003 /* HanlinAgentCore */ = {isa = XCSwiftPackageProductDependency; package = AC1900000000000000000001 /* HanlinSDK */; productName = HanlinAgentCore; };
+		AC1500000000000000000004 /* HanlinPersistenceAdapters */ = {isa = XCSwiftPackageProductDependency; package = AC1900000000000000000001 /* HanlinSDK */; productName = HanlinPersistenceAdapters; };
         C60000000000000000000002 /* SwiftStreamingMarkdown */ = {
             isa = XCSwiftPackageProductDependency;
             package = C60000000000000000000003;
             productName = SwiftStreamingMarkdown;
         };
-		E3A100000000000000000004 /* HanlinExpoWidgetNative */ = {isa = XCSwiftPackageProductDependency; package = A10000000000000000000047 /* HanlinExpoRuntime */; productName = HanlinExpoWidgetNative; };
+		E3A100000000000000000004 /* HanlinExpoWidgetNative */ = {isa = XCSwiftPackageProductDependency; package = AC1900000000000000000001 /* HanlinSDK */; productName = HanlinExpoWidgetNative; };
 		E3A100000000000000000002 /* HanlinExpoWidgetNative */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A10000000000000000000047 /* XCLocalSwiftPackageReference "HanlinExpoRuntime" */;
+			package = AC1900000000000000000001 /* HanlinSDK */;
 			productName = HanlinExpoWidgetNative;
 		};
 		F70000000000000000000011 /* HanlinMiniAppCore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A10000000000000000000044 /* XCLocalSwiftPackageReference "HanlinPlatform" */;
+			package = AC1900000000000000000001 /* HanlinSDK */;
 			productName = HanlinMiniAppCore;
 		};
 		F70000000000000000000012 /* HanlinParityMiniApp */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = F70000000000000000000010 /* XCLocalSwiftPackageReference "HanlinParityMiniApp" */;
+			package = AC1900000000000000000001 /* HanlinSDK */;
 			productName = HanlinParityMiniApp;
 		};
 		F70000000000000000000021 /* HanlinSefariaMiniApp */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = F70000000000000000000020 /* XCLocalSwiftPackageReference "HanlinSefariaMiniApp" */;
+			package = AC1900000000000000000001 /* HanlinSDK */;
 			productName = HanlinSefariaMiniApp;
 		};
 		F70000000000000000000051 /* TorahLibraryKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = F70000000000000000000050 /* XCLocalSwiftPackageReference "TorahLibraryKit" */;
+			package = AC1900000000000000000001 /* HanlinSDK */;
 			productName = TorahLibraryKit;
 		};
 		F70000000000000000000031 /* HanlinWikipediaMiniApp */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = F70000000000000000000030 /* XCLocalSwiftPackageReference "HanlinWikipediaMiniApp" */;
+			package = AC1900000000000000000001 /* HanlinSDK */;
 			productName = HanlinWikipediaMiniApp;
 		};
 		F70000000000000000000041 /* HanlinTextStudioMiniApp */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = F70000000000000000000040 /* XCLocalSwiftPackageReference "HanlinTextStudioMiniApp" */;
+			package = AC1900000000000000000001 /* HanlinSDK */;
 			productName = HanlinTextStudioMiniApp;
 		};
 		C10000000000000000000021 /* HanlinScriptExtensions */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A10000000000000000000044 /* XCLocalSwiftPackageReference "HanlinPlatform" */;
+			package = AC1900000000000000000001 /* HanlinSDK */;
 			productName = HanlinScriptExtensions;
 		};
 		C10000000000000000000022 /* HanlinScriptUI */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A10000000000000000000044 /* XCLocalSwiftPackageReference "HanlinPlatform" */;
+			package = AC1900000000000000000001 /* HanlinSDK */;
 			productName = HanlinScriptUI;
 		};
 		C10000000000000000000023 /* HanlinScriptingApplicationRuntime */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A10000000000000000000044 /* XCLocalSwiftPackageReference "HanlinPlatform" */;
+			package = AC1900000000000000000001 /* HanlinSDK */;
 			productName = HanlinScriptingApplicationRuntime;
 		};
 		C10000000000000000000024 /* HanlinScriptDeviceServices */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A10000000000000000000044 /* XCLocalSwiftPackageReference "HanlinPlatform" */;
+			package = AC1900000000000000000001 /* HanlinSDK */;
 			productName = HanlinScriptDeviceServices;
 		};
 		C10000000000000000000025 /* HanlinNativeScriptRuntime */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A10000000000000000000046 /* XCLocalSwiftPackageReference "HanlinNativeScriptRuntime" */;
+			package = AC1900000000000000000001 /* HanlinSDK */;
 			productName = HanlinNativeScriptRuntime;
 		};
 		C10000000000000000000027 /* HanlinExpoNativeAPI */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A10000000000000000000048 /* XCLocalSwiftPackageReference "HanlinExpoNativeAPI" */;
+			package = AC1900000000000000000001 /* HanlinSDK */;
 			productName = HanlinExpoNativeAPI;
 		};
 		C10000000000000000000026 /* HanlinExpoRuntime */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A10000000000000000000047 /* XCLocalSwiftPackageReference "HanlinExpoRuntime" */;
+			package = AC1900000000000000000001 /* HanlinSDK */;
 			productName = HanlinExpoRuntime;
 		};
 		C10000000000000000000020 /* HanlinScriptingSDK */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A10000000000000000000044 /* XCLocalSwiftPackageReference "HanlinPlatform" */;
+			package = AC1900000000000000000001 /* HanlinSDK */;
 			productName = HanlinScriptingSDK;
 		};
 		C10000000000000000000019 /* HanlinScriptStore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A10000000000000000000044 /* XCLocalSwiftPackageReference "HanlinPlatform" */;
+			package = AC1900000000000000000001 /* HanlinSDK */;
 			productName = HanlinScriptStore;
 		};
 		C10000000000000000000018 /* HanlinScriptCompiler */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A10000000000000000000044 /* XCLocalSwiftPackageReference "HanlinPlatform" */;
+			package = AC1900000000000000000001 /* HanlinSDK */;
 			productName = HanlinScriptCompiler;
 		};
 		C10000000000000000000017 /* HanlinScriptContracts */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A10000000000000000000044 /* XCLocalSwiftPackageReference "HanlinPlatform" */;
+			package = AC1900000000000000000001 /* HanlinSDK */;
 			productName = HanlinScriptContracts;
 		};
 		A10000000000000000000016 /* HanlinQuickJS */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A10000000000000000000045 /* XCLocalSwiftPackageReference "HanlinQuickJS" */;
+			package = AC1900000000000000000001 /* HanlinSDK */;
 			productName = HanlinQuickJS;
 		};
 		A10000000000000000000015 /* HanlinPlatformContracts */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A10000000000000000000044 /* XCLocalSwiftPackageReference "HanlinPlatform" */;
+			package = AC1900000000000000000001 /* HanlinSDK */;
 			productName = HanlinPlatformContracts;
 		};
 		A10000000000000000000014 /* IOSSystemLite */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A10000000000000000000043 /* XCLocalSwiftPackageReference "IOSSystemLite" */;
+			package = AC1900000000000000000001 /* HanlinSDK */;
 			productName = IOSSystemLite;
 		};
 		A10000000000000000000011 /* MCP */ = {
@@ -3128,17 +4143,17 @@
 		};
 		F80000000000000000000051 /* W1-006 */ = {
 			"isa" = "XCSwiftPackageProductDependency";
-			"package" = "A10000000000000000000044";
+			"package" = AC1900000000000000000001 /* HanlinSDK */;
 			"productName" = "HanlinPlatformContracts";
 		};
 		F80000000000000000000052 /* W1-006 */ = {
 			"isa" = "XCSwiftPackageProductDependency";
-			"package" = "A10000000000000000000044";
+			"package" = AC1900000000000000000001 /* HanlinSDK */;
 			"productName" = "HanlinMiniAppCore";
 		};
 		F80000000000000000000053 /* W1-006 */ = {
 			"isa" = "XCSwiftPackageProductDependency";
-			"package" = "F8000000000000000000005A";
+			"package" = AC1900000000000000000001 /* HanlinSDK */;
 			"productName" = "HanlinProductSplit";
 		};
 		AC1700000000000000000002 = {isa = XCSwiftPackageProductDependency; package = AC1700000000000000000001; productName = A2UISwiftCore; };
@@ -3148,6 +4163,56 @@
 		AC170000000000000000000F = {isa = XCSwiftPackageProductDependency; package = AC170000000000000000000E; productName = SwiftTreeSitter; };
 		AC1700000000000000000013 = {isa = XCSwiftPackageProductDependency; package = AC1700000000000000000012; productName = TreeSitter; };
 		AC1700000000000000000017 = {isa = XCSwiftPackageProductDependency; package = AC1700000000000000000016; productName = TreeSitterBash; };
+		AC1900000000000000000002 = {
+			isa = XCSwiftPackageProductDependency;
+			package = AC1900000000000000000001;
+			productName = HanlinApplication;
+		};
+		AC1900000000000000000003 = {
+			isa = XCSwiftPackageProductDependency;
+			package = AC1900000000000000000001;
+			productName = HanlinA2UI;
+		};
+		AC1900000000000000000004 = {
+			isa = XCSwiftPackageProductDependency;
+			package = AC1900000000000000000001;
+			productName = HanlinLocalization;
+		};
+		AC1900000000000000000005 = {
+			isa = XCSwiftPackageProductDependency;
+			package = AC1900000000000000000001;
+			productName = HanlinAgentActivityCore;
+		};
+		AC1900000000000000000040 = {
+			isa = XCSwiftPackageProductDependency;
+			package = AC1900000000000000000001;
+			productName = HanlinExtensionContracts;
+		};
+		AC1900000000000000000041 = {
+			isa = XCSwiftPackageProductDependency;
+			package = AC1900000000000000000001;
+			productName = HanlinShareExtensionUI;
+		};
+		AC1900000000000000000042 = {
+			isa = XCSwiftPackageProductDependency;
+			package = AC1900000000000000000001;
+			productName = HanlinNotificationExtension;
+		};
+		AC1900000000000000000043 = {
+			isa = XCSwiftPackageProductDependency;
+			package = AC1900000000000000000001;
+			productName = HanlinTranslationUI;
+		};
+		AC1900000000000000000044 = {
+			isa = XCSwiftPackageProductDependency;
+			package = AC1900000000000000000001;
+			productName = HanlinWidgetUI;
+		};
+		AC1900000000000000000045 = {
+			isa = XCSwiftPackageProductDependency;
+			package = AC1900000000000000000001;
+			productName = HanlinMiniAppsUI;
+		};
 /* End XCSwiftPackageProductDependency section */
 
 /* Integrated standalone target and transport objects */

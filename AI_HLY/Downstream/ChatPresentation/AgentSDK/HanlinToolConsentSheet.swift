@@ -1,3 +1,4 @@
+import HanlinLocalization
 import SwiftUI
 
 /// The user reviews the same immutable request the original Host will validate again.
@@ -10,26 +11,26 @@ struct HanlinToolConsentSheet: View {
         NavigationStack {
             Form {
                 Section {
-                    LabeledContent("Tool", value: request.tool)
+                    LabeledContent(hanlin: "Tool", value: request.tool)
                     Text(request.remembersDecision
-                        ? String(localized: "This permission will also apply in your other conversations.")
-                        : String(localized: "This operation uses Hanlin’s access. Review its request before allowing it once."))
+                        ? String(localized: "This permission will also apply in your other conversations.", bundle: HanlinLocalization.bundle)
+                        : String(localized: "This operation uses Hanlin’s access. Review its request before allowing it once.", bundle: HanlinLocalization.bundle))
                         .font(HanlinTypography.footnote).foregroundStyle(.secondary)
                 }
-                Section("Request") {
+                Section(hanlin: "Request") {
                     Text(String(decoding: request.originalArgumentsJSON ?? Data(), as: UTF8.self))
                         .font(HanlinTypography.footnote.monospaced())
                         .textSelection(.enabled)
                         .accessibilityIdentifier("hanlin-tool-consent-original-request")
                 }
             }
-            .navigationTitle("Allow tool operation?")
+            .navigationTitle(Text("Allow tool operation?", bundle: HanlinLocalization.bundle))
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancel", role: .cancel) { answer(false) }
+                    Button(hanlin: "Cancel", role: .cancel) { answer(false) }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button(request.remembersDecision ? String(localized: "Allow and remember") : String(localized: "Allow once")) { answer(true) }
+                    Button(request.remembersDecision ? String(localized: "Allow and remember", bundle: HanlinLocalization.bundle) : String(localized: "Allow once", bundle: HanlinLocalization.bundle)) { answer(true) }
                         .accessibilityIdentifier("hanlin-tool-consent-allow-once")
                 }
             }
@@ -44,7 +45,7 @@ struct HanlinPhase2AcceptanceStatusView: View {
     @State private var requests = 0
     var body: some View {
         HStack {
-            Text("\(requests)").accessibilityIdentifier("hanlin-phase2-request-count")
+            Text("\(requests)", bundle: HanlinLocalization.bundle).accessibilityIdentifier("hanlin-phase2-request-count")
             Text(conversationID?.uuidString ?? "unavailable").accessibilityIdentifier("hanlin-phase2-chat-id")
         }
         .font(HanlinTypography.caption2)

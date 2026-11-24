@@ -1,0 +1,89 @@
+{
+  "base": "424137fa",
+  "original_source": "AI_HLY/Views/Components/ChatViewComponents.swift",
+  "original_source_sha256": "3707b12a86b574898a6a88efc8561a72e804b5c8c852c7232a02799d6ba4f852",
+  "scope": "Only canonical relocation, public constructors/access and app compatibility aliases; no algorithm, animation timing or view-body changes",
+  "body_checks": [
+    {
+      "member": "LoadingGradientText.body",
+      "pass": true,
+      "original_body_tokens_sha256": "1aff58408630f9984ca9ed86437dbc0faa9b50b90a5b8a7112ea67e69816ca81"
+    },
+    {
+      "member": "ChatScrollImmediateContentTouches.makeUIView(context:)",
+      "pass": true,
+      "original_body_tokens_sha256": "c4279be6403176a125e3db09e6d85d82ae24f1a3f24730cce2dc4986787c72d8"
+    },
+    {
+      "member": "ChatScrollImmediateContentTouches.updateUIView(_:context:)",
+      "pass": true,
+      "original_body_tokens_sha256": "6fd42ddff89f3b2973acc1ceaf645975b68b007325f9b26454bbe07422b6837e"
+    },
+    {
+      "member": "ChatScrollImmediateContentTouches.sizeThatFits(_:uiView:context:)",
+      "pass": true,
+      "original_body_tokens_sha256": "4e9090a850ac886acac3524139847eb1bdf60fec351e3b256c55a2856c7b7541"
+    },
+    {
+      "member": "ChatScrollImmediateContentTouches.dismantleUIView(_:coordinator:)",
+      "pass": true,
+      "original_body_tokens_sha256": "ddc1498475f34794918b5eff1c0a0db36a367632f73a248a12e6511d835963ab"
+    },
+    {
+      "member": "ChatScrollImmediateContentTouches.ConfigurationView.didMoveToWindow()",
+      "pass": true,
+      "original_body_tokens_sha256": "09fe9ed0a2fb3e4b12ab8ea09210da6654ec3cd57d8a9c9b7f436b859fbb3eee"
+    },
+    {
+      "member": "ChatScrollImmediateContentTouches.ConfigurationView.didMoveToSuperview()",
+      "pass": true,
+      "original_body_tokens_sha256": "bf29be731d0a85f16a492a775a1a5f7e7ce617945525eb86a9e6c931270e5739"
+    },
+    {
+      "member": "ChatScrollImmediateContentTouches.ConfigurationView.layoutSubviews()",
+      "pass": true,
+      "original_body_tokens_sha256": "4ff389ed524aa1e62a40ad0206f6a14b5ea9b7b2d6993e1730ce534f11123e00"
+    },
+    {
+      "member": "ChatScrollImmediateContentTouches.ConfigurationView.restoreOriginalValue()",
+      "pass": true,
+      "original_body_tokens_sha256": "8aa07d078c176a9944bdb3ffbfbf8225f805054a3c09fa390fc1879b876cb2aa"
+    },
+    {
+      "member": "ChatScrollImmediateContentTouches.ConfigurationView.applyIfNeeded()",
+      "pass": true,
+      "original_body_tokens_sha256": "ff0b9d383ac3bd65fdf518ac701dea3a615b1622d5447a379a0a3ea7f84644bc"
+    },
+    {
+      "member": "chatScrollImmediateContentTouches(onScrollViewChanged:)",
+      "pass": true,
+      "original_body_tokens_sha256": "1feecc9d11aa9815dd0a3bc6bc71fb32e97c62def20a9403dc26184036d017e2"
+    },
+    {
+      "member": "ToggleButton.body",
+      "pass": true,
+      "original_body_tokens_sha256": "0077382f80e9bb24176bb3fc99a9cba231096de17a4af276c3382f10976eb170"
+    }
+  ],
+  "passed": 12,
+  "total": 12,
+  "swift_parse": [
+    {
+      "path": "AI_HLY/Views/Components/ChatViewComponents.swift",
+      "exit_code": 0,
+      "sha256": "715eaf59b335940f43ebbbe8169a5eae5fa0b7de47b998626cf710cf1e59fb76"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinOriginalActivityControls.swift",
+      "exit_code": 0,
+      "sha256": "1a88b02132e48ba6fece0e9227943951e1c0b6a379abda5591e4537241833e71"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Scrolling/ChatScrollImmediateContentTouches.swift",
+      "exit_code": 0,
+      "sha256": "d600437a0d38a9ebaddad0b02c1f4bd46f39b1ef2577f62b6d32cd3cde357d28"
+    }
+  ],
+  "native_compilation": "Pending root-owned combined gate",
+  "default_appearance": "Original LoadingGradientText calls canonical HanlinActivityTitle; existing appearance/preset/Reduce Motion behavior inherited unchanged"
+}

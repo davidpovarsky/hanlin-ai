@@ -1,0 +1,13 @@
+{
+  "reviewer": "motion_acceptance",
+  "reviewed_at_utc": "2026-11-24T00:51:46.503139+00:00",
+  "base": "37d108e1387114b094a7f97be823c4231ede2a65",
+  "candidate_diff_sha256": "9304f3763abfb9e609ecfa043a9bd894d588e1e6b2e8f9a7b876270d6191d385",
+  "result": "PASS_SOURCE_REVIEW",
+  "findings": [
+    "Default true preserves original overlay callers; only external compact composer disables backdrop.",
+    "Original gradient is hit-testing false; visual obstruction is distinct from missing auto-follow.",
+    "All scheduling guards/callback/order retained; diagnostic fields are geometry/policy/counters only."
+  ],
+  "native_acceptance": "NOT_RUN"
+}

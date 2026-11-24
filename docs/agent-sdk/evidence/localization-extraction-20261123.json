@@ -1,0 +1,2656 @@
+{
+  "schema_version": 1,
+  "date_utc": "2026-11-23",
+  "work": "Canonical original localization and visual-resource bundle for shared SDK",
+  "baseline_commit": "c660f594636a4423e3bbd051078e032527f94384",
+  "module": "HanlinLocalization",
+  "catalogs": [
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/Localizable.xcstrings",
+      "keys": 1118,
+      "source_language": "zh-Hans",
+      "sha256": "c84abcc423c6f0b27d09002f5a9d43da83d1adc3c7418b903fe8b63afab184c5",
+      "locale_entries": {
+        "en": 1117,
+        "he": 1117,
+        "zh-Hans": 597
+      }
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/MCPLocalizable.xcstrings",
+      "keys": 134,
+      "source_language": "en",
+      "sha256": "00f9e7f6da0a1d8c6976f482cd3675b0e5fb07a9f3fdfae204745d43aa24c8c7",
+      "locale_entries": {
+        "en": 134,
+        "he": 134,
+        "zh-Hans": 134
+      }
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/RuntimeLocalizable.xcstrings",
+      "keys": 275,
+      "source_language": "en",
+      "sha256": "4cf11a72d5cc7533172451cb46a08879ea1094938b560aef4059b3c3c42a6d4d",
+      "locale_entries": {
+        "en": 275,
+        "he": 275,
+        "zh-Hans": 275
+      }
+    }
+  ],
+  "resource_moves": {
+    "files": [
+      {
+        "original_path": "AI_HLY/Resource/Localizable.xcstrings",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/Localizable.xcstrings",
+        "sha256": "c84abcc423c6f0b27d09002f5a9d43da83d1adc3c7418b903fe8b63afab184c5",
+        "bytes": 529267
+      },
+      {
+        "original_path": "AI_HLY/Downstream/MCP/Resources/MCPLocalizable.xcstrings",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/MCPLocalizable.xcstrings",
+        "sha256": "00f9e7f6da0a1d8c6976f482cd3675b0e5fb07a9f3fdfae204745d43aa24c8c7",
+        "bytes": 44266
+      },
+      {
+        "original_path": "AI_HLY/Downstream/RuntimeCore/Resources/RuntimeLocalizable.xcstrings",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/RuntimeLocalizable.xcstrings",
+        "sha256": "4cf11a72d5cc7533172451cb46a08879ea1094938b560aef4059b3c3c42a6d4d",
+        "bytes": 182141
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/HLAutumn.colorset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/HLAutumn.colorset/Contents.json",
+        "sha256": "8d2920f3089e205b9b96bd31dfb16268daf5f244a5e0aad1674d1bac17f6ded0",
+        "bytes": 701
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/HLAzure.colorset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/HLAzure.colorset/Contents.json",
+        "sha256": "96b8523c3fb7da097e523965c2a67a713809556524145a87c20647479deec730",
+        "bytes": 701
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/HLBlue.colorset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/HLBlue.colorset/Contents.json",
+        "sha256": "e8074a9eaed399ee02476150c44b117b6515757354db8b9c931b733db4f3180e",
+        "bytes": 701
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/HLBluefont.colorset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/HLBluefont.colorset/Contents.json",
+        "sha256": "26b4ae7db29ab464477bb180ee79ee8ed773d293ed33c70978885500b8300b08",
+        "bytes": 701
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/HLBrown.colorset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/HLBrown.colorset/Contents.json",
+        "sha256": "a5b8aa179c93511ba6f0d035cad92d6879d000cda111b6d7a18778360e03bacc",
+        "bytes": 701
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/HLCyanite.colorset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/HLCyanite.colorset/Contents.json",
+        "sha256": "7f0c517c1e9f50d68e6c865934d4bb4200e62092fa9e5059d60da49c3785f58d",
+        "bytes": 701
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/HLGray.colorset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/HLGray.colorset/Contents.json",
+        "sha256": "081101bfa952e1ffd36060666283c21121816cd406947b1828eac8f4bb2bc92e",
+        "bytes": 701
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/HLGreen.colorset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/HLGreen.colorset/Contents.json",
+        "sha256": "1b3774ce7525383d0ee03a7aa45484df0d88a90e024ad967ba6ebe90f4625b2d",
+        "bytes": 701
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/HLIndigo.colorset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/HLIndigo.colorset/Contents.json",
+        "sha256": "c191986e3c1c9e9c2ec69d0c51628b00e9f7049fb4d86fd77e40ff1ab75c91e5",
+        "bytes": 701
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/HLNavy.colorset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/HLNavy.colorset/Contents.json",
+        "sha256": "7ad9e76b1fc0d15d56f5da925943bc0c9dcccc3e9551cfb22b79f549485836ea",
+        "bytes": 701
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/HLOrange.colorset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/HLOrange.colorset/Contents.json",
+        "sha256": "649a9ff7428e9bb8d16d0f5c4732d031bc0901332aa55b7ca4b5aa515fc5646c",
+        "bytes": 701
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/HLPink.colorset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/HLPink.colorset/Contents.json",
+        "sha256": "787a40135b6e98bfcf1e49c89308dd3d2aa0fbde71d1bac0986b5738942b5d35",
+        "bytes": 701
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/HLPlum.colorset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/HLPlum.colorset/Contents.json",
+        "sha256": "afac7ddc7d7e56e65a350c983b0ae7d7c0c5c90c6c3ed0f49a65ac9e78a5b1e8",
+        "bytes": 701
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/HLPurple.colorset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/HLPurple.colorset/Contents.json",
+        "sha256": "85cbf5652f802d4599adb62448a2bf97221dcd72cf01d0d2b7af1f55fe82b251",
+        "bytes": 701
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/HLRed.colorset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/HLRed.colorset/Contents.json",
+        "sha256": "6416355ed501e875567a1715f9d898d9482b5b5e805e1932b3bcbacb1a30687c",
+        "bytes": 701
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/HLSpring.colorset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/HLSpring.colorset/Contents.json",
+        "sha256": "90c79d5f10b83c1924ef77ba37b7b710bd896451b5e94db0ca39a886f9993818",
+        "bytes": 701
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/HLTeal.colorset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/HLTeal.colorset/Contents.json",
+        "sha256": "a21d974963a74787db8433fbafd56fb4cbff4d3e3b1feef1e76e0d9480e7b927",
+        "bytes": 701
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/HLYellow.colorset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/HLYellow.colorset/Contents.json",
+        "sha256": "7964b31f2ecea2e968bd98b61c1bb88a17d02924343a5e456fba9651762a75fd",
+        "bytes": 701
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/ai302.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/ai302.imageset/Contents.json",
+        "sha256": "f63d40a75e5f3948f8f4c19d014020a8393cd401ccf403bf0295b918df0d98df",
+        "bytes": 389
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/ai302.imageset/ai302-color 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/ai302.imageset/ai302-color 1.png",
+        "sha256": "3bbd1cb755996e47fd041193f7022a96eb6f9058d3910598846bf539eb924fad",
+        "bytes": 58641
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/ai302.imageset/ai302-color 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/ai302.imageset/ai302-color 2.png",
+        "sha256": "3bbd1cb755996e47fd041193f7022a96eb6f9058d3910598846bf539eb924fad",
+        "bytes": 58641
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/ai302.imageset/ai302-color.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/ai302.imageset/ai302-color.png",
+        "sha256": "3bbd1cb755996e47fd041193f7022a96eb6f9058d3910598846bf539eb924fad",
+        "bytes": 58641
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/aihubmix.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/aihubmix.imageset/Contents.json",
+        "sha256": "5a104695d210e0588f86e5fef143384ff8cd5a321901d2c631a400e0c8d13c79",
+        "bytes": 398
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/aihubmix.imageset/aihubmix-color 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/aihubmix.imageset/aihubmix-color 1.png",
+        "sha256": "720817d3ef36df938813103d304a47ee545d594bd727eb364f87566fe424e811",
+        "bytes": 53838
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/aihubmix.imageset/aihubmix-color 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/aihubmix.imageset/aihubmix-color 2.png",
+        "sha256": "720817d3ef36df938813103d304a47ee545d594bd727eb364f87566fe424e811",
+        "bytes": 53838
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/aihubmix.imageset/aihubmix-color.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/aihubmix.imageset/aihubmix-color.png",
+        "sha256": "720817d3ef36df938813103d304a47ee545d594bd727eb364f87566fe424e811",
+        "bytes": 53838
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/amap.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/amap.imageset/Contents.json",
+        "sha256": "34aa78f3badd66eca2ba753445e60bb3e6f2218d05437325d84d7c24664677a3",
+        "bytes": 452
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/amap.imageset/c28b713232a745b497a3d136b38e15c7 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/amap.imageset/c28b713232a745b497a3d136b38e15c7 1.png",
+        "sha256": "8766b3e76108c6b2e07bcf7d91ba08593a462d22ccc1ab6b39963d4128c1550f",
+        "bytes": 363379
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/amap.imageset/c28b713232a745b497a3d136b38e15c7 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/amap.imageset/c28b713232a745b497a3d136b38e15c7 2.png",
+        "sha256": "8766b3e76108c6b2e07bcf7d91ba08593a462d22ccc1ab6b39963d4128c1550f",
+        "bytes": 363379
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/amap.imageset/c28b713232a745b497a3d136b38e15c7.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/amap.imageset/c28b713232a745b497a3d136b38e15c7.png",
+        "sha256": "8766b3e76108c6b2e07bcf7d91ba08593a462d22ccc1ab6b39963d4128c1550f",
+        "bytes": 363379
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/applemap.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/applemap.imageset/Contents.json",
+        "sha256": "21f669b0bc7042555a5ae69e70ac8335dc499b226bd6ff1ed1c721af84e700e1",
+        "bytes": 458
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/applemap.imageset/footer_icon__pr1hkqvdj7e6_large_2x 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/applemap.imageset/footer_icon__pr1hkqvdj7e6_large_2x 1.png",
+        "sha256": "3dd9ec28ff51820dd6670290783e48097a527fbcd734d43f2234368f8321b9a2",
+        "bytes": 32259
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/applemap.imageset/footer_icon__pr1hkqvdj7e6_large_2x 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/applemap.imageset/footer_icon__pr1hkqvdj7e6_large_2x 2.png",
+        "sha256": "3dd9ec28ff51820dd6670290783e48097a527fbcd734d43f2234368f8321b9a2",
+        "bytes": 32259
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/applemap.imageset/footer_icon__pr1hkqvdj7e6_large_2x.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/applemap.imageset/footer_icon__pr1hkqvdj7e6_large_2x.png",
+        "sha256": "3dd9ec28ff51820dd6670290783e48097a527fbcd734d43f2234368f8321b9a2",
+        "bytes": 32259
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/applogo.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/applogo.imageset/Contents.json",
+        "sha256": "b581179dc5b8fde0933843ca75d7f4a1e401c3d79e59a427ffe8c5edc118005d",
+        "bytes": 380
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/applogo.imageset/logo_3_0 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/applogo.imageset/logo_3_0 1.png",
+        "sha256": "33627c30c1c853af9e9e9a27502a831b8b2c3f0ad286c91e580a5e0159163841",
+        "bytes": 225416
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/applogo.imageset/logo_3_0 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/applogo.imageset/logo_3_0 2.png",
+        "sha256": "33627c30c1c853af9e9e9a27502a831b8b2c3f0ad286c91e580a5e0159163841",
+        "bytes": 225416
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/applogo.imageset/logo_3_0.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/applogo.imageset/logo_3_0.png",
+        "sha256": "33627c30c1c853af9e9e9a27502a831b8b2c3f0ad286c91e580a5e0159163841",
+        "bytes": 225416
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/arxiv.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/arxiv.imageset/Contents.json",
+        "sha256": "545dc958ee147e16e080734315da90960463ecf5a268c497a72565b555637707",
+        "bytes": 425
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/arxiv.imageset/arxiv-logomark-small@2x 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/arxiv.imageset/arxiv-logomark-small@2x 1.png",
+        "sha256": "8a9b6f6422b16d06b4feada756072382a3d9bb0f016e1af646fabb5b79b1950e",
+        "bytes": 2066
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/arxiv.imageset/arxiv-logomark-small@2x 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/arxiv.imageset/arxiv-logomark-small@2x 2.png",
+        "sha256": "8a9b6f6422b16d06b4feada756072382a3d9bb0f016e1af646fabb5b79b1950e",
+        "bytes": 2066
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/arxiv.imageset/arxiv-logomark-small@2x.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/arxiv.imageset/arxiv-logomark-small@2x.png",
+        "sha256": "8a9b6f6422b16d06b4feada756072382a3d9bb0f016e1af646fabb5b79b1950e",
+        "bytes": 2066
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/assistant.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/assistant.imageset/Contents.json",
+        "sha256": "f7358cd04623cd6f4dddc3ba43ccc2ca058e3957a19738dd911226b846f13674",
+        "bytes": 365
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/assistant.imageset/cpu 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/assistant.imageset/cpu 1.png",
+        "sha256": "12ca0f00afd51ab9f41f2488d0c9e7332bbe6a05bf0e8d59566731359aa14008",
+        "bytes": 7997
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/assistant.imageset/cpu 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/assistant.imageset/cpu 2.png",
+        "sha256": "12ca0f00afd51ab9f41f2488d0c9e7332bbe6a05bf0e8d59566731359aa14008",
+        "bytes": 7997
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/assistant.imageset/cpu.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/assistant.imageset/cpu.png",
+        "sha256": "12ca0f00afd51ab9f41f2488d0c9e7332bbe6a05bf0e8d59566731359aa14008",
+        "bytes": 7997
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/baidumap.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/baidumap.imageset/Contents.json",
+        "sha256": "1c64e746b8d4aa756be45bd33506ad86d86dc2fbe112c1fb37a5a5cdbe74861b",
+        "bytes": 386
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/baidumap.imageset/baidu-copy 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/baidumap.imageset/baidu-copy 1.png",
+        "sha256": "48e2739ef7cf7ba3d0d83dc314dc115028dbae531c17f982e521ae5d20186d35",
+        "bytes": 5951
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/baidumap.imageset/baidu-copy 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/baidumap.imageset/baidu-copy 2.png",
+        "sha256": "48e2739ef7cf7ba3d0d83dc314dc115028dbae531c17f982e521ae5d20186d35",
+        "bytes": 5951
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/baidumap.imageset/baidu-copy.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/baidumap.imageset/baidu-copy.png",
+        "sha256": "48e2739ef7cf7ba3d0d83dc314dc115028dbae531c17f982e521ae5d20186d35",
+        "bytes": 5951
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/bing.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/bing.imageset/Contents.json",
+        "sha256": "de0c3ce4d9e15c8ecaeebc910219dd10825d2e4a1fec40c16c50dba968ace625",
+        "bytes": 386
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/bing.imageset/bing-color 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/bing.imageset/bing-color 1.png",
+        "sha256": "20f7459f342ebecbbbca50524e63026404f7ec4031708455f7ae339b0f432f22",
+        "bytes": 49912
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/bing.imageset/bing-color 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/bing.imageset/bing-color 2.png",
+        "sha256": "20f7459f342ebecbbbca50524e63026404f7ec4031708455f7ae339b0f432f22",
+        "bytes": 49912
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/bing.imageset/bing-color.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/bing.imageset/bing-color.png",
+        "sha256": "20f7459f342ebecbbbca50524e63026404f7ec4031708455f7ae339b0f432f22",
+        "bytes": 49912
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/bochaai.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/bochaai.imageset/Contents.json",
+        "sha256": "31c1c2e0633f3c246a7c2c1ec66bcea50b312f5c07c65d95f21188e49cb57d45",
+        "bytes": 368
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/bochaai.imageset/icon 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/bochaai.imageset/icon 1.png",
+        "sha256": "b1cddc3d7ae00e42c99747cc754deca102168c1826c967565d75d5fefb51d5a2",
+        "bytes": 147949
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/bochaai.imageset/icon 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/bochaai.imageset/icon 2.png",
+        "sha256": "b1cddc3d7ae00e42c99747cc754deca102168c1826c967565d75d5fefb51d5a2",
+        "bytes": 147949
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/bochaai.imageset/icon.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/bochaai.imageset/icon.png",
+        "sha256": "b1cddc3d7ae00e42c99747cc754deca102168c1826c967565d75d5fefb51d5a2",
+        "bytes": 147949
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/brave.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/brave.imageset/Contents.json",
+        "sha256": "107cafb29143c541dbd86bdbb8bcfc113bafb615aec19ee1c9e34388e6e8624c",
+        "bytes": 371
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/brave.imageset/brave 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/brave.imageset/brave 1.png",
+        "sha256": "b9ddb562825be6740e195fd208d93611b9a14e32860c8ddc48a53597b220b90f",
+        "bytes": 513467
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/brave.imageset/brave 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/brave.imageset/brave 2.png",
+        "sha256": "b9ddb562825be6740e195fd208d93611b9a14e32860c8ddc48a53597b220b90f",
+        "bytes": 513467
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/brave.imageset/brave.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/brave.imageset/brave.png",
+        "sha256": "b9ddb562825be6740e195fd208d93611b9a14e32860c8ddc48a53597b220b90f",
+        "bytes": 513467
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/cherry.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/cherry.imageset/Contents.json",
+        "sha256": "6f597a8c502b22d34a1f90eba21001a9dd7df6ee02167896396ff41edf419611",
+        "bytes": 383
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/cherry.imageset/cherry_in 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/cherry.imageset/cherry_in 1.png",
+        "sha256": "7ba006cbde3619816475c927d876e569908c76274c5731120c612de8ffc31f1a",
+        "bytes": 37164
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/cherry.imageset/cherry_in 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/cherry.imageset/cherry_in 2.png",
+        "sha256": "7ba006cbde3619816475c927d876e569908c76274c5731120c612de8ffc31f1a",
+        "bytes": 37164
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/cherry.imageset/cherry_in.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/cherry.imageset/cherry_in.png",
+        "sha256": "7ba006cbde3619816475c927d876e569908c76274c5731120c612de8ffc31f1a",
+        "bytes": 37164
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/claude.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/claude.imageset/Contents.json",
+        "sha256": "3d8fe258377d27a449b249aad4ae6e8c06d2218bfb8333d1310471d812cc9626",
+        "bytes": 392
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/claude.imageset/claude-color 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/claude.imageset/claude-color 1.png",
+        "sha256": "c266266e64f6fdb47826b9d926edacb634599bffcee5307d10f13635059d1a44",
+        "bytes": 54846
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/claude.imageset/claude-color 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/claude.imageset/claude-color 2.png",
+        "sha256": "c266266e64f6fdb47826b9d926edacb634599bffcee5307d10f13635059d1a44",
+        "bytes": 54846
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/claude.imageset/claude-color.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/claude.imageset/claude-color.png",
+        "sha256": "c266266e64f6fdb47826b9d926edacb634599bffcee5307d10f13635059d1a44",
+        "bytes": 54846
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/deepseek.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/deepseek.imageset/Contents.json",
+        "sha256": "351ad32ad5b605a2dee60fac208464d99e589b9370b38aa8dac75a137fe40c5f",
+        "bytes": 380
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/deepseek.imageset/deepseek 1.svg",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/deepseek.imageset/deepseek 1.svg",
+        "sha256": "456c7754c2eba2c2659d5b70b9f4bfa2fc59871445f49983d6d5227057cfe3c3",
+        "bytes": 3296
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/deepseek.imageset/deepseek 2.svg",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/deepseek.imageset/deepseek 2.svg",
+        "sha256": "456c7754c2eba2c2659d5b70b9f4bfa2fc59871445f49983d6d5227057cfe3c3",
+        "bytes": 3296
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/deepseek.imageset/deepseek.svg",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/deepseek.imageset/deepseek.svg",
+        "sha256": "456c7754c2eba2c2659d5b70b9f4bfa2fc59871445f49983d6d5227057cfe3c3",
+        "bytes": 3296
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/defaultIcon.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/defaultIcon.imageset/Contents.json",
+        "sha256": "cfc377d6d6d67506a23e6b8a67cd32a27b5ac4049a8cbb078ac9a4427c72200f",
+        "bytes": 380
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/defaultIcon.imageset/sparkles 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/defaultIcon.imageset/sparkles 1.png",
+        "sha256": "e82256e8c02d2fbaeff5eb3d5486655ac96ca90ea329e5e78a500b0c1980170b",
+        "bytes": 10176
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/defaultIcon.imageset/sparkles 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/defaultIcon.imageset/sparkles 2.png",
+        "sha256": "e82256e8c02d2fbaeff5eb3d5486655ac96ca90ea329e5e78a500b0c1980170b",
+        "bytes": 10176
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/defaultIcon.imageset/sparkles.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/defaultIcon.imageset/sparkles.png",
+        "sha256": "e82256e8c02d2fbaeff5eb3d5486655ac96ca90ea329e5e78a500b0c1980170b",
+        "bytes": 10176
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/doubao.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/doubao.imageset/Contents.json",
+        "sha256": "d36d217490f81bbbfb6d9166756e981a8fc41b9718cfb8f2d2888f527a332988",
+        "bytes": 392
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/doubao.imageset/doubao-color 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/doubao.imageset/doubao-color 1.png",
+        "sha256": "91ae6b55afe0aa5beb7beea802440d16f632387638d880477e2fd030117f1e5c",
+        "bytes": 43417
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/doubao.imageset/doubao-color 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/doubao.imageset/doubao-color 2.png",
+        "sha256": "91ae6b55afe0aa5beb7beea802440d16f632387638d880477e2fd030117f1e5c",
+        "bytes": 43417
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/doubao.imageset/doubao-color.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/doubao.imageset/doubao-color.png",
+        "sha256": "91ae6b55afe0aa5beb7beea802440d16f632387638d880477e2fd030117f1e5c",
+        "bytes": 43417
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/exa.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/exa.imageset/Contents.json",
+        "sha256": "d0891b57dc17fcca8984312b7d4b17a581b323101c68e949a3221e085d17c9a6",
+        "bytes": 371
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/exa.imageset/light 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/exa.imageset/light 1.png",
+        "sha256": "ac317a50c6222202f8b4eb254850b76f4a75aabf55987b00652689e00ec7346d",
+        "bytes": 122762
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/exa.imageset/light 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/exa.imageset/light 2.png",
+        "sha256": "ac317a50c6222202f8b4eb254850b76f4a75aabf55987b00652689e00ec7346d",
+        "bytes": 122762
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/exa.imageset/light.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/exa.imageset/light.png",
+        "sha256": "ac317a50c6222202f8b4eb254850b76f4a75aabf55987b00652689e00ec7346d",
+        "bytes": 122762
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/gitee.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/gitee.imageset/Contents.json",
+        "sha256": "1e4a3d5a4eac4406540d66f5f4527177c95bf8981f49413d7ca274f61bcbb404",
+        "bytes": 377
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/gitee.imageset/giteeai 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/gitee.imageset/giteeai 1.png",
+        "sha256": "0e02d453f90709205127f65d31555c036ef9deabda0686495b613850ee641dea",
+        "bytes": 40315
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/gitee.imageset/giteeai 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/gitee.imageset/giteeai 2.png",
+        "sha256": "0e02d453f90709205127f65d31555c036ef9deabda0686495b613850ee641dea",
+        "bytes": 40315
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/gitee.imageset/giteeai.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/gitee.imageset/giteeai.png",
+        "sha256": "0e02d453f90709205127f65d31555c036ef9deabda0686495b613850ee641dea",
+        "bytes": 40315
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/gitee_dark.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/gitee_dark.imageset/Contents.json",
+        "sha256": "dde2dc842d44c9560798dc6c6690dfe808ccb3890978f91a73e7c56b2b5bde55",
+        "bytes": 383
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/gitee_dark.imageset/giteeai-2 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/gitee_dark.imageset/giteeai-2 1.png",
+        "sha256": "b72cc2fff5261ace486d2a2308d0a11b192564f5e6d738dc0370d9f85f9e3dfd",
+        "bytes": 40235
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/gitee_dark.imageset/giteeai-2 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/gitee_dark.imageset/giteeai-2 2.png",
+        "sha256": "b72cc2fff5261ace486d2a2308d0a11b192564f5e6d738dc0370d9f85f9e3dfd",
+        "bytes": 40235
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/gitee_dark.imageset/giteeai-2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/gitee_dark.imageset/giteeai-2.png",
+        "sha256": "b72cc2fff5261ace486d2a2308d0a11b192564f5e6d738dc0370d9f85f9e3dfd",
+        "bytes": 40235
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/github.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/github.imageset/Contents.json",
+        "sha256": "4f0b403ef7dc505b75d03bfde473fce559dcbb23628c00d297203d2343377c04",
+        "bytes": 380
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/github.imageset/github-2 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/github.imageset/github-2 1.png",
+        "sha256": "03fe7f8b724c3e2822ffaa65d2f173fb87dafbe106318bdf74c70a88211f38a6",
+        "bytes": 31445
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/github.imageset/github-2 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/github.imageset/github-2 2.png",
+        "sha256": "03fe7f8b724c3e2822ffaa65d2f173fb87dafbe106318bdf74c70a88211f38a6",
+        "bytes": 31445
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/github.imageset/github-2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/github.imageset/github-2.png",
+        "sha256": "03fe7f8b724c3e2822ffaa65d2f173fb87dafbe106318bdf74c70a88211f38a6",
+        "bytes": 31445
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/github_dark.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/github_dark.imageset/Contents.json",
+        "sha256": "dfdf8f553f685d49f70c6278d358ac3040fc2651e39ab99342519cb5ec2c0c95",
+        "bytes": 374
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/github_dark.imageset/github 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/github_dark.imageset/github 1.png",
+        "sha256": "180f3334965f9f0e87944388e409e0e1a36fb1390892c5f3907cf5cd99177c6f",
+        "bytes": 31107
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/github_dark.imageset/github 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/github_dark.imageset/github 2.png",
+        "sha256": "180f3334965f9f0e87944388e409e0e1a36fb1390892c5f3907cf5cd99177c6f",
+        "bytes": 31107
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/github_dark.imageset/github.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/github_dark.imageset/github.png",
+        "sha256": "180f3334965f9f0e87944388e409e0e1a36fb1390892c5f3907cf5cd99177c6f",
+        "bytes": 31107
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/google.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/google.imageset/Contents.json",
+        "sha256": "adb2ee6b0215d60b58b459e57ef218a5433401cfa62354f6e56ada7430ec7e22",
+        "bytes": 392
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/google.imageset/gemini-color 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/google.imageset/gemini-color 1.png",
+        "sha256": "50ba22c7a5d382f242e799951462bd87a27170a714a3a786e55546ddbfaddfb0",
+        "bytes": 240400
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/google.imageset/gemini-color 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/google.imageset/gemini-color 2.png",
+        "sha256": "50ba22c7a5d382f242e799951462bd87a27170a714a3a786e55546ddbfaddfb0",
+        "bytes": 240400
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/google.imageset/gemini-color.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/google.imageset/gemini-color.png",
+        "sha256": "50ba22c7a5d382f242e799951462bd87a27170a714a3a786e55546ddbfaddfb0",
+        "bytes": 240400
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/google_search.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/google_search.imageset/Contents.json",
+        "sha256": "651917ed9bef63660355e48a03a6b67ac2711c7cfa59e8b681be9668ecfdfc75",
+        "bytes": 392
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/google_search.imageset/google-color 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/google_search.imageset/google-color 1.png",
+        "sha256": "fbb281efb973d347524a95235f8af1a36e273b6d86a11eee421fee4d113ae392",
+        "bytes": 37557
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/google_search.imageset/google-color 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/google_search.imageset/google-color 2.png",
+        "sha256": "fbb281efb973d347524a95235f8af1a36e273b6d86a11eee421fee4d113ae392",
+        "bytes": 37557
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/google_search.imageset/google-color.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/google_search.imageset/google-color.png",
+        "sha256": "fbb281efb973d347524a95235f8af1a36e273b6d86a11eee421fee4d113ae392",
+        "bytes": 37557
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/googlemap.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/googlemap.imageset/Contents.json",
+        "sha256": "dcbabe49385550358e4822e2aaa206a599e4b96c5300d568082d78e420103697",
+        "bytes": 392
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/googlemap.imageset/a-GoogleMaps 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/googlemap.imageset/a-GoogleMaps 1.png",
+        "sha256": "7dbdb8e039d8247b9f7dc0cf8e6f515d139194bb9d662a750bc6aaea1cc6ed21",
+        "bytes": 6196
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/googlemap.imageset/a-GoogleMaps 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/googlemap.imageset/a-GoogleMaps 2.png",
+        "sha256": "7dbdb8e039d8247b9f7dc0cf8e6f515d139194bb9d662a750bc6aaea1cc6ed21",
+        "bytes": 6196
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/googlemap.imageset/a-GoogleMaps.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/googlemap.imageset/a-GoogleMaps.png",
+        "sha256": "7dbdb8e039d8247b9f7dc0cf8e6f515d139194bb9d662a750bc6aaea1cc6ed21",
+        "bytes": 6196
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/hanlin.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/hanlin.imageset/Contents.json",
+        "sha256": "513287ddcba8d15df2797a068b08ffee64bc4b998e36a932a929e7220919f74a",
+        "bytes": 359
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/hanlin.imageset/h 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/hanlin.imageset/h 1.png",
+        "sha256": "f04f7c3644f9828906236f8ae0197d8032163ef27854a63e2672067fe6b3d82e",
+        "bytes": 83407
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/hanlin.imageset/h 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/hanlin.imageset/h 2.png",
+        "sha256": "f04f7c3644f9828906236f8ae0197d8032163ef27854a63e2672067fe6b3d82e",
+        "bytes": 83407
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/hanlin.imageset/h.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/hanlin.imageset/h.png",
+        "sha256": "f04f7c3644f9828906236f8ae0197d8032163ef27854a63e2672067fe6b3d82e",
+        "bytes": 83407
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/huggingface.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/huggingface.imageset/Contents.json",
+        "sha256": "f11b726029bd75d1faaa0d68b366ecf2d08176006cc0b44984ece13627725bd8",
+        "bytes": 407
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/huggingface.imageset/huggingface-color 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/huggingface.imageset/huggingface-color 1.png",
+        "sha256": "f399bb4fa79f3ff30930d6c5f2ed8b7d6094cdd6f904317a803108dd2069c664",
+        "bytes": 61054
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/huggingface.imageset/huggingface-color 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/huggingface.imageset/huggingface-color 2.png",
+        "sha256": "f399bb4fa79f3ff30930d6c5f2ed8b7d6094cdd6f904317a803108dd2069c664",
+        "bytes": 61054
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/huggingface.imageset/huggingface-color.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/huggingface.imageset/huggingface-color.png",
+        "sha256": "f399bb4fa79f3ff30930d6c5f2ed8b7d6094cdd6f904317a803108dd2069c664",
+        "bytes": 61054
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/hunyuan.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/hunyuan.imageset/Contents.json",
+        "sha256": "2c52f206729a38fc66e2e9567a2f4e53fd43d900f8a75f020e2a8e6509d1fb62",
+        "bytes": 383
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/hunyuan.imageset/a-yemian1 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/hunyuan.imageset/a-yemian1 1.png",
+        "sha256": "ca8f3a4d6d6c3b4eda39c8eb6bd9069850946df26cc5f7fc4a20c885342422ce",
+        "bytes": 7558
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/hunyuan.imageset/a-yemian1 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/hunyuan.imageset/a-yemian1 2.png",
+        "sha256": "ca8f3a4d6d6c3b4eda39c8eb6bd9069850946df26cc5f7fc4a20c885342422ce",
+        "bytes": 7558
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/hunyuan.imageset/a-yemian1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/hunyuan.imageset/a-yemian1.png",
+        "sha256": "ca8f3a4d6d6c3b4eda39c8eb6bd9069850946df26cc5f7fc4a20c885342422ce",
+        "bytes": 7558
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/iflow.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/iflow.imageset/Contents.json",
+        "sha256": "948b16b7d51e3ad70f2e21073c7821f165f61781c5261534ff79c2f0724507e8",
+        "bytes": 512
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/iflow.imageset/O1CN01nulwex1q7Eq1TVqUh_!!6000000005448-55-tps-32-32 1.svg",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/iflow.imageset/O1CN01nulwex1q7Eq1TVqUh_!!6000000005448-55-tps-32-32 1.svg",
+        "sha256": "7450cab608ce761bfe5d5f5c95c124788e1ef7f1741f7ca3f4b3dbf71e28abcd",
+        "bytes": 4217
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/iflow.imageset/O1CN01nulwex1q7Eq1TVqUh_!!6000000005448-55-tps-32-32 2.svg",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/iflow.imageset/O1CN01nulwex1q7Eq1TVqUh_!!6000000005448-55-tps-32-32 2.svg",
+        "sha256": "7450cab608ce761bfe5d5f5c95c124788e1ef7f1741f7ca3f4b3dbf71e28abcd",
+        "bytes": 4217
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/iflow.imageset/O1CN01nulwex1q7Eq1TVqUh_!!6000000005448-55-tps-32-32.svg",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/iflow.imageset/O1CN01nulwex1q7Eq1TVqUh_!!6000000005448-55-tps-32-32.svg",
+        "sha256": "7450cab608ce761bfe5d5f5c95c124788e1ef7f1741f7ca3f4b3dbf71e28abcd",
+        "bytes": 4217
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/kimi.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/kimi.imageset/Contents.json",
+        "sha256": "1dff867f07713dca1194e18d885315c0712a4641fe1136b8043242cb5f5eb2b1",
+        "bytes": 392
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/kimi.imageset/kimi-color-2 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/kimi.imageset/kimi-color-2 1.png",
+        "sha256": "5a722caa7b29b3eec31d7b929d527faf52c7187011fc9bae8f056c1c6e280465",
+        "bytes": 22348
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/kimi.imageset/kimi-color-2 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/kimi.imageset/kimi-color-2 2.png",
+        "sha256": "5a722caa7b29b3eec31d7b929d527faf52c7187011fc9bae8f056c1c6e280465",
+        "bytes": 22348
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/kimi.imageset/kimi-color-2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/kimi.imageset/kimi-color-2.png",
+        "sha256": "5a722caa7b29b3eec31d7b929d527faf52c7187011fc9bae8f056c1c6e280465",
+        "bytes": 22348
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/kimi_dark.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/kimi_dark.imageset/Contents.json",
+        "sha256": "f11a71100179cb58b0269a823c0459247e211801feeb90f36d00be24fdbc7612",
+        "bytes": 386
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/kimi_dark.imageset/kimi-color 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/kimi_dark.imageset/kimi-color 1.png",
+        "sha256": "35dd8b86a4493b01f4d699dde2b2b7fb2f119cf01173920f0df74b522be65221",
+        "bytes": 21725
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/kimi_dark.imageset/kimi-color 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/kimi_dark.imageset/kimi-color 2.png",
+        "sha256": "35dd8b86a4493b01f4d699dde2b2b7fb2f119cf01173920f0df74b522be65221",
+        "bytes": 21725
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/kimi_dark.imageset/kimi-color.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/kimi_dark.imageset/kimi-color.png",
+        "sha256": "35dd8b86a4493b01f4d699dde2b2b7fb2f119cf01173920f0df74b522be65221",
+        "bytes": 21725
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/knowledge_bag.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/knowledge_bag.imageset/Contents.json",
+        "sha256": "5646188b6d9b071aecfabe5ee6384f878adf80efa8bc3a9de502724bf153f4ef",
+        "bytes": 380
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/knowledge_bag.imageset/know_bag 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/knowledge_bag.imageset/know_bag 1.png",
+        "sha256": "ca998e0ec2e2681a5d611801520a7ab9e25f811f0def98f1c71892f9c18bf126",
+        "bytes": 303971
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/knowledge_bag.imageset/know_bag 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/knowledge_bag.imageset/know_bag 2.png",
+        "sha256": "ca998e0ec2e2681a5d611801520a7ab9e25f811f0def98f1c71892f9c18bf126",
+        "bytes": 303971
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/knowledge_bag.imageset/know_bag.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/knowledge_bag.imageset/know_bag.png",
+        "sha256": "ca998e0ec2e2681a5d611801520a7ab9e25f811f0def98f1c71892f9c18bf126",
+        "bytes": 303971
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/langsearch.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/langsearch.imageset/Contents.json",
+        "sha256": "f9631c104d2ebcc6523b883968b05af9a5a3f34c7150831ea1bdb5ebdf0bfc65",
+        "bytes": 377
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/langsearch.imageset/unnamed 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/langsearch.imageset/unnamed 1.png",
+        "sha256": "d995fb6d20895f67059120ef2e96d970a8a4c15cbd08db2b0dc392d0ba222d8b",
+        "bytes": 6480
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/langsearch.imageset/unnamed 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/langsearch.imageset/unnamed 2.png",
+        "sha256": "d995fb6d20895f67059120ef2e96d970a8a4c15cbd08db2b0dc392d0ba222d8b",
+        "bytes": 6480
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/langsearch.imageset/unnamed.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/langsearch.imageset/unnamed.png",
+        "sha256": "d995fb6d20895f67059120ef2e96d970a8a4c15cbd08db2b0dc392d0ba222d8b",
+        "bytes": 6480
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/lm_studio.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/lm_studio.imageset/Contents.json",
+        "sha256": "d329251aaa7d56f9c5f628d87b9e74f259856b770cc4c4c837b497183b94a039",
+        "bytes": 380
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/lm_studio.imageset/lmstudio 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/lm_studio.imageset/lmstudio 1.png",
+        "sha256": "84a44b8e19f6036b0d736267dfe4c719a10dafcb3259305f728b8606536e2911",
+        "bytes": 18907
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/lm_studio.imageset/lmstudio 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/lm_studio.imageset/lmstudio 2.png",
+        "sha256": "84a44b8e19f6036b0d736267dfe4c719a10dafcb3259305f728b8606536e2911",
+        "bytes": 18907
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/lm_studio.imageset/lmstudio.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/lm_studio.imageset/lmstudio.png",
+        "sha256": "84a44b8e19f6036b0d736267dfe4c719a10dafcb3259305f728b8606536e2911",
+        "bytes": 18907
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/lm_studio_dark.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/lm_studio_dark.imageset/Contents.json",
+        "sha256": "e438d99b0f4dc8ec72a87f92439c488dbcc95d47ebeaf895b694e97b31cd8611",
+        "bytes": 386
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/lm_studio_dark.imageset/lmstudio-2 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/lm_studio_dark.imageset/lmstudio-2 1.png",
+        "sha256": "4edcfda9c52803953d9d765efb5aa5b5523cfa096f740c67639dfcc58c8ebe7d",
+        "bytes": 18853
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/lm_studio_dark.imageset/lmstudio-2 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/lm_studio_dark.imageset/lmstudio-2 2.png",
+        "sha256": "4edcfda9c52803953d9d765efb5aa5b5523cfa096f740c67639dfcc58c8ebe7d",
+        "bytes": 18853
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/lm_studio_dark.imageset/lmstudio-2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/lm_studio_dark.imageset/lmstudio-2.png",
+        "sha256": "4edcfda9c52803953d9d765efb5aa5b5523cfa096f740c67639dfcc58c8ebe7d",
+        "bytes": 18853
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/longcat.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/longcat.imageset/Contents.json",
+        "sha256": "e7ef6ea5f052e24deea0d79e8f32ea15ea3688588aaafe3e88f94b657bb3b8f1",
+        "bytes": 407
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/longcat.imageset/longcat-color (1) 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/longcat.imageset/longcat-color (1) 1.png",
+        "sha256": "64af5298e1631c3a54d86ffc46cec340dc17d2e89909c984e19a4e60909652ce",
+        "bytes": 35062
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/longcat.imageset/longcat-color (1) 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/longcat.imageset/longcat-color (1) 2.png",
+        "sha256": "64af5298e1631c3a54d86ffc46cec340dc17d2e89909c984e19a4e60909652ce",
+        "bytes": 35062
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/longcat.imageset/longcat-color (1).png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/longcat.imageset/longcat-color (1).png",
+        "sha256": "64af5298e1631c3a54d86ffc46cec340dc17d2e89909c984e19a4e60909652ce",
+        "bytes": 35062
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/longcat_dark.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/longcat_dark.imageset/Contents.json",
+        "sha256": "39c70d23fb5ae43f9575dc3aba920ae99bd9e3ee407d0563a71c06f7a15a54a2",
+        "bytes": 395
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/longcat_dark.imageset/longcat-color 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/longcat_dark.imageset/longcat-color 1.png",
+        "sha256": "2336d2778860511247bcbfb285bbecc2c237172aea7a151547bd03d5be85b667",
+        "bytes": 35495
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/longcat_dark.imageset/longcat-color 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/longcat_dark.imageset/longcat-color 2.png",
+        "sha256": "2336d2778860511247bcbfb285bbecc2c237172aea7a151547bd03d5be85b667",
+        "bytes": 35495
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/longcat_dark.imageset/longcat-color.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/longcat_dark.imageset/longcat-color.png",
+        "sha256": "2336d2778860511247bcbfb285bbecc2c237172aea7a151547bd03d5be85b667",
+        "bytes": 35495
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/meta.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/meta.imageset/Contents.json",
+        "sha256": "6ee3b43b7bc6751bb6fb3e7ea74068c32761169f3ba3411c7fa5f8b40cc10912",
+        "bytes": 386
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/meta.imageset/meta-color 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/meta.imageset/meta-color 1.png",
+        "sha256": "907e3d525d295aa4c981c3533a6dcbc42d07b344bcc13de1fe01863c1359d790",
+        "bytes": 50138
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/meta.imageset/meta-color 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/meta.imageset/meta-color 2.png",
+        "sha256": "907e3d525d295aa4c981c3533a6dcbc42d07b344bcc13de1fe01863c1359d790",
+        "bytes": 50138
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/meta.imageset/meta-color.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/meta.imageset/meta-color.png",
+        "sha256": "907e3d525d295aa4c981c3533a6dcbc42d07b344bcc13de1fe01863c1359d790",
+        "bytes": 50138
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/mimo.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/mimo.imageset/Contents.json",
+        "sha256": "32338edea8a07f64ea035d8d83d03dbf9a3c9dee390629577b0f76865fe6a4fa",
+        "bytes": 398
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/mimo.imageset/xiaomimimo (1) 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/mimo.imageset/xiaomimimo (1) 1.png",
+        "sha256": "3cfdf270d86c9124c69515efff080943fdfdbb579ff248af77beabe5e275d72d",
+        "bytes": 37389
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/mimo.imageset/xiaomimimo (1) 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/mimo.imageset/xiaomimimo (1) 2.png",
+        "sha256": "3cfdf270d86c9124c69515efff080943fdfdbb579ff248af77beabe5e275d72d",
+        "bytes": 37389
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/mimo.imageset/xiaomimimo (1).png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/mimo.imageset/xiaomimimo (1).png",
+        "sha256": "3cfdf270d86c9124c69515efff080943fdfdbb579ff248af77beabe5e275d72d",
+        "bytes": 37389
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/mimo_dark.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/mimo_dark.imageset/Contents.json",
+        "sha256": "a382d467484ca17817ec5f4c84be372c217237f2a4e10c1c77aa1065288bedec",
+        "bytes": 386
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/mimo_dark.imageset/xiaomimimo 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/mimo_dark.imageset/xiaomimimo 1.png",
+        "sha256": "dc86439c3efeb848a219cd90d8078a9fba58421da313adfb17c3629ff8cb678b",
+        "bytes": 36311
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/mimo_dark.imageset/xiaomimimo 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/mimo_dark.imageset/xiaomimimo 2.png",
+        "sha256": "dc86439c3efeb848a219cd90d8078a9fba58421da313adfb17c3629ff8cb678b",
+        "bytes": 36311
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/mimo_dark.imageset/xiaomimimo.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/mimo_dark.imageset/xiaomimimo.png",
+        "sha256": "dc86439c3efeb848a219cd90d8078a9fba58421da313adfb17c3629ff8cb678b",
+        "bytes": 36311
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/minimax.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/minimax.imageset/Contents.json",
+        "sha256": "cd33b5756a62749fd1d70d59a337366d8cc165eb04ac5870865dab10a945eb2b",
+        "bytes": 395
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/minimax.imageset/minimax-color 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/minimax.imageset/minimax-color 1.png",
+        "sha256": "4d05a9ea9ad0f71df9517e2c5426473b4ab55165440c24e6deb4ec7a9a3d60cd",
+        "bytes": 40634
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/minimax.imageset/minimax-color 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/minimax.imageset/minimax-color 2.png",
+        "sha256": "4d05a9ea9ad0f71df9517e2c5426473b4ab55165440c24e6deb4ec7a9a3d60cd",
+        "bytes": 40634
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/minimax.imageset/minimax-color.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/minimax.imageset/minimax-color.png",
+        "sha256": "4d05a9ea9ad0f71df9517e2c5426473b4ab55165440c24e6deb4ec7a9a3d60cd",
+        "bytes": 40634
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/modelscope.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/modelscope.imageset/Contents.json",
+        "sha256": "01780f70e190fbd0ae1d52cbebd177e67239f7f8648aca13ba37b79b76e9c2be",
+        "bytes": 404
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/modelscope.imageset/modelscope-color 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/modelscope.imageset/modelscope-color 1.png",
+        "sha256": "8195deb625e65bdddbdc2135db67cdcce56a337c617ac85b601682c7749b8e5d",
+        "bytes": 12740
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/modelscope.imageset/modelscope-color 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/modelscope.imageset/modelscope-color 2.png",
+        "sha256": "8195deb625e65bdddbdc2135db67cdcce56a337c617ac85b601682c7749b8e5d",
+        "bytes": 12740
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/modelscope.imageset/modelscope-color.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/modelscope.imageset/modelscope-color.png",
+        "sha256": "8195deb625e65bdddbdc2135db67cdcce56a337c617ac85b601682c7749b8e5d",
+        "bytes": 12740
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/n1n.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/n1n.imageset/Contents.json",
+        "sha256": "1636946680700eaa246beba40b1d55d212cb02b4690e2aa4d79683385cf62920",
+        "bytes": 365
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/n1n.imageset/n1n 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/n1n.imageset/n1n 1.png",
+        "sha256": "82006fc4b3add8490b742f8188e1b0ae40a0b5f3c5ad654f49a1b202631ade0d",
+        "bytes": 8271
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/n1n.imageset/n1n 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/n1n.imageset/n1n 2.png",
+        "sha256": "82006fc4b3add8490b742f8188e1b0ae40a0b5f3c5ad654f49a1b202631ade0d",
+        "bytes": 8271
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/n1n.imageset/n1n.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/n1n.imageset/n1n.png",
+        "sha256": "82006fc4b3add8490b742f8188e1b0ae40a0b5f3c5ad654f49a1b202631ade0d",
+        "bytes": 8271
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/openai.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/openai.imageset/Contents.json",
+        "sha256": "1793eeeddf5e3f4c0359ab42ae99bdb1cea80c0d7282206b4b392f795d8da31c",
+        "bytes": 380
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/openai.imageset/openai-2 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/openai.imageset/openai-2 1.png",
+        "sha256": "3528e80f3e973b10cc6d5535d3d83d93b19408e64fa4326f0ec36c905bac9be1",
+        "bytes": 46274
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/openai.imageset/openai-2 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/openai.imageset/openai-2 2.png",
+        "sha256": "3528e80f3e973b10cc6d5535d3d83d93b19408e64fa4326f0ec36c905bac9be1",
+        "bytes": 46274
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/openai.imageset/openai-2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/openai.imageset/openai-2.png",
+        "sha256": "3528e80f3e973b10cc6d5535d3d83d93b19408e64fa4326f0ec36c905bac9be1",
+        "bytes": 46274
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/openai_dark.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/openai_dark.imageset/Contents.json",
+        "sha256": "6a08b20020e33d33c526cc3d930e1c8876d53bd2d708225cc05aafed506f8837",
+        "bytes": 374
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/openai_dark.imageset/openai 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/openai_dark.imageset/openai 1.png",
+        "sha256": "5d4877a114835587b9a48a22e82936275bbffd429631007c81ea44ee7800b33a",
+        "bytes": 45414
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/openai_dark.imageset/openai 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/openai_dark.imageset/openai 2.png",
+        "sha256": "5d4877a114835587b9a48a22e82936275bbffd429631007c81ea44ee7800b33a",
+        "bytes": 45414
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/openai_dark.imageset/openai.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/openai_dark.imageset/openai.png",
+        "sha256": "5d4877a114835587b9a48a22e82936275bbffd429631007c81ea44ee7800b33a",
+        "bytes": 45414
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/openrouter.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/openrouter.imageset/Contents.json",
+        "sha256": "17b4dd76f15c16dc2c4086e9dee518ffdc964716feb91c6f03afd093524e1740",
+        "bytes": 392
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/openrouter.imageset/openrouter-2 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/openrouter.imageset/openrouter-2 1.png",
+        "sha256": "0634e44f566ac26b8e27ad297a5b8697c9978e1d8931f214ac2df9862bcaed2b",
+        "bytes": 21996
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/openrouter.imageset/openrouter-2 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/openrouter.imageset/openrouter-2 2.png",
+        "sha256": "0634e44f566ac26b8e27ad297a5b8697c9978e1d8931f214ac2df9862bcaed2b",
+        "bytes": 21996
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/openrouter.imageset/openrouter-2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/openrouter.imageset/openrouter-2.png",
+        "sha256": "0634e44f566ac26b8e27ad297a5b8697c9978e1d8931f214ac2df9862bcaed2b",
+        "bytes": 21996
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/openrouter_dark.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/openrouter_dark.imageset/Contents.json",
+        "sha256": "1eeac645e9d644d5e9992652a5dee1d86ac75b10034f3255616442b2f290ee50",
+        "bytes": 386
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/openrouter_dark.imageset/openrouter 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/openrouter_dark.imageset/openrouter 1.png",
+        "sha256": "47bc2cfc604791b3c6129e202b8d57d5a48cdcba2f24a24f6ee2f09fc86d28a7",
+        "bytes": 21348
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/openrouter_dark.imageset/openrouter 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/openrouter_dark.imageset/openrouter 2.png",
+        "sha256": "47bc2cfc604791b3c6129e202b8d57d5a48cdcba2f24a24f6ee2f09fc86d28a7",
+        "bytes": 21348
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/openrouter_dark.imageset/openrouter.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/openrouter_dark.imageset/openrouter.png",
+        "sha256": "47bc2cfc604791b3c6129e202b8d57d5a48cdcba2f24a24f6ee2f09fc86d28a7",
+        "bytes": 21348
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/openweather.imageset/1743227 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/openweather.imageset/1743227 1.png",
+        "sha256": "aa4198f7e32aa2767cff934664d7a229d688ff5d49682b35dc553ee9112187c8",
+        "bytes": 5893
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/openweather.imageset/1743227 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/openweather.imageset/1743227 2.png",
+        "sha256": "aa4198f7e32aa2767cff934664d7a229d688ff5d49682b35dc553ee9112187c8",
+        "bytes": 5893
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/openweather.imageset/1743227.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/openweather.imageset/1743227.png",
+        "sha256": "aa4198f7e32aa2767cff934664d7a229d688ff5d49682b35dc553ee9112187c8",
+        "bytes": 5893
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/openweather.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/openweather.imageset/Contents.json",
+        "sha256": "1d65783818684b4a25d876922b25867bbed908fe98615cf6f3b3bf279078a84f",
+        "bytes": 377
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/perplexity.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/perplexity.imageset/Contents.json",
+        "sha256": "5b5fec4af4492b87a3d076c9975914a32628eecb373e7e4e74c26e82e83907a3",
+        "bytes": 404
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/perplexity.imageset/perplexity-color 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/perplexity.imageset/perplexity-color 1.png",
+        "sha256": "089fa59dcece4b82a8f964576b69a736e7c6312f6f66cda5140d410ac9e61464",
+        "bytes": 43614
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/perplexity.imageset/perplexity-color 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/perplexity.imageset/perplexity-color 2.png",
+        "sha256": "089fa59dcece4b82a8f964576b69a736e7c6312f6f66cda5140d410ac9e61464",
+        "bytes": 43614
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/perplexity.imageset/perplexity-color.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/perplexity.imageset/perplexity-color.png",
+        "sha256": "089fa59dcece4b82a8f964576b69a736e7c6312f6f66cda5140d410ac9e61464",
+        "bytes": 43614
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/poe.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/poe.imageset/Contents.json",
+        "sha256": "34963de97ab940ad85696a7e806837714a91ea399f24c29a8d3eab7f60aa45c1",
+        "bytes": 383
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/poe.imageset/poe-color 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/poe.imageset/poe-color 1.png",
+        "sha256": "cb3420735cfed2c00922d610dd1c7c43d8738927edf947298accd9f92b3845e2",
+        "bytes": 44985
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/poe.imageset/poe-color 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/poe.imageset/poe-color 2.png",
+        "sha256": "cb3420735cfed2c00922d610dd1c7c43d8738927edf947298accd9f92b3845e2",
+        "bytes": 44985
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/poe.imageset/poe-color.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/poe.imageset/poe-color.png",
+        "sha256": "cb3420735cfed2c00922d610dd1c7c43d8738927edf947298accd9f92b3845e2",
+        "bytes": 44985
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/poe_dark.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/poe_dark.imageset/Contents.json",
+        "sha256": "fefbf603ad503fe0974d65b3b1c9e60668b0ee464a2da1442fa566cb1e499a1b",
+        "bytes": 395
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/poe_dark.imageset/poe-color (1) 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/poe_dark.imageset/poe-color (1) 1.png",
+        "sha256": "cfd4f0f5d9c194cf10bcacd9171e3c1a50520617fbbaefbfcd9656bb83dcd3fd",
+        "bytes": 41358
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/poe_dark.imageset/poe-color (1) 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/poe_dark.imageset/poe-color (1) 2.png",
+        "sha256": "cfd4f0f5d9c194cf10bcacd9171e3c1a50520617fbbaefbfcd9656bb83dcd3fd",
+        "bytes": 41358
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/poe_dark.imageset/poe-color (1).png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/poe_dark.imageset/poe-color (1).png",
+        "sha256": "cfd4f0f5d9c194cf10bcacd9171e3c1a50520617fbbaefbfcd9656bb83dcd3fd",
+        "bytes": 41358
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/prompt.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/prompt.imageset/Contents.json",
+        "sha256": "ca09a0a2c4cd7c0447171f87a692859390ddb951d58684295de2573cae927dbb",
+        "bytes": 374
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/prompt.imageset/prompt 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/prompt.imageset/prompt 1.png",
+        "sha256": "70beb778a0e9694e26f1834f7cfae0a8531f579b5a15a2944c7c0dd21141accd",
+        "bytes": 54509
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/prompt.imageset/prompt 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/prompt.imageset/prompt 2.png",
+        "sha256": "70beb778a0e9694e26f1834f7cfae0a8531f579b5a15a2944c7c0dd21141accd",
+        "bytes": 54509
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/prompt.imageset/prompt.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/prompt.imageset/prompt.png",
+        "sha256": "70beb778a0e9694e26f1834f7cfae0a8531f579b5a15a2944c7c0dd21141accd",
+        "bytes": 54509
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/qweather.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/qweather.imageset/Contents.json",
+        "sha256": "eebd4ac3adc413d807e89a67656b8cb943790988b2cdb8b9690ddeadaeda718d",
+        "bytes": 380
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/qweather.imageset/qweather 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/qweather.imageset/qweather 1.png",
+        "sha256": "8768ab21831fe0074d46172e3a41e6f02d431ef36dee2ec4465ce38a607922ae",
+        "bytes": 4857
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/qweather.imageset/qweather 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/qweather.imageset/qweather 2.png",
+        "sha256": "8768ab21831fe0074d46172e3a41e6f02d431ef36dee2ec4465ce38a607922ae",
+        "bytes": 4857
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/qweather.imageset/qweather.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/qweather.imageset/qweather.png",
+        "sha256": "8768ab21831fe0074d46172e3a41e6f02d431ef36dee2ec4465ce38a607922ae",
+        "bytes": 4857
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/qweather_dark.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/qweather_dark.imageset/Contents.json",
+        "sha256": "6723927b108583b72bf81bc89e4cc4ac374807744aa7ba7d0058e75f2d76e952",
+        "bytes": 392
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/qweather_dark.imageset/qweather (1) 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/qweather_dark.imageset/qweather (1) 1.png",
+        "sha256": "10f3c741e7236c6e5583a20ed0db01ec1b11a2ce219adfa76bede9bc75e6457e",
+        "bytes": 4952
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/qweather_dark.imageset/qweather (1) 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/qweather_dark.imageset/qweather (1) 2.png",
+        "sha256": "10f3c741e7236c6e5583a20ed0db01ec1b11a2ce219adfa76bede9bc75e6457e",
+        "bytes": 4952
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/qweather_dark.imageset/qweather (1).png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/qweather_dark.imageset/qweather (1).png",
+        "sha256": "10f3c741e7236c6e5583a20ed0db01ec1b11a2ce219adfa76bede9bc75e6457e",
+        "bytes": 4952
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/qwen.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/qwen.imageset/Contents.json",
+        "sha256": "8b3897b67f99dafbba04f7ca5e90e8516a6d08140a26427dbc190ca24a3ed541",
+        "bytes": 368
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/qwen.imageset/qwen 1.svg",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/qwen.imageset/qwen 1.svg",
+        "sha256": "885e994548f24c0955ef23b2aae53e8a1eaadbc343323973db45ec845f9d86c1",
+        "bytes": 986
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/qwen.imageset/qwen 2.svg",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/qwen.imageset/qwen 2.svg",
+        "sha256": "885e994548f24c0955ef23b2aae53e8a1eaadbc343323973db45ec845f9d86c1",
+        "bytes": 986
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/qwen.imageset/qwen.svg",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/qwen.imageset/qwen.svg",
+        "sha256": "885e994548f24c0955ef23b2aae53e8a1eaadbc343323973db45ec845f9d86c1",
+        "bytes": 986
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/siliconflow.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/siliconflow.imageset/Contents.json",
+        "sha256": "8fba0e828bb83a705496ce7589180093a6a65b7d1bd47d1e81d9f781e2e77ac5",
+        "bytes": 410
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/siliconflow.imageset/siliconcloud-color 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/siliconflow.imageset/siliconcloud-color 1.png",
+        "sha256": "195e58ef6178547903fa512024d62cfafeee9e9a70ea17266a1b25c4a7f232c4",
+        "bytes": 10774
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/siliconflow.imageset/siliconcloud-color 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/siliconflow.imageset/siliconcloud-color 2.png",
+        "sha256": "195e58ef6178547903fa512024d62cfafeee9e9a70ea17266a1b25c4a7f232c4",
+        "bytes": 10774
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/siliconflow.imageset/siliconcloud-color.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/siliconflow.imageset/siliconcloud-color.png",
+        "sha256": "195e58ef6178547903fa512024d62cfafeee9e9a70ea17266a1b25c4a7f232c4",
+        "bytes": 10774
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/siri.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/siri.imageset/Contents.json",
+        "sha256": "2964f5f05bab1561ad36d912efc1d9b5f35be18d2d064d9fb409301e3311b273",
+        "bytes": 368
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/siri.imageset/siri 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/siri.imageset/siri 1.png",
+        "sha256": "cdde970913f72b198b055733970b1ad1ce204f5876984144703a5c615549499a",
+        "bytes": 603861
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/siri.imageset/siri 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/siri.imageset/siri 2.png",
+        "sha256": "cdde970913f72b198b055733970b1ad1ce204f5876984144703a5c615549499a",
+        "bytes": 603861
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/siri.imageset/siri.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/siri.imageset/siri.png",
+        "sha256": "cdde970913f72b198b055733970b1ad1ce204f5876984144703a5c615549499a",
+        "bytes": 603861
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/spark.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/spark.imageset/Contents.json",
+        "sha256": "a7a74bf3b22e8c3b1a4e858f8d483e0b720d141e83f36a32841cc58d83af3473",
+        "bytes": 389
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/spark.imageset/spark-color 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/spark.imageset/spark-color 1.png",
+        "sha256": "5422fee48c9270b25a6f6eff9bae213ccab83e33cc061cd393dbce995363b7c6",
+        "bytes": 46203
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/spark.imageset/spark-color 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/spark.imageset/spark-color 2.png",
+        "sha256": "5422fee48c9270b25a6f6eff9bae213ccab83e33cc061cd393dbce995363b7c6",
+        "bytes": 46203
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/spark.imageset/spark-color.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/spark.imageset/spark-color.png",
+        "sha256": "5422fee48c9270b25a6f6eff9bae213ccab83e33cc061cd393dbce995363b7c6",
+        "bytes": 46203
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/step.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/step.imageset/Contents.json",
+        "sha256": "97e98cab202927199c129fd37dde7e2a924c316e9836bb6d2055d06f1a99d2a4",
+        "bytes": 395
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/step.imageset/stepfun-color 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/step.imageset/stepfun-color 1.png",
+        "sha256": "90a7ab6699491a34d618362ce0493d1971b681d21f14d9c316ecd90b530535d5",
+        "bytes": 24523
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/step.imageset/stepfun-color 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/step.imageset/stepfun-color 2.png",
+        "sha256": "90a7ab6699491a34d618362ce0493d1971b681d21f14d9c316ecd90b530535d5",
+        "bytes": 24523
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/step.imageset/stepfun-color.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/step.imageset/stepfun-color.png",
+        "sha256": "90a7ab6699491a34d618362ce0493d1971b681d21f14d9c316ecd90b530535d5",
+        "bytes": 24523
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/tavily.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/tavily.imageset/Contents.json",
+        "sha256": "68ddd49eef661418ed53eae653da0e49a6902cb52fe2c400bb1172fc0203adb8",
+        "bytes": 374
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/tavily.imageset/tavily 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/tavily.imageset/tavily 1.png",
+        "sha256": "0ea9bfd05b84f6a2e47b1d57b35f4e687bbac7816bf75b063c51d88bc648c526",
+        "bytes": 46137
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/tavily.imageset/tavily 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/tavily.imageset/tavily 2.png",
+        "sha256": "0ea9bfd05b84f6a2e47b1d57b35f4e687bbac7816bf75b063c51d88bc648c526",
+        "bytes": 46137
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/tavily.imageset/tavily.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/tavily.imageset/tavily.png",
+        "sha256": "0ea9bfd05b84f6a2e47b1d57b35f4e687bbac7816bf75b063c51d88bc648c526",
+        "bytes": 46137
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/tiangong.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/tiangong.imageset/Contents.json",
+        "sha256": "261471236423b27b38ef334f2481e6b8eaa8b1623509171ebbf48336d25a7a27",
+        "bytes": 398
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/tiangong.imageset/tiangong-color 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/tiangong.imageset/tiangong-color 1.png",
+        "sha256": "e9bf775ef4b3e0e958fb2baf4241755c968ce6ee805a4876e3f25883cb37dea6",
+        "bytes": 59625
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/tiangong.imageset/tiangong-color 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/tiangong.imageset/tiangong-color 2.png",
+        "sha256": "e9bf775ef4b3e0e958fb2baf4241755c968ce6ee805a4876e3f25883cb37dea6",
+        "bytes": 59625
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/tiangong.imageset/tiangong-color.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/tiangong.imageset/tiangong-color.png",
+        "sha256": "e9bf775ef4b3e0e958fb2baf4241755c968ce6ee805a4876e3f25883cb37dea6",
+        "bytes": 59625
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/translate.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/translate.imageset/Contents.json",
+        "sha256": "f87806344086061b1bf91014f8b490aa997e1a7ddefc83d8174e69578a19e22d",
+        "bytes": 434
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/translate.imageset/translate-bold-svgrepo-com 1.svg",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/translate.imageset/translate-bold-svgrepo-com 1.svg",
+        "sha256": "7077172335b4e6a84d317522f362515a934c8df6d5dcf9c733e84c07531f7a5d",
+        "bytes": 991
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/translate.imageset/translate-bold-svgrepo-com 2.svg",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/translate.imageset/translate-bold-svgrepo-com 2.svg",
+        "sha256": "7077172335b4e6a84d317522f362515a934c8df6d5dcf9c733e84c07531f7a5d",
+        "bytes": 991
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/translate.imageset/translate-bold-svgrepo-com.svg",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/translate.imageset/translate-bold-svgrepo-com.svg",
+        "sha256": "7077172335b4e6a84d317522f362515a934c8df6d5dcf9c733e84c07531f7a5d",
+        "bytes": 991
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/translate_circle.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/translate_circle.imageset/Contents.json",
+        "sha256": "c0509af550ad0f7f9a972ff2e69b7f4adff6380747fb3585ca70a6303a30bbbb",
+        "bytes": 371
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/translate_circle.imageset/svg-6 1.svg",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/translate_circle.imageset/svg-6 1.svg",
+        "sha256": "c10f5abc9aa3aadb740535016f8ba68129a1b68192f247c5ea2aa9b26240a1cd",
+        "bytes": 1298
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/translate_circle.imageset/svg-6 2.svg",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/translate_circle.imageset/svg-6 2.svg",
+        "sha256": "c10f5abc9aa3aadb740535016f8ba68129a1b68192f247c5ea2aa9b26240a1cd",
+        "bytes": 1298
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/translate_circle.imageset/svg-6.svg",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/translate_circle.imageset/svg-6.svg",
+        "sha256": "c10f5abc9aa3aadb740535016f8ba68129a1b68192f247c5ea2aa9b26240a1cd",
+        "bytes": 1298
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/webreader.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/webreader.imageset/Contents.json",
+        "sha256": "589ad184c19d4c4269f585dd73cce59bad0e34dafdbfc32cd70d7d0c212ab219",
+        "bytes": 365
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/webreader.imageset/web 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/webreader.imageset/web 1.png",
+        "sha256": "c4d0f6954eb7cc3b9deef9ce79c41fa4b1e97bab8b5abdfd22fcbdfe9a8a548b",
+        "bytes": 340326
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/webreader.imageset/web 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/webreader.imageset/web 2.png",
+        "sha256": "c4d0f6954eb7cc3b9deef9ce79c41fa4b1e97bab8b5abdfd22fcbdfe9a8a548b",
+        "bytes": 340326
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/webreader.imageset/web.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/webreader.imageset/web.png",
+        "sha256": "c4d0f6954eb7cc3b9deef9ce79c41fa4b1e97bab8b5abdfd22fcbdfe9a8a548b",
+        "bytes": 340326
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/wenxin.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/wenxin.imageset/Contents.json",
+        "sha256": "c5da498ae663ceef48da53fb011f5d16b6e4f02f90b68035a45996f42762491e",
+        "bytes": 392
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/wenxin.imageset/wenxin-color 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/wenxin.imageset/wenxin-color 1.png",
+        "sha256": "9aee025d5c9faddd20c9eba3418644629cfba3443c8ced8b047080fcbe744bd7",
+        "bytes": 63990
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/wenxin.imageset/wenxin-color 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/wenxin.imageset/wenxin-color 2.png",
+        "sha256": "9aee025d5c9faddd20c9eba3418644629cfba3443c8ced8b047080fcbe744bd7",
+        "bytes": 63990
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/wenxin.imageset/wenxin-color.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/wenxin.imageset/wenxin-color.png",
+        "sha256": "9aee025d5c9faddd20c9eba3418644629cfba3443c8ced8b047080fcbe744bd7",
+        "bytes": 63990
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/xai.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/xai.imageset/Contents.json",
+        "sha256": "b8df73214003bf6b03050ff7c85aaeb110c6a94691f042d8b0614d6098bda516",
+        "bytes": 374
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/xai.imageset/grok-2 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/xai.imageset/grok-2 1.png",
+        "sha256": "ede4f7a90fac3ede444ef4e9f6225d862f9f261e5eaf079c354c66e29091777b",
+        "bytes": 32083
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/xai.imageset/grok-2 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/xai.imageset/grok-2 2.png",
+        "sha256": "ede4f7a90fac3ede444ef4e9f6225d862f9f261e5eaf079c354c66e29091777b",
+        "bytes": 32083
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/xai.imageset/grok-2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/xai.imageset/grok-2.png",
+        "sha256": "ede4f7a90fac3ede444ef4e9f6225d862f9f261e5eaf079c354c66e29091777b",
+        "bytes": 32083
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/xai_dark.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/xai_dark.imageset/Contents.json",
+        "sha256": "4e3e6f58797966b3109cc67c718a171c9a3e605fb28c38fd0250dd7896fcb927",
+        "bytes": 368
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/xai_dark.imageset/grok 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/xai_dark.imageset/grok 1.png",
+        "sha256": "f39bb8901c2ba6d93de6105de951b21b0115e28b79afa268a3cdcf5cb4536f49",
+        "bytes": 32043
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/xai_dark.imageset/grok 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/xai_dark.imageset/grok 2.png",
+        "sha256": "f39bb8901c2ba6d93de6105de951b21b0115e28b79afa268a3cdcf5cb4536f49",
+        "bytes": 32043
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/xai_dark.imageset/grok.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/xai_dark.imageset/grok.png",
+        "sha256": "f39bb8901c2ba6d93de6105de951b21b0115e28b79afa268a3cdcf5cb4536f49",
+        "bytes": 32043
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/yi.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/yi.imageset/Contents.json",
+        "sha256": "18a14592f1808f209908494b470c70db7db4ddef43521b75e52a9ff14f424516",
+        "bytes": 386
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/yi.imageset/yi-color-2 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/yi.imageset/yi-color-2 1.png",
+        "sha256": "f904765ec4247764278522473fdb2850fb68c685884dd796db84eba05ba9b710",
+        "bytes": 21528
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/yi.imageset/yi-color-2 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/yi.imageset/yi-color-2 2.png",
+        "sha256": "f904765ec4247764278522473fdb2850fb68c685884dd796db84eba05ba9b710",
+        "bytes": 21528
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/yi.imageset/yi-color-2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/yi.imageset/yi-color-2.png",
+        "sha256": "f904765ec4247764278522473fdb2850fb68c685884dd796db84eba05ba9b710",
+        "bytes": 21528
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/yi_dark.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/yi_dark.imageset/Contents.json",
+        "sha256": "5a82fdbb3e15933a1fca08988059693d118c8e50ef7b90afc86160d5b271a8ed",
+        "bytes": 380
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/yi_dark.imageset/yi-color 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/yi_dark.imageset/yi-color 1.png",
+        "sha256": "4501ab4496c00c84a85e85c413201b4eab3afed31fe69a2e91a853fad2eb0226",
+        "bytes": 21487
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/yi_dark.imageset/yi-color 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/yi_dark.imageset/yi-color 2.png",
+        "sha256": "4501ab4496c00c84a85e85c413201b4eab3afed31fe69a2e91a853fad2eb0226",
+        "bytes": 21487
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/yi_dark.imageset/yi-color.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/yi_dark.imageset/yi-color.png",
+        "sha256": "4501ab4496c00c84a85e85c413201b4eab3afed31fe69a2e91a853fad2eb0226",
+        "bytes": 21487
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/zhipuai.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/zhipuai.imageset/Contents.json",
+        "sha256": "90fa152fcd66961414e1982023a9ca36f9f59c28c8c44914d6632925e6cf1d60",
+        "bytes": 377
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/zhipuai.imageset/zai (1) 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/zhipuai.imageset/zai (1) 1.png",
+        "sha256": "e4b9c0070aa93d8a3da4b64e53ec05e5bd85d218545e0e253f80811c07cc873c",
+        "bytes": 24935
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/zhipuai.imageset/zai (1) 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/zhipuai.imageset/zai (1) 2.png",
+        "sha256": "e4b9c0070aa93d8a3da4b64e53ec05e5bd85d218545e0e253f80811c07cc873c",
+        "bytes": 24935
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/zhipuai.imageset/zai (1).png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/zhipuai.imageset/zai (1).png",
+        "sha256": "e4b9c0070aa93d8a3da4b64e53ec05e5bd85d218545e0e253f80811c07cc873c",
+        "bytes": 24935
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/zhipuai_dark.imageset/Contents.json",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/zhipuai_dark.imageset/Contents.json",
+        "sha256": "3ff36c57a188f6eaecb58ddd7af5368ff2a01396a34451c905ac32032d2bfe69",
+        "bytes": 365
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/zhipuai_dark.imageset/zai 1.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/zhipuai_dark.imageset/zai 1.png",
+        "sha256": "c5cfd73dea9364e7c421d0e4d11d73f21110a022257856b777dfc1f3368e356d",
+        "bytes": 17575
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/zhipuai_dark.imageset/zai 2.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/zhipuai_dark.imageset/zai 2.png",
+        "sha256": "c5cfd73dea9364e7c421d0e4d11d73f21110a022257856b777dfc1f3368e356d",
+        "bytes": 17575
+      },
+      {
+        "original_path": "AI_HLY/Assets.xcassets/zhipuai_dark.imageset/zai.png",
+        "sdk_path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/zhipuai_dark.imageset/zai.png",
+        "sha256": "c5cfd73dea9364e7c421d0e4d11d73f21110a022257856b777dfc1f3368e356d",
+        "bytes": 17575
+      }
+    ],
+    "color_assets": [
+      "HLAutumn",
+      "HLAzure",
+      "HLBlue",
+      "HLBluefont",
+      "HLBrown",
+      "HLCyanite",
+      "HLGray",
+      "HLGreen",
+      "HLIndigo",
+      "HLNavy",
+      "HLOrange",
+      "HLPink",
+      "HLPlum",
+      "HLPurple",
+      "HLRed",
+      "HLSpring",
+      "HLTeal",
+      "HLYellow"
+    ],
+    "app_assets_retained": [
+      "AppIcon.appiconset",
+      "AccentColor.colorset"
+    ],
+    "launch_logo_symlink": "AI_HLY/Assets.xcassets/applogo.imageset"
+  },
+  "source_provenance": {
+    "changed_files": [
+      {
+        "path": "AI_HLY/Model/AllModels.swift",
+        "before_sha256": "1bfb2f4f5b225efca24c57a0bbebf568ae47183443d2de7b6dc39a609e48ada9",
+        "after_sha256": "3d157e246ac267cbe4099739ede84f6b5a6c54b6588ceba6feb516e3c1bc1d4e",
+        "edits": 4
+      },
+      {
+        "path": "AI_HLY/Services/ChatServices/MapServices.swift",
+        "before_sha256": "7c67ce0b35083e2d20227d1f173f700b49fd90b0b21f06cf39b30dc0ad858d6a",
+        "after_sha256": "b5d9fcccee42099373a3068c0872bd12af877d170f342e7106b91fcd18450d1d",
+        "edits": 2
+      },
+      {
+        "path": "AI_HLY/Services/ChatServices/APIManager+LegacyTools.swift",
+        "before_sha256": "cba7aedf581df00981efadb684cf4056bbb02e608414d69f4106bc8a5269fda5",
+        "after_sha256": "69c1cec544b97b069a98e7e74283abd904cff4b4c7695b2663fb97bda6c569f3",
+        "edits": 4
+      },
+      {
+        "path": "AI_HLY/Services/DataServices/HanlinAppProviderCredentials.swift",
+        "before_sha256": "0c4a7b8438810f97219caa4b376fed567bccd8cdafcdd6232d2bede32a5e8af7",
+        "after_sha256": "7fc14ed5b2d717fce0baeb570d66d3d583fe12de362388ed36ccbff98b56d840",
+        "edits": 2
+      },
+      {
+        "path": "AI_HLY/Services/DataServices/InfoServices.swift",
+        "before_sha256": "0e9cd057ae9f0b15a24d29c964314cd3e213144ba555d6f799991af2a522a751",
+        "after_sha256": "429e7a83ffc92626d054d0822823fbb5421077eabe024732a47e34a53a563206",
+        "edits": 56
+      },
+      {
+        "path": "AI_HLY/NativeAppPlatform/AppsHub/NativeAppSessionContainerView.swift",
+        "before_sha256": "9925c99fa5d684a99726b3d21b2f70bf453809bb360f910a8bbf97d33dc12e5a",
+        "after_sha256": "71aa467b75536b33d151eaef9cc411e92464e555ad6b82659a4dde29e889880c",
+        "edits": 4
+      },
+      {
+        "path": "AI_HLY/NativeAppPlatform/AppsHub/MiniAppCardView.swift",
+        "before_sha256": "d5d6d9909e0b04893985c5594a3fdefd145cf61fa2e72cbbc997643636e0931c",
+        "after_sha256": "0deb0154138e287b36766f30d7a56b85bc4d7eff2bf0390ad747511afb7a02c3",
+        "edits": 3
+      },
+      {
+        "path": "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsAddSheet.swift",
+        "before_sha256": "651ab577b9624edd739c2f24a76c4c4639715684669c34c0d78cb8e9654770e9",
+        "after_sha256": "c1e7a041be0d361f53b7ec914704f0363a9905f4656017a24e0e0bb50f3b0685",
+        "edits": 14
+      },
+      {
+        "path": "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsHubView.swift",
+        "before_sha256": "b20a19e28ad2c0f7d94eb7d1a62fbea513f09501ae29b8860a2c68bd938fdbc8",
+        "after_sha256": "78b8257f1b7843b905e0b48e62564f57f212604a855711f8384ab7ece0fb10c1",
+        "edits": 28
+      },
+      {
+        "path": "AI_HLY/NativeAppPlatform/AppsHub/NativeAppCardView.swift",
+        "before_sha256": "7398eeff963c795d5416252901b0f0d2b1382a79fa70487886a27b4ee7a7dfce",
+        "after_sha256": "d307b38daca9dd741ed14089bf11fa67a06f053a7712645fe82c814ac6513713",
+        "edits": 4
+      },
+      {
+        "path": "AI_HLY/NativeAppPlatform/AppsHub/NativeAppDetailView.swift",
+        "before_sha256": "aa23691c0b444816575eb91b1712e2ad1c635b44219ba80c61ad54ca1e20be04",
+        "after_sha256": "4ac945d6eae1c797d23564ce0c1ce26d84d00acf60cb6cb6c638291b02fc1c50",
+        "edits": 5
+      },
+      {
+        "path": "AI_HLY/NativeAppPlatform/BuiltinApps/Wikipedia/Assistant/NativeAppWikipediaTools.swift",
+        "before_sha256": "c8a773cb9355823277c9842977944c49fbb788a38802a65e4cb7c7c53cf89947",
+        "after_sha256": "47cfc0383d7a915527076a75e8eefc7da4723dc32931bbf48d61c37c453e7005",
+        "edits": 5
+      },
+      {
+        "path": "AI_HLY/NativeAppPlatform/BuiltinApps/TextStudio/Assistant/NativeAppTextStudioTools.swift",
+        "before_sha256": "338f836e7129b5fcddc5c199d39c3345fa68a2bba7aea69a383e186290aa0dd5",
+        "after_sha256": "e46098f735d1044b5a56df80ad3ad19c28d1f7408ba57f2833ca89496e78c9bc",
+        "edits": 5
+      },
+      {
+        "path": "AI_HLY/NativeAppPlatform/BuiltinApps/Sefaria/Assistant/NativeAppSefariaTools.swift",
+        "before_sha256": "34051baabf0bcccaced11a14db433d96ba5b52b848a2c617679dad4d1e462548",
+        "after_sha256": "29302a3320ec77ab7ebd6c98087f81031c7956ea001fa426cb907949e4b9ab40",
+        "edits": 5
+      },
+      {
+        "path": "AI_HLY/NativeAppPlatform/Core/NativeAppCategory.swift",
+        "before_sha256": "6f24f06c4f238867c69ee9bf447b023308b9eafb9a5aace7ebef45d4745c726c",
+        "after_sha256": "69630e3aa2f4953abddeb18187827f58cbab902745313b5778e2e58aaeab0090",
+        "edits": 8
+      },
+      {
+        "path": "AI_HLY/Downstream/MiniApps/HanlinMiniAppHost.swift",
+        "before_sha256": "4de156d4d47545cf9955619d8cc7f765d6b34f597b2256bd87199d65f2d77559",
+        "after_sha256": "fdcbbfa309785465c9a92cc7b17a95ebb140ae8afe067c13a3d0c684ff26e207",
+        "edits": 33
+      },
+      {
+        "path": "AI_HLY/Downstream/AgentDiagnostics/AgentRuntimeUIAcceptanceProvider.swift",
+        "before_sha256": "4217b5db668047f53ed909154e2105c9ae92cc0af0d94cfc5fe77bfcd6bfae1e",
+        "after_sha256": "7ea4263920fbb5f8f70b16f8b85b369d480caa98ab0124260cb0fb89ed4b312c",
+        "edits": 3
+      },
+      {
+        "path": "AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsView.swift",
+        "before_sha256": "44564b153dac4b255d3a94cbee73258773829af246462cb886c896b965b6162f",
+        "after_sha256": "798826e7f1c430d8afae640f0b7563025fb29bad72038baa14e8cebf74043c0f",
+        "edits": 67
+      },
+      {
+        "path": "AI_HLY/Downstream/MCP/ToolIntegration/AssistantToolBridge.swift",
+        "before_sha256": "bf60ddc944e3ac4bc44382a11647a068a27577fa605dbe7b0e1117a3060add83",
+        "after_sha256": "5dac17ac9e255fc48a7bf729c1bdd03b6d3c33920e7cb22894b50b83ebe45fb5",
+        "edits": 2
+      },
+      {
+        "path": "AI_HLY/Downstream/MCP/UI/Settings/MCPServersSettingsView.swift",
+        "before_sha256": "a606960e8a2c83c4558d0bc6938f9b6c664ec9d39291cbe4df0ad810c7ac2f02",
+        "after_sha256": "6155cf5bdec4b3d3b28bbe95b86c3082e5397065261802bd6b2437af1482a665",
+        "edits": 2
+      },
+      {
+        "path": "AI_HLY/Downstream/MCP/UI/Chat/MCPChatServerButton.swift",
+        "before_sha256": "91ed6ef28a3d73ba9a3466691a79da2feacc441176d1fbfa160aab3dd11ede96",
+        "after_sha256": "8d1d5481ac21a425535466139cff29571cf5ac71bc05b9a3fbe483d0324b42d6",
+        "edits": 2
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/ChatMessagePreview.swift",
+        "before_sha256": "12792cc44ab98bcaee864afb9db13959581ce4702fd44e401f6000ec0c46e911",
+        "after_sha256": "ffdc240c13c587b085a1797bc6d7d2e2b3c5f2811ea35c563b4007de8b12c751",
+        "edits": 2
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/HanlinChatContentView.swift",
+        "before_sha256": "2ee5adc679309eebca4fbf1377ce00d5af0c7625e3b807934592fd08e6ba089a",
+        "after_sha256": "ba8dad717b7674a4de302c6338cf8fa942e413addb75b5bd301d7de6f6f8d4dc",
+        "edits": 3
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/ChatMarkdownView.swift",
+        "before_sha256": "e18ec2cc887fea8c4d13c80ba3df45c20884f6aa1ee3228a28a8ea4b2e69dc96",
+        "after_sha256": "9ee34c65f9fcb9f29bdd9d7f3f2800ae5d6a806ed9a9f9652d847af6feb8f347",
+        "edits": 4
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/ClassicChatAgentProjection.swift",
+        "before_sha256": "bf7f750d91692b0d6d6824193c3ad4fd93cd2c39bda68b4118724d4e552eef73",
+        "after_sha256": "aca4478e10bd47768d5911af63193d97b540c46cc7e1a295afe3f0a0bd43016d",
+        "edits": 7
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/HanlinModelDisplayName.swift",
+        "before_sha256": "62cd12d392c5f80e23de3accd45b1c20fdfc68b12492ee7ce62ce1e14fddd677",
+        "after_sha256": "189802f910e6c45594f7cf6c391b1ab60376700a4c00c55ba26bfd4b7231f041",
+        "edits": 2
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/ChatEmbeddedResultHost.swift",
+        "before_sha256": "ebe0d2042fd8d943d18bc2025221f0921835f0a352dcf3584e74906e3a665759",
+        "after_sha256": "6b038a62e716ec07126aaaf524f9e940f1f1a1f8dae6507f7f355c32e8df7e6a",
+        "edits": 13
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/ChatSavedExcerptsView.swift",
+        "before_sha256": "fc71df31eea49b62858e2aa2c5e0127fd16b1e448921c998c9d758fe9b6bf1ab",
+        "after_sha256": "051a3b85d3fd20de539c1dff1cea5255a3ce20ae55412e23e066979dd544fb1c",
+        "edits": 13
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/AgentSDK/HanlinToolPermissionsView.swift",
+        "before_sha256": "8894cfc798968e37764dd3ab07bd521a82df82d1a797cb44faa4d266ba653733",
+        "after_sha256": "8cdea344d47d19c087ec0661a1e539c50025370226fe42969972e45a331258bf",
+        "edits": 9
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/AgentSDK/HanlinToolConsentSheet.swift",
+        "before_sha256": "d6bce181676dcce4433a8b6baacbfcb1bef202e8ba28395f2b0824fbefabcf20",
+        "after_sha256": "88ea4fe803d31e0352620ad98b26f408060fd43daa4ea1c98ed52e269d2bb8f7",
+        "edits": 11
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/AgentSDK/HanlinA2UIAcceptanceStatusView.swift",
+        "before_sha256": "76ea75bd8be94e4ac8b3f88fc3f2298bb55028688de6a59570e136766ccc7bbe",
+        "after_sha256": "b48f173b5fd9a9f0d22890753297fa88731494ee1c5fdb0cf2aff48e8f7841de",
+        "edits": 2
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatPresentation/HanlinPersonalLibraryView.swift",
+        "before_sha256": "a66037563c54e250c866b27990dcec3aab8ebc8d3236cb027ff9974bdd9b7655",
+        "after_sha256": "cb75e696a7b2d68e0262ce679b8c3f137d99f60b4602cb425a88ee1b8d60adf8",
+        "edits": 20
+      },
+      {
+        "path": "AI_HLY/Downstream/AgentSkills/UI/SkillExecutionPlanSection.swift",
+        "before_sha256": "68a78f2becbdfadef5ffc7fca0652c4a281fba7d7c754047f3a6813bf983c57f",
+        "after_sha256": "a6197f00a53cc82e4f748939a98f29f58d910f54eed067545372853e35e325a8",
+        "edits": 17
+      },
+      {
+        "path": "AI_HLY/Downstream/AgentSkills/UI/SkillEditorView.swift",
+        "before_sha256": "6ffa8d55d1d6fc74719b3c336d37e24a302611074e80cbe818aa1fabd9f5a96a",
+        "after_sha256": "a300abae23c39a8314286801bfe6137064a568d4b72ade2906e0a149cd342a71",
+        "edits": 7
+      },
+      {
+        "path": "AI_HLY/Downstream/AgentSkills/UI/SkillCenterView.swift",
+        "before_sha256": "482539c5d95328a7af936f9f95b5bd71a40190558b2c4b230b89e0160058506f",
+        "after_sha256": "81670bf00f2a4c2d44caa23226776850bd4a6dba7b64dc4336f83d3265b50127",
+        "edits": 3
+      },
+      {
+        "path": "AI_HLY/Downstream/AgentSkills/UI/SkillImportView.swift",
+        "before_sha256": "89029e1d3291fb687ae47ed4522dc0880b5f44b1e04fe865c0626351d5a5032d",
+        "after_sha256": "da9a46bd11604269ce742e3235fb1a52c1762e866989a1e1aa8fe446e42f209c",
+        "edits": 14
+      },
+      {
+        "path": "AI_HLY/Downstream/AgentSkills/UI/SkillDetailView.swift",
+        "before_sha256": "9fdeecc0978514ddfabfe82bee1bc7a29ae5983a88fdb037fef08914b8f022b4",
+        "after_sha256": "65560a050ac3719b22377ee5a67f79c6ce56f6b710c31018a0901bd2eea1bcec",
+        "edits": 33
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatInput/HanlinComposerPopupView.swift",
+        "before_sha256": "4a5a0f9d500fae6d3642666ed6156195bd6c6c2e245b1fad643fb91c3ea01297",
+        "after_sha256": "b7bec252926d0840cd1d6b68975f41cc94ce25b46f5c38c1c3c29d0e0ee7496b",
+        "edits": 153
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatInput/HanlinComposerActionBridge.swift",
+        "before_sha256": "7e59cfbeba392f164108ea9eff099c7cb470a056d7be47dfec2b1bbd6944dd9d",
+        "after_sha256": "f0f99bcb4cb4d499a90e5075dcd5403fae2629e54b793d6390754306cc567146",
+        "edits": 14
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatInput/HanlinModelPickerPopover.swift",
+        "before_sha256": "712ff54b790db7bb742261217e19e2556629e1ee9835e0629aafc00d67201799",
+        "after_sha256": "d73cdb6939dbe9844c3f2b2f767e8cb8ba61d90b7dab8d0e0b9678ced7b6bf0c",
+        "edits": 24
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinComposerSessionBridge.swift",
+        "before_sha256": "1b3cfdfbbfa9cad53a963518188a20340bee5cc977d365f9e6fa001e3aaa5aaa",
+        "after_sha256": "7181a07b111d0f1b1bffe0d3234ed454abbc7560df1d5a144f1c3029407f7b99",
+        "edits": 2
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinCompactChatWorkspace.swift",
+        "before_sha256": "729ae08bec5d2280fcddf363b3f27f5181287fd8f3537c00c4b1b79c36549d95",
+        "after_sha256": "5f137f6d012179c29acf3b5e90141ede162139e0cb2c8697c6afc64a6b7a274f",
+        "edits": 13
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinOrganizerDock.swift",
+        "before_sha256": "11a242c6cc8271b5949dc4bd6ab288dcaecbab7ce0bcd0171f63b23be56256c8",
+        "after_sha256": "04213d8eaeb9b4a6c2871a4bac776943a8da1cc1ef72bd031045837c32b223e4",
+        "edits": 8
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinCompactConversationLibrary.swift",
+        "before_sha256": "931c9e9278d11612ea49b6d4aea29e2868e583564d388fecef008b21313e74d6",
+        "after_sha256": "7c0c4298b72dc7e2080791d77c2cd36d5de497bd528e05a1fdfa540533e3630b",
+        "edits": 17
+      },
+      {
+        "path": "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinCompactRecentChats.swift",
+        "before_sha256": "3e14fcca6d5a5a1e36e5c3e3bef9c6982a83d4631c271ff3a8708a2b2f8d10d5",
+        "after_sha256": "d3c581269eafbf6d81e6d1c9d3c8f97b313f8b25af845946299eef5253e3c9d7",
+        "edits": 10
+      },
+      {
+        "path": "AI_HLY/Downstream/TorahStudy/TorahSourceReaderView.swift",
+        "before_sha256": "38ed6d21724f68e43e1425fcdf2a309edf08e337aeee0b12c8b6d8b32833dcf5",
+        "after_sha256": "ef69d80e15efc71883760832ad2d59ed7ab2a38656f503e60e154f078f919491",
+        "edits": 7
+      },
+      {
+        "path": "AI_HLY/Downstream/TorahStudy/TorahPhotoStudyCaptureView.swift",
+        "before_sha256": "721036d88cb16d0e183463785c902a7934bfc8ccd7505fa4a16476adb7a74d0b",
+        "after_sha256": "c1b7b6e3e946f6887d2b3f3bf38f2b00ec8dabb043c9a162093667f84574e488",
+        "edits": 14
+      },
+      {
+        "path": "AI_HLY/Downstream/ScriptingPlatform/ScriptingPackageCenterViews.swift",
+        "before_sha256": "b6e296310e2ef49ab0f16614eccbfdcabe7edf337a61c6dfc3332be24f32cb93",
+        "after_sha256": "913ad37b7b17a5b1bce31b9748960fa2363b4907fe88c6b6416bc832883995e9",
+        "edits": 49
+      },
+      {
+        "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+        "before_sha256": "e24efb52fc70a1c3412c0d7d8ad28a6cfae57d3e76fa22959185d94586e2593a",
+        "after_sha256": "553e0faa878f4657dc4c9dd647598bba972744b7dcc8503fb837c8a553692357",
+        "edits": 2
+      },
+      {
+        "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingSystemUI.swift",
+        "before_sha256": "c1997a2e2618595ccd696afd90cd4f6499c87ff436cc5cd24c3fb18002f23ca0",
+        "after_sha256": "e34dada805032ebb0afd7c857fad112cf7bd05be38edbd670209da6ba9cfdcb3",
+        "edits": 9
+      },
+      {
+        "path": "AI_HLY/Downstream/RuntimeCore/Core/RuntimeBackgroundContinuation.swift",
+        "before_sha256": "cd8f6436b9beee8a0dac4735c4e5f6bcf3099b2e5c7c21fc4c1d243d1d7f1132",
+        "after_sha256": "995bcd17ba4f1de7da2b58505c7f9cb7b43001db1aad4d74e98c97a983921d30",
+        "edits": 9
+      },
+      {
+        "path": "AI_HLY/Downstream/RuntimeCore/UI/PythonPackagesView.swift",
+        "before_sha256": "a454cb7fcc6c331191dc71b9212e059e8f58195ad1e4d3fad39a6ea4180dddb5",
+        "after_sha256": "89a4fffbc7cc157c23ad6f7f8af36ec35a8b7b3c65ac21f5fa6cd7fe5c37d2ed",
+        "edits": 2
+      },
+      {
+        "path": "AI_HLY/Downstream/AgentActivity/Transcript/AgentTranscriptTextView.swift",
+        "before_sha256": "30ab8b91e7b06d77a70ff989b60f7153b352c483b75df9ef5c893c4cf90a2dd3",
+        "after_sha256": "a772e2046a0ef58073d08a9a4de19021ca7e3fb35e27418064790eee5b2e17fa",
+        "edits": 2
+      },
+      {
+        "path": "AI_HLY/Downstream/AgentActivity/AgentEventAccumulator.swift",
+        "before_sha256": "9c20a6cd9ae655835a3f10a85c8407587c1117cc0286080ecc2ef7f9e945f888",
+        "after_sha256": "316798c38f2325e05d367ba1bd1cfb75b18bfde3215518d1e02b6c454da8af32",
+        "edits": 15
+      },
+      {
+        "path": "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityComposer.swift",
+        "before_sha256": "82554012e86036dee09ca12f91ab7b42abed08403f98ae328c2988375b83979b",
+        "after_sha256": "6ea2e10091edc65235e2d7e760577b59f9af2c422c3101ee7e4f97d13dcc670d",
+        "edits": 9
+      },
+      {
+        "path": "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityTitleBuilder.swift",
+        "before_sha256": "09a954e8c447d2f8b6689db09a5e37d5a4e76ff98787b82bf6df50cde13a0006",
+        "after_sha256": "8c679d2aca392039cacd59de601190fe7535489e57e41943b678179b712a8292",
+        "edits": 8
+      },
+      {
+        "path": "AI_HLY/Downstream/AgentActivity/ToolPresentationRegistry.swift",
+        "before_sha256": "3097430ec9e0e8cfcf6e61c60720bc26af50c62e1ad1b17e89196810be5cc711",
+        "after_sha256": "4b2ce81c17905429634527d5ae948b9f8245b31cc34534597b0590814cc79167",
+        "edits": 5
+      },
+      {
+        "path": "AI_HLY/Downstream/AgentActivity/ProviderEventAdapter.swift",
+        "before_sha256": "5a0d977614e03f3e388dce5957210522d717e8993aeb780584abf6ab09a2fa3a",
+        "after_sha256": "eaea664db4a542f3fb0a18e38b3e91d37255ae851cc2d382d545884229aa68f7",
+        "edits": 12
+      },
+      {
+        "path": "AI_HLY/Downstream/AgentActivity/LegacyAgentActivityAdapter.swift",
+        "before_sha256": "76823d40ffecece222eb2293bca1391a4d67e620bab986016477fe7bb1c93b07",
+        "after_sha256": "ac326e138437ad381c0c57f71a5e1fa5b02e7b428185074bcbc5d916de2de306",
+        "edits": 11
+      },
+      {
+        "path": "AI_HLY/Downstream/AgentActivity/Evidence/LegacyResourcesEvidenceAdapter.swift",
+        "before_sha256": "fe0951972164de74a28539e5f71e0002c7d9c18a1b1992d7a26b4a13a29a57a5",
+        "after_sha256": "52f9d98e5dc668de045ef7cbf7fd1c0cbb3592f2ca445465d21001eb0fac0233",
+        "edits": 2
+      },
+      {
+        "path": "AI_HLY/Downstream/AgentActivity/Evidence/AgentEvidenceRow.swift",
+        "before_sha256": "3bbc41546629596769b0d0902225446146641d4729e9857783f0ce73b73cce8f",
+        "after_sha256": "c25e0825ef11ea658dbbb031c503e8099c0a3a6514d4619a62fbb7deeb8fb6de",
+        "edits": 7
+      },
+      {
+        "path": "AI_HLY/Downstream/AgentActivity/Evidence/AgentEvidenceSheet.swift",
+        "before_sha256": "a389763b14c5cbc5ed0fbf85a54673135b52c463c5adcff32b8534fb3a740ce3",
+        "after_sha256": "b229750cf07cec954668f4d67360fc9c39a5d906dc649c2785cb7927a7623dff",
+        "edits": 14
+      },
+      {
+        "path": "AI_HLY/Downstream/AgentActivity/ToolPresentation/ToolPresentationProfile.swift",
+        "before_sha256": "5911189e04f77ec3c940a7cdb903a53db6c76f1f03a0f217803fdde92a8812e9",
+        "after_sha256": "c83c6ab5e81420ecd0dba4ad3a8c3ec103e99cada5380543d303efdff02140cc",
+        "edits": 10
+      },
+      {
+        "path": "AI_HLY/Downstream/AgentActivity/ToolPresentation/LegacyToolPresentationAdapter.swift",
+        "before_sha256": "7c1dbf85960bb81e1702c93e6c2c550e8296db03c747bb2685d299c4508dcfc5",
+        "after_sha256": "1da0897998f6b755076a62e253d91e4e1ff656eba05f78ed4fb78bbe4ef805a5",
+        "edits": 4
+      },
+      {
+        "path": "AI_HLY/Downstream/AgentActivity/AgentActivityStepView.swift",
+        "before_sha256": "a4a479287fb06a18a10ebf4599e9c411be2c0398d294330c67e192b700aba833",
+        "after_sha256": "9ab17f751cd60b927f0d7edd74366433bd603fb163c2acf614cbb997151aa123",
+        "edits": 6
+      },
+      {
+        "path": "AI_HLY/Downstream/AgentActivity/AgentActivityModels.swift",
+        "before_sha256": "935bd6e487eaf95452ba7ad925fa108a608eaa9de8334b0de60ca1da3c98940e",
+        "after_sha256": "3a44577945b4247ad4e88f672597e24304450d9f3a14462725cf233b48ec02e5",
+        "edits": 2
+      },
+      {
+        "path": "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInbox.swift",
+        "before_sha256": "3ff58adcf9354e348f20f6ad7cb38d9879b4966383eacdd79c18475185bafa1c",
+        "after_sha256": "1f25c436e7ec7cd3413ccbf4c5142f8a614c6b7c044703a838b1339860571962",
+        "edits": 3
+      },
+      {
+        "path": "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInboxView.swift",
+        "before_sha256": "9b3be12b53e815d5cf195565bc8689f628cd8bc3b9c90ce3cef5ff3635544549",
+        "after_sha256": "1a5f19eb4ce4b6982db8e92cc77c927c1c3ef8c82c0a427f01713dd506700b1e",
+        "edits": 35
+      },
+      {
+        "path": "AI_HLY/Downstream/SystemIntegrations/ChavrusaSystemIntegrations.swift",
+        "before_sha256": "dc03b7e85fd99d5b82ac53d61a66bdd960d28e077fbac9b0fa30109ce3b81a38",
+        "after_sha256": "ea5dbd150dabccee1443faabb98c2aba3ad9cc02622dc99df05c165459aaa7d6",
+        "edits": 2
+      },
+      {
+        "path": "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsProvider.swift",
+        "before_sha256": "3183dabc3c476469dc0de6c90d76669970cb01352b7e42a4520257b6ade1b07d",
+        "after_sha256": "8bcb75feb76f83e121ef86fa041ff1db6f0093308a63d0c4cc6938aa7fd39a83",
+        "edits": 7
+      },
+      {
+        "path": "AI_HLY/ListView.swift",
+        "before_sha256": "81a47ccf1595d4b162f540b331664ca0c837a173cf4b4e8119f9894f9141349c",
+        "after_sha256": "4b98aa9296c4f41d243b3561c55336bd3fcdc00caf095736c440a1f7546c9314",
+        "edits": 31
+      },
+      {
+        "path": "AI_HLY/ChatView.swift",
+        "before_sha256": "4fe2917022f09d5699d9f802ad1bffeace5de05d0aa03dedf946aa00a1f4bab4",
+        "after_sha256": "97437407189724debc7368ccef24c7c8740acfe9d14d2d91daa5501c1c438121",
+        "edits": 60
+      },
+      {
+        "path": "AI_HLY/NativeAgentExtensions/Presentation/ModernCards/NativeToolResultCardContainer.swift",
+        "before_sha256": "1b37807d7dc26c3d26e1df01b0b3020eef66edf39835ff091724e0a852920946",
+        "after_sha256": "9fa1cd5a7420308204a8760477ea3e3cc33cb201a0ff5a6f2bd3a4f1fa34ef88",
+        "edits": 2
+      },
+      {
+        "path": "AI_HLY/NativeAgentExtensions/Presentation/ModernCards/NativeToolSearchResultCard.swift",
+        "before_sha256": "94dbbac79fa4aad3bf5cda79e2f1cf9d60dbfbd35a11f6875889ce8c16268640",
+        "after_sha256": "54d14f5a8e251933008a4abe41bb3e9361eb92937da5b763351a2fe5f0c6f853",
+        "edits": 4
+      },
+      {
+        "path": "AI_HLY/NativeAgentExtensions/Presentation/ModernCards/NativeToolErrorCard.swift",
+        "before_sha256": "5d7b998389ea4c0f61ffa62253127e2e8e267042b4d9523c0215d421b058467e",
+        "after_sha256": "1201f8cf61a835c942461f7d94886f5784740183b2e14c0c4b49634533d35e05",
+        "edits": 2
+      },
+      {
+        "path": "AI_HLY/NativeAgentExtensions/Presentation/ModernCards/ModernNativeToolResultRenderer.swift",
+        "before_sha256": "b82cc523b783415ad8b7e537f5b76a6fc05c4011424614681b0b5eaee9fb4139",
+        "after_sha256": "601535afe57773dbfaab70b1cc1efcad7529310dc0a05d5808f32b050d3df742",
+        "edits": 2
+      },
+      {
+        "path": "AI_HLY/NativeAgentExtensions/Presentation/ModernCards/NativeToolEntityCard.swift",
+        "before_sha256": "70bfb685981bd7691bb424e3365876390cd452246d35e32360583c8b463dec6b",
+        "after_sha256": "1bb2ab8272a96413fc8d782284235e7d513a581b51219fd88a0c80a20d4d49f1",
+        "edits": 5
+      },
+      {
+        "path": "AI_HLY/NativeAgentExtensions/UI/NativeUIRenderer.swift",
+        "before_sha256": "88c33a4d6192b9dcc1e4e95c227cc3e5947b7963fb1d4bcc5e9635d1723c19fe",
+        "after_sha256": "1c11f56e65f7ee431e68cbe1bfa6e61d812b5952110df02b28b37767a3e8c676",
+        "edits": 15
+      },
+      {
+        "path": "AI_HLY/NativeAgentExtensions/UI/NativeAssistantToolGroupSettingsView.swift",
+        "before_sha256": "132c58b3e71406f8c3b7177b9d8ac6258ca9bff81cd001e63d1b1daa9722eb52",
+        "after_sha256": "084f53d44cf9fa1c096824c00cce2737275a9ce6774bab5cc5dd01af8beaf150",
+        "edits": 10
+      },
+      {
+        "path": "AI_HLY/VisionView.swift",
+        "before_sha256": "2250262e0de670c7ce31cebed48b52764535dad8a6af04233846549997a0fc6a",
+        "after_sha256": "d68f7d903d2ec4f045001dab2f929b658fdfc9f718296c4cf4218ed7c6da8697",
+        "edits": 34
+      },
+      {
+        "path": "AI_HLY/MainTabView.swift",
+        "before_sha256": "cc6375e354ff210948bfada4392148653183fbf74c8b27bacfebb265f92ab3c5",
+        "after_sha256": "7735ad40eacbfbf48ec3448f13cbb23fa6aa26f20bee46833e4a076aab13d9da",
+        "edits": 11
+      },
+      {
+        "path": "AI_HLY/SettingsView.swift",
+        "before_sha256": "8191e5f709624abd1a36feeb8c770d2fc4ed23c0cf2a9f5579c28d2cbfabf897",
+        "after_sha256": "9a5ebc67ebbc0a136bce1c11505d7c7f164d6c10e5ed02dffad7e5ab03861c72",
+        "edits": 46
+      },
+      {
+        "path": "AI_HLY/Views/Components/KnowledgeWritingView.swift",
+        "before_sha256": "62b77d4f545ef9545c57070eb1357dc20b67ae148ceb0a9490ff674fcd28386b",
+        "after_sha256": "d0717483f889afcbd9ba753a413e364cdd4a8100908b97d85310e9f1e49fb8b1",
+        "edits": 39
+      },
+      {
+        "path": "AI_HLY/Views/Components/SettingsViewComponents.swift",
+        "before_sha256": "8074d6c19a25836ca7c923b6c89f88b080984a2260ae6310b78701ec670fde97",
+        "after_sha256": "9ff0d21979fef869089132032252ef9e0418799ead30bfbdb916fe16179d2aba",
+        "edits": 78
+      },
+      {
+        "path": "AI_HLY/Views/Components/VoiceInputView.swift",
+        "before_sha256": "2d0fda8e1063402671bba294f43bb78cfe291b92015d9137f2791e9b604373f3",
+        "after_sha256": "a02436f7fc29f49c80c8ef926baf1271ef7e4152549be6e8375b85c0b264e702",
+        "edits": 39
+      },
+      {
+        "path": "AI_HLY/Views/Components/QuickToolsView.swift",
+        "before_sha256": "b6cd9cadf587257f59d4827f025963ae51fc9232f864f0ea7bd8b61c164c666b",
+        "after_sha256": "907718c73fb93ed1a875e674aee0279e76b307eae497788f4437639f296204a2",
+        "edits": 66
+      },
+      {
+        "path": "AI_HLY/Views/Components/MemoryArchiveView.swift",
+        "before_sha256": "d34da1bf00bb1a46e67db1a7436803ef0dd2e41f396b3a58168fbca27dfe3dda",
+        "after_sha256": "45d0aef9b84de7dab1af5e455ad7fb0c8ff5eaa0d20a17c8d54cf05449b43503",
+        "edits": 36
+      },
+      {
+        "path": "AI_HLY/Views/Components/ModelManagementView.swift",
+        "before_sha256": "1582a80f9b00bc81ad7d817a08c65eb6d67b792efdbc498db9cc08c1bc2c9928",
+        "after_sha256": "0034248e4be20ff011b4fbbd34135ab572cc7f589b90112fb76c582e8eeec79a",
+        "edits": 29
+      },
+      {
+        "path": "AI_HLY/Views/Components/ChatViewBottom.swift",
+        "before_sha256": "47cdddfd14482e5bad64193fccbf634da7786417f84a82980f3bedf40032c780",
+        "after_sha256": "22a1b2ac6957e7ab639f03dfca3a62d09e801b6b26e5277c7077ec7057859361",
+        "edits": 72
+      },
+      {
+        "path": "AI_HLY/Views/Components/APISettingView.swift",
+        "before_sha256": "8bfbadfc13b3df5ecf7d6f20a61ac78fbe533e784a158e777de51361ada95979",
+        "after_sha256": "5ddf2897a73b1a06c10c9c563ad379c34f5a90ff49b03e5398a400a18d7bb9e6",
+        "edits": 233
+      },
+      {
+        "path": "AI_HLY/Views/Components/ModelsViewComponents.swift",
+        "before_sha256": "786876bb5371fadf8fce8169485d2e2defcc1701c1cb43c23b9e5d75ca80a60c",
+        "after_sha256": "c299331f85a3f84fcc7e5869c69d89d69300e0638c5dacc088fc59333344d9c8",
+        "edits": 143
+      },
+      {
+        "path": "AI_HLY/Views/Components/ListViewComponents.swift",
+        "before_sha256": "315203bd27bee3631408dc4d3ed0067530a9f4b182ebf1eefd0a3525bb4865be",
+        "after_sha256": "a65bcea76c85ee42cca77f63d828b462c5669fb91a87e74f0dee1ad9795723f2",
+        "edits": 18
+      },
+      {
+        "path": "AI_HLY/Views/Components/ChatViewComponents.swift",
+        "before_sha256": "fbb281ef2181d6d8bd2aa717df5376b0c9d4a84b39016397e1caf7c2fb6ddbce",
+        "after_sha256": "333bca934970d125f9523e0d0215f50e9a119632c691e90e24a8ed78161de815",
+        "edits": 332
+      },
+      {
+        "path": "AI_HLY/Views/Components/HanlinHelpView.swift",
+        "before_sha256": "27ac7f8cbe6b29fa3c59c9a7347e5f3d446b75d0ee37ed1b94ca0d4a51375e3f",
+        "after_sha256": "0a62f8e99300a6844fe9ab1ad76c0bd87be3cd39664e2ba0ec2754ae85542b50",
+        "edits": 12
+      },
+      {
+        "path": "AI_HLY/Views/Components/PromptRepoView.swift",
+        "before_sha256": "efb4351ce52eab5a0fdbd079e1ed3d8ef0d5310aa509e97f984f7a56ff811cb8",
+        "after_sha256": "4bbebe6ed265750bea73966743389c1b443a9e7b4d78e339ace973f52b77c6b7",
+        "edits": 42
+      },
+      {
+        "path": "AI_HLY/Views/Components/TranslationDicView.swift",
+        "before_sha256": "137dc50103441c31a3eadd8b824369be325d0e0d9378b9fed85d4631ff96d1f8",
+        "after_sha256": "e44661ea2e5689b06e764d347ef04ca8a77bbe8c8e3cde9710517afee619b6c6",
+        "edits": 24
+      },
+      {
+        "path": "AI_HLY/ModelsView.swift",
+        "before_sha256": "c90f5ecd5328d9a73695ebcc8637d0569a11d4c4c9a389af846b762ba3f4f629",
+        "after_sha256": "3b422fc798f5f617dbd39cce45f47a38bbd0ba273e14f5ee4e6ca5f00d82c635",
+        "edits": 44
+      },
+      {
+        "path": "AI_HLY/KnowledgeListView.swift",
+        "before_sha256": "2cc53efde381244a6d5e5a170d58b3e397b63d552fbbcf7c850218339568a3dc",
+        "after_sha256": "8267d4083b9c94b136273ab52a9bf2db2d25c4b9208ba6e24fe78e1d1ecedd2a",
+        "edits": 22
+      },
+      {
+        "path": "Packages/HanlinPresentationSDK/Sources/HanlinRichUI/NativeOpenUINode.swift",
+        "before_sha256": "435e2206030769de6ee198ee0cf978736ac1d48a0db887072c06c84fe54e01dc",
+        "after_sha256": "d78707654c528159d36d3b694d934a4fca086ad31248b5e24a4e7d547a16c40e",
+        "edits": 8
+      },
+      {
+        "path": "Packages/HanlinPresentationSDK/Sources/HanlinA2UI/Media/HanlinMediaCatalogImplementation.swift",
+        "before_sha256": "408f272531a68a0685b7d1af348d10d6eff017ae5ba8b8ddd4e68ab9763f643e",
+        "after_sha256": "caf80a136502e987f4ccbcea21110b2a6c45700ef0f60e1234240129577272e5",
+        "edits": 7
+      },
+      {
+        "path": "Packages/HanlinPresentationSDK/Sources/HanlinA2UI/Media/HanlinA2UIMediaURLGate.swift",
+        "before_sha256": "20fd9a0274075e6ff331133c47fa5357dd6fcb10d6cd150d4488fab945e490cb",
+        "after_sha256": "3dd25fe7089e7c1495f86d4b2ff7d9b6bae60f3e4c346c4194b78e53be396a9e",
+        "edits": 7
+      },
+      {
+        "path": "Packages/HanlinPresentationSDK/Sources/HanlinA2UI/Media/HanlinYouTubePlayerView.swift",
+        "before_sha256": "39874c906920f3cbaca9bad9d63c9a486fa965ccbb4698511ed912101cff29d6",
+        "after_sha256": "5bb3cad8c3d42562cc8c2f35413295770473a915d61761cc4d373277a55a238b",
+        "edits": 7
+      },
+      {
+        "path": "Packages/HanlinPresentationSDK/Sources/HanlinA2UI/Media/HanlinRichMediaViews.swift",
+        "before_sha256": "f5838932ebc6154229339861552d4edc3c24dfdce85e8be7020e57b303cf3ee7",
+        "after_sha256": "46d6f30acbe478236f71d7394f4be59bc17fd28b6aab9f37c184f7a271928ade",
+        "edits": 19
+      },
+      {
+        "path": "Packages/HanlinPresentationSDK/Sources/HanlinA2UI/A2UI/HanlinA2UIResultView.swift",
+        "before_sha256": "b1b5b71e0441b4c7823c4e19863c41fbeae403ab0137cc90b8c24271121de404",
+        "after_sha256": "89d16c0dbcbf532683eaeda796ec334fb6c6f20648726dd6bc00501ef5ad646f",
+        "edits": 3
+      },
+      {
+        "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/CodeFences/ChatCodeFenceView.swift",
+        "before_sha256": "6643b395a55888d5da5e0c6da257586aa54792c01904605336e6d29232f0651d",
+        "after_sha256": "964d36b7e3b02537f5f885b6c59e51c50a6d5f36de19ce1f2896b96829df9fcf",
+        "edits": 19
+      },
+      {
+        "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinActivityHierarchy.swift",
+        "before_sha256": "9b2ee7e9ee1a3ce61e5070d171047469a357ef0f6677529ebec778f774440bae",
+        "after_sha256": "7d4e19a8520e352ae53031da54b5c4f5a75795084402f6c3f4e4c57731e7a7bb",
+        "edits": 3
+      },
+      {
+        "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinComponentCatalogView.swift",
+        "before_sha256": "0e9c1631875beb1cab203d321c4c30be5e46535c704f59e51a70f464374a43ca",
+        "after_sha256": "88e23d82060089fd86a1e10d3f451e04896113adcd1950ce1b93a2fba8305f6c",
+        "edits": 34
+      },
+      {
+        "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinToolActivityHeader.swift",
+        "before_sha256": "21f3b0f344ce324d4057211c10779510120c3a246a4098a51442900ea0372f28",
+        "after_sha256": "4c9e3d0e1a3842b33bfa9ef93b3e31027e822ad8247fdd19b8d24fa098356079",
+        "edits": 3
+      },
+      {
+        "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/NativeMultilineTextEditor.swift",
+        "before_sha256": "6df520cf477d344c533a8a8cefe35a675d6e9ba20f9c9b26ab32db03e2557f87",
+        "after_sha256": "a65249e7f297817a1961d9275545f13710b7ab614bddcf71310d0d44495fee38",
+        "edits": 3
+      },
+      {
+        "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/HanlinDetachedCapabilityChips.swift",
+        "before_sha256": "2c83b9226d333a8d4ea24325f097b173236a28ca5c84f15812dc58d846795098",
+        "after_sha256": "19c8797b1ad55555115413e2d2ea949aabf9c97db6b285cea8bdfaaaeb0af9bc",
+        "edits": 15
+      },
+      {
+        "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/HanlinMorphComposer.swift",
+        "before_sha256": "8c1e6c2f9db85c020a8730c620a0bb638a214714d3243d7ffc40efd319e077ea",
+        "after_sha256": "22e38d421fa8da0614c4bc0ddbd9ded1a29313bcb17833c6e61b62dcf7649907",
+        "edits": 5
+      },
+      {
+        "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinAnimatedDisclosure.swift",
+        "before_sha256": "a19e5c748ab601d598116e364d2d7b4bedc36de396b120b3fc40eea3aa4d68a8",
+        "after_sha256": "91d60f960fd1ca1dea34b1ce34a6a5e99b4e60c2a030be78ac9f996a2533d084",
+        "edits": 3
+      },
+      {
+        "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/ChatMotionPreferences.swift",
+        "before_sha256": "e63652e5b1184f06ce33f921672890b70d5949a0cb04803bf08a30207027fa52",
+        "after_sha256": "ed99eb69d031bdf6cfaccf31b4e5d892e27388b89ccffa1f1a562af2e6d47a50",
+        "edits": 7
+      },
+      {
+        "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinInlineToolApproval.swift",
+        "before_sha256": "ed3d056b73e13220f40ede81af417a624dd9c1aa0a2894ee3f8b2184eb0e5e80",
+        "after_sha256": "3919befd38ca2a6de86f0452d92d7384ce5ef09cf674fe7f73541a424df9f888",
+        "edits": 11
+      },
+      {
+        "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinSources.swift",
+        "before_sha256": "39aae83f46266f74b4061a8bbc88378463cc6e32607134694df96258407401ac",
+        "after_sha256": "072a996ccd98d54abdc0e330122d1a43931bb643cc3af6eddc0dbd2329f86334",
+        "edits": 3
+      }
+    ],
+    "other_source_changes": "Three original table localizers moved with only public visibility and bundle routing; tests/stagers/helpers added separately",
+    "unchanged_launch_storyboard": true,
+    "original_localizer_bodies_and_dictionaries": "byte-identical after declared access/bundle changes"
+  },
+  "syntax_routing": {
+    "scanned_files": 538,
+    "changed_files": 115,
+    "edits_by_reason": {
+      "Foundation localization bundle": 1172,
+      "explicit shared resource dependency": 115,
+      "shared original color asset": 547,
+      "named localization table bundle": 1,
+      "native control localized label": 287,
+      "original SwiftUI localized Text": 227,
+      "shared image with host-name fallback": 41,
+      "native Text title/accessibility overload": 112,
+      "native localized search prompt": 8,
+      "preserve legacy onCommit callback and environment locale": 2,
+      "retain host locale for legacy prompt": 1
+    },
+    "original_literal_segments": "preserved exactly and in order",
+    "idempotency_remaining_edits": 0,
+    "excluded_source": "AI_HLY/AI_HLY.swift is owned/replaced by root; rerun transform after integration to route new SDK facades",
+    "tool": "Scripts/Localization/route_shared_resources.py",
+    "tool_swift_sha256": "0acee60a34b136905b57c49661495025aa6fd5817d834bc85855cb8d767f0490",
+    "raw_edit_receipt_sha256": "ae599b6b34ebe11b225f4167ad5c4a6cf275c26378bc50f05a794bd6e6bbb576"
+  },
+  "verification": {
+    "original_resource_hashes_verified": 301,
+    "source_catalog_validation": {
+      "status": "PASS",
+      "catalog_values": 3656,
+      "packaged_values": 0,
+      "errors": []
+    },
+    "synthetic_compiled_table_parser_controls": {
+      "sdk_bundle_pass": "PASS",
+      "packaged_values": 177,
+      "missing_sdk_bundle_rejected": "FAIL",
+      "changed_translation_rejected": "FAIL",
+      "scope": "Synthetic plist fixtures, not native app execution"
+    },
+    "native_staging": {
+      "a2ui_inputs": 363,
+      "code_fence_inputs": 327,
+      "default_locale_and_process_rule": "PASS"
+    },
+    "native_execution": "NOT_RUN"
+  },
+  "portable_public_bundle_test": {
+    "passed": 1,
+    "toolchain": "Swift 6.4.3 RELEASE / Swift 6 / aarch64 Linux",
+    "resource_rule": ".copy in isolated Linux harness; production native target uses .process",
+    "log_sha256": "7370974d141f5d4f2b04adee14e70bb9072368f9ace43d1f4087fc8eb6721dea"
+  },
+  "existing_locale_validators": {
+    "runtime_used_keys": 196,
+    "mcp_used_keys": 129,
+    "locales": [
+      "en",
+      "he",
+      "zh-Hans"
+    ],
+    "historical_git_ref": "c660f594636a4423e3bbd051078e032527f94384 PASS"
+  },
+  "native_acceptance_tests": "Packages/HanlinPresentationSDK/Tests/HanlinLocalizationTests/HanlinLocalizationTests.swift",
+  "native_gates_pending": [
+    "Typecheck all native SwiftUI forwarding overloads on supported Apple platforms",
+    "Validate original locale rendering inside actual host apps",
+    "Validate Xcode actool follows the app applogo asset symlink",
+    "Run original UIKit asset and compiled catalog tests / packaged-value validator"
+  ],
+  "native_execution": "NOT_RUN on Oracle Linux",
+  "integration_owner": "root owns package manifests, Xcode/project metadata and Apple build/visual gates",
+  "source_authorities": {
+    "Text and stored string localization": "https://developer.apple.com/documentation/SwiftUI/Text",
+    "Native Text alert title": "https://developer.apple.com/documentation/swiftui/view/alert(_:ispresented:actions:message:)-8dvt8",
+    "ContentUnavailableView original generic constraints": "https://developer.apple.com/documentation/swiftui/contentunavailableview/init(_:systemimage:description:)-4490a",
+    "Picker original builder initializer": "https://developer.apple.com/documentation/swiftui/picker/init(selection:content:label:)",
+    "Section original builder initializer": "https://developer.apple.com/documentation/SwiftUI/Section/init(content:header:)",
+    "TextField original builder initializer": "https://developer.apple.com/documentation/swiftui/textfield/init(text:prompt:label:)",
+    "TextField legacy onCommit semantics": "https://developer.apple.com/documentation/swiftui/textfield/init(_:text:oncommit:)",
+    "UIKit resource color initializer": "https://developer.apple.com/documentation/uikit/color-creation",
+    "UIKit named image bundles": "https://developer.apple.com/documentation/UIKit/UIImage"
+  },
+  "evidence_directory": "/mnt/development/projects/evidence/hanlin-sdk-ui-20261123/Localization"
+}

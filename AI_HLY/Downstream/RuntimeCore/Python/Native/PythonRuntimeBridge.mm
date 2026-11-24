@@ -11,6 +11,17 @@
 
 static std::once_flag initializationFlag;
 static NSString *initializationError = nil;
+static std::mutex resourceBundleMutex;
+static NSBundle *resourceBundle = nil;
+void HanlinPythonSetResourceBundle(const char *bundlePath) {
+    if (!bundlePath) return;
+    std::lock_guard<std::mutex> guard(resourceBundleMutex);
+    if (!resourceBundle) resourceBundle = [NSBundle bundleWithPath:[NSString stringWithUTF8String:bundlePath]];
+}
+static NSBundle *HanlinPythonResources(void) {
+    std::lock_guard<std::mutex> guard(resourceBundleMutex);
+    return resourceBundle ?: NSBundle.mainBundle;
+}
 static std::mutex cancellationMutex;
 static std::unordered_map<std::string, std::shared_ptr<std::atomic<bool>>> cancellationFlags;
 
@@ -60,7 +71,7 @@ static void InitializePython(void) {
         setenv("PYTHONUTF8", "1", 1);
         // Embedded OpenSSL has no iOS Keychain-backed default CA file. Supply
         // the pinned, unmodified Mozilla roots; never weaken certificate checks.
-        NSString *certificates = [NSBundle.mainBundle pathForResource:@"HanlinPythonCACertificates" ofType:@"pem"];
+        NSString *certificates = [HanlinPythonResources() pathForResource:@"HanlinPythonCACertificates" ofType:@"pem"];
         if (!certificates) {
             initializationError = @"The embedded Python CA certificate bundle is missing.";
             return;
@@ -122,7 +133,7 @@ char *HanlinPythonExecute(const char *requestJSON) {
         if (found != cancellationFlags.end()) cancellation = found->second;
     }
     if (!cancellation) return CopyUTF8(@"{\"error\":\"Python job cancellation identity is not registered.\"}");
-    NSURL *bootstrapURL = [NSBundle.mainBundle URLForResource:@"HanlinPythonExecution" withExtension:@"py"];
+    NSURL *bootstrapURL = [HanlinPythonResources() URLForResource:@"HanlinPythonExecution" withExtension:@"py"];
     NSString *bootstrap = bootstrapURL ? [NSString stringWithContentsOfURL:bootstrapURL encoding:NSUTF8StringEncoding error:nil] : nil;
     if (!bootstrap.length) return CopyUTF8(@"{\"error\":\"The embedded Python execution resource is missing.\"}");
 

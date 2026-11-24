@@ -1,0 +1,122 @@
+{
+  "base": "65fdc2ed9cd1ed563b86d98cee2dab7f665f714c",
+  "scope": "Original function and computed-property bodies; new public constructors, immutable identity isolation and host callback storage are separate seams.",
+  "normalizations": [
+    "Canonical localization bundle and original control forwarding helpers",
+    "Injected exact original transfer view and live transfer-busy callback"
+  ],
+  "source_provenance": [
+    {
+      "original": "HanlinMiniAppsApp/MiniAppsLibrary.swift",
+      "original_sha256": "187d264231108f682ebab7a398687dc1ba7195816acc57ddf0b6fbd9f9f07986",
+      "canonical": [
+        {
+          "path": "Packages/HanlinPresentationSDK/Sources/HanlinMiniAppsUI/HanlinMiniAppsLibrary.swift",
+          "sha256": "2bdadc9e549e6b31202fbac66bc36780b239d00c71048a3c44fe97292ae36a7b"
+        }
+      ]
+    },
+    {
+      "original": "HanlinMiniAppsApp/MiniAppsServices.swift",
+      "original_sha256": "cc77e9ed3db943a5ec53f97b6e02cd11017b2eb1659aa48ea8297493a89ad1c3",
+      "canonical": [
+        {
+          "path": "Packages/HanlinPresentationSDK/Sources/HanlinMiniAppsUI/HanlinMiniAppsServices.swift",
+          "sha256": "0a0efd44f373f4069e39388b5a85a8b568943d8496abea6d121e246e9162f0db"
+        },
+        {
+          "path": "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsProvider.swift",
+          "sha256": "a2e91e79550378c0d306d0f19aa874853c5c9a1cc4727efa7aa35e646bae65a9"
+        }
+      ]
+    },
+    {
+      "original": "HanlinMiniAppsApp/MiniAppsForegroundBridge.swift",
+      "original_sha256": "545d8a5778c9210a9e82b69d219ae2cd3940f81e3fc9dd0ba8b0fbfa25305622",
+      "canonical": [
+        {
+          "path": "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsForegroundBridge.swift",
+          "sha256": "d965dedf74c260f9d47aeb580677ba58a364d459d6d5af3b777894855e90260b"
+        }
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "original": "HanlinMiniAppsApp/MiniAppsLibrary.swift",
+      "member": "MiniAppsLibrary.filtered",
+      "pass": true,
+      "normalized_tokens_sha256": "821867a6d19cd082b72a4d4b84849e1a1516bc6928f57d9bcbfd491138106d87"
+    },
+    {
+      "original": "HanlinMiniAppsApp/MiniAppsLibrary.swift",
+      "member": "MiniAppsLibrary.body",
+      "pass": true,
+      "normalized_tokens_sha256": "9c6eeb419ff5839da94fe5c55531cd53ee1dc55ac2c63e4ae74e4b2a533e6ee6"
+    },
+    {
+      "original": "HanlinMiniAppsApp/MiniAppsLibrary.swift",
+      "member": "MiniAppsLibrary.reload()",
+      "pass": true,
+      "normalized_tokens_sha256": "0e3475c866555d9f20cad0aa4030dc059642a2b5f8f0a34b55a22d9d327c9c1d"
+    },
+    {
+      "original": "HanlinMiniAppsApp/MiniAppsServices.swift",
+      "member": "MiniAppsServices.IntegrationError.errorDescription",
+      "pass": true,
+      "normalized_tokens_sha256": "08e33192fd550a5c1e4502eb8df56f0b5e8b0cba7ddd0e25e9523e1df2afcca9"
+    },
+    {
+      "original": "HanlinMiniAppsApp/MiniAppsServices.swift",
+      "member": "MiniAppsServices.connected(to:)",
+      "pass": true,
+      "normalized_tokens_sha256": "3fd52ad8aa011cfa8c3e6215ceb8994cb3387dec26bf54fde7cd8f4e541f5303"
+    },
+    {
+      "original": "HanlinMiniAppsApp/MiniAppsForegroundBridge.swift",
+      "member": "MiniAppsForegroundBridge.open(_:)",
+      "pass": true,
+      "normalized_tokens_sha256": "b4dc03af4769ce19ea5fc597c970b1fff721800a2bbbfe4201c200c3db88206b"
+    },
+    {
+      "original": "HanlinMiniAppsApp/MiniAppsForegroundBridge.swift",
+      "member": "MiniAppsForegroundBridge.cancelAndClose(openURL:)",
+      "pass": true,
+      "normalized_tokens_sha256": "0e6d570a6a157a145a69d6df2daee027e099e3a759ad588a35374c9877effeca"
+    },
+    {
+      "original": "HanlinMiniAppsApp/MiniAppsForegroundBridge.swift",
+      "member": "MiniAppsForegroundBridge.returnToOrigin(openURL:)",
+      "pass": true,
+      "normalized_tokens_sha256": "5d1d5fd6325f2a927e867232a34c4dc2de0cedede8985619e1487e2051761017"
+    },
+    {
+      "original": "HanlinMiniAppsApp/MiniAppsForegroundBridge.swift",
+      "member": "MiniAppsForegroundBridge.returnURL(reference:openURL:)",
+      "pass": true,
+      "normalized_tokens_sha256": "682b2b57037648b57a1c3be130e0260a0477ea6474b098ce6d6a5f250647f960"
+    },
+    {
+      "original": "HanlinMiniAppsApp/MiniAppsForegroundBridge.swift",
+      "member": "MiniAppsForegroundBridge.recordFailure(stage:error:)",
+      "pass": true,
+      "normalized_tokens_sha256": "4f588875be29efbe08be46b7eff39efa21527c3467943d557ca0b30518e7996c"
+    },
+    {
+      "original": "HanlinMiniAppsApp/MiniAppsForegroundBridge.swift",
+      "member": "MiniAppsForegroundBridge.errorCategory(for:)",
+      "pass": true,
+      "normalized_tokens_sha256": "dae1cda67789d4b4518817ace0c2b76cb17641b8af04ea17619aaa234db56052"
+    },
+    {
+      "original": "HanlinMiniAppsApp/MiniAppsForegroundBridge.swift",
+      "member": "MiniAppsForegroundBridge.message(for:)",
+      "pass": true,
+      "normalized_tokens_sha256": "f68b47729a2cd8d008513ed0701d799368d2497153d7cbbdbed83a1ba27b087b"
+    }
+  ],
+  "passed": 12,
+  "total": 12,
+  "apple_compilation": "Not performed by this source-preservation check",
+  "device_acceptance": "Not claimed"
+}

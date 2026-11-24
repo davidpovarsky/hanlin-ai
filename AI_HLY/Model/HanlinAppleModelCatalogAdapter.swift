@@ -52,9 +52,35 @@ enum HanlinAppleModelCatalogAdapter {
         }
     }
 
-    static func configuration(for model: AllModels) throws -> HanlinChatModelConfiguration {
+    static func configuration(
+        for model: AllModels,
+        temperature: Double = HanlinChatGenerationDefaults.temperature,
+        topP: Double = HanlinChatGenerationDefaults.topP,
+        maxTokens: Int = HanlinChatGenerationDefaults.maxTokens
+    ) throws -> HanlinChatModelConfiguration {
         try validate(model)
         guard HanlinAppleOnDeviceProvider.availability == .available else { throw HanlinAppleProviderError.unavailable }
-        return HanlinAppleOnDeviceProvider.configuration()
+        return generationConfiguration(temperature: temperature, topP: topP, maxTokens: maxTokens)
+    }
+
+    // Keep the original native identity while forwarding the caller's settings to
+    // the shared engine and provider, including settings the provider must reject.
+    static func generationConfiguration(
+        temperature: Double = HanlinChatGenerationDefaults.temperature,
+        topP: Double = HanlinChatGenerationDefaults.topP,
+        maxTokens: Int = HanlinChatGenerationDefaults.maxTokens
+    ) -> HanlinChatModelConfiguration {
+        let native = HanlinAppleOnDeviceProvider.configuration()
+        return .init(
+            modelID: native.modelID, baseModelID: native.baseModelID,
+            displayName: native.displayName, company: native.company, apiType: native.apiType,
+            endpoint: native.endpoint, apiKey: native.apiKey,
+            temperature: temperature, topP: topP, maxTokens: maxTokens,
+            supportsReasoning: native.supportsReasoning,
+            supportReasoningChange: native.supportReasoningChange,
+            thinkingLength: native.thinkingLength, reasoningEffort: native.reasoningEffort,
+            supportsToolUse: native.supportsToolUse, supportsTextGen: native.supportsTextGen,
+            systemPrompt: native.systemPrompt, updatedAt: native.updatedAt
+        )
     }
 }

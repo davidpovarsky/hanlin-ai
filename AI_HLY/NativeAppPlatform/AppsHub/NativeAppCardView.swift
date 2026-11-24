@@ -1,3 +1,4 @@
+import HanlinLocalization
 import SwiftUI
 
 struct NativeAppCardView: View {
@@ -18,7 +19,7 @@ struct NativeAppCardView: View {
             VStack(alignment: .leading, spacing: 12) {
                 HStack(alignment: .top) {
                     if manifest.isExperimental {
-                        Text("BETA")
+                        Text("BETA", bundle: HanlinLocalization.bundle)
                             .font(HanlinTypography.caption2.weight(.bold))
                             .padding(.horizontal, 7)
                             .padding(.vertical, 4)
@@ -59,6 +60,6 @@ struct NativeAppCardView: View {
             value: isEditing
         )
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(manifest.title), \(manifest.subtitle)")
+        .accessibilityLabel(Text("\(manifest.title), \(manifest.subtitle)", bundle: HanlinLocalization.bundle))
     }
 }

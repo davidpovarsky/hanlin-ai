@@ -1,0 +1,47 @@
+[
+  {
+    "path": "simulator-logs/SimulatorBuildResult.xcresult/Data/data.0~2GTyQNYBtHPy-co-tVw3l72iAtbtDEFjSWJry_q90Kd8nUlXKwFZxg4Jn9FvwsJywW2DPtjvajYtLJdqHdf2Eg==",
+    "frameBytes": 293,
+    "decodedBytes": 446,
+    "decodedSHA256": "56c62bf1f92bddd3bfa1bb12140cedc3548613efc5e2d36f69689d555285d447",
+    "tokens": {
+      "swiftconstvalues": 0,
+      "SwiftConstValuesFileList": 0,
+      "stringsdata": 0,
+      "bundle: .main": 0,
+      "HanlinAppIntents": 0,
+      "bundle: .atURL": 0,
+      "HanlinScriptingAppIntents.swift": 0
+    }
+  },
+  {
+    "path": "simulator-logs/SimulatorBuildResult.xcresult/Data/data.0~Rmo1oPDGPPh4s5hVgtxfUQFKx-Tp3CEO6GL1t-9MwkV_aQJRIKb3psBcDBl3tpfmfifL4ykMJismydWW5fYKdw==",
+    "frameBytes": 33586,
+    "decodedBytes": 1159080,
+    "decodedSHA256": "2ec3af77b99d13160abb83aa132219c3d96d468d41a428047209f1692353af5e",
+    "tokens": {
+      "swiftconstvalues": 0,
+      "SwiftConstValuesFileList": 0,
+      "stringsdata": 0,
+      "bundle: .main": 18,
+      "HanlinAppIntents": 0,
+      "bundle: .atURL": 0,
+      "HanlinScriptingAppIntents.swift": 10
+    }
+  },
+  {
+    "path": "simulator-logs/SimulatorBuildResult.xcresult/Data/data.0~k4Xb2tsjD7nn2np0h5z6UHy1oEd2p38ASjFqldl1VX5USU4j0AOL0Hu1T2FwhaMYKDht8X2DT0MIo6ojvElsRQ==",
+    "frameBytes": 779919,
+    "decodedBytes": 20770857,
+    "decodedSHA256": "d95c95245d799a7f86873c8232f7f4f6b16a811fbcd39285e75edbbfde1fb8f6",
+    "tokens": {
+      "swiftconstvalues": 0,
+      "SwiftConstValuesFileList": 389,
+      "stringsdata": 178,
+      "bundle: .main": 27,
+      "HanlinAppIntents": 41,
+      "bundle: .atURL": 0,
+      "HanlinScriptingAppIntents.swift": 28
+    }
+  }
+]

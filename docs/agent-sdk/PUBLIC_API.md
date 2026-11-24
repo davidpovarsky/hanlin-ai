@@ -1,6 +1,6 @@
 # HanlinAgentSDK 0.1.0-preview.1 — first source contract
 
-> Historical 2026-11-15 source record. For current pins, implemented products, Host API 1.1, conversation format 2 and actual consumer/platform status, read [SDK-01 current audit (2026-11-19)](SDK_01_CURRENT_AUDIT_20261119.md). Historical pause/lease wording does not override the owner's current standing continuation authorization.
+> Historical 2026-11-15 source record. Its old dependency pins, missing-UI statements and pending proofs are not the current SDK inventory. For the current original-application, headless, Composer, activity and provider/model APIs, read [embedding documentation](../../Docs/SDK/HanlinApplicationEmbedding.md). For exact original evidence, integrated Host API 1.2 and current remaining host/device gates, read [acceptance reconciliation (2026-11-23)](../../Docs/SDK/AcceptanceReconciliation20261123.md). The [2026-11-19 audit](SDK_01_CURRENT_AUDIT_20261119.md) remains an earlier source snapshot. Historical pause/lease wording does not override current owner authorization.
 
 This preview is source delivery, not app/UI/device acceptance or a stable release. Consume the exact handoff Git SHA, never a moving branch. The package manifest is `Packages/HanlinAgentSDK/Package.swift`; platforms are iOS **27.0**, macOS **26**, Swift tools **6.2**, Swift language mode **6**. The local `../HanlinPlatform` dependency retains its real manifest and original public products. SwiftAISDK is pinned to `43ebcfaae67ca2c47ea1ce940d66b581e60ca7f6` in both graphs. See `IMPLEMENTATION_HANDOFF.md` for the frozen source/evidence and remaining gates.
 
@@ -135,3 +135,11 @@ accepted/repaired input, but are **NOT_RUN / not typechecked** under the resourc
 gate. Prior 45-producer/39-portable results remain historical old-closure evidence.
 No consumer source or shipping dependency pin/lock changed for this correction;
 Roni review and Tomer's real Mac proof/final dependency window remain required.
+
+### Explicit context transition (Host API 1.2)
+
+`HanlinHostNavigationTransitionSource` refines the original host port with `openWithContextTransition(_:session:)`. Its `HanlinHostNavigationReceipt` retains the complete origin session and exact original navigation result, plus an optional host-issued successor. A successor requires a presented acknowledgement, fresh session ID and generation, and unchanged conversation/namespace/scene. Queued requests have no successor.
+
+Call through `HanlinHostDispatcher.openWithContextTransition`: it verifies the original context before entry, reserves the request, validates exact target bytes and correlation, then checks the resulting context with the live host. Cancellation and revocation of both identities are checked after suspension. Correctly correlated effect receipts survive suppressed delivery and can be read as historical evidence through `navigationReceipts(for:)`; they are not a current authority grant.
+
+An in-flight transition blocks other operations on its origin. A transitioned origin, or an origin whose call failed after host entry, is retired. An undelivered successor is also retired on failure/cancellation; retained historical receipts cannot reactivate it. Do not retry the request automatically or mutate an existing AgentSession identity. The host must reconcile uncertain outcomes, stop the old session and construct any continuation using its fresh identity and the original engine/store. Existing `open` remains strict about an unchanged context. See [the implementation and validation boundaries](navigation-transition-20261119/README.md).

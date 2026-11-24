@@ -1,0 +1,21 @@
+{
+  "nativeJobLogSHA256": "774daaa290455ac86b3f8a6f6faf4b8ec84f2063df894c291116a0c4a86cdab0",
+  "nativeJobLogBytes": 26337432,
+  "appLinkCommands": [
+    {
+      "line": 79121,
+      "text": "Launch full app on iPad Simulator\tBuild full arm64 simulator app\t2026-11-23T18:56:15.1351870Z Ld /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/__preview.dylib normal (in target 'AI_Hanlin' from project 'AI_HLY')"
+    },
+    {
+      "line": 120519,
+      "text": "Launch full app on iPad Simulator\tBuild full arm64 simulator app\t2026-11-23T18:56:41.0798510Z Ld /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/AI_Hanlin.debug.dylib normal (in target 'AI_Hanlin' from project 'AI_HLY')"
+    },
+    {
+      "line": 120530,
+      "text": "Launch full app on iPad Simulator\tBuild full arm64 simulator app\t2026-11-23T18:56:43.9268960Z Ld /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/AI_Hanlin normal (in target 'AI_Hanlin' from project 'AI_HLY')"
+    }
+  ],
+  "finalAppSignValidateTouch": [],
+  "embeddedFrameworkCodeSignCount": 92,
+  "classification": "LINK_COMMANDS_OBSERVED; final completed app build/signing not qualified"
+}

@@ -1,0 +1,23 @@
+{
+  "application_source_sha": "07845de8c335a975027fd375f287a85754da51ab",
+  "tree": "2c11e299cc0df79a1d804d4217c28f4d1e4cfeab",
+  "parent": "41f4242e83a17773e39a4b17ba2450f1e9b2ddfb",
+  "sdk_application_ancestor": "fb5abff01b1ae7958ab6c6733ff715ff615ae7b8",
+  "baseline": "96c5b1b60c15a9a0cf1c4356f9822c64d9864c86",
+  "hanlin_source": "ca3c91f2233bf5c77990643b29a874aac8704639",
+  "swift_ai_sdk_source": "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8",
+  "path": "Maktabah.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+  "before_sha256": "722609bb6b71362aee5e7f401246edcd037a2d1815c2fc4704bf93830d9f5530",
+  "immediate_parent_before_sha256": "2854803c8c1aeb39f49a964e7adac51cf77eee822c88694e6f5c704c0b0cd450",
+  "after_sha256": "a41b340f77574fd74013ba5df160cffabab473f1941a50031d0f9025007c8c9c",
+  "only_revision_literal_changed": true,
+  "host_manifests_build_definitions_and_ui_unchanged": true,
+  "native_result": "NOT_RUN",
+  "published_exact": true,
+  "application_trees": {
+    "Source": "4b2abd687328725fb7a7f0ca635b2cab9e0f0c0b",
+    "Vendor": "ee5b415a5ccb9db9fda2b0e8d6ce3748cdeaea6e",
+    "Maktabah.xcodeproj": "f61421e8677027ffa18364226b4ee68a0937dfc5",
+    "Maktabah-iOSUITests": "442ea1cf71c846eaa131a15f2b85fa4e30e205bd"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "time": "2026-11-23T20:43:13.845906+00:00",
+  "run": 45260265662,
+  "source": "e59256e8325bcdb71c0e683f6b19e7641642aad8",
+  "owner": "/root/motion_acceptance",
+  "maximum_watch_seconds": 3300,
+  "native_job_minutes": 150,
+  "interval_seconds": 60,
+  "scope": "Original paired3 only; followup receipt if actual run outlasts connector watch bound"
+}

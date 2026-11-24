@@ -1,0 +1,24 @@
+{
+  "status": "PASS_COMPONENT_INSTALLER_BEHAVIOR",
+  "tests": 8,
+  "log": "installer-tests.log",
+  "execution": "Actual Git checkout/update and Swift6.4.3 dump-package; explicit fixture generator",
+  "nativeDownloadsForSourceProfile": 0,
+  "sourceChangesPreserved": true,
+  "manualGeneratedChangesPreserved": true,
+  "notRun": [
+    "Original Hanlin selected product host installation",
+    "Original Otzaria/Lorvex Apple compile/runtime using new installed checkout",
+    "Native public catalog installation pending full artifact publication"
+  ],
+  "sourceSHA256": {
+    "Scripts/SDK/install.py": "3175bc12f07e6daa1ad90ec4e4edba00d5863628ffc4dc85ec4f50dd78d1b626",
+    "Scripts/SDK/tests/test_install.py": "6af3478f52511d53cfd1115ac85dad73cceff19b6fd05f3d6dcba68f8a0362a1"
+  },
+  "focusedFollowup": {
+    "newSharedCacheTest": "PASS",
+    "affectedRevisionUpdateRegression": "PASS",
+    "log": "installer-source-cache-tests.log",
+    "remainingBaseline": "Reused first7-test receipt except the affected revision update method, which was rerun."
+  }
+}

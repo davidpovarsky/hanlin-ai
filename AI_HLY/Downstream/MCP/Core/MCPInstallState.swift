@@ -1,6 +1,6 @@
 import Foundation
 
-enum MCPInstallPhase: String, Codable, CaseIterable, Sendable {
+public enum MCPInstallPhase: String, Codable, CaseIterable, Sendable {
     case resolving
     case downloading
     case verifying
@@ -12,7 +12,7 @@ enum MCPInstallPhase: String, Codable, CaseIterable, Sendable {
     case completed
 }
 
-enum MCPInstallState: Codable, Hashable, Sendable {
+public enum MCPInstallState: Codable, Hashable, Sendable {
     case idle
     case previewing
     case installing(operationID: UUID, phase: MCPInstallPhase, fraction: Double?)

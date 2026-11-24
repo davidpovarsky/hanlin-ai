@@ -1,0 +1,50 @@
+{
+  "utc": "2026-11-23T23:37:42.425515+00:00",
+  "before_sha256": "2abebdeeaf9445a2047f84c439b6755102a5dbaa78c6c2b0d98d432cc4c55321",
+  "after_sha256": "0ca416d1359901e9d0bad818a7bd3691126c690c4c36ad7f1a8b31aa6e5c634d",
+  "source": "Scripts/CI/prepare_calendar_acceptance.py",
+  "observed_run": 45283504095,
+  "status": "SOURCE_REVIEW_PENDING_NATIVE_NOT_RUN",
+  "protected_exact_to_4cfa": {
+    ".github/workflows/build-ios26-unsigned-ipa.yml": "307bc9bf8cad8f305eee296e3b9ea574d7e1de6a4a233d246f7e2248610eba9b",
+    "AI_HLYTests/CalendarToolTests.swift": "10e2b95d046e55089073f9095822ee8df8cee977b9f524648914889d0cb106da",
+    "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift": "9ee86ec88ce723c8257cef8a26ff46865408ec3b50568314875a5608c7ddfc0a",
+    "AI_HLYTests/HanlinApplicationSystemIntegrationTests.swift": "617d5472d978fde04ca74400267cb1bb92244b84fbe224545896bddb26bfa802",
+    "AI_HLYTests/HanlinMCPEmbeddingTests.swift": "2774f4a60882be0a8eec456f8e6e75ede049981c58f412931311c1db509f6592",
+    "AI_HLYTests/RuntimeAutonomyV3Tests.swift": "b72a5d8ec0c51144e864776a2e1d4537cbfd0e28e27074b47280af5b108fba7d",
+    "AI_HLYTests/ShareInboxHostIntegrationTests.swift": "c6ba09129bdab7fadcae8ac02468081332a8f7296a656a84df650b78e8db0195",
+    "AI_HLYUITests/AgentRuntimeConversationUITests.swift": "3d9755248a7ac026c2d2a0293d744d45e3c7454c9bd154a7a35e91d65175454a",
+    "AI_HLYUITests/HanlinNativeA2UIChatUITests.swift": "11b3cb74033aa95a3a37521ee013a1e05245b4a01a0e974bb147a0e259e70edc",
+    "Scripts/CI/current_unit_xctestrun.py": "2d7839768ed684daee282382ab846e118adab049e22a6a7252053062e7f08efa",
+    "Scripts/CI/owned_simulator_receipts.py": "878dba3d6890b6c701cebe8183efdeb4265f86e19818054d6e305eb8a84ebf6a",
+    "Scripts/CI/stage_simulator_fixtures.py": "7b34752357bc8ad0f1d3cf5f64de3140967a15159748c9046bc11aac3c6ebb72",
+    "Scripts/CI/test_prepare_calendar_acceptance.py": "1f10efc91d2586cb7662454bb18bc383a2ee066c7cad4ef6355ea7efcf85cb9c"
+  },
+  "new_privacy_allowance_seconds": 120.0,
+  "install_allowance_seconds_unchanged": 180.0,
+  "test_allowances_unchanged": true,
+  "three_commands_once_each_no_retry_or_fallback": true,
+  "failure_still_fails_before_tests": true,
+  "tests_executed": false,
+  "syntax_ast": "PASS",
+  "per_command_elapsed_and_timeout_recorded": true,
+  "exact_inverse_to_executed_4cfa": true,
+  "observed_main37": {
+    "status": "FAIL_PRE_TEST_STAGING",
+    "invocations": {
+      "PASS": 0,
+      "FAIL": 0,
+      "NOT_RUN": 37
+    },
+    "prior_history_partition": {
+      "PASS": 18,
+      "FAIL": 7,
+      "NOT_RUN": 12
+    },
+    "artifact_id": 14873545801,
+    "artifact_bytes": 3462247,
+    "artifact_sha256": "caa30774d1c319df49647cb96e35ee4d983c070aee724d55fdf0e7aca0df344b",
+    "runtime_class_identity_not_exercised": true,
+    "UI_target_path": "__TESTROOT__/Debug-iphonesimulator/AI_Hanlin.app"
+  }
+}

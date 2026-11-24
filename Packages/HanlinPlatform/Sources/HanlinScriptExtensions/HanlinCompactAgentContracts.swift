@@ -1,3 +1,4 @@
+import HanlinExtensionContracts
 // HanlinCompactAgentContracts.swift
 // HanlinScriptExtensions
 //
@@ -136,10 +137,14 @@ public struct HanlinCompactAgentConfiguration: Codable, Hashable, Sendable {
 // MARK: - Configuration Store
 
 public struct HanlinCompactAgentConfigStore: Sendable {
-    public static let appGroupIdentifier = "group.com.itorah.chavrusachat"
+    public static let appGroupIdentifier = HanlinExtensionHostConfiguration.hanlinAppGroupIdentifier
     private let fileURL: URL
 
-    public init(appGroupIdentifier: String = Self.appGroupIdentifier) throws {
+    public init() throws {
+        try self.init(appGroupIdentifier: HanlinExtensionHostConfiguration.load().requireAppGroupIdentifier())
+    }
+
+    public init(appGroupIdentifier: String) throws {
         guard let container = FileManager.default.containerURL(
             forSecurityApplicationGroupIdentifier: appGroupIdentifier
         ) else {
@@ -218,12 +223,23 @@ public enum HanlinCompactAgentError: LocalizedError, Sendable {
 
 public actor HanlinCompactAgentClient {
     private let suppliedConfiguration: HanlinCompactAgentConfiguration?
+    private let configurationLoader: (@Sendable () throws -> HanlinCompactAgentConfiguration?)?
     private let credentialResolver: (@Sendable (String) throws -> String)?
     private let engine = HanlinChatEngine()
 
     public init(configuration: HanlinCompactAgentConfiguration? = nil,
                 credentialResolver: (@Sendable (String) throws -> String)? = nil) {
         self.suppliedConfiguration = configuration
+        self.configurationLoader = nil
+        self.credentialResolver = credentialResolver
+    }
+
+    /// Read host-owned configuration on every request, retaining the original
+    /// per-request credential resolution and the same shared chat engine.
+    public init(configurationLoader: @escaping @Sendable () throws -> HanlinCompactAgentConfiguration?,
+                credentialResolver: (@Sendable (String) throws -> String)? = nil) {
+        self.suppliedConfiguration = nil
+        self.configurationLoader = configurationLoader
         self.credentialResolver = credentialResolver
     }
 
@@ -234,6 +250,9 @@ public actor HanlinCompactAgentClient {
         let activeConfig: HanlinCompactAgentConfiguration
         if let config = suppliedConfiguration {
             activeConfig = config
+        } else if let configurationLoader {
+            guard let loaded = try configurationLoader() else { throw HanlinCompactAgentError.notConfigured }
+            activeConfig = loaded
         } else if let loaded = try HanlinCompactAgentConfigStore().load() {
             activeConfig = loaded
         } else {

@@ -1,0 +1,11 @@
+{
+  "run": 45290086669,
+  "source": "51f56b49fe7add4eafa1d8b2443f1adf3b82157f",
+  "artifact_id": 14877566989,
+  "artifact_bytes": 14996,
+  "destination_device": 2064,
+  "free_bytes": 2201214976,
+  "required_before_download_bytes": 268480444,
+  "time": "2026-11-24T00:37:59.014504+00:00",
+  "status": "ADMITTED_DOWNLOAD_CAPACITY"
+}

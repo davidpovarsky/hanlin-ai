@@ -1,0 +1,23 @@
+{
+  "status": "PASS",
+  "pythonCompile": "PASS",
+  "workflowYAML": "PASS",
+  "exportShellSyntax": "PASS",
+  "producerSelection": [
+    {
+      "job": "build-ios26-unsigned-ipa",
+      "afterOriginalPreparation": true,
+      "exportSteps": 1,
+      "retainedArtifact": "hanlin-sdk-native-prepared",
+      "condition": "${{ needs.plan-affected-validation.outputs.run_simulator_job != 'true' }}"
+    },
+    {
+      "job": "full-app-simulator-smoke",
+      "afterOriginalPreparation": true,
+      "exportSteps": 1,
+      "retainedArtifact": "hanlin-sdk-native-prepared",
+      "condition": "job success"
+    }
+  ],
+  "nativeExecution": "NOT_RUN"
+}

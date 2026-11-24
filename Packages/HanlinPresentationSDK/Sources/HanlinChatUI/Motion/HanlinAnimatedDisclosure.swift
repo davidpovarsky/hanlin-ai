@@ -1,3 +1,4 @@
+import HanlinLocalization
 import Foundation
 
 /// Finite geometry shared by disclosure measurement and placement. Layout may
@@ -39,12 +40,13 @@ public struct HanlinAnimatedDisclosure<Content: View>: View {
     @Environment(\.chatMotion) private var motion
     @State private var mounted = false
     @State private var progress: CGFloat = 0
-    @State private var revision = 0
 
     public var body: some View {
         ChatDisclosureLayout(progress: progress, spacing: spacing) {
             if mounted {
                 VStack(alignment: .leading, spacing: 6, content: content)
+                    .accessibilityElement(children: .contain)
+                    .accessibilityHidden(!isExpanded)
                     .transition(.identity)
             }
         }
@@ -54,7 +56,6 @@ public struct HanlinAnimatedDisclosure<Content: View>: View {
         .allowsHitTesting(isExpanded)
         .accessibilityHidden(!isExpanded)
         .onAppear { settle() }
-        .onDisappear { revision += 1 }
         .onChange(of: isExpanded) { _, _ in transition() }
         .onChange(of: motion.isAnimated) { _, animated in
             if !animated { settle() }
@@ -62,7 +63,6 @@ public struct HanlinAnimatedDisclosure<Content: View>: View {
     }
 
     private func settle() {
-        revision += 1
         var transaction = Transaction(animation: nil)
         transaction.disablesAnimations = true
         withTransaction(transaction) {
@@ -80,17 +80,14 @@ public struct HanlinAnimatedDisclosure<Content: View>: View {
 
     private func animateToTarget() {
         guard motion.isAnimated else { settle(); return }
-        revision += 1
-        let currentRevision = revision
         let expanding = isExpanded
-        withAnimation(motion.disclosureAnimation(expanding: expanding), completionCriteria: .removed) {
+        // Reuse the measured content across animated collapse and reversal.
+        // Recreating complex descendants here can delay the next visible frame
+        // past rapid input. The zero-height clip, AX and hit-testing guards still
+        // hide collapsed content; settle() resets it on reattachment or no motion.
+        withAnimation(motion.disclosureAnimation(expanding: expanding)) {
             if expanding { mounted = true }
             progress = expanding ? 1 : 0
-        } completion: {
-            guard revision == currentRevision, !isExpanded, !expanding else { return }
-            var transaction = Transaction(animation: nil)
-            transaction.disablesAnimations = true
-            withTransaction(transaction) { mounted = false }
         }
     }
 }
@@ -116,7 +113,7 @@ public struct HanlinMotionDisclosureStyle: DisclosureGroupStyle {
                 .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
-            .accessibilityValue(configuration.isExpanded ? Text("Expanded") : Text("Collapsed"))
+            .accessibilityValue(configuration.isExpanded ? Text("Expanded", bundle: HanlinLocalization.bundle) : Text("Collapsed", bundle: HanlinLocalization.bundle))
             HanlinAnimatedDisclosure(isExpanded: configuration.isExpanded) {
                 configuration.content
             }

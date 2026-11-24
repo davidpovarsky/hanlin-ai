@@ -1,0 +1,12 @@
+{
+  "recorded_at": "2026-11-23T11:56:51.635827+00:00",
+  "artifact_id": 14816840026,
+  "run_id": 45166004801,
+  "head_sha": "3a9e1681f03080412d0ee934a00b307f3d7ae59c",
+  "bytes": 68440465,
+  "sha256": "16c454d58a723f5422f4709aafb7ae8078cb3536cc4a1c9af4fc36ec5f226c39",
+  "api_size_digest_match": true,
+  "zip_crc": "PASS",
+  "member_count": 51,
+  "download_and_crc_seconds": 15.093564444221556
+}

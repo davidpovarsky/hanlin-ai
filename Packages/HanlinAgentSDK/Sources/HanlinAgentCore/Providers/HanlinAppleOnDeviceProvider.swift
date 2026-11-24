@@ -53,18 +53,43 @@ import FoundationModels
 public struct HanlinAppleLanguageModel: LanguageModelV3 {
     public let provider = "apple-on-device"
     public let modelId = HanlinAppleOnDeviceProvider.modelID
-    public init() {}
+    private let toolBridge: (@Sendable (LanguageModelV3CallOptions) async throws -> LanguageModelV3StreamResult)?
+    public init() { toolBridge = nil }
+
+    #if canImport(FoundationModels)
+    /// Internal acceptance seam in the original provider. The public factory and all
+    /// shipping capability gates remain text-only until actual Apple acceptance passes.
+    @available(iOS 27.0, macOS 27.0, *)
+    init<Model: FoundationModels.LanguageModel>(toolBridgeModel: Model) {
+        toolBridge = { options in
+            try await HanlinAppleToolSessionBridge.stream(options: options, model: toolBridgeModel)
+        }
+    }
+    #endif
 
     public func doGenerate(options: LanguageModelV3CallOptions) async throws -> LanguageModelV3GenerateResult {
         let stream = try await doStream(options: options).stream
         var text = ""
+        var content: [LanguageModelV3Content] = []
+        var reason = LanguageModelV3FinishReason(unified: .stop)
+        var usage = LanguageModelV3Usage()
         for try await part in stream {
-            if case .textDelta(_, let delta, _) = part { text += delta }
+            switch part {
+            case .textDelta(_, let delta, _): text += delta
+            case .toolCall(let call):
+                if !text.isEmpty { content.append(.text(.init(text: text))); text = "" }
+                content.append(.toolCall(call))
+            case .finish(let finishReason, let finishUsage, _):
+                reason = finishReason; usage = finishUsage
+            default: break
+            }
         }
-        return .init(content: [.text(.init(text: text))], finishReason: .init(unified: .stop), usage: .init())
+        if !text.isEmpty || content.isEmpty { content.append(.text(.init(text: text))) }
+        return .init(content: content, finishReason: reason, usage: usage)
     }
 
     public func doStream(options: LanguageModelV3CallOptions) async throws -> LanguageModelV3StreamResult {
+        if let toolBridge { return try await toolBridge(options) }
         guard (options.tools ?? []).isEmpty else { throw HanlinAppleProviderError.unsupportedTools }
         if let choice = options.toolChoice, choice != .auto && choice != .none { throw HanlinAppleProviderError.unsupportedTools }
         guard options.topP == nil, options.topK == nil, options.presencePenalty == nil,

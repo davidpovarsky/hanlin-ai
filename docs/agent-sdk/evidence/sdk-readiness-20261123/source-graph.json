@@ -1,0 +1,3368 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-23T16:51:29.012978+00:00",
+  "sourceCommit": "f1f6d745b178b28fe26fe94434aae4e0f5bf4a7c",
+  "status": "PASS",
+  "scope": "Static source ownership, graph inventory and actual original call sites; not Apple compilation or runtime execution.",
+  "rootManifestSHA256": "662888ccc63bb8b3a78e5107229edf900527d096dfb8eeeef1534897a75634d4",
+  "products": [
+    "HanlinHostContracts",
+    "HanlinAgentCore",
+    "HanlinPersistenceAdapters",
+    "HanlinShareExtensionUI",
+    "HanlinNotificationExtension",
+    "HanlinTranslationUI",
+    "HanlinExpoNativeAPI",
+    "HanlinExpoWidgetNative",
+    "HanlinExpoRuntime",
+    "HanlinExpoWidgetSubset",
+    "HanlinNativeScriptRuntime",
+    "HanlinParityMiniApp",
+    "HanlinExtensionContracts",
+    "HanlinPlatformContracts",
+    "HanlinMiniAppCore",
+    "HanlinScriptContracts",
+    "HanlinScriptCompiler",
+    "HanlinScriptStore",
+    "HanlinScriptRuntime",
+    "HanlinScriptingSDK",
+    "HanlinScriptUI",
+    "HanlinScriptServices",
+    "HanlinScriptDeviceServices",
+    "HanlinScriptExtensions",
+    "HanlinChatCore",
+    "HanlinScriptingApplicationRuntime",
+    "HanlinLocalization",
+    "HanlinAgentActivityCore",
+    "HanlinAgentActivityUI",
+    "HanlinPresentationKit",
+    "HanlinRichUI",
+    "HanlinChatUI",
+    "HanlinA2UI",
+    "HanlinMiniAppsUI",
+    "HanlinProductSplit",
+    "HanlinQuickJS",
+    "HanlinSefariaMiniApp",
+    "HanlinSkillFormat",
+    "HanlinTextStudioMiniApp",
+    "HanlinWidgetUI",
+    "HanlinWikipediaMiniApp",
+    "IOSSystemLite",
+    "TorahLibraryKit",
+    "HanlinApplication"
+  ],
+  "productCount": 44,
+  "targets": [
+    "JSON",
+    "JSONRegexRuntime",
+    "HanlinExactJSONSchema",
+    "HanlinHostContracts",
+    "HanlinAgentCore",
+    "HanlinPersistenceAdapters",
+    "HanlinSDKTestFixtures",
+    "HanlinFixtureHost",
+    "HanlinSDKPortableProof",
+    "HanlinHostContractsTests",
+    "HanlinHostConcurrencyTests",
+    "HanlinAgentCoreTests",
+    "HanlinPersistenceAdaptersTests",
+    "HanlinShareExtensionUI",
+    "HanlinNotificationExtension",
+    "HanlinTranslationUI",
+    "HanlinExpoNativeAPI",
+    "HanlinExpoWorklets",
+    "HanlinExpoNativeAPICore",
+    "Libffi",
+    "HanlinExpoWidgetNative",
+    "HanlinExpoRuntime",
+    "ReactNativeHeaders",
+    "React",
+    "ReactNativeDependencies",
+    "hermesvm",
+    "ExpoModulesJSI",
+    "ExpoModulesCore",
+    "ExpoModulesWorklets",
+    "ExpoUI",
+    "ExpoBrownfield",
+    "HanlinExpoWidgetSubset",
+    "HanlinNativeScriptCoreSupport",
+    "HanlinNativeScriptRuntime",
+    "TNSWidgets",
+    "NSCWinterTC",
+    "HanlinParityMiniApp",
+    "HanlinParityMiniAppTests",
+    "HanlinExtensionContracts",
+    "HanlinPlatformContracts",
+    "HanlinPlatformContractsTests",
+    "HanlinMiniAppCore",
+    "HanlinMiniAppCoreTests",
+    "HanlinScriptContracts",
+    "HanlinScriptContractsTests",
+    "HanlinWidgetCompiler",
+    "HanlinScriptCompiler",
+    "HanlinScriptCompilerTests",
+    "HanlinScriptStore",
+    "HanlinScriptStoreTests",
+    "HanlinScriptRuntime",
+    "HanlinScriptRuntimeTests",
+    "HanlinScriptingSDK",
+    "HanlinScriptingSDKTests",
+    "HanlinScriptUI",
+    "HanlinScriptUITests",
+    "HanlinScriptServices",
+    "HanlinScriptServicesTests",
+    "HanlinScriptDeviceServices",
+    "HanlinScriptDeviceServicesTests",
+    "HanlinChatCore",
+    "HanlinChatCoreTests",
+    "HanlinScriptExtensions",
+    "HanlinScriptExtensionsTests",
+    "HanlinLegacyWidgetStoreFixture",
+    "HanlinScriptingApplicationRuntime",
+    "HanlinScriptingApplicationRuntimeTests",
+    "HanlinLocalization",
+    "HanlinMiniAppsUI",
+    "HanlinPresentationKit",
+    "HanlinAgentActivityCore",
+    "HanlinAgentActivityUI",
+    "HanlinRichUI",
+    "HanlinChatUI",
+    "HanlinA2UI",
+    "HanlinLocalizationTests",
+    "HanlinChatUITests",
+    "HanlinPresentationKitTests",
+    "HanlinProductSplit",
+    "RegisteredIntegrationTests",
+    "CQuickJS",
+    "HanlinSefariaMiniApp",
+    "HanlinSefariaMiniAppTests",
+    "HanlinSkillFormat",
+    "HanlinSkillFormatTests",
+    "HanlinTextStudioMiniApp",
+    "HanlinTextStudioMiniAppTests",
+    "HanlinWidgetUI",
+    "HanlinScriptingWidgets",
+    "HanlinWikipediaMiniApp",
+    "HanlinWikipediaMiniAppTests",
+    "IOSSystemLite",
+    "IOSSystemStreamBridge",
+    "ios_system",
+    "files",
+    "text",
+    "tar",
+    "curl_ios",
+    "libssh2",
+    "openssl",
+    "awk",
+    "TorahLibraryKit",
+    "TorahLibraryKitTests",
+    "NodeMobile",
+    "Python",
+    "HanlinNodeBridge",
+    "HanlinPythonBridge",
+    "AI_Hanlin"
+  ],
+  "targetCount": 108,
+  "originalApplicationSwiftFiles": [
+    {
+      "path": "AI_HLY/ChatView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "d229ecb8d3e039fb37c4f2e4f12dc8470cc61107"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/AgentActivityModels.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "19930d04cf02f5b581eee6382c48d267836f88c1"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/AgentActivityPersistence.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "854e8df5d71d3e538ea45d9680a5b2aaa3e95afa"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/AgentActivityStepView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "b1d36fe07e616f9c1ec4dacadb59672319f5e677"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/AgentEvent.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "0c3ccd21cb23deb84869be566711fc0e673f4aeb"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/AgentEventAccumulator.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "143f8e9a20e9971226fe5dd949d851464c4634e4"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/AgentRunLifecycleCoordinator.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "c6c06f823bddc5181ffb0344b321ab8d694a8ce0"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/Evidence/AgentEvidenceAccumulator.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "29c0691328dc4704ebfd37fc167ddc2fae6c5089"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/Evidence/AgentEvidenceDeduplicator.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "b502604a5e247dff093194e8518b960eb8e7ed76"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/Evidence/AgentEvidenceExtractor.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "8b5fc69d9f311bb3ef1dd0b93f1d6a538731d4fe"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/Evidence/AgentEvidenceItem.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "517592acf192d6145601caaec9870950b0d2f46c"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/Evidence/AgentEvidenceRow.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "d35dfa0a6788601dcde9d2f73de76a4d7eaa5713"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/Evidence/AgentEvidenceSheet.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "c51fa24e40da71c41786da9e2669718fe20c6462"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/Evidence/LegacyResourcesEvidenceAdapter.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "378b84b5cad18b755b3c35cd0839f1fe2bd36795"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/LegacyAgentActivityAdapter.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "aab8dd7215f9062a1c1f1c8a894aa123c02d38d3"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityComposer.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "9b811c1a77374b8b277832bc6c5dc1f0fda0c79d"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityCompositionPolicy.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "c43b0fb2f890cfb8d88e6a9dce868ab4bf66bae4"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityDeduplicator.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "15323fc565b6300b14707f68e8fab43f2c5196bf"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityDetailPolicy.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "a0da02a02ddd2158ad581293ee735677a47f3ada"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityHeaderPhase.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "a2dd9c349c900789a2271fc833f973b8b8cfe1ad"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityTitleBuilder.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "5b80250b5960380622deeaccdea8b5228fb98ba4"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/Presentation/AgentActivityVisibilityPolicy.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "23198e6c3cbba52eb187a9580caafe3e1b90dfb0"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/Presentation/AgentDisplayActivity.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "bdbeccf06b23ad7fe82453b6da062d884b5f9958"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/Presentation/AgentDisplayRound.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "8c39d83ea1c55eccb6ce08c4836186737e1553c4"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/ProviderCapabilities.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "5440ac2e26a0ac65f85bca68022f49efb4cd8ea0"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/ProviderEventAdapter.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "7e1e6aae44abda476620f335b9cb5bbf46b54db8"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/ReportProgressController.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "e8d080d02f7a4b18f700938c0f2e302a5d726730"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/Scrolling/AgentRunScrollFingerprint.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "6811beb8aa0df405a49d5d4ecc9cc3b52f1b5631"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/Scrolling/ChatAutoFollowController.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "4ba2035cb5ddd1c5ca50f84d66a8031bb625bff4"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/Scrolling/ChatAutoFollowValidation.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "bdece70f6a92c116b506c6c665d42bc30c27b722"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/Scrolling/ChatScrollViewHandle.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "ed88bf79fc5425f1864b60f2bb7749acad3b7dc8"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/ToolPresentation/LegacyToolPresentationAdapter.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "0da1dfb2d2e6717ada5a5f9d57aee29fc60a2d40"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/ToolPresentation/ToolInvocationMetadata.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "e4ea97fba8b1c536fb1588998116bd41d9b05ce5"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/ToolPresentation/ToolPresentationProfile.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "ce21c3fcf01d32aeb3dc124bc127acb6bd965c5f"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/ToolPresentation/ToolPresentationValidation.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "a550c484299e72719d19cddb6b0dfb8c4c1c52da"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/ToolPresentation/ToolResultPresentationCoordinator.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "2c34bde0c082a47675a9ab8e62b9940dd934560d"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/ToolPresentationRegistry.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "a4b3b30287ff7276f132f697f5c19a5c6e95e1b3"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/ToolSchemaDecorator.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "38131b38a35385c3b70849000862fb372ce31936"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/Transcript/AgentTranscriptAccumulator.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "72b4b194d725c58bdfd8aa264c657f8dbfbaaa4b"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/Transcript/AgentTranscriptItem.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "b1ff551e4bf4687ca400a1fada1660d523145b48"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/Transcript/AgentTranscriptTextView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "c978a16b3c918705cd7f405ce1771d9bfe340178"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/Transcript/AgentTranscriptToolResultView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "76f556846a8758926d2fbaf9877ace6f8fcc59ea"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentActivity/Transcript/AgentTranscriptValidation.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "87cc841b355bbab1db319d8c945d5aec907864b9"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsConfiguration.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "7208f37067dcd70a61da45d00952b8605ca9f7da"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsExport.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "124c1304bb2697e67ae246005af05da9016f170d"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsJournal.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "e0f0e88af7df775c6988a29f120eb14660d29f49"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsRawReview.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "79d1c59773824b83e8522015f97447f31c1f8a1d"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsRecorder.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "275deb8ea86d33762e4ca5667f84186f8b98e8c7"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsRedactor.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "b98475c62eaf5dfe9f1f4bde553e9f9af3354458"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsSession.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "514f137d05edbf8a3038b1a4a47f5429c4366a8b"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "54bff67aa40969239f5bfdc62f094ab10d05b355"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentDiagnostics/AgentRuntimeUIAcceptanceProvider.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "fa81afdb6765b784309427a425216101455d6bb9"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentDiagnostics/AgentTokenUsage.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "52dbad9103762dc74988ee31700e053851ad86d4"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentSkills/Analysis/BashSkillSyntaxAnalyzer.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "f322ebb3c8a397ef6914e634ab7f3b9e2b1b18de"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentSkills/Analysis/SkillSyntaxFindings.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "0f46376e2a93c55267c4dfad40dfabde807474a8"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentSkills/AssistantCapabilitySession.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "622fb9e9bd778d566c8190afcee06607a289fc91"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentSkills/AssistantToolExposurePlanner.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "44fff01d8fbf05f0a41efe37b584832604063873"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentSkills/HanlinAISDKToolAdapter.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "f0f38b239e8ef4dafee587a181dc01c68bb2b4d5"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentSkills/HanlinSkillCatalog+InvocationPolicy.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "436ca1bfc328d614dc63511e512560a9b90d4757"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentSkills/HanlinSkillCatalog.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "d6157e49519d76c4a67364d5091d869f19e6d596"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentSkills/HanlinSkillIndex.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "f7994ca4b2ca17cc47fc3a9f58930f305f629d47"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentSkills/LoadSkillTool.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "6b7df31c72eeb41882ce45f2479d7b48af4535a4"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentSkills/ReadSkillResourceTool.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "b81b1c567786f7c3c80c10b5a72ac534354da45a"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentSkills/ReadToolResultTool.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "1bede2a7ded8cc8ff267456e808e22f87513fa12"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentSkills/SkillDownloadTransfer.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "fb621024afaa223da09093524fbc0d47d55dd60a"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentSkills/SkillImporter.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "179d57c2530dafd656e9686e181b8b0435fcb71e"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentSkills/SkillModels.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "9c567a79ac2b9b4756456989650b6e0b78ff16a2"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentSkills/SkillStore.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "50731cf0336f86c12bc4d050f70f04c7307d7cb0"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentSkills/SystemSkillsProvider.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "101c27f31b8c51b8ab6bec39a48b266cd0560598"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentSkills/ToolResultStore.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "2e714c1be7b723d8ac25a22263696dc022c8b283"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentSkills/ToolSearchTool.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "8417fba9faee553098ef2ba353fab22185d43884"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentSkills/UI/SkillCenterView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "e746145a6972fca8e01f15210e51e41b1f21e73b"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentSkills/UI/SkillCompatibilityUnknownSection.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "02977b5274499f6cfd1f8f4e7e727eb23cd02cb7"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentSkills/UI/SkillDetailView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "144c5ac97a5803bdb40d868cb03a50e6f55dd13c"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentSkills/UI/SkillEditorView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "7ee4288ff776ae1a9a5891939ade46723c5c668c"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentSkills/UI/SkillExecutionPlanSection.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "5e72b4aea27bf826075d9fc7397ca4b72f66742f"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentSkills/UI/SkillImportPresentationState.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "f0f741819f2f1f3685f34ecd50d57eb419b73dc2"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentSkills/UI/SkillImportView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "84a5a1b90e3afcee00208eaae3faf2e8b473afa4"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentSkills/UI/SkillL10n.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "4ca040240d27c6e247fa961ba096cefb683f5cdb"
+    },
+    {
+      "path": "AI_HLY/Downstream/CanonicalAdapters/HanlinFoundationJSONShadowAdapter.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "ba5c93df6b30e6f3c37b33e36c348c32f4bce6b7"
+    },
+    {
+      "path": "AI_HLY/Downstream/CanonicalAdapters/MCPCanonicalShadowAdapter.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "297ab6dee39b1cd5470aef62d6fca553eb38989a"
+    },
+    {
+      "path": "AI_HLY/Downstream/CanonicalAdapters/NativeAppCanonicalShadowAdapter.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "380d9f39a8849ddb1441e5ddf86a699c8fe56400"
+    },
+    {
+      "path": "AI_HLY/Downstream/CanonicalAdapters/NativeToolCanonicalShadowAdapter.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "757e29e139ec925ddf75ece4e384215adedbf38b"
+    },
+    {
+      "path": "AI_HLY/Downstream/CanonicalAdapters/RuntimeCoreCanonicalShadowAdapter.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "4a0c8f44eb7907ea0f59ffe6f3666be7ff3b9e23"
+    },
+    {
+      "path": "AI_HLY/Downstream/CanonicalShadow/CanonicalShadowReport.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "61aa3d271fd307c867b57adf91bc8c7a098e7f2e"
+    },
+    {
+      "path": "AI_HLY/Downstream/CanonicalShadow/HanlinCanonicalShadowCoordinator.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "bbef0ed8bed6ecd4c31fbb75db6708ecec90faaf"
+    },
+    {
+      "path": "AI_HLY/Downstream/CanonicalTools/HanlinCanonicalToolAuthority.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "86bb34f56859ca482e9db37f7cb80c4e50c78c55"
+    },
+    {
+      "path": "AI_HLY/Downstream/CanonicalTools/Legacy/LegacyToolCanonicalAdapter.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "b44c8af9954d77535b7e26ec7a09738724cb2c8f"
+    },
+    {
+      "path": "AI_HLY/Downstream/CanonicalTools/Legacy/LegacyToolExecutor.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "cabf7f1d279f3a2ed63175f42382db9a14b7ce29"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinAIReceivingWindowRoot.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "28bef54a79261cd3b1a33fc7e8fccb01c453de3b"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinAppAgentPresentationContracts.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "1bdb6d24361de00cfeae774fe9acfb43f494c05a"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinAppAgentSessionOwner.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "b577373eb4ef643ae2e95549a6905411d185a687"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinAppConversationStore.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "f6cfe1016af128aab80733aba55ea3151e21c48a"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinAppHostIntegration.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "3a27a78b08d98883dec6b399e32b95ac6a8d6959"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinAppHostSplitTool.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "d33cc4f6679d2323cb65b4f80ccfd86e6856720a"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinAppSplitOriginCoordinator.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "40462df43740316dcea33b2fd124d6094a400e66"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinAppToolConsent.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "dd83ba36d7619524877262534b264220ad833698"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinConversationMutation.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "ffe9463fc4a6845fe683a97686cf1db65c0a7d33"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinConversationRunLease.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "8efaa4db02e6fec64baaf9f4d064eab82c499365"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinConversationStreamProjection.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "5d2c795c1449ba7753fef4b18080eb806a5f7ca8"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinDefaultChatPolicy.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "b89fcde2da8b2370cbb23496e80ddf3c08df19ed"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinInlineToolError.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "de807c411d950745eed58b7538999aea0ad7216e"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinNativeA2UIAcceptanceProvider.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "2c5991dc587e7294ac1a773d7895ef29e7802382"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinToolApprovalScopeFactory.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "1ebb2d2e320028e2b7a007d0fcb538187bb43367"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinToolApprovalStore.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "53d424133e424de8363b734abe5dfb9944575f87"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatInput/HanlinComposerActionBridge.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "e664a07546d1a5a7170b8aa6d9659f73e3f822bd"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatInput/HanlinComposerPopupCoordinator.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "467b4a983af96a159467c25a8a3db1b7fe15bcbd"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatInput/HanlinComposerPopupView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "1fe378f73bf9b38784d338701b58d79a2063c52b"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatInput/HanlinDetachedCapabilityChips.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "6df9be70b9830b7cd79cf1a8301096bdcb7daa0e"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatInput/HanlinDraftPersistence.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "e6efc82588638b7029f87c6624346cbb9ecc6fd6"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatInput/HanlinFeedback.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "6813a0042ae892f0c81d5c5273a23191d35c473f"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatInput/HanlinModelPickerPopover.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "84ccb9716244b5a3f535d00c81f8c1691f024357"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatInput/HanlinModelZoomPopover.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "4ddb19cf28cfc14563fd4f00fd2ad711a6fea7a2"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatInput/HanlinMorphComposer.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "29b39e88ced158b6ad32c23227bf804f72464645"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatInput/NativeMultilineTextEditor.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "434d2a49716962c215f34c1d5fc8864b8d65ac4b"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinCompactChatWorkspace.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "ddbd32123987d42eaa2b594d2d2240fd154c7aaa"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinCompactConversationLibrary.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "2c45eac0ec80a4e3b1a28ddfb46e39009f0c0e1f"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinCompactRecentChats.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "e6dfcfd513575198f14ca10464b207d084971d67"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinComposerSessionBridge.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "0d5711134393acdfc9b654a31b906f2a4bc98968"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinOrganizerDock.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "03a971e1b5a915519923ef691c859a95b1946d66"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinOrganizerDockState.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "66f6bfc572e4d137df885a25b1b1dd5dc5eb0fb9"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinPendingFirstTurn.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "060a928ad8d5d07c45ae90760e5a70a597b8f840"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIContentLimits.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "555a97cd1d97749dda1d6b2c22d31048440aaac4"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIFrameLifetime.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "288f0483c245a21e7e664bae5399705e2793d18c"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIIngress.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "a198972ab55178ca2b9e58777c50537ddfc389e7"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UILocalMedia.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "a1fc6ec7a74bb8514983a23723a1741f817c8eaf"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIResultOwner.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "db5ca8f87ff94648abc075f43d8e97287e2df6b6"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIResultProjectionSource.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "f6d9f82a7eb74277e03defcfb7a729fc6b85a18b"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UIResultView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "a59924c8bc01b41f57c09addea630382c5e2385d"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinA2UISession.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "c816de0c8e3c5245a7361e91ebd6fd6554328368"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinChatContentProjection.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "877d8d9250911c1869db1ffcabc0a15db3bf1e13"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/A2UI/HanlinMediaCatalog.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "59afd4fc94bad02663c6dad69a8d8a3d4ed1a8a1"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/AgentSDK/HanlinA2UIAcceptanceStatusView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "593a31f103191cdb1b4c7395329270a522eaaec2"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/AgentSDK/HanlinA2UIAgentPresentationAdapter.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "d685a08dd4cf84881b97bdf97f6e9b0c87eaaf0a"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/AgentSDK/HanlinA2UIAppPresentation.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "1bebf14592ee9ddcfb890cacf268abd760ab2e1f"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/AgentSDK/HanlinA2UICompleteBatchValidator.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "1384832c4fca8ab21ace42261da09849465b42b5"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/AgentSDK/HanlinOfficialA2UIToolPayload.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "27d9aa8e9a5f4318f088f6ca9da1dddac99006bc"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/AgentSDK/HanlinToolConsentSheet.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "3558a4456b873e978f41dd50315d5d379c581242"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/AgentSDK/HanlinToolPermissionsView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "2e7129610f8f08b4d49bd0c4645f0d6a5f3375f6"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/AgentSDK/PresentA2UITool.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "3e4e4ee6ac05853bb55d0975aa88cf1130109ad8"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/ChatEmbeddedResultHost.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "40f0fc44d1198de37d1d3cf60c64b92279d4e54e"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/ChatHostPresentationPolicy.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "bb817f0e159cfb049443e08fff083fd5841f770f"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/ChatMarkdownView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "f7a4d9752cb8ec503fb2c7bea8cf27ee9aa8edf8"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/ChatMessagePreview.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "0464a8b6928c8e552942cf77c08993dfd4634ef7"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/ChatMessagePreviewMetrics.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "2305cb3a4fd7309d8624816f4764071772ba10cb"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/ChatPresentationBridge.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "41738cdf0d7a30bc7fee4e2339c0dc6a8fa4e57e"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/ChatSavedExcerpt.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "82a320c76f0c3b7db7d22ea56bafb578ee0e7b3a"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/ChatSavedExcerptsView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "db8abe577cbf99a8425b757f6ba0b82ebcec56f5"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/ClassicChatAgentProjection.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "4b861dbafceba227ffc969f9556825201c32b308"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/CodeFences/ChatCodeFenceDocument.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "680bd16dcb317c5f89b3b960f8f8edc6e20af594"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/CodeFences/ChatCodeFenceEngine.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "376d76fa888a2dd35db20e2d88d1f784afa3dd9e"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/CodeFences/ChatCodeFenceView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "dce124efa28f7531989f153a9c506a22387bcd9b"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/CodeFences/ChatCodeFenceWebView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "444642507131a6d63819810ef4e9f1656b48f7c6"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/HanlinAgentRunReadCache.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "ef299d2de0093a41f7bc36b2b101815c004019ef"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/HanlinChatContentView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "ae20192ce6882fb0fd98e04f6c290039744713a4"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/HanlinChatStreamBuffer.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "37570b079a41ff4e7c1df0dadf9ee9a4d2cb61c1"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/HanlinDesignCatalogBridge.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "b3cf0703cba8ca0b6fc9466292dea811ba025378"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/HanlinMessageCitations.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "f2df585086ed2409eb862233ea6c7535bc3070b9"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/HanlinModelDisplayName.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "c469b2f6b6d03dd6a14963f4da09910af040220d"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/HanlinOpenUIPresentation.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "913886a60f43ce85deb6197184fbfef2926b5d73"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/HanlinPersonalLibraryView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "69fc984e77c644eb66ca9b917f4356ad69771783"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/Media/HanlinA2UIMediaURLGate.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "9ba8454fed27569f7f9a3736dc52e1936552b075"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/Media/HanlinMediaAddressPolicy.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "4483e87d9d1dabab15217b96de41e3bd426baa9d"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/Media/HanlinMediaCatalogImplementation.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "5ea8d4be1a3105758bd69533cd088978360dda31"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/Media/HanlinRemoteMediaURL.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "e27376d13f0198fc1c2640cce9f7e0403e01a6ee"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/Media/HanlinRichMediaStore.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "b2b94712e99fdaedc142e1cf9a84bb7e5a5202c3"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/Media/HanlinRichMediaViews.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "434cac226452f9c27c5069718be36cf17eb43ede"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/Media/HanlinYouTubeDocument.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "8ad5925c15f0e37ae1c9a29302264fb3306a8234"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/Media/HanlinYouTubePlayerView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "9974e907e8efd584ad39614e1f7e22d9d9d9ea6c"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/Media/HanlinYouTubeVideo.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "1a77548b9f88f7318bb3e047ff1a11884f0846a2"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatPresentation/ProviderModelCatalogMetadata.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "e5810f9605c76f3dc433f0504554abdc9036bcaf"
+    },
+    {
+      "path": "AI_HLY/Downstream/Compatibility/AppleFoundationModelsProvider.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "149365ccd4a03e2fa04a17ca22877b3e773a04c0"
+    },
+    {
+      "path": "AI_HLY/Downstream/Compatibility/CoreAILanguageModelProvider.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "195fadacc8b730a2833467ab0313bfb2deb21df4"
+    },
+    {
+      "path": "AI_HLY/Downstream/Compatibility/LocalLLMStreamingAdapter.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "e0b338ff6c237eea38115c0e7167a68f6d25dcf3"
+    },
+    {
+      "path": "AI_HLY/Downstream/EmbeddedResults/ExpoEmbeddedResultAdapter.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "45cde641b88a0d940c6e1b84de6a649786a41793"
+    },
+    {
+      "path": "AI_HLY/Downstream/EmbeddedResults/HanlinEmbeddedResultResolver.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "f36fe66fec418140e387f2d9c00bab12fd42eda8"
+    },
+    {
+      "path": "AI_HLY/Downstream/EmbeddedResults/HanlinEmbeddedResultSession.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "151aa15342e494b663adbad632fe22eca6d1ce53"
+    },
+    {
+      "path": "AI_HLY/Downstream/EmbeddedResults/HanlinEmbeddedResultSurface.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "11e057b0382159fa1041326193f069f3eab5c66f"
+    },
+    {
+      "path": "AI_HLY/Downstream/EmbeddedResults/NativeScriptEmbeddedResultAdapter.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "671056b176a99c1aebbaa9a559414cb9b0fdd1fa"
+    },
+    {
+      "path": "AI_HLY/Downstream/EmbeddedResults/ScriptUIEmbeddedResultAdapter.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "16374ff93231459a70d263d95ac5df51a2b39e00"
+    },
+    {
+      "path": "AI_HLY/Downstream/EmbeddedResults/SwiftEmbeddedResultAdapter.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "e0d5be58173415fc66d803620bbaa8c9786e1eb9"
+    },
+    {
+      "path": "AI_HLY/Downstream/HostServices/Adapters/AgentHostServicesAdapter.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "2a7b295d4f9a5f5f972851ae5bb30e38c81be52d"
+    },
+    {
+      "path": "AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "f43baad8439648a8b5a38c0cee4571999a008448"
+    },
+    {
+      "path": "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "f6ba69017e692295a50a393479420c7916ec6f93"
+    },
+    {
+      "path": "AI_HLY/Downstream/HostServices/Adapters/ScriptUIHostServicesAdapter.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "e4cb1ae90507d4247c7687496af6d98fbc09a99c"
+    },
+    {
+      "path": "AI_HLY/Downstream/HostServices/Adapters/SwiftMiniAppHostServicesAdapter.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "fd6c48e4796d275278231e200e0f5d6f49edd586"
+    },
+    {
+      "path": "AI_HLY/Downstream/HostServices/Capabilities/HanlinHostCapabilityAuthority.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "45a2ed81868b2611f7bdc9758009051cc0e1be0b"
+    },
+    {
+      "path": "AI_HLY/Downstream/HostServices/Capabilities/HanlinHostCapabilityMetadata.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "017b286e39546bbc4846bc07d817421f4293b490"
+    },
+    {
+      "path": "AI_HLY/Downstream/HostServices/Core/HanlinHostCallContext.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "33bf9e6bde4a9234c6d272e4352c2f7fd4f703cd"
+    },
+    {
+      "path": "AI_HLY/Downstream/HostServices/Core/HanlinHostServiceError.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "478109e42d5d324d22d242f8b27b375080d3d9b9"
+    },
+    {
+      "path": "AI_HLY/Downstream/HostServices/Core/HanlinHostServicesBroker.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "21de4127eb60a183f5becbeef0f9e5a9db1bc057"
+    },
+    {
+      "path": "AI_HLY/Downstream/HostServices/Data/HanlinFileService.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "f75eba31d08ed785bb912f6c5f96a2c092979f0f"
+    },
+    {
+      "path": "AI_HLY/Downstream/HostServices/Data/HanlinSQLiteHostAdapter.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "f7846ba8139b817195ff48a382134f826496765d"
+    },
+    {
+      "path": "AI_HLY/Downstream/HostServices/Runtime/HanlinRuntimeBroker.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "4015c941094b1e94e25dd97e92a6d6324fc92c7b"
+    },
+    {
+      "path": "AI_HLY/Downstream/HostServices/Runtime/HanlinRuntimeWireProtocol.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "5c6246846baa20c4880d8467d7667106981d57c4"
+    },
+    {
+      "path": "AI_HLY/Downstream/HostServices/Runtime/RuntimeAvailabilityStore.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "444c34640b20360f5218848c98b586ed7ee61caa"
+    },
+    {
+      "path": "AI_HLY/Downstream/HostServices/System/HanlinSystemServicesBroker.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "bf2182a7f50fd82fd9963d38a1f20bb6757b0cee"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/Core/MCPChatSelection.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "b05e63b665f8c9f5c282ac0b857e81b328f5d63d"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/Core/MCPCompatibilityReport.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "9c3035b133336dcdc4cb329ed2fb7ce413720a18"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/Core/MCPEnvironmentDraft.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "3c5d71479bf6cf95937592ebd3b616d7267b3f1f"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/Core/MCPError.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "9a5422c6392c2c44739bf3fb73ed796e3f05eb85"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/Core/MCPFeatureConfiguration.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "139b1ad08c036e5e0bb19e01a5f37b078eb302a4"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/Core/MCPInstallState.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "0decf0cdfa0c851a29ef48e4a2efa885d878164c"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/Core/MCPServerConfiguration.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "5f56778f96a9e4a3eb812929e339e1864dae80b1"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/Core/MCPServerDescriptor.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "e3fc1ad92c7ce6b50ff8eebfe45b262793ce5a31"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/Core/MCPServerRuntimeState.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "0b2b971721dc865fb64d2aa7de2d9dd40ca7515f"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/Core/MCPServerSettings.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "9040d3727ec3df46bee6ad821f5fc9d36ad72379"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/Diagnostics/MCPLogRedactor.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "6d8947865f802648e81d1256d4590b9d67a0ae7b"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/Diagnostics/MCPTraceLogger.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "8c5ba15d6c928db0925f85eefad273bbcc1b1743"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/Installer/MCPInstallProgress.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "931db3e5a49d6a475891466aed0bf67764463e6c"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/Installer/MCPPackageImportDocument.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "7e2a9d8d2ad17f18096832481b1d9b4e821448ea"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/Installer/MCPPackageInstallService.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "0d004793c1db238434e8434cc94e484d1c037b52"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/Installer/MCPPackageManifestPreview.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "1b89e3f13609646a21923e75543b92494dc875c8"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/Installer/MCPPackageSpec.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "733da587df63caff0fe88aeac3081ea387a4acfa"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/Persistence/MCPChatSelectionStore.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "eb1b1403435aae5543d162450e22934263615937"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/Persistence/MCPFileLayout.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "2acc17608fc58b777d561e35d3b0fdbefe70d597"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/Persistence/MCPInstalledPackageManifest.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "2e0f3df3fbadebdc55348143c06403634fa5ee6f"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/Persistence/MCPSecretStore.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "5e25d6222611b9952c3ff0c151b9324c68ee1698"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/Persistence/MCPServerPathResolver.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "d7e66ce89b9accace2fd7eeeee0a91864e4a78cd"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/Persistence/MCPServerRegistryStore.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "49c7520d7a0623c69fc1409bfb79d4e9dc3cd30b"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/Runtime/EmbeddedNodeMCPTransport.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "16aa845aae56da47297b3d0942aa3cdff14e2368"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/Runtime/MCPClientSession.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "097cabdf4b33890a8c94d65f6f541b6e8760d7ef"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/Runtime/MCPRuntimeAcceptance.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "ffd6a050a6025ef06a4c2fdf67c0a63c5a6fc8dd"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/Runtime/MCPRuntimeController.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "c0d2d80dae687931f659ef7dedc8dcc19c948bc0"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/Runtime/MCPRuntimeProvider.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "287276570a880fcb7d18ff06fc3e683b1fcabc90"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/Runtime/MCPRuntimeSnapshot.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "0cdbc3a5f2e2aa0dcadc6f0cf66adfbb2c65ae4c"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/Runtime/MCPServerLifecycleSlot.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "3cc079a44d1269b31a74d769113e7c083eda955d"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/Runtime/MCPServerPathResolverAcceptance.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "1ca3d018f30c4cdcadb52255223d33e01d9341c2"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/Runtime/NodeRuntimeService+MCP.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "e2e0ce7e3d802c08423756036c2d131d4aa4b2a4"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/ToolIntegration/AssistantToolBridge.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "4db2e96fb5ad75910a084a0244607df0bfced90c"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/ToolIntegration/AssistantToolRequestScope.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "427cffec71f4ff50b755e86619262430b86b5ff5"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/ToolIntegration/MCPToolBridge.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "d6d3bb2c9d727ef475d010396b74c0aa7dd1d7c2"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/ToolIntegration/MCPToolCatalog.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "7ceb71c067624ef99ef2e51f636e65fa8c231d53"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/ToolIntegration/MCPToolDescriptor.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "7df6035f54c236ab6f2cfe4cf3fd1f0182087f06"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/ToolIntegration/MCPToolNameCodec.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "38faa4ee394a92206ad3c31f319b0530bc0d223a"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/ToolIntegration/MCPToolResolutionResult.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "6b9694f86b53d5620b35cda37da4a3762d118770"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/UI/Chat/MCPChatServerButton.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "aa77eaa56b13c6b52ad6599dd4b973554f6eee56"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/UI/Chat/MCPChatServerSheet.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "6950b9960ff0bc85caedf80fb1e446a6568c6154"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/UI/MCPL10n.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "b6cccb9f9a54f53d554e21aebb677805e0d4b144"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/UI/Settings/MCPInstallProgressView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "ac5084bad5773e9bc186556bd24117eab85d9a87"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/UI/Settings/MCPRuntimeStatusView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "be05b9267b57517d5f3d878f767daf7b87590232"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/UI/Settings/MCPServerDetailView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "43c3b5383c2dce81b4dd0d5f6e71ef2eabcd4e98"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/UI/Settings/MCPServerDiagnosticsView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "9a9cfb9df113dd85b1b74da01ec9cbc5787d2a39"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/UI/Settings/MCPServerEnvironmentView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "ee757db824e3c53373346870e46b40a3a10303cf"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/UI/Settings/MCPServerInstallView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "279f8d6d8afd894bb951786ed9ff3c64535ec4c1"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/UI/Settings/MCPServerLogsView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "e6f1b80d224da02591cd60a61214b3237f9fdad2"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/UI/Settings/MCPServerToolsView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "e86ad3f616c18b439c0f9793f9f8abc45e2912e5"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/UI/Settings/MCPServersSettingsView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "ea31546acf6345a60e4ec7056940a1ef9cd9de5d"
+    },
+    {
+      "path": "AI_HLY/Downstream/MiniApps/CompiledMiniAppExposureRegistry.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "f6190b47fb17b599b85d76a366583af854a1f0fe"
+    },
+    {
+      "path": "AI_HLY/Downstream/MiniApps/HanlinMiniAppHost.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "89b7a6b59cead58bcd9f5ae236869b4059e104ff"
+    },
+    {
+      "path": "AI_HLY/Downstream/NativeScript/HanlinNativeScriptPOCView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "8cca1373cae4f4b4240f53d4beb55a5635abc8e7"
+    },
+    {
+      "path": "AI_HLY/Downstream/NativeScript/HanlinNativeScriptProductionBootstrap.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "af73bed2bffc867cfb5dab9a0889e66dea2f68da"
+    },
+    {
+      "path": "AI_HLY/Downstream/NativeScript/HanlinNativeServicesBridge.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "355dec265dddca405b0b8a0ea1af0ba919f6932b"
+    },
+    {
+      "path": "AI_HLY/Downstream/ProductSplit/HanlinSplitForegroundTransport.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "4b801af382f7bad3c5b6079e21faca8078b030e5"
+    },
+    {
+      "path": "AI_HLY/Downstream/ProductSplit/HanlinSplitLiveTarget.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "0502cf5d88960fe50cff109973b58fde13d4b81d"
+    },
+    {
+      "path": "AI_HLY/Downstream/ProductSplit/HanlinSplitMailbox.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "181b54b00699b77671479a116cb1d66b4bbb10b5"
+    },
+    {
+      "path": "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsBootstrap.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "49102b89947821bcf7e16c7382d4edb77259dc45"
+    },
+    {
+      "path": "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsCatalogView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "15d99289d1f9e229f03889f9f849bb362c9afaf4"
+    },
+    {
+      "path": "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsForegroundBridge.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "9094d48b342b56feb950df1f254cb0f2c84b6678"
+    },
+    {
+      "path": "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsProvider.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "c1ee53a8798f07072ea571e39fad2fa8099d2e37"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Core/AppRuntimeCore.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "5f22dd8ca1f2d52c390c8df45ac40c57b16f647a"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Core/HanlinApplicationRuntimeConfiguration.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "35507f04f1dc0fda7b065ca29c38005e30b7fb93"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Core/RuntimeBackgroundContinuation.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "d54ba80e507ec1b72f46947a12d41a3f5ba51705"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Core/RuntimeCapabilityContract.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "242c6c02d84ed40c7e73293b271bf1890b695d3e"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Core/RuntimeDiagnostics.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "3015684aa3e9ab0a5fbba9de7c2fa2b0ad757877"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Core/RuntimeExecutionInputArtifact.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "7d6619e1270e37b3f3d2363492da8ad85d7a3f32"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Core/RuntimeFileLayout.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "62fd6d3eb5c5c37057097fb184c7b902379cfd85"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Core/RuntimeJobStore.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "9644650c5ce596a4728e9f58cd9d92a9aacd7e06"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Core/RuntimeLifecycleBridge.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "d7dc8aa00671f9ef2e1a81409983b73e10bf8711"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Core/RuntimeModels.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "d8aafd07a1af0f1eefa308273dffd7c08fdb17ca"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Core/RuntimePolicy.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "935c5e9183066adb7ef317ec96acb1260bcc9bab"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Core/RuntimeQueuedExecution.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "a175c1260d60f6e5a5f987ffa77220a2cd9c3d4b"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Core/RuntimeUserOperation.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "a7e965d5e563f0d6b1e69400027a2367bb66802c"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Core/Skills/SkillOpenClawProjection.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "c4fab54661ccca02d58b2e329fd0e68d97433bc4"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Core/Skills/SkillRuntimeAnalysis.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "87ca50ee029b503c2b43850b05d9f824aea9d26f"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Core/Skills/SkillRuntimeContract.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "fa5b9941d5b868fca87e2a4bcbc4551e0af7c764"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Core/Skills/SkillRuntimeFactsProvider.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "ed566974669c55788c20fc9362b3d44ca5565e80"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Core/Skills/SkillRuntimeInstalledIdentity.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "7d528cd7c0fcf12c4d1d5fb30d9bc5fe1254cea5"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Core/Skills/SkillRuntimeNodeCapabilityAdapter.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "21116bcc8578189157481cf35265127d2bea80cd"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Core/Skills/SkillRuntimeOpenClaw.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "9f843a91ed2787bf69695410aff8f447a2dcfc56"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Core/Skills/SkillRuntimePlanner.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "947505526771dd9785e308d2ec05801a7a844a7c"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Core/Skills/SkillRuntimeRegistry.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "80a0b6bd1fe2aeb0991ff86c6e76fefdcd703443"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Core/Skills/SkillRuntimeRequirements.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "8f6069b4b6b6d9d605dab383776203f803492b4c"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Core/Skills/SkillRuntimeService.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "d9fad184bea628b132b602a743c5947c6e71a500"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Environment/RuntimeEnvironment.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "9bbfdb3acd5d022ba9ad2d9a9cf844344eefbdbe"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/JavaScriptCore/JavaScriptCoreOutputCapture.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "f56a8709d7ca8dde85879f3d0cf039515f3bfa81"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/JavaScriptCore/JavaScriptCoreRuntimeService.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "9731ea2add050793693fd761ae97a62e5dea26bb"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Lifecycle/LifecycleExecutionBroker.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "760e2a0964f1666a426546d354bd88b6e19ce58c"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Native/NodeRuntimeBridge.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "450ce5d6a4d8c10e8a76489071b22ac5e0512212"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/NodePackageManager.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "fe52f315924493c0cf62e1bc11e0dc3d6a7b1e9d"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/NodeRuntimeService.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "adb00b708af9e89261b41e47e7a7f2a7fa09cc30"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/RuntimeCommandDispatcher.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "3fb6ca7d63a14481e2c3880fd6827de2a9b3fa85"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/RuntimeHostConnection+Operations.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "dd6466a2d1b044e6296d0619d089f48cad7d9b5a"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/TypeScriptRuntimeService.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "310ae7c9328bfd36b5dde6135fc23bac3d060cee"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Python/PythonNativeExtensions.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "709e2cd53fe523ed34064129611f07cd5caa3ef5"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Python/PythonPackageManager.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "27a8769a3337c4363fa8f42f1f1c77597c68d1fd"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Python/PythonQueuedExecution.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "16aa4f96cf73020e7808190d275c34c20166fc56"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Python/PythonRuntimeBridge.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "496c3cc44162c58eda85dde4e42f1f2193acd7c5"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Python/PythonRuntimeService.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "819c2621c430c22d2a88e25fc02bf233036249ad"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Shell/ShellRuntimeAcceptance.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "4e825afb4cbb1d1867170749aca632c3421d7e6d"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Shell/ShellRuntimeDiagnostics.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "4d43cd008eb16c7df0ad67daf36d2f66cc3b405b"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Shell/ShellRuntimeService.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "216b921a8e0a292b3c2fd8cd979b760bf633db8b"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Shell/ShellRuntimeSmokeSuite.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "b96b553941cb71f1f090f1956bd9aa0fb3f556b2"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Tools/ExecuteJavaScriptTool.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "1f27d0eb4fec329815f46c49ae2830296bdca860"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Tools/ExecuteLocalPythonTool.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "2b9a38a6cdd6ca73a39e3ebc29ad1f67776847f8"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Tools/ExecuteShellCommandTool.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "43c4a7c0c42a0f9001798af0eed9e68b9fd44e53"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Tools/ExecuteSkillResourceTool.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "3b88cba72fb51720d019e246e18af64b914b6ba4"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Tools/ExecuteTypeScriptTool.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "3182ae5545f2abb40beed4ab8fa58fb36eddd152"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Tools/GetRuntimeCapabilitiesTool.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "7e9254f8f526add5c9cd5d4422b5886832831b1e"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Tools/GetRuntimeJobTool.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "8c8214cd9e2339a31e32ac0e20d4b518fd5c11ba"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Tools/ListToolsTool.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "67589642c512914db7989dafa3b75acd76400f1a"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Tools/ManageMCPServersTool.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "1f8f13a02dd56f6338c0dfd76b2afcb76488cfbd"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Tools/ManageRuntimePackagesTool.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "855a4b12cee0a7d26f03657b984255636946ed21"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Tools/NativeToolCatalog+RuntimeTools.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "572417a6f4192c1c78eedc7423eeb83e716dab7d"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Tools/RuntimeToolSupport.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "a8610523d37bddc9dbd32396acd6af9df04260b5"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/UI/NodePackagesView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "c9ac083aba048d26e951ba2a2e6bb10e42af581e"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/UI/PythonPackagesView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "e2d016d372854fd9528f135559c68b698d537c1c"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/UI/RuntimeCenterView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "72f94c32711dba427957c6e686e6eb3ef3e91d3d"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/UI/RuntimeEnvironmentView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "e8944c1011bc77a1af87e40d8dab7211f76d9666"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/UI/RuntimeL10n.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "4ca040240d27c6e247fa961ba096cefb683f5cdb"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/UI/RuntimeLogsView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "bed45fb1bc5b5be2ddc4bbf8254aa7fe8b376079"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/UI/ShellCapabilitiesView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "81771a9d6345bd3bfaa46e197b2871c9b6d71a5d"
+    },
+    {
+      "path": "AI_HLY/Downstream/SDK/HanlinApplicationComponents.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "bac8146dec68578e8ced8b2c39b5909a5d948b54"
+    },
+    {
+      "path": "AI_HLY/Downstream/SDK/HanlinApplicationConfiguration.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "1671032ff76637c8da7434008acfb863e5449451"
+    },
+    {
+      "path": "AI_HLY/Downstream/SDK/HanlinApplicationContext.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "829a75e2a9b4170a5e76339e73af6b4347cae0ad"
+    },
+    {
+      "path": "AI_HLY/Downstream/SDK/HanlinApplicationConversationManagement.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "a07f1ea833e3a992c81db93c897835b7c93affcc"
+    },
+    {
+      "path": "AI_HLY/Downstream/SDK/HanlinApplicationData.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "6f58b9acaf5ae2fdae8978ccb70047141e4d0ab2"
+    },
+    {
+      "path": "AI_HLY/Downstream/SDK/HanlinApplicationLifecycle.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "5d49973514078a33f0e81a0273f10794e807a138"
+    },
+    {
+      "path": "AI_HLY/Downstream/SDK/HanlinApplicationMCP.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "20efa3e05deb0861c2c35169348a7ef32f0df067"
+    },
+    {
+      "path": "AI_HLY/Downstream/SDK/HanlinApplicationModelConfiguration.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "8f2a9a096f39c7ee37e4ad76a01121a094d1ffbc"
+    },
+    {
+      "path": "AI_HLY/Downstream/SDK/HanlinApplicationResources.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "adf06f721875f4b89480a3c5b3a24fddae63d375"
+    },
+    {
+      "path": "AI_HLY/Downstream/SDK/HanlinApplicationScene.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "c413bc437d495edeecd91a309cc0ba0800006a55"
+    },
+    {
+      "path": "AI_HLY/Downstream/SDK/HanlinConversationComposerView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "0ac7c9c3ac6ab8f054cb1c33fc27471b977eab38"
+    },
+    {
+      "path": "AI_HLY/Downstream/SDK/HanlinConversationController.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "a2549823a7294da58f91745278bee705cd3e3b29"
+    },
+    {
+      "path": "AI_HLY/Downstream/SDK/HanlinConversationMessageSnapshot.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "bd55624fca59f09a7766b2055554fa86ebdd8266"
+    },
+    {
+      "path": "AI_HLY/Downstream/SDK/HanlinConversationView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "2325af8d9c77647ff7206ee764f3e4464e8e6186"
+    },
+    {
+      "path": "AI_HLY/Downstream/SDK/HanlinMountedComposerContent.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "c1b44bae4e710bac79fc86dbebd4bb04d81c0ef2"
+    },
+    {
+      "path": "AI_HLY/Downstream/SDK/HanlinToolActivityView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "fc4a27f65e897c594aba1a988247658e284af267"
+    },
+    {
+      "path": "AI_HLY/Downstream/Scripting/HanlinJavaScriptCoreSession.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "5e914391059b1413d610d1f726cd2f4898f3ae44"
+    },
+    {
+      "path": "AI_HLY/Downstream/Scripting/HanlinQuickJSSession.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "70d3122ba2ad13521b8f1d06a11fa9ccbf2bd97d"
+    },
+    {
+      "path": "AI_HLY/Downstream/Scripting/HanlinScriptCanonicalAdapter.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "3256875271e6e0f6fa6102723b3018536ca29deb"
+    },
+    {
+      "path": "AI_HLY/Downstream/Scripting/HanlinScriptPackageLoader.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "554d3106832508894ddb5276761c250ec5f02e94"
+    },
+    {
+      "path": "AI_HLY/Downstream/Scripting/HanlinScriptValueBridge.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "79b3cc0fe706db8478b1884f9403f763b28b7dea"
+    },
+    {
+      "path": "AI_HLY/Downstream/Scripting/HanlinScriptingError.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "9c51b9b8dbf0d2983ed7dff58d72c2033ddcf378"
+    },
+    {
+      "path": "AI_HLY/Downstream/Scripting/HanlinScriptingPerformanceSignposts.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "ab99a822366a1678a1c15f9664254a591a5ef8c3"
+    },
+    {
+      "path": "AI_HLY/Downstream/Scripting/HanlinScriptingProviderRegistry.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "e82b37383eb5e95dd4d92e313e3610ec253a9f9f"
+    },
+    {
+      "path": "AI_HLY/Downstream/Scripting/HanlinWorkerScriptingSessions.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "79102daec8404351b698ff0a81947dbebfbbae78"
+    },
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinAppleDeviceSnapshotProvider.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "3637e84bed65a1c3627571bf4491b6e4cdd88716"
+    },
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinNodeMobileScriptingCompiler.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "0b03e649e9d89df51418484ce1d0c8356e9cae84"
+    },
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingApplicationRuntimeBridge.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "2d41fe6d790974568e070523a2a62a1793dfee0e"
+    },
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingAssistantProviderAdapter.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "f11b17b43dd747f4596dae3922d3d8b71d3fe1b9"
+    },
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "71844523bf2444c24d808ed9cc34067a9f64acd3"
+    },
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatformAIIntegration.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "9014a6165cbd2768a26bd36e4c11d43a9e441654"
+    },
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingSystemUI.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "ce39a90a499b0ce24730fe8ab410eee395898c3a"
+    },
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/ScriptingPackageCardView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "3d5af82776f04377723b8da4a9ca6abd5f8e5009"
+    },
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/ScriptingPackageCenterViews.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "d97106766d4b06ec99add6a09a10e0ffaf5bb8a2"
+    },
+    {
+      "path": "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareActionTarget.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "4ee0232bf9c8f9a8515c0a3029901ca97e97b7ba"
+    },
+    {
+      "path": "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInbox.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "3e21e59873b2b99f2d47ae90c367b10ef7b41356"
+    },
+    {
+      "path": "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInboxView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "eb9d1c8660b1858ba11629990c6e7a1c9f61cb85"
+    },
+    {
+      "path": "AI_HLY/Downstream/SystemIntegrations/ChavrusaSystemIntegrations.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "ec8b9c3307fe8ea1cc55ff690e5a8016b7e80e88"
+    },
+    {
+      "path": "AI_HLY/Downstream/TorahStudy/AuthorizedAttachmentRegistry.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "b1b05a5d416158b4c8982a10d4492d99dda40721"
+    },
+    {
+      "path": "AI_HLY/Downstream/TorahStudy/TorahOCRService.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "7f8eb039b8286db5e3b3d979d740dadf1f4c8555"
+    },
+    {
+      "path": "AI_HLY/Downstream/TorahStudy/TorahPhotoStudyCaptureView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "7fa90b98a8a02a06409a1d58790ce5162b9436ae"
+    },
+    {
+      "path": "AI_HLY/Downstream/TorahStudy/TorahSourceReaderView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "d55881ed85d525e6918436989140e79b34860a29"
+    },
+    {
+      "path": "AI_HLY/Downstream/TorahStudy/TorahStudyNativeTools.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "c38507c7f892ad96c08b006a96fb85daf513f4e4"
+    },
+    {
+      "path": "AI_HLY/Downstream/TorahStudy/TorahStudyNavigationRouter.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "624e56eb98f0de896a6ebda4b3bb3c8d7c160e67"
+    },
+    {
+      "path": "AI_HLY/KnowledgeListView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "b4ae667b8b4c1c0320bce78e64a86db1a54996a3"
+    },
+    {
+      "path": "AI_HLY/ListView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "f1a9add9ad3cb79251689ae804977e2283c01b0e"
+    },
+    {
+      "path": "AI_HLY/MainTabView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "74578922ab1f582b5ab73a00b9ba2336a5b77c78"
+    },
+    {
+      "path": "AI_HLY/Model/APIKeys.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "b650d23c7968ddca9e0a087fe8ecd9ff425decea"
+    },
+    {
+      "path": "AI_HLY/Model/AllModels.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "c3f680589a223689aa23d33094312f70795c21cd"
+    },
+    {
+      "path": "AI_HLY/Model/ChatMessages.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "8b750c7c9621f6bfbec2493ed5c21630eecb6c94"
+    },
+    {
+      "path": "AI_HLY/Model/ChatRecords.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "bd7869631a1cf78798ca60485e951c3114580ad3"
+    },
+    {
+      "path": "AI_HLY/Model/HanlinAppleModelCatalogAdapter.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "6e0142c3715cebd91cd854a538f9c53d17f7daa9"
+    },
+    {
+      "path": "AI_HLY/Model/KnowledgeChunk.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "b51bac11e8d8ecd1373b0cf2e33b20aa62daa575"
+    },
+    {
+      "path": "AI_HLY/Model/KnowledgeRecords.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "359e36df8a81e1e1730804a30ad5e19de0fa96bb"
+    },
+    {
+      "path": "AI_HLY/Model/MemoryArchive.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "b80c6fd827b076e1341528dd3d0802e425022260"
+    },
+    {
+      "path": "AI_HLY/Model/PromptRepo.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "2fbf2c5dc4fcc2ecb68942f1483f2d1867e8636d"
+    },
+    {
+      "path": "AI_HLY/Model/SearchKeys.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "99665dd2da7ef0ccccbaec34056223c5064250c7"
+    },
+    {
+      "path": "AI_HLY/Model/ToolKeys.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "0c2ad388f195b956bde562087079c3cfd87930de"
+    },
+    {
+      "path": "AI_HLY/Model/TranslationDic.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "c62c1788dbbf86d637ff70c9f13f50fc700d6f9e"
+    },
+    {
+      "path": "AI_HLY/Model/UserInfo.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "da272728bcbcea9680a9ebba2b79f1bbe4f9df01"
+    },
+    {
+      "path": "AI_HLY/ModelsView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "af1978565e7c0780a259c1d50fd98d9eea98eaa4"
+    },
+    {
+      "path": "AI_HLY/NativeAgentExtensions/ChatIntegration/ChatMessages+NativeUI.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "e8d17308c27c04b1a90c51f761fe11dfba0d55d9"
+    },
+    {
+      "path": "AI_HLY/NativeAgentExtensions/ChatIntegration/NativeToolBridge.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "f9ef1f409a05ac6f4163a49b176759342ab46a68"
+    },
+    {
+      "path": "AI_HLY/NativeAgentExtensions/Core/NativeToolJSON.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "502a11227c93306abf523ffb0206426d9d761581"
+    },
+    {
+      "path": "AI_HLY/NativeAgentExtensions/Diagnostics/NativeToolTraceLogger.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "bd3836d17fa4e99f27f9aededdefdd7c2938f570"
+    },
+    {
+      "path": "AI_HLY/NativeAgentExtensions/Presentation/ModernCards/ModernNativeToolResultRenderer.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "dec7fb98ca80276da1e951b6cbd4f9216609580e"
+    },
+    {
+      "path": "AI_HLY/NativeAgentExtensions/Presentation/ModernCards/NativeToolEntityCard.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "7d67b9841fdc94dd966bbfcb162dcc07997fe7a8"
+    },
+    {
+      "path": "AI_HLY/NativeAgentExtensions/Presentation/ModernCards/NativeToolErrorCard.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "ac5d0f13e7f38b6643752dabec46d298b916bce4"
+    },
+    {
+      "path": "AI_HLY/NativeAgentExtensions/Presentation/ModernCards/NativeToolResultCardContainer.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "56bd4d483e858dc3801d9486001c3a6346253c4a"
+    },
+    {
+      "path": "AI_HLY/NativeAgentExtensions/Presentation/ModernCards/NativeToolResultCardStyle.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "c526ca9b6f5e548fa807f37edd7fcd208cc7eeae"
+    },
+    {
+      "path": "AI_HLY/NativeAgentExtensions/Presentation/ModernCards/NativeToolSearchResultCard.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "d498ac9325da61897c6e764f6b5a0d088520753f"
+    },
+    {
+      "path": "AI_HLY/NativeAgentExtensions/ToolCatalog/NativeAssistantToolGroup.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "2c9116925838b7c319a43e78c5f2c7084de51265"
+    },
+    {
+      "path": "AI_HLY/NativeAgentExtensions/ToolCatalog/NativeToolCatalog.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "d95dc267107899438ec8418e70a42ce6a1b48969"
+    },
+    {
+      "path": "AI_HLY/NativeAgentExtensions/ToolCatalog/NativeToolCatalogEntry.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "75f82621db97bfa6b4acb0720c399d6c3e1ea3a8"
+    },
+    {
+      "path": "AI_HLY/NativeAgentExtensions/ToolRuntime/NativeTool.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "ff07c0c3740b4e9613b444979f94f7776318fcab"
+    },
+    {
+      "path": "AI_HLY/NativeAgentExtensions/ToolRuntime/NativeToolResult.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "c7da92bd9e5e25663fa0b6683a7a10c5f73c63db"
+    },
+    {
+      "path": "AI_HLY/NativeAgentExtensions/Tools/QuickCalculateTool.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "f5dbc6a7763f29bf9343edfd1dcb3a8d19b45a6b"
+    },
+    {
+      "path": "AI_HLY/NativeAgentExtensions/UI/NativeAssistantToolGroupSettingsView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "cb0f91b5aee5ff0f53eaf0a712035991fa473d05"
+    },
+    {
+      "path": "AI_HLY/NativeAgentExtensions/UI/NativeUIBlock.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "34efdbad3de5a50c2bc6d5f793aadc7ef11f27cd"
+    },
+    {
+      "path": "AI_HLY/NativeAgentExtensions/UI/NativeUIRenderer.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "b655d31a0e36d6013e78e7906905c0466ac300ae"
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/Actions/NativeAppAction.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "7191dae4b190e745a7bc014b086025faa1056519"
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/Actions/NativeAppActionBus.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "89804f1f9442e1e7a01bec423813d9faa02cd751"
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/AppsHub/MiniAppCardView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "49bd31fccd03f63c9814eed74de3482ed5819dee"
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/AppsHub/NativeAppCardView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "d575360b1718d264342fa288f7e8aa201d5316c3"
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/AppsHub/NativeAppDetailView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "76843bb1f160307b4c667a7c72a054a065f8df52"
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/AppsHub/NativeAppSessionContainerView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "82df3e2b882ee256efcbcc4e87ed400e87a2b648"
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsAddSheet.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "3943d0d0cac0d200ff0b52ff6d8041e9c91e6cef"
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsCatalogView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "f299271cb97b33f90e9e5148d1b6644f33870c0b"
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsHubView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "a6234ca4362badecb4bfff7a5d849dc272c5335b"
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/BuiltinApps/BuiltinAppsIndex.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "6faa0625d2f83c3666fbe5fa33cd5c87629c0a95"
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/BuiltinApps/BuiltinCanonicalRegistrations.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "4461d00caaf293490c27a09aac42d7798790b1ca"
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/BuiltinApps/NativeBuiltinRuntimeBinding.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "30f8e0c6b563ac81f75fcf6e2c9d806504563512"
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/BuiltinApps/Sefaria/Assistant/NativeAppSefariaTools.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "1d0ec21f5ce9ba671de04780c87776ac6e7533e9"
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/BuiltinApps/Sefaria/Chat/NativeAppSefariaChatCardProvider.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "c59db73b29a945a89959a8f9deaa99d1814e14bf"
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/BuiltinApps/Sefaria/NativeAppSefariaAppModule.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "c15ad2a23c9432cb4916d06b099ede1f73d66d9d"
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/BuiltinApps/Sefaria/NativeAppSefariaExports.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "fb25839e616a2441c3df57e0b849a3b69e251d04"
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/BuiltinApps/Sefaria/NativeAppSefariaImports.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "c430f2cbb715ab8900e08a84e5bc9cbd5f569360"
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/BuiltinApps/Sefaria/NativeAppSefariaIndex.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "bd67621c6e3f381aca36f7ad39336afbc0506324"
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/BuiltinApps/TextStudio/Assistant/NativeAppTextStudioTools.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "f76befd3007659aeabbe29421c808bb7f125c7c6"
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/BuiltinApps/TextStudio/Chat/NativeAppTextStudioChatCardProvider.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "98bbfcc01e4a7bff9d49fc8a4dfceb3c364859ae"
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/BuiltinApps/TextStudio/NativeAppTextStudioAppModule.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "25fd2f6334bc242d4b4b4449b3779ad83f069143"
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/BuiltinApps/TextStudio/NativeAppTextStudioExports.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "1f351980e7b3be4766e8eb16183035968ab3fcde"
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/BuiltinApps/TextStudio/NativeAppTextStudioImports.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "26a4dc8d8a80eea7eb58f0fb41e9af237bf2f56a"
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/BuiltinApps/TextStudio/NativeAppTextStudioIndex.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "454b942993b8839d558ce555f8ec192f2c06debd"
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/BuiltinApps/Wikipedia/Assistant/NativeAppWikipediaTools.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "7ab7c774c1cc5b761fd4a7a3cad9f1b3274deb39"
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/BuiltinApps/Wikipedia/Chat/NativeAppWikipediaChatCardProvider.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "80693ce16f8995e6ee5c103559ff0df0a04e7b17"
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/BuiltinApps/Wikipedia/NativeAppWikipediaAppModule.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "da9e706b857e596e7b25b92fd97cf0ecb1ed306d"
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/BuiltinApps/Wikipedia/NativeAppWikipediaExports.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "cb43af8ce964785b2066eff123061a9b1fe446b8"
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/BuiltinApps/Wikipedia/NativeAppWikipediaImports.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "0c1a06f58d86812512a18e5488ef4a45ab2af1ee"
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/BuiltinApps/Wikipedia/NativeAppWikipediaIndex.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "9095ec6b186a1a848afeb24fbb9d9f5400de8a84"
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/Capabilities/NativeCapabilityRegistry.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "c09c75aa42a0782222d99fcda07eeb6c2530b777"
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/Capabilities/NativeCapabilityRequest.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "964e6bcbb1b5d3ba5167f07e3e15a3948ec64c66"
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/Core/NativeAppAppearance.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "e57ac648f94d7d81e49e6df13c19aa52fcce765f"
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/Core/NativeAppCategory.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "2b9211fb553610bc15576e6d22bc9614ca7354cf"
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/Core/NativeAppContext.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "4b0844d62ba7feca05f53e00f6c0645ebd25d8f2"
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/Core/NativeAppEntryPointKind.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "5d5acfd95c3f51284e29f08bd0d1e919024412f0"
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/Core/NativeAppManifest.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "47444a71a8bd4dea3f9124240e01e8826fd48b29"
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/Core/NativeAppModule.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "bad0d62262220b38d0d6fefc3025246099a17da4"
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/Core/NativeAppPresentation.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "c07bb340b2d5343a46dcffa9ca59ef4245e620b5"
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/Core/NativeAppRegistry.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "4a374c6b9150ec83b73823b77d606d0fa42e77e9"
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/Core/NativeAppSession.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "12cf9cfc182792e5f8d2a523aed8a6729a285105"
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/Core/NativeAppSessionEnvironment.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "f68780c73646d5e69b6b9d5718f32d12fc114ecc"
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/Core/NativeToolCatalog+NativeApps.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "8c76cdedcfee07e5b0f0395ae2184b5f7a5bcab7"
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/Routing/NativeAppRoute.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "c5a30ee7a655ca2c8500683898a8ddf0f6e7b7a1"
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/Routing/NativeAppRouter.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "272160c923c0bb98f6de3d090597cfecd4010b7b"
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/Services/NativeAppNetworkBroker.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "0194ea98adc3f613c3a9a21d6927777f9dc14d1c"
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/Services/NativeAppOpenURLBroker.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "5e0afed2151b6a16f526e1044e92bbd908673daa"
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/Services/NativeAppPasteboardBroker.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "ce776fc3779eb171ede4544b22f71f8ff28e9149"
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/Services/NativeAppPlatformServices.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "f274e017ec3d07645f1984a32d1d2bd560ea20d6"
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/Services/NativeAppStorageBroker.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "d2edfa35c8074cfc95bd7fd8d18486d19f093d9a"
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/Support/NativeAppColor.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "d039d201b2b0ae66577a66663a93ae5ba9466ac2"
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/Support/NativeAppJSON.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "edc0d4cdd342277b0e70c2973a4efe97e87319c9"
+    },
+    {
+      "path": "AI_HLY/Services/APIServices/APIBalance.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "c4ae8cae298268d315a5a88b6bb1f640293e0e3a"
+    },
+    {
+      "path": "AI_HLY/Services/APIServices/APITest.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "00db37933976fc4509eac61c97e98ab62862ed18"
+    },
+    {
+      "path": "AI_HLY/Services/APIServices/ModelRefreshService.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "1287e736b569a78775f0e69db41205757dc64de4"
+    },
+    {
+      "path": "AI_HLY/Services/ChatServices/APIManager+LegacyTools.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "bcfc775c7d81d75d3af5cbf49f4189a4ff7c84d6"
+    },
+    {
+      "path": "AI_HLY/Services/ChatServices/APIManager.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "d25d2dc088ccb5aeeead532ff780a3b7d95f83de"
+    },
+    {
+      "path": "AI_HLY/Services/ChatServices/AutomaticSearch/AutomaticSearchMigration.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "7d74f7d3f64f902b614f59d2e50b86267ef090cb"
+    },
+    {
+      "path": "AI_HLY/Services/ChatServices/AutomaticSearch/AutomaticWebSearchCoordinator.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "5c7b3f82e7782297ae60356c6fb7ad9ce5f83686"
+    },
+    {
+      "path": "AI_HLY/Services/ChatServices/AutomaticSearch/KeenablePublicSearchAdapter.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "e510531f257c8f533adbde1cacfe1ba613390f3f"
+    },
+    {
+      "path": "AI_HLY/Services/ChatServices/AutomaticSearch/TavilyKeylessSearchAdapter.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "a3927637a284fd4a364333786a5e58a17cf16e9a"
+    },
+    {
+      "path": "AI_HLY/Services/ChatServices/AutomaticSearch/WebSearchProviderProtocol.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "546bb51c4d893fc08d7dbe2610ea8ed5c6e10656"
+    },
+    {
+      "path": "AI_HLY/Services/ChatServices/AutomaticSearch/WebSearchRelevanceEvaluator.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "b217839e453a1367d58edce1cd7428fb0c67af0c"
+    },
+    {
+      "path": "AI_HLY/Services/ChatServices/AutomaticSearch/WebSearchResult.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "34d7db717173d40f894e47ed69d0286d57a04411"
+    },
+    {
+      "path": "AI_HLY/Services/ChatServices/AutomaticSearch/YouKeylessSearchAdapter.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "48a4fb1f4f5b4b79f95df9b0be91ea6219c2d034"
+    },
+    {
+      "path": "AI_HLY/Services/ChatServices/CalendarService.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "25b0d83d36de48f4990d89b7d1599edb6f3a005b"
+    },
+    {
+      "path": "AI_HLY/Services/ChatServices/CanvasServices.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "eb1c059604c21b03946f521c0038f231738262fe"
+    },
+    {
+      "path": "AI_HLY/Services/ChatServices/ChatTools.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "71321c91d2c28ca672168c62015308a261f3a83f"
+    },
+    {
+      "path": "AI_HLY/Services/ChatServices/CodeServices.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "f95558bae89aa9dbfde8aab7ee6d6f0c15180e62"
+    },
+    {
+      "path": "AI_HLY/Services/ChatServices/FileContentExtraction.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "258e7fee995e698917a0dc92bbc6a3c8787a4196"
+    },
+    {
+      "path": "AI_HLY/Services/ChatServices/HealthServices.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "64c9776bf5d8e8aa9c9732c7d8f733f445ccd3f0"
+    },
+    {
+      "path": "AI_HLY/Services/ChatServices/MapServices.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "cf155e388047f920a848bd1bb7d66c4f54cf4cff"
+    },
+    {
+      "path": "AI_HLY/Services/ChatServices/SystemOptimizer.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "70ed13d2a0bf12229923db17d94adafe646d110f"
+    },
+    {
+      "path": "AI_HLY/Services/ChatServices/TextToSpeech.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "b42ba9acc31168edfba0f8a356f187c478663641"
+    },
+    {
+      "path": "AI_HLY/Services/ChatServices/ToolsAPI.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "9aa8fe1c85cccda49b219935800082047f659701"
+    },
+    {
+      "path": "AI_HLY/Services/ChatServices/WeatherServices.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "7e360a09fd9f2769a8dbec162d38677abe546f13"
+    },
+    {
+      "path": "AI_HLY/Services/ChatServices/WebReadTool.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "69117078c06e9197320d8fb1434f26a2c3be6817"
+    },
+    {
+      "path": "AI_HLY/Services/ChatServices/WebSearchTool.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "9c462de3a7ddfb121916abc0d38753ae0f459ae6"
+    },
+    {
+      "path": "AI_HLY/Services/DataServices/HanlinAppProviderCredentials.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "e9fede669280b1580673d285a53110a10804632b"
+    },
+    {
+      "path": "AI_HLY/Services/DataServices/InfoServices.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "aed5dffa4aaed6b92b3e4ee543838324089db22e"
+    },
+    {
+      "path": "AI_HLY/Services/DataServices/PreLoad.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "aed905d4ba19eb966f36279f9fe1e435365bd124"
+    },
+    {
+      "path": "AI_HLY/Services/KnowledgeServices/KnowledgeAPI.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "1db3c06ce7d28eeef3218029206baab8faecdc51"
+    },
+    {
+      "path": "AI_HLY/Services/ModelServices/ModelDown.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "8412607d6f44c2c769e7eda77248bea2921d1971"
+    },
+    {
+      "path": "AI_HLY/Services/ModelServices/ModelServices.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "81c70aa106396a83cef7a10cce812cb2d98ce225"
+    },
+    {
+      "path": "AI_HLY/Services/VisionServices/VisionAPI.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "7e2f6eca597a49ed6214247c02c1f9ab4a615648"
+    },
+    {
+      "path": "AI_HLY/SettingsView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "62b510a9af95415dfc126cb8ab198d03e143adc6"
+    },
+    {
+      "path": "AI_HLY/Views/Components/APISettingView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "fc64a6dc8553a7f5830dbac99a770a161213d379"
+    },
+    {
+      "path": "AI_HLY/Views/Components/ChatViewBottom.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "174435d04c1b9e7add343ff16ee2413850e6e9cf"
+    },
+    {
+      "path": "AI_HLY/Views/Components/ChatViewComponents.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "fbf17bf12b1eb3e2ee5ed55f344d291e81b68675"
+    },
+    {
+      "path": "AI_HLY/Views/Components/ChatandFile.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "4b0325aaca204e851508c369abfc85028d0a8213"
+    },
+    {
+      "path": "AI_HLY/Views/Components/DocumentPicker.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "02c7e2a6790a5aecac1aa253162150aaa818603f"
+    },
+    {
+      "path": "AI_HLY/Views/Components/HanlinHelpView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "cffdd132d4e5a968272e67233601cf3e1113eb50"
+    },
+    {
+      "path": "AI_HLY/Views/Components/ImagePicker.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "60f79d99a937dceeeefd97e9ba57681eb73fe8fb"
+    },
+    {
+      "path": "AI_HLY/Views/Components/KnowledgeWritingView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "9686105d9685db020b21e1ce27ca07df5a58d845"
+    },
+    {
+      "path": "AI_HLY/Views/Components/ListViewComponents.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "a83d3969cda199262b29dbb98d7fb990f24c43ec"
+    },
+    {
+      "path": "AI_HLY/Views/Components/MemoryArchiveView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "944b4ad92316672c3d1f9a6195720934b08e7cad"
+    },
+    {
+      "path": "AI_HLY/Views/Components/ModelManagementView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "c161e216f990b304a1ef9c01ed1201564afa6194"
+    },
+    {
+      "path": "AI_HLY/Views/Components/ModelsViewComponents.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "a98f0e00358ffd88c252755d7d3123373a6f4de5"
+    },
+    {
+      "path": "AI_HLY/Views/Components/PromptRepoView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "38209c163d17a17e8ef5335e49d34b7004c00b36"
+    },
+    {
+      "path": "AI_HLY/Views/Components/QuickToolsView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "b8d831692068b8d7520ab470f4c3aa6699903738"
+    },
+    {
+      "path": "AI_HLY/Views/Components/SettingsViewComponents.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "0c3e7545c315cfbb17068d7f1eeb7e5f9ce08ef8"
+    },
+    {
+      "path": "AI_HLY/Views/Components/TranslationDicView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "4cf9193afd1ed6329b1f1de8e8a3af6668bb73e8"
+    },
+    {
+      "path": "AI_HLY/Views/Components/VoiceInputView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "612108b19c4f6a414aa35674456fa1622843a5d8"
+    },
+    {
+      "path": "AI_HLY/VisionIntent.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "20c93c055c1ea956f1a0f159c463ab99dd0dc896"
+    },
+    {
+      "path": "AI_HLY/VisionView.swift",
+      "mode": "100644",
+      "type": "blob",
+      "gitBlob": "975d51c69cbbe13dc0e112568291cb960aca2748"
+    }
+  ],
+  "applicationSourceCount": 507,
+  "applicationSourceMissing": [],
+  "applicationSourceExtra": [],
+  "thinExecutableEntry": "AI_HLY/AI_HLY.swift",
+  "childManifestInputs": {
+    "Packages/HanlinAgentSDK/Package.swift": {
+      "sha256": "9af2a15811e934e4082360e46f368ea2b0d5ba5d97a77d8bb0ddb34d48e0666b",
+      "matchesGeneratedInventory": true,
+      "unchangedFromConsumerPin": true
+    },
+    "Packages/HanlinAppExtensionsSDK/Package.swift": {
+      "sha256": "9cfaec8b4158dc6b099765b800bcc35834d1ad2283717d82882b60b1d97a27b1",
+      "matchesGeneratedInventory": true,
+      "unchangedFromConsumerPin": true
+    },
+    "Packages/HanlinExpoNativeAPI/Package.swift": {
+      "sha256": "1bf2b967d85c4759f94f39330b1b435148a9d3956ec6b8e645cec7dd65bec83d",
+      "matchesGeneratedInventory": true,
+      "unchangedFromConsumerPin": true
+    },
+    "Packages/HanlinExpoRuntime/Package.swift": {
+      "sha256": "3c63a7cc0751b86e445e4048413c61553269e0d0fd087d01544c24dccb8f379c",
+      "matchesGeneratedInventory": true,
+      "unchangedFromConsumerPin": true
+    },
+    "Packages/HanlinExpoWidgetSubset/Package.swift": {
+      "sha256": "ed50b8b4f6ee4532ff3ed2af82d7994c7718e958387495280f9a939218323a41",
+      "matchesGeneratedInventory": true,
+      "unchangedFromConsumerPin": true
+    },
+    "Packages/HanlinNativeScriptRuntime/Package.swift": {
+      "sha256": "f2798b093e8df72923abc135e4999f2614c32e8de1d495c480e6fd8fd4db9b34",
+      "matchesGeneratedInventory": true,
+      "unchangedFromConsumerPin": true
+    },
+    "Packages/HanlinParityMiniApp/Package.swift": {
+      "sha256": "66025f0b1fb7db7db9b8a24426319b651858f3454295780ee807edd335cec90b",
+      "matchesGeneratedInventory": true,
+      "unchangedFromConsumerPin": true
+    },
+    "Packages/HanlinPlatform/Package.swift": {
+      "sha256": "e27c872f7b9972be7667ea0f8e126131d42379d2a8b66527887ee97a32616e41",
+      "matchesGeneratedInventory": true,
+      "unchangedFromConsumerPin": true
+    },
+    "Packages/HanlinPresentationSDK/Package.swift": {
+      "sha256": "462479a3660edd652181ad339238c29f270ec9bfd8203d2f1310681d8029ecc4",
+      "matchesGeneratedInventory": true,
+      "unchangedFromConsumerPin": true
+    },
+    "Packages/HanlinProductSplit/Package.swift": {
+      "sha256": "31234398119e82e9895391040f281e9c9895c2cc73f962c12f1b37489e7f5e3a",
+      "matchesGeneratedInventory": true,
+      "unchangedFromConsumerPin": true
+    },
+    "Packages/HanlinQuickJS/Package.swift": {
+      "sha256": "3b3e64732c71724b027fd28236f635073d02a3c208cbd9060fafaf802a47480e",
+      "matchesGeneratedInventory": true,
+      "unchangedFromConsumerPin": true
+    },
+    "Packages/HanlinSefariaMiniApp/Package.swift": {
+      "sha256": "7ac94c46688313d32e03c2ffa3bb74c1f1dc00fc8b0b8b7322ae1286b918d50c",
+      "matchesGeneratedInventory": true,
+      "unchangedFromConsumerPin": true
+    },
+    "Packages/HanlinSkillFormat/Package.swift": {
+      "sha256": "3878f654329884843943a463a901537c45f894b198a4bc9b9b9169410dc66741",
+      "matchesGeneratedInventory": true,
+      "unchangedFromConsumerPin": true
+    },
+    "Packages/HanlinTextStudioMiniApp/Package.swift": {
+      "sha256": "d2049eb9401b85c9ab1734a369b818f930db964aee7ce7bb7bf865ec21af291d",
+      "matchesGeneratedInventory": true,
+      "unchangedFromConsumerPin": true
+    },
+    "Packages/HanlinWidgetSDK/Package.swift": {
+      "sha256": "7621588d8da3037defe51a66839b0b703ae5464e90446c13ebc00e853daf523d",
+      "matchesGeneratedInventory": true,
+      "unchangedFromConsumerPin": true
+    },
+    "Packages/HanlinWikipediaMiniApp/Package.swift": {
+      "sha256": "01b8cc014f8a5e853b644947fd6684df56b65b37feb08ef23f410fb56c902d8e",
+      "matchesGeneratedInventory": true,
+      "unchangedFromConsumerPin": true
+    },
+    "Packages/IOSSystemLite/Package.swift": {
+      "sha256": "06c6721c4b59328ba4f78997c9a8b23330357db12d3a619207dc1bac8cb76bab",
+      "matchesGeneratedInventory": true,
+      "unchangedFromConsumerPin": true
+    },
+    "Packages/TorahLibraryKit/Package.swift": {
+      "sha256": "4423074f870fe146b8914dc275db77aedef4cc1b6c0b856dfad844b65c3a21d6",
+      "matchesGeneratedInventory": true,
+      "unchangedFromConsumerPin": true
+    }
+  },
+  "actualOriginalCallSites": [
+    {
+      "path": "AI_HLY/AI_HLY.swift",
+      "sha256": "1927c6e54b859e5d8334a2502f899b742612eac3592c4447e04c5a8f43c86b0e",
+      "observedOriginalConnections": [
+        "HanlinApplicationContext(configuration: .hanlin)",
+        "HanlinApplicationScene(context: context)",
+        "HanlinApplicationIntentsPackage.self"
+      ]
+    },
+    {
+      "path": "AI_HLY/Downstream/SDK/HanlinApplicationContext.swift",
+      "sha256": "482c7e5d1eaa04a6c1f410b1ef3fda9ce85362ced3aa874aaf049cb234c72602",
+      "observedOriginalConnections": [
+        "AppDataManager(modelContainer: container)",
+        "public static var schema: Schema { AppDataManager.schema }"
+      ]
+    },
+    {
+      "path": "AI_HLY/Downstream/SDK/HanlinApplicationScene.swift",
+      "sha256": "b1c8cf52a80d8e0023742cd9a8ee0460becd9fd9d0b70f660aebc6abf43960c1",
+      "observedOriginalConnections": [
+        "MainTabView(deepLinkTarget: $deepLinkTarget)",
+        "NativeAppSessionContainerView(request: request)"
+      ]
+    },
+    {
+      "path": "AI_HLY/Downstream/SDK/HanlinConversationView.swift",
+      "sha256": "c37d598d091e42d48819b84aad23b81c8d043f6f7687926d2c20e83b004eb7d1",
+      "observedOriginalConnections": [
+        "ChatView(chatRecord: record, surface: surface"
+      ]
+    },
+    {
+      "path": "AI_HLY/Downstream/SDK/HanlinMountedComposerContent.swift",
+      "sha256": "58f32f6b0bccd42950d74a60255a1998e756ead31262def25665784060b252f7",
+      "observedOriginalConnections": [
+        "ChatViewBottom(",
+        "chatRecord: endpoint.chatRecord"
+      ]
+    },
+    {
+      "path": "AI_HLY/Downstream/SDK/HanlinConversationController.swift",
+      "sha256": "10ba61e87fe89a7fc5558ac4611264e396f8bcfa041dac4e1e456ea692fe41ff",
+      "observedOriginalConnections": [
+        "sessionOwner = HanlinAppAgentSessionOwner()",
+        "APIManager(context: context, agentSessionOwner: sessionOwner)"
+      ]
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinAgentSession.swift",
+      "sha256": "179e222f04e185d941c0f42416f6df6d391cf308bd79b63af341093c460d1e1b",
+      "observedOriginalConnections": [
+        "private let engine: HanlinAISDKAgentEngine",
+        "try await engine.stream(",
+        ".reasoningDelta(let text)",
+        ".structuredPart(let part)"
+      ]
+    }
+  ],
+  "localPackageEdgesRemaining": 0,
+  "appleBuildStatus": "NOT_RUN by this static audit; original producer45218713371 is separately owned."
+}

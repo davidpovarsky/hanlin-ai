@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "reviewedSource": "36d3c51bdba93ada2c2722ed0e9b99109d84a616",
+  "path": "Scripts/NativeScript/metadata_public_headers.py",
+  "sourceSHA256": "5a8a110a3fe4a692faede3211a22b0326065cd43026a4f47c3e3d7d1d5de4e5f",
+  "conclusion": "Separate source-selected Host build helper; no expansion of the eleven Native18 preparation inputs is justified by this finding.",
+  "preparation": {
+    "executedDuringNative18PreparationOrExport": false,
+    "memberOfNative18SupportArchive": false,
+    "actualConsumer": "Original Host/App metadata phase imports the helper from SRCROOT/Scripts/NativeScript after preparation/export.",
+    "wrapperCopiedFromDeclaredInput": true
+  },
+  "normalInstallation": {
+    "helperSelectedForNativeScriptProfile": true,
+    "pinnedFullGitRevisionRequired": true,
+    "ordinaryDirtyHelperRejectedBySharedInstallerCheck": true,
+    "sourceReferences": [
+      "Scripts/SDK/install.py:selected_source_paths",
+      "Scripts/SDK/install.py:prepare_checkout",
+      "Scripts/SDK/install.py:verify_owned_changes",
+      "Scripts/SDK/install.py:check"
+    ]
+  },
+  "narrowNativeGuard": {
+    "declaredPreparationInputs": 11,
+    "includesHelper": false,
+    "checksGeneratorAndBuildMetadataTool": true,
+    "standaloneVerifySourceDoesNotIndependentlyCheckHelper": true
+  },
+  "original452388Evidence": {
+    "metadataToolProvenanceIncludesHelperHash": false,
+    "diagnosticsTrackedWorkspaceModified": true,
+    "unitReceiptRetainsGlobalDiffDigest": true,
+    "perHelperMaterializedRunnerByteClaim": false,
+    "cacheFileInputRootsExcludeScripts": true,
+    "cacheDirectoryDigestUsesNamesAndKindsOnly": true,
+    "actualMismatchObserved": false
+  },
+  "disposition": {
+    "newGate": false,
+    "newTests": 0,
+    "productionChanges": 0,
+    "nativeInputContractChanges": 0,
+    "publicationStillRequiresEligibleSuccessfulProducer": true,
+    "findingIndependentlyInvalidatesNative18Archives": false
+  },
+  "recordedAt": "2026-11-23T19:35:30.584013+00:00"
+}

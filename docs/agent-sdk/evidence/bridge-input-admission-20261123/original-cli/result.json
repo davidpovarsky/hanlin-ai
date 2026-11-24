@@ -1,0 +1,79 @@
+[
+  {
+    "case": "duplicate-module",
+    "exit": -5,
+    "duration": 0.267,
+    "fatal_duplicate": true,
+    "output_files": [
+      "swiftui-inventory.json"
+    ],
+    "stderr_first": [
+      "Swift/NativeDictionary.swift:823: Fatal error: Duplicate values for key: 'SwiftUI'",
+      "",
+      "*** Signal 5: Backtracing from 0xe4bc717cd7e4... done ***",
+      "",
+      "*** Program crashed: System trap at 0x0000e4bc717cd7e4 ***",
+      ""
+    ],
+    "sha256": {
+      "swiftui-inventory.json": "76ae8330e9d4b758e04e7ebb19bb074cf8d185387a5d83f38b2d250a2d0a5519"
+    }
+  },
+  {
+    "case": "cross-module-enum",
+    "exit": -5,
+    "duration": 0.234,
+    "fatal_duplicate": true,
+    "output_files": [],
+    "stderr_first": [
+      "Swift/NativeDictionary.swift:823: Fatal error: Duplicate values for key: 'SharedMode'",
+      "",
+      "*** Signal 5: Backtracing from 0xf50ac520d7e4... done ***",
+      "",
+      "*** Program crashed: System trap at 0x0000f50ac520d7e4 ***",
+      ""
+    ]
+  },
+  {
+    "case": "cross-module-optionset",
+    "exit": -5,
+    "duration": 0.235,
+    "fatal_duplicate": true,
+    "output_files": [],
+    "stderr_first": [
+      "Swift/NativeDictionary.swift:823: Fatal error: Duplicate values for key: 'SharedOptions'",
+      "",
+      "*** Signal 5: Backtracing from 0xed44f429d7e4... done ***",
+      "",
+      "*** Program crashed: System trap at 0x0000ed44f429d7e4 ***",
+      ""
+    ]
+  },
+  {
+    "case": "valid-original-fixtures",
+    "exit": 0,
+    "duration": 0.083,
+    "fatal_duplicate": false,
+    "output_files": [
+      "HanlinGeneratedModifiers.swift",
+      "HanlinGeneratedViews.swift",
+      "bridge-manifest.ts",
+      "coverage.json",
+      "coverage.md",
+      "modifiers.ts",
+      "swiftui-inventory.json",
+      "views.tsx"
+    ],
+    "stderr_first": [],
+    "sha256": {
+      "HanlinGeneratedModifiers.swift": "e8bd617d157369432218901c5d53de475570876a656135bd0977701135032076",
+      "HanlinGeneratedViews.swift": "ee1f05d681f2601464a02f93f8d6d726a66a07bd0ca8e3f4b9339434cbcd35ab",
+      "bridge-manifest.ts": "7b8085c995c61b5a208570dfc0daf63060056cab1ff0bb207c13d55ea1cd4c7e",
+      "coverage.json": "d4165867556d6b499d39d242c224a691ca404990058c40c71c27784301cce7cb",
+      "coverage.md": "46c669d86f91dd572784d17c71d25db4b35a74b68d50f775efc0817ef1e313fc",
+      "modifiers.ts": "77c18d416d1f83ded44598abe8336112e9839925e755fc25b7bb67f0b04401fe",
+      "swiftui-inventory.json": "3c824ff153734c5f94082f8ebe7b98cd806d5c691293e085745e1d22eab20dbb",
+      "views.tsx": "d98a93f63a339a9cc14ebf10ab2511a271c79cc46df45f81d011f0b85cf8aed7"
+    }
+  }
+]

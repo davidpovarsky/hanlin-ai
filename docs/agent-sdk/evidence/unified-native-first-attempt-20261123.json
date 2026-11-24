@@ -1,0 +1,9 @@
+{
+  "run": 45102381023,
+  "commit": "b1d114595b7089617bfb086deb9c64c0ef9cff69",
+  "result": "ROUTING_FAILURE",
+  "nativeBuild": "NOT_RUN",
+  "nativeTests": 0,
+  "cause": "New SDK paths not yet registered in affected-validation-map.json",
+  "correction": "Added explicit assembly/calendar/tooling routes and validated exact-case planner without contradictory simulator_e2e_only flag"
+}

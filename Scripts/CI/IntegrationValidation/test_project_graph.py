@@ -27,13 +27,13 @@ class ProjectGraphTests(unittest.TestCase):
         validate_agent_sdk_linkage(self.project, ROOT)
 
     def test_agent_sdk_requires_framework_link_not_just_declaration(self):
-        ai = next(value for value in self.objects.values() if value.get("name") == "AI_Hanlin"
+        ai = next(value for value in self.objects.values() if value.get("name") == "HanlinApp"
                   and value.get("isa") == "PBXNativeTarget")
         phase = next(self.objects[key] for key in ai["buildPhases"]
                      if self.objects[key]["isa"] == "PBXFrameworksBuildPhase")
         phase["files"] = [key for key in phase["files"]
-                          if self.objects.get(self.objects[key].get("productRef"), {}).get("productName") != "HanlinAgentCore"]
-        with self.assertRaisesRegex(AssertionError, "not actually linked"):
+                          if self.objects.get(self.objects[key].get("productRef"), {}).get("productName") != "HanlinApplication"]
+        with self.assertRaisesRegex(AssertionError, "SDK image ownership mismatch"):
             validate_agent_sdk_linkage(self.project, ROOT)
 
     def test_agent_sdk_does_not_leak_into_miniapps(self):
@@ -45,17 +45,17 @@ class ProjectGraphTests(unittest.TestCase):
 
     def test_agent_sdk_requires_canonical_sibling_package(self):
         package = next(value for value in self.objects.values()
-                       if value.get("relativePath") == "Packages/HanlinAgentSDK")
+                       if value.get("relativePath") == ".")
         package["relativePath"] = "../OtherSDK"
         with self.assertRaisesRegex(AssertionError, "canonical local SDK"):
             validate_agent_sdk_linkage(self.project, ROOT)
 
-    def test_agent_sdk_native_adapter_must_be_in_synchronized_ai_sources(self):
+    def test_shared_native_adapter_must_not_compile_again_in_executable(self):
         exception = next(value for value in self.objects.values()
                          if value.get("isa") == "PBXFileSystemSynchronizedBuildFileExceptionSet"
                          and value.get("target") == "D7B6C3C02D50A55D004E3AD6")
-        exception["membershipExceptions"].append("Model/HanlinAppleModelCatalogAdapter.swift")
-        with self.assertRaisesRegex(AssertionError, "adapter excluded"):
+        exception["membershipExceptions"].remove("Model/HanlinAppleModelCatalogAdapter.swift")
+        with self.assertRaisesRegex(AssertionError, "Shared sources must compile only once"):
             validate_agent_sdk_linkage(self.project, ROOT)
 
     def test_agent_sdk_test_import_requires_its_real_product(self):

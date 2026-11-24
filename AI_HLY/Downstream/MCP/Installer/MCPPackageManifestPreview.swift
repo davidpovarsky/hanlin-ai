@@ -1,14 +1,14 @@
 import Foundation
 import SWCompression
 
-struct MCPPackageManifestPreview: Codable, Hashable, Sendable {
-    var packageName: String
-    var version: String
-    var summary: String?
-    var nodeRequirement: String?
-    var entryPoints: [String]
-    var dependencyCount: Int
-    var compatibility: MCPCompatibilityReport
+public struct MCPPackageManifestPreview: Codable, Hashable, Sendable {
+    public internal(set) var packageName: String
+    public internal(set) var version: String
+    public internal(set) var summary: String?
+    public internal(set) var nodeRequirement: String?
+    public internal(set) var entryPoints: [String]
+    public internal(set) var dependencyCount: Int
+    public internal(set) var compatibility: MCPCompatibilityReport
 
     static func readTGZ(at url: URL, maximumArchiveBytes: Int = 100 * 1_024 * 1_024) throws -> Self {
         let archive = try Data(contentsOf: url, options: .mappedIfSafe)

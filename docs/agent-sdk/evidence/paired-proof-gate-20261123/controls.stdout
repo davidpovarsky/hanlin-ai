@@ -1,0 +1,8 @@
+{"status": "NOT_REQUESTED", "scope": "Host prerequisites only"}
+{"status": "NOT_REQUESTED", "scope": "Native foreground prerequisites only"}
+{"status": "NOT_REQUESTED", "scope": "Host prerequisites only"}
+{"status": "INVALIDATED", "origin_run": "45133337462", "reason": "source changed", "next": "Execute actual foreground53 prerequisites"}
+{"status": "INVALIDATED", "origin_run": "44351078724", "reason": "changed Host", "next": "Execute actual affected Host prerequisites"}
+{"status": "INVALIDATED", "origin_run": "45133337462", "reason": "changed foreground", "next": "Execute actual foreground53 prerequisites"}
+{"status": "REUSED_VERIFIED_PASS"}
+{"status": "REUSED_VERIFIED_PASS"}

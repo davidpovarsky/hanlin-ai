@@ -1,3 +1,4 @@
+import HanlinLocalization
 import SwiftUI
 
 struct NativeToolErrorCard: View {
@@ -6,7 +7,7 @@ struct NativeToolErrorCard: View {
 
     var body: some View {
         NativeToolResultCardContainer(
-            title: block.title ?? String(localized: "Couldn’t load the source"),
+            title: block.title ?? String(localized: "Couldn’t load the source", bundle: HanlinLocalization.bundle),
             subtitle: nil,
             systemImage: block.systemImage ?? "exclamationmark.triangle",
             actions: block.actions,

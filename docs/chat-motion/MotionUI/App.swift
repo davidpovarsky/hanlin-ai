@@ -1,6 +1,10 @@
+import HanlinChatUI
 import Observation
 import SwiftUI
 import UIKit
+
+// Same canonical activity control used by the original chat.
+private typealias ToggleButton = HanlinActivityToggleButton
 
 @main
 struct MotionProofApp: App {
@@ -204,33 +208,37 @@ private struct MotionProofContent: View {
                 .accessibilityIdentifier("proof-effective-motion")
             ScrollView {
                 LazyVStack(alignment: .leading, spacing: 0) {
-                    // Exact original production ToggleButton, visibility lifted only by the preparer.
-                    ToggleButton(title: "Thinking", timeText: String(count), isExpanded: observedExpansion,
-                        isActive: running, numericCount: count, usesAnimatedDisclosure: true)
-                        .accessibilityIdentifier("proof-thinking")
-                    HanlinAnimatedDisclosure(isExpanded: expanded) {
-                        VStack(alignment: .leading, spacing: 6) {
-                            Text("A short visible reasoning summary. שלום עולם. مرحبًا بالعالم.")
-                                .textSelection(.enabled).accessibilityIdentifier("proof-summary")
-                            if longText {
-                                Text(String(repeating: "**Markdown** `code()` שלום مرحبًا\n", count: 24))
-                                    .font(.body).textSelection(.enabled)
+                    // Keep header and disclosure in the same lazy row, as in
+                    // HanlinActivityDisclosureStyle and the original D production probe.
+                    VStack(alignment: .leading, spacing: 0) {
+                        // Exact original production ToggleButton, visibility lifted only by the preparer.
+                        ToggleButton(title: "Thinking", timeText: String(count), isExpanded: observedExpansion,
+                            isActive: running, numericCount: count, usesAnimatedDisclosure: true)
+                            .accessibilityIdentifier("proof-thinking")
+                        HanlinAnimatedDisclosure(isExpanded: expanded) {
+                            VStack(alignment: .leading, spacing: 6) {
+                                Text("A short visible reasoning summary. שלום עולם. مرحبًا بالعالم.")
+                                    .textSelection(.enabled).accessibilityIdentifier("proof-summary")
+                                if longText {
+                                    Text(String(repeating: "**Markdown** `code()` שלום مرحبًا\n", count: 24))
+                                        .font(.body).textSelection(.enabled)
+                                }
+                                DisclosureGroup(isExpanded: $toolExpanded) {
+                                    Text("Tool output, not hidden reasoning.\nlet value = 17")
+                                        .font(.body.monospaced()).textSelection(.enabled)
+                                        .accessibilityIdentifier("proof-tool-output")
+                                } label: { Text("Repeated tool name") }
+                                    .disclosureGroupStyle(HanlinMotionDisclosureStyle())
+                                Text("source call-2: Repeated tool name — cancelled")
+                                Text("source call-3: Repeated tool name — failed; no output")
                             }
-                            DisclosureGroup(isExpanded: $toolExpanded) {
-                                Text("Tool output, not hidden reasoning.\nlet value = 17")
-                                    .font(.body.monospaced()).textSelection(.enabled)
-                                    .accessibilityIdentifier("proof-tool-output")
-                            } label: { Text("Repeated tool name") }
-                                .disclosureGroupStyle(HanlinMotionDisclosureStyle())
-                            Text("source call-2: Repeated tool name — cancelled")
-                            Text("source call-3: Repeated tool name — failed; no output")
+                            .onGeometryChange(for: CGFloat.self) { $0.size.height } action: {
+                                telemetry.recordNaturalHeight($0, expanded: expanded)
+                            }
                         }
-                        .onGeometryChange(for: CGFloat.self) { $0.size.height } action: {
-                            telemetry.recordNaturalHeight($0, expanded: expanded)
+                        .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { height in
+                            telemetry.recordVisibleHeight(height, preset: storedID, expanded: expanded)
                         }
-                    }
-                    .onGeometryChange(for: CGFloat.self) { $0.size.height } action: { height in
-                        telemetry.recordVisibleHeight(height, preset: storedID, expanded: expanded)
                     }
                     Text("Original content after details").padding(.top, 6)
                         .accessibilityIdentifier("proof-footer")

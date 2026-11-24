@@ -1,0 +1,23 @@
+{
+  "run": 45283243206,
+  "source": "4cfa52348e80cf635caf04c541fd84ee1ddb50bd",
+  "time": "2026-11-23T23:46:35.088239+00:00",
+  "original_watcher_job": "job_36775014b61f",
+  "sentinel_finished_at": "2026-11-23T23:45:16.953261Z",
+  "sentinel_exit_code": 0,
+  "old_watch_receipt": {
+    "time": "2026-11-23T23:45:16.490414+00:00",
+    "elapsed_seconds": 3300.001409078017,
+    "watch_exit": 124
+  },
+  "orphan_pid": 3330326,
+  "orphan_pgid": 3330324,
+  "orphan_uid": 1001,
+  "original_watch_log_fd_verified": true,
+  "reason": "Old subprocess.run timeout killed the wrapper while its exact owned read-only gh watch remained; stop this observer before sequential same-run continuation. No GitHub cancellation or native process operation.",
+  "signals": [
+    "SIGTERM"
+  ],
+  "matching_gh_watch_processes_after": [],
+  "status": "PREVIOUS_OBSERVER_ENDED_NO_OVERLAP"
+}

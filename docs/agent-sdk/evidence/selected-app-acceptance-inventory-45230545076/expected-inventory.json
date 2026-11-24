@@ -1,0 +1,2080 @@
+{
+  "schemaVersion": 1,
+  "sourceSHA": "7523f45cf8ea180a8e30f511ff0fbd3bb5ccae6d",
+  "scope": "Expected source inventory only; no test execution claimed",
+  "requestedSelectors": [
+    "AI_HLYTests/CalendarToolTests",
+    "AI_HLYTests/HanlinApplicationEmbeddingTests",
+    "AI_HLYTests/HanlinConversationProjectionTests",
+    "AI_HLYTests/HanlinAppAgentSessionOwnerTests",
+    "AI_HLYTests/AgentActivityHeaderPhaseTests",
+    "AI_HLYTests/AgentRoundPresentationTests",
+    "AI_HLYTests/ChatPresentationTests",
+    "AI_HLYTests/NativeComposerLineSizingTests",
+    "AI_HLYTests/PendingFirstTurnTests",
+    "AI_HLYTests/HanlinLocalizationTests",
+    "AI_HLYTests/HanlinLocalizedControlTests",
+    "AI_HLYTests/HanlinOriginalAssetTests",
+    "AI_HLYTests/ChatCodeFenceTests",
+    "AI_HLYTests/VoiceRecordingLifecycleTests",
+    "AI_HLYTests/HanlinRemoteMediaURLTests",
+    "AI_HLYTests/A2UISDKTests",
+    "AI_HLYTests/A2UIIngressTests",
+    "AI_HLYTests/HanlinNativeWidgetRendererTests",
+    "AI_HLYTests/ChatScrollViewHandleTests",
+    "AI_HLYTests/ChatAutoFollowTests",
+    "AI_HLYTests/HanlinApplicationSystemIntegrationTests",
+    "AI_HLYTests/ShareInboxHostIntegrationTests",
+    "AI_HLYUITests/HanlinNativeA2UIChatUITests",
+    "AI_HLYTests/HanlinMCPEmbeddingTests",
+    "AI_HLYTests/HanlinCapabilityObservationTests",
+    "AI_HLYTests/RuntimeAutonomyV3Tests/actualMCPTransportPreservesLargeStructuredResultsThroughTheOriginalRendererAndStore",
+    "AI_HLYTests/ModelPopoverZoomOrderTests/nativeGenerationConfigurationPreservesOriginalSettings()",
+    "AI_HLYTests/ModelPopoverZoomOrderTests/nativeGenerationRejectsUnsupportedTopPThroughOriginalEngine()",
+    "AI_HLYUITests/AgentRuntimeConversationUITests/testOriginalChatActivitySurvivesKeyboardRotationAndConversationReattachment",
+    "AI_HLYUITests/AgentRuntimeConversationUITests/testUI06ComposerMultilineAttachmentsModelSelectorNoOverlap",
+    "AI_HLYUITests/AgentRuntimeConversationUITests/testUI03SearchMessageAndDeduplicatedCitations",
+    "AI_HLYUITests/AgentRuntimeConversationUITests/testUI03HebrewRTLSearchMessageAndDeduplicatedCitations"
+  ],
+  "counts": {
+    "methodDefinitions": 310,
+    "expectedInvocations": 342,
+    "unitMethodDefinitions": 299,
+    "uiMethodDefinitions": 11,
+    "bySuite": {
+      "A2UISDKTests": {
+        "methodDefinitions": 38,
+        "expectedInvocations": 38
+      },
+      "A2UIIngressTests": {
+        "methodDefinitions": 8,
+        "expectedInvocations": 8
+      },
+      "AgentActivityHeaderPhaseTests": {
+        "methodDefinitions": 14,
+        "expectedInvocations": 14
+      },
+      "AgentRoundPresentationTests": {
+        "methodDefinitions": 25,
+        "expectedInvocations": 25
+      },
+      "CalendarToolTests": {
+        "methodDefinitions": 4,
+        "expectedInvocations": 6
+      },
+      "ChatAutoFollowTests": {
+        "methodDefinitions": 12,
+        "expectedInvocations": 12
+      },
+      "ChatCodeFenceTests": {
+        "methodDefinitions": 5,
+        "expectedInvocations": 5
+      },
+      "ChatPresentationTests": {
+        "methodDefinitions": 15,
+        "expectedInvocations": 16
+      },
+      "ChatScrollViewHandleTests": {
+        "methodDefinitions": 11,
+        "expectedInvocations": 11
+      },
+      "HanlinAppAgentSessionOwnerTests": {
+        "methodDefinitions": 51,
+        "expectedInvocations": 68
+      },
+      "HanlinApplicationEmbeddingTests": {
+        "methodDefinitions": 16,
+        "expectedInvocations": 16
+      },
+      "HanlinApplicationSystemIntegrationTests": {
+        "methodDefinitions": 4,
+        "expectedInvocations": 6
+      },
+      "HanlinCapabilityObservationTests": {
+        "methodDefinitions": 18,
+        "expectedInvocations": 18
+      },
+      "HanlinConversationProjectionTests": {
+        "methodDefinitions": 2,
+        "expectedInvocations": 2
+      },
+      "HanlinMCPEmbeddingTests": {
+        "methodDefinitions": 10,
+        "expectedInvocations": 10
+      },
+      "HanlinNativeWidgetRendererTests": {
+        "methodDefinitions": 7,
+        "expectedInvocations": 7
+      },
+      "PendingFirstTurnTests": {
+        "methodDefinitions": 4,
+        "expectedInvocations": 4
+      },
+      "ModelPopoverZoomOrderTests": {
+        "methodDefinitions": 2,
+        "expectedInvocations": 2
+      },
+      "HanlinRemoteMediaURLTests": {
+        "methodDefinitions": 7,
+        "expectedInvocations": 7
+      },
+      "NativeComposerLineSizingTests": {
+        "methodDefinitions": 14,
+        "expectedInvocations": 22
+      },
+      "RuntimeAutonomyV3Tests": {
+        "methodDefinitions": 1,
+        "expectedInvocations": 1
+      },
+      "ShareInboxHostIntegrationTests": {
+        "methodDefinitions": 4,
+        "expectedInvocations": 4
+      },
+      "VoiceRecordingLifecycleTests": {
+        "methodDefinitions": 22,
+        "expectedInvocations": 22
+      },
+      "AgentRuntimeConversationUITests": {
+        "methodDefinitions": 4,
+        "expectedInvocations": 4
+      },
+      "HanlinNativeA2UIChatUITests": {
+        "methodDefinitions": 7,
+        "expectedInvocations": 7
+      },
+      "HanlinLocalizedControlTests": {
+        "methodDefinitions": 1,
+        "expectedInvocations": 1
+      },
+      "HanlinOriginalAssetTests": {
+        "methodDefinitions": 1,
+        "expectedInvocations": 1
+      },
+      "HanlinLocalizationTests": {
+        "methodDefinitions": 3,
+        "expectedInvocations": 5
+      }
+    }
+  },
+  "sourceFileSHA256": {
+    "AI_HLYTests/A2UITests.swift": "c66ab3fbd7e6087208336737c8ea6dcfa28c26c3215cdfc9ffe0d00fb6774f89",
+    "AI_HLYTests/AgentActivityHeaderPhaseTests.swift": "b05aea3e3b2a17d0f45872f7a30475713968b6fd9255fae3907cb231bd143bf7",
+    "AI_HLYTests/AgentRoundPresentationTests.swift": "9d10254f721147bd29b862ed7999cff0a4a19a1283cf23fc377d91542b151ff9",
+    "AI_HLYTests/CalendarToolTests.swift": "10e2b95d046e55089073f9095822ee8df8cee977b9f524648914889d0cb106da",
+    "AI_HLYTests/ChatAutoFollowTests.swift": "c36ac17d0ac2503376ac757cfdaf1b5e4022cc473d8aa8ecc1a5a1968b37b03a",
+    "AI_HLYTests/ChatCodeFenceTests.swift": "0a441d9eb856ee5b7b5c87dd09872d280b81b842801a12367ce6ec4f75ac8fce",
+    "AI_HLYTests/ChatPresentationTests.swift": "6540c94c86d790efe9d0394f8b68596cd1687e0c04d7efde6f16003e6a7bd5a6",
+    "AI_HLYTests/ChatScrollViewHandleTests.swift": "ec51b892bd3cd3d8db5bb1fb2480a687159916d871a2918668f49efa7e8b306f",
+    "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift": "9ee86ec88ce723c8257cef8a26ff46865408ec3b50568314875a5608c7ddfc0a",
+    "AI_HLYTests/HanlinApplicationEmbeddingTests.swift": "57fa4d549f51f1cec1f17571ec69c56e62176c6169c5946628aa5165fd9fcd17",
+    "AI_HLYTests/HanlinApplicationSystemIntegrationTests.swift": "617d5472d978fde04ca74400267cb1bb92244b84fbe224545896bddb26bfa802",
+    "AI_HLYTests/HanlinCapabilityObservationTests.swift": "207b4bb7e2821ff0b3e563dde4131922fceb25c2d6b4142084e1461586a95ac4",
+    "AI_HLYTests/HanlinConversationProjectionTests.swift": "5689f0ed337357edaabe99cb7fa1ea0c9d7d9792614a39c5dd6ff56e8f5d2da6",
+    "AI_HLYTests/HanlinMCPEmbeddingTests.swift": "2774f4a60882be0a8eec456f8e6e75ede049981c58f412931311c1db509f6592",
+    "AI_HLYTests/HanlinNativeWidgetRendererTests.swift": "c43cd512bb45c120fd06f2903b80c1092220efd1ed85045b9513c88a13c055f6",
+    "AI_HLYTests/HanlinOrganizerDockParityTests.swift": "0e7366d161edcb410ab9707c408540bf5a4d22eb4c7710d09d2adf06530a6d16",
+    "AI_HLYTests/HanlinRemoteMediaURLTests.swift": "8d529ef1da665e792f9e56b92f746659eb26be6c790765c6f233b81016247059",
+    "AI_HLYTests/NativeComposerLineSizingTests.swift": "6eb5c1a7f623dac590311d3040c6c0f81cdbb6baec98fdd943d6617151d0f248",
+    "AI_HLYTests/RuntimeAutonomyV3Tests.swift": "b72a5d8ec0c51144e864776a2e1d4537cbfd0e28e27074b47280af5b108fba7d",
+    "AI_HLYTests/ShareInboxHostIntegrationTests.swift": "c6ba09129bdab7fadcae8ac02468081332a8f7296a656a84df650b78e8db0195",
+    "AI_HLYTests/VoiceRecordingLifecycleTests.swift": "6140722d3090e41c7465601624a0fa389509c91bd23054e9a91bd80c0fe4c7c1",
+    "AI_HLYUITests/AgentRuntimeConversationUITests.swift": "3d9755248a7ac026c2d2a0293d744d45e3c7454c9bd154a7a35e91d65175454a",
+    "AI_HLYUITests/HanlinNativeA2UIChatUITests.swift": "11b3cb74033aa95a3a37521ee013a1e05245b4a01a0e974bb147a0e259e70edc",
+    "Packages/HanlinPresentationSDK/Tests/HanlinLocalizationTests/HanlinLocalizationTests.swift": "4b20056ba96ba0ed9561d32c3b8e8e93bd89d5a6aa093eb5a1a4d8a1b9f0951e"
+  },
+  "suites": {
+    "A2UISDKTests": {
+      "source": "AI_HLYTests/A2UITests.swift",
+      "selectedScopes": [
+        "AI_HLYTests/A2UISDKTests"
+      ],
+      "methods": [
+        {
+          "name": "customMediaCatalogResolvesYouTubeThroughOfficialGraphAndBinding()",
+          "line": 301
+        },
+        {
+          "name": "customMediaCannotAlterOfficialCatalogOrAdmitScriptFields()",
+          "line": 324
+        },
+        {
+          "name": "galleryAndLinkSourcesResolveThroughTheOfficialCatalogAndBindings()",
+          "line": 344
+        },
+        {
+          "name": "richMediaSchemasRejectUnboundedCollectionsMissingSourcesAndScripts()",
+          "line": 388
+        },
+        {
+          "name": "successfulProducerEOFKeepsOriginalModelActionAndClosesInput()",
+          "line": 411
+        },
+        {
+          "name": "producerEOFDoesNotSurviveRevocationOrFollowAnotherGeneration()",
+          "line": 437
+        },
+        {
+          "name": "producerEOFCancelsOnlyItsReceiverAndCannotReplaceFinishedTool()",
+          "line": 456
+        },
+        {
+          "name": "modelPartUsesMessageIdentityWithoutToolCall()",
+          "line": 482
+        },
+        {
+          "name": "orderedModelProjectionPreservesTextAndRegisteredSurface()",
+          "line": 498
+        },
+        {
+          "name": "modelProjectionRejectsForeignIdentityAndAmbiguousParts()",
+          "line": 524
+        },
+        {
+          "name": "modelProjectionNeverFollowsReplacedGeneration()",
+          "line": 545
+        },
+        {
+          "name": "transientOwnerLookupKeepsWireIDsIndependent()",
+          "line": 600
+        },
+        {
+          "name": "transientReceiveRejectsWrongIdentityAndSequence()",
+          "line": 626
+        },
+        {
+          "name": "sealedResultRetainsModelsAndRevokesActions()",
+          "line": 658
+        },
+        {
+          "name": "sealingRunDoesNotRevokeOtherRun()",
+          "line": 679
+        },
+        {
+          "name": "replacementRevokesOldGenerationBeforeNewDelivery()",
+          "line": 699
+        },
+        {
+          "name": "endingResultCancelsOwnedReceiveTask()",
+          "line": 724
+        },
+        {
+          "name": "presentationCopiesDoNotOwnDiscard()",
+          "line": 756
+        },
+        {
+          "name": "eventSinkIsWeakAndCannotKeepAuthorityAlive()",
+          "line": 779
+        },
+        {
+          "name": "deletedSurfaceDropsQueuedOwnedEvents()",
+          "line": 819
+        },
+        {
+          "name": "retiredSurfaceCannotReanimateQueuedEventsInSameResult()",
+          "line": 835
+        },
+        {
+          "name": "parsesAndRendersTextCardInputButton()",
+          "line": 910
+        },
+        {
+          "name": "nativeInputBindingWritesAndReadsOfficialModel()",
+          "line": 921
+        },
+        {
+          "name": "stableIDsAndNodeIdentityAcrossUpdates()",
+          "line": 932
+        },
+        {
+          "name": "malformedAndUnknownContentFallsBackAndRecovers()",
+          "line": 943
+        },
+        {
+          "name": "officialSchemasRejectInvalidTextInputButton()",
+          "line": 958
+        },
+        {
+          "name": "independentSurfacesKeepModelsSeparate()",
+          "line": 991
+        },
+        {
+          "name": "independentOwnersCanReuseWireSurfaceID()",
+          "line": 1004
+        },
+        {
+          "name": "deleteDisposesAndRecreateStartsWithNewIdentity()",
+          "line": 1013
+        },
+        {
+          "name": "closeRejectsLateFramesAndDisposesSurfaces()",
+          "line": 1024
+        },
+        {
+          "name": "buttonEventUsesCurrentBoundValue()",
+          "line": 1033
+        },
+        {
+          "name": "hebrewFixtureRetainsBindingsInRTLComposition()",
+          "line": 1055
+        },
+        {
+          "name": "surfaceLimitDoesNotRemoveExistingContent()",
+          "line": 1069
+        },
+        {
+          "name": "rejectedSurfaceIDsCannotGrowFallbackStorageWithoutBound()",
+          "line": 1123
+        },
+        {
+          "name": "unsupportedOperationsCannotCreateOrRerouteOwnedSurfaceFallbacks()",
+          "line": 1135
+        },
+        {
+          "name": "unknownFunctionsAndUnsolicitedResponsesCannotEnableRPC()",
+          "line": 1173
+        },
+        {
+          "name": "closeRevokesQueuedAndRetainedActionCallbacks()",
+          "line": 1230
+        },
+        {
+          "name": "closeCancelsSeededInFlightSDKCallPromptlyAndOnlyOnce()",
+          "line": 1245
+        }
+      ],
+      "arguments": {},
+      "conditionalMethods": {
+        "customMediaCatalogResolvesYouTubeThroughOfficialGraphAndBinding()": [
+          "NOT (HANLIN_A2UI_PORTABLE_RUNNER)",
+          "HANLIN_A2UI_POC"
+        ],
+        "customMediaCannotAlterOfficialCatalogOrAdmitScriptFields()": [
+          "NOT (HANLIN_A2UI_PORTABLE_RUNNER)",
+          "HANLIN_A2UI_POC"
+        ],
+        "galleryAndLinkSourcesResolveThroughTheOfficialCatalogAndBindings()": [
+          "NOT (HANLIN_A2UI_PORTABLE_RUNNER)",
+          "HANLIN_A2UI_POC"
+        ],
+        "richMediaSchemasRejectUnboundedCollectionsMissingSourcesAndScripts()": [
+          "NOT (HANLIN_A2UI_PORTABLE_RUNNER)",
+          "HANLIN_A2UI_POC"
+        ],
+        "successfulProducerEOFKeepsOriginalModelActionAndClosesInput()": [
+          "NOT (HANLIN_A2UI_PORTABLE_RUNNER)",
+          "HANLIN_A2UI_POC"
+        ],
+        "producerEOFDoesNotSurviveRevocationOrFollowAnotherGeneration()": [
+          "NOT (HANLIN_A2UI_PORTABLE_RUNNER)",
+          "HANLIN_A2UI_POC"
+        ],
+        "producerEOFCancelsOnlyItsReceiverAndCannotReplaceFinishedTool()": [
+          "NOT (HANLIN_A2UI_PORTABLE_RUNNER)",
+          "HANLIN_A2UI_POC"
+        ],
+        "modelPartUsesMessageIdentityWithoutToolCall()": [
+          "NOT (HANLIN_A2UI_PORTABLE_RUNNER)",
+          "HANLIN_A2UI_POC"
+        ],
+        "orderedModelProjectionPreservesTextAndRegisteredSurface()": [
+          "NOT (HANLIN_A2UI_PORTABLE_RUNNER)",
+          "HANLIN_A2UI_POC"
+        ],
+        "modelProjectionRejectsForeignIdentityAndAmbiguousParts()": [
+          "NOT (HANLIN_A2UI_PORTABLE_RUNNER)",
+          "HANLIN_A2UI_POC"
+        ],
+        "modelProjectionNeverFollowsReplacedGeneration()": [
+          "NOT (HANLIN_A2UI_PORTABLE_RUNNER)",
+          "HANLIN_A2UI_POC"
+        ],
+        "transientOwnerLookupKeepsWireIDsIndependent()": [
+          "NOT (HANLIN_A2UI_PORTABLE_RUNNER)",
+          "HANLIN_A2UI_POC"
+        ],
+        "transientReceiveRejectsWrongIdentityAndSequence()": [
+          "NOT (HANLIN_A2UI_PORTABLE_RUNNER)",
+          "HANLIN_A2UI_POC"
+        ],
+        "sealedResultRetainsModelsAndRevokesActions()": [
+          "NOT (HANLIN_A2UI_PORTABLE_RUNNER)",
+          "HANLIN_A2UI_POC"
+        ],
+        "sealingRunDoesNotRevokeOtherRun()": [
+          "NOT (HANLIN_A2UI_PORTABLE_RUNNER)",
+          "HANLIN_A2UI_POC"
+        ],
+        "replacementRevokesOldGenerationBeforeNewDelivery()": [
+          "NOT (HANLIN_A2UI_PORTABLE_RUNNER)",
+          "HANLIN_A2UI_POC"
+        ],
+        "endingResultCancelsOwnedReceiveTask()": [
+          "NOT (HANLIN_A2UI_PORTABLE_RUNNER)",
+          "HANLIN_A2UI_POC"
+        ],
+        "presentationCopiesDoNotOwnDiscard()": [
+          "NOT (HANLIN_A2UI_PORTABLE_RUNNER)",
+          "HANLIN_A2UI_POC"
+        ],
+        "eventSinkIsWeakAndCannotKeepAuthorityAlive()": [
+          "NOT (HANLIN_A2UI_PORTABLE_RUNNER)",
+          "HANLIN_A2UI_POC"
+        ],
+        "deletedSurfaceDropsQueuedOwnedEvents()": [
+          "NOT (HANLIN_A2UI_PORTABLE_RUNNER)",
+          "HANLIN_A2UI_POC"
+        ],
+        "retiredSurfaceCannotReanimateQueuedEventsInSameResult()": [
+          "NOT (HANLIN_A2UI_PORTABLE_RUNNER)",
+          "HANLIN_A2UI_POC"
+        ],
+        "parsesAndRendersTextCardInputButton()": [
+          "NOT (HANLIN_A2UI_PORTABLE_RUNNER)",
+          "HANLIN_A2UI_POC"
+        ],
+        "nativeInputBindingWritesAndReadsOfficialModel()": [
+          "NOT (HANLIN_A2UI_PORTABLE_RUNNER)",
+          "HANLIN_A2UI_POC"
+        ],
+        "stableIDsAndNodeIdentityAcrossUpdates()": [
+          "NOT (HANLIN_A2UI_PORTABLE_RUNNER)",
+          "HANLIN_A2UI_POC"
+        ],
+        "malformedAndUnknownContentFallsBackAndRecovers()": [
+          "NOT (HANLIN_A2UI_PORTABLE_RUNNER)",
+          "HANLIN_A2UI_POC"
+        ],
+        "officialSchemasRejectInvalidTextInputButton()": [
+          "NOT (HANLIN_A2UI_PORTABLE_RUNNER)",
+          "HANLIN_A2UI_POC"
+        ],
+        "independentSurfacesKeepModelsSeparate()": [
+          "NOT (HANLIN_A2UI_PORTABLE_RUNNER)",
+          "HANLIN_A2UI_POC"
+        ],
+        "independentOwnersCanReuseWireSurfaceID()": [
+          "NOT (HANLIN_A2UI_PORTABLE_RUNNER)",
+          "HANLIN_A2UI_POC"
+        ],
+        "deleteDisposesAndRecreateStartsWithNewIdentity()": [
+          "NOT (HANLIN_A2UI_PORTABLE_RUNNER)",
+          "HANLIN_A2UI_POC"
+        ],
+        "closeRejectsLateFramesAndDisposesSurfaces()": [
+          "NOT (HANLIN_A2UI_PORTABLE_RUNNER)",
+          "HANLIN_A2UI_POC"
+        ],
+        "buttonEventUsesCurrentBoundValue()": [
+          "NOT (HANLIN_A2UI_PORTABLE_RUNNER)",
+          "HANLIN_A2UI_POC"
+        ],
+        "hebrewFixtureRetainsBindingsInRTLComposition()": [
+          "NOT (HANLIN_A2UI_PORTABLE_RUNNER)",
+          "HANLIN_A2UI_POC"
+        ],
+        "surfaceLimitDoesNotRemoveExistingContent()": [
+          "NOT (HANLIN_A2UI_PORTABLE_RUNNER)",
+          "HANLIN_A2UI_POC"
+        ],
+        "rejectedSurfaceIDsCannotGrowFallbackStorageWithoutBound()": [
+          "NOT (HANLIN_A2UI_PORTABLE_RUNNER)",
+          "HANLIN_A2UI_POC"
+        ],
+        "unsupportedOperationsCannotCreateOrRerouteOwnedSurfaceFallbacks()": [
+          "NOT (HANLIN_A2UI_PORTABLE_RUNNER)",
+          "HANLIN_A2UI_POC"
+        ],
+        "unknownFunctionsAndUnsolicitedResponsesCannotEnableRPC()": [
+          "NOT (HANLIN_A2UI_PORTABLE_RUNNER)",
+          "HANLIN_A2UI_POC"
+        ],
+        "closeRevokesQueuedAndRetainedActionCallbacks()": [
+          "NOT (HANLIN_A2UI_PORTABLE_RUNNER)",
+          "HANLIN_A2UI_POC"
+        ],
+        "closeCancelsSeededInFlightSDKCallPromptlyAndOnlyOnce()": [
+          "NOT (HANLIN_A2UI_PORTABLE_RUNNER)",
+          "HANLIN_A2UI_POC",
+          "DEBUG"
+        ]
+      }
+    },
+    "A2UIIngressTests": {
+      "source": "AI_HLYTests/A2UITests.swift",
+      "selectedScopes": [
+        "AI_HLYTests/A2UIIngressTests"
+      ],
+      "methods": [
+        {
+          "name": "acceptsOfficialV1FixtureFrames()",
+          "line": 248
+        },
+        {
+          "name": "rejectsMalformedAndAmbiguousFrames()",
+          "line": 249
+        },
+        {
+          "name": "rejectsOtherProtocolVersions()",
+          "line": 250
+        },
+        {
+          "name": "preservesUnicodeSurfaceIdentity()",
+          "line": 251
+        },
+        {
+          "name": "boundsUTF8MessageAndComponentBatch()",
+          "line": 252
+        },
+        {
+          "name": "rejectsRPCAndUnnegotiatedCatalogs()",
+          "line": 253
+        },
+        {
+          "name": "rejectedEnvelopesNeverExportSurfaceCorrelation()",
+          "line": 254
+        },
+        {
+          "name": "componentValidationRemainsWithSDK()",
+          "line": 255
+        }
+      ],
+      "arguments": {},
+      "conditionalMethods": {
+        "acceptsOfficialV1FixtureFrames()": [
+          "NOT (HANLIN_A2UI_PORTABLE_RUNNER)"
+        ],
+        "rejectsMalformedAndAmbiguousFrames()": [
+          "NOT (HANLIN_A2UI_PORTABLE_RUNNER)"
+        ],
+        "rejectsOtherProtocolVersions()": [
+          "NOT (HANLIN_A2UI_PORTABLE_RUNNER)"
+        ],
+        "preservesUnicodeSurfaceIdentity()": [
+          "NOT (HANLIN_A2UI_PORTABLE_RUNNER)"
+        ],
+        "boundsUTF8MessageAndComponentBatch()": [
+          "NOT (HANLIN_A2UI_PORTABLE_RUNNER)"
+        ],
+        "rejectsRPCAndUnnegotiatedCatalogs()": [
+          "NOT (HANLIN_A2UI_PORTABLE_RUNNER)"
+        ],
+        "rejectedEnvelopesNeverExportSurfaceCorrelation()": [
+          "NOT (HANLIN_A2UI_PORTABLE_RUNNER)"
+        ],
+        "componentValidationRemainsWithSDK()": [
+          "NOT (HANLIN_A2UI_PORTABLE_RUNNER)"
+        ]
+      }
+    },
+    "AgentActivityHeaderPhaseTests": {
+      "source": "AI_HLYTests/AgentActivityHeaderPhaseTests.swift",
+      "selectedScopes": [
+        "AI_HLYTests/AgentActivityHeaderPhaseTests"
+      ],
+      "methods": [
+        {
+          "name": "completedHistoryNeverRevivesThinkingFromStaleApproval()",
+          "line": 8
+        },
+        {
+          "name": "permissionWaitPausesShimmerAndCanResumeOnlyWhileActive()",
+          "line": 16
+        },
+        {
+          "name": "historicalFooterAndDuplicateActivityStatusAreHidden()",
+          "line": 27
+        },
+        {
+          "name": "completedToolDoesNotReuseItsEarlierRunningSummary()",
+          "line": 38
+        },
+        {
+          "name": "failureCancellationAndConsentDoNotImplyLiveWorkOrSuccess()",
+          "line": 50
+        },
+        {
+          "name": "firstAnswerTextStopsWorkingWithoutFalsifyingConcurrentExecution()",
+          "line": 61
+        },
+        {
+          "name": "shimmerMovesBetweenLeafAndNearestVisibleAncestor()",
+          "line": 72
+        },
+        {
+          "name": "internalPreparationDoesNotCreateToolActivityOrRewriteHistory()",
+          "line": 86
+        },
+        {
+          "name": "mountedDetailsKeepCallIdentityAndPayloadIndependentOfExpansion()",
+          "line": 104
+        },
+        {
+          "name": "providerReasoningSurvivesCompositionAndEndsAtTheFirstAnswer()",
+          "line": 122
+        },
+        {
+          "name": "reasoningAndRealToolLifecyclesSurviveWhileDiscoveryStaysHidden()",
+          "line": 150
+        },
+        {
+          "name": "onlyActualRequestReceiptShowsWaitingAndFirstSemanticOutputClearsIt()",
+          "line": 180
+        },
+        {
+          "name": "olderStoredRunsDoNotInventPendingRequestReceipt()",
+          "line": 216
+        },
+        {
+          "name": "admittedNonTextOutputEndsReasoningWithoutDemotingTheFinalAnswer()",
+          "line": 226
+        }
+      ],
+      "arguments": {},
+      "conditionalMethods": {}
+    },
+    "AgentRoundPresentationTests": {
+      "source": "AI_HLYTests/AgentRoundPresentationTests.swift",
+      "selectedScopes": [
+        "AI_HLYTests/AgentRoundPresentationTests"
+      ],
+      "methods": [
+        {
+          "name": "mcpDeclaredIconsPreferToolThenItsServerForCurrentTheme()",
+          "line": 9
+        },
+        {
+          "name": "mcpUnsafeAndMissingIconsKeepServerOrSystemSymbolFallback()",
+          "line": 25
+        },
+        {
+          "name": "mcpIconMetadataPreservesLegacyCodableAndSkipsMalformedDecoration()",
+          "line": 52
+        },
+        {
+          "name": "mcpIconsSurviveCanonicalCallPersistenceAndActivityProjectionWithoutChangingAuthority()",
+          "line": 77
+        },
+        {
+          "name": "locationApprovalShowsRealScopeWithoutTrustingProgressNarrative()",
+          "line": 116
+        },
+        {
+          "name": "approvalSummaryNeverHidesArgumentsThatNeedReview()",
+          "line": 126
+        },
+        {
+          "name": "attributedSingletonRoundsKeepTheirHierarchyWithoutInventingLegacyParents()",
+          "line": 144
+        },
+        {
+          "name": "exactBuiltInOperationsKeepTheirOwnActivityPresentation()",
+          "line": 160
+        },
+        {
+          "name": "emptySubsecondReasoningDoesNotCreateAZeroSecondHistoryRow()",
+          "line": 174
+        },
+        {
+          "name": "chatCompletionsSourceLinksPersistWithoutProviderAnnotationEvents()",
+          "line": 191
+        },
+        {
+          "name": "sourceURLAliasesSurviveEvidenceDeduplicationAndCodable()",
+          "line": 213
+        },
+        {
+          "name": "sourceURLAliasesStayBoundedAndKeepOriginalDestination()",
+          "line": 236
+        },
+        {
+          "name": "sourceURLAliasesKeepClaimAnchorsAndScopedProjectionAfterReplay()",
+          "line": 251
+        },
+        {
+          "name": "citationEventBesideItsTextDeltaKeepsTheNewTranscriptOwner()",
+          "line": 278
+        },
+        {
+          "name": "orderedMarkdownFragmentRetainsOnlyItsVerifiedAnchors()",
+          "line": 293
+        },
+        {
+          "name": "legacyResourcesRequireExplicitSourceLinksAndNeverGuessNumericIndexes()",
+          "line": 313
+        },
+        {
+          "name": "suppliedResourceFaviconSurvivesCanonicalSourceAndInlineAliasProjection()",
+          "line": 326
+        },
+        {
+          "name": "missingOrUnsafeResourceFaviconsKeepTheExistingDefault()",
+          "line": 352
+        },
+        {
+          "name": "providerCitationsKeepTheOriginalAnswerAndCannotBorrowChangedText()",
+          "line": 367
+        },
+        {
+          "name": "actualApprovalKeepsCallIdentityAndDenialStaysNeutralThroughFailureReplay()",
+          "line": 393
+        },
+        {
+          "name": "richToolFollowupPreservesPriorAnswerAndStableActivityIdentity()",
+          "line": 413
+        },
+        {
+          "name": "asyncCancellationCannotClearANewerRunWhileRecorderDrains()",
+          "line": 425
+        },
+        {
+          "name": "suspendedBeginCannotReclaimOwnershipFromANewerRun()",
+          "line": 440
+        },
+        {
+          "name": "actualRoundMarkersOwnReasoningAndParallelSameNameTools()",
+          "line": 461
+        },
+        {
+          "name": "legacyActivitiesNeverAcquireAParentFromTheirTimeOrName()",
+          "line": 485
+        }
+      ],
+      "arguments": {},
+      "conditionalMethods": {}
+    },
+    "CalendarToolTests": {
+      "source": "AI_HLYTests/CalendarToolTests.swift",
+      "selectedScopes": [
+        "AI_HLYTests/CalendarToolTests"
+      ],
+      "methods": [
+        {
+          "name": "reversedDatesDoNotDispatchAndNextSearchCanComplete()",
+          "line": 13
+        },
+        {
+          "name": "failedReadProducesStructuredOutcomeWithoutPoisoningNextCall(kind:)",
+          "line": 37
+        },
+        {
+          "name": "malformedWriteIsRejectedBeforeExecutorAndCommittedWriteIsRetained()",
+          "line": 66
+        },
+        {
+          "name": "failedWriteIsNeverReportedAsCommitted()",
+          "line": 86
+        }
+      ],
+      "arguments": {
+        "failedReadProducesStructuredOutcomeWithoutPoisoningNextCall(kind:)": {
+          "valuesSwift": [
+            "\"denied\"",
+            "\"timeout\"",
+            "\"cancelled\""
+          ],
+          "count": 3
+        }
+      },
+      "conditionalMethods": {}
+    },
+    "ChatAutoFollowTests": {
+      "source": "AI_HLYTests/ChatAutoFollowTests.swift",
+      "selectedScopes": [
+        "AI_HLYTests/ChatAutoFollowTests"
+      ],
+      "methods": [
+        {
+          "name": "sustainedRequestsKeepOneTimerAndMergeAnimationWithoutStarvation()",
+          "line": 8
+        },
+        {
+          "name": "interactionCancelsScheduledScrollAndStaleTimerCannotClearNewOne()",
+          "line": 30
+        },
+        {
+          "name": "selectionPauseRejectsLayoutWorkUntilAnExplicitResume()",
+          "line": 52
+        },
+        {
+          "name": "aNewRunRejectsThePreviousPendingScroll()",
+          "line": 69
+        },
+        {
+          "name": "measuredScrollRangeIncludesOriginalInsetsWithoutDuplicateComposerClearance()",
+          "line": 90
+        },
+        {
+          "name": "unmeasuredAndFittingTranscriptsNeverScheduleEvenForcedScrolling()",
+          "line": 105
+        },
+        {
+          "name": "pendingLongTranscriptRequestRechecksGeometryAfterContentShrinks()",
+          "line": 120
+        },
+        {
+          "name": "growingTranscriptCanFollowAgainWhileUserPauseRemainsAuthoritative()",
+          "line": 134
+        },
+        {
+          "name": "nonFiniteAndOverflowingGeometryCannotRestoreAnOffset()",
+          "line": 154
+        },
+        {
+          "name": "finiteNearBottomMeasurementHandlesInsetsAndElasticOverscroll()",
+          "line": 179
+        },
+        {
+          "name": "detachedTranscriptCannotReuseCachedLayoutOrQueuedRestoration()",
+          "line": 192
+        },
+        {
+          "name": "invalidGeometryCancelsAnAlreadyQueuedScroll()",
+          "line": 214
+        }
+      ],
+      "arguments": {},
+      "conditionalMethods": {}
+    },
+    "ChatCodeFenceTests": {
+      "source": "AI_HLYTests/ChatCodeFenceTests.swift",
+      "selectedScopes": [
+        "AI_HLYTests/ChatCodeFenceTests"
+      ],
+      "methods": [
+        {
+          "name": "actualWebKitRendersRequiredMermaidFamiliesAndCachesExactInputs()",
+          "line": 15
+        },
+        {
+          "name": "actualWebKitParsesFullUnifiedAndSplitDiffWithoutExecutingSource()",
+          "line": 37
+        },
+        {
+          "name": "actualWebKitQueuesDiagramAndDiffAgainstOneColdStartup()",
+          "line": 56
+        },
+        {
+          "name": "assetsFailClosedOnTamperingAndVisibleDocumentDisablesScripts()",
+          "line": 77
+        },
+        {
+          "name": "cancellationRejectsAnOfflinePreviewWithoutReturningStaleContent()",
+          "line": 105
+        }
+      ],
+      "arguments": {},
+      "conditionalMethods": {}
+    },
+    "ChatPresentationTests": {
+      "source": "AI_HLYTests/ChatPresentationTests.swift",
+      "selectedScopes": [
+        "AI_HLYTests/ChatPresentationTests"
+      ],
+      "methods": [
+        {
+          "name": "permissionReceiptDoesNotClaimExecutionOrBecomeItsTitle()",
+          "line": 12
+        },
+        {
+          "name": "answerDeltasDoNotDuplicateReasoningOrEncodeEveryRunSnapshot()",
+          "line": 32
+        },
+        {
+          "name": "parallelCallsWithSameToolAndArgumentsKeepTheirOwnIdentity()",
+          "line": 63
+        },
+        {
+          "name": "actualCodeToolLifecycleKeepsOneRowPerCallAndRetainsItsFailureAfterRunCompletion()",
+          "line": 78
+        },
+        {
+          "name": "actualStreamProjectionDoesNotLetEventDedupHideCanonicalOutputOrFreezeItsStatus()",
+          "line": 110
+        },
+        {
+          "name": "personalSaveUsesSelectedQuoteWithoutAddingKnowledge()",
+          "line": 143
+        },
+        {
+          "name": "ambiguousOrFormattedQuotesNeverInventOffsets()",
+          "line": 160
+        },
+        {
+          "name": "savedSnapshotSurvivesStoreReopenAndSourceDeletion()",
+          "line": 169
+        },
+        {
+          "name": "addingSavedExcerptsMigratesTheExistingApplicationSchemaWithoutDeletingChat()",
+          "line": 191
+        },
+        {
+          "name": "nativeSelectionPausesFollowingEvenWhenTheMessageIsNearTheBottom()",
+          "line": 223
+        },
+        {
+          "name": "selectionSheetCallbacksUseUnicodeSelectedRange()",
+          "line": 234
+        },
+        {
+          "name": "mixedMarkdownMathAndStreamingHaveFiniteLayout(width:)",
+          "line": 254
+        },
+        {
+          "name": "rendererSelectionRetainsExactGraphemeAndNativeRange()",
+          "line": 292
+        },
+        {
+          "name": "renderedRangesDisambiguateIdenticalSavedQuotes()",
+          "line": 304
+        },
+        {
+          "name": "internalBrowserAcceptsOnlyRealWebURLs()",
+          "line": 317
+        }
+      ],
+      "arguments": {
+        "mixedMarkdownMathAndStreamingHaveFiniteLayout(width:)": {
+          "valuesSwift": [
+            "320.0",
+            "720.0"
+          ],
+          "count": 2
+        }
+      },
+      "conditionalMethods": {}
+    },
+    "ChatScrollViewHandleTests": {
+      "source": "AI_HLYTests/ChatScrollViewHandleTests.swift",
+      "selectedScopes": [
+        "AI_HLYTests/ChatScrollViewHandleTests"
+      ],
+      "methods": [
+        {
+          "name": "positiveGeometryWithoutAWindowCannotPositionATranscript()",
+          "line": 8
+        },
+        {
+          "name": "everyReadRechecksWindowDimensionsAndConversation()",
+          "line": 18
+        },
+        {
+          "name": "detachAndReplacementInvalidateCapturedRequestsWithoutRetainingViews()",
+          "line": 40
+        },
+        {
+          "name": "lateWindowAttachmentDeliversOneDeferredReadinessCallback()",
+          "line": 60
+        },
+        {
+          "name": "cancelledReadinessCannotRestoreAPreviousConversation()",
+          "line": 78
+        },
+        {
+          "name": "resizedViewportRejectsARequestBeforeTheNextBridgeCallback()",
+          "line": 101
+        },
+        {
+          "name": "movingTheSameScrollViewToAnotherWindowInvalidatesQueuedPositioning()",
+          "line": 130
+        },
+        {
+          "name": "contentGrowthAndUserScrollingKeepTheViewportLifetime()",
+          "line": 147
+        },
+        {
+          "name": "outgoingConversationCallbacksCannotUnbindOrCancelTheCurrentViewport()",
+          "line": 166
+        },
+        {
+          "name": "deferredReadinessRechecksResizeAndCanRecoverAtTheNewViewport()",
+          "line": 190
+        },
+        {
+          "name": "incomingBindingBeforeActivationDoesNotNeedAnotherBridgeCallback()",
+          "line": 209
+        }
+      ],
+      "arguments": {},
+      "conditionalMethods": {}
+    },
+    "HanlinAppAgentSessionOwnerTests": {
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "selectedScopes": [
+        "AI_HLYTests/HanlinAppAgentSessionOwnerTests"
+      ],
+      "methods": [
+        {
+          "name": "originalConsentExpiresRevokesAndRejectsStaleSheetAnswers()",
+          "line": 216
+        },
+        {
+          "name": "nativeConsentUsesOriginalOperationAcrossForeignAnswerContextAndRevocation()",
+          "line": 261
+        },
+        {
+          "name": "actualEventKitToolRecoversTheOriginalChatAndReadsTheFullDateWindow()",
+          "line": 333
+        },
+        {
+          "name": "originalProviderCredentialRowsReopenAndRecoverWithoutSchemaChanges(kind:)",
+          "line": 461
+        },
+        {
+          "name": "originalCredentialEditorRemainsTransientAndLegacyCompatible()",
+          "line": 517
+        },
+        {
+          "name": "originalCredentialStaleContextCannotCheckpointOverNewerSavedValue()",
+          "line": 551
+        },
+        {
+          "name": "originalSecuredCredentialRotationRetainsPredecessorAndRejectsStaleDraft()",
+          "line": 577
+        },
+        {
+          "name": "originalDiscoveryAndProbesUseUnsavedCredentialWithoutImplicitFallback(storedKey:)",
+          "line": 616
+        },
+        {
+          "name": "originalCredentialCommitSurvivesPublicationFailureAndRetryDoesNotResave()",
+          "line": 685
+        },
+        {
+          "name": "protectedCredentialMetadataSavesPreserveOriginalRowsAndGenerations(kind:)",
+          "line": 727
+        },
+        {
+          "name": "protectedCredentialMetadataSaveRetainsNilAndEmptyRepresentations(initial:)",
+          "line": 795
+        },
+        {
+          "name": "protectedCredentialExplicitMigrationIsTargetedAndRecoverable(kind:)",
+          "line": 825
+        },
+        {
+          "name": "protectedCredentialMigrationRejectsBuiltInMarkersAndEmptyKeys()",
+          "line": 900
+        },
+        {
+          "name": "protectedCredentialNewProviderCommitsOnlyReferenceAndFailedInsertRetainsExistingRows()",
+          "line": 919
+        },
+        {
+          "name": "protectedCredentialExplicitReplacementRecoversMissingReferenceWithoutPlaintextFallback(value:)",
+          "line": 949
+        },
+        {
+          "name": "protectedCredentialMetadataFailureAndStaleDraftPreserveOriginalDiskRow()",
+          "line": 978
+        },
+        {
+          "name": "originalCredentialStageFailureLeavesOriginalDiskRowUnchanged()",
+          "line": 1023
+        },
+        {
+          "name": "originalCredentialReadOnlySaveRetainsStagedRecoveryWithoutReplacingLegacyRow()",
+          "line": 1045
+        },
+        {
+          "name": "originalCredentialHandlesFailClosedAndPreserveCurrentRequestAuthority()",
+          "line": 1073
+        },
+        {
+          "name": "originalSecuredSearchSelectionSurvivesUnavailableKeychain()",
+          "line": 1118
+        },
+        {
+          "name": "originalCompactPublisherExportsOnlySecuredReferenceAndRetainsLegacyCompatibility()",
+          "line": 1133
+        },
+        {
+          "name": "originalProviderAdmissionRejectsChangesDuringDiagnosticAwait(change:)",
+          "line": 1169
+        },
+        {
+          "name": "originalDirectTransportRechecksOwnerInsideItsProducer()",
+          "line": 1241
+        },
+        {
+          "name": "originalReusedSDKEngineUsesEachTurnsManagerAndTransport()",
+          "line": 1283
+        },
+        {
+          "name": "originalInjectedProviderCannotBeReplacedByTurnTransport()",
+          "line": 1359
+        },
+        {
+          "name": "originalCredentialPortRejectsForeignModelNamespaceRequestAndDeletedOrigin()",
+          "line": 1384
+        },
+        {
+          "name": "originalMemoryPortRechecksOptInsAndCannotReplaceOriginlessRows()",
+          "line": 1430
+        },
+        {
+          "name": "originalDataEpochSurvivesEngineReplacementAndIsRevokedDuringPreparation()",
+          "line": 1479
+        },
+        {
+          "name": "deletingConversationDuringOriginalEnginePreparationCannotAdmitLateSession()",
+          "line": 1518
+        },
+        {
+          "name": "stoppingInlineToolReleasesOnlyItsLeaseBeforeNonCooperativeExecutorDrains()",
+          "line": 1551
+        },
+        {
+          "name": "originalTypedAttachmentStorePreservesBytesAndRejectsForeignSessionMetadataAndTurn()",
+          "line": 1637
+        },
+        {
+          "name": "actualSDKAdapterUsesOriginalAttachmentTurnAcrossDiagnosticsRoundsAndRevocation()",
+          "line": 1677
+        },
+        {
+          "name": "existingSwiftDataRowPreservesLegacyFieldsAndRejectsConflictForeignScopeAndDeletion()",
+          "line": 1779
+        },
+        {
+          "name": "clearHistoryCommitsCanonicalBarrierAndVisibleReplacementToOriginalDiskStore()",
+          "line": 1805
+        },
+        {
+          "name": "clearHistoryRejectsAlreadySuspendedOriginalStoreWriter(hadCanonicalRecord:)",
+          "line": 1871
+        },
+        {
+          "name": "clearHistorySaveFailureRestoresOriginalDiskContentWithoutSuccessMarker()",
+          "line": 1916
+        },
+        {
+          "name": "temporaryClearHistoryDropsOriginalSessionHistoryWithoutInsertingStoreRows()",
+          "line": 1967
+        },
+        {
+          "name": "clearHistoryPreservesUnrecognizedOrExhaustedCanonicalRecord(futureFormat:)",
+          "line": 1997
+        },
+        {
+          "name": "diskBackedOriginalConversationReopensWithoutLosingLegacyOrCanonicalHistory()",
+          "line": 2023
+        },
+        {
+          "name": "originalStoreKeepsItsContainerAliveAcrossDeferredPersistenceAfterCreatorReturns()",
+          "line": 2100
+        },
+        {
+          "name": "identicalContentAndPartIDsKeepExactRowRunBindingAndOriginalReplaySession()",
+          "line": 2138
+        },
+        {
+          "name": "originalHostActionContinuesThroughTheSameOwnerEngineAndCanonicalStore()",
+          "line": 2190
+        },
+        {
+          "name": "temporaryCanonicalMetadataSurvivesCancellationWithoutDatabaseWrite()",
+          "line": 2235
+        },
+        {
+          "name": "historyOpenRejectsDeletedForeignAndCancelledOriginsWithoutCreatingSession()",
+          "line": 2257
+        },
+        {
+          "name": "historicalReceiptDedupRejectsChangedLargeIntegerOutcomeAndPreservesBytes()",
+          "line": 2286
+        },
+        {
+          "name": "liveSettledAndProvisionalReceiptsHaveDistinctReconciliationRules()",
+          "line": 2329
+        },
+        {
+          "name": "acceptedOriginAcknowledgementCannotClearAnotherWindowOrNewerDelivery()",
+          "line": 2384
+        },
+        {
+          "name": "actualNativeBoundaryPreservesExactInputsAndRejectsInvalidOrChangedContextBeforeEffects()",
+          "line": 2421
+        },
+        {
+          "name": "officialToolPayloadUsesOriginalRendererAndPersistsExactBytesWithoutInferringArbitraryJSON()",
+          "line": 2493
+        },
+        {
+          "name": "cachedSearchCatalogKeepsOriginalRoutesAndInvalidatesChangedSchemasBeforeDispatch()",
+          "line": 2511
+        },
+        {
+          "name": "appHostInvokesOriginalExecutorOnceAndUsesExplicitNativeOutcome()",
+          "line": 2597
+        }
+      ],
+      "arguments": {
+        "originalProviderCredentialRowsReopenAndRecoverWithoutSchemaChanges(kind:)": {
+          "valuesSwift": [
+            "HanlinKeychainCredentialStore.Kind.model",
+            ".search",
+            ".tool"
+          ],
+          "count": 3
+        },
+        "originalDiscoveryAndProbesUseUnsavedCredentialWithoutImplicitFallback(storedKey:)": {
+          "valuesSwift": [
+            "\"\"",
+            "\"synthetic-persisted\""
+          ],
+          "count": 2
+        },
+        "protectedCredentialMetadataSavesPreserveOriginalRowsAndGenerations(kind:)": {
+          "valuesSwift": [
+            "HanlinKeychainCredentialStore.Kind.model",
+            ".search",
+            ".tool"
+          ],
+          "count": 3
+        },
+        "protectedCredentialMetadataSaveRetainsNilAndEmptyRepresentations(initial:)": {
+          "valuesSwift": [
+            "Optional<String>.none",
+            "Optional<String>.some(\"\")"
+          ],
+          "count": 2
+        },
+        "protectedCredentialExplicitMigrationIsTargetedAndRecoverable(kind:)": {
+          "valuesSwift": [
+            "HanlinKeychainCredentialStore.Kind.model",
+            ".search",
+            ".tool"
+          ],
+          "count": 3
+        },
+        "protectedCredentialExplicitReplacementRecoversMissingReferenceWithoutPlaintextFallback(value:)": {
+          "valuesSwift": [
+            "\"synthetic-reentered\"",
+            "\"\""
+          ],
+          "count": 2
+        },
+        "originalProviderAdmissionRejectsChangesDuringDiagnosticAwait(change:)": {
+          "valuesSwift": [
+            "\"revoke\"",
+            "\"rotate\"",
+            "\"rotateSameValue\"",
+            "\"endpoint\"",
+            "\"deleteOrigin\"",
+            "\"rebind\"",
+            "\"cancel\""
+          ],
+          "count": 7
+        },
+        "clearHistoryRejectsAlreadySuspendedOriginalStoreWriter(hadCanonicalRecord:)": {
+          "valuesSwift": [
+            "false",
+            "true"
+          ],
+          "count": 2
+        },
+        "clearHistoryPreservesUnrecognizedOrExhaustedCanonicalRecord(futureFormat:)": {
+          "valuesSwift": [
+            "false",
+            "true"
+          ],
+          "count": 2
+        }
+      },
+      "conditionalMethods": {
+        "actualEventKitToolRecoversTheOriginalChatAndReadsTheFullDateWindow()": [
+          "targetEnvironment(simulator)"
+        ],
+        "officialToolPayloadUsesOriginalRendererAndPersistsExactBytesWithoutInferringArbitraryJSON()": [
+          "HANLIN_A2UI_POC"
+        ]
+      }
+    },
+    "HanlinApplicationEmbeddingTests": {
+      "source": "AI_HLYTests/HanlinApplicationEmbeddingTests.swift",
+      "selectedScopes": [
+        "AI_HLYTests/HanlinApplicationEmbeddingTests"
+      ],
+      "methods": [
+        {
+          "name": "providerCredentialLookupUsesTheRecordsContainer()",
+          "line": 30
+        },
+        {
+          "name": "originalRuntimeCannotBeRedirectedToAnotherContainer()",
+          "line": 67
+        },
+        {
+          "name": "programmaticProviderAndModelUseOriginalRowsAndProtectedWriter()",
+          "line": 83
+        },
+        {
+          "name": "hostConstructedActivitySnapshotPreservesIdentityAndOriginalPayloads()",
+          "line": 141
+        },
+        {
+          "name": "providerPreloadingPreservesDistinctRoutingIdentitiesWithEqualNames()",
+          "line": 161
+        },
+        {
+          "name": "providerPreloadingKeepsCustomBuiltinRoutingOverride()",
+          "line": 180
+        },
+        {
+          "name": "providerPreloadingPreservesRenamedBuiltinCredentials()",
+          "line": 197
+        },
+        {
+          "name": "explicitBuiltinRequestOverrideStaysHostOwnedDuringPreload()",
+          "line": 215
+        },
+        {
+          "name": "providerPreloadingRetainsAmbiguousLegacyCredentialRows()",
+          "line": 235
+        },
+        {
+          "name": "modelPreloadingKeepsCustomMetadataForMatchingCatalogName()",
+          "line": 255
+        },
+        {
+          "name": "modelPreloadingPreservesDistinctCustomRowsWithEqualNames()",
+          "line": 277
+        },
+        {
+          "name": "modelPreloadingRetainsBuiltinCustomNameCollision()",
+          "line": 298
+        },
+        {
+          "name": "conversationMetadataMutatesOnlyTheOriginalRowsAndPreservesAnnouncement()",
+          "line": 319
+        },
+        {
+          "name": "conversationDeletionRevokesPreparationAndRejectsLateProjection()",
+          "line": 353
+        },
+        {
+          "name": "conversationMutationRejectsAForeignContainerBeforeRevocation()",
+          "line": 398
+        },
+        {
+          "name": "conversationMetadataAndDeletionReturnSaveFailuresAndRollback()",
+          "line": 421
+        }
+      ],
+      "arguments": {},
+      "conditionalMethods": {}
+    },
+    "HanlinApplicationSystemIntegrationTests": {
+      "source": "AI_HLYTests/HanlinApplicationSystemIntegrationTests.swift",
+      "selectedScopes": [
+        "AI_HLYTests/HanlinApplicationSystemIntegrationTests"
+      ],
+      "methods": [
+        {
+          "name": "widgetIntentMetadataLoadsTheOriginalHostTranslations(language:)",
+          "line": 11
+        },
+        {
+          "name": "notificationBootstrapPreservesHostActionsAndCategories()",
+          "line": 40
+        },
+        {
+          "name": "plainHostsDoNotInheritHanlinShareGroupOrCameraRoute()",
+          "line": 55
+        },
+        {
+          "name": "liveSystemIntegrationOwnershipCannotBeRedirected()",
+          "line": 72
+        }
+      ],
+      "arguments": {
+        "widgetIntentMetadataLoadsTheOriginalHostTranslations(language:)": {
+          "valuesSwift": [
+            "\"en\"",
+            "\"he\"",
+            "\"zh-Hans\""
+          ],
+          "count": 3
+        }
+      },
+      "conditionalMethods": {}
+    },
+    "HanlinCapabilityObservationTests": {
+      "source": "AI_HLYTests/HanlinCapabilityObservationTests.swift",
+      "selectedScopes": [
+        "AI_HLYTests/HanlinCapabilityObservationTests"
+      ],
+      "methods": [
+        {
+          "name": "skillEnabledMutationNotifiesAndReadsActualPersistedState()",
+          "line": 43
+        },
+        {
+          "name": "filesystemSkillQueriesObserveCommittedCatalogChanges()",
+          "line": 59
+        },
+        {
+          "name": "catalogNotificationsReadTheActualRegisteredEntries()",
+          "line": 72
+        },
+        {
+          "name": "nativePreferenceChangesNotifyAndReadActualDefaults()",
+          "line": 89
+        },
+        {
+          "name": "nativeGroupObservationPreservesIndividualPreferences()",
+          "line": 108
+        },
+        {
+          "name": "mcpSelectionNotifiesAfterRealCommitAndPreservesOtherChats()",
+          "line": 126
+        },
+        {
+          "name": "failedMCPSelectionDoesNotNotifyACommit()",
+          "line": 151
+        },
+        {
+          "name": "unloadedMCPSelectionKeepsTheExistingAdmissionGuard()",
+          "line": 183
+        },
+        {
+          "name": "mcpSignalsAreScopedAndNoopWritesDoNotNotify()",
+          "line": 201
+        },
+        {
+          "name": "serverRemovalPreservesExplicitEmptyAndNotifiesOnlyAffectedScopes()",
+          "line": 233
+        },
+        {
+          "name": "concurrentMCPReadsKeepTheirRequestedChatAndStorageScope()",
+          "line": 277
+        },
+        {
+          "name": "delayedConcurrentServerIntentsPreserveBothCanonicalSelections()",
+          "line": 297
+        },
+        {
+          "name": "concurrentActorIntentsCommitCurrentStateAndExactMutationScopes()",
+          "line": 340
+        },
+        {
+          "name": "serverIntentsSeedActualDefaultsOnlyForAbsentRecordsAndPreserveEmpty()",
+          "line": 366
+        },
+        {
+          "name": "serverIntentFailuresBelongToTheirRequestAndDoNotPublishFalseCommits()",
+          "line": 416
+        },
+        {
+          "name": "firstIntentPinsRequestDefaultsAcrossGatedConfigurationChanges()",
+          "line": 445
+        },
+        {
+          "name": "serverIntentSaveFailureAfterSuccessfulReadPreservesBytesAndRevision()",
+          "line": 503
+        },
+        {
+          "name": "migrationOverrideUsesOnlyItsOwnedSource()",
+          "line": 534
+        }
+      ],
+      "arguments": {},
+      "conditionalMethods": {}
+    },
+    "HanlinConversationProjectionTests": {
+      "source": "AI_HLYTests/HanlinConversationProjectionTests.swift",
+      "selectedScopes": [
+        "AI_HLYTests/HanlinConversationProjectionTests"
+      ],
+      "methods": [
+        {
+          "name": "originalRichPayloadsAndFailureTextPersistInTheSameRows()",
+          "line": 16
+        },
+        {
+          "name": "staleRunLeaseCannotReleaseANewerUIOrHeadlessOwner()",
+          "line": 64
+        }
+      ],
+      "arguments": {},
+      "conditionalMethods": {}
+    },
+    "HanlinMCPEmbeddingTests": {
+      "source": "AI_HLYTests/HanlinMCPEmbeddingTests.swift",
+      "selectedScopes": [
+        "AI_HLYTests/HanlinMCPEmbeddingTests"
+      ],
+      "methods": [
+        {
+          "name": "conversationSelectionKeepsOriginalDefaultsExplicitEmptyAndOtherChats()",
+          "line": 8
+        },
+        {
+          "name": "failedSelectionReadCannotRestoreDefaultMCPAuthority()",
+          "line": 36
+        },
+        {
+          "name": "failedFeatureCommitDoesNotPublishSuccessOrStartRuntime()",
+          "line": 56
+        },
+        {
+          "name": "staleEditableSettingsPreserveCurrentEnvironmentAndPackageIdentity()",
+          "line": 73
+        },
+        {
+          "name": "disabledRuntimeOperationsReturnTheirOwnFailure()",
+          "line": 108
+        },
+        {
+          "name": "selectionAcknowledgementRejectsAConversationDeletedDuringCommit()",
+          "line": 129
+        },
+        {
+          "name": "overlappingAdministrationCannotReplaceCredentialsOrDisableAnAdmittedOperation()",
+          "line": 152
+        },
+        {
+          "name": "cancellationBeforeInstallerProgressDoesNotStartRuntimeAndReleasesOnlyItsLease()",
+          "line": 182
+        },
+        {
+          "name": "duplicateEnvironmentNamesFailBeforePersistenceAndCannotCrashRuntimeAssembly()",
+          "line": 206
+        },
+        {
+          "name": "duplicatePersistentIdentitiesProduceErrorsInsteadOfTrapsOrAmbiguousRows()",
+          "line": 239
+        }
+      ],
+      "arguments": {},
+      "conditionalMethods": {}
+    },
+    "HanlinNativeWidgetRendererTests": {
+      "source": "AI_HLYTests/HanlinNativeWidgetRendererTests.swift",
+      "selectedScopes": [
+        "AI_HLYTests/HanlinNativeWidgetRendererTests"
+      ],
+      "methods": [
+        {
+          "name": "testExpoRawTaggedAndDateWireSurvivePublicationAndSourceAction()",
+          "line": 19
+        },
+        {
+          "name": "testOriginalShapesStacksImagesLinksAndModifiersMatchNativeReferences()",
+          "line": 65
+        },
+        {
+          "name": "testOriginalTextConcatenationPreservesNativeTypeAndChildStyles()",
+          "line": 130
+        },
+        {
+          "name": "testOriginalSlotsMatchNativeOverlayBackgroundAndMaskPixels()",
+          "line": 142
+        },
+        {
+          "name": "testOriginalChartAndGaugeReceiveTheirTypedNativeData()",
+          "line": 169
+        },
+        {
+          "name": "testOriginalLabelAndProgressKeepTheirPreparedChildren()",
+          "line": 192
+        },
+        {
+          "name": "testInstalledExternalSourceRendersThroughAnyChild()",
+          "line": 207
+        }
+      ],
+      "arguments": {},
+      "conditionalMethods": {}
+    },
+    "PendingFirstTurnTests": {
+      "source": "AI_HLYTests/HanlinOrganizerDockParityTests.swift",
+      "selectedScopes": [
+        "AI_HLYTests/PendingFirstTurnTests"
+      ],
+      "methods": [
+        {
+          "name": "homeFirstTurnDispatchesOnEndpointRegistration()",
+          "line": 925
+        },
+        {
+          "name": "cancellingPendingFirstTurnPreventsExecution()",
+          "line": 1001
+        },
+        {
+          "name": "rejectedSendRollsBackAndRestoresHomeDraft()",
+          "line": 1019
+        },
+        {
+          "name": "invalidHomeSelectedModelIndexRefused()",
+          "line": 1100
+        }
+      ],
+      "arguments": {},
+      "conditionalMethods": {}
+    },
+    "ModelPopoverZoomOrderTests": {
+      "source": "AI_HLYTests/HanlinOrganizerDockParityTests.swift",
+      "selectedScopes": [
+        "AI_HLYTests/ModelPopoverZoomOrderTests/nativeGenerationConfigurationPreservesOriginalSettings()",
+        "AI_HLYTests/ModelPopoverZoomOrderTests/nativeGenerationRejectsUnsupportedTopPThroughOriginalEngine()"
+      ],
+      "methods": [
+        {
+          "name": "nativeGenerationConfigurationPreservesOriginalSettings()",
+          "line": 1166
+        },
+        {
+          "name": "nativeGenerationRejectsUnsupportedTopPThroughOriginalEngine()",
+          "line": 1191
+        }
+      ],
+      "arguments": {},
+      "conditionalMethods": {}
+    },
+    "HanlinRemoteMediaURLTests": {
+      "source": "AI_HLYTests/HanlinRemoteMediaURLTests.swift",
+      "selectedScopes": [
+        "AI_HLYTests/HanlinRemoteMediaURLTests"
+      ],
+      "methods": [
+        {
+          "name": "acceptsPublicHTTPS()",
+          "line": 62
+        },
+        {
+          "name": "rejectsCredentialsAndOtherSchemes()",
+          "line": 63
+        },
+        {
+          "name": "rejectsLiteralNetworkAddresses()",
+          "line": 64
+        },
+        {
+          "name": "rejectsLocalNamesAndAmbiguousHosts()",
+          "line": 65
+        },
+        {
+          "name": "boundsURLAndHostLabels()",
+          "line": 66
+        },
+        {
+          "name": "preservesOpaqueSourceBytes()",
+          "line": 67
+        },
+        {
+          "name": "resolvedDestinationsRejectPrivateSpecialAndTranslatedLocalAddresses()",
+          "line": 68
+        }
+      ],
+      "arguments": {},
+      "conditionalMethods": {
+        "acceptsPublicHTTPS()": [
+          "NOT (HANLIN_MEDIA_URL_PORTABLE_RUNNER)"
+        ],
+        "rejectsCredentialsAndOtherSchemes()": [
+          "NOT (HANLIN_MEDIA_URL_PORTABLE_RUNNER)"
+        ],
+        "rejectsLiteralNetworkAddresses()": [
+          "NOT (HANLIN_MEDIA_URL_PORTABLE_RUNNER)"
+        ],
+        "rejectsLocalNamesAndAmbiguousHosts()": [
+          "NOT (HANLIN_MEDIA_URL_PORTABLE_RUNNER)"
+        ],
+        "boundsURLAndHostLabels()": [
+          "NOT (HANLIN_MEDIA_URL_PORTABLE_RUNNER)"
+        ],
+        "preservesOpaqueSourceBytes()": [
+          "NOT (HANLIN_MEDIA_URL_PORTABLE_RUNNER)"
+        ],
+        "resolvedDestinationsRejectPrivateSpecialAndTranslatedLocalAddresses()": [
+          "NOT (HANLIN_MEDIA_URL_PORTABLE_RUNNER)"
+        ]
+      }
+    },
+    "NativeComposerLineSizingTests": {
+      "source": "AI_HLYTests/NativeComposerLineSizingTests.swift",
+      "selectedScopes": [
+        "AI_HLYTests/NativeComposerLineSizingTests"
+      ],
+      "methods": [
+        {
+          "name": "editingKeepsDraftAndSelection()",
+          "line": 37
+        },
+        {
+          "name": "layoutDuringNativeEditPreservesCharactersAndCursor(_:)",
+          "line": 67
+        },
+        {
+          "name": "coalescedNativeEditsPreserveTextAndSelection(_:)",
+          "line": 101
+        },
+        {
+          "name": "retainedRenderSnapshotPreservesNativeDraftAndCursor(_:)",
+          "line": 139
+        },
+        {
+          "name": "liveOwnerClearAndReplacementBeforeRenderAcknowledgement()",
+          "line": 181
+        },
+        {
+          "name": "equalStringOwnerSwitchKeepsPendingInputAndLateDelegateScoped()",
+          "line": 258
+        },
+        {
+          "name": "canonicalEquivalentOwnerAndNativeReplacementsPreserveExactText()",
+          "line": 302
+        },
+        {
+          "name": "sameValueClearPrecedesLateNativeDelegate(_:)",
+          "line": 348
+        },
+        {
+          "name": "markedTextOwnerSwitchPreservesCompositionAndAuthoritativeClear(_:)",
+          "line": 381
+        },
+        {
+          "name": "programmaticDraftUpdatesWhileEditing()",
+          "line": 414
+        },
+        {
+          "name": "wrappedLinesAndScrolling()",
+          "line": 452
+        },
+        {
+          "name": "textKit2WrappedLinesKeepNativeLayout()",
+          "line": 516
+        },
+        {
+          "name": "textKit2ParagraphCoverageAndConservativeFallback()",
+          "line": 554
+        },
+        {
+          "name": "fontAndViewport()",
+          "line": 583
+        }
+      ],
+      "arguments": {
+        "layoutDuringNativeEditPreservesCharactersAndCursor(_:)": {
+          "valuesSwift": [
+            "\"Model picker keeps this draft\"",
+            "\"שלום 👋 טיוטה ארוכה\"",
+            "String(repeating: \"Wrapped accessible draft text \", count: 35)"
+          ],
+          "count": 3
+        },
+        "coalescedNativeEditsPreserveTextAndSelection(_:)": {
+          "valuesSwift": [
+            "\"Run the local Python acceptance tool and report the result.\"",
+            "\"Draft preserved across switch\"",
+            "\"שלום 👋🏽 טיוטה ארוכה\""
+          ],
+          "count": 3
+        },
+        "retainedRenderSnapshotPreservesNativeDraftAndCursor(_:)": {
+          "valuesSwift": [
+            "\"PAIRED_CANCEL_12345678-1234-1234-1234-123456789ABC\"",
+            "\"PAIRED_OPEN_12345678-1234-1234-1234-123456789ABC\"",
+            "\"שלום 👋🏽 טיוטה\\nשורה שנייה\""
+          ],
+          "count": 3
+        },
+        "sameValueClearPrecedesLateNativeDelegate(_:)": {
+          "valuesSwift": [
+            "false",
+            "true"
+          ],
+          "count": 2
+        },
+        "markedTextOwnerSwitchPreservesCompositionAndAuthoritativeClear(_:)": {
+          "valuesSwift": [
+            "false",
+            "true"
+          ],
+          "count": 2
+        }
+      },
+      "conditionalMethods": {}
+    },
+    "RuntimeAutonomyV3Tests": {
+      "source": "AI_HLYTests/RuntimeAutonomyV3Tests.swift",
+      "selectedScopes": [
+        "AI_HLYTests/RuntimeAutonomyV3Tests/actualMCPTransportPreservesLargeStructuredResultsThroughTheOriginalRendererAndStore"
+      ],
+      "methods": [
+        {
+          "name": "actualMCPTransportPreservesLargeStructuredResultsThroughTheOriginalRendererAndStore()",
+          "line": 11
+        }
+      ],
+      "arguments": {},
+      "conditionalMethods": {}
+    },
+    "ShareInboxHostIntegrationTests": {
+      "source": "AI_HLYTests/ShareInboxHostIntegrationTests.swift",
+      "selectedScopes": [
+        "AI_HLYTests/ShareInboxHostIntegrationTests"
+      ],
+      "methods": [
+        {
+          "name": "mixedBatchBecomesNamedVerifiedChatAttachmentsWithoutConsumingTheInbox()",
+          "line": 10
+        },
+        {
+          "name": "invalidCapacityRejectedItemsAndTamperedBytesCannotChangeTheSourceBatch()",
+          "line": 29
+        },
+        {
+          "name": "cancelledDraftPreparationKeepsTheOriginalFile()",
+          "line": 55
+        },
+        {
+          "name": "providerBatchSurvivesSourceDeletionAndIsReadByTheRealHostInbox()",
+          "line": 85
+        }
+      ],
+      "arguments": {},
+      "conditionalMethods": {}
+    },
+    "VoiceRecordingLifecycleTests": {
+      "source": "AI_HLYTests/VoiceRecordingLifecycleTests.swift",
+      "selectedScopes": [
+        "AI_HLYTests/VoiceRecordingLifecycleTests"
+      ],
+      "methods": [
+        {
+          "name": "testVR01_DismissBeforePermissionCallback_IgnoresLateGranted()",
+          "line": 51
+        },
+        {
+          "name": "testVR02_ReopenCreatesNewAttempt_OldCallbackIgnored()",
+          "line": 103
+        },
+        {
+          "name": "testVR03_PermissionDeniedAndRestricted()",
+          "line": 155
+        },
+        {
+          "name": "testVR04_PermissionRevokedInSettings_RecheckedOnForeground()",
+          "line": 191
+        },
+        {
+          "name": "testVR05_RapidDoubleStart_OnlyOneActive()",
+          "line": 224
+        },
+        {
+          "name": "testVR06_FailureAfterSetActive_RollsBackAudioSession()",
+          "line": 248
+        },
+        {
+          "name": "testVR07_RollbackAtAllStages()",
+          "line": 281
+        },
+        {
+          "name": "testVR08_StopPreservesRecognizedText_SecondStopIdempotent()",
+          "line": 339
+        },
+        {
+          "name": "testVR09_DismissWhileTapActive_ShutsDownCleanly()",
+          "line": 366
+        },
+        {
+          "name": "testVR10_StaleGenerationCallback_CannotMutateNewSession()",
+          "line": 390
+        },
+        {
+          "name": "testVR11_AudioTapSink_RealTimeSafetyAndRms()",
+          "line": 442
+        },
+        {
+          "name": "testVR12_RouteChangeAndBackgroundHandling()",
+          "line": 485
+        },
+        {
+          "name": "testVR13_TextToSpeechCoordination_PreservesPlaybackCategory()",
+          "line": 508
+        },
+        {
+          "name": "testVR14_LanguageSelectionAndRequestedVsEffectiveLocale()",
+          "line": 546
+        },
+        {
+          "name": "testVR15_LocalizedStrings_AuthenticJsonIntegrity()",
+          "line": 569
+        },
+        {
+          "name": "testVR16_VoiceInputViewBindingsAndDismissal()",
+          "line": 593
+        },
+        {
+          "name": "testVR17_StressFiftyRapidCycles()",
+          "line": 609
+        },
+        {
+          "name": "testVR22_OwnRecordingCategoryChangeDoesNotStopMicrophone()",
+          "line": 634
+        },
+        {
+          "name": "testVR23_OutputChangesPreserveInputButInputOrFormatLossStopsRecording()",
+          "line": 671
+        },
+        {
+          "name": "testVR19_AudioTapSink_RealFilePoolBranchExecution_VariousFrameSizes()",
+          "line": 718
+        },
+        {
+          "name": "testVR20_AudioTapSink_OversizedAndIncompatibleFrameSafety_NoCrash()",
+          "line": 766
+        },
+        {
+          "name": "testVR21_RepeatedCyclesWithRealSinkFileMode()",
+          "line": 833
+        }
+      ],
+      "arguments": {},
+      "conditionalMethods": {}
+    },
+    "AgentRuntimeConversationUITests": {
+      "source": "AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+      "selectedScopes": [
+        "AI_HLYUITests/AgentRuntimeConversationUITests/testOriginalChatActivitySurvivesKeyboardRotationAndConversationReattachment",
+        "AI_HLYUITests/AgentRuntimeConversationUITests/testUI06ComposerMultilineAttachmentsModelSelectorNoOverlap",
+        "AI_HLYUITests/AgentRuntimeConversationUITests/testUI03SearchMessageAndDeduplicatedCitations",
+        "AI_HLYUITests/AgentRuntimeConversationUITests/testUI03HebrewRTLSearchMessageAndDeduplicatedCitations"
+      ],
+      "methods": [
+        {
+          "name": "testOriginalChatActivitySurvivesKeyboardRotationAndConversationReattachment()",
+          "line": 160
+        },
+        {
+          "name": "testUI03SearchMessageAndDeduplicatedCitations()",
+          "line": 618
+        },
+        {
+          "name": "testUI03HebrewRTLSearchMessageAndDeduplicatedCitations()",
+          "line": 622
+        },
+        {
+          "name": "testUI06ComposerMultilineAttachmentsModelSelectorNoOverlap()",
+          "line": 878
+        }
+      ],
+      "arguments": {},
+      "conditionalMethods": {}
+    },
+    "HanlinNativeA2UIChatUITests": {
+      "source": "AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+      "selectedScopes": [
+        "AI_HLYUITests/HanlinNativeA2UIChatUITests"
+      ],
+      "methods": [
+        {
+          "name": "testOriginalFormSubmitsEditedValueAndPreservesUnsentComposerDraft()",
+          "line": 12
+        },
+        {
+          "name": "testExpandedDismissalRetainsTheOriginalFormAndDoesNotIssueARequest()",
+          "line": 28
+        },
+        {
+          "name": "testSameProcessReopenRestoresCanonicalReadOnlyMediaWithoutAnotherModelRequest()",
+          "line": 46
+        },
+        {
+          "name": "testOriginalGalleryAndLinkRetainSourcesAndReadOnlyHistory()",
+          "line": 84
+        },
+        {
+          "name": "testSurfaceOnlyNativeResponseUsesTheOriginalAssistantRow()",
+          "line": 139
+        },
+        {
+          "name": "testOriginalMixedOpenUIReactAndNativeShareStateAndKeepDraft()",
+          "line": 150
+        },
+        {
+          "name": "testNewConversationWorksWithoutOptimizationModel()",
+          "line": 217
+        }
+      ],
+      "arguments": {},
+      "conditionalMethods": {}
+    },
+    "HanlinLocalizedControlTests": {
+      "source": "Packages/HanlinPresentationSDK/Tests/HanlinLocalizationTests/HanlinLocalizationTests.swift",
+      "selectedScopes": [
+        "AI_HLYTests/HanlinLocalizedControlTests"
+      ],
+      "methods": [
+        {
+          "name": "labelsKeepTheOriginalNativeTypes()",
+          "line": 48
+        }
+      ],
+      "arguments": {},
+      "conditionalMethods": {
+        "labelsKeepTheOriginalNativeTypes()": [
+          "canImport(SwiftUI)"
+        ]
+      }
+    },
+    "HanlinOriginalAssetTests": {
+      "source": "Packages/HanlinPresentationSDK/Tests/HanlinLocalizationTests/HanlinLocalizationTests.swift",
+      "selectedScopes": [
+        "AI_HLYTests/HanlinOriginalAssetTests"
+      ],
+      "methods": [
+        {
+          "name": "sharedAssetsLoadFromTheirCanonicalBundle()",
+          "line": 82
+        }
+      ],
+      "arguments": {},
+      "conditionalMethods": {
+        "sharedAssetsLoadFromTheirCanonicalBundle()": [
+          "canImport(UIKit)"
+        ]
+      }
+    },
+    "HanlinLocalizationTests": {
+      "source": "Packages/HanlinPresentationSDK/Tests/HanlinLocalizationTests/HanlinLocalizationTests.swift",
+      "selectedScopes": [
+        "AI_HLYTests/HanlinLocalizationTests"
+      ],
+      "methods": [
+        {
+          "name": "resourceBundleIsIndependentOfHost()",
+          "line": 7
+        },
+        {
+          "name": "deferredOriginalTitleKeepsItsTableLocaleAndBundle()",
+          "line": 13
+        },
+        {
+          "name": "originalTranslationTablesRemainAvailable(locale:)",
+          "line": 24
+        }
+      ],
+      "arguments": {
+        "originalTranslationTablesRemainAvailable(locale:)": {
+          "valuesSwift": [
+            "\"en\"",
+            "\"he\"",
+            "\"zh-Hans\""
+          ],
+          "count": 3
+        }
+      },
+      "conditionalMethods": {
+        "deferredOriginalTitleKeepsItsTableLocaleAndBundle()": [
+          "canImport(Darwin)"
+        ],
+        "originalTranslationTablesRemainAvailable(locale:)": [
+          "canImport(Darwin)"
+        ]
+      }
+    }
+  }
+}

@@ -1,3 +1,4 @@
+import HanlinLocalization
 #if canImport(UIKit)
 //
 //  NativeMultilineTextEditor.swift
@@ -49,7 +50,7 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
 
     @Binding var text: String
     @Binding var textHeight: CGFloat
-    var placeholderText: String = String(localized: "Message")
+    var placeholderText: String = String(localized: "Message", bundle: HanlinLocalization.bundle)
     var minHeight: CGFloat = 38
     var maxHeight: CGFloat = 140
     var usesAutomaticLineLimits = false
@@ -73,7 +74,7 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
     }
 
     public init(text: Binding<String>, textHeight: Binding<CGFloat>,
-                placeholderText: String = String(localized: "Message"),
+                placeholderText: String = String(localized: "Message", bundle: HanlinLocalization.bundle),
                 minHeight: CGFloat = 38, maxHeight: CGFloat = 140,
                 usesAutomaticLineLimits: Bool = false,
                 onPasteImage: ((UIImage) -> Void)? = nil,
@@ -465,7 +466,7 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
             let native = textView.text ?? ""
             let model = parent.currentText
             let selection = textView.selectedRange
-            print("HANLIN_COMPOSER_EDIT id=\(editDiagnosticID) sequence=\(editDiagnosticSequence) event=\(event) nativeUTF16=\(native.utf16.count) modelUTF16=\(model.utf16.count) renderedUTF16=\(parent.text.utf16.count) synchronizedUTF16=\(lastSynchronizedModelText.utf16.count) nativeEqualsModel=\(native.utf8.elementsEqual(model.utf8)) selection=\(selection.location):\(selection.length) editing=\(isEditing) firstResponder=\(textView.isFirstResponder) marked=\(textView.markedTextRange != nil) \(detail)")
+            print("HANLIN_COMPOSER_EDIT id=\(editDiagnosticID) nativeID=\(ObjectIdentifier(textView)) sequence=\(editDiagnosticSequence) event=\(event) nativeUTF16=\(native.utf16.count) modelUTF16=\(model.utf16.count) renderedUTF16=\(parent.text.utf16.count) synchronizedUTF16=\(lastSynchronizedModelText.utf16.count) nativeEqualsModel=\(native.utf8.elementsEqual(model.utf8)) selection=\(selection.location):\(selection.length) editing=\(isEditing) firstResponder=\(textView.isFirstResponder) marked=\(textView.markedTextRange != nil) \(detail)")
         }
         #endif
 
@@ -691,6 +692,23 @@ public final class MultilineInnerTextView: UITextView {
     var onPasteImage: ((UIImage) -> Void)?
     var onPasteFile: ((URL) -> Void)?
     var onSendMessage: (() -> Void)?
+
+    #if DEBUG || HANLIN_TESTING
+    // Observe the real responder caller only when the existing edit diagnostic is enabled.
+    // Bound both frame count and symbol length; never record draft text or selection content.
+    public override func resignFirstResponder() -> Bool {
+        let recordsDiagnostics = ProcessInfo.processInfo.environment["HANLIN_COMPOSER_EDIT_DIAGNOSTICS"] == "1"
+        let wasFirstResponder = isFirstResponder
+        let callerFrames = recordsDiagnostics
+            ? Thread.callStackSymbols.prefix(24).map { String($0.prefix(512)) }
+            : []
+        let result = super.resignFirstResponder()
+        if recordsDiagnostics {
+            print("HANLIN_COMPOSER_RESPONDER nativeID=\(ObjectIdentifier(self)) action=resign before=\(wasFirstResponder) after=\(isFirstResponder) result=\(result) callers=\(callerFrames.joined(separator: " | "))")
+        }
+        return result
+    }
+    #endif
 
     public override var keyCommands: [UIKeyCommand]? {
         let returnCommand = UIKeyCommand(

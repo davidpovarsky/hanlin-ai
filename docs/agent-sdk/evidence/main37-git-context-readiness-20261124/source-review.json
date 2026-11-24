@@ -1,0 +1,18 @@
+{
+  "base": "f870abda090a7ac0f382b7b9396599d1b474a7ef",
+  "changed_file": "Scripts/CI/current_unit_xctestrun.py",
+  "before_sha256": "2d7839768ed684daee282382ab846e118adab049e22a6a7252053062e7f08efa",
+  "after_sha256": "f2b5dfbe1238840de1b421f48c2953c4e1851ecb3c8bccd605fe51a879085dcc",
+  "inverse_exact": true,
+  "git_commands": [
+    "git rev-parse HEAD",
+    "git diff --binary --no-ext-diff --no-textconv HEAD -- ."
+  ],
+  "old_query_timeout": 30,
+  "new_query_timeout": 120,
+  "other_commands_timeouts_unchanged": true,
+  "original_gate_conditions_unchanged": true,
+  "retries": 0,
+  "cached_source_fallback": false,
+  "product_assertions_and_deadlines_changed": false
+}

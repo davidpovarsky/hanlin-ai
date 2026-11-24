@@ -1,0 +1,79 @@
+/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/native-launch-sendable-20261123/ExternalClient.swift:5:9: error: stored property 'legacyLaunchRequest' of 'Sendable'-conforming struct 'ExpansionBoundary' contains non-Sendable type 'NativeAppLaunchRequest'
+ 3 | // The original failing app boundary, exercised through an imported public module.
+ 4 | struct ExpansionBoundary: Sendable {
+ 5 |     var legacyLaunchRequest: NativeAppLaunchRequest?
+   |         `- error: stored property 'legacyLaunchRequest' of 'Sendable'-conforming struct 'ExpansionBoundary' contains non-Sendable type 'NativeAppLaunchRequest'
+ 6 | }
+ 7 | func requireSendable<T: Sendable>(_ value: T) {}
+
+/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/NativeUI/NativeAppPresentation.swift:9:15: note: struct 'NativeAppLaunchRequest' does not conform to the 'Sendable' protocol
+ 7 | }
+ 8 | 
+ 9 | public struct NativeAppLaunchRequest: Identifiable, Hashable, Codable {
+   |               `- note: struct 'NativeAppLaunchRequest' does not conform to the 'Sendable' protocol
+10 |     public let id: UUID
+11 |     public let appID: String
+
+/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/native-launch-sendable-20261123/ExternalClient.swift:14:5: error: type 'NativeAppPresentationStyle' does not conform to the 'Sendable' protocol
+12 |     _ request: NativeAppLaunchRequest
+13 | ) {
+14 |     requireSendable(style)
+   |     `- error: type 'NativeAppPresentationStyle' does not conform to the 'Sendable' protocol
+15 |     requireSendable(route)
+16 |     requireSendable(payload)
+
+/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/NativeUI/NativeAppPresentation.swift:3:13: note: enum 'NativeAppPresentationStyle' does not conform to the 'Sendable' protocol
+ 1 | import Foundation
+ 2 | 
+ 3 | public enum NativeAppPresentationStyle: String, Hashable, Codable {
+   |             `- note: enum 'NativeAppPresentationStyle' does not conform to the 'Sendable' protocol
+ 4 |     case fullScreen
+ 5 |     case largeSheet
+
+/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/native-launch-sendable-20261123/ExternalClient.swift:15:5: error: type 'NativeAppRoute' does not conform to the 'Sendable' protocol
+13 | ) {
+14 |     requireSendable(style)
+15 |     requireSendable(route)
+   |     `- error: type 'NativeAppRoute' does not conform to the 'Sendable' protocol
+16 |     requireSendable(payload)
+17 |     requireSendable(request)
+
+/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/NativeUI/NativeAppRoute.swift:4:15: note: struct 'NativeAppRoute' does not conform to the 'Sendable' protocol
+ 2 | 
+ 3 | 
+ 4 | public struct NativeAppRoute: Identifiable, Codable, Hashable {
+   |               `- note: struct 'NativeAppRoute' does not conform to the 'Sendable' protocol
+ 5 |     public var id: String {
+ 6 |         [appID, screen, stablePayloadID].filter { !$0.isEmpty }.joined(separator: ":")
+
+/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/native-launch-sendable-20261123/ExternalClient.swift:16:5: error: type 'NativeAppRoutePayload' does not conform to the 'Sendable' protocol
+14 |     requireSendable(style)
+15 |     requireSendable(route)
+16 |     requireSendable(payload)
+   |     `- error: type 'NativeAppRoutePayload' does not conform to the 'Sendable' protocol
+17 |     requireSendable(request)
+18 | }
+
+/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/NativeUI/NativeAppRoute.swift:31:13: note: enum 'NativeAppRoutePayload' does not conform to the 'Sendable' protocol
+29 | }
+30 | 
+31 | public enum NativeAppRoutePayload: Codable, Hashable {
+   |             `- note: enum 'NativeAppRoutePayload' does not conform to the 'Sendable' protocol
+32 |     case empty
+33 |     case dictionary([String: String])
+
+/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/native-launch-sendable-20261123/ExternalClient.swift:17:5: error: type 'NativeAppLaunchRequest' does not conform to the 'Sendable' protocol
+15 |     requireSendable(route)
+16 |     requireSendable(payload)
+17 |     requireSendable(request)
+   |     `- error: type 'NativeAppLaunchRequest' does not conform to the 'Sendable' protocol
+18 | }
+19 | 
+
+/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/NativeUI/NativeAppPresentation.swift:9:15: note: struct 'NativeAppLaunchRequest' does not conform to the 'Sendable' protocol
+ 7 | }
+ 8 | 
+ 9 | public struct NativeAppLaunchRequest: Identifiable, Hashable, Codable {
+   |               `- note: struct 'NativeAppLaunchRequest' does not conform to the 'Sendable' protocol
+10 |     public let id: UUID
+11 |     public let appID: String

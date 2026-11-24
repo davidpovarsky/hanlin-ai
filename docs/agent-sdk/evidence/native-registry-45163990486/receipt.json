@@ -1,0 +1,81 @@
+{
+  "status": "EXECUTED_PASS",
+  "scope": "Original native macOS atomic-store package tests; not full Hanlin/iOS/WidgetKit acceptance",
+  "run_id": 45163990486,
+  "job_id": 137656161482,
+  "source_commit": "32da9e314e22bbf22391fcf8902302acfbb281e2",
+  "head_sha_and_original_checkout_log_match": true,
+  "runner_id": 1000024616,
+  "runner_label": "xcode-27",
+  "xcode": "27.2 (27B52)",
+  "swift": "Apple Swift6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)",
+  "testing_library": "2403",
+  "reported_testing_target": "arm64e-apple-macos14.0",
+  "started_at": "2026-11-23T11:18:40Z",
+  "completed_at": "2026-11-23T11:23:46Z",
+  "original_package_path": "Packages/HanlinPlatform",
+  "command": "swift test --package-path \"$PACKAGE_PATH\" --filter \"$TEST_FILTER\"",
+  "filter": "HanlinAtomicScriptStoreTests[./](persistedRegistryIdentity|persistedBackupRegistryIdentity|validRegistrySelection)(\\(|$)",
+  "build_seconds": 164.63,
+  "test_seconds": 0.096,
+  "method_count": 3,
+  "argument_case_count": 4,
+  "failed": 0,
+  "methods": [
+    {
+      "method": "persistedRegistryIdentity(duplicatingEntry:)",
+      "original_display_name": "Malformed stored identity rejects cold load and restore without changing registry bytes",
+      "cases": 2,
+      "result": "PASS"
+    },
+    {
+      "method": "persistedBackupRegistryIdentity()",
+      "original_display_name": "The selected backup must also have matching installed identities",
+      "cases": 1,
+      "result": "PASS"
+    },
+    {
+      "method": "validRegistrySelection()",
+      "original_display_name": "Valid primary precedence and valid backup recovery retain their original data",
+      "cases": 1,
+      "result": "PASS"
+    }
+  ],
+  "production_and_test_inputs": [
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinAtomicScriptStore.swift",
+      "sha256": "beba9139602322438239f36e42607781940a4d3c2c9a742e5b1987bea24ab5d0"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinScriptStoreTests/HanlinAtomicScriptStoreTests.swift",
+      "sha256": "49eed09937705d2aaf19b85de1ec49ffb861d6445764806c68794a43ea7181cf"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Package.swift",
+      "sha256": "e27c872f7b9972be7667ea0f8e126131d42379d2a8b66527887ee97a32616e41"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Package.resolved",
+      "sha256": "7882ef847a4aaa1bfa2ee128122393cf718f393485d9658bb93f402f740f2c17"
+    },
+    {
+      "path": ".github/workflows/validate-scripting-runtime.yml",
+      "sha256": "395ea6430af04b1ca8c66386af45073a1b0abc4d0c6ed20a1c46b30854fe0016"
+    }
+  ],
+  "original_log": {
+    "bytes": 64366,
+    "sha256": "4d9b7d20c0c5b130a9ba1b0f4d910bd6285c9f317b551fe46a2497f2410f2ad2"
+  },
+  "reuse_limits": [
+    "No prior passed suite was selected or rerun.",
+    "SwiftPM compiled original package targets but only the three selected methods/four argument cases executed.",
+    "The workflow cache hash alone does not bind new store inputs; exact checkout and actual selected test output establish this result.",
+    "No live calendar/EventKit, device, app lifecycle, real WidgetKit rendering, native artifact publication or full SDK acceptance inferred."
+  ],
+  "observed_warnings": [
+    "Existing ZIPFoundation watchOS4 manifest deprecation.",
+    "Existing unused commit binding in HanlinScriptExtensionStore.",
+    "Existing redundant require in HanlinDualWidgetEnginesTests."
+  ]
+}

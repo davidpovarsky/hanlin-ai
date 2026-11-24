@@ -1,3 +1,4 @@
+import HanlinLocalization
 //
 //  MainTabView.swift
 //  AI_HLY
@@ -47,7 +48,7 @@ struct MainTabView: View {
                 onOpenProfile: { modal = .profile }, onOpenMiniApps: openCompanion,
                 onOpenVision: { showsVision = true })
                 .tabItem {
-                    Label(String(localized: "Chat"), systemImage: "bubble.left.and.bubble.right")
+                    Label(String(localized: "Chat", bundle: HanlinLocalization.bundle), systemImage: "bubble.left.and.bubble.right")
                         .accessibilityIdentifier("hanlin-home-tab")
                 }
                 .tag(0)
@@ -58,7 +59,7 @@ struct MainTabView: View {
                     selectedTab = 0
                 })
                 .tabItem {
-                    Label("Library", systemImage: "books.vertical")
+                    Label(hanlin: "Library", systemImage: "books.vertical")
                         .accessibilityIdentifier("hanlin-library-tab")
                 }
                 .tag(2)
@@ -88,16 +89,16 @@ struct MainTabView: View {
                 deepLinkTarget = nil
             }
         }
-        .alert("MiniApps unavailable", isPresented: $companionUnavailable) {
-            Button("OK", role: .cancel) {}
+        .alert(Text("MiniApps unavailable", bundle: HanlinLocalization.bundle), isPresented: $companionUnavailable) {
+            Button(hanlin: "OK", role: .cancel) {}
         } message: {
-            Text("Install Hanlin MiniApps to open its catalog. Your conversation stays here.")
+            Text("Install Hanlin MiniApps to open its catalog. Your conversation stays here.", bundle: HanlinLocalization.bundle)
         }
-        .alert("Mini App result unavailable", isPresented: Binding(
+        .alert(Text("Mini App result unavailable", bundle: HanlinLocalization.bundle), isPresented: Binding(
             get: { splitCoordinator.failure(forReceivingWindowID: receivingWindowID) != nil },
             set: { if !$0 { splitCoordinator.dismissFailure(forReceivingWindowID: receivingWindowID) } }
-        )) { Button("OK") { splitCoordinator.dismissFailure(forReceivingWindowID: receivingWindowID) } }
-        message: { Text("Open the original conversation to check this request. Its result could not be returned to this window.") }
+        )) { Button(hanlin: "OK") { splitCoordinator.dismissFailure(forReceivingWindowID: receivingWindowID) } }
+        message: { Text("Open the original conversation to check this request. Its result could not be returned to this window.", bundle: HanlinLocalization.bundle) }
         .background(Color(.systemBackground))
         .sheet(isPresented: $torahRouter.isPresentingReader) {
             if let link = torahRouter.activeDeepLink {

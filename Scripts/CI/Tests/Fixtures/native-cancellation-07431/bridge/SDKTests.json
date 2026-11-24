@@ -1,0 +1,99 @@
+{
+  "devices" : [
+    {
+      "architecture" : "arm64",
+      "deviceId" : "52ebbc75444d10e3c5fde96a3854ccb982dbcf76",
+      "deviceName" : "My Mac",
+      "modelName" : "Virtual Machine",
+      "osBuildNumber" : "26A434",
+      "osVersion" : "27.0.1",
+      "platform" : "macOS"
+    }
+  ],
+  "testNodes" : [
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "children" : [
+                    {
+                      "name" : "Expectation failed: await state.cancelled",
+                      "nodeType" : "Failure Message",
+                      "sourceLocation" : {
+                        "filePath" : "/Users/runner/work/_temp/hanlin-native-tool-candidate.7dzugpkh/Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests.swift",
+                        "lineNumber" : 170
+                      }
+                    }
+                  ],
+                  "duration" : "5s",
+                  "durationInSeconds" : 5.0972583293914795,
+                  "name" : "Cancelling a waiting native request reaches its public executor and produces no host effect",
+                  "nodeIdentifier" : "HanlinAppleToolSessionBridgeTests/nativeCancellationStopsAwaitingExecutor()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests/nativeCancellationStopsAwaitingExecutor()",
+                  "nodeType" : "Test Case",
+                  "result" : "Failed"
+                },
+                {
+                  "duration" : "0.047s",
+                  "durationInSeconds" : 0.0470731258392334,
+                  "name" : "A denied native call has no effect and continues with the correlated tool denial",
+                  "nodeIdentifier" : "HanlinAppleToolSessionBridgeTests/nativeDenialReturnsThroughCanonicalHistory()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests/nativeDenialReturnsThroughCanonicalHistory()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.034s",
+                  "durationInSeconds" : 0.033988237380981445,
+                  "name" : "Nonstreaming use of the original provider preserves native handoff calls",
+                  "nodeIdentifier" : "HanlinAppleToolSessionBridgeTests/nativeGeneratePreservesToolCalls()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests/nativeGeneratePreservesToolCalls()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.049s",
+                  "durationInSeconds" : 0.049497127532958984,
+                  "name" : "Two same-name calls keep their identities and continue through the original executor",
+                  "nodeIdentifier" : "HanlinAppleToolSessionBridgeTests/nativeFrameworkHandoffUsesCanonicalExecutorAndHistory()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests/nativeFrameworkHandoffUsesCanonicalExecutorAndHistory()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0.088s",
+                  "durationInSeconds" : 0.08806657791137695,
+                  "name" : "An invalid numeric sibling blocks the complete batch before approval or effect",
+                  "nodeIdentifier" : "HanlinAppleToolSessionBridgeTests/nativeNumericSiblingCannotPartiallyExecute()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests/nativeNumericSiblingCannotPartiallyExecute()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "FoundationModels handoff through the original provider and engine",
+              "nodeIdentifierURL" : "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests",
+              "nodeType" : "Test Suite",
+              "result" : "Failed"
+            }
+          ],
+          "name" : "HanlinAgentCoreTests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/HanlinAgentSDK/HanlinAgentCoreTests",
+          "nodeType" : "Unit test bundle",
+          "result" : "Failed"
+        }
+      ],
+      "name" : "HanlinAgentSDK-Package",
+      "nodeType" : "Test Plan",
+      "result" : "Failed"
+    }
+  ],
+  "testPlanConfigurations" : [
+    {
+      "configurationId" : "1",
+      "configurationName" : "Test Scheme Action"
+    }
+  ]
+}

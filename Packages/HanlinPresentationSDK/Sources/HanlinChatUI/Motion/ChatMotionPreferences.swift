@@ -1,11 +1,22 @@
+import HanlinLocalization
 #if canImport(SwiftUI)
 import SwiftUI
+
+private struct HanlinChatMotionPresetOverrideKey: EnvironmentKey {
+    static let defaultValue: ChatMotionPreset? = nil
+}
 
 private struct ChatMotionKey: EnvironmentKey {
     static let defaultValue = ChatMotionConfiguration.forPreset(.relaxed)
 }
 
 public extension EnvironmentValues {
+    /// An explicit host selection takes precedence over saved app preferences.
+    var hanlinChatMotionPresetOverride: ChatMotionPreset? {
+        get { self[HanlinChatMotionPresetOverrideKey.self] }
+        set { self[HanlinChatMotionPresetOverrideKey.self] = newValue }
+    }
+
     var chatMotion: ChatMotionConfiguration {
         get { self[ChatMotionKey.self] }
         set { self[ChatMotionKey.self] = newValue }
@@ -33,22 +44,41 @@ public extension ChatMotionConfiguration {
 private struct ChatMotionPreferences: ViewModifier {
     @AppStorage(ChatMotionPreset.storageKey) private var storedID = ChatMotionPreset.relaxed.rawValue
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.hanlinChatMotionPresetOverride) private var hostPreset
 
     func body(content: Content) -> some View {
         content
-            .environment(\.chatMotion, .forPreset(.fromStoredID(storedID), reduceMotion: reduceMotion))
+            .environment(\.chatMotion, .forPreset(hostPreset ?? .fromStoredID(storedID), reduceMotion: reduceMotion))
             .onAppear { normalize() }
             .onChange(of: storedID) { _, _ in normalize() }
     }
 
     private func normalize() {
+        guard hostPreset == nil else { return }
         let validID = ChatMotionPreset.fromStoredID(storedID).rawValue
         if storedID != validID { storedID = validID }
     }
 }
 
+private struct HanlinChatMotionOverride: ViewModifier {
+    let preset: ChatMotionPreset
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    func body(content: Content) -> some View {
+        content
+            .environment(\.hanlinChatMotionPresetOverride, preset)
+            .environment(\.chatMotion, .forPreset(preset, reduceMotion: reduceMotion))
+    }
+}
+
 public extension View {
     func chatMotionPreferences() -> some View { modifier(ChatMotionPreferences()) }
+
+    /// Selects an original motion preset for this subtree without writing the
+    /// host's stored preference. Accessibility Reduce Motion remains authoritative.
+    func hanlinChatMotion(_ preset: ChatMotionPreset) -> some View {
+        modifier(HanlinChatMotionOverride(preset: preset))
+    }
 }
 
 /// The sole user-facing control, embedded in the existing General Settings.
@@ -61,13 +91,13 @@ public struct ChatMotionPresetPicker: View {
             get: { ChatMotionPreset.fromStoredID(storedID) },
             set: { storedID = $0.rawValue }
         )) {
-            Text("Smooth and relaxed").tag(ChatMotionPreset.relaxed)
-            Text("Height reveal").tag(ChatMotionPreset.heightReveal)
-            Text("Gentle squeeze").tag(ChatMotionPreset.gentleSqueeze)
-            Text("Quiet fade").tag(ChatMotionPreset.quietFade)
-            Text("No animations").tag(ChatMotionPreset.none)
+            Text("Smooth and relaxed", bundle: HanlinLocalization.bundle).tag(ChatMotionPreset.relaxed)
+            Text("Height reveal", bundle: HanlinLocalization.bundle).tag(ChatMotionPreset.heightReveal)
+            Text("Gentle squeeze", bundle: HanlinLocalization.bundle).tag(ChatMotionPreset.gentleSqueeze)
+            Text("Quiet fade", bundle: HanlinLocalization.bundle).tag(ChatMotionPreset.quietFade)
+            Text("No animations", bundle: HanlinLocalization.bundle).tag(ChatMotionPreset.none)
         } label: {
-            Label("Chat animations", systemImage: "sparkles")
+            Label(hanlin: "Chat animations", systemImage: "sparkles")
         }
         .pickerStyle(.menu)
         .accessibilityIdentifier("hanlin-chat-motion-preset")

@@ -1,3 +1,4 @@
+import HanlinLocalization
 // Visual reference: Hanlin_Detached_Active_Chips_Original_Composer.swift
 // SHA-256 e3cf93feac90ff1ead2e6bd2acbb3cace1a2b89e07dd97d242e4b89751bbb5c7.
 import SwiftUI
@@ -13,13 +14,13 @@ public enum HanlinDetachedCapability: String, CaseIterable, Identifiable, Sendab
     public var id: String { rawValue }
     public var title: String {
         switch self {
-        case .search: return String(localized: "Search")
-        case .thinking: return String(localized: "composer.capability.thinking")
-        case .tools: return String(localized: "Tools")
+        case .search: return String(localized: "Search", bundle: HanlinLocalization.bundle)
+        case .thinking: return String(localized: "composer.capability.thinking", bundle: HanlinLocalization.bundle)
+        case .tools: return String(localized: "Tools", bundle: HanlinLocalization.bundle)
         case .skills: return "Skills"
         case .mcp: return "MCP"
-        case .runtimes: return String(localized: "composer.capability.runtimes")
-        case .creative: return String(localized: "Creative")
+        case .runtimes: return String(localized: "composer.capability.runtimes", bundle: HanlinLocalization.bundle)
+        case .creative: return String(localized: "Creative", bundle: HanlinLocalization.bundle)
         }
     }
     public var symbol: String {
@@ -35,13 +36,13 @@ public enum HanlinDetachedCapability: String, CaseIterable, Identifiable, Sendab
     }
     public var subtitle: String {
         switch self {
-        case .search: return String(localized: "Internet and knowledge")
-        case .thinking: return String(localized: "Reasoning and planning")
-        case .tools: return String(localized: "Tools and actions")
-        case .skills: return String(localized: "Agent capabilities")
-        case .mcp: return String(localized: "Servers and connections")
-        case .runtimes: return String(localized: "hanlin.morph.localRuntimesDescription")
-        case .creative: return String(localized: "Image and audio")
+        case .search: return String(localized: "Internet and knowledge", bundle: HanlinLocalization.bundle)
+        case .thinking: return String(localized: "Reasoning and planning", bundle: HanlinLocalization.bundle)
+        case .tools: return String(localized: "Tools and actions", bundle: HanlinLocalization.bundle)
+        case .skills: return String(localized: "Agent capabilities", bundle: HanlinLocalization.bundle)
+        case .mcp: return String(localized: "Servers and connections", bundle: HanlinLocalization.bundle)
+        case .runtimes: return String(localized: "hanlin.morph.localRuntimesDescription", bundle: HanlinLocalization.bundle)
+        case .creative: return String(localized: "Image and audio", bundle: HanlinLocalization.bundle)
         }
     }
 
@@ -73,7 +74,8 @@ public struct HanlinDetachedCapabilityChips: View {
         self.open = open; self.disable = disable
     }
 
-    private let blue = Color(red: 58 / 255, green: 124 / 255, blue: 180 / 255)
+    @Environment(\.hanlinChatAppearance) private var appearance
+    private var blue: Color { appearance.capabilityAccent ?? Color(red: 58 / 255, green: 124 / 255, blue: 180 / 255) }
 
     public static func usesCompactLayout(width: CGFloat) -> Bool { width < 510 }
 
@@ -104,8 +106,8 @@ public struct HanlinDetachedCapabilityChips: View {
                         }
                     }
                     .accessibilityLabel(Text(capability.title))
-                    .accessibilityValue(Text(String(localized: "Enabled")))
-                    .accessibilityHint(Text(String(localized: "Open settings")))
+                    .accessibilityValue(Text(String(localized: "Enabled", bundle: HanlinLocalization.bundle)))
+                    .accessibilityHint(Text(String(localized: "Open settings", bundle: HanlinLocalization.bundle)))
                     .accessibilityIdentifier("composer-chip-\(capability.id)")
                 }
             }

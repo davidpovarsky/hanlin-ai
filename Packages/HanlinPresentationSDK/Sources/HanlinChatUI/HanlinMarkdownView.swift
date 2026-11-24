@@ -18,6 +18,7 @@ public struct HanlinMarkdownView: View {
     private let onSelectionAction: (@MainActor @Sendable (String, MarkdownTextSelection) -> Void)?
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @Environment(\.layoutDirection) private var layoutDirection
+    @Environment(\.hanlinMarkdownConfigurationTransform) private var configurationTransform
     @State private var listener = HanlinMarkdownListener()
     @State private var citationIcons: [URL: Data] = [:]
 
@@ -56,7 +57,7 @@ public struct HanlinMarkdownView: View {
         let codeStyle = CodeBlockConfig.default
         let codeFonts = TextFonts(normal: UIFont.monospacedSystemFont(ofSize: HanlinTypography.uiFont(.callout).pointSize, weight: .regular),
             italic: nil, bold: nil, boldItalic: nil, preferredLetterSpacing: nil, preferredLineHeight: nil)
-        return MarkdownRenderConfig.default
+        let original = MarkdownRenderConfig.default
             .withCitationConfig(value: .init(font: HanlinTypography.uiFont(.caption1),
                 textColor: .secondary, backgroundColor: Color.secondary.opacity(0.10),
                 iconsByCitationURL: iconsByCitationURL, iconOnTrailingEdge: layoutDirection == .rightToLeft))
@@ -74,6 +75,7 @@ public struct HanlinMarkdownView: View {
             .withTextContextMenu(value: contextMenuItems.isEmpty ? nil : TextContextMenu(menuGroups: [
                 TextContextMenuGroup(title: nil, image: nil, displayInline: true, items: contextMenuItems)
             ]))
+        return configurationTransform(original)
     }
 
     private var citationIconURLs: [URL] {
@@ -110,6 +112,29 @@ public struct HanlinMarkdownView: View {
         // Markdown layout while the answer is being streamed.
         guard !Task.isCancelled, loaded != citationIcons else { return }
         citationIcons = loaded
+    }
+}
+
+
+private struct HanlinMarkdownConfigurationKey: EnvironmentKey {
+    static let defaultValue: @MainActor @Sendable (MarkdownRenderConfig) -> MarkdownRenderConfig = { $0 }
+}
+
+private extension EnvironmentValues {
+    var hanlinMarkdownConfigurationTransform: @MainActor @Sendable (MarkdownRenderConfig) -> MarkdownRenderConfig {
+        get { self[HanlinMarkdownConfigurationKey.self] }
+        set { self[HanlinMarkdownConfigurationKey.self] = newValue }
+    }
+}
+
+public extension View {
+    /// Customizes the original renderer's complete configuration after Hanlin
+    /// installs its original fonts, citations, media and selection callbacks.
+    /// The identity transform is the default; the parser and view stay shared.
+    func hanlinMarkdownConfiguration(
+        _ transform: @escaping @MainActor @Sendable (MarkdownRenderConfig) -> MarkdownRenderConfig
+    ) -> some View {
+        environment(\.hanlinMarkdownConfigurationTransform, transform)
     }
 }
 

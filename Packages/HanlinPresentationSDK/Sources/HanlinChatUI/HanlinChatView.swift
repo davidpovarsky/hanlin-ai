@@ -7,26 +7,33 @@ import HanlinPresentationKit
 /// models, SwiftData context, engine, provider, or global conversation selection.
 public struct HanlinChatView<Transcript: View, Composer: View>: View {
     public let shell: ShellDescriptor
+    public let showsComposerBackdrop: Bool
     private let transcript: Transcript
     private let composer: Composer
 
     public init(shell: ShellDescriptor,
+                showsComposerBackdrop: Bool = true,
                 @ViewBuilder transcript: () -> Transcript,
                 @ViewBuilder composer: () -> Composer) {
-        self.shell = shell; self.transcript = transcript(); self.composer = composer()
+        self.shell = shell; self.showsComposerBackdrop = showsComposerBackdrop
+        self.transcript = transcript(); self.composer = composer()
     }
 
     public var body: some View {
         VStack {
             ZStack(alignment: .bottom) {
                 transcript
-                LinearGradient(
-                    colors: [Color(uiColor: .systemBackground).opacity(0), Color(uiColor: .systemBackground)],
-                    startPoint: .top, endPoint: .center
-                )
-                .frame(height: 120)
-                .allowsHitTesting(false)
-                .zIndex(0)
+                // A host with a persistent sibling composer already gives the
+                // transcript its own viewport; no overlay obscures its last rows.
+                if showsComposerBackdrop {
+                    LinearGradient(
+                        colors: [Color(uiColor: .systemBackground).opacity(0), Color(uiColor: .systemBackground)],
+                        startPoint: .top, endPoint: .center
+                    )
+                    .frame(height: 120)
+                    .allowsHitTesting(false)
+                    .zIndex(0)
+                }
                 composer
             }
         }

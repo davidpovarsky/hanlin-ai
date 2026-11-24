@@ -80,5 +80,16 @@
 	<string>Hanlin schedules system alarms only for the times you choose.</string>
 	<key>com.apple.developer.translation-ui-provider.network-access</key>
 	<true/>
+	<key>HanlinExtensionHost</key>
+	<dict>
+		<key>AppGroupIdentifier</key>
+		<string>group.com.itorah.chavrusachat</string>
+		<key>WidgetKind</key>
+		<string>com.hanlin.scripting.widget</string>
+		<key>NotificationCategoryIdentifier</key>
+		<string>CHAVRUSA_REMINDER</string>
+		<key>VisionURL</key>
+		<string>chavrusachat://openVisionView</string>
+	</dict>
 </dict>
 </plist>

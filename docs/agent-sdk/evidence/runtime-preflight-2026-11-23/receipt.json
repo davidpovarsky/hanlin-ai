@@ -1,0 +1,48 @@
+{
+  "runId": 45112778130,
+  "jobId": 137488754023,
+  "headSha": "e33247fbaca62e76227e99fe0bd8c7a3d1716f2c",
+  "conclusion": "failure",
+  "failedStep": "Run RuntimeCore preflight",
+  "cause": "Fixed substring grep rejected quoted and whitespace-normalized membershipExceptions although the actual target's exclusions are present.",
+  "jobLog": {
+    "bytes": 366433,
+    "sha256": "45d806b0bd8d5e8bbf6b401ff6a3f8a59fcd1d9ee38787a141c622a054b41363"
+  },
+  "SDKCompilationSourceAudit": {
+    "source": "e33247fbaca62e76227e99fe0bd8c7a3d1716f2c",
+    "target": "AI_Hanlin",
+    "explicitSourceCount": 500,
+    "nodeHostSourcePaths": [],
+    "hostArchiveCopied": true,
+    "note": "The SDK uses an explicit source whitelist and the original prepared ZIP resource. It does not declare a separate exclude array for Node/Host."
+  },
+  "newControls": {
+    "methods": 4,
+    "cases": 8,
+    "result": "PASS",
+    "reruns": 0
+  },
+  "originalHostPackageResults": {
+    "tests": 153,
+    "pass": 152,
+    "fail": 0,
+    "skipped": 1,
+    "repeatedByThisFix": false,
+    "preparedArchiveSHA256": "a2641a191aa0aca4350fd8e272c79a83eaa4f85314e1cd77dc0aaa463ef2c39a"
+  },
+  "nativeExport": "SKIPPED",
+  "SwiftPackageResolution": "SKIPPED",
+  "appCompilation": "SKIPPED",
+  "simulatorAndDeviceAcceptance": "NOT_RUN",
+  "newCIDispatches": 0,
+  "FoundationModelsInterface": {
+    "artifactID": 14791117850,
+    "zipSHA256": "97d34b189448b380fbe2af396e42d52bd5e1e6c6ae424112b25283dbb490a08c",
+    "excerptSHA256": "812d8f15063b0e8fa2573568ee84eee86344d17a3c81c2383a35dd26df27938c",
+    "xcode": "27.2 / 27B52",
+    "sdk": "27.2",
+    "modelExecution": "NOT_RUN",
+    "handoff": "Exact original declaration artifact handed to presentation lane."
+  }
+}

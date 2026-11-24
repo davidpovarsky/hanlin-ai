@@ -1,0 +1,22 @@
+[
+  {
+    "path": "README.md",
+    "bytes": 11270,
+    "sha256": "2db7852840aa47e21034463040110d13ecf6c1650fbd6becd6e9939b230a35d3"
+  },
+  {
+    "path": "root-duplicate-inventory.json",
+    "bytes": 19393,
+    "sha256": "3ce4f56401d8633773d97195e7b5887d4bdaebb7808e4289097aa76eb79e0275"
+  },
+  {
+    "path": "source-contract.json",
+    "bytes": 5758,
+    "sha256": "55e80d22eb6ca95fba6d8439ead72618eac56b8ffb94793a9a1cf57623c0e07c"
+  },
+  {
+    "path": "space-plan.json",
+    "bytes": 3232,
+    "sha256": "8e5e8df983a98f74879842a89490e5f8fbc78d5123f91044b1d14a3fd0988cc7"
+  }
+]

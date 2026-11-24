@@ -14,7 +14,7 @@ struct SkillRuntimeFactsProvider: SkillRuntimeCapabilityProvider {
         }
         // Engine source identity is the actually installed, pinned runtime manifest plus the
         // version observed from its live adapter. Environment changes invalidate prior tests.
-        let manifest = Bundle.main.url(forResource: "RuntimeManifest", withExtension: "json")
+        let manifest = HanlinApplicationResources.bundle.url(forResource: "RuntimeManifest", withExtension: "json")
         guard let manifest, let manifestBytes = try? Data(contentsOf: manifest) else {
             return .init(engineID: engineID, binding: nil, facts: [])
         }

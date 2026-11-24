@@ -1,0 +1,78 @@
+[
+  {
+    "id": 14791965279,
+    "name": "AI_Hanlin-iOS26-simulator-smoke-logs",
+    "archive": "/mnt/development/projects/hanlin-sdk-artifacts-20261123/native-run-45112778130/AI_Hanlin-iOS26-simulator-smoke-logs.zip",
+    "sha256": "d82be75d2987b318a52d418102cb520e8b544a6a696b477e7163a39312c1425e",
+    "files": [
+      {
+        "path": "/mnt/development/projects/hanlin-sdk-artifacts-20261123/native-run-45112778130/AI_Hanlin-iOS26-simulator-smoke-logs/simulator-logs/01-cache-mode.log",
+        "size": 244,
+        "sha256": "d9b143936b6a3ca1e89b91fee5b42f2dce2dd78056ade1fb5b8d8e4f9cfe2c5e"
+      },
+      {
+        "path": "/mnt/development/projects/hanlin-sdk-artifacts-20261123/native-run-45112778130/AI_Hanlin-iOS26-simulator-smoke-logs/simulator-logs/01-environment.log",
+        "size": 963,
+        "sha256": "3b668dcda21f7e87d5347b8dc8e7c8df185996680caf8451bf4ded423cab9b26"
+      },
+      {
+        "path": "/mnt/development/projects/hanlin-sdk-artifacts-20261123/native-run-45112778130/AI_Hanlin-iOS26-simulator-smoke-logs/simulator-logs/02-prepare-runtime-core.log",
+        "size": 1125,
+        "sha256": "a693cfedfd4e21869c41a561444302e0f92d590a4e4185a3bd49faca0472293b"
+      },
+      {
+        "path": "/mnt/development/projects/hanlin-sdk-artifacts-20261123/native-run-45112778130/AI_Hanlin-iOS26-simulator-smoke-logs/simulator-logs/03-package-runtime-host.log",
+        "size": 16471,
+        "sha256": "73cab6d2ec4ae074cab8a3d552860c75e257598d824a7d68a83f86ca9430e8a5"
+      },
+      {
+        "path": "/mnt/development/projects/hanlin-sdk-artifacts-20261123/native-run-45112778130/AI_Hanlin-iOS26-simulator-smoke-logs/simulator-logs/04-runtime-preflight.log",
+        "size": 937,
+        "sha256": "5ef1c6e4405a2b67e3f3595ea07082f93ad31a816a6aee348ac5a407476e6dd9"
+      },
+      {
+        "path": "/mnt/development/projects/hanlin-sdk-artifacts-20261123/native-run-45112778130/AI_Hanlin-iOS26-simulator-smoke-logs/simulator-logs/09-host-resources.log",
+        "size": 76410,
+        "sha256": "72ae5ba7facaf6641ece1c416ac5360746146cc26da30281f9086ae4972bfda3"
+      },
+      {
+        "path": "/mnt/development/projects/hanlin-sdk-artifacts-20261123/native-run-45112778130/AI_Hanlin-iOS26-simulator-smoke-logs/simulator-logs/foundation-models-interface/declarations.txt",
+        "size": 60798,
+        "sha256": "812d8f15063b0e8fa2573568ee84eee86344d17a3c81c2383a35dd26df27938c"
+      },
+      {
+        "path": "/mnt/development/projects/hanlin-sdk-artifacts-20261123/native-run-45112778130/AI_Hanlin-iOS26-simulator-smoke-logs/simulator-logs/foundation-models-interface/receipt.json",
+        "size": 1221,
+        "sha256": "d7d19e0e2875a90026aa4289503297daf8d4db100fc44bb46405b0846f7f8789"
+      },
+      {
+        "path": "/mnt/development/projects/hanlin-sdk-artifacts-20261123/native-run-45112778130/AI_Hanlin-iOS26-simulator-smoke-logs/simulator-logs/performance-summary.json",
+        "size": 107,
+        "sha256": "c9dbceeea60dc1d2ebb3fe380f7501e2bca63527717f50bfc6f70a34f3108162"
+      },
+      {
+        "path": "/mnt/development/projects/hanlin-sdk-artifacts-20261123/native-run-45112778130/AI_Hanlin-iOS26-simulator-smoke-logs/simulator-logs/performance-summary.md",
+        "size": 3472,
+        "sha256": "bf90988f2e273b943b60e5a13de1384051a8fb3d99732936c2089dd6a6d5953a"
+      }
+    ]
+  },
+  {
+    "id": 14791117850,
+    "name": "hanlin-foundation-models-interface",
+    "archive": "/mnt/development/projects/hanlin-sdk-artifacts-20261123/native-run-45112778130/hanlin-foundation-models-interface.zip",
+    "sha256": "97d34b189448b380fbe2af396e42d52bd5e1e6c6ae424112b25283dbb490a08c",
+    "files": [
+      {
+        "path": "/mnt/development/projects/hanlin-sdk-artifacts-20261123/native-run-45112778130/hanlin-foundation-models-interface/declarations.txt",
+        "size": 60798,
+        "sha256": "812d8f15063b0e8fa2573568ee84eee86344d17a3c81c2383a35dd26df27938c"
+      },
+      {
+        "path": "/mnt/development/projects/hanlin-sdk-artifacts-20261123/native-run-45112778130/hanlin-foundation-models-interface/receipt.json",
+        "size": 1221,
+        "sha256": "d7d19e0e2875a90026aa4289503297daf8d4db100fc44bb46405b0846f7f8789"
+      }
+    ]
+  }
+]

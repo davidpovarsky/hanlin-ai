@@ -1,0 +1,51 @@
+{
+  "utc": "2026-11-23T21:55:35.501448+00:00",
+  "status": "PASS",
+  "actions": [
+    {
+      "path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-sendability-retry-20261123/compiler-failure/original-xcodebuild-simulator.log",
+      "allocated_bytes": 10600448,
+      "removed": true
+    },
+    {
+      "path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-expanded-20261123/native-export-evidence",
+      "allocated_bytes": 9809920,
+      "removed": true
+    },
+    {
+      "path": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-artifact",
+      "allocated_bytes": 11927552,
+      "removed": true
+    }
+  ],
+  "allocated_bytes_removed": 32337920,
+  "filesystem_available_before_bytes": 1282441216,
+  "filesystem_available_after_bytes": 1314779136,
+  "observed_available_delta_bytes": 32337920,
+  "concurrency_note": "Other authorized owners may change this shared filesystem concurrently; allocated removed bytes are exact and free-space delta is an observation.",
+  "originals": [
+    {
+      "original_zip": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-sendability-retry-20261123/compiler-failure/original-smoke-artifact.zip",
+      "sha256": "c95eb7b9af4eea50de1207e97ace4ff7c2e1baeb2a67cac477c5da524cd08198",
+      "receipt": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-sendability-retry-20261123/compiler-failure/original-artifact-receipt.json",
+      "receipt_sha256": "902ee5a1db13562f5982853faa259a656e188d602c08859f40e4adca7ffbe59b",
+      "preserved_after": true
+    },
+    {
+      "original_zip": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-expanded-20261123/simulator-smoke-logs.zip",
+      "sha256": "b1a77242770173e7f2f842acc5f18d68b339a20132536b0ac5d151b737ebfe81",
+      "receipt": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-expanded-20261123/readback-artifacts.json",
+      "receipt_sha256": "b954476fd844d32d73d4bd579c96783d755e12a5468c4823758b207d9696fb73",
+      "preserved_after": true
+    },
+    {
+      "original_zip": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/original-simulator-logs.zip",
+      "sha256": "e24985621b6993657b818618187b89113cefd27b79c67aa08b14b67767394dc6",
+      "receipt": "/mnt/development/projects/worktrees/hanlin-sdk-unification-20261123/build/sdk-native-unified-recovery-20261123/failure-readback/artifact-index.json",
+      "receipt_sha256": "70f6877db95ad8f6323e56c988a534d70e6731983030099a79f60bbe53e6900a",
+      "preserved_after": true
+    }
+  ],
+  "other_deletions": 0,
+  "preflight_sha256": "59002f5d678849a8c5f6171953eb247102e4e43164e9d0e3b200b3e582cb77b2"
+}

@@ -1,0 +1,17 @@
+Building for debugging...
+[Computing dependencies]
+[Pre-planning 1 / 67]
+[Planning deferred tasks]
+[22 / 33] UnsafeLibrary
+[24 / 35] UnsafeLibrary
+[32 / 38] Consumer-product
+[33 / 38] Consumer-product
+[36 / 39] UnsafeLibrary
+[40 / 40] Consumer-product
+Build complete! (6.06 secs)
+Fetching http://127.0.0.1:33751/UnsafeLibrary.git
+Fetched http://127.0.0.1:33751/UnsafeLibrary.git (0.05s)
+Computing version for http://127.0.0.1:33751/UnsafeLibrary.git
+Computed http://127.0.0.1:33751/UnsafeLibrary.git at 1.0.0 (0.48s)
+Creating working copy for http://127.0.0.1:33751/UnsafeLibrary.git
+Working copy of http://127.0.0.1:33751/UnsafeLibrary.git resolved at 1.0.0

@@ -12,15 +12,19 @@ struct MCPServerConfiguration: Codable, Hashable, Sendable {
         resolvedPaths: MCPResolvedServerPaths,
         secrets: [String: String] = [:],
         environment: [String: String] = [:]
-    ) -> MCPServerConfiguration {
-        let serverEnvironment = Dictionary(
-            uniqueKeysWithValues: descriptor.environment.compactMap { variable in
-                if let reference = variable.secretReference, let secret = secrets[reference] {
-                    return (variable.name, secret)
-                }
-                return variable.value.map { (variable.name, $0) }
+    ) throws -> MCPServerConfiguration {
+        var serverEnvironment: [String: String] = [:]
+        var names = Set<String>()
+        for variable in descriptor.environment {
+            guard names.insert(variable.name).inserted else {
+                throw MCPError.duplicateEnvironmentName(variable.name)
             }
-        )
+            if let reference = variable.secretReference, let secret = secrets[reference] {
+                serverEnvironment[variable.name] = secret
+            } else if let value = variable.value {
+                serverEnvironment[variable.name] = value
+            }
+        }
         return MCPServerConfiguration(
             serverID: descriptor.id,
             entryPoint: resolvedPaths.entryPoint.path,

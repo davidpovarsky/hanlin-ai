@@ -1,3 +1,4 @@
+import HanlinLocalization
 import SwiftUI
 import HanlinPresentationKit
 
@@ -13,50 +14,50 @@ public struct HanlinComponentCatalogView: View {
 
     public var body: some View {
         List {
-            Section("Typography") {
-                Text("Large title").font(HanlinTypography.largeTitle)
-                Text("Title").font(HanlinTypography.title)
-                Text("Section heading").font(HanlinTypography.title2)
-                Text("Subsection heading").font(HanlinTypography.title3)
-                Text("Headline").font(HanlinTypography.headline)
-                Text("Body · עברית · English · 中文").font(HanlinTypography.body)
-                Text("Secondary text").font(HanlinTypography.subheadline)
-                Text("Callout").font(HanlinTypography.callout)
-                Text("Supporting text").font(HanlinTypography.footnote)
-                Text("Caption").font(HanlinTypography.caption)
-                Text("Metadata").font(HanlinTypography.caption2)
+            Section(hanlin: "Typography") {
+                Text("Large title", bundle: HanlinLocalization.bundle).font(HanlinTypography.largeTitle)
+                Text("Title", bundle: HanlinLocalization.bundle).font(HanlinTypography.title)
+                Text("Section heading", bundle: HanlinLocalization.bundle).font(HanlinTypography.title2)
+                Text("Subsection heading", bundle: HanlinLocalization.bundle).font(HanlinTypography.title3)
+                Text("Headline", bundle: HanlinLocalization.bundle).font(HanlinTypography.headline)
+                Text("Body · עברית · English · 中文", bundle: HanlinLocalization.bundle).font(HanlinTypography.body)
+                Text("Secondary text", bundle: HanlinLocalization.bundle).font(HanlinTypography.subheadline)
+                Text("Callout", bundle: HanlinLocalization.bundle).font(HanlinTypography.callout)
+                Text("Supporting text", bundle: HanlinLocalization.bundle).font(HanlinTypography.footnote)
+                Text("Caption", bundle: HanlinLocalization.bundle).font(HanlinTypography.caption)
+                Text("Metadata", bundle: HanlinLocalization.bundle).font(HanlinTypography.caption2)
             }
-            Section("System controls") {
-                Toggle("Enabled", isOn: $isEnabled)
-                Picker("Selection", selection: $selected) {
-                    Text("First").tag(0)
-                    Text("Second").tag(1)
+            Section(hanlin: "System controls") {
+                Toggle(hanlin: "Enabled", isOn: $isEnabled)
+                Picker(hanlin: "Selection", selection: $selected) {
+                    Text("First", bundle: HanlinLocalization.bundle).tag(0)
+                    Text("Second", bundle: HanlinLocalization.bundle).tag(1)
                 }
-                Slider(value: $amount) { Text("Value") }
-                Button("Action", systemImage: "checkmark") {}
-                Menu("Menu", systemImage: "ellipsis") {
-                    Button("First action", systemImage: "star") {}
-                    Button("Second action", systemImage: "square.and.arrow.up") {}
+                Slider(value: $amount) { Text("Value", bundle: HanlinLocalization.bundle) }
+                Button(hanlin: "Action", systemImage: "checkmark") {}
+                Menu(hanlin: "Menu", systemImage: "ellipsis") {
+                    Button(hanlin: "First action", systemImage: "star") {}
+                    Button(hanlin: "Second action", systemImage: "square.and.arrow.up") {}
                 }
             }
-            Section("Inline search") {
+            Section(hanlin: "Inline search") {
                 #if canImport(UIKit)
-                HanlinSearchField(text: $query, prompt: String(localized: "Search"),
+                HanlinSearchField(text: $query, prompt: String(localized: "Search", bundle: HanlinLocalization.bundle),
                     accessibilityIdentifier: "hanlin-catalog-search")
                 #else
-                TextField("Search", text: $query)
+                TextField(hanlin: "Search", text: $query)
                 #endif
             }
-            Section("Appearance") {
-                Label("Accent", systemImage: "circle.fill").foregroundStyle(.tint)
-                Label("Primary text", systemImage: "textformat").foregroundStyle(.primary)
-                Label("Secondary text", systemImage: "textformat").foregroundStyle(.secondary)
-                LabeledContent("Minimum touch target", value: "\(Int(HanlinControlMetrics.minimumHitTarget)) pt")
-                LabeledContent("Page inset", value: "\(Int(HanlinControlMetrics.pageInset)) pt")
+            Section(hanlin: "Appearance") {
+                Label(hanlin: "Accent", systemImage: "circle.fill").foregroundStyle(.tint)
+                Label(hanlin: "Primary text", systemImage: "textformat").foregroundStyle(.primary)
+                Label(hanlin: "Secondary text", systemImage: "textformat").foregroundStyle(.secondary)
+                LabeledContent(hanlin: "Minimum touch target", value: "\(Int(HanlinControlMetrics.minimumHitTarget)) pt")
+                LabeledContent(hanlin: "Page inset", value: "\(Int(HanlinControlMetrics.pageInset)) pt")
             }
         }
         .font(HanlinTypography.body)
-        .navigationTitle("Interface catalogue")
+        .navigationTitle(Text("Interface catalogue", bundle: HanlinLocalization.bundle))
         .accessibilityIdentifier("hanlin-component-catalogue")
     }
 }

@@ -17,6 +17,15 @@ public actor HanlinHostDispatcher {
     private let host: any HanlinHostIntegration
     private var calls: [CallKey: CallState] = [:]
     private var revokedSessions = Set<UUID>()
+    private struct NavigationKey: Hashable { let session: UUID; let request: UUID }
+    private struct NavigationState {
+        let session: HanlinHostSession
+        let destination: HanlinHostDestination
+        var receipt: HanlinHostNavigationReceipt?
+    }
+    private var navigationRequests: [NavigationKey: NavigationState] = [:]
+    private var activeNavigationBySession: [UUID: NavigationKey] = [:]
+    private var retiredSessions = Set<UUID>()
 
     public init(host: any HanlinHostIntegration) { self.host = host }
 
@@ -51,7 +60,7 @@ public actor HanlinHostDispatcher {
             guard let result = old.result else { throw HanlinHostError.duplicateInvocation }
             guard try JSONEncoder().encode(result).count <= limits.maximumOutputBytes else { throw HanlinHostError.outputLimitExceeded }
             try Task.checkCancellation()
-            guard !revokedSessions.contains(session.id) else { throw HanlinHostError.staleContext }
+            guard sessionIsAvailable(session) else { throw HanlinHostError.staleContext }
             return result
         }
         // The provider ID is opaque. A fresh UUID maps it to a valid canonical invocation ID.
@@ -69,7 +78,7 @@ public actor HanlinHostDispatcher {
         // Revalidate after all suspensions and reserve before host dispatch. Host still owns schema,
         // durable idempotency, permission/confirmation and the final native mutation boundary.
         try Task.checkCancellation()
-        guard !revokedSessions.contains(session.id) else { throw HanlinHostError.staleContext }
+        guard sessionIsAvailable(session) else { throw HanlinHostError.staleContext }
         calls[key] = CallState(invocationID: invocationID,
             identity: .init(session: session, runID: runID, step: step, providerCallID: providerCallID,
                             invocationID: invocationID, logicalToolID: tool.route.logicalToolID),
@@ -113,7 +122,7 @@ public actor HanlinHostDispatcher {
             runID: runID, step: step, session: session, catalog: catalog, expectedRevision: expectedRevision,
             limits: limits, progress: progress)
         try Task.checkCancellation()
-        guard !revokedSessions.contains(session.id),
+        guard sessionIsAvailable(session),
               let state = calls[CallKey(session: session.id, run: runID, providerID: providerCallID)] else {
             throw HanlinHostError.staleContext
         }
@@ -123,7 +132,7 @@ public actor HanlinHostDispatcher {
     /// Checks an actual unresolved reservation before a Host associates durable metadata with it.
     /// The result identity and original bytes must be the ones captured before Host entry.
     public func isReserved(_ invocation: HanlinHostInvocation) -> Bool {
-        guard !revokedSessions.contains(invocation.session.id),
+        guard sessionIsAvailable(invocation.session),
               let state = calls[CallKey(session: invocation.session.id, run: invocation.runID, providerID: invocation.providerCallID)] else { return false }
         return state.result == nil && state.invocationID == invocation.request.id && state.resultID == invocation.resultID
             && state.identity.session == invocation.session && state.identity.runID == invocation.runID
@@ -153,24 +162,90 @@ public actor HanlinHostDispatcher {
         return result
     }
 
+    /// Open through the original host's explicit context-transition capability. Old
+    /// contexts never become fresh by rewriting a reply or skipping a post-await check.
+    public func openWithContextTransition(_ destination: HanlinHostDestination,
+                                          session: HanlinHostSession) async throws -> HanlinHostNavigationReceipt {
+        try Task.checkCancellation()
+        guard host.apiVersion.major == 1, host.apiVersion.minor >= 2,
+              let transitionHost = host as? any HanlinHostNavigationTransitionSource else {
+            throw HanlinHostError.unsupportedVersion
+        }
+        guard destination.context == session.context else { throw HanlinHostError.staleContext }
+        try await requireCurrent(session)
+        guard sessionIsAvailable(session) else { throw HanlinHostError.staleContext }
+        let key = NavigationKey(session: session.id, request: destination.requestID)
+        if let old = navigationRequests[key] {
+            guard old.session == session, old.destination == destination,
+                  old.destination.objectReference.utf8.elementsEqual(destination.objectReference.utf8),
+                  old.destination.blockReference.map({ Data($0.utf8) }) == destination.blockReference.map({ Data($0.utf8) }) else {
+                throw HanlinHostError.idempotencyConflict
+            }
+            // Even a queued/uncertain request must be reconciled by its original host,
+            // not entered a second time because the caller did not receive an ACK.
+            throw HanlinHostError.duplicateInvocation
+        }
+        navigationRequests[key] = .init(session: session, destination: destination)
+        activeNavigationBySession[session.id] = key
+        defer { activeNavigationBySession[session.id] = nil }
+        do {
+            let receipt = try await transitionHost.openWithContextTransition(destination, session: session)
+            try receipt.validate(for: destination, session: session)
+            // Preserve a correctly correlated effect receipt before cancellation or
+            // authority changes suppress its delivery, just as tool dispatch does.
+            navigationRequests[key]?.receipt = receipt
+            try Task.checkCancellation()
+            guard sessionIsAvailable(session, allowingNavigation: key) else { throw HanlinHostError.staleContext }
+            let next = receipt.successorSession ?? session
+            try await requireCurrent(next, allowingNavigation: key)
+            // Checking the successor alone cannot notice revocation of the origin
+            // while the host context callback was suspended.
+            try Task.checkCancellation()
+            guard sessionIsAvailable(session, allowingNavigation: key) else { throw HanlinHostError.staleContext }
+            if receipt.successorSession != nil { retiredSessions.insert(session.id) }
+            return receipt
+        } catch {
+            // Host entry may already have changed the native scene. Preserve the
+            // reservation and retire this identity; only the host can issue a fresh
+            // session or reconcile the original request. Never silently repeat it.
+            retiredSessions.insert(session.id)
+            if let successor = navigationRequests[key]?.receipt?.successorSession {
+                retiredSessions.insert(successor.id)
+            }
+            throw error
+        }
+    }
+
+    /// Correlated historical receipts, not proof that their successor is still current.
+    public func navigationReceipts(for session: HanlinHostSession) -> [HanlinHostNavigationReceipt] {
+        navigationRequests.values.filter { $0.session == session }.compactMap(\.receipt)
+    }
+
+    private func sessionIsAvailable(_ session: HanlinHostSession,
+                                    allowingNavigation: NavigationKey? = nil) -> Bool {
+        !revokedSessions.contains(session.id) && !retiredSessions.contains(session.id)
+            && (activeNavigationBySession[session.id] == nil
+                || activeNavigationBySession[session.id] == allowingNavigation)
+    }
+
     /// The host may suspend with a captured matching context. Actor revocation and task
     /// cancellation must both be checked AFTER that await, before any dispatch or delivery.
-    private func requireCurrent(_ session: HanlinHostSession) async throws {
+    private func requireCurrent(_ session: HanlinHostSession, allowingNavigation: NavigationKey? = nil) async throws {
         try Task.checkCancellation()
-        guard !revokedSessions.contains(session.id) else { throw HanlinHostError.staleContext }
+        guard sessionIsAvailable(session, allowingNavigation: allowingNavigation) else { throw HanlinHostError.staleContext }
         let current = try await host.context(for: session)
         try Task.checkCancellation()
-        guard !revokedSessions.contains(session.id), current == session.context else { throw HanlinHostError.staleContext }
+        guard sessionIsAvailable(session, allowingNavigation: allowingNavigation), current == session.context else { throw HanlinHostError.staleContext }
     }
 
     private func forward(_ event: HanlinToolProgressEvent, key: CallKey, session: HanlinHostSession,
                          to sink: @escaping @Sendable (HanlinToolProgressEvent) async -> Void) async {
-        guard !Task.isCancelled, !revokedSessions.contains(session.id), let state = calls[key], state.result == nil,
+        guard !Task.isCancelled, sessionIsAvailable(session), let state = calls[key], state.result == nil,
               state.invocationID == event.invocationID,
               state.progressSequence.map({ event.sequence > $0 }) ?? true,
               (event.message?.utf8.count ?? 0) <= 4_096,
               let current = try? await host.context(for: session), current == session.context,
-              !Task.isCancelled, !revokedSessions.contains(session.id), calls[key]?.result == nil,
+              !Task.isCancelled, sessionIsAvailable(session), calls[key]?.result == nil,
               calls[key]?.progressSequence.map({ event.sequence > $0 }) ?? true else { return }
         calls[key]?.progressSequence = event.sequence
         await sink(event)

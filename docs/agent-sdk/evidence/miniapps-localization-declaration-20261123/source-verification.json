@@ -1,0 +1,161 @@
+{
+  "parent_sha": "e7428f4fdc383b290fd4cc9f75f280ec7fdb44f3",
+  "original_native_source": "e59256e8325bcdb71c0e683f6b19e7641642aad8",
+  "original_native_run": 45260265662,
+  "source_file": "HanlinMiniAppsApp/Info.plist",
+  "before_sha256": "1a88d9ecdc0d5286bb6b536ce3092522282e6410d6c205e9d25d5457d9b50e59",
+  "after_sha256": "421c40c57901a14de975e3d15f1bcb6a39fb8aa61023aa1aa5df48e69cd6f49c",
+  "plist_parse": "PASS",
+  "only_new_plist_key": "CFBundleLocalizations",
+  "supported_languages": [
+    "en",
+    "he",
+    "zh-Hans"
+  ],
+  "all_prior_keys_values_unchanged": true,
+  "removing_exact_insertion_restores_prior_bytes": true,
+  "catalogs": [
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/Localizable.xcstrings",
+      "sha256": "c84abcc423c6f0b27d09002f5a9d43da83d1adc3c7418b903fe8b63afab184c5",
+      "source_language": "zh-Hans",
+      "languages": [
+        "en",
+        "he",
+        "zh-Hans"
+      ]
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/MCPLocalizable.xcstrings",
+      "sha256": "00f9e7f6da0a1d8c6976f482cd3675b0e5fb07a9f3fdfae204745d43aa24c8c7",
+      "source_language": "en",
+      "languages": [
+        "en",
+        "he",
+        "zh-Hans"
+      ]
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/RuntimeLocalizable.xcstrings",
+      "sha256": "4cf11a72d5cc7533172451cb46a08879ea1094938b560aef4059b3c3c42a6d4d",
+      "source_language": "en",
+      "languages": [
+        "en",
+        "he",
+        "zh-Hans"
+      ]
+    }
+  ],
+  "main_host_source_lproj": [
+    "en",
+    "he",
+    "zh-Hans"
+  ],
+  "mini_host_source_lproj": [],
+  "main_host_info_plist_unchanged": true,
+  "original_build_receipts": [
+    {
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-paired-proof-20261123/build/paired3-e592-20261123/native/app-split-evidence/paired-product/ai-build.log",
+      "original_sha256": "e9a101ea1f2c102a08c09da7f9c56454682ab271cec3bb1bf37dca8edb7a17f9",
+      "original_bytes": 15537735,
+      "extraction": "Lines containing CopyStringsFile and /InfoPlist.strings, or CpResource and HanlinLocalization.bundle; trailing whitespace stripped only in this derived excerpt",
+      "excerpt_sha256": "14d9e1d9cc99af12f427c84f2922374061e749e1a4c69e1c611347a70412ceef",
+      "selected_line_count": 3,
+      "main_host_info_plist_languages": [
+        "en",
+        "he",
+        "zh-Hans"
+      ],
+      "mini_host_info_plist_languages": []
+    },
+    {
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-paired-proof-20261123/build/paired3-e592-20261123/native/app-split-evidence/paired-product/mini-build.log",
+      "original_sha256": "7a840c310ee3495eb9aa4eeb81da7fde8818d248f46f05db0b76eb2ac9da4de0",
+      "original_bytes": 12605875,
+      "extraction": "Lines containing CopyStringsFile and /InfoPlist.strings, or CpResource and HanlinLocalization.bundle; trailing whitespace stripped only in this derived excerpt",
+      "excerpt_sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "selected_line_count": 0,
+      "main_host_info_plist_languages": [],
+      "mini_host_info_plist_languages": []
+    }
+  ],
+  "protected_inputs": [
+    {
+      "path": "AI-HLY-Info.plist",
+      "sha256": "a192c61db77c3d6b7244b30353bd750f0e65a9050af60cbf583c3f12b82549fd",
+      "unchanged_vs_parent": true
+    },
+    {
+      "path": "AI_HLY.xcodeproj/project.pbxproj",
+      "sha256": "2b689644c3fb9ac84137021ed400e94abcd473f3c69711c93e970a00d4ed206b",
+      "unchanged_vs_parent": true
+    },
+    {
+      "path": "AI_HLY/Downstream/MiniApps/HanlinMiniAppHost.swift",
+      "sha256": "fdcbbfa309785465c9a92cc7b17a95ebb140ae8afe067c13a3d0c684ff26e207",
+      "unchanged_vs_parent": true
+    },
+    {
+      "path": "AI_HLYUITests/HanlinPairedProductUITests.swift",
+      "sha256": "eb8e4648b6459bd1832fa1e21603dc394c3474f9b8f7fcc0494a26779b0bde58",
+      "unchanged_vs_parent": true
+    },
+    {
+      "path": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+      "sha256": "349db7657d2aa90b63ee1e824ec8937d30f904c8b6b1605d5942394583115d00",
+      "unchanged_vs_parent": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Package.swift",
+      "sha256": "462479a3660edd652181ad339238c29f270ec9bfd8203d2f1310681d8029ecc4",
+      "unchanged_vs_parent": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/HanlinLocalization.swift",
+      "sha256": "2112f0888e23a46d23b37371c14ee24ef91cf57ab412b1011aaaa64e1cb0541e",
+      "unchanged_vs_parent": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/Localizable.xcstrings",
+      "sha256": "c84abcc423c6f0b27d09002f5a9d43da83d1adc3c7418b903fe8b63afab184c5",
+      "unchanged_vs_parent": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/RuntimeLocalizable.xcstrings",
+      "sha256": "4cf11a72d5cc7533172451cb46a08879ea1094938b560aef4059b3c3c42a6d4d",
+      "unchanged_vs_parent": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/MCPLocalizable.xcstrings",
+      "sha256": "00f9e7f6da0a1d8c6976f482cd3675b0e5fb07a9f3fdfae204745d43aa24c8c7",
+      "unchanged_vs_parent": true
+    },
+    {
+      "path": "AI_HLY/en.lproj/InfoPlist.strings",
+      "sha256": "a2e4ad5900eb37ef8cacebd3590db9c97a66abe41b9a8fc0c34e1f9140742fd4",
+      "unchanged_vs_parent": true
+    },
+    {
+      "path": "AI_HLY/he.lproj/InfoPlist.strings",
+      "sha256": "b2d5aa6a5fc343bf8512bc0184abdce8a2f4501620d5c6d28cc59cbbbf9861df",
+      "unchanged_vs_parent": true
+    },
+    {
+      "path": "AI_HLY/zh-Hans.lproj/InfoPlist.strings",
+      "sha256": "9c59a532c3f75099a2377221ac6ba17b1fd983339a794324eb86046ce9ccac5e",
+      "unchanged_vs_parent": true
+    }
+  ],
+  "original_three_tests_byte_identical": true,
+  "observed_transfer_success": {
+    "language": "zh-Hans",
+    "text": "传输完成。你的小程序已准备就绪。",
+    "canonical_catalog_value_matches": true,
+    "original_ax_sha256": "c5e25a1c721891d952d9317330b12db9cf69fe2c6e1fc859f9ebaa1f32f2f1ce"
+  },
+  "acceptance": {
+    "original_method": "FAIL at requested English status assertion",
+    "post_import_saved_state_reopen_rollback": "NOT_RUN",
+    "corrected_native_host_language": "NOT_RUN"
+  }
+}

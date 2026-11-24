@@ -1,0 +1,20 @@
+{
+  "expected_source": "6772dce6304fc6761a2200314f7d2020dc782e47",
+  "started_at": "2026-11-23T09:23:56.680119+00:00",
+  "payload": {
+    "ref": "codex/hanlin-motion-d-20261123",
+    "inputs": {
+      "target_validation_group": "chat_motion_product",
+      "exact_test_selector": "MotionUITests/testDRapidInputDiagnosticOnly",
+      "testflight_upload": "false",
+      "runtime_bundle_only": "false",
+      "runtime_publish_release": "false",
+      "full_validation": "false"
+    }
+  },
+  "workflow_sha256": "c211ff46fbf4c5ea934201682ee5984f64ae936adeb952341acc7ba203ecac62",
+  "scope": "Original D diagnostic only; all six native delivery variants in both original scroll phases",
+  "authority": "Parent authorized one original D after source-bound B video diagnosis; A/B/C not selected",
+  "concurrency": "Isolated exact validation ref plus original chat_motion_product group; cannot cancel root or paired gates",
+  "no_new_product_or_fixture_commit": true
+}

@@ -1,3 +1,4 @@
+import HanlinLocalization
 //
 //  APIManager+LegacyTools.swift
 //  AI_HLY
@@ -7,6 +8,7 @@ import Foundation
 import SwiftData
 import CoreLocation
 import HanlinPlatformContracts
+import HanlinScriptDeviceServices
 
 extension APIManager {
     @MainActor
@@ -15,7 +17,9 @@ extension APIManager {
         argumentsJSON: String,
         context: NativeToolExecutionContext,
         continuation: AsyncThrowingStream<StreamData, Error>.Continuation?,
-        currentLocationProvider: @MainActor () async throws -> Location = { try await getCurrentLocation() }
+        currentLocationProvider: @MainActor () async throws -> Location = { try await getCurrentLocation() },
+        calendarSearchProvider: @MainActor (HanlinCalendarSearchRequest) async throws -> [EventItem] = { try await searchSystemEvents($0) },
+        calendarWriteProvider: @MainActor (HanlinCalendarWriteRequest) async throws -> EventItem = { try await writeSystemEvent($0) }
     ) async -> NativeToolResult {
         let currentLanguage = context.localeIdentifier
         let currentLanguagePrefix = currentLanguage.hasPrefix("zh")
@@ -302,7 +306,7 @@ extension APIManager {
                                                     executionOutcome = .cancelled
                                                     executionDiagnostics.failureCategory = executionOutcome.rawValue
                                                     executionDiagnostics.wasCancelled = true
-                                                    toolResult = String(localized: "Cancelled")
+                                                    toolResult = String(localized: "Cancelled", bundle: HanlinLocalization.bundle)
                                                     break
                                                 }
                                                 // 检查是否有激活的天气服务
@@ -361,7 +365,7 @@ extension APIManager {
                                                     if error is CancellationError || Task.isCancelled {
                                                         executionOutcome = .cancelled
                                                         executionDiagnostics.wasCancelled = true
-                                                        toolResult = String(localized: "Cancelled")
+                                                        toolResult = String(localized: "Cancelled", bundle: HanlinLocalization.bundle)
                                                     } else {
                                                         executionOutcome = .failed
                                                         toolResult = currentLanguagePrefix
@@ -394,7 +398,7 @@ extension APIManager {
                                                     if error is CancellationError || Task.isCancelled {
                                                         executionOutcome = .cancelled
                                                         executionDiagnostics.wasCancelled = true
-                                                        toolResult = String(localized: "Cancelled")
+                                                        toolResult = String(localized: "Cancelled", bundle: HanlinLocalization.bundle)
                                                     } else {
                                                         executionOutcome = .failed
                                                         toolResult = currentLanguagePrefix ?
@@ -568,160 +572,88 @@ extension APIManager {
                                             case "search_calendar_and_reminders":
                                                 continuation?.yield(StreamData(operationalState: currentLanguagePrefix ? "查询日程事项" : "Searching Calendar"))
                                                 useFunctionName = functionName
-                                                
+                                                executionDiagnostics.backendRoute = "system:eventkit"
                                                 do {
-                                                    // 从函数参数中分别提取各字段
-                                                    let keyword = extractValue(from: functionArguments, forKey: "keyword")
-                                                    let startDateString = extractValue(from: functionArguments, forKey: "start_date")
-                                                    let endDateString = extractValue(from: functionArguments, forKey: "end_date")
-                                                    let location = extractValue(from: functionArguments, forKey: "location")
-                                                    let eventType = extractValue(from: functionArguments, forKey: "event_type")
-                                                    
-                                                    // 将日期字符串转换为 Date 对象，格式要求为 "yyyy-MM-dd"
-                                                    let dateFormatter = DateFormatter()
-                                                    dateFormatter.dateFormat = "yyyy-MM-dd"
-                                                    var startDate: Date? = nil
-                                                    var endDate: Date? = nil
-                                                    if let startStr = startDateString, !startStr.isEmpty {
-                                                        startDate = dateFormatter.date(from: startStr)
-                                                    }
-                                                    if let endStr = endDateString, !endStr.isEmpty {
-                                                        endDate = dateFormatter.date(from: endStr)
-                                                    }
-                                                    
-                                                    // 调用新的搜索函数，按照各条件查询日历与提醒事项
-                                                    let items = await searchSystemEvents(keyword: keyword, startDate: startDate, endDate: endDate, location: location, eventType: eventType)
+                                                    try Task.checkCancellation()
+                                                    let request = try HanlinCalendarSearchRequest(
+                                                        keyword: extractValue(from: functionArguments, forKey: "keyword"),
+                                                        startDate: HanlinCalendarDateParser.day(extractValue(from: functionArguments, forKey: "start_date"), field: "start_date"),
+                                                        endDate: HanlinCalendarDateParser.day(extractValue(from: functionArguments, forKey: "end_date"), field: "end_date"),
+                                                        location: extractValue(from: functionArguments, forKey: "location"),
+                                                        eventType: extractValue(from: functionArguments, forKey: "event_type"))
+                                                    let items = try await calendarSearchProvider(request)
+                                                    try Task.checkCancellation()
                                                     executionEvidenceItems = AgentEvidenceExtractor.calendarItems(
-                                                        items,
-                                                        toolName: functionName,
-                                                        toolCallID: toolCallID
-                                                    )
-                                                    
+                                                        items, toolName: functionName, toolCallID: toolCallID)
                                                     if items.isEmpty {
                                                         toolResult = currentLanguagePrefix ?
-                                                        "未查询到符合条件的日历事件或提醒事项。" :
-                                                        "No calendar events or reminders found matching the criteria."
+                                                            "未查询到符合条件的日历事件或提醒事项。" :
+                                                            "No calendar events or reminders found matching the criteria."
                                                     } else {
-                                                        
-                                                        // 格式化输出结果
-                                                        let outputFormatter = DateFormatter()
-                                                        outputFormatter.dateFormat = "yyyy-MM-dd HH:mm"
-                                                        
+                                                        let formatter = DateFormatter()
+                                                        formatter.dateFormat = "yyyy-MM-dd HH:mm"
                                                         let formatted = items.enumerated().map { index, item in
-                                                            let timeString: String = {
-                                                                if let start = item.startDate {
-                                                                    return outputFormatter.string(from: start)
-                                                                } else if let due = item.dueDate {
-                                                                    return outputFormatter.string(from: due)
-                                                                } else {
-                                                                    return currentLanguagePrefix ? "无时间信息" : "No time info"
-                                                                }
-                                                            }()
-                                                            
-                                                            let notePart = item.notes?.isEmpty == false ? "（备注：\(item.notes!)）" : ""
-                                                            let locPart = item.location?.isEmpty == false ? "（地点：\(item.location!)）" : ""
-                                                            let typePart = item.type == "calendar" ? (currentLanguagePrefix ? "日历事件" : "Calendar") : (currentLanguagePrefix ? "提醒事项" : "Reminder")
-                                                            
-                                                            return "(\(index + 1)) [\(typePart)] \(item.title) - \(timeString)\(notePart)\(locPart)"
+                                                            let date = item.startDate ?? item.dueDate
+                                                            let time = date.map { formatter.string(from: $0) } ?? (currentLanguagePrefix ? "无时间信息" : "No time info")
+                                                            let note = item.notes.flatMap { $0.isEmpty ? nil : "（备注：\($0)）" } ?? ""
+                                                            let location = item.location.flatMap { $0.isEmpty ? nil : "（地点：\($0)）" } ?? ""
+                                                            let kind = item.type == "calendar" ? (currentLanguagePrefix ? "日历事件" : "Calendar") : (currentLanguagePrefix ? "提醒事项" : "Reminder")
+                                                            return "(\(index + 1)) [\(kind)] \(item.title) - \(time)\(note)\(location)"
                                                         }.joined(separator: "\n")
-                                                        
                                                         toolResult = currentLanguagePrefix ?
-                                                        "查询成功，共找到 \(items.count) 个相关项目：\n\(formatted)" :
-                                                        "Query successful. Found \(items.count) matching items:\n\(formatted)"
+                                                            "查询成功，共找到 \(items.count) 个相关项目：\n\(formatted)" :
+                                                            "Query successful. Found \(items.count) matching items:\n\(formatted)"
                                                     }
+                                                } catch {
+                                                    let failure = calendarToolFailure(error)
+                                                    executionOutcome = failure.outcome
+                                                    executionReturnedError = true
+                                                    executionDiagnostics.failureCategory = failure.outcome.rawValue
+                                                    executionDiagnostics.wasCancelled = failure.outcome == .cancelled
+                                                    executionDiagnostics.didTimeOut = failure.outcome == .timedOut
+                                                    toolResult = failure.message
                                                 }
-                                                
                                                 toolResultFront = toolResult
-                                                
+
                                             case "write_system_event":
                                                 continuation?.yield(StreamData(operationalState: currentLanguagePrefix ? "写入系统事件" : "Writing System Event"))
                                                 useFunctionName = functionName
-                                                
+                                                executionDiagnostics.backendRoute = "system:eventkit"
                                                 do {
-                                                    // 从函数参数中分别提取各字段
-                                                    let typeStr = extractValue(from: functionArguments, forKey: "type") ?? ""
-                                                    let titleStr = extractValue(from: functionArguments, forKey: "title") ?? ""
-                                                    let startDateStr = extractValue(from: functionArguments, forKey: "start_date") ?? ""
-                                                    let endDateStr = extractValue(from: functionArguments, forKey: "end_date") ?? ""
-                                                    let dueDateStr = extractValue(from: functionArguments, forKey: "due_date") ?? ""
-                                                    let locationValue = extractValue(from: functionArguments, forKey: "location") ?? ""
-                                                    let notesValue = extractValue(from: functionArguments, forKey: "notes") ?? ""
-                                                    let priorityStr = extractValue(from: functionArguments, forKey: "priority")
-                                                    let reminderMinutesStr = extractValue(from: functionArguments, forKey: "reminder_minutes")
-                                                    
-                                                    // 使用 ISO8601 格式转换日期字符串（格式示例：2025-04-16T12:34:56Z）
-                                                    print("时间：", startDateStr, endDateStr, dueDateStr)
-                                                    let isoFormatter = ISO8601DateFormatter()
-                                                    var startDate: Date? = nil
-                                                    var endDate: Date? = nil
-                                                    var dueDate: Date? = nil
-                                                    
-                                                    if !startDateStr.isEmpty {
-                                                        startDate = isoFormatter.date(from: startDateStr)
-                                                    }
-                                                    if !endDateStr.isEmpty {
-                                                        endDate = isoFormatter.date(from: endDateStr)
-                                                    }
-                                                    if !dueDateStr.isEmpty {
-                                                        dueDate = isoFormatter.date(from: dueDateStr)
-                                                    }
-                                                    
-                                                    // 将 priority 转换为 Int（若传入值非空）
-                                                    var priorityValue: Int? = nil
-                                                    if let pStr = priorityStr, let pInt = Int(pStr) {
-                                                        priorityValue = pInt
-                                                    }
-                                                    
-                                                    // 将 reminder_minutes 转换为 Int（若传入值非空）
-                                                    var reminderMinutesValue: Int? = nil
-                                                    if let rmStr = reminderMinutesStr, let rmInt = Int(rmStr) {
-                                                        reminderMinutesValue = rmInt
-                                                    }
-                                                    
-                                                    // 调用写入系统事件的函数
-                                                    let (writtenEvent, success) = await writeSystemEvent(type: typeStr,
-                                                                                                         title: titleStr,
-                                                                                                         startDate: startDate,
-                                                                                                         endDate: endDate,
-                                                                                                         dueDate: dueDate,
-                                                                                                         location: locationValue,
-                                                                                                         notes: notesValue,
-                                                                                                         priority: priorityValue,
-                                                                                                         reminderMinutes: reminderMinutesValue)
-                                                    
-                                                    if success, let event = writtenEvent {
-                                                        // 使用 DateFormatter 格式化时间输出
-                                                        let outputFormatter = DateFormatter()
-                                                        outputFormatter.dateFormat = "yyyy-MM-dd HH:mm"
-                                                        let timeString: String = {
-                                                            if typeStr.lowercased() == "calendar", let start = event.startDate {
-                                                                return outputFormatter.string(from: start)
-                                                            } else if typeStr.lowercased() == "reminder", let due = event.dueDate {
-                                                                return outputFormatter.string(from: due)
-                                                            } else {
-                                                                return currentLanguagePrefix ? "无时间信息" : "No time info"
-                                                            }
-                                                        }()
-                                                        
-                                                        toolResult = currentLanguagePrefix ?
-                                                        "写入成功：[ \(event.title) - \(timeString) ]" :
-                                                        "Event written successfully: [ \(event.title) - \(timeString) ]"
-                                                        
-                                                        // 存入聊天框
-                                                        if self.events == nil {
-                                                            self.events = []
-                                                        }
-                                                        self.events?.append(event)
-                                                        
-                                                    } else {
-                                                        toolResult = currentLanguagePrefix ?
-                                                        "写入系统事件失败。" :
-                                                        "Failed to write system event."
-                                                    }
+                                                    try Task.checkCancellation()
+                                                    let request = try HanlinCalendarWriteRequest(
+                                                        type: extractValue(from: functionArguments, forKey: "type") ?? "",
+                                                        title: extractValue(from: functionArguments, forKey: "title") ?? "",
+                                                        startDate: HanlinCalendarDateParser.timestamp(extractValue(from: functionArguments, forKey: "start_date"), field: "start_date"),
+                                                        endDate: HanlinCalendarDateParser.timestamp(extractValue(from: functionArguments, forKey: "end_date"), field: "end_date"),
+                                                        dueDate: HanlinCalendarDateParser.timestamp(extractValue(from: functionArguments, forKey: "due_date"), field: "due_date"),
+                                                        location: extractValue(from: functionArguments, forKey: "location"),
+                                                        notes: extractValue(from: functionArguments, forKey: "notes"),
+                                                        priority: HanlinCalendarDateParser.integer(extractValue(from: functionArguments, forKey: "priority"), field: "priority"),
+                                                        reminderMinutes: HanlinCalendarDateParser.integer(extractValue(from: functionArguments, forKey: "reminder_minutes"), field: "reminder_minutes"))
+                                                    let event = try await calendarWriteProvider(request)
+                                                    // A committed write remains a success even if cancellation races
+                                                    // after EventKit saved it. Never invite an accidental duplicate.
+                                                    let formatter = DateFormatter()
+                                                    formatter.dateFormat = "yyyy-MM-dd HH:mm"
+                                                    let time = (event.startDate ?? event.dueDate).map { formatter.string(from: $0) }
+                                                        ?? (currentLanguagePrefix ? "无时间信息" : "No time info")
+                                                    toolResult = currentLanguagePrefix ?
+                                                        "写入成功：[ \(event.title) - \(time) ]" :
+                                                        "Event written successfully: [ \(event.title) - \(time) ]"
+                                                    if self.events == nil { self.events = [] }
+                                                    self.events?.append(event)
+                                                } catch {
+                                                    let failure = calendarToolFailure(error)
+                                                    executionOutcome = failure.outcome
+                                                    executionReturnedError = true
+                                                    executionDiagnostics.failureCategory = failure.outcome.rawValue
+                                                    executionDiagnostics.wasCancelled = failure.outcome == .cancelled
+                                                    executionDiagnostics.didTimeOut = failure.outcome == .timedOut
+                                                    toolResult = failure.message
                                                 }
-                                                
                                                 toolResultFront = toolResult
-                                                
+
                                             case "create_web_view":
                                                 continuation?.yield(StreamData(operationalState: currentLanguagePrefix ? "正在创建网页" : "Creating Webpage"))
                                                 

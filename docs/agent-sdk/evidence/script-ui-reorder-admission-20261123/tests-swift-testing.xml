@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="TestResults" errors="0" tests="6" failures="0" skipped="0" time="0.007061721">
+    <testcase classname="HanlinScriptUITests.HanlinScriptUIReorderAdmissionTests" name="validReorderPreservesNodesAndPropertyPatches()" time="0.005056549" />
+    <testcase classname="HanlinScriptUITests.HanlinScriptUIReorderAdmissionTests" name="invalidNestedBatchKeepsPublishedRootAndAllowsRecovery()" time="0.00525507" />
+    <testcase classname="HanlinScriptUITests.HanlinScriptUIReorderAdmissionTests" name="mismatchedRequestedKeySetsAreRejected()" time="0.005059749" />
+    <testcase classname="HanlinScriptUITests.HanlinScriptUIReorderAdmissionTests" name="duplicateCurrentChildKeysAreRejected()" time="0.00506083" />
+    <testcase classname="HanlinScriptUITests.HanlinScriptUIReorderAdmissionTests" name="missingCurrentChildKeysAreRejected()" time="0.005063949" />
+    <testcase classname="HanlinScriptUITests.HanlinScriptUIReorderAdmissionTests" name="duplicateReorderSequenceIsRejected()" time="0.001278087" />
+  </testsuite>
+</testsuites>

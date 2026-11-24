@@ -1,0 +1,35 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "43E586DF-0E98-43A6-A020-FDCEDB6DD18E",
+        "deviceName" : "Hanlin-Phase2-Motion-45267860115",
+        "exportedFileName" : "E80BFC0B-9BB4-45E1-A22C-D5B8AA5D60E9",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-23 at 09.37.15 PM",
+        "timestamp" : 1795469835.144
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "43E586DF-0E98-43A6-A020-FDCEDB6DD18E",
+        "deviceName" : "Hanlin-Phase2-Motion-45267860115",
+        "exportedFileName" : "D0E9A126-779C-45A1-BE75-EDA258AD2EBE",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-23 at 09.37.12 PM",
+        "timestamp" : 1795469832.711
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "43E586DF-0E98-43A6-A020-FDCEDB6DD18E",
+        "deviceName" : "Hanlin-Phase2-Motion-45267860115",
+        "exportedFileName" : "90224775-0013-46F2-85AC-209D81061983.mp4",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Screen Recording 2026-11-23 at 09.36.36 PM.mp4",
+        "timestamp" : 1795469796.14
+      }
+    ],
+    "testIdentifier" : "MotionUITests/testBRapidReversalPresetSwitchAndPersistence()",
+    "testIdentifierURL" : "test://com.apple.xcode/ChatMotionProof/ChatMotionProofUITests/MotionUITests/testBRapidReversalPresetSwitchAndPersistence"
+  }
+]

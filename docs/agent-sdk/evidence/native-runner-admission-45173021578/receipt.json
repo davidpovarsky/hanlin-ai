@@ -1,0 +1,38 @@
+{
+  "run_id": 45173021578,
+  "run_attempt": 1,
+  "head_sha": "494382c95755020f465977c74ac0edf5c4c27d12",
+  "native_job": 137687253559,
+  "native_status": "NOT_RUN_HOSTED_RUNNER_ADMISSION",
+  "runner_id": 0,
+  "native_steps": 0,
+  "application_selectors_not_run": 28,
+  "queued_since": "2026-11-23T12:18:38Z",
+  "cancelled_at": "2026-11-23T12:36:19Z",
+  "allocation_window_seconds": 1061,
+  "workflow_result": "failure",
+  "native_artifacts": 0,
+  "other_artifact_names": [
+    "provider-conformance-summary",
+    "ci-performance-report",
+    "ci-validation-plan"
+  ],
+  "original_annotation": "The job was not acquired by Runner of type hosted even after multiple attempts",
+  "old_watcher_ended": {
+    "run_id": 45173021578,
+    "ended_at": "2026-11-23T12:37:12.162145+00:00",
+    "returncode": 1,
+    "window_expired": false
+  },
+  "owned_watch_orphans": [],
+  "continuation": {
+    "run_id": 45177292887,
+    "source": "2549bb1395045e1514ec6c273239fcdaf18af207",
+    "created_at": "2026-11-23T12:45:20Z",
+    "same28selectors": true,
+    "same_production_workflow_tests": true,
+    "sole_watcher": "job_a0bba11350e4",
+    "already_passed_store3methods4cases_replayed": false
+  },
+  "recorded_at": "2026-11-23T12:49:01.208632+00:00"
+}

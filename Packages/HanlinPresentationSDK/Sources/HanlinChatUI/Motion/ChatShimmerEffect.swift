@@ -21,6 +21,7 @@ public struct HanlinActivityTitle: View {
     private let active: Bool
     private let startedAt: Date?
     private let stoppedAt: Date?
+    @Environment(\.hanlinChatAppearance) private var appearance
 
     public init(_ title: String, font: Font, baseColor: Color = .secondary, isActive: Bool,
                 startedAt: Date? = nil, stoppedAt: Date? = nil) {
@@ -35,7 +36,7 @@ public struct HanlinActivityTitle: View {
     public var body: some View {
         Text(title)
             .font(font)
-            .foregroundStyle(active ? Color(red: 0.24, green: 0.43, blue: 0.68) : baseColor)
+            .foregroundStyle(active ? (appearance.activeTitle ?? Color(red: 0.24, green: 0.43, blue: 0.68)) : baseColor)
             .chatShimmer(isActive: active, startedAt: startedAt, stoppedAt: stoppedAt)
     }
 }
@@ -51,6 +52,7 @@ struct ChatShimmerModifier: ViewModifier {
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.chatMotion) private var motion
     @Environment(\.hanlinActivityBranchVisible) private var branchIsVisible
+    @Environment(\.hanlinChatAppearance) private var appearance
 
     init(isActive: Bool = true, colors: [Color]? = nil,
          startedAt: Date? = nil, stoppedAt: Date? = nil) {
@@ -78,7 +80,7 @@ struct ChatShimmerModifier: ViewModifier {
                             let progress = seconds.truncatingRemainder(dividingBy: duration) / duration
                             let position = CGFloat(progress) * (width + beamWidth) - beamWidth
                             LinearGradient(
-                                colors: colors ?? [
+                                colors: colors ?? appearance.shimmerColors ?? [
                                     .clear,
                                     Color(red: 0.32, green: 0.65, blue: 0.98).opacity(0.32),
                                     Color(red: 0.63, green: 0.83, blue: 1.00),

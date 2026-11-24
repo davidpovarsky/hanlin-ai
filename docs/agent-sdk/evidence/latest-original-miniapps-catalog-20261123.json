@@ -1,0 +1,372 @@
+{
+  "base": "bcb1a2954c8cfbd36035c08aafb4acbca7a6a5fb",
+  "scope": "Original function and computed-property bodies; new public constructors, immutable identity isolation and host callback storage are separate seams.",
+  "normalizations": [
+    "Canonical localization bundle and original control forwarding helpers",
+    "Public type name for the original companion composition"
+  ],
+  "source_provenance": [
+    {
+      "original": "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsCatalogView.swift",
+      "original_sha256": "e1e1b4d74892ebf12636656d149696f420af8093b433bc500c0dbc24352e7541",
+      "canonical": [
+        {
+          "path": "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsCatalogView.swift",
+          "sha256": "898f2c86989fa593643a6e34f4f84644008aed580a9a672b8d0e27bbe11a1960"
+        }
+      ]
+    },
+    {
+      "original": "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsHubView.swift",
+      "original_sha256": "d073755f042197de3c8265a26f446ec051a71e35efbacf2da019a35e94c7596a",
+      "canonical": [
+        {
+          "path": "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsHubView.swift",
+          "sha256": "a628141848eda57b36197023dac51c4836da493449cd503cd66c4e786c5e6bc7"
+        }
+      ]
+    },
+    {
+      "original": "AI_HLY/Downstream/TorahStudy/TorahPhotoStudyCaptureView.swift",
+      "original_sha256": "63f13f28e88fa9ddc15d635defb6f77beadd8375bf50feea075952364d26ef28",
+      "canonical": [
+        {
+          "path": "AI_HLY/Downstream/TorahStudy/TorahPhotoStudyCaptureView.swift",
+          "sha256": "a23a1adff8bc84cb3bb829e7038de5e3ec35faa672cffbeda27b396b93363126"
+        }
+      ]
+    },
+    {
+      "original": "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsProvider.swift",
+      "original_sha256": "b03848c28dfb1c266d80e0bcddaafcfc1b8c79d410ecfd2c98067b94dd0f215f",
+      "canonical": [
+        {
+          "path": "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsProvider.swift",
+          "sha256": "b447dc4f3b82c22700d09cf06bedfad746fb9ab4aad37a3401532ff7cd74a1c0"
+        }
+      ]
+    },
+    {
+      "original": "HanlinMiniAppsApp/MiniAppsLibrary.swift",
+      "original_sha256": "9af454bdc297427b22dabf105ffd59143e83a3a7d1ae52bc33a3d7f0536430b8",
+      "canonical": [
+        {
+          "path": "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsCatalogView.swift",
+          "sha256": "208ac1c2e8867ad5121d95a38a8e785094c5cdc5ce73a0095604b7631a099805"
+        }
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "original": "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsCatalogView.swift",
+      "member": "NativeAppsCatalogView.body",
+      "pass": true,
+      "normalized_tokens_sha256": "a80bbbd8e725733e074d910ab7d9a916c4c76838ed3224b7c76168970658a337"
+    },
+    {
+      "original": "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsCatalogView.swift",
+      "member": "NativeAppsCatalogView.filteredItems",
+      "pass": true,
+      "normalized_tokens_sha256": "3d7b8d332fc53ec3a045014a326ef0754145226e36c637e144a72cf3e7b9a7a6"
+    },
+    {
+      "original": "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsCatalogView.swift",
+      "member": "NativeAppsCatalogView.engineSection(_:title:)",
+      "pass": true,
+      "normalized_tokens_sha256": "61dd717feda303969d0b2e63501d53cd1e573d8ad9a2f1a683dc27bb387be73b"
+    },
+    {
+      "original": "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsCatalogView.swift",
+      "member": "NativeAppsCatalogView.miniAppCard(_:)",
+      "pass": true,
+      "normalized_tokens_sha256": "43109ba41270212cf93afa0715bfe257fd9d58668cadd52cb25f2b68d709c473"
+    },
+    {
+      "original": "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsCatalogView.swift",
+      "member": "NativeAppsCatalogView.commonActions(for:)",
+      "pass": true,
+      "normalized_tokens_sha256": "f011c55deef14329bbd016ea29d9d7922b50d1bc67eb38eaa4c69293d60349f8"
+    },
+    {
+      "original": "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsCatalogView.swift",
+      "member": "MiniAppDescriptorDetailView.body",
+      "pass": true,
+      "normalized_tokens_sha256": "c3eac51ea82feae73496222989993ab3661ac7da4b8be343f1bd9a0d40b01e77"
+    },
+    {
+      "original": "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsHubView.swift",
+      "member": "NativeAppsHubView.body",
+      "pass": true,
+      "normalized_tokens_sha256": "1cac0134b62be6ac43d76dfa0e07e6d40ad75f6fdb8e12fecd809e3b9e9129a9"
+    },
+    {
+      "original": "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsHubView.swift",
+      "member": "NativeAppsLaunchSession.prepare(modelContext:)",
+      "pass": true,
+      "normalized_tokens_sha256": "73df306c1ef8b7315812badb94102531e31160b4830d17c87308c394d0bc0981"
+    },
+    {
+      "original": "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsHubView.swift",
+      "member": "NativeAppsLaunchSession.refreshCatalog()",
+      "pass": true,
+      "normalized_tokens_sha256": "f87255cc2154f24bf7cc45c2d707f94e759cfeb8364007328a25d1bed11c406e"
+    },
+    {
+      "original": "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsHubView.swift",
+      "member": "NativeAppsLaunchSession.launch(_:)",
+      "pass": true,
+      "normalized_tokens_sha256": "a327b719080a2e914d6740bb2f524524eb50ed7db8d19056a6b0562985c167ac"
+    },
+    {
+      "original": "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsHubView.swift",
+      "member": "NativeAppsLaunchSession.hasActiveScriptApplication",
+      "pass": true,
+      "normalized_tokens_sha256": "4eaa0d38f36bf57b5c3ad86a26450327fad4adf11ac96c75f4eab0ab9363d7cb"
+    },
+    {
+      "original": "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsHubView.swift",
+      "member": "NativeAppsLaunchSession.isScriptPresented",
+      "pass": true,
+      "normalized_tokens_sha256": "46fc19bef0ad4a3b6c5c7a8157eee61becb43b2a892b22b7506f0cd9d1f9c854"
+    },
+    {
+      "original": "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsHubView.swift",
+      "member": "NativeAppsLaunchSession.dismissScript()",
+      "pass": true,
+      "normalized_tokens_sha256": "b2472a56f08c5771e3babd0dce2f097cef1175b32ddfd1c25676b490d907e70d"
+    },
+    {
+      "original": "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsHubView.swift",
+      "member": "NativeAppsLaunchSession.clearFailure()",
+      "pass": true,
+      "normalized_tokens_sha256": "bfe8bb3bfa7a169032fbe2007065a1301cff030be555a810932c9a4be8149740"
+    },
+    {
+      "original": "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsHubView.swift",
+      "member": "NativeAppsLaunchSession.failureMessage",
+      "pass": true,
+      "normalized_tokens_sha256": "070cb4d48fac4c3f1c3b62375357ff618f0307b121687bd87f46fc23a7951d3a"
+    },
+    {
+      "original": "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsHubView.swift",
+      "member": "NativeAppsLaunchPresentation.failureMessage",
+      "pass": true,
+      "normalized_tokens_sha256": "cb2cbae27445fe82250a0aa72036cf97463c9cd0d11e5068f1226e2d4d33f615"
+    },
+    {
+      "original": "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsHubView.swift",
+      "member": "NativeAppsLaunchPresentation.clearFailure()",
+      "pass": true,
+      "normalized_tokens_sha256": "5a3fd016f4e5f0b5b365aa75dfb9e27cd1aeb0839712931791cc00d64f16de78"
+    },
+    {
+      "original": "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsHubView.swift",
+      "member": "NativeAppsLaunchPresentation.body(content:)",
+      "pass": true,
+      "normalized_tokens_sha256": "551082b0e643fb9e905ca1136e9c768fdaac1ee526383c66f841061ddb8c6044"
+    },
+    {
+      "original": "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsHubView.swift",
+      "member": "NativeAppsComposerPage.filteredItems",
+      "pass": true,
+      "normalized_tokens_sha256": "17f3d6addd85eac72c84ece29e000ace54ac000564a1eb32c3ba1908ee9b3327"
+    },
+    {
+      "original": "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsHubView.swift",
+      "member": "NativeAppsComposerPage.body",
+      "pass": true,
+      "normalized_tokens_sha256": "fc0ea60355316c12133f02e80a2e9056b1cbb80786b84d7fd4d562bb082bf999"
+    },
+    {
+      "original": "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsHubView.swift",
+      "member": "NativeAppsComposerPage.appSection(_:title:)",
+      "pass": true,
+      "normalized_tokens_sha256": "05620de8c48353c4debba91a9cfb403a8ab314df57c483ca601ecdfe00dc6835"
+    },
+    {
+      "original": "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsHubView.swift",
+      "member": "isFailure",
+      "pass": true,
+      "normalized_tokens_sha256": "a88aa8c0926727e042135fb36d5234ac2f712b960c067678b2a70250c22f4103"
+    },
+    {
+      "original": "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsHubView.swift",
+      "member": "failureMessage",
+      "pass": true,
+      "normalized_tokens_sha256": "8b8238f34c662bcbf69151fabc04800ca07d5d0f381fc89c57ced382555e9981"
+    },
+    {
+      "original": "AI_HLY/Downstream/TorahStudy/TorahPhotoStudyCaptureView.swift",
+      "member": "TorahPhotoStudyCaptureView.body",
+      "pass": true,
+      "normalized_tokens_sha256": "94224baa2137e90f47b06108cdacfcfe0c6f54c179152b3b504e2e30dd7562e4"
+    },
+    {
+      "original": "AI_HLY/Downstream/TorahStudy/TorahPhotoStudyCaptureView.swift",
+      "member": "TorahPhotoStudyCaptureView.placeholderView",
+      "pass": true,
+      "normalized_tokens_sha256": "da181c32eaa0d602e3fc56d08322bf581c382926fbea0109ec8ab778d8b99fc9"
+    },
+    {
+      "original": "AI_HLY/Downstream/TorahStudy/TorahPhotoStudyCaptureView.swift",
+      "member": "TorahPhotoStudyCaptureView.imagePreviewWithOverlay(image:)",
+      "pass": true,
+      "normalized_tokens_sha256": "dbea1df8b4c280890743c3866c09f7e5b7f13e80227399909e8c653db3c203b9"
+    },
+    {
+      "original": "AI_HLY/Downstream/TorahStudy/TorahPhotoStudyCaptureView.swift",
+      "member": "TorahPhotoStudyCaptureView.resultCardView(title:)",
+      "pass": true,
+      "normalized_tokens_sha256": "d0418427a5a72f4fb329d8492dd412d8cf2c46c4de03fe7cb7cd9fcf9ac8d1a8"
+    },
+    {
+      "original": "AI_HLY/Downstream/TorahStudy/TorahPhotoStudyCaptureView.swift",
+      "member": "TorahPhotoStudyCaptureView.bottomActionToolbar",
+      "pass": true,
+      "normalized_tokens_sha256": "5a19df6c17ddfe1b84a5b21b73ef77a102b5add037343712eda0d5b019e2e545"
+    },
+    {
+      "original": "AI_HLY/Downstream/TorahStudy/TorahPhotoStudyCaptureView.swift",
+      "member": "TorahPhotoStudyCaptureView.transcriptionEditorSheet",
+      "pass": true,
+      "normalized_tokens_sha256": "dac000b8dbbb7aa96a674825b9801d42d8f3b3c28d048fb2fb6da9a32adc21f5"
+    },
+    {
+      "original": "AI_HLY/Downstream/TorahStudy/TorahPhotoStudyCaptureView.swift",
+      "member": "TorahPhotoStudyCaptureView.processIdentification()",
+      "pass": true,
+      "normalized_tokens_sha256": "2925cb0bede7c395f6f560a237f2d12801120bb020f154b74407a98b75d8357d"
+    },
+    {
+      "original": "AI_HLY/Downstream/TorahStudy/TorahPhotoStudyCaptureView.swift",
+      "member": "TorahPhotoStudyCaptureView.processIdentificationWithText(_:)",
+      "pass": true,
+      "normalized_tokens_sha256": "3ce9cd28a3cf16a9dc99f25806cb0575e3b78f4c9a87c5774dc78acb468f5d80"
+    },
+    {
+      "original": "AI_HLY/Downstream/TorahStudy/TorahPhotoStudyCaptureView.swift",
+      "member": "TorahPhotoStudyCaptureView.openHere()",
+      "pass": true,
+      "normalized_tokens_sha256": "e557aa63872e5c7456cca97df62cae6923dbb4d2a92e94daaf1fcca19206431b"
+    },
+    {
+      "original": "AI_HLY/Downstream/TorahStudy/TorahPhotoStudyCaptureView.swift",
+      "member": "TorahPhotoStudyCaptureView.openInMaktabah()",
+      "pass": true,
+      "normalized_tokens_sha256": "4afd8b2363e1985e2b6fed089f8a2cec3909472478468089859b2c590a1f9986"
+    },
+    {
+      "original": "AI_HLY/Downstream/TorahStudy/TorahPhotoStudyCaptureView.swift",
+      "member": "CameraPicker.makeUIViewController(context:)",
+      "pass": true,
+      "normalized_tokens_sha256": "9594d07b3a146023fa5fcace72b846e0092bbbe436e60d96a58df961693bd4ca"
+    },
+    {
+      "original": "AI_HLY/Downstream/TorahStudy/TorahPhotoStudyCaptureView.swift",
+      "member": "CameraPicker.updateUIViewController(_:context:)",
+      "pass": true,
+      "normalized_tokens_sha256": "04b2c18ac14beb64e9bb5c0ee6f4a36d3c19a1438293be47d559fc49681a429a"
+    },
+    {
+      "original": "AI_HLY/Downstream/TorahStudy/TorahPhotoStudyCaptureView.swift",
+      "member": "CameraPicker.makeCoordinator()",
+      "pass": true,
+      "normalized_tokens_sha256": "e8358734ec38e6bba31d989cdb3e2b97884ed78fd09526db57b174bc07eec413"
+    },
+    {
+      "original": "AI_HLY/Downstream/TorahStudy/TorahPhotoStudyCaptureView.swift",
+      "member": "CameraPicker.Coordinator.imagePickerController(_:didFinishPickingMediaWithInfo:)",
+      "pass": true,
+      "normalized_tokens_sha256": "35e4e64a21bb9a6ee99789e4df5c391ec0493ca09d4785df3457d635812a49a9"
+    },
+    {
+      "original": "AI_HLY/Downstream/TorahStudy/TorahPhotoStudyCaptureView.swift",
+      "member": "CameraPicker.Coordinator.imagePickerControllerDidCancel(_:)",
+      "pass": true,
+      "normalized_tokens_sha256": "608b1fcb0b1dbc0508623de7ac844356775dbe3e49543225b0cf6929c743bc7c"
+    },
+    {
+      "original": "AI_HLY/Downstream/TorahStudy/TorahPhotoStudyCaptureView.swift",
+      "member": "PhotoPicker.makeUIViewController(context:)",
+      "pass": true,
+      "normalized_tokens_sha256": "ff8166b7a0944f13c804ebf3c056ae41cbcd02ff9f5fb047de7624754f27591d"
+    },
+    {
+      "original": "AI_HLY/Downstream/TorahStudy/TorahPhotoStudyCaptureView.swift",
+      "member": "PhotoPicker.updateUIViewController(_:context:)",
+      "pass": true,
+      "normalized_tokens_sha256": "04b2c18ac14beb64e9bb5c0ee6f4a36d3c19a1438293be47d559fc49681a429a"
+    },
+    {
+      "original": "AI_HLY/Downstream/TorahStudy/TorahPhotoStudyCaptureView.swift",
+      "member": "PhotoPicker.makeCoordinator()",
+      "pass": true,
+      "normalized_tokens_sha256": "e8358734ec38e6bba31d989cdb3e2b97884ed78fd09526db57b174bc07eec413"
+    },
+    {
+      "original": "AI_HLY/Downstream/TorahStudy/TorahPhotoStudyCaptureView.swift",
+      "member": "PhotoPicker.Coordinator.picker(_:didFinishPicking:)",
+      "pass": true,
+      "normalized_tokens_sha256": "35043d53b762fd4fdd8369e989190740acf878755f783b5bc4df969aa5eccbfd"
+    },
+    {
+      "original": "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsProvider.swift",
+      "member": "HanlinMiniAppsProvider.Failure.errorDescription",
+      "pass": true,
+      "normalized_tokens_sha256": "af423ae52e0b206c8c8bc774fb9146040cdf257f6c84ef9f08aacffac9db84c3"
+    },
+    {
+      "original": "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsProvider.swift",
+      "member": "HanlinMiniAppsProvider.refreshCatalog()",
+      "pass": true,
+      "normalized_tokens_sha256": "786cf4779db4079fce645d27e5b09ee47e7a1cd50c404e298e90ecbb1cb0381a"
+    },
+    {
+      "original": "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsProvider.swift",
+      "member": "HanlinMiniAppsProvider.launch(_:includesDismissControl:)",
+      "pass": true,
+      "normalized_tokens_sha256": "a99e32b172ee2f0bea191b2a22ce018fc097d7c2ae1130f4a23cc5f97f39b02a"
+    },
+    {
+      "original": "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsProvider.swift",
+      "member": "HanlinMiniAppsProvider.launch(packageID:)",
+      "pass": true,
+      "normalized_tokens_sha256": "ee87d19f4e17fa72a6b6bea4154f4a3928c9eeb1c1f83f2254382d55c37faf55"
+    },
+    {
+      "original": "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsProvider.swift",
+      "member": "HanlinMiniAppsProvider.requirePackageServices()",
+      "pass": true,
+      "normalized_tokens_sha256": "6d32bebabdf253f45b7746064a24bf93461abf2f11f829690e1229a04107d81e"
+    },
+    {
+      "original": "HanlinMiniAppsApp/MiniAppsLibrary.swift",
+      "member": "MiniAppsLibrary.body",
+      "pass": true,
+      "normalized_tokens_sha256": "420f91a8a9ff98bab0c29d933ebb682f9ac88058cc4740ab4b9f121afe0c4cab"
+    },
+    {
+      "original": "HanlinMiniAppsApp/MiniAppsLibrary.swift",
+      "member": "MiniAppsLibrary.catalog",
+      "pass": true,
+      "normalized_tokens_sha256": "3e35cededc66ba455f0d833f79bb70817635f4ad191de0b26c218fe2000737ce"
+    },
+    {
+      "original": "HanlinMiniAppsApp/MiniAppsLibrary.swift",
+      "member": "MiniAppsLibrary.open(_:)",
+      "pass": true,
+      "normalized_tokens_sha256": "a072e7a9bcbb7a5d8cfeee293a25801815190b55fc3cbce546de7ffdbe452d7b"
+    },
+    {
+      "original": "HanlinMiniAppsApp/MiniAppsLibrary.swift",
+      "member": "MiniAppsLibrary.refreshCatalog()",
+      "pass": true,
+      "normalized_tokens_sha256": "7fff76f0cf83930e006fb4a6c36c7f777118e2ab25e7b4690f425f3d61932bd7"
+    }
+  ],
+  "passed": 51,
+  "total": 51,
+  "apple_compilation": "Not performed by this source-preservation check",
+  "device_acceptance": "Not claimed"
+}

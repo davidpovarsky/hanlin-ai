@@ -1,0 +1,50 @@
+{
+  "recorded_at": "2026-11-23T13:13:16.678282+00:00",
+  "expected_source": "5d0ea90d98b405d38b66bb735198b945225877ba",
+  "published_ref": "5d0ea90d98b405d38b66bb735198b945225877ba\trefs/heads/codex/hanlin-sdk-unification-20261123",
+  "active_same_branch_runs": [
+    {
+      "run_id": 45177292887,
+      "status": "in_progress",
+      "source": "2549bb1395045e1514ec6c273239fcdaf18af207",
+      "motion_jobs": [
+        {
+          "id": 137701830470,
+          "name": "inputs.exact_test_selector == 'MotionUITests/testDRapidInputDiagnosticOnly' && 'Original Motion input diagnostic (D)' || inputs.exact_test_selector == 'MotionUITests/testAAllFivePresetsTwentyCompleteCyclesEach' && 'Original Motion preset cycles (A)' || inputs.exact_test_selector == 'MotionUITests/testCReadableLongContentRTLTypeOrientationAndCompletion' && 'Original Motion visual capture (C)' || 'Original Motion interaction acceptance (B and C)'",
+          "status": "completed",
+          "conclusion": "skipped"
+        }
+      ]
+    }
+  ],
+  "motion_owner_lock": "ACQUIRED",
+  "prior_owned_watchers": [],
+  "prior_D_watch": {
+    "ended_at": "2026-11-23T12:24:22.958916+00:00",
+    "run_id": 45171553469,
+    "watcher_exit_code": 1,
+    "status": "WATCH_ENDED",
+    "workflow_status": "completed",
+    "workflow_conclusion": "failure"
+  },
+  "concurrency_group": "Build iOS 26 Unsigned IPA-refs/heads/codex/hanlin-sdk-unification-20261123-chat_motion_product",
+  "root_exact_test_group_distinct": true,
+  "new_allocation_qualification": {
+    "run_id": 45177292887,
+    "native_job_id": 137701956293,
+    "source": "2549bb1395045e1514ec6c273239fcdaf18af207",
+    "authority": "Root sole existing watch observed actual setup/dependencies/runtime preflight/native export complete and full app compile active at13:09:15UTC; no additional capacity probe",
+    "full_app_compile": "NOT_YET_ACCEPTED"
+  },
+  "prior_actual_boot_qualification": {
+    "run_id": 45166004801,
+    "boot": "READY_FROM_NATIVE_BOOTSTATUS; fresh; no recovery",
+    "C": "1/1 Passed"
+  },
+  "D_and_following_helpers_sha256": "a3426d8dc8e2e2a48f452328854372d8fbc9ef15cd0ef1a5ad0292a84f1e0a81",
+  "D_and_following_helpers_byte_identical_to": "6772dce6304fc6761a2200314f7d2020dc782e47",
+  "fixture_app_sha256": "0c1491dfa227b98332b446e15f3c84de1346f2daf71a9247c6d8e7f6cf2103c2",
+  "fixture_app_byte_identical_to": "6772dce6304fc6761a2200314f7d2020dc782e47",
+  "selected_source_resource_paths_diff_from_C": [],
+  "workflow_sha256": "d8523462b044a399724eca2b510827939f6ed896f7cb4ff7cd8af0b3b5d63fd1"
+}

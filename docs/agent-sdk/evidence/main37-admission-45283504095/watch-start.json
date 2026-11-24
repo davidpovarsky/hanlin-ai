@@ -1,0 +1,19 @@
+{
+  "utc": "2026-11-23T22:52:56.708537+00:00",
+  "run": 45283504095,
+  "source": "4cfa52348e80cf635caf04c541fd84ee1ddb50bd",
+  "owner": "root",
+  "command": [
+    "gh",
+    "run",
+    "watch",
+    "45283504095",
+    "--repo",
+    "davidpovarsky/hanlin-ai",
+    "--interval",
+    "60",
+    "--exit-status"
+  ],
+  "bounded_seconds": 3300,
+  "scope": "One finite watcher; original terminal metadata/log collection only after completed identity check"
+}

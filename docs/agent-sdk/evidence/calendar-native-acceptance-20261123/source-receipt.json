@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-11-23T16:55:15.007266+00:00",
+  "base_sha": "f1f6d745b178b28fe26fe94434aae4e0f5bf4a7c",
+  "selector": "AI_HLYTests/HanlinAppAgentSessionOwnerTests/actualEventKitToolRecoversTheOriginalChatAndReadsTheFullDateWindow()",
+  "source_checks": {
+    "swift_parse": "PASS",
+    "owned_simulator_admission_controls": {
+      "status": "PASS",
+      "methods": 2
+    },
+    "workflow_yaml": "PASS",
+    "diff_check": "PASS"
+  },
+  "native": "NOT_RUN",
+  "original_path": "HanlinAppAgentSessionOwner -> HanlinAISDKToolAdapter -> original canonical legacy authority -> APIManager.executeLegacyTool defaults -> searchSystemEvents -> HanlinAppleCalendarService -> EventKit",
+  "owned_records": {
+    "calendar_events_year_offsets": [
+      -4,
+      0,
+      4
+    ],
+    "reminders": 1,
+    "marker": "unique UUID per invocation",
+    "cleanup": "remove only successfully saved fixture objects; failed cleanup records test failure"
+  },
+  "assertions": [
+    "real ten-year default query sees all three original EventKit events and one reminder",
+    "original canonical inline invocation completes and releases activity/lease",
+    "reversed range returns invalidArguments through original dispatcher",
+    "pre-cancelled native dispatcher returns cancelled",
+    "same original owner and same engine complete a second turn",
+    "original canonical history reopens both response rows"
+  ],
+  "limits": [
+    "The deterministic model supplies text only; no live provider claim.",
+    "Pre-dispatch cancellation is not a stalled EventKit callback; previously executed callback-operation controls remain separate evidence.",
+    "Simulator execution is not physical iPad crash acceptance."
+  ],
+  "inputs": [
+    {
+      "path": "AI_HLYTests/CalendarToolTests.swift",
+      "sha256": "10e2b95d046e55089073f9095822ee8df8cee977b9f524648914889d0cb106da"
+    },
+    {
+      "path": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "sha256": "9ee86ec88ce723c8257cef8a26ff46865408ec3b50568314875a5608c7ddfc0a"
+    },
+    {
+      "path": "Scripts/CI/prepare_calendar_acceptance.py",
+      "sha256": "2abebdeeaf9445a2047f84c439b6755102a5dbaa78c6c2b0d98d432cc4c55321"
+    },
+    {
+      "path": "Scripts/CI/test_prepare_calendar_acceptance.py",
+      "sha256": "1f10efc91d2586cb7662454bb18bc383a2ee066c7cad4ef6355ea7efcf85cb9c"
+    },
+    {
+      "path": ".github/workflows/build-ios26-unsigned-ipa.yml",
+      "sha256": "d7fff995c1554fcc2fee909ed0ded17228611ca5a6a90fd66758c409480fc8ab"
+    }
+  ]
+}

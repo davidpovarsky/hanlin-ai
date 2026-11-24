@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "status": "EXACT_ORIGINAL_MACRO_INPUT_ADMITTED",
+  "sourceRevision": "d8e4327f6d4097ac5a206f2acf2bf654a7ee9c13",
+  "expectedPin": {
+    "identity": "equatable",
+    "kind": "remoteSourceControl",
+    "location": "https://github.com/ordo-one/equatable",
+    "state": {
+      "revision": "597c2bb34af0c51331eb3b5e705f942d8ee20daa",
+      "version": "1.4.1"
+    }
+  },
+  "originalAppLockSHA256": "cfcfdaeeb0c4fc59143bcf84b71aa4b3f0999e90680967817874eb8bcc42721c",
+  "resolvedLockSHA256": "8d7db2deb9cd5a8879255ac414f16921b8fc587ba86335dfa180a6cb6153a467",
+  "originalAdmissionHelperSHA256": "86f58b55ef3f717111303bf3897945f433b66261a2870dfe2b94b4e123787e5a",
+  "macroSourceReceiptSHA256": "e4116358061980dba289af972479444ac20ec5fcc14d6a98ce50b3cc66a9b4ec",
+  "automaticPackageResolutionDuringBuildAndTest": false,
+  "nativeAcceptance": "NOT_CLAIMED_BY_MACRO_INPUT_ADMISSION"
+}

@@ -1,0 +1,94 @@
+{
+  "files": [
+    {
+      "path": "/Users/runner/work/hanlin-ai/hanlin-ai/docs/product-split/evidence/durability-fix/64388883-3e8e-4eaa-914c-45a9d723400e/commands.jsonl",
+      "bytes": 18533,
+      "sha256": "bf0ed06c1e1066b48b06a41b2534c525f8efa03f2a19ebe1a51728591e49a153"
+    },
+    {
+      "path": "/Users/runner/work/hanlin-ai/hanlin-ai/docs/product-split/evidence/durability-fix/64388883-3e8e-4eaa-914c-45a9d723400e/contracts-provenance.json",
+      "bytes": 15132,
+      "sha256": "7034dbcf07aac125efb00c6baafdfb82dc0239c6cb9bb512b1b925fbcae0b1ea"
+    },
+    {
+      "path": "/Users/runner/work/hanlin-ai/hanlin-ai/docs/product-split/evidence/durability-fix/64388883-3e8e-4eaa-914c-45a9d723400e/core-provenance.json",
+      "bytes": 6349,
+      "sha256": "7c1bf090886954cd6e1f43f41d6847b8f0c0a7aa9e24079a2181e266a9e8ee91"
+    },
+    {
+      "path": "/Users/runner/work/hanlin-ai/hanlin-ai/docs/product-split/evidence/durability-fix/64388883-3e8e-4eaa-914c-45a9d723400e/foreground-binary-provenance.json",
+      "bytes": 8216,
+      "sha256": "f71b7237afc6c5f987b7e33043dc08984f2d7f45e9fa6c09611904619d85d2bc"
+    },
+    {
+      "path": "/Users/runner/work/hanlin-ai/hanlin-ai/docs/product-split/evidence/durability-fix/64388883-3e8e-4eaa-914c-45a9d723400e/raw-001-toolchain.stderr.log",
+      "bytes": 30,
+      "sha256": "bbc8b176d3c74d4c5a7fd00b40280f98168e116d5272273bfe8e71407625540e"
+    },
+    {
+      "path": "/Users/runner/work/hanlin-ai/hanlin-ai/docs/product-split/evidence/durability-fix/64388883-3e8e-4eaa-914c-45a9d723400e/raw-001-toolchain.stdout.log",
+      "bytes": 98,
+      "sha256": "4b59da256292ae42e3f04ef6d06ea3e139678613a3cd3d0dc37a6757c0bd290a"
+    },
+    {
+      "path": "/Users/runner/work/hanlin-ai/hanlin-ai/docs/product-split/evidence/durability-fix/64388883-3e8e-4eaa-914c-45a9d723400e/raw-002-compile-contracts.stderr.log",
+      "bytes": 98,
+      "sha256": "4b59da256292ae42e3f04ef6d06ea3e139678613a3cd3d0dc37a6757c0bd290a"
+    },
+    {
+      "path": "/Users/runner/work/hanlin-ai/hanlin-ai/docs/product-split/evidence/durability-fix/64388883-3e8e-4eaa-914c-45a9d723400e/raw-002-compile-contracts.stdout.log",
+      "bytes": 99181,
+      "sha256": "5f0978ade78cc8264feadea37722a1610d66f3001dd4dc61818d9e780eb45e30"
+    },
+    {
+      "path": "/Users/runner/work/hanlin-ai/hanlin-ai/docs/product-split/evidence/durability-fix/64388883-3e8e-4eaa-914c-45a9d723400e/raw-003-compile-core.stderr.log",
+      "bytes": 98,
+      "sha256": "4b59da256292ae42e3f04ef6d06ea3e139678613a3cd3d0dc37a6757c0bd290a"
+    },
+    {
+      "path": "/Users/runner/work/hanlin-ai/hanlin-ai/docs/product-split/evidence/durability-fix/64388883-3e8e-4eaa-914c-45a9d723400e/raw-003-compile-core.stdout.log",
+      "bytes": 7585,
+      "sha256": "0d5d404baa862d394ed62c756e189139a2c6919eada593978426d239f38bce78"
+    },
+    {
+      "path": "/Users/runner/work/hanlin-ai/hanlin-ai/docs/product-split/evidence/durability-fix/64388883-3e8e-4eaa-914c-45a9d723400e/raw-004-link-foreground.stderr.log",
+      "bytes": 98,
+      "sha256": "4b59da256292ae42e3f04ef6d06ea3e139678613a3cd3d0dc37a6757c0bd290a"
+    },
+    {
+      "path": "/Users/runner/work/hanlin-ai/hanlin-ai/docs/product-split/evidence/durability-fix/64388883-3e8e-4eaa-914c-45a9d723400e/raw-004-link-foreground.stdout.log",
+      "bytes": 41317,
+      "sha256": "b4b5bd97ce9e7baf43ad87e79b2cc041bd45f63d8794906e34c3a77578e9c058"
+    },
+    {
+      "path": "/Users/runner/work/hanlin-ai/hanlin-ai/docs/product-split/evidence/durability-fix/64388883-3e8e-4eaa-914c-45a9d723400e/raw-005-tests-foreground.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/Users/runner/work/hanlin-ai/hanlin-ai/docs/product-split/evidence/durability-fix/64388883-3e8e-4eaa-914c-45a9d723400e/raw-005-tests-foreground.stdout.log",
+      "bytes": 2090,
+      "sha256": "c617624f4096a37fa8807b3c145449ce20cff0eeae45d1d760bfda13b3bae810"
+    },
+    {
+      "path": "/Users/runner/work/hanlin-ai/hanlin-ai/docs/product-split/evidence/durability-fix/64388883-3e8e-4eaa-914c-45a9d723400e/raw-006-commit-base.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/Users/runner/work/hanlin-ai/hanlin-ai/docs/product-split/evidence/durability-fix/64388883-3e8e-4eaa-914c-45a9d723400e/raw-006-commit-base.stdout.log",
+      "bytes": 41,
+      "sha256": "c764ff6c0e255e5815a66e05a0b0bb6a6b528420eaaa5399b1a30c0d6479ab14"
+    },
+    {
+      "path": "/Users/runner/work/hanlin-ai/hanlin-ai/docs/product-split/evidence/durability-fix/64388883-3e8e-4eaa-914c-45a9d723400e/raw-007-working-tree.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/Users/runner/work/hanlin-ai/hanlin-ai/docs/product-split/evidence/durability-fix/64388883-3e8e-4eaa-914c-45a9d723400e/raw-007-working-tree.stdout.log",
+      "bytes": 130,
+      "sha256": "b1468ff190e3d17c538dd0ab1e4cdd15d9809f4e9c1d18cef5198afa548b0602"
+    }
+  ]
+}

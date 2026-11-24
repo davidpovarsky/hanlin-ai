@@ -1,0 +1,27 @@
+{
+  "time": "2026-11-23T19:22:28.747899+00:00",
+  "source": "9575dd15e816009e11d84ab7f4e21b45cb67c5e8",
+  "ref": "codex/hanlin-sdk-motion-readiness-20261123",
+  "scope": "affected original B+C",
+  "owner": "/root/motion_acceptance",
+  "authorization": "Root reviewed646724 startup fix, integrated9b6ec193 and qualified9575dd15; exactly one changed-readiness experiment authorized.",
+  "active_motion_jobs": [],
+  "other_observed_runs": [
+    {
+      "run": 45246711373,
+      "source": "36d3c51bdba93ada2c2722ed0e9b99109d84a616",
+      "status": "in_progress"
+    },
+    {
+      "run": 45240721804,
+      "source": "f31147911a74e8984f2a510d6e11aec0bfb12975",
+      "status": "in_progress"
+    }
+  ],
+  "prior_row_attempts": "BLOCKED / NOT_RUN; no blind attempt3 of the old source",
+  "held_scopes": [
+    "A",
+    "native result inspection",
+    "paired3"
+  ]
+}

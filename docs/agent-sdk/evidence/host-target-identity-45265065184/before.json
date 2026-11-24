@@ -1,0 +1,16 @@
+{
+  "utc": "2026-11-23T22:26:12.753772+00:00",
+  "sourceBase": "e1d936c27e4e89736c622e398af8fb0094094d5a",
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "Scripts.SDK.tests.test_host_link_ownership.HostLinkOwnershipTests.test_host_target_name_disambiguates_the_sdk_and_preserves_the_app_product",
+    "-v"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-sdk-link-ownership-20261123",
+  "exit": 1,
+  "status": "FAIL",
+  "testSHA256": "4efa6df73fe966984fe76d39d739979cb8743e4a0dcadb021824575045e741fd",
+  "scope": "one new source identity regression, no Apple execution"
+}

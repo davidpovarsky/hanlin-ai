@@ -1,3 +1,4 @@
+import HanlinLocalization
 //
 //  HanlinCompactRecentChats.swift
 //  AI_HLY
@@ -61,7 +62,7 @@ struct HanlinCompactRecentChats: View {
 
     private var recentHeader: some View {
         HStack(alignment: .firstTextBaseline) {
-            Text(String(localized: "Recent Conversations"))
+            Text(String(localized: "Recent Conversations", bundle: HanlinLocalization.bundle))
                 .font(HanlinTypography.fixed(size: 16, weight: .regular))
                 .foregroundStyle(.secondary)
                 .accessibilityIdentifier("hanlin-compact-recent-header")
@@ -70,12 +71,12 @@ struct HanlinCompactRecentChats: View {
 
             Button(action: onOpenLibrary) {
                 HStack(spacing: 4) {
-                    Text(String(localized: "View All"))
+                    Text(String(localized: "View All", bundle: HanlinLocalization.bundle))
                     Image(systemName: "chevron.right")
                         .font(HanlinTypography.fixed(size: 11, weight: .semibold))
                 }
                 .font(HanlinTypography.fixed(size: 14, weight: .medium))
-                .foregroundStyle(Color.hlBluefont)
+                .foregroundStyle(Color.hanlinHLBluefont)
                 .padding(.vertical, 4)
                 .contentShape(Rectangle())
             }
@@ -93,8 +94,8 @@ struct HanlinCompactRecentChats: View {
             HStack(spacing: 10) {
                 Image(systemName: "bubble.left.and.bubble.right")
                     .font(HanlinTypography.subheadline)
-                    .foregroundStyle(Color.hlBluefont)
-                Text(String(localized: "No recent conversations yet. Type a message below to start."))
+                    .foregroundStyle(Color.hanlinHLBluefont)
+                Text(String(localized: "No recent conversations yet. Type a message below to start.", bundle: HanlinLocalization.bundle))
                     .font(HanlinTypography.subheadline)
                     .foregroundStyle(.secondary)
             }
@@ -115,7 +116,7 @@ struct HanlinCompactRecentChats: View {
                         Button {
                             onEditRecord(record)
                         } label: {
-                            Label("编辑图标", systemImage: "paintbrush")
+                            Label(hanlin: "编辑图标", systemImage: "paintbrush")
                         }
 
                         Button {
@@ -130,7 +131,7 @@ struct HanlinCompactRecentChats: View {
                         Button(role: .destructive) {
                             onDeleteRecord(record)
                         } label: {
-                            Label("删除消息", systemImage: "trash")
+                            Label(hanlin: "删除消息", systemImage: "trash")
                         }
                     }
 
@@ -152,7 +153,7 @@ struct HanlinRecentConversationRow: View {
 
     private var titleText: String {
         let raw = (record.name ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
-        return raw.isEmpty ? String(localized: "Untitled Chat") : raw
+        return raw.isEmpty ? String(localized: "Untitled Chat", bundle: HanlinLocalization.bundle) : raw
     }
 
     var body: some View {
@@ -183,7 +184,7 @@ struct HanlinRecentConversationRow: View {
             if record.isPinned {
                 Image(systemName: "pin.fill")
                     .font(HanlinTypography.fixed(size: 11, weight: .semibold))
-                    .foregroundStyle(Color.hlBluefont.opacity(0.75))
+                    .foregroundStyle(Color.hanlinHLBluefont.opacity(0.75))
             }
         }
         .frame(height: 54)

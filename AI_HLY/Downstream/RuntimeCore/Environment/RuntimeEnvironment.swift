@@ -44,7 +44,11 @@ struct RuntimeEnvironmentItem: Identifiable, Codable, Hashable, Sendable {
 }
 
 actor RuntimeSecretStore {
-    private let service = "com.itorah.chavrusachat.runtime"
+    private let service: String
+
+    init(service: String = HanlinApplicationProcessRuntime.shared.configuration.environmentSecretService) {
+        self.service = service
+    }
 
     func set(_ secret: String, reference: String = UUID().uuidString) throws -> String {
         guard let data = secret.data(using: .utf8) else { throw RuntimeCoreError.runtimeFailure("The secret could not be encoded.") }

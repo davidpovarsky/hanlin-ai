@@ -100,3 +100,6 @@ public struct HanlinInvokeScriptActionIntent: AppIntent {
 private enum HanlinScriptAppIntentBridgeError: Error {
     case invalidParameters
 }
+
+/// Metadata entry point for the existing shared action and widget intents.
+public struct HanlinScriptExtensionIntentsPackage: AppIntentsPackage {}

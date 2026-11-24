@@ -54,8 +54,12 @@ python3 "$root/Scripts/CI/boot_motion_simulator.py" \
 echo "$device" > "$evidence/selected-device.txt"
 scratch="$(mktemp -d "${RUNNER_TEMP:-/tmp}/hanlin-motion-ui.XXXXXXXX")"
 python3 docs/chat-motion/prepare_motion_ui.py --output "$scratch/proof" > "$evidence/preparation.json"
-cp "$scratch/proof/project.json" "$scratch/proof/proof-inputs.json" "$evidence/"
-tar -czf "$evidence/owned-sources.tar.gz" -C "$scratch/proof" Production App UITests project.json
+cp "$scratch/proof/project.json" "$scratch/proof/proof-inputs.json" "$scratch/proof/HanlinSDK.lock.json" "$evidence/"
+cp "$scratch/proof/Vendor/HanlinSDK/Package.swift" "$evidence/selected-sdk-Package.swift"
+cp "$scratch/proof/Vendor/HanlinSDK/.hanlin-sdk/installation.json" "$evidence/sdk-installation.json"
+cp "$scratch/proof/Vendor/HanlinSDK/docs/agent-sdk/unified-package-manifest.json" "$evidence/selected-sdk-manifest.json"
+tar --exclude=.git --exclude=.build -czf "$evidence/owned-sources.tar.gz" -C "$scratch/proof" \
+  App UITests project.json HanlinSDK.lock.json Vendor/HanlinSDK
 cd "$scratch/proof";xcodegen generate --spec project.json > "$evidence/xcodegen.log"
 cp ChatMotionProof.xcodeproj/project.pbxproj "$evidence/generated-project.pbxproj"
 python3 - "$evidence" <<'PY'
@@ -68,17 +72,31 @@ configs=[objects[key] for key in objects[target['buildConfigurationList']]['buil
 assert all(x['buildSettings'].get('ASSETCATALOG_COMPILER_APPICON_NAME')=='' for x in configs),'Target app icon preset must be overridden, project-only override is insufficient'
 (e/'generated-target-settings.json').write_text(json.dumps(configs,indent=2))
 PY
+finish_phase resolve
+# Resolve normally, then admit only the original reviewed macro revision. This
+# stage does not compile or execute the macro; the admitted build cannot resolve again.
+xcodebuild -resolvePackageDependencies -project ChatMotionProof.xcodeproj -scheme ChatMotionProof \
+  -derivedDataPath "$scratch/DerivedData" 2>&1 | tee "$evidence/resolve.log"
+python3 "$root/docs/chat-motion/record_sdk_inputs.py" --proof "$scratch/proof" \
+  --derived-data "$scratch/DerivedData" --evidence "$evidence" --admit-macro \
+  > "$evidence/macro-input-verification.json"
 finish_phase build
 xcodebuild build-for-testing -project ChatMotionProof.xcodeproj -scheme ChatMotionProof \
   -destination "platform=iOS Simulator,id=$device" -destination-timeout 90 \
-  -derivedDataPath "$scratch/DerivedData" CODE_SIGNING_ALLOWED=NO \
+  -derivedDataPath "$scratch/DerivedData" -disableAutomaticPackageResolution -skipMacroValidation CODE_SIGNING_ALLOWED=NO \
   2>&1 | tee "$evidence/build.log"
+python3 "$root/docs/chat-motion/record_sdk_inputs.py" --proof "$scratch/proof" \
+  --derived-data "$scratch/DerivedData" --evidence "$evidence" > "$evidence/sdk-input-verification.json"
 finish_phase test
 motion_scope="${HANLIN_MOTION_SCOPE:-affected}"
 if [[ "$motion_scope" == cycles ]]; then
   selected_tests=(-only-testing:ChatMotionProofUITests/MotionUITests/testAAllFivePresetsTwentyCompleteCyclesEach)
 elif [[ "$motion_scope" == input-diagnostic ]]; then
   selected_tests=(-only-testing:ChatMotionProofUITests/MotionUITests/testDRapidInputDiagnosticOnly)
+elif [[ "$motion_scope" == visual-c ]]; then
+  selected_tests=(-only-testing:ChatMotionProofUITests/MotionUITests/testCReadableLongContentRTLTypeOrientationAndCompletion)
+elif [[ "$motion_scope" == reversal-b ]]; then
+  selected_tests=(-only-testing:ChatMotionProofUITests/MotionUITests/testBRapidReversalPresetSwitchAndPersistence)
 else
   [[ "$motion_scope" == affected ]]
   selected_tests=(-only-testing:ChatMotionProofUITests/MotionUITests/testBRapidReversalPresetSwitchAndPersistence
@@ -89,7 +107,7 @@ set +e
 python3 "$root/docs/chat-motion/record_ui_run.py" --device "$device" --evidence "$evidence" -- \
   xcodebuild test-without-building -project ChatMotionProof.xcodeproj -scheme ChatMotionProof \
   -destination "platform=iOS Simulator,id=$device" -destination-timeout 60 \
-  -derivedDataPath "$scratch/DerivedData" -resultBundlePath "$scratch/Motion.xcresult" \
+  -derivedDataPath "$scratch/DerivedData" -resultBundlePath "$scratch/Motion.xcresult" -disableAutomaticPackageResolution -skipMacroValidation \
   -parallel-testing-enabled NO -test-timeouts-enabled YES \
   -default-test-execution-time-allowance 600 -maximum-test-execution-time-allowance 720 \
   CODE_SIGNING_ALLOWED=NO "${selected_tests[@]}" 2>&1 | tee "$evidence/test.log"
@@ -110,12 +128,12 @@ def visit(n):
         for v in n:visit(v)
 visit(json.loads((e/'tests.json').read_text()))
 scope=(e/'selected-scope.txt').read_text().strip()
-names=['testAAllFivePresetsTwentyCompleteCyclesEach'] if scope=='cycles' else ['testDRapidInputDiagnosticOnly'] if scope=='input-diagnostic' else ['testBRapidReversalPresetSwitchAndPersistence','testCReadableLongContentRTLTypeOrientationAndCompletion']
+names=['testAAllFivePresetsTwentyCompleteCyclesEach'] if scope=='cycles' else ['testDRapidInputDiagnosticOnly'] if scope=='input-diagnostic' else ['testCReadableLongContentRTLTypeOrientationAndCompletion'] if scope=='visual-c' else ['testBRapidReversalPresetSwitchAndPersistence'] if scope=='reversal-b' else ['testBRapidReversalPresetSwitchAndPersistence','testCReadableLongContentRTLTypeOrientationAndCompletion']
 expected={'MotionUITests/'+name+'()' for name in names}
 assert len(found)==len(expected) and {n['nodeIdentifier'] for n in found}==expected and all(n['result']=='Passed' for n in found)
 if scope=='cycles':
     timeline=json.loads((e/'motion-geometry-timeline.json').read_text());assert {n['preset'] for n in timeline}=={'v1.relaxed','v1.height-reveal','v1.gentle-squeeze','v1.quiet-fade','v1.none'}
 assert json.loads((e/'video-status.json').read_text())['exit_code']==0 and (e/'motion-first120s.mp4').stat().st_size>1024
-(e/'result-validation.json').write_text(json.dumps({'status':'DIAGNOSTIC_CAPTURED' if scope=='input-diagnostic' else 'EXECUTED_PASS','methods':len(found),'selected_scope':scope,'cycles_per_preset':20 if scope=='cycles' else None,'scope':'input observations only; Motion acceptance A/B/C NOT_RUN' if scope=='input-diagnostic' else 'native components; original app/renderer/scroll/iPad26/physical NOT_RUN'}))
+(e/'result-validation.json').write_text(json.dumps({'status':'DIAGNOSTIC_CAPTURED' if scope=='input-diagnostic' else 'EXECUTED_PASS','methods':len(found),'selected_scope':scope,'cycles_per_preset':20 if scope=='cycles' else None,'scope':'input observations only; Motion acceptance A/B/C NOT_RUN' if scope=='input-diagnostic' else 'C native assertions; landscape full-screen attachment requires visual review; A/B/D NOT_RUN; original app/renderer/scroll/iPad26/physical NOT_RUN' if scope=='visual-c' else 'native components; original app/renderer/scroll/iPad26/physical NOT_RUN'}))
 PY
 finish_phase complete

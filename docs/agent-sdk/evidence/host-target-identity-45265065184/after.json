@@ -1,0 +1,23 @@
+{
+  "startedUTC": "2026-11-23T22:27:10.661135+00:00",
+  "finishedUTC": "2026-11-23T22:27:14.170739+00:00",
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "Scripts.SDK.tests.test_host_link_ownership",
+    "Scripts.Runtime.Tests.test_runtime_host_source_exclusion",
+    "Scripts.Runtime.Tests.test_ios_system_project_resources",
+    "test_project_graph.ProjectGraphTests.test_agent_sdk_requires_framework_link_not_just_declaration",
+    "-v"
+  ],
+  "environment": [
+    "PATH=/usr/local/swift/usr/bin:/usr/local/bin:/usr/bin:/bin",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "PYTHONPATH=/mnt/development/projects/worktrees/hanlin-sdk-link-ownership-20261123:/mnt/development/projects/worktrees/hanlin-sdk-link-ownership-20261123/Scripts/CI/IntegrationValidation"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-sdk-link-ownership-20261123",
+  "exit": 0,
+  "status": "PASS",
+  "scope": "one new identity regression plus twelve affected ownership/name lookup controls; no Apple execution"
+}

@@ -1,0 +1,43 @@
+{
+  "source": "e33247fbaca62e76227e99fe0bd8c7a3d1716f2c",
+  "projectSHA256": "577fc56f6e551dd9f38b1078626c72e31c46a8c4f846bb20eb4c080beb82e4b8",
+  "oldLiteralGuardMatches": false,
+  "results": [
+    {
+      "name": "focused-source-exclusion-tests",
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "Scripts.Runtime.Tests.test_runtime_host_source_exclusion",
+        "-v"
+      ],
+      "exitCode": 0,
+      "log": "test_another_targets_exclusion_is_not_evidence (Scripts.Runtime.Tests.test_runtime_host_source_exclusion.RuntimeHostSourceExclusionTests.test_another_targets_exclusion_is_not_evidence) ... ok\ntest_comment_sibling_and_descendant_do_not_hide_included_sources (Scripts.Runtime.Tests.test_runtime_host_source_exclusion.RuntimeHostSourceExclusionTests.test_comment_sibling_and_descendant_do_not_hide_included_sources) ... ok\ntest_original_and_normalized_project_spelling_and_whole_host_exclusion (Scripts.Runtime.Tests.test_runtime_host_source_exclusion.RuntimeHostSourceExclusionTests.test_original_and_normalized_project_spelling_and_whole_host_exclusion) ... ok\ntest_unregistered_group_does_not_exclude_app_sources (Scripts.Runtime.Tests.test_runtime_host_source_exclusion.RuntimeHostSourceExclusionTests.test_unregistered_group_does_not_exclude_app_sources) ... ok\n\n----------------------------------------------------------------------\nRan 4 tests in 0.002s\n\nOK\n",
+      "sha256": "ce947a1e09b4b66bb7a3c9ee217f306f4975d09537be3911d6d21a061ce9a938"
+    },
+    {
+      "name": "source-bound-project-validation",
+      "command": [
+        "python3",
+        "Scripts/Runtime/validate_runtime_host_source_exclusion.py",
+        "--project",
+        "/mnt/development/projects/hanlin-sdk-artifacts-20261123/native-run-45112778130/producer-e33247fb-project.pbxproj"
+      ],
+      "exitCode": 0,
+      "log": "{\"excludedNodeModules\": \"Downstream/RuntimeCore/Node/Host/node_modules\", \"group\": \"D7B6C3C32D50A55D004E3AD6\", \"membershipProof\": [{\"exception\": \"A10000000000000000000030\", \"excludedPath\": \"Downstream\"}, {\"exception\": \"A10000000000000000000030\", \"excludedPath\": \"Downstream/RuntimeCore/Node/Host\"}, {\"exception\": \"A10000000000000000000030\", \"excludedPath\": \"Downstream/RuntimeCore/Node/Host/node_modules\"}], \"target\": \"D7B6C3C02D50A55D004E3AD6\"}\n",
+      "sha256": "c3b03d12aed41b4ed33f5b9f2028f0f429b644146b342837b8f5fe8ae37a0b85"
+    },
+    {
+      "name": "preflight-shell-syntax",
+      "command": [
+        "bash",
+        "-n",
+        "Scripts/Runtime/preflight-runtime-core.sh"
+      ],
+      "exitCode": 0,
+      "log": "",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

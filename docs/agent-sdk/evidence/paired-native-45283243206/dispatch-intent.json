@@ -1,0 +1,11 @@
+{
+  "time": "2026-11-23T22:49:02.421997+00:00",
+  "source": "4cfa52348e80cf635caf04c541fd84ee1ddb50bd",
+  "tree": "62f3717f31fd633333697bdca0b87a56f298ee20",
+  "branch": "codex/hanlin-sdk-paired3-corrections-20261123",
+  "workflow": "validate-app-split.yml",
+  "owner": "/root/motion_acceptance",
+  "request_sha256": "9d4ef847342b2b4cb64ce0f99c61c6c0246e09bdb1fd0d08d62b7b95ece4e809",
+  "source_admission_sha256": "8c5f24e519a4767961a1b19e1ffbdbcfc26d609345a5b4879f651785ce4b6a07",
+  "one_post_only": true
+}
