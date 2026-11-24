@@ -1,5 +1,13 @@
 #!/bin/bash
 set -euo pipefail
+# Exact pin repair: resolve once and build iOS; accepted tests stay historical.
+if [[ -n "${GITHUB_EVENT_PATH:-}" ]] && python3 - "$GITHUB_EVENT_PATH" <<'PY_PIN_BUILD_SELECTOR'
+import json,sys
+sys.exit(0 if json.load(open(sys.argv[1])).get('inputs',{}).get('exact_test_selector') == 'HanlinNativeToolPinBuildRecheck' else 1)
+PY_PIN_BUILD_SELECTOR
+then
+  exec python3 "$(git rev-parse --show-toplevel)/Scripts/CI/IntegrationValidation/run_native_tool_pin_build.py"
+fi
 # This separate composed-source delta never invokes old acceptance suites.
 if [[ -n "${GITHUB_EVENT_PATH:-}" ]] && python3 - "$GITHUB_EVENT_PATH" <<'PY_STOP_SELECTOR'
 import json,sys
