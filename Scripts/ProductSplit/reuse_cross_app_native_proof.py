@@ -11,6 +11,7 @@ import argparse
 import hashlib
 import json
 import os
+import plistlib
 from pathlib import Path
 import re
 import runpy
@@ -21,6 +22,25 @@ DESCRIPTOR = Path("docs/product-split/evidence/cross-app-20261123/native-nine-or
 TEST_FILE = "HanlinMiniAppsTests/CrossAppInvocationTests.swift"
 PROJECT = "AI_HLY.xcodeproj/project.pbxproj"
 PREFIX = "HanlinMiniAppsTests/CrossAppInvocationTests/"
+
+INFO_PLIST = "HanlinMiniAppsApp/Info.plist"
+LOCALIZATION_INDEPENDENT_METHODS = frozenset({
+    "testCompletionIsSavedBeforeSourceOpensAndSurvivesColdRestore",
+    "testTwoWindowsKeepTheirOwnInputOutputAndCallbacks",
+    "testCancelAndDisplayDoneReturnNoDocumentMutation",
+    "testActualProducerAttachmentOperationsPreserveBytes",
+    "testUnavailableCallbackRetainsResultForSourceRecovery",
+    "testTextStudioWindowsRestoreTheirOwnDrafts",
+    "testReusingValueWindowKeepsItsInvocationBindingCurrent",
+    "testRemovingInvocationOwnerCancelsWhileSessionIsStillRetained",
+})
+LOCALIZATION_DECLARATION = ["en", "he", "zh-Hans"]
+LOCALIZATION_INSERTION_ANCHOR = b"\t<key>CFBundleDocumentTypes</key>"
+LOCALIZATION_INSERTION = (
+    b"\t<key>CFBundleLocalizations</key>\n\t<array>\n"
+    b"\t\t<string>en</string>\n\t\t<string>he</string>\n"
+    b"\t\t<string>zh-Hans</string>\n\t</array>\n"
+)
 
 
 class ProofError(RuntimeError):
@@ -34,6 +54,42 @@ def require(condition, message):
 
 def digest(data):
     return hashlib.sha256(data).hexdigest()
+
+
+def qualify_localization_delta(original, current, method):
+    """Admit one exact declaration addition for eight unchanged direct cases.
+
+    This is not a plist-path exemption: every original byte remains in place,
+    all other parsed values match, and actual scene/UI methods are ineligible.
+    The caller still authenticates the original source and every other input.
+    """
+    if method not in LOCALIZATION_INDEPENDENT_METHODS:
+        return None
+    if original.count(LOCALIZATION_INSERTION_ANCHOR) != 1:
+        return None
+    expected = original.replace(LOCALIZATION_INSERTION_ANCHOR,
+                                LOCALIZATION_INSERTION + LOCALIZATION_INSERTION_ANCHOR, 1)
+    if current != expected:
+        return None
+    # Exact byte qualification above also excludes duplicate keys, rewrites and
+    # unrelated formatting differences; parse the actual values independently.
+    old, new = plistlib.loads(original), plistlib.loads(current)
+    if (not isinstance(old, dict) or not isinstance(new, dict)
+            or "CFBundleLocalizations" in old
+            or new.get("CFBundleLocalizations") != LOCALIZATION_DECLARATION):
+        return None
+    remaining = dict(new)
+    del remaining["CFBundleLocalizations"]
+    if remaining != old:
+        return None
+    return {
+        "path": INFO_PLIST,
+        "policy": "EXACT_LOCALIZATION_DECLARATION_ADDITION_V1",
+        "original_sha256": digest(original), "current_sha256": digest(current),
+        "added_localizations": list(LOCALIZATION_DECLARATION),
+        "all_other_bytes_and_values": "UNCHANGED",
+        "reason": "The unchanged direct case does not evaluate UI, activate scenes, load engines or assert localized output.",
+    }
 
 
 def file_digest(path):
@@ -429,6 +485,20 @@ def plan_reuse(root, archive_path, current_environment):
             configuration_errors.append("project:app-sources-or-target-configuration-changed")
     except ProofError as error:
         configuration_errors.append("project:" + str(error))
+    original_info = current_info = None
+    if current_hash(INFO_PLIST) != source_inputs.get(INFO_PLIST):
+        original_info = subprocess.check_output(
+            ["git", "show", origin["source_sha"] + ":" + INFO_PLIST], cwd=root, timeout=30)
+        require(digest(original_info) == source_inputs.get(INFO_PLIST),
+                "Original Info.plist is not the executed artifact input")
+        if (root / INFO_PLIST).is_file():
+            current_info = (root / INFO_PLIST).read_bytes()
+        elif INFO_PLIST in sparse:
+            current_info = subprocess.check_output(["git", "show", "HEAD:" + INFO_PLIST],
+                                                   cwd=root, timeout=30)
+        if current_info is not None:
+            require(digest(current_info) == current_hash(INFO_PLIST),
+                    "Current Info.plist moved during source qualification")
     results = []
     for case in spec["cases"]:
         reasons = list(env_errors) + list(configuration_errors)
@@ -446,13 +516,20 @@ def plan_reuse(root, archive_path, current_environment):
         additions = sorted(path for path in current_paths - baseline_paths
                            if any(path.startswith(prefix) for prefix in prefixes))
         reasons.extend("source-added:" + path for path in additions)
-        records = {}
+        records, qualified_deltas = {}, []
         for path in sorted(paths):
             expected = source_inputs.get(path)
             actual = current_hash(path)
             records[path] = {"expected": expected, "actual": actual}
             if expected is None or actual != expected:
-                reasons.append("source:" + path)
+                qualification = (qualify_localization_delta(original_info, current_info, case["method"])
+                                 if path == INFO_PLIST and original_info is not None
+                                 and current_info is not None else None)
+                if qualification is None:
+                    reasons.append("source:" + path)
+                else:
+                    records[path]["qualification"] = qualification
+                    qualified_deltas.append(qualification)
         status = "INVALIDATED" if reasons else "REUSED_VERIFIED_PASS"
         results.append({
             "selector": PREFIX + case["method"], "status": status,
@@ -461,6 +538,7 @@ def plan_reuse(root, archive_path, current_environment):
             "assertion_sha256": old_methods[case["method"]], "dependency_groups": case["groups"],
             "input_fingerprint": digest(json.dumps(records, sort_keys=True).encode()),
             "dependency_input_count": len(records), "invalidation_reasons": reasons,
+            "qualified_input_deltas": qualified_deltas,
             "scope": case["scope"],
         })
     reusable = [entry["selector"] for entry in results if entry["status"] == "REUSED_VERIFIED_PASS"]
