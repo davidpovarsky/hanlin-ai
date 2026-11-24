@@ -1,0 +1,29 @@
+Building for debugging...
+[1 / 5]
+[2 / 6] HanlinPlatformContracts
+[3 / 7] HanlinPlatformContracts
+[8 / 12] HanlinScriptContracts
+[10 / 14] HanlinMiniAppCore
+[12 / 16] HanlinScriptStore
+[13 / 17] HanlinScriptStore
+[16 / 20] HanlinPlatformContracts
+[22 / 26] HanlinScriptStoreTests-product
+[23 / 28] HanlinScriptStoreTests-product
+[24 / 28] HanlinScriptStoreTests-product
+[26 / 33] HanlinScriptStoreTests-product
+Build complete! (4,08 secs)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite "Canonical projection of installed package entrypoints" started.
+◇ Test "Stored Expo package keeps every action while equivalent exposures share a canonical descriptor" started.
+◇ Test "Action identity preserves JavaScript case through Codable without changing other identifiers" started.
+◇ Test "Conflicting canonical exposures remain validation errors" started.
+◇ Test case passing 1 argument field → "handler" to "Conflicting canonical exposures remain validation errors" started.
+◇ Test case passing 1 argument field → "contexts" to "Conflicting canonical exposures remain validation errors" started.
+◇ Test case passing 1 argument field → "runtime" to "Conflicting canonical exposures remain validation errors" started.
+✔ Test "Action identity preserves JavaScript case through Codable without changing other identifiers" passed after 0.001 seconds.
+✔ Test "Conflicting canonical exposures remain validation errors" with 3 test cases passed after 0.004 seconds.
+✔ Test "Stored Expo package keeps every action while equivalent exposures share a canonical descriptor" passed after 0.004 seconds.
+✔ Suite "Canonical projection of installed package entrypoints" passed after 0.004 seconds.
+✔ Test run with 3 tests in 1 suite passed after 0.004 seconds.

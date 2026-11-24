@@ -1,0 +1,111 @@
+{
+  "source": "fd81d602d3b25f09162a659e1e0cf0582e91a93a",
+  "members": {
+    "baseline-controller-state.json": {
+      "sha256": "9d4bbdb358a92fa2c15588732d283c96538d0d0843c979d2b7ac431fa9ed9691",
+      "bytes": 2127
+    },
+    "baseline-identifiers.swift": {
+      "sha256": "3b3651705d4ee066324e623f284718d985ce7e44d1b01d4a9c3a437ed3d7410a",
+      "bytes": 15313
+    },
+    "baseline.log": {
+      "sha256": "f9eb870a191515467122c237a90daf0a2ba615a6ed153328c75d299ed14c42f6",
+      "bytes": 3860
+    },
+    "baseline.swift": {
+      "sha256": "426509862e4b67d755c6e466356da1418fbaf7246277100779aab768ceba3258",
+      "bytes": 17373
+    },
+    "candidate-action-fixed-controller.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "candidate-action-fixed.log": {
+      "sha256": "099203c8e9b69d34a2232414bd601a4f84a74ef2b40aa96c100b277f9d1055b9",
+      "bytes": 1879
+    },
+    "candidate-controller-state.json": {
+      "sha256": "2946b73f0e76d40c32b5c52473c55b408d90d581954f8ebbadb8b4c37d04ea3c",
+      "bytes": 3215
+    },
+    "candidate-controller.log": {
+      "sha256": "e346bffc2b5fce0ee3a6d9b17fd53351125b746f365532d67421cd9f19f649fc",
+      "bytes": 647
+    },
+    "candidate-identifiers.swift": {
+      "sha256": "de5af069d3fd9483cd5d5d16f7d4c81b46704072e1c968c435df3cbd253e4601",
+      "bytes": 15960
+    },
+    "candidate.log": {
+      "sha256": "aac3c526835b0f996baa8aed7ce9d5c2f5460fe7f397373f452433962110bb9a",
+      "bytes": 2511
+    },
+    "candidate.swift": {
+      "sha256": "7901c51ea32046e57ad49a41f7252b488941a2d6ede7bb0f0634e86fe8b634b2",
+      "bytes": 17717
+    },
+    "continuation-receipt.json": {
+      "sha256": "55e17e59342b2f9abdb7643f26eeb5168575af480ff4c892969c8c2573711d2c",
+      "bytes": 323
+    },
+    "controller.log": {
+      "sha256": "e250b353f6d89b12f02cb83b1df1d67c188488c60e273318dae32b3650ce73a6",
+      "bytes": 799
+    },
+    "final-source-binding.json": {
+      "sha256": "17043fdfba80126869874bee79db7f432420b8adac5341d00521c26203030bac",
+      "bytes": 11152
+    },
+    "initial-test.swift": {
+      "sha256": "6f9813f2f632e226803715de511676c43eff9de558722db6e2bd723ec9b8526c",
+      "bytes": 12600
+    },
+    "inputs.json": {
+      "sha256": "1672a8fee7c6c73eae1c7f81ed49243e63edd12059f0b31066c7f5ee4fb1135d",
+      "bytes": 9824
+    },
+    "prepared.json": {
+      "sha256": "7dbcac537a59a9f8f7739f17f645c539fc143b7a9ae1238246186302c14f4d2b",
+      "bytes": 1028
+    },
+    "resume-action-fixed.py": {
+      "sha256": "b348980f25416daf6b3d6f043519a1a0187f8a5c7ead434b71103992a2b29da2",
+      "bytes": 2997
+    },
+    "resume-candidate.py": {
+      "sha256": "05956dd60b5cba9275fdfe3c68681551bd402730e46b201b06f491f97da2e8fa",
+      "bytes": 3002
+    },
+    "run.py": {
+      "sha256": "289fe1e6c8ddf62ce7a368674dd54c0dd7ab85f254fbb657cd214fbe18c1137f",
+      "bytes": 2693
+    },
+    "state.json": {
+      "sha256": "bdbfcccb93a53d67a721eccf621d401d0ef8dd83b9697cf1f80d3151221d894b",
+      "bytes": 4281
+    },
+    "proof-Package.swift": {
+      "sha256": "2ca705e0f8460a9ac91fb3e505b963a7d65eea20adeb5701d272b4aa63e6ccf5",
+      "bytes": 680
+    },
+    "final-test.swift": {
+      "sha256": "5babc16bfe0a33eaa723f8915f4b64eb4292fefd075da0a047201fca09722d70",
+      "bytes": 13538
+    }
+  },
+  "stateSHA256": "bdbfcccb93a53d67a721eccf621d401d0ef8dd83b9697cf1f80d3151221d894b",
+  "status": "PASS",
+  "changed": [
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinIdentifiers.swift",
+      "before": "3b3651705d4ee066324e623f284718d985ce7e44d1b01d4a9c3a437ed3d7410a",
+      "after": "de5af069d3fd9483cd5d5d16f7d4c81b46704072e1c968c435df3cbd253e4601"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
+      "before": "426509862e4b67d755c6e466356da1418fbaf7246277100779aab768ceba3258",
+      "after": "7901c51ea32046e57ad49a41f7252b488941a2d6ede7bb0f0634e86fe8b634b2"
+    }
+  ]
+}

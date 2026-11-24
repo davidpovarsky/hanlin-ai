@@ -1,0 +1,30 @@
+Building for debugging...
+[1 / 5]
+[2 / 6] HanlinScriptStore
+[3 / 7] HanlinScriptStore
+[7 / 12] HanlinScriptStore
+[13 / 14] HanlinScriptStoreTests-product
+Build complete! (1,60 secs)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite "Canonical projection of installed package entrypoints" started.
+◇ Test "Stored Expo package keeps every action while equivalent exposures share a canonical descriptor" started.
+◇ Test "Conflicting canonical exposures remain validation errors" started.
+◇ Test case passing 1 argument field → "runtime" to "Conflicting canonical exposures remain validation errors" started.
+◇ Test case passing 1 argument field → "contexts" to "Conflicting canonical exposures remain validation errors" started.
+◇ Test case passing 1 argument field → "handler" to "Conflicting canonical exposures remain validation errors" started.
+✔ Test "Conflicting canonical exposures remain validation errors" with 3 test cases passed after 0.004 seconds.
+✘ Test "Stored Expo package keeps every action while equivalent exposures share a canonical descriptor" recorded an issue at HanlinCanonicalEntrypointProjectionTests.swift:26:9: Expectation failed: descriptor.actions.map(\.id.rawValue) == actionIDs
+↳ descriptor.actions.map(\.id.rawValue) == actionIDs → false
+↳   descriptor.actions.map(\.id.rawValue) → []
+↳   actionIDs → ["hostServicesEcho", "hostServicesFail", "hostServicesPublishWidget"]
+✘ Test "Stored Expo package keeps every action while equivalent exposures share a canonical descriptor" recorded an issue at HanlinCanonicalEntrypointProjectionTests.swift:27:9: Expectation failed: descriptor.actions.map(\.handler) == Array(repeating: "source/bundle.js", count: 3)
+↳ descriptor.actions.map(\.handler) == Array(repeating: "source/bundle.js", count: 3) → false
+↳   descriptor.actions.map(\.handler) → []
+↳   Array(repeating: "source/bundle.js", count: 3) → [Optional("source/bundle.js"), Optional("source/bundle.js"), Optional("source/bundle.js")]
+✘ Test "Stored Expo package keeps every action while equivalent exposures share a canonical descriptor" failed after 0.006 seconds with 2 issues.
+✘ Suite "Canonical projection of installed package entrypoints" failed after 0.006 seconds with 2 issues.
+✘ Test run with 2 tests in 1 suite failed after 0.006 seconds with 2 issues.
+Note: Some test targets reported failures:
+  - HanlinScriptStoreTests (Swift Testing)
