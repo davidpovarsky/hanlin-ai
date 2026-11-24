@@ -151,3 +151,20 @@ test('original action-only source and exported control handlers do not require a
     assert.equal(result.rendered, undefined);
   }
 });
+
+test('Expo original compiler accepts source graphs beyond the former borrowed byte quotas', () => {
+  const chunk = 'e'.repeat(700000);
+  const files = {
+    'widget.js': 'import {a} from "./a"; import {b} from "./b"; import {c} from "./c"; export default function layout(){ return {type:"TextView",props:{text:a+b+c}}; }',
+    'a.js': 'export const a=' + JSON.stringify(chunk) + ';',
+    'b.js': 'export const b=' + JSON.stringify(chunk) + ';',
+    'c.js': 'export const c=' + JSON.stringify(chunk) + ';'
+  };
+  const program = compile({engine:'expo', format:'javascript', entry:'widget.js', files, actions:[]});
+  const context = vm.createContext({});
+  vm.runInContext(fs.readFileSync(path.join(root,
+    'Packages/HanlinPlatform/Sources/HanlinScriptExtensions/Resources/ExpoWidgets.bundle'), 'utf8'), context);
+  const layout = vm.runInContext(program, context);
+  assert.equal(layout().props.text.length, chunk.length * 3);
+  assert.ok(program.length > 2097152);
+});

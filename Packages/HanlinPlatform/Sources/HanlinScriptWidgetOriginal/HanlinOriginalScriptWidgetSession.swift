@@ -20,6 +20,23 @@ public final class HanlinOriginalScriptWidgetSession {
 
     public static var globalAPIs: [String] { ScriptWidgetRuntimeContract.globalAPIs }
     public static var apiVersion: String { ScriptWidgetBuildContract.nativeRuntimeAPIVersion }
+    public static var maximumSourceBytes: Int { ScriptWidgetRuntimeContract.maximumSourceBytes }
+    public static var maximumElementNodes: Int { ScriptWidgetRuntimeContract.maximumElementNodes }
+    public static var maximumElementDepth: Int { ScriptWidgetRuntimeContract.maximumElementDepth }
+    public static var maximumPropsPerElement: Int { ScriptWidgetRuntimeContract.maximumPropsPerElement }
+    public static var compileTimeout: TimeInterval { ScriptWidgetRuntimeContract.compileTimeout }
+
+    public static func validateSource(_ source: String) throws {
+        if let error = ScriptWidgetRuntimeContract.validateSource(source) {
+            throw HanlinOriginalScriptWidgetFailure(error.localizedDescription)
+        }
+    }
+
+    public static func validatePreparedJavaScript(_ source: String) throws {
+        if let error = ScriptWidgetRuntimeContract.validateTranspiled(source) {
+            throw HanlinOriginalScriptWidgetFailure(error.localizedDescription)
+        }
+    }
     public static var executionTimeout: TimeInterval {
         switch ScriptWidgetRuntimeContract.executionTimeout {
         case let .seconds(value): return Double(value)

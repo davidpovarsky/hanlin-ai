@@ -181,7 +181,7 @@ public enum HanlinNativePresentationExecutor {
                 // These reserved values are produced by the typed native
                 // presentation helpers in Expo layouts and consumed once.
                 if let raw = state.values.removeValue(forKey: "__hanlinPresentationEffect") {
-                    effect = try JSONDecoder().decode(HanlinNativePresentationEffect.self, from: raw.jsonValue().canonicalJSONData())
+                    effect = try JSONDecoder().decode(HanlinNativePresentationEffect.self, from: raw.jsonValue().canonicalJSONData(limits: .unbounded))
                 }
                 let node = try HanlinExpoWidgetsRuntime.shared.render(layout: program.javaScript,
                     props: state.values.mapValues { $0.toAny() },
@@ -212,9 +212,6 @@ public enum HanlinNativePresentationExecutor {
                 state.committedNonces = Array((state.committedNonces + [action.nonce]).suffix(128))
             }
             let encodedState = try encoder.encode(state)
-            guard encodedState.count <= HanlinScriptExtensionStore.maximumArtifactBytes else {
-                throw HanlinNativePresentationError.invalidState
-            }
             try FileManager.default.createDirectory(at: stateURL.deletingLastPathComponent(), withIntermediateDirectories: true)
             try encodedState.write(to: stateURL, options: .atomic)
             execution = .init(prepared: prepared, effect: effect, revision: state.revision)

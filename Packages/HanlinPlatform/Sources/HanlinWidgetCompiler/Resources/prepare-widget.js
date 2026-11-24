@@ -31,7 +31,6 @@ function __hanlinCompileWidget(input) {
   // CommonJS closure. Imports remain package sources; no foreground VM is used.
   function compileScriptWidgetModules() {
     const compiled = {};
-    let sourceBytes = 0;
     function resolve(name, parent) {
       if (!name.startsWith('.')) throw new Error('Unsupported ScriptWidget import: ' + name);
       const parts = parent.split('/'); parts.pop();
@@ -49,8 +48,8 @@ function __hanlinCompileWidget(input) {
     function compile(path) {
       if (path in compiled) return;
       const bytes = encodeURIComponent(input.files[path]).replace(/%[A-F\d]{2}/gi, 'x').length;
-      sourceBytes += bytes;
-      if (bytes > 524288 || sourceBytes > 2097152) throw new Error('ScriptWidget source graph exceeds budget');
+      if (typeof input.sourceByteLimit === 'number' && bytes > input.sourceByteLimit)
+        throw new Error('ScriptWidget module exceeds the original source-byte limit');
       compiled[path] = '';
       const dependencies = [];
       const dependencyPlugin = () => ({ visitor: {
@@ -123,11 +122,10 @@ function __hanlinCompileWidget(input) {
   }
   if (input.engine !== 'expo') throw new Error('Unsupported widget engine');
   if (input.format === 'expo-layout') {
-    return Babel.transform('(' + input.files[input.entry] + ')', { plugins: [guardPlugin] }).code.replace(/;\s*$/, '');
+    return Babel.transform('(' + input.files[input.entry] + ')', {}).code.replace(/;\s*$/, '');
   }
   const compiled = {};
   const external = ['react', 'react/jsx-runtime', '@expo/ui/swift-ui', '@expo/ui/swift-ui/modifiers'];
-  let sourceBytes = 0;
   function resolve(name, parent) {
     if (external.includes(name)) return null;
     if (!name.startsWith('.')) throw new Error('Unsupported widget import: ' + name);
@@ -143,9 +141,6 @@ function __hanlinCompileWidget(input) {
   }
   function compileModule(path) {
     if (path in compiled) return;
-    const bytes = encodeURIComponent(input.files[path]).replace(/%[A-F\d]{2}/gi, 'x').length;
-    sourceBytes += bytes;
-    if (bytes > 524288 || sourceBytes > 2097152) throw new Error('Widget source graph exceeds budget');
     compiled[path] = ''; // break valid CommonJS module cycles
     const dependencies = [];
     let hasDefault = false;
@@ -162,7 +157,7 @@ function __hanlinCompileWidget(input) {
         }
       }
     } });
-    const plugins = [dependencyPlugin, 'transform-modules-commonjs', guardPlugin];
+    const plugins = [dependencyPlugin, 'transform-modules-commonjs'];
     const presets = input.format === 'tsx' ? ['typescript', 'scriptwidget'] :
       input.format === 'jsx' ? ['scriptwidget'] : [];
     const code = Babel.transform(input.files[path], { filename: path, presets, plugins }).code;

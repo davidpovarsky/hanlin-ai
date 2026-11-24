@@ -65,7 +65,7 @@ public struct HanlinScriptWidgetPreparedNode: Codable, Hashable, Sendable {
 enum HanlinWidgetJSON {
     static func value(_ object: Any) throws -> HanlinValue {
         let data = try JSONSerialization.data(withJSONObject: object, options: [.fragmentsAllowed, .sortedKeys])
-        return try HanlinValue(jsonValue: HanlinJSONValue.decodeCanonicalJSON(data, limits: .init(maximumPayloadBytes: 256 * 1_024, maximumNodes: 1_000)))
+        return try HanlinValue(jsonValue: HanlinJSONValue.decodeCanonicalJSON(data, limits: .unbounded))
     }
 
     static func dictionary(_ object: [String: Any]) throws -> [String: HanlinValue] {
@@ -145,8 +145,7 @@ public enum HanlinWidgetPreparation {
             // preparation too. Publish those writes in this same transaction;
             // a concurrent AppIntent cannot be overwritten by an old read.
             guard result.values != (state?.values ?? [:]) else { return snapshot }
-            guard (state?.revision ?? 0) < UInt64.max,
-                  try JSONEncoder().encode(result.values).count <= 256 * 1_024 else { throw HanlinWidgetActionError.invalidState }
+            guard (state?.revision ?? 0) < UInt64.max else { throw HanlinWidgetActionError.invalidState }
             let updated = HanlinWidgetInstanceState(identity: widget.identity, engine: widget.engine, artifactSHA256: digest,
                 revision: (state?.revision ?? 0) + 1, values: result.values, committedNonces: state?.committedNonces ?? [])
             return snapshot.replacing(states: snapshot.widgetStates.filter { !($0.identity == widget.identity && $0.engine == widget.engine) } + [updated])

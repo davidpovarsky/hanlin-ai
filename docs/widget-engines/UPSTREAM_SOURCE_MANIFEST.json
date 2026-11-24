@@ -709,9 +709,9 @@
       "upstream": "Shared/ScriptWidgetRuntime/Widget/Runtime/ScriptWidgetRuntime.swift",
       "upstreamBlob": "d87cddf8b6b23e07b08948a2941ba7d4ef222e49",
       "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/HanlinScriptWidgetRuntime.swift",
-      "localSHA256": "ac4239ea986e45555ee17caeee1d692e55ae0016f0939f130a6bdbf628b7f291",
+      "localSHA256": "425396c929e63ec2dd766189bf77bf8a057e6e42fbaf02f45c7736b30cd1c4c4",
       "byteIdentical": false,
-      "adaptation": "Source-derived original JSExport/util/custom-component lifecycle; Hanlin one-shot VM owner, verified files, typed transactional storage, bounded HTTP and prepared Sendable tree. Aggregate preparation charges scalar children/UTF-8 keys/canonical values, enforces 1000 nodes/64 depth/256-KiB materials/1-MiB encoded DTO and cooperative five-second deadline. Not a byte-identical copy or hard VM-memory/preemption guarantee. Native presentation action transport, local source-module compilation, and frozen dynamic-island/presentation effects preserve original engine components and APIs. Original Control actions can complete with storage values and no rendered root; rendered widget/presentation paths retain their native tree contract.",
+      "adaptation": "Source-derived original JSExport/util/custom-component lifecycle; Hanlin one-shot VM owner, verified files, typed transactional storage and prepared Sendable tree. Source/prepared-JavaScript, element-count/depth/props and cooperative deadlines are read from the installed original ScriptWidget runtime contract. Scalar children and nested child arrays do not consume additional element/depth allowances; each Dynamic Island region is validated separately. No additional host material-byte, frozen-JSON or scalar-node authoring quota. Element/array cycles, invalid JSON and original runtime errors remain failures. Not a byte-identical copy or hard VM-memory/preemption guarantee. Native presentation action transport, local source-module compilation, and frozen dynamic-island/presentation effects preserve original engine components and APIs. Original Control actions can complete with storage values and no rendered root; rendered widget/presentation paths retain their native tree contract.",
       "sourceRole": "host-adapter",
       "latestUpstreamContract": {
         "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/HanlinScriptWidgetRuntime.swift",
@@ -723,7 +723,7 @@
         },
         "originalSHA256": "7040cab9a460f5845ee96114c396b7e27e46caf8c9e62614a717e25adb1af574",
         "changed": true,
-        "hostSHA256": "ac4239ea986e45555ee17caeee1d692e55ae0016f0939f130a6bdbf628b7f291",
+        "hostSHA256": "425396c929e63ec2dd766189bf77bf8a057e6e42fbaf02f45c7736b30cd1c4c4",
         "implementation": "Hanlin host adapter; original renderer source and original app service coverage are separate"
       }
     },
@@ -733,9 +733,9 @@
       "upstream": "Shared/ScriptWidgetRuntime/Widget/Runtime/ScriptWidgetRuntime.swift",
       "upstreamBlob": "d87cddf8b6b23e07b08948a2941ba7d4ef222e49",
       "local": "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/Resources/prepare-widget.js",
-      "localSHA256": "83afb97d6fea555751a21ba814f18712c4f3f60c33c4c6b89a3f9af4db0007aa",
+      "localSHA256": "53fd68b18417eebab3cf85d3e03d403809d5ef3033867cffd4f934b346331124",
       "byteIdentical": false,
-      "adaptation": "ScriptWidgetCompiler guard visitor and async $main wrapper adapted; Expo module compiler adapter is Hanlin-owned. Native presentation action transport, local source-module compilation, and frozen dynamic-island/presentation effects preserve original engine components and APIs. Original Control actions can complete with storage values and no rendered root; rendered widget/presentation paths retain their native tree contract.",
+      "adaptation": "ScriptWidgetCompiler guard visitor and async $main wrapper adapted; Expo module compiler adapter is Hanlin-owned. ScriptWidget per-module source validation uses the installed original runtime contract; no additional aggregate-source allowance is imposed. Expo compilation uses the original Babel parser/runtime without borrowing ScriptWidget byte/deadline guards. Native presentation action transport, local source-module compilation, and frozen dynamic-island/presentation effects preserve original engine components and APIs. Original Control actions can complete with storage values and no rendered root; rendered widget/presentation paths retain their native tree contract.",
       "sourceRole": "host-adapter",
       "latestUpstreamContract": {
         "local": "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/Resources/prepare-widget.js",
@@ -747,7 +747,7 @@
         },
         "originalSHA256": "7040cab9a460f5845ee96114c396b7e27e46caf8c9e62614a717e25adb1af574",
         "changed": true,
-        "hostSHA256": "83afb97d6fea555751a21ba814f18712c4f3f60c33c4c6b89a3f9af4db0007aa",
+        "hostSHA256": "53fd68b18417eebab3cf85d3e03d403809d5ef3033867cffd4f934b346331124",
         "implementation": "Hanlin host adapter; original renderer source and original app service coverage are separate"
       }
     },

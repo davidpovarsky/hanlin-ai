@@ -69,6 +69,7 @@ public struct HanlinScriptWidgetRuntime: Sendable {
                           nativeRoot: URL?, nativeIdentity: String?,
                           requiresRender: Bool) throws -> HanlinScriptWidgetEvaluation {
         try program.validate(engine: .scriptwidget)
+        try HanlinOriginalScriptWidgetSession.validatePreparedJavaScript(program.javaScript)
         guard let context = JSContext(), let util = Self.resource("util.js") else {
             throw HanlinScriptWidgetError("Missing ScriptWidget runtime resource")
         }
@@ -85,7 +86,7 @@ public struct HanlinScriptWidgetRuntime: Sendable {
             values: values.mapValues { $0.toAny() },
             environment: environment.mapValues { value in
                 if case let .string(text) = value { return text }
-                return (try? String(data: value.jsonValue().canonicalJSONData(), encoding: .utf8)) ?? ""
+                return (try? String(data: value.jsonValue().canonicalJSONData(limits: .unbounded), encoding: .utf8)) ?? ""
             }, isUserInitiatedAction: actionID != nil || actionValue != nil)
         let completion = HanlinScriptWidgetCompletion()
         let deadline = ContinuousClock.now.advanced(by: .seconds(HanlinOriginalScriptWidgetSession.executionTimeout))
@@ -152,6 +153,8 @@ public struct HanlinScriptWidgetRuntime: Sendable {
                 """)
             let importScript: @convention(block) (String) -> Bool = { path in
                 guard let script = program.imports[path], let current = JSContext.current() else { return false }
+                do { try HanlinOriginalScriptWidgetSession.validatePreparedJavaScript(script) }
+                catch { completion.finish(.failure(error)); return false }
                 current.evaluateScript(script)
                 return current.exception == nil
             }
@@ -198,27 +201,31 @@ public struct HanlinScriptWidgetRuntime: Sendable {
                     return
                 }
                 let expanded = ["expandedLeading", "expandedCenter", "expandedTrailing", "expandedBottom"]
-                    .compactMap { dynamicRegions[$0] }
-                let fallback = expanded.isEmpty ? ["compactLeading", "compactTrailing", "minimal"].compactMap { dynamicRegions[$0] } : expanded
-                let root = rendered ?? (fallback.isEmpty ? nil :
-                    ScriptWidgetRuntimeElement(tagString: "vstack", props: [:], children: fallback))
-                if requiresRender && root == nil {
+                    .filter { dynamicRegions[$0] != nil }
+                let fallback = expanded.isEmpty
+                    ? ["compactLeading", "compactTrailing", "minimal"].filter { dynamicRegions[$0] != nil } : expanded
+                if requiresRender && rendered == nil && fallback.isEmpty {
                     completion.finish(.failure(HanlinScriptWidgetError("The script did not call $render or $dynamic_island")))
                     return
                 }
                 do {
                     var budget = FreezeBudget(deadline: deadline)
                     var active: Set<ObjectIdentifier> = []
-                    let frozen = try requiresRender ? root.map {
-                        try freeze($0, depth: 1, budget: &budget, active: &active, context: current)
-                    } : nil
-                    if let frozen, try JSONEncoder().encode(frozen).count > 1_024 * 1_024 {
-                        throw HanlinScriptWidgetError("Widget prepared payload budget exceeded")
+                    var frozen: HanlinScriptWidgetPreparedNode?
+                    if requiresRender, let rendered {
+                        frozen = try freeze(rendered, depth: 1, budget: &budget, active: &active, context: current)
                     }
                     var regions: [String: HanlinScriptWidgetPreparedNode] = [:]
                     if requiresRender {
                         for (key, element) in dynamicRegions {
+                            // The original engine validates each submitted
+                            // Dynamic Island root separately.
+                            budget.nodes = 0
                             regions[key] = try freeze(element, depth: 1, budget: &budget, active: &active, context: current)
+                        }
+                        if frozen == nil, !fallback.isEmpty {
+                            frozen = .init(tag: "vstack", props: [:],
+                                children: fallback.compactMap { regions[$0] }.map { .element($0) })
                         }
                     }
                     let island: HanlinScriptWidgetDynamicIsland? = regions.isEmpty ? nil : .init(
@@ -259,36 +266,33 @@ public struct HanlinScriptWidgetRuntime: Sendable {
     private struct FreezeBudget {
         let deadline: ContinuousClock.Instant
         var nodes = 0
-        var materialBytes = 0
         func checkTime() throws {
             guard ContinuousClock.now < deadline else { throw HanlinScriptWidgetError("Widget execution budget exceeded") }
         }
         mutating func node() throws {
             try checkTime()
-            guard nodes < 1_000 else { throw HanlinScriptWidgetError("Widget tree budget exceeded") }
+            guard nodes < HanlinOriginalScriptWidgetSession.maximumElementNodes else {
+                throw HanlinScriptWidgetError("Original ScriptWidget element-node limit exceeded")
+            }
             nodes += 1
         }
-        mutating func charge(_ size: Int) throws {
+        func value(_ object: Any) throws -> HanlinValue {
             try checkTime()
-            guard size <= 256 * 1_024 - materialBytes else { throw HanlinScriptWidgetError("Widget material budget exceeded") }
-            materialBytes += size
-        }
-        mutating func value(_ object: Any) throws -> HanlinValue {
-            let value = try HanlinWidgetJSON.value(object)
-            try charge(try value.jsonValue().canonicalJSONData().count)
-            return value
+            return try HanlinWidgetJSON.value(object)
         }
     }
 
     // Source-derived component resolution, performed only by the VM owner.
     private func freeze(_ input: ScriptWidgetRuntimeElement, depth: Int, budget: inout FreezeBudget,
                         active: inout Set<ObjectIdentifier>, context: JSContext) throws -> HanlinScriptWidgetPreparedNode {
-        guard depth <= 64 else { throw HanlinScriptWidgetError("Widget tree budget exceeded") }
+        guard depth <= HanlinOriginalScriptWidgetSession.maximumElementDepth else {
+            throw HanlinScriptWidgetError("Original ScriptWidget element-depth limit exceeded")
+        }
         try budget.node()
         var element = input
         var inserted: [ObjectIdentifier] = []
         defer { inserted.forEach { active.remove($0) } }
-        for _ in 0..<64 {
+        for _ in 0..<HanlinOriginalScriptWidgetSession.maximumElementDepth {
             try budget.checkTime()
             let identifier = ObjectIdentifier(element)
             guard active.insert(identifier).inserted else { throw HanlinScriptWidgetError("Widget component cycle") }
@@ -301,24 +305,29 @@ public struct HanlinScriptWidgetRuntime: Sendable {
             }
             element = result
         }
-        guard let tag = element.tagAsString(), element.getProps().count <= 128 else { throw HanlinScriptWidgetError("Invalid native widget element") }
-        try budget.charge(tag.utf8.count)
+        guard let tag = element.tagAsString(),
+              element.getProps().count <= HanlinOriginalScriptWidgetSession.maximumPropsPerElement else {
+            throw HanlinScriptWidgetError("Invalid native widget element")
+        }
         var props: [String: HanlinValue] = [:]
         for (key, value) in element.getProps() {
             guard let key = key as? String else { throw HanlinScriptWidgetError("Invalid property key") }
-            try budget.charge(key.utf8.count)
             props[key] = try budget.value(value)
         }
         var children: [HanlinScriptWidgetPreparedNode.Child] = []
-        func append(_ value: Any, arrayDepth: Int = 0) throws {
-            guard depth + arrayDepth <= 64 else { throw HanlinScriptWidgetError("Widget tree budget exceeded") }
+        var activeArrays: Set<ObjectIdentifier> = []
+        func append(_ value: Any) throws {
             try budget.checkTime()
             if let child = value as? ScriptWidgetRuntimeElement {
-                children.append(.element(try freeze(child, depth: depth + arrayDepth + 1, budget: &budget, active: &active, context: context)))
-            } else if let nested = value as? [Any] {
-                for item in nested { try append(item, arrayDepth: arrayDepth + 1) }
+                children.append(.element(try freeze(child, depth: depth + 1, budget: &budget, active: &active, context: context)))
+            } else if let nested = value as? NSArray {
+                let identifier = ObjectIdentifier(nested)
+                guard activeArrays.insert(identifier).inserted else {
+                    throw HanlinScriptWidgetError("Widget child array contains a cycle")
+                }
+                defer { activeArrays.remove(identifier) }
+                for item in nested { try append(item) }
             } else {
-                try budget.node()
                 children.append(.value(try budget.value(value)))
             }
         }

@@ -5,6 +5,7 @@ import HanlinPlatformContracts
 import HanlinScriptContracts
 import HanlinScriptExtensions
 import HanlinWidgetCompiler
+import HanlinScriptWidgetOriginal
 import XCTest
 
 @MainActor
@@ -105,6 +106,43 @@ final class HanlinNativePresentationTests: XCTestCase {
         XCTAssertEqual(nodes.compactMap { $0 }.count, 7)
         XCTAssertEqual(nodes.compactMap { $0 }.map(\.tag), Array(repeating: "text", count: 7))
         XCTAssertEqual(result.node.tag, "vstack")
+
+        // Scalar text is not an original element node. This one-element output
+        // also exceeds the removed host material and frozen-JSON quotas.
+        let largeSource = """
+            export default function render() {
+              $render(<text>{Array(1100).fill("x".repeat(1024))}</text>);
+            }
+            """
+        let large = try HanlinWidgetCompiler.preparePresentation(metadata,
+            files: ["native/island.tsx": Data(largeSource.utf8)])
+        let largeResult = try HanlinScriptWidgetRuntime.shared.run(program: large, values: [:], environment: [:])
+        XCTAssertEqual(largeResult.node.children.count, 1100)
+        XCTAssertGreaterThan(try JSONEncoder().encode(largeResult.node).count, 1_048_576)
+
+        let nestedSource = """
+            export default function render() {
+              let children: unknown = ["leaf"];
+              for (let i = 0; i < 80; i++) children = [children];
+              $render(<text>{children}</text>);
+            }
+            """
+        let nested = try HanlinWidgetCompiler.preparePresentation(metadata,
+            files: ["native/island.tsx": Data(nestedSource.utf8)])
+        let nestedResult = try HanlinScriptWidgetRuntime.shared.run(program: nested, values: [:], environment: [:])
+        XCTAssertEqual(nestedResult.node.children, [.value(.string("leaf"))])
+
+        let excessiveElements = """
+            export default function render() {
+              $render(<vstack>{Array.from({length: \(HanlinOriginalScriptWidgetSession.maximumElementNodes)}, () => <text>x</text>)}</vstack>);
+            }
+            """
+        let invalid = try HanlinWidgetCompiler.preparePresentation(metadata,
+            files: ["native/island.tsx": Data(excessiveElements.utf8)])
+        XCTAssertThrowsError(try HanlinScriptWidgetRuntime.shared.run(program: invalid, values: [:], environment: [:]))
+        XCTAssertThrowsError(try HanlinWidgetCompiler.preparePresentation(metadata,
+            files: ["native/island.tsx": Data(String(repeating: " ",
+                count: HanlinOriginalScriptWidgetSession.maximumSourceBytes + 1).utf8)]))
     }
 
     func testNativePresentationRejectsRemovedGenerationAndDifferentProductStore() throws {
@@ -140,6 +178,27 @@ final class HanlinNativePresentationTests: XCTestCase {
         XCTAssertEqual(properties["text"] as? String, "מקור מקורי")
         XCTAssertThrowsError(try HanlinWidgetCompiler.preparePresentation(declaration,
             files: ["native/layout.json": Data([0xff])]))
+
+        // This valid Expo program crosses the former shared source/compiled/
+        // JSON-output limits. Expo keeps its own original runtime semantics.
+        let text = String(repeating: "e", count: 2_097_153)
+        let largeSource = "props => ({type: 'TextView', props: {text: '" + text + "'}})"
+        let large = try HanlinWidgetCompiler.preparePresentation(declaration,
+            files: ["native/layout.json": Data(largeSource.utf8)])
+        let originalOutput = try HanlinExpoWidgetsRuntime.shared.render(layout: large.javaScript).get()
+        XCTAssertEqual((originalOutput["props"] as? [String: Any])?["text"] as? String, text)
+        try withStore { store in
+            let identity = try makeIdentity()
+            _ = try publish(large, identity: identity, store: store)
+            let rendered = try HanlinNativePresentationExecutor.prepare(
+                .init(identity: identity, kind: .snippet, actionName: "search"), store: store)
+            guard case let .expo(node, _) = rendered.prepared,
+                  case let .object(fields) = node,
+                  case let .object(props)? = fields["props"] else {
+                return XCTFail("Expected original Expo prepared dictionary")
+            }
+            XCTAssertEqual(props["text"], .string(text))
+        }
     }
 
     private func publish(_ program: HanlinWidgetProgram, identity: HanlinScriptExtensionIdentity,

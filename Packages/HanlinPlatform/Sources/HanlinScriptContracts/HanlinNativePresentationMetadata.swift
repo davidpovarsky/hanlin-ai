@@ -33,7 +33,7 @@ public struct HanlinNativePresentationMetadata: Codable, Hashable, Sendable {
 
     public static func declarations(in manifest: HanlinScriptingManifest) throws -> [String: Self] {
         guard let field = manifest.unknownFields["nativePresentations"] else { return [:] }
-        return try JSONDecoder().decode([String: Self].self, from: field.canonicalJSONData())
+        return try JSONDecoder().decode([String: Self].self, from: field.canonicalJSONData(limits: .unbounded))
     }
 
     public static func artifactPath(for entrypointID: String) -> String {

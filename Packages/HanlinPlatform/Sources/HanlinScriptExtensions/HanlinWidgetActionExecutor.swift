@@ -156,7 +156,7 @@ public enum HanlinWidgetActionExecutor {
                 case .legacy: throw HanlinWidgetActionError.invalidIdentity
                 }
             }
-            guard state.revision < UInt64.max, try JSONEncoder().encode(state.values).count <= 256 * 1_024 else { throw HanlinWidgetActionError.invalidState }
+            guard state.revision < UInt64.max else { throw HanlinWidgetActionError.invalidState }
             state.revision += 1
             state.committedNonces = Array((state.committedNonces + [nonce]).suffix(128))
             var states = current.widgetStates.filter { !($0.identity == identity && $0.engine == context.engine) }

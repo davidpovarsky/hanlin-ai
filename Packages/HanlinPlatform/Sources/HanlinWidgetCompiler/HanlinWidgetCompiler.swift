@@ -29,7 +29,7 @@ public enum HanlinWidgetCompiler {
         try manifest.validateWidgetMetadata()
         guard let engine = manifest.declaredWidgetEngine, engine != .legacy,
               let field = manifest.unknownFields["hanlinWidget"] else { throw HanlinWidgetProgramError.invalidProgram }
-        let metadata = try JSONDecoder().decode(HanlinWidgetPackageMetadata.self, from: field.canonicalJSONData())
+        let metadata = try JSONDecoder().decode(HanlinWidgetPackageMetadata.self, from: field.canonicalJSONData(limits: .unbounded))
         return try prepare(engine: engine, metadata: metadata, entryPath: entryPath, files: files,
                            includesOriginalWidgetManifest: true)
     }
@@ -57,8 +57,9 @@ public enum HanlinWidgetCompiler {
             ? originalScriptWidgetActions(engine: engine, metadata: metadata, entryPath: entryPath, files: files)
             : metadata
         guard metadata.abiVersion == HanlinWidgetProgram.abiVersion,
-              let source = files[entryPath], source.count <= 512 * 1_024,
+              let source = files[entryPath],
               let entrySource = String(data: source, encoding: .utf8) else { throw HanlinWidgetProgramError.invalidSource }
+        if engine == .scriptwidget { try HanlinOriginalScriptWidgetSession.validateSource(entrySource) }
         // The declared format, not the filename extension, identifies the entry.
         // Expo-layout expressions commonly use .json or another asset suffix.
         var sources: [String: String] = [entryPath: entrySource]
@@ -76,8 +77,9 @@ public enum HanlinWidgetCompiler {
 #if canImport(JavaScriptCore)
         // One invocation owns the VM; neither compiler contexts nor JSValues are cached.
         guard let context = JSContext() else { throw HanlinWidgetProgramError.missingCompiler }
-        let deadline = ContinuousClock.now.advanced(by: .seconds(10))
-        let active: @convention(block) () -> Bool = { ContinuousClock.now < deadline }
+        let deadline: ContinuousClock.Instant? = engine == .scriptwidget
+            ? ContinuousClock.now.advanced(by: .seconds(HanlinOriginalScriptWidgetSession.compileTimeout)) : nil
+        let active: @convention(block) () -> Bool = { deadline.map { ContinuousClock.now < $0 } ?? true }
         context.setObject(active, forKeyedSubscript: "__scriptWidgetCompileActive" as NSString)
         context.evaluateScript(babel)
         context.evaluateScript(adapter)
@@ -85,21 +87,24 @@ public enum HanlinWidgetCompiler {
         let actionObjects = try JSONSerialization.jsonObject(with: actionsData)
         let result = context.objectForKeyedSubscript("__hanlinCompileWidget")?.call(withArguments: [[
             "engine": engine.rawValue, "format": metadata.sourceFormat.rawValue,
-            "entry": entryPath, "files": sources, "actions": actionObjects
+            "entry": entryPath, "files": sources, "actions": actionObjects,
+            "sourceByteLimit": engine == .scriptwidget ? HanlinOriginalScriptWidgetSession.maximumSourceBytes as Any : NSNull()
         ]])
         if let exception = context.exception { throw HanlinWidgetProgramError.compilationFailed(exception.toString() ?? "Unknown compiler exception") }
-        guard ContinuousClock.now < deadline, let javaScript = result?.toString(), !javaScript.isEmpty else {
+        guard active(), let javaScript = result?.toString(), !javaScript.isEmpty else {
             throw HanlinWidgetProgramError.compilationFailed("Compiler produced no output or exceeded its budget")
         }
+        if engine == .scriptwidget { try HanlinOriginalScriptWidgetSession.validatePreparedJavaScript(javaScript) }
         var imports: [String: String] = [:]
         if engine == .scriptwidget, context.objectForKeyedSubscript("__hanlinWidgetUsesModules")?.toBool() != true {
             for (path, code) in sources where path != entryPath {
-                guard code.utf8.count <= 512 * 1_024 else { throw HanlinWidgetProgramError.invalidSource }
+                try HanlinOriginalScriptWidgetSession.validateSource(code)
                 let output = context.objectForKeyedSubscript("__hanlinCompileWidget")?.call(withArguments: [[
                     "engine": "scriptwidget-import", "format": "jsx", "entry": path, "files": sources, "actions": []
                 ]])
                 if let exception = context.exception { throw HanlinWidgetProgramError.compilationFailed(exception.toString() ?? "Import compilation failed") }
-                guard ContinuousClock.now < deadline, let text = output?.toString() else { throw HanlinWidgetProgramError.invalidSource }
+                guard active(), let text = output?.toString() else { throw HanlinWidgetProgramError.invalidSource }
+                try HanlinOriginalScriptWidgetSession.validatePreparedJavaScript(text)
                 imports[path] = text
             }
         }
