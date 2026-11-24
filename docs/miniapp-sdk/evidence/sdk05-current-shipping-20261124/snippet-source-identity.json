@@ -1,0 +1,273 @@
+{
+  "status": "AUTHENTIC_EXECUTED_REPORT_RECONCILED_TO_EXACT_SHIPPED_BYTES",
+  "sourceBlocks": 14,
+  "jsonBlocks": 7,
+  "explicitExclusions": 8,
+  "snippets": [
+    {
+      "id": "expo.app",
+      "document": "docs/hanlin-expo-runtime.md",
+      "line": 173,
+      "sha256": "fbd2266553b25b133b2419ed47a818423c182e96e8f9fc8f5f20730ebe2fbe58",
+      "bytes": 690,
+      "disposition": "original-source-typecheck"
+    },
+    {
+      "id": "expo.registration",
+      "document": "docs/hanlin-expo-runtime.md",
+      "line": 297,
+      "sha256": "f3532a443c0193cbb6866cb1a7474d0f5055917ffdc7f5e60efe35159e544d19",
+      "bytes": 120,
+      "disposition": "original-source-typecheck"
+    },
+    {
+      "id": "expo.script",
+      "document": "docs/hanlin-expo-runtime.md",
+      "line": 205,
+      "sha256": "f8b479220bb3c95444e548eb08c75f1c7120f96a4987403d867e304f226d6934",
+      "bytes": 212,
+      "disposition": "public-authoring-loader-fields"
+    },
+    {
+      "id": "workflow.descriptor",
+      "document": "docs/miniapp-sdk/AUTHORING_WORKFLOW.md",
+      "line": 25,
+      "sha256": "30fb20e6d4f179c7b45f995da47e7abcfc63072fe7285a01ce53cc7c319f43cb",
+      "bytes": 137,
+      "disposition": "public-authoring-project-config"
+    },
+    {
+      "id": "ns.construction",
+      "document": "docs/hanlin-nativescript-guide.md",
+      "line": 39,
+      "sha256": "2421b9aaa684489afc086ba102b8b85907da396846ed90b0fb02ad4cec7241a1",
+      "bytes": 143,
+      "disposition": "original-source-typecheck"
+    },
+    {
+      "id": "ns.initializers",
+      "document": "docs/hanlin-nativescript-guide.md",
+      "line": 46,
+      "sha256": "9cc3dcc8d5159e4a6266b2c3746b9986570f264545c2e42ebbb0e28d024528b9",
+      "bytes": 370,
+      "disposition": "original-source-typecheck"
+    },
+    {
+      "id": "ns.factories",
+      "document": "docs/hanlin-nativescript-guide.md",
+      "line": 56,
+      "sha256": "73efbd1bb8469c592691c0fd66238fce227bad3a0ba07bad8abe5cd4df7185c6",
+      "bytes": 191,
+      "disposition": "original-source-typecheck"
+    },
+    {
+      "id": "ns.properties",
+      "document": "docs/hanlin-nativescript-guide.md",
+      "line": 74,
+      "sha256": "9ea0c859676e27711d0e9cc5abb63f28a6093cd62705f30c210891fa6936eda7",
+      "bytes": 331,
+      "disposition": "original-source-typecheck"
+    },
+    {
+      "id": "ns.callbacks",
+      "document": "docs/hanlin-nativescript-guide.md",
+      "line": 106,
+      "sha256": "40706b43e6d36edb509b426d9bec5a6c75c674af624bbb448d21ca710e497eda",
+      "bytes": 517,
+      "disposition": "original-source-typecheck"
+    },
+    {
+      "id": "ns.presentation",
+      "document": "docs/hanlin-nativescript-guide.md",
+      "line": 130,
+      "sha256": "0ae4a2cea196f8ce13bff4682ad87634c166720c8719d9b4d53219dcb1018d86",
+      "bytes": 360,
+      "disposition": "original-source-typecheck"
+    },
+    {
+      "id": "ns.tabs",
+      "document": "docs/hanlin-nativescript-guide.md",
+      "line": 143,
+      "sha256": "029092aa30d48dc2ca16f807360cdf837967ed6d79b747ffec143664366b0bbd",
+      "bytes": 1159,
+      "disposition": "original-source-typecheck"
+    },
+    {
+      "id": "ns.swiftui-provider",
+      "document": "docs/hanlin-nativescript-guide.md",
+      "line": 191,
+      "sha256": "b71070542714fe867962b5353eb595303850520b0bb992b929a039064987740c",
+      "bytes": 691,
+      "disposition": "original-source-typecheck"
+    },
+    {
+      "id": "ns.tsconfig",
+      "document": "docs/hanlin-nativescript-guide.md",
+      "line": 225,
+      "sha256": "5788d12bec24da68a5004aff662b30875cb1bea66d89fe6ef706f1f8f20bcf82",
+      "bytes": 159,
+      "disposition": "original-compiler-config"
+    },
+    {
+      "id": "ns.script",
+      "document": "docs/hanlin-nativescript-guide.md",
+      "line": 259,
+      "sha256": "f922b1ec55a91350e4eaad6fc11705d4fc426650d3c57992e002506aa43db954",
+      "bytes": 344,
+      "disposition": "public-authoring-loader-fields"
+    },
+    {
+      "id": "ns.package",
+      "document": "docs/hanlin-nativescript-guide.md",
+      "line": 274,
+      "sha256": "5bebf3f266f640465e887d9aec6609d2e0d57274541aa8df39d665ab4128b902",
+      "bytes": 136,
+      "disposition": "public-authoring-loader-fields"
+    },
+    {
+      "id": "readme.descriptor",
+      "document": "docs/miniapp-sdk/README.md",
+      "line": 50,
+      "sha256": "1bf949fb4ba1fd14481df380299652fe9b587aa5c30afdb6621fe23be6c02094",
+      "bytes": 107,
+      "disposition": "public-authoring-project-config"
+    },
+    {
+      "id": "widget.services",
+      "document": "docs/miniapp-sdk/SCRIPTWIDGET_AUTHORING.md",
+      "line": 29,
+      "sha256": "20121364f1242e11d8ebc606b3752edc62c732ba1cda4f69a00a4cb6eaaf49d8",
+      "bytes": 456,
+      "disposition": "original-source-typecheck"
+    },
+    {
+      "id": "widget.http",
+      "document": "docs/miniapp-sdk/SCRIPTWIDGET_AUTHORING.md",
+      "line": 49,
+      "sha256": "80f68f7a33050c33d54a5424e1ae449c6fb22fc83c89ff55c3a1efb1b939ff53",
+      "bytes": 338,
+      "disposition": "original-source-typecheck"
+    },
+    {
+      "id": "widget.presentation",
+      "document": "docs/miniapp-sdk/SCRIPTWIDGET_AUTHORING.md",
+      "line": 82,
+      "sha256": "4c151d27118366aa154c6c2a63f3e1dc4fe217612b2bfa8d4688e58dba622c6d",
+      "bytes": 312,
+      "disposition": "original-source-typecheck"
+    },
+    {
+      "id": "controls.manifest",
+      "document": "docs/miniapp-sdk/SCRIPTWIDGET_CONTROLS.md",
+      "line": 40,
+      "sha256": "8c31c94e7e78b87fb68be7ba5a960f8b121b0c15691e57fed5e937e5415605c7",
+      "bytes": 631,
+      "disposition": "original-widget-manifest-semantic-validation"
+    },
+    {
+      "id": "controls.handler",
+      "document": "docs/miniapp-sdk/SCRIPTWIDGET_CONTROLS.md",
+      "line": 93,
+      "sha256": "fc330127228be3f2dfba630d6492cfbd3e0bfa56d0104c173c6372f494d37250",
+      "bytes": 234,
+      "disposition": "original-source-typecheck"
+    },
+    {
+      "id": "expo.architecture",
+      "document": "docs/hanlin-expo-runtime.md",
+      "line": 21,
+      "sha256": "2b596872c7c4714368ebfda16127611711d0832e94b3d5488ea94c92ef351785",
+      "bytes": 1483,
+      "disposition": "EXPLICIT_NONAUTHORING_EXCLUSION",
+      "reason": "Architecture diagram"
+    },
+    {
+      "id": "expo.inventory-flow",
+      "document": "docs/hanlin-expo-runtime.md",
+      "line": 75,
+      "sha256": "b51ddace4f8c906ce7eac2642c9532a9c0eda3d7b2b7488f32aae7952853e614",
+      "bytes": 315,
+      "disposition": "EXPLICIT_NONAUTHORING_EXCLUSION",
+      "reason": "Host inventory explanation"
+    },
+    {
+      "id": "expo.host-delegate",
+      "document": "docs/hanlin-expo-runtime.md",
+      "line": 106,
+      "sha256": "c7a92790bbc51e3050e28c0cf37062ef61edab08f91eaf1dcab5aa667f5178d0",
+      "bytes": 429,
+      "disposition": "EXPLICIT_NONAUTHORING_EXCLUSION",
+      "reason": "Internal Swift host implementation, not a MiniApp source example"
+    },
+    {
+      "id": "expo.host-modifier",
+      "document": "docs/hanlin-expo-runtime.md",
+      "line": 146,
+      "sha256": "6775ac75e25397abe89819a0d3f1a4282f23c34512cdd47a308617ae7336af7e",
+      "bytes": 779,
+      "disposition": "EXPLICIT_NONAUTHORING_EXCLUSION",
+      "reason": "Internal Swift modifier implementation, not a MiniApp source example"
+    },
+    {
+      "id": "expo.layout",
+      "document": "docs/hanlin-expo-runtime.md",
+      "line": 285,
+      "sha256": "56cea11fd4d08402289d59fe61dcf6b6f850d7d700ecf4399cf0006ef7540468",
+      "bytes": 403,
+      "disposition": "EXPLICIT_NONAUTHORING_EXCLUSION",
+      "reason": "Directory layout"
+    },
+    {
+      "id": "ns.layout",
+      "document": "docs/hanlin-nativescript-guide.md",
+      "line": 248,
+      "sha256": "6a07282b3c55fdc5369583100b5c2343cbd9b02c150e633391a12dc6ad7eff70",
+      "bytes": 137,
+      "disposition": "EXPLICIT_NONAUTHORING_EXCLUSION",
+      "reason": "Directory layout"
+    },
+    {
+      "id": "widget.regeneration-commands",
+      "document": "docs/miniapp-sdk/SCRIPTWIDGET_AUTHORING.md",
+      "line": 109,
+      "sha256": "59477e7594beeaa6a908412aeaedecadedd68311627084de139a760c6faffdb8",
+      "bytes": 286,
+      "disposition": "EXPLICIT_NONAUTHORING_EXCLUSION",
+      "reason": "Repository shell instructions; not executed by the snippet checker"
+    },
+    {
+      "id": "workflow.commands",
+      "document": "docs/miniapp-sdk/AUTHORING_WORKFLOW.md",
+      "line": 105,
+      "sha256": "46e7a1501556b67e6caa2188b83ad8044d341398346161db8fcf2cda59d72cab",
+      "bytes": 324,
+      "disposition": "EXPLICIT_NONAUTHORING_EXCLUSION",
+      "reason": "Desktop shell instructions with user-provided paths; not executed by the snippet checker"
+    }
+  ],
+  "registration": {
+    "expectedName": "main",
+    "registrations": [
+      "main"
+    ],
+    "nativeSessionSHA256": "27505a611dbe1b61ab100ca53c393ca9a72aedb76bbc084015c35423f25804c7",
+    "mode": "source-contract-check",
+    "nativeLaunch": "NOT_RUN",
+    "nativePath": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoSession.swift"
+  },
+  "checkerInputs": [
+    {
+      "path": "Scripts/MiniApps/check-authoring-examples.mjs",
+      "sha256": "419f295ee6f0e7dcbf9cee42560ef1e8760010ae07b1d6767a0f6017fc7b317a"
+    },
+    {
+      "path": "Scripts/MiniApps/authoring-examples.json",
+      "sha256": "3ff3b2272bb77eb22fcc3df81063aab3994ec555b1e78562ee9e256b3cd0aa26"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
+      "sha256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856"
+    }
+  ],
+  "newValidationOrExecution": false
+}

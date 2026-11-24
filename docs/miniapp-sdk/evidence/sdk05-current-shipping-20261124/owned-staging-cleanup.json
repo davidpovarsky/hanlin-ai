@@ -1,0 +1,14 @@
+{
+  "removedPath": "/tmp/hanlin-sdk05-shipping-45375410965-5ndqe_cd",
+  "ownedFiles": 6,
+  "ownedBytes": 82294393,
+  "existsAfter": false,
+  "preserved": [
+    "Original authenticated outer artifact",
+    "Parent retained text/log artifacts",
+    "Frozen original SDK-only kit and all prior receipts",
+    "Shared package/runtime caches"
+  ],
+  "remainingArtifactAccess": "RuntimeHostResources.zip remains the named authenticated member of the parent-owned outer ZIP. To replay inspection, recreate this owned temporary path and extract only that exact member; the receipt is not modified.",
+  "atUTC": "2026-11-24T11:51:40.352633+00:00"
+}
