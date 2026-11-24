@@ -86,8 +86,8 @@ final class MiniAppAuthoringUITests: XCTestCase {
                       "The real companion installer did not finish the corrected archive.")
         XCTAssertFalse(item(mini, "hanlin-import-error-message").exists)
         XCTAssertFalse(item(mini, "hanlin-import-diagnostics-sheet").exists)
-        if mini.navigationBars["Script Package"].buttons["Done"].exists {
-            mini.navigationBars["Script Package"].buttons["Done"].tap()
+        if mini.buttons["hanlin-package-import-done"].exists {
+            mini.buttons["hanlin-package-import-done"].tap()
         }
         if mini.buttons["hanlin-apps-add-done"].exists { mini.buttons["hanlin-apps-add-done"].tap() }
         let search = mini.searchFields["Search Apps"].firstMatch

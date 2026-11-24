@@ -8,6 +8,7 @@ import https from 'node:https';
 import http from 'node:http';
 
 import { generateCodegen } from './generate-codegen.mjs';
+import { patchNativeModuleForSessions, patchUIKitHostHeaderForSessions, patchUIKitViewForSessions } from './multiscene-patch.mjs';
 import { verifyNSMD } from './verify-nsmd.mjs';
 import { verifyArtifacts } from './verify-artifacts.mjs';
 
@@ -255,91 +256,19 @@ export async function prepareExpoNativeAPI() {
 }
 `, 'utf8');
 
-  // 7. Apply native authorization gate patch into NativeScriptNativeApiModule.mm and .h
-  const moduleMmPath = resolve(coreTargetDir, 'nativescript', 'ios', 'NativeScriptNativeApiModule.mm');
-  const moduleHPath = resolve(coreTargetDir, 'nativescript', 'ios', 'NativeScriptNativeApiModule.h');
-
-  if (existsSync(moduleMmPath)) {
-    let mmContent = await readFile(moduleMmPath, 'utf8');
-
-    // Prepend include
-    mmContent = '#include "HanlinExpoNativeAPIGate.h"\n' + mmContent;
-
-    // Append worklet clearing helper
-    mmContent = mmContent + `
-void HanlinExpoNativeAPIClearWorkletRuntime(void) {
-  setNativeScriptWorkletRuntime(nullptr);
-}
-`;
-
-    // Patch bundledMetadataPath()
-    const bundleAnchor = 'std::string bundledMetadataPath() {';
-    const bundleReplacement = `std::string bundledMetadataPath() {
-  NSString* gatePath = [HanlinExpoNativeAPIGate bundledMetadataPath];
-  if (gatePath != nil && gatePath.length > 0) {
-    return gatePath.UTF8String;
-  }`;
-    mmContent = applyStrictPatch(mmContent, bundleAnchor, bundleReplacement, 'bundledMetadataPath');
-
-    // Patch NativeScriptCreateUIKitHost()
-    const createAnchor = 'NSDictionary<NSString*, NSString*>* NativeScriptCreateUIKitHost(NSString* hostId) {';
-    const createReplacement = `NSDictionary<NSString*, NSString*>* NativeScriptCreateUIKitHost(NSString* hostId) {
-  if (![HanlinExpoNativeAPIGate isNativeAPIAuthorizedForCurrentSession]) {
-    NSLog(@"[HANLIN_EXPO_NATIVEAPI_DENIAL] NativeScriptCreateUIKitHost rejected: no active matching native runtime session.");
-    return nil;
-  }`;
-    mmContent = applyStrictPatch(mmContent, createAnchor, createReplacement, 'NativeScriptCreateUIKitHost');
-
-    // Patch NativeScriptRunUIKitHostLifecycle()
-    const lifecycleAnchor = `NSDictionary<NSString*, NSString*>* NativeScriptRunUIKitHostLifecycle(NSString* hostId,
-                                                                      NSString* phase) {`;
-    const lifecycleReplacement = `NSDictionary<NSString*, NSString*>* NativeScriptRunUIKitHostLifecycle(NSString* hostId,
-                                                                      NSString* phase) {
-  if (![HanlinExpoNativeAPIGate isNativeAPIAuthorizedForCurrentSession]) {
-    NSLog(@"[HANLIN_EXPO_NATIVEAPI_DENIAL] NativeScriptRunUIKitHostLifecycle rejected: no active matching native runtime session.");
-    return nil;
-  }`;
-    mmContent = applyStrictPatch(mmContent, lifecycleAnchor, lifecycleReplacement, 'NativeScriptRunUIKitHostLifecycle');
-
-    // Patch install()
-    const installAnchor = 'bool NativeScriptNativeApiModule::install(jsi::Runtime& runtime, std::string metadataPath) {';
-    const installReplacement = `bool NativeScriptNativeApiModule::install(jsi::Runtime& runtime, std::string metadataPath) {
-  if (![HanlinExpoNativeAPIGate isNativeAPIAuthorizedForRuntime:&runtime]) {
-    NSLog(@"[HANLIN_EXPO_NATIVEAPI_DENIAL] NativeScriptNativeApiModule::install rejected: no active matching native runtime session.");
-    return false;
-  }`;
-    mmContent = applyStrictPatch(mmContent, installAnchor, installReplacement, 'install');
-
-    // Patch installWorkletRuntime() - exactly one complete signature and opening brace
-    const workletAnchor = `bool NativeScriptNativeApiModule::installWorkletRuntime(jsi::Runtime& runtime,
-                                                        jsi::Object runtimeHolder,
-                                                        std::string metadataPath) {`;
-    const workletReplacement = `bool NativeScriptNativeApiModule::installWorkletRuntime(jsi::Runtime& runtime,
-                                                        jsi::Object runtimeHolder,
-                                                        std::string metadataPath) {
-  if (![HanlinExpoNativeAPIGate isNativeAPIAuthorizedForRuntime:&runtime]) {
-    NSLog(@"[HANLIN_EXPO_NATIVEAPI_DENIAL] NativeScriptNativeApiModule::installWorkletRuntime rejected: no active matching native runtime session.");
-    return false;
-  }`;
-    mmContent = applyStrictPatch(mmContent, workletAnchor, workletReplacement, 'installWorkletRuntime');
-
-    // Strict validation of the patched file:
-    const installWorkletCount = mmContent.split('installWorkletRuntime(').length - 1;
-    if (installWorkletCount !== 1) {
-      throw new Error(`[HanlinExpoNativeAPI] Validation failed: installWorkletRuntime count = ${installWorkletCount}, expected 1`);
-    }
-    const denialCount = mmContent.split('[HANLIN_EXPO_NATIVEAPI_DENIAL]').length - 1;
-    if (denialCount !== 4) {
-      throw new Error(`[HanlinExpoNativeAPI] Validation failed: gate denial count = ${denialCount}, expected 4`);
-    }
-    if (mmContent.includes('jsi::Object runtimeHolder,\n                                                        std::string metadataPath) {\n  writeSmokeMarker')) {
-      throw new Error('[HanlinExpoNativeAPI] Validation failed: duplicate parameters detected in installWorkletRuntime');
-    }
-
-    await writeFile(moduleMmPath, mmContent, 'utf8');
-
-    console.log('[HanlinExpoNativeAPI] Injected session/runtime-scoped HanlinExpoNativeAPIGate into NativeScriptNativeApiModule.mm');
+  // 7. Apply reproducible per-session native runtime and UIKit host patches.
+  const nativeIOSDir = resolve(coreTargetDir, 'nativescript', 'ios');
+  for (const [name, patch] of [
+    ['NativeScriptNativeApiModule.mm', patchNativeModuleForSessions],
+    ['NativeScriptUIKitHost.h', patchUIKitHostHeaderForSessions],
+    ['NativeScriptUIView.mm', patchUIKitViewForSessions]
+  ]) {
+    const path = resolve(nativeIOSDir, name);
+    await writeFile(path, patch(await readFile(path, 'utf8')), 'utf8');
   }
+  // The public header must expose the patched session-aware entry points too.
+  await cp(resolve(nativeIOSDir, 'NativeScriptUIKitHost.h'), resolve(coreIncludeDir, 'NativeScriptUIKitHost.h'));
+  console.log('[HanlinExpoNativeAPI] Applied session/runtime/view-scoped native integration');
 
   // 8. Generate Codegen artifacts into target directories
   await generateCodegen({

@@ -311,19 +311,35 @@ def main():
                 if hashlib.sha256(destination.read_bytes()).hexdigest() != digest:
                     raise RuntimeError("Runtime fixture bytes changed")
                 state["runtime_inputs"].append({"source": os.path.relpath(source, ROOT), "sha256": digest})
+            # Existing owner fixture: actual ScriptUI import and nested modal in
+            # the original cross-app mailbox group, not synthetic Expo runtimes.
+            _, raw = command([sys.executable, "Scripts/ProductSplit/stage_external_modal_fixture.py",
+                "--simulator-udid", simulator, "--app-path", str(products["com.itorah.hanlinminiapps"]),
+                "--evidence", str(EVIDENCE / "external-modal-fixture")],
+                "external-modal-fixture-stage.log", timeout=180)
+            modal_fixture = json.loads(raw)
+            state["external_modal_fixture"] = modal_fixture
             runtime_selectors = [
                 "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch",
                 "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents",
                 "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoNativeAPIUsesActualUIKitAndWorklets",
                 "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoWidgetsUsesOriginalTimelinesAndLiveActivities",
-                "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneModularSearchLoadsActualSefariaText"]
+                "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneModularSearchLoadsActualSefariaText",
+                "HanlinMiniAppsTests/CrossAppInvocationTests/testCancelAndDisplayDoneReturnNoDocumentMutation",
+                "HanlinMiniAppsTests/CrossAppInvocationTests/testReusingValueWindowKeepsItsInvocationBindingCurrent",
+                "HanlinMiniAppsTests/CrossAppInvocationTests/testRemovingInvocationOwnerCancelsWhileSessionIsStillRetained",
+                "HanlinMiniAppsTests/CrossAppInvocationTests/testActualIncomingRequestsCreateDistinctIPadScenes",
+                "HanlinMiniAppsTests/NativeScriptWindowOwnershipTests/testUnrelatedAndLateWindowCleanupPreservesNativeScriptOwner",
+                "HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests/testExternalInvocationSurvivesNestedFullScreenModal"]
             runtime_result = EVIDENCE / "OriginalRuntimes.xcresult"
             argv = base + ["-scheme", "HanlinMiniApps", "test-without-building",
                 "-resultBundlePath", str(runtime_result)]
             argv += ["-only-testing:" + selector for selector in runtime_selectors]
             code, _ = command(argv, "original-runtimes.log", timeout=1200, allow_failure=True)
             state["original_runtime_summary"] = verify_native_result(runtime_result, "original-runtimes",
-                runtime_selectors, 5, code)
+                runtime_selectors, 11, code)
+            _, raw = command(modal_fixture["verify_command"], "external-modal-result.json")
+            state["external_modal_result"] = json.loads(raw)
         if TEST_SCOPE in {"cross_product", "product_and_share"}:
             archive = fixture_archive(state["sha"])
             _, raw = command(["xcrun", "simctl", "get_app_container", simulator,

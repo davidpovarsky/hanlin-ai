@@ -57,6 +57,7 @@ final class HanlinMiniAppsProvider {
         // Visibility is a catalog preference. An authorized foreground request
         // still resolves against the current canonical registrations.
         try await refreshCatalog()
+        try platform.requireLaunchAdmission()
         guard let item = host.items.first(where: { $0 == selected }) else { throw Failure.staleSelection }
         switch item.engine {
         case .swift:
@@ -84,7 +85,8 @@ final class HanlinMiniAppsProvider {
             case .swift: false
             }
             guard producedApplication else { throw Failure.launchDidNotProduceApplication }
-            return AnyView(ScriptingApplicationContainerView(platform: platform))
+            return AnyView(ScriptingApplicationContainerView(
+                platform: platform, ownsApplicationLifetime: includesDismissControl))
         }
     }
 
@@ -94,6 +96,7 @@ final class HanlinMiniAppsProvider {
         defer { launching = false }
 
         await platform.restore()
+        try platform.requireLaunchAdmission()
         try requirePackageServices()
         await platform.launch(packageID)
         if case .failed(let message) = platform.activity { throw Failure.unavailable(message) }

@@ -1,6 +1,7 @@
 import Foundation
 import XCTest
 import UIKit
+import SwiftUI
 import HanlinTextStudioMiniApp
 import HanlinMiniAppsBridge
 @testable import HanlinMiniApps
@@ -119,6 +120,38 @@ final class CrossAppInvocationTests: XCTestCase {
         XCTAssertEqual(coldA.persistentString(forKey: "draft"), "", "An intentionally empty restored draft is still a draft.")
     }
 
+    func testReusingValueWindowKeepsItsInvocationBindingCurrent() {
+        let first = UUID(), second = UUID()
+        var sceneIdentity: UUID? = first
+        let binding = Binding<UUID?>(get: { sceneIdentity }, set: { sceneIdentity = $0 })
+        let window = HanlinMiniAppsWindow(requestID: binding)
+        XCTAssertEqual(window.externalRequestID, first)
+        window.externalRequestID = second
+        XCTAssertEqual(sceneIdentity, second,
+            "Reusing a window must update the WindowGroup value used for focus and restoration.")
+        XCTAssertEqual(window.externalRequestID, second)
+        window.externalRequestID = nil
+        XCTAssertNil(sceneIdentity, "Closing the invocation must clear the same scene identity.")
+    }
+
+    func testRemovingInvocationOwnerCancelsWhileSessionIsStillRetained() throws {
+        let (root, store) = try fixture()
+        defer { try? FileManager.default.removeItem(at: root) }
+        let original = request("close this invocation")
+        _ = try store.enqueue(original)
+        let session = HanlinExternalMiniAppSession(
+            requestID: original.id, store: store, openSource: { _ in true })
+        try session.restoreRequest()
+        var owner: HanlinExternalMiniAppLifetime? = .init(session: session)
+        weak var weakOwner = owner
+        owner = nil
+        XCTAssertNil(weakOwner)
+        XCTAssertEqual(try store.result(id: original.id)?.status, .cancelled,
+            "Removing the view owner must persist cancellation even if async work retains the session.")
+        XCTAssertNil(session.request)
+        XCTAssertNil(session.view)
+    }
+
     func testActualIncomingRequestsCreateDistinctIPadScenes() async throws {
         XCTAssertEqual(UIDevice.current.userInterfaceIdiom, .pad, "This scope requires the actual iPad destination.")
         let store = try MiniAppBridgeStore()
@@ -131,13 +164,14 @@ final class CrossAppInvocationTests: XCTestCase {
             }
             XCTAssertTrue(opened, "The shipping URL scheme must accept the durable invocation.")
         }
-        let scenes = NSPredicate { _, _ in
-            MainActor.assumeIsolated {
-                Set(UIApplication.shared.connectedScenes.map { $0.session.persistentIdentifier })
-                    .subtracting(before).count >= 2
-            }
+        let clock = ContinuousClock()
+        let deadline = clock.now.advanced(by: .seconds(30))
+        while clock.now < deadline {
+            let createdCount = Set(UIApplication.shared.connectedScenes.map { $0.session.persistentIdentifier })
+                .subtracting(before).count
+            if createdCount >= 2 { break }
+            try await Task.sleep(for: .milliseconds(100))
         }
-        await fulfillment(of: [XCTNSPredicateExpectation(predicate: scenes, object: nil)], timeout: 30)
         let created = UIApplication.shared.connectedScenes.filter { !before.contains($0.session.persistentIdentifier) }
         XCTAssertGreaterThanOrEqual(created.count, 2)
         for scene in created {

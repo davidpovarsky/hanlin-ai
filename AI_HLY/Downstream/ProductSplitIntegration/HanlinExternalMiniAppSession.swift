@@ -67,6 +67,11 @@ final class HanlinExternalMiniAppSession {
             // package registry and canonical discovery remain shared.
             let platform = HanlinScriptingPlatform()
             ownedPlatform = platform
+            platform.externalMiniAppCanLaunch = { [weak self] in
+                guard let self else { return false }
+                return self.loadGeneration == generation && self.result == nil
+                    && self.request?.id == self.requestID
+            }
             platform.externalMiniAppOperation = { [weak self] operation, payload in
                 guard let self else { throw CancellationError() }
                 return try await self.perform(operation, payload: payload)
@@ -87,13 +92,13 @@ final class HanlinExternalMiniAppSession {
                     try await self.complete(value)
                 })
             try Task.checkCancellation()
-            guard loadGeneration == generation else { throw CancellationError() }
+            guard loadGeneration == generation, result == nil else { throw CancellationError() }
             view = launchedView
         } catch {
             ownedPlatform?.dismissActiveApplication()
             guard loadGeneration == generation else { return }
             if error is CancellationError {
-                request = nil
+                if result == nil { request = nil }
                 provider = nil
                 platform = nil
                 return
@@ -165,6 +170,9 @@ final class HanlinExternalMiniAppSession {
     }
 
     private func releaseEngine() {
+        // An async launch may still retain this platform after the scene closes.
+        // Its last admission check must continue to reject that abandoned work.
+        platform?.externalMiniAppCanLaunch = { false }
         platform?.dismissActiveApplication()
         platform?.externalMiniAppOperation = nil
         view = nil
@@ -174,6 +182,8 @@ final class HanlinExternalMiniAppSession {
 
     func cancel() async {
         guard let request else { return }
+        loadGeneration = UUID()
+        loading = false
         do {
             if result == nil {
                 try await finish(MiniAppResult(requestID: request.id, status: .cancelled))
@@ -260,15 +270,29 @@ final class HanlinExternalMiniAppSession {
     }
 }
 
+/// The state lifetime ends when this invocation is removed, not when a child
+/// full-screen presentation temporarily covers it. An async engine load may
+/// retain the session after removal, so the owner must close it independently.
+@MainActor
+final class HanlinExternalMiniAppLifetime {
+    let session: HanlinExternalMiniAppSession
+
+    init(session: HanlinExternalMiniAppSession) { self.session = session }
+
+    isolated deinit { session.close() }
+}
+
 /// Uses the existing MiniApp view and runtime; contains no substitute engine.
 @MainActor
 public struct HanlinExternalMiniAppView: View {
-    @State private var session: HanlinExternalMiniAppSession
+    @State private var lifetime: HanlinExternalMiniAppLifetime
+    private var session: HanlinExternalMiniAppSession { lifetime.session }
 
     private let onClose: () -> Void
 
     public init(requestID: UUID, onClose: @escaping () -> Void = {}) {
-        _session = State(initialValue: HanlinExternalMiniAppSession(requestID: requestID))
+        _lifetime = State(initialValue: HanlinExternalMiniAppLifetime(
+            session: HanlinExternalMiniAppSession(requestID: requestID)))
         self.onClose = onClose
     }
 
@@ -297,8 +321,9 @@ public struct HanlinExternalMiniAppView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button(session.result == nil ? label("Cancel", "ביטול") : label("Apps", "אפליקציות")) {
-                        if session.result != nil { session.close(); onClose() }
+                    Button(session.request != nil && session.result == nil
+                           ? label("Cancel", "ביטול") : label("Apps", "אפליקציות")) {
+                        if session.request == nil || session.result != nil { session.close(); onClose() }
                         else { Task { await session.cancel() } }
                     }
                         .disabled(session.returning)
@@ -313,15 +338,16 @@ public struct HanlinExternalMiniAppView: View {
                 }
             }
             .navigationTitle(session.request?.source.documentTitle ?? "MiniApps")
-            .task { await session.load() }
+            // Do not retain the state owner in suspended loading work: removal
+            // must close its session even while an engine preparation awaits.
+            .task { [session = lifetime.session] in await session.load() }
             .alert(label("MiniApps", "מיני אפליקציות"), isPresented: Binding(
-                get: { session.error != nil },
+                get: { session.error != nil && (session.view != nil || session.result != nil) },
                 set: { if !$0 { session.error = nil } }
             )) { Button(label("OK", "אישור")) { session.error = nil } }
               message: { Text(session.error ?? "") }
         }
         .accessibilityIdentifier("miniapps.external.window")
-        .onDisappear { session.close() }
     }
 
     private func label(_ english: String, _ hebrew: String) -> String {

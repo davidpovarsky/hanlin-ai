@@ -65,6 +65,7 @@ INPUTS = (
 
     "Scripts/ExpoNativeAPI/dependency-lock.json",
     "Scripts/ExpoNativeAPI/prepare-ios-dependencies.mjs",
+    "Scripts/ExpoNativeAPI/multiscene-patch.mjs",
     "Scripts/NativeScript/dependency-lock.json", "Scripts/NativeScript/package-lock.json",
     "Scripts/NativeScript/prepare-ios-dependencies.mjs",
     "Scripts/NativeScript/build-metadata-tool.py",

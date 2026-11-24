@@ -319,7 +319,11 @@ def main():
     with open(os.environ['GITHUB_OUTPUT'],'a') as stream:
         stream.write('reused='+str(reused).lower()+'\n')
     print(json.dumps(result))
-    foreground_id = os.environ.get('FOREGROUND_PROOF_RUN_ID','')
+    # The standalone workflow exposes the shared Host proof input while its
+    # separate foreground input is wired only for the paired lane. Reuse the
+    # same explicitly supplied origin through the full existing 53-case
+    # source/toolchain/receipt verifier; an invalid origin still executes tests.
+    foreground_id = os.environ.get('FOREGROUND_PROOF_RUN_ID','') or run_id
     foreground = {'status':'NOT_REQUESTED','scope':'Native foreground prerequisites only'}
     foreground_reused = False
     if foreground_id:

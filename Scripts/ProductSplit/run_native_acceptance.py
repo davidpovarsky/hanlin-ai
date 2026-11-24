@@ -18,16 +18,20 @@ EVIDENCE = Path(os.environ['SPLIT_EVIDENCE'])
 TEST_SCOPE = os.environ.get('SPLIT_NATIVE_TEST_SCOPE', 'baseline')
 UI_PLANS = {
     'cross_app': (['HanlinMiniAppsTests/CrossAppInvocationTests',
-                  'HanlinMiniAppsUITests/MiniAppsCrossAppPreferencesUITests'], 9),
+                  'HanlinMiniAppsUITests/MiniAppsCrossAppPreferencesUITests',
+                  'HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests',
+                  'HanlinMiniAppsTests/NativeScriptWindowOwnershipTests'], 13),
     'baseline': (['HanlinMiniAppsUITests/HanlinMiniAppsUITests',
                   'HanlinMiniAppsUITests/MiniAppsProviderUITests'], 7),
     # Cross-app adapters and teardown changed: recheck these two runtime cases
-    # and nine new producer/UI cases. Do not repeat unchanged storage tests.
+    # and thirteen producer/UI/owner cases. Do not repeat unchanged storage tests.
     'production_runtimes': ([
         'HanlinMiniAppsTests/CrossAppInvocationTests',
         'HanlinMiniAppsUITests/MiniAppsCrossAppPreferencesUITests',
+        'HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests',
+        'HanlinMiniAppsTests/NativeScriptWindowOwnershipTests',
         'HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch',
-        'HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents'], 11),
+        'HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents'], 15),
 }
 
 
@@ -85,6 +89,20 @@ def main():
         shutil.copy2(scheme, EVIDENCE/'HanlinMiniApps.xcscheme')
         resolved = ROOT/'AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved'
         (EVIDENCE/'Package.resolved').write_bytes(resolved.read_bytes())
+        # Match the existing paired/original-app CI policy for this already
+        # pinned upstream generator. The standalone helper omitted these
+        # command-local noninteractive flags in run 45285438881.
+        a2ui_pin = next(pin for pin in json.loads(resolved.read_bytes())['pins']
+                        if pin['identity'] == 'a2ui')
+        if a2ui_pin['location'] != 'https://github.com/a2ui-project/a2ui' or \
+                a2ui_pin['state']['revision'] != '3ed9601862ecc78027e20ac80ad8b1b98a5d9079':
+            raise RuntimeError('The qualified A2UI generator pin changed; update its build evidence')
+        state['headless_package_policy'] = {
+            'source': 'Scripts/ProductSplit/run_paired_acceptance.py',
+            'source_sha256': hashlib.sha256((ROOT/'Scripts/ProductSplit/run_paired_acceptance.py').read_bytes()).hexdigest(),
+            'a2ui': a2ui_pin,
+            'scope': 'CURRENT_XCODEBUILD_COMMAND_ONLY_NO_GLOBAL_PREFERENCES_CHANGED',
+        }
         runtimes = json.loads(command(['xcrun', 'simctl', 'list', 'runtimes', '-j'], 'runtimes.json'))['runtimes']
         sdk = command(['xcrun', '--sdk', 'iphonesimulator', '--show-sdk-version'], 'simulator-sdk.txt').strip()
         runtime = next(r for r in runtimes if r.get('isAvailable') and not r.get('isInternal')
@@ -96,13 +114,20 @@ def main():
         simulator = command(['xcrun', 'simctl', 'create', 'HanlinSplit-'+os.environ.get('GITHUB_RUN_ID','local'),
                              device['identifier'], runtime['identifier']], 'created-simulator.txt').strip()
         state.update(simulator=simulator, runtime=runtime, device=device)
-        destinations = command(['xcodebuild', '-project', 'AI_HLY.xcodeproj', '-scheme', 'HanlinMiniApps',
-                                '-showdestinations', *package_arguments], 'destinations.log', timeout=120)
-        destination = next(line for line in destinations.splitlines() if simulator.lower() in line.lower())
-        state['architecture'] = re.search(r'arch:\s*(\w+)', destination).group(1)
-        if state['architecture'] not in runtime['supportedArchitectures']:
-            raise RuntimeError('Xcode destination architecture is unsupported by selected runtime')
-        state['architecture_evidence'] = destination.strip()
+        # -showdestinations unexpectedly resolves the entire package graph.
+        # Run 45279691350 timed out while fetching packages before any app build.
+        # Select the native host architecture from actual runtime metadata, let
+        # the real build validate this explicit destination, and verify its
+        # Mach-O output below instead of launching a second dependency resolver.
+        architecture = command(['uname', '-m'], 'host-architecture.txt').strip()
+        if architecture not in runtime['supportedArchitectures']:
+            raise RuntimeError('Native host architecture is unsupported by the selected simulator runtime')
+        state['architecture'] = architecture
+        state['architecture_evidence'] = {
+            'status': 'NATIVE_HOST_AND_RUNTIME_CONFIRMED_BUILD_PENDING',
+            'host': architecture,
+            'runtime_supported': runtime['supportedArchitectures'],
+        }
         # Run 44248480774 compiled successfully, but its immediate cold-boot install,
         # screenshot and simulator log all timed out before either selected UI case.
         # Start only this owned device before compilation so its first-boot services
@@ -114,8 +139,12 @@ def main():
         command(['xcrun', 'simctl', 'bootstatus', simulator, '-b'], 'bootstatus.log', timeout=300)
         derived = Path(os.environ['SPLIT_DERIVED_DATA'])
         base = ['xcodebuild', '-project', 'AI_HLY.xcodeproj', '-scheme', 'HanlinMiniApps',
-                '-destination', 'platform=iOS Simulator,id='+simulator, '-parallel-testing-enabled', 'NO',
+                '-destination', 'platform=iOS Simulator,id='+simulator+',arch='+architecture,
+                '-parallel-testing-enabled', 'NO',
                 '-derivedDataPath', str(derived), *package_arguments,
+                # Same pinned build-plugin and macro policy used by the
+                # existing original-app and paired-product CI commands.
+                '-skipPackagePluginValidation', '-skipMacroValidation',
                 # Preserve the original target's simulator entitlements. An
                 # unsigned build cannot exercise widget/package publication.
                 'CODE_SIGNING_ALLOWED=YES', 'CODE_SIGNING_REQUIRED=YES', 'CODE_SIGN_IDENTITY=-']
@@ -141,6 +170,16 @@ def main():
         executable_name = info['CFBundleExecutable']
         if Path(executable_name).name != executable_name:
             raise RuntimeError('Built executable must remain inside its original app bundle')
+        binary_architectures = command(
+            ['xcrun', 'lipo', '-archs', str(app_product/executable_name)],
+            'simulator-executable-architectures.txt').strip().split()
+        if architecture not in binary_architectures:
+            raise RuntimeError('Actual built executable omits the selected native simulator architecture')
+        state['architecture_evidence'].update(
+            status='BUILT_MACH_O_ARCHITECTURE_VERIFIED',
+            built=binary_architectures,
+            executable=executable_name,
+        )
         command(['codesign', '--verify', '--deep', '--strict', str(app_product)], 'simulator-signature.log')
         entitlement_source = ROOT/'HanlinMiniAppsApp/HanlinMiniApps.entitlements'
         required_groups = plistlib.loads(entitlement_source.read_bytes())['com.apple.security.application-groups']
@@ -259,6 +298,11 @@ def main():
                 provenance.append({'source': source.relative_to(ROOT).as_posix(), 'sha256': digest,
                                    'destination': str(destination), 'bytes': source.stat().st_size})
             (EVIDENCE/'runtime-fixtures.json').write_text(json.dumps(provenance, indent=2)+'\n')
+        if TEST_SCOPE in {'cross_app', 'production_runtimes'}:
+            command([sys.executable, 'Scripts/ProductSplit/stage_external_modal_fixture.py',
+                     '--simulator-udid', simulator, '--app-path', str(app_product),
+                     '--evidence', str(EVIDENCE/'external-modal')],
+                    'external-modal-staging.log', timeout=180)
         argv = base + ['test-without-building',
                 '-resultBundlePath', str(EVIDENCE/'MiniApps.xcresult')]
         argv += ['-only-testing:' + selector for selector in selectors]
@@ -273,6 +317,14 @@ def main():
             raw = command(['xcrun','xcresulttool','get','test-results','summary','--path',str(result)], 'test-summary.json')
             summary = json.loads(raw)
             state['summary'] = summary
+            try:
+                command(['xcrun', 'xcresulttool', 'export', 'attachments',
+                         '--path', str(result), '--output-path', str(EVIDENCE/'ui-attachments')],
+                        'ui-attachment-export.log', timeout=180)
+                state['ui_attachments'] = 'EXPORTED_FROM_ACTUAL_XCRESULT'
+            except Exception as export_error:
+                # The raw xcresult remains available for read-only export.
+                state['ui_attachment_export_error'] = str(export_error)
             passed, failed = summary.get('passedTests',0), summary.get('failedTests',0)
             command(['xcrun', 'xcresulttool', 'get', 'test-results', 'tests',
                 '--path', str(result)], 'test-nodes.json')
@@ -280,6 +332,11 @@ def main():
                 '--results', str(EVIDENCE/'test-nodes.json'), '--selectors', ','.join(selectors)],
                 'requested-tests.log')
             if process.returncode == 0 and passed == expected_tests and failed == 0 and summary.get('skippedTests',0) == 0:
+                if TEST_SCOPE in {'cross_app', 'production_runtimes'}:
+                    state.update(status='RUNTIME_RESULT_VALIDATION_FAILED', ui='EXECUTED_PASS')
+                    staging = json.loads((EVIDENCE/'external-modal/staging.json').read_text())
+                    command(staging['verify_command'], 'external-modal-actual-result.json')
+                    state['external_modal_result'] = 'ACTUAL_RUNTIME_RESULT_VERIFIED'
                 state.update(status='EXECUTED_PASS',ui='EXECUTED_PASS')
             elif failed:
                 state.update(status='TEST_FAILED',ui='TEST_FAILED')
@@ -340,12 +397,18 @@ def main():
         (EVIDENCE/'native-acceptance-duration-seconds.txt').write_text(str(int(state['duration_seconds']))+'\n')
         (EVIDENCE/'acceptance.json').write_text(json.dumps(state,indent=2)+'\n')
         if TEST_SCOPE in {'cross_app', 'production_runtimes'} and state.get('build') == 'EXECUTED_PASS':
-            exported = subprocess.run([sys.executable, 'Scripts/ProductSplit/export_cross_app_simulator.py'],
-                                      cwd=ROOT, capture_output=True, text=True)
-            (EVIDENCE/'producer-export.log').write_text(exported.stdout + exported.stderr)
-            if exported.returncode:
+            # Consumers require the actual built app. Preserve genuine UI/build
+            # passes, but an absent export must not leave the delivery gate green.
+            try:
+                command([sys.executable, 'Scripts/ProductSplit/export_cross_app_simulator.py'],
+                        'producer-export.log', timeout=300)
+                state['producer_export'] = 'EXECUTED_PASS'
+            except Exception as export_error:
                 state['producer_export'] = 'FAILED'
-                (EVIDENCE/'acceptance.json').write_text(json.dumps(state,indent=2)+'\n')
+                state['producer_export_error'] = str(export_error)
+                if state['status'] == 'EXECUTED_PASS':
+                    state['status'] = 'PRODUCER_EXPORT_FAILED'
+            (EVIDENCE/'acceptance.json').write_text(json.dumps(state,indent=2)+'\n')
         # No deletion/erase: preserve the dedicated device for failure diagnosis.
     return 0 if state['status'] == 'EXECUTED_PASS' else 1
 

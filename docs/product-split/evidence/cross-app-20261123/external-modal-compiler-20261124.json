@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "observedAtUTC": "2026-11-24T01:01:54.553837+00:00",
+  "sourceCommitBeforeFix": "a774de24926ca13d563c45c42917d03b8c04296f",
+  "scope": "Exact production TypeScript compiler fixture compilation; not native iOS or UI execution",
+  "compilerResourcesArtifactRun": 45285438881,
+  "compilerResourcesArtifactSHA256": "dc4c6336e3e82bc73e018a3bd3c24f42153462824d2f36951c59a0a0a02bbbcf",
+  "originalSourceSHA256": "c681dd888caee42efb384d79b1c068bbf6d24cfd681bd6d1376330cfb62cf030",
+  "fixedSourceSHA256": "d03ae8f4c78fb3f7e75a359215dfd0147b0da1b143e2f6ca167266334d97c2fb",
+  "originalProgramResult": {
+    "compilerVersion": "6.0.3",
+    "compilerIntegrity": "sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw==",
+    "diagnostics": [
+      {
+        "code": 7006,
+        "category": "error",
+        "message": "Parameter 'context' implicitly has an 'any' type.",
+        "file": "source/index.tsx",
+        "line": 14,
+        "column": 30
+      },
+      {
+        "code": 7006,
+        "category": "error",
+        "message": "Parameter 'value' implicitly has an 'any' type.",
+        "file": "source/index.tsx",
+        "line": 18,
+        "column": 14
+      }
+    ],
+    "emittedFiles": [],
+    "succeeded": false
+  },
+  "fixedProgramResult": {
+    "compilerVersion": "6.0.3",
+    "compilerIntegrity": "sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw==",
+    "diagnostics": [],
+    "emittedFiles": [
+      "dist/source/index.js",
+      "dist/source/index.js.map"
+    ],
+    "succeeded": true
+  },
+  "typeErasureComparison": {
+    "sameRuntimeJavaScript": true,
+    "runtimeJavaScriptSHA256": "a565faa17fc0f0d639fbdd5cbf1be8c6c00178bcb0b3ee9fe26374bd1d2db494",
+    "scope": "Type-erasure comparison only; original strict Program compile failed as separately recorded"
+  },
+  "inputs": {
+    "host/typescript-compiler.mjs": "c21a05fdc704305815e130ad913a2c63b4e705bf06b68bacf0a855e0aab2631e",
+    "host/package-lock.json": "4a1f2ecaae83c3f68cb02b605c03323260bc4bbb32923865d5c654be5736c7b4",
+    "project/tsconfig.json": "c76917a991d42590dc2f46b229d40702ddc93b505bf8aaab83f6fb4dd5f74bfe",
+    "project/virtual/miniapps.d.ts": "62382db4f324a3a6791db7ebe263a93bf2cc25a44f53ef8ddea52e442988a160",
+    "project/virtual/global.d.ts": "d5ed4b23de93d9f5c93fcf372736f8288e436e117fa008cdd9ac69a2656a949c",
+    "project/virtual/safari-ext.d.ts": "b86c4909673f425deb596e67c328cacad2f43022aa12ece1a03aee0e464815ae",
+    "project/virtual/web-fetch.d.ts": "d93cf87b1e46c33c6e672d3fc451f9cfa35f7bae490065b9a7f26b0b08d16938",
+    "project/virtual/scripting.d.ts": "92155306822de8d1b3c9c31acd604ab562f46c69f0fa70a4cdced63c4a7a5259",
+    "project/virtual/node.d.ts": "05be426cfb2493524d8ef5a167f9e30128257457289b6c14a87a14c23d5f0602"
+  }
+}
