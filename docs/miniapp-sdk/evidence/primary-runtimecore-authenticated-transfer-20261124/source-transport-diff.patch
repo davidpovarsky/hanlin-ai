@@ -1,0 +1,23 @@
+diff --git a/Scripts/Runtime/prepare-runtime-core.sh b/Scripts/Runtime/prepare-runtime-core.sh
+index d6b6cc5ca..85d29101a 100755
+--- a/Scripts/Runtime/prepare-runtime-core.sh
++++ b/Scripts/Runtime/prepare-runtime-core.sh
+@@ -39,11 +39,16 @@ readonly BUNDLE_ARCHIVE="${WORK_ROOT}/${BUNDLE_NAME}"
+ readonly PAYLOAD_ROOT="${WORK_ROOT}/payload"
+ 
+ [[ "${RELEASE_REPOSITORY}" =~ ^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$ ]]
+-command -v gh >/dev/null
+-if [[ -n "${RUNTIME_CORE_ARTIFACT_RUN_ID:-}" ]]; then
++# An authenticated build coordinator may transfer the exact lock-pinned archive.
++# Local and downloaded bytes pass through the same verification below.
++if [[ -n "${RUNTIME_CORE_BUNDLE_ARCHIVE:-}" ]]; then
++  cp "${RUNTIME_CORE_BUNDLE_ARCHIVE}" "${BUNDLE_ARCHIVE}"
++elif [[ -n "${RUNTIME_CORE_ARTIFACT_RUN_ID:-}" ]]; then
++  command -v gh >/dev/null
+   python3 "${SCRIPT_DIR}/runtime_bundle_source.py" "${RELEASE_REPOSITORY}" \
+     "${RUNTIME_CORE_ARTIFACT_RUN_ID}" "${ARTIFACT_DEPENDENCY_HASH}" "${EXPECTED_BUNDLE_SHA256}" "${WORK_ROOT}"
+ else
++  command -v gh >/dev/null
+   gh release download "${RELEASE_TAG}" \
+     --repo "${RELEASE_REPOSITORY}" \
+     --pattern "${BUNDLE_NAME}" \

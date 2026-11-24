@@ -1,0 +1,31 @@
+{
+  "status": "TRANSFERRED_ORIGINAL_ARCHIVE_VERIFIED",
+  "startedAt": "2026-11-24T19:37:41.607520+00:00",
+  "finishedAt": "2026-11-24T19:37:59.022928+00:00",
+  "elapsedSeconds": 17.415429452434182,
+  "argv": [
+    "sudo",
+    "-u",
+    "ubuntu",
+    "scp",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "StrictHostKeyChecking=yes",
+    "/mnt/development/projects/transfers/hanlin-runtimecore-42926628418-20261124/hanlin-runtime-2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194.zip",
+    "scaleway-mac:/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-inputs/runtime-core/hanlin-runtime-2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194.zip"
+  ],
+  "scpExitCode": 0,
+  "remote": {
+    "verifiedAt": "2026-11-24T19:37:58.917452+00:00",
+    "sourceHEAD": "7de3a280bcd4e6202b7246735e5a9204e6a1d186",
+    "archive": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-inputs/runtime-core/hanlin-runtime-2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194.zip",
+    "bytes": 86253335,
+    "sha256": "196a35562a31229b1bcf05afbe49f76470ced90a7fbf0494ecebd5c06d07440f",
+    "expectedSHA256": "196a35562a31229b1bcf05afbe49f76470ced90a7fbf0494ecebd5c06d07440f",
+    "helperSHA256": "059f37520387b3cf49d7d08fd22c81e5c9bd4050ca90cd76f2b5989aafcb7038",
+    "originalArchiveVerifier": "PASS",
+    "fullRuntimeCorePreparation": "NOT_RUN_AFTER_FIX"
+  },
+  "credentialsTransferred": false
+}
