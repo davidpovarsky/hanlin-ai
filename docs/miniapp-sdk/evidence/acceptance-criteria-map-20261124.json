@@ -1647,7 +1647,7 @@
     "skipped": 0,
     "receipt": "docs/miniapp-sdk/evidence/apple-modern-contracts-20261124/receipt.json"
   },
-  "currentScopeNote": "MAIN15 has authentic first-build failure in HanlinMiniAppsWidgets original React/Expo header imports. Previous Options and WidgetUI body/module compilation advanced; no final link/app pass. Three-way agent work: exact header integration diagnosis, independent review, actual shipping SDK comparison. Four scoped tasks complete, all52 app cases and physical acceptance remain missing.",
+  "currentScopeNote": "MAIN15 first MiniApps build failed in widget extension original React/Expo imports. Actual shipping SDK and all4 documentation projects passed with precise e222 source identity. Previous Options and WidgetUI compilation advanced; no final link/app pass. Reviewed one-line test correction is separate and published. Four scoped tasks complete; all52 app cases and physical acceptance remain missing.",
   "modernContractGateHistory": [
     {
       "runID": 45348880385,
@@ -1930,7 +1930,17 @@
       "yoga/YGConfig.h",
       "yoga/Yoga.h"
     ],
-    "boundary": "Original flags already present; verify actual header/module closure. No stubs, API weakening or blanket Swift-version diagnosis."
+    "boundary": "Original flags already present; verify actual header/module closure. No stubs, API weakening or blanket Swift-version diagnosis.",
+    "originalHeaderPresence": {
+      "status": "AUTHOR_AUTHENTICATED_ORIGINAL_HEADERS_PRESENT",
+      "headerSupportArchiveSHA256": "90b3af259a3347adffb021f56e66ff82e926ea1e8668d5774b1d384650394c45",
+      "locations": [
+        "ReactModularHeaders",
+        "ModularFrameworks/react.framework/Headers"
+      ],
+      "allFourReportedHeadersPresent": true
+    },
+    "consumerDifferenceUnderInvestigation": "Original Cxx roots/defines are present after normalization in both. Successful package drivers use explicit module builds; the failed widget extension reconstructs implicit imports. Real isolated fresh-cache comparison is being prepared."
   },
   "postDispatchTestCorrection": {
     "commit": "788354f8e9e863eb5e4c9007a8b58ea71d028b19",
@@ -1943,5 +1953,21 @@
     "assertionsPreserved": 39,
     "provenanceRefreshRequired": false,
     "nativeExecution": "NOT_RUN; not part of e222 MAIN15"
+  },
+  "main15ShippingSDK": {
+    "status": "PASS_EXPECTED_PROVENANCE_DELTA",
+    "receipt": {
+      "path": "docs/miniapp-sdk/evidence/sdk05-shipping-main15-20261124/receipt.json",
+      "sha256": "65ac606bcd61a04f6a04a932d6a0e135b76b82be7e2ffdd0372d38f7e3311708"
+    },
+    "testedSourceCommit": "e2227ccdfe0c3111d1c17ef2b4bb1653ac24bb9c",
+    "manifestSHA256": "ab7900fbb6009606800a7d4beda2bef2cee6ef8492928bea90ad5d0460abff8b",
+    "inputSHA256": "91128b0831f2d90374bc7889acb9cbbd695d49187520ee23a7a75e3c2bcef6fc",
+    "changedShippingDocuments": 3,
+    "unchangedInputs": 219,
+    "unchangedFileRecords": 25658,
+    "actualSnippetProjects": 4,
+    "actualSnippetDiagnostics": 0,
+    "boundary": "Actual e222 shipping identity only; later README/reachability and one-line test correction excluded. Native first build failed; all52 application cases NOT_RUN."
   }
 }
