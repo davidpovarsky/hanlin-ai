@@ -1,0 +1,12 @@
+diff --git a/Scripts/Expo/prepare-ios-dependencies.mjs b/Scripts/Expo/prepare-ios-dependencies.mjs
+index b8f850d67..918858a71 100644
+--- a/Scripts/Expo/prepare-ios-dependencies.mjs
++++ b/Scripts/Expo/prepare-ios-dependencies.mjs
+@@ -1241,6 +1241,7 @@ template <typename CharTransformT = fnv1a_identity>
+             ...process.env,
+             PODS_ROOT: podsRoot,
+             RN_ROOT: rnRoot,
++            REACT_NATIVE_PATH: rnRoot,
+           },
+           stdio: 'inherit'
+         });

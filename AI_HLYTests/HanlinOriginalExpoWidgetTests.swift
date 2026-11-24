@@ -13,11 +13,15 @@ import XCTest
 final class HanlinOriginalExpoWidgetTests: XCTestCase {
     func testOriginalWidgetRegistrationTimelineAndPickerKeepProductAndInstallationIdentity() async throws {
         let group = try XCTUnwrap(Bundle.main.object(forInfoDictionaryKey: "ExpoWidgetsAppGroupIdentifier") as? String)
-        XCTAssertEqual(WidgetsStorage.appGroupIdentifier, group)
-        XCTAssertTrue(HanlinExpoWidgetsIntegration.isOriginalRuntimeAvailable,
-            "The original Expo Widgets JavaScript runtime must be embedded with its native module.")
         let defaults = try XCTUnwrap(UserDefaults(suiteName: group))
         let token = UUID().uuidString.lowercased()
+        let groupProbeKey = "__hanlin_original_expo_group_probe." + token
+        defer { defaults.removeObject(forKey: groupProbeKey) }
+        defaults.set(group, forKey: groupProbeKey)
+        XCTAssertEqual(WidgetsStorage.getString(forKey: groupProbeKey), group,
+            "The original Expo widget storage must reach the declared app-group suite.")
+        XCTAssertTrue(HanlinExpoWidgetsIntegration.isOriginalRuntimeAvailable,
+            "The original Expo Widgets JavaScript runtime must be embedded with its native module.")
         let packageID = "test.original-expo." + token
         let firstInstallation = "installed.expo-first." + token
         let secondInstallation = "installed.expo-second." + token

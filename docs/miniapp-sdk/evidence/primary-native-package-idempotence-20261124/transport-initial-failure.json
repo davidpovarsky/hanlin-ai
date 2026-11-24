@@ -1,0 +1,6 @@
+{
+  "status": "PRE_EXECUTION_TRANSPORT_FAILURE",
+  "error": "OSError [Errno 7] Argument list too long in local subprocess.Popen before SSH started",
+  "nativeOrFocusedExecution": false,
+  "resolution": "Stream script/payload through SSH stdin, not a single command-line argument"
+}

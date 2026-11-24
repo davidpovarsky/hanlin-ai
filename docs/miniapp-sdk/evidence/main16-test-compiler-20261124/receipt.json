@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "status": "SOURCE_FIXES_INDEPENDENTLY_REVIEWED_NATIVE_VALIDATION_PENDING",
+  "owner": "/root/control_authoring",
+  "baseCommit": "1bc0360cb204796a092c9101df980028f2963459",
+  "actualFailure": {
+    "runID": 45430463243,
+    "sourceCommit": "7d1efaa6ada43dd80c57133c09e6a8fb327075cf",
+    "artifactSHA256": "ad546a720f976eef8d7af40c8187a287b56382af6caba614ad9e35aa5491b95f",
+    "aiBuildLogBytes": 9688898,
+    "aiBuildLogSHA256": "7cb76a022c9feca202ce48dbbbe2815a2d1ec6df5bc2ca6aefe80d6727685b96",
+    "aiBuildLog": "/dev/shm/hanlin-native-gate-evidence-45430463243/app-split-evidence/paired-product/ai-build.log",
+    "diagnosticLines": [
+      102885,
+      102957
+    ],
+    "aiBuildExitCode": 65,
+    "aiBuildElapsedSeconds": 488.930143958,
+    "miniAppsBuildExitCode": 0,
+    "miniAppsBuildElapsedSeconds": 785.086133333,
+    "native52": "NOT_RUN",
+    "baseTestFilesByteIdenticalToFailedRun": true
+  },
+  "changes": [
+    {
+      "path": "AI_HLYTests/HanlinNativePresentationTests.swift",
+      "cause": "The flatMap closure containing switch statements was inferred as Void instead of a Sequence.",
+      "correction": "Explicit [String] closure result plus return in each existing branch. Recursive order, scalar string selection and empty/default handling retained."
+    },
+    {
+      "path": "AI_HLYTests/HanlinOriginalExpoWidgetTests.swift",
+      "cause": "Swift6 direct access to the genuine original mutable nonisolated static appGroupIdentifier is not concurrency-safe.",
+      "correction": "Use the existing declared UserDefaults suite to write a UUID-owned sentinel; compare the genuine original WidgetsStorage.getString result to the exact expected group value; defer removal.",
+      "assertionBoundary": "Actual original storage must reach the declared suite. This is a real getter/storage check, not comparison between duplicated Bundle-derived constants.",
+      "fixtureSetup": "The existing defaults and token setup precede the replacement equality, preserving the original assertion-call order."
+    }
+  ],
+  "sourceSHA256": {
+    "AI_HLYTests/HanlinNativePresentationTests.swift": "200e2c5b9e02b38b2bebbdb91e222893d4622ee3fcaf06186a09c6eda33be182",
+    "AI_HLYTests/HanlinOriginalExpoWidgetTests.swift": "4ffadc5573c5fc69e2b1276e5f86cb69a84eb4466f7c819085ba7f0e72b23860"
+  },
+  "originalDefinitions": {
+    "storagePath": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetsStorage.swift",
+    "storageSHA256": "4a3c58daafb36fc77be701a34431446d96cfc4172f4de60bcaa7f96046f61e5b",
+    "storageRetainedCopy": "original-widgets-storage.txt",
+    "preparedNodePath": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinPreparedWidget.swift",
+    "preparedNodeFileSHA256": "2031782a2d40e5a86846132122e72f1637b976caab6164858a8cc9d864aa9f7c",
+    "preparedNodeLines": [
+      50,
+      63
+    ],
+    "preparedNodeRetainedCopy": "original-prepared-node.txt"
+  },
+  "assertionPreservation": {
+    "inventory": "source-assertion-inventory.json",
+    "orderedXCTAssertCalls": [
+      27,
+      28
+    ],
+    "testMethods": 6,
+    "sameMethodNames": true,
+    "nativeAcceptanceSelection": "Unchanged52 cases; runner/workflow not modified."
+  },
+  "focusedCompilerCheck": {
+    "status": "NOT_RUN_PRIMARY_MAC_BUSY",
+    "preflight": "mac-preflight.json",
+    "capturedAt": "2026-11-24T16:38:32.423398+00:00",
+    "preflightSHA256": "0fe7be85696b1b9dd996d50773b5e74ea5157a6f6851e4d966188cd31a5dace8",
+    "toolchain": "Xcode27.0/27A266a; AppleSwift6.4.0.34.1; simulatorSDK27.0",
+    "activeBuildProcessIDs": [
+      9922,
+      10157,
+      10873
+    ],
+    "action": "No compiler probe, staging, app build or native test was started beside another owner. Root instructed sealing the reviewed source correction and using its one required full Xcode27.2 gate.",
+    "newSlotRequested": false,
+    "ciDispatch": "NONE"
+  },
+  "independentReview": "independent-review.json",
+  "preserved": [
+    "All remaining assertion expressions and test methods",
+    "Original upstream WidgetsStorage implementation and existing public getter",
+    "Swift6 concurrency settings, imports and actor annotations",
+    "All production source and52-case selection"
+  ],
+  "notClaimed": [
+    "These corrected tests have compiled or run natively",
+    "Any52 acceptance case passed in MAIN16",
+    "Local compiler probe success"
+  ],
+  "rawEvidenceSHA256": {
+    "actual-compiler-diagnostics.log": "4172e47acbd5a0fabaf6cb3b95e70e524bd43bb2f64b219611705acfb7d13477",
+    "independent-review.json": "045c832a7ab109bef64f2d10b01fd41816520cb86b1d4ee89e21f4f00ff20ebf",
+    "mac-preflight.json": "0fe7be85696b1b9dd996d50773b5e74ea5157a6f6851e4d966188cd31a5dace8",
+    "mac-preflight.stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mac-preflight.stdout.log": "0fe7be85696b1b9dd996d50773b5e74ea5157a6f6851e4d966188cd31a5dace8",
+    "original-prepared-node.txt": "15c6c6ad2fa8c1e9a123045824d0be1758c9cb4d68c17b0bbf6f8d4799069981",
+    "original-widgets-storage.txt": "4a3c58daafb36fc77be701a34431446d96cfc4172f4de60bcaa7f96046f61e5b",
+    "source-assertion-inventory.json": "a6009abc70b189e433e7c9a3d730b7f5427e2361ccd442239907a7d4b9352f61",
+    "source-fix.diff": "16f517305f6ec8f4bba9f229e7229e5fe09e6545f4ee777045a404629663b52f"
+  }
+}

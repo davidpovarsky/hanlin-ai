@@ -1,5 +1,35 @@
 {
   "schemaVersion": 1,
+  "typingSelection": {
+    "react": {
+      "mode": "original-compatible-range",
+      "requested": "^19.1.1 ~19.3.0",
+      "constraints": [
+        {
+          "source": "react-native@0.88.1 peerDependencies",
+          "range": "^19.1.1"
+        },
+        {
+          "source": "expo@58.0.26 devDependencies",
+          "range": "~19.3.0"
+        }
+      ]
+    },
+    "compilers": {
+      "expo": {
+        "mode": "explicit-verified-host-toolchain",
+        "requested": "npm:@typescript/typescript6@6.0.2",
+        "upstreamPeerRange": null,
+        "reason": "Retain the explicitly verified host compiler. Original consumer peer constraints remain part of npm graph resolution; an absent or unconstrained peer does not select an arbitrary newest compiler."
+      },
+      "nativescript": {
+        "mode": "explicit-verified-host-toolchain",
+        "requested": "5.9.3",
+        "upstreamPeerRange": "*",
+        "reason": "Retain the verified NativeScript host compiler; an unconstrained original Vite peer does not select an arbitrary newest compiler."
+      }
+    }
+  },
   "versions": {
     "expo": {
       "expo": "58.0.26",
@@ -12,6 +42,7 @@
       "expo-modules-jsi": "58.0.23",
       "expo-widgets": "58.0.29",
       "@nativescript/react-native": "9.1.2",
+      "@types/react": "19.3.0",
       "@react-native/codegen": "0.88.1",
       "@react-native/metro-config": "0.88.1",
       "babel-preset-expo": "58.0.26"
@@ -21,7 +52,7 @@
       "@nativescript/ios": "9.1.1",
       "@nativescript/swift-ui": "4.0.2",
       "@nativescript/types": "9.1.4",
-      "@nativescript/vite": "8.0.23"
+      "@nativescript/vite": "8.0.24"
     },
     "scriptwidget": {
       "revision": "4da256d58247bbafb9a5cd443a285250b97b3c4b"
@@ -107,209 +138,7 @@
   },
   "sourceUpdates": {
     "scriptWidgetCommit": "4da256d58247bbafb9a5cd443a285250b97b3c4b",
-    "changedNativeSources": [
-      {
-        "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Attributes/Animation/ScriptWidgetAttributeAnimationModifier.swift",
-        "originalBeforeSHA256": "95ebf74529b7ea72a71542fe6bf45a49fb1d4ef9b5b6271583504ebcae95d77f",
-        "originalAfterSHA256": "7ace3ba526338edd6e2762945c29d2d8e84f88420394c8ce80ec23efac2dfcf8",
-        "adapted": false
-      },
-      {
-        "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Attributes/Animation/SwingAnimationModifier.swift",
-        "originalBeforeSHA256": "ff3208bb34852beb392b3eee6798b06bbe7e9eeac5e11e978f7d58adac365e1b",
-        "originalAfterSHA256": "e1106f90fd48eca8b26b21bdc576f088991c855ad3ce47fcc1e964ccb75be0ed",
-        "adapted": false
-      },
-      {
-        "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Elements/ScriptWidgetElementTagStack.swift",
-        "originalBeforeSHA256": "8f973902677eae87aa0340195c8eeeefce8559bd7afdfd24b3545da9972062e8",
-        "originalAfterSHA256": "2214ccbb0a035d72630cb4b3825afca6ff1146bf9d9d55405a7dff3aea3996f0",
-        "adapted": true
-      },
-      {
-        "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/ScriptWidgetElementView.swift",
-        "originalBeforeSHA256": "310716d2b4a8b68b1629479b149850e143c66c984a2d05411f219759d6dd195e",
-        "originalAfterSHA256": "af96882fc15a1868a93f52cce75b03f6a406ae2d5ede8d66de7c652549994be8",
-        "adapted": true
-      },
-      {
-        "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Util/ScriptWidgetElementColor.swift",
-        "originalBeforeSHA256": "70d261d2a43fa4e9109a7ea6fd8e55a888c8a4511da36d87dc1d00299501d62b",
-        "originalAfterSHA256": "afa52730b60da24e0aace503440f2a6e75f7d8061ebe20f7f7a877a93e62d787",
-        "adapted": true
-      },
-      {
-        "path": "Scripts/Widgets/vendor/expo-widgets/bundle/decorator.ts",
-        "originalBeforeSHA256": "991130ce645d0715b1b0ac638f7da8ef1af5ee1a3c94493df0a96434e62a29da",
-        "originalAfterSHA256": "ed1164cb0588fa8a54d28f213da77c38ca1580770d4b884a2a780c7eacf4cd77",
-        "adapted": false
-      },
-      {
-        "path": "Scripts/Widgets/vendor/expo-widgets/bundle/index.ts",
-        "originalBeforeSHA256": "37a2191a82c65a677a2815d5538127dbe9333e7a1a26dd62a129967905f9fd75",
-        "originalAfterSHA256": "de00004c39274f4f079d0b87d831b610d89199e6a25c3d65f465582048bffca6",
-        "adapted": false
-      },
-      {
-        "path": "Scripts/Widgets/vendor/expo-widgets/bundle/layout-registry-stub.ts",
-        "originalBeforeSHA256": "36ce61332695bbdc3b44e8335df10022c2a443543fb97c2a405ba55dcfd7fd31",
-        "originalAfterSHA256": "f9944fbf5cc3769a1d6a1d5d4e9dc8d50fab2ba1f11aee5a2dd6c6f019a14502",
-        "adapted": false
-      },
-      {
-        "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Attributes/Animation/ClockHandRotationEffect.swift",
-        "originalBeforeSHA256": "de0dee2c0adb0db6c12c83e9037f23e2bb9d0debac28000153015463293b2185",
-        "originalAfterSHA256": "3158af2c8f4b3aed89c478f58484933b70e1235035fbcec4e2ed5b8ae2b549f8",
-        "adapted": true
-      },
-      {
-        "path": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/SlotView.swift",
-        "originalBeforeSHA256": "482186b055b7429628b00040f38d99d8d996059241797a8c351e3ffdc8d6aad7",
-        "originalAfterSHA256": "cdaa678a318b3a57c40305235feaa5c1a50e052179f2900a335cafced9772747",
-        "adapted": true
-      },
-      {
-        "path": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/HStackView.swift",
-        "originalBeforeSHA256": "82d8d9848f2561cad39f946aed65114757e3b5623a727e772c2b92bc766489f6",
-        "originalAfterSHA256": "970503b99d68d991bf400777c9181afcb75665d5571485d99f70c7edf7772104",
-        "adapted": true
-      },
-      {
-        "path": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/VStackView.swift",
-        "originalBeforeSHA256": "5f01646de8cf30ea76b4dcd01eebc857fd3435fd2e6e357ad9e933afcb806ba6",
-        "originalAfterSHA256": "eaefef31ce1749026c8265685324ed41afa44b94da0830020ee94814e9a3989d",
-        "adapted": true
-      },
-      {
-        "path": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/AccessoryWidgetBackgroundView.swift",
-        "originalBeforeSHA256": "bdcde465dcdc038e6fad5137c84a3ea0672910289b70eabc7e076a2164362fac",
-        "originalAfterSHA256": "711d1849e0e1683d37a9bf4b21eabfeceb9559f5682eb54fa0f444533364ea3c",
-        "adapted": true
-      },
-      {
-        "path": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/ChartView.swift",
-        "originalBeforeSHA256": "bbcc25619c923e6cc4509e21e35a187a8e1a4ac8145a383228a4a9ff5cd2d3aa",
-        "originalAfterSHA256": "74dfbe9e77e22005216ee6f07a3cb8e983e469dd2e1de04bd3fbf56ec5af294e",
-        "adapted": true
-      },
-      {
-        "path": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/UIBaseView.swift",
-        "originalBeforeSHA256": "d437ab0153abb966ea4cf5da97a9cb7c6b17e2b97c1ea07808679a7120700041",
-        "originalAfterSHA256": "654fcc032fd3fa219ddb21ad2789659076571b256f699f9371bafd128de95b0a",
-        "adapted": true
-      },
-      {
-        "path": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/AnimationConfig.swift",
-        "originalBeforeSHA256": "4ab76d9bb2011978741fb6ba2dab72f7d891f5c2e1888b4636319ff9319092d2",
-        "originalAfterSHA256": "51ca337823d341173744afb8544f5fe34f887b6adcc8a9f2e6d592b4204c1fef",
-        "adapted": true
-      },
-      {
-        "path": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/ContainerBackgroundModifier.swift",
-        "originalBeforeSHA256": "c94b9fc80c722e02a698965cbc95f8a83d6ade7ac717fb8d89b4a9084ae83249",
-        "originalAfterSHA256": "d8bba0d76b1c030a9bb6c7df23704326ae78aafa30981bf3938daa2598a737a2",
-        "adapted": true
-      },
-      {
-        "path": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/ContentTransitionModifier.swift",
-        "originalBeforeSHA256": "8b56040dfa06def2ed6260ede2d6a3e82400ea7e94e434ce7b8db7ddce926cb2",
-        "originalAfterSHA256": "f6a95e4bf2cc942ff1f3f4b2e8d2a8fa712230ffd228e458cc59e81b06c249aa",
-        "adapted": true
-      },
-      {
-        "path": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/FontModifier.swift",
-        "originalBeforeSHA256": "d3aadea0246be17fba37592401ad3f6688e8dc666ef8bd0c2e8880d2633a6409",
-        "originalAfterSHA256": "c4c163de5cf934fd2d4960fb5d23052aaf86be709b821e14636334b298233a49",
-        "adapted": true
-      },
-      {
-        "path": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/View+ModifierArray.swift",
-        "originalBeforeSHA256": "37c604894e597550d48ee94c9690cc67224b922bed5485e07bcb377b3f73d9fb",
-        "originalAfterSHA256": "0711381951e6ffb436bb4e2f4c5c39f7aa2ed22ab355fb4dc5b389acf58c892e",
-        "adapted": true
-      },
-      {
-        "path": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/ViewModifierRegistry.swift",
-        "originalBeforeSHA256": "3aa4e12e23eaa5f3706298b190a4e9e846fdf286e196a3b7ba23cc4305757566",
-        "originalAfterSHA256": "4cb49138695127b562e79727299068b0652172ba50d0752e35e281a6a4cd914b",
-        "adapted": true
-      },
-      {
-        "path": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/WidgetModifiers.swift",
-        "originalBeforeSHA256": "74cf1878974b30ad507d943a342c1d6b361ac37cfb630a3d17dcf6c54db5fc3e",
-        "originalAfterSHA256": "13832640e5913c2970055f6adc00e3bf996180a794003bfc649952eae3bdbe2d",
-        "adapted": true
-      },
-      {
-        "path": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/Core/Convertibles+SwiftUI.swift",
-        "originalBeforeSHA256": "a463597903e583903cd95cd8e0ff243d565188b755a984ec88f9fdf9663aa8da",
-        "originalAfterSHA256": "456fba6cfbbfc39401f52f554030bd22bb16474c047d94d2cfc0090bdaefb437",
-        "adapted": true
-      },
-      {
-        "path": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/Core/Convertibles+Color.swift",
-        "originalBeforeSHA256": "8caee7e4e5df124a0588c047965ae48a39fde0e0363db56b770e06adf014053c",
-        "originalAfterSHA256": "de51225146ebe958de9f4beeb5f8e0c8fa4a4b43d9c0a4469ad624f97cbc9972",
-        "adapted": true
-      },
-      {
-        "path": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/UniversalLayout.swift",
-        "originalAfterSHA256": "4e97e3dba83ad299965580e214eb44bb27b9a511b73563745753578bd68614d8",
-        "added": true
-      },
-      {
-        "path": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/WidgetKitModifiers.swift",
-        "originalAfterSHA256": "c031b99d25a8db38bd9f5b92c6e525998e3570fd30b585e8f5496ed0f66d89cf",
-        "added": true
-      },
-      {
-        "path": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/Core/Upstream/Core/Coding/JavaScriptCodable+Color.swift",
-        "originalAfterSHA256": "f53d0cc8f04af4e5ea8467d96609cf882fa86e2119cd97552ee0c5b02a87ce93",
-        "added": true
-      },
-      {
-        "path": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/SelectedSegmentTintColorModifier.swift",
-        "originalAfterSHA256": "858963925d8f45c3fad287c0001db7423b98872a5ebf23c4a015b2932311e0a1",
-        "added": true,
-        "requiredType": "SelectedSegmentTintColorModifier"
-      },
-      {
-        "path": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/ArrangementModifiers.swift",
-        "originalAfterSHA256": "7a9b811792402a4130010f8fc3d3dc81de0e3549e2caafdb5b675270a77c277a",
-        "added": true,
-        "requiredType": "ArrangementViewStyleModifier"
-      },
-      {
-        "path": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/SearchToolbarBehaviorModifier.swift",
-        "originalAfterSHA256": "826a7bbce43151537b5049e66dab34094da4712a03da455fa8b639c1d7c33a3a",
-        "added": true,
-        "requiredType": "SearchToolbarBehaviorModifier"
-      },
-      {
-        "path": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/PreferredColorSchemeModifier.swift",
-        "originalAfterSHA256": "1fb4fdc2942fea5b57d49f46dcff26d6f1a4e89aa61306317f2753e794fcfbe3",
-        "added": true,
-        "requiredType": "PreferredColorSchemeModifier"
-      },
-      {
-        "path": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/ScrollEdgeEffectStyleModifier.swift",
-        "originalAfterSHA256": "c927d8beab56cc801f74f994e74b5d82648ef8935faa20cae461efa744f4d039",
-        "added": true,
-        "requiredType": "ScrollEdgeEffectStyleModifier"
-      },
-      {
-        "path": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/PresentationModifiers.swift",
-        "originalAfterSHA256": "c4ae4d055cfc865815be3b0bc12a0caaf39f01e3e485c9825b4d0f1cc5d1b746",
-        "added": true,
-        "requiredType": "PresentationCornerRadiusModifier"
-      },
-      {
-        "path": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/SectionIndexLabelModifier.swift",
-        "originalAfterSHA256": "2f3d55b9fb3e6df58176350abc5ee1a48822d4da95ea5b8b4623ee797e4a1981",
-        "added": true,
-        "requiredType": "SectionIndexLabelModifier"
-      }
-    ],
+    "changedNativeSources": [],
     "adapterContracts": [
       {
         "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/HanlinScriptWidgetRuntime.swift",
@@ -321,7 +150,7 @@
         },
         "originalSHA256": "7040cab9a460f5845ee96114c396b7e27e46caf8c9e62614a717e25adb1af574",
         "changed": true,
-        "hostSHA256": "fd95fbae7ecd7f917c6ef0be9d002d84010d8f25210759ac214d29538da15a15",
+        "hostSHA256": "d3735e19e7e2603d17449acd0c57c22bc676ee022bfe3152a20d2d846dd58afd",
         "implementation": "Hanlin host adapter; original renderer source and original app service coverage are separate"
       },
       {
@@ -334,7 +163,7 @@
         },
         "originalSHA256": "7040cab9a460f5845ee96114c396b7e27e46caf8c9e62614a717e25adb1af574",
         "changed": true,
-        "hostSHA256": "5f42f6db1e4beaad0679babfa0ac0ba47bf637a65b3aa4fa28a3bc96da59711b",
+        "hostSHA256": "5053e0587036008a1ae85d24b4d469271d5f6c880e1a1244e752ec436b32813c",
         "implementation": "Hanlin host adapter; original renderer source and original app service coverage are separate"
       },
       {
@@ -368,7 +197,7 @@
         "implementation": "Hanlin host adapter; original renderer source and original app service coverage are separate"
       }
     ],
-    "manifestSHA256": "b2f3a98491738971bdb47037ecb7d3972e68e79e14aec7a00925d53ef04d662e",
+    "manifestSHA256": "63aa2132a1463552c274c328d63fd4b76b45046de28a8420e5a278257905bb5c",
     "catalogSHA256": "425e5bae37920bd571a469c273c923471cb9f1cad5a945e7f28bf972fff8b0d1"
   },
   "nativeArtifacts": [

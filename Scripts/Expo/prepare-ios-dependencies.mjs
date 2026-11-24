@@ -1241,6 +1241,7 @@ template <typename CharTransformT = fnv1a_identity>
             ...process.env,
             PODS_ROOT: podsRoot,
             RN_ROOT: rnRoot,
+            REACT_NATIVE_PATH: rnRoot,
           },
           stdio: 'inherit'
         });

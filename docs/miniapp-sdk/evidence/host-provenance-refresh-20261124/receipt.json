@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-24T18:11:15.294156+00:00",
+  "sourceBase": "67f555e99e15de202bea41dde74a660c1c252026",
+  "changedSource": {
+    "path": "Scripts/Runtime/prepare-runtime-host.sh",
+    "beforeSHA256": "1116efd0aacd1b0891287d5a9afc8b67f45186fad82f4a0c8a6a35eb17b7519c",
+    "afterSHA256": "af0fda26d53a6b72b495a73e104835af176dccfc39cda2d5bcfffa3f7a04cbd6"
+  },
+  "purpose": "Refresh existing source inventory, manifest reference and reachability documentation after native preparation and before RuntimeHost reuse/SDK staging fingerprints.",
+  "flow": [
+    "Existing original tooling receipt verification or install for Expo and NativeScript",
+    "Existing Expo declaration preparation and ScriptWidget type check",
+    "Existing audit-miniapp-sdk --write",
+    "Existing audit-miniapp-sdk --check",
+    "Existing audit_miniapp_reachability default write mode",
+    "Existing audit_miniapp_reachability --check",
+    "Existing RuntimeHost reuse check; on miss, unchanged SDK staging/archive creation and verification"
+  ],
+  "compilerSelection": "No --typescript-module override. Existing audit resolves Scripts/Expo/node_modules/typescript and requires @typescript/typescript6 package 6.0.2; the moved existing tooling preparation makes that original compiler available before the hook.",
+  "preparedInputBoundary": "The hook consumes current repository files, including native-generated inputs prepared by full-host callers. It neither runs nor claims original native binary preparation. Existing example callers: validate-app-split native lines385/387 before host392; testflight202/206 before214; unsigned original native1231/1235 before1391/1418 and2140/2142 before2271.",
+  "reuseBoundary": "The four established generators/checks precede the first reuse decision, not only cache-miss packaging. Existing inventory write metadata includes current sourceCommit and uncommittedSourcePaths; differences in these shipped documents legitimately change the existing SDK/Host fingerprint even when runtime semantic source is unchanged. No fingerprints are weakened or normalized by this patch.",
+  "preserved": [
+    "Original guarded authoring presence check",
+    "One existing tooling loop, one Expo prepare-types and one ScriptWidget check; no duplicate installation/check calls",
+    "Existing stage-sdk location and arguments",
+    "All archive creation, npm tests, packed validation, JITless smoke and metadata command bodies",
+    "Existing fail-fast set -euo pipefail behavior"
+  ],
+  "checks": {
+    "bashSyntax": "PASS",
+    "sourceOrderAndRetainedCallReview": "PASS",
+    "actualFourAudits": "NOT_RUN; root owns combined-source execution after integration",
+    "fullHostPreparation": "NOT_RUN in this lane",
+    "nativeAnd52Cases": "NOT_RUN in this lane"
+  },
+  "authoritativeInputsSHA256": {
+    "Scripts/Audit/audit-miniapp-sdk.mjs": "f2a38e9af505a02e231c67294b8e21de4d7b4bc0fd539bf46935ab706993ab18",
+    "Scripts/Audit/audit_miniapp_reachability.py": "a28d4702744f94e265489ca9df18ae6a2fd666290598d6faa693810d794a0dce",
+    "Scripts/Runtime/runtime_host_archive.py": "c446a8bcd0bebb30193eab35e6588662d9c989c4e656be020259a94428c0c8c6",
+    "Scripts/MiniApps/stage-sdk.mjs": "a9d02de9128acde4bcdd14b60c3227627a43c004075f55c6d9f41e2045c9bcce",
+    "Scripts/MiniApps/install-tooling.mjs": "6fb5f130d1a381d628ffa5042eff7ce36d48431ed7636a36c28fec20e5b79120",
+    ".github/workflows/validate-app-split.yml": "677ba19c3a2e281e850b182b3bef8bcde709ee167f58d601c1c3aa6ade665982",
+    ".github/workflows/testflight.yml": "a2d65f9fa19fcef13cf0e96b78d71463b84aa2f1692371abbbae9406a60d8bc4",
+    ".github/workflows/build-ios26-unsigned-ipa.yml": "8db985018d69ed5879533028f8f6d15b4d40bd6a2c49abf866cc2930603ba838"
+  },
+  "setupNote": "The new --no-checkout sparse worktree initially had no materialized script. git read-tree -mu HEAD populated its declared sparse paths before the edit. No product command or test ran during setup.",
+  "independentReview": {
+    "path": "independent-review.json",
+    "reviewer": "/root/sdk_only_author",
+    "result": "NO_CONCRETE_BLOCKER"
+  }
+}
