@@ -556,7 +556,12 @@ struct ChatViewBottom: View {
             popupCoordinator.dockState.attachmentOverheadHeight = max(measuredAttachmentPreviewHeight, newOverhead)
         }
         .onDisappear { debounceWorkItem?.cancel() }
-        .onChange(of: isInputActive.wrappedValue) { _, focused in
+        .onChange(of: isInputActive.wrappedValue) { previousFocus, focused in
+            #if DEBUG || HANLIN_TESTING
+            if ProcessInfo.processInfo.environment["HANLIN_COMPOSER_EDIT_DIAGNOSTICS"] == "1" {
+                print("HANLIN_COMPOSER_HOST_FOCUS event=binding-change before=\(previousFocus) after=\(focused)")
+            }
+            #endif
             popupCoordinator.dockState.handleInputFocusChange(focused, preserveExpandedDrawer: true)
         }
         .onChange(of: isMultiSelectMode) {
@@ -1426,6 +1431,11 @@ struct ChatViewBottom: View {
                 },
                 onMentionTriggered: { updateModelSuggestions() },
                 onFocusChange: { focused in
+                    #if DEBUG || HANLIN_TESTING
+                    if ProcessInfo.processInfo.environment["HANLIN_COMPOSER_EDIT_DIAGNOSTICS"] == "1" {
+                        print("HANLIN_COMPOSER_HOST_FOCUS event=native-callback nativeFocused=\(focused) boundFocused=\(isInputActive.wrappedValue)")
+                    }
+                    #endif
                     popupCoordinator.dockState.handleInputFocusChange(focused, preserveExpandedDrawer: true)
                 },
                 onLifecycleEvent: onNativeEditorLifecycle,
