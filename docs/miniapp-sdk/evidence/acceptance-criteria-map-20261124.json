@@ -1070,10 +1070,25 @@
         "Actual missing-manifest ZIP rejected with production ambiguousManifest/error; one new portable case passed.",
         "Actual Apple eight-case Analyzer contract pass in45356338624, including wrong entries, unsupported exposures and unavailable/incompatible plugin policy."
       ],
-      "remainingRequirements": [
+      "remainingRequirements": [],
+      "closure": "COMPLETED_SCOPED_DOD; original contract/validator criteria established by recorded executed component evidence; separate integration/device tasks remain open.",
+      "closureHistory": [
+        {
+          "atUTC": "2026-11-24T10:44:55.329622+00:00",
+          "priorClosure": "CONDITIONAL; 42 selected passes alone do not establish all listed negative contract cases.",
+          "priorRemainingRequirements": [
+            "Apple import integration remains subject to actual app gate results."
+          ],
+          "reason": "Reconciled original task DoD independently from parent integration/device criteria"
+        }
+      ],
+      "integrationDependencies": [
         "Apple import integration remains subject to actual app gate results."
       ],
-      "closure": "CONDITIONAL; 42 selected passes alone do not establish all listed negative contract cases."
+      "completionEvidence": {
+        "path": "docs/miniapp-sdk/evidence/task-scope-reconciliation-20261124.json",
+        "sha256": "bdd68155e001855c992085855a24ef3ebe11d37a8e67b70d47cd30697881d217"
+      }
     },
     {
       "task": "SDK-03",
@@ -1104,7 +1119,7 @@
         "Current exported SDK-only authoring/build/source retention, with actual original Expo modifier and UIKit property diagnostics; exact scope in sdk_only_current."
       ],
       "remainingRequirements": [
-        "Actual selected Core/direct-runtime application behavior from next corrected52-case combined app run (gate11failed before all42), with case results.",
+        "Actual selected Core/direct-runtime application behavior from active complete52 run45375410965 atsource999599c2, with case results.",
         "Do not claim complete original declaration-body checking: original NativeScript consumer policy is strict source with skipLibCheck=true."
       ],
       "closure": "CONDITIONAL; optional full Apple SDK generator work is explicitly deferred, not an extra gate."
@@ -1147,7 +1162,7 @@
       ],
       "remainingRequirements": [
         "All-public-exported-adapter native coverage is NOT_ESTABLISHED by the inspected receipts.",
-        "Current selected UIKit/Worklets/Widgets application results remain subject to next corrected52-case combined app run (gate11failed before all42).",
+        "Current selected UIKit/Worklets/Widgets application results remain subject to active complete52 run45375410965 atsource999599c2.",
         "Historical native API declaration receipt has changed inputs and cannot become a whole current-source PASS.",
         "Actual corrected52case run must execute installed metadata, GroupBox content/native events, selected modifier behavior, hosted action/publication and existing return callback case. DefaultDocumentGroupLaunchActions requires a genuine document container; no all83per-effect semantic proof is inferred."
       ],
@@ -1185,10 +1200,25 @@
         "Original ScriptWidget valid/missing-storage permission-contract cases passed against exported original validator and compiler; source locations preserved.",
         "Actual Apple eight-case Analyzer contract pass in45356338624, including wrong entries, unsupported exposures and unavailable/incompatible plugin policy."
       ],
-      "remainingRequirements": [
+      "remainingRequirements": [],
+      "closure": "COMPLETED_SCOPED_DOD; original contract/validator criteria established by recorded executed component evidence; separate integration/device tasks remain open.",
+      "closureHistory": [
+        {
+          "atUTC": "2026-11-24T10:44:55.329622+00:00",
+          "priorClosure": "CONDITIONAL; the core13 authoring component cases are already proven and need not be rerun merely for this mapping.",
+          "priorRemainingRequirements": [
+            "Native diagnostic presentation/repair/installation receipt remain subject to actual paired app gate. No generic OS permission behavior is inferred from manifest validation."
+          ],
+          "reason": "Reconciled original task DoD independently from parent integration/device criteria"
+        }
+      ],
+      "integrationDependencies": [
         "Native diagnostic presentation/repair/installation receipt remain subject to actual paired app gate. No generic OS permission behavior is inferred from manifest validation."
       ],
-      "closure": "CONDITIONAL; the core13 authoring component cases are already proven and need not be rerun merely for this mapping."
+      "completionEvidence": {
+        "path": "docs/miniapp-sdk/evidence/task-scope-reconciliation-20261124.json",
+        "sha256": "bdd68155e001855c992085855a24ef3ebe11d37a8e67b70d47cd30697881d217"
+      }
     },
     {
       "task": "SDK-07",
@@ -1224,9 +1254,9 @@
         "Actual Apple existing lifecycle method passed on current store/test bytes in45354891567."
       ],
       "remainingRequirements": [
-        "Actual next corrected52-case combined app run (gate11failed before all42) rows/screenshots/installation receipt for its selected application scope.",
+        "Actual active complete52 run45375410965 atsource999599c2 rows/screenshots/installation receipt for its selected application scope.",
         "Existing applicable receipts from another established owner may be linked without new testing after exact source/toolchain/input verification.",
-        "Selected42-case application proof is not the complete80-cell extension/runtime E2E proof.",
+        "Selected52-case application proof is not the complete80-cell extension/runtime E2E proof.",
         "OS permission revocation is not established by the successful storage lifecycle receipt."
       ],
       "closure": "CONDITIONAL; reconcile existing required evidence rather than interpreting source presence, count38, or cancellation as product acceptance."
@@ -1268,7 +1298,7 @@
         "raw CI+device evidence",
         "gate CLOSED only if all mandatory executable evidence exists."
       ],
-      "status": "OPEN; gate10firstappbuildFAILED; all42appcasesNOT_RUN. Sourcefix/nextcurrentSDKandnativegatepending; physicaldeviceBLOCKED_EXTERNAL."
+      "status": "OPEN; current main12/source999599c2 complete52 in progress; current full SDK and actual SDK-only native cases pending; physical route BLOCKED_EXTERNAL."
     },
     {
       "task": "MINIAPP-SDK parent",
@@ -1290,21 +1320,26 @@
         "Device iPad+iPhone/simulator as relevant; signed IPA (Apple SDK/Xcode exact), AppGroup/entitlements each extension, behavior on-device; raw logs/screenshots SHA/CI URLs."
       ],
       "status": "OPEN_BROADER_SCOPE",
-      "boundary": "80 current source-reachability cells and native original-library surfaces have separate scopes. Legitimate Deferred/NotApplicable/BLOCKED dispositions require reasons; neither source wiring nor38selected tests becomes80E2Epasses."
+      "boundary": "80 current source-reachability cells and native original-library surfaces have separate scopes. Legitimate Deferred/NotApplicable/BLOCKED dispositions require reasons; neither source wiring nor52selected tests becomes80E2Epasses."
     },
     {
       "task": "SDK01/SDK05 source-delivery reconciliation",
-      "status": "SOURCE_ENUMERATION_AND_EXAMPLE_EXPORT_COMPLETED_FULL_SHIPPING_IDENTITY_PENDING",
+      "status": "SDK01_SCOPED_AUDIT_COMPLETED; SDK05_CURRENT_FULL_SHIPPING_IDENTITY_PENDING",
       "scope": "Complete consumed manifest-field/source map and export/index complete source-only examples; these are source/delivery criteria, not a new native gate.",
       "evidenceIDs": [
         "complete_source_reconciliation_87",
         "complete_manifest_field_inventory",
-        "complete_source_examples"
-      ]
+        "complete_source_examples",
+        "complete_sdk_reconciliation_93"
+      ],
+      "completionEvidence": {
+        "path": "docs/miniapp-sdk/evidence/task-scope-reconciliation-20261124.json",
+        "sha256": "bdd68155e001855c992085855a24ef3ebe11d37a8e67b70d47cd30697881d217"
+      }
     }
   ],
-  "recordingOutcome": "Evidence mapping only. No task closure, new test result, native application success, physical-device success, main merge, release or TestFlight publication is asserted.",
-  "updatedAtUTC": "2026-11-24T10:37:26.948070+00:00",
+  "recordingOutcome": "Task-scoped evidence reconciliation:SDK01/02/06 completed in Asana with readback. No new native application/device result, main merge, release or TestFlight publication is asserted.",
+  "updatedAtUTC": "2026-11-24T10:44:55.329622+00:00",
   "currentIntegrationBase": "999599c242c064564c40866a1979c463f1d0e95f",
   "gateHistory": [
     {
@@ -1609,5 +1644,9 @@
       "bytes": 5865,
       "sha256": "4966ac259bf116681d61aed800d574a918d3b0c01758373bba441ef7f6cc610b"
     }
+  },
+  "taskClosureDecisions": {
+    "path": "docs/miniapp-sdk/evidence/task-scope-reconciliation-20261124.json",
+    "sha256": "bdd68155e001855c992085855a24ef3ebe11d37a8e67b70d47cd30697881d217"
   }
 }

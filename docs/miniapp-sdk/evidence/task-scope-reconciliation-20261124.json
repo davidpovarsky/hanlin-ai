@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 1,
+  "atUTC": "2026-11-24T10:44:55.329622+00:00",
+  "implementationSource": "999599c242c064564c40866a1979c463f1d0e95f",
+  "reviewedRepository": "6af858400134f6a0dd350cf31ca89f15a7cc5a39",
+  "independentReviewer": "sdk_only_author",
+  "reviewScope": "Original13 task criteria, current source hashes, retained receipts and selected52 source; no tests/builds/CI/source mutation performed by reviewer",
+  "auditReceipt": {
+    "path": "docs/miniapp-sdk/evidence/complete-sdk-reconciliation-20261124/receipt.json",
+    "sha256": "9e12a944532c54eeaf79c437b3966a2784bd30612f584383f3476fe0c17e8105"
+  },
+  "auditApplicability": "All93 recorded source hashes and all4 generated outputs match retained current audit receipt",
+  "completedTasks": [
+    {
+      "id": "1220373483148840",
+      "key": "SDK-01",
+      "label": "מיפוי מקור סמכותי וגרסאות",
+      "why": "הושלם מיפוי המקורות, סמכויות הגרסה, הטיפוסים והחוזים מול הקוד:93 מקורות,176 exports מקומיים (כולל טיפוסים),334 שדות ו-80 תאי סיווג. ארבע פקודות יצירה/בדיקה עברו לאחר איחוד התיקונים; ביקורת עצמאית אישרה התאמה מדויקת ל-hashes. אי-הוודאויות ומגבלות הראיות מצוינות במפורש.",
+      "evidence": "docs/miniapp-sdk/evidence/complete-sdk-reconciliation-20261124/receipt.json; docs/miniapp-sdk/source-inventory.json; docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+      "completed": true,
+      "completed_at": "2026-11-24T10:43:11.685Z"
+    },
+    {
+      "id": "1220373483150660",
+      "key": "SDK-02",
+      "label": "חוזי חבילה ובדיקות שליליות",
+      "why": "תנאי הסיום של schema, ambiguity/missing manifest, version incompatibility, unsupported exposure, missing plugin, escaping paths, backward/current contracts ו-source/contract drift מכוסים בראיות הממוקדות. שמונה בדיקות חוזה מקוריות עברו בפועל ב-Apple; בדיקת missing-manifest והארכיון עברו במסלולי הייצור. חיבור הייבוא וממשק האפליקציה מנוהלים במשימות האינטגרציה הפתוחות.",
+      "evidence": "docs/miniapp-sdk/evidence/acceptance-criteria-map-20261124.json (SDK-02); docs/miniapp-sdk/evidence/apple-modern-contracts-20261124/receipt.json; run45356338624",
+      "completed": true,
+      "completed_at": "2026-11-24T10:43:11.659Z"
+    },
+    {
+      "id": "1220373592513501",
+      "key": "SDK-06",
+      "label": "כלי אימות, קומפילציה ואריזה",
+      "why": "חמשת הכלים וה-CLI מפעילים מהדרים ובאנדלרים מקוריים, משמרים מקורות ומחזירים אבחנות עם קוד/קובץ/מיקום וזהות קלט. ראיות קיימות מכסות TS2353,TS7006,modifier חסר, version/wrong-entry/permission mismatch לפני ייבוא, בניית ארכיון ואימות חוזר.13 בדיקות authoring עברו בפועל ב-Host Mac; בניות מקוריות עדכניות עברו עם0diagnostics. השלמת מסך השגיאות, תיקון דרך הסוכן והתקנה באפליקציה נשארת במשימות Repair/SDK-07 ובבדיקת52.",
+      "evidence": "docs/miniapp-sdk/evidence/acceptance-criteria-map-20261124.json (SDK-06); docs/miniapp-sdk/evidence/tenth-host-authoring-20261124/receipt.json; docs/miniapp-sdk/evidence/generated-views-probe-20261124/receipt.json",
+      "completed": true,
+      "completed_at": "2026-11-24T10:43:11.664Z"
+    }
+  ],
+  "remainingTasks": [
+    {
+      "key": "SDK-03",
+      "id": "1220373608755846",
+      "status": "NATIVE_ACCEPTANCE_PENDING",
+      "condition": "Current shipping identity and selected NativeScript real runtime, relaunch, independently authored package, owner cleanup and lifetime cases. Original strict source/skipLibCheck=true policy stays explicit."
+    },
+    {
+      "key": "SDK-04",
+      "id": "1220373832827086",
+      "status": "SELECTED_NATIVE_ACCEPTANCE_AND_BOUNDED_COVERAGE_PENDING",
+      "condition": "Execute the selected native Expo/manual/generated/metadata/action/publication/return cases; keep per-group type/forwarding/actual-effect evidence separate. DefaultDocumentGroupLaunchActions requires a genuine document host and is documented as contextual; no optional scene expansion is added."
+    },
+    {
+      "key": "SDK-05",
+      "id": "1220373832827017",
+      "status": "CURRENT_SHIPPING_IDENTITY_PENDING",
+      "condition": "Fresh full SDK must retain exact current docs/examples and pass actual snippet check. Existing independent SDK-only authoring proof need not be repeated."
+    },
+    {
+      "key": "SDK-07",
+      "id": "1220373832815088",
+      "status": "COMPLETE52_PENDING",
+      "condition": "Both builds, all52 selected cases with zero failures/skips, actual repair/import/render attachments and nonempty installed receipt. Broader80-cell or generic permission-revocation semantics are outside this closure."
+    },
+    {
+      "key": "SDK-08",
+      "id": "1220373635419168",
+      "status": "SIMULATOR_PENDING_PHYSICAL_ROUTE_BLOCKED_EXTERNAL",
+      "condition": "Fresh shipping identity, both SDK-only native cases and physical-owner installation/verification route/evidence. No accessible physical execution route has been established."
+    },
+    {
+      "key": "MINIAPP-UPSTREAM",
+      "id": "1220829472845488",
+      "status": "APPLE_CONSUMER_BUILD_PENDING",
+      "condition": "Current full original-source/native/SDK preparation and actual Apple consumer builds, including corrected C++ widget consumer settings."
+    },
+    {
+      "key": "MINIAPP-REPAIR",
+      "id": "1220832299334064",
+      "status": "REPAIR_SELECTORS_AND_ATTACHMENTS_PENDING",
+      "condition": "Actual malformed archive and TS2322 Sheet, original composer, real production tools, visible MiniApp repair result42 and actual installed identity. Controlled model response proves pipeline; separate SDK-only proof covers independent authoring."
+    },
+    {
+      "key": "MINIAPP-SCRIPTWIDGET",
+      "id": "1220849081007269",
+      "status": "SELECTED_ORIGINAL_SERVICE_NATIVE_CASES_PENDING",
+      "condition": "Selected original API/control/live-activity/native-presentation suites, retaining2/2 existing adapter parity proof and explicit dispositions for system services not exercised."
+    },
+    {
+      "key": "MINIAPP-SDK",
+      "id": "1220373592380175",
+      "status": "OPEN",
+      "condition": "Required current native acceptance, exact bounded API coverage dispositions and physical-owner route. Optional full Apple generator, custom home and new legacy Scripting/ScriptUI feature work are excluded."
+    },
+    {
+      "key": "EXTENSION-RUNTIME-E2E",
+      "id": "1220374212463856",
+      "status": "OPEN_BROADER_SCOPE",
+      "condition": "Existing broader surface/runtime/context/device task remains open.80source cells or52selected native cases do not imply all combinations passed or impose a new expanded SDK-lane gate."
+    }
+  ],
+  "nativeGate": {
+    "runID": 45375410965,
+    "sourceCommit": "999599c242c064564c40866a1979c463f1d0e95f",
+    "selectedCases": 52,
+    "status": "IN_PROGRESS",
+    "boundary": "No new native outcome follows from this task-scope review"
+  },
+  "additionalCxxClosureReview": {
+    "reviewer": "control_authoring",
+    "sourceCommit": "999599c242c064564c40866a1979c463f1d0e95f",
+    "result": "No additional direct ExpoWidgets/HanlinScriptingWidgets/HanlinWidgetUI importer lacking required Cxx mode identified",
+    "existingConsumers": [
+      "HanlinExpoRuntime Cxx",
+      "AI_Hanlin Cxx",
+      "HanlinApp objcxx Debug/Release",
+      "HanlinMiniApps objcxx Debug/Release",
+      "AI_HLYTests objcxx Debug/Release",
+      "HanlinMiniAppsTests objcxx Debug/Release"
+    ],
+    "fixedConsumers": [
+      "HanlinScriptingWidgets Cxx+producer import flags",
+      "HanlinWidgetUI Cxx+producer import flags",
+      "Both widget host Debug/Release configurations objcxx+producer import flags"
+    ],
+    "boundary": "Existing non-widget consumers do not duplicate every unsafeFlag. No universal flag equality or actual Apple compilation inferred; no new tests/builds/edits."
+  },
+  "result": "3 scoped original DoDs completed and read back in Asana; current full integration and device acceptance remain open"
+}
