@@ -38,6 +38,7 @@ registerWindowFactory(({id, services}) => {
     counter.text = String(++increments);
   });
   const prepare = button('Prepare Return', 'hanlin-ns-window-prepare-return', () => {
+    input.dismissSoftInput();
     const text = input.text ?? '';
     const metadata = {windowSessionID: id, requestID: request.text, documentID, counter: String(increments)};
     prepared = () => services.miniapps.complete({
@@ -52,7 +53,7 @@ registerWindowFactory(({id, services}) => {
     Promise.resolve().then(ownCompletion).then(() => { status.text = 'Returned'; })
       .catch(error => { status.text = String(error.message ?? error); });
   });
-  for (const child of [request, input, status, counter, increment, prepare, complete]) layout.addChild(child);
+  for (const child of [request, prepare, input, status, counter, increment, complete]) layout.addChild(child);
   page.content = layout;
   services.miniapps.getContext().then(context => {
     request.text = context.id;
