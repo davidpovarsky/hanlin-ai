@@ -8,20 +8,25 @@ retain(){
   code=$?;last_phase="$phase";finish_phase diagnostics
   if [[ "${device_strategy:-}" == fresh && -n "${device:-}" ]]; then
     cleanup_code=0
-    python3 - "$device" "$evidence/verified-environment.json" "Hanlin-Phase2-Motion-${GITHUB_RUN_ID:-local}" > "$evidence/owned-simulator-cleanup.log" 2>&1 <<'PY' || cleanup_code=$?
+    python3 - "$root" "$device" "$evidence/verified-environment.json" > "$evidence/owned-simulator-cleanup.log" 2>&1 <<'PY' || cleanup_code=$?
 import json,subprocess,sys
 from pathlib import Path
-selected=json.loads(Path(sys.argv[2]).read_text())['device']
-assert selected['udid']==sys.argv[1] and selected['name']==sys.argv[3], 'Only this run-owned simulator can be removed'
-subprocess.run(['xcrun','simctl','shutdown',selected['udid']],check=False,timeout=20)
-subprocess.run(['xcrun','simctl','delete',selected['udid']],check=True,timeout=20)
-print(json.dumps({'status':'OWNED_SIMULATOR_REMOVED','device':selected['udid']}))
+sys.path.insert(0,str(Path(sys.argv[1])/'Scripts/CI'))
+from owned_simulator_receipts import motion_run_from_environment, verify_owned_motion_creation
+identity=motion_run_from_environment()
+owner=verify_owned_motion_creation(sys.argv[3],sys.argv[2],identity['run_id'],identity['run_attempt'],
+                                   run_provider=identity['run_provider'])
+subprocess.run(['xcrun','simctl','shutdown',owner['simulator']],check=False,timeout=20)
+subprocess.run(['xcrun','simctl','delete',owner['simulator']],check=True,timeout=20)
+print(json.dumps({'status':'OWNED_SIMULATOR_REMOVED','device':owner['simulator'],'ownership':owner}))
 PY
     if [[ "$code" == 0 && "$cleanup_code" != 0 ]]; then code="$cleanup_code"; fi
   fi
   printf 'exit_code=%s\nphase=%s\n' "$code" "$last_phase" > "$evidence/process-status.txt"
+  event_name="${GITHUB_EVENT_NAME:-workflow_dispatch}"
+  if [[ -n "${HANLIN_LOCAL_RUN_ID:-}" ]]; then event_name=local_mac; fi
   python3 "$root/Scripts/CI/generate_performance_report.py" --log-dir "$evidence" \
-    --run-id "${GITHUB_RUN_ID:-}" --commit-sha "$(git -C "$root" rev-parse HEAD)" --event-name workflow_dispatch \
+    --run-id "${GITHUB_RUN_ID:-}" --commit-sha "$(git -C "$root" rev-parse HEAD)" --event-name "$event_name" \
     --output-json "$evidence/ci-performance-report.json" --step-summary "${GITHUB_STEP_SUMMARY:-$evidence/step-summary.md}"
   return "$code"
 }
@@ -36,7 +41,8 @@ xcrun simctl list devices available -j > "$evidence/devices.json"
 xcrun simctl list runtimes -j > "$evidence/runtimes.json"
 device_strategy="${HANLIN_MOTION_DEVICE_STRATEGY:-ready}"
 if [[ "$device_strategy" == fresh ]]; then
-  device="$(python3 Scripts/CI/select_installed_simulator.py --output "$evidence/verified-environment.json" --create-owned "Hanlin-Phase2-Motion-${GITHUB_RUN_ID:-local}")"
+  owned_name="$(python3 Scripts/CI/owned_simulator_receipts.py --motion-name --output "$evidence/motion-run-provenance.json")"
+  device="$(python3 Scripts/CI/select_installed_simulator.py --output "$evidence/verified-environment.json" --create-owned "$owned_name")"
 else
   [[ "$device_strategy" == ready ]]
   selected_device_args=()

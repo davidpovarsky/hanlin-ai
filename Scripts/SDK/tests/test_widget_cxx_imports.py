@@ -72,6 +72,8 @@ class WidgetCxxImportTests(unittest.TestCase):
                 settings = objects[key]["buildSettings"]
                 with self.subTest(host=value["name"], config=objects[key]["name"]):
                     self.assertEqual(settings["SWIFT_OBJC_INTEROP_MODE"], "objcxx")
+                    self.assertEqual(settings["SWIFT_ENABLE_EXPLICIT_MODULES"], "YES",
+                                     "The widget host must preserve the producer's explicit module import context.")
                     self.assertEqual(settings["OTHER_SWIFT_FLAGS"], expected_flags)
         # Use the actual project producer, including the real MiniApps extension
         # cloning path. Neither this source contract nor dump-package runs Xcode.
