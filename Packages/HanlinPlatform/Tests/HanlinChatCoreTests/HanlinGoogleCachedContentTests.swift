@@ -1,4 +1,7 @@
 import Foundation
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 import Testing
 import AISDKProvider
 @testable import HanlinChatCore
@@ -121,6 +124,21 @@ struct HanlinGoogleCachedContentTests {
         }
         await #expect(throws: CancellationError.self) { try await task.value }
         #expect(await wire.requests.isEmpty)
+    }
+
+    @Test func successfulCreationReceiptSurvivesLateCancellation() async throws {
+        let body = Data(metadata().utf8)
+        let manager = try HanlinGoogleCachedContentManager(
+            modelID: "gemini-2.5-flash", scopeKey: "account-conversation-scope",
+            apiKey: "fixture-only-credential", transport: { request in
+                withUnsafeCurrentTask { $0?.cancel() }
+                return (body, HTTPURLResponse(url: request.url!, statusCode: 200,
+                    httpVersion: "HTTP/1.1", headerFields: nil)!)
+            })
+        let task = Task { try await manager.create(contents: Self.content, ttl: 300) }
+        let created = try await task.value
+        #expect(created.name == "cachedContents/test-123")
+        #expect(created.scopeKey == "account-conversation-scope")
     }
 
     @Test func referencesRoundTripWithoutCorpusOrCredential() throws {

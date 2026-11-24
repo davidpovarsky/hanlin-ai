@@ -1,4 +1,7 @@
 import Foundation
+#if canImport(FoundationNetworking)
+import FoundationNetworking
+#endif
 import AISDKProvider
 
 /// Metadata for an explicitly created Gemini generateContent cache.
@@ -143,6 +146,9 @@ public struct HanlinGoogleCachedContentManager: Sendable {
 
     /// Create a content-only cache. JSONValue is the original Swift AI SDK wire value type.
     /// Use {"role":"user","parts":[{"text":"..."}]} or the documented inlineData/fileData forms.
+    /// Once submitted, cancellation or transport loss cannot prove that creation
+    /// did not occur. A successful received receipt is returned even if the caller
+    /// was just cancelled, so it can explicitly delete the TTL-bounded resource.
     public func create(
         contents: [JSONValue],
         ttl: TimeInterval,
@@ -230,7 +236,9 @@ public struct HanlinGoogleCachedContentManager: Sendable {
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         }
         let (data, response) = try await transport(request)
-        try Task.checkCancellation()
+        // Never discard a received creation identity solely because cancellation
+        // arrived after the server accepted a billable, TTL-bounded resource.
+        if method != "POST" { try Task.checkCancellation() }
         guard response.url?.scheme == "https",
               response.url?.host == "generativelanguage.googleapis.com" else {
             throw HanlinGoogleCachedContentError.invalidEndpoint
