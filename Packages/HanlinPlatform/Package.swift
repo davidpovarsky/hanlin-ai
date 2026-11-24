@@ -70,7 +70,7 @@ let package = Package(
         .package(url: "https://github.com/open-telemetry/opentelemetry-swift-core.git", exact: "2.6.0"),
         .package(
             url: "https://github.com/davidpovarsky/swift-ai-sdk.git",
-            revision: "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8"
+            revision: "ec935fd0a098d52c211307c8ad14c7203bd73fb2"
         ),
         .package(
             url: "https://github.com/weichsel/ZIPFoundation.git",

@@ -2820,7 +2820,8 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
                         supportsReasoning: modelInfo.supportsReasoning && ifThink,
                         supportReasoningChange: modelInfo.supportReasoningChange,
                         thinkingLength: thinkingLength,
-                        supportsToolUse: modelInfo.agentCapabilities.supportsNativeToolCalling && ifToolUse
+                        supportsToolUse: modelInfo.agentCapabilities.supportsNativeToolCalling && ifToolUse,
+                        promptCachePolicy: modelInfo.promptCachePolicy
                     )
 
                     if modelInfo.agentCapabilities.supportsNativeToolCalling
@@ -4023,7 +4024,9 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
                     guard toolAdapter == nil else { throw HanlinAppleProviderError.unsupportedTools }
                     return try HanlinAppleOnDeviceProvider.makeEngine(configuration: sessionConfiguration)
                 }
-                return try HanlinAISDKAgentEngine(configuration: sessionConfiguration)
+                return try HanlinAISDKAgentEngine(configuration: sessionConfiguration,
+                    telemetry: AgentDiagnosticsConfiguration.level == .off
+                        ? nil : HanlinOpenTelemetryTracer.local.telemetrySettings())
             }, toolAdapter: toolAdapter, messages: sdkMessages, systemPrompt: baseSystemPrompt,
             dataAccess: try requireDataAccess(), transport: turnTransport)
 

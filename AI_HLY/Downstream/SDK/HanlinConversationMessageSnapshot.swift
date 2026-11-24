@@ -134,6 +134,7 @@ public struct HanlinApplicationModel: Identifiable, Sendable {
     public let supportsImageInput: Bool
     public let supportsImageGeneration: Bool
     public let supportsVoice: Bool
+    public let promptCachePolicy: HanlinPromptCachePolicy?
 
     @MainActor
     init(_ model: AllModels) {
@@ -153,5 +154,6 @@ public struct HanlinApplicationModel: Identifiable, Sendable {
         supportsImageInput = model.supportsMultimodal
         supportsImageGeneration = model.supportsImageGen
         supportsVoice = model.supportsVoiceGen
+        promptCachePolicy = model.promptCachePolicy
     }
 }

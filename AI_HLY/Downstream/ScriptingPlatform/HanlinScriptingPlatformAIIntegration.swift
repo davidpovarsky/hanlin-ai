@@ -95,6 +95,7 @@ final class HanlinScriptingPlatformAIIntegration: HanlinScriptingApplicationServ
             supportReasoningChange: selectedModel.supportReasoningChange,
             thinkingLength: HanlinDefaultChatPolicy.thinkingLength,
             supportsToolUse: false,
+            promptCachePolicy: selectedModel.promptCachePolicy,
             updatedAt: .now
         )
         let store = try compactConfigStore ?? HanlinCompactAgentConfigStore()

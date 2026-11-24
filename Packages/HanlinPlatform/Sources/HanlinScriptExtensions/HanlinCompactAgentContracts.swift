@@ -31,6 +31,7 @@ public struct HanlinCompactAgentConfiguration: Codable, Hashable, Sendable {
     public let supportReasoningChange: Bool
     public let thinkingLength: Int
     public let supportsToolUse: Bool
+    public let promptCachePolicy: HanlinPromptCachePolicy?
     public let updatedAt: Date
 
     public init(
@@ -49,6 +50,7 @@ public struct HanlinCompactAgentConfiguration: Codable, Hashable, Sendable {
         supportReasoningChange: Bool = false,
         thinkingLength: Int = HanlinChatGenerationDefaults.thinkingLength,
         supportsToolUse: Bool = false,
+        promptCachePolicy: HanlinPromptCachePolicy? = nil,
         updatedAt: Date = .now
     ) {
         self.endpoint = endpoint
@@ -66,6 +68,7 @@ public struct HanlinCompactAgentConfiguration: Codable, Hashable, Sendable {
         self.supportReasoningChange = supportReasoningChange
         self.thinkingLength = thinkingLength
         self.supportsToolUse = supportsToolUse
+        self.promptCachePolicy = promptCachePolicy
         self.updatedAt = updatedAt
     }
 
@@ -100,6 +103,7 @@ public struct HanlinCompactAgentConfiguration: Codable, Hashable, Sendable {
             thinkingLength: thinkingLength,
             supportsToolUse: supportsToolUse,
             systemPrompt: systemPrompt,
+            promptCachePolicy: promptCachePolicy,
             updatedAt: updatedAt
         )
     }
@@ -107,7 +111,7 @@ public struct HanlinCompactAgentConfiguration: Codable, Hashable, Sendable {
     private enum CodingKeys: String, CodingKey {
         case endpoint, apiKey, credentialReference, modelID, company, displayName, systemPrompt, apiType
         case temperature, topP, maxTokens, supportsReasoning, supportReasoningChange
-        case thinkingLength, supportsToolUse, updatedAt
+        case thinkingLength, supportsToolUse, promptCachePolicy, updatedAt
     }
 
     public init(from decoder: Decoder) throws {
@@ -130,6 +134,7 @@ public struct HanlinCompactAgentConfiguration: Codable, Hashable, Sendable {
         supportReasoningChange = try container.decodeIfPresent(Bool.self, forKey: .supportReasoningChange) ?? false
         thinkingLength = try container.decodeIfPresent(Int.self, forKey: .thinkingLength) ?? 0
         supportsToolUse = try container.decodeIfPresent(Bool.self, forKey: .supportsToolUse) ?? false
+        promptCachePolicy = try container.decodeIfPresent(HanlinPromptCachePolicy.self, forKey: .promptCachePolicy)
         updatedAt = try container.decodeIfPresent(Date.self, forKey: .updatedAt) ?? .now
     }
 }
