@@ -1,0 +1,15 @@
+✔ manifest declarations/schema match the installed original source and provenance (16.535417ms)
+✔ genuine action references, legacy controls and nullable optional fields validate (9.573896ms)
+✔ original semantic and JSON shape errors include precise manifest locations (14.312044ms)
+✔ build keeps exact root widget.json, original JSX, declared assets and preview in a real archive (1911.494407ms)
+✔ original JSX semantic errors use the actual TypeScript compiler even with checkJs disabled in project config (435.552634ms)
+✔ manifest declarations reject incorrect control shapes in the authoring type environment (339.862593ms)
+✔ changed original semantic rules cannot silently publish a stale authoring validator (7.696685ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3158.101516

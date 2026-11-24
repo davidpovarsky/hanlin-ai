@@ -178,6 +178,8 @@ async function parseProject(ts, input, sdkRoot, sdkEngine, fallbackConfig, usePr
   const sourceConfig = fallbackConfig && (!useProjectConfig || !ts.sys.fileExists(configPath))
     ? {config: fallbackConfig} : ts.readConfigFile(configPath, ts.sys.readFile);
   const config = {...sourceConfig.config};
+  if (input.originalWidgetManifestText !== undefined)
+    config.compilerOptions = {...config.compilerOptions, allowJs: true, checkJs: true};
   const resolveExtendedConfig = value => {
     if (typeof value !== 'string' || value.startsWith('.') || path.isAbsolute(value)) return value;
     for (const root of [input.sourceRoot, toolingRoot]) {
@@ -197,6 +199,7 @@ async function parseProject(ts, input, sdkRoot, sdkEngine, fallbackConfig, usePr
     moduleResolution: ts.ModuleResolutionKind.Bundler,
     strict: true, allowJs: true, noEmit: true,
     ...base.options, ...parsed.options,
+    ...(input.originalWidgetManifestText !== undefined ? {allowJs: true, checkJs: true} : {}),
     noEmit: true, incremental: false, composite: false,
     typeRoots: [...new Set([...(parsed.options.typeRoots ?? []), ...(base.options.typeRoots ?? []),
       path.join(toolingRoot, 'node_modules', '@types')])],
@@ -616,6 +619,28 @@ async function buildExpo(input, parsed, stage, sdkEngine) {
     main: 'bundle.js', hanlinRuntime: 'hanlin-expo', ...(preparedContract ? {hanlinExpo: preparedContract} : {})});
 }
 
+async function validateOriginalScriptWidgetManifest(input, sdk, ts) {
+  if (input.engine !== 'scriptwidget') return {diagnostics: []};
+  const names = await fs.readdir(input.sourceRoot);
+  const ambiguous = names.find(name => name.toLowerCase() === 'widget.json' && name !== 'widget.json');
+  if (ambiguous) return {diagnostics: [finding('SCRIPTWIDGET_INVALID_MANIFEST_NAME',
+    'The original ScriptWidget manifest must be named exactly widget.json.', ambiguous)]};
+  if (!names.includes('widget.json')) return {diagnostics: []};
+  input.originalWidgetManifestText = await fs.readFile(path.join(input.sourceRoot, 'widget.json'), 'utf8');
+  const descriptor = sdk.engines.scriptwidget;
+  if (!descriptor.packageManifestSchemaPath || !descriptor.packageManifestValidatorPath)
+    return {diagnostics: [finding('SCRIPTWIDGET_MANIFEST_SDK_MISSING',
+      'This SDK does not contain the original ScriptWidget manifest authoring contract.', 'widget.json',
+      'Stage the SDK from the current host build and validate again.')]};
+  const schema = await json(child(sdk.sdkRoot, descriptor.packageManifestSchemaPath));
+  const {validateScriptWidgetManifest} = await import(pathToFileURL(child(sdk.sdkRoot, descriptor.packageManifestValidatorPath)).href);
+  const result = await validateScriptWidgetManifest({text: input.originalWidgetManifestText,
+    entry: input.entry, compiler: ts, schema,
+    exists: relative => fs.stat(child(input.sourceRoot, relative)).then(info => info.isFile(), () => false)});
+  input.originalWidgetManifest = result.manifest;
+  return {...result, schemaPath: descriptor.packageManifestSchemaPath, sources: schema['x-original-contract'].sources};
+}
+
 async function buildScriptWidget(input, parsed, stage) {
   // Keep original JSX/TSX for the installed original ScriptWidget compiler/runtime.
   for (const source of parsed.program.getSourceFiles()) {
@@ -626,6 +651,16 @@ async function buildScriptWidget(input, parsed, stage) {
     await fs.copyFile(source.fileName, target);
   }
   await copyResources(input, stage);
+  if (input.originalWidgetManifestText !== undefined) {
+    // The installed original control runtime reads this exact root-level file.
+    await fs.writeFile(path.join(stage, 'widget.json'), input.originalWidgetManifestText);
+    const preview = input.originalWidgetManifest?.preview;
+    if (preview && await fs.stat(child(input.sourceRoot, preview)).then(info => info.isFile(), () => false)) {
+      const target = child(stage, preview);
+      await fs.mkdir(path.dirname(target), {recursive: true});
+      await fs.copyFile(child(input.sourceRoot, preview), target);
+    }
+  }
   await writeJSON(path.join(stage, 'script.json'), {...input.script, kind: 'widget',
     entry: input.entry, widgetEngine: 'scriptwidget', hanlinRuntime: 'scripting-jsc'});
   if (Object.keys(input.pkg).length) await writeJSON(path.join(stage, 'package.json'), input.pkg);
@@ -651,11 +686,13 @@ export async function runMiniAppOperation(request, {sdkRoot, compiler} = {}) {
     if (!ts?.createProgram) throw new Error('The original TypeScript compiler is unavailable in this SDK.');
     report.sdk = {packageVersions: descriptor.packageVersions ?? {},
       manifestSHA256: sdk.manifestSHA256, compilerVersion: ts.version};
+    const originalManifest = await validateOriginalScriptWidgetManifest(input, sdk, ts);
+    if (originalManifest.schemaPath) report.manifestValidation = {schemaPath: originalManifest.schemaPath, sources: originalManifest.sources};
     const parsed = await parseProject(ts, input, sdk.sdkRoot, descriptor);
-    report.typecheck = {strict: parsed.options.strict === true, skipLibCheck: parsed.options.skipLibCheck === true,
+    report.typecheck = {strict: parsed.options.strict === true, checkJs: parsed.options.checkJs === true, skipLibCheck: parsed.options.skipLibCheck === true,
       dependencyDeclarationsChecked: parsed.options.skipLibCheck !== true};
     const native = await validateNativePresentations(input, sdk, compiler);
-    report.diagnostics = [...parsed.diagnostics, ...native.diagnostics, ...await packageConsistency(input)];
+    report.diagnostics = [...originalManifest.diagnostics, ...parsed.diagnostics, ...native.diagnostics, ...await packageConsistency(input)];
     if (report.diagnostics.some(item => item.category === 'error')) return report;
     if (request.operation === 'validate') { report.succeeded = true; return report; }
     stage = request.outputDirectory ? path.resolve(request.outputDirectory)

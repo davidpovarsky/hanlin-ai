@@ -1,0 +1,538 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Original ScriptWidget Package 2.0 widget.json",
+  "$ref": "#/$defs/WidgetPackageManifest",
+  "$defs": {
+    "WidgetPackageFamily": {
+      "type": "string",
+      "enum": [
+        "systemSmall",
+        "systemMedium",
+        "systemLarge",
+        "systemExtraLarge",
+        "systemExtraLargePortrait",
+        "accessoryCircular",
+        "accessoryRectangular",
+        "accessoryInline"
+      ]
+    },
+    "WidgetPackagePermission": {
+      "type": "string",
+      "enum": [
+        "network",
+        "location",
+        "health",
+        "calendar",
+        "reminders",
+        "remindersWrite",
+        "photos",
+        "services",
+        "music",
+        "storage",
+        "icloud",
+        "notifications",
+        "calendarWrite",
+        "maps",
+        "weather",
+        "alarms",
+        "documents",
+        "contacts",
+        "home",
+        "files"
+      ]
+    },
+    "WidgetPackageControlType": {
+      "type": "string",
+      "enum": [
+        "button",
+        "toggle"
+      ]
+    },
+    "WidgetPackageAuthor": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "url": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "WidgetPackageAction": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9.-]{0,63}$",
+          "x-original-code": "invalid_action_id"
+        },
+        "title": {
+          "type": "string",
+          "x-original-max-characters": 40,
+          "x-original-nonblank": true,
+          "x-original-code": "invalid_action_title"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string",
+              "x-original-max-characters": 160,
+              "x-original-code": "invalid_action_description"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "systemImage": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9.-]{0,79}$",
+          "x-original-code": "invalid_action_image"
+        },
+        "function": {
+          "type": "string",
+          "pattern": "^[A-Za-z_$][A-Za-z0-9_$]{0,63}$",
+          "x-original-code": "invalid_action_function"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "systemImage",
+        "function"
+      ]
+    },
+    "WidgetPackageControl": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9.-]{0,63}$",
+          "x-original-code": "invalid_control_id"
+        },
+        "type": {
+          "$ref": "#/$defs/WidgetPackageControlType"
+        },
+        "title": {
+          "type": "string",
+          "x-original-max-characters": 40,
+          "x-original-nonblank": true,
+          "x-original-code": "invalid_control_title"
+        },
+        "subtitle": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "systemImage": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9.-]{0,79}$",
+          "x-original-code": "invalid_control_image"
+        },
+        "action": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Za-z_$][A-Za-z0-9_$]{0,63}$",
+              "x-original-code": "invalid_control_action"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "actionID": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "stateKey": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "title",
+        "systemImage"
+      ],
+      "allOf": [
+        {
+          "oneOf": [
+            {
+              "required": [
+                "actionID"
+              ],
+              "properties": {
+                "actionID": {
+                  "type": "string"
+                },
+                "action": {
+                  "type": "null"
+                }
+              }
+            },
+            {
+              "required": [
+                "action"
+              ],
+              "properties": {
+                "action": {
+                  "type": "string"
+                },
+                "actionID": {
+                  "type": "null"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "toggle"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "stateKey"
+            ],
+            "properties": {
+              "stateKey": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "stateKey": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "WidgetPackagePushUpdates": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "registrationURL": {
+          "type": "string"
+        },
+        "channel": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "x-original-code": "invalid_push_channel"
+        }
+      },
+      "required": [
+        "registrationURL",
+        "channel"
+      ]
+    },
+    "WidgetPackageTimeline": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "dailyTimes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^(?:[01][0-9]|2[0-3]):[0-5][0-9]$"
+          },
+          "minItems": 1,
+          "maxItems": 4,
+          "uniqueItems": true,
+          "x-original-code": "invalid_timeline"
+        },
+        "timeZone": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "dailyTimes"
+      ]
+    },
+    "WidgetPackageManifest": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "formatVersion": {
+          "type": "integer",
+          "const": 2,
+          "x-original-code": "unsupported_format"
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9.-]{2,127}$",
+          "x-original-code": "invalid_id"
+        },
+        "name": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:-[0-9A-Za-z.-]+)?$",
+          "x-original-code": "invalid_version"
+        },
+        "runtimeVersion": {
+          "type": "string",
+          "const": "1.0",
+          "x-original-code": "unsupported_runtime"
+        },
+        "minimumRuntimeVersion": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^(0|[1-9][0-9]{0,2})\\.(0|[1-9][0-9]{0,2})$",
+              "x-original-code": "invalid_minimum_runtime"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "timeline": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/WidgetPackageTimeline"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "entry": {
+          "type": "string",
+          "pattern": "\\.[jJ][sS][xX]?$",
+          "x-original-code": "invalid_entry_type"
+        },
+        "supportedFamilies": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/WidgetPackageFamily"
+          },
+          "minItems": 1,
+          "uniqueItems": true,
+          "x-original-code": "missing_or_duplicate_families"
+        },
+        "permissions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/WidgetPackagePermission"
+          },
+          "uniqueItems": true,
+          "x-original-code": "duplicate_permissions"
+        },
+        "networkDomains": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "plugins": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9][A-Za-z0-9.-]{2,127}$"
+              },
+              "x-original-code": "invalid_plugin"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "actions": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/WidgetPackageAction"
+              },
+              "maxItems": 16,
+              "x-original-code": "too_many_actions"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "controls": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/WidgetPackageControl"
+              },
+              "maxItems": 8,
+              "x-original-code": "too_many_controls"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "pushUpdates": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/WidgetPackagePushUpdates"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "category": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tags": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "maxItems": 20,
+              "x-original-code": "too_many_tags"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "icon": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "preview": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "author": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/WidgetPackageAuthor"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "license": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "formatVersion",
+        "id",
+        "name",
+        "version",
+        "runtimeVersion",
+        "entry",
+        "supportedFamilies",
+        "permissions",
+        "networkDomains"
+      ]
+    }
+  },
+  "x-original-contract": {
+    "runtimeVersion": "1.0",
+    "nativeRuntimeVersion": "1.6",
+    "validationSHA256": "743545d3b83a1026d1f61b8297aa7ea67454c2eade0959c85ad5d3de987a4ab8",
+    "sources": [
+      {
+        "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptMetadata.swift",
+        "upstream": "Shared/ScriptWidgetRuntime/Common/ScriptMetadata.swift",
+        "commit": "4da256d58247bbafb9a5cd443a285250b97b3c4b",
+        "sha256": "27dada0499f2d5d3299bc4a8c7131f066ba148c4b89be6d5a48ce24224120075"
+      },
+      {
+        "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptWidgetPackage.swift",
+        "upstream": "Shared/ScriptWidgetRuntime/Common/ScriptWidgetPackage.swift",
+        "commit": "4da256d58247bbafb9a5cd443a285250b97b3c4b",
+        "sha256": "3aa2274d41edd3e7e87edd91697a4a204489d0efc6a2efaa00ea82d517af16fd"
+      }
+    ]
+  }
+}

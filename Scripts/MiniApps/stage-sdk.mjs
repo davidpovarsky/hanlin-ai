@@ -184,10 +184,14 @@ export async function stageSDK({root=repositoryRoot,output,engines:requestedEngi
     // unsupported signature fails staging instead of publishing invented types.
     const {generateScriptWidgetServiceTypes}=await import(pathToFileURL(path.join(root,'Scripts/MiniApps/generate-scriptwidget-service-types.mjs')).href);
     const serviceTypes=await generateScriptWidgetServiceTypes({root,output:path.join(staging,'scriptwidget')});
+    const {generateScriptWidgetManifest}=await import(pathToFileURL(path.join(root,'Scripts/MiniApps/generate-scriptwidget-manifest.mjs')).href);
+    await generateScriptWidgetManifest({root,output:path.join(staging,'scriptwidget')});
     if(!engines.expo)await copyAuthoringTree(path.join(root,'Scripts/Expo/node_modules/typescript'),path.join(staging,'scriptwidget/typescript'),files,'scriptwidget/typescript');
     engines.scriptwidget={toolingRoot:'scriptwidget',tsconfigPath:'scriptwidget/tsconfig.json',
       typescriptPath:engines.expo?.typescriptPath??'scriptwidget/typescript/lib/typescript.js',packageVersions:{'everettjf/scriptwidget':widgetCommits.join(',')},
-      docs:['docs/miniapp-sdk/SCRIPTWIDGET_AUTHORING.md'],capabilities:['prepared-widgets','original-native-services'],
+      docs:['docs/miniapp-sdk/SCRIPTWIDGET_AUTHORING.md','docs/miniapp-sdk/SCRIPTWIDGET_CONTROLS.md'],capabilities:['prepared-widgets','original-native-services','original-control-widgets'],
+      packageManifestSchemaPath:'scriptwidget/widget-manifest.schema.json',
+      packageManifestValidatorPath:'scriptwidget/manifest-validation.mjs',
       nativeAPIManifestPath:'scriptwidget/native-api.json',
       nativeAPISummary:{globals:serviceTypes.globals,objects:serviceTypes.nativeObjects,methods:serviceTypes.nativeMethods},
       upstreamTypingStatus:'Original component catalog and declarations generated from the original native JSExport APIs and explicit Hanlin host additions embedded in this exact build.'};
