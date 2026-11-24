@@ -328,6 +328,13 @@ export async function refreshOriginalSources({root,cache,publications,archives})
     files.set(local,bytes);manifest.files.push({repository:'everettjf/scriptwidget',commit,upstream:item.path,upstreamBlob:blob(bytes),local,localSHA256:sha(bytes),byteIdentical:true,adaptation:'New original component; native compilation required.'});
     changes.push({path:local,originalAfterSHA256:sha(bytes),added:true});
   }
+  // These are the upstream app's record browser/migration/export screens and
+  // its UI store. No native JSExport provider/runtime references them; they
+  // require the original app's separate action catalog, not the runtime API.
+  const originalApplicationUI=new Set([
+    'Common/ScriptWidgetDiagnosticExportView.swift','Common/ScriptWidgetRecordStore.swift',
+    'Common/ScriptWidgetRecordsView.swift','Common/ScriptWidgetStorageUpgradeView.swift'
+  ]);
   const serviceRoot='Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/';
   if(manifest.files.some(entry=>entry.local.startsWith(serviceRoot))) {
     const originalRoot='Shared/ScriptWidgetRuntime/';
@@ -335,6 +342,7 @@ export async function refreshOriginalSources({root,cache,publications,archives})
     for(const item of tree.tree??[]) {
       if(item.type!=='blob'||!item.path.startsWith(originalRoot)||!item.path.endsWith('.swift'))continue;
       const relative=item.path.slice(originalRoot.length);
+      if(originalApplicationUI.has(relative))continue;
       if(!['Common/','Plugin/','Widget/API/','Widget/Runtime/'].some(folder=>relative.startsWith(folder))&&relative!=='Widget/Component/ScriptWidgetRuntimeElement.swift')continue;
       const local=serviceRoot+relative;if(knownServiceFiles.has(local))continue;
       if(existsSync(path.join(root,local)))throw new Error('New original service source collides with a host file: '+local);

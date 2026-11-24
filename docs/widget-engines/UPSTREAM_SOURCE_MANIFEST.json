@@ -3141,46 +3141,6 @@
         "path": "ios/Modifiers/SectionIndexLabelModifier.swift"
       },
       "adaptation": "Complete original dependency of the current widget renderer; shared original widget type namespace."
-    },
-    {
-      "repository": "everettjf/scriptwidget",
-      "commit": "4da256d58247bbafb9a5cd443a285250b97b3c4b",
-      "upstream": "Shared/ScriptWidgetRuntime/Common/ScriptWidgetDiagnosticExportView.swift",
-      "upstreamBlob": "a30ded55b2dd8bed653e1f234344c149dfb55359",
-      "local": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptWidgetDiagnosticExportView.swift",
-      "localSHA256": "a58379717419b9425c2595a900f1056e4fd6223752beff49164d0e18ec25f58e",
-      "byteIdentical": true,
-      "adaptation": "Original service/core dependency in the dedicated original ScriptWidget module."
-    },
-    {
-      "repository": "everettjf/scriptwidget",
-      "commit": "4da256d58247bbafb9a5cd443a285250b97b3c4b",
-      "upstream": "Shared/ScriptWidgetRuntime/Common/ScriptWidgetRecordStore.swift",
-      "upstreamBlob": "c19240c97f174c40e4f140f1c4a9c4a8b8522afd",
-      "local": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptWidgetRecordStore.swift",
-      "localSHA256": "db126080c16caa07d8cd05e6690a6906d99e3ec6d559249ed6364b124dce9330",
-      "byteIdentical": true,
-      "adaptation": "Original service/core dependency in the dedicated original ScriptWidget module."
-    },
-    {
-      "repository": "everettjf/scriptwidget",
-      "commit": "4da256d58247bbafb9a5cd443a285250b97b3c4b",
-      "upstream": "Shared/ScriptWidgetRuntime/Common/ScriptWidgetRecordsView.swift",
-      "upstreamBlob": "f3988eb8d0d9b0356b7829f072e74497c6ee0af0",
-      "local": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptWidgetRecordsView.swift",
-      "localSHA256": "182365c17e9e6d8753d051beacf960cb990fd82a00da3ba6cdb6ce80f1e6be79",
-      "byteIdentical": true,
-      "adaptation": "Original service/core dependency in the dedicated original ScriptWidget module."
-    },
-    {
-      "repository": "everettjf/scriptwidget",
-      "commit": "4da256d58247bbafb9a5cd443a285250b97b3c4b",
-      "upstream": "Shared/ScriptWidgetRuntime/Common/ScriptWidgetStorageUpgradeView.swift",
-      "upstreamBlob": "661aefa7f1b1019891cd1021a6c2055652173d9f",
-      "local": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptWidgetStorageUpgradeView.swift",
-      "localSHA256": "ab30fb13feb3b9e90ec3d8ece5a7da57e654a5a4f1d93f5ee2f1c20b00cb195e",
-      "byteIdentical": true,
-      "adaptation": "Original service/core dependency in the dedicated original ScriptWidget module."
     }
   ],
   "schemaVersion": 2

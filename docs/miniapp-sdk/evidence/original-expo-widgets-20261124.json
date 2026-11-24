@@ -197,6 +197,15 @@
     "falseForegroundDependenciesRemoved": 83,
     "reason": "UIKit aliases, generic associated names and live React/JSI context are not dependencies of a prepared dictionary namespace. The complete original ExpoWidgets module remains compiled against genuine Core/UI.",
     "actualResolutionPlan": "Fresh original-source resolution completed; the only remaining discovered Core file was its wholly macOS-conditional Platform.swift, now excluded for the actual iOS target.",
-    "additionalUpstreamReleaseObserved": "@nativescript/vite 8.0.24 appeared after the coherent8.0.23 baseline; the next build resolver will incorporate it with its original exact lock."
+    "additionalUpstreamReleaseObserved": "@nativescript/vite 8.0.24 appeared after the coherent8.0.23 baseline; the next build resolver will incorporate it with its original exact lock.",
+    "originalApplicationUIScreensExcluded": {
+      "files": [
+        "Common/ScriptWidgetDiagnosticExportView.swift",
+        "Common/ScriptWidgetRecordStore.swift",
+        "Common/ScriptWidgetRecordsView.swift",
+        "Common/ScriptWidgetStorageUpgradeView.swift"
+      ],
+      "reason": "Unused upstream application record-browser/migration/export UI cluster refers to separate original application action catalog; no installed native provider/runtime reference exists. All original JSExport APIs remain."
+    }
   }
 }

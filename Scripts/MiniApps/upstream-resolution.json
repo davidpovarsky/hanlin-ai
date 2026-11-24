@@ -308,26 +308,6 @@
         "originalAfterSHA256": "2f3d55b9fb3e6df58176350abc5ee1a48822d4da95ea5b8b4623ee797e4a1981",
         "added": true,
         "requiredType": "SectionIndexLabelModifier"
-      },
-      {
-        "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptWidgetDiagnosticExportView.swift",
-        "originalAfterSHA256": "a58379717419b9425c2595a900f1056e4fd6223752beff49164d0e18ec25f58e",
-        "added": true
-      },
-      {
-        "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptWidgetRecordStore.swift",
-        "originalAfterSHA256": "db126080c16caa07d8cd05e6690a6906d99e3ec6d559249ed6364b124dce9330",
-        "added": true
-      },
-      {
-        "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptWidgetRecordsView.swift",
-        "originalAfterSHA256": "182365c17e9e6d8753d051beacf960cb990fd82a00da3ba6cdb6ce80f1e6be79",
-        "added": true
-      },
-      {
-        "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptWidgetStorageUpgradeView.swift",
-        "originalAfterSHA256": "ab30fb13feb3b9e90ec3d8ece5a7da57e654a5a4f1d93f5ee2f1c20b00cb195e",
-        "added": true
       }
     ],
     "adapterContracts": [
@@ -388,7 +368,7 @@
         "implementation": "Hanlin host adapter; original renderer source and original app service coverage are separate"
       }
     ],
-    "manifestSHA256": "9ad19027d2810ad0992e5c00a43657507177ffc59ee03cd49fffe99cb6aaf98e",
+    "manifestSHA256": "b2f3a98491738971bdb47037ecb7d3972e68e79e14aec7a00925d53ef04d662e",
     "catalogSHA256": "425e5bae37920bd571a469c273c923471cb9f1cad5a945e7f28bf972fff8b0d1"
   },
   "nativeArtifacts": [
