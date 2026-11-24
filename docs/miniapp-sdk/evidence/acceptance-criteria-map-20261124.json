@@ -887,6 +887,54 @@
       "typeDiagnostics": 0,
       "guidesByteMatched": 6,
       "boundary": "Three current guide files changed after tested source; no current guide/example full-SDK PASS inferred. Corrected main preparation must perform fresh authentic full export/check."
+    },
+    "native_corrections_source_reconciliation_88": {
+      "result": "PASS_SOURCE_ONLY",
+      "receipt": {
+        "path": "docs/miniapp-sdk/evidence/native-corrections-reconciliation-20261124/receipt.json",
+        "sha256": "2aa40c6119b9161d7c5803f818487af7beab8dbb2b7f1b15708d9c44c1facd05"
+      },
+      "sourceCount": 88,
+      "localPublicExports": 173,
+      "manifestFields": 334,
+      "reachabilityCells": 80,
+      "boundary": "Combined exact source/type/schema/reference reachability reconciliation. First missing third-authority red retained; mapper repaired and allfour generation/check commands passed. No native pass inferred."
+    },
+    "scriptwidget_host_validation_fix": {
+      "result": "SOURCE_FIX_AND_FOCUSED_PORTABLE_PASS_APPLE_RETEST_PENDING",
+      "rootIntegrationCommit": "01d08ed453040d74a76211e7fb51a611b0d1e2cc",
+      "receipt": {
+        "path": "docs/miniapp-sdk/evidence/scriptwidget-host-validation-20261124/receipt.json",
+        "sha256": "fd64952d4b5e6fc808c103249d9ef5f68b9b86a60afe47d2175cb2f10a206da8"
+      },
+      "independentReview": {
+        "path": "docs/miniapp-sdk/evidence/scriptwidget-host-validation-20261124/independent-review.json",
+        "sha256": "8c0b519fb93372fd5376f33ff533215271bb0f7bfa1d8672cf78203d9da4c06f"
+      },
+      "focusedCases": {
+        "passed": 3,
+        "failed": 0
+      },
+      "helperMatrix": {
+        "validAccepted": 4,
+        "malformedRejected": 9,
+        "matchingCases": 7
+      },
+      "boundary": "Actual default network wildcard setup mismatch repaired consistently across native/publicvalidator/provenance. Host matching and Apple test bodies unchanged."
+    },
+    "manifest_network_authority_fix": {
+      "result": "FOCUSED_SOURCE1_PASS",
+      "receipt": {
+        "path": "docs/miniapp-sdk/evidence/manifest-network-authority-20261124/receipt.json",
+        "sha256": "8be48349597f2b1629911ba4ec70a39c53fbd1abc46e33652e597c51c8a4759d"
+      },
+      "independentReview": {
+        "path": "docs/miniapp-sdk/evidence/manifest-network-authority-20261124/independent-review.json",
+        "sha256": "077d26aa638f42647e5cdc477b9540de1e290da1843252f2119678a726a4acae"
+      },
+      "requiredAuthorities": 3,
+      "rejectedProvenanceMutations": 5,
+      "nativeChanges": false
     }
   },
   "criteria": [
@@ -1136,8 +1184,8 @@
     }
   ],
   "recordingOutcome": "Evidence mapping only. No task closure, new test result, native application success, physical-device success, main merge, release or TestFlight publication is asserted.",
-  "updatedAtUTC": "2026-11-24T09:11:47.095269+00:00",
-  "currentIntegrationBase": "74ba980dbb91f3a38d4531f043801f5e742c283a",
+  "updatedAtUTC": "2026-11-24T09:22:55.440783+00:00",
+  "currentIntegrationBase": "7b21953bf9a27727935bcfec1adcfc8702c1b8af",
   "gateHistory": [
     {
       "runID": 45335292541,
@@ -1305,7 +1353,12 @@
     "passed": 0,
     "failed": 2,
     "skipped": 0,
-    "cause": "Both methods throw Invalid network host declaration: *. Session synthesizes unrestricted* and network policy accepts it; duplicated manifest validator rejects it. Production correction in progress; assertions not weakened."
+    "cause": "Both methods throw Invalid network host declaration: *. Session synthesizes unrestricted* and network policy accepts it; duplicated manifest validator rejects it. Production correction in progress; assertions not weakened.",
+    "initialFailureEvidence": {
+      "path": "docs/miniapp-sdk/evidence/scriptwidget-host-validation-20261124/initial-native-failure.json",
+      "sha256": "431a154a4e320128c1d9a4d14970db8925bc8622ed627092f293e3ffc4c6d217"
+    },
+    "sourceFixEvidenceID": "scriptwidget_host_validation_fix"
   },
   "physicalDeviceRouteEvidence": {
     "path": "docs/miniapp-sdk/evidence/available-device-test-route-20261124.json",
