@@ -95,10 +95,24 @@ final class CrossAppInvocationTests: XCTestCase {
         defer { try? FileManager.default.removeItem(at: root) }
         let original = request("")
         _ = try store.enqueue(original)
-        let session = HanlinExternalMiniAppSession(requestID: original.id, store: store, openSource: { _ in false })
+        var openCalls = 0
+        let session = HanlinExternalMiniAppSession(requestID: original.id, store: store, openSource: { _ in
+            openCalls += 1
+            XCTAssertEqual(try? store.result(id: original.id)?.text, "retained")
+            return false
+        })
         try session.restoreRequest()
-        _ = try await session.perform("miniapps.complete", payload: #""retained""#)
-        _ = try await session.perform("miniapps.return", payload: "{}")
+        let completion = try await session.perform("miniapps.complete", payload: #""retained""#)
+        XCTAssertEqual(completion, #"{"ok":true}"#, "Completion acknowledges the saved result, independently of opening its source.")
+        let response = try await session.perform("miniapps.return", payload: "{}")
+        let acknowledgement = try XCTUnwrap(
+            try JSONSerialization.jsonObject(with: Data(response.utf8)) as? [String: Any])
+        XCTAssertEqual(acknowledgement["ok"] as? Bool, false,
+                       "A failed actual open callback must not return an unconditional success acknowledgement.")
+        XCTAssertEqual(acknowledgement["requested"] as? Bool, true)
+        XCTAssertEqual(acknowledgement["opened"] as? Bool, false)
+        XCTAssertEqual(acknowledgement["status"] as? String, "failed")
+        XCTAssertEqual(openCalls, 1)
         XCTAssertEqual(try store.pendingResults(sourceAppID: original.source.appID).map(\.text), ["retained"])
         XCTAssertNotNil(session.error)
         XCTAssertFalse(session.returning)

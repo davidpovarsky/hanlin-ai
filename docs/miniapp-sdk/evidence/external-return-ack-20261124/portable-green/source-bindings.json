@@ -1,0 +1,116 @@
+{
+  "scope": "Exact original Foundation contracts/store plus verbatim selected session methods and existing failed-callback XCTest. Cleanup counter is harness-only; no UIKit, engine, OS-opening or native acceptance claim.",
+  "bindings": [
+    {
+      "source": "AI_HLY/Downstream/ProductSplitIntegration/HanlinExternalMiniAppSession.swift",
+      "marker": "    private func mailbox()",
+      "sourceSHA256": "279e6a4c387afe6845c51a9adea622dc1085c82fb93ddfd23abb9dd5f4ec6f72",
+      "startLine": 35,
+      "excerptSHA256": "ca161459e4f531ecc2a89bc861f7e85f5587f265db8ab6136360edeb94a78c2c",
+      "verbatim": true
+    },
+    {
+      "source": "AI_HLY/Downstream/ProductSplitIntegration/HanlinExternalMiniAppSession.swift",
+      "marker": "    func restoreRequest()",
+      "sourceSHA256": "279e6a4c387afe6845c51a9adea622dc1085c82fb93ddfd23abb9dd5f4ec6f72",
+      "startLine": 41,
+      "excerptSHA256": "e54b4f9291ed81f719917d6d6296df9afebbb5eb5741d01dff5daf1abab78bf6",
+      "verbatim": true
+    },
+    {
+      "source": "AI_HLY/Downstream/ProductSplitIntegration/HanlinExternalMiniAppSession.swift",
+      "marker": "    func perform(",
+      "sourceSHA256": "279e6a4c387afe6845c51a9adea622dc1085c82fb93ddfd23abb9dd5f4ec6f72",
+      "startLine": 117,
+      "excerptSHA256": "5e3d14f33f1e7d73e3ea3345a05afe303385de7490bee9f809bfe0ec31399e3e",
+      "verbatim": true
+    },
+    {
+      "source": "AI_HLY/Downstream/ProductSplitIntegration/HanlinExternalMiniAppSession.swift",
+      "marker": "    func returnToSource()",
+      "sourceSHA256": "279e6a4c387afe6845c51a9adea622dc1085c82fb93ddfd23abb9dd5f4ec6f72",
+      "startLine": 208,
+      "excerptSHA256": "ff22f6c6a3f6ed1e6a05b09201a17adf3d5ec8ea30d96d1ed28d718479aa0e9b",
+      "verbatim": true
+    },
+    {
+      "source": "AI_HLY/Downstream/ProductSplitIntegration/HanlinExternalMiniAppSession.swift",
+      "marker": "    private func completeJSON(",
+      "sourceSHA256": "279e6a4c387afe6845c51a9adea622dc1085c82fb93ddfd23abb9dd5f4ec6f72",
+      "startLine": 226,
+      "excerptSHA256": "671d19a1ebf299ede9799c406b5a1b9340dcec8e6e46808c56adff54d01debdb",
+      "verbatim": true
+    },
+    {
+      "source": "AI_HLY/Downstream/ProductSplitIntegration/HanlinExternalMiniAppSession.swift",
+      "marker": "    private func finish(",
+      "sourceSHA256": "279e6a4c387afe6845c51a9adea622dc1085c82fb93ddfd23abb9dd5f4ec6f72",
+      "startLine": 250,
+      "excerptSHA256": "4364392a603529ffbb80db57edfedf97bb926aca9192f4090f1355e6bcde63ef",
+      "verbatim": true
+    },
+    {
+      "source": "AI_HLY/Downstream/ProductSplitIntegration/HanlinExternalMiniAppSession.swift",
+      "marker": "    private func failure(",
+      "sourceSHA256": "279e6a4c387afe6845c51a9adea622dc1085c82fb93ddfd23abb9dd5f4ec6f72",
+      "startLine": 277,
+      "excerptSHA256": "4ad340100109bb930a2b44062c94c08fe4b6ec418b282c3f0ae6d42937796bc2",
+      "verbatim": true
+    },
+    {
+      "source": "AI_HLY/Downstream/ProductSplitIntegration/HanlinExternalMiniAppSession.swift",
+      "marker": "    static func localized(",
+      "sourceSHA256": "279e6a4c387afe6845c51a9adea622dc1085c82fb93ddfd23abb9dd5f4ec6f72",
+      "startLine": 282,
+      "excerptSHA256": "99980602ea6c8af722e60aae7829f1675fb7de3e8d482f69a7ed38996c58db08",
+      "verbatim": true
+    },
+    {
+      "source": "AI_HLY/Downstream/ProductSplitIntegration/HanlinExternalMiniAppSession.swift",
+      "marker": "    enum SourceReturnOutcome:",
+      "sourceSHA256": "279e6a4c387afe6845c51a9adea622dc1085c82fb93ddfd23abb9dd5f4ec6f72",
+      "startLine": 201,
+      "excerptSHA256": "58345a75711e9287ec0810341a7693eaa4030914370b781cd06775d96ca27abd",
+      "verbatim": true
+    },
+    {
+      "source": "Packages/HanlinMiniAppsBridge/Sources/HanlinMiniAppsBridge/MiniAppContracts.swift",
+      "sourceSHA256": "f3834e432bf48097d065234c0222ca96d0bbe025c36a9491af483a9b16e39bec",
+      "completeOriginalFile": true
+    },
+    {
+      "source": "Packages/HanlinMiniAppsBridge/Sources/HanlinMiniAppsBridge/MiniAppPreferences.swift",
+      "sourceSHA256": "8a359491aac0f7602cd5347395f7c36755e5450b16edea2388818d3aa46357d4",
+      "completeOriginalFile": true
+    },
+    {
+      "source": "Packages/HanlinMiniAppsBridge/Sources/HanlinMiniAppsBridge/MiniAppBridgeStore.swift",
+      "sourceSHA256": "a50fcd574c1716c62440ec46ed58e4576d0906c3084b9a7a0e1b3ddad97a1048",
+      "completeOriginalFile": true
+    },
+    {
+      "source": "HanlinMiniAppsTests/CrossAppInvocationTests.swift",
+      "marker": "    private func fixture()",
+      "sourceSHA256": "22f91c12d0953f0d1e08ee1a1157bd595a6da01adb85ac8a104c069c4073b936",
+      "startLine": 11,
+      "excerptSHA256": "82462b37ff9acd3349c7569d6fa2a3c2eb042a73f8804afc1130218575682cf0",
+      "verbatim": true
+    },
+    {
+      "source": "HanlinMiniAppsTests/CrossAppInvocationTests.swift",
+      "marker": "    private func request(",
+      "sourceSHA256": "22f91c12d0953f0d1e08ee1a1157bd595a6da01adb85ac8a104c069c4073b936",
+      "startLine": 15,
+      "excerptSHA256": "76f0cb52179d02d05cb9c54c667ee07214702629ff208bd0e9da1674117e697e",
+      "verbatim": true
+    },
+    {
+      "source": "HanlinMiniAppsTests/CrossAppInvocationTests.swift",
+      "marker": "    func testUnavailableCallbackRetainsResultForSourceRecovery()",
+      "sourceSHA256": "22f91c12d0953f0d1e08ee1a1157bd595a6da01adb85ac8a104c069c4073b936",
+      "startLine": 93,
+      "excerptSHA256": "dec6cced89baf646c5a9643c88d39a6154c985d7572fa7c1ba5c4687b9a0eb2c",
+      "verbatim": true
+    }
+  ]
+}

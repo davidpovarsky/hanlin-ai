@@ -1,0 +1,12 @@
+{
+  "command": [
+    "git",
+    "diff",
+    "--check",
+    "--",
+    "AI_HLY/Downstream/ProductSplitIntegration/HanlinExternalMiniAppSession.swift",
+    "HanlinMiniAppsTests/CrossAppInvocationTests.swift"
+  ],
+  "exitCode": 0,
+  "cwd": "/mnt/development/projects/worktrees/hanlin-external-return-receipt-20261124"
+}

@@ -1,0 +1,36 @@
+{
+  "command": [
+    "swift",
+    "test",
+    "--package-path",
+    "/mnt/development/projects/worktrees/hanlin-external-return-receipt-20261124/docs/miniapp-sdk/evidence/external-return-ack-20261124/portable-green",
+    "--scratch-path",
+    "/tmp/hanlin-return-ack-20261124-red/green-build",
+    "--cache-path",
+    "/tmp/hanlin-return-ack-20261124-red/cache",
+    "--filter",
+    "CrossAppInvocationTests.testUnavailableCallbackRetainsResultForSourceRecovery"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-external-return-receipt-20261124",
+  "environment": {
+    "SWIFTPM_MODULECACHE_OVERRIDE": "/tmp/hanlin-return-ack-20261124-red/module-cache",
+    "CLANG_MODULE_CACHE_PATH": "/tmp/hanlin-return-ack-20261124-red/clang-cache"
+  },
+  "exitCode": 0,
+  "durationSeconds": 12.721311569213867,
+  "stdout": {
+    "path": "green.stdout.log",
+    "sha256": "129ab818dfa4d13056f5477e5aaa74d9e8df7530a7185f0a2864dbe04df138bb",
+    "bytes": 656,
+    "storedAs": "green.stdout.log.gz",
+    "gzipSHA256": "8db9be30a4f52fa12fbdffc76db3ca3c13798e7f0520547d9d7219cc0afc685b"
+  },
+  "stderr": {
+    "path": "green.stderr.log",
+    "sha256": "9e4ecd3bc298ba8796aaf26148acccbe0ff947b9b640e2f47443a278f3510837",
+    "bytes": 2318,
+    "storedAs": "green.stderr.log.gz",
+    "gzipSHA256": "adf17a11f5c67192e0a2342c55cb32a5e4c00a3a79d9e83c7fe5828429d79aeb"
+  },
+  "boundary": "Same exact existing failed-callback XCTest and original Foundation contracts/store; only selected production source changed. No Apple/native runtime proof."
+}

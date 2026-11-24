@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-24T10:21:54.937432+00:00",
+  "originalReviewReceiptSHA256": "ae36c8d9c7ed0f7bfe2b58ccc8476ffba1db23783e9d37ccb3fa5aa6008befec",
+  "preservesInitialReview": true,
+  "generatedGroupBoxRepair": {
+    "commit": "d9d3bcd1fb04b7bc68836691de7641f607740b55",
+    "reviewer": "/root/sdk_only_author",
+    "result": "NO_CONCRETE_BLOCKER",
+    "canonicalAndInstalledWrapperSHA256": "7c3bf97da0a680dc80d1a1d19f915b67778e17f42021355c5d99ea4f99c85c74",
+    "evidence": "docs/miniapp-sdk/evidence/groupbox-children-fallback-20261124/receipt.json",
+    "executedProof": "Actual React/TypeScript wrapper red1 to green1 and actual production generator over unchanged IR matches both mirrors. Native NOT_RUN."
+  },
+  "privateReturnAcknowledgementRepair": {
+    "productionSHA256": "279e6a4c387afe6845c51a9adea622dc1085c82fb93ddfd23abb9dd5f4ec6f72",
+    "evidence": "../external-return-ack-20261124/receipt.json",
+    "executedProof": "Exact same existing XCTest and verbatim selected production methods/original Foundation store red1 with4assertion failures to green1. Native NOT_RUN.",
+    "independentReviewer": "/root/entrypoints"
+  },
+  "combinedAuthoringProof": {
+    "owner": "/root/entrypoints",
+    "evidenceWorktree": "/mnt/development/projects/worktrees/hanlin-generated-views-probe-20261124",
+    "sourceCommitObserved": "f0caf1e6ea97569394688eb7fdfcc8731c69b462",
+    "result": "EXECUTED_PASS",
+    "compilerVersion": "6.0.3",
+    "typecheck": {
+      "strict": true,
+      "checkJs": false,
+      "skipLibCheck": false,
+      "dependencyDeclarationsChecked": true
+    },
+    "diagnostics": 0,
+    "sourceMapSections": 822,
+    "modifierSourceSHA256": "3b20939a057885bd2293fc65080bfdb28b51ecaa68adab8a26298e8fd251ea1d",
+    "bundleSHA256": "1ce3a7a6939f7f36f0c637a6c0155319982ee86db839c35ab27c9e37cb82b040",
+    "sourceMapSHA256": "889d503aa2ed016ec9488c0143164ab21889d65d4d4c21e34b28fb5cfa1801e6",
+    "references": [
+      {
+        "path": "docs/miniapp-sdk/evidence/generated-views-probe-20261124/attempt-02-public-build-result.json",
+        "sha256": "a40c8b9110415b97a2041697c6a96716ef65359ab581c8269c2781a40dc8f0cd"
+      },
+      {
+        "path": "docs/miniapp-sdk/evidence/generated-views-probe-20261124/attempt-02-current-source-proof.json",
+        "sha256": "bcac5a45a43e287baa416d252693e755dc2f7fe49a80923a2fdac54fa419cedc"
+      },
+      {
+        "path": "docs/miniapp-sdk/evidence/generated-views-probe-20261124/public-build-artifact.zip.json",
+        "sha256": "1475785dedef045aa2ef96385b113825dd09e7bfeb969ba16947ce9597eba995"
+      }
+    ],
+    "boundary": "Original exported compiler/dependency graph with exact current repository local facade overlay; no new full SDK assembly, application execution, simulator/device or all-modifier semantic pass.",
+    "history": "Initial actual build also had zero diagnostics; its first post-build indexed-source-map inspection failed and was repaired without changing that result. Only the real GroupBox forwarding correction justified the second affected build. No independent repeat in this review lane."
+  },
+  "nativeScope": "Parent plans focused11 =8MiniAppsUI +1existing MiniApps native return case +2AIhosted; selection and source preparation do not establish execution. Root owns all native result recording."
+}
