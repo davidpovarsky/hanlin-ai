@@ -1,0 +1,25 @@
+{
+  "owner": "/root",
+  "sourceHead": "9784a44652187f049aed853ac8549bc0db39bc90",
+  "scope": "Original unified manifest generation on Oracle; Swift package metadata only, no Apple build acceptance",
+  "startedAt": "2026-11-24T23:43:47.693673+00:00",
+  "before": {
+    "Package.swift": "24fdf091f56e1c6766730f9cb4eac5e2ce4925919a1e7cb52c020cf37fb54a16",
+    "docs/agent-sdk/unified-package-manifest.json": "7105bf08ed7b4b5caa2ff159273989d0d58ecba46379821d56601c4047758ef6"
+  },
+  "status": "PASS",
+  "argv": [
+    "python3",
+    "Scripts/SDK/generate_manifest.py"
+  ],
+  "swift": "Swift 6.4.3 aarch64-unknown-linux-gnu",
+  "pid": 3793818,
+  "exitCode": 0,
+  "finishedAt": "2026-11-24T23:43:53.130956+00:00",
+  "seconds": 5.437103845179081,
+  "after": {
+    "Package.swift": "2238e4db391c3460cd81d6bfaf972ad7fa6683828e105de4e7df234d14ab3b0c",
+    "docs/agent-sdk/unified-package-manifest.json": "3051ec46a9e5bcdebccf3a1e7091c5df8c659cd8f49968678bfaf012c40712ec"
+  },
+  "logSHA256": "bfdac7652f38881e2b162197e3c546afdd97bc4cbd7e1256021a167ea447f001"
+}
