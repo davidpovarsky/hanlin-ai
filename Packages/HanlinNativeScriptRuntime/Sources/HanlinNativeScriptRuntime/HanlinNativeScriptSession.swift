@@ -5,8 +5,9 @@ import UIKit
 
 @MainActor
 public final class HanlinNativeScriptSession {
-    private static let supportedRuntimeVersion = "9.1.0"
-    private static let supportedSwiftUIVersion = "4.0.2"
+    private static let supportedRuntimeVersion = HanlinNativeScriptHostVersions.runtimeVersion
+    private static let supportedCoreVersion = HanlinNativeScriptHostVersions.coreVersion
+    private static let supportedSwiftUIVersion = HanlinNativeScriptHostVersions.swiftUIVersion
     private static weak var activeSession: HanlinNativeScriptSession?
 
     /// The pinned upstream NativeScript wrapper owns a process-global main VM.
@@ -185,7 +186,7 @@ public final class HanlinNativeScriptSession {
     }
 
     public static func isCoreVersionCompatible(_ versionString: String) -> Bool {
-        HanlinPreparedRuntimeVersion.supportsMinimum(versionString, installed: supportedRuntimeVersion)
+        HanlinPreparedRuntimeVersion.supportsMinimum(versionString, installed: supportedCoreVersion)
     }
 
     private static func validateCoreRequirements(packageJSONURL: URL) throws {
@@ -208,7 +209,7 @@ public final class HanlinNativeScriptSession {
         if let version = declaredCoreVersion {
             guard isCoreVersionCompatible(version) else {
                 throw HanlinNativeScriptError.unsupportedCoreVersion(
-                    "This Hanlin build supports @nativescript/core \(supportedRuntimeVersion), but the package requires \(version)."
+                    "This Hanlin build supports @nativescript/core \(supportedCoreVersion), but the package requires \(version)."
                 )
             }
         }

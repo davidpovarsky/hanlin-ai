@@ -1,0 +1,24 @@
+{
+  "baseSHA": "173ef0e22b64b1982bf389064867e17100b92587",
+  "time": "2026-11-24T05:13:06.958774+00:00",
+  "cwd": "/mnt/development/projects/worktrees/hanlin-miniapps-version-audit-20261124",
+  "argv": [
+    "node",
+    "Scripts/Audit/audit-miniapp-sdk.mjs",
+    "--write",
+    "--typescript-module",
+    "/dev/shm/hanlin-expo-widgets-sdk-20261124/Scripts/Expo/node_modules/typescript/lib/typescript.js"
+  ],
+  "exit": 1,
+  "stdout": "",
+  "stderr": "file:///mnt/development/projects/worktrees/hanlin-miniapps-version-audit-20261124/Scripts/Audit/audit-miniapp-sdk.mjs:155\n  throw new Error('Prepared runtime version validation changed; audit the installed contract.');\n        ^\n\nError: Prepared runtime version validation changed; audit the installed contract.\n    at file:///mnt/development/projects/worktrees/hanlin-miniapps-version-audit-20261124/Scripts/Audit/audit-miniapp-sdk.mjs:155:9\n\nNode.js v24.22.0\n",
+  "compiler": {
+    "package": "@typescript/typescript6",
+    "version": "6.0.2",
+    "fileSHA256": "d3f3cd2b04b7f466f4484df921b744223f7bd1f3e353ec9110bdf52695b983d5"
+  },
+  "inventoryBeforeSHA256": "ae00d8d6ddb28896f58740d24bb785e4250b335a64ad0951c80e334fe0ffe73d",
+  "inventoryAfterSHA256": "ae00d8d6ddb28896f58740d24bb785e4250b335a64ad0951c80e334fe0ffe73d",
+  "expectedFailure": "Prepared runtime version validation changed; audit the installed contract.",
+  "classification": "EXPECTED_RED_STALE_AUDIT_EXTRACTION"
+}

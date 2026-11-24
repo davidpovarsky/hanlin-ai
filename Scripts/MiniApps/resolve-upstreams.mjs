@@ -100,6 +100,13 @@ export function generatedHostVersions(versions) {
   if(revision&&!/^[a-f0-9]{40}$/.test(revision))throw new Error('Missing exact ScriptWidget source revision');
   return '// Generated from the exact upstream package and native dependency locks.\n// Updated together by Scripts/MiniApps/resolve-upstreams.mjs before the host build.\npublic enum HanlinMiniAppHostVersions {\n'+Object.entries(fields).map(([name,value])=>`    public static let ${name} = ${JSON.stringify(value)}`).join('\n')+(revision?`\n    public static let scriptWidgetRevision = ${JSON.stringify(revision)}`:'')+'\n}\n';
 }
+export function generatedNativeScriptHostVersions(versions) {
+  const ns=versions.nativescript;
+  const fields={runtimeVersion:ns['@nativescript/ios'],coreVersion:ns['@nativescript/core'],swiftUIVersion:ns['@nativescript/swift-ui']};
+  for(const [name,value] of Object.entries(fields))if(!/^\d+\.\d+\.\d+(?:[-+][\w.-]+)?$/.test(value??''))throw new Error(`Missing exact NativeScript host version: ${name}`);
+  return '// Generated from the same exact original NativeScript inputs as the importer.\nenum HanlinNativeScriptHostVersions {\n'+Object.entries(fields).map(([name,value])=>`    static let ${name} = ${JSON.stringify(value)}`).join('\n')+'\n}\n';
+}
+
 export function generatedExpoHostVersions(versions,hermesVersion) {
   const expo=versions.expo;
   const fields={runtimeVersion:expo['@expo/ui'],expoSDKVersion:expo.expo,expoUIVersion:expo['@expo/ui'],reactNativeVersion:expo['react-native'],hermesVersion,nativeApiVersion:expo['@nativescript/react-native'],workletsVersion:expo['react-native-worklets'],nativeApiAbiIdentity:`rn${expo['react-native']}-hermes${hermesVersion}`};
@@ -195,6 +202,7 @@ export async function resolveUpstreams({root=path.resolve(here,'../..'),cache=pa
     ['Scripts/NativeScript/package.json',pretty(nsPackage)],['Scripts/NativeScript/dependency-lock.json',pretty(updatedNS)],
     ['Scripts/ExpoNativeAPI/dependency-lock.json',pretty(updatedNative)],
     ['Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinMiniAppHostVersions.swift',generatedHostVersions(versions)],
+    ['Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptHostVersions.swift',generatedNativeScriptHostVersions(versions)],
     ['Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoHostVersions.swift',generatedExpoHostVersions(versions,hermes)],
     ['Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPI/HanlinExpoNativeAPIHostVersions.swift',generatedNativeAPIHostVersions(versions)]
   ]);

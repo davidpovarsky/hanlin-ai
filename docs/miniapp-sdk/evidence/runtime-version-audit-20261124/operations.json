@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "node",
+    "--test",
+    "Scripts/Audit/Tests/expo-operation-contract.test.mjs"
+  ],
+  "exit": 0,
+  "stdout": "\u2714 actual Expo grouped cases and explicitly connected external cases cover the typed facade (14.243082ms)\n\u2714 a delegated prefix cannot hide a missing operation or a disconnected callback (12.257551ms)\n\u2139 tests 2\n\u2139 suites 0\n\u2139 pass 2\n\u2139 fail 0\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 todo 0\n\u2139 duration_ms 99.969141\n",
+  "stderr": "",
+  "scope": "Two focused source-extraction cases covering actual grouped/delegated dispatch and rejection of nonexistent operations or a disconnected callback. Earlier4 version cases are not rerun."
+}

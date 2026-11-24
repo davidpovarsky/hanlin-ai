@@ -1,0 +1,38 @@
+{
+  "scope": "Syntax only; not Apple typecheck/link/native execution.",
+  "commands": [
+    {
+      "argv": [
+        "swiftc",
+        "-frontend",
+        "-parse",
+        "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptHostVersions.swift"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "swiftc",
+        "-frontend",
+        "-parse",
+        "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptSession.swift"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "swiftc",
+        "-frontend",
+        "-parse",
+        "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ]
+}

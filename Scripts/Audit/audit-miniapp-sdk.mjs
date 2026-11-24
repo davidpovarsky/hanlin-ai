@@ -5,6 +5,8 @@ import {execFileSync} from 'node:child_process';
 import path from 'node:path';
 import {pathToFileURL} from 'node:url';
 import {createRequire} from 'node:module';
+import {auditPreparedRuntimeContract} from './miniapp-runtime-contract.mjs';
+import {auditExpoOperationRoutes} from './miniapp-expo-operations.mjs';
 
 const compilerArgument = process.argv.indexOf('--typescript-module');
 const compilerFile = compilerArgument >= 0
@@ -112,7 +114,7 @@ if (!keyBlock) throw new Error('The script.json decoder contract changed; audit 
 const knownKeys = [...keyBlock.matchAll(/"([^"]+)"/g)].map(m => m[1]);
 const canonicalSchema = await json('Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json');
 for (const file of [
-  'Scripts/Audit/audit-miniapp-sdk.mjs', 'Packages/HanlinNativeScriptRuntime/Package.swift', 'Packages/HanlinExpoRuntime/Package.swift',
+  'Scripts/Audit/audit-miniapp-sdk.mjs', 'Scripts/Audit/miniapp-runtime-contract.mjs', 'Scripts/Audit/miniapp-expo-operations.mjs', 'Packages/HanlinNativeScriptRuntime/Package.swift', 'Packages/HanlinExpoRuntime/Package.swift',
   'Packages/HanlinExpoNativeAPI/Package.swift', 'AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift',
   'Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeServicesBridge.m',
   'AI_HLY/Downstream/NativeScript/HanlinNativeServicesBridge.swift',
@@ -150,31 +152,17 @@ for (const file of [
 ]) await source(file);
 
 const analyzer = await source('Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift');
-const preparedVersions = Object.fromEntries([...analyzer.text.matchAll(/private static let (nativeScriptRuntimeVersion|nativeScriptSwiftUIVersion|expoSDKVersion|expoUIVersion|expoUIBridgeVersion) = "([^"]+)"/g)].map(m => [m[1], m[2]]));
-if (Object.keys(preparedVersions).length !== 5 || !analyzer.text.includes('HanlinPreparedRuntimeVersion.supportsMinimum')) {
-  throw new Error('Prepared runtime version validation changed; audit the installed contract.');
-}
-const nativeSessionSource = await source('Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptSession.swift');
-const nativeSessionVersion = name => nativeSessionSource.text.match(new RegExp(`private static let ${name} = "([^"]+)"`))?.[1];
-if (nativeSessionVersion('supportedRuntimeVersion') !== preparedVersions.nativeScriptRuntimeVersion ||
-    nativeSessionVersion('supportedSwiftUIVersion') !== preparedVersions.nativeScriptSwiftUIVersion ||
-    nsLock.nativeScript.coreVersion !== preparedVersions.nativeScriptRuntimeVersion ||
-    nsLock.nativeScript.iosRuntimeVersion !== preparedVersions.nativeScriptRuntimeVersion ||
-    nsLock.swiftUI.version !== preparedVersions.nativeScriptSwiftUIVersion ||
-    bridge.runtimeVersion !== preparedVersions.expoSDKVersion ||
-    bridge.expoUIVersion !== preparedVersions.expoUIVersion ||
-    bridge.bridgeVersion !== preparedVersions.expoUIBridgeVersion) {
-  throw new Error('Importer, direct session and pinned/generated runtime versions disagree.');
-}
+const runtimeContract = await auditPreparedRuntimeContract({source, json, nsLock, nsPackage, tooling, lock, bridge});
+const preparedVersions = runtimeContract.versions;
 
 const wanted = ['expo', '@expo/ui', 'react', 'react-native', 'expo-modules-core', 'expo-modules-jsi', 'react-native-worklets', '@nativescript/react-native'];
 const nativeNames = [...nativeModule.text.matchAll(/AsyncFunction\("([^"]+)"\)/g)].map(m => m[1]);
-const operations = [...adapter.text.slice(0, adapter.text.indexOf('// MARK: - HanlinExpoHostServicesProvider')).matchAll(/case "([^"]+)":/g)].map(m => m[1]);
 const facade = (await source('Packages/HanlinExpoUI/src/host-services.ts')).text;
 const facadeOperations = [...facade.matchAll(/invoke(?:<[^\n]+?>)?\('([^']+)'/g)].map(m => m[1]);
-if (!nativeNames.includes('invoke') || facadeOperations.some(op => !operations.includes(op))) {
-  throw new Error('Existing Expo facade/native operation drift; do not publish an inferred API.');
-}
+const operationContract = auditExpoOperationRoutes({adapter, nativeNames, facadeOperations,
+  externalSession: await source('AI_HLY/Downstream/ProductSplitIntegration/HanlinExternalMiniAppSession.swift'),
+  platform: await source('AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift')});
+const operations = operationContract.operations;
 const inventory = {
   schemaVersion: 1,
   auditParser: {package: compilerPackage.name, version: compilerPackage.version, reportedCompilerVersion: ts.version,
@@ -186,8 +174,10 @@ const inventory = {
   snapshotIdentity: 'sourceCommit is the base commit; exact source hashes also cover any listed uncommitted source paths at audit time.',
   extensionReachability: 'extension-reachability.json (INT-01; separate consumer of this source inventory)',
   preparedRuntimeContract: {source: analyzer.path, versions: preparedVersions,
+    versionSources: runtimeContract.versionSources, nativeSession: runtimeContract.nativeSession, expoSession: runtimeContract.expoSession,
+    bridgeGenerationBaseline: runtimeContract.bridgeGenerationBaseline,
     minimumVersionSource: 'Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPreparedRuntimeVersion.swift',
-    policy: 'Released three-component semantic versions; historical ^/~ /=/v prefix expresses minimum metadata, not npm resolution. Core/Expo require the installed major and no newer version. Widget runtime/plugin exact pins remain authoritative.',
+    policy: 'Released three-component semantic versions; historical ^/~ /=/v prefix expresses minimum metadata, not npm resolution. Core/Expo require the installed major and no newer version. NativeScript prepared runtime requires the installed iOS major/minor and no newer patch; Core and iOS versions are independent. Widget runtime/plugin exact pins remain authoritative. The Expo bridge-generation baseline is separate from installed original Expo versions.',
     stableDiagnosticCodes: [...new Set([...analyzer.text.matchAll(/code: "(MINIAPP_[A-Z_]+)"/g)].map(m => m[1]))].sort(),
     status: 'shared importer/direct-session minimum policy; numeric build precedence ignores build labels. Source pin consistency checked; full schemas and installed Host acceptance remain separate gates'},
   nativeScript: {toolingDependencies: nsPackage.dependencies ?? {}, toolingDevDependencies: nsPackage.devDependencies ?? {}, pinnedNativeContract: nsLock.nativeScript, swiftUI: nsLock.swiftUI,
@@ -202,7 +192,7 @@ const inventory = {
       reviewedViews: reviewed.views, reviewedModifiers: reviewed.modifiers},
     nativeAPIFacade: {packageVersion: nativeAPIPackage.version, peerDependencies: nativeAPIPackage.peerDependencies},
     nativeModule: {source: nativeModule.path, exports: nativeNames},
-    hostInvoke: {source: adapter.path, operations, facadeOperations, status: 'partial_source_wiring_not_surface_acceptance'},
+    hostInvoke: {source: adapter.path, operations, routes: operationContract.routes, facadeOperations, status: 'partial_source_wiring_not_surface_acceptance'},
     publicExports: expoExports.sort((a, b) => compare(a.source, b.source) || a.line - b.line || compare(a.name, b.name)),
     reexports: reexports.sort((a, b) => compare(a.source, b.source) || a.line - b.line),
   },

@@ -47,6 +47,7 @@ public struct HanlinCompatibilityInventory: Codable, Hashable, Sendable {
 
 public struct HanlinScriptAnalyzer: Sendable {
     private static let nativeScriptRuntimeVersion = HanlinMiniAppHostVersions.nativeScriptRuntimeVersion
+    private static let nativeScriptCoreVersion = HanlinMiniAppHostVersions.nativeScriptCoreVersion
     private static let nativeScriptSwiftUIVersion = HanlinMiniAppHostVersions.nativeScriptSwiftUIVersion
     private static let expoSDKVersion = HanlinMiniAppHostVersions.expoSDKVersion
     private static let expoUIVersion = HanlinMiniAppHostVersions.expoUIVersion
@@ -406,7 +407,7 @@ public struct HanlinScriptAnalyzer: Sendable {
                     state: .unsupported,
                     severity: .error,
                     sourcePath: packageJSONPath,
-                    message: "This Hanlin build supports @nativescript/core \(nativeScriptRuntimeVersion), but the package requires \(coreVersion).",
+                    message: "This Hanlin build supports @nativescript/core \(nativeScriptCoreVersion), but the package requires \(coreVersion).",
                     rationale: "Declare a released semantic version no newer than the embedded Core in the same major version.",
                     code: "MINIAPP_CORE_VERSION_MISMATCH"
                 ))
@@ -421,7 +422,7 @@ public struct HanlinScriptAnalyzer: Sendable {
     }
 
     private static func isCoreVersionCompatible(_ versionString: String) -> Bool {
-        HanlinPreparedRuntimeVersion.supportsMinimum(versionString, installed: nativeScriptRuntimeVersion)
+        HanlinPreparedRuntimeVersion.supportsMinimum(versionString, installed: nativeScriptCoreVersion)
     }
 
     private static func validatePreparedExpoApplication(
