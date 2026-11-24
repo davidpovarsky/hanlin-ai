@@ -1,5 +1,5 @@
 {
-  "sourceCommit": "b8d3caee19485c4ef4448be9e68dfeb2449d38da",
+  "sourceCommit": "c1fca00b0973aa0a791f56a3f0ca1d711651107b",
   "uncommittedSourcePaths": [],
   "schemaVersion": 1,
   "auditParser": {
@@ -88,7 +88,7 @@
     "toolingDevDependencies": {
       "@nativescript/ios": "9.1.1",
       "@nativescript/types": "9.1.4",
-      "@nativescript/vite": "8.0.23",
+      "@nativescript/vite": "8.0.24",
       "typescript": "5.9.3",
       "vite": "8.0.0"
     },
@@ -13881,7 +13881,7 @@
     },
     {
       "path": "Scripts/Expo/package-lock.json",
-      "sha256": "e3da3f23bf663dd927d1db5f34750053c611603cc968f200f51c309f3f8ccf60"
+      "sha256": "95d2a560d4eb01de64fcd0d43875a4ef2392e9747ed9fa79c2e0a0e58abececf"
     },
     {
       "path": "Scripts/Expo/package.json",
@@ -13921,7 +13921,7 @@
     },
     {
       "path": "Scripts/NativeScript/build-host-services.mjs",
-      "sha256": "9389c754c2708ac1592352f9ec0b184f9a154a0a2471259104f2f64dab29726b"
+      "sha256": "b46fcc461ad34fcf49140e4fd0e11e0dcb8f47a8523a15116029435289ee7003"
     },
     {
       "path": "Scripts/NativeScript/build-metadata-tool.py",
@@ -13945,7 +13945,7 @@
     },
     {
       "path": "Scripts/NativeScript/package.json",
-      "sha256": "db255f51de179afb603cffa5d42830a27fcf0e2650d3401364f7338f94a328b5"
+      "sha256": "08fc03bfa87cd78f4f21f80e9324a4840061105f6e9ab081ed794c569ca7324b"
     },
     {
       "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
