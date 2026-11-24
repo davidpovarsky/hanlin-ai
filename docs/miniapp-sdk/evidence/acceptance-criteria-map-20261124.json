@@ -15,18 +15,18 @@
     "absenceBoundary": "A missing matched receipt means not established within the requested evidence set, not proof that the implementation or a receipt elsewhere does not exist."
   },
   "activeGate": {
-    "runID": 45430463243,
-    "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45430463243",
-    "sourceCommit": "7d1efaa6ada43dd80c57133c09e6a8fb327075cf",
+    "runID": 45441138261,
+    "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45441138261",
+    "sourceCommit": "ce49e30d69466e44b0aa26582beaa57ee7a91a9b",
     "scope": "miniapp_complete",
-    "status": "COMPLETED_FAILURE",
+    "status": "IN_PROGRESS",
     "selectedCases": 52,
     "miniAppsCases": 25,
     "aiCases": 27,
-    "caseStatus": "NOT_RUN",
+    "caseStatus": "NOT_RUN_AT_DISPATCH",
     "dispatchReceipt": {
-      "path": "docs/miniapp-sdk/evidence/sixteenth-native-gate-dispatch-20261124.json",
-      "sha256": "0b84d5cceeff6dbe032f67c9ca0bb290a94fec3fd46161804f06db817f811401"
+      "path": "docs/miniapp-sdk/evidence/seventeenth-native-gate-dispatch-20261124.json",
+      "sha256": "7a509801a2e0bf85a536f6861f4352995e16286dc0cc9c05a6a2139ea5925508"
     },
     "acceptanceRequires": [
       "Fresh original native and shipping SDK identity preparation",
@@ -35,15 +35,7 @@
       "Actual diagnostic-sheet/repaired-native-app attachments",
       "Exact original archive/report handoff and nonempty installedPackageID receipt"
     ],
-    "boundary": "MiniApps full build-for-testing, original package/object/widget/app links and signing PASS on required Xcode27.2. AI build fails at exactly two test-source diagnostics; all52 application cases NOT_RUN. No UI/physical-device/release pass.",
-    "firstMiniAppsBuild": "EXECUTED_PASS_EXIT0",
-    "aiBuild": "EXECUTED_FAIL_EXIT65",
-    "miniBuildSeconds": 785.0861333329999,
-    "aiBuildSeconds": 488.93014395800014,
-    "resultReceipt": {
-      "path": "docs/miniapp-sdk/evidence/native-gate-16-ai-test-compilation-20261124/receipt.json",
-      "sha256": "9d9065c8da17fcbd5fec5129e5055e56f70c06bfe342ac239daaf32ba30cfa35"
-    }
+    "boundary": "Current native/application results pending. MAIN16 full MiniApps build and actual SDK passes retain their own source attribution. Two reviewed AI test corrections require this actual full gate."
   },
   "userScope": {
     "activeOriginalEngines": [
@@ -1407,9 +1399,9 @@
       }
     }
   ],
-  "recordingOutcome": "Four scoped tasks complete. MAIN16 MiniApps full build and actual shipping SDK PASS; AI test compilation failed and all52 application cases NOT_RUN. Reviewed two-file MAIN17 candidate is ready, not yet dispatched.",
-  "updatedAtUTC": "2026-11-24T16:46:31.480919+00:00",
-  "currentIntegrationBase": "812fff05f8f4f9509e180a737c70b95ce76251dc",
+  "recordingOutcome": "Four scoped tasks complete. MAIN17 exact52 gate active on reviewed two-test correction; current app/device proof pending. MAIN16 actual MiniApps build and SDK passes retained without attributing application success.",
+  "updatedAtUTC": "2026-11-24T16:48:53.760705+00:00",
+  "currentIntegrationBase": "ce49e30d69466e44b0aa26582beaa57ee7a91a9b",
   "gateHistory": [
     {
       "runID": 45335292541,
@@ -1669,7 +1661,7 @@
     "skipped": 0,
     "receipt": "docs/miniapp-sdk/evidence/apple-modern-contracts-20261124/receipt.json"
   },
-  "currentScopeNote": "Only two AI test-source files change from MAIN16. Original libraries, Swift concurrency checks, assertions, fixtures, workflow, runner, budgets and52 selection remain. No SDK source refresh is required for these excluded test paths. Current native validation pending; physical acceptance still unavailable.",
+  "currentScopeNote": "MAIN17 differs from MAIN16 only in two AI test files outside SDK/inventory/reachability inputs. No generators rerun. Same original libraries and52selection, assertions, runner/workflow andbudgets. Only this receipt andmap are added after dispatch; tested source remains ce49e30d.",
   "modernContractGateHistory": [
     {
       "runID": 45348880385,
@@ -1806,7 +1798,7 @@
     "schemaVersion": 1,
     "sequence": 17,
     "atUTC": "2026-11-24T16:46:31.480919+00:00",
-    "status": "READY_REVIEWED_SOURCE_FIXES",
+    "status": "DISPATCHED",
     "implementationSource": "812fff05f8f4f9509e180a737c70b95ce76251dc",
     "scope": "miniapp_complete",
     "selectedCases": 52,
@@ -1872,7 +1864,10 @@
     "candidateReceipt": {
       "path": "docs/miniapp-sdk/evidence/native-gate-17-candidate-20261124.json",
       "sha256": "038ba2b0319f89598b44532b0cd7421dbf148b501ae31b22c3465fcbd18c16b0"
-    }
+    },
+    "sourceCommit": "ce49e30d69466e44b0aa26582beaa57ee7a91a9b",
+    "runID": 45441138261,
+    "actualExecution": "PENDING_CURRENT_BUILD_AND_CASE_RESULTS"
   },
   "taskClosureDecisions": {
     "path": "docs/miniapp-sdk/evidence/task-scope-reconciliation-20261124.json",
@@ -2087,6 +2082,37 @@
       "failureReceipt": {
         "path": "docs/miniapp-sdk/evidence/native-gate-15-original-headers-20261124/receipt.json",
         "sha256": "eaf062a0cbeed95d5b275628eaa5550ee1fb9c343aca64aff4c16d7ab5cd3cea"
+      }
+    },
+    {
+      "runID": 45430463243,
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45430463243",
+      "sourceCommit": "7d1efaa6ada43dd80c57133c09e6a8fb327075cf",
+      "scope": "miniapp_complete",
+      "status": "COMPLETED_FAILURE",
+      "selectedCases": 52,
+      "miniAppsCases": 25,
+      "aiCases": 27,
+      "caseStatus": "NOT_RUN",
+      "dispatchReceipt": {
+        "path": "docs/miniapp-sdk/evidence/sixteenth-native-gate-dispatch-20261124.json",
+        "sha256": "0b84d5cceeff6dbe032f67c9ca0bb290a94fec3fd46161804f06db817f811401"
+      },
+      "acceptanceRequires": [
+        "Fresh original native and shipping SDK identity preparation",
+        "Both product builds",
+        "All52 selected cases pass without failures/skips",
+        "Actual diagnostic-sheet/repaired-native-app attachments",
+        "Exact original archive/report handoff and nonempty installedPackageID receipt"
+      ],
+      "boundary": "MiniApps full build-for-testing, original package/object/widget/app links and signing PASS on required Xcode27.2. AI build fails at exactly two test-source diagnostics; all52 application cases NOT_RUN. No UI/physical-device/release pass.",
+      "firstMiniAppsBuild": "EXECUTED_PASS_EXIT0",
+      "aiBuild": "EXECUTED_FAIL_EXIT65",
+      "miniBuildSeconds": 785.0861333329999,
+      "aiBuildSeconds": 488.93014395800014,
+      "resultReceipt": {
+        "path": "docs/miniapp-sdk/evidence/native-gate-16-ai-test-compilation-20261124/receipt.json",
+        "sha256": "9d9065c8da17fcbd5fec5129e5055e56f70c06bfe342ac239daaf32ba30cfa35"
       }
     }
   ],
