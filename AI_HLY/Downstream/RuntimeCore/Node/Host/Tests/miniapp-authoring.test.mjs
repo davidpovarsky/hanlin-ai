@@ -25,7 +25,8 @@ async function fixture(t, engine = 'nativescript') {
   await fs.writeFile(path.join(sdk, 'original', 'package.json'), JSON.stringify({private: true}));
   await fs.writeFile(path.join(sdk, 'miniapp-sdk.json'), JSON.stringify({
     schemaVersion: 1, engines: {[engine]: {
-      toolingRoot: 'original', packageVersions: {typescript: ts.version, '@nativescript/core': '9.1.0', '@nativescript/ios': '9.1.0'},
+      toolingRoot: 'original', typescriptPath: 'original/node_modules/typescript/lib/typescript.js',
+      packageVersions: {typescript: ts.version, '@nativescript/core': '9.1.0', '@nativescript/ios': '9.1.0'},
       docs: ['guide.md']
     }}
   }));
@@ -184,7 +185,8 @@ test('the real CLI archives and revalidates retained source, diagnostics and out
   const reportPath = path.join(f.root, 'report.json');
   const build = spawnSync(process.execPath, [cli, 'build', '--engine', 'nativescript', '--sdk', f.sdk,
     '--project', f.project, '--archive', archive, '--report', reportPath], {
-      encoding: 'utf8', env: {...process.env, HANLIN_AUTHORING_TYPESCRIPT: compilerLocation}
+      encoding: 'utf8', cwd: path.join(f.sdk, 'original'),
+      env: {...process.env, HANLIN_AUTHORING_TYPESCRIPT: 'typescript'}
     });
   assert.equal(build.status, 0, build.stderr + build.stdout);
   const report = JSON.parse(await fs.readFile(reportPath));
@@ -195,6 +197,14 @@ test('the real CLI archives and revalidates retained source, diagnostics and out
   assert.equal(unpack.status, 0, unpack.stderr);
   const check = await f.run('validate', {projectRoot: extracted});
   assert.equal(check.succeeded, true, JSON.stringify(check));
+  // The ordinary CLI must also load the compiler from its supplied SDK without
+  // inheriting this test process's optional compiler override.
+  const ordinaryEnvironment = {...process.env};
+  delete ordinaryEnvironment.HANLIN_AUTHORING_TYPESCRIPT;
+  const validate = spawnSync(process.execPath, [cli, 'validate', '--engine', 'nativescript',
+    '--sdk', f.sdk, '--project', extracted], {encoding: 'utf8', env: ordinaryEnvironment});
+  assert.equal(validate.status, 0, validate.stderr + validate.stdout);
+  assert.equal(JSON.parse(validate.stdout).sdk.compilerVersion, ts.version);
   const map = JSON.parse(await fs.readFile(path.join(extracted, 'nativescript/app/modules/index.js.map')));
   assert.equal(map.sourcesContent[0], await fs.readFile(f.entry, 'utf8'));
 });
