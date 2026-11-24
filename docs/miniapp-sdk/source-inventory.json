@@ -1,5 +1,5 @@
 {
-  "sourceCommit": "340018ddc9ea2395ffabedbf179369b5bdb791af",
+  "sourceCommit": "0d3b614ea34e01fb381f2289130fff83323c8f4f",
   "uncommittedSourcePaths": [],
   "schemaVersion": 1,
   "auditParser": {
@@ -69,6 +69,7 @@
     "minimumVersionSource": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPreparedRuntimeVersion.swift",
     "policy": "Released three-component semantic versions; historical ^/~ /=/v prefix expresses minimum metadata, not npm resolution. Core/Expo require the installed major and no newer version. NativeScript prepared runtime requires the installed iOS major/minor and no newer patch; Core and iOS versions are independent. Widget runtime/plugin exact pins remain authoritative. Public Expo runtime metadata follows the installed original UI graph across both generated mirrors; the reviewed Apple API coverage input and Hanlin bridge ABI remain independent.",
     "stableDiagnosticCodes": [
+      "MINIAPP_ASSISTANT_TOOL_INVALID",
       "MINIAPP_BRIDGE_VERSION_INVALID",
       "MINIAPP_BRIDGE_VERSION_MISMATCH",
       "MINIAPP_CORE_VERSION_MISMATCH",
@@ -6956,8 +6957,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "426509862e4b67d755c6e466356da1418fbaf7246277100779aab768ceba3258",
-              "line": 237
+              "sha256": "b7e1e37c44877dda02cdcee8409b9f5b5afb212aa9183461c0eabd04cb4d2d6e",
+              "line": 238
             }
           ]
         },
@@ -6970,8 +6971,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "426509862e4b67d755c6e466356da1418fbaf7246277100779aab768ceba3258",
-              "line": 248
+              "sha256": "b7e1e37c44877dda02cdcee8409b9f5b5afb212aa9183461c0eabd04cb4d2d6e",
+              "line": 249
             }
           ]
         },
@@ -6984,8 +6985,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "426509862e4b67d755c6e466356da1418fbaf7246277100779aab768ceba3258",
-              "line": 256
+              "sha256": "b7e1e37c44877dda02cdcee8409b9f5b5afb212aa9183461c0eabd04cb4d2d6e",
+              "line": 257
             }
           ]
         },
@@ -6998,8 +6999,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "426509862e4b67d755c6e466356da1418fbaf7246277100779aab768ceba3258",
-              "line": 255
+              "sha256": "b7e1e37c44877dda02cdcee8409b9f5b5afb212aa9183461c0eabd04cb4d2d6e",
+              "line": 256
             }
           ]
         },
@@ -7012,8 +7013,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "426509862e4b67d755c6e466356da1418fbaf7246277100779aab768ceba3258",
-              "line": 241
+              "sha256": "b7e1e37c44877dda02cdcee8409b9f5b5afb212aa9183461c0eabd04cb4d2d6e",
+              "line": 242
             }
           ]
         },
@@ -7026,8 +7027,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "426509862e4b67d755c6e466356da1418fbaf7246277100779aab768ceba3258",
-              "line": 244
+              "sha256": "b7e1e37c44877dda02cdcee8409b9f5b5afb212aa9183461c0eabd04cb4d2d6e",
+              "line": 245
             }
           ]
         },
@@ -7114,8 +7115,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "426509862e4b67d755c6e466356da1418fbaf7246277100779aab768ceba3258",
-              "line": 193
+              "sha256": "b7e1e37c44877dda02cdcee8409b9f5b5afb212aa9183461c0eabd04cb4d2d6e",
+              "line": 194
             }
           ]
         },
@@ -7247,8 +7248,462 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "a8b4b96df4fb0782e78e0c48132def346f63436b9cff96286088f52b5889da54",
-              "line": 746
+              "sha256": "10a2a4d34263e0800ad2dde326f187bf978c32b9d3d2a340a73bc664b48464ac",
+              "line": 755
+            }
+          ]
+        },
+        {
+          "field": "entrypoints[].assistantTool",
+          "type": "HanlinAssistantToolDeclaration",
+          "required": "required for assistantTool",
+          "status": "supported",
+          "semantics": "Dedicated assistant action declaration, schemas and optional composer configuration.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
+              "sha256": "10a2a4d34263e0800ad2dde326f187bf978c32b9d3d2a340a73bc664b48464ac",
+              "line": 784
+            }
+          ]
+        },
+        {
+          "field": "entrypoints[].assistantTool.actions",
+          "type": "[HanlinAssistantToolAction]",
+          "required": true,
+          "status": "supported",
+          "semantics": "Nonempty declared action table; validation does not execute it.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinAssistantToolDeclaration.swift",
+              "sha256": "b2a72ec90edfc9083ab2ecfbabea9af8c64e2ab98c08e1f3d19a722b73ad9d12",
+              "line": 8,
+              "symbol": "HanlinAssistantToolDeclaration.actions"
+            }
+          ]
+        },
+        {
+          "field": "entrypoints[].assistantTool.actions[].embeddedResultID",
+          "type": "String?",
+          "required": false,
+          "status": "supported",
+          "semantics": "Optional exact declared embeddedResult entrypoint in this package.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinAssistantToolDeclaration.swift",
+              "sha256": "b2a72ec90edfc9083ab2ecfbabea9af8c64e2ab98c08e1f3d19a722b73ad9d12",
+              "line": 58,
+              "symbol": "HanlinAssistantToolAction.embeddedResultID"
+            }
+          ]
+        },
+        {
+          "field": "entrypoints[].assistantTool.actions[].exportedSymbol",
+          "type": "String?",
+          "required": false,
+          "status": "supported",
+          "semantics": "Named source export; defaults to action ID. Never the app entrypoint.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinAssistantToolDeclaration.swift",
+              "sha256": "b2a72ec90edfc9083ab2ecfbabea9af8c64e2ab98c08e1f3d19a722b73ad9d12",
+              "line": 56,
+              "symbol": "HanlinAssistantToolAction.exportedSymbol"
+            }
+          ]
+        },
+        {
+          "field": "entrypoints[].assistantTool.actions[].id",
+          "type": "String",
+          "required": true,
+          "status": "supported",
+          "semantics": "Unique canonical action ID used by the existing action transport.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinAssistantToolDeclaration.swift",
+              "sha256": "b2a72ec90edfc9083ab2ecfbabea9af8c64e2ab98c08e1f3d19a722b73ad9d12",
+              "line": 50,
+              "symbol": "HanlinAssistantToolAction.id"
+            }
+          ]
+        },
+        {
+          "field": "entrypoints[].assistantTool.actions[].inputSchema",
+          "type": "HanlinJSONSchemaDocument",
+          "required": true,
+          "status": "supported",
+          "semantics": "Raw JSON Schema object with type object; applies to model arguments.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinAssistantToolDeclaration.swift",
+              "sha256": "b2a72ec90edfc9083ab2ecfbabea9af8c64e2ab98c08e1f3d19a722b73ad9d12",
+              "line": 53,
+              "symbol": "HanlinAssistantToolAction.inputSchema"
+            }
+          ]
+        },
+        {
+          "field": "entrypoints[].assistantTool.actions[].outputSchema",
+          "type": "HanlinJSONSchemaDocument?",
+          "required": false,
+          "status": "supported",
+          "semantics": "Optional raw JSON Schema describing returned data.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinAssistantToolDeclaration.swift",
+              "sha256": "b2a72ec90edfc9083ab2ecfbabea9af8c64e2ab98c08e1f3d19a722b73ad9d12",
+              "line": 54,
+              "symbol": "HanlinAssistantToolAction.outputSchema"
+            }
+          ]
+        },
+        {
+          "field": "entrypoints[].assistantTool.actions[].summary",
+          "type": "String",
+          "required": true,
+          "status": "supported",
+          "semantics": "Nonempty model description.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinAssistantToolDeclaration.swift",
+              "sha256": "b2a72ec90edfc9083ab2ecfbabea9af8c64e2ab98c08e1f3d19a722b73ad9d12",
+              "line": 52,
+              "symbol": "HanlinAssistantToolAction.summary"
+            }
+          ]
+        },
+        {
+          "field": "entrypoints[].assistantTool.actions[].title",
+          "type": "String",
+          "required": true,
+          "status": "supported",
+          "semantics": "Nonempty display title.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinAssistantToolDeclaration.swift",
+              "sha256": "b2a72ec90edfc9083ab2ecfbabea9af8c64e2ab98c08e1f3d19a722b73ad9d12",
+              "line": 51,
+              "symbol": "HanlinAssistantToolAction.title"
+            }
+          ]
+        },
+        {
+          "field": "entrypoints[].assistantTool.configuration",
+          "type": "HanlinComposerConfiguration?",
+          "required": false,
+          "status": "supported",
+          "semantics": "Optional versioned user configuration rendered in the shared composer bubble.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinAssistantToolDeclaration.swift",
+              "sha256": "b2a72ec90edfc9083ab2ecfbabea9af8c64e2ab98c08e1f3d19a722b73ad9d12",
+              "line": 9,
+              "symbol": "HanlinAssistantToolDeclaration.configuration"
+            }
+          ]
+        },
+        {
+          "field": "entrypoints[].assistantTool.configuration.options[].children",
+          "type": "[HanlinComposerOption]",
+          "required": false,
+          "status": "supported",
+          "semantics": "Optional nested catalog options.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinComposerConfiguration.swift",
+              "sha256": "22fefa45440b28bc66bcef5b5158e838787a980826cd5b80c106db07fe3a2a1e",
+              "line": 140,
+              "symbol": "HanlinComposerOption.children"
+            }
+          ],
+          "decoderDefault": []
+        },
+        {
+          "field": "entrypoints[].assistantTool.configuration.options[].id",
+          "type": "String",
+          "required": true,
+          "status": "supported",
+          "semantics": "Unique stable selected value.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinComposerConfiguration.swift",
+              "sha256": "22fefa45440b28bc66bcef5b5158e838787a980826cd5b80c106db07fe3a2a1e",
+              "line": 138,
+              "symbol": "HanlinComposerOption.id"
+            }
+          ]
+        },
+        {
+          "field": "entrypoints[].assistantTool.configuration.options[].title",
+          "type": "String",
+          "required": true,
+          "status": "supported",
+          "semantics": "Display label.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinComposerConfiguration.swift",
+              "sha256": "22fefa45440b28bc66bcef5b5158e838787a980826cd5b80c106db07fe3a2a1e",
+              "line": 139,
+              "symbol": "HanlinComposerOption.title"
+            }
+          ]
+        },
+        {
+          "field": "entrypoints[].assistantTool.configuration.panels",
+          "type": "[HanlinComposerPanel]",
+          "required": true,
+          "status": "supported",
+          "semantics": "Nonempty list of named configuration panels.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinComposerConfiguration.swift",
+              "sha256": "22fefa45440b28bc66bcef5b5158e838787a980826cd5b80c106db07fe3a2a1e",
+              "line": 7,
+              "symbol": "HanlinComposerConfiguration.panels"
+            }
+          ]
+        },
+        {
+          "field": "entrypoints[].assistantTool.configuration.panels[].customViewID",
+          "type": "String?",
+          "required": false,
+          "status": "supported",
+          "semantics": "Optional embedding-host view key. Provider owns validation of additional custom fields.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinComposerConfiguration.swift",
+              "sha256": "22fefa45440b28bc66bcef5b5158e838787a980826cd5b80c106db07fe3a2a1e",
+              "line": 117,
+              "symbol": "HanlinComposerPanel.customViewID"
+            }
+          ]
+        },
+        {
+          "field": "entrypoints[].assistantTool.configuration.panels[].fields",
+          "type": "[HanlinComposerField]",
+          "required": false,
+          "status": "supported",
+          "semantics": "Structured configuration fields, unique by key across all panels.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinComposerConfiguration.swift",
+              "sha256": "22fefa45440b28bc66bcef5b5158e838787a980826cd5b80c106db07fe3a2a1e",
+              "line": 114,
+              "symbol": "HanlinComposerPanel.fields"
+            }
+          ],
+          "decoderDefault": []
+        },
+        {
+          "field": "entrypoints[].assistantTool.configuration.panels[].fields[].defaultValue",
+          "type": "HanlinJSONValue?",
+          "required": false,
+          "status": "supported",
+          "semantics": "Optional valid JSON default copied into each new attachment.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinComposerConfiguration.swift",
+              "sha256": "22fefa45440b28bc66bcef5b5158e838787a980826cd5b80c106db07fe3a2a1e",
+              "line": 169,
+              "symbol": "HanlinComposerField.defaultValue"
+            }
+          ]
+        },
+        {
+          "field": "entrypoints[].assistantTool.configuration.panels[].fields[].key",
+          "type": "String",
+          "required": true,
+          "status": "supported",
+          "semantics": "Stable structured configuration key, separate from model arguments.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinComposerConfiguration.swift",
+              "sha256": "22fefa45440b28bc66bcef5b5158e838787a980826cd5b80c106db07fe3a2a1e",
+              "line": 165,
+              "symbol": "HanlinComposerField.key"
+            }
+          ]
+        },
+        {
+          "field": "entrypoints[].assistantTool.configuration.panels[].fields[].kind",
+          "type": "Kind",
+          "required": true,
+          "status": "supported",
+          "semantics": "text, toggle, number, choice, multiChoice, catalog, or location.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinComposerConfiguration.swift",
+              "sha256": "22fefa45440b28bc66bcef5b5158e838787a980826cd5b80c106db07fe3a2a1e",
+              "line": 167,
+              "symbol": "HanlinComposerField.kind"
+            }
+          ]
+        },
+        {
+          "field": "entrypoints[].assistantTool.configuration.panels[].fields[].maximum",
+          "type": "Double?",
+          "required": false,
+          "status": "supported",
+          "semantics": "Numeric maximum, or maximum radiusMeters for location.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinComposerConfiguration.swift",
+              "sha256": "22fefa45440b28bc66bcef5b5158e838787a980826cd5b80c106db07fe3a2a1e",
+              "line": 172,
+              "symbol": "HanlinComposerField.maximum"
+            }
+          ]
+        },
+        {
+          "field": "entrypoints[].assistantTool.configuration.panels[].fields[].minimum",
+          "type": "Double?",
+          "required": false,
+          "status": "supported",
+          "semantics": "Numeric minimum, or minimum radiusMeters for location.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinComposerConfiguration.swift",
+              "sha256": "22fefa45440b28bc66bcef5b5158e838787a980826cd5b80c106db07fe3a2a1e",
+              "line": 171,
+              "symbol": "HanlinComposerField.minimum"
+            }
+          ]
+        },
+        {
+          "field": "entrypoints[].assistantTool.configuration.panels[].fields[].options",
+          "type": "[HanlinComposerOption]",
+          "required": false,
+          "status": "supported",
+          "semantics": "Unique selection/catalog option IDs; nested options supported.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinComposerConfiguration.swift",
+              "sha256": "22fefa45440b28bc66bcef5b5158e838787a980826cd5b80c106db07fe3a2a1e",
+              "line": 170,
+              "symbol": "HanlinComposerField.options"
+            }
+          ],
+          "decoderDefault": []
+        },
+        {
+          "field": "entrypoints[].assistantTool.configuration.panels[].fields[].placeholder",
+          "type": "String?",
+          "required": false,
+          "status": "supported",
+          "semantics": "Optional text placeholder.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinComposerConfiguration.swift",
+              "sha256": "22fefa45440b28bc66bcef5b5158e838787a980826cd5b80c106db07fe3a2a1e",
+              "line": 173,
+              "symbol": "HanlinComposerField.placeholder"
+            }
+          ]
+        },
+        {
+          "field": "entrypoints[].assistantTool.configuration.panels[].fields[].required",
+          "type": "Bool",
+          "required": false,
+          "status": "supported",
+          "semantics": "Whether a value is required before sending.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinComposerConfiguration.swift",
+              "sha256": "22fefa45440b28bc66bcef5b5158e838787a980826cd5b80c106db07fe3a2a1e",
+              "line": 168,
+              "symbol": "HanlinComposerField.required"
+            }
+          ],
+          "decoderDefault": false
+        },
+        {
+          "field": "entrypoints[].assistantTool.configuration.panels[].fields[].title",
+          "type": "String",
+          "required": true,
+          "status": "supported",
+          "semantics": "Field display title.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinComposerConfiguration.swift",
+              "sha256": "22fefa45440b28bc66bcef5b5158e838787a980826cd5b80c106db07fe3a2a1e",
+              "line": 166,
+              "symbol": "HanlinComposerField.title"
+            }
+          ]
+        },
+        {
+          "field": "entrypoints[].assistantTool.configuration.panels[].id",
+          "type": "String",
+          "required": true,
+          "status": "supported",
+          "semantics": "Unique nonempty panel ID.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinComposerConfiguration.swift",
+              "sha256": "22fefa45440b28bc66bcef5b5158e838787a980826cd5b80c106db07fe3a2a1e",
+              "line": 112,
+              "symbol": "HanlinComposerPanel.id"
+            }
+          ]
+        },
+        {
+          "field": "entrypoints[].assistantTool.configuration.panels[].title",
+          "type": "String",
+          "required": true,
+          "status": "supported",
+          "semantics": "Panel display title.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinComposerConfiguration.swift",
+              "sha256": "22fefa45440b28bc66bcef5b5158e838787a980826cd5b80c106db07fe3a2a1e",
+              "line": 113,
+              "symbol": "HanlinComposerPanel.title"
+            }
+          ]
+        },
+        {
+          "field": "entrypoints[].assistantTool.configuration.schemaVersion",
+          "type": "Int",
+          "required": false,
+          "status": "supported",
+          "semantics": "Version 1; unknown versions rejected.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinComposerConfiguration.swift",
+              "sha256": "22fefa45440b28bc66bcef5b5158e838787a980826cd5b80c106db07fe3a2a1e",
+              "line": 6,
+              "symbol": "HanlinComposerConfiguration.schemaVersion"
+            }
+          ],
+          "decoderDefault": 1
+        },
+        {
+          "field": "entrypoints[].assistantTool.summary",
+          "type": "String",
+          "required": true,
+          "status": "supported",
+          "semantics": "Nonempty description supplied to the model.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinAssistantToolDeclaration.swift",
+              "sha256": "b2a72ec90edfc9083ab2ecfbabea9af8c64e2ab98c08e1f3d19a722b73ad9d12",
+              "line": 7,
+              "symbol": "HanlinAssistantToolDeclaration.summary"
+            }
+          ]
+        },
+        {
+          "field": "entrypoints[].assistantTool.title",
+          "type": "String",
+          "required": true,
+          "status": "supported",
+          "semantics": "Nonempty title displayed before selection.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinAssistantToolDeclaration.swift",
+              "sha256": "b2a72ec90edfc9083ab2ecfbabea9af8c64e2ab98c08e1f3d19a722b73ad9d12",
+              "line": 6,
+              "symbol": "HanlinAssistantToolDeclaration.title"
             }
           ]
         },
@@ -7261,8 +7716,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "a8b4b96df4fb0782e78e0c48132def346f63436b9cff96286088f52b5889da54",
-              "line": 778
+              "sha256": "10a2a4d34263e0800ad2dde326f187bf978c32b9d3d2a340a73bc664b48464ac",
+              "line": 821
             }
           ]
         },
@@ -7275,22 +7730,22 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "a8b4b96df4fb0782e78e0c48132def346f63436b9cff96286088f52b5889da54",
-              "line": 759
+              "sha256": "10a2a4d34263e0800ad2dde326f187bf978c32b9d3d2a340a73bc664b48464ac",
+              "line": 768
             }
           ]
         },
         {
           "field": "entrypoints[].kind",
-          "type": "appIntent | embeddedResult | share | translationUI | liveActivity",
+          "type": "assistantTool | appIntent | embeddedResult | share | translationUI | liveActivity",
           "required": true,
           "status": "supported",
-          "semantics": "Only these modern explicit kinds are accepted; engine-specific source requirements still apply.",
+          "semantics": "Explicit kinds; assistantTool additionally requires a dedicated prepared program and declared action metadata.",
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "a8b4b96df4fb0782e78e0c48132def346f63436b9cff96286088f52b5889da54",
-              "line": 760
+              "sha256": "10a2a4d34263e0800ad2dde326f187bf978c32b9d3d2a340a73bc664b48464ac",
+              "line": 769
             }
           ]
         },
@@ -7303,8 +7758,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "a8b4b96df4fb0782e78e0c48132def346f63436b9cff96286088f52b5889da54",
-              "line": 763
+              "sha256": "10a2a4d34263e0800ad2dde326f187bf978c32b9d3d2a340a73bc664b48464ac",
+              "line": 772
             }
           ]
         },
@@ -7317,7 +7772,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "426509862e4b67d755c6e466356da1418fbaf7246277100779aab768ceba3258",
+              "sha256": "b7e1e37c44877dda02cdcee8409b9f5b5afb212aa9183461c0eabd04cb4d2d6e",
               "line": 66
             }
           ]
@@ -7540,13 +7995,13 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "426509862e4b67d755c6e466356da1418fbaf7246277100779aab768ceba3258",
-              "line": 202
+              "sha256": "b7e1e37c44877dda02cdcee8409b9f5b5afb212aa9183461c0eabd04cb4d2d6e",
+              "line": 203
             },
             {
               "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-              "sha256": "44dfc39f53d8b39f6e54675ea02a9e4682578ed36985d5939948c2006335ae6f",
-              "line": 1526
+              "sha256": "3821b5ff6657b75895b66e56ac366186717c32fd128aa852dbaf99b49318b473",
+              "line": 1543
             }
           ]
         },
@@ -7888,8 +8343,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "426509862e4b67d755c6e466356da1418fbaf7246277100779aab768ceba3258",
-              "line": 282
+              "sha256": "b7e1e37c44877dda02cdcee8409b9f5b5afb212aa9183461c0eabd04cb4d2d6e",
+              "line": 283
             }
           ]
         },
@@ -7902,8 +8357,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "426509862e4b67d755c6e466356da1418fbaf7246277100779aab768ceba3258",
-              "line": 294
+              "sha256": "b7e1e37c44877dda02cdcee8409b9f5b5afb212aa9183461c0eabd04cb4d2d6e",
+              "line": 295
             }
           ]
         },
@@ -7916,8 +8371,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "426509862e4b67d755c6e466356da1418fbaf7246277100779aab768ceba3258",
-              "line": 328
+              "sha256": "b7e1e37c44877dda02cdcee8409b9f5b5afb212aa9183461c0eabd04cb4d2d6e",
+              "line": 329
             }
           ]
         },
@@ -7930,8 +8385,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "426509862e4b67d755c6e466356da1418fbaf7246277100779aab768ceba3258",
-              "line": 286
+              "sha256": "b7e1e37c44877dda02cdcee8409b9f5b5afb212aa9183461c0eabd04cb4d2d6e",
+              "line": 287
             }
           ]
         },
@@ -7944,8 +8399,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "426509862e4b67d755c6e466356da1418fbaf7246277100779aab768ceba3258",
-              "line": 303
+              "sha256": "b7e1e37c44877dda02cdcee8409b9f5b5afb212aa9183461c0eabd04cb4d2d6e",
+              "line": 304
             }
           ]
         },
@@ -7958,8 +8413,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "426509862e4b67d755c6e466356da1418fbaf7246277100779aab768ceba3258",
-              "line": 307
+              "sha256": "b7e1e37c44877dda02cdcee8409b9f5b5afb212aa9183461c0eabd04cb4d2d6e",
+              "line": 308
             }
           ]
         },
@@ -7972,8 +8427,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "426509862e4b67d755c6e466356da1418fbaf7246277100779aab768ceba3258",
-              "line": 310
+              "sha256": "b7e1e37c44877dda02cdcee8409b9f5b5afb212aa9183461c0eabd04cb4d2d6e",
+              "line": 311
             }
           ]
         },
@@ -7986,8 +8441,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "426509862e4b67d755c6e466356da1418fbaf7246277100779aab768ceba3258",
-              "line": 310
+              "sha256": "b7e1e37c44877dda02cdcee8409b9f5b5afb212aa9183461c0eabd04cb4d2d6e",
+              "line": 311
             }
           ]
         },
@@ -8000,8 +8455,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "426509862e4b67d755c6e466356da1418fbaf7246277100779aab768ceba3258",
-              "line": 321
+              "sha256": "b7e1e37c44877dda02cdcee8409b9f5b5afb212aa9183461c0eabd04cb4d2d6e",
+              "line": 322
             }
           ]
         },
@@ -8014,8 +8469,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "426509862e4b67d755c6e466356da1418fbaf7246277100779aab768ceba3258",
-              "line": 335
+              "sha256": "b7e1e37c44877dda02cdcee8409b9f5b5afb212aa9183461c0eabd04cb4d2d6e",
+              "line": 336
             }
           ]
         },
@@ -8028,8 +8483,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "426509862e4b67d755c6e466356da1418fbaf7246277100779aab768ceba3258",
-              "line": 335
+              "sha256": "b7e1e37c44877dda02cdcee8409b9f5b5afb212aa9183461c0eabd04cb4d2d6e",
+              "line": 336
             }
           ]
         },
@@ -8042,8 +8497,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "426509862e4b67d755c6e466356da1418fbaf7246277100779aab768ceba3258",
-              "line": 314
+              "sha256": "b7e1e37c44877dda02cdcee8409b9f5b5afb212aa9183461c0eabd04cb4d2d6e",
+              "line": 315
             }
           ]
         },
@@ -8056,8 +8511,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "426509862e4b67d755c6e466356da1418fbaf7246277100779aab768ceba3258",
-              "line": 293
+              "sha256": "b7e1e37c44877dda02cdcee8409b9f5b5afb212aa9183461c0eabd04cb4d2d6e",
+              "line": 294
             }
           ]
         },
@@ -8070,8 +8525,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "426509862e4b67d755c6e466356da1418fbaf7246277100779aab768ceba3258",
-              "line": 289
+              "sha256": "b7e1e37c44877dda02cdcee8409b9f5b5afb212aa9183461c0eabd04cb4d2d6e",
+              "line": 290
             }
           ]
         },
@@ -8084,8 +8539,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "426509862e4b67d755c6e466356da1418fbaf7246277100779aab768ceba3258",
-              "line": 328
+              "sha256": "b7e1e37c44877dda02cdcee8409b9f5b5afb212aa9183461c0eabd04cb4d2d6e",
+              "line": 329
             }
           ]
         },
@@ -8098,7 +8553,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "426509862e4b67d755c6e466356da1418fbaf7246277100779aab768ceba3258",
+              "sha256": "b7e1e37c44877dda02cdcee8409b9f5b5afb212aa9183461c0eabd04cb4d2d6e",
               "line": 66
             }
           ]
@@ -8151,7 +8606,7 @@
       "boundary": "Frozen Scripting compatibility is documented, not expanded. Metadata declarations are distinct from executable support and device acceptance.",
       "coverage": {
         "status": "COMPLETE_SOURCE_FIELD_ENUMERATION",
-        "fieldCount": 83,
+        "fieldCount": 113,
         "scope": "Current recognized reader/producer fields in listed sources; wildcard maps retain original ownership."
       }
     },
@@ -8172,8 +8627,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
-              "line": 543
+              "sha256": "aa3db842d52ab5dafdf465b5cca577ae5b5b8fee76d171496a85ed0ea627df90",
+              "line": 601
             }
           ]
         },
@@ -8186,8 +8641,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "a8b4b96df4fb0782e78e0c48132def346f63436b9cff96286088f52b5889da54",
-              "line": 392
+              "sha256": "10a2a4d34263e0800ad2dde326f187bf978c32b9d3d2a340a73bc664b48464ac",
+              "line": 393
             }
           ]
         },
@@ -8200,8 +8655,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "a8b4b96df4fb0782e78e0c48132def346f63436b9cff96286088f52b5889da54",
-              "line": 684
+              "sha256": "10a2a4d34263e0800ad2dde326f187bf978c32b9d3d2a340a73bc664b48464ac",
+              "line": 693
             }
           ]
         },
@@ -8214,8 +8669,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "a8b4b96df4fb0782e78e0c48132def346f63436b9cff96286088f52b5889da54",
-              "line": 392
+              "sha256": "10a2a4d34263e0800ad2dde326f187bf978c32b9d3d2a340a73bc664b48464ac",
+              "line": 393
             }
           ]
         },
@@ -8228,8 +8683,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "a8b4b96df4fb0782e78e0c48132def346f63436b9cff96286088f52b5889da54",
-              "line": 394
+              "sha256": "10a2a4d34263e0800ad2dde326f187bf978c32b9d3d2a340a73bc664b48464ac",
+              "line": 395
             }
           ]
         },
@@ -8242,8 +8697,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "a8b4b96df4fb0782e78e0c48132def346f63436b9cff96286088f52b5889da54",
-              "line": 684
+              "sha256": "10a2a4d34263e0800ad2dde326f187bf978c32b9d3d2a340a73bc664b48464ac",
+              "line": 693
             }
           ]
         },
@@ -8256,8 +8711,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "a8b4b96df4fb0782e78e0c48132def346f63436b9cff96286088f52b5889da54",
-              "line": 392
+              "sha256": "10a2a4d34263e0800ad2dde326f187bf978c32b9d3d2a340a73bc664b48464ac",
+              "line": 393
             }
           ]
         },
@@ -8270,8 +8725,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "a8b4b96df4fb0782e78e0c48132def346f63436b9cff96286088f52b5889da54",
-              "line": 339
+              "sha256": "10a2a4d34263e0800ad2dde326f187bf978c32b9d3d2a340a73bc664b48464ac",
+              "line": 340
             }
           ]
         },
@@ -8284,8 +8739,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "a8b4b96df4fb0782e78e0c48132def346f63436b9cff96286088f52b5889da54",
-              "line": 342
+              "sha256": "10a2a4d34263e0800ad2dde326f187bf978c32b9d3d2a340a73bc664b48464ac",
+              "line": 343
             }
           ]
         },
@@ -8298,8 +8753,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "a8b4b96df4fb0782e78e0c48132def346f63436b9cff96286088f52b5889da54",
-              "line": 370
+              "sha256": "10a2a4d34263e0800ad2dde326f187bf978c32b9d3d2a340a73bc664b48464ac",
+              "line": 371
             }
           ]
         },
@@ -8312,8 +8767,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "a8b4b96df4fb0782e78e0c48132def346f63436b9cff96286088f52b5889da54",
-              "line": 341
+              "sha256": "10a2a4d34263e0800ad2dde326f187bf978c32b9d3d2a340a73bc664b48464ac",
+              "line": 342
             },
             {
               "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptSession.swift",
@@ -8336,8 +8791,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "a8b4b96df4fb0782e78e0c48132def346f63436b9cff96286088f52b5889da54",
-              "line": 328
+              "sha256": "10a2a4d34263e0800ad2dde326f187bf978c32b9d3d2a340a73bc664b48464ac",
+              "line": 329
             }
           ]
         },
@@ -8350,8 +8805,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "a8b4b96df4fb0782e78e0c48132def346f63436b9cff96286088f52b5889da54",
-              "line": 327
+              "sha256": "10a2a4d34263e0800ad2dde326f187bf978c32b9d3d2a340a73bc664b48464ac",
+              "line": 328
             }
           ]
         },
@@ -8364,8 +8819,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
-              "line": 545
+              "sha256": "aa3db842d52ab5dafdf465b5cca577ae5b5b8fee76d171496a85ed0ea627df90",
+              "line": 603
             }
           ]
         }
@@ -8406,8 +8861,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
-              "line": 618
+              "sha256": "aa3db842d52ab5dafdf465b5cca577ae5b5b8fee76d171496a85ed0ea627df90",
+              "line": 710
             }
           ]
         },
@@ -8420,8 +8875,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "a8b4b96df4fb0782e78e0c48132def346f63436b9cff96286088f52b5889da54",
-              "line": 643
+              "sha256": "10a2a4d34263e0800ad2dde326f187bf978c32b9d3d2a340a73bc664b48464ac",
+              "line": 652
             }
           ]
         },
@@ -8434,8 +8889,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "a8b4b96df4fb0782e78e0c48132def346f63436b9cff96286088f52b5889da54",
-              "line": 684
+              "sha256": "10a2a4d34263e0800ad2dde326f187bf978c32b9d3d2a340a73bc664b48464ac",
+              "line": 693
             }
           ]
         },
@@ -8448,8 +8903,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "a8b4b96df4fb0782e78e0c48132def346f63436b9cff96286088f52b5889da54",
-              "line": 552
+              "sha256": "10a2a4d34263e0800ad2dde326f187bf978c32b9d3d2a340a73bc664b48464ac",
+              "line": 561
             }
           ]
         },
@@ -8462,8 +8917,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "a8b4b96df4fb0782e78e0c48132def346f63436b9cff96286088f52b5889da54",
-              "line": 645
+              "sha256": "10a2a4d34263e0800ad2dde326f187bf978c32b9d3d2a340a73bc664b48464ac",
+              "line": 654
             }
           ]
         },
@@ -8476,8 +8931,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "a8b4b96df4fb0782e78e0c48132def346f63436b9cff96286088f52b5889da54",
-              "line": 684
+              "sha256": "10a2a4d34263e0800ad2dde326f187bf978c32b9d3d2a340a73bc664b48464ac",
+              "line": 693
             }
           ]
         },
@@ -8490,8 +8945,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "a8b4b96df4fb0782e78e0c48132def346f63436b9cff96286088f52b5889da54",
-              "line": 552
+              "sha256": "10a2a4d34263e0800ad2dde326f187bf978c32b9d3d2a340a73bc664b48464ac",
+              "line": 561
             }
           ]
         },
@@ -8504,8 +8959,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "a8b4b96df4fb0782e78e0c48132def346f63436b9cff96286088f52b5889da54",
-              "line": 524
+              "sha256": "10a2a4d34263e0800ad2dde326f187bf978c32b9d3d2a340a73bc664b48464ac",
+              "line": 533
             }
           ]
         },
@@ -8518,8 +8973,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "a8b4b96df4fb0782e78e0c48132def346f63436b9cff96286088f52b5889da54",
-              "line": 556
+              "sha256": "10a2a4d34263e0800ad2dde326f187bf978c32b9d3d2a340a73bc664b48464ac",
+              "line": 565
             },
             {
               "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoSession.swift",
@@ -8537,8 +8992,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
-              "line": 615
+              "sha256": "aa3db842d52ab5dafdf465b5cca577ae5b5b8fee76d171496a85ed0ea627df90",
+              "line": 707
             }
           ]
         },
@@ -8551,8 +9006,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
-              "line": 615
+              "sha256": "aa3db842d52ab5dafdf465b5cca577ae5b5b8fee76d171496a85ed0ea627df90",
+              "line": 707
             }
           ]
         },
@@ -8565,8 +9020,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
-              "line": 615
+              "sha256": "aa3db842d52ab5dafdf465b5cca577ae5b5b8fee76d171496a85ed0ea627df90",
+              "line": 707
             }
           ]
         },
@@ -8579,8 +9034,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "a8b4b96df4fb0782e78e0c48132def346f63436b9cff96286088f52b5889da54",
-              "line": 531
+              "sha256": "10a2a4d34263e0800ad2dde326f187bf978c32b9d3d2a340a73bc664b48464ac",
+              "line": 540
             }
           ]
         },
@@ -8593,8 +9048,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "a8b4b96df4fb0782e78e0c48132def346f63436b9cff96286088f52b5889da54",
-              "line": 552
+              "sha256": "10a2a4d34263e0800ad2dde326f187bf978c32b9d3d2a340a73bc664b48464ac",
+              "line": 561
             }
           ]
         },
@@ -8607,8 +9062,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "a8b4b96df4fb0782e78e0c48132def346f63436b9cff96286088f52b5889da54",
-              "line": 621
+              "sha256": "10a2a4d34263e0800ad2dde326f187bf978c32b9d3d2a340a73bc664b48464ac",
+              "line": 630
             }
           ]
         },
@@ -8621,8 +9076,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "a8b4b96df4fb0782e78e0c48132def346f63436b9cff96286088f52b5889da54",
-              "line": 582
+              "sha256": "10a2a4d34263e0800ad2dde326f187bf978c32b9d3d2a340a73bc664b48464ac",
+              "line": 591
             }
           ]
         },
@@ -8635,8 +9090,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "a8b4b96df4fb0782e78e0c48132def346f63436b9cff96286088f52b5889da54",
-              "line": 620
+              "sha256": "10a2a4d34263e0800ad2dde326f187bf978c32b9d3d2a340a73bc664b48464ac",
+              "line": 629
             }
           ]
         },
@@ -8649,8 +9104,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "a8b4b96df4fb0782e78e0c48132def346f63436b9cff96286088f52b5889da54",
-              "line": 600
+              "sha256": "10a2a4d34263e0800ad2dde326f187bf978c32b9d3d2a340a73bc664b48464ac",
+              "line": 609
             }
           ]
         },
@@ -8663,8 +9118,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "a8b4b96df4fb0782e78e0c48132def346f63436b9cff96286088f52b5889da54",
-              "line": 530
+              "sha256": "10a2a4d34263e0800ad2dde326f187bf978c32b9d3d2a340a73bc664b48464ac",
+              "line": 539
             },
             {
               "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoSession.swift",
@@ -8687,8 +9142,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "a8b4b96df4fb0782e78e0c48132def346f63436b9cff96286088f52b5889da54",
-              "line": 501
+              "sha256": "10a2a4d34263e0800ad2dde326f187bf978c32b9d3d2a340a73bc664b48464ac",
+              "line": 510
             }
           ]
         },
@@ -8701,8 +9156,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "a8b4b96df4fb0782e78e0c48132def346f63436b9cff96286088f52b5889da54",
-              "line": 511
+              "sha256": "10a2a4d34263e0800ad2dde326f187bf978c32b9d3d2a340a73bc664b48464ac",
+              "line": 520
             }
           ]
         },
@@ -8751,6 +9206,20 @@
       "source": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
       "fields": [
         {
+          "field": "assistantTools",
+          "type": "record<string, string>",
+          "required": "required for declared assistantTool",
+          "status": "supported",
+          "semantics": "Maps assistantTool entrypoint IDs to dedicated source files; existing original compiler builds separate prepared programs.",
+          "sources": [
+            {
+              "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-assistant-tools.mjs",
+              "sha256": "0d44fa988530fc96ec6d01574293a650cec54e0c726d1443a57192536d8fd9fd",
+              "line": 142
+            }
+          ]
+        },
+        {
           "field": "compiledHashes",
           "type": "record<string, SHA-256 string>",
           "required": "required for packaged sourceRoot",
@@ -8759,8 +9228,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
-              "line": 148
+              "sha256": "aa3db842d52ab5dafdf465b5cca577ae5b5b8fee76d171496a85ed0ea627df90",
+              "line": 165
             }
           ]
         },
@@ -8773,8 +9242,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
-              "line": 148
+              "sha256": "aa3db842d52ab5dafdf465b5cca577ae5b5b8fee76d171496a85ed0ea627df90",
+              "line": 165
             }
           ]
         },
@@ -8787,8 +9256,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
-              "line": 118
+              "sha256": "aa3db842d52ab5dafdf465b5cca577ae5b5b8fee76d171496a85ed0ea627df90",
+              "line": 122
             }
           ]
         },
@@ -8801,8 +9270,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
-              "line": 122
+              "sha256": "aa3db842d52ab5dafdf465b5cca577ae5b5b8fee76d171496a85ed0ea627df90",
+              "line": 126
             }
           ]
         },
@@ -8815,8 +9284,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
-              "line": 381
+              "sha256": "aa3db842d52ab5dafdf465b5cca577ae5b5b8fee76d171496a85ed0ea627df90",
+              "line": 430
             }
           ]
         },
@@ -8829,8 +9298,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
-              "line": 107
+              "sha256": "aa3db842d52ab5dafdf465b5cca577ae5b5b8fee76d171496a85ed0ea627df90",
+              "line": 111
             }
           ]
         },
@@ -8843,13 +9312,13 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
-              "line": 715
+              "sha256": "aa3db842d52ab5dafdf465b5cca577ae5b5b8fee76d171496a85ed0ea627df90",
+              "line": 827
             },
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
-              "line": 687
+              "sha256": "aa3db842d52ab5dafdf465b5cca577ae5b5b8fee76d171496a85ed0ea627df90",
+              "line": 784
             }
           ]
         },
@@ -8862,13 +9331,13 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
-              "line": 715
+              "sha256": "aa3db842d52ab5dafdf465b5cca577ae5b5b8fee76d171496a85ed0ea627df90",
+              "line": 827
             },
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
-              "line": 687
+              "sha256": "aa3db842d52ab5dafdf465b5cca577ae5b5b8fee76d171496a85ed0ea627df90",
+              "line": 784
             }
           ]
         },
@@ -8881,13 +9350,13 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
-              "line": 715
+              "sha256": "aa3db842d52ab5dafdf465b5cca577ae5b5b8fee76d171496a85ed0ea627df90",
+              "line": 827
             },
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
-              "line": 687
+              "sha256": "aa3db842d52ab5dafdf465b5cca577ae5b5b8fee76d171496a85ed0ea627df90",
+              "line": 784
             }
           ]
         },
@@ -8900,13 +9369,13 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
-              "line": 715
+              "sha256": "aa3db842d52ab5dafdf465b5cca577ae5b5b8fee76d171496a85ed0ea627df90",
+              "line": 827
             },
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
-              "line": 687
+              "sha256": "aa3db842d52ab5dafdf465b5cca577ae5b5b8fee76d171496a85ed0ea627df90",
+              "line": 784
             }
           ]
         },
@@ -8919,8 +9388,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
-              "line": 147
+              "sha256": "aa3db842d52ab5dafdf465b5cca577ae5b5b8fee76d171496a85ed0ea627df90",
+              "line": 164
             }
           ]
         },
@@ -8933,8 +9402,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
-              "line": 147
+              "sha256": "aa3db842d52ab5dafdf465b5cca577ae5b5b8fee76d171496a85ed0ea627df90",
+              "line": 164
             }
           ]
         },
@@ -8947,8 +9416,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
-              "line": 108
+              "sha256": "aa3db842d52ab5dafdf465b5cca577ae5b5b8fee76d171496a85ed0ea627df90",
+              "line": 112
             }
           ]
         },
@@ -8961,8 +9430,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
-              "line": 177
+              "sha256": "aa3db842d52ab5dafdf465b5cca577ae5b5b8fee76d171496a85ed0ea627df90",
+              "line": 196
             }
           ]
         }
@@ -8970,7 +9439,7 @@
       "boundary": "Source TypeScript validation requires the descriptor; a supplied build report does not replace current compiler validation.",
       "coverage": {
         "status": "COMPLETE_SOURCE_FIELD_ENUMERATION",
-        "fieldCount": 14,
+        "fieldCount": 15,
         "scope": "Current recognized reader/producer fields in listed sources; wildcard maps retain original ownership."
       }
     },
@@ -8991,8 +9460,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
-              "line": 488
+              "sha256": "aa3db842d52ab5dafdf465b5cca577ae5b5b8fee76d171496a85ed0ea627df90",
+              "line": 539
             }
           ]
         },
@@ -9005,8 +9474,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
-              "line": 488
+              "sha256": "aa3db842d52ab5dafdf465b5cca577ae5b5b8fee76d171496a85ed0ea627df90",
+              "line": 539
             }
           ]
         },
@@ -9019,8 +9488,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
-              "line": 481
+              "sha256": "aa3db842d52ab5dafdf465b5cca577ae5b5b8fee76d171496a85ed0ea627df90",
+              "line": 532
             }
           ]
         },
@@ -9033,8 +9502,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
-              "line": 481
+              "sha256": "aa3db842d52ab5dafdf465b5cca577ae5b5b8fee76d171496a85ed0ea627df90",
+              "line": 532
             }
           ]
         },
@@ -9047,8 +9516,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
-              "line": 481
+              "sha256": "aa3db842d52ab5dafdf465b5cca577ae5b5b8fee76d171496a85ed0ea627df90",
+              "line": 532
             }
           ]
         },
@@ -9061,8 +9530,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
-              "line": 489
+              "sha256": "aa3db842d52ab5dafdf465b5cca577ae5b5b8fee76d171496a85ed0ea627df90",
+              "line": 540
             }
           ]
         },
@@ -9075,8 +9544,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
-              "line": 489
+              "sha256": "aa3db842d52ab5dafdf465b5cca577ae5b5b8fee76d171496a85ed0ea627df90",
+              "line": 540
             }
           ]
         },
@@ -9089,8 +9558,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
-              "line": 488
+              "sha256": "aa3db842d52ab5dafdf465b5cca577ae5b5b8fee76d171496a85ed0ea627df90",
+              "line": 539
             }
           ]
         },
@@ -9103,8 +9572,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
-              "line": 488
+              "sha256": "aa3db842d52ab5dafdf465b5cca577ae5b5b8fee76d171496a85ed0ea627df90",
+              "line": 539
             }
           ]
         },
@@ -9117,8 +9586,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
-              "line": 490
+              "sha256": "aa3db842d52ab5dafdf465b5cca577ae5b5b8fee76d171496a85ed0ea627df90",
+              "line": 541
             }
           ]
         },
@@ -9131,8 +9600,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
-              "line": 491
+              "sha256": "aa3db842d52ab5dafdf465b5cca577ae5b5b8fee76d171496a85ed0ea627df90",
+              "line": 542
             }
           ]
         },
@@ -9145,8 +9614,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
-              "line": 480
+              "sha256": "aa3db842d52ab5dafdf465b5cca577ae5b5b8fee76d171496a85ed0ea627df90",
+              "line": 531
             }
           ]
         }
@@ -10511,7 +10980,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/action/properties/capabilities"
             }
           ],
@@ -10531,7 +11000,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/action/properties/id"
             }
           ],
@@ -10548,7 +11017,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/action/properties/inputSchema"
             }
           ],
@@ -10565,7 +11034,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/action/properties/outputSchema"
             }
           ],
@@ -10582,7 +11051,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/action/properties/risk"
             }
           ],
@@ -10599,7 +11068,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/action/properties/title"
             }
           ],
@@ -10616,7 +11085,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/appearance/properties/accentHex"
             }
           ],
@@ -10634,7 +11103,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/appearance/properties/preferredColorScheme"
             }
           ],
@@ -10648,6 +11117,300 @@
           }
         },
         {
+          "field": "#/$defs/assistantToolAction/properties/embeddedResultID",
+          "type": "string",
+          "required": false,
+          "status": "supported",
+          "semantics": "Declared by the existing canonical schema; exact enum, alternatives, nullability and constraints retained in schema.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
+              "jsonPointer": "#/$defs/assistantToolAction/properties/embeddedResultID"
+            }
+          ],
+          "schema": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        {
+          "field": "#/$defs/assistantToolAction/properties/exportedSymbol",
+          "type": "string",
+          "required": false,
+          "status": "supported",
+          "semantics": "Declared by the existing canonical schema; exact enum, alternatives, nullability and constraints retained in schema.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
+              "jsonPointer": "#/$defs/assistantToolAction/properties/exportedSymbol"
+            }
+          ],
+          "schema": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        {
+          "field": "#/$defs/assistantToolAction/properties/id",
+          "type": "string",
+          "required": true,
+          "status": "supported",
+          "semantics": "Declared by the existing canonical schema; exact enum, alternatives, nullability and constraints retained in schema.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
+              "jsonPointer": "#/$defs/assistantToolAction/properties/id"
+            }
+          ],
+          "schema": {
+            "type": "string",
+            "maxLength": 255,
+            "pattern": "^[a-z0-9]+(?:[-._][a-z0-9]+)*$"
+          }
+        },
+        {
+          "field": "#/$defs/assistantToolAction/properties/inputSchema",
+          "type": "object",
+          "required": true,
+          "status": "supported",
+          "semantics": "Declared by the existing canonical schema; exact enum, alternatives, nullability and constraints retained in schema.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
+              "jsonPointer": "#/$defs/assistantToolAction/properties/inputSchema"
+            }
+          ],
+          "schema": {
+            "type": "object",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "const": "object"
+              }
+            }
+          }
+        },
+        {
+          "field": "#/$defs/assistantToolAction/properties/inputSchema/properties/type",
+          "type": "schema",
+          "required": true,
+          "status": "supported",
+          "semantics": "Declared by the existing canonical schema; exact enum, alternatives, nullability and constraints retained in schema.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
+              "jsonPointer": "#/$defs/assistantToolAction/properties/inputSchema/properties/type"
+            }
+          ],
+          "schema": {
+            "const": "object"
+          }
+        },
+        {
+          "field": "#/$defs/assistantToolAction/properties/outputSchema",
+          "type": "object",
+          "required": false,
+          "status": "supported",
+          "semantics": "Declared by the existing canonical schema; exact enum, alternatives, nullability and constraints retained in schema.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
+              "jsonPointer": "#/$defs/assistantToolAction/properties/outputSchema"
+            }
+          ],
+          "schema": {
+            "type": "object"
+          }
+        },
+        {
+          "field": "#/$defs/assistantToolAction/properties/summary",
+          "type": "string",
+          "required": true,
+          "status": "supported",
+          "semantics": "Declared by the existing canonical schema; exact enum, alternatives, nullability and constraints retained in schema.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
+              "jsonPointer": "#/$defs/assistantToolAction/properties/summary"
+            }
+          ],
+          "schema": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        {
+          "field": "#/$defs/assistantToolAction/properties/title",
+          "type": "string",
+          "required": true,
+          "status": "supported",
+          "semantics": "Declared by the existing canonical schema; exact enum, alternatives, nullability and constraints retained in schema.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
+              "jsonPointer": "#/$defs/assistantToolAction/properties/title"
+            }
+          ],
+          "schema": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        {
+          "field": "#/$defs/assistantToolDeclaration/properties/actions",
+          "type": "array",
+          "required": true,
+          "status": "supported",
+          "semantics": "Declared by the existing canonical schema; exact enum, alternatives, nullability and constraints retained in schema.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
+              "jsonPointer": "#/$defs/assistantToolDeclaration/properties/actions"
+            }
+          ],
+          "schema": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "$ref": "#/$defs/assistantToolAction"
+            }
+          }
+        },
+        {
+          "field": "#/$defs/assistantToolDeclaration/properties/configuration",
+          "type": "#/$defs/composerConfiguration",
+          "required": false,
+          "status": "supported",
+          "semantics": "Declared by the existing canonical schema; exact enum, alternatives, nullability and constraints retained in schema.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
+              "jsonPointer": "#/$defs/assistantToolDeclaration/properties/configuration"
+            }
+          ],
+          "schema": {
+            "$ref": "#/$defs/composerConfiguration"
+          }
+        },
+        {
+          "field": "#/$defs/assistantToolDeclaration/properties/summary",
+          "type": "string",
+          "required": true,
+          "status": "supported",
+          "semantics": "Declared by the existing canonical schema; exact enum, alternatives, nullability and constraints retained in schema.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
+              "jsonPointer": "#/$defs/assistantToolDeclaration/properties/summary"
+            }
+          ],
+          "schema": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        {
+          "field": "#/$defs/assistantToolDeclaration/properties/title",
+          "type": "string",
+          "required": true,
+          "status": "supported",
+          "semantics": "Declared by the existing canonical schema; exact enum, alternatives, nullability and constraints retained in schema.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
+              "jsonPointer": "#/$defs/assistantToolDeclaration/properties/title"
+            }
+          ],
+          "schema": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        {
+          "field": "#/$defs/assistantToolEntrypoint/properties/assistantTool",
+          "type": "#/$defs/assistantToolDeclaration",
+          "required": true,
+          "status": "supported",
+          "semantics": "Declared by the existing canonical schema; exact enum, alternatives, nullability and constraints retained in schema.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
+              "jsonPointer": "#/$defs/assistantToolEntrypoint/properties/assistantTool"
+            }
+          ],
+          "schema": {
+            "$ref": "#/$defs/assistantToolDeclaration"
+          }
+        },
+        {
+          "field": "#/$defs/assistantToolEntrypoint/properties/id",
+          "type": "string",
+          "required": true,
+          "status": "supported",
+          "semantics": "Declared by the existing canonical schema; exact enum, alternatives, nullability and constraints retained in schema.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
+              "jsonPointer": "#/$defs/assistantToolEntrypoint/properties/id"
+            }
+          ],
+          "schema": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        {
+          "field": "#/$defs/assistantToolEntrypoint/properties/kind",
+          "type": "schema",
+          "required": true,
+          "status": "supported",
+          "semantics": "Declared by the existing canonical schema; exact enum, alternatives, nullability and constraints retained in schema.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
+              "jsonPointer": "#/$defs/assistantToolEntrypoint/properties/kind"
+            }
+          ],
+          "schema": {
+            "const": "assistantTool"
+          }
+        },
+        {
+          "field": "#/$defs/assistantToolEntrypoint/properties/sourcePath",
+          "type": "string",
+          "required": true,
+          "status": "supported",
+          "semantics": "Declared by the existing canonical schema; exact enum, alternatives, nullability and constraints retained in schema.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
+              "jsonPointer": "#/$defs/assistantToolEntrypoint/properties/sourcePath"
+            }
+          ],
+          "schema": {
+            "type": "string",
+            "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.?/)[^\\\\:]+/bundle\\.(?:js|mjs)$"
+          }
+        },
+        {
           "field": "#/$defs/author/properties/identifier",
           "type": "#/$defs/identifier",
           "required": false,
@@ -10656,7 +11419,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/author/properties/identifier"
             }
           ],
@@ -10673,7 +11436,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/author/properties/name"
             }
           ],
@@ -10691,7 +11454,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/author/properties/website"
             }
           ],
@@ -10709,7 +11472,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/capability/properties/constraints"
             }
           ],
@@ -10726,7 +11489,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/capability/properties/id"
             }
           ],
@@ -10743,7 +11506,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/capability/properties/optional"
             }
           ],
@@ -10760,12 +11523,363 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/capability/properties/reason"
             }
           ],
           "schema": {
             "$ref": "#/$defs/localizedValue"
+          }
+        },
+        {
+          "field": "#/$defs/composerConfiguration/properties/panels",
+          "type": "array",
+          "required": true,
+          "status": "supported",
+          "semantics": "Declared by the existing canonical schema; exact enum, alternatives, nullability and constraints retained in schema.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
+              "jsonPointer": "#/$defs/composerConfiguration/properties/panels"
+            }
+          ],
+          "schema": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "$ref": "#/$defs/composerPanel"
+            }
+          }
+        },
+        {
+          "field": "#/$defs/composerConfiguration/properties/schemaVersion",
+          "type": "schema",
+          "required": false,
+          "status": "supported",
+          "semantics": "Declared by the existing canonical schema; exact enum, alternatives, nullability and constraints retained in schema.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
+              "jsonPointer": "#/$defs/composerConfiguration/properties/schemaVersion"
+            }
+          ],
+          "schema": {
+            "const": 1,
+            "default": 1
+          }
+        },
+        {
+          "field": "#/$defs/composerField/properties/defaultValue",
+          "type": "schema",
+          "required": false,
+          "status": "supported",
+          "semantics": "Declared by the existing canonical schema; exact enum, alternatives, nullability and constraints retained in schema.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
+              "jsonPointer": "#/$defs/composerField/properties/defaultValue"
+            }
+          ],
+          "schema": {}
+        },
+        {
+          "field": "#/$defs/composerField/properties/key",
+          "type": "string",
+          "required": true,
+          "status": "supported",
+          "semantics": "Declared by the existing canonical schema; exact enum, alternatives, nullability and constraints retained in schema.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
+              "jsonPointer": "#/$defs/composerField/properties/key"
+            }
+          ],
+          "schema": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        {
+          "field": "#/$defs/composerField/properties/kind",
+          "type": "schema",
+          "required": true,
+          "status": "supported",
+          "semantics": "Declared by the existing canonical schema; exact enum, alternatives, nullability and constraints retained in schema.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
+              "jsonPointer": "#/$defs/composerField/properties/kind"
+            }
+          ],
+          "schema": {
+            "enum": [
+              "text",
+              "toggle",
+              "number",
+              "choice",
+              "multiChoice",
+              "catalog",
+              "location"
+            ]
+          }
+        },
+        {
+          "field": "#/$defs/composerField/properties/maximum",
+          "type": "number",
+          "required": false,
+          "status": "supported",
+          "semantics": "Declared by the existing canonical schema; exact enum, alternatives, nullability and constraints retained in schema.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
+              "jsonPointer": "#/$defs/composerField/properties/maximum"
+            }
+          ],
+          "schema": {
+            "type": "number"
+          }
+        },
+        {
+          "field": "#/$defs/composerField/properties/minimum",
+          "type": "number",
+          "required": false,
+          "status": "supported",
+          "semantics": "Declared by the existing canonical schema; exact enum, alternatives, nullability and constraints retained in schema.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
+              "jsonPointer": "#/$defs/composerField/properties/minimum"
+            }
+          ],
+          "schema": {
+            "type": "number"
+          }
+        },
+        {
+          "field": "#/$defs/composerField/properties/options",
+          "type": "array",
+          "required": false,
+          "status": "supported",
+          "semantics": "Declared by the existing canonical schema; exact enum, alternatives, nullability and constraints retained in schema.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
+              "jsonPointer": "#/$defs/composerField/properties/options"
+            }
+          ],
+          "schema": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/composerOption"
+            }
+          }
+        },
+        {
+          "field": "#/$defs/composerField/properties/placeholder",
+          "type": "string",
+          "required": false,
+          "status": "supported",
+          "semantics": "Declared by the existing canonical schema; exact enum, alternatives, nullability and constraints retained in schema.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
+              "jsonPointer": "#/$defs/composerField/properties/placeholder"
+            }
+          ],
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "field": "#/$defs/composerField/properties/required",
+          "type": "boolean",
+          "required": false,
+          "status": "supported",
+          "semantics": "Declared by the existing canonical schema; exact enum, alternatives, nullability and constraints retained in schema.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
+              "jsonPointer": "#/$defs/composerField/properties/required"
+            }
+          ],
+          "schema": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        {
+          "field": "#/$defs/composerField/properties/title",
+          "type": "string",
+          "required": true,
+          "status": "supported",
+          "semantics": "Declared by the existing canonical schema; exact enum, alternatives, nullability and constraints retained in schema.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
+              "jsonPointer": "#/$defs/composerField/properties/title"
+            }
+          ],
+          "schema": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        {
+          "field": "#/$defs/composerOption/properties/children",
+          "type": "array",
+          "required": false,
+          "status": "supported",
+          "semantics": "Declared by the existing canonical schema; exact enum, alternatives, nullability and constraints retained in schema.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
+              "jsonPointer": "#/$defs/composerOption/properties/children"
+            }
+          ],
+          "schema": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/composerOption"
+            }
+          }
+        },
+        {
+          "field": "#/$defs/composerOption/properties/id",
+          "type": "string",
+          "required": true,
+          "status": "supported",
+          "semantics": "Declared by the existing canonical schema; exact enum, alternatives, nullability and constraints retained in schema.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
+              "jsonPointer": "#/$defs/composerOption/properties/id"
+            }
+          ],
+          "schema": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        {
+          "field": "#/$defs/composerOption/properties/title",
+          "type": "string",
+          "required": true,
+          "status": "supported",
+          "semantics": "Declared by the existing canonical schema; exact enum, alternatives, nullability and constraints retained in schema.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
+              "jsonPointer": "#/$defs/composerOption/properties/title"
+            }
+          ],
+          "schema": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        {
+          "field": "#/$defs/composerPanel/anyOf/0/properties/fields",
+          "type": "schema",
+          "required": true,
+          "status": "supported",
+          "semantics": "Declared by the existing canonical schema; exact enum, alternatives, nullability and constraints retained in schema.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
+              "jsonPointer": "#/$defs/composerPanel/anyOf/0/properties/fields"
+            }
+          ],
+          "schema": {
+            "minItems": 1
+          }
+        },
+        {
+          "field": "#/$defs/composerPanel/properties/customViewID",
+          "type": "string",
+          "required": false,
+          "status": "supported",
+          "semantics": "Declared by the existing canonical schema; exact enum, alternatives, nullability and constraints retained in schema.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
+              "jsonPointer": "#/$defs/composerPanel/properties/customViewID"
+            }
+          ],
+          "schema": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        {
+          "field": "#/$defs/composerPanel/properties/fields",
+          "type": "array",
+          "required": false,
+          "status": "supported",
+          "semantics": "Declared by the existing canonical schema; exact enum, alternatives, nullability and constraints retained in schema.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
+              "jsonPointer": "#/$defs/composerPanel/properties/fields"
+            }
+          ],
+          "schema": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/composerField"
+            }
+          }
+        },
+        {
+          "field": "#/$defs/composerPanel/properties/id",
+          "type": "string",
+          "required": true,
+          "status": "supported",
+          "semantics": "Declared by the existing canonical schema; exact enum, alternatives, nullability and constraints retained in schema.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
+              "jsonPointer": "#/$defs/composerPanel/properties/id"
+            }
+          ],
+          "schema": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        {
+          "field": "#/$defs/composerPanel/properties/title",
+          "type": "string",
+          "required": true,
+          "status": "supported",
+          "semantics": "Declared by the existing canonical schema; exact enum, alternatives, nullability and constraints retained in schema.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
+              "jsonPointer": "#/$defs/composerPanel/properties/title"
+            }
+          ],
+          "schema": {
+            "type": "string",
+            "minLength": 1
           }
         },
         {
@@ -10777,7 +11891,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/dependency/properties/optional"
             }
           ],
@@ -10794,7 +11908,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/dependency/properties/packageID"
             }
           ],
@@ -10811,7 +11925,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/dependency/properties/versions"
             }
           ],
@@ -10828,7 +11942,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/distribution/properties/allowedModes"
             }
           ],
@@ -10856,7 +11970,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/distribution/properties/remoteUpdates"
             }
           ],
@@ -10873,7 +11987,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/distribution/properties/sourceEditable"
             }
           ],
@@ -10890,7 +12004,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/distribution/properties/sourceVisible"
             }
           ],
@@ -10907,7 +12021,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/entryPoint/properties/allowedContexts"
             }
           ],
@@ -10932,6 +12046,23 @@
           }
         },
         {
+          "field": "#/$defs/entryPoint/properties/assistantTool",
+          "type": "#/$defs/assistantToolDeclaration",
+          "required": false,
+          "status": "supported",
+          "semantics": "Declared by the existing canonical schema; exact enum, alternatives, nullability and constraints retained in schema.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
+              "jsonPointer": "#/$defs/entryPoint/properties/assistantTool"
+            }
+          ],
+          "schema": {
+            "$ref": "#/$defs/assistantToolDeclaration"
+          }
+        },
+        {
           "field": "#/$defs/entryPoint/properties/handler",
           "type": "string",
           "required": true,
@@ -10940,7 +12071,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/entryPoint/properties/handler"
             }
           ],
@@ -10958,7 +12089,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/entryPoint/properties/kind"
             }
           ],
@@ -10975,7 +12106,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/entryPoint/properties/runtimeProfile"
             }
           ],
@@ -10999,7 +12130,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/extension/properties/entryPoint"
             }
           ],
@@ -11017,7 +12148,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/extension/properties/kind"
             }
           ],
@@ -11034,7 +12165,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/extension/properties/requiredCapabilities"
             }
           ],
@@ -11054,7 +12185,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/icon/properties/type"
             }
           ],
@@ -11076,7 +12207,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/icon/properties/value"
             }
           ],
@@ -11094,7 +12225,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/implementation/oneOf/0/properties/moduleID"
             }
           ],
@@ -11111,7 +12242,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/implementation/oneOf/0/properties/type"
             }
           ],
@@ -11128,7 +12259,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/implementation/oneOf/1/properties/packageID"
             }
           ],
@@ -11145,7 +12276,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/implementation/oneOf/1/properties/type"
             }
           ],
@@ -11162,7 +12293,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/implementation/oneOf/2/properties/packageID"
             }
           ],
@@ -11179,7 +12310,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/implementation/oneOf/2/properties/type"
             }
           ],
@@ -11196,7 +12327,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/implementation/oneOf/3/properties/moduleID"
             }
           ],
@@ -11213,7 +12344,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/implementation/oneOf/3/properties/packageID"
             }
           ],
@@ -11230,7 +12361,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/implementation/oneOf/3/properties/type"
             }
           ],
@@ -11247,7 +12378,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/integrity/properties/algorithm"
             }
           ],
@@ -11264,7 +12395,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/integrity/properties/digest"
             }
           ],
@@ -11282,7 +12413,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/integrity/properties/signer"
             }
           ],
@@ -11299,7 +12430,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/localizedValue/properties/fallbackLocale"
             }
           ],
@@ -11317,7 +12448,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/localizedValue/properties/values"
             }
           ],
@@ -11339,7 +12470,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/route/properties/id"
             }
           ],
@@ -11356,7 +12487,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/route/properties/parameterSchema"
             }
           ],
@@ -11373,7 +12504,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/route/properties/requiredCapabilities"
             }
           ],
@@ -11393,7 +12524,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/route/properties/title"
             }
           ],
@@ -11410,7 +12541,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/schema/properties/additionalProperties"
             }
           ],
@@ -11427,7 +12558,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/schema/properties/items"
             }
           ],
@@ -11444,7 +12575,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/schema/properties/maxBytes"
             }
           ],
@@ -11462,7 +12593,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/schema/properties/maxItems"
             }
           ],
@@ -11480,7 +12611,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/schema/properties/maxLength"
             }
           ],
@@ -11498,7 +12629,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/schema/properties/maximum"
             }
           ],
@@ -11515,7 +12646,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/schema/properties/minItems"
             }
           ],
@@ -11533,7 +12664,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/schema/properties/minLength"
             }
           ],
@@ -11551,7 +12682,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/schema/properties/minimum"
             }
           ],
@@ -11568,7 +12699,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/schema/properties/pattern"
             }
           ],
@@ -11585,7 +12716,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/schema/properties/properties"
             }
           ],
@@ -11605,7 +12736,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/schema/properties/required"
             }
           ],
@@ -11626,7 +12757,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/schema/properties/schemas"
             }
           ],
@@ -11647,7 +12778,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/schema/properties/type"
             }
           ],
@@ -11677,7 +12808,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/schema/properties/values"
             }
           ],
@@ -11698,7 +12829,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/skill/properties/id"
             }
           ],
@@ -11715,7 +12846,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/skill/properties/instructions"
             }
           ],
@@ -11751,7 +12882,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/skill/properties/instructions/oneOf/1/properties/inline"
             }
           ],
@@ -11768,7 +12899,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/skill/properties/instructions/oneOf/1/properties/path"
             }
           ],
@@ -11785,7 +12916,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/skill/properties/instructions/oneOf/1/properties/resource"
             }
           ],
@@ -11802,7 +12933,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/skill/properties/keywords"
             }
           ],
@@ -11822,7 +12953,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/skill/properties/preferredToolIDs"
             }
           ],
@@ -11842,7 +12973,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/skill/properties/summary"
             }
           ],
@@ -11859,7 +12990,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/skill/properties/title"
             }
           ],
@@ -11876,7 +13007,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/skill/properties/triggerHints"
             }
           ],
@@ -11896,7 +13027,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/tool/properties/approval"
             }
           ],
@@ -11944,7 +13075,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/tool/properties/approval/properties/actionParameter"
             }
           ],
@@ -11963,7 +13094,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/tool/properties/approval/properties/nonSensitiveActions"
             }
           ],
@@ -11987,7 +13118,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/tool/properties/approval/properties/requiresApproval"
             }
           ],
@@ -12004,7 +13135,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/tool/properties/approval/properties/scopeParameters"
             }
           ],
@@ -12028,7 +13159,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/tool/properties/capabilities"
             }
           ],
@@ -12048,7 +13179,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/tool/properties/id"
             }
           ],
@@ -12065,7 +13196,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/tool/properties/inputSchema"
             }
           ],
@@ -12082,7 +13213,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/tool/properties/outputSchema"
             }
           ],
@@ -12099,7 +13230,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/tool/properties/owner"
             }
           ],
@@ -12116,7 +13247,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/tool/properties/presentation"
             }
           ],
@@ -12228,7 +13359,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/tool/properties/presentation/properties/compactStyle"
             }
           ],
@@ -12252,7 +13383,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/tool/properties/presentation/properties/embeddedPresentation"
             }
           ],
@@ -12316,7 +13447,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/tool/properties/presentation/properties/embeddedPresentation/properties/expansion"
             }
           ],
@@ -12350,7 +13481,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/tool/properties/presentation/properties/embeddedPresentation/properties/expansion/properties/expandedHandler"
             }
           ],
@@ -12367,7 +13498,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/tool/properties/presentation/properties/embeddedPresentation/properties/expansion/properties/supportedModes"
             }
           ],
@@ -12392,7 +13523,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/tool/properties/presentation/properties/embeddedPresentation/properties/handler"
             }
           ],
@@ -12409,7 +13540,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/tool/properties/presentation/properties/embeddedPresentation/properties/sizing"
             }
           ],
@@ -12444,7 +13575,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/tool/properties/presentation/properties/embeddedPresentation/properties/sizing/properties/preferredHeight"
             }
           ],
@@ -12461,7 +13592,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/tool/properties/presentation/properties/embeddedPresentation/properties/sizing/properties/preferredWidth"
             }
           ],
@@ -12478,7 +13609,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/tool/properties/presentation/properties/embeddedPresentation/properties/sizing/properties/preset"
             }
           ],
@@ -12501,7 +13632,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/tool/properties/presentation/properties/executionPresentation"
             }
           ],
@@ -12540,7 +13671,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/tool/properties/presentation/properties/executionPresentation/properties/animation"
             }
           ],
@@ -12562,7 +13693,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/tool/properties/presentation/properties/executionPresentation/properties/customHandler"
             }
           ],
@@ -12579,7 +13710,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/tool/properties/presentation/properties/executionPresentation/properties/familyID"
             }
           ],
@@ -12596,7 +13727,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/tool/properties/presentation/properties/executionPresentation/properties/systemImage"
             }
           ],
@@ -12615,7 +13746,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/tool/properties/presentation/properties/supportsExpandedPresentation"
             }
           ],
@@ -12632,7 +13763,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/tool/properties/risk"
             }
           ],
@@ -12649,7 +13780,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/tool/properties/summary"
             }
           ],
@@ -12666,7 +13797,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/tool/properties/title"
             }
           ],
@@ -12683,7 +13814,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/toolOwner/properties/identifier"
             }
           ],
@@ -12700,7 +13831,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/toolOwner/properties/type"
             }
           ],
@@ -12724,7 +13855,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/value/properties/type"
             }
           ],
@@ -12751,7 +13882,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/value/properties/value"
             }
           ],
@@ -12766,7 +13897,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/versionRange/properties/maximum"
             }
           ],
@@ -12783,7 +13914,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/$defs/versionRange/properties/minimum"
             }
           ],
@@ -12800,7 +13931,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/properties/actions"
             }
           ],
@@ -12820,7 +13951,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/properties/apiVersion"
             }
           ],
@@ -12837,7 +13968,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/properties/appearance"
             }
           ],
@@ -12854,7 +13985,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/properties/authors"
             }
           ],
@@ -12875,7 +14006,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/properties/capabilities"
             }
           ],
@@ -12895,7 +14026,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/properties/category"
             }
           ],
@@ -12924,7 +14055,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/properties/dependencies"
             }
           ],
@@ -12944,7 +14075,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/properties/description"
             }
           ],
@@ -12961,7 +14092,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/properties/distribution"
             }
           ],
@@ -12978,7 +14109,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/properties/entryPoints"
             }
           ],
@@ -12999,7 +14130,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/properties/extensions"
             }
           ],
@@ -13019,7 +14150,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/properties/icon"
             }
           ],
@@ -13036,7 +14167,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/properties/id"
             }
           ],
@@ -13053,7 +14184,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/properties/implementation"
             }
           ],
@@ -13070,7 +14201,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/properties/integrity"
             }
           ],
@@ -13087,7 +14218,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/properties/minimumHostVersion"
             }
           ],
@@ -13104,7 +14235,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/properties/name"
             }
           ],
@@ -13121,7 +14252,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/properties/routes"
             }
           ],
@@ -13141,7 +14272,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/properties/schemaVersion"
             }
           ],
@@ -13158,7 +14289,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/properties/skills"
             }
           ],
@@ -13178,7 +14309,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/properties/summary"
             }
           ],
@@ -13195,7 +14326,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/properties/supportedExposures"
             }
           ],
@@ -13215,7 +14346,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/properties/tools"
             }
           ],
@@ -13235,7 +14366,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-              "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+              "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218",
               "jsonPointer": "#/properties/version"
             }
           ],
@@ -13503,12 +14634,90 @@
             "minimum"
           ],
           "additionalProperties": true
+        },
+        {
+          "jsonPointer": "#/$defs/composerOption",
+          "required": [
+            "id",
+            "title"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "jsonPointer": "#/$defs/composerField",
+          "required": [
+            "key",
+            "title",
+            "kind"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "jsonPointer": "#/$defs/composerPanel",
+          "required": [
+            "id",
+            "title"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "jsonPointer": "#/$defs/composerPanel/anyOf/0",
+          "required": [
+            "fields"
+          ]
+        },
+        {
+          "jsonPointer": "#/$defs/composerPanel/anyOf/1",
+          "required": [
+            "customViewID"
+          ]
+        },
+        {
+          "jsonPointer": "#/$defs/composerConfiguration",
+          "required": [
+            "panels"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "jsonPointer": "#/$defs/assistantToolAction",
+          "required": [
+            "id",
+            "title",
+            "summary",
+            "inputSchema"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "jsonPointer": "#/$defs/assistantToolAction/properties/inputSchema",
+          "required": [
+            "type"
+          ]
+        },
+        {
+          "jsonPointer": "#/$defs/assistantToolDeclaration",
+          "required": [
+            "title",
+            "summary",
+            "actions"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "jsonPointer": "#/$defs/assistantToolEntrypoint",
+          "required": [
+            "id",
+            "kind",
+            "sourcePath",
+            "assistantTool"
+          ]
         }
       ],
       "boundary": "Separate format: do not substitute these schema fields/enums for script.json or prepared package.json. Schema enumeration does not promise runtime/surface availability or parity with every Swift Codable descriptor.",
       "coverage": {
         "status": "COMPLETE_SOURCE_FIELD_ENUMERATION",
-        "fieldCount": 134,
+        "fieldCount": 170,
         "scope": "Every property in the separate canonical schema, including nested/conditional definitions."
       }
     }
@@ -13517,7 +14726,7 @@
     "schemaVersion": 1,
     "status": "COMPLETE_SOURCE_FIELD_ENUMERATION",
     "nativeAcceptance": "NOT_INFERRED",
-    "fieldCount": 334,
+    "fieldCount": 401,
     "sourceContract": "Decoder keys, extension consumers, nested records, prepared package/authoring reads and schema properties are mapped. Added/removed recognized keys fail until mapped. Loaded source hashes participate in the existing inventory drift check.",
     "publicReference": "MANIFEST_REFERENCE.md"
   },
@@ -13593,7 +14802,7 @@
     },
     {
       "path": "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
-      "sha256": "e8da50eb4d076d995135132810444f16900a65d55edd901270a2af07132a57a3"
+      "sha256": "60bbc9ee2dc045d19c54db56761ec99e0d927576002e48fd11a13c239b768bc3"
     },
     {
       "path": "AI_HLY/Downstream/HostServices/Core/HanlinHostCallContext.swift",
@@ -13624,12 +14833,16 @@
       "sha256": "279e6a4c387afe6845c51a9adea622dc1085c82fb93ddfd23abb9dd5f4ec6f72"
     },
     {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-assistant-tools.mjs",
+      "sha256": "0d44fa988530fc96ec6d01574293a650cec54e0c726d1443a57192536d8fd9fd"
+    },
+    {
       "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-      "sha256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856"
+      "sha256": "aa3db842d52ab5dafdf465b5cca577ae5b5b8fee76d171496a85ed0ea627df90"
     },
     {
       "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-      "sha256": "44dfc39f53d8b39f6e54675ea02a9e4682578ed36985d5939948c2006335ae6f"
+      "sha256": "3821b5ff6657b75895b66e56ac366186717c32fd128aa852dbaf99b49318b473"
     },
     {
       "path": "Fixtures/ExpoNativeAPIProbe/tsconfig.json",
@@ -13780,6 +14993,14 @@
       "sha256": "01bf31169e04ca73898fc830d72e0d8824c43563678291823103ac978f114f2c"
     },
     {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinAssistantToolDeclaration.swift",
+      "sha256": "b2a72ec90edfc9083ab2ecfbabea9af8c64e2ab98c08e1f3d19a722b73ad9d12"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinComposerConfiguration.swift",
+      "sha256": "22fefa45440b28bc66bcef5b5158e838787a980826cd5b80c106db07fe3a2a1e"
+    },
+    {
       "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPreparedRuntimeVersion.swift",
       "sha256": "e7e6dcb882b853a086c8ea33023de3a3f6889eefd6ed7c7075ba26d1ba511134"
     },
@@ -13789,7 +15010,7 @@
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-      "sha256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d"
+      "sha256": "58be72fbac20c7fcc616b120f9f0e000f8a4596cf722277712d7f73d383ec218"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinMiniAppHostVersions.swift",
@@ -13797,11 +15018,11 @@
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-      "sha256": "a8b4b96df4fb0782e78e0c48132def346f63436b9cff96286088f52b5889da54"
+      "sha256": "10a2a4d34263e0800ad2dde326f187bf978c32b9d3d2a340a73bc664b48464ac"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinInstallContracts.swift",
-      "sha256": "09969f5f4cc93bc3a265b0389a3af7a85ef5f8df0a705163a27beeacbad275ea"
+      "sha256": "2fd21cd0df503042315302acd8c8fa1f754a53eac3ff37b0ff14d0693b9952a2"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinNativePresentationMetadata.swift",
@@ -13825,7 +15046,7 @@
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-      "sha256": "426509862e4b67d755c6e466356da1418fbaf7246277100779aab768ceba3258"
+      "sha256": "b7e1e37c44877dda02cdcee8409b9f5b5afb212aa9183461c0eabd04cb4d2d6e"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/HanlinOriginalScriptWidgetControls.swift",
@@ -13861,7 +15082,7 @@
     },
     {
       "path": "Scripts/Audit/miniapp-manifest-contracts.mjs",
-      "sha256": "484a0f05eeee4818da22aeb9eab5de9a509bc10e3b63b7226a20206a839a5aaa"
+      "sha256": "92d337bfe03cb123375424f8b295c25856cb53c85226b241e526d56d7011ae8f"
     },
     {
       "path": "Scripts/Audit/miniapp-runtime-contract.mjs",
