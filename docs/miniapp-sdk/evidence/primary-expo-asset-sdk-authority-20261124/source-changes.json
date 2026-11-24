@@ -1,0 +1,58 @@
+[
+  {
+    "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinMiniAppHostVersions.swift",
+    "mode": "100644",
+    "beforeSHA256": "a31357ce803c24ba80aed6f4c81b7e31f82abde1ec6c2ef00c6ee4a57c272717",
+    "afterSHA256": "8e99e562bacbe6354bc23caf6a1233930a1e0d61c3abe0444195dd36164f747d",
+    "bytes": 825
+  },
+  {
+    "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
+    "mode": "100644",
+    "beforeSHA256": "a8b4b96df4fb0782e78e0c48132def346f63436b9cff96286088f52b5889da54",
+    "afterSHA256": "7c58f10cc6a5f89c452842490b8ee6eb2378066929c8db27c5dfe6139d441527",
+    "bytes": 52059
+  },
+  {
+    "path": "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinScriptAnalyzerTests.swift",
+    "mode": "100644",
+    "beforeSHA256": "3f3b3565384b7e8a66948d6be67ee95f2f735f038dc69ea07d287e1c6a3cfca2",
+    "afterSHA256": "e71673cd27ee0b780bc9ca254ee62e2da1a38eb45250bdae8983ab0e5443633c",
+    "bytes": 40125
+  },
+  {
+    "path": "Scripts/Expo/package-lock.json",
+    "mode": "100644",
+    "beforeSHA256": "95d2a560d4eb01de64fcd0d43875a4ef2392e9747ed9fa79c2e0a0e58abececf",
+    "afterSHA256": "9ee1d2babe6266148d8f969b25f542c00897c569969e5aae6dd6f744e2a0c53c",
+    "bytes": 336324
+  },
+  {
+    "path": "Scripts/Expo/package.json",
+    "mode": "100644",
+    "beforeSHA256": "db6fd60dbc8f2b15eac5fee7029781cf14834ffbad53f0c8948fc4c2945c1e91",
+    "afterSHA256": "da083105462f40368adb89acba0dbc1b623d2249b26b2ac1cbe1d326edc2bd3d",
+    "bytes": 1759
+  },
+  {
+    "path": "Scripts/MiniApps/Tests/upstream-resolution.test.mjs",
+    "mode": "100644",
+    "beforeSHA256": "42001deb8dd18953b96f6a22d63fcc5ad9b27ab400ce701a3cf183922cbc35f6",
+    "afterSHA256": "2b8ab415f6343b2cdf33cf9029aa5b39f52b5a9959f6d52dd31a3fd7e3cea16e",
+    "bytes": 9882
+  },
+  {
+    "path": "Scripts/MiniApps/resolve-upstreams.mjs",
+    "mode": "100644",
+    "beforeSHA256": "f6c92fb61dd5d06f806a9f2c89c931bb57c390201133f941b5c7e7498b2a777d",
+    "afterSHA256": "7973977cf986cbee14fd147fd8b10c1d54a6f1a1c790511d2df5cf054063e7a2",
+    "bytes": 29048
+  },
+  {
+    "path": "Scripts/MiniApps/stage-sdk.mjs",
+    "mode": "100644",
+    "beforeSHA256": "a9d02de9128acde4bcdd14b60c3227627a43c004075f55c6d9f41e2045c9bcce",
+    "afterSHA256": "b1b0a3bd2c560fcf93eca064053aba7bcbf7786fb800e083bb7f297a0a300c40",
+    "bytes": 21137
+  }
+]

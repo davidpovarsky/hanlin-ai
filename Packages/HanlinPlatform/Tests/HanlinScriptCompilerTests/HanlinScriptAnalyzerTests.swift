@@ -63,6 +63,39 @@ struct HanlinScriptAnalyzerTests {
         }
     }
 
+    @Test("Prepared Expo packages preserve the embedded original asset version contract")
+    func expoAssetPluginRequiresItsActualEmbeddedVersion() throws {
+        let analyzer = HanlinScriptAnalyzer(inventory: .init(
+            baselineID: "fixture", baselineDigest: String(repeating: "a", count: 64), symbols: []
+        ))
+        let cases = [
+            ("expo-asset", HanlinMiniAppHostVersions.expoAssetVersion, true),
+            ("expo-asset", "999.0.0", false),
+            ("expo-not-embedded", HanlinMiniAppHostVersions.expoAssetVersion, false)
+        ]
+        for (name, version, expected) in cases {
+            let prepared = try JSONSerialization.data(withJSONObject: [
+                "name": "fixture", "main": "bundle.js", "hanlinRuntime": "hanlin-expo",
+                "hanlinExpo": [
+                    "runtimeVersion": HanlinMiniAppHostVersions.expoUIVersion,
+                    "plugins": ["@expo/ui": HanlinMiniAppHostVersions.expoUIVersion, name: version]
+                ]
+            ])
+            let fixture = try package(files: [
+                "script.json": #"{"name":"Expo Asset Fixture","version":"1.0.0","entry":"expo/app/bundle.js","hanlinRuntime":"hanlin-expo"}"#,
+                "expo/app/bundle.js": "console.log('asset version fixture')",
+                "expo/app/package.json": String(decoding: prepared, as: UTF8.self)
+            ])
+            defer { try? FileManager.default.removeItem(at: fixture.stagingRoot) }
+            let preview = try analyzer.analyze(fixture)
+            #expect(preview.canInstall == expected, "\(name) required version \(version)")
+            #expect(preview.findings.contains {
+                $0.sourcePath == "expo/app/package.json" && $0.message.contains(name) &&
+                $0.state == (expected ? .supported : .unsupported)
+            })
+        }
+    }
+
     @Test("Bridge version types and complete semantic versions are validated before import")
     func malformedBridgeVersionsNeverBypassPreparedPackageValidation() throws {
         let analyzer = HanlinScriptAnalyzer(inventory: .init(baselineID: "fixture", baselineDigest: String(repeating: "a", count: 64), symbols: []))
