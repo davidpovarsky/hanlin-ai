@@ -1,0 +1,114 @@
+{
+  "source_member": "app-split-evidence/build.log",
+  "source_sha256": "169764e99682db55407aec1e048cc2b73fd523aa0d8ce96c6c925f6c469019c2",
+  "original_lines": [
+    {
+      "line": 99609,
+      "text": " 86 | /*!"
+    },
+    {
+      "line": 99610,
+      "text": ""
+    },
+    {
+      "line": 99611,
+      "text": "/Users/runner/work/hanlin-ai/hanlin-ai/HanlinMiniAppsUITests/MiniAppsNativeScriptWindowUITests.swift:23:9: error: sending 'self' risks causing data races [#RegionIsolation::SendingRisksDataRace]"
+    },
+    {
+      "line": 99612,
+      "text": " 21 |         app.launchEnvironment[\"HANLIN_UNIT_TEST_HOST\"] = \"0\""
+    },
+    {
+      "line": 99613,
+      "text": " 22 |         app.launch()"
+    },
+    {
+      "line": 99614,
+      "text": " 23 |         installFixtureIfNeeded()"
+    },
+    {
+      "line": 99615,
+      "text": "    |         |- error: sending 'self' risks causing data races [#RegionIsolation::SendingRisksDataRace]"
+    },
+    {
+      "line": 99616,
+      "text": "    |         `- note: sending 'self' to main actor-isolated instance method 'installFixtureIfNeeded()' risks causing data races between main actor-isolated code and code in the current isolation context"
+    },
+    {
+      "line": 99617,
+      "text": " 24 |     }"
+    },
+    {
+      "line": 99618,
+      "text": " 25 | "
+    },
+    {
+      "line": 99619,
+      "text": ""
+    },
+    {
+      "line": 99620,
+      "text": "/Users/runner/work/hanlin-ai/hanlin-ai/HanlinMiniAppsUITests/MiniAppsNativeScriptWindowUITests.swift:28:13: error: sending 'self' risks causing data races [#RegionIsolation::SendingRisksDataRace]"
+    },
+    {
+      "line": 99621,
+      "text": " 26 |     override func tearDownWithError() throws {"
+    },
+    {
+      "line": 99622,
+      "text": " 27 |         if testRun?.hasSucceeded == false {"
+    },
+    {
+      "line": 99623,
+      "text": " 28 |             capture(\"native-window-failure\")"
+    },
+    {
+      "line": 99624,
+      "text": "    |             |- error: sending 'self' risks causing data races [#RegionIsolation::SendingRisksDataRace]"
+    },
+    {
+      "line": 99625,
+      "text": "    |             `- note: sending 'self' to main actor-isolated instance method 'capture' risks causing data races between main actor-isolated code and code in the current isolation context"
+    },
+    {
+      "line": 99626,
+      "text": " 29 |             let tree = XCTAttachment(string: app.debugDescription)"
+    },
+    {
+      "line": 99627,
+      "text": " 30 |             tree.name = \"native-window-accessibility\""
+    },
+    {
+      "line": 99628,
+      "text": ""
+    },
+    {
+      "line": 99909,
+      "text": "\t/Users/runner/work/hanlin-ai/hanlin-ai/build/app-split-evidence/Build.xcresult"
+    },
+    {
+      "line": 99910,
+      "text": ""
+    },
+    {
+      "line": 99911,
+      "text": "** TEST BUILD FAILED **"
+    },
+    {
+      "line": 99912,
+      "text": ""
+    },
+    {
+      "line": 99913,
+      "text": ""
+    },
+    {
+      "line": 99914,
+      "text": "The following build commands failed:"
+    },
+    {
+      "line": 99915,
+      "text": "\tSwiftCompile normal arm64 /Users/runner/work/hanlin-ai/hanlin-ai/HanlinMiniAppsUITests/MiniAppsNativeScriptWindowUITests.swift (in target 'HanlinMiniAppsUITests' from project 'AI_HLY')"
+    }
+  ]
+}

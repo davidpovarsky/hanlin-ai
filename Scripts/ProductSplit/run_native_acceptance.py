@@ -11,7 +11,7 @@ import sys
 import time
 
 from simulator_entitlements import read_simulator_entitlements
-from verify_targets import validate_native_test_membership
+from verify_targets import native_ui_typecheck_command, validate_native_test_membership
 
 ROOT = Path(__file__).resolve().parents[2]
 EVIDENCE = Path(os.environ['SPLIT_EVIDENCE'])
@@ -23,7 +23,7 @@ UI_PLANS = {
                   'HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests',
                   'HanlinMiniAppsTests/NativeScriptWindowOwnershipTests',
                   'HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests',
-                  'HanlinMiniAppsUITests/MiniAppsNativeScriptWindowUITests'], 17),
+                  'HanlinMiniAppsUITests/MiniAppsNativeScriptWindowUITests'], 18),
     'baseline': (['HanlinMiniAppsUITests/HanlinMiniAppsUITests',
                   'HanlinMiniAppsUITests/MiniAppsProviderUITests'], 7),
     # The complete affected scope includes the original producer cases plus
@@ -37,7 +37,7 @@ UI_PLANS = {
         'HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests',
         'HanlinMiniAppsUITests/MiniAppsNativeScriptWindowUITests',
         'HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch',
-        'HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents'], 19),
+        'HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents'], 20),
 }
 
 
@@ -169,6 +169,20 @@ def main():
                 'authenticated_previous_passes': len(previous['reusable_selectors']),
                 'previous_run_overall_status': 'failure',
             }
+        # A real Swift 6 XCTest isolation error in run 45316423267 appeared only
+        # after 26 minutes of app compilation. Check the same XCTest-only source
+        # target with the actual Apple compiler before starting the owned device.
+        state['status'] = 'UI_SOURCE_TYPECHECK_FAILED'
+        sdk_path = command(['xcrun', '--sdk', 'iphonesimulator', '--show-sdk-path'],
+                           'ui-source-sdk-path.txt').strip()
+        platform_path = command(['xcrun', '--sdk', 'iphonesimulator', '--show-sdk-platform-path'],
+                                'ui-source-platform-path.txt').strip()
+        ui_compile = native_ui_typecheck_command(architecture, sdk_path, platform_path,
+                                                 state['ui_target_sources'])
+        state['ui_source_typecheck_command'] = ui_compile
+        command(ui_compile, 'ui-source-typecheck.log', timeout=120)
+        state['ui_source_typecheck'] = 'EXECUTED_PASS'
+        state['status'] = 'INFRA_ERROR'
         # Authenticate prior proof and capture its environment before booting.
         # Run 45313324655 exhausted the metadata transport deadline after boot;
         # even ps and a screenshot then timed out under observed memory pressure.

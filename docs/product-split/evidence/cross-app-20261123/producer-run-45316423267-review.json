@@ -1,0 +1,173 @@
+{
+  "schema_version": 1,
+  "repository": "davidpovarsky/hanlin-ai",
+  "run_id": 45316423267,
+  "job_id": 138184262317,
+  "run_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45316423267",
+  "source_sha": "df3cb6d5ac27fdef24e3a45c6b3b2558f4563274",
+  "artifact": {
+    "id": 14886859568,
+    "name": "app-split-45316423267",
+    "bytes": 17786420,
+    "sha256": "0f43f5ed1dce7b13dba9b39da95ba85e8f37ccdd9ff79d898663fd1741714a95",
+    "verification": "COMPLETE_DOWNLOADED_ZIP_HASH_VERIFIED"
+  },
+  "outcome": {
+    "workflow": "failure",
+    "acceptance": "BUILD_FAILED",
+    "build_for_testing": "FAILED_EXIT_65",
+    "ui": "NOT_RUN",
+    "fresh_tests_executed": 0,
+    "producer_export": "NOT_RUN"
+  },
+  "native_proof_coverage": {
+    "full_affected_scope": 19,
+    "fresh_execution_required": 11,
+    "authenticated_previous_passes": 8,
+    "previous_run_overall_status": "failure"
+  },
+  "authenticated_prior_passes": [
+    "HanlinMiniAppsTests/CrossAppInvocationTests/testCompletionIsSavedBeforeSourceOpensAndSurvivesColdRestore",
+    "HanlinMiniAppsTests/CrossAppInvocationTests/testTwoWindowsKeepTheirOwnInputOutputAndCallbacks",
+    "HanlinMiniAppsTests/CrossAppInvocationTests/testCancelAndDisplayDoneReturnNoDocumentMutation",
+    "HanlinMiniAppsTests/CrossAppInvocationTests/testActualProducerAttachmentOperationsPreserveBytes",
+    "HanlinMiniAppsTests/CrossAppInvocationTests/testUnavailableCallbackRetainsResultForSourceRecovery",
+    "HanlinMiniAppsTests/CrossAppInvocationTests/testTextStudioWindowsRestoreTheirOwnDrafts",
+    "HanlinMiniAppsTests/CrossAppInvocationTests/testReusingValueWindowKeepsItsInvocationBindingCurrent",
+    "HanlinMiniAppsTests/CrossAppInvocationTests/testRemovingInvocationOwnerCancelsWhileSessionIsStillRetained"
+  ],
+  "failure": {
+    "file": "HanlinMiniAppsUITests/MiniAppsNativeScriptWindowUITests.swift",
+    "distinct_compiler_errors": [
+      {
+        "line": 23,
+        "diagnostic": "sending self risks causing data races",
+        "context": "Nonisolated setUpWithError invokes MainActor installFixtureIfNeeded."
+      },
+      {
+        "line": 28,
+        "diagnostic": "sending self risks causing data races",
+        "context": "Nonisolated tearDownWithError invokes MainActor capture."
+      }
+    ],
+    "primary_log": "run-45316423267/build.log",
+    "primary_log_sha256": "169764e99682db55407aec1e048cc2b73fd523aa0d8ce96c6c925f6c469019c2",
+    "retained_excerpt": "run-45316423267/build-errors.json"
+  },
+  "actual_commands": [
+    {
+      "argv": [
+        "xcrun",
+        "simctl",
+        "bootstatus",
+        "40E750A9-5F84-4E2A-898E-032EA57709AA",
+        "-b"
+      ],
+      "exit": 0,
+      "seconds": 137.48342487500003,
+      "log": "bootstatus.log",
+      "sha256": "0030ce100e012baee3c7c5998b0d4342109c16728cd651a7f09b47373b5fdfa0"
+    },
+    {
+      "argv": [
+        "xcodebuild",
+        "-project",
+        "AI_HLY.xcodeproj",
+        "-scheme",
+        "HanlinMiniApps",
+        "-destination",
+        "platform=iOS Simulator,id=40E750A9-5F84-4E2A-898E-032EA57709AA,arch=arm64",
+        "-parallel-testing-enabled",
+        "NO",
+        "-derivedDataPath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/SourcePackages",
+        "-skipPackagePluginValidation",
+        "-skipMacroValidation",
+        "CODE_SIGNING_ALLOWED=YES",
+        "CODE_SIGNING_REQUIRED=YES",
+        "CODE_SIGN_IDENTITY=-",
+        "build-for-testing",
+        "-resultBundlePath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/app-split-evidence/Build.xcresult"
+      ],
+      "exit": 65,
+      "seconds": 1588.605846375,
+      "log": "build.log",
+      "sha256": "169764e99682db55407aec1e048cc2b73fd523aa0d8ce96c6c925f6c469019c2"
+    },
+    {
+      "argv": [
+        "vm_stat"
+      ],
+      "exit": 0,
+      "seconds": 0.10368283399975553,
+      "log": "failure-memory.txt",
+      "sha256": "764b501f0f38fdedcfd21521bdab23ea9891973b6e524910d9a4d33de454d847"
+    },
+    {
+      "argv": [
+        "ps",
+        "-axo",
+        "pid,ppid,%cpu,%mem,state,etime,comm"
+      ],
+      "exit": 0,
+      "seconds": 0.30931458299983206,
+      "log": "failure-processes.txt",
+      "sha256": "9ad7b09a235985ff4aa8ef61d9fb7a5403f4e0ea97bd1613072a89d38b4321c2"
+    },
+    {
+      "argv": [
+        "xcrun",
+        "simctl",
+        "io",
+        "40E750A9-5F84-4E2A-898E-032EA57709AA",
+        "screenshot",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/app-split-evidence/failure.png"
+      ],
+      "exit": 0,
+      "seconds": 5.803234708000218,
+      "log": "screenshot.log",
+      "sha256": "72c050c988b90ae1d0b76b3182a67d8df2426dfd5a59451aff434fadc3d52ac0"
+    }
+  ],
+  "correction": {
+    "xctest_isolation": "Perform fixture installation inside each already MainActor-isolated test body, preserving every original UI action/assertion; record teardown attachments directly using the existing compiled XCTest-hook pattern.",
+    "early_compiler_check": "Typecheck the exact five original XCTest-only UI source members with real Apple swiftc before boot/app compilation. Derive Swift language/deployment from the actual scheme/project target; use framework locations shown by the failed original compiler command. This does not replace full build or actual XCTest execution.",
+    "localization": "Preserve upstream en/he/zh-Hans declaration and add one actual English/Hebrew native-layout case, separately qualified for proof reuse.",
+    "next_scope": {
+      "cross_app": 18,
+      "production_runtimes": 20,
+      "eligible_unchanged_previous_passes": 8,
+      "fresh_required_if_qualified": 12
+    }
+  },
+  "limits": [
+    "No XCTest method ran in this failed build.",
+    "Link commands are not an overall app/build success or an installable product verification.",
+    "No simulator or physical-device sharing success is inferred."
+  ],
+  "members": {
+    "acceptance.json": {
+      "path": "run-45316423267/acceptance.json",
+      "sha256": "41a58b430b7a39537766bfb2ee7b50fedea4efdadb45b0deddcd49d79c443639"
+    },
+    "commands.jsonl": {
+      "path": "run-45316423267/commands.jsonl",
+      "sha256": "82fb7ac44e7884ee6287a5b35afe0a82b91af3cd9fa4a759943cf4e110c9ac8a"
+    },
+    "previous-native-proof.json": {
+      "path": "run-45316423267/previous-native-proof.json",
+      "sha256": "d9033e170e39aca12747317403c553080078cab1bc7a47f6304ab0db908da68a"
+    },
+    "artifact-verification.json": {
+      "path": "run-45316423267/artifact-verification.json",
+      "sha256": "2b99b11f416ca7d9961b2ccca9fb4ef17cdbb93d58c24d69dfbd4e9007fce676"
+    },
+    "build-errors.json": {
+      "path": "run-45316423267/build-errors.json",
+      "sha256": "69a1502064e7af0d607b04b74acf18709e16612886a2729ed47872ea78db9bc5"
+    }
+  }
+}

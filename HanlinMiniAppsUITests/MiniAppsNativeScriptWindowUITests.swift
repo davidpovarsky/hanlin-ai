@@ -20,12 +20,14 @@ final class MiniAppsNativeScriptWindowUITests: XCTestCase {
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
         app.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
         app.launch()
-        installFixtureIfNeeded()
     }
 
     override func tearDownWithError() throws {
         if testRun?.hasSucceeded == false {
-            capture("native-window-failure")
+            let screenshot = XCTAttachment(screenshot: app.screenshot())
+            screenshot.name = "native-window-failure"
+            screenshot.lifetime = .keepAlways
+            add(screenshot)
             let tree = XCTAttachment(string: app.debugDescription)
             tree.name = "native-window-accessibility"
             tree.lifetime = .keepAlways
@@ -35,6 +37,9 @@ final class MiniAppsNativeScriptWindowUITests: XCTestCase {
     }
 
     func testTwoNativeWindowsCompleteInReverseOrderWithoutContextMixing() throws {
+        // XCTest's synchronous setup hook is nonisolated; fixture work stays
+        // in this test's MainActor context after the original app launch.
+        installFixtureIfNeeded()
         let alpha = try open("alpha")
         editAndPrepare(alpha, name: "alpha", increments: 1)
         capture("native-window-alpha-prepared")
@@ -60,6 +65,9 @@ final class MiniAppsNativeScriptWindowUITests: XCTestCase {
     }
 
     func testCancellingOneNativeWindowKeepsOtherWindowAndPreparedCallbackAlive() throws {
+        // XCTest's synchronous setup hook is nonisolated; fixture work stays
+        // in this test's MainActor context after the original app launch.
+        installFixtureIfNeeded()
         let gamma = try open("gamma")
         editAndPrepare(gamma, name: "gamma", increments: 1)
         let delta = try open("delta")
