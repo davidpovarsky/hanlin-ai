@@ -7,10 +7,12 @@
   "source_sha256": {
     "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeScriptWindowFactory.mm": "94de3a78e7969d2d8b8bcd82957b8f702377de61db5f286951f907718f30be8f",
     "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include/HanlinNativeScriptWindowFactory.h": "dbf0beca1c0b52a8408b13dc17cb7605abb9541e9118d7d4ba72866e465b2021",
-    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptWindowSession.swift": "85f349e9e1a39e494c301c5c111d8c0d0f1d6fa17a95f90c95f8eb12156ec44d",
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptWindowSession.swift": "26dc226c745973d96f0166a10e78f1db9a82378e7524d17ad2330cb6c61955e8",
     "Scripts/NativeScript/window-factory.mjs": "ec747a6b573daa335ecc7caccd72ef6e25d4a3e4b1627207f5573f9760ce51a6",
     "Scripts/NativeScript/host-services.ts": "81aefd90acf499f3301abdb9597ef92c8c7f1e03c0bcd05243295d3e98ff4bd1",
-    "Scripts/NativeScript/Fixtures/window-factory.hanlinNativeScript": "e528ee7db79dbe9cecc76a71b4c8c4e65939e4f90c4a3970f855966c2da7e0d7"
+    "Scripts/NativeScript/Fixtures/window-factory.hanlinNativeScript": "e528ee7db79dbe9cecc76a71b4c8c4e65939e4f90c4a3970f855966c2da7e0d7",
+    "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests.swift": "fac1a7336a3b233a18015f56df18fe615c04f56064029af2d292a7f8ea9d4386",
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeServicesBridge.m": "7817e45687bd69ba1a93f9aa8d48d66ddf1a63e32109807d949c1bfb3e0bd160"
   },
   "javascript_checks": {
     "new_window_cases": 5,
@@ -31,5 +33,17 @@
     "method_verified_in_pinned_core": "@nativescript/core9.1.0/ui/editable-text-base/index.ios.mjs:dismissSoftInput calls resignFirstResponder",
     "generated_fixture_syntax": "PASS",
     "unchanged_helper_tests": "REUSED_PREVIOUS_7_PASS; NOT_RERUN"
+  },
+  "last_owner_lifetime_followup": {
+    "neutral_provider_retired_before_vm_shutdown": true,
+    "all_selected_bridges_detached_before_provider_cancellation": true,
+    "stale_bridge_preserves_replacement_provider": true,
+    "new_native_case": "NativeScriptHostServicesLifetimeTests/testBridgeInvalidationReleasesPendingCallbacksBeforeProviderCancellation",
+    "test_shape": "Public bridge.invalidate on one of two claimed bridges, one deferred provider, fourteen callbacks across seven APIs; synchronous cancellation completion and retained late completion.",
+    "swift_syntax": "PASS",
+    "objc_native_compilation": "NOT_RUN",
+    "new_XCTest_execution": "NOT_RUN",
+    "unchanged_javascript_checks": "NOT_RERUN",
+    "peer_review": "Anytype consumer read-only review: precise ARC lifetime and two-phase cancellation findings fixed; no remaining concrete blocker."
   }
 }
