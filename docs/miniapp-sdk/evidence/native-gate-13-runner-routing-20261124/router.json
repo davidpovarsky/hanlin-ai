@@ -1,0 +1,22 @@
+{
+  "command": [
+    "sudo",
+    "-u",
+    "ubuntu",
+    "python3",
+    "/home/ubuntu/.agents/skills/build-runner-router/scripts/route_probe.py",
+    "--kind",
+    "apple",
+    "--urgency",
+    "normal",
+    "--repo",
+    "davidpovarsky/hanlin-ai",
+    "--workflow",
+    "validate-app-split.yml",
+    "--sha",
+    "2f1cfa6e4a702475acfe80ad68bf82c5320902f5"
+  ],
+  "exit": 0,
+  "stdout": "{\n  \"timestamp\": \"2026-11-24T11:43:39.533981+00:00\",\n  \"read_only\": true,\n  \"kind\": \"apple\",\n  \"urgency\": \"normal\",\n  \"server\": {\n    \"host\": \"torah-social\",\n    \"online\": true,\n    \"logical_cpus\": 2,\n    \"ram_total_gb\": 11.65,\n    \"ram_available_gb\": 5.46,\n    \"free_disk_gb\": 0.95,\n    \"build_disk\": \"/mnt/development\"\n  },\n  \"windows\": {\n    \"host\": \"david-win\",\n    \"online\": true,\n    \"ram_total_gb\": 15.71,\n    \"ram_available_gb\": 1.9,\n    \"logical_cpus\": 12,\n    \"disks\": [\n      {\n        \"DeviceID\": \"C:\",\n        \"Size\": 510615613440,\n        \"FreeSpace\": 33030397952\n      },\n      {\n        \"DeviceID\": \"G:\",\n        \"Size\": 214748364800,\n        \"FreeSpace\": 5742059520\n      }\n    ],\n    \"free_disk_gb\": 33.03\n  },\n  \"mac\": {\n    \"host\": \"scaleway-mac\",\n    \"online\": true,\n    \"macos_version\": \"27.0\",\n    \"xcode_version\": \"Xcode 27.0\",\n    \"xcode_build\": \"Build version 27A266a\",\n    \"logical_cpus\": 10,\n    \"ram_total_gb\": 16.0,\n    \"free_disk_gb\": 405.46,\n    \"build_root\": \"~/builds\"\n  },\n  \"github\": {\n    \"status\": \"available\",\n    \"matching_runs\": [],\n    \"active_matching_run\": false,\n    \"potential_matching_success\": false,\n    \"workflow_filter\": \"validate-app-split.yml\"\n  },\n  \"recommendation\": \"SCALEWAY_MAC_PRIMARY_FALLBACK_GITHUB\",\n  \"note\": \"Agent must verify exact SHA/workflow, valid evidence, free Actions minutes, remaining build disk and ownership before dispatch. No job has been started.\"\n}\n",
+  "stderr": ""
+}
