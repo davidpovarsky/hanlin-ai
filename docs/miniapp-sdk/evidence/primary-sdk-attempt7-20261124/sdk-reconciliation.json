@@ -1,0 +1,162 @@
+{
+  "executionSource": "fd81d602d3b25f09162a659e1e0cf0582e91a93a",
+  "sourceTree": "c143ef6bba91db06182175fca88ca192ef102fe8",
+  "archivePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/prepared-snapshot-attempt7/files/build/runtime-host/RuntimeHostResources.zip",
+  "archiveBytes": 81813086,
+  "archiveSHA256": "c4e85e967f873ffbe907990c5d9d612b5b6f95871b4e85c736ec0799f09cb1af",
+  "manifestSHA256": "6a5ce216ab722741314a893f8bb226773da27c9d6151f6cbc28f46901b8fcb94",
+  "manifestBytes": 5219288,
+  "inputSHA256": "7073ff408de405da0fc2e992993588529a6271f1c41d87dea520b10fcdf62db0",
+  "sourceInputCount": 222,
+  "fileCount": 25661,
+  "prior": {
+    "executionSource": "bd6da170da7936fe3c5353ddaf8b25c97477a380",
+    "receiptPath": "docs/miniapp-sdk/evidence/primary-sdk-attempt6-20261124/receipt.json",
+    "receiptSHA256": "2ce330eafec2788a46d184ed4c40bb1dcd281fbc54a7a570da65abc437ca9f4b",
+    "manifestSHA256": "c9491455251124a82a7ca5721cc2fcd78e424670eeac53fdf8b1fc07abd4c325",
+    "inputSHA256": "78a8ffd73b3f96d984237e7866a723fb876a35d91f6bb16627373d92a6ef1fd9"
+  },
+  "sourceInputs": {
+    "changed": [
+      {
+        "path": "docs/miniapp-sdk/extension-reachability.json",
+        "before": {
+          "path": "docs/miniapp-sdk/extension-reachability.json",
+          "sha256": "9028752022b0e28a3d1f533c5ec4d0d85e6e9736b0c19b2c47c926cf3481e66a"
+        },
+        "after": {
+          "path": "docs/miniapp-sdk/extension-reachability.json",
+          "sha256": "855ce12c168cc258cd202b1bf436dc7849901a71e189c2d4d49201b7f5da062b"
+        }
+      },
+      {
+        "path": "docs/miniapp-sdk/extension-reachability.md",
+        "before": {
+          "path": "docs/miniapp-sdk/extension-reachability.md",
+          "sha256": "2825bae8731c9c8674d746feb913ed890f880c4fc5ee65ff57f9d85171a9dc1a"
+        },
+        "after": {
+          "path": "docs/miniapp-sdk/extension-reachability.md",
+          "sha256": "5499b31720ac284d264768ba3416ed032d5a3d37f821350a06c3a3f3625e75c2"
+        }
+      },
+      {
+        "path": "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+        "before": {
+          "path": "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+          "sha256": "ad9c59d1962d516cd480de78cf5ee01fad11159cc0a73ee1a9cb3ea2f324b8a1"
+        },
+        "after": {
+          "path": "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+          "sha256": "54b154ffd2d74328ad849b521d7d3940184e8771cf2adb03f5b0acc8587a8e96"
+        }
+      },
+      {
+        "path": "docs/miniapp-sdk/source-inventory.json",
+        "before": {
+          "path": "docs/miniapp-sdk/source-inventory.json",
+          "sha256": "03a4c8fec52f59a8737e870364773c43b1de4e15a4b0ffe0195e3ff5dea18cfd"
+        },
+        "after": {
+          "path": "docs/miniapp-sdk/source-inventory.json",
+          "sha256": "b0d3426a1238df51009a1c2b124f2d4dfa98f1ac6a75540e5a3a4f8578bd9c95"
+        }
+      }
+    ],
+    "unchanged": 218,
+    "added": [],
+    "removed": []
+  },
+  "members": {
+    "changed": [
+      {
+        "path": "docs/miniapp-sdk/extension-reachability.json",
+        "before": {
+          "path": "docs/miniapp-sdk/extension-reachability.json",
+          "sha256": "9028752022b0e28a3d1f533c5ec4d0d85e6e9736b0c19b2c47c926cf3481e66a",
+          "bytes": 147521
+        },
+        "after": {
+          "path": "docs/miniapp-sdk/extension-reachability.json",
+          "sha256": "855ce12c168cc258cd202b1bf436dc7849901a71e189c2d4d49201b7f5da062b",
+          "bytes": 147521
+        }
+      },
+      {
+        "path": "docs/miniapp-sdk/extension-reachability.md",
+        "before": {
+          "path": "docs/miniapp-sdk/extension-reachability.md",
+          "sha256": "2825bae8731c9c8674d746feb913ed890f880c4fc5ee65ff57f9d85171a9dc1a",
+          "bytes": 21494
+        },
+        "after": {
+          "path": "docs/miniapp-sdk/extension-reachability.md",
+          "sha256": "5499b31720ac284d264768ba3416ed032d5a3d37f821350a06c3a3f3625e75c2",
+          "bytes": 21494
+        }
+      },
+      {
+        "path": "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+        "before": {
+          "path": "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+          "sha256": "ad9c59d1962d516cd480de78cf5ee01fad11159cc0a73ee1a9cb3ea2f324b8a1",
+          "bytes": 118561
+        },
+        "after": {
+          "path": "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+          "sha256": "54b154ffd2d74328ad849b521d7d3940184e8771cf2adb03f5b0acc8587a8e96",
+          "bytes": 118561
+        }
+      },
+      {
+        "path": "docs/miniapp-sdk/source-inventory.json",
+        "before": {
+          "path": "docs/miniapp-sdk/source-inventory.json",
+          "sha256": "03a4c8fec52f59a8737e870364773c43b1de4e15a4b0ffe0195e3ff5dea18cfd",
+          "bytes": 493266
+        },
+        "after": {
+          "path": "docs/miniapp-sdk/source-inventory.json",
+          "sha256": "b0d3426a1238df51009a1c2b124f2d4dfa98f1ac6a75540e5a3a4f8578bd9c95",
+          "bytes": 493266
+        }
+      }
+    ],
+    "unchanged": 25657,
+    "added": [],
+    "removed": []
+  },
+  "reuseGroups": {
+    "declarations": {
+      "members": 5210,
+      "unchanged": 5210,
+      "changed": []
+    },
+    "examples": {
+      "members": 29,
+      "unchanged": 29,
+      "changed": []
+    },
+    "public-docs": {
+      "members": 25,
+      "unchanged": 21,
+      "changed": [
+        "docs/miniapp-sdk/extension-reachability.json",
+        "docs/miniapp-sdk/extension-reachability.md",
+        "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+        "docs/miniapp-sdk/source-inventory.json"
+      ]
+    },
+    "original-compiler-entrypoints": {
+      "members": 2,
+      "unchanged": 2,
+      "changed": []
+    }
+  },
+  "engineAndUpstreamMetadataUnchanged": true,
+  "sourceDeltaCanonicalSHA256": "f291a4588bcfd8a8317ed94bd97c41eab97cc4d2fdd6252214622cffeabaf753",
+  "hostOutsideSDKChanged": [
+    "miniapp-authoring.mjs"
+  ],
+  "scope": "Recomputed actual input identity, bound all222 source inputs and compared all25661 SDK manifest file records; reread changed SDK docs and exact original compiler identity-chain members, while reusing unaffected evidence. Separately hashed outside-SDK Host member bytes. No repeated112-member audit or product compiler/generator/native execution."
+}

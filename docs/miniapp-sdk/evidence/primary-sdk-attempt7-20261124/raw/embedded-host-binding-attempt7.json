@@ -1,0 +1,73 @@
+{
+  "source": "fd81d602d3b25f09162a659e1e0cf0582e91a93a",
+  "attempt": 7,
+  "archiveSHA256": "c4e85e967f873ffbe907990c5d9d612b5b6f95871b4e85c736ec0799f09cb1af",
+  "moduleSHA256": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9",
+  "products": {
+    "HanlinMiniApps.app": {
+      "observedAt": "2026-11-24T22:29:28.217438+00:00",
+      "buildCommand": {
+        "command_id": "a9b09d0f879f4e6eaef4f664bea2d4b8",
+        "pid": 13674,
+        "started_at": 1795559146.034343,
+        "seconds": 84.00691170799837,
+        "exit": 0,
+        "status": "completed",
+        "observed_at": 1795559230.040992
+      },
+      "archives": [
+        {
+          "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/RuntimeHostResources.zip",
+          "relativePath": "RuntimeHostResources.zip",
+          "bytes": 81813086,
+          "sha256": "c4e85e967f873ffbe907990c5d9d612b5b6f95871b4e85c736ec0799f09cb1af",
+          "moduleSHA256": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9"
+        }
+      ]
+    },
+    "AI_Hanlin.app": {
+      "observedAt": "2026-11-24T22:29:29.034726+00:00",
+      "buildCommand": {
+        "command_id": "61f755bdbfe9404cadb924502e8cba3b",
+        "pid": 15502,
+        "started_at": 1795559231.185708,
+        "seconds": 55.72176679200493,
+        "exit": 0,
+        "status": "completed",
+        "observed_at": 1795559286.907304
+      },
+      "archives": [
+        {
+          "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/HanlinSDK_AI_Hanlin.bundle/RuntimeHostResources.zip",
+          "relativePath": "HanlinSDK_AI_Hanlin.bundle/RuntimeHostResources.zip",
+          "bytes": 81813086,
+          "sha256": "c4e85e967f873ffbe907990c5d9d612b5b6f95871b4e85c736ec0799f09cb1af",
+          "moduleSHA256": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9"
+        },
+        {
+          "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/HanlinSDK_AI_Hanlin.bundle/RuntimeHostResources.zip",
+          "relativePath": "PlugIns/AI_HLYTests.xctest/HanlinSDK_AI_Hanlin.bundle/RuntimeHostResources.zip",
+          "bytes": 81813086,
+          "sha256": "c4e85e967f873ffbe907990c5d9d612b5b6f95871b4e85c736ec0799f09cb1af",
+          "moduleSHA256": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9"
+        },
+        {
+          "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/Frameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinSDK_AI_Hanlin.bundle/RuntimeHostResources.zip",
+          "relativePath": "PlugIns/AI_HLYTests.xctest/Frameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinSDK_AI_Hanlin.bundle/RuntimeHostResources.zip",
+          "bytes": 81813086,
+          "sha256": "c4e85e967f873ffbe907990c5d9d612b5b6f95871b4e85c736ec0799f09cb1af",
+          "moduleSHA256": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9"
+        },
+        {
+          "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/Frameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinSDK_AI_Hanlin.bundle/RuntimeHostResources.zip",
+          "relativePath": "Frameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinSDK_AI_Hanlin.bundle/RuntimeHostResources.zip",
+          "bytes": 81813086,
+          "sha256": "c4e85e967f873ffbe907990c5d9d612b5b6f95871b4e85c736ec0799f09cb1af",
+          "moduleSHA256": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9"
+        }
+      ]
+    }
+  },
+  "capturedAt": "2026-11-24T22:29:29.034744+00:00",
+  "status": "BOTH_BUILT_PRODUCTS_BOUND"
+}
