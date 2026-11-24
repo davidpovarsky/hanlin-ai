@@ -318,10 +318,10 @@ public struct HanlinScriptAnalyzer: Sendable {
             ))
             return
         }
-        let packageJSONPath = URL(filePath: entrypoint.sourcePath)
-            .deletingLastPathComponent()
-            .appending(path: "package.json")
-            .relativePath
+        // Manifest paths are archive-relative, including a bundle at its root.
+        // A filesystem URL would resolve a root entry against the process directory.
+        let entryDirectory = entrypoint.sourcePath.split(separator: "/").dropLast().joined(separator: "/")
+        let packageJSONPath = entryDirectory.isEmpty ? "package.json" : entryDirectory + "/package.json"
         guard let packageJSONData = files[packageJSONPath],
               let packageJSON = try? JSONSerialization.jsonObject(with: packageJSONData) as? [String: Any],
               URL(filePath: entrypoint.sourcePath).lastPathComponent == "bundle.mjs",
@@ -502,7 +502,7 @@ public struct HanlinScriptAnalyzer: Sendable {
                 ))
             }
         }
-        let entryDir = URL(filePath: entrypoint.sourcePath).deletingLastPathComponent().relativePath
+        let entryDir = entrypoint.sourcePath.split(separator: "/").dropLast().joined(separator: "/")
         let candidateA = entryDir.isEmpty || entryDir == "." ? "package.json" : "\(entryDir)/package.json"
         let packageJSONPath = files[candidateA] != nil ? candidateA : "package.json"
         guard let packageJSONData = files[packageJSONPath],

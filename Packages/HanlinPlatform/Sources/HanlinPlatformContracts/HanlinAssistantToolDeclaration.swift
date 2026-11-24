@@ -20,6 +20,16 @@ public struct HanlinAssistantToolDeclaration: Codable, Hashable, Sendable {
         self.configuration = configuration
     }
 
+    private enum CodingKeys: String, CodingKey { case title, summary, actions, configuration }
+
+    public init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        title = try values.decode(String.self, forKey: .title)
+        summary = try values.decode(String.self, forKey: .summary)
+        actions = try values.decode([HanlinAssistantToolAction].self, forKey: .actions)
+        configuration = try values.decodeManifestValueIfDeclared(HanlinComposerConfiguration.self, forKey: .configuration)
+    }
+
     public func validateDefinition() throws {
         guard !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
               !summary.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
@@ -84,10 +94,11 @@ public struct HanlinAssistantToolAction: Codable, Hashable, Sendable, Identifiab
         id = try values.decode(String.self, forKey: .id)
         title = try values.decode(String.self, forKey: .title)
         summary = try values.decode(String.self, forKey: .summary)
-        inputSchema = try Self.schema(values.decode(HanlinJSONValue.self, forKey: .inputSchema))
-        outputSchema = try values.decodeIfPresent(HanlinJSONValue.self, forKey: .outputSchema).map(Self.schema)
-        exportedSymbol = try values.decodeIfPresent(String.self, forKey: .exportedSymbol)
-        embeddedResultID = try values.decodeIfPresent(String.self, forKey: .embeddedResultID)
+        inputSchema = try Self.schema(values.decode(HanlinManifestJSONValue.self, forKey: .inputSchema).value)
+        outputSchema = try values.decodeManifestValueIfDeclared(HanlinManifestJSONValue.self, forKey: .outputSchema)
+            .map { try Self.schema($0.value) }
+        exportedSymbol = try values.decodeManifestValueIfDeclared(String.self, forKey: .exportedSymbol)
+        embeddedResultID = try values.decodeManifestValueIfDeclared(String.self, forKey: .embeddedResultID)
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -95,8 +106,8 @@ public struct HanlinAssistantToolAction: Codable, Hashable, Sendable, Identifiab
         try values.encode(id, forKey: .id)
         try values.encode(title, forKey: .title)
         try values.encode(summary, forKey: .summary)
-        try values.encode(inputSchema.root, forKey: .inputSchema)
-        try values.encodeIfPresent(outputSchema?.root, forKey: .outputSchema)
+        try values.encode(HanlinManifestJSONValue(inputSchema.root), forKey: .inputSchema)
+        try values.encodeIfPresent(outputSchema.map { HanlinManifestJSONValue($0.root) }, forKey: .outputSchema)
         try values.encodeIfPresent(exportedSymbol, forKey: .exportedSymbol)
         try values.encodeIfPresent(embeddedResultID, forKey: .embeddedResultID)
     }
