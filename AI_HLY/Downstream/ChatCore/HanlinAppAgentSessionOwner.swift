@@ -315,7 +315,8 @@ final class HanlinAppAgentSessionOwner {
             supportsReasoning: original.supportsReasoning, supportReasoningChange: original.supportReasoningChange,
             thinkingLength: original.thinkingLength, reasoningEffort: original.reasoningEffort,
             supportsToolUse: original.supportsToolUse, supportsTextGen: original.supportsTextGen,
-            systemPrompt: original.systemPrompt, updatedAt: original.updatedAt)
+            systemPrompt: original.systemPrompt, promptCachePolicy: original.promptCachePolicy,
+            updatedAt: original.updatedAt)
     }
 
     func stream(request: Request, modelContext: ModelContext, configuration: HanlinChatModelConfiguration,
@@ -614,6 +615,6 @@ final class HanlinAppAgentSessionOwner {
             && one.supportsReasoning == two.supportsReasoning && one.supportReasoningChange == two.supportReasoningChange
             && one.thinkingLength == two.thinkingLength && one.reasoningEffort == two.reasoningEffort
             && one.supportsToolUse == two.supportsToolUse && one.supportsTextGen == two.supportsTextGen
-            && one.systemPrompt == two.systemPrompt
+            && one.systemPrompt == two.systemPrompt && one.promptCachePolicy == two.promptCachePolicy
     }
 }

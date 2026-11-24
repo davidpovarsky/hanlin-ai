@@ -10,7 +10,7 @@ public enum HanlinSkillIndex {
         var lines: [String] = [
             "Available Skills (call load_skill(skill_id: \"...\") to activate instructions and tools; skill_id values are NOT callable tool names):"
         ]
-        for skill in skills {
+        for skill in skills.sorted(by: { $0.id.rawValue < $1.id.rawValue }) {
             let id = skill.id.rawValue
             let title = skill.title.preferredValue()
             let summary = skill.summary.preferredValue()
