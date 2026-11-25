@@ -1284,10 +1284,13 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
         let noText = "No text is available for this version."
         XCTAssertFalse(detailList.staticTexts[noText].firstMatch.exists)
 
+        // A complete Hebrew verse can be shorter than 40 grapheme clusters.
+        // Its source-scoped API body, native disclosure and real word content
+        // establish a rendered response without an English-length assumption.
         func visibleFullText() -> XCUIElement? {
             guard textBody.exists && textBody.isHittable else { return nil }
             let label = textBody.label.trimmingCharacters(in: .whitespacesAndNewlines)
-            guard label.count >= 40 && label.split(whereSeparator: { $0.isWhitespace }).count >= 6 &&
+            guard label.split(whereSeparator: { $0.isWhitespace }).count >= 6 &&
                 label != noText && !label.hasPrefix("Language,") && !label.hasPrefix("License,") else {
                 return nil
             }

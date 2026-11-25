@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "createdAtUTC": "2026-11-25T04:23:09.427172+00:00",
+  "members": [
+    {
+      "path": "README.md",
+      "bytes": 1276,
+      "sha256": "cfaa5bfca59712a2feb681996e04551049a6e6683e0057d4e10745eeb80ee7e4"
+    },
+    {
+      "path": "change.json",
+      "bytes": 2317,
+      "sha256": "75c2ae30f93bc3df29e78274e69ecaf3d055a81654c2896f1397c321220a034d"
+    },
+    {
+      "path": "source.patch",
+      "bytes": 1270,
+      "sha256": "f5257ee6ae40b3db457f40036419a0db7fac3115c52e6f9edf51d883699f6e4f"
+    }
+  ],
+  "totalMemberBytes": 4863,
+  "sourceChange": {
+    "path": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+    "before": {
+      "bytes": 78468,
+      "sha256": "84ede1a7dbafac2415c88cb276d2b04c0c0bce0a139f704b7737bcd307dd4ad8"
+    },
+    "after": {
+      "bytes": 78682,
+      "sha256": "39ed9a15efb3ede5dbb014aaf3218c1d102b9178a14e454478c3ecbdf5ea414c"
+    }
+  },
+  "nativeRecheck": "NOT_RUN"
+}
