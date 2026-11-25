@@ -1192,41 +1192,63 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
             }
         }
         let detailReady = waitUntil(timeout: 15) {
-            nativeDetailList()?.buttons.matching(sourceVersionPredicate)
+            nativeDetailList()?.descendants(matching: .any).matching(sourceVersionPredicate)
                 .allElementsBoundByIndex.contains(where: { $0.isHittable }) == true
         }
         capture(name: "modular-search-native-detail")
         XCTAssertTrue(detailReady, "Native detail must expose an interactive original version control")
         let detailList = try XCTUnwrap(nativeDetailList(),
             "The result must render its native list containing the actual source link")
-        let versionButtons = detailList.buttons.matching(sourceVersionPredicate)
+        // Native SwiftUI propagates an identifier on the whole disclosure to
+        // its content rows. The fixture marks only the original label Text, so
+        // the actual load button and returned body keep their own identifiers.
+        func disclosureHeader(labelIdentifier: String) -> XCUIElement {
+            let direct = detailList.buttons.matching(NSPredicate(
+                format: "identifier == %@", labelIdentifier)).firstMatch
+            if direct.exists { return direct }
+            return detailList.buttons.containing(.any, identifier: labelIdentifier).firstMatch
+        }
+        let versionLabels = detailList.descendants(matching: .any).matching(sourceVersionPredicate)
         for _ in 0..<5 {
-            if versionButtons.allElementsBoundByIndex.contains(where: { $0.isHittable }) { break }
+            if versionLabels.allElementsBoundByIndex.contains(where: { $0.isHittable }) { break }
             detailList.swipeUp()
         }
-        let sourceVersion = try XCTUnwrap(
-            versionButtons.allElementsBoundByIndex.first(where: { $0.isHittable }),
-            "The result must expose an original version disclosure")
-        let entryID = String(sourceVersion.identifier.dropFirst(sourceVersionPrefix.count))
+        let sourceVersionLabel = try XCTUnwrap(
+            versionLabels.allElementsBoundByIndex.first(where: { $0.isHittable }),
+            "The result must expose an original version disclosure label")
+        let sourceVersion = disclosureHeader(labelIdentifier: sourceVersionLabel.identifier)
+        XCTAssertTrue(sourceVersion.isHittable)
+        let entryID = String(sourceVersionLabel.identifier.dropFirst(sourceVersionPrefix.count))
         XCTAssertFalse(entryID.isEmpty)
         let loadText = detailList.buttons.matching(NSPredicate(
             format: "identifier == %@", "modular-full-text-load-" + entryID)).firstMatch
 
         func expandDisclosure(_ header: XCUIElement, content: XCUIElement, name: String) {
-            // Original Expo DisclosureGroup currently defaults to expanded.
-            // Exercise a real transition, then leave this exact group expanded.
-            let initiallyExpanded = content.exists
+            // Use the original native disclosure's actual state, then require
+            // the matching content transition. A missing locator cannot stand
+            // in for a collapsed group.
+            let expanded = header.images["expanded"].firstMatch
+            let collapsed = header.images["collapsed"].firstMatch
+            let initiallyExpanded = expanded.exists
+            XCTAssertNotEqual(initiallyExpanded, collapsed.exists,
+                "\(name) must expose exactly one native disclosure state")
+            XCTAssertEqual(content.exists, initiallyExpanded,
+                "\(name) must expose its own content in the native expanded state")
             header.tap()
-            XCTAssertTrue(waitUntil(timeout: 10) { content.exists != initiallyExpanded },
-                "\(name) must respond to the original disclosure control")
+            XCTAssertTrue(waitUntil(timeout: 10) {
+                expanded.exists != initiallyExpanded &&
+                collapsed.exists == initiallyExpanded &&
+                content.exists != initiallyExpanded
+            }, "\(name) must respond to the original disclosure control")
             if initiallyExpanded { header.tap() }
-            XCTAssertTrue(content.waitForExistence(timeout: 15),
-                "\(name) must expose its own content after expansion")
+            XCTAssertTrue(waitUntil(timeout: 15) {
+                expanded.exists && !collapsed.exists && content.exists
+            }, "\(name) must expose its own content after expansion")
         }
         expandDisclosure(sourceVersion, content: loadText, name: "Source version")
         if !loadText.isHittable { detailList.swipeUp() }
         XCTAssertTrue(loadText.isHittable)
-        let loadedVersions = detailList.buttons.matching(NSPredicate(
+        let loadedVersions = detailList.descendants(matching: .any).matching(NSPredicate(
             format: "identifier BEGINSWITH %@", loadedVersionPrefix + entryID + ":"))
         let versionsBeforeLoad = Set(loadedVersions.allElementsBoundByIndex.map { $0.identifier })
         loadText.tap()
@@ -1246,9 +1268,10 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
             if returnedVersion()?.isHittable == true { break }
             detailList.swipeUp()
         }
-        let textVersion = try XCTUnwrap(returnedVersion(), "A returned full-text version is required")
+        let textVersionLabel = try XCTUnwrap(returnedVersion(), "A returned full-text version is required")
+        let textVersion = disclosureHeader(labelIdentifier: textVersionLabel.identifier)
         XCTAssertTrue(textVersion.isHittable)
-        let returnedVersionID = String(textVersion.identifier.dropFirst(loadedVersionPrefix.count))
+        let returnedVersionID = String(textVersionLabel.identifier.dropFirst(loadedVersionPrefix.count))
         XCTAssertFalse(returnedVersionID.isEmpty)
         let textBody = detailList.staticTexts.matching(NSPredicate(
             format: "identifier == %@", "modular-full-text-body-" + returnedVersionID)).firstMatch

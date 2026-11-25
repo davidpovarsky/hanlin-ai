@@ -179,7 +179,12 @@ function NativeTextVersion({version, locale, entryID}: {version:any; locale:stri
   const t = tFactory(locale);
   const heading = version.versionTitleInHebrew || version.versionTitle || t('untitledVersion');
   const versionID = `${entryID}:${String(version.id)}`;
-  return <DisclosureGroup label={String(heading)} testID={`modular-loaded-version-${versionID}`}>
+  return <DisclosureGroup>
+    <DisclosureGroup.Label>
+      <Text modifiers={[accessibilityIdentifier(`modular-loaded-version-${versionID}`)]}>
+        {String(heading)}
+      </Text>
+    </DisclosureGroup.Label>
     {version.language &&
       <LabeledContent label={t('language')}><Text>{version.language}</Text></LabeledContent>}
     {version.license &&
@@ -238,8 +243,12 @@ function NativeResultDetail(props: {
       {entries.map((entry:any) => {
         const state = expanded[entry.id];
         const entryTitle = entry.version || entry.heRef || entry.ref || t('variantVersion');
-        return <DisclosureGroup key={String(entry.id)} label={String(entryTitle)}
-          testID={`modular-source-version-${String(entry.id)}`}>
+        return <DisclosureGroup key={String(entry.id)}>
+          <DisclosureGroup.Label>
+            <Text modifiers={[accessibilityIdentifier(`modular-source-version-${String(entry.id)}`)]}>
+              {String(entryTitle)}
+            </Text>
+          </DisclosureGroup.Label>
           <NativeFullText entry={entry} locale={locale} onLoad={onLoadFullText}/>
           {state?.loading && <ProgressView/>}
           {state?.error && <Text modifiers={[foregroundStyle('red')]}>{state.error}</Text>}
