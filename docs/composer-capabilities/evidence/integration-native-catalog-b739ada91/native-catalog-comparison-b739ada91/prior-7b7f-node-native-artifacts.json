@@ -1,0 +1,100 @@
+{
+  "acceptance": {
+    "appleBuild": "reuse-producer-evidence; this exporter does not build or test runtimes",
+    "nativeSlices": "validated-existing-binaries",
+    "ordinaryVersionDependency": "requires original host acceptance; prepared Expo header paths and host build phases need integration"
+  },
+  "artifacts": [
+    {
+      "archive": "NodeMobile.xcframework.zip",
+      "bytes": 35086561,
+      "checksum": "755769361a77d53ac930ff0b28526a6a9085619f15dc7bd169fcadcc3ee290fc",
+      "installPath": "Vendor/NodeMobile/NodeMobile.xcframework",
+      "kind": "xcframework",
+      "libraries": [
+        {
+          "architectures": [
+            "arm64"
+          ],
+          "binary": "ios-arm64-simulator/NodeMobile.framework/NodeMobile",
+          "binarySHA256": "a0daa0ebeb6a1f819726fff5228f2efadd58be9b8475ffe142edc992194bb8a0",
+          "identifier": "ios-arm64-simulator",
+          "platform": "ios",
+          "variant": "simulator"
+        },
+        {
+          "architectures": [
+            "arm64"
+          ],
+          "binary": "ios-arm64/NodeMobile.framework/NodeMobile",
+          "binarySHA256": "86492ee2e27c580f38747522a443094b5db02aa74b9460b3a593545f5bc2a23c",
+          "identifier": "ios-arm64",
+          "platform": "ios",
+          "variant": null
+        }
+      ],
+      "root": "NodeMobile.xcframework",
+      "target": "NodeMobile",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/releases/download/sdk-native-v1-b446f0628c17bf626c7f632fa3c99eeb577a4858e17ff4ce3ff7cb5f08fee18d/NodeMobile.xcframework.zip"
+    }
+  ],
+  "contentSHA256": "b446f0628c17bf626c7f632fa3c99eeb577a4858e17ff4ce3ff7cb5f08fee18d",
+  "inputSHA256": {
+    "RuntimeDependencies.lock.json": "6cdbc18a474febbfc912b35ecbf5b0b55438a6a3e6daf2c33a43792cd04bd50a",
+    "Scripts/Expo/babel.config.cjs": "62581fd5caf7b97cb36290093b7bbf7103e1c1b1300e0e11a1b3eaaf96c998ba",
+    "Scripts/Expo/build-original-expo-source.mjs": "855a9a79f1c27a2ba2f3796cf784ebb66a4a48df928b2ea8f6ca1ffd9e886c03",
+    "Scripts/Expo/build-original-widget-runtime.mjs": "5928bb12ed2fd2f6b2ecfeb6d8fc309d46e5837c58dcc4272d73af13434eb549",
+    "Scripts/Expo/dependency-lock.json": "b9e3ad6d863e3e5136ad93924ce4edcb37da87578b113523640110af347eec65",
+    "Scripts/Expo/package-lock.json": "c08757cf46ac4d5c86a873f676af4a3be585db64ae2e1aa1e8288277d4eb63b8",
+    "Scripts/Expo/prepare-ios-dependencies.mjs": "97069b0e1ec619d906f4b6d196e38e6527790c3661f798abcca6258dacf18163",
+    "Scripts/ExpoNativeAPI/dependency-lock.json": "08657d657c1f4efa36149075b632cfc75685fc1ca9af0397fc1168fe9253b768",
+    "Scripts/ExpoNativeAPI/multiscene-patch.mjs": "cafa8348a764155789169c411eb59555c6c7a2d3ef363b870e36f8d6b52c7cbd",
+    "Scripts/ExpoNativeAPI/prepare-ios-dependencies.mjs": "950a2eb6e8713bdd1a395eee6df1779d91f63864af95c33658efa6d090676f66",
+    "Scripts/NativeScript/build-metadata-tool.py": "f4318f38b1c6a9c56ba54edb0d270a6374178fa5a8e024ebfddb9790f7ae3cf5",
+    "Scripts/NativeScript/build-step-metadata-generator-wrapper.py": "0c053414f573ff2f88498099d7f1ae591d289ca3029390cd421dd938bf089ba3",
+    "Scripts/NativeScript/dependency-lock.json": "8499976a4ea0a069ed654b09b597d8fabede4bbbfb62227451a68707b851e8e5",
+    "Scripts/NativeScript/package-lock.json": "16f569f4bfa6f8806cfe72449866a0dc9a9331f33d2c67170d5292455c48b60b",
+    "Scripts/NativeScript/prepare-ios-dependencies.mjs": "b5114a3be1fc846e288128af08cef9f38b0cac8e34923780325c4edc2976ebd9",
+    "Scripts/Runtime/prepare-runtime-core.sh": "1ff99fabcbf8f40d515f3f1b944299286c1094a19520f9892a97f99cf8b64540"
+  },
+  "missingTargets": [
+    "ExpoAsset",
+    "ExpoBrownfield",
+    "ExpoModulesCore",
+    "ExpoModulesJSI",
+    "ExpoModulesWorklets",
+    "ExpoUI",
+    "Libffi",
+    "NSCWinterTC",
+    "Python",
+    "React",
+    "ReactNativeDependencies",
+    "ReactNativeHeaders",
+    "TNSWidgets",
+    "hermesvm"
+  ],
+  "releaseTag": "sdk-native-v1-b446f0628c17bf626c7f632fa3c99eeb577a4858e17ff4ce3ff7cb5f08fee18d",
+  "repository": "davidpovarsky/hanlin-ai",
+  "requiredTargets": [
+    "ReactNativeHeaders",
+    "React",
+    "ReactNativeDependencies",
+    "hermesvm",
+    "ExpoModulesJSI",
+    "ExpoModulesCore",
+    "ExpoModulesWorklets",
+    "ExpoUI",
+    "ExpoAsset",
+    "ExpoBrownfield",
+    "Libffi",
+    "TNSWidgets",
+    "NSCWinterTC",
+    "NodeMobile",
+    "Python"
+  ],
+  "schemaVersion": 1,
+  "scope": "selected-targets",
+  "sourceCommit": "7b7f7e4460200d7e98162dd525d67f8ca1860911",
+  "state": "prepared",
+  "supportArtifacts": []
+}

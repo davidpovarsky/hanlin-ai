@@ -1,0 +1,13 @@
+{
+  "atUTC": "2026-11-25T01:30:27.204497+00:00",
+  "category": "inactive reproducible isolated copied ModuleCache",
+  "path": "/Users/m1/caches/DerivedData/hanlin-composer-app-20261124.ModuleCache-before-attempt2",
+  "reason": "Attempt2 recreated its own working module cache and passed the previousSwiftShims blocker; raw error/log/xcresult evidence retained. No active open files in the detached stale copy.",
+  "sourceCommit": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91",
+  "beforeFreeBytes": 39935004672,
+  "bytesInFiles": 1182623502,
+  "lsofExit": 1,
+  "afterFreeBytes": 40257015808,
+  "recoveredBytes": 322011136,
+  "status": "REMOVED_OWN_INACTIVE_GENERATED_CACHE_ONLY"
+}

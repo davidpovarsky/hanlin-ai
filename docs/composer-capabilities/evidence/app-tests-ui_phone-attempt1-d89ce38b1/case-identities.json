@@ -1,0 +1,70 @@
+{
+  "expectedMethodCount": 4,
+  "expectedInvocationCount": 4,
+  "observedMethodCount": 4,
+  "observedInvocationCount": 4,
+  "observedDeviceIDs": [
+    "F1D52257-55E0-4927-8029-E19D47B51AC0"
+  ],
+  "cases": [
+    {
+      "selector": "AI_HLYUITests/HanlinComposerCapabilitiesUITests/testMiniAppSelectionAttachesWithoutLaunchingAndEnablesAttachmentOnlySend",
+      "relativeIdentity": "HanlinComposerCapabilitiesUITests/testMiniAppSelectionAttachesWithoutLaunchingAndEnablesAttachmentOnlySend",
+      "expectedInvocations": 1,
+      "observedCopies": 1,
+      "rawIdentity": "HanlinComposerCapabilitiesUITests/testMiniAppSelectionAttachesWithoutLaunchingAndEnablesAttachmentOnlySend()",
+      "rawIdentityURL": "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinComposerCapabilitiesUITests/testMiniAppSelectionAttachesWithoutLaunchingAndEnablesAttachmentOnlySend",
+      "rawResult": "Failed",
+      "durationSeconds": 46.32673692703247,
+      "arguments": [],
+      "status": "OBSERVED_NONPASS"
+    },
+    {
+      "selector": "AI_HLYUITests/HanlinComposerCapabilitiesUITests/testMentionAndSlashPreserveHebrewTextAtTheRealCaretAndInsertTheSameIdentity",
+      "relativeIdentity": "HanlinComposerCapabilitiesUITests/testMentionAndSlashPreserveHebrewTextAtTheRealCaretAndInsertTheSameIdentity",
+      "expectedInvocations": 1,
+      "observedCopies": 1,
+      "rawIdentity": "HanlinComposerCapabilitiesUITests/testMentionAndSlashPreserveHebrewTextAtTheRealCaretAndInsertTheSameIdentity()",
+      "rawIdentityURL": "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinComposerCapabilitiesUITests/testMentionAndSlashPreserveHebrewTextAtTheRealCaretAndInsertTheSameIdentity",
+      "rawResult": "Failed",
+      "durationSeconds": 30.31432604789734,
+      "arguments": [],
+      "status": "OBSERVED_NONPASS"
+    },
+    {
+      "selector": "AI_HLYUITests/HanlinComposerCapabilitiesUITests/testManifestCatalogAndMapPanelsKeepUserConfigurationAcrossEditing",
+      "relativeIdentity": "HanlinComposerCapabilitiesUITests/testManifestCatalogAndMapPanelsKeepUserConfigurationAcrossEditing",
+      "expectedInvocations": 1,
+      "observedCopies": 1,
+      "rawIdentity": "HanlinComposerCapabilitiesUITests/testManifestCatalogAndMapPanelsKeepUserConfigurationAcrossEditing()",
+      "rawIdentityURL": "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinComposerCapabilitiesUITests/testManifestCatalogAndMapPanelsKeepUserConfigurationAcrossEditing",
+      "rawResult": "Failed",
+      "durationSeconds": 187.0529750585556,
+      "arguments": [],
+      "status": "OBSERVED_NONPASS"
+    },
+    {
+      "selector": "AI_HLYUITests/HanlinMorphComposerUITests/testDismissModelPickerKeepsSelectedModelAndDraft",
+      "relativeIdentity": "HanlinMorphComposerUITests/testDismissModelPickerKeepsSelectedModelAndDraft",
+      "expectedInvocations": 1,
+      "observedCopies": 1,
+      "rawIdentity": "HanlinMorphComposerUITests/testDismissModelPickerKeepsSelectedModelAndDraft()",
+      "rawIdentityURL": "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinMorphComposerUITests/testDismissModelPickerKeepsSelectedModelAndDraft",
+      "rawResult": "Failed",
+      "durationSeconds": 18.55938696861267,
+      "arguments": [],
+      "status": "OBSERVED_NONPASS"
+    }
+  ],
+  "problems": [
+    "METHOD_NONPASS: HanlinComposerCapabilitiesUITests/testMiniAppSelectionAttachesWithoutLaunchingAndEnablesAttachmentOnlySend",
+    "METHOD_NONPASS: HanlinComposerCapabilitiesUITests/testMentionAndSlashPreserveHebrewTextAtTheRealCaretAndInsertTheSameIdentity",
+    "METHOD_NONPASS: HanlinComposerCapabilitiesUITests/testManifestCatalogAndMapPanelsKeepUserConfigurationAcrossEditing",
+    "METHOD_NONPASS: HanlinMorphComposerUITests/testDismissModelPickerKeepsSelectedModelAndDraft",
+    "SUMMARY_NONPASS",
+    "SUMMARY_failedTests: 4",
+    "SUMMARY_COUNT_MISMATCH_passedTests: 0",
+    "SUMMARY_HAS_FAILURE_DIAGNOSTICS"
+  ],
+  "passed": false
+}

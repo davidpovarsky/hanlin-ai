@@ -75,7 +75,15 @@ final class HanlinMorphComposerUITests: XCTestCase {
         model.tap()
         let picker = app.descendants(matching: .any)["hanlin-model-picker-popover"].firstMatch
         XCTAssertTrue(picker.waitForExistence(timeout: 10))
-        model.tap()
+        // The native popover exposes its dismissal region while its source
+        // button is absent from AX. Cancel outside the current picker bounds.
+        let dismissal = app.otherElements["PopoverDismissRegion"].firstMatch
+        XCTAssertTrue(dismissal.exists)
+        let point = CGPoint(x: dismissal.frame.maxX - 12, y: picker.frame.midY)
+        XCTAssertFalse(picker.frame.contains(point))
+        dismissal.coordinate(withNormalizedOffset: .zero).withOffset(CGVector(
+            dx: point.x - dismissal.frame.minX, dy: point.y - dismissal.frame.minY
+        )).tap()
         XCTAssertTrue(picker.waitForNonExistence(timeout: 5))
         XCTAssertEqual(model.label, originalLabel)
         XCTAssertEqual(input.value as? String, draft)

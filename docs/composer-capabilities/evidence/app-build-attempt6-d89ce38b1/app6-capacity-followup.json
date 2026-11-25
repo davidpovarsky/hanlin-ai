@@ -1,0 +1,22 @@
+{
+  "atUTC": "2026-11-25T03:40:13.334591+00:00",
+  "sourceCommit": "d89ce38b170bc9af4734cd11e30ca793b16698d0",
+  "phase": "incremental app6 already building after unchanged runtime/source input validation",
+  "initialAdmissionPlan": "app6-incremental-capacity-plan.json",
+  "initialAdmissionEstimateGiB": {
+    "incremental": 2,
+    "concurrent": 4,
+    "OS": 2
+  },
+  "independentRetainedAppAllocatedBytes": 1668079616,
+  "independentRetainedAppFileCount": 6872,
+  "conservativeReassessmentGiB": {
+    "incremental": 4,
+    "concurrent": 4,
+    "OS": 2
+  },
+  "reassessmentBasis": "Two retained app bundle sizes plus0.5GiB temporary bookkeeping rounded to4GiB; initial2GiB estimate covered one retained app replacement and small metadata/log writes; neither modifies the prior observed admission record",
+  "currentFreeBytes": 20111048704,
+  "currentFreeGiB": 18.73,
+  "conservativeEnvelopeFitsNow": true
+}

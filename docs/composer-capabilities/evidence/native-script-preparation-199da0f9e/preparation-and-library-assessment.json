@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "assessedAtUTC": "2026-11-25T02:43:45.355490+00:00",
+  "libraryCompilation": {
+    "status": "EXECUTED_PASS",
+    "sourceCommit": "aea6d31e311a3f3096014ea2f1c39432371e3ecc",
+    "receipt": "../application-library-aea6d31e3/application-module-build-attempt1.json",
+    "scope": "Original HanlinApplication library source compilation only; not application/runtime acceptance. Stable previous Host6 resource is intentional; Host7 and full app builds remain required.",
+    "swiftSourceCountReportedByExecutionOwner": 519,
+    "durationSeconds": 571.716,
+    "stableEmbeddedHost6ArchiveSHA256": "9d2390718e8cbd9161438392789a69a60bcfe537c8cd4ac5b8088323cb3339cc",
+    "fullApplicationBuild": "NOT_INFERRED",
+    "tests": "NOT_RUN"
+  },
+  "nativePreparation": {
+    "status": "EXECUTED_PASS",
+    "sourceCommit": "aea6d31e311a3f3096014ea2f1c39432371e3ecc",
+    "receipt": "native-script-metadata-preparation.json",
+    "durationSeconds": 6.674,
+    "installedWrapperSHA256": "71bf1d521abff7cc29c1e8d397a9ef2a55b09f758afb36f0a148be12350b664f",
+    "exactWrapperSourceHashMatches": true
+  },
+  "firstPreflight": {
+    "status": "FAILED",
+    "sourceCommit": "aea6d31e311a3f3096014ea2f1c39432371e3ecc",
+    "receipt": "native-script-metadata-preflight.json",
+    "exitCode": 1,
+    "durationSeconds": 0.307,
+    "reason": "ENOENT for Prepared/swiftui-fixture/nativescript/app/package.json."
+  },
+  "fixtureProducerCorrection": {
+    "commit": "199da0f9e61a0d99998bce906001e565f3138d1c",
+    "changedFile": "Scripts/NativeScript/prepare-fixture.mjs",
+    "addedLines": 3,
+    "removedLines": 3,
+    "behavior": "Use the resolved dependency lock for runtime/core fixture versions while retaining the installed-version and original production checks.",
+    "patch": {
+      "path": "evidence/native-script-preparation-199da0f9e/fixture-lock-authority-199da0f9e.patch.gz",
+      "rawSHA256": "da7124804027a4c56b7863f9ec5b6c5786eac8300e3c925305ead0438551f328"
+    }
+  },
+  "fixtureProduction": {
+    "status": "EXECUTED_PASS",
+    "sourceCommit": "199da0f9e61a0d99998bce906001e565f3138d1c",
+    "receipt": "native-script-fixture-production.json",
+    "durationSeconds": 24.598,
+    "packageJSONUnchanged": true,
+    "packageJSONSHA256": "08fc03bfa87cd78f4f21f80e9324a4840061105f6e9ab081ed794c569ca7324b"
+  },
+  "secondPreflight": {
+    "status": "EXECUTED_PASS",
+    "sourceCommit": "199da0f9e61a0d99998bce906001e565f3138d1c",
+    "receipt": "native-script-metadata-preflight-attempt2.json",
+    "durationSeconds": 2.291,
+    "packageJSONUnchanged": true
+  },
+  "generatedFixtures": {
+    "commit": "bcd44d23a0d2fc2804fa34f3cc5407e51b0adc2f",
+    "changedFiles": [
+      "Scripts/NativeScript/Prepared/fixture-a/nativescript/app/bundle.mjs",
+      "Scripts/NativeScript/Prepared/fixture-b/nativescript/app/bundle.mjs"
+    ],
+    "patch": {
+      "path": "evidence/native-script-preparation-199da0f9e/generated-fixtures-bcd44d23a.patch.gz",
+      "rawSHA256": "ee8063a84c74cec3c8fa8e4279040e45200d9e14842bc00f122909e93da38881"
+    }
+  },
+  "runtimeHostAttempts": {
+    "failedAttempt7": "../runtime-host-final-attempt7-bcd44d23a/failure-assessment.json",
+    "passedAttempt8": "../runtime-host-final-attempt8-bcd44d23a/runtime-host-final-attempt8.json",
+    "sameSourceCommit": "bcd44d23a0d2fc2804fa34f3cc5407e51b0adc2f",
+    "passed": 177,
+    "failed": 0,
+    "skipped": 1,
+    "archiveSHA256": "8b05742603572e8b3309a647fc04880fa59d891beb13f4623fbd79a0cb9c49a1",
+    "archiveBytes": 81837544,
+    "independentArchiveHashMatched": true
+  },
+  "finalGeneratedFreeze": {
+    "commit": "b739ada91aca115093e3511f9df58c15edcb5923",
+    "parent": "bcd44d23a0d2fc2804fa34f3cc5407e51b0adc2f",
+    "changedFiles": [
+      "docs/miniapp-sdk/extension-reachability.json",
+      "docs/miniapp-sdk/extension-reachability.md",
+      "docs/miniapp-sdk/source-inventory.json"
+    ],
+    "addedLines": 5,
+    "removedLines": 5,
+    "patch": {
+      "path": "evidence/runtime-host-final-attempt8-bcd44d23a/sdk-inventory-freeze-b739ada91.patch.gz",
+      "rawSHA256": "5bf28786b3ce58e151c5b127e559b0e6927a956dc1a60994e7b893f3708fd49c"
+    }
+  },
+  "acceptanceBoundary": "Library compilation, artifact preparation, fixtures, preflight and Host checks do not establish full application build, native VM or UI acceptance. Those gates remain pending.",
+  "noNativeCommandsOrTestsExecutedDuringPackaging": true
+}

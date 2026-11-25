@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "kind": "independent-native-preflight-source-scope-review",
+  "reviewer": "/root/sdk_boundary_review",
+  "savedAtUTC": "2026-11-25T03:31:38.475097+00:00",
+  "targetSource": "d89ce38b170bc9af4734cd11e30ca793b16698d0",
+  "reviewStatus": "SOURCE_REVIEW_COMPLETE_NO_BLOCKING_DEFECT_FOUND",
+  "immutableScopes": {
+    "scheme": {
+      "commit": "eefe96321c9d83cdb300fbf84fd1da3977f5362e",
+      "parent": "b739ada91aca115093e3511f9df58c15edcb5923",
+      "paths": [
+        {
+          "path": "AI_HLY.xcodeproj/xcshareddata/xcschemes/AI_HLY.xcscheme",
+          "sha256": "1a37dc5e015ee2e29e873f3e6d6035d6e933ec4eb27848c1263e51c9958af480"
+        }
+      ]
+    },
+    "checker": {
+      "commit": "59838a47979f8d875618687708e0334fb63454a5",
+      "parent": "eefe96321c9d83cdb300fbf84fd1da3977f5362e",
+      "paths": [
+        {
+          "path": "Scripts/NativeScript/Tests/app-binary-preflight.test.mjs",
+          "sha256": "d01533d58a7fef39bbe8473ac21161012b45ef41f128bbca81b48ea8c85ed2f3"
+        },
+        {
+          "path": "Scripts/NativeScript/app-binary-preflight.mjs",
+          "sha256": "f7aa0390c863534688b71df86437b0f5583489d6c5e54b2cc097730603216f87"
+        },
+        {
+          "path": "Scripts/NativeScript/preflight-ios-dependencies.mjs",
+          "sha256": "80b6abe07b87aa3a44dbf16d73c79a5ff1c001cd29ff09cd13af038ab6b54c60"
+        }
+      ]
+    },
+    "fixture": {
+      "commit": "d89ce38b170bc9af4734cd11e30ca793b16698d0",
+      "parent": "59838a47979f8d875618687708e0334fb63454a5",
+      "paths": [
+        {
+          "path": "Scripts/NativeScript/Tests/app-binary-preflight.test.mjs",
+          "sha256": "85d9896cb61759d17081bd851e626c6c1148eb07e797209892ec7bdf07699ebb"
+        }
+      ]
+    }
+  },
+  "scopeDescriptions": {
+    "scheme": "Only TestAction shouldUseLaunchSchemeArgsEnv changes YES to NO, making its existing HANLIN_UNIT_TEST_HOST=1 effective. LaunchAction/ProfileAction, production host gates and test assertions unchanged.",
+    "checker": "Only NativeScript built-app inspection helper, preflight integration and nine focused regression fixtures. Original app/runtime/linker/metadata producer unchanged.",
+    "fixture": "Only test fixture temp-directory canonicalization with realpath for macOS /var to /private/var aliases; checker behavior and test assertions unchanged."
+  },
+  "preservedOriginalChecks": [
+    "Exact original Core/runtime dependency-lock and closure versions",
+    "SwiftUI plugin integrity/version/provider and prepared runtime-file hashes",
+    "Required NativeScript/NSCWinterTC/TNSWidgets frameworks and Mach-O shape",
+    "TNSWidgets exported TNSLabel Objective-C class",
+    "Real Objective-C SwiftUI provider registration checked with otool -ov",
+    "Provider-name strings check on the same image that passed the Objective-C check",
+    "Prepared fixture package/provenance and plugin-free Core requirements",
+    "Canonical build-define checks for prepared runtime modules"
+  ],
+  "checkerFindings": [
+    "Verified linked direct main-bundle image closure adds Xcode debug dylib metadata ownership without admitting framework or unlinked metadata.",
+    "Canonical paths are deduplicated, direct main-bundle-parent scope is enforced, and actual loader/executable/runpath resolution is retained.",
+    "Exact __DATA/__TNSMetadata section and positive BigInt size are required, with exactly one owner per loaded architecture; fat slices are not counted as duplicate host images.",
+    "Provider candidates gain the verified host paths while preserving the existing embedded-framework scan and same-provider strings assertion."
+  ],
+  "fingerprintScope": "Scheme, checker and fixture paths are outside reviewed SDK explicit/recursive inputs, source-inventory inputs and Host/native input roots; no production producer or package refresh implied.",
+  "selectedCaseIndependence": {
+    "suite": "AI_HLYTests/HanlinUnifiedHostServicesE2ETests",
+    "cases": [
+      "actualNativeScriptAssistantUsesDedicatedSourceAndImmutableConfiguration()",
+      "actualExpoAssistantUsesDedicatedSourceAndImmutableConfiguration()",
+      "nativeScriptAssistantRepliesSettleOnceAndRejectMalformedJSON()",
+      "nativeScriptAssistantCancellationAndInvalidationReleaseWaiters()"
+    ],
+    "basis": "The engine cases author isolated index.ts/echo.ts fixtures through MiniAppAuthoringTool and use production assistant exports; reply/cancellation cases instantiate NativeScriptHostServicesAdapter directly. Neither parity-demo helpers nor modular-text-search UI is loaded by these cases."
+  },
+  "boundedCompletedOwnerFollowup": {
+    "from": "318b251b11a4816eb9cc3c1337c7bfe287f4a890",
+    "to": "15647db0c5143836a4b31c51a8217b16228863d0",
+    "nonEvidencePaths": [
+      "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+      "Scripts/Expo/miniapps/modular-text-search/App.tsx"
+    ],
+    "additionalEvidencePathCount": 57,
+    "sharedProductionRuntimeBridgeOrSelectedCaseHelperChanged": false,
+    "technicalIntakePrerequisiteForSelectedApp6Gates": false,
+    "excluded": "No active-owner working files or later changes imported; immutable diff-path classification only."
+  },
+  "relatedProof": {
+    "path": "/mnt/development/projects/worktrees/hanlin-composer-capabilities-20261124/build/composer-evidence/parity-fixture-intake-scope-eefe96321.json",
+    "sha256": "71ea0e18bd2993695539e55e1984cae198ac3fde222ad547d004742591bbecbc"
+  },
+  "validationBoundary": {
+    "testsExecutedByReviewer": false,
+    "buildsExecutedByReviewer": false,
+    "productionSourceEditedForThisReview": false,
+    "passClaims": "None. Native execution results belong to separate original Mac receipts; this document records source review and input scope only."
+  }
+}

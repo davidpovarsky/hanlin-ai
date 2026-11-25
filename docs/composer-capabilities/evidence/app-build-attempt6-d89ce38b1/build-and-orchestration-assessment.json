@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 1,
+  "assessedAtUTC": "2026-11-25T03:46:12.114837+00:00",
+  "sourceCommit": "d89ce38b170bc9af4734cd11e30ca793b16698d0",
+  "build": {
+    "status": "EXECUTED_PASS",
+    "scheme": "AI_HLY",
+    "exitCode": 0,
+    "durationSeconds": 207.607,
+    "startedAtUTC": "2026-11-25T03:36:50.226249+00:00",
+    "finishedAtUTC": "2026-11-25T03:40:17.832877+00:00",
+    "receipt": "ai-hly-build-attempt6.json",
+    "processReceipt": "ai-hly-build-attempt6-process.json",
+    "compilerPID": 20652,
+    "processAndCompletedCommandMatch": true,
+    "rawLogSHA256": "479775e23c60d7ccbf2ee82cf297de84acfc927d68f65320498de12070692bd8",
+    "resolvedLockUnchanged": true,
+    "trackedChangesEmpty": true,
+    "acceptanceTestsExecutedByBuildForTestingCommand": 0,
+    "companionBuildInferred": false
+  },
+  "priorWaitingRunner": {
+    "receipt": "app6-capacity-plan-refresh.json",
+    "stoppedAtUTC": "2026-11-25T03:31:11.728160+00:00",
+    "stoppedPID": 3893,
+    "recordedState": "own capacity waiter only; no compiler/result/log existed",
+    "observedOwnDescendants": [],
+    "noCompilerLogOrResultExistedPerOriginalReceipt": true,
+    "classification": "OWN_WAITER_ORCHESTRATION_NOT_FAILED_OR_DUPLICATE_COMPILATION"
+  },
+  "admissionPlan": {
+    "originalPhaseEstimateGiB": {
+      "incrementalBuildEstimateGiB": 8,
+      "concurrentGrowthAllowanceGiB": 6,
+      "OSMarginGiB": 4
+    },
+    "actualIncrementalAdmissionEstimateGiB": {
+      "incrementalBuildEstimateGiB": 2,
+      "concurrentGrowthAllowanceGiB": 4,
+      "OSMarginGiB": 2
+    },
+    "basis": "Only test scheme and three Node checker/fixture files differ from full successful app5; no Swift/ObjC/linker/project/pin/native inputs change. Warm existing same-scheme products retained. 2GiB allows graph/result/metadata/link temporary writes; 4GiB accounts for active other app/UI owner growth; 2GiB OS margin with normal memory pressure. Observed free space recovered from8.239 to13.953GiB. No CPU/load/job-count gate.",
+    "changedPathsSinceSuccessfulBuild": [
+      "AI_HLY.xcodeproj/xcshareddata/xcschemes/AI_HLY.xcscheme",
+      "Scripts/NativeScript/Tests/app-binary-preflight.test.mjs",
+      "Scripts/NativeScript/app-binary-preflight.mjs",
+      "Scripts/NativeScript/preflight-ios-dependencies.mjs"
+    ],
+    "fixedCPUIdleOrLoadOrJobCountGate": false,
+    "historicalPlanPreserved": true,
+    "planReceipt": "app6-incremental-capacity-plan.json"
+  },
+  "cacheRetirement": {
+    "receipt": "inactive-composer-sdk-cache-retirement-20261125.json",
+    "startedAtUTC": "2026-11-25T03:36:21.030652+00:00",
+    "finishedAtUTC": "2026-11-25T03:36:49.900644+00:00",
+    "completedBeforeCompilerStart": true,
+    "scope": "own inactive SDK/Platform compiler/index caches only",
+    "paths": 12,
+    "sumAllocatedBytesBeforeOfRetiredPaths": 1579753472,
+    "recordedLsofExitCode": 0,
+    "recordedMatchingOpenFiles": [],
+    "recordedProcessMatches": [],
+    "observedFilesystemFreeBytesBefore": 10688143360,
+    "observedFilesystemFreeBytesAfter": 9251786752,
+    "observedFilesystemFreeByteDelta": -1436356608,
+    "netRecoveredByteClaim": null,
+    "qualification": "Other owners are active; APFS sharing and concurrent writes/cleanup can make observed free-space delta differ from allocated cache bytes",
+    "preservationRecordedByExecutionOwner": [
+      "current hanlin-composer-app-20261124 DerivedData",
+      "all Build/Products and out/Products",
+      "SourcePackages/checkouts/artifacts/repositories",
+      "all logs/xcresult/evidence/source/native artifacts",
+      "all simulator devices/runtimes",
+      "all other owners directories"
+    ],
+    "host7Temp": "preserved; separate open-file scan timed out, not used as deletion proof"
+  },
+  "laterCapacityReassessment": {
+    "receipt": "app6-capacity-followup.json",
+    "observedAtUTC": "2026-11-25T03:40:13.334591+00:00",
+    "phase": "incremental app6 already building after unchanged runtime/source input validation",
+    "retainedAppAllocatedBytes": 1668079616,
+    "retainedAppFileCount": 6872,
+    "conservativeEstimateGiB": {
+      "incremental": 4,
+      "concurrent": 4,
+      "OS": 2
+    },
+    "totalConservativeEnvelopeGiB": 10,
+    "observedFreeBytes": 20111048704,
+    "observedFreeGiB": 18.73,
+    "envelopeFitsAtObservation": true,
+    "basis": "Two retained app bundle sizes plus0.5GiB temporary bookkeeping rounded to4GiB; initial2GiB estimate covered one retained app replacement and small metadata/log writes; neither modifies the prior observed admission record",
+    "doesNotRewriteActualAdmissionEstimate": true
+  },
+  "boundaries": [
+    "One actual attempt6 compiler started after the owned waiting runner was stopped; the prior wait is not a failed or duplicated build.",
+    "Allocated cache bytes are distinct from observed free space; negative net delta is retained and no reclaimed-space amount is claimed.",
+    "Original successful build receipts are separate from functional/native/editor/UI test execution.",
+    "No native commands, compiler, tests, cleanup or Mac mutation occurred during evidence packaging."
+  ]
+}

@@ -7,6 +7,7 @@ import SwiftUI
 @MainActor
 final class HanlinApplicationLifecycleState {
     var preparationTask: Task<Void, Never>?
+    var systemIntegrationTask: Task<Void, Never>?
     var saveObserver: AnyCancellable?
 }
 
@@ -24,10 +25,13 @@ extension HanlinApplicationContext {
                 return
             }
             HanlinExpoSession.ensureAppDefinesLoaded()
-            await ChavrusaSystemIntegrationBootstrap.configure()
             HanlinNativeScriptProductionBootstrap.prepareEmbeddedProviders()
             dataManager.preloadDataIfNeeded()
             HanlinScriptingPlatform.shared.configure(modelContext: modelContainer.mainContext)
+            // Optional system setup must not gate the local stores or runtimes.
+            applicationLifecycle.systemIntegrationTask = Task { @MainActor in
+                await ChavrusaSystemIntegrationBootstrap.configure()
+            }
             await HanlinScriptingPlatform.shared.publishCompactAgentConfig()
             await RuntimeLifecycleBridge.prepareApplication()
             applicationLifecycle.saveObserver = NotificationCenter.default.publisher(for: ModelContext.didSave)

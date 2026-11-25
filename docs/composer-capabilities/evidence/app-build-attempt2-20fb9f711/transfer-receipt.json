@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "transferredAtUTC": "2026-11-25T01:35:19.837060+00:00",
+  "transport": "Oracle pinned scaleway-mac SSH alias, BatchMode=yes, StrictHostKeyChecking=yes",
+  "sourceReadOnly": true,
+  "allSourceSHA256Verified": true,
+  "noBuildsTestsGeneratorsDevicesOrMacWrites": true,
+  "files": [
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt2-20fb9f711/ai-hly-build-attempt2.json",
+      "bytes": 1459,
+      "sha256": "b87c01e761c6fa976ef11f7da67985c10bcd6e7424e2a9883aaed1da56ac285f",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/ai-hly-build-attempt2.json",
+      "sourceBytes": 1459,
+      "sourceSHA256": "b87c01e761c6fa976ef11f7da67985c10bcd6e7424e2a9883aaed1da56ac285f",
+      "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt2-20fb9f711/ai-hly-build-attempt2-errors.json",
+      "bytes": 2244,
+      "sha256": "37694da14a535ccf01f858466bb0d41a1bc543898e0ec52061577a2039c761ea",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/ai-hly-build-attempt2-errors.json",
+      "sourceBytes": 2244,
+      "sourceSHA256": "37694da14a535ccf01f858466bb0d41a1bc543898e0ec52061577a2039c761ea",
+      "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt2-20fb9f711/ai-hly-build-attempt2.log.gz",
+      "bytes": 194448,
+      "sha256": "c5f0951a8113f0d9979c07842230e888ce184e1fecd562de274d2614f898e944",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/ai-hly-build-attempt2.log",
+      "sourceBytes": 4608783,
+      "sourceSHA256": "49e8df8a70597ca6f0f36f5974976ac0f51420ed5771f763cf90f5ffbc14b933",
+      "compressedForRepository": true,
+      "uncompressedLogSHA256": "49e8df8a70597ca6f0f36f5974976ac0f51420ed5771f763cf90f5ffbc14b933",
+      "uncompressedLogBytes": 4608783
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt2-20fb9f711/isolated-stale-module-cache-retirement.json",
+      "bytes": 677,
+      "sha256": "a7b275b526ed7d25d38c474e736585c3f6b5f32e31927d50880bc9e7f1042951",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/isolated-stale-module-cache-retirement.json",
+      "sourceBytes": 677,
+      "sourceSHA256": "a7b275b526ed7d25d38c474e736585c3f6b5f32e31927d50880bc9e7f1042951",
+      "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt2-20fb9f711/xcresult-sha256.json",
+      "bytes": 1962,
+      "sha256": "24e42e8e1ee5ff0b2654c4803005f3bb9610077dfc0f156b5fd1a381b3058202",
+      "sourcePath": "Read-only Mac xcresult file hashes",
+      "compressedForRepository": false,
+      "derived": true
+    }
+  ],
+  "existingProcessReceipt": "../app-build-attempt1-20fb9f711/ai-hly-build-attempt2-process.json",
+  "rawCompilerErrorLines": [
+    "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinCompactChatWorkspace.swift:613:21: error: overriding property must be as accessible as its enclosing type",
+    "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinCompactChatWorkspace.swift:613:21: error: cannot override with a stored property 'focused'"
+  ]
+}

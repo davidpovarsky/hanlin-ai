@@ -1,0 +1,86 @@
+{
+  "startedAtUTC": "2026-11-25T03:36:21.030652+00:00",
+  "finishedAtUTC": "2026-11-25T03:36:49.900644+00:00",
+  "sourceCommit": "d89ce38b170bc9af4734cd11e30ca793b16698d0",
+  "category": "own inactive SDK/Platform compiler/index caches only",
+  "ownerEvidence": "Receipt-bound older SDK11 and Platform51 execution caches; independent inventory verified original successful logs/xcresult/source/product retention",
+  "processMatches": [],
+  "lsofExitCode": 0,
+  "matchingOpenFiles": [],
+  "removed": [
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-composer-sdk-ios/Build/Intermediates.noindex",
+      "allocatedBytesBefore": 288366592,
+      "removed": true
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-composer-sdk-ios/Index.noindex",
+      "allocatedBytesBefore": 62095360,
+      "removed": true
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-composer-sdk-ios/ModuleCache.noindex",
+      "allocatedBytesBefore": 139018240,
+      "removed": true
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-composer-sdk-ios/CompilationCache.noindex",
+      "allocatedBytesBefore": 28672,
+      "removed": true
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-composer-sdk-ios/SDKExplicitPrecompiledModules",
+      "allocatedBytesBefore": 203239424,
+      "removed": true
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-composer-sdk-ios/SDKStatCaches.noindex",
+      "allocatedBytesBefore": 16912384,
+      "removed": true
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-composer-platform-spm/out/Intermediates.noindex",
+      "allocatedBytesBefore": 367538176,
+      "removed": true
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-composer-platform-spm/out/ModuleCache.noindex",
+      "allocatedBytesBefore": 225738752,
+      "removed": true
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-composer-platform-spm/out/CompilationCache.noindex",
+      "allocatedBytesBefore": 28672,
+      "removed": true
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-composer-platform-spm/out/SDKExplicitPrecompiledModules",
+      "allocatedBytesBefore": 192270336,
+      "removed": true
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-composer-platform-spm/out/SDKStatCaches.noindex",
+      "allocatedBytesBefore": 15294464,
+      "removed": true
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-composer-platform-spm/out/v5",
+      "allocatedBytesBefore": 69222400,
+      "removed": true
+    }
+  ],
+  "allocatedBytesRemoved": 1579753472,
+  "freeBytesBefore": 10688143360,
+  "freeBytesAfter": 9251786752,
+  "observedFreeByteDelta": -1436356608,
+  "deltaQualification": "Other owners are active; APFS sharing and concurrent writes/cleanup can make observed free-space delta differ from allocated cache bytes",
+  "preserved": [
+    "current hanlin-composer-app-20261124 DerivedData",
+    "all Build/Products and out/Products",
+    "SourcePackages/checkouts/artifacts/repositories",
+    "all logs/xcresult/evidence/source/native artifacts",
+    "all simulator devices/runtimes",
+    "all other owners directories"
+  ],
+  "host7Temp": "preserved; separate open-file scan timed out, not used as deletion proof"
+}

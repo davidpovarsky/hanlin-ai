@@ -1,0 +1,49 @@
+{
+  "atUTC": "2026-11-25T03:31:11.728160+00:00",
+  "sourceCommit": "d89ce38b170bc9af4734cd11e30ca793b16698d0",
+  "stoppedPID": 3893,
+  "stoppedCommand": "/opt/homebrew/Cellar/python@3.12/3.12.16/Frameworks/Python.framework/Versions/3.12/Resources/Python.app/Contents/MacOS/Python build/composer-evidence/run_app_build.py --scheme AI_HLY --attempt 6 --source d89ce38b170bc9af4734cd11e30ca793b16698d0",
+  "stoppedState": "own capacity waiter only; no compiler/result/log existed",
+  "observedOwnDescendants": [],
+  "previousAdmission": {
+    "sourceCommit": "d89ce38b170bc9af4734cd11e30ca793b16698d0",
+    "scheme": "AI_HLY",
+    "status": "WAITING_FOR_MEASURED_CAPACITY",
+    "elapsedSeconds": 593.474,
+    "capacity": {
+      "atUTC": "2026-11-25T03:31:08.492032+00:00",
+      "cpuIdlePercent": 19.78,
+      "availableGiB": 5.437,
+      "diskGiB": 14.747,
+      "nativeProcesses": [
+        "14538  6123   0.0 160400 /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild",
+        "14845 94314  54.0 294912 /Users/m1/builds/xcode-27.1.Zoqh5zoP/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-frontend",
+        "14853 94314  54.9 285248 /Users/m1/builds/xcode-27.1.Zoqh5zoP/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-frontend",
+        "94314 87847   0.0 192048 /Users/m1/builds/xcode-27.1.Zoqh5zoP/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-test"
+      ],
+      "memoryPressureLevel": 1,
+      "swapUsage": "vm.swapusage: total = 1024.00M  used = 264.19M  free = 759.81M  (encrypted)",
+      "incrementalBuildEstimateGiB": 8,
+      "concurrentGrowthAllowanceGiB": 6,
+      "OSMarginGiB": 4
+    }
+  },
+  "newPlan": {
+    "sourceCommit": "d89ce38b170bc9af4734cd11e30ca793b16698d0",
+    "scheme": "AI_HLY",
+    "incrementalBuildEstimateGiB": 2,
+    "concurrentGrowthAllowanceGiB": 4,
+    "OSMarginGiB": 2,
+    "basis": "Only test scheme and three Node checker/fixture files differ from full successful app5; no Swift/ObjC/linker/project/pin/native inputs change. Warm existing same-scheme products retained. 2GiB allows graph/result/metadata/link temporary writes; 4GiB accounts for active other app/UI owner growth; 2GiB OS margin with normal memory pressure. Observed free space recovered from8.239 to13.953GiB. No CPU/load/job-count gate.",
+    "changedPathsSinceSuccessfulBuild": [
+      "AI_HLY.xcodeproj/xcshareddata/xcschemes/AI_HLY.xcscheme",
+      "Scripts/NativeScript/Tests/app-binary-preflight.test.mjs",
+      "Scripts/NativeScript/app-binary-preflight.mjs",
+      "Scripts/NativeScript/preflight-ios-dependencies.mjs"
+    ]
+  },
+  "runnerBeforeSHA256": "3f7e1ee03a1ea7c3f4ff264a9c7fe11d7bc805c34d6133993dab5900d1fbb7f9",
+  "runnerAfterSHA256": "f027b5edc7abe1138fcbfa7f8013672c32d35139058fe3abfd790d150ebc1a0a",
+  "planSHA256": "3d4bb6a4b5da2fb877bf27495de03c4c19ca6d0c00502860c465ca4d616c47c8",
+  "boundary": "Original app6 compiler has not run; same attempt will resume with phase-specific storage estimate. No other job/cache/source affected."
+}
