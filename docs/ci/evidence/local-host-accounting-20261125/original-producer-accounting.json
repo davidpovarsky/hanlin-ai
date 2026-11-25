@@ -1,0 +1,828 @@
+{
+  "schemaVersion": 3,
+  "provider": "local-mac",
+  "repository": "davidpovarsky/hanlin-ai",
+  "head": "a146bc7af248e4fe4d518c74c810474d39baa93e",
+  "status": "EXECUTED_PASS",
+  "hostMetadata": {
+    "nodeVersion": "v24.5.0",
+    "archiveSha256": "052c71626ea07c213e098ee04ebfa1a9ba528b8124accc6f35cd715e15f0e4dc",
+    "sourceInputsHash": "908f317442d73ce9a49b706174f7971bad72ba5c9d708f25fe7671eea437563f",
+    "jitlessArchiveSmoke": "passed",
+    "npmInstall": "npm ci --omit=dev --ignore-scripts --workspaces=false --no-audit --no-fund",
+    "tests": "passed"
+  },
+  "hostAccounting": {
+    "schemaVersion": 3,
+    "provider": "local-mac",
+    "accepted": true,
+    "status": "EXECUTED_PASS",
+    "reasons": [],
+    "origin": {
+      "provider": "local-mac",
+      "repository": "davidpovarsky/hanlin-ai",
+      "head": "a146bc7af248e4fe4d518c74c810474d39baa93e",
+      "stage": "original-host",
+      "status": "EXECUTED_PASS",
+      "preparationSHA256": "7f30dbf3092177faa4788615ab115aa0fe87511963da3cdc7890b7f85c2527e6",
+      "controllerSHA256": "8a9c6ebbbac85da00ad0b2697aaf2f9df0a7e5737d47f6eb7880384372ffc738",
+      "startedAt": "2026-11-25T02:55:35.752032+00:00",
+      "finishedAt": "2026-11-25T02:58:36.598285+00:00",
+      "elapsedSeconds": 180.84629404099542,
+      "command": [
+        "/bin/bash",
+        "Scripts/Runtime/prepare-runtime-host.sh"
+      ],
+      "archiveSHA256": "052c71626ea07c213e098ee04ebfa1a9ba528b8124accc6f35cd715e15f0e4dc",
+      "sourceInputsHash": "908f317442d73ce9a49b706174f7971bad72ba5c9d708f25fe7671eea437563f",
+      "toolchain": {
+        "node": "v24.5.0",
+        "python": "Python 3.12.16",
+        "xcode": "Xcode 27.0\nBuild version 27A266a"
+      },
+      "nativeFrameworks": {
+        "status": "REUSED_VERIFIED_PASS",
+        "unchangedFiles": 14724,
+        "inventorySHA256": "6c653690752cf89f07dd5f3251b1dc869657ff850031dd1180cf6ee8555b0fb6",
+        "producerSource": "fda6948ca6a1f541293a1a1dd20e97f75eb0a527",
+        "catalogSHA256": "d13aed210768d84475c28201a973e3d59645c3e27f69e7069a30fb9b685e91dc"
+      },
+      "counts": {
+        "tests": 170,
+        "pass": 169,
+        "fail": 0,
+        "skipped": 1
+      },
+      "cases": [
+        {
+          "name": "real archive inventory exceeds former file/size caps with bounded I/O and preserves caller budgets",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "actual CLI Worker resolves extensionless scripts and directory mains using Node resolution",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "runtime probe retries opaque Worker exits and loader diagnostics from stderr",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "unused client stdio and cross-spawn code do not reject the selected server path",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "direct-blocked may import child_process without executing it",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "esm-import-only may import child_process without executing it",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "transitive-blocked may import child_process without executing it",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "commonjs-blocked may import child_process without executing it",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "dynamic-blocked may import child_process without executing it",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "get-builtin-blocked may import child_process without executing it",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "spawn-call is rejected when subprocess execution is attempted",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "exec-call is rejected when subprocess execution is attempted",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "exec-file-call is rejected when subprocess execution is attempted",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "fork-call is rejected when subprocess execution is attempted",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "spawn-sync-call is rejected when subprocess execution is attempted",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "exec-sync-call is rejected when subprocess execution is attempted",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "exec-file-sync-call is rejected when subprocess execution is attempted",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "child-process-bypass is rejected when subprocess execution is attempted",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "fork-child-call is rejected when subprocess execution is attempted",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "commonjs-spawn-call is rejected when subprocess execution is attempted",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "get-builtin-call is rejected when subprocess execution is attempted",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "transitive-call is rejected when subprocess execution is attempted",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "cluster-blocked is rejected by the Worker runtime policy",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "binding-blocked is rejected by the Worker runtime policy",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "process-wrap-blocked is rejected by the Worker runtime policy",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "unreachable native build material is inventory, not an execution-path rejection",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "bounded concurrent archive scanning preserves serial safety results",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "only the selected reachable TypeScript entry is compiled by the Worker loader",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "a native addon actually resolved by the selected entry is rejected",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "archive safety rejects a symlink that escapes packageRoot",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "canonical parent aliases do not make a contained entry point appear to escape",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "execution-path analysis requires an explicit selected entry point",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "runtime probe bounds forced shutdown after MCP protocol success",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "the production installer rejects executed child_process and preserves the prior package",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "MCP probe forwards explicitly supplied paths and credentials after bootstrap without argv caps",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "owned UTF-8 input remains strict without ICU TextDecoder, including scalar splits and BOM",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "actual authenticated HTTP control executes >32MiB Unicode input with exact durable hashes and no replay",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "wrong digest, size, identity and invalid UTF8 preserve failed input without executing its source",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "interruption during claimed input preparation settles the original ID without a Worker or later replay",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "never-started receipts and nonregular inbox paths cannot be claimed as fresh execution",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "actual process termination during preflight recovers the claimed input as interrupted without source replay",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "ordinary cancellation before POST persists the first cause and prevents delayed file or Host operation side effects",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "cancelling an unregistered pre-existing journal never overwrites or classifies its history as never-started",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "Host-generated child job identity reaches input validation and its durable receipt",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "actual Worker interruption retains its cause and full output through reopen",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "late Host operation completion cannot erase an already requested system interruption",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "interruption before POST or during journal creation cannot start or replay side effects",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "esm resolves workspace modules and local exports before pinned global packages",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "commonjs resolves workspace modules and local exports before pinned global packages",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "managed CLI preload does not configure or leak its private bootstrap into nested Workers",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "Host command wait wakes for actual requests and aborts without cancelling the execution",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "full stdout and stderr survive preview limits and store reopen with verified hashes",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "ordinary event-loop work finishes after module evaluation without being terminated early",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "explicit timeout retains partial output and is distinct from user cancellation",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "explicit cancellation terminates the actual worker and retains partial output",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "actual Node job crosses 300 seconds with no hidden deadline",
+          "status": "SKIPPED"
+        },
+        {
+          "name": "a later nonzero exit cannot be hidden by an earlier successful module export",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "user worker messages cannot hide the final module result",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "a restored job with no opened streams has an empty lossless output page",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "actual CommonJS CLI main preserves argv, cwd, environment, binary stdin and late stdout",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "actual ESM CLI errors and exit status are retained without interpreting user messages as results",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "CLI cancellation stops the actual main and retains partial output; launch environment is frozen",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "user PATH HOME and NODE_OPTIONS apply to the job without reconfiguring Worker bootstrap",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "approved Skill job does not inherit host secrets and keeps its explicit environment",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "Fetch transport follows actual WebAssembly availability",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "real JITless Node supports Fetch request, streaming, clone, redirects, gzip, multipart and abort",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "native Fetch reference proves TLS, SRI and actual controlled Proxy routing",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "actual published Yarn patch is idempotent and refuses changed bytes or versions",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "Host operation survives observer loss and retains complete progress, UTF8 previews, digests and reopen",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "Host cancellation stays requested until the real asynchronous operation drains",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "a real Host journal failure aborts extraction and exposes failed in-memory status with partial output",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "Host operation claims real oversized owned inputs before invoking the existing callback and never replays",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "Host operation ingress rejects changed input identity without executing its callback and retains the real bytes",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "worker stdin and stdout remain isolated for multiple servers",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "lifecycle scripts retain native execution metadata while incompatible engines remain rejected",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "integrity mismatch fails closed",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "install cancellation aborts work",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "multiple package bins are listed and an explicit path preserves its bin name",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "unknown legacy transactions preserve both the installed package and its backup",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "host redirects npm state before preview and install modules initialize",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "worker terminal status is observable only after its actual atomic journal rename",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "operation terminal status is observable only after its actual atomic journal rename",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "actual MCP installation executes lifecycle before initialize/tools-list and preserves the prior server after failure",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "actual MCP tools/list above the former one-MiB probe cap passes by default",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "ordinary installation probes a real >one-MiB schema after the former thirty-second deadline and journals exact output",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "a stopped probe cancels its actual Worker without waiting for a protocol timeout",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "exit zero without a protocol response fails promptly instead of waiting forever",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "complete protocol reply immediately followed by exit zero remains a valid probe",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "a caller-selected probe byte budget is honored without a hidden minimum",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "real MCP HTTP transport retains >eight-MiB disconnected frames, accepts owned >ten-MiB input, and binds generation",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "cancelling an actual pending MCP startup settles the managed job and permits a clean later generation",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "MCP generations retain actual late Worker imports across commit, rollback and process-style reopen",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "real TypeScript reports semantic errors with original source locations",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "validation uses actual original package declarations from the supplied SDK",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "NativeScript package emits a runnable ESM graph and retains exact editable sources",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "NativeScript preserves authored CommonJS JavaScript and its source-map mode",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "import rechecks retained source and ignores a stale successful report",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "ScriptWidget keeps original source and its explicit ABI declaration",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "failed typecheck emits no package",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "a requested existing output directory is preserved",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "SDK discovery reads its real manifest and requested documentation",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "bundle-only imports do not receive a fabricated source typecheck pass",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "modified compiled output is rejected even when retained TypeScript is still valid",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "the real CLI archives and revalidates retained source, diagnostics and output identity",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "compiler-used sources named build or dist survive source retention and archive revalidation",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "NativeScript preserves the original npm runtime package rather than leaving an unresolved bare import",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "canonical module and type references use the supplied SDK while retaining its nested dependency",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "NativeScript emission and copied bodies agree with canonical types and preserve project aliases and extra dependencies",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "missing canonical exports, configs and SDK dependencies never resolve from ancestor packages",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "explicit esm native command module executes a real CLI and retains complete binary streams",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "explicit commonjs native command module executes a real CLI and retains complete binary streams",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "an unattached context never fabricates an execution, PID or successful empty output",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "actual persistent MCP Worker can inspect the module but cannot inherit a chat command owner",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "network diagnostics preserve bounded cyclic AggregateError cause codes",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "the HTTPS diagnostic never disables TLS or accepts credential-bearing echo URLs",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "real TLS handshake failures remain failures for both fetch and node:https GET/POST",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "actual optional failure prunes its required ancestor and cyclic private deps, preserving required/shared builds and journals",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "required failures and forged optional flags cannot erase required packages",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "aborted optional work never becomes an optional success or omission",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "malformed optional shell syntax is a real journaled build failure, while required syntax remains rejected",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "actual registry reify retries previously omitted hooks after an unrelated root version update",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "actual Arborist tree plans dependency phases, root project phases and skips unchanged build products",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "immutable package generations preserve old files, reject conflicting commits and retain published generations",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "root aliases expose the same physical legacy and published generation without mutating reads",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "competing commits through host root aliases preserve conflict rejection",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "reading a missing legacy host does not create directories or introduce a missing-path error",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "npm lifecycle environment retains user values and flattens RFC183 package metadata",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "actual registry extraction and Arborist dependency hooks publish atomically and preserve unchanged builds",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "command-only package validation hashes actual entries without executing invented CLI arguments",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "actual Worker loads import and require-only public roots from the staged package generation",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "an actual root dependency failure is not hidden by CLI or require fallback",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "subpath metadata does not pretend a nonexistent root was imported; invalid bin targets still fail",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "source execution preserves explicit positional arguments through the original parser",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "actual Yarn language preserves quoting, Unicode argv, environment and cwd across command adapters",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "original multiline shell source retains file redirection and stdout-to-stderr duplication",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "grammar newline boundaries preserve quoted text, comments, CRLF and continued commands",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "real interpreter pipes stdin and redirects output while retaining exact failing exit status",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "dynamic command names and command substitutions always reach adapters, never OS spawn",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "globs, groups and logical short-circuiting use the actual parser/interpreter",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "missing adapters fail truthfully and can be handled with shell control flow",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "capability facts identify the actual Node process and its actual built-in namespace",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "real parent Worker spools a >10MiB Unicode pipeline through actual CLI jobs without output loss",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "npm run uses actual pre/main/post CLI jobs, lifecycle environment and stops at real exit23",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "durable completion receipt is idempotent across lost/reordered acknowledgements and rejects conflicts",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "parent cancellation remains pending until the actual linked-command receipt arrives",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "actual journal write failure returns a failed in-memory status and retains partial output",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "manifest compatibility uses the actual Node version, OS and architecture",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "an iOS target is not substituted with Darwin and CPU constraints remain effective",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "actual registry preview and global install use the running interpreter target",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "MCP candidate selection uses the actual interpreter against supplied registry metadata",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "actual global installation retains and executes a package beyond fifty thousand files",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "commonjs waits for an exported asynchronous network operation before worker teardown",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "esm waits for an exported asynchronous network operation before worker teardown",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "generic ESM execution captures Hebrew output and a structured value",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "generic CommonJS execution returns module.exports",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "TypeScript 6 compiler emits JavaScript and source maps",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "execution output is capped without splitting the worker protocol",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "UTF-8 output budgets never split Hebrew or emoji",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "lifecycle planner preserves original portable shell source and rejects malformed syntax",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "failed executions preserve aggregate HTTPS cause codes",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "console errors preserve cyclic causes within the output budget",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "actual compiler Worker accepts >10MiB durable source and retains full typed output/hash/reopen",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "actual project compiler preserves >128 argv values, emits files and reports locked compiler identity",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "compiler diagnostics are preserved with actual failing exit and no emitted JavaScript",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "virtual source does not replace an installed dependency with the same basename",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "actual compiler job cancellation retains entered Worker output and does not block another job",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "warning tracing is scoped, reference counted and idempotent",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "diagnostic execution retains the actual warning stack and worker identity",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "named fs and fs/promises imports use the execution workspace",
+          "status": "EXECUTED_PASS"
+        },
+        {
+          "name": "relative copy and rename destinations plus native realpath stay in the execution workspace",
+          "status": "EXECUTED_PASS"
+        }
+      ],
+      "packedJitlessProbe": {
+        "passed": true,
+        "fetchImplementation": "node-fetch@3.3.2+native-web-api",
+        "webAssemblyAvailable": false,
+        "nonce": "7083a4db-819a-4f3e-819c-966d554af4cb",
+        "contracts": [
+          "GET",
+          "Request POST Unicode",
+          "redirect",
+          "HTTP error",
+          "ReadableStream",
+          "clone",
+          "gzip",
+          "multipart File",
+          "abort",
+          "HEAD",
+          "204"
+        ]
+      },
+      "logSHA256": "715c163601a4873f3d0e2be71be385e8735fc3f7f7007ae6ac0aded6802a4181"
+    },
+    "directHostStage": {
+      "status": "EXECUTED_PASS",
+      "testsExecutedHere": true
+    },
+    "repositoryCredentialFreeHostTests": {
+      "status": "NOT_RUN",
+      "reason": "The original local producer did not record caller credential presence."
+    },
+    "crossRunReuse": "NOT_ACCEPTED_WITHOUT_A_SEPARATE_AUTHENTICATED_ORIGIN_AND_COMPLETE_UNCHANGED_INPUT_CLOSURE"
+  },
+  "verification": {
+    "verifiedAt": "2026-11-25T05:37:52.994Z",
+    "sourceCheckout": "705163fb2a952522ca6cbfdcdebddd8bd6b22532",
+    "nodeFingerprint": {
+      "versions": {
+        "node": "24.5.0",
+        "acorn": "8.15.0",
+        "ada": "3.2.6",
+        "amaro": "1.1.1",
+        "ares": "1.34.5",
+        "brotli": "1.1.0",
+        "cjs_module_lexer": "2.1.0",
+        "cldr": "47.0",
+        "icu": "77.1",
+        "llhttp": "9.3.0",
+        "modules": "137",
+        "napi": "10",
+        "nbytes": "0.1.1",
+        "ncrypto": "0.0.1",
+        "nghttp2": "1.66.0",
+        "openssl": "3.5.1",
+        "simdjson": "3.13.0",
+        "simdutf": "6.4.0",
+        "sqlite": "3.50.3",
+        "tz": "2025b",
+        "undici": "7.12.0",
+        "unicode": "16.0",
+        "uv": "1.51.0",
+        "uvwasi": "0.0.21",
+        "v8": "13.6.233.10-node.21",
+        "zlib": "1.3.1-470d3a2",
+        "zstd": "1.5.7"
+      },
+      "platform": "darwin",
+      "arch": "arm64"
+    },
+    "nativeInputSHA256": {
+      "RuntimeDependencies.lock.json": "6cdbc18a474febbfc912b35ecbf5b0b55438a6a3e6daf2c33a43792cd04bd50a",
+      "Scripts/Expo/babel.config.cjs": "62581fd5caf7b97cb36290093b7bbf7103e1c1b1300e0e11a1b3eaaf96c998ba",
+      "Scripts/Expo/build-original-expo-source.mjs": "855a9a79f1c27a2ba2f3796cf784ebb66a4a48df928b2ea8f6ca1ffd9e886c03",
+      "Scripts/Expo/build-original-widget-runtime.mjs": "5928bb12ed2fd2f6b2ecfeb6d8fc309d46e5837c58dcc4272d73af13434eb549",
+      "Scripts/Expo/dependency-lock.json": "b9e3ad6d863e3e5136ad93924ce4edcb37da87578b113523640110af347eec65",
+      "Scripts/Expo/package-lock.json": "c08757cf46ac4d5c86a873f676af4a3be585db64ae2e1aa1e8288277d4eb63b8",
+      "Scripts/Expo/prepare-ios-dependencies.mjs": "97069b0e1ec619d906f4b6d196e38e6527790c3661f798abcca6258dacf18163",
+      "Scripts/ExpoNativeAPI/dependency-lock.json": "08657d657c1f4efa36149075b632cfc75685fc1ca9af0397fc1168fe9253b768",
+      "Scripts/ExpoNativeAPI/multiscene-patch.mjs": "cafa8348a764155789169c411eb59555c6c7a2d3ef363b870e36f8d6b52c7cbd",
+      "Scripts/ExpoNativeAPI/prepare-ios-dependencies.mjs": "950a2eb6e8713bdd1a395eee6df1779d91f63864af95c33658efa6d090676f66",
+      "Scripts/NativeScript/build-metadata-tool.py": "f4318f38b1c6a9c56ba54edb0d270a6374178fa5a8e024ebfddb9790f7ae3cf5",
+      "Scripts/NativeScript/build-step-metadata-generator-wrapper.py": "71bf1d521abff7cc29c1e8d397a9ef2a55b09f758afb36f0a148be12350b664f",
+      "Scripts/NativeScript/dependency-lock.json": "8499976a4ea0a069ed654b09b597d8fabede4bbbfb62227451a68707b851e8e5",
+      "Scripts/NativeScript/package-lock.json": "16f569f4bfa6f8806cfe72449866a0dc9a9331f33d2c67170d5292455c48b60b",
+      "Scripts/NativeScript/prepare-ios-dependencies.mjs": "b5114a3be1fc846e288128af08cef9f38b0cac8e34923780325c4edc2976ebd9",
+      "Scripts/Runtime/prepare-runtime-core.sh": "1ff99fabcbf8f40d515f3f1b944299286c1094a19520f9892a97f99cf8b64540"
+    },
+    "canonicalArchiveValidatorSHA256": "c446a8bcd0bebb30193eab35e6588662d9c989c4e656be020259a94428c0c8c6",
+    "sourceInputsHash": "908f317442d73ce9a49b706174f7971bad72ba5c9d708f25fe7671eea437563f",
+    "archiveSHA256": "052c71626ea07c213e098ee04ebfa1a9ba528b8124accc6f35cd715e15f0e4dc",
+    "scope": "Original local Mac producer only; no fresh test execution, derivative acceptance, GitHub check or native build is asserted."
+  }
+}

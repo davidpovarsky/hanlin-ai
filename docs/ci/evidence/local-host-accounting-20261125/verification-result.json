@@ -1,0 +1,19 @@
+{
+  "startedAt": "2026-11-25T05:37:51.503553+00:00",
+  "finishedAt": "2026-11-25T05:37:53.001454+00:00",
+  "exitCode": 0,
+  "elapsedSeconds": 1.497738042002311,
+  "command": [
+    "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/node-v24.5.0-darwin-arm64/bin/node",
+    "/Users/m1/caches/HanlinThreeWaves/local-host-accounting-20261125/record-local-mac-host-receipt.mjs",
+    "/Users/m1/caches/HanlinThreeWaves/local-host-accounting-20261125/config.json",
+    "7f30dbf3092177faa4788615ab115aa0fe87511963da3cdc7890b7f85c2527e6"
+  ],
+  "scope": "Read-only original producer verification; no source/artifact/native/test mutation",
+  "sourceHashes": {
+    "local-mac-host-accounting.mjs": "d5888106170a4404d116d9112d8c54d32c36f49e7cd857b61741583a3020e576",
+    "record-local-mac-host-receipt.mjs": "06d58965a8e736a827c3039c96929b8cd1d4f360c89904d95818144c20f76f61"
+  },
+  "logSHA256": "0d7328ab2cdd4337ebc582ee4a3c72190fb43c9ee68d218f65c521c2491de5fc",
+  "receiptSHA256": "c77574024f1915b5c9bf6600a621f27f79e4eba09a84a29c80a328d63b6dd6cf"
+}
