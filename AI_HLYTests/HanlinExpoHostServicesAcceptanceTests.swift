@@ -18,7 +18,7 @@ final class HanlinExpoHostServicesAcceptanceTests: XCTestCase {
     }
 
     func testInstalledExpoActionsReturnActualReplyAndFailure() async throws {
-        let fixture = try await installedFixture()
+        let fixture = try await installedFixture(inProductionHost: true)
         defer { fixture.platform.dismissActiveApplication(); try? FileManager.default.removeItem(at: fixture.root) }
         let id = UUID()
         let payload: HanlinValue = .object(["ordinal": .integer(19), "unicode": .string("שלום"),
@@ -44,6 +44,51 @@ final class HanlinExpoHostServicesAcceptanceTests: XCTestCase {
         XCTAssertEqual(nextReply["computed"], .integer(20))
         XCTAssertNotEqual(nextReply["id"], reply["id"])
         attach(value, name: "expo-installed-action-reply")
+
+        // Use the same installed Hermes handler through the real notification
+        // ingress, durable queue, live-target validation and Host broker.
+        // This establishes native action delivery, not OS push/tap execution.
+        let challenge = UUID().uuidString
+        let notificationPayload: HanlinJSONValue = .object([
+            "ordinal": .integer(41), "unicode": .string("שלום🙂"), "challenge": .string(challenge)
+        ])
+        let notification = try notificationEvent(fixture, action: "hostServicesEcho", payload: notificationPayload)
+        try fixture.platform.receiveNotificationEvent(notification)
+        let notificationReceipt = try await waitForNotificationReceipt(fixture, id: notification.id)
+        XCTAssertEqual(notificationReceipt.invocationID, notification.id)
+        XCTAssertEqual(notificationReceipt.status, .succeeded)
+        XCTAssertEqual(notificationReceipt.attempt, 1)
+        XCTAssertNil(notificationReceipt.failure)
+        guard case let .object(notificationReply)? = notificationReceipt.value else {
+            return XCTFail("The notification queue must retain the actual installed JS action result")
+        }
+        XCTAssertEqual(notificationReply["id"], .string(notification.id.uuidString))
+        XCTAssertEqual(notificationReply["caller"], .string("hanlin.host"))
+        XCTAssertEqual(notificationReply["action"], .string("hostServicesEcho"))
+        XCTAssertEqual(notificationReply["parameters"], try HanlinValue(jsonValue: notificationPayload))
+        XCTAssertEqual(notificationReply["computed"], .integer(42))
+        XCTAssertEqual(notificationReply["storageVerified"], .bool(true))
+        let reopened = HanlinScriptExtensions.HanlinScriptExtensionStore(root: fixture.extensions.root)
+        XCTAssertEqual(try reopened.receipt(for: notification.id), notificationReceipt)
+        try fixture.platform.receiveNotificationEvent(notification)
+        await fixture.platform.resumePendingInvocations()
+        XCTAssertEqual(try reopened.receipt(for: notification.id), notificationReceipt,
+                       "A later delivery/tap must retain the same terminal receipt and action attempt")
+
+        let rejected = try notificationEvent(fixture, action: "hostServicesFail", payload: .null)
+        try fixture.platform.receiveNotificationEvent(rejected)
+        let rejectedReceipt = try await waitForNotificationReceipt(fixture, id: rejected.id)
+        XCTAssertEqual(rejectedReceipt.status, .failed)
+        XCTAssertEqual(rejectedReceipt.failure, .actionFailed)
+        XCTAssertEqual(rejectedReceipt.attempt, 1)
+        XCTAssertNil(rejectedReceipt.value)
+        for (name, receipt) in [("notification-installed-expo-result", notificationReceipt),
+                                ("notification-installed-expo-action-error", rejectedReceipt)] {
+            let attachment = XCTAttachment(data: try JSONEncoder().encode(receipt), uniformTypeIdentifier: "public.json")
+            attachment.name = name
+            attachment.lifetime = .keepAlways
+            add(attachment)
+        }
     }
 
     func testPreparedExpoWidgetPublicationReachesExistingConsumer() async throws {
@@ -103,7 +148,7 @@ final class HanlinExpoHostServicesAcceptanceTests: XCTestCase {
         let package: HanlinStoredPackageSnapshot
     }
 
-    private func installedFixture() async throws -> Fixture {
+    private func installedFixture(inProductionHost: Bool = false) async throws -> Fixture {
         let bundle = Bundle(for: Self.self)
         let resources = try XCTUnwrap(bundle.url(forResource: "HostServicesProbe", withExtension: "bundle", subdirectory: "Fixtures")
             ?? bundle.url(forResource: "HostServicesProbe", withExtension: "bundle"))
@@ -111,16 +156,50 @@ final class HanlinExpoHostServicesAcceptanceTests: XCTestCase {
         XCTAssertTrue(FileManager.default.fileExists(atPath: archive.path), "The original Metro preparation must stage the actual fixture")
         let root = FileManager.default.temporaryDirectory.appending(path: "ExpoHostServices-" + UUID().uuidString)
         try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
-        let extensions = HanlinScriptExtensions.HanlinScriptExtensionStore(root: root.appending(path: "Extensions"))
-        let platform = HanlinScriptingPlatform(rootOverride: root.appending(path: "InstalledPlatform"), initialization: .init(
-            registerExpoDefines: { HanlinExpoSession.ensureAppDefinesLoaded() },
-            makeExtensionStore: { extensions }, enqueuePublication: { work in work() }))
+        let extensions: HanlinScriptExtensions.HanlinScriptExtensionStore
+        let platform: HanlinScriptingPlatform
+        if inProductionHost {
+            // The production broker deliberately targets the shared owning
+            // platform. Import there, without installing a test broker route.
+            extensions = try HanlinScriptingPlatform.productExtensionStore()
+            platform = .shared
+        } else {
+            extensions = HanlinScriptExtensions.HanlinScriptExtensionStore(root: root.appending(path: "Extensions"))
+            platform = HanlinScriptingPlatform(rootOverride: root.appending(path: "InstalledPlatform"), initialization: .init(
+                registerExpoDefines: { HanlinExpoSession.ensureAppDefinesLoaded() },
+                makeExtensionStore: { extensions }, enqueuePublication: { work in work() }))
+        }
         do {
             XCTAssertNil(platform.bootstrapError)
+            if inProductionHost { await platform.restore() }
+            let previousIDs = Set(platform.installedPackages.map { $0.record.installedPackageID })
             await platform.importPackage(from: archive)
             XCTAssertTrue(platform.canInstallPreview, platform.importDiagnostics.map(\.message).joined(separator: "\n"))
+            let importedName = try XCTUnwrap(platform.preview?.manifest?.name)
+            if inProductionHost && platform.installedPackages.contains(where: { $0.manifest?.name == importedName }) {
+                XCTFail("The acceptance fixture must not replace a pre-existing package in the owning Host")
+                throw NSError(domain: "HanlinNotificationAcceptance", code: 2,
+                              userInfo: [NSLocalizedDescriptionKey: "Pre-existing acceptance fixture"])
+            }
             await platform.installPreview()
-            let package = try XCTUnwrap(platform.installedPackages.first)
+            let newPackages = platform.installedPackages.filter {
+                !previousIDs.contains($0.record.installedPackageID) && $0.manifest?.name == importedName
+            }
+            if inProductionHost {
+                // Register exact owned cleanup before assertions can stop the case.
+                for owned in newPackages {
+                    let installedID = owned.record.installedPackageID
+                    addTeardownBlock {
+                        await platform.uninstall(installedID)
+                        let remainsInstalled = await MainActor.run {
+                            platform.installedPackages.contains { $0.record.installedPackageID == installedID }
+                        }
+                        XCTAssertFalse(remainsInstalled, "The acceptance-owned import must be removed after the case")
+                    }
+                }
+            }
+            XCTAssertEqual(newPackages.count, 1)
+            let package = try XCTUnwrap(newPackages.first)
             XCTAssertTrue(package.enabled)
             XCTAssertGreaterThan(package.record.activeGeneration, 0)
             let descriptor = try package.appDescriptor()
@@ -136,6 +215,7 @@ final class HanlinExpoHostServicesAcceptanceTests: XCTestCase {
             XCTAssertNotNil(platform.activeExpoController)
             return Fixture(root: root, platform: platform, extensions: extensions, package: package)
         } catch {
+            platform.discardPreview()
             platform.dismissActiveApplication()
             try? FileManager.default.removeItem(at: root)
             throw error
@@ -158,6 +238,33 @@ final class HanlinExpoHostServicesAcceptanceTests: XCTestCase {
         task.cancel()
         XCTAssertEqual(completion, .completed, "The actual installed action must acknowledge before the test deadline")
         return try XCTUnwrap(result, "No native acknowledgement was received").get()
+    }
+
+    private func notificationEvent(_ fixture: Fixture, action: String,
+                                   payload: HanlinJSONValue) throws -> HanlinNotificationEvent {
+        let catalog = try XCTUnwrap(fixture.extensions.load())
+        let entity = try XCTUnwrap(catalog.intentEntities.first(where: {
+            $0.identity.installedPackageID == fixture.package.record.installedPackageID
+                && $0.identity.generation == fixture.package.record.activeGeneration && $0.id == action
+        }), "The installed package must publish its actual declared intent identity")
+        let createdAt = Date.now
+        return try .init(id: UUID(), createdAt: createdAt, expiresAt: createdAt.addingTimeInterval(60),
+                         appID: fixture.package.appID, identity: entity.identity,
+                         actionID: .init(validating: action), parameters: payload)
+    }
+
+    private func waitForNotificationReceipt(_ fixture: Fixture, id: UUID) async throws -> HanlinInvocationReceipt {
+        let deadline = ContinuousClock.now + .seconds(60)
+        while ContinuousClock.now < deadline {
+            if let receipt = try fixture.extensions.receipt(for: id), receipt.status.isTerminal {
+                return receipt
+            }
+            try await Task.sleep(for: .milliseconds(25))
+        }
+        let status = try fixture.extensions.receipt(for: id)?.status.rawValue ?? "missing"
+        XCTFail("The actual notification action did not reach a terminal receipt: " + status)
+        throw NSError(domain: "HanlinNotificationAcceptance", code: 1,
+                      userInfo: [NSLocalizedDescriptionKey: "Notification receipt remained " + status])
     }
 
     private func nativeTexts(_ value: HanlinValue) -> [String] {
