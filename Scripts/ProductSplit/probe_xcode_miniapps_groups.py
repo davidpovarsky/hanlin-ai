@@ -20,8 +20,11 @@ def main():
     parser.add_argument("--entitlements", required=True)
     parser.add_argument("--expected-entitlements-sha256", required=True)
     parser.add_argument("--source-sha", required=True)
-    parser.add_argument("--distribution-export", action="store_true",
+    modes = parser.add_mutually_exclusive_group()
+    modes.add_argument("--distribution-export", action="store_true",
                         help="Use the installed distribution identity after an unsigned local probe archive")
+    modes.add_argument("--distribution-archive", action="store_true",
+                       help="Ask Xcode automatic provisioning with the exact installed distribution identity")
     args = parser.parse_args()
     if os.geteuid() == 0 or Path.home() != Path("/Users/m1"):
         raise SystemExit("Use the existing normal m1 SSH signing session")
@@ -46,6 +49,19 @@ def main():
     free_before = free_before.f_bavail * free_before.f_frsize
     # This one-C-file project has no dependencies, simulator or shared mutable cache.
     project = _write_probe_project(work)
+    if args.distribution_archive:
+        # Match the original App Groups capability as well as its exact source
+        # entitlements. The registered bundle ID remains unchanged.
+        pbx = project / "project.pbxproj"
+        source = pbx.read_text()
+        original = "attributes = {LastUpgradeCheck = 2700; };"
+        adjusted = """attributes = {LastUpgradeCheck = 2700; TargetAttributes = {
+          A10000000000000000000009 = {DevelopmentTeam = NA6HPWARQ2;
+          ProvisioningStyle = Automatic; SystemCapabilities = {
+          com.apple.ApplicationGroups.iOS = {enabled = 1; }; }; }; }; };"""
+        if source.count(original) != 1:
+            raise ValueError("Original probe project capability insertion anchor changed")
+        pbx.write_text(source.replace(original, adjusted))
     identity_before = subprocess.run(
         ["security", "find-identity", "-v", "-p", "codesigning"],
         text=True, capture_output=True, check=True).stdout
@@ -69,6 +85,9 @@ def main():
         argv += ["CODE_SIGNING_ALLOWED=NO"]
     else:
         argv += authentication
+        if args.distribution_archive:
+            argv += ["CODE_SIGN_IDENTITY=644940FCF25D1730DBD1BF7596AEBA7229E2B8FD",
+                     "OTHER_CODE_SIGN_FLAGS=--keychain /Users/m1/Library/Keychains/apple-signing.keychain-db"]
     receipt = {
         "scope": "REAL_XCODE_ACCOUNT_RESOURCE_PROBE_ONLY_NOT_ORIGINAL_APP_ACCEPTANCE",
         "started_at": started, "source_sha": args.source_sha,
@@ -76,7 +95,10 @@ def main():
         "bundle_id": "com.itorah.hanlinminiapps.share", "team": "NA6HPWARQ2",
         "required_entitlements": required, "user": "m1", "effective_uid": os.geteuid(),
         "command": argv, "identities_before": identities_before,
-        "mode": "existing-distribution-export" if args.distribution_export else "automatic-development",
+        "mode": ("existing-distribution-export" if args.distribution_export else
+                 "automatic-existing-distribution-archive" if args.distribution_archive else
+                 "automatic-development"),
+        "probe_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         "free_bytes_before": free_before, "status": "RUNNING",
         "deadline_seconds": 180, "no_upload_or_install_requested": True,
     }
@@ -117,6 +139,7 @@ def main():
             return code
 
         code = owned_stage(argv, "unsigned-discovery-archive" if args.distribution_export
+                           else "automatic-existing-distribution-provisioning" if args.distribution_archive
                            else "automatic-development-provisioning")
         if code == 0 and args.distribution_export:
             app = work / "ProfileDiscovery.xcarchive/Products/Applications/ProfileDiscovery.app"
