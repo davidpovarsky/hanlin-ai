@@ -83,10 +83,12 @@ struct AgentEventAccumulator {
         evidence.insert(contentsOf: [source])
       }
     case .modelRoundStarted(let id):
+      run.finalAnswerStartedAt = nil
       transcript.setModelRound(id)
     case .runStarted(let metadata):
       guard metadata.id == run.id else { return }
       run.startedAt = metadata.startedAt
+      run.finalAnswerStartedAt = nil
 
     case .reasoningStarted(let metadata):
       let sequence = transcript.allocateSequence()
@@ -379,6 +381,7 @@ struct AgentEventAccumulator {
       preserveExplicitSourceAnchors(for: id)
       if disposition == .final {
         run.finalAnswer = Self.nonemptyText(transcript.item(externalID: id)?.text)
+        if run.finalAnswer != nil { run.finalAnswerStartedAt = transcript.item(externalID: id)?.startedAt }
       }
 
     case .searchStarted(let id, let title, let queries, let providerName):
@@ -433,6 +436,10 @@ struct AgentEventAccumulator {
       closeRunningSteps(as: .completed)
       transcript.closeActiveItems(as: .completed)
       run.finalAnswer = transcript.selectFinalAnswerForCompletedRun()
+      run.finalAnswerStartedAt = transcript.items.last(where: {
+        $0.kind == .assistantText && $0.textRole == .final
+          && $0.text?.contains(where: { !$0.isWhitespace }) == true
+      })?.startedAt
       run.status = .completed
       run.completedAt = Date()
 

@@ -1,0 +1,122 @@
+{
+  "base_sha": "ca6310219ca104d5db44c7fbbb64766eb6d78c19",
+  "source_manifest": {
+    "AI_HLY/Downstream/AgentActivity/AgentEvent.swift": "8848c6253a7f3b4a2e17d7d417279d7e5124dc5eff57367894f77a858183a38d",
+    "AI_HLY/Downstream/AgentActivity/AgentEventAccumulator.swift": "d1c9a3ce85ff65b90e277a6f315aae81a0cab51afd69ebd1b25522bfa5bd14fd",
+    "AI_HLY/Downstream/AgentDiagnostics/AgentRuntimeUIAcceptanceProvider.swift": "4c62a0eeb72283163c6fd3b66cdaa9c4cc9086d5f8bc63a35e429573b457b107",
+    "AI_HLYTests/AgentActivityHeaderPhaseTests.swift": "03d0ebdbaf7db8433f4f6cf68879432b92acb01241d6d3b8f4e1ea17928b4b00",
+    "AI_HLYTests/AgentRoundPresentationTests.swift": "b32bdaf18f3f107603bd62c6c4dbf64e56a9b81e872010a2e451bf7acb498433",
+    "AI_HLYUITests/AgentRuntimeConversationUITests.swift": "05b77d05a215cfada5cf941a9b60735d8d228695c4b6159b8b3a857bde989eb7",
+    "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Models/AgentActivityModels.swift": "cc49ec07cd8c2207b899ff7a32a7c1334db3d300dd411fbabbe7b1e201672aeb",
+    "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentActivityComposer.swift": "dd6aabe1ea9ce317c17fd57d8cb6cc9563669f24ed02ef6bb91fb790de96c63e",
+    "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentActivityHeaderPhase.swift": "54e5cd1483dec380cfaeae360dd66ef572b23ef2b673162cb72529eaee748212",
+    "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Progress/ProgressSummarySanitizer.swift": "63f2388f52c5a9c7ee6996a5d5df8c3a34d4a4c3a336b39b99c0be299671c05b",
+    "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityUI/HanlinAgentActivityView.swift": "5ecba7297158a2cb59232986ee0c27b0bf169d7ec7aad1a8aa60dccddfc03e9d",
+    "Packages/HanlinPresentationSDK/Sources/HanlinPresentationKit/MessageOpenUIStateStore.swift": "637d499055f0e9fcc57b5b499afe094aa85dbe3bb9f555d592ecb6bf561c5b26",
+    "Scripts/CI/AgentActivityHeaderChecks.swift": "f364e301db83b21556652d5edcfecf1b82c264718ec652ef57266024c4897a90",
+    "Packages/HanlinPresentationSDK/Sources/HanlinPresentationKit/HanlinActivityDisclosureState.swift": "8876d867d6aed5771cd251cbaa2e6f9c5b4579218b26fa6cef19a1640d976b69",
+    "Scripts/CI/AgentActivityLifecycleChecks.swift": "1e03f88fc475280329a878c47450caffecf35a0eb99cd9e8995c98521e7fbf57",
+    "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentActivityVisibilityPolicy.swift": "a6f740e5b4f513eae994ef0e95f8f3c1ea4fa5c4c315a7817bac08eac50c31d6",
+    "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Diagnostics/AgentDiagnosticsRedactor.swift": "75f6d979a43af6b641d31685c353df0568816ba97bea8a98851c7c0e848c1dc3"
+  },
+  "checks": [
+    {
+      "name": "disk-before",
+      "command": [
+        "df",
+        "-k",
+        "/System/Volumes/Data"
+      ],
+      "exit": 0,
+      "seconds": 0.0035162919999999973,
+      "log": "/Users/m1/builds/hanlin-149001-activity-checks-20261125/r3/disk-before.log",
+      "log_sha256": "93e8ff39d1e49bdc4969a7d5e822873eaa4449652e832f6b573becd89dba55dc"
+    },
+    {
+      "name": "toolchain",
+      "command": [
+        "xcrun",
+        "swiftc",
+        "--version"
+      ],
+      "exit": 0,
+      "seconds": 0.124551041,
+      "log": "/Users/m1/builds/hanlin-149001-activity-checks-20261125/r3/toolchain.log",
+      "log_sha256": "1b207d5b85484205225f907ee34c5c63fcf5ba15260fad7ceb129191841e9908"
+    },
+    {
+      "name": "compile",
+      "command": [
+        "xcrun",
+        "swiftc",
+        "-swift-version",
+        "6",
+        "-parse-as-library",
+        "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentActivityHeaderPhase.swift",
+        "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentActivityVisibilityPolicy.swift",
+        "Packages/HanlinPresentationSDK/Sources/HanlinPresentationKit/HanlinActivityDisclosureState.swift",
+        "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Progress/ProgressSummarySanitizer.swift",
+        "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Diagnostics/AgentDiagnosticsRedactor.swift",
+        "Scripts/CI/AgentActivityLifecycleChecks.swift",
+        "-o",
+        "/Users/m1/builds/hanlin-149001-activity-checks-20261125/r3/activity-checks"
+      ],
+      "exit": 0,
+      "seconds": 1.263374917,
+      "log": "/Users/m1/builds/hanlin-149001-activity-checks-20261125/r3/compile.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "checks",
+      "command": [
+        "/Users/m1/builds/hanlin-149001-activity-checks-20261125/r3/activity-checks"
+      ],
+      "exit": 0,
+      "seconds": 0.2370516250000001,
+      "log": "/Users/m1/builds/hanlin-149001-activity-checks-20261125/r3/checks.log",
+      "log_sha256": "14f92d064838efc2b8215fd055e3550f390c8c59dfc8a8af8f0870431638695f"
+    },
+    {
+      "name": "parse",
+      "command": [
+        "xcrun",
+        "swiftc",
+        "-frontend",
+        "-parse",
+        "AI_HLY/Downstream/AgentActivity/AgentEvent.swift",
+        "AI_HLY/Downstream/AgentActivity/AgentEventAccumulator.swift",
+        "AI_HLY/Downstream/AgentDiagnostics/AgentRuntimeUIAcceptanceProvider.swift",
+        "AI_HLYTests/AgentActivityHeaderPhaseTests.swift",
+        "AI_HLYTests/AgentRoundPresentationTests.swift",
+        "AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+        "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Models/AgentActivityModels.swift",
+        "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentActivityComposer.swift",
+        "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentActivityHeaderPhase.swift",
+        "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Progress/ProgressSummarySanitizer.swift",
+        "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityUI/HanlinAgentActivityView.swift",
+        "Packages/HanlinPresentationSDK/Sources/HanlinPresentationKit/MessageOpenUIStateStore.swift",
+        "Scripts/CI/AgentActivityHeaderChecks.swift",
+        "Packages/HanlinPresentationSDK/Sources/HanlinPresentationKit/HanlinActivityDisclosureState.swift",
+        "Scripts/CI/AgentActivityLifecycleChecks.swift",
+        "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentActivityVisibilityPolicy.swift",
+        "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Diagnostics/AgentDiagnosticsRedactor.swift"
+      ],
+      "exit": 0,
+      "seconds": 0.09436091700000016,
+      "log": "/Users/m1/builds/hanlin-149001-activity-checks-20261125/r3/parse.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "disk-after",
+      "command": [
+        "df",
+        "-k",
+        "/System/Volumes/Data"
+      ],
+      "exit": 0,
+      "seconds": 0.0039205830000001995,
+      "log": "/Users/m1/builds/hanlin-149001-activity-checks-20261125/r3/disk-after.log",
+      "log_sha256": "0e976c8b2d9c54513d1a554db045d19cb05db95828d7d1458ca0016eb85c4295"
+    }
+  ]
+}

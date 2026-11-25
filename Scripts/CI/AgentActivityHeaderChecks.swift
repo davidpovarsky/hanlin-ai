@@ -2,10 +2,11 @@ import Foundation
 
 // Compile with the production AgentActivityHeaderPhase.swift and
 // AgentActivityVisibilityPolicy.swift, ChatMotionConfiguration.swift and
-// HanlinAnimatedDisclosure.swift. This does not replace Apple UI acceptance.
+// HanlinAnimatedDisclosure.swift, HanlinActivityDisclosureState.swift and
+// ProgressSummarySanitizer.swift and AgentDiagnosticsRedactor.swift. This does not replace Apple UI acceptance.
 @main
 struct AgentActivityHeaderChecks {
-    static func main() {
+    static func main() throws {
         var checks = 0
         func check(_ condition: Bool, _ label: String) {
             precondition(condition, label)
@@ -42,7 +43,7 @@ struct AgentActivityHeaderChecks {
                             hasPendingApproval: pending, hasAnswerText: answer,
                             hasActiveOperation: operation)
                         let expected: AgentActivityHeaderPhase = !active ? .history
-                            : pending && !operation ? .awaitingApproval : operation ? .working : .history
+                            : pending && !operation ? .awaitingApproval : operation || !answer ? .working : .history
                         check(phase == expected, "Answer activity transition preserves real tool/approval lifetime")
                     }
                 }
@@ -68,8 +69,8 @@ struct AgentActivityHeaderChecks {
             activePaths: parallel).isEmpty, "Terminal or approval wait has no animated owner")
         check(Owner.resolve(isWorking: true, isHierarchyExpanded: true,
             activePaths: []).isEmpty, "No real invocation means no synthetic active ancestor")
-        check(AgentActivityHeaderPhase.resolve(isRunActive: true, hasPendingApproval: false) == .history,
-            "Provider latency must not fabricate preparing-answer activity")
+        check(AgentActivityHeaderPhase.resolve(isRunActive: true, hasPendingApproval: false) == .working,
+            "A live gap remains active without fabricating an activity or shimmer owner")
         for name in ["load_skill", "read_skill_resource", "tool_search", "report_progress", "read_tool_result"] {
             for kind in ["toolCall", "toolExecution", "codeExecution"] {
                 check(!AgentActivityVisibilityPolicy.showsInvocation(kind: kind, toolName: name, hasIdentity: true),
@@ -184,6 +185,39 @@ struct AgentActivityHeaderChecks {
         check(ChatMotionConfiguration.forPreset(.quietFade).shimmerDuration == 2.6, "Quiet tempo preserved")
         check(!ChatMotionConfiguration.forPreset(.none).showsShimmer, "Motion-off stays off")
         check(!ChatMotionConfiguration.forPreset(.relaxed, reduceMotion: true).showsShimmer, "Reduce Motion stays static")
-        print("PASS: \(checks) production activity lifetime and motion-policy checks")
+        let runID = UUID()
+        var disclosure = HanlinActivityDisclosureState(runID: runID, phase: .active)
+        check(disclosure.isExpanded, "New work expands automatically")
+        disclosure.isExpanded = false
+        for _ in 0..<20 {
+            disclosure = disclosure.reconciled(runID: runID, phase: .active)
+            check(!disclosure.isExpanded, "New events must respect manual collapse")
+        }
+        let storedDisclosure = try JSONEncoder().encode(disclosure)
+        let restoredDisclosure = try JSONDecoder().decode(HanlinActivityDisclosureState.self, from: storedDisclosure)
+        check(!restoredDisclosure.reconciled(runID: runID, phase: .active).isExpanded,
+            "Recreating a view from stored message state must respect collapse")
+        disclosure.isExpanded = true
+        disclosure = disclosure.reconciled(runID: runID, phase: .answering)
+        check(!disclosure.isExpanded, "Confirmed final answer collapses activity")
+        disclosure.isExpanded = true
+        disclosure = disclosure.reconciled(runID: runID, phase: .finished)
+        check(disclosure.isExpanded, "Manual reopening during answer survives completion")
+        check(disclosure.reconciled(runID: UUID(), phase: .active).isExpanded,
+            "A new run resets only its own automatic expansion")
+        check(!HanlinActivityDisclosureState(runID: UUID(), phase: .finished).isExpanded,
+            "Restored completed history defaults to collapsed")
+        let sentence = "Checking the requested dates and comparing the available appointments."
+        let longSummary = Array(repeating: sentence, count: 15).joined(separator: "\n\n")
+        check(ProgressSummarySanitizer.sanitizeProviderReasoningDisplay(longSummary) == longSummary,
+            "Long displayable reasoning must not disappear at a short title limit")
+        for unsafe in ["Internal reasoning: I need to check the hidden state.",
+                       "{\"private\":true}"] {
+            check(ProgressSummarySanitizer.sanitizeProviderReasoningDisplay(unsafe) == nil,
+                "Long text support does not expose private reasoning or credential payloads")
+        }
+        check(ProgressSummarySanitizer.sanitizeProviderReasoningDisplay("  ") == nil,
+            "Whitespace is not historical reasoning")
+        print("PASS: \(checks) production activity lifetime, disclosure, summary and motion-policy checks")
     }
 }
