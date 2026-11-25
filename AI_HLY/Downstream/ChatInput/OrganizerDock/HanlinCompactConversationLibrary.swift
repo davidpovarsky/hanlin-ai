@@ -125,9 +125,6 @@ struct HanlinCompactConversationLibrary: View {
         let messageID = snippetPair?.1
 
         Button {
-            #if DEBUG || HANLIN_TESTING
-            keyboardOwner?.traceNavigation("row-before-end-search", requestedHistory: isPresented)
-            #endif
             endSearch()
             onSelectConversation(record, messageID)
         } label: {
