@@ -1,0 +1,101 @@
+{
+  "observedAt": "2026-11-25T00:03:34.536792+00:00",
+  "sourceRoot": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/bridge-runloop-regression-attempt7",
+  "files": [
+    {
+      "path": "actual/actual-jsc-job.json",
+      "bytes": 1308,
+      "sha256": "57a57321d70da79b1b32e132ae096154992751704d73d1b6197abbd3346ebe6e"
+    },
+    {
+      "path": "actual/actual-node-job.json",
+      "bytes": 1284,
+      "sha256": "9f66f073bb2f856dd822b56c08f9fab0d808b8bb113d3201fdab25c877cd574d"
+    },
+    {
+      "path": "actual/parity-runtime-diagnostic-attempt7.json.gz",
+      "bytes": 96953,
+      "sha256": "76024d757251c0535058d30fcc875da74f0039197702000430cbd7e6f4fd7e69"
+    },
+    {
+      "path": "actual/retained-runtime-excerpt.json",
+      "bytes": 1738,
+      "sha256": "f139dcbec3c91abe178993a9b0ba36b248bcc37bf1c37c5eb90e8aa557e08a71"
+    },
+    {
+      "path": "baseline.log",
+      "bytes": 2406,
+      "sha256": "985eaeee88af533579087fd334b6d9376e4b4dd63a92503a4e5809f3782d2bc5"
+    },
+    {
+      "path": "baseline.m",
+      "bytes": 36490,
+      "sha256": "7817e45687bd69ba1a93f9aa8d48d66ddf1a63e32109807d949c1bfb3e0bd160"
+    },
+    {
+      "path": "candidate.log",
+      "bytes": 1917,
+      "sha256": "ceb3ac41106aa6c6c6565e8a7a7e13b4f79a17ea4cf304a6cfb753b7213c4261"
+    },
+    {
+      "path": "candidate.m",
+      "bytes": 37015,
+      "sha256": "e36a9d2ba06dd7878d17df7c9e8f17df8952ac67f087c0a43174742c1c0ebe0c"
+    },
+    {
+      "path": "controller.log",
+      "bytes": 3312,
+      "sha256": "162fe6bf0f45331862256c41ffce65ddd0d0e3cf24093b49fc2ba13714b750c4"
+    },
+    {
+      "path": "harness-compile-failure/baseline.log",
+      "bytes": 14836,
+      "sha256": "cdb5b60f59263656c940c3b95107d859394176018cee6c85c34063cc5c23da2e"
+    },
+    {
+      "path": "harness-compile-failure/controller.log",
+      "bytes": 2842,
+      "sha256": "fb884566ee2c0459bcf5f84f0f376542e3ace286a9c0ed2fa207a4c66b7f2be4"
+    },
+    {
+      "path": "harness-compile-failure/package/Tests/NativeScriptMainRunLoopCallbackTests.swift",
+      "bytes": 6254,
+      "sha256": "1ca6881f8b333519c78893dd3a0d42a7079a1700dcee00c41874f86e135117a7"
+    },
+    {
+      "path": "harness-compile-failure/runner.py",
+      "bytes": 2854,
+      "sha256": "efa18d758671f14df7dce3a3fcb8850f6dd0b4eef8e820e458830acb4beb1e60"
+    },
+    {
+      "path": "harness-compile-failure/state.json",
+      "bytes": 3098,
+      "sha256": "07b74fcdefa3304fe0b76e962d24f74d5a678029cf237d5d482cbe9f97e6ef11"
+    },
+    {
+      "path": "package/Package.swift",
+      "bytes": 485,
+      "sha256": "4217e9b52f4809f0d56ec6cccef364d8cc0f3f646475bc2bf9847e0c5c46590a"
+    },
+    {
+      "path": "package/Sources/HanlinNativeScriptCoreSupport/include/HanlinNativeServicesBridge.h",
+      "bytes": 8837,
+      "sha256": "c2e8a138628dfd568a30dcaf0b2fd899347b6065354c86350db7d3f36f4c0b19"
+    },
+    {
+      "path": "package/Tests/NativeScriptMainRunLoopCallbackTests.swift",
+      "bytes": 6258,
+      "sha256": "ad4b516db151867a80413646be9dfed9313f3f356d972c112fdf0f0d5806fd99"
+    },
+    {
+      "path": "runner.py",
+      "bytes": 2854,
+      "sha256": "efa18d758671f14df7dce3a3fcb8850f6dd0b4eef8e820e458830acb4beb1e60"
+    },
+    {
+      "path": "state.json",
+      "bytes": 4423,
+      "sha256": "8cddd70a8312c0f3a2f3037cbb9a5471cea34d51cf68edb6de2539588bedeaca"
+    }
+  ]
+}

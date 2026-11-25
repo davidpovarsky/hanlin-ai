@@ -1,0 +1,84 @@
+Building for debugging...
+[Planning deferred tasks]
+[12 / 43]
+[28 / 43] HanlinNativeScriptCoreSupport
+[35 / 74]
+[38 / 74]
+[43 / 74]
+[48 / 74]
+[53 / 74]
+[55 / 74]
+[58 / 74]
+[59 / 74]
+[64 / 75] NativeScriptMainRunLoopCallbackTests-product
+[64 / 75]
+[66 / 146]
+[70 / 146]
+[72 / 146]
+[75 / 146]
+[78 / 146]
+[82 / 146]
+[85 / 146]
+[87 / 146]
+[90 / 146]
+[93 / 146]
+[94 / 146]
+[97 / 146]
+[99 / 146]
+[101 / 146]
+[104 / 146]
+[106 / 146]
+[107 / 146]
+[109 / 146]
+[110 / 146]
+[111 / 146]
+[114 / 146]
+[116 / 146]
+[117 / 146]
+[119 / 146]
+[122 / 146]
+[123 / 146]
+[126 / 146]
+[127 / 146]
+[128 / 146]
+[130 / 146]
+[132 / 146]
+error: SwiftCompile normal arm64 /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/bridge-runloop-regression-attempt7/package/Tests/NativeScriptMainRunLoopCallbackTests.swift failed with a nonzero exit code. Command line:     cd /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/bridge-runloop-regression-attempt7
+    builtin-SwiftPerFileCompile NativeScriptMainRunLoopCallbackTests.swift
+/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/bridge-runloop-regression-attempt7/package/Tests/NativeScriptMainRunLoopCallbackTests.swift:13:36: [1;31merror: [1;39m'setActiveSessionBridge(_:forSessionID:)' has been renamed to 'setActiveSession(_:forSessionID:)'[0;0m
+ [0;36m11 |[0;0m         let (sessionID, bridge) = try bind(provider)
+ [0;36m12 |[0;0m         defer { HanlinNativeServicesBridge.unregisterProvider(forSessionID: sessionID) }
+ [0;36m13 |[0;0m         HanlinNativeServicesBridge.setActiveSessionBridge(bridge, forSessionID: sessionID)
+    [0;36m|[0;0m                                    `- [1;31merror: [1;39m'setActiveSessionBridge(_:forSessionID:)' has been renamed to 'setActiveSession(_:forSessionID:)'[0;0m
+ [0;36m14 |[0;0m         let finished = expectation(description: "Original synchronous bridge returned")
+ [0;36m15 |[0;0m         DispatchQueue.main.async {
+
+/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/bridge-runloop-regression-attempt7/package/Sources/HanlinNativeScriptCoreSupport/include/HanlinNativeServicesBridge.h:86:1: [1;39mnote: [1;39m'setActiveSessionBridge(_:forSessionID:)' was obsoleted in Swift 3[0;0m
+ [0;36m84 |[0;0m 
+ [0;36m85 |[0;0m /// Active session bridge binding for runtime hosts
+ [0;36m86 |[0;0m + (void)setActiveSessionBridge:(nullable HanlinNativeServicesSessionBridge *)bridge forSessionID:(NSString *)sessionID;
+    [0;36m|[0;0m `- [1;39mnote: [1;39m'setActiveSessionBridge(_:forSessionID:)' was obsoleted in Swift 3[0;0m
+ [0;36m87 |[0;0m + (void)clearActiveSessionBridgeForSessionID:(NSString *)sessionID;
+ [0;36m88 |[0;0m + (nullable HanlinNativeServicesSessionBridge *)activeSessionBridge;
+
+/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/bridge-runloop-regression-attempt7/package/Tests/NativeScriptMainRunLoopCallbackTests.swift:53:21: [1;33mwarning: [1;39mcapture of 'token' with non-Sendable type 'RunLoopCallbackCapture' in a '@Sendable' closure[0;0m [#]8;;https://docs.swift.org/compiler/documentation/diagnostics/sendable-closure-captures\SendableClosureCaptures]8;;\]
+ [0;36m51 |[0;0m             captured = token
+ [0;36m52 |[0;0m             bridge.executeJavaScript("late-result") { [token] _, _ in
+ [0;36m53 |[0;0m                 _ = token
+    [0;36m|[0;0m                     `- [1;33mwarning: [1;39mcapture of 'token' with non-Sendable type 'RunLoopCallbackCapture' in a '@Sendable' closure[0;0m [#]8;;https://docs.swift.org/compiler/documentation/diagnostics/sendable-closure-captures\SendableClosureCaptures]8;;\]
+ [0;36m54 |[0;0m                 mustNotRun.fulfill()
+ [0;36m55 |[0;0m             }
+    [0;36m:[0;0m
+ [0;36m78 |[0;0m }
+ [0;36m79 |[0;0m 
+ [0;36m80 |[0;0m private final class RunLoopCallbackCapture {}
+    [0;36m|[0;0m                     `- [1;39mnote: [1;39mclass 'RunLoopCallbackCapture' does not conform to the 'Sendable' protocol[0;0m
+ [0;36m81 |[0;0m 
+ [0;36m82 |[0;0m private final class RunLoopNativeServicesProvider: NSObject, @unchecked Sendable, HanlinNativeServicesProvider {
+
+[#SendableClosureCaptures]: <https://docs.swift.org/compiler/documentation/diagnostics/sendable-closure-captures>
+Failed frontend command:
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-frontend -frontend -c /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/bridge-runloop-regression-attempt7/build/out/Intermediates.noindex/HanlinNativeMainRunLoopProof.build/Debug/NativeScriptMainRunLoopCallbackTests-p.build/DerivedSources/test_entry_point.swift -primary-file /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/bridge-runloop-regression-attempt7/package/Tests/NativeScriptMainRunLoopCallbackTests.swift -emit-dependencies-path /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/bridge-runloop-regression-attempt7/build/out/Intermediates.noindex/HanlinNativeMainRunLoopProof.build/Debug/NativeScriptMainRunLoopCallbackTests-p.build/Objects-normal/arm64/NativeScriptMainRunLoopCallbackTests.d -emit-const-values-path /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/bridge-runloop-regression-attempt7/build/out/Intermediates.noindex/HanlinNativeMainRunLoopProof.build/Debug/NativeScriptMainRunLoopCallbackTests-p.build/Objects-normal/arm64/NativeScriptMainRunLoopCallbackTests.swiftconstvalues -emit-reference-dependencies-path /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/bridge-runloop-regression-attempt7/build/out/Intermediates.noindex/HanlinNativeMainRunLoopProof.build/Debug/NativeScriptMainRunLoopCallbackTests-p.build/Objects-normal/arm64/NativeScriptMainRunLoopCallbackTests.swiftdeps -serialize-diagnostics-path /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/bridge-runloop-regression-attempt7/build/out/Intermediates.noindex/HanlinNativeMainRunLoopProof.build/Debug/NativeScriptMainRunLoopCallbackTests-p.build/Objects-normal/arm64/NativeScriptMainRunLoopCallbackTests.dia -target arm64-apple-macos14.0 -module-can-import-version Testing 2084 0 -module-can-import-version XCTest 25228 0 -disable-cross-import-overlay-search -swift-module-cross-import Testing /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks/Testing.framework/Modules/Testing.swiftcrossimport/AppKit.swiftoverlay -swift-module-cross-import Testing /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks/Testing.framework/Modules/Testing.swiftcrossimport/CoreGraphics.swiftoverlay -swift-module-cross-import Testing /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks/Testing.framework/Modules/Testing.swiftcrossimport/CoreImage.swiftoverlay -swift-module-cross-import Testing /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks/Testing.framework/Modules/Testing.swiftcrossimport/CoreTransferable.swiftoverlay -swift-module-cross-import Testing /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks/Testing.framework/Modules/Testing.swiftcrossimport/Foundation.swiftoverlay -load-resolved-plugin /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/swift/host/plugins/libFoundationMacros.dylib\#/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/bin/swift-plugin-server\#FoundationMacros -load-resolved-plugin /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/swift/host/plugins/libObservationMacros.dylib\#/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/bin/swift-plugin-server\#ObservationMacros -load-resolved-plugin /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/swift/host/plugins/libPreviewsMacros.dylib\#/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/bin/swift-plugin-server\#PreviewsMacros -load-resolved-plugin /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/swift/host/plugins/libSwiftMacros.dylib\#/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/bin/swift-plugin-server\#SwiftMacros -load-resolved-plugin /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/swift/host/plugins/libSwiftUIMacros.dylib\#/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/bin/swift-plugin-server\#SwiftUIMacros -load-resolved-plugin /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing/libTestingMacros.dylib\#\#TestingMacros -disable-implicit-swift-modules -Xcc -fno-implicit-modules -Xcc -fno-implicit-module-maps -explicit-swift-module-map-file /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/bridge-runloop-regression-attempt7/build/out/Intermediates.noindex/HanlinNativeMainRunLoopProof.build/Debug/NativeScriptMainRunLoopCallbackTests-p.build/Objects-normal/arm64/NativeScriptMainRunLoopCallbackTests-dependencies-1.json -Xllvm -aarch64-use-tbi -enable-objc-interop -stack-check -sdk /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.0.sdk -I /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/bridge-runloop-regression-attempt7/build/out/Products/Debug -Isystem /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib -F /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/bridge-runloop-regression-attempt7/build/out/Products/Debug/PackageFrameworks -F /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/bridge-runloop-regression-attempt7/build/out/Products/Debug -F /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks -module-cache-path /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/bridge-runloop-regression-attempt7/build/out/Intermediates.noindex/SwiftExplicitPrecompiledModules -color-diagnostics -Xcc -fcolor-diagnostics -enable-testing -g -debug-info-format\=dwarf -dwarf-version\=4 -swift-version 6 -Onone -D SWIFT_PACKAGE -D DEBUG -D Xcode -serialize-debugging-options -enable-experimental-feature DebugDescriptionMacro -empty-abi-descriptor -validate-clang-modules-once -clang-build-session-file /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/bridge-runloop-regression-attempt7/build/out/ModuleCache.noindex/Session.modulevalidation -Xcc -working-directory -Xcc /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/bridge-runloop-regression-attempt7 -enable-anonymous-context-mangled-names -file-compilation-dir /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/bridge-runloop-regression-attempt7 -Xcc -fmodule-map-file\=/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/bridge-runloop-regression-attempt7/build/out/Intermediates.noindex/GeneratedModuleMaps/HanlinNativeScriptCoreSupport.modulemap -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -Xcc -ivfsstatcache -Xcc /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/bridge-runloop-regression-attempt7/build/out/SDKStatCaches.noindex/macosx27.0-26A425-a0facfad118c1a7a18f0aad9463f65497231f6df4def33e022ae2eb8f782df1a.sdkstatcache -Xcc -fmodules-prune-interval\=86400 -Xcc -fmodules-prune-after\=345600 -Xcc -I/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/bridge-runloop-regression-attempt7/package/Sources/HanlinNativeScriptCoreSupport/include -Xcc -I/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/bridge-runloop-regression-attempt7/build/out/Products/Debug/include -Xcc -I/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/bridge-runloop-regression-attempt7/build/out/Intermediates.noindex/HanlinNativeMainRunLoopProof.build/Debug/NativeScriptMainRunLoopCallbackTests-p.build/DerivedSources-normal/arm64 -Xcc -I/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/bridge-runloop-regression-attempt7/build/out/Intermediates.noindex/HanlinNativeMainRunLoopProof.build/Debug/NativeScriptMainRunLoopCallbackTests-p.build/DerivedSources/arm64 -Xcc -I/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/bridge-runloop-regression-attempt7/build/out/Intermediates.noindex/HanlinNativeMainRunLoopProof.build/Debug/NativeScriptMainRunLoopCallbackTests-p.build/DerivedSources -Xcc -DSWIFT_PACKAGE -Xcc -DDEBUG\=1 -no-auto-bridging-header-chaining -module-name NativeScriptMainRunLoopCallbackTests -package-name package -const-gather-protocols-file /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/bridge-runloop-regression-attempt7/build/out/Intermediates.noindex/HanlinNativeMainRunLoopProof.build/Debug/NativeScriptMainRunLoopCallbackTests-p.build/Objects-normal/arm64/NativeScriptMainRunLoopCallbackTests_const_extract_protocols.json -disable-clang-spi -clang-target arm64-apple-macos27.0 -target-sdk-version 27.0 -target-sdk-name macosx27.0 -in-process-plugin-server-path /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/libSwiftInProcPluginServer.dylib -parse-as-library -o /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/bridge-runloop-regression-attempt7/build/out/Intermediates.noindex/HanlinNativeMainRunLoopProof.build/Debug/NativeScriptMainRunLoopCallbackTests-p.build/Objects-normal/arm64/NativeScriptMainRunLoopCallbackTests.o -debug-module-path /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/bridge-runloop-regression-attempt7/build/out/Intermediates.noindex/HanlinNativeMainRunLoopProof.build/Debug/NativeScriptMainRunLoopCallbackTests-p.build/Objects-normal/arm64/NativeScriptMainRunLoopCallbackTests.swiftmodule -index-unit-output-path /HanlinNativeMainRunLoopProof.build/Debug/NativeScriptMainRunLoopCallbackTests-p.build/Objects-normal/arm64/NativeScriptMainRunLoopCallbackTests.o -index-store-path /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/bridge-runloop-regression-attempt7/build/out -index-system-modules
+[135 / 146] NativeScriptMainRunLoopCallbackTests-product
+error: Build failed
+error: fatalError

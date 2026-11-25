@@ -1,0 +1,78 @@
+{
+  "owner": "/root/native_execution",
+  "status": "PASS",
+  "preparedAt": "2026-11-25T00:02:13.035111+00:00",
+  "macCheckoutSource": "fd81d602d3b25f09162a659e1e0cf0582e91a93a",
+  "publishedCombinedSource": "edd5bcf494d181b642e28d5f5663df5840678fc6",
+  "scope": "Exact original Objective-C bridge callback scheduling with controlled native provider; no application/engine acceptance claim.",
+  "sourceHashes": {
+    "baseline.m": "7817e45687bd69ba1a93f9aa8d48d66ddf1a63e32109807d949c1bfb3e0bd160",
+    "candidate.m": "e36a9d2ba06dd7878d17df7c9e8f17df8952ac67f087c0a43174742c1c0ebe0c",
+    "package/Sources/HanlinNativeScriptCoreSupport/include/HanlinNativeServicesBridge.h": "c2e8a138628dfd568a30dcaf0b2fd899347b6065354c86350db7d3f36f4c0b19",
+    "package/Tests/NativeScriptMainRunLoopCallbackTests.swift": "ad4b516db151867a80413646be9dfed9313f3f356d972c112fdf0f0d5806fd99",
+    "package/Package.swift": "4217e9b52f4809f0d56ec6cccef364d8cc0f3f646475bc2bf9847e0c5c46590a",
+    "runner.py": "efa18d758671f14df7dce3a3fcb8850f6dd0b4eef8e820e458830acb4beb1e60"
+  },
+  "budgetSecondsPerVersion": 300,
+  "headroom": "Processes: 264 total, 3 running, 261 sleeping, 1328 threads \n2026/11/25 01:01:06\nLoad Avg: 2.55, 13.37, 34.41 \nCPU usage: 7.31% user, 17.7% sys, 75.60% idle \nSharedLibs: 336M resident, 52M data, 110M linkedit.\nMemRegions: 24234 total, 318M resident, 61M private, 1918M shared.\nPhysMem: 12G used (1526M wired, 497M compressor), 3292M unused.\nVM: 120T vsize, 57G framework vsize, 6633(0) swapins, 43700(0) swapouts.\nNetworks: packets: 93691928/128G in, 13498176/6892M out.\nDisks: 34105845/2147G read, 24477682/822G written.\n\n\n",
+  "swift": "Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)\nTarget: arm64-apple-macosx27.0.0",
+  "startedAt": "2026-11-25T00:02:13.068600+00:00",
+  "controllerPID": 61543,
+  "commands": [
+    {
+      "label": "baseline",
+      "argv": [
+        "/usr/bin/swift",
+        "test",
+        "--package-path",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/bridge-runloop-regression-attempt7/package",
+        "--scratch-path",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/bridge-runloop-regression-attempt7/build",
+        "--jobs",
+        "1",
+        "--filter",
+        "NativeScriptMainRunLoopCallbackTests.testBackgroundCompletionReentersRunLoopInsideMainQueueSynchronousCall"
+      ],
+      "startedAt": "2026-11-25T00:02:13.069261+00:00",
+      "expectedExitCode": 1,
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/bridge-runloop-regression-attempt7/baseline.log",
+      "pid": 61544,
+      "exitCode": 1,
+      "finishedAt": "2026-11-25T00:02:35.766656+00:00",
+      "elapsedSeconds": 22.697235708001244,
+      "logBytes": 2406,
+      "logSHA256": "985eaeee88af533579087fd334b6d9376e4b4dd63a92503a4e5809f3782d2bc5"
+    },
+    {
+      "label": "candidate",
+      "argv": [
+        "/usr/bin/swift",
+        "test",
+        "--package-path",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/bridge-runloop-regression-attempt7/package",
+        "--scratch-path",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/bridge-runloop-regression-attempt7/build",
+        "--jobs",
+        "1",
+        "--filter",
+        "NativeScriptMainRunLoopCallbackTests"
+      ],
+      "startedAt": "2026-11-25T00:02:35.767409+00:00",
+      "expectedExitCode": 0,
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/bridge-runloop-regression-attempt7/candidate.log",
+      "pid": 62004,
+      "exitCode": 0,
+      "finishedAt": "2026-11-25T00:02:37.606186+00:00",
+      "elapsedSeconds": 1.8385720840014983,
+      "logBytes": 1917,
+      "logSHA256": "ceb3ac41106aa6c6c6565e8a7a7e13b4f79a17ea4cf304a6cfb753b7213c4261"
+    }
+  ],
+  "phase": "candidate",
+  "harnessCorrection": {
+    "reason": "Use the actual Swift-imported setActiveSession selector and mark the immutable capture token Sendable. Production candidate unchanged.",
+    "priorState": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/bridge-runloop-regression-attempt7/harness-compile-failure/state.json",
+    "previousTestSHA256": "1ca6881f8b333519c78893dd3a0d42a7079a1700dcee00c41874f86e135117a7"
+  },
+  "finishedAt": "2026-11-25T00:02:37.606743+00:00"
+}
