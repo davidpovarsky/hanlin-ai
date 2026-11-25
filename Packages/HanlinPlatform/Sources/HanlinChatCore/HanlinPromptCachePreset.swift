@@ -56,7 +56,7 @@ public enum HanlinPromptCachePreset: String, CaseIterable, Hashable, Sendable {
               endpoint?.host?.lowercased() == "api.openai.com",
               endpoint?.user == nil, endpoint?.password == nil,
               endpoint?.port == nil || endpoint?.port == 443,
-              ["openai", "openai-response", "openai-responses"].contains(dialect) else {
+              ["openai", "openai-response", "openairesponse", "openai-responses"].contains(dialect) else {
             return result
         }
 
@@ -64,7 +64,7 @@ public enum HanlinPromptCachePreset: String, CaseIterable, Hashable, Sendable {
         if supportsExtendedRetention(model) {
             result.append(.openAITwentyFourHours)
         }
-        if ["openai-response", "openai-responses"].contains(dialect),
+        if ["openai-response", "openairesponse", "openai-responses"].contains(dialect),
            supportsExplicitCaching(model) {
             result.append(contentsOf: [.openAIExplicitThirtyMinutes, .openAIExplicitTwelveHours])
         }

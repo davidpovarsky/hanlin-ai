@@ -74,11 +74,13 @@ private final class HangingCompactResponsesProtocol: URLProtocol, @unchecked Sen
 
 @Suite("Compact Responses canonical SDK route", .serialized)
 struct HanlinCompactResponsesTests {
-    private func configuration() -> HanlinChatModelConfiguration {
+    private func configuration(
+        policy: HanlinPromptCachePolicy? = .init(openAI: .init(mode: .explicit, ttl: .twelveHours))
+    ) -> HanlinChatModelConfiguration {
         .init(modelID: "gpt-6.2-sol", company: "OpenAI", apiType: "OpenAI-Response",
             endpoint: "https://api.openai.com/v1/responses", credential: "fixture-only",
             systemPrompt: "Stable instructions",
-            promptCachePolicy: .init(openAI: .init(mode: .explicit, ttl: .twelveHours)))
+            promptCachePolicy: policy)
     }
 
     @Test("Compact requests retain original Responses envelope, message order, cache scope and normalized usage")
@@ -129,6 +131,67 @@ struct HanlinCompactResponsesTests {
             "First question", "Earlier answer", "Second question"])
         let stable = try #require(input.first?["content"] as? [[String: Any]])
         #expect((stable.first?["prompt_cache_breakpoint"] as? [String: String]) == ["mode": "explicit", "ttl": "12h"])
+    }
+
+    @Test("Automatic native Responses keeps the same stable boundary across changing context without changing implicit mode")
+    func automaticStableBoundaryAcrossRequests() async throws {
+        CompactResponsesProtocol.state.reset()
+        let session = URLSessionConfiguration.ephemeral
+        session.protocolClasses = [CompactResponsesProtocol.self]
+        let engine = HanlinChatEngine(sessionConfiguration: session)
+        let scope = HanlinPromptCacheScope(namespace: ["app", "account", "workspace"],
+            conversationID: "same-conversation", promptVersion: "compact-v1")
+        let model = configuration(policy: nil)
+        for suffix in ["first", "second"] {
+            let stream = try await engine.stream(messages: [.user("Question \(suffix)")],
+                configuration: model, systemContext: "Changing context \(suffix)", cacheScope: scope)
+            for try await _ in stream {}
+        }
+
+        let bodies = CompactResponsesProtocol.state.captured
+        try #require(bodies.count == 2)
+        var boundaries: [Data] = []
+        var contexts: [String] = []
+        var questions: [String] = []
+        for data in bodies {
+            let body = try #require(JSONSerialization.jsonObject(with: data) as? [String: Any])
+            // The request keeps the provider's implicit mode and default lifetime.
+            // Only the stable message gains an additional eligible boundary.
+            #expect(body["prompt_cache_options"] == nil)
+            #expect(body["prompt_cache_retention"] == nil)
+            #expect(body["prompt_cache_key"] as? String == scope.key(configuration: model))
+            let input = try #require(body["input"] as? [[String: Any]])
+            try #require(input.count == 3)
+            let stable = try #require(input[0]["content"] as? [[String: Any]])
+            #expect(stable.first?["text"] as? String == "Stable instructions")
+            #expect((stable.first?["prompt_cache_breakpoint"] as? [String: String]) == ["mode": "explicit"])
+            boundaries.append(try JSONSerialization.data(withJSONObject: stable, options: .sortedKeys))
+            func contentText(_ item: [String: Any]) -> String {
+                if let text = item["content"] as? String { return text }
+                return (item["content"] as? [[String: Any]])?.compactMap { $0["text"] as? String }.joined() ?? ""
+            }
+            contexts.append(contentText(input[1]))
+            questions.append(contentText(input[2]))
+        }
+        #expect(boundaries[0] == boundaries[1])
+        #expect(contexts == ["Context:\nChanging context first", "Context:\nChanging context second"])
+        #expect(questions == ["Question first", "Question second"])
+
+        // Explicit opt-outs also pass through the original serializer, so their
+        // absence is checked on actual request bodies rather than on a flag.
+        for policy in [HanlinPromptCachePolicy.providerDefault, .noExplicitCaching] {
+            let stream = try await engine.stream(messages: [.user("Question")],
+                configuration: configuration(policy: policy), systemContext: "Changing context", cacheScope: scope)
+            for try await _ in stream {}
+        }
+        let allBodies = CompactResponsesProtocol.state.captured
+        #expect(allBodies.count == 4)
+        for data in allBodies.dropFirst(2) {
+            let body = try #require(JSONSerialization.jsonObject(with: data) as? [String: Any])
+            #expect(body["prompt_cache_options"] == nil)
+            #expect(body["prompt_cache_key"] == nil)
+            #expect(!String(decoding: data, as: UTF8.self).contains("prompt_cache_breakpoint"))
+        }
     }
 
     @Test("Compact facade refuses tool authority and legacy Chat-shaped Responses requests before transport")

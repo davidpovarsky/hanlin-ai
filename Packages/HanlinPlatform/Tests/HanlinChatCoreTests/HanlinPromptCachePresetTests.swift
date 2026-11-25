@@ -36,6 +36,9 @@ struct HanlinPromptCachePresetTests {
         #expect(!modern.contains(.openAITwentyFourHours))
         #expect(modern.contains(.openAIExplicitThirtyMinutes))
         #expect(modern.contains(.openAIExplicitTwelveHours))
+        #expect(HanlinPromptCachePreset.available(
+            company: "OPENAI", apiType: "openAIResponse", endpoint: native, modelID: "gpt-6.2-sol"
+        ) == modern)
         #expect(HanlinPromptCachePreset.openAIExplicitTwelveHours.policy?.openAI?.ttl == .twelveHours)
         #expect(HanlinPromptCachePreset.openAITwentyFourHours.policy?.openAI?.retention == .twentyFourHours)
     }

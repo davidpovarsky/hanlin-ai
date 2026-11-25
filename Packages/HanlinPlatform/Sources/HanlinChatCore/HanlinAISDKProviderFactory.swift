@@ -302,7 +302,16 @@ extension HanlinAISDKProviderFactory {
                 "type": .string("ephemeral"), "ttl": .string(policy.anthropicTTL.rawValue)
             ])]]
         case .openAI, .openAIResponses:
-            guard policy.openAI?.hasModernOptions == true else { return nil }
+            // Reuse the maintained native/model capability gate from settings.
+            // An extra stable boundary coexists with the provider's implicit
+            // latest-message boundary; it does not select explicit-only mode,
+            // extend TTL, or prewarm. Older/custom/plan transports keep defaults.
+            let automaticStablePrefix = kind == .openAIResponses
+                && HanlinPromptCachePreset.available(
+                    company: configuration.company, apiType: configuration.apiType,
+                    endpoint: configuration.endpoint, modelID: configuration.baseModelID
+                ).contains(.openAIExplicitThirtyMinutes)
+            guard policy.openAI?.hasModernOptions == true || automaticStablePrefix else { return nil }
             var marker: [String: JSONValue] = ["mode": .string("explicit")]
             if let ttl = policy.openAI?.ttl { marker["ttl"] = .string(ttl.rawValue) }
             return ["openai": ["promptCacheBreakpoint": .object(marker)]]
