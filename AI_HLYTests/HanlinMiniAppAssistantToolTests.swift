@@ -114,7 +114,7 @@ struct HanlinMiniAppAssistantToolTests {
     private func fixture(enabled: Bool = true, generation: UInt64 = 7,
                          sourcePath: String = "tools/assistant/bundle.mjs") throws -> HanlinStoredPackageSnapshot {
         let schema = try HanlinJSONSchemaDocument.decodeCanonicalJSON(
-            Data(#"{"type":"object","properties":{"query":{"type":"string"}},"required":["query"]}"#.utf8))
+            Data(#"{"$schema":"https://json-schema.org/draft/2020-12/schema","type":"object","properties":{"query":{"type":"string"}},"required":["query"]}"#.utf8))
         let configuration = HanlinComposerConfiguration(panels: [
             .init(id: "search", title: "Search", fields: [
                 .init(key: "catalog", title: "Catalog", kind: .text, defaultValue: .string("default"))
