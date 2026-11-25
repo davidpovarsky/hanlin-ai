@@ -79,8 +79,12 @@ final class MiniAppAuthoringUITests: XCTestCase {
         XCTAssertTrue(request.waitForExistence(timeout: 45),
                       "The original composer must persist the repair request.")
 
-        // Actual tool calls correct the source, validate, build and open MiniApps.
-        XCTAssertTrue(mini.wait(for: .runningForeground, timeout: 180))
+        // The original on-device compiler validates the faulty and repaired
+        // projects, then validates and emits again during the real build. The
+        // measured SDK19 pipeline was still building when the old 180s wait
+        // terminated both apps. Keep the whole-case 600s allowance and every
+        // installer, native result and actual receipt assertion below.
+        XCTAssertTrue(mini.wait(for: .runningForeground, timeout: 420))
         let importer = mini.buttons["hanlin-file-importer"].firstMatch
         XCTAssertTrue(importer.waitForExistence(timeout: 90),
                       "The real companion installer did not finish the corrected archive.")
