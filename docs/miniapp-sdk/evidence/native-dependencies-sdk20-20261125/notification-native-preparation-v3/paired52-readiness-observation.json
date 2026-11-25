@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "observedAt": "2026-11-25T22:18:27.299623+00:00",
+  "source": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+  "sourceTree": "c0f027896b1edd67ea824c48b2b3bbf7c4e5e73a",
+  "prepared": {
+    "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v3/state.json",
+    "bytes": 15567,
+    "sha256": "0eb409b8ea1853620b8fbc462f67ae3c5a19973e085ba61bfa7149622f2e4d45"
+  },
+  "ledger": {
+    "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v3/ledger.json",
+    "bytes": 1884,
+    "sha256": "26a4bc05363573082404f43e604678e8126c37afb9493096e2c8764993c92fdd"
+  },
+  "frameworks": {
+    "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v3/prepared-frameworks.json",
+    "bytes": 15613,
+    "sha256": "38b16127d7045ed40051b3c2d968fae5a4ca35655a36cdeef52324da99428993"
+  },
+  "configAuthority": {
+    "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v3/config-materialization.json",
+    "bytes": 658,
+    "sha256": "d9647613e2110f4bba9afee6b552bf43dff84964e5bb08d16eb3225191a767c0"
+  },
+  "config": {
+    "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/Config.xcconfig",
+    "bytes": 217,
+    "sha256": "03d96d520f785e34d85b643e31bcb4a424e46e76a81c6b4c245f91eaac3e110f"
+  },
+  "sdkSourceInputsVerified": 235,
+  "trackedDiffSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "derivedData": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125",
+  "derivedDataExists": false,
+  "historyFiles": [
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-history/focused-wire-unit-state.json",
+      "bytes": 2488,
+      "sha256": "95d72c8829b026d2e61b08c037e0cc6a332c2ccd0cdb5ea13d391b174c7aef80"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-history/historical-os-recovery-ledger.json",
+      "bytes": 3201,
+      "sha256": "cfa1ab524fe4c871268b2b364d3bf73dc0d5fd30bb1e584fa002a934771ac62f"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-history/oracle-sdk20-verification.json",
+      "bytes": 6485,
+      "sha256": "8c33bf22355ab2749f81c8abc5fa0b08ef8fe87fca78077512f35060d789f21d"
+    }
+  ],
+  "resourceAssessment": {
+    "minimumFreeBytes": 32000000000,
+    "observedFreeBytes": 121385590784,
+    "kind": "conservative incremental estimates for fresh original whole chain",
+    "componentsBytes": {
+      "newDerivedDataAndPackageClones": 20000000000,
+      "ownedSimulatorAndInstalls": 3000000000,
+      "fixtureSDKAndWorkspaces": 2000000000,
+      "finalizedResultsAndExports": 4000000000,
+      "reserveAndConcurrentGrowth": 3000000000
+    },
+    "oldProductsAndPreparedInputsAlreadyPresent": true,
+    "measurement": "statvfs of owned R3 volume; controller rechecks free bytes at launch"
+  }
+}

@@ -1,0 +1,189 @@
+{
+  "schema": 1,
+  "id": "notification-native-preparation-v1",
+  "source": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+  "sourceTree": "c0f027896b1edd67ea824c48b2b3bbf7c4e5e73a",
+  "status": "FAILED",
+  "startedAt": "2026-11-25T21:47:17.425063+00:00",
+  "pid": 70520,
+  "commands": [
+    {
+      "id": "install-expo-tooling",
+      "argv": [
+        "/Users/m1/builds/hanlin-notification-wire-fix-20261125/Tools/node-v24.5.0-darwin-arm64/bin/node",
+        "Scripts/MiniApps/install-tooling.mjs",
+        "--repository=/Users/m1/builds/hanlin-notification-wire-fix-20261125",
+        "--engine=expo",
+        "--ignore-scripts"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-notification-wire-fix-20261125",
+      "startedAt": "2026-11-25T21:47:17.425827+00:00",
+      "status": "PASS",
+      "log": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v1/install-expo-tooling.log",
+      "pid": 70527,
+      "pgid": 70527,
+      "exitCode": 0,
+      "finishedAt": "2026-11-25T21:47:25.135234+00:00",
+      "actualElapsedSeconds": 7.709146041990607,
+      "logIdentity": {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v1/install-expo-tooling.log",
+        "bytes": 4218,
+        "sha256": "67e6c426fd461177d4d9f180f0ec6ae7c7bea76d8e76811dba876e893f13b74e",
+        "mode": 420
+      }
+    },
+    {
+      "id": "install-nativescript-tooling",
+      "argv": [
+        "/Users/m1/builds/hanlin-notification-wire-fix-20261125/Tools/node-v24.5.0-darwin-arm64/bin/node",
+        "Scripts/MiniApps/install-tooling.mjs",
+        "--repository=/Users/m1/builds/hanlin-notification-wire-fix-20261125",
+        "--engine=nativescript",
+        "--ignore-scripts"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-notification-wire-fix-20261125",
+      "startedAt": "2026-11-25T21:47:25.135891+00:00",
+      "status": "PASS",
+      "log": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v1/install-nativescript-tooling.log",
+      "pid": 70571,
+      "pgid": 70571,
+      "exitCode": 0,
+      "finishedAt": "2026-11-25T21:47:27.341138+00:00",
+      "actualElapsedSeconds": 2.205012167003588,
+      "logIdentity": {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v1/install-nativescript-tooling.log",
+        "bytes": 485,
+        "sha256": "9bde731e9c6e961f3b42fe62dfbbee22a06762034c0f55a99996b25f5cec39df",
+        "mode": 420
+      }
+    },
+    {
+      "id": "prepare-exact-types",
+      "argv": [
+        "/Users/m1/builds/hanlin-notification-wire-fix-20261125/Tools/node-v24.5.0-darwin-arm64/bin/node",
+        "Scripts/Expo/prepare-types.mjs"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-notification-wire-fix-20261125",
+      "startedAt": "2026-11-25T21:47:27.341739+00:00",
+      "status": "PASS",
+      "log": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v1/prepare-exact-types.log",
+      "pid": 70574,
+      "pgid": 70574,
+      "exitCode": 0,
+      "finishedAt": "2026-11-25T21:47:29.807957+00:00",
+      "actualElapsedSeconds": 2.4659810839948477,
+      "logIdentity": {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v1/prepare-exact-types.log",
+        "bytes": 90,
+        "sha256": "6104127c609c61304c6058c86e9f827fd85219a10aef358ef5957cb8b6ed2723",
+        "mode": 420
+      }
+    },
+    {
+      "id": "prepare-original-expo-native",
+      "argv": [
+        "/Users/m1/builds/hanlin-notification-wire-fix-20261125/Tools/node-v24.5.0-darwin-arm64/bin/node",
+        "Scripts/Expo/prepare-ios-dependencies.mjs"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-notification-wire-fix-20261125",
+      "startedAt": "2026-11-25T21:47:29.808627+00:00",
+      "status": "PASS",
+      "log": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v1/prepare-original-expo-native.log",
+      "pid": 70594,
+      "pgid": 70594,
+      "exitCode": 0,
+      "finishedAt": "2026-11-25T21:50:23.119699+00:00",
+      "actualElapsedSeconds": 173.31135666699265,
+      "logIdentity": {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v1/prepare-original-expo-native.log",
+        "bytes": 4176112,
+        "sha256": "34f3e789b3ab737199f3b0206be77ac1e9a42917e8c3e092cda181d24d76c89d",
+        "mode": 420
+      }
+    },
+    {
+      "id": "prepare-original-nativescript-native",
+      "argv": [
+        "/Users/m1/builds/hanlin-notification-wire-fix-20261125/Tools/node-v24.5.0-darwin-arm64/bin/node",
+        "Scripts/NativeScript/prepare-ios-dependencies.mjs"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-notification-wire-fix-20261125",
+      "startedAt": "2026-11-25T21:50:23.122625+00:00",
+      "status": "FAILED",
+      "log": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v1/prepare-original-nativescript-native.log",
+      "pid": 73654,
+      "pgid": 73654,
+      "exitCode": 1,
+      "finishedAt": "2026-11-25T21:50:26.123303+00:00",
+      "actualElapsedSeconds": 3.00044999999227,
+      "logIdentity": {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v1/prepare-original-nativescript-native.log",
+        "bytes": 1198,
+        "sha256": "f792ff9ecd158016efd9fd6eb5740a82287f08ce8e0005b1f93e2d26c68efa4e",
+        "mode": 420
+      }
+    }
+  ],
+  "errors": [
+    "RuntimeError('Original producer failed: prepare-original-nativescript-native')"
+  ],
+  "sourceErrors": [],
+  "cleanupErrors": [],
+  "freeBytesAtStart": 146210422784,
+  "nodeIdentity": {
+    "version": "24.5.0",
+    "platform": "darwin",
+    "arch": "arm64",
+    "execPath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/Tools/node-v24.5.0-darwin-arm64/bin/node"
+  },
+  "allowanceSeconds": 1800,
+  "priorLedgersModified": false,
+  "oldDerivedDataModified": false,
+  "plan": {
+    "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-plan-v1.json",
+    "bytes": 17124,
+    "sha256": "2b951753b617a0d160b596361d5fa38a627a2674766b836e98925d8ec53b301a",
+    "mode": 420
+  },
+  "controller": {
+    "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/native-preparation-v1.py",
+    "bytes": 11373,
+    "sha256": "23ef99bb62a24726421806c0ff6b684bfabe4d06f29c63b167f01841df985701",
+    "mode": 420
+  },
+  "restoration": {
+    "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-wire-input-restoration-v1/state.json",
+    "bytes": 7747,
+    "sha256": "12322840e33a7d48464b484932f7546fb265b6defae1dbb2396039a25493cba9"
+  },
+  "sdkManifest": {
+    "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-wire-input-restoration-v1/cache/miniapp-sdk.json",
+    "bytes": 5226713,
+    "sha256": "6f11ed8da3df18627f05932d47b5b68dec54eb26ac396151a21cbc8c3e65800e"
+  },
+  "hostArchives": [
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/AI_HLY/RuntimeHostResources.zip",
+      "bytes": 81839498,
+      "sha256": "ed18d93a88a1020bc2140417cea3847daf3d03472cdd4769d9a5ac4e44f48a22"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/build/runtime-host/RuntimeHostResources.zip",
+      "bytes": 81839498,
+      "sha256": "ed18d93a88a1020bc2140417cea3847daf3d03472cdd4769d9a5ac4e44f48a22"
+    }
+  ],
+  "observedAt": "2026-11-25T21:50:26.262827+00:00",
+  "elapsedSeconds": 188.83844683298958,
+  "traceback": "Traceback (most recent call last):\n  File \"/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/native-preparation-v1.py\", line 103, in main\n    if code:raise RuntimeError('Original producer failed: '+cmd['id'])\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: Original producer failed: prepare-original-nativescript-native\n",
+  "sourceAfter": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+  "finishedAt": "2026-11-25T21:50:26.262338+00:00",
+  "actualElapsedSeconds": 188.837976625,
+  "remainingAllowanceSeconds": 1611.162023375,
+  "ledger": {
+    "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v1/ledger.json",
+    "bytes": 473,
+    "sha256": "416bd3cc78ef76fe48136427314ea59ec07d5f2873ccab4e84fa6bf65bf5d056",
+    "mode": 420
+  }
+}

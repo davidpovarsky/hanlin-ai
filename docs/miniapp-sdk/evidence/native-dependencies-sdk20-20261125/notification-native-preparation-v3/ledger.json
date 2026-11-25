@@ -1,0 +1,55 @@
+{
+  "schema": 1,
+  "id": "notification-native-preparation-v3",
+  "allowanceSeconds": 1800,
+  "charges": [
+    {
+      "startedAt": "2026-11-25T21:47:17.425063+00:00",
+      "finishedAt": "2026-11-25T21:50:26.262338+00:00",
+      "seconds": 188.837976625,
+      "status": "FAILED"
+    },
+    {
+      "startedAt": "2026-11-25T22:01:28.732166+00:00",
+      "finishedAt": "2026-11-25T22:01:34.670411+00:00",
+      "seconds": 5.938364417001139,
+      "status": "FAILED"
+    },
+    {
+      "startedAt": "2026-11-25T22:05:07.315082+00:00",
+      "finishedAt": "2026-11-25T22:05:14.662384+00:00",
+      "seconds": 7.347363291992224,
+      "status": "INSTALLED",
+      "phase": "notification-metadata-toolchain-v1"
+    },
+    {
+      "startedAt": "2026-11-25T22:10:25.345242+00:00",
+      "finishedAt": "2026-11-25T22:12:07.026124+00:00",
+      "seconds": 101.68132462500944,
+      "status": "PREPARED"
+    }
+  ],
+  "totalChargedSeconds": 303.8050289590028,
+  "remainingAllowanceSeconds": 1496.1949710409972,
+  "priorLedger": {
+    "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v2/ledger.json",
+    "bytes": 918,
+    "sha256": "cd80f10afb1848c12df73eca2de13663633794e3abf52b27b35e5ef2f3bd7d69"
+  },
+  "toolchainPreparation": {
+    "state": {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-metadata-toolchain-v1/state.json",
+      "bytes": 1139,
+      "sha256": "86e8c111510ad1baf953e613a6ce22f2ba4b061ccd4b6db30787cd794ad1a446"
+    },
+    "charge": {
+      "startedAt": "2026-11-25T22:05:07.315082+00:00",
+      "finishedAt": "2026-11-25T22:05:14.662384+00:00",
+      "seconds": 7.347363291992224,
+      "status": "INSTALLED",
+      "phase": "notification-metadata-toolchain-v1"
+    }
+  },
+  "priorLedgersModified": false,
+  "restorationChargeRecordedSeparately": 54.375687207997544
+}

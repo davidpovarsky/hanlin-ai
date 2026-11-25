@@ -1,0 +1,80 @@
+{
+  "schema": 1,
+  "source": "dff3b45c99a57bf8fe8ec721db3fa1fafce7134b",
+  "sourceTree": "52619d4ca19658c559c8378abe320e7b5cd736e3",
+  "startedAt": "2026-11-25T21:15:23.717223+00:00",
+  "status": "COMMAND_SUCCEEDED",
+  "pid": 58414,
+  "command": [
+    "/usr/bin/xcrun",
+    "swift",
+    "test",
+    "--package-path",
+    "/Users/m1/builds/hanlin-notification-wire-fix-20261125/Packages/HanlinPlatform",
+    "--scratch-path",
+    "/Users/m1/builds/hanlin-notification-wire-fix-20261125/build/swiftpm-notification-wire",
+    "--force-resolved-versions",
+    "--skip-update",
+    "--filter",
+    "HanlinNotificationInvocationTests",
+    "--xunit-output",
+    "/Users/m1/builds/hanlin-notification-wire-fix-20261125/build/notification-wire-regression-v1/test-results.xml"
+  ],
+  "sourceErrors": [],
+  "cleanupErrors": [],
+  "toolchain": {
+    "developerDir": {
+      "argv": [
+        "/usr/bin/xcode-select",
+        "-p"
+      ],
+      "exitCode": 0,
+      "stdout": "/Applications/Xcode.app/Contents/Developer\n",
+      "stderr": ""
+    },
+    "swift": {
+      "argv": [
+        "/usr/bin/xcrun",
+        "swift",
+        "--version"
+      ],
+      "exitCode": 0,
+      "stdout": "Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)\nTarget: arm64-apple-macosx27.0.0\n",
+      "stderr": "swift-driver version: 1.168.6 "
+    },
+    "xcode": {
+      "argv": [
+        "/usr/bin/xcodebuild",
+        "-version"
+      ],
+      "exitCode": 0,
+      "stdout": "Xcode 27.0\nBuild version 27A266a\n",
+      "stderr": ""
+    },
+    "disk": {
+      "argv": [
+        "/bin/df",
+        "-k",
+        "/System/Volumes/Data"
+      ],
+      "exitCode": 0,
+      "stdout": "Filesystem   1024-blocks      Used Available Capacity iused      ifree %iused  Mounted on\n/dev/disk3s5   482797652 282534136 155330056    65% 4186618 1553300560    0%   /System/Volumes/Data\n",
+      "stderr": ""
+    }
+  },
+  "commandStartedAt": "2026-11-25T21:15:24.634105+00:00",
+  "commandPid": 58421,
+  "commandPGID": 58421,
+  "exitCode": 0,
+  "commandFinishedAt": "2026-11-25T21:16:50.211131+00:00",
+  "files": [
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/build/notification-wire-regression-v1/swift-test.log",
+      "bytes": 24225,
+      "sha256": "5b163aa2413597185cf99bd7cb0e6ea52446b3c3cc7d9974fe35431ee76afef8"
+    }
+  ],
+  "finishedAt": "2026-11-25T21:16:50.257711+00:00",
+  "actualElapsedSeconds": 86.5407380000106,
+  "acceptance": "PENDING_RAW_RESULT_RECONCILIATION"
+}

@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "observedAt": "2026-11-25T21:57:17.828910+00:00",
+  "source": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+  "beforePATH": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/Tools/node-v24.5.0-darwin-arm64/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin",
+  "before": {
+    "command": "/usr/bin/python3",
+    "exitCode": 0,
+    "stdout": "{\"version\": \"3.9.6 (default, Aug 25 2026, 21:26:21) \\n[Clang 21.0.0 (clang-2100.3.34.2)]\", \"executable\": \"/Applications/Xcode.app/Contents/Developer/usr/bin/python3\", \"tarfile\": \"/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/tarfile.py\", \"extractallSignature\": \"(self, path='.', members=None, *, numeric_owner=False)\"}\n",
+    "stderr": ""
+  },
+  "afterPATH": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/Tools/node-v24.5.0-darwin-arm64/bin:/opt/homebrew/opt/python@3.12/libexec/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin",
+  "after": {
+    "command": "/opt/homebrew/opt/python@3.12/libexec/bin/python3",
+    "exitCode": 0,
+    "stdout": "{\"version\": \"3.12.16 (main, Oct 25 2026, 18:24:37) [Clang 21.0.0 (clang-2100.3.34.2)]\", \"executable\": \"/opt/homebrew/opt/python@3.12/bin/python3.12\", \"tarfile\": \"/opt/homebrew/Cellar/python@3.12/3.12.16/Frameworks/Python.framework/Versions/3.12/lib/python3.12/tarfile.py\", \"extractallSignature\": \"(self, path='.', members=None, *, numeric_owner=False, filter=None)\"}\n",
+    "stderr": ""
+  },
+  "python3Alias": "/opt/homebrew/opt/python@3.12/libexec/bin/python3",
+  "python3Resolved": "/opt/homebrew/Cellar/python@3.12/3.12.16/Frameworks/Python.framework/Versions/3.12/bin/python3.12",
+  "python3Bytes": 34640,
+  "python3SHA256": "ab825fde913c394f6fb8dc57da39108ad98e1827a5404119993de3d3bc6d8fb7",
+  "priorStateSHA256": "0d29750c7e800819b9d2ba8c4158635b6bf0c054fc4d0d7a3acd0c3e598003cb",
+  "priorCharge": 188.837976625,
+  "remainingAllowanceSeconds": 1611.162023375
+}

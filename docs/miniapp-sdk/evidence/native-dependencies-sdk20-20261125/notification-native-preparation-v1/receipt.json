@@ -1,0 +1,123 @@
+{
+  "schema": 1,
+  "observedAt": "2026-11-25T21:57:19.055676+00:00",
+  "files": [
+    {
+      "relative": "install-expo-tooling.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v1/install-expo-tooling.log",
+      "bytes": 4218,
+      "sha256": "67e6c426fd461177d4d9f180f0ec6ae7c7bea76d8e76811dba876e893f13b74e",
+      "storedBytes": 720,
+      "storedSHA256": "8af7665139233ee031fce953be0738177502a85f9832a5a636e837ddd3bd1551",
+      "gzip": true,
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v1/terminal/install-expo-tooling.log.gz"
+    },
+    {
+      "relative": "install-nativescript-tooling.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v1/install-nativescript-tooling.log",
+      "bytes": 485,
+      "sha256": "9bde731e9c6e961f3b42fe62dfbbee22a06762034c0f55a99996b25f5cec39df",
+      "storedBytes": 293,
+      "storedSHA256": "362996dd1d10339ab88ed19110eb07c0309e6018a9cab36608556fe7db2494a0",
+      "gzip": true,
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v1/terminal/install-nativescript-tooling.log.gz"
+    },
+    {
+      "relative": "ledger.json",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v1/ledger.json",
+      "bytes": 473,
+      "sha256": "416bd3cc78ef76fe48136427314ea59ec07d5f2873ccab4e84fa6bf65bf5d056",
+      "storedBytes": 473,
+      "storedSHA256": "416bd3cc78ef76fe48136427314ea59ec07d5f2873ccab4e84fa6bf65bf5d056",
+      "gzip": false,
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v1/terminal/ledger.json"
+    },
+    {
+      "relative": "post-expo-prepared.diff",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v1/post-expo-prepared.diff",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedBytes": 0,
+      "storedSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gzip": false,
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v1/terminal/post-expo-prepared.diff"
+    },
+    {
+      "relative": "prepare-exact-types.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v1/prepare-exact-types.log",
+      "bytes": 90,
+      "sha256": "6104127c609c61304c6058c86e9f827fd85219a10aef358ef5957cb8b6ed2723",
+      "storedBytes": 103,
+      "storedSHA256": "3d87c7128567b259cad9ddcdc792e3e3a41cefb95d90a1f60311663b9c0dcb6f",
+      "gzip": true,
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v1/terminal/prepare-exact-types.log.gz"
+    },
+    {
+      "relative": "prepare-original-expo-native.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v1/prepare-original-expo-native.log",
+      "bytes": 4176112,
+      "sha256": "34f3e789b3ab737199f3b0206be77ac1e9a42917e8c3e092cda181d24d76c89d",
+      "storedBytes": 421444,
+      "storedSHA256": "8f5fb2cd264fe3fae309ea3eacc9828a3e212376d358ba16e268569426513276",
+      "gzip": true,
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v1/terminal/prepare-original-expo-native.log.gz"
+    },
+    {
+      "relative": "prepare-original-nativescript-native.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v1/prepare-original-nativescript-native.log",
+      "bytes": 1198,
+      "sha256": "f792ff9ecd158016efd9fd6eb5740a82287f08ce8e0005b1f93e2d26c68efa4e",
+      "storedBytes": 570,
+      "storedSHA256": "b64e6357f68c87679447284652e4c04987569ed548cc35fa3c6c37a3994ce519",
+      "gzip": true,
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v1/terminal/prepare-original-nativescript-native.log.gz"
+    },
+    {
+      "relative": "python-resolution-proof.json",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v1/python-resolution-proof.json",
+      "bytes": 1987,
+      "sha256": "4a3f922f54a70affb837f537670496e96397bc7326d5bd267c4298d8709a2239",
+      "storedBytes": 1987,
+      "storedSHA256": "4a3f922f54a70affb837f537670496e96397bc7326d5bd267c4298d8709a2239",
+      "gzip": false,
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v1/terminal/python-resolution-proof.json"
+    },
+    {
+      "relative": "state.json",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v1/state.json",
+      "bytes": 8595,
+      "sha256": "0d29750c7e800819b9d2ba8c4158635b6bf0c054fc4d0d7a3acd0c3e598003cb",
+      "storedBytes": 8595,
+      "storedSHA256": "0d29750c7e800819b9d2ba8c4158635b6bf0c054fc4d0d7a3acd0c3e598003cb",
+      "gzip": false,
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v1/terminal/state.json"
+    }
+  ],
+  "pythonResolution": {
+    "schema": 1,
+    "observedAt": "2026-11-25T21:57:17.828910+00:00",
+    "source": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+    "beforePATH": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/Tools/node-v24.5.0-darwin-arm64/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin",
+    "before": {
+      "command": "/usr/bin/python3",
+      "exitCode": 0,
+      "stdout": "{\"version\": \"3.9.6 (default, Aug 25 2026, 21:26:21) \\n[Clang 21.0.0 (clang-2100.3.34.2)]\", \"executable\": \"/Applications/Xcode.app/Contents/Developer/usr/bin/python3\", \"tarfile\": \"/Applications/Xcode.app/Contents/Developer/Library/Frameworks/Python3.framework/Versions/3.9/lib/python3.9/tarfile.py\", \"extractallSignature\": \"(self, path='.', members=None, *, numeric_owner=False)\"}\n",
+      "stderr": ""
+    },
+    "afterPATH": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/Tools/node-v24.5.0-darwin-arm64/bin:/opt/homebrew/opt/python@3.12/libexec/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin",
+    "after": {
+      "command": "/opt/homebrew/opt/python@3.12/libexec/bin/python3",
+      "exitCode": 0,
+      "stdout": "{\"version\": \"3.12.16 (main, Oct 25 2026, 18:24:37) [Clang 21.0.0 (clang-2100.3.34.2)]\", \"executable\": \"/opt/homebrew/opt/python@3.12/bin/python3.12\", \"tarfile\": \"/opt/homebrew/Cellar/python@3.12/3.12.16/Frameworks/Python.framework/Versions/3.12/lib/python3.12/tarfile.py\", \"extractallSignature\": \"(self, path='.', members=None, *, numeric_owner=False, filter=None)\"}\n",
+      "stderr": ""
+    },
+    "python3Alias": "/opt/homebrew/opt/python@3.12/libexec/bin/python3",
+    "python3Resolved": "/opt/homebrew/Cellar/python@3.12/3.12.16/Frameworks/Python.framework/Versions/3.12/bin/python3.12",
+    "python3Bytes": 34640,
+    "python3SHA256": "ab825fde913c394f6fb8dc57da39108ad98e1827a5404119993de3d3bc6d8fb7",
+    "priorStateSHA256": "0d29750c7e800819b9d2ba8c4158635b6bf0c054fc4d0d7a3acd0c3e598003cb",
+    "priorCharge": 188.837976625,
+    "remainingAllowanceSeconds": 1611.162023375
+  },
+  "acceptance": "FAILED original NativeScript preparation before compiler; first4 command passes retained"
+}
