@@ -200,7 +200,7 @@ For a real agent, restore **all** original system instructions, tools and histor
 
 The existing native agent diagnostics UI shows provider cache reads/writes, per-round coverage and a weighted cache-read fraction when every contributing round has valid reported input/read counts. Missing remains unavailable; a reported zero remains zero. Cache read/write tokens are input components, not extra tokens to add to the total. The fraction is a token reuse measurement, **not a request hit rate or a billed savings percentage**.
 
-App composition passes `nil` telemetry when diagnostics are off. When enabled it uses `HanlinOpenTelemetryTracer.local.telemetrySettings()`, which exports metadata to local OSLog. It does not contact a collector or Langfuse.
+The cloud Swift AI SDK engine compositions in `APIManager` and the MiniApp resolver pass `nil` telemetry when diagnostics are off. When enabled, these compositions use `HanlinOpenTelemetryTracer.local.telemetrySettings()`, which exports metadata to local OSLog. This does not add those SDK spans to the legacy plain-chat/compact routes or the existing Apple on-device engine factory. The adapter does not contact a collector or Langfuse.
 
 For an explicitly configured destination, inject an original `OpenTelemetrySdk.SpanExporter`:
 
