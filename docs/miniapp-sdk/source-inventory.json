@@ -1,10 +1,6 @@
 {
-  "sourceCommit": "a2c8a1b1be746461272ba77254603304567c309d",
-  "uncommittedSourcePaths": [
-    "Package.swift",
-    "Scripts/Expo/package-lock.json",
-    "Scripts/Expo/package.json"
-  ],
+  "sourceCommit": "dff3b45c99a57bf8fe8ec721db3fa1fafce7134b",
+  "uncommittedSourcePaths": [],
   "schemaVersion": 1,
   "auditParser": {
     "package": "@typescript/typescript6",

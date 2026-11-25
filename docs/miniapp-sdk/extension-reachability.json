@@ -1,10 +1,8 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "a2c8a1b1be746461272ba77254603304567c309d",
+  "sourceCommit": "dff3b45c99a57bf8fe8ec721db3fa1fafce7134b",
   "snapshotIdentity": "Base commit plus exact current hashes; uncommitted audit sources are listed separately",
-  "uncommittedSourcePaths": [
-    "AI_HLY.xcodeproj/project.pbxproj"
-  ],
+  "uncommittedSourcePaths": [],
   "status": "IN_PROGRESS_SOURCE_AUDIT",
   "sdkAuthority": "source-inventory.json",
   "sdkSources": [
@@ -733,7 +731,7 @@
       "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNotificationEvent.swift",
       "line": 6,
       "anchor": "public struct HanlinNotificationEvent",
-      "sha256": "982bbdff39e2baeb944ab476bc16d8f826f36ca38e9a3e6a75e6efaeaf3b318b"
+      "sha256": "867613ea9cf2785e6eff3caad96c620a8c50d16fd22d266eeda899b7ab784f69"
     },
     "notificationQueue": {
       "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNotificationInvocation.swift",
@@ -853,7 +851,7 @@
       "file": "HanlinMiniAppsApp/HanlinMiniAppsApp.swift",
       "line": 12,
       "anchor": "@main",
-      "sha256": "579a27ec799ea414cd1ae58533748e79840167fca9d8b849e8a0b3d9d55118c2"
+      "sha256": "f1489c1f8c4ca1039d4ffc5698b43a5e672ec586fb5b9393dc69f246f11de4c1"
     },
     "miniAppsWidgetBundle": {
       "file": "HanlinMiniAppsExtensions/Widgets/HanlinMiniAppsWidgets.swift",
