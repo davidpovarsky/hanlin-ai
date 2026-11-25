@@ -316,14 +316,23 @@
       "miniapps_sdk": "b0cf26a668a698682f5307252f14cf0af8c6d00a",
       "wave3": "f3a0a97e63cc38acd58c0673447efe8d61b556da",
       "status": "READ_ONLY_REVIEW: new MiniSDK notification/Host source not included in App07; preserve separate acceptance boundary"
+    },
+    "latest_incoming_source_acceptance": {
+      "source": "d8150350901b245d52b2637277f454a6f2da5446",
+      "status": "SOURCE_CHECKS_PASS_NATIVE_PENDING",
+      "source_fixture_passes": 26,
+      "receipt": "evidence/latest-sync-b0cf-20261125/candidate-receipt.json",
+      "host_refresh_required": true,
+      "app_attempt": "08",
+      "notification_native_owner_scope": "NOT_RUN_HERE"
     }
   },
-  "updated_at": "2026-11-25T05:15:06.346498+00:00",
-  "latest_integrated_source": "37367b3d6bbd7e8321d6828a9052d502dd9d7522",
+  "updated_at": "2026-11-25T05:28:34.082303+00:00",
+  "latest_integrated_source": "d8150350901b245d52b2637277f454a6f2da5446",
   "synchronized_heads": {
     "composer": "f39142d3d14ae1bbbb81febceeef61fdc605f2a0",
-    "miniapps_sdk": "3d3a89bbfb5921490764f01b20632f62fb398433",
-    "wave3": "a2127598a677e0b8a67d41cdb422c4e19c8d1afc"
+    "miniapps_sdk": "b0cf26a668a698682f5307252f14cf0af8c6d00a",
+    "wave3": "f3a0a97e63cc38acd58c0673447efe8d61b556da"
   },
-  "synchronization_cutoff_utc": "2026-11-25T04:43:43Z"
+  "synchronization_cutoff_utc": "2026-11-25T05:13:09Z"
 }

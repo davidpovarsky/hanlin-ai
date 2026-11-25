@@ -1,0 +1,8 @@
+file:///mnt/development/projects/worktrees/hanlin-ai-cache-notification-sync-20261125/Scripts/Audit/audit-miniapp-sdk.mjs:228
+  if (JSON.stringify(prior) !== JSON.stringify(inventory)) throw new Error('SDK source inventory drift. Audit source changes, then regenerate with --write.');
+                                                                 ^
+
+Error: SDK source inventory drift. Audit source changes, then regenerate with --write.
+    at file:///mnt/development/projects/worktrees/hanlin-ai-cache-notification-sync-20261125/Scripts/Audit/audit-miniapp-sdk.mjs:228:66
+
+Node.js v24.22.0

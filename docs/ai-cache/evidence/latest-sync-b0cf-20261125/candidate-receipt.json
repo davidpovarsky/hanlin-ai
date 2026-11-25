@@ -1,0 +1,206 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-11-25T05:27:39.028321+00:00",
+  "worktree": "/mnt/development/projects/worktrees/hanlin-ai-cache-notification-sync-20261125",
+  "branch": "codex/hanlin-ai-cache-notification-sync-20261125",
+  "base": "1f27a36e257573df0a74ec5b3b0ca3586f6854ad",
+  "candidate": "d8150350901b245d52b2637277f454a6f2da5446",
+  "tree": "78242f94c61f2e8f2be3a64f4a59d7af23f35fc7",
+  "clean": true,
+  "normalMergedHeads": [
+    "b0cf26a668a698682f5307252f14cf0af8c6d00a",
+    "f3a0a97e63cc38acd58c0673447efe8d61b556da"
+  ],
+  "normalMergeCommits": [
+    "c632453129feb529266662fd8c90e9c0e6aab5d3",
+    "69ec622743fc1544753ef975628aa5986dc6d067"
+  ],
+  "generationAndFixtureCommit": "d8150350901b245d52b2637277f454a6f2da5446",
+  "conflictResolution": {
+    "path": "Scripts/MiniApps/stage-sdk.mjs",
+    "policy": "Preserve assistant tools, examples, declaration package and docs while unioning notification events and notification declaration package/docs."
+  },
+  "originalGeneratedPaths": [
+    "AI_HLY.xcodeproj/project.pbxproj",
+    "Package.swift",
+    "docs/agent-sdk/unified-package-manifest.json"
+  ],
+  "fixtureCorrection": {
+    "path": "Scripts/CI/IntegrationValidation/test_project_graph.py",
+    "description": "Replace stale three-extension count with exact Notification/Share/Translation/Widgets membership; retain all namespace and entitlement assertions."
+  },
+  "deltaPaths": [
+    "M\tAI_HLY.xcodeproj/project.pbxproj",
+    "M\tAI_HLY/AI_HLY.swift",
+    "M\tAI_HLY/Downstream/SDK/HanlinApplicationLifecycle.swift",
+    "A\tAI_HLY/Downstream/ScriptingPlatform/HanlinNotificationApplicationDelegate.swift",
+    "M\tAI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+    "M\tAI_HLYTests/HanlinExpoHostServicesAcceptanceTests.swift",
+    "M\tHanlinMiniAppsApp/HanlinMiniAppsApp.swift",
+    "A\tHanlinMiniAppsExtensions/Notification/HanlinMiniAppsNotificationService.entitlements",
+    "A\tHanlinMiniAppsExtensions/Notification/Info.plist",
+    "A\tHanlinMiniAppsExtensions/Notification/NotificationService.swift",
+    "M\tHanlinMiniAppsTests/SplitAppStorageLayoutTests.swift",
+    "M\tPackage.swift",
+    "M\tPackages/HanlinAppExtensionsSDK/Package.swift",
+    "M\tPackages/HanlinAppExtensionsSDK/Sources/HanlinNotificationExtension/HanlinNotificationService.swift",
+    "M\tPackages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationDelivery.swift",
+    "M\tPackages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationQueue.swift",
+    "A\tPackages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNotificationEvent.swift",
+    "A\tPackages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNotificationInvocation.swift",
+    "A\tPackages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinNotificationInvocationTests.swift",
+    "M\tScripts/Audit/audit_miniapp_reachability.py",
+    "M\tScripts/CI/IntegrationValidation/miniapps_provider_sources.json",
+    "M\tScripts/CI/IntegrationValidation/project_graph.py",
+    "M\tScripts/CI/IntegrationValidation/test_project_graph.py",
+    "A\tScripts/MiniApps/Examples/expo-hello-world/notification-event.ts",
+    "M\tScripts/MiniApps/Examples/expo-hello-world/tsconfig.json",
+    "A\tScripts/MiniApps/Examples/nativescript-hello-world/notification-event.ts",
+    "M\tScripts/MiniApps/Examples/nativescript-hello-world/tsconfig.json",
+    "A\tScripts/MiniApps/Tests/notification-events.test.mjs",
+    "A\tScripts/MiniApps/notification-events/index.d.ts",
+    "A\tScripts/MiniApps/notification-events/package.json",
+    "M\tScripts/MiniApps/stage-sdk.mjs",
+    "M\tScripts/ProductSplit/miniapps_extensions.py",
+    "M\tScripts/SDK/update_project.py",
+    "M\tdocs/agent-sdk/unified-package-manifest.json",
+    "A\tdocs/ci/evidence/authoring-resolution-cache-20261125/host-case-reuse-closure.json",
+    "A\tdocs/ci/evidence/authoring-resolution-cache-20261125/host-module-sync-plan.md",
+    "A\tdocs/miniapp-sdk/NOTIFICATION_EVENTS.md",
+    "A\tdocs/miniapp-sdk/evidence/notification-ingress-20261125/README.md",
+    "A\tdocs/miniapp-sdk/evidence/notification-ingress-20261125/raw/0-UNUserNotificationCenter.h",
+    "A\tdocs/miniapp-sdk/evidence/notification-ingress-20261125/raw/1-UNNotificationResponse.h",
+    "A\tdocs/miniapp-sdk/evidence/notification-ingress-20261125/raw/2-UNNotification.h",
+    "A\tdocs/miniapp-sdk/evidence/notification-ingress-20261125/raw/apple-sdk-header-observation.json",
+    "A\tdocs/miniapp-sdk/evidence/notification-ingress-20261125/raw/source-bindings.json",
+    "A\tdocs/miniapp-sdk/evidence/notification-ingress-20261125/raw/typescript-compiler.json",
+    "A\tdocs/miniapp-sdk/evidence/notification-ingress-20261125/raw/typescript-contract-run.json",
+    "A\tdocs/miniapp-sdk/evidence/notification-ingress-20261125/raw/typescript-contract.log",
+    "A\tdocs/miniapp-sdk/evidence/notification-ingress-20261125/raw/typescript-publication-bindings.json",
+    "A\tdocs/miniapp-sdk/evidence/notification-ingress-20261125/receipt.json",
+    "A\tdocs/miniapp-sdk/evidence/notification-installed-expo-acceptance-source-20261125/README.md",
+    "A\tdocs/miniapp-sdk/evidence/notification-installed-expo-acceptance-source-20261125/receipt.json",
+    "A\tdocs/miniapp-sdk/evidence/primary-paired52-continuation-control-20261125/controller.py",
+    "A\tdocs/miniapp-sdk/evidence/primary-paired52-continuation-control-20261125/receipt.json",
+    "A\tdocs/miniapp-sdk/notification-event.schema.json",
+    "M\tdocs/product-split/target-membership.json"
+  ],
+  "actualOracleFixturePasses": {
+    "hostLinkOwnership": 6,
+    "widgetCxxImports": 1,
+    "projectGraph": 19,
+    "total": 26
+  },
+  "checks": {
+    "appIntentsResources": "PASS",
+    "unifiedManifest": "PASS",
+    "projectGraph": "PASS",
+    "stageSDKJavaScriptSyntax": "PASS",
+    "gitDiffWhitespace": "PASS",
+    "SDKSourceAudit": "STALE_GENERATED_OUTPUT_REQUIRES_ORIGINAL_MAC_REFRESH",
+    "reachability": "BLOCKED_BY_STALE_SDK_SOURCE_AUDIT"
+  },
+  "selectedAppAcceptance": {
+    "methods": 46,
+    "requiredInvocations": 48,
+    "sourceInventory": "selected-cache-test-inventory.json",
+    "candidateExecution": "NOT_RUN",
+    "historicalApp07Source": "948bdb1fe75d31559dc8d65ae8d2e70fa69de276",
+    "historicalApp07": "PASS_ON_ITS_SEALED_SOURCE_ONLY"
+  },
+  "preservationReceipt": "preservation-receipt.json",
+  "preservationCategories": [
+    "core80",
+    "localJS36",
+    "activeLocks",
+    "sixStandaloneManifests",
+    "dedicatedC6AndCachePaths",
+    "sharedPlatformOnlyIncomingNotificationHunks",
+    "stageSDKBothContractsAndExamplesRetained"
+  ],
+  "newNotificationNativeAcceptance": "NOT_RUN; incoming owner TS1 is not native or OS notification acceptance; standalone MiniApps extension embedding requires its own native product validation.",
+  "remainingOriginalMacProducer": "python3 Scripts/Runtime/runtime_host_archive.py sync AI_HLY/RuntimeHostResources.zip (calls original Host producer if fingerprint differs); subsequent original archive validation, runtime manifest and native inventory checks, then parent-owned affected app validation.",
+  "dependencyResolution": "All nine active tracked locks and six resolved standalone manifests remain unchanged; AppExtensions manifest/root generated graph changes are local target dependencies, not upstream pin changes.",
+  "evidenceFiles": {
+    "app-intents-check.log": {
+      "sha256": "dee7c7cc1ea4e0689e5f02b0dc6fc6ccf217e0f7a744f91bd9a91e7053b641cf",
+      "bytes": 93
+    },
+    "host-link-ownership.log": {
+      "sha256": "e0b76a77594bd32a707ff439757b03cc0327868f402867958c1c081138b76f9d",
+      "bytes": 1334
+    },
+    "manifest-check.log": {
+      "sha256": "ef1d5f337d63832d7b11fad2f23da38bf3cdee83bd82bfecfddc56df7dcefdc5",
+      "bytes": 3605
+    },
+    "manifest-generation.log": {
+      "sha256": "ef1d5f337d63832d7b11fad2f23da38bf3cdee83bd82bfecfddc56df7dcefdc5",
+      "bytes": 3605
+    },
+    "minisdk-merge-completed.log": {
+      "sha256": "360a882ed6bcda3376d7e91ab008a28fe65aeed6d2ec2091ee9a7f4434bf16a7",
+      "bytes": 171
+    },
+    "minisdk-merge.log": {
+      "sha256": "5fa7fed265e8c820c345561a42b6a7f1a9e9ff96a92f70ad74616ad8db835a5d",
+      "bytes": 458
+    },
+    "preservation-receipt.json": {
+      "sha256": "c4a5f16cff2a985620ab9432cf772a5fd1b6102d55107a29e33ca4896ec488e2",
+      "bytes": 31258
+    },
+    "project-check.log": {
+      "sha256": "7b205399ea53f72db8afa2fe3d77370cd6f0ac3d9ea8d19cea47a806236d4d18",
+      "bytes": 88
+    },
+    "project-generation.log": {
+      "sha256": "7b205399ea53f72db8afa2fe3d77370cd6f0ac3d9ea8d19cea47a806236d4d18",
+      "bytes": 88
+    },
+    "project-graph-fixtures.log": {
+      "sha256": "0a6753df2b4d900d33c2bf50242cef673726ec74705dbafde0d191b0a494556b",
+      "bytes": 2677
+    },
+    "reachability-check.log": {
+      "sha256": "00c8e9089bb61d19c1a6c0df66dbac3aee1c7ad61aa1feaa475f6b348d9d0034",
+      "bytes": 768
+    },
+    "sdk-audit-check.log": {
+      "sha256": "c19db8b259f4ad0b52fc91d6a1459254f6e8d53cd577898d5b722ce6175ff2ec",
+      "bytes": 594
+    },
+    "selected-cache-test-inventory.json": {
+      "sha256": "557e716eba15309a68f1f980a1d9795827fee89b99a09cac2622445fd5d3de26",
+      "bytes": 13535
+    },
+    "source-checks.json": {
+      "sha256": "7ea5066355c4f2665a9139de35f00b07adeb95a9d399125cd39e73c6cbd7b696",
+      "bytes": 2160
+    },
+    "source-fixture-results.json": {
+      "sha256": "c558efae690746e2e42080bc4e6a215b21d1d04621c619f7f556dd31f305c7b2",
+      "bytes": 1515
+    },
+    "source-generation-commands.json": {
+      "sha256": "44d2064497999dad0373eaf2817e8f353a30fbc6355c12b0a73b179f02136671",
+      "bytes": 1206
+    },
+    "stage-sdk-syntax.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "wave3-merge.log": {
+      "sha256": "9a865949db53795703eb849d00a0681578d0ca9710baaef06176c45095409f29",
+      "bytes": 412
+    },
+    "widget-cxx-imports.log": {
+      "sha256": "f6fbf6a2ad3926f7c7493cc4fbf491ec71de5bcc25721f7f30474e149e22c98b",
+      "bytes": 291
+    },
+    "worktree.log": {
+      "sha256": "1c9109c67acfc47bd334af5742b4bf45ab75615a5348b3de90186877edcc87b2",
+      "bytes": 184
+    }
+  }
+}

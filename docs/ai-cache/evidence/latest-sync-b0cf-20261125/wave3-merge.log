@@ -1,0 +1,6 @@
+Merge made by the 'ort' strategy.
+ .../host-case-reuse-closure.json                   | 1847 ++++++++++++++++++++
+ .../host-module-sync-plan.md                       |   91 +
+ 2 files changed, 1938 insertions(+)
+ create mode 100644 docs/ci/evidence/authoring-resolution-cache-20261125/host-case-reuse-closure.json
+ create mode 100644 docs/ci/evidence/authoring-resolution-cache-20261125/host-module-sync-plan.md
