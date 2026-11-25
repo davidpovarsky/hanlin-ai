@@ -1,0 +1,10 @@
+{
+  "atUTC": "2026-11-25T01:15:16.954023+00:00",
+  "sourceCommit": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91",
+  "diagnosis": "Copied SwiftShims PCM records the original owner ModuleCache path; exact xcresult error preserved",
+  "action": "Move only our isolated ModuleCache aside for regeneration",
+  "from": "/Users/m1/caches/DerivedData/hanlin-composer-app-20261124/ModuleCache.noindex",
+  "to": "/Users/m1/caches/DerivedData/hanlin-composer-app-20261124.ModuleCache-before-attempt2",
+  "sourceFilesChanged": false,
+  "otherOwnerCachesChanged": false
+}

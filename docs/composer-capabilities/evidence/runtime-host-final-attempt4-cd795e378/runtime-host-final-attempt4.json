@@ -1,0 +1,19 @@
+{
+  "sourceCommit": "cd795e378afed5c7556a71e26e5247da9ff22869",
+  "startedAtUTC": "2026-11-25T00:56:35.430868+00:00",
+  "finishedAtUTC": "2026-11-25T00:58:12.077977+00:00",
+  "command": [
+    "nice",
+    "-n",
+    "10",
+    "bash",
+    "Scripts/Runtime/prepare-runtime-host.sh"
+  ],
+  "exitCode": 0,
+  "durationSeconds": 96.647,
+  "logSHA256": "0530855aa61515628b1caf7ce8a38a222e64fdb5e74a354c8cc04845c8e91996",
+  "reason": "freeze original SDK archive after native resource generation",
+  "archiveSHA256": "16006101892548001b64e4a8167e27e910f5e907a7af296ef8786d4850811120",
+  "archiveBytes": 81837518,
+  "trackedChanges": " M docs/miniapp-sdk/extension-reachability.json\n M docs/miniapp-sdk/extension-reachability.md\n M docs/miniapp-sdk/source-inventory.json\n"
+}

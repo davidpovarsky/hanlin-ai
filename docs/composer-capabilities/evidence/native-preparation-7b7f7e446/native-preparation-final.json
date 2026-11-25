@@ -1,0 +1,36 @@
+{
+  "sourceCommit": "7b7f7e4460200d7e98162dd525d67f8ca1860911",
+  "atUTC": "2026-11-25T00:48:57.267481+00:00",
+  "frameworksValidated": 15,
+  "supportGroupsValidated": [
+    "HanlinExpoHeaderSupport",
+    "HanlinExpoWidgetRuntimeSupport",
+    "HanlinNativeScriptHostSupport",
+    "HanlinPythonHostSupport"
+  ],
+  "checks": [
+    {
+      "command": [
+        "node",
+        "Scripts/Audit/audit-miniapp-sdk.mjs",
+        "--check"
+      ],
+      "exitCode": 0,
+      "logSHA256": "102ca01eb91b32d9498d2aa22040bf0933ed9083322a0cb1dd2e9b39257321c6"
+    },
+    {
+      "command": [
+        "python3",
+        "Scripts/Runtime/runtime_host_archive.py",
+        "validate",
+        "AI_HLY/RuntimeHostResources.zip",
+        "--source-root",
+        "AI_HLY/Downstream/RuntimeCore/Node/Host"
+      ],
+      "exitCode": 1,
+      "logSHA256": "e9f2baa1c22fe1e7a981a49345b6a536a00b3c0880043a2c588ff5fcadb015d4"
+    }
+  ],
+  "expoPreparationReceipt": "expo-current-cached-preparation.json",
+  "runtimeHostSHA256": "043f27b7c8b884c3095c97a99672d58bcf2ba7a1df5276ce8eaefa7eeae1e9d9"
+}

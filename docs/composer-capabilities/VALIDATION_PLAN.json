@@ -4,7 +4,7 @@
   "asanaTask": "1220882717750164",
   "sourceBase": "0929e07a6a6adae3a27cab5c514623c7cc0f157c",
   "sourceSnapshot": "8a67e7aee83c6b12673db1348b7f550a2805de50",
-  "finalSource": "PENDING native artifact integration and application validation; latest executed RuntimeHost source is 37a788a4a10a293653e307c05ba1a507d518d1f0",
+  "finalSource": "PENDING application and native/UI validation. AI_HLY build attempt 1 failed at 20fb9f711 because of relocated SwiftShims module-cache paths. Isolated cache repair and measured-admission policy refresh are recorded; actual attempt 2 has started without a completed result in this packet. Completed native preparation and RuntimeHost archive freshness retain their actual sources.",
   "runner": {
     "host": "scaleway-mac",
     "transport": "SentinelX direct",
@@ -92,15 +92,28 @@
       "status": "EXECUTED_PASS",
       "executionSource": "f54aebbb35169ea63eca146a1ba3ef4e8bf4f84d",
       "evidence": "docs/composer-capabilities/evidence/mac-validation-20261125/app-preparation.json",
-      "finalSourceFreshness": "PENDING_AFTER_NATIVE_OWNER_INTEGRATION"
+      "finalSourceFreshness": "PENDING final consumer application validation. Native artifact preparation and RuntimeHost freshness are recorded separately as completed gates."
+    },
+    {
+      "id": "native_preparation",
+      "why": "The consumer application must use original, provenance-verified native frameworks and generated resources matching the current locks.",
+      "status": "EXECUTED_PASS",
+      "executionSource": "7b7f7e4460200d7e98162dd525d67f8ca1860911",
+      "command": "node Scripts/Expo/prepare-ios-dependencies.mjs",
+      "evidence": "docs/composer-capabilities/evidence/native-preparation-7b7f7e446/native-preparation-final.json",
+      "originalPreparerReceipt": "docs/composer-capabilities/evidence/native-preparation-7b7f7e446/expo-current-cached-preparation.json",
+      "frameworksValidated": 15,
+      "supportGroupsValidated": 4,
+      "sourceGenerationCommit": "47643864a8ac380f3d2e3a962ae7a8b144517a16",
+      "acceptanceTests": "NOT_INFERRED"
     },
     {
       "id": "runtime_host",
       "why": "New wrappers, staged types/schema and authoring imports invalidate old RuntimeHostResources.zip; original packager requires its actual Node tests and JITless archive verification.",
       "command": "RUNNER_TEMP=<isolated>/build/tmp bash Scripts/Runtime/prepare-runtime-host.sh",
       "status": "EXECUTED_PASS",
-      "executionSource": "37a788a4a10a293653e307c05ba1a507d518d1f0",
-      "evidence": "docs/composer-capabilities/evidence/runtime-host-final-attempt3-37a788a4a/runtime-host-final-attempt3.json",
+      "executionSource": "cd795e378afed5c7556a71e26e5247da9ff22869",
+      "evidence": "docs/composer-capabilities/evidence/runtime-host-final-attempt4-cd795e378/runtime-host-final-attempt4.json",
       "actualNodeCases": {
         "total": 178,
         "passed": 177,
@@ -109,15 +122,16 @@
         "skipName": "actual Node job crosses 300 seconds with no hidden deadline",
         "skipReason": "Existing opt-in long test; unchanged by this work."
       },
-      "archiveSHA256": "043f27b7c8b884c3095c97a99672d58bcf2ba7a1df5276ce8eaefa7eeae1e9d9",
-      "archiveBytes": 81837535,
+      "archiveSHA256": "16006101892548001b64e4a8167e27e910f5e907a7af296ef8786d4850811120",
+      "archiveBytes": 81837518,
       "finalArchiveFreshness": {
         "status": "EXECUTED_PASS",
-        "sourceCommit": "37a788a4a10a293653e307c05ba1a507d518d1f0",
-        "reason": "Original RuntimeHost preparation reran after the exact React19.3.1 type-lock integration; copied receipt/raw log and observed archive bytes/hash agree."
+        "sourceCommit": "cd795e378afed5c7556a71e26e5247da9ff22869",
+        "reason": "Original RuntimeHost packager reran after original native Widget generation; complete Node tests, ZIP validation and JITless probe passed. Independent read-only archive hash matches the receipt.",
+        "generatedInventoryCommit": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91"
       },
-      "durationSeconds": 103.584,
-      "previousSuccessfulSource": "f54aebbb35169ea63eca146a1ba3ef4e8bf4f84d"
+      "durationSeconds": 96.647,
+      "previousSuccessfulSource": "37a788a4a10a293653e307c05ba1a507d518d1f0"
     },
     {
       "id": "manifest_audit",
@@ -209,9 +223,52 @@
         "HanlinMiniApps"
       ],
       "configuration": "Debug build-for-testing",
-      "status": "NOT_RUN",
+      "status": "PENDING",
       "pending": true,
-      "expectedBuilds": 2
+      "expectedBuilds": 2,
+      "progress": {
+        "status": "STARTED_NO_COMPLETED_RESULT",
+        "source": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91",
+        "attempt": 2,
+        "scheme": "AI_HLY",
+        "jobReportedByOwner": "job_e9db205b711d",
+        "startedAtUTC": "2026-11-25T01:23:17.863531+00:00",
+        "observedAtUTC": "2026-11-25T01:25:39.507812+00:00",
+        "processReceipt": "evidence/app-build-attempt1-20fb9f711/ai-hly-build-attempt2-process.json",
+        "capacityPolicyRefresh": "evidence/app-build-attempt1-20fb9f711/app-build-capacity-policy-refresh.json",
+        "completedSuccessfulBuildInThisPacket": false
+      },
+      "attempts": [
+        {
+          "id": "AI_HLY attempt1",
+          "source": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91",
+          "status": "FAILED",
+          "failureClassification": "RELOCATED_PRECOMPILED_MODULE_CACHE",
+          "exitCode": 65,
+          "durationSeconds": 330.678,
+          "receipt": "evidence/app-build-attempt1-20fb9f711/ai-hly-build-attempt1.json",
+          "diagnostics": "evidence/app-build-attempt1-20fb9f711/ai-hly-build-attempt1-errors.json",
+          "assessment": "evidence/app-build-attempt1-20fb9f711/build-assessment.json",
+          "rawLogSHA256": "8638ebde19ff53fbd8564aa1613d726a06bf4503f96a30f4ca09ea94924e61fe",
+          "acceptanceTestsExecuted": 0
+        },
+        {
+          "id": "AI_HLY attempt2",
+          "source": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91",
+          "status": "STARTED_NO_COMPLETED_RESULT",
+          "startedAtUTC": "2026-11-25T01:23:17.863531+00:00",
+          "processReceipt": "evidence/app-build-attempt1-20fb9f711/ai-hly-build-attempt2-process.json",
+          "observedAtUTC": "2026-11-25T01:25:39.507812+00:00",
+          "completedReceiptExistsAtCapture": false
+        }
+      ],
+      "moduleCacheRepair": {
+        "status": "RECORDED_RETRY_RESULT_PENDING",
+        "source": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91",
+        "receipt": "evidence/app-build-attempt1-20fb9f711/app-build-attempt1-cache-repair.json",
+        "sourceFilesChanged": false,
+        "otherOwnerCachesChanged": false
+      }
     },
     {
       "id": "app_scope",
@@ -968,7 +1025,7 @@
     "completionDocumentationOnly": "635bc66274436d21236500cda4c2e873b1abe1bd",
     "activeDraftExcluded": "PR18 remains with original owner"
   },
-  "updatedAtUTC": "2026-11-25T00:37:27.752050+00:00",
+  "updatedAtUTC": "2026-11-25T01:26:38.515858+00:00",
   "failureCorrections": [
     {
       "boundary": "manifest ordinary JSON",
@@ -985,6 +1042,11 @@
     {
       "boundary": "model history projection",
       "reason": "Persistent typed snapshots project ordinary immutable configuration JSON to model history"
+    },
+    {
+      "boundary": "isolated application ModuleCache relocation",
+      "reason": "Actual AI_HLY build-for-testing exit 65 reports a SwiftShims PCM compiled with the original producer cache path. Root moved only the isolated ModuleCache aside without source, dependency-pin or other-owner cache changes. Successful recompilation remains pending.",
+      "evidence": "docs/composer-capabilities/evidence/app-build-attempt1-20fb9f711/build-assessment.json"
     }
   ],
   "latestUpstreamIntegration": {
@@ -994,10 +1056,9 @@
     "taskWorkspaceEquivalent": "6ceb07447 changes already included by identical merge-tree"
   },
   "overallStatus": "PENDING",
-  "evidenceCheckpoint": "37a788a4a10a293653e307c05ba1a507d518d1f0",
+  "evidenceCheckpoint": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91",
   "evidenceIndex": "docs/composer-capabilities/EVIDENCE_INDEX.json",
   "pendingRequiredGates": [
-    "Integrate and verify the current native artifacts before consumer application builds",
     "Two actual application build-for-testing schemes",
     "Thirteen app integration methods",
     "Four actual native-engine methods",
@@ -1009,8 +1070,11 @@
     "Platform coverage is 45 verified prior passes plus six final executed passes; no single 51-method execution is claimed.",
     "Capacity-interrupted attempt4 executed zero cases. Its original and corrected automation reports are both preserved.",
     "Log-derived JUnit is labeled as derived; original log bytes are recoverable from gzip.",
-    "The f54 RuntimeHost 177-pass result remains historical evidence. A new original preparation at37 passed177 with the same one existing opt-in skip and verified the new archive hash; all app/native/editor/UI gates remain pending."
+    "RuntimeHost attempts 2/3 retain their actual historical 177-pass proof. Attempt 4 executed 177 passes after native resource generation at cd795e378, with one unchanged opt-in skip and a new verified archive hash.",
+    "Guarded or prerequisite-blocked artifact transfers are preserved as preparation outcomes, never counted as failing or passing acceptance tests.",
+    "Native preparer exit 0, verified framework bytes, codegen and metadata checks do not establish successful consumer app builds or native-engine/editor/UI execution.",
+    "The failed build-for-testing attempt and recorded ModuleCache repair are not acceptance test results. Stopping a waiting admission runner with no compiler is orchestration, not a build/test failure. An actual retry process start is not a completed build."
   ],
   "documentationBranchBase": "189ca0d73a8f9b92451d343ca84b4b7074c57c6c",
-  "latestRecordedExecutionSource": "7b7f7e4460200d7e98162dd525d67f8ca1860911"
+  "latestRecordedExecutionSource": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91"
 }

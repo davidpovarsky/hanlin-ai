@@ -610,11 +610,11 @@ struct HanlinCompactSearchFocusRegistration: UIViewRepresentable {
     final class Anchor: UIView {
         private let token = UUID()
         private weak var owner: HanlinCompactKeyboardOwner?
-        private var focused: Bool
+        private var searchIsFocused: Bool
 
         init(owner: HanlinCompactKeyboardOwner, focused: Bool) {
             self.owner = owner
-            self.focused = focused
+            self.searchIsFocused = focused
             super.init(frame: .zero)
             isUserInteractionEnabled = false
             isAccessibilityElement = false
@@ -634,7 +634,7 @@ struct HanlinCompactSearchFocusRegistration: UIViewRepresentable {
                 self.owner?.removeSearchFocus(token)
                 self.owner = owner
             }
-            self.focused = focused
+            self.searchIsFocused = focused
             publishFocus()
         }
 
@@ -644,7 +644,7 @@ struct HanlinCompactSearchFocusRegistration: UIViewRepresentable {
         }
 
         private func publishFocus() {
-            owner?.setSearchFocus(token, anchor: self, focused: focused)
+            owner?.setSearchFocus(token, anchor: self, focused: searchIsFocused)
         }
     }
 }

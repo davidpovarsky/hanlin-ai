@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "createdAtUTC": "2026-11-25T00:28:39.148294+00:00",
-  "documentationCheckpoint": "37a788a4a10a293653e307c05ba1a507d518d1f0",
+  "documentationCheckpoint": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91",
   "overallStatus": "PENDING",
   "sdk": {
     "source": "a3aae0b952b0518cb8c40ed4a511d4cffadab99f",
@@ -83,21 +83,26 @@
   },
   "runtimeHost": {
     "failedAttempt": "evidence/mac-validation-20261125/runtime-host-final-attempt1.json",
-    "passingAttempt": "evidence/runtime-host-final-attempt3-37a788a4a/runtime-host-final-attempt3.json",
-    "passingSource": "37a788a4a10a293653e307c05ba1a507d518d1f0",
+    "passingAttempt": "evidence/runtime-host-final-attempt4-cd795e378/runtime-host-final-attempt4.json",
+    "passingSource": "cd795e378afed5c7556a71e26e5247da9ff22869",
     "executedStatus": "EXECUTED_PASS",
     "nodePassed": 177,
     "nodeFailed": 0,
     "nodeSkipped": 1,
-    "archiveSHA256": "043f27b7c8b884c3095c97a99672d58bcf2ba7a1df5276ce8eaefa7eeae1e9d9",
-    "rawLogSHA256": "c2657aebf954ae63ea467fa2fa696b409f304024d2bb6951c39315d0f44eac9f",
-    "previousPassingAttempt": "evidence/mac-validation-20261125/runtime-host-final-attempt2.json",
-    "durationSeconds": 103.584,
-    "archiveBytes": 81837535,
+    "archiveSHA256": "16006101892548001b64e4a8167e27e910f5e907a7af296ef8786d4850811120",
+    "rawLogSHA256": "0530855aa61515628b1caf7ce8a38a222e64fdb5e74a354c8cc04845c8e91996",
+    "previousPassingAttempt": "evidence/runtime-host-final-attempt3-37a788a4a/runtime-host-final-attempt3.json",
+    "durationSeconds": 96.647,
+    "archiveBytes": 81837518,
     "archiveFreshness": {
       "status": "EXECUTED_PASS",
-      "source": "37a788a4a10a293653e307c05ba1a507d518d1f0"
-    }
+      "source": "cd795e378afed5c7556a71e26e5247da9ff22869",
+      "generatedInventoryCommit": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91"
+    },
+    "historicalPassingAttempts": [
+      "evidence/mac-validation-20261125/runtime-host-final-attempt2.json",
+      "evidence/runtime-host-final-attempt3-37a788a4a/runtime-host-final-attempt3.json"
+    ]
   },
   "appPreparation": {
     "status": "EXECUTED_PASS",
@@ -106,7 +111,6 @@
     "a2uiResult": "evidence/mac-validation-20261125/a2ui-schemas.json/result.json"
   },
   "pending": [
-    "Integrate and verify the current native artifacts before consumer application builds",
     "Two actual application build-for-testing schemes",
     "Thirteen app integration methods",
     "Four actual native-engine methods",
@@ -120,8 +124,8 @@
   },
   "applicability": "evidence/applicability-37a788a4a.json",
   "documentationBranchBase": "189ca0d73a8f9b92451d343ca84b4b7074c57c6c",
-  "updatedAtUTC": "2026-11-25T00:37:27.752050+00:00",
-  "latestRecordedExecutionSource": "7b7f7e4460200d7e98162dd525d67f8ca1860911",
+  "updatedAtUTC": "2026-11-25T01:26:38.515858+00:00",
+  "latestRecordedExecutionSource": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91",
   "manifestAudit": {
     "status": "EXECUTED_PASS",
     "source": "7b7f7e4460200d7e98162dd525d67f8ca1860911",
@@ -134,5 +138,60 @@
     "rawLogSHA256": "e2b42956c610e7ca794c7d59cf8a201a57db3fe427f090a3f4030921700a0105",
     "sourceOnly": true,
     "nativeAcceptance": "NOT_INFERRED"
+  },
+  "nativePreparation": {
+    "status": "EXECUTED_PASS",
+    "source": "7b7f7e4460200d7e98162dd525d67f8ca1860911",
+    "exitCode": 0,
+    "frameworksValidated": 15,
+    "supportGroupsValidated": 4,
+    "receipt": "evidence/native-preparation-7b7f7e446/native-preparation-final.json",
+    "originalPreparerReceipt": "evidence/native-preparation-7b7f7e446/expo-current-cached-preparation.json",
+    "assessment": "evidence/native-preparation-7b7f7e446/preparation-assessment.json",
+    "generationProvenance": "evidence/native-preparation-7b7f7e446/generation-provenance.json",
+    "acceptanceTests": "NOT_INFERRED"
+  },
+  "applicationBuildProgress": {
+    "status": "STARTED_NO_COMPLETED_RESULT",
+    "source": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91",
+    "attempt": 2,
+    "scheme": "AI_HLY",
+    "jobReportedByOwner": "job_e9db205b711d",
+    "startedAtUTC": "2026-11-25T01:23:17.863531+00:00",
+    "observedAtUTC": "2026-11-25T01:25:39.507812+00:00",
+    "processReceipt": "evidence/app-build-attempt1-20fb9f711/ai-hly-build-attempt2-process.json",
+    "capacityPolicyRefresh": "evidence/app-build-attempt1-20fb9f711/app-build-capacity-policy-refresh.json",
+    "completedSuccessfulBuildInThisPacket": false
+  },
+  "applicationBuildAttempts": [
+    {
+      "id": "AI_HLY attempt1",
+      "source": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91",
+      "status": "FAILED",
+      "failureClassification": "RELOCATED_PRECOMPILED_MODULE_CACHE",
+      "exitCode": 65,
+      "durationSeconds": 330.678,
+      "receipt": "evidence/app-build-attempt1-20fb9f711/ai-hly-build-attempt1.json",
+      "diagnostics": "evidence/app-build-attempt1-20fb9f711/ai-hly-build-attempt1-errors.json",
+      "assessment": "evidence/app-build-attempt1-20fb9f711/build-assessment.json",
+      "rawLogSHA256": "8638ebde19ff53fbd8564aa1613d726a06bf4503f96a30f4ca09ea94924e61fe",
+      "acceptanceTestsExecuted": 0
+    },
+    {
+      "id": "AI_HLY attempt2",
+      "source": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91",
+      "status": "STARTED_NO_COMPLETED_RESULT",
+      "startedAtUTC": "2026-11-25T01:23:17.863531+00:00",
+      "processReceipt": "evidence/app-build-attempt1-20fb9f711/ai-hly-build-attempt2-process.json",
+      "observedAtUTC": "2026-11-25T01:25:39.507812+00:00",
+      "completedReceiptExistsAtCapture": false
+    }
+  ],
+  "moduleCacheRepair": {
+    "status": "RECORDED_RETRY_RESULT_PENDING",
+    "source": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91",
+    "receipt": "evidence/app-build-attempt1-20fb9f711/app-build-attempt1-cache-repair.json",
+    "sourceFilesChanged": false,
+    "otherOwnerCachesChanged": false
   }
 }

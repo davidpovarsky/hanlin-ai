@@ -33,7 +33,7 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
         var isFinished: Bool { lock.withLock { result != nil } }
 
         func install(_ continuation: CheckedContinuation<HanlinValue, any Error>) {
-            let completed = lock.withLock {
+            let completed = lock.withLock { () -> Result<HanlinValue, any Error>? in
                 if let result { return result }
                 self.continuation = continuation
                 return nil as Result<HanlinValue, any Error>?
