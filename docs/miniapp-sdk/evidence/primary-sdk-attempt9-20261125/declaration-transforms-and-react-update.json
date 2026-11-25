@@ -1,0 +1,249 @@
+{
+  "status": "ACTUAL_BYTES_BOUND_NO_NEW_TRANSFORMS",
+  "correctionProducer": "Scripts/Expo/prepare-types.mjs",
+  "producerSHA256": "e32603c7fd4a24f2c5223155185e35bc59ad87455859cf3bf321a23a5e6f878e",
+  "producerUnchangedSinceSDK7": true,
+  "actualCorrectionReceiptSHA256": "c5e5322a6177f36a713380134006d4beb3a0ebd275e435e66b7de93a4cb60f82",
+  "currentPackages": {
+    "react-native": "0.88.1",
+    "@nativescript/react-native": "9.1.2"
+  },
+  "historicalEvidence": {
+    "path": "docs/miniapp-sdk/evidence/EXPO_SDK_TYPES_2026-11-14.json",
+    "sha256": "1f1dc104daf5ce74637a49be2080b07a677075c46abf417c32e383208cb86254",
+    "historicalReactNativeVersion": "0.88.0",
+    "boundary": "The same affected original declaration/implementation hashes remain current at0.88.1; the historical release/other execution facts are not relabeled."
+  },
+  "patchedFileCount": 5,
+  "exactSubstitutionCount": 7,
+  "patches": [
+    {
+      "package": "react-native",
+      "file": "Libraries/Animated/nodes/AnimatedProps.d.ts",
+      "originalSHA256": "0dde4c5442c332f01cb8f830ead7965b64996dca6b9bcc3a280806f48b8d3f21",
+      "correctedSHA256": "aed96d9f0b4b196eb342fdc5c0e952025cdcbb894179360d00319bc9c2b37b4c",
+      "source": "Libraries/Animated/nodes/AnimatedProps.js",
+      "sourceSHA256": "d860011a3cde601ef237ffb40eef05c68cb3b15bc3c25e2fead8db751f1167de",
+      "reason": "Flow explicitly permits an optional nullable style. The TS index signature must admit that named property.",
+      "packageVersion": "0.88.1",
+      "SDKPath": "expo/node_modules/react-native/types_generated/Libraries/Animated/nodes/AnimatedProps.d.ts",
+      "bytes": 1275,
+      "exactSubstitutions": [
+        [
+          "style?: AnimatedStyleAllowlist | undefined;",
+          "style?: AnimatedStyleAllowlist | null | undefined;"
+        ],
+        [
+          "[key: string]: true | AnimatedStyleAllowlist;",
+          "[key: string]: true | AnimatedStyleAllowlist | null | undefined;"
+        ]
+      ],
+      "reconstructedOriginalSHA256": "0dde4c5442c332f01cb8f830ead7965b64996dca6b9bcc3a280806f48b8d3f21",
+      "implementationAuthority": "MiniAppSDK/expo/node_modules/react-native/Libraries/Animated/nodes/AnimatedProps.js",
+      "actualImplementationSHA256": "d860011a3cde601ef237ffb40eef05c68cb3b15bc3c25e2fead8db751f1167de",
+      "unchangedFromSDK7": true,
+      "publication": {
+        "version": "0.88.1",
+        "resolved": "https://registry.npmjs.org/react-native/-/react-native-0.88.1.tgz",
+        "integrity": "sha512-wajWcLZ93GCN7k4Uwh4CS4L2Ah8ohcvkOXnvIYmh4Yvuqho5j3APZ9qozK+nQrHWSgauq4h8D3HN5DKK84SrHA=="
+      }
+    },
+    {
+      "package": "react-native",
+      "file": "Libraries/Lists/VirtualizedList.d.ts",
+      "originalSHA256": "90335722e3f37fbca6dc2dc699efac7ebf2f8866a9cfddce21a3dd6bb9e9a92a",
+      "correctedSHA256": "51500c381dc135aba8268f7af110fb2cc657a0db9c823ec8555f0b9231de0272",
+      "source": "Libraries/Lists/VirtualizedList.js",
+      "sourceSHA256": "94d0e1f682f3422648451be3070a68a6e69eeddce7bed4c43cc3124e89565b5e",
+      "reason": "The exported value is the actual class constructor. Infer its instance without the unrelated React static lifecycle generic constraint.",
+      "packageVersion": "0.88.1",
+      "SDKPath": "expo/node_modules/react-native/types_generated/Libraries/Lists/VirtualizedList.d.ts",
+      "bytes": 1011,
+      "exactSubstitutions": [
+        [
+          "React.ComponentRef<VirtualizedListType>",
+          "InstanceType<VirtualizedListType>"
+        ]
+      ],
+      "reconstructedOriginalSHA256": "90335722e3f37fbca6dc2dc699efac7ebf2f8866a9cfddce21a3dd6bb9e9a92a",
+      "implementationAuthority": "MiniAppSDK/expo/node_modules/react-native/Libraries/Lists/VirtualizedList.js",
+      "actualImplementationSHA256": "94d0e1f682f3422648451be3070a68a6e69eeddce7bed4c43cc3124e89565b5e",
+      "unchangedFromSDK7": true,
+      "publication": {
+        "version": "0.88.1",
+        "resolved": "https://registry.npmjs.org/react-native/-/react-native-0.88.1.tgz",
+        "integrity": "sha512-wajWcLZ93GCN7k4Uwh4CS4L2Ah8ohcvkOXnvIYmh4Yvuqho5j3APZ9qozK+nQrHWSgauq4h8D3HN5DKK84SrHA=="
+      }
+    },
+    {
+      "package": "react-native",
+      "file": "src/private/webapis/dom/nodes/ReadOnlyNode.d.ts",
+      "originalSHA256": "b0599260380ad18e7b783d712990bdf0cfba1346719bb8273fbaf06ed5a61bae",
+      "correctedSHA256": "9f09899132976f3110b403314e07e1a0157459e9f2194259df42094e4114dbaf",
+      "source": "src/private/webapis/dom/nodes/ReactNativeDocument.js",
+      "sourceSHA256": "dcafb922a27f7dac28f3d6079af34c90dfb047ea42f519d6a45fc16a671a4394",
+      "reason": "The abstract base throws; the concrete Document getter really returns null. Preserve that actual subclass behavior in the base return type.",
+      "packageVersion": "0.88.1",
+      "SDKPath": "expo/node_modules/react-native/types_generated/src/private/webapis/dom/nodes/ReadOnlyNode.d.ts",
+      "bytes": 4098,
+      "exactSubstitutions": [
+        [
+          "get textContent(): string;",
+          "get textContent(): string | null;"
+        ]
+      ],
+      "reconstructedOriginalSHA256": "b0599260380ad18e7b783d712990bdf0cfba1346719bb8273fbaf06ed5a61bae",
+      "implementationAuthority": "MiniAppSDK/expo/node_modules/react-native/src/private/webapis/dom/nodes/ReactNativeDocument.js",
+      "actualImplementationSHA256": "dcafb922a27f7dac28f3d6079af34c90dfb047ea42f519d6a45fc16a671a4394",
+      "unchangedFromSDK7": true,
+      "publication": {
+        "version": "0.88.1",
+        "resolved": "https://registry.npmjs.org/react-native/-/react-native-0.88.1.tgz",
+        "integrity": "sha512-wajWcLZ93GCN7k4Uwh4CS4L2Ah8ohcvkOXnvIYmh4Yvuqho5j3APZ9qozK+nQrHWSgauq4h8D3HN5DKK84SrHA=="
+      }
+    },
+    {
+      "package": "@nativescript/react-native",
+      "file": "Runtime.d.ts",
+      "originalSHA256": "f28f211c956653fe859b9fc30a3765afb8902aa3d505248e28e3991fe32d1ca1",
+      "correctedSHA256": "0ec1d58c4bc38f66f8ff77bf03240c304f5e74b5ac17b923de8976f45a68f0cc",
+      "source": "native-api/ffi/objc/shared/bridge/Install.mm",
+      "sourceSHA256": "f8c156b7ea87e6eed0e7aa9a5af1816bacb40332a68038ac521e191e15510e83",
+      "reason": "Actual Install.mm installs constants first and does not overwrite conflicting globals with struct constructors. Keep struct field types and actual constants; do not advertise new timezone()/new dyld_shared_cache_ranges().",
+      "packageVersion": "9.1.2",
+      "SDKPath": "expo/node_modules/@nativescript/react-native/types/ios/Runtime.d.ts",
+      "bytes": 1268130,
+      "exactSubstitutions": [
+        [
+          "declare class timezone {\n  constructor(init?: timezone);",
+          "interface timezone {"
+        ],
+        [
+          "declare class dyld_shared_cache_ranges {\n  constructor(init?: dyld_shared_cache_ranges);",
+          "interface dyld_shared_cache_ranges {"
+        ]
+      ],
+      "reconstructedOriginalSHA256": "f28f211c956653fe859b9fc30a3765afb8902aa3d505248e28e3991fe32d1ca1",
+      "implementationAuthority": "Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/nativescript/native-api/ffi/objc/shared/bridge/Install.mm",
+      "actualImplementationSHA256": "f8c156b7ea87e6eed0e7aa9a5af1816bacb40332a68038ac521e191e15510e83",
+      "unchangedFromSDK7": true,
+      "publication": {
+        "version": "9.1.2",
+        "resolved": "https://registry.npmjs.org/@nativescript/react-native/-/react-native-9.1.2.tgz",
+        "integrity": "sha512-sqgsqg++6etbihWzLeIeSi7OxlmAsEegxz4yHerqCbYBuxyrVnTrtK4vDNnTYbNM+q6u2b0hwDNhX0aOEKTeTw=="
+      }
+    },
+    {
+      "package": "@nativescript/react-native",
+      "file": "UIKit.d.ts",
+      "originalSHA256": "6ad19868e345469b507442f2666ca55ba69a5a98915e09459739e43246469638",
+      "correctedSHA256": "fde14e711cf6a496d48ba026cc022808df3bce202eec8a0d5521efc72f23d837",
+      "source": "native-api/ffi/objc/shared/bridge/host_objects/Object.mm",
+      "sourceSHA256": "fbc95bc22a5115453f944a408183ca2a64e3338954ba8ca4b2b045146afe7348",
+      "reason": "Apple exposes the ObjC description selector, but the actual JS host object explicitly resolves description to a string before method lookup. Match that JS boundary and inherited NSObject property.",
+      "packageVersion": "9.1.2",
+      "SDKPath": "expo/node_modules/@nativescript/react-native/types/ios/UIKit.d.ts",
+      "bytes": 831181,
+      "exactSubstitutions": [
+        [
+          "  description(): string;\n\n  static readonly supportsSecureCoding: boolean;",
+          "  readonly description: string;\n\n  static readonly supportsSecureCoding: boolean;"
+        ]
+      ],
+      "reconstructedOriginalSHA256": "6ad19868e345469b507442f2666ca55ba69a5a98915e09459739e43246469638",
+      "implementationAuthority": "Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/nativescript/native-api/ffi/objc/shared/bridge/host_objects/Object.mm",
+      "actualImplementationSHA256": "fbc95bc22a5115453f944a408183ca2a64e3338954ba8ca4b2b045146afe7348",
+      "unchangedFromSDK7": true,
+      "publication": {
+        "version": "9.1.2",
+        "resolved": "https://registry.npmjs.org/@nativescript/react-native/-/react-native-9.1.2.tgz",
+        "integrity": "sha512-sqgsqg++6etbihWzLeIeSi7OxlmAsEegxz4yHerqCbYBuxyrVnTrtK4vDNnTYbNM+q6u2b0hwDNhX0aOEKTeTw=="
+      }
+    }
+  ],
+  "originalUIExports": {
+    "module": "@expo/ui/swift-ui/modifiers",
+    "originalExports": 232,
+    "additionalExports": 87,
+    "originalPrecedence": [
+      "navigationBarTitleDisplayMode",
+      "preferredColorScheme",
+      "presentationCornerRadius",
+      "sectionIndexLabel"
+    ]
+  },
+  "separateOriginalReactTypeUpdate": {
+    "before": "19.3.0",
+    "after": "19.3.1",
+    "lockedPublication": {
+      "version": "19.3.1",
+      "resolved": "https://registry.npmjs.org/@types/react/-/react-19.3.1.tgz",
+      "integrity": "sha512-HNTkBIm8zmHX8LUXX2vtZ/ONzehrV1J3abl2fUIiZ5qxTYRCj/z+rDeFwOltqCLl9lRdUTKWT41OLtYuFV/Arg==",
+      "devOptional": true,
+      "license": "MIT",
+      "dependencies": {
+        "csstype": "^3.2.2"
+      }
+    },
+    "changedMembers": [
+      {
+        "path": "expo/node_modules/@types/react/README.md",
+        "before": {
+          "path": "expo/node_modules/@types/react/README.md",
+          "sha256": "eeb7da821c1f0672a1aea1594fcec4c66222cfe25cbd14caddc266c02d1708a2",
+          "bytes": 1750
+        },
+        "after": {
+          "path": "expo/node_modules/@types/react/README.md",
+          "sha256": "35ec797fc71e812f7475a8e5e332d8a7fb11f53fa5a00add8b5c50d852b807ee",
+          "bytes": 1750
+        },
+        "diff": "--- 19.3.0/expo/node_modules/@types/react/README.md\n+++ 19.3.1/expo/node_modules/@types/react/README.md\n@@ -8,7 +8,7 @@\n Files were exported from https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react.\r\n \r\n ### Additional Details\r\n- * Last updated: Wed, 09 Sep 2026 18:05:03 GMT\r\n+ * Last updated: Tue, 24 Nov 2026 19:02:26 GMT\r\n  * Dependencies: [csstype](https://npmjs.com/package/csstype)\r\n \r\n # Credits\r\n"
+      },
+      {
+        "path": "expo/node_modules/@types/react/index.d.ts",
+        "before": {
+          "path": "expo/node_modules/@types/react/index.d.ts",
+          "sha256": "045c1b395851aa71ef76393398466330fe1eeebc113c8085eefc6d84abea3a88",
+          "bytes": 182820
+        },
+        "after": {
+          "path": "expo/node_modules/@types/react/index.d.ts",
+          "sha256": "b4395ea30999cee66d1c3d672c13a23aff67793cb183a5b9c3ae972c262d484e",
+          "bytes": 182827
+        },
+        "diff": "--- 19.3.0/expo/node_modules/@types/react/index.d.ts\n+++ 19.3.1/expo/node_modules/@types/react/index.d.ts\n@@ -4209,7 +4209,7 @@\n     interface TouchList {\n         [index: number]: Touch;\n         length: number;\n-        item(index: number): Touch;\n+        item(index: number): Touch | null;\n         identifiedTouch(identifier: number): Touch;\n     }\n \n"
+      },
+      {
+        "path": "expo/node_modules/@types/react/package.json",
+        "before": {
+          "path": "expo/node_modules/@types/react/package.json",
+          "sha256": "505c0df4cd73d6a02c946bd9b81451584bd9c83ea72d75cff9b826efceaa19c2",
+          "bytes": 6108
+        },
+        "after": {
+          "path": "expo/node_modules/@types/react/package.json",
+          "sha256": "c451e7793fe35d3cb42ce3d86ecd3716f859b67443d4ea32c9c57b8bd51e02ed",
+          "bytes": 6108
+        },
+        "diff": "--- 19.3.0/expo/node_modules/@types/react/package.json\n+++ 19.3.1/expo/node_modules/@types/react/package.json\n@@ -1,6 +1,6 @@\n {\n     \"name\": \"@types/react\",\n-    \"version\": \"19.3.0\",\n+    \"version\": \"19.3.1\",\n     \"description\": \"TypeScript definitions for react\",\n     \"homepage\": \"https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/react\",\n     \"license\": \"MIT\",\n@@ -205,6 +205,6 @@\n         \"csstype\": \"^3.2.2\"\n     },\n     \"peerDependencies\": {},\n-    \"typesPublisherContentHash\": \"86ea5f223efc88fcaa71962f0f031a623142285e331499ee981e201dc8d2a77e\",\n+    \"typesPublisherContentHash\": \"eb9697b7677c1991e03cd57074443b9a4b859049d2f4add6143d71983cc60ee1\",\n     \"typeScriptVersion\": \"5.6\"\n }"
+      },
+      {
+        "path": "expo/node_modules/@types/react/ts5.0/index.d.ts",
+        "before": {
+          "path": "expo/node_modules/@types/react/ts5.0/index.d.ts",
+          "sha256": "3219302a5e14b9ff32b1f2a5ac872741df7847e66726f88f80aa3b11d77ec090",
+          "bytes": 181793
+        },
+        "after": {
+          "path": "expo/node_modules/@types/react/ts5.0/index.d.ts",
+          "sha256": "73778e216765d4268d22893309a068a17f7cd0e471243ebd9334ea206e4a0e80",
+          "bytes": 181800
+        },
+        "diff": "--- 19.3.0/expo/node_modules/@types/react/ts5.0/index.d.ts\n+++ 19.3.1/expo/node_modules/@types/react/ts5.0/index.d.ts\n@@ -4208,7 +4208,7 @@\n     interface TouchList {\n         [index: number]: Touch;\n         length: number;\n-        item(index: number): Touch;\n+        item(index: number): Touch | null;\n         identifiedTouch(identifier: number): Touch;\n     }\n \n"
+      }
+    ],
+    "source": "Existing original upstream resolver during actual attempt8, preserved into attempt9; not a new Hanlin declaration patch."
+  },
+  "boundary": "Original publication identities and explicit deterministic compatibility transforms are distinct. No claim that every shipped declaration is byte-unmodified. No compiler or type patch producer rerun by inspector."
+}

@@ -1,0 +1,346 @@
+{
+  "source": "1812bff50571c9907d15cd8b4bfbe4874be24756",
+  "archiveSHA256": "3c94ebea1e314c280031ac475e2d42b63ebcf2dc2eb32d2c6e31905e3eda3240",
+  "manifestSHA256": "6fbba77d588e292b291864f0cae9e5eb5d602a4e2f208379ce1c331dedf412c9",
+  "inputSHA256": "4904d0a46e4c653587fa1503a059834e9b6f35eac821a286d5eb9e96b8a92011",
+  "allActualSDKMembersVerified": 25661,
+  "actualSDKMemberBytesVerified": 294393847,
+  "changedInputs": [
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/original-runtime-receipt.json",
+      "before": {
+        "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/original-runtime-receipt.json",
+        "sha256": "f7ad6d7bf5841f5a0be2f722a1b2735620aa06dcf4801cb73210688a7a135e64"
+      },
+      "after": {
+        "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/original-runtime-receipt.json",
+        "sha256": "3d619674297acb22ae4d0a97f5e7d8a878b0eccbc3bfc49769cfdb5a05248a0b"
+      }
+    },
+    {
+      "path": "Scripts/Expo/dependency-lock.json",
+      "before": {
+        "path": "Scripts/Expo/dependency-lock.json",
+        "sha256": "549d100eca28b6b5f59b0cc6bb55d64c27e7bb88f02fd58eb8f1b2f6097be64f"
+      },
+      "after": {
+        "path": "Scripts/Expo/dependency-lock.json",
+        "sha256": "b9e3ad6d863e3e5136ad93924ce4edcb37da87578b113523640110af347eec65"
+      }
+    },
+    {
+      "path": "Scripts/Expo/package-lock.json",
+      "before": {
+        "path": "Scripts/Expo/package-lock.json",
+        "sha256": "95d2a560d4eb01de64fcd0d43875a4ef2392e9747ed9fa79c2e0a0e58abececf"
+      },
+      "after": {
+        "path": "Scripts/Expo/package-lock.json",
+        "sha256": "c08757cf46ac4d5c86a873f676af4a3be585db64ae2e1aa1e8288277d4eb63b8"
+      }
+    },
+    {
+      "path": "Scripts/Expo/package.json",
+      "before": {
+        "path": "Scripts/Expo/package.json",
+        "sha256": "db6fd60dbc8f2b15eac5fee7029781cf14834ffbad53f0c8948fc4c2945c1e91"
+      },
+      "after": {
+        "path": "Scripts/Expo/package.json",
+        "sha256": "e2b50fae013276229c78619bbbe0b63d8c29b00fefde3afeccea98af117aa206"
+      }
+    },
+    {
+      "path": "Scripts/MiniApps/resolve-upstreams.mjs",
+      "before": {
+        "path": "Scripts/MiniApps/resolve-upstreams.mjs",
+        "sha256": "b2222aad85f1a6c5ba38a6d52282674bb37627e05ab484b637614dfc7b9892f8"
+      },
+      "after": {
+        "path": "Scripts/MiniApps/resolve-upstreams.mjs",
+        "sha256": "7973977cf986cbee14fd147fd8b10c1d54a6f1a1c790511d2df5cf054063e7a2"
+      }
+    },
+    {
+      "path": "Scripts/MiniApps/stage-sdk.mjs",
+      "before": {
+        "path": "Scripts/MiniApps/stage-sdk.mjs",
+        "sha256": "a9d02de9128acde4bcdd14b60c3227627a43c004075f55c6d9f41e2045c9bcce"
+      },
+      "after": {
+        "path": "Scripts/MiniApps/stage-sdk.mjs",
+        "sha256": "b1b0a3bd2c560fcf93eca064053aba7bcbf7786fb800e083bb7f297a0a300c40"
+      }
+    },
+    {
+      "path": "Scripts/MiniApps/upstream-resolution.json",
+      "before": {
+        "path": "Scripts/MiniApps/upstream-resolution.json",
+        "sha256": "2bf8f371f06949fbe56858c38addeb417a07f9b598fc38ff72aedb39d5f364eb"
+      },
+      "after": {
+        "path": "Scripts/MiniApps/upstream-resolution.json",
+        "sha256": "e0c2944ea24c09330825dee58badedcec58606ba603ccdedc888abf1a63a13cb"
+      }
+    },
+    {
+      "path": "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+      "before": {
+        "path": "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+        "sha256": "54b154ffd2d74328ad849b521d7d3940184e8771cf2adb03f5b0acc8587a8e96"
+      },
+      "after": {
+        "path": "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+        "sha256": "768731f0c748276aeab4d34f57ad3ad89fd38aa30f562ff0cc9b5ad9a3767368"
+      }
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.json",
+      "before": {
+        "path": "docs/miniapp-sdk/extension-reachability.json",
+        "sha256": "855ce12c168cc258cd202b1bf436dc7849901a71e189c2d4d49201b7f5da062b"
+      },
+      "after": {
+        "path": "docs/miniapp-sdk/extension-reachability.json",
+        "sha256": "854dd9133f9de88d62912273c16d11df484c357fb8cd309826e13c1f98fa7885"
+      }
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.md",
+      "before": {
+        "path": "docs/miniapp-sdk/extension-reachability.md",
+        "sha256": "5499b31720ac284d264768ba3416ed032d5a3d37f821350a06c3a3f3625e75c2"
+      },
+      "after": {
+        "path": "docs/miniapp-sdk/extension-reachability.md",
+        "sha256": "39e0f358f0597cdcc890d716a2b3631a72e751b4096296bd0d35543d03639ba6"
+      }
+    },
+    {
+      "path": "docs/miniapp-sdk/source-inventory.json",
+      "before": {
+        "path": "docs/miniapp-sdk/source-inventory.json",
+        "sha256": "b0d3426a1238df51009a1c2b124f2d4dfa98f1ac6a75540e5a3a4f8578bd9c95"
+      },
+      "after": {
+        "path": "docs/miniapp-sdk/source-inventory.json",
+        "sha256": "104df0d315f5ddd5b8897e305d20d37c667dd43b6f7d788a3fc872692a13300e"
+      }
+    }
+  ],
+  "unchangedInputs": 211,
+  "changedMembers": [
+    {
+      "path": "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+      "before": {
+        "path": "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+        "sha256": "54b154ffd2d74328ad849b521d7d3940184e8771cf2adb03f5b0acc8587a8e96",
+        "bytes": 118561
+      },
+      "after": {
+        "path": "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+        "sha256": "768731f0c748276aeab4d34f57ad3ad89fd38aa30f562ff0cc9b5ad9a3767368",
+        "bytes": 118804
+      }
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.json",
+      "before": {
+        "path": "docs/miniapp-sdk/extension-reachability.json",
+        "sha256": "855ce12c168cc258cd202b1bf436dc7849901a71e189c2d4d49201b7f5da062b",
+        "bytes": 147521
+      },
+      "after": {
+        "path": "docs/miniapp-sdk/extension-reachability.json",
+        "sha256": "854dd9133f9de88d62912273c16d11df484c357fb8cd309826e13c1f98fa7885",
+        "bytes": 147521
+      }
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.md",
+      "before": {
+        "path": "docs/miniapp-sdk/extension-reachability.md",
+        "sha256": "5499b31720ac284d264768ba3416ed032d5a3d37f821350a06c3a3f3625e75c2",
+        "bytes": 21494
+      },
+      "after": {
+        "path": "docs/miniapp-sdk/extension-reachability.md",
+        "sha256": "39e0f358f0597cdcc890d716a2b3631a72e751b4096296bd0d35543d03639ba6",
+        "bytes": 21494
+      }
+    },
+    {
+      "path": "docs/miniapp-sdk/source-inventory.json",
+      "before": {
+        "path": "docs/miniapp-sdk/source-inventory.json",
+        "sha256": "b0d3426a1238df51009a1c2b124f2d4dfa98f1ac6a75540e5a3a4f8578bd9c95",
+        "bytes": 493266
+      },
+      "after": {
+        "path": "docs/miniapp-sdk/source-inventory.json",
+        "sha256": "104df0d315f5ddd5b8897e305d20d37c667dd43b6f7d788a3fc872692a13300e",
+        "bytes": 493871
+      }
+    },
+    {
+      "path": "expo/node_modules/.package-lock.json",
+      "before": {
+        "path": "expo/node_modules/.package-lock.json",
+        "sha256": "c8e2b164beb2ed12f84597b28aab2d285a3cd6aaaa96a2d3a74af6ad5e36ab5f",
+        "bytes": 336592
+      },
+      "after": {
+        "path": "expo/node_modules/.package-lock.json",
+        "sha256": "c7581c16ca6207bcf0618f004f4f2d1746943bbdd566e22d18a89080cf7c248d",
+        "bytes": 336592
+      }
+    },
+    {
+      "path": "expo/node_modules/@types/react/README.md",
+      "before": {
+        "path": "expo/node_modules/@types/react/README.md",
+        "sha256": "eeb7da821c1f0672a1aea1594fcec4c66222cfe25cbd14caddc266c02d1708a2",
+        "bytes": 1750
+      },
+      "after": {
+        "path": "expo/node_modules/@types/react/README.md",
+        "sha256": "35ec797fc71e812f7475a8e5e332d8a7fb11f53fa5a00add8b5c50d852b807ee",
+        "bytes": 1750
+      }
+    },
+    {
+      "path": "expo/node_modules/@types/react/index.d.ts",
+      "before": {
+        "path": "expo/node_modules/@types/react/index.d.ts",
+        "sha256": "045c1b395851aa71ef76393398466330fe1eeebc113c8085eefc6d84abea3a88",
+        "bytes": 182820
+      },
+      "after": {
+        "path": "expo/node_modules/@types/react/index.d.ts",
+        "sha256": "b4395ea30999cee66d1c3d672c13a23aff67793cb183a5b9c3ae972c262d484e",
+        "bytes": 182827
+      }
+    },
+    {
+      "path": "expo/node_modules/@types/react/package.json",
+      "before": {
+        "path": "expo/node_modules/@types/react/package.json",
+        "sha256": "505c0df4cd73d6a02c946bd9b81451584bd9c83ea72d75cff9b826efceaa19c2",
+        "bytes": 6108
+      },
+      "after": {
+        "path": "expo/node_modules/@types/react/package.json",
+        "sha256": "c451e7793fe35d3cb42ce3d86ecd3716f859b67443d4ea32c9c57b8bd51e02ed",
+        "bytes": 6108
+      }
+    },
+    {
+      "path": "expo/node_modules/@types/react/ts5.0/index.d.ts",
+      "before": {
+        "path": "expo/node_modules/@types/react/ts5.0/index.d.ts",
+        "sha256": "3219302a5e14b9ff32b1f2a5ac872741df7847e66726f88f80aa3b11d77ec090",
+        "bytes": 181793
+      },
+      "after": {
+        "path": "expo/node_modules/@types/react/ts5.0/index.d.ts",
+        "sha256": "73778e216765d4268d22893309a068a17f7cd0e471243ebd9334ea206e4a0e80",
+        "bytes": 181800
+      }
+    },
+    {
+      "path": "expo/package-lock.json",
+      "before": {
+        "path": "expo/package-lock.json",
+        "sha256": "95d2a560d4eb01de64fcd0d43875a4ef2392e9747ed9fa79c2e0a0e58abececf",
+        "bytes": 336291
+      },
+      "after": {
+        "path": "expo/package-lock.json",
+        "sha256": "c08757cf46ac4d5c86a873f676af4a3be585db64ae2e1aa1e8288277d4eb63b8",
+        "bytes": 336324
+      }
+    },
+    {
+      "path": "expo/package.json",
+      "before": {
+        "path": "expo/package.json",
+        "sha256": "db6fd60dbc8f2b15eac5fee7029781cf14834ffbad53f0c8948fc4c2945c1e91",
+        "bytes": 1730
+      },
+      "after": {
+        "path": "expo/package.json",
+        "sha256": "e2b50fae013276229c78619bbbe0b63d8c29b00fefde3afeccea98af117aa206",
+        "bytes": 1759
+      }
+    }
+  ],
+  "unchangedMembers": 25650,
+  "groupComparison": {
+    "declarations": {
+      "members": 5210,
+      "unchanged": 5208,
+      "changed": [
+        "expo/node_modules/@types/react/index.d.ts",
+        "expo/node_modules/@types/react/ts5.0/index.d.ts"
+      ]
+    },
+    "examples": {
+      "members": 29,
+      "unchanged": 29,
+      "changed": []
+    },
+    "public-docs": {
+      "members": 25,
+      "unchanged": 21,
+      "changed": [
+        "docs/miniapp-sdk/extension-reachability.json",
+        "docs/miniapp-sdk/extension-reachability.md",
+        "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+        "docs/miniapp-sdk/source-inventory.json"
+      ]
+    },
+    "original-compiler-entrypoints": {
+      "members": 2,
+      "unchanged": 2,
+      "changed": []
+    }
+  },
+  "metadataDifferences": [
+    {
+      "pointer": "/engines/expo/hostContract/plugins/expo-asset",
+      "before": null,
+      "after": "58.0.21"
+    },
+    {
+      "pointer": "/engines/expo/installation/contentSHA256",
+      "before": "7e21449f47399a2048a93cbece2d090f24bfb0174b31135153451ab84d6fba27",
+      "after": "cb4e932b2f4ed0baf0fde6f87335e6ae53a126df2bcec99bc925558ac5cc4b7e"
+    },
+    {
+      "pointer": "/engines/expo/installation/inputs/lockSHA256",
+      "before": "95d2a560d4eb01de64fcd0d43875a4ef2392e9747ed9fa79c2e0a0e58abececf",
+      "after": "c08757cf46ac4d5c86a873f676af4a3be585db64ae2e1aa1e8288277d4eb63b8"
+    },
+    {
+      "pointer": "/engines/expo/installation/inputs/packageSHA256",
+      "before": "db6fd60dbc8f2b15eac5fee7029781cf14834ffbad53f0c8948fc4c2945c1e91",
+      "after": "e2b50fae013276229c78619bbbe0b63d8c29b00fefde3afeccea98af117aa206"
+    },
+    {
+      "pointer": "/engines/expo/packageVersions/@types/react",
+      "before": "19.3.0",
+      "after": "19.3.1"
+    },
+    {
+      "pointer": "/engines/expo/packageVersions/expo-asset",
+      "before": null,
+      "after": "58.0.21"
+    },
+    {
+      "pointer": "/upstream/expo/assetVersion",
+      "before": null,
+      "after": "58.0.21"
+    }
+  ],
+  "boundary": "Every current SDK member hash/size and exact member set verified against the retained manifest; no extraction, repack or product execution."
+}

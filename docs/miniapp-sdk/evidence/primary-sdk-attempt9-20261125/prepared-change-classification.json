@@ -1,0 +1,283 @@
+{
+  "executionSource": "1812bff50571c9907d15cd8b4bfbe4874be24756",
+  "preparedDeltaBinding": {
+    "algorithm": "SHA256 of compact UTF-8 JSON rows sorted by path; keys path,beforeSHA256,afterSHA256,bytes,contentFrom",
+    "sha256": "651412fc7d95567ac27daa6c757bd3aa2f3cacaf6e50f85e6e96348073f64600"
+  },
+  "paths": 9,
+  "payloadBytes": 1150910,
+  "modeChanges": 0,
+  "classifications": [
+    {
+      "path": "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "classification": "Serialization-only: exact parsed JSON equal; all39pin records/revisions and originHash unchanged."
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/original-runtime-receipt.json",
+      "classification": "Only inputSHA256 and packageLockSHA256 updated; all other original runtime receipt values unchanged."
+    },
+    {
+      "path": "Scripts/Expo/package.json",
+      "classification": "Only original @types/react devDependency19.3.0→19.3.1."
+    },
+    {
+      "path": "Scripts/Expo/package-lock.json",
+      "classification": "Exactly4JSON value changes: root @types/react pin, that package version, original tarball URL and SRI."
+    },
+    {
+      "path": "Scripts/MiniApps/upstream-resolution.json",
+      "classification": "Existing original resolver now records ExpoAsset58.0.21 original publication/artifact and React types19.3.1; all9prior nativeArtifact records equal."
+    },
+    {
+      "path": "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+      "classification": "Original generated field reference: added ExpoAsset plugin row, published actionIdentifier schema reference, current source line anchors."
+    },
+    {
+      "path": "docs/miniapp-sdk/source-inventory.json",
+      "classification": "13actual source hashes updated,335fields vs334; one Asset field added, one published action ID schema reference updated, source anchors and2actual uncommitted package inputs recorded."
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.json",
+      "classification": "Only sourceCommit and13sdkSources hashes changed; complete80cell matrix and other source/acceptance data equal."
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.md",
+      "classification": "Generated sourceCommit provenance; reachability descriptions and80cell matrix unchanged."
+    }
+  ],
+  "upstreamNativeArtifacts": {
+    "priorCount": 9,
+    "currentCount": 10,
+    "added": {
+      "name": "ExpoAsset",
+      "source": "npm-source",
+      "package": "expo-asset",
+      "version": "58.0.21",
+      "tarball": "https://registry.npmjs.org/expo-asset/-/expo-asset-58.0.21.tgz",
+      "sha256": "2bfbb115da9111702530e5df550eac7e2a074aa12b6297fcc332744767623126",
+      "target": "Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework",
+      "sourceBuild": {
+        "producer": "original-cocoapods",
+        "packageIntegrity": "sha512-qaJmuTtswggXdBQfiUdpxrVGM7l+tH8iEDHwVDMuxyCF/kAau8sUGVuWrDKYNW4yAx7Z8ncgsT8s27pXjRH5GA=="
+      }
+    },
+    "allNinePriorRowsUnchanged": true
+  },
+  "manifestFieldComparison": {
+    "added": [
+      {
+        "family": "expo prepared package.json",
+        "field": "hanlinExpo.plugins.expo-asset",
+        "after": {
+          "field": "hanlinExpo.plugins.expo-asset",
+          "type": "string",
+          "required": false,
+          "status": "supported",
+          "semantics": "Exact installed original Expo Asset version.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
+              "sha256": "7c58f10cc6a5f89c452842490b8ee6eb2378066929c8db27c5dfe6139d441527",
+              "line": 620
+            }
+          ]
+        }
+      }
+    ],
+    "removed": [],
+    "changedSemanticFields": [
+      {
+        "family": "canonical compiled Hanlin app",
+        "field": "#/$defs/action/properties/id",
+        "before": {
+          "field": "#/$defs/action/properties/id",
+          "type": "#/$defs/identifier",
+          "required": true,
+          "status": "supported",
+          "semantics": "Declared by the existing canonical schema; exact enum, alternatives, nullability and constraints retained in schema.",
+          "schema": {
+            "$ref": "#/$defs/identifier"
+          }
+        },
+        "after": {
+          "field": "#/$defs/action/properties/id",
+          "type": "#/$defs/actionIdentifier",
+          "required": true,
+          "status": "supported",
+          "semantics": "Declared by the existing canonical schema; exact enum, alternatives, nullability and constraints retained in schema.",
+          "schema": {
+            "$ref": "#/$defs/actionIdentifier"
+          }
+        }
+      }
+    ],
+    "changedSourceHashRows": [
+      {
+        "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
+        "beforeSHA256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
+        "afterSHA256": "fa5121902e231d5d44ad08bf47699784fd4d0bc2a98102f3a156e6e4ae79b9b9"
+      },
+      {
+        "path": "Packages/HanlinExpoRuntime/Package.swift",
+        "beforeSHA256": "116a910cffe061ff3eea0e289402bc51769d3268daedc94ea5b1e043e6d109a4",
+        "afterSHA256": "d4157d16c1d505b408cf4b78f7ab59f53ff607ea94e0c4e51a4e2c088a691f37"
+      },
+      {
+        "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoSession.swift",
+        "beforeSHA256": "27505a611dbe1b61ab100ca53c393ca9a72aedb76bbc084015c35423f25804c7",
+        "afterSHA256": "852828b5e9548de003195cef2253b892a5b4a1c039e71946bb0e7fb0b61d7107"
+      },
+      {
+        "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeServicesBridge.m",
+        "beforeSHA256": "7817e45687bd69ba1a93f9aa8d48d66ddf1a63e32109807d949c1bfb3e0bd160",
+        "afterSHA256": "e36a9d2ba06dd7878d17df7c9e8f17df8952ac67f087c0a43174742c1c0ebe0c"
+      },
+      {
+        "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
+        "beforeSHA256": "072a2e92842ab720db4044a3703d6b8dae8244c9854d1ceaa81a47e8e4f15b8d",
+        "afterSHA256": "690edfb30aca14647b39c8d6f53273558700943051699893ee3ef052c9349a97"
+      },
+      {
+        "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinMiniAppHostVersions.swift",
+        "beforeSHA256": "a31357ce803c24ba80aed6f4c81b7e31f82abde1ec6c2ef00c6ee4a57c272717",
+        "afterSHA256": "8e99e562bacbe6354bc23caf6a1233930a1e0d61c3abe0444195dd36164f747d"
+      },
+      {
+        "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
+        "beforeSHA256": "a8b4b96df4fb0782e78e0c48132def346f63436b9cff96286088f52b5889da54",
+        "afterSHA256": "7c58f10cc6a5f89c452842490b8ee6eb2378066929c8db27c5dfe6139d441527"
+      },
+      {
+        "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
+        "beforeSHA256": "426509862e4b67d755c6e466356da1418fbaf7246277100779aab768ceba3258",
+        "afterSHA256": "7901c51ea32046e57ad49a41f7252b488941a2d6ede7bb0f0634e86fe8b634b2"
+      },
+      {
+        "path": "Scripts/Audit/miniapp-manifest-contracts.mjs",
+        "beforeSHA256": "484a0f05eeee4818da22aeb9eab5de9a509bc10e3b63b7226a20206a839a5aaa",
+        "afterSHA256": "9f592ef1d6d280923c473041a078e7f63757633ff55c3ee08f80af6d80b057e3"
+      },
+      {
+        "path": "Scripts/Expo/dependency-lock.json",
+        "beforeSHA256": "549d100eca28b6b5f59b0cc6bb55d64c27e7bb88f02fd58eb8f1b2f6097be64f",
+        "afterSHA256": "b9e3ad6d863e3e5136ad93924ce4edcb37da87578b113523640110af347eec65"
+      },
+      {
+        "path": "Scripts/Expo/package-lock.json",
+        "beforeSHA256": "95d2a560d4eb01de64fcd0d43875a4ef2392e9747ed9fa79c2e0a0e58abececf",
+        "afterSHA256": "c08757cf46ac4d5c86a873f676af4a3be585db64ae2e1aa1e8288277d4eb63b8"
+      },
+      {
+        "path": "Scripts/Expo/package.json",
+        "beforeSHA256": "db6fd60dbc8f2b15eac5fee7029781cf14834ffbad53f0c8948fc4c2945c1e91",
+        "afterSHA256": "e2b50fae013276229c78619bbbe0b63d8c29b00fefde3afeccea98af117aa206"
+      },
+      {
+        "path": "Scripts/MiniApps/resolve-upstreams.mjs",
+        "beforeSHA256": "b2222aad85f1a6c5ba38a6d52282674bb37627e05ab484b637614dfc7b9892f8",
+        "afterSHA256": "7973977cf986cbee14fd147fd8b10c1d54a6f1a1c790511d2df5cf054063e7a2"
+      }
+    ],
+    "uncommittedSourcePaths": [
+      "Scripts/Expo/package-lock.json",
+      "Scripts/Expo/package.json"
+    ]
+  },
+  "nativeCatalogBinaryComparison": {
+    "method": "Compare library dictionaries keyed by actual XCFramework slice identifier; preserve raw array order/checksum differences separately.",
+    "existingTargets": [
+      {
+        "target": "ReactNativeHeaders",
+        "librariesByIdentifierUnchanged": true,
+        "libraryCount": 2,
+        "archiveChecksumUnchanged": true
+      },
+      {
+        "target": "React",
+        "librariesByIdentifierUnchanged": true,
+        "libraryCount": 2,
+        "archiveChecksumUnchanged": true
+      },
+      {
+        "target": "ReactNativeDependencies",
+        "librariesByIdentifierUnchanged": true,
+        "libraryCount": 2,
+        "archiveChecksumUnchanged": true
+      },
+      {
+        "target": "hermesvm",
+        "librariesByIdentifierUnchanged": true,
+        "libraryCount": 2,
+        "archiveChecksumUnchanged": true
+      },
+      {
+        "target": "ExpoModulesJSI",
+        "librariesByIdentifierUnchanged": true,
+        "libraryCount": 2,
+        "archiveChecksumUnchanged": false
+      },
+      {
+        "target": "ExpoModulesCore",
+        "librariesByIdentifierUnchanged": true,
+        "libraryCount": 2,
+        "archiveChecksumUnchanged": true
+      },
+      {
+        "target": "ExpoModulesWorklets",
+        "librariesByIdentifierUnchanged": true,
+        "libraryCount": 2,
+        "archiveChecksumUnchanged": true
+      },
+      {
+        "target": "ExpoUI",
+        "librariesByIdentifierUnchanged": true,
+        "libraryCount": 2,
+        "archiveChecksumUnchanged": false
+      },
+      {
+        "target": "ExpoBrownfield",
+        "librariesByIdentifierUnchanged": true,
+        "libraryCount": 2,
+        "archiveChecksumUnchanged": true
+      },
+      {
+        "target": "Libffi",
+        "librariesByIdentifierUnchanged": true,
+        "libraryCount": 2,
+        "archiveChecksumUnchanged": true
+      },
+      {
+        "target": "TNSWidgets",
+        "librariesByIdentifierUnchanged": true,
+        "libraryCount": 5,
+        "archiveChecksumUnchanged": true
+      },
+      {
+        "target": "NSCWinterTC",
+        "librariesByIdentifierUnchanged": true,
+        "libraryCount": 5,
+        "archiveChecksumUnchanged": true
+      },
+      {
+        "target": "NodeMobile",
+        "librariesByIdentifierUnchanged": true,
+        "libraryCount": 2,
+        "archiveChecksumUnchanged": true
+      },
+      {
+        "target": "Python",
+        "librariesByIdentifierUnchanged": true,
+        "libraryCount": 2,
+        "archiveChecksumUnchanged": true
+      }
+    ],
+    "allExistingLibraryRecordsAndBinaryHashesUnchanged": true,
+    "addedTarget": "ExpoAsset",
+    "changedExistingArchiveChecksums": [
+      "ExpoModulesJSI",
+      "ExpoUI"
+    ],
+    "boundary": "Original catalog binary identities are equal for existing targets; source-built archive checksums differ for ExpoUI/ExpoModulesJSI. No assertion of full archive-byte equality or fresh binary reexecution."
+  },
+  "productionMaterialized": false
+}
