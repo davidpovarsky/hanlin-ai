@@ -127,9 +127,21 @@
         "miniapp-assistant-tools.test.mjs",
         "miniapp-authoring.test.mjs dedicated assistant case"
       ],
-      "status": "PENDING_FINAL_SOURCE_CHECK",
+      "status": "EXECUTED_PASS",
       "priorExecutedEvidence": "docs/composer-capabilities/evidence/mac-host-20261124/source-graph-contract-results.json",
-      "completedHostCoverage": "The f54 RuntimeHost pass includes the current SDK/manifest inventory audit and original Host assistant/authoring cases; it does not relabel the separate historical manifest-audit test as a fresh execution."
+      "completedHostCoverage": "The separate manifest-contract regression now executed at 7b7 and passed. Original Host assistant/authoring and inventory-audit coverage retains the source 37 RuntimeHost receipt.",
+      "executionSource": "7b7f7e4460200d7e98162dd525d67f8ca1860911",
+      "executedAtUTC": "2026-11-25T00:35:34.980179+00:00",
+      "evidence": "docs/composer-capabilities/evidence/manifest-final-7b7f7e446/manifest-final-test.json",
+      "actualAuditCases": {
+        "total": 1,
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0
+      },
+      "durationSeconds": 0.618,
+      "sourceOnly": true,
+      "nativeAcceptance": "NOT_INFERRED"
     },
     {
       "id": "shared_contracts",
@@ -956,7 +968,7 @@
     "completionDocumentationOnly": "635bc66274436d21236500cda4c2e873b1abe1bd",
     "activeDraftExcluded": "PR18 remains with original owner"
   },
-  "updatedAtUTC": "2026-11-25T00:32:17.358000+00:00",
+  "updatedAtUTC": "2026-11-25T00:37:27.752050+00:00",
   "failureCorrections": [
     {
       "boundary": "manifest ordinary JSON",
@@ -990,8 +1002,7 @@
     "Thirteen app integration methods",
     "Four actual native-engine methods",
     "Four native editor regression methods",
-    "Four iPhone UI executions and three iPad UI executions",
-    "Reconcile final-source applicability of the separately recorded manifest-contract audit test"
+    "Four iPhone UI executions and three iPad UI executions"
   ],
   "evidenceRules": [
     "Original run receipts retain their actual source revisions and raw results.",
@@ -1000,5 +1011,6 @@
     "Log-derived JUnit is labeled as derived; original log bytes are recoverable from gzip.",
     "The f54 RuntimeHost 177-pass result remains historical evidence. A new original preparation at37 passed177 with the same one existing opt-in skip and verified the new archive hash; all app/native/editor/UI gates remain pending."
   ],
-  "documentationBranchBase": "189ca0d73a8f9b92451d343ca84b4b7074c57c6c"
+  "documentationBranchBase": "189ca0d73a8f9b92451d343ca84b4b7074c57c6c",
+  "latestRecordedExecutionSource": "7b7f7e4460200d7e98162dd525d67f8ca1860911"
 }

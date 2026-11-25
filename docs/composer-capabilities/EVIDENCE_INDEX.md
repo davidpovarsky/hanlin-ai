@@ -4,6 +4,8 @@ This is an evidence checkpoint through source `37a788a4a10a293653e307c05ba1a507d
 
 The [validation plan](VALIDATION_PLAN.json) records the remaining gates. The [machine index](EVIDENCE_INDEX.json) lists results and their receipt paths. [Packaging metadata](evidence/package-20261125.json) maps copied files to their original paths and checksums; [SHA256SUMS](evidence/SHA256SUMS-20261125) covers the packaged evidence.
 
+The later dedicated manifest-contract regression at `7b7f7e4460200d7e98162dd525d67f8ca1860911` is recorded separately below. It reconciles that pending item without relabeling any earlier SDK, Platform, or RuntimeHost execution.
+
 ## Executed results
 
 | Lane / attempt | Actual execution source | Actual result | Evidence |
@@ -17,6 +19,7 @@ The [validation plan](VALIDATION_PLAN.json) records the remaining gates. The [ma
 | RuntimeHost final attempt 1 | `6a3c194a1951aa8394c76efcb6e100e76ade56c2` | Exit 1: the manifest audit lacked the integrated ExpoAsset plugin mapping | [receipt](evidence/mac-validation-20261125/runtime-host-final-attempt1.json) |
 | RuntimeHost final attempt 2 | `f54aebbb35169ea63eca146a1ba3ef4e8bf4f84d` | Packager exit 0; 177 Node tests passed, 0 failed, one existing opt-in long test skipped; packed ZIP validation and JITless probe passed | [receipt](evidence/mac-validation-20261125/runtime-host-final-attempt2.json), [complete compressed log](evidence/mac-validation-20261125/runtime-host-final-attempt2.log.gz) |
 | RuntimeHost final attempt 3 | `37a788a4a10a293653e307c05ba1a507d518d1f0` | After exact `@types/react@19.3.1` lock integration: exit 0, 177 passed, 0 failed, the same one existing opt-in skip; actual archive hash reverified | [receipt](evidence/runtime-host-final-attempt3-37a788a4a/runtime-host-final-attempt3.json), [complete compressed log](evidence/runtime-host-final-attempt3-37a788a4a/runtime-host-final-attempt3.log.gz) |
+| Final manifest-contract regression | `7b7f7e4460200d7e98162dd525d67f8ca1860911` | One passed, zero failed/skipped; exit 0 in 0.618s at 2026-11-25 00:35:34.980179 UTC, including changed embedded-plugin identity and new source-authority rejection cases | [receipt](evidence/manifest-final-7b7f7e446/manifest-final-test.json), [complete compressed log](evidence/manifest-final-7b7f7e446/manifest-final-test.log.gz) |
 | App preparation / A2UI | `f54aebbb35169ea63eca146a1ba3ef4e8bf4f84d` | Both original source generators passed their checks; original A2UI schema generator executed successfully | [receipt](evidence/mac-validation-20261125/app-preparation.json), [A2UI result](evidence/mac-validation-20261125/a2ui-schemas.json/result.json) |
 
 ### Platform coverage is aggregated
@@ -58,7 +61,6 @@ The one skipped case was `actual Node job crosses 300 seconds with no hidden dea
 | iPhone UI | Three composer-capability UI methods plus the existing model-picker/draft regression |
 | iPad UI | The same three composer-capability UI methods |
 | Native artifact integration | Complete root-owned artifact provenance integration and consumer application build validation |
-| Separate manifest-contract audit test | Reconcile its historical source-specific receipt with final inputs; the current RuntimeHost inventory audit already passed |
 
 The UI inventory is **seven executions across two devices**, comprising four distinct methods. The catalog/map fixture supplies UI metadata only; it does not provide a tool executor or a fabricated model response.
 

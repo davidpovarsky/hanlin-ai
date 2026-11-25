@@ -111,8 +111,7 @@
     "Thirteen app integration methods",
     "Four actual native-engine methods",
     "Four native editor regression methods",
-    "Four iPhone UI executions and three iPad UI executions",
-    "Reconcile final-source applicability of the separately recorded manifest-contract audit test"
+    "Four iPhone UI executions and three iPad UI executions"
   ],
   "packaging": {
     "index": "evidence/package-20261125.json",
@@ -121,5 +120,19 @@
   },
   "applicability": "evidence/applicability-37a788a4a.json",
   "documentationBranchBase": "189ca0d73a8f9b92451d343ca84b4b7074c57c6c",
-  "updatedAtUTC": "2026-11-25T00:32:17.358000+00:00"
+  "updatedAtUTC": "2026-11-25T00:37:27.752050+00:00",
+  "latestRecordedExecutionSource": "7b7f7e4460200d7e98162dd525d67f8ca1860911",
+  "manifestAudit": {
+    "status": "EXECUTED_PASS",
+    "source": "7b7f7e4460200d7e98162dd525d67f8ca1860911",
+    "executedAtUTC": "2026-11-25T00:35:34.980179+00:00",
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "durationSeconds": 0.618,
+    "receipt": "evidence/manifest-final-7b7f7e446/manifest-final-test.json",
+    "rawLogSHA256": "e2b42956c610e7ca794c7d59cf8a201a57db3fe427f090a3f4030921700a0105",
+    "sourceOnly": true,
+    "nativeAcceptance": "NOT_INFERRED"
+  }
 }

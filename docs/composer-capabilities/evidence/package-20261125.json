@@ -589,8 +589,41 @@
       "sourceBytes": 1229,
       "sourceSHA256": "7329f7b8bc7e20ac6f8d69c92f78710558714714dfb2ebf0d699f6bf062bb133",
       "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/manifest-final-7b7f7e446/manifest-final-test.json",
+      "bytes": 332,
+      "sha256": "9460e5128877f3f1c0c177a4e882677232b5c244155dd7de950b82d056b01140",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/manifest-final-test.json",
+      "sourceHost": "scaleway-mac",
+      "sourceBytes": 332,
+      "sourceSHA256": "9460e5128877f3f1c0c177a4e882677232b5c244155dd7de950b82d056b01140",
+      "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/manifest-final-7b7f7e446/manifest-final-test.log.gz",
+      "bytes": 2062,
+      "sha256": "f4f111a23d843244474cd4f39d541e7da37adc64f127a7c17e5d530c5899c750",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/manifest-final-test.log",
+      "sourceHost": "scaleway-mac",
+      "sourceBytes": 5119,
+      "sourceSHA256": "e2b42956c610e7ca794c7d59cf8a201a57db3fe427f090a3f4030921700a0105",
+      "compressedForRepository": true,
+      "uncompressedLogSHA256": "e2b42956c610e7ca794c7d59cf8a201a57db3fe427f090a3f4030921700a0105",
+      "uncompressedLogBytes": 5119
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/manifest-final-7b7f7e446/transfer-receipt.json",
+      "bytes": 721,
+      "sha256": "947f352293f142b0d95b148b8fef802af960aefc9a2bc79b9821be59d8b991f8",
+      "sourcePath": "/mnt/development/projects/worktrees/hanlin-composer-evidence-20261125/docs/composer-capabilities/evidence/manifest-final-7b7f7e446/transfer-receipt.json",
+      "sourceHost": "torah-social",
+      "sourceBytes": 721,
+      "sourceSHA256": "947f352293f142b0d95b148b8fef802af960aefc9a2bc79b9821be59d8b991f8",
+      "compressedForRepository": false
     }
   ],
-  "updatedAtUTC": "2026-11-25T00:32:17.358000+00:00",
-  "latestEvidenceCheckpoint": "37a788a4a10a293653e307c05ba1a507d518d1f0"
+  "updatedAtUTC": "2026-11-25T00:37:27.752050+00:00",
+  "latestEvidenceCheckpoint": "37a788a4a10a293653e307c05ba1a507d518d1f0",
+  "latestRecordedExecutionSource": "7b7f7e4460200d7e98162dd525d67f8ca1860911"
 }
