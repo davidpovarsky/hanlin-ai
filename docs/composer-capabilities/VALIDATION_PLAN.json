@@ -4,7 +4,7 @@
   "asanaTask": "1220882717750164",
   "sourceBase": "0929e07a6a6adae3a27cab5c514623c7cc0f157c",
   "sourceSnapshot": "8a67e7aee83c6b12673db1348b7f550a2805de50",
-  "finalSource": "Full AI_HLY Debug build-for-testing passed at b739ada91: exit 0 in 1040.388s, unchanged lock and no tracked changes. Generated NativeScript metadata has all 12 required strings and zero clang errors; this is build-time HOST_BASELINE_ONLY evidence. The subsequent fresh test-manifest guard requires the explicit test-host environment correction before application tests launch. Companion HanlinMiniApps compilation and functional/native/editor/UI acceptance remain pending. Earlier four failed app attempts and Host7 failure remain preserved.",
+  "finalSource": "AI_HLY build-for-testing PASS remains at b739ada91. Corrected original built-app preflight passed with checker598 against unchanged b739 app binaries. Nine checker fixtures initially failed at598; fixture-only d89 correction then passed all9 on Mac. Scheme eefe correction is integrated but fresh generated-manifest verification remains pending. Companion compilation and actual application/native/editor/UI acceptance remain open. Original failures retain their actual sources.",
   "runner": {
     "host": "scaleway-mac",
     "transport": "SentinelX direct",
@@ -198,6 +198,36 @@
           "originalProducerLogSHA256": "5aeae751df080bcc7fa5efe02c22e3975f1cc6674eeafc9c0b3e25f30416d5fc",
           "all15OwnerNativeBinariesIdentical": false
         }
+      },
+      "builtAppPreflight": {
+        "status": "EXECUTED_PASS",
+        "latestCheckerSource": "59838a47979f8d875618687708e0334fb63454a5",
+        "builtApplicationSource": "b739ada91aca115093e3511f9df58c15edcb5923",
+        "scope": "Original built-app dependency/metadata/provider preflight; no VM or application/UI test execution inferred.",
+        "attempts": [
+          {
+            "status": "FAILED",
+            "source": "b739ada91aca115093e3511f9df58c15edcb5923",
+            "exitCode": 1,
+            "durationSeconds": 97.371,
+            "receipt": "evidence/native-app-preflight-d89ce38b1/native-script-built-app-preflight-attempt1.json",
+            "rawLogSHA256": "1d9b8db4ff21e0d699b1526e41f35b45dd1c174305953146b7c6bb03ab715187"
+          },
+          {
+            "status": "EXECUTED_PASS",
+            "checkerSource": "59838a47979f8d875618687708e0334fb63454a5",
+            "builtApplicationSource": "b739ada91aca115093e3511f9df58c15edcb5923",
+            "exitCode": 0,
+            "durationSeconds": 30.62,
+            "receipt": "evidence/native-app-preflight-d89ce38b1/native-script-built-app-preflight-attempt2.json",
+            "rawLogSHA256": "94806496b987d0d71f28e783c9c123ac1bd9f9ce9138a58bd41ad6b3afadca1c",
+            "appBinarySHA256": {
+              "AI_Hanlin": "2cb23f37bc5a707fb0bfc1c6deedbbc12e3f27b011d02937414f6f2c62507fb8",
+              "AI_Hanlin.debug.dylib": "e498a5fafbf5058b1c0ee3a885eac138232c39dd7711e2aa153e47e685904c09"
+            }
+          }
+        ],
+        "assessment": "evidence/native-app-preflight-d89ce38b1/repair-scope-and-results.json"
       }
     },
     {
@@ -419,7 +449,7 @@
       "pending": true,
       "expectedBuilds": 2,
       "progress": {
-        "status": "AI_HLY_BUILD_PASSED_COMPANION_AND_ACCEPTANCE_PENDING",
+        "status": "AI_HLY_BUILD_PASSED_TEST_MANIFEST_REVALIDATION_PENDING",
         "latestCompletedAttempt": 5,
         "latestCompletedBuildSource": "b739ada91aca115093e3511f9df58c15edcb5923",
         "latestCompletedBuildStatus": "PASSED",
@@ -435,7 +465,9 @@
           "HanlinMiniApps"
         ],
         "latestBuildReceipt": "evidence/app-build-attempt5-b739ada91/ai-hly-build-attempt5.json",
-        "testsExecutedByLatestBuild": 0
+        "testsExecutedByLatestBuild": 0,
+        "schemeCorrectionSource": "eefe96321c9d83cdb300fbf84fd1da3977f5362e",
+        "freshGeneratedManifestVerification": "NOT_RECORDED_IN_THIS_PACKET"
       },
       "attempts": [
         {
@@ -538,7 +570,7 @@
     {
       "id": "test_manifest_preflight",
       "why": "Actual generated xctestrun environment must select the intended unit-test host mode before the original test suites launch.",
-      "status": "BLOCKED_TEST_ENVIRONMENT",
+      "status": "PENDING",
       "source": "b739ada91aca115093e3511f9df58c15edcb5923",
       "receipt": "evidence/app-build-attempt5-b739ada91/built-products-preflight-attempt1.json",
       "checkedAtUTC": "2026-11-25T03:00:05.269599+00:00",
@@ -549,7 +581,81 @@
         "AI_HLYUITests"
       ],
       "appTestsLaunched": false,
-      "successfulBuildRetained": true
+      "successfulBuildRetained": true,
+      "originalGuardStatus": "BLOCKED_TEST_ENVIRONMENT",
+      "schemeCorrectionSource": "eefe96321c9d83cdb300fbf84fd1da3977f5362e",
+      "schemeIntakeReceipt": "evidence/native-app-preflight-d89ce38b1/test-environment-fix-intake.json",
+      "freshGeneratedManifestVerification": "NOT_RECORDED_IN_THIS_PACKET"
+    },
+    {
+      "id": "native_built_app_preflight",
+      "why": "Run the original preflight against the actual built app while distinguishing checker source from retained binary source.",
+      "status": "EXECUTED_PASS",
+      "latestCheckerSource": "59838a47979f8d875618687708e0334fb63454a5",
+      "builtApplicationSource": "b739ada91aca115093e3511f9df58c15edcb5923",
+      "scope": "Original built-app dependency/metadata/provider preflight; no VM or application/UI test execution inferred.",
+      "attempts": [
+        {
+          "status": "FAILED",
+          "source": "b739ada91aca115093e3511f9df58c15edcb5923",
+          "exitCode": 1,
+          "durationSeconds": 97.371,
+          "receipt": "evidence/native-app-preflight-d89ce38b1/native-script-built-app-preflight-attempt1.json",
+          "rawLogSHA256": "1d9b8db4ff21e0d699b1526e41f35b45dd1c174305953146b7c6bb03ab715187"
+        },
+        {
+          "status": "EXECUTED_PASS",
+          "checkerSource": "59838a47979f8d875618687708e0334fb63454a5",
+          "builtApplicationSource": "b739ada91aca115093e3511f9df58c15edcb5923",
+          "exitCode": 0,
+          "durationSeconds": 30.62,
+          "receipt": "evidence/native-app-preflight-d89ce38b1/native-script-built-app-preflight-attempt2.json",
+          "rawLogSHA256": "94806496b987d0d71f28e783c9c123ac1bd9f9ce9138a58bd41ad6b3afadca1c",
+          "appBinarySHA256": {
+            "AI_Hanlin": "2cb23f37bc5a707fb0bfc1c6deedbbc12e3f27b011d02937414f6f2c62507fb8",
+            "AI_Hanlin.debug.dylib": "e498a5fafbf5058b1c0ee3a885eac138232c39dd7711e2aa153e47e685904c09"
+          }
+        }
+      ],
+      "assessment": "evidence/native-app-preflight-d89ce38b1/repair-scope-and-results.json"
+    },
+    {
+      "id": "native_app_checker_regressions",
+      "why": "Verify positive and negative linked-host metadata ownership paths with the original nine Node regression cases.",
+      "status": "EXECUTED_PASS",
+      "uniqueCases": 9,
+      "latestExecutedPasses": 9,
+      "failed": 0,
+      "skipped": 0,
+      "source": "d89ce38b170bc9af4734cd11e30ca793b16698d0",
+      "scope": "Node checker unit fixtures only, separate from functional/native/editor/UI acceptance and the Host8 Node suite.",
+      "attempts": [
+        {
+          "status": "FAILED",
+          "source": "59838a47979f8d875618687708e0334fb63454a5",
+          "exitCode": 1,
+          "durationSeconds": 1.38,
+          "passed": 0,
+          "failed": 9,
+          "skipped": 0,
+          "receipt": "evidence/native-app-preflight-d89ce38b1/native-app-preflight-regressions-attempt1.json",
+          "rawLogSHA256": "b60f6f1a006222ab3b0af37e362c4dff0090b86aae00b8a90949d26dc8000f68",
+          "failureClassification": "VAR_PRIVATE_VAR_FIXTURE_LOOKUP_BEFORE_METADATA_ASSERTIONS"
+        },
+        {
+          "status": "EXECUTED_PASS",
+          "source": "d89ce38b170bc9af4734cd11e30ca793b16698d0",
+          "exitCode": 0,
+          "durationSeconds": 0.483,
+          "passed": 9,
+          "failed": 0,
+          "skipped": 0,
+          "receipt": "evidence/native-app-preflight-d89ce38b1/native-app-preflight-regressions-attempt2.json",
+          "rawLogSHA256": "4b4e4f11506cd15e028dc33218b981a58155895befe8a8c52adaed313c518413"
+        }
+      ],
+      "caseResults": "evidence/native-app-preflight-d89ce38b1/unit-regression-case-results.json",
+      "fixtureFixProductionCheckerUnchanged": true
     },
     {
       "id": "app_scope",
@@ -570,7 +676,7 @@
         "HanlinMiniAppHostDiscoveryTests/preparedExpoActionExportsKeepTheirInstalledAppInTheCatalog": 1
       },
       "launchPrerequisite": {
-        "status": "BLOCKED_TEST_ENVIRONMENT",
+        "status": "SOURCE_CORRECTION_INTEGRATED_FRESH_MANIFEST_PENDING",
         "source": "b739ada91aca115093e3511f9df58c15edcb5923",
         "receipt": "evidence/app-build-attempt5-b739ada91/built-products-preflight-attempt1.json",
         "checkedAtUTC": "2026-11-25T03:00:05.269599+00:00",
@@ -581,7 +687,11 @@
           "AI_HLYUITests"
         ],
         "appTestsLaunched": false,
-        "successfulBuildRetained": true
+        "successfulBuildRetained": true,
+        "originalGuardStatus": "BLOCKED_TEST_ENVIRONMENT",
+        "schemeCorrectionSource": "eefe96321c9d83cdb300fbf84fd1da3977f5362e",
+        "schemeIntakeReceipt": "evidence/native-app-preflight-d89ce38b1/test-environment-fix-intake.json",
+        "freshGeneratedManifestVerification": "NOT_RECORDED_IN_THIS_PACKET"
       }
     },
     {
@@ -1320,7 +1430,7 @@
     "completionDocumentationOnly": "635bc66274436d21236500cda4c2e873b1abe1bd",
     "activeDraftExcluded": "PR18 remains with original owner"
   },
-  "updatedAtUTC": "2026-11-25T03:04:38.309734+00:00",
+  "updatedAtUTC": "2026-11-25T03:33:05.302517+00:00",
   "failureCorrections": [
     {
       "boundary": "manifest ordinary JSON",
@@ -1412,6 +1522,30 @@
       "integratedFixCommit": "199da0f9e61a0d99998bce906001e565f3138d1c",
       "reason": "Three source lines use authoritative locked runtime/core versions while retaining original installed-version checks and producer. Original fixture production and second preflight then passed; initial missing-fixture preflight remains FAILED.",
       "evidence": "docs/composer-capabilities/evidence/native-script-preparation-199da0f9e/preparation-and-library-assessment.json"
+    },
+    {
+      "boundary": "actual generated test-host environment",
+      "sourceCommit": "eefe96321c9d83cdb300fbf84fd1da3977f5362e",
+      "scope": "One scheme TestAction property YES to NO; original explicit environment retained.",
+      "freshGeneratedManifestVerification": "PENDING",
+      "evidence": "docs/composer-capabilities/evidence/native-app-preflight-d89ce38b1/test-environment-fix-intake.json"
+    },
+    {
+      "boundary": "built-app linked metadata host images",
+      "sourceCommit": "59838a47979f8d875618687708e0334fb63454a5",
+      "scope": "Three tooling/test files; strict linked direct host metadata/provider discovery with original guards preserved.",
+      "originalBuiltAppPreflightStatus": "EXECUTED_PASS",
+      "builtAppSource": "b739ada91aca115093e3511f9df58c15edcb5923",
+      "evidence": "docs/composer-capabilities/evidence/native-app-preflight-d89ce38b1/native-script-built-app-preflight-attempt2.json",
+      "nativeVMAndUIAcceptance": "NOT_INFERRED"
+    },
+    {
+      "boundary": "macOS checker fixture canonical path",
+      "sourceCommit": "d89ce38b170bc9af4734cd11e30ca793b16698d0",
+      "scope": "Two test-fixture lines import realpath and canonicalize mkdtemp output; production checker, assertions and budgets unchanged.",
+      "initialActualResult": "0 passed, 9 failed",
+      "retryActualResult": "9 passed, 0 failed, 0 skipped",
+      "evidence": "docs/composer-capabilities/evidence/native-app-preflight-d89ce38b1/unit-regression-case-results.json"
     }
   ],
   "latestUpstreamIntegration": {
@@ -1421,11 +1555,11 @@
     "taskWorkspaceEquivalent": "6ceb07447 changes already included by identical merge-tree"
   },
   "overallStatus": "PENDING",
-  "evidenceCheckpoint": "b739ada91aca115093e3511f9df58c15edcb5923",
+  "evidenceCheckpoint": "d89ce38b170bc9af4734cd11e30ca793b16698d0",
   "evidenceIndex": "docs/composer-capabilities/EVIDENCE_INDEX.json",
   "pendingRequiredGates": [
     "Remaining HanlinMiniApps application build-for-testing scheme",
-    "Generated test-manifest environment correction before actual test execution",
+    "Fresh generated test-manifest environment verification after integrated scheme correction",
     "Thirteen app integration methods",
     "Four actual native-engine methods",
     "Four native editor regression methods",
@@ -1451,10 +1585,15 @@
     "Native reuse is qualified: all 16 inputs match the captured owner catalog, 14 of 15 framework slice maps and 34 of 36 slices match. ExpoModulesJSI was rebuilt by the original producer, and two header ZIP differences are proven directory permissions only. Four of five support archives match; NodeHostSupport changes with Host8. No all-15-identical binary claim is made.",
     "AI_HLY attempt5 is an actual full build-for-testing PASS at b739ada91, with TEST BUILD SUCCEEDED, exit 0, unchanged lock and no tracked changes. This closes only the AI_HLY build portion, not companion compilation or any acceptance test.",
     "The generated NativeScript visibility result is HOST_BASELINE_ONLY build-time evidence: 12 required strings present and zero clang errors. The reused metadata-compiler origin 5d4569c1 is separate from application source b739ada91; no VM result is inferred.",
-    "The fresh xctestrun guard after the passing build found missing HANLIN_UNIT_TEST_HOST entries in both inspected environment maps for both test targets. No app tests launched. This is a prerequisite correction, not a failed build or an executed test failure."
+    "The fresh xctestrun guard after the passing build found missing HANLIN_UNIT_TEST_HOST entries in both inspected environment maps for both test targets. No app tests launched. This is a prerequisite correction, not a failed build or an executed test failure.",
+    "Built-app preflight2 passed with checker source598 against original b739 app binaries. The unchanged main/debug-dylib hashes are bound by original receipts; later build products are not substituted.",
+    "The initial nine checker fixtures are actual failures, despite the original preflight2 receipt describing them as blocked. Their Node log records0pass9fail. The fixture-only d89 retry records9pass0fail0skip; these are nine unique checker cases, not application/native/UI acceptance.",
+    "All sixteen native fingerprint inputs remain byte-identical between compiled b739 and d89. The existing native/Host preparation receipts retain their actual sources; this source review does not invent a new preparation or runtime execution.",
+    "The source-only scheme fix does not itself verify a newly generated xctestrun. Fresh-manifest verification remains pending, separately from the already passed AI_HLY build and checker tests.",
+    "The preserved parity scope review concerns immutable owner commits and selected-case independence. It does not import active owner work or assert native success from source changes."
   ],
   "documentationBranchBase": "189ca0d73a8f9b92451d343ca84b4b7074c57c6c",
-  "latestRecordedExecutionSource": "b739ada91aca115093e3511f9df58c15edcb5923",
+  "latestRecordedExecutionSource": "d89ce38b170bc9af4734cd11e30ca793b16698d0",
   "buildTimeMetadata": {
     "status": "EXECUTED_PASS",
     "source": "b739ada91aca115093e3511f9df58c15edcb5923",
@@ -1467,5 +1606,28 @@
     "metadataBinarySHA256": "5a3385b02b9f1c626301a326d32068aadc5d6ef6ceb4fa5bae486a978321fbba",
     "compilerOriginSource": "5d4569c197810cdd4c1e02e7c16d42a01a77d5c0",
     "nativeVMAcceptance": "NOT_INFERRED"
+  },
+  "nativePreflightSourceScope": {
+    "source": "d89ce38b170bc9af4734cd11e30ca793b16698d0",
+    "independentReview": "evidence/native-app-preflight-d89ce38b1/native-preflight-source-scope-d89ce38b1.json",
+    "assessment": "evidence/native-app-preflight-d89ce38b1/repair-scope-and-results.json",
+    "nativeFingerprintInputsByteIdentical": 16,
+    "changedPathsSinceBuiltApp": [
+      "AI_HLY.xcodeproj/xcshareddata/xcschemes/AI_HLY.xcscheme",
+      "Scripts/NativeScript/Tests/app-binary-preflight.test.mjs",
+      "Scripts/NativeScript/app-binary-preflight.mjs",
+      "Scripts/NativeScript/preflight-ios-dependencies.mjs"
+    ],
+    "sourceReviewIsNotAnExecutionPass": true
+  },
+  "parityIntakeScopeReview": {
+    "status": "READ_ONLY_REVIEW_RECORDED",
+    "receipt": "evidence/native-app-preflight-d89ce38b1/parity-fixture-intake-scope-eefe96321.json",
+    "actualReviewSource": "eefe96321c9d83cdb300fbf84fd1da3977f5362e",
+    "compiledBaseline": "b739ada91aca115093e3511f9df58c15edcb5923",
+    "reviewedChangedPaths": 14,
+    "sourceEqualityAssessmentThroughD89": "evidence/native-app-preflight-d89ce38b1/repair-scope-and-results.json",
+    "selectedCasesRequireParityIntake": false,
+    "nativeAcceptanceNotInferred": true
   }
 }

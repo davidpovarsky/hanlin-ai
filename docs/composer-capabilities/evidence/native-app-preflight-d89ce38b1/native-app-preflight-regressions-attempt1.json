@@ -1,0 +1,20 @@
+{
+  "checkerSourceCommit": "59838a47979f8d875618687708e0334fb63454a5",
+  "sourceCommit": "59838a47979f8d875618687708e0334fb63454a5",
+  "builtAppSourceCommit": "b739ada91aca115093e3511f9df58c15edcb5923",
+  "buildReceipt": "ai-hly-build-attempt5.json",
+  "appBinarySHA256": {
+    "AI_Hanlin": "2cb23f37bc5a707fb0bfc1c6deedbbc12e3f27b011d02937414f6f2c62507fb8",
+    "AI_Hanlin.debug.dylib": "e498a5fafbf5058b1c0ee3a885eac138232c39dd7711e2aa153e47e685904c09"
+  },
+  "startedAtUTC": "2026-11-25T03:17:16.873636+00:00",
+  "finishedAtUTC": "2026-11-25T03:17:18.253679+00:00",
+  "exitCode": 1,
+  "durationSeconds": 1.38,
+  "command": [
+    "node",
+    "--test",
+    "Scripts/NativeScript/Tests/app-binary-preflight.test.mjs"
+  ],
+  "logSHA256": "b60f6f1a006222ab3b0af37e362c4dff0090b86aae00b8a90949d26dc8000f68"
+}
