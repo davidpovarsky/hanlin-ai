@@ -570,4 +570,146 @@ struct HanlinScriptMiniAppRegistrationTests {
     }
 
 
+
+    @Test("Prepared action exports retain their identities behind one canonical App Intent bridge")
+    func preparedActionExportsShareCanonicalBridge() throws {
+        let actionIDs = ["hostServicesEcho", "hostServicesFail", "hostServicesPublishWidget"]
+        for runtime in [HanlinRuntimeProfile.hanlinExpo, .hanlinNativeScript] {
+            let app = HanlinPackageEntrypointDescriptor(
+                id: "app", kind: .app, sourcePath: "source/bundle.js",
+                supportedContexts: [.mainApplication], runtimePolicyID: "foreground-app-v1",
+                runtimeProfile: runtime, compatibility: .supported)
+            let actions = actionIDs.map { id in
+                HanlinPackageEntrypointDescriptor(
+                    id: id, kind: .appIntent, sourcePath: "source/bundle.js", exportedSymbol: id,
+                    supportedContexts: [.appIntent, .mainApplication],
+                    runtimePolicyID: "prepared-foreground-action-v1",
+                    runtimeProfile: runtime, compatibility: .supported)
+            }
+            let snapshot = try preparedActionSnapshot(entrypoints: [app] + actions, runtime: runtime)
+            let descriptor = try snapshot.appDescriptor()
+            let bridges = descriptor.entryPoints.filter { $0.kind == .appIntentBridge }
+            let bridge = try #require(bridges.first)
+            #expect(bridges.count == 1)
+            #expect(bridge.handler == "source/bundle.js")
+            #expect(bridge.runtimeProfile == runtime)
+            #expect(Set(bridge.allowedContexts) == [.appIntent, .mainApplication])
+            #expect(descriptor.entryPoints.filter { $0.kind == .app }.count == 1)
+            #expect(snapshot.hasLaunchableApp)
+            #expect(snapshot.entrypoints == [app] + actions)
+            #expect(snapshot.entrypoints.filter { $0.kind == .appIntent }.map(\.exportedSymbol) == actionIDs.map(Optional.some))
+            #expect(descriptor.actions.map(\.id.rawValue) == actionIDs)
+            #expect(descriptor.actions.allSatisfy { $0.handler == "source/bundle.js" })
+        }
+    }
+
+    @Test("Different App Intent handlers, runtimes and context sets remain conflicting canonical routes")
+    func conflictingAppIntentBridgesRemainInvalid() throws {
+        let original = HanlinPackageEntrypointDescriptor(
+            id: "first", kind: .appIntent, sourcePath: "source/bundle.js", exportedSymbol: "first",
+            supportedContexts: [.appIntent, .mainApplication], runtimePolicyID: "prepared-foreground-action-v1",
+            runtimeProfile: .hanlinExpo, compatibility: .supported)
+        let conflicts = [
+            HanlinPackageEntrypointDescriptor(
+                id: "otherHandler", kind: .appIntent, sourcePath: "source/other.js",
+                supportedContexts: [.appIntent, .mainApplication], runtimePolicyID: "prepared-foreground-action-v1",
+                runtimeProfile: .hanlinExpo, compatibility: .supported),
+            HanlinPackageEntrypointDescriptor(
+                id: "otherRuntime", kind: .appIntent, sourcePath: "source/bundle.js",
+                supportedContexts: [.appIntent, .mainApplication], runtimePolicyID: "prepared-foreground-action-v1",
+                runtimeProfile: .hanlinNativeScript, compatibility: .supported),
+            HanlinPackageEntrypointDescriptor(
+                id: "otherContext", kind: .appIntent, sourcePath: "source/bundle.js",
+                supportedContexts: [.mainApplication], runtimePolicyID: "prepared-foreground-action-v1",
+                runtimeProfile: .hanlinExpo, compatibility: .supported)
+        ]
+        for conflict in conflicts {
+            let snapshot = try preparedActionSnapshot(entrypoints: [original, conflict])
+            do {
+                _ = try snapshot.appDescriptor()
+                Issue.record("Conflicting App Intent routes must not be silently merged")
+            } catch HanlinContractError.invalidManifest(let issues) {
+                #expect(issues.contains { $0.code == .duplicateEntryPoint })
+            }
+        }
+    }
+
+    @Test("Identical foreground entries still violate the canonical unique-kind contract")
+    func duplicateForegroundEntrypointsRemainInvalid() throws {
+        let app = HanlinPackageEntrypointDescriptor(
+            id: "app", kind: .app, sourcePath: "source/bundle.js",
+            supportedContexts: [.mainApplication], runtimePolicyID: "foreground-app-v1",
+            runtimeProfile: .hanlinExpo, compatibility: .supported)
+        let snapshot = try preparedActionSnapshot(entrypoints: [app, app])
+        do {
+            _ = try snapshot.appDescriptor()
+            Issue.record("Only shared App Intent bridges are coalesced")
+        } catch HanlinContractError.invalidManifest(let issues) {
+            #expect(issues.contains { $0.code == .duplicateEntryPoint })
+        }
+    }
+
+    @Test("Prepared action identifiers preserve export case, round trip, and reject malformed values")
+    func preparedActionIdentifiersPreserveCaseAndRejectMalformedValues() throws {
+        let names = ["hostServicesEcho", "hostServicesFail", "hostServicesPublishWidget"]
+        for name in names {
+            let actionID = try HanlinActionID(validating: name)
+            #expect(actionID.rawValue == name)
+            #expect(actionID != HanlinActionID(rawValue: name.lowercased()))
+            let encoded = try JSONEncoder().encode(actionID)
+            #expect(try JSONDecoder().decode(HanlinActionID.self, from: encoded) == actionID)
+            #expect(HanlinAppID(rawValue: name) == nil)
+            #expect(HanlinCapabilityID(rawValue: name) == nil)
+        }
+        let invalidNames = ["", ".Echo", "Echo-", "Echo..Value", "Echo/_Value",
+                            "Echo Value", "Echo\n", "הד", String(repeating: "A", count: 256)]
+        for name in invalidNames {
+            #expect(HanlinActionID(rawValue: name) == nil)
+            let encoded = try JSONEncoder().encode(name)
+            #expect(throws: HanlinContractError.self) {
+                try JSONDecoder().decode(HanlinActionID.self, from: encoded)
+            }
+        }
+        let schema = try #require(JSONSerialization.jsonObject(with: HanlinManifestSchema.data()) as? [String: Any])
+        let definitions = try #require(schema["$defs"] as? [String: Any])
+        let action = try #require(definitions["action"] as? [String: Any])
+        let properties = try #require(action["properties"] as? [String: Any])
+        let identity = try #require(properties["id"] as? [String: Any])
+        #expect(identity["$ref"] as? String == "#/$defs/actionIdentifier")
+        let actionIdentity = try #require(definitions["actionIdentifier"] as? [String: Any])
+        let pattern = try #require(actionIdentity["pattern"] as? String)
+        let expression = try NSRegularExpression(pattern: pattern)
+        for name in names + ["share.value", "Action_1", "A"] {
+            let range = NSRange(name.startIndex..., in: name)
+            #expect(expression.firstMatch(in: name, range: range)?.range == range)
+        }
+        for name in invalidNames.dropLast() {
+            let range = NSRange(name.startIndex..., in: name)
+            #expect(expression.firstMatch(in: name, range: range) == nil)
+        }
+        #expect(actionIdentity["maxLength"] as? Int == 255)
+    }
+
+    private func preparedActionSnapshot(
+        entrypoints: [HanlinPackageEntrypointDescriptor],
+        runtime: HanlinRuntimeProfile = .hanlinExpo
+    ) throws -> HanlinStoredPackageSnapshot {
+        let actionIDs = ["hostServicesEcho", "hostServicesFail", "hostServicesPublishWidget"]
+        let manifest = HanlinScriptingManifest(
+            name: "Expo SwiftUI Probe A", version: "1.0.0", entry: "bundle.js",
+            hanlinRuntime: runtime.rawValue,
+            unknownFields: ["actions": .array(actionIDs.map { id in
+                .object(["id": .string(id), "handler": .string("bundle.js"),
+                         "capability": .string("inter-app.share")])
+            })])
+        let record = HanlinInstalledPackageRecord(
+            installedPackageID: try .init(validating: "installed.prepared.actions"),
+            packageID: try .init(validating: "prepared.actions"), version: try .init(validating: "1.0.0"),
+            sourceDigest: String(repeating: "a", count: 64), artifactDigest: String(repeating: "b", count: 64),
+            activeGeneration: 1, installedAt: .distantPast, updatedAt: .distantPast)
+        return HanlinStoredPackageSnapshot(
+            record: record, entrypoints: entrypoints, enabled: true, availableGenerations: [1],
+            grantedCapabilities: [try .init(validating: "inter-app.share")], manifest: manifest)
+    }
+
 }

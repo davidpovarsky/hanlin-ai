@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "createdAtUTC": "2026-11-25T05:20:43.376098+00:00",
+  "baseCombinedSource": "7214b97b79245507711c2b0b950ede839646372e",
+  "consumerSharedSource": "4e921b9517f2fc28fcaebcb2ba7441ab1fb46a90",
+  "conflicts": [
+    "AI_HLY.xcodeproj/project.pbxproj",
+    "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+    "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-sdk-resolution.test.mjs",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinIdentifiers.swift",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
+    "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
+    "Scripts/MiniApps/upstream-resolution.json",
+    "Scripts/SDK/tests/test_widget_cxx_imports.py",
+    "Scripts/SDK/update_project.py"
+  ],
+  "decisions": [
+    "Preserved all source merges including canonical ChatGPT plan client/session transport, Darwin private-store repair, authoring, release verification and original dependency preparation.",
+    "Preserved tested ESM .mjs module output and corresponding Node fixture assertions from current PR19.",
+    "Preserved broader native consumers of original Expo Clang import/explicit module flags and original project flags, including module parity tests.",
+    "Preserved canonical descriptor deduplication across identical routes; this includes duplicate appIntent bridges while retaining differing routes for rejection. Prepared action identities and exact case remain.",
+    "Preserved @types/react 19.3.1 and expo-asset 58.0.21 from current PR19; preserved swift-ai-sdk 3f38f130 from current consumers.",
+    "Preserved schema description for case-sensitive original JavaScript exports.",
+    "Original twenty cross-app acceptance methods plus three added package/lifetime methods remain required. No native PASS inferred from a merge."
+  ]
+}

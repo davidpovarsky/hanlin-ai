@@ -32,9 +32,47 @@ def _job(run_id, run_attempt):
     return "Hanlin-Phase2-" + run_id + "-" + run_attempt
 
 
+def motion_run_identity(run_id, run_attempt, run_provider="github"):
+    """Keep local Mac labels distinct from the original numeric GitHub identity."""
+    if run_provider == "github":
+        _job(run_id, run_attempt)
+        name = "Hanlin-Phase2-Motion-" + run_id
+    elif run_provider == "local-mac":
+        if (not isinstance(run_id, str)
+                or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._-]{0,63}", run_id)
+                or not isinstance(run_attempt, str)
+                or not re.fullmatch(r"[1-9][0-9]*", run_attempt)):
+            raise RuntimeError("Local Mac Motion requires an explicit bounded run label and positive attempt")
+        name = "Hanlin-Phase2-Motion-local-" + run_id + "-" + run_attempt
+    else:
+        raise RuntimeError("Unsupported Motion run provider")
+    if len(name) > 120:
+        raise RuntimeError("A bounded Phase2-owned simulator name is required")
+    return {"run_provider": run_provider, "run_id": run_id,
+            "run_attempt": run_attempt, "name": name}
+
+
+def motion_run_from_environment(environment=None):
+    environment = os.environ if environment is None else environment
+    local_keys = ("HANLIN_LOCAL_RUN_ID", "HANLIN_LOCAL_RUN_ATTEMPT")
+    if any(key in environment for key in local_keys):
+        if (environment.get("GITHUB_ACTIONS", "").lower() == "true"
+                or any(key in environment for key in ("GITHUB_RUN_ID", "GITHUB_RUN_ATTEMPT"))):
+            raise RuntimeError("Motion must not mix GitHub and local Mac ownership")
+        return motion_run_identity(environment.get(local_keys[0]),
+                                   environment.get(local_keys[1]), "local-mac")
+    return motion_run_identity(environment.get("GITHUB_RUN_ID"),
+                               environment.get("GITHUB_RUN_ATTEMPT"))
+
+
 def created_selection(selected, before, observed, requested_name, created_udid,
-                      run_id, run_attempt):
+                      run_id, run_attempt, *, run_provider="github"):
     """Attach provenance only after native create returned a genuinely new UUID."""
+    if run_provider == "local-mac":
+        if requested_name != motion_run_identity(run_id, run_attempt, run_provider)["name"]:
+            raise RuntimeError("Local Mac ownership is scoped to the current Motion run")
+    elif run_provider != "github":
+        raise RuntimeError("Unsupported simulator run provider")
     simulator = _uuid(created_udid)
     previous = {_uuid(device["udid"]) for devices in before["devices"].values()
                 for device in devices}
@@ -51,19 +89,20 @@ def created_selection(selected, before, observed, requested_name, created_udid,
     return {**selected, "source_device": source, "model": source["name"], "device": matches[0],
             "ownership": {
                 "schema_version": 1, "operation": "simctl_create",
-                "run_id": run_id, "run_attempt": run_attempt,
+                "run_provider": run_provider, "run_id": run_id, "run_attempt": run_attempt,
                 "simulator": simulator, "name": requested_name,
                 "runtime": runtime, "device_type": source["deviceTypeIdentifier"],
                 "source_device": _uuid(source["udid"]), "absent_before_create": True,
             }}
 
 
-def _created_selection(path, simulator, run_id, run_attempt, expected_name):
+def _created_selection(path, simulator, run_id, run_attempt, expected_name, *, run_provider="github"):
     raw = Path(path).read_bytes()
     selected = json.loads(raw)
     device, runtime, owner = selected["device"], selected["runtime"], selected["ownership"]
     if (owner.get("schema_version") != 1 or owner.get("operation") != "simctl_create"
             or owner.get("absent_before_create") is not True
+            or owner.get("run_provider", "github") != run_provider
             or owner.get("run_id") != run_id or owner.get("run_attempt") != run_attempt
             or owner.get("name") != expected_name or device.get("name") != expected_name
             or _uuid(owner.get("simulator")) != simulator or _uuid(device.get("udid")) != simulator
@@ -83,14 +122,13 @@ def _selection(log, simulator, run_id, run_attempt):
                               _job(run_id, run_attempt))
 
 
-def verify_owned_motion_creation(path, simulator, run_id, run_attempt):
+def verify_owned_motion_creation(path, simulator, run_id, run_attempt, *, run_provider="github"):
     """Validate the original Motion create receipt before touching its UUID."""
-    _job(run_id, run_attempt)  # Require this GitHub run and attempt, as for live staging.
+    identity = motion_run_identity(run_id, run_attempt, run_provider)
     simulator = _uuid(simulator)
-    name = "Hanlin-Phase2-Motion-" + run_id
-    _, digest = _created_selection(path, simulator, run_id, run_attempt, name)
-    return {"simulator": simulator, "run_id": run_id, "run_attempt": run_attempt,
-            "name": name, "selection_sha256": digest}
+    _, digest = _created_selection(path, simulator, run_id, run_attempt, identity["name"],
+                                   run_provider=run_provider)
+    return {**identity, "simulator": simulator, "selection_sha256": digest}
 
 
 def record_owned_boot(log, simulator, result, run_id=None, run_attempt=None):
@@ -140,3 +178,15 @@ def verify_staged_owner(staged, observed):
     if (staged.get("simulator") != observed["simulator"]
             or any(expected.get(field) != observed[field] for field in fields)):
         raise RuntimeError("Live credential ownership changed after staging")
+
+
+if __name__ == "__main__":
+    import argparse
+    parser = argparse.ArgumentParser(description="Resolve explicit Motion run provenance without native commands")
+    parser.add_argument("--motion-name", action="store_true", required=True)
+    parser.add_argument("--output", type=Path)
+    args = parser.parse_args()
+    identity = motion_run_from_environment()
+    if args.output:
+        args.output.write_text(json.dumps(identity, indent=2) + "\n", encoding="utf-8")
+    print(identity["name"])

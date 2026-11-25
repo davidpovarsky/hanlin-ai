@@ -1,5 +1,8 @@
 import Foundation
 import HanlinHostContracts
+#if canImport(Darwin)
+import Darwin
+#endif
 
 /// One actor instance owns this private directory. Cross-process/AppGroup writers are unsupported;
 /// hosts needing them must inject their coordinated store. No credentials or host DB access here.
@@ -11,7 +14,7 @@ public actor HanlinPrivateConversationStore: HanlinConversationStore {
         guard directory.isFileURL, maximumRecordBytes > 0, maximumRecordBytes <= 16 * 1_048_576 else {
             throw HanlinHostError.invalidArguments
         }
-        self.directory = directory.standardizedFileURL
+        self.directory = try Self.canonicalDirectory(directory.standardizedFileURL)
         self.maximumRecordBytes = maximumRecordBytes
     }
 
@@ -66,6 +69,26 @@ public actor HanlinPrivateConversationStore: HanlinConversationStore {
         guard old.namespace == namespace, revision < UInt64.max else { throw HanlinHostError.invalidRecord }
         try save(.init(namespace: namespace, conversationID: old.conversationID, revision: revision + 1,
                        model: old.model, draft: old.draft, entries: old.entries), replacing: revision)
+    }
+
+    /// Darwin exposes system directories through /var, /tmp and /etc aliases. Resolve
+    /// only that known prefix, even before the private store directory exists. Resolving
+    /// the entire URL would also follow a host or record symlink, and Foundation may
+    /// shorten /private/var back to /var. Keep the verified physical spelling instead.
+    private static func canonicalDirectory(_ directory: URL) throws -> URL {
+        #if canImport(Darwin)
+        let path = directory.path(percentEncoded: false)
+        for alias in ["/var", "/tmp", "/etc"] where path == alias || path.hasPrefix(alias + "/") {
+            guard let resolved = realpath(alias, nil) else { throw HanlinHostError.invalidRecord }
+            defer { free(resolved) }
+            let prefix = String(cString: resolved)
+            guard prefix == alias || prefix == "/private" + alias else {
+                throw HanlinHostError.invalidRecord
+            }
+            return URL(filePath: prefix + String(path.dropFirst(alias.count)), directoryHint: .isDirectory)
+        }
+        #endif
+        return directory
     }
 
     private func location(_ id: UUID, namespace: HanlinConversationNamespace) -> URL {

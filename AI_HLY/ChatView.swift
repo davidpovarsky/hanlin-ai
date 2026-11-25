@@ -1207,7 +1207,7 @@ struct ChatView: View {
             } action: { _, layout in
                 autoFollowController.updateLayout(layout)
                 scheduleSourceScroll(using: scrollViewProxy)
-                scheduleAutoFollow(using: scrollViewProxy, animated: false)
+                scheduleAutoFollow(using: scrollViewProxy, animated: false, measuredLayout: layout)
             }
             .onScrollPhaseChange { _, newPhase in
                 switch newPhase {
@@ -1263,18 +1263,24 @@ struct ChatView: View {
     private func scheduleAutoFollow(
         using scrollViewProxy: ScrollViewProxy,
         animated: Bool,
-        force: Bool = false
+        force: Bool = false,
+        measuredLayout: ChatAutoFollowLayout? = nil
     ) {
         guard pendingSourceScroll == nil, force || nativeSelectionIDs.isEmpty else {
             traceAutoFollowBoundary("request-blocked-by-selection-or-source")
             return
         }
         let conversationID = effectiveChatSessionID
-        guard let layout = transcriptScrollView.layout(conversationID: conversationID) else {
+        guard let attachedLayout = transcriptScrollView.layout(conversationID: conversationID) else {
             autoFollowController.invalidateLayout()
             traceAutoFollowBoundary("request-without-current-viewport")
             return
         }
+        // SwiftUI can report content growth before UIKit commits contentSize.
+        // Keep that current measurement for admission instead of overwriting it
+        // with the earlier native size. Execution still rechecks the actual
+        // attached viewport, generation and scroll range below.
+        let layout = measuredLayout ?? attachedLayout
         autoFollowController.updateLayout(layout)
         traceAutoFollowBoundary("request", layout: layout)
         let viewportGeneration = transcriptScrollView.generation

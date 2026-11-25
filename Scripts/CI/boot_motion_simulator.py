@@ -18,9 +18,9 @@ import time
 import uuid
 
 if __package__:
-    from .owned_simulator_receipts import verify_owned_motion_creation
+    from .owned_simulator_receipts import verify_owned_motion_creation, motion_run_from_environment
 else:
-    from owned_simulator_receipts import verify_owned_motion_creation
+    from owned_simulator_receipts import verify_owned_motion_creation, motion_run_from_environment
 
 BOOT_SECONDS = 15.0
 # Native cold-start admission only; Motion test/animation deadlines are separate.
@@ -48,11 +48,13 @@ def native_command(command, timeout, output):
             "output_file": Path(output).name, "output_sha256": digest(output)}
 
 
-def ensure_ready(device, selection, strategy, run_id, run_attempt, runner=native_command):
+def ensure_ready(device, selection, strategy, run_id, run_attempt, runner=native_command, *,
+                 run_provider="github"):
     selection = Path(selection)
     out = selection.parent
     receipt = {"schema_version": 1, "status": "NOT_READY", "device": device,
-               "strategy": strategy, "run_id": run_id, "run_attempt": run_attempt,
+               "strategy": strategy, "run_provider": run_provider,
+               "run_id": run_id, "run_attempt": run_attempt,
                "attempts": [], "recovery_count": 0,
                "scope": "Simulator readiness only; Motion product tests NOT_RUN"}
     initial_hash = None
@@ -66,7 +68,8 @@ def ensure_ready(device, selection, strategy, run_id, run_attempt, runner=native
         if digest(selection) != initial_hash:
             raise RuntimeError("Motion simulator selection changed during readiness")
         if strategy == "fresh":
-            current = verify_owned_motion_creation(selection, device, run_id, run_attempt)
+            current = verify_owned_motion_creation(selection, device, run_id, run_attempt,
+                                                   run_provider=run_provider)
             if current != owner:
                 raise RuntimeError("Motion simulator ownership changed during readiness")
 
@@ -92,7 +95,8 @@ def ensure_ready(device, selection, strategy, run_id, run_attempt, runner=native
             raise RuntimeError("Selected Motion UUID differs from requested device")
         initial_hash = digest(selection)
         if strategy == "fresh":
-            owner = verify_owned_motion_creation(selection, device, run_id, run_attempt)
+            owner = verify_owned_motion_creation(selection, device, run_id, run_attempt,
+                                                   run_provider=run_provider)
             receipt["ownership"] = owner
         elif selected["device"]["state"] != "Booted":
             raise RuntimeError("BLOCKED_ENVIRONMENT: ready strategy requires the existing booted selection")
@@ -207,8 +211,12 @@ def main():
     args = parser.parse_args()
     retain_startup_context(args.selection.parent)
     try:
+        identity = (motion_run_from_environment() if args.strategy == "fresh" else
+                    {"run_provider": "github", "run_id": os.environ.get("GITHUB_RUN_ID"),
+                     "run_attempt": os.environ.get("GITHUB_RUN_ATTEMPT")})
         ensure_ready(args.device, args.selection, args.strategy,
-                     os.environ.get("GITHUB_RUN_ID"), os.environ.get("GITHUB_RUN_ATTEMPT"))
+                     identity["run_id"], identity["run_attempt"],
+                     run_provider=identity["run_provider"])
     except (OSError, ValueError, TypeError, AttributeError, KeyError, RuntimeError) as error:
         retain_failure_observations(args.selection.parent)
         print("Motion preflight failed: " + str(error), file=sys.stderr)
