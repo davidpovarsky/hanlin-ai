@@ -350,27 +350,46 @@ extension HanlinAISDKProviderFactory {
             try Task.checkCancellation()
             try await requestAdmission?(request)
             try Task.checkCancellation()
+            let cancellation = HanlinChatTransportCancellation.current
+            try cancellation?.checkCancellation()
             let traceID = UUID()
             transportObserver?(.request(id: traceID, request: request))
 #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
+            let pending = Task {
+                try Task.checkCancellation()
+                return try await session.bytes(for: request)
+            }
+            let pendingID = cancellation?.register { pending.cancel() }
+            defer { cancellation?.unregister(pendingID) }
             let bytes: URLSession.AsyncBytes
             let response: URLResponse
             do {
-                (bytes, response) = try await session.bytes(for: request)
+                (bytes, response) = try await withTaskCancellationHandler {
+                    try await pending.value
+                } onCancel: {
+                    pending.cancel()
+                }
             } catch {
                 transportObserver?(.end(id: traceID, error: String(describing: error)))
                 throw error
             }
+            // After headers, cancelling the Swift fetch task is no longer enough:
+            // the body is consumed by separate original SDK Tasks. Cancel this
+            // URLSession task directly when its owning turn terminates.
+            let networkTask = bytes.task
+            let requestID = cancellation?.register { networkTask.cancel() }
             if let httpResponse = response as? HTTPURLResponse {
                 transportObserver?(.response(id: traceID, response: httpResponse))
                 await onResponse?(request, httpResponse)
             }
             let stream = AsyncThrowingStream<Data, Error> { continuation in
                 let task = Task {
+                    defer { cancellation?.unregister(requestID) }
                     var buffer = Data()
                     buffer.reserveCapacity(16_384)
                     do {
                         for try await byte in bytes {
+                            try Task.checkCancellation()
                             buffer.append(byte)
                             if byte == 0x0A || buffer.count >= 1024 {
                                 transportObserver?(.bytes(id: traceID, data: buffer))
@@ -392,7 +411,11 @@ extension HanlinAISDKProviderFactory {
                         continuation.finish(throwing: error)
                     }
                 }
-                continuation.onTermination = { @Sendable _ in task.cancel() }
+                continuation.onTermination = { @Sendable _ in
+                    task.cancel()
+                    networkTask.cancel()
+                    cancellation?.unregister(requestID)
+                }
             }
             return FetchResponse(body: .stream(stream), urlResponse: response)
 #else

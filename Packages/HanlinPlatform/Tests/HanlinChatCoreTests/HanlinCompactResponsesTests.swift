@@ -1,4 +1,7 @@
 import Foundation
+#if canImport(Darwin)
+import Darwin
+#endif
 #if canImport(FoundationNetworking)
 import FoundationNetworking
 #endif
@@ -85,36 +88,120 @@ private final class ProviderRedirectState: @unchecked Sendable {
     var admissionCount: Int { lock.withLock { admissions } }
 }
 
-private final class RedirectingProviderProtocol: URLProtocol, @unchecked Sendable {
-    static let state = ProviderRedirectState()
-    static let original = URL(string: "https://provider-source.invalid/v1/chat/completions")!
-    static let destination = URL(string: "https://unadmitted-destination.invalid/stolen-request")!
+private final class LoopbackProviderRedirectServer: @unchecked Sendable {
+    let port: UInt16
+    let state = ProviderRedirectState()
+    private let listenFD: Int32
+    private let lock = NSLock()
+    private var stopped = false
 
-    override class func canInit(with request: URLRequest) -> Bool {
-        request.url == original || request.url == destination
-    }
-    override class func canonicalRequest(for request: URLRequest) -> URLRequest { request }
-    override func startLoading() {
-        Self.state.record(request)
-        if request.url == Self.original {
-            let response = HTTPURLResponse(url: Self.original, statusCode: 307, httpVersion: "HTTP/1.1",
-                headerFields: ["Location": Self.destination.absoluteString, "Content-Length": "0"])!
-            var redirect = request
-            redirect.url = Self.destination
-            // A real redirect callback is essential: merely returning a 3xx
-            // response would not exercise URLSession's automatic redirect path.
-            client?.urlProtocol(self, wasRedirectedTo: redirect, redirectResponse: response)
-            client?.urlProtocolDidFinishLoading(self)
-        } else {
-            let response = HTTPURLResponse(url: Self.destination, statusCode: 200, httpVersion: "HTTP/1.1",
-                headerFields: ["Content-Type": "text/event-stream"])!
-            client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
-            client?.urlProtocol(self, didLoad: Data("data: [DONE]\n\n".utf8))
-            client?.urlProtocolDidFinishLoading(self)
+    var endpoint: URL { URL(string: "http://127.0.0.1:\(port)/v1/chat/completions")! }
+    private var isStopped: Bool { lock.withLock { stopped } }
+
+    init(redirectTo destination: URL? = nil) throws {
+        let fd = Darwin.socket(AF_INET, SOCK_STREAM, 0)
+        guard fd >= 0 else { throw URLError(.cannotCreateFile) }
+        var ownsFD = true
+        defer { if ownsFD { Darwin.close(fd) } }
+        var address = sockaddr_in()
+        address.sin_len = UInt8(MemoryLayout<sockaddr_in>.size)
+        address.sin_family = sa_family_t(AF_INET)
+        address.sin_port = 0
+        address.sin_addr.s_addr = inet_addr("127.0.0.1")
+        let bound = withUnsafePointer(to: &address) {
+            $0.withMemoryRebound(to: sockaddr.self, capacity: 1) {
+                Darwin.bind(fd, $0, socklen_t(MemoryLayout<sockaddr_in>.size))
+            }
+        }
+        guard bound == 0, Darwin.listen(fd, 4) == 0 else { throw URLError(.cannotConnectToHost) }
+        var length = socklen_t(MemoryLayout<sockaddr_in>.size)
+        let named = withUnsafeMutablePointer(to: &address) {
+            $0.withMemoryRebound(to: sockaddr.self, capacity: 1) {
+                Darwin.getsockname(fd, $0, &length)
+            }
+        }
+        guard named == 0 else { throw URLError(.cannotConnectToHost) }
+        listenFD = fd
+        port = UInt16(bigEndian: address.sin_port)
+        ownsFD = false
+        let endpoint = self.endpoint
+        let state = self.state
+        let body = destination == nil ? Data("data: [DONE]\n\n".utf8) : Data()
+        let status = destination == nil ? "200 OK" : "307 Temporary Redirect"
+        let location = destination.map { "Location: \($0.absoluteString)\r\n" } ?? ""
+        let response = Data(("HTTP/1.1 \(status)\r\n" + location +
+            "Content-Type: text/event-stream\r\nContent-Length: \(body.count)\r\nConnection: close\r\n\r\n").utf8) + body
+
+        Thread.detachNewThread { [weak self] in
+            while self?.isStopped == false {
+                let client = Darwin.accept(fd, nil, nil)
+                guard client >= 0 else { break }
+                var timeout = timeval(tv_sec: 5, tv_usec: 0)
+                _ = Darwin.setsockopt(client, SOL_SOCKET, SO_RCVTIMEO, &timeout, socklen_t(MemoryLayout<timeval>.size))
+                _ = Darwin.setsockopt(client, SOL_SOCKET, SO_SNDTIMEO, &timeout, socklen_t(MemoryLayout<timeval>.size))
+                var noSignal: Int32 = 1
+                _ = Darwin.setsockopt(client, SOL_SOCKET, SO_NOSIGPIPE, &noSignal, socklen_t(MemoryLayout<Int32>.size))
+                if let request = Self.readRequest(client, endpoint: endpoint) {
+                    state.record(request)
+                    response.withUnsafeBytes { buffer in
+                        guard let base = buffer.baseAddress else { return }
+                        var sent = 0
+                        while sent < response.count {
+                            let count = Darwin.send(client, base.advanced(by: sent), response.count - sent, 0)
+                            if count <= 0 { break }
+                            sent += count
+                        }
+                    }
+                }
+                Darwin.shutdown(client, SHUT_RDWR)
+                Darwin.close(client)
+            }
         }
     }
-    override func stopLoading() {}
+
+    deinit { stop() }
+
+    func stop() {
+        let shouldClose = lock.withLock {
+            if stopped { return false }
+            stopped = true
+            return true
+        }
+        if shouldClose {
+            Darwin.shutdown(listenFD, SHUT_RDWR)
+            Darwin.close(listenFD)
+        }
+    }
+
+    private static func readRequest(_ fd: Int32, endpoint: URL) -> URLRequest? {
+        var data = Data()
+        var buffer = [UInt8](repeating: 0, count: 4096)
+        while data.count < 65_536 {
+            let count = Darwin.recv(fd, &buffer, buffer.count, 0)
+            guard count > 0 else { return nil }
+            data.append(contentsOf: buffer.prefix(count))
+            guard let boundary = data.range(of: Data("\r\n\r\n".utf8)) else { continue }
+            let lines = String(decoding: data[..<boundary.lowerBound], as: UTF8.self).components(separatedBy: "\r\n")
+            guard let first = lines.first else { return nil }
+            let components = first.split(separator: " ")
+            guard components.count == 3, let url = URL(string: String(components[1]), relativeTo: endpoint) else { return nil }
+            var request = URLRequest(url: url.absoluteURL)
+            request.httpMethod = String(components[0])
+            for line in lines.dropFirst() {
+                guard let colon = line.firstIndex(of: ":") else { continue }
+                let value = line[line.index(after: colon)...].trimmingCharacters(in: .whitespaces)
+                request.setValue(value, forHTTPHeaderField: String(line[..<colon]))
+            }
+            let length = Int(request.value(forHTTPHeaderField: "Content-Length") ?? "0") ?? 0
+            guard length >= 0, length <= 65_536 else { return nil }
+            if data.count < boundary.upperBound + length { continue }
+            request.httpBody = data.subdata(in: boundary.upperBound..<(boundary.upperBound + length))
+            return request
+        }
+        return nil
+    }
 }
+
 #endif
 
 @Suite("Compact Responses canonical SDK route", .serialized)
@@ -294,36 +381,94 @@ struct HanlinCompactResponsesTests {
         }
         #expect(HangingCompactResponsesProtocol.state.stopCount > 0)
     }
+
+    @Test("Cancelling one agent turn leaves another turn on the same fetch session active")
+    func cancellationIsIsolatedAcrossSharedFetchTurns() async throws {
+        HangingCompactResponsesProtocol.state.reset()
+        let session = URLSessionConfiguration.ephemeral
+        session.protocolClasses = [HangingCompactResponsesProtocol.self]
+        let transport = HanlinChatEngine(sessionConfiguration: session)
+        let fetch = await transport.makeAISDKFetch()
+        let engine = try HanlinAISDKAgentEngine(configuration: configuration(), fetch: fetch)
+        let first = try await engine.stream(messages: [.init(role: .user, text: "First")],
+            baseSystemPrompt: nil, tools: [], prepareStep: { .init(activeToolAliases: []) })
+        let second = try await engine.stream(messages: [.init(role: .user, text: "Second")],
+            baseSystemPrompt: nil, tools: [], prepareStep: { .init(activeToolAliases: []) })
+        actor Progress {
+            var ready: Set<Int> = []
+            func received(_ id: Int) { ready.insert(id) }
+        }
+        let progress = Progress()
+        let firstConsumer = Task {
+            do {
+                for try await event in first {
+                    if case .textDelta("partial") = event { await progress.received(1) }
+                }
+            } catch {}
+        }
+        let secondConsumer = Task {
+            do {
+                for try await event in second {
+                    if case .textDelta("partial") = event { await progress.received(2) }
+                }
+            } catch {}
+        }
+        defer { firstConsumer.cancel(); secondConsumer.cancel() }
+        let readyDeadline = ContinuousClock.now.advanced(by: .seconds(5))
+        while await progress.ready.count < 2, ContinuousClock.now < readyDeadline {
+            try await Task.sleep(for: .milliseconds(10))
+        }
+        try #require(await progress.ready == [1, 2])
+        try #require(HangingCompactResponsesProtocol.state.captured.count == 2)
+
+        firstConsumer.cancel()
+        await firstConsumer.value
+        let firstDeadline = ContinuousClock.now.advanced(by: .seconds(5))
+        while HangingCompactResponsesProtocol.state.stopCount < 1, ContinuousClock.now < firstDeadline {
+            try await Task.sleep(for: .milliseconds(10))
+        }
+        #expect(HangingCompactResponsesProtocol.state.stopCount == 1)
+
+        secondConsumer.cancel()
+        await secondConsumer.value
+        let secondDeadline = ContinuousClock.now.advanced(by: .seconds(5))
+        while HangingCompactResponsesProtocol.state.stopCount < 2, ContinuousClock.now < secondDeadline {
+            try await Task.sleep(for: .milliseconds(10))
+        }
+        #expect(HangingCompactResponsesProtocol.state.stopCount == 2)
+    }
+
 #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
     @Test("Provider redirects cannot bypass admission or forward credential headers")
     func redirectsCannotEscapeProviderAdmission() async throws {
         for sdkFetch in [true, false] {
-            RedirectingProviderProtocol.state.reset()
+            let destination = try LoopbackProviderRedirectServer()
+            let origin = try LoopbackProviderRedirectServer(redirectTo: destination.endpoint)
+            defer { origin.stop(); destination.stop() }
             let session = URLSessionConfiguration.ephemeral
-            session.protocolClasses = [RedirectingProviderProtocol.self]
             session.timeoutIntervalForRequest = 5
             session.timeoutIntervalForResource = 5
             let engine = HanlinChatEngine(sessionConfiguration: session)
-            var request = URLRequest(url: RedirectingProviderProtocol.original)
+            var request = URLRequest(url: origin.endpoint)
             request.httpMethod = "POST"
             request.httpBody = Data(#"{"model":"fixture","messages":[]}"#.utf8)
             request.setValue("Bearer fixture-only", forHTTPHeaderField: "Authorization")
             request.setValue("fixture-api-key", forHTTPHeaderField: "x-api-key")
             let admission: HanlinChatRequestAdmission = { _ in
-                RedirectingProviderProtocol.state.admit()
+                origin.state.admit()
             }
 
             if sdkFetch {
                 let fetch = await engine.makeAISDKFetch(requestAdmission: admission)
                 let response = try await fetch(request)
                 #expect((response.urlResponse as? HTTPURLResponse)?.statusCode == 307)
-                #expect(response.urlResponse.url == RedirectingProviderProtocol.original)
+                #expect(response.urlResponse.url == origin.endpoint)
                 if case .stream(let body) = response.body {
                     for try await _ in body {}
                 }
             } else {
                 let model = HanlinChatModelConfiguration(modelID: "gpt-4o", company: "OpenAI",
-                    apiType: "openai", endpoint: RedirectingProviderProtocol.original,
+                    apiType: "openai", endpoint: origin.endpoint,
                     apiKey: "fixture-only")
                 let stream = await engine.stream(request: request, configuration: model,
                     requestAdmission: admission)
@@ -335,12 +480,13 @@ struct HanlinCompactResponsesTests {
                 }
             }
 
-            let captured = RedirectingProviderProtocol.state.captured
+            let captured = origin.state.captured
             #expect(captured.count == 1)
-            #expect(captured.first?.url == RedirectingProviderProtocol.original)
+            #expect(destination.state.captured.isEmpty)
+            #expect(captured.first?.url == origin.endpoint)
             #expect(captured.first?.value(forHTTPHeaderField: "Authorization") == "Bearer fixture-only")
             #expect(captured.first?.value(forHTTPHeaderField: "x-api-key") == "fixture-api-key")
-            #expect(RedirectingProviderProtocol.state.admissionCount == 1)
+            #expect(origin.state.admissionCount == 1)
         }
     }
 #endif

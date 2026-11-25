@@ -152,7 +152,7 @@ public actor HanlinChatEngine {
         let traceID = UUID()
         let task = Task.detached(priority: .userInitiated) {
             let session = owner.session
-            defer { session.finishTasksAndInvalidate() }
+            defer { session.invalidateAndCancel() }
             var transportStarted = false
             var tracePending = Data()
 

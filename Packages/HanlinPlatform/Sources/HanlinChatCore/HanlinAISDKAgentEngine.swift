@@ -68,7 +68,7 @@ public actor HanlinAISDKAgentEngine {
         self.resolvesProviderFromConfiguration = true
         self.resolvedProvider = try HanlinAISDKProviderFactory.resolve(
             configuration: configuration,
-            fetch: fetch
+            fetch: fetch ?? HanlinAISDKProviderFactory.makeFetch(sessionConfiguration: .ephemeral)
         )
     }
 
@@ -250,6 +250,7 @@ public actor HanlinAISDKAgentEngine {
 
         return AsyncThrowingStream { continuation in
             let stopper = StreamStopper()
+            let cancellation = HanlinChatTransportCancellation()
             let streamSettings: CallSettings = {
                 guard resolvedProvider.descriptor.kind == .appleOnDevice else { return settings }
                 var nativeSettings = settings
@@ -258,7 +259,7 @@ public actor HanlinAISDKAgentEngine {
                 nativeSettings.abortSignal = { stopper.isCancellationRequested }
                 return nativeSettings
             }()
-            let task = Task {
+            let task = HanlinChatTransportCancellation.$current.withValue(cancellation) { Task {
                 do {
                     continuation.yield(.runStarted)
                     if let structuredResponse {
@@ -600,9 +601,10 @@ public actor HanlinAISDKAgentEngine {
                 } catch {
                     continuation.finish(throwing: error)
                 }
-            }
+            } }
             continuation.onTermination = { @Sendable _ in
                 task.cancel()
+                cancellation.cancel()
                 stopper.stop()
             }
         }
