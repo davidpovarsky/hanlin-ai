@@ -1174,6 +1174,14 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
             format: "label == %@", "Open in Sefaria")).firstMatch
         XCTAssertTrue(sourceLink.waitForExistence(timeout: 15),
             "Opening the result must show its real source detail")
+        // The destination's children can exist before controlled native
+        // navigation finishes. Keep the actual native-list hittability contract.
+        let detailReady = waitUntil(timeout: 15) {
+            app.collectionViews.allElementsBoundByIndex.contains(where: { $0.isHittable }) ||
+                app.tables.allElementsBoundByIndex.contains(where: { $0.isHittable })
+        }
+        capture(name: "modular-search-native-detail")
+        XCTAssertTrue(detailReady, "Native detail navigation must finish with an interactive list")
         let detailList = try XCTUnwrap(
             app.collectionViews.allElementsBoundByIndex.first(where: { $0.isHittable }) ??
                 app.tables.allElementsBoundByIndex.first(where: { $0.isHittable }),
