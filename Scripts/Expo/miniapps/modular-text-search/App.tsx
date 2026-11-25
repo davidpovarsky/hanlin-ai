@@ -474,7 +474,7 @@ export default function App() {
   }
 
   return <View style={{flex:1}}>
-    <Host style={{flex:1}}
+    <Host key={locale} style={{flex:1}}
       layoutDirection={locale==='he'?'rightToLeft':'leftToRight'}>
       <NavigationStack path={path} onPathChange={setPath}
         modifiers={[navigationTitle(t('appTitle')),navigationBarTitleDisplayMode('large')]}>
