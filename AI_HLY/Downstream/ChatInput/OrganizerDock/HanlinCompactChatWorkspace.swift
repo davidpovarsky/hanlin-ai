@@ -533,6 +533,11 @@ final class HanlinCompactKeyboardOwner {
     private var modelPopoverIDs: Set<UUID> = []
     private var historyPresented = false
     private var editorAccessibilityBeforeHistory: (isElement: Bool, elementsHidden: Bool)?
+    #if DEBUG || HANLIN_TESTING
+    private var accessibilityTraceSequence = 0
+    private var accessibilityTraceGeneration: UInt = 0
+    private var accessibilityTraceTask: Task<Void, Never>?
+    #endif
     private struct SearchFocus {
         weak var anchor: UIView?
         weak var window: UIWindow?
@@ -579,7 +584,78 @@ final class HanlinCompactKeyboardOwner {
     func setHistoryPresented(_ presented: Bool) {
         historyPresented = presented
         applyEditorAccessibilityOwnership()
+        #if DEBUG || HANLIN_TESTING
+        traceEditorAccessibility("history-set-immediate")
+        scheduleAccessibilityReadback()
+        #endif
     }
+
+    #if DEBUG || HANLIN_TESTING
+    /// Observational only: read the existing owned editor, without traversing
+    /// ancestors, changing accessibility, or recording draft/selection content.
+    private func traceEditorAccessibility(_ phase: String) {
+        guard ProcessInfo.processInfo.environment["HANLIN_COMPOSER_EDIT_DIAGNOSTICS"] == "1",
+              accessibilityTraceSequence < 96 else { return }
+        accessibilityTraceSequence += 1
+        var record: [String: Any] = [
+            "epoch": Date().timeIntervalSince1970,
+            "pid": ProcessInfo.processInfo.processIdentifier,
+            "phase": phase,
+            "sequence": accessibilityTraceSequence,
+            "owner": String(describing: ObjectIdentifier(self)),
+            "historyPresented": historyPresented,
+            "editorPresent": editor != nil
+        ]
+        if let editor {
+            record["editor"] = String(describing: ObjectIdentifier(editor))
+            record["nativeClass"] = String(reflecting: type(of: editor))
+            record["identifier"] = editor.accessibilityIdentifier ?? ""
+            record["isAccessibilityElement"] = editor.isAccessibilityElement
+            record["accessibilityElementsHidden"] = editor.accessibilityElementsHidden
+            record["isAccessibilityElementBlockPresent"] = editor.isAccessibilityElementBlock != nil
+            record["accessibilityElementsHiddenBlockPresent"] = editor.accessibilityElementsHiddenBlock != nil
+            record["automationElementsBlockPresent"] = editor.automationElementsBlock != nil
+            record["ordinaryChildrenCountOrUnspecified"] = editor.accessibilityElements?.count ?? -1
+            record["automationChildrenCountOrUnspecified"] = editor.automationElements?.count ?? -1
+            record["isUserInteractionEnabled"] = editor.isUserInteractionEnabled
+            record["isHidden"] = editor.isHidden
+            record["alpha"] = editor.alpha
+            record["isFirstResponder"] = editor.isFirstResponder
+            record["traits"] = editor.accessibilityTraits.rawValue
+            record["notEnabledTrait"] = editor.accessibilityTraits.contains(.notEnabled)
+            record["layoutDirection"] = editor.effectiveUserInterfaceLayoutDirection == .rightToLeft ? "rtl" : "ltr"
+            record["bounds"] = String(describing: editor.bounds)
+            if let window = editor.window {
+                record["window"] = String(describing: ObjectIdentifier(window))
+                record["windowFrame"] = String(describing: editor.convert(editor.bounds, to: window))
+            }
+        }
+        if let original = editorAccessibilityBeforeHistory {
+            record["savedOriginalIsElement"] = original.isElement
+            record["savedOriginalElementsHidden"] = original.elementsHidden
+        }
+        guard let data = try? JSONSerialization.data(withJSONObject: record, options: [.sortedKeys]),
+              let message = String(data: data, encoding: .utf8) else { return }
+        NSLog("%@", "[HANLIN_SIDEBAR_EDITOR_AX] " + message as NSString)
+    }
+
+    /// One yielded readback per visibility change or new editor attachment.
+    /// This is not a timing gate and never alters the original test or UI state.
+    private func scheduleAccessibilityReadback() {
+        guard ProcessInfo.processInfo.environment["HANLIN_COMPOSER_EDIT_DIAGNOSTICS"] == "1",
+              accessibilityTraceSequence < 96, let editor else { return }
+        accessibilityTraceGeneration &+= 1
+        let generation = accessibilityTraceGeneration
+        accessibilityTraceTask?.cancel()
+        accessibilityTraceTask = Task { @MainActor [weak self, weak editor] in
+            await Task.yield()
+            guard !Task.isCancelled, let self, let editor, self.editor === editor,
+                  self.accessibilityTraceGeneration == generation else { return }
+            self.traceEditorAccessibility("deferred-yield-readback")
+            self.accessibilityTraceTask = nil
+        }
+    }
+    #endif
 
     private func applyEditorAccessibilityOwnership() {
         guard let editor else {
@@ -616,6 +692,10 @@ final class HanlinCompactKeyboardOwner {
             // Every native update reports attachment, including active IME
             // composition. Reassert ownership before the same-editor fast path.
             applyEditorAccessibilityOwnership()
+            #if DEBUG || HANLIN_TESTING
+            traceEditorAccessibility("attached-immediate")
+            if changed { scheduleAccessibilityReadback() }
+            #endif
             guard changed else { return }
             observer?.ownershipDidChange("editor-attached")
         case .focusChanged(let focused):
