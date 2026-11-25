@@ -56,7 +56,7 @@
   "targets": 114,
   "localPackageEdgesRemaining": 0,
   "inputs": {
-    "Packages/HanlinAgentSDK/Package.swift": "bf962522344115d26a279ca02c4dbb3e81bc4265ff841a7b40ff533bcad9ecc7",
+    "Packages/HanlinAgentSDK/Package.swift": "6a56eeba43e764113ff5b01d09a50f325448c22498d059bbec553820554c7f28",
     "Packages/HanlinAppExtensionsSDK/Package.swift": "64d5594128c50035fd2dc37665d92927b45badefcc52b1ec521a5bfc8c8e3cde",
     "Packages/HanlinExpoNativeAPI/Package.swift": "1bf2b967d85c4759f94f39330b1b435148a9d3956ec6b8e645cec7dd65bec83d",
     "Packages/HanlinExpoRuntime/Package.swift": "d4157d16c1d505b408cf4b78f7ab59f53ff607ea94e0c4e51a4e2c088a691f37",
@@ -64,7 +64,7 @@
     "Packages/HanlinMiniAppsBridge/Package.swift": "579cdb6febf974d7f463aee0cd6592cdf0cfd5a4c8e53840009ff170e52b6e2e",
     "Packages/HanlinNativeScriptRuntime/Package.swift": "88a4926e884e6804246a7d077efed3837271886a9825585b1e561b4ce1576120",
     "Packages/HanlinParityMiniApp/Package.swift": "66025f0b1fb7db7db9b8a24426319b651858f3454295780ee807edd335cec90b",
-    "Packages/HanlinPlatform/Package.swift": "dab6f5e0a143a18249c2202e90c7044722dffea6506f9de9975f58c517fac7ef",
+    "Packages/HanlinPlatform/Package.swift": "cd389c9ae218de8a579601619cdb21242489066d123c87b5b7391e8ba0517dce",
     "Packages/HanlinPresentationSDK/Package.swift": "72d91889acd4745dbd5532c223ae1147387114517c4a16c434504666387c6f04",
     "Packages/HanlinProductSplit/Package.swift": "31234398119e82e9895391040f281e9c9895c2cc73f962c12f1b37489e7f5e3a",
     "Packages/HanlinQuickJS/Package.swift": "3b3e64732c71724b027fd28236f635073d02a3c208cbd9060fafaf802a47480e",
