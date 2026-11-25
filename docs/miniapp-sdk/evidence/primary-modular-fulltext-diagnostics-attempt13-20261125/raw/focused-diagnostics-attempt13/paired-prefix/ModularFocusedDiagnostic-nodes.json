@@ -1,0 +1,67 @@
+{
+  "devices" : [
+    {
+      "architecture" : "arm64",
+      "deviceId" : "1F3AB83E-F409-4B71-BD56-4669DB61627A",
+      "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+      "modelName" : "iPad Pro 13-inch (M5)",
+      "osBuildNumber" : "24A434",
+      "osVersion" : "27.0",
+      "platform" : "iOS Simulator"
+    }
+  ],
+  "testNodes" : [
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "children" : [
+                    {
+                      "name" : "XCTUnwrap failed: expected non-nil value of type \"XCUIElement\" - Expanding the API response must render a nonempty full text, not only the search snippet or metadata",
+                      "nodeType" : "Failure Message",
+                      "sourceLocation" : {
+                        "filePath" : "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+                        "lineNumber" : 1300
+                      }
+                    },
+                    {
+                      "name" : "Update the Info.plist: Support for all orientations will soon be required.",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "2m 32s",
+                  "durationInSeconds" : 152.87090003490448,
+                  "name" : "testStandaloneModularSearchLoadsActualSefariaText()",
+                  "nodeIdentifier" : "MiniAppsProductionRuntimeUITests/testStandaloneModularSearchLoadsActualSefariaText()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneModularSearchLoadsActualSefariaText",
+                  "nodeType" : "Test Case",
+                  "result" : "Failed"
+                }
+              ],
+              "name" : "MiniAppsProductionRuntimeUITests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests",
+              "nodeType" : "Test Suite",
+              "result" : "Failed"
+            }
+          ],
+          "name" : "HanlinMiniAppsUITests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests",
+          "nodeType" : "UI test bundle",
+          "result" : "Failed"
+        }
+      ],
+      "name" : "HanlinMiniApps",
+      "nodeType" : "Test Plan",
+      "result" : "Failed"
+    }
+  ],
+  "testPlanConfigurations" : [
+    {
+      "configurationId" : "1",
+      "configurationName" : "Test Scheme Action"
+    }
+  ]
+}
