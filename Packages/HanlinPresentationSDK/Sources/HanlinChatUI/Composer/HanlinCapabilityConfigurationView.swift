@@ -131,6 +131,7 @@ extension HanlinCapabilityConfigurationView where CustomPanel == Text {
 private struct HanlinCapabilityFieldView: View {
     let field: HanlinComposerField
     @Binding var configuration: HanlinJSONValue
+    @FocusState private var textIsFocused: Bool
 
     private var value: HanlinJSONValue? {
         guard case let .object(values) = configuration else { return nil }
@@ -160,6 +161,8 @@ private struct HanlinCapabilityFieldView: View {
                 LabeledContent(field.title) {
                     TextField(field.placeholder ?? field.title, text: stringValue, axis: .vertical)
                         .textFieldStyle(.roundedBorder)
+                        .focused($textIsFocused)
+                        .hanlinComposerFieldFocus(textIsFocused)
                         .accessibilityIdentifier("hanlin-capability-input-\(field.key)")
                 }
             case .toggle:
@@ -275,6 +278,7 @@ struct HanlinCapabilityNumberField: View {
     @Binding var value: HanlinJSONValue?
     var accessibilityID: String = ""
     @State private var input: HanlinCapabilityNumberInputState
+    @FocusState private var inputIsFocused: Bool
 
     init(title: String, value: Binding<HanlinJSONValue?>, accessibilityID: String = "") {
         self.title = title
@@ -294,6 +298,8 @@ struct HanlinCapabilityNumberField: View {
         LabeledContent(title) {
             TextField(title, text: text)
                 .textFieldStyle(.roundedBorder)
+                .focused($inputIsFocused)
+                .hanlinComposerFieldFocus(inputIsFocused)
                 .multilineTextAlignment(.trailing)
                 .frame(minWidth: 80, minHeight: 44)
                 .accessibilityIdentifier(accessibilityID)
