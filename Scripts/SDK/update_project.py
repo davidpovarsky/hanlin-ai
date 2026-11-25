@@ -159,13 +159,13 @@ def widget_cxx_import_flags(package):
             .replace(str(ROOT), "$(SRCROOT)") for flag in flags]
 
 
-def wire_widget_cxx_imports(text, package):
+def wire_expo_cxx_imports(text, package, host_name):
     flags = widget_cxx_import_flags(package)
     if len(flags) % 2 or any(flags[index] != "-Xcc" for index in range(0, len(flags), 2)):
         raise ValueError("Unexpected ExpoWidgets Clang import flag shape")
     objects = parse_project(text)["objects"]
     host = next(value for value in objects.values()
-                if value.get("isa") == "PBXNativeTarget" and value.get("name") == "HanlinScriptingWidgets")
+                if value.get("isa") == "PBXNativeTarget" and value.get("name") == host_name)
     for key in objects[host["buildConfigurationList"]]["buildConfigurations"]:
         current = objects[key]["buildSettings"].get("OTHER_SWIFT_FLAGS", ["$(inherited)"])
         values = shlex.split(current) if isinstance(current, str) else list(current)
@@ -387,7 +387,10 @@ def update(package=None):
     from miniapps_extensions import wire_miniapps_extensions
     # The original widget host is configured first; its real standalone
     # MiniApps counterpart is then cloned with the same import contract.
-    text = wire_widget_cxx_imports(text, package)
+    text = wire_expo_cxx_imports(text, package, "HanlinScriptingWidgets")
+    # Unit tests import the original implementation and its Expo dependencies.
+    # Preserve that producer context when Xcode compiles the native test target.
+    text = wire_expo_cxx_imports(text, package, "AI_HLYTests")
     text = wire_miniapps_extensions(text, edit_object, replace_list, insert_object)
     parse_project(text)
     return text
