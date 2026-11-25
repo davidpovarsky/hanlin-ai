@@ -1,0 +1,10 @@
+{
+  "operation": "Oracle Python3 read-only Git/source/evidence verification; saved script executed from stdin",
+  "exit_code": 0,
+  "duration_seconds": 1.15,
+  "new_tests": false,
+  "new_builds": false,
+  "new_resolutions": false,
+  "native_operations": false,
+  "script_sha256": "38ee9286df4a04d3f54428a9a2a4b0f23ed392b2ddc53f17480d9c43d2ed5648"
+}
