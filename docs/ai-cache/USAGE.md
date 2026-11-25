@@ -1,6 +1,6 @@
 # Using Hanlin cache policies and diagnostics
 
-Source review: **2026-11-25**, integration baseline `168d8cd62f30440449b192d9d66cc4cd21b38657`. The signatures below were checked against that source. The examples were not executed against a live provider. Core, native app and UI acceptance remain pending until the integration owner records their results; existing narrower evidence is listed below.
+Source and evidence review: **2026-11-25**, integration baseline `72bff522e6a13bff60c16d7a82e7c12f86abf8f9`. The public signatures and examples below remain source-reviewed; the examples were not executed against a live provider. The [final-pin native receipt](evidence/native-core-20261125/final-pin/receipt.json) records **48 passing tests** at its own exact source `04c1942bc88cd4de7deafda7dd342b9b6c401dcf`: 44 Hanlin ChatCore cases and 4 original producer cases using Swift AI SDK `abf0921c6e89e6521cc2b510ff11016b45a0ef08`. Full native app validation is **RUNNING** at this update, not a completed pass; live provider and billing acceptance remain **NOT_RUN**.
 
 See the [execution plan](PLAN_20261125.md) and [architecture/dependency decisions](CACHE_AND_OBSERVABILITY_ADR.md).
 
@@ -212,15 +212,16 @@ For totals, choose one span aggregation level and one attribute namespace. Do no
 
 ## Validation and closure boundaries
 
-This guide is **source-reviewed documentation**, not an execution receipt. At its source baseline:
+This guide is **source-reviewed documentation**, not an execution receipt. The following receipts retain their original source/dependency identities; this document does not relabel an earlier run as a run of its own commit. The acceptance snapshot is:
 
 | Evidence | What it establishes |
 | --- | --- |
-| [Local cache/accounting receipt](evidence/local-cache-20261125/receipt.json) | Previously executed 18-case native proof: 11 local-cache lifecycle cases and 7 accounting cases, with exact source/dependency hashes. Reuse requires unchanged inputs. |
-| [Active assistant JavaScript summary](evidence/active-assistant-js-20261125/summary.json) | Previously executed 15 JavaScript contract tests plus generation/drift checks. It explicitly does not certify a native app build. |
-| [Canonical graph receipt](evidence/canonical-graph-20261125/receipt.json) | Recorded generator/project-update and check commands for its source SHA. It is not a full app build or a provider call. |
-| Core/provider/Google lifecycle/OTel tests and app UI | Await the integration owner's exact-source native acceptance receipts. Authored tests or successful compilation alone are not a test pass. |
-| Live provider cache hits, Google resource receipts, storage costs or savings | Not executed by this documentation work. Requires an authorized account and actual provider usage/billing evidence. |
+| [Final-pin native core/producer receipt](evidence/native-core-20261125/final-pin/receipt.json) | **EXECUTED_PASS:** 48 tests at `04c1942bc88cd4de7deafda7dd342b9b6c401dcf`, including 9 Google lifecycle cases, 6 original OpenTelemetry bridge cases, policy/preset/mutation/schema/transport cases, and 4 original producer cases. Uses the published `abf0921c` SDK pin; does not establish a full app build. |
+| [Local cache/accounting receipt](evidence/local-cache-20261125/receipt.json) and [reuse assessment](evidence/reuse-receipt-20261125.json) | **REUSED_VERIFIED_PASS:** 11 local-cache lifecycle and 7 accounting cases. The assessment records unchanged production/test bytes and the original LRUCache 1.3.0 dependency; its scope is the recorded proof closure. |
+| [Active assistant JavaScript summary](evidence/active-assistant-js-20261125/summary.json) and [reuse assessment](evidence/reuse-receipt-20261125.json) | **REUSED_VERIFIED_PASS:** 15 JavaScript contract tests plus generation/drift checks for the verified facade/compiler closure. It does not certify native Host routing or an app build. |
+| [Canonical graph tests](evidence/canonical-graph-20261125/graph-tests-receipt.json) and [final-pin preparation](evidence/native-preparation-20261125/final-pin-stage/receipt.json) | **74 graph tests passed** (55 SDK graph + 19 project graph). Final-pin generator/project checks and the core step exited 0. The preparation receipt also preserves a separate failed runtime-host step; it must not be treated as an overall successful app build. |
+| Full native app and app-level persistence/Host validation | **RUNNING** under the integration owner at this update. No completed app acceptance is claimed. Core tests, source inspection and authored test declarations cannot replace that result. |
+| Live provider cache hits, Google creation/use/cleanup receipts, storage costs or savings | **NOT_RUN.** Requires an authorized account and actual provider usage/billing evidence. |
 
 The public Google lifecycle cases live in `HanlinGoogleCachedContentTests.swift`; scoped generation/conflict cases live in `HanlinPromptCacheTests.swift`. Preset and agent inheritance cases live in `HanlinPromptCachePresetTests.swift` and `HanlinPromptCachePolicyMutationTests.swift`. Original producer span assertions and the OTel bridge tests cover separate boundaries.
 
