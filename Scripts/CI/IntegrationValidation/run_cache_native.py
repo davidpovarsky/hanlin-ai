@@ -120,7 +120,8 @@ def main():
         status="PASS" if result.returncode == 0 and unchanged else "FAILED")
     matches = re.findall(r"Test run with (\d+) tests.*?passed", log.read_text())
     if matches:
-        receipt["swift_testing_passed"] = int(matches[-1])
+        receipt["swift_testing_process_counts"] = [int(count) for count in matches]
+        receipt["swift_testing_passed"] = sum(receipt["swift_testing_process_counts"])
     lock = proof / "Package.resolved"
     if lock.exists():
         receipt["resolved_pins"] = json.loads(lock.read_text())["pins"]
