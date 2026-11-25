@@ -107,7 +107,7 @@ let cachedConfiguration = contentConfiguration(
 )
 let engine = try HanlinAISDKAgentEngine(
     configuration: cachedConfiguration,
-    fetch: HanlinChatEngine().makeAISDKFetch()
+    fetch: await HanlinChatEngine().makeAISDKFetch()
 )
 let events = try await engine.stream(
     messages: [.init(role: .user, text: question)],
@@ -165,7 +165,7 @@ For this simple content-only example, returning to implicit caching starts with 
 ```swift
 let fallbackEngine = try HanlinAISDKAgentEngine(
     configuration: uncachedConfiguration,
-    fetch: HanlinChatEngine().makeAISDKFetch()
+    fetch: await HanlinChatEngine().makeAISDKFetch()
 )
 let fallbackEvents = try await fallbackEngine.stream(
     messages: [
@@ -199,7 +199,7 @@ import OpenTelemetrySdk
 let tracer = HanlinOpenTelemetryTracer(exporter: configuredExporter)
 let tracedEngine = try HanlinAISDKAgentEngine(
     configuration: cachedConfiguration,
-    fetch: HanlinChatEngine().makeAISDKFetch(),
+    fetch: await HanlinChatEngine().makeAISDKFetch(),
     telemetry: tracer.telemetrySettings()
 )
 ```
