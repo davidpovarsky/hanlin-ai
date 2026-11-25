@@ -6,6 +6,7 @@ import XCTest
 final class MiniAppsNativeScriptPackageWindowUITests: XCTestCase {
     private let app = XCUIApplication(bundleIdentifier: "com.itorah.hanlinminiapps")
     private var openedRequests: [NativeScriptWindowUIInteractions.Request] = []
+    private var nativeProcessID: String?
     private static var installedPackages: Set<String> = []
     private let requests = [
         "alpha": "1e23b001-6a2c-4c0f-b001-202611240011",
@@ -114,6 +115,9 @@ final class MiniAppsNativeScriptPackageWindowUITests: XCTestCase {
         if !openedRequests.contains(where: { $0.id == id }) {
             openedRequests.append(.init(id: id, title: "NativeScript package " + name))
         }
+        try NativeScriptWindowUIInteractions.assertSameProcess(
+            in: app, expected: &nativeProcessID, requestID: id
+        )
         assertLabel(window.staticTexts["hanlin-ns-window-request"],
                     equals: try XCTUnwrap(UUID(uuidString: id)).uuidString, timeout: 90)
         let package = (name == "alpha" || name == "gamma") ? "alpha" : "beta"

@@ -6,6 +6,7 @@ import XCTest
 final class MiniAppsNativeScriptWindowUITests: XCTestCase {
     private let app = XCUIApplication(bundleIdentifier: "com.itorah.hanlinminiapps")
     private var openedRequests: [NativeScriptWindowUIInteractions.Request] = []
+    private var nativeProcessID: String?
     private static var fixtureInstalled = false
     private let packageName = "Hanlin NativeScript Window Factory E2E"
     private let requests = [
@@ -111,6 +112,9 @@ final class MiniAppsNativeScriptWindowUITests: XCTestCase {
         if !openedRequests.contains(where: { $0.id == id }) {
             openedRequests.append(.init(id: id, title: "NativeScript window " + name))
         }
+        try NativeScriptWindowUIInteractions.assertSameProcess(
+            in: app, expected: &nativeProcessID, requestID: id
+        )
         let requestID = try XCTUnwrap(UUID(uuidString: id))
         assertLabel(window.staticTexts["hanlin-ns-window-request"], equals: requestID.uuidString, timeout: 90)
         return window
@@ -215,6 +219,33 @@ enum NativeScriptWindowUIInteractions {
     struct Request {
         let id: String
         let title: String
+    }
+
+    static func assertSameProcess(
+        in app: XCUIApplication, expected: inout String?, requestID: String
+    ) throws {
+        // Read the public accessibility description, not a private process API.
+        // The e1a25038 original console proved that app.open restarted the SUT
+        // between requests; that must fail these concurrent-window scenarios.
+        let header = String(app.debugDescription.split(separator: "\n", maxSplits: 1).first ?? "")
+        let pattern = try NSRegularExpression(pattern: "^Attributes: Application, .*?, pid: ([0-9]+),")
+        let match = try XCTUnwrap(pattern.firstMatch(
+            in: header, range: NSRange(header.startIndex..<header.endIndex, in: header)
+        ), "The actual accessibility snapshot must identify the application process.")
+        let range = try XCTUnwrap(Range(match.range(at: 1), in: header))
+        let current = String(header[range])
+        XCTContext.runActivity(named: "Native window process for request " + requestID) { activity in
+            let evidence = XCTAttachment(string: header)
+            evidence.name = "native-window-process-" + requestID
+            evidence.lifetime = .keepAlways
+            activity.add(evidence)
+        }
+        if let expected {
+            XCTAssertEqual(current, expected,
+                           "Every request and refocus in this concurrency scenario must keep the original application process alive.")
+        } else {
+            expected = current
+        }
     }
 
     static func replaceContents(of input: XCUIElement, with value: String) {
