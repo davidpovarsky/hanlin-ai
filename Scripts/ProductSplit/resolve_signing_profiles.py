@@ -21,7 +21,7 @@ import urllib.request
 import uuid
 
 from audit_release_resources import (
-    ROLES, ROOT, AppleReadFailure, apple_get, decode, evaluate_profile, exact_bundles,
+    ROLES, ROOT, AppleReadFailure, apple_get, decode, evaluate_profile, exact_bundles, product_roles,
 )
 
 
@@ -223,13 +223,40 @@ def resolve_local_distribution_profiles(certificate_sha, private_directory, fact
     Existing candidates are assessed first; each role has at most one creation
     attempt per call. An uncertain POST is never retried by this helper.
     """
+    return _resolve_local_profiles(
+        [row for row in ROLES if row[0] in {"ai", "widgets"}],
+        certificate_sha, private_directory, facts, source_sha=source_sha,
+        build_number=build_number, source_root=source_root,
+        get=get, create=create, decode_content=decode_content,
+    )
+
+
+def resolve_local_miniapps_profiles(certificate_sha, private_directory, facts, *,
+                                    source_sha, build_number, source_root=ROOT,
+                                    get=apple_get, create=create_profile,
+                                    decode_content=decode_cms):
+    """Resolve the original MiniApps main app and all four source extensions.
+
+    Call only after actual App Group/iCloud associations have been reconciled.
+    Enabling a capability alone is not evidence that a profile grants its data.
+    Every source entitlement file is loaded before any Apple request is made.
+    """
+    return _resolve_local_profiles(
+        product_roles("miniapps"), certificate_sha, private_directory, facts,
+        source_sha=source_sha, build_number=build_number, source_root=source_root,
+        get=get, create=create, decode_content=decode_content,
+    )
+
+
+def _resolve_local_profiles(roles, certificate_sha, private_directory, facts, *,
+                            source_sha, build_number, source_root,
+                            get, create, decode_content):
     local_release_context(source_sha, build_number)
     team = os.environ["APPLE_TEAM_ID"]
     sources = []
-    for role, bundle, _, source in ROLES:
-        if role in {"ai", "widgets"}:
-            content = (Path(source_root) / source).read_bytes()
-            sources.append((role, bundle, source, content, plistlib.loads(content)))
+    for role, bundle, _, source in roles:
+        content = (Path(source_root) / source).read_bytes()
+        sources.append((role, bundle, source, content, plistlib.loads(content)))
     certificate_id = original_certificate_id(get("/v1/certificates", {
         "filter[certificateType]": "DISTRIBUTION,IOS_DISTRIBUTION",
         "fields[certificates]": "certificateType,certificateContent", "limit": 200,

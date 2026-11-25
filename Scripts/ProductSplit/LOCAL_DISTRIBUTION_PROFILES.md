@@ -108,6 +108,27 @@ available to the coordinator after full validation and preserves existing cache
 entries. Main/Widgets target overlays and export mappings must use the actual
 verified profile names or UUIDs; preserve the other target mappings.
 
+## Resolve the complete MiniApps product
+
+The separate `resolve_local_miniapps_profiles()` wrapper takes the same arguments
+and resolves the MiniApps main app plus Widgets, Share, Translation Provider, and
+Notification Service. It derives that family from the original extension catalog;
+it does not resolve or alter the AI main/Widgets pair. The existing
+`resolve_local_distribution_profiles()` scope stays unchanged.
+
+Use it only after the coordinator has verified the actual group and container
+assignments. All five original entitlement plists are loaded before any Apple
+request. Every returned profile must cover its full source entitlement dictionary,
+including both App Groups. MiniApps Widgets also retains the original iCloud,
+HealthKit, HomeKit, and shared Keychain requirements. A missing file, incompatible
+profile, or unverified newly created profile fails the operation; the main app
+profile cannot stand in for an extension.
+
+The canonical `product_roles("miniapps")` set also drives export mapping and final
+IPA signature/profile coverage. A local release must retain all five roles through
+archive, export, and verification. This helper prepares profiles; it does not
+establish that an archive, upload, or TestFlight processing has succeeded.
+
 ## Portable regression command
 
 Run from `Scripts/ProductSplit` with no network or Apple credentials:
@@ -115,6 +136,7 @@ Run from `Scripts/ProductSplit` with no network or Apple credentials:
 ```bash
 PYTHONDONTWRITEBYTECODE=1 python3 -m unittest -v \
   test_local_distribution_profiles \
+  test_local_miniapps_profiles \
   test_signing_profiles.ProfileResolutionTests \
   test_signing_profiles.ProfileCacheTests
 ```
