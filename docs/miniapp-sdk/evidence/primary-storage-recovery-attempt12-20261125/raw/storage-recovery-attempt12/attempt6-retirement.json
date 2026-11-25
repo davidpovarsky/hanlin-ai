@@ -1,0 +1,48 @@
+{
+  "startedAt": "2026-11-25T04:03:26.945536+00:00",
+  "attempt": 6,
+  "uid": "3797CDB6-6A26-41AF-8E80-11A011B62F80",
+  "source": "bd6da170da7936fe3c5353ddaf8b25c97477a380",
+  "candidateSHA256": "f790f3e6f2559ff52d611fe8dbcb6751a7815848af2263db8c124e4657af09ba",
+  "freeBytesBefore": 6245015552,
+  "candidateLogicalBytes": 4905066496,
+  "command": [
+    "xcrun",
+    "simctl",
+    "delete",
+    "3797CDB6-6A26-41AF-8E80-11A011B62F80"
+  ],
+  "authorization": "Root explicit named6 then5 only as measured necessary; standing user task cleanup",
+  "preserved": [
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired-product-attempt6/AIBuild.xcresult",
+      "duKiB": 852,
+      "InfoPlistExists": true,
+      "topLevel": [
+        "Data",
+        "Info.plist"
+      ]
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired-product-attempt6/MiniBuild.xcresult",
+      "duKiB": 588,
+      "InfoPlistExists": true,
+      "topLevel": [
+        "Data",
+        "Info.plist"
+      ]
+    }
+  ],
+  "status": "RETIRED",
+  "exitCode": 0,
+  "stdout": "",
+  "stderr": "",
+  "elapsedSeconds": 0.19744983299460728,
+  "finishedAt": "2026-11-25T04:03:27.143719+00:00",
+  "registeredAfter": false,
+  "deviceExistsAfter": false,
+  "dfAfter": "Filesystem   1024-blocks      Used Available Capacity iused    ifree %iused  Mounted on\n/dev/disk3s5   482797652 432750792   6162084    99% 5813376 61620840    9%   /System/Volumes/Data\n",
+  "freeBytesAfter": 6309974016,
+  "criticalEvidenceUnchanged": true,
+  "fullResultsRetained": true
+}

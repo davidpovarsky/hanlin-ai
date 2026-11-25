@@ -1,0 +1,50 @@
+{
+  "createdAtUTC": "2026-11-25T04:37:17.128517+00:00",
+  "scope": "Source and original portable TypeScript validation only; native acceptance NOT_RUN",
+  "authorBase": "c58bcb9f495edc57a931670342bd3cbeb4f446fe",
+  "canonicalEquivalentBase": "a840f1b9d9cf136079b3d6cfec201bd08e070d38",
+  "sourceChanges": [
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/HostServicesProbe.tsx",
+      "beforeSHA256": "108eac3bf0d3b908089b37ad2175de8eb3be2cf1a81d601a649b02fe48a39801",
+      "afterSHA256": "d0791fba83acabe38ee0bd1d63a128540c7be2976de774a157f19dac97f7376f",
+      "afterBytes": 9422
+    },
+    {
+      "path": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+      "beforeSHA256": "39ed9a15efb3ede5dbb014aaf3218c1d102b9178a14e454478c3ecbdf5ea414c",
+      "afterSHA256": "472a3cab5f3b57b5572fb81bccc78a19fe02c731af322337d7b4c9a8ff9b5149",
+      "afterBytes": 81523
+    }
+  ],
+  "members": [
+    {
+      "path": "README.md",
+      "bytes": 1604,
+      "sha256": "4bf19ddf32c574d6b140e14ccd38b275c9f2e4cefbd75c8a7c3d677da05db72b"
+    },
+    {
+      "path": "source.diff.gz",
+      "bytes": 2632,
+      "sha256": "8deac4dbd595c8f04c00e91672dea0d6335a8a69270692ead08c459f65e65939"
+    },
+    {
+      "path": "typecheck-receipt.json",
+      "bytes": 902,
+      "sha256": "8de2cbfa476eb41cafb9c471bf7828ed5dcdddaaadf863beea3b3c9e11f90b97"
+    },
+    {
+      "path": "typecheck.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "nativeAcceptance": "NOT_RUN",
+  "pairedSelection": "unchanged original 25 + 27",
+  "peerReview": "Read-only review by native_execution; no source mutation or native operation",
+  "losslessSourceDiff": {
+    "path": "source.diff.gz",
+    "decodedSHA256": "6d16aaf2ed3c0bf40001861b79eedcc944f538d0ae9c04b0e10c108905a35e25",
+    "decodedBytes": 8098
+  }
+}

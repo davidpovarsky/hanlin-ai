@@ -965,6 +965,49 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
         expectAdapterText("HOST_SERVICES_FILES_PASS")
         tapAdapterButton("Run Host Services Runtime")
         expectAdapterText("HOST_SERVICES_RUNTIME_PASS")
+        tapAdapterButton("Run All Host Runtimes")
+        let allRuntimeStatus = app.descendants(matching: .any).matching(NSPredicate(
+            format: "label == %@ OR label BEGINSWITH %@",
+            "HOST_SERVICES_ALL_RUNTIMES_PASS", "HOST_SERVICES_FAILED:all-runtimes:"
+        )).firstMatch
+        // This additional five-backend check retains the original JSC assertion
+        // above and the original whole-case allowance. Cold Host preparation is
+        // followed by actual original Node, TS, Python, JSC and Shell execution.
+        XCTAssertTrue(allRuntimeStatus.waitForExistence(timeout: 120))
+        XCTAssertEqual(allRuntimeStatus.label, "HOST_SERVICES_ALL_RUNTIMES_PASS")
+        let receiptPrefix = "HOST_SERVICES_ALL_RUNTIMES_RECEIPTS:"
+        let receiptText = app.descendants(matching: .any).matching(
+            NSPredicate(format: "label BEGINSWITH %@", receiptPrefix)).firstMatch
+        XCTAssertTrue(receiptText.waitForExistence(timeout: 10))
+        let receiptData = Data(receiptText.label.dropFirst(receiptPrefix.count).utf8)
+        let evidence = try XCTUnwrap(try JSONSerialization.jsonObject(with: receiptData) as? [String: Any])
+        let nonce = try XCTUnwrap(evidence["nonce"] as? String)
+        XCTAssertFalse(nonce.isEmpty)
+        let rows = try XCTUnwrap(evidence["results"] as? [[String: Any]])
+        let kinds = ["node", "typeScript", "localPython", "javaScriptCore", "shell"]
+        XCTAssertEqual(rows.count, kinds.count)
+        var executionIDs = Set<String>()
+        for (expectedKind, row) in zip(kinds, rows) {
+            let kind = try XCTUnwrap(row["kind"] as? String)
+            XCTAssertEqual(kind, expectedKind)
+            let result = try XCTUnwrap(row["result"] as? [String: Any])
+            let executionID = try XCTUnwrap(result["executionID"] as? String)
+            XCTAssertNotNil(UUID(uuidString: executionID))
+            XCTAssertTrue(executionIDs.insert(executionID).inserted)
+            XCTAssertEqual(result["exitCode"] as? Int, 0)
+            XCTAssertEqual(result["didTimeOut"] as? Bool, false)
+            XCTAssertEqual(result["wasCancelled"] as? Bool, false)
+            XCTAssertEqual(result["outputWasTruncated"] as? Bool, false)
+            let duration = try XCTUnwrap(result["durationMilliseconds"] as? Double)
+            XCTAssertTrue(duration.isFinite && duration >= 0)
+            let stdout = try XCTUnwrap(result["stdout"] as? String)
+            XCTAssertEqual(stdout.trimmingCharacters(in: .whitespacesAndNewlines),
+                           nonce + ":" + kind + ":42")
+        }
+        let runtimeAttachment = XCTAttachment(data: receiptData, uniformTypeIdentifier: "public.json")
+        runtimeAttachment.name = "expo-original-five-runtime-receipts"
+        runtimeAttachment.lifetime = .keepAlways
+        add(runtimeAttachment)
         tapAdapterButton("Read Host Live Activity Status")
         let activityStatus = app.descendants(matching: .any).matching(NSPredicate(
             format: "label BEGINSWITH 'HOST_SERVICES_ACTIVITY_READS_PASS:enabled='"
@@ -1284,10 +1327,13 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
         let noText = "No text is available for this version."
         XCTAssertFalse(detailList.staticTexts[noText].firstMatch.exists)
 
+        // A complete Hebrew verse can be shorter than 40 grapheme clusters.
+        // Its source-scoped API body, native disclosure and real word content
+        // establish a rendered response without an English-length assumption.
         func visibleFullText() -> XCUIElement? {
             guard textBody.exists && textBody.isHittable else { return nil }
             let label = textBody.label.trimmingCharacters(in: .whitespacesAndNewlines)
-            guard label.count >= 40 && label.split(whereSeparator: { $0.isWhitespace }).count >= 6 &&
+            guard label.split(whereSeparator: { $0.isWhitespace }).count >= 6 &&
                 label != noText && !label.hasPrefix("Language,") && !label.hasPrefix("License,") else {
                 return nil
             }

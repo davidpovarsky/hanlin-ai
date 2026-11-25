@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "createdAtUTC": "2026-11-25T04:23:09.427172+00:00",
+  "status": "TEST_ORACLE_CORRECTION_NATIVE_RECHECK_PENDING",
+  "failedSourceCommit": "42e34eff615a6d599ddfd01ea9382d920b5f9a5c",
+  "firstPacketSHA256": "58d3bc087263a29c1274f03d24112dee421b2ce36cb55f608fe1200dcaf2ce99",
+  "firstPacketMembersVerified": 14,
+  "actualCase": {
+    "passed": 0,
+    "failed": 1,
+    "skipped": 0,
+    "seconds": 152.871,
+    "failureLine": 1300
+  },
+  "observed": {
+    "accessibilityPath": "focused-diagnostics-attempt13/ModularFocusedDiagnostic-attachments/E1DBEE7A-591E-413A-BDA6-F0132F1FF361.txt",
+    "accessibilitySHA256": "7bf9b621f68831ba2f873c923ef48ae3c1207e0c9a1cfcf26d7a2905da3be02f",
+    "bodyLine": "                                StaticText, 0x115029a40, {{20.0, 348.0}, {992.0, 52.0}}, identifier: 'modular-full-text-body-Genesis 1:1 (The Holy Scriptures: A New Translation (JPS 1917) [en]):he-0', label: 'בְּרֵאשִׁ֖ית בָּרָ֣א אֱלֹהִ֑ים אֵ֥ת הַשָּׁמַ֖יִם וְאֵ֥ת הָאָֽרֶץ׃'",
+    "bodyText": "בְּרֵאשִׁ֖ית בָּרָ֣א אֱלֹהִ֑ים אֵ֥ת הַשָּׁמַ֖יִם וְאֵ֥ת הָאָֽרֶץ׃",
+    "unicodeSegmentation": {
+      "graphemes": 35,
+      "scalars": 65,
+      "words": 7,
+      "node": "v24.22.0"
+    },
+    "oldLengthFloorSatisfied": false,
+    "retainedSixWordRequirementSatisfied": true,
+    "nativeHittabilityAfterCorrection": "NOT_EXECUTED"
+  },
+  "sourceChange": {
+    "path": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+    "before": {
+      "bytes": 78468,
+      "sha256": "84ede1a7dbafac2415c88cb276d2b04c0c0bce0a139f704b7737bcd307dd4ad8"
+    },
+    "after": {
+      "bytes": 78682,
+      "sha256": "39ed9a15efb3ede5dbb014aaf3218c1d102b9178a14e454478c3ecbdf5ea414c"
+    }
+  },
+  "preserved": [
+    "same actual newly-returned API version and source-scoped body ID",
+    "real native disclosure state/content transitions",
+    "isHittable",
+    "six-word content requirement",
+    "noVersionText and metadata-prefix rejection",
+    "language/source metadata and attachments",
+    "all case/command/wait timeouts",
+    "App and original SDK/Host implementation"
+  ],
+  "independentSourceReview": "sdk_reconcile confirmed bounded language-dependent floor correction before edit"
+}
