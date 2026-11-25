@@ -1,0 +1,81 @@
+{
+  "active_lockfiles": [
+    "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+    "Packages/HanlinAgentSDK/Package.resolved",
+    "Packages/HanlinParityMiniApp/Package.resolved",
+    "Packages/HanlinPlatform/Package.resolved",
+    "Packages/HanlinSefariaMiniApp/Package.resolved",
+    "Packages/HanlinSkillFormat/Package.resolved",
+    "Packages/HanlinSwiftUIBridgeGenerator/Package.resolved",
+    "Packages/HanlinTextStudioMiniApp/Package.resolved",
+    "Packages/HanlinWikipediaMiniApp/Package.resolved"
+  ],
+  "graph": {
+    "deployment_target": "27.0",
+    "miniapps_products": [
+      "HanlinA2UI",
+      "HanlinAgentActivityCore",
+      "HanlinExpoNativeAPI",
+      "HanlinExpoRuntime",
+      "HanlinExpoWidgetsOriginal",
+      "HanlinExtensionContracts",
+      "HanlinLocalization",
+      "HanlinMiniAppCore",
+      "HanlinMiniAppsBridge",
+      "HanlinMiniAppsPicker",
+      "HanlinMiniAppsUI",
+      "HanlinNativeScriptRuntime",
+      "HanlinParityMiniApp",
+      "HanlinPlatformContracts",
+      "HanlinPresentationKit",
+      "HanlinProductSplit",
+      "HanlinScriptCompiler",
+      "HanlinScriptContracts",
+      "HanlinScriptDeviceServices",
+      "HanlinScriptExtensions",
+      "HanlinScriptStore",
+      "HanlinScriptUI",
+      "HanlinScriptingApplicationRuntime",
+      "HanlinScriptingSDK",
+      "HanlinSefariaMiniApp",
+      "HanlinTextStudioMiniApp",
+      "HanlinTranslationUI",
+      "HanlinWidgetUI",
+      "HanlinWikipediaMiniApp",
+      "IOSSystemLite",
+      "SWCompression",
+      "TorahLibraryKit",
+      "ZIPFoundation"
+    ],
+    "miniapps_source_groups": [
+      "HanlinMiniAppsApp"
+    ],
+    "signed_or_install_proof": false
+  },
+  "native_execution": "NOT_RUN",
+  "preparation_note": "Canonical worktree was sparse without AI_HLY; materialized exact original source before filesystem graph validation.",
+  "sdk_linkage": {
+    "ai_products": [
+      "HanlinApplication"
+    ],
+    "apple_compilation": "NOT_RUN",
+    "host_sources": [
+      "AI_HLY.swift"
+    ],
+    "linked_application_products": {
+      "AI_HLYTests": [
+        "HanlinApplication"
+      ],
+      "HanlinApp": [
+        "HanlinApplication"
+      ]
+    },
+    "miniapps_agent_products": [],
+    "native_adapter": "Model/HanlinAppleModelCatalogAdapter.swift",
+    "sdk_application_sources": 523,
+    "unit_test_products": [
+      "HanlinApplication"
+    ]
+  },
+  "source": "c92c3f904872b37287861dfafa9cc668d5dc44c3"
+}

@@ -1,0 +1,20 @@
+{
+  "head": "c92c3f904872b37287861dfafa9cc668d5dc44c3",
+  "parents": "4e921b9517f2fc28fcaebcb2ba7441ab1fb46a90 5b69bbb52013686922efa7c4e7d9f2d44b774f94",
+  "tree": "3b67d31f3ecb61af02612dc8188a812a2075f62d",
+  "status": "",
+  "incomingTreeDifference": "A\tdocs/agent-sdk/otzaria-integration-20261125/README.md\nA\tdocs/agent-sdk/otzaria-integration-20261125/check.stderr.log\nA\tdocs/agent-sdk/otzaria-integration-20261125/check.stdout.log\nA\tdocs/agent-sdk/otzaria-integration-20261125/generate.stderr.log\nA\tdocs/agent-sdk/otzaria-integration-20261125/generate.stdout.log\n",
+  "incomingWhitespacePreserved": {
+    "exit": 2,
+    "bytes": 199943,
+    "sha256": "43bf13ae6c4180172ba73fec00edd5821082fbcad2d54fd21026ef424722411e"
+  },
+  "newDeltaWhitespace": "PASS",
+  "priorEvidenceExact": [
+    "docs/agent-sdk/otzaria-integration-20261125/README.md",
+    "docs/agent-sdk/otzaria-integration-20261125/check.stderr.log",
+    "docs/agent-sdk/otzaria-integration-20261125/check.stdout.log",
+    "docs/agent-sdk/otzaria-integration-20261125/generate.stderr.log",
+    "docs/agent-sdk/otzaria-integration-20261125/generate.stdout.log"
+  ]
+}
