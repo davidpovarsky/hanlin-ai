@@ -1,0 +1,168 @@
+{
+  "scope": "Native artifact source input comparison only; no restore/build/export/publish executed. Fresh final-source Host/SDK support still required.",
+  "candidateFunctionalSource": "4c9c1451f10e8c1a71c5dc07bfe3b858d2f37f51",
+  "foreignPublishedSource": "1812bff50571c9907d15cd8b4bfbe4874be24756",
+  "inputCount": 16,
+  "allInputsEqual": true,
+  "inputs": [
+    {
+      "path": "RuntimeDependencies.lock.json",
+      "candidateSHA256": "6cdbc18a474febbfc912b35ecbf5b0b55438a6a3e6daf2c33a43792cd04bd50a",
+      "foreignSourceSHA256": "6cdbc18a474febbfc912b35ecbf5b0b55438a6a3e6daf2c33a43792cd04bd50a",
+      "equal": true
+    },
+    {
+      "path": "Scripts/Expo/dependency-lock.json",
+      "candidateSHA256": "b9e3ad6d863e3e5136ad93924ce4edcb37da87578b113523640110af347eec65",
+      "foreignSourceSHA256": "b9e3ad6d863e3e5136ad93924ce4edcb37da87578b113523640110af347eec65",
+      "equal": true
+    },
+    {
+      "path": "Scripts/Expo/prepare-ios-dependencies.mjs",
+      "candidateSHA256": "97069b0e1ec619d906f4b6d196e38e6527790c3661f798abcca6258dacf18163",
+      "foreignSourceSHA256": "97069b0e1ec619d906f4b6d196e38e6527790c3661f798abcca6258dacf18163",
+      "equal": true
+    },
+    {
+      "path": "Scripts/Expo/build-original-expo-source.mjs",
+      "candidateSHA256": "855a9a79f1c27a2ba2f3796cf784ebb66a4a48df928b2ea8f6ca1ffd9e886c03",
+      "foreignSourceSHA256": "855a9a79f1c27a2ba2f3796cf784ebb66a4a48df928b2ea8f6ca1ffd9e886c03",
+      "equal": true
+    },
+    {
+      "path": "Scripts/Expo/build-original-widget-runtime.mjs",
+      "candidateSHA256": "5928bb12ed2fd2f6b2ecfeb6d8fc309d46e5837c58dcc4272d73af13434eb549",
+      "foreignSourceSHA256": "5928bb12ed2fd2f6b2ecfeb6d8fc309d46e5837c58dcc4272d73af13434eb549",
+      "equal": true
+    },
+    {
+      "path": "Scripts/Expo/package-lock.json",
+      "candidateSHA256": "9ee1d2babe6266148d8f969b25f542c00897c569969e5aae6dd6f744e2a0c53c",
+      "foreignSourceSHA256": "9ee1d2babe6266148d8f969b25f542c00897c569969e5aae6dd6f744e2a0c53c",
+      "equal": true
+    },
+    {
+      "path": "Scripts/Expo/babel.config.cjs",
+      "candidateSHA256": "62581fd5caf7b97cb36290093b7bbf7103e1c1b1300e0e11a1b3eaaf96c998ba",
+      "foreignSourceSHA256": "62581fd5caf7b97cb36290093b7bbf7103e1c1b1300e0e11a1b3eaaf96c998ba",
+      "equal": true
+    },
+    {
+      "path": "Scripts/ExpoNativeAPI/dependency-lock.json",
+      "candidateSHA256": "08657d657c1f4efa36149075b632cfc75685fc1ca9af0397fc1168fe9253b768",
+      "foreignSourceSHA256": "08657d657c1f4efa36149075b632cfc75685fc1ca9af0397fc1168fe9253b768",
+      "equal": true
+    },
+    {
+      "path": "Scripts/ExpoNativeAPI/prepare-ios-dependencies.mjs",
+      "candidateSHA256": "950a2eb6e8713bdd1a395eee6df1779d91f63864af95c33658efa6d090676f66",
+      "foreignSourceSHA256": "950a2eb6e8713bdd1a395eee6df1779d91f63864af95c33658efa6d090676f66",
+      "equal": true
+    },
+    {
+      "path": "Scripts/ExpoNativeAPI/multiscene-patch.mjs",
+      "candidateSHA256": "cafa8348a764155789169c411eb59555c6c7a2d3ef363b870e36f8d6b52c7cbd",
+      "foreignSourceSHA256": "cafa8348a764155789169c411eb59555c6c7a2d3ef363b870e36f8d6b52c7cbd",
+      "equal": true
+    },
+    {
+      "path": "Scripts/NativeScript/dependency-lock.json",
+      "candidateSHA256": "8499976a4ea0a069ed654b09b597d8fabede4bbbfb62227451a68707b851e8e5",
+      "foreignSourceSHA256": "8499976a4ea0a069ed654b09b597d8fabede4bbbfb62227451a68707b851e8e5",
+      "equal": true
+    },
+    {
+      "path": "Scripts/NativeScript/package-lock.json",
+      "candidateSHA256": "16f569f4bfa6f8806cfe72449866a0dc9a9331f33d2c67170d5292455c48b60b",
+      "foreignSourceSHA256": "16f569f4bfa6f8806cfe72449866a0dc9a9331f33d2c67170d5292455c48b60b",
+      "equal": true
+    },
+    {
+      "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+      "candidateSHA256": "b5114a3be1fc846e288128af08cef9f38b0cac8e34923780325c4edc2976ebd9",
+      "foreignSourceSHA256": "b5114a3be1fc846e288128af08cef9f38b0cac8e34923780325c4edc2976ebd9",
+      "equal": true
+    },
+    {
+      "path": "Scripts/NativeScript/build-metadata-tool.py",
+      "candidateSHA256": "f4318f38b1c6a9c56ba54edb0d270a6374178fa5a8e024ebfddb9790f7ae3cf5",
+      "foreignSourceSHA256": "f4318f38b1c6a9c56ba54edb0d270a6374178fa5a8e024ebfddb9790f7ae3cf5",
+      "equal": true
+    },
+    {
+      "path": "Scripts/NativeScript/build-step-metadata-generator-wrapper.py",
+      "candidateSHA256": "0c053414f573ff2f88498099d7f1ae591d289ca3029390cd421dd938bf089ba3",
+      "foreignSourceSHA256": "0c053414f573ff2f88498099d7f1ae591d289ca3029390cd421dd938bf089ba3",
+      "equal": true
+    },
+    {
+      "path": "Scripts/Runtime/prepare-runtime-core.sh",
+      "candidateSHA256": "1ff99fabcbf8f40d515f3f1b944299286c1094a19520f9892a97f99cf8b64540",
+      "foreignSourceSHA256": "1ff99fabcbf8f40d515f3f1b944299286c1094a19520f9892a97f99cf8b64540",
+      "equal": true
+    }
+  ],
+  "requiredTargets": [
+    "ReactNativeHeaders",
+    "React",
+    "ReactNativeDependencies",
+    "hermesvm",
+    "ExpoModulesJSI",
+    "ExpoModulesCore",
+    "ExpoModulesWorklets",
+    "ExpoUI",
+    "ExpoAsset",
+    "ExpoBrownfield",
+    "Libffi",
+    "TNSWidgets",
+    "NSCWinterTC",
+    "NodeMobile",
+    "Python"
+  ],
+  "requiredSupportGroups": [
+    "HanlinExpoHeaderSupport",
+    "HanlinExpoWidgetRuntimeSupport",
+    "HanlinNativeScriptHostSupport",
+    "HanlinNodeHostSupport",
+    "HanlinPythonHostSupport"
+  ],
+  "foreignObservation": {
+    "observedAt": "2026-11-25T00:49:58.559367+00:00",
+    "stateSHA256": "d66cbe53102609d67313e917d2d54768c5d9ab4052f3e5f285bf013e53ce9f0b",
+    "state": {
+      "owner": "/root/native_execution",
+      "source": "1812bff50571c9907d15cd8b4bfbe4874be24756",
+      "status": "PAUSED_AFTER_PHASE",
+      "attempt": 9,
+      "phase": "split-inputs",
+      "error": null,
+      "finishedAt": "2026-11-25T00:36:45.991485+00:00",
+      "controllerPID": 77588
+    },
+    "catalogs": [
+      {
+        "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/prepared-native-attempt7/native-artifacts.json",
+        "sha256": "b7bf734b3bd35595f90c3d3a841fa57ad63f0529dc0a5b6b2bee942e747022a6",
+        "keys": [
+          "acceptance",
+          "artifacts",
+          "contentSHA256",
+          "inputSHA256",
+          "missingTargets",
+          "releaseTag",
+          "repository",
+          "requiredTargets",
+          "schemaVersion",
+          "scope",
+          "sourceCommit",
+          "state",
+          "supportArtifacts"
+        ],
+        "state": "prepared",
+        "source": null,
+        "sourceSHA": null,
+        "targetCount": 14
+      }
+    ]
+  }
+}
