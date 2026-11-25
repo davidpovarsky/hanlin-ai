@@ -1,0 +1,135 @@
+{
+  "owner": "/root/native_execution",
+  "schema": 1,
+  "source": "fda6948ca6a1f541293a1a1dd20e97f75eb0a527",
+  "tree": "a1fe06e442f36f104adca116eab14892674452ed",
+  "startedAt": "2026-11-25T02:28:56.883413+00:00",
+  "pid": 52378,
+  "status": "RUNNING",
+  "phase": "RemainingFocused.log",
+  "scope": "One unchanged parity startup diagnostic followed by SDK-only Expo, SDK-only NativeScript and Modular original selectors; exact published test source.",
+  "original52": "NOT_RUN",
+  "original25": "NOT_RUN",
+  "original27": "NOT_RUN",
+  "original52RequiresIndependentRun": true,
+  "uiSource": {
+    "path": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+    "originalSHA256": "6c87c9751bf4b5910cc72716bfa1a6cb384c3ef53908a6ca074f713656f5730e",
+    "delta": "No source variant. Exact published measured preview and same-predicate detail readiness changes."
+  },
+  "originalRunner": {
+    "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+    "sha256": "6e3abbb16c9b55b048b69c2391784510d8c143c7ed00e760a73ecb903cdbb61d",
+    "unchanged": true
+  },
+  "errors": [
+    "ParityStartupDiagnostic: Original runtime acceptance did not execute every selected case: ParityStartupDiagnostic"
+  ],
+  "cases": {
+    "ParityStartupDiagnostic": {
+      "status": "FAIL",
+      "startedAt": "2026-11-25T02:35:38.194829+00:00",
+      "selectors": [
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch"
+      ],
+      "originalUI": true,
+      "exitCode": 65,
+      "finishedAt": "2026-11-25T02:37:23.844820+00:00",
+      "resultFinalized": true,
+      "error": "Original runtime acceptance did not execute every selected case: ParityStartupDiagnostic",
+      "log": {
+        "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt10/paired-prefix/ParityStartupDiagnostic.log",
+        "bytes": 23199,
+        "sha256": "9f94424d82da711ead9656c445e34bc0dba6d17c81fd634c76a261c960dc58e6"
+      }
+    },
+    "RemainingFocused": {
+      "status": "RUNNING",
+      "startedAt": "2026-11-25T02:37:24.174236+00:00",
+      "selectors": [
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyExpoPackageImportsRendersAndHandlesEvents",
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyNativeScriptPackageImportsRendersAndHandlesEvents",
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneModularSearchLoadsActualSefariaText"
+      ],
+      "originalUI": true
+    }
+  },
+  "sourceRestored": true,
+  "originalTestRebuild": "PASS",
+  "observedAt": "2026-11-25T02:37:24.175133+00:00",
+  "elapsedSeconds": 507.293535290999,
+  "selectors": {
+    "parityStartup": [
+      "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch"
+    ],
+    "remainingFocused": [
+      "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyExpoPackageImportsRendersAndHandlesEvents",
+      "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyNativeScriptPackageImportsRendersAndHandlesEvents",
+      "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneModularSearchLoadsActualSefariaText"
+    ]
+  },
+  "hostArchiveSHA256": "86733eba5d80156edf52da87f0f371c208122d6e60f618f182990330514984c3",
+  "observerSHA256": "429a3aca2916f5cb11a7cd46d0bd2c102dfc468ecfcf205633cef22d33c2976e",
+  "interceptedOriginal25Selectors": [
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualInputLayoutAndDataAdapters",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualPresentationAdaptersAndDismissalEvents",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoNativeAPIUsesActualUIKitAndWorklets",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoWidgetsUsesOriginalTimelinesAndLiveActivities",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneModularSearchLoadsActualSefariaText",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyExpoPackageImportsRendersAndHandlesEvents",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyNativeScriptPackageImportsRendersAndHandlesEvents",
+    "HanlinMiniAppsTests/CrossAppInvocationTests/testCancelAndDisplayDoneReturnNoDocumentMutation",
+    "HanlinMiniAppsTests/CrossAppInvocationTests/testReusingValueWindowKeepsItsInvocationBindingCurrent",
+    "HanlinMiniAppsTests/CrossAppInvocationTests/testRemovingInvocationOwnerCancelsWhileSessionIsStillRetained",
+    "HanlinMiniAppsTests/CrossAppInvocationTests/testActualIncomingRequestsCreateDistinctIPadScenes",
+    "HanlinMiniAppsTests/NativeScriptWindowOwnershipTests/testUnrelatedAndLateWindowCleanupPreservesNativeScriptOwner",
+    "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests/testInvalidationReleasesHandlersAndRejectsLateActions",
+    "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests/testBridgeInvalidationReleasesPendingCallbacksBeforeProviderCancellation",
+    "HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests/testExternalInvocationSurvivesNestedFullScreenModal",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedGroupBoxSlotsAndInstalledMetadata",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEditButtonEditsOriginalList",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEmptyViewReportsNativeLayout",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierAccessibilityAndGeometry",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierHitTestingAndSubmitScope",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierNativeContainerContexts",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoHostServicesUseRealStorageRuntimeAndWidgetPublication",
+    "HanlinMiniAppsTests/CrossAppInvocationTests/testUnavailableCallbackRetainsResultForSourceRecovery"
+  ],
+  "dataContainer": "/Users/m1/Library/Developer/CoreSimulator/Devices/9DB610ED-23EB-451F-B74C-4C46438D25E8/data/Containers/Data/Application/CF8B4D6A-3C0C-4662-91D8-B9AAF9474D44",
+  "simulator": "9DB610ED-23EB-451F-B74C-4C46438D25E8",
+  "installedMetadataBinding": {
+    "path": "installed-metadata-binding.json",
+    "sha256": "d58a79c7815fc9e7a14ae0c9d11bea492b1d08449aab761f2ee5ea6fd0c98234",
+    "requiredNamesPresent": true
+  },
+  "testBinaries": {
+    "exactPublishedSource": [
+      {
+        "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniAppsUITests-Runner.app/PlugIns/HanlinMiniAppsUITests.xctest/HanlinMiniAppsUITests",
+        "bytes": 606400,
+        "sha256": "cee227a2886e897635d44df91c93df83e245b9278b8f057ab73dc1e2cbe734ab"
+      }
+    ]
+  },
+  "runtimeObserver": {
+    "pid": 58045,
+    "predicate": "process == \"HanlinMiniApps\" AND (eventMessage CONTAINS \"HANLIN_\" OR eventMessage CONTAINS \"NativeScript\" OR eventMessage CONTAINS \"runtime_paths\" OR eventMessage CONTAINS \"host_ready\")",
+    "startedAt": "2026-11-25T02:35:38.192731+00:00",
+    "sampleLimit": 1,
+    "sampleDurationSeconds": 3
+  },
+  "attachmentExports": [
+    {
+      "result": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt10/paired-prefix/ParityStartupDiagnostic.xcresult",
+      "exit": 0
+    }
+  ],
+  "runtimeMarkers": {
+    "ParityStartupDiagnostic": {
+      "count": 0,
+      "path": "ParityStartupDiagnostic-runtime-markers.json"
+    }
+  }
+}

@@ -1,0 +1,92 @@
+[
+  {
+    "path": "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+    "headSHA256": "08fe8608ac946c2759a05389b69c5601039cff61f41ad24fa55cee8d222cc2c2",
+    "headMode": "100644",
+    "kind": "file",
+    "bytes": 9960,
+    "sha256": "610bcbb9a7f90c27e3bd3ecd3b1d139fe3ff72ed18086327d1d96c437de932f5",
+    "mode": "0o644",
+    "contentFrom": "tracked-delta/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved"
+  },
+  {
+    "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/original-runtime-receipt.json",
+    "headSHA256": "f7ad6d7bf5841f5a0be2f722a1b2735620aa06dcf4801cb73210688a7a135e64",
+    "headMode": "100644",
+    "kind": "file",
+    "bytes": 6085,
+    "sha256": "3d619674297acb22ae4d0a97f5e7d8a878b0eccbc3bfc49769cfdb5a05248a0b",
+    "mode": "0o644",
+    "contentFrom": "tracked-delta/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/original-runtime-receipt.json"
+  },
+  {
+    "path": "Scripts/Expo/package-lock.json",
+    "headSHA256": "9ee1d2babe6266148d8f969b25f542c00897c569969e5aae6dd6f744e2a0c53c",
+    "headMode": "100644",
+    "kind": "file",
+    "bytes": 336324,
+    "sha256": "c08757cf46ac4d5c86a873f676af4a3be585db64ae2e1aa1e8288277d4eb63b8",
+    "mode": "0o644",
+    "contentFrom": "tracked-delta/Scripts/Expo/package-lock.json"
+  },
+  {
+    "path": "Scripts/Expo/package.json",
+    "headSHA256": "da083105462f40368adb89acba0dbc1b623d2249b26b2ac1cbe1d326edc2bd3d",
+    "headMode": "100644",
+    "kind": "file",
+    "bytes": 1759,
+    "sha256": "e2b50fae013276229c78619bbbe0b63d8c29b00fefde3afeccea98af117aa206",
+    "mode": "0o644",
+    "contentFrom": "tracked-delta/Scripts/Expo/package.json"
+  },
+  {
+    "path": "Scripts/MiniApps/upstream-resolution.json",
+    "headSHA256": "2bf8f371f06949fbe56858c38addeb417a07f9b598fc38ff72aedb39d5f364eb",
+    "headMode": "100644",
+    "kind": "file",
+    "bytes": 15092,
+    "sha256": "e0c2944ea24c09330825dee58badedcec58606ba603ccdedc888abf1a63a13cb",
+    "mode": "0o644",
+    "contentFrom": "tracked-delta/Scripts/MiniApps/upstream-resolution.json"
+  },
+  {
+    "path": "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+    "headSHA256": "ad9c59d1962d516cd480de78cf5ee01fad11159cc0a73ee1a9cb3ea2f324b8a1",
+    "headMode": "100644",
+    "kind": "file",
+    "bytes": 118804,
+    "sha256": "768731f0c748276aeab4d34f57ad3ad89fd38aa30f562ff0cc9b5ad9a3767368",
+    "mode": "0o644",
+    "contentFrom": "tracked-delta/docs/miniapp-sdk/MANIFEST_REFERENCE.md"
+  },
+  {
+    "path": "docs/miniapp-sdk/extension-reachability.json",
+    "headSHA256": "152806a609b662c373eedd382758f1298bf945883f0c467dc5595050f8f0fa29",
+    "headMode": "100644",
+    "kind": "file",
+    "bytes": 147521,
+    "sha256": "9a9843d277a3e76ad64fc7589029801960c5c98b9aba09f3ed7746552ee3d42d",
+    "mode": "0o644",
+    "contentFrom": "tracked-delta/docs/miniapp-sdk/extension-reachability.json"
+  },
+  {
+    "path": "docs/miniapp-sdk/extension-reachability.md",
+    "headSHA256": "f2cd972c7366043028bbaea078291717ae363b288d29ecf242fd358103f7a9b1",
+    "headMode": "100644",
+    "kind": "file",
+    "bytes": 21494,
+    "sha256": "cae21720cab9b31211796a5d82309d6e779f46ddb1d946d1ec1e322f4cf952cb",
+    "mode": "0o644",
+    "contentFrom": "tracked-delta/docs/miniapp-sdk/extension-reachability.md"
+  },
+  {
+    "path": "docs/miniapp-sdk/source-inventory.json",
+    "headSHA256": "b126e18f8a228e2235ef8ef324a31f0b9b6e3384e6af0f82755e35c4bcccaeef",
+    "headMode": "100644",
+    "kind": "file",
+    "bytes": 493871,
+    "sha256": "856bc8aca1473f8f4255b324e840ef2ebcdf5eb7352d1041d2433391e9f4bfd8",
+    "mode": "0o644",
+    "contentFrom": "tracked-delta/docs/miniapp-sdk/source-inventory.json"
+  }
+]
