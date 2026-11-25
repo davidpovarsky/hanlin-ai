@@ -7,8 +7,18 @@ import Testing
 @Suite("Legacy Tool Canonical Migration Tests", .serialized)
 struct LegacyToolMigrationTests {
 
+    private static let expectedToolNames: Set<String> = [
+        "save_memory", "retrieve_memory", "update_memory",
+        "manage_calendar", "search_calendar_and_reminders", "write_system_event",
+        "query_location", "get_current_location", "search_nearby_locations", "get_route",
+        "query_weather", "search_online", "read_web_page", "search_arxiv_papers",
+        "extract_remote_file_content", "search_knowledge_bag", "create_knowledge_document",
+        "create_canvas", "edit_canvas", "create_web_view", "execute_remote_python_code",
+        "fetch_step_details", "fetch_energy_details", "fetch_nutrition_details", "make_nutrition_data"
+    ]
+
     @MainActor
-    @Test("LegacyToolCanonicalAdapter matches exact buildMemoryTools source truth (24 tools)")
+    @Test("LegacyToolCanonicalAdapter matches exact buildMemoryTools source truth (25 tools)")
     func legacyAdapterMatchesSourceTruth() throws {
         // Derive authoritative source truth directly from buildMemoryTools
         let sourceTools = buildMemoryTools(
@@ -27,7 +37,8 @@ struct LegacyToolMigrationTests {
             (tool["function"] as? [String: Any])?["name"] as? String
         })
 
-        #expect(sourceNames.count == 24)
+        #expect(sourceNames.count == 25)
+        #expect(sourceNames == Self.expectedToolNames)
 
         let sources = LegacyToolCanonicalAdapter.sources(
             memoryEnabled: true,
@@ -41,7 +52,7 @@ struct LegacyToolMigrationTests {
             canvasEnabled: true
         )
 
-        #expect(sources.count == 24)
+        #expect(sources.count == 25)
 
         let canonicalNames = Set(sources.map(\.toolName))
         #expect(canonicalNames == sourceNames)
@@ -99,7 +110,7 @@ struct LegacyToolMigrationTests {
     }
 
     @MainActor
-    @Test("Canonical authority indexes all 24 legacy sources and routes backend correctly")
+    @Test("Canonical authority indexes all 25 legacy sources and routes backend correctly")
     func canonicalAuthorityLegacyIndexing() throws {
         let sources = LegacyToolCanonicalAdapter.sources()
 
@@ -109,14 +120,22 @@ struct LegacyToolMigrationTests {
             legacySources: sources
         )
 
-        #expect(authority.catalog.entries.count == 24)
-        #expect(authority.routingTable.routes.count == 24)
+        #expect(authority.catalog.entries.count == 25)
+        #expect(authority.routingTable.routes.count == 25)
+        #expect(Set(authority.routingTable.routes.map(\.alias)) == Self.expectedToolNames)
 
         let searchRes = authority.resolution(alias: "search_online")
         if case let .legacy(toolName)? = searchRes?.backend {
             #expect(toolName == "search_online")
         } else {
             Issue.record("search_online did not resolve to legacy backend")
+        }
+
+        let calendarRes = authority.resolution(alias: "manage_calendar")
+        if case let .legacy(toolName)? = calendarRes?.backend {
+            #expect(toolName == "manage_calendar")
+        } else {
+            Issue.record("manage_calendar did not resolve to legacy backend")
         }
 
         let weatherRes = authority.resolution(alias: "query_weather")
@@ -151,6 +170,13 @@ struct LegacyToolMigrationTests {
         // Verify schemas for exposed subset
         let subsetSchemas = prepared.schemas(for: Set(["save_memory", "get_route"]))
         #expect(subsetSchemas.count == 2)
+
+        let calendarSchemas = prepared.schemas(for: Set(["manage_calendar"]))
+        #expect(calendarSchemas.count == 1)
+        let calendarFunction = try #require(calendarSchemas.first?["function"] as? [String: Any])
+        #expect((calendarFunction["name"] as? String) == "manage_calendar")
+        let calendarParameters = try #require(calendarFunction["parameters"] as? [String: Any])
+        #expect((calendarParameters["required"] as? [String]) == ["operation"])
     }
 
     @MainActor
