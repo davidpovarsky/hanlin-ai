@@ -873,6 +873,71 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         XCTAssertTrue(paragraph.waitForExistence(timeout: 10), "Dismissing the browser did not restore the original chat")
     }
 
+    func testActivityAutoExpansionManualCollapseFinalCollapseAndColdReasoning() throws {
+        continueAfterFailure = false
+        executionTimeAllowance = 120
+        let app = XCUIApplication()
+        defer { app.terminate() }
+        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+        app.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
+        app.launchEnvironment["HANLIN_AGENT_RUNTIME_UI_ACCEPTANCE"] = "1"
+        app.launchEnvironment["HANLIN_PHASE2_STORE_ID"] = UUID().uuidString
+        app.launch()
+        openChat(in: app)
+        sendPrompt("PROMPT_ACTIVITY_LIFECYCLE", in: app)
+        let summary = app.descendants(matching: .any).matching(NSPredicate(
+            format: "identifier == %@ AND label CONTAINS %@", "hanlin-reasoning-expanded-text",
+            "ACTIVITY_FIRST_CHECKPOINT")).firstMatch
+        XCTAssertTrue(summary.waitForExistence(timeout: 15), "Actual activity must expand without a tap")
+        XCTAssertGreaterThan(summary.label.count, 140, "Long displayable output stays visible")
+        let toggle = app.descendants(matching: .any)["hanlin-reasoning-toggle"].firstMatch
+        XCTAssertTrue(toggle.waitForExistence(timeout: 5))
+        XCTAssertFalse(app.staticTexts["Thinking & tools"].exists)
+        XCTAssertFalse(toggle.label.contains("Activity history"))
+        tapElement(toggle)
+        XCTAssertTrue(summary.waitForNonExistence(timeout: 5))
+
+        let interim = app.descendants(matching: .any).matching(NSPredicate(
+            format: "label CONTAINS %@", "ACTIVITY_INTERIM_CHECKPOINT")).firstMatch
+        XCTAssertTrue(interim.waitForExistence(timeout: 20))
+        XCTAssertFalse(summary.exists, "Interim text must respect manual collapse")
+        XCTAssertFalse(toggle.label.contains("Worked for"), "Provisional text is not a final answer")
+        let nextThinking = XCTNSPredicateExpectation(
+            predicate: NSPredicate(format: "label CONTAINS %@", "Thinking"), object: toggle)
+        XCTAssertEqual(XCTWaiter.wait(for: [nextThinking], timeout: 15), .completed)
+        XCTAssertFalse(summary.exists, "New reasoning must not force a manually collapsed tree open")
+        tapElement(toggle)
+        let second = app.descendants(matching: .any).matching(NSPredicate(
+            format: "identifier == %@ AND label CONTAINS %@", "hanlin-reasoning-expanded-text",
+            "ACTIVITY_SECOND_CHECKPOINT")).firstMatch
+        XCTAssertTrue(second.waitForExistence(timeout: 5))
+        XCTAssertTrue(summary.exists, "The first completed summary is retained beside later work")
+
+        let final = app.descendants(matching: .any).matching(NSPredicate(
+            format: "label CONTAINS %@", "ACTIVITY_FINAL_COMPLETE")).firstMatch
+        XCTAssertTrue(final.waitForExistence(timeout: 20))
+        XCTAssertTrue(app.buttons["hanlin-chat-stop"].firstMatch.waitForNonExistence(timeout: 10))
+        XCTAssertTrue(summary.waitForNonExistence(timeout: 5), "The completed activity collapses automatically")
+        XCTAssertTrue(toggle.label.contains("Worked for"))
+        tapElement(toggle)
+        XCTAssertTrue(summary.waitForExistence(timeout: 5))
+        XCTAssertTrue(second.exists)
+        XCTAssertFalse(app.descendants(matching: .any)["hanlin-reasoning-live-status"].exists,
+            "Historical reasoning has no permanent Thinking label")
+        attachScreenshot("activity-live-disclosure-completed-history", in: app)
+        openSettings(in: app)
+        app.terminate()
+        app.launch()
+        openChat(in: app)
+        XCTAssertTrue(final.waitForExistence(timeout: 20))
+        if !summary.waitForExistence(timeout: 2) { tapElement(toggle) }
+        XCTAssertTrue(summary.waitForExistence(timeout: 5), "The saved summary survives a cold conversation reopen")
+        XCTAssertTrue(second.exists)
+        XCTAssertEqual(app.staticTexts["hanlin-phase2-request-count"].label, "0",
+            "Opening history does not replay a provider request")
+        attachScreenshot("activity-reasoning-cold-restoration", in: app)
+    }
+
     func testUI04CollapsedProgressAndInspectorWithoutRawCoT() throws {
         let app = launchAcceptanceApp()
         openChat(in: app)

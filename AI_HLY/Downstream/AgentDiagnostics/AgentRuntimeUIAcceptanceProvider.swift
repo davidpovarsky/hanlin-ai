@@ -429,6 +429,7 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
             stopped = newValue
         }
     }
+    private var activityLifecycleTask: Task<Void, Never>?
 
     static var observedPhase2Requests: Int {
         lock.lock(); defer { lock.unlock() }
@@ -872,6 +873,11 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
             return
         }
 
+        if currentText.contains("PROMPT_ACTIVITY_LIFECYCLE") {
+            emitActivityLifecycleStream()
+            return
+        }
+
         // 4. UI-04 Collapsed progress and inspector without raw CoT (must precede 6*7 check)
         if bodyString.contains("PROMPT_UI04_REASONING_INSPECTOR") {
             if bodyString.contains("ui04-progress-1") {
@@ -1198,6 +1204,39 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
 
     override func stopLoading() {
         isStopped = true
+        activityLifecycleTask?.cancel()
+    }
+
+    /// Controlled provider traffic through the original chat projection. This
+    /// fixture supplies no tool effect and installs no replacement activity view.
+    private func emitActivityLifecycleStream() {
+        let response = HTTPURLResponse(url: request.url!, statusCode: 200,
+            httpVersion: "HTTP/1.1", headerFields: ["Content-Type": "text/event-stream"])!
+        client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
+        activityLifecycleTask = Task { [weak self] in
+            guard let self else { return }
+            func emit(_ delta: [String: Any], final: Bool = false) {
+                guard !self.isStopped else { return }
+                var choice: [String: Any] = ["delta": delta]
+                if final { choice["finish_reason"] = "stop" }
+                else { choice["finish_reason"] = NSNull() }
+                let payload: [String: Any] = ["choices": [choice]]
+                guard let data = try? JSONSerialization.data(withJSONObject: payload) else { return }
+                let suffix = final ? "data: [DONE]\n\n" : ""
+                self.client?.urlProtocol(self, didLoad:
+                    Data(("data: " + String(decoding: data, as: UTF8.self) + "\n\n" + suffix).utf8))
+                if final { self.client?.urlProtocolDidFinishLoading(self) }
+            }
+            let first = "ACTIVITY_FIRST_CHECKPOINT. "
+                + String(repeating: "Checking the requested calendar dates and comparing the available appointments. ", count: 3)
+            emit(["reasoning_content": first])
+            do { try await Task.sleep(for: .seconds(10)) } catch { return }
+            emit(["content": "ACTIVITY_INTERIM_CHECKPOINT"])
+            do { try await Task.sleep(for: .seconds(10)) } catch { return }
+            emit(["reasoning_content": "ACTIVITY_SECOND_CHECKPOINT. I need to check the remaining appointment details."])
+            do { try await Task.sleep(for: .seconds(10)) } catch { return }
+            emit(["content": "ACTIVITY_FINAL_COMPLETE"], final: true)
+        }
     }
 
     private func emitToolCall(id: String, name: String, arguments: String) {

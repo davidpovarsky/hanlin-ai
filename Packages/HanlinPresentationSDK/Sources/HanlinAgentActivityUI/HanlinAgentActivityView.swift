@@ -26,7 +26,8 @@ public nonisolated struct HanlinAgentActivityView: View, Equatable {
     public let toolApproval: ChatToolApprovalPresentation?
     public let messageState: MessageOpenUIStateStore?
     @State private var expandedActivityIDs: Set<String> = []
-    @State private var collapsedRoundIDs: Set<String> = []
+    @State private var localDisclosure: HanlinActivityDisclosureState?
+    @State private var legacyRunID = UUID()
     @State private var legacyDetailsExpanded = false
 
 
@@ -77,7 +78,7 @@ public nonisolated struct HanlinAgentActivityView: View, Equatable {
             hasPendingApproval: toolApproval != nil || run?.approvals.contains {
                 $0.disposition == .awaiting || $0.disposition == .providerRequired
             } == true,
-            hasAnswerText: hasAnswerText,
+            hasAnswerText: hasFinalAnswer,
             hasActiveOperation: activities.contains {
                 $0.status == .running && $0.kind != .reasoning && $0.kind != .narrative
                     && toolApproval?.callID != $0.id
@@ -93,41 +94,85 @@ public nonisolated struct HanlinAgentActivityView: View, Equatable {
                              activeActivities: [AgentDisplayActivity]) -> String {
         switch phase {
         case .working:
-            return hierarchyIsExpanded ? String(localized: "Thinking & tools", bundle: HanlinLocalization.bundle)
-                : (activeActivities.map(\.title) + (hasLiveModelRequest
-                    ? [String(localized: "Waiting for model response", bundle: HanlinLocalization.bundle)] : [])).joined(separator: " · ")
-        case .awaitingApproval: return String(localized: "Waiting for your confirmation", bundle: HanlinLocalization.bundle)
-        case .history: return String(localized: "Activity history", bundle: HanlinLocalization.bundle)
+            if hierarchyIsExpanded { return String(localized: "Working…", bundle: HanlinLocalization.bundle) }
+            let titles = activeActivities.filter { $0.kind != .reasoning }.map(\.title)
+            if !titles.isEmpty { return titles.joined(separator: " · ") }
+            if activeActivities.contains(where: { $0.kind == .reasoning }) {
+                return String(localized: "Thinking", bundle: HanlinLocalization.bundle)
+            }
+            return String(localized: "Working…", bundle: HanlinLocalization.bundle)
+        case .awaitingApproval:
+            return String(localized: "Waiting for your confirmation", bundle: HanlinLocalization.bundle)
+        case .history:
+            let duration = run.map {
+                AgentActivityDurationFormatter.string(
+                    max(0, ($0.activityCompletedAt ?? $0.startedAt).timeIntervalSince($0.startedAt)))
+            } ?? reasoningTime ?? AgentActivityDurationFormatter.string(0)
+            return String(format: String(localized: "Worked for %@", bundle: HanlinLocalization.bundle), duration)
         }
+    }
+
+    /// A provider can send commentary before another tool. Its first text delta
+    /// is provisional, and must not collapse the activity as though work ended.
+    @MainActor
+    private var hasFinalAnswer: Bool {
+        if let run { return run.finalAnswerStartedAt != nil }
+        return hasAnswerText
     }
 
     @MainActor
     private var hasLiveModelRequest: Bool {
         AgentActivityHeaderPhase.showsModelRequestStatus(isRunActive: isActive,
-            requestID: run?.pendingModelRequestID, hasAnswerText: hasAnswerText,
+            requestID: run?.pendingModelRequestID, hasAnswerText: hasFinalAnswer,
             hasPendingApproval: toolApproval != nil || run?.approvals.contains {
                 $0.disposition == .awaiting || $0.disposition == .providerRequired
             } == true)
     }
 
     @MainActor
-    private var modelRequestActivityID: String { "model-request:" + (run?.pendingModelRequestID ?? "") }
-    @MainActor
-    private var hierarchyIsExpanded: Bool { isExpanded || toolApproval != nil }
+    private var disclosureRunID: UUID { run?.id ?? messageState?.identity.messageID ?? legacyRunID }
 
     @MainActor
-    private func roundHasHeader(_ round: AgentDisplayRound) -> Bool {
-        round.hasHierarchyHeader
+    private var disclosurePhase: HanlinActivityDisclosureState.Phase {
+        !isActive ? .finished : hasFinalAnswer ? .answering : .active
     }
 
     @MainActor
-    private func roundIsWaiting(_ round: AgentDisplayRound,
-                                approvals: [String: AgentToolApproval]) -> Bool {
-        round.activities.contains { activity in
-            toolApproval?.callID == activity.id
-                || approvals[activity.id]?.disposition == .awaiting
-                || approvals[activity.id]?.disposition == .providerRequired
-        }
+    private var disclosureLifecycle: HanlinActivityDisclosureState {
+        .init(runID: disclosureRunID, phase: disclosurePhase)
+    }
+
+    @MainActor
+    private var currentDisclosure: HanlinActivityDisclosureState? {
+        let value = messageState?.activityDisclosure ?? localDisclosure
+        return value?.runID == disclosureRunID ? value : nil
+    }
+
+    @MainActor
+    private var hierarchyIsExpanded: Bool { currentDisclosure?.isExpanded ?? isExpanded }
+
+    @MainActor
+    private func storeDisclosure(_ value: HanlinActivityDisclosureState) {
+        if let messageState { messageState.setActivityDisclosure(value) }
+        else { localDisclosure = value }
+        if isExpanded != value.isExpanded { isExpanded = value.isExpanded }
+    }
+
+    @MainActor
+    private func synchronizeDisclosure() {
+        let previous = messageState?.activityDisclosure ?? localDisclosure
+        let next = previous?.reconciled(runID: disclosureRunID, phase: disclosurePhase)
+            ?? .init(runID: disclosureRunID, phase: disclosurePhase,
+                     isExpanded: disclosurePhase == .active ? true : isExpanded)
+        storeDisclosure(next)
+    }
+
+    @MainActor
+    private func setHierarchyExpanded(_ expanded: Bool) {
+        var value = currentDisclosure
+            ?? .init(runID: disclosureRunID, phase: disclosurePhase)
+        value.isExpanded = expanded
+        storeDisclosure(value)
     }
 
     @MainActor
@@ -137,7 +182,7 @@ public nonisolated struct HanlinAgentActivityView: View, Equatable {
         guard phase == .working else { return [] }
         return activities.filter { activity in
             AgentActivityVisibilityPolicy.animatesActivity(kind: activity.kind.rawValue,
-                status: activity.status.rawValue, isRunActive: isActive, hasAnswerText: hasAnswerText,
+                status: activity.status.rawValue, isRunActive: isActive, hasAnswerText: hasFinalAnswer,
                 isAwaitingApproval: toolApproval?.callID == activity.id
                     || approvals[activity.id]?.disposition == .awaiting
                     || approvals[activity.id]?.disposition == .providerRequired)
@@ -145,131 +190,85 @@ public nonisolated struct HanlinAgentActivityView: View, Equatable {
     }
 
     @MainActor
-    private func shimmerPaths(rounds: [AgentDisplayRound], activeIDs: Set<String>,
-                              approvals: [String: AgentToolApproval]) -> [AgentActivityShimmerOwner.Path] {
-        var paths = rounds.flatMap { round in
-            round.activities.filter { activeIDs.contains($0.id) }.map { activity in
-                AgentActivityShimmerOwner.Path(activityID: activity.id,
-                    roundID: roundHasHeader(round) ? round.id : nil,
-                    isRoundExpanded: !collapsedRoundIDs.contains(round.id)
-                        || roundIsWaiting(round, approvals: approvals))
-            }
-        }
-        if hasLiveModelRequest {
-            paths.append(.init(activityID: modelRequestActivityID, roundID: nil, isRoundExpanded: true))
-        }
-        return paths
-    }
-
-    @MainActor
     public var body: some View {
         let timeline = run.map(AgentActivityComposer.compose)
-        let activities = timeline?.activities ?? []
+        let activities = (timeline?.activities ?? []).filter { activity in
+            activity.kind != .reasoning || (isActive && activity.status == .running)
+                || run.map { !AgentActivityComposer.reasoningDisplayText(for: activity, in: $0).isEmpty } == true
+        }
         let approvals = Dictionary((run?.approvals ?? []).map { ($0.callID, $0) },
             uniquingKeysWith: { _, latest in latest })
         let phase = headerPhase(for: activities, approvals: approvals)
         let activeActivities = liveActivities(in: activities, phase: phase, approvals: approvals)
-        let activeIDs = Set(activeActivities.map(\.id))
-        let rounds = run.flatMap { run in timeline.map { AgentActivityComposer.rounds(for: run, timeline: $0) } } ?? []
-        let paths = shimmerPaths(rounds: rounds, activeIDs: activeIDs, approvals: approvals)
+        let paths = activeActivities.map {
+            AgentActivityShimmerOwner.Path(activityID: $0.id, roundID: nil, isRoundExpanded: true)
+        }
         let shimmerOwners = AgentActivityShimmerOwner.resolve(isWorking: phase.showsShimmer,
             isHierarchyExpanded: hierarchyIsExpanded, activePaths: paths)
-        if timeline?.activities.isEmpty == false
-            || (run == nil && !legacyToolContent.isEmpty) || toolApproval != nil || hasLiveModelRequest {
-            DisclosureGroup(isExpanded: Binding(
-                get: { hierarchyIsExpanded }, set: { isExpanded = $0 }
-            )) {
-                if let timeline, let run, !timeline.activities.isEmpty {
-                    ForEach(rounds) { round in
-                        roundView(round, run: run, approvals: approvals, shimmerOwners: shimmerOwners)
-                    }
-                } else {
-                    if run == nil && !legacyToolContent.isEmpty {
-                        DisclosureGroup(isExpanded: $legacyDetailsExpanded) {
-                            Self.technicalText(ClassicProjectedToolCallEntry.sanitizeUserFacingToolOutput(legacyToolContent))
-                        } label: {
-                            HanlinActivityHierarchyHeader(title: String(localized: "Tool details", bundle: HanlinLocalization.bundle),
-                                symbol: "wrench.and.screwdriver", depth: 1,
-                                isExpanded: legacyDetailsExpanded, isActive: false)
+        let legacyReasoning = run == nil
+            ? ProgressSummarySanitizer.sanitizeProviderReasoningDisplay(reasoning) ?? "" : ""
+        let hasHistory = !activities.isEmpty || !legacyReasoning.isEmpty
+            || (run == nil && !legacyToolContent.isEmpty) || toolApproval != nil
+        return Group {
+            if hasHistory {
+                DisclosureGroup(isExpanded: Binding(
+                    get: { hierarchyIsExpanded }, set: { setHierarchyExpanded($0) }
+                )) {
+                    if let run {
+                        // Model round IDs stay in the canonical transcript. They
+                        // are not user work, so never become empty generic nodes.
+                        ForEach(activities) { activity in
+                            if activity.kind == .reasoning {
+                                reasoningRow(activity, run: run,
+                                    isCurrent: shimmerOwners.contains(.activity(activity.id)))
+                            } else {
+                                activityRow(activity, approval: approvals[activity.id],
+                                    isCurrent: shimmerOwners.contains(.activity(activity.id)))
+                            }
                         }
-                        .disclosureGroupStyle(HanlinActivityDisclosureStyle())
+                    } else {
+                        if !legacyReasoning.isEmpty {
+                            Text(legacyReasoning)
+                                .font(HanlinTypography.footnote)
+                                .foregroundStyle(.secondary)
+                                .textSelection(.enabled)
+                                .fixedSize(horizontal: false, vertical: true)
+                                .accessibilityIdentifier("hanlin-reasoning-expanded-text")
+                        }
+                        if !legacyToolContent.isEmpty {
+                            DisclosureGroup(isExpanded: $legacyDetailsExpanded) {
+                                Self.technicalText(ClassicProjectedToolCallEntry.sanitizeUserFacingToolOutput(legacyToolContent))
+                            } label: {
+                                HanlinActivityHierarchyHeader(title: String(localized: "Tool details", bundle: HanlinLocalization.bundle),
+                                    symbol: "wrench.and.screwdriver", depth: 1,
+                                    isExpanded: legacyDetailsExpanded, isActive: false)
+                            }
+                            .disclosureGroupStyle(HanlinActivityDisclosureStyle())
+                        }
                     }
+                    if let pending = toolApproval,
+                       !activities.contains(where: { $0.id == pending.callID }) {
+                        approvalView(pending)
+                    }
+                } label: {
+                    HanlinActivityHierarchyHeader(title: headerTitle(for: phase, activeActivities: activeActivities),
+                        symbol: "sparkles", isExpanded: hierarchyIsExpanded,
+                        isActive: shimmerOwners.contains(.root))
+                        .accessibilityIdentifier("hanlin-reasoning-toggle")
                 }
-                if hasLiveModelRequest {
-                    HanlinActivityTitle(String(localized: "Waiting for model response", bundle: HanlinLocalization.bundle),
-                        font: HanlinTypography.footnote, baseColor: .secondary,
-                        isActive: shimmerOwners.contains(.activity(modelRequestActivityID)))
-                        .padding(.vertical, 4)
-                        .accessibilityIdentifier("hanlin-model-request-status")
-                }
-                if let pending = toolApproval,
-                   timeline?.activities.contains(where: { $0.id == pending.callID }) != true {
-                    // Early delivery keeps the request attached to its real
-                    // call, without guessing ownership or granting consent.
-                    approvalView(pending)
-                }
-            } label: {
-                HanlinActivityHierarchyHeader(title: headerTitle(for: phase, activeActivities: activeActivities),
-                    symbol: "sparkles", isExpanded: hierarchyIsExpanded,
-                    isActive: shimmerOwners.contains(.root))
-                    .accessibilityIdentifier("hanlin-reasoning-toggle")
+                .disclosureGroupStyle(HanlinActivityDisclosureStyle(depth: 0))
+                .accessibilityElement(children: .contain)
+                .accessibilityIdentifier("hanlin-agent-activity-toggle")
+            } else if hasLiveModelRequest {
+                // Request latency is a temporary root status, never a stored or
+                // expandable activity node and never evidence of actual thinking.
+                HanlinActivityTitle(String(localized: "Working…", bundle: HanlinLocalization.bundle),
+                    font: HanlinTypography.footnote, baseColor: .secondary, isActive: false)
+                    .accessibilityIdentifier("hanlin-model-request-status")
             }
-            .disclosureGroupStyle(HanlinActivityDisclosureStyle(depth: 0))
-            .accessibilityElement(children: .contain)
-            .accessibilityIdentifier("hanlin-agent-activity-toggle")
         }
-    }
-
-    @ViewBuilder
-    @MainActor
-    private func roundView(_ round: AgentDisplayRound, run: AgentRun,
-                           approvals: [String: AgentToolApproval],
-                           shimmerOwners: Set<AgentActivityShimmerOwner>) -> some View {
-        // Nest only genuinely attributed rounds. Legacy siblings are never
-        // assigned a parent because their rows happen to be adjacent.
-        if roundHasHeader(round) {
-            let waiting = roundIsWaiting(round, approvals: approvals)
-            let expanded = !collapsedRoundIDs.contains(round.id) || waiting
-            let activeTitles = round.activities.filter {
-                AgentActivityVisibilityPolicy.animatesActivity(kind: $0.kind.rawValue,
-                    status: $0.status.rawValue, isRunActive: isActive, hasAnswerText: hasAnswerText,
-                    isAwaitingApproval: toolApproval?.callID == $0.id
-                        || approvals[$0.id]?.disposition == .awaiting
-                        || approvals[$0.id]?.disposition == .providerRequired)
-            }.map(\.title)
-            DisclosureGroup(isExpanded: Binding(
-                get: { !collapsedRoundIDs.contains(round.id) || waiting },
-                set: { if $0 { collapsedRoundIDs.remove(round.id) }
-                    else { collapsedRoundIDs.insert(round.id) } }
-            )) {
-                roundRows(round, run: run, approvals: approvals, shimmerOwners: shimmerOwners)
-            } label: {
-                HanlinActivityHierarchyHeader(title: !expanded && !activeTitles.isEmpty
-                    ? activeTitles.joined(separator: " · ")
-                    : (waiting ? String(localized: "Actions requiring your approval", bundle: HanlinLocalization.bundle) : String(localized: "Thinking & tools", bundle: HanlinLocalization.bundle)),
-                    symbol: "gearshape.2", depth: 1, isExpanded: expanded,
-                    isActive: shimmerOwners.contains(.round(round.id)))
-            }
-            .disclosureGroupStyle(HanlinActivityDisclosureStyle())
-        } else {
-            roundRows(round, run: run, approvals: approvals, shimmerOwners: shimmerOwners)
-        }
-    }
-
-    @MainActor
-    private func roundRows(_ round: AgentDisplayRound, run: AgentRun,
-                           approvals: [String: AgentToolApproval],
-                           shimmerOwners: Set<AgentActivityShimmerOwner>) -> some View {
-        VStack(alignment: .leading, spacing: 3) {
-            ForEach(round.activities) { activity in
-                if activity.kind == .reasoning {
-                    reasoningRow(activity, run: run,
-                        isCurrent: shimmerOwners.contains(.activity(activity.id)))
-                } else {
-                    activityRow(activity, approval: approvals[activity.id],
-                        isCurrent: shimmerOwners.contains(.activity(activity.id)))
-                }
-            }
+        .onChange(of: disclosureLifecycle, initial: true) { _, _ in
+            synchronizeDisclosure()
         }
     }
 
@@ -277,17 +276,23 @@ public nonisolated struct HanlinAgentActivityView: View, Equatable {
     private func reasoningRow(_ activity: AgentDisplayActivity, run: AgentRun,
                               isCurrent: Bool) -> some View {
         let summary = AgentActivityComposer.reasoningDisplayText(for: activity, in: run)
-        let isPlaceholder = summary == String(localized: "Thinking", bundle: HanlinLocalization.bundle)
-        let title = !isCurrent && isPlaceholder ? String(localized: "Reasoning", bundle: HanlinLocalization.bundle) : summary
-        let duration: String = {
-            guard !isCurrent, let startedAt = activity.startedAt, let completedAt = activity.completedAt,
-                  completedAt.timeIntervalSince(startedAt) >= 1 else { return "" }
-            return AgentActivityDurationFormatter.string(completedAt.timeIntervalSince(startedAt))
-        }()
-        return HanlinToolActivityHeader(title: title, status: duration, symbol: "sparkles",
-            isActive: isCurrent, showsShimmer: isCurrent,
-            startedAt: activity.startedAt, completedAt: activity.completedAt)
-            .accessibilityIdentifier("hanlin-reasoning-expanded-text")
+        return VStack(alignment: .leading, spacing: 5) {
+            if isCurrent {
+                HanlinToolActivityHeader(
+                    title: String(localized: "Thinking", bundle: HanlinLocalization.bundle),
+                    status: "", symbol: "sparkles", isActive: true, showsShimmer: true,
+                    startedAt: activity.startedAt, completedAt: activity.completedAt)
+                    .accessibilityIdentifier("hanlin-reasoning-live-status")
+            }
+            if !summary.isEmpty {
+                Text(summary)
+                    .font(HanlinTypography.footnote)
+                    .foregroundStyle(.secondary)
+                    .textSelection(.enabled)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .accessibilityIdentifier("hanlin-reasoning-expanded-text")
+            }
+        }
     }
 
     @MainActor
@@ -429,6 +434,16 @@ public nonisolated struct HanlinAgentActivityView: View, Equatable {
             case .command: return .command
             case .imageGeneration: return .imageGeneration
             case .map: return .map
+            case .calendarSearch: return .calendarSearch
+            case .calendarRead: return .calendarRead
+            case .calendarCreate: return .calendarCreate
+            case .calendarUpdate: return .calendarUpdate
+            case .calendarDelete: return .calendarDelete
+            case .calendarComplete: return .calendarComplete
+            case .calendarAccess: return .calendarAccess
+            case .memorySave: return .memorySave
+            case .memoryRecall: return .memoryRecall
+            case .memoryUpdate: return .memoryUpdate
             default: break
             }
         }
@@ -448,6 +463,16 @@ public nonisolated struct HanlinAgentActivityView: View, Equatable {
         case .command?: .command
         case .imageGeneration?: .imageGeneration
         case .map?: .map
+        case .calendarSearch?: .calendarSearch
+        case .calendarRead?: .calendarRead
+        case .calendarCreate?: .calendarCreate
+        case .calendarUpdate?: .calendarUpdate
+        case .calendarDelete?: .calendarDelete
+        case .calendarComplete?: .calendarComplete
+        case .calendarAccess?: .calendarAccess
+        case .memorySave?: .memorySave
+        case .memoryRecall?: .memoryRecall
+        case .memoryUpdate?: .memoryUpdate
         default: .generic
         }
     }

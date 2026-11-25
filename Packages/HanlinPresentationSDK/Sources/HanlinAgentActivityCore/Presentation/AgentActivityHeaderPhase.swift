@@ -1,6 +1,6 @@
-/// Real reasoning and tool lifetimes own activity motion. Answer streaming ends
-/// reasoning motion; independently running tools may still continue alongside it.
-/// A run alone, persisted labels or stale approval never revive completed activity.
+/// Run lifetime owns the header phase; real reasoning and tool lifetimes own motion.
+/// `hasAnswerText` means a confirmed final answer, never provisional commentary.
+/// A gap between model/tool events must not turn a still-active run into history.
 public enum AgentActivityHeaderPhase: Equatable, Sendable {
     case working
     case awaitingApproval
@@ -10,10 +10,9 @@ public enum AgentActivityHeaderPhase: Equatable, Sendable {
                         hasAnswerText: Bool = false, hasActiveOperation: Bool = false,
                         hasActiveReasoning: Bool = false, hasPendingModelRequest: Bool = false) -> Self {
         guard isRunActive else { return .history }
-        let hasLiveWork = hasActiveOperation
-            || ((hasActiveReasoning || hasPendingModelRequest) && !hasAnswerText && !hasPendingApproval)
         if hasPendingApproval && !hasActiveOperation { return .awaitingApproval }
-        return hasLiveWork ? .working : .history
+        if hasActiveOperation { return .working }
+        return hasAnswerText ? .history : .working
     }
 
     public var showsShimmer: Bool { self == .working }
