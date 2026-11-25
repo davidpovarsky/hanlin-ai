@@ -87,6 +87,36 @@ private final class HanlinTelemetryBackend: Sendable {
         let provider: TracerProviderSdk
         var spans: [UUID: any OpenTelemetryApi.Span] = [:]
         var isShutdown = false
+
+        // Keep every original SDK reference created by this transaction within
+        // its owning State. The Mutex closure receives only a Sendable token;
+        // no builder/tracer/span alias enters the caller's isolation region.
+        mutating func start(
+            name: String,
+            attributes: [String: OpenTelemetryApi.AttributeValue],
+            parent: OpenTelemetryApi.SpanContext?
+        ) -> Token {
+            let builder = provider
+                .get(instrumentationName: "HanlinChatCore")
+                .spanBuilder(spanName: name)
+            if let parent {
+                builder.setParent(parent)
+            } else {
+                builder.setNoParent()
+            }
+            // Context is task-scoped above, never OpenTelemetry's global/thread
+            // active context, which could join unrelated concurrent requests.
+            builder.setActive(false)
+            for (key, value) in attributes {
+                builder.setAttribute(key: key, value: value)
+            }
+            let span = builder.startSpan()
+            let token = Token(id: UUID(), context: span.context)
+            if !isShutdown, span.isRecording {
+                spans[token.id] = span
+            }
+            return token
+        }
     }
 
     private let state: Mutex<State>
@@ -99,7 +129,7 @@ private final class HanlinTelemetryBackend: Sendable {
             .settingAttributePerEventCountLimit(8)
         let builder = TracerProviderBuilder().with(spanLimits: limits)
         if let exporter {
-            builder.add(spanProcessor: BatchSpanProcessor(
+            _ = builder.add(spanProcessor: BatchSpanProcessor(
                 spanExporter: exporter,
                 scheduleDelay: 1,
                 exportTimeout: 5,
@@ -124,26 +154,7 @@ private final class HanlinTelemetryBackend: Sendable {
         parent: OpenTelemetryApi.SpanContext?
     ) -> Token {
         state.withLock { state in
-            let builder = state.provider
-                .get(instrumentationName: "HanlinChatCore")
-                .spanBuilder(spanName: name)
-            if let parent {
-                builder.setParent(parent)
-            } else {
-                builder.setNoParent()
-            }
-            // Context is task-scoped above, never OpenTelemetry's global/thread
-            // active context, which could join unrelated concurrent requests.
-            builder.setActive(false)
-            for (key, value) in attributes {
-                builder.setAttribute(key: key, value: value)
-            }
-            let span = builder.startSpan()
-            let token = Token(id: UUID(), context: span.context)
-            if !state.isShutdown, span.isRecording {
-                state.spans[token.id] = span
-            }
-            return token
+            state.start(name: name, attributes: attributes, parent: parent)
         }
     }
 
