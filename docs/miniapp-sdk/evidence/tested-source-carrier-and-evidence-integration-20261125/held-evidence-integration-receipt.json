@@ -1,0 +1,120 @@
+{
+  "schema": 1,
+  "phase": "INTEGRATED_AND_VERIFIED",
+  "startedAt": "2026-11-25T19:54:06.703019+00:00",
+  "carrierCommit": "7f46e9d00fa6b3ef1867c6f174a79b0151a36bcc",
+  "planSHA256": "0007222d7ca90bb05be917f90a6d73d36a318ae2d74e0e561a3e4bb1c958b576",
+  "expectedPaths": 1587,
+  "applied": [
+    {
+      "heldCommit": "efafb6a115e095716a057752993165581d6c3f1a",
+      "appliedCommit": "5d2198f2c166bfe7c5521e705e3154649e804f33",
+      "parent": "7f46e9d00fa6b3ef1867c6f174a79b0151a36bcc",
+      "pathCount": 449
+    },
+    {
+      "heldCommit": "898178407def93d0ad8836d06af4ac3b1f809118",
+      "appliedCommit": "703ac3744b7cfcab944787fc6bd7d76770b4bd00",
+      "parent": "5d2198f2c166bfe7c5521e705e3154649e804f33",
+      "pathCount": 65
+    },
+    {
+      "heldCommit": "d710598de2c9f463da3f78141ae0ada75f690d2b",
+      "appliedCommit": "b3e91a1174174e06e8751dd255c8921bb53bfc98",
+      "parent": "703ac3744b7cfcab944787fc6bd7d76770b4bd00",
+      "pathCount": 29
+    },
+    {
+      "heldCommit": "fde05869f0544e8e54f6cbf455ff8fafda2081d4",
+      "appliedCommit": "6a5dfdcdbe858c05ca0a7f7069cb6c237b97a8f1",
+      "parent": "b3e91a1174174e06e8751dd255c8921bb53bfc98",
+      "pathCount": 25
+    },
+    {
+      "heldCommit": "9e6c73fd35b03b5a9ebbcd8b6428a7200e4dbb99",
+      "appliedCommit": "9c59f7f79971b034af8e7822a5f66b4cbb72a024",
+      "parent": "6a5dfdcdbe858c05ca0a7f7069cb6c237b97a8f1",
+      "pathCount": 19
+    },
+    {
+      "heldCommit": "1880994b60aa2b880f807ba1930f0f5c3d04b605",
+      "appliedCommit": "9a2625027f6042e9b0b84766f2151643e1bf36ac",
+      "parent": "9c59f7f79971b034af8e7822a5f66b4cbb72a024",
+      "pathCount": 61
+    },
+    {
+      "heldCommit": "20265fe9dc19acf112deef375dce1ee00c66c78f",
+      "appliedCommit": "28d4da0a194e9725723ff13c2a310c8c50a56f36",
+      "parent": "9a2625027f6042e9b0b84766f2151643e1bf36ac",
+      "pathCount": 38
+    },
+    {
+      "heldCommit": "a8791674acd632536b532e2c3675965c00cf856c",
+      "appliedCommit": "acf56212223a0db2a82593a86c12dd3a32d626a4",
+      "parent": "28d4da0a194e9725723ff13c2a310c8c50a56f36",
+      "pathCount": 92
+    },
+    {
+      "heldCommit": "18cd04c520f815c49069f0d20e59dc252f439e02",
+      "appliedCommit": "7c147fce414c7fb5f623bb2c449f941b3a5fabe1",
+      "parent": "acf56212223a0db2a82593a86c12dd3a32d626a4",
+      "pathCount": 94
+    },
+    {
+      "heldCommit": "6aa2a8f344d5f9d77bfe0b474f50b6271bdf9864",
+      "appliedCommit": "0417591dba0a2e2ecbd93f382869fad103da8bc8",
+      "parent": "7c147fce414c7fb5f623bb2c449f941b3a5fabe1",
+      "pathCount": 121
+    },
+    {
+      "heldCommit": "b372e4b20fe6ef43c7984ba30677e473b12916a0",
+      "appliedCommit": "fceb733a6ab673436230b6bf92b97ed8a9481459",
+      "parent": "0417591dba0a2e2ecbd93f382869fad103da8bc8",
+      "pathCount": 158
+    },
+    {
+      "heldCommit": "3623ebc43fd4def7a8c2f7f6c0f9f3e8e28130fb",
+      "appliedCommit": "4586e157fab4d97277b85380db0ba837f7d2fe13",
+      "parent": "fceb733a6ab673436230b6bf92b97ed8a9481459",
+      "pathCount": 9
+    },
+    {
+      "heldCommit": "a4e65378e5c2bbc616482078f105d489869ee4b5",
+      "appliedCommit": "5b401eb95cdc20d1b6c5bf4c5fc006b98b7df4a4",
+      "parent": "4586e157fab4d97277b85380db0ba837f7d2fe13",
+      "pathCount": 204
+    },
+    {
+      "heldCommit": "e2c6b379fcaa9f3927c77c35a1fa4731c04e6744",
+      "appliedCommit": "341c27ee89673f10fa5c20c7a2c451ab5a4eafa9",
+      "parent": "5b401eb95cdc20d1b6c5bf4c5fc006b98b7df4a4",
+      "pathCount": 133
+    },
+    {
+      "heldCommit": "2e55181e1de9db14340b7d8a5038bf3b8808f295",
+      "appliedCommit": "faee7df869ea5fa510373ac57101d393171fb058",
+      "parent": "341c27ee89673f10fa5c20c7a2c451ab5a4eafa9",
+      "pathCount": 68
+    },
+    {
+      "heldCommit": "fb943ce9191b2d559aa7e182cae8b0cddeaaaa09",
+      "appliedCommit": "a365bd8e7668d0315974ae0641b0fb7c1a498e52",
+      "parent": "faee7df869ea5fa510373ac57101d393171fb058",
+      "pathCount": 7
+    },
+    {
+      "heldCommit": "e8c9cfb805cd8db262d73c9a9c7f42a0cc9456f7",
+      "appliedCommit": "a42e15aecbe7178bb4095bf071f13ee0b3bbfeeb",
+      "parent": "a365bd8e7668d0315974ae0641b0fb7c1a498e52",
+      "pathCount": 15
+    }
+  ],
+  "lastCommitAt": "2026-11-25T19:54:10.566531+00:00",
+  "finishedAt": "2026-11-25T19:54:10.761792+00:00",
+  "head": "a42e15aecbe7178bb4095bf071f13ee0b3bbfeeb",
+  "SDKSourceInputsVerified": 235,
+  "consumerSourceInputsVerified": 15,
+  "totalAddedPaths": 1587,
+  "protectedStateUnchanged": true,
+  "boundary": "Evidence-only additions after exact prepared-source carrier; no source, generated SDK, original products or native tests changed."
+}

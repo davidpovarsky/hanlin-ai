@@ -1,0 +1,577 @@
+{
+  "schema": 1,
+  "observedAt": "2026-11-25T18:32:53.957501+00:00",
+  "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "sourceTree": "f7a6596a1ef53d8d962ceb9f619460ffa19ee91e",
+  "status": "EXECUTED_PASS",
+  "original52": "EXECUTED_PASS",
+  "chargedSeconds": 3106.6737294579943,
+  "cumulativeActiveSeconds": 24205.119291294035,
+  "groups": {
+    "OriginalRuntimes": {
+      "status": "PASS",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "deviceId": "E742FBCD-8FF0-4130-B143-7F8328637138",
+              "deviceName": "HanlinPaired-local",
+              "modelName": "iPad Pro 13-inch (M5)",
+              "osBuildNumber": "24A434",
+              "osVersion": "27.0",
+              "platform": "iOS Simulator"
+            },
+            "expectedFailures": 0,
+            "failedTests": 0,
+            "passedTests": 25,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "HanlinMiniApps \u00b7 Built with macOS 27.0",
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "finishTime": 1795630208.529,
+        "passedTests": 25,
+        "result": "Passed",
+        "runtimeWarnings": [
+          {
+            "issueType": "Runtime Warning",
+            "message": "Update the Info.plist: Support for all orientations will soon be required."
+          },
+          {
+            "issueType": "Runtime Warning",
+            "message": "Update the Info.plist: Support for all orientations will soon be required."
+          },
+          {
+            "issueType": "Runtime Warning",
+            "message": "Update the Info.plist: Support for all orientations will soon be required."
+          },
+          {
+            "issueType": "Runtime Warning",
+            "message": "Update the Info.plist: Support for all orientations will soon be required."
+          },
+          {
+            "issueType": "Runtime Warning",
+            "message": "Update the Info.plist: Support for all orientations will soon be required."
+          },
+          {
+            "issueType": "Runtime Warning",
+            "message": "Update the Info.plist: Support for all orientations will soon be required."
+          },
+          {
+            "issueType": "Runtime Warning",
+            "message": "Update the Info.plist: Support for all orientations will soon be required."
+          },
+          {
+            "issueType": "Runtime Warning",
+            "message": "Update the Info.plist: Support for all orientations will soon be required."
+          },
+          {
+            "issueType": "Runtime Warning",
+            "message": "Update the Info.plist: Support for all orientations will soon be required."
+          },
+          {
+            "issueType": "Runtime Warning",
+            "message": "Update the Info.plist: Support for all orientations will soon be required."
+          },
+          {
+            "issueType": "Runtime Warning",
+            "message": "Update the Info.plist: Support for all orientations will soon be required."
+          },
+          {
+            "issueType": "Runtime Warning",
+            "message": "Update the Info.plist: Support for all orientations will soon be required."
+          },
+          {
+            "issueType": "Runtime Warning",
+            "message": "Update the Info.plist: Support for all orientations will soon be required."
+          },
+          {
+            "issueType": "Runtime Warning",
+            "message": "Update the Info.plist: Support for all orientations will soon be required."
+          },
+          {
+            "issueType": "Runtime Warning",
+            "message": "Update the Info.plist: Support for all orientations will soon be required."
+          },
+          {
+            "issueType": "Runtime Warning",
+            "message": "Update the Info.plist: Support for all orientations will soon be required."
+          },
+          {
+            "issueType": "Runtime Warning",
+            "message": "Update the Info.plist: Support for all orientations will soon be required."
+          }
+        ],
+        "skippedTests": 0,
+        "startTime": 1795628405.838,
+        "statistics": [],
+        "testFailures": [],
+        "title": "Test - HanlinMiniApps",
+        "topInsights": [],
+        "totalTestCount": 25
+      },
+      "resultFinalized": true,
+      "exitCode": 0
+    },
+    "Paired": {
+      "status": "PASS",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "deviceId": "E742FBCD-8FF0-4130-B143-7F8328637138",
+              "deviceName": "HanlinPaired-local",
+              "modelName": "iPad Pro 13-inch (M5)",
+              "osBuildNumber": "24A434",
+              "osVersion": "27.0",
+              "platform": "iOS Simulator"
+            },
+            "expectedFailures": 0,
+            "failedTests": 0,
+            "passedTests": 27,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "AI_HLY \u00b7 Built with macOS 27.0",
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "finishTime": 1795631415.077,
+        "passedTests": 27,
+        "result": "Passed",
+        "runtimeWarnings": [
+          {
+            "issueType": "Runtime Warning",
+            "message": "           SessionCore.mm:631   This method can lead to UI unresponsiveness if called on the main thread while the audio session is active."
+          },
+          {
+            "issueType": "Runtime Warning",
+            "message": "    AVAudioSession_iOS.mm:978   This method can lead to UI unresponsiveness if called on the main thread. Consider using the asynchronous activate/deactivate API instead for calls from the main thread."
+          },
+          {
+            "issueType": "Runtime Warning",
+            "message": "Update the Info.plist: Support for all orientations will soon be required."
+          },
+          {
+            "issueType": "Runtime Warning",
+            "message": "Update the Info.plist: Support for all orientations will soon be required."
+          }
+        ],
+        "skippedTests": 0,
+        "startTime": 1795630246.154,
+        "statistics": [],
+        "testFailures": [],
+        "title": "Test - AI_HLY",
+        "topInsights": [
+          {
+            "category": "Longest Test Runs",
+            "impact": "77% of duration",
+            "text": "1 longest test run with outlier durations exceeding 278.97s (three standard deviations)"
+          }
+        ],
+        "totalTestCount": 27
+      },
+      "resultFinalized": true,
+      "exitCode": 0
+    }
+  },
+  "files": [
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/original52-retained-child-v7.py",
+      "relativePath": "original52-retained-child-v7.py",
+      "rawBytes": 23491,
+      "rawSHA256": "04ff68e1ebc6ccd7069363c0aa32894af4b28a815d73a9c8fc6e6d5c3bc5128a",
+      "bytes": 23491,
+      "sha256": "04ff68e1ebc6ccd7069363c0aa32894af4b28a815d73a9c8fc6e6d5c3bc5128a",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/controller-child.log",
+      "relativePath": "paired52-continuation-v5/controller-child.log",
+      "rawBytes": 16325,
+      "rawSHA256": "446018d08a1d6be9b541afd629fa8c46b678af9e887d81c891b31c92cade52df",
+      "bytes": 16325,
+      "sha256": "446018d08a1d6be9b541afd629fa8c46b678af9e887d81c891b31c92cade52df",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/decision.json",
+      "relativePath": "paired52-continuation-v5/decision.json.gz",
+      "rawBytes": 183546,
+      "rawSHA256": "b38292358c011d2db0a1a96c167494ca84f87bd806c27e399d7ec294f7e4b42b",
+      "bytes": 49031,
+      "sha256": "1431a44912b6395c8ff0437ac13a95117f57db173ef6b6d0ee43967620628022",
+      "encoding": "gzip"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/events.jsonl",
+      "relativePath": "paired52-continuation-v5/events.jsonl",
+      "rawBytes": 15879,
+      "rawSHA256": "cd6c6746d79a447be95f3f0fc3541929fe18f6ea5b00f3fba75cc25969f6861a",
+      "bytes": 15879,
+      "sha256": "cd6c6746d79a447be95f3f0fc3541929fe18f6ea5b00f3fba75cc25969f6861a",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/native-result/OriginalRuntimes-attachments/manifest.json",
+      "relativePath": "paired52-continuation-v5/native-result/OriginalRuntimes-attachments/manifest.json",
+      "rawBytes": 77460,
+      "rawSHA256": "d18e842b4ff52dd7fcd833772d4468253b8aa2300f684206967fd459a99e0df5",
+      "bytes": 77460,
+      "sha256": "d18e842b4ff52dd7fcd833772d4468253b8aa2300f684206967fd459a99e0df5",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/native-result/OriginalRuntimes-attachments-export.log",
+      "relativePath": "paired52-continuation-v5/native-result/OriginalRuntimes-attachments-export.log",
+      "rawBytes": 27225,
+      "rawSHA256": "42cf84b454e7a170fbd4edc1654db1e5aea180850b25905b0be297443aed3a34",
+      "bytes": 27225,
+      "sha256": "42cf84b454e7a170fbd4edc1654db1e5aea180850b25905b0be297443aed3a34",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/native-result/OriginalRuntimes-nodes.json",
+      "relativePath": "paired52-continuation-v5/native-result/OriginalRuntimes-nodes.json",
+      "rawBytes": 22889,
+      "rawSHA256": "a9115dcb72398c1cf1a8bfa4ec9dd2b42273176befdbfa2be46354a0eb606878",
+      "bytes": 22889,
+      "sha256": "a9115dcb72398c1cf1a8bfa4ec9dd2b42273176befdbfa2be46354a0eb606878",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/native-result/OriginalRuntimes-selected-tests.log",
+      "relativePath": "paired52-continuation-v5/native-result/OriginalRuntimes-selected-tests.log",
+      "rawBytes": 57,
+      "rawSHA256": "df5ef130980769b652356a28c34429171445d43d45f5ac7fa0ca4cc9ff1c5e96",
+      "bytes": 57,
+      "sha256": "df5ef130980769b652356a28c34429171445d43d45f5ac7fa0ca4cc9ff1c5e96",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/native-result/OriginalRuntimes-summary.json",
+      "relativePath": "paired52-continuation-v5/native-result/OriginalRuntimes-summary.json",
+      "rawBytes": 3522,
+      "rawSHA256": "8362539879032ba8a5dfe944fef09ad4769b9ea62cacbd42cc575119efcbddc2",
+      "bytes": 3522,
+      "sha256": "8362539879032ba8a5dfe944fef09ad4769b9ea62cacbd42cc575119efcbddc2",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/native-result/Paired-attachments/manifest.json",
+      "relativePath": "paired52-continuation-v5/native-result/Paired-attachments/manifest.json",
+      "rawBytes": 6145,
+      "rawSHA256": "fd112a4ec8e52d214193a8b459aa3b90937f7a2b3436f4f898cd40e427cde68a",
+      "bytes": 6145,
+      "sha256": "fd112a4ec8e52d214193a8b459aa3b90937f7a2b3436f4f898cd40e427cde68a",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/native-result/Paired-attachments-export.log",
+      "relativePath": "paired52-continuation-v5/native-result/Paired-attachments-export.log",
+      "rawBytes": 5505,
+      "rawSHA256": "28830a074f835ed2a35b0f33b1ec354eb1cdefe4ca7ab86c6c1f792d8bc0cde0",
+      "bytes": 5505,
+      "sha256": "28830a074f835ed2a35b0f33b1ec354eb1cdefe4ca7ab86c6c1f792d8bc0cde0",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/native-result/Paired-nodes.json",
+      "relativePath": "paired52-continuation-v5/native-result/Paired-nodes.json",
+      "rawBytes": 22342,
+      "rawSHA256": "d208e06cceaf65935d9eb7dc8e20ef640aea6a7488a70691392b9d3671c1e89f",
+      "bytes": 22342,
+      "sha256": "d208e06cceaf65935d9eb7dc8e20ef640aea6a7488a70691392b9d3671c1e89f",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/native-result/Paired-selected-tests.log",
+      "relativePath": "paired52-continuation-v5/native-result/Paired-selected-tests.log",
+      "rawBytes": 57,
+      "rawSHA256": "df5ef130980769b652356a28c34429171445d43d45f5ac7fa0ca4cc9ff1c5e96",
+      "bytes": 57,
+      "sha256": "df5ef130980769b652356a28c34429171445d43d45f5ac7fa0ca4cc9ff1c5e96",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/native-result/Paired-summary.json",
+      "relativePath": "paired52-continuation-v5/native-result/Paired-summary.json",
+      "rawBytes": 1979,
+      "rawSHA256": "961704b8fa2ef947d5dc1e37984d0e9ed8904830e496a3ae34110ee5d34ef713",
+      "bytes": 1979,
+      "sha256": "961704b8fa2ef947d5dc1e37984d0e9ed8904830e496a3ae34110ee5d34ef713",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/native-result/active-command.json",
+      "relativePath": "paired52-continuation-v5/native-result/active-command.json",
+      "rawBytes": 470,
+      "rawSHA256": "476ffb3e1c057b2d4aa364177e2e344a7317e7a7827fdfa427e89532117b95d0",
+      "bytes": 470,
+      "sha256": "476ffb3e1c057b2d4aa364177e2e344a7317e7a7827fdfa427e89532117b95d0",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/native-result/boot.log",
+      "relativePath": "paired52-continuation-v5/native-result/boot.log",
+      "rawBytes": 0,
+      "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/native-result/bootstatus.log",
+      "relativePath": "paired52-continuation-v5/native-result/bootstatus.log",
+      "rawBytes": 412,
+      "rawSHA256": "5e235a5c383b48dcf6ff949b3ca3bf2d5ce583e6eafe2f7fbbe4dd5563cef1df",
+      "bytes": 412,
+      "sha256": "5e235a5c383b48dcf6ff949b3ca3bf2d5ce583e6eafe2f7fbbe4dd5563cef1df",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/native-result/command-events.jsonl",
+      "relativePath": "paired52-continuation-v5/native-result/command-events.jsonl.gz",
+      "rawBytes": 416350,
+      "rawSHA256": "a528254ef7ab1e9cf7f314470d8cab83b0d3a9ba590ce69cfadc83d041d3c2e8",
+      "bytes": 10186,
+      "sha256": "cbdf12356c4adbb1ea00e095be87bad3123d3a609cbfa26bc5e4711491f8d862",
+      "encoding": "gzip"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/native-result/commands.jsonl",
+      "relativePath": "paired52-continuation-v5/native-result/commands.jsonl",
+      "rawBytes": 15789,
+      "rawSHA256": "02216c1c874f6fc34d94a9bafcaf2193b069091b105622134fcd28edff35c1d0",
+      "bytes": 15789,
+      "sha256": "02216c1c874f6fc34d94a9bafcaf2193b069091b105622134fcd28edff35c1d0",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/native-result/created-simulator.txt",
+      "relativePath": "paired52-continuation-v5/native-result/created-simulator.txt",
+      "rawBytes": 37,
+      "rawSHA256": "df333300ba32a39a07bcd88aed5fc6bb5f0b51f738c521f6a0949dc54456a37e",
+      "bytes": 37,
+      "sha256": "df333300ba32a39a07bcd88aed5fc6bb5f0b51f738c521f6a0949dc54456a37e",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/native-result/devices-before.json",
+      "relativePath": "paired52-continuation-v5/native-result/devices-before.json",
+      "rawBytes": 36948,
+      "rawSHA256": "36e882aae02eb257f6b36410eba2d8b26ec486439e73e34f0c6c1ee5fb5e6f70",
+      "bytes": 36948,
+      "sha256": "36e882aae02eb257f6b36410eba2d8b26ec486439e73e34f0c6c1ee5fb5e6f70",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/native-result/external-modal-result.json",
+      "relativePath": "paired52-continuation-v5/native-result/external-modal-result.json",
+      "rawBytes": 535,
+      "rawSHA256": "9ae186e3157034a6a3644f636ccafaf17369ace893fed035c6c27423e344cb9a",
+      "bytes": 535,
+      "sha256": "9ae186e3157034a6a3644f636ccafaf17369ace893fed035c6c27423e344cb9a",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/native-result/final-mini-container-metadata.plist",
+      "relativePath": "paired52-continuation-v5/native-result/final-mini-container-metadata.plist",
+      "rawBytes": 602,
+      "rawSHA256": "cde9660338425f9d80813bfce0c335fca4780f4390b8e84b108c7f0b306ccf8f",
+      "bytes": 602,
+      "sha256": "cde9660338425f9d80813bfce0c335fca4780f4390b8e84b108c7f0b306ccf8f",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/native-result/final-mini-data-container.txt",
+      "relativePath": "paired52-continuation-v5/native-result/final-mini-data-container.txt",
+      "rawBytes": 157,
+      "rawSHA256": "de6552ab33503dd15c58d9a8cb4014c90cf33c34bd0529876de0eaabdc2bfb8b",
+      "bytes": 157,
+      "sha256": "de6552ab33503dd15c58d9a8cb4014c90cf33c34bd0529876de0eaabdc2bfb8b",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/native-result/original-runtimes.log",
+      "relativePath": "paired52-continuation-v5/native-result/original-runtimes.log.gz",
+      "rawBytes": 556407,
+      "rawSHA256": "db41b689889a6137c3a9997cc8cbf8cb876904259380bc76ef9dd8fab0447429",
+      "bytes": 48467,
+      "sha256": "8cef7a12794dfd75bb624e905ee70e67b932fa503bcf5022544233d2513d24e5",
+      "encoding": "gzip"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/native-result/paired-tests.log",
+      "relativePath": "paired52-continuation-v5/native-result/paired-tests.log",
+      "rawBytes": 76015,
+      "rawSHA256": "fbe4a09ced11c35b9eacd2a60623d0b5fa9c03366d7460579a9b6bf4ea84af35",
+      "bytes": 76015,
+      "sha256": "fbe4a09ced11c35b9eacd2a60623d0b5fa9c03366d7460579a9b6bf4ea84af35",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/native-result/retained-mini-data-container.txt",
+      "relativePath": "paired52-continuation-v5/native-result/retained-mini-data-container.txt",
+      "rawBytes": 157,
+      "rawSHA256": "e0dddff483c6d78dbbffb6942768ba99e76564b8c92bc7570b618bdee4802026",
+      "bytes": 157,
+      "sha256": "e0dddff483c6d78dbbffb6942768ba99e76564b8c92bc7570b618bdee4802026",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/native-result/retained-modal-group-container.txt",
+      "relativePath": "paired52-continuation-v5/native-result/retained-modal-group-container.txt",
+      "rawBytes": 156,
+      "rawSHA256": "1838466e27723ce2816b755d7221c4edfe83e5a9f6cefe15e55361575f20f853",
+      "bytes": 156,
+      "sha256": "1838466e27723ce2816b755d7221c4edfe83e5a9f6cefe15e55361575f20f853",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/native-result/retained-product-verification.json",
+      "relativePath": "paired52-continuation-v5/native-result/retained-product-verification.json",
+      "rawBytes": 11411,
+      "rawSHA256": "1485bd7780a0fd3575675f4510a87c56718b0ac974f4c4fc78bf2564c2b8f556",
+      "bytes": 11411,
+      "sha256": "1485bd7780a0fd3575675f4510a87c56718b0ac974f4c4fc78bf2564c2b8f556",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/native-result/selected-commands.json",
+      "relativePath": "paired52-continuation-v5/native-result/selected-commands.json",
+      "rawBytes": 11261,
+      "rawSHA256": "d9057278d98c4b6aff592dfdc78887a3035fc3df2275bfc9fcbebaa43e5c6640",
+      "bytes": 11261,
+      "sha256": "d9057278d98c4b6aff592dfdc78887a3035fc3df2275bfc9fcbebaa43e5c6640",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/native-result/staged-inputs-final-verification.json",
+      "relativePath": "paired52-continuation-v5/native-result/staged-inputs-final-verification.json",
+      "rawBytes": 3206,
+      "rawSHA256": "174f775acb85a304bcc1790f144a792fc6c56a101b988e1b536b5c7fd11f1d83",
+      "bytes": 3206,
+      "sha256": "174f775acb85a304bcc1790f144a792fc6c56a101b988e1b536b5c7fd11f1d83",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/native-result/state.json",
+      "relativePath": "paired52-continuation-v5/native-result/state.json",
+      "rawBytes": 39077,
+      "rawSHA256": "786ea113ee8a47f8b8e8330ee2a3627be727c285f587ebd35afab9bfe2907baf",
+      "bytes": 39077,
+      "sha256": "786ea113ee8a47f8b8e8330ee2a3627be727c285f587ebd35afab9bfe2907baf",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/plan-before.json",
+      "relativePath": "paired52-continuation-v5/plan-before.json",
+      "rawBytes": 18768,
+      "rawSHA256": "0f48ac183faabd8db7cb8cd37f37702f1e548e7c8862ffe539071a5b406b5e82",
+      "bytes": 18768,
+      "sha256": "0f48ac183faabd8db7cb8cd37f37702f1e548e7c8862ffe539071a5b406b5e82",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/primary-state-before.json",
+      "relativePath": "paired52-continuation-v5/primary-state-before.json",
+      "rawBytes": 122508,
+      "rawSHA256": "535e1f70ec507834b52783c40e508bd88cc84709df0de57fa0cd6b00fe87682d",
+      "bytes": 122508,
+      "sha256": "535e1f70ec507834b52783c40e508bd88cc84709df0de57fa0cd6b00fe87682d",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/state.json",
+      "relativePath": "paired52-continuation-v5/state.json",
+      "rawBytes": 28524,
+      "rawSHA256": "796a24bcc641e31409c7d9e68de2f95206264e0211952885aba61d8ca7ee8820",
+      "bytes": 28524,
+      "sha256": "796a24bcc641e31409c7d9e68de2f95206264e0211952885aba61d8ca7ee8820",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5-decision-receipt.json",
+      "relativePath": "paired52-continuation-v5-decision-receipt.json",
+      "rawBytes": 966,
+      "rawSHA256": "46eccc9dd62cbdf30cbbbeda247a144b1f56dcc1f9769d5219c3cda2f7da8534",
+      "bytes": 966,
+      "sha256": "46eccc9dd62cbdf30cbbbeda247a144b1f56dcc1f9769d5219c3cda2f7da8534",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5-launch.json",
+      "relativePath": "paired52-continuation-v5-launch.json",
+      "rawBytes": 1064,
+      "rawSHA256": "a3f443b80ee6e19986e8f80fd80653ec93156b24d5bfe51c6f1d570c4f7cca2f",
+      "bytes": 1064,
+      "sha256": "a3f443b80ee6e19986e8f80fd80653ec93156b24d5bfe51c6f1d570c4f7cca2f",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5-seal-command-v2.json",
+      "relativePath": "paired52-continuation-v5-seal-command-v2.json",
+      "rawBytes": 1343,
+      "rawSHA256": "30b07b05ffd88ab22f2ffa70104ad8931c2f7a493515a083c249fd2e0b436679",
+      "bytes": 1343,
+      "sha256": "30b07b05ffd88ab22f2ffa70104ad8931c2f7a493515a083c249fd2e0b436679",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5-seal-command.json",
+      "relativePath": "paired52-continuation-v5-seal-command.json",
+      "rawBytes": 955,
+      "rawSHA256": "de47c0cf60c9346bcb6c6a8cc6de315939a5fe6cc3818230691d1e8aaec0f15d",
+      "bytes": 955,
+      "sha256": "de47c0cf60c9346bcb6c6a8cc6de315939a5fe6cc3818230691d1e8aaec0f15d",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-v5h.py",
+      "relativePath": "paired52-v5h.py",
+      "rawBytes": 33830,
+      "rawSHA256": "04d3f71d81436f95043e8bd84029c17aa4b7b06b7d91f3a5f73fa68d1967cd68",
+      "bytes": 33830,
+      "sha256": "04d3f71d81436f95043e8bd84029c17aa4b7b06b7d91f3a5f73fa68d1967cd68",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/plan.json",
+      "relativePath": "plan.json",
+      "rawBytes": 18768,
+      "rawSHA256": "0f48ac183faabd8db7cb8cd37f37702f1e548e7c8862ffe539071a5b406b5e82",
+      "bytes": 18768,
+      "sha256": "0f48ac183faabd8db7cb8cd37f37702f1e548e7c8862ffe539071a5b406b5e82",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/seal-original52-retained-decision-v7.py",
+      "relativePath": "seal-original52-retained-decision-v7.py",
+      "rawBytes": 14164,
+      "rawSHA256": "534c68084bebe31f00603e45f2861c394cb54a08f4805cb9c119d18d6c22faf9",
+      "bytes": 14164,
+      "sha256": "534c68084bebe31f00603e45f2861c394cb54a08f4805cb9c119d18d6c22faf9",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/state.json",
+      "relativePath": "state.json",
+      "rawBytes": 124308,
+      "rawSHA256": "36063a9d865126cc8fe31abad97a982bdced62380226079f07592de033e3a7d2",
+      "bytes": 124308,
+      "sha256": "36063a9d865126cc8fe31abad97a982bdced62380226079f07592de033e3a7d2",
+      "encoding": "identity"
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "schema": 1,
+  "status": "EXACT_TESTED_SOURCE_CARRIER_AND_HELD_EVIDENCE_INTEGRATED",
+  "sourceCarrier": "7f46e9d00fa6b3ef1867c6f174a79b0151a36bcc",
+  "actualNativeConsumer": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "sdkProducer": "a2c8a1b1be746461272ba77254603304567c309d",
+  "heldEvidenceHead": "a42e15aecbe7178bb4095bf071f13ee0b3bbfeeb",
+  "newNativeExecution": false,
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 2332,
+      "sha256": "4e824a37525f96bf8d224b9252076a9a4e09a3e94bc579bd10c23310f846f817",
+      "mode": "100644"
+    },
+    {
+      "path": "apply-held17.py",
+      "bytes": 5665,
+      "sha256": "c96d274e486c36154714f8de96ba3848da28c1cd47736afca63653cdcdaa766e",
+      "mode": "100644"
+    },
+    {
+      "path": "apply-prepared25.py",
+      "bytes": 6784,
+      "sha256": "95142c2d94e99337199bd627eca779c63426ca6311b56d21051a758d28308c77",
+      "mode": "100644"
+    },
+    {
+      "path": "held-evidence-integration-plan.json",
+      "bytes": 24001,
+      "sha256": "0007222d7ca90bb05be917f90a6d73d36a318ae2d74e0e561a3e4bb1c958b576",
+      "mode": "100644"
+    },
+    {
+      "path": "held-evidence-integration-receipt.json",
+      "bytes": 4584,
+      "sha256": "7e2ff988feaaa9d9c8003615058f224b8f7323b09eecae111aa05858db69c2af",
+      "mode": "100644"
+    },
+    {
+      "path": "prepared-source-materialization-plan.json",
+      "bytes": 19774,
+      "sha256": "eae3a25e5f0b2ad56e461ccebbaeb03e8a61f9e50d9de4e5b1f415174024effd",
+      "mode": "100644"
+    },
+    {
+      "path": "prepared-source-materialization-receipt.json",
+      "bytes": 20886,
+      "sha256": "8594688573aabeaad629110c4128c57260c710ec98a9647054ba2b16b490c47b",
+      "mode": "100644"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "status": "IMPORT_ONLY_REPRODUCED_AND_VERIFIED",
+  "observedAt": "2026-11-25T19:27:39.289968+00:00",
+  "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "controllerSHA256": "0b808d66d088893e2b2686de65c76ee665538932b42f3157e135a2930eb6d4f4",
+  "originalRunner": {
+    "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+    "sha256": "a99b6194f8dd20bc30998ff2ad9e86ec219415a00615b250c65670f7dfcdba7d"
+  },
+  "fixedHelperSHA256": "ceb0991b95b84aa2261395dd812effe5c2bf4bad2b3e220ccec13ea083068d41",
+  "cases": [
+    {
+      "helper": "original-v8",
+      "environment": "absent",
+      "outcome": "KeyError",
+      "key": "SPLIT_EVIDENCE"
+    },
+    {
+      "helper": "minimal-fixed",
+      "environment": "absent",
+      "outcome": "IMPORTED_ENVIRONMENT_RESTORED",
+      "moduleEvidence": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/os-notification-probe-draft/import-only-no-native-evidence",
+      "originalValueRestored": true
+    },
+    {
+      "helper": "minimal-fixed",
+      "environment": "present",
+      "outcome": "IMPORTED_ENVIRONMENT_RESTORED",
+      "moduleEvidence": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/os-notification-probe-draft/import-only-no-native-evidence",
+      "originalValueRestored": true
+    }
+  ],
+  "nativeCommands": 0,
+  "productTests": 0,
+  "builds": 0,
+  "sourceWrites": 0,
+  "createdEvidenceDirectory": false,
+  "boundary": "Only the two controller helper functions were evaluated; the original runner module was imported with subprocess.Popen disabled. No main(), command(), test or build function executed. Bytecode writes were disabled."
+}

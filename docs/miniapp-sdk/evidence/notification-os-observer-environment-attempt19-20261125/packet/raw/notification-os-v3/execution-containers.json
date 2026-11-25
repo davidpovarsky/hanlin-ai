@@ -1,0 +1,31 @@
+{
+  "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "decisionSHA256": "0705ed2f72a5a17bcd82b9ce94e8eda8dc5e96eb368f921e438042a6b25716c8",
+  "observedAt": "2026-11-25T19:17:22.033845+00:00",
+  "device": "E742FBCD-8FF0-4130-B143-7F8328637138",
+  "runnerBundleID": "com.itorah.hanlinminiapps.integration.uitests.xctrunner",
+  "uiRunnerInfoSHA256": "e807c6b2a4c5444448a527d598bb86195f0737209b6c15bc2b8ecc8273f75d87",
+  "runnerData": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/FC80577A-6432-4FB4-A113-DA91458A21B0",
+  "appData": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/CD73F996-FB42-42E4-B1DE-7287569F3A54",
+  "appGroup": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Shared/AppGroup/EAE213D3-0A61-4500-9D46-E8F08D94D8F2",
+  "actionInput": {
+    "source": "Fixtures/Widgets/Hanlin-ScriptWidget-Actions.scripting",
+    "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/CD73F996-FB42-42E4-B1DE-7287569F3A54/Documents/Hanlin-ScriptWidget-Actions.scripting",
+    "bytes": 825,
+    "sha256": "33c717e2a454d8831364cb24b15b9e9e799cd3161b526013a15efe46485ebccb",
+    "status": "REUSED_IDENTICAL_EXISTING_INPUT"
+  },
+  "existingOriginalInputsVerifiedWithoutCopy": [
+    {
+      "source": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo",
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/CD73F996-FB42-42E4-B1DE-7287569F3A54/Documents/ExpoSwiftUIProbeA.hanlinExpo",
+      "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20"
+    },
+    {
+      "source": "DemoMiniApps/hanlin-script-parity.hanlinNativeScript",
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/CD73F996-FB42-42E4-B1DE-7287569F3A54/Documents/hanlin-script-parity.hanlinNativeScript",
+      "sha256": "2e48509336edba2b301490422102dbf25cb7f1b894430d52994febdc1c33c199"
+    }
+  ],
+  "boundary": "OS returned current owned-device containers. No permission grant, registry, queue or receipt is manufactured."
+}
