@@ -14,6 +14,7 @@ import HanlinNativeScriptCoreSupport
 public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendable, HanlinNativeServicesProvider {
     public let sessionID: String
     public let context: HanlinHostCallContext
+    private let isolatesWindowStorage: Bool
     private let externalMiniAppOperation: HanlinMiniAppExternalOperation?
 
     private struct RegisteredActionHandler {
@@ -33,9 +34,11 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
         installedPackageID: HanlinInstalledPackageID? = nil,
         grantedCapabilities: Set<String>,
         sessionID: String = UUID().uuidString.lowercased(),
+        isolatesWindowStorage: Bool = false,
         canPresentUI: Bool = true,
         externalMiniAppOperation: HanlinMiniAppExternalOperation? = nil
     ) {
+        self.isolatesWindowStorage = isolatesWindowStorage
         self.sessionID = sessionID
         self.externalMiniAppOperation = externalMiniAppOperation
         let appSession = try! HanlinAppSessionID(validating: sessionID)
@@ -63,10 +66,17 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
             appropriateFor: nil,
             create: true
         )) ?? FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else { return nil }
-        let dir = support
+        var dir = support
             .appending(path: "Hanlin/MiniApps", directoryHint: .isDirectory)
             .appending(path: appID.rawValue, directoryHint: .isDirectory)
-            .appending(path: area, directoryHint: .isDirectory)
+        if isolatesWindowStorage {
+            // A simultaneous invocation cannot overwrite the other window's
+            // files using equal relative paths. The original package container
+            // remains available to legacy single-application sessions.
+            dir = dir.appending(path: "Windows", directoryHint: .isDirectory)
+                .appending(path: sessionID, directoryHint: .isDirectory)
+        }
+        dir = dir.appending(path: area, directoryHint: .isDirectory)
         try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
         return dir.path(percentEncoded: false)
     }

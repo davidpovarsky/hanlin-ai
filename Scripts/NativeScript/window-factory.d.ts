@@ -3,6 +3,12 @@ import type { createHostServicesForBridge } from '@hanlin/host-services';
 
 export interface MiniAppWindowContext {
   readonly id: string;
+  readonly packageID: string;
+  /** Explicit package/window environment; never process-global environment. */
+  readonly environment: Readonly<Record<string, string>>;
+  readonly storage: Readonly<{root?: string; state?: string; documents?: string; cache?: string}>;
+  /** Absolute path constrained to this live window's immutable source namespace. */
+  resourcePath(relativePath: string): string;
   readonly window: NativeWindow;
   readonly services: ReturnType<typeof createHostServicesForBridge>;
 }

@@ -1,13 +1,16 @@
-import { mkdir, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { execFileSync } from 'node:child_process';
+const versions = JSON.parse(await readFile(new URL('./dependency-lock.json', import.meta.url), 'utf8')).nativeScript;
 const root = resolve(import.meta.dirname, 'Fixtures/window-factory-source');
 const app = resolve(root, 'nativescript/app');
 await mkdir(app, {recursive: true});
-const bundle = `import { Page, StackLayout, Label, TextView, Button } from '@nativescript/core';
+const bundle = `import { Page, StackLayout, Label, TextView, Button, File } from '@nativescript/core';
 import { registerWindowFactory } from '@hanlin/window-factory';
 
-registerWindowFactory(({id, services}) => {
+// Module state must also be isolated for two windows of this same package.
+let increments = 0;
+registerWindowFactory(({id, services, storage}) => {
   const page = new Page();
   page.actionBarHidden = true;
   const layout = new StackLayout();
@@ -24,7 +27,6 @@ registerWindowFactory(({id, services}) => {
   const counter = new Label();
   counter.accessibilityIdentifier = 'hanlin-ns-window-counter';
   counter.text = '0';
-  let increments = 0;
   let documentID = '';
   let prepared;
   const button = (title, id, run) => {
@@ -40,10 +42,11 @@ registerWindowFactory(({id, services}) => {
   const prepare = button('Prepare Return', 'hanlin-ns-window-prepare-return', () => {
     input.dismissSoftInput();
     const text = input.text ?? '';
+    File.fromPath(storage.state + '/same-name.txt').writeTextSync(text);
     const metadata = {windowSessionID: id, requestID: request.text, documentID, counter: String(increments)};
     prepared = () => services.miniapps.complete({
       operation: 'replaceSelection', items: [{kind: 'text', text}],
-      metadata
+      metadata: {...metadata, storedValue: File.fromPath(storage.state + '/same-name.txt').readTextSync()}
     });
     status.text = 'Prepared';
   });
@@ -68,8 +71,8 @@ await writeFile(resolve(app, 'bundle.mjs'), bundle);
 await writeFile(resolve(app, 'package.json'), JSON.stringify({
   name: 'hanlin-window-factory', version: '1.0.0', private: true, type: 'module',
   main: 'bundle.mjs', hanlinRuntime: 'hanlin-nativescript',
-  hanlinNativeScript: {runtimeVersion: '9.1.0', windowFactory: 1},
-  dependencies: {'@nativescript/core': '9.1.0'}
+  hanlinNativeScript: {runtimeVersion: versions.iosRuntimeVersion, plugins: {}, windowFactory: 1},
+  dependencies: {'@nativescript/core': versions.coreVersion}
 }, null, 2) + '\n');
 await writeFile(resolve(root, 'script.json'), JSON.stringify({
   name: 'Hanlin NativeScript Window Factory E2E', version: '1.0.0',

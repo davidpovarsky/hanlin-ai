@@ -1,4 +1,4 @@
-// Generated from Scripts/NativeScript/window-factory.mjs; SHA256 ec747a6b573daa335ecc7caccd72ef6e25d4a3e4b1627207f5573f9760ce51a6
+// Generated from Scripts/NativeScript/window-factory.mjs; SHA256 f21bf759c988c9ae57ce90aaa3a68a8bb5c8696bb3f11551ebca94499c343e2d
 import { Application, NativeWindowEvents } from '@nativescript/core';
 import { IOSNativeWindow } from '@nativescript/core/native-window/native-window.ios';
 import { IOSHelper } from '@nativescript/core/ui/core/view/view-helper';
@@ -10,9 +10,16 @@ class HanlinEmbeddedWindow extends IOSNativeWindow {
   constructor(context) {
     super(undefined, undefined, context.windowID, !Application.primaryWindow, 'embedded');
     this.context = context;
+    this.styledRoots = new WeakSet();
   }
 
   _setNativeContent(view) {
+    if (this.context.styleSheetPath && !this.styledRoots.has(view)) {
+      // Original per-view StyleScope; never install one package's app.css
+      // into Application's process-global CSS cascade.
+      view.addCssFile(this.context.styleSheetPath);
+      this.styledRoots.add(view);
+    }
     const controller = this._getViewController(view);
     this._setViewControllerView(view);
     this.context.presentViewController(controller);
@@ -36,9 +43,10 @@ class HanlinEmbeddedWindow extends IOSNativeWindow {
 }
 
 /**
- * Register once while the declared package entry loads. Each call receives a
- * newly bound provider and must produce its own root. Module-wide caches may
- * still be shared deliberately; request state belongs in this callback.
+ * Register while this window's immutable entry module loads. Private modules
+ * have unique original loader identities, and every callback retains its bound
+ * services, storage paths, resources and native window. Original native-library
+ * modules and the original main VM remain shared by cooperating packages.
  */
 export function registerWindowFactory(factory) {
   if (typeof HanlinNativeScriptWindowFactoryRegistry === 'undefined') {
@@ -88,7 +96,22 @@ export function registerWindowFactory(factory) {
       void services.miniapps.complete({status: 'error', message}).catch(() => {});
     };
     try {
-      const content = factory(Object.freeze({id: context.windowID, window, services}));
+      const environment = Object.freeze(JSON.parse(context.environmentJSON ?? '{}'));
+      const storage = Object.freeze({
+        root: environment.HANLIN_MINIAPP_DATA_ROOT,
+        state: environment.HANLIN_MINIAPP_STATE_DIR,
+        documents: environment.HANLIN_MINIAPP_DOCUMENTS_DIR,
+        cache: environment.HANLIN_MINIAPP_CACHE_DIR
+      });
+      const resourcePath = relativePath => {
+        const path = context.resourcePath(relativePath);
+        if (!path) throw new Error('The resource is outside this live window package.');
+        return path;
+      };
+      const content = factory(Object.freeze({
+        id: context.windowID, packageID: context.packageID,
+        window, services, environment, storage, resourcePath
+      }));
       if (content && typeof content.then === 'function') content.then(install).catch(failure);
       else install(content);
     } catch (error) {
@@ -96,7 +119,7 @@ export function registerWindowFactory(factory) {
       throw error;
     }
   });
-  if (!accepted) throw new Error('The active package already owns a window factory or is not in factory mode.');
+  if (!accepted) throw new Error('This package entry must register exactly one window factory during its own load.');
   app.notifyReady();
-  app._ensureAppCssLoaded();
+
 }

@@ -2,8 +2,9 @@ import Foundation
 import HanlinNativeScriptCoreSupport
 import UIKit
 
-/// A cooperating package's window, with its own provider and presentation.
-/// The original NativeScriptSession remains the sole owner of the package VM.
+/// One provider, immutable package/module namespace and original NativeWindow.
+/// NativeScript's original main VM remains process-wide; only cooperating
+/// factory entries are admitted. Legacy whole-application ownership is preserved.
 @MainActor
 public final class HanlinNativeScriptWindowSession {
     public typealias ProviderFactory = @MainActor (String) -> any HanlinNativeServicesProvider
@@ -26,30 +27,21 @@ public final class HanlinNativeScriptWindowSession {
     public static func open(
         applicationRoot: URL,
         environment: [String: String] = [:],
-        makeRuntimeProvider: ProviderFactory,
-        makeWindowProvider: ProviderFactory,
-        configureRuntime: @escaping @MainActor (String) -> Void = { _ in },
-        releaseRuntime: @escaping @MainActor (String) -> Void = { _ in }
+        makeWindowProvider: ProviderFactory
     ) throws -> HanlinNativeScriptWindowSession {
-        let root = applicationRoot.standardizedFileURL
+        let root = try HanlinNativeScriptSession.validatePreparedApplication(applicationRoot)
         guard try supportsWindowFactory(applicationRoot: root) else {
             throw failure("This entry does not declare a cooperating NativeScript window factory.")
         }
 
         let runtimeOwner: RuntimeOwner
         if let current = activeOwner {
-            guard current.applicationRoot == root, current.environment == environment else {
-                throw failure("The open NativeScript runtime belongs to a different package or generation.")
-            }
             runtimeOwner = current
         } else {
-            // Legacy whole-application sessions keep their existing ownership.
             guard HanlinNativeScriptSession.activeSessionIdentifier == nil else {
                 throw failure("A legacy NativeScript application owns the active runtime.")
             }
-            runtimeOwner = try RuntimeOwner(
-                applicationRoot: root, environment: environment,
-                makeProvider: makeRuntimeProvider, configure: configureRuntime, release: releaseRuntime)
+            runtimeOwner = try RuntimeOwner()
             activeOwner = runtimeOwner
         }
 
@@ -57,11 +49,29 @@ public final class HanlinNativeScriptWindowSession {
         let provider = makeWindowProvider(windowID)
         HanlinNativeServicesBridge.register(provider, forSessionID: windowID)
         do {
+            // Keep the package environment explicit; never mutate process globals
+            // when a second package opens. Storage paths come from its provider.
+            var scopedEnvironment = environment
+            scopedEnvironment["HANLIN_MINIAPP_DATA_ROOT"] = provider.dataRootDirectory()
+            scopedEnvironment["HANLIN_MINIAPP_STATE_DIR"] = provider.stateDirectory()
+            scopedEnvironment["HANLIN_MINIAPP_DOCUMENTS_DIR"] = provider.documentsDirectory()
+            scopedEnvironment["HANLIN_MINIAPP_CACHE_DIR"] = provider.cacheDirectory()
+            let package = try HanlinNativeScriptWindowPackage.stage(
+                source: root, hostRoot: runtimeOwner.hostRoot, windowID: windowID,
+                environment: scopedEnvironment, sharedRuntime: runtimeOwner.sharedRuntime)
+            guard HanlinNativeScriptWindowFactoryRegistry.loadPackage(
+                windowID: windowID, configurationJSON: package.loaderConfigurationJSON) else {
+                throw failure(HanlinNativeScriptWindowFactoryRegistry.lastFailure()
+                              ?? "The original NativeScript loader could not load this window's entry.")
+            }
             guard let token = HanlinNativeServicesPrepareSessionBootstrap(windowID),
                   let bridge = HanlinNativeServicesBridge.claimSessionBridge(withToken: token) else {
                 throw failure("The window's Host Services bridge could not be created.")
             }
-            guard let context = HanlinNativeScriptWindowFactoryRegistry.openWindow(id: windowID, bridge: bridge) else {
+            guard let context = HanlinNativeScriptWindowFactoryRegistry.openWindow(
+                id: windowID, bridge: bridge, packageID: package.packageID,
+                applicationRoot: package.root.path, environmentJSON: package.environmentJSON,
+                styleSheetPath: package.styleSheetPath) else {
                 bridge.invalidate()
                 throw failure(HanlinNativeScriptWindowFactoryRegistry.lastFailure()
                               ?? "The NativeScript window factory did not open its view.")
@@ -90,8 +100,6 @@ public final class HanlinNativeScriptWindowSession {
     public func shutdown() {
         guard isActive, let owner else { return }
         isActive = false
-        // Close native/JS view ownership while the VM is still live, then revoke
-        // only this window's pending operations/provider.
         HanlinNativeScriptWindowFactoryRegistry.closeWindow(id: sessionID)
         HanlinNativeServicesBridge.unregisterProvider(forSessionID: sessionID)
         owner.windowIDs.remove(sessionID)
@@ -102,9 +110,7 @@ public final class HanlinNativeScriptWindowSession {
         }
     }
 
-    deinit {
-        MainActor.assumeIsolated { shutdown() }
-    }
+    deinit { MainActor.assumeIsolated { shutdown() } }
 
     private static func failure(_ message: String) -> NSError {
         NSError(domain: "HanlinNativeScript.WindowFactory", code: 1,
@@ -113,27 +119,23 @@ public final class HanlinNativeScriptWindowSession {
 
     @MainActor
     private final class RuntimeOwner {
-        let applicationRoot: URL
-        let environment: [String: String]
+        let hostRoot: URL
+        let sharedRuntime: URL
         let session: HanlinNativeScriptSession
         let provider: any HanlinNativeServicesProvider
-        let release: @MainActor (String) -> Void
         var windowIDs: Set<String> = []
         private var stopped = false
 
-        init(applicationRoot: URL, environment: [String: String],
-             makeProvider: ProviderFactory,
-             configure: @MainActor (String) -> Void,
-             release: @escaping @MainActor (String) -> Void) throws {
-            self.applicationRoot = applicationRoot
-            self.environment = environment
-            self.release = release
-            session = try HanlinNativeScriptSession(
-                applicationRoot: applicationRoot, environment: environment)
-            provider = makeProvider(session.sessionID)
-            // The app's existing container helper also installs a default
-            // provider. Run it first, then bind our explicitly neutral provider.
-            configure(session.sessionID)
+        init() throws {
+            guard let shared = HanlinNativeScriptSession.sharedRuntimeURL else {
+                throw HanlinNativeScriptWindowSession.failure("The original NativeScript libraries are unavailable.")
+            }
+            sharedRuntime = shared
+            hostRoot = try HanlinNativeScriptWindowPackage.makeHostRoot(sharedRuntime: shared)
+            session = try HanlinNativeScriptSession(applicationRoot: hostRoot)
+            provider = HanlinNativeScriptWindowFactoryRegistry.neutralRuntimeProvider()
+            // Global Host Services deliberately cannot pick the first or focused
+            // package. Every privileged call must use its explicit window bridge.
             HanlinNativeServicesBridge.register(provider, forSessionID: session.sessionID)
             HanlinNativeServicesBridge.register(provider)
             do {
@@ -144,7 +146,7 @@ public final class HanlinNativeScriptWindowSession {
                 try session.start()
                 guard HanlinNativeScriptWindowFactoryRegistry.hasFactory(sessionID: session.sessionID) else {
                     throw HanlinNativeScriptWindowSession.failure(
-                        "The declared NativeScript entry did not register its window factory.")
+                        "The neutral original NativeScript entry did not register its package loader.")
                 }
             } catch {
                 stop()
@@ -155,13 +157,13 @@ public final class HanlinNativeScriptWindowSession {
         func stop() {
             guard !stopped else { return }
             stopped = true
-            // Registry callbacks, neutral-provider handlers and pending bridge
-            // completions can own JS blocks. Retire them while their VM is live.
             HanlinNativeScriptWindowFactoryRegistry.endRuntime(sessionID: session.sessionID)
             HanlinNativeServicesBridge.unregisterProvider(forSessionID: session.sessionID)
             HanlinNativeServicesBridge.clearLegacyProvider(ifMatches: provider)
-            release(session.sessionID)
             session.shutdown()
+            // Keep all module files/scopes until the VM and every window have
+            // retired; closing one window cannot break another's delayed import.
+            try? FileManager.default.removeItem(at: hostRoot.deletingLastPathComponent())
         }
 
         deinit { MainActor.assumeIsolated { stop() } }
