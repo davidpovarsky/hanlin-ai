@@ -37,9 +37,18 @@ private final class HanlinNotificationCenterDelegate: NSObject, UNUserNotificati
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 willPresent notification: UNNotification) async -> Int {
         await receive(notification.request.content.userInfo)
-        // No original delegate meant no foreground presentation. Preserve that
-        // behavior and any installed delegate's actual presentation decision.
-        return await previous?.userNotificationCenter?(center, willPresent: notification) ?? 0
+        // Call the original Objective-C completion requirement: Swift 6.4's
+        // optional async thunk crashes during SIL lowering with C++ interop.
+        // Preserve the previous delegate's bits and the Host's zero fallback.
+        return await withCheckedContinuation { continuation in
+            guard let callback = previous?.userNotificationCenter(_:willPresent:withCompletionHandler:) else {
+                continuation.resume(returning: 0)
+                return
+            }
+            callback(center, notification) { options in
+                continuation.resume(returning: options)
+            }
+        }
     }
 
     func userNotificationCenter(_ center: UNUserNotificationCenter,
@@ -47,7 +56,13 @@ private final class HanlinNotificationCenterDelegate: NSObject, UNUserNotificati
         if response.actionIdentifier != UNNotificationDismissActionIdentifier {
             await receive(response.notification.request.content.userInfo)
         }
-        await previous?.userNotificationCenter?(center, didReceive: response)
+        await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
+            guard let callback = previous?.userNotificationCenter(_:didReceive:withCompletionHandler:) else {
+                continuation.resume()
+                return
+            }
+            callback(center, response) { continuation.resume() }
+        }
     }
 
     func userNotificationCenter(_ center: UNUserNotificationCenter,
