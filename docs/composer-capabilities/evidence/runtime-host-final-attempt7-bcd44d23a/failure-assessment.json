@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "bcd44d23a0d2fc2804fa34f3cc5407e51b0adc2f",
+  "receipt": "runtime-host-final-attempt7.json",
+  "status": "FAILED",
+  "exitCode": 1,
+  "durationSeconds": 310.523,
+  "totalTests": 178,
+  "passed": 174,
+  "failed": 3,
+  "skipped": 1,
+  "failedTests": [
+    {
+      "name": "actual authenticated HTTP control executes >32MiB Unicode input with exact durable hashes and no replay",
+      "durationMilliseconds": 17207.672917
+    },
+    {
+      "name": "real JITless Node supports Fetch request, streaming, clone, redirects, gzip, multipart and abort",
+      "durationMilliseconds": 15154.600417
+    },
+    {
+      "name": "cancelling an actual pending MCP startup settles the managed job and permits a clean later generation",
+      "durationMilliseconds": 18564.200875
+    }
+  ],
+  "classification": "Observed Host-readiness assertions and killed child-process timeout; these are actual test failures.",
+  "rawLogSHA256": "e2553a7e5ebd8b0fd3f334cddaf79620d3c033eacbb9655a89e0c559462ce28e",
+  "retry": {
+    "receipt": "../runtime-host-final-attempt8-bcd44d23a/runtime-host-final-attempt8.json",
+    "sameSourceCommit": true,
+    "previousCommand": [
+      "nice",
+      "-n",
+      "10",
+      "bash",
+      "Scripts/Runtime/prepare-runtime-host.sh"
+    ],
+    "retryCommand": [
+      "bash",
+      "Scripts/Runtime/prepare-runtime-host.sh"
+    ],
+    "change": "Removed nice -n 10; original test assertions and timing budgets unchanged, as recorded by the execution owner.",
+    "result": "177 passed, 0 failed, 1 unchanged skip; original ZIP/JITless probe passed.",
+    "causation": "The record establishes the retry result; it does not prove a sole cause for the earlier scheduling/readiness failure."
+  }
+}

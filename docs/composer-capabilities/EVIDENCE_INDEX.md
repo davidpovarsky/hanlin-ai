@@ -1,6 +1,6 @@
 # Composer capabilities: validation evidence
 
-This packet records successful original RuntimeHost attempt 6 at `801bb3f66cfe6d4d0ff9e49e0094ea2887525fbd`, generated inventory freeze `712fc49fe656e0b9a4c7e691752377b879fd6e24`, and four failed application build attempts with their actual sources and diagnostics. Subsequent actor-isolation and original-owner metadata source changes are preserved without claiming validation after their integration. The isolated documentation branch is based on `189ca0d73a8f9b92451d343ca84b4b7074c57c6c`. Overall completion is **pending**. This packaging work ran no compiler, tests, native preparer or simulator.
+This packet records the successful original `HanlinApplication` library compilation at `aea6d31e311a3f3096014ea2f1c39432371e3ecc`, NativeScript fixture/preflight recovery, the actual Host7 failure followed by the successful unchanged-source Host8 retry, and native artifact export/verification at generated freeze `b739ada91aca115093e3511f9df58c15edcb5923`. Four failed full application build attempts remain preserved. The library build does not establish a successful full application build or runtime/UI acceptance. The isolated documentation branch is based on `189ca0d73a8f9b92451d343ca84b4b7074c57c6c`. Overall completion is **pending**. This packaging work ran no compiler, tests, native preparer or simulator.
 
 The [validation plan](VALIDATION_PLAN.json) records the remaining gates. The [machine index](EVIDENCE_INDEX.json) lists results and their receipt paths. [Packaging metadata](evidence/package-20261125.json) maps copied files to their original paths and checksums; [SHA256SUMS](evidence/SHA256SUMS-20261125) covers the packaged evidence.
 
@@ -29,7 +29,16 @@ The dedicated manifest regression, native artifact preparation, and completed Ru
 | AI_HLY build-for-testing attempt 2 | `20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91` | Exit 65 after 261.208s; two compiler errors reject the private stored `focused` property. No acceptance tests executed by this build command | [receipt](evidence/app-build-attempt2-20fb9f711/ai-hly-build-attempt2.json), [xcresult errors](evidence/app-build-attempt2-20fb9f711/ai-hly-build-attempt2-errors.json), [complete compressed log](evidence/app-build-attempt2-20fb9f711/ai-hly-build-attempt2.log.gz) |
 | AI_HLY build-for-testing attempt 3 | `91ac2c3868d9a056815bca56448e0cfcabd54eed` | Exit 65 after 134.632s; optional `Result` inference error in the NativeScript host-services adapter. No acceptance tests executed | [receipt](evidence/app-build-attempt3-91ac2c386/ai-hly-build-attempt3.json), [xcresult errors](evidence/app-build-attempt3-91ac2c386/ai-hly-build-attempt3-errors.json), [complete compressed log](evidence/app-build-attempt3-91ac2c386/ai-hly-build-attempt3.log.gz) |
 | AI_HLY build-for-testing attempt 4 | `712fc49fe656e0b9a4c7e691752377b879fd6e24` | Exit 65 after 175.793s; actor-isolated tool-name access in the live executor factory. No acceptance tests executed | [receipt](evidence/app-build-attempt4-712fc49fe/ai-hly-build-attempt4.json), [log-derived diagnostic](evidence/app-build-attempt4-712fc49fe/derived-compiler-errors.json), [complete compressed log](evidence/app-build-attempt4-712fc49fe/ai-hly-build-attempt4.log.gz) |
+| HanlinApplication library build | `aea6d31e311a3f3096014ea2f1c39432371e3ecc` | Exit 0 in 571.716s; original library compilation only, with stable Host6 resource; no acceptance tests | [receipt](evidence/application-library-aea6d31e3/application-module-build-attempt1.json), [complete compressed log](evidence/application-library-aea6d31e3/application-module-build-attempt1.log.gz) |
+| NativeScript metadata preparation | `aea6d31e311a3f3096014ea2f1c39432371e3ecc` | Original preparer exit 0 in 6.674s; installed wrapper hash matches exact owner source | [receipt](evidence/native-script-preparation-199da0f9e/native-script-metadata-preparation.json) |
+| NativeScript initial preflight | `aea6d31e311a3f3096014ea2f1c39432371e3ecc` | Exit 1 in 0.307s; original SwiftUI fixture package.json absent | [receipt](evidence/native-script-preparation-199da0f9e/native-script-metadata-preflight.json), [raw log](evidence/native-script-preparation-199da0f9e/native-script-metadata-preflight.log.gz) |
+| Original NativeScript fixture production | `199da0f9e61a0d99998bce906001e565f3138d1c` | Exit 0 in 24.598s after the fixture producer used the authoritative dependency lock | [receipt](evidence/native-script-preparation-199da0f9e/native-script-fixture-production.json) |
+| NativeScript second preflight | `199da0f9e61a0d99998bce906001e565f3138d1c` | Exit 0 in 2.291s; package.json unchanged | [receipt](evidence/native-script-preparation-199da0f9e/native-script-metadata-preflight-attempt2.json) |
+| RuntimeHost final attempt 7 | `bcd44d23a0d2fc2804fa34f3cc5407e51b0adc2f` | Exit 1 in 310.523s; 174 passed, three real readiness/child-timeout failures, one unchanged skip | [receipt](evidence/runtime-host-final-attempt7-bcd44d23a/runtime-host-final-attempt7.json), [failure assessment](evidence/runtime-host-final-attempt7-bcd44d23a/failure-assessment.json), [raw log](evidence/runtime-host-final-attempt7-bcd44d23a/runtime-host-final-attempt7.log.gz) |
+| RuntimeHost final attempt 8 | `bcd44d23a0d2fc2804fa34f3cc5407e51b0adc2f` | Exit 0 in 125.160s at normal priority; 177 passed, zero failed, one unchanged skip; original packed ZIP/JITless checks passed | [receipt](evidence/runtime-host-final-attempt8-bcd44d23a/runtime-host-final-attempt8.json), [raw log](evidence/runtime-host-final-attempt8-bcd44d23a/runtime-host-final-attempt8.log.gz) |
+| Native artifact export / verification | `b739ada91aca115093e3511f9df58c15edcb5923` | Both exit 0: 266.869s export and 9.269s verification; catalog has 15 frameworks and five support records | [receipt](evidence/integration-native-catalog-b739ada91/native-catalog-b739ada91-host8.json), [catalog](evidence/integration-native-catalog-b739ada91/native-artifacts.json) |
 | App preparation / A2UI | `f54aebbb35169ea63eca146a1ba3ef4e8bf4f84d` | Both original source generators passed their checks; original A2UI schema generator executed successfully | [receipt](evidence/mac-validation-20261125/app-preparation.json), [A2UI result](evidence/mac-validation-20261125/a2ui-schemas.json/result.json) |
+
 
 ### Platform coverage is aggregated
 
@@ -89,7 +98,7 @@ The skipped case remains `actual Node job crosses 300 seconds with no hidden dea
 
 The [source/build assessment](evidence/runtime-host-final-attempt6-801bb3f66/source-and-build-assessment.json) verifies that generated freeze `712fc49fe` changes **eight lines across three documentation files**: three source-revision entries and five copies of the corrected adapter hash. The [original generated patch](evidence/runtime-host-final-attempt6-801bb3f66/sdk-inventory-freeze-712fc49fe.patch.gz) and [one-line source correction](evidence/runtime-host-final-attempt6-801bb3f66/nativescript-result-type-801bb3f66.patch.gz) are preserved.
 
-**Archive freshness passed at `801bb3f66`.** Later owner-metadata intake and actor-factory corrections have no subsequent preparation/archive result in this packet. Earlier RuntimeHost passes, original sources, archive hashes and failures remain preserved. None establishes a successful application build.
+**Host6 archive freshness passed at its actual source `801bb3f66`.** The later metadata/actor changes, fixture generation, Host7 failure and successful Host8 preparation are recorded separately below. Earlier passes, original sources, archive hashes and failures remain preserved. None establishes a successful full application build.
 
 ### Application build attempt 1 and isolated cache repair
 
@@ -115,7 +124,7 @@ The raw log has exactly two compiler error lines, both at `HanlinCompactChatWork
 
 The [cache-retirement receipt](evidence/app-build-attempt2-20fb9f711/isolated-stale-module-cache-retirement.json) records removal of only the inactive, reproducible copied ModuleCache after the working cache was regenerated. It records no active open files in that detached copy. This maintenance action is preserved as orchestration, with no build or test pass inferred.
 
-The [focus-fix provenance](evidence/app-build-attempt2-20fb9f711/focus-fix-provenance.json) records the ownership check and exact correction: original commit `8cf5b3e3023852ab41fec7d9db1592218c1bcfd1` was integrated as `e5a3e6d9216a69552b2b25a096fd3f3fcf8e2876`. Their source diffs are byte-identical. Only the private Anchor backing Bool and three uses change from `focused` to `searchIsFocused`; initializer/update labels and focus publication behavior remain unchanged. The [original patch and ownership rationale](evidence/app-build-attempt2-20fb9f711/focus-fix-8cf5b3e30.patch.gz) are preserved. **Compilation after this correction is not verified by this packet.**
+The [focus-fix provenance](evidence/app-build-attempt2-20fb9f711/focus-fix-provenance.json) records the ownership check and exact correction: original commit `8cf5b3e3023852ab41fec7d9db1592218c1bcfd1` was integrated as `e5a3e6d9216a69552b2b25a096fd3f3fcf8e2876`. Their source diffs are byte-identical. Only the private Anchor backing Bool and three uses change from `focused` to `searchIsFocused`; initializer/update labels and focus publication behavior remain unchanged. The [original patch and ownership rationale](evidence/app-build-attempt2-20fb9f711/focus-fix-8cf5b3e30.patch.gz) are preserved. At the attempt-2 checkpoint no successful recompilation was available. The later original library-only compilation is recorded below with its actual source and restricted scope.
 
 The complete 4,608,783-byte raw attempt-2 log is losslessly compressed; its uncompressed SHA-256 is:
 
@@ -143,15 +152,56 @@ No separately exported xcresult issue file was present at capture. The included 
 
 `565d4477238385a062ad2ece425960abfa5e40b1edba10f0412dd2d30a3bbf87`
 
-Original fix `4c18f43cabad800e6069d601b39ca534e720e8a0` adds exactly two `@MainActor` annotations to the live factories. Its integration as `aea6d31e311a3f3096014ea2f1c39432371e3ecc` has a byte-identical source diff. The [original fix and rationale](evidence/runtime-host-final-attempt6-801bb3f66/executor-mainactor-4c18f43ca.patch.gz) are preserved; no compilation after that correction is claimed.
+Original fix `4c18f43cabad800e6069d601b39ca534e720e8a0` adds exactly two `@MainActor` annotations to the live factories. Its integration as `aea6d31e311a3f3096014ea2f1c39432371e3ecc` has a byte-identical source diff. The [original fix and rationale](evidence/runtime-host-final-attempt6-801bb3f66/executor-mainactor-4c18f43ca.patch.gz) are preserved. The subsequent library-only compilation passed at the integrated `aea6d31e3` source; full application validation remains separate.
 
-The original NativeScript owner change `4d8c0d0ac0e49e4a14dc64970b75bfca4e8b2aed` was taken through `d4258d2cc9bdce5fdcac846c9d4d86380e40793b` and integrated as `e08a77146a6bef97a0be8cd90dfdf1d30e2255ba`. All three diffs are byte-identical and affect exactly the original metadata wrapper and its README. The [owner patch](evidence/runtime-host-final-attempt6-801bb3f66/nativescript-owner-metadata-4d8c0d0ac.patch.gz) and comparison are preserved. This is source-intake evidence; the following original NativeScript preparation/preflight and final archive freshness are **pending evidence in this packet**, not inferred from the source merge.
+The original NativeScript owner change `4d8c0d0ac0e49e4a14dc64970b75bfca4e8b2aed` was taken through `d4258d2cc9bdce5fdcac846c9d4d86380e40793b` and integrated as `e08a77146a6bef97a0be8cd90dfdf1d30e2255ba`. All three diffs are byte-identical and affect exactly the original metadata wrapper and its README. The [owner patch](evidence/runtime-host-final-attempt6-801bb3f66/nativescript-owner-metadata-4d8c0d0ac.patch.gz) and comparison are preserved. This is source-intake evidence. The subsequent original NativeScript preparer, initial failed preflight, corrected fixture production, successful second preflight and Host8 archive preparation are preserved below as actual separate executions.
+
+### Original application library compilation
+
+The original `HanlinApplication` scheme completed `xcodebuild build` with **exit 0 in 571.716 seconds**, from **02:14:13.395232 to 02:23:45.110379 UTC** at `aea6d31e311a3f3096014ea2f1c39432371e3ecc`. Its raw log contains `BUILD SUCCEEDED`; the execution owner reported the original 519 Swift source files. The [exact receipt](evidence/application-library-aea6d31e3/application-module-build-attempt1.json) records no tracked changes.
+
+This was a library compilation. It intentionally retained the prior Host6 archive, whose before/after SHA-256 was identical (`9d2390718e8cbd9161438392789a69a60bcfe537c8cd4ac5b8088323cb3339cc`). It did not execute tests or establish a successful `AI_HLY` or `HanlinMiniApps` build, current application resource binding, native-engine acceptance or UI behavior. The four completed full-app failures remain in this index.
+
+The complete 8,526,296-byte raw log is losslessly compressed with SHA-256 `5f7a8d6b6714b532a0d4240dd58b92e7c34ec18d0c214ee9d77c56b7d24fd403`. The original xcresult remains on the Mac, with its [seven-file hash inventory](evidence/application-library-aea6d31e3/xcresult-sha256.json) preserved.
+
+### NativeScript metadata preparation and fixture recovery
+
+The original NativeScript preparer passed in **6.674 seconds** at `aea6d31e3`. Its installed wrapper SHA-256 `71bf1d521abff7cc29c1e8d397a9ef2a55b09f758afb36f0a148be12350b664f` matches the exact integrated owner source. The initial preflight then **failed** in 0.307 seconds because `Prepared/swiftui-fixture/nativescript/app/package.json` did not exist. This prerequisite failure remains preserved; it is not counted as a native-engine acceptance result.
+
+The [exact fixture producer correction](evidence/native-script-preparation-199da0f9e/fixture-lock-authority-199da0f9e.patch.gz) in `199da0f9e61a0d99998bce906001e565f3138d1c` changes three lines in `prepare-fixture.mjs` to use the authoritative runtime/core lock versions. It retains the installed-version validation and original producer. The original fixture producer subsequently passed in **24.598 seconds**, and the second original preflight passed in **2.291 seconds**.
+
+Both successful receipts record the same unchanged package.json SHA-256: `08fc03bfa87cd78f4f21f80e9324a4840061105f6e9ab081ed794c569ca7324b`. Generated commit `bcd44d23a0d2fc2804fa34f3cc5407e51b0adc2f` changes only the two original fixture bundle files; its [original patch](evidence/native-script-preparation-199da0f9e/generated-fixtures-bcd44d23a.patch.gz) is retained. The [combined source assessment](evidence/native-script-preparation-199da0f9e/preparation-and-library-assessment.json) preserves each execution source and the initial failure.
+
+### Host7 failure, unchanged-source Host8 pass and final archive
+
+Host7 ran the original packager at `bcd44d23a` with `nice -n 10` and completed with **174 passes, three actual failures, one unchanged skip**, exit 1 after 310.523 seconds. The three failures were execution-input readiness at 17.208 seconds, the Fetch child killed at its existing 15-second budget, and MCP host-fixture readiness at 18.564 seconds. The [failure assessment](evidence/runtime-host-final-attempt7-bcd44d23a/failure-assessment.json) retains their full case names and original timing details. The raw log SHA-256 is `e2553a7e5ebd8b0fd3f334cddaf79620d3c033eacbb9655a89e0c559462ce28e`.
+
+Host8 used **the same source, tests, assertions and timing budgets**, with the original packager at normal priority. It completed at **02:37:47.226713 UTC**, exit 0 in **125.160 seconds**, with **177 passes, zero failures and the same existing opt-in skip**. Original packed ZIP validation and all eleven packed JITless contracts passed. The changed process priority and successful retry are recorded observations; they do not prove a sole cause for Host7's timing failures.
+
+The read-only transfer independently matched the actual **81,837,544-byte** archive to SHA-256 `8b05742603572e8b3309a647fc04880fa59d891beb13f4623fbd79a0cb9c49a1`. The raw Host8 log SHA-256 is `0c87e20007d3a248b4ef781e1c3eb2ce6fb4fc9038a3a8774807e37ad752bd9f`. Repeated Host passes are not added together as unique test coverage.
+
+Generated freeze `b739ada91aca115093e3511f9df58c15edcb5923` changes exactly **five provenance/hash lines in three SDK documentation files**, after Host8 at `bcd44d23a`. The [original generated patch](evidence/runtime-host-final-attempt8-bcd44d23a/sdk-inventory-freeze-b739ada91.patch.gz) and [original freeze receipt](evidence/runtime-host-final-attempt8-bcd44d23a/runtime-provenance-host8-commit.json) preserve this distinction. Archive freshness after the metadata, actor and fixture changes is now an executed pass; application acceptance remains pending.
+
+### Prebuild source audit and verified native catalog
+
+The [original read-only integration audit](evidence/integration-native-catalog-b739ada91/prebuild-integration-b739ada91.json) retains its actual remote fetch cutoff of **02:33:51.362865 UTC** and audited source `bcd44d23a`. It distinguishes subsequent generated-only `b739ada91` from the source actually audited. Completed relevant metadata and factory-isolation changes were already integrated; unrelated owner UI-helper changes do not affect the selected composer tests. The unresolved original owner's native acceptance boundary remains explicit.
+
+The original native exporter and verifier executed at `b739ada91`, each with exit 0: **266.869 seconds** for export and **9.269 seconds** for verification. Their [receipt](evidence/integration-native-catalog-b739ada91/native-catalog-b739ada91-host8.json), [export log](evidence/integration-native-catalog-b739ada91/native-catalog-b739ada91-host8-export.log.gz), [verification log](evidence/integration-native-catalog-b739ada91/native-catalog-b739ada91-host8-verify.log.gz) and exact [native catalog](evidence/integration-native-catalog-b739ada91/native-artifacts.json) are preserved. The catalog declares 15 frameworks, five support records and no missing targets. It explicitly describes validation of existing native binaries and does not claim to build or test runtimes. Native binaries remain on the Mac.
+
+The [qualified native comparison](evidence/integration-native-catalog-b739ada91/native-catalog-comparison-b739ada91.json) binds its owner baseline to the exact captured catalog at owner source `fda6948ca`, rather than relabeling an earlier mutable catalog. **All 16 native inputs match; 14 of 15 framework slice maps and 34 of 36 individual slices match the owner binaries.** ExpoModulesJSI is the documented original-producer rebuild completed at 00:46:04 UTC. Its raw producer log is already retained in this packet; the original producer built both slices in 56 seconds. This is not a claim that all fifteen frameworks reuse identical owner binaries.
+
+Two additional framework ZIP differences concern only Header directory modes changing from 0700 to 0755. Byte equality after normalizing just those directory attributes was verified in memory; no Mac archive was modified. Four of five support archives match the owner catalog, with Host8's NodeHostSupport as the only support delta. All eight original catalog/receipt/inspection snapshots are retained with the comparison so its qualifications remain reproducible. The original native preparation receipt's then-stale RuntimeHost check is preserved; later Host8 proof is recorded separately.
+
+### Verified Asana milestone
+
+The authorized parent and M5 milestone descriptions were updated in a single successful **2-of-2** write at **02:31:11 UTC**. Both remained incomplete. The [write acknowledgement and read-back assessment](evidence/asana-milestone-20261125-023111.json) preserve the new summary and verification metadata without copying the prior task descriptions. M5 retained its prior rich/plain notes byte-for-byte; the parent retained all content with only six existing Asana URLs canonicalized to include `/f/`. One transient parent read-back failure was resolved by a bounded read-only retry, without a repeated write.
+
+The milestone reports the library-only pass, actual fixture/preflight recovery and open full-app/native/UI gates. Host7/8 results occurred after that write and are not represented as already written to Asana by this packet.
 
 ## Required work still pending
 
 | Gate | Exact pending scope |
 |---|---|
-| Preparation after owner intake | Original NativeScript preparation/preflight and final archive freshness for the new metadata inputs |
 | Application compilation | Two Debug `build-for-testing` schemes: `AI_HLY` and `HanlinMiniApps` |
 | App selection / storage / policy integration | 13 methods: six composer integration, five MiniApp assistant-tool, one original Skill policy and one prepared Expo discovery method |
 | Original native engines | Four `HanlinUnifiedHostServicesE2ETests` methods |
@@ -159,7 +209,7 @@ The original NativeScript owner change `4d8c0d0ac0e49e4a14dc64970b75bfca4e8b2aed
 | iPhone UI | Three composer-capability UI methods plus the existing model-picker/draft regression |
 | iPad UI | The same three composer-capability UI methods |
 
-This packet records four failed `AI_HLY` builds, successful qualified SDK resolution and RuntimeHost attempts through 6, and exact source corrections/intake. It contains no successful application build or application/native/editor/UI test result. The pending gates above remain open.
+This packet records four failed `AI_HLY` builds, successful library-only compilation, actual NativeScript preparation/fixture/preflight recovery, the retained Host7 failure and successful Host8 retry, and native artifact export/verification at `b739ada91`. It contains no successful full application build or application/native/editor/UI test result. The pending gates above remain open.
 
 The UI inventory is **seven executions across two devices**, comprising four distinct methods. The catalog/map fixture supplies UI metadata only; it does not provide a tool executor or a fabricated model response.
 

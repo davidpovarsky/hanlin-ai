@@ -1,0 +1,18 @@
+{
+  "sourceCommit": "199da0f9e61a0d99998bce906001e565f3138d1c",
+  "startedAtUTC": "2026-11-25T02:25:46.673687+00:00",
+  "finishedAtUTC": "2026-11-25T02:25:48.964928+00:00",
+  "command": [
+    "npm",
+    "run",
+    "preflight:ios-dependencies",
+    "--prefix",
+    "Scripts/NativeScript"
+  ],
+  "exitCode": 0,
+  "durationSeconds": 2.291,
+  "logSHA256": "9f4ee924d89fc111b0a7cde31a74ff862d866fe481bb079ca49aa205ba876cfb",
+  "packageJSONSHA256Before": "08fc03bfa87cd78f4f21f80e9324a4840061105f6e9ab081ed794c569ca7324b",
+  "packageJSONSHA256After": "08fc03bfa87cd78f4f21f80e9324a4840061105f6e9ab081ed794c569ca7324b",
+  "trackedChanges": " M Scripts/NativeScript/Prepared/fixture-a/nativescript/app/bundle.mjs\n M Scripts/NativeScript/Prepared/fixture-b/nativescript/app/bundle.mjs\n"
+}

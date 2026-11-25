@@ -1,0 +1,15 @@
+{
+  "sourceCommit": "199da0f9e61a0d99998bce906001e565f3138d1c",
+  "startedAtUTC": "2026-11-25T02:25:21.884862+00:00",
+  "finishedAtUTC": "2026-11-25T02:25:46.483013+00:00",
+  "command": [
+    "node",
+    "Scripts/NativeScript/prepare-fixture.mjs"
+  ],
+  "exitCode": 0,
+  "durationSeconds": 24.598,
+  "logSHA256": "bc3dc67e30e38fbf07ec3ca08e1b774901468b5eced3f826d06e31c603a52cbe",
+  "packageJSONSHA256Before": "08fc03bfa87cd78f4f21f80e9324a4840061105f6e9ab081ed794c569ca7324b",
+  "packageJSONSHA256After": "08fc03bfa87cd78f4f21f80e9324a4840061105f6e9ab081ed794c569ca7324b",
+  "trackedChanges": " M Scripts/NativeScript/Prepared/fixture-a/nativescript/app/bundle.mjs\n M Scripts/NativeScript/Prepared/fixture-b/nativescript/app/bundle.mjs\n"
+}

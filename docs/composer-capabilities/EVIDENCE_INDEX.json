@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "createdAtUTC": "2026-11-25T00:28:39.148294+00:00",
-  "documentationCheckpoint": "aea6d31e311a3f3096014ea2f1c39432371e3ecc",
+  "documentationCheckpoint": "b739ada91aca115093e3511f9df58c15edcb5923",
   "overallStatus": "PENDING",
   "sdk": {
     "source": "a3aae0b952b0518cb8c40ed4a511d4cffadab99f",
@@ -85,31 +85,59 @@
   },
   "runtimeHost": {
     "failedAttempt": "evidence/mac-validation-20261125/runtime-host-final-attempt1.json",
-    "passingAttempt": "evidence/runtime-host-final-attempt6-801bb3f66/runtime-host-final-attempt6.json",
-    "passingSource": "801bb3f66cfe6d4d0ff9e49e0094ea2887525fbd",
+    "passingAttempt": "evidence/runtime-host-final-attempt8-bcd44d23a/runtime-host-final-attempt8.json",
+    "passingSource": "bcd44d23a0d2fc2804fa34f3cc5407e51b0adc2f",
     "executedStatus": "EXECUTED_PASS",
     "nodePassed": 177,
     "nodeFailed": 0,
     "nodeSkipped": 1,
-    "archiveSHA256": "9d2390718e8cbd9161438392789a69a60bcfe537c8cd4ac5b8088323cb3339cc",
-    "rawLogSHA256": "84dad869cb29f0bd357f2f857d2cc1a0f7b68fb847ebe709890fa775006baae0",
-    "previousPassingAttempt": "evidence/runtime-host-final-attempt5-756d7f151/runtime-host-final-attempt5.json",
-    "durationSeconds": 84.718,
-    "archiveBytes": 81837524,
+    "archiveSHA256": "8b05742603572e8b3309a647fc04880fa59d891beb13f4623fbd79a0cb9c49a1",
+    "rawLogSHA256": "0c87e20007d3a248b4ef781e1c3eb2ce6fb4fc9038a3a8774807e37ad752bd9f",
+    "previousPassingAttempt": "evidence/runtime-host-final-attempt6-801bb3f66/runtime-host-final-attempt6.json",
+    "durationSeconds": 125.16,
+    "archiveBytes": 81837544,
     "archiveFreshness": {
       "status": "EXECUTED_PASS",
-      "source": "801bb3f66cfe6d4d0ff9e49e0094ea2887525fbd",
-      "generatedInventoryCommit": "712fc49fe656e0b9a4c7e691752377b879fd6e24"
+      "source": "bcd44d23a0d2fc2804fa34f3cc5407e51b0adc2f",
+      "generatedInventoryCommit": "b739ada91aca115093e3511f9df58c15edcb5923",
+      "receipt": "evidence/runtime-host-final-attempt8-bcd44d23a/runtime-host-final-attempt8.json",
+      "reason": "Original preparation after metadata/actor changes and fixture generation; same-source normal-priority retry retains Host7 failure and unchanged assertions/budgets."
     },
     "historicalPassingAttempts": [
       "evidence/mac-validation-20261125/runtime-host-final-attempt2.json",
       "evidence/runtime-host-final-attempt3-37a788a4a/runtime-host-final-attempt3.json",
       "evidence/runtime-host-final-attempt4-cd795e378/runtime-host-final-attempt4.json",
-      "evidence/runtime-host-final-attempt5-756d7f151/runtime-host-final-attempt5.json"
+      "evidence/runtime-host-final-attempt5-756d7f151/runtime-host-final-attempt5.json",
+      "evidence/runtime-host-final-attempt6-801bb3f66/runtime-host-final-attempt6.json"
     ],
     "postIntegrationFreshness": {
-      "source": "aea6d31e311a3f3096014ea2f1c39432371e3ecc",
-      "status": "PENDING_EVIDENCE_AFTER_METADATA_INTAKE_AND_ACTOR_FIX"
+      "status": "EXECUTED_PASS",
+      "source": "bcd44d23a0d2fc2804fa34f3cc5407e51b0adc2f",
+      "generatedInventoryCommit": "b739ada91aca115093e3511f9df58c15edcb5923",
+      "receipt": "evidence/runtime-host-final-attempt8-bcd44d23a/runtime-host-final-attempt8.json",
+      "reason": "Original preparation after metadata/actor changes and fixture generation; same-source normal-priority retry retains Host7 failure and unchanged assertions/budgets."
+    },
+    "failedAttempts": [
+      "evidence/mac-validation-20261125/runtime-host-final-attempt1.json",
+      "evidence/runtime-host-final-attempt7-bcd44d23a/runtime-host-final-attempt7.json"
+    ],
+    "latestFailedAttempt": {
+      "status": "FAILED",
+      "source": "bcd44d23a0d2fc2804fa34f3cc5407e51b0adc2f",
+      "exitCode": 1,
+      "durationSeconds": 310.523,
+      "nodePassed": 174,
+      "nodeFailed": 3,
+      "nodeSkipped": 1,
+      "receipt": "evidence/runtime-host-final-attempt7-bcd44d23a/runtime-host-final-attempt7.json",
+      "assessment": "evidence/runtime-host-final-attempt7-bcd44d23a/failure-assessment.json",
+      "rawLogSHA256": "e2553a7e5ebd8b0fd3f334cddaf79620d3c033eacbb9655a89e0c559462ce28e",
+      "classification": "ACTUAL_READINESS_AND_CHILD_TIMEOUT_FAILURES"
+    },
+    "normalPriorityRetry": {
+      "sameSource": true,
+      "testsAssertionsAndBudgetsUnchanged": true,
+      "causalAttribution": "Not proven to be the sole cause of the preceding failures."
     }
   },
   "appPreparation": {
@@ -119,7 +147,6 @@
     "a2uiResult": "evidence/mac-validation-20261125/a2ui-schemas.json/result.json"
   },
   "pending": [
-    "Original NativeScript preparation/preflight and archive freshness after the owner metadata intake",
     "Two actual application build-for-testing schemes",
     "Thirteen app integration methods",
     "Four actual native-engine methods",
@@ -133,8 +160,8 @@
   },
   "applicability": "evidence/applicability-37a788a4a.json",
   "documentationBranchBase": "189ca0d73a8f9b92451d343ca84b4b7074c57c6c",
-  "updatedAtUTC": "2026-11-25T02:16:47.657975+00:00",
-  "latestRecordedExecutionSource": "712fc49fe656e0b9a4c7e691752377b879fd6e24",
+  "updatedAtUTC": "2026-11-25T02:50:06.741981+00:00",
+  "latestRecordedExecutionSource": "b739ada91aca115093e3511f9df58c15edcb5923",
   "manifestAudit": {
     "status": "EXECUTED_PASS",
     "source": "7b7f7e4460200d7e98162dd525d67f8ca1860911",
@@ -160,20 +187,50 @@
     "generationProvenance": "evidence/native-preparation-7b7f7e446/generation-provenance.json",
     "acceptanceTests": "NOT_INFERRED",
     "postOwnerMetadataIntakeFreshness": {
-      "source": "aea6d31e311a3f3096014ea2f1c39432371e3ecc",
-      "status": "PENDING_EVIDENCE",
-      "ownerReportedPreparationJob": "job_9cebc5d796cb"
+      "status": "EXECUTED_PASS",
+      "assessment": "evidence/native-script-preparation-199da0f9e/preparation-and-library-assessment.json",
+      "preparation": {
+        "status": "EXECUTED_PASS",
+        "source": "aea6d31e311a3f3096014ea2f1c39432371e3ecc",
+        "receipt": "evidence/native-script-preparation-199da0f9e/native-script-metadata-preparation.json",
+        "durationSeconds": 6.674,
+        "installedWrapperSHA256": "71bf1d521abff7cc29c1e8d397a9ef2a55b09f758afb36f0a148be12350b664f"
+      },
+      "initialPreflight": {
+        "status": "FAILED",
+        "source": "aea6d31e311a3f3096014ea2f1c39432371e3ecc",
+        "exitCode": 1,
+        "durationSeconds": 0.307,
+        "receipt": "evidence/native-script-preparation-199da0f9e/native-script-metadata-preflight.json",
+        "reason": "Original SwiftUI fixture package.json was absent."
+      },
+      "fixtureProducerCorrection": "199da0f9e61a0d99998bce906001e565f3138d1c",
+      "fixtureProduction": {
+        "status": "EXECUTED_PASS",
+        "source": "199da0f9e61a0d99998bce906001e565f3138d1c",
+        "receipt": "evidence/native-script-preparation-199da0f9e/native-script-fixture-production.json",
+        "durationSeconds": 24.598
+      },
+      "secondPreflight": {
+        "status": "EXECUTED_PASS",
+        "source": "199da0f9e61a0d99998bce906001e565f3138d1c",
+        "receipt": "evidence/native-script-preparation-199da0f9e/native-script-metadata-preflight-attempt2.json",
+        "durationSeconds": 2.291
+      },
+      "generatedFixtureCommit": "bcd44d23a0d2fc2804fa34f3cc5407e51b0adc2f",
+      "applicationOrNativeAcceptanceInferred": false
     }
   },
   "applicationBuildProgress": {
-    "status": "CORRECTIONS_INTEGRATED_AWAITING_VALIDATION",
+    "status": "APPLICATION_LIBRARY_PASSED_FULL_APPLICATION_VALIDATION_PENDING",
     "latestCompletedAttempt": 4,
     "latestCompletedBuildSource": "712fc49fe656e0b9a4c7e691752377b879fd6e24",
     "latestCompletedBuildStatus": "FAILED",
     "actorCorrectionIntegratedCommit": "aea6d31e311a3f3096014ea2f1c39432371e3ecc",
     "metadataIntakeIntegratedCommit": "e08a77146a6bef97a0be8cd90dfdf1d30e2255ba",
     "provenance": "evidence/runtime-host-final-attempt6-801bb3f66/source-and-build-assessment.json",
-    "completedSuccessfulBuildInThisPacket": false
+    "completedSuccessfulBuildInThisPacket": false,
+    "libraryCompilation": "evidence/application-library-aea6d31e3/application-module-build-attempt1.json"
   },
   "applicationBuildAttempts": [
     {
@@ -264,8 +321,169 @@
     "applicationBuildOrTestPassInferred": false
   },
   "generatedInventoryFreeze": {
-    "source": "712fc49fe656e0b9a4c7e691752377b879fd6e24",
-    "assessment": "evidence/runtime-host-final-attempt6-801bb3f66/source-and-build-assessment.json",
-    "changedProvenanceAndHashLines": 8
+    "source": "b739ada91aca115093e3511f9df58c15edcb5923",
+    "actualHostExecutionSource": "bcd44d23a0d2fc2804fa34f3cc5407e51b0adc2f",
+    "assessment": "evidence/native-script-preparation-199da0f9e/preparation-and-library-assessment.json",
+    "receipt": "evidence/runtime-host-final-attempt8-bcd44d23a/runtime-provenance-host8-commit.json",
+    "changedProvenanceAndHashLines": 5,
+    "changedDocumentationFiles": 3
+  },
+  "applicationLibraryCompilation": {
+    "status": "EXECUTED_PASS",
+    "source": "aea6d31e311a3f3096014ea2f1c39432371e3ecc",
+    "scheme": "HanlinApplication",
+    "command": [
+      "xcodebuild",
+      "build",
+      "-project",
+      "AI_HLY.xcodeproj",
+      "-scheme",
+      "HanlinApplication",
+      "-configuration",
+      "Debug",
+      "-destination",
+      "platform=iOS Simulator,id=F1D52257-55E0-4927-8029-E19D47B51AC0",
+      "-jobs",
+      "2",
+      "-derivedDataPath",
+      "/Users/m1/caches/DerivedData/hanlin-composer-app-20261124",
+      "-clonedSourcePackagesDirPath",
+      "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/SourcePackages",
+      "-disableAutomaticPackageResolution",
+      "-onlyUsePackageVersionsFromResolvedFile",
+      "-skipPackageUpdates",
+      "-skipPackagePluginValidation",
+      "-skipMacroValidation",
+      "CODE_SIGNING_ALLOWED=YES",
+      "CODE_SIGNING_REQUIRED=YES",
+      "CODE_SIGN_IDENTITY=-",
+      "-resultBundlePath",
+      "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/application-module-build-attempt1.xcresult"
+    ],
+    "exitCode": 0,
+    "startedAtUTC": "2026-11-25T02:14:13.395232+00:00",
+    "finishedAtUTC": "2026-11-25T02:23:45.110379+00:00",
+    "durationSeconds": 571.716,
+    "swiftSourceCountReportedByExecutionOwner": 519,
+    "receipt": "evidence/application-library-aea6d31e3/application-module-build-attempt1.json",
+    "scope": "Original HanlinApplication library compilation with the stable earlier Host6 resource; separate from full application and runtime/UI acceptance.",
+    "stableEmbeddedHost6ArchiveSHA256": "9d2390718e8cbd9161438392789a69a60bcfe537c8cd4ac5b8088323cb3339cc",
+    "rawLogSHA256": "5f7a8d6b6714b532a0d4240dd58b92e7c34ec18d0c214ee9d77c56b7d24fd403",
+    "fullApplicationBuildOrAcceptanceTestsInferred": false,
+    "originalScopeRecordedAtExecution": "Original HanlinApplication library source compilation only; not application/runtime acceptance. Stable previous Host6 resource is intentional; Host7 and full app builds remain required."
+  },
+  "nativeScriptMetadataPreparation": {
+    "status": "EXECUTED_PASS",
+    "assessment": "evidence/native-script-preparation-199da0f9e/preparation-and-library-assessment.json",
+    "preparation": {
+      "status": "EXECUTED_PASS",
+      "source": "aea6d31e311a3f3096014ea2f1c39432371e3ecc",
+      "receipt": "evidence/native-script-preparation-199da0f9e/native-script-metadata-preparation.json",
+      "durationSeconds": 6.674,
+      "installedWrapperSHA256": "71bf1d521abff7cc29c1e8d397a9ef2a55b09f758afb36f0a148be12350b664f"
+    },
+    "initialPreflight": {
+      "status": "FAILED",
+      "source": "aea6d31e311a3f3096014ea2f1c39432371e3ecc",
+      "exitCode": 1,
+      "durationSeconds": 0.307,
+      "receipt": "evidence/native-script-preparation-199da0f9e/native-script-metadata-preflight.json",
+      "reason": "Original SwiftUI fixture package.json was absent."
+    },
+    "fixtureProducerCorrection": "199da0f9e61a0d99998bce906001e565f3138d1c",
+    "fixtureProduction": {
+      "status": "EXECUTED_PASS",
+      "source": "199da0f9e61a0d99998bce906001e565f3138d1c",
+      "receipt": "evidence/native-script-preparation-199da0f9e/native-script-fixture-production.json",
+      "durationSeconds": 24.598
+    },
+    "secondPreflight": {
+      "status": "EXECUTED_PASS",
+      "source": "199da0f9e61a0d99998bce906001e565f3138d1c",
+      "receipt": "evidence/native-script-preparation-199da0f9e/native-script-metadata-preflight-attempt2.json",
+      "durationSeconds": 2.291
+    },
+    "generatedFixtureCommit": "bcd44d23a0d2fc2804fa34f3cc5407e51b0adc2f",
+    "applicationOrNativeAcceptanceInferred": false
+  },
+  "nativeArtifactExportVerification": {
+    "status": "EXECUTED_PASS",
+    "source": "b739ada91aca115093e3511f9df58c15edcb5923",
+    "receipt": "evidence/integration-native-catalog-b739ada91/native-catalog-b739ada91-host8.json",
+    "catalog": "evidence/integration-native-catalog-b739ada91/native-artifacts.json",
+    "stages": [
+      {
+        "stage": "export",
+        "exitCode": 0,
+        "durationSeconds": 266.869,
+        "rawLogSHA256": "ccd1370b757e19b9f2ca2e4a0e2b03c9f62905494d060fb214cb381b77568ee9"
+      },
+      {
+        "stage": "verify",
+        "exitCode": 0,
+        "durationSeconds": 9.269,
+        "rawLogSHA256": "4c9d4a5204d1cbac0f74163fc660f12c97db3b8c023041f4855974835bff7a86"
+      }
+    ],
+    "frameworks": 15,
+    "supportRecords": 5,
+    "missingTargets": [],
+    "acceptanceBoundary": {
+      "appleBuild": "reuse-producer-evidence; this exporter does not build or test runtimes",
+      "nativeSlices": "validated-existing-binaries",
+      "ordinaryVersionDependency": "requires original host acceptance; prepared Expo header paths and host build phases need integration"
+    },
+    "nativeBinariesCopied": false,
+    "qualifiedReuseAssessment": {
+      "status": "READ_ONLY_VERIFIED",
+      "receipt": "evidence/integration-native-catalog-b739ada91/native-catalog-comparison-b739ada91.json",
+      "actualCurrentSource": "b739ada91aca115093e3511f9df58c15edcb5923",
+      "ownerBaselineSource": "fda6948ca6a1f541293a1a1dd20e97f75eb0a527",
+      "summary": {
+        "allNativeInputsIdenticalToOwner": true,
+        "changedSupportArtifacts": [
+          "HanlinNodeHostSupport"
+        ],
+        "directoryModeOnlyFrameworkArchives": [
+          "ReactNativeHeaders",
+          "React"
+        ],
+        "exactFrameworkArchives": 12,
+        "frameworkCount": 15,
+        "frameworksWithNativeSlicesIdenticalToOwner": 14,
+        "identicalSupportArtifacts": 4,
+        "nativeInputCount": 16,
+        "nativeSliceCount": 36,
+        "nativeSlicesIdenticalToOwner": 34,
+        "originalProducerRebuiltFrameworks": [
+          "ExpoModulesJSI"
+        ],
+        "supportArtifactCount": 5
+      },
+      "acceptanceBoundary": "Prepared artifact inventory and provenance only. Does not claim app, simulator or native assistant acceptance; those remain separate parent-owned gates.",
+      "originalProducerLogSHA256": "5aeae751df080bcc7fa5efe02c22e3975f1cc6674eeafc9c0b3e25f30416d5fc",
+      "all15OwnerNativeBinariesIdentical": false
+    }
+  },
+  "prebuildIntegrationAudit": {
+    "status": "READ_ONLY_AUDIT_RECORDED",
+    "receipt": "evidence/integration-native-catalog-b739ada91/prebuild-integration-b739ada91.json",
+    "actualAuditedSource": "bcd44d23a0d2fc2804fa34f3cc5407e51b0adc2f",
+    "fetchCutoffUTC": "2026-11-25T02:33:51.362865Z",
+    "subsequentGeneratedFreeze": "b739ada91aca115093e3511f9df58c15edcb5923",
+    "newRelevantCompletedSourceRequired": false,
+    "nativeAcceptanceStillPending": true
+  },
+  "asanaMilestone": {
+    "status": "UPDATED_AND_READ_BACK",
+    "updatedAtUTC": "2026-11-25T02:31:11Z",
+    "taskIDs": [
+      "1220882717750164",
+      "1220882600644494"
+    ],
+    "updatedTasks": 2,
+    "taskCompletionChanged": false,
+    "allOriginalContentPreserved": true,
+    "receipt": "evidence/asana-milestone-20261125-023111.json"
   }
 }
