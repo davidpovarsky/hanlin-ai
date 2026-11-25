@@ -4,6 +4,7 @@ import hashlib
 import importlib.util
 import json
 import os
+import re
 import signal
 import subprocess
 import sys
@@ -308,6 +309,30 @@ runner.command([sys.executable, '-c', sys.argv[3], str(runner.EVIDENCE/'command-
                         os.kill(child_pid, signal.SIGKILL)
                     except ProcessLookupError:
                         pass
+
+
+class PairedSwiftTestingSelectorTests(unittest.TestCase):
+    def test_method_filters_match_the_original_swift_testing_signatures(self):
+        # Swift Testing identities include the parameter list. Xcode accepts a
+        # bare function filter but executes no matching case (native21/27 proof).
+        source_files = {
+            "PendingFirstTurnTests": "HanlinOrganizerDockParityTests.swift",
+            "HanlinScriptingPlatformCompositionTests": "HanlinScriptingPlatformCompositionTests.swift",
+            "MiniAppAuthoringToolTests": "MiniAppAuthoringToolTests.swift",
+        }
+        selectors, expected = runner.TEST_PLANS["miniapp_complete"]
+        methods = [value.split("/") for value in selectors
+                   if len(value.split("/")) == 3 and value.split("/")[1] in source_files]
+        self.assertEqual(expected, 27)
+        self.assertEqual(len(methods), 6)
+        for target, suite, method in methods:
+            with self.subTest(suite=suite, method=method):
+                source = (runner.ROOT / target / source_files[suite]).read_text()
+                name = method.removesuffix("()")
+                self.assertIn("import Testing", source)
+                self.assertRegex(source, r"@Test(?:\(.*\))?\s+func\s+" + re.escape(name) + r"\(\)")
+                self.assertEqual(method, name + "()",
+                                 "Use the declared Swift Testing identity, not a bare name.")
 
 
 if __name__ == "__main__":

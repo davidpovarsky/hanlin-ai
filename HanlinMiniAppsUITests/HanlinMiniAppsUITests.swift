@@ -766,7 +766,10 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
         XCTAssertTrue(remove.isHittable)
         remove.tap()
         let event = sdkOnlyText("EDIT_DELETE_EVENTS:1")
-        let confirm = row.buttons.matching(NSPredicate(format: "label == 'Delete'")).firstMatch
+        // UIKit places the trailing delete confirmation beside the swiped cell.
+        let list = app.collectionViews.containing(
+            .staticText, identifier: "Original editable list").firstMatch
+        let confirm = list.buttons.matching(NSPredicate(format: "label == 'Delete'")).firstMatch
         XCTAssertTrue(waitUntil(timeout: 10) { event.exists || (confirm.exists && confirm.isHittable) })
         if !event.exists { confirm.tap() }
         expectAdapterText("EDIT_DELETE_EVENTS:1")

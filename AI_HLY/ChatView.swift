@@ -432,12 +432,7 @@ struct ChatView: View {
 
     private func syncComposerEndpointWithBridge() {
         guard let sessionBridge else { return }
-        let endpoint = makeExternalComposerEndpoint()
-        if isExternalCompactComposerHost {
-            sessionBridge.update(endpoint: endpoint)
-        } else {
-            sessionBridge.snapshotDraft(from: endpoint)
-        }
+        sessionBridge.update(endpoint: makeExternalComposerEndpoint())
     }
 
     private var resolvedChatShell: ShellDescriptor {
@@ -605,13 +600,9 @@ struct ChatView: View {
                 TemporaryRecord = true
             }
             handleOnAppear()
-            if isExternalCompactComposerHost {
-                sessionBridge?.register(endpoint: makeExternalComposerEndpoint())
-            } else if let sessionBridge {
-                let endpoint = makeExternalComposerEndpoint()
-                sessionBridge.restoreCachedDraftIfNeeded(into: endpoint)
-                sessionBridge.snapshotDraft(from: endpoint)
-            }
+            // Inline and external composers share the mounted chat's send endpoint.
+            // Imported first turns must also dispatch in the wide iPad layout.
+            sessionBridge?.register(endpoint: makeExternalComposerEndpoint())
             if horizontalSizeClass == .compact || isExternalCompactComposerHost {
                 NotificationCenter.default.post(name: .hideTabBar, object: true) // 仅在紧凑模式下隐藏 TabBar
             }
@@ -650,11 +641,7 @@ struct ChatView: View {
             if let sessionBridge, sessionBridge.expectedActiveSessionID != effectiveChatSessionID {
                 agentSessionOwner.cancel()
             }
-            if isExternalCompactComposerHost {
-                sessionBridge?.unregister(sessionID: effectiveChatSessionID, token: composerRegistrationToken)
-            } else {
-                sessionBridge?.snapshotDraft(from: makeExternalComposerEndpoint())
-            }
+            sessionBridge?.unregister(sessionID: effectiveChatSessionID, token: composerRegistrationToken)
             if horizontalSizeClass == .compact || isExternalCompactComposerHost {
                 NotificationCenter.default.post(name: .hideTabBar, object: false) // 显示 TabBar
             }
