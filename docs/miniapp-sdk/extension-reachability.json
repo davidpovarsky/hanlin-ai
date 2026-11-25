@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "c05d8de55d5a38c0365581c297bc5b70bb34513a",
+  "sourceCommit": "5a0351f7e452789fd41c715c1ccb7f020cff44c5",
   "snapshotIdentity": "Base commit plus exact current hashes; uncommitted audit sources are listed separately",
   "uncommittedSourcePaths": [],
   "status": "IN_PROGRESS_SOURCE_AUDIT",
@@ -751,7 +751,7 @@
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinNotificationApplicationDelegate.swift",
       "line": 11,
       "anchor": "public final class HanlinNotificationApplicationDelegate",
-      "sha256": "3ffc6143a68699bcecd3e6d24af8d50c119886462e3495db476308ec11cecb20"
+      "sha256": "917e53aa616fe54cf75370feca5276c02c53eace57cd3b169ccb3414dc893e97"
     },
     "notificationForeground": {
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
