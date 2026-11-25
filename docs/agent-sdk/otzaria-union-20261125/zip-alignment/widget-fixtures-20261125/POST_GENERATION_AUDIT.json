@@ -1,0 +1,347 @@
+{
+  "status": "PASS",
+  "scope": "Post-generation source and archive-member validation; eight original Node controls reused from actual same-run logs; zero native widget tests",
+  "source_sha": "3f622f786bcd493d9068f35ad0b149d49d6fd793",
+  "retained_failed_validation_sha256": "3d7a964b2c413589777381712cc8c5a035ae10f1ce13e04c6812346f69fd86b5",
+  "node_tests_passed": 8,
+  "native_tests_executed": 0,
+  "node_log_sha256": "5b7bb80a900658fddd89d81eab0d7e3c5759efbbc665b563cd8e98b7e9051b0a",
+  "generator_log_sha256": "7f25042678af792c775a5a2fca1989e6a623bad032b72758a00939d81aeef2e8",
+  "node_version": "v22.23.5",
+  "changed_fixture_files": 22,
+  "unchanged_original_script_resource_inputs": 9,
+  "changed_uncompressed_members": 4,
+  "reason_extra_zip_bytes_changed": "Original deterministicZip uses this Node runtime compressor. Uncompressed members and all ZIP metadata are independently equal except four expected Expo package.json version contracts; compressed sizes differ.",
+  "member_validation": [
+    {
+      "archive": "Hanlin-Expo-Widget-Counter.hanlinExpo",
+      "before_sha256": "07bc97e06a1c4b638272dda7eeeb132e2b91499d5546cccfe7fbfd5bfc4cae0e",
+      "after_sha256": "64ddee41b1551385a86ec868c7d3ee6bef0202380d4d21b9f6b250ce9fd778a0",
+      "members": [
+        {
+          "path": "package.json",
+          "before_sha256": "654f333f2ea880593c03ea667ed552730cbea8bbb419a124fd702f9e233e7379",
+          "after_sha256": "f9e58f8ca6ca9ec463dd9a4a15915a4dc4bef52ecca7da4d8b51556a93faf037",
+          "old_compressed_bytes": 160,
+          "new_compressed_bytes": 161,
+          "payload_changed": true
+        },
+        {
+          "path": "script.json",
+          "before_sha256": "80c22aeab814f67b488edf0f48fb6c5f552b2cf6f30c00e6a92457a086c5ac0b",
+          "after_sha256": "80c22aeab814f67b488edf0f48fb6c5f552b2cf6f30c00e6a92457a086c5ac0b",
+          "old_compressed_bytes": 244,
+          "new_compressed_bytes": 242,
+          "payload_changed": false
+        },
+        {
+          "path": "widget.tsx",
+          "before_sha256": "1ab32165c7ae1d0c2d0a3d45a673e323c22a27bc09fe8bb4c0dccf237b4ff824",
+          "after_sha256": "1ab32165c7ae1d0c2d0a3d45a673e323c22a27bc09fe8bb4c0dccf237b4ff824",
+          "old_compressed_bytes": 428,
+          "new_compressed_bytes": 428,
+          "payload_changed": false
+        }
+      ]
+    },
+    {
+      "archive": "Hanlin-Expo-Widget-Visuals.hanlinExpo",
+      "before_sha256": "2584982f4077b022860a1197c62d3bc85fdaa454e907e6749cd5734e7886cb68",
+      "after_sha256": "539be1e79390f1c94002914c393400e26328efaf3f063bc673afb95494b2002d",
+      "members": [
+        {
+          "path": "package.json",
+          "before_sha256": "92e3dead62810727abe07f25596ac40dcd7b314312133322ccd1be5736fc27a2",
+          "after_sha256": "04ec5106e01a1a0f5c4e586676237b76fd9e554ad6155875fdc9c22eded57cd9",
+          "old_compressed_bytes": 160,
+          "new_compressed_bytes": 162,
+          "payload_changed": true
+        },
+        {
+          "path": "script.json",
+          "before_sha256": "a931e3e24e79587ac5030d0931ce9d8b82cc316427374b0190fc27637cd355c1",
+          "after_sha256": "a931e3e24e79587ac5030d0931ce9d8b82cc316427374b0190fc27637cd355c1",
+          "old_compressed_bytes": 228,
+          "new_compressed_bytes": 225,
+          "payload_changed": false
+        },
+        {
+          "path": "widget.jsx",
+          "before_sha256": "e94a3349aff5092029f02e17572bb84f9cf803d2b83578c51893beaed9a924d8",
+          "after_sha256": "e94a3349aff5092029f02e17572bb84f9cf803d2b83578c51893beaed9a924d8",
+          "old_compressed_bytes": 577,
+          "new_compressed_bytes": 570,
+          "payload_changed": false
+        }
+      ]
+    },
+    {
+      "archive": "Hanlin-Mixed-Native-Widget.hanlinExpo",
+      "before_sha256": "7dc83c351a276573bf8fc8591b1be081401433247a656306d54fb9c16cda0d2e",
+      "after_sha256": "abc2cae226c212dc7362a1e1aefa7c6c7f6c38f62fb39747adc3ffc3658241d4",
+      "members": [
+        {
+          "path": "README.txt",
+          "before_sha256": "6e25fe76db504eed99b59fe7d058d3e84abb5117bc646668040ffc389f8689ff",
+          "after_sha256": "6e25fe76db504eed99b59fe7d058d3e84abb5117bc646668040ffc389f8689ff",
+          "old_compressed_bytes": 119,
+          "new_compressed_bytes": 120,
+          "payload_changed": false
+        },
+        {
+          "path": "package.json",
+          "before_sha256": "134d880cc27eab880f7cbb4357c5808a31033ad97180645ba83e2274e078b9e5",
+          "after_sha256": "d02b0b4ce05a01620dadf11ee26da55f7b9649cd579c0e194bd519a085aa1c9c",
+          "old_compressed_bytes": 164,
+          "new_compressed_bytes": 165,
+          "payload_changed": true
+        },
+        {
+          "path": "script.json",
+          "before_sha256": "1d8e2d59fd7bd37aa2e5ef63448a9bb068673cbde9aa725a2fd4b4847f1c14d9",
+          "after_sha256": "1d8e2d59fd7bd37aa2e5ef63448a9bb068673cbde9aa725a2fd4b4847f1c14d9",
+          "old_compressed_bytes": 210,
+          "new_compressed_bytes": 209,
+          "payload_changed": false
+        },
+        {
+          "path": "widget.jsx",
+          "before_sha256": "b57ec0ea5ae1bfc97b374b6b0ec1f880cf4483428007c84d7db6075c1f446a12",
+          "after_sha256": "b57ec0ea5ae1bfc97b374b6b0ec1f880cf4483428007c84d7db6075c1f446a12",
+          "old_compressed_bytes": 94,
+          "new_compressed_bytes": 94,
+          "payload_changed": false
+        }
+      ]
+    },
+    {
+      "archive": "Hanlin-ScriptWidget-Actions.scripting",
+      "before_sha256": "33c717e2a454d8831364cb24b15b9e9e799cd3161b526013a15efe46485ebccb",
+      "after_sha256": "160ff9251c1560d38e401a5ac16727ac4840b9501c08b297c7c37f8a6fa10910",
+      "members": [
+        {
+          "path": "script.json",
+          "before_sha256": "409945c1945dcd574b6596b64161243d7a98c8902dc2f5bd0a1e4ee8e24e4c69",
+          "after_sha256": "409945c1945dcd574b6596b64161243d7a98c8902dc2f5bd0a1e4ee8e24e4c69",
+          "old_compressed_bytes": 289,
+          "new_compressed_bytes": 287,
+          "payload_changed": false
+        },
+        {
+          "path": "widget.jsx",
+          "before_sha256": "ef54486085896a09a05274594ac57064bbfb9873717604e87cb8e016af1756fa",
+          "after_sha256": "ef54486085896a09a05274594ac57064bbfb9873717604e87cb8e016af1756fa",
+          "old_compressed_bytes": 320,
+          "new_compressed_bytes": 320,
+          "payload_changed": false
+        }
+      ]
+    },
+    {
+      "archive": "Hanlin-ScriptWidget-Dashboard.scripting",
+      "before_sha256": "478cd567e9731cc7342aefa9024ea498edf8d12d340cc5c558484e60a210dace",
+      "after_sha256": "43b9b75e6f9708f1ce95dfcef2fd18f284de3f0fbc6c1b9919c0e539c32494ec",
+      "members": [
+        {
+          "path": "assets/pixel.png",
+          "before_sha256": "56bd3a7251ed205191d3bdfe70576ef51adf978c47276caf4e22707d45d54a9d",
+          "after_sha256": "56bd3a7251ed205191d3bdfe70576ef51adf978c47276caf4e22707d45d54a9d",
+          "old_compressed_bytes": 68,
+          "new_compressed_bytes": 63,
+          "payload_changed": false
+        },
+        {
+          "path": "script.json",
+          "before_sha256": "ac72a19ad65ee94a8b0dd8b5fe124a328453a71a8be651cb97edc6988ac1d911",
+          "after_sha256": "ac72a19ad65ee94a8b0dd8b5fe124a328453a71a8be651cb97edc6988ac1d911",
+          "old_compressed_bytes": 205,
+          "new_compressed_bytes": 200,
+          "payload_changed": false
+        },
+        {
+          "path": "widget.jsx",
+          "before_sha256": "d88d0504ce658d1a22d77cf9e86e642cb11d51c38d41301405b16f55de748cff",
+          "after_sha256": "d88d0504ce658d1a22d77cf9e86e642cb11d51c38d41301405b16f55de748cff",
+          "old_compressed_bytes": 371,
+          "new_compressed_bytes": 370,
+          "payload_changed": false
+        }
+      ]
+    },
+    {
+      "archive": "Hanlin-Widget-Invalid-Cases.hanlinExpo",
+      "before_sha256": "077a6ea43342877550f495b1bb885a3c93d8d6c60389459bf55ff05d2db5982c",
+      "after_sha256": "8eea8a1972a053cc9ab90d7d01d07dc8c70c4adc5a0a04cb1aad891acad7c98b",
+      "members": [
+        {
+          "path": "negative-cases.json",
+          "before_sha256": "1823cdae5c48142036aece46a0af7c9e6a88540aaeea9c9c5125f8bf48def6b0",
+          "after_sha256": "1823cdae5c48142036aece46a0af7c9e6a88540aaeea9c9c5125f8bf48def6b0",
+          "old_compressed_bytes": 97,
+          "new_compressed_bytes": 97,
+          "payload_changed": false
+        },
+        {
+          "path": "package.json",
+          "before_sha256": "d9e5982141be29b6e31f7552163556f4f9bd0283dcf94345c40a658bd4d0832d",
+          "after_sha256": "6d6f329f7e68b40c90fe03632598e7f89804b312a4597b4bee3727785c9a2382",
+          "old_compressed_bytes": 165,
+          "new_compressed_bytes": 166,
+          "payload_changed": true
+        },
+        {
+          "path": "script.json",
+          "before_sha256": "5c227caedcc50532bca25796b6cf1d576c304109ccbd3ef446889f7c397bc248",
+          "after_sha256": "5c227caedcc50532bca25796b6cf1d576c304109ccbd3ef446889f7c397bc248",
+          "old_compressed_bytes": 202,
+          "new_compressed_bytes": 200,
+          "payload_changed": false
+        },
+        {
+          "path": "widget.jsx",
+          "before_sha256": "29bbbe6a63f5381d5575b3a8a29272db8d21579b24130bdf7f43d800f4bc992c",
+          "after_sha256": "29bbbe6a63f5381d5575b3a8a29272db8d21579b24130bdf7f43d800f4bc992c",
+          "old_compressed_bytes": 54,
+          "new_compressed_bytes": 54,
+          "payload_changed": false
+        }
+      ]
+    },
+    {
+      "archive": "Hanlin-Widget-Legacy-Regression.scripting",
+      "before_sha256": "787bf97e48164d7b9021c64bfa7122e48131a82b388efc3bad26c58276f4bb2f",
+      "after_sha256": "f69e85615e9fcdfc06870f11fadd5f7628a91210b699535ef4239f5039a37184",
+      "members": [
+        {
+          "path": "script.json",
+          "before_sha256": "b966a83666cd2acfb5d9498ce6d4b99cfbd638805f876d518581972a50b2d22b",
+          "after_sha256": "b966a83666cd2acfb5d9498ce6d4b99cfbd638805f876d518581972a50b2d22b",
+          "old_compressed_bytes": 109,
+          "new_compressed_bytes": 109,
+          "payload_changed": false
+        },
+        {
+          "path": "widget.json",
+          "before_sha256": "701f8e641f0e756d986e0d14471cb0178761a18bb6965b1f95223981850a5b9a",
+          "after_sha256": "701f8e641f0e756d986e0d14471cb0178761a18bb6965b1f95223981850a5b9a",
+          "old_compressed_bytes": 117,
+          "new_compressed_bytes": 118,
+          "payload_changed": false
+        }
+      ]
+    }
+  ],
+  "outputs": [
+    {
+      "path": "Fixtures/Widgets/Hanlin-Expo-Widget-Counter.hanlinExpo",
+      "size": 1147,
+      "sha256": "64ddee41b1551385a86ec868c7d3ee6bef0202380d4d21b9f6b250ce9fd778a0"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/Hanlin-Expo-Widget-Counter.hanlinExpo",
+      "size": 1147,
+      "sha256": "64ddee41b1551385a86ec868c7d3ee6bef0202380d4d21b9f6b250ce9fd778a0"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Expo-Widget-Counter.hanlinExpo",
+      "size": 1147,
+      "sha256": "64ddee41b1551385a86ec868c7d3ee6bef0202380d4d21b9f6b250ce9fd778a0"
+    },
+    {
+      "path": "Fixtures/Widgets/Hanlin-Expo-Widget-Visuals.hanlinExpo",
+      "size": 1273,
+      "sha256": "539be1e79390f1c94002914c393400e26328efaf3f063bc673afb95494b2002d"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/Hanlin-Expo-Widget-Visuals.hanlinExpo",
+      "size": 1273,
+      "sha256": "539be1e79390f1c94002914c393400e26328efaf3f063bc673afb95494b2002d"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Expo-Widget-Visuals.hanlinExpo",
+      "size": 1273,
+      "sha256": "539be1e79390f1c94002914c393400e26328efaf3f063bc673afb95494b2002d"
+    },
+    {
+      "path": "Fixtures/Widgets/Hanlin-Mixed-Native-Widget.hanlinExpo",
+      "size": 1000,
+      "sha256": "abc2cae226c212dc7362a1e1aefa7c6c7f6c38f62fb39747adc3ffc3658241d4"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/Hanlin-Mixed-Native-Widget.hanlinExpo",
+      "size": 1000,
+      "sha256": "abc2cae226c212dc7362a1e1aefa7c6c7f6c38f62fb39747adc3ffc3658241d4"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Mixed-Native-Widget.hanlinExpo",
+      "size": 1000,
+      "sha256": "abc2cae226c212dc7362a1e1aefa7c6c7f6c38f62fb39747adc3ffc3658241d4"
+    },
+    {
+      "path": "Fixtures/Widgets/Hanlin-ScriptWidget-Actions.scripting",
+      "size": 823,
+      "sha256": "160ff9251c1560d38e401a5ac16727ac4840b9501c08b297c7c37f8a6fa10910"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/Hanlin-ScriptWidget-Actions.scripting",
+      "size": 823,
+      "sha256": "160ff9251c1560d38e401a5ac16727ac4840b9501c08b297c7c37f8a6fa10910"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-ScriptWidget-Actions.scripting",
+      "size": 823,
+      "sha256": "160ff9251c1560d38e401a5ac16727ac4840b9501c08b297c7c37f8a6fa10910"
+    },
+    {
+      "path": "Fixtures/Widgets/Hanlin-ScriptWidget-Dashboard.scripting",
+      "size": 957,
+      "sha256": "43b9b75e6f9708f1ce95dfcef2fd18f284de3f0fbc6c1b9919c0e539c32494ec"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/Hanlin-ScriptWidget-Dashboard.scripting",
+      "size": 957,
+      "sha256": "43b9b75e6f9708f1ce95dfcef2fd18f284de3f0fbc6c1b9919c0e539c32494ec"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-ScriptWidget-Dashboard.scripting",
+      "size": 957,
+      "sha256": "43b9b75e6f9708f1ce95dfcef2fd18f284de3f0fbc6c1b9919c0e539c32494ec"
+    },
+    {
+      "path": "Fixtures/Widgets/Hanlin-Widget-Invalid-Cases.hanlinExpo",
+      "size": 947,
+      "sha256": "8eea8a1972a053cc9ab90d7d01d07dc8c70c4adc5a0a04cb1aad891acad7c98b"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/Hanlin-Widget-Invalid-Cases.hanlinExpo",
+      "size": 947,
+      "sha256": "8eea8a1972a053cc9ab90d7d01d07dc8c70c4adc5a0a04cb1aad891acad7c98b"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Widget-Invalid-Cases.hanlinExpo",
+      "size": 947,
+      "sha256": "8eea8a1972a053cc9ab90d7d01d07dc8c70c4adc5a0a04cb1aad891acad7c98b"
+    },
+    {
+      "path": "Fixtures/Widgets/Hanlin-Widget-Legacy-Regression.scripting",
+      "size": 445,
+      "sha256": "f69e85615e9fcdfc06870f11fadd5f7628a91210b699535ef4239f5039a37184"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/Hanlin-Widget-Legacy-Regression.scripting",
+      "size": 445,
+      "sha256": "f69e85615e9fcdfc06870f11fadd5f7628a91210b699535ef4239f5039a37184"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Widget-Legacy-Regression.scripting",
+      "size": 445,
+      "sha256": "f69e85615e9fcdfc06870f11fadd5f7628a91210b699535ef4239f5039a37184"
+    },
+    {
+      "path": "Fixtures/Widgets/SHA256.json",
+      "size": 3703,
+      "sha256": "22c49e48792735889e4ace90bd33d88a55868e8440ae9f82af97d30bd524c7d3"
+    }
+  ],
+  "validated_at": "2026-11-25T07:11:46.159592+00:00"
+}
