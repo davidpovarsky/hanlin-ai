@@ -136,7 +136,7 @@
     "reuse_receipt": "evidence/reuse-receipt-20261125.json",
     "current_app_result": {
       "source": "72bff522e6a13bff60c16d7a82e7c12f86abf8f9",
-      "status": "RUNNING",
+      "status": "FAILED_RETRY_PENDING",
       "declared_cases": 46,
       "prepare_status": "PREPARED",
       "actual_resolved": {
@@ -145,7 +145,12 @@
         "opentelemetry-swift-core": "2.6.0",
         "swift-atomics": "1.3.1"
       },
-      "atomics_reason": "Original OpenTelemetry core2.6.0 manifest requires swift-atomics from1.3.1; all other existing pins unchanged."
+      "atomics_reason": "Original OpenTelemetry core2.6.0 manifest requires swift-atomics from1.3.1; all other existing pins unchanged.",
+      "executed": 0,
+      "build_exit_code": 65,
+      "reason": "Cloned Clang ModuleCache retained donor absolute path; owned nonportable cache quarantined.",
+      "receipt": "evidence/app-native-20261125/attempt01-module-cache/test/receipt.json",
+      "repair": "evidence/app-native-20261125/attempt01-module-cache/test/module-cache-repair.json"
     },
     "runtime_host_result": {
       "source": "04c1942bc88cd4de7deafda7dd342b9b6c401dcf",
@@ -156,9 +161,14 @@
       "skip": "Original opt-in >300-second worker duration test; not a cache/assistant acceptance case.",
       "evidence": "evidence/native-preparation-20261125/host-final/index.json"
     },
-    "latest_sync_receipt": "evidence/latest-sync-20261125.json"
+    "latest_sync_receipt": "evidence/latest-sync-20261125.json",
+    "current_host_refresh": {
+      "source": "a489d5ef622f279ed4de7f108e6297447f0cbacd",
+      "status": "RUNNING",
+      "reason": "Latest upstream provenance changes SDK source fingerprint; original archive sync invokes original builder."
+    }
   },
-  "updated_at": "2026-11-25T01:34:24.461229+00:00",
+  "updated_at": "2026-11-25T01:53:36.612070+00:00",
   "latest_integrated_source": "deeab80ef98b5fb97db6bbbd51f9943130617e3f",
   "synchronized_heads": {
     "composer": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91",
