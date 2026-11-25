@@ -11,19 +11,29 @@ public struct MiniAppCatalogItem: Codable, Hashable, Identifiable, Sendable {
     public let supportedOperations: [MiniAppOperation]
     public let actionID: String?
     public let localizedTitles: [String: String]
+    /// PNG data projected from the original icon; optional for schema-v1 compatibility.
+    public let iconData: Data?
+    public let localizedSubtitles: [String: String]?
 
     public init(id: String, title: String, subtitle: String? = nil, systemImage: String = "app",
                 supportedContentTypes: [String] = [],
                 supportedOperations: [MiniAppOperation] = [.display], actionID: String? = nil,
-                localizedTitles: [String: String] = [:]) {
+                localizedTitles: [String: String] = [:], iconData: Data? = nil,
+                localizedSubtitles: [String: String]? = nil) {
         self.id = id; self.title = title; self.subtitle = subtitle; self.systemImage = systemImage
         self.supportedContentTypes = supportedContentTypes; self.supportedOperations = supportedOperations
         self.actionID = actionID; self.localizedTitles = localizedTitles
+        self.iconData = iconData; self.localizedSubtitles = localizedSubtitles
     }
 
     public func title(locale: Locale) -> String {
         localizedTitles[locale.identifier] ??
         localizedTitles[locale.language.languageCode?.identifier ?? ""] ?? title
+    }
+
+    public func subtitle(locale: Locale) -> String? {
+        localizedSubtitles?[locale.identifier] ??
+        localizedSubtitles?[locale.language.languageCode?.identifier ?? ""] ?? subtitle
     }
 
     public func accepts(_ inputs: [MiniAppContent]) -> Bool {
