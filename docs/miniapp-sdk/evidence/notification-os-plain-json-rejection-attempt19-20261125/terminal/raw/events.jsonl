@@ -1,0 +1,15 @@
+{"at": "2026-11-25T20:43:13.771682+00:00", "event": "prepared", "startedAt": "2026-11-25T20:43:13.771394+00:00"}
+{"at": "2026-11-25T20:43:13.774067+00:00", "event": "launched_setup", "status": "RUNNING"}
+{"at": "2026-11-25T20:43:43.784092+00:00", "event": "setup_heartbeat", "elapsedSeconds": 30.010180124998442}
+{"at": "2026-11-25T20:44:00.731673+00:00", "event": "launched_test", "status": "RUNNING"}
+{"at": "2026-11-25T20:44:30.671283+00:00", "event": "launched_worker", "status": "RUNNING"}
+{"at": "2026-11-25T20:44:30.674921+00:00", "event": "worker_bound_to_current_test", "executionContainersSHA256": "6a7bac72bf115bf9279d2655d465e4649a7ee62d3934c07430569b40520129ea", "reboundContainersSHA256": "ac2835071f55e60529cdadb009381d6feb44c0deacfb969a75f24f4da781c23c", "exchangeStartedAfter": 1795639440.7281542, "activeIdentity": {"challenge": "notification-os-8dba666b-6f15-413d-b698-b170bef6ff47", "runID": "3787daba-fac3-441b-8dc5-c3aec5ae025a", "version": 1}, "workerPID": 47215, "testPID": 46844}
+{"at": "2026-11-25T20:45:00.686485+00:00", "event": "heartbeat", "elapsedSeconds": 106.91400225000689, "testExitCode": null, "workerExitCode": null}
+{"at": "2026-11-25T20:45:30.688635+00:00", "event": "heartbeat", "elapsedSeconds": 136.91591079099453, "testExitCode": null, "workerExitCode": null}
+{"at": "2026-11-25T20:46:00.697336+00:00", "event": "heartbeat", "elapsedSeconds": 166.92248866599402, "testExitCode": null, "workerExitCode": null}
+{"at": "2026-11-25T20:46:30.705500+00:00", "event": "heartbeat", "elapsedSeconds": 196.9319174580014, "testExitCode": null, "workerExitCode": null}
+{"at": "2026-11-25T20:47:00.711478+00:00", "event": "heartbeat", "elapsedSeconds": 226.93831195800158, "testExitCode": null, "workerExitCode": 1}
+{"at": "2026-11-25T20:47:02.380940+00:00", "event": "heartbeat", "elapsedSeconds": 228.60966099999496, "testExitCode": 1, "workerExitCode": 1}
+{"at": "2026-11-25T20:47:02.381323+00:00", "event": "actual_terminal", "status": "FAILED", "error": "RuntimeError: Original selected XCTest/verification failed"}
+{"at": "2026-11-25T20:47:06.339305+00:00", "event": "charge_ready", "finishedAt": "2026-11-25T20:47:06.338726+00:00", "elapsedSeconds": 232.5675223750004, "chargedSeconds": 232.5675223750004, "independentObservationChargedSeconds": 233.90022650000174, "cumulativeActiveSeconds": 25438.734638920043, "cumulativeAllOSObservationSeconds": 1131.2029771670059, "allowanceExceededDuringCleanup": false, "processLogs": [{"path": "test.log", "bytes": 3207, "sha256": "9262a9f682bffbedd0c9d7d02dc558f7b736d2f3899c869dcd6d15d5244b7363"}, {"path": "worker.log", "bytes": 665, "sha256": "ebbb8a63f9a59e5abea12a955d3e8d155aa3a6bbd6f9dcf1b1b9c9022d95d705"}, {"path": "setup.log", "bytes": 2563, "sha256": "122934e47ecc92cb0a68ab1fd53fcd08a46c0aa8aab06c7f643bc450206ffd43"}]}
+{"at": "2026-11-25T20:47:06.340045+00:00", "event": "finalized", "status": "FAILED"}

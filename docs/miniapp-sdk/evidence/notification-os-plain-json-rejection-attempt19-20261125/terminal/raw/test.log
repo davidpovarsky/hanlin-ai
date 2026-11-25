@@ -1,0 +1,31 @@
+Paired command starting: notification-os-tests.log; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: notification-os-tests.log; pid=46856; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: notification-os-tests.log; pid=46856; elapsed=30.0s; log_bytes=3470; observed_exit=None
+Paired command running: notification-os-tests.log; pid=46856; elapsed=60.0s; log_bytes=13623; observed_exit=None
+Paired command running: notification-os-tests.log; pid=46856; elapsed=90.0s; log_bytes=21692; observed_exit=None
+Paired command running: notification-os-tests.log; pid=46856; elapsed=120.0s; log_bytes=28119; observed_exit=None
+Paired command running: notification-os-tests.log; pid=46856; elapsed=150.0s; log_bytes=28119; observed_exit=None
+Paired command running: notification-os-tests.log; pid=46856; elapsed=180.1s; log_bytes=29085; observed_exit=None
+Paired command completed: notification-os-tests.log; pid=46856; elapsed=181.3s; log_bytes=30401; observed_exit=65
+Paired command starting: notification-os-summary.json; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: notification-os-summary.json; pid=47720; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command completed: notification-os-summary.json; pid=47720; elapsed=0.2s; log_bytes=1839; observed_exit=0
+Paired command starting: notification-os-nodes.json; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: notification-os-nodes.json; pid=47721; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command completed: notification-os-nodes.json; pid=47721; elapsed=0.0s; log_bytes=2643; observed_exit=0
+Paired command starting: notification-os-selected-tests.log; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: notification-os-selected-tests.log; pid=47722; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command completed: notification-os-selected-tests.log; pid=47722; elapsed=0.0s; log_bytes=57; observed_exit=0
+Traceback (most recent call last):
+  File "/Users/m1/builds/hanlin-notification-os-recovery-20261125/recovery/notification-os-recovery-v1.py", line 639, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/Users/m1/builds/hanlin-notification-os-recovery-20261125/recovery/notification-os-recovery-v1.py", line 361, in main
+    return child_setup(decision_path) if args.child == "setup" else child_test(decision_path)
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/m1/builds/hanlin-notification-os-recovery-20261125/recovery/notification-os-recovery-v1.py", line 234, in child_test
+    summary = r.verify_native_result(result, "notification-os", [SELECTOR], 1, code)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/m1/builds/hanlin-notification-os-recovery-20261125/Scripts/ProductSplit/run_paired_acceptance.py", line 352, in verify_native_result
+    raise RuntimeError("Original runtime acceptance did not execute every selected case: " + prefix)
+RuntimeError: Original runtime acceptance did not execute every selected case: notification-os

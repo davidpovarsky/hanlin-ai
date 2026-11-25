@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "id": "notification-os-recovery-v1",
+  "maximumActiveSeconds": 900,
+  "separateFromOriginalOS900": true,
+  "historicalOSChargedSeconds": 897.3027506670041,
+  "historicalPrimaryActiveSeconds": 25204.83441242004,
+  "charges": [
+    {
+      "id": "isolated-source-and-device-preparation",
+      "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+      "startedAt": "2026-11-25T20:35:37.545418+00:00",
+      "finishedAt": "2026-11-25T20:35:38.878085+00:00",
+      "elapsedSeconds": 1.332704125001328,
+      "status": "PREPARED_SOURCE_AND_NEW_SHUTDOWN_DEVICE",
+      "nativeTestExecution": "NOT_RUN"
+    }
+  ],
+  "activeElapsedSeconds": 1.332704125001328,
+  "remainingAllowanceSeconds": 898.6672958749987,
+  "cumulativeAllOSObservationSeconds": 898.6354547920055,
+  "historicalLedger": {
+    "path": "/Users/m1/builds/hanlin-notification-os-recovery-20261125/history/original-os-v5-ledger.json",
+    "bytes": 2219,
+    "sha256": "7b710d0bba8e359839a0f15cb61d4fc9509a3709234b7a52c8213358455dbaa4",
+    "historical": true,
+    "origin": {
+      "packet": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-v5-terminal-packet",
+      "storedPath": "raw/notification-os-v5/ledger.json",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v5/ledger.json",
+      "sha256": "7b710d0bba8e359839a0f15cb61d4fc9509a3709234b7a52c8213358455dbaa4",
+      "bytes": 2219
+    }
+  }
+}

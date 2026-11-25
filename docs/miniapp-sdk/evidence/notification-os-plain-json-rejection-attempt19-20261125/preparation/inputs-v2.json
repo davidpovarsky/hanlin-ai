@@ -1,0 +1,2061 @@
+{
+  "schema": 1,
+  "observedAt": "2026-11-25T20:30:56.351199+00:00",
+  "kind": "ISOLATED_PREBUILT_RECOVERY_INPUTS",
+  "root": "/Users/m1/builds/hanlin-notification-os-recovery-20261125",
+  "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "sourceTree": "f7a6596a1ef53d8d962ceb9f619460ffa19ee91e",
+  "compiledConsumerSource": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "SDKProducerSource": "a2c8a1b1be746461272ba77254603304567c309d",
+  "sourceSnapshotKind": "EXACT_SELECTED_GIT_BLOBS_WITH_AUTHENTICATED_PREPARED_FIXTURE",
+  "sourceFiles": [
+    {
+      "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+      "bytes": 47871,
+      "sha256": "a99b6194f8dd20bc30998ff2ad9e86ec219415a00615b250c65670f7dfcdba7d",
+      "mode": "0o644",
+      "origin": {
+        "kind": "GIT_BLOB",
+        "commit": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+        "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+        "blob": "e1a5320fd797885e91171854f507e49a66a1fbf4",
+        "alsoInPreviousRequiredMap": true
+      }
+    },
+    {
+      "path": "Scripts/ProductSplit/simulator_entitlements.py",
+      "bytes": 3658,
+      "sha256": "aa1cfcd4f371dd25a637bc56ab281ef94f8bcdcc2bb415b9125dd0b0aa0b27a8",
+      "mode": "0o644",
+      "origin": {
+        "kind": "GIT_BLOB",
+        "commit": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+        "path": "Scripts/ProductSplit/simulator_entitlements.py",
+        "blob": "252ad38403dbd7fe5bcf9c3d30c5e8ab63a3b9d0",
+        "alsoInPreviousRequiredMap": false
+      }
+    },
+    {
+      "path": "Scripts/CI/verify_selected_tests.py",
+      "bytes": 2000,
+      "sha256": "4ae4a28934341461b364a9b83fb891ca214da64cf3046635278fb4e6837caad5",
+      "mode": "0o644",
+      "origin": {
+        "kind": "GIT_BLOB",
+        "commit": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+        "path": "Scripts/CI/verify_selected_tests.py",
+        "blob": "b19ac545b8ef1310456318c3b47076e01fa01779",
+        "alsoInPreviousRequiredMap": true
+      }
+    },
+    {
+      "path": "Scripts/CI/observe_notification_os_delivery.py",
+      "bytes": 18899,
+      "sha256": "f6cf4e040f592fa94ebf9fd813b6e03d125d5c7c32dc2d2a43f3b42cdb33d085",
+      "mode": "0o644",
+      "origin": {
+        "kind": "GIT_BLOB",
+        "commit": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+        "path": "Scripts/CI/observe_notification_os_delivery.py",
+        "blob": "b2fa8058be79f96bd044bcb39e6ee18fa976f33e",
+        "alsoInPreviousRequiredMap": true
+      }
+    },
+    {
+      "path": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+      "bytes": 91719,
+      "sha256": "da0fa21f26b677f4d18f8e1972208b39e30401a127e9dd2a9643e0fe8d7ad17c",
+      "mode": "0o644",
+      "origin": {
+        "kind": "GIT_BLOB",
+        "commit": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+        "path": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+        "blob": "93ee84af222e1f4fdfbcc0700f7ddf5e13498ca6",
+        "alsoInPreviousRequiredMap": true
+      }
+    }
+  ],
+  "productFiles": [
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/Info.plist",
+      "role": "retainedProduct",
+      "bytes": 5276,
+      "sha256": "b62620a3005aa50f80052859b4d47183f9e4dec8cee463949a7e62fedae813c0"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/HanlinMiniApps",
+      "role": "retainedProduct",
+      "bytes": 40496,
+      "sha256": "9ecf0a41bd7e8f7f024a957867c65b3bac76dc3c7198a3c78011ae1aabcd66b6"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/HanlinMiniApps.debug.dylib",
+      "role": "retainedProduct",
+      "bytes": 128035408,
+      "sha256": "44af528fa8cc87861760c2100c5fbb354936eeb3623281fb7efaba6ec58a0c85"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/RuntimeHostResources.zip",
+      "role": "retainedProduct",
+      "bytes": 81824721,
+      "sha256": "7a426675109c5ebc4c8b5824565547f8aea10584785932280fdb623128530ecc"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/PlugIns/HanlinMiniAppsNotificationService.appex/Info.plist",
+      "role": "retainedProduct",
+      "bytes": 1278,
+      "sha256": "176d667ec09408832340ae438a7e26886a9f080625c445c3f192850a7b9a467b"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/PlugIns/HanlinMiniAppsNotificationService.appex/HanlinMiniAppsNotificationService",
+      "role": "retainedProduct",
+      "bytes": 37888,
+      "sha256": "53b2d84cbfee4328e4e195f1de8775f998b2b51eed00729b7cc6a1717c2a5687"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/PlugIns/HanlinMiniAppsNotificationService.appex/HanlinMiniAppsNotificationService.debug.dylib",
+      "role": "retainedProduct",
+      "bytes": 21564144,
+      "sha256": "e180275d27cb648701745887a90925c9bdd1822443bda29eec14138b29999a3e"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/PlugIns/HanlinMiniAppsShare.appex/Info.plist",
+      "role": "retainedProduct",
+      "bytes": 1484,
+      "sha256": "5a601d95e10ee6e24eedc25a3ed41523e64becd57a7c38c4a298503f94546b1b"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/PlugIns/HanlinMiniAppsShare.appex/HanlinMiniAppsShare",
+      "role": "retainedProduct",
+      "bytes": 37872,
+      "sha256": "92ca2122829113bfe3634834c2b4125c7c1108846632e5caea983130a6c89821"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/PlugIns/HanlinMiniAppsShare.appex/HanlinMiniAppsShare.debug.dylib",
+      "role": "retainedProduct",
+      "bytes": 3333472,
+      "sha256": "363a34fd6a71f93a2ad621855a3d484ee399312703f84e2e42ba7a644a0efd8d"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/PlugIns/HanlinMiniAppsWidgets.appex/Info.plist",
+      "role": "retainedProduct",
+      "bytes": 2943,
+      "sha256": "7b80628e4ba87f4583a18bc29c2d3541ea49a8c7fac3ae49e69333fe3b7e4ef8"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/PlugIns/HanlinMiniAppsWidgets.appex/HanlinMiniAppsWidgets",
+      "role": "retainedProduct",
+      "bytes": 40512,
+      "sha256": "e216c5d97a9487b246e6813e007f960c7aac45a459a56057414e6f15dd1704de"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/PlugIns/HanlinMiniAppsWidgets.appex/HanlinMiniAppsWidgets.debug.dylib",
+      "role": "retainedProduct",
+      "bytes": 38244752,
+      "sha256": "2255f5989a4b4f662fb35d791cedcd035db5d61a1f1f9ae8fd5d50c6ae0ff878"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/Info.plist",
+      "role": "retainedProduct",
+      "bytes": 5507,
+      "sha256": "2f8fe3fe0643a2fb10cbb032155ff0956612eb1f745899ad7b0c0202015c61ed"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/AI_Hanlin",
+      "role": "retainedProduct",
+      "bytes": 40496,
+      "sha256": "4934f20379d6aa7d4c97878b498993436550effede1a610be7630fd723990944"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/AI_Hanlin.debug.dylib",
+      "role": "retainedProduct",
+      "bytes": 3473824,
+      "sha256": "80ba1b05240eb988af275c12edaef7d4d0a194542a2de60dd56f4ce57f336abb"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/HanlinSDK_AI_Hanlin.bundle/RuntimeHostResources.zip",
+      "role": "retainedProduct",
+      "bytes": 81824721,
+      "sha256": "7a426675109c5ebc4c8b5824565547f8aea10584785932280fdb623128530ecc"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/HanlinSDK_AI_Hanlin.bundle/RuntimeHostResources.zip",
+      "role": "retainedProduct",
+      "bytes": 81824721,
+      "sha256": "7a426675109c5ebc4c8b5824565547f8aea10584785932280fdb623128530ecc"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/Frameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinSDK_AI_Hanlin.bundle/RuntimeHostResources.zip",
+      "role": "retainedProduct",
+      "bytes": 81824721,
+      "sha256": "7a426675109c5ebc4c8b5824565547f8aea10584785932280fdb623128530ecc"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/Frameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinSDK_AI_Hanlin.bundle/RuntimeHostResources.zip",
+      "role": "retainedProduct",
+      "bytes": 81824721,
+      "sha256": "7a426675109c5ebc4c8b5824565547f8aea10584785932280fdb623128530ecc"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/HanlinScriptingWidgets.appex/Info.plist",
+      "role": "retainedProduct",
+      "bytes": 2890,
+      "sha256": "167a82ec3ec7e8a0e773c9854116f15138c3a17a6601a92bc3abac5e78671188"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/HanlinScriptingWidgets.appex/HanlinScriptingWidgets",
+      "role": "retainedProduct",
+      "bytes": 40512,
+      "sha256": "2887da88bddb8b60085ed267c484f03affc140e8422b1170a0d0e164562d5b9d"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/HanlinScriptingWidgets.appex/HanlinScriptingWidgets.debug.dylib",
+      "role": "retainedProduct",
+      "bytes": 44890400,
+      "sha256": "45f9d58d9f466c706b0f8a01105352547fbcf635c5024a535846fe02430c4a77"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/ChavrusaChatNotificationService.appex/Info.plist",
+      "role": "retainedProduct",
+      "bytes": 1220,
+      "sha256": "cf22dfcabc37e0108e7d7a24ed8f7566d0934e60290d16e8427b2370532ae32c"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/ChavrusaChatNotificationService.appex/ChavrusaChatNotificationService",
+      "role": "retainedProduct",
+      "bytes": 37888,
+      "sha256": "207de6131defbd56e873e387e93206520aba3ce2f063597360da6ffcac8d6a4d"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/ChavrusaChatNotificationService.appex/ChavrusaChatNotificationService.debug.dylib",
+      "role": "retainedProduct",
+      "bytes": 28194512,
+      "sha256": "116e44f3f59bbe9a3a7c8881ccc2ecb99e9521dec60c3af8768d4f20c8f9d94a"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/ChavrusaChatShare.appex/Info.plist",
+      "role": "retainedProduct",
+      "bytes": 1423,
+      "sha256": "8b9c19a920eb2d2568cfb4e9e1729f98c7e7d907201b31654e65fb2fdc50b84f"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/ChavrusaChatShare.appex/ChavrusaChatShare",
+      "role": "retainedProduct",
+      "bytes": 37872,
+      "sha256": "116f3e85ecd4331277498f1c012901c68c34064eebe3837374015ba00231182d"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/ChavrusaChatShare.appex/ChavrusaChatShare.debug.dylib",
+      "role": "retainedProduct",
+      "bytes": 10043312,
+      "sha256": "31bc31f3e9398c0ce194aadb09ad6ada1cd5d1ceb253d7b2f5686c16af44e653"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_HLYUITests-Runner.app/PlugIns/AI_HLYUITests.xctest/Info.plist",
+      "role": "retainedProduct",
+      "bytes": 736,
+      "sha256": "0b74fc1f509103283e23cb6f8e0d0bbfe187a31208762264f2eca905549da81d"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_HLYUITests-Runner.app/PlugIns/AI_HLYUITests.xctest/AI_HLYUITests",
+      "role": "retainedProduct",
+      "bytes": 2852064,
+      "sha256": "78a31793185b0e35fcb73da55c660b4ac507627fd77370985e21b3bea0ddeb12"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/Info.plist",
+      "role": "retainedProduct",
+      "bytes": 704,
+      "sha256": "ef2975aad67dfc02df6ba3d6ffba32fe74b26534b591bbeb8f1062c77d21674a"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/AI_HLYTests",
+      "role": "retainedProduct",
+      "bytes": 37680128,
+      "sha256": "345b0e1b3039865c2a58ef864adecf1f722034d4c79a8cc618738da1077b9f5d"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniAppsUITests-Runner.app/PlugIns/HanlinMiniAppsUITests.xctest/Info.plist",
+      "role": "retainedProduct",
+      "bytes": 734,
+      "sha256": "84ccf7641c4a3489fae0321433bdff3d566b116d7e86ef3bc053b614359b441d"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniAppsUITests-Runner.app/PlugIns/HanlinMiniAppsUITests.xctest/HanlinMiniAppsUITests",
+      "role": "retainedProduct",
+      "bytes": 748384,
+      "sha256": "9b9397a85e961a0894d8d35198df6faba679924f7c37b8cb2625c93a68e0a226"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/AI_HLY_iphonesimulator27.0-arm64.xctestrun",
+      "role": "aiXctestrun",
+      "bytes": 10920,
+      "sha256": "b2cc79f4b3780daec837e119cc5e4a07d5ecccd618ab793b88bb0b80dbfa2062"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/HanlinMiniApps_iphonesimulator27.0-arm64.xctestrun",
+      "role": "miniXctestrun",
+      "bytes": 16737,
+      "sha256": "2d6b493aa93663d03e17a15722eab010326b260ccbbb454ed12077cae45cda96"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniAppsUITests-Runner.app/Info.plist",
+      "role": "uiRunnerInfo",
+      "bytes": 10947,
+      "sha256": "e807c6b2a4c5444448a527d598bb86195f0737209b6c15bc2b8ecc8273f75d87"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniAppsUITests-Runner.app/HanlinMiniAppsUITests-Runner",
+      "role": "uiRunnerExecutable",
+      "bytes": 95248,
+      "sha256": "2493c0f772aa3477817b8f57cc72df3dfeb134cd4d25e329bee41a027f704b78"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/HanlinMiniApps",
+      "role": "miniAppExecutable",
+      "bytes": 40496,
+      "sha256": "9ecf0a41bd7e8f7f024a957867c65b3bac76dc3c7198a3c78011ae1aabcd66b6"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/HanlinMiniApps.debug.dylib",
+      "role": "miniRuntimeImage",
+      "bytes": 128035408,
+      "sha256": "44af528fa8cc87861760c2100c5fbb354936eeb3623281fb7efaba6ec58a0c85"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/RuntimeHostResources.zip",
+      "role": "miniHostResource",
+      "bytes": 81824721,
+      "sha256": "7a426675109c5ebc4c8b5824565547f8aea10584785932280fdb623128530ecc"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniAppsUITests-Runner.app/PlugIns/HanlinMiniAppsUITests.xctest/HanlinMiniAppsUITests",
+      "role": "uiTestExecutable",
+      "bytes": 748384,
+      "sha256": "9b9397a85e961a0894d8d35198df6faba679924f7c37b8cb2625c93a68e0a226"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/HanlinMiniApps_iphonesimulator27.0-arm64.xctestrun",
+      "role": "xctestrun",
+      "bytes": 16737,
+      "sha256": "2d6b493aa93663d03e17a15722eab010326b260ccbbb454ed12077cae45cda96"
+    }
+  ],
+  "xctestrun": {
+    "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/HanlinMiniApps_iphonesimulator27.0-arm64.xctestrun",
+    "role": "xctestrun",
+    "bytes": 16737,
+    "sha256": "2d6b493aa93663d03e17a15722eab010326b260ccbbb454ed12077cae45cda96"
+  },
+  "fixtures": [
+    {
+      "name": "Hanlin-ScriptWidget-Actions.scripting",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-os-recovery-20261125/Fixtures/Widgets/Hanlin-ScriptWidget-Actions.scripting",
+      "bytes": 825,
+      "sha256": "33c717e2a454d8831364cb24b15b9e9e799cd3161b526013a15efe46485ebccb",
+      "origin": {
+        "kind": "GIT_BLOB",
+        "commit": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+        "path": "Fixtures/Widgets/Hanlin-ScriptWidget-Actions.scripting"
+      }
+    },
+    {
+      "name": "ExpoSwiftUIProbeA.hanlinExpo",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-os-recovery-20261125/AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo",
+      "bytes": 325929,
+      "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20",
+      "origin": {
+        "kind": "AUTHENTICATED_PREPARED_OVERLAY",
+        "commit": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+        "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo"
+      }
+    },
+    {
+      "name": "hanlin-script-parity.hanlinNativeScript",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-os-recovery-20261125/DemoMiniApps/hanlin-script-parity.hanlinNativeScript",
+      "bytes": 7512,
+      "sha256": "2e48509336edba2b301490422102dbf25cb7f1b894430d52994febdc1c33c199",
+      "origin": {
+        "kind": "GIT_BLOB",
+        "commit": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+        "path": "DemoMiniApps/hanlin-script-parity.hanlinNativeScript"
+      }
+    }
+  ],
+  "historicalLedger": {
+    "path": "/Users/m1/builds/hanlin-notification-os-recovery-20261125/history/original-os-v5-ledger.json",
+    "bytes": 2219,
+    "sha256": "7b710d0bba8e359839a0f15cb61d4fc9509a3709234b7a52c8213358455dbaa4",
+    "historical": true,
+    "origin": {
+      "packet": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-v5-terminal-packet",
+      "storedPath": "raw/notification-os-v5/ledger.json",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v5/ledger.json",
+      "sha256": "7b710d0bba8e359839a0f15cb61d4fc9509a3709234b7a52c8213358455dbaa4",
+      "bytes": 2219
+    }
+  },
+  "historicalPrimary": {
+    "path": "/Users/m1/builds/hanlin-notification-os-recovery-20261125/history/original-primary-after-os-v5.json",
+    "bytes": 126822,
+    "sha256": "009d98edeb4b2a7a4efd6640f91f1b6424b8151a79454e7508cc6753b1264108",
+    "historical": true,
+    "origin": {
+      "packet": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-v5-terminal-packet",
+      "storedPath": "raw/state.json.gz",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/state.json",
+      "sha256": "009d98edeb4b2a7a4efd6640f91f1b6424b8151a79454e7508cc6753b1264108",
+      "bytes": 126822
+    }
+  },
+  "historicalTerminal": {
+    "path": "/Users/m1/builds/hanlin-notification-os-recovery-20261125/history/original-os-v5-terminal.json",
+    "bytes": 6435,
+    "sha256": "ba83da13e54a4bc839d9d99a9a9dfc29c3e5896eb4416d8ae965bcbfa637760e",
+    "historical": true,
+    "origin": {
+      "packet": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-v5-terminal-packet",
+      "storedPath": "raw/notification-os-v5/state.json",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v5/state.json",
+      "sha256": "ba83da13e54a4bc839d9d99a9a9dfc29c3e5896eb4416d8ae965bcbfa637760e",
+      "bytes": 6435
+    }
+  },
+  "historicalCleanupReconciliation": {
+    "path": "/Users/m1/builds/hanlin-notification-os-recovery-20261125/history/original-os-v5-later-absence.json",
+    "bytes": 3930,
+    "sha256": "479c32388bda3ad690e19444f4986c71ab68e2aef98e06c04ad69a373c1fd9e9",
+    "historical": true,
+    "origin": {
+      "packet": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-v5-terminal-packet",
+      "storedPath": "raw/notification-os-v5-post-terminal-group-observation.json",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v5-post-terminal-group-observation.json",
+      "sha256": "479c32388bda3ad690e19444f4986c71ab68e2aef98e06c04ad69a373c1fd9e9",
+      "bytes": 3930
+    }
+  },
+  "SDKManifest": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/prepared-snapshot-attempt19/extracted-sdk/miniapp-sdk.json",
+    "bytes": 5224120,
+    "sha256": "4505c28495d8b6ecd1073254e0e395adcc898cc02dd1d40699591f51db4dee92",
+    "inputSHA256": "ba8f3f1f09054887eed62532fa1d5ca2ac3bd60e6aa99a98ab1035c7653882a2",
+    "sourceInputCount": 235
+  },
+  "sourceInputClosure": [
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinNotificationApplicationDelegate.swift",
+      "bytes": 3952,
+      "sha256": "c36fadd1099529226434fc11d258772556ecc82f71a594c3a81d4d6f2ac0e0d9",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "docs/hanlin-expo-runtime.md",
+      "bytes": 18662,
+      "sha256": "14ba327519fd1b16c72f398eefcbbb4058eaf7682ba98f267807a5c462939808",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "docs/hanlin-nativescript-guide.md",
+      "bytes": 17048,
+      "sha256": "5545b69b00e47508121c2d80a7b44241b854a7abad4019cc70696d6c0da8d1c6",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "docs/miniapp-sdk/AUTHORING_WORKFLOW.md",
+      "bytes": 14228,
+      "sha256": "cbf07d75821695da68bddfdfc75fe7b98943ee89b67479afb717cd739383804f",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "docs/miniapp-sdk/DURABLE_INVOCATION_DELIVERY_2026-11-13.md",
+      "bytes": 8559,
+      "sha256": "810922f08de982da10f4319454d7784ecd31c73d7e5d651d269be40d960d72bf",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "docs/miniapp-sdk/EXAMPLES.md",
+      "bytes": 3722,
+      "sha256": "a17984f1d39f3f8ea73c9fe5be03eebec5884665a8fd18981639442ba1261e70",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "docs/miniapp-sdk/EXPO_HOST_FACADE_CORRECTIONS_2026-11-13.md",
+      "bytes": 1730,
+      "sha256": "11f29f3c73015c955e5c63eddc7ccf264ac4489ce0fa927838ba1a364a225bc4",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "docs/miniapp-sdk/EXPO_STRICT_TYPES_AND_FILE_WIRE_2026-11-14.md",
+      "bytes": 4391,
+      "sha256": "e1a48b1daa1020475feec68d3296a21ce063fef6b6354ee9f485d55f6988d98d",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "docs/miniapp-sdk/EXPO_WIDGETS_ORIGINAL.md",
+      "bytes": 5669,
+      "sha256": "9862848b1833f255631c6be20b00fc2514d9855eac16cfb9fe63beb6325b236c",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.json",
+      "bytes": 153644,
+      "sha256": "84849e4928f42f1b417ad1136c62329e94f7ea9a46f22667177fe6180155b977",
+      "origin": "AUTHENTICATED_PREPARED_OVERLAY"
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.md",
+      "bytes": 23332,
+      "sha256": "3742686d8b088e8c6afcc6b473b2ffa2cf342dae0723ed1365b265d72e120d27",
+      "origin": "AUTHENTICATED_PREPARED_OVERLAY"
+    },
+    {
+      "path": "docs/miniapp-sdk/HANDOFF_2026-11-15.md",
+      "bytes": 11689,
+      "sha256": "60e35d7e563685be98b83db8a19257bff008b53e00a1685d65c3a0484fa8391e",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "docs/miniapp-sdk/IMPORT_REPAIR.md",
+      "bytes": 5178,
+      "sha256": "489d50e487708c860b023da81c5a1a960e124fee0c07f197ab8bdd98090590f2",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+      "bytes": 118804,
+      "sha256": "283c96260a51c095be32f262f9f77ba58bebc5372aa1af994176816c8fb5d538",
+      "origin": "AUTHENTICATED_PREPARED_OVERLAY"
+    },
+    {
+      "path": "docs/miniapp-sdk/METADATA_FRAMEWORK_DEDUP_2026-11-15.md",
+      "bytes": 3042,
+      "sha256": "5a40ec3f450ba1c7a5941b76df1bdc40aa972049e0130a70258cdbe7ab323c51",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "docs/miniapp-sdk/MINIAPP_ACTION_LIFETIME_2026-11-13.md",
+      "bytes": 2622,
+      "sha256": "0392ccf073019a5a5260cf84b3967831b5916a992d61ae824a7f313e9dd8f234",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "docs/miniapp-sdk/NATIVESCRIPT_RUNTIME_WIRE_2026-11-13.md",
+      "bytes": 14059,
+      "sha256": "da34a6f1432e7eaa5ee0c0f05a04a2451ba9e2d7f390fd87d134c45f89a12ce0",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "docs/miniapp-sdk/NATIVESCRIPT_SDK_METADATA_2026-11-14.md",
+      "bytes": 4423,
+      "sha256": "493c6fc61e7fe5dc6b3ad3bd47c9cb5f80ccaded81be42b8e689ba57a1512bc5",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "docs/miniapp-sdk/NOTIFICATION_EVENTS.md",
+      "bytes": 8433,
+      "sha256": "d027d20f9b95087ec7adcfb290ee7f4dab7ee057d623a81c87eeb561e321998f",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "docs/miniapp-sdk/notification-event.schema.json",
+      "bytes": 2615,
+      "sha256": "519d0ffaf9bb70368de9f2772d141082cef5feefe77d7a2117495f5a19ad7699",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "docs/miniapp-sdk/ORIGINAL_UPSTREAM_BUILD.md",
+      "bytes": 8523,
+      "sha256": "dbce13974c47d171dec19432a97b2cf56d4e42e3be78a32afff4dc0cd0eb5639",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "docs/miniapp-sdk/OWNED_SHARE_INGRESS_2026-11-13.md",
+      "bytes": 9130,
+      "sha256": "b49fdab8b88cc5225480fd9b24a9213ba5437fb298b327db18069dc27aadc059",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "docs/miniapp-sdk/PREPARED_PACKAGE_VERSION_CONTRACT_2026-11-13.md",
+      "bytes": 8281,
+      "sha256": "68b8ad713aa3177eeb4e3f5a03390f9e40f858fd14f55c50ac357931ddcdf349",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "docs/miniapp-sdk/README.md",
+      "bytes": 15957,
+      "sha256": "90068db0d87718cc9f995f9d45c1e2e8a7bd670aa8b8f3b324f0bf4cfc591d95",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "docs/miniapp-sdk/SCRIPTWIDGET_AUTHORING.md",
+      "bytes": 9137,
+      "sha256": "1c9a43f36b5317c263868ac549567a31d08440e600d20b96fd7fef493e31fbca",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "docs/miniapp-sdk/SCRIPTWIDGET_CONTROLS.md",
+      "bytes": 6418,
+      "sha256": "1a22bcd767f2747a6e522fae41c4ef245594ad43ecacf85bed768c1912f34064",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "docs/miniapp-sdk/SKILL_RUNTIME_CONTRACT_2026-11-16.md",
+      "bytes": 6542,
+      "sha256": "4ed91dfebcb5c146338b570e1bed33357c2cc10ed3217112c9f2e67bdf901eb9",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "docs/miniapp-sdk/source-inventory.json",
+      "bytes": 494020,
+      "sha256": "de8326436f4ecb7f03c7c28e913f00ef3dc6fa331c1c8a7f355406cd9f0c81ea",
+      "origin": "AUTHENTICATED_PREPARED_OVERLAY"
+    },
+    {
+      "path": "docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json",
+      "bytes": 210998,
+      "sha256": "63aa2132a1463552c274c328d63fd4b76b45046de28a8420e5a278257905bb5c",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinAppExtensionsSDK/Sources/HanlinNotificationExtension/HanlinNotificationService.swift",
+      "bytes": 4713,
+      "sha256": "fd2568e373da3dfdd2c35a2f0138f02cf46d7e6bd67c70b4d38109718b39480e",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPI/HanlinExpoNativeAPIHostVersions.swift",
+      "bytes": 248,
+      "sha256": "3094b19bbeef676478a22be01efe6ad4679039fb5832bb10d0e7630305b5d138",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPI/HanlinExpoNativeAPIManager.swift",
+      "bytes": 3009,
+      "sha256": "e714fc23dd1507ba915a674b3beddfd59ecfbf73128d0db655be9ce8dfd1ef48",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinExpoNativeAPIJS/package.json",
+      "bytes": 430,
+      "sha256": "7a46122e4b3ca8e9fb1caa54bb7bdd0a6e4c56226b6c3bdded20e6134bb5909e",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinExpoNativeAPIJS/src/index.ts",
+      "bytes": 1783,
+      "sha256": "000de857839c76e86a426123d4bce30f0b56854f7655d4021342b2d932b98390",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/HanlinExpoWidgetsIntegration.swift",
+      "bytes": 14017,
+      "sha256": "445d8c707bdb5f74c536d1ab9aa6e11c3fdbaba266a2fee15121cd44619c0e5a",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/HanlinExpoWidgetsIntentsPackage.swift",
+      "bytes": 247,
+      "sha256": "acb09fc16173670ec0c79d3b9be412b4da4cc7cb0d8698193b893fd14be48cc5",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/LiveActivity.swift",
+      "bytes": 2676,
+      "sha256": "5cd3246b91d1814fa2a8ee204e5791cdb3e2210822246dec7f642817fda6daa2",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/LiveActivityFactory.swift",
+      "bytes": 2482,
+      "sha256": "34aa1afdce0c88e3a81c4013f518d492df561539548ba7c5d5c5244fe479affb",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetObject.swift",
+      "bytes": 1651,
+      "sha256": "025a1cd04deb5333523aa50c0e17c59917f9966f584a82072c2b015d03cde5ea",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/AccessoryWidgetBackgroundView.swift",
+      "bytes": 579,
+      "sha256": "16436a1b8fc3a66996555de8fe5a9995924f68a70dcdf33d7e63f8f1e8be683e",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/AppIntent.swift",
+      "bytes": 3785,
+      "sha256": "b8316b264e367ba538f09444a74e4a9721d829f10ea69f03f68f9fc9cfa6812a",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/Buttons.swift",
+      "bytes": 1501,
+      "sha256": "5a8b9b6b740e11686c173d67cd4fcf75c3d0b6bd3dc64b668e867e770e59ce29",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/ChildView.swift",
+      "bytes": 760,
+      "sha256": "1e8f9d57fa6ac106b09df262e6319b44a8995166235381de4c1ad5df94a44b9d",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/DynamicView.swift",
+      "bytes": 817,
+      "sha256": "f5b5563210ee58f53460dad9de97abd54499b6a8ad024038699a0af9462f5a27",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/EntryView.swift",
+      "bytes": 1809,
+      "sha256": "65ae5ef22a6b4777f7d90e82365108991b8e8b369e28a1607f93b7ae70a76422",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/Fragment.swift",
+      "bytes": 250,
+      "sha256": "072b40dc5b3e9908cf3a351d707c9e69d6744c5412fbef8cab6dd98f53945dc1",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/LiveActivityBanner.swift",
+      "bytes": 632,
+      "sha256": "ca7f65ceb0cfbc43c829350521afe11be8d1891a8b322c0a4846210dc7674bbc",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/RedBoxView.swift",
+      "bytes": 2758,
+      "sha256": "652b887b0cda62d993440e0ab41f1507e1592dac45899e4fe03e124c0dff8b50",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/TimelineEntry.swift",
+      "bytes": 215,
+      "sha256": "f3028ccce31246641f2d537bff4dd50b0686c87d8d208e05c96bd91a23c65b4f",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/TimelineProvider.swift",
+      "bytes": 1687,
+      "sha256": "3431d9cfe5af815b42964dd7dc9b3de8e6e6d20b276739b6eecf5f0a9d5bc689",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/Type.swift",
+      "bytes": 98,
+      "sha256": "bea95a0d86ec6048f4488111e8bacf5aa7582b55579415620bcfc2e31b6e5ca0",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/Utils.swift",
+      "bytes": 4994,
+      "sha256": "08c1a02e1eaae8ee190a9c908cae0c2e672cddbfb450ed97f978b43b018268ed",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/ViewRenderer.swift",
+      "bytes": 6651,
+      "sha256": "c38e906a25fad080c09fc60789fb336a9c7de3aa31149f4d72500b0947227b60",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/WidgetLiveActivity.swift",
+      "bytes": 3899,
+      "sha256": "0f6d6b8e994d06e4acb69b8e793ded04143b3db96c2e89ba384890bbad176c11",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/WidgetModifiers.swift",
+      "bytes": 2924,
+      "sha256": "be592a19078bf4a06d95fdcc675863f4b13b212cbd46ece1b812196b037aea14",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/WidgetsJSRuntime.swift",
+      "bytes": 4591,
+      "sha256": "ba0e7d6351e1e6dd5f95d4f891203cbdd6954f90e8019e298639b1be2e49c70b",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/WidgetsLayoutRegistry.swift",
+      "bytes": 1656,
+      "sha256": "19a7f6ebf859a2d2695f839c8ccf1968b29fa9426b0325bb1e59f256539fc997",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetsContext.swift",
+      "bytes": 235,
+      "sha256": "14feb7544bff21a7223d59600a1f00b603ebd2ca364459bd5f3fcb964740b246",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetsEvents.swift",
+      "bytes": 518,
+      "sha256": "2afe29cd894b7722645ff0b410d564068e3e6e5d7b8f503c2885f4a8e89103b6",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetsExceptions.swift",
+      "bytes": 826,
+      "sha256": "31b695f7237481a38673ab7e52bd2091b53a1d1e80841a5933292842fe84a4db",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetsModule.swift",
+      "bytes": 7342,
+      "sha256": "153e723f0e7a75cb325dc74333efe3788010a1f74319a09ddb386853232634a5",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetsRecords.swift",
+      "bytes": 846,
+      "sha256": "65079174172668f7d9a2595d3e18e3c90351c68903aef8db42760ac605fa3e2f",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetsStorage.swift",
+      "bytes": 1573,
+      "sha256": "4a3c58daafb36fc77be701a34431446d96cfc4172f4de60bcaa7f96046f61e5b",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/ExpoWidgets.bundle",
+      "bytes": 166326,
+      "sha256": "6ec4f91b442f8c387f2ea339f503b5a39082878811806cb58179236d06323aed",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/ExpoWidgetsLayoutRegistry.json",
+      "bytes": 20,
+      "sha256": "71c9d33ca106b100af05bbb627934736fc082bfcf2bb33c412ead9eb0c5840b5",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/Info.plist",
+      "bytes": 364,
+      "sha256": "06a9c2c6630712a6761042823033448a59a6242cf6e93ddd57edabad88ff724b",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/original-runtime-receipt.json",
+      "bytes": 6085,
+      "sha256": "930fa2685c39e238da2ff557a6653bc7530a5a64edc9166b63dd720b410c01d0",
+      "origin": "AUTHENTICATED_PREPARED_OVERLAY"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/README.txt",
+      "bytes": 166,
+      "sha256": "ecab392c89bea2ecf2153f046c9107dec788736ed800907c2c51ab353a5d4a06",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/package.json",
+      "bytes": 457,
+      "sha256": "18dbddebb3c641742ca5f83d0492cec1cbbc7bb1affbefe641477b7481110568",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/README.md",
+      "bytes": 3585,
+      "sha256": "4e2965ada75bf9bd6bdf6ffb4ebcfe4a06ba49888bb04e803086e358a2a481df",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/generated/bridge-manifest.ts",
+      "bytes": 39972,
+      "sha256": "a56c8a16334bfe76ebe6489fc1f018f25f28f7cadba6c1ef11a268e5336f3b37",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+      "bytes": 14525,
+      "sha256": "fee40e3a17dd3466ad2a97301e877501832f044968360684af8e473fe6055483",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/generated/views.tsx",
+      "bytes": 2798,
+      "sha256": "7c3bf97da0a680dc80d1a1d19f915b67778e17f42021355c5d99ea4f99c85c74",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/host-services.ts",
+      "bytes": 8965,
+      "sha256": "010488e8c6aae2635f67d45cefebb9fdb2d4f97af71161af011a83d626ad60e7",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/index.ts",
+      "bytes": 185,
+      "sha256": "d0907d0fd364c9b0621f48099d98ece640ba25d8d40f53cb60aabb3b1dbd3922",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/manual-components.tsx",
+      "bytes": 11834,
+      "sha256": "b95b387fce797a3c0ffe8c258e1fe0b411e76956e6cd50ae9235267f5b638da6",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/miniapp-actions.ts",
+      "bytes": 2996,
+      "sha256": "d5d38fc209d8d8dedb2832ffd037e53d4eabd8b8c92320bd79e791fdfef2c607",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/modifiers.ts",
+      "bytes": 472,
+      "sha256": "56b1efa29241c519d325682828e944becae6b516887908777661b3a574821782",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/system-surfaces.ts",
+      "bytes": 3395,
+      "sha256": "3a2c4424ce074056ef76d62a4502fb16c389e10a46967fcde15835efde94543f",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/tests/generated-views.test.mjs",
+      "bytes": 3522,
+      "sha256": "03c46a995205ca0b1730fc8aa26bac97771c1f4cd3951665c13f7c2fa2c046fa",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/tests/host-services-publication.test.mjs",
+      "bytes": 3304,
+      "sha256": "84a995d298fd75a7959a63083fb6bdd0c3db65c16850d1571c456c32309ffb1e",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/tests/miniapp-actions.test.mjs",
+      "bytes": 2053,
+      "sha256": "566e95d9b0ba53fdf576de2000c6e97707fb3b85e6fb014445f1c96546eea4bc",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.d.ts",
+      "bytes": 3985,
+      "sha256": "75f055c7067c2497b64f64714ca175fc09a323236e236b1d57621d4a07c3f7c1",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.mjs",
+      "bytes": 4512,
+      "sha256": "c6cc15960daeb071fc5adc8daf3f041c3e990ee8ce285a0b6c945667763a7dc5",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/package.json",
+      "bytes": 147,
+      "sha256": "c42e3fe3eb38b7289ba3cf49ca0b56bcbd7ac2d27d68955f27e3d5e33e642a7e",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/system-surfaces.d.ts",
+      "bytes": 3692,
+      "sha256": "04a07d066efe992bc4a421e7a8aadd5e555ac82478dcf4fc613703da3ca417f8",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/system-surfaces.mjs",
+      "bytes": 159,
+      "sha256": "ff92a9423fcfa566d4e00546e7a8e9fb0c8b206a361911225c1f67dddba68d19",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Package.swift",
+      "bytes": 10347,
+      "sha256": "864210a4e3d3a77c375c3211095467e876f41352e5f25bcf72730353d77d6981",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationDelivery.swift",
+      "bytes": 4555,
+      "sha256": "b029004be2138cb11ef6221ab7b2c64489ec05b8e22ead565b822da1a946431f",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationQueue.swift",
+      "bytes": 15384,
+      "sha256": "b9671f1d78db83f6786320a68878d01852d5a81a3383866cb26a5e52a87da5ff",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNotificationEvent.swift",
+      "bytes": 5280,
+      "sha256": "982bbdff39e2baeb944ab476bc16d8f826f36ca38e9a3e6a75e6efaeaf3b318b",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNotificationInvocation.swift",
+      "bytes": 4618,
+      "sha256": "210a1266c9b276cd0865bf9238faec73c8caaf464329a22b2c470f71f6f76706",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/HanlinScriptWidgetRuntime.swift",
+      "bytes": 23944,
+      "sha256": "d3735e19e7e2603d17449acd0c57c22bc676ee022bfe3152a20d2d846dd58afd",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/HanlinOriginalScriptWidgetArchive.swift",
+      "bytes": 1065,
+      "sha256": "7d5ccfd581640690601e58cef9822dac34ba02320a0e708595ef54987933f7bb",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/HanlinOriginalScriptWidgetConfiguration.swift",
+      "bytes": 6328,
+      "sha256": "4bcf3b53a0a308c7c777cee946872076d87f3541c07913e2f8026fd7b0ace897",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/HanlinOriginalScriptWidgetControls.swift",
+      "bytes": 3638,
+      "sha256": "f79c2efa49d41f215a38293d9dbd068283af9d49066878f5a67c6da03b383063",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/HanlinOriginalScriptWidgetEnvironment.swift",
+      "bytes": 2105,
+      "sha256": "4e4cc8d5cd867e7aa17736ff5d69b7e5a289b8d9bf362f7527ae59a198272eb3",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/HanlinOriginalScriptWidgetSession.swift",
+      "bytes": 13303,
+      "sha256": "aaba22894ddd8bf7863a5ddd4e1e61cece90081b579bb8ce7b2a084f751f8f9b",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptManager.swift",
+      "bytes": 86010,
+      "sha256": "facae6f7b15611a71869ab87fe077c542be22ce58b4c09b280fb7e29236bbe7f",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptMetadata.swift",
+      "bytes": 24769,
+      "sha256": "f1b202b4caef78877cad69700ff698350066066c12f7fcc5bf557810aa1234f9",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptModel.swift",
+      "bytes": 1650,
+      "sha256": "7396a815f5c31e6ad08c6606230304bca663f1caa7789659138e4c66905a4379",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptWidgetCloudJSON.swift",
+      "bytes": 21585,
+      "sha256": "d26babdd82bf9ae3ee3288727966c005a3689061a52b7034e00002efd89b9705",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptWidgetCloudJSONView.swift",
+      "bytes": 5976,
+      "sha256": "23ae017217072997721d8b18251f1960ba6e07b94b2f43a4733925ce0883d9d0",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptWidgetDiagnosticLog.swift",
+      "bytes": 13423,
+      "sha256": "a0caeb5028f04651e9a9b632827a04cde8bcbcafbf8182b5d37c741ad82bf59d",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptWidgetPackage.swift",
+      "bytes": 98560,
+      "sha256": "3aa2274d41edd3e7e87edd91697a4a204489d0efc6a2efaa00ea82d517af16fd",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptWidgetStorageProfiles.swift",
+      "bytes": 63611,
+      "sha256": "a61b98d72597569fa5fbef1b2c323c52197a0f5224b01ee91fb6ff74fceb0ee5",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptWidgetStorageUpgrade.swift",
+      "bytes": 7336,
+      "sha256": "29df6a3af86343a2b97677f410691c35b16f2ec57d9bed6b62af404c62990ff3",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptWidgetSystemAccessView.swift",
+      "bytes": 11461,
+      "sha256": "07459e60d68dbb65b1c87d6a1ba4af940a2f6322e7d114bc914e3c9b56051323",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/LICENSE.txt",
+      "bytes": 11358,
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/NOTICE.txt",
+      "bytes": 621,
+      "sha256": "9c66a31a160e44905959f8e02f59f91325439e75e869d9ef7de52ad1983a1a06",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Plugin/ScriptWidgetDataSources.swift",
+      "bytes": 27459,
+      "sha256": "6d5a062de80aeae763087c66b0f31910af63190821942d55d39f782f62095607",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeAlarms.swift",
+      "bytes": 8641,
+      "sha256": "1e018a1f256ea16774cef9241e21c181783e92d17e19d96353aca95520e82245",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeCalendar.swift",
+      "bytes": 42511,
+      "sha256": "5a355f79b06e2e8085ee7668e5f836559048e6b42ad28abd523cbdd855164615",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeCalendarWrites.swift",
+      "bytes": 5768,
+      "sha256": "01a62e3c7bc201cb8c3efaf197ee2aa5ea3014dc6a27e4bcd88f3456b66af5c0",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeCloudJSON.swift",
+      "bytes": 5436,
+      "sha256": "e9361b1dbae78436e78c11f05ebc3f9b5660f0448e75324eddda2faf05a170dd",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeConsole.swift",
+      "bytes": 730,
+      "sha256": "ad8f57abd7c175e91d874c6c09c0abd1a05f527a5e387ecb484737419f57774e",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeContacts.swift",
+      "bytes": 2880,
+      "sha256": "0c3a85ec23ed8263ec810c5b265f01af001a77a858623d87475c8019658a9def",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeDevice.swift",
+      "bytes": 5349,
+      "sha256": "9e88549b24a86c471afb4b5fb68450abaa84229a617938b47013ae72e1bb2922",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeDocuments.swift",
+      "bytes": 5838,
+      "sha256": "8b7c1b6dee0c3fedbccadd656c581b95917a176f6e23423db61a25f51f608552",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeFetch.swift",
+      "bytes": 17207,
+      "sha256": "8a7bb65bffe0390ac719e33b0ece71e19b20e9be96841e422a3a4c37f09352b3",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeFile.swift",
+      "bytes": 2193,
+      "sha256": "ac111e89f1f7a8be1930bfd2f7e111df22e34100a0db000a9ebd12501addfa58",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeHealth.swift",
+      "bytes": 40741,
+      "sha256": "6b5d764332e693654dc3d51a15089d4fd4ee73660d3c00e759a258559de04750",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeHealthHistory.swift",
+      "bytes": 4253,
+      "sha256": "3ff770753d3419c80efa973f62c6f6d46334c66392067741f382e75260921af9",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeHome.swift",
+      "bytes": 8926,
+      "sha256": "d9548a2cfdac8eb02026fd526ee2042edd515a55cae69aef573fb27876f33d21",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeLocation.swift",
+      "bytes": 34367,
+      "sha256": "b002544a5a6946725e07e2a715dce3e994f59637ddd47eafdbad3f6fa007dbe1",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeMaps.swift",
+      "bytes": 9376,
+      "sha256": "b9a1ec2b87723bdba8218585710f77eec686b8a2f60b44559cb6af3c9a4f7f1d",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeMusic.swift",
+      "bytes": 13643,
+      "sha256": "bc973eb825a8bfced7832000f114ea298ea15af53001a211cda5883a082a9268",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeNotifications.swift",
+      "bytes": 9324,
+      "sha256": "59a9580018b112427764dbb1a78422c2eb5eadd3173458930741c4c022d3f087",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimePhotos.swift",
+      "bytes": 31388,
+      "sha256": "7d9a6ffb098f225af83dde31e1e7d73ad23a01a505b76b8f0a72f93a44c96ce8",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimePromise.swift",
+      "bytes": 3750,
+      "sha256": "13f8c1563e906edd2fd9f96b372cace3e15be58e18c583ba60100f2ad842d8d5",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeReminders.swift",
+      "bytes": 45787,
+      "sha256": "d7d060b0bd004126ca34f977a3aa5e8bf0e2be314de3d37a9caafee6fadb56eb",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeServices.swift",
+      "bytes": 8976,
+      "sha256": "68458d34ed1ba2c72dac0792f53cd871ac1f6c81731b62fc41738d2dcf54e661",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeStorage.swift",
+      "bytes": 10014,
+      "sha256": "68d03e9712e1a13cb5db9581a651e2acf81fe68edaacfe6ae49e0af587e1beba",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeSystem.swift",
+      "bytes": 4696,
+      "sha256": "9881cb0bab5bb255eb78d0fdce46ad79014a112af25f953d92850da7532aff35",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeSystemServices.swift",
+      "bytes": 13773,
+      "sha256": "028a336864a6f0fbd9e30e5864eddf5b13aafcd3e87f49c622ee7233bc327f58",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeWeather.swift",
+      "bytes": 6137,
+      "sha256": "beb2d479aadf532c827b31eacd1ec68d80586d409133acedaa1616384fc7aae8",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetServiceAccessPolicy.swift",
+      "bytes": 6786,
+      "sha256": "2952863b469cc93e9fbe545290f6210ef53f0c085aab67111aa63b8b332b01b0",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetServiceAccountsView.swift",
+      "bytes": 9754,
+      "sha256": "7517b058087288d507086c0783a8f59d41b6f6d63fb6c2979be2382074d74c99",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetServiceAuthorization.swift",
+      "bytes": 5132,
+      "sha256": "19f0fbe63f278b0c610ff904a8c1ad7adebbcc400bc575f732f52fbd91d6674a",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetServiceConnections.swift",
+      "bytes": 8745,
+      "sha256": "24c073c04156659df1a77976b15751c91f3e202ee7bd27bc3ded420ba44c9c74",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetServiceCredentialVault.swift",
+      "bytes": 5373,
+      "sha256": "bcf3d0061a90d8f458c1257ad5982767f927001f3fc199dc823cd3b7f515451a",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetServiceTransport.swift",
+      "bytes": 14712,
+      "sha256": "1312ac317ead67b8fa32bc581350c6c8b293fe1724b56d680f853cecc5452b3d",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetStorageFiles.swift",
+      "bytes": 39980,
+      "sha256": "961c3b3242be4d669b8a10e8f79f9660297323f92798899248db3d12e3e79aba",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetStorageLock.swift",
+      "bytes": 10245,
+      "sha256": "98d1e5d58c8ccdb01b973f07f4c24d044147f334a74a3eeb9ca80e6487d8a5c0",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetStorageNamespaces.swift",
+      "bytes": 83982,
+      "sha256": "54833459d4600b6500d3cbb5a54966ec411ad8f0d7307e0ff27d865635564397",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Component/ScriptWidgetRuntimeElement.swift",
+      "bytes": 7617,
+      "sha256": "be05cea780d55eac944292b825f7a4ce2515e75ef5106c318f8df34bb26e85fc",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/DeepLinkDefine.swift",
+      "bytes": 241,
+      "sha256": "9615881c68517a5fccb601abf6a4bb0d765f63e70bf6da8a0ca879aec5477bcf",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/ScriptWidgetAppState.swift",
+      "bytes": 380,
+      "sha256": "dd15a508b6c39b97c611643c4f5ee71fbbee9581b2c10711c5d00159c2659c3c",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/ScriptWidgetRunningState.swift",
+      "bytes": 16248,
+      "sha256": "f7b50ceacdf034833c92554a769fe692abebe296b87e55091e7a2fb09146d9da",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/ScriptWidgetRuntime.swift",
+      "bytes": 69622,
+      "sha256": "15a60ffc1a6171dde86fa442a7a51764fd073eee4f615e329b6593dc5cf9b34a",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/ScriptWidgetRuntimeDelivery.swift",
+      "bytes": 4795,
+      "sha256": "b7d5f4238764f0fc84327ac40efc307982726dadd4beee06d2495da3964792f4",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/ScriptWidgetRuntimeDiagnostics.swift",
+      "bytes": 4442,
+      "sha256": "67fa58dfe4e59209c1b56f927844c51a1f2ce28c03361127b5afbcd0dc0e7307",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Resources/support.bundle/core.js",
+      "bytes": 2805380,
+      "sha256": "01546b893cd7951ab5e3dce30009b0e684022f334e9a49d4b498b85b4c4bf163",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Resources/support.bundle/moment.min.js",
+      "bytes": 58862,
+      "sha256": "73de4254959530e4d1d9bec586379184f96b4953dacf9cd5e5e2bdd7bfeceef7",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Resources/support.bundle/util.js",
+      "bytes": 1025,
+      "sha256": "08f291ad3d1ddcc0a9c7637bef13506a978b7d2f47da1a69e8adaaf1618ba642",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/project_graph.py",
+      "bytes": 18232,
+      "sha256": "fc46f1e5266f054794811a0756fa51677a291b0533f816f1342a5d42f9ba85b8",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/Expo/babel.config.cjs",
+      "bytes": 206,
+      "sha256": "62581fd5caf7b97cb36290093b7bbf7103e1c1b1300e0e11a1b3eaaf96c998ba",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/Expo/build-original-widget-runtime.mjs",
+      "bytes": 5442,
+      "sha256": "5928bb12ed2fd2f6b2ecfeb6d8fc309d46e5837c58dcc4272d73af13434eb549",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/Expo/dependency-lock.json",
+      "bytes": 5375,
+      "sha256": "b9e3ad6d863e3e5136ad93924ce4edcb37da87578b113523640110af347eec65",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/Expo/metro.config.cjs",
+      "bytes": 775,
+      "sha256": "23907e12eb10e51229e3edebab5cacf46f15c8e9eced70eac2411846fb7062a7",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/Expo/package-lock.json",
+      "bytes": 336324,
+      "sha256": "3b31e1c8fd34145df900764a2cda013ab02ecea7f890c969ad5e0a92925d0dd8",
+      "origin": "AUTHENTICATED_PREPARED_OVERLAY"
+    },
+    {
+      "path": "Scripts/Expo/package.json",
+      "bytes": 1759,
+      "sha256": "bb447094c0ef2250c445f580fa91c81a55fc3187c7d49e145b84e9c1c3756dce",
+      "origin": "AUTHENTICATED_PREPARED_OVERLAY"
+    },
+    {
+      "path": "Scripts/Expo/prepare-types.mjs",
+      "bytes": 7336,
+      "sha256": "e32603c7fd4a24f2c5223155185e35bc59ad87455859cf3bf321a23a5e6f878e",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/Expo/sync-original-ui-exports.mjs",
+      "bytes": 3511,
+      "sha256": "0991e011951d7469e29111ae742c1b9479978a6aa5a039c6992762c559504455",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/ExpoNativeAPI/dependency-lock.json",
+      "bytes": 1645,
+      "sha256": "08657d657c1f4efa36149075b632cfc75685fc1ca9af0397fc1168fe9253b768",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/authoring-examples.json",
+      "bytes": 4606,
+      "sha256": "3ff3b2272bb77eb22fcc3df81063aab3994ec555b1e78562ee9e256b3cd0aa26",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/check-authoring-examples.mjs",
+      "bytes": 17675,
+      "sha256": "419f295ee6f0e7dcbf9cee42560ef1e8760010ae07b1d6767a0f6017fc7b317a",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/expo-hello-world/App.tsx",
+      "bytes": 478,
+      "sha256": "e0ec9b33bbe972668b0be87b6f8263faff0977e5bfea7654334c7f7f68b95531",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/expo-hello-world/hanlin.authoring.json",
+      "bytes": 99,
+      "sha256": "23628daa17919961823da4ebc9a4166ab9e1d7a9b3ec2ff47fdc70d7b444bf94",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/expo-hello-world/index.ts",
+      "bytes": 120,
+      "sha256": "f3532a443c0193cbb6866cb1a7474d0f5055917ffdc7f5e60efe35159e544d19",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/expo-hello-world/notification-event.ts",
+      "bytes": 650,
+      "sha256": "3faaf31c55f30954b8c3a74cce95d0461bdef531269bcd7832a886be4ac390de",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/expo-hello-world/package.json",
+      "bytes": 223,
+      "sha256": "ce6b14d9dd58a68d245000b2d9997086754acba6b3213087e9531b59701cd9bc",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/expo-hello-world/README.md",
+      "bytes": 831,
+      "sha256": "367e2b77ec0d06230ed8b7a3756cc5ef6bd2b4328c2405977e383f8ecc52b403",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/expo-hello-world/script.json",
+      "bytes": 264,
+      "sha256": "308768a8274c3f58254c4f6daafa7b16a07f0c68dc519f17d3e5feae895dcafb",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/expo-hello-world/tsconfig.json",
+      "bytes": 82,
+      "sha256": "989df0a97a5ac05cb6b26df1d7f2d18896e2627da8ac72d4d35e66a60da84b19",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/index.json",
+      "bytes": 796,
+      "sha256": "a0eddbc0e8dc3b15d6ddf74e8173d674afec99c5a52c77366e1000116eb4c8d1",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/nativescript-hello-world/hanlin.authoring.json",
+      "bytes": 107,
+      "sha256": "1bf949fb4ba1fd14481df380299652fe9b587aa5c30afdb6621fe23be6c02094",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/nativescript-hello-world/index.ts",
+      "bytes": 991,
+      "sha256": "bfb34d9b7ac0f50488468a5cf8200d55cefbb9d0d345d080bb652323a1df9bf6",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/nativescript-hello-world/notification-event.ts",
+      "bytes": 650,
+      "sha256": "3faaf31c55f30954b8c3a74cce95d0461bdef531269bcd7832a886be4ac390de",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/nativescript-hello-world/package.json",
+      "bytes": 225,
+      "sha256": "ab65e0e388ac19daf337b29965fd030e6196faf90cee439c786de9e1c3f49cb6",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/nativescript-hello-world/README.md",
+      "bytes": 914,
+      "sha256": "aae06c1b3c963f8a6cf246ea52642d73f5e6ec237cfb19fc4737dd4072570e6a",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/nativescript-hello-world/script.json",
+      "bytes": 320,
+      "sha256": "521f9d8332544a7858dca222d635cf8530e13d72cfb4e2e62d4196acc3a249cb",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/nativescript-hello-world/tsconfig.json",
+      "bytes": 67,
+      "sha256": "089155f616dd73ff0bebb1469f21fda41c51ad93c7b7db83d2745fa5e88ce0e5",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/sdk-only-departure-budget/App.tsx",
+      "bytes": 4556,
+      "sha256": "b2cdbefb1cdfc9c392294692e0c2d4aec7f79176505f3fd4714585716920e0f6",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/sdk-only-departure-budget/hanlin.authoring.json",
+      "bytes": 99,
+      "sha256": "23628daa17919961823da4ebc9a4166ab9e1d7a9b3ec2ff47fdc70d7b444bf94",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/sdk-only-departure-budget/index.ts",
+      "bytes": 120,
+      "sha256": "f3532a443c0193cbb6866cb1a7474d0f5055917ffdc7f5e60efe35159e544d19",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/sdk-only-departure-budget/model.ts",
+      "bytes": 809,
+      "sha256": "b1b7c165ad8bce614aaf59657750eb508ce867f2e03dedf76119cf76270e05eb",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/sdk-only-departure-budget/package.json",
+      "bytes": 223,
+      "sha256": "eaca3101f64376e4a2f23475839757d2215fc565b8be582d5e40e0542c89734b",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/sdk-only-departure-budget/README.md",
+      "bytes": 636,
+      "sha256": "2e14a982ddb34ee47eeba68605d938f580c0706333d58756544037f05a32f192",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/sdk-only-departure-budget/script.json",
+      "bytes": 268,
+      "sha256": "fce829f1ede25e2a95377b3d270c36b974a342c61dd9d8038ae8682d26361a60",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/sdk-only-departure-budget/tsconfig.json",
+      "bytes": 69,
+      "sha256": "48dc261d79c7417b5e10c2ab83bdce581d8be8f16b70e867789ae7b3f5c9eb59",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/sdk-only-table-share/hanlin.authoring.json",
+      "bytes": 107,
+      "sha256": "1bf949fb4ba1fd14481df380299652fe9b587aa5c30afdb6621fe23be6c02094",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/sdk-only-table-share/index.ts",
+      "bytes": 4782,
+      "sha256": "afbfe5116695db1f0a2641a19e474493c3559f5c9f6e470bf0b72d500c9c461c",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/sdk-only-table-share/model.ts",
+      "bytes": 1491,
+      "sha256": "f9fbaa39afdd00df325ada8177d0bb8213557672a9af7c54fc98936f00d95e9e",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/sdk-only-table-share/package.json",
+      "bytes": 212,
+      "sha256": "1341e9a334dcd928fcdee84456d6069e5476a54440395e1bf1732c271836bccb",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/sdk-only-table-share/README.md",
+      "bytes": 773,
+      "sha256": "2ca21af20c04538813dc2799b29d7b2e44525cd4c92b77ce985361b509a6951f",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/sdk-only-table-share/script.json",
+      "bytes": 306,
+      "sha256": "1cd5129c60227b1ab53e2752e27b3acc29b73d8161de9495d46b2470393653f1",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/sdk-only-table-share/tsconfig.json",
+      "bytes": 54,
+      "sha256": "b70b632b881af38c566610fa375116ee8172fc20ed495f58b0d0261f0226ac0f",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/generate-scriptwidget-manifest.mjs",
+      "bytes": 12810,
+      "sha256": "2c768de46884937c6ac6e99a0430c754be99257c32571e80c6a7210dbe049aff",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/generate-scriptwidget-service-types.mjs",
+      "bytes": 13401,
+      "sha256": "36362e6c8f4bbbc6a5731b3aa219e8bae102e2e2613ce83ef78a347a72ae2fca",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/generate-scriptwidget-types.mjs",
+      "bytes": 2623,
+      "sha256": "1bfd0374d0340080c9dd256126eef9b03b3f1d579a874fdd921cd87bc372ae13",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/install-tooling.mjs",
+      "bytes": 10914,
+      "sha256": "6fb5f130d1a381d628ffa5042eff7ce36d48431ed7636a36c28fec20e5b79120",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/miniapp.mjs",
+      "bytes": 4101,
+      "sha256": "1c256c00392c626a54ebee2abe3ededaa792c5bfa6dd9b6c5aceb89be84e5b30",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/native-presentations.d.ts",
+      "bytes": 1272,
+      "sha256": "a034605ea3d9582b390a466231fb37023c523a559d807c353ada61c689e396ff",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/notification-events/index.d.ts",
+      "bytes": 1306,
+      "sha256": "1fca542efed873474b4541f09945af3db035b570c691be63982a3ddf9ae2f837",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/notification-events/package.json",
+      "bytes": 134,
+      "sha256": "b6ec9ece2d15d32b029e720cd5dde983a681cba511e807cd5766862d79ef8456",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/refresh-original-sources.mjs",
+      "bytes": 31410,
+      "sha256": "9b367c79ece68771e1ab193cc22c218feb72d2f519ffb410fc560b6fca59a7e8",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/resolve-upstreams.mjs",
+      "bytes": 30102,
+      "sha256": "4e2c12f497d312db93132f69741b783f6e31b1f2604dd852129f3c61109d7428",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/components.d.ts",
+      "bytes": 5240,
+      "sha256": "6a58b4510a4f6ed0b4fb35ced943f25d9748bcd4d9f290af021ee4cad3263651",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/host-globals.d.ts",
+      "bytes": 2528,
+      "sha256": "603148dada2fd81794f8bd2953e6da8aa3f4aaf8bed1176d50435c31b1136c7a",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/manifest-validation.mjs",
+      "bytes": 13070,
+      "sha256": "f84c8dfbe6c86a862c87c4bc6423b30003620fae4d1a7a826cd8c02ae4410289",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/native-api.json",
+      "bytes": 73769,
+      "sha256": "e8ec69ede5ef8b3deaa74767b4c473d7c97733e13dcef6feb063c9aa2973ce96",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/original-api.d.ts",
+      "bytes": 20966,
+      "sha256": "e7212325aa3eb7a8e10cd00de34ab3b09ff4acb7259b296114c8f26672934a7c",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/service-shapes.mjs",
+      "bytes": 3988,
+      "sha256": "eed9da2be6229161f5781c29ee47c2535383b36bfa1c09556a67008ea073a57d",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/service-types.d.ts",
+      "bytes": 6583,
+      "sha256": "51bd5d47d2190ebb8e0f8ddc5ab031b7007dcedaef1213de0c0ef4c4e7d7e446",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/tsconfig.json",
+      "bytes": 362,
+      "sha256": "7c3f30d1c5e0e38a5250930cc62aea4a47e1cfd9a9dbe5110f5796f0e6bf2e2b",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/upstream/dataAPICatalog.js",
+      "bytes": 45974,
+      "sha256": "71958adac054862f6fe41100c6709bdbbdae7ed59a07f322f934ad2f73d70e88",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/upstream/LICENSE",
+      "bytes": 11358,
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/upstream/NOTICE",
+      "bytes": 592,
+      "sha256": "39d8aedeb5890cc1a1cda786d80b0133faf27f72df1158beacd1406ed275c249",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/upstream/package.json",
+      "bytes": 18,
+      "sha256": "1239d4d885dcad42201a27ed9324f8f0f760b78700d8db9ced39a511cffe7eae",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/upstream/provenance.json",
+      "bytes": 1868,
+      "sha256": "425e5bae37920bd571a469c273c923471cb9f1cad5a945e7f28bf972fff8b0d1",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/upstream/scriptWidgetAPI.js",
+      "bytes": 15914,
+      "sha256": "d021101c46f554cd9ba77a83c088295ff2523e011424982facec8d1c9462ec9e",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/upstream/storageAPICatalog.js",
+      "bytes": 2067,
+      "sha256": "9b9cb5e46575b38697d56d0263fa147d50cd9bef6685f82ddd175ebe561b9f45",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/upstream/systemAPICatalog.js",
+      "bytes": 23085,
+      "sha256": "78f83702de1766718ebfde97151a373094fe38f2e480d0b915d99e968b862c90",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/widget-manifest.d.ts",
+      "bytes": 2052,
+      "sha256": "6d9d086bb8d8289390f5b3454b17a435aea0f148724f897c9befb62bf31d5e8f",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
+      "bytes": 13230,
+      "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/stage-sdk.mjs",
+      "bytes": 22599,
+      "sha256": "f0d2b438ee79ac0973f8d261ecf626b2a94268e5140c6dcb67f48b07cabd1f25",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/test-native-presentations.mjs",
+      "bytes": 8911,
+      "sha256": "e2eb617fcecdb7b0d0dee8b7dec10c287c23f7d38fb0d765c458f2a35dda1fd7",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/upstream-fetch.mjs",
+      "bytes": 2220,
+      "sha256": "762ec94347f12c2ae7cc8bf3b6f4296d5d730c6980b8689f67abf8427df59743",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/MiniApps/upstream-resolution.json",
+      "bytes": 15092,
+      "sha256": "28a724580a5c7b03268335bfba6a144b7db155198a916305cd00e2e339db1b2e",
+      "origin": "AUTHENTICATED_PREPARED_OVERLAY"
+    },
+    {
+      "path": "Scripts/MiniApps/verify-sefaria-live.mjs",
+      "bytes": 2717,
+      "sha256": "dfba32975b1cafdf226ecbcab73afdcdece4fa86979f84ab4a3a13e5b1457e1c",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/NativeScript/dependency-lock.json",
+      "bytes": 1274,
+      "sha256": "8499976a4ea0a069ed654b09b597d8fabede4bbbfb62227451a68707b851e8e5",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/NativeScript/package-lock.json",
+      "bytes": 110219,
+      "sha256": "16f569f4bfa6f8806cfe72449866a0dc9a9331f33d2c67170d5292455c48b60b",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Scripts/NativeScript/package.json",
+      "bytes": 851,
+      "sha256": "08fc03bfa87cd78f4f21f80e9324a4840061105f6e9ab081ed794c569ca7324b",
+      "origin": "GIT_D4_BLOB"
+    },
+    {
+      "path": "Tools/SwiftUIBridge/configuration.json",
+      "bytes": 12350,
+      "sha256": "a8711bcfc51ae85ee58cf8ebd5a5724c6a142994dcbe3d558e8644d9c48fda8a",
+      "origin": "GIT_D4_BLOB"
+    }
+  ],
+  "prepared25Authority": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk19-reconciliation/prepared-source-materialization-d4a0b115.json",
+    "sha256": "eae3a25e5f0b2ad56e461ccebbaeb03e8a61f9e50d9de4e5b1f415174024effd",
+    "count": 25,
+    "totalBytes": 14676032,
+    "rows": [
+      {
+        "path": "AI_HLY.xcodeproj/project.pbxproj",
+        "bytes": 252023,
+        "sha256": "a80e2947b4dedf0ce95b326cf44b0efac613b7b044058e3afc3fccb870cb0087",
+        "payload": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/prepared-snapshot-attempt19/tracked-delta/AI_HLY.xcodeproj/project.pbxproj",
+        "beforeSHA256": "0d94f6b2ba6fdc6cd8466309d911c5e79a3ea08a0d4c525ce7565a38d9e09c73"
+      },
+      {
+        "path": "AI_HLYUITests/Fixtures/ExpoNativeAPIProbeA.hanlinExpo",
+        "bytes": 1403392,
+        "sha256": "c050720db91ffb2c32a9723d8b42a960f126cfed3192e14ccd67a1a8472d93c6",
+        "payload": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/prepared-snapshot-attempt19/tracked-delta/AI_HLYUITests/Fixtures/ExpoNativeAPIProbeA.hanlinExpo",
+        "beforeSHA256": "f065d0fffd837c9346caac0326d3e19620a25a6516ba175cb4ae8d3360d879ba"
+      },
+      {
+        "path": "AI_HLYUITests/Fixtures/ExpoNativeAPIProbeB.hanlinExpo",
+        "bytes": 1403384,
+        "sha256": "794c7a2237c32166a4cd36a4d1088b585f4057073454b17684bee938f5c665ad",
+        "payload": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/prepared-snapshot-attempt19/tracked-delta/AI_HLYUITests/Fixtures/ExpoNativeAPIProbeB.hanlinExpo",
+        "beforeSHA256": "e0a8612e4d08bb198f5b48ea3e0fd5355c73e9f9a32215e7481f0d64dce6a7b3"
+      },
+      {
+        "path": "AI_HLYUITests/Fixtures/ExpoNativeAPIProbeIncompatible.hanlinExpo",
+        "bytes": 1403399,
+        "sha256": "c83750124f42597209a9bbadd1b85f9cfe51128b6b6d7781f16a0cb274cc4e27",
+        "payload": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/prepared-snapshot-attempt19/tracked-delta/AI_HLYUITests/Fixtures/ExpoNativeAPIProbeIncompatible.hanlinExpo",
+        "beforeSHA256": "39fa0b492bb18ef50a774ccb5a7c5a5501f240a3a7b4053f9d4531f843236b1b"
+      },
+      {
+        "path": "AI_HLYUITests/Fixtures/ExpoNativeAPIProbeMissingGrant.hanlinExpo",
+        "bytes": 1403397,
+        "sha256": "9bf9cd16e84d7c1c097fab3b2da04aaf0441f814f30852f1e9a0e40ebf506ba7",
+        "payload": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/prepared-snapshot-attempt19/tracked-delta/AI_HLYUITests/Fixtures/ExpoNativeAPIProbeMissingGrant.hanlinExpo",
+        "beforeSHA256": "5b5ef66c91204f4268b07ce2e3864922cc203acd3d0ad2fe5df3b80f2071fe38"
+      },
+      {
+        "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbe.hanlinExpo",
+        "bytes": 325929,
+        "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20",
+        "payload": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v5-manual-and-producer-supplement/produced-source/AI_HLYUITests/Fixtures/ExpoSwiftUIProbe.hanlinExpo",
+        "beforeSHA256": "e9b662011c5ef37c2cf4491f4c6516b86886a1d0e93104cec534745395f8076a"
+      },
+      {
+        "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo",
+        "bytes": 325929,
+        "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20",
+        "payload": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v5-manual-and-producer-supplement/produced-source/AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo",
+        "beforeSHA256": "e9b662011c5ef37c2cf4491f4c6516b86886a1d0e93104cec534745395f8076a"
+      },
+      {
+        "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbeB.hanlinExpo",
+        "bytes": 325930,
+        "sha256": "c60e7d88f759118cf52c9ed50f464031a61402367e02e7fe45b50e37ee0bc016",
+        "payload": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v5-manual-and-producer-supplement/produced-source/AI_HLYUITests/Fixtures/ExpoSwiftUIProbeB.hanlinExpo",
+        "beforeSHA256": "843b3147f81c4022759e01e29264f93273fbad47daad4ba45a5d1fc425d164da"
+      },
+      {
+        "path": "Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIProbeA.hanlinExpo",
+        "bytes": 1403392,
+        "sha256": "c050720db91ffb2c32a9723d8b42a960f126cfed3192e14ccd67a1a8472d93c6",
+        "payload": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/prepared-snapshot-attempt19/tracked-delta/Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIProbeA.hanlinExpo",
+        "beforeSHA256": "f065d0fffd837c9346caac0326d3e19620a25a6516ba175cb4ae8d3360d879ba"
+      },
+      {
+        "path": "Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIProbeB.hanlinExpo",
+        "bytes": 1403384,
+        "sha256": "794c7a2237c32166a4cd36a4d1088b585f4057073454b17684bee938f5c665ad",
+        "payload": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/prepared-snapshot-attempt19/tracked-delta/Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIProbeB.hanlinExpo",
+        "beforeSHA256": "e0a8612e4d08bb198f5b48ea3e0fd5355c73e9f9a32215e7481f0d64dce6a7b3"
+      },
+      {
+        "path": "Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIProbeIncompatible.hanlinExpo",
+        "bytes": 1403399,
+        "sha256": "c83750124f42597209a9bbadd1b85f9cfe51128b6b6d7781f16a0cb274cc4e27",
+        "payload": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/prepared-snapshot-attempt19/tracked-delta/Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIProbeIncompatible.hanlinExpo",
+        "beforeSHA256": "39fa0b492bb18ef50a774ccb5a7c5a5501f240a3a7b4053f9d4531f843236b1b"
+      },
+      {
+        "path": "Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIProbeMissingGrant.hanlinExpo",
+        "bytes": 1403397,
+        "sha256": "9bf9cd16e84d7c1c097fab3b2da04aaf0441f814f30852f1e9a0e40ebf506ba7",
+        "payload": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/prepared-snapshot-attempt19/tracked-delta/Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIProbeMissingGrant.hanlinExpo",
+        "beforeSHA256": "5b5ef66c91204f4268b07ce2e3864922cc203acd3d0ad2fe5df3b80f2071fe38"
+      },
+      {
+        "path": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbe.hanlinExpo",
+        "bytes": 325929,
+        "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20",
+        "payload": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v5-manual-and-producer-supplement/produced-source/Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbe.hanlinExpo",
+        "beforeSHA256": "e9b662011c5ef37c2cf4491f4c6516b86886a1d0e93104cec534745395f8076a"
+      },
+      {
+        "path": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeA.hanlinExpo",
+        "bytes": 325929,
+        "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20",
+        "payload": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v5-manual-and-producer-supplement/produced-source/Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeA.hanlinExpo",
+        "beforeSHA256": "e9b662011c5ef37c2cf4491f4c6516b86886a1d0e93104cec534745395f8076a"
+      },
+      {
+        "path": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeB.hanlinExpo",
+        "bytes": 325930,
+        "sha256": "c60e7d88f759118cf52c9ed50f464031a61402367e02e7fe45b50e37ee0bc016",
+        "payload": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v5-manual-and-producer-supplement/produced-source/Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeB.hanlinExpo",
+        "beforeSHA256": "843b3147f81c4022759e01e29264f93273fbad47daad4ba45a5d1fc425d164da"
+      },
+      {
+        "path": "Package.swift",
+        "bytes": 88328,
+        "sha256": "392ece3430f8e61eb28afdaa925adf006b1a3dbf82a233568c2c279ab768e53b",
+        "payload": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/prepared-snapshot-attempt19/tracked-delta/Package.swift",
+        "beforeSHA256": "2238e4db391c3460cd81d6bfaf972ad7fa6683828e105de4e7df234d14ab3b0c"
+      },
+      {
+        "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/original-runtime-receipt.json",
+        "bytes": 6085,
+        "sha256": "930fa2685c39e238da2ff557a6653bc7530a5a64edc9166b63dd720b410c01d0",
+        "payload": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/prepared-snapshot-attempt19/tracked-delta/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/original-runtime-receipt.json",
+        "beforeSHA256": "3d619674297acb22ae4d0a97f5e7d8a878b0eccbc3bfc49769cfdb5a05248a0b"
+      },
+      {
+        "path": "Scripts/Expo/package-lock.json",
+        "bytes": 336324,
+        "sha256": "3b31e1c8fd34145df900764a2cda013ab02ecea7f890c969ad5e0a92925d0dd8",
+        "payload": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/prepared-snapshot-attempt19/tracked-delta/Scripts/Expo/package-lock.json",
+        "beforeSHA256": "c08757cf46ac4d5c86a873f676af4a3be585db64ae2e1aa1e8288277d4eb63b8"
+      },
+      {
+        "path": "Scripts/Expo/package.json",
+        "bytes": 1759,
+        "sha256": "bb447094c0ef2250c445f580fa91c81a55fc3187c7d49e145b84e9c1c3756dce",
+        "payload": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/prepared-snapshot-attempt19/tracked-delta/Scripts/Expo/package.json",
+        "beforeSHA256": "e2b50fae013276229c78619bbbe0b63d8c29b00fefde3afeccea98af117aa206"
+      },
+      {
+        "path": "Scripts/MiniApps/upstream-resolution.json",
+        "bytes": 15092,
+        "sha256": "28a724580a5c7b03268335bfba6a144b7db155198a916305cd00e2e339db1b2e",
+        "payload": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/prepared-snapshot-attempt19/tracked-delta/Scripts/MiniApps/upstream-resolution.json",
+        "beforeSHA256": "e0c2944ea24c09330825dee58badedcec58606ba603ccdedc888abf1a63a13cb"
+      },
+      {
+        "path": "docs/agent-sdk/unified-package-manifest.json",
+        "bytes": 3901,
+        "sha256": "dd14c80e4223465e6a600f93c153c0f4c80a290b28520dfb8aa65d33f1862e4d",
+        "payload": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/prepared-snapshot-attempt19/tracked-delta/docs/agent-sdk/unified-package-manifest.json",
+        "beforeSHA256": "3051ec46a9e5bcdebccf3a1e7091c5df8c659cd8f49968678bfaf012c40712ec"
+      },
+      {
+        "path": "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+        "bytes": 118804,
+        "sha256": "283c96260a51c095be32f262f9f77ba58bebc5372aa1af994176816c8fb5d538",
+        "payload": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/prepared-snapshot-attempt19/tracked-delta/docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+        "beforeSHA256": "768731f0c748276aeab4d34f57ad3ad89fd38aa30f562ff0cc9b5ad9a3767368"
+      },
+      {
+        "path": "docs/miniapp-sdk/extension-reachability.json",
+        "bytes": 153644,
+        "sha256": "84849e4928f42f1b417ad1136c62329e94f7ea9a46f22667177fe6180155b977",
+        "payload": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/prepared-snapshot-attempt19/tracked-delta/docs/miniapp-sdk/extension-reachability.json",
+        "beforeSHA256": "9a9843d277a3e76ad64fc7589029801960c5c98b9aba09f3ed7746552ee3d42d"
+      },
+      {
+        "path": "docs/miniapp-sdk/extension-reachability.md",
+        "bytes": 23332,
+        "sha256": "3742686d8b088e8c6afcc6b473b2ffa2cf342dae0723ed1365b265d72e120d27",
+        "payload": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/prepared-snapshot-attempt19/tracked-delta/docs/miniapp-sdk/extension-reachability.md",
+        "beforeSHA256": "cae21720cab9b31211796a5d82309d6e779f46ddb1d946d1ec1e322f4cf952cb"
+      },
+      {
+        "path": "docs/miniapp-sdk/source-inventory.json",
+        "bytes": 494020,
+        "sha256": "de8326436f4ecb7f03c7c28e913f00ef3dc6fa331c1c8a7f355406cd9f0c81ea",
+        "payload": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/prepared-snapshot-attempt19/tracked-delta/docs/miniapp-sdk/source-inventory.json",
+        "beforeSHA256": "856bc8aca1473f8f4255b324e840ef2ebcdf5eb7352d1041d2433391e9f4bfd8"
+      }
+    ]
+  },
+  "productAuthority": {
+    "packet": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-v5-terminal-packet",
+    "storedPath": "raw/notification-os-v5/decision.json.gz",
+    "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v5/decision.json",
+    "sha256": "ce8d33c24728872dcab36cf20d643f9b5d2b1e94ae312b144513824237a48aa5",
+    "bytes": 172479
+  },
+  "observationBudget": {
+    "maximumActiveSeconds": 900,
+    "separateFromOriginalOS900": true,
+    "historicalOSChargedSeconds": 897.3027506670041,
+    "historicalPrimaryActiveSeconds": 25204.83441242004,
+    "preparationWillBeCharged": true
+  },
+  "requestedDevice": {
+    "name": "Hanlin Notification OS Recovery 20261125",
+    "deviceType": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro-13-inch-M5-12GB",
+    "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-27-0",
+    "runtimeVersion": "27.0",
+    "runtimeBuild": "24A434"
+  },
+  "boundary": "No compiler, npm, SDK regeneration, historical-path recreation, boot/install/test or product mutation. Source235 and prepared25 are verified recoverable on Oracle; only original execution helpers, UI provenance, three fixtures and immutable history will be staged."
+}

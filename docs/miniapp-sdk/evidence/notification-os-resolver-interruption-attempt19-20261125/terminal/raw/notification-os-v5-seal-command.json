@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/opt/homebrew/opt/python@3.12/bin/python3.12",
+    "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/seal-notification-os-decision-v8.py"
+  ],
+  "startedAt": "2026-11-25T19:41:34.501989+00:00",
+  "finishedAt": "2026-11-25T19:41:37.146114+00:00",
+  "seconds": 2.6437662500102306,
+  "exitCode": 0,
+  "stdout": "{\"schema\": 1, \"status\": \"SEALED_NOT_LAUNCHED\", \"source\": \"d4a0b115b106d4250ea40ad66153d5156847a07c\", \"sourceTree\": \"f7a6596a1ef53d8d962ceb9f619460ffa19ee91e\", \"decision\": {\"path\": \"build/primary-control/notification-os-v5-decision.json\", \"bytes\": 172479, \"sha256\": \"ce8d33c24728872dcab36cf20d643f9b5d2b1e94ae312b144513824237a48aa5\"}, \"sealer\": {\"path\": \"build/primary-control/seal-notification-os-decision-v8.py\", \"bytes\": 42618, \"sha256\": \"da6c107b036ae25647f6e27ec834aa234eab369a8a328198bd03d4c26c97fb74\"}, \"controller\": {\"path\": \"build/primary-control/notification-os-v10.py\", \"sha256\": \"8b93a1d5952436135015227e29f5af4c12b0aeaa4879a46135697c10f2c37b68\"}, \"sealedAt\": \"2026-11-25T19:41:37.140462+00:00\", \"fieldCount\": 30, \"productRows\": 44, \"originalProductRows\": 35, \"stagedInputCount\": 11, \"inputObservation\": {\"path\": \"build/primary-control/notification-os-v5-seal-inputs.json\", \"bytes\": 13676, \"sha256\": \"ee42aaad45859b33159a3467ccb8ad13946f7a47fd49d84241c71e17e7f32ce9\"}, \"activeBaselineSeconds\": 24674.060430753034, \"allowanceSeconds\": 900, \"remainingAllowanceSeconds\": 533.4712310000032, \"priorOSChargedSeconds\": 366.5287689999968, \"actualPairedStatus\": \"EXECUTED_PASS\", \"phaseExecution\": \"NOT_RUN\", \"SDKProducerSource\": \"a2c8a1b1be746461272ba77254603304567c309d\", \"miniBuildProducerSource\": \"d4a0b115b106d4250ea40ad66153d5156847a07c\", \"aiBuildProducerSource\": \"d4a0b115b106d4250ea40ad66153d5156847a07c\"}\n",
+  "stderr": ""
+}

@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "observedAt": "2026-11-25T20:52:38.850342+00:00",
+  "verifier": "/root/remaining_controllers",
+  "status": "VERIFIED_EXACT_ARCHIVE_AND_FILE_PAYLOADS",
+  "archive": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-recovery-v1-xcresult-archive/NotificationOS.xcresult.tar.gz",
+    "bytes": 89006891,
+    "sha256": "07720ea7537ea3705c7baf8d41acd1e837c57948192af0e5dec06cca5413192c"
+  },
+  "sourceManifest": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-recovery-v1-xcresult-archive/source-manifest.json",
+    "bytes": 50661,
+    "sha256": "c0c677b985a2dd8e655b1b5243f00759d77bdb3317c3b111e48c11de0a7f3da8"
+  },
+  "verifiedMembers": 116,
+  "verifiedFiles": 114,
+  "verifiedRawFileBytes": 89853430,
+  "modesAndUidGidMatch": true,
+  "sourceExtendedAttributesAllEmpty": true,
+  "tarMtimeNotExactNanosecondsCount": 116,
+  "timestampBoundary": "Exact ns timestamps are retained in authenticated source manifest; tar representation is not relabeled as exact ns.",
+  "caseStatus": "FAILED",
+  "executionBoundary": "Oracle-only streaming read; no extraction, native query, source change or test execution"
+}

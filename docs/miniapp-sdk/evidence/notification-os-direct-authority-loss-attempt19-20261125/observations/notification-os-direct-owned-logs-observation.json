@@ -1,0 +1,155 @@
+{
+  "schema": 1,
+  "observedAt": "2026-11-25T20:10:53.534612+00:00",
+  "scope": "read-only exact owned DerivedData Logs; no deletion",
+  "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Logs",
+  "exists": true,
+  "rows": [
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Logs/Build",
+      "isSymlink": false,
+      "allocatedBytes": 147456,
+      "logicalBytes": 143078,
+      "files": 2,
+      "largestFiles": [
+        {
+          "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Logs/Build/CE448F0B-CCD0-4E3D-817F-625AC2BE1FD0.xcactivitylog",
+          "bytes": 141384,
+          "allocatedBytes": 143360,
+          "mtimeNs": "1795626550663176598"
+        },
+        {
+          "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Logs/Build/LogStoreManifest.plist",
+          "bytes": 1694,
+          "allocatedBytes": 4096,
+          "mtimeNs": "1795628357710727704"
+        }
+      ]
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Logs/Launch",
+      "isSymlink": false,
+      "allocatedBytes": 0,
+      "logicalBytes": 0,
+      "files": 0,
+      "largestFiles": []
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Logs/Localization",
+      "isSymlink": false,
+      "allocatedBytes": 0,
+      "logicalBytes": 0,
+      "files": 0,
+      "largestFiles": []
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Logs/Package",
+      "isSymlink": false,
+      "allocatedBytes": 540672,
+      "logicalBytes": 144523,
+      "files": 104,
+      "largestFiles": [
+        {
+          "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Logs/Package/LogStoreManifest.plist",
+          "bytes": 116415,
+          "allocatedBytes": 118784,
+          "mtimeNs": "1795636221112749128"
+        },
+        {
+          "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Logs/Package/7DFEF842-549F-4566-8B3E-6E0F8225858D.xcactivitylog",
+          "bytes": 270,
+          "allocatedBytes": 4096,
+          "mtimeNs": "1795636007531463171"
+        },
+        {
+          "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Logs/Package/A7B72640-5380-4C2D-80F0-59A3021C1D68.xcactivitylog",
+          "bytes": 270,
+          "allocatedBytes": 4096,
+          "mtimeNs": "1795635765010180394"
+        },
+        {
+          "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Logs/Package/D092A259-78DA-4271-8D35-202020F7ACFE.xcactivitylog",
+          "bytes": 270,
+          "allocatedBytes": 4096,
+          "mtimeNs": "1795635815102389073"
+        },
+        {
+          "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Logs/Package/9965304A-03CA-4ACA-8BD0-F06F73278C23.xcactivitylog",
+          "bytes": 270,
+          "allocatedBytes": 4096,
+          "mtimeNs": "1795636146283470559"
+        },
+        {
+          "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Logs/Package/7B82347F-FFFD-4AC6-96CB-1119901081F9.xcactivitylog",
+          "bytes": 270,
+          "allocatedBytes": 4096,
+          "mtimeNs": "1795635830278681486"
+        },
+        {
+          "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Logs/Package/9A37E33F-ED32-433C-A428-E873F4BDFF5A.xcactivitylog",
+          "bytes": 269,
+          "allocatedBytes": 4096,
+          "mtimeNs": "1795636084166058772"
+        },
+        {
+          "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Logs/Package/1D4866ED-F705-4126-82AE-48B5695A8803.xcactivitylog",
+          "bytes": 270,
+          "allocatedBytes": 4096,
+          "mtimeNs": "1795636153145453224"
+        },
+        {
+          "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Logs/Package/1411EB1C-C259-41BF-8DFC-DB19926C9D68.xcactivitylog",
+          "bytes": 272,
+          "allocatedBytes": 4096,
+          "mtimeNs": "1795636101425814253"
+        },
+        {
+          "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Logs/Package/4C932CB3-3593-496A-9C4C-A4F997B89C7A.xcactivitylog",
+          "bytes": 271,
+          "allocatedBytes": 4096,
+          "mtimeNs": "1795636133979504713"
+        },
+        {
+          "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Logs/Package/11BEF937-F0B4-41F6-9E3F-1059C7474007.xcactivitylog",
+          "bytes": 270,
+          "allocatedBytes": 4096,
+          "mtimeNs": "1795636086931089363"
+        },
+        {
+          "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Logs/Package/87817253-C46D-4AF7-8996-82FE31B18372.xcactivitylog",
+          "bytes": 269,
+          "allocatedBytes": 4096,
+          "mtimeNs": "1795636098377973771"
+        },
+        {
+          "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Logs/Package/30B04918-6EE1-486D-827D-ECD485613014.xcactivitylog",
+          "bytes": 269,
+          "allocatedBytes": 4096,
+          "mtimeNs": "1795636138824278549"
+        },
+        {
+          "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Logs/Package/275FBA66-4315-4DF0-A913-0AD4DB0BB26C.xcactivitylog",
+          "bytes": 270,
+          "allocatedBytes": 4096,
+          "mtimeNs": "1795635969341352842"
+        },
+        {
+          "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Logs/Package/78EC2AF7-D14A-4088-8024-F5BCC811B67A.xcactivitylog",
+          "bytes": 269,
+          "allocatedBytes": 4096,
+          "mtimeNs": "1795635925035913697"
+        }
+      ]
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Logs/Test",
+      "isSymlink": false,
+      "allocatedBytes": 0,
+      "logicalBytes": 0,
+      "files": 0,
+      "largestFiles": []
+    }
+  ],
+  "allocatedBytes": 688128,
+  "finishedAt": "2026-11-25T20:10:53.564165+00:00"
+}

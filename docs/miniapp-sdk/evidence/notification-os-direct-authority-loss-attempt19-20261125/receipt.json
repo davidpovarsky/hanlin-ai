@@ -1,0 +1,81 @@
+{
+  "schema": 1,
+  "packet": "notification-os-direct-authority-loss-attempt19-20261125",
+  "memberCount": 12,
+  "totalFileCountIncludingReceipt": 13,
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 4403,
+      "sha256": "9bf0124e545deed9d3bb2dd88636c0a78cca66500c6730ce8239469d3619670a",
+      "mode": "100644"
+    },
+    {
+      "path": "diffs/notification-os-v10-to-direct-v1.diff",
+      "bytes": 25781,
+      "sha256": "37ea96bc12f2163b7413d0ef34abb0b1421a3976b3ad04273883e03e081cc3b5",
+      "mode": "100644"
+    },
+    {
+      "path": "diffs/seal-and-launch-notification-os-direct-v1.diff",
+      "bytes": 4026,
+      "sha256": "a36d60fc058f89b55c44e3db152455fe8192f95c89b93f2344a925735827e905",
+      "mode": "100644"
+    },
+    {
+      "path": "diffs/seal-notification-os-v8-to-direct-v1.diff",
+      "bytes": 19619,
+      "sha256": "c17ac0d6460696bd4e0a833e31d0ba1501bad6a793f0db357c34138246747ea4",
+      "mode": "100644"
+    },
+    {
+      "path": "drafts/notification-os-direct-v1.py",
+      "bytes": 55351,
+      "sha256": "0f853aad3a103d5482086a6ee32cb24ebf8366c2626c170e97626852d107595c",
+      "mode": "100644"
+    },
+    {
+      "path": "drafts/seal-and-launch-notification-os-direct-v1.py",
+      "bytes": 4884,
+      "sha256": "bc4d13ef6564ee7f6f7b8e89dae149c7e15f9c991873ccb1744e25768b14efd3",
+      "mode": "100644"
+    },
+    {
+      "path": "drafts/seal-notification-os-direct-decision-v1.py",
+      "bytes": 50816,
+      "sha256": "0ef2479029dc151db1a580000da606438d534e5dab1a6c83efcae76ffcb2a769",
+      "mode": "100644"
+    },
+    {
+      "path": "manifest.json",
+      "bytes": 4925,
+      "sha256": "de31a86b4169e208e81161d2875b7eafce93fb56a57cc03329241917ed06c6d2",
+      "mode": "100644"
+    },
+    {
+      "path": "observations/notification-os-direct-authority-path-observation.json",
+      "bytes": 1222,
+      "sha256": "8d1f4188f8ed243ae4f5a3157efb11c7b07e6f8d705d7b7f86f41f60ac501150",
+      "mode": "100644"
+    },
+    {
+      "path": "observations/notification-os-direct-checkout-product-identity-observation.json",
+      "bytes": 3358,
+      "sha256": "d81eb96524f3a4714a4899fe13986f0b0066e55df72b84b53ae0f146957fdc6f",
+      "mode": "100644"
+    },
+    {
+      "path": "observations/notification-os-direct-owned-logs-observation.json",
+      "bytes": 6086,
+      "sha256": "591fedff0f313aafb786ac2a9a4f12baa8abcda1ad40f6cf2a3c1b39559e213c",
+      "mode": "100644"
+    },
+    {
+      "path": "observations/notification-os-direct-resource-20261125T200958Z.json",
+      "bytes": 1219,
+      "sha256": "57ca3c277a1832bcc4be7a0d0dacd31dab4e2b1aa22f891aa424dcf44a047102",
+      "mode": "100644"
+    }
+  ],
+  "boundary": "Exact Oracle copies; controls unexecuted; no subsequent reconstructed-run result."
+}
