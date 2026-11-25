@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "createdAtUTC": "2026-11-25T00:28:39.148294+00:00",
-  "documentationCheckpoint": "91ac2c3868d9a056815bca56448e0cfcabd54eed",
+  "documentationCheckpoint": "aea6d31e311a3f3096014ea2f1c39432371e3ecc",
   "overallStatus": "PENDING",
   "sdk": {
     "source": "a3aae0b952b0518cb8c40ed4a511d4cffadab99f",
@@ -85,27 +85,32 @@
   },
   "runtimeHost": {
     "failedAttempt": "evidence/mac-validation-20261125/runtime-host-final-attempt1.json",
-    "passingAttempt": "evidence/runtime-host-final-attempt5-756d7f151/runtime-host-final-attempt5.json",
-    "passingSource": "756d7f1517f64295d4ce8ff9ea01d88c1f5f1194",
+    "passingAttempt": "evidence/runtime-host-final-attempt6-801bb3f66/runtime-host-final-attempt6.json",
+    "passingSource": "801bb3f66cfe6d4d0ff9e49e0094ea2887525fbd",
     "executedStatus": "EXECUTED_PASS",
     "nodePassed": 177,
     "nodeFailed": 0,
     "nodeSkipped": 1,
-    "archiveSHA256": "120bc8a6396f4202284d8a4e61ca3d772d15d791f750b9824f6a57a735f1f70b",
-    "rawLogSHA256": "754ea129dbab59da74471bf0093977ba6c3c25a28b853dd7a6355a45fef98a09",
-    "previousPassingAttempt": "evidence/runtime-host-final-attempt4-cd795e378/runtime-host-final-attempt4.json",
-    "durationSeconds": 466.034,
-    "archiveBytes": 81837507,
+    "archiveSHA256": "9d2390718e8cbd9161438392789a69a60bcfe537c8cd4ac5b8088323cb3339cc",
+    "rawLogSHA256": "84dad869cb29f0bd357f2f857d2cc1a0f7b68fb847ebe709890fa775006baae0",
+    "previousPassingAttempt": "evidence/runtime-host-final-attempt5-756d7f151/runtime-host-final-attempt5.json",
+    "durationSeconds": 84.718,
+    "archiveBytes": 81837524,
     "archiveFreshness": {
       "status": "EXECUTED_PASS",
-      "source": "756d7f1517f64295d4ce8ff9ea01d88c1f5f1194",
-      "generatedInventoryCommit": "91ac2c3868d9a056815bca56448e0cfcabd54eed"
+      "source": "801bb3f66cfe6d4d0ff9e49e0094ea2887525fbd",
+      "generatedInventoryCommit": "712fc49fe656e0b9a4c7e691752377b879fd6e24"
     },
     "historicalPassingAttempts": [
       "evidence/mac-validation-20261125/runtime-host-final-attempt2.json",
       "evidence/runtime-host-final-attempt3-37a788a4a/runtime-host-final-attempt3.json",
-      "evidence/runtime-host-final-attempt4-cd795e378/runtime-host-final-attempt4.json"
-    ]
+      "evidence/runtime-host-final-attempt4-cd795e378/runtime-host-final-attempt4.json",
+      "evidence/runtime-host-final-attempt5-756d7f151/runtime-host-final-attempt5.json"
+    ],
+    "postIntegrationFreshness": {
+      "source": "aea6d31e311a3f3096014ea2f1c39432371e3ecc",
+      "status": "PENDING_EVIDENCE_AFTER_METADATA_INTAKE_AND_ACTOR_FIX"
+    }
   },
   "appPreparation": {
     "status": "EXECUTED_PASS",
@@ -114,6 +119,7 @@
     "a2uiResult": "evidence/mac-validation-20261125/a2ui-schemas.json/result.json"
   },
   "pending": [
+    "Original NativeScript preparation/preflight and archive freshness after the owner metadata intake",
     "Two actual application build-for-testing schemes",
     "Thirteen app integration methods",
     "Four actual native-engine methods",
@@ -127,8 +133,8 @@
   },
   "applicability": "evidence/applicability-37a788a4a.json",
   "documentationBranchBase": "189ca0d73a8f9b92451d343ca84b4b7074c57c6c",
-  "updatedAtUTC": "2026-11-25T01:53:51.789085+00:00",
-  "latestRecordedExecutionSource": "91ac2c3868d9a056815bca56448e0cfcabd54eed",
+  "updatedAtUTC": "2026-11-25T02:16:47.657975+00:00",
+  "latestRecordedExecutionSource": "712fc49fe656e0b9a4c7e691752377b879fd6e24",
   "manifestAudit": {
     "status": "EXECUTED_PASS",
     "source": "7b7f7e4460200d7e98162dd525d67f8ca1860911",
@@ -152,14 +158,21 @@
     "originalPreparerReceipt": "evidence/native-preparation-7b7f7e446/expo-current-cached-preparation.json",
     "assessment": "evidence/native-preparation-7b7f7e446/preparation-assessment.json",
     "generationProvenance": "evidence/native-preparation-7b7f7e446/generation-provenance.json",
-    "acceptanceTests": "NOT_INFERRED"
+    "acceptanceTests": "NOT_INFERRED",
+    "postOwnerMetadataIntakeFreshness": {
+      "source": "aea6d31e311a3f3096014ea2f1c39432371e3ecc",
+      "status": "PENDING_EVIDENCE",
+      "ownerReportedPreparationJob": "job_9cebc5d796cb"
+    }
   },
   "applicationBuildProgress": {
-    "status": "FAILED_CORRECTION_WITH_RUNTIME_OWNER",
-    "latestCompletedAttempt": 3,
-    "latestCompletedBuildSource": "91ac2c3868d9a056815bca56448e0cfcabd54eed",
+    "status": "CORRECTIONS_INTEGRATED_AWAITING_VALIDATION",
+    "latestCompletedAttempt": 4,
+    "latestCompletedBuildSource": "712fc49fe656e0b9a4c7e691752377b879fd6e24",
     "latestCompletedBuildStatus": "FAILED",
-    "receipt": "evidence/app-build-attempt3-91ac2c386/ai-hly-build-attempt3.json",
+    "actorCorrectionIntegratedCommit": "aea6d31e311a3f3096014ea2f1c39432371e3ecc",
+    "metadataIntakeIntegratedCommit": "e08a77146a6bef97a0be8cd90dfdf1d30e2255ba",
+    "provenance": "evidence/runtime-host-final-attempt6-801bb3f66/source-and-build-assessment.json",
     "completedSuccessfulBuildInThisPacket": false
   },
   "applicationBuildAttempts": [
@@ -206,6 +219,21 @@
       "rawLogSHA256": "81679428a7a197b18ebf412364c63851ebcb8bb3a05d83363234a03dafdc09ff",
       "failureClassification": "OPTIONAL_RESULT_CLOSURE_INFERENCE",
       "acceptanceTestsExecuted": 0
+    },
+    {
+      "id": "AI_HLY attempt4",
+      "source": "712fc49fe656e0b9a4c7e691752377b879fd6e24",
+      "status": "FAILED",
+      "startedAtUTC": "2026-11-25T02:00:05.514975+00:00",
+      "finishedAtUTC": "2026-11-25T02:03:01.307956+00:00",
+      "exitCode": 65,
+      "durationSeconds": 175.793,
+      "receipt": "evidence/app-build-attempt4-712fc49fe/ai-hly-build-attempt4.json",
+      "diagnostics": "evidence/app-build-attempt4-712fc49fe/derived-compiler-errors.json",
+      "diagnosticProvenance": "Explicitly log-derived, not an xcresult export",
+      "rawLogSHA256": "565d4477238385a062ad2ece425960abfa5e40b1edba10f0412dd2d30a3bbf87",
+      "failureClassification": "MAINACTOR_NATIVE_TOOL_NAME_ACCESS",
+      "acceptanceTestsExecuted": 0
     }
   ],
   "moduleCacheRepair": {
@@ -236,8 +264,8 @@
     "applicationBuildOrTestPassInferred": false
   },
   "generatedInventoryFreeze": {
-    "source": "91ac2c3868d9a056815bca56448e0cfcabd54eed",
-    "assessment": "evidence/runtime-host-final-attempt5-756d7f151/checkpoint-assessment.json",
-    "changedSourceRevisionLines": 3
+    "source": "712fc49fe656e0b9a4c7e691752377b879fd6e24",
+    "assessment": "evidence/runtime-host-final-attempt6-801bb3f66/source-and-build-assessment.json",
+    "changedProvenanceAndHashLines": 8
   }
 }

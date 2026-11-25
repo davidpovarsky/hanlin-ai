@@ -1191,9 +1191,137 @@
       "sourcePath": "Derived exact-source assessment of original Host5 and SDK resolution receipts, generated Git diff and completed app attempt3",
       "compressedForRepository": false,
       "derived": true
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/runtime-host-final-attempt6-801bb3f66/runtime-host-final-attempt6.json",
+      "bytes": 913,
+      "sha256": "8c436edf026c8238253093870d5503997a434a4ae0f773f6433a6996afd06143",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/runtime-host-final-attempt6.json",
+      "sourceBytes": 913,
+      "sourceSHA256": "8c436edf026c8238253093870d5503997a434a4ae0f773f6433a6996afd06143",
+      "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/runtime-host-final-attempt6-801bb3f66/runtime-host-final-attempt6.log.gz",
+      "bytes": 7838,
+      "sha256": "c341ce38e58eb170db72563e046d236d94cf5cf96943ca3567dbff69905a08bb",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/runtime-host-final-attempt6.log",
+      "sourceBytes": 20055,
+      "sourceSHA256": "84dad869cb29f0bd357f2f857d2cc1a0f7b68fb847ebe709890fa775006baae0",
+      "compressedForRepository": true,
+      "uncompressedLogSHA256": "84dad869cb29f0bd357f2f857d2cc1a0f7b68fb847ebe709890fa775006baae0",
+      "uncompressedLogBytes": 20055
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt4-712fc49fe/ai-hly-build-attempt4.json",
+      "bytes": 1459,
+      "sha256": "22407fe2122149b5ac9b42dde8342016dba986628eae648123f6637ac4ef2f0e",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/ai-hly-build-attempt4.json",
+      "sourceBytes": 1459,
+      "sourceSHA256": "22407fe2122149b5ac9b42dde8342016dba986628eae648123f6637ac4ef2f0e",
+      "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt4-712fc49fe/ai-hly-build-attempt4.log.gz",
+      "bytes": 37168,
+      "sha256": "84617c96b64c55dee2ffe4d93c339c8ad44677ebb012d7ac09daa8772cfdd122",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/ai-hly-build-attempt4.log",
+      "sourceBytes": 489706,
+      "sourceSHA256": "565d4477238385a062ad2ece425960abfa5e40b1edba10f0412dd2d30a3bbf87",
+      "compressedForRepository": true,
+      "uncompressedLogSHA256": "565d4477238385a062ad2ece425960abfa5e40b1edba10f0412dd2d30a3bbf87",
+      "uncompressedLogBytes": 489706
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/runtime-host-final-attempt6-801bb3f66/transfer-receipt.json",
+      "bytes": 1867,
+      "sha256": "354c625825b6e676d00709efad496b6a262bdcf31510418d4e757c16f659cf08",
+      "sourcePath": "Read-only verified transfer of exact completed Host6 or app attempt4 evidence",
+      "compressedForRepository": false,
+      "derived": true
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt4-712fc49fe/transfer-receipt.json",
+      "bytes": 1855,
+      "sha256": "9d54909cffc8fe5fec98a152d383c68e1f48fc9e02a4ad93fa7e30604129d276",
+      "sourcePath": "Read-only verified transfer of exact completed Host6 or app attempt4 evidence",
+      "compressedForRepository": false,
+      "derived": true
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt4-712fc49fe/xcresult-sha256.json",
+      "bytes": 1949,
+      "sha256": "514589e06f0eab6e44a884ce07c15caf38ea61e29a8d69769ed97db70430694c",
+      "sourcePath": "Read-only Mac xcresult bundle file hashes",
+      "compressedForRepository": false,
+      "derived": true
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt4-712fc49fe/derived-compiler-errors.json",
+      "bytes": 608,
+      "sha256": "6cbf5ae56b2c7a07437d05e3b83dc2182603050cf8c6ef328a3bca0c076f3c5b",
+      "sourcePath": "Explicitly log-derived compiler diagnostics",
+      "compressedForRepository": false,
+      "derived": true
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/runtime-host-final-attempt6-801bb3f66/nativescript-result-type-801bb3f66.patch.gz",
+      "bytes": 524,
+      "sha256": "9c220380dc494edbbcb648e02656958f8b478e0c6f0dbde142c98b01acb2a8dd",
+      "sourcePath": "Oracle exact Git object: git show --format=fuller --no-ext-diff --no-renames 801bb3f66cfe6d4d0ff9e49e0094ea2887525fbd",
+      "sourceBytes": 1230,
+      "sourceSHA256": "6ce48c6697d869c8ee5a8d81c9e4ba1cf4bd336039462614df07c92c82e48023",
+      "compressedForRepository": true,
+      "uncompressedLogBytes": 1230,
+      "uncompressedLogSHA256": "6ce48c6697d869c8ee5a8d81c9e4ba1cf4bd336039462614df07c92c82e48023"
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/runtime-host-final-attempt6-801bb3f66/sdk-inventory-freeze-712fc49fe.patch.gz",
+      "bytes": 1407,
+      "sha256": "8823dc6e5ed43a0a62ce11250c51ea0246c043aa02762a0eb0be01364216e0dd",
+      "sourcePath": "Oracle exact Git object: git show --format=fuller --no-ext-diff --no-renames 712fc49fe656e0b9a4c7e691752377b879fd6e24",
+      "sourceBytes": 4629,
+      "sourceSHA256": "e43acab3e4f4dd77ed180092b461a5d1a5709146d738ca1c10fe1b047343f6cc",
+      "compressedForRepository": true,
+      "uncompressedLogBytes": 4629,
+      "uncompressedLogSHA256": "e43acab3e4f4dd77ed180092b461a5d1a5709146d738ca1c10fe1b047343f6cc"
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/runtime-host-final-attempt6-801bb3f66/executor-mainactor-4c18f43ca.patch.gz",
+      "bytes": 739,
+      "sha256": "ee60e1b1b3ee0e10279df71e723158aa73096cf83933536a1f72c3784df65e3d",
+      "sourcePath": "Oracle exact Git object: git show --format=fuller --no-ext-diff --no-renames 4c18f43cabad800e6069d601b39ca534e720e8a0",
+      "sourceBytes": 1537,
+      "sourceSHA256": "fc8736c07346f35aa9ddffefa8c7d56a945f3b21c661ede82bb5efdf288e4cb2",
+      "compressedForRepository": true,
+      "uncompressedLogBytes": 1537,
+      "uncompressedLogSHA256": "fc8736c07346f35aa9ddffefa8c7d56a945f3b21c661ede82bb5efdf288e4cb2"
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/runtime-host-final-attempt6-801bb3f66/nativescript-owner-metadata-4d8c0d0ac.patch.gz",
+      "bytes": 3327,
+      "sha256": "a1af5cb4d6a8063d9b40987e3592a762664fd055903773972d55159e389c7e37",
+      "sourcePath": "Oracle exact Git object: git show --format=fuller --no-ext-diff --no-renames 4d8c0d0ac0e49e4a14dc64970b75bfca4e8b2aed",
+      "sourceBytes": 8477,
+      "sourceSHA256": "79b3061a3f441cf64cc0a7b27b3aaf550742cb162d728fd5fb976cb23e01377f",
+      "compressedForRepository": true,
+      "uncompressedLogBytes": 8477,
+      "uncompressedLogSHA256": "79b3061a3f441cf64cc0a7b27b3aaf550742cb162d728fd5fb976cb23e01377f"
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/runtime-host-final-attempt6-801bb3f66/source-and-build-assessment.json",
+      "bytes": 4614,
+      "sha256": "adf0250dc7d95358c8c846ac259f02b4ded1e74a45e4db4fc9db7ba87ff8ec05",
+      "sourcePath": "Derived exact-Git/receipt comparison of Host6, app attempt4, factory actor fix and original-owner metadata intake",
+      "compressedForRepository": false,
+      "derived": true
     }
   ],
-  "updatedAtUTC": "2026-11-25T01:53:51.789085+00:00",
-  "latestEvidenceCheckpoint": "91ac2c3868d9a056815bca56448e0cfcabd54eed",
-  "latestRecordedExecutionSource": "91ac2c3868d9a056815bca56448e0cfcabd54eed"
+  "updatedAtUTC": "2026-11-25T02:16:47.657975+00:00",
+  "latestEvidenceCheckpoint": "aea6d31e311a3f3096014ea2f1c39432371e3ecc",
+  "latestRecordedExecutionSource": "712fc49fe656e0b9a4c7e691752377b879fd6e24"
 }

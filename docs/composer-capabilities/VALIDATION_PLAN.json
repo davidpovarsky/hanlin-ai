@@ -4,7 +4,7 @@
   "asanaTask": "1220882717750164",
   "sourceBase": "0929e07a6a6adae3a27cab5c514623c7cc0f157c",
   "sourceSnapshot": "8a67e7aee83c6b12673db1348b7f550a2805de50",
-  "finalSource": "PENDING application and native/UI validation. Original qualified SwiftAI package resolution and RuntimeHost attempt 5 passed at 756d7f151, followed by generated inventory freeze 91ac2c386. Actual AI_HLY build attempt 3 failed at 91ac2c386 on the runtime adapter optional Result inference; its correction remains with the assigned owner. No successful application build is recorded.",
+  "finalSource": "PENDING application and native/UI validation. RuntimeHost attempt 6 passed at 801bb3f66 and generated inventory was frozen at 712fc49fe. App attempt 4 failed at 712fc49fe on MainActor-isolated tool metadata access. The two factory annotations and exact original-owner metadata intake are integrated, with subsequent original preparation, archive freshness and application validation outside this packet.",
   "runner": {
     "host": "scaleway-mac",
     "transport": "SentinelX direct",
@@ -105,7 +105,12 @@
       "frameworksValidated": 15,
       "supportGroupsValidated": 4,
       "sourceGenerationCommit": "47643864a8ac380f3d2e3a962ae7a8b144517a16",
-      "acceptanceTests": "NOT_INFERRED"
+      "acceptanceTests": "NOT_INFERRED",
+      "postOwnerMetadataIntakeFreshness": {
+        "source": "aea6d31e311a3f3096014ea2f1c39432371e3ecc",
+        "status": "PENDING_EVIDENCE",
+        "ownerReportedPreparationJob": "job_9cebc5d796cb"
+      }
     },
     {
       "id": "sdk_resolution",
@@ -140,8 +145,8 @@
       "why": "New wrappers, staged types/schema and authoring imports invalidate old RuntimeHostResources.zip; original packager requires its actual Node tests and JITless archive verification.",
       "command": "RUNNER_TEMP=<isolated>/build/tmp bash Scripts/Runtime/prepare-runtime-host.sh",
       "status": "EXECUTED_PASS",
-      "executionSource": "756d7f1517f64295d4ce8ff9ea01d88c1f5f1194",
-      "evidence": "docs/composer-capabilities/evidence/runtime-host-final-attempt5-756d7f151/runtime-host-final-attempt5.json",
+      "executionSource": "801bb3f66cfe6d4d0ff9e49e0094ea2887525fbd",
+      "evidence": "docs/composer-capabilities/evidence/runtime-host-final-attempt6-801bb3f66/runtime-host-final-attempt6.json",
       "actualNodeCases": {
         "total": 178,
         "passed": 177,
@@ -150,16 +155,20 @@
         "skipName": "actual Node job crosses 300 seconds with no hidden deadline",
         "skipReason": "Existing opt-in long test; unchanged by this work."
       },
-      "archiveSHA256": "120bc8a6396f4202284d8a4e61ca3d772d15d791f750b9824f6a57a735f1f70b",
-      "archiveBytes": 81837507,
+      "archiveSHA256": "9d2390718e8cbd9161438392789a69a60bcfe537c8cd4ac5b8088323cb3339cc",
+      "archiveBytes": 81837524,
       "finalArchiveFreshness": {
         "status": "EXECUTED_PASS",
-        "sourceCommit": "756d7f1517f64295d4ce8ff9ea01d88c1f5f1194",
-        "reason": "Qualified SwiftAI revision changed the archived Platform manifest. Original Host preparation reran with 177 passes, the unchanged opt-in skip, ZIP validation and JITless probe. Independent archive hash/size match the receipt. Native producers were not rerun.",
-        "generatedInventoryCommit": "91ac2c3868d9a056815bca56448e0cfcabd54eed"
+        "sourceCommit": "801bb3f66cfe6d4d0ff9e49e0094ea2887525fbd",
+        "reason": "Original Host preparation after the optional-result type correction passed 177 Node methods, with the unchanged skip and original ZIP/JITless checks. Independent archive hash and size match the receipt.",
+        "generatedInventoryCommit": "712fc49fe656e0b9a4c7e691752377b879fd6e24"
       },
-      "durationSeconds": 466.034,
-      "previousSuccessfulSource": "cd795e378afed5c7556a71e26e5247da9ff22869"
+      "durationSeconds": 84.718,
+      "previousSuccessfulSource": "756d7f1517f64295d4ce8ff9ea01d88c1f5f1194",
+      "postIntegrationFreshness": {
+        "source": "aea6d31e311a3f3096014ea2f1c39432371e3ecc",
+        "status": "PENDING_EVIDENCE_AFTER_METADATA_INTAKE_AND_ACTOR_FIX"
+      }
     },
     {
       "id": "manifest_audit",
@@ -255,11 +264,13 @@
       "pending": true,
       "expectedBuilds": 2,
       "progress": {
-        "status": "FAILED_CORRECTION_WITH_RUNTIME_OWNER",
-        "latestCompletedAttempt": 3,
-        "latestCompletedBuildSource": "91ac2c3868d9a056815bca56448e0cfcabd54eed",
+        "status": "CORRECTIONS_INTEGRATED_AWAITING_VALIDATION",
+        "latestCompletedAttempt": 4,
+        "latestCompletedBuildSource": "712fc49fe656e0b9a4c7e691752377b879fd6e24",
         "latestCompletedBuildStatus": "FAILED",
-        "receipt": "evidence/app-build-attempt3-91ac2c386/ai-hly-build-attempt3.json",
+        "actorCorrectionIntegratedCommit": "aea6d31e311a3f3096014ea2f1c39432371e3ecc",
+        "metadataIntakeIntegratedCommit": "e08a77146a6bef97a0be8cd90dfdf1d30e2255ba",
+        "provenance": "evidence/runtime-host-final-attempt6-801bb3f66/source-and-build-assessment.json",
         "completedSuccessfulBuildInThisPacket": false
       },
       "attempts": [
@@ -305,6 +316,21 @@
           "processReceipt": "evidence/runtime-host-final-attempt5-756d7f151/ai-hly-build-attempt3-process.json",
           "rawLogSHA256": "81679428a7a197b18ebf412364c63851ebcb8bb3a05d83363234a03dafdc09ff",
           "failureClassification": "OPTIONAL_RESULT_CLOSURE_INFERENCE",
+          "acceptanceTestsExecuted": 0
+        },
+        {
+          "id": "AI_HLY attempt4",
+          "source": "712fc49fe656e0b9a4c7e691752377b879fd6e24",
+          "status": "FAILED",
+          "startedAtUTC": "2026-11-25T02:00:05.514975+00:00",
+          "finishedAtUTC": "2026-11-25T02:03:01.307956+00:00",
+          "exitCode": 65,
+          "durationSeconds": 175.793,
+          "receipt": "evidence/app-build-attempt4-712fc49fe/ai-hly-build-attempt4.json",
+          "diagnostics": "evidence/app-build-attempt4-712fc49fe/derived-compiler-errors.json",
+          "diagnosticProvenance": "Explicitly log-derived, not an xcresult export",
+          "rawLogSHA256": "565d4477238385a062ad2ece425960abfa5e40b1edba10f0412dd2d30a3bbf87",
+          "failureClassification": "MAINACTOR_NATIVE_TOOL_NAME_ACCESS",
           "acceptanceTestsExecuted": 0
         }
       ],
@@ -1078,7 +1104,7 @@
     "completionDocumentationOnly": "635bc66274436d21236500cda4c2e873b1abe1bd",
     "activeDraftExcluded": "PR18 remains with original owner"
   },
-  "updatedAtUTC": "2026-11-25T01:53:51.789085+00:00",
+  "updatedAtUTC": "2026-11-25T02:16:47.657975+00:00",
   "failureCorrections": [
     {
       "boundary": "manifest ordinary JSON",
@@ -1109,6 +1135,19 @@
       "integratedFixCommit": "e5a3e6d9216a69552b2b25a096fd3f3fcf8e2876",
       "compilationAfterFix": "NOT_VERIFIED_BY_THIS_PACKET",
       "evidence": "docs/composer-capabilities/evidence/app-build-attempt2-20fb9f711/focus-fix-provenance.json"
+    },
+    {
+      "boundary": "NativeScript continuation optional result inference",
+      "integratedFixCommit": "801bb3f66cfe6d4d0ff9e49e0094ea2887525fbd",
+      "reason": "Explicit optional Result return type on the existing lock closure; original source patch and resulting Host6 inventory hashes preserved.",
+      "applicationCompilePass": "NOT_CLAIMED"
+    },
+    {
+      "boundary": "live executor factory MainActor metadata access",
+      "originalFixCommit": "4c18f43cabad800e6069d601b39ca534e720e8a0",
+      "integratedFixCommit": "aea6d31e311a3f3096014ea2f1c39432371e3ecc",
+      "reason": "Two explicit @MainActor annotations on live factories; exact source diff verified, no unsafe actor escape.",
+      "applicationCompilePass": "NOT_CLAIMED"
     }
   ],
   "latestUpstreamIntegration": {
@@ -1118,9 +1157,10 @@
     "taskWorkspaceEquivalent": "6ceb07447 changes already included by identical merge-tree"
   },
   "overallStatus": "PENDING",
-  "evidenceCheckpoint": "91ac2c3868d9a056815bca56448e0cfcabd54eed",
+  "evidenceCheckpoint": "aea6d31e311a3f3096014ea2f1c39432371e3ecc",
   "evidenceIndex": "docs/composer-capabilities/EVIDENCE_INDEX.json",
   "pendingRequiredGates": [
+    "Original NativeScript preparation/preflight and archive freshness after the owner metadata intake",
     "Two actual application build-for-testing schemes",
     "Thirteen app integration methods",
     "Four actual native-engine methods",
@@ -1137,8 +1177,9 @@
     "Native preparer exit 0, verified framework bytes, codegen and metadata checks do not establish successful consumer app builds or native-engine/editor/UI execution.",
     "The failed build-for-testing attempt and recorded ModuleCache repair are not acceptance test results. Stopping a waiting admission runner with no compiler is orchestration, not a build/test failure. An actual retry process start is not a completed build.",
     "Attempt 2 is a completed compilation failure, not a passing build or acceptance-test run. The exact source correction is integrated, but this packet provides no successful compilation after that correction. Inactive cache retirement is orchestration only.",
-    "RuntimeHost attempt 5 records 177 actual passes at 756d7f151 with the same existing skip. Qualified SDK resolution passed with the exact clean 3f38 revision and unchanged lock, but neither result establishes successful application compilation. Completed app attempt 3 remains FAILED. Earlier shared-test reuse retains its existing assessed source boundary."
+    "RuntimeHost attempt 5 records 177 actual passes at 756d7f151 with the same existing skip. Qualified SDK resolution passed with the exact clean 3f38 revision and unchanged lock, but neither result establishes successful application compilation. Completed app attempt 3 remains FAILED. Earlier shared-test reuse retains its existing assessed source boundary.",
+    "Host6 is authentic passed evidence at 801bb3f66, not proof of later metadata/actor changes. App attempt4 remains a compilation failure. Its missing exported xcresult issue file is represented by explicitly log-derived diagnostics; original raw log and xcresult file hashes are retained. Exact owner-source intake and actor annotations do not establish native preparation or application acceptance."
   ],
   "documentationBranchBase": "189ca0d73a8f9b92451d343ca84b4b7074c57c6c",
-  "latestRecordedExecutionSource": "91ac2c3868d9a056815bca56448e0cfcabd54eed"
+  "latestRecordedExecutionSource": "712fc49fe656e0b9a4c7e691752377b879fd6e24"
 }
