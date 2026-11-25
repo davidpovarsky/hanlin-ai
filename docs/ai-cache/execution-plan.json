@@ -170,33 +170,33 @@
       "repair_commit": "5a0351f7e452789fd41c715c1ccb7f020cff44c5"
     },
     "runtime_host_result": {
-      "source": "c05d8de55d5a38c0365581c297bc5b70bb34513a",
-      "generated_commit": "40a778f5faf9df99e692033a2c762d4664d6d8f8",
+      "source": "5a0351f7e452789fd41c715c1ccb7f020cff44c5",
+      "generated_commit": "c72df9dfd20204abb04b9447c4a375d346cfa8c6",
       "status": "EXECUTED_PASS",
       "passed": 177,
       "failed": 0,
       "skipped": 1,
       "skip": "Original opt-in long worker duration test",
       "jitless_actual_archive_smoke": "PASS",
-      "raw_log_sha256": "e494e84d65a7f6fc910dd69c0666d84d3857a9e3cfc2205ecd06df2c684d4d26",
-      "archive_sha256": "7aa1e384b69cd61b49040b9f8f9df422fab9cfb4d1ca3b744fd77ca680333d79",
-      "source_inputs_hash": "2813dd432b0cfd9f18c40e1d656c27b07820571e813d7155a1534a39f29d75a7",
-      "receipt": "evidence/app-native-20261125/attempt09/host-refresh/receipt.json"
+      "raw_log_sha256": "67a000cd44c75dfe45626eac461bf267190102083492517bc7a914a33489cdd8",
+      "archive_sha256": "7f0f6cd49c058673ffb9699fd2262ae768ca2843282f88e51d0ade293535df64",
+      "source_inputs_hash": "212e401bce8905c47620cd70f6bf7786eb7efa58b6c72ffd0cd35e345d0d80a7",
+      "receipt": "evidence/app-native-20261125/attempt10/host-refresh/receipt.json"
     },
     "latest_sync_receipt": "evidence/latest-sync-f391-20261125/receipt.json",
     "current_host_refresh": {
-      "source": "c05d8de55d5a38c0365581c297bc5b70bb34513a",
-      "generated_commit": "40a778f5faf9df99e692033a2c762d4664d6d8f8",
+      "source": "5a0351f7e452789fd41c715c1ccb7f020cff44c5",
+      "generated_commit": "c72df9dfd20204abb04b9447c4a375d346cfa8c6",
       "status": "EXECUTED_PASS",
       "passed": 177,
       "failed": 0,
       "skipped": 1,
       "skip": "Original opt-in long worker duration test",
       "jitless_actual_archive_smoke": "PASS",
-      "raw_log_sha256": "e494e84d65a7f6fc910dd69c0666d84d3857a9e3cfc2205ecd06df2c684d4d26",
-      "archive_sha256": "7aa1e384b69cd61b49040b9f8f9df422fab9cfb4d1ca3b744fd77ca680333d79",
-      "source_inputs_hash": "2813dd432b0cfd9f18c40e1d656c27b07820571e813d7155a1534a39f29d75a7",
-      "receipt": "evidence/app-native-20261125/attempt09/host-refresh/receipt.json"
+      "raw_log_sha256": "67a000cd44c75dfe45626eac461bf267190102083492517bc7a914a33489cdd8",
+      "archive_sha256": "7f0f6cd49c058673ffb9699fd2262ae768ca2843282f88e51d0ade293535df64",
+      "source_inputs_hash": "212e401bce8905c47620cd70f6bf7786eb7efa58b6c72ffd0cd35e345d0d80a7",
+      "receipt": "evidence/app-native-20261125/attempt10/host-refresh/receipt.json"
     },
     "app_attempts": [
       {
@@ -357,7 +357,7 @@
       "required_gate": "Original build and strict48 invocations, with no optional delegate near-match warning."
     },
     "latest_head_observation": "evidence/final-head-observation-app08-20261125/observation.json",
-    "next_app_source": "40a778f5faf9df99e692033a2c762d4664d6d8f8",
+    "next_app_source": "c72df9dfd20204abb04b9447c4a375d346cfa8c6",
     "app_failure_history": [
       {
         "source": "1ae93941a34cf555f8a7293106efeff80978ebfa",
@@ -376,8 +376,8 @@
       }
     ]
   },
-  "updated_at": "2026-11-25T06:05:51.549614+00:00",
-  "latest_integrated_source": "5a0351f7e452789fd41c715c1ccb7f020cff44c5",
+  "updated_at": "2026-11-25T06:08:14.355584+00:00",
+  "latest_integrated_source": "c72df9dfd20204abb04b9447c4a375d346cfa8c6",
   "synchronized_heads": {
     "composer": "f39142d3d14ae1bbbb81febceeef61fdc605f2a0",
     "miniapps_sdk": "b0cf26a668a698682f5307252f14cf0af8c6d00a",
