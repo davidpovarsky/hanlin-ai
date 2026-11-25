@@ -277,17 +277,24 @@
       "scope": "Only validation tooling; full tracked source hashing retained, historical-proof mutation rejected; nine actual tracked locks copied. App03 remains sealed at5b69bbb5 and is not relabeled."
     },
     "standalone_package_resolution": {
-      "status": "RUNNING",
+      "status": "RESOLUTION_PASS",
       "source": "37367b3d6bbd7e8321d6828a9052d502dd9d7522",
       "producer_fix": "26e94ea93cc16dee392138b2a40c9f699f263f79",
       "guard_fixtures_passed": 12,
       "guard_evidence": "evidence/standalone-lock-guard-20261125/guard-receipt.json",
       "recipe": "Scripts/CI/IntegrationValidation/resolve_agent_sdk_locks.sh",
       "job": "job_220cdb233362",
-      "scope": "Original six standalone SwiftPM graphs; canonical app lock remains authority; no hand-edited pins"
+      "scope": "Original six standalone SwiftPM graphs; canonical app lock remains authority; no hand-edited pins",
+      "graphs": 6,
+      "builds": 0,
+      "tests": 0,
+      "generated_commit": "0e782f60bb28c704cae6200d5ff161826b771154",
+      "evidence": "evidence/standalone-lock-resolution-20261125/receipt.json",
+      "unrelated_pins_changed": false,
+      "canonical_app_lock_unchanged": true
     }
   },
-  "updated_at": "2026-11-25T04:59:33.264867+00:00",
+  "updated_at": "2026-11-25T05:01:37.217687+00:00",
   "latest_integrated_source": "37367b3d6bbd7e8321d6828a9052d502dd9d7522",
   "synchronized_heads": {
     "composer": "f39142d3d14ae1bbbb81febceeef61fdc605f2a0",
