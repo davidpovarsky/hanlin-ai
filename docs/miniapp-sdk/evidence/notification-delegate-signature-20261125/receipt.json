@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "kind": "MINIMAL_NOTIFICATION_DELEGATE_SIGNATURE_CORRECTION",
+  "recordedAt": "2026-11-25T05:48:49.958909+00:00",
+  "sourceCommit": "b0cf26a668a698682f5307252f14cf0af8c6d00a",
+  "sourcePath": "AI_HLY/Downstream/ScriptingPlatform/HanlinNotificationApplicationDelegate.swift",
+  "sourceBeforeSHA256": "65e908cc29df4bab76ef3a1b44e032fe2651b47ed4b438035b4e5757a468fa67",
+  "sourceAfterSHA256": "eacf5e748287603ef4e6796d2f2d0016b7563aa5de62bca4478a693d2b82eb83",
+  "sourceLinesChanged": 2,
+  "members": [
+    {
+      "path": "README.md",
+      "bytes": 1835,
+      "sha256": "9415a8fa86f8fce8e8e98d07f56092b9aae06b3ca6577323f0bef6fab3aea325"
+    },
+    {
+      "path": "native-proof-reference.json",
+      "bytes": 1465,
+      "sha256": "94464b3c2e059a4110709598b2ce207df1da1f3e1a406a55ee227b6d8409d280"
+    },
+    {
+      "path": "source-binding.json",
+      "bytes": 1560,
+      "sha256": "4ad58a28d564f3e28711b6c2f116b7b0744358ec7d90df376b7b082fccaadd85"
+    }
+  ],
+  "memberCount": 3,
+  "memberBytes": 4860,
+  "nativeRawProofBoundary": "Reported exact actual signature result; raw packet independently retained in follow-up. Actual consumer validation remains pending."
+}
