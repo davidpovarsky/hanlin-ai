@@ -1,0 +1,20 @@
+{
+  "captureError" : "",
+  "diskBudgetBytes" : 268435456,
+  "droppedByteCount" : 0,
+  "encryptedRaw" : true,
+  "encryption" : "AES-256-GCM, per-record nonce and authenticated aad; device-only Keychain key",
+  "eventsFile" : "agent-session-2026-11-25T13-34-37-55e04ec1-stage-events.jsonl",
+  "groupID" : "BA653381-42E2-4786-988B-E1E76A9B59F0",
+  "lastSequence" : 435,
+  "queueBudgetBytes" : 16777216,
+  "rawFile" : "agent-session-2026-11-25T13-34-37-55e04ec1.raw.enc",
+  "rawFileSHA256" : "bee44f32520453e0023e4b8c885526e9c9e6863bffd5bb9187066244c59a435c",
+  "runID" : "55E04EC1-134D-4F8A-B8D5-8E7E0D9F4059",
+  "schemaVersion" : 1,
+  "sharing" : "Local only. Raw decryption\/sharing requires deliberate user action.",
+  "snapshotsFile" : "agent-session-2026-11-25T13-34-37-55e04ec1-stage-snapshots.json",
+  "status" : "recording_or_interrupted",
+  "storedBytes" : 8148289,
+  "truncated" : false
+}
