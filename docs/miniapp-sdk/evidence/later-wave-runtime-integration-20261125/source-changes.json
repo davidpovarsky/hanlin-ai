@@ -1,0 +1,643 @@
+{
+  "base": "89f758d56a4945acc52dfe604b78835539d5df85",
+  "functionalSourceCommit": "4c9c1451f10e8c1a71c5dc07bfe3b858d2f37f51",
+  "changes": [
+    {
+      "status": "M",
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-authoring.test.mjs",
+      "kind": "regression",
+      "beforeSHA256": "bef93d623bae3ffa7ba5320d71cfaaed09d6316c46ec1715d16275e36b535dce",
+      "afterSHA256": "41f4df51d49ebf48e8ecda9c205372281b2bce2b4e865f1b343474ca8f38b853"
+    },
+    {
+      "status": "M",
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-sdk-resolution.test.mjs",
+      "kind": "regression",
+      "beforeSHA256": "958d0e0a71f47fa7677e412cd1a0ed40da43feb898b182df84e63256a05e5865",
+      "afterSHA256": "5feff98ed62727330f2a64abedff0d4a3af9f71d5a8b1f7c8e39396c90e7d65f"
+    },
+    {
+      "status": "M",
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
+      "kind": "production",
+      "beforeSHA256": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9",
+      "afterSHA256": "fa5121902e231d5d44ad08bf47699784fd4d0bc2a98102f3a156e6e4ae79b9b9"
+    },
+    {
+      "status": "A",
+      "path": "HanlinMiniAppsTests/NativeScriptMainRunLoopCallbackTests.swift",
+      "kind": "regression",
+      "beforeSHA256": null,
+      "afterSHA256": "ad4b516db151867a80413646be9dfed9313f3f356d972c112fdf0f0d5806fd99"
+    },
+    {
+      "status": "M",
+      "path": "Package.swift",
+      "kind": "generated",
+      "beforeSHA256": "cc1f8feedf643d98dd82b6fab4accbb3141863f37403eaa98d368c9ccc4287c9",
+      "afterSHA256": "c62a115ec0f633ca634b3853bd05e194ad2605d658f0eed618942096a8d7c597"
+    },
+    {
+      "status": "M",
+      "path": "Packages/HanlinExpoRuntime/Package.swift",
+      "kind": "production",
+      "beforeSHA256": "116a910cffe061ff3eea0e289402bc51769d3268daedc94ea5b1e043e6d109a4",
+      "afterSHA256": "d4157d16c1d505b408cf4b78f7ab59f53ff607ea94e0c4e51a4e2c088a691f37"
+    },
+    {
+      "status": "M",
+      "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoSession.swift",
+      "kind": "production",
+      "beforeSHA256": "27505a611dbe1b61ab100ca53c393ca9a72aedb76bbc084015c35423f25804c7",
+      "afterSHA256": "852828b5e9548de003195cef2253b892a5b4a1c039e71946bb0e7fb0b61d7107"
+    },
+    {
+      "status": "M",
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeServicesBridge.m",
+      "kind": "production",
+      "beforeSHA256": "7817e45687bd69ba1a93f9aa8d48d66ddf1a63e32109807d949c1bfb3e0bd160",
+      "afterSHA256": "e36a9d2ba06dd7878d17df7c9e8f17df8952ac67f087c0a43174742c1c0ebe0c"
+    },
+    {
+      "status": "M",
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinMiniAppHostVersions.swift",
+      "kind": "production",
+      "beforeSHA256": "a31357ce803c24ba80aed6f4c81b7e31f82abde1ec6c2ef00c6ee4a57c272717",
+      "afterSHA256": "8e99e562bacbe6354bc23caf6a1233930a1e0d61c3abe0444195dd36164f747d"
+    },
+    {
+      "status": "M",
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
+      "kind": "production",
+      "beforeSHA256": "a8b4b96df4fb0782e78e0c48132def346f63436b9cff96286088f52b5889da54",
+      "afterSHA256": "7c58f10cc6a5f89c452842490b8ee6eb2378066929c8db27c5dfe6139d441527"
+    },
+    {
+      "status": "M",
+      "path": "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinScriptAnalyzerTests.swift",
+      "kind": "regression",
+      "beforeSHA256": "3f3b3565384b7e8a66948d6be67ee95f2f735f038dc69ea07d287e1c6a3cfca2",
+      "afterSHA256": "e71673cd27ee0b780bc9ca254ee62e2da1a38eb45250bdae8983ab0e5443633c"
+    },
+    {
+      "status": "M",
+      "path": "Scripts/Audit/miniapp-manifest-contracts.mjs",
+      "kind": "production",
+      "beforeSHA256": "484a0f05eeee4818da22aeb9eab5de9a509bc10e3b63b7226a20206a839a5aaa",
+      "afterSHA256": "9f592ef1d6d280923c473041a078e7f63757633ff55c3ee08f80af6d80b057e3"
+    },
+    {
+      "status": "M",
+      "path": "Scripts/Expo/build-original-expo-source.mjs",
+      "kind": "production",
+      "beforeSHA256": "5a446cd0e1701a91f4eed5d5a3c5d5ea41be05d15cec668ca36edca3a38b2488",
+      "afterSHA256": "855a9a79f1c27a2ba2f3796cf784ebb66a4a48df928b2ea8f6ca1ffd9e886c03"
+    },
+    {
+      "status": "M",
+      "path": "Scripts/Expo/dependency-lock.json",
+      "kind": "production",
+      "beforeSHA256": "549d100eca28b6b5f59b0cc6bb55d64c27e7bb88f02fd58eb8f1b2f6097be64f",
+      "afterSHA256": "b9e3ad6d863e3e5136ad93924ce4edcb37da87578b113523640110af347eec65"
+    },
+    {
+      "status": "M",
+      "path": "Scripts/Expo/package-lock.json",
+      "kind": "production",
+      "beforeSHA256": "95d2a560d4eb01de64fcd0d43875a4ef2392e9747ed9fa79c2e0a0e58abececf",
+      "afterSHA256": "9ee1d2babe6266148d8f969b25f542c00897c569969e5aae6dd6f744e2a0c53c"
+    },
+    {
+      "status": "M",
+      "path": "Scripts/Expo/package.json",
+      "kind": "production",
+      "beforeSHA256": "db6fd60dbc8f2b15eac5fee7029781cf14834ffbad53f0c8948fc4c2945c1e91",
+      "afterSHA256": "da083105462f40368adb89acba0dbc1b623d2249b26b2ac1cbe1d326edc2bd3d"
+    },
+    {
+      "status": "M",
+      "path": "Scripts/Expo/prepare-ios-dependencies.mjs",
+      "kind": "production",
+      "beforeSHA256": "072c3432d299e4081d11d052b4bfe74d195e5775ace19362aaaea25652137dbb",
+      "afterSHA256": "97069b0e1ec619d906f4b6d196e38e6527790c3661f798abcca6258dacf18163"
+    },
+    {
+      "status": "M",
+      "path": "Scripts/MiniApps/Tests/upstream-resolution.test.mjs",
+      "kind": "regression",
+      "beforeSHA256": "4ae2f944b0bd1cbeebc78599385c664fdb194eedae42d4cd376b44b5677b1b90",
+      "afterSHA256": "2b8ab415f6343b2cdf33cf9029aa5b39f52b5a9959f6d52dd31a3fd7e3cea16e"
+    },
+    {
+      "status": "M",
+      "path": "Scripts/MiniApps/resolve-upstreams.mjs",
+      "kind": "production",
+      "beforeSHA256": "b2222aad85f1a6c5ba38a6d52282674bb37627e05ab484b637614dfc7b9892f8",
+      "afterSHA256": "7973977cf986cbee14fd147fd8b10c1d54a6f1a1c790511d2df5cf054063e7a2"
+    },
+    {
+      "status": "M",
+      "path": "Scripts/MiniApps/stage-sdk.mjs",
+      "kind": "production",
+      "beforeSHA256": "a9d02de9128acde4bcdd14b60c3227627a43c004075f55c6d9f41e2045c9bcce",
+      "afterSHA256": "b1b0a3bd2c560fcf93eca064053aba7bcbf7786fb800e083bb7f297a0a300c40"
+    },
+    {
+      "status": "M",
+      "path": "Scripts/SDK/native_artifacts.py",
+      "kind": "production",
+      "beforeSHA256": "9d093f9207d8f2f3cdfea8c35420c725661c78eda2b97849abb3482240bd7fcc",
+      "afterSHA256": "6c11725c13a7ba9a47ac1c6e2e6056606ef9f5da4899b265daaf62e326f2574b"
+    },
+    {
+      "status": "M",
+      "path": "docs/agent-sdk/unified-package-manifest.json",
+      "kind": "generated",
+      "beforeSHA256": "76c6eeae79c3140692013dc240c4b48a29ff71499e66a6dd4ab32a3fda05b4fa",
+      "afterSHA256": "0bd654688bed250640665b6eb071450bec46ac7149de7a85f872f6f55c373671"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-expo-asset-manifest-map-20261125/README.md",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "402d5afb481cdb6a9394b55357f29d0691b89ff813e4d5e0a482acac46856508"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-expo-asset-manifest-map-20261125/receipt.json",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "c1f8f02a4ea4798620fb301377237604683a69d235ce33c0a600e933a700e2d1"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-expo-asset-native-20261124/README.md",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "ee8198137fc01d41bd18b10007fe40da2595cbefc665d81233ba93bc3c0b8753"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-expo-asset-native-20261124/raw/installed-publication/Podfile.lock.gz",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "1a4724b009336f6470d1c89f013c029ff89b1ac77f290986a37abf67f895e945"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-expo-asset-native-20261124/raw/installed-publication/core-filesystem-observation.json",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "be675d40290ea3b2baed771a94fd1a44865df341410e69ede2f8a1122c121a9c"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-expo-asset-native-20261124/raw/installed-publication/original/Package.swift",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "dc49c8256885039c23f11e68c3db8c540861ffd923a6051ea4a57d61f46052cf"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-expo-asset-native-20261124/raw/installed-publication/original/expo-module.config.json",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "58c11112e257db494f137e470e4a944d92c861b649bb95e6afafb2a22b5981ed"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-expo-asset-native-20261124/raw/installed-publication/original/ios/AssetModule.swift",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "a8a030696a86ee885d151e0baff359066bf046a6e29f483b1bc44c0e815a02c3"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-expo-asset-native-20261124/raw/installed-publication/original/ios/ExpoAsset.podspec",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "1718cbff56334111fd5fc9eda65bd8724bfc4ec7de39b46f260e41cc8db78d7b"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-expo-asset-native-20261124/raw/installed-publication/original/package.json",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "a317879b994f92128624136f42832597fc411015de25aa1125dfb73a82487427"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-expo-asset-native-20261124/raw/installed-publication/original/spm.config.json",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "10006e4f892880396d62a6a6b817d871d53a362abdc4398a936f4a9b50c12c05"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-expo-asset-native-20261124/raw/installed-publication/pod-source-cache-observation.json",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "6c555e07812f29555e8e0228bc5955e0b396a7ec1ebf62cf4d70b95b28ed5cbc"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-expo-asset-native-20261124/raw/installed-publication/receipt.json",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "06d43bfb7484e87e8c3dc21c7261b76831562259a69f1ec37a554cb5b6d0a825"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-expo-asset-native-20261124/raw/installed-publication/spm-config-receipt.json",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "e7d95a7cfd61e51868bdbf1fa37a7951e4825eb3d771a177fac0dde35698e9b1"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-expo-asset-native-20261124/raw/sdk7/expo-asset/LICENSE",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "fb3ca4a837f5779e83cef89b78253a8949cfb9429c340309f62d0465ec6610b4"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-expo-asset-native-20261124/raw/sdk7/expo-asset/src/ExpoAsset.ts",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "aa6242252197244d06e3da57df3fedcf99fb5f191e0d1ae55f822e27fe0465bb"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-expo-asset-native-20261124/raw/sdk7/expo-modules-autolinking/src/platforms/apple/apple.ts",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "ec83bc4060126d837acb71071ebb5d63331c54e7319dce6c738b6e8bbe73cf1a"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-expo-asset-native-20261124/raw/sdk7/expo/LICENSE",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "fb3ca4a837f5779e83cef89b78253a8949cfb9429c340309f62d0465ec6610b4"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-expo-asset-native-20261124/raw/sdk7/expo/src/Expo.fx.tsx",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "826a406576b7d9ae76a9a17477abebf78e1e0aa1472c4a939e40cf79954acab7"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-expo-asset-native-20261124/raw/sdk7/expo/src/launch/registerRootComponent.tsx",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "6ab6910db2fbaba08a9b6dc2843b8b1e0f6da729cb57cd8ce5c5b1a37af2bb76"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-expo-asset-native-20261124/receipt.json",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "65076914ac92855510080aa0f98d75ebb0a1e4565fd150a4799309fe3bd302e7"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-expo-asset-native-20261124/sdk7-original-bootstrap-members.json",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "e554a558fa8a5e36fe98f8f9a71a6e5cceef932c494cf97a47beafb82915d8c0"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-expo-asset-native-20261124/source-changes.json",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "5a0e8c164c8a8cec1f2bf08b270c2f18f495585b4769d1285646ffbd7e72429c"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-expo-asset-sdk-authority-20261124/README.md",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "ef05836bc8a035e2ee1065c4e991527ab859cf4651c62602bc78a1c67776d631"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-expo-asset-sdk-authority-20261124/canonical-authority-trace.json",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "a3cf3c381ca442006885ecac16644139d851d0415d67ed4402af7a53b5af151c"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-expo-asset-sdk-authority-20261124/generate-host-version-constant.mjs",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "f231b57d9250018266a2448bcc901dc5a157baf8a1a633145ed309cfb4bc6262"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-expo-asset-sdk-authority-20261124/generator-input-versions.json",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "983e6f2b6bcff69c8438f0b4f343bba2fb1b438b4228a274ace7e21fbc6315d1"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-expo-asset-sdk-authority-20261124/generator-observation.json",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "cd012ff70ddbd1300a14fcd4155e34254c92e1d9496ce5934923fd659300456d"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-expo-asset-sdk-authority-20261124/generator.stderr.log",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-expo-asset-sdk-authority-20261124/generator.stdout.swift",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "8e99e562bacbe6354bc23caf6a1233930a1e0d61c3abe0444195dd36164f747d"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-expo-asset-sdk-authority-20261124/original-asset-index.d.ts",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "d13143ef38f2d4ae059fd11345909a4de633b7df37ed98c82c2f4a58d4a6d341"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-expo-asset-sdk-authority-20261124/receipt.json",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "033595c680669303ccb4d5bd19d57d57a035c573bb41d4081aaae7153b2b2355"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-expo-asset-sdk-authority-20261124/source-changes.json",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "ffb5afe4b0ecbf0facbe999ecc45a6e7932da04128ee36a27c177e419ed1bf5d"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-native-callback-runloop-20261125/README.md",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "afed49c0cb9406e08249f2eb1c3935510351ef4b572414817b1c5d3aaf4127cd"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-native-callback-runloop-20261125/raw/actual/actual-jsc-job.json",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "57a57321d70da79b1b32e132ae096154992751704d73d1b6197abbd3346ebe6e"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-native-callback-runloop-20261125/raw/actual/actual-node-job.json",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "9f66f073bb2f856dd822b56c08f9fab0d808b8bb113d3201fdab25c877cd574d"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-native-callback-runloop-20261125/raw/actual/parity-runtime-diagnostic-attempt7.json.gz",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "76024d757251c0535058d30fcc875da74f0039197702000430cbd7e6f4fd7e69"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-native-callback-runloop-20261125/raw/actual/retained-runtime-excerpt.json",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "f139dcbec3c91abe178993a9b0ba36b248bcc37bf1c37c5eb90e8aa557e08a71"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-native-callback-runloop-20261125/raw/baseline.log",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "985eaeee88af533579087fd334b6d9376e4b4dd63a92503a4e5809f3782d2bc5"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-native-callback-runloop-20261125/raw/baseline.m",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "7817e45687bd69ba1a93f9aa8d48d66ddf1a63e32109807d949c1bfb3e0bd160"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-native-callback-runloop-20261125/raw/candidate.log",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "ceb3ac41106aa6c6c6565e8a7a7e13b4f79a17ea4cf304a6cfb753b7213c4261"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-native-callback-runloop-20261125/raw/candidate.m",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "e36a9d2ba06dd7878d17df7c9e8f17df8952ac67f087c0a43174742c1c0ebe0c"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-native-callback-runloop-20261125/raw/controller.log",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "162fe6bf0f45331862256c41ffce65ddd0d0e3cf24093b49fc2ba13714b750c4"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-native-callback-runloop-20261125/raw/harness-compile-failure/baseline.log",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "cdb5b60f59263656c940c3b95107d859394176018cee6c85c34063cc5c23da2e"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-native-callback-runloop-20261125/raw/harness-compile-failure/controller.log",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "fb884566ee2c0459bcf5f84f0f376542e3ace286a9c0ed2fa207a4c66b7f2be4"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-native-callback-runloop-20261125/raw/harness-compile-failure/package/Tests/NativeScriptMainRunLoopCallbackTests.swift",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "1ca6881f8b333519c78893dd3a0d42a7079a1700dcee00c41874f86e135117a7"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-native-callback-runloop-20261125/raw/harness-compile-failure/runner.py",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "efa18d758671f14df7dce3a3fcb8850f6dd0b4eef8e820e458830acb4beb1e60"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-native-callback-runloop-20261125/raw/harness-compile-failure/state.json",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "07b74fcdefa3304fe0b76e962d24f74d5a678029cf237d5d482cbe9f97e6ef11"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-native-callback-runloop-20261125/raw/package/Package.swift",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "4217e9b52f4809f0d56ec6cccef364d8cc0f3f646475bc2bf9847e0c5c46590a"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-native-callback-runloop-20261125/raw/package/Sources/HanlinNativeScriptCoreSupport/include/HanlinNativeServicesBridge.h",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "c2e8a138628dfd568a30dcaf0b2fd899347b6065354c86350db7d3f36f4c0b19"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-native-callback-runloop-20261125/raw/package/Tests/NativeScriptMainRunLoopCallbackTests.swift",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "ad4b516db151867a80413646be9dfed9313f3f356d972c112fdf0f0d5806fd99"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-native-callback-runloop-20261125/raw/runner.py",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "efa18d758671f14df7dce3a3fcb8850f6dd0b4eef8e820e458830acb4beb1e60"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-native-callback-runloop-20261125/raw/snapshot-manifest.json",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "814dbe9db89514c89347b3132440cd1f2445e03ccf15b015603e6cab08d0409a"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-native-callback-runloop-20261125/raw/state.json",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "8cddd70a8312c0f3a2f3037cbb9a5471cea34d51cf68edb6de2539588bedeaca"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-native-callback-runloop-20261125/receipt.json",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "6a68f81425085ebd7207ee366570c6d71e7a6e2e206d759407316469b2ce59fa"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-nativescript-esm-20261124/README.md",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "dc18cd4df5c29b364b61525c91bc43f12ed2979e0765c7e6b1fa86e1a7e9cee4"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-nativescript-esm-20261124/proof/actual-installed-table-share/bundle.mjs",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "8f35a0f4aff91d2310533efdd2defefd2edea91a4e12f564c0940b7b19c8d8af"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-nativescript-esm-20261124/proof/actual-installed-table-share/modules/index.js",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "7849ede81720f715c846a8a0a705dd7a0ebdc5e36d5a4713da2a6e1855d197c4"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-nativescript-esm-20261124/proof/actual-installed-table-share/modules/index.js.map",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "684bdef105bda23a5cfc112b0b9e76c82eda9ed17ba06258464ae15aa4352604"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-nativescript-esm-20261124/proof/actual-installed-table-share/modules/model.js",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "3a1dfd2d654b2ea588a6f229d65e91abea171d04a5b7e6d9e2133a63ec5ef8f0"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-nativescript-esm-20261124/proof/actual-installed-table-share/modules/model.js.map",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "2913ac5e38853cf13c51fed61bf9de7a9d00af41d9010389590ce446380dae9b"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-nativescript-esm-20261124/proof/actual-installed-table-share/package.json",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "94fa53de3297f8159bd4114fe85975fe954ef361d373a35a2e779577a5b10dff"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-nativescript-esm-20261124/proof/baseline.log",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "60def20df028dd434b6c8d9ff5e2f178db1ebeb29dd7877b3a700183d0fb9716"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-nativescript-esm-20261124/proof/candidate.log",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "3b18446b1f2f52f762af50bf363be7768ec9193c73602528a2286d440d536816"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-nativescript-esm-20261124/proof/controller.log",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-nativescript-esm-20261124/proof/prepared.json",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "1f2e6d5e5055ebd00e877d8808c00e6ebb4499b55cd1359c31b796d8876f440e"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-nativescript-esm-20261124/proof/receipt.json",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "6d1fd79085bc5acc62ba3571022132777fdeecc2a2842520a0c9115aa68ebe1d"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-nativescript-esm-20261124/proof/run.py",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "76e68ab18a958909690141b97423017010fe2deecebb2e131c81cf8a88242fa6"
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-nativescript-esm-20261124/proof/state.json",
+      "kind": "retained-original-evidence",
+      "beforeSHA256": null,
+      "afterSHA256": "1da085e4246d6a9ebc069ba4847900fdce768432504cb6aaca2296c5f097d6fb"
+    }
+  ]
+}
