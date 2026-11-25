@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="TestResults" errors="0" tests="6" failures="0" skipped="0" time="0.010508167">
+    <testcase classname="SwiftAISDKTests.StreamTextToolResultContinuationTests" name="budgetStopsContinuation()" time="0.005964" />
+    <testcase classname="SwiftAISDKTests.StreamTextToolResultContinuationTests" name="twoToolConversation(reason:)" time="0.006918791" />
+    <testcase classname="SwiftAISDKTests.StreamTextToolResultContinuationTests" name="toolErrorContinuesWithoutReexecution()" time="0.009201291" />
+    <testcase classname="SwiftAISDKTests.StreamTextToolResultContinuationTests" name="textCompletionStopsNormally()" time="0.004624792" />
+    <testcase classname="SwiftAISDKTests.StreamTextToolResultContinuationTests" name="missingToolOutputStopsContinuation()" time="0.005976709" />
+    <testcase classname="SwiftAISDKTests.StreamTextThoughtSignatureContinuationTests" name="signedSequentialContinuation()" time="0.010046125" />
+  </testsuite>
+</testsuites>

@@ -1,0 +1,110 @@
+{
+  "baseline_runner_sha256": "a28aecadd9a30e58fe0a99bbea230e0e362f70bf4c3d3e2c6b90e6bf2e6de3b2",
+  "binary": {
+    "bytes": 24205760,
+    "path": "/Users/m1/caches/DerivedData/otzaria-core7-abf-union-20261125/out/Products/Debug/SwiftAISDKTests.xctest/Contents/MacOS/SwiftAISDKTests",
+    "sha256": "e39f2a9047ad033e94b9bda089f2d6ac8440ee6c3884980367af8141f73e6174"
+  },
+  "cache_cloned_again": false,
+  "commands": [
+    {
+      "argv": [
+        "xcrun",
+        "swift",
+        "test",
+        "--package-path",
+        "/Users/m1/builds/otzaria-core7-abf-union-20261125",
+        "--scratch-path",
+        "/Users/m1/caches/DerivedData/otzaria-core7-abf-union-20261125",
+        "--jobs",
+        "2",
+        "--disable-automatic-resolution",
+        "--filter",
+        "StreamTextThoughtSignatureContinuationTests|StreamTextToolResultContinuationTests",
+        "--xunit-output",
+        "/Users/m1/builds/otzaria-core7-abf-union-20261125/evidence-resume02/focused-suite.xml"
+      ],
+      "exit_code": 0,
+      "free_bytes_after": 8455819264,
+      "log": "original-core7.log",
+      "log_sha256": "f1d288ad72e7603702ca5ae60f86bee80f7973bee62c02c267d68285593fea0b",
+      "name": "original-core7",
+      "pid": 46672,
+      "seconds": 25.984
+    },
+    {
+      "argv": [
+        "xcrun",
+        "dwarfdump",
+        "--uuid",
+        "/Users/m1/caches/DerivedData/otzaria-core7-abf-union-20261125/debug/SwiftAISDKTests.xctest/Contents/MacOS/SwiftAISDKTests"
+      ],
+      "exit_code": 0,
+      "free_bytes_after": 8455364608,
+      "log": "test-binary-uuid.log",
+      "log_sha256": "54c9660b16d5530cbd205c76f69761199e4c6c7ec0f0ad53c4ceb9a096f375cc",
+      "name": "test-binary-uuid",
+      "pid": 47888,
+      "seconds": 0.021
+    }
+  ],
+  "core_source": "abf0921c6e89e6521cc2b510ff11016b45a0ef08",
+  "dependency_resolution_reexecuted": false,
+  "disk_admission": {
+    "anticipated_concurrent_growth_gib": 4.0,
+    "free_bytes": 8963104768,
+    "os_margin_gib": 2.0,
+    "other_remaining_and_os_bytes": 6442450944,
+    "own_remaining_peak_bytes": 536870912,
+    "required_free_bytes": 6979321856
+  },
+  "exact_method_identities": [
+    [
+      "SwiftAISDKTests.StreamTextThoughtSignatureContinuationTests",
+      "signedSequentialContinuation()"
+    ],
+    [
+      "SwiftAISDKTests.StreamTextToolResultContinuationTests",
+      "budgetStopsContinuation()"
+    ],
+    [
+      "SwiftAISDKTests.StreamTextToolResultContinuationTests",
+      "missingToolOutputStopsContinuation()"
+    ],
+    [
+      "SwiftAISDKTests.StreamTextToolResultContinuationTests",
+      "textCompletionStopsNormally()"
+    ],
+    [
+      "SwiftAISDKTests.StreamTextToolResultContinuationTests",
+      "toolErrorContinuesWithoutReexecution()"
+    ],
+    [
+      "SwiftAISDKTests.StreamTextToolResultContinuationTests",
+      "twoToolConversation(reason:)"
+    ]
+  ],
+  "exact_parameter_invocations": [
+    ".stop",
+    ".toolCalls"
+  ],
+  "failed_methods": 0,
+  "finished_at": "2026-11-25T04:09:59.433261+00:00",
+  "free_bytes_after": 8455008256,
+  "full_core48_reexecuted": false,
+  "graph_reexecuted": false,
+  "live_provider_executed": false,
+  "original_input_inventory_sha256": "7373e51e659fb08f14127b7c54192bfc7bda184a9c3638a94557a8cae4213689",
+  "original_invocations_executed": 7,
+  "original_invocations_expected": 7,
+  "original_methods_executed": 6,
+  "original_methods_expected": 6,
+  "original_source_and_lock_unchanged": true,
+  "prior_job": "job_723e56f227ee",
+  "prior_receipt_sha256": "9c91a94345466f2efc5659f853f309147f34f2370d5ee89f0645c8122b1cf065",
+  "runner_sha256": "6b11d623630a85baafb227d061b79e371edd41361bc3be1430774ada01048cb6",
+  "skipped_methods": 0,
+  "source_union": "c92c3f904872b37287861dfafa9cc668d5dc44c3",
+  "started_at": "2026-11-25T04:09:32.934256+00:00",
+  "status": "EXECUTED_PASS"
+}

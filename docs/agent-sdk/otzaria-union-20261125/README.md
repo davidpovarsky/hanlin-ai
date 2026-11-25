@@ -18,28 +18,29 @@ and preserved raw evidence whitespace. Those original bytes were retained;
 the added delta relative to incoming 5b69 passes `git diff --check`.
 The original diagnostic is retained as a compressed log.
 
-## Qualification state after the first native attempt
+## Qualification state and retained first attempt
 
 - Source merge and incoming-tree/preserved-evidence equality: EXECUTED_PASS.
 - Canonical static graph/link ownership: see source-checks.json.
 - Actual Apple canonical manifest --check: EXECUTED_PASS in job_723e56f227ee,
   15.087 seconds, 523 original application sources, 114 targets and zero local
   package edges. All 754 exact manifest-source inputs were unchanged.
-- Original Core continuation controls: INCOMPLETE. Exact original abf production
-  and the two unchanged test files resolved; the owned Swift process was stopped
-  with exit 125 after 101.342 seconds because concurrent growth consumed the
-  recorded remaining disk reserve. No test result is counted as passed. The
-  compiler output contains no compiler-error diagnostic before interruption.
+- Original Core continuation controls: EXECUTED_PASS in job_2f7821b69d94.
+  All six unchanged original methods and seven exact invocations passed with
+  zero failed/skipped methods; full production source and dependency locks
+  remained unchanged. This is an original producer/mock-transport component
+  proof, not a live-provider or app test. See native-evidence-resume02.
+  The earlier owned compilation interruption remains recorded with exit 125;
+  its failed receipt and raw log were not rewritten.
 - The earlier job_5911ae8b89ea was BLOCKED before extraction, graph evaluation or
   Swift compilation: 8,697,040,896 free bytes versus the then-current joint plan
   of 13,958,643,712 bytes. That failure is retained independently.
 - Existing Core48 proof stays separately attributed to its original source,
   receipt, raw log and exact dependency closure. It was not rerun here.
-- Latest observed C8 owner task (03:46:36 UTC) has app04 running on sealed
-  1710bc6119983799f7d22cb723659ac274fe96b1, after its narrow fixture correction
-  4f2bc986 and new composer/MiniApps integration. Its actual app result remains
-  pending. This union checkpoint does not silently claim those newer source
-  changes or another owner's eventual app test result.
+- C8 owner app04 built successfully on sealed 1710bc61, then its runtime gate
+  failed. The owner's latest recorded diagnosis includes ClassicChatRestoration
+  case25 tool-metadata assertions and a test-host exit/restart under investigation.
+  Its agents own that diagnosis; no overall app acceptance is claimed here.
 
 ## Native evidence and continuation
 
@@ -118,3 +119,26 @@ match the real Mac PASS, so that graph result is reused without a duplicate nati
 Core remains abf0921c throughout. Original demo fixture improvements, the test-host scheme,
 canPresentUI fixture correction and active-lock validator are included. C8 actual app tests
 and the incremental Core7 continuation remain pending; this merge claims neither as PASS.
+
+## Actual original Core continuation PASS
+
+Job job_2f7821b69d94 completed on the real Mac in 27.03 seconds. The original
+Swift command took 25.984 seconds and executed six methods/seven scenarios,
+including each of the .stop and .toolCalls parameter invocations exactly once.
+Raw XML has all six expected method identities with no failure, error or skip.
+No graph, cache clone, resolution, or previous 48-case gate was repeated.
+
+Receipt SHA-256: eda8713182065b994e30480d3bc9111a7048d93d0ceecd9541398f8be34a986c.
+Raw log SHA-256: f1d288ad72e7603702ca5ae60f86bee80f7973bee62c02c267d68285593fea0b.
+Actual XML SHA-256: 2d22ba84c664cdf4f245ad3ffcf72f62105286d6ca95f5b0da8deb1c39734498.
+Actual SwiftAISDKTests binary: 24,205,760 bytes,
+SHA-256 e39f2a9047ad033e94b9bda089f2d6ac8440ee6c3884980367af8141f73e6174.
+The original source inventory matches before, after and the prior interrupted
+attempt (SHA-256 7373e51e659fb08f14127b7c54192bfc7bda184a9c3638a94557a8cae4213689).
+The binary UUID log and every original proof file are retained with a hash index.
+
+The paid-cache continuation was admitted against its actual remaining 512 MiB,
+4 GiB remaining other growth and 2 GiB OS margin. It started with 8,963,104,768
+free bytes and finished with 8,455,008,256; system-wide changes include concurrent
+writers and do not measure this job's allocated bytes alone. No other owner's
+process or files were stopped, rewritten or deleted.
