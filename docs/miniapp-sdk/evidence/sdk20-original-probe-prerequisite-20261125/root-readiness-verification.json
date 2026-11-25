@@ -1,0 +1,56 @@
+{
+  "schema": 1,
+  "verifiedAt": "2026-11-25T23:25:46.963922+00:00",
+  "status": "READY_FROM_ORIGINAL_PRODUCER_WITH_RECONCILED_WRAPPER_PREDICATE",
+  "scope": "Original Metro producer completed; whole52/native runtime acceptance not claimed",
+  "rawTerminalStatus": "SOURCE_CHANGED",
+  "rawTerminalPreserved": true,
+  "producerExitCode": 0,
+  "source": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+  "verifiedPacketMembers": 18,
+  "unchangedExistingArchives": 12,
+  "newOriginalHostedResource": {
+    "relativePath": "AI_HLYTests/Fixtures/HostServicesProbe.bundle/ExpoSwiftUIProbeA.hanlinExpo",
+    "exists": true,
+    "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/AI_HLYTests/Fixtures/HostServicesProbe.bundle/ExpoSwiftUIProbeA.hanlinExpo",
+    "bytes": 325929,
+    "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20"
+  },
+  "initialAndFinalSource": {
+    "source": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+    "tree": "c0f027896b1edd67ea824c48b2b3bbf7c4e5e73a",
+    "sdkSourceInputs": 235,
+    "consumerSourceFiles": 15,
+    "hostSHA256": "ed18d93a88a1020bc2140417cea3847daf3d03472cdd4769d9a5ac4e44f48a22",
+    "sdkManifestSHA256": "6f11ed8da3df18627f05932d47b5b68dec54eb26ac396151a21cbc8c3e65800e",
+    "sdkInputSHA256": "0388d52ec3ceef1adddb21a8718566876db0ef693520bc761e4ec57573a96514",
+    "trackedDiffSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "rawState": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/probe-fixture-sdk20-preparation-v1/terminal/state.json",
+    "bytes": 12255,
+    "sha256": "949660502e1637c5c96aa41372e07d380fe36a0bab586c0f43cc87e7fbcd50d9"
+  },
+  "rawLedger": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/probe-fixture-sdk20-preparation-v1/terminal/ledger.json",
+    "bytes": 1331,
+    "sha256": "fd4e5beca04d71756853be1b9f0badb74f0d0d58bee6213782c22fac2782b4b1"
+  },
+  "rawPacketReceipt": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/probe-fixture-sdk20-preparation-v1/terminal/receipt.json",
+    "bytes": 11777,
+    "sha256": "b44dda469bc85249d2cdb8d7079a3f63995f6d1928fd3acd52d12173842f7bf6"
+  },
+  "predicateReconciliation": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/probe-fixture-sdk20-preparation-v1/hosted-git-predicate-reconciliation.json",
+    "bytes": 6858,
+    "sha256": "449cc069f7e23873b6da57e3af283ae0f135ac25d0d8677157e2d9978b1a0651"
+  },
+  "cause": "The reviewed external wrapper expected git-ignored. Actual original generated resource is untracked and not ignored. The original producer/test source and all guarded inputs are unchanged. The read-only reconciliation verifies the remaining eleven postconditions skipped after that wrapper predicate.",
+  "producerReplayed": false,
+  "priorWhole52Charge": 2501.629630375013,
+  "probeCharge": 49.427906917000655,
+  "totalChargedSeconds": 2551.057537292014,
+  "remainingSeconds": 11848.942462707986,
+  "futureGate": "Original complete52 rerun; verify genuine resource in newly built hosted test bundle before test execution"
+}

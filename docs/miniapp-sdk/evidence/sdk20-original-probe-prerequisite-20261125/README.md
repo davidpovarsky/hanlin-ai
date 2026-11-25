@@ -1,0 +1,7 @@
+# SDK20 original Expo probe prerequisite restored
+
+The unchanged original `node Scripts/Expo/build-probe.mjs` ran once on source `7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f` and exited zero. It generated the genuine hosted XCTest resource missing from the first SDK20 whole run. All twelve existing probe archives stayed byte-identical; all 235 SDK source inputs, fifteen consumer source files, original native binaries and Host archive remained unchanged. The tracked Git diff is empty.
+
+The external preparation wrapper recorded `SOURCE_CHANGED` because its postcondition wrongly required the generated hosted archive to be Git-ignored. The actual archive is untracked and not ignored. That raw failure, exact elapsed charge and original state/ledger are preserved. Read-only reconciliation identifies the one failing predicate and completes all eleven later checks; no producer was replayed and no product/test/runner assertion was changed. `root-readiness-verification.json` independently verifies all eighteen packet members and the exact source/fixture/accounting conclusions.
+
+The producer consumed 49.427906917000655 seconds. Together with the actual first failed whole run, cumulative time is 2551.057537292014 seconds within the same 14400-second allowance, leaving 11848.942462707986 seconds. The next original complete 25+27 run receives that remaining balance. This preparation checkpoint does not assert full52, NS-five or actual OS notification success.

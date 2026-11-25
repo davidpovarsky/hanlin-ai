@@ -1,0 +1,178 @@
+{
+  "schema": 1,
+  "observedAt": "2026-11-25T23:22:06.136312+00:00",
+  "mode": "read-only exact failed wrapper predicate reconciliation; no producer repeat or raw state rewrite",
+  "source": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+  "state": {
+    "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/probe-fixture-sdk20-preparation-v1/state.json",
+    "bytes": 12255,
+    "sha256": "949660502e1637c5c96aa41372e07d380fe36a0bab586c0f43cc87e7fbcd50d9"
+  },
+  "ledger": {
+    "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/probe-fixture-sdk20-preparation-v1/ledger.json",
+    "bytes": 1331,
+    "sha256": "fd4e5beca04d71756853be1b9f0badb74f0d0d58bee6213782c22fac2782b4b1"
+  },
+  "plan": {
+    "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/probe-fixture-sdk20-preparation-v1-plan.json",
+    "bytes": 5164,
+    "sha256": "c387c4826c7ad9864b2f1cc7ff7aebc82a15b5c98bf8034b769136c57e24e7a7"
+  },
+  "commands": [
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/Users/m1/builds/hanlin-notification-wire-fix-20261125",
+        "check-ignore",
+        "-v",
+        "AI_HLYTests/Fixtures/HostServicesProbe.bundle/ExpoSwiftUIProbeA.hanlinExpo"
+      ],
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/Users/m1/builds/hanlin-notification-wire-fix-20261125",
+        "check-ignore",
+        "-q",
+        "AI_HLYTests/Fixtures/HostServicesProbe.bundle/ExpoSwiftUIProbeA.hanlinExpo"
+      ],
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/Users/m1/builds/hanlin-notification-wire-fix-20261125",
+        "ls-files",
+        "--error-unmatch",
+        "AI_HLYTests/Fixtures/HostServicesProbe.bundle/ExpoSwiftUIProbeA.hanlinExpo"
+      ],
+      "exitCode": 1,
+      "stdout": "",
+      "stderr": "error: pathspec 'AI_HLYTests/Fixtures/HostServicesProbe.bundle/ExpoSwiftUIProbeA.hanlinExpo' did not match any file(s) known to git\nDid you forget to 'git add'?\n"
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/Users/m1/builds/hanlin-notification-wire-fix-20261125",
+        "status",
+        "--porcelain=v1",
+        "--untracked-files=all",
+        "--",
+        "AI_HLYTests/Fixtures/HostServicesProbe.bundle/ExpoSwiftUIProbeA.hanlinExpo"
+      ],
+      "exitCode": 0,
+      "stdout": "?? AI_HLYTests/Fixtures/HostServicesProbe.bundle/ExpoSwiftUIProbeA.hanlinExpo\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/Users/m1/builds/hanlin-notification-wire-fix-20261125",
+        "diff",
+        "--binary",
+        "HEAD",
+        "--"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "postRequiredFilesVerified": [
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/Scripts/Expo/build-probe.mjs",
+      "bytes": 7556,
+      "sha256": "cdead47d9914543725e0e3160a14a13d91b31b2d584b737f0eb95c1b5539618c"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/Scripts/Expo/check-ui-type-contract.mjs",
+      "bytes": 4559,
+      "sha256": "5271bdb790f0053b44d912ff227a4fdf63b5cbf50f99999f750893a3798df143"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/Scripts/Expo/metro.config.cjs",
+      "bytes": 775,
+      "sha256": "23907e12eb10e51229e3edebab5cacf46f15c8e9eced70eac2411846fb7062a7"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/Scripts/Expo/babel.config.cjs",
+      "bytes": 206,
+      "sha256": "62581fd5caf7b97cb36290093b7bbf7103e1c1b1300e0e11a1b3eaaf96c998ba"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/Scripts/Widgets/deterministic-zip.mjs",
+      "bytes": 2215,
+      "sha256": "853b5c831fe3cc80c6c52f87991095930f5084c99d43f5999990782cdd4c1da0"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/Scripts/Expo/package.json",
+      "bytes": 1759,
+      "sha256": "bb447094c0ef2250c445f580fa91c81a55fc3187c7d49e145b84e9c1c3756dce"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/Scripts/Expo/package-lock.json",
+      "bytes": 336324,
+      "sha256": "3b31e1c8fd34145df900764a2cda013ab02ecea7f890c969ad5e0a92925d0dd8"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/AI_HLYTests/Fixtures/HostServicesProbe.bundle/README.txt",
+      "bytes": 280,
+      "sha256": "f8f3ac6577959ffb7e847e94227bc53129ef5d33409824249fb733cb0853a4d8"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/prepare-original-expo-probe-v1.py",
+      "bytes": 12117,
+      "sha256": "5ed491318ddd72bfeb84414ea0e429cdeb2bca966b5896299fcb0dc15ee262d4"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v1/state.json",
+      "bytes": 6485,
+      "sha256": "62fa0f2144ce6dd280e8a6615baea3f2ec822beb13f544528e9ec79b3e3d241a"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v1/ledger.json",
+      "bytes": 4713,
+      "sha256": "f62166616dc312aa689cc2543bbe1f0ca1c9e75d619c0061bccda4f1c488e75f"
+    }
+  ],
+  "initialSource": {
+    "source": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+    "tree": "c0f027896b1edd67ea824c48b2b3bbf7c4e5e73a",
+    "sdkSourceInputs": 235,
+    "consumerSourceFiles": 15,
+    "hostSHA256": "ed18d93a88a1020bc2140417cea3847daf3d03472cdd4769d9a5ac4e44f48a22",
+    "sdkManifestSHA256": "6f11ed8da3df18627f05932d47b5b68dec54eb26ac396151a21cbc8c3e65800e",
+    "sdkInputSHA256": "0388d52ec3ceef1adddb21a8718566876db0ef693520bc761e4ec57573a96514",
+    "trackedDiffSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "finalSource": {
+    "source": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+    "tree": "c0f027896b1edd67ea824c48b2b3bbf7c4e5e73a",
+    "sdkSourceInputs": 235,
+    "consumerSourceFiles": 15,
+    "hostSHA256": "ed18d93a88a1020bc2140417cea3847daf3d03472cdd4769d9a5ac4e44f48a22",
+    "sdkManifestSHA256": "6f11ed8da3df18627f05932d47b5b68dec54eb26ac396151a21cbc8c3e65800e",
+    "sdkInputSHA256": "0388d52ec3ceef1adddb21a8718566876db0ef693520bc761e4ec57573a96514",
+    "trackedDiffSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "hostedResource": {
+    "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/AI_HLYTests/Fixtures/HostServicesProbe.bundle/ExpoSwiftUIProbeA.hanlinExpo",
+    "bytes": 325929,
+    "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20"
+  },
+  "originalProducerExitCode": 0,
+  "rawTerminalStatus": "SOURCE_CHANGED",
+  "rawSourceErrors": [
+    "AssertionError()"
+  ]
+}
