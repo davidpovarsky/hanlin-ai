@@ -4,7 +4,7 @@
   "asanaTask": "1220882717750164",
   "sourceBase": "0929e07a6a6adae3a27cab5c514623c7cc0f157c",
   "sourceSnapshot": "8a67e7aee83c6b12673db1348b7f550a2805de50",
-  "finalSource": "PENDING application and native/UI validation. AI_HLY attempts 1 and 2 failed at 20fb9f711. Attempt 2 no longer reported the SwiftShims cache failure and exposed the inherited focused-property collision. The minimal rename is integrated at e5a3e6d92, with compilation after the fix not verified by this packet. Completed native preparation and RuntimeHost archive freshness retain their actual sources.",
+  "finalSource": "PENDING application and native/UI validation. Original qualified SwiftAI package resolution and RuntimeHost attempt 5 passed at 756d7f151, followed by generated inventory freeze 91ac2c386. Actual AI_HLY build attempt 3 failed at 91ac2c386 on the runtime adapter optional Result inference; its correction remains with the assigned owner. No successful application build is recorded.",
   "runner": {
     "host": "scaleway-mac",
     "transport": "SentinelX direct",
@@ -108,12 +108,40 @@
       "acceptanceTests": "NOT_INFERRED"
     },
     {
+      "id": "sdk_resolution",
+      "why": "The original application package graph must resolve the qualified SwiftAI revision without changing the supplied lock.",
+      "status": "EXECUTED_PASS",
+      "executionSource": "756d7f1517f64295d4ce8ff9ea01d88c1f5f1194",
+      "command": [
+        "xcodebuild",
+        "-resolvePackageDependencies",
+        "-project",
+        "AI_HLY.xcodeproj",
+        "-scheme",
+        "AI_HLY",
+        "-clonedSourcePackagesDirPath",
+        "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/SourcePackages",
+        "-disableAutomaticPackageResolution",
+        "-onlyUsePackageVersionsFromResolvedFile",
+        "-skipPackageUpdates",
+        "-skipPackagePluginValidation",
+        "-skipMacroValidation"
+      ],
+      "evidence": "docs/composer-capabilities/evidence/runtime-host-final-attempt5-756d7f151/qualified-sdk-resolution.json",
+      "durationSeconds": 264.447,
+      "sdkRevision": "3f38f1302764635c9991d0d00fd7b12471a5373c",
+      "sdkCheckoutClean": true,
+      "lockSHA256": "4a55e370d71d69933efb0bc54a08973da962b4d7270da59791aa3b1ed58910bd",
+      "lockUnchanged": true,
+      "scope": "Package graph resolution; no application build or tests inferred."
+    },
+    {
       "id": "runtime_host",
       "why": "New wrappers, staged types/schema and authoring imports invalidate old RuntimeHostResources.zip; original packager requires its actual Node tests and JITless archive verification.",
       "command": "RUNNER_TEMP=<isolated>/build/tmp bash Scripts/Runtime/prepare-runtime-host.sh",
       "status": "EXECUTED_PASS",
-      "executionSource": "cd795e378afed5c7556a71e26e5247da9ff22869",
-      "evidence": "docs/composer-capabilities/evidence/runtime-host-final-attempt4-cd795e378/runtime-host-final-attempt4.json",
+      "executionSource": "756d7f1517f64295d4ce8ff9ea01d88c1f5f1194",
+      "evidence": "docs/composer-capabilities/evidence/runtime-host-final-attempt5-756d7f151/runtime-host-final-attempt5.json",
       "actualNodeCases": {
         "total": 178,
         "passed": 177,
@@ -122,16 +150,16 @@
         "skipName": "actual Node job crosses 300 seconds with no hidden deadline",
         "skipReason": "Existing opt-in long test; unchanged by this work."
       },
-      "archiveSHA256": "16006101892548001b64e4a8167e27e910f5e907a7af296ef8786d4850811120",
-      "archiveBytes": 81837518,
+      "archiveSHA256": "120bc8a6396f4202284d8a4e61ca3d772d15d791f750b9824f6a57a735f1f70b",
+      "archiveBytes": 81837507,
       "finalArchiveFreshness": {
         "status": "EXECUTED_PASS",
-        "sourceCommit": "cd795e378afed5c7556a71e26e5247da9ff22869",
-        "reason": "Original RuntimeHost packager reran after original native Widget generation; complete Node tests, ZIP validation and JITless probe passed. Independent read-only archive hash matches the receipt.",
-        "generatedInventoryCommit": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91"
+        "sourceCommit": "756d7f1517f64295d4ce8ff9ea01d88c1f5f1194",
+        "reason": "Qualified SwiftAI revision changed the archived Platform manifest. Original Host preparation reran with 177 passes, the unchanged opt-in skip, ZIP validation and JITless probe. Independent archive hash/size match the receipt. Native producers were not rerun.",
+        "generatedInventoryCommit": "91ac2c3868d9a056815bca56448e0cfcabd54eed"
       },
-      "durationSeconds": 96.647,
-      "previousSuccessfulSource": "37a788a4a10a293653e307c05ba1a507d518d1f0"
+      "durationSeconds": 466.034,
+      "previousSuccessfulSource": "cd795e378afed5c7556a71e26e5247da9ff22869"
     },
     {
       "id": "manifest_audit",
@@ -227,13 +255,11 @@
       "pending": true,
       "expectedBuilds": 2,
       "progress": {
-        "status": "CORRECTION_INTEGRATED_AWAITING_VALIDATION",
-        "latestCompletedAttempt": 2,
-        "latestCompletedBuildSource": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91",
+        "status": "FAILED_CORRECTION_WITH_RUNTIME_OWNER",
+        "latestCompletedAttempt": 3,
+        "latestCompletedBuildSource": "91ac2c3868d9a056815bca56448e0cfcabd54eed",
         "latestCompletedBuildStatus": "FAILED",
-        "originalFocusFixCommit": "8cf5b3e3023852ab41fec7d9db1592218c1bcfd1",
-        "integratedFocusFixCommit": "e5a3e6d9216a69552b2b25a096fd3f3fcf8e2876",
-        "fixProvenance": "evidence/app-build-attempt2-20fb9f711/focus-fix-provenance.json",
+        "receipt": "evidence/app-build-attempt3-91ac2c386/ai-hly-build-attempt3.json",
         "completedSuccessfulBuildInThisPacket": false
       },
       "attempts": [
@@ -264,6 +290,21 @@
           "assessment": "evidence/app-build-attempt2-20fb9f711/build-assessment.json",
           "rawLogSHA256": "49e8df8a70597ca6f0f36f5974976ac0f51420ed5771f763cf90f5ffbc14b933",
           "failureClassification": "INHERITED_FOCUSED_PROPERTY_COLLISION",
+          "acceptanceTestsExecuted": 0
+        },
+        {
+          "id": "AI_HLY attempt3",
+          "source": "91ac2c3868d9a056815bca56448e0cfcabd54eed",
+          "status": "FAILED",
+          "startedAtUTC": "2026-11-25T01:46:35.721926+00:00",
+          "finishedAtUTC": "2026-11-25T01:48:50.353174+00:00",
+          "exitCode": 65,
+          "durationSeconds": 134.632,
+          "receipt": "evidence/app-build-attempt3-91ac2c386/ai-hly-build-attempt3.json",
+          "diagnostics": "evidence/app-build-attempt3-91ac2c386/ai-hly-build-attempt3-errors.json",
+          "processReceipt": "evidence/runtime-host-final-attempt5-756d7f151/ai-hly-build-attempt3-process.json",
+          "rawLogSHA256": "81679428a7a197b18ebf412364c63851ebcb8bb3a05d83363234a03dafdc09ff",
+          "failureClassification": "OPTIONAL_RESULT_CLOSURE_INFERENCE",
           "acceptanceTestsExecuted": 0
         }
       ],
@@ -1037,7 +1078,7 @@
     "completionDocumentationOnly": "635bc66274436d21236500cda4c2e873b1abe1bd",
     "activeDraftExcluded": "PR18 remains with original owner"
   },
-  "updatedAtUTC": "2026-11-25T01:36:37.138996+00:00",
+  "updatedAtUTC": "2026-11-25T01:53:51.789085+00:00",
   "failureCorrections": [
     {
       "boundary": "manifest ordinary JSON",
@@ -1077,7 +1118,7 @@
     "taskWorkspaceEquivalent": "6ceb07447 changes already included by identical merge-tree"
   },
   "overallStatus": "PENDING",
-  "evidenceCheckpoint": "e5a3e6d9216a69552b2b25a096fd3f3fcf8e2876",
+  "evidenceCheckpoint": "91ac2c3868d9a056815bca56448e0cfcabd54eed",
   "evidenceIndex": "docs/composer-capabilities/EVIDENCE_INDEX.json",
   "pendingRequiredGates": [
     "Two actual application build-for-testing schemes",
@@ -1095,8 +1136,9 @@
     "Guarded or prerequisite-blocked artifact transfers are preserved as preparation outcomes, never counted as failing or passing acceptance tests.",
     "Native preparer exit 0, verified framework bytes, codegen and metadata checks do not establish successful consumer app builds or native-engine/editor/UI execution.",
     "The failed build-for-testing attempt and recorded ModuleCache repair are not acceptance test results. Stopping a waiting admission runner with no compiler is orchestration, not a build/test failure. An actual retry process start is not a completed build.",
-    "Attempt 2 is a completed compilation failure, not a passing build or acceptance-test run. The exact source correction is integrated, but this packet provides no successful compilation after that correction. Inactive cache retirement is orchestration only."
+    "Attempt 2 is a completed compilation failure, not a passing build or acceptance-test run. The exact source correction is integrated, but this packet provides no successful compilation after that correction. Inactive cache retirement is orchestration only.",
+    "RuntimeHost attempt 5 records 177 actual passes at 756d7f151 with the same existing skip. Qualified SDK resolution passed with the exact clean 3f38 revision and unchanged lock, but neither result establishes successful application compilation. Completed app attempt 3 remains FAILED. Earlier shared-test reuse retains its existing assessed source boundary."
   ],
   "documentationBranchBase": "189ca0d73a8f9b92451d343ca84b4b7074c57c6c",
-  "latestRecordedExecutionSource": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91"
+  "latestRecordedExecutionSource": "91ac2c3868d9a056815bca56448e0cfcabd54eed"
 }

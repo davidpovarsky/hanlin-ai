@@ -1,6 +1,6 @@
 # Composer capabilities: validation evidence
 
-This evidence packet includes native preparation at `7b7f7e4460200d7e98162dd525d67f8ca1860911`, RuntimeHost preparation at `cd795e378afed5c7556a71e26e5247da9ff22869`, and two failed application builds at `20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91`. It also records the focus-property correction integrated at `e5a3e6d9216a69552b2b25a096fd3f3fcf8e2876`, without a successful build after that correction. The isolated documentation branch is based on `189ca0d73a8f9b92451d343ca84b4b7074c57c6c`. Overall completion is **pending**. Original execution sources and results remain unchanged; this packaging work ran no compiler, tests, or simulator.
+This packet includes successful original RuntimeHost preparation and qualified SwiftAI package resolution at `756d7f1517f64295d4ce8ff9ea01d88c1f5f1194`, followed by generated inventory freeze `91ac2c3868d9a056815bca56448e0cfcabd54eed`. Three application build attempts are preserved as actual failures, with their respective sources and diagnostics. The isolated documentation branch is based on `189ca0d73a8f9b92451d343ca84b4b7074c57c6c`. Overall completion is **pending**. This packaging work ran no compiler, tests, native preparer or simulator.
 
 The [validation plan](VALIDATION_PLAN.json) records the remaining gates. The [machine index](EVIDENCE_INDEX.json) lists results and their receipt paths. [Packaging metadata](evidence/package-20261125.json) maps copied files to their original paths and checksums; [SHA256SUMS](evidence/SHA256SUMS-20261125) covers the packaged evidence.
 
@@ -21,9 +21,12 @@ The dedicated manifest regression, native artifact preparation, and completed Ru
 | RuntimeHost final attempt 3 | `37a788a4a10a293653e307c05ba1a507d518d1f0` | After exact `@types/react@19.3.1` lock integration: exit 0, 177 passed, 0 failed, the same one existing opt-in skip; actual archive hash reverified | [receipt](evidence/runtime-host-final-attempt3-37a788a4a/runtime-host-final-attempt3.json), [complete compressed log](evidence/runtime-host-final-attempt3-37a788a4a/runtime-host-final-attempt3.log.gz) |
 | RuntimeHost final attempt 4 | `cd795e378afed5c7556a71e26e5247da9ff22869` | After original native resource generation: exit 0 in 96.647s, 177 passed, 0 failed, one unchanged opt-in skip; ZIP validation and JITless probe passed | [receipt](evidence/runtime-host-final-attempt4-cd795e378/runtime-host-final-attempt4.json), [complete compressed log](evidence/runtime-host-final-attempt4-cd795e378/runtime-host-final-attempt4.log.gz) |
 | Original native preparation | `7b7f7e4460200d7e98162dd525d67f8ca1860911` | Original preparer exit 0; 15 frameworks and four support groups validated; consumer acceptance tests remain pending | [preparer receipt](evidence/native-preparation-7b7f7e446/expo-current-cached-preparation.json), [validation receipt](evidence/native-preparation-7b7f7e446/native-preparation-final.json) |
+| RuntimeHost final attempt 5 | `756d7f1517f64295d4ce8ff9ea01d88c1f5f1194` | After qualified SwiftAI manifest integration: exit 0 in 466.034s, 177 passed, 0 failed, one unchanged opt-in skip; original ZIP/JITless checks passed | [receipt](evidence/runtime-host-final-attempt5-756d7f151/runtime-host-final-attempt5.json), [complete compressed log](evidence/runtime-host-final-attempt5-756d7f151/runtime-host-final-attempt5.log.gz) |
+| Qualified SDK resolution | `756d7f1517f64295d4ce8ff9ea01d88c1f5f1194` | Original Xcode package resolution exit 0 in 264.447s; exact clean `3f38f130` SDK checkout and unchanged lock | [receipt](evidence/runtime-host-final-attempt5-756d7f151/qualified-sdk-resolution.json), [complete compressed log](evidence/runtime-host-final-attempt5-756d7f151/qualified-sdk-resolution.log.gz) |
 | Final manifest-contract regression | `7b7f7e4460200d7e98162dd525d67f8ca1860911` | One passed, zero failed/skipped; exit 0 in 0.618s at 2026-11-25 00:35:34.980179 UTC, including changed embedded-plugin identity and new source-authority rejection cases | [receipt](evidence/manifest-final-7b7f7e446/manifest-final-test.json), [complete compressed log](evidence/manifest-final-7b7f7e446/manifest-final-test.log.gz) |
 | AI_HLY build-for-testing attempt 1 | `20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91` | Exit 65 after 330.678s; copied SwiftShims PCM retained the producer ModuleCache path. No acceptance tests executed by this build command | [receipt](evidence/app-build-attempt1-20fb9f711/ai-hly-build-attempt1.json), [xcresult errors](evidence/app-build-attempt1-20fb9f711/ai-hly-build-attempt1-errors.json), [complete compressed log](evidence/app-build-attempt1-20fb9f711/ai-hly-build-attempt1.log.gz) |
 | AI_HLY build-for-testing attempt 2 | `20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91` | Exit 65 after 261.208s; two compiler errors reject the private stored `focused` property. No acceptance tests executed by this build command | [receipt](evidence/app-build-attempt2-20fb9f711/ai-hly-build-attempt2.json), [xcresult errors](evidence/app-build-attempt2-20fb9f711/ai-hly-build-attempt2-errors.json), [complete compressed log](evidence/app-build-attempt2-20fb9f711/ai-hly-build-attempt2.log.gz) |
+| AI_HLY build-for-testing attempt 3 | `91ac2c3868d9a056815bca56448e0cfcabd54eed` | Exit 65 after 134.632s; optional `Result` inference error in the NativeScript host-services adapter. No acceptance tests executed | [receipt](evidence/app-build-attempt3-91ac2c386/ai-hly-build-attempt3.json), [xcresult errors](evidence/app-build-attempt3-91ac2c386/ai-hly-build-attempt3-errors.json), [complete compressed log](evidence/app-build-attempt3-91ac2c386/ai-hly-build-attempt3.log.gz) |
 | App preparation / A2UI | `f54aebbb35169ea63eca146a1ba3ef4e8bf4f84d` | Both original source generators passed their checks; original A2UI schema generator executed successfully | [receipt](evidence/mac-validation-20261125/app-preparation.json), [A2UI result](evidence/mac-validation-20261125/a2ui-schemas.json/result.json) |
 
 ### Platform coverage is aggregated
@@ -58,21 +61,31 @@ The [producer metadata receipt](evidence/native-preparation-7b7f7e446/native-pro
 
 The [generation provenance](evidence/native-preparation-7b7f7e446/generation-provenance.json) verifies that commit `47643864a8ac380f3d2e3a962ae7a8b144517a16` changes **one generated Widget receipt file, exactly two fields**: `inputSHA256` and `packageLockSHA256`. Every other JSON field is unchanged. Its original Git patch is preserved with lossless compression. Inventory-freeze commit `20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91` changes only three generated source-revision lines in the SDK inventory/reachability documentation.
 
+### Qualified SDK resolution
+
+The original Xcode `-resolvePackageDependencies` command completed with exit 0 in **264.447 seconds** at `756d7f151`. Its raw log records checkout of exactly `3f38f1302764635c9991d0d00fd7b12471a5373c` from the qualified SwiftAI repository. The receipt records a clean checkout and an unchanged before/after application lock SHA-256:
+
+`4a55e370d71d69933efb0bc54a08973da962b4d7270da59791aa3b1ed58910bd`
+
+The raw resolution-log SHA-256 is `40ad9a0514e4a17dafe9ac37264a707033c02cb7a3d3733ffcb33eeb5689e846`. This is successful package graph resolution; it is not an application build or test result.
+
+The [checkpoint assessment](evidence/runtime-host-final-attempt5-756d7f151/checkpoint-assessment.json) verifies that generated commit `91ac2c3868d9a056815bca56448e0cfcabd54eed` changes exactly three source-revision lines in the existing SDK inventory/reachability files, from `cd795e378` to `756d7f151`. The [original Git patch](evidence/runtime-host-final-attempt5-756d7f151/sdk-inventory-freeze-91ac2c386.patch.gz) is retained. Earlier shared SDK/Platform execution and reuse evidence keep their existing assessed source boundaries; resolution alone does not extend that applicability.
+
 ### RuntimeHost artifact freshness
 
-After native generation, the source inventory check passed, while the old RuntimeHost archive correctly rejected the stale staged SDK: `MiniApp SDK differs from current host source inputs`. Both [source-check logs](evidence/native-preparation-7b7f7e446/post-native-source-check-1.log.gz) and the [stale-archive diagnostic](evidence/native-preparation-7b7f7e446/post-native-source-check-2.log.gz) are preserved. This was an artifact freshness failure, with no application or UI test execution.
+The qualified SwiftAI revision changes the Platform package manifest archived inside the SDK. The original RuntimeHost packager therefore completed attempt 5 at `756d7f151` in **466.034 seconds**, with **177 Node tests passed, zero failed, one unchanged opt-in skip, packed ZIP validation and the original JITless probe passed**. Native producers were not rerun.
 
-The original RuntimeHost packager then completed attempt 4 at `cd795e378` in 96.647 seconds. Its **177 passing Node tests, zero failures, one existing opt-in skip, packed ZIP validation and JITless archive probe** are preserved in the completed receipt and raw log. The transfer independently matched the actual 81,837,518-byte Mac archive to SHA-256:
+The read-only transfer independently matched the actual **81,837,507-byte** Mac archive to SHA-256:
 
-`16006101892548001b64e4a8167e27e910f5e907a7af296ef8786d4850811120`
+`120bc8a6396f4202284d8a4e61ca3d772d15d791f750b9824f6a57a735f1f70b`
 
-The uncompressed attempt-4 raw log SHA-256 is:
+The uncompressed attempt-5 raw log SHA-256 is:
 
-`0530855aa61515628b1caf7ce8a38a222e64fdb5e74a354c8cc04845c8e91996`
+`754ea129dbab59da74471bf0093977ba6c3c25a28b853dd7a6355a45fef98a09`
 
-The one skipped case was `actual Node job crosses 300 seconds with no hidden deadline`, the existing opt-in long test. No new skip was introduced.
+The skipped case remains `actual Node job crosses 300 seconds with no hidden deadline`, the existing opt-in long test. No new skip was introduced.
 
-**Archive freshness passed at `cd795e378` after original native resource generation.** Earlier attempts 2 and 3 retain their actual 177-pass results, sources and archive hashes. The generated source-revision metadata was subsequently frozen in `20fb9f711`; no new test execution is attributed to that metadata-only commit.
+**Archive freshness passed at `756d7f151` after qualified SDK integration.** The generated source metadata was then frozen in `91ac2c386`; no test execution is attributed to that documentation-only commit. Earlier successful attempts 2, 3 and 4 retain their actual 177-pass results, original sources and archive hashes. The earlier missing-plugin audit failure and stale-SDK detection also remain preserved. The successful archive preparation does not establish a successful application build.
 
 ### Application build attempt 1 and isolated cache repair
 
@@ -104,7 +117,19 @@ The complete 4,608,783-byte raw attempt-2 log is losslessly compressed; its unco
 
 `49e8df8a70597ca6f0f36f5974976ac0f51420ed5771f763cf90f5ffbc14b933`
 
-The original xcresult remains on the Mac; its [seven-file hash inventory](evidence/app-build-attempt2-20fb9f711/xcresult-sha256.json) is included. Subsequent SDK-pin integration, RuntimeHost preparation and application validation are outside this packet's recorded results.
+The original xcresult remains on the Mac; its [seven-file hash inventory](evidence/app-build-attempt2-20fb9f711/xcresult-sha256.json) is included. The later qualified SDK resolution and RuntimeHost attempt 5 are recorded above. The completed application attempt 3 is recorded below; it does not provide a successful build.
+
+### Application build attempt 3
+
+The third `AI_HLY` build-for-testing attempt ran at `91ac2c386` and completed at **01:48:50.353174 UTC**, with **exit 65 after 134.632 seconds**. Its receipt records an unchanged resolved lock and no tracked source changes.
+
+The raw log and exported xcresult issues contain one compiler error at `NativeScriptHostServicesAdapter.swift:38:28`: an optional `Result<HanlinValue, any Error>?` must be unwrapped to the nonoptional `Result` type. The correction is with the assigned runtime-adapter owner. No correction or subsequent successful compilation is inferred from this packet.
+
+The complete **1,376,602-byte** raw log is preserved with lossless compression. Its SHA-256 is:
+
+`81679428a7a197b18ebf412364c63851ebcb8bb3a05d83363234a03dafdc09ff`
+
+The original xcresult remains on the Mac, with its [seven-file hash inventory](evidence/app-build-attempt3-91ac2c386/xcresult-sha256.json) retained here. The command was build-for-testing and executed no application/native/editor/UI acceptance tests.
 
 ## Required work still pending
 
@@ -117,7 +142,7 @@ The original xcresult remains on the Mac; its [seven-file hash inventory](eviden
 | iPhone UI | Three composer-capability UI methods plus the existing model-picker/draft regression |
 | iPad UI | The same three composer-capability UI methods |
 
-This packet records two failed `AI_HLY` builds, the isolated cache repair and retirement, and the integrated focus-property correction. It contains no successful application build or application/native/editor/UI test result. The pending gates above remain open.
+This packet records three failed `AI_HLY` builds, successful qualified SDK resolution and original RuntimeHost preparation, and the integrated focus-property correction. It contains no successful application build or application/native/editor/UI test result. The pending gates above remain open.
 
 The UI inventory is **seven executions across two devices**, comprising four distinct methods. The catalog/map fixture supplies UI metadata only; it does not provide a tool executor or a fabricated model response.
 

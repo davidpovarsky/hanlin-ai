@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "createdAtUTC": "2026-11-25T00:28:39.148294+00:00",
-  "documentationCheckpoint": "e5a3e6d9216a69552b2b25a096fd3f3fcf8e2876",
+  "documentationCheckpoint": "91ac2c3868d9a056815bca56448e0cfcabd54eed",
   "overallStatus": "PENDING",
   "sdk": {
     "source": "a3aae0b952b0518cb8c40ed4a511d4cffadab99f",
@@ -9,7 +9,8 @@
     "passed": 11,
     "failed": 0,
     "skipped": 0,
-    "receipt": "evidence/sdk-ios-a3aae0b95/receipt.json"
+    "receipt": "evidence/sdk-ios-a3aae0b95/receipt.json",
+    "existingReuseAssessmentThroughSource": "37a788a4a10a293653e307c05ba1a507d518d1f0"
   },
   "platformExecutions": [
     {
@@ -79,29 +80,31 @@
     "latestExecutedPasses": 6,
     "verifiedPriorPasses": 45,
     "single51CaseRun": false,
-    "reuseAssessment": "evidence/platform-attempt5-f54aebbb3/reuse-assessment.json"
+    "reuseAssessment": "evidence/platform-attempt5-f54aebbb3/reuse-assessment.json",
+    "existingReuseAssessmentThroughSource": "37a788a4a10a293653e307c05ba1a507d518d1f0"
   },
   "runtimeHost": {
     "failedAttempt": "evidence/mac-validation-20261125/runtime-host-final-attempt1.json",
-    "passingAttempt": "evidence/runtime-host-final-attempt4-cd795e378/runtime-host-final-attempt4.json",
-    "passingSource": "cd795e378afed5c7556a71e26e5247da9ff22869",
+    "passingAttempt": "evidence/runtime-host-final-attempt5-756d7f151/runtime-host-final-attempt5.json",
+    "passingSource": "756d7f1517f64295d4ce8ff9ea01d88c1f5f1194",
     "executedStatus": "EXECUTED_PASS",
     "nodePassed": 177,
     "nodeFailed": 0,
     "nodeSkipped": 1,
-    "archiveSHA256": "16006101892548001b64e4a8167e27e910f5e907a7af296ef8786d4850811120",
-    "rawLogSHA256": "0530855aa61515628b1caf7ce8a38a222e64fdb5e74a354c8cc04845c8e91996",
-    "previousPassingAttempt": "evidence/runtime-host-final-attempt3-37a788a4a/runtime-host-final-attempt3.json",
-    "durationSeconds": 96.647,
-    "archiveBytes": 81837518,
+    "archiveSHA256": "120bc8a6396f4202284d8a4e61ca3d772d15d791f750b9824f6a57a735f1f70b",
+    "rawLogSHA256": "754ea129dbab59da74471bf0093977ba6c3c25a28b853dd7a6355a45fef98a09",
+    "previousPassingAttempt": "evidence/runtime-host-final-attempt4-cd795e378/runtime-host-final-attempt4.json",
+    "durationSeconds": 466.034,
+    "archiveBytes": 81837507,
     "archiveFreshness": {
       "status": "EXECUTED_PASS",
-      "source": "cd795e378afed5c7556a71e26e5247da9ff22869",
-      "generatedInventoryCommit": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91"
+      "source": "756d7f1517f64295d4ce8ff9ea01d88c1f5f1194",
+      "generatedInventoryCommit": "91ac2c3868d9a056815bca56448e0cfcabd54eed"
     },
     "historicalPassingAttempts": [
       "evidence/mac-validation-20261125/runtime-host-final-attempt2.json",
-      "evidence/runtime-host-final-attempt3-37a788a4a/runtime-host-final-attempt3.json"
+      "evidence/runtime-host-final-attempt3-37a788a4a/runtime-host-final-attempt3.json",
+      "evidence/runtime-host-final-attempt4-cd795e378/runtime-host-final-attempt4.json"
     ]
   },
   "appPreparation": {
@@ -124,8 +127,8 @@
   },
   "applicability": "evidence/applicability-37a788a4a.json",
   "documentationBranchBase": "189ca0d73a8f9b92451d343ca84b4b7074c57c6c",
-  "updatedAtUTC": "2026-11-25T01:36:37.138996+00:00",
-  "latestRecordedExecutionSource": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91",
+  "updatedAtUTC": "2026-11-25T01:53:51.789085+00:00",
+  "latestRecordedExecutionSource": "91ac2c3868d9a056815bca56448e0cfcabd54eed",
   "manifestAudit": {
     "status": "EXECUTED_PASS",
     "source": "7b7f7e4460200d7e98162dd525d67f8ca1860911",
@@ -152,13 +155,11 @@
     "acceptanceTests": "NOT_INFERRED"
   },
   "applicationBuildProgress": {
-    "status": "CORRECTION_INTEGRATED_AWAITING_VALIDATION",
-    "latestCompletedAttempt": 2,
-    "latestCompletedBuildSource": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91",
+    "status": "FAILED_CORRECTION_WITH_RUNTIME_OWNER",
+    "latestCompletedAttempt": 3,
+    "latestCompletedBuildSource": "91ac2c3868d9a056815bca56448e0cfcabd54eed",
     "latestCompletedBuildStatus": "FAILED",
-    "originalFocusFixCommit": "8cf5b3e3023852ab41fec7d9db1592218c1bcfd1",
-    "integratedFocusFixCommit": "e5a3e6d9216a69552b2b25a096fd3f3fcf8e2876",
-    "fixProvenance": "evidence/app-build-attempt2-20fb9f711/focus-fix-provenance.json",
+    "receipt": "evidence/app-build-attempt3-91ac2c386/ai-hly-build-attempt3.json",
     "completedSuccessfulBuildInThisPacket": false
   },
   "applicationBuildAttempts": [
@@ -190,6 +191,21 @@
       "rawLogSHA256": "49e8df8a70597ca6f0f36f5974976ac0f51420ed5771f763cf90f5ffbc14b933",
       "failureClassification": "INHERITED_FOCUSED_PROPERTY_COLLISION",
       "acceptanceTestsExecuted": 0
+    },
+    {
+      "id": "AI_HLY attempt3",
+      "source": "91ac2c3868d9a056815bca56448e0cfcabd54eed",
+      "status": "FAILED",
+      "startedAtUTC": "2026-11-25T01:46:35.721926+00:00",
+      "finishedAtUTC": "2026-11-25T01:48:50.353174+00:00",
+      "exitCode": 65,
+      "durationSeconds": 134.632,
+      "receipt": "evidence/app-build-attempt3-91ac2c386/ai-hly-build-attempt3.json",
+      "diagnostics": "evidence/app-build-attempt3-91ac2c386/ai-hly-build-attempt3-errors.json",
+      "processReceipt": "evidence/runtime-host-final-attempt5-756d7f151/ai-hly-build-attempt3-process.json",
+      "rawLogSHA256": "81679428a7a197b18ebf412364c63851ebcb8bb3a05d83363234a03dafdc09ff",
+      "failureClassification": "OPTIONAL_RESULT_CLOSURE_INFERENCE",
+      "acceptanceTestsExecuted": 0
     }
   ],
   "moduleCacheRepair": {
@@ -205,5 +221,23 @@
     "source": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91",
     "receipt": "evidence/app-build-attempt2-20fb9f711/isolated-stale-module-cache-retirement.json",
     "classification": "ORCHESTRATION_NOT_ACCEPTANCE"
+  },
+  "qualifiedSDKResolution": {
+    "status": "EXECUTED_PASS",
+    "source": "756d7f1517f64295d4ce8ff9ea01d88c1f5f1194",
+    "receipt": "evidence/runtime-host-final-attempt5-756d7f151/qualified-sdk-resolution.json",
+    "exitCode": 0,
+    "durationSeconds": 264.447,
+    "sdkRevision": "3f38f1302764635c9991d0d00fd7b12471a5373c",
+    "sdkCheckoutClean": true,
+    "lockUnchanged": true,
+    "lockSHA256": "4a55e370d71d69933efb0bc54a08973da962b4d7270da59791aa3b1ed58910bd",
+    "rawLogSHA256": "40ad9a0514e4a17dafe9ac37264a707033c02cb7a3d3733ffcb33eeb5689e846",
+    "applicationBuildOrTestPassInferred": false
+  },
+  "generatedInventoryFreeze": {
+    "source": "91ac2c3868d9a056815bca56448e0cfcabd54eed",
+    "assessment": "evidence/runtime-host-final-attempt5-756d7f151/checkpoint-assessment.json",
+    "changedSourceRevisionLines": 3
   }
 }
