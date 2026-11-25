@@ -1,0 +1,16 @@
+[
+  {
+    "command": [
+      "/usr/bin/python3",
+      "-B",
+      "/tmp/hanlin-sdk-source-1d677dgk/Scripts/Runtime/runtime_host_archive.py",
+      "validate",
+      "/mnt/development/projects/worktrees/hanlin-native-catalog-sdk-inputs-20261125/build/native-authoring-provenance-20261125/RuntimeHostResources-052c.zip",
+      "--source-root",
+      "/tmp/hanlin-sdk-source-1d677dgk/AI_HLY/Downstream/RuntimeCore/Node/Host"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  }
+]

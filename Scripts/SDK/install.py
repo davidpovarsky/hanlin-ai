@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import importlib.util
 import json
 import os
 from pathlib import Path, PurePosixPath
@@ -89,14 +90,28 @@ def generated_hashes(root: Path) -> dict[str, str]:
     return {name: sha256(root / name) for name in GENERATED if (root / name).is_file()}
 
 
+def native_artifact_tools():
+    spec = importlib.util.spec_from_file_location("hanlin_native_ownership", Path(__file__).with_name("native_artifacts.py"))
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
 def verify_owned_changes(root: Path, receipt: dict | None) -> None:
     """Only unchanged installer-generated output may be reset during an upgrade."""
     records = git(root, "status", "--porcelain=v1", "-z", "--untracked-files=normal").split("\0")
+    native_owned = None
     for record in records:
         if not record:
             continue
         status, path = record[:2], record[3:]
-        if "R" in status or "C" in status or path not in GENERATED:
+        if "R" in status or "C" in status:
+            raise ValueError(f"SDK checkout has an actual source edit; preserve it before installing: {path}")
+        if path not in GENERATED:
+            if native_owned is None:
+                native_owned = native_artifact_tools().managed_source_outputs(root)
+            if path in native_owned:
+                continue
             raise ValueError(f"SDK checkout has an actual source edit; preserve it before installing: {path}")
         expected = (receipt or {}).get("generatedSHA256", {}).get(path)
         if not expected or not (root / path).is_file() or sha256(root / path) != expected:
@@ -104,13 +119,22 @@ def verify_owned_changes(root: Path, receipt: dict | None) -> None:
 
 
 def reset_generated(root: Path) -> None:
-    for name in GENERATED:
+    native = native_artifact_tools()
+    owned = native.managed_source_outputs(root)
+    for name in (*GENERATED, *owned):
         tracked = subprocess.run(["git", "-C", str(root), "ls-files", "--error-unmatch", "--", name],
                                  stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL).returncode == 0
         if tracked:
-            git(root, "restore", "--source=HEAD", "--staged", "--worktree", "--", name)
+            extra = ["--ignore-skip-worktree-bits"] if name in owned else []
+            git(root, "restore", "--source=HEAD", "--staged", "--worktree", *extra, "--", name)
         elif (root / name).is_file():
             (root / name).unlink()
+    if owned:
+        path = root / ".hanlin-sdk/native-artifacts-installed.json"
+        receipt = json.loads(path.read_text())
+        receipt["paths"].pop(native.WIDGET_RUNTIME_ROOT, None)
+        receipt.pop("preparedSourceSHA256", None)
+        write_json(path, receipt)
 
 
 def ignore_checkout(host: Path, destination: Path) -> None:
@@ -326,14 +350,16 @@ def check(host: Path, lock_path: Path, relative: str) -> dict:
         run([sys.executable, str(root / "Scripts/SDK/generate_app_intents_resources.py"), "--check"], cwd=root)
     # Check that managed native installation paths still exist without a download.
     if receipt.get("managedNativeTargets"):
-        run([sys.executable, str(root / "Scripts/SDK/native_artifacts.py"), "verify-source",
+        validation = json.loads(run([sys.executable, str(root / "Scripts/SDK/native_artifacts.py"), "verify-source",
              "--catalog", str(root / "docs/native-artifacts.json"), "--root", str(root),
-             "--targets", *receipt["managedNativeTargets"]], cwd=root)
+             "--targets", *receipt["managedNativeTargets"]], cwd=root))
         catalog = json.loads((root / "docs/native-artifacts.json").read_text())
         native_receipt = json.loads((root / ".hanlin-sdk/native-artifacts-installed.json").read_text())
-        selected = set(receipt["managedNativeTargets"])
-        records = [item for item in catalog["artifacts"] if item["target"] in selected]
-        records += [item for item in catalog["supportArtifacts"] if selected.intersection(item["requiredBy"])]
+        # Use the same canonical dependency closure as installation, including
+        # newly declared support dependencies in older full catalogs.
+        selected = set(validation["selectedRecords"])
+        records = [item for item in [*catalog["artifacts"], *catalog["supportArtifacts"]]
+                   if item["target"] in selected]
         for item in records:
             paths = [item["installPath"]] if item["kind"] == "xcframework" else item["installPaths"]
             if any(native_receipt["paths"].get(path) != item["checksum"] or not (root / path).exists() for path in paths):

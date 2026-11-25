@@ -56,6 +56,10 @@ class NativeSourceFixture:
         (host / "package.json").write_text('{"dependencies":{}}\n')
         (host / "package-lock.json").write_text('{"packages":{}}\n')
         (host / "fixture.mjs").write_text('export const fixture = "original";\n')
+        for name in native.PREPARED_WIDGET_FILES:
+            widget_file = self.sdk / name
+            widget_file.parent.mkdir(parents=True, exist_ok=True)
+            widget_file.write_text("prepared widget support fixture: " + name + "\n")
         (self.sdk / ".gitignore").write_text(
             "/.hanlin-sdk/\n/Vendor/\n/AI_HLY/RuntimeHostResources.zip\n")
         (self.sdk / "Package.swift").write_text("// generated profile fixture\n")
@@ -81,6 +85,11 @@ class NativeSourceFixture:
             archive.writestr("HanlinNodeHostSupport/AI_HLY/RuntimeHostResources.zip",
                              self.host_archive.read_bytes())
         self.archives["HanlinNodeHostSupport"] = support
+        widget_support = root / "HanlinExpoWidgetRuntimeSupport.zip"
+        with zipfile.ZipFile(widget_support, "w") as archive:
+            for name in sorted(native.PREPARED_WIDGET_FILES):
+                archive.writestr("HanlinExpoWidgetRuntimeSupport/" + name, (self.sdk / name).read_bytes())
+        self.archives["HanlinExpoWidgetRuntimeSupport"] = widget_support
         records = []
         for name, archive in self.archives.items():
             item = {"target": name, "kind": "xcframework" if name == "NodeMobile" else "host-support",
@@ -90,7 +99,8 @@ class NativeSourceFixture:
             if name == "NodeMobile":
                 item["installPath"] = native.TARGETS[name]
             else:
-                item.update(installPaths=["AI_HLY/RuntimeHostResources.zip"], requiredBy=["NodeMobile"])
+                group = native.SUPPORT_GROUPS[name]
+                item.update(installPaths=list(group["paths"]), requiredBy=list(group["targets"]))
             records.append(item)
         identity = hashlib.sha256(json.dumps({item["target"]: item["checksum"] for item in records},
             sort_keys=True, separators=(",", ":")).encode()).hexdigest()
@@ -100,7 +110,7 @@ class NativeSourceFixture:
         self.catalog = {"schemaVersion": 1, "state": "published", "repository": native.REPOSITORY,
             "sourceCommit": producer, "releaseTag": tag, "contentSHA256": identity,
             "requiredTargets": list(native.TARGETS), "artifacts": [records[0]],
-            "supportArtifacts": [records[1]], "inputSHA256": native.source_inputs(self.sdk)}
+            "supportArtifacts": records[1:], "inputSHA256": native.source_inputs(self.sdk)}
         native.json_write(self.sdk / "docs/native-artifacts.json", self.catalog)
         self.git("add", ".")
         self.git("commit", "-m", "Content-addressed fixture catalog")
@@ -110,7 +120,9 @@ class NativeSourceFixture:
         self.native_receipt = self.sdk / ".hanlin-sdk/native-artifacts-installed.json"
         native.json_write(self.native_receipt, {"releaseTag": tag, "paths": {
             native.TARGETS["NodeMobile"]: records[0]["checksum"],
-            "AI_HLY/RuntimeHostResources.zip": records[1]["checksum"]}})
+            "AI_HLY/RuntimeHostResources.zip": records[1]["checksum"],
+            native.WIDGET_RUNTIME_ROOT: records[2]["checksum"]},
+            "preparedSourceSHA256": native.widget_source_hashes(self.sdk)})
         self.pin()
 
     def git(self, *arguments):
@@ -141,6 +153,13 @@ class NativeSourceFixture:
         assert not (self.sdk / native.INPUTS[0]).exists()
         assert not (self.sdk / HOST / "package.json").exists()
         assert not (self.sdk / VALIDATOR).exists()
+        # Keep the existing installed support fixture across source pruning, just
+        # as the cached ignored framework/Host archive remains installed.
+        with zipfile.ZipFile(self.archives["HanlinExpoWidgetRuntimeSupport"]) as archive:
+            for name in native.PREPARED_WIDGET_FILES:
+                target = self.sdk / name
+                target.parent.mkdir(parents=True, exist_ok=True)
+                target.write_bytes(archive.read("HanlinExpoWidgetRuntimeSupport/" + name))
 
     def check(self):
         return installer.check(self.host, self.lock, "Vendor/HanlinSDK")

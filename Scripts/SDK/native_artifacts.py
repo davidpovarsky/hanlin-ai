@@ -39,7 +39,7 @@ SUPPORT_GROUPS = {
                   "Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders"),
     },
     "HanlinExpoWidgetRuntimeSupport": {
-        "targets": ("ExpoUI", "ExpoModulesCore"),
+        "targets": ("ExpoUI", "ExpoModulesCore", "NodeMobile"),
         "paths": ("Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle",),
     },
     "HanlinNativeScriptHostSupport": {
@@ -167,13 +167,18 @@ def source_commit(root: Path) -> str:
     return subprocess.check_output(["git", "-C", str(root), "rev-parse", "HEAD"], text=True).strip()
 
 
-def pinned_files(root: Path, names: tuple[str, ...], revision: str | None = None) -> tuple[str, dict[str, bytes]]:
+def pinned_files(root: Path, names: tuple[str, ...], revision: str | None = None, *,
+                 prepared_inputs: frozenset[str] = frozenset()) -> tuple[str, dict[str, bytes]]:
     """Read exact Git blobs without requiring sparse inputs to be checked out."""
+    if not prepared_inputs.issubset(PREPARED_SDK_DOCUMENTS | PREPARED_WIDGET_FILES):
+        raise ValueError("Unknown prepared SDK input")
     revision = revision or source_commit(root)
     if source_commit(root) != revision:
         raise ValueError("Native preparation input revision changed")
     changed = subprocess.run(["git", "-C", str(root), "diff", "--quiet", "--no-ext-diff",
-                              revision, "--", *names], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                              revision, "--", *names,
+                              *(":(exclude)" + name for name in sorted(prepared_inputs))],
+                             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     if changed.returncode:
         raise ValueError("Modified native preparation input: " + ", ".join(names))
     tree = subprocess.check_output(["git", "-C", str(root), "ls-tree", "-r", "-z", revision, "--", *names])
@@ -186,7 +191,8 @@ def pinned_files(root: Path, names: tuple[str, ...], revision: str | None = None
         name = str(relative(name.decode("utf-8")))
         if kind != b"blob" or mode not in (b"100644", b"100755"):
             raise ValueError("Native preparation input is not a regular Git file: " + name)
-        entries.append((name, oid))
+        if name not in prepared_inputs:
+            entries.append((name, oid))
     raw = subprocess.check_output(["git", "-C", str(root), "cat-file", "--batch"],
                                   input=b"".join(oid + b"\n" for _, oid in entries))
     stream = io.BytesIO(raw)
@@ -225,13 +231,143 @@ def verify_source_inputs(catalog: dict, root: Path) -> str:
     return revision
 
 
+# These original audit outputs are shipped verbatim in MiniAppSDK/docs. They
+# describe the prepared upstream packages, so clean/sparse Git may predate them.
+PREPARED_SDK_DOCUMENTS = frozenset({
+    "docs/miniapp-sdk/source-inventory.json",
+    "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+    "docs/miniapp-sdk/extension-reachability.json",
+    "docs/miniapp-sdk/extension-reachability.md",
+})
+
+
+WIDGET_RUNTIME_ROOT = SUPPORT_GROUPS["HanlinExpoWidgetRuntimeSupport"]["paths"][0]
+PREPARED_WIDGET_FILES = frozenset(WIDGET_RUNTIME_ROOT + "/" + name for name in (
+    "ExpoWidgets.bundle", "ExpoWidgetsLayoutRegistry.json", "Info.plist",
+    "original-runtime-receipt.json", "README.txt",
+))
+
+
+def widget_source_hashes(root: Path) -> dict[str, str]:
+    """Hash the exact original prepared resource set, never arbitrary sources."""
+    widget_root = root / WIDGET_RUNTIME_ROOT
+    inside(root, widget_root)
+    if widget_root.is_symlink() or not widget_root.is_dir():
+        raise ValueError("Prepared Expo Widget support is missing")
+    actual = {}
+    for current in widget_root.rglob("*"):
+        inside(root, current)
+        if current.is_symlink():
+            raise ValueError("Prepared Expo Widget support contains a symlink")
+        if current.is_file():
+            actual[current.relative_to(root).as_posix()] = digest(current)
+    if set(actual) != PREPARED_WIDGET_FILES:
+        raise ValueError("Prepared Expo Widget source inventory differs")
+    return actual
+
+
+def managed_source_outputs(root: Path) -> dict[str, str]:
+    """Recognize only exact resource bytes recorded by verified installation."""
+    path = root / ".hanlin-sdk/native-artifacts-installed.json"
+    if not path.is_file():
+        return {}
+    receipt = json.loads(path.read_text())
+    owned = receipt.get("preparedSourceSHA256", {})
+    if not owned:
+        return {}
+    catalog = load_catalog(root / "docs/native-artifacts.json")
+    record = next((item for item in catalog["supportArtifacts"]
+                   if item["target"] == "HanlinExpoWidgetRuntimeSupport"), None)
+    if (set(owned) != PREPARED_WIDGET_FILES or not record
+            or catalog["state"] != "published"
+            or receipt.get("paths", {}).get(WIDGET_RUNTIME_ROOT) != record["checksum"]
+            or widget_source_hashes(root) != owned):
+        raise ValueError("Managed native source output was edited outside the installer")
+    return owned
+
+
+def node_sdk_source_files(root: Path, archive: Path, revision: str) -> dict[str, bytes]:
+    """Project the original SDK fingerprint inputs without installing packages.
+
+    The manifest selects tracked source roots, not replacement source bytes.
+    Complete roots retain newly added files; the pinned original producer then
+    recomputes its own inventory/hash and rejects missing or stale inputs.
+    """
+    with zipfile.ZipFile(archive) as packed:
+        members = {}
+        for item in packed.infolist():
+            if item.is_dir():
+                continue
+            name = item.filename.removeprefix("./")
+            relative(name)
+            if name in members:
+                raise ValueError("Ambiguous Node Host support member: " + name)
+            members[name] = item
+        sdk = json.loads(packed.read(members["MiniAppSDK/miniapp-sdk.json"]))
+        inputs = sdk.get("sourceInputs")
+        if not isinstance(inputs, list) or not inputs:
+            raise ValueError("MiniApp SDK source input inventory is missing")
+        expected = {}
+        for item in inputs:
+            if (not isinstance(item, dict) or set(item) != {"path", "sha256"}
+                    or not isinstance(item["path"], str)
+                    or not isinstance(item["sha256"], str)
+                    or not re.fullmatch(r"[a-f0-9]{64}", item["sha256"])):
+                raise ValueError("Invalid MiniApp SDK source input")
+            name = str(relative(item["path"]))
+            if name in expected or len(PurePosixPath(name).parts) < 2:
+                raise ValueError("Duplicate or invalid MiniApp SDK source input: " + name)
+            expected[name] = item["sha256"]
+        encoded = json.dumps(inputs, ensure_ascii=False, separators=(",", ":")).encode()
+        if hashlib.sha256(encoded).hexdigest() != sdk.get("inputSHA256"):
+            raise ValueError("MiniApp SDK source input inventory digest differs")
+        roots = sorted({"/".join(PurePosixPath(name).parts[:2]) for name in expected})
+        _, files = pinned_files(root, tuple(roots), revision,
+                                prepared_inputs=PREPARED_SDK_DOCUMENTS | PREPARED_WIDGET_FILES)
+        packaged_files = {item["path"]: item["sha256"] for item in sdk.get("files", [])}
+        for name in PREPARED_SDK_DOCUMENTS:
+            if name not in expected:
+                raise ValueError("Prepared SDK document is absent from source inputs: " + name)
+            content = packed.read(members["MiniAppSDK/" + name])
+            checksum = hashlib.sha256(content).hexdigest()
+            if checksum != expected[name] or packaged_files.get(name) != checksum:
+                raise ValueError("Prepared SDK document digest differs: " + name)
+            # A clean/pruned checkout uses the immutable published preparation.
+            # A materialized generated overlay must match that preparation too.
+            original = subprocess.check_output(["git", "-C", str(root), "show", revision + ":" + name])
+            current = root / name
+            inside(root, current)
+            if current.is_symlink() or (current.exists() and
+                    (not current.is_file() or current.read_bytes() not in (original, content))):
+                raise ValueError("Modified prepared SDK document: " + name)
+            files[name] = content
+        # The original SDK also fingerprints the prepared Widget JavaScript
+        # bundle. Node-only consumers install this existing small support group;
+        # no Expo native framework or native producer is required.
+        widget_inputs = {name for name in expected if name.startswith(WIDGET_RUNTIME_ROOT + "/")}
+        if widget_inputs != PREPARED_WIDGET_FILES:
+            raise ValueError("Prepared Expo Widget source inventory differs")
+        if widget_source_hashes(root) != {name: expected[name] for name in widget_inputs}:
+            raise ValueError("Prepared Expo Widget source digest differs")
+        for name in widget_inputs:
+            files[name] = (root / name).read_bytes()
+        if not set(expected).issubset(files):
+            raise ValueError("MiniApp SDK source input is absent from pinned Git")
+        return files
+
+
 def validate_node_support(root: Path, archive: Path, revision: str) -> None:
     # Reuse the original source/archive policy, including dependency patches and
-    # exact module inventory. Only small tracked sources are materialized; no npm,
-    # native builder, frozen runtime extraction or second archive schema is used.
+    # exact module/SDK inventory. Materialize tracked fingerprint roots only;
+    # no npm, native builder or frozen dependency extraction is used.
     validator = "Scripts/Runtime/runtime_host_archive.py"
     host = "AI_HLY/Downstream/RuntimeCore/Node/Host"
     _, files = pinned_files(root, (validator, host), revision)
+    if host + "/miniapp-authoring.mjs" in files:
+        try:
+            files.update(node_sdk_source_files(root, archive, revision))
+        except (KeyError, TypeError, zipfile.BadZipFile) as error:
+            raise ValueError("Invalid MiniApp SDK source inventory: " + str(error)) from error
     with tempfile.TemporaryDirectory(prefix="hanlin-sdk-source-") as temporary:
         source = Path(temporary)
         for name, content in files.items():
@@ -532,7 +668,11 @@ def selected_records(catalog: dict, targets: list[str] | None, support: bool) ->
         available_groups = {item["target"] for item in catalog["supportArtifacts"]}
         if not required_groups.issubset(available_groups):
             raise ValueError("Selected host support has not been published")
-        records += [item for item in catalog["supportArtifacts"] if item["target"] in required_groups]
+        # Catalog order is not dependency order. The SDK fingerprint in Node
+        # Host support consumes the original prepared Widget resource support.
+        order = {name: index for index, name in enumerate(SUPPORT_GROUPS)}
+        records += sorted((item for item in catalog["supportArtifacts"] if item["target"] in required_groups),
+                          key=lambda item: order[item["target"]])
     return records
 
 
@@ -545,7 +685,7 @@ def verify_installed_source(catalog: dict, root: Path, targets: list[str] | None
     if node:
         validate_node_support(root, root / "AI_HLY/RuntimeHostResources.zip", revision)
     return {"sourceCommit": revision, "declaredPreparationInputs": len(INPUTS),
-            "nodeHostSourceValidated": node}
+            "nodeHostSourceValidated": node, "selectedRecords": [item["target"] for item in records]}
 
 
 def install(catalog: dict, root: Path, cache: Path, targets: list[str] | None, support: bool) -> None:
@@ -557,7 +697,17 @@ def install(catalog: dict, root: Path, cache: Path, targets: list[str] | None, s
     receipt = json.loads(receipt_path.read_text()) if receipt_path.exists() else {"paths": {}}
     for item in records:
         names = [item["installPath"]] if item["kind"] == "xcframework" else item["installPaths"]
-        if all(receipt["paths"].get(name) == item["checksum"] and (root / name).exists() for name in names):
+        cached = all(receipt["paths"].get(name) == item["checksum"] and (root / name).exists() for name in names)
+        widget = item["target"] == "HanlinExpoWidgetRuntimeSupport"
+        legacy_widget = cached and widget and not receipt.get("preparedSourceSHA256")
+        if cached and widget:
+            owned = receipt.get("preparedSourceSHA256")
+            if owned and widget_source_hashes(root) != owned:
+                raise ValueError("Managed native source output was edited outside the installer")
+            # Older receipts lack file ownership; verify the immutable support
+            # archive before recording it, rather than blessing arbitrary bytes.
+            cached = bool(owned)
+        if cached:
             if item["target"] == "HanlinNodeHostSupport":
                 validate_node_support(root, root / "AI_HLY/RuntimeHostResources.zip", revision)
             continue
@@ -565,6 +715,11 @@ def install(catalog: dict, root: Path, cache: Path, targets: list[str] | None, s
         with tempfile.TemporaryDirectory(prefix="hanlin-sdk-install-", dir=root) as temporary:
             temp = Path(temporary)
             extract_verified(archive, item["checksum"], temp, item["root"])
+            # Validate the entire prepared source set before replacing even a
+            # pristine tracked destination or recording any new ownership.
+            staged_widget_hashes = widget_source_hashes(temp / item["root"]) if widget else None
+            if legacy_widget and widget_source_hashes(root) != staged_widget_hashes:
+                raise ValueError("Refusing to adopt modified legacy Widget resources")
             if item["kind"] == "xcframework":
                 framework_libraries(temp / item["root"], item["target"])
             if item["target"] == "HanlinNodeHostSupport":
@@ -573,7 +728,16 @@ def install(catalog: dict, root: Path, cache: Path, targets: list[str] | None, s
                 destination = root / name
                 inside(root, destination)
                 if destination.exists() and name not in receipt["paths"]:
-                    raise ValueError(f"Refusing to replace unmanaged prepared input: {destination}")
+                    if widget and name == WIDGET_RUNTIME_ROOT:
+                        # The original resource tree may be materialized with its
+                        # target sources. Only an exact pristine tracked set can
+                        # become managed; edits/extras/symlinks still reject.
+                        actual = widget_source_hashes(root)
+                        _, originals = pinned_files(root, tuple(sorted(PREPARED_WIDGET_FILES)), revision)
+                        if actual != {path: hashlib.sha256(data).hexdigest() for path, data in originals.items()}:
+                            raise ValueError("Refusing to replace modified tracked Widget resources")
+                    else:
+                        raise ValueError(f"Refusing to replace unmanaged prepared input: {destination}")
                 source = temp / item["root"]
                 if item["kind"] == "host-support":
                     source /= name
@@ -590,6 +754,8 @@ def install(catalog: dict, root: Path, cache: Path, targets: list[str] | None, s
                         backup.rename(destination)
                     raise
                 receipt["paths"][name] = item["checksum"]
+                if widget:
+                    receipt["preparedSourceSHA256"] = staged_widget_hashes
                 # Save each completed replacement so an interrupted install can resume.
                 json_write(receipt_path, receipt)
     if source_commit(root) != revision:
