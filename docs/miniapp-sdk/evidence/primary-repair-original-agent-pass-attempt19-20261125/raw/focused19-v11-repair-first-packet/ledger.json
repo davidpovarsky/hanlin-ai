@@ -1,0 +1,238 @@
+{
+  "schema": 1,
+  "id": "focused19-v11",
+  "allowanceSeconds": 5900,
+  "originalAllowanceSeconds": 3600,
+  "priorContinuationGrants": [
+    {
+      "authority": {
+        "path": "build/primary-control/focused19-v8/decision.json",
+        "sha256": "7c16a01c08f9ebfe7ac34844afcf1008e8be97975449c7424c3640bbeeab640f"
+      },
+      "grant": {
+        "by": "/root",
+        "additionalSeconds": 400,
+        "basis": "The user explicitly authorized completing the remaining implementation without repeated permission. Preserve the original3600 and all six actual charges; add400 for the measured receiver-synchronization continuation.",
+        "plannedNextPhaseSeconds": 900,
+        "components": {
+          "affectedAIBuild": 180,
+          "originalCase": 600,
+          "setupResultCleanup": 120
+        },
+        "otherGrantsUnchanged": true
+      }
+    },
+    {
+      "authority": {
+        "path": "build/primary-control/focused19-v9/decision.json",
+        "sha256": "dd38954a1f5db85b02c65c02566053e7c2dea660500ccb08c8220f34d5e7c6f9"
+      },
+      "grant": {
+        "by": "/root",
+        "additionalSeconds": 750,
+        "basis": "The user explicitly authorized completing the remaining implementation without repeated permission. Preserve the original3600, prior explicit400 grant and all seven actual charges; add750 for the measured MiniApps receiver-presentation continuation.",
+        "plannedNextPhaseSeconds": 900,
+        "components": {
+          "affectedMiniBuild": 180,
+          "originalCase": 600,
+          "setupResultCleanup": 120
+        },
+        "otherGrantsUnchanged": true
+      }
+    },
+    {
+      "authority": {
+        "path": "build/primary-control/focused19-v9/decision.json",
+        "sha256": "dd38954a1f5db85b02c65c02566053e7c2dea660500ccb08c8220f34d5e7c6f9"
+      },
+      "grant": {
+        "by": "/root",
+        "additionalSeconds": 200,
+        "basis": "The user explicitly authorized completing the remaining implementation without repeated permission. Preserve the original3600, prior400, separate750 and all seven actual charges; add200 after the actual V8 transcript established pending receiver status before installation, requiring the provider correction and both original builds.",
+        "plannedNextPhaseSeconds": 1080,
+        "components": {
+          "affectedMiniBuild": 180,
+          "affectedAIBuild": 180,
+          "originalCase": 600,
+          "setupResultCleanup": 120
+        },
+        "otherGrantsUnchanged": true
+      }
+    },
+    {
+      "authority": {
+        "path": "build/primary-control/focused19-v10/decision.json",
+        "sha256": "e5c4f55ab15c4b8360380bf2523847d073a1c47622fb06fce8b0c7bf83a7a01e"
+      },
+      "grant": {
+        "by": "/root",
+        "additionalSeconds": 300,
+        "basis": "The user explicitly authorized completing the remaining implementation without repeated permission. Preserve the original3600, separate prior400/750/200 grants and all eight actual charges; add300 for the measured AI-only repair-coordinator continuation while authenticating unchanged dc53 MiniApps products.",
+        "plannedNextPhaseSeconds": 900,
+        "components": {
+          "affectedAIBuild": 180,
+          "originalCase": 600,
+          "setupResultCleanup": 120
+        },
+        "otherGrantsUnchanged": true
+      }
+    }
+  ],
+  "continuationGrant": {
+    "by": "/root",
+    "additionalSeconds": 650,
+    "basis": "The user explicitly authorized completing the remaining implementation without repeated permission. Preserve the original3600, separate prior400/750/200/300 grants and all nine actual charges; add650 for the measured shared importer lifecycle correction requiring both original MiniApps and AI builds.",
+    "plannedNextPhaseSeconds": 1080,
+    "components": {
+      "affectedMiniBuild": 180,
+      "affectedAIBuild": 180,
+      "originalCase": 600,
+      "setupResultCleanup": 120
+    },
+    "otherGrantsUnchanged": true
+  },
+  "continuationAllowanceSeconds": 1088.8944576229987,
+  "continuationElapsedSeconds": 814.4282468750025,
+  "activeElapsedSeconds": 5625.533789252004,
+  "charges": [
+    {
+      "id": "focused19-v1",
+      "source": "a2c8a1b1be746461272ba77254603304567c309d",
+      "status": "FOCUSED_FAILED",
+      "elapsedSeconds": 366.7222996670025,
+      "statePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v1/state.json",
+      "decisionSHA256": "77eef76303d4df1ac274a6cbf3db71b8f7efc4ee7f4e9b623334d565dd3297a3",
+      "logSHA256": "50e1e8e69dc605e6e1b848865df43258820bffe759fce30baafddb4f1e1466aa",
+      "exitCode": 1,
+      "expectedGroups": {
+        "FocusedMini3": 3,
+        "FocusedAI8": 8
+      }
+    },
+    {
+      "id": "focused19-v2",
+      "source": "62dfff9aebd0a272486c7770d4f77ba603d535ab",
+      "status": "FOCUSED_FAILED",
+      "elapsedSeconds": 977.134837125006,
+      "statePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v2/state.json",
+      "decisionSHA256": "72608e39bc0987c619ea24b0eeea53b18cd5cca6f86c4a3dab688699580a315c",
+      "logSHA256": "342ef196929155502518e95854d07595b7d804ae635c8393e0800a028e6a97e4",
+      "exitCode": 1,
+      "expectedGroups": {
+        "FocusedMini3": 3,
+        "FocusedAI8": 8
+      }
+    },
+    {
+      "id": "focused19-v3",
+      "source": "6c006c948f0a6f371f7fc68b90e393f43734f8dd",
+      "status": "FOCUSED_FAILED",
+      "elapsedSeconds": 39.67624695900304,
+      "statePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v3/state.json",
+      "decisionSHA256": "e5317f244c6cf6cecb4b9a9c1b3043b1921fbe646d922f332d7bdcd103fea86a",
+      "logSHA256": "5c3085ba2ea41118eae72f8f33666d910d72dc64ca42f8a873f24b23ed8e755a",
+      "exitCode": 1,
+      "expectedGroups": {
+        "FocusedManual1": 1,
+        "FocusedRepair1": 1
+      }
+    },
+    {
+      "id": "focused19-v5",
+      "source": "6c006c948f0a6f371f7fc68b90e393f43734f8dd",
+      "status": "FOCUSED_FAILED",
+      "elapsedSeconds": 713.0760274589993,
+      "statePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v5/state.json",
+      "decisionSHA256": "288fff0babef0edb6cf02f392285a194d9707a79af6214fe4d1e1396a3dff51b",
+      "logSHA256": "d1ad80a8abe2aaae22be3cf0a654497d8de0f9b6ac2433ef28c2259d6897ca82",
+      "exitCode": 1,
+      "expectedGroups": {
+        "FocusedManual1": 1,
+        "FocusedRepair1": 1
+      }
+    },
+    {
+      "id": "focused19-v6",
+      "source": "958cf666da7be83b9b63e46e3013e3344fb31585",
+      "status": "FOCUSED_FAILED",
+      "elapsedSeconds": 544.1797895409982,
+      "statePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v6/state.json",
+      "decisionSHA256": "39b1aad0ac110ac97a638b08ec1d9c22b3efa4723cce1378e87a7028a056ce4f",
+      "logSHA256": "d76584f27bd51ae5865d743a6fb6982464fdc95a6e8f6d07e6b73838fbc51671",
+      "exitCode": 1,
+      "expectedGroups": {
+        "FocusedRepair1": 1
+      }
+    },
+    {
+      "id": "focused19-v7",
+      "source": "f6bb035f2828ec24a683bb2f5f1dddb27143dc4a",
+      "status": "FOCUSED_FAILED",
+      "elapsedSeconds": 443.2465754169971,
+      "statePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v7/state.json",
+      "decisionSHA256": "51e5f719fc302d9e55dc5da77069b03cd33f1e2eae9def2c59a7c48a819abbb6",
+      "logSHA256": "69f3e934134df2a854674ffbc3dc6cb9fd7e64f5ee6929338bb2af4b0864aaeb",
+      "exitCode": 1,
+      "expectedGroups": {
+        "FocusedRepair1": 1
+      }
+    },
+    {
+      "id": "focused19-v8",
+      "source": "7bf0c2fdc2f7168d6b98dda66f443ae032fe1c11",
+      "status": "FOCUSED_FAILED",
+      "elapsedSeconds": 735.968727458996,
+      "statePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/state.json",
+      "decisionSHA256": "7c16a01c08f9ebfe7ac34844afcf1008e8be97975449c7424c3640bbeeab640f",
+      "logSHA256": "0e766623af6c5e92150b2ce975e7e9c853ed4e8b9f0fd911d12015edce6a08c6",
+      "exitCode": 1,
+      "expectedGroups": {
+        "FocusedRepair1": 1
+      }
+    },
+    {
+      "id": "focused19-v9",
+      "source": "dc53a6c8ff1bb68bfbc52a64667e14ce688055b0",
+      "status": "FOCUSED_FAILED",
+      "elapsedSeconds": 493.8438168749999,
+      "statePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v9/state.json",
+      "decisionSHA256": "dd38954a1f5db85b02c65c02566053e7c2dea660500ccb08c8220f34d5e7c6f9",
+      "logSHA256": "fd51fbc5487d09cd0c33e2d94ad6387b710d4d3d9eb73f041f38f60068578d5c",
+      "exitCode": 1,
+      "expectedGroups": {
+        "FocusedRepair1": 1
+      }
+    },
+    {
+      "id": "focused19-v10",
+      "source": "4cde88df07a2f3cd86cc99ad87786c79ae207390",
+      "status": "FOCUSED_FAILED",
+      "elapsedSeconds": 497.25722187499923,
+      "statePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v10/state.json",
+      "decisionSHA256": "e5c4f55ab15c4b8360380bf2523847d073a1c47622fb06fce8b0c7bf83a7a01e",
+      "logSHA256": "8845d128dae855cb98ef25d0d2b9f39d814b40acfa2ff09d7bb4ad02fb3f9ec8",
+      "exitCode": 1,
+      "expectedGroups": {
+        "FocusedRepair1": 1
+      }
+    },
+    {
+      "id": "focused19-v11",
+      "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+      "status": "FOCUSED_PASS",
+      "elapsedSeconds": 814.4282468750025,
+      "statePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v11/state.json",
+      "decisionSHA256": "7dd6fbe9469886c57813740b7b9e11fc44605e4d0524cc06879f9ec1170d438c",
+      "logSHA256": "e13b151b5b87e3215c7eca23eb2b382a942baf7899a7992d5ab63418fcab904e",
+      "exitCode": 0,
+      "expectedGroups": {
+        "FocusedRepair1": 1
+      }
+    }
+  ],
+  "originalLedger": {
+    "path": "build/primary-control/focused19-v10/ledger.json",
+    "sha256": "6f87f56ae70751274ba77a623e88a40ee8e2febd39b64f7cfa98c4eb3e2ca855"
+  },
+  "otherGrantsUnchanged": true
+}

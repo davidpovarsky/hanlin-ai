@@ -1,0 +1,92 @@
+--- /mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-draft/focused19-recovery-controller-v11.py
++++ /mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-draft/focused19-recovery-controller-v11b.py
+@@ -4,7 +4,7 @@
+ Prior ManualInput proof remains historical; fresh original25+27 is never claimed here.
+ """
+ from pathlib import Path
+-import argparse, fcntl, hashlib, importlib.util, json, math, os, shlex, signal, subprocess, sys, time, uuid
++import argparse, datetime, fcntl, hashlib, importlib.util, json, math, os, shlex, signal, subprocess, sys, time, uuid
+ 
+ ID = "focused19-v11"
+ SOURCE = "d4a0b115b106d4250ea40ad66153d5156847a07c"
+@@ -100,6 +100,53 @@
+     value = importlib.util.module_from_spec(spec)
+     spec.loader.exec_module(value)
+     return value
++
++def historical_group_exclusion(terminal, authority, root, derived, live_group, utc):
++    pgid = int(terminal["phasePID"])
++    initial = live_group(pgid)
++    if not initial:
++        return None
++    # Numeric process-group identifiers can be reused after an authenticated clear.
++    assert terminal.get("remainingOwnedProcessGroup") == []
++    finished = datetime.datetime.fromisoformat(terminal["finishedAt"])
++    assert finished.tzinfo is not None
++    finished = finished.astimezone(datetime.timezone.utc)
++    pids = {line.split()[0] for line in initial}
++    argv = ["/bin/ps", "-p", ",".join(sorted(pids, key=int)),
++            "-o", "pid=,pgid=,state=,lstart=,command="]
++    query = subprocess.run(argv, text=True, capture_output=True, timeout=10,
++                           env=dict(os.environ, TZ="UTC", LC_ALL="C"))
++    assert query.returncode == 0 or (query.returncode == 1 and not query.stdout.strip() and not query.stderr.strip()), query.stderr
++    months = {month: number for number, month in enumerate("Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec".split(), 1)}
++    markers = [str(root), str(derived)]
++    device = terminal.get("ownedSimulatorCleanup", {}).get("device")
++    if device:
++        markers.append(str(device))
++    members = []
++    for line in query.stdout.splitlines():
++        values = line.split(None, 8)
++        assert len(values) == 9, line
++        if values[0] not in pids or values[1] != str(pgid) or values[2].startswith("Z"):
++            continue
++        started = datetime.datetime(int(values[7]), months[values[4]], int(values[5]),
++            *map(int, values[6].split(":")), tzinfo=datetime.timezone.utc)
++        command = values[8]
++        related = [marker for marker in markers if marker and marker in command]
++        assert started > finished and not related, {"historicalPGID": pgid,
++            "terminal": authority, "finishedAt": finished.isoformat(),
++            "startedAtUTC": started.isoformat(), "command": command, "ownedMarkers": related}
++        members.append({"pid": int(values[0]), "pgid": pgid, "state": values[2],
++            "startedAtUTC": started.isoformat(), "command": command})
++    remaining = {int(line.split()[0]) for line in live_group(pgid)}
++    assert remaining <= {member["pid"] for member in members}, "Historical group changed during targeted identity observation"
++    if not members:
++        return None
++    return {"terminal": authority, "historicalPGID": pgid, "priorFinishedAt": terminal["finishedAt"],
++        "priorRemainingOwnedProcessGroup": [], "observedAt": utc(),
++        "disposition": "UNRELATED_PGID_REUSE_AFTER_AUTHENTICATED_CLEAR",
++        "query": {"argv": argv, "environment": {"TZ": "UTC", "LC_ALL": "C"},
++                  "exitCode": query.returncode, "stdout": query.stdout, "stderr": query.stderr},
++        "members": members, "recheckedLivePIDs": sorted(remaining)}
+ 
+ def main():
+     assert isinstance(CHILD_SHA, str) and len(CHILD_SHA) == 64, "Unsealed native child binding"
+@@ -375,6 +422,7 @@
+         return [line for line in query.stdout.splitlines() if len(v := line.split()) == 3
+                 and v[0] in pids and v[1] == str(pgid) and not v[2].startswith("Z")]
+ 
++    historical_group_exclusions = []
+     terminal_rows = d["priorTerminals"]
+     assert terminal_rows and PRIOR_RECORDS[0] in terminal_rows
+     prior_controllers = {primary.get("controllerPID"), prefix.get("controllerPID")} - {None}
+@@ -389,7 +437,9 @@
+         else:
+             assert not old.get("cleanupErrors", [])
+         if old.get("phasePID") is not None:
+-            assert not live_group(old["phasePID"]), "Prior owned native process group remains"
++            exclusion = historical_group_exclusion(old, item, root, Path(d["derivedData"]), live_group, h.utc)
++            if exclusion is not None:
++                historical_group_exclusions.append(exclusion)
+         if old.get("controllerPID") is not None:
+             prior_controllers.add(old["controllerPID"])
+     historic_pids = prior_controllers - {os.getpid()}
+@@ -541,6 +591,7 @@
+              "status": "STARTING", "expectedGroups": GROUPS, "expectedTotal": 1,
+              "producerSource": PRODUCER_SOURCE, "originalFocusedAllowanceSeconds": ORIGINAL_ALLOWANCE,
+              "priorFocusedChargeSeconds": PRIOR_CHARGE, "priorFocusRecords": PRIOR_RECORDS,
++              "historicalProcessGroupExclusions": historical_group_exclusions,
+               "originalAllowanceSeconds": ORIGINAL_ALLOWANCE, "priorContinuationGrants": PRIOR_CONTINUATION_GRANTS,
+               "continuationGrant": CONTINUATION_GRANT,
+               "totalFocusedAllowanceSeconds": TOTAL_ALLOWANCE,
