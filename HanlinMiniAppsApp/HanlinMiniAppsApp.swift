@@ -148,6 +148,10 @@ struct HanlinMiniAppsWindow: View {
             .task(id: bootstrap.phase == .ready ? incomingURL : nil) {
                 guard bootstrap.phase == .ready, let url = incomingURL else { return }
                 if let transferID = MiniAppAuthoringTransfer.reference(in: url, purpose: .install) {
+                    // Keep an existing import presentation under its owner's
+                    // control. Completing publication after it was dismissed
+                    // must not reopen an empty importer over the installed app.
+                    let hadImportPresentation = HanlinScriptingPlatform.shared.hasImportPresentation
                     do {
                         try await MiniAppAuthoringDelivery.receiveImport(transferID, platform: .shared)
                     } catch {
@@ -157,7 +161,7 @@ struct HanlinMiniAppsWindow: View {
                                 message: error.localizedDescription))
                         }
                     }
-                    if !HanlinScriptingPlatform.shared.hasImportPresentation {
+                    if !hadImportPresentation && !HanlinScriptingPlatform.shared.hasImportPresentation {
                         showsImport = true
                     }
                 } else if url.scheme?.lowercased() == "hanlinminiapps",
