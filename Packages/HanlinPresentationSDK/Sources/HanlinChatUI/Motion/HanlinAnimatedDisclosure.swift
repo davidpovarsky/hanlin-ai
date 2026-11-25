@@ -120,15 +120,19 @@ private struct ChatDisclosureAccessibilityScope<Content: View>: UIViewController
     struct Root: View {
         let content: Content
         let environment: EnvironmentValues
+        let isHidden: Bool
 
         var body: some View {
             // Forward the complete environment, including custom chat values.
+            // Virtual SwiftUI children belong to this hosting graph, so its
+            // semantic visibility must receive the same logical disclosure state.
             content.environment(\.self, environment)
+                .accessibilityHidden(true, isEnabled: isHidden)
         }
     }
 
     func makeUIViewController(context: Context) -> UIHostingController<Root> {
-        let controller = UIHostingController(rootView: Root(content: content, environment: context.environment))
+        let controller = UIHostingController(rootView: Root(content: content, environment: context.environment, isHidden: isHidden))
         controller.safeAreaRegions = []
         controller.sizingOptions = [.intrinsicContentSize]
         controller.view.backgroundColor = .clear
@@ -139,7 +143,7 @@ private struct ChatDisclosureAccessibilityScope<Content: View>: UIViewController
 
     func updateUIViewController(_ controller: UIHostingController<Root>, context: Context) {
         withTransaction(context.transaction) {
-            controller.rootView = Root(content: content, environment: context.environment)
+            controller.rootView = Root(content: content, environment: context.environment, isHidden: isHidden)
         }
         controller.view.accessibilityElementsHidden = isHidden
     }
