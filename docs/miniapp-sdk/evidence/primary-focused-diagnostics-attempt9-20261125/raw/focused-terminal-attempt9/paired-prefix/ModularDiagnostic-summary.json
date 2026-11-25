@@ -1,0 +1,3 @@
+Error: Failed to create a new result bundle reader, underlying error: Info.plist at /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt9/paired-prefix/ModularDiagnostic.xcresult/Info.plist does not exist, the result bundle might be corrupted or the provided path is not a result bundle
+Usage: xcresulttool <subcommand>
+  See 'xcresulttool --help' for more information.
