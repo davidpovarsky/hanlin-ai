@@ -1,6 +1,7 @@
-import { mkdir, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { execFileSync } from 'node:child_process';
+const versions = JSON.parse(await readFile(new URL('./dependency-lock.json', import.meta.url), 'utf8')).nativeScript;
 const root = resolve(import.meta.dirname, 'Fixtures/window-factory-source');
 const app = resolve(root, 'nativescript/app');
 await mkdir(app, {recursive: true});
@@ -68,8 +69,8 @@ await writeFile(resolve(app, 'bundle.mjs'), bundle);
 await writeFile(resolve(app, 'package.json'), JSON.stringify({
   name: 'hanlin-window-factory', version: '1.0.0', private: true, type: 'module',
   main: 'bundle.mjs', hanlinRuntime: 'hanlin-nativescript',
-  hanlinNativeScript: {runtimeVersion: '9.1.0', windowFactory: 1},
-  dependencies: {'@nativescript/core': '9.1.0'}
+  hanlinNativeScript: {runtimeVersion: versions.iosRuntimeVersion, plugins: {}, windowFactory: 1},
+  dependencies: {'@nativescript/core': versions.coreVersion}
 }, null, 2) + '\n');
 await writeFile(resolve(root, 'script.json'), JSON.stringify({
   name: 'Hanlin NativeScript Window Factory E2E', version: '1.0.0',
