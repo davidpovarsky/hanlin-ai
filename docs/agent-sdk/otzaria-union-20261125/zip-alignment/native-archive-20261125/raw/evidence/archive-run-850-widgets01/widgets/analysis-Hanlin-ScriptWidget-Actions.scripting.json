@@ -1,0 +1,7 @@
+{
+  "archive" : "Hanlin-ScriptWidget-Actions.scripting",
+  "archiveSHA256" : "160ff9251c1560d38e401a5ac16727ac4840b9501c08b297c7c37f8a6fa10910",
+  "canInstall" : true,
+  "findings" : "[]",
+  "scope" : "Real shared analyzer; not a native UI assertion"
+}

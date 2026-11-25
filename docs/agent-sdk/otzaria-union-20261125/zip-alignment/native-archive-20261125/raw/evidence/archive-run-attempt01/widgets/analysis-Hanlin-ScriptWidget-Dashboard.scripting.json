@@ -1,0 +1,7 @@
+{
+  "archive" : "Hanlin-ScriptWidget-Dashboard.scripting",
+  "archiveSHA256" : "478cd567e9731cc7342aefa9024ea498edf8d12d340cc5c558484e60a210dace",
+  "canInstall" : true,
+  "findings" : "[]",
+  "scope" : "Real shared analyzer; not a native UI assertion"
+}

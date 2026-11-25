@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="0.001843125"/>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="9.7708e-05"/>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="0.0001265"/>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="0.00010475"/>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="0.00054"/>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="0.000666334"/>
+    <testsuite name="TestResults" errors="0" tests="1" failures="0" skipped="0" time="3.033020125">
+        <testcase classname="HanlinScriptExtensionsTests.HanlinDualWidgetEnginesTests" name="installAndVerifiedLoader(name:)" time="3.030916083"/>
+    </testsuite>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="9.1625e-05"/>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="0.000100667"/>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="8.7416e-05"/>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="9.7583e-05"/>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="0.000946917"/>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="0.000328125"/>
+</testsuites>

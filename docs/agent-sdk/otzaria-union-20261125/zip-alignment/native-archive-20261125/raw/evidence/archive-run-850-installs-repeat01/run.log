@@ -1,0 +1,80 @@
+warning: 'zipfoundation': /Users/m1/builds/hanlin-zip-23040c6c-native-20261125/package-resolution-shared/checkouts/ZIPFoundation/Package@swift-5.9.swift:23:61: warning: 'v4' is deprecated: watchOS 9.0 is the oldest supported version [#DeprecatedDeclaration]
+21 |     name: "ZIPFoundation",
+22 |     platforms: [
+23 |         .macOS(.v10_13), .iOS(.v12), .tvOS(.v12), .watchOS(.v4), .visionOS(.v1)
+   |                                                             `- warning: 'v4' is deprecated: watchOS 9.0 is the oldest supported version [#DeprecatedDeclaration]
+24 |     ],
+25 |     products: [
+
+[#DeprecatedDeclaration]: <https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration>
+warning: 'opentelemetry-swift-core': /Users/m1/builds/hanlin-zip-23040c6c-native-20261125/package-resolution-shared/checkouts/opentelemetry-swift-core/Package.swift:13:15: warning: 'v4' is deprecated: watchOS 9.0 is the oldest supported version [#DeprecatedDeclaration]
+11 |     .iOS(.v12),
+12 |     .tvOS(.v12),
+13 |     .watchOS(.v4),
+   |               `- warning: 'v4' is deprecated: watchOS 9.0 is the oldest supported version [#DeprecatedDeclaration]
+14 |     .visionOS(.v1),
+15 |   ],
+
+[#DeprecatedDeclaration]: <https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration>
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite "Pass 3 installed widget programs, actions and transactions" started.
+◇ Test installAndVerifiedLoader(name:) started.
+◇ Test case passing 1 argument name → "Hanlin-Expo-Widget-Counter.hanlinExpo" to installAndVerifiedLoader(name:) started.
+◇ Test case passing 1 argument name → "Hanlin-Expo-Widget-Visuals.hanlinExpo" to installAndVerifiedLoader(name:) started.
+◇ Test case passing 1 argument name → "Hanlin-ScriptWidget-Dashboard.scripting" to installAndVerifiedLoader(name:) started.
+◇ Test case passing 1 argument name → "Hanlin-ScriptWidget-Actions.scripting" to installAndVerifiedLoader(name:) started.
+◇ Test case passing 1 argument name → "Hanlin-Widget-Legacy-Regression.scripting" to installAndVerifiedLoader(name:) started.
+build tag : vstack
+build tag : hstack
+build tag : hstack
+build tag : text
+build tag : text
+build tag : hstack
+build tag : hstack
+build tag : toggle
+build tag : toggle
+build tag : button
+build tag : button
+build tag : text
+build tag : text
+build tag : text
+build tag : text
+build tag : text
+build tag : text
+build tag : button
+build tag : button
+build tag : button
+build tag : button
+build tag : text
+build tag : text
+build tag : text
+build tag : text
+build tag : text
+build tag : text
+build tag : vstack
+build tag : text
+build tag : text
+build tag : hgrid
+build tag : hgrid
+build tag : vgrid
+build tag : vgrid
+build tag : image
+build tag : image
+build tag : date
+build tag : date
+build tag : chart
+build tag : chart
+build tag : badge
+build tag : badge
+build tag : chip
+build tag : chip
+build tag : stat
+build tag : stat
+build tag : ring
+build tag : ring
+Charts: Custom UnitPoint values are not supported in AxisValueLabel's anchor property. Please use leading, topLeading, center, etc.
+✔ Test installAndVerifiedLoader(name:) with 5 test cases passed after 3.030 seconds.
+✔ Suite "Pass 3 installed widget programs, actions and transactions" passed after 3.032 seconds.
+✔ Test run with 1 test in 1 suite passed after 3.033 seconds.

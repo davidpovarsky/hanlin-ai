@@ -1,0 +1,48 @@
+{
+  "archive" : "Hanlin-Expo-Widget-Counter.hanlinExpo",
+  "archiveSHA256" : "64ddee41b1551385a86ec868c7d3ee6bef0202380d4d21b9f6b250ce9fd778a0",
+  "compiledJavaScriptSHA256" : "649920e9b12204f79dbda558e2d56632679948114b7397b9f9f69e843c245c7d",
+  "compilerSHA256" : "5073907ce8e9ceea2405274312324a7ac6e8ca5e21908b181bf40b935853d4c8",
+  "declaredFamilies" : [
+    "systemSmall",
+    "systemMedium",
+    "systemLarge",
+    "systemExtraLarge"
+  ],
+  "entityID" : "widget-v2:aW5zdGFsbGVkLndpZGdldA==.cGFja2FnZS53aWRnZXQ=.MQ==.d2lkZ2V0.ZXhwbw==.ZGVmYXVsdA==",
+  "familyPrepared" : "systemMedium",
+  "installedWidget" : {
+    "displayName" : "Expo Counter Widget · Default",
+    "engine" : "expo",
+    "family" : "systemMedium",
+    "identity" : {
+      "entrypointID" : "widget",
+      "generation" : 1,
+      "installedPackageID" : "installed.widget",
+      "packageID" : "package.widget",
+      "variantID" : "default"
+    },
+    "payload" : {
+      "expoDescriptor" : {
+        "layout" : "",
+        "layoutRef" : "Packages\/installed.widget\/generations\/1\/artifacts\/206b2df0a16ed0497cef665c59bf9a1ffab3a45bcc3e8015c28af1ee5ecf5f96",
+        "layoutSHA256" : "206b2df0a16ed0497cef665c59bf9a1ffab3a45bcc3e8015c28af1ee5ecf5f96"
+      },
+      "kind" : "expo"
+    },
+    "relevance" : 0,
+    "root" : {
+      "children" : [
+
+      ],
+      "kind" : "text",
+      "properties" : {
+
+      }
+    },
+    "validUntil" : 63113904000
+  },
+  "scope" : "Actual shared atomic installation and preparation; not SpringBoard placement",
+  "sourceSHA256" : "1ab32165c7ae1d0c2d0a3d45a673e323c22a27bc09fe8bb4c0dccf237b4ff824",
+  "upstreamCommit" : "917a61b581baeb852aa4fe331da2c1395d824351"
+}

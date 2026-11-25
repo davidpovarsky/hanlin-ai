@@ -1,0 +1,48 @@
+{
+  "archive" : "Hanlin-Widget-Legacy-Regression.scripting",
+  "archiveSHA256" : "f69e85615e9fcdfc06870f11fadd5f7628a91210b699535ef4239f5039a37184",
+  "entityID" : "widget-v2:aW5zdGFsbGVkLndpZGdldA==.cGFja2FnZS53aWRnZXQ=.MQ==.d2lkZ2V0.bGVnYWN5.ZGVmYXVsdA==",
+  "familyPrepared" : "systemMedium",
+  "installedWidget" : {
+    "displayName" : "Widget Legacy Regression · Default",
+    "engine" : "legacy",
+    "family" : "systemMedium",
+    "identity" : {
+      "entrypointID" : "widget",
+      "generation" : 1,
+      "installedPackageID" : "installed.widget",
+      "packageID" : "package.widget",
+      "variantID" : "default"
+    },
+    "payload" : {
+      "kind" : "legacy",
+      "legacyNode" : {
+        "children" : [
+
+        ],
+        "kind" : "text",
+        "properties" : {
+          "text" : {
+            "type" : "string",
+            "value" : "Legacy HanlinScriptUINode Tree"
+          }
+        }
+      }
+    },
+    "relevance" : 0,
+    "root" : {
+      "children" : [
+
+      ],
+      "kind" : "text",
+      "properties" : {
+        "text" : {
+          "type" : "string",
+          "value" : "Legacy HanlinScriptUINode Tree"
+        }
+      }
+    },
+    "validUntil" : 63113904000
+  },
+  "scope" : "Actual shared atomic installation and preparation; not SpringBoard placement"
+}

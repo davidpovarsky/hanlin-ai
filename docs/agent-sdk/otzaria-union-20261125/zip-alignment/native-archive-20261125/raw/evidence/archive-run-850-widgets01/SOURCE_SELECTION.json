@@ -1,0 +1,214 @@
+[
+  {
+    "arguments": null,
+    "display": "Production exporter round trips through production archive import",
+    "file": "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinPackageCenterTests.swift",
+    "method": "exporterImporterContract",
+    "module": "HanlinScriptCompilerTests",
+    "parameters": [],
+    "signature": "exporterImporterContract()",
+    "source_sha256": "2ff8005ca5691a2f198baabd899e9b93247c8dd46e395f74792931b5e408c9ff",
+    "suite": "HanlinPackageCenterTests"
+  },
+  {
+    "arguments": null,
+    "display": "Stages, validates, extracts, and decodes without executing source",
+    "file": "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinPackageCenterTests.swift",
+    "method": "validPackage",
+    "module": "HanlinScriptCompilerTests",
+    "parameters": [],
+    "signature": "validPackage()",
+    "source_sha256": "2ff8005ca5691a2f198baabd899e9b93247c8dd46e395f74792931b5e408c9ff",
+    "suite": "HanlinPackageCenterTests"
+  },
+  {
+    "arguments": null,
+    "display": "Imports prepared NativeScript packages containing ESM bundles",
+    "file": "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinPackageCenterTests.swift",
+    "method": "nativeScriptPackageWithMJS",
+    "module": "HanlinScriptCompilerTests",
+    "parameters": [],
+    "signature": "nativeScriptPackageWithMJS()",
+    "source_sha256": "2ff8005ca5691a2f198baabd899e9b93247c8dd46e395f74792931b5e408c9ff",
+    "suite": "HanlinPackageCenterTests"
+  },
+  {
+    "arguments": null,
+    "display": "Imports archives from File Provider paths containing spaces",
+    "file": "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinPackageCenterTests.swift",
+    "method": "fileProviderPathWithSpaces",
+    "module": "HanlinScriptCompilerTests",
+    "parameters": [],
+    "signature": "fileProviderPathWithSpaces()",
+    "source_sha256": "2ff8005ca5691a2f198baabd899e9b93247c8dd46e395f74792931b5e408c9ff",
+    "suite": "HanlinPackageCenterTests"
+  },
+  {
+    "arguments": null,
+    "display": "Imports archives whose source paths contain Unicode and spaces",
+    "file": "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinPackageCenterTests.swift",
+    "method": "unicodeSourcePath",
+    "module": "HanlinScriptCompilerTests",
+    "parameters": [],
+    "signature": "unicodeSourcePath()",
+    "source_sha256": "2ff8005ca5691a2f198baabd899e9b93247c8dd46e395f74792931b5e408c9ff",
+    "suite": "HanlinPackageCenterTests"
+  },
+  {
+    "arguments": null,
+    "display": "Malformed manifests fail before a staged package can escape",
+    "file": "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinPackageCenterTests.swift",
+    "method": "malformedManifest",
+    "module": "HanlinScriptCompilerTests",
+    "parameters": [],
+    "signature": "malformedManifest()",
+    "source_sha256": "2ff8005ca5691a2f198baabd899e9b93247c8dd46e395f74792931b5e408c9ff",
+    "suite": "HanlinPackageCenterTests"
+  },
+  {
+    "arguments": null,
+    "display": "Accepts one wrapped Scripting manifest and ignores macOS metadata",
+    "file": "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinArchivePolicyTests.swift",
+    "method": "wrappedPackage",
+    "module": "HanlinScriptCompilerTests",
+    "parameters": [],
+    "signature": "wrappedPackage()",
+    "source_sha256": "ec941d33c0a715be42ad9b21c09791a5c8ced721c99c8d2fbe1c667332a91816",
+    "suite": "HanlinArchivePolicyTests"
+  },
+  {
+    "arguments": null,
+    "display": "Accepts prepared NativeScript ESM bundle artifacts",
+    "file": "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinArchivePolicyTests.swift",
+    "method": "nativeScriptMJSBundle",
+    "module": "HanlinScriptCompilerTests",
+    "parameters": [],
+    "signature": "nativeScriptMJSBundle()",
+    "source_sha256": "ec941d33c0a715be42ad9b21c09791a5c8ced721c99c8d2fbe1c667332a91816",
+    "suite": "HanlinArchivePolicyTests"
+  },
+  {
+    "arguments": [
+      "../script.json",
+      "/script.json",
+      "C:/script.json",
+      "folder/../../script.json"
+    ],
+    "display": "rejectsEscapingPaths(path:)",
+    "file": "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinArchivePolicyTests.swift",
+    "method": "rejectsEscapingPaths",
+    "module": "HanlinScriptCompilerTests",
+    "parameters": [
+      "path"
+    ],
+    "signature": "rejectsEscapingPaths(path:)",
+    "source_sha256": "ec941d33c0a715be42ad9b21c09791a5c8ced721c99c8d2fbe1c667332a91816",
+    "suite": "HanlinArchivePolicyTests"
+  },
+  {
+    "arguments": null,
+    "display": "Rejects links, collisions, configured ratio excess and hidden encrypted entries",
+    "file": "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinArchivePolicyTests.swift",
+    "method": "hostileEntries",
+    "module": "HanlinScriptCompilerTests",
+    "parameters": [],
+    "signature": "hostileEntries()",
+    "source_sha256": "ec941d33c0a715be42ad9b21c09791a5c8ced721c99c8d2fbe1c667332a91816",
+    "suite": "HanlinArchivePolicyTests"
+  },
+  {
+    "arguments": null,
+    "display": "Rejects ambiguous manifests and case collisions",
+    "file": "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinArchivePolicyTests.swift",
+    "method": "ambiguousManifest",
+    "module": "HanlinScriptCompilerTests",
+    "parameters": [],
+    "signature": "ambiguousManifest()",
+    "source_sha256": "ec941d33c0a715be42ad9b21c09791a5c8ced721c99c8d2fbe1c667332a91816",
+    "suite": "HanlinArchivePolicyTests"
+  },
+  {
+    "arguments": null,
+    "display": "Autonomous Skills accept large resources while explicit budgets remain enforceable",
+    "file": "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinArchivePolicyTests.swift",
+    "method": "autonomousSkillResources",
+    "module": "HanlinScriptCompilerTests",
+    "parameters": [],
+    "signature": "autonomousSkillResources()",
+    "source_sha256": "ec941d33c0a715be42ad9b21c09791a5c8ced721c99c8d2fbe1c667332a91816",
+    "suite": "HanlinArchivePolicyTests"
+  },
+  {
+    "arguments": null,
+    "display": "Autonomous Skills still reject invalid sizes, overflow, escaping paths and collisions",
+    "file": "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinArchivePolicyTests.swift",
+    "method": "autonomousSkillIntegrity",
+    "module": "HanlinScriptCompilerTests",
+    "parameters": [],
+    "signature": "autonomousSkillIntegrity()",
+    "source_sha256": "ec941d33c0a715be42ad9b21c09791a5c8ced721c99c8d2fbe1c667332a91816",
+    "suite": "HanlinArchivePolicyTests"
+  },
+  {
+    "arguments": null,
+    "display": "Default imports accept original engine resources beyond former host budgets",
+    "file": "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinArchivePolicyTests.swift",
+    "method": "ordinaryPackageCapacity",
+    "module": "HanlinScriptCompilerTests",
+    "parameters": [],
+    "signature": "ordinaryPackageCapacity()",
+    "source_sha256": "ec941d33c0a715be42ad9b21c09791a5c8ced721c99c8d2fbe1c667332a91816",
+    "suite": "HanlinArchivePolicyTests"
+  },
+  {
+    "arguments": null,
+    "display": "Root and single-wrapper manifests retain source metadata and ordinary resources",
+    "file": "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinArchivePolicyTests.swift",
+    "method": "retainedSourcesAndAssets",
+    "module": "HanlinScriptCompilerTests",
+    "parameters": [],
+    "signature": "retainedSourcesAndAssets()",
+    "source_sha256": "ec941d33c0a715be42ad9b21c09791a5c8ced721c99c8d2fbe1c667332a91816",
+    "suite": "HanlinArchivePolicyTests"
+  },
+  {
+    "arguments": [
+      "Hanlin-Expo-Widget-Counter.hanlinExpo",
+      "Hanlin-Expo-Widget-Visuals.hanlinExpo",
+      "Hanlin-ScriptWidget-Dashboard.scripting",
+      "Hanlin-ScriptWidget-Actions.scripting",
+      "Hanlin-Widget-Legacy-Regression.scripting",
+      "Hanlin-Mixed-Native-Widget.hanlinExpo",
+      "Hanlin-Widget-Invalid-Cases.hanlinExpo"
+    ],
+    "display": "realArchiveImport(name:)",
+    "file": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift",
+    "method": "realArchiveImport",
+    "module": "HanlinScriptExtensionsTests",
+    "parameters": [
+      "name"
+    ],
+    "signature": "realArchiveImport(name:)",
+    "source_sha256": "c23ceb31142d4d86b80d805db32515ea2ec5f97902cb68ec6241cb988b299f27",
+    "suite": "HanlinDualWidgetEnginesTests"
+  },
+  {
+    "arguments": [
+      "Hanlin-Expo-Widget-Counter.hanlinExpo",
+      "Hanlin-Expo-Widget-Visuals.hanlinExpo",
+      "Hanlin-ScriptWidget-Dashboard.scripting",
+      "Hanlin-ScriptWidget-Actions.scripting",
+      "Hanlin-Widget-Legacy-Regression.scripting"
+    ],
+    "display": "installAndVerifiedLoader(name:)",
+    "file": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift",
+    "method": "installAndVerifiedLoader",
+    "module": "HanlinScriptExtensionsTests",
+    "parameters": [
+      "name"
+    ],
+    "signature": "installAndVerifiedLoader(name:)",
+    "source_sha256": "c23ceb31142d4d86b80d805db32515ea2ec5f97902cb68ec6241cb988b299f27",
+    "suite": "HanlinDualWidgetEnginesTests"
+  }
+]

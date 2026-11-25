@@ -1,0 +1,29 @@
+{
+  "status": "PASS",
+  "scope": "Exact committed source transfer only; no compilation or test invocation",
+  "source": "850de66432fc872d349469a2a63aaa564c61f0a8",
+  "started_at": "2026-11-25T07:21:11.053452+00:00",
+  "free_before": 5963022336,
+  "files_verified": 1305,
+  "changed_paths": [
+    "AI_HLY/Downstream/ProductSplitIntegration/HanlinExternalMiniAppSession.swift",
+    "Fixtures/Widgets/Hanlin-Expo-Widget-Counter.hanlinExpo",
+    "Fixtures/Widgets/Hanlin-Expo-Widget-Visuals.hanlinExpo",
+    "Fixtures/Widgets/Hanlin-Mixed-Native-Widget.hanlinExpo",
+    "Fixtures/Widgets/Hanlin-ScriptWidget-Actions.scripting",
+    "Fixtures/Widgets/Hanlin-ScriptWidget-Dashboard.scripting",
+    "Fixtures/Widgets/Hanlin-Widget-Invalid-Cases.hanlinExpo",
+    "Fixtures/Widgets/Hanlin-Widget-Legacy-Regression.scripting",
+    "Fixtures/Widgets/SHA256.json",
+    "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift",
+    "Scripts/Expo/dependency-lock.json",
+    "Scripts/Widgets/Tests/compiler-and-actions.test.mjs",
+    "Scripts/Widgets/build-sample-packages.mjs",
+    "Scripts/Widgets/deterministic-zip.mjs",
+    "Scripts/Widgets/samples.mjs"
+  ],
+  "preimages_retained": 10,
+  "source_manifest_sha256": "0941b55c21421212c6e5c3da82af6cdb7b8befe231a93c64ef51e7715a47e204",
+  "free_after": 5957603328,
+  "finished_at": "2026-11-25T07:21:11.405242+00:00"
+}

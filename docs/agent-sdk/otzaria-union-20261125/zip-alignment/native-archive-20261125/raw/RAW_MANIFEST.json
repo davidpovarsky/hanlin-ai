@@ -1,0 +1,697 @@
+{
+  "schema": 1,
+  "captured_at": "2026-11-25T07:54:34.533209+00:00",
+  "scope": "Exact complete evidence tree and original scoped controllers, no build caches or binaries",
+  "files": [
+    {
+      "path": "archive_installation_repeat_850.py",
+      "bytes": 20674,
+      "sha256": "e99324afe18427ef344a953530da8cc5494c31e768f2ddbd97eb0a2355e29395",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/archive_installation_repeat_850.py"
+    },
+    {
+      "path": "archive_native_build_850.py",
+      "bytes": 20379,
+      "sha256": "5bd6ffbadfd220624ce4aba76b9fd6a1aa1158825590b1139eabbfa54b3423b5",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/archive_native_build_850.py"
+    },
+    {
+      "path": "archive_native_gate.py",
+      "bytes": 20288,
+      "sha256": "f0b07363c2bfff5a22900655e4ba9ed938748d9c9d111258133894d464b81644",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/archive_native_gate.py"
+    },
+    {
+      "path": "archive_native_gate_v2.py",
+      "bytes": 20294,
+      "sha256": "40045bd13f27871424ba62cce9c873aed01d78ea1ff1a35c5c35a3120028f5c1",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/archive_native_gate_v2.py"
+    },
+    {
+      "path": "archive_widget_runtime_850.py",
+      "bytes": 20686,
+      "sha256": "85d58bbce76e1047ec59293c985e0ef63d9443473964d95e63dae6f98d830735",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/archive_widget_runtime_850.py"
+    },
+    {
+      "path": "evidence/SOURCE_1abcc474_VERIFIED.json",
+      "bytes": 319,
+      "sha256": "5f2dc0c981504ae9f1446cea1d319767f1236a78afcaf8efb978154e17950bb6",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/SOURCE_1abcc474_VERIFIED.json"
+    },
+    {
+      "path": "evidence/SOURCE_PREPARATION.json",
+      "bytes": 520,
+      "sha256": "71cd3a4a599ba1232f96f8cf84e0a4c2295f41304bb46b06bab823cde7c0c567",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/SOURCE_PREPARATION.json"
+    },
+    {
+      "path": "evidence/archive-build-850-diagnostic01/RESULT.json",
+      "bytes": 402478,
+      "sha256": "277b3569264e8d619a2dbc69343fa9cade87217f432c8f8752fe85947fc145e0",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-build-850-diagnostic01/RESULT.json"
+    },
+    {
+      "path": "evidence/archive-build-850-diagnostic01/SOURCE_MANIFEST.json",
+      "bytes": 388209,
+      "sha256": "0941b55c21421212c6e5c3da82af6cdb7b8befe231a93c64ef51e7715a47e204",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-build-850-diagnostic01/SOURCE_MANIFEST.json"
+    },
+    {
+      "path": "evidence/archive-build-850-diagnostic01/SOURCE_SELECTION.json",
+      "bytes": 9082,
+      "sha256": "8bd632182c6f147aeaebe8f33d66cc4453d8b09b3670e1ea984292ae066d2c6b",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-build-850-diagnostic01/SOURCE_SELECTION.json"
+    },
+    {
+      "path": "evidence/archive-build-850-diagnostic01/build.log",
+      "bytes": 2793,
+      "sha256": "155d4bd004a188d5b17494401624375f8ad905da146f86d442bd6296bd8926de",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-build-850-diagnostic01/build.log"
+    },
+    {
+      "path": "evidence/archive-build-attempt03/RESULT.json",
+      "bytes": 401343,
+      "sha256": "1946f2786d567154d4988e94508caf488590a8aa37017be50302f41a14eeabf5",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-build-attempt03/RESULT.json"
+    },
+    {
+      "path": "evidence/archive-build-attempt03/SOURCE_MANIFEST.json",
+      "bytes": 386870,
+      "sha256": "95fb2fa15b6df5515b062d854e328de6bd4872eba6736d221bd464278c9f4a3e",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-build-attempt03/SOURCE_MANIFEST.json"
+    },
+    {
+      "path": "evidence/archive-build-attempt03/SOURCE_SELECTION.json",
+      "bytes": 9082,
+      "sha256": "9dd7b9717acfb45bb92037b079086ad6947ef233e121eed19745234d387597ce",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-build-attempt03/SOURCE_SELECTION.json"
+    },
+    {
+      "path": "evidence/archive-build-attempt03/build.log",
+      "bytes": 27142,
+      "sha256": "c128cf36341488befe3f3d831f8f39e832e4597db5008447d6ea6540f68bb2f3",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-build-attempt03/build.log"
+    },
+    {
+      "path": "evidence/archive-preparation-attempt02.json",
+      "bytes": 602,
+      "sha256": "fbdd38f49b481c9ef4c73d47f28693751c2dc8969b3bc63a793ad2fdeab12def",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-preparation-attempt02.json"
+    },
+    {
+      "path": "evidence/archive-run-850-installs-repeat01/RESULT.json",
+      "bytes": 401434,
+      "sha256": "36e6691fc1de6ee193150538612a024033a1b66d0a3ace98749b484bf81b3d0c",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-run-850-installs-repeat01/RESULT.json"
+    },
+    {
+      "path": "evidence/archive-run-850-installs-repeat01/SOURCE_MANIFEST.json",
+      "bytes": 388209,
+      "sha256": "0941b55c21421212c6e5c3da82af6cdb7b8befe231a93c64ef51e7715a47e204",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-run-850-installs-repeat01/SOURCE_MANIFEST.json"
+    },
+    {
+      "path": "evidence/archive-run-850-installs-repeat01/SOURCE_SELECTION.json",
+      "bytes": 9082,
+      "sha256": "8bd632182c6f147aeaebe8f33d66cc4453d8b09b3670e1ea984292ae066d2c6b",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-run-850-installs-repeat01/SOURCE_SELECTION.json"
+    },
+    {
+      "path": "evidence/archive-run-850-installs-repeat01/archive-swift-testing.xml",
+      "bytes": 1530,
+      "sha256": "8de0f99b988c7f74cd50459a92aadd1047ef7f06459153784ee06b95eb7047a3",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-run-850-installs-repeat01/archive-swift-testing.xml"
+    },
+    {
+      "path": "evidence/archive-run-850-installs-repeat01/run.log",
+      "bytes": 3410,
+      "sha256": "3847e5697477f9623c80123c83ba3e5211d14fd46664b51cc769eae467e0d868",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-run-850-installs-repeat01/run.log"
+    },
+    {
+      "path": "evidence/archive-run-850-installs-repeat01/widgets/installed-Hanlin-Expo-Widget-Counter.hanlinExpo.json",
+      "bytes": 1675,
+      "sha256": "2419f7980e8a4fb8c98da54fb344fa81d865a5bca5abd0dec3b8f4b2db8749f2",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-run-850-installs-repeat01/widgets/installed-Hanlin-Expo-Widget-Counter.hanlinExpo.json"
+    },
+    {
+      "path": "evidence/archive-run-850-installs-repeat01/widgets/installed-Hanlin-Expo-Widget-Visuals.hanlinExpo.json",
+      "bytes": 1675,
+      "sha256": "ac058427b86c49f422d08de2d24de464c99a57873557d0a65d8951cb98a1cd43",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-run-850-installs-repeat01/widgets/installed-Hanlin-Expo-Widget-Visuals.hanlinExpo.json"
+    },
+    {
+      "path": "evidence/archive-run-850-installs-repeat01/widgets/installed-Hanlin-ScriptWidget-Actions.scripting-native.png",
+      "bytes": 7759,
+      "sha256": "7923f802e008442d4074755b612adff676fe7320584b848e548b4f237b79796f",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-run-850-installs-repeat01/widgets/installed-Hanlin-ScriptWidget-Actions.scripting-native.png"
+    },
+    {
+      "path": "evidence/archive-run-850-installs-repeat01/widgets/installed-Hanlin-ScriptWidget-Actions.scripting.json",
+      "bytes": 1702,
+      "sha256": "ca32dd84e63e6b2a11357770edfd4aa0fc1499cdbbaf40bd37a24b16fc0caaa5",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-run-850-installs-repeat01/widgets/installed-Hanlin-ScriptWidget-Actions.scripting.json"
+    },
+    {
+      "path": "evidence/archive-run-850-installs-repeat01/widgets/installed-Hanlin-ScriptWidget-Dashboard.scripting-native.png",
+      "bytes": 13175,
+      "sha256": "a2f9f3fcd28b20b5e1c45dedd266678937d9535c4efedf2a39b5f6f51994dbba",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-run-850-installs-repeat01/widgets/installed-Hanlin-ScriptWidget-Dashboard.scripting-native.png"
+    },
+    {
+      "path": "evidence/archive-run-850-installs-repeat01/widgets/installed-Hanlin-ScriptWidget-Dashboard.scripting.json",
+      "bytes": 1706,
+      "sha256": "cdc3e9f1451c05808631430ba0b6eca1a33f0a0b5b9ab04a74ca4004cd1ba53a",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-run-850-installs-repeat01/widgets/installed-Hanlin-ScriptWidget-Dashboard.scripting.json"
+    },
+    {
+      "path": "evidence/archive-run-850-installs-repeat01/widgets/installed-Hanlin-Widget-Legacy-Regression.scripting-native.png",
+      "bytes": 4418,
+      "sha256": "d82ad28f4ed094721d43d1419a25da94054c1c10a8eb5ffa8c1ae6add06f2259",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-run-850-installs-repeat01/widgets/installed-Hanlin-Widget-Legacy-Regression.scripting-native.png"
+    },
+    {
+      "path": "evidence/archive-run-850-installs-repeat01/widgets/installed-Hanlin-Widget-Legacy-Regression.scripting.json",
+      "bytes": 1297,
+      "sha256": "abbde934fe26245274b9e0877e35234c4ff6db538e66f241ae36d897d84ca643",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-run-850-installs-repeat01/widgets/installed-Hanlin-Widget-Legacy-Regression.scripting.json"
+    },
+    {
+      "path": "evidence/archive-run-850-widgets01/RESULT.json",
+      "bytes": 404322,
+      "sha256": "d677ba20725eba5f2a44dd61be7986b257382aad48f1e89b5f085f68dcf8e57c",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-run-850-widgets01/RESULT.json"
+    },
+    {
+      "path": "evidence/archive-run-850-widgets01/SOURCE_MANIFEST.json",
+      "bytes": 388209,
+      "sha256": "0941b55c21421212c6e5c3da82af6cdb7b8befe231a93c64ef51e7715a47e204",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-run-850-widgets01/SOURCE_MANIFEST.json"
+    },
+    {
+      "path": "evidence/archive-run-850-widgets01/SOURCE_SELECTION.json",
+      "bytes": 9082,
+      "sha256": "8bd632182c6f147aeaebe8f33d66cc4453d8b09b3670e1ea984292ae066d2c6b",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-run-850-widgets01/SOURCE_SELECTION.json"
+    },
+    {
+      "path": "evidence/archive-run-850-widgets01/archive-swift-testing.xml",
+      "bytes": 1670,
+      "sha256": "cafca7a2c37f3942fad72a4dd8fed2ebba2983c463fad3d13c536659ec849f68",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-run-850-widgets01/archive-swift-testing.xml"
+    },
+    {
+      "path": "evidence/archive-run-850-widgets01/run.log",
+      "bytes": 4374,
+      "sha256": "c49d3aaa7b8c507d444bb1bb9b916b395c3f419d02d704f87063af947866d9f3",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-run-850-widgets01/run.log"
+    },
+    {
+      "path": "evidence/archive-run-850-widgets01/widgets/analysis-Hanlin-Expo-Widget-Counter.hanlinExpo.json",
+      "bytes": 1620,
+      "sha256": "5a3f1050c506fb2b017a8ec46a91ab9be77cc2ce01fef2411af6cb81a2ef21c1",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-run-850-widgets01/widgets/analysis-Hanlin-Expo-Widget-Counter.hanlinExpo.json"
+    },
+    {
+      "path": "evidence/archive-run-850-widgets01/widgets/analysis-Hanlin-Expo-Widget-Visuals.hanlinExpo.json",
+      "bytes": 1620,
+      "sha256": "e8a2dccc519edd173514f293db6f013e87a3dc745f2b9462eb83914684205980",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-run-850-widgets01/widgets/analysis-Hanlin-Expo-Widget-Visuals.hanlinExpo.json"
+    },
+    {
+      "path": "evidence/archive-run-850-widgets01/widgets/analysis-Hanlin-Mixed-Native-Widget.hanlinExpo.json",
+      "bytes": 1935,
+      "sha256": "cffd78c0acf9e5faef8a0a5b81f65418f98f1fee99ad43944333db136cddec0c",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-run-850-widgets01/widgets/analysis-Hanlin-Mixed-Native-Widget.hanlinExpo.json"
+    },
+    {
+      "path": "evidence/archive-run-850-widgets01/widgets/analysis-Hanlin-ScriptWidget-Actions.scripting.json",
+      "bytes": 252,
+      "sha256": "74dc1f4b6b48d05f0ed3c4357edd70d11c3ef6780da28044e26e4c889bfdca05",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-run-850-widgets01/widgets/analysis-Hanlin-ScriptWidget-Actions.scripting.json"
+    },
+    {
+      "path": "evidence/archive-run-850-widgets01/widgets/analysis-Hanlin-ScriptWidget-Dashboard.scripting.json",
+      "bytes": 254,
+      "sha256": "f52b1482b2159b912c13e8d2f0a83928428af4c33581b9d9ef73704f2021fbf5",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-run-850-widgets01/widgets/analysis-Hanlin-ScriptWidget-Dashboard.scripting.json"
+    },
+    {
+      "path": "evidence/archive-run-850-widgets01/widgets/analysis-Hanlin-Widget-Invalid-Cases.hanlinExpo.json",
+      "bytes": 1996,
+      "sha256": "78a15588c6d79064a094e7a1309095f6f89d14c582cc66b25a569ebd13fc4800",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-run-850-widgets01/widgets/analysis-Hanlin-Widget-Invalid-Cases.hanlinExpo.json"
+    },
+    {
+      "path": "evidence/archive-run-850-widgets01/widgets/analysis-Hanlin-Widget-Legacy-Regression.scripting.json",
+      "bytes": 256,
+      "sha256": "bb9858d1557a05d5c188338ef940b5cc0aac74f4744fea9ec3dd03325c944b18",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-run-850-widgets01/widgets/analysis-Hanlin-Widget-Legacy-Regression.scripting.json"
+    },
+    {
+      "path": "evidence/archive-run-850-widgets01/widgets/installed-Hanlin-Expo-Widget-Counter.hanlinExpo.json",
+      "bytes": 1675,
+      "sha256": "2419f7980e8a4fb8c98da54fb344fa81d865a5bca5abd0dec3b8f4b2db8749f2",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-run-850-widgets01/widgets/installed-Hanlin-Expo-Widget-Counter.hanlinExpo.json"
+    },
+    {
+      "path": "evidence/archive-run-850-widgets01/widgets/installed-Hanlin-Expo-Widget-Visuals.hanlinExpo.json",
+      "bytes": 1675,
+      "sha256": "ac058427b86c49f422d08de2d24de464c99a57873557d0a65d8951cb98a1cd43",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-run-850-widgets01/widgets/installed-Hanlin-Expo-Widget-Visuals.hanlinExpo.json"
+    },
+    {
+      "path": "evidence/archive-run-850-widgets01/widgets/installed-Hanlin-ScriptWidget-Actions.scripting-native.png",
+      "bytes": 7758,
+      "sha256": "c87019aa4d604183b860566c6ba335a0fc7f5db3d7c64a611614fe5409384960",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-run-850-widgets01/widgets/installed-Hanlin-ScriptWidget-Actions.scripting-native.png"
+    },
+    {
+      "path": "evidence/archive-run-850-widgets01/widgets/installed-Hanlin-ScriptWidget-Actions.scripting.json",
+      "bytes": 1702,
+      "sha256": "ca32dd84e63e6b2a11357770edfd4aa0fc1499cdbbaf40bd37a24b16fc0caaa5",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-run-850-widgets01/widgets/installed-Hanlin-ScriptWidget-Actions.scripting.json"
+    },
+    {
+      "path": "evidence/archive-run-850-widgets01/widgets/installed-Hanlin-ScriptWidget-Dashboard.scripting-native.png",
+      "bytes": 13173,
+      "sha256": "4da41245f84f82cbac78a6e6c2b230e9777f76edfa2303ecdc91c275d3e8c6a7",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-run-850-widgets01/widgets/installed-Hanlin-ScriptWidget-Dashboard.scripting-native.png"
+    },
+    {
+      "path": "evidence/archive-run-850-widgets01/widgets/installed-Hanlin-ScriptWidget-Dashboard.scripting.json",
+      "bytes": 1706,
+      "sha256": "cdc3e9f1451c05808631430ba0b6eca1a33f0a0b5b9ab04a74ca4004cd1ba53a",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-run-850-widgets01/widgets/installed-Hanlin-ScriptWidget-Dashboard.scripting.json"
+    },
+    {
+      "path": "evidence/archive-run-850-widgets01/widgets/installed-Hanlin-Widget-Legacy-Regression.scripting-native.png",
+      "bytes": 4418,
+      "sha256": "d82ad28f4ed094721d43d1419a25da94054c1c10a8eb5ffa8c1ae6add06f2259",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-run-850-widgets01/widgets/installed-Hanlin-Widget-Legacy-Regression.scripting-native.png"
+    },
+    {
+      "path": "evidence/archive-run-850-widgets01/widgets/installed-Hanlin-Widget-Legacy-Regression.scripting.json",
+      "bytes": 1297,
+      "sha256": "abbde934fe26245274b9e0877e35234c4ff6db538e66f241ae36d897d84ca643",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-run-850-widgets01/widgets/installed-Hanlin-Widget-Legacy-Regression.scripting.json"
+    },
+    {
+      "path": "evidence/archive-run-attempt01/RESULT.json",
+      "bytes": 397760,
+      "sha256": "ed766a3ba49d12e3115f52a1e230df9b824e0f5af7e64360ff2cc1edab1a8fcd",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-run-attempt01/RESULT.json"
+    },
+    {
+      "path": "evidence/archive-run-attempt01/SOURCE_MANIFEST.json",
+      "bytes": 386870,
+      "sha256": "95fb2fa15b6df5515b062d854e328de6bd4872eba6736d221bd464278c9f4a3e",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-run-attempt01/SOURCE_MANIFEST.json"
+    },
+    {
+      "path": "evidence/archive-run-attempt01/SOURCE_SELECTION.json",
+      "bytes": 9082,
+      "sha256": "9dd7b9717acfb45bb92037b079086ad6947ef233e121eed19745234d387597ce",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-run-attempt01/SOURCE_SELECTION.json"
+    },
+    {
+      "path": "evidence/archive-run-attempt01/archive-swift-testing.xml",
+      "bytes": 11398,
+      "sha256": "155ede7fc33ba01928e2d85e698a601cf4f1c6a5078ce9f2cfd228338944b4b0",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-run-attempt01/archive-swift-testing.xml"
+    },
+    {
+      "path": "evidence/archive-run-attempt01/failure.txt",
+      "bytes": 389,
+      "sha256": "8847ed0d25c492a4a128a8591c41f272eb45b8fdd1ad05323455af0aeb8f8c50",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-run-attempt01/failure.txt"
+    },
+    {
+      "path": "evidence/archive-run-attempt01/run.log",
+      "bytes": 54290,
+      "sha256": "058d046dd7c35924b629d6c574d234c0b2e09d680f8c2cffd8cc4c9c8e656354",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-run-attempt01/run.log"
+    },
+    {
+      "path": "evidence/archive-run-attempt01/widgets/analysis-Hanlin-Expo-Widget-Counter.hanlinExpo.json",
+      "bytes": 1987,
+      "sha256": "25394670f6ccee80e466ea832458afad8e78be013d12851b44346a76132b0f92",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-run-attempt01/widgets/analysis-Hanlin-Expo-Widget-Counter.hanlinExpo.json"
+    },
+    {
+      "path": "evidence/archive-run-attempt01/widgets/analysis-Hanlin-Expo-Widget-Visuals.hanlinExpo.json",
+      "bytes": 1987,
+      "sha256": "7f0e1b63be900d625ca4b4696afeaa8b05876ee0d28465b768654b1268c95dfd",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-run-attempt01/widgets/analysis-Hanlin-Expo-Widget-Visuals.hanlinExpo.json"
+    },
+    {
+      "path": "evidence/archive-run-attempt01/widgets/analysis-Hanlin-Mixed-Native-Widget.hanlinExpo.json",
+      "bytes": 2301,
+      "sha256": "357ed72c585939d496094fb7d7ad03ba6e8f7d208a6f8787ed83596561b81248",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-run-attempt01/widgets/analysis-Hanlin-Mixed-Native-Widget.hanlinExpo.json"
+    },
+    {
+      "path": "evidence/archive-run-attempt01/widgets/analysis-Hanlin-ScriptWidget-Actions.scripting.json",
+      "bytes": 252,
+      "sha256": "de0ea10badf2acd21b394a0d057ae90dead0ef39c9db2110a14e8f33c58c5eac",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-run-attempt01/widgets/analysis-Hanlin-ScriptWidget-Actions.scripting.json"
+    },
+    {
+      "path": "evidence/archive-run-attempt01/widgets/analysis-Hanlin-ScriptWidget-Dashboard.scripting.json",
+      "bytes": 254,
+      "sha256": "a84f4ce16e6f706a7932bef9b7776f180503fcf2adadc2521805d6572916dc2c",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-run-attempt01/widgets/analysis-Hanlin-ScriptWidget-Dashboard.scripting.json"
+    },
+    {
+      "path": "evidence/archive-run-attempt01/widgets/analysis-Hanlin-Widget-Invalid-Cases.hanlinExpo.json",
+      "bytes": 1994,
+      "sha256": "802b28c6dabbab53a1a136b0573ba896a68db1a743f88017ff4897b3fbcba300",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-run-attempt01/widgets/analysis-Hanlin-Widget-Invalid-Cases.hanlinExpo.json"
+    },
+    {
+      "path": "evidence/archive-run-attempt01/widgets/analysis-Hanlin-Widget-Legacy-Regression.scripting.json",
+      "bytes": 256,
+      "sha256": "c21a3f0cec69d3342286f1d56b5825896cffadb260ee35fab142a3471d76ee45",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-run-attempt01/widgets/analysis-Hanlin-Widget-Legacy-Regression.scripting.json"
+    },
+    {
+      "path": "evidence/archive-run-attempt01/widgets/installed-Hanlin-Expo-Widget-Counter.hanlinExpo.json",
+      "bytes": 1675,
+      "sha256": "341023f720740457bb03172bf9a326c07b6dbd399f844fb0b53b348aeceae226",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-run-attempt01/widgets/installed-Hanlin-Expo-Widget-Counter.hanlinExpo.json"
+    },
+    {
+      "path": "evidence/archive-run-attempt01/widgets/installed-Hanlin-Expo-Widget-Visuals.hanlinExpo.json",
+      "bytes": 1675,
+      "sha256": "cd8e09baf95a260690460497b7f1572582b03d241cc6923b195c993efbe532f1",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-run-attempt01/widgets/installed-Hanlin-Expo-Widget-Visuals.hanlinExpo.json"
+    },
+    {
+      "path": "evidence/archive-run-attempt01/widgets/installed-Hanlin-ScriptWidget-Actions.scripting-native.png",
+      "bytes": 7759,
+      "sha256": "7923f802e008442d4074755b612adff676fe7320584b848e548b4f237b79796f",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-run-attempt01/widgets/installed-Hanlin-ScriptWidget-Actions.scripting-native.png"
+    },
+    {
+      "path": "evidence/archive-run-attempt01/widgets/installed-Hanlin-ScriptWidget-Actions.scripting.json",
+      "bytes": 1702,
+      "sha256": "781d716870d722aa8141f8d72699ecc33d0d1c3f251d82fceb9caca766aa9b90",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-run-attempt01/widgets/installed-Hanlin-ScriptWidget-Actions.scripting.json"
+    },
+    {
+      "path": "evidence/archive-run-attempt01/widgets/installed-Hanlin-ScriptWidget-Dashboard.scripting-native.png",
+      "bytes": 13175,
+      "sha256": "a2f9f3fcd28b20b5e1c45dedd266678937d9535c4efedf2a39b5f6f51994dbba",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-run-attempt01/widgets/installed-Hanlin-ScriptWidget-Dashboard.scripting-native.png"
+    },
+    {
+      "path": "evidence/archive-run-attempt01/widgets/installed-Hanlin-ScriptWidget-Dashboard.scripting.json",
+      "bytes": 1706,
+      "sha256": "948731f2812f854c045f357842fc57c7581f71e0ea1f999fdd39f4c4547b4037",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-run-attempt01/widgets/installed-Hanlin-ScriptWidget-Dashboard.scripting.json"
+    },
+    {
+      "path": "evidence/archive-run-attempt01/widgets/installed-Hanlin-Widget-Legacy-Regression.scripting-native.png",
+      "bytes": 4418,
+      "sha256": "d82ad28f4ed094721d43d1419a25da94054c1c10a8eb5ffa8c1ae6add06f2259",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-run-attempt01/widgets/installed-Hanlin-Widget-Legacy-Regression.scripting-native.png"
+    },
+    {
+      "path": "evidence/archive-run-attempt01/widgets/installed-Hanlin-Widget-Legacy-Regression.scripting.json",
+      "bytes": 1297,
+      "sha256": "ed5132b6b3cb5417c8534ced49ad72a68bff117c3f6f26bc3ff656aef8f4ed01",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/archive-run-attempt01/widgets/installed-Hanlin-Widget-Legacy-Regression.scripting.json"
+    },
+    {
+      "path": "evidence/canonical-generation-attempt01/RESULT.json",
+      "bytes": 197614,
+      "sha256": "feef71ba1f5ba4417144a069804ab14d079e407623be0e67bd113c221a2d6e16",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/canonical-generation-attempt01/RESULT.json"
+    },
+    {
+      "path": "evidence/canonical-generation-attempt02/RESULT.json",
+      "bytes": 198055,
+      "sha256": "d260269ec82b6c7efbfc5bd9075926cc8581e406eb6ecd529e6895a5e8015440",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/canonical-generation-attempt02/RESULT.json"
+    },
+    {
+      "path": "evidence/canonical-generation-attempt03/RESULT.json",
+      "bytes": 401115,
+      "sha256": "2c481da9f20ecbddd10628f964523d6f5fab51ce39ee248313978e599cbb632c",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/canonical-generation-attempt03/RESULT.json"
+    },
+    {
+      "path": "evidence/canonical-generation-attempt03/before-Package.swift",
+      "bytes": 89440,
+      "sha256": "afef4a0c438afc8cf0586b1665d96bc1559db09833086af9e3b2f47811b6568c",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/canonical-generation-attempt03/before-Package.swift"
+    },
+    {
+      "path": "evidence/canonical-generation-attempt03/before-unified-package-manifest.json",
+      "bytes": 3901,
+      "sha256": "4c92451d692c01d99681b793ac862444e93b9cc5e0cc26a22e71c9faf22d713f",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/canonical-generation-attempt03/before-unified-package-manifest.json"
+    },
+    {
+      "path": "evidence/canonical-generation-attempt03/check.log",
+      "bytes": 3605,
+      "sha256": "217ce542c95d95c575350f32c991d691b2f55bc4bcc44753aeeb2fec4b41b28d",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/canonical-generation-attempt03/check.log"
+    },
+    {
+      "path": "evidence/canonical-generation-attempt03/generate.log",
+      "bytes": 3605,
+      "sha256": "217ce542c95d95c575350f32c991d691b2f55bc4bcc44753aeeb2fec4b41b28d",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/canonical-generation-attempt03/generate.log"
+    },
+    {
+      "path": "evidence/canonical-generation-attempt03/generated-Package.swift",
+      "bytes": 89440,
+      "sha256": "7f989201b2238a0420aa2d8909205cb5613332a922c5797bddebeaa277fa5e36",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/canonical-generation-attempt03/generated-Package.swift"
+    },
+    {
+      "path": "evidence/canonical-generation-attempt03/generated-unified-package-manifest.json",
+      "bytes": 3901,
+      "sha256": "1c0437744e1b4cb1c091afbb15eaa9762ec8fab0956a2a76a4d6f85785b04018",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/canonical-generation-attempt03/generated-unified-package-manifest.json"
+    },
+    {
+      "path": "evidence/canonical-generation-attempt03/generated.diff",
+      "bytes": 621,
+      "sha256": "4de5d7ced649d53d38f3d82eb7a9ed41bf7ee9c34d19c40d6b5a17541ef5f2f6",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/canonical-generation-attempt03/generated.diff"
+    },
+    {
+      "path": "evidence/graph-check-850de664/RESULT.json",
+      "bytes": 4716,
+      "sha256": "818310b2d9e01b0a2a4d84926d1af72aeded7fdb77ce024f079bc0a391ee6eb7",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/graph-check-850de664/RESULT.json"
+    },
+    {
+      "path": "evidence/graph-check-850de664/check.log",
+      "bytes": 3605,
+      "sha256": "217ce542c95d95c575350f32c991d691b2f55bc4bcc44753aeeb2fec4b41b28d",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/graph-check-850de664/check.log"
+    },
+    {
+      "path": "evidence/resolution-attempt01/HanlinAgentSDK-resolve.log",
+      "bytes": 1467,
+      "sha256": "8aa2636c56904444ce4bee81d2c8c3a1ed4e1e534ee42b129e9be471116bf609",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/resolution-attempt01/HanlinAgentSDK-resolve.log"
+    },
+    {
+      "path": "evidence/resolution-attempt01/HanlinParityMiniApp-resolve.log",
+      "bytes": 1629,
+      "sha256": "7bb9d77aa1189fe6528aa2a41cd725cdfa8df27a4af6108f733a4c5813214e83",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/resolution-attempt01/HanlinParityMiniApp-resolve.log"
+    },
+    {
+      "path": "evidence/resolution-attempt01/HanlinPlatform-resolve.log",
+      "bytes": 4984,
+      "sha256": "01f7b4e277b7d06269948ae7efd1123641e9ab92a677b0b5c8eab30a6f77755c",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/resolution-attempt01/HanlinPlatform-resolve.log"
+    },
+    {
+      "path": "evidence/resolution-attempt01/HanlinSefariaMiniApp-resolve.log",
+      "bytes": 1629,
+      "sha256": "dade4d161536703f00bf767ad1cf4910e98e058d32bc3db65dc97d713e627eef",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/resolution-attempt01/HanlinSefariaMiniApp-resolve.log"
+    },
+    {
+      "path": "evidence/resolution-attempt01/HanlinTextStudioMiniApp-resolve.log",
+      "bytes": 1629,
+      "sha256": "59c5acc267db04921b25b75dc9845ffec4398f49a6a9b93aafe24d1d397e9293",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/resolution-attempt01/HanlinTextStudioMiniApp-resolve.log"
+    },
+    {
+      "path": "evidence/resolution-attempt01/HanlinWikipediaMiniApp-resolve.log",
+      "bytes": 1629,
+      "sha256": "0c1e6e645afe1765160e273a871ff5a6378bcd7f03de2b8b20f90c8259efd820",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/resolution-attempt01/HanlinWikipediaMiniApp-resolve.log"
+    },
+    {
+      "path": "evidence/resolution-attempt01/RESULT.json",
+      "bytes": 414124,
+      "sha256": "76e7e6ae1ca9a89d85a1ee64539ad2b7f2d8860857e9f470c117476f950c834c",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/resolution-attempt01/RESULT.json"
+    },
+    {
+      "path": "evidence/resolution-attempt01/before/Packages/HanlinAgentSDK/Package.resolved",
+      "bytes": 1198,
+      "sha256": "2acb720310279d62c48a54d2a856f25937a9abed054b5a2661b03c548fee457f",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/resolution-attempt01/before/Packages/HanlinAgentSDK/Package.resolved"
+    },
+    {
+      "path": "evidence/resolution-attempt01/before/Packages/HanlinParityMiniApp/Package.resolved",
+      "bytes": 1198,
+      "sha256": "e0a1d86319347dd23c139babb2864cfc7da0e7365419eef82da71ce354b25fde",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/resolution-attempt01/before/Packages/HanlinParityMiniApp/Package.resolved"
+    },
+    {
+      "path": "evidence/resolution-attempt01/before/Packages/HanlinPlatform/Package.resolved",
+      "bytes": 1198,
+      "sha256": "3e20591d1ac1c23db5258e6fbaee9386e94a58546e814fd5dfad6bf910551c0b",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/resolution-attempt01/before/Packages/HanlinPlatform/Package.resolved"
+    },
+    {
+      "path": "evidence/resolution-attempt01/before/Packages/HanlinSefariaMiniApp/Package.resolved",
+      "bytes": 1198,
+      "sha256": "6252f1f037cf0d5514ad4f8d04ae5391eeb074a837bbc562148b7858bd946210",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/resolution-attempt01/before/Packages/HanlinSefariaMiniApp/Package.resolved"
+    },
+    {
+      "path": "evidence/resolution-attempt01/before/Packages/HanlinTextStudioMiniApp/Package.resolved",
+      "bytes": 1198,
+      "sha256": "43ef7974e3631a0534bc85aa462b2396c052d8e991043ee28a31941db3869f5c",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/resolution-attempt01/before/Packages/HanlinTextStudioMiniApp/Package.resolved"
+    },
+    {
+      "path": "evidence/resolution-attempt01/before/Packages/HanlinWikipediaMiniApp/Package.resolved",
+      "bytes": 1198,
+      "sha256": "c31e1e6bd9f3b22b5046ab6e776bd0ebf9ac1804ff857dac9742ddc9be5c8094",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/resolution-attempt01/before/Packages/HanlinWikipediaMiniApp/Package.resolved"
+    },
+    {
+      "path": "evidence/resolution-attempt01/resolved/Packages/HanlinAgentSDK/Package.resolved",
+      "bytes": 1771,
+      "sha256": "1519e59a98d639f584066f13712b896fcb9b2544f0b5b56dfae80420ffd9d572",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/resolution-attempt01/resolved/Packages/HanlinAgentSDK/Package.resolved"
+    },
+    {
+      "path": "evidence/resolution-attempt01/resolved/Packages/HanlinParityMiniApp/Package.resolved",
+      "bytes": 1771,
+      "sha256": "46c8e40fb1b5b94977a94a43de500efa807b64cb70a6cde5eb77e3ae469cffb5",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/resolution-attempt01/resolved/Packages/HanlinParityMiniApp/Package.resolved"
+    },
+    {
+      "path": "evidence/resolution-attempt01/resolved/Packages/HanlinPlatform/Package.resolved",
+      "bytes": 1771,
+      "sha256": "c75981600c9f61a4bd404c94e1c76692defa8d514dd0bc985fb9d5a3ac531075",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/resolution-attempt01/resolved/Packages/HanlinPlatform/Package.resolved"
+    },
+    {
+      "path": "evidence/resolution-attempt01/resolved/Packages/HanlinSefariaMiniApp/Package.resolved",
+      "bytes": 1771,
+      "sha256": "aefab9f267ff1ac08372ac6f5da7a1a0426ca13b114f3e8de798b1e72a4e063f",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/resolution-attempt01/resolved/Packages/HanlinSefariaMiniApp/Package.resolved"
+    },
+    {
+      "path": "evidence/resolution-attempt01/resolved/Packages/HanlinTextStudioMiniApp/Package.resolved",
+      "bytes": 1771,
+      "sha256": "1ff8d78b2d938058907b44d7d2c5f910ed051d858429f73a2c3d8aaacc4a41f3",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/resolution-attempt01/resolved/Packages/HanlinTextStudioMiniApp/Package.resolved"
+    },
+    {
+      "path": "evidence/resolution-attempt01/resolved/Packages/HanlinWikipediaMiniApp/Package.resolved",
+      "bytes": 1771,
+      "sha256": "9285d61cc4633c01ceee14e46890acfddfc82a71811be32ce8e5ea325de67b6e",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/resolution-attempt01/resolved/Packages/HanlinWikipediaMiniApp/Package.resolved"
+    },
+    {
+      "path": "evidence/source-retarget-850de664/PATCH.json",
+      "bytes": 9158,
+      "sha256": "269e1f12bb5a7d12634eaf275120f2665dc5297181da2f108c8ae80a01223ec8",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/source-retarget-850de664/PATCH.json"
+    },
+    {
+      "path": "evidence/source-retarget-850de664/RESULT.json",
+      "bytes": 1392,
+      "sha256": "cbb86ad4e7835bfbf766de6bf5d7c5c7f38d68e0e492e61215917e37276b14a6",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/source-retarget-850de664/RESULT.json"
+    },
+    {
+      "path": "evidence/source-retarget-850de664/SOURCE_MANIFEST.after.json",
+      "bytes": 388209,
+      "sha256": "0941b55c21421212c6e5c3da82af6cdb7b8befe231a93c64ef51e7715a47e204",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/source-retarget-850de664/SOURCE_MANIFEST.after.json"
+    },
+    {
+      "path": "evidence/source-retarget-850de664/SOURCE_MANIFEST.before.json",
+      "bytes": 386870,
+      "sha256": "95fb2fa15b6df5515b062d854e328de6bd4872eba6736d221bd464278c9f4a3e",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/source-retarget-850de664/SOURCE_MANIFEST.before.json"
+    },
+    {
+      "path": "evidence/source-retarget-850de664/preimages/AI_HLY/Downstream/ProductSplitIntegration/HanlinExternalMiniAppSession.swift",
+      "bytes": 17715,
+      "sha256": "279e6a4c387afe6845c51a9adea622dc1085c82fb93ddfd23abb9dd5f4ec6f72",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/source-retarget-850de664/preimages/AI_HLY/Downstream/ProductSplitIntegration/HanlinExternalMiniAppSession.swift"
+    },
+    {
+      "path": "evidence/source-retarget-850de664/preimages/Fixtures/Widgets/Hanlin-Expo-Widget-Counter.hanlinExpo",
+      "bytes": 1148,
+      "sha256": "07bc97e06a1c4b638272dda7eeeb132e2b91499d5546cccfe7fbfd5bfc4cae0e",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/source-retarget-850de664/preimages/Fixtures/Widgets/Hanlin-Expo-Widget-Counter.hanlinExpo"
+    },
+    {
+      "path": "evidence/source-retarget-850de664/preimages/Fixtures/Widgets/Hanlin-Expo-Widget-Visuals.hanlinExpo",
+      "bytes": 1281,
+      "sha256": "2584982f4077b022860a1197c62d3bc85fdaa454e907e6749cd5734e7886cb68",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/source-retarget-850de664/preimages/Fixtures/Widgets/Hanlin-Expo-Widget-Visuals.hanlinExpo"
+    },
+    {
+      "path": "evidence/source-retarget-850de664/preimages/Fixtures/Widgets/Hanlin-Mixed-Native-Widget.hanlinExpo",
+      "bytes": 999,
+      "sha256": "7dc83c351a276573bf8fc8591b1be081401433247a656306d54fb9c16cda0d2e",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/source-retarget-850de664/preimages/Fixtures/Widgets/Hanlin-Mixed-Native-Widget.hanlinExpo"
+    },
+    {
+      "path": "evidence/source-retarget-850de664/preimages/Fixtures/Widgets/Hanlin-ScriptWidget-Actions.scripting",
+      "bytes": 825,
+      "sha256": "33c717e2a454d8831364cb24b15b9e9e799cd3161b526013a15efe46485ebccb",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/source-retarget-850de664/preimages/Fixtures/Widgets/Hanlin-ScriptWidget-Actions.scripting"
+    },
+    {
+      "path": "evidence/source-retarget-850de664/preimages/Fixtures/Widgets/Hanlin-ScriptWidget-Dashboard.scripting",
+      "bytes": 968,
+      "sha256": "478cd567e9731cc7342aefa9024ea498edf8d12d340cc5c558484e60a210dace",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/source-retarget-850de664/preimages/Fixtures/Widgets/Hanlin-ScriptWidget-Dashboard.scripting"
+    },
+    {
+      "path": "evidence/source-retarget-850de664/preimages/Fixtures/Widgets/Hanlin-Widget-Invalid-Cases.hanlinExpo",
+      "bytes": 948,
+      "sha256": "077a6ea43342877550f495b1bb885a3c93d8d6c60389459bf55ff05d2db5982c",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/source-retarget-850de664/preimages/Fixtures/Widgets/Hanlin-Widget-Invalid-Cases.hanlinExpo"
+    },
+    {
+      "path": "evidence/source-retarget-850de664/preimages/Fixtures/Widgets/Hanlin-Widget-Legacy-Regression.scripting",
+      "bytes": 444,
+      "sha256": "787bf97e48164d7b9021c64bfa7122e48131a82b388efc3bad26c58276f4bb2f",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/source-retarget-850de664/preimages/Fixtures/Widgets/Hanlin-Widget-Legacy-Regression.scripting"
+    },
+    {
+      "path": "evidence/source-retarget-850de664/preimages/Fixtures/Widgets/SHA256.json",
+      "bytes": 3702,
+      "sha256": "4964eeee90ef13fc28a6f059bfdd4d6316cdd0c60cdc151de192ff6f49d6208c",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/source-retarget-850de664/preimages/Fixtures/Widgets/SHA256.json"
+    },
+    {
+      "path": "evidence/source-retarget-850de664/preimages/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift",
+      "bytes": 79563,
+      "sha256": "f79bb40cbfff82eb8631275fd70f99e2f527c5ee497b4cbb168602b6fbf81658",
+      "original_mac_path": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/evidence/source-retarget-850de664/preimages/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift"
+    }
+  ]
+}

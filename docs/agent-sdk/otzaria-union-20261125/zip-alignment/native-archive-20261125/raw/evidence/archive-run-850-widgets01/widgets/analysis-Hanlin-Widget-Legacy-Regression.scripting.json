@@ -1,0 +1,7 @@
+{
+  "archive" : "Hanlin-Widget-Legacy-Regression.scripting",
+  "archiveSHA256" : "f69e85615e9fcdfc06870f11fadd5f7628a91210b699535ef4239f5039a37184",
+  "canInstall" : true,
+  "findings" : "[]",
+  "scope" : "Real shared analyzer; not a native UI assertion"
+}

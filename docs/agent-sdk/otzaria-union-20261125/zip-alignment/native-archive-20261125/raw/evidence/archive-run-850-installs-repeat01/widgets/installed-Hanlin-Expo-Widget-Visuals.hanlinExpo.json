@@ -1,0 +1,48 @@
+{
+  "archive" : "Hanlin-Expo-Widget-Visuals.hanlinExpo",
+  "archiveSHA256" : "539be1e79390f1c94002914c393400e26328efaf3f063bc673afb95494b2002d",
+  "compiledJavaScriptSHA256" : "cbab290544064fe159e7f561237ce79eeba59a94917ad821ce383c61871d5732",
+  "compilerSHA256" : "5073907ce8e9ceea2405274312324a7ac6e8ca5e21908b181bf40b935853d4c8",
+  "declaredFamilies" : [
+    "systemSmall",
+    "systemMedium",
+    "systemLarge",
+    "systemExtraLarge"
+  ],
+  "entityID" : "widget-v2:aW5zdGFsbGVkLndpZGdldA==.cGFja2FnZS53aWRnZXQ=.MQ==.d2lkZ2V0.ZXhwbw==.ZGVmYXVsdA==",
+  "familyPrepared" : "systemMedium",
+  "installedWidget" : {
+    "displayName" : "Expo Visuals Widget · Default",
+    "engine" : "expo",
+    "family" : "systemMedium",
+    "identity" : {
+      "entrypointID" : "widget",
+      "generation" : 1,
+      "installedPackageID" : "installed.widget",
+      "packageID" : "package.widget",
+      "variantID" : "default"
+    },
+    "payload" : {
+      "expoDescriptor" : {
+        "layout" : "",
+        "layoutRef" : "Packages\/installed.widget\/generations\/1\/artifacts\/6f38e238fbb74ff1e4fcd406cfaf0f0589bc6814af01434fbae12e878125cbb8",
+        "layoutSHA256" : "6f38e238fbb74ff1e4fcd406cfaf0f0589bc6814af01434fbae12e878125cbb8"
+      },
+      "kind" : "expo"
+    },
+    "relevance" : 0,
+    "root" : {
+      "children" : [
+
+      ],
+      "kind" : "text",
+      "properties" : {
+
+      }
+    },
+    "validUntil" : 63113904000
+  },
+  "scope" : "Actual shared atomic installation and preparation; not SpringBoard placement",
+  "sourceSHA256" : "e94a3349aff5092029f02e17572bb84f9cf803d2b83578c51893beaed9a924d8",
+  "upstreamCommit" : "917a61b581baeb852aa4fe331da2c1395d824351"
+}

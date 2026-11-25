@@ -1,0 +1,12 @@
+{
+  "archive_sha256": "ed478ead1552ee767dc38023fefe75627fab21c24c3af8b06a8cd19e9c6bf129",
+  "created_at": "2026-11-25T05:40:31.310090+00:00",
+  "files": 1300,
+  "free_after": 6944944128,
+  "free_before": 6886420480,
+  "manifest_sha256": "a6588d16f6f7f14d85d3258cb02e25407ff06979ef08507db9891cd32e77c6b5",
+  "source": "23040c6c95147d100a8729a9964bd09f984c0435",
+  "source_bytes": 22291616,
+  "source_root": "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/source",
+  "status": "EXACT_SOURCE_PREPARED_NOT_COMPILED"
+}

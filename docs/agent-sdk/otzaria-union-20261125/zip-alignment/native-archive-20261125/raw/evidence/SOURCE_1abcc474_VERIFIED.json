@@ -1,0 +1,9 @@
+{
+  "bytes": 22295054,
+  "files": 1300,
+  "manifest_sha256": "95fb2fa15b6df5515b062d854e328de6bd4872eba6736d221bd464278c9f4a3e",
+  "source_sha": "1abcc4749056d4c1c364f378732e137e7fead8b3",
+  "status": "EXACT_COMMITTED_SOURCE_CLOSURE_VERIFIED",
+  "tests_executed": 0,
+  "timestamp": "2026-11-25T06:09:35.253864+00:00"
+}

@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/archive_native_gate_v2.py", line 308, in main
+    require(rc == 0, "Original " + args.phase + " exited " + str(rc))
+  File "/Users/m1/builds/hanlin-zip-23040c6c-native-20261125/archive_native_gate_v2.py", line 27, in require
+    raise RuntimeError(message)
+RuntimeError: Original run exited 1

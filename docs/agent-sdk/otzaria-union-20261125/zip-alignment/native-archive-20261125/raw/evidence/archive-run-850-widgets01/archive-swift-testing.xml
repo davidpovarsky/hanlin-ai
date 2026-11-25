@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="0.000588708"/>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="9.0667e-05"/>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="7.8375e-05"/>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="0.00017"/>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="0.000376208"/>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="0.000111333"/>
+    <testsuite name="TestResults" errors="0" tests="2" failures="0" skipped="0" time="1.365776791">
+        <testcase classname="HanlinScriptExtensionsTests.HanlinDualWidgetEnginesTests" name="installAndVerifiedLoader(name:)" time="1.365248917"/>
+        <testcase classname="HanlinScriptExtensionsTests.HanlinDualWidgetEnginesTests" name="realArchiveImport(name:)" time="0.54564275"/>
+    </testsuite>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="0.00010575"/>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="9.4333e-05"/>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="9.4084e-05"/>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="0.000119791"/>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="9.1333e-05"/>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="0.000103208"/>
+</testsuites>

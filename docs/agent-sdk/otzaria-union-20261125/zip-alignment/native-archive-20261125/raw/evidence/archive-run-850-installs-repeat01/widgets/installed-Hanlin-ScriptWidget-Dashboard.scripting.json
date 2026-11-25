@@ -1,0 +1,48 @@
+{
+  "archive" : "Hanlin-ScriptWidget-Dashboard.scripting",
+  "archiveSHA256" : "43b9b75e6f9708f1ce95dfcef2fd18f284de3f0fbc6c1b9919c0e539c32494ec",
+  "compiledJavaScriptSHA256" : "eedd5eae48fbdd585644672bd9da814bfc4fc1674dad66410996d6cbd6d4ae65",
+  "compilerSHA256" : "5073907ce8e9ceea2405274312324a7ac6e8ca5e21908b181bf40b935853d4c8",
+  "declaredFamilies" : [
+    "systemSmall",
+    "systemMedium",
+    "systemLarge",
+    "systemExtraLarge"
+  ],
+  "entityID" : "widget-v2:aW5zdGFsbGVkLndpZGdldA==.cGFja2FnZS53aWRnZXQ=.MQ==.d2lkZ2V0.c2NyaXB0d2lkZ2V0.ZGVmYXVsdA==",
+  "familyPrepared" : "systemMedium",
+  "installedWidget" : {
+    "displayName" : "ScriptWidget Dashboard · Default",
+    "engine" : "scriptwidget",
+    "family" : "systemMedium",
+    "identity" : {
+      "entrypointID" : "widget",
+      "generation" : 1,
+      "installedPackageID" : "installed.widget",
+      "packageID" : "package.widget",
+      "variantID" : "default"
+    },
+    "payload" : {
+      "kind" : "scriptwidget",
+      "scriptDescriptor" : {
+        "script" : "",
+        "scriptRef" : "Packages\/installed.widget\/generations\/1\/artifacts\/e8de60bb6cd39851ab52e27f0e10fe06aadc423b50aa92574ba666fc2981050a",
+        "scriptSHA256" : "e8de60bb6cd39851ab52e27f0e10fe06aadc423b50aa92574ba666fc2981050a"
+      }
+    },
+    "relevance" : 0,
+    "root" : {
+      "children" : [
+
+      ],
+      "kind" : "text",
+      "properties" : {
+
+      }
+    },
+    "validUntil" : 63113904000
+  },
+  "scope" : "Actual shared atomic installation and preparation; not SpringBoard placement",
+  "sourceSHA256" : "d88d0504ce658d1a22d77cf9e86e642cb11d51c38d41301405b16f55de748cff",
+  "upstreamCommit" : "68f04194f00222558c44d5a832e7617a96f62574"
+}

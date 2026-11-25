@@ -1,0 +1,15 @@
+{
+  "controller_sha256": "40045bd13f27871424ba62cce9c873aed01d78ea1ff1a35c5c35a3120028f5c1",
+  "expected_codepoints": [
+    "0x2192",
+    "0x2717",
+    "0x2718"
+  ],
+  "job_id": "job_6567d982b8e7",
+  "reason": "Launch wrapper required unused Unicode symbols instead of the controller actual three parser symbols; exact controller content already matched its SHA256. Corrected wrapper checks the actual original symbol set.",
+  "recorded_at": "2026-11-25T06:33:50.610377+00:00",
+  "source_unchanged": true,
+  "status": "FAILED_BEFORE_CONTROLLER_OR_SWIFT",
+  "swift_commands": 0,
+  "tests_executed": 0
+}
