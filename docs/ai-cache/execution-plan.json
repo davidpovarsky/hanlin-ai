@@ -155,20 +155,19 @@
     },
     "reuse_receipt": "evidence/final-reuse-20261125/reuse-receipt.json",
     "current_app_result": {
-      "source": "948bdb1fe75d31559dc8d65ae8d2e70fa69de276",
-      "status": "EXECUTED_PASS",
+      "source": "1ae93941a34cf555f8a7293106efeff80978ebfa",
+      "status": "BUILD_FAILED_TESTS_NOT_RUN",
       "expected_methods": 46,
       "expected_invocations": 48,
-      "executed": 48,
-      "passed": 48,
-      "failed": 0,
+      "executed": 0,
+      "build_exit_code": 65,
       "source_unchanged": true,
-      "receipt": "evidence/app-native-20261125/attempt07/test/receipt.json",
-      "summary": "evidence/app-native-20261125/attempt07/test/acceptance-summary.json",
-      "raw_log_sha256": "07c830e0b4fb16158ffe41a6e584a14b75635fa3c9a5aaefe5d2191f8f499f07",
-      "prepare_status": "PREPARED",
-      "prepare_receipt": "evidence/app-native-20261125/attempt07/prepare/receipt.json",
-      "result_bundle_manifest_sha256": "798725b1c5e427b69f87a84c5cd3a5ca6304e772f8cd106669f9771ad4a52747"
+      "locks_unchanged": true,
+      "receipt": "evidence/app-native-20261125/attempt08/test/receipt.json",
+      "summary": "evidence/app-native-20261125/attempt08/native-acceptance-summary.json",
+      "raw_log_sha256": "93ab30a42855a01db0f2dcaf674d5deccdc2c64969437fb53393bdeec1b86b95",
+      "next_attempt": "09",
+      "repair_commit": "5c51b3f2a5c97ae374a8dfbbb0be73ecba7908fc"
     },
     "runtime_host_result": {
       "source": "4eb1af2a625cddcf896e88edc54de7eb649ae7a2",
@@ -330,10 +329,32 @@
       "host_refresh_required": true,
       "app_attempt": "08",
       "notification_native_owner_scope": "NOT_RUN_HERE"
-    }
+    },
+    "last_successful_app_result": {
+      "source": "948bdb1fe75d31559dc8d65ae8d2e70fa69de276",
+      "status": "EXECUTED_PASS",
+      "expected_methods": 46,
+      "expected_invocations": 48,
+      "executed": 48,
+      "passed": 48,
+      "failed": 0,
+      "source_unchanged": true,
+      "receipt": "evidence/app-native-20261125/attempt07/test/receipt.json",
+      "summary": "evidence/app-native-20261125/attempt07/test/acceptance-summary.json",
+      "raw_log_sha256": "07c830e0b4fb16158ffe41a6e584a14b75635fa3c9a5aaefe5d2191f8f499f07",
+      "prepare_status": "PREPARED",
+      "prepare_receipt": "evidence/app-native-20261125/attempt07/prepare/receipt.json",
+      "result_bundle_manifest_sha256": "798725b1c5e427b69f87a84c5cd3a5ca6304e772f8cd106669f9771ad4a52747"
+    },
+    "notification_delegate_repair": {
+      "source": "5c51b3f2a5c97ae374a8dfbbb0be73ecba7908fc",
+      "status": "SOURCE_REVIEWED_NATIVE_PENDING",
+      "receipt": "evidence/notification-delegate-fix-20261125/receipt.json"
+    },
+    "latest_head_observation": "evidence/final-head-observation-app08-20261125/observation.json"
   },
-  "updated_at": "2026-11-25T05:32:20.558510+00:00",
-  "latest_integrated_source": "ecfd3fd0768bba0c1be5a92be81f31775ee6ea3e",
+  "updated_at": "2026-11-25T05:41:56.819759+00:00",
+  "latest_integrated_source": "5c51b3f2a5c97ae374a8dfbbb0be73ecba7908fc",
   "synchronized_heads": {
     "composer": "f39142d3d14ae1bbbb81febceeef61fdc605f2a0",
     "miniapps_sdk": "b0cf26a668a698682f5307252f14cf0af8c6d00a",
