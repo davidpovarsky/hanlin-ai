@@ -160,7 +160,8 @@ struct HanlinCompactResponsesTests {
         #expect(final?.tokenUsage?.totalTokens == 108)
         let bodies = CompactResponsesProtocol.state.captured
         #expect(bodies.count == 1)
-        let json = try #require(JSONSerialization.jsonObject(with: #require(bodies.first)) as? [String: Any])
+        let firstBody = try #require(bodies.first)
+        let json = try #require(JSONSerialization.jsonObject(with: firstBody) as? [String: Any])
         #expect(json["messages"] == nil)
         #expect(json["max_tokens"] == nil)
         #expect(json["max_output_tokens"] as? Int == HanlinChatGenerationDefaults.maxTokens)

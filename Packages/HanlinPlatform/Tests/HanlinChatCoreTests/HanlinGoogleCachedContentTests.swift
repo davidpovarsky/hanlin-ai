@@ -34,11 +34,13 @@ struct HanlinGoogleCachedContentTests {
         #expect(requests.map(\.httpMethod) == ["POST", "GET", "PATCH", "DELETE"])
         #expect(requests.allSatisfy { $0.url?.query == nil && $0.url?.host == "generativelanguage.googleapis.com" })
         #expect(requests.allSatisfy { $0.value(forHTTPHeaderField: "x-goog-api-key") == "fixture-only-credential" })
-        let creation = try #require(try JSONSerialization.jsonObject(with: #require(requests[0].httpBody)) as? [String: Any])
+        let creationBody = try #require(requests[0].httpBody)
+        let creation = try #require(try JSONSerialization.jsonObject(with: creationBody) as? [String: Any])
         #expect(creation["ttl"] as? String == "300.5s")
         #expect(creation["model"] as? String == "models/gemini-2.5-flash")
         #expect(creation["systemInstruction"] == nil && creation["tools"] == nil)
-        let renewal = try #require(try JSONSerialization.jsonObject(with: #require(requests[2].httpBody)) as? [String: Any])
+        let renewalBody = try #require(requests[2].httpBody)
+        let renewal = try #require(try JSONSerialization.jsonObject(with: renewalBody) as? [String: Any])
         #expect(renewal.count == 1 && renewal["ttl"] as? String == "600s")
     }
 
