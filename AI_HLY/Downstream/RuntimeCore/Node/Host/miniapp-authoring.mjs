@@ -228,6 +228,12 @@ async function parseProject(ts, input, sdkRoot, sdkEngine, fallbackConfig, usePr
     directoryExists: directory => sdkLookup(directory) && compilerHost.directoryExists(directory),
     getDirectories: directory => sdkLookup(directory) ? compilerHost.getDirectories(directory).filter(sdkLookup) : []
   };
+  // Keep lookups local to this program and to their original host boundary.
+  // A project result must never satisfy a canonical SDK lookup (or a later operation).
+  const projectResolutionCache = ts.createModuleResolutionCache(
+    compilerHost.getCurrentDirectory(), file => compilerHost.getCanonicalFileName(file), options);
+  const sdkResolutionCache = ts.createModuleResolutionCache(
+    sdkResolutionHost.getCurrentDirectory(), file => sdkResolutionHost.getCanonicalFileName(file), sdkOptions);
   const sdkSource = file => file && inside(toolingRoot, file);
   const resolveModule = (name, containingFile) => {
     const fromSDK = sdkSource(containingFile);
@@ -236,11 +242,11 @@ async function parseProject(ts, input, sdkRoot, sdkEngine, fallbackConfig, usePr
     // Keep SDK-local nested dependencies, relative imports and project aliases;
     // never satisfy a missing canonical export from an ancestor installation.
     if (fromSDK || original) {
-      return (fromSDK ? ts.resolveModuleName(name, containingFile, sdkOptions, sdkResolutionHost).resolvedModule : undefined)
-        ?? (packageName(name) ? ts.resolveModuleName(name, sdkContainingFile, sdkOptions, sdkResolutionHost).resolvedModule : undefined);
+      return (fromSDK ? ts.resolveModuleName(name, containingFile, sdkOptions, sdkResolutionHost, sdkResolutionCache).resolvedModule : undefined)
+        ?? (packageName(name) ? ts.resolveModuleName(name, sdkContainingFile, sdkOptions, sdkResolutionHost, sdkResolutionCache).resolvedModule : undefined);
     }
-    return ts.resolveModuleName(name, containingFile, options, compilerHost).resolvedModule
-      ?? (packageName(name) ? ts.resolveModuleName(name, sdkContainingFile, sdkOptions, sdkResolutionHost).resolvedModule : undefined);
+    return ts.resolveModuleName(name, containingFile, options, compilerHost, projectResolutionCache).resolvedModule
+      ?? (packageName(name) ? ts.resolveModuleName(name, sdkContainingFile, sdkOptions, sdkResolutionHost, sdkResolutionCache).resolvedModule : undefined);
   };
   compilerHost.resolveModuleNames = (names, containingFile) => names.map(name => resolveModule(name, containingFile));
   compilerHost.resolveTypeReferenceDirectives = (names, containingFile, redirectedReference, compilerOptions) =>
@@ -255,7 +261,7 @@ async function parseProject(ts, input, sdkRoot, sdkEngine, fallbackConfig, usePr
         const resolved = ts.resolveTypeReferenceDirective(requested, origin, settings, settings === sdkOptions ? sdkResolutionHost : compilerHost, redirectedReference).resolvedTypeReferenceDirective;
         if (resolved) return resolved;
       }
-      const module = ts.resolveModuleName(requested, sdkContainingFile, sdkOptions, sdkResolutionHost).resolvedModule;
+      const module = ts.resolveModuleName(requested, sdkContainingFile, sdkOptions, sdkResolutionHost, sdkResolutionCache).resolvedModule;
       return module && /\.d\.[cm]?ts$/.test(module.resolvedFileName)
         ? {primary: false, resolvedFileName: module.resolvedFileName, packageId: module.packageId, isExternalLibraryImport: true}
         : undefined;
