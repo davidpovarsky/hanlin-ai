@@ -135,16 +135,16 @@
     },
     "reuse_receipt": "evidence/reuse-receipt-20261125.json",
     "current_app_result": {
-      "source": "5769972abc4586c13bb77429ceb36b215ebae8b4",
-      "status": "PREPARING_RETRY",
+      "source": "1710bc6119983799f7d22cb723659ac274fe96b1",
+      "status": "PREPARING_RETRY04",
       "declared_cases": 46,
       "executed": 0,
       "latest_attempt": "evidence/app-native-20261125/attempt03/test-index.json",
       "fix": "4f2bc9864a4fefa62f69ca54fb9f6b33351ba1df",
       "preparation_reason": "Latest source synchronized; exact source-declared invocation gate installed; current original Host and fixtures remain valid.",
       "expected_invocations": 48,
-      "prepare_status": "PREPARED",
-      "prepare_receipt": "evidence/app-native-20261125/attempt03/prepare/receipt.json",
+      "prepare_status": "RUNNING",
+      "prepare_receipt": "Mac:build/cache-app-native-evidence-04-20261125/prepare/receipt.json",
       "expected_methods": 46
     },
     "runtime_host_result": {
@@ -156,7 +156,7 @@
       "skip": "Original opt-in >300-second worker duration test; not a cache/assistant acceptance case.",
       "evidence": "evidence/native-preparation-20261125/host-final/index.json"
     },
-    "latest_sync_receipt": "evidence/latest-sync-before-app03-20261125.json",
+    "latest_sync_receipt": "evidence/latest-sync-before-app04-20261125.json",
     "current_host_refresh": {
       "source": "53593c3749dbd2be1e56739576fcdd5ea2c1cf06",
       "status": "EXECUTED_PASS",
@@ -207,8 +207,8 @@
       "scope": "Only validation tooling; full tracked source hashing retained, historical-proof mutation rejected; nine actual tracked locks copied. App03 remains sealed at5b69bbb5 and is not relabeled."
     }
   },
-  "updated_at": "2026-11-25T03:35:22.332446+00:00",
-  "latest_integrated_source": "94a929a26355e4a586238a31e3a4fc2628e8e548",
+  "updated_at": "2026-11-25T03:42:24.681531+00:00",
+  "latest_integrated_source": "1710bc6119983799f7d22cb723659ac274fe96b1",
   "synchronized_heads": {
     "composer": "d89ce38b170bc9af4734cd11e30ca793b16698d0",
     "miniapps_sdk": "bff06a5998e9d584c9a5de2bd9aa187dc9cb4dd0",
