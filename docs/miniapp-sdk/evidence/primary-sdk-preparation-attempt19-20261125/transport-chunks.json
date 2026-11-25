@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-11-25T10:58:09.102761+00:00",
+  "kind": "EXACT_BINARY_TRANSPORT_CHUNKS",
+  "source": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/user-deliverables-sdk19/SDK18-to-SDK19-exact.delta.zip",
+    "bytes": 2683094,
+    "sha256": "6974fe7da2dceadec9cac10a328f9053e079c5dc92956081b1f35715bff22de9"
+  },
+  "chunkBytes": 786432,
+  "count": 4,
+  "chunks": [
+    {
+      "index": 0,
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/user-deliverables-sdk19/transport-chunks/chunk-000.bin",
+      "offset": 0,
+      "bytes": 786432,
+      "sha256": "5e7a59db5705c9713e2c117deb0871ba69aa6b39dbe32b6e93a79bfa63698613"
+    },
+    {
+      "index": 1,
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/user-deliverables-sdk19/transport-chunks/chunk-001.bin",
+      "offset": 786432,
+      "bytes": 786432,
+      "sha256": "c98a7a2ec5032dba690e8271aecd0d53b152b06e55291c42c0853b72cd20c984"
+    },
+    {
+      "index": 2,
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/user-deliverables-sdk19/transport-chunks/chunk-002.bin",
+      "offset": 1572864,
+      "bytes": 786432,
+      "sha256": "eb8f3edf00eb983beca13ee961fd83ca60a94221e648efc671927b5b2b7bd7a7"
+    },
+    {
+      "index": 3,
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/user-deliverables-sdk19/transport-chunks/chunk-003.bin",
+      "offset": 2359296,
+      "bytes": 323798,
+      "sha256": "1d9b82dde52ca372ab9e68c8b5657d37632e1200d6955f3411a6f5b8b5f13d9b"
+    }
+  ],
+  "base": {
+    "bytes": 68726436,
+    "sha256": "78e8a83d42ebfba2c9c8194acf6a0c16d3c7aab92d0ad2fbc4ecc137930226dd"
+  },
+  "output": {
+    "bytes": 68726642,
+    "sha256": "1bf347311b9547054725f8674419a11b3c502a4994feb6dbd9283c3af7400210"
+  }
+}

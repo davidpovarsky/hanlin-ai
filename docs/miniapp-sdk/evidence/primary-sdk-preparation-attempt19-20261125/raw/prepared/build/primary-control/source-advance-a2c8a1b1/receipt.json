@@ -1,0 +1,160 @@
+{
+  "status": "SOURCE_READY_NATIVE_NOT_STARTED",
+  "sourceBase": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+  "target": "a2c8a1b1be746461272ba77254603304567c309d",
+  "tree": "c3cfefa7775c91e2b2a9eaff980bbde6e681cc37",
+  "packSHA256": "a08f73d21760761e63143146436b0fa942f52505be96d5c1da8609eb0500e457",
+  "preparedWorkingFiles": [
+    {
+      "path": "AI_HLY.xcodeproj/project.pbxproj",
+      "sha256": "a80e2947b4dedf0ce95b326cf44b0efac613b7b044058e3afc3fccb870cb0087",
+      "size": 252023,
+      "mode": 420,
+      "policy": "PRESERVE_EXACT_PREPARED"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbe.hanlinExpo",
+      "sha256": "c1ad901a6e02d31846bdcb478f986fdec8ea12add17aeab52d0bb90381236d9d",
+      "size": 325888,
+      "mode": 420,
+      "policy": "PRESERVE_EXACT_PREPARED"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo",
+      "sha256": "c1ad901a6e02d31846bdcb478f986fdec8ea12add17aeab52d0bb90381236d9d",
+      "size": 325888,
+      "mode": 420,
+      "policy": "PRESERVE_EXACT_PREPARED"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbeB.hanlinExpo",
+      "sha256": "3839e0dfd05595c70f9859a7b80deb857994ec3aa572cd9a7bbc549bb71d4fe1",
+      "size": 325891,
+      "mode": 420,
+      "policy": "PRESERVE_EXACT_PREPARED"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbe.hanlinExpo",
+      "sha256": "c1ad901a6e02d31846bdcb478f986fdec8ea12add17aeab52d0bb90381236d9d",
+      "size": 325888,
+      "mode": 420,
+      "policy": "PRESERVE_EXACT_PREPARED"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeA.hanlinExpo",
+      "sha256": "c1ad901a6e02d31846bdcb478f986fdec8ea12add17aeab52d0bb90381236d9d",
+      "size": 325888,
+      "mode": 420,
+      "policy": "PRESERVE_EXACT_PREPARED"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeB.hanlinExpo",
+      "sha256": "3839e0dfd05595c70f9859a7b80deb857994ec3aa572cd9a7bbc549bb71d4fe1",
+      "size": 325891,
+      "mode": 420,
+      "policy": "PRESERVE_EXACT_PREPARED"
+    },
+    {
+      "path": "Package.swift",
+      "sha256": "392ece3430f8e61eb28afdaa925adf006b1a3dbf82a233568c2c279ab768e53b",
+      "size": 88328,
+      "mode": 420,
+      "policy": "PRESERVE_EXACT_PREPARED"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/original-runtime-receipt.json",
+      "sha256": "930fa2685c39e238da2ff557a6653bc7530a5a64edc9166b63dd720b410c01d0",
+      "size": 6085,
+      "mode": 420,
+      "policy": "PRESERVE_EXACT_PREPARED"
+    },
+    {
+      "path": "Scripts/Expo/package-lock.json",
+      "sha256": "3b31e1c8fd34145df900764a2cda013ab02ecea7f890c969ad5e0a92925d0dd8",
+      "size": 336324,
+      "mode": 420,
+      "policy": "PRESERVE_EXACT_PREPARED"
+    },
+    {
+      "path": "Scripts/Expo/package.json",
+      "sha256": "bb447094c0ef2250c445f580fa91c81a55fc3187c7d49e145b84e9c1c3756dce",
+      "size": 1759,
+      "mode": 420,
+      "policy": "PRESERVE_EXACT_PREPARED"
+    },
+    {
+      "path": "Scripts/MiniApps/upstream-resolution.json",
+      "sha256": "28a724580a5c7b03268335bfba6a144b7db155198a916305cd00e2e339db1b2e",
+      "size": 15092,
+      "mode": 420,
+      "policy": "PRESERVE_EXACT_PREPARED"
+    },
+    {
+      "path": "docs/agent-sdk/unified-package-manifest.json",
+      "sha256": "dd14c80e4223465e6a600f93c153c0f4c80a290b28520dfb8aa65d33f1862e4d",
+      "size": 3901,
+      "mode": 420,
+      "policy": "PRESERVE_EXACT_PREPARED"
+    },
+    {
+      "path": "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+      "sha256": "283c96260a51c095be32f262f9f77ba58bebc5372aa1af994176816c8fb5d538",
+      "size": 118804,
+      "mode": 420,
+      "policy": "PRESERVE_EXACT_PREPARED"
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.json",
+      "sha256": "4ba23a27fc1dae71f7bba128d564bcdb0df114511c98231b28ae43013f7227af",
+      "size": 153644,
+      "mode": 420,
+      "policy": "PRESERVE_EXACT_PREPARED"
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.md",
+      "sha256": "3465dc8ceda07aea884eb51cacd91310ac899e0f575b362e7586c5c726e3e9c9",
+      "size": 23332,
+      "mode": 420,
+      "policy": "PRESERVE_EXACT_PREPARED"
+    },
+    {
+      "path": "docs/miniapp-sdk/source-inventory.json",
+      "sha256": "659853eb35e2959e936635ab5bbc1df2e91c4b8b4923f9619f25a663cc70f803",
+      "size": 494019,
+      "mode": 420,
+      "policy": "PRESERVE_EXACT_PREPARED"
+    }
+  ],
+  "workingArchiveSHA256": "e147a71ce7a59af763167a38db9dfcab4a6cb81ca604106b315f7a8783423c21",
+  "preservedHostArchiveSHA256": "ce240d8d4083a2babfa3827fd12f93e0ad469b45c5f7055a259fcb8babe1881f",
+  "sourceHashes": {
+    "AI_HLY/ChatView.swift": "d21659cdaa7d3e6141d4677d10ccaee067e7238ba8c4ccc2f689b63db4c41ffe",
+    "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests.swift": "7d6b159d580636269daf67f6ed04634d586b94d07c960bd099cc9c5f4da9e164",
+    "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift": "da0fa21f26b677f4d18f8e1972208b39e30401a127e9dd2a9643e0fe8d7ad17c",
+    "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoUIModule.swift": "3ad8217ce87005fab1fe3dc256e7d7680ced7c330f7cd9dc5561f1a5e5905e09",
+    "Packages/HanlinExpoUI/src/manual-components.tsx": "b95b387fce797a3c0ffe8c258e1fe0b411e76956e6cd50ae9235267f5b638da6",
+    "Scripts/ProductSplit/run_paired_acceptance.py": "a99b6194f8dd20bc30998ff2ad9e86ec219415a00615b250c65670f7dfcdba7d",
+    "Scripts/ProductSplit/test_run_paired_acceptance.py": "3791b4178c5cc49b64c38ead6f913284f29fc990c7223953aa74f2075f3771f1"
+  },
+  "retainedPhases": [
+    "split-metadata",
+    "split-platform",
+    "host-proof",
+    "split-foreground",
+    "split-host-lifecycle"
+  ],
+  "invalidatedPhases": [
+    "split-upstreams",
+    "split-native-preparation",
+    "split-native-artifacts",
+    "split-restore-inputs",
+    "split-inputs",
+    "split-paired-acceptance"
+  ],
+  "inputClosureReason": "Reviewed TextEditor mounted state and private stale-echo acknowledgement, exact native EditButton confirmation locator, wide composer first-turn endpoint lifecycle, ActivityKit publication observation, and six exact original Swift Testing selector identities. The JS wrapper changes the actual SDK dependency closure. Run normal original upstream resolver, manifest/project generation, strict target/resource/version checks, native preparation including fixture rebuild and Host/SDK/four documentation checks, native export and restored/captured input metadata. Retain unchanged platform/toolchain, foreground53, Host lifecycle and NativeScript metadata closures; none of their actual source inputs intersects these seven changed source paths. Every old terminal/result/charge is retained.",
+  "cumulativeActiveSeconds": 15206.084556709033,
+  "originalMaximumActiveSeconds": 12600,
+  "newPlanSHA256": "fb888d78c49d9849f30dd888a7c4e2b6c053963f861137b288ccf6147242a4d3",
+  "advancedAt": "2026-11-25T10:38:21.371876+00:00",
+  "nativeStarted": false
+}

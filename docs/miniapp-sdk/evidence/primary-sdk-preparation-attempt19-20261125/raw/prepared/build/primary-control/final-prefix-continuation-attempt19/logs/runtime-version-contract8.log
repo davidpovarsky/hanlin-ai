@@ -1,0 +1,16 @@
+✔ actual importer and sessions reconcile independent original versions and the bridge baseline (12.408667ms)
+✔ future independent Core iOS and SwiftUI updates reach both generated consumers (6.910334ms)
+✔ stale direct-session runtime and using iOS as the Core ceiling both fail the audit (6.080083ms)
+✔ original dependency drift and public runtime metadata drift remain rejected separately (7.813583ms)
+✔ Native API facade versions follow the resolved graph and reject an actual exported mismatch (12.23025ms)
+✔ Expo UI public runtime metadata follows the installed original runtime across every mirror (21.841541ms)
+✔ Worklets native compiler flags must match the resolved original JS graph in both manifests (43.445625ms)
+✔ Worklets native compiler definition follows future exact resolver selection without changing other settings (1.865084ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 156.475167
