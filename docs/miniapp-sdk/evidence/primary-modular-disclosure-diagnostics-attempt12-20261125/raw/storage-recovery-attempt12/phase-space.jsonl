@@ -1,0 +1,1 @@
+{"observedAt": "2026-11-25T03:38:56.449394+00:00", "phase": "ModularFocusedDiagnostic.log", "pid": 23813, "freeBytes": 13821685760, "df": "Filesystem   1024-blocks      Used Available Capacity iused     ifree %iused  Mounted on\n/dev/disk3s5   482797652 425415136  13497740    97% 5705860 134977400    4%   /System/Volumes/Data\n"}
