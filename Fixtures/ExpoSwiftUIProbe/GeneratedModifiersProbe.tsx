@@ -1,7 +1,7 @@
 import React, { useState, type ReactNode } from 'react';
 import { View } from 'react-native';
 import {
-  Host, VStack, HStack, ZStack, Text, Button, TextField, Slider, Label, Image,
+  Host, VStack, HStack, ZStack, Text, Button, TextField, TextEditor, Slider, Label, Image,
   ScrollView, List, Section, NavigationStack, NavigationLink, NavigationDestination,
   Searchable, Table, Inspector, SwipeActions, Link,
 } from '@hanlin/expo-ui';
@@ -123,11 +123,14 @@ function InputPanel({ back }: Back) {
           m.disableAutocorrection(true), m.textInputAutocapitalization('never'), m.submitLabel('done'),
           m.findDisabled(true), m.replaceDisabled(true), m.submitScope(blockSubmit),
           m.textInputFormattingControlVisibility('hidden', ['contextMenu', 'inputAssistant']),
-          m.textSelectionAffinity('downstream'), m.writingToolsAffordanceVisibility('hidden')]} />
+          m.writingToolsAffordanceVisibility('hidden')]} />
     </VStack>
     <Text>{'MODIFIER_INPUT:' + text}</Text>
     <Text>{'MODIFIER_SUBMITS:' + submits}</Text>
     <Button label={blockSubmit ? "Allow generated submit" : "Generated submit allowed"} onPress={() => setBlockSubmit(false)} />
+    <TextEditor defaultValue="Affinity example: hello مرحبا"
+      modifiers={[m.accessibilityIdentifier('generated-modifier-affinity-editor'),
+        m.frame({ width: 340, height: 60 }), m.textSelectionAffinity('downstream')]} />
     <Slider value={level} onValueChange={setLevel} min={0} max={100} step={5}
       label={<Text>Generated level</Text>}
       modifiers={[m.frame({ width: 320 }), m.sliderThumbVisibility('visible'),

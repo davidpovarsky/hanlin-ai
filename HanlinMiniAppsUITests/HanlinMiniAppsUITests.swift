@@ -846,6 +846,11 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
         openAdditionalExpoProbe("Open Generated Modifiers Probe")
         tapAdapterButton("Modifiers: Input")
         expectAdapterText("MODIFIER_NATIVE_CONTEXT:Input:appeared")
+        let affinityEditor = app.textViews["generated-modifier-affinity-editor"].firstMatch
+        XCTAssertTrue(affinityEditor.waitForExistence(timeout: 10),
+                      "The selection-affinity modifier must mount its actual native TextEditor context.")
+        XCTAssertTrue(affinityEditor.isHittable)
+        XCTAssertEqual(affinityEditor.value as? String, "Affinity example: hello مرحبا")
         expectAdapterText("MODIFIER_HIT_COUNTS:front=0;back=0")
         let back = app.buttons["Generated back target"].firstMatch
         XCTAssertTrue(back.waitForExistence(timeout: 10))
