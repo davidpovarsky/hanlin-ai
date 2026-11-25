@@ -169,3 +169,23 @@ filtered by the incoming context. Unlike per-app system share-menu preferences,
 the user explicitly requested a common preference store, which remains in the
 shared App Group. This is a source/reference review. Screenshots from actual
 consumer acceptance, Hebrew/RTL and phone visual checks are still pending.
+
+
+## Actual Xcode API-key provisioning route, 06:12 UTC
+
+A normal m1 SSH Xcode27 automatic-provisioning attempt used the installed ASC key,
+the original MiniApps Share bundle ID and its exact two-group entitlement plist.
+The existing dependency-free ProfileDiscovery utility was used solely to exercise
+Apple profile lookup; this is not a MiniApps product archive or acceptance proof.
+
+Xcode reached GatherProvisioningInputs and exited65: the account is at its
+development-certificate limit and requires choosing a certificate to revoke before
+it can create a new one. No certificate was selected or revoked. The original
+distribution identity is unchanged and no new identity became available.
+No iOS App Development profile was available for that extension. See
+xcode-account-probe-attempt1/ for exact command, entitlement hash, log and receipt.
+
+This establishes that the normal m1 API-key route was actually attempted; the
+earlier local codesign-only probe did not establish that. A distribution export
+using the installed Apple Distribution identity is being evaluated as the next
+supported route, without revoking identities needed by other projects.
