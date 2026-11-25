@@ -1,0 +1,108 @@
+{
+  "source": "fda6948ca6a1f541293a1a1dd20e97f75eb0a527",
+  "priorEvidenceReceiptSHA256": "a0e0c906735a77251bd403c1d8ce42013fc173e90caca727c8decac0cd14ba9d",
+  "reusedProofs": [
+    {
+      "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/declaration-transforms-and-react-update.json",
+      "sha256": "d302c29d8e755f9c599e9c9c432458043aa4b0392925b1efe55cb32c08514425",
+      "bytes": 14447
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/compiler-identity-binding.json",
+      "sha256": "8e7c8faadcccfcfa3204e690e08098529af1999f887122dc35e8960987176368",
+      "bytes": 1231
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/expo-asset-sdk-authority.json",
+      "sha256": "8795fd3639c5e12acefb732a572041c7d9c66c9707f227a1d85fb02fd054db20",
+      "bytes": 33597
+    }
+  ],
+  "sameEntireEngineAndUpstreamMetadata": true,
+  "expoAsset": {
+    "version": "58.0.21",
+    "originalPackageMembers": 109,
+    "allUnchanged": true,
+    "samePackageVersionAndPluginAuthority": true
+  },
+  "reactTypes": {
+    "version": "19.3.1",
+    "unchangedFromActualSDK9": true,
+    "existingAutomaticUpdate": "Original resolver selected 19.3.1 during attempt8, preserved through9 and10; no new declaration edit."
+  },
+  "declarationCompatibility": {
+    "producerSHA256": "e32603c7fd4a24f2c5223155185e35bc59ad87455859cf3bf321a23a5e6f878e",
+    "receiptSHA256": "c5e5322a6177f36a713380134006d4beb3a0ebd275e435e66b7de93a4cb60f82",
+    "files": 5,
+    "exactSubstitutions": 7,
+    "patches": [
+      {
+        "package": "react-native",
+        "packageVersion": "0.88.1",
+        "SDKPath": "expo/node_modules/react-native/types_generated/Libraries/Animated/nodes/AnimatedProps.d.ts",
+        "originalSHA256": "0dde4c5442c332f01cb8f830ead7965b64996dca6b9bcc3a280806f48b8d3f21",
+        "correctedSHA256": "aed96d9f0b4b196eb342fdc5c0e952025cdcbb894179360d00319bc9c2b37b4c",
+        "sourceSHA256": "d860011a3cde601ef237ffb40eef05c68cb3b15bc3c25e2fead8db751f1167de",
+        "exactSubstitutionCount": 2,
+        "unchangedFromSDK9": true
+      },
+      {
+        "package": "react-native",
+        "packageVersion": "0.88.1",
+        "SDKPath": "expo/node_modules/react-native/types_generated/Libraries/Lists/VirtualizedList.d.ts",
+        "originalSHA256": "90335722e3f37fbca6dc2dc699efac7ebf2f8866a9cfddce21a3dd6bb9e9a92a",
+        "correctedSHA256": "51500c381dc135aba8268f7af110fb2cc657a0db9c823ec8555f0b9231de0272",
+        "sourceSHA256": "94d0e1f682f3422648451be3070a68a6e69eeddce7bed4c43cc3124e89565b5e",
+        "exactSubstitutionCount": 1,
+        "unchangedFromSDK9": true
+      },
+      {
+        "package": "react-native",
+        "packageVersion": "0.88.1",
+        "SDKPath": "expo/node_modules/react-native/types_generated/src/private/webapis/dom/nodes/ReadOnlyNode.d.ts",
+        "originalSHA256": "b0599260380ad18e7b783d712990bdf0cfba1346719bb8273fbaf06ed5a61bae",
+        "correctedSHA256": "9f09899132976f3110b403314e07e1a0157459e9f2194259df42094e4114dbaf",
+        "sourceSHA256": "dcafb922a27f7dac28f3d6079af34c90dfb047ea42f519d6a45fc16a671a4394",
+        "exactSubstitutionCount": 1,
+        "unchangedFromSDK9": true
+      },
+      {
+        "package": "@nativescript/react-native",
+        "packageVersion": "9.1.2",
+        "SDKPath": "expo/node_modules/@nativescript/react-native/types/ios/Runtime.d.ts",
+        "originalSHA256": "f28f211c956653fe859b9fc30a3765afb8902aa3d505248e28e3991fe32d1ca1",
+        "correctedSHA256": "0ec1d58c4bc38f66f8ff77bf03240c304f5e74b5ac17b923de8976f45a68f0cc",
+        "sourceSHA256": "f8c156b7ea87e6eed0e7aa9a5af1816bacb40332a68038ac521e191e15510e83",
+        "exactSubstitutionCount": 2,
+        "unchangedFromSDK9": true
+      },
+      {
+        "package": "@nativescript/react-native",
+        "packageVersion": "9.1.2",
+        "SDKPath": "expo/node_modules/@nativescript/react-native/types/ios/UIKit.d.ts",
+        "originalSHA256": "6ad19868e345469b507442f2666ca55ba69a5a98915e09459739e43246469638",
+        "correctedSHA256": "fde14e711cf6a496d48ba026cc022808df3bce202eec8a0d5521efc72f23d837",
+        "sourceSHA256": "fbc95bc22a5115453f944a408183ca2a64e3338954ba8ca4b2b045146afe7348",
+        "exactSubstitutionCount": 1,
+        "unchangedFromSDK9": true
+      }
+    ],
+    "existingTransformOnly": true
+  },
+  "compiler": {
+    "originalMembers": {
+      "expo/node_modules/typescript/lib/typescript.js": "d3f3cd2b04b7f466f4484df921b744223f7bd1f3e353ec9110bdf52695b983d5",
+      "expo/node_modules/typescript/package.json": "d9b8fb53c67c947fece83bcb73fa8512227ea6a12b110e096fdab8ecdc02b655",
+      "expo/node_modules/@typescript/old/lib/typescript.js": "569177652966bd528c319171c7dd22860dbf72bde116cbc4f644f1d02bb12e39",
+      "expo/node_modules/@typescript/old/package.json": "9332e97c30d3e53ed54910b89207ed657fb444066484df6e5b6965bf130865e9"
+    },
+    "identity": {
+      "packageName": "@typescript/typescript6",
+      "packageVersion": "6.0.2",
+      "compilerVersion": "6.0.3"
+    },
+    "declaredAlias": "npm:@typescript/typescript6@6.0.2",
+    "notExecutedByInspector": true
+  },
+  "boundary": "Original publication identities include five explicit, existing deterministic declaration compatibility corrections. No claim that every shipped declaration byte is unmodified. Reuse is justified by exact current member/producer/receipt identity; no compiler or patch producer rerun."
+}

@@ -1,0 +1,103 @@
+{
+  "status": "EXECUTED_PASS",
+  "actualReportSHA256": "8be33b2bd2fb07424bd156bbbf97f55705b15ed8776317669ecb44d0d880423d",
+  "source": "fda6948ca6a1f541293a1a1dd20e97f75eb0a527",
+  "sdk": {
+    "manifestSHA256": "19726b5eecc1459e30dae9e7ec4ca6761001de92b22055ac41b9a96aabdd7a88",
+    "inputSHA256": "998e474dfeb225185e91ac4886d4b3aec517dfc55cd16cac0f46366b55494d56"
+  },
+  "projects": [
+    {
+      "name": "expo-guide",
+      "engine": "expo",
+      "succeeded": true,
+      "diagnostics": 0,
+      "compilerVersion": "6.0.3",
+      "typecheck": {
+        "strict": true,
+        "checkJs": false,
+        "skipLibCheck": false,
+        "dependencyDeclarationsChecked": true
+      },
+      "sameOriginalSnippetsContextAndOptions": true
+    },
+    {
+      "name": "nativescript-guide",
+      "engine": "nativescript",
+      "succeeded": true,
+      "diagnostics": 0,
+      "compilerVersion": "5.9.3",
+      "typecheck": {
+        "strict": true,
+        "checkJs": true,
+        "skipLibCheck": true,
+        "dependencyDeclarationsChecked": false
+      },
+      "sameOriginalSnippetsContextAndOptions": true
+    },
+    {
+      "name": "scriptwidget-guide",
+      "engine": "scriptwidget",
+      "succeeded": true,
+      "diagnostics": 0,
+      "compilerVersion": "6.0.3",
+      "typecheck": {
+        "strict": true,
+        "checkJs": true,
+        "skipLibCheck": false,
+        "dependencyDeclarationsChecked": true
+      },
+      "sameOriginalSnippetsContextAndOptions": true
+    },
+    {
+      "name": "scriptwidget-controls",
+      "engine": "scriptwidget",
+      "succeeded": true,
+      "diagnostics": 0,
+      "compilerVersion": "6.0.3",
+      "typecheck": {
+        "strict": true,
+        "checkJs": true,
+        "skipLibCheck": false,
+        "dependencyDeclarationsChecked": true
+      },
+      "sameOriginalSnippetsContextAndOptions": true
+    }
+  ],
+  "sourceFences": 14,
+  "jsonFences": 7,
+  "nonAuthoringExclusions": 8,
+  "checkerInputs": [
+    {
+      "path": "Scripts/MiniApps/check-authoring-examples.mjs",
+      "sha256": "419f295ee6f0e7dcbf9cee42560ef1e8760010ae07b1d6767a0f6017fc7b317a"
+    },
+    {
+      "path": "Scripts/MiniApps/authoring-examples.json",
+      "sha256": "3ff3b2272bb77eb22fcc3df81063aab3994ec555b1e78562ee9e256b3cd0aa26"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
+      "sha256": "fa5121902e231d5d44ad08bf47699784fd4d0bc2a98102f3a156e6e4ae79b9b9"
+    }
+  ],
+  "registration": {
+    "expectedName": "main",
+    "registrations": [
+      "main"
+    ],
+    "nativeSessionSHA256": "852828b5e9548de003195cef2253b892a5b4a1c039e71946bb0e7fb0b61d7107",
+    "mode": "source-contract-check",
+    "nativeLaunch": "NOT_RUN",
+    "nativePath": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoSession.swift"
+  },
+  "boundary": {
+    "code": "Original TypeScript semantic checking through the public authoring validator; source is not executed.",
+    "json": "Descriptors and compiler config are consumed by the production authoring path. Script/package metadata excerpts are parsed loader fields, not a full native prepared-package validation. Only widget.json runs the exported original manifest semantic validator.",
+    "shells": "Repository commands and path placeholders are classified instructions, not executed shell examples.",
+    "nativeLaunch": "NOT_RUN",
+    "deviceOperations": "NOT_RUN",
+    "networkCalls": "NOT_RUN"
+  },
+  "noCompilerRerunByInspector": true
+}
