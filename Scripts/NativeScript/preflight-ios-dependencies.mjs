@@ -2,6 +2,7 @@ import { createHash } from 'node:crypto';
 import { access, readFile, readdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { spawnSync } from 'node:child_process';
+import { collectHostImages, requireHostMetadata } from './app-binary-preflight.mjs';
 
 const scriptRoot = resolve(import.meta.dirname);
 const repositoryRoot = resolve(scriptRoot, '..', '..');
@@ -155,12 +156,13 @@ if (appIndex >= 0) {
       throw new Error('Unable to resolve the built application executable');
     }
     const executable = resolve(appRoot, plist.stdout.trim());
+    const hostImages = await collectHostImages(appRoot, executable);
     // SwiftPM may place the provider in an embedded package-product framework
     // instead of the main executable. Scan every Mach-O in the app's dyld
     // closure and still require real Objective-C class metadata, matching the
     // NSClassFromString / objc_lookUpClass contract used at runtime.
     const frameworkRoot = resolve(appRoot, 'Frameworks');
-    const closureExecutables = [executable];
+    const closureExecutables = [...new Set(hostImages.map((image) => image.path))];
     for (const entry of await readdir(frameworkRoot, { withFileTypes: true })) {
       if (entry.isDirectory() && entry.name.endsWith('.framework')) {
         const frameworkName = entry.name.slice(0, -'.framework'.length);
@@ -185,13 +187,7 @@ if (appIndex >= 0) {
       const detail = objcRuntimeError ? ` (${objcRuntimeError.message})` : '';
       throw new Error(`The built app closure does not register the embedded NativeScript SwiftUI provider class${detail}`);
     }
-    const loadCommands = spawnSync('/usr/bin/otool', ['-l', executable], {
-      encoding: 'utf8',
-      maxBuffer: 64 * 1024 * 1024
-    });
-    if (loadCommands.status !== 0 || !loadCommands.stdout.includes('__TNSMetadata')) {
-      throw new Error('The built app does not contain the NativeScript metadata section');
-    }
+    requireHostMetadata(hostImages);
     const strings = spawnSync('/usr/bin/strings', [providerExecutable], {
       encoding: 'utf8',
       maxBuffer: 64 * 1024 * 1024
