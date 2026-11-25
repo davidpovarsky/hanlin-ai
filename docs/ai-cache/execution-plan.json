@@ -88,10 +88,10 @@
       "status": "EXECUTED_PASS",
       "evidence": [
         "USAGE.md",
-        "evidence/native-core-20261125/attempts/04-runtime-cancellation-redirect/receipt.json",
-        "evidence/native-core-20261125/attempts/04-runtime-cancellation-redirect/raw.log.gz"
+        "evidence/native-core-20261125/final-pin/receipt.json",
+        "evidence/native-core-20261125/final-pin/raw.log.gz"
       ],
-      "acceptance_note": "9 Google native lifecycle tests passed individually within combined failing run; full integrated native gate remains C8. Public Swift API boundary, no automatic paid app/JS manager.",
+      "acceptance_note": "9 Google native lifecycle cases passed in final48/48native run. Public Swift API is documented and opt-in; no automatic paid app/JS manager. Full application acceptance remains C8.",
       "live_status": "NOT_RUN: no authorized live provider account configured in isolated validation environment; no actual-hit or billing claim."
     },
     {
@@ -133,10 +133,32 @@
       "receipt": "evidence/native-core-20261125/final-pin/receipt.json",
       "source_unchanged": true
     },
-    "reuse_receipt": "evidence/reuse-receipt-20261125.json"
+    "reuse_receipt": "evidence/reuse-receipt-20261125.json",
+    "current_app_result": {
+      "source": "72bff522e6a13bff60c16d7a82e7c12f86abf8f9",
+      "status": "RUNNING",
+      "declared_cases": 46,
+      "prepare_status": "PREPARED",
+      "actual_resolved": {
+        "swift-ai-sdk": "abf0921c6e89e6521cc2b510ff11016b45a0ef08",
+        "lrucache": "1.3.0",
+        "opentelemetry-swift-core": "2.6.0",
+        "swift-atomics": "1.3.1"
+      },
+      "atomics_reason": "Original OpenTelemetry core2.6.0 manifest requires swift-atomics from1.3.1; all other existing pins unchanged."
+    },
+    "runtime_host_result": {
+      "source": "04c1942bc88cd4de7deafda7dd342b9b6c401dcf",
+      "status": "EXECUTED_PASS",
+      "passed": 177,
+      "failed": 0,
+      "skipped": 1,
+      "skip": "Original opt-in >300-second worker duration test; not a cache/assistant acceptance case.",
+      "evidence": "evidence/native-preparation-20261125/host-final/index.json"
+    }
   },
-  "updated_at": "2026-11-25T01:15:54.582783+00:00",
-  "latest_integrated_source": "972035205a153669126255f3e4a22dbb88281630",
+  "updated_at": "2026-11-25T01:31:23.403172+00:00",
+  "latest_integrated_source": "72bff522e6a13bff60c16d7a82e7c12f86abf8f9",
   "synchronized_heads": {
     "composer": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91",
     "miniapps_sdk": "1812bff50571c9907d15cd8b4bfbe4874be24756",
