@@ -1,0 +1,97 @@
+{
+  "status": "DIAGNOSTIC_SOURCE_FIX_PREPARED_NATIVE_RECHECK_REQUIRED",
+  "baseSource": "aa2ead24c5c7378f7d416d67ee7f487f99a8bbeb",
+  "branch": "codex/hanlin-main-diagnostic-getter-fix-20261125",
+  "changedSource": {
+    "path": "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinCompactChatWorkspace.swift",
+    "beforeSHA256": "e01b9c723cb20fedeac3a73d1b4ed9193d931ed506bbdca1bf0584410904b0ce",
+    "afterSHA256": "f386e2a5005bbefa119e4a81bea16d10368183b708b2c0a42ebfd9b5ca8ac141",
+    "patchSHA256": "2a508ac06f3bb9908ebf3fbce5702691a10d394825402fdc805b8efb551850dc",
+    "scope": "Five optional observation getter reads removed; explicit block/container not-read fields added inside original DEBUG/HANLIN_TESTING diagnostic gate"
+  },
+  "byteClosure": {
+    "outsideTraceFunctionIdentical": true,
+    "outsideTraceFunctionSHA256": "ea8df1a1f32775b66233c05a5571a51010a6799e14c147841758f719554396de",
+    "unchangedInputs": {
+      "AI_HLYUITests/HanlinSidebarNavigationUITests.swift": "ca7a6a5d18143e12cbe558ed3ce67d77e19afe128adc1474d8bfd76c39e56113",
+      "AI_HLYTests/HanlinSidebarGestureTests.swift": "31bee1d3369658bbacf72b7b7dcb82067363fc20c738f45800d094429c316e65",
+      "AI_HLY/Downstream/SDK/HanlinApplicationLifecycle.swift": "4e8364f8537ec2dd4e5b3eab04137bdeafbf00d95ce67e4b214584827d74c323",
+      "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinCompactConversationLibrary.swift": "3e93ee770cd72697e5a571e16f89e9251ac5266315681a87d7925536cc79c06d",
+      "AI_HLY/AI_HLY.swift": "11840d5e3f1dc0c87dba1dbe7380f8e761bdf3ed89e4d5a365d824045df72c51",
+      "AI_HLY.xcodeproj/xcshareddata/xcschemes/AI_HLY.xcscheme": "5513779c414d4978d5a1e0f9aa316e573bc75a521ef38276d079d00f767ad62d"
+    }
+  },
+  "nativeBaseline": {
+    "source": "aa2ead24c5c7378f7d416d67ee7f487f99a8bbeb",
+    "receiptSHA256": "14db62166dfe435dcd1556fecad840115c882613552bfd97d6486125f3677347",
+    "result": "ORIGINAL_NINE_FAILED",
+    "actualPassed": 4,
+    "actualFailed": 5,
+    "actualSkipped": 0,
+    "collection": "COMPLETE",
+    "cleanup": "COMPLETE",
+    "UIFailure": "All five original UI methods fail initial Window wait at line29; no previous line58/161/188 outcome is inferred",
+    "archiveSHA256FromRootVerifiedTransfer": "0038d87a1d6c2e63bc0fc6fbed85a9256944006a01b9f83559c246870b872c07",
+    "transferReceiptSHA256": "800dfbfc976e8d0fa88e9559b1ab347df2f71711a01784c3a15dfe9aefc606bd",
+    "independentSelectedMemberQualificationSHA256": "e42019804ecc1963c4ff422cd4328ff76127495bf86d56598faa0aa9b3e66f9c",
+    "crashes": [
+      {
+        "member": "Library/Logs/DiagnosticReports/AI_Hanlin-2026-11-25-121009.ips",
+        "sha256": "d5e4ac1767dffe6c808c021a6191d1b8a887dcf1bdb914607e271881dc70cbe4",
+        "pid": 95762,
+        "signal": "SIGABRT",
+        "line": 628
+      },
+      {
+        "member": "Library/Logs/DiagnosticReports/AI_Hanlin-2026-11-25-121042.ips",
+        "sha256": "dba1eb428c41a1629ae7d5f4b62c7d6a1b1672ed3d708bb0ede82f015b601d79",
+        "pid": 96707,
+        "signal": "SIGABRT",
+        "line": 628
+      },
+      {
+        "member": "Library/Logs/DiagnosticReports/AI_Hanlin-2026-11-25-121124.ips",
+        "sha256": "46aa711e74f7bd2a0144b5ba0ea73c7fc3608063eea9a8817c5ba550c6e1c7c1",
+        "pid": 96842,
+        "signal": "SIGABRT",
+        "line": 628
+      },
+      {
+        "member": "Library/Logs/DiagnosticReports/AI_Hanlin-2026-11-25-121207.ips",
+        "sha256": "546fa51b1c4bb0ec300f788b5e0fd8afbc6ef79b81b25a09c68e072b135aecda",
+        "pid": 97453,
+        "signal": "SIGABRT",
+        "line": 628
+      },
+      {
+        "member": "Library/Logs/DiagnosticReports/AI_Hanlin-2026-11-25-121249.ips",
+        "sha256": "4dd90a54bd15e38982f5f5e76bde01ca3c701f17b2b2626c163ac8eca98e2f28",
+        "pid": 99203,
+        "signal": "SIGABRT",
+        "line": 628
+      }
+    ]
+  },
+  "causalLimit": "All five same-device SIGABRT stacks independently bind doesNotRecognizeSelector to the first block getter at exact source line628. No exact exception selector string was preserved; the source attribution is the evidence, and the other four removed optional getters were not reached by this crash.",
+  "diagnosticSemantics": "Not-read never represents false/absent blocks or empty children. Remaining scalar, identity, frame, window, sequence, lifecycle and original task observations are unchanged. Existing offline parser treats omitted block/count fields as optional; its next source binding must explicitly use the final candidate.",
+  "validation": {
+    "gitDiffCheck": "PASS",
+    "sourceOnlyReplacementAndOutsideTraceComparison": "PASS",
+    "nativeCompile": "NOT_RUN",
+    "nativeTests": "NOT_RUN",
+    "newPortableTests": "NOT_RUN_NOT_NEEDED_FOR_OBSERVATIONAL_READ_REMOVAL",
+    "MacMutation": false
+  },
+  "peerReview": {
+    "reviewer": "/root/chat_ui",
+    "status": "SOURCE_REVIEW_CLEAR",
+    "reviewedSourceSHA256": "f386e2a5005bbefa119e4a81bea16d10368183b708b2c0a42ebfd9b5ca8ac141",
+    "reviewedPatchSHA256": "2a508ac06f3bb9908ebf3fbce5702691a10d394825402fdc805b8efb551850dc"
+  },
+  "remaining": [
+    "Root integrates exact donor and freezes new source; no dependency/native engine or fixture change is introduced",
+    "Actual corrected build and five original UI methods remain required",
+    "Authentic four Swift passes remain separate; any scoped reuse requires final-source qualification by assigned owner",
+    "Original Sidebar behavior, search routing and physical iPad/TestFlight outcomes remain open where not already independently accepted"
+  ]
+}
