@@ -24,7 +24,7 @@ import tempfile
 import time
 import zipfile
 
-from audit_release_resources import ROLES, certificate, decode, evaluate_profile
+from audit_release_resources import ROLES, certificate, decode, evaluate_profile, product_roles
 from resolve_signing_profiles import (
     resolve_original_profiles, install_profile, remove_installed_profiles,
 )
@@ -215,8 +215,7 @@ def main():
                 product = {"role": role, "bundle_id": bundle, "archive": "NOT_RUN", "export": "NOT_RUN",
                            "entitlements": "NOT_RUN"}
                 state["products"].append(product)
-                selected_bundles = {b for r, b, _, _ in ROLES
-                                    if (r == "miniapps") == (role == "miniapps")}
+                selected_bundles = {bundle for _, bundle, _, _ in product_roles(role)}
                 options["provisioningProfiles"] = {b: profile_mapping[b] for b in selected_bundles}
                 export_options.write_bytes(plistlib.dumps(options))
                 export_options.chmod(0o600)
@@ -264,8 +263,7 @@ def main():
                 if len(apps) != 1:
                     raise RuntimeError("Exported product has an ambiguous app payload")
                 run(["codesign", "--verify", "--deep", "--strict", apps[0]], role + "-signature")
-                expected = {b: (name, path) for name, b, _, path in ROLES if name != "miniapps"} if role == "ai" else {
-                    b: (name, path) for name, b, _, path in ROLES if name == "miniapps"}
+                expected = {bundle: (name, path) for name, bundle, _, path in product_roles(role)}
                 targets = exported_bundle_targets(apps[0], set(expected))
                 observed = {}
                 for identity, target in targets.items():

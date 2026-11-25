@@ -42,10 +42,21 @@ def inventory(root):
     return entries
 
 
-receipt_path = out / "acceptance.json"
-if not receipt_path.exists():
+input_receipt_path = out / "acceptance.json"
+if not input_receipt_path.exists():
     raise SystemExit("No native build receipt; producer export not available.")
-receipt = json.loads(receipt_path.read_text())
+# The coordinator appends the export outcome to acceptance.json after this
+# script returns. Keep the exact build evidence immutable for consumers.
+receipt_bytes = input_receipt_path.read_bytes()
+receipt = json.loads(receipt_bytes)
+receipt_path = out / "producer-build-receipt.json"
+try:
+    with receipt_path.open("xb") as frozen:
+        frozen.write(receipt_bytes)
+    receipt_path.chmod(0o444)
+except FileExistsError:
+    if receipt_path.read_bytes() != receipt_bytes:
+        raise SystemExit("The frozen producer build receipt differs from the input receipt.")
 if receipt.get("build") != "EXECUTED_PASS":
     raise SystemExit("Producer did not finish its actual app build.")
 commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()

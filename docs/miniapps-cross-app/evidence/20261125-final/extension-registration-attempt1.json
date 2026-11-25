@@ -1,0 +1,169 @@
+{
+  "source_sha": "5cca5d7913e992564bdd2c78326ab86f22d728da",
+  "team_id": "NA6HPWARQ2",
+  "started_at": "2026-11-25T05:31:03.667980+00:00",
+  "plan_sha256": "ab7bd35289a5fa323602bfc0c6dc02ba222c9f7df962fd75c8b6c0646f87b3a8",
+  "apply": true,
+  "operations": [
+    {
+      "method": "GET",
+      "path": "/v1/bundleIds",
+      "started_at": "2026-11-25T05:31:03.686528+00:00",
+      "http_status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/v1/bundleIds",
+      "started_at": "2026-11-25T05:31:04.348576+00:00",
+      "http_status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/v1/bundleIds",
+      "started_at": "2026-11-25T05:31:04.983815+00:00",
+      "request": {
+        "data": {
+          "type": "bundleIds",
+          "attributes": {
+            "name": "Hanlin MiniApps Widgets",
+            "identifier": "com.itorah.hanlinminiapps.widgets",
+            "platform": "IOS"
+          }
+        }
+      },
+      "http_status": 201
+    },
+    {
+      "method": "GET",
+      "path": "/v1/bundleIds",
+      "started_at": "2026-11-25T05:31:05.614171+00:00",
+      "http_status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/v1/bundleIds/R2N62AFGF6/bundleIdCapabilities",
+      "started_at": "2026-11-25T05:31:06.186340+00:00",
+      "http_status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/v1/bundleIdCapabilities",
+      "started_at": "2026-11-25T05:31:06.749920+00:00",
+      "request": {
+        "data": {
+          "type": "bundleIdCapabilities",
+          "attributes": {
+            "capabilityType": "APP_GROUPS"
+          },
+          "relationships": {
+            "bundleId": {
+              "data": {
+                "type": "bundleIds",
+                "id": "R2N62AFGF6"
+              }
+            }
+          }
+        }
+      },
+      "http_status": 201
+    },
+    {
+      "method": "POST",
+      "path": "/v1/bundleIdCapabilities",
+      "started_at": "2026-11-25T05:31:07.480425+00:00",
+      "request": {
+        "data": {
+          "type": "bundleIdCapabilities",
+          "attributes": {
+            "capabilityType": "HEALTHKIT"
+          },
+          "relationships": {
+            "bundleId": {
+              "data": {
+                "type": "bundleIds",
+                "id": "R2N62AFGF6"
+              }
+            }
+          }
+        }
+      },
+      "http_status": 201
+    },
+    {
+      "method": "POST",
+      "path": "/v1/bundleIdCapabilities",
+      "started_at": "2026-11-25T05:31:08.014908+00:00",
+      "request": {
+        "data": {
+          "type": "bundleIdCapabilities",
+          "attributes": {
+            "capabilityType": "HOMEKIT"
+          },
+          "relationships": {
+            "bundleId": {
+              "data": {
+                "type": "bundleIds",
+                "id": "R2N62AFGF6"
+              }
+            }
+          }
+        }
+      },
+      "http_status": 201
+    },
+    {
+      "method": "POST",
+      "path": "/v1/bundleIdCapabilities",
+      "started_at": "2026-11-25T05:31:08.532514+00:00",
+      "request": {
+        "data": {
+          "type": "bundleIdCapabilities",
+          "attributes": {
+            "capabilityType": "ICLOUD"
+          },
+          "relationships": {
+            "bundleId": {
+              "data": {
+                "type": "bundleIds",
+                "id": "R2N62AFGF6"
+              }
+            }
+          }
+        }
+      },
+      "http_status": 409,
+      "errors": [
+        {
+          "status": "409",
+          "code": "ENTITY_ERROR.ATTRIBUTE.INVALID",
+          "title": "An attribute in the provided entity has invalid value",
+          "detail": "The identifier 'R2N62AFGF6' cannot have the CloudkitVersion 'null'."
+        }
+      ]
+    }
+  ],
+  "extensions": [
+    {
+      "bundle_id": "com.itorah.hanlinminiapps.widgets",
+      "source_entitlements_sha256": "0da89872d45b5e9b990de71c4f9c0855f1117f81cb1867a07aa3bfb8b6106254",
+      "created": true,
+      "capabilities_enabled": [
+        "APP_GROUPS",
+        "HEALTHKIT",
+        "HOMEKIT"
+      ],
+      "id": "R2N62AFGF6"
+    }
+  ],
+  "app_group_assignment": "REQUIRES_SEPARATE_VERIFICATION",
+  "icloud_container_assignment": "REQUIRES_SEPARATE_VERIFICATION",
+  "profile_signing_and_upload": "NOT_PERFORMED",
+  "parent": {
+    "id": "ZMP944AT2R",
+    "identifier": "com.itorah.hanlinminiapps",
+    "seedId": "NA6HPWARQ2"
+  },
+  "status": "STOPPED",
+  "error": "Apple rejected POST /v1/bundleIdCapabilities: HTTP 409",
+  "finished_at": "2026-11-25T05:31:09.060701+00:00"
+}
