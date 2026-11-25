@@ -6,6 +6,7 @@ import XCTest
 final class MiniAppsNativeScriptPackageWindowUITests: XCTestCase {
     private let app = XCUIApplication(bundleIdentifier: "com.itorah.hanlinminiapps")
     private var openedRequests: [NativeScriptWindowUIInteractions.Request] = []
+    private var nativeProcessID: String?
     private static var installedPackages: Set<String> = []
     private let requests = [
         "alpha": "1e23b001-6a2c-4c0f-b001-202611240011",
@@ -105,7 +106,7 @@ final class MiniAppsNativeScriptPackageWindowUITests: XCTestCase {
 
     private func focus(_ name: String) throws -> XCUIElement {
         let id = try XCTUnwrap(requests[name])
-        app.open(try XCTUnwrap(URL(string: "hanlinminiapps://x-callback-url/run?request=" + id)))
+        XCUIDevice.shared.system.open(try XCTUnwrap(URL(string: "hanlinminiapps://x-callback-url/run?request=" + id)))
         let window = app.windows.containing(
             .navigationBar, identifier: "NativeScript package " + name
         ).firstMatch
@@ -114,6 +115,9 @@ final class MiniAppsNativeScriptPackageWindowUITests: XCTestCase {
         if !openedRequests.contains(where: { $0.id == id }) {
             openedRequests.append(.init(id: id, title: "NativeScript package " + name))
         }
+        try NativeScriptWindowUIInteractions.assertSameProcess(
+            in: app, expected: &nativeProcessID, requestID: id
+        )
         assertLabel(window.staticTexts["hanlin-ns-window-request"],
                     equals: try XCTUnwrap(UUID(uuidString: id)).uuidString, timeout: 90)
         let package = (name == "alpha" || name == "gamma") ? "alpha" : "beta"
@@ -128,7 +132,7 @@ final class MiniAppsNativeScriptPackageWindowUITests: XCTestCase {
         let input = window.textViews["hanlin-ns-window-input"]
         XCTAssertTrue(input.waitForExistence(timeout: 15))
         XCTAssertTrue(input.isHittable)
-        NativeScriptWindowUIInteractions.append("-edited", to: input)
+        NativeScriptWindowUIInteractions.replaceContents(of: input, with: name + "-edited")
         assertValue(input, equals: name + "-edited")
         let prepare = window.buttons["hanlin-ns-window-prepare-return"]
         XCTAssertTrue(prepare.isHittable)
