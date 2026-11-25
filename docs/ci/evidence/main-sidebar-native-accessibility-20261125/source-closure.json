@@ -1,0 +1,143 @@
+{
+  "status": "PEER_REVIEWED_NATIVE_NOT_RUN",
+  "baseCommit": "86d3983048a5e943ab79c4779723b912f019e4d3",
+  "sourceFiles": {
+    "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinCompactChatWorkspace.swift": "2b214d3c56cb1c7acc2effd391ebab521431b25ac0d2562684317339f5f22ab5",
+    "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinCompactConversationLibrary.swift": "8d3487f22a16b5ad1d9220c426ab25f7105a13c682bf8c9fbd6a8587a2b4df19",
+    "AI_HLYTests/HanlinSidebarGestureTests.swift": "31bee1d3369658bbacf72b7b7dcb82067363fc20c738f45800d094429c316e65"
+  },
+  "unchangedFunctionClosuresAcross70586dCandidate": {
+    "searchAndModelFocusMethodsSHA256": "25060435659e6e355e758be5f56aa056d033a2c2c4cdb415d49297e11abefdf8",
+    "searchAnchorRegistrationSHA256": "5a5b0eb0005e312e2b16ff2de29b0d36556a33f4785afa4a125ce4a99be9a7c3",
+    "originalFiveTestFilePrefixSHA256": "078ee95183081deab9599f6824814e0151daea6c49f4468b75bda17e4c43915b",
+    "gesturePolicyAndPanTailSHA256": "46937505356000afea17dd6d0391995122e8d65e390f280d08a0178a3d53ac09",
+    "originalFiveUISourceSHA256": "ca7a6a5d18143e12cbe558ed3ce67d77e19afe128adc1474d8bfd76c39e56113",
+    "originalLateDetachTestFileSHA256": "5dc4ca52a85f45daf9640834b0a224df902b6648e72437b9bd4ceb64a7491f3a"
+  },
+  "unchangedFilesFrom86d": {
+    "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinSidebarReveal.swift": "0e80eede087e933a7c4a40b07e96a335135252c1a0793c89bd4f234b45eaafef",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/NativeMultilineTextEditor.swift": "f077c6986119b2dd7abe541defba6922190f5074347817be81c157cc352e4f83",
+    "AI_HLYTests/HanlinOrganizerDockParityTests.swift": "5dc4ca52a85f45daf9640834b0a224df902b6648e72437b9bd4ceb64a7491f3a",
+    "AI_HLYUITests/HanlinSidebarNavigationUITests.swift": "ca7a6a5d18143e12cbe558ed3ce67d77e19afe128adc1474d8bfd76c39e56113"
+  },
+  "priorPassedFive": {
+    "origin": "705163fb2a952522ca6cbfdcdebddd8bd6b22532",
+    "receiptSHA256": "4096e1b3f14bdf2ac8449e50d3b94d94349426cb6aa78ed65a67760fef4f92e1",
+    "archive": "/mnt/development/projects/worktrees/hanlin-main-sidebar-focus-compile-20261125/build/main-sidebar-terminal-20261125/main-sidebar-705-terminal-evidence.tar.gz",
+    "archiveSHA256": "38e28e5db850176a79c6e6d50c54e279277f1270fd601662d9393242cff92724",
+    "toolchain": {
+      "xcode": "Xcode 27.0\nBuild version 27A266a",
+      "swift": "Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)\nTarget: arm64-apple-macosx27.0.0",
+      "sdk": "24A430",
+      "runtime": "24A434"
+    },
+    "actualCases": [
+      {
+        "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinSidebarGestureTests/searchWindowOwnershipWithoutComposer()",
+        "nodeIdentifier": "HanlinSidebarGestureTests/searchWindowOwnershipWithoutComposer()",
+        "name": "Search owns only its mounted window even without a composer, and stale anchors cannot clear it",
+        "result": "Passed"
+      },
+      {
+        "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinSidebarGestureTests/cancellationAndProjection()",
+        "nodeIdentifier": "HanlinSidebarGestureTests/cancellationAndProjection()",
+        "name": "Interrupted gestures restore state and overshoot never escapes the reveal bounds",
+        "result": "Passed"
+      },
+      {
+        "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinSidebarGestureTests/nativeInteractionsKeepOwnership()",
+        "nodeIdentifier": "HanlinSidebarGestureTests/nativeInteractionsKeepOwnership()",
+        "name": "Text editing, row swipe actions and horizontal scrollers retain their gestures",
+        "result": "Passed"
+      },
+      {
+        "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinSidebarGestureTests/navigationEdgeOwnership()",
+        "nodeIdentifier": "HanlinSidebarGestureTests/navigationEdgeOwnership()",
+        "name": "A pushed route retains its native back edge in both layout directions",
+        "result": "Passed"
+      },
+      {
+        "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinSidebarGestureTests/horizontalDirectionAndBounds()",
+        "nodeIdentifier": "HanlinSidebarGestureTests/horizontalDirectionAndBounds()",
+        "name": "Only physical horizontal gestures in the opening or closing direction begin",
+        "result": "Passed"
+      }
+    ],
+    "selectors": [
+      "AI_HLYTests/HanlinSidebarGestureTests/horizontalDirectionAndBounds",
+      "AI_HLYTests/HanlinSidebarGestureTests/navigationEdgeOwnership",
+      "AI_HLYTests/HanlinSidebarGestureTests/nativeInteractionsKeepOwnership",
+      "AI_HLYTests/HanlinSidebarGestureTests/cancellationAndProjection",
+      "AI_HLYTests/HanlinSidebarGestureTests/searchWindowOwnershipWithoutComposer"
+    ]
+  },
+  "reuseAssessment": {
+    "status": "SOURCE_ELIGIBLE_PENDING_FINAL_INPUT_ENVIRONMENT_BINDING",
+    "caseCount": 5,
+    "reason": "The original five-case suite remains an exact byte prefix. The complete gesture policy/Pan implementation tail and search/model focus methods/anchor registration are byte-identical through705\u219286d\u2192candidate. The added owner fields initialize to false/nil without side effects; these five methods do not call editor attachment or the new History setter. The705\u219286d View-body interaction gates and native editor changes are outside the invoked test closure. Final package/toolchain/runtime/test-host input binding remains required before reporting reuse."
+  },
+  "requiresExecution": {
+    "status": "NOT_RUN",
+    "caseCount": 9,
+    "selectors": [
+      "AI_HLYUITests/HanlinSidebarNavigationUITests/testHistoryRevealKeepsDraftAndOriginalProfileRoute",
+      "AI_HLYUITests/HanlinSidebarNavigationUITests/testPhysicalDragsAndReactivationKeepGestureConfigurationCurrent",
+      "AI_HLYUITests/HanlinSidebarNavigationUITests/testSearchSelectionAndNativeBackPreserveSeparateDrafts",
+      "AI_HLYUITests/HanlinSidebarNavigationUITests/testNativeHistoryRowSwipeRemainsAvailable",
+      "AI_HLYUITests/HanlinSidebarNavigationUITests/testHebrewHistoryKeepsPhysicalRevealAndMirroredControls",
+      "AI_HLYTests/HanlinCompactKeyboardGeometryTests/lateEditorDetachPreservesCurrentOwner",
+      "AI_HLYTests/HanlinSidebarAccessibilityOwnershipTests/historyTemporarilyOwnsEditorAccessibility",
+      "AI_HLYTests/HanlinSidebarAccessibilityOwnershipTests/replacementAndDetachRestoreScopedAccessibility",
+      "AI_HLYTests/HanlinSidebarAccessibilityOwnershipTests/historyBeforeAttachmentPreservesPriorHiddenState"
+    ],
+    "reason": "All five original UI cases exercise History opening/closing and native semantics; the original late-detach test directly calls the modified editor lifecycle, and three new cases cover restoration/reassertion/replacement/late attachment."
+  },
+  "preserved": [
+    "Original five UI definitions, assertions and timeouts",
+    "NavigationStack/List instances and search dismissal binding",
+    "Reveal geometry and gesture policy",
+    "Native editor factory/update/IME ordering and interaction writer",
+    "Weak editor registration and strict stale detach identity guard",
+    "Prepared Host052c,15 native frameworks,private normalized SPM/DD and simulator settings (Mac not touched)"
+  ],
+  "reviewAfterExecution": [
+    "Whole closed History accessibility tree including navigation/search/title/Profile regions, not only Done",
+    "Hebrew exposed composer semantic state and actual original hittability assertion",
+    "Closing toolbar glyph appearance, title alignment and unchanged navigation bar height",
+    "Draft, selection, focus, native row swipe and search/back behavior"
+  ],
+  "primaryAPIs": [
+    {
+      "url": "https://developer.apple.com/documentation/swiftui/view/accessibilityhidden(_:isenabled:).md",
+      "verified": "Public iOS18+ conditional accessibility modifier; when isEnabled is false the existing hidden state is unchanged."
+    },
+    {
+      "url": "https://developer.apple.com/documentation/swiftui/toolbarcontentbuilder",
+      "verified": "Public builder supports conditional toolbar content; candidate compiler acceptance remains NOT_RUN."
+    },
+    {
+      "url": "https://developer.apple.com/documentation/objectivec/nsobject-swift.class/isaccessibilityelement.md",
+      "verified": "Public MainActor get/set Bool property."
+    },
+    {
+      "url": "https://developer.apple.com/documentation/objectivec/nsobject-swift.class/accessibilityelementshidden.md",
+      "verified": "Public MainActor get/set Bool property."
+    }
+  ],
+  "notExecuted": [
+    "native build",
+    "native test",
+    "simulator creation",
+    "Mac source or cache staging"
+  ],
+  "peerReview": {
+    "reviewer": "/root/chat_ui",
+    "status": "NO_CONCRETE_SOURCE_OR_LIFECYCLE_BLOCKER",
+    "reviewedFiles": {
+      "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinCompactChatWorkspace.swift": "2b214d3c56cb1c7acc2effd391ebab521431b25ac0d2562684317339f5f22ab5",
+      "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinCompactConversationLibrary.swift": "8d3487f22a16b5ad1d9220c426ab25f7105a13c682bf8c9fbd6a8587a2b4df19",
+      "AI_HLYTests/HanlinSidebarGestureTests.swift": "31bee1d3369658bbacf72b7b7dcb82067363fc20c738f45800d094429c316e65"
+    },
+    "runtimeClaim": false
+  }
+}
