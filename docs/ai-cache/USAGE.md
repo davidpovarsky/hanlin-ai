@@ -1,6 +1,6 @@
 # Using Hanlin cache policies and diagnostics
 
-Source and evidence review: **2026-11-25**, integration baseline `72bff522e6a13bff60c16d7a82e7c12f86abf8f9`. The public signatures and examples below remain source-reviewed; the examples were not executed against a live provider. The [final-pin native receipt](evidence/native-core-20261125/final-pin/receipt.json) records **48 passing tests** at its own exact source `04c1942bc88cd4de7deafda7dd342b9b6c401dcf`: 44 Hanlin ChatCore cases and 4 original producer cases using Swift AI SDK `abf0921c6e89e6521cc2b510ff11016b45a0ef08`. Full native app validation is **RUNNING** at this update, not a completed pass; live provider and billing acceptance remain **NOT_RUN**.
+Source and evidence review: **2026-11-25**, integration source under app validation `1710bc6119983799f7d22cb723659ac274fe96b1`. The public signatures and examples below remain source-reviewed; the examples were not executed against a live provider. The [final-pin native receipt](evidence/native-core-20261125/final-pin/receipt.json) records **48 passing tests** at its own exact source `04c1942bc88cd4de7deafda7dd342b9b6c401dcf`: 44 Hanlin ChatCore cases and 4 original producer cases using Swift AI SDK `abf0921c6e89e6521cc2b510ff11016b45a0ef08`. Full native app validation is **RUNNING** at this update, not a completed pass; live provider and billing acceptance remain **NOT_RUN**.
 
 See the [execution plan](PLAN_20261125.md) and [architecture/dependency decisions](CACHE_AND_OBSERVABILITY_ADR.md).
 
@@ -30,6 +30,18 @@ The public configuration field is `HanlinChatModelConfiguration.promptCachePolic
 The app persists the preference in the existing `AllModels` SwiftData row. Its `setPromptCachePolicy(_:)` serializer rejects Google resource references and OpenAI comparison response IDs: these belong to a scoped request, never a global model preference. Existing app configuration, session and compact paths carry the optional policy.
 
 To return to ordinary behavior, select **Automatic**, or pass `promptCachePolicy: nil` when constructing a configuration. To stop Hanlin cache hints, select **Provider defaults** or **No explicit cache controls**. These choices neither delete a Google resource nor prevent provider-managed implicit caching. Existing explicit Google resources require a separate delete or expiry. No database migration, Redis deployment or second model engine is needed for this rollback.
+
+## Active Expo and NativeScript consumers
+
+The [native MiniApp assistant guide](../hanlin-miniapp-assistant.md) documents the existing public `models()`, `start()`, `stream()` and `generate()` APIs, cancellation, structured output, admission and provider limits, with examples for both engines. Both facades use the [shared TypeScript contract](../../Packages/HanlinExpoUI/src/miniapp-assistant.ts) and call the native service supplied by the AI application.
+
+Choose a model using the ID returned by `models()`. The native resolver applies that model's saved prompt-cache policy and obtains its credentials through Hanlin's existing protected provider registry. JavaScript supplies conversation content and an optional conversation identifier; it does not supply provider credentials/endpoints or inherit the parent agent's tool authority. Breaking a stream or calling its handle's `cancel()` cancels the native producer. The guide specifies how final usage and validated structured results are returned.
+
+## Local automatic-search cache
+
+The existing [AutomaticWebSearchCoordinator](../../AI_HLY/Services/ChatServices/AutomaticSearch/AutomaticWebSearchCoordinator.swift) uses LRUCache for reproducible automatic-search results. Existing callers continue through `search(query:count:bypassCache:)`; no second storage service is required. The [cache contract](CACHE_AND_OBSERVABILITY_ADR.md#local-search-cache-contract) records its 300-second lifetime after successful completion, 50-entry cap and 4 MiB estimated payload-cost cap, plus coalescing and per-caller cancellation.
+
+Use `cacheStatistics()` for metadata-only counters and `invalidateCache()` to clear reusable entries and advance the generation. An old in-flight request may finish for its original callers but cannot repopulate the invalidated cache. `bypassCache: true` makes an independent fresh request; it neither joins an ordinary in-flight query nor refreshes or replaces an ordinary cached entry. Failures are not cached. These local hits do not establish provider prompt-cache hits or billed savings.
 
 ## Google explicit cached content: public Swift API only
 
