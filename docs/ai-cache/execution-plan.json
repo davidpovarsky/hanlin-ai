@@ -135,10 +135,11 @@
     },
     "reuse_receipt": "evidence/reuse-receipt-20261125.json",
     "current_app_result": {
-      "status": "PREPARING_RETRY",
-      "source": "c3d154551d377e5a6155507df09d9817b41aaa9c",
+      "source": "b2b17ca2078c632c87b95d6f766ec13b09b344d7",
+      "status": "SOURCE_FIX_IN_PROGRESS",
       "declared_cases": 46,
-      "previous_attempt": "evidence/app-native-20261125/attempt01-module-cache/index.json"
+      "executed": 0,
+      "latest_attempt": "evidence/app-native-20261125/attempt02-factory-isolation/index.json"
     },
     "runtime_host_result": {
       "source": "04c1942bc88cd4de7deafda7dd342b9b6c401dcf",
@@ -174,10 +175,18 @@
         "reason": "Cloned Clang ModuleCache retained donor absolute path; owned nonportable cache quarantined.",
         "receipt": "evidence/app-native-20261125/attempt01-module-cache/test/receipt.json",
         "repair": "evidence/app-native-20261125/attempt01-module-cache/test/module-cache-repair.json"
+      },
+      {
+        "source": "b2b17ca2078c632c87b95d6f766ec13b09b344d7",
+        "status": "FAILED_RETRY_PENDING",
+        "executed": 0,
+        "build_exit_code": 65,
+        "reason": "AssistantToolBridge.Executors.live factory is not implicitly MainActor-isolated by its enclosing type; NativeTool.name access fails Swift6isolation check.",
+        "receipt": "evidence/app-native-20261125/attempt02-factory-isolation/test/receipt.json"
       }
     ]
   },
-  "updated_at": "2026-11-25T02:04:58.471958+00:00",
+  "updated_at": "2026-11-25T02:17:07.602028+00:00",
   "latest_integrated_source": "3eec80ce7b01303803a69cb6e74a992fdae75e10",
   "synchronized_heads": {
     "composer": "801bb3f66cfe6d4d0ff9e49e0094ea2887525fbd",
