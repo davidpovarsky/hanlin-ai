@@ -1,0 +1,120 @@
+{
+  "schemaVersion": 1,
+  "status": "SOURCE_REVIEWED_NATIVE_NOT_RUN",
+  "baseSource": "d20a4595565b6d7d7231795cd79dc924dedd3c51",
+  "sourceOnly": true,
+  "sourceFiles": {
+    "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinCompactChatWorkspace.swift": {
+      "baseSHA256": "ee459b744f2fbb75e37573506bad66575796470758b4bb5308fd104271942195",
+      "candidateSHA256": "e01b9c723cb20fedeac3a73d1b4ed9193d931ed506bbdca1bf0584410904b0ce",
+      "nonDiagnosticSourceEquality": "PASS"
+    },
+    "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinCompactConversationLibrary.swift": {
+      "baseSHA256": "8d3487f22a16b5ad1d9220c426ab25f7105a13c682bf8c9fbd6a8587a2b4df19",
+      "candidateSHA256": "3e93ee770cd72697e5a571e16f89e9251ac5266315681a87d7925536cc79c06d",
+      "nonDiagnosticSourceEquality": "PASS"
+    }
+  },
+  "unchangedInputs": {
+    "AI_HLYUITests/HanlinSidebarNavigationUITests.swift": "ca7a6a5d18143e12cbe558ed3ce67d77e19afe128adc1474d8bfd76c39e56113",
+    "AI_HLYTests/HanlinSidebarGestureTests.swift": "31bee1d3369658bbacf72b7b7dcb82067363fc20c738f45800d094429c316e65",
+    "AI_HLY/Downstream/SDK/HanlinApplicationLifecycle.swift": "4e8364f8537ec2dd4e5b3eab04137bdeafbf00d95ce67e4b214584827d74c323"
+  },
+  "allOriginalStatements": "RETAINED_IN_ORIGINAL_ORDER",
+  "priorEvidence": {
+    "source": "0a8e90dcf81c1ce71d01555d64b07d0142362f1d",
+    "terminalReceiptSHA256": "51c1e6947d076c73c929db14d78204bf23d6aac1b700402b6ce8a341547ce427",
+    "actualUI": {
+      "pass": 2,
+      "fail": 3,
+      "skip": 0
+    },
+    "missingSwiftMethods": 4,
+    "searchTransitionReceiptSHA256": "b57fa2cd4f13a057bb91f25ce9252152ff7bfaa929df20c2a2ee9aef964f9264",
+    "tapTimeUTC": "2026-11-25T07:34:05.719Z",
+    "busyControllerWarningUTC": "2026-11-25T07:34:05.997212Z",
+    "observedControllerID": "0x10cf69c00"
+  },
+  "phases": [
+    "row-before-end-search",
+    "callback-before-path",
+    "path-change",
+    "path-change-yield"
+  ],
+  "limits": {
+    "controllerNodes": 32,
+    "controllerDepth": 8,
+    "capturesPerOwner": 24,
+    "routeKindsPerSnapshot": 8,
+    "navigationStackIDs": 8,
+    "childIDsPerNode": 32,
+    "childIDsPerRecord": 8,
+    "classNameCharacters": 120
+  },
+  "nativeOwnership": {
+    "entry": "existing owner.editor.window.rootViewController",
+    "edges": [
+      "UIViewController.children",
+      "UIViewController.presentedViewController"
+    ],
+    "viewsLoaded": false,
+    "privateHierarchyTraversal": false,
+    "delegateMutation": false,
+    "navigationOrFocusMutation": false,
+    "completionRegistered": false
+  },
+  "yield": {
+    "role": "ONE_BOUNDED_OBSERVATION_PER_LATEST_PATH_CHANGE",
+    "mainActor": true,
+    "weakOwnerAndWindow": true,
+    "generationAndWindowIdentityGuard": true,
+    "routingOrReadinessGate": false,
+    "pathFields": "Explicit event snapshots, not a live path claim."
+  },
+  "completionInterpretation": {
+    "required": [
+      "begin",
+      "end"
+    ],
+    "retainFailures": [
+      "rootUnavailable",
+      "limitReached",
+      "missing or truncated records"
+    ],
+    "newAcceptanceClaim": false
+  },
+  "peerReview": {
+    "agent": "/root/chat_ui",
+    "status": "NO_CONCRETE_BLOCKER",
+    "sourceHashes": [
+      "e01b9c723cb20fedeac3a73d1b4ed9193d931ed506bbdca1bf0584410904b0ce",
+      "3e93ee770cd72697e5a571e16f89e9251ac5266315681a87d7925536cc79c06d"
+    ],
+    "executedTests": false
+  },
+  "checks": {
+    "gitDiffCheck": "PASS",
+    "insertionOnlyDiff": "PASS",
+    "nonDiagnosticSourceEquality": "PASS",
+    "originalTestAndBootstrapByteEquality": "PASS"
+  },
+  "nextNativeSelectors": [
+    "AI_HLYUITests/HanlinSidebarNavigationUITests/testHistoryRevealKeepsDraftAndOriginalProfileRoute",
+    "AI_HLYUITests/HanlinSidebarNavigationUITests/testPhysicalDragsAndReactivationKeepGestureConfigurationCurrent",
+    "AI_HLYUITests/HanlinSidebarNavigationUITests/testSearchSelectionAndNativeBackPreserveSeparateDrafts",
+    "AI_HLYUITests/HanlinSidebarNavigationUITests/testNativeHistoryRowSwipeRemainsAvailable",
+    "AI_HLYUITests/HanlinSidebarNavigationUITests/testHebrewHistoryKeepsPhysicalRevealAndMirroredControls",
+    "AI_HLYTests/HanlinCompactKeyboardGeometryTests/lateEditorDetachPreservesCurrentOwner()",
+    "AI_HLYTests/HanlinSidebarAccessibilityOwnershipTests/historyTemporarilyOwnsEditorAccessibility()",
+    "AI_HLYTests/HanlinSidebarAccessibilityOwnershipTests/replacementAndDetachRestoreScopedAccessibility()",
+    "AI_HLYTests/HanlinSidebarAccessibilityOwnershipTests/historyBeforeAttachmentPreservesPriorHiddenState()"
+  ],
+  "nativeExecution": "NOT_RUN",
+  "macSourceCacheOwner": "/root",
+  "notes": [
+    "The diagnostic localizes the actual busy native controller/transition and is not a Search production fix.",
+    "Retained failed or missing cases remain failed or not run until genuine next execution.",
+    "A yielded observation is not evidence that UIKit dismissal or a SwiftUI animation completed.",
+    "No new controller payload transfer or native job is part of this source donor."
+  ]
+}
