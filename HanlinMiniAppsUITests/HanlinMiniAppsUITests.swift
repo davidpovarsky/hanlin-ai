@@ -231,7 +231,9 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
         launchInstalledPackage(named: parityPackageName)
 
         // 1. Verify App Title
-        let titlePredicate = NSPredicate(format: "label CONTAINS 'HanlinScript Parity' OR identifier == 'hanlin-script-parity-title'")
+        // Only the original NativeScript root can satisfy this identifier.
+        // The catalog also contains the package name and is not execution evidence.
+        let titlePredicate = NSPredicate(format: "identifier == 'hanlin-script-parity-title'")
         let titleCandidate = app.descendants(matching: .any).matching(titlePredicate).firstMatch
         XCTAssertTrue(titleCandidate.waitForExistence(timeout: 30), "HanlinScript Parity title did not render")
         capture(name: "Parity-App-Launched")
