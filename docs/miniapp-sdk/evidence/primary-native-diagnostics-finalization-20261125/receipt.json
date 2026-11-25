@@ -1,0 +1,51 @@
+{
+  "schema": 1,
+  "recordedAt": "2026-11-25T02:00:31.795260+00:00",
+  "baselineSourceCommit": "1812bff50571c9907d15cd8b4bfbe4874be24756",
+  "productionPath": "Scripts/ProductSplit/run_paired_acceptance.py",
+  "beforeSHA256": "b27ca38423d3d0eb179f2b8bb7f25568d8ee9a7a70a36da7dd9e57e243ca004c",
+  "afterSHA256": "6e3abbb16c9b55b048b69c2391784510d8c143c7ed00e760a73ecb903cdbb61d",
+  "sourceChange": "Test command construction only: -collect-test-diagnostics never; original builds, selectors, XCTest assertions, per-case allowances, command budgets, result parsing and attachment export unchanged.",
+  "validation": {
+    "pythonAST": "PASS",
+    "removeExactAddedFlagConstructionRestoresOriginalBytes": true,
+    "newNativeExecution": "NOT_RUN"
+  },
+  "actualBaseline": {
+    "focusedCases": 6,
+    "passed": 3,
+    "failed": 3,
+    "caseSuiteSeconds": 354.821,
+    "xcodeResultFinalized": true,
+    "xcodeExit": 65,
+    "diagnosticDelaySeconds": 600,
+    "actualDiagnosticError": "Failure collecting diagnostics from simulator: Timed out after 600.0 seconds while waiting for a response from the invoked process",
+    "focusedResult": "Failures retained; this runner change does not repair app failures."
+  },
+  "members": [
+    {
+      "path": "focused-original.log.gz",
+      "bytes": 11837,
+      "sha256": "3ba78ee38b0765f6da13526267df113e9d69a12b04b048eeb48f83bfdb51cdb4",
+      "originalBytes": 118054,
+      "originalSHA256": "0303d4bae08f882d234230276ff780dfdf8f22676ffb2ac58706d297a9e580a7",
+      "encoding": "gzip"
+    },
+    {
+      "path": "owned-xcode-sample.txt.gz",
+      "bytes": 76948,
+      "sha256": "759bfb6d07b2eaf115214aef055f2915a6053d378cde085915e4da221298ccf7",
+      "originalBytes": 387685,
+      "originalSHA256": "c2064c083a451a6790d3bef3bffcf98ba910bafe566365c12a6643c3b84d1fe1",
+      "encoding": "gzip"
+    },
+    {
+      "path": "xcodebuild-diagnostics-help.txt",
+      "bytes": 297,
+      "sha256": "38b43f277c7dc68a0e1601cdc1700b65a1518d0859cb477b9dc9a6a429420624",
+      "originalBytes": 297,
+      "originalSHA256": "38b43f277c7dc68a0e1601cdc1700b65a1518d0859cb477b9dc9a6a429420624",
+      "encoding": "plain"
+    }
+  ]
+}
