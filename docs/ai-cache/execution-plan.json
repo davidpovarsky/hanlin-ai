@@ -37,7 +37,11 @@
       "owner": "נועם",
       "contract": "HanlinChatModelConfiguration/ProviderFactory/AgentEngine/RequestBuilder/Parser: חוזה טיפוסי, options merging עם reasoning, scope יציב שאינו כולל סודות, OpenAI controls נתמכים, Anthropic TTL/breakpoints, Google reference. SIWC ו-compatible לא מקבלים שדות לא נתמכים. לעדכן פורק SDK המקורי אם serializer חסר. קבלה: wire + stream tests ב-Mac, מסלול רגיל וכלים/structured, unknown/zero והגדרות לא נתמכות.",
       "asana": "1220884143828951",
-      "status": "IN_PROGRESS"
+      "status": "EXECUTED_PASS",
+      "evidence": [
+        "evidence/native-core-20261125/final-pin/receipt.json",
+        "evidence/producer-publication-20261125.json"
+      ]
     },
     {
       "id": "C3",
@@ -120,24 +124,22 @@
     "other_work": "Preserve other active branches/worktrees and running jobs; synchronize completed source changes after each stage",
     "publication": "Normal push only; no main force/rewrite; exact reviewable commits",
     "current_core_result": {
-      "source": "0c243d6cf20a702239a645c2f5c4b0f65d955702",
-      "executed": 47,
-      "passed": 44,
-      "failed_tests": 3,
-      "status": "FAILED",
-      "remaining": [
-        "original producer telemetry observation synchronization",
-        "compact cancellation transport propagation",
-        "redirect native fixture"
-      ],
-      "receipt": "evidence/native-core-20261125/attempts/04-runtime-cancellation-redirect/receipt.json"
-    }
+      "source": "04c1942bc88cd4de7deafda7dd342b9b6c401dcf",
+      "executed": 48,
+      "passed": 48,
+      "failed_tests": 0,
+      "status": "EXECUTED_PASS",
+      "swift_ai_sdk": "abf0921c6e89e6521cc2b510ff11016b45a0ef08",
+      "receipt": "evidence/native-core-20261125/final-pin/receipt.json",
+      "source_unchanged": true
+    },
+    "reuse_receipt": "evidence/reuse-receipt-20261125.json"
   },
-  "updated_at": "2026-11-25T00:43:05.350943+00:00",
-  "latest_integrated_source": "b3bc838a60b6b002586cceac011f4017645b4ff5",
+  "updated_at": "2026-11-25T01:15:54.582783+00:00",
+  "latest_integrated_source": "972035205a153669126255f3e4a22dbb88281630",
   "synchronized_heads": {
-    "composer": "7b7f7e4460200d7e98162dd525d67f8ca1860911",
+    "composer": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91",
     "miniapps_sdk": "1812bff50571c9907d15cd8b4bfbe4874be24756",
-    "wave3": "de1312733098d3c066254687c037a84ea7134ad2"
+    "wave3": "cd9930c27bb476b3b40907df2605596b04f86e62"
   }
 }
