@@ -124,8 +124,8 @@
   },
   "applicability": "evidence/applicability-37a788a4a.json",
   "documentationBranchBase": "189ca0d73a8f9b92451d343ca84b4b7074c57c6c",
-  "updatedAtUTC": "2026-11-25T01:04:48.116850+00:00",
-  "latestRecordedExecutionSource": "cd795e378afed5c7556a71e26e5247da9ff22869",
+  "updatedAtUTC": "2026-11-25T01:26:38.515858+00:00",
+  "latestRecordedExecutionSource": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91",
   "manifestAudit": {
     "status": "EXECUTED_PASS",
     "source": "7b7f7e4460200d7e98162dd525d67f8ca1860911",
@@ -152,12 +152,46 @@
     "acceptanceTests": "NOT_INFERRED"
   },
   "applicationBuildProgress": {
-    "status": "RUNNING_REPORTED",
+    "status": "STARTED_NO_COMPLETED_RESULT",
     "source": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91",
-    "job": "job_8807a8836db9",
+    "attempt": 2,
     "scheme": "AI_HLY",
-    "reportedBy": "root owner",
-    "recordedAtUTC": "2026-11-25T01:04:48.116850+00:00",
-    "completedResultInThisPacket": false
+    "jobReportedByOwner": "job_e9db205b711d",
+    "startedAtUTC": "2026-11-25T01:23:17.863531+00:00",
+    "observedAtUTC": "2026-11-25T01:25:39.507812+00:00",
+    "processReceipt": "evidence/app-build-attempt1-20fb9f711/ai-hly-build-attempt2-process.json",
+    "capacityPolicyRefresh": "evidence/app-build-attempt1-20fb9f711/app-build-capacity-policy-refresh.json",
+    "completedSuccessfulBuildInThisPacket": false
+  },
+  "applicationBuildAttempts": [
+    {
+      "id": "AI_HLY attempt1",
+      "source": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91",
+      "status": "FAILED",
+      "failureClassification": "RELOCATED_PRECOMPILED_MODULE_CACHE",
+      "exitCode": 65,
+      "durationSeconds": 330.678,
+      "receipt": "evidence/app-build-attempt1-20fb9f711/ai-hly-build-attempt1.json",
+      "diagnostics": "evidence/app-build-attempt1-20fb9f711/ai-hly-build-attempt1-errors.json",
+      "assessment": "evidence/app-build-attempt1-20fb9f711/build-assessment.json",
+      "rawLogSHA256": "8638ebde19ff53fbd8564aa1613d726a06bf4503f96a30f4ca09ea94924e61fe",
+      "acceptanceTestsExecuted": 0
+    },
+    {
+      "id": "AI_HLY attempt2",
+      "source": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91",
+      "status": "STARTED_NO_COMPLETED_RESULT",
+      "startedAtUTC": "2026-11-25T01:23:17.863531+00:00",
+      "processReceipt": "evidence/app-build-attempt1-20fb9f711/ai-hly-build-attempt2-process.json",
+      "observedAtUTC": "2026-11-25T01:25:39.507812+00:00",
+      "completedReceiptExistsAtCapture": false
+    }
+  ],
+  "moduleCacheRepair": {
+    "status": "RECORDED_RETRY_RESULT_PENDING",
+    "source": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91",
+    "receipt": "evidence/app-build-attempt1-20fb9f711/app-build-attempt1-cache-repair.json",
+    "sourceFilesChanged": false,
+    "otherOwnerCachesChanged": false
   }
 }

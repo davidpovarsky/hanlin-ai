@@ -1,0 +1,16 @@
+{
+  "sourceCommit": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91",
+  "scheme": "AI_HLY",
+  "status": "WAITING_FOR_MEASURED_CAPACITY",
+  "elapsedSeconds": 393.063,
+  "capacity": {
+    "atUTC": "2026-11-25T01:21:53.348228+00:00",
+    "cpuIdlePercent": 60.58,
+    "availableGiB": 6.728,
+    "diskGiB": 40.479,
+    "nativeProcesses": [
+      "6678  6371   4.2  52992 /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild",
+      "9479  4997   0.0 244832 /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild"
+    ]
+  }
+}

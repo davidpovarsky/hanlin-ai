@@ -1,6 +1,6 @@
 # Composer capabilities: validation evidence
 
-This evidence packet includes the completed native preparation at `7b7f7e4460200d7e98162dd525d67f8ca1860911`, RuntimeHost preparation at `cd795e378afed5c7556a71e26e5247da9ff22869`, and generated inventory freeze `20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91`. It was assembled in an isolated documentation branch based on `189ca0d73a8f9b92451d343ca84b4b7074c57c6c`. Overall completion is **pending**. Each receipt retains its original execution source; assembling this packet did not run a compiler, tests, or a simulator.
+This evidence packet includes the completed native preparation at `7b7f7e4460200d7e98162dd525d67f8ca1860911`, RuntimeHost preparation at `cd795e378afed5c7556a71e26e5247da9ff22869`, generated inventory freeze `20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91`, and the first application build failure at that same source. It was assembled in an isolated documentation branch based on `189ca0d73a8f9b92451d343ca84b4b7074c57c6c`. Overall completion is **pending**. Each receipt retains its original execution source; assembling this packet did not run a compiler, tests, or a simulator.
 
 The [validation plan](VALIDATION_PLAN.json) records the remaining gates. The [machine index](EVIDENCE_INDEX.json) lists results and their receipt paths. [Packaging metadata](evidence/package-20261125.json) maps copied files to their original paths and checksums; [SHA256SUMS](evidence/SHA256SUMS-20261125) covers the packaged evidence.
 
@@ -22,6 +22,7 @@ The dedicated manifest regression, native artifact preparation, and completed Ru
 | RuntimeHost final attempt 4 | `cd795e378afed5c7556a71e26e5247da9ff22869` | After original native resource generation: exit 0 in 96.647s, 177 passed, 0 failed, one unchanged opt-in skip; ZIP validation and JITless probe passed | [receipt](evidence/runtime-host-final-attempt4-cd795e378/runtime-host-final-attempt4.json), [complete compressed log](evidence/runtime-host-final-attempt4-cd795e378/runtime-host-final-attempt4.log.gz) |
 | Original native preparation | `7b7f7e4460200d7e98162dd525d67f8ca1860911` | Original preparer exit 0; 15 frameworks and four support groups validated; consumer acceptance tests remain pending | [preparer receipt](evidence/native-preparation-7b7f7e446/expo-current-cached-preparation.json), [validation receipt](evidence/native-preparation-7b7f7e446/native-preparation-final.json) |
 | Final manifest-contract regression | `7b7f7e4460200d7e98162dd525d67f8ca1860911` | One passed, zero failed/skipped; exit 0 in 0.618s at 2026-11-25 00:35:34.980179 UTC, including changed embedded-plugin identity and new source-authority rejection cases | [receipt](evidence/manifest-final-7b7f7e446/manifest-final-test.json), [complete compressed log](evidence/manifest-final-7b7f7e446/manifest-final-test.log.gz) |
+| AI_HLY build-for-testing attempt 1 | `20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91` | Exit 65 after 330.678s; copied SwiftShims PCM retained the producer ModuleCache path. No acceptance tests executed by this build command | [receipt](evidence/app-build-attempt1-20fb9f711/ai-hly-build-attempt1.json), [xcresult errors](evidence/app-build-attempt1-20fb9f711/ai-hly-build-attempt1-errors.json), [complete compressed log](evidence/app-build-attempt1-20fb9f711/ai-hly-build-attempt1.log.gz) |
 | App preparation / A2UI | `f54aebbb35169ea63eca146a1ba3ef4e8bf4f84d` | Both original source generators passed their checks; original A2UI schema generator executed successfully | [receipt](evidence/mac-validation-20261125/app-preparation.json), [A2UI result](evidence/mac-validation-20261125/a2ui-schemas.json/result.json) |
 
 ### Platform coverage is aggregated
@@ -72,6 +73,22 @@ The one skipped case was `actual Node job crosses 300 seconds with no hidden dea
 
 **Archive freshness passed at `cd795e378` after original native resource generation.** Earlier attempts 2 and 3 retain their actual 177-pass results, sources and archive hashes. The generated source-revision metadata was subsequently frozen in `20fb9f711`; no new test execution is attributed to that metadata-only commit.
 
+### Application build attempt 1 and isolated cache repair
+
+The first `AI_HLY` Debug `build-for-testing` attempt ran at `20fb9f711` from 2026-11-25 01:04:51.837629 UTC to 01:10:22.514325 UTC. It exited **65 after 330.678 seconds**. Both the original raw log and exported xcresult issue summaries report that the copied `SwiftShims` precompiled module contains the original producer's absolute ModuleCache path, followed by `Missing required module 'SwiftShims'`. The failed compiler target was `ChavrusaChatNotificationService`. This is a recorded compilation failure; the build-for-testing command did not execute acceptance tests.
+
+The [build assessment](evidence/app-build-attempt1-20fb9f711/build-assessment.json) links the original [APFS cache-copy receipt](evidence/app-build-attempt1-20fb9f711/derived-cache-reuse.json), exact compiler diagnostics, and [repair receipt](evidence/app-build-attempt1-20fb9f711/app-build-attempt1-cache-repair.json). At 01:15:16.954023 UTC the root owner moved only this task's isolated `ModuleCache.noindex` aside for regeneration. The repair receipt records no source changes and no changes to another owner's cache. It does not claim a successful recompilation.
+
+The [historical retry admission snapshot](evidence/app-build-attempt1-20fb9f711/app-build-admission.json), observed at 01:21:53.348228 UTC, records waiting under the superseded admission policy. The [policy-refresh receipt](evidence/app-build-attempt1-20fb9f711/app-build-capacity-policy-refresh.json) records stopping only the owned waiting Python process, with an empty child-process list and no compiler. The root owner refreshed admission to use the current measured memory/disk policy. **This waiting-runner cancellation is orchestration, not a build or test failure.** The [earlier admission race-resolution receipt](evidence/app-build-attempt1-20fb9f711/app-build-admission-race-resolution.json) separately preserves removal of a duplicate waiting process while the first compiler remained active.
+
+The [actual attempt-2 process receipt](evidence/app-build-attempt1-20fb9f711/ai-hly-build-attempt2-process.json) records an `xcodebuild` start at **01:23:17.863531 UTC**, PID 15399, at the unchanged `20fb9f711` source with `-jobs 2`. At the evidence capture of 01:25:39.507812 UTC no completed attempt-2 receipt existed. A process start does not establish a successful build; all application/native/editor/UI gates remain pending.
+
+The complete 13,619,832-byte attempt-1 raw log is losslessly compressed; its uncompressed SHA-256 is:
+
+`8638ebde19ff53fbd8564aa1613d726a06bf4503f96a30f4ca09ea94924e61fe`
+
+The original `.xcresult` remains at the Mac path recorded in the build receipt. A [seven-file bundle hash inventory](evidence/app-build-attempt1-20fb9f711/xcresult-sha256.json) and original exported issue summaries are preserved here. Packaging this evidence performed no native compilation, test or simulator operation, cache repair, or application-source mutation.
+
 ## Required work still pending
 
 | Gate | Exact pending scope |
@@ -83,7 +100,7 @@ The one skipped case was `actual Node job crosses 300 seconds with no hidden dea
 | iPhone UI | Three composer-capability UI methods plus the existing model-picker/draft regression |
 | iPad UI | The same three composer-capability UI methods |
 
-At this packet checkpoint the root owner has reported the `AI_HLY` build active at `20fb9f711` in `job_8807a8836db9`; this packet contains no completed application build result. The pending gates above remain open.
+This packet records the failed first `AI_HLY` build, isolated ModuleCache repair, admission-policy refresh and actual retry start. It contains no successful application build or application/native/editor/UI test result. The pending gates above remain open.
 
 The UI inventory is **seven executions across two devices**, comprising four distinct methods. The catalog/map fixture supplies UI metadata only; it does not provide a tool executor or a fabricated model response.
 
