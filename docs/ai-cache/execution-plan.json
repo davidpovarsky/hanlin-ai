@@ -163,15 +163,15 @@
     },
     "latest_sync_receipt": "evidence/latest-sync-20261125.json",
     "current_host_refresh": {
-      "source": "a489d5ef622f279ed4de7f108e6297447f0cbacd",
+      "source": "02619cfab1a52519d436441abd1f732a7bbd91c5",
       "status": "RUNNING",
-      "reason": "Latest upstream provenance changes SDK source fingerprint; original archive sync invokes original builder."
+      "reason": "After latest NativeScript adapter typing correction: original audit refresh before archive sync"
     }
   },
-  "updated_at": "2026-11-25T01:53:36.612070+00:00",
-  "latest_integrated_source": "deeab80ef98b5fb97db6bbbd51f9943130617e3f",
+  "updated_at": "2026-11-25T02:00:50.373797+00:00",
+  "latest_integrated_source": "02619cfab1a52519d436441abd1f732a7bbd91c5",
   "synchronized_heads": {
-    "composer": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91",
+    "composer": "801bb3f66cfe6d4d0ff9e49e0094ea2887525fbd",
     "miniapps_sdk": "05a40d39a8b28ec3fd3741800ebf079834a00070",
     "wave3": "bad6e68df21d4ecfe11f3b6fc3f4242eba5b23ed"
   }
