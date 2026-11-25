@@ -80,6 +80,27 @@ final class HanlinChatPresentationTests: XCTestCase {
         }
     }
 
+    func testZoomVisualSourceReturnsOnlyForFinalSheetDismissal() {
+        var state = HanlinChatPresentationState()
+        XCTAssertTrue(state.launcherIsVisible(usesZoom: true))
+        state.open(.sheet)
+        XCTAssertFalse(state.launcherIsVisible(usesZoom: true))
+        state.request(.inspector)
+        XCTAssertFalse(state.launcherIsVisible(usesZoom: true))
+        state.finishDismissal(.sheet)
+        XCTAssertFalse(state.launcherIsVisible(usesZoom: true))
+        state.request(.sheet)
+        XCTAssertFalse(state.launcherIsVisible(usesZoom: true))
+        state.finishDismissal(.inspector)
+        state.close()
+        XCTAssertTrue(state.launcherIsVisible(usesZoom: true))
+        XCTAssertFalse(state.launcherIsVisible(usesZoom: false))
+        XCTAssertFalse(state.showsLauncher)
+        state.finishDismissal(.sheet)
+        XCTAssertTrue(state.showsLauncher)
+        XCTAssertTrue(state.launcherIsVisible(usesZoom: true))
+    }
+
     func testEmptyPolicyAndActiveReconfiguration() {
         var state = HanlinChatPresentationState(policy: .init(modes: [], initialMode: .inspector))
         XCTAssertEqual(state.policy.initialMode, .sheet)

@@ -27,16 +27,18 @@ public struct HanlinLauncher: View {
 
     public var body: some View {
         Group {
-            // Remove entry controls from layout and accessibility while either
-            // native surface owns the conversation, including handoffs.
-            if controller.showsLauncher {
-                if let transition {
-                    launcher.matchedTransitionSource(id: transition.sourceID, in: transition.namespace)
-                } else {
-                    launcher
-                }
+            // Never remove or replace the registered source as the sheet opens.
+            // The original namespace, ID, geometry and native zoom are retained.
+            if let transition {
+                launcher.matchedTransitionSource(id: transition.sourceID, in: transition.namespace)
+            } else {
+                launcher
             }
         }
+        // Conceal the rendering, not the identity of the transition source.
+        .opacity(controller.state.launcherIsVisible(usesZoom: transition != nil) ? 1 : 0)
+        .allowsHitTesting(controller.showsLauncher)
+        .accessibilityHidden(!controller.showsLauncher)
         .onChange(of: controller.isPresented) { _, open in
             if open {
                 quickFocused = false

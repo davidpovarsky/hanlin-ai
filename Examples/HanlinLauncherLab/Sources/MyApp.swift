@@ -113,6 +113,7 @@ private struct LabReader: View {
                             Text("שאלה מהירה").tag(HanlinLauncherStyle.quickComposer)
                         }
                         .pickerStyle(.segmented)
+                        .disabled(presentation.isPresented)
                         Picker("מצבי הצגה", selection: $modes) {
                             ForEach(LabModes.allCases) { Text($0.title).tag($0) }
                         }
@@ -162,14 +163,17 @@ private struct LabReader: View {
             .navigationTitle("Hanlin SDK")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                if style == .toolbarCapsule && presentation.showsLauncher {
+                if style == .toolbarCapsule {
                     ToolbarItem(placement: .topBarTrailing) {
                         launcher
                     }
+                    .sharedBackgroundVisibility(
+                        presentation.state.launcherIsVisible(usesZoom: zoom) ? .automatic : .hidden
+                    )
                 }
             }
             .overlay(alignment: .bottomTrailing) {
-                if style != .toolbarCapsule && presentation.showsLauncher {
+                if style != .toolbarCapsule {
                     launcher
                         .padding(.horizontal, 20)
                         .padding(.bottom, 18)

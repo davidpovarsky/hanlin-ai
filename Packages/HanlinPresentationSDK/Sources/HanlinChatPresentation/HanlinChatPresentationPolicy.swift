@@ -47,6 +47,16 @@ public struct HanlinChatPresentationState: Equatable, Sendable {
     /// Keep them hidden through native dismissal and presentation handoffs.
     public var showsLauncher: Bool { phase == .closed }
 
+    /// Keep the source view mounted for the native zoom. The launcher is
+    /// visually concealed during an open chat or handoff. When a zoom sheet
+    /// actually closes, restore its visual destination for the native return
+    /// animation, but keep the entry noninteractive until dismissal completes.
+    public func launcherIsVisible(usesZoom: Bool) -> Bool {
+        if showsLauncher { return true }
+        if usesZoom, case .dismissing(.sheet, next: nil) = phase { return true }
+        return false
+    }
+
     public var isTransitioning: Bool {
         if case .dismissing = phase { return true }; return false
     }
