@@ -28,6 +28,7 @@ public final class HanlinExpoUIModule: Module {
 public final class HanlinTextEditorProps: UIBaseViewProps {
     @Field public var value: String?
     @Field public var defaultValue: String?
+    @Field public var mostRecentEventCount: Int?
     @Field public var placeholder: String?
     @Field public var isEditable = true
     public var onValueChange = EventDispatcher()
@@ -49,6 +50,7 @@ private struct HanlinTextEditorContent: View {
     @ObservedObject var props: HanlinTextEditorProps
     @State private var text: String
     @State private var hasInitialValue: Bool
+    @State private var nativeEventCount: Int
 
     init(props: HanlinTextEditorProps) {
         self.props = props
@@ -56,6 +58,7 @@ private struct HanlinTextEditorContent: View {
         // Initialize state in the mounted SwiftUI child and accept a late first value.
         _text = State(initialValue: props.value ?? props.defaultValue ?? "")
         _hasInitialValue = State(initialValue: props.value != nil || props.defaultValue != nil)
+        _nativeEventCount = State(initialValue: props.mostRecentEventCount ?? 0)
     }
 
     private var textBinding: Binding<String> {
@@ -65,10 +68,22 @@ private struct HanlinTextEditorContent: View {
                 guard newValue != text else { return }
                 hasInitialValue = true
                 text = newValue
+                nativeEventCount = max(nativeEventCount, props.mostRecentEventCount ?? 0) + 1
                 // Only native edits emit events; incoming React values do not.
-                props.onValueChange(["value": newValue])
+                props.onValueChange(["value": newValue, "eventCount": nativeEventCount])
             }
         )
+    }
+
+    private func applyControlledValue() {
+        guard let value = props.value else { return }
+        // Older compiled packages omit the acknowledgement and keep their existing behavior.
+        if let acknowledged = props.mostRecentEventCount {
+            guard acknowledged >= nativeEventCount else { return }
+            nativeEventCount = acknowledged
+        }
+        hasInitialValue = true
+        if value != text { text = value }
     }
 
     var body: some View {
@@ -83,10 +98,12 @@ private struct HanlinTextEditorContent: View {
                 .scrollContentBackground(.hidden)
                 .disabled(!props.isEditable)
         }
-        .onChange(of: props.value, initial: true) { _, newValue in
-            guard let newValue else { return }
-            hasInitialValue = true
-            if newValue != text { text = newValue }
+        .onChange(of: props.value, initial: true) { _, _ in
+            applyControlledValue()
+        }
+        .onChange(of: props.mostRecentEventCount) { _, _ in
+            // A parent can reject or normalize an edit without changing its value.
+            applyControlledValue()
         }
         .onChange(of: props.defaultValue, initial: true) { _, newValue in
             guard !hasInitialValue, props.value == nil, let newValue else { return }
