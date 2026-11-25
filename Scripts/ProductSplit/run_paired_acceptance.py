@@ -486,6 +486,9 @@ def main():
             # Simulator ad-hoc signing includes the targets' existing entitlements.
             # No team, provisioning profile, application ID or distribution signing is changed.
             "CODE_SIGNING_ALLOWED=YES", "CODE_SIGNING_REQUIRED=YES", "CODE_SIGN_IDENTITY=-"]
+        # Preserve XCTest results/attachments without a second, 600-second
+        # simulator sysdiagnose after a failure. Targeted capture remains below.
+        test_base = base + ["-collect-test-diagnostics", "never"]
         state["status"] = "BUILD_FAILED"
         # The observed cold first-product build was still compiling after 40 min.
         # Allow 60 min for that build; first-launch, routing and UI deadlines stay unchanged.
@@ -617,7 +620,7 @@ def main():
             adapter_assets = start_native_adapter_assets(state)
             state["original_runtime_selectors"] = runtime_selectors
             runtime_result = EVIDENCE / "OriginalRuntimes.xcresult"
-            argv = base + ["-scheme", "HanlinMiniApps", "test-without-building",
+            argv = test_base + ["-scheme", "HanlinMiniApps", "test-without-building",
                 "-resultBundlePath", str(runtime_result)]
             argv += ["-only-testing:" + selector for selector in runtime_selectors]
             code, _ = command(argv, "original-runtimes.log", timeout=1200, allow_failure=True)
@@ -647,7 +650,7 @@ def main():
             runtime_selectors = list(SDK04_MINIAPPS_SELECTORS)
             state["original_runtime_selectors"] = runtime_selectors
             runtime_result = EVIDENCE / "OriginalRuntimes.xcresult"
-            argv = base + ["-scheme", "HanlinMiniApps", "test-without-building",
+            argv = test_base + ["-scheme", "HanlinMiniApps", "test-without-building",
                 "-resultBundlePath", str(runtime_result)]
             argv += ["-only-testing:" + selector for selector in runtime_selectors]
             code, _ = command(argv, "original-runtimes.log", timeout=1200, allow_failure=True)
@@ -663,7 +666,7 @@ def main():
                 raise RuntimeError("The fresh owned simulator already has a transfer package input")
             shutil.copy2(archive, documents / archive.name)
         result = EVIDENCE / "Paired.xcresult"
-        argv = base + ["-scheme", "AI_HLY", "test-without-building",
+        argv = test_base + ["-scheme", "AI_HLY", "test-without-building",
             "-resultBundlePath", str(result),
             "-test-timeouts-enabled", "YES", "-maximum-test-execution-time-allowance", "600"]
         argv += ["-only-testing:" + selector for selector in selectors]
