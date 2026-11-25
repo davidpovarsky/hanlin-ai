@@ -1,0 +1,89 @@
+{
+  "head": "ade2f626e37102abde83050c94d524d19e0726bb",
+  "selectedGroups": [
+    "app_unit_tests",
+    "runtimecore_host",
+    "simulator_targeted_ui"
+  ],
+  "activeRuns": [],
+  "recentRuns": [
+    {
+      "conclusion": "failure",
+      "databaseId": 45256955142,
+      "headSha": "0b40a021c6d28e4d1c47ed87060d063c8456ba9f",
+      "status": "completed"
+    },
+    {
+      "conclusion": "failure",
+      "databaseId": 45246711373,
+      "headSha": "36d3c51bdba93ada2c2722ed0e9b99109d84a616",
+      "status": "completed"
+    },
+    {
+      "conclusion": "failure",
+      "databaseId": 45238831508,
+      "headSha": "39a10b1cbf4645b629f556ea312e2576a4e566db",
+      "status": "completed"
+    },
+    {
+      "conclusion": "failure",
+      "databaseId": 45230545076,
+      "headSha": "7523f45cf8ea180a8e30f511ff0fbd3bb5ccae6d",
+      "status": "completed"
+    },
+    {
+      "conclusion": "failure",
+      "databaseId": 45224582718,
+      "headSha": "8429dbb6cb66e266504b8d055586829ba7aa61f7",
+      "status": "completed"
+    },
+    {
+      "conclusion": "failure",
+      "databaseId": 45218713371,
+      "headSha": "7f6a960eb341e3a6642db390d4b5de0b2e3448fc",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 45217195070,
+      "headSha": "5d0ea90d98b405d38b66bb735198b945225877ba",
+      "status": "completed"
+    },
+    {
+      "conclusion": "failure",
+      "databaseId": 45181755996,
+      "headSha": "5d0ea90d98b405d38b66bb735198b945225877ba",
+      "status": "completed"
+    },
+    {
+      "conclusion": "failure",
+      "databaseId": 45177292887,
+      "headSha": "2549bb1395045e1514ec6c273239fcdaf18af207",
+      "status": "completed"
+    },
+    {
+      "conclusion": "failure",
+      "databaseId": 45173021578,
+      "headSha": "494382c95755020f465977c74ac0edf5c4c27d12",
+      "status": "completed"
+    },
+    {
+      "conclusion": "failure",
+      "databaseId": 45171553469,
+      "headSha": "32b3168d73a9b92c3a774bcbb97f95941d8a4db7",
+      "status": "completed"
+    },
+    {
+      "conclusion": "success",
+      "databaseId": 45166004801,
+      "headSha": "3a9e1681f03080412d0ee934a00b307f3d7ae59c",
+      "status": "completed"
+    }
+  ],
+  "previousRun": 45256955142,
+  "previousNativeBundleScan": "PASS:2 equal copies and37 source resources",
+  "previousLocalization": "FAIL:single-bundle selection",
+  "sourceRepair": "f353a0ca7794d8c0682c8ff26d54536fa8970b41",
+  "upstreamProducer": "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8",
+  "expectedInvocations": 342
+}

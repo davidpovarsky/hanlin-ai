@@ -480,6 +480,31 @@ final class HanlinActiveComposerSessionBridge {
         return targetID
     }
 
+
+    /// Uses the original first-turn state machine without modifying the user's
+    /// unsent Home draft. The repair button is the explicit send action.
+    @discardableResult
+    func beginImportedFirstTurn(submissionID: UUID, text: String, documentURLs: [URL],
+                                targetChatID: UUID, selectedModelIndex: Int) -> Bool {
+        if completedSubmissionIDs.contains(submissionID) { return true }
+        if let current = pendingFirstTurn, current.isPendingHandoff {
+            return current.submissionID == submissionID
+        }
+        var submission = HanlinPendingFirstTurn(
+            submissionID: submissionID, text: text, images: [], documentURLs: documentURLs,
+            selectedURLs: [], prompts: [], selectedModelIndex: selectedModelIndex,
+            ifSearch: false, ifKnowledge: false, ifToolUse: true, ifThink: false,
+            thinkingLength: 0, ifPlanning: false, ifAudio: false,
+            selectedImageSize: "square", imageReversePrompt: "", temperature: 0.8,
+            topP: 0.9, maxTokens: 2048, maxMessagesNum: 20,
+            status: .awaitingEndpoint(targetChatID: targetChatID))
+        submission.restoresHomeDraft = false
+        submission.preservesConversationSettings = true
+        pendingFirstTurn = submission
+        fulfillPendingFirstTurnIfReady()
+        return true
+    }
+
     private func clearHomeDraftFields() {
         homeMessage = ""
         homeSelectedImages.removeAll()
@@ -489,6 +514,7 @@ final class HanlinActiveComposerSessionBridge {
     }
 
     private func restoreHomeDraft(from pending: HanlinPendingFirstTurn) {
+        guard pending.restoresHomeDraft else { return }
         if homeMessage.isEmpty {
             homeMessage = pending.text
         }
@@ -559,19 +585,21 @@ final class HanlinActiveComposerSessionBridge {
         if endpoint.selectedModelIndex.wrappedValue != resolvedModelIndex {
             endpoint.onSelectModel(resolvedModelIndex)
         }
-        endpoint.ifSearch.wrappedValue = pending.ifSearch
-        endpoint.ifKnowledge.wrappedValue = pending.ifKnowledge
         endpoint.ifToolUse.wrappedValue = pending.ifToolUse
-        endpoint.ifThink.wrappedValue = pending.ifThink
-        endpoint.thinkingLength.wrappedValue = pending.thinkingLength
-        endpoint.ifPlanning.wrappedValue = pending.ifPlanning
-        endpoint.ifAudio.wrappedValue = pending.ifAudio
-        endpoint.selectedImageSize.wrappedValue = pending.selectedImageSize
-        endpoint.imageReversePrompt.wrappedValue = pending.imageReversePrompt
-        endpoint.temperature.wrappedValue = pending.temperature
-        endpoint.topP.wrappedValue = pending.topP
-        endpoint.maxTokens.wrappedValue = pending.maxTokens
-        endpoint.maxMessagesNum.wrappedValue = pending.maxMessagesNum
+        if !pending.preservesConversationSettings {
+            endpoint.ifSearch.wrappedValue = pending.ifSearch
+            endpoint.ifKnowledge.wrappedValue = pending.ifKnowledge
+            endpoint.ifThink.wrappedValue = pending.ifThink
+            endpoint.thinkingLength.wrappedValue = pending.thinkingLength
+            endpoint.ifPlanning.wrappedValue = pending.ifPlanning
+            endpoint.ifAudio.wrappedValue = pending.ifAudio
+            endpoint.selectedImageSize.wrappedValue = pending.selectedImageSize
+            endpoint.imageReversePrompt.wrappedValue = pending.imageReversePrompt
+            endpoint.temperature.wrappedValue = pending.temperature
+            endpoint.topP.wrappedValue = pending.topP
+            endpoint.maxTokens.wrappedValue = pending.maxTokens
+            endpoint.maxMessagesNum.wrappedValue = pending.maxMessagesNum
+        }
 
         endpoint.message.wrappedValue = pending.text
         endpoint.selectedImages.wrappedValue = pending.images

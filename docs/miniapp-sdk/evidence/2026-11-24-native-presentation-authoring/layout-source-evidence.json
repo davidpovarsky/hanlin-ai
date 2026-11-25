@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-24T00:13:13.717012+00:00",
+  "status": "EXECUTED_PASS",
+  "tests": 6,
+  "log": "layout-source-integration.log",
+  "logSHA256": "3c78fc4bc461ecdb097acd778ac73a23a7cf0eb7c26200e4d0c07ccb362d2872",
+  "implementationSHA256": "346193d2dd635d3276b0ae5a1bf3ae641bec035c0d4ce2949b4dc6ae96c1df8f",
+  "testSHA256": "ec344806d68c28b1ff02f71be199bf1715a30163e3445ae8b43815122290d5a0",
+  "sdkManifestSHA256": "4d798f5cd5734a2d25d933a4d421724a14222067b87540026d44448710426f51",
+  "scope": "Actual original TypeScript and Babel parser; JSON/object/function layout source preservation, syntax/missing-source/renderer diagnostics, isolated native type environments, source and directory resource round trip. Native Apple layout execution is separate."
+}

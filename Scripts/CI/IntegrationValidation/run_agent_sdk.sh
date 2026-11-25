@@ -1,10 +1,35 @@
 #!/bin/bash
 set -euo pipefail
+# Exact pin repair: resolve once and build iOS; accepted tests stay historical.
+if [[ -n "${GITHUB_EVENT_PATH:-}" ]] && python3 - "$GITHUB_EVENT_PATH" <<'PY_PIN_BUILD_SELECTOR'
+import json,sys
+sys.exit(0 if json.load(open(sys.argv[1])).get('inputs',{}).get('exact_test_selector') == 'HanlinNativeToolPinBuildRecheck' else 1)
+PY_PIN_BUILD_SELECTOR
+then
+  exec python3 "$(git rev-parse --show-toplevel)/Scripts/CI/IntegrationValidation/run_native_tool_pin_build.py"
+fi
+# This separate composed-source delta never invokes old acceptance suites.
+if [[ -n "${GITHUB_EVENT_PATH:-}" ]] && python3 - "$GITHUB_EVENT_PATH" <<'PY_STOP_SELECTOR'
+import json,sys
+inputs=json.load(open(sys.argv[1])).get('inputs',{})
+sys.exit(0 if inputs.get('exact_test_selector') in {'HanlinStopContinuationDelta', 'HanlinNativeToolCancellationRecheck'} else 1)
+PY_STOP_SELECTOR
+then
+  exec python3 "$(git rev-parse --show-toplevel)/Scripts/CI/IntegrationValidation/run_stop_continuation_delta.py"
+fi
+# Only this explicit isolated-candidate selector changes the legacy selection.
+if [[ -n "${GITHUB_EVENT_PATH:-}" ]] && python3 - "$GITHUB_EVENT_PATH" <<'PY_SELECTOR'
+import json,sys
+sys.exit(0 if json.load(open(sys.argv[1])).get('inputs',{}).get('exact_test_selector') in {'HanlinNativeToolCandidate', 'HanlinNativeToolCandidateRecheck', 'HanlinNativeToolHeaderRecheck', 'HanlinNativeToolBridgeRecheck'} else 1)
+PY_SELECTOR
+then
+  exec python3 "$(git rev-parse --show-toplevel)/Scripts/CI/IntegrationValidation/run_native_tool_candidate.py"
+fi
 python3 "$(git rev-parse --show-toplevel)/Scripts/CI/verify_exact_json_vendor.py"
 root="$(git rev-parse --show-toplevel)"
 cd "$root"
 source_sha="$(git rev-parse HEAD)"
-producer_sha=e7bf34111e603ca977becd007dd4e5bb109af857
+producer_sha=07431abccbfb151ca2dab67bca6cf86fcb2bd3b8
 evidence="$root/build/agent-sdk-validation-evidence"
 mkdir -p "$evidence"
 if [[ "${HANLIN_SDK_CORE_AND_SESSION:-0}" == 1 ]]; then
@@ -23,8 +48,9 @@ scratch="$(mktemp -d "${RUNNER_TEMP:-/tmp}/hanlin-agent-sdk.XXXXXXXX")"
 git archive "$source_sha" Packages/HanlinAgentSDK Packages/HanlinPlatform docs/agent-sdk > "$evidence/tested-source.tar"
 tar -xf "$evidence/tested-source.tar" -C "$scratch"
 producer="$scratch/Producer"
-git clone --no-checkout --filter=blob:none --single-branch --branch codex/hanlin-raw-tool-input-20261115 \
+git clone --no-checkout --filter=blob:none --depth=1 \
   https://github.com/davidpovarsky/swift-ai-sdk.git "$producer" > "$evidence/producer-clone.log" 2>&1
+git -C "$producer" fetch --no-tags --depth=1 origin "$producer_sha" >> "$evidence/producer-clone.log" 2>&1
 git -C "$producer" checkout --detach "$producer_sha" >> "$evidence/producer-clone.log" 2>&1
 test "$(git -C "$producer" rev-parse HEAD)" = "$producer_sha"
 printf '%s\n' "$producer_sha" > "$evidence/producer-commit.txt"
@@ -71,7 +97,7 @@ for p in root.rglob('Package.resolved'):
     if any(s in ['checkouts','.build','DerivedData'] for s in p.relative_to(root).parts):continue
     b=p.read_bytes();data=json.loads(b);pins=[x for x in data['pins'] if x['identity']=='swift-ai-sdk']
     if not p.is_relative_to(root/'Producer'):
-        assert len(pins)==1 and pins[0]['state']['revision']=='e7bf34111e603ca977becd007dd4e5bb109af857',str(p)
+        assert len(pins)==1 and pins[0]['state']['revision']=='07431abccbfb151ca2dab67bca6cf86fcb2bd3b8',str(p)
     dest=folder/f'{len(records):02d}-Package.resolved';dest.write_bytes(b)
     records.append({'source_path':str(p),'raw_file':str(dest.relative_to(evidence)),'sha256':hashlib.sha256(b).hexdigest(),'resolved':data})
 (evidence/'resolution.json').write_text(json.dumps(records,indent=2))

@@ -1,0 +1,10 @@
+{
+  "name": "Table Share",
+  "version": "1.0.0",
+  "description": "Split a restaurant bill exactly, with tax, tip and optional whole-dollar contributions.",
+  "entry": "nativescript/app/bundle.mjs",
+  "runInApp": true,
+  "hanlinRuntime": "hanlin-nativescript",
+  "icon": "person.3",
+  "color": "#315ACB"
+}

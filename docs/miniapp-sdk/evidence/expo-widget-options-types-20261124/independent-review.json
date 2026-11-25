@@ -1,0 +1,11 @@
+{
+  "reviewer": "/root/entrypoints",
+  "mode": "read-only",
+  "finalSourceHashes": {
+    "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinOriginalExpoWidgetOptions.swift": "6ca742d0e0413a2f219723ec65caab7df5a485257ba75277603ec132a7a6deac",
+    "AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift": "024bd8bcb47d43ace64fb410938f393effb3c6e8bd327506cf9065851de8073c"
+  },
+  "status": "NO_CONCRETE_BLOCKER",
+  "scope": "Final options return-boundary ordering and dependency optionality, adapter checked conversion before unchanged callback; no tests/probes/CI by reviewer.",
+  "supersedes": "The earlier pre-loop dictionary conversion review is superseded by final return-boundary conversion review."
+}

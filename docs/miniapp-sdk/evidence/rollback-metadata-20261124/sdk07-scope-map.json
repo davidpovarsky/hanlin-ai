@@ -1,0 +1,30 @@
+{
+  "sourceReviewed": "cbb662d3cd669901de2e18f2c7d94c0487aecc20",
+  "storeLifecycle": {
+    "test": "HanlinAtomicScriptStoreTests/lifecycle",
+    "before": "Real rollback defect reproduced. Existing test used identical descriptors and nil manifests.",
+    "after": "Strengthened one method passes with the documented portable projection; Apple pending.",
+    "source": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinAtomicScriptStore.swift"
+  },
+  "priorReceiptNotMisused": {
+    "path": "docs/agent-sdk/evidence/native-registry-45163990486/receipt.json",
+    "scope": "Only persistedRegistryIdentity, persistedBackupRegistryIdentity and validRegistrySelection ran (3 methods/4 argument cases). Compiling or reporting the suite does not prove lifecycle ran."
+  },
+  "permissionRevocation": {
+    "storedMetadataTest": "HanlinAtomicScriptStoreTests/capabilityGrantLifecycle checks persisted legacy metadata only.",
+    "hostExistingTest": "AI_HLYTests/HanlinUnifiedHostServicesE2ETests.swift:123-164, legacyPackageGrantMetadataDoesNotGateNetwork, explicitly continues network authorization after revoking legacy package metadata.",
+    "authority": "Packages/HanlinPlatform/Sources/HanlinScriptServices/HanlinScriptPermissionAuthority.swift:40-46 returns allowed; device services own OS authorization.",
+    "status": "Actual OS permission-revocation execution was not established by the inspected receipts. No new Hanlin permission gate was introduced or requested by this patch."
+  },
+  "widgetInvalidation": {
+    "source": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift:399-414",
+    "method": "staleUndeclaredDisabledAndUninstalledActionsRejectBeforeMutation",
+    "boundary": "Existing targeted action-store test source, not a newly executed full package lifecycle or native acceptance receipt."
+  },
+  "notClaimed": [
+    "Complete SDK07 readiness",
+    "full package UI lifecycle",
+    "all80 extension/runtime cells",
+    "physical device permission changes"
+  ]
+}

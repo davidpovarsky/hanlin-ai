@@ -1,0 +1,279 @@
+[
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-accessibility-20261123/build/motion-b-accessibility-20261123/admission-plan.json",
+    "path": "admission-plan.json",
+    "bytes": 884,
+    "sha256": "49dc64534d28f225d74435d0032e7d022b4991dfe733e6f7d6545f8520f1faa6",
+    "kind": "byte-identical original receipt"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-accessibility-20261123/build/motion-b-accessibility-20261123/source-admission.json",
+    "path": "source-admission.json",
+    "bytes": 1574,
+    "sha256": "c1b56d9bf75ae49b55f3ce5d1c7b0a1a0b7f45fbc0bde8f145641c769bf81f4f",
+    "kind": "byte-identical original receipt"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-accessibility-20261123/build/motion-b-accessibility-20261123/profile-admission.json",
+    "path": "profile-admission.json",
+    "bytes": 99165,
+    "sha256": "7c8d6d061433474dfa83ffc95d966917285d07176d8112379d6c86caaa86bbde",
+    "kind": "byte-identical original receipt"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-accessibility-20261123/build/motion-b-accessibility-20261123/dispatch-request.json",
+    "path": "dispatch-request.json",
+    "bytes": 367,
+    "sha256": "d1e97e2b7fbdbf0322f047defc98d991cba19b4cdeb3884324fe0e442baf0c13",
+    "kind": "byte-identical original receipt"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-accessibility-20261123/build/motion-b-accessibility-20261123/dispatch-intent.json",
+    "path": "dispatch-intent.json",
+    "bytes": 228,
+    "sha256": "5de0f33e813eb4462630429cafde1e87e9517c698a66bed5f1047aa443c81d3c",
+    "kind": "byte-identical original receipt"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-accessibility-20261123/build/motion-b-accessibility-20261123/dispatch-ack.json",
+    "path": "dispatch-ack.json",
+    "bytes": 100,
+    "sha256": "92595a907c4b1682849df3616882d8a7bab2396a30945b30d2337fb67894f5f4",
+    "kind": "byte-identical original receipt"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-accessibility-20261123/build/motion-b-accessibility-20261123/dispatch-readback.json",
+    "path": "dispatch-readback.json",
+    "bytes": 16735,
+    "sha256": "d83ecda29ce78abdfe8e702978e3e4fcfab334e51d9d0d8d5b910db4c60b02a1",
+    "kind": "byte-identical original receipt"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-accessibility-20261123/build/motion-b-accessibility-20261123/ref-admission.json",
+    "path": "ref-admission.json",
+    "bytes": 532,
+    "sha256": "e94b55e0f0c2df5f79258beddc5b9899b3dd2ef0de348ab74acc1d6250dc19bd",
+    "kind": "byte-identical original receipt"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-accessibility-20261123/build/motion-b-accessibility-20261123/commit-admission.json",
+    "path": "commit-admission.json",
+    "bytes": 1342,
+    "sha256": "67f7489d871b0b227d114889d0b3430ee498ebcee6a5df375a923d97e2aabab2",
+    "kind": "byte-identical original receipt"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-accessibility-20261123/build/motion-b-accessibility-20261123/watch-start.json",
+    "path": "watch-start.json",
+    "bytes": 328,
+    "sha256": "f108db139469ef3d8b7d93a12b26467e404c4d073a4a211b4d2974cef068520b",
+    "kind": "byte-identical original receipt"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-accessibility-20261123/build/motion-b-accessibility-20261123/watch-ended.json",
+    "path": "watch-ended.json",
+    "bytes": 90,
+    "sha256": "acd53ec695a15dc426e9e2eebde7dc734f8648e0e93d3484847c28f3e85a0ade",
+    "kind": "byte-identical original receipt"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-accessibility-20261123/build/motion-b-accessibility-20261123/watch-terminal-readback.json",
+    "path": "watch-terminal-readback.json",
+    "bytes": 15674,
+    "sha256": "7bd612da25c636bc70b8fa1db2e19e8fed15b36494b47414937bc224a40806a7",
+    "kind": "byte-identical original receipt"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-accessibility-20261123/build/motion-b-accessibility-20261123/collector-start.json",
+    "path": "collector-start.json",
+    "bytes": 71,
+    "sha256": "d8e0d4d23d807bbe72a046089991b598888fa7d13b7004323a7cca4e28b03867",
+    "kind": "byte-identical original receipt"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-accessibility-20261123/build/motion-b-accessibility-20261123/collector-ended.json",
+    "path": "collector-ended.json",
+    "bytes": 90,
+    "sha256": "c6b702c53acb6a4c5a519b15afa8790c8dbc32353305984ac6807eb4a0faf5ca",
+    "kind": "byte-identical original receipt"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-accessibility-20261123/build/motion-b-accessibility-20261123/terminal-run.json",
+    "path": "terminal-run.json",
+    "bytes": 15674,
+    "sha256": "7bd612da25c636bc70b8fa1db2e19e8fed15b36494b47414937bc224a40806a7",
+    "kind": "byte-identical original receipt"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-accessibility-20261123/build/motion-b-accessibility-20261123/terminal-jobs.json",
+    "path": "terminal-jobs.json",
+    "bytes": 33008,
+    "sha256": "406cdf95dac5cdd31c1c7c37110073f6d93d10b2dd8dc70c5f68bc8bf8275db5",
+    "kind": "byte-identical original receipt"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-accessibility-20261123/build/motion-b-accessibility-20261123/terminal-artifacts.json",
+    "path": "terminal-artifacts.json",
+    "bytes": 954,
+    "sha256": "6228638178563e3b3ac0e1573a4a395a702c91efc679c292b202b5ba8691957d",
+    "kind": "byte-identical original receipt"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-accessibility-20261123/build/motion-b-accessibility-20261123/terminal-annotations.json",
+    "path": "terminal-annotations.json",
+    "bytes": 377,
+    "sha256": "38602e512da48ab8ef9408396921b5c29dd8609e883fa813f2de307641e34b4f",
+    "kind": "byte-identical original receipt"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-accessibility-20261123/build/motion-b-accessibility-20261123/terminal-check.json",
+    "path": "terminal-check.json",
+    "bytes": 3851,
+    "sha256": "0d42552d3c9f2da9212f9181b077b2cd1a92120781a1586a8cf906e1cba83f61",
+    "kind": "byte-identical original receipt"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-accessibility-20261123/build/motion-b-accessibility-20261123/artifact-verification.json",
+    "path": "artifact-verification.json",
+    "bytes": 270,
+    "sha256": "a55a2e4f4b1d70cb329a2538b804fcf728e537dc5461858aa274211c5d6c5a41",
+    "kind": "byte-identical original receipt"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-accessibility-20261123/build/motion-b-accessibility-20261123/collection-result.json",
+    "path": "collection-result.json",
+    "bytes": 12786,
+    "sha256": "3bdf490ad281eb9a78d143dc8ab33bfd6f27eeb392281994c873f799f049e5a4",
+    "kind": "byte-identical original receipt"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-accessibility-20261123/build/motion-b-accessibility-20261123/native/tests.json",
+    "path": "native/tests.json",
+    "bytes": 2395,
+    "sha256": "f1834a15543920fde1129ae64ef848e773b64bb5c346535cad7bd0df32f667ab",
+    "kind": "byte-identical original receipt"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-accessibility-20261123/build/motion-b-accessibility-20261123/native/test.log",
+    "path": "native/test.log",
+    "bytes": 8014,
+    "sha256": "f50aad793728cb2c754ff7b49c024cbbdb874851b81d33b1f4af49fb8e9cec11",
+    "kind": "byte-identical original receipt"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-accessibility-20261123/build/motion-b-accessibility-20261123/native/source-sha.txt",
+    "path": "native/source-sha.txt",
+    "bytes": 41,
+    "sha256": "c254294f094052cba242ea195647578a07d2253c852cf44149fe37af88050781",
+    "kind": "byte-identical original receipt"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-accessibility-20261123/build/motion-b-accessibility-20261123/native/requested-scope.txt",
+    "path": "native/requested-scope.txt",
+    "bytes": 11,
+    "sha256": "d8dba5cf11d918468abd1a23c703efde392a35659de1e9622bb66c874d133666",
+    "kind": "byte-identical original receipt"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-accessibility-20261123/build/motion-b-accessibility-20261123/native/selected-scope.txt",
+    "path": "native/selected-scope.txt",
+    "bytes": 11,
+    "sha256": "d8dba5cf11d918468abd1a23c703efde392a35659de1e9622bb66c874d133666",
+    "kind": "byte-identical original receipt"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-accessibility-20261123/build/motion-b-accessibility-20261123/native/process-status.txt",
+    "path": "native/process-status.txt",
+    "bytes": 27,
+    "sha256": "e9a5bdca7e32335bc64704071e56d1f4e5590ded4ab54d6209f08f118e43e0c9",
+    "kind": "byte-identical original receipt"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-accessibility-20261123/build/motion-b-accessibility-20261123/native/raw-result-status.json",
+    "path": "native/raw-result-status.json",
+    "bytes": 232,
+    "sha256": "5f67bffca00572178560f00c4a0d4b53d418e6f23615f08dcd8c26ae670413e1",
+    "kind": "byte-identical original receipt"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-accessibility-20261123/build/motion-b-accessibility-20261123/native/motion-boot-readiness.json",
+    "path": "native/motion-boot-readiness.json",
+    "bytes": 1442,
+    "sha256": "568b3ab02e226b9006dc0da22cf6c36b7cdc4b5880f3d722a7d601c2db6ba6b3",
+    "kind": "byte-identical original receipt"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-accessibility-20261123/build/motion-b-accessibility-20261123/native/motion-startup-context.json",
+    "path": "native/motion-startup-context.json",
+    "bytes": 672,
+    "sha256": "43114da789931d5e9d4be4beb7a69904dc5bc4e5ceac292d91a36a7d2b83a64a",
+    "kind": "byte-identical original receipt"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-accessibility-20261123/build/motion-b-accessibility-20261123/native/video-status.json",
+    "path": "native/video-status.json",
+    "bytes": 306,
+    "sha256": "9ad9f5f049f0a1cbf799e4ff7a61e1728ee153182c12bf98091600cf8dd2ed96",
+    "kind": "byte-identical original receipt"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-accessibility-20261123/build/motion-b-accessibility-20261123/native/sdk-input-verification.json",
+    "path": "native/sdk-input-verification.json",
+    "bytes": 171,
+    "sha256": "d3671b69bca3457f2a88053bc4a6163a54487d5b7c053851682ef8608b7eb8ed",
+    "kind": "byte-identical original receipt"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-accessibility-20261123/build/motion-b-accessibility-20261123/native/macro-input-verification.json",
+    "path": "native/macro-input-verification.json",
+    "bytes": 900,
+    "sha256": "24171f2eb7d7aa1015025b2df390c096a85e878c0500bcda2e44653f7a60c38a",
+    "kind": "byte-identical original receipt"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-accessibility-20261123/build/motion-b-accessibility-20261123/native/preparation.json",
+    "path": "native/preparation.json",
+    "bytes": 99165,
+    "sha256": "7c8d6d061433474dfa83ffc95d966917285d07176d8112379d6c86caaa86bbde",
+    "kind": "byte-identical original receipt"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-accessibility-20261123/build/motion-b-accessibility-20261123/native/generated-target-settings.json",
+    "path": "native/generated-target-settings.json",
+    "bytes": 1436,
+    "sha256": "142280d23338be4f7585eb71c3f560f1405a29e4fb20391d372f0c9b4e346cf0",
+    "kind": "byte-identical original receipt"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-accessibility-20261123/build/motion-b-accessibility-20261123/local-payload-review/009.bin",
+    "path": "original-runtime/app-console.log.gz",
+    "decoded_bytes": 205643,
+    "decoded_sha256": "23d34499bd6e88a4bf7d9935d2fe432706a3a8cb57ef04a97dfe712155067c64",
+    "gzip_bytes": 15360,
+    "gzip_sha256": "e81de606b0092c80dbb8329d42c05cf3999106f798c609dd2a4e31ea277e1cef",
+    "kind": "lossless gzip of original decoded runtime payload"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-accessibility-20261123/build/motion-b-accessibility-20261123/local-payload-review/011.bin",
+    "path": "original-runtime/runner-console.log.gz",
+    "decoded_bytes": 344155,
+    "decoded_sha256": "1671278a1d55a8ca1b60e9675cdff09285d2f56796012617f41dd87ca550b9d8",
+    "gzip_bytes": 33326,
+    "gzip_sha256": "ad663a57d02a449d3affe947dcef6e86939339beb014e043f2f2ee38f603e68b",
+    "kind": "lossless gzip of original decoded runtime payload"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-accessibility-20261123/build/motion-b-accessibility-20261123/local-payload-review/video-prewarm-top-9-14.jpg",
+    "path": "visual/video-prewarm-top-9-14.jpg",
+    "bytes": 62142,
+    "sha256": "66083badb53c9b125d15b917ca121050d4d4ffd6b56b3d62a570d36872a65744",
+    "kind": "byte-identical original receipt"
+  },
+  {
+    "source": "/mnt/development/projects/worktrees/hanlin-sdk-motion-b-accessibility-20261123/build/motion-b-accessibility-20261123/local-payload-review/video-overview.jpg",
+    "path": "visual/video-overview.jpg",
+    "bytes": 65755,
+    "sha256": "005c235d4ebe5a144e6c61f0627462e62352f1c510a2fee1432b8e113a64f084",
+    "kind": "byte-identical original receipt"
+  }
+]

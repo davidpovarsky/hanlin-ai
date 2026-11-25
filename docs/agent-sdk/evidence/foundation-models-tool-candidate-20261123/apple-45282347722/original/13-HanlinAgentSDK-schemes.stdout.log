@@ -1,0 +1,13 @@
+{
+  "workspace" : {
+    "name" : "HanlinAgentSDK",
+    "schemes" : [
+      "HanlinAgentCore",
+      "HanlinAgentSDK-Package",
+      "HanlinFixtureHost",
+      "HanlinHostContracts",
+      "HanlinPersistenceAdapters",
+      "HanlinSDKPortableProof"
+    ]
+  }
+}

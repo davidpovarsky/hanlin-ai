@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Temporary recognized source contract for the actual public authoring operation; not a change to the production fixture importer.",
+  "descriptor": {
+    "schemaVersion": 1,
+    "engine": "expo",
+    "entry": "variant-a.ts",
+    "tsconfig": "tsconfig.json",
+    "resources": [
+      "widget.tsx"
+    ]
+  },
+  "descriptorSHA256": "5baf5452caa0edf8685abbabc8a12448c9e503e4bb27effd4c0b53dc25127879",
+  "originalSDKRoot": "/dev/shm/hanlin-sdk-only-kit-45335292541/AI_HLY/Downstream/RuntimeCore/Node/Host/MiniAppSDK",
+  "originalSDKManifest": "/dev/shm/hanlin-sdk-only-kit-45335292541/AI_HLY/Downstream/RuntimeCore/Node/Host/MiniAppSDK/miniapp-sdk.json",
+  "originalSDKManifestSHA256": "fa1e737ec63e640175cdb5c9dad51903cd86d50ae7b340ba5b8ec1ff4e408d85",
+  "typeDependencyLink": {
+    "path": "Scripts/Expo/node_modules",
+    "target": "/dev/shm/hanlin-sdk-only-kit-45335292541/AI_HLY/Downstream/RuntimeCore/Node/Host/MiniAppSDK/expo/node_modules"
+  },
+  "currentFacadeOverlay": "Exact current Packages/HanlinExpoUI copied to fixture node_modules/@hanlin/expo-ui after the reviewed checkpoint; no original SDK package modifications.",
+  "publicBuildStatus": "EXECUTED_PASS; attempt02 is final affected source",
+  "facadeSources": {
+    "package.json": "18dbddebb3c641742ca5f83d0492cec1cbbc7bb1affbefe641477b7481110568",
+    "README.md": "9904dc92afb28444f17493c4f26c5d8dfe81e39c2c78fa1ab45002cc90ac70c7",
+    "src/miniapp-actions.ts": "d5d38fc209d8d8dedb2832ffd037e53d4eabd8b8c92320bd79e791fdfef2c607",
+    "src/modifiers.ts": "56b1efa29241c519d325682828e944becae6b516887908777661b3a574821782",
+    "src/manual-components.tsx": "23315409689a8fb0f1a652a3d62428eade12822a4626224d0080046f08a80fe2",
+    "src/host-services.ts": "010488e8c6aae2635f67d45cefebb9fdb2d4f97af71161af011a83d626ad60e7",
+    "src/index.ts": "d0907d0fd364c9b0621f48099d98ece640ba25d8d40f53cb60aabb3b1dbd3922",
+    "src/system-surfaces.ts": "3a2c4424ce074056ef76d62a4502fb16c389e10a46967fcde15835efde94543f",
+    "tests/miniapp-actions.test.mjs": "566e95d9b0ba53fdf576de2000c6e97707fb3b85e6fb014445f1c96546eea4bc",
+    "tests/host-services-publication.test.mjs": "84a995d298fd75a7959a63083fb6bdd0c3db65c16850d1571c456c32309ffb1e",
+    "src/generated/views.tsx": "7c3bf97da0a680dc80d1a1d19f915b67778e17f42021355c5d99ea4f99c85c74",
+    "src/generated/modifiers.ts": "fee40e3a17dd3466ad2a97301e877501832f044968360684af8e473fe6055483",
+    "src/generated/bridge-manifest.ts": "a56c8a16334bfe76ebe6489fc1f018f25f28f7cadba6c1ef11a268e5336f3b37"
+  },
+  "reviewedDependencies": {
+    "metadata": "fcf88190ca930130a035ef9150947543713616d1",
+    "modifiers": "4bccb1d82cd4005cac5000e0f74f1112704d6d7e",
+    "hostServices": "f7f16caeea1595f29f84c4faf724dfee30982cce",
+    "groupBox": "d9d3bcd1fb04b7bc68836691de7641f607740b55"
+  },
+  "currentIsolatedDependencyCommit": "f74d7b6451b482235800da6a143adadcef481500",
+  "groupBoxFollowup": {
+    "sourceOwner": "control_authoring",
+    "stableWrapperSHA256": "7c3bf97da0a680dc80d1a1d19f915b67778e17f42021355c5d99ea4f99c85c74",
+    "contract": "undefined content defaults to children; explicit null/false/0/empty-string content is preserved",
+    "reasonForAffectedRebuild": "A genuine public JSX child forwarding defect was found after the initial successful build; current wrapper and native observable source changed."
+  },
+  "originalCompilerIdentity": {
+    "packageName": "@typescript/typescript6",
+    "packageVersion": "6.0.2",
+    "compilerVersion": "6.0.3"
+  },
+  "compilerIdentityBoundary": "Original npm alias/wrapper package version and compiler implementation version are distinct and are both preserved from the SDK; no stale-version or SDK-defect claim.",
+  "temporaryContextRemovedAfterBuild": true,
+  "cleanupGuard": {
+    "initialGuardStopped": true,
+    "reason": "Final generator commit added one source-only package test after the13-file runtime/type overlay was copied.",
+    "additionalSourceOnlyFiles": [
+      "tests/generated-views.test.mjs"
+    ],
+    "resolution": "Verified all13 originally copied files against both their recorded hashes and current original local files, then removed only the owned copy. No runtime/type source drift and no compiler rerun."
+  }
+}

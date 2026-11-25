@@ -38,6 +38,7 @@ public enum HanlinExpoWidgetNative {
         resources: [String: URL] = [:],
         buttonBuilder: @escaping (String, SwiftUI.ButtonRole?, AnyView) -> AnyView
     ) -> any ExpoSwiftUI.AnyChild {
-        WidgetsViewRenderer(name: "Hanlin", buttonBuilder: buttonBuilder, node: node, context: AppContext(resources: resources)).render()
+        HanlinExpoWidgetOriginalBootstrap.install()
+        return WidgetsViewRenderer(name: "Hanlin", buttonBuilder: buttonBuilder, node: node, context: AppContext(resources: resources)).render()
     }
 }

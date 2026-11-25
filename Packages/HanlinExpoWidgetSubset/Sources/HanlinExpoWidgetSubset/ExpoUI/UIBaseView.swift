@@ -15,11 +15,16 @@ public struct UIBaseView<Props: UIBaseViewProps, Content: ExpoSwiftUI.View<Props
   }
 
   public var body: some View {
-    innerView
+    UniversalPercentageParentBoundary(content: innerView)
       .applyAccessibilityIdentifier(props.testID)
       .applyModifiers(props.modifiers, appContext: props.appContext, globalEventDispatcher: props.globalEventDispatcher)
+      // A user modifier such as `onGeometryChange` hides the layout value a universal stack reads.
+      // Set it again outside every modifier.
+      .layoutValue(key: UniversalLayoutDimensionsKey.self, value: universalLayoutDimensions(from: props.modifiers))
   }
 }
+
+
 
 /**
  Deprecated. Use `applyModifiers` method directly instead.

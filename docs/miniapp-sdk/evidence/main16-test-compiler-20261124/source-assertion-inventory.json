@@ -1,0 +1,24 @@
+[
+  {
+    "path": "AI_HLYTests/HanlinNativePresentationTests.swift",
+    "beforeSHA256": "51a5c5d9ac533ef733b1d076eaf119a777814ac50cdd9826581d9f6b86587dac",
+    "afterSHA256": "200e2c5b9e02b38b2bebbdb91e222893d4622ee3fcaf06186a09c6eda33be182",
+    "assertionCalls": 27,
+    "testMethods": [
+      "testNativeSnippetHasIndependentDurableSessionsWithoutWidgetInstances",
+      "testTranslationUsesOriginalAsyncAPIAndReturnsNativeFinishEffect",
+      "testOriginalDynamicIslandCapturesAllSevenNativeRegionsAndFunctionComponents",
+      "testNativePresentationRejectsRemovedGenerationAndDifferentProductStore",
+      "testExpoLayoutEntryUsesItsDeclaredFormatRegardlessOfFileExtension"
+    ]
+  },
+  {
+    "path": "AI_HLYTests/HanlinOriginalExpoWidgetTests.swift",
+    "beforeSHA256": "23ac930c1db21b5e91cc80fd03c17bfd78521fa6d6e86d1cc76c05bc4c7356bf",
+    "afterSHA256": "4ffadc5573c5fc69e2b1276e5f86cb69a84eb4466f7c819085ba7f0e72b23860",
+    "assertionCalls": 28,
+    "testMethods": [
+      "testOriginalWidgetRegistrationTimelineAndPickerKeepProductAndInstallationIdentity"
+    ]
+  }
+]

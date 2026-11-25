@@ -1,0 +1,22 @@
+{
+  "source_parent": "a9ff86b0a54f27cd996bc5d1c2863980bcf75b5b",
+  "native_measurement_run": 45248270552,
+  "old_job_minutes": 25,
+  "new_job_minutes": 35,
+  "measured_preflight_seconds": 428,
+  "measured_resolution_seconds": 481,
+  "measured_build_seconds": 237,
+  "preparation_resolution_build_seconds": 1146,
+  "unchanged_default_native_case_allowance_seconds": 600,
+  "unchanged_maximum_native_case_allowance_seconds": 720,
+  "measured_result_collection_seconds": 10,
+  "measured_preparation_plus_native_ceiling_plus_results_seconds": 1876,
+  "job_seconds": 2100,
+  "remaining_seconds_for_bookkeeping_upload_and_variability": 224,
+  "previous_actual_job_seconds": 1450,
+  "workflow_semantic_change": "Only jobs.chat-motion-product.timeout-minutes25\u219235",
+  "native_runner_sha256_unchanged": "0c1b71a5db380c1e14e3210be62a004ff4a993ea913702a03407b6b482b643c7",
+  "test_bodies_and_animation_inputs": "UNCHANGED",
+  "scope": "Infrastructure job envelope only; no B assertion/gesture/test allowance/preset timing change",
+  "native_on_new_component": "NOT_RUN"
+}

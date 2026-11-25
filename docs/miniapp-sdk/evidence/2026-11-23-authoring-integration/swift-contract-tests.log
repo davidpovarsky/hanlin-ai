@@ -1,0 +1,44 @@
+◇ Test run started.
+↳ Testing Library Version: 6.4.3 (ba0861fb203553c)
+↳ Target Platform: aarch64-unknown-linux-gnu
+◇ Suite "Prepared runtime minimum version contract" started.
+◇ Test explicitBackwardBridgeCompatibilityStillRequiresCompleteStableVersions() started.
+◇ Test malformedInstalledAuthorityNeverBecomesACompatibleDefault() started.
+◇ Test releasedRuntimeMinimumsCannotAdmitMalformedFutureOrPrereleaseVersions() started.
+◇ Test javascriptRuntimeCompatibilityAcceptsOnlyCurrentOrOlderSameMinorPatches() started.
+✔ Test malformedInstalledAuthorityNeverBecomesACompatibleDefault() passed after 0.022 seconds.
+✔ Test releasedRuntimeMinimumsCannotAdmitMalformedFutureOrPrereleaseVersions() passed after 0.029 seconds.
+✔ Test javascriptRuntimeCompatibilityAcceptsOnlyCurrentOrOlderSameMinorPatches() passed after 0.032 seconds.
+✔ Test explicitBackwardBridgeCompatibilityStillRequiresCompleteStableVersions() passed after 0.040 seconds.
+✔ Suite "Prepared runtime minimum version contract" passed after 0.045 seconds.
+✔ Test run with 4 tests in 1 suite passed after 0.050 seconds.
+Building for debugging...
+[Computing dependencies]
+[Constructing description]
+[Pre-planning 1 / 124]
+[Planning 1 / 124]
+[Planning deferred tasks]
+[Starting]
+[9 / 32]
+[10 / 33] HanlinPlatformContracts
+[12 / 35] HanlinPlatformContracts
+[13 / 35] HanlinPlatformContracts
+[14 / 35] HanlinPlatformContracts
+[15 / 35] HanlinPlatformContracts
+[18 / 35] HanlinPlatformContracts
+[19 / 36] HanlinPlatformContractsTests-product
+[21 / 39] HanlinPlatformContractsTests-product
+[21 / 39] HanlinPlatformContracts
+[23 / 39] HanlinPlatformContractsTests-product
+[24 / 40] HanlinPlatformContractsTests-product
+[27 / 40] HanlinPlatformContractsTests-product
+[29 / 40]
+[30 / 41]
+[32 / 41]
+[32 / 41] HanlinPlatformContracts
+[33 / 41] HanlinPlatformContractsTests-product
+[37 / 44] HanlinPlatformContractsTests-test-runner
+[41 / 44] HanlinPlatformContractsTests-test-runner
+[42 / 45] HanlinPlatformContractsTests-test-runner
+[45 / 45] HanlinPlatformContractsTests-test-runner
+Build complete! (92.10 secs)

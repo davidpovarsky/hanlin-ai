@@ -1,0 +1,7 @@
+{
+  "baseCommit": "dc518aa35d123b611c02b10ad75e11477a7eb131",
+  "path": "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinOriginalExpoWidgetOptions.swift",
+  "originalAndFinalLoopIdentical": true,
+  "loopSHA256": "ed2eb09676a8f992e201dd63e9dddcf81bc11bc1e297835faa4d29776a45abb3",
+  "scope": "Exact original object pattern, current-option lookup, option ownership/current-value checks, conflict tracking and byte-key mutation; only subsequent return conversion is new."
+}

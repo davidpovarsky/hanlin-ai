@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-24T02:07:23.282226+00:00",
+  "baseGitSHA": "06e9e7c9df82c874da7d9e5d5d73359b2a235f44",
+  "originalPackage": "expo-modules-jsi@58.0.23",
+  "originalSource": "apple/scripts/build-xcframework.sh",
+  "originalSHA256": "2551dc6457f370cf9fefe184f030ddf85d2899f3bcc0eef4d6ef135b04f25678",
+  "originalOutputDeclarations": {
+    "buildRoot": "PACKAGE_DIR unless EXPO_CUSTOM_BUILD_ROOT is supplied",
+    "paths": [
+      "apple/.DerivedData",
+      "apple/.build",
+      "apple/.swiftpm",
+      "apple/.generated",
+      "apple/Products"
+    ]
+  },
+  "fix": "Exclude only these original native output subtrees from installed authoring receipts and SDK copying. Preserve original declaration/implementation source files and unrelated build/dist paths.",
+  "status": "EXECUTED_PASS",
+  "command": "node --test --test-name-pattern=native ExpoModulesJSI build output Scripts/MiniApps/Tests/installed-tooling.test.mjs",
+  "executedTests": 1,
+  "log": "native-output-seam.log",
+  "logSHA256": "c09148c87ccb0ddce0817879dd7fb5755dadf682dae49576115133b0eef0c28b",
+  "sourceHashes": {
+    "Scripts/MiniApps/install-tooling.mjs": "6fb5f130d1a381d628ffa5042eff7ce36d48431ed7636a36c28fec20e5b79120",
+    "Scripts/MiniApps/stage-sdk.mjs": "8085dab33f14e9a67a26f329f9c0efb16b1059448134573e961bcca844f1a3dc",
+    "Scripts/MiniApps/Tests/installed-tooling.test.mjs": "76bd5330e9a052739a4001e81a8ac17219f6c794ca687356b19b8b31c5946577"
+  },
+  "nativeBuildStatus": "NOT_RUN"
+}

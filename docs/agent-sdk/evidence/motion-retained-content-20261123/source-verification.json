@@ -1,0 +1,68 @@
+{
+  "last_native_source": "9575dd15e816009e11d84ab7f4e21b45cb67c5e8",
+  "syntax_parse": "PASS (Linux parse only; SwiftUI typecheck/native execution NOT_RUN)",
+  "geometry_and_layout": "BYTE_IDENTICAL",
+  "opacity_clipping_hit_testing_accessibility_and_settle_assignments": "UNCHANGED",
+  "protected_inputs": [
+    {
+      "path": "docs/chat-motion/MotionUI/App.swift",
+      "sha256": "7323a83f5ed539b25d12f944a7bd256faba63c2d5806168d0def42e829454b25",
+      "unchanged_since_executed_9575": true
+    },
+    {
+      "path": "docs/chat-motion/MotionUI/MotionUITests.swift",
+      "sha256": "ed053de2cf5013ef001fc198f4d730f7d8d7bf9d55991e784dbc454b90c46724",
+      "unchanged_since_executed_9575": true
+    },
+    {
+      "path": "docs/chat-motion/run_motion_ui.sh",
+      "sha256": "0c1b71a5db380c1e14e3210be62a004ff4a993ea913702a03407b6b482b643c7",
+      "unchanged_since_executed_9575": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/ChatMotionConfiguration.swift",
+      "sha256": "d8ff25aa0ba06895108f09edf00709db04efe4f7467d1b8302adf1bae1785577",
+      "unchanged_since_executed_9575": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/ChatMotionPreferences.swift",
+      "sha256": "709f948ac85ac042d15fb8c258383f1bbb06f5336c0904dc170e04b46f143791",
+      "unchanged_since_executed_9575": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/ChatShimmerEffect.swift",
+      "sha256": "40af700d48af8c3229db379cbc9add813484f7d465889523c0acc0a70b552f6a",
+      "unchanged_since_executed_9575": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinToolActivityHeader.swift",
+      "sha256": "fa2998c9a0b7268ca593b0fcb1343b2e673530e8ebf5189902dec9a516277785",
+      "unchanged_since_executed_9575": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinActivityHierarchy.swift",
+      "sha256": "7d4e19a8520e352ae53031da54b5c4f5a75795084402f6c3f4e4c57731e7a7bb",
+      "unchanged_since_executed_9575": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinInlineToolApproval.swift",
+      "sha256": "5fe7e40ae61e4dfeb6e36f0d519bf90f4a7ef5c1b865c3dd030bd3561d35e364",
+      "unchanged_since_executed_9575": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityUI/HanlinAgentActivityView.swift",
+      "sha256": "3698c6b5759462a08466b8be9de7d86fbc419237c0dbe881baaf656242f0a8ef",
+      "unchanged_since_executed_9575": true
+    }
+  ],
+  "changed_production_input": {
+    "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinAnimatedDisclosure.swift",
+    "before_sha256": "91d60f960fd1ca1dea34b1ce34a6a5e99b4e60c2a030be78ac9f996a2533d084",
+    "after_sha256": "ce949b1acce2bf4339f3a2c0a93b3028c50ef918ab9db7dc1d7b0e063c166eef"
+  },
+  "native_B": "NOT_RUN_ON_NEW_COMPONENT",
+  "native_C": "PRIOR_9575_NATIVE_VISUAL_PASS; unchanged pre-collapse path, retention changed at final collapse",
+  "native_A": "NOT_RUN_ON_NEW_COMPONENT; pending after B",
+  "native_D": "PREVIOUS_DIAGNOSTIC_ONLY; no repeat planned",
+  "no_assertion_timing_gesture_or_preset_change": true
+}

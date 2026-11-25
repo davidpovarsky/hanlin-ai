@@ -1,0 +1,116 @@
+{
+  "status": "TEST_FAILED",
+  "ui": "TEST_FAILED",
+  "build": "EXECUTED_PASS",
+  "physical_device": "NOT_RUN",
+  "provisioned_distribution": "NOT_RUN",
+  "scope": "Two shipping targets, actual App Group, original Host request/return/cancel, original ScriptUI import and private-data transfer/rollback",
+  "model_boundary": "Existing opt-in simulator HTTP acceptance provider; all Host, permission, OS transitions, storage and result handling are real.",
+  "started_at": 1795475107.927422,
+  "test_scope": "cross_product",
+  "selected_tests": [
+    "AI_HLYUITests/HanlinPairedProductUITests"
+  ],
+  "sha": "4cfa52348e80cf635caf04c541fd84ee1ddb50bd",
+  "simulator": "9B6403BE-C0D2-4791-9FDE-CB99B22CC5FB",
+  "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-27-2",
+  "device": "iPhone 18 Pro",
+  "mini_build": "EXECUTED_PASS",
+  "ai_build": "EXECUTED_PASS",
+  "product_identity": {
+    "com.itorah.chavrusachat": {
+      "display_name": "Hanlin AI",
+      "info_plist_sha256": "5145ec0c6f61985b2672483de5959d3a4f02bfe4727ffdc3f6f9faedbd19f60c",
+      "app_icon": {
+        "name": "AppIcon",
+        "compiled_catalog_sha256": "2fe6d616b9af5cb53463fb65e9f911dc7b4c10efe40d2896aef1dfcf5b494404"
+      }
+    },
+    "com.itorah.hanlinminiapps": {
+      "display_name": "Hanlin MiniApps",
+      "info_plist_sha256": "87cc7b3ddee27a3a6f960d65bb53a3662657e90929f04a6488cafa4796e0ad86",
+      "app_icon": {
+        "name": "AppIcon",
+        "compiled_catalog_sha256": "b08d9137e3901a12b00d05bc38be6c827c0ca6a1d5bcf4bda8908747ea7fe35d"
+      }
+    }
+  },
+  "app_group": {
+    "status": "EXECUTED_PASS",
+    "containers": {
+      "com.itorah.chavrusachat": "/Users/runner/Library/Developer/CoreSimulator/Devices/9B6403BE-C0D2-4791-9FDE-CB99B22CC5FB/data/Containers/Shared/AppGroup/EBAD1E68-9550-47BC-ACE9-84663D4E8BE2",
+      "com.itorah.hanlinminiapps": "/Users/runner/Library/Developer/CoreSimulator/Devices/9B6403BE-C0D2-4791-9FDE-CB99B22CC5FB/data/Containers/Shared/AppGroup/EBAD1E68-9550-47BC-ACE9-84663D4E8BE2"
+    }
+  },
+  "summary": {
+    "devicesAndConfigurations": [
+      {
+        "device": {
+          "architecture": "arm64",
+          "deviceId": "9B6403BE-C0D2-4791-9FDE-CB99B22CC5FB",
+          "deviceName": "HanlinPaired-45283243206",
+          "modelName": "iPhone 18 Pro",
+          "osBuildNumber": "24B8117",
+          "osVersion": "27.2",
+          "platform": "iOS Simulator"
+        },
+        "expectedFailures": 0,
+        "failedTests": 2,
+        "passedTests": 1,
+        "skippedTests": 0,
+        "testPlanConfiguration": {
+          "configurationId": "1",
+          "configurationName": "Test Scheme Action"
+        }
+      }
+    ],
+    "environmentDescription": "AI_HLY \u00b7 Built with macOS 27.0.1",
+    "expectedFailures": 0,
+    "failedTests": 2,
+    "finishTime": 1795479196.812,
+    "passedTests": 1,
+    "result": "Failed",
+    "runtimeWarnings": [
+      {
+        "issueType": "Runtime Warning",
+        "message": "This method can lead to UI unresponsiveness if called on the main thread while the audio session is active."
+      },
+      {
+        "issueType": "Runtime Warning",
+        "message": "This method can lead to UI unresponsiveness if called on the main thread. Consider using the asynchronous activate/deactivate API instead for calls from the main thread."
+      }
+    ],
+    "skippedTests": 0,
+    "startTime": 1795478616.768,
+    "statistics": [],
+    "testFailures": [
+      {
+        "failureText": "Failed to synthesize event: Neither element nor any descendant has keyboard focus. Event dispatch snapshot: TextView, {{91.0, 732.0}, {282.0, 38.0}}, identifier: 'hanlin-chat-input', value: Ask any questions.\nElement debug description:\nAttributes: TextView, 0x10a85ebc0, {{91.0, 732.0}, {282.0, 38.0}}, identifier: 'hanlin-chat-input', value: Ask any questions.\nElement subtree:\n \u2192TextView, 0x10a85ebc0, {{91.0, 732.0}, {282.0, 38.0}}, identifier: 'hanlin-chat-input', value: Ask any questions.\n    Other, 0x10a85ea80, {{91.0, 732.0}, {0.0, 0.0}}, identifier: '_UITextSelectionRangeAdjustmentContainerView'\n      Other, 0x10a85e6c0, {{91.0, 732.0}, {0.0, 0.0}}, identifier: 'com.apple.text.grabber.leading'\n        Other, 0x10a85e440, {{83.8, 718.5}, {16.5, 16.5}}\n        Other, 0x10a85e580, {{91.0, 732.0}, {2.0, 0.0}}\n      Other, 0x10a85e300, {{91.0, 732.0}, {0.0, 0.0}}, identifier: 'com.apple.text.grabber.leading'\n        Other, 0x10b750140, {{83.8, 718.5}, {16.5, 16.5}}\n        Other, 0x10b750000, {{91.0, 732.0}, {2.0, 0.0}}\n    Other, 0x10b751400, {{340.0, 732.0}, {30.0, 38.0}}, label: 'Vertical scroll bar, 1 page', value: 0%\n      Other, 0x10b752e40, {{367.0, 731.0}, {3.0, 36.0}}\n    Other, 0x10b752a80, {{91.0, 748.0}, {282.0, 19.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%\n      Other, 0x10b751900, {{94.0, 764.0}, {276.0, 3.0}}\nPath to element:\n \u2192Application, 0x10a83fc00, pid: 74334, label: 'Hanlin AI'\n  \u21b3Window (Main), 0x10a83f700, {{0.0, 0.0}, {402.0, 874.0}}\n   \u21b3Other, 0x10aad8280, {{0.0, 0.0}, {402.0, 874.0}}\n    \u21b3Other, 0x10aad83c0, {{0.0, 0.0}, {402.0, 874.0}}\n     \u21b3Other, 0x10aad8000, {{0.0, 0.0}, {402.0, 874.0}}\n      \u21b3Other, 0x1073a3200, {{0.0, 0.0}, {402.0, 874.0}}\n       \u21b3Other, 0x1073a3700, {{0.0, 0.0}, {402.0, 874.0}}\n        \u21b3Other, 0x1073a3980, {{0.0, 0.0}, {402.0, 874.0}}\n         \u21b3Other, 0x1073a2f80, {{0.0, 0.0}, {402.0, 874.0}}\n          \u21b3Other, 0x1073a3340, {{0.0, 0.0}, {402.0, 874.0}}\n           \u21b3Other, 0x1073a3480, {{0.0, 0.0}, {402.0, 874.0}}\n            \u21b3Other, 0x1073a35c0, {{0.0, 0.0}, {402.0, 897.0}}, identifier: 'hanlin-compact-chat-workspace'\n             \u21b3Other, 0x10a85ed00, {{88.0, 732.0}, {285.0, 86.0}}, identifier: 'hanlin-composer-surface'\n              \u21b3TextView, 0x10a85ebc0, {{91.0, 732.0}, {282.0, 38.0}}, identifier: 'hanlin-chat-input', value: Ask any questions.\nQuery chain:\n \u2192Find: Target Application 'com.itorah.chavrusachat'\n  Output: {\n    Application, 0x10a83f0c0, pid: 74334, label: 'Hanlin AI'\n  }\n  \u21aa\ufe0eFind: Descendants matching type TextView\n    Output: {\n      TextView, 0x10aae7840, {{91.0, 732.0}, {282.0, 38.0}}, identifier: 'hanlin-chat-input', value: Ask any questions.\n    }\n    \u21aa\ufe0eFind: Elements matching predicate '\"hanlin-chat-input\" IN identifiers'\n      Output: {\n        TextView, 0x10a81c280, {{91.0, 732.0}, {282.0, 38.0}}, identifier: 'hanlin-chat-input', value: Ask any questions.\n      }\n      \u21aa\ufe0eFind: First Match\n        Output: {\n          TextView, 0x10a832580, {{91.0, 732.0}, {282.0, 38.0}}, identifier: 'hanlin-chat-input', value: Ask any questions.\n        }\n",
+        "targetName": "AI_HLYUITests",
+        "testIdentifier": 1,
+        "testIdentifierString": "HanlinPairedProductUITests/testCompanionCancellationReturnsWithoutChangingPrivateState()",
+        "testIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinPairedProductUITests/testCompanionCancellationReturnsWithoutChangingPrivateState",
+        "testName": "testCompanionCancellationReturnsWithoutChangingPrivateState()"
+      },
+      {
+        "failureText": "XCTAssertEqual failed: (\"XCTWaiterResult(rawValue: 2)\") is not equal to (\"XCTWaiterResult(rawValue: 1)\") - Unreachable product control: hanlin-tool-consent-review-toggle",
+        "targetName": "AI_HLYUITests",
+        "testIdentifier": 2,
+        "testIdentifierString": "HanlinPairedProductUITests/testCompanionReturnsActualPrivateValueToOriginalChat()",
+        "testIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinPairedProductUITests/testCompanionReturnsActualPrivateValueToOriginalChat",
+        "testName": "testCompanionReturnsActualPrivateValueToOriginalChat()"
+      }
+    ],
+    "title": "Test - AI_HLY",
+    "topInsights": [],
+    "totalTestCount": 3
+  },
+  "error": "Original native acceptance did not pass every case in the recorded scope",
+  "diagnostic_errors": [],
+  "result_bundles": [
+    "Paired.xcresult",
+    "AIBuild.xcresult",
+    "MiniBuild.xcresult"
+  ],
+  "duration_seconds": 4098.229561090469
+}

@@ -109,7 +109,9 @@ extension HanlinStoredPackageSnapshot: HanlinMiniAppRegistration {
 
         let mappedEntryPoints: [HanlinEntryPointDescriptor] = entrypoints.compactMap { ep in
             guard let canonicalKind = ep.kind.canonicalKind else { return nil }
-            let contexts = ep.supportedContexts.isEmpty ? [.mainApplication] : Array(ep.supportedContexts)
+            let contexts = ep.supportedContexts.isEmpty
+                ? [.mainApplication]
+                : ep.supportedContexts.sorted { $0.rawValue < $1.rawValue }
             let epRuntime = ep.runtimeProfile
             return HanlinEntryPointDescriptor(
                 kind: canonicalKind,
@@ -121,7 +123,10 @@ extension HanlinStoredPackageSnapshot: HanlinMiniAppRegistration {
 
         let finalEntryPoints: [HanlinEntryPointDescriptor]
         if !mappedEntryPoints.isEmpty {
-            finalEntryPoints = mappedEntryPoints
+            // Distinct package action IDs may expose the same canonical handler.
+            // Preserve differing descriptors so validation still rejects conflicts.
+            var seenEntryPoints = Set<HanlinEntryPointDescriptor>()
+            finalEntryPoints = mappedEntryPoints.filter { seenEntryPoints.insert($0).inserted }
         } else if entrypoints.isEmpty {
             // Legacy script package with no explicit entrypoints.
             // Synthesize foreground app entrypoint when the legacy manifest represents an app.
@@ -251,9 +256,15 @@ extension HanlinStoredPackageSnapshot: HanlinMiniAppRegistration {
                     let capID = (try? HanlinCapabilityID(validating: capIDStr))
                         ?? (try! HanlinCapabilityID(validating: "inter-app.share"))
                     let handler: String? = {
-                        if case let .string(value) = actionObj["handler"] { return value }
-                        if case let .string(value) = actionObj["entrypoint"] { return value }
-                        return nil
+                        let declared: String?
+                        if case let .string(value) = actionObj["handler"] { declared = value }
+                        else if case let .string(value) = actionObj["entrypoint"] { declared = value }
+                        else { declared = nil }
+                        guard let declared else { return nil }
+                        if entrypoints.contains(where: { $0.sourcePath == declared }) { return declared }
+                        let installedPath = "source/" + declared
+                        if entrypoints.contains(where: { $0.sourcePath == installedPath }) { return installedPath }
+                        return declared
                     }()
                     let titleVal = (try? LocalizedValue(["en": titleStr]))
                         ?? (try! LocalizedValue(["en": actionIDStr]))

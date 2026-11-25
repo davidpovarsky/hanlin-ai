@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "timestampUTC": "2026-11-24T10:04:23.834131+00:00",
+  "reasonForAffectedParse": "Three real native mode-label waits were added after peer review; attempt01 still describes its exact previous source.",
+  "command": [
+    "swiftc",
+    "-frontend",
+    "-parse",
+    "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift"
+  ],
+  "exitCode": 0,
+  "file": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+  "sha256": "9db97d1f88729d07bc1265694779d258993bf71a08b4bd875f9dda0543003f7f",
+  "baselineMethods": 15,
+  "newMethods": [
+    "testStandaloneExpoGeneratedEditButtonEditsOriginalList",
+    "testStandaloneExpoGeneratedEmptyViewReportsNativeLayout",
+    "testStandaloneExpoGeneratedGroupBoxSlotsAndInstalledMetadata",
+    "testStandaloneExpoGeneratedModifierAccessibilityAndGeometry",
+    "testStandaloneExpoGeneratedModifierHitTestingAndSubmitScope",
+    "testStandaloneExpoGeneratedModifierNativeContainerContexts",
+    "testStandaloneExpoHostServicesUseRealStorageRuntimeAndWidgetPublication"
+  ],
+  "deletedOrReplacedBaselineLines": 0,
+  "status": "SYNTAX_AND_SOURCE_CHECK_PASS",
+  "boundary": "Linux syntax/source check only; XCTest type check and native behavior NOT_RUN."
+}

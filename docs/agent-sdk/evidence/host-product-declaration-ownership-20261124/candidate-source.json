@@ -1,0 +1,22 @@
+{
+  "base": "f870abda090a7ac0f382b7b9396599d1b474a7ef",
+  "productionPaths": [
+    "AI_HLY.xcodeproj/project.pbxproj",
+    "Scripts/CI/IntegrationValidation/project_graph.py",
+    "Scripts/SDK/generate_manifest.py",
+    "Scripts/SDK/update_project.py",
+    "Scripts/SDK/application_products.json",
+    "Scripts/SDK/tests/test_host_link_ownership.py",
+    "docs/agent-sdk/unified-package-manifest.json"
+  ],
+  "diffSHA256": "f08384b26ffc375b1d1be55d7dae93a28921092d054f5f13d2b3b30bdc0cebb1",
+  "sourceFiles": {
+    "AI_HLY.xcodeproj/project.pbxproj": "95f5e541b9ab445a1fc8e72b5c92dadb35aa45cd11577f019552bdc743a88699",
+    "Scripts/CI/IntegrationValidation/project_graph.py": "2d6ed6ef1ac4379b2bd46af2a060751995ec2c45439f3d3eed8f868248a90425",
+    "Scripts/SDK/generate_manifest.py": "5c48bca4468f4bef612e625b783e420f761186c38c645c2ddbd7e44c3d28b9dd",
+    "Scripts/SDK/update_project.py": "2d84bfc951d94084fdcee0c560495ce91b1e1cef7f3b9af2d97441be0d40c1a9",
+    "Scripts/SDK/application_products.json": "183c975c1783ee5ea017d9e9164c6611dde9d9987a15022521ce2dcd8971406b",
+    "Scripts/SDK/tests/test_host_link_ownership.py": "ad50e20b610a6902836a729adff4fa4090d4cf572b6ef0d3041e6dc8201cfac6",
+    "docs/agent-sdk/unified-package-manifest.json": "6e3ad962cce2a40e697809ea522c1798b55f82ac56c8921ad64ccb5d9299fdf1"
+  }
+}

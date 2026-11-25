@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "atUTC": "2026-11-24T08:53:44.371100+00:00",
+  "sourceCommit": "9183c70660f465c557a4d7cf278aa17b80ef7c9b",
+  "result": "INTEGRATED_SOURCE_REFERENCE_REACHABILITY_PASS",
+  "commands": [
+    {
+      "command": [
+        "/usr/local/bin/node",
+        "Scripts/Audit/audit-miniapp-sdk.mjs",
+        "--write"
+      ],
+      "exit": 0,
+      "stdout": "1.stdout.log",
+      "stderr": "1.stderr.log"
+    },
+    {
+      "command": [
+        "python3",
+        "Scripts/Audit/audit_miniapp_reachability.py"
+      ],
+      "exit": 0,
+      "stdout": "2.stdout.log",
+      "stderr": "2.stderr.log"
+    },
+    {
+      "command": [
+        "/usr/local/bin/node",
+        "Scripts/Audit/audit-miniapp-sdk.mjs",
+        "--check"
+      ],
+      "exit": 0,
+      "stdout": "3.stdout.log",
+      "stderr": "3.stderr.log"
+    },
+    {
+      "command": [
+        "python3",
+        "Scripts/Audit/audit_miniapp_reachability.py",
+        "--check"
+      ],
+      "exit": 0,
+      "stdout": "4.stdout.log",
+      "stderr": "4.stderr.log"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "docs/miniapp-sdk/source-inventory.json",
+      "bytes": 484947,
+      "sha256": "252d6a6985288c4b6a8af3eb77334f0fcfe8b65996785ebb094d73ce8774213e"
+    },
+    {
+      "path": "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+      "bytes": 118561,
+      "sha256": "3a4d9e0ec6aa1666112f4ddf6c27096853359d8e88d4575b3bc70b6bebf9b578"
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.json",
+      "bytes": 146376,
+      "sha256": "fd9d9b79e928aaa45f2cf742decb56e2ac9d2aea991e1c8a1e67e2a9f412779c"
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.md",
+      "bytes": 21494,
+      "sha256": "962bf94a30e02ea00d850468567fab18026b42d1c6b0e727d95c6b130a9396a5"
+    }
+  ],
+  "sourceFiles": 87,
+  "manifestCoverage": {
+    "schemaVersion": 1,
+    "status": "COMPLETE_SOURCE_FIELD_ENUMERATION",
+    "nativeAcceptance": "NOT_INFERRED",
+    "fieldCount": 334,
+    "sourceContract": "Decoder keys, extension consumers, nested records, prepared package/authoring reads and schema properties are mapped. Added/removed recognized keys fail until mapped. Loaded source hashes participate in the existing inventory drift check.",
+    "publicReference": "MANIFEST_REFERENCE.md"
+  },
+  "boundary": "Source mapping and existing output drift checks only; no new runtime/UI/physical-device acceptance."
+}

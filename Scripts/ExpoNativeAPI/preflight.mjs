@@ -3,11 +3,18 @@ import { existsSync } from 'node:fs';
 import { open, readFile, stat } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { auditNativeAPIVersionContract } from '../Audit/miniapp-runtime-contract.mjs';
 
 const scriptRoot = resolve(import.meta.dirname);
 const repoRoot = resolve(scriptRoot, '..', '..');
 
 const sha256 = (bytes) => createHash('sha256').update(bytes).digest('hex');
+
+export async function checkVersionContract() {
+  const source = async file => ({path: file, text: await readFile(resolve(repoRoot, file), 'utf8')});
+  const json = async file => JSON.parse((await source(file)).text);
+  return auditNativeAPIVersionContract({source, json});
+}
 
 export async function preflight() {
   console.log('=== Hanlin Expo + NativeScript Native API Preflight Check ===');
@@ -28,13 +35,12 @@ export async function preflight() {
   check('Scripts/Expo/dependency-lock.json exists', existsSync(expoLockPath));
   check('Scripts/ExpoNativeAPI/dependency-lock.json exists', existsSync(nativeLockPath));
 
-  const expoLock = JSON.parse(await readFile(expoLockPath, 'utf8'));
-  const nativeLock = JSON.parse(await readFile(nativeLockPath, 'utf8'));
-
-  check('React Native stable 0.88.0 in dependency-lock', expoLock.expo.reactNativeVersion === '0.88.0');
-  check('Hermes 260318099.0.4 in dependency-lock', expoLock.expo.hermesVersion === '260318099.0.4');
-  check('NativeScript RN 9.1.2 in dependency-lock', nativeLock.nativeApi.version === '9.1.2');
-  check('Worklets 0.13.1 in dependency-lock', nativeLock.worklets.version === '0.13.1');
+  try {
+    const versions = await checkVersionContract();
+    check('Native API '+versions.nativeApiVersion+', Worklets '+versions.workletsVersion+', React Native '+versions.reactNativeVersion+', and Hermes '+versions.hermesVersion+' agree with the resolved graph and public facade', true);
+  } catch (error) {
+    check('Resolved Native API version contract: '+error.message, false);
+  }
 
   // 2. Check Babel configuration
   const babelConfigPath = resolve(repoRoot, 'Scripts', 'Expo', 'babel.config.cjs');

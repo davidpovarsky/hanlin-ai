@@ -43,7 +43,7 @@ class IOSSystemProjectResourceValidationTests(unittest.TestCase):
 
     def remove_app_resources_but_keep_old_comments(self):
         text = self.project.read_text()
-        key, files = self.phase(text, "AI_Hanlin")
+        key, files = self.phase(text, "HanlinApp")
         dictionary_ids = ["A10000000000000000000060", "A10000000000000000000061"]
         text = edit_object(text, key, lambda block: replace_list(
             block, "files", [value for value in files if value not in dictionary_ids]))

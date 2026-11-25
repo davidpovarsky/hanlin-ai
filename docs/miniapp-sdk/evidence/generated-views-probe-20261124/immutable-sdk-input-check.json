@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "sdkManifestSHA256": "fa1e737ec63e640175cdb5c9dad51903cd86d50ae7b340ba5b8ec1ff4e408d85",
+  "checkedFiles": [
+    {
+      "path": "expo/node_modules/@hanlin/expo-ui/package.json",
+      "sha256": "18dbddebb3c641742ca5f83d0492cec1cbbc7bb1affbefe641477b7481110568",
+      "bytes": 457
+    },
+    {
+      "path": "expo/node_modules/@hanlin/expo-ui/README.md",
+      "sha256": "9904dc92afb28444f17493c4f26c5d8dfe81e39c2c78fa1ab45002cc90ac70c7",
+      "bytes": 2662
+    },
+    {
+      "path": "expo/node_modules/@hanlin/expo-ui/src/generated/bridge-manifest.ts",
+      "sha256": "a3665bd2a5d11204debc8123a4030dc03a60db22662a42778ac9d84344e0d406",
+      "bytes": 39971
+    },
+    {
+      "path": "expo/node_modules/@hanlin/expo-ui/src/generated/modifiers.ts",
+      "sha256": "fee40e3a17dd3466ad2a97301e877501832f044968360684af8e473fe6055483",
+      "bytes": 14525
+    },
+    {
+      "path": "expo/node_modules/@hanlin/expo-ui/src/generated/views.tsx",
+      "sha256": "4c9170e65f2248556544092000d9a25cd4c25a2cc19ac393281dcbe7cd29281a",
+      "bytes": 2685
+    },
+    {
+      "path": "expo/node_modules/@hanlin/expo-ui/src/host-services.ts",
+      "sha256": "eb1b68fe3175af3e82bf206395ff96eb25c86d6331df55c0bc0678b73ee3f29d",
+      "bytes": 7277
+    },
+    {
+      "path": "expo/node_modules/@hanlin/expo-ui/src/index.ts",
+      "sha256": "d0907d0fd364c9b0621f48099d98ece640ba25d8d40f53cb60aabb3b1dbd3922",
+      "bytes": 185
+    },
+    {
+      "path": "expo/node_modules/@hanlin/expo-ui/src/manual-components.tsx",
+      "sha256": "aca64e3232f72cbb8a09a5a052c66ec73d42bd36c326b726b2fb95d6a31ce47d",
+      "bytes": 11238
+    },
+    {
+      "path": "expo/node_modules/@hanlin/expo-ui/src/miniapp-actions.ts",
+      "sha256": "d5d38fc209d8d8dedb2832ffd037e53d4eabd8b8c92320bd79e791fdfef2c607",
+      "bytes": 2996
+    },
+    {
+      "path": "expo/node_modules/@hanlin/expo-ui/src/modifiers.ts",
+      "sha256": "56b1efa29241c519d325682828e944becae6b516887908777661b3a574821782",
+      "bytes": 472
+    },
+    {
+      "path": "expo/node_modules/@hanlin/expo-ui/src/system-surfaces.ts",
+      "sha256": "3a2c4424ce074056ef76d62a4502fb16c389e10a46967fcde15835efde94543f",
+      "bytes": 3395
+    },
+    {
+      "path": "expo/node_modules/@hanlin/expo-ui/tests/miniapp-actions.test.mjs",
+      "sha256": "566e95d9b0ba53fdf576de2000c6e97707fb3b85e6fb014445f1c96546eea4bc",
+      "bytes": 2053
+    },
+    {
+      "path": "expo/node_modules/@typescript/old/package.json",
+      "sha256": "9332e97c30d3e53ed54910b89207ed657fb444066484df6e5b6965bf130865e9",
+      "bytes": 3527
+    },
+    {
+      "path": "expo/node_modules/typescript/lib/typescript.js",
+      "sha256": "d3f3cd2b04b7f466f4484df921b744223f7bd1f3e353ec9110bdf52695b983d5",
+      "bytes": 45
+    },
+    {
+      "path": "expo/node_modules/typescript/package.json",
+      "sha256": "d9b8fb53c67c947fece83bcb73fa8512227ea6a12b110e096fdab8ecdc02b655",
+      "bytes": 841
+    }
+  ],
+  "status": "UNCHANGED_MATCH_ORIGINAL_MANIFEST",
+  "scope": "Original local-facade copy and compiler input identities only; no claim that a fresh full SDK was staged."
+}

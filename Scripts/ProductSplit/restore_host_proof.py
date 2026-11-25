@@ -337,6 +337,9 @@ def main():
     with open(os.environ['GITHUB_OUTPUT'],'a') as stream:
         stream.write('foreground_reused='+str(foreground_reused).lower()+'\n')
     print(json.dumps(foreground))
+    if os.environ.get('PAIRED_PROOF_REUSE_REQUIRED') == 'true' and not (reused and foreground_reused):
+        raise SystemExit('Requested paired proof reuse was invalidated; original receipts retained. '
+                         'Inspect the mismatch before executing any prerequisite suite.')
 
 
 if __name__ == '__main__':

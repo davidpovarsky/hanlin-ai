@@ -1,0 +1,14 @@
+public struct HanlinScriptWidgetPreparedNode: Codable, Hashable, Sendable {
+    public let tag: String
+    public let props: [String: HanlinValue]
+    public let children: [Child]
+    public indirect enum Child: Codable, Hashable, Sendable {
+        case element(HanlinScriptWidgetPreparedNode)
+        case value(HanlinValue)
+    }
+    public init(tag: String, props: [String: HanlinValue], children: [Child]) {
+        self.tag = tag
+        self.props = props
+        self.children = children
+    }
+}

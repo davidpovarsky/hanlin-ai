@@ -56,12 +56,12 @@ for name in names:
     assert not added or name.endswith('MiniApp') and added=={'swiftyjson'},(name,'unexpected identity addition',added)
     for identity,pin in after.items():
         if identity=='swift-ai-sdk':
-            assert pin['state']['revision']=='e7bf34111e603ca977becd007dd4e5bb109af857'
+            assert pin['state']['revision']=='07431abccbfb151ca2dab67bca6cf86fcb2bd3b8'
             assert pin['kind']==before[identity]['kind'] and pin['location']==before[identity]['location']
         elif identity in before:assert pin==before[identity],(name,'unrelated pin changed',identity)
         else:assert pin==platform[identity] and pin['state']['version']=='5.0.1',(name,'inherited existing SwiftyJSON pin mismatch')
     dest=evidence/rel;dest.parent.mkdir(parents=True,exist_ok=True);dest.write_bytes(raw)
     records.append({'source_path':rel,'raw_file':rel,'sha256':hashlib.sha256(raw).hexdigest(),'resolved':new,'previously_unlocked_existing_dependencies':sorted(added)})
 (evidence/'resolution.json').write_text(json.dumps(records,indent=2))
-(evidence/'summary.json').write_text(json.dumps({'status':'RESOLUTION_PASS','graphs':len(records),'builds':0,'tests':0,'producer':'e7bf34111e603ca977becd007dd4e5bb109af857','unrelated_pins_changed':False},indent=2))
+(evidence/'summary.json').write_text(json.dumps({'status':'RESOLUTION_PASS','graphs':len(records),'builds':0,'tests':0,'producer':'07431abccbfb151ca2dab67bca6cf86fcb2bd3b8','unrelated_pins_changed':False},indent=2))
 PY

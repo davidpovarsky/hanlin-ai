@@ -1,0 +1,25 @@
+{
+  "total_count": 1,
+  "artifacts": [
+    {
+      "id": 14865599937,
+      "node_id": "MDg6QXJ0aWZhY3QxNDg2NTU5OTkzNw==",
+      "name": "native-result-inspection-45267860115",
+      "size_in_bytes": 11426785,
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/14865599937",
+      "archive_download_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/14865599937/zip",
+      "expired": false,
+      "digest": "sha256:18827fd1472e4212f084592c9a399d97933b2ffca4ad6f8c3db3ace816228cb9",
+      "created_at": "2026-11-23T21:58:52Z",
+      "updated_at": "2026-11-23T21:58:52Z",
+      "expires_at": "2026-12-07T21:58:50Z",
+      "workflow_run": {
+        "id": 45272858701,
+        "repository_id": 1295277723,
+        "head_repository_id": 1295277723,
+        "head_branch": "codex/hanlin-sdk-motion-b-retained-20261123",
+        "head_sha": "35bfa9509ed4660d2c189b1935ed7725d0bae9f2"
+      }
+    }
+  ]
+}

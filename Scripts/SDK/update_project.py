@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Wire the original Hanlin executable to its single shared SDK implementation."""
 from pathlib import Path
-import argparse,json,re,sys
+import subprocess
+import argparse,json,os,re,shlex,sys
 ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(ROOT/"Scripts/CI/IntegrationValidation"))
 from project_graph import parse_project
@@ -15,6 +16,7 @@ PRODUCTS={"HanlinApplication":"AC1900000000000000000002","HanlinA2UI":"AC1900000
           "HanlinNotificationExtension":"AC1900000000000000000042",
           "HanlinTranslationUI":"AC1900000000000000000043",
           "HanlinWidgetUI":"AC1900000000000000000044",
+          "HanlinExpoWidgetsOriginal":"AC1900000000000000000050",
            "HanlinMiniAppsUI":"AC1900000000000000000045",
            "HanlinPresentationKit":"AC1800000000000000000002",
            "TorahLibraryKit":"F70000000000000000000051"}
@@ -25,16 +27,24 @@ PRODUCTS={"HanlinApplication":"AC1900000000000000000002","HanlinA2UI":"AC1900000
 EXTRA_PRODUCT_BUILDS = {
     ("HanlinMiniApps", "HanlinMiniAppsUI"): "AC1900000000000000000046",
     ("HanlinMiniApps", "HanlinPresentationKit"): "AC1900000000000000000047",
-    ("HanlinMiniApps", "TorahLibraryKit"): "AC1900000000000000000048"
+    ("HanlinMiniApps", "TorahLibraryKit"): "AC1900000000000000000048",
+    ("HanlinApp", "HanlinTranslationUI"): "AC1900000000000000000049",
+    ("HanlinMiniApps", "HanlinTranslationUI"): "AC190000000000000000004A",
+    ("AI_HLYTests", "HanlinTranslationUI"): "AC190000000000000000004B",
+    ("HanlinApp", "HanlinExpoWidgetsOriginal"): "AC1900000000000000000051",
+    ("HanlinMiniApps", "HanlinExpoWidgetsOriginal"): "AC1900000000000000000052",
+    ("AI_HLYTests", "HanlinExpoWidgetsOriginal"): "AC1900000000000000000053",
+    ("HanlinScriptingWidgets", "HanlinExpoWidgetsOriginal"): "AC1900000000000000000054",
+    ("HanlinMiniApps", "HanlinWidgetUI"): "AC1900000000000000000055"
 }
 TARGET_PRODUCTS={
-    "AI_Hanlin": ["HanlinApplication", "HanlinA2UI", "HanlinLocalization", "HanlinExtensionContracts"],
-    "AI_HLYTests": ["HanlinApplication", "HanlinA2UI", "HanlinLocalization", "HanlinExtensionContracts"],
-    "HanlinMiniApps": ["HanlinA2UI", "HanlinLocalization", "HanlinAgentActivityCore", "HanlinExtensionContracts", "HanlinMiniAppsUI", "HanlinPresentationKit", "TorahLibraryKit"],
+    "HanlinApp": ["HanlinApplication"],
+    "AI_HLYTests": ["HanlinApplication"],
+    "HanlinMiniApps": ["HanlinA2UI", "HanlinLocalization", "HanlinAgentActivityCore", "HanlinExtensionContracts", "HanlinMiniAppsUI", "HanlinPresentationKit", "TorahLibraryKit", "HanlinTranslationUI", "HanlinExpoWidgetsOriginal", "HanlinWidgetUI"],
     "ChavrusaChatShare": ["HanlinShareExtensionUI", "HanlinExtensionContracts"],
     "ChavrusaChatNotificationService": ["HanlinNotificationExtension", "HanlinExtensionContracts"],
     "ChavrusaChatTranslationProvider": ["HanlinTranslationUI", "HanlinExtensionContracts"],
-    "HanlinScriptingWidgets": ["HanlinWidgetUI", "HanlinExtensionContracts"],
+    "HanlinScriptingWidgets": ["HanlinWidgetUI", "HanlinExtensionContracts", "HanlinExpoWidgetsOriginal"],
 }
 
 class Span:
@@ -86,7 +96,116 @@ def insert_object(text,section,key,body):
     rendered="\t\t"+key+" = {\n"+body+"\t\t};\n"
     return text.replace(marker,rendered+marker,1)
 
-def update():
+# The SDK implementation dependencies live in application_products.json.
+# These thin hosts declare and link only their owning Application image;
+# other executables retain their independent products.
+HOST_LINK_OWNERS = {"HanlinApp": "HanlinApplication", "AI_HLYTests": "HanlinApplication"}
+
+
+def application_product_closure(manifest):
+    targets = {target["name"]: target for target in manifest["targets"]}
+    products = {product["name"]: product["targets"] for product in manifest["products"]}
+    reachable, remote = set(), set()
+
+    def include(name):
+        if name in reachable:
+            return
+        if name not in targets:
+            raise ValueError("Missing canonical application target: " + name)
+        reachable.add(name)
+        for dependency in targets[name].get("dependencies", []):
+            if "product" in dependency:
+                product, package, *_ = dependency["product"]
+                if not package:
+                    raise ValueError("Application dependency requires an explicit package: " + product)
+                remote.add((product, package.lower()))
+            elif "target" in dependency:
+                include(dependency["target"][0])
+            elif "byName" in dependency:
+                include(dependency["byName"][0])
+            else:
+                raise ValueError("Unsupported application dependency: " + repr(dependency))
+
+    for name in products["HanlinApplication"]:
+        include(name)
+    local = {name for name, members in products.items() if set(members) <= reachable}
+    return local, remote
+
+
+def product_is_covered(product, objects, closure):
+    package = objects.get(product.get("package"), {})
+    if package.get("isa") == "XCLocalSwiftPackageReference":
+        return product["productName"] in closure[0]
+    if package.get("isa") == "XCRemoteSwiftPackageReference":
+        identity = package["repositoryURL"].rstrip("/").removesuffix(".git").rsplit("/", 1)[-1].lower()
+        return (product["productName"], identity) in closure[1]
+    return False
+
+
+
+def widget_cxx_import_flags(package):
+    # Read the genuine original producer from the evaluated unified manifest.
+    producers = [target for target in package["targets"] if target["name"] == "ExpoWidgets"]
+    if len(producers) != 1:
+        raise ValueError("Expected the original ExpoWidgets producer")
+    settings = [value["kind"] for value in producers[0]["settings"] if value["tool"] == "swift"]
+    modes = [value["interoperabilityMode"]["_0"] for value in settings if "interoperabilityMode" in value]
+    if modes != ["Cxx"]:
+        raise ValueError("Expected ExpoWidgets' original C++ interoperability contract")
+    flags = [flag for value in settings if "unsafeFlags" in value for flag in value["unsafeFlags"]["_0"]]
+    # Package-relative absolute paths become repository-relative Xcode inputs;
+    # retain the producer's flags, definitions and fallback search paths.
+    return [(flag[:2] + os.path.normpath(flag[2:]) if flag.startswith(("-I/", "-F/")) else flag)
+            .replace(str(ROOT), "$(SRCROOT)") for flag in flags]
+
+
+def wire_widget_cxx_imports(text, package):
+    flags = widget_cxx_import_flags(package)
+    if len(flags) % 2 or any(flags[index] != "-Xcc" for index in range(0, len(flags), 2)):
+        raise ValueError("Unexpected ExpoWidgets Clang import flag shape")
+    objects = parse_project(text)["objects"]
+    # These native targets directly import ExpoWidgets/Core or import an app
+    # module that does. Keep unrelated extensions and UI runners unchanged.
+    consumers = {"HanlinApp", "HanlinMiniApps", "AI_HLYTests", "HanlinMiniAppsTests",
+                 "HanlinScriptingWidgets", "HanlinMiniAppsWidgets"}
+    hosts = [value for value in objects.values()
+             if value.get("isa") == "PBXNativeTarget" and value.get("name") in consumers]
+    if {host["name"] for host in hosts} != consumers:
+        raise ValueError("Missing native consumer of the original Expo import contract")
+    for host in hosts:
+        for key in objects[host["buildConfigurationList"]]["buildConfigurations"]:
+            current = objects[key]["buildSettings"].get("OTHER_SWIFT_FLAGS", ["$(inherited)"])
+            values = shlex.split(current) if isinstance(current, str) else list(current)
+            for index in range(0, len(flags), 2):
+                pair = flags[index:index + 2]
+                if not any(values[offset:offset + 2] == pair for offset in range(len(values) - 1)):
+                    values.extend(pair)
+            def settings(block):
+                replacements = {
+                    "SWIFT_OBJC_INTEROP_MODE": "objcxx",
+                    # The original Core interface fails to resolve its React
+                    # framework headers through the inherited implicit loader.
+                    "SWIFT_ENABLE_EXPLICIT_MODULES": "YES",
+                    "OTHER_SWIFT_FLAGS": "(" + ", ".join(json.dumps(value) for value in values) + ",)",
+                }
+                for name, value in replacements.items():
+                    line = name + " = " + value + ";"
+                    pattern = r'"?' + name + r'"? = [^;]+;'
+                    if re.search(pattern, block):
+                        block = re.sub(pattern, lambda _: line, block, count=1)
+                    else:
+                        block = re.sub(r'("?buildSettings"? = \{)',
+                                       lambda match: match[1] + "\n\t\t\t\t" + line, block, count=1)
+                return block
+            text = edit_object(text, key, settings)
+    return text
+
+
+def update(package=None):
+    if package is None:
+        package = json.loads(subprocess.check_output(
+            ["swift", "package", "--package-path", str(ROOT), "dump-package"], text=True, timeout=120))
+    closure = application_product_closure(package)
     text=FILE.read_text();project=parse_project(text);objects=project["objects"]
     root=objects[project["rootObject"]]
     old=[key for key in root["packageReferences"] if objects[key]["isa"]=="XCLocalSwiftPackageReference" and key!=ROOT_PACKAGE]
@@ -102,12 +221,20 @@ def update():
     for name,key in PRODUCTS.items():
         text=insert_object(text,"XCSwiftPackageProductDependency",key,
             "\t\t\tisa = XCSwiftPackageProductDependency;\n\t\t\tpackage = "+ROOT_PACKAGE+";\n\t\t\tproductName = "+name+";\n")
+    objects=parse_project(text)["objects"]
     targets={v["name"]:(k,v) for k,v in objects.items() if v.get("isa")=="PBXNativeTarget"}
     for index,(name,required) in enumerate(TARGET_PRODUCTS.items()):
         key,target=targets[name]
         products=list(target.get("packageProductDependencies",[]))
         for product in required:
             if PRODUCTS[product] not in products:products.append(PRODUCTS[product])
+        owner = HOST_LINK_OWNERS.get(name)
+        if owner:
+            # Xcode also derives product graph/link inputs from declarations.
+            # Keep independent products; only remove proven Application members.
+            products = [ref for ref in products
+                        if objects[ref]["productName"] == owner
+                        or not product_is_covered(objects[ref], objects, closure)]
         def set_products(block):
             if "packageProductDependencies" not in block:
                 marker = "\t\t\tproductType = "
@@ -117,9 +244,17 @@ def update():
         text=edit_object(text,key,set_products)
         phase=next(k for k in target["buildPhases"] if objects[k]["isa"]=="PBXFrameworksBuildPhase")
         linked=list(objects[phase]["files"])
-        if name=="AI_Hanlin":
+        if owner:
+            # Preserve native/system references and independent host products.
+            linked = [key for key in linked
+                      if "productRef" not in objects[key]
+                      or objects[objects[key]["productRef"]]["productName"] == owner
+                      or not product_is_covered(objects[objects[key]["productRef"]], objects, closure)]
+        if name=="HanlinApp":
             linked=[k for k in linked if objects[k].get("fileRef") not in {"A10000000000000000000020","A10000000000000000000021"}]
         for offset,product in enumerate(required):
+            if owner and product != owner and product in closure[0]:
+                continue
             build_id=EXTRA_PRODUCT_BUILDS.get((name,product))
             if build_id is None:
                 assert offset < 4, "Allocate an explicit free ID for an additional target product"
@@ -128,18 +263,41 @@ def update():
             text=insert_object(text,"PBXBuildFile",build_id,
                 "\t\t\tisa = PBXBuildFile;\n\t\t\tproductRef = "+PRODUCTS[product]+";\n")
         text=edit_object(text,phase,lambda b:replace_list(b,"files",linked))
-        host_modules={"AI_Hanlin":"HanlinApp", "HanlinScriptingWidgets":"HanlinScriptingWidgetsHost"}
+        if name == "HanlinMiniApps":
+            # The genuine Expo Widgets push switch uses the same APNs signing
+            # environments as the original AI app, with its own bundle identity.
+            ai_target = targets["HanlinApp"][1]
+            ai_configs = {objects[c]["name"]: objects[c] for c in
+                          objects[ai_target["buildConfigurationList"]]["buildConfigurations"]}
+            for config in objects[target["buildConfigurationList"]]["buildConfigurations"]:
+                config_name = objects[config]["name"]
+                environment = ai_configs[config_name]["buildSettings"]["APS_ENVIRONMENT"]
+                def push_setting(block, value=environment):
+                    setting = "APS_ENVIRONMENT = " + json.dumps(value) + ";"
+                    pattern = r'"?APS_ENVIRONMENT"? = [^;]+;'
+                    if re.search(pattern, block):
+                        return re.sub(pattern, lambda _: setting, block, count=1)
+                    return re.sub(r'("?buildSettings"? = \{)',
+                                  lambda match: match.group(1) + "\n\t\t\t\t" + setting,
+                                  block, count=1)
+                text = edit_object(text, config, push_setting)
+        host_modules={"HanlinApp":"HanlinApp", "HanlinScriptingWidgets":"HanlinScriptingWidgetsHost"}
         if name in host_modules:
             # The SDK owns the original implementation module names, preserving
             # SwiftData and persisted AppIntent/AppEntity/ActivityAttributes identity.
             for config in objects[target["buildConfigurationList"]]["buildConfigurations"]:
                 def settings(b):
                     module=host_modules[name]
+                    if name == "HanlinApp":
+                        b,count=re.subn(r'"?PRODUCT_NAME"? = [^;]+;',
+                                        "PRODUCT_NAME = AI_Hanlin;",b,count=1)
+                        if count != 1:
+                            raise ValueError("Missing original app product name")
                     if "PRODUCT_MODULE_NAME" in b:
                         return re.sub(r'"?PRODUCT_MODULE_NAME"? = [^;]+;',
                                       "PRODUCT_MODULE_NAME = "+module+";",b)
-                    return re.sub(r'"?PRODUCT_NAME"? = "\$\(TARGET_NAME\)";',
-                                  'PRODUCT_NAME = "$(TARGET_NAME)";\n\t\t\t\tPRODUCT_MODULE_NAME = '+module+';',b)
+                    return re.sub(r'("?PRODUCT_NAME"? = [^;]+;)',
+                                  lambda match: match[0]+'\n\t\t\t\tPRODUCT_MODULE_NAME = '+module+';',b,count=1)
                 text=edit_object(text,config,settings)
     # The standalone MiniApps executable compiles the same small original
     # runtime/provider closure. Runtime configuration must not pull the chat
@@ -158,7 +316,10 @@ def update():
             "AI_HLY/NativeAppPlatform/AppsHub/MiniAppCardView.swift",
             "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsAddSheet.swift",
             "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsCatalogView.swift",
-            "AI_HLY/NativeAppPlatform/Support/NativeAppColor.swift"]
+            "AI_HLY/NativeAppPlatform/Support/NativeAppColor.swift",
+            "AI_HLY/Downstream/ProductSplitIntegration/MiniAppAuthoringDelivery.swift",
+            "AI_HLY/Downstream/ScriptingPlatform/MiniAppImportDiagnosticsView.swift",
+            "AI_HLY/Downstream/RuntimeCore/Core/MiniAppAuthoringService.swift"]
     shared_group="F9F4C452EBF2FA6B1274B4D7"
     shared_children=list(objects[shared_group]["children"])
     for index,path in enumerate(shared):
@@ -214,8 +375,9 @@ def update():
         "\t\t\tisa = PBXFileReference;\n\t\t\tlastKnownFileType = text.json.xcstrings;\n"
         "\t\t\tpath = \"Packages/HanlinWidgetSDK/HostResources/HanlinAppIntents.xcstrings\";\n"
         "\t\t\tsourceTree = SOURCE_ROOT;\n")
-    for name, build in [("AI_Hanlin", "AC1900000000000000000131"),
-                        ("HanlinScriptingWidgets", "AC1900000000000000000132")]:
+    for name, build in [("HanlinApp", "AC1900000000000000000131"),
+                        ("HanlinScriptingWidgets", "AC1900000000000000000132"),
+                        ("HanlinMiniApps", "AC1900000000000000000133")]:
         target=targets[name][1]
         phase=next(k for k in target["buildPhases"] if objects[k]["isa"]=="PBXResourcesBuildPhase")
         files=list(objects[phase]["files"])
@@ -227,6 +389,12 @@ def update():
     children=list(objects[group]["children"])
     if intents_file not in children: children.append(intents_file)
     text=edit_object(text,group,lambda b:replace_list(b,"children",children))
+    sys.path.insert(0, str(ROOT / "Scripts/ProductSplit"))
+    from miniapps_extensions import wire_miniapps_extensions
+    # Create/update standalone extension clones before applying the original
+    # import contract to every real native consumer, including new clones.
+    text = wire_miniapps_extensions(text, edit_object, replace_list, insert_object)
+    text = wire_widget_cxx_imports(text, package)
     parse_project(text)
     return text
 

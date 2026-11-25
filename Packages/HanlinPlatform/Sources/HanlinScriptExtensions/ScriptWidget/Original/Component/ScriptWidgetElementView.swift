@@ -12,14 +12,24 @@ import HanlinScriptContracts
 @MainActor
 final class ScriptWidgetElementContext {
     let actionContext: HanlinWidgetActionContext
+    let nativeActionBuilder: ((HanlinWidgetActionCommand, AnyView) -> AnyView)?
     let debugMode = false
     let animationDate: Date?
     let package: HanlinScriptWidgetResources
     var canExecuteActions: Bool { !actionContext.actions.isEmpty }
-    init(actionContext: HanlinWidgetActionContext, animationDate: Date? = nil) {
+    init(actionContext: HanlinWidgetActionContext, animationDate: Date? = nil,
+         nativeActionBuilder: ((HanlinWidgetActionCommand, AnyView) -> AnyView)? = nil) {
         self.actionContext = actionContext
+        self.nativeActionBuilder = nativeActionBuilder
         self.animationDate = animationDate
         package = HanlinScriptWidgetResources(files: actionContext.resources)
+    }
+    func command(for element: ScriptWidgetRuntimeElement, declaration: HanlinWidgetActionDeclaration,
+                 desiredValue: Bool? = nil) -> HanlinWidgetActionCommand {
+        let parameters = element.getProps()["actionParameters"].flatMap { try? HanlinWidgetJSON.value($0) }
+        return .init(context: actionContext, actionID: declaration.id,
+            nonce: actionContext.presentation == nil ? "" : UUID().uuidString,
+            desiredValue: desiredValue, parameters: parameters)
     }
     func usesContainerBackground(for element: ScriptWidgetRuntimeElement) -> Bool { false }
     func declaration(for element: ScriptWidgetRuntimeElement) -> HanlinWidgetActionDeclaration? {
@@ -57,6 +67,7 @@ struct ScriptWidgetElementView: View {
             switch tag {
             case "hstack": return ScriptWidgetElementTagStack.buildViewHStack(element, context)
             case "vstack": return ScriptWidgetElementTagStack.buildViewVStack(element, context)
+            case "list": return ScriptWidgetElementTagList.buildView(element, context)
             case "zstack": return ScriptWidgetElementTagZStack.buildView(element, context)
             case "hgrid": return ScriptWidgetElementTagGrid.buildViewHGrid(element, context)
             case "vgrid": return ScriptWidgetElementTagGrid.buildViewVGrid(element, context)

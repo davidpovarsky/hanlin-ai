@@ -1,0 +1,28 @@
+◇ Test run started.
+↳ Testing Library Version: 6.4.3 (ba0861fb203553c)
+↳ Target Platform: aarch64-unknown-linux-gnu
+◇ Suite HanlinArchiveDirectoryTests started.
+◇ Test realArchiveWithoutPackageManifestIsRejected() started.
+✔ Test realArchiveWithoutPackageManifestIsRejected() passed after 0.002 seconds.
+✔ Suite HanlinArchiveDirectoryTests passed after 0.002 seconds.
+✔ Test run with 1 test in 1 suite passed after 0.003 seconds.
+Building for debugging...
+[Computing dependencies]
+[Pre-planning 1 / 153]
+[Planning deferred tasks]
+[38 / 74] HanlinPlatformContracts
+[43 / 80] HanlinScriptContracts
+[44 / 80] HanlinPlatformContracts
+[46 / 80] HanlinScriptContracts
+[59 / 83] HanlinPlatformContracts
+[63 / 86] HanlinScriptContracts
+[69 / 86] HanlinScriptCompiler
+[72 / 90] ArchiveImportPolicyTests-product
+[72 / 91] ArchiveImportPolicyTests-product
+[79 / 91] HanlinScriptCompiler
+[80 / 91] ArchiveImportPolicyTests-product
+[84 / 92] ArchiveImportPolicyTests-product
+[88 / 95] ArchiveImportPolicyTests-test-runner
+[92 / 95] ArchiveImportPolicyTests-test-runner
+[96 / 96] ArchiveImportPolicyTests-test-runner
+Build complete! (12.73 secs)

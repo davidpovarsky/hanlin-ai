@@ -1,0 +1,2 @@
+2026-11-23 22:55:02.999 xcodebuild[10552:34619] [MT] IDERunDestination: Supported platforms for the buildables in the current scheme is empty.
+2026-11-23 22:55:03.719 xcodebuild[10552:34619] [MT] IDESchemeActionsInvocationRecord: Device <DVTiOSDeviceSimulatorPlaceholder: 0x77967c0dc0 (Any iOS Simulator Device | undefined_arch)> is missing operatingSystemVersion, operatingSystemVersionWithBuildNumber.

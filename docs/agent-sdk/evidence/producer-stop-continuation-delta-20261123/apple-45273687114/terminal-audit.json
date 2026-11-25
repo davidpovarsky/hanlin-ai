@@ -1,0 +1,44 @@
+{
+  "receipt": {
+    "run_id": 45273687114,
+    "run_attempt": 1,
+    "source": "e1a295ba60396997a6127c6c2e2c4e6e75f508b3",
+    "utc": "2026-11-23T22:18:30.600110+00:00",
+    "artifact_id": 14868011763,
+    "artifact_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/14868011763",
+    "zip_bytes": 4651327,
+    "zip_sha256": "1ab4e195cfc821b59b05979a7221ce35e1cee5e679f67dcf3242f9f467b72827",
+    "api_digest_verified": true,
+    "api_run_source_verified": true,
+    "zip_crc": "PASS",
+    "acquisition_count": 1,
+    "archive_member_inventory_sha256": "b5a28af43d23c6ece242a460eaa4bd8619eabf04b9a0707cbcdaaa00405e6e7b",
+    "extracted_files": 46,
+    "container_only_files": 53
+  },
+  "evidence_root": "/mnt/development/projects/worktrees/hanlin-sdk02-stop-continuation-20261123/build/sdk02-stop-continuation-acceptance/delta-selector-recheck/original",
+  "commands_with_verified_original_outputs": 15,
+  "source_hashes_verified": 404,
+  "workflow_hashes_verified": 8,
+  "actual_locks_verified": 2,
+  "failing_commands": [],
+  "summary_reproduction": "PASS",
+  "candidate_status": "PASS",
+  "system_model_generation": "NOT_RUN",
+  "shipping_native_tool_capability": false,
+  "selected_route": {
+    "exact_test_selector": "HanlinStopContinuationDelta",
+    "target_validation_group": "agent_sdk_exact_source_proof",
+    "baseline": "NOT_SELECTED",
+    "run_id": "45273687114",
+    "run_attempt": "1"
+  },
+  "producer_commit": "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8",
+  "candidate_counts": {
+    "PASS": 3,
+    "FAIL": 0,
+    "NOT_RUN": 0
+  },
+  "prior_cases_replayed": 0,
+  "ios_agent_core_compile": "PASS"
+}

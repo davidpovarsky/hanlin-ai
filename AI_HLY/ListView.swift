@@ -111,6 +111,24 @@ struct ListView: View {
         )
     }
 
+    private func dispatchPendingMiniAppRepair() {
+        guard let repair = MiniAppRepairCoordinator.shared.pending(for: receivingWindowID) else { return }
+        let id = repair.conversationID
+        do {
+            let rows = try modelContext.fetch(FetchDescriptor<ChatRecords>(predicate: #Predicate { $0.id == id }))
+            guard rows.count == 1, let record = rows.first else { return }
+            guard sessionBridge.beginImportedFirstTurn(submissionID: repair.id,
+                text: repair.text, documentURLs: repair.documents,
+                targetChatID: repair.conversationID, selectedModelIndex: repair.selectedModelIndex)
+            else { return }
+            selectedChatRecord = record
+            sessionBridge.expectedActiveSessionID = id
+            if useCompactWorkspace { compactWorkspacePath = [.chat(id)] }
+        } catch {
+            conversationUnavailable = true
+        }
+    }
+
     var body: some View {
         Group {
             if !useCompactWorkspace {
@@ -174,6 +192,21 @@ struct ListView: View {
                 infoDescriptionCache.removeValue(forKey: change.conversationID)
             }
             forceRefresh.toggle()
+        }
+        .task(id: MiniAppRepairCoordinator.shared.destination(for: receivingWindowID)) {
+            guard let id = MiniAppRepairCoordinator.shared.destination(for: receivingWindowID),
+                  let rows = try? modelContext.fetch(FetchDescriptor<ChatRecords>(predicate: #Predicate { $0.id == id })),
+                  rows.count == 1, let record = rows.first else { return }
+            selectedChatRecord = record
+            sessionBridge.expectedActiveSessionID = id
+            if useCompactWorkspace { compactWorkspacePath = [.chat(id)] }
+        }
+        .task(id: MiniAppRepairCoordinator.shared.pending(for: receivingWindowID)?.id) {
+            dispatchPendingMiniAppRepair()
+        }
+        .onChange(of: sessionBridge.pendingFirstTurn?.status) {
+            MiniAppRepairCoordinator.shared.acknowledge(sessionBridge.pendingFirstTurn, window: receivingWindowID)
+            dispatchPendingMiniAppRepair()
         }
         .task(id: requestedSelection?.id) {
             guard let request = requestedSelection else { return }

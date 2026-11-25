@@ -1,0 +1,40 @@
+TAP version 13
+# Subtest: NativeScript package emits a runnable ESM graph and retains exact editable sources
+ok 1 - NativeScript package emits a runnable ESM graph and retains exact editable sources
+  ---
+  duration_ms: 2510.928708
+  type: 'test'
+  ...
+# Subtest: NativeScript preserves authored CommonJS JavaScript and its source-map mode
+ok 2 - NativeScript preserves authored CommonJS JavaScript and its source-map mode
+  ---
+  duration_ms: 1157.263166
+  type: 'test'
+  ...
+# Subtest: the real CLI archives and revalidates retained source, diagnostics and output identity
+ok 3 - the real CLI archives and revalidates retained source, diagnostics and output identity
+  ---
+  duration_ms: 4491.258833
+  type: 'test'
+  ...
+# Subtest: NativeScript preserves the original npm runtime package rather than leaving an unresolved bare import
+ok 4 - NativeScript preserves the original npm runtime package rather than leaving an unresolved bare import
+  ---
+  duration_ms: 1793.665292
+  type: 'test'
+  ...
+# Subtest: NativeScript emission and copied bodies agree with canonical types and preserve project aliases and extra dependencies
+ok 5 - NativeScript emission and copied bodies agree with canonical types and preserve project aliases and extra dependencies
+  ---
+  duration_ms: 1430.605083
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 12093.716042

@@ -1,0 +1,25 @@
+{
+  "at": "2026-11-24T08:54:52.880877+00:00",
+  "sourceCommit": "74ba980dbb91f3a38d4531f043801f5e742c283a",
+  "branch": "codex/hanlin-miniapps-sdk-completion-20261123",
+  "workflowID": 419196373,
+  "inputs": {
+    "paired_product_acceptance": "true",
+    "paired_test_scope": "miniapp_scriptwidget",
+    "runtime_bundle_artifact_run_id": "42926628418"
+  },
+  "selectedCases": 2,
+  "testFilter": "HanlinDualWidgetEnginesTests/(rootFragmentsPreserveOriginalElementAllowances|scriptWidgetUsesOriginalElementLimitsWithoutExtraMaterialQuotas)",
+  "concurrencySuffix": "paired-miniapp_scriptwidget",
+  "dispatchExecuted": true,
+  "dispatchOutput": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45360272675\n",
+  "dispatchStderr": "",
+  "mainRunUnaffected": 45354940642,
+  "existingPassesReused": [
+    45356338624,
+    45354891567
+  ],
+  "boundary": "Actual2method Apple/JSC evidence required for the reviewed original-budget adapter changes. No full app/UI, SDK export or physical-device result inferred.",
+  "newRunID": 45360272675,
+  "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45360272675"
+}

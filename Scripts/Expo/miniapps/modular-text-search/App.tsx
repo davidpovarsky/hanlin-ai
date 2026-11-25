@@ -18,6 +18,7 @@ import {
 import { appendUniqueResults, groupSearchResults, versionLabel } from './src/logic/searchGrouping';
 import { tFactory, getQuickQueries, formatNumber, versionModeOptions } from './src/logic/localization';
 import { splitLooseList } from './src/logic/textUtils';
+import { normalizeEntrypointInput } from './src/logic/entrypointInput';
 
 type SearchOptions = Record<string, any>;
 type TextOptions = Record<string, any>;
@@ -294,6 +295,13 @@ export default function App() {
   const [expanded,setExpanded] = useState<Record<string,TextLoaderState>>({});
   const searching = useRef(false);
   const loadingPage = useRef(false);
+  const actionSearch = useRef<(parameters: unknown) => Promise<{ query: string; total: number } | null>>(async () => null);
+  useEffect(() => {
+    let mounted = true;
+    void hostServices.actions.register({ search: ({ parameters }) => actionSearch.current(parameters) })
+      .catch(error => { if (mounted) setDiagnostic(String(error?.message ?? error)); });
+    return () => { mounted = false; };
+  }, []);
 
   const groups = useMemo(() => groupSearchResults(results),[results]);
   const suggestions = useMemo(() => getQuickQueries(locale),[locale]);
@@ -312,8 +320,11 @@ export default function App() {
     }
   },[engineId,query,searchOptions,filtersText,filterFieldsText,aggsText]);
 
-  async function search(value?:string) {
-    if(searching.current)return;
+  async function search(value?:string, invoked = false): Promise<{ query: string; total: number } | null> {
+    if (searching.current) {
+      if (invoked) throw new Error('A search is already running.');
+      return null;
+    }
     const q = String(value ?? query).trim();
     if(!q){
       setError(t('noQueryError'));
@@ -321,7 +332,8 @@ export default function App() {
       setResults([]);
       setSubmittedQuery('');
       setHasMore(false);
-      return;
+      if (invoked) throw new Error(t('noQueryError'));
+      return null;
     }
     searching.current = true;
     const options = effective(q,0);
@@ -342,17 +354,28 @@ export default function App() {
       setLastSearchOptions(options);
       setHasMore(incoming.length>0 && incoming.length<total);
       if(incoming.length===0)setError(t('noResultsError'));
+      return { query: q, total };
     } catch(e:any) {
       setError(e?.message || String(e));
       setResults([]);
       setMeta(null);
       setSubmittedQuery('');
       setHasMore(false);
+      if (invoked) throw e;
+      return null;
     } finally {
       searching.current = false;
       setIsLoading(false);
     }
   }
+
+  actionSearch.current = async parameters => {
+    const input = normalizeEntrypointInput(parameters);
+    if (input.locale) setLocale(input.locale);
+    setQuery(input.query);
+    setPath([]);
+    return search(input.query, true);
+  };
 
   async function loadMore() {
     if(searching.current||loadingPage.current||isLoading||isLoadingMore||

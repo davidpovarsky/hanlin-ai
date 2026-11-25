@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "utc": "2026-11-24T08:03:03.665343+00:00",
+  "argv": [
+    "/usr/local/bin/node",
+    "Scripts/Expo/node_modules/typescript/bin/tsc6",
+    "--project",
+    "Fixtures/ExpoSwiftUIProbe/tsconfig.json",
+    "--pretty",
+    "false"
+  ],
+  "exitCode": 0,
+  "sourceSHA256": "4794f92fc158639b806c0f80bf74cf71775651ad2acd2c24c9462f9d810ff48e",
+  "compilerVersion": "6.0.2",
+  "strict": true,
+  "skipLibCheck": false,
+  "correction": "Actual original TextFieldProps documents text as ObservableState<string> and supports omitted text for internal state. Removed the unnecessary controlled string from the secondary focus target; no new state shim or compiler override.",
+  "native": "NOT_RUN",
+  "compilerPackageVersion": "6.0.2",
+  "actualCompilerVersion": "6.0.3",
+  "compilerIdentityCorrection": "The initial 6.0.2 label was taken from package.json. Reading the actual compiler export confirms6.0.3 and identical compiler bytes in local and exact-export graphs; compiler-identities.json records the hashes."
+}

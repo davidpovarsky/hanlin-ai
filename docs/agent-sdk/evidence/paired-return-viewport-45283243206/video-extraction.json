@@ -1,0 +1,21 @@
+{
+  "source_payload": "/mnt/development/projects/worktrees/hanlin-sdk-paired3-corrections-20261123/build/paired3-corrections-20261123/native/app-split-evidence/paired-product/Paired.xcresult/Data/data.0~FKIA5xMcO0nRNe1O5TXIgEmxK8SZcPKRumjRdiKoNcWsYWFJp3aJDNHADwa6m8V01gP9DFgQ5Tesij3b91VP3Q==",
+  "source_sha256": "95647bfb30b7dcda0db2c8fb18f0ec20508b15bba8053bcbcf1f04ac4bb26abb",
+  "frames": [
+    {
+      "second": 65,
+      "file": "return-video-65.png",
+      "sha256": "93f3b61039835a7868a0a0e1532542726b12911d8fc965a462c2973a6ca9d96a"
+    },
+    {
+      "second": 75,
+      "file": "return-video-75.png",
+      "sha256": "be29f2f2a0cbe029a7ce23bb98ab9f4c1156faeb241292146f690b9a51dd86db"
+    },
+    {
+      "second": 100,
+      "file": "return-video-100.png",
+      "sha256": "a5112e30f1cf9deb3f5f000d2a9ef5ed2455f6a8f1f974a215af307ecd433f33"
+    }
+  ]
+}

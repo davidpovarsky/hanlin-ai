@@ -21,9 +21,9 @@ export function matchQuery(mediaQuery, values) {
         // Either the parsed or specified `type` is "all", or the types must be
         // equal for a match.
         const typeMatch = query.type === 'all' || values.type === query.type;
-        // Quit early when `type` doesn't match, but take "not" into account
-        if ((typeMatch && inverse) || !(typeMatch || inverse)) {
-            return false;
+        // `not` negates the whole query, the type included.
+        if (!typeMatch) {
+            return inverse;
         }
         const expressionsMatch = features.every((feature) => {
             const value = values[feature.property];
@@ -69,7 +69,7 @@ export function matchQuery(mediaQuery, values) {
                 }
             }
         });
-        return (expressionsMatch && !inverse) || (!expressionsMatch && inverse);
+        return inverse ? !expressionsMatch : expressionsMatch;
     });
 }
 export function parseQuery(mediaQuery) {

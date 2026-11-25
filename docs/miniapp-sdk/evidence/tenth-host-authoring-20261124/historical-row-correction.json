@@ -1,0 +1,114 @@
+{
+  "recordedAtUTC": "2026-11-24T09:05:51.905352+00:00",
+  "kind": "EVIDENCE_ROW_ATTRIBUTION_CORRECTION",
+  "previousRows": [
+    {
+      "line": 20984,
+      "text": "✔ integrity mismatch fails closed (2.156ms)"
+    },
+    {
+      "line": 20985,
+      "text": "✔ install cancellation aborts work (0.608ms)"
+    },
+    {
+      "line": 20986,
+      "text": "✔ multiple package bins are listed and an explicit path preserves its bin name (1.627375ms)"
+    },
+    {
+      "line": 20987,
+      "text": "✔ unknown legacy transactions preserve both the installed package and its backup (16.592167ms)"
+    },
+    {
+      "line": 20988,
+      "text": "✔ host redirects npm state before preview and install modules initialize (14955.870875ms)"
+    },
+    {
+      "line": 20989,
+      "text": "✔ worker terminal status is observable only after its actual atomic journal rename (71.987666ms)"
+    },
+    {
+      "line": 20990,
+      "text": "✔ operation terminal status is observable only after its actual atomic journal rename (21.953292ms)"
+    },
+    {
+      "line": 20991,
+      "text": "✔ actual MCP installation executes lifecycle before initialize/tools-list and preserves the prior server after failure (3573.8405ms)"
+    },
+    {
+      "line": 20992,
+      "text": "✔ actual MCP tools/list above the former one-MiB probe cap passes by default (99.676167ms)"
+    },
+    {
+      "line": 20993,
+      "text": "✔ ordinary installation probes a real >one-MiB schema after the former thirty-second deadline and journals exact output (31581.609958ms)"
+    },
+    {
+      "line": 20994,
+      "text": "✔ a stopped probe cancels its actual Worker without waiting for a protocol timeout (1168.759083ms)"
+    },
+    {
+      "line": 20995,
+      "text": "✔ exit zero without a protocol response fails promptly instead of waiting forever (42.950541ms)"
+    },
+    {
+      "line": 20996,
+      "text": "✔ complete protocol reply immediately followed by exit zero remains a valid probe (76.997916ms)"
+    }
+  ],
+  "correctRows": [
+    {
+      "line": 21001,
+      "text": "✔ real TypeScript reports semantic errors with original source locations (2201.68ms)"
+    },
+    {
+      "line": 21002,
+      "text": "✔ validation uses actual original package declarations from the supplied SDK (1919.18975ms)"
+    },
+    {
+      "line": 21003,
+      "text": "✔ NativeScript package emits a runnable ESM graph and retains exact editable sources (2521.149125ms)"
+    },
+    {
+      "line": 21004,
+      "text": "✔ import rechecks retained source and ignores a stale successful report (3005.130375ms)"
+    },
+    {
+      "line": 21005,
+      "text": "✔ ScriptWidget keeps original source and its explicit ABI declaration (1009.668542ms)"
+    },
+    {
+      "line": 21006,
+      "text": "✔ failed typecheck emits no package (966.859209ms)"
+    },
+    {
+      "line": 21007,
+      "text": "✔ a requested existing output directory is preserved (954.342916ms)"
+    },
+    {
+      "line": 21008,
+      "text": "✔ SDK discovery reads its real manifest and requested documentation (11.898042ms)"
+    },
+    {
+      "line": 21009,
+      "text": "✔ bundle-only imports do not receive a fabricated source typecheck pass (9.403ms)"
+    },
+    {
+      "line": 21010,
+      "text": "✔ modified compiled output is rejected even when retained TypeScript is still valid (4007.777209ms)"
+    },
+    {
+      "line": 21011,
+      "text": "✔ the real CLI archives and revalidates retained source, diagnostics and output identity (14124.381375ms)"
+    },
+    {
+      "line": 21012,
+      "text": "✔ compiler-used sources named build or dist survive source retention and archive revalidation (4343.790875ms)"
+    },
+    {
+      "line": 21013,
+      "text": "✔ NativeScript preserves the original npm runtime package rather than leaving an unresolved bare import (6301.058291ms)"
+    }
+  ],
+  "unchangedRawLogSHA256": "c6b184e7b004158b1fac6ee663abeeaf35643064bd3a43d0ebf88c68fb246d13",
+  "explanation": "Old mapping accidentally selected adjacent thirteen MCP/probe rows. Replace with exact thirteen miniapp-authoring method-name matches in same immutable log. Counts and actual result remain13 passed/0failed/0skipped. Record correction, not new execution."
+}

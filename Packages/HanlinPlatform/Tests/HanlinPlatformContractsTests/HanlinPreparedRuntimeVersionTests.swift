@@ -35,4 +35,18 @@ struct HanlinPreparedRuntimeVersionTests {
             #expect(!HanlinPreparedRuntimeVersion.supportsMinimum("9.1.0", installed: installed))
         }
     }
+
+    @Test func javascriptRuntimeCompatibilityAcceptsOnlyCurrentOrOlderSameMinorPatches() {
+        for required in ["9.1.0", "9.1.1", "9.1.0+fixture.1"] {
+            #expect(HanlinPreparedRuntimeVersion.supportsCompatiblePatch(required, installed: "9.1.1"))
+        }
+        for required in ["9.1.2", "9.0.9", "9.2.0", "10.1.0", "8.1.0", "9.1.0-beta.1",
+                         "", "9.1", "^9.1.0", "9.01.0", "9.1.0.extra"] {
+            #expect(!HanlinPreparedRuntimeVersion.supportsCompatiblePatch(required, installed: "9.1.1"))
+        }
+        #expect(!HanlinPreparedRuntimeVersion.supportsCompatiblePatch("9.1.1", installed: "9.1.0"))
+        #expect(!HanlinPreparedRuntimeVersion.supportsCompatiblePatch("9.1.0", installed: "9.1.1-beta.1"))
+        #expect(!HanlinPreparedRuntimeVersion.supportsCompatiblePatch("9.1.0", installed: "invalid"))
+    }
+
 }

@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-24T12:07:32.583391+00:00",
+  "route": "Existing documented scaleway-mac SSH alias through connected Oracle host",
+  "purpose": "Read-only physical iPad/iPhone availability inventory; no app acceptance execution",
+  "retainedEvidenceFinding": "Prior mac.json used simctl list devices; mac-xcode-apps.json only listed Xcode.app27.0. Neither established physical device inventory.",
+  "inventoryCommands": [
+    {
+      "argv": [
+        "xcrun",
+        "devicectl",
+        "list",
+        "devices",
+        "--timeout",
+        "20",
+        "--json-output",
+        "-"
+      ],
+      "atUTC": "2026-11-24T12:06:44.257713+00:00",
+      "exit": 0,
+      "timedOut": false,
+      "durationSeconds": 0.125605875
+    },
+    {
+      "argv": [
+        "xcrun",
+        "xctrace",
+        "list",
+        "devices"
+      ],
+      "atUTC": "2026-11-24T12:06:44.258792+00:00",
+      "exit": 0,
+      "timedOut": false,
+      "durationSeconds": 2.8400558329999996
+    }
+  ],
+  "deviceCtl": {
+    "outcome": "success",
+    "jsonVersion": 5,
+    "toolVersion": "642.16",
+    "devices": [
+      {
+        "identifier": "90338403-D249-45C9-B432-267A9C8C931C",
+        "name": "iPad Pro 13-inch (M5)",
+        "reality": "simulated",
+        "visibilityClass": "simulators",
+        "deviceType": "iPad",
+        "connectionState": "connected",
+        "transportType": "sameMachine",
+        "provider": "com.apple.CoreSimulator.SimulatorCoreDevicePlugin"
+      },
+      {
+        "identifier": "457C88BB-8253-4206-A9A9-5D2863503B97",
+        "name": "iPhone 18 Pro",
+        "reality": "simulated",
+        "visibilityClass": "simulators",
+        "deviceType": "iPhone",
+        "connectionState": "disconnected",
+        "transportType": "sameMachine",
+        "provider": "com.apple.CoreSimulator.SimulatorCoreDevicePlugin"
+      }
+    ],
+    "listedDeviceCount": 2,
+    "explicitlySimulatedCount": 2,
+    "identifiedPhysicalIPadOrIPhoneCount": 0
+  },
+  "xcTrace": {
+    "deviceRows": [
+      "109bcd84-6a7a-475f-9c53-0cf427912d04 (225B67B3-1508-555B-9F40-808D25382398)"
+    ],
+    "simulatorCount": 11,
+    "interpretation": "The single opaque UUID-named Devices entry has no iPad/iPhone model/platform identification in this output. It is not counted as a proven physical iOS device."
+  },
+  "conclusion": "NO_REACHABLE_PHYSICAL_IPAD_OR_IPHONE_IDENTIFIED_IN_THIS_ROUTE_SNAPSHOT",
+  "unknowns": [
+    "Whether an unpaired, offline or otherwise undiscovered physical iOS device exists is not established by these inventory commands.",
+    "The opaque xctrace Devices entry is not classified as an iPad/iPhone from this output.",
+    "No physical device signing, installation, app launch or acceptance eligibility was exercised."
+  ],
+  "boundaries": {
+    "readOnlyMacCommands": true,
+    "remoteJSONOnStdout": true,
+    "simulatorOrDeviceChanges": false,
+    "pairingOrInstall": false,
+    "signingOrSDKChanges": false,
+    "buildsOrTests": false,
+    "credentialInspection": false,
+    "nativeAcceptanceClaimed": false,
+    "rootWorktreeChanged": false,
+    "inventoryStoppedAfterTwoCommands": true
+  },
+  "files": {
+    "retained-source-summary.json": {
+      "bytes": 1347,
+      "sha256": "7e8e913f97019f2171a67b2b927a6010f900e19d8fc5762bc35f61eeaf185bab"
+    },
+    "devicectl-help.json": {
+      "bytes": 6394,
+      "sha256": "414d61e1a49253f915d380a5c60062786d6a99187bdd416c859b5e3f682f0f9f"
+    },
+    "physical-device-inventory.json": {
+      "bytes": 23194,
+      "sha256": "c1e4f287b5af3005adbf6791aeeb761dd03633603846d8fc8eef6530ad27ca24"
+    }
+  }
+}

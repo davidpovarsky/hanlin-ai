@@ -1,7 +1,9 @@
 import Foundation
+import ExpoAsset
 import ExpoBrownfield
 import ExpoModulesCore
 import ExpoUI
+import ExpoWidgets
 import HanlinExpoNativeAPI
 import HanlinExpoNativeAPICore
 import HanlinPlatformContracts
@@ -80,7 +82,9 @@ private final class HanlinExpoReactNativeFactoryDelegate: RCTDefaultReactNativeF
 public final class HanlinExpoModulesProvider: ModulesProvider {
     public override func getModuleClasses() -> [ExpoModuleTupleType] {
         return [
+            (module: ExpoAsset.AssetModule.self, name: nil),
             (module: ExpoUIModule.self, name: "ExpoUI"),
+            (module: ExpoWidgets.WidgetsModule.self, name: "ExpoWidgets"),
             (module: HanlinExpoUIModule.self, name: "HanlinExpoUI"),
             (module: HanlinGeneratedExpoUIModule.self, name: "HanlinGeneratedExpoUI"),
             (module: ExpoBrownfieldModule.self, name: "ExpoBrownfieldModule"),
@@ -92,8 +96,8 @@ public final class HanlinExpoModulesProvider: ModulesProvider {
 
 @MainActor
 public final class HanlinExpoSession {
-    private static let supportedSDKVersion = "58.0.3"
-    private static let supportedUIVersion = "58.0.3"
+    private static let supportedSDKVersion = HanlinExpoHostVersions.expoSDKVersion
+    private static let supportedUIVersion = HanlinExpoHostVersions.expoUIVersion
     private static var activeSessions: [String: HanlinExpoSession] = [:]
 
     public let sessionID: String
@@ -101,6 +105,8 @@ public final class HanlinExpoSession {
     public let containerController: UIViewController
     public let bundleURL: URL
     public let packageID: String
+    public let installedPackageID: String
+    public let packageGeneration: UInt64
     public let isNativeAPIGranted: Bool
 
     private var reactNativeFactory: RCTReactNativeFactory?
@@ -139,6 +145,8 @@ public final class HanlinExpoSession {
         applicationRoot: URL,
         sessionID: String = UUID().uuidString.lowercased(),
         packageID: String = "unknown",
+        installedPackageID: String? = nil,
+        packageGeneration: UInt64 = 0,
         isNativeAPIGranted: Bool = false
     ) throws {
         Self.ensureAppDefinesLoaded()
@@ -205,13 +213,15 @@ public final class HanlinExpoSession {
         self.sessionID = sessionID
         self.applicationRoot = root
         self.bundleURL = resolvedBundleURL
-        self.packageID = packageID
+        self.packageID = packageID == "unknown" ? (packageJSON["name"] as? String ?? root.lastPathComponent) : packageID
+        self.installedPackageID = installedPackageID ?? root.path
+        self.packageGeneration = packageGeneration
         self.isNativeAPIGranted = isNativeAPIGranted
         self.containerController = UIViewController()
         self.containerController.view.backgroundColor = .systemBackground
     }
 
-    public func start(moduleName: String = "main") throws {
+    public func start(moduleName: String = "main", initialProperties: [String: Any]? = nil) throws {
         guard !isActive else { return }
 
         do {
@@ -232,6 +242,7 @@ public final class HanlinExpoSession {
                 throw HanlinExpoError.bootstrapFailed("No Host Services provider is registered for this Expo session.")
             }
             NSLog("%@", "HANLIN_EXPO_HOSTSERVICES_BOUND")
+            HanlinExpoWidgetsIntegration.bind(appContext: appContext, packageID: packageID, installedPackageID: installedPackageID, generation: packageGeneration, sessionID: sessionID)
             appContext.registerNativeModules(provider: modulesProvider)
             NSLog("%@", "HANLIN_EXPO_MODULES_REGISTERED")
             self.appContext = appContext
@@ -250,7 +261,7 @@ public final class HanlinExpoSession {
 
             let rootView = factory.rootViewFactory.view(
                 withModuleName: moduleName,
-                initialProperties: nil,
+                initialProperties: initialProperties,
                 launchOptions: nil
             )
             NSLog("%@", "HANLIN_EXPO_ROOTVIEW_CREATED")
@@ -294,6 +305,7 @@ public final class HanlinExpoSession {
         reactNativeFactory = nil
         factoryDelegate = nil
         if let appContext {
+            HanlinExpoWidgetsIntegration.unbind(appContext: appContext)
             HanlinExpoHostServicesBridge.unbind(appContext: appContext)
             NSLog("%@", "HANLIN_EXPO_UNBOUND")
             // Expo's native state owns destroy() and executes it on the JS

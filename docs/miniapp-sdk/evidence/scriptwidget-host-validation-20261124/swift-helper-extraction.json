@@ -1,0 +1,12 @@
+{
+  "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeFetch.swift",
+  "sourceSHA256": "8a7bb65bffe0390ac719e33b0ece71e19b20e9be96841e422a3a4c37f09352b3",
+  "rangeStart": "    static func isValidDomainDeclaration(",
+  "rangeEndExcluded": "\\n    static func packageAllows(",
+  "extractedSourceSHA256": "0812613bd7142d73b4d99e74fd8ac5725f0cf43c593b9434a0ad63afe39880b0",
+  "harnessSHA256": "ab9ecc4f9bd6fff01583147628963ba228bd4d6a7e9197e15d86ff26c22312e9",
+  "method": "Direct byte-for-byte source extraction, no recreated implementation; Foundation-only execution on Linux, not Apple runtime acceptance.",
+  "validDeclarations": 4,
+  "malformedDeclarations": 9,
+  "hostMatchingCases": 7
+}

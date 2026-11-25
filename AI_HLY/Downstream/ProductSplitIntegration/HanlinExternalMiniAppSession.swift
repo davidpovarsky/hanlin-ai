@@ -140,9 +140,14 @@ final class HanlinExternalMiniAppSession {
             try await finish(MiniAppResult(requestID: request.id, status: .cancelled), returnsToSource: false)
             return #"{"ok":true}"#
         case "miniapps.return":
-            await returnToSource()
+            let outcome = await returnToSource()
             releaseEngine()
-            return #"{"ok":true}"#
+            return String(decoding: try JSONSerialization.data(withJSONObject: [
+                "ok": outcome == .opened,
+                "requested": outcome == .opened || outcome == .failed,
+                "opened": outcome == .opened,
+                "status": outcome.rawValue
+            ], options: [.sortedKeys]), as: UTF8.self)
         default:
             throw failure("Unknown MiniApps operation.")
         }
@@ -193,9 +198,17 @@ final class HanlinExternalMiniAppSession {
         } catch { self.error = error.localizedDescription }
     }
 
-    func returnToSource() async {
-        guard !returning, let request, let result else { return }
-        guard let url = request.callbackURL(for: result) else { return }
+    enum SourceReturnOutcome: String {
+        case opened, failed
+        case notAvailable = "not-available"
+        case inProgress = "in-progress"
+    }
+
+    @discardableResult
+    func returnToSource() async -> SourceReturnOutcome {
+        guard !returning else { return .inProgress }
+        guard let request, let result,
+              let url = request.callbackURL(for: result) else { return .notAvailable }
         returning = true
         defer { returning = false }
         let opened = await openSource(url)
@@ -203,6 +216,7 @@ final class HanlinExternalMiniAppSession {
             error = Self.localized("The result is saved. Open the source app to continue.",
                                    "התוצאה נשמרה. יש לפתוח את אפליקציית המקור כדי להמשיך.")
         }
+        return opened ? .opened : .failed
     }
 
     func complete(_ value: HanlinValue) async throws {

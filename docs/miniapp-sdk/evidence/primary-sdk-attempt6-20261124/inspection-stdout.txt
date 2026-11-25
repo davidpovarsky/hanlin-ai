@@ -1,0 +1,48 @@
+{
+  "status": "PASS",
+  "recordedAtUTC": "2026-11-24T21:19:59.416704+00:00",
+  "inspectionStartedAtUTC": "2026-11-24T21:19:57.876290+00:00",
+  "elapsedSeconds": 1.540416682139039,
+  "executionSource": "bd6da170da7936fe3c5353ddaf8b25c97477a380",
+  "archiveSHA256": "6b8ab65a1d8c6a2ae51ff12b606ba830cd19a775dc9764587941c569498475d1",
+  "manifestSHA256": "c9491455251124a82a7ca5721cc2fcd78e424670eeac53fdf8b1fc07abd4c325",
+  "inputSHA256": "78a8ffd73b3f96d984237e7866a723fb876a35d91f6bb16627373d92a6ef1fd9",
+  "changedInputs": 3,
+  "unchangedInputs": 219,
+  "changedMembers": 3,
+  "unchangedMembers": 25658,
+  "documentProjects": 4,
+  "diagnostics": 0,
+  "preparedSourcePaths": 3,
+  "preparedSourceBytes": 662281,
+  "sourceDeltaCanonicalSHA256": "f236b2645efa7b8b55e3c443ec279bb137aaf1649760c01e26458522531a8165",
+  "nativePreparation": "EXECUTED_PASS",
+  "nativeExport": "EXECUTED_PASS",
+  "applicationAcceptance": "NOT_ESTABLISHED; actual paired phase RUNNING at capture",
+  "reuseGroups": {
+    "declarations": {
+      "members": 5210,
+      "unchanged": 5210,
+      "changed": []
+    },
+    "examples": {
+      "members": 29,
+      "unchanged": 29,
+      "changed": []
+    },
+    "public-docs": {
+      "members": 25,
+      "unchanged": 22,
+      "changed": [
+        "docs/miniapp-sdk/extension-reachability.json",
+        "docs/miniapp-sdk/extension-reachability.md",
+        "docs/miniapp-sdk/source-inventory.json"
+      ]
+    },
+    "original-compilers": {
+      "members": 2,
+      "unchanged": 2,
+      "changed": []
+    }
+  }
+}

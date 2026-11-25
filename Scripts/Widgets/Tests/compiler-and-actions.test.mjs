@@ -8,7 +8,7 @@ import { deterministicZip } from '../deterministic-zip.mjs';
 
 const root = path.resolve(import.meta.dirname, '../../..');
 const compilerRoot = path.join(root, 'Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/Resources');
-const compiler = vm.createContext({ __scriptWidgetCompileActive: () => true });
+const compiler = vm.createContext({ __scriptWidgetBeginCompile() {}, __scriptWidgetCompileActive: () => true });
 vm.runInContext(fs.readFileSync(path.join(compilerRoot, 'core.js'), 'utf8'), compiler);
 vm.runInContext(fs.readFileSync(path.join(compilerRoot, 'prepare-widget.js'), 'utf8'), compiler);
 const bundle = fs.readFileSync(path.join(root, 'Packages/HanlinPlatform/Sources/HanlinScriptExtensions/Resources/ExpoWidgets.bundle'), 'utf8');
@@ -71,6 +71,47 @@ test('P3-03/P3-24: ScriptWidget source functions preserve typed state', async ()
   await run('named'); assert.equal(values.status,'Named source function ran');
   values.backup=true; const tree=JSON.stringify(await run('')); assert.match(tree,/"on":true/);
   values.backup=false; assert.match(JSON.stringify(await run('')),/"on":false/);
+});
+test('ScriptWidget starts an independent original compile budget for every Babel operation', () => {
+  // Observe the real compiler's lifecycle without replacing Babel, advancing a
+  // clock, sleeping, or claiming this VM proves Apple execution-time behavior.
+  let begins = 0;
+  let checks = 0;
+  let operationActive = false;
+  const context = vm.createContext({
+    __scriptWidgetBeginCompile() { begins += 1; operationActive = true; },
+    __scriptWidgetCompileActive() { checks += 1; return operationActive; }
+  });
+  vm.runInContext(fs.readFileSync(path.join(compilerRoot, 'core.js'), 'utf8'), context);
+  vm.runInContext(fs.readFileSync(path.join(compilerRoot, 'prepare-widget.js'), 'utf8'), context);
+  const transform = context.Babel.transform;
+  let operations = 0;
+  context.Babel.transform = (...args) => {
+    assert.equal(operationActive, true, 'An original Babel operation inherited an inactive prior budget');
+    assert.equal(begins, operations + 1, 'Each original Babel operation must begin its own budget');
+    operations += 1;
+    return transform(...args);
+  };
+  const compile = input => {
+    operationActive = false;
+    const before = operations;
+    const output = context.__hanlinCompileWidget(input);
+    assert.ok(operations > before);
+    assert.ok(checks >= operations, 'Every operation must retain its original deadline check');
+    new vm.Script(output);
+    return output;
+  };
+  const files = {
+    'widget.tsx': 'import { title } from "./title"; export default function render() { $render(<text>{title}</text>); }',
+    'title.ts': 'export const title: string = "Independent source";'
+  };
+  assert.match(compile({ engine: 'scriptwidget', format: 'tsx', entry: 'widget.tsx', files, actions: [] }), /Independent source/);
+  compile({ engine: 'scriptwidget-import', format: 'jsx', entry: 'helper.jsx',
+    files: { 'helper.jsx': 'function helper() { return <text>Imported source</text>; }' }, actions: [] });
+  compile({ engine: 'scriptwidget', format: 'jsx', entry: 'single.jsx',
+    files: { 'single.jsx': '$render(<text>Independent entry</text>);' }, actions: [] });
+  assert.equal(begins, operations);
+  assert.equal(operations, 6, 'Entry inspection, two modules, an import, inspection and a top-level compile all ran');
 });
 test('P3-12: reserved guard identifiers and malformed JSX fail compilation', () => {
   for (const source of ['while(true){}; const __scriptWidgetCheckExecution=()=>{};', '$render(<broken;)']) {

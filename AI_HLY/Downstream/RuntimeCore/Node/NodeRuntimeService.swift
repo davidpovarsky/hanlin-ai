@@ -1,5 +1,6 @@
 import CryptoKit
 import Foundation
+import HanlinPlatformContracts
 import Security
 import ZIPFoundation
 
@@ -627,6 +628,47 @@ actor NodeRuntimeService {
         if result.wasCancelled { throw CancellationError() }
         guard let value = result.value else {
             throw RuntimeCoreError.runtimeFailure("TypeScript compiler job \(id) failed. Full output is retained. \(result.stderr)")
+        }
+        return try JSONDecoder().decode(type, from: JSONEncoder().encode(value))
+    }
+
+    /// MiniApp authoring is a durable, cancellable Node job using this app's original SDK.
+    func miniAppSDK(engine: String?, resource: String?) async throws -> RuntimeJSONValue {
+        var body: [String: Any] = ["operation": "sdk"]
+        if let engine { body["engine"] = engine }
+        if let resource { body["resource"] = resource }
+        return try await runMiniAppAuthoring(RuntimeJSONValue.self, body: body,
+            workspace: fileLayout.workspace(client: .tools, identifier: "miniapp-authoring"))
+    }
+
+    func authorMiniApp(operation: String, engine: String, project: URL) async throws -> HanlinMiniAppAuthoringReport {
+        let workspace = try fileLayout.validatedWorkspace(project)
+        return try await runMiniAppAuthoring(HanlinMiniAppAuthoringReport.self,
+            body: ["operation": operation, "engine": engine, "projectRoot": workspace.path],
+            workspace: workspace)
+    }
+
+    private func runMiniAppAuthoring<T: Decodable & Sendable>(
+        _ type: T.Type, body: [String: Any], workspace: URL
+    ) async throws -> T {
+        let hostRoot = try prepareHostRuntime()
+        let module = hostRoot.appending(path: "miniapp-authoring.mjs")
+        let sdk = hostRoot.appending(path: "MiniAppSDK", directoryHint: .isDirectory)
+        let id = UUID()
+        let literal: (String) throws -> String = { String(decoding: try JSONEncoder().encode($0), as: UTF8.self) }
+        let input = String(decoding: try JSONSerialization.data(withJSONObject: body), as: UTF8.self)
+        let source = """
+        import { runMiniAppOperation } from \(try literal(module.absoluteString));
+        const report = await runMiniAppOperation(\(input), {sdkRoot: \(try literal(sdk.path))});
+        const receipt = { ...report, executionID: \(try literal(id.uuidString.lowercased())) };
+        console.log(JSON.stringify(receipt));
+        process.exitCode = receipt.succeeded === false ? 1 : 0;
+        export default receipt;
+        """
+        let result = try await executeJavaScript(.init(id: id, source: source, workspace: workspace), moduleKind: "esm")
+        if result.wasCancelled { throw CancellationError() }
+        guard let value = result.value else {
+            throw RuntimeCoreError.runtimeFailure("MiniApp authoring job \(id) failed. Full output is retained. \(result.stderr)")
         }
         return try JSONDecoder().decode(type, from: JSONEncoder().encode(value))
     }

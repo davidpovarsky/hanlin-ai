@@ -67,11 +67,11 @@ let package = Package(
         .package(url: "https://github.com/SwiftyJSON/SwiftyJSON.git", exact: "5.0.1"),
         .package(
             url: "https://github.com/davidpovarsky/swift-ai-sdk.git",
-            revision: "e7bf34111e603ca977becd007dd4e5bb109af857"
+            revision: "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8"
         ),
         .package(
             url: "https://github.com/weichsel/ZIPFoundation.git",
-            .upToNextMinor(from: "0.9.19")
+            exact: "0.9.19"
         )
     ],
     targets: [
@@ -107,7 +107,7 @@ let package = Package(
         ),
         .target(
             name: "HanlinWidgetCompiler",
-            dependencies: ["HanlinPlatformContracts", "HanlinScriptContracts"],
+            dependencies: ["HanlinPlatformContracts", "HanlinScriptContracts", "HanlinScriptWidgetOriginal"],
             resources: [.copy("Resources/core.js"), .copy("Resources/prepare-widget.js")],
             linkerSettings: [.linkedFramework("JavaScriptCore", .when(platforms: [.iOS, .macOS]))]
         ),
@@ -223,8 +223,20 @@ let package = Package(
             ]
         ),
         .target(
+            name: "HanlinScriptWidgetOriginal",
+            dependencies: [
+                "HanlinExtensionContracts",
+                .product(name: "ZIPFoundation", package: "ZIPFoundation")
+            ],
+            exclude: ["Original/LICENSE.txt", "Original/NOTICE.txt"],
+            resources: [.copy("Resources/support.bundle")],
+            swiftSettings: [.swiftLanguageMode(.v5)],
+            linkerSettings: [.linkedFramework("JavaScriptCore")]
+        ),
+        .target(
             name: "HanlinScriptExtensions",
             dependencies: [
+                "HanlinScriptWidgetOriginal",
                 "HanlinExtensionContracts",
                 .product(name: "SwiftyJSON", package: "SwiftyJSON"),
                 "HanlinPlatformContracts",

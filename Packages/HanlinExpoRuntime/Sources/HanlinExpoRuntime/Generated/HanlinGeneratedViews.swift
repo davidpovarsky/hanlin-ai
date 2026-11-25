@@ -86,7 +86,7 @@ public struct HanlinGeneratedEmptyViewView: ExpoSwiftUI.View {
 }
 
 public enum HanlinGeneratedBridgeMetadata {
-    public static let runtimeVersion = "58.0.3"
+    public static let runtimeVersion = "58.0.29"
     public static let bridgeVersion = "3.0.0"
     public static let inventoryIdentity = "xcode-27.0-ios-27.0-arm64e-apple-ios"
 }

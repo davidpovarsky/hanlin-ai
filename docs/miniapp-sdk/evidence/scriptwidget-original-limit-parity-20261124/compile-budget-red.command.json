@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/usr/local/bin/node",
+    "--test",
+    "--test-name-pattern=ScriptWidget starts an independent original compile budget",
+    "Scripts/Widgets/Tests/compiler-and-actions.test.mjs"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-scriptwidget-original-limit-parity-20261124",
+  "exitCode": 1,
+  "seconds": 0.341,
+  "atUTC": "2026-11-24T08:33:35.114764+00:00"
+}

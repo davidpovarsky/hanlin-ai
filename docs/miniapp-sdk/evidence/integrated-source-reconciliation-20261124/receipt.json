@@ -1,0 +1,68 @@
+{
+  "atUTC": "2026-11-24T08:16:37.811870+00:00",
+  "sourceCommit": "098fbb64aca02227327e0d517030d969e73c0a44",
+  "status": "SOURCE_RECONCILIATION_PASS",
+  "outputs": [
+    {
+      "path": "docs/miniapp-sdk/source-inventory.json",
+      "bytes": 222154,
+      "sha256": "306a41dd55eee55682563f28876ce757c445571caa3a7e73a217f5e3e1b6ade4"
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.json",
+      "bytes": 144095,
+      "sha256": "ffacd4e53cb7c8efb49ec89af62faa5fc7870a763f2e89055ae43795bab97689"
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.md",
+      "bytes": 21494,
+      "sha256": "8961d0156a29eccba01d72b64e80041c7c345ba5edf0ce587b742a79e6f28548"
+    }
+  ],
+  "commands": [
+    {
+      "command": [
+        "/usr/local/bin/node",
+        "Scripts/Audit/audit-miniapp-sdk.mjs",
+        "--write"
+      ],
+      "exit": 0,
+      "stdout": "1.stdout.log",
+      "stderr": "1.stderr.log",
+      "scope": "Source reconciliation only; native execution not inferred."
+    },
+    {
+      "command": [
+        "python3",
+        "Scripts/Audit/audit_miniapp_reachability.py"
+      ],
+      "exit": 0,
+      "stdout": "2.stdout.log",
+      "stderr": "2.stderr.log",
+      "scope": "Source reconciliation only; native execution not inferred."
+    },
+    {
+      "command": [
+        "/usr/local/bin/node",
+        "Scripts/Audit/audit-miniapp-sdk.mjs",
+        "--check"
+      ],
+      "exit": 0,
+      "stdout": "3.stdout.log",
+      "stderr": "3.stderr.log",
+      "scope": "Source reconciliation only; native execution not inferred."
+    },
+    {
+      "command": [
+        "python3",
+        "Scripts/Audit/audit_miniapp_reachability.py",
+        "--check"
+      ],
+      "exit": 0,
+      "stdout": "4.stdout.log",
+      "stderr": "4.stderr.log",
+      "scope": "Source reconciliation only; native execution not inferred."
+    }
+  ],
+  "boundary": "No new native UI, Apple package execution, signed physical device or80-cell E2E pass."
+}

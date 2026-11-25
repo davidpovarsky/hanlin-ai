@@ -1,0 +1,171 @@
+module CoreModules {
+  header "CoreModules/CoreModulesPlugins.h"
+  header "CoreModules/RCTAccessibilityManager.h"
+  header "CoreModules/RCTActionSheetManager.h"
+  header "CoreModules/RCTAlertController.h"
+  header "CoreModules/RCTAlertManager.h"
+  header "CoreModules/RCTAppState.h"
+  header "CoreModules/RCTAppearance.h"
+  header "CoreModules/RCTClipboard.h"
+  header "CoreModules/RCTDevLoadingView.h"
+  header "CoreModules/RCTDevMenu.h"
+  header "CoreModules/RCTDevMenuConfigurationDecorator.h"
+  header "CoreModules/RCTDevSettings.h"
+  header "CoreModules/RCTDevToolsRuntimeSettingsModule.h"
+  header "CoreModules/RCTDeviceInfo.h"
+  header "CoreModules/RCTEventDispatcher.h"
+  header "CoreModules/RCTExceptionsManager.h"
+  header "CoreModules/RCTFPSGraph.h"
+  header "CoreModules/RCTI18nManager.h"
+  header "CoreModules/RCTInspectorWebSocketReporter.h"
+  header "CoreModules/RCTKeyboardObserver.h"
+  header "CoreModules/RCTLogBox.h"
+  header "CoreModules/RCTLogBoxView.h"
+  header "CoreModules/RCTPlatform.h"
+  header "CoreModules/RCTRedBox.h"
+  header "CoreModules/RCTSourceCode.h"
+  header "CoreModules/RCTStatusBarManager.h"
+  header "CoreModules/RCTTiming.h"
+  header "CoreModules/RCTWebSocketModule.h"
+  export *
+}
+
+module RCTAnimation {
+  header "RCTAnimation/RCTAdditionAnimatedNode.h"
+  header "RCTAnimation/RCTAnimatedNode.h"
+  header "RCTAnimation/RCTAnimationDriver.h"
+  header "RCTAnimation/RCTAnimationPlugins.h"
+  header "RCTAnimation/RCTAnimationUtils.h"
+  header "RCTAnimation/RCTColorAnimatedNode.h"
+  header "RCTAnimation/RCTDecayAnimation.h"
+  header "RCTAnimation/RCTDiffClampAnimatedNode.h"
+  header "RCTAnimation/RCTDivisionAnimatedNode.h"
+  header "RCTAnimation/RCTEventAnimation.h"
+  header "RCTAnimation/RCTFrameAnimation.h"
+  header "RCTAnimation/RCTInterpolationAnimatedNode.h"
+  header "RCTAnimation/RCTModuloAnimatedNode.h"
+  header "RCTAnimation/RCTMultiplicationAnimatedNode.h"
+  header "RCTAnimation/RCTNativeAnimatedModule.h"
+  header "RCTAnimation/RCTNativeAnimatedNodesManager.h"
+  header "RCTAnimation/RCTNativeAnimatedTurboModule.h"
+  header "RCTAnimation/RCTObjectAnimatedNode.h"
+  header "RCTAnimation/RCTPropsAnimatedNode.h"
+  header "RCTAnimation/RCTSpringAnimation.h"
+  header "RCTAnimation/RCTStyleAnimatedNode.h"
+  header "RCTAnimation/RCTSubtractionAnimatedNode.h"
+  header "RCTAnimation/RCTTrackingAnimatedNode.h"
+  header "RCTAnimation/RCTTransformAnimatedNode.h"
+  header "RCTAnimation/RCTValueAnimatedNode.h"
+  export *
+}
+
+module RCTBlob {
+  header "RCTBlob/RCTBlobManager.h"
+  header "RCTBlob/RCTBlobPlugins.h"
+  header "RCTBlob/RCTFileReaderModule.h"
+  export *
+}
+
+module RCTDeprecation {
+  header "RCTDeprecation/RCTDeprecation.h"
+  export *
+}
+
+module RCTImage {
+  header "RCTImage/RCTAnimatedImage.h"
+  header "RCTImage/RCTBundleAssetImageLoader.h"
+  header "RCTImage/RCTDisplayWeakRefreshable.h"
+  header "RCTImage/RCTGIFImageDecoder.h"
+  header "RCTImage/RCTImageBlurUtils.h"
+  header "RCTImage/RCTImageCache.h"
+  header "RCTImage/RCTImageDataDecoder.h"
+  header "RCTImage/RCTImageEditingManager.h"
+  header "RCTImage/RCTImageLoader.h"
+  header "RCTImage/RCTImageLoaderLoggable.h"
+  header "RCTImage/RCTImageLoaderProtocol.h"
+  header "RCTImage/RCTImagePlugins.h"
+  header "RCTImage/RCTImageStoreManager.h"
+  header "RCTImage/RCTImageURLLoader.h"
+  header "RCTImage/RCTImageUtils.h"
+  header "RCTImage/RCTLocalAssetImageLoader.h"
+  header "RCTImage/RCTResizeMode.h"
+  header "RCTImage/RCTUIImageViewAnimated.h"
+  export *
+}
+
+module RCTSettings {
+  header "RCTSettings/RCTSettingsManager.h"
+  header "RCTSettings/RCTSettingsPlugins.h"
+  export *
+}
+
+module RCTSwiftUIWrapper {
+  header "RCTSwiftUIWrapper/RCTSwiftUIContainerViewWrapper.h"
+  export *
+}
+
+module RCTText {
+  header "RCTText/RCTBackedTextInputDelegate.h"
+  header "RCTText/RCTBackedTextInputDelegateAdapter.h"
+  header "RCTText/RCTBackedTextInputViewProtocol.h"
+  header "RCTText/RCTDynamicTypeRamp.h"
+  header "RCTText/RCTTextSelection.h"
+  header "RCTText/RCTTextTransform.h"
+  header "RCTText/RCTUITextField.h"
+  header "RCTText/RCTUITextView.h"
+  export *
+}
+
+module RCTVibration {
+  header "RCTVibration/RCTVibration.h"
+  header "RCTVibration/RCTVibrationPlugins.h"
+  export *
+}
+
+module ReactCommon {
+  header "ReactCommon/RCTPerformanceLoggerUtils.h"
+  header "ReactCommon/RCTTurboModuleWithJSIBindings.h"
+  export *
+}
+
+module React_RCTAppDelegate {
+  header "React_RCTAppDelegate/RCTAppDelegate.h"
+  header "React_RCTAppDelegate/RCTAppSetupUtils.h"
+  header "React_RCTAppDelegate/RCTDefaultReactNativeFactoryDelegate.h"
+  header "React_RCTAppDelegate/RCTDependencyProvider.h"
+  header "React_RCTAppDelegate/RCTJSRuntimeConfiguratorProtocol.h"
+  header "React_RCTAppDelegate/RCTReactNativeFactory.h"
+  header "React_RCTAppDelegate/RCTRootViewFactory.h"
+  header "React_RCTAppDelegate/RCTUIConfiguratorProtocol.h"
+  header "React_RCTAppDelegate/React_RCTAppDelegate-umbrella.h"
+  export *
+}
+
+module ReactNativeHeaders_react {
+  header "react/cxxstableapi/FrameworksGuard.h"
+  header "react/cxxstableapi/PrivateGuard.h"
+  header "react/cxxstableapi/UmbrellaGuard.h"
+  header "react/debug/flags.h"
+  header "react/renderer/debug/flags.h"
+  header "react/runtime/JSRuntimeFactory.h"
+  header "react/runtime/JSRuntimeFactoryCAPI.h"
+  export *
+}
+
+module reactperflogger {
+  header "reactperflogger/ReactPerfettoCategories.h"
+  export *
+}
+
+module yoga {
+  header "yoga/YGConfig.h"
+  header "yoga/YGEnums.h"
+  header "yoga/YGMacros.h"
+  header "yoga/YGNode.h"
+  header "yoga/YGNodeLayout.h"
+  header "yoga/YGNodeStyle.h"
+  header "yoga/YGPixelGrid.h"
+  header "yoga/YGValue.h"
+  header "yoga/Yoga.h"
+  export *
+}

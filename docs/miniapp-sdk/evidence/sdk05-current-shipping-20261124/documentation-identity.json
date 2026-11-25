@@ -1,0 +1,141 @@
+{
+  "status": "BYTE_IDENTITY_VERIFIED",
+  "sourceCommit": "999599c242c064564c40866a1979c463f1d0e95f",
+  "comparisonCommit": "2f1cfa6e4a702475acfe80ad68bf82c5320902f5",
+  "allShippedDocumentation": [
+    {
+      "path": "docs/hanlin-expo-runtime.md",
+      "bytes": 18662,
+      "sha256": "14ba327519fd1b16c72f398eefcbbb4058eaf7682ba98f267807a5c462939808"
+    },
+    {
+      "path": "docs/hanlin-nativescript-guide.md",
+      "bytes": 17048,
+      "sha256": "5545b69b00e47508121c2d80a7b44241b854a7abad4019cc70696d6c0da8d1c6"
+    },
+    {
+      "path": "docs/miniapp-sdk/AUTHORING_WORKFLOW.md",
+      "bytes": 14228,
+      "sha256": "cbf07d75821695da68bddfdfc75fe7b98943ee89b67479afb717cd739383804f"
+    },
+    {
+      "path": "docs/miniapp-sdk/DURABLE_INVOCATION_DELIVERY_2026-11-13.md",
+      "bytes": 8559,
+      "sha256": "810922f08de982da10f4319454d7784ecd31c73d7e5d651d269be40d960d72bf"
+    },
+    {
+      "path": "docs/miniapp-sdk/EXAMPLES.md",
+      "bytes": 3722,
+      "sha256": "a17984f1d39f3f8ea73c9fe5be03eebec5884665a8fd18981639442ba1261e70"
+    },
+    {
+      "path": "docs/miniapp-sdk/EXPO_HOST_FACADE_CORRECTIONS_2026-11-13.md",
+      "bytes": 1730,
+      "sha256": "11f29f3c73015c955e5c63eddc7ccf264ac4489ce0fa927838ba1a364a225bc4"
+    },
+    {
+      "path": "docs/miniapp-sdk/EXPO_STRICT_TYPES_AND_FILE_WIRE_2026-11-14.md",
+      "bytes": 4391,
+      "sha256": "e1a48b1daa1020475feec68d3296a21ce063fef6b6354ee9f485d55f6988d98d"
+    },
+    {
+      "path": "docs/miniapp-sdk/EXPO_WIDGETS_ORIGINAL.md",
+      "bytes": 5669,
+      "sha256": "9862848b1833f255631c6be20b00fc2514d9855eac16cfb9fe63beb6325b236c"
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.json",
+      "bytes": 147521,
+      "sha256": "f4e2bd0bead729e6a05c591947ee1cd7f13eaf85e3f1a193510f65ac83c95008"
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.md",
+      "bytes": 21494,
+      "sha256": "8d9c979eedf51d8fd8a2f0535d616a3c03950d6b47f9cccb7fb1bb3a1b26487c"
+    },
+    {
+      "path": "docs/miniapp-sdk/HANDOFF_2026-11-15.md",
+      "bytes": 11689,
+      "sha256": "60e35d7e563685be98b83db8a19257bff008b53e00a1685d65c3a0484fa8391e"
+    },
+    {
+      "path": "docs/miniapp-sdk/IMPORT_REPAIR.md",
+      "bytes": 5178,
+      "sha256": "489d50e487708c860b023da81c5a1a960e124fee0c07f197ab8bdd98090590f2"
+    },
+    {
+      "path": "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+      "bytes": 118561,
+      "sha256": "ad9c59d1962d516cd480de78cf5ee01fad11159cc0a73ee1a9cb3ea2f324b8a1"
+    },
+    {
+      "path": "docs/miniapp-sdk/METADATA_FRAMEWORK_DEDUP_2026-11-15.md",
+      "bytes": 3042,
+      "sha256": "5a40ec3f450ba1c7a5941b76df1bdc40aa972049e0130a70258cdbe7ab323c51"
+    },
+    {
+      "path": "docs/miniapp-sdk/MINIAPP_ACTION_LIFETIME_2026-11-13.md",
+      "bytes": 2622,
+      "sha256": "0392ccf073019a5a5260cf84b3967831b5916a992d61ae824a7f313e9dd8f234"
+    },
+    {
+      "path": "docs/miniapp-sdk/NATIVESCRIPT_RUNTIME_WIRE_2026-11-13.md",
+      "bytes": 14059,
+      "sha256": "da34a6f1432e7eaa5ee0c0f05a04a2451ba9e2d7f390fd87d134c45f89a12ce0"
+    },
+    {
+      "path": "docs/miniapp-sdk/NATIVESCRIPT_SDK_METADATA_2026-11-14.md",
+      "bytes": 4423,
+      "sha256": "493c6fc61e7fe5dc6b3ad3bd47c9cb5f80ccaded81be42b8e689ba57a1512bc5"
+    },
+    {
+      "path": "docs/miniapp-sdk/ORIGINAL_UPSTREAM_BUILD.md",
+      "bytes": 8523,
+      "sha256": "dbce13974c47d171dec19432a97b2cf56d4e42e3be78a32afff4dc0cd0eb5639"
+    },
+    {
+      "path": "docs/miniapp-sdk/OWNED_SHARE_INGRESS_2026-11-13.md",
+      "bytes": 9130,
+      "sha256": "b49fdab8b88cc5225480fd9b24a9213ba5437fb298b327db18069dc27aadc059"
+    },
+    {
+      "path": "docs/miniapp-sdk/PREPARED_PACKAGE_VERSION_CONTRACT_2026-11-13.md",
+      "bytes": 8281,
+      "sha256": "68b8ad713aa3177eeb4e3f5a03390f9e40f858fd14f55c50ac357931ddcdf349"
+    },
+    {
+      "path": "docs/miniapp-sdk/README.md",
+      "bytes": 15776,
+      "sha256": "4427f49e5b729658d95d98eb6cdbb84ea08f2e4d2e33d7b7c480192914346637"
+    },
+    {
+      "path": "docs/miniapp-sdk/SCRIPTWIDGET_AUTHORING.md",
+      "bytes": 9137,
+      "sha256": "1c9a43f36b5317c263868ac549567a31d08440e600d20b96fd7fef493e31fbca"
+    },
+    {
+      "path": "docs/miniapp-sdk/SCRIPTWIDGET_CONTROLS.md",
+      "bytes": 6418,
+      "sha256": "1a22bcd767f2747a6e522fae41c4ef245594ad43ecacf85bed768c1912f34064"
+    },
+    {
+      "path": "docs/miniapp-sdk/SKILL_RUNTIME_CONTRACT_2026-11-16.md",
+      "bytes": 6542,
+      "sha256": "4ed91dfebcb5c146338b570e1bed33357c2cc10ed3217112c9f2e67bdf901eb9"
+    },
+    {
+      "path": "docs/miniapp-sdk/source-inventory.json",
+      "bytes": 493311,
+      "sha256": "0fd0bc2eb8aa0ab33bfaa74a48c4e2ad3d743d682cbf3bcc059d7a17aacdd515"
+    }
+  ],
+  "checkedGuidePaths": [
+    "docs/hanlin-expo-runtime.md",
+    "docs/hanlin-nativescript-guide.md",
+    "docs/miniapp-sdk/SCRIPTWIDGET_AUTHORING.md",
+    "docs/miniapp-sdk/SCRIPTWIDGET_CONTROLS.md",
+    "docs/miniapp-sdk/AUTHORING_WORKFLOW.md",
+    "docs/miniapp-sdk/README.md"
+  ],
+  "excludedRepositoryEvidencePresent": false
+}

@@ -1,0 +1,889 @@
+Module import search paths:
+  [0] (non-system) /Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks
+Framework search paths:
+  [0] (non-system) /Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks
+Implicit framework search paths:
+  [0] /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/System/Library/Frameworks
+  [1] /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/System/Library/SubFrameworks
+  [2] /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/Library/Frameworks
+Runtime library import search paths:
+  [0] /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator
+  [1] /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/usr/lib/swift
+(End of search path lists.)
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+1 | #import "Headers/ExpoModulesCore_umbrella.h"
+  |         `- note: in file included from <module-includes>:1:
+2 | #import "Headers/ExpoModulesCore-Swift.h"
+3 | 
+
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/ExpoModulesCore_umbrella.h:27:9: note: in file included from /Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/ExpoModulesCore_umbrella.h:27:
+25 | #import "EXFaceDetectorManagerInterface.h"
+26 | #import "EXFaceDetectorManagerProviderInterface.h"
+27 | #import "EXFilePermissionModuleInterface.h"
+   |         `- note: in file included from /Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/ExpoModulesCore_umbrella.h:27:
+28 | #import "EXFileSystemInterface.h"
+29 | #import "EXGyroscopeInterface.h"
+
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/EXFilePermissionModuleInterface.h:3:9: note: in file included from /Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/EXFilePermissionModuleInterface.h:3:
+ 1 | // Copyright 2018-present 650 Industries. All rights reserved.
+ 2 | 
+ 3 | #import <ExpoModulesCore/EXFileSystemInterface.h>
+   |         `- note: in file included from /Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/EXFilePermissionModuleInterface.h:3:
+ 4 | 
+ 5 | @protocol EXFilePermissionModuleInterface
+
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/EXFileSystemInterface.h:14:42: warning: pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+12 | @protocol EXFileSystemInterface
+13 | 
+14 | @property (nonatomic, readonly) NSString *documentDirectory;
+   |                                          |- warning: pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+   |                                          |- note: insert '_Nullable' if the pointer may be null
+   |                                          `- note: insert '_Nonnull' if the pointer should never be null
+15 | @property (nonatomic, readonly) NSString *cachesDirectory;
+16 | @property (nonatomic, readonly) NSString *applicationSupportDirectory;
+
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+1 | #import "Headers/ExpoModulesCore_umbrella.h"
+  |         `- note: in file included from <module-includes>:1:
+2 | #import "Headers/ExpoModulesCore-Swift.h"
+3 | 
+
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/ExpoModulesCore_umbrella.h:27:9: note: in file included from /Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/ExpoModulesCore_umbrella.h:27:
+25 | #import "EXFaceDetectorManagerInterface.h"
+26 | #import "EXFaceDetectorManagerProviderInterface.h"
+27 | #import "EXFilePermissionModuleInterface.h"
+   |         `- note: in file included from /Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/ExpoModulesCore_umbrella.h:27:
+28 | #import "EXFileSystemInterface.h"
+29 | #import "EXGyroscopeInterface.h"
+
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/EXFilePermissionModuleInterface.h:3:9: note: in file included from /Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/EXFilePermissionModuleInterface.h:3:
+ 1 | // Copyright 2018-present 650 Industries. All rights reserved.
+ 2 | 
+ 3 | #import <ExpoModulesCore/EXFileSystemInterface.h>
+   |         `- note: in file included from /Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/EXFilePermissionModuleInterface.h:3:
+ 4 | 
+ 5 | @protocol EXFilePermissionModuleInterface
+
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/EXFileSystemInterface.h:20:57: warning: pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+18 | // TODO: Move permissionsForURI to EXFileSystemManagerInterface
+19 | - (EXFileSystemPermissionFlags)permissionsForURI:(NSURL *)uri;
+20 | - (nonnull NSString *)generatePathInDirectory:(NSString *)directory withExtension:(NSString *)extension;
+   |                                                         |- warning: pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+   |                                                         |- note: insert '_Nullable' if the pointer may be null
+   |                                                         `- note: insert '_Nonnull' if the pointer should never be null
+21 | - (BOOL)ensureDirExistsWithPath:(NSString *)path;
+22 | 
+
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+1 | #import "Headers/ExpoModulesCore_umbrella.h"
+  |         `- note: in file included from <module-includes>:1:
+2 | #import "Headers/ExpoModulesCore-Swift.h"
+3 | 
+
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/ExpoModulesCore_umbrella.h:27:9: note: in file included from /Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/ExpoModulesCore_umbrella.h:27:
+25 | #import "EXFaceDetectorManagerInterface.h"
+26 | #import "EXFaceDetectorManagerProviderInterface.h"
+27 | #import "EXFilePermissionModuleInterface.h"
+   |         `- note: in file included from /Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/ExpoModulesCore_umbrella.h:27:
+28 | #import "EXFileSystemInterface.h"
+29 | #import "EXGyroscopeInterface.h"
+
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/EXFilePermissionModuleInterface.h:3:9: note: in file included from /Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/EXFilePermissionModuleInterface.h:3:
+ 1 | // Copyright 2018-present 650 Industries. All rights reserved.
+ 2 | 
+ 3 | #import <ExpoModulesCore/EXFileSystemInterface.h>
+   |         `- note: in file included from /Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/EXFilePermissionModuleInterface.h:3:
+ 4 | 
+ 5 | @protocol EXFilePermissionModuleInterface
+
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/EXFileSystemInterface.h:20:93: warning: pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+18 | // TODO: Move permissionsForURI to EXFileSystemManagerInterface
+19 | - (EXFileSystemPermissionFlags)permissionsForURI:(NSURL *)uri;
+20 | - (nonnull NSString *)generatePathInDirectory:(NSString *)directory withExtension:(NSString *)extension;
+   |                                                                                             |- warning: pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+   |                                                                                             |- note: insert '_Nullable' if the pointer may be null
+   |                                                                                             `- note: insert '_Nonnull' if the pointer should never be null
+21 | - (BOOL)ensureDirExistsWithPath:(NSString *)path;
+22 | 
+
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+1 | #import "Headers/ExpoModulesCore_umbrella.h"
+  |         `- note: in file included from <module-includes>:1:
+2 | #import "Headers/ExpoModulesCore-Swift.h"
+3 | 
+
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/ExpoModulesCore_umbrella.h:27:9: note: in file included from /Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/ExpoModulesCore_umbrella.h:27:
+25 | #import "EXFaceDetectorManagerInterface.h"
+26 | #import "EXFaceDetectorManagerProviderInterface.h"
+27 | #import "EXFilePermissionModuleInterface.h"
+   |         `- note: in file included from /Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/ExpoModulesCore_umbrella.h:27:
+28 | #import "EXFileSystemInterface.h"
+29 | #import "EXGyroscopeInterface.h"
+
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/EXFilePermissionModuleInterface.h:3:9: note: in file included from /Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/EXFilePermissionModuleInterface.h:3:
+ 1 | // Copyright 2018-present 650 Industries. All rights reserved.
+ 2 | 
+ 3 | #import <ExpoModulesCore/EXFileSystemInterface.h>
+   |         `- note: in file included from /Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/EXFilePermissionModuleInterface.h:3:
+ 4 | 
+ 5 | @protocol EXFilePermissionModuleInterface
+
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/EXFileSystemInterface.h:21:43: warning: pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+19 | - (EXFileSystemPermissionFlags)permissionsForURI:(NSURL *)uri;
+20 | - (nonnull NSString *)generatePathInDirectory:(NSString *)directory withExtension:(NSString *)extension;
+21 | - (BOOL)ensureDirExistsWithPath:(NSString *)path;
+   |                                           |- warning: pointer is missing a nullability type specifier (_Nonnull, _Nullable, or _Null_unspecified)
+   |                                           |- note: insert '_Nullable' if the pointer may be null
+   |                                           `- note: insert '_Nonnull' if the pointer should never be null
+22 | 
+23 | @end
+
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+1 | #import "Headers/ExpoModulesCore_umbrella.h"
+  |         `- note: in file included from <module-includes>:1:
+2 | #import "Headers/ExpoModulesCore-Swift.h"
+3 | 
+
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/ExpoModulesCore_umbrella.h:31:9: note: in file included from /Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/ExpoModulesCore_umbrella.h:31:
+29 | #import "EXGyroscopeInterface.h"
+30 | #import "EXHostWrapper.h"
+31 | #import "EXImageLoader.h"
+   |         `- note: in file included from /Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/ExpoModulesCore_umbrella.h:31:
+32 | #import "EXImageLoaderInterface.h"
+33 | #import "EXInternalModule.h"
+
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/EXImageLoader.h:14:38: warning: cannot find protocol definition for 'EXImageLoaderInterface'
+ 8 | @class RCTBridge;
+ 9 | @class RCTImageLoader;
+10 | @protocol EXImageLoaderInterface;
+   |           `- note: protocol 'EXImageLoaderInterface' has no definition
+11 | #endif
+12 | 
+13 | NS_SWIFT_NAME(ImageLoader)
+14 | @interface EXImageLoader : NSObject <EXImageLoaderInterface>
+   |                                      `- warning: cannot find protocol definition for 'EXImageLoaderInterface'
+15 | 
+16 | - (nonnull instancetype)initWithBridge:(nonnull RCTBridge *)bridge;
+
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+1 | #import "Headers/ExpoModulesCore_umbrella.h"
+  |         `- note: in file included from <module-includes>:1:
+2 | #import "Headers/ExpoModulesCore-Swift.h"
+3 | 
+
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/ExpoModulesCore_umbrella.h:65:9: note: in file included from /Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/ExpoModulesCore_umbrella.h:65:
+63 | #import "EXUtilitiesInterface.h"
+64 | #import "ExpoFabricViewObjC.h"
+65 | #import "ExpoModulesCore.h"
+   |         `- note: in file included from /Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/ExpoModulesCore_umbrella.h:65:
+66 | #import "Platform.h"
+67 | #import "Swift.h"
+
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/ExpoModulesCore.h:42:9: note: in file included from /Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/ExpoModulesCore.h:42:
+40 | #import <ExpoModulesCore/EXModuleRegistryDelegate.h>
+41 | #import <ExpoModulesCore/EXModuleRegistryAdapter.h>
+42 | #import <ExpoModulesCore/EXModuleRegistryHolderReactModule.h>
+   |         `- note: in file included from /Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/ExpoModulesCore.h:42:
+43 | #import <ExpoModulesCore/EXModuleRegistryProvider.h>
+44 | #import <ExpoModulesCore/EXAppLifecycleListener.h>
+
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/EXModuleRegistryHolderReactModule.h:7:58: warning: cannot find protocol definition for 'RCTBridgeModule'
+ 1 | // Copyright 2018-present 650 Industries. All rights reserved.
+ 2 | 
+ 3 | @protocol RCTBridgeModule;
+   |           `- note: protocol 'RCTBridgeModule' has no definition
+ 4 | 
+ 5 | #import <ExpoModulesCore/EXModuleRegistry.h>
+ 6 | 
+ 7 | @interface EXModuleRegistryHolderReactModule : NSObject <RCTBridgeModule>
+   |                                                          `- warning: cannot find protocol definition for 'RCTBridgeModule'
+ 8 | 
+ 9 | - (nonnull instancetype)initWithModuleRegistry:(nonnull EXModuleRegistry *)moduleRegistry;
+
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+1 | #import "Headers/ExpoModulesCore_umbrella.h"
+  |         `- note: in file included from <module-includes>:1:
+2 | #import "Headers/ExpoModulesCore-Swift.h"
+3 | 
+
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/ExpoModulesCore_umbrella.h:69:38: warning: umbrella header for module 'ExpoModulesCore' does not include header 'ExpoViewProps.h'
+67 | #import "Swift.h"
+68 | #import "SwiftUIVirtualViewObjC.h"
+69 | #import "SwiftUIVirtualViewObjCDev.h"
+   |                                      `- warning: umbrella header for module 'ExpoModulesCore' does not include header 'ExpoViewProps.h'
+
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+1 | #import "Headers/ExpoModulesCore_umbrella.h"
+  |         `- note: in file included from <module-includes>:1:
+2 | #import "Headers/ExpoModulesCore-Swift.h"
+3 | 
+
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/ExpoModulesCore_umbrella.h:69:38: warning: umbrella header for module 'ExpoModulesCore' does not include header 'ExpoViewShadowNode.h'
+67 | #import "Swift.h"
+68 | #import "SwiftUIVirtualViewObjC.h"
+69 | #import "SwiftUIVirtualViewObjCDev.h"
+   |                                      `- warning: umbrella header for module 'ExpoModulesCore' does not include header 'ExpoViewShadowNode.h'
+
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+1 | #import "Headers/ExpoModulesCore_umbrella.h"
+  |         `- note: in file included from <module-includes>:1:
+2 | #import "Headers/ExpoModulesCore-Swift.h"
+3 | 
+
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/ExpoModulesCore_umbrella.h:69:38: warning: umbrella header for module 'ExpoModulesCore' does not include header 'SwiftUIViewProps.h'
+67 | #import "Swift.h"
+68 | #import "SwiftUIVirtualViewObjC.h"
+69 | #import "SwiftUIVirtualViewObjCDev.h"
+   |                                      `- warning: umbrella header for module 'ExpoModulesCore' does not include header 'SwiftUIViewProps.h'
+
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+1 | #import "Headers/ExpoModulesCore_umbrella.h"
+  |         `- note: in file included from <module-includes>:1:
+2 | #import "Headers/ExpoModulesCore-Swift.h"
+3 | 
+
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/ExpoModulesCore_umbrella.h:69:38: warning: umbrella header for module 'ExpoModulesCore' does not include header 'ExpoViewEventEmitter.h'
+67 | #import "Swift.h"
+68 | #import "SwiftUIVirtualViewObjC.h"
+69 | #import "SwiftUIVirtualViewObjCDev.h"
+   |                                      `- warning: umbrella header for module 'ExpoModulesCore' does not include header 'ExpoViewEventEmitter.h'
+
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+1 | #import "Headers/ExpoModulesCore_umbrella.h"
+  |         `- note: in file included from <module-includes>:1:
+2 | #import "Headers/ExpoModulesCore-Swift.h"
+3 | 
+
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/ExpoModulesCore_umbrella.h:69:38: warning: umbrella header for module 'ExpoModulesCore' does not include header 'TestingSyncJSCallInvoker.h'
+67 | #import "Swift.h"
+68 | #import "SwiftUIVirtualViewObjC.h"
+69 | #import "SwiftUIVirtualViewObjCDev.h"
+   |                                      `- warning: umbrella header for module 'ExpoModulesCore' does not include header 'TestingSyncJSCallInvoker.h'
+
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+1 | #import "Headers/ExpoModulesCore_umbrella.h"
+  |         `- note: in file included from <module-includes>:1:
+2 | #import "Headers/ExpoModulesCore-Swift.h"
+3 | 
+
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/ExpoModulesCore_umbrella.h:69:38: warning: umbrella header for module 'ExpoModulesCore' does not include header 'ExpoViewState.h'
+67 | #import "Swift.h"
+68 | #import "SwiftUIVirtualViewObjC.h"
+69 | #import "SwiftUIVirtualViewObjCDev.h"
+   |                                      `- warning: umbrella header for module 'ExpoModulesCore' does not include header 'ExpoViewState.h'
+
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+1 | #import "Headers/ExpoModulesCore_umbrella.h"
+  |         `- note: in file included from <module-includes>:1:
+2 | #import "Headers/ExpoModulesCore-Swift.h"
+3 | 
+
+13 warnings generated.
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/ExpoModulesCore_umbrella.h:69:38: warning: umbrella header for module 'ExpoModulesCore' does not include header 'ExpoViewComponentDescriptor.h'
+67 | #import "Swift.h"
+68 | #import "SwiftUIVirtualViewObjC.h"
+69 | #import "SwiftUIVirtualViewObjCDev.h"
+   |                                      `- warning: umbrella header for module 'ExpoModulesCore' does not include header 'ExpoViewComponentDescriptor.h'
+Module import search paths:
+  [0] (non-system) /Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks
+Framework search paths:
+  [0] (non-system) /Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks
+Implicit framework search paths:
+  [0] /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/System/Library/Frameworks
+  [1] /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/System/Library/SubFrameworks
+  [2] /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/Library/Frameworks
+Runtime library import search paths:
+  [0] /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator
+  [1] /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/usr/lib/swift
+(End of search path lists.)
+<unknown>:0: remark: 'Swift' has a required transitive dependency on 'SwiftShims'
+<unknown>:0: remark: loaded module 'SwiftShims'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk/usr/lib/swift/shims/module.modulemap', loaded: '/Users/m1/caches/DerivedData/hanlin-ai-788354f8-headers-explicit-20261124/SwiftShims-56QWAKYSMVXN38N38N8L4815D.pcm'
+<unknown>:0: remark: loaded module 'Swift'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/usr/lib/swift/Swift.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/Swift.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+<unknown>:0: remark: loaded module 'CxxShim'; source: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/libcxxshim.modulemap', loaded: '/Users/m1/caches/DerivedData/hanlin-ai-788354f8-headers-explicit-20261124/CxxShim-6S4UUC1ASZL42HBSFR098PN6K.pcm'
+<unknown>:0: remark: 'Cxx' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: loaded module 'Cxx'; source: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/Cxx.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Users/m1/caches/DerivedData/hanlin-ai-788354f8-headers-explicit-20261124/Cxx-3FWJ5CZXRXUVK.swiftmodule'
+<unknown>:0: remark: '_StringProcessing' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: loaded module '_StringProcessing'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/usr/lib/swift/_StringProcessing.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/_StringProcessing.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+<unknown>:0: remark: loaded module '_SwiftConcurrencyShims'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk/usr/lib/swift/shims/module.modulemap', loaded: '/Users/m1/caches/DerivedData/hanlin-ai-788354f8-headers-explicit-20261124/_SwiftConcurrencyShims-6IM9YYESUU1RY35JS2SYLIQ6E.pcm'
+<unknown>:0: remark: '_Concurrency' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: '_Concurrency' has a required transitive dependency on 'SwiftShims'
+<unknown>:0: remark: loaded module '_Concurrency'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/usr/lib/swift/_Concurrency.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/_Concurrency.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Probe.swift:1:24: remark: 'ExpoModulesCore' has a required transitive dependency on 'Combine'
+1 | @preconcurrency import ExpoModulesCore
+  |                        `- remark: 'ExpoModulesCore' has a required transitive dependency on 'Combine'
+2 | 
+
+<unknown>:0: remark: 'Combine' has a required transitive dependency on 'Darwin'
+<unknown>:0: remark: 'Darwin' has a required transitive dependency on 'Darwin'
+<unknown>:0: remark: '_DarwinFoundation1' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: '_DarwinFoundation1' has a required transitive dependency on '_DarwinFoundation1'
+<unknown>:0: remark: '_DarwinFoundation1' has a required transitive dependency on '_DarwinFoundation1._errno'
+<unknown>:0: remark: loaded module '_errno'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk/usr/include/DarwinFoundation1.modulemap', loaded: '/Users/m1/caches/DerivedData/hanlin-ai-788354f8-headers-explicit-20261124/_DarwinFoundation1-A4KJ3EPJ1NJKQFR7KRZ0QJJHK.pcm'
+<unknown>:0: remark: '_DarwinFoundation1' has a required transitive dependency on '_DarwinFoundation1._math'
+<unknown>:0: remark: '_Builtin_float' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: '_Builtin_float' has a required transitive dependency on '_Builtin_float'
+<unknown>:0: remark: loaded module '_Builtin_float' (overlay for a clang dependency); source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/usr/lib/swift/_Builtin_float.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/_Builtin_float.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+<unknown>:0: remark: loaded module '_math'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk/usr/include/DarwinFoundation1.modulemap', loaded: '/Users/m1/caches/DerivedData/hanlin-ai-788354f8-headers-explicit-20261124/_DarwinFoundation1-A4KJ3EPJ1NJKQFR7KRZ0QJJHK.pcm'
+<unknown>:0: remark: loaded module '_DarwinFoundation1' (overlay for a clang dependency); source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/usr/lib/swift/_DarwinFoundation1.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/_DarwinFoundation1.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+<unknown>:0: remark: '_DarwinFoundation2' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: '_DarwinFoundation2' has a required transitive dependency on '_DarwinFoundation2'
+<unknown>:0: remark: '_DarwinFoundation2' has a required transitive dependency on '_DarwinFoundation2._stdio'
+<unknown>:0: remark: loaded module '_stdio'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk/usr/include/DarwinFoundation2.modulemap', loaded: '/Users/m1/caches/DerivedData/hanlin-ai-788354f8-headers-explicit-20261124/_DarwinFoundation2-BI3LCIX6OXGPU8YZU8W2LEGTZ.pcm'
+<unknown>:0: remark: '_DarwinFoundation2' has a required transitive dependency on '_DarwinFoundation2._time'
+<unknown>:0: remark: loaded module '_time'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk/usr/include/DarwinFoundation2.modulemap', loaded: '/Users/m1/caches/DerivedData/hanlin-ai-788354f8-headers-explicit-20261124/_DarwinFoundation2-BI3LCIX6OXGPU8YZU8W2LEGTZ.pcm'
+<unknown>:0: remark: '_DarwinFoundation2' has a required transitive dependency on '_DarwinFoundation2.sys_time.timeval'
+<unknown>:0: remark: loaded module 'timeval'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk/usr/include/DarwinFoundation2.modulemap', loaded: '/Users/m1/caches/DerivedData/hanlin-ai-788354f8-headers-explicit-20261124/_DarwinFoundation2-BI3LCIX6OXGPU8YZU8W2LEGTZ.pcm'
+<unknown>:0: remark: loaded module '_DarwinFoundation2' (overlay for a clang dependency); source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/usr/lib/swift/_DarwinFoundation2.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/_DarwinFoundation2.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+<unknown>:0: remark: '_DarwinFoundation3' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: '_DarwinFoundation3' has a required transitive dependency on '_DarwinFoundation3'
+<unknown>:0: remark: '_DarwinFoundation3' has a required transitive dependency on '_DarwinFoundation3._signal'
+<unknown>:0: remark: loaded module '_signal'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk/usr/include/DarwinFoundation3.modulemap', loaded: '/Users/m1/caches/DerivedData/hanlin-ai-788354f8-headers-explicit-20261124/_DarwinFoundation3-660DX81OGJH16HFZYA0TBYA9J.pcm'
+<unknown>:0: remark: '_DarwinFoundation3' has a required transitive dependency on '_DarwinFoundation3.pthread'
+<unknown>:0: remark: loaded module 'pthread'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk/usr/include/DarwinFoundation3.modulemap', loaded: '/Users/m1/caches/DerivedData/hanlin-ai-788354f8-headers-explicit-20261124/_DarwinFoundation3-660DX81OGJH16HFZYA0TBYA9J.pcm'
+<unknown>:0: remark: '_DarwinFoundation3' has a required transitive dependency on '_DarwinFoundation3.unistd'
+<unknown>:0: remark: loaded module 'unistd'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk/usr/include/DarwinFoundation3.modulemap', loaded: '/Users/m1/caches/DerivedData/hanlin-ai-788354f8-headers-explicit-20261124/_DarwinFoundation3-660DX81OGJH16HFZYA0TBYA9J.pcm'
+<unknown>:0: remark: loaded module '_DarwinFoundation3' (overlay for a clang dependency); source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/usr/lib/swift/_DarwinFoundation3.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/_DarwinFoundation3.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+<unknown>:0: remark: 'Darwin' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: 'Darwin' has a required transitive dependency on '_Builtin_float'
+<unknown>:0: remark: 'Darwin' has a required transitive dependency on '_DarwinFoundation1'
+<unknown>:0: remark: 'Darwin' has a required transitive dependency on '_DarwinFoundation2'
+<unknown>:0: remark: 'Darwin' has a required transitive dependency on '_DarwinFoundation3'
+<unknown>:0: remark: 'Darwin' has a required transitive dependency on 'Darwin.Mach.message'
+<unknown>:0: remark: loaded module 'message'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk/usr/include/Darwin_Mach.modulemap', loaded: '/Users/m1/caches/DerivedData/hanlin-ai-788354f8-headers-explicit-20261124/Darwin-80NOBFNZ3J8BC535SPWK5LJ9P.pcm'
+<unknown>:0: remark: 'Darwin' has a required transitive dependency on 'sys_types'
+<unknown>:0: remark: loaded module 'sys_types'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk/usr/include/DarwinFoundation2.modulemap', loaded: '/Users/m1/caches/DerivedData/hanlin-ai-788354f8-headers-explicit-20261124/sys_types-16BTVES5CYFRJXL0F8B63A766.pcm'
+<unknown>:0: remark: loaded module 'Darwin'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/usr/lib/swift/Darwin.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/Darwin.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+<unknown>:0: remark: 'Combine' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: 'Combine' has a required transitive dependency on '_Concurrency'
+<unknown>:0: remark: 'Combine' has a required transitive dependency on '_StringProcessing'
+<unknown>:0: remark: 'Combine' has a required transitive dependency on '_SwiftConcurrencyShims'
+<unknown>:0: remark: loaded module 'Combine'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/System/Library/Frameworks/Combine.framework/Modules/Combine.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/Combine.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Probe.swift:1:24: remark: 'ExpoModulesCore' has a required transitive dependency on 'CommonCrypto'
+1 | @preconcurrency import ExpoModulesCore
+  |                        `- remark: 'ExpoModulesCore' has a required transitive dependency on 'CommonCrypto'
+2 | 
+
+<unknown>:0: remark: loaded module 'CommonCrypto'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk/usr/include/CommonCrypto/module.modulemap', loaded: '/Users/m1/caches/DerivedData/hanlin-ai-788354f8-headers-explicit-20261124/CommonCrypto-46GRY2W6XS5GPJOOOCV6OT0BP.pcm'
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Probe.swift:1:24: remark: 'ExpoModulesCore' has a required transitive dependency on 'CoreGraphics'
+1 | @preconcurrency import ExpoModulesCore
+  |                        `- remark: 'ExpoModulesCore' has a required transitive dependency on 'CoreGraphics'
+2 | 
+
+<unknown>:0: remark: 'CoreGraphics' has a required transitive dependency on 'CoreFoundation'
+<unknown>:0: remark: 'CoreFoundation' has a required transitive dependency on 'CoreFoundation'
+<unknown>:0: remark: 'Dispatch' has a required transitive dependency on 'Combine'
+<unknown>:0: remark: 'Dispatch' has a required transitive dependency on 'Dispatch'
+<unknown>:0: remark: 'ObjectiveC' has a required transitive dependency on 'ObjectiveC'
+<unknown>:0: remark: 'ObjectiveC' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: 'ObjectiveC' has a required transitive dependency on '_Concurrency'
+<unknown>:0: remark: 'ObjectiveC' has a required transitive dependency on '_StringProcessing'
+<unknown>:0: remark: 'ObjectiveC' has a required transitive dependency on '_SwiftConcurrencyShims'
+<unknown>:0: remark: loaded module 'ObjectiveC' (overlay for a clang dependency); source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/usr/lib/swift/ObjectiveC.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/ObjectiveC.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+<unknown>:0: remark: 'Dispatch' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: 'Dispatch' has a required transitive dependency on '_Concurrency'
+<unknown>:0: remark: 'Dispatch' has a required transitive dependency on '_StringProcessing'
+<unknown>:0: remark: 'Dispatch' has a required transitive dependency on '_SwiftConcurrencyShims'
+<unknown>:0: remark: loaded module 'Dispatch' (overlay for a clang dependency); source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/usr/lib/swift/Dispatch.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/Dispatch.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+<unknown>:0: remark: 'CoreFoundation' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: 'CoreFoundation' has a required transitive dependency on '_Concurrency'
+<unknown>:0: remark: 'CoreFoundation' has a required transitive dependency on '_StringProcessing'
+<unknown>:0: remark: 'CoreFoundation' has a required transitive dependency on '_SwiftConcurrencyShims'
+<unknown>:0: remark: loaded module 'CoreFoundation'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/usr/lib/swift/CoreFoundation.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/CoreFoundation.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+<unknown>:0: remark: 'CoreGraphics' has a required transitive dependency on 'CoreGraphics'
+<unknown>:0: remark: 'CoreGraphics' has a required transitive dependency on 'Foundation'
+<unknown>:0: remark: 'Foundation' has a required transitive dependency on 'Combine'
+<unknown>:0: remark: 'Foundation' has a required transitive dependency on 'CoreFoundation'
+<unknown>:0: remark: 'Foundation' has a required transitive dependency on 'Darwin'
+<unknown>:0: remark: 'Foundation' has a required transitive dependency on 'Dispatch'
+<unknown>:0: remark: 'Foundation' has a required transitive dependency on 'Foundation'
+<unknown>:0: remark: 'XPC' has a required transitive dependency on 'Darwin'
+<unknown>:0: remark: 'XPC' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: 'XPC' has a required transitive dependency on 'System'
+<unknown>:0: remark: 'System' has a required transitive dependency on 'Darwin.C'
+<unknown>:0: remark: loaded module 'C'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk/usr/include/Darwin_C.modulemap', loaded: '/Users/m1/caches/DerivedData/hanlin-ai-788354f8-headers-explicit-20261124/Darwin-80NOBFNZ3J8BC535SPWK5LJ9P.pcm'
+<unknown>:0: remark: 'System' has a required transitive dependency on 'Darwin'
+<unknown>:0: remark: 'System' has a required transitive dependency on 'Darwin.Mach'
+<unknown>:0: remark: loaded module 'Mach'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk/usr/include/Darwin_Mach.modulemap', loaded: '/Users/m1/caches/DerivedData/hanlin-ai-788354f8-headers-explicit-20261124/Darwin-80NOBFNZ3J8BC535SPWK5LJ9P.pcm'
+<unknown>:0: remark: 'System' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: 'System' has a required transitive dependency on '_Concurrency'
+<unknown>:0: remark: 'System' has a required transitive dependency on '_StringProcessing'
+<unknown>:0: remark: 'System' has a required transitive dependency on '_SwiftConcurrencyShims'
+<unknown>:0: remark: loaded module 'System'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/usr/lib/swift/System.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/System.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+<unknown>:0: remark: 'XPC' has a required transitive dependency on 'XPC'
+<unknown>:0: remark: 'XPC' has a required transitive dependency on '_Concurrency'
+<unknown>:0: remark: 'XPC' has a required transitive dependency on '_StringProcessing'
+<unknown>:0: remark: 'XPC' has a required transitive dependency on '_SwiftConcurrencyShims'
+<unknown>:0: remark: loaded module 'XPC' (overlay for a clang dependency); source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/usr/lib/swift/XPC.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/XPC.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+<unknown>:0: remark: 'Foundation' has a required transitive dependency on 'ObjectiveC'
+<unknown>:0: remark: 'Foundation' has a required transitive dependency on 'Observation'
+<unknown>:0: remark: 'Observation' has a required transitive dependency on 'Darwin'
+<unknown>:0: remark: 'Observation' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: 'Observation' has a required transitive dependency on '_Concurrency'
+<unknown>:0: remark: 'Observation' has a required transitive dependency on '_SwiftConcurrencyShims'
+<unknown>:0: remark: 'Observation' has a required transitive dependency on 'Darwin.os.lock'
+<unknown>:0: remark: loaded module 'lock'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk/usr/include/Darwin.modulemap', loaded: '/Users/m1/caches/DerivedData/hanlin-ai-788354f8-headers-explicit-20261124/Darwin-80NOBFNZ3J8BC535SPWK5LJ9P.pcm'
+<unknown>:0: remark: loaded module 'Observation'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/usr/lib/swift/Observation.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/Observation.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+<unknown>:0: remark: 'Foundation' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: 'Foundation' has a required transitive dependency on 'System'
+<unknown>:0: remark: 'Foundation' has a required transitive dependency on '_Concurrency'
+<unknown>:0: remark: 'Foundation' has a required transitive dependency on '_StringProcessing'
+<unknown>:0: remark: 'Foundation' has a required transitive dependency on '_SwiftConcurrencyShims'
+<unknown>:0: remark: 'Foundation' has a required transitive dependency on 'string_h'
+<unknown>:0: remark: loaded module 'string_h'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk/usr/include/c_standard_library.modulemap', loaded: '/Users/m1/caches/DerivedData/hanlin-ai-788354f8-headers-explicit-20261124/string_h-5O8X381S9HMN131UJRCYCJWHF.pcm'
+<unknown>:0: remark: 'Foundation' has a required transitive dependency on 'Darwin.sysdir'
+<unknown>:0: remark: loaded module 'sysdir'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk/usr/include/Darwin.modulemap', loaded: '/Users/m1/caches/DerivedData/hanlin-ai-788354f8-headers-explicit-20261124/Darwin-80NOBFNZ3J8BC535SPWK5LJ9P.pcm'
+<unknown>:0: remark: 'Foundation' has a required transitive dependency on 'Darwin.uuid'
+<unknown>:0: remark: loaded module 'uuid'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk/usr/include/uuid.modulemap', loaded: '/Users/m1/caches/DerivedData/hanlin-ai-788354f8-headers-explicit-20261124/Darwin-80NOBFNZ3J8BC535SPWK5LJ9P.pcm'
+<unknown>:0: remark: loaded module 'Foundation'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/System/Library/Frameworks/Foundation.framework/Modules/Foundation.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/Foundation.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+<unknown>:0: remark: 'CoreGraphics' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: 'CoreGraphics' has a required transitive dependency on '_Concurrency'
+<unknown>:0: remark: 'CoreGraphics' has a required transitive dependency on '_StringProcessing'
+<unknown>:0: remark: 'CoreGraphics' has a required transitive dependency on '_SwiftConcurrencyShims'
+<unknown>:0: remark: loaded module 'CoreGraphics'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/System/Library/Frameworks/CoreGraphics.framework/Modules/CoreGraphics.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/CoreGraphics.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Probe.swift:1:24: remark: 'ExpoModulesCore' has a required transitive dependency on 'CoreMedia'
+1 | @preconcurrency import ExpoModulesCore
+  |                        `- remark: 'ExpoModulesCore' has a required transitive dependency on 'CoreMedia'
+2 | 
+
+<unknown>:0: remark: 'CoreMedia' has a required transitive dependency on 'CoreAudio'
+<unknown>:0: remark: 'CoreAudio' has a required transitive dependency on 'CoreAudio'
+<unknown>:0: remark: 'CoreAudio' has a required transitive dependency on 'Foundation'
+<unknown>:0: remark: 'CoreAudio' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: 'CoreAudio' has a required transitive dependency on '_Concurrency'
+<unknown>:0: remark: 'CoreAudio' has a required transitive dependency on '_StringProcessing'
+<unknown>:0: remark: 'CoreAudio' has a required transitive dependency on '_SwiftConcurrencyShims'
+<unknown>:0: remark: loaded module 'CoreAudio'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/usr/lib/swift/CoreAudio.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/CoreAudio.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+<unknown>:0: remark: 'CoreMedia' has a required transitive dependency on 'CoreAudioTypes'
+<unknown>:0: remark: 'CoreMedia' has a required transitive dependency on 'CoreFoundation'
+<unknown>:0: remark: 'CoreMedia' has a required transitive dependency on 'CoreMedia'
+<unknown>:0: remark: 'CoreVideo' has a required transitive dependency on 'CoreGraphics'
+<unknown>:0: remark: 'CoreVideo' has a required transitive dependency on 'CoreVideo'
+<unknown>:0: remark: 'Metal' has a required transitive dependency on 'Metal'
+<unknown>:0: remark: 'Metal' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: 'Metal' has a required transitive dependency on '_Concurrency'
+<unknown>:0: remark: 'Metal' has a required transitive dependency on '_StringProcessing'
+<unknown>:0: remark: 'Metal' has a required transitive dependency on '_SwiftConcurrencyShims'
+<unknown>:0: remark: loaded module 'Metal' (overlay for a clang dependency); source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/usr/lib/swift/Metal.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/Metal.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+<unknown>:0: remark: 'CoreVideo' has a required transitive dependency on 'Foundation'
+<unknown>:0: remark: 'CoreVideo' has a required transitive dependency on 'IOSurface'
+<unknown>:0: remark: 'CoreVideo' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: 'CoreVideo' has a required transitive dependency on '_Concurrency'
+<unknown>:0: remark: 'CoreVideo' has a required transitive dependency on '_StringProcessing'
+<unknown>:0: remark: 'CoreVideo' has a required transitive dependency on '_SwiftConcurrencyShims'
+<unknown>:0: remark: loaded module 'CoreVideo' (overlay for a clang dependency); source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/System/Library/Frameworks/CoreVideo.framework/Modules/CoreVideo.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/CoreVideo.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+<unknown>:0: remark: 'CoreMedia' has a required transitive dependency on 'CoreVideo'
+<unknown>:0: remark: 'CoreMedia' has a required transitive dependency on 'Darwin'
+<unknown>:0: remark: 'CoreMedia' has a required transitive dependency on 'Dispatch'
+<unknown>:0: remark: 'CoreMedia' has a required transitive dependency on 'Foundation'
+<unknown>:0: remark: 'CoreMedia' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: 'CoreMedia' has a required transitive dependency on '_Concurrency'
+<unknown>:0: remark: 'CoreMedia' has a required transitive dependency on '_StringProcessing'
+<unknown>:0: remark: 'CoreMedia' has a required transitive dependency on '_SwiftConcurrencyShims'
+<unknown>:0: remark: 'CoreMedia' has a required transitive dependency on 'simd'
+<unknown>:0: remark: 'simd' has a required transitive dependency on 'Darwin'
+<unknown>:0: remark: 'simd' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: 'simd' has a required transitive dependency on '_Concurrency'
+<unknown>:0: remark: 'simd' has a required transitive dependency on '_StringProcessing'
+<unknown>:0: remark: 'simd' has a required transitive dependency on '_SwiftConcurrencyShims'
+<unknown>:0: remark: 'simd' has a required transitive dependency on 'simd'
+<unknown>:0: remark: loaded module 'simd'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/usr/lib/swift/simd.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/simd.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+<unknown>:0: remark: loaded module 'CoreMedia'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/System/Library/Frameworks/CoreMedia.framework/Modules/CoreMedia.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/CoreMedia.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Probe.swift:1:24: remark: 'ExpoModulesCore' has a required transitive dependency on 'CryptoKit'
+1 | @preconcurrency import ExpoModulesCore
+  |                        `- remark: 'ExpoModulesCore' has a required transitive dependency on 'CryptoKit'
+2 | 
+
+<unknown>:0: remark: 'CryptoKit' has a required transitive dependency on 'Foundation'
+<unknown>:0: remark: 'CryptoKit' has a required transitive dependency on 'LocalAuthentication'
+<unknown>:0: remark: 'LocalAuthentication' has a required transitive dependency on 'Combine'
+<unknown>:0: remark: 'LocalAuthentication' has a required transitive dependency on 'Foundation'
+<unknown>:0: remark: 'LocalAuthentication' has a required transitive dependency on 'LocalAuthentication'
+<unknown>:0: remark: 'LocalAuthentication' has a required transitive dependency on 'Observation'
+<unknown>:0: remark: 'LocalAuthentication' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: 'LocalAuthentication' has a required transitive dependency on '_Concurrency'
+<unknown>:0: remark: 'LocalAuthentication' has a required transitive dependency on '_StringProcessing'
+<unknown>:0: remark: 'LocalAuthentication' has a required transitive dependency on '_SwiftConcurrencyShims'
+<unknown>:0: remark: loaded module 'LocalAuthentication'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/System/Library/Frameworks/LocalAuthentication.framework/Modules/LocalAuthentication.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/LocalAuthentication.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+<unknown>:0: remark: 'CryptoKit' has a required transitive dependency on 'Security.SecAccessControl'
+<unknown>:0: remark: loaded module 'SecAccessControl'; source: '', loaded: '/Users/m1/caches/DerivedData/hanlin-ai-788354f8-headers-explicit-20261124/Security-ANUA5K4U25JXY0I5L257EOB45.pcm'
+<unknown>:0: remark: 'CryptoKit' has a required transitive dependency on 'Security'
+<unknown>:0: remark: 'CryptoKit' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: 'CryptoKit' has a required transitive dependency on '_Concurrency'
+<unknown>:0: remark: 'CryptoKit' has a required transitive dependency on '_StringProcessing'
+<unknown>:0: remark: 'CryptoKit' has a required transitive dependency on '_SwiftConcurrencyShims'
+<unknown>:0: remark: loaded module 'CryptoKit'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/System/Library/Frameworks/CryptoKit.framework/Modules/CryptoKit.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/CryptoKit.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Probe.swift:1:24: remark: 'ExpoModulesCore' has a required transitive dependency on 'Dispatch'
+1 | @preconcurrency import ExpoModulesCore
+  |                        `- remark: 'ExpoModulesCore' has a required transitive dependency on 'Dispatch'
+2 | 
+
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Probe.swift:1:24: remark: 'ExpoModulesCore' has a required transitive dependency on 'ExpoModulesCore'
+1 | @preconcurrency import ExpoModulesCore
+  |                        `- remark: 'ExpoModulesCore' has a required transitive dependency on 'ExpoModulesCore'
+2 | 
+
+<unknown>:0: remark: 'UIKit' has a required transitive dependency on 'Accessibility'
+<unknown>:0: remark: 'Accessibility' has a required transitive dependency on 'Accessibility'
+<unknown>:0: remark: 'Accessibility' has a required transitive dependency on 'Foundation'
+<unknown>:0: remark: 'Accessibility' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: 'Accessibility' has a required transitive dependency on '_Concurrency'
+<unknown>:0: remark: 'Accessibility' has a required transitive dependency on '_StringProcessing'
+<unknown>:0: remark: 'Accessibility' has a required transitive dependency on '_SwiftConcurrencyShims'
+<unknown>:0: remark: loaded module 'Accessibility'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/System/Library/Frameworks/Accessibility.framework/Modules/Accessibility.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/Accessibility.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+<unknown>:0: remark: 'UIKit' has a required transitive dependency on 'CoreGraphics'
+<unknown>:0: remark: 'UIKit' has a required transitive dependency on 'CoreText'
+<unknown>:0: remark: 'CoreText' has a required transitive dependency on 'CoreText'
+<unknown>:0: remark: 'CoreText' has a required transitive dependency on 'Foundation'
+<unknown>:0: remark: 'CoreText' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: 'CoreText' has a required transitive dependency on 'UniformTypeIdentifiers'
+<unknown>:0: remark: 'UniformTypeIdentifiers' has a required transitive dependency on 'Foundation'
+<unknown>:0: remark: 'UniformTypeIdentifiers' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: 'UniformTypeIdentifiers' has a required transitive dependency on 'UniformTypeIdentifiers'
+<unknown>:0: remark: 'UniformTypeIdentifiers' has a required transitive dependency on '_Concurrency'
+<unknown>:0: remark: 'UniformTypeIdentifiers' has a required transitive dependency on '_StringProcessing'
+<unknown>:0: remark: 'UniformTypeIdentifiers' has a required transitive dependency on '_SwiftConcurrencyShims'
+<unknown>:0: remark: loaded module 'UniformTypeIdentifiers'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/usr/lib/swift/UniformTypeIdentifiers.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/UniformTypeIdentifiers.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+<unknown>:0: remark: 'CoreText' has a required transitive dependency on '_Concurrency'
+<unknown>:0: remark: 'CoreText' has a required transitive dependency on '_StringProcessing'
+<unknown>:0: remark: 'CoreText' has a required transitive dependency on '_SwiftConcurrencyShims'
+<unknown>:0: remark: loaded module 'CoreText'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/System/Library/Frameworks/CoreText.framework/Modules/CoreText.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/CoreText.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+<unknown>:0: remark: 'UIKit' has a required transitive dependency on 'DataDetection'
+<unknown>:0: remark: 'DataDetection' has a required transitive dependency on 'DataDetection'
+<unknown>:0: remark: 'DataDetection' has a required transitive dependency on 'Foundation'
+<unknown>:0: remark: 'DataDetection' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: 'DataDetection' has a required transitive dependency on '_Concurrency'
+<unknown>:0: remark: 'DataDetection' has a required transitive dependency on '_StringProcessing'
+<unknown>:0: remark: 'DataDetection' has a required transitive dependency on '_SwiftConcurrencyShims'
+<unknown>:0: remark: loaded module 'DataDetection'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/System/Library/Frameworks/DataDetection.framework/Modules/DataDetection.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/DataDetection.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+<unknown>:0: remark: 'UIKit' has a required transitive dependency on 'DeveloperToolsSupport'
+<unknown>:0: remark: 'DeveloperToolsSupport' has a required transitive dependency on 'CoreGraphics'
+<unknown>:0: remark: 'DeveloperToolsSupport' has a required transitive dependency on 'DeveloperToolsSupport'
+<unknown>:0: remark: 'DeveloperToolsSupport' has a required transitive dependency on 'Foundation'
+<unknown>:0: remark: 'DeveloperToolsSupport' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: 'DeveloperToolsSupport' has a required transitive dependency on '_Concurrency'
+<unknown>:0: remark: 'DeveloperToolsSupport' has a required transitive dependency on '_StringProcessing'
+<unknown>:0: remark: 'DeveloperToolsSupport' has a required transitive dependency on '_SwiftConcurrencyShims'
+<unknown>:0: remark: 'DeveloperToolsSupport' has a required transitive dependency on 'os.lock'
+<unknown>:0: remark: 'os' has a required transitive dependency on 'ObjectiveC'
+<unknown>:0: remark: 'os' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: 'os' has a required transitive dependency on '_Concurrency'
+<unknown>:0: remark: 'os' has a required transitive dependency on '_StringProcessing'
+<unknown>:0: remark: 'os' has a required transitive dependency on '_SwiftConcurrencyShims'
+<unknown>:0: remark: 'os' has a required transitive dependency on 'os.log'
+<unknown>:0: remark: loaded module 'log'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk/usr/include/os.modulemap', loaded: '/Users/m1/caches/DerivedData/hanlin-ai-788354f8-headers-explicit-20261124/os-6YGEW1V0CR1528RCKBR3FKEXY.pcm'
+<unknown>:0: remark: 'os' has a required transitive dependency on 'os'
+<unknown>:0: remark: 'os' has a required transitive dependency on 'os.signpost'
+<unknown>:0: remark: loaded module 'signpost'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk/usr/include/os.modulemap', loaded: '/Users/m1/caches/DerivedData/hanlin-ai-788354f8-headers-explicit-20261124/os-6YGEW1V0CR1528RCKBR3FKEXY.pcm'
+<unknown>:0: remark: 'os' has a required transitive dependency on 'os.workgroup'
+<unknown>:0: remark: loaded module 'workgroup'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk/usr/include/os.modulemap', loaded: '/Users/m1/caches/DerivedData/hanlin-ai-788354f8-headers-explicit-20261124/os-6YGEW1V0CR1528RCKBR3FKEXY.pcm'
+<unknown>:0: remark: loaded module 'os' (overlay for a clang dependency); source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/usr/lib/swift/os.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/os.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+<unknown>:0: remark: loaded module 'lock'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk/usr/include/os.modulemap', loaded: '/Users/m1/caches/DerivedData/hanlin-ai-788354f8-headers-explicit-20261124/os-6YGEW1V0CR1528RCKBR3FKEXY.pcm'
+<unknown>:0: remark: 'DeveloperToolsSupport' has a required transitive dependency on 'os.log'
+<unknown>:0: remark: loaded module 'log'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk/usr/include/os.modulemap', loaded: '/Users/m1/caches/DerivedData/hanlin-ai-788354f8-headers-explicit-20261124/os-6YGEW1V0CR1528RCKBR3FKEXY.pcm'
+<unknown>:0: remark: 'DeveloperToolsSupport' has a required transitive dependency on 'os'
+<unknown>:0: remark: loaded module 'DeveloperToolsSupport'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/System/Library/Frameworks/DeveloperToolsSupport.framework/Modules/DeveloperToolsSupport.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/DeveloperToolsSupport.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+<unknown>:0: remark: 'UIKit' has a required transitive dependency on 'Dispatch'
+<unknown>:0: remark: 'UIKit' has a required transitive dependency on 'Foundation'
+<unknown>:0: remark: 'UIKit' has a required transitive dependency on 'QuartzCore'
+<unknown>:0: remark: 'QuartzCore' has a required transitive dependency on 'Foundation'
+<unknown>:0: remark: 'QuartzCore' has a required transitive dependency on 'QuartzCore'
+<unknown>:0: remark: 'QuartzCore' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: 'QuartzCore' has a required transitive dependency on '_Concurrency'
+<unknown>:0: remark: 'QuartzCore' has a required transitive dependency on '_StringProcessing'
+<unknown>:0: remark: 'QuartzCore' has a required transitive dependency on '_SwiftConcurrencyShims'
+<unknown>:0: remark: loaded module 'QuartzCore'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/usr/lib/swift/QuartzCore.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/QuartzCore.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+<unknown>:0: remark: 'UIKit' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: 'UIKit' has a required transitive dependency on 'SwiftUICore'
+<unknown>:0: remark: 'SwiftUICore' has a required transitive dependency on 'Accessibility'
+<unknown>:0: remark: 'SwiftUICore' has a required transitive dependency on 'Combine'
+<unknown>:0: remark: 'SwiftUICore' has a required transitive dependency on 'CoreFoundation'
+<unknown>:0: remark: 'SwiftUICore' has a required transitive dependency on 'CoreTransferable'
+<unknown>:0: remark: 'CoreTransferable' has a required transitive dependency on 'Combine'
+<unknown>:0: remark: 'CoreTransferable' has a required transitive dependency on 'CoreTransferable'
+<unknown>:0: remark: 'CoreTransferable' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: 'CoreTransferable' has a required transitive dependency on 'UniformTypeIdentifiers'
+<unknown>:0: remark: 'CoreTransferable' has a required transitive dependency on '_Concurrency'
+<unknown>:0: remark: 'CoreTransferable' has a required transitive dependency on '_StringProcessing'
+<unknown>:0: remark: 'CoreTransferable' has a required transitive dependency on '_SwiftConcurrencyShims'
+<unknown>:0: remark: loaded module 'CoreTransferable'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/System/Library/Frameworks/CoreTransferable.framework/Modules/CoreTransferable.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/CoreTransferable.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+<unknown>:0: remark: 'SwiftUICore' has a required transitive dependency on 'DeveloperToolsSupport'
+<unknown>:0: remark: 'SwiftUICore' has a required transitive dependency on 'Dispatch'
+<unknown>:0: remark: 'SwiftUICore' has a required transitive dependency on 'Foundation'
+<unknown>:0: remark: 'SwiftUICore' has a required transitive dependency on 'OSLog'
+<unknown>:0: remark: 'OSLog' has a required transitive dependency on 'Foundation'
+<unknown>:0: remark: 'OSLog' has a required transitive dependency on 'OSLog'
+<unknown>:0: remark: 'OSLog' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: 'OSLog' has a required transitive dependency on '_Concurrency'
+<unknown>:0: remark: 'OSLog' has a required transitive dependency on '_StringProcessing'
+<unknown>:0: remark: 'OSLog' has a required transitive dependency on '_SwiftConcurrencyShims'
+<unknown>:0: remark: loaded module 'OSLog'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/usr/lib/swift/OSLog.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/OSLog.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+<unknown>:0: remark: 'SwiftUICore' has a required transitive dependency on 'Observation'
+<unknown>:0: remark: 'SwiftUICore' has a required transitive dependency on 'Spatial'
+<unknown>:0: remark: 'Spatial' has a required transitive dependency on 'Spatial'
+<unknown>:0: remark: 'Spatial' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: 'Spatial' has a required transitive dependency on '_Concurrency'
+<unknown>:0: remark: 'Spatial' has a required transitive dependency on '_StringProcessing'
+<unknown>:0: remark: 'Spatial' has a required transitive dependency on '_SwiftConcurrencyShims'
+<unknown>:0: remark: loaded module 'Spatial'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/usr/lib/swift/Spatial.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/Spatial.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+<unknown>:0: remark: 'SwiftUICore' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: 'SwiftUICore' has a required transitive dependency on 'SwiftUICore'
+<unknown>:0: remark: 'SwiftUICore' has a required transitive dependency on 'Symbols'
+<unknown>:0: remark: 'Symbols' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: 'Symbols' has a required transitive dependency on 'Symbols'
+<unknown>:0: remark: 'Symbols' has a required transitive dependency on '_Concurrency'
+<unknown>:0: remark: 'Symbols' has a required transitive dependency on '_StringProcessing'
+<unknown>:0: remark: 'Symbols' has a required transitive dependency on '_SwiftConcurrencyShims'
+<unknown>:0: remark: loaded module 'Symbols'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/System/Library/Frameworks/Symbols.framework/Modules/Symbols.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/Symbols.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+<unknown>:0: remark: 'SwiftUICore' has a required transitive dependency on 'UniformTypeIdentifiers'
+<unknown>:0: remark: 'SwiftUICore' has a required transitive dependency on '_Concurrency'
+<unknown>:0: remark: 'SwiftUICore' has a required transitive dependency on '_StringProcessing'
+<unknown>:0: remark: 'SwiftUICore' has a required transitive dependency on '_SwiftConcurrencyShims'
+<unknown>:0: remark: 'SwiftUICore' has a required transitive dependency on 'os.log'
+<unknown>:0: remark: loaded module 'log'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk/usr/include/os.modulemap', loaded: '/Users/m1/caches/DerivedData/hanlin-ai-788354f8-headers-explicit-20261124/os-6YGEW1V0CR1528RCKBR3FKEXY.pcm'
+<unknown>:0: remark: 'SwiftUICore' has a required transitive dependency on 'os'
+<unknown>:0: remark: 'SwiftUICore' has a required transitive dependency on 'simd'
+<unknown>:0: remark: loaded module 'SwiftUICore'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/System/Library/Frameworks/SwiftUICore.framework/Modules/SwiftUICore.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/SwiftUICore.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+<unknown>:0: remark: 'UIKit' has a required transitive dependency on 'Symbols'
+<unknown>:0: remark: 'UIKit' has a required transitive dependency on 'UIKit.UIAction'
+<unknown>:0: remark: 'FileProvider' has a required transitive dependency on 'FileProvider'
+<unknown>:0: remark: 'FileProvider' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: 'FileProvider' has a required transitive dependency on '_Concurrency'
+<unknown>:0: remark: 'FileProvider' has a required transitive dependency on '_StringProcessing'
+<unknown>:0: remark: 'FileProvider' has a required transitive dependency on '_SwiftConcurrencyShims'
+<unknown>:0: remark: loaded module 'FileProvider' (overlay for a clang dependency); source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/System/Library/Frameworks/FileProvider.framework/Modules/FileProvider.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/FileProvider.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+<unknown>:0: remark: 'CoreMotion' has a required transitive dependency on 'CoreMotion'
+<unknown>:0: remark: 'CoreLocation' has a required transitive dependency on 'CoreLocation'
+<unknown>:0: remark: 'CoreLocation' has a required transitive dependency on 'Foundation'
+<unknown>:0: remark: 'CoreLocation' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: 'CoreLocation' has a required transitive dependency on '_Concurrency'
+<unknown>:0: remark: 'CoreLocation' has a required transitive dependency on '_StringProcessing'
+<unknown>:0: remark: 'CoreLocation' has a required transitive dependency on '_SwiftConcurrencyShims'
+<unknown>:0: remark: 'CoreLocation' has a required transitive dependency on 'os.log'
+<unknown>:0: remark: loaded module 'log'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk/usr/include/os.modulemap', loaded: '/Users/m1/caches/DerivedData/hanlin-ai-788354f8-headers-explicit-20261124/os-6YGEW1V0CR1528RCKBR3FKEXY.pcm'
+<unknown>:0: remark: 'CoreLocation' has a required transitive dependency on 'os'
+<unknown>:0: remark: loaded module 'CoreLocation' (overlay for a clang dependency); source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/usr/lib/swift/CoreLocation.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/CoreLocation.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+<unknown>:0: remark: 'CoreMotion' has a required transitive dependency on 'Foundation'
+<unknown>:0: remark: 'CoreMotion' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: 'CoreMotion' has a required transitive dependency on '_Concurrency'
+<unknown>:0: remark: 'CoreMotion' has a required transitive dependency on '_StringProcessing'
+<unknown>:0: remark: 'CoreMotion' has a required transitive dependency on '_SwiftConcurrencyShims'
+<unknown>:0: remark: 'CoreMotion' has a required transitive dependency on 'os.log'
+<unknown>:0: remark: loaded module 'log'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk/usr/include/os.modulemap', loaded: '/Users/m1/caches/DerivedData/hanlin-ai-788354f8-headers-explicit-20261124/os-6YGEW1V0CR1528RCKBR3FKEXY.pcm'
+<unknown>:0: remark: 'CoreMotion' has a required transitive dependency on 'os'
+<unknown>:0: remark: loaded module 'CoreMotion' (overlay for a clang dependency); source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/System/Library/Frameworks/CoreMotion.framework/Modules/CoreMotion.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/CoreMotion.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+<unknown>:0: remark: 'CoreImage' has a required transitive dependency on 'CoreImage'
+<unknown>:0: remark: 'ImageIO' has a required transitive dependency on 'CoreGraphics'
+<unknown>:0: remark: 'ImageIO' has a required transitive dependency on 'CoreVideo'
+<unknown>:0: remark: 'ImageIO' has a required transitive dependency on 'Foundation'
+<unknown>:0: remark: 'ImageIO' has a required transitive dependency on 'ImageIO'
+<unknown>:0: remark: 'ImageIO' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: 'ImageIO' has a required transitive dependency on 'UniformTypeIdentifiers'
+<unknown>:0: remark: 'ImageIO' has a required transitive dependency on '_Concurrency'
+<unknown>:0: remark: 'ImageIO' has a required transitive dependency on '_StringProcessing'
+<unknown>:0: remark: 'ImageIO' has a required transitive dependency on '_SwiftConcurrencyShims'
+<unknown>:0: remark: loaded module 'ImageIO' (overlay for a clang dependency); source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/System/Library/Frameworks/ImageIO.framework/Modules/ImageIO.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/ImageIO.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+<unknown>:0: remark: 'CoreImage' has a required transitive dependency on 'CoreVideo'
+<unknown>:0: remark: 'CoreImage' has a required transitive dependency on 'Foundation'
+<unknown>:0: remark: 'CoreImage' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: 'CoreImage' has a required transitive dependency on '_Concurrency'
+<unknown>:0: remark: 'CoreImage' has a required transitive dependency on '_StringProcessing'
+<unknown>:0: remark: 'CoreImage' has a required transitive dependency on '_SwiftConcurrencyShims'
+<unknown>:0: remark: loaded module 'CoreImage' (overlay for a clang dependency); source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/usr/lib/swift/CoreImage.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/CoreImage.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+<unknown>:0: remark: loaded module 'UIAction'; source: '', loaded: '/Users/m1/caches/DerivedData/hanlin-ai-788354f8-headers-explicit-20261124/UIKit-86B4LGMZD7OG12KKCCVAJFYHF.pcm'
+<unknown>:0: remark: 'UIKit' has a required transitive dependency on 'UIKit.UICommand'
+<unknown>:0: remark: loaded module 'UICommand'; source: '', loaded: '/Users/m1/caches/DerivedData/hanlin-ai-788354f8-headers-explicit-20261124/UIKit-86B4LGMZD7OG12KKCCVAJFYHF.pcm'
+<unknown>:0: remark: 'UIKit' has a required transitive dependency on 'UIKit.UIKeyCommand'
+<unknown>:0: remark: loaded module 'UIKeyCommand'; source: '', loaded: '/Users/m1/caches/DerivedData/hanlin-ai-788354f8-headers-explicit-20261124/UIKit-86B4LGMZD7OG12KKCCVAJFYHF.pcm'
+<unknown>:0: remark: 'UIKit' has a required transitive dependency on 'UIKit'
+<unknown>:0: remark: 'UIKit' has a required transitive dependency on 'UIKit.UIMainMenuSystem'
+<unknown>:0: remark: loaded module 'UIMainMenuSystem'; source: '', loaded: '/Users/m1/caches/DerivedData/hanlin-ai-788354f8-headers-explicit-20261124/UIKit-86B4LGMZD7OG12KKCCVAJFYHF.pcm'
+<unknown>:0: remark: 'UIKit' has a required transitive dependency on 'UIKit.UIMenu'
+<unknown>:0: remark: loaded module 'UIMenu'; source: '', loaded: '/Users/m1/caches/DerivedData/hanlin-ai-788354f8-headers-explicit-20261124/UIKit-86B4LGMZD7OG12KKCCVAJFYHF.pcm'
+<unknown>:0: remark: 'UIKit' has a required transitive dependency on '_Concurrency'
+<unknown>:0: remark: 'UIKit' has a required transitive dependency on '_StringProcessing'
+<unknown>:0: remark: 'UIKit' has a required transitive dependency on '_SwiftConcurrencyShims'
+<unknown>:0: remark: loaded module 'UIKit' (overlay for a clang dependency); source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/System/Library/Frameworks/UIKit.framework/Modules/UIKit.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/UIKit.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+<unknown>:0: remark: 'AVFoundation' has a required transitive dependency on 'AVFAudio.AVAudioSession'
+<unknown>:0: remark: 'AVFAudio' has a required transitive dependency on 'AVFAudio'
+<unknown>:0: remark: 'AVFAudio' has a required transitive dependency on 'CoreAudio'
+<unknown>:0: remark: 'AVFAudio' has a required transitive dependency on 'CoreAudioTypes'
+<unknown>:0: remark: 'AVFAudio' has a required transitive dependency on 'Foundation'
+<unknown>:0: remark: 'AVFAudio' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: 'AVFAudio' has a required transitive dependency on '_Concurrency'
+<unknown>:0: remark: 'AVFAudio' has a required transitive dependency on '_StringProcessing'
+<unknown>:0: remark: 'AVFAudio' has a required transitive dependency on '_SwiftConcurrencyShims'
+<unknown>:0: remark: loaded module 'AVFAudio' (overlay for a clang dependency); source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/System/Library/Frameworks/AVFAudio.framework/Modules/AVFAudio.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/AVFAudio.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+<unknown>:0: remark: 'AudioToolbox' has a required transitive dependency on 'AudioToolbox'
+<unknown>:0: remark: 'CoreMIDI' has a required transitive dependency on 'CoreMIDI'
+<unknown>:0: remark: 'CoreMIDI' has a required transitive dependency on 'Foundation'
+<unknown>:0: remark: 'CoreMIDI' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: 'CoreMIDI' has a required transitive dependency on '_Concurrency'
+<unknown>:0: remark: 'CoreMIDI' has a required transitive dependency on '_StringProcessing'
+<unknown>:0: remark: 'CoreMIDI' has a required transitive dependency on '_SwiftConcurrencyShims'
+<unknown>:0: remark: loaded module 'CoreMIDI' (overlay for a clang dependency); source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/usr/lib/swift/CoreMIDI.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/CoreMIDI.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+<unknown>:0: remark: 'AudioToolbox' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: 'AudioToolbox' has a required transitive dependency on '_Concurrency'
+<unknown>:0: remark: 'AudioToolbox' has a required transitive dependency on '_StringProcessing'
+<unknown>:0: remark: 'AudioToolbox' has a required transitive dependency on '_SwiftConcurrencyShims'
+<unknown>:0: remark: loaded module 'AudioToolbox' (overlay for a clang dependency); source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/System/Library/Frameworks/AudioToolbox.framework/Modules/AudioToolbox.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/AudioToolbox.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+<unknown>:0: remark: loaded module 'AVAudioSession'; source: '', loaded: '/Users/m1/caches/DerivedData/hanlin-ai-788354f8-headers-explicit-20261124/AVFAudio-5J4B3MBBOO5JGM8LJQY02B9PO.pcm'
+<unknown>:0: remark: 'AVFoundation' has a required transitive dependency on 'AVFAudio'
+<unknown>:0: remark: 'AVFoundation' has a required transitive dependency on 'AVFoundation'
+<unknown>:0: remark: 'MediaToolbox' has a required transitive dependency on 'MediaToolbox'
+<unknown>:0: remark: 'MediaToolbox' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: 'MediaToolbox' has a required transitive dependency on '_Concurrency'
+<unknown>:0: remark: 'MediaToolbox' has a required transitive dependency on '_StringProcessing'
+<unknown>:0: remark: 'MediaToolbox' has a required transitive dependency on '_SwiftConcurrencyShims'
+<unknown>:0: remark: loaded module 'MediaToolbox' (overlay for a clang dependency); source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/System/Library/Frameworks/MediaToolbox.framework/Modules/MediaToolbox.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/MediaToolbox.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+<unknown>:0: remark: 'VideoToolbox' has a required transitive dependency on 'CoreFoundation'
+<unknown>:0: remark: 'VideoToolbox' has a required transitive dependency on 'CoreVideo'
+<unknown>:0: remark: 'VideoToolbox' has a required transitive dependency on 'Darwin'
+<unknown>:0: remark: 'VideoToolbox' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: 'VideoToolbox' has a required transitive dependency on 'VideoToolbox'
+<unknown>:0: remark: 'VideoToolbox' has a required transitive dependency on '_Concurrency'
+<unknown>:0: remark: 'VideoToolbox' has a required transitive dependency on '_StringProcessing'
+<unknown>:0: remark: 'VideoToolbox' has a required transitive dependency on '_SwiftConcurrencyShims'
+<unknown>:0: remark: loaded module 'VideoToolbox' (overlay for a clang dependency); source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/System/Library/Frameworks/VideoToolbox.framework/Modules/VideoToolbox.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/VideoToolbox.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+<unknown>:0: remark: 'AVFoundation' has a required transitive dependency on 'CoreGraphics'
+<unknown>:0: remark: 'AVFoundation' has a required transitive dependency on 'CoreImage'
+<unknown>:0: remark: 'AVFoundation' has a required transitive dependency on 'CoreMedia'
+<unknown>:0: remark: 'AVFoundation' has a required transitive dependency on 'Dispatch'
+<unknown>:0: remark: 'AVFoundation' has a required transitive dependency on 'Foundation'
+<unknown>:0: remark: 'AVFoundation' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: 'AVFoundation' has a required transitive dependency on '_Concurrency'
+<unknown>:0: remark: 'AVFoundation' has a required transitive dependency on '_StringProcessing'
+<unknown>:0: remark: 'AVFoundation' has a required transitive dependency on '_SwiftConcurrencyShims'
+<unknown>:0: remark: loaded module 'AVFoundation' (overlay for a clang dependency); source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/usr/lib/swift/AVFoundation.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/AVFoundation.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+<unknown>:0: remark: 'AVKit' has a required transitive dependency on 'AVKit'
+<unknown>:0: remark: 'AVKit' has a required transitive dependency on 'Combine'
+<unknown>:0: remark: 'AVKit' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: 'AVKit' has a required transitive dependency on 'TipKit'
+<unknown>:0: remark: 'TipKit' has a required transitive dependency on 'Foundation'
+<unknown>:0: remark: 'TipKit' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: 'TipKit' has a required transitive dependency on 'SwiftUI'
+<unknown>:0: remark: 'SwiftUI' has a required transitive dependency on 'Combine'
+<unknown>:0: remark: 'SwiftUI' has a required transitive dependency on 'CoreData'
+<unknown>:0: remark: 'CoreData' has a required transitive dependency on 'Combine'
+<unknown>:0: remark: 'CoreData' has a required transitive dependency on 'CoreData'
+<unknown>:0: remark: 'CoreData' has a required transitive dependency on 'Foundation'
+<unknown>:0: remark: 'CoreData' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: 'CoreData' has a required transitive dependency on '_Concurrency'
+<unknown>:0: remark: 'CoreData' has a required transitive dependency on '_StringProcessing'
+<unknown>:0: remark: 'CoreData' has a required transitive dependency on '_SwiftConcurrencyShims'
+<unknown>:0: remark: 'CoreData' has a required transitive dependency on 'os.lock'
+<unknown>:0: remark: loaded module 'lock'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk/usr/include/os.modulemap', loaded: '/Users/m1/caches/DerivedData/hanlin-ai-788354f8-headers-explicit-20261124/os-6YGEW1V0CR1528RCKBR3FKEXY.pcm'
+<unknown>:0: remark: 'CoreData' has a required transitive dependency on 'os'
+<unknown>:0: remark: loaded module 'CoreData'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/System/Library/Frameworks/CoreData.framework/Modules/CoreData.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/CoreData.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+<unknown>:0: remark: 'SwiftUI' has a required transitive dependency on 'CoreFoundation'
+<unknown>:0: remark: 'SwiftUI' has a required transitive dependency on 'CoreGraphics'
+<unknown>:0: remark: 'SwiftUI' has a required transitive dependency on 'CoreMedia'
+<unknown>:0: remark: 'SwiftUI' has a required transitive dependency on 'CoreTransferable'
+<unknown>:0: remark: 'SwiftUI' has a required transitive dependency on 'DataDetection'
+<unknown>:0: remark: 'SwiftUI' has a required transitive dependency on 'DeveloperToolsSupport'
+<unknown>:0: remark: 'SwiftUI' has a required transitive dependency on 'Foundation'
+<unknown>:0: remark: 'SwiftUI' has a required transitive dependency on 'OSLog'
+<unknown>:0: remark: 'SwiftUI' has a required transitive dependency on 'Observation'
+<unknown>:0: remark: 'SwiftUI' has a required transitive dependency on 'Spatial'
+<unknown>:0: remark: 'SwiftUI' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: 'SwiftUI' has a required transitive dependency on 'SwiftUI'
+<unknown>:0: remark: 'SwiftUI' has a required transitive dependency on 'SwiftUICore'
+<unknown>:0: remark: 'SwiftUI' has a required transitive dependency on 'Symbols'
+<unknown>:0: remark: 'SwiftUI' has a required transitive dependency on 'UIKit'
+<unknown>:0: remark: 'SwiftUI' has a required transitive dependency on 'UniformTypeIdentifiers'
+<unknown>:0: remark: 'SwiftUI' has a required transitive dependency on '_Concurrency'
+<unknown>:0: remark: 'SwiftUI' has a required transitive dependency on '_StringProcessing'
+<unknown>:0: remark: 'SwiftUI' has a required transitive dependency on '_SwiftConcurrencyShims'
+<unknown>:0: remark: 'SwiftUI' has a required transitive dependency on 'os.log'
+<unknown>:0: remark: loaded module 'log'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk/usr/include/os.modulemap', loaded: '/Users/m1/caches/DerivedData/hanlin-ai-788354f8-headers-explicit-20261124/os-6YGEW1V0CR1528RCKBR3FKEXY.pcm'
+<unknown>:0: remark: 'SwiftUI' has a required transitive dependency on 'os'
+<unknown>:0: remark: loaded module 'SwiftUI'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/System/Library/Frameworks/SwiftUI.framework/Modules/SwiftUI.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/SwiftUI.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+<unknown>:0: remark: 'TipKit' has a required transitive dependency on '_Concurrency'
+<unknown>:0: remark: 'TipKit' has a required transitive dependency on '_StringProcessing'
+<unknown>:0: remark: 'TipKit' has a required transitive dependency on '_SwiftConcurrencyShims'
+<unknown>:0: remark: loaded module 'TipKit'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/System/Library/Frameworks/TipKit.framework/Modules/TipKit.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/TipKit.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+<unknown>:0: remark: 'AVKit' has a required transitive dependency on '_Concurrency'
+<unknown>:0: remark: 'AVKit' has a required transitive dependency on '_StringProcessing'
+<unknown>:0: remark: 'AVKit' has a required transitive dependency on '_SwiftConcurrencyShims'
+<unknown>:0: remark: loaded module 'AVKit' (overlay for a clang dependency); source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/System/Library/Frameworks/AVKit.framework/Modules/AVKit.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/AVKit.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Probe.swift:1:24: remark: 'ExpoModulesCore' has a required transitive dependency on 'ExpoModulesJSI'
+1 | @preconcurrency import ExpoModulesCore
+  |                        `- remark: 'ExpoModulesCore' has a required transitive dependency on 'ExpoModulesJSI'
+2 | 
+
+<unknown>:0: remark: 'ExpoModulesJSI' has a required transitive dependency on 'CoreGraphics'
+<unknown>:0: remark: 'ExpoModulesJSI' has a required transitive dependency on 'Foundation'
+<unknown>:0: remark: 'ExpoModulesJSI' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: 'ExpoModulesJSI' has a required transitive dependency on '_Concurrency'
+<unknown>:0: remark: 'ExpoModulesJSI' has a required transitive dependency on '_StringProcessing'
+<unknown>:0: remark: 'ExpoModulesJSI' has a required transitive dependency on '_SwiftConcurrencyShims'
+<unknown>:0: remark: 'ExpoModulesJSI' has a required transitive dependency on 'os'
+<unknown>:0: remark: loaded module 'ExpoModulesJSI'; source: '/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesJSI.framework/Modules/ExpoModulesJSI.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Users/m1/caches/DerivedData/hanlin-ai-788354f8-headers-explicit-20261124/ExpoModulesJSI-2LWNNJ3BIHAQ1.swiftmodule'
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Probe.swift:1:24: remark: 'ExpoModulesCore' has a required transitive dependency on 'Foundation'
+1 | @preconcurrency import ExpoModulesCore
+  |                        `- remark: 'ExpoModulesCore' has a required transitive dependency on 'Foundation'
+2 | 
+
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Probe.swift:1:24: remark: 'ExpoModulesCore' has a required transitive dependency on 'ObjectiveC'
+1 | @preconcurrency import ExpoModulesCore
+  |                        `- remark: 'ExpoModulesCore' has a required transitive dependency on 'ObjectiveC'
+2 | 
+
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Probe.swift:1:24: remark: 'ExpoModulesCore' has a required transitive dependency on 'RegexBuilder'
+1 | @preconcurrency import ExpoModulesCore
+  |                        `- remark: 'ExpoModulesCore' has a required transitive dependency on 'RegexBuilder'
+2 | 
+
+<unknown>:0: remark: 'RegexBuilder' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: 'RegexBuilder' has a required transitive dependency on '_StringProcessing'
+<unknown>:0: remark: loaded module 'RegexBuilder'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/usr/lib/swift/RegexBuilder.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/RegexBuilder.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Probe.swift:1:24: remark: 'ExpoModulesCore' has a required transitive dependency on 'Swift'
+1 | @preconcurrency import ExpoModulesCore
+  |                        `- remark: 'ExpoModulesCore' has a required transitive dependency on 'Swift'
+2 | 
+
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Probe.swift:1:24: remark: 'ExpoModulesCore' has a required transitive dependency on 'SwiftUI'
+1 | @preconcurrency import ExpoModulesCore
+  |                        `- remark: 'ExpoModulesCore' has a required transitive dependency on 'SwiftUI'
+2 | 
+
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Probe.swift:1:24: remark: 'ExpoModulesCore' has a required transitive dependency on 'UIKit.UIGestureRecognizerSubclass'
+1 | @preconcurrency import ExpoModulesCore
+  |                        `- remark: 'ExpoModulesCore' has a required transitive dependency on 'UIKit.UIGestureRecognizerSubclass'
+2 | 
+
+<unknown>:0: remark: loaded module 'UIGestureRecognizerSubclass'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk/System/Library/Frameworks/UIKit.framework/Modules/module.modulemap', loaded: '/Users/m1/caches/DerivedData/hanlin-ai-788354f8-headers-explicit-20261124/UIKit-86B4LGMZD7OG12KKCCVAJFYHF.pcm'
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Probe.swift:1:24: remark: 'ExpoModulesCore' has a required transitive dependency on 'UIKit'
+1 | @preconcurrency import ExpoModulesCore
+  |                        `- remark: 'ExpoModulesCore' has a required transitive dependency on 'UIKit'
+2 | 
+
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Probe.swift:1:24: remark: 'ExpoModulesCore' has a required transitive dependency on '_Concurrency'
+1 | @preconcurrency import ExpoModulesCore
+  |                        `- remark: 'ExpoModulesCore' has a required transitive dependency on '_Concurrency'
+2 | 
+
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Probe.swift:1:24: remark: 'ExpoModulesCore' has a required transitive dependency on '_StringProcessing'
+1 | @preconcurrency import ExpoModulesCore
+  |                        `- remark: 'ExpoModulesCore' has a required transitive dependency on '_StringProcessing'
+2 | 
+
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Probe.swift:1:24: remark: 'ExpoModulesCore' has a required transitive dependency on '_SwiftConcurrencyShims'
+1 | @preconcurrency import ExpoModulesCore
+  |                        `- remark: 'ExpoModulesCore' has a required transitive dependency on '_SwiftConcurrencyShims'
+2 | 
+
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Probe.swift:1:24: remark: 'ExpoModulesCore' has a required transitive dependency on 'os.log'
+1 | @preconcurrency import ExpoModulesCore
+  |                        `- remark: 'ExpoModulesCore' has a required transitive dependency on 'os.log'
+2 | 
+
+<unknown>:0: remark: loaded module 'log'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk/usr/include/os.modulemap', loaded: '/Users/m1/caches/DerivedData/hanlin-ai-788354f8-headers-explicit-20261124/os-6YGEW1V0CR1528RCKBR3FKEXY.pcm'
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Probe.swift:1:24: remark: 'ExpoModulesCore' has a required transitive dependency on 'os'
+1 | @preconcurrency import ExpoModulesCore
+  |                        `- remark: 'ExpoModulesCore' has a required transitive dependency on 'os'
+2 | 
+
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Probe.swift:1:24: remark: loaded module 'ExpoModulesCore'; source: '/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Modules/ExpoModulesCore.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface', loaded: '/Users/m1/caches/DerivedData/hanlin-ai-788354f8-headers-explicit-20261124/ExpoModulesCore-RQ97RBZ26DGJ.swiftmodule'
+1 | @preconcurrency import ExpoModulesCore
+  |                        `- remark: loaded module 'ExpoModulesCore'; source: '/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Modules/ExpoModulesCore.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface', loaded: '/Users/m1/caches/DerivedData/hanlin-ai-788354f8-headers-explicit-20261124/ExpoModulesCore-RQ97RBZ26DGJ.swiftmodule'
+2 | 

@@ -1,0 +1,78 @@
+{
+  "owner": "/root/native_execution",
+  "sourceBase": "fd81d602d3b25f09162a659e1e0cf0582e91a93a",
+  "preparedAt": "2026-11-24T23:40:57.412699+00:00",
+  "status": "PASS",
+  "scope": "Original TypeScript NativeScript emitter, local graph/module format/source maps/CLI and canonical dependency identity; no native/UI claim.",
+  "baselineSHA256": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9",
+  "candidateSHA256": "fa5121902e231d5d44ad08bf47699784fd4d0bc2a98102f3a156e6e4ae79b9b9",
+  "testSHA256": "41f4df51d49ebf48e8ecda9c205372281b2bce2b4e865f1b343474ca8f38b853",
+  "resolverTestSHA256": "5feff98ed62727330f2a64abedff0d4a3af9f71d5a8b1f7c8e39396c90e7d65f",
+  "compilerPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/NativeScript/node_modules/typescript/lib/typescript.js",
+  "compilerSHA256": "3ae902c92cc44dace175c0e69e13a4b0899f6983c6121d76b9ab8dd5795e7675",
+  "compilerVersion": "5.9.3",
+  "nodeVersion": "v24.5.0",
+  "cliSHA256": "1c256c00392c626a54ebee2abe3ededaa792c5bfa6dd9b6c5aceb89be84e5b30",
+  "runnerSHA256": "76e68ab18a958909690141b97423017010fe2deecebb2e131c81cf8a88242fa6",
+  "budgetSecondsPerVersion": 300,
+  "headroom": "Processes: 269 total, 6 running, 1 stuck, 262 sleeping, 1356 threads \n2026/11/25 00:40:57\nLoad Avg: 5.43, 19.62, 44.71 \nCPU usage: 10.81% user, 21.62% sys, 67.56% idle \nSharedLibs: 334M resident, 66M data, 99M linkedit.\nMemRegions: 24730 total, 535M resident, 74M private, 2206M shared.\nPhysMem: 7590M used (1604M wired, 410M compressor), 8270M unused.\nVM: 122T vsize, 57G framework vsize, 4918(0) swapins, 43700(0) swapouts.\nNetworks: packets: 92496157/126G in, 13430288/6877M out.\nDisks: 33548625/2119G read, 23963949/804G written.\n\n\n",
+  "startedAt": "2026-11-24T23:40:57.521710+00:00",
+  "controllerPID": 48901,
+  "commands": [
+    {
+      "label": "baseline",
+      "argv": [
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/node-v24.5.0-darwin-arm64/bin/node",
+        "--test",
+        "--test-reporter=tap",
+        "--test-concurrency=1",
+        "--test-name-pattern=^NativeScript package emits a runnable ESM graph|^NativeScript preserves authored CommonJS JavaScript",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ns-esm-regression-attempt7/repository/AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-authoring.test.mjs"
+      ],
+      "startedAt": "2026-11-24T23:40:57.522219+00:00",
+      "expectedExitCode": 1,
+      "pid": 48902,
+      "exitCode": 1,
+      "finishedAt": "2026-11-24T23:40:59.475979+00:00",
+      "elapsedSeconds": 1.953773374996672,
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ns-esm-regression-attempt7/baseline.log",
+      "logBytes": 1581,
+      "logSHA256": "60def20df028dd434b6c8d9ff5e2f178db1ebeb29dd7877b3a700183d0fb9716",
+      "tapCounts": {
+        "tests": 2,
+        "pass": 1,
+        "fail": 1,
+        "skipped": 0
+      }
+    },
+    {
+      "label": "candidate",
+      "argv": [
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/node-v24.5.0-darwin-arm64/bin/node",
+        "--test",
+        "--test-reporter=tap",
+        "--test-concurrency=1",
+        "--test-name-pattern=^NativeScript package emits a runnable ESM graph|^NativeScript preserves authored CommonJS JavaScript|^NativeScript preserves the original npm runtime package|^NativeScript emission and copied bodies agree|^the real CLI archives and revalidates retained source",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ns-esm-regression-attempt7/repository/AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-authoring.test.mjs",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ns-esm-regression-attempt7/repository/AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-sdk-resolution.test.mjs"
+      ],
+      "startedAt": "2026-11-24T23:40:59.477334+00:00",
+      "expectedExitCode": 0,
+      "pid": 49034,
+      "exitCode": 0,
+      "finishedAt": "2026-11-24T23:41:11.619939+00:00",
+      "elapsedSeconds": 12.142632791001233,
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ns-esm-regression-attempt7/candidate.log",
+      "logBytes": 1415,
+      "logSHA256": "3b18446b1f2f52f762af50bf363be7768ec9193c73602528a2286d440d536816",
+      "tapCounts": {
+        "tests": 5,
+        "pass": 5,
+        "fail": 0,
+        "skipped": 0
+      }
+    }
+  ],
+  "phase": "candidate",
+  "finishedAt": "2026-11-24T23:41:11.621140+00:00"
+}

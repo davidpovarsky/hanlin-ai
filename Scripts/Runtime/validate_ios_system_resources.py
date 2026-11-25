@@ -99,10 +99,10 @@ def validate_project_resources(project_text: str) -> None:
         root = objects[project["rootObject"]]
         targets = [objects[key] for key in root["targets"]
                    if objects[key].get("isa") == "PBXNativeTarget"
-                   and objects[key].get("name") == "AI_Hanlin"
+                   and objects[key].get("name") == "HanlinApp"
                    and objects[key].get("productType") == "com.apple.product-type.application"]
         if len(targets) != 1:
-            raise ResourceValidationError("RuntimeCore requires exactly one original AI_Hanlin app target")
+            raise ResourceValidationError("RuntimeCore requires exactly one original HanlinApp app target")
         references = []
         for phase_id in targets[0].get("buildPhases", []):
             phase = objects[phase_id]
@@ -118,7 +118,7 @@ def validate_project_resources(project_text: str) -> None:
             copies = [reference for reference in references if reference.get("path") == path.as_posix()]
             if len(copies) != 1:
                 raise ResourceValidationError(
-                    f"Xcode Copy Bundle Resources must contain exactly one {path.name} in AI_Hanlin"
+                    f"Xcode Copy Bundle Resources must contain exactly one {path.name} in HanlinApp"
                 )
             if copies[0].get("sourceTree") != "SOURCE_ROOT" or copies[0].get("explicitFileType") != "text":
                 raise ResourceValidationError(

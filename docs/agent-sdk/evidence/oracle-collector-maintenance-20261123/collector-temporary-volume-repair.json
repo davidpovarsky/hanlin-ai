@@ -1,0 +1,12 @@
+{
+  "utc": "2026-11-23T23:16:43.819649+00:00",
+  "before_sha256": "b2a5026feb3cfb6d7f63f550dd4d55d6a816b5005dcf2b228b8fca96a20fdfb0",
+  "after_sha256": "f913b8a99634d7648285a9cb5bb8946a9bda5b9c492832054c1c818a1e7829a7",
+  "change": "Only pre-acquisition destination free-space admission and owned temporary/cache directories; original run/source/attempt/jobs/artifacts/log checks unchanged",
+  "runner_unchanged": true,
+  "download_started": false,
+  "actual_workspace_device": 2064,
+  "actual_workspace_free": 2100518912,
+  "root_tmp_device": 2049,
+  "root_tmp_free": 59883520
+}

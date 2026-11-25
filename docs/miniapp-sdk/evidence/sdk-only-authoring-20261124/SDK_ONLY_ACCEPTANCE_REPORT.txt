@@ -1,0 +1,64 @@
+SDK-ONLY AUTHORING ACCEPTANCE — FINAL RECEIPT
+
+Portable source/build acceptance passed for corrected Expo and original NativeScript. Original SDK registration documentation gap preserved and repaired from a separately published public erratum. Native import/launch/UI/device acceptance not performed.
+
+Current packages for later native acceptance
+Expo Departure Budget: /dev/shm/hanlin-sdk-only-kit-45335292541/author-work/archives/expo-departure-budget-main.hanlinExpo
+  1954734 bytes; SHA-256 a2eb3f8034c221b9ebd46b3ad02a293bfddb29a2dd7b8b421790bd24bba95f7e
+NativeScript Table Share: /dev/shm/hanlin-sdk-only-kit-45335292541/author-work/archives/nativescript-table-share.hanlinNativeScript
+  12895 bytes; SHA-256 0babb546f9dd876a6fe245280863021307389eded8cb61a053968597bf0e8253
+
+Preserved initial experiment
+Original evidence bundle: /dev/shm/hanlin-sdk-only-kit-45335292541/author-work/original-sdk-only-acceptance.tar.gz
+  SHA-256 fc811673f17fb0aa64088fc227ae41ce309bf3661eb178ecc83f137110b0ec06
+The complete ORIGINAL_SDK_ONLY_ACCEPTANCE_REPORT.txt and original-sdk-only-results.json were frozen before any superseding documentation was read. They retain the original Expo source/Metro archive, original NativeScript package, all initial/final validation reports, the two deliberate negative cases, source and output hashes, exact command/stdout/stderr receipts, a 33-resource input-read inventory, original documentation findings and an unexecuted native interaction plan.
+
+Initial outcomes
+Both original examples passed first validation and original CLI build with zero diagnostics. Isolated negative copies produced exactly one error each: TS2305 at App.tsx:6:66 for nonexistentDepartureGlow and TS2339 at index.ts:136:23 for UILabel.nonexistentReceiptTotal. Unchanged valid originals then passed again, with byte-identical source inventories and report bytes. Original source retention and compiled hash inventories verified with zero mismatches.
+
+Public documentation repair
+Erratum commit: 729fdf04910e418d194d0a1a167f8fae94af46d1
+Read only the two copied public docs and their provenance manifest after freezing the original receipt. Their SHA-256 identities matched that manifest.
+The public docs explicitly require AppRegistry.registerComponent('main', () => App) because the foreground host requests root main; npm package name and package.json.main do not choose the React root. The builder preserves source registration. This resolves the initial registration documentation gap and clarifies the obsolete fixture build instructions.
+Created a separate expo-departure-budget-main project. The sole source diff is index.ts line 4: DepartureBudget -> main. UI, calculation code, dependencies and source/compiler descriptors remain byte-identical. The original source and archive were not overwritten.
+Original index SHA-256: aee78306a48dd3833803a08e18bd0916566852942e671c65afde00da4b1dbd5a
+Corrected index SHA-256: f3532a443c0193cbb6866cb1a7474d0f5055917ffdc7f5e60efe35159e544d19
+Exact diff: evidence/expo-registration-repair.diff. Provenance and captured documents: evidence/public-docs-repair-receipt.json and evidence/public-docs-erratum/.
+
+Corrected validation/build, each invoked once
+expo-corrected-validate: CLI exit 0; succeeded=True; diagnostics=0; duration=3.7339s
+  Command: /usr/local/bin/node /dev/shm/hanlin-sdk-only-kit-45335292541/Scripts/MiniApps/miniapp.mjs validate --sdk /dev/shm/hanlin-sdk-only-kit-45335292541/AI_HLY/Downstream/RuntimeCore/Node/Host/MiniAppSDK --engine expo --project /dev/shm/hanlin-sdk-only-kit-45335292541/author-work/expo-departure-budget-main --report /dev/shm/hanlin-sdk-only-kit-45335292541/author-work/evidence/expo-corrected-validate/report.json
+  Report SHA-256: 88e5b482d3b5960c401d4a5fb3371ea4938447d860e6714355e26890a5ae1731
+  Evidence directory: /dev/shm/hanlin-sdk-only-kit-45335292541/author-work/evidence/expo-corrected-validate
+expo-corrected-build: CLI exit 0; succeeded=True; diagnostics=0; duration=23.5044s
+  Command: /usr/local/bin/node /dev/shm/hanlin-sdk-only-kit-45335292541/Scripts/MiniApps/miniapp.mjs build --sdk /dev/shm/hanlin-sdk-only-kit-45335292541/AI_HLY/Downstream/RuntimeCore/Node/Host/MiniAppSDK --engine expo --project /dev/shm/hanlin-sdk-only-kit-45335292541/author-work/expo-departure-budget-main --report /dev/shm/hanlin-sdk-only-kit-45335292541/author-work/evidence/expo-corrected-build/report.json --archive /dev/shm/hanlin-sdk-only-kit-45335292541/author-work/archives/expo-departure-budget-main.hanlinExpo
+  Report SHA-256: a96837f2d48258fc191ba62f36f75688d00c2b1f74c130debe1f05068cbc3c75
+  Evidence directory: /dev/shm/hanlin-sdk-only-kit-45335292541/author-work/evidence/expo-corrected-build
+Corrected Expo integrity: 8 source hashes, 4 compiled hashes, 0 mismatches; every authored file retained byte-for-byte; bundle.js.map present.
+Build/validation stderr is empty. No further NativeScript build or negative proof was run after the documentation update. Only the corrected project staging and own temporary folder were cleaned after capturing archive evidence.
+
+Same SDK and compiler policy
+SDK root: /dev/shm/hanlin-sdk-only-kit-45335292541/AI_HLY/Downstream/RuntimeCore/Node/Host/MiniAppSDK
+Manifest SHA-256: fa1e737ec63e640175cdb5c9dad51903cd86d50ae7b340ba5b8ec1ff4e408d85
+Input SHA-256: 4028f9fc58e1a9a95937ed7b4eb223c3caa2a94714bbbdaae4ddc7b0aa6de795
+Expo: Expo UI 58.0.29, Expo 58.0.26, React 19.3.0, React Native 0.88.1; compiler 6.0.3 (wrapper package 6.0.2), strict=true, skipLibCheck=false, dependency declarations checked.
+NativeScript: Core/types 9.1.4, iOS runtime 9.1.1, compiler 5.9.3; strict=true, skipLibCheck=true under original consumer policy. Project source still checked against original Core/UIKit declarations.
+No dependency installation, SDK edits, compiler overrides or authored suppressions. No internal Host implementation, unrelated repository source, prior tests/fixtures/evidence or network docs were read. The separately supplied erratum is the sole added authority used for the correction.
+
+UI and later native acceptance
+Full labels and step-by-step unexecuted expectations: native-acceptance-plan-current.json. Corrected Expo differs only in its registered root; all UI behavior and expected values remain those of the original authored app.
+Departure Budget: native SwiftUI date picker, travel/preparation/buffer steppers, early-arrival toggle, Local/City/Long trip preset buttons, calculated timeline and three packing toggles. For arrival Dec 1 09:00 local, defaults give preparation 08:05, departure 08:20, expected arrival 08:50 and 55 total minutes. City gives 07:50/08:05/08:50 and 70. Turn buffer off after City: 08:00/08:15/09:00 and 60. For Dec 1 00:20 with Local, preparation and departure fall on Nov 30 at 23:45 and 23:55; expected arrival is Dec 1 00:15.
+Table Share: native subtotal/tax/tip fields, 1–12 people buttons, whole-dollar switch, correction messages and reset. Default subtotal $84 with tax 8.5% and tip 18% totals $106.26; three pay $35.42. Four pay two × $26.57 and two × $26.56. Whole-dollar mode at four people requests $27 each and reports $1.74 extra. Blank input shows Check the amounts; Reset restores the initial example.
+
+Unproven by this work
+Native import/receiver installation, foreground launch, actual SwiftUI/UIKit rendering, UI layout, executed interactions, lifecycle and device performance are not established by Linux validation/Metro/ESM output. The corrected source now agrees with the public root-name contract, but native runtime acceptance remains separate.
+
+Receipt index
+sdk-only-results.json: final machine-readable result and corrected commands/hashes.
+ORIGINAL_SDK_ONLY_ACCEPTANCE_REPORT.txt / original-sdk-only-results.json: original independent result before public erratum.
+evidence/commands.json: eight original validation/build receipts; each command folder contains command.txt, stdout.txt, stderr.txt, report.json, receipt.json.
+evidence/expo-corrected-{validate,build}/: two corrected command receipts.
+evidence/archive-inspection.json / archive-integrity.json / expo-corrected-archive-inspection.json: source/output identity and archive metadata.
+documentation-findings.json: unchanged initial findings.
+evidence/public-docs-repair-receipt.json: exact public erratum/source repair provenance.
+native-acceptance-plan-current.json: corrected Expo plus original NativeScript interaction plan.

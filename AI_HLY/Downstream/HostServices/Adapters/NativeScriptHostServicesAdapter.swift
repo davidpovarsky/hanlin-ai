@@ -299,30 +299,30 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
             return .object([:])
         }
         // First try standard untagged JSON via HanlinJSONValue
-        if let jsonVal = try? HanlinJSONValue.decodeCanonicalJSON(data),
+        if let jsonVal = try? HanlinJSONValue.decodeCanonicalJSON(data, limits: .unbounded),
            let hanlinVal = try? HanlinValue(jsonValue: jsonVal) {
             return hanlinVal
         }
         // Then try tagged JSON representation
-        if let taggedVal = try? HanlinValue.decodeCanonicalJSON(data) {
+        if let taggedVal = try? HanlinValue.decodeCanonicalJSON(data, limits: .unbounded) {
             return taggedVal
         }
         if let decodedVal = try? JSONDecoder().decode(HanlinValue.self, from: data) {
             return decodedVal
         }
         // Fall back to attempting parse with full diagnostic throw
-        let jsonVal = try HanlinJSONValue.decodeCanonicalJSON(data)
+        let jsonVal = try HanlinJSONValue.decodeCanonicalJSON(data, limits: .unbounded)
         return try HanlinValue(jsonValue: jsonVal)
     }
 
     private static func serializeUntaggedJSON(_ value: HanlinValue) throws -> String {
         if let jsonVal = try? value.jsonValue() {
-            let data = try jsonVal.canonicalJSONData()
+            let data = try jsonVal.canonicalJSONData(limits: .unbounded)
             if let str = String(data: data, encoding: .utf8) {
                 return str
             }
         }
-        let fallbackData = try value.canonicalJSONData()
+        let fallbackData = try value.canonicalJSONData(limits: .unbounded)
         return String(data: fallbackData, encoding: .utf8) ?? "{}"
     }
 
@@ -334,6 +334,32 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
         completion: @escaping (String?, String?) -> Void
     ) {
         nonisolated(unsafe) let safeCompletion = completion
+        if targetID == "hanlin.host-services", action.hasPrefix("liveActivities.") {
+            let ctx = context
+            let requestID = UUID().uuidString.lowercased()
+            let accepted = lock.withLock {
+                guard !runtimeRequestsInvalidated else { return false }
+                runtimeRequests[requestID] = Task { @MainActor [weak self] in
+                    guard let self else { return }
+                    defer { _ = self.lock.withLock { self.runtimeRequests.removeValue(forKey: requestID) } }
+                    do {
+                        try Task.checkCancellation()
+                        let response = try await HanlinScriptingPlatform.shared.invokeLiveActivity(
+                            operation: action, payloadJSON: payloadJSON, context: ctx)
+                        guard !Task.isCancelled,
+                              self.lock.withLock({ !self.runtimeRequestsInvalidated }) else { return }
+                        safeCompletion(response, nil)
+                    } catch {
+                        guard !Task.isCancelled,
+                              self.lock.withLock({ !self.runtimeRequestsInvalidated }) else { return }
+                        safeCompletion(nil, error.localizedDescription)
+                    }
+                }
+                return true
+            }
+            if !accepted { safeCompletion(nil, "NativeScript Host Services session is no longer active.") }
+            return
+        }
         if targetID == "hanlin.cross-app", let externalMiniAppOperation {
             let requestID = UUID().uuidString.lowercased()
             _ = lock.withLock {

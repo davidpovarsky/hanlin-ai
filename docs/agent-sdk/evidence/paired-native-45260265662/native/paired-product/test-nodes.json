@@ -1,0 +1,109 @@
+{
+  "devices" : [
+    {
+      "architecture" : "arm64",
+      "deviceId" : "554B2148-31B2-4079-B9A4-295CFC33D2EE",
+      "deviceName" : "HanlinPaired-45260265662",
+      "modelName" : "iPhone 18 Pro",
+      "osBuildNumber" : "24B8117",
+      "osVersion" : "27.2",
+      "platform" : "iOS Simulator"
+    }
+  ],
+  "testNodes" : [
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "children" : [
+                    {
+                      "name" : "Failed to determine hittability of \"hanlin-tool-consent-review-toggle\" Button: Activation point invalid and no suggested hit points based on element frame",
+                      "nodeType" : "Failure Message",
+                      "sourceLocation" : {
+                        "filePath" : "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinPairedProductUITests.swift",
+                        "lineNumber" : 220
+                      }
+                    },
+                    {
+                      "name" : "Multiple Runtime Warnings",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "3m 4s",
+                  "durationInSeconds" : 184.76171493530273,
+                  "name" : "testCompanionCancellationReturnsWithoutChangingPrivateState()",
+                  "nodeIdentifier" : "HanlinPairedProductUITests/testCompanionCancellationReturnsWithoutChangingPrivateState()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinPairedProductUITests/testCompanionCancellationReturnsWithoutChangingPrivateState",
+                  "nodeType" : "Test Case",
+                  "result" : "Failed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "XCTAssertEqual failed: (\"XCTWaiterResult(rawValue: 2)\") is not equal to (\"XCTWaiterResult(rawValue: 1)\") - Unreachable product control: hanlin-tool-consent-review-toggle",
+                      "nodeType" : "Failure Message",
+                      "sourceLocation" : {
+                        "filePath" : "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinPairedProductUITests.swift",
+                        "lineNumber" : 220
+                      }
+                    },
+                    {
+                      "name" : "Multiple Runtime Warnings",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "2m 11s",
+                  "durationInSeconds" : 131.56017899513245,
+                  "name" : "testCompanionReturnsActualPrivateValueToOriginalChat()",
+                  "nodeIdentifier" : "HanlinPairedProductUITests/testCompanionReturnsActualPrivateValueToOriginalChat()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinPairedProductUITests/testCompanionReturnsActualPrivateValueToOriginalChat",
+                  "nodeType" : "Test Case",
+                  "result" : "Failed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "XCTAssertTrue failed - Missing actual product result: Transfer complete. Your mini apps are ready.",
+                      "nodeType" : "Failure Message",
+                      "sourceLocation" : {
+                        "filePath" : "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYUITests/HanlinPairedProductUITests.swift",
+                        "lineNumber" : 304
+                      }
+                    }
+                  ],
+                  "duration" : "4m 15s",
+                  "durationInSeconds" : 255.51947903633118,
+                  "name" : "testOriginalPackageAndSavedStateTransferThenRollback()",
+                  "nodeIdentifier" : "HanlinPairedProductUITests/testOriginalPackageAndSavedStateTransferThenRollback()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinPairedProductUITests/testOriginalPackageAndSavedStateTransferThenRollback",
+                  "nodeType" : "Test Case",
+                  "result" : "Failed"
+                }
+              ],
+              "name" : "HanlinPairedProductUITests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinPairedProductUITests",
+              "nodeType" : "Test Suite",
+              "result" : "Failed"
+            }
+          ],
+          "name" : "AI_HLYUITests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests",
+          "nodeType" : "UI test bundle",
+          "result" : "Failed"
+        }
+      ],
+      "name" : "AI_HLY",
+      "nodeType" : "Test Plan",
+      "result" : "Failed"
+    }
+  ],
+  "testPlanConfigurations" : [
+    {
+      "configurationId" : "1",
+      "configurationName" : "Test Scheme Action"
+    }
+  ]
+}

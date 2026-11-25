@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-24",
+  "firstParent": "987e3940d0eec660b49d1ca8570c8bba5658fbbe",
+  "rootFixCommit": "371af35ac8649785ad2d39cf982fe5b53a828822",
+  "mergeStatus": "NO_CONFLICTS",
+  "rootFixFileBlobs": {
+    ".github/workflows/validate-app-split.yml": "06eae50fd0da5f48215e0dfc6ecaa731ecfaa515",
+    "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-authoring.test.mjs": "4efe4c000aa67665f678f4c07f6a57f71ba63338",
+    "Scripts/MiniApps/miniapp.mjs": "782e44105c78e31460f0ad4a0fae6a8941568595",
+    "docs/miniapp-sdk/evidence/2026-11-24-cli-module-resolution/README.md": "21005fe47d9fdcc3f910cc07a44c671ba30bfccf",
+    "docs/miniapp-sdk/evidence/2026-11-24-cli-module-resolution/after.log": "556c84f01123f1b48fde483abc47546651954eda",
+    "docs/miniapp-sdk/evidence/2026-11-24-cli-module-resolution/before.log": "d2b26e0476ec7583d2d830e5c0c122c4ca1a4add",
+    "docs/miniapp-sdk/evidence/2026-11-24-cli-module-resolution/intermediate-fixture-missing-typescriptPath.log": "225885ec80d7457b8757dfc2ecd2686efd08955c",
+    "docs/miniapp-sdk/evidence/2026-11-24-cli-module-resolution/result.json": "e340948c23c560979e4952425aac349d0d7ef328",
+    "docs/miniapp-sdk/evidence/fourth-native-gate-20261124.json": "714dfd7ec6c0c1a0fda38606b039eba28e54ca87"
+  },
+  "verification": "Every source/workflow/evidence blob introduced by the root CLI fix matches its original commit exactly in the merged index. No test or CI rerun; the root exact relocated CLI case evidence is preserved with its original provenance. Complete staged Host suite and Apple36-case acceptance remain required.",
+  "nativeAcceptance": "NOT_RUN",
+  "rawEvidencePreservation": "Original before/intermediate Node logs contain trailing whitespace. Logs remain byte-for-byte identical to the root commit; source/workflow/receipt diff checks exclude those original raw log records."
+}

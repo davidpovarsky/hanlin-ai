@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-24T09:31:51.870251+00:00",
+  "status": "EXECUTED_PASS",
+  "scope": "Two unchanged isolated original ScriptWidget adapter/limit-parity tests executed on the actual Apple SwiftPM/JavaScriptCore environment.",
+  "runID": 45364761765,
+  "jobID": 138343532787,
+  "sourceCommit": "71d176315dea14e4db524f9da642bfdca5a46618",
+  "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45364761765",
+  "jobURL": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45364761765/job/138343532787",
+  "runConclusion": "success",
+  "jobConclusion": "success",
+  "startedAt": "2026-11-24T09:23:44Z",
+  "completedAt": "2026-11-24T09:27:42Z",
+  "counts": {
+    "selected": 2,
+    "executed": 2,
+    "passed": 2,
+    "failed": 0,
+    "skipped": 0
+  },
+  "selectedResults": "selected-results.json",
+  "toolchain": "toolchain.json",
+  "dispatch": "dispatch.json",
+  "runMetadata": "run-api.json",
+  "authenticatedRetrieval": "job-138343532787-log-receipt.json",
+  "rawLog": {
+    "file": "job-138343532787.log.gz",
+    "originalBytes": 157315,
+    "originalSHA256": "1de027eb185eac798eb0a14a6c723debfe36cd43fc8299b7ad346144ef570f77",
+    "compressedBytes": 14714,
+    "compressedSHA256": "3645802abb6a83ff42b21c047cdc61486f05b4fa9378fc5d5b6c36c9f053949c",
+    "lossless": true
+  },
+  "assertionCoverage": [
+    {
+      "method": "scriptWidgetUsesOriginalElementLimitsWithoutExtraMaterialQuotas",
+      "proven": [
+        "Execute actual ScriptWidget programs with scalar children/property material exceeding removed Hanlin caps.",
+        "Serialize a valid prepared node exceeding the old 1MiB host payload cap.",
+        "Reject a tree exceeding the original element allowance.",
+        "Reject invalid widget preparation without committing its staged storage state."
+      ]
+    },
+    {
+      "method": "rootFragmentsPreserveOriginalElementAllowances",
+      "proven": [
+        "Compile a real multi-module TypeScript/JSX presentation with the original compiler.",
+        "Normalize repeated single-element root Fragments at the original element/depth allowances.",
+        "Keep nested and multiple-child Fragment semantics and reject cycles/over-limit trees.",
+        "Normalize captured original Dynamic Island region roots at the same allowance; this is prepared-node capture, not ActivityKit UI execution."
+      ]
+    }
+  ],
+  "previousFailure": {
+    "runID": 45360272675,
+    "sourceCommit": "74ba980dbb91f3a38d4531f043801f5e742c283a",
+    "reason": "Production synthesized wildcard manifest was rejected before these assertions.",
+    "preservedReceipt": "../scriptwidget-host-validation-20261124/receipt.json",
+    "testAssertionsChanged": false
+  },
+  "currentSourceApplicability": {
+    "targetSource": "6d9a59bfc1bd1830a8d56e694c42b19c6bd7d468",
+    "status": "REUSED_VERIFIED_PASS",
+    "details": "source-applicability.json"
+  },
+  "boundary": {
+    "fullAppUI": "NOT_RUN_BY_THIS_JOB",
+    "simulatorUI": "NOT_RUN_BY_THIS_JOB",
+    "physicalDevice": "NOT_RUN",
+    "allOriginalScriptWidgetAPIs": "NOT_INFERRED",
+    "WidgetKitOSRendering": "NOT_INFERRED",
+    "ActivityKitUI": "NOT_INFERRED",
+    "freshShippingSDK": "NOT_RUN_BY_THIS_JOB",
+    "main11": "SEPARATE_ROOT_OWNED_RUN",
+    "newTestsOrCIActionsByEvidenceLane": "NONE"
+  },
+  "evidenceOrigin": "Read the existing root-owned completed watcher files only; no independent API request, poller, download, rerun or source edit."
+}

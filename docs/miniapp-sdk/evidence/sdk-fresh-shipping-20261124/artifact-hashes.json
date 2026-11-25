@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "files": [
+    {
+      "path": "cache-availability.json",
+      "bytes": 47409,
+      "sha256": "a9cf4f44787b889e6807558e3598dc7d9a187d04c0c2ed00b08301594f0ce7ef"
+    },
+    {
+      "path": "existing-expo-verify.json",
+      "bytes": 282,
+      "sha256": "2f520004d29661ffbf10539fd6e0e7af41a9785c92700586a3b0ee0e53d68a64"
+    },
+    {
+      "path": "existing-expo-verify.stderr.log",
+      "bytes": 966,
+      "sha256": "bfb2f2cece849a83818c6f7053794d121cf1c8b05c5d64b26d4543287393264a"
+    },
+    {
+      "path": "existing-expo-verify.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "expo-cache-inputs.json",
+      "bytes": 431536,
+      "sha256": "06d76921534179e1d29f2e53bb287a1673ebb0eae06ac54974fd7f9bec5d8fa5"
+    },
+    {
+      "path": "immutable-sdk-expo-verify.json",
+      "bytes": 324,
+      "sha256": "3d55f63c8a5d21d6db8e6ae37b449d3b67a12b73e082d8e9a26e84679a251069"
+    },
+    {
+      "path": "immutable-sdk-expo-verify.stderr.log",
+      "bytes": 1008,
+      "sha256": "5700f41bdc033c7f0710a62d731c314f99b28cdfbe0788c02f3202a5081570a2"
+    },
+    {
+      "path": "immutable-sdk-expo-verify.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "nativescript-cache-inputs.json",
+      "bytes": 112850,
+      "sha256": "ef0319fb80ccedd050f97ef565177c9ce980ff2cdff2e5e0a3f6682c7c1968ed"
+    },
+    {
+      "path": "receipt.json",
+      "bytes": 11971,
+      "sha256": "f4a9fbf01b6c435f5475a8debf7947aae077acdfcd7350ac2e0a96d2dc7aec7d"
+    },
+    {
+      "path": "run10-miniapp-documentation-snippets.json",
+      "bytes": 19645,
+      "sha256": "b6b6580828e2d97e3d4c32722dd19fc0db82cb3dbe047033e4ebb29e97c996e1"
+    }
+  ]
+}

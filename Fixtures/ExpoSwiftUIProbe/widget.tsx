@@ -1,3 +1,15 @@
+import { Text, VStack } from '@expo/ui/swift-ui';
+
+/** The installed prepared Expo program consumes the instance props published by
+ * the typed host facade. The compatibility helper below stays unchanged. */
+export default function HostServicesWidget(props: {counter?: number; title?: string}) {
+  'widget';
+  return <VStack spacing={8}>
+    <Text>{props.title ?? 'Prepared Expo widget'}</Text>
+    <Text>{`Counter: ${props.counter ?? 0}`}</Text>
+  </VStack>;
+}
+
 export interface WidgetState {
   counter: number;
   title?: string;

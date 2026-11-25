@@ -1,0 +1,7 @@
+{
+  "scope": "Source inventory checker only; no product code or package policy changed.",
+  "initialFinding": "The new dependency property scan also matched input.pkg.hanlinNativeScript, which belongs to the authoring application rather than the installed dependency.",
+  "correction": "Restrict that family to the actual local pkg loaded from the installed dependency package.json; retain source offsets and reject unmapped fields there.",
+  "rawFailure": "source-check-attempt-02.txt",
+  "additionalCoverage": "A future dependency-package property read now has an explicit negative drift case in the same focused test."
+}

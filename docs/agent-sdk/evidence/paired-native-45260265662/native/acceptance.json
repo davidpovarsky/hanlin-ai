@@ -1,0 +1,132 @@
+{
+  "status": "TEST_FAILED",
+  "ui": "TEST_FAILED",
+  "build": "EXECUTED_PASS",
+  "physical_device": "NOT_RUN",
+  "provisioned_distribution": "NOT_RUN",
+  "scope": "Two shipping targets, actual App Group, original Host request/return/cancel, original ScriptUI import and private-data transfer/rollback",
+  "model_boundary": "Existing opt-in simulator HTTP acceptance provider; all Host, permission, OS transitions, storage and result handling are real.",
+  "started_at": 1795466438.184638,
+  "test_scope": "cross_product",
+  "selected_tests": [
+    "AI_HLYUITests/HanlinPairedProductUITests"
+  ],
+  "sha": "e59256e8325bcdb71c0e683f6b19e7641642aad8",
+  "simulator": "554B2148-31B2-4079-B9A4-295CFC33D2EE",
+  "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-27-2",
+  "device": "iPhone 18 Pro",
+  "mini_build": "EXECUTED_PASS",
+  "ai_build": "EXECUTED_PASS",
+  "product_identity": {
+    "com.itorah.chavrusachat": {
+      "display_name": "Hanlin AI",
+      "info_plist_sha256": "5145ec0c6f61985b2672483de5959d3a4f02bfe4727ffdc3f6f9faedbd19f60c",
+      "app_icon": {
+        "name": "AppIcon",
+        "compiled_catalog_sha256": "454a292f7b5b9caea894c71871dd947a785cdf27fda4bc9b499907223865300d"
+      }
+    },
+    "com.itorah.hanlinminiapps": {
+      "display_name": "Hanlin MiniApps",
+      "info_plist_sha256": "dcd7c599a9bcbeadb6a2d6f91c4eff74881ca377074b85d7c7745ceeac91feb1",
+      "app_icon": {
+        "name": "AppIcon",
+        "compiled_catalog_sha256": "2fe6d616b9af5cb53463fb65e9f911dc7b4c10efe40d2896aef1dfcf5b494404"
+      }
+    }
+  },
+  "app_group": {
+    "status": "EXECUTED_PASS",
+    "containers": {
+      "com.itorah.chavrusachat": "/Users/runner/Library/Developer/CoreSimulator/Devices/554B2148-31B2-4079-B9A4-295CFC33D2EE/data/Containers/Shared/AppGroup/2540E07F-DF8B-4765-9ADE-5E8C4F728DA4",
+      "com.itorah.hanlinminiapps": "/Users/runner/Library/Developer/CoreSimulator/Devices/554B2148-31B2-4079-B9A4-295CFC33D2EE/data/Containers/Shared/AppGroup/2540E07F-DF8B-4765-9ADE-5E8C4F728DA4"
+    }
+  },
+  "summary": {
+    "devicesAndConfigurations": [
+      {
+        "device": {
+          "architecture": "arm64",
+          "deviceId": "554B2148-31B2-4079-B9A4-295CFC33D2EE",
+          "deviceName": "HanlinPaired-45260265662",
+          "modelName": "iPhone 18 Pro",
+          "osBuildNumber": "24B8117",
+          "osVersion": "27.2",
+          "platform": "iOS Simulator"
+        },
+        "expectedFailures": 0,
+        "failedTests": 3,
+        "passedTests": 0,
+        "skippedTests": 0,
+        "testPlanConfiguration": {
+          "configurationId": "1",
+          "configurationName": "Test Scheme Action"
+        }
+      }
+    ],
+    "environmentDescription": "AI_HLY \u00b7 Built with macOS 27.0.1",
+    "expectedFailures": 0,
+    "failedTests": 3,
+    "finishTime": 1795470621.057,
+    "passedTests": 0,
+    "result": "Failed",
+    "runtimeWarnings": [
+      {
+        "issueType": "Runtime Warning",
+        "message": "This method can lead to UI unresponsiveness if called on the main thread while the audio session is active."
+      },
+      {
+        "issueType": "Runtime Warning",
+        "message": "This method can lead to UI unresponsiveness if called on the main thread while the audio session is active."
+      },
+      {
+        "issueType": "Runtime Warning",
+        "message": "This method can lead to UI unresponsiveness if called on the main thread. Consider using the asynchronous activate/deactivate API instead for calls from the main thread."
+      },
+      {
+        "issueType": "Runtime Warning",
+        "message": "This method can lead to UI unresponsiveness if called on the main thread. Consider using the asynchronous activate/deactivate API instead for calls from the main thread."
+      }
+    ],
+    "skippedTests": 0,
+    "startTime": 1795469985.465,
+    "statistics": [],
+    "testFailures": [
+      {
+        "failureText": "Failed to determine hittability of \"hanlin-tool-consent-review-toggle\" Button: Activation point invalid and no suggested hit points based on element frame",
+        "targetName": "AI_HLYUITests",
+        "testIdentifier": 1,
+        "testIdentifierString": "HanlinPairedProductUITests/testCompanionCancellationReturnsWithoutChangingPrivateState()",
+        "testIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinPairedProductUITests/testCompanionCancellationReturnsWithoutChangingPrivateState",
+        "testName": "testCompanionCancellationReturnsWithoutChangingPrivateState()"
+      },
+      {
+        "failureText": "XCTAssertEqual failed: (\"XCTWaiterResult(rawValue: 2)\") is not equal to (\"XCTWaiterResult(rawValue: 1)\") - Unreachable product control: hanlin-tool-consent-review-toggle",
+        "targetName": "AI_HLYUITests",
+        "testIdentifier": 2,
+        "testIdentifierString": "HanlinPairedProductUITests/testCompanionReturnsActualPrivateValueToOriginalChat()",
+        "testIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinPairedProductUITests/testCompanionReturnsActualPrivateValueToOriginalChat",
+        "testName": "testCompanionReturnsActualPrivateValueToOriginalChat()"
+      },
+      {
+        "failureText": "XCTAssertTrue failed - Missing actual product result: Transfer complete. Your mini apps are ready.",
+        "targetName": "AI_HLYUITests",
+        "testIdentifier": 3,
+        "testIdentifierString": "HanlinPairedProductUITests/testOriginalPackageAndSavedStateTransferThenRollback()",
+        "testIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinPairedProductUITests/testOriginalPackageAndSavedStateTransferThenRollback",
+        "testName": "testOriginalPackageAndSavedStateTransferThenRollback()"
+      }
+    ],
+    "title": "Test - AI_HLY",
+    "topInsights": [],
+    "totalTestCount": 3
+  },
+  "error": "Original native acceptance did not pass every case in the recorded scope",
+  "diagnostic_errors": [],
+  "result_bundles": [
+    "Paired.xcresult",
+    "AIBuild.xcresult",
+    "MiniBuild.xcresult"
+  ],
+  "duration_seconds": 4195.860888004303
+}

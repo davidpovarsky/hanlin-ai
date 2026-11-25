@@ -1,0 +1,266 @@
+{
+  "copied_at": "2026-11-23T22:06:45.544681+00:00",
+  "files": [
+    {
+      "path": "docs/agent-sdk/evidence/paired-native-45260265662/dispatch-intent.json",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-paired-proof-20261123/build/paired3-e592-20261123/dispatch-intent.json",
+      "bytes": 216,
+      "sha256": "98a98fd51a728fe5a978a7bcb2f0a44c5868719174e6638591328e40b02ecead"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/paired-native-45260265662/dispatch-request.json",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-paired-proof-20261123/build/paired3-e592-20261123/dispatch-request.json",
+      "bytes": 461,
+      "sha256": "fcb5e299a15dbd415b252d5ced4dd3dcf5672ea3b60e269bb0f3cf3f21853dc0"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/paired-native-45260265662/dispatch-ack.json",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-paired-proof-20261123/build/paired3-e592-20261123/dispatch-ack.json",
+      "bytes": 100,
+      "sha256": "d7a5fb2c790900d322e680af82e7cf8e42b443a9b41d9f26728e120e6aa35d8f"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/paired-native-45260265662/run-readback.json",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-paired-proof-20261123/build/paired3-e592-20261123/run-readback.json",
+      "bytes": 14046,
+      "sha256": "0fe9e25cfa51b623fd79d76a415f6df68767162906a1af14e1b502a360e57275"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/paired-native-45260265662/admission.json",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-paired-proof-20261123/build/paired3-e592-20261123/admission.json",
+      "bytes": 566,
+      "sha256": "cac2d2080c2b617b4b15031c903aed36598f4d9df0cba2565dfc6e3055d868a6"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/paired-native-45260265662/ref-admission.json",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-paired-proof-20261123/build/paired3-e592-20261123/ref-admission.json",
+      "bytes": 506,
+      "sha256": "a171c944a139448af9b0d3a9483ee095188bd0db53206a7d0e2bb1dd84f6040e"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/paired-native-45260265662/terminal-run.json",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-paired-proof-20261123/build/paired3-e592-20261123/terminal-run.json",
+      "bytes": 14054,
+      "sha256": "f5fe0f019d645860257f610eb554b02f4be37f4504007b20813150370448c1e8"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/paired-native-45260265662/terminal-jobs.json",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-paired-proof-20261123/build/paired3-e592-20261123/terminal-jobs.json",
+      "bytes": 10475,
+      "sha256": "bf90ea222e3bc2799e4a17c4f1f7999bfee33fb4915ca75d6ab55edaf420f10d"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/paired-native-45260265662/terminal-annotations.json",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-paired-proof-20261123/build/paired3-e592-20261123/terminal-annotations.json",
+      "bytes": 372,
+      "sha256": "63c6fb46a471d0ccbede447f017ad7b484e2eeda4b981b5a0ccc46fbb7fc6a26"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/paired-native-45260265662/terminal-artifacts.json",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-paired-proof-20261123/build/paired3-e592-20261123/terminal-artifacts.json",
+      "bytes": 942,
+      "sha256": "39c2e528355ab11cb580d44185d5cbd1c88cb48ff0006fbef9f0c1f7c7c64b8d"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/paired-native-45260265662/artifact-verification.json",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-paired-proof-20261123/build/paired3-e592-20261123/artifact-verification.json",
+      "bytes": 273,
+      "sha256": "400841c41e1cde59392708a774052087abefa869a7c20ff3f3e7a219f158b677"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/paired-native-45260265662/collection-result.json",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-paired-proof-20261123/build/paired3-e592-20261123/collection-result.json",
+      "bytes": 455189,
+      "sha256": "d27fbcdc1c6f2ae746c7493335508f6beb4929fa738ea1c91bb9bddaa3ad67a5"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/paired-native-45260265662/watch-start.json",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-paired-proof-20261123/build/paired3-e592-20261123/watch-start.json",
+      "bytes": 352,
+      "sha256": "4643a53ecc3cd6704bc1a824d0497ddfd553caf935e1dade41d8c82af15595d0"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/paired-native-45260265662/watch-ended.json",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-paired-proof-20261123/build/paired3-e592-20261123/watch-ended.json",
+      "bytes": 92,
+      "sha256": "ab840d12036c5a020622a8e62b6a9759f6ec61c3b4b0fcfdd2b46074c6d75847"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/paired-native-45260265662/collector-start.json",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-paired-proof-20261123/build/paired3-e592-20261123/collector-start.json",
+      "bytes": 114,
+      "sha256": "c0903ce183d980fc972a7dd29be92cd06fde0999f2e031b768fc02d8078a94b7"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/paired-native-45260265662/collector-ended.json",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-paired-proof-20261123/build/paired3-e592-20261123/collector-ended.json",
+      "bytes": 90,
+      "sha256": "3f8045510822906a0ef27ee342f09d88190a69d6593f41e8600b2ff99e3eb7da"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/paired-native-45260265662/watch-followup-required.json",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-paired-proof-20261123/build/paired3-e592-20261123/watch-followup-required.json",
+      "bytes": 204,
+      "sha256": "2df14ef04a0e3b6de8f0b957f7a7f14deb2ef69258fb4496d70f5fb41ce058be"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/paired-native-45260265662/watch-resume-1-start.json",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-paired-proof-20261123/build/paired3-e592-20261123/watch-resume-1-start.json",
+      "bytes": 433,
+      "sha256": "164455915c4cb0634a9244649d9919f5f0e62a3359d5db7771a507561e0566da"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/paired-native-45260265662/watch-resume-1-ended.json",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-paired-proof-20261123/build/paired3-e592-20261123/watch-resume-1-ended.json",
+      "bytes": 90,
+      "sha256": "459056f4261998afcb931729c162b86c41f191c639ce2312665f5e455b931578"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/paired-native-45260265662/previous-watcher-terminal-receipt.json",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-paired-proof-20261123/build/paired3-e592-20261123/previous-watcher-terminal-receipt.json",
+      "bytes": 267,
+      "sha256": "ac291d94431ac3845a2394c492857d0034ad7b421a049cdb341651fd17dc71fd"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/paired-native-45260265662/watch-resume-1-terminal-readback.json",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-paired-proof-20261123/build/paired3-e592-20261123/watch-resume-1-terminal-readback.json",
+      "bytes": 14054,
+      "sha256": "f5fe0f019d645860257f610eb554b02f4be37f4504007b20813150370448c1e8"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/paired-native-45260265662/native/acceptance.json",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-paired-proof-20261123/build/paired3-e592-20261123/native/app-split-evidence/acceptance.json",
+      "bytes": 6036,
+      "sha256": "33f655bb3a276f1174a1f2580fa0d0e9cd47bb6fbcec2d98d5d0367d7ea9c5dd"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/paired-native-45260265662/native/host-reuse.json",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-paired-proof-20261123/build/paired3-e592-20261123/native/app-split-evidence/host-reuse.json",
+      "bytes": 903,
+      "sha256": "5ab5133e9ee2099ef9fdce656923c29684082b0bcb249308c001a25d93716ee2"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/paired-native-45260265662/native/foreground-reuse.json",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-paired-proof-20261123/build/paired3-e592-20261123/native/app-split-evidence/foreground-reuse.json",
+      "bytes": 633,
+      "sha256": "4343ae71673d4e6691c6aa7f780bf2f860d0e7100339ebb19a16ec024809f685"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/paired-native-45260265662/native/ci-performance-report.json",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-paired-proof-20261123/build/paired3-e592-20261123/native/app-split-evidence/ci-performance-report.json",
+      "bytes": 2133,
+      "sha256": "342b10dfc0eb8e144525d5670ba231ff1ab4175c9ee0ff7b6914256f873b3048"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/paired-native-45260265662/native/paired-product/acceptance.json",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-paired-proof-20261123/build/paired3-e592-20261123/native/app-split-evidence/paired-product/acceptance.json",
+      "bytes": 6036,
+      "sha256": "33f655bb3a276f1174a1f2580fa0d0e9cd47bb6fbcec2d98d5d0367d7ea9c5dd"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/paired-native-45260265662/native/paired-product/test-nodes.json",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-paired-proof-20261123/build/paired3-e592-20261123/native/app-split-evidence/paired-product/test-nodes.json",
+      "bytes": 4956,
+      "sha256": "29b50db52cd541611bc6fedacdc34fd6bc05a2e1958218b4b726cb086341ab40"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/paired-native-45260265662/native/paired-product/test-summary.json",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-paired-proof-20261123/build/paired3-e592-20261123/native/app-split-evidence/paired-product/test-summary.json",
+      "bytes": 3651,
+      "sha256": "99d7b77d14f864206ec789a60b153593fa5f38f2ea17e24e41d2b6ff7956c754"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/paired-native-45260265662/native/paired-product/commands.jsonl",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-paired-proof-20261123/build/paired3-e592-20261123/native/app-split-evidence/paired-product/commands.jsonl",
+      "bytes": 11316,
+      "sha256": "cb7a837d312cad15dfaa639e51c8dbd91066e2e7386d678484985c20f9561225"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/paired-native-45260265662/native/paired-product/paired-tests.log",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-paired-proof-20261123/build/paired3-e592-20261123/native/app-split-evidence/paired-product/paired-tests.log",
+      "bytes": 66188,
+      "sha256": "1db2e1ae38979ab653feea05b50db84513f9b14292dc8799dfa9dafc0705ab04"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/paired-native-45260265662/native/paired-product/fixture-provenance.json",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-paired-proof-20261123/build/paired3-e592-20261123/native/app-split-evidence/paired-product/fixture-provenance.json",
+      "bytes": 543,
+      "sha256": "51bc5925f895f33b260f5323d02db57488baf6427178f4b83584b456a2f0502b"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/paired-native-45260265662/native/paired-product/source-sha.txt",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-paired-proof-20261123/build/paired3-e592-20261123/native/app-split-evidence/paired-product/source-sha.txt",
+      "bytes": 41,
+      "sha256": "5bf6db2171d4cf510dd25a4e392692b2807fa5f32354dc76b28ed289efd54c0a"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/paired-native-45260265662/native/paired-product/sdk.txt",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-paired-proof-20261123/build/paired3-e592-20261123/native/app-split-evidence/paired-product/sdk.txt",
+      "bytes": 5,
+      "sha256": "53e1ae253beb3b8a3b99dd2d4ec1eb641d392378329fcdccb560779fdf46de0b"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/paired-native-45260265662/native/paired-product/boot.log",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-paired-proof-20261123/build/paired3-e592-20261123/native/app-split-evidence/paired-product/boot.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/paired-native-45260265662/native/paired-product/bootstatus.log",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-paired-proof-20261123/build/paired3-e592-20261123/native/app-split-evidence/paired-product/bootstatus.log",
+      "bytes": 131,
+      "sha256": "4bd322a40e736e9c359d4a1a4644806e35da1cc1cf600ff1860d5d37c9ff43ab"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/paired-native-45260265662/native/paired-product/failure-device-state.json",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-paired-proof-20261123/build/paired3-e592-20261123/native/app-split-evidence/paired-product/failure-device-state.json",
+      "bytes": 22746,
+      "sha256": "6c433f69caa419cd30e58b0ee1d5456dcefd99ce48078e6baf60754efefb4833"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/paired-native-45260265662/native/paired-product/failure.png",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-paired-proof-20261123/build/paired3-e592-20261123/native/app-split-evidence/paired-product/failure.png",
+      "bytes": 3810899,
+      "sha256": "f80d7e439c6bdfbb92287b2bd8f44d8fe70dcdf3fb5197a91e7fd584e7921c4c"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/paired-native-45260265662/native/paired-product/com.itorah.chavrusachat-embedded-entitlements.json",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-paired-proof-20261123/build/paired3-e592-20261123/native/app-split-evidence/paired-product/com.itorah.chavrusachat-embedded-entitlements.json",
+      "bytes": 1237,
+      "sha256": "0b6e19bea3b9968b3a5ae310649c05bad1f8fae8463134980093733833054961"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/paired-native-45260265662/native/paired-product/com.itorah.hanlinminiapps-embedded-entitlements.json",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-paired-proof-20261123/build/paired3-e592-20261123/native/app-split-evidence/paired-product/com.itorah.hanlinminiapps-embedded-entitlements.json",
+      "bytes": 828,
+      "sha256": "5195022189a99ca502395970d82f7cc0542fa8a1563a97c34fff7523545ae23e"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/paired-native-45260265662/native/paired-product/com.itorah.chavrusachat-group-container.txt",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-paired-proof-20261123/build/paired3-e592-20261123/native/app-split-evidence/paired-product/com.itorah.chavrusachat-group-container.txt",
+      "bytes": 160,
+      "sha256": "d4ab0b06e302999a736a40207eee3b0c99891932b8ef41f347d7e61ea16bedd1"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/paired-native-45260265662/native/paired-product/com.itorah.hanlinminiapps-group-container.txt",
+      "original_path": "/mnt/development/projects/worktrees/hanlin-sdk-paired-proof-20261123/build/paired3-e592-20261123/native/app-split-evidence/paired-product/com.itorah.hanlinminiapps-group-container.txt",
+      "bytes": 160,
+      "sha256": "d4ab0b06e302999a736a40207eee3b0c99891932b8ef41f347d7e61ea16bedd1"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/paired-native-45260265662/derived/mini-build.log.terminal.txt",
+      "derived_from": "/mnt/development/projects/worktrees/hanlin-sdk-paired-proof-20261123/build/paired3-e592-20261123/native/app-split-evidence/paired-product/mini-build.log",
+      "original_bytes": 12605875,
+      "original_sha256": "7a840c310ee3495eb9aa4eeb81da7fde8818d248f46f05db0b76eb2ac9da4de0",
+      "transformation": "Last30 decoded lines with trailing whitespace removed, one final newline; full original retained in Oracle and authenticated artifact"
+    },
+    {
+      "path": "docs/agent-sdk/evidence/paired-native-45260265662/derived/ai-build.log.terminal.txt",
+      "derived_from": "/mnt/development/projects/worktrees/hanlin-sdk-paired-proof-20261123/build/paired3-e592-20261123/native/app-split-evidence/paired-product/ai-build.log",
+      "original_bytes": 15537735,
+      "original_sha256": "e9a101ea1f2c102a08c09da7f9c56454682ab271cec3bb1bf37dca8edb7a17f9",
+      "transformation": "Last30 decoded lines, one final newline; full original retained in Oracle and authenticated artifact"
+    }
+  ],
+  "native_replay": false
+}

@@ -1,0 +1,21 @@
+✔ Expo uses its published coherent matrix rather than unrelated latest React or Worklets (1.74545ms)
+✔ a package publication must contain its original integrity (0.330122ms)
+✔ native source identity changes for native versions, installed graph, Xcode, and producer (1.028445ms)
+✔ generated runtime metadata uses exact native and original ScriptWidget identities (0.803564ms)
+✔ three-way native refresh preserves host adaptations and applies upstream changes (18.844146ms)
+✔ conflicting native changes produce a repair diff and fail instead of discarding adaptations (9.239212ms)
+✔ original widget imports use the existing unified widget target namespace (0.951845ms)
+✔ actual native host ABI metadata changes with the original React Native and Hermes graph (0.427603ms)
+✔ prepared widget namespace keeps original universal layout without importing the React Yoga hook (0.506443ms)
+✔ public Native API metadata uses the same real Worklets and React Native versions (1.228167ms)
+✔ React declaration resolution intersects original Expo and RN ranges including disjunctions (1.636369ms)
+✔ an unconstrained original NativeScript compiler peer preserves the verified per-engine toolchains (0.286322ms)
+✔ SlotView refresh preserves native children and upstream changes without a React shadow hook (15.81797ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 148.476478

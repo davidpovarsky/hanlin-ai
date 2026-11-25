@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "Scripts/SDK/update_project.py",
+    "--check"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-sdk-link-ownership-20261123",
+  "startedUTC": "2026-11-23T22:27:59.082996+00:00",
+  "finishedUTC": "2026-11-23T22:28:02.389501+00:00",
+  "exit": 0,
+  "status": "PASS"
+}

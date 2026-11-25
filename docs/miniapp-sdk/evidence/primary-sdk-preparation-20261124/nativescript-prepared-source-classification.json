@@ -1,0 +1,4097 @@
+{
+  "sourceAuthority": {
+    "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+    "commit": "340018ddc9ea2395ffabedbf179369b5bdb791af",
+    "sha256": "b5114a3be1fc846e288128af08cef9f38b0cac8e34923780325c4edc2976ebd9"
+  },
+  "originalAuthority": "Exact original npm member bytes in authenticated final RuntimeHostResources.zip / MiniAppSDK",
+  "countsByDelta": {
+    "json-values-equal": 8,
+    "javascript-body-changed": 154,
+    "json-values-changed": 1,
+    "identical-content-observed-mode-row": 1,
+    "line-endings-only": 3
+  },
+  "countsByOriginalIdentity": {
+    "exact-original-bytes": 105,
+    "original-plus-existing-preparation-transforms": 62
+  },
+  "transformTagCounts": {
+    "canonical-build-defines": 48,
+    "existing-Color-cross-realm-and-UIColor-adaptation": 2,
+    "external-package-relative-imports": 8,
+    "existing-child-view-controller-containment": 4,
+    "existing-session-app-config-provider-import": 2,
+    "existing-embedded-TabView-and-layout-adaptation": 4,
+    "existing-Color-Font-native-value-unwrapping": 4
+  },
+  "rows": [
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@csstools/color-helpers/package.json",
+      "beforeSHA256": "4cb2e14af3d5296ab12311440ea76aea5617d07d7a715fe8e6911657ed217a34",
+      "afterSHA256": "ed0659c5bac8547eb6ce5bf4c0f7ea77f43835095e4460e3956ecd63143c0cfd",
+      "changeFromExecutionBase": "json-values-equal",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@csstools/color-helpers/package.json",
+      "originalSHA256": "ed0659c5bac8547eb6ce5bf4c0f7ea77f43835095e4460e3956ecd63143c0cfd",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          306,
+          336
+        ]
+      },
+      "existingTransforms": [],
+      "changedTopLevelValues": {},
+      "packageFormattingAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          801,
+          821
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@csstools/css-calc/package.json",
+      "beforeSHA256": "9ee8e109cd65fcc5422630a71a57f4dd185dd65818008211ef1f47abe47f3526",
+      "afterSHA256": "963c23fedd6df9a4428f87819c8cbbe6bbd7e16169cfdb5e832f462f8d65eefa",
+      "changeFromExecutionBase": "json-values-equal",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@csstools/css-calc/package.json",
+      "originalSHA256": "963c23fedd6df9a4428f87819c8cbbe6bbd7e16169cfdb5e832f462f8d65eefa",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          306,
+          336
+        ]
+      },
+      "existingTransforms": [],
+      "changedTopLevelValues": {},
+      "packageFormattingAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          801,
+          821
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@csstools/css-color-parser/package.json",
+      "beforeSHA256": "ab1ef71b83eb7ae578fb9e2e1423a421bbed93909fc2edf154f105e5ca43b4b3",
+      "afterSHA256": "294fd9dacab143694b97ac81d21f45a78e683655f37c718c330a3494530dcb60",
+      "changeFromExecutionBase": "json-values-equal",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@csstools/css-color-parser/package.json",
+      "originalSHA256": "294fd9dacab143694b97ac81d21f45a78e683655f37c718c330a3494530dcb60",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          306,
+          336
+        ]
+      },
+      "existingTransforms": [],
+      "changedTopLevelValues": {},
+      "packageFormattingAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          801,
+          821
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@csstools/css-parser-algorithms/package.json",
+      "beforeSHA256": "854711f2b10e99127f83d241df4e30738988db0c538967a9a415c71989a8985a",
+      "afterSHA256": "2ede4a8a1bafd777c50af276310c5bb4b5274585ebf079059663a3c43a185742",
+      "changeFromExecutionBase": "json-values-equal",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@csstools/css-parser-algorithms/package.json",
+      "originalSHA256": "2ede4a8a1bafd777c50af276310c5bb4b5274585ebf079059663a3c43a185742",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          306,
+          336
+        ]
+      },
+      "existingTransforms": [],
+      "changedTopLevelValues": {},
+      "packageFormattingAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          801,
+          821
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@csstools/css-tokenizer/package.json",
+      "beforeSHA256": "a15ce5a1b9f0ff3142e72483e019e386879694b618c9e222d43b98cb5e08dac4",
+      "afterSHA256": "304f952c40d6a6070d5a00b26fe84ff594f0b450a7a9d8496c0d87fe49c9a753",
+      "changeFromExecutionBase": "json-values-equal",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@csstools/css-tokenizer/package.json",
+      "originalSHA256": "304f952c40d6a6070d5a00b26fe84ff594f0b450a7a9d8496c0d87fe49c9a753",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          306,
+          336
+        ]
+      },
+      "existingTransforms": [],
+      "changedTopLevelValues": {},
+      "packageFormattingAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          801,
+          821
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/application/application-common.js",
+      "beforeSHA256": "b9a929205548a390210dc8abab7c9df1c1451fd75810a737ef45db47fcc24852",
+      "afterSHA256": "fe0209812581cd1328366fa0424376424dc90fabf5cf945b790b09ea5e20531d",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/application/application-common.js",
+      "originalSHA256": "fe0209812581cd1328366fa0424376424dc90fabf5cf945b790b09ea5e20531d",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": []
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/application/application-common.mjs",
+      "beforeSHA256": "b9a929205548a390210dc8abab7c9df1c1451fd75810a737ef45db47fcc24852",
+      "afterSHA256": "fe0209812581cd1328366fa0424376424dc90fabf5cf945b790b09ea5e20531d",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/application/application-common.js",
+      "originalSHA256": "fe0209812581cd1328366fa0424376424dc90fabf5cf945b790b09ea5e20531d",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/application/application.ios.js",
+      "beforeSHA256": "ace78fc5e9ca8050ed679b20f793978f5bb3d6c01da24d3fcd163c0c10d5f8f4",
+      "afterSHA256": "9b2bb02b53398f1326247a61383acc7667d5ad24bbe74f37dd95b739e76c42fd",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/application/application.ios.js",
+      "originalSHA256": "0c913307d0d7bf128fc296166b7f8d0d80f67e1fc376ad198dd8b3a3abb4ea55",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "canonical-build-defines",
+          "sourceLines": [
+            740,
+            783
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/application/application.ios.mjs",
+      "beforeSHA256": "ace78fc5e9ca8050ed679b20f793978f5bb3d6c01da24d3fcd163c0c10d5f8f4",
+      "afterSHA256": "9b2bb02b53398f1326247a61383acc7667d5ad24bbe74f37dd95b739e76c42fd",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/application/application.ios.js",
+      "originalSHA256": "0c913307d0d7bf128fc296166b7f8d0d80f67e1fc376ad198dd8b3a3abb4ea55",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "canonical-build-defines",
+          "sourceLines": [
+            740,
+            783
+          ]
+        }
+      ],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/application/application.js",
+      "beforeSHA256": "ace78fc5e9ca8050ed679b20f793978f5bb3d6c01da24d3fcd163c0c10d5f8f4",
+      "afterSHA256": "9b2bb02b53398f1326247a61383acc7667d5ad24bbe74f37dd95b739e76c42fd",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/application/application.ios.js",
+      "originalSHA256": "0c913307d0d7bf128fc296166b7f8d0d80f67e1fc376ad198dd8b3a3abb4ea55",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "canonical-build-defines",
+          "sourceLines": [
+            740,
+            783
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/application/application.mjs",
+      "beforeSHA256": "ace78fc5e9ca8050ed679b20f793978f5bb3d6c01da24d3fcd163c0c10d5f8f4",
+      "afterSHA256": "9b2bb02b53398f1326247a61383acc7667d5ad24bbe74f37dd95b739e76c42fd",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/application/application.ios.js",
+      "originalSHA256": "0c913307d0d7bf128fc296166b7f8d0d80f67e1fc376ad198dd8b3a3abb4ea55",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "canonical-build-defines",
+          "sourceLines": [
+            740,
+            783
+          ]
+        }
+      ],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/application/scene-delegate-bridge.js",
+      "beforeSHA256": "291beb1972d6337349e1f066a62cd7c2649b849089715a20aa5fea3f5708a931",
+      "afterSHA256": "870d6a1a8bc30c1db43e98fbb81c3d0fb462ce664954e8084c662a82eed14c11",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/application/scene-delegate-bridge.js",
+      "originalSHA256": "870d6a1a8bc30c1db43e98fbb81c3d0fb462ce664954e8084c662a82eed14c11",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": []
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/application/scene-delegate-bridge.mjs",
+      "beforeSHA256": "291beb1972d6337349e1f066a62cd7c2649b849089715a20aa5fea3f5708a931",
+      "afterSHA256": "870d6a1a8bc30c1db43e98fbb81c3d0fb462ce664954e8084c662a82eed14c11",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/application/scene-delegate-bridge.js",
+      "originalSHA256": "870d6a1a8bc30c1db43e98fbb81c3d0fb462ce664954e8084c662a82eed14c11",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/color/color-common.js",
+      "beforeSHA256": "12b0347582da176bcf7b57d35cb33d88b6cfaf0fd8630c730e361e760d57367e",
+      "afterSHA256": "b4d417d154ae97c49b84547efca9b2916d965ca5140ef9361f5909cb372fd1f0",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/color/color-common.js",
+      "originalSHA256": "5a2b124fedca3e1729f8cbd9361fee717df3e6b1b33524efa924afb89cd72adf",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "existing-Color-cross-realm-and-UIColor-adaptation",
+          "sourceLines": [
+            584,
+            610
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/color/color-common.mjs",
+      "beforeSHA256": "12b0347582da176bcf7b57d35cb33d88b6cfaf0fd8630c730e361e760d57367e",
+      "afterSHA256": "b4d417d154ae97c49b84547efca9b2916d965ca5140ef9361f5909cb372fd1f0",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/color/color-common.js",
+      "originalSHA256": "5a2b124fedca3e1729f8cbd9361fee717df3e6b1b33524efa924afb89cd72adf",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "existing-Color-cross-realm-and-UIColor-adaptation",
+          "sourceLines": [
+            584,
+            610
+          ]
+        }
+      ],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/color/color-utils.js",
+      "beforeSHA256": "a2dafec41bbcf4e887bd10f0ec5f395642e9d74f81e2f9691e7cf6cf32f6ac2a",
+      "afterSHA256": "3b9dd9150cae2db9502864cd94240e9290382fed54941d95f50f6ac7df79064e",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/color/color-utils.js",
+      "originalSHA256": "6572b44a41beb75f618801f005d73d4b3539ada93032faae96943cf68bbf82d6",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "external-package-relative-imports",
+          "sourceLines": [
+            374,
+            458
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/color/color-utils.mjs",
+      "beforeSHA256": "a2dafec41bbcf4e887bd10f0ec5f395642e9d74f81e2f9691e7cf6cf32f6ac2a",
+      "afterSHA256": "3b9dd9150cae2db9502864cd94240e9290382fed54941d95f50f6ac7df79064e",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/color/color-utils.js",
+      "originalSHA256": "6572b44a41beb75f618801f005d73d4b3539ada93032faae96943cf68bbf82d6",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "external-package-relative-imports",
+          "sourceLines": [
+            374,
+            458
+          ]
+        }
+      ],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/core-types/index.js",
+      "beforeSHA256": "ba9cb1ba1e41c7bf8fddfa769aba7b95ae96b9a2df4144818456d7e37599fc75",
+      "afterSHA256": "dd35e191b4a3d13c8707dac1ea28020c165085dff8eeb87acd7eb4a6850a5dec",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/core-types/index.js",
+      "originalSHA256": "dd35e191b4a3d13c8707dac1ea28020c165085dff8eeb87acd7eb4a6850a5dec",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": []
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/core-types/index.mjs",
+      "beforeSHA256": "ba9cb1ba1e41c7bf8fddfa769aba7b95ae96b9a2df4144818456d7e37599fc75",
+      "afterSHA256": "dd35e191b4a3d13c8707dac1ea28020c165085dff8eeb87acd7eb4a6850a5dec",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/core-types/index.js",
+      "originalSHA256": "dd35e191b4a3d13c8707dac1ea28020c165085dff8eeb87acd7eb4a6850a5dec",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/css-mediaquery/index.js",
+      "beforeSHA256": "903edd88b7ee3b5ccb10c9da524864cc8b38157fcef0caa08b218c206d3cf54d",
+      "afterSHA256": "3e29904e107bfa90f9af5ce6350087e072843767c1ca4ac62341bec7707e959b",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/css-mediaquery/index.js",
+      "originalSHA256": "3e29904e107bfa90f9af5ce6350087e072843767c1ca4ac62341bec7707e959b",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": []
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/css-mediaquery/index.mjs",
+      "beforeSHA256": "903edd88b7ee3b5ccb10c9da524864cc8b38157fcef0caa08b218c206d3cf54d",
+      "afterSHA256": "3e29904e107bfa90f9af5ce6350087e072843767c1ca4ac62341bec7707e959b",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/css-mediaquery/index.js",
+      "originalSHA256": "3e29904e107bfa90f9af5ce6350087e072843767c1ca4ac62341bec7707e959b",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/css/css-tree-parser.js",
+      "beforeSHA256": "6e4f9f47e3b1b688499bfe81879bc7bf01b858bd62fad374fbe50a97f457f7e4",
+      "afterSHA256": "d359941f7fa1d0f2c13e726967acfb5737991d324456c811c28b91c486f94f47",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/css/css-tree-parser.js",
+      "originalSHA256": "0eb49baa4f88071d76c3a211e64afc733e50d6bdc3aa610b07b74ed8126727cb",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "external-package-relative-imports",
+          "sourceLines": [
+            374,
+            458
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/css/css-tree-parser.mjs",
+      "beforeSHA256": "6e4f9f47e3b1b688499bfe81879bc7bf01b858bd62fad374fbe50a97f457f7e4",
+      "afterSHA256": "d359941f7fa1d0f2c13e726967acfb5737991d324456c811c28b91c486f94f47",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/css/css-tree-parser.js",
+      "originalSHA256": "0eb49baa4f88071d76c3a211e64afc733e50d6bdc3aa610b07b74ed8126727cb",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "external-package-relative-imports",
+          "sourceLines": [
+            374,
+            458
+          ]
+        }
+      ],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/css/lib/parse/index.js",
+      "beforeSHA256": "27f74d85e4a8fbb109ef4f52f51d9371f530bbdc73c4c52d8179d32735b157ec",
+      "afterSHA256": "8f3634728e2517c3aa42a99559f62100c4f688b797c44cd442729f37cad1cbb3",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/css/lib/parse/index.js",
+      "originalSHA256": "8f3634728e2517c3aa42a99559f62100c4f688b797c44cd442729f37cad1cbb3",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": []
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/css/lib/parse/index.mjs",
+      "beforeSHA256": "27f74d85e4a8fbb109ef4f52f51d9371f530bbdc73c4c52d8179d32735b157ec",
+      "afterSHA256": "8f3634728e2517c3aa42a99559f62100c4f688b797c44cd442729f37cad1cbb3",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/css/lib/parse/index.js",
+      "originalSHA256": "8f3634728e2517c3aa42a99559f62100c4f688b797c44cd442729f37cad1cbb3",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/css/parser.js",
+      "beforeSHA256": "d7a9170c99cb69a360130ba030e45ea6378d536e60245bf06a72c6433cd3893b",
+      "afterSHA256": "09ac385d502ab47911215e11d4ed9840d9ed2bf8ddaa34c2480a14a01d5d8d60",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/css/parser.js",
+      "originalSHA256": "09ac385d502ab47911215e11d4ed9840d9ed2bf8ddaa34c2480a14a01d5d8d60",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": []
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/css/parser.mjs",
+      "beforeSHA256": "d7a9170c99cb69a360130ba030e45ea6378d536e60245bf06a72c6433cd3893b",
+      "afterSHA256": "09ac385d502ab47911215e11d4ed9840d9ed2bf8ddaa34c2480a14a01d5d8d60",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/css/parser.js",
+      "originalSHA256": "09ac385d502ab47911215e11d4ed9840d9ed2bf8ddaa34c2480a14a01d5d8d60",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/http/http-request-internal/http-request-internal-common.js",
+      "beforeSHA256": "c22102627b733d4a29aabbcf36f728e542c65f8c17a19b1b0f521b79855f08f0",
+      "afterSHA256": "8bbc53be5bb515724c641f2af99ce3c2eb2043de3a783f4796d8a2e5f7303bca",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/http/http-request-internal/http-request-internal-common.js",
+      "originalSHA256": "8bbc53be5bb515724c641f2af99ce3c2eb2043de3a783f4796d8a2e5f7303bca",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": []
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/http/http-request-internal/http-request-internal-common.mjs",
+      "beforeSHA256": "c22102627b733d4a29aabbcf36f728e542c65f8c17a19b1b0f521b79855f08f0",
+      "afterSHA256": "8bbc53be5bb515724c641f2af99ce3c2eb2043de3a783f4796d8a2e5f7303bca",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/http/http-request-internal/http-request-internal-common.js",
+      "originalSHA256": "8bbc53be5bb515724c641f2af99ce3c2eb2043de3a783f4796d8a2e5f7303bca",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/http/http-request-internal/index.ios.js",
+      "beforeSHA256": "97d01d410756bdab64fcf691acc41999960b3ea56e10de2d4352e8490eafcb29",
+      "afterSHA256": "3d9cf66c848d60781a9282ff04ac7bb222005b3741d71c6bfb4fb395ed8bef51",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/http/http-request-internal/index.ios.js",
+      "originalSHA256": "3d9cf66c848d60781a9282ff04ac7bb222005b3741d71c6bfb4fb395ed8bef51",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": []
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/http/http-request-internal/index.ios.mjs",
+      "beforeSHA256": "97d01d410756bdab64fcf691acc41999960b3ea56e10de2d4352e8490eafcb29",
+      "afterSHA256": "3d9cf66c848d60781a9282ff04ac7bb222005b3741d71c6bfb4fb395ed8bef51",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/http/http-request-internal/index.ios.js",
+      "originalSHA256": "3d9cf66c848d60781a9282ff04ac7bb222005b3741d71c6bfb4fb395ed8bef51",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/http/http-request-internal/index.js",
+      "beforeSHA256": "97d01d410756bdab64fcf691acc41999960b3ea56e10de2d4352e8490eafcb29",
+      "afterSHA256": "3d9cf66c848d60781a9282ff04ac7bb222005b3741d71c6bfb4fb395ed8bef51",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/http/http-request-internal/index.ios.js",
+      "originalSHA256": "3d9cf66c848d60781a9282ff04ac7bb222005b3741d71c6bfb4fb395ed8bef51",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": []
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/http/http-request-internal/index.mjs",
+      "beforeSHA256": "97d01d410756bdab64fcf691acc41999960b3ea56e10de2d4352e8490eafcb29",
+      "afterSHA256": "3d9cf66c848d60781a9282ff04ac7bb222005b3741d71c6bfb4fb395ed8bef51",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/http/http-request-internal/index.ios.js",
+      "originalSHA256": "3d9cf66c848d60781a9282ff04ac7bb222005b3741d71c6bfb4fb395ed8bef51",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/native-window/native-window-common.js",
+      "beforeSHA256": "88ae3526b835e6fe7fa5124709c1a652c10d7e739274035da220674959d9f05c",
+      "afterSHA256": "ea06d789d3962d4cb58e2493ad0fc1773a558a673a6f02ab67320d86666ac7bb",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/native-window/native-window-common.js",
+      "originalSHA256": "ea06d789d3962d4cb58e2493ad0fc1773a558a673a6f02ab67320d86666ac7bb",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": []
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/native-window/native-window-common.mjs",
+      "beforeSHA256": "88ae3526b835e6fe7fa5124709c1a652c10d7e739274035da220674959d9f05c",
+      "afterSHA256": "ea06d789d3962d4cb58e2493ad0fc1773a558a673a6f02ab67320d86666ac7bb",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/native-window/native-window-common.js",
+      "originalSHA256": "ea06d789d3962d4cb58e2493ad0fc1773a558a673a6f02ab67320d86666ac7bb",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/native-window/native-window.ios.js",
+      "beforeSHA256": "75b4ecb07ce2ebc72361554c3dda3440745d03073fb76e051a57d35b67bb0445",
+      "afterSHA256": "63062593e1b52720982b534b2984ac9634e126d91f6bc280d8ebbaa35917f472",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/native-window/native-window.ios.js",
+      "originalSHA256": "107ce0632fbdd91610f8dc22831a1b8a212e51fd7b62148773b5cdb8f37e9101",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "canonical-build-defines",
+          "sourceLines": [
+            740,
+            783
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/native-window/native-window.ios.mjs",
+      "beforeSHA256": "75b4ecb07ce2ebc72361554c3dda3440745d03073fb76e051a57d35b67bb0445",
+      "afterSHA256": "63062593e1b52720982b534b2984ac9634e126d91f6bc280d8ebbaa35917f472",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/native-window/native-window.ios.js",
+      "originalSHA256": "107ce0632fbdd91610f8dc22831a1b8a212e51fd7b62148773b5cdb8f37e9101",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "canonical-build-defines",
+          "sourceLines": [
+            740,
+            783
+          ]
+        }
+      ],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/native-window/native-window.js",
+      "beforeSHA256": "75b4ecb07ce2ebc72361554c3dda3440745d03073fb76e051a57d35b67bb0445",
+      "afterSHA256": "63062593e1b52720982b534b2984ac9634e126d91f6bc280d8ebbaa35917f472",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/native-window/native-window.ios.js",
+      "originalSHA256": "107ce0632fbdd91610f8dc22831a1b8a212e51fd7b62148773b5cdb8f37e9101",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "canonical-build-defines",
+          "sourceLines": [
+            740,
+            783
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/native-window/native-window.mjs",
+      "beforeSHA256": "75b4ecb07ce2ebc72361554c3dda3440745d03073fb76e051a57d35b67bb0445",
+      "afterSHA256": "63062593e1b52720982b534b2984ac9634e126d91f6bc280d8ebbaa35917f472",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/native-window/native-window.ios.js",
+      "originalSHA256": "107ce0632fbdd91610f8dc22831a1b8a212e51fd7b62148773b5cdb8f37e9101",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "canonical-build-defines",
+          "sourceLines": [
+            740,
+            783
+          ]
+        }
+      ],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/native-window/window-base.js",
+      "beforeSHA256": "95257feb3d0735e6a216f7a08541fcbe75fd4e658a7d67c2fc5bad24cf20f453",
+      "afterSHA256": "2c595a6cc1a1afed4b14d3e334f52a7674ee68693c087848d6ae946af009d618",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/native-window/window-base.js",
+      "originalSHA256": "2c595a6cc1a1afed4b14d3e334f52a7674ee68693c087848d6ae946af009d618",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": []
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/native-window/window-base.mjs",
+      "beforeSHA256": "95257feb3d0735e6a216f7a08541fcbe75fd4e658a7d67c2fc5bad24cf20f453",
+      "afterSHA256": "2c595a6cc1a1afed4b14d3e334f52a7674ee68693c087848d6ae946af009d618",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/native-window/window-base.js",
+      "originalSHA256": "2c595a6cc1a1afed4b14d3e334f52a7674ee68693c087848d6ae946af009d618",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/package.json",
+      "beforeSHA256": "c308ba5ea1433a44265cf7c3a5521f841268cb92a60ecdc9194258ae0244d74d",
+      "afterSHA256": "c9ee2195d3902aa8ab891d672e24140ffc01e1cb17d7be971e8938182fc5211b",
+      "changeFromExecutionBase": "json-values-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/package.json",
+      "originalSHA256": "c9ee2195d3902aa8ab891d672e24140ffc01e1cb17d7be971e8938182fc5211b",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [],
+      "changedTopLevelValues": {
+        "dependencies": {
+          "before": {
+            "@csstools/css-calc": "~2.1.4",
+            "@csstools/css-color-parser": "^3.0.10",
+            "@csstools/css-parser-algorithms": "^3.0.5",
+            "@csstools/css-tokenizer": "^3.0.4",
+            "@nativescript/hook": "~3.0.4",
+            "acorn": "^8.15.0",
+            "css-tree": "^3.1.0",
+            "css-what": "^7.0.0",
+            "emoji-regex": "^10.2.1",
+            "source-map": "0.7.6",
+            "source-map-js": "^1.2.1",
+            "tslib": "^2.0.0"
+          },
+          "after": {
+            "@csstools/css-calc": "~2.1.4",
+            "@csstools/css-color-parser": "^3.0.10",
+            "@csstools/css-parser-algorithms": "^3.0.5",
+            "@csstools/css-tokenizer": "^3.0.4",
+            "@nativescript/hook": "~3.0.4",
+            "acorn": "^8.15.0",
+            "css-tree": "^3.1.0",
+            "css-what": "^7.0.0",
+            "emoji-regex": "^10.2.1",
+            "semver": "^7.0.0",
+            "source-map": "0.7.6",
+            "source-map-js": "^1.2.1",
+            "tslib": "^2.0.0"
+          }
+        },
+        "version": {
+          "before": "9.1.0",
+          "after": "9.1.4"
+        }
+      },
+      "packageFormattingAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          801,
+          821
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/platform/screen/index.ios.js",
+      "beforeSHA256": "f5852a312f9e63686a4af91bc1df6972be370dd1a2ae1ea7c33c93d2e7cfd52d",
+      "afterSHA256": "6228be99f3b3fae7ddd51563066419f54a06322261619e0fb4e44860d80bbecf",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/platform/screen/index.ios.js",
+      "originalSHA256": "6228be99f3b3fae7ddd51563066419f54a06322261619e0fb4e44860d80bbecf",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": []
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/platform/screen/index.ios.mjs",
+      "beforeSHA256": "f5852a312f9e63686a4af91bc1df6972be370dd1a2ae1ea7c33c93d2e7cfd52d",
+      "afterSHA256": "6228be99f3b3fae7ddd51563066419f54a06322261619e0fb4e44860d80bbecf",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/platform/screen/index.ios.js",
+      "originalSHA256": "6228be99f3b3fae7ddd51563066419f54a06322261619e0fb4e44860d80bbecf",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/platform/screen/index.js",
+      "beforeSHA256": "f5852a312f9e63686a4af91bc1df6972be370dd1a2ae1ea7c33c93d2e7cfd52d",
+      "afterSHA256": "6228be99f3b3fae7ddd51563066419f54a06322261619e0fb4e44860d80bbecf",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/platform/screen/index.ios.js",
+      "originalSHA256": "6228be99f3b3fae7ddd51563066419f54a06322261619e0fb4e44860d80bbecf",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": []
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/platform/screen/index.mjs",
+      "beforeSHA256": "f5852a312f9e63686a4af91bc1df6972be370dd1a2ae1ea7c33c93d2e7cfd52d",
+      "afterSHA256": "6228be99f3b3fae7ddd51563066419f54a06322261619e0fb4e44860d80bbecf",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/platform/screen/index.ios.js",
+      "originalSHA256": "6228be99f3b3fae7ddd51563066419f54a06322261619e0fb4e44860d80bbecf",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/text/text-common.js",
+      "beforeSHA256": "a50f8c1936d2e9e50fb299bf24225c76dcc97661bd1d2b133edd486a5039bf05",
+      "afterSHA256": "a825a528070f7921767103f9edd2801cc9fa11c035baf40f850b991387fecc35",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/text/text-common.js",
+      "originalSHA256": "a825a528070f7921767103f9edd2801cc9fa11c035baf40f850b991387fecc35",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": []
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/text/text-common.mjs",
+      "beforeSHA256": "a50f8c1936d2e9e50fb299bf24225c76dcc97661bd1d2b133edd486a5039bf05",
+      "afterSHA256": "a825a528070f7921767103f9edd2801cc9fa11c035baf40f850b991387fecc35",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/text/text-common.js",
+      "originalSHA256": "a825a528070f7921767103f9edd2801cc9fa11c035baf40f850b991387fecc35",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/action-bar/index.ios.js",
+      "beforeSHA256": "ee96dc5abceed8813aeb9b556a55dfd68c7ed8c69985b82523423b8111d4485f",
+      "afterSHA256": "ee5827e3c00bb2e3b4f2ffa7b2969df60bac7cc8e43b25b4f7a4cdb340a6e85d",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/action-bar/index.ios.js",
+      "originalSHA256": "fb70e54c43b1e5558ec88915cb8e6e8a0675b001d5aec72e7401761ab59ffacf",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "canonical-build-defines",
+          "sourceLines": [
+            740,
+            783
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/action-bar/index.ios.mjs",
+      "beforeSHA256": "ee96dc5abceed8813aeb9b556a55dfd68c7ed8c69985b82523423b8111d4485f",
+      "afterSHA256": "ee5827e3c00bb2e3b4f2ffa7b2969df60bac7cc8e43b25b4f7a4cdb340a6e85d",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/action-bar/index.ios.js",
+      "originalSHA256": "fb70e54c43b1e5558ec88915cb8e6e8a0675b001d5aec72e7401761ab59ffacf",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "canonical-build-defines",
+          "sourceLines": [
+            740,
+            783
+          ]
+        }
+      ],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/action-bar/index.js",
+      "beforeSHA256": "ee96dc5abceed8813aeb9b556a55dfd68c7ed8c69985b82523423b8111d4485f",
+      "afterSHA256": "ee5827e3c00bb2e3b4f2ffa7b2969df60bac7cc8e43b25b4f7a4cdb340a6e85d",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/action-bar/index.ios.js",
+      "originalSHA256": "fb70e54c43b1e5558ec88915cb8e6e8a0675b001d5aec72e7401761ab59ffacf",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "canonical-build-defines",
+          "sourceLines": [
+            740,
+            783
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/action-bar/index.mjs",
+      "beforeSHA256": "ee96dc5abceed8813aeb9b556a55dfd68c7ed8c69985b82523423b8111d4485f",
+      "afterSHA256": "ee5827e3c00bb2e3b4f2ffa7b2969df60bac7cc8e43b25b4f7a4cdb340a6e85d",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/action-bar/index.ios.js",
+      "originalSHA256": "fb70e54c43b1e5558ec88915cb8e6e8a0675b001d5aec72e7401761ab59ffacf",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "canonical-build-defines",
+          "sourceLines": [
+            740,
+            783
+          ]
+        }
+      ],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/animation/keyframe-animation.js",
+      "beforeSHA256": "830305cc61a1e54207c731e1fd0af42581f813b521bb2a1a9398b8b89916619b",
+      "afterSHA256": "cca9e0b39a98c5af3999ec0db8d616d931efedf8b77a7ce275f05eb2662c484c",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/animation/keyframe-animation.js",
+      "originalSHA256": "cca9e0b39a98c5af3999ec0db8d616d931efedf8b77a7ce275f05eb2662c484c",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": []
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/animation/keyframe-animation.mjs",
+      "beforeSHA256": "830305cc61a1e54207c731e1fd0af42581f813b521bb2a1a9398b8b89916619b",
+      "afterSHA256": "cca9e0b39a98c5af3999ec0db8d616d931efedf8b77a7ce275f05eb2662c484c",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/animation/keyframe-animation.js",
+      "originalSHA256": "cca9e0b39a98c5af3999ec0db8d616d931efedf8b77a7ce275f05eb2662c484c",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/button/index.ios.js",
+      "beforeSHA256": "c3464dc813751f6c33052e2c2ae854de63e9096e1d70030a7b1c2b2af8c62c39",
+      "afterSHA256": "5bd07fd0667b0326b392815acf283b112561f10e78db1b3c5fedc047607301b8",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/button/index.ios.js",
+      "originalSHA256": "5bd07fd0667b0326b392815acf283b112561f10e78db1b3c5fedc047607301b8",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": []
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/button/index.ios.mjs",
+      "beforeSHA256": "c3464dc813751f6c33052e2c2ae854de63e9096e1d70030a7b1c2b2af8c62c39",
+      "afterSHA256": "5bd07fd0667b0326b392815acf283b112561f10e78db1b3c5fedc047607301b8",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/button/index.ios.js",
+      "originalSHA256": "5bd07fd0667b0326b392815acf283b112561f10e78db1b3c5fedc047607301b8",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/button/index.js",
+      "beforeSHA256": "c3464dc813751f6c33052e2c2ae854de63e9096e1d70030a7b1c2b2af8c62c39",
+      "afterSHA256": "5bd07fd0667b0326b392815acf283b112561f10e78db1b3c5fedc047607301b8",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/button/index.ios.js",
+      "originalSHA256": "5bd07fd0667b0326b392815acf283b112561f10e78db1b3c5fedc047607301b8",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": []
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/button/index.mjs",
+      "beforeSHA256": "c3464dc813751f6c33052e2c2ae854de63e9096e1d70030a7b1c2b2af8c62c39",
+      "afterSHA256": "5bd07fd0667b0326b392815acf283b112561f10e78db1b3c5fedc047607301b8",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/button/index.ios.js",
+      "originalSHA256": "5bd07fd0667b0326b392815acf283b112561f10e78db1b3c5fedc047607301b8",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/core/properties/index.js",
+      "beforeSHA256": "8c64a8a5711edfe119cf9c22e05259701e47abc644035cb16a9d536823073619",
+      "afterSHA256": "365acc7c537f6f49e93759b243fcc70ba108fc4b22cac8c9472319796dfde6fa",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/core/properties/index.js",
+      "originalSHA256": "35fba0bc5601d89adab560e9fef275bd434a448b44a4f8757429121edc2d7cad",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "external-package-relative-imports",
+          "sourceLines": [
+            374,
+            458
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/core/properties/index.mjs",
+      "beforeSHA256": "8c64a8a5711edfe119cf9c22e05259701e47abc644035cb16a9d536823073619",
+      "afterSHA256": "365acc7c537f6f49e93759b243fcc70ba108fc4b22cac8c9472319796dfde6fa",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/core/properties/index.js",
+      "originalSHA256": "35fba0bc5601d89adab560e9fef275bd434a448b44a4f8757429121edc2d7cad",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "external-package-relative-imports",
+          "sourceLines": [
+            374,
+            458
+          ]
+        }
+      ],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/core/view-base/index.js",
+      "beforeSHA256": "61cbb28171209493bba38793e6eaccd5f674f26ef34902964002a673aeb7c004",
+      "afterSHA256": "f973595a3278f9ad6fd806dd7f07a69fe5796c4f3327b11bb643c59b0ff0170a",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/core/view-base/index.js",
+      "originalSHA256": "00067c28d20ca99f6a145b06a0207d4df648bf30047b9738674b939e1a80fce2",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "canonical-build-defines",
+          "sourceLines": [
+            740,
+            783
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/core/view-base/index.mjs",
+      "beforeSHA256": "61cbb28171209493bba38793e6eaccd5f674f26ef34902964002a673aeb7c004",
+      "afterSHA256": "f973595a3278f9ad6fd806dd7f07a69fe5796c4f3327b11bb643c59b0ff0170a",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/core/view-base/index.js",
+      "originalSHA256": "00067c28d20ca99f6a145b06a0207d4df648bf30047b9738674b939e1a80fce2",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "canonical-build-defines",
+          "sourceLines": [
+            740,
+            783
+          ]
+        }
+      ],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/core/view/index.ios.js",
+      "beforeSHA256": "ca77a0057fa5481f6d6e922aa7d906315a93a11356e46b08c1fe64c34a7bd64e",
+      "afterSHA256": "b1cf94c17536617c66ca6a39766105f9df5157c10c661852779a40553189a338",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/core/view/index.ios.js",
+      "originalSHA256": "e2164bdfaa7592006aab3fe4e4b43e7579cb3676b6c0492c6aaeea74215d5bbc",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "canonical-build-defines",
+          "sourceLines": [
+            740,
+            783
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/core/view/index.ios.mjs",
+      "beforeSHA256": "ca77a0057fa5481f6d6e922aa7d906315a93a11356e46b08c1fe64c34a7bd64e",
+      "afterSHA256": "b1cf94c17536617c66ca6a39766105f9df5157c10c661852779a40553189a338",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/core/view/index.ios.js",
+      "originalSHA256": "e2164bdfaa7592006aab3fe4e4b43e7579cb3676b6c0492c6aaeea74215d5bbc",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "canonical-build-defines",
+          "sourceLines": [
+            740,
+            783
+          ]
+        }
+      ],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/core/view/index.js",
+      "beforeSHA256": "ca77a0057fa5481f6d6e922aa7d906315a93a11356e46b08c1fe64c34a7bd64e",
+      "afterSHA256": "b1cf94c17536617c66ca6a39766105f9df5157c10c661852779a40553189a338",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/core/view/index.ios.js",
+      "originalSHA256": "e2164bdfaa7592006aab3fe4e4b43e7579cb3676b6c0492c6aaeea74215d5bbc",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "canonical-build-defines",
+          "sourceLines": [
+            740,
+            783
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/core/view/index.mjs",
+      "beforeSHA256": "ca77a0057fa5481f6d6e922aa7d906315a93a11356e46b08c1fe64c34a7bd64e",
+      "afterSHA256": "b1cf94c17536617c66ca6a39766105f9df5157c10c661852779a40553189a338",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/core/view/index.ios.js",
+      "originalSHA256": "e2164bdfaa7592006aab3fe4e4b43e7579cb3676b6c0492c6aaeea74215d5bbc",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "canonical-build-defines",
+          "sourceLines": [
+            740,
+            783
+          ]
+        }
+      ],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/core/view/view-helper/index.ios.js",
+      "beforeSHA256": "c7fdd67c2effa799d449d035267735272f4cc4b6c2ccaa7f6c069bbd18546f43",
+      "afterSHA256": "110eed47d13db868b753341cc9df2b9317758863844459613934f737885710a8",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/core/view/view-helper/index.ios.js",
+      "originalSHA256": "05f53d1b9d9103f1ab6a4a7fa34ba3698b730dfd29d2ace8613b9c6920c4f6ea",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "canonical-build-defines",
+          "sourceLines": [
+            740,
+            783
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/core/view/view-helper/index.ios.mjs",
+      "beforeSHA256": "c7fdd67c2effa799d449d035267735272f4cc4b6c2ccaa7f6c069bbd18546f43",
+      "afterSHA256": "110eed47d13db868b753341cc9df2b9317758863844459613934f737885710a8",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/core/view/view-helper/index.ios.js",
+      "originalSHA256": "05f53d1b9d9103f1ab6a4a7fa34ba3698b730dfd29d2ace8613b9c6920c4f6ea",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "canonical-build-defines",
+          "sourceLines": [
+            740,
+            783
+          ]
+        }
+      ],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/core/view/view-helper/index.js",
+      "beforeSHA256": "c7fdd67c2effa799d449d035267735272f4cc4b6c2ccaa7f6c069bbd18546f43",
+      "afterSHA256": "110eed47d13db868b753341cc9df2b9317758863844459613934f737885710a8",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/core/view/view-helper/index.ios.js",
+      "originalSHA256": "05f53d1b9d9103f1ab6a4a7fa34ba3698b730dfd29d2ace8613b9c6920c4f6ea",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "canonical-build-defines",
+          "sourceLines": [
+            740,
+            783
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/core/view/view-helper/index.mjs",
+      "beforeSHA256": "c7fdd67c2effa799d449d035267735272f4cc4b6c2ccaa7f6c069bbd18546f43",
+      "afterSHA256": "110eed47d13db868b753341cc9df2b9317758863844459613934f737885710a8",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/core/view/view-helper/index.ios.js",
+      "originalSHA256": "05f53d1b9d9103f1ab6a4a7fa34ba3698b730dfd29d2ace8613b9c6920c4f6ea",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "canonical-build-defines",
+          "sourceLines": [
+            740,
+            783
+          ]
+        }
+      ],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/frame/frame-common.js",
+      "beforeSHA256": "691461015fe59d17bf061466d47e9d377df9b571f529ecedda2bb4dfb320b1fb",
+      "afterSHA256": "7e90702bc3809493da59bf0b3acdaec888607f9960486446dce4118303425615",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/frame/frame-common.js",
+      "originalSHA256": "99c41b563e82f69ca11f1d0c5a3157c1593fbc82dc7fa3dbddced4f15edf1410",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "canonical-build-defines",
+          "sourceLines": [
+            740,
+            783
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/frame/frame-common.mjs",
+      "beforeSHA256": "691461015fe59d17bf061466d47e9d377df9b571f529ecedda2bb4dfb320b1fb",
+      "afterSHA256": "7e90702bc3809493da59bf0b3acdaec888607f9960486446dce4118303425615",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/frame/frame-common.js",
+      "originalSHA256": "99c41b563e82f69ca11f1d0c5a3157c1593fbc82dc7fa3dbddced4f15edf1410",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "canonical-build-defines",
+          "sourceLines": [
+            740,
+            783
+          ]
+        }
+      ],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/frame/frame-stack.js",
+      "beforeSHA256": "d1ade48791a86705bbf4574564aaacc37144c8f5b8686b750736d555086f945b",
+      "afterSHA256": "9d5fc068b52d59c0209ab0b34c96dbd0cf321e86dec0e21c1d9d66520d0adfe6",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/frame/frame-stack.js",
+      "originalSHA256": "9d5fc068b52d59c0209ab0b34c96dbd0cf321e86dec0e21c1d9d66520d0adfe6",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": []
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/frame/frame-stack.mjs",
+      "beforeSHA256": "d1ade48791a86705bbf4574564aaacc37144c8f5b8686b750736d555086f945b",
+      "afterSHA256": "9d5fc068b52d59c0209ab0b34c96dbd0cf321e86dec0e21c1d9d66520d0adfe6",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/frame/frame-stack.js",
+      "originalSHA256": "9d5fc068b52d59c0209ab0b34c96dbd0cf321e86dec0e21c1d9d66520d0adfe6",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/frame/index.ios.js",
+      "beforeSHA256": "7296d253cbaa4916c8cb72c6425d337cb02a233c25bb20884a16cd586dabc686",
+      "afterSHA256": "b627a2f5195824bf3c91c559988b05661ffd574cf44b2bee8a3c765271f87e4b",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/frame/index.ios.js",
+      "originalSHA256": "b627a2f5195824bf3c91c559988b05661ffd574cf44b2bee8a3c765271f87e4b",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": []
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/frame/index.ios.mjs",
+      "beforeSHA256": "7296d253cbaa4916c8cb72c6425d337cb02a233c25bb20884a16cd586dabc686",
+      "afterSHA256": "b627a2f5195824bf3c91c559988b05661ffd574cf44b2bee8a3c765271f87e4b",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/frame/index.ios.js",
+      "originalSHA256": "b627a2f5195824bf3c91c559988b05661ffd574cf44b2bee8a3c765271f87e4b",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/frame/index.js",
+      "beforeSHA256": "7296d253cbaa4916c8cb72c6425d337cb02a233c25bb20884a16cd586dabc686",
+      "afterSHA256": "b627a2f5195824bf3c91c559988b05661ffd574cf44b2bee8a3c765271f87e4b",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/frame/index.ios.js",
+      "originalSHA256": "b627a2f5195824bf3c91c559988b05661ffd574cf44b2bee8a3c765271f87e4b",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": []
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/frame/index.mjs",
+      "beforeSHA256": "7296d253cbaa4916c8cb72c6425d337cb02a233c25bb20884a16cd586dabc686",
+      "afterSHA256": "b627a2f5195824bf3c91c559988b05661ffd574cf44b2bee8a3c765271f87e4b",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/frame/index.ios.js",
+      "originalSHA256": "b627a2f5195824bf3c91c559988b05661ffd574cf44b2bee8a3c765271f87e4b",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/gestures/index.ios.js",
+      "beforeSHA256": "e2af7fd84903ac8fa9e376e03350a6076e2c09c847256488907e8b079d354ee0",
+      "afterSHA256": "518e54fd5948c2d1347a033314dce78e470f58fc09a6250cab2a1e59f297311a",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/gestures/index.ios.js",
+      "originalSHA256": "518e54fd5948c2d1347a033314dce78e470f58fc09a6250cab2a1e59f297311a",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": []
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/gestures/index.ios.mjs",
+      "beforeSHA256": "e2af7fd84903ac8fa9e376e03350a6076e2c09c847256488907e8b079d354ee0",
+      "afterSHA256": "518e54fd5948c2d1347a033314dce78e470f58fc09a6250cab2a1e59f297311a",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/gestures/index.ios.js",
+      "originalSHA256": "518e54fd5948c2d1347a033314dce78e470f58fc09a6250cab2a1e59f297311a",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/gestures/index.js",
+      "beforeSHA256": "e2af7fd84903ac8fa9e376e03350a6076e2c09c847256488907e8b079d354ee0",
+      "afterSHA256": "518e54fd5948c2d1347a033314dce78e470f58fc09a6250cab2a1e59f297311a",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/gestures/index.ios.js",
+      "originalSHA256": "518e54fd5948c2d1347a033314dce78e470f58fc09a6250cab2a1e59f297311a",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": []
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/gestures/index.mjs",
+      "beforeSHA256": "e2af7fd84903ac8fa9e376e03350a6076e2c09c847256488907e8b079d354ee0",
+      "afterSHA256": "518e54fd5948c2d1347a033314dce78e470f58fc09a6250cab2a1e59f297311a",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/gestures/index.ios.js",
+      "originalSHA256": "518e54fd5948c2d1347a033314dce78e470f58fc09a6250cab2a1e59f297311a",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/label/index.ios.js",
+      "beforeSHA256": "6c022a56432fa883e9599149c9dbd920f213a5242658ac437d22c64a06b5e597",
+      "afterSHA256": "08d96ea42bed26b6cc1238534ba27448e06128fe6afbff66b6125ca2fb87bf35",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/label/index.ios.js",
+      "originalSHA256": "08d96ea42bed26b6cc1238534ba27448e06128fe6afbff66b6125ca2fb87bf35",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": []
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/label/index.ios.mjs",
+      "beforeSHA256": "6c022a56432fa883e9599149c9dbd920f213a5242658ac437d22c64a06b5e597",
+      "afterSHA256": "08d96ea42bed26b6cc1238534ba27448e06128fe6afbff66b6125ca2fb87bf35",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/label/index.ios.js",
+      "originalSHA256": "08d96ea42bed26b6cc1238534ba27448e06128fe6afbff66b6125ca2fb87bf35",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/label/index.js",
+      "beforeSHA256": "6c022a56432fa883e9599149c9dbd920f213a5242658ac437d22c64a06b5e597",
+      "afterSHA256": "08d96ea42bed26b6cc1238534ba27448e06128fe6afbff66b6125ca2fb87bf35",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/label/index.ios.js",
+      "originalSHA256": "08d96ea42bed26b6cc1238534ba27448e06128fe6afbff66b6125ca2fb87bf35",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": []
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/label/index.mjs",
+      "beforeSHA256": "6c022a56432fa883e9599149c9dbd920f213a5242658ac437d22c64a06b5e597",
+      "afterSHA256": "08d96ea42bed26b6cc1238534ba27448e06128fe6afbff66b6125ca2fb87bf35",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/label/index.ios.js",
+      "originalSHA256": "08d96ea42bed26b6cc1238534ba27448e06128fe6afbff66b6125ca2fb87bf35",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/layouts/flexbox-layout/index.ios.js",
+      "beforeSHA256": "079cc8a380e02877d307e48cf3bf8d6de203cb871e1d939e3e7ee6393f2389ef",
+      "afterSHA256": "05eacec4588ad08356d37b1f9d44012ac0e2b144ab2db6296e70e6ee57bb27a3",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/layouts/flexbox-layout/index.ios.js",
+      "originalSHA256": "05eacec4588ad08356d37b1f9d44012ac0e2b144ab2db6296e70e6ee57bb27a3",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": []
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/layouts/flexbox-layout/index.ios.mjs",
+      "beforeSHA256": "079cc8a380e02877d307e48cf3bf8d6de203cb871e1d939e3e7ee6393f2389ef",
+      "afterSHA256": "05eacec4588ad08356d37b1f9d44012ac0e2b144ab2db6296e70e6ee57bb27a3",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/layouts/flexbox-layout/index.ios.js",
+      "originalSHA256": "05eacec4588ad08356d37b1f9d44012ac0e2b144ab2db6296e70e6ee57bb27a3",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/layouts/flexbox-layout/index.js",
+      "beforeSHA256": "079cc8a380e02877d307e48cf3bf8d6de203cb871e1d939e3e7ee6393f2389ef",
+      "afterSHA256": "05eacec4588ad08356d37b1f9d44012ac0e2b144ab2db6296e70e6ee57bb27a3",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/layouts/flexbox-layout/index.ios.js",
+      "originalSHA256": "05eacec4588ad08356d37b1f9d44012ac0e2b144ab2db6296e70e6ee57bb27a3",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": []
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/layouts/flexbox-layout/index.mjs",
+      "beforeSHA256": "079cc8a380e02877d307e48cf3bf8d6de203cb871e1d939e3e7ee6393f2389ef",
+      "afterSHA256": "05eacec4588ad08356d37b1f9d44012ac0e2b144ab2db6296e70e6ee57bb27a3",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/layouts/flexbox-layout/index.ios.js",
+      "originalSHA256": "05eacec4588ad08356d37b1f9d44012ac0e2b144ab2db6296e70e6ee57bb27a3",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/layouts/layout-base-common.js",
+      "beforeSHA256": "2a8f91a8794872d6b88a0df1ad96cf66cba4fe0a33a5980a80a3aa504899eddd",
+      "afterSHA256": "712809c9a215b3e1b5afd8caacd62c214bceebaf0a4a6feb1fb3309601e9c473",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/layouts/layout-base-common.js",
+      "originalSHA256": "712809c9a215b3e1b5afd8caacd62c214bceebaf0a4a6feb1fb3309601e9c473",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": []
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/layouts/layout-base-common.mjs",
+      "beforeSHA256": "2a8f91a8794872d6b88a0df1ad96cf66cba4fe0a33a5980a80a3aa504899eddd",
+      "afterSHA256": "712809c9a215b3e1b5afd8caacd62c214bceebaf0a4a6feb1fb3309601e9c473",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/layouts/layout-base-common.js",
+      "originalSHA256": "712809c9a215b3e1b5afd8caacd62c214bceebaf0a4a6feb1fb3309601e9c473",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/layouts/liquid-glass-container/index.ios.js",
+      "beforeSHA256": "8f733c01f1bf55c4572cd4d604d1a9aee6737fcab607eb4d499461c582f8f550",
+      "afterSHA256": "1de9c7ff2406e9e301bb3f67b4ac4e54b167e7684780ebde71ce54e86c4b878c",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/layouts/liquid-glass-container/index.ios.js",
+      "originalSHA256": "1de9c7ff2406e9e301bb3f67b4ac4e54b167e7684780ebde71ce54e86c4b878c",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": []
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/layouts/liquid-glass-container/index.ios.mjs",
+      "beforeSHA256": "8f733c01f1bf55c4572cd4d604d1a9aee6737fcab607eb4d499461c582f8f550",
+      "afterSHA256": "1de9c7ff2406e9e301bb3f67b4ac4e54b167e7684780ebde71ce54e86c4b878c",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/layouts/liquid-glass-container/index.ios.js",
+      "originalSHA256": "1de9c7ff2406e9e301bb3f67b4ac4e54b167e7684780ebde71ce54e86c4b878c",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/layouts/liquid-glass-container/index.js",
+      "beforeSHA256": "8f733c01f1bf55c4572cd4d604d1a9aee6737fcab607eb4d499461c582f8f550",
+      "afterSHA256": "1de9c7ff2406e9e301bb3f67b4ac4e54b167e7684780ebde71ce54e86c4b878c",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/layouts/liquid-glass-container/index.ios.js",
+      "originalSHA256": "1de9c7ff2406e9e301bb3f67b4ac4e54b167e7684780ebde71ce54e86c4b878c",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": []
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/layouts/liquid-glass-container/index.mjs",
+      "beforeSHA256": "8f733c01f1bf55c4572cd4d604d1a9aee6737fcab607eb4d499461c582f8f550",
+      "afterSHA256": "1de9c7ff2406e9e301bb3f67b4ac4e54b167e7684780ebde71ce54e86c4b878c",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/layouts/liquid-glass-container/index.ios.js",
+      "originalSHA256": "1de9c7ff2406e9e301bb3f67b4ac4e54b167e7684780ebde71ce54e86c4b878c",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/layouts/liquid-glass/index.ios.js",
+      "beforeSHA256": "df7a98f8e7c5151c26c793d19a30c865a1b4f3aab4bc6026164258a5d1371e02",
+      "afterSHA256": "f6868b083370ec1d5d9cc06fec31ceb04de4b8d23f4ea332d4c76438a7c564fd",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/layouts/liquid-glass/index.ios.js",
+      "originalSHA256": "f6868b083370ec1d5d9cc06fec31ceb04de4b8d23f4ea332d4c76438a7c564fd",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": []
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/layouts/liquid-glass/index.ios.mjs",
+      "beforeSHA256": "df7a98f8e7c5151c26c793d19a30c865a1b4f3aab4bc6026164258a5d1371e02",
+      "afterSHA256": "f6868b083370ec1d5d9cc06fec31ceb04de4b8d23f4ea332d4c76438a7c564fd",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/layouts/liquid-glass/index.ios.js",
+      "originalSHA256": "f6868b083370ec1d5d9cc06fec31ceb04de4b8d23f4ea332d4c76438a7c564fd",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/layouts/liquid-glass/index.js",
+      "beforeSHA256": "df7a98f8e7c5151c26c793d19a30c865a1b4f3aab4bc6026164258a5d1371e02",
+      "afterSHA256": "f6868b083370ec1d5d9cc06fec31ceb04de4b8d23f4ea332d4c76438a7c564fd",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/layouts/liquid-glass/index.ios.js",
+      "originalSHA256": "f6868b083370ec1d5d9cc06fec31ceb04de4b8d23f4ea332d4c76438a7c564fd",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": []
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/layouts/liquid-glass/index.mjs",
+      "beforeSHA256": "df7a98f8e7c5151c26c793d19a30c865a1b4f3aab4bc6026164258a5d1371e02",
+      "afterSHA256": "f6868b083370ec1d5d9cc06fec31ceb04de4b8d23f4ea332d4c76438a7c564fd",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/layouts/liquid-glass/index.ios.js",
+      "originalSHA256": "f6868b083370ec1d5d9cc06fec31ceb04de4b8d23f4ea332d4c76438a7c564fd",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/list-view/index.ios.js",
+      "beforeSHA256": "6bc9da3943199c27deca1885e800b96ddd6905978bd316a398180eb187516a1a",
+      "afterSHA256": "ad447c15af84b63586fe48844ce38a2936f0f7a77b35714b4843b0fa24ecb18f",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/list-view/index.ios.js",
+      "originalSHA256": "45e341b7d71d83d5e4c8d2d413f87e315f5b785d612a0a165120a8958dd69f37",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "canonical-build-defines",
+          "sourceLines": [
+            740,
+            783
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/list-view/index.ios.mjs",
+      "beforeSHA256": "6bc9da3943199c27deca1885e800b96ddd6905978bd316a398180eb187516a1a",
+      "afterSHA256": "ad447c15af84b63586fe48844ce38a2936f0f7a77b35714b4843b0fa24ecb18f",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/list-view/index.ios.js",
+      "originalSHA256": "45e341b7d71d83d5e4c8d2d413f87e315f5b785d612a0a165120a8958dd69f37",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "canonical-build-defines",
+          "sourceLines": [
+            740,
+            783
+          ]
+        }
+      ],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/list-view/index.js",
+      "beforeSHA256": "6bc9da3943199c27deca1885e800b96ddd6905978bd316a398180eb187516a1a",
+      "afterSHA256": "ad447c15af84b63586fe48844ce38a2936f0f7a77b35714b4843b0fa24ecb18f",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/list-view/index.ios.js",
+      "originalSHA256": "45e341b7d71d83d5e4c8d2d413f87e315f5b785d612a0a165120a8958dd69f37",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "canonical-build-defines",
+          "sourceLines": [
+            740,
+            783
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/list-view/index.mjs",
+      "beforeSHA256": "6bc9da3943199c27deca1885e800b96ddd6905978bd316a398180eb187516a1a",
+      "afterSHA256": "ad447c15af84b63586fe48844ce38a2936f0f7a77b35714b4843b0fa24ecb18f",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/list-view/index.ios.js",
+      "originalSHA256": "45e341b7d71d83d5e4c8d2d413f87e315f5b785d612a0a165120a8958dd69f37",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "canonical-build-defines",
+          "sourceLines": [
+            740,
+            783
+          ]
+        }
+      ],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/list-view/list-view-common.js",
+      "beforeSHA256": "6a965b276579c784899455d800931424eb8a4866356fe8acb6b3ce27136f3333",
+      "afterSHA256": "5766dcc7e42a15e4c2a03abcc1443c4b412f8aad0efdaa3cefeb451c67c6ec8b",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/list-view/list-view-common.js",
+      "originalSHA256": "0957959592524a6d385f14760636210373d922fd4bc2f4464ad1695d00825739",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "canonical-build-defines",
+          "sourceLines": [
+            740,
+            783
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/list-view/list-view-common.mjs",
+      "beforeSHA256": "6a965b276579c784899455d800931424eb8a4866356fe8acb6b3ce27136f3333",
+      "afterSHA256": "5766dcc7e42a15e4c2a03abcc1443c4b412f8aad0efdaa3cefeb451c67c6ec8b",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/list-view/list-view-common.js",
+      "originalSHA256": "0957959592524a6d385f14760636210373d922fd4bc2f4464ad1695d00825739",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "canonical-build-defines",
+          "sourceLines": [
+            740,
+            783
+          ]
+        }
+      ],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/page/index.ios.js",
+      "beforeSHA256": "338ecf3bff606e6adb4338cef94beb8770f342b320c12b9d3746b81023b38ebe",
+      "afterSHA256": "e07c47f6b8a8588a28e12294fa7d909cdf7f9270e072920b14afd81a31cd351f",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/page/index.ios.js",
+      "originalSHA256": "a5d0648d19bd3d2aecb2bd797aa256235f63130c8d515de6ad20f3c5ee322b27",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "canonical-build-defines",
+          "sourceLines": [
+            740,
+            783
+          ]
+        },
+        {
+          "name": "existing-child-view-controller-containment",
+          "sourceLines": [
+            681,
+            709
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/page/index.ios.mjs",
+      "beforeSHA256": "338ecf3bff606e6adb4338cef94beb8770f342b320c12b9d3746b81023b38ebe",
+      "afterSHA256": "e07c47f6b8a8588a28e12294fa7d909cdf7f9270e072920b14afd81a31cd351f",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/page/index.ios.js",
+      "originalSHA256": "a5d0648d19bd3d2aecb2bd797aa256235f63130c8d515de6ad20f3c5ee322b27",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "canonical-build-defines",
+          "sourceLines": [
+            740,
+            783
+          ]
+        },
+        {
+          "name": "existing-child-view-controller-containment",
+          "sourceLines": [
+            681,
+            709
+          ]
+        }
+      ],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/page/index.js",
+      "beforeSHA256": "338ecf3bff606e6adb4338cef94beb8770f342b320c12b9d3746b81023b38ebe",
+      "afterSHA256": "e07c47f6b8a8588a28e12294fa7d909cdf7f9270e072920b14afd81a31cd351f",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/page/index.ios.js",
+      "originalSHA256": "a5d0648d19bd3d2aecb2bd797aa256235f63130c8d515de6ad20f3c5ee322b27",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "canonical-build-defines",
+          "sourceLines": [
+            740,
+            783
+          ]
+        },
+        {
+          "name": "existing-child-view-controller-containment",
+          "sourceLines": [
+            681,
+            709
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/page/index.mjs",
+      "beforeSHA256": "338ecf3bff606e6adb4338cef94beb8770f342b320c12b9d3746b81023b38ebe",
+      "afterSHA256": "e07c47f6b8a8588a28e12294fa7d909cdf7f9270e072920b14afd81a31cd351f",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/page/index.ios.js",
+      "originalSHA256": "a5d0648d19bd3d2aecb2bd797aa256235f63130c8d515de6ad20f3c5ee322b27",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "canonical-build-defines",
+          "sourceLines": [
+            740,
+            783
+          ]
+        },
+        {
+          "name": "existing-child-view-controller-containment",
+          "sourceLines": [
+            681,
+            709
+          ]
+        }
+      ],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/scroll-view/index.ios.js",
+      "beforeSHA256": "a7af8ca1c18934d171410ec00968f767965e093a3666acfddbae97b035ba50fc",
+      "afterSHA256": "5d16d1c77be432015bab549c6bbacac1f1e80c917e67767dd1c9561d8335fdd3",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/scroll-view/index.ios.js",
+      "originalSHA256": "5d16d1c77be432015bab549c6bbacac1f1e80c917e67767dd1c9561d8335fdd3",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": []
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/scroll-view/index.ios.mjs",
+      "beforeSHA256": "a7af8ca1c18934d171410ec00968f767965e093a3666acfddbae97b035ba50fc",
+      "afterSHA256": "5d16d1c77be432015bab549c6bbacac1f1e80c917e67767dd1c9561d8335fdd3",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/scroll-view/index.ios.js",
+      "originalSHA256": "5d16d1c77be432015bab549c6bbacac1f1e80c917e67767dd1c9561d8335fdd3",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/scroll-view/index.js",
+      "beforeSHA256": "a7af8ca1c18934d171410ec00968f767965e093a3666acfddbae97b035ba50fc",
+      "afterSHA256": "5d16d1c77be432015bab549c6bbacac1f1e80c917e67767dd1c9561d8335fdd3",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/scroll-view/index.ios.js",
+      "originalSHA256": "5d16d1c77be432015bab549c6bbacac1f1e80c917e67767dd1c9561d8335fdd3",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": []
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/scroll-view/index.mjs",
+      "beforeSHA256": "a7af8ca1c18934d171410ec00968f767965e093a3666acfddbae97b035ba50fc",
+      "afterSHA256": "5d16d1c77be432015bab549c6bbacac1f1e80c917e67767dd1c9561d8335fdd3",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/scroll-view/index.ios.js",
+      "originalSHA256": "5d16d1c77be432015bab549c6bbacac1f1e80c917e67767dd1c9561d8335fdd3",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/scroll-view/scroll-view-common.js",
+      "beforeSHA256": "0e229a37168f1c2043110b834a9242b1ec1193a582e7ada1d54748d981d76491",
+      "afterSHA256": "fb2ebc4789900fbc1ee226c043d7e214be5ef0b6726903e3c342efd14162ad8a",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/scroll-view/scroll-view-common.js",
+      "originalSHA256": "e3030ab5e1ddb56b5c7696d547a3c3e249b8ac31d68ee9ba14f8cd6b7ee00de8",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "canonical-build-defines",
+          "sourceLines": [
+            740,
+            783
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/scroll-view/scroll-view-common.mjs",
+      "beforeSHA256": "0e229a37168f1c2043110b834a9242b1ec1193a582e7ada1d54748d981d76491",
+      "afterSHA256": "fb2ebc4789900fbc1ee226c043d7e214be5ef0b6726903e3c342efd14162ad8a",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/scroll-view/scroll-view-common.js",
+      "originalSHA256": "e3030ab5e1ddb56b5c7696d547a3c3e249b8ac31d68ee9ba14f8cd6b7ee00de8",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "canonical-build-defines",
+          "sourceLines": [
+            740,
+            783
+          ]
+        }
+      ],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/styling/background.ios.js",
+      "beforeSHA256": "d351190e71a9ab437b534fe0696da6f0b8bc553733bbd7a4dfa8083d5c7180e4",
+      "afterSHA256": "7c0bb6b87aeda9ab4b01f34a63a56006f5a0b4c028bf346f501936536af47441",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/styling/background.ios.js",
+      "originalSHA256": "7c0bb6b87aeda9ab4b01f34a63a56006f5a0b4c028bf346f501936536af47441",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": []
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/styling/background.ios.mjs",
+      "beforeSHA256": "d351190e71a9ab437b534fe0696da6f0b8bc553733bbd7a4dfa8083d5c7180e4",
+      "afterSHA256": "7c0bb6b87aeda9ab4b01f34a63a56006f5a0b4c028bf346f501936536af47441",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/styling/background.ios.js",
+      "originalSHA256": "7c0bb6b87aeda9ab4b01f34a63a56006f5a0b4c028bf346f501936536af47441",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/styling/background.js",
+      "beforeSHA256": "d351190e71a9ab437b534fe0696da6f0b8bc553733bbd7a4dfa8083d5c7180e4",
+      "afterSHA256": "7c0bb6b87aeda9ab4b01f34a63a56006f5a0b4c028bf346f501936536af47441",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/styling/background.ios.js",
+      "originalSHA256": "7c0bb6b87aeda9ab4b01f34a63a56006f5a0b4c028bf346f501936536af47441",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": []
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/styling/background.mjs",
+      "beforeSHA256": "d351190e71a9ab437b534fe0696da6f0b8bc553733bbd7a4dfa8083d5c7180e4",
+      "afterSHA256": "7c0bb6b87aeda9ab4b01f34a63a56006f5a0b4c028bf346f501936536af47441",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/styling/background.ios.js",
+      "originalSHA256": "7c0bb6b87aeda9ab4b01f34a63a56006f5a0b4c028bf346f501936536af47441",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/styling/css-selector.js",
+      "beforeSHA256": "a5fc08b29228870647f7ac7ad3032224caf0dfdf2b819c36b4fe5c53053d17bf",
+      "afterSHA256": "cfebe5c90fcfd072d01face6b7a22eac8b7a09dfb5d23be338b488570fd9adc5",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/styling/css-selector.js",
+      "originalSHA256": "6a6254fd2b79c52103d1c6176a757b023101cdcc9f0f914ecad0079591f3d7fd",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "external-package-relative-imports",
+          "sourceLines": [
+            374,
+            458
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/styling/css-selector.mjs",
+      "beforeSHA256": "a5fc08b29228870647f7ac7ad3032224caf0dfdf2b819c36b4fe5c53053d17bf",
+      "afterSHA256": "cfebe5c90fcfd072d01face6b7a22eac8b7a09dfb5d23be338b488570fd9adc5",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/styling/css-selector.js",
+      "originalSHA256": "6a6254fd2b79c52103d1c6176a757b023101cdcc9f0f914ecad0079591f3d7fd",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "external-package-relative-imports",
+          "sourceLines": [
+            374,
+            458
+          ]
+        }
+      ],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/styling/length-shared.js",
+      "beforeSHA256": "966ca2b6d52ecbcc7c93587cd5fbdb7ac6095f1dbae477e50e5b5c949b69697b",
+      "afterSHA256": "880cbc7665e2305dea119e2767751fc3655c530ea0856c9b42ba2315b902bb20",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/styling/length-shared.js",
+      "originalSHA256": "880cbc7665e2305dea119e2767751fc3655c530ea0856c9b42ba2315b902bb20",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": []
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/styling/length-shared.mjs",
+      "beforeSHA256": "966ca2b6d52ecbcc7c93587cd5fbdb7ac6095f1dbae477e50e5b5c949b69697b",
+      "afterSHA256": "880cbc7665e2305dea119e2767751fc3655c530ea0856c9b42ba2315b902bb20",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/styling/length-shared.js",
+      "originalSHA256": "880cbc7665e2305dea119e2767751fc3655c530ea0856c9b42ba2315b902bb20",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/styling/style-properties.js",
+      "beforeSHA256": "297bd6517e31c9af2a019fe52d8e2b6f7f076d956cbf6847f982ca8a1e972e60",
+      "afterSHA256": "405e62786b74a47dcc6b245d3469a8cf9da2f358a34a69baf6007a7f1c783572",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/styling/style-properties.js",
+      "originalSHA256": "6560351c60a72dfbbb55c2dcf422d50fd88d7073b69574edf2fa84c6b4526b3c",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "canonical-build-defines",
+          "sourceLines": [
+            740,
+            783
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/styling/style-properties.mjs",
+      "beforeSHA256": "297bd6517e31c9af2a019fe52d8e2b6f7f076d956cbf6847f982ca8a1e972e60",
+      "afterSHA256": "405e62786b74a47dcc6b245d3469a8cf9da2f358a34a69baf6007a7f1c783572",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/styling/style-properties.js",
+      "originalSHA256": "6560351c60a72dfbbb55c2dcf422d50fd88d7073b69574edf2fa84c6b4526b3c",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "canonical-build-defines",
+          "sourceLines": [
+            740,
+            783
+          ]
+        }
+      ],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/styling/style-scope.js",
+      "beforeSHA256": "0da315a73feec25d03c596e06598a302de4ca3a4427fe2983c571945bd0981f2",
+      "afterSHA256": "4cd70f34bd1c313da17c8d31d2c1a1c7df034ff5835afed4d84f3a6957a46497",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/styling/style-scope.js",
+      "originalSHA256": "403f4ecc766f6a53a49b0ff58bf2e4c4f250e08264340b79f6a6b4423e65f6da",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "canonical-build-defines",
+          "sourceLines": [
+            740,
+            783
+          ]
+        },
+        {
+          "name": "existing-session-app-config-provider-import",
+          "sourceLines": [
+            283,
+            289
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/styling/style-scope.mjs",
+      "beforeSHA256": "4142ce51a22405ecd98c26b76b2895051d10e19b99f2cc051c05dbca936736df",
+      "afterSHA256": "d16ced0c61d0142c4c432f73f4ddbaeff428fbe0b058a3cfd3d756c8d84f9a37",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/styling/style-scope.js",
+      "originalSHA256": "403f4ecc766f6a53a49b0ff58bf2e4c4f250e08264340b79f6a6b4423e65f6da",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "canonical-build-defines",
+          "sourceLines": [
+            740,
+            783
+          ]
+        },
+        {
+          "name": "existing-session-app-config-provider-import",
+          "sourceLines": [
+            283,
+            289
+          ]
+        }
+      ],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/styling/style/index.js",
+      "beforeSHA256": "ed2c7b906249c84a6fcb3e8aee6cbef58b2746eb6488ef60e56349939041d2fd",
+      "afterSHA256": "5090b6fecaa6e2d18d98bf5b6c09266711439699e305539c4bd49f37dc176c2f",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/styling/style/index.js",
+      "originalSHA256": "5090b6fecaa6e2d18d98bf5b6c09266711439699e305539c4bd49f37dc176c2f",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": []
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/styling/style/index.mjs",
+      "beforeSHA256": "ed2c7b906249c84a6fcb3e8aee6cbef58b2746eb6488ef60e56349939041d2fd",
+      "afterSHA256": "5090b6fecaa6e2d18d98bf5b6c09266711439699e305539c4bd49f37dc176c2f",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/styling/style/index.js",
+      "originalSHA256": "5090b6fecaa6e2d18d98bf5b6c09266711439699e305539c4bd49f37dc176c2f",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/switch/index.ios.js",
+      "beforeSHA256": "c9b4c201c12d401c02c41ca4313daca2ea885d5a746b5223578c80590d7ed7e1",
+      "afterSHA256": "dd615dd858e0bbe438f68229e4c5cbc1fb1dc3f5955a360ae4223a2f761c4f58",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/switch/index.ios.js",
+      "originalSHA256": "dd615dd858e0bbe438f68229e4c5cbc1fb1dc3f5955a360ae4223a2f761c4f58",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": []
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/switch/index.ios.mjs",
+      "beforeSHA256": "c9b4c201c12d401c02c41ca4313daca2ea885d5a746b5223578c80590d7ed7e1",
+      "afterSHA256": "dd615dd858e0bbe438f68229e4c5cbc1fb1dc3f5955a360ae4223a2f761c4f58",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/switch/index.ios.js",
+      "originalSHA256": "dd615dd858e0bbe438f68229e4c5cbc1fb1dc3f5955a360ae4223a2f761c4f58",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/switch/index.js",
+      "beforeSHA256": "c9b4c201c12d401c02c41ca4313daca2ea885d5a746b5223578c80590d7ed7e1",
+      "afterSHA256": "dd615dd858e0bbe438f68229e4c5cbc1fb1dc3f5955a360ae4223a2f761c4f58",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/switch/index.ios.js",
+      "originalSHA256": "dd615dd858e0bbe438f68229e4c5cbc1fb1dc3f5955a360ae4223a2f761c4f58",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": []
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/switch/index.mjs",
+      "beforeSHA256": "c9b4c201c12d401c02c41ca4313daca2ea885d5a746b5223578c80590d7ed7e1",
+      "afterSHA256": "dd615dd858e0bbe438f68229e4c5cbc1fb1dc3f5955a360ae4223a2f761c4f58",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/switch/index.ios.js",
+      "originalSHA256": "dd615dd858e0bbe438f68229e4c5cbc1fb1dc3f5955a360ae4223a2f761c4f58",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/tab-view/index.ios.js",
+      "beforeSHA256": "770df55c43d1354bfd27bde0f3af9caedada6b03df1ed13642bffef08df7725c",
+      "afterSHA256": "7209b985663cf8a20ccd64eea975713ce6ca47f1a0044df2317f4aae3cd0097e",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/tab-view/index.ios.js",
+      "originalSHA256": "e4652bc894956cb0ade08ca462e8f91a5b7ab822ade66d87aafa6674a7094069",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "canonical-build-defines",
+          "sourceLines": [
+            740,
+            783
+          ]
+        },
+        {
+          "name": "existing-embedded-TabView-and-layout-adaptation",
+          "sourceLines": [
+            460,
+            516,
+            681,
+            694
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/tab-view/index.ios.mjs",
+      "beforeSHA256": "770df55c43d1354bfd27bde0f3af9caedada6b03df1ed13642bffef08df7725c",
+      "afterSHA256": "7209b985663cf8a20ccd64eea975713ce6ca47f1a0044df2317f4aae3cd0097e",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/tab-view/index.ios.js",
+      "originalSHA256": "e4652bc894956cb0ade08ca462e8f91a5b7ab822ade66d87aafa6674a7094069",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "canonical-build-defines",
+          "sourceLines": [
+            740,
+            783
+          ]
+        },
+        {
+          "name": "existing-embedded-TabView-and-layout-adaptation",
+          "sourceLines": [
+            460,
+            516,
+            681,
+            694
+          ]
+        }
+      ],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/tab-view/index.js",
+      "beforeSHA256": "770df55c43d1354bfd27bde0f3af9caedada6b03df1ed13642bffef08df7725c",
+      "afterSHA256": "7209b985663cf8a20ccd64eea975713ce6ca47f1a0044df2317f4aae3cd0097e",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/tab-view/index.ios.js",
+      "originalSHA256": "e4652bc894956cb0ade08ca462e8f91a5b7ab822ade66d87aafa6674a7094069",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "canonical-build-defines",
+          "sourceLines": [
+            740,
+            783
+          ]
+        },
+        {
+          "name": "existing-embedded-TabView-and-layout-adaptation",
+          "sourceLines": [
+            460,
+            516,
+            681,
+            694
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/tab-view/index.mjs",
+      "beforeSHA256": "770df55c43d1354bfd27bde0f3af9caedada6b03df1ed13642bffef08df7725c",
+      "afterSHA256": "7209b985663cf8a20ccd64eea975713ce6ca47f1a0044df2317f4aae3cd0097e",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/tab-view/index.ios.js",
+      "originalSHA256": "e4652bc894956cb0ade08ca462e8f91a5b7ab822ade66d87aafa6674a7094069",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "canonical-build-defines",
+          "sourceLines": [
+            740,
+            783
+          ]
+        },
+        {
+          "name": "existing-embedded-TabView-and-layout-adaptation",
+          "sourceLines": [
+            460,
+            516,
+            681,
+            694
+          ]
+        }
+      ],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/tab-view/tab-view-common.js",
+      "beforeSHA256": "e8d7b4c71672751f990693baef23305845ce68fdd05d78948a68011b15f35b1f",
+      "afterSHA256": "2d1a175c13a1ece8155f334b4151a8662d06a6b5642da98f8cbcb2da48d83b1c",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/tab-view/tab-view-common.js",
+      "originalSHA256": "f691e214709e10bfcda30ac737ee4b63a6879271787e4f45a6fb21886b130848",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "canonical-build-defines",
+          "sourceLines": [
+            740,
+            783
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/tab-view/tab-view-common.mjs",
+      "beforeSHA256": "e8d7b4c71672751f990693baef23305845ce68fdd05d78948a68011b15f35b1f",
+      "afterSHA256": "2d1a175c13a1ece8155f334b4151a8662d06a6b5642da98f8cbcb2da48d83b1c",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/tab-view/tab-view-common.js",
+      "originalSHA256": "f691e214709e10bfcda30ac737ee4b63a6879271787e4f45a6fb21886b130848",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "canonical-build-defines",
+          "sourceLines": [
+            740,
+            783
+          ]
+        }
+      ],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/text-base/index.ios.js",
+      "beforeSHA256": "faa4585b3f44217b949798cd946ddb3cd1c85b8e63c823127551963883a0dcc9",
+      "afterSHA256": "5f16cdc53d6dd2474ad659ec387aca4aba80afba0da83c46d945763eb23aba3c",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/text-base/index.ios.js",
+      "originalSHA256": "cd449448c908d431adc2bdabde8a07ebeaea3e14c348e4f14dbfa01285b4a6a8",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "existing-Color-Font-native-value-unwrapping",
+          "sourceLines": [
+            660,
+            679
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/text-base/index.ios.mjs",
+      "beforeSHA256": "faa4585b3f44217b949798cd946ddb3cd1c85b8e63c823127551963883a0dcc9",
+      "afterSHA256": "5f16cdc53d6dd2474ad659ec387aca4aba80afba0da83c46d945763eb23aba3c",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/text-base/index.ios.js",
+      "originalSHA256": "cd449448c908d431adc2bdabde8a07ebeaea3e14c348e4f14dbfa01285b4a6a8",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "existing-Color-Font-native-value-unwrapping",
+          "sourceLines": [
+            660,
+            679
+          ]
+        }
+      ],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/text-base/index.js",
+      "beforeSHA256": "faa4585b3f44217b949798cd946ddb3cd1c85b8e63c823127551963883a0dcc9",
+      "afterSHA256": "5f16cdc53d6dd2474ad659ec387aca4aba80afba0da83c46d945763eb23aba3c",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/text-base/index.ios.js",
+      "originalSHA256": "cd449448c908d431adc2bdabde8a07ebeaea3e14c348e4f14dbfa01285b4a6a8",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "existing-Color-Font-native-value-unwrapping",
+          "sourceLines": [
+            660,
+            679
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/text-base/index.mjs",
+      "beforeSHA256": "faa4585b3f44217b949798cd946ddb3cd1c85b8e63c823127551963883a0dcc9",
+      "afterSHA256": "5f16cdc53d6dd2474ad659ec387aca4aba80afba0da83c46d945763eb23aba3c",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/text-base/index.ios.js",
+      "originalSHA256": "cd449448c908d431adc2bdabde8a07ebeaea3e14c348e4f14dbfa01285b4a6a8",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "existing-Color-Font-native-value-unwrapping",
+          "sourceLines": [
+            660,
+            679
+          ]
+        }
+      ],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/text-field/index.ios.js",
+      "beforeSHA256": "0db333dabe13702a002e3b3df728035d45d7c96550653ace10848e5d64fa0501",
+      "afterSHA256": "56925380bec1c1e54eaaba8c2b80b1f2e959dccdfc85b4d3a3afaf3bbc59eb18",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/text-field/index.ios.js",
+      "originalSHA256": "56925380bec1c1e54eaaba8c2b80b1f2e959dccdfc85b4d3a3afaf3bbc59eb18",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": []
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/text-field/index.ios.mjs",
+      "beforeSHA256": "0db333dabe13702a002e3b3df728035d45d7c96550653ace10848e5d64fa0501",
+      "afterSHA256": "56925380bec1c1e54eaaba8c2b80b1f2e959dccdfc85b4d3a3afaf3bbc59eb18",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/text-field/index.ios.js",
+      "originalSHA256": "56925380bec1c1e54eaaba8c2b80b1f2e959dccdfc85b4d3a3afaf3bbc59eb18",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/text-field/index.js",
+      "beforeSHA256": "0db333dabe13702a002e3b3df728035d45d7c96550653ace10848e5d64fa0501",
+      "afterSHA256": "56925380bec1c1e54eaaba8c2b80b1f2e959dccdfc85b4d3a3afaf3bbc59eb18",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/text-field/index.ios.js",
+      "originalSHA256": "56925380bec1c1e54eaaba8c2b80b1f2e959dccdfc85b4d3a3afaf3bbc59eb18",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": []
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/text-field/index.mjs",
+      "beforeSHA256": "0db333dabe13702a002e3b3df728035d45d7c96550653ace10848e5d64fa0501",
+      "afterSHA256": "56925380bec1c1e54eaaba8c2b80b1f2e959dccdfc85b4d3a3afaf3bbc59eb18",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/text-field/index.ios.js",
+      "originalSHA256": "56925380bec1c1e54eaaba8c2b80b1f2e959dccdfc85b4d3a3afaf3bbc59eb18",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/text-view/index.ios.js",
+      "beforeSHA256": "977fd95dd12dff2210317728d6c3feb24b444e1f270672097ec06ab7c16faf93",
+      "afterSHA256": "e9b3e97d60ecb291d5f2945f2ae2b72b1a3d5fce1645d9cdb2d82ab5bd5bf514",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/text-view/index.ios.js",
+      "originalSHA256": "e9b3e97d60ecb291d5f2945f2ae2b72b1a3d5fce1645d9cdb2d82ab5bd5bf514",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": []
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/text-view/index.ios.mjs",
+      "beforeSHA256": "977fd95dd12dff2210317728d6c3feb24b444e1f270672097ec06ab7c16faf93",
+      "afterSHA256": "e9b3e97d60ecb291d5f2945f2ae2b72b1a3d5fce1645d9cdb2d82ab5bd5bf514",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/text-view/index.ios.js",
+      "originalSHA256": "e9b3e97d60ecb291d5f2945f2ae2b72b1a3d5fce1645d9cdb2d82ab5bd5bf514",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/text-view/index.js",
+      "beforeSHA256": "977fd95dd12dff2210317728d6c3feb24b444e1f270672097ec06ab7c16faf93",
+      "afterSHA256": "e9b3e97d60ecb291d5f2945f2ae2b72b1a3d5fce1645d9cdb2d82ab5bd5bf514",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/text-view/index.ios.js",
+      "originalSHA256": "e9b3e97d60ecb291d5f2945f2ae2b72b1a3d5fce1645d9cdb2d82ab5bd5bf514",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": []
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/ui/text-view/index.mjs",
+      "beforeSHA256": "977fd95dd12dff2210317728d6c3feb24b444e1f270672097ec06ab7c16faf93",
+      "afterSHA256": "e9b3e97d60ecb291d5f2945f2ae2b72b1a3d5fce1645d9cdb2d82ab5bd5bf514",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/ui/text-view/index.ios.js",
+      "originalSHA256": "e9b3e97d60ecb291d5f2945f2ae2b72b1a3d5fce1645d9cdb2d82ab5bd5bf514",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/utils/native-helper-for-android.js",
+      "beforeSHA256": "9778d2d7016a314eba18dde2da15bd7b248da7639ed57aaae1b83d1ccbc45911",
+      "afterSHA256": "c8145477b1696a89e3d9bc52a0f89c18198d6ed3fa27b3a16b96ac59d9f94b02",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/utils/native-helper-for-android.js",
+      "originalSHA256": "c8145477b1696a89e3d9bc52a0f89c18198d6ed3fa27b3a16b96ac59d9f94b02",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": []
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/utils/native-helper-for-android.mjs",
+      "beforeSHA256": "9778d2d7016a314eba18dde2da15bd7b248da7639ed57aaae1b83d1ccbc45911",
+      "afterSHA256": "c8145477b1696a89e3d9bc52a0f89c18198d6ed3fa27b3a16b96ac59d9f94b02",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/utils/native-helper-for-android.js",
+      "originalSHA256": "c8145477b1696a89e3d9bc52a0f89c18198d6ed3fa27b3a16b96ac59d9f94b02",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/utils/native-helper.ios.js",
+      "beforeSHA256": "518de67dd42cd1c907814d24fcb7568a4d50fa34a4d135c2d3a510e55cb52402",
+      "afterSHA256": "9d74e352cd8a57a2c1f7a1664a186f1adf38ed2b86be46fbc77b5cb77eb99113",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/utils/native-helper.ios.js",
+      "originalSHA256": "9d74e352cd8a57a2c1f7a1664a186f1adf38ed2b86be46fbc77b5cb77eb99113",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": []
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/utils/native-helper.ios.mjs",
+      "beforeSHA256": "518de67dd42cd1c907814d24fcb7568a4d50fa34a4d135c2d3a510e55cb52402",
+      "afterSHA256": "9d74e352cd8a57a2c1f7a1664a186f1adf38ed2b86be46fbc77b5cb77eb99113",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/utils/native-helper.ios.js",
+      "originalSHA256": "9d74e352cd8a57a2c1f7a1664a186f1adf38ed2b86be46fbc77b5cb77eb99113",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/utils/native-helper.js",
+      "beforeSHA256": "518de67dd42cd1c907814d24fcb7568a4d50fa34a4d135c2d3a510e55cb52402",
+      "afterSHA256": "9d74e352cd8a57a2c1f7a1664a186f1adf38ed2b86be46fbc77b5cb77eb99113",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/utils/native-helper.ios.js",
+      "originalSHA256": "9d74e352cd8a57a2c1f7a1664a186f1adf38ed2b86be46fbc77b5cb77eb99113",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": []
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/utils/native-helper.mjs",
+      "beforeSHA256": "518de67dd42cd1c907814d24fcb7568a4d50fa34a4d135c2d3a510e55cb52402",
+      "afterSHA256": "9d74e352cd8a57a2c1f7a1664a186f1adf38ed2b86be46fbc77b5cb77eb99113",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/utils/native-helper.ios.js",
+      "originalSHA256": "9d74e352cd8a57a2c1f7a1664a186f1adf38ed2b86be46fbc77b5cb77eb99113",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/wgc/crypto/index.js",
+      "beforeSHA256": "ed3ac04b6fde91160df8bccd5dad684f9017ea158b493f36843e3774d6ccdda9",
+      "afterSHA256": "f6a4107db55505587a2e9c2ab30ac9ba98bbff6372b0be5471b2299998fd588b",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/wgc/crypto/index.js",
+      "originalSHA256": "ae5f479e669c936e4339d7fdef714443492fc275124cf85e2976ab83626c5428",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "canonical-build-defines",
+          "sourceLines": [
+            740,
+            783
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@nativescript/core/wgc/crypto/index.mjs",
+      "beforeSHA256": "ed3ac04b6fde91160df8bccd5dad684f9017ea158b493f36843e3774d6ccdda9",
+      "afterSHA256": "f6a4107db55505587a2e9c2ab30ac9ba98bbff6372b0be5471b2299998fd588b",
+      "changeFromExecutionBase": "javascript-body-changed",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/@nativescript/core/wgc/crypto/index.js",
+      "originalSHA256": "ae5f479e669c936e4339d7fdef714443492fc275124cf85e2976ab83626c5428",
+      "sameAsOriginalBytes": false,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          220,
+          249
+        ]
+      },
+      "existingTransforms": [
+        {
+          "name": "canonical-build-defines",
+          "sourceLines": [
+            740,
+            783
+          ]
+        }
+      ],
+      "shadowCopyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          232,
+          244
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/css-tree/lib/data.js",
+      "beforeSHA256": "a6490e312753740b82517580f7fbb0b1c62b30ff8b72518f25b7e74e9ae31975",
+      "afterSHA256": "a6490e312753740b82517580f7fbb0b1c62b30ff8b72518f25b7e74e9ae31975",
+      "changeFromExecutionBase": "identical-content-observed-mode-row",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/css-tree/lib/data.js",
+      "originalSHA256": "a6490e312753740b82517580f7fbb0b1c62b30ff8b72518f25b7e74e9ae31975",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          306,
+          336
+        ]
+      },
+      "existingTransforms": []
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/css-tree/package.json",
+      "beforeSHA256": "55540a15026970b09f0e4db831e54f2b7dfdda471741d54e3f49b6b7069a1d77",
+      "afterSHA256": "bd734f2de92e7a254bd05970fa83b30f8be9ed73e33577065a1529e59843cfd4",
+      "changeFromExecutionBase": "json-values-equal",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/css-tree/package.json",
+      "originalSHA256": "bd734f2de92e7a254bd05970fa83b30f8be9ed73e33577065a1529e59843cfd4",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          306,
+          336
+        ]
+      },
+      "existingTransforms": [],
+      "changedTopLevelValues": {},
+      "packageFormattingAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          801,
+          821
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/css-what/package.json",
+      "beforeSHA256": "f50f17f67404ab5feea17f6e7b2156ce882ea6bfc8777d9011aa1845934b834b",
+      "afterSHA256": "84e94951ab88b87e519f27e080acd5173e05810662503589726d709451876b61",
+      "changeFromExecutionBase": "json-values-equal",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/css-what/package.json",
+      "originalSHA256": "84e94951ab88b87e519f27e080acd5173e05810662503589726d709451876b61",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          306,
+          336
+        ]
+      },
+      "existingTransforms": [],
+      "changedTopLevelValues": {},
+      "packageFormattingAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          801,
+          821
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/tslib/modules/index.js",
+      "beforeSHA256": "0b2e098d44c3f7eae206022a32f4600063c807bc1b97486bca1a12914f2c3906",
+      "afterSHA256": "b3a4765da2bc019c79f2c2c12b36f860e946119d976897f1ce945caf227d0468",
+      "changeFromExecutionBase": "line-endings-only",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/tslib/modules/index.js",
+      "originalSHA256": "b3a4765da2bc019c79f2c2c12b36f860e946119d976897f1ce945caf227d0468",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          306,
+          336
+        ]
+      },
+      "existingTransforms": []
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/tslib/modules/package.json",
+      "beforeSHA256": "3ca9d4afd21425087cf31893b8f9f63c81b0b8408db5e343ca76e5f8aa26ab9a",
+      "afterSHA256": "f2a77d1fa2e7ee710b2835b2933d75d9c7f5dad4f1bab69e1679876e32b5e9eb",
+      "changeFromExecutionBase": "json-values-equal",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/tslib/modules/package.json",
+      "originalSHA256": "f2a77d1fa2e7ee710b2835b2933d75d9c7f5dad4f1bab69e1679876e32b5e9eb",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          306,
+          336
+        ]
+      },
+      "existingTransforms": [],
+      "changedTopLevelValues": {},
+      "packageFormattingAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          801,
+          821
+        ]
+      }
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/tslib/tslib.es6.js",
+      "beforeSHA256": "944658bcef6786108a55ea4d56214086365ea34ffcea50215c0f3708bd7d386c",
+      "afterSHA256": "480042d65f5abdacdcf9d9ade38f9d484455be82aa34bd472bf6ab87ea0e3620",
+      "changeFromExecutionBase": "line-endings-only",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/tslib/tslib.es6.js",
+      "originalSHA256": "480042d65f5abdacdcf9d9ade38f9d484455be82aa34bd472bf6ab87ea0e3620",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          306,
+          336
+        ]
+      },
+      "existingTransforms": []
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/tslib/tslib.js",
+      "beforeSHA256": "5b1e566051b18c117f2c8554197163ce9307a69d841dccd39e315e1c173cb21c",
+      "afterSHA256": "8855865a058bc0a6df8f5db45347be041a2d6bbe1654216c51a805648c1b6e8a",
+      "changeFromExecutionBase": "line-endings-only",
+      "originalSDKMember": "MiniAppSDK/nativescript/node_modules/tslib/tslib.js",
+      "originalSHA256": "8855865a058bc0a6df8f5db45347be041a2d6bbe1654216c51a805648c1b6e8a",
+      "sameAsOriginalBytes": true,
+      "copyAuthority": {
+        "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+        "lines": [
+          306,
+          336
+        ]
+      },
+      "existingTransforms": []
+    }
+  ],
+  "boundaries": [
+    "No preparation code was executed or modified.",
+    "105 paths equal the mapped original body; .mjs and iOS aliases may copy a differently named original source.",
+    "62 paths carry existing Hanlin preparation adaptations; these are not described as unmodified upstream bytes.",
+    "The tracked Core package moves from9.1.0 to resolved9.1.4 and adds its original semver dependency.",
+    "This classification establishes source provenance, not app/native behavior."
+  ]
+}

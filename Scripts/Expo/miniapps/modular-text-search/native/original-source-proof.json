@@ -1,0 +1,76 @@
+{
+  "attachmentSHA256": "3f81e380acefbafade23effea989e969cce6a404a3754cfbdb33609408802b15",
+  "sources": [
+    {
+      "sourcePath": "src/logic/searchGrouping.js",
+      "originalSHA256": "d7f8fe70f0355878624c2faa356f9cad88032cd7068aa7cef5763dd239af0424",
+      "localSHA256": "d7f8fe70f0355878624c2faa356f9cad88032cd7068aa7cef5763dd239af0424",
+      "byteIdentical": true
+    },
+    {
+      "sourcePath": "src/logic/textUtils.js",
+      "originalSHA256": "381b8809d99176f0e320e18a1537999c792d843c527a17d072868c840ac49516",
+      "localSHA256": "23a5ed4e316acf547ff7505002e10d451f559b56f957cb45ada6e9da324453e0",
+      "byteIdentical": false
+    },
+    {
+      "sourcePath": "src/logic/localization.js",
+      "originalSHA256": "d3469b6512a6b9cf02d87ac0fa348b8d29bae0f21443f85af11965db3e98d873",
+      "localSHA256": "d3469b6512a6b9cf02d87ac0fa348b8d29bae0f21443f85af11965db3e98d873",
+      "byteIdentical": true
+    },
+    {
+      "sourcePath": "src/intent/snippetDefaults.js",
+      "originalSHA256": "82b15d94edeeda146e04a90a6fa35e44cfbbff891acdbd0bfc3ab3f4cf212809",
+      "localSHA256": "82b15d94edeeda146e04a90a6fa35e44cfbbff891acdbd0bfc3ab3f4cf212809",
+      "byteIdentical": true
+    },
+    {
+      "sourcePath": "src/intent/snippetViewModel.js",
+      "originalSHA256": "22853b612b79dfe8e3d13822417cf7d63ba55144c29111bf9be533adb6a68787",
+      "localSHA256": "22853b612b79dfe8e3d13822417cf7d63ba55144c29111bf9be533adb6a68787",
+      "byteIdentical": true
+    },
+    {
+      "sourcePath": "src/engines/registry.js",
+      "originalSHA256": "9be4d34fecd98447cb94585be1b5bd589a5a0cbe47c726905a398bfd3d4a09cb",
+      "localSHA256": "9be4d34fecd98447cb94585be1b5bd589a5a0cbe47c726905a398bfd3d4a09cb",
+      "byteIdentical": true
+    },
+    {
+      "sourcePath": "src/engines/preferences.js",
+      "originalSHA256": "38e699d09b942887b84c200c7b07467f3b28f092f3385d9ba9f756a6fc6f6896",
+      "localSHA256": "124ed5937e1a69f51657d8c9bc58b7326269bc2ea77510fc9a6fafece5cb43ac",
+      "byteIdentical": false
+    },
+    {
+      "sourcePath": "src/engines/sefaria/constants.js",
+      "originalSHA256": "f6dc8d774ac727b25c3ff278f514ee6f6d0ddd9b74541c9c96d3fec246f7601d",
+      "localSHA256": "f6dc8d774ac727b25c3ff278f514ee6f6d0ddd9b74541c9c96d3fec246f7601d",
+      "byteIdentical": true
+    },
+    {
+      "sourcePath": "src/engines/sefaria/client.js",
+      "originalSHA256": "cd58ed5f4c84634174e34d1a597fd4f437853e80d13bd195dd16f4992015e08c",
+      "localSHA256": "c2221c450bf897c69f2796e3a9867384abc0fefa3d29f18e59a2bd24c64dfd2f",
+      "byteIdentical": false
+    },
+    {
+      "sourcePath": "src/engines/sefaria/searchPayload.js",
+      "originalSHA256": "6e4c77c4248d0d1ae84d6172bd184a1d61594250517a545dae53fb09723b85c5",
+      "localSHA256": "6e4c77c4248d0d1ae84d6172bd184a1d61594250517a545dae53fb09723b85c5",
+      "byteIdentical": true
+    },
+    {
+      "sourcePath": "src/engines/sefaria/engine.js",
+      "originalSHA256": "0fe3b94e5ef58a668990270761336ed5fe200a7472fe853a5e614b1ad64929c3",
+      "localSHA256": "0fe3b94e5ef58a668990270761336ed5fe200a7472fe853a5e614b1ad64929c3",
+      "byteIdentical": true
+    }
+  ],
+  "adaptations": {
+    "src/engines/preferences.js": "Original ScriptWidget persistent string storage API",
+    "src/engines/sefaria/client.js": "Original ScriptWidget HTTP API, native query encoding without browser URLSearchParams",
+    "src/logic/textUtils.js": "Trailing blank line at EOF normalized; logic unchanged"
+  }
+}

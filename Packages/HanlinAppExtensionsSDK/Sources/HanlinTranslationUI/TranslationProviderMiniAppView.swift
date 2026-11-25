@@ -17,7 +17,15 @@ public struct TranslationProviderMiniAppView: View {
         self.app = app
     }
 
-    public var body: some View {
+    @ViewBuilder public var body: some View {
+        if app.nativePresentation != nil {
+            TranslationProviderNativePresentationView(session: session, app: app)
+        } else {
+            legacyBody
+        }
+    }
+
+    private var legacyBody: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
                 // Header badge

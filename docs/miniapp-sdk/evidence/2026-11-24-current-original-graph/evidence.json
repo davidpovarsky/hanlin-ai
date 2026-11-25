@@ -1,0 +1,176 @@
+{
+  "schemaVersion": 1,
+  "status": "EXECUTED_PASS",
+  "recordedAtUTC": "2026-11-24T00:31:42.994696+00:00",
+  "repository": {
+    "sourceBaseAtSDKStaging": "ca9acf4e",
+    "authoringImplementationCommit": "0db0fe2d693d17535215b5d4736af3233fed71e9",
+    "combinedHEADAtVerification": "3016c3349076d661bc36336a92bb63877ef3b8a0",
+    "implementationSHA256": "3fe29fdb290fe3275c5156e038d2f8a5ee5e125b71dcb69a0a85c3a768ca55c9",
+    "combinedRootImplementationBytesMatch": true
+  },
+  "environment": {
+    "platform": "Linux aarch64",
+    "node": "v24.22.0",
+    "nativeAppleExecution": "NOT_RUN_IN_THIS_EVIDENCE"
+  },
+  "sdk": {
+    "path": "/dev/shm/hanlin-miniapp-current-sdk-20261124",
+    "manifestSHA256": "cb094a40ba850512399d5a199dced29830e510601adbbdfa2a7b4759aa293599",
+    "inputSHA256": "5435dc528e89e0f8a3f00d78f2355d7da5488d53764de7f3d4d870b09a208610",
+    "engines": [
+      "expo",
+      "scriptwidget"
+    ],
+    "fileCount": 19689,
+    "compilerVersion": "6.0.3",
+    "packageVersions": {
+      "@expo/ui": "58.0.29",
+      "@hanlin/expo-native-api": "1.0.0",
+      "@hanlin/expo-ui": "1.0.0",
+      "@nativescript/react-native": "9.1.2",
+      "expo": "58.0.26",
+      "expo-brownfield": "58.0.20",
+      "expo-modules-core": "58.1.0",
+      "expo-modules-jsi": "58.0.23",
+      "react": "19.3.0",
+      "react-native": "0.88.1",
+      "react-native-worklets": "0.13.0",
+      "expo-widgets": "58.0.29",
+      "@babel/core": "7.29.7",
+      "@react-native-community/cli": "20.2.0",
+      "@react-native/codegen": "0.88.1",
+      "@react-native/metro-config": "0.88.1",
+      "@types/react": "19.3.0",
+      "babel-preset-expo": "58.0.26",
+      "esbuild": "0.25.12",
+      "typescript": "6.0.2"
+    },
+    "metroVersion": "0.87.1",
+    "hostContract": {
+      "runtimeVersion": "58.0.29",
+      "expoSDKVersion": "58.0.26",
+      "bridgeVersion": "3.0.0",
+      "nativeApiContractVersion": "1.0.0",
+      "nativeApiAbiIdentity": "rn0.88.1-hermes260318099.0.5",
+      "plugins": {
+        "@expo/ui": "58.0.29",
+        "expo-widgets": "58.0.29",
+        "@hanlin/expo-ui": "3.0.0",
+        "@nativescript/react-native": "9.1.2",
+        "react-native-worklets": "0.13.0"
+      }
+    },
+    "scriptWidgetNativeAPI": {
+      "globals": 41,
+      "objects": 24,
+      "methods": 118
+    },
+    "localHanlinPackageBytesMatchCombinedSource": true,
+    "scope": "Expo + ScriptWidget subset staged from the same coherent installed original graph and actual combined native source. Full three-engine SDK packaging is handled by the application build."
+  },
+  "checks": [
+    {
+      "name": "canonical modular search1.4 actual original Metro and isolated Expo/ScriptWidget type environments",
+      "status": "EXECUTED_PASS",
+      "diagnostics": [],
+      "typecheck": {
+        "strict": true,
+        "skipLibCheck": false,
+        "dependencyDeclarationsChecked": true
+      },
+      "log": "canonical-current-build.log"
+    },
+    {
+      "name": "actual current SDK positive/negative authoring integration",
+      "status": "EXECUTED_PASS",
+      "tests": 5,
+      "log": "current-sdk-integration.log"
+    },
+    {
+      "name": "all retained source digests match canonical source; all compiled digests match prepared bytes; ZIP CRC",
+      "status": "EXECUTED_PASS",
+      "sourceFiles": 35,
+      "compiledFiles": 18
+    }
+  ],
+  "artifact": {
+    "archivePath": "/dev/shm/hanlin-modular-search14-current-artifact-20261124/ModularTextSearch-1.4.0.hanlinExpo",
+    "archiveSHA256": "9e31b10560bb3ce335cdde7c7fd7ca9582b3e1acae3ec946cada01f547a96b07",
+    "archiveBytes": 2197878,
+    "bundleSHA256": "916f1db56a3e761fe707c11c615a9e6c4e0336d72b35442933e96f71ee6928f0",
+    "sourceMapSHA256": "74f0fd0c03c92d918b41e6170b53cc3587c31586eb8d597f02c72a8b0dda1679",
+    "version": "1.4.0",
+    "preparedHostContract": {
+      "runtimeVersion": "58.0.29",
+      "bridgeVersion": "3.0.0",
+      "plugins": {
+        "@expo/ui": "58.0.29",
+        "@hanlin/expo-ui": "3.0.0",
+        "@nativescript/react-native": "9.1.2",
+        "react-native-worklets": "0.13.0",
+        "expo-widgets": "58.0.29"
+      },
+      "nativeApi": {
+        "contractVersion": "1.0.0",
+        "abiIdentity": "rn0.88.1-hermes260318099.0.5"
+      }
+    },
+    "preparedDependencies": {
+      "@expo/ui": "58.0.29",
+      "@hanlin/expo-ui": "1.0.0",
+      "expo": "58.0.26",
+      "react": "19.3.0",
+      "react-native": "0.88.1",
+      "@hanlin/expo-native-api": "1.0.0",
+      "@nativescript/react-native": "9.1.2",
+      "react-native-worklets": "0.13.0"
+    },
+    "canonicalSourceIdentity": [
+      {
+        "path": "native/search.tsx",
+        "sha256": "e1e94967febb0f8aea8be64296e9ad384b7f65d29f7744d7cd39dcfcf775a15b",
+        "retainedBytesMatch": true,
+        "preparedBytesMatch": true
+      },
+      {
+        "path": "native/tsconfig.json",
+        "sha256": "04f9897c1e27a4f1bfb0b948d70c482618c84961a61567447ef110ea43dcce93",
+        "retainedBytesMatch": true,
+        "preparedBytesMatch": true
+      },
+      {
+        "path": "native/src/intent/snippetViewModel.js",
+        "sha256": "22853b612b79dfe8e3d13822417cf7d63ba55144c29111bf9be533adb6a68787",
+        "retainedBytesMatch": true,
+        "preparedBytesMatch": true
+      },
+      {
+        "path": "index.ts",
+        "sha256": "00e02d45f2f2a702f611c680663da217bfca69cd375b1dfe9f8f14562f9fb3e0",
+        "retainedBytesMatch": true,
+        "runtimeRepresentation": "Compiled into the original Metro bundle; editable original remains in source/."
+      },
+      {
+        "path": "App.tsx",
+        "sha256": "574e69fa47345e9847cb98b7f9c8a75d92e941854b5fd2764edb3b0d894f0c7a",
+        "retainedBytesMatch": true,
+        "runtimeRepresentation": "Compiled into the original Metro bundle; editable original remains in source/."
+      }
+    ]
+  },
+  "logs": [
+    {
+      "path": "canonical-current-build.log",
+      "sha256": "1805e1e52439fa92a04a62f8c9a6b12648f5eb765f85ef730d403548a8c46c4f"
+    },
+    {
+      "path": "current-sdk-integration.log",
+      "sha256": "5bddd0b523452a915c37d9ea24a90709428bfa928c8f8b63abd5ac5b576388e9"
+    },
+    {
+      "path": "sdk-staging.log",
+      "sha256": "313c9941faa99147fcc4a54cb6f1765d5924cf49e7804ed0f399570979ed617c"
+    }
+  ]
+}

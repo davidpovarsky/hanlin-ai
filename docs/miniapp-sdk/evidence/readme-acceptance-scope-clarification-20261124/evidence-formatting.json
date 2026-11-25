@@ -1,0 +1,19 @@
+{
+  "observedCheck": {
+    "argv": [
+      "git",
+      "diff",
+      "--cached",
+      "--check"
+    ],
+    "exitCode": 2,
+    "stdout": "docs/miniapp-sdk/evidence/readme-acceptance-scope-clarification-20261124/readme.diff:8: trailing whitespace.\n+ \ndocs/miniapp-sdk/evidence/readme-acceptance-scope-clarification-20261124/readme.diff:11: trailing whitespace.\n+ \ndocs/miniapp-sdk/evidence/readme-acceptance-scope-clarification-20261124/readme.diff:13: trailing whitespace.\n+ \ndocs/miniapp-sdk/evidence/readme-acceptance-scope-clarification-20261124/readme.diff:13: new blank line at EOF.\n",
+    "stderr": ""
+  },
+  "cause": "Unified diff evidence contains literal space-only context lines; the corrected README itself had no whitespace diagnostic.",
+  "resolution": "Preserved the exact diff as gzip; did not modify the README or diff contents.",
+  "originalDiffSHA256": "cfecb98d22393a7c729ad54e09c774beef878e09bd7a49a8c132803b59680cff",
+  "originalDiffBytes": 3241,
+  "gzipSHA256": "202a0f3de38a34b1b0a045362966233cec3ba0b6466b3eea4665dc91d4e62ae5",
+  "scope": "Evidence formatting only; not a product/compiler/test failure."
+}

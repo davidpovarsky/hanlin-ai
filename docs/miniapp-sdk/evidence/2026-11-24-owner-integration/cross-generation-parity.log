@@ -1,0 +1,8 @@
+PASS upstream regeneration NativeScriptNativeApiModule.mm
+PASS upstream regeneration NativeScriptUIKitHost.h
+PASS upstream regeneration NativeScriptUIView.mm
+PASS canonical bridge mirror HanlinExpoNativeAPIGate.h
+PASS canonical bridge mirror HanlinExpoNativeAPIGate.mm
+PASS canonical bridge mirror HanlinExpoSessionRuntimeRegistry.h
+PASS public header mirror HanlinExpoNativeAPIGate.h
+PASS public header mirror NativeScriptUIKitHost.h

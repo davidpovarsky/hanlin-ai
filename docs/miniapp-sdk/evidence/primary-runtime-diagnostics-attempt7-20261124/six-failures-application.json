@@ -1,0 +1,332 @@
+[
+  {
+    "time": "2026-11-24 23:40:34.997011+0100",
+    "pid": 21362,
+    "sender": "/System/Library/Frameworks/Foundation.framework/Foundation",
+    "message": "HANLIN_EXPO_APP_DEFINES_LOADED"
+  },
+  {
+    "time": "2026-11-24 23:40:35.246863+0100",
+    "pid": 21362,
+    "sender": "/Users/m1/Library/Developer/CoreSimulator/Devices/D45E88A7-3C07-4227-86C4-D3B2E61C251A/data/Containers/Bundle/Application/312E5FC6-8186-4EC9-98B9-43017966F0C6/HanlinMiniApps.app/HanlinMiniApps.debug.dylib",
+    "message": "extension-refresh package=install-script-ec17057f5a2c82aaed6ab6ca phase=artifact-resolution diag=id=HWG-A77DB769A8A6 phase=host.publish.widgetProgram decision=instancePublication relPath=Packages/install-script-ec17057f5a2c82aaed6ab6ca domain=HanlinPlatformContracts.HanlinContractError code=15 summary=invalidManifest([HanlinPlatformContracts.HanlinManifestIssue(code: HanlinPlatformContracts.HanlinManifestIssueCode.duplicateEntryPoint, path: \"entryPoints\", message: \"Duplicate canonical identifiers are not allowed.\")])"
+  },
+  {
+    "time": "2026-11-24 23:40:54.712295+0100",
+    "pid": 21362,
+    "sender": "/Users/m1/Library/Developer/CoreSimulator/Devices/D45E88A7-3C07-4227-86C4-D3B2E61C251A/data/Containers/Bundle/Application/312E5FC6-8186-4EC9-98B9-43017966F0C6/HanlinMiniApps.app/HanlinMiniApps.debug.dylib",
+    "message": "[HANLIN_EXPO_NATIVEAPI_GATE] Registered session context session=9a914055-0886-444d-871c-d6630c80ca00 package=script-e02ac9a9c44ee3e98502e441 gen=0 granted=1"
+  },
+  {
+    "time": "2026-11-24 23:40:54.754541+0100",
+    "pid": 21362,
+    "sender": "/System/Library/Frameworks/Foundation.framework/Foundation",
+    "message": "HANLIN_EXPO_APPCONTEXT_CREATED"
+  },
+  {
+    "time": "2026-11-24 23:40:54.754612+0100",
+    "pid": 21362,
+    "sender": "/System/Library/Frameworks/Foundation.framework/Foundation",
+    "message": "HANLIN_EXPO_HOSTSERVICES_BOUND"
+  },
+  {
+    "time": "2026-11-24 23:40:54.882658+0100",
+    "pid": 21362,
+    "sender": "/System/Library/Frameworks/Foundation.framework/Foundation",
+    "message": "HANLIN_EXPO_MODULES_REGISTERED"
+  },
+  {
+    "time": "2026-11-24 23:40:54.883490+0100",
+    "pid": 21362,
+    "sender": "/System/Library/Frameworks/Foundation.framework/Foundation",
+    "message": "HANLIN_EXPO_REACT_FACTORY_CREATED"
+  },
+  {
+    "time": "2026-11-24 23:40:54.934156+0100",
+    "pid": 21362,
+    "sender": "/System/Library/Frameworks/Foundation.framework/Foundation",
+    "message": "HANLIN_EXPO_HOST_DID_INITIALIZE_RUNTIME runtime=0x00000001240a5000"
+  },
+  {
+    "time": "2026-11-24 23:40:54.935296+0100",
+    "pid": 21362,
+    "sender": "/System/Library/Frameworks/Foundation.framework/Foundation",
+    "message": "HANLIN_EXPO_ROOTVIEW_CREATED"
+  },
+  {
+    "time": "2026-11-24 23:40:54.935515+0100",
+    "pid": 21362,
+    "sender": "/System/Library/Frameworks/Foundation.framework/Foundation",
+    "message": "HANLIN_EXPO_INITIALIZED_EXTERNAL_ROOT path=/Users/m1/Library/Developer/CoreSimulator/Devices/D45E88A7-3C07-4227-86C4-D3B2E61C251A/data/Containers/Data/Application/C9593608-1F58-456A-8AD3-2C857B5DDC32/Library/Application Support/Hanlin/ScriptingPlatform/Installed/packages/install-script-e02ac9a9c44ee3e98502e441/generations/1/source/ bundle=bundle.js"
+  },
+  {
+    "time": "2026-11-24 23:40:54.940892+0100",
+    "pid": 21362,
+    "sender": "/System/Library/Frameworks/Foundation.framework/Foundation",
+    "message": "HANLIN_EXPO_SET_RUNTIME_DONE"
+  },
+  {
+    "time": "2026-11-24 23:40:54.940978+0100",
+    "pid": 21362,
+    "sender": "/System/Library/Frameworks/Foundation.framework/Foundation",
+    "message": "HANLIN_EXPO_REGISTERED_MODULES=ExpoBrownfieldStateModule, HanlinHostServices, ExpoModulesCoreJSLogger, ExpoBrownfieldModule, ExpoWidgets, ExpoUI, HanlinGeneratedExpoUI, HanlinExpoUI"
+  },
+  {
+    "time": "2026-11-24 23:42:30.862485+0100",
+    "pid": 21662,
+    "sender": "/System/Library/Frameworks/Foundation.framework/Foundation",
+    "message": "HANLIN_EXPO_APP_DEFINES_LOADED"
+  },
+  {
+    "time": "2026-11-24 23:42:31.113670+0100",
+    "pid": 21662,
+    "sender": "/Users/m1/Library/Developer/CoreSimulator/Devices/D45E88A7-3C07-4227-86C4-D3B2E61C251A/data/Containers/Bundle/Application/312E5FC6-8186-4EC9-98B9-43017966F0C6/HanlinMiniApps.app/HanlinMiniApps.debug.dylib",
+    "message": "extension-refresh package=install-script-ec17057f5a2c82aaed6ab6ca phase=artifact-resolution diag=id=HWG-A77DB769A8A6 phase=host.publish.widgetProgram decision=instancePublication relPath=Packages/install-script-ec17057f5a2c82aaed6ab6ca domain=HanlinPlatformContracts.HanlinContractError code=15 summary=invalidManifest([HanlinPlatformContracts.HanlinManifestIssue(code: HanlinPlatformContracts.HanlinManifestIssueCode.duplicateEntryPoint, path: \"entryPoints\", message: \"Duplicate canonical identifiers are not allowed.\")])"
+  },
+  {
+    "time": "2026-11-24 23:42:50.546866+0100",
+    "pid": 21662,
+    "sender": "/Users/m1/Library/Developer/CoreSimulator/Devices/D45E88A7-3C07-4227-86C4-D3B2E61C251A/data/Containers/Bundle/Application/312E5FC6-8186-4EC9-98B9-43017966F0C6/HanlinMiniApps.app/HanlinMiniApps.debug.dylib",
+    "message": "[HANLIN_EXPO_NATIVEAPI_GATE] Registered session context session=f466b551-031e-4182-a37f-04bc8699754a package=script-9a462e5101dab38179a6de6f gen=0 granted=1"
+  },
+  {
+    "time": "2026-11-24 23:42:50.549271+0100",
+    "pid": 21662,
+    "sender": "/System/Library/Frameworks/Foundation.framework/Foundation",
+    "message": "HANLIN_EXPO_APPCONTEXT_CREATED"
+  },
+  {
+    "time": "2026-11-24 23:42:50.549333+0100",
+    "pid": 21662,
+    "sender": "/System/Library/Frameworks/Foundation.framework/Foundation",
+    "message": "HANLIN_EXPO_HOSTSERVICES_BOUND"
+  },
+  {
+    "time": "2026-11-24 23:42:50.656034+0100",
+    "pid": 21662,
+    "sender": "/System/Library/Frameworks/Foundation.framework/Foundation",
+    "message": "HANLIN_EXPO_MODULES_REGISTERED"
+  },
+  {
+    "time": "2026-11-24 23:42:50.656184+0100",
+    "pid": 21662,
+    "sender": "/System/Library/Frameworks/Foundation.framework/Foundation",
+    "message": "HANLIN_EXPO_REACT_FACTORY_CREATED"
+  },
+  {
+    "time": "2026-11-24 23:42:50.666524+0100",
+    "pid": 21662,
+    "sender": "/System/Library/Frameworks/Foundation.framework/Foundation",
+    "message": "HANLIN_EXPO_HOST_DID_INITIALIZE_RUNTIME runtime=0x0000000129113000"
+  },
+  {
+    "time": "2026-11-24 23:42:50.666609+0100",
+    "pid": 21662,
+    "sender": "/System/Library/Frameworks/Foundation.framework/Foundation",
+    "message": "HANLIN_EXPO_ROOTVIEW_CREATED"
+  },
+  {
+    "time": "2026-11-24 23:42:50.666778+0100",
+    "pid": 21662,
+    "sender": "/System/Library/Frameworks/Foundation.framework/Foundation",
+    "message": "HANLIN_EXPO_INITIALIZED_EXTERNAL_ROOT path=/Users/m1/Library/Developer/CoreSimulator/Devices/D45E88A7-3C07-4227-86C4-D3B2E61C251A/data/Containers/Data/Application/C9593608-1F58-456A-8AD3-2C857B5DDC32/Library/Application Support/Hanlin/ScriptingPlatform/Installed/packages/install-script-9a462e5101dab38179a6de6f/generations/1/source/ bundle=bundle.js"
+  },
+  {
+    "time": "2026-11-24 23:42:50.669449+0100",
+    "pid": 21662,
+    "sender": "/System/Library/Frameworks/Foundation.framework/Foundation",
+    "message": "HANLIN_EXPO_SET_RUNTIME_DONE"
+  },
+  {
+    "time": "2026-11-24 23:42:50.669545+0100",
+    "pid": 21662,
+    "sender": "/System/Library/Frameworks/Foundation.framework/Foundation",
+    "message": "HANLIN_EXPO_REGISTERED_MODULES=ExpoBrownfieldStateModule, ExpoModulesCoreJSLogger, ExpoWidgets, ExpoBrownfieldModule, ExpoUI, HanlinGeneratedExpoUI, HanlinHostServices, HanlinExpoUI"
+  },
+  {
+    "time": "2026-11-24 23:43:26.730962+0100",
+    "pid": 21785,
+    "sender": "/System/Library/Frameworks/Foundation.framework/Foundation",
+    "message": "HANLIN_EXPO_APP_DEFINES_LOADED"
+  },
+  {
+    "time": "2026-11-24 23:43:27.003735+0100",
+    "pid": 21785,
+    "sender": "/Users/m1/Library/Developer/CoreSimulator/Devices/D45E88A7-3C07-4227-86C4-D3B2E61C251A/data/Containers/Bundle/Application/312E5FC6-8186-4EC9-98B9-43017966F0C6/HanlinMiniApps.app/HanlinMiniApps.debug.dylib",
+    "message": "extension-refresh package=install-script-ec17057f5a2c82aaed6ab6ca phase=artifact-resolution diag=id=HWG-A77DB769A8A6 phase=host.publish.widgetProgram decision=instancePublication relPath=Packages/install-script-ec17057f5a2c82aaed6ab6ca domain=HanlinPlatformContracts.HanlinContractError code=15 summary=invalidManifest([HanlinPlatformContracts.HanlinManifestIssue(code: HanlinPlatformContracts.HanlinManifestIssueCode.duplicateEntryPoint, path: \"entryPoints\", message: \"Duplicate canonical identifiers are not allowed.\")])"
+  },
+  {
+    "time": "2026-11-24 23:44:13.891573+0100",
+    "pid": 22444,
+    "sender": "/System/Library/Frameworks/Foundation.framework/Foundation",
+    "message": "HANLIN_EXPO_APP_DEFINES_LOADED"
+  },
+  {
+    "time": "2026-11-24 23:44:14.155542+0100",
+    "pid": 22444,
+    "sender": "/Users/m1/Library/Developer/CoreSimulator/Devices/D45E88A7-3C07-4227-86C4-D3B2E61C251A/data/Containers/Bundle/Application/312E5FC6-8186-4EC9-98B9-43017966F0C6/HanlinMiniApps.app/HanlinMiniApps.debug.dylib",
+    "message": "extension-refresh package=install-script-ec17057f5a2c82aaed6ab6ca phase=artifact-resolution diag=id=HWG-A77DB769A8A6 phase=host.publish.widgetProgram decision=instancePublication relPath=Packages/install-script-ec17057f5a2c82aaed6ab6ca domain=HanlinPlatformContracts.HanlinContractError code=15 summary=invalidManifest([HanlinPlatformContracts.HanlinManifestIssue(code: HanlinPlatformContracts.HanlinManifestIssueCode.duplicateEntryPoint, path: \"entryPoints\", message: \"Duplicate canonical identifiers are not allowed.\")])"
+  },
+  {
+    "time": "2026-11-24 23:44:35.433691+0100",
+    "pid": 22444,
+    "sender": "/Users/m1/Library/Developer/CoreSimulator/Devices/D45E88A7-3C07-4227-86C4-D3B2E61C251A/data/Containers/Bundle/Application/312E5FC6-8186-4EC9-98B9-43017966F0C6/HanlinMiniApps.app/HanlinMiniApps.debug.dylib",
+    "message": "HANLIN_NS_RUNTIME_CREATED"
+  },
+  {
+    "time": "2026-11-24 23:44:35.433758+0100",
+    "pid": 22444,
+    "sender": "/Users/m1/Library/Developer/CoreSimulator/Devices/D45E88A7-3C07-4227-86C4-D3B2E61C251A/data/Containers/Bundle/Application/312E5FC6-8186-4EC9-98B9-43017966F0C6/HanlinMiniApps.app/HanlinMiniApps.debug.dylib",
+    "message": "HANLIN_NS_CONTEXT_READY"
+  },
+  {
+    "time": "2026-11-24 23:44:35.433794+0100",
+    "pid": 22444,
+    "sender": "/Users/m1/Library/Developer/CoreSimulator/Devices/D45E88A7-3C07-4227-86C4-D3B2E61C251A/data/Containers/Bundle/Application/312E5FC6-8186-4EC9-98B9-43017966F0C6/HanlinMiniApps.app/HanlinMiniApps.debug.dylib",
+    "message": "HANLIN_NS_HOST_SERVICES_BIND_BEGIN"
+  },
+  {
+    "time": "2026-11-24 23:44:35.433837+0100",
+    "pid": 22444,
+    "sender": "/Users/m1/Library/Developer/CoreSimulator/Devices/D45E88A7-3C07-4227-86C4-D3B2E61C251A/data/Containers/Bundle/Application/312E5FC6-8186-4EC9-98B9-43017966F0C6/HanlinMiniApps.app/HanlinMiniApps.debug.dylib",
+    "message": "HANLIN_NS_HOST_SERVICES_BIND_OK"
+  },
+  {
+    "time": "2026-11-24 23:44:35.433883+0100",
+    "pid": 22444,
+    "sender": "/Users/m1/Library/Developer/CoreSimulator/Devices/D45E88A7-3C07-4227-86C4-D3B2E61C251A/data/Containers/Bundle/Application/312E5FC6-8186-4EC9-98B9-43017966F0C6/HanlinMiniApps.app/HanlinMiniApps.debug.dylib",
+    "message": "HANLIN_NS_RUN_MAIN_BEGIN"
+  },
+  {
+    "time": "2026-11-24 23:45:07.518996+0100",
+    "pid": 22632,
+    "sender": "/System/Library/Frameworks/Foundation.framework/Foundation",
+    "message": "HANLIN_EXPO_APP_DEFINES_LOADED"
+  },
+  {
+    "time": "2026-11-24 23:45:07.797595+0100",
+    "pid": 22632,
+    "sender": "/Users/m1/Library/Developer/CoreSimulator/Devices/D45E88A7-3C07-4227-86C4-D3B2E61C251A/data/Containers/Bundle/Application/312E5FC6-8186-4EC9-98B9-43017966F0C6/HanlinMiniApps.app/HanlinMiniApps.debug.dylib",
+    "message": "extension-refresh package=install-script-ec17057f5a2c82aaed6ab6ca phase=artifact-resolution diag=id=HWG-A77DB769A8A6 phase=host.publish.widgetProgram decision=instancePublication relPath=Packages/install-script-ec17057f5a2c82aaed6ab6ca domain=HanlinPlatformContracts.HanlinContractError code=15 summary=invalidManifest([HanlinPlatformContracts.HanlinManifestIssue(code: HanlinPlatformContracts.HanlinManifestIssueCode.duplicateEntryPoint, path: \"entryPoints\", message: \"Duplicate canonical identifiers are not allowed.\")])"
+  },
+  {
+    "time": "2026-11-24 23:45:36.802297+0100",
+    "pid": 22632,
+    "sender": "/Users/m1/Library/Developer/CoreSimulator/Devices/D45E88A7-3C07-4227-86C4-D3B2E61C251A/data/Containers/Bundle/Application/312E5FC6-8186-4EC9-98B9-43017966F0C6/HanlinMiniApps.app/HanlinMiniApps.debug.dylib",
+    "message": "[HANLIN_EXPO_NATIVEAPI_GATE] Registered session context session=92365044-2e02-48c9-a1bb-440a9b15f29f package=script-a19fcce1a9ef912a9ef0721c gen=0 granted=1"
+  },
+  {
+    "time": "2026-11-24 23:45:36.804792+0100",
+    "pid": 22632,
+    "sender": "/System/Library/Frameworks/Foundation.framework/Foundation",
+    "message": "HANLIN_EXPO_APPCONTEXT_CREATED"
+  },
+  {
+    "time": "2026-11-24 23:45:36.804838+0100",
+    "pid": 22632,
+    "sender": "/System/Library/Frameworks/Foundation.framework/Foundation",
+    "message": "HANLIN_EXPO_HOSTSERVICES_BOUND"
+  },
+  {
+    "time": "2026-11-24 23:45:36.914278+0100",
+    "pid": 22632,
+    "sender": "/System/Library/Frameworks/Foundation.framework/Foundation",
+    "message": "HANLIN_EXPO_MODULES_REGISTERED"
+  },
+  {
+    "time": "2026-11-24 23:45:36.914429+0100",
+    "pid": 22632,
+    "sender": "/System/Library/Frameworks/Foundation.framework/Foundation",
+    "message": "HANLIN_EXPO_REACT_FACTORY_CREATED"
+  },
+  {
+    "time": "2026-11-24 23:45:36.920751+0100",
+    "pid": 22632,
+    "sender": "/System/Library/Frameworks/Foundation.framework/Foundation",
+    "message": "HANLIN_EXPO_HOST_DID_INITIALIZE_RUNTIME runtime=0x0000000127541e00"
+  },
+  {
+    "time": "2026-11-24 23:45:36.920829+0100",
+    "pid": 22632,
+    "sender": "/System/Library/Frameworks/Foundation.framework/Foundation",
+    "message": "HANLIN_EXPO_ROOTVIEW_CREATED"
+  },
+  {
+    "time": "2026-11-24 23:45:36.921006+0100",
+    "pid": 22632,
+    "sender": "/System/Library/Frameworks/Foundation.framework/Foundation",
+    "message": "HANLIN_EXPO_INITIALIZED_EXTERNAL_ROOT path=/Users/m1/Library/Developer/CoreSimulator/Devices/D45E88A7-3C07-4227-86C4-D3B2E61C251A/data/Containers/Data/Application/C9593608-1F58-456A-8AD3-2C857B5DDC32/Library/Application Support/Hanlin/ScriptingPlatform/Installed/packages/install-script-a19fcce1a9ef912a9ef0721c/generations/1/source/ bundle=bundle.js"
+  },
+  {
+    "time": "2026-11-24 23:45:36.923877+0100",
+    "pid": 22632,
+    "sender": "/System/Library/Frameworks/Foundation.framework/Foundation",
+    "message": "HANLIN_EXPO_SET_RUNTIME_DONE"
+  },
+  {
+    "time": "2026-11-24 23:45:36.924007+0100",
+    "pid": 22632,
+    "sender": "/System/Library/Frameworks/Foundation.framework/Foundation",
+    "message": "HANLIN_EXPO_REGISTERED_MODULES=ExpoBrownfieldModule, HanlinHostServices, HanlinExpoUI, ExpoModulesCoreJSLogger, ExpoUI, HanlinGeneratedExpoUI, ExpoBrownfieldStateModule, ExpoWidgets"
+  },
+  {
+    "time": "2026-11-24 23:46:13.027883+0100",
+    "pid": 23052,
+    "sender": "/System/Library/Frameworks/Foundation.framework/Foundation",
+    "message": "HANLIN_EXPO_APP_DEFINES_LOADED"
+  },
+  {
+    "time": "2026-11-24 23:46:13.314995+0100",
+    "pid": 23052,
+    "sender": "/Users/m1/Library/Developer/CoreSimulator/Devices/D45E88A7-3C07-4227-86C4-D3B2E61C251A/data/Containers/Bundle/Application/312E5FC6-8186-4EC9-98B9-43017966F0C6/HanlinMiniApps.app/HanlinMiniApps.debug.dylib",
+    "message": "extension-refresh package=install-script-ec17057f5a2c82aaed6ab6ca phase=artifact-resolution diag=id=HWG-A77DB769A8A6 phase=host.publish.widgetProgram decision=instancePublication relPath=Packages/install-script-ec17057f5a2c82aaed6ab6ca domain=HanlinPlatformContracts.HanlinContractError code=15 summary=invalidManifest([HanlinPlatformContracts.HanlinManifestIssue(code: HanlinPlatformContracts.HanlinManifestIssueCode.duplicateEntryPoint, path: \"entryPoints\", message: \"Duplicate canonical identifiers are not allowed.\")])"
+  },
+  {
+    "time": "2026-11-24 23:46:51.643368+0100",
+    "pid": 23052,
+    "sender": "/Users/m1/Library/Developer/CoreSimulator/Devices/D45E88A7-3C07-4227-86C4-D3B2E61C251A/data/Containers/Bundle/Application/312E5FC6-8186-4EC9-98B9-43017966F0C6/HanlinMiniApps.app/HanlinMiniApps.debug.dylib",
+    "message": "HANLIN_NS_RUNTIME_CREATED"
+  },
+  {
+    "time": "2026-11-24 23:46:51.643439+0100",
+    "pid": 23052,
+    "sender": "/Users/m1/Library/Developer/CoreSimulator/Devices/D45E88A7-3C07-4227-86C4-D3B2E61C251A/data/Containers/Bundle/Application/312E5FC6-8186-4EC9-98B9-43017966F0C6/HanlinMiniApps.app/HanlinMiniApps.debug.dylib",
+    "message": "HANLIN_NS_CONTEXT_READY"
+  },
+  {
+    "time": "2026-11-24 23:46:51.643473+0100",
+    "pid": 23052,
+    "sender": "/Users/m1/Library/Developer/CoreSimulator/Devices/D45E88A7-3C07-4227-86C4-D3B2E61C251A/data/Containers/Bundle/Application/312E5FC6-8186-4EC9-98B9-43017966F0C6/HanlinMiniApps.app/HanlinMiniApps.debug.dylib",
+    "message": "HANLIN_NS_HOST_SERVICES_BIND_BEGIN"
+  },
+  {
+    "time": "2026-11-24 23:46:51.643526+0100",
+    "pid": 23052,
+    "sender": "/Users/m1/Library/Developer/CoreSimulator/Devices/D45E88A7-3C07-4227-86C4-D3B2E61C251A/data/Containers/Bundle/Application/312E5FC6-8186-4EC9-98B9-43017966F0C6/HanlinMiniApps.app/HanlinMiniApps.debug.dylib",
+    "message": "HANLIN_NS_HOST_SERVICES_BIND_OK"
+  },
+  {
+    "time": "2026-11-24 23:46:51.643560+0100",
+    "pid": 23052,
+    "sender": "/Users/m1/Library/Developer/CoreSimulator/Devices/D45E88A7-3C07-4227-86C4-D3B2E61C251A/data/Containers/Bundle/Application/312E5FC6-8186-4EC9-98B9-43017966F0C6/HanlinMiniApps.app/HanlinMiniApps.debug.dylib",
+    "message": "HANLIN_NS_RUN_MAIN_BEGIN"
+  },
+  {
+    "time": "2026-11-24 23:46:51.646179+0100",
+    "pid": 23052,
+    "sender": "/Users/m1/Library/Developer/CoreSimulator/Devices/D45E88A7-3C07-4227-86C4-D3B2E61C251A/data/Containers/Bundle/Application/312E5FC6-8186-4EC9-98B9-43017966F0C6/HanlinMiniApps.app/HanlinMiniApps.debug.dylib",
+    "message": "[HanlinNativeScript] NativeScript script execution failed: Cannot instantiate module /Users/m1/Library/Developer/CoreSimulator/Devices/D45E88A7-3C07-4227-86C4-D3B2E61C251A/data/Containers/Data/Application/C9593608-1F58-456A-8AD3-2C857B5DDC32/Library/Application Support/Hanlin/ScriptingPlatform/Installed/packages/install-script-f742f5767a7a47f8f8d51efd/generations/1/source/nativescript/app/bundle.mjs\nSyntaxError: Unexpected token '{'\nStack:\nSyntaxError: Unexpected token '{'"
+  },
+  {
+    "time": "2026-11-24 23:46:51.654293+0100",
+    "pid": 23052,
+    "sender": "/System/Library/Frameworks/Foundation.framework/Foundation",
+    "message": "[HanlinScriptingPlatform] NativeScript launch failed for install-script-f742f5767a7a47f8f8d51efd: bootstrapFailed(\"NativeScript script execution failed: Cannot instantiate module /Users/m1/Library/Developer/CoreSimulator/Devices/D45E88A7-3C07-4227-86C4-D3B2E61C251A/data/Containers/Data/Application/C9593608-1F58-456A-8AD3-2C857B5DDC32/Library/Application Support/Hanlin/ScriptingPlatform/Installed/packages/install-script-f742f5767a7a47f8f8d51efd/generations/1/source/nativescript/app/bundle.mjs\\nSyntaxError: Unexpected token \\'{\\'\\nStack:\\nSyntaxError: Unexpected token \\'{\\'\")"
+  },
+  {
+    "time": "2026-11-24 23:46:51.654404+0100",
+    "pid": 23052,
+    "sender": "/System/Library/Frameworks/Foundation.framework/Foundation",
+    "message": "HANLIN_NS_PRODUCTION_SHUTDOWN_OK"
+  }
+]

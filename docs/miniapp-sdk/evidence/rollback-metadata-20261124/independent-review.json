@@ -1,0 +1,13 @@
+{
+  "reviewer": "/root/entrypoints",
+  "result": "NO_CONCRETE_BLOCKER",
+  "mode": "read-only source review; no tests or CI",
+  "productionSourceSHA256": "7402b0237d625ad1c0f920b2a2b1824d488ab99896eb3393a25b73ded11fe78d",
+  "findings": [
+    "Target history resolves before metadata backfill or registry mutation.",
+    "An entrypoints-present marker distinguishes a full snapshot whose manifest is intentionally nil.",
+    "Old backup fallback requires matching generation, package, version, source and artifact identities and indexed entries.",
+    "The departing active generation is preserved before overwrite so redo remains exact.",
+    "Only historical descriptors/manifest and existing record fields are restored; enabled state and grants stay unchanged."
+  ]
+}

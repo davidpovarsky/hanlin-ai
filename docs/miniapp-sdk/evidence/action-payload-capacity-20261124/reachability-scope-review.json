@@ -1,0 +1,181 @@
+{
+  "status": "SOURCE_REVIEW_ONLY",
+  "reviewedBase": "df436d7650bc5918d29707868565fc114e65c445",
+  "inventorySourceCommit": "f4cd9d4b14bcfb4927015ec99c35de43e32a84a1",
+  "inventoryPath": "docs/miniapp-sdk/extension-reachability.json",
+  "inventorySHA256": "0cc7750f89a67a644a65d7d898f6af32359b1d40c116ebb1839526c6c3add20e",
+  "scope": "80 cells are 8 ingress categories x 2 foreground app engines (Expo, NativeScript) x 5 canonical Host runtimes; they are not all original-library capabilities.",
+  "counts": {
+    "partially-wired": 40,
+    "disconnected": 30,
+    "not-tested": 10
+  },
+  "bySurface": {
+    "share": {
+      "rows": 10,
+      "statuses": {
+        "partially-wired": 10
+      },
+      "canonicalHostPath": 10,
+      "durableActionReceipt": 10,
+      "structuredRuntimeReceiptAtIngress": 0,
+      "executedE2E": 0
+    },
+    "translation": {
+      "rows": 10,
+      "statuses": {
+        "partially-wired": 10
+      },
+      "canonicalHostPath": 10,
+      "durableActionReceipt": 10,
+      "structuredRuntimeReceiptAtIngress": 0,
+      "executedE2E": 0
+    },
+    "widget": {
+      "rows": 10,
+      "statuses": {
+        "disconnected": 10
+      },
+      "canonicalHostPath": 0,
+      "durableActionReceipt": 0,
+      "structuredRuntimeReceiptAtIngress": 0,
+      "executedE2E": 0
+    },
+    "notification": {
+      "rows": 10,
+      "statuses": {
+        "disconnected": 10
+      },
+      "canonicalHostPath": 0,
+      "durableActionReceipt": 0,
+      "structuredRuntimeReceiptAtIngress": 0,
+      "executedE2E": 0
+    },
+    "liveActivity": {
+      "rows": 10,
+      "statuses": {
+        "disconnected": 10
+      },
+      "canonicalHostPath": 0,
+      "durableActionReceipt": 0,
+      "structuredRuntimeReceiptAtIngress": 0,
+      "executedE2E": 0
+    },
+    "hostAppIntent": {
+      "rows": 10,
+      "statuses": {
+        "partially-wired": 10
+      },
+      "canonicalHostPath": 10,
+      "durableActionReceipt": 10,
+      "structuredRuntimeReceiptAtIngress": 0,
+      "executedE2E": 0
+    },
+    "shortcuts": {
+      "rows": 10,
+      "statuses": {
+        "partially-wired": 10
+      },
+      "canonicalHostPath": 10,
+      "durableActionReceipt": 10,
+      "structuredRuntimeReceiptAtIngress": 0,
+      "executedE2E": 0
+    },
+    "foreground": {
+      "rows": 10,
+      "statuses": {
+        "not-tested": 10
+      },
+      "canonicalHostPath": 10,
+      "durableActionReceipt": 0,
+      "structuredRuntimeReceiptAtIngress": 10,
+      "executedE2E": 0
+    }
+  },
+  "separateOriginalLibrarySurfaces": [
+    {
+      "surface": "scriptWidgetControls",
+      "status": "source-wired",
+      "sourceSupport": "Original button/toggle ControlWidget wrappers, configuration intents, entity/value providers and actions are registered in both widget bundles. Original widget.json actions/controls are projected into current installation/generation state and the widget action executor. Original source provenance and automatic refresh are retained.",
+      "refs": [
+        "originalControlWidgets",
+        "originalToggleWidget",
+        "originalControlProvider",
+        "originalControlActions",
+        "controlCatalog",
+        "controlCompiler",
+        "widgetCallback",
+        "hostControlButtonRegistration",
+        "hostControlToggleRegistration",
+        "miniAppsControlButtonRegistration",
+        "miniAppsControlToggleRegistration",
+        "controlUpstream",
+        "controlSourceRefresh"
+      ],
+      "canonicalHostRuntimePassthroughEstablished": false,
+      "executedE2E": false,
+      "deviceProof": null
+    },
+    {
+      "surface": "widgets",
+      "status": "source-wired",
+      "sourceSupport": "Original engine widget rendering and actions exist, including the original Expo Widgets module, registration picker, timeline and configuration integration. This is separate from a canonical Host-runtime bridge.",
+      "refs": [
+        "widgetBundle",
+        "miniAppsWidgetBundle",
+        "widgetCallback",
+        "originalExpoWidget",
+        "originalExpoModule",
+        "originalExpoRegistry"
+      ],
+      "canonicalHostRuntimePassthroughEstablished": false,
+      "executedE2E": false,
+      "deviceProof": null
+    },
+    {
+      "surface": "nativePresentations",
+      "status": "source-wired",
+      "sourceSupport": "Declared native snippet/translation programs execute through original widget engines with invocation-owned state and actual native controls. Translation expansion/text replacement uses the native provider context; it is not a React Native or NativeScript VM inside the extension.",
+      "refs": [
+        "nativePresentationExecutor",
+        "nativePresentationView",
+        "nativeSnippet",
+        "nativeTranslation"
+      ],
+      "canonicalHostRuntimePassthroughEstablished": false,
+      "executedE2E": false,
+      "deviceProof": null
+    },
+    {
+      "surface": "liveActivities",
+      "status": "source-wired",
+      "sourceSupport": "Original Expo ActivityKit and original ScriptWidget component/region rendering have native lifecycle integration. Local controls refresh declared activity state with current installation/generation checks.",
+      "refs": [
+        "scriptWidgetLiveActivity",
+        "scriptWidgetActivityRenderer",
+        "originalExpoActivity",
+        "originalExpoModule",
+        "widgetBundle",
+        "miniAppsWidgetBundle"
+      ],
+      "canonicalHostRuntimePassthroughEstablished": false,
+      "executedE2E": false,
+      "deviceProof": null
+    }
+  ],
+  "interpretation": [
+    "10 foreground cells have a direct source path and remain not-tested in this inventory; they are not 10 executed passes.",
+    "40 Share/translation/Host AppIntent/Shortcuts cells dispatch registered installed-package handlers and persist HanlinValue action results. Their partial classification concerns automatic canonical RuntimeExecutionResult readback at ingress, not absence of package actions.",
+    "20 Widget/Live Activity disconnected cells describe missing canonical Node/TypeScript/Python/JSC/Shell passthrough in those extension routes. Original Expo Widgets and ScriptWidget rendering, controls and native actions are separately implemented.",
+    "10 notification cells describe the existing AI media/category extension without a package runtime envelope. Original ScriptWidget notification services do not establish a rich MiniApp notification content extension.",
+    "Custom home is excluded; legacy Scripting development is frozen; full Apple SDK generation is deferred. No generic RuntimeExecutionResult rewrite was added."
+  ],
+  "actualRepair": "Remove extra Hanlin payload/depth/queue admission quotas on the existing active action transport; original engine/native and malformed/schema contracts remain.",
+  "nativeAcceptance": {
+    "fourExtensionCategoriesByTwoEnginesByFiveRuntimes": 40,
+    "additionalSurfaceCells": 40,
+    "executedSurfaceE2EPasses": 0,
+    "signedPhysicalAcceptance": "NOT_RUN"
+  },
+  "generatedInventoriesModified": false
+}

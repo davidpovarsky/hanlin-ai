@@ -1,0 +1,144 @@
+{
+  "sourceCommit": "999599c242c064564c40866a1979c463f1d0e95f",
+  "runID": 45375410965,
+  "artifactID": 14916730253,
+  "authentication": "Parent authenticated download; this lane independently rehashed the exact supplied local archive. No network retrieval.",
+  "archivePath": "/tmp/hanlin-native-gate-evidence-45375410965/app-split-45375410965.zip",
+  "archiveBytes": 333607332,
+  "archiveSHA256": "555799b3fa3512c41f757eca7fdf0da998274c311530019a0dff61334a53b05f",
+  "ownedStaging": "/tmp/hanlin-sdk05-shipping-45375410965-5ndqe_cd",
+  "nestedArchive": {
+    "member": "runtime-host/RuntimeHostResources.zip",
+    "path": "/tmp/hanlin-sdk05-shipping-45375410965-5ndqe_cd/RuntimeHostResources.zip",
+    "bytes": 81812125,
+    "sha256": "3f8369a26f492aa0cb4c7ca63a03d33104993adad81223ba9b3ee7f0e46ada4c"
+  },
+  "retainedMembers": [
+    {
+      "archiveMember": "app-split-evidence/miniapp-documentation-snippets.json",
+      "originalBytes": 20066,
+      "originalSHA256": "d4af6b636f23f004618da047803a7f73a4897f433d2bd9dfe8e5b72311ebe912",
+      "retainedPath": "raw/app-split-evidence/miniapp-documentation-snippets.json",
+      "retainedBytes": 20066,
+      "retainedSHA256": "d4af6b636f23f004618da047803a7f73a4897f433d2bd9dfe8e5b72311ebe912",
+      "gzip": false
+    },
+    {
+      "archiveMember": "app-split-evidence/upstream-resolution.json",
+      "originalBytes": 14914,
+      "originalSHA256": "21b42552da1a1085be20898d8d38294d150c1a4cfdd39d36b89c45e4cf4ed9e0",
+      "retainedPath": "raw/app-split-evidence/upstream-resolution.json",
+      "retainedBytes": 14914,
+      "retainedSHA256": "21b42552da1a1085be20898d8d38294d150c1a4cfdd39d36b89c45e4cf4ed9e0",
+      "gzip": false
+    },
+    {
+      "archiveMember": "app-split-evidence/prepared-native/upstream-resolution.json",
+      "originalBytes": 14118,
+      "originalSHA256": "2bf8f371f06949fbe56858c38addeb417a07f9b598fc38ff72aedb39d5f364eb",
+      "retainedPath": "raw/app-split-evidence/prepared-native/upstream-resolution.json",
+      "retainedBytes": 14118,
+      "retainedSHA256": "2bf8f371f06949fbe56858c38addeb417a07f9b598fc38ff72aedb39d5f364eb",
+      "gzip": false
+    },
+    {
+      "archiveMember": "app-split-evidence/prepared-native/native-artifacts.json",
+      "originalBytes": 28572,
+      "originalSHA256": "609c3b1106ba1afa9e5f85397cc61a50c5def66649980f6fbc387a8a7a083717",
+      "retainedPath": "raw/app-split-evidence/prepared-native/native-artifacts.json",
+      "retainedBytes": 28572,
+      "retainedSHA256": "609c3b1106ba1afa9e5f85397cc61a50c5def66649980f6fbc387a8a7a083717",
+      "gzip": false
+    },
+    {
+      "archiveMember": "runtime-host/host-metadata.json",
+      "originalBytes": 358,
+      "originalSHA256": "64e27bc46d75c8b61de151c79024a31f0140243d8b199b595188a17c9a8ebf36",
+      "retainedPath": "raw/runtime-host/host-metadata.json",
+      "retainedBytes": 358,
+      "retainedSHA256": "64e27bc46d75c8b61de151c79024a31f0140243d8b199b595188a17c9a8ebf36",
+      "gzip": false
+    },
+    {
+      "archiveMember": "runtime-host/runtime-host.sha256",
+      "originalBytes": 91,
+      "originalSHA256": "e118ac68e89d6113981177805d3b87c5cd509f37bcbb9454f054152f0ee198e1",
+      "retainedPath": "raw/runtime-host/runtime-host.sha256",
+      "retainedBytes": 91,
+      "retainedSHA256": "e118ac68e89d6113981177805d3b87c5cd509f37bcbb9454f054152f0ee198e1",
+      "gzip": false
+    },
+    {
+      "archiveMember": "app-split-evidence/paired-product/source-sha.txt",
+      "originalBytes": 41,
+      "originalSHA256": "606abf1ce74bfead20a466158233025377612f208dfbd34d90eb5a83f13221b4",
+      "retainedPath": "raw/app-split-evidence/paired-product/source-sha.txt",
+      "retainedBytes": 41,
+      "retainedSHA256": "606abf1ce74bfead20a466158233025377612f208dfbd34d90eb5a83f13221b4",
+      "gzip": false
+    },
+    {
+      "archiveMember": "app-split-evidence/acceptance.json",
+      "originalBytes": 2588,
+      "originalSHA256": "1a9a0a42e3235955423f213c2e0c952e9d637c4ec3a382935a7f48ebb0546cfb",
+      "retainedPath": "raw/app-split-evidence/acceptance.json",
+      "retainedBytes": 2588,
+      "retainedSHA256": "1a9a0a42e3235955423f213c2e0c952e9d637c4ec3a382935a7f48ebb0546cfb",
+      "gzip": false
+    },
+    {
+      "archiveMember": "app-split-evidence/ci-performance-report.json",
+      "originalBytes": 2241,
+      "originalSHA256": "2e14f25059320f9937a382dd852ff51d786d985e5cbd1cc10c3dad917ccc2976",
+      "retainedPath": "raw/app-split-evidence/ci-performance-report.json",
+      "retainedBytes": 2241,
+      "retainedSHA256": "2e14f25059320f9937a382dd852ff51d786d985e5cbd1cc10c3dad917ccc2976",
+      "gzip": false
+    },
+    {
+      "archiveMember": "app-split-evidence/miniapp-cli-relocation.log",
+      "originalBytes": 223,
+      "originalSHA256": "1b9af92980d0393a8ceb34e67f1de3733e3d7eba17bfbf03269dfe6496176fe5",
+      "retainedPath": "raw/app-split-evidence/miniapp-cli-relocation.log.gz",
+      "retainedBytes": 184,
+      "retainedSHA256": "2c56be9b5dd5494e4814ed0fa7c229996cd667691a56df0cb577346ee254f149",
+      "gzip": true
+    },
+    {
+      "archiveMember": "app-split-evidence/native-dependencies.log",
+      "originalBytes": 2811390,
+      "originalSHA256": "fc8105f0b3617d67b0c531750ad60b6a50b604ebe919eabe81b8451bfe1c5f84",
+      "retainedPath": "raw/app-split-evidence/native-dependencies.log.gz",
+      "retainedBytes": 304629,
+      "retainedSHA256": "f9b1cd044a9e537b00220c5bd58346a2bf927edb4ede2b8da5cd2719edcdf21f",
+      "gzip": true
+    },
+    {
+      "archiveMember": "app-split-evidence/preflight.log",
+      "originalBytes": 128111,
+      "originalSHA256": "ba0897ed1961f3a5941cdfbe1b67bcf5e5d14d0a2e1e477e87edd37c1c3a62e2",
+      "retainedPath": "raw/app-split-evidence/preflight.log.gz",
+      "retainedBytes": 5637,
+      "retainedSHA256": "ffc4e18114e47e6ff819a5d8b2e12a9bed6572f7de319e52b4fcd31f93e9e6a1",
+      "gzip": true
+    },
+    {
+      "archiveMember": "app-split-evidence/upstream-resolution.log",
+      "originalBytes": 7866,
+      "originalSHA256": "e2560a4fee803cfd54a0cc3f637dab366e2d79891032893847c6d63d11111a25",
+      "retainedPath": "raw/app-split-evidence/upstream-resolution.log.gz",
+      "retainedBytes": 2219,
+      "retainedSHA256": "9328f7ca7547619a8d506540751579fc902abd5dcd8015f9a1b698801c6b561d",
+      "gzip": true
+    },
+    {
+      "archiveMember": "app-split-evidence/upstream-inputs.patch",
+      "originalBytes": 20789,
+      "originalSHA256": "8dba74dc69ac22e81dd0b058e1ef02f64042165f4cf0bc6875b30092f5c26c60",
+      "retainedPath": "raw/app-split-evidence/upstream-inputs.patch.gz",
+      "retainedBytes": 5698,
+      "retainedSHA256": "117f02ef6b3ba42cd1b613c68dae35df2371fda0b292b08dcb6b645f9f974e32",
+      "gzip": true
+    }
+  ]
+}

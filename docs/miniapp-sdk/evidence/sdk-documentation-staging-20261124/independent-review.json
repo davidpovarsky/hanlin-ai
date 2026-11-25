@@ -1,0 +1,15 @@
+{
+  "reviewer": "entrypoints",
+  "reviewedCommit": "ee5409351f9c9d164a47b58c1aaa172e710ca8c6",
+  "mode": "Read-only Git objects/source/hash review; no tests/CI",
+  "result": "NO_CONCRETE_BLOCKER",
+  "confirmed": [
+    "same existing name policy in inputReceipt and documentation copy including nested evidence and backups",
+    "source root behavior matches walker; staging directory cleared before copy",
+    "staging script itself contributes to SDK input identity",
+    "original API/type/compiler copies unchanged; public documentation bytes retained",
+    "all7 evidence artifacts and2source hashes match; actual red1green1; setup failure separately retained"
+  ],
+  "boundary": "Fresh complete SDK assembly/native gate still pending",
+  "recordedAtUTC": "2026-11-24T08:03:49.690975+00:00"
+}

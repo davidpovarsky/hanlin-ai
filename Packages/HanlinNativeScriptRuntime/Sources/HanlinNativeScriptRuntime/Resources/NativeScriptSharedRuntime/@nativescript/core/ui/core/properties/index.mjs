@@ -8,6 +8,8 @@ export { unsetValue } from './property-shared';
 const cssPropertyNames = [];
 const cssShorthandConverters = new Map();
 const cssShorthandLonghands = new Map();
+// Bumped per shorthand registration, so rules parsed before it can still expand it.
+let cssShorthandsVersion = 0;
 const HAS_OWN = Object.prototype.hasOwnProperty;
 const symbolPropertyMap = {};
 const cssSymbolPropertyMap = {};
@@ -15,9 +17,36 @@ const cssSymbolPropertyMap = {};
 const CSS_VARIABLE_NAME_RE = /^--[^,\s]+?$/;
 const DIP_RE = /([0-9]+(\.[0-9]+)?)dip\b/g;
 const UNSET_RE = /unset/g;
+/** Stands in for an unresolved var() until the whole value is known; a NUL never occurs in css. */
+const UNRESOLVED_VAR = '\u0000';
 const INFINITY_RE = /infinity/g;
 const inheritableProperties = new Array();
 const inheritableCssProperties = new Array();
+/** `sourceKey` of every registered `CssProperty`, by css name. */
+const cssValueSourceKeys = Object.create(null);
+/**
+ * Whether the style still carries what the cascade last wrote for the property.
+ * A `CssProperty` keeps one value: a local value both suppresses the css write and
+ * takes the slot, so the style can stop carrying what the cascade recorded. The
+ * cascade has to write it again rather than skip it as unchanged.
+ */
+export function _isCssValueStillApplied(style, cssLocalName, value) {
+    const sourceKey = cssValueSourceKeys[cssLocalName];
+    if (sourceKey === undefined) {
+        // Applied through the view rather than the style; nothing to verify.
+        return true;
+    }
+    // A reset leaves no source behind, so it is in effect precisely when nothing else claimed the property.
+    return style[sourceKey] === (isResetValue(value) ? undefined : 2 /* ValueSource.Css */);
+}
+/**
+ * What a released local value falls back to: the value the cascade last resolved for
+ * the property, or `undefined` when it resolved none.
+ */
+function cascadedCssValue(view, cssLocalName) {
+    const value = view._cssState?._getAppliedPropertyValue(cssLocalName);
+    return value === '' || isResetValue(value) ? undefined : value;
+}
 function print(map) {
     const symbols = Object.getOwnPropertySymbols(map);
     for (const symbol of symbols) {
@@ -102,6 +131,14 @@ export function _pendingCssShorthandSubstitution(cssName, value) {
     }
     return declarations;
 }
+/** Changes whenever a shorthand is registered. */
+export function _getCssShorthandsVersion() {
+    return cssShorthandsVersion;
+}
+/** Whether `cssName` is a registered shorthand. */
+export function _isCssShorthand(cssName) {
+    return cssShorthandConverters.has(cssName);
+}
 /**
  * Expand a shorthand declaration into its longhand declarations, or `undefined`
  * when the property is not a shorthand, the value still has to be evaluated per
@@ -154,26 +191,42 @@ export function _evaluateCssVariableExpression(view, cssName, value) {
         if (idx === -1) {
             continue;
         }
-        const endIdx = output.indexOf(')', idx);
+        const endIdx = findClosingParenthesis(output, idx + 3);
         if (endIdx === -1) {
             continue;
         }
-        const matched = output
-            .substring(idx + 4, endIdx)
-            .split(',')
-            .map((v) => v.trim())
-            .filter((v) => !!v);
-        const cssVariableName = matched.shift();
+        const body = output.substring(idx + 4, endIdx);
+        const commaIdx = body.indexOf(',');
+        const cssVariableName = (commaIdx === -1 ? body : body.substring(0, commaIdx)).trim();
+        const fallback = commaIdx === -1 ? '' : body.substring(commaIdx + 1).trim();
         let cssVariableValue = view.style.getCssVariable(cssVariableName);
-        if (cssVariableValue === null && matched.length) {
-            cssVariableValue = _evaluateCssVariableExpression(view, cssName, matched.join(', ')).split(',')[0];
+        if (typeof cssVariableValue === 'string' && cssVariableValue.trim() === 'initial') {
+            cssVariableValue = null;
         }
-        if (!cssVariableValue) {
-            cssVariableValue = 'unset';
+        if (cssVariableValue === null && fallback) {
+            cssVariableValue = _evaluateCssVariableExpression(view, cssName, fallback);
+        }
+        if (!cssVariableValue || cssVariableValue === 'unset') {
+            cssVariableValue = UNRESOLVED_VAR;
         }
         output = `${output.substring(0, idx)}${cssVariableValue}${output.substring(endIdx + 1)}`;
     }
-    return output;
+    // An unresolved var() invalidates the whole declaration, wherever it is nested,
+    // unless it sat in the fallback of a var() that resolved.
+    return output.includes(UNRESOLVED_VAR) ? 'unset' : output;
+}
+function findClosingParenthesis(value, openIdx) {
+    let depth = 0;
+    for (let i = openIdx; i < value.length; i++) {
+        const ch = value[i];
+        if (ch === '(') {
+            depth++;
+        }
+        else if (ch === ')' && --depth === 0) {
+            return i;
+        }
+    }
+    return -1;
 }
 export function _evaluateCssCalcExpression(value) {
     if (typeof value !== 'string') {
@@ -247,7 +300,7 @@ export class Property {
             }
         };
         const property = this;
-        this.set = function (boxedValue) {
+        this.set = function (boxedValue, origin) {
             const reset = isResetValue(boxedValue);
             let value;
             let wrapped;
@@ -313,6 +366,7 @@ export class Property {
                         propertyName,
                         value,
                         oldValue,
+                        origin: origin ?? 'script',
                     });
                 }
                 if (this.domNode) {
@@ -346,6 +400,7 @@ export class Property {
                         propertyName,
                         value,
                         oldValue,
+                        origin: 'native',
                     });
                 }
                 if (affectsLayout) {
@@ -477,6 +532,7 @@ export class CoercibleProperty extends Property {
                         propertyName,
                         value,
                         oldValue,
+                        origin: 'script',
                     });
                 }
                 if (affectsLayout) {
@@ -526,7 +582,7 @@ export class InheritedProperty extends Property {
             }
             // take currentValue before calling base - base may change it.
             const currentValue = that[key];
-            setBase.call(that, unboxedValue);
+            setBase.call(that, unboxedValue, valueSource === 3 /* ValueSource.Local */ ? 'script' : 'inherited');
             const newValue = that[key];
             that[sourceKey] = newValueSource;
             if (currentValue !== newValue) {
@@ -603,14 +659,24 @@ export class CssProperty {
                 Trace.write(`${newValue} not set to view because ".viewRef" is cleared`, Trace.categories.Style, Trace.messageType.warn);
                 return;
             }
-            const reset = isResetValue(newValue) || newValue === '';
+            this._localValueVersion++;
+            let reset = isResetValue(newValue) || newValue === '';
+            let valueSource = 3 /* ValueSource.Local */;
             let value;
+            if (reset) {
+                const cssValue = cascadedCssValue(view, property.cssLocalName);
+                if (cssValue !== undefined) {
+                    newValue = cssValue;
+                    valueSource = 2 /* ValueSource.Css */;
+                    reset = false;
+                }
+            }
             if (reset) {
                 value = defaultValue;
                 delete this[sourceKey];
             }
             else {
-                this[sourceKey] = 3 /* ValueSource.Local */;
+                this[sourceKey] = valueSource;
                 value = valueConverter && typeof newValue === 'string' ? (overrideConverter ? valueConverter.call(this, newValue) : valueConverter(newValue)) : newValue;
             }
             const oldValue = (key in this ? this[key] : defaultValue);
@@ -662,6 +728,7 @@ export class CssProperty {
                         propertyName,
                         value,
                         oldValue,
+                        origin: 'script',
                     });
                 }
                 if (affectsLayout) {
@@ -739,6 +806,7 @@ export class CssProperty {
                         propertyName,
                         value,
                         oldValue,
+                        origin: 'css',
                     });
                 }
                 if (affectsLayout) {
@@ -773,6 +841,7 @@ export class CssProperty {
         if (this.cssLocalName !== this.cssName) {
             Object.defineProperty(cls.prototype, this.cssLocalName, this.localValueDescriptor);
         }
+        cssValueSourceKeys[this.cssLocalName] = this.sourceKey;
     }
     isSet(instance) {
         return this.key in instance;
@@ -814,6 +883,7 @@ export class CssAnimationProperty {
         const eventName = propertyName + 'Change';
         const property = this;
         function descriptor(symbol, propertySource, enumerable, configurable, getsComputed) {
+            const origin = propertySource === 4 /* ValueSource.Keyframe */ ? 'animation' : propertySource === 2 /* ValueSource.Css */ ? 'css' : 'script';
             return {
                 enumerable,
                 configurable,
@@ -899,6 +969,7 @@ export class CssAnimationProperty {
                             propertyName,
                             value,
                             oldValue,
+                            origin,
                         });
                     }
                 },
@@ -958,6 +1029,7 @@ export class InheritedCssProperty extends CssProperty {
         const getDefault = this.getDefault;
         const setNative = this.setNative;
         const defaultValueKey = this.defaultValueKey;
+        const cssLocalName = this.cssLocalName;
         const eventName = propertyName + 'Change';
         const defaultValue = options.defaultValue;
         let affectsLayout = options.affectsLayout;
@@ -981,108 +1053,126 @@ export class InheritedCssProperty extends CssProperty {
                 overrideConverter = true;
             }
         };
-        const setFunc = (valueSource) => function (boxedValue) {
-            const view = this.viewRef.get();
-            if (!view) {
-                Trace.write(`${boxedValue} not set to view's property because ".viewRef" is cleared`, Trace.categories.Style, Trace.messageType.warn);
-                return;
-            }
-            const reset = isResetValue(boxedValue) || boxedValue === '';
-            const currentValueSource = this[sourceKey] || 0 /* ValueSource.Default */;
-            if (reset) {
-                // If we want to reset cssValue and we have localValue - return;
-                if (valueSource === 2 /* ValueSource.Css */ && currentValueSource === 3 /* ValueSource.Local */) {
+        const setFunc = (valueSource) => {
+            const isLocalWrite = valueSource === 3 /* ValueSource.Local */;
+            // Default is only used by the cascade below, to reset a child that inherited this value.
+            const origin = isLocalWrite ? 'script' : valueSource === 2 /* ValueSource.Css */ ? 'css' : 'inherited';
+            return function (boxedValue) {
+                const view = this.viewRef.get();
+                if (!view) {
+                    Trace.write(`${boxedValue} not set to view's property because ".viewRef" is cleared`, Trace.categories.Style, Trace.messageType.warn);
                     return;
                 }
-            }
-            else {
-                if (currentValueSource > valueSource) {
-                    return;
+                if (isLocalWrite) {
+                    this._localValueVersion++;
                 }
-            }
-            const oldValue = key in this ? this[key] : defaultValue;
-            let value;
-            let unsetNativeValue = false;
-            if (reset) {
-                const parentStyle = view.parent ? view.parent.style : null;
-                // If value is not initial or unset and view has a parent that has non-default value, use it as the reset value.
-                if (boxedValue !== 'initial' && parentStyle && parentStyle[sourceKey] > 0 /* ValueSource.Default */) {
-                    value = parentStyle[propertyName];
-                    this[sourceKey] = 1 /* ValueSource.Inherited */;
+                let reset = isResetValue(boxedValue) || boxedValue === '';
+                let newValueSource = valueSource;
+                if (reset && isLocalWrite) {
+                    const cssValue = cascadedCssValue(view, cssLocalName);
+                    if (cssValue !== undefined) {
+                        boxedValue = cssValue;
+                        newValueSource = 2 /* ValueSource.Css */;
+                        reset = false;
+                    }
+                }
+                const currentValueSource = this[sourceKey] || 0 /* ValueSource.Default */;
+                if (reset) {
+                    // If we want to reset cssValue and we have localValue - return;
+                    if (valueSource === 2 /* ValueSource.Css */ && currentValueSource === 3 /* ValueSource.Local */) {
+                        return;
+                    }
+                }
+                else {
+                    if (currentValueSource > valueSource) {
+                        return;
+                    }
+                }
+                const oldValue = key in this ? this[key] : defaultValue;
+                let value;
+                let unsetNativeValue = false;
+                if (reset) {
+                    const parentStyle = view.parent ? view.parent.style : null;
+                    // If value is not initial or unset and view has a parent that has non-default value, use it as the reset value.
+                    if (boxedValue !== 'initial' && parentStyle && parentStyle[sourceKey] > 0 /* ValueSource.Default */) {
+                        value = parentStyle[propertyName];
+                        this[sourceKey] = 1 /* ValueSource.Inherited */;
+                        this[key] = value;
+                    }
+                    else {
+                        value = defaultValue;
+                        delete this[sourceKey];
+                        delete this[key];
+                        unsetNativeValue = true;
+                    }
+                }
+                else {
+                    this[sourceKey] = newValueSource;
+                    if (valueConverter && typeof boxedValue === 'string') {
+                        value = overrideConverter ? valueConverter.call(this, boxedValue) : valueConverter(boxedValue);
+                    }
+                    else {
+                        value = boxedValue;
+                    }
                     this[key] = value;
                 }
-                else {
-                    value = defaultValue;
-                    delete this[sourceKey];
-                    delete this[key];
-                    unsetNativeValue = true;
-                }
-            }
-            else {
-                this[sourceKey] = valueSource;
-                if (valueConverter && typeof boxedValue === 'string') {
-                    value = overrideConverter ? valueConverter.call(this, boxedValue) : valueConverter(boxedValue);
-                }
-                else {
-                    value = boxedValue;
-                }
-                this[key] = value;
-            }
-            const changed = equalityComparer ? !equalityComparer(oldValue, value) : oldValue !== value;
-            if (changed) {
-                if (valueChanged) {
-                    valueChanged(this, oldValue, value);
-                }
-                if (view[setNative]) {
-                    if (view._suspendNativeUpdatesCount) {
-                        if (view._suspendedUpdates) {
-                            view._suspendedUpdates[propertyName] = property;
-                        }
+                const changed = equalityComparer ? !equalityComparer(oldValue, value) : oldValue !== value;
+                if (changed) {
+                    if (valueChanged) {
+                        valueChanged(this, oldValue, value);
                     }
-                    else if (unsetNativeValue) {
-                        if (defaultValueKey in this) {
-                            view[setNative](this[defaultValueKey]);
-                            delete this[defaultValueKey];
+                    if (view[setNative]) {
+                        if (view._suspendNativeUpdatesCount) {
+                            if (view._suspendedUpdates) {
+                                view._suspendedUpdates[propertyName] = property;
+                            }
+                        }
+                        else if (unsetNativeValue) {
+                            if (defaultValueKey in this) {
+                                view[setNative](this[defaultValueKey]);
+                                delete this[defaultValueKey];
+                            }
+                            else {
+                                view[setNative](defaultValue);
+                            }
                         }
                         else {
-                            view[setNative](defaultValue);
+                            if (!(defaultValueKey in this)) {
+                                this[defaultValueKey] = view[getDefault] ? view[getDefault]() : defaultValue;
+                            }
+                            view[setNative](value);
                         }
                     }
-                    else {
-                        if (!(defaultValueKey in this)) {
-                            this[defaultValueKey] = view[getDefault] ? view[getDefault]() : defaultValue;
-                        }
-                        view[setNative](value);
+                    if (this.hasListeners(eventName)) {
+                        this.notify({
+                            object: this,
+                            eventName,
+                            propertyName,
+                            value,
+                            oldValue,
+                            origin,
+                        });
                     }
-                }
-                if (this.hasListeners(eventName)) {
-                    this.notify({
-                        object: this,
-                        eventName,
-                        propertyName,
-                        value,
-                        oldValue,
+                    if (affectsLayout) {
+                        view.requestLayout();
+                    }
+                    view.eachChild((child) => {
+                        const childStyle = child.style;
+                        const childValueSource = childStyle[sourceKey] || 0 /* ValueSource.Default */;
+                        if (reset) {
+                            if (childValueSource === 1 /* ValueSource.Inherited */) {
+                                setDefaultFunc.call(childStyle, unsetValue);
+                            }
+                        }
+                        else {
+                            if (childValueSource <= 1 /* ValueSource.Inherited */) {
+                                setInheritedFunc.call(childStyle, value);
+                            }
+                        }
+                        return true;
                     });
                 }
-                if (affectsLayout) {
-                    view.requestLayout();
-                }
-                view.eachChild((child) => {
-                    const childStyle = child.style;
-                    const childValueSource = childStyle[sourceKey] || 0 /* ValueSource.Default */;
-                    if (reset) {
-                        if (childValueSource === 1 /* ValueSource.Inherited */) {
-                            setDefaultFunc.call(childStyle, unsetValue);
-                        }
-                    }
-                    else {
-                        if (childValueSource <= 1 /* ValueSource.Inherited */) {
-                            setInheritedFunc.call(childStyle, value);
-                        }
-                    }
-                    return true;
-                });
-            }
+            };
         };
         const setDefaultFunc = setFunc(0 /* ValueSource.Default */);
         const setInheritedFunc = setFunc(1 /* ValueSource.Inherited */);
@@ -1100,6 +1190,7 @@ export class ShorthandProperty {
         this.cssName = `css:${options.cssName}`;
         this.cssLocalName = `${options.cssName}`;
         cssShorthandConverters.set(options.cssName, options.converter);
+        cssShorthandsVersion++;
         const converter = options.converter;
         function setLocalValue(value) {
             const view = this.viewRef.get();

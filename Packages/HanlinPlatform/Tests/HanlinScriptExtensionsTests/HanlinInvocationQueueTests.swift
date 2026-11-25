@@ -70,7 +70,7 @@ struct HanlinInvocationQueueTests {
         #expect(try Data(contentsOf: outside) == outsideBytes)
     }
 
-    @Test func unreadableRecordsStillConsumeAdmissionCapacityUntilExplicitRecovery() async throws {
+    @Test func unreadableRecordsCannotBlockAdmissionAndRetainTheirOriginalBytes() async throws {
         let root = temporaryRoot(); defer { try? FileManager.default.removeItem(at: root) }
         let store = HanlinScriptExtensionStore(root: root), healthy = try command()
         try store.enqueue(healthy)
@@ -79,13 +79,19 @@ struct HanlinInvocationQueueTests {
             try Data("malformed".utf8).write(to: file)
         }
         let next = try command()
-        #expect(throws: HanlinInvocationQueueError.queueFull) { try store.enqueue(next) }
+        try store.enqueue(next)
+        #expect(try store.command(for: next.id)?.invocation.parameters == next.invocation.parameters)
         let executor = HanlinInvocationExecutor(store: store)
         let receipt = try await executor.execute(healthy.id) { _ in .integer(42) }
         #expect(receipt?.status == .succeeded)
         try store.enqueue(next)
         let scan = try store.scanPendingCommands(limit: 128)
         #expect(scan.commands.map(\.id) == [next.id] && scan.rejections.count == 127)
+        for rejection in scan.rejections {
+            let id = try #require(rejection.invocationID)
+            let file = store.root.appending(path: "ResumeQueue/\(id.uuidString.lowercased()).json")
+            #expect(try Data(contentsOf: file) == Data("malformed".utf8))
+        }
     }
 
     private func temporaryRoot() -> URL {

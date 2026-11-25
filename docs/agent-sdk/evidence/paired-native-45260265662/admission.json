@@ -1,0 +1,13 @@
+{
+  "source": "e59256e8325bcdb71c0e683f6b19e7641642aad8",
+  "base": "0b40a021c6d28e4d1c47ed87060d063c8456ba9f",
+  "actual_app_build_proof_run": 45246711373,
+  "proof_source_admission": "../paired-proof-gate-20261123/source-admission.json",
+  "guard_controls": "21 PASS portable",
+  "required_reuse": "Both native guards must pass or workflow stops before baseline replay",
+  "original_cases_unchanged": true,
+  "native_status": "NOT_RUN",
+  "active_workflow_runs_at_admission": 0,
+  "admitted_at": "2026-11-23T20:31:24.058499+00:00",
+  "dispatch_performed": false
+}

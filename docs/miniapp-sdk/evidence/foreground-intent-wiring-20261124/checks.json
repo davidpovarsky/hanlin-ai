@@ -1,0 +1,80 @@
+[
+  {
+    "check": "project-idempotency",
+    "argv": [
+      "python3",
+      "Scripts/SDK/update_project.py",
+      "--check"
+    ],
+    "exit": 0,
+    "seconds": 1.04,
+    "log": "project-idempotency.log",
+    "output": "Original application source ownership: SDK; executable entry point: AI_HLY/AI_HLY.swift\n"
+  },
+  {
+    "check": "project-graph-tests",
+    "argv": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "Scripts/CI/IntegrationValidation",
+      "-p",
+      "test_project_graph.py",
+      "-v"
+    ],
+    "exit": 0,
+    "seconds": 0.881,
+    "log": "project-graph-tests.log",
+    "output": "test_agent_sdk_actual_linkage (test_project_graph.ProjectGraphTests.test_agent_sdk_actual_linkage) ... ok\ntest_agent_sdk_does_not_leak_into_miniapps (test_project_graph.ProjectGraphTests.test_agent_sdk_does_not_leak_into_miniapps) ... ok\ntest_agent_sdk_requires_canonical_sibling_package (test_project_graph.ProjectGraphTests.test_agent_sdk_requires_canonical_sibling_package) ... ok\ntest_agent_sdk_requires_framework_link_not_just_declaration (test_project_graph.ProjectGraphTests.test_agent_sdk_requires_framework_link_not_just_declaration) ... ok\ntest_agent_sdk_test_import_requires_owning_application_product (test_project_graph.ProjectGraphTests.test_agent_sdk_test_import_requires_owning_application_product) ... ok\ntest_extraction_keeps_target_and_real_source (test_project_graph.ProjectGraphTests.test_extraction_keeps_target_and_real_source) ... ok\ntest_miniapps_extensions_are_actually_embedded (test_project_graph.ProjectGraphTests.test_miniapps_extensions_are_actually_embedded) ... ok\ntest_miniapps_extensions_do_not_alias_ai_targets (test_project_graph.ProjectGraphTests.test_miniapps_extensions_do_not_alias_ai_targets) ... ok\ntest_miniapps_extensions_link_original_shared_sdk (test_project_graph.ProjectGraphTests.test_miniapps_extensions_link_original_shared_sdk) ... ok\ntest_native_surfaces_share_only_miniapps_namespace (test_project_graph.ProjectGraphTests.test_native_surfaces_share_only_miniapps_namespace) ... ok\ntest_registered_graph (test_project_graph.ProjectGraphTests.test_registered_graph) ... ok\ntest_reject_app_dependency (test_project_graph.ProjectGraphTests.test_reject_app_dependency) ... ok\ntest_reject_declared_but_unlinked_product (test_project_graph.ProjectGraphTests.test_reject_declared_but_unlinked_product) ... ok\ntest_reject_duplicate_project_key (test_project_graph.ProjectGraphTests.test_reject_duplicate_project_key) ... ok\ntest_reject_invalid_signing_or_lower_deployment (test_project_graph.ProjectGraphTests.test_reject_invalid_signing_or_lower_deployment) ... ok\ntest_reject_runtime_build_phase (test_project_graph.ProjectGraphTests.test_reject_runtime_build_phase) ... ok\ntest_reject_whole_app_source_membership (test_project_graph.ProjectGraphTests.test_reject_whole_app_source_membership) ... ok\ntest_result_verifier_requires_all_actual_passing_nodes (test_project_graph.ProjectGraphTests.test_result_verifier_requires_all_actual_passing_nodes) ... ok\ntest_shared_native_adapter_must_not_compile_again_in_executable (test_project_graph.ProjectGraphTests.test_shared_native_adapter_must_not_compile_again_in_executable) ... ok\n\n----------------------------------------------------------------------\nRan 19 tests in 0.743s\n\nOK\n"
+  },
+  {
+    "check": "target-source-membership",
+    "argv": [
+      "python3",
+      "Scripts/ProductSplit/verify_targets.py"
+    ],
+    "exit": 1,
+    "seconds": 0.602,
+    "log": "target-source-membership.log",
+    "output": "Traceback (most recent call last):\n  File \"/mnt/development/projects/worktrees/hanlin-miniapps-intent-wiring-20261124/Scripts/ProductSplit/verify_targets.py\", line 159, in <module>\n    main()\n  File \"/mnt/development/projects/worktrees/hanlin-miniapps-intent-wiring-20261124/Scripts/ProductSplit/verify_targets.py\", line 91, in main\n    runtime_lock = json.loads((ROOT / \"RuntimeDependencies.lock.json\").read_text())\n                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/pathlib.py\", line 1029, in read_text\n    with self.open(mode='r', encoding=encoding, errors=errors) as f:\n         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/pathlib.py\", line 1015, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/mnt/development/projects/worktrees/hanlin-miniapps-intent-wiring-20261124/RuntimeDependencies.lock.json'\n"
+  },
+  {
+    "check": "swift-syntax",
+    "argv": [
+      "/usr/local/bin/swiftc",
+      "-frontend",
+      "-parse",
+      "HanlinMiniAppsApp/HanlinMiniAppsApp.swift"
+    ],
+    "exit": 0,
+    "seconds": 0.386,
+    "log": "swift-syntax.log",
+    "output": ""
+  },
+  {
+    "check": "diff-whitespace",
+    "argv": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exit": 0,
+    "seconds": 0.039,
+    "log": "diff-whitespace.log",
+    "output": ""
+  },
+  {
+    "check": "target-source-membership-final",
+    "argv": [
+      "python3",
+      "Scripts/ProductSplit/verify_targets.py"
+    ],
+    "exit": 0,
+    "seconds": 0.183,
+    "log": "target-source-membership-final.log",
+    "retryReason": "Materialized unchanged RuntimeDependencies.lock.json and AI-HLY-Info.plist omitted by the initial sparse checkout. No product-source correction was needed.",
+    "output": "{\"status\": \"SOURCE_VALIDATED\", \"shared_source_count\": 79, \"graph\": {\"miniapps_products\": [\"HanlinA2UI\", \"HanlinAgentActivityCore\", \"HanlinExpoNativeAPI\", \"HanlinExpoRuntime\", \"HanlinExpoWidgetsOriginal\", \"HanlinExtensionContracts\", \"HanlinLocalization\", \"HanlinMiniAppCore\", \"HanlinMiniAppsBridge\", \"HanlinMiniAppsPicker\", \"HanlinMiniAppsUI\", \"HanlinNativeScriptRuntime\", \"HanlinParityMiniApp\", \"HanlinPlatformContracts\", \"HanlinPresentationKit\", \"HanlinProductSplit\", \"HanlinScriptCompiler\", \"HanlinScriptContracts\", \"HanlinScriptDeviceServices\", \"HanlinScriptExtensions\", \"HanlinScriptStore\", \"HanlinScriptUI\", \"HanlinScriptingApplicationRuntime\", \"HanlinScriptingSDK\", \"HanlinSefariaMiniApp\", \"HanlinTextStudioMiniApp\", \"HanlinTranslationUI\", \"HanlinWidgetUI\", \"HanlinWikipediaMiniApp\", \"IOSSystemLite\", \"SWCompression\", \"TorahLibraryKit\", \"ZIPFoundation\"], \"miniapps_source_groups\": [\"HanlinMiniAppsApp\"], \"deployment_target\": \"27.0\", \"signed_or_install_proof\": false}, \"sdk\": {\"ai_products\": [\"HanlinApplication\"], \"unit_test_products\": [\"HanlinApplication\"], \"miniapps_agent_products\": [], \"sdk_application_sources\": 513, \"host_sources\": [\"AI_HLY.swift\"], \"native_adapter\": \"Model/HanlinAppleModelCatalogAdapter.swift\", \"linked_application_products\": {\"HanlinApp\": [\"HanlinApplication\"], \"AI_HLYTests\": [\"HanlinApplication\"]}, \"apple_compilation\": \"NOT_RUN\"}, \"ios_build\": \"NOT_RUN\", \"ios_ui\": \"NOT_RUN\", \"signed_group\": \"NOT_RUN\"}\n"
+  }
+]

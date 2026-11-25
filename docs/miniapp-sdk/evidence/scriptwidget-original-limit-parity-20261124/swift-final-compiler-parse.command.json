@@ -1,0 +1,19 @@
+{
+  "argv": [
+    "swiftc",
+    "-frontend",
+    "-parse",
+    "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/HanlinWidgetCompiler.swift"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-scriptwidget-original-limit-parity-20261124",
+  "exitCode": 0,
+  "seconds": 0.047,
+  "atUTC": "2026-11-24T08:40:13.794440+00:00",
+  "inputs": [
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/HanlinWidgetCompiler.swift",
+      "sha256": "d33e755c68ea9440fc68c9d42cd695cc3815ede7b9873e010200375c8b38293f"
+    }
+  ],
+  "reason": "Remove outer result checks after the operation checks moved into the actual Babel transform boundary; packaging is not another timeout scope."
+}

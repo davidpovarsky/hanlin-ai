@@ -1,0 +1,12 @@
+{
+  "checkedAt": "2026-11-24T14:16:55.394830+00:00",
+  "kind": "Read-only completion of reuse-input identity, no compiler or test rerun",
+  "source": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinDescriptors.swift",
+  "projection": "Verbatim terminal HanlinManifestIssueCode/HanlinManifestIssue declarations",
+  "priorProjectionSHA256": "55bfe2a2ab836cfd4d00e19b36bddcf4b9d5dbc307701e930f1150c8bea0fc0e",
+  "currentProjectionSHA256": "55bfe2a2ab836cfd4d00e19b36bddcf4b9d5dbc307701e930f1150c8bea0fc0e",
+  "actualMacInput": {
+    "path": "/Users/m1/builds/hanlin-ai-ce2eceeb-expo-widget-props-20261124/HanlinManifestIssue.swift",
+    "sha256": "55bfe2a2ab836cfd4d00e19b36bddcf4b9d5dbc307701e930f1150c8bea0fc0e"
+  }
+}

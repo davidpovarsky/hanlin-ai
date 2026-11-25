@@ -332,13 +332,17 @@ public struct HanlinScriptingBundler: Sendable {
         var widgetFiles: [HanlinArtifactFile] = []
         for (path, data) in preparedWidgetPrograms.sorted(by: { $0.key < $1.key }) {
             guard HanlinArchivePolicy.normalizedRelativePath(path) == path,
-                  path.hasPrefix("widgets/"), path.hasSuffix(".json"), data.count <= 3 * 1_024 * 1_024 else {
+                  (path.hasPrefix("widgets/") || (path.hasPrefix("presentations/") &&
+                    path.split(separator: "/").count == 2 &&
+                    HanlinWidgetProgram.isSHA256(String(path.dropFirst("presentations/".count).dropLast(".json".count))))),
+                  path.hasSuffix(".json"), data.count <= 3 * 1_024 * 1_024 else {
                 throw HanlinScriptingBundlerError.invalidCompilerOutput("invalid_widget_program")
             }
             let url = temporary.appending(path: path)
             try fileManager.createDirectory(at: url.deletingLastPathComponent(), withIntermediateDirectories: true)
             try data.write(to: url, options: .atomic)
-            widgetFiles.append(.init(logicalPath: path, sha256: Self.sha256(data), byteCount: Int64(data.count), context: .widget))
+            widgetFiles.append(.init(logicalPath: path, sha256: Self.sha256(data), byteCount: Int64(data.count),
+                context: path.hasPrefix("presentations/") ? .appIntent : .widget))
         }
         let complete = try completeArtifactManifest(bundle.manifest, artifactRoot: temporary, additionalFiles: widgetFiles)
         let encoder = JSONEncoder()

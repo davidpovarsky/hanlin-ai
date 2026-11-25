@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "command": [
+    "ps",
+    "-u",
+    "501",
+    "-o",
+    "pid=,ppid=,uid=,stat=,comm="
+  ],
+  "timeout_seconds": 5,
+  "effective_uid": 501,
+  "processes": [
+    {
+      "pid": 3149,
+      "ppid": 1,
+      "uid": 501,
+      "state": "R",
+      "executable": "/Library/Developer/PrivateFrameworks/CoreSimulator.framework/Versions/A/XPCServices/com.apple.CoreSimulator.CoreSimulatorService.xpc/Contents/MacOS/com.apple.CoreSimulator.CoreSimulatorService"
+    },
+    {
+      "pid": 3283,
+      "ppid": 1,
+      "uid": 501,
+      "state": "S",
+      "executable": "/Library/Developer/PrivateFrameworks/CoreSimulator.framework/Versions/A/XPCServices/SimulatorTrampoline.xpc/Contents/MacOS/SimulatorTrampoline"
+    },
+    {
+      "pid": 3530,
+      "ppid": 1,
+      "uid": 501,
+      "state": "S",
+      "executable": "launchd_sim"
+    }
+  ],
+  "timed_out": false,
+  "return_code": 0,
+  "stderr": ""
+}

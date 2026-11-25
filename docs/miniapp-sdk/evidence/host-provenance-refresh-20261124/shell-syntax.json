@@ -1,0 +1,14 @@
+{
+  "argv": [
+    "bash",
+    "-n",
+    "Scripts/Runtime/prepare-runtime-host.sh"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-host-provenance-refresh-20261124",
+  "startedAt": "2026-11-24T18:11:15.264200+00:00",
+  "elapsedSeconds": 0.0017764493823051453,
+  "exitCode": 0,
+  "stdout": "",
+  "stderr": "",
+  "scope": "Bash syntax only; no script commands executed."
+}

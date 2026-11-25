@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "engine": "nativescript",
+  "operation": "build",
+  "succeeded": true,
+  "diagnostics": [],
+  "sourceRoot": "/dev/shm/hanlin-miniapp-integration-20261123/native-authoring",
+  "sdk": {
+    "packageVersions": {
+      "@nativescript/core": "9.1.0",
+      "@nativescript/swift-ui": "4.0.2",
+      "@nativescript/ios": "9.1.0",
+      "@nativescript/types": "9.1.0",
+      "@nativescript/vite": "8.0.0",
+      "typescript": "5.9.3",
+      "vite": "8.0.0",
+      "@hanlin/host-services": "1.0.0"
+    },
+    "manifestSHA256": "c4c68340c27658d9d5ef277baf7df4bb6ca4049b3ef94e6ddbc3d57db80898f8",
+    "compilerVersion": "5.9.3"
+  },
+  "typecheck": {
+    "strict": true,
+    "skipLibCheck": true,
+    "dependencyDeclarationsChecked": false
+  },
+  "preparedPackagePath": "/dev/shm/hanlin-miniapp-integration-20261123/native-authoring/.hanlin-build/ebc243a2-6c5d-4dbb-8848-36e07346a242/package",
+  "archivePath": "/dev/shm/hanlin-miniapp-integration-20261123/native-authoring/.hanlin-build/ebc243a2-6c5d-4dbb-8848-36e07346a242/MiniApp.hanlinNativeScript"
+}

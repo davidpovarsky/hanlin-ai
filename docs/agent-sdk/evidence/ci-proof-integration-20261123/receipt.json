@@ -1,0 +1,26 @@
+{
+  "utc": "2026-11-23T21:16:06.832327+00:00",
+  "base": "e24a70da90b8f3936f8d302e380d31f094eb9648",
+  "source_commits": [
+    "e59256e8325bcdb71c0e683f6b19e7641642aad8",
+    "0f521eab23352cc3bae23dfbb617871a9397929b"
+  ],
+  "scope": "CI_ONLY_ORIGINAL_ACCEPTANCE_UNCHANGED",
+  "motion": "Selected chat-motion-product job25→35min only; native720s and original tests unchanged. Exact whole-workflow comparison restored by reverting one scalar.",
+  "paired": "Required two-proof reuse fails closed after original receipts; original five reuse predicates and optional fallback unchanged. Whole workflow differs by one env declaration.",
+  "prior_validation": "Original21 proof controls PASS; actual Host/foreground reuse PASS in45260265662@e592. No controls or native tests replayed during integration.",
+  "production_source_changed": false,
+  "original_patch_paths": [
+    ".github/workflows/build-ios26-unsigned-ipa.yml",
+    ".github/workflows/validate-app-split.yml",
+    "Scripts/ProductSplit/restore_host_proof.py",
+    "Scripts/ProductSplit/test_restore_host_proof.py",
+    "docs/agent-sdk/evidence/motion-job-envelope-20261123/README.md",
+    "docs/agent-sdk/evidence/motion-job-envelope-20261123/receipt.json",
+    "docs/agent-sdk/evidence/paired-proof-gate-20261123/README.md",
+    "docs/agent-sdk/evidence/paired-proof-gate-20261123/controls.stderr",
+    "docs/agent-sdk/evidence/paired-proof-gate-20261123/controls.stdout",
+    "docs/agent-sdk/evidence/paired-proof-gate-20261123/source-admission.json",
+    "docs/agent-sdk/evidence/paired-proof-gate-20261123/verification.json"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "cwd": "/mnt/development/projects/worktrees/hanlin-scriptwidget-host-validation-20261124",
+  "argv": [
+    "/usr/local/bin/node",
+    "Scripts/MiniApps/generate-scriptwidget-manifest.mjs"
+  ],
+  "exitCode": 0,
+  "durationSeconds": 0.0827,
+  "outputs": {
+    "manifest-regenerate.stdout.txt": {
+      "bytes": 1153,
+      "sha256": "990fa9f78ab6d2983cec3c3a41912af1bbec0236b3287f556c3186412917e21d"
+    },
+    "manifest-regenerate.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  }
+}

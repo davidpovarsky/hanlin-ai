@@ -1,0 +1,23 @@
+{
+  "path": "/dev/shm/hanlin-native-gate-evidence-45375410965/job-138380242016.log",
+  "bytes": 5335422,
+  "sha256": "3429754b557a50489ee7bb5bf362870ae53e02e3aa567cbeb8a2aee2cf6b1403",
+  "selectedRows": [
+    {
+      "line": 3354,
+      "text": "miniapps\tPrepare existing native dependencies and Runtime host\t2026-11-24T10:33:47.1798640Z ^[[36;1mnode Scripts/MiniApps/check-authoring-examples.mjs --sdk-archive build/runtime-host/RuntimeHostResources.zip --require-sdk-docs --report \"$SPLIT_EVIDENCE/miniapp-documentation-snippets.json\"^[[0m"
+    },
+    {
+      "line": 24273,
+      "text": "miniapps\tPrepare existing native dependencies and Runtime host\t2026-11-24T10:48:10.1580680Z {\"output\":\"/Users/runner/work/_temp/hanlin-runtime-host/MiniAppSDK\",\"inputSHA256\":\"ace5ee5e40a1c4c8c17c2a3744b24ac2793b237e5a2cc9d5dfd3c31959c82d6b\",\"files\":25661,\"engines\":[\"expo\",\"nativescript\",\"scriptwidget\"]}"
+    },
+    {
+      "line": 24471,
+      "text": "miniapps\tPrepare existing native dependencies and Runtime host\t2026-11-24T10:50:45.3583450Z     \"manifestSHA256\": \"1b66e9111586a764617a47fafe8f71ac677c14743fc1d0df79290e3ac994cebc\","
+    },
+    {
+      "line": 24472,
+      "text": "miniapps\tPrepare existing native dependencies and Runtime host\t2026-11-24T10:50:45.3665220Z     \"inputSHA256\": \"ace5ee5e40a1c4c8c17c2a3744b24ac2793b237e5a2cc9d5dfd3c31959c82d6b\""
+    }
+  ]
+}

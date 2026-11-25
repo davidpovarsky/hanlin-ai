@@ -1,3 +1,4 @@
+import SwiftUI
 import HanlinLocalization
 import CryptoKit
 import CoreFoundation
@@ -13,6 +14,7 @@ import HanlinScriptingApplicationRuntime
 import HanlinScriptingSDK
 import HanlinNativeScriptRuntime
 import HanlinExpoRuntime
+import ExpoWidgets
 import HanlinExpoNativeAPI
 import HanlinMiniAppCore
 import HanlinProductSplit
@@ -62,6 +64,65 @@ final class HanlinScriptingPlatform {
 
     private(set) var activity: Activity = .idle
     private(set) var preview: HanlinImportPreview?
+    private(set) var authoringReport: HanlinMiniAppAuthoringReport?
+    private(set) var importAttemptID = UUID()
+    private var importOperationID: UUID?
+    private var retainedImportArchive: URL?
+    private var repairWakeURL: URL?
+    private var importPresentations: Set<UUID> = []
+
+    var hasImportPresentation: Bool { !importPresentations.isEmpty }
+
+    func setImportPresentation(_ id: UUID, visible: Bool) {
+        if visible { importPresentations.insert(id) }
+        else { importPresentations.remove(id) }
+    }
+
+    var canInstallPreview: Bool {
+        preview?.canInstall == true && (authoringReport?.succeeded ?? true)
+    }
+
+    var canRepairImport: Bool {
+        (stagedPackage?.archiveURL ?? retainedImportArchive) != nil
+    }
+
+    var importDiagnostics: [HanlinMiniAppAuthoringDiagnostic] {
+        var rows = (preview?.findings ?? []).map { finding in
+            HanlinMiniAppAuthoringDiagnostic(
+                code: finding.code ?? "PACKAGE_COMPATIBILITY",
+                category: finding.severity.rawValue,
+                message: finding.message, file: finding.sourcePath, remediation: finding.rationale)
+        }
+        rows.append(contentsOf: authoringReport?.diagnostics ?? [])
+        if case .failed(let message) = activity, !rows.contains(where: { $0.message == message }) {
+            rows.append(.init(code: "PACKAGE_IMPORT", category: "error", message: message))
+        }
+        return rows
+    }
+
+    func importDiagnosticJSON() throws -> Data {
+        let report = HanlinMiniAppAuthoringReport(
+            engine: authoringReport?.engine ?? preview?.manifest?.hanlinRuntime ?? "unknown",
+            operation: "import", succeeded: canInstallPreview,
+            diagnostics: importDiagnostics, sourceRoot: authoringReport?.sourceRoot,
+            sdk: authoringReport?.sdk)
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+        return try encoder.encode(report)
+    }
+
+    func prepareImportRepair() throws -> URL {
+        if let repairWakeURL { return repairWakeURL }
+        guard let archive = stagedPackage?.archiveURL ?? retainedImportArchive else {
+            throw MiniAppAuthoringTransferStore.StoreError.missingPayload
+        }
+        let url = try MiniAppAuthoringDelivery.prepareRepair(
+            archive: archive,
+            originalFileName: preview?.source.originalFileName ?? archive.lastPathComponent,
+            diagnostics: importDiagnosticJSON())
+        repairWakeURL = url
+        return url
+    }
     private(set) var installedPackages: [HanlinStoredPackageSnapshot] = []
     private(set) var bootstrapError: String?
     private(set) var pendingResumeCommands: [HanlinScriptResumeCommand] = []
@@ -72,6 +133,8 @@ final class HanlinScriptingPlatform {
     private(set) var activeApplicationModel: HanlinScriptUIModel?
     private(set) var activeNativeScriptController: UIViewController?
     private(set) var activeExpoController: UIViewController?
+    /// Presented by the owning foreground scene when an external action opens a runtime.
+    private(set) var presentsForegroundAction = false
     private(set) var systemUIPresentation: HanlinScriptingSystemUIPresentation?
     private(set) var installedRoot: URL?
     private(set) var widgetPublicationDiagnostics: [HanlinInstalledPackageID: HanlinWidgetStorageDiagnostic] = [:]
@@ -102,6 +165,7 @@ final class HanlinScriptingPlatform {
         nativeScriptSession != nil || nativeScriptWindowSession != nil
     }
     private var expoSession: HanlinExpoSession?
+    private var expoHostServices: ExpoHostServicesAdapter?
     private(set) var isTransferringProductData = false
     private var activeStoreOperations = 0
     private var scriptingStorageCheckpoint: UUID?
@@ -436,6 +500,9 @@ final class HanlinScriptingPlatform {
         defer { activeStoreOperations -= 1 }
         print("HANLIN_IMPORT_PACKAGE_STARTED: url=\(sourceURL.path(percentEncoded: false))")
         discardPreview()
+        let operationID = UUID()
+        importOperationID = operationID
+        importAttemptID = operationID
         guard let analyzer, let stagingRoot else {
             let message = bootstrapError ?? "Scripting platform is unavailable."
             print("HANLIN_IMPORT_PACKAGE_BOOTSTRAP_GUARD_FAILED: \(message)")
@@ -444,10 +511,18 @@ final class HanlinScriptingPlatform {
         }
         activity = .importing
         do {
+            let copyRoot = stagingRoot.appending(path: "repair-input-\(operationID.uuidString.lowercased())",
+                directoryHint: .isDirectory)
+            try FileManager.default.createDirectory(at: copyRoot, withIntermediateDirectories: true)
+            let ownedArchive = copyRoot.appending(path: sourceURL.lastPathComponent)
+            let accessed = sourceURL.startAccessingSecurityScopedResource()
+            defer { if accessed { sourceURL.stopAccessingSecurityScopedResource() } }
+            try FileManager.default.copyItem(at: sourceURL, to: ownedArchive)
+            retainedImportArchive = ownedArchive
             let center = packageCenter
             let result = try await Task.detached(priority: .userInitiated) {
                 let staged = try center.stageAndInspect(
-                    sourceURL: sourceURL,
+                    sourceURL: ownedArchive,
                     stagingParent: stagingRoot
                 )
                 do {
@@ -457,12 +532,42 @@ final class HanlinScriptingPlatform {
                     throw error
                 }
             }.value
+            guard importOperationID == operationID else {
+                try? center.discard(result.0)
+                return
+            }
+            var checkedReport: HanlinMiniAppAuthoringReport?
+            if FileManager.default.fileExists(atPath:
+                result.0.packageRoot.appending(path: "hanlin.authoring.json").path) {
+                let engine: String
+                if result.1.entrypoints.contains(where: { $0.runtimeProfile == .hanlinExpo }) {
+                    engine = "expo"
+                } else if result.1.entrypoints.contains(where: { $0.runtimeProfile == .hanlinNativeScript }) {
+                    engine = "nativescript"
+                } else {
+                    engine = result.1.entrypoints.contains(where: { $0.widgetEngine == .scriptwidget })
+                        ? "scriptwidget" : "unknown"
+                }
+                do {
+                    checkedReport = try await MiniAppAuthoringService.validate(project: result.0.packageRoot, engine: engine)
+                } catch {
+                    checkedReport = .init(engine: engine, operation: "validate", succeeded: false,
+                        diagnostics: [.init(code: "AUTHORING_VALIDATION", category: "error",
+                            message: error.localizedDescription)])
+                }
+            }
+            guard importOperationID == operationID else {
+                try? center.discard(result.0)
+                return
+            }
+            authoringReport = checkedReport
             stagedPackage = result.0
             preview = result.1
             capabilityApprovals = .init(requests: result.1.requestedCapabilities)
             activity = .previewReady
-            print("HANLIN_IMPORT_PACKAGE_SUCCESS: canInstall=\(result.1.canInstall) entrypoints=\(result.1.entrypoints.count)")
+            print("HANLIN_IMPORT_PACKAGE_PREVIEW: canInstall=\(canInstallPreview) entrypoints=\(result.1.entrypoints.count)")
         } catch {
+            guard importOperationID == operationID else { return }
             let message = Self.safeMessage(error)
             print("HANLIN_IMPORT_PACKAGE_CATCH_ERROR: \(message)")
             activity = .failed(message)
@@ -474,8 +579,8 @@ final class HanlinScriptingPlatform {
         activeStoreOperations += 1
         defer { activeStoreOperations -= 1 }
         guard activity != .installing else { return }
-        print("HANLIN_INSTALL_PREVIEW_STARTED: canInstall=\(preview?.canInstall ?? false)")
-        guard let preview, preview.canInstall, let stagedPackage,
+        print("HANLIN_INSTALL_PREVIEW_STARTED: canInstall=\(canInstallPreview)")
+        guard let preview, canInstallPreview, let stagedPackage,
               let store, let bundler, let stagingRoot else {
             activity = .failed("This package did not pass Import Preview.")
             return
@@ -518,9 +623,9 @@ final class HanlinScriptingPlatform {
                 let compiled = if preview.entrypoints.contains(where: { $0.runtimeProfile == .hanlinNativeScript }) {
                     try Self.nativeScriptSourceBundle(preview: preview)
                 } else if preview.entrypoints.contains(where: { $0.runtimeProfile == .hanlinExpo }) {
-                    try Self.preparedSourceBundle(preview: preview, compilerVersion: "Expo-58.0.3-prepared")
+                    try Self.preparedSourceBundle(preview: preview, compilerVersion: "Expo-\(HanlinExpoBridgeMetadata.runtimeVersion)-prepared")
                 } else if preview.entrypoints.contains(where: { $0.widgetEngine == .scriptwidget }) && bundles.isEmpty {
-                    try Self.preparedSourceBundle(preview: preview, compilerVersion: "ScriptWidget-68f04194-prepared")
+                    try Self.preparedSourceBundle(preview: preview, compilerVersion: "ScriptWidget-\(HanlinMiniAppHostVersions.scriptWidgetRevision)-prepared")
                 } else if bundles.isEmpty && preview.entrypoints.allSatisfy({ $0.kind == .widget && $0.widgetEngine == .legacy && URL(filePath: $0.sourcePath).pathExtension.lowercased() == "json" }) {
                     try Self.preparedSourceBundle(preview: preview, compilerVersion: "Hanlin-widget-json-v1")
                 } else if bundles.isEmpty {
@@ -592,6 +697,13 @@ final class HanlinScriptingPlatform {
     }
 
     func discardPreview() {
+        importOperationID = nil
+        authoringReport = nil
+        repairWakeURL = nil
+        if let retainedImportArchive {
+            try? FileManager.default.removeItem(at: retainedImportArchive.deletingLastPathComponent())
+        }
+        retainedImportArchive = nil
         if let stagedPackage { try? packageCenter.discard(stagedPackage) }
         stagedPackage = nil
         preview = nil
@@ -664,6 +776,41 @@ final class HanlinScriptingPlatform {
         try extensionStore.invalidateWidgetActions(installedPackageID: id)
     }
 
+    @ViewBuilder
+    func scriptWidgetServicesView(for entityID: String) -> some View {
+        if let extensionStore {
+            HanlinScriptWidgetServicesView(store: extensionStore, entityID: entityID)
+        } else {
+            ContentUnavailableView("Widget Services", systemImage: "externaldrive.badge.exclamationmark",
+                description: Text("The shared widget store is unavailable."))
+        }
+    }
+
+    func startScriptWidgetLiveActivity(for entityID: String) async throws {
+#if os(iOS)
+        guard let extensionStore, let snapshot = try extensionStore.load(),
+              let instance = snapshot.widgetInstances.first(where: { $0.entityID == entityID && $0.engine == .scriptwidget }),
+              let widget = snapshot.widgets.first(where: { $0.identity == instance.identity && $0.engine == .scriptwidget }) else {
+            throw HanlinWidgetActionError.inactiveInstance
+        }
+        _ = try await HanlinScriptWidgetLiveActivityController.start(store: extensionStore,
+            entityID: entityID, family: widget.family, title: widget.displayName)
+#else
+        throw HanlinHostServiceError.invalidRequest("Live Activities are unavailable on this platform.")
+#endif
+    }
+
+    func endScriptWidgetLiveActivities(for entityID: String) async throws {
+#if os(iOS)
+        guard let extensionStore, let instance = try extensionStore.load()?.widgetInstances.first(where: {
+            $0.entityID == entityID && $0.engine == .scriptwidget
+        }) else { throw HanlinWidgetActionError.inactiveInstance }
+        try await HanlinScriptWidgetLiveActivityController.endActivities(store: extensionStore, identity: instance.identity)
+#else
+        throw HanlinHostServiceError.invalidRequest("Live Activities are unavailable on this platform.")
+#endif
+    }
+
     func widgetInstances(for id: HanlinInstalledPackageID) throws -> [HanlinWidgetInstance] {
         guard let extensionStore else { throw HanlinScriptExtensionStoreError.appGroupUnavailable }
         return try extensionStore.load()?.widgetInstances.filter { $0.identity.installedPackageID == id } ?? []
@@ -703,6 +850,8 @@ final class HanlinScriptingPlatform {
         guard let extensionStore else { throw HanlinScriptExtensionStoreError.appGroupUnavailable }
         try extensionStore.createWidgetInstance(from: entityID, displayName: name)
         WidgetCenter.shared.reloadTimelines(ofKind: HanlinWidgetActionExecutor.widgetKind)
+        ControlCenter.shared.reloadControls(ofKind: HanlinScriptWidgetControlCatalog.buttonKind)
+        ControlCenter.shared.reloadControls(ofKind: HanlinScriptWidgetControlCatalog.toggleKind)
     }
 
     func setCapabilityGranted(
@@ -877,15 +1026,25 @@ final class HanlinScriptingPlatform {
                     installedPackageID: package.record.installedPackageID,
                     grantedCapabilities: Set(package.grantedCapabilities.map(\.rawValue)),
                     sessionID: sessionID,
-                    externalMiniAppOperation: externalMiniAppOperation
+                    externalMiniAppOperation: externalMiniAppOperation,
+                    preparedWidgetPublisher: { [weak self] entrypointID, variantID, props in
+                        guard let self else { throw HanlinWidgetActionError.inactiveInstance }
+                        return try await self.publishPreparedExpoWidget(
+                            installedPackageID: package.record.installedPackageID,
+                            appID: package.appID, expectedGeneration: package.record.activeGeneration,
+                            sessionID: sessionID, entrypointID: entrypointID, variantID: variantID, props: props)
+                    }
                 )
+                expoHostServices = adapter
                 HanlinExpoHostServicesBridge.register(provider: adapter, forSessionID: sessionID)
                 let isNativeAPIGranted = true // Native API access follows the active runtime, not legacy grants.
                 needsFreshProcessForTransfer = true
                 let session = try HanlinExpoSession(
                     applicationRoot: entrypointURL.deletingLastPathComponent(),
                     sessionID: sessionID,
-                    packageID: id.rawValue,
+                    packageID: package.record.packageID.rawValue,
+                    installedPackageID: package.record.installedPackageID.rawValue,
+                    packageGeneration: package.record.activeGeneration,
                     isNativeAPIGranted: isNativeAPIGranted
                 )
                 expoSession = session
@@ -1024,10 +1183,13 @@ final class HanlinScriptingPlatform {
             HanlinExpoHostServicesBridge.unregister(sessionID: session.sessionID)
         }
         expoSession = nil
+        if let adapter = expoHostServices { Task { await adapter.actionChannel.close() } }
+        expoHostServices = nil
         activeApplicationID = nil
         activeApplicationModel = nil
         activeNativeScriptController = nil
         activeExpoController = nil
+        presentsForegroundAction = false
         Task { @MainActor [weak self] in try? await self?.processPendingResumeCommands() }
     }
 
@@ -1058,6 +1220,23 @@ final class HanlinScriptingPlatform {
               declaredAction.capabilities.contains(capability),
               let handlerPath = declaredAction.handler else {
             throw HanlinMiniAppRequestError.routeNotFound
+        }
+
+        if let appEntry = package.entrypoints.first(where: { $0.kind == .app && $0.runtimeProfile == .hanlinExpo }) {
+            guard handlerPath == appEntry.sourcePath else { throw HanlinMiniAppRequestError.routeNotFound }
+            if activeApplicationID != package.record.installedPackageID {
+                guard !isLaunching else { throw HanlinInvocationNotStarted() }
+                await launch(package.record.installedPackageID)
+                if activeApplicationID == package.record.installedPackageID, activeExpoController != nil {
+                    presentsForegroundAction = true
+                }
+            }
+            guard activeApplicationID == package.record.installedPackageID,
+                  expoSession != nil, let adapter = expoHostServices else {
+                throw HanlinInvocationDispatchError(.needsForeground, .unavailableHost)
+            }
+            return try await adapter.actionChannel.invoke(id: invocationID ?? UUID(), action: action.rawValue,
+                caller: caller.rawValue, parameters: payload)
         }
 
         if hasNativeScriptApplicationSession, activeApplicationID == package.record.installedPackageID {
@@ -1208,6 +1387,52 @@ final class HanlinScriptingPlatform {
         }
     }
 
+    /// Commit props to the existing prepared Expo program. The receipt states
+    /// persistence/catalog/reload facts; WidgetKit rendering is not observed here.
+    private func publishPreparedExpoWidget(
+        installedPackageID: HanlinInstalledPackageID, appID: HanlinAppID,
+        expectedGeneration: UInt64, sessionID: String,
+        entrypointID: String, variantID: String, props: [String: HanlinValue]
+    ) async throws -> String {
+        guard !isTransferringProductData else { throw HanlinProductTransferError.busy }
+        activeStoreOperations += 1
+        defer { activeStoreOperations -= 1 }
+        guard let store, let extensionStore,
+              let session = expoSession, session.isActive, session.sessionID == sessionID,
+              session.installedPackageID == installedPackageID.rawValue,
+              session.packageGeneration == expectedGeneration else {
+            throw HanlinWidgetActionError.inactiveInstance
+        }
+        guard let package = try await store.snapshots().first(where: {
+            $0.record.installedPackageID == installedPackageID && $0.appID == appID
+        }), package.enabled, package.record.activeGeneration == expectedGeneration,
+           package.entrypoints.contains(where: {
+               $0.id == entrypointID && $0.kind == .widget && $0.widgetEngine == .expo
+                   && $0.runtimeProfile == .hanlinExpo
+           }) else {
+            throw HanlinHostServiceError.invalidRequest("Prepared widget publication requires this session's current installed generation and an explicitly declared Expo widget entrypoint")
+        }
+        // A suspension above must not admit an already-replaced owning session.
+        guard expoSession === session, session.isActive else { throw HanlinWidgetActionError.inactiveInstance }
+        let identity = HanlinScriptExtensionIdentity(installedPackageID: installedPackageID,
+            packageID: package.record.packageID, generation: expectedGeneration,
+            entrypointID: entrypointID, variantID: variantID)
+        let receipt = try extensionStore.publishExpoWidgetProps(identity: identity, props: props)
+        WidgetCenter.shared.reloadTimelines(ofKind: HanlinWidgetActionExecutor.widgetKind)
+        guard var response = try JSONSerialization.jsonObject(with: JSONEncoder().encode(receipt)) as? [String: Any] else {
+            throw HanlinWidgetActionError.invalidState
+        }
+        response["ok"] = true
+        response["published"] = true
+        response["publication"] = "prepared-expo-state"
+        response["engine"] = "expo"
+        response["stateCommitted"] = true
+        response["catalogVisible"] = true
+        response["reloadRequested"] = true
+        response["osRendered"] = NSNull()
+        return String(decoding: try JSONSerialization.data(withJSONObject: response, options: [.sortedKeys]), as: UTF8.self)
+    }
+
     struct ExpoWidgetPersistedExposure: Codable, Sendable {
         let validUntil: Date?
         let root: HanlinScriptUINode
@@ -1276,6 +1501,15 @@ final class HanlinScriptingPlatform {
         defer { activeStoreOperations -= 1 }
         guard let store, let extensionStore else { return }
 
+        // Original Expo registrations share the same installed catalog lifecycle.
+        // Keep disabled choices, remove uninstalled data, and invalidate old
+        // generation layouts before any asynchronous extension publication.
+        HanlinExpoWidgetsIntegration.reconcileRegistrations(
+            installedIDs: Set(installedPackages.map { $0.record.installedPackageID.rawValue }),
+            activeGenerations: Dictionary(uniqueKeysWithValues: installedPackages.filter(\.enabled).map {
+                ($0.record.installedPackageID.rawValue, $0.record.activeGeneration)
+            }))
+
         var widgets: [HanlinScriptWidgetSnapshot] = []
         var intentEntities: [HanlinScriptIntentEntityRecord] = []
         var translationApps: [HanlinScriptTranslationUISnapshot] = []
@@ -1286,15 +1520,49 @@ final class HanlinScriptingPlatform {
             do {
                 let artifactRoot = try await store.activeArtifactURL(for: package.record.installedPackageID)
                 let displayName = package.manifest?.name ?? package.record.packageID.rawValue
+                let nativeDeclarations = try package.manifest.map(HanlinNativePresentationMetadata.declarations) ?? [:]
+                func publishNativePresentation(_ entrypointID: String) throws -> HanlinNativePresentationDescriptor? {
+                    guard let declaration = nativeDeclarations[entrypointID] else { return nil }
+                    let path = HanlinNativePresentationMetadata.artifactPath(for: entrypointID)
+                    let bytes = try Data(contentsOf: artifactRoot.appending(path: path))
+                    let program = try JSONDecoder().decode(HanlinWidgetProgram.self, from: bytes)
+                    try program.validate(engine: declaration.engine)
+                    let artifact = try extensionStore.storeArtifact(data: bytes,
+                        installedPackageID: package.record.installedPackageID, generation: package.record.activeGeneration)
+                    return .init(engine: declaration.engine, programRef: artifact.ref,
+                        programSHA256: artifact.sha256, input: declaration.input)
+                }
 
                 // Translation UI Discovery
                 let translationEntrypoints = package.entrypoints.filter { $0.kind == .translationUI }
                 for entrypoint in translationEntrypoints {
                     let fileURL = artifactRoot.appending(path: entrypoint.sourcePath)
-                    guard entrypoint.sourcePath.hasSuffix(".json"),
-                          let data = try? Data(contentsOf: fileURL),
-                          let rootNode = try? JSONDecoder().decode(HanlinScriptUINode.self, from: data) else {
-                        Self.logger.info("translation-ui entrypoint \(entrypoint.sourcePath) is non-JSON or unparseable; skipping generic fallback")
+                    let nativePresentation = try publishNativePresentation(entrypoint.id)
+                    let rootNode: HanlinScriptUINode?
+                    if nativePresentation != nil {
+                        rootNode = nil
+                    } else if entrypoint.sourcePath.hasSuffix(".json"),
+                       let data = try? Data(contentsOf: fileURL),
+                       let snapshot = try? JSONDecoder().decode(HanlinScriptUINode.self, from: data) {
+                        rootNode = snapshot
+                    } else if [.hanlinNativeScript, .hanlinExpo].contains(entrypoint.runtimeProfile),
+                              let action = try package.appDescriptor().actions.first(where: {
+                                  $0.handler == entrypoint.sourcePath &&
+                                      (entrypoint.exportedSymbol == nil || $0.id.rawValue == entrypoint.exportedSymbol)
+                              }) {
+                        // This native extension carries the selected text to the
+                        // prepared app. It never pretends to run React Native or
+                        // a NativeScript VM inside a declarative snapshot.
+                        rootNode = .init(kind: .vStack, children: [
+                            .init(kind: .text, properties: ["text": .string("{{selectedText}}")]),
+                            .init(kind: .button, properties: ["intent": .object([
+                                "__hanlinAppIntent": .bool(true), "name": .string(action.id.rawValue),
+                                "parameters": .object(["query": .string("{{selectedText}}"),
+                                    "source": .string("translationUI")])
+                            ])], children: [.init(kind: .text, properties: ["text": .string(action.title.resolved(locale: .current))])])
+                        ])
+                    } else {
+                        Self.logger.info("Translation entrypoint has no executable action or valid snapshot")
                         continue
                     }
                     let identity = HanlinScriptExtensionIdentity(
@@ -1323,7 +1591,8 @@ final class HanlinScriptingPlatform {
                         accentHex: accentHex,
                         isBeta: isBeta,
                         entrypointID: entrypoint.id,
-                        rootNode: rootNode
+                        rootNode: rootNode,
+                        nativePresentation: nativePresentation
                     ))
                 }
 
@@ -1419,7 +1688,13 @@ final class HanlinScriptingPlatform {
                         continue
                     }
 
-                    if entrypoint.runtimeProfile == .hanlinNativeScript {
+                    let nativePresentation = try publishNativePresentation(entrypoint.id)
+                    if entrypoint.runtimePolicyID == "native-presentation-v1", let nativePresentation {
+                        intentEntities.append(.init(identity: identity, id: entrypoint.exportedSymbol ?? entrypoint.id,
+                            displayName: displayName, nativePresentation: nativePresentation))
+                        continue
+                    }
+                    if entrypoint.runtimeProfile == .hanlinNativeScript || entrypoint.runtimeProfile == .hanlinExpo {
                         var actionIDs: [(id: String, title: String)] = []
                         let intentURL = artifactRoot.appending(path: entrypoint.sourcePath)
                         if entrypoint.sourcePath.hasSuffix(".json"),
@@ -1431,22 +1706,19 @@ final class HanlinScriptingPlatform {
                                 actionIDs.append((id: action, title: title))
                             }
                         }
-                        if let actionsField = package.manifest?.unknownFields["actions"],
-                           case let .array(actionsList) = actionsField {
-                            for item in actionsList {
-                                if case let .object(actObj) = item,
-                                   case let .string(actID) = actObj["id"],
-                                   !actionIDs.contains(where: { $0.id == actID }) {
-                                    let actTitle: String = {
-                                        if case let .string(t) = actObj["title"] { return t }
-                                        return actID
-                                    }()
-                                    actionIDs.append((id: actID, title: actTitle))
-                                }
+                        for action in try package.appDescriptor().actions {
+                            if let symbol = entrypoint.exportedSymbol, symbol != action.id.rawValue { continue }
+                            if entrypoint.runtimePolicyID == "prepared-foreground-action-v1",
+                               action.handler != entrypoint.sourcePath { continue }
+                            if !actionIDs.contains(where: { $0.id == action.id.rawValue }) {
+                                actionIDs.append((id: action.id.rawValue, title: action.title.resolved(locale: .current)))
                             }
                         }
+                        if nativePresentation != nil && actionIDs.isEmpty {
+                            actionIDs.append((id: entrypoint.exportedSymbol ?? entrypoint.id, title: displayName))
+                        }
                         for item in actionIDs {
-                            intentEntities.append(.init(identity: identity, id: item.id, displayName: item.title))
+                            intentEntities.append(.init(identity: identity, id: item.id, displayName: item.title, nativePresentation: nativePresentation))
                         }
                         continue
                     }
@@ -1623,6 +1895,8 @@ final class HanlinScriptingPlatform {
             throw error
         }
 
+        await HanlinScriptWidgetLiveActivityController.reconcile(snapshot: newSnapshot)
+
         for package in installedPackages where package.enabled {
             let hasNativeWidget = package.entrypoints.contains {
                 $0.kind == .widget && $0.widgetEngine != nil && $0.widgetEngine != .legacy
@@ -1649,6 +1923,8 @@ final class HanlinScriptingPlatform {
         lastWidgetStorageDiagnostic = packageDiagnostics.values.first
         if previousSnapshot?.widgets != newSnapshot.widgets || previousSnapshot?.widgetInstances != newSnapshot.widgetInstances {
             WidgetCenter.shared.reloadTimelines(ofKind: HanlinWidgetActionExecutor.widgetKind)
+            ControlCenter.shared.reloadControls(ofKind: HanlinScriptWidgetControlCatalog.buttonKind)
+            ControlCenter.shared.reloadControls(ofKind: HanlinScriptWidgetControlCatalog.toggleKind)
         }
         await publishCompactAgentConfig()
     }
@@ -1730,6 +2006,7 @@ final class HanlinScriptingPlatform {
                         return try await self.dispatchResumeCommand(command)
                     }
                     if receipt?.status.isTerminal == true {
+                        HanlinInvocationSnippetIntent.reload()
                         pendingResumeCommands.removeAll { $0.id == command.id }
                     }
                 } catch {
@@ -1774,12 +2051,12 @@ final class HanlinScriptingPlatform {
         guard command.invocation.delivery == nil || command.invocation.delivery?.appID == package.appID,
               let entrypoint = package.entrypoints.first(where: {
                   $0.id == identity.entrypointID && (command.invocation.delivery?.source == .share
-                      ? ($0.kind == .app || $0.kind == .share) : $0.kind == .appIntent)
+                      ? ($0.kind == .app || $0.kind == .share) : ($0.kind == .appIntent || $0.kind == .translationUI))
               }),
               let actionName = command.invocation.entityID else {
             throw HanlinInvocationDispatchError(.failed, .unsupportedEntrypoint)
         }
-        if entrypoint.runtimeProfile == .hanlinNativeScript {
+        if entrypoint.runtimeProfile == .hanlinNativeScript || entrypoint.runtimeProfile == .hanlinExpo {
             let cleanActionName = actionName.components(separatedBy: "::").last ?? actionName
             guard let targetID = (try? HanlinAppID(validating: package.manifest?.hanlinAppID ?? identity.packageID.rawValue))
                     ?? (try? HanlinAppID(validating: identity.packageID.rawValue)),
@@ -1787,6 +2064,13 @@ final class HanlinScriptingPlatform {
                   let descriptor = try? package.appDescriptor(),
                   let declaredAction = descriptor.actions.first(where: { $0.id == actionID }),
                   let capability = declaredAction.capabilities.first ?? (try? HanlinCapabilityID(validating: "inter-app.share")) else {
+                throw HanlinInvocationDispatchError(.failed, .invalidTarget)
+            }
+            if let symbol = entrypoint.exportedSymbol, symbol != actionID.rawValue {
+                throw HanlinInvocationDispatchError(.failed, .invalidTarget)
+            }
+            if entrypoint.runtimePolicyID == "prepared-foreground-action-v1",
+               declaredAction.handler != entrypoint.sourcePath {
                 throw HanlinInvocationDispatchError(.failed, .invalidTarget)
             }
             let parameters: HanlinValue
@@ -1804,12 +2088,26 @@ final class HanlinScriptingPlatform {
             }
             // Preserve the one-isolate invariant. Queue policy must not start a
             // second NativeScript VM while another package owns the first.
-            guard !hasNativeScriptApplicationSession || activeApplicationID == identity.installedPackageID,
-                  !isExecutingHeadlessNativeScriptAction else {
-                throw HanlinInvocationNotStarted()
-            }
-            if command.invocation.delivery?.source == .share, hasNativeScriptApplicationSession {
-                throw HanlinInvocationNotStarted()
+            if entrypoint.runtimeProfile == .hanlinNativeScript {
+                guard !hasNativeScriptApplicationSession || activeApplicationID == identity.installedPackageID,
+                      !isExecutingHeadlessNativeScriptAction else {
+                    throw HanlinInvocationNotStarted()
+                }
+                if command.invocation.delivery?.source == .share, hasNativeScriptApplicationSession {
+                    throw HanlinInvocationNotStarted()
+                }
+                if command.invocation.continueInForeground, !hasNativeScriptApplicationSession,
+                   let appEntry = package.entrypoints.first(where: {
+                       $0.kind == .app && $0.runtimeProfile == .hanlinNativeScript
+                   }), declaredAction.handler == appEntry.sourcePath {
+                    guard !isLaunching else { throw HanlinInvocationNotStarted() }
+                    await launch(identity.installedPackageID)
+                    guard activeApplicationID == identity.installedPackageID,
+                          activeNativeScriptController != nil else {
+                        throw HanlinInvocationDispatchError(.needsForeground, .unavailableHost)
+                    }
+                    presentsForegroundAction = true
+                }
             }
             await HanlinMiniAppHost.shared.refresh(installedPackages: installedPackages)
             queuedNativeScriptAdmissions.insert(command.id)
@@ -1819,9 +2117,6 @@ final class HanlinScriptingPlatform {
                 action: actionID, capability: requestCapability, payload: parameters))
             WidgetCenter.shared.reloadTimelines(ofKind: "com.hanlin.scripting.widget")
             return response.value
-        }
-        guard entrypoint.runtimeProfile != .hanlinExpo else {
-            throw HanlinInvocationDispatchError(.failed, .unsupportedEntrypoint)
         }
         let artifactRoot = try await store.activeArtifactURL(for: identity.installedPackageID)
         let compiledPath = try Self.compiledPath(for: entrypoint.sourcePath)
@@ -2390,6 +2685,143 @@ final class HanlinScriptingPlatform {
         )
     }
 
+    /// Shared ActivityKit adapter for active Expo and NativeScript sessions.
+    /// The native system owns scheduling and presentation; this returns its real
+    /// identifiers/results and uses the existing extension renderer.
+    func invokeLiveActivity(
+        operation: String, payloadJSON: String, context: HanlinHostCallContext
+    ) async throws -> String {
+#if os(iOS)
+        guard let installedID = context.installedPackageID, let appID = context.appID, let store,
+              let package = try await store.snapshots().first(where: {
+                  $0.record.installedPackageID == installedID && $0.appID == appID && $0.enabled
+              }) else {
+            throw HanlinHostServiceError.invalidRequest("The MiniApp session is no longer installed.")
+        }
+        func encoded(_ value: [String: Any]) throws -> String {
+            String(decoding: try JSONSerialization.data(withJSONObject: value, options: [.sortedKeys]), as: UTF8.self)
+        }
+        if operation == "liveActivities.areEnabled" {
+            return try encoded(["enabled": HanlinScriptLiveActivityController.areActivitiesEnabled])
+        }
+        if operation == "liveActivities.list" {
+            return try encoded(["activityIDs": HanlinScriptLiveActivityController.activityIDs(installedPackageID: installedID.rawValue) + HanlinScriptWidgetLiveActivityController.activityIDs(installedPackageID: installedID.rawValue)])
+        }
+        guard ["liveActivities.start", "liveActivities.update", "liveActivities.end"].contains(operation),
+              let payload = try JSONSerialization.jsonObject(with: Data(payloadJSON.utf8)) as? [String: Any] else {
+            throw HanlinHostServiceError.invalidRequest("Unknown Live Activity operation or invalid JSON payload.")
+        }
+        func finiteNumber(_ name: String) throws -> Double? {
+            guard let value = payload[name] else { return nil }
+            guard let number = value as? NSNumber, CFGetTypeID(number) != CFBooleanGetTypeID(),
+                  number.doubleValue.isFinite else {
+                throw HanlinHostServiceError.invalidRequest("\(name) must be a finite number.")
+            }
+            return number.doubleValue
+        }
+        let activityID = payload["activityID"] as? String
+        let startsOriginal = operation == "liveActivities.start" &&
+            (payload["scriptWidgetEntrypointID"] != nil || payload["widgetInstanceID"] != nil)
+        let updatesOriginal = activityID.map {
+            HanlinScriptWidgetLiveActivityController.contains(systemActivityID: $0, installedPackageID: installedID.rawValue)
+        } ?? false
+        if startsOriginal || updatesOriginal {
+            guard let extensionStore else { throw HanlinScriptExtensionStoreError.appGroupUnavailable }
+            var values: [String: HanlinValue] = [:]
+            if let supplied = payload["state"] {
+                guard let dictionary = supplied as? [String: Any] else {
+                    throw HanlinHostServiceError.invalidRequest("A ScriptWidget Live Activity state must be a JSON object.")
+                }
+                values = try dictionary.mapValues(ExpoHostServicesAdapter.toHanlinValue)
+            }
+            let staleDate = try finiteNumber("staleDateEpochMilliseconds").map { Date(timeIntervalSince1970: $0 / 1_000) }
+            let relevance = try finiteNumber("relevanceScore") ?? 0
+            if startsOriginal {
+                let requestedEntrypoint = payload["scriptWidgetEntrypointID"] as? String
+                let requestedInstance = payload["widgetInstanceID"] as? String
+                guard let snapshot = try extensionStore.load(),
+                      let instance = snapshot.widgetInstances.first(where: { instance in
+                          instance.identity.installedPackageID == installedID && instance.engine == .scriptwidget &&
+                          instance.identity.generation == package.record.activeGeneration &&
+                          (requestedEntrypoint == nil || instance.identity.entrypointID == requestedEntrypoint) &&
+                          (requestedInstance.map { $0 == instance.entityID } ?? instance.isDefault)
+                      }) else {
+                    throw HanlinHostServiceError.invalidRequest("The package does not have that installed ScriptWidget entrypoint or instance.")
+                }
+                let family = payload["family"] as? String ?? snapshot.widgets.first {
+                    $0.identity == instance.identity && $0.engine == .scriptwidget
+                }?.family ?? "systemMedium"
+                let id = try await HanlinScriptWidgetLiveActivityController.start(
+                    store: extensionStore, entityID: instance.entityID, family: family,
+                    title: payload["title"] as? String ?? package.manifest?.name ?? "MiniApp",
+                    values: values, staleDate: staleDate, relevanceScore: relevance)
+                return try encoded(["activityID": id])
+            }
+            if operation == "liveActivities.update" {
+                let updated = try await HanlinScriptWidgetLiveActivityController.update(
+                    store: extensionStore, systemActivityID: activityID!, installedPackageID: installedID.rawValue,
+                    title: payload["title"] as? String, values: values, staleDate: staleDate, relevanceScore: relevance)
+                return try encoded(["ok": updated])
+            }
+            let ended = try await HanlinScriptWidgetLiveActivityController.end(
+                store: extensionStore, systemActivityID: activityID!, installedPackageID: installedID.rawValue,
+                title: payload["title"] as? String, values: values, dismissAfterSeconds: try finiteNumber("dismissAfterSeconds"))
+            return try encoded(["ok": ended])
+        }
+        let previous = activityID.flatMap {
+            HanlinScriptLiveActivityController.contentState(systemActivityID: $0, installedPackageID: installedID.rawValue)
+        }
+        if operation != "liveActivities.start", previous == nil {
+            return try encoded(["ok": false])
+        }
+        let root: HanlinScriptUINode
+        if let supplied = payload["root"] as? [String: Any] {
+            root = try ExpoHostServicesAdapter.parseUntaggedNode(supplied)
+        } else if let previous {
+            root = previous.root
+        } else {
+            throw HanlinHostServiceError.invalidRequest("Starting a Live Activity requires its native root layout.")
+        }
+        let state = try payload["state"].map(ExpoHostServicesAdapter.toHanlinValue) ?? previous?.state ?? .null
+        let title = payload["title"] as? String ?? previous?.title ?? package.manifest?.name ?? "MiniApp"
+        let content = HanlinGenericLiveActivityAttributes.ContentState(
+            revision: (previous?.revision ?? 0) + 1, title: title, state: state, root: root)
+        let staleDate = try finiteNumber("staleDateEpochMilliseconds").map { Date(timeIntervalSince1970: $0 / 1_000) }
+        let relevance = try finiteNumber("relevanceScore") ?? 0
+        switch operation {
+        case "liveActivities.start":
+            let requestedEntrypoint = payload["actionEntrypointID"] as? String
+            let actionEntrypoint = package.entrypoints.first {
+                $0.kind == .appIntent && (requestedEntrypoint == nil || $0.id == requestedEntrypoint)
+            }
+            if requestedEntrypoint != nil, actionEntrypoint == nil {
+                throw HanlinHostServiceError.invalidRequest("The package does not declare that Live Activity action entrypoint.")
+            }
+            let identity = actionEntrypoint.map {
+                HanlinScriptExtensionIdentity(installedPackageID: installedID,
+                    packageID: package.record.packageID, generation: package.record.activeGeneration, entrypointID: $0.id)
+            }
+            let id = try HanlinScriptLiveActivityController.start(
+                attributes: .init(installedPackageID: installedID.rawValue, activityID: UUID().uuidString,
+                                  actionIdentity: identity),
+                state: content, staleDate: staleDate, relevanceScore: relevance)
+            return try encoded(["activityID": id])
+        case "liveActivities.update":
+            let updated = await HanlinScriptLiveActivityController.update(
+                systemActivityID: activityID!, installedPackageID: installedID.rawValue,
+                state: content, staleDate: staleDate, relevanceScore: relevance)
+            return try encoded(["ok": updated])
+        default:
+            let ended = await HanlinScriptLiveActivityController.end(
+                systemActivityID: activityID!, installedPackageID: installedID.rawValue,
+                finalState: content, dismissTimeInterval: try finiteNumber("dismissAfterSeconds"))
+            return try encoded(["ok": ended])
+        }
+#else
+        throw HanlinHostServiceError.invalidRequest("Live Activities are unavailable on this platform.")
+#endif
+    }
+
     private func performLiveActivity(
         _ request: HanlinScriptingLiveActivityRequest,
         installedPackageID: HanlinInstalledPackageID
@@ -2471,6 +2903,10 @@ final class HanlinScriptingPlatform {
     }
 
     nonisolated private static func safeMessage(_ error: Error) -> String {
+        if let storeError = error as? HanlinAtomicScriptStoreError,
+           case .generationMetadataUnavailable = storeError {
+            return String(localized: "This saved version is missing its launch metadata. Import that version's package again to restore it.", bundle: HanlinLocalization.bundle)
+        }
         if let storageError = error as? HanlinScriptExtensionStoreError,
            storageError == .appGroupUnavailable {
             return String(localized: "Hanlin cannot access shared storage. This action is unavailable in this installation.", bundle: HanlinLocalization.bundle)
@@ -2528,18 +2964,19 @@ final class HanlinScriptingPlatform {
         preview: HanlinImportPreview
     ) throws -> HanlinScriptingBundle {
         let metadata = try HanlinScriptingSDK.metadata()
+        let runtimeIdentity = "NativeScript-\(HanlinMiniAppHostVersions.nativeScriptRuntimeVersion)"
         let optionsHash = SHA256.hash(data: Data("nativescript-source-v1".utf8))
             .map { String(format: "%02x", $0) }.joined()
         let fingerprint = SHA256.hash(data: Data([
             preview.source.contentSHA256,
-            "NativeScript-9.1.0",
+            runtimeIdentity,
             metadata.baselineID,
             metadata.baselineDigest,
             optionsHash,
         ].joined(separator: "\n").utf8)).map { String(format: "%02x", $0) }.joined()
         return .init(
             manifest: .init(
-                compilerVersion: "NativeScript-9.1.0-prepared",
+                compilerVersion: "\(runtimeIdentity)-prepared",
                 compilerIntegrity: preview.source.contentSHA256,
                 compilerOptionsHash: optionsHash,
                 baselineID: metadata.baselineID,

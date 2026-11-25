@@ -1,0 +1,22 @@
+{
+  "mode": "STATIC_READ_ONLY",
+  "comparison": {
+    "base": "5c6aefa2670560447355dcb80799e40003282d70",
+    "head": "e2227ccdfe0c3111d1c17ef2b4bb1653ac24bb9c"
+  },
+  "changedSwiftFiles": [],
+  "targetSourcePath": "Packages/HanlinWidgetSDK/Sources/HanlinWidgetUI",
+  "soleSource": {
+    "path": "Packages/HanlinWidgetSDK/Sources/HanlinWidgetUI/Exports.swift",
+    "gitBlob": "0d52e08fdc4cdaccbc3f2a0d5e73d28b4cb67202",
+    "sha256": "91f078504101bc03d386dbb8a0d5499296e83c47281b086f712c2a72f4c28ad1",
+    "sameAtBothCommits": true,
+    "contents": "// Keep original AppIntent/AppEntity Swift module identities in the canonical implementation.\n@_exported import HanlinScriptingWidgets\n"
+  },
+  "membershipAuthorities": [
+    "Packages/HanlinWidgetSDK/Package.swift target HanlinWidgetUI",
+    "Package.swift target HanlinWidgetUI (lines535\u2013538 at e222)"
+  ],
+  "conclusion": "No changed production Swift body exists in this actual target. Its unchanged source only re-exports HanlinScriptingWidgets. Previously reviewed C++ import settings are present in both manifests. No additional API mismatch is established; this is not an emitted-module/native PASS.",
+  "excluded": "Did not repeat Options/ExpoHostServicesAdapter review or production object scan; no builds/tests/generators/CI/mutations during review."
+}

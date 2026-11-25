@@ -1,0 +1,25 @@
+{
+  "capturedAt": "2026-11-24T19:33:15.960683+00:00",
+  "files": {
+    "attempt4-state.json": {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/state.json",
+      "bytes": 10216,
+      "sha256": "d1fa6428d45cdc504d79910722cb359a04a9f847ac82034be118ae356126e963"
+    },
+    "attempt4-native-preparation.log": {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt4/split-native-preparation.log",
+      "bytes": 12801,
+      "sha256": "8fef5f53d38578167740c2a446aeb1498a06704700b016df4fd4b5aa0aaf5839"
+    },
+    "attempt4-observed-terminal.json": {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/observation-attempt4/terminal-state.json",
+      "bytes": 12735,
+      "sha256": "31896a2d8434c6113a99a9da6b8def4937b157c9a72de7a1c7249fc7203edd6a"
+    },
+    "react-native-package.json": {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/Expo/node_modules/react-native/package.json",
+      "bytes": 6286,
+      "sha256": "3f2bf69ed883e97a295b1de43f5a2d75d112ab45495153360c2fb521023c7f3f"
+    }
+  }
+}

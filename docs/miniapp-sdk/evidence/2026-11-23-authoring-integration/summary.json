@@ -1,0 +1,153 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-23",
+  "sourceCommit": "23a44b982c6785b2d748389cf30251c9c2945971",
+  "platform": "Linux aarch64; Node24.22.0; Swift6.4.3",
+  "authoringModuleSHA256": "4863c467bd3984c23f1a5a8e0d8cdd4cb310361ca14c223c0150ec64e9a7819b",
+  "scope": "Portable original compiler, Metro and package/declaration tests. Apple embedded runtime/UI acceptance is NOT_RUN in this evidence.",
+  "sdkPolicy": "The exact installed coherent pinned baseline graph was used; latest upstream resolver/native host build is separate CI work. Each report records original package/compiler versions and SDK manifest digest.",
+  "tests": [
+    {
+      "name": "Production authoring module and CLI",
+      "status": "EXECUTED_PASS",
+      "passed": 13,
+      "failed": 0,
+      "log": "node-tests.log",
+      "compiler": "Original TypeScript6.0.3",
+      "command": "HANLIN_AUTHORING_TYPESCRIPT=file:///dev/shm/hanlin-miniapp-authoring-tests-20261123/node_modules/typescript/lib/typescript.js node --test AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-authoring.test.mjs"
+    },
+    {
+      "name": "Original modular text search source, strict types and Metro0.87.1",
+      "status": "EXECUTED_PASS",
+      "report": "expo-search-build.json",
+      "log": "expo-search-build.log",
+      "note": "First Metro run logged cache-file ENOENT. Production now creates the cache directory; the subsequent fresh image/contract build completes without that warning."
+    },
+    {
+      "name": "Fresh Expo project plus image and exact installed native contract",
+      "status": "EXECUTED_PASS",
+      "report": "expo-fresh-assets-build.json",
+      "log": "expo-fresh-assets-build.log",
+      "identity": "artifact-identity.json",
+      "typecheck": "strict=true; skipLibCheck=false; native ES2023 libs; original expo/tsconfig.base resolved from SDK"
+    },
+    {
+      "name": "NativeScript source and real UIKit global types",
+      "status": "EXECUTED_PASS",
+      "report": "nativescript-original-types.json",
+      "negativeReport": "nativescript-uikit-invalid.json",
+      "note": "UIView/UILabel resolve from actual original Core and platform packages; unknown UIView property fails TS2339. Original consumer skipLibCheck=true is explicit in report and does not suppress source checking."
+    },
+    {
+      "name": "NativeScript original SwiftUI JS closure preservation",
+      "status": "EXECUTED_PASS",
+      "report": "nativescript-swiftui-build.json",
+      "log": "nativescript-swiftui-build.log",
+      "identity": "artifact-identity.json",
+      "note": "Post-build inspection corrected package.json path from root to nativescript/app. Original index.ios.js is byte-identical; Core is host-provided, not duplicated."
+    },
+    {
+      "name": "Actual repair fixture producer; stale source/compiler recheck",
+      "status": "EXECUTED_PASS",
+      "report": "native-repair-fixture.json",
+      "log": "native-repair-fixture.log",
+      "note": "Valid source built with original Core. Mutated retained source produces TS2322 index.ts:1:14 and source-changed diagnostic; archived success receipt is not trusted."
+    },
+    {
+      "name": "Original PlatformContracts minimum runtime version tests",
+      "status": "EXECUTED_PASS",
+      "passed": 4,
+      "log": "swift-contract-tests.log",
+      "note": "Actual complete original Foundation-compatible contracts/resources copied into portable Swift package; no Apple framework substitution."
+    },
+    {
+      "name": "Original shared-module linker behavior",
+      "status": "EXECUTED_PASS",
+      "passed": 3,
+      "log": "swift-shared-module-tests.log",
+      "note": "Actual production Foundation helper compiled with its original tests; private dependencies preserved, shared Core linked and stale owned links refreshed."
+    },
+    {
+      "name": "Embedded iPad Node Metro/compiler plus import/repair UI",
+      "status": "NOT_RUN",
+      "note": "Parent combined native acceptance owns this obligation; portable results do not substitute for Apple execution."
+    }
+  ],
+  "files": [
+    {
+      "path": "artifact-identity.json",
+      "sha256": "6fbe47724d2a41c59d7dc0e73f5edfbec5db3022587013cc4385768c176f99ec",
+      "bytes": 1614
+    },
+    {
+      "path": "expo-fresh-assets-build.json",
+      "sha256": "f1b80075ad472f4d0e66ef8c7c2a3406727bf1634f9d324450579dfc549cfc5d",
+      "bytes": 1425
+    },
+    {
+      "path": "expo-fresh-assets-build.log",
+      "sha256": "4ac5db77e8790180e0295b987b0e39f6a125604ce06de9eb840ba80821e72e73",
+      "bytes": 2444
+    },
+    {
+      "path": "expo-native-config-validation.json",
+      "sha256": "5ed8665e3b95644d025c71d76329f008be37c22d91aeb88732cf0075308f6afd",
+      "bytes": 1140
+    },
+    {
+      "path": "expo-search-build.json",
+      "sha256": "1b9cd36d385f059b160548fc15e34c5fe108984441b42093062cc129497cfe43",
+      "bytes": 1428
+    },
+    {
+      "path": "expo-search-build.log",
+      "sha256": "fbb7ef471a962fe182110c6fd025df0434b6af738d223968fc0ea25ccbd3b9bf",
+      "bytes": 3770
+    },
+    {
+      "path": "native-repair-fixture.json",
+      "sha256": "254d10d87e1767a2aaf02f1e88ec1a36a9c3945e676f41210e4e5666d3b4b011",
+      "bytes": 3395
+    },
+    {
+      "path": "native-repair-fixture.log",
+      "sha256": "d6590bbe8fba3b60eb8211f4510c58d4e749183ea77bc9c12c4d72b20d651fa5",
+      "bytes": 2711
+    },
+    {
+      "path": "nativescript-original-types.json",
+      "sha256": "b7dad3948f4569a90100ea0eb0a94b8a51d0258b149b494390d4a01664bbcc03",
+      "bytes": 763
+    },
+    {
+      "path": "nativescript-swiftui-build.json",
+      "sha256": "f9fe67f3b3ac72c84becaec6b8852eaee5ca56bf46790e3f6e247b11f3d2fea8",
+      "bytes": 1069
+    },
+    {
+      "path": "nativescript-swiftui-build.log",
+      "sha256": "f9fe67f3b3ac72c84becaec6b8852eaee5ca56bf46790e3f6e247b11f3d2fea8",
+      "bytes": 1069
+    },
+    {
+      "path": "nativescript-uikit-invalid.json",
+      "sha256": "de553845c9fcf9e837f6e785f1e74d17db7b7796b42573fa88c8b8a434f93b9a",
+      "bytes": 1028
+    },
+    {
+      "path": "node-tests.log",
+      "sha256": "26ffead360bf7919f105268e28dcbcd2f87da8533f2fdf69d78b22217f3f3d83",
+      "bytes": 1322
+    },
+    {
+      "path": "swift-contract-tests.log",
+      "sha256": "473ee6fa976f570bc901cc444297e4b33c595280deaca0a679b8da3b2ad83960",
+      "bytes": 2189
+    },
+    {
+      "path": "swift-shared-module-tests.log",
+      "sha256": "735ab316d0b98ee597c0ea9d7aa17fbd47c666a056dfb30220e6138531f60f1f",
+      "bytes": 1702
+    }
+  ]
+}

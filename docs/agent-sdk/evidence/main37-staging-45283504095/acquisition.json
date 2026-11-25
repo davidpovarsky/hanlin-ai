@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "run": 45283504095,
+  "attempt": 1,
+  "source": "4cfa52348e80cf635caf04c541fd84ee1ddb50bd",
+  "producerConclusion": "failure",
+  "artifactID": 14873545801,
+  "artifactName": "AI_Hanlin-iOS26-simulator-smoke-logs",
+  "archiveBytes": 3462247,
+  "archiveSHA256": "caa30774d1c319df49647cb96e35ee4d983c070aee724d55fdf0e7aca0df344b",
+  "downloadCount": 1,
+  "safeUniqueMembers": 93,
+  "crc": "PASS_ALL_MEMBERS_STREAMED",
+  "memberPayloadBytes": 24038197,
+  "memberInventorySHA256": "79a22e2829461abbbf8e8ac5691324a94e0693951e3c99d0c536df22e7429444",
+  "finishedUTC": "2026-11-23T23:34:59.975470+00:00",
+  "preparedNativeAcquired": false,
+  "publicationEligible": false
+}

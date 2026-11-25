@@ -1,0 +1,94 @@
+{
+  "sourceBase": "7865249ad98f7c9286a15e1c022aba0fabde91b6",
+  "existingSDK7": {
+    "expoDirectPackageCount": 20,
+    "expoAssetInPackageVersions": false,
+    "archiveSHA256": "c4e85e967f873ffbe907990c5d9d612b5b6f95871b4e85c736ec0799f09cb1af",
+    "actualOriginalAssetMembers": [
+      {
+        "path": "MiniAppSDK/expo/node_modules/expo-asset/package.json",
+        "sha256": "a317879b994f92128624136f42832597fc411015de25aa1125dfb73a82487427",
+        "bytes": 2350
+      },
+      {
+        "path": "MiniAppSDK/expo/node_modules/expo-asset/build/index.d.ts",
+        "sha256": "d13143ef38f2d4ae059fd11345909a4de633b7df37ed98c82c2f4a58d4a6d341",
+        "bytes": 76
+      },
+      {
+        "path": "MiniAppSDK/expo/node_modules/expo-asset/build/Asset.d.ts",
+        "sha256": "6ca7ea94ddccfa25be3274737e3d7ce93b6dfeb4aca70cf2e558c6578dd0c3b1",
+        "bytes": 5069
+      }
+    ]
+  },
+  "authorityFlow": [
+    {
+      "path": "Scripts/MiniApps/install-tooling.mjs",
+      "lines": [
+        64,
+        99
+      ],
+      "rule": "Direct dependencies/devDependencies/optionalDependencies populate graph.versions after full locked installed graph validation."
+    },
+    {
+      "path": "Scripts/MiniApps/stage-sdk.mjs",
+      "lines": [
+        212,
+        234
+      ],
+      "rule": "packageVersions receives graph.versions; native lock version parity includes expo-asset; hostContract.plugins exports the same native version."
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
+      "lines": [
+        53,
+        100
+      ],
+      "rule": "get_miniapp_sdk packageResources enumerates packageVersions and original package types entry."
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
+      "lines": [
+        168,
+        262
+      ],
+      "rule": "Canonical module/type/config authority derives from packageVersions; SDK lookup excludes outside node_modules."
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
+      "lines": [
+        622,
+        642
+      ],
+      "rule": "Metro uses the same packageVersions keys and bounded SDK ancestor resolution."
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
+      "rule": "Only actual embedded expo-asset version is admitted as a declared native plugin; all former plugin rules and unknown-plugin rejection remain."
+    }
+  ],
+  "expectedNextSDKState": {
+    "state": "REQUIRES_ACTUAL_ORIGINAL_SDK_PREPARATION",
+    "expoDirectPackageCount": 21,
+    "packageVersions": {
+      "expo-asset": "58.0.21"
+    },
+    "packageResource": {
+      "name": "expo-asset",
+      "packageJSON": "expo/node_modules/expo-asset/package.json",
+      "types": "expo/node_modules/expo-asset/build/index.d.ts"
+    },
+    "hostContractPlugin": {
+      "expo-asset": "58.0.21"
+    },
+    "freshInstallReceiptRequired": true
+  },
+  "unchangedResolver": "This companion makes the new original native API canonical through existing metadata; it does not alter TypeScript or Metro resolver implementation.",
+  "lockBoundary": {
+    "existingNonRootPackageRows": 690,
+    "allExistingRowsUnchanged": true,
+    "originalExpoAssetPackageRowUnchanged": true,
+    "onlyRawLockChange": "Add exact expo-asset58.0.21 to root dependencies; every other lock byte unchanged."
+  }
+}

@@ -88,8 +88,8 @@ public actor HanlinMiniAppRequestBroker {
         public let maximumAuditEvents: Int
 
         public init(
-            maximumPayloadBytes: Int = 1_048_576,
-            maximumResponseBytes: Int = 4_194_304,
+            maximumPayloadBytes: Int = .max,
+            maximumResponseBytes: Int = .max,
             timeout: Duration? = .seconds(15),
             maximumAuditEvents: Int = 1_000
         ) {
@@ -99,8 +99,8 @@ public actor HanlinMiniAppRequestBroker {
             self.maximumAuditEvents = maximumAuditEvents
         }
 
-        /// Runtime actions in the personal Host have no implicit15s lifetime.
-        /// Payload/response/audit budgets and explicit callers' deadlines remain.
+        /// Runtime actions in the personal Host have no implicit 15s lifetime
+        /// or payload quota. Explicit caller budgets and audit retention remain.
         public static let personalHost = Self(timeout: nil)
     }
 

@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "runID": 45398772829,
+  "sourceCommit": "cf9c18903c03264265557efb446207efa7226912",
+  "segment": 1,
+  "startedAtUTC": "2026-11-24T12:59:49.103117+00:00",
+  "mechanism": "gh run watch --exit-status --compact --interval30",
+  "status": "NATIVE_RUN_COMPLETED",
+  "nativeStatus": "completed",
+  "watcherReturnCode": 1,
+  "watcherFinishedAtUTC": "2026-11-24T13:51:45.138655+00:00",
+  "nativeConclusion": "failure",
+  "runURL": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45398772829",
+  "artifacts": [
+    {
+      "id": 14927335537,
+      "name": "app-split-45398772829",
+      "bytes": 334245460,
+      "digest": "sha256:1ff663b205d35ce9d6f6eaadbb6e0690c40d4f96fdee9ab2f19d3bdd083ce33e"
+    }
+  ],
+  "jobs": [
+    {
+      "id": 138461551988,
+      "name": "miniapps",
+      "conclusion": "failure"
+    },
+    {
+      "id": 138461554263,
+      "name": "release-resource-audit",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 138461554408,
+      "name": "Verify MiniApp import contracts",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 138461554425,
+      "name": "Verify original ScriptWidget adapter semantics",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 138461554618,
+      "name": "Verify MiniApp store lifecycle",
+      "conclusion": "skipped"
+    },
+    {
+      "id": 138461615027,
+      "name": "register-original-product",
+      "conclusion": "skipped"
+    }
+  ],
+  "finishedAtUTC": "2026-11-24T13:51:50.059950+00:00"
+}

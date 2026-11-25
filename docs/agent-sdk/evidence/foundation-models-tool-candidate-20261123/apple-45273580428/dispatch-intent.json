@@ -1,0 +1,52 @@
+{
+  "workflow": "build-ios26-unsigned-ipa.yml",
+  "sha": "2c41a1b7ed6b191be7529550ae1ca4501632ce8d",
+  "remote_sha": "2c41a1b7ed6b191be7529550ae1ca4501632ce8d",
+  "utc": "2026-11-23T21:49:36.442675+00:00",
+  "request": {
+    "ref": "codex/hanlin-sdk02-native-tool-adapter-20261123",
+    "inputs": {
+      "composer_validation_only": "false",
+      "nativescript_metadata_validation_only": "false",
+      "runtime_job_foundation_only": "false",
+      "markdown_renderer_validation_only": "false",
+      "code_fence_webkit_validation_only": "false",
+      "diagnostics_capture_validation_only": "false",
+      "testflight_upload": "false",
+      "runtime_bundle_only": "false",
+      "runtime_publish_release": "false",
+      "phase1_validation_only": "false",
+      "fast_validation_only": "false",
+      "nativescript_poc_only": "false",
+      "force_clean_build": "false",
+      "measure_warm_rebuild": "false",
+      "simulator_e2e_only": "false",
+      "full_validation": "false",
+      "target_validation_group": "agent_sdk_exact_source_proof",
+      "exact_test_selector": "HanlinNativeToolHeaderRecheck"
+    }
+  },
+  "prior_run_ids": [
+    45268041311,
+    45259715158,
+    45240721804
+  ],
+  "scope": {
+    "current_sdk_cases": 5,
+    "current_core_cases": 0,
+    "current_baseline_cases": 0,
+    "current_ios_build": false,
+    "ios_compile_reuse": {
+      "run_id": 45268041311,
+      "source": "846ca37aaee19f46dccca3cd39c7d6762d2561f4",
+      "requirement": "404 unchanged package hashes, both actual pre/post raw lock bytes, authenticated original successful build command/output, exact Xcode/Swift/SDK/OS/select-xcode fingerprints",
+      "current_ios_build_exit": null,
+      "mode": "REUSED_VERIFIED"
+    },
+    "accepted_cases_reuse": 28,
+    "baseline_case_reuse": 12,
+    "simulator_launch": false,
+    "shipping_gates": "CLOSED"
+  },
+  "authorization": "Root authorized exactly ONE dispatch after own source review and peer frozen readback PASS"
+}

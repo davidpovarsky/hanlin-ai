@@ -1,0 +1,11 @@
+{
+  "job_id": "job_3852748495a0",
+  "owner": "root",
+  "run": 45283504095,
+  "attempt": 1,
+  "source": "4cfa52348e80cf635caf04c541fd84ee1ddb50bd",
+  "started_at": "2026-11-23T22:52:56.708537+00:00",
+  "deadline_seconds": 3300,
+  "no_second_watcher": true,
+  "smoke_acquisition_owner": "release_hosts after root terminal"
+}

@@ -1,0 +1,109 @@
+{
+  "hostArchiveSHA256": "db8f8f82e6013f66b49325a1a0cd47ab7deb7799e2488b16248167df0876dbf4",
+  "hostArchiveBytes": 81996421,
+  "sdkManifestMember": "MiniAppSDK/miniapp-sdk.json",
+  "sdkManifestSHA256": "fa1e737ec63e640175cdb5c9dad51903cd86d50ae7b340ba5b8ec1ff4e408d85",
+  "sdkInputSHA256": "4028f9fc58e1a9a95937ed7b4eb223c3caa2a94714bbbdaae4ddc7b0aa6de795",
+  "sdkFiles": 25791,
+  "sdkUncompressedBytes": 299773741,
+  "archiveUncompressedBytes": 356991190,
+  "firstMembers": [
+    "MiniAppSDK/docs/hanlin-expo-runtime.md",
+    "MiniAppSDK/docs/hanlin-nativescript-guide.md",
+    "MiniAppSDK/docs/miniapp-sdk/AUTHORING_WORKFLOW.md",
+    "MiniAppSDK/docs/miniapp-sdk/DURABLE_INVOCATION_DELIVERY_2026-11-13.md",
+    "MiniAppSDK/docs/miniapp-sdk/EXPO_HOST_FACADE_CORRECTIONS_2026-11-13.md",
+    "MiniAppSDK/docs/miniapp-sdk/EXPO_STRICT_TYPES_AND_FILE_WIRE_2026-11-14.md",
+    "MiniAppSDK/docs/miniapp-sdk/EXPO_WIDGETS_ORIGINAL.md",
+    "MiniAppSDK/docs/miniapp-sdk/HANDOFF_2026-11-15.md",
+    "MiniAppSDK/docs/miniapp-sdk/IMPORT_REPAIR.md",
+    "MiniAppSDK/docs/miniapp-sdk/METADATA_FRAMEWORK_DEDUP_2026-11-15.md",
+    "MiniAppSDK/docs/miniapp-sdk/MINIAPP_ACTION_LIFETIME_2026-11-13.md",
+    "MiniAppSDK/docs/miniapp-sdk/NATIVESCRIPT_RUNTIME_WIRE_2026-11-13.md"
+  ],
+  "engines": {
+    "expo": {
+      "typescript": {
+        "packageName": "@typescript/typescript6",
+        "packageVersion": "6.0.2",
+        "compilerVersion": "6.0.3"
+      },
+      "packageVersions": {
+        "@expo/ui": "58.0.29",
+        "@hanlin/expo-native-api": "1.0.0",
+        "@hanlin/expo-ui": "1.0.0",
+        "@nativescript/react-native": "9.1.2",
+        "expo": "58.0.26",
+        "expo-brownfield": "58.0.20",
+        "expo-modules-core": "58.1.0",
+        "expo-modules-jsi": "58.0.23",
+        "react": "19.3.0",
+        "react-native": "0.88.1",
+        "react-native-worklets": "0.13.0",
+        "expo-widgets": "58.0.29",
+        "@babel/core": "7.29.7",
+        "@react-native-community/cli": "20.2.0",
+        "@react-native/codegen": "0.88.1",
+        "@react-native/metro-config": "0.88.1",
+        "@types/react": "19.3.0",
+        "babel-preset-expo": "58.0.26",
+        "esbuild": "0.25.12",
+        "typescript": "6.0.2"
+      },
+      "hostContract": {
+        "runtimeVersion": "58.0.29",
+        "expoSDKVersion": "58.0.26",
+        "bridgeVersion": "3.0.0",
+        "nativeApiContractVersion": "1.0.0",
+        "nativeApiAbiIdentity": "rn0.88.1-hermes260318099.0.5",
+        "plugins": {
+          "@expo/ui": "58.0.29",
+          "expo-widgets": "58.0.29",
+          "@hanlin/expo-ui": "3.0.0",
+          "@nativescript/react-native": "9.1.2",
+          "react-native-worklets": "0.13.0"
+        }
+      },
+      "typeCheckingPolicy": {
+        "strictSource": true,
+        "checkOriginalDeclarationBodies": true,
+        "explanation": "Original declarations and source are checked."
+      }
+    },
+    "nativescript": {
+      "typescript": {
+        "packageName": "typescript",
+        "packageVersion": "5.9.3",
+        "compilerVersion": "5.9.3"
+      },
+      "packageVersions": {
+        "@nativescript/core": "9.1.4",
+        "@nativescript/swift-ui": "4.0.2",
+        "@nativescript/ios": "9.1.1",
+        "@nativescript/types": "9.1.4",
+        "@nativescript/vite": "8.0.24",
+        "typescript": "5.9.3",
+        "vite": "8.0.0",
+        "@hanlin/host-services": "1.0.0"
+      },
+      "hostContract": null,
+      "typeCheckingPolicy": {
+        "strictSource": true,
+        "checkOriginalDeclarationBodies": false,
+        "explanation": "Original NativeScript consumer mode: source is strict; original declaration bodies are not revalidated. Set skipLibCheck:false for SDK declaration diagnostics."
+      }
+    },
+    "scriptwidget": {
+      "typescript": {
+        "packageName": "@typescript/typescript6",
+        "packageVersion": "6.0.2",
+        "compilerVersion": "6.0.3"
+      },
+      "packageVersions": {
+        "everettjf/scriptwidget": "4da256d58247bbafb9a5cd443a285250b97b3c4b,68f04194f00222558c44d5a832e7617a96f62574"
+      },
+      "hostContract": null,
+      "typeCheckingPolicy": null
+    }
+  }
+}

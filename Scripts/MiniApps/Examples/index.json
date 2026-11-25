@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "projects": [
+    {
+      "id": "expo-hello-world",
+      "engine": "expo",
+      "level": "hello-world",
+      "title": "Expo Hello World",
+      "directory": "expo-hello-world"
+    },
+    {
+      "id": "sdk-only-departure-budget",
+      "engine": "expo",
+      "level": "complete-app",
+      "title": "Departure Budget",
+      "directory": "sdk-only-departure-budget"
+    },
+    {
+      "id": "nativescript-hello-world",
+      "engine": "nativescript",
+      "level": "hello-world",
+      "title": "NativeScript Hello World",
+      "directory": "nativescript-hello-world"
+    },
+    {
+      "id": "sdk-only-table-share",
+      "engine": "nativescript",
+      "level": "complete-app",
+      "title": "Table Share",
+      "directory": "sdk-only-table-share"
+    }
+  ]
+}

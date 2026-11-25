@@ -1,11 +1,28 @@
+import type { MiniAppLiveActivities } from "./system-surfaces";
+export type { NativeSurfaceJSON, NativeSurfaceAction, NativeSurfaceNode, NativeSurfaceProperties, LiveActivityStart, NativeSurfaceLiveActivityStart, ScriptWidgetLiveActivityStart, LiveActivityUpdate, LiveActivityEnd, MiniAppLiveActivities } from "./system-surfaces";
 import { requireNativeModule } from 'expo';
 import { fromByteArray, toByteArray } from 'base64-js';
+import { serveMiniAppActions, type MiniAppActionHandlers, type MiniAppJSONValue } from './miniapp-actions';
+export type { MiniAppActionInvocation, MiniAppActionHandler, MiniAppActionHandlers, MiniAppJSONValue } from './miniapp-actions';
 
 interface NativeHostServicesModule {
   invoke(operation: string, payloadJSON: string): Promise<string>;
   hasCapability(capability: string): Promise<boolean>;
 }
 const NativeHostServices = requireNativeModule<NativeHostServicesModule>('HanlinHostServices');
+
+/** Standard React Native root props supplied to a declared embedded-result entrypoint. */
+export interface HanlinExpoRootProps {
+  hanlin?: {
+    kind: 'embeddedResult';
+    handler: string;
+    ownerID: string;
+    installedPackageID: string;
+    generation: number;
+    resultReference?: string;
+    payload?: MiniAppJSONValue;
+  };
+}
 
 export type HanlinRuntimeKind = 'node' | 'typeScript' | 'localPython' | 'javaScriptCore' | 'shell';
 export type MiniAppOperation = 'display' | 'insert' | 'replaceSelection' | 'replaceDocument' | 'custom';
@@ -71,7 +88,75 @@ async function invoke<T>(operation: string, payload: unknown): Promise<T> {
   return JSON.parse(response) as T;
 }
 
+/** Replace the props of an existing, explicitly declared prepared Expo widget.
+ * Props belong to the selected instance and are shared by all its supported sizes.
+ * For the original dynamic Widget API, use expo-widgets createWidget directly. */
+export interface ExpoWidgetPublicationRequest {
+  engine: 'expo';
+  entrypointID: string;
+  props: Record<string, MiniAppJSONValue>;
+  /** Omit for the installation's existing default instance. */
+  variantID?: string;
+}
+
+/** Actual persistence/catalog facts; no receipt claims the OS has rendered a widget. */
+export interface ExpoWidgetPublicationReceipt {
+  ok: true;
+  published: true;
+  publication: 'prepared-expo-state';
+  engine: 'expo';
+  stateCommitted: true;
+  catalogVisible: true;
+  reloadRequested: true;
+  osRendered: null;
+  installedPackageID: string;
+  packageID: string;
+  generation: number;
+  entrypointID: string;
+  variantID: string;
+  entityID: string;
+  artifactSHA256: string;
+  revision: number;
+  supportedFamilies: string[];
+}
+
+/** Frozen positional compatibility call: its saved root has no modern renderer. */
+export interface LegacyWidgetStorageReceipt {
+  ok: true;
+  published: false;
+  storage: 'legacy-widget-exposure';
+  remediation: string;
+}
+
+function publishWidget(request: ExpoWidgetPublicationRequest): Promise<ExpoWidgetPublicationReceipt>;
+/** @deprecated Stores the legacy tree only. Use the tagged overload or original expo-widgets createWidget. */
+function publishWidget(entrypointID: string, family: string, root: unknown,
+  validUntil?: string | number | Date): Promise<LegacyWidgetStorageReceipt>;
+function publishWidget(request: ExpoWidgetPublicationRequest | string, family?: string, root?: unknown,
+  validUntil?: string | number | Date): Promise<ExpoWidgetPublicationReceipt | LegacyWidgetStorageReceipt> {
+  if (typeof request !== 'string') return invoke('widgets.publishPrepared', request);
+  let validUntilISO: string | undefined;
+  let validUntilEpochMilliseconds: number | undefined;
+  if (validUntil instanceof Date) {
+    validUntilISO = validUntil.toISOString();
+    validUntilEpochMilliseconds = validUntil.getTime();
+  } else if (typeof validUntil === 'number') {
+    validUntilISO = new Date(validUntil).toISOString();
+    validUntilEpochMilliseconds = validUntil;
+  } else if (typeof validUntil === 'string') {
+    validUntilISO = validUntil;
+    const parsed = Date.parse(validUntil);
+    if (!Number.isNaN(parsed)) validUntilEpochMilliseconds = parsed;
+  }
+  return invoke('widgets.publish', {entrypointID: request, family, root,
+    validUntil: validUntilISO, validUntilEpochMilliseconds});
+}
+
 export const hostServices = {
+  actions: {
+    /** Call once after loading the complete action table. Runs until session teardown. */
+    register: (handlers: MiniAppActionHandlers): Promise<void> => serveMiniAppActions(invoke, handlers),
+  },
   miniapps: {
     getContext: () => invoke<MiniAppSharedContext>('miniapps.context', {}),
     complete: async (output: string | MiniAppOutput) => {
@@ -121,33 +206,13 @@ export const hostServices = {
     return (await invoke<{ files: string[] }>('files.list', { area })).files;
   },
 
-  publishWidget(
-    entrypointID: string,
-    family: string,
-    root: unknown,
-    validUntil?: string | number | Date
-  ): Promise<{ ok: true }> {
-    let validUntilISO: string | undefined;
-    let validUntilEpochMilliseconds: number | undefined;
-    if (validUntil instanceof Date) {
-      validUntilISO = validUntil.toISOString();
-      validUntilEpochMilliseconds = validUntil.getTime();
-    } else if (typeof validUntil === 'number') {
-      validUntilISO = new Date(validUntil).toISOString();
-      validUntilEpochMilliseconds = validUntil;
-    } else if (typeof validUntil === 'string') {
-      validUntilISO = validUntil;
-      const parsed = Date.parse(validUntil);
-      if (!Number.isNaN(parsed)) {
-        validUntilEpochMilliseconds = parsed;
-      }
-    }
-    return invoke('widgets.publish', {
-      entrypointID,
-      family,
-      root,
-      validUntil: validUntilISO,
-      validUntilEpochMilliseconds,
-    });
-  },
+  liveActivities: {
+    areEnabled: async () => (await invoke<{enabled: boolean}>('liveActivities.areEnabled', {})).enabled,
+    list: async () => (await invoke<{activityIDs: string[]}>('liveActivities.list', {})).activityIDs,
+    start: request => invoke('liveActivities.start', request),
+    update: (activityID, request) => invoke('liveActivities.update', {...request, activityID}),
+    end: (activityID, request = {}) => invoke('liveActivities.end', {...request, activityID}),
+  } satisfies MiniAppLiveActivities,
+
+  publishWidget,
 } as const;

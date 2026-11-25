@@ -1,0 +1,10 @@
+{
+  "command": [
+    "swiftc",
+    "-frontend",
+    "-parse",
+    "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests.swift"
+  ],
+  "exitCode": 0,
+  "classification": "syntax only; actual Apple module typecheck and execution pending"
+}

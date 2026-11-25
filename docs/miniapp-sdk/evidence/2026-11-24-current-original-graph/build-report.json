@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "engine": "expo",
+  "operation": "build",
+  "succeeded": true,
+  "diagnostics": [],
+  "sourceRoot": "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/Scripts/Expo/miniapps/modular-text-search",
+  "sdk": {
+    "packageVersions": {
+      "@expo/ui": "58.0.29",
+      "@hanlin/expo-native-api": "1.0.0",
+      "@hanlin/expo-ui": "1.0.0",
+      "@nativescript/react-native": "9.1.2",
+      "expo": "58.0.26",
+      "expo-brownfield": "58.0.20",
+      "expo-modules-core": "58.1.0",
+      "expo-modules-jsi": "58.0.23",
+      "react": "19.3.0",
+      "react-native": "0.88.1",
+      "react-native-worklets": "0.13.0",
+      "expo-widgets": "58.0.29",
+      "@babel/core": "7.29.7",
+      "@react-native-community/cli": "20.2.0",
+      "@react-native/codegen": "0.88.1",
+      "@react-native/metro-config": "0.88.1",
+      "@types/react": "19.3.0",
+      "babel-preset-expo": "58.0.26",
+      "esbuild": "0.25.12",
+      "typescript": "6.0.2"
+    },
+    "manifestSHA256": "cb094a40ba850512399d5a199dced29830e510601adbbdfa2a7b4759aa293599",
+    "compilerVersion": "6.0.3"
+  },
+  "typecheck": {
+    "strict": true,
+    "skipLibCheck": false,
+    "dependencyDeclarationsChecked": true
+  },
+  "preparedPackagePath": "/dev/shm/hanlin-modular-search14-current-artifact-20261124/package",
+  "archivePath": "/dev/shm/hanlin-modular-search14-current-artifact-20261124/ModularTextSearch-1.4.0.hanlinExpo"
+}

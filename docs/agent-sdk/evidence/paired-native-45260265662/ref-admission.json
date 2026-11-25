@@ -1,0 +1,10 @@
+{
+  "ref": "refs/heads/codex/hanlin-sdk-paired3-frozen-20261123",
+  "node_id": "REF_kwDOTTRem9oAM3JlZnMvaGVhZHMvY29kZXgvaGFubGluLXNkay1wYWlyZWQzLWZyb3plbi0yMDI2MTEyMw",
+  "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/git/refs/heads/codex/hanlin-sdk-paired3-frozen-20261123",
+  "object": {
+    "sha": "e59256e8325bcdb71c0e683f6b19e7641642aad8",
+    "type": "commit",
+    "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/git/commits/e59256e8325bcdb71c0e683f6b19e7641642aad8"
+  }
+}

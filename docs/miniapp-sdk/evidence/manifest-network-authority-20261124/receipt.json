@@ -1,0 +1,134 @@
+{
+  "status": "FOCUSED_SOURCE_CHECK_PASS",
+  "baseCommit": "01d08ed453040d74a76211e7fb51a611b0d1e2cc",
+  "createdAt": "2026-11-24T09:20:25.877816+00:00",
+  "productionFiles": [
+    "Scripts/Audit/miniapp-manifest-contracts.mjs"
+  ],
+  "testFiles": [
+    "Scripts/Audit/Tests/manifest-contracts.test.mjs"
+  ],
+  "sourceSHA256": {
+    "Scripts/Audit/miniapp-manifest-contracts.mjs": "484a0f05eeee4818da22aeb9eab5de9a509bc10e3b63b7226a20206a839a5aaa",
+    "Scripts/Audit/Tests/manifest-contracts.test.mjs": "eaf8b67004a39c559254a10178971913c3b334d185fad64680fd1726e4331336"
+  },
+  "fieldCount": 334,
+  "familyCount": 8,
+  "originalAuthorities": [
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptMetadata.swift",
+      "sha256": "f1b202b4caef78877cad69700ff698350066066c12f7fcc5bf557810aa1234f9"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptWidgetPackage.swift",
+      "sha256": "3aa2274d41edd3e7e87edd91697a4a204489d0efc6a2efaa00ea82d517af16fd"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeFetch.swift",
+      "sha256": "8a7bb65bffe0390ac719e33b0ece71e19b20e9be96841e422a3a4c37f09352b3"
+    }
+  ],
+  "provenanceMutationsRejected": [
+    "missing helper",
+    "extra authority",
+    "duplicate replacing helper",
+    "different registered authority",
+    "incorrect helper hash"
+  ],
+  "unchangedDriftChecks": [
+    "new retained-field consumer rejected",
+    "renamed native input field rejected",
+    "new prepared package reader field rejected",
+    "new installed-dependency field rejected",
+    "original schema/Codable mismatch rejected",
+    "new canonical schema property automatically reaches checked outputs"
+  ],
+  "check": {
+    "argv": [
+      "node",
+      "--test",
+      "Scripts/Audit/Tests/manifest-contracts.test.mjs"
+    ],
+    "exitCode": 0,
+    "durationSeconds": 0.3234897833317518,
+    "nodeVersion": "v24.22.0",
+    "stdoutSHA256": "f6c42067520911bf34e62aaacb73ac72142c1aa7ee024f98f6eb89beaf670d01",
+    "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "executedAt": "2026-11-24T09:19:26.817039+00:00"
+  },
+  "nativeAcceptance": "NOT_INFERRED",
+  "fullGeneration": "NOT_RUN; root owns the combined integration write/check",
+  "input": {
+    "baseCommit": "01d08ed453040d74a76211e7fb51a611b0d1e2cc",
+    "purpose": "Bind the three actual original manifest authority sources exactly; preserve hash and field-drift rejection.",
+    "priorFailure": {
+      "command": [
+        "node",
+        "Scripts/Audit/audit-miniapp-sdk.mjs",
+        "--write"
+      ],
+      "receiptSource": "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/docs/miniapp-sdk/evidence/native-corrections-reconciliation-20261124/1.stderr.log",
+      "sha256": "91e181045285f97178ca7ae68f9809694c9aef442e5927756f4b8b4c6bfeafdc",
+      "reexecuted": false
+    },
+    "beforeMapperSHA256": "790c5c4fb9fb928df5feb7b981ca3eaef89076f30b255538e8f8df82fc62f0c6",
+    "targetedCheck": [
+      "node",
+      "--test",
+      "Scripts/Audit/Tests/manifest-contracts.test.mjs"
+    ],
+    "boundary": "Source contract only; no full inventory regeneration, app runtime, native test, or CI dispatch."
+  },
+  "independentReview": {
+    "status": "NO_CONCRETE_BLOCKER",
+    "reviewerAgent": "/root/entrypoints",
+    "sourceSHA256": {
+      "Scripts/Audit/miniapp-manifest-contracts.mjs": "484a0f05eeee4818da22aeb9eab5de9a509bc10e3b63b7226a20206a839a5aaa",
+      "Scripts/Audit/Tests/manifest-contracts.test.mjs": "eaf8b67004a39c559254a10178971913c3b334d185fad64680fd1726e4331336"
+    },
+    "scope": [
+      "explicit source registry feeds existing source text/hash validation",
+      "equal count plus exact expected paths reject duplicate, missing, extra or substituted authorities",
+      "hash lookup limited to the three expected source records",
+      "real network helper anchor present; field rows and semantics unchanged"
+    ],
+    "verificationBoundary": "Read-only source review; reviewer did not rerun tests, regenerate inventory, or execute native CI."
+  },
+  "evidenceFiles": [
+    {
+      "path": "README.md",
+      "sha256": "79db43cf4c87a8b0f90a66f6cbfa7f451a65151c60526a4ce232acb3450f7db1",
+      "bytes": 1481
+    },
+    {
+      "path": "focused-check.json",
+      "sha256": "55663ccb0d49692b13943631c765c12712db9788f76c5d3691bba702b4f4bef9",
+      "bytes": 411
+    },
+    {
+      "path": "focused-check.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "focused-check.stdout.txt",
+      "sha256": "f6c42067520911bf34e62aaacb73ac72142c1aa7ee024f98f6eb89beaf670d01",
+      "bytes": 4616
+    },
+    {
+      "path": "independent-review.json",
+      "sha256": "077d26aa638f42647e5cdc477b9540de1e290da1843252f2119678a726a4acae",
+      "bytes": 812
+    },
+    {
+      "path": "input.json",
+      "sha256": "4bb0c795cb763ec1ebe6142bab6737283b6fa351c4e659c83bf8652ecfafa080",
+      "bytes": 910
+    },
+    {
+      "path": "integration-red.stderr.txt",
+      "sha256": "91e181045285f97178ca7ae68f9809694c9aef442e5927756f4b8b4c6bfeafdc",
+      "bytes": 712
+    }
+  ]
+}

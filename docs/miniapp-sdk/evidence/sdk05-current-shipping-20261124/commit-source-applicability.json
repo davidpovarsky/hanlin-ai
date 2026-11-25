@@ -1,0 +1,16 @@
+{
+  "testedSourceCommit": "999599c242c064564c40866a1979c463f1d0e95f",
+  "comparisonCommit": "2f1cfa6e4a702475acfe80ad68bf82c5320902f5",
+  "commitRangeChanges": [
+    "M\tdocs/miniapp-sdk/evidence/acceptance-criteria-map-20261124.json",
+    "A\tdocs/miniapp-sdk/evidence/sdk04-focused-scope-20261124/independent-complete-selection-review.json",
+    "A\tdocs/miniapp-sdk/evidence/task-scope-reconciliation-20261124.json",
+    "A\tdocs/miniapp-sdk/evidence/twelfth-native-gate-dispatch-20261124.json",
+    "A\tdocs/miniapp-sdk/evidence/twelfth-native-gate-observation-20261124.json",
+    "A\tdocs/miniapp-sdk/evidence/windows-physical-device-route-20261124.json"
+  ],
+  "all222SDKInputBaseBlobsUnchanged": true,
+  "basis": "Every SDK source input was separately compared against both Git objects in source-input-reconciliation.json.",
+  "dirtyRootAGENTS": "Observed and not changed; not an SDK input.",
+  "currentSDKClaim": "Source999 plus exact authentic preparation patch/output identities, not unmodified checkout-only input identity."
+}

@@ -187,7 +187,7 @@ jobs:
     if: ${{ github.event_name == 'workflow_dispatch' && inputs.target_validation_group == 'chat_motion_product' && !inputs.testflight_upload }}
     name: ${{ inputs.exact_test_selector == 'MotionUITests/testDRapidInputDiagnosticOnly' && 'Original Motion input diagnostic (D)' || inputs.exact_test_selector == 'MotionUITests/testAAllFivePresetsTwentyCompleteCyclesEach' && 'Original Motion preset cycles (A)' || inputs.exact_test_selector == 'MotionUITests/testCReadableLongContentRTLTypeOrientationAndCompletion' && 'Original Motion visual capture (C)' || inputs.exact_test_selector == 'MotionUITests/testBRapidReversalPresetSwitchAndPersistence' && 'Original Motion reversal acceptance (B)' || 'Original Motion interaction acceptance (B and C)' }}
     runs-on: xcode-27
-    timeout-minutes: 25
+    timeout-minutes: 35
     steps:
       - uses: actions/checkout@v7.0.1
       - name: Exercise the selected original Motion UI scope
@@ -262,7 +262,7 @@ jobs:
           set -euo pipefail
           SECONDS=0
           trap 'echo "$SECONDS" > build/skill-format-app-resolution/nativescript-install-duration-seconds.txt' EXIT
-          npm ci --ignore-scripts --no-audit --no-fund --prefix Scripts/NativeScript 2>&1 | tee build/skill-format-app-resolution/nativescript-install.log
+          node Scripts/MiniApps/install-tooling.mjs --engine=nativescript --ignore-scripts 2>&1 | tee build/skill-format-app-resolution/nativescript-install.log
       - name: Restore or prepare the existing declaration-only metadata compiler
         timeout-minutes: 12
         uses: ./.github/actions/prepare-nativescript-metadata-tool
@@ -274,7 +274,7 @@ jobs:
           trap 'echo "$SECONDS" > build/skill-format-app-resolution/native-staging-duration-seconds.txt' EXIT
           {
             npm run prepare:ios-dependencies --prefix Scripts/NativeScript
-            npm ci --prefix Scripts/Expo
+            node Scripts/MiniApps/install-tooling.mjs --engine=expo
             node Scripts/Expo/prepare-ios-dependencies.mjs
           } 2>&1 | tee build/skill-format-app-resolution/native-staging.log
       - name: Resolve app dependencies without building or testing
@@ -525,7 +525,7 @@ jobs:
           test -n "$selected_xcode"
           echo "DEVELOPER_DIR=$selected_xcode/Contents/Developer" >> "$GITHUB_ENV"
       - name: Install existing pinned NativeScript tooling
-        run: npm ci --prefix Scripts/NativeScript --ignore-scripts --no-audit --no-fund
+        run: node Scripts/MiniApps/install-tooling.mjs --engine=nativescript --ignore-scripts
       - name: Prepare declaration-only metadata tool
         uses: ./.github/actions/prepare-nativescript-metadata-tool
       - name: Compare real SDK metadata parser modes
@@ -759,7 +759,7 @@ jobs:
         run: |
           set -euxo pipefail
           mkdir -p "$LOG_DIR"
-          npm ci --ignore-scripts --no-audit --no-fund --prefix Scripts/NativeScript
+          node Scripts/MiniApps/install-tooling.mjs --engine=nativescript --ignore-scripts
           npm run prepare:ios-dependencies --prefix Scripts/NativeScript
           node Scripts/NativeScript/prepare-fixture.mjs
           npm run preflight:ios-dependencies --prefix Scripts/NativeScript
@@ -1201,19 +1201,40 @@ jobs:
           echo "runner-arch=$runner_arch" >> "$GITHUB_OUTPUT"
           echo "iphoneos-sdk=$iphoneos_sdk" >> "$GITHUB_OUTPUT"
 
+      - name: Resolve current original MiniApp sources and exact build graph
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$LOG_DIR" build/acceptance/miniapp-upstreams
+          trap 'cp build/acceptance/miniapp-upstreams/resolution.json "$LOG_DIR/miniapp-upstream-resolution.json" 2>/dev/null || true; git diff --binary > "$LOG_DIR/miniapp-upstream-inputs.patch"' EXIT
+          node Scripts/MiniApps/resolve-upstreams.mjs --apply --cache="$RUNNER_TEMP/hanlin-miniapp-upstreams" 2>&1 | tee "$LOG_DIR/miniapp-upstream-resolution.log"
+
+      - name: Preserve current original MiniApp build inputs
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: miniapp-upstream-inputs-${{ github.job }}-${{ github.run_id }}
+          path: |
+            ${{ env.LOG_DIR }}/miniapp-upstream-*
+            build/acceptance/miniapp-upstreams
+          if-no-files-found: error
+          retention-days: 30
+
       - name: Prepare declaration-only metadata tool
         uses: ./.github/actions/prepare-nativescript-metadata-tool
 
-      - name: Prepare pinned NativeScript iOS dependency closure
+      - name: Prepare resolved original MiniApp native dependencies
         run: |
           set -euxo pipefail
           mkdir -p "$LOG_DIR"
-          npm ci --ignore-scripts --no-audit --no-fund --prefix Scripts/NativeScript
+          node Scripts/MiniApps/install-tooling.mjs --engine=nativescript --ignore-scripts
           npm run prepare:ios-dependencies --prefix Scripts/NativeScript
           node Scripts/NativeScript/prepare-fixture.mjs
           npm run preflight:ios-dependencies --prefix Scripts/NativeScript
-          npm ci --prefix Scripts/Expo
+          node Scripts/MiniApps/install-tooling.mjs --engine=expo
           node Scripts/Expo/prepare-ios-dependencies.mjs
+          node Scripts/Expo/prepare-types.mjs
+          node Scripts/Expo/build-probe.mjs
 
       - name: Prepare log folders
         run: |
@@ -1635,7 +1656,6 @@ jobs:
               -showBuildTimingSummary \
               -skipPackagePluginValidation \
               -skipMacroValidation \
-              SWIFT_ENABLE_EXPLICIT_MODULES=NO \
               FRAMEWORK_SEARCH_PATHS="$repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks $repo_root/Artifacts/ModularFrameworks \$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks \$(SRCROOT)/Artifacts/ModularFrameworks \$(inherited)" \
               HEADER_SEARCH_PATHS="$repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders $repo_root/Artifacts/ReactModularHeaders $repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers $repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react \$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders \$(SRCROOT)/Artifacts/ReactModularHeaders \$(inherited) \$(BUILT_PRODUCTS_DIR)/React.framework/Headers \$(BUILT_PRODUCTS_DIR)/ExpoModulesCore.framework/Headers \$(BUILT_PRODUCTS_DIR)/Python.framework/Headers" \
               CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES=YES \
@@ -1677,7 +1697,6 @@ jobs:
             -showBuildTimingSummary \
             -skipPackagePluginValidation \
             -skipMacroValidation \
-            SWIFT_ENABLE_EXPLICIT_MODULES=NO \
             FRAMEWORK_SEARCH_PATHS="$repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks $repo_root/Artifacts/ModularFrameworks \$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks \$(SRCROOT)/Artifacts/ModularFrameworks \$(inherited)" \
             HEADER_SEARCH_PATHS="$repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders $repo_root/Artifacts/ReactModularHeaders $repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers $repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react \$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders \$(SRCROOT)/Artifacts/ReactModularHeaders \$(inherited) \$(BUILT_PRODUCTS_DIR)/React.framework/Headers \$(BUILT_PRODUCTS_DIR)/ExpoModulesCore.framework/Headers \$(BUILT_PRODUCTS_DIR)/Python.framework/Headers" \
             CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES=YES \
@@ -2091,17 +2110,38 @@ jobs:
           if-no-files-found: error
           retention-days: 14
 
+      - name: Resolve current original MiniApp sources and exact build graph
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$LOG_DIR" build/acceptance/miniapp-upstreams
+          trap 'cp build/acceptance/miniapp-upstreams/resolution.json "$LOG_DIR/miniapp-upstream-resolution.json" 2>/dev/null || true; git diff --binary > "$LOG_DIR/miniapp-upstream-inputs.patch"' EXIT
+          node Scripts/MiniApps/resolve-upstreams.mjs --apply --cache="$RUNNER_TEMP/hanlin-miniapp-upstreams" 2>&1 | tee "$LOG_DIR/miniapp-upstream-resolution.log"
+
+      - name: Preserve current original MiniApp build inputs
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: miniapp-upstream-inputs-${{ github.job }}-${{ github.run_id }}
+          path: |
+            ${{ env.LOG_DIR }}/miniapp-upstream-*
+            build/acceptance/miniapp-upstreams
+          if-no-files-found: error
+          retention-days: 30
+
       - name: Prepare declaration-only metadata tool
         uses: ./.github/actions/prepare-nativescript-metadata-tool
 
-      - name: Prepare pinned NativeScript iOS dependency closure
+      - name: Prepare resolved original MiniApp native dependencies
         run: |
           set -euxo pipefail
           mkdir -p "$LOG_DIR"
-          npm ci --ignore-scripts --no-audit --no-fund --prefix Scripts/NativeScript
+          node Scripts/MiniApps/install-tooling.mjs --engine=nativescript --ignore-scripts
           npm run prepare:ios-dependencies --prefix Scripts/NativeScript
-          npm ci --prefix Scripts/Expo
+          node Scripts/MiniApps/install-tooling.mjs --engine=expo
           node Scripts/Expo/prepare-ios-dependencies.mjs
+          node Scripts/Expo/prepare-types.mjs
+          node Scripts/Expo/build-probe.mjs
           if [ "$RUN_NATIVESCRIPT_DEPENDENCIES" = "true" ] || [ "$RUN_FULL_VALIDATION" = "true" ] || [ "$RUN_SIMULATOR_NATIVESCRIPT_POC" = "true" ] || [ "${{ inputs.nativescript_poc_only }}" = "true" ]; then
             node Scripts/NativeScript/prepare-fixture.mjs
             npm run prepare:production-package --prefix Scripts/NativeScript
@@ -2226,7 +2266,6 @@ jobs:
           grep -Fq "Prepared verified RuntimeCore $(node Scripts/Runtime/compute-runtime-dependency-hash.mjs RuntimeDependencies.lock.json)" "$LOG_DIR/02-prepare-runtime-core.log"
 
       - name: Package current RuntimeCore host resources
-        if: ${{ needs.plan-affected-validation.outputs.run_runtimecore_host == 'true' || needs.plan-affected-validation.outputs.run_full_validation == 'true' }}
         run: |
           set -euxo pipefail
           bash Scripts/Runtime/prepare-runtime-host.sh 2>&1 | tee "$LOG_DIR/03-package-runtime-host.log"
@@ -2428,7 +2467,6 @@ jobs:
             -showBuildTimingSummary \
             -skipPackagePluginValidation \
             -skipMacroValidation \
-            SWIFT_ENABLE_EXPLICIT_MODULES=NO \
             CLANG_CXX_LANGUAGE_STANDARD=gnu++20 \
             FRAMEWORK_SEARCH_PATHS="$repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks $repo_root/Artifacts/ModularFrameworks \$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks \$(SRCROOT)/Artifacts/ModularFrameworks \$(inherited)" \
             HEADER_SEARCH_PATHS="$repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders $repo_root/Artifacts/ReactModularHeaders $repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers $repo_root/Artifacts/ReactNativeDependencies.xcframework/Headers $repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers $repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react \$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders \$(SRCROOT)/Artifacts/ReactModularHeaders \$(inherited) \$(BUILT_PRODUCTS_DIR)/React.framework/Headers \$(BUILT_PRODUCTS_DIR)/react.framework/Headers \$(BUILT_PRODUCTS_DIR)/ExpoModulesCore.framework/Headers \$(BUILT_PRODUCTS_DIR)/Python.framework/Headers" \
@@ -2513,7 +2551,6 @@ jobs:
             -showBuildTimingSummary \
             -skipPackagePluginValidation \
             -skipMacroValidation \
-            SWIFT_ENABLE_EXPLICIT_MODULES=NO \
             CLANG_CXX_LANGUAGE_STANDARD=gnu++20 \
             FRAMEWORK_SEARCH_PATHS="$repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks $repo_root/Artifacts/ModularFrameworks \$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks \$(SRCROOT)/Artifacts/ModularFrameworks \$(inherited)" \
             HEADER_SEARCH_PATHS="$repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders $repo_root/Artifacts/ReactModularHeaders $repo_root/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers $repo_root/Artifacts/ReactNativeDependencies.xcframework/Headers $repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers $repo_root/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react \$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders \$(SRCROOT)/Artifacts/ReactModularHeaders \$(inherited) \$(BUILT_PRODUCTS_DIR)/React.framework/Headers \$(BUILT_PRODUCTS_DIR)/react.framework/Headers \$(BUILT_PRODUCTS_DIR)/ExpoModulesCore.framework/Headers \$(BUILT_PRODUCTS_DIR)/Python.framework/Headers" \

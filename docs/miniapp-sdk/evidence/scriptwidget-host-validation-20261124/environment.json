@@ -1,0 +1,31 @@
+{
+  "0": {
+    "argv": [
+      "/usr/local/bin/node",
+      "--version"
+    ],
+    "stdout": "v24.22.0\n",
+    "stderr": "",
+    "exitCode": 0
+  },
+  "1": {
+    "argv": [
+      "/usr/local/bin/swift",
+      "--version"
+    ],
+    "stdout": "Swift version 6.4.3 (swift-6.4.3-RELEASE)\nTarget: aarch64-unknown-linux-gnu\n",
+    "stderr": "",
+    "exitCode": 0
+  },
+  "2": {
+    "argv": [
+      "/usr/local/bin/node",
+      "--input-type=module",
+      "-e",
+      "import ts from \"file:///dev/shm/hanlin-sdk-only-kit-45335292541/AI_HLY/Downstream/RuntimeCore/Node/Host/MiniAppSDK/expo/node_modules/typescript/lib/typescript.js\"; console.log(ts.version);"
+    ],
+    "stdout": "6.0.3\n",
+    "stderr": "",
+    "exitCode": 0
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "node",
+    "--test",
+    "Scripts/Audit/Tests/runtime-version-contract.test.mjs"
+  ],
+  "exit": 0,
+  "stdout": "\u2714 actual importer and sessions reconcile independent original versions and the bridge baseline (20.456839ms)\n\u2714 future independent Core iOS and SwiftUI updates reach both generated consumers (14.780166ms)\n\u2714 stale direct-session runtime and using iOS as the Core ceiling both fail the audit (19.988316ms)\n\u2714 original dependency drift and bridge baseline drift remain rejected separately (21.406564ms)\n\u2139 tests 4\n\u2139 suites 0\n\u2139 pass 4\n\u2139 fail 0\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 todo 0\n\u2139 duration_ms 167.205971\n",
+  "stderr": "",
+  "scope": "Four focused original source/generator reconciliation cases, including stale and mismatched version rejection. No native execution."
+}

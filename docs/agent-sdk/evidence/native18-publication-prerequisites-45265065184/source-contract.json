@@ -1,0 +1,83 @@
+{
+  "recordedUTC": "2026-11-23T21:29:32.022298+00:00",
+  "reviewedProducerRun": 45265065184,
+  "producerSource": "ade2f626e37102abde83050c94d524d19e0726bb",
+  "runStatus": "NOT_QUERIED_BY_THIS_LANE; root sole watcher",
+  "artifactIdentity": "PENDING_ROOT_TERMINAL_ASSIGNMENT",
+  "artifactName": "hanlin-sdk-native-prepared",
+  "producerSourceFiles": [
+    {
+      "path": "Scripts/SDK/native_artifacts.py",
+      "bytes": 40500,
+      "sha256": "ecb76ee7aaec7938fefbe16c2627b5ed1a9a1ba6b9145a49a823216b34ab15e6",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/blob/ade2f626e37102abde83050c94d524d19e0726bb/Scripts/SDK/native_artifacts.py"
+    },
+    {
+      "path": "Scripts/SDK/install.py",
+      "bytes": 19503,
+      "sha256": "4cf99955317a83e3d882834fe0235f505af41e335fd1e84e475524081d301677",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/blob/ade2f626e37102abde83050c94d524d19e0726bb/Scripts/SDK/install.py"
+    },
+    {
+      "path": "Scripts/SDK/generate_manifest.py",
+      "bytes": 16110,
+      "sha256": "10e6ce09e056e13f9ed22d2f5946d851239c1d1cfca6e331c566fc178bd25c7f",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/blob/ade2f626e37102abde83050c94d524d19e0726bb/Scripts/SDK/generate_manifest.py"
+    },
+    {
+      "path": "Scripts/Runtime/runtime_host_archive.py",
+      "bytes": 9657,
+      "sha256": "55b31a02dbded24ba1b9a4c1036715a89755be2548dea36a948f57df6d42f334",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/blob/ade2f626e37102abde83050c94d524d19e0726bb/Scripts/Runtime/runtime_host_archive.py"
+    },
+    {
+      "path": ".github/workflows/build-ios26-unsigned-ipa.yml",
+      "bytes": 208094,
+      "sha256": "afeed29d2451d17f835230166cb2da894d574aa4474ca296b770ebb68e1f3d8c",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/blob/ade2f626e37102abde83050c94d524d19e0726bb/.github/workflows/build-ios26-unsigned-ipa.yml"
+    }
+  ],
+  "requiredNativePayloads": 18,
+  "requiredFrameworks": 14,
+  "requiredHostSupportGroups": 4,
+  "preparationInputSHA256": {
+    "RuntimeDependencies.lock.json": "6cdbc18a474febbfc912b35ecbf5b0b55438a6a3e6daf2c33a43792cd04bd50a",
+    "Scripts/Expo/dependency-lock.json": "d9ded3b3d73b1d563d149e1456ffaf8d2bfecdf222ecca6657aafb10cc4ea536",
+    "Scripts/Expo/prepare-ios-dependencies.mjs": "38d7825492e0c68c9e50a4273cf254648ff8ae81b185716fdbc032709dbca1a4",
+    "Scripts/ExpoNativeAPI/dependency-lock.json": "2a2717c43e5396128dfa8b48baa6951a5d9f79661c9d9cc76d0c01fbf8021704",
+    "Scripts/ExpoNativeAPI/prepare-ios-dependencies.mjs": "1ee5f051f6315fcef4ce08ea7cb5db882c39c18a9b3f02a06733d2aed4bab35d",
+    "Scripts/NativeScript/build-metadata-tool.py": "f4318f38b1c6a9c56ba54edb0d270a6374178fa5a8e024ebfddb9790f7ae3cf5",
+    "Scripts/NativeScript/build-step-metadata-generator-wrapper.py": "0c053414f573ff2f88498099d7f1ae591d289ca3029390cd421dd938bf089ba3",
+    "Scripts/NativeScript/dependency-lock.json": "7e03d1d97c25f13d1242667f4bba8635391452028cb4e3fb38c0ab215ad2ff8f",
+    "Scripts/NativeScript/package-lock.json": "17f34a1d12fdf55e4a8c44572639ee75df3b5ab4bdb65ffa54712e5f2d737984",
+    "Scripts/NativeScript/prepare-ios-dependencies.mjs": "814cb0ff5b5aa4575c0daaced0014e461d51d108059f4cccb396f9c1d5c6e5a5",
+    "Scripts/Runtime/prepare-runtime-core.sh": "8765967fdba85cc77dcbf3c02936993c39bf186d7327560a3d84590222710a10"
+  },
+  "preparationInputCount": 11,
+  "helperContractExpanded": false,
+  "requiredAdmission": [
+    "Original root-owned terminal run SUCCESS at exact source and attempt; reconcile requested acceptance identities before eligibility admission",
+    "Unique assigned unexpired hanlin-sdk-native-prepared artifact bound to that run and source; API size/digest and ZIP paths/CRC verified",
+    "Prepared catalog sourceCommit matches actual producer; scope full; requiredTargets complete; missingTargets empty; exactly14 framework+4 support records",
+    "Original load_catalog, complete verify_source_inputs and archive/slice verifier retained; actual original producer export includes Node Host validation",
+    "Publish only immutable existing original URLs/content tag; preserve original producer source; public18 payload readback; retain catalog after publication"
+  ],
+  "futureSDK02": {
+    "reviewedCandidate": "846ca37aaee19f46dccca3cd39c7d6762d2561f4",
+    "productionPaths": [
+      "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleOnDeviceProvider.swift",
+      "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleToolHistory.swift",
+      "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleToolSchema.swift",
+      "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleToolSessionBridge.swift",
+      "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift",
+      "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKModels.swift"
+    ],
+    "preparationInputsChanged": [],
+    "nodeHostOrValidatorChanged": [],
+    "nativeAssetsMayRemainValid": true,
+    "condition": "Final source must still pass the original11-input source guard and original Node Host source/archive validation. Preserve the actual original producer in the catalog and the final SDK revision separately.",
+    "doesNotQualify": "No transfer of full app/SDK02/Motion/runtime acceptance to a later Swift integration"
+  },
+  "catalogOnlyIntegration": "Original generate_manifest.py does not read native-artifacts.json; catalog publication alone does not require a manifest regeneration. Regenerate only if final source manifests change.",
+  "installs": "NOT_RUN; one fresh full44 product install at final source freeze, then original check; three existing selected Hosts retain zero managed native targets unless their reviewed selection changes"
+}

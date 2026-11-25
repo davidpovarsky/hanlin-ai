@@ -1,0 +1,25 @@
+{
+  "at": "2026-11-24T09:23:37.084025+00:00",
+  "sourceCommit": "71d176315dea14e4db524f9da642bfdca5a46618",
+  "branch": "codex/hanlin-miniapps-sdk-completion-20261123",
+  "workflowID": 419196373,
+  "inputs": {
+    "paired_product_acceptance": "true",
+    "paired_test_scope": "miniapp_scriptwidget",
+    "runtime_bundle_artifact_run_id": "42926628418"
+  },
+  "selectedCases": 2,
+  "testFilter": "HanlinDualWidgetEnginesTests/(rootFragmentsPreserveOriginalElementAllowances|scriptWidgetUsesOriginalElementLimitsWithoutExtraMaterialQuotas)",
+  "concurrencySuffix": "paired-miniapp_scriptwidget",
+  "previousRunID": 45360272675,
+  "dispatchExecuted": true,
+  "dispatchOutput": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45364761765\n",
+  "dispatchStderr": "",
+  "existingPassesReused": [
+    45356338624,
+    45354891567
+  ],
+  "boundary": "Actual unchanged two-case Apple retest after reviewed native network wildcard consistency correction; no full-app, shippingSDK or physical-device pass inferred.",
+  "newRunID": 45364761765,
+  "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45364761765"
+}

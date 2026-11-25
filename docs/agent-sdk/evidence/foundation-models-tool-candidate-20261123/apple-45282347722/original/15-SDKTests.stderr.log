@@ -1,0 +1,24 @@
+2026-11-23 22:51:46.697 xcodebuild[4833:18992] [MT] IDERunDestination: Supported platforms for the buildables in the current scheme is empty.
+--- xcodebuild: WARNING: Using the first of multiple matching destinations:
+{ platform:macOS, arch:arm64, id:52ebbc75444d10e3c5fde96a3854ccb982dbcf76, name:My Mac }
+{ platform:macOS, arch:x86_64, id:52ebbc75444d10e3c5fde96a3854ccb982dbcf76, name:My Mac }
+{ platform:macOS, arch:arm64, variant:Mac Catalyst, id:52ebbc75444d10e3c5fde96a3854ccb982dbcf76, name:My Mac }
+{ platform:macOS, arch:x86_64, variant:Mac Catalyst, id:52ebbc75444d10e3c5fde96a3854ccb982dbcf76, name:My Mac }
+{ platform:macOS, arch:arm64, variant:DriverKit, id:52ebbc75444d10e3c5fde96a3854ccb982dbcf76, name:My Mac }
+{ platform:macOS, arch:arm64, variant:Designed for [iPad,iPhone], id:52ebbc75444d10e3c5fde96a3854ccb982dbcf76, name:My Mac }
+{ platform:macOS, arch:arm64e.x1, variant:Designed for [iPad,iPhone], id:52ebbc75444d10e3c5fde96a3854ccb982dbcf76, name:My Mac }
+{ platform:macOS, arch:arm64_32, variant:Designed for [iPad,iPhone], id:52ebbc75444d10e3c5fde96a3854ccb982dbcf76, name:My Mac }
+2026-11-23 22:54:18.483 xcodebuild[4833:27166]  DVTAssertions: Warning in IDEFrameworks/IDEFoundation/Execution/LaunchSystem/IDELaunchSession.m:395
+Details:  setRunnablePIDWithDiagnostics:logSection:andCompletionHandler: called without a completion handler - blocking until diagnostics setup completes. Callers should migrate to using a completion handler for better performance.
+Object:   <IDELaunchSession: 0x7a6e33c900>
+Method:   -setRunnablePIDWithDiagnostics:logSection:andCompletionHandler:
+Thread:   <NSThread: 0x7a6b216f80>{number = 93, name = (null)}
+Please file a bug at https://feedbackassistant.apple.com with this warning message and any useful information you can provide.
+2026-11-23 22:54:35.948 xcodebuild[4833:18992] [MT] IDETestOperationsObserverDebug: 17.859 elapsed -- Testing started completed.
+2026-11-23 22:54:35.948 xcodebuild[4833:18992] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-23 22:54:35.948 xcodebuild[4833:18992] [MT] IDETestOperationsObserverDebug: 17.859 sec, +17.859 sec -- end
+Failing tests:
+	HanlinAppleToolSessionBridgeTests.nativeCancellationStopsAwaitingExecutor()
+
+** TEST FAILED **
+

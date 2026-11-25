@@ -19,7 +19,8 @@
     "skipLibCheck": false,
     "strict": true,
     "target": "ES2022",
-    "lib": ["ES2022"]
+    "lib": ["ES2022"],
+    "resolveJsonModule": true
   },
   "include": ["*.ts", "*.tsx", "../../Packages/HanlinExpoUI/src/**/*.ts", "../../Packages/HanlinExpoUI/src/**/*.tsx"]
 }

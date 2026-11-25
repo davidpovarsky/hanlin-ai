@@ -1,0 +1,26 @@
+{
+  "at": "2026-11-24T08:18:15.379007+00:00",
+  "sourceCommit": "a12eb646aeb5c484f746c07ecffafc7d9f34f167",
+  "branch": "codex/hanlin-miniapps-sdk-completion-20261123",
+  "workflowID": 419196373,
+  "workflowPath": ".github/workflows/validate-app-split.yml",
+  "inputs": {
+    "paired_product_acceptance": "true",
+    "paired_test_scope": "miniapp_authoring",
+    "runtime_bundle_artifact_run_id": "42926628418"
+  },
+  "selectedCases": 42,
+  "aiCases": 25,
+  "miniAppsCases": 17,
+  "previousRunID": 45343362337,
+  "concurrencySuffix": "paired-miniapp_authoring",
+  "dispatchExecuted": true,
+  "dispatchOutput": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45354940642\n",
+  "dispatchStderr": "",
+  "boundary": "Fresh shipping SDK prep/docs identity plus actual42case app/UI acceptance required. No job-start, compilation-only, generic80cell or physical-device pass inferred.",
+  "newRunID": 45354940642,
+  "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45354940642",
+  "recordedAtUTC": "2026-11-24T08:21:48.418353+00:00",
+  "firstSavedStatus": "in_progress",
+  "firstSavedConclusion": ""
+}

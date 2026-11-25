@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-11-23T23:06:00Z",
+  "sourceCommit": "23a44b982c6785b2d748389cf30251c9c2945971",
+  "nativescript": {
+    "originalPackage": "@nativescript/swift-ui",
+    "version": "4.0.2",
+    "originalFile": "/dev/shm/hanlin-miniapp-sdk-combined-20261123/nativescript/node_modules/@nativescript/swift-ui/index.ios.js",
+    "copiedFile": "/dev/shm/hanlin-miniapp-integration-20261123/native-authoring/.hanlin-build/ebc243a2-6c5d-4dbb-8848-36e07346a242/package/nativescript/app/node_modules/@nativescript/swift-ui/index.ios.js",
+    "sha256": "dd1c048833b06a28b53a2ea73158cd3d64823e032885f0d482e0a37922ad6b94",
+    "byteIdentity": true,
+    "coreDuplicated": false,
+    "metadata": {
+      "runtimeVersion": "9.1.0",
+      "plugins": {
+        "@nativescript/swift-ui": "4.0.2"
+      }
+    }
+  },
+  "expo": {
+    "metadata": {
+      "runtimeVersion": "58.0.3",
+      "bridgeVersion": "3.0.0",
+      "plugins": {
+        "@expo/ui": "58.0.3",
+        "@hanlin/expo-ui": "3.0.0",
+        "@nativescript/react-native": "9.1.2",
+        "react-native-worklets": "0.13.1"
+      },
+      "nativeApi": {
+        "contractVersion": "1.0.0",
+        "abiIdentity": "rn0.88.0-hermes260318099.0.4"
+      }
+    },
+    "originalImageSHA256": "7ac2abfce2be8b46dd9826d597d94edeefc1570b4a992622721b90a1850e3ee9",
+    "compiledImages": [
+      "assets/__hanlin-miniapp-integration-20261123/expo-asset/pixel.png"
+    ],
+    "bundleSHA256": "0a6bd706ff700049c827f10eef9c2ba5f913c8f0f5ae1c82cc2f06b3c73be037",
+    "sourceMapSHA256": "7269883c4e6524ce40814c1f58e4c2bfb1dcb2084dc77717855d924987c950d8"
+  }
+}

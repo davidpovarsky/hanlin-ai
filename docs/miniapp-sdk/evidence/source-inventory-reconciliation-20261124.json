@@ -1,0 +1,413 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-11-24T05:42:02.258270+00:00",
+  "sourceCommit": "00d86e42ab09e99831d042c617c23e17bc91f894",
+  "evidenceBoundary": "Source documentation/provenance reconciliation only. No native compilation, runtime, UI or device acceptance is asserted.",
+  "priorRootGenerationHistory": {
+    "schemaVersion": 1,
+    "sourceCommit": "9f091beccc3538d6db06bd73ddc7e1aad78b6321",
+    "createdAt": "2026-11-24T05:31:18.010308+00:00",
+    "evidenceBoundary": "Source inventory/provenance reconciliation only. No native compilation or UI/device acceptance is asserted.",
+    "priorRootFailures": [
+      {
+        "sourceCommit": "efcb479dbb12772c1f4647e2697e8e12a08a6f3c",
+        "command": [
+          "node",
+          "Scripts/Audit/audit-miniapp-sdk.mjs",
+          "--write"
+        ],
+        "failure": "ENOENT Fixtures/ExpoSwiftUIProbe/tsconfig.json",
+        "resolution": "Materialized both existing tracked ExpoSwiftUIProbe and ExpoNativeAPIProbe fixture directories with sparse-checkout; no content edits."
+      },
+      {
+        "sourceCommit": "efcb479dbb12772c1f4647e2697e8e12a08a6f3c",
+        "command": [
+          "node",
+          "Scripts/Audit/audit-miniapp-sdk.mjs",
+          "--write"
+        ],
+        "failure": "Prepared runtime version validation changed; audit the installed contract.",
+        "resolution": "Integrated independently reviewed version bindings and strict source extraction from 8c3aaa5895d26076bd98060244beb03c71a3ede7 as 2eccb2f4a3a5680a28412f6c0dd5605d795c8ef2. Original worker red outputs remain in runtime-version-audit-20261124."
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "node",
+          "Scripts/Audit/audit-miniapp-sdk.mjs",
+          "--write"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 0.544,
+        "stdout": "Wrote source inventory: 72 sources, 173 local public exports; E2E not inferred.\n",
+        "stderr": ""
+      },
+      {
+        "argv": [
+          "python3",
+          "Scripts/Audit/audit_miniapp_reachability.py"
+        ],
+        "exitCode": 1,
+        "elapsedSeconds": 0.137,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/Scripts/Audit/audit_miniapp_reachability.py\", line 207, in <module>\n    main()\n  File \"/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/Scripts/Audit/audit_miniapp_reachability.py\", line 185, in main\n    value = build()\n            ^^^^^^^\n  File \"/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/Scripts/Audit/audit_miniapp_reachability.py\", line 33, in build\n    ref(\"shareWrite\", \"ChavrusaChatShare/ShareViewController.swift\", \"store.commit(batchID, items: items)\")\n  File \"/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/Scripts/Audit/audit_miniapp_reachability.py\", line 25, in ref\n    data = (ROOT / file).read_bytes()\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/pathlib.py\", line 1021, in read_bytes\n    with self.open(mode='rb') as f:\n         ^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/pathlib.py\", line 1015, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/ChavrusaChatShare/ShareViewController.swift'\n"
+      },
+      {
+        "argv": [
+          "node",
+          "Scripts/Audit/audit-miniapp-sdk.mjs",
+          "--check"
+        ],
+        "exitCode": 0,
+        "stdout": "PASS: SDK source inventory matches 72 sources and 173 local public exports.\n",
+        "stderr": ""
+      }
+    ]
+  },
+  "integratedChanges": {
+    "versionsAndExplicitOperations": "2eccb2f4a3a5680a28412f6c0dd5605d795c8ef2",
+    "preparedCacheIdentity": "9f091beccc3538d6db06bd73ddc7e1aad78b6321",
+    "portableShellDescription": "6f38b83e0fe9bfeec26d46e7be466acbe5228e6a",
+    "currentReachabilityAndSparseInputs": "00d86e42ab09e99831d042c617c23e17bc91f894"
+  },
+  "commands": [
+    {
+      "argv": [
+        "node",
+        "Scripts/Audit/audit-miniapp-sdk.mjs",
+        "--write"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.524,
+      "stdout": "Wrote source inventory: 72 sources, 173 local public exports; E2E not inferred.\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "python3",
+        "Scripts/Audit/audit_miniapp_reachability.py"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 1.795,
+      "stdout": "Wrote 80 canonical Host-runtime reachability cells plus separate original-library surface records; no physical/E2E pass inferred.\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "node",
+        "Scripts/Audit/audit-miniapp-sdk.mjs",
+        "--check"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.468,
+      "stdout": "PASS: SDK source inventory matches 72 sources and 173 local public exports.\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "python3",
+        "Scripts/Audit/audit_miniapp_reachability.py",
+        "--check"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 1.39,
+      "stdout": "PASS: 80 unique source-backed reachability cells; no E2E pass inferred.\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.021,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "files": [
+    {
+      "path": "docs/miniapp-sdk/source-inventory.json",
+      "beforeSHA256": "ae00d8d6ddb28896f58740d24bb785e4250b335a64ad0951c80e334fe0ffe73d",
+      "afterSHA256": "8ff66f669edb8d264ccfb55f139048f64d5553c94d2be190d6a7495bdd88eb6b",
+      "changed": true,
+      "changedTopLevelFields": [
+        "expo",
+        "gaps",
+        "nativeScript",
+        "preparedRuntimeContract",
+        "sourceCommit",
+        "sources"
+      ],
+      "sourceCountBefore": 61,
+      "sourceCountAfter": 72,
+      "addedSources": [
+        "AI_HLY/Downstream/ProductSplitIntegration/HanlinExternalMiniAppSession.swift",
+        "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+        "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoHostVersions.swift",
+        "Packages/HanlinExpoUI/src/miniapp-actions.ts",
+        "Packages/HanlinExpoUI/src/system-surfaces.ts",
+        "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptHostVersions.swift",
+        "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinMiniAppHostVersions.swift",
+        "Scripts/Audit/miniapp-expo-operations.mjs",
+        "Scripts/Audit/miniapp-runtime-contract.mjs",
+        "Scripts/Expo/dependency-lock.json",
+        "Scripts/MiniApps/resolve-upstreams.mjs"
+      ],
+      "removedSources": [],
+      "changedExistingSources": [
+        "AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift",
+        "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
+        "AI_HLY/Downstream/HostServices/Runtime/HanlinRuntimeBroker.swift",
+        "AI_HLY/Downstream/MiniApps/HanlinMiniAppHost.swift",
+        "AI_HLY/Downstream/NativeScript/HanlinNativeServicesBridge.swift",
+        "Packages/HanlinExpoNativeAPIJS/package.json",
+        "Packages/HanlinExpoRuntime/Package.swift",
+        "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoBridgeMetadata.swift",
+        "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoSession.swift",
+        "Packages/HanlinExpoUI/package.json",
+        "Packages/HanlinExpoUI/src/host-services.ts",
+        "Packages/HanlinExpoUI/src/modifiers.ts",
+        "Packages/HanlinNativeScriptRuntime/Package.swift",
+        "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeServicesBridge.m",
+        "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include/HanlinNativeServicesBridge.h",
+        "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptSession.swift",
+        "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.d.ts",
+        "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.mjs",
+        "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPreparedRuntimeVersion.swift",
+        "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
+        "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
+        "Scripts/Audit/audit-miniapp-sdk.mjs",
+        "Scripts/Expo/build-probe.mjs",
+        "Scripts/Expo/check-ui-type-contract.mjs",
+        "Scripts/Expo/package-lock.json",
+        "Scripts/Expo/package.json",
+        "Scripts/Expo/prepare-types.mjs",
+        "Scripts/NativeScript/build-host-services.mjs",
+        "Scripts/NativeScript/build-step-metadata-generator-wrapper.py",
+        "Scripts/NativeScript/dependency-lock.json",
+        "Scripts/NativeScript/host-services.ts",
+        "Scripts/NativeScript/metadata_public_headers.py",
+        "Scripts/NativeScript/package.json"
+      ]
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.json",
+      "beforeSHA256": "67719ee7e99ff91aa05bdf51bbea5756709ac988d4076c33602c16cc73a6bdff",
+      "afterSHA256": "7f2ffa4ce5ed33d65d8ed1347b0c7e9f24eca87850b19168bcd1730cbe29a0af",
+      "changed": true,
+      "changedTopLevelFields": [
+        "acceptance",
+        "entitlements",
+        "matrix",
+        "matrixScope",
+        "optionalSurfaceSymbolScan",
+        "originalLibrarySurfaces",
+        "paths",
+        "sdkSources",
+        "sourceCommit",
+        "sourceReadPolicy",
+        "sourceRefs",
+        "systemServices",
+        "targetsDeclaredInProject"
+      ],
+      "rowCountBefore": 80,
+      "rowCountAfter": 80,
+      "statusCountsBefore": {
+        "partially-wired": 15,
+        "disconnected": 55,
+        "not-tested": 10
+      },
+      "statusCountsAfter": {
+        "partially-wired": 40,
+        "disconnected": 30,
+        "not-tested": 10
+      },
+      "changedStatusRows": [
+        {
+          "surface": "hostAppIntent",
+          "engine": "hanlinExpo",
+          "runtime": "javaScriptCore",
+          "before": "disconnected",
+          "after": "partially-wired"
+        },
+        {
+          "surface": "hostAppIntent",
+          "engine": "hanlinExpo",
+          "runtime": "localPython",
+          "before": "disconnected",
+          "after": "partially-wired"
+        },
+        {
+          "surface": "hostAppIntent",
+          "engine": "hanlinExpo",
+          "runtime": "node",
+          "before": "disconnected",
+          "after": "partially-wired"
+        },
+        {
+          "surface": "hostAppIntent",
+          "engine": "hanlinExpo",
+          "runtime": "shell",
+          "before": "disconnected",
+          "after": "partially-wired"
+        },
+        {
+          "surface": "hostAppIntent",
+          "engine": "hanlinExpo",
+          "runtime": "typeScript",
+          "before": "disconnected",
+          "after": "partially-wired"
+        },
+        {
+          "surface": "share",
+          "engine": "hanlinExpo",
+          "runtime": "javaScriptCore",
+          "before": "disconnected",
+          "after": "partially-wired"
+        },
+        {
+          "surface": "share",
+          "engine": "hanlinExpo",
+          "runtime": "localPython",
+          "before": "disconnected",
+          "after": "partially-wired"
+        },
+        {
+          "surface": "share",
+          "engine": "hanlinExpo",
+          "runtime": "node",
+          "before": "disconnected",
+          "after": "partially-wired"
+        },
+        {
+          "surface": "share",
+          "engine": "hanlinExpo",
+          "runtime": "shell",
+          "before": "disconnected",
+          "after": "partially-wired"
+        },
+        {
+          "surface": "share",
+          "engine": "hanlinExpo",
+          "runtime": "typeScript",
+          "before": "disconnected",
+          "after": "partially-wired"
+        },
+        {
+          "surface": "shortcuts",
+          "engine": "hanlinExpo",
+          "runtime": "javaScriptCore",
+          "before": "disconnected",
+          "after": "partially-wired"
+        },
+        {
+          "surface": "shortcuts",
+          "engine": "hanlinExpo",
+          "runtime": "localPython",
+          "before": "disconnected",
+          "after": "partially-wired"
+        },
+        {
+          "surface": "shortcuts",
+          "engine": "hanlinExpo",
+          "runtime": "node",
+          "before": "disconnected",
+          "after": "partially-wired"
+        },
+        {
+          "surface": "shortcuts",
+          "engine": "hanlinExpo",
+          "runtime": "shell",
+          "before": "disconnected",
+          "after": "partially-wired"
+        },
+        {
+          "surface": "shortcuts",
+          "engine": "hanlinExpo",
+          "runtime": "typeScript",
+          "before": "disconnected",
+          "after": "partially-wired"
+        },
+        {
+          "surface": "translation",
+          "engine": "hanlinExpo",
+          "runtime": "javaScriptCore",
+          "before": "disconnected",
+          "after": "partially-wired"
+        },
+        {
+          "surface": "translation",
+          "engine": "hanlinExpo",
+          "runtime": "localPython",
+          "before": "disconnected",
+          "after": "partially-wired"
+        },
+        {
+          "surface": "translation",
+          "engine": "hanlinExpo",
+          "runtime": "node",
+          "before": "disconnected",
+          "after": "partially-wired"
+        },
+        {
+          "surface": "translation",
+          "engine": "hanlinExpo",
+          "runtime": "shell",
+          "before": "disconnected",
+          "after": "partially-wired"
+        },
+        {
+          "surface": "translation",
+          "engine": "hanlinExpo",
+          "runtime": "typeScript",
+          "before": "disconnected",
+          "after": "partially-wired"
+        },
+        {
+          "surface": "translation",
+          "engine": "hanlinNativeScript",
+          "runtime": "javaScriptCore",
+          "before": "disconnected",
+          "after": "partially-wired"
+        },
+        {
+          "surface": "translation",
+          "engine": "hanlinNativeScript",
+          "runtime": "localPython",
+          "before": "disconnected",
+          "after": "partially-wired"
+        },
+        {
+          "surface": "translation",
+          "engine": "hanlinNativeScript",
+          "runtime": "node",
+          "before": "disconnected",
+          "after": "partially-wired"
+        },
+        {
+          "surface": "translation",
+          "engine": "hanlinNativeScript",
+          "runtime": "shell",
+          "before": "disconnected",
+          "after": "partially-wired"
+        },
+        {
+          "surface": "translation",
+          "engine": "hanlinNativeScript",
+          "runtime": "typeScript",
+          "before": "disconnected",
+          "after": "partially-wired"
+        }
+      ]
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.md",
+      "beforeSHA256": "9c29d5bdf144e9f9b6812db117a3a006fbb2a993c6090781de5735d3b4119935",
+      "afterSHA256": "3e9df426903d9929f69e1746965a61c118465622c9cb4219e3656c1dc9300f9b",
+      "changed": true
+    }
+  ],
+  "result": "PASS"
+}

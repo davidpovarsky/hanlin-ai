@@ -1,0 +1,197 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS_CURRENT_SHIPPING_IDENTITY_REUSE",
+  "recordedAtUTC": "2026-11-24T12:54:27.644475+00:00",
+  "scope": "Minimal read-only reuse of main12 SDK05 shipping identity against actual main13 preparation artifacts; plus existing audit input impact advice for the separately owned native publication fix.",
+  "source": {
+    "main13": "2cb851067c4339125ab6fb515522796bceb80c35",
+    "evidenceBase": "ce2eceeb20b4f38031264f161ac9829b3745275a",
+    "priorMain12": "999599c242c064564c40866a1979c463f1d0e95f",
+    "same222InputPathsAcrossBothTransitions": true
+  },
+  "provenance": {
+    "runID": 45389020875,
+    "artifactID": 14921026306,
+    "outer": {
+      "path": "/tmp/hanlin-native-gate-evidence-45389020875/app-split-45389020875.zip",
+      "bytes": 334177257,
+      "sha256": "7e228d0676a5addfcdd1e00767769d746b566824b3c201293d370cb9630b7dce",
+      "artifactID": 14921026306
+    },
+    "nested": {
+      "member": "runtime-host/RuntimeHostResources.zip",
+      "bytes": 81812125,
+      "sha256": "1f8f8543bead231063a73fe21c10f866aabdbd3fccad5f42c48f052fa28761c2",
+      "previousSHA256": "3f8369a26f492aa0cb4c7ca63a03d33104993adad81223ba9b3ee7f0e46ada4c"
+    },
+    "authentication": "Parent downloaded/authenticated the supplied GitHub artifact. This lane independently rehashed that exact retained archive; no network request or download."
+  },
+  "sdkIdentity": {
+    "manifestSHA256": "1b66e9111586a764617a47fafe8f71ac677c14743fc1d0df79290e3ac994cebc",
+    "previousManifestSHA256": "1b66e9111586a764617a47fafe8f71ac677c14743fc1d0df79290e3ac994cebc",
+    "manifestBytes": 5219260,
+    "manifestByteIdentical": true,
+    "inputSHA256": "ace5ee5e40a1c4c8c17c2a3744b24ac2793b237e5a2cc9d5dfd3c31959c82d6b",
+    "previousInputSHA256": "ace5ee5e40a1c4c8c17c2a3744b24ac2793b237e5a2cc9d5dfd3c31959c82d6b",
+    "sourceInputs": 222,
+    "sourceInputsOrderedIdentical": true,
+    "fileRows": 25661,
+    "fileRowsOrderedIdentical": true,
+    "engineMetadataIdentical": true,
+    "upstreamMetadataIdentical": true
+  },
+  "reuse": {
+    "priorEvidenceCommit": "d56a3c4005a2ed10b6cb9fbd17ae25b0f1642c93",
+    "priorIntegratedCommit": "df07b8da",
+    "priorReceipt": "../sdk05-current-shipping-20261124/receipt.json",
+    "priorReceiptSHA256": "f8c940f0ae15dd3ec5a8778a5028c937da4e6ef3f7c3b37ed8a095eb9b623ecf",
+    "manifestRows": {
+      "docs": 25,
+      "examplesIncludingIndex": 29,
+      "declarations": 5210,
+      "docsRowsIdentical": true,
+      "exampleRowsIdentical": true,
+      "declarationRowsIdentical": true
+    },
+    "prior112SelectedMemberChecksRepeated": false,
+    "allSDKFilesRehashed": false,
+    "boundary": "The actual nested manifest bytes and every ordered declared input/file row match. The earlier selected-member verification is reused by this exact manifest identity; this lane does not claim a new independent full SDK content audit."
+  },
+  "actualMain13Snippets": {
+    "sha256": "cb8c6c97cbae270b65d0dc4aacf364a628da07982ccc6f75ca3f56b9f7e245be",
+    "previousSHA256": "d4af6b636f23f004618da047803a7f73a4897f433d2bd9dfe8e5b72311ebe912",
+    "status": "EXECUTED_PASS",
+    "sourceBlocks": 14,
+    "jsonBlocks": 7,
+    "excluded": 8,
+    "projects": [
+      {
+        "name": "expo-guide",
+        "compilerVersion": "6.0.3",
+        "typecheck": {
+          "strict": true,
+          "checkJs": false,
+          "skipLibCheck": false,
+          "dependencyDeclarationsChecked": true
+        },
+        "succeeded": true,
+        "diagnosticCount": 0
+      },
+      {
+        "name": "nativescript-guide",
+        "compilerVersion": "5.9.3",
+        "typecheck": {
+          "strict": true,
+          "checkJs": true,
+          "skipLibCheck": true,
+          "dependencyDeclarationsChecked": false
+        },
+        "succeeded": true,
+        "diagnosticCount": 0
+      },
+      {
+        "name": "scriptwidget-guide",
+        "compilerVersion": "6.0.3",
+        "typecheck": {
+          "strict": true,
+          "checkJs": true,
+          "skipLibCheck": false,
+          "dependencyDeclarationsChecked": true
+        },
+        "succeeded": true,
+        "diagnosticCount": 0
+      },
+      {
+        "name": "scriptwidget-controls",
+        "compilerVersion": "6.0.3",
+        "typecheck": {
+          "strict": true,
+          "checkJs": true,
+          "skipLibCheck": false,
+          "dependencyDeclarationsChecked": true
+        },
+        "succeeded": true,
+        "diagnosticCount": 0
+      }
+    ],
+    "documentationIdentityRowsIdentical": true,
+    "checkerInputsIdentical": true,
+    "registrationIdentical": true,
+    "diagnostics": 0,
+    "totalMarkdownFences": 29,
+    "onlyReportDifferences": "Four temporary validation.sourceRoot paths; complete exact differences retained."
+  },
+  "nativeAcceptance": {
+    "build": "EXECUTED_FAIL",
+    "miniBuild": "EXECUTED_FAIL",
+    "aiBuild": "NOT_RUN",
+    "ui": "NOT_RUN",
+    "actualBuildExit": 65,
+    "error": "xcodebuild exit 65; inspect mini-build.log",
+    "applicationCasePassesClaimed": 0,
+    "boundary": "Main13 stopped in the first application build. The separately owned native publication conversion diagnosis/fix is not validated by this shipping receipt. No application/UI/device acceptance is inferred."
+  },
+  "upcomingPublicationChange": {
+    "impactReport": "publication-audit-input-impact.json",
+    "existingInventoryWriteCheckRequired": true,
+    "existingReachabilityWriteCheckRequired": true,
+    "auditCommandsExecutedHere": false,
+    "privateNativeFileIsDirectSDKInput": false,
+    "generatedAuditDocumentationIsSDKInput": true,
+    "futureIdentityBoundary": "Refreshing the shipped source-inventory/reachability records changes a later normal shipping manifest/input identity. Current manifest equality applies to main13 versus main12, not automatically to a later corrected source. No extra ad hoc SDK build is requested."
+  },
+  "activitiesNotPerformed": [
+    "compiler execution",
+    "tests",
+    "SDK or application builds",
+    "CI dispatch or polling",
+    "artifact download",
+    "Asana writes",
+    "source changes",
+    "fresh SDK-only authoring experiment",
+    "112-member reinspection",
+    "original frozen kit mutation"
+  ],
+  "cleanup": {
+    "ownedPath": "/tmp/hanlin-sdk05-main13-reuse-bgdg6_gh",
+    "removed": true,
+    "bytesBeforeRemoval": 81812125
+  },
+  "evidenceFiles": {
+    "manifest-and-snippet-comparison.json": {
+      "path": "manifest-and-snippet-comparison.json",
+      "bytes": 3368,
+      "sha256": "8da48916f0874c3336fd827fb7dd42e1f2592d83a01c174237ed49ca74df7133"
+    },
+    "source-commit-applicability.json": {
+      "path": "source-commit-applicability.json",
+      "bytes": 38398,
+      "sha256": "560a1baaf1548321fdf9925d4c1a6628c3fa48b45562aa09d3cfe09efdd729ae"
+    },
+    "publication-audit-input-impact.json": {
+      "path": "publication-audit-input-impact.json",
+      "bytes": 10717,
+      "sha256": "45e74b7bfb52bcbdc56726d5e144f9d91eaf54a46d558e9a979f530dad5a6924"
+    },
+    "inspection-command.json": {
+      "path": "inspection-command.json",
+      "bytes": 344,
+      "sha256": "a3c3fdf4836071f220ec30da57a98e8b454c306165b8d286e38e0f09efc865ad"
+    },
+    "inspect_shipping_reuse.py": {
+      "path": "inspect_shipping_reuse.py",
+      "bytes": 7001,
+      "sha256": "a9c0d7e7599c804dee799d74791e16a536d641880e73f590bee9bab03459a831"
+    },
+    "miniapp-documentation-snippets.json": {
+      "path": "raw/app-split-evidence/miniapp-documentation-snippets.json",
+      "bytes": 20066,
+      "sha256": "cb8c6c97cbae270b65d0dc4aacf364a628da07982ccc6f75ca3f56b9f7e245be"
+    },
+    "acceptance.json": {
+      "path": "raw/app-split-evidence/acceptance.json",
+      "bytes": 2623,
+      "sha256": "8444c947b647b4b54e7b7ba7a4370d7cea5c63ab80196004736efce5a8cfc743"
+    }
+  }
+}

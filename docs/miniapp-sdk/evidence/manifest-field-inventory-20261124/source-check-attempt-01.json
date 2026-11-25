@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "node",
+    "--test",
+    "Scripts/Audit/Tests/manifest-contracts.test.mjs"
+  ],
+  "exitCode": 0,
+  "elapsedSeconds": 0.26274214405566454,
+  "node": "v24.22.0",
+  "logSHA256": "a8abf75c7835b40e76eb8a58c8e2a36f37c82f6d2f0d57451ba8480c43535c6f",
+  "scope": "One source mapping and drift check only; no native/runtime execution or combined inventory regeneration."
+}

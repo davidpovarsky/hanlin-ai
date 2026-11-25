@@ -533,6 +533,7 @@ public enum HanlinSwiftUIOutputGenerator {
             let name = upperCamel(view.symbol)
             let values = signature.parameters.filter { !$0.isViewBuilder }
             let builders = signature.parameters.filter(\.isViewBuilder)
+            let usesChildrenFallback = builders.count > 1 && builders.contains { $0.localName == "content" }
             lines.append("export interface \(name)Props extends CommonViewModifierProps {")
             for parameter in values {
                 let optional = parameter.defaultValue == nil ? "" : "?"
@@ -541,13 +542,21 @@ public enum HanlinSwiftUIOutputGenerator {
             if builders.count == 1 { lines.append("  children?: React.ReactNode;") }
             if builders.count > 1 {
                 for builder in builders { lines.append("  \(builder.localName)?: React.ReactNode;") }
+                if usesChildrenFallback {
+                    lines.append("  /** Used when content is omitted or undefined; explicit content, including null, wins. */")
+                }
                 lines.append("  children?: React.ReactNode;")
             }
             lines.append("}")
             lines.append("")
             lines.append("const Native\(name) = requireNativeView<\(name)Props>('HanlinGeneratedExpoUI', 'HanlinGenerated\(name)View');")
             lines.append("")
-            let slotBindings = builders.count > 1 ? ", " + builders.map(\.localName).joined(separator: ", ") : ""
+            let builderBindings = builders.map { builder in
+                usesChildrenFallback && builder.localName == "content" ? "content = children" : builder.localName
+            }
+            let slotBindings = builders.count > 1
+                ? ", " + ((usesChildrenFallback ? ["children"] : []) + builderBindings).joined(separator: ", ")
+                : ""
             lines.append("export function \(name)({ modifiers\(slotBindings), ...props }: \(name)Props) {")
             lines.append("  return (")
             lines.append("    <Native\(name)")

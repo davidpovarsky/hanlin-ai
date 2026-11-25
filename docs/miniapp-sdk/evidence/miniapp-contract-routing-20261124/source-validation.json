@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "status": "SOURCE_CHECKS_PASS",
+  "baseSourceSHA": "58306a098611d3691904f2a37a61b72634f48c6a",
+  "caller": {
+    "path": ".github/workflows/validate-app-split.yml",
+    "sha256": "6ca46214a3c7175353eb503062ce8e58f12f0bc833047c871cb9078ff0ec53c3"
+  },
+  "callee": {
+    "path": ".github/workflows/validate-scripting-runtime.yml",
+    "sha256": "395ea6430af04b1ca8c66386af45073a1b0abc4d0c6ed20a1c46b30854fe0016",
+    "unchanged": true,
+    "reference": "local ./ path at caller commit"
+  },
+  "workflowDispatchInputCount": 10,
+  "unchangedExistingModeCombinations": 160,
+  "newModeTruthTable": [
+    {
+      "paired": false,
+      "registration": false,
+      "audit": false,
+      "miniapps": true,
+      "contracts": false
+    },
+    {
+      "paired": false,
+      "registration": false,
+      "audit": true,
+      "miniapps": false,
+      "contracts": false
+    },
+    {
+      "paired": false,
+      "registration": true,
+      "audit": false,
+      "miniapps": false,
+      "contracts": false
+    },
+    {
+      "paired": false,
+      "registration": true,
+      "audit": true,
+      "miniapps": false,
+      "contracts": false
+    },
+    {
+      "paired": true,
+      "registration": false,
+      "audit": false,
+      "miniapps": false,
+      "contracts": true
+    },
+    {
+      "paired": true,
+      "registration": false,
+      "audit": true,
+      "miniapps": false,
+      "contracts": false
+    },
+    {
+      "paired": true,
+      "registration": true,
+      "audit": false,
+      "miniapps": false,
+      "contracts": false
+    },
+    {
+      "paired": true,
+      "registration": true,
+      "audit": true,
+      "miniapps": false,
+      "contracts": false
+    }
+  ],
+  "scopeGroupSuffixes": {
+    "miniapp_authoring": "paired-miniapp_authoring",
+    "miniapp_contracts": "paired-miniapp_contracts"
+  },
+  "concurrencyAndCancelInProgressUnchanged": true,
+  "permissionsUnchanged": true,
+  "existingMainJobBodyByteIdentical": true,
+  "registrationAndAuditJobsUnchanged": true,
+  "secretsConvention": "inherit, matching existing focused-scripting-package-tests caller",
+  "selectedMethods": [
+    "expoMainMustMatchTheInspectedForegroundEntrypoint",
+    "nativeScriptPreparedEntrypointIsAlwaysTheCanonicalBundle",
+    "nativeScriptSwiftUIContract",
+    "nativeScriptCoreContract",
+    "expoSwiftUIContract",
+    "expoMultiExposureMatrix",
+    "malformedPreparedEntrypointsFailWithStableDiagnostic",
+    "unavailableModernNativePluginsFailBeforeImport"
+  ],
+  "expectedExecutedMethods": 8,
+  "checks": "YAML parsing with BaseLoader, exact source/body/input comparisons and evaluation of the actual job/group expressions. No runtime tests.",
+  "notEstablished": [
+    "GitHub service acceptance/dispatch",
+    "native compilation or method execution",
+    "app UI acceptance"
+  ],
+  "rootPreflightReceiptSHA256": "dda42df2663fa0b3710474f4f30306c0b18ba4b0c1892af1d7be90833a382444"
+}

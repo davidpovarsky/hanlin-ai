@@ -385,8 +385,9 @@ private struct PresentationStateSync: ViewModifier {
                 presented = value
             }
             .onChange(of: presented) { _, value in
-                guard value != props.isPresented else { return }
-                props.onPresentedChange(["value": value])
+                // Controlled prop echoes must not emit a value-change event,
+                // but every transition to dismissed still has one onDismiss.
+                if value != props.isPresented { props.onPresentedChange(["value": value]) }
                 if !value { props.onDismiss([:]) }
             }
     }

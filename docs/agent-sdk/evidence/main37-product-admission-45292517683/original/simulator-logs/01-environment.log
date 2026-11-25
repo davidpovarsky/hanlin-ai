@@ -1,0 +1,41 @@
++ sw_vers
+ProductName:		macOS
+ProductVersion:		27.0.1
+BuildVersion:		26A434
++ xcode-select -p
+/Applications/Xcode_27.2.app/Contents/Developer
++ xcodebuild -version
+Xcode 27.2
+Build version 27B52
++ xcodebuild -showsdks
+DriverKit SDKs:
+	DriverKit 27.2                	-sdk driverkit27.2
+
+iOS SDKs:
+	iOS 27.2                      	-sdk iphoneos27.2
+
+iOS Simulator SDKs:
+	Simulator - iOS 27.2          	-sdk iphonesimulator27.2
+
+macOS SDKs:
+	macOS 27.2                    	-sdk macosx27.2
+	macOS 27.2                    	-sdk macosx27.2
+
+tvOS SDKs:
+	tvOS 27.2                     	-sdk appletvos27.2
+
+tvOS Simulator SDKs:
+	Simulator - tvOS 27.2         	-sdk appletvsimulator27.2
+
+visionOS SDKs:
+	visionOS 27.2                 	-sdk xros27.2
+
+visionOS Simulator SDKs:
+	Simulator - visionOS 27.2     	-sdk xrsimulator27.2
+
+watchOS SDKs:
+	watchOS 27.2                  	-sdk watchos27.2
+
+watchOS Simulator SDKs:
+	Simulator - watchOS 27.2      	-sdk watchsimulator27.2
+

@@ -23,8 +23,17 @@ struct HanlinMiniAppRequestLifetimeTests {
     @Test func explicitlyRequestedDeadlinesAndSizeBudgetsAreStillEnforced() async throws {
         #expect(HanlinMiniAppRequestBroker.Limits().timeout == .seconds(15))
         #expect(HanlinMiniAppRequestBroker.Limits.personalHost.timeout == nil)
-        #expect(HanlinMiniAppRequestBroker.Limits.personalHost.maximumPayloadBytes == 1_048_576)
-        let request = try fixture()
+        #expect(HanlinMiniAppRequestBroker.Limits.personalHost.maximumPayloadBytes == .max)
+        #expect(HanlinMiniAppRequestBroker.Limits.personalHost.maximumResponseBytes == .max)
+        let payload = HanlinValue.string(String(repeating: "x", count: 1_048_577))
+        let response = HanlinValue.string(String(repeating: "y", count: 4_194_305))
+        let request = try fixture(payload: payload)
+        let personal = HanlinMiniAppRequestBroker(limits: .personalHost)
+        await personal.register(target: request.target, action: request.action, capability: request.capability) { incoming in
+            #expect(incoming.payload == payload)
+            return response
+        }
+        #expect(try await personal.request(request).value == response)
         let timed = HanlinMiniAppRequestBroker(limits: .init(timeout: .milliseconds(10)))
         await timed.register(target: request.target, action: request.action, capability: request.capability) { _ in
             try await Task.sleep(for: .seconds(1)); return .null
@@ -32,6 +41,9 @@ struct HanlinMiniAppRequestLifetimeTests {
         await #expect(throws: HanlinMiniAppRequestError.timedOut) { _ = try await timed.request(request) }
         let bounded = HanlinMiniAppRequestBroker(limits: .init(maximumPayloadBytes: 1, timeout: nil))
         await #expect(throws: HanlinMiniAppRequestError.payloadTooLarge) { _ = try await bounded.request(request) }
+        let boundedResponse = HanlinMiniAppRequestBroker(limits: .init(maximumResponseBytes: 1, timeout: nil))
+        await boundedResponse.register(target: request.target, action: request.action, capability: request.capability) { _ in response }
+        await #expect(throws: HanlinMiniAppRequestError.responseTooLarge) { _ = try await boundedResponse.request(request) }
     }
 
     @Test func uncappedRequestCancellationDrainsItsRealHandlerBeforeReportingCancelled() async throws {
@@ -61,8 +73,8 @@ struct HanlinMiniAppRequestLifetimeTests {
         func drain() { drained = true }
     }
 
-    private func fixture() throws -> HanlinMiniAppRequest {
+    private func fixture(payload: HanlinValue = .string("owned")) throws -> HanlinMiniAppRequest {
         .init(caller: try .init(validating: "lifetime.caller"), target: try .init(validating: "lifetime.target"),
-              action: try .init(validating: "share.value"), capability: try .init(validating: "inter-app.share"), payload: .string("owned"))
+              action: try .init(validating: "share.value"), capability: try .init(validating: "inter-app.share"), payload: payload)
     }
 }

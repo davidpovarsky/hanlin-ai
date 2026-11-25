@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 2658,
+      "sha256": "60d64a7c0f1fad1029cb938489046f40559b71634c32f5194292cbfcb327fb5d"
+    },
+    {
+      "path": "check_routing_source.py",
+      "bytes": 6262,
+      "sha256": "b5c6ca656615968b780f6bcc9bbef06a000822d7158ee54ffd44db93d62b8676"
+    },
+    {
+      "path": "independent-review.json",
+      "bytes": 920,
+      "sha256": "5a366eb369cae5c8d75b88f3ef6fc84a497316fb2e64d3056e2e642ae9d388bb"
+    },
+    {
+      "path": "root-preflight.json",
+      "bytes": 1934,
+      "sha256": "dda42df2663fa0b3710474f4f30306c0b18ba4b0c1892af1d7be90833a382444"
+    },
+    {
+      "path": "source-validation.json",
+      "bytes": 2916,
+      "sha256": "daa3c2a94c9cacd2655d5091d2eb2da018001eab42780c4fc940f69e36d38635"
+    },
+    {
+      "path": "source-validation.txt",
+      "bytes": 340,
+      "sha256": "e63fa3ca93d5f7b093427c1976eefc3378ed8d03555691e4e4e0a7ae280ea48c"
+    }
+  ]
+}

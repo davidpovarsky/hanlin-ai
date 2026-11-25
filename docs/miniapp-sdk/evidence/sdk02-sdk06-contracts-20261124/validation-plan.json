@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "sourceSHA": "4ea670e120a3217423bc73db68dab514c78079de",
+  "scope": "Only original ScriptWidget permission-contract positive/negative cases; source analysis of remaining SDK02/SDK06 gaps. No application acceptance claim.",
+  "selectedExistingTests": [
+    "genuine action references, legacy controls and nullable optional fields validate",
+    "original semantic and JSON shape errors include precise manifest locations"
+  ],
+  "whyExecute": "Previous same-source receipt used compiler6.0.2; this directly checks current exported SDK compiler6.0.3 and exact packaged validator/schema.",
+  "currentSDK": {
+    "artifactRunID": 45335292541,
+    "root": "/dev/shm/hanlin-sdk-only-kit-45335292541/AI_HLY/Downstream/RuntimeCore/Node/Host/MiniAppSDK",
+    "manifestSHA256": "fa1e737ec63e640175cdb5c9dad51903cd86d50ae7b340ba5b8ec1ff4e408d85",
+    "inputFingerprint": "4028f9fc58e1a9a95937ed7b4eb223c3caa2a94714bbbdaae4ddc7b0aa6de795",
+    "compilerPath": "/dev/shm/hanlin-sdk-only-kit-45335292541/AI_HLY/Downstream/RuntimeCore/Node/Host/MiniAppSDK/expo/node_modules/typescript/lib/typescript.js",
+    "compilerModuleSHA256": "d3f3cd2b04b7f466f4484df921b744223f7bd1f3e353ec9110bdf52695b983d5",
+    "declaredTypeScript": {
+      "packageName": "@typescript/typescript6",
+      "packageVersion": "6.0.2",
+      "compilerVersion": "6.0.3"
+    },
+    "observedIdentity": {
+      "compilerVersion": "6.0.3",
+      "node": "v24.22.0"
+    },
+    "packagedSourceComparison": [
+      {
+        "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
+        "packagedPath": "/dev/shm/hanlin-sdk-only-kit-45335292541/AI_HLY/Downstream/RuntimeCore/Node/Host/MiniAppSDK/scriptwidget/widget-manifest.schema.json",
+        "sha256": "4deb4b2a1071ed0557ae6924a4f4ab3a5d57e467eb8796c4e6febb629ddde022",
+        "sameBytes": true
+      },
+      {
+        "path": "Scripts/MiniApps/scriptwidget/manifest-validation.mjs",
+        "packagedPath": "/dev/shm/hanlin-sdk-only-kit-45335292541/AI_HLY/Downstream/RuntimeCore/Node/Host/MiniAppSDK/scriptwidget/manifest-validation.mjs",
+        "sha256": "326176eac507dc298b91065d2ce93de15869ab801bd02c31edfc0a474d9cd7c5",
+        "sameBytes": true
+      }
+    ]
+  },
+  "noReruns": [
+    "12 archive cases",
+    "completed module proof",
+    "13 Host authoring cases",
+    "native gate38"
+  ],
+  "noChanges": [
+    "production files",
+    "root worktree",
+    "Asana",
+    "GitHub",
+    "shared SDK kit",
+    "other author workspace"
+  ]
+}

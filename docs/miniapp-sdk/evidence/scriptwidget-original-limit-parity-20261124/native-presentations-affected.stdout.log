@@ -1,0 +1,12 @@
+✔ original ScriptWidget compiler bundles typed local modules and action parameters (80.555017ms)
+✔ module closure does not resolve framework imports into the frozen Scripting engine (10.61658ms)
+✔ ordinary original ScriptWidget top-level async source remains executable (10.005697ms)
+✔ ported attachment executes grouped search, version expansion, full text, pagination and replacement (546.772464ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 897.677376

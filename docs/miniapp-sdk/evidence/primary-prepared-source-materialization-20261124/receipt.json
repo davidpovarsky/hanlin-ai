@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-24T20:53:23.748500+00:00",
+  "status": "EXACT_PREPARED_INPUTS_MATERIALIZED_NATIVE_REVALIDATION_PENDING",
+  "baseBeforeApplication": "4e01722f2b7e0a906d13d6151a29c495bb492e0b",
+  "executionSourceOfPayload": "340018ddc9ea2395ffabedbf179369b5bdb791af",
+  "SDKReceiptSHA256": "53de9094b708b6b338f23c033982bc972b37babe071d47689a0dbfe0752d1e1f",
+  "planPath": "docs/miniapp-sdk/evidence/primary-sdk-preparation-20261124/materialization-plan.json",
+  "planSHA256": "b46090238a2e888deb8613c816d1550a3de43e3c5a8d905d6ca6779320e6f1dc",
+  "ledgerSHA256": "b4381014062cca249740e1ff83c6d78d07680c2b27b51ac0569f2ea96e1a20ff",
+  "canonicalContentBinding": {
+    "algorithm": "SHA256 over UTF-8 JSON of rows in ledger order with keys sorted, separators comma/colon, and fields path,beforeSHA256,afterSHA256,afterBytes,payloadRelativePath",
+    "sha256": "69f9f9702ba336b8504a19ed80c17922ec0585767b2e7fb8d76508bf7aa8cfbf"
+  },
+  "paths": 188,
+  "payloadBytes": 17349363,
+  "contentChanges": 187,
+  "modeChanges": [
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/css-tree/lib/data.js",
+      "before": "100644",
+      "after": "100755",
+      "authority": "raw/native-mode-observation.json dated2026-11-24T20:42:40.292902Z; agrees with transferred payload"
+    }
+  ],
+  "allBeforeContentAndIndexModesVerifiedBeforeWriting": true,
+  "allAfterContentSizesAndModesVerified": true,
+  "protectedInstructionsPreservedSHA256": "f27d4554d8dda88996d1511b361e8b8e5520cb08e8198c5fbc7816b1fbc9aa9f",
+  "ExpoPreparationCorrectionSHA256": "072c3432d299e4081d11d052b4bfe74d195e5775ace19362aaaea25652137dbb",
+  "nativeBoundary": {
+    "preparedSDK": "PASS on source340018 with these generated inputs",
+    "MiniAppsBuild": "FAILED before module-map correction",
+    "AIBuild": "NOT_RUN",
+    "all52": "NOT_RUN",
+    "correctedNativeExecution": "PENDING"
+  },
+  "validationReuse": "Reused authenticated immutable prepared bytes, original documentation reports and focused correction proof. No generator/compiler/test rerun for materialization."
+}

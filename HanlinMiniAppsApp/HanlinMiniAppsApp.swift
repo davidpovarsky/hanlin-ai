@@ -1,5 +1,8 @@
 import AppIntents
+import ExpoWidgets
+import HanlinTranslationUI
 import HanlinScriptExtensions
+import HanlinWidgetUI
 import SwiftUI
 import HanlinProductSplit
 import HanlinMiniAppsBridge
@@ -99,10 +102,23 @@ struct HanlinMiniAppsWindow: View {
             }
             .task(id: bootstrap.phase == .ready ? incomingURL : nil) {
                 guard bootstrap.phase == .ready, let url = incomingURL else { return }
-                if url.scheme?.lowercased() == "hanlinminiapps",
-                   url.host?.lowercased() == "x-callback-url",
-                   url.path == "/run",
-                   let requestID = MiniAppBridgeStore.requestID(from: url) {
+                if let transferID = MiniAppAuthoringTransfer.reference(in: url, purpose: .install) {
+                    do {
+                        try await MiniAppAuthoringDelivery.receiveImport(transferID, platform: .shared)
+                    } catch {
+                        HanlinScriptingPlatform.shared.reportImportFailure(error)
+                        if let store = try? MiniAppAuthoringDelivery.store() {
+                            try? store.record(.init(transferID: transferID, status: .failed,
+                                message: error.localizedDescription))
+                        }
+                    }
+                    if !HanlinScriptingPlatform.shared.hasImportPresentation {
+                        showsImport = true
+                    }
+                } else if url.scheme?.lowercased() == "hanlinminiapps",
+                          url.host?.lowercased() == "x-callback-url",
+                          url.path == "/run",
+                          let requestID = MiniAppBridgeStore.requestID(from: url) {
                     do {
                         let mailbox = try MiniAppBridgeStore()
                         guard let request = try mailbox.request(id: requestID) else {
@@ -176,13 +192,19 @@ struct HanlinMiniAppsWindow: View {
 
 /// Constructed only after the real storage preparation succeeded.
 private struct HanlinMiniAppsReadyRoot: View {
-    @State private var provider = HanlinMiniAppsProvider(platform: HanlinScriptingPlatform())
+    @State private var provider = HanlinMiniAppsProvider(platform: .shared)
     @Environment(\.scenePhase) private var scenePhase
 
     var body: some View {
         MiniAppsLibrary(provider: provider)
                 .task {
                     await AppRuntimeCore.shared.handleForegroundIfLaunched()
+                }
+                .fullScreenCover(isPresented: Binding(
+                    get: { provider.platform.presentsForegroundAction },
+                    set: { if !$0 { provider.platform.dismissActiveApplication() } }
+                )) {
+                    ScriptingApplicationContainerView(platform: provider.platform)
                 }
                 .onChange(of: scenePhase) { _, phase in
                     if phase == .active {
@@ -195,6 +217,6 @@ private struct HanlinMiniAppsReadyRoot: View {
 /// Index the original shared actions in the foreground app that executes them.
 struct HanlinMiniAppsIntents: AppIntentsPackage {
     static var includedPackages: [any AppIntentsPackage.Type] {
-        [HanlinScriptExtensionIntentsPackage.self]
+        [HanlinWidgetIntentsPackage.self, HanlinNativePresentationIntentsPackage.self, HanlinExpoWidgetsIntentsPackage.self]
     }
 }

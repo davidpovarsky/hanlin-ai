@@ -1,0 +1,18 @@
+{
+  "priorCommit": "2c167de391896001963e0a44b4cdea1ddd6fc5a4",
+  "priorReceipt": "docs/miniapp-sdk/evidence/expo-widget-props-value-20261124/receipt.json",
+  "path": "/Users/m1/builds/hanlin-ai-ce2eceeb-expo-widget-props-20261124",
+  "files": [
+    {
+      "source": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinValue.swift",
+      "sha256": "cd266a8b820ae8673fd576697bc30d77ba5dd563feaa670f7e5b2f18319ff3d8",
+      "previousMacFile": "HanlinValue.swift"
+    },
+    {
+      "source": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinContractError.swift",
+      "sha256": "ad59a698345d7c218b3787c721b93fc6104ae462f7f11000d9204b1dd03e8518",
+      "previousMacFile": "HanlinContractError.swift"
+    }
+  ],
+  "toolchain": "Same observed Xcode27.0/27A266a and Swift6.4.0.34.1; original module Swift6 compiler command retained in prior receipt."
+}

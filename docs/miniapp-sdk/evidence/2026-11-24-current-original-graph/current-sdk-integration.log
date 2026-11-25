@@ -1,0 +1,13 @@
+✔ Expo React types and original ScriptWidget JSX validate in isolated actual SDK environments (7450.81357ms)
+✔ a native entry beside the primary project config keeps its own renderer environment (4751.918591ms)
+✔ an invalid native JSX property blocks packaging and reports the original native source location (5527.760994ms)
+✔ native layout syntax, missing source and unsupported renderer fail with actionable original paths (3127.154155ms)
+✔ an original Metro configuration error is reported without silently substituting another transformer (5605.343286ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 26803.01022

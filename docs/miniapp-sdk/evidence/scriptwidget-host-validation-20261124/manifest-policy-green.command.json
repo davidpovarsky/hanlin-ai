@@ -1,0 +1,25 @@
+{
+  "cwd": "/mnt/development/projects/worktrees/hanlin-scriptwidget-host-validation-20261124",
+  "argv": [
+    "/usr/local/bin/node",
+    "--test",
+    "--test-name-pattern",
+    "manifest declarations/schema match|installed network declarations preserve|changed original semantic rules",
+    "Scripts/MiniApps/Tests/scriptwidget-manifest.test.mjs"
+  ],
+  "environment": {
+    "HANLIN_AUTHORING_TYPESCRIPT": "file:///dev/shm/hanlin-sdk-only-kit-45335292541/AI_HLY/Downstream/RuntimeCore/Node/Host/MiniAppSDK/expo/node_modules/typescript/lib/typescript.js"
+  },
+  "exitCode": 0,
+  "durationSeconds": 0.4806,
+  "outputs": {
+    "manifest-policy-green.stdout.txt": {
+      "bytes": 423,
+      "sha256": "1e5ec8bb162915567f5d17010aa8d82c817a08e5f0a2eba526651c2743452e79"
+    },
+    "manifest-policy-green.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  }
+}

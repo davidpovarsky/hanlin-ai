@@ -20,6 +20,7 @@ public struct HanlinApplicationScene: Scene {
         WindowGroup {
             HanlinAIReceivingWindowRoot(onDisappear: { windowID in
                 HanlinAppSplitOriginCoordinator.shared.revokeReceivingWindow(windowID)
+                MiniAppRepairCoordinator.shared.release(window: windowID)
             }) { receivingWindowID in
             MainTabView(deepLinkTarget: $deepLinkTarget)
                 .modelContainer(context.modelContainer)
@@ -31,7 +32,14 @@ public struct HanlinApplicationScene: Scene {
                     Task { await context.handleScenePhase(newPhase) }
                 }
                 .onOpenURL { url in
-                    if url.scheme?.lowercased() == "chavrusachat", url.host?.lowercased() == "split" {
+                    if url.scheme == "chavrusachat", url.host == "miniapp-authoring" {
+                        let repairs = MiniAppRepairCoordinator.shared
+                        if let claim = repairs.claim(url, window: receivingWindowID) {
+                            Task { @MainActor in
+                                await repairs.receive(claim, window: receivingWindowID, context: context)
+                            }
+                        }
+                    } else if url.scheme?.lowercased() == "chavrusachat", url.host?.lowercased() == "split" {
                         let receiver = HanlinAppSplitOriginCoordinator.shared
                         if let claimID = receiver.claimReturn(url, receivingWindowID: receivingWindowID) {
                             Task { @MainActor in

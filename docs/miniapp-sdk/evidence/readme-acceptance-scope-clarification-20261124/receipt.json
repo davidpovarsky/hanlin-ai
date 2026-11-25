@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "status": "PROSE_CORRECTION_READY_SOURCE_REVIEW_ONLY",
+  "recordedAtUTC": "2026-11-24T14:31:16.532830+00:00",
+  "base": "33f28ccb7d58da5ad5bc5e515665ea43b51af3ea",
+  "activeSourcePreserved": "e2227ccdfe0c3111d1c17ef2b4bb1653ac24bb9c",
+  "activeRunID": 45412939674,
+  "sourceScope": [
+    "docs/miniapp-sdk/README.md"
+  ],
+  "change": "Clarify the still-valid 42-case miniapp_authoring subset and distinct 52-case miniapp_complete scope without asserting an executed pass.",
+  "readme": {
+    "path": "docs/miniapp-sdk/README.md",
+    "beforeSHA256": "4427f49e5b729658d95d98eb6cdbb84ea08f2e4d2e33d7b7c480192914346637",
+    "afterSHA256": "90068db0d87718cc9f995f9d45c1e2e8a7bd670aa8b8f3b324f0bf4cfc591d95",
+    "beforeBytes": 15776,
+    "afterBytes": 15957,
+    "sameBeforeAtActiveSourceAndBase": true,
+    "changedLines": [
+      109
+    ],
+    "allOtherLinesByteIdentical": true,
+    "inventoriedDescriptorBodySHA256": "8400a12ff5af95866661765d5ee6d0af938c157b0567e0f3ff703c5643fdbb7d",
+    "descriptorBodyUnchanged": true
+  },
+  "scopeCounts": {
+    "miniapp_authoring": {
+      "AI": 25,
+      "MiniApps": 17,
+      "total": 42
+    },
+    "miniapp_sdk04StandaloneSelectors": 9,
+    "overlapWithAuthoring": [
+      "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents"
+    ],
+    "miniapp_complete": {
+      "AI": 27,
+      "MiniApps": 25,
+      "total": 52
+    }
+  },
+  "consumerImpact": "consumer-impact.json",
+  "consumerImpactSHA256": "2f88c98702cd449e907b1d3188397f627d69fef8e1672fc96a7da127b7d95f31",
+  "diffSHA256": "cfecb98d22393a7c729ad54e09c774beef878e09bd7a49a8c132803b59680cff",
+  "validation": "Read-only source/byte comparisons and git whitespace check only; no generators/tests/builds/compiler. Existing implementation, fixtures, snippets and workflows untouched.",
+  "pendingProvenance": "The tracked currentScope README hash is intentionally left for root's authorized reachability refresh/check after integration. Source inventory is unaffected.",
+  "reuseBoundary": "Keep actual execution source/SDK attribution; retain unchanged code/fixture/type evidence without claiming new native passes or identical updated shipping metadata.",
+  "sdk05": "Remains completed; no additional unmet DoD identified.",
+  "diffArtifact": {
+    "path": "readme.diff.gz",
+    "compression": "gzip",
+    "originalBytes": 3241,
+    "originalSHA256": "cfecb98d22393a7c729ad54e09c774beef878e09bd7a49a8c132803b59680cff",
+    "compressedSHA256": "202a0f3de38a34b1b0a045362966233cec3ba0b6466b3eea4665dc91d4e62ae5"
+  },
+  "evidenceFormatting": "evidence-formatting.json retains the raw whitespace-check observation and lossless diff compression correction; README bytes unchanged."
+}

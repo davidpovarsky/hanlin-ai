@@ -1,0 +1,47 @@
+{
+  "source": "ade2f626e37102abde83050c94d524d19e0726bb",
+  "runId": 45265065184,
+  "tests": "342 NOT_RUN pending original results",
+  "files": [
+    {
+      "path": "request.json",
+      "size": 2088,
+      "sha256": "a35d7db74a12ccfffc049c126aff9a554dd641f4bdb8f4561afa03236f70d7ef"
+    },
+    {
+      "path": "plan.json",
+      "size": 299076,
+      "sha256": "f0c426e67349d8c3dd287a47fb60f6209ca7f2f4dbe1375a5bc951a515a02d34"
+    },
+    {
+      "path": "admission.json",
+      "size": 2514,
+      "sha256": "59ae2c5f8d9555bbd574cb295d4961b226ba115fc53c4c842d11595c7a18a2dc"
+    },
+    {
+      "path": "dispatch-intent.json",
+      "size": 2334,
+      "sha256": "837a51a33fce3da85e7ce976c92c1360e3dd3e515cebc7a28c4470ed3bd6146e"
+    },
+    {
+      "path": "dispatch-ack.json",
+      "size": 174,
+      "sha256": "5b3aa933855714ea40190fdeaef68153c0d5694bc76935b40bc1f963a69505fe"
+    },
+    {
+      "path": "run.json",
+      "size": 14562,
+      "sha256": "57505359e013c4f8d1bb116bd25746756c1f134ea23503d55f636e081d7ea07b"
+    },
+    {
+      "path": "inventory-source-rebind.json",
+      "size": 8990,
+      "sha256": "0b314495d05870a40e8e9df65a96156c9ce4f26c398de39ac958e70f6b1516c0"
+    },
+    {
+      "path": "watch-start.json",
+      "size": 363,
+      "sha256": "9b35a6cfd1a2e190110fef0f8e3f43b5c0fa6fb10b4e8558dd55e575b10c9582"
+    }
+  ]
+}

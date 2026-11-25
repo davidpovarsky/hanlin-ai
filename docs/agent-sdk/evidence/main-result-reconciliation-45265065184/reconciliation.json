@@ -1,0 +1,2368 @@
+{
+  "run": 45265065184,
+  "attempt": 1,
+  "source": "ade2f626e37102abde83050c94d524d19e0726bb",
+  "status": "FAIL",
+  "counts": {
+    "PASS": 323,
+    "FAIL": 7,
+    "NOT_RUN": 12
+  },
+  "expectedMethodDefinitions": 310,
+  "executedMethodDefinitions": 298,
+  "uniqueExecutedInvocations": 330,
+  "expectedInvocations": 342,
+  "fullArgumentResolutions": [
+    {
+      "method": "NativeComposerLineSizingTests/layoutDuringNativeEditPreservesCharactersAndCursor(_:)",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/NativeComposerLineSizingTests/layoutDuringNativeEditPreservesCharactersAndCursor(_:)?args=776e902447d68c1f18df72fe4eedba1363511ff53451722f9150e950e929e873",
+      "treeDisplay": "\"Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessi",
+      "originalFullDebugDescription": "\"Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text Wrapped accessible draft text \"",
+      "originalFullValueUTF8SHA256": "cde765318f397a8fd92ea49d60fd621afc1c6ba4faefa9fe2fecf0ff7e38a842",
+      "originalFullValueCharacters": 1050,
+      "sourceExpression": "String(repeating: \"Wrapped accessible draft text \", count: 35)"
+    },
+    {
+      "method": "NativeComposerLineSizingTests/retainedRenderSnapshotPreservesNativeDraftAndCursor(_:)",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/NativeComposerLineSizingTests/retainedRenderSnapshotPreservesNativeDraftAndCursor(_:)?args=b15d262025720a7f367c544faffd6be7aa871d4befc09776a23d8f63cd5253a1",
+      "treeDisplay": "\"שלום 👋🏽 טיוטה שורה שנייה\"",
+      "originalFullDebugDescription": "\"שלום 👋🏽 טיוטה\\nשורה שנייה\"",
+      "originalFullValueUTF8SHA256": "d81ebcca73eb3acbd8a3dd9b204ba66644346cc1f936e52a98e5016f7364aaa6",
+      "originalFullValueCharacters": 24,
+      "sourceExpression": "\"שלום 👋🏽 טיוטה\\nשורה שנייה\""
+    }
+  ],
+  "unexpectedOriginalSystemFailure": "The test runner encountered an error: missing AI_Hanlin app path",
+  "sourceQualification": {
+    "sourceSHA": "7523f45cf8ea180a8e30f511ff0fbd3bb5ccae6d",
+    "test_source_equivalence": [
+      {
+        "path": "AI_HLYTests/A2UITests.swift",
+        "equal": true,
+        "sha256": "c66ab3fbd7e6087208336737c8ea6dcfa28c26c3215cdfc9ffe0d00fb6774f89"
+      },
+      {
+        "path": "AI_HLYTests/AgentActivityHeaderPhaseTests.swift",
+        "equal": true,
+        "sha256": "b05aea3e3b2a17d0f45872f7a30475713968b6fd9255fae3907cb231bd143bf7"
+      },
+      {
+        "path": "AI_HLYTests/AgentRoundPresentationTests.swift",
+        "equal": true,
+        "sha256": "9d10254f721147bd29b862ed7999cff0a4a19a1283cf23fc377d91542b151ff9"
+      },
+      {
+        "path": "AI_HLYTests/CalendarToolTests.swift",
+        "equal": true,
+        "sha256": "10e2b95d046e55089073f9095822ee8df8cee977b9f524648914889d0cb106da"
+      },
+      {
+        "path": "AI_HLYTests/ChatAutoFollowTests.swift",
+        "equal": true,
+        "sha256": "c36ac17d0ac2503376ac757cfdaf1b5e4022cc473d8aa8ecc1a5a1968b37b03a"
+      },
+      {
+        "path": "AI_HLYTests/ChatCodeFenceTests.swift",
+        "equal": true,
+        "sha256": "0a441d9eb856ee5b7b5c87dd09872d280b81b842801a12367ce6ec4f75ac8fce"
+      },
+      {
+        "path": "AI_HLYTests/ChatPresentationTests.swift",
+        "equal": true,
+        "sha256": "6540c94c86d790efe9d0394f8b68596cd1687e0c04d7efde6f16003e6a7bd5a6"
+      },
+      {
+        "path": "AI_HLYTests/ChatScrollViewHandleTests.swift",
+        "equal": true,
+        "sha256": "ec51b892bd3cd3d8db5bb1fb2480a687159916d871a2918668f49efa7e8b306f"
+      },
+      {
+        "path": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+        "equal": true,
+        "sha256": "9ee86ec88ce723c8257cef8a26ff46865408ec3b50568314875a5608c7ddfc0a"
+      },
+      {
+        "path": "AI_HLYTests/HanlinApplicationEmbeddingTests.swift",
+        "equal": false,
+        "sha256": "d647361dbef8f576f18e13fc852df7f61b7d06a7f5757e5b29bfd503aafc4463"
+      },
+      {
+        "path": "AI_HLYTests/HanlinApplicationSystemIntegrationTests.swift",
+        "equal": true,
+        "sha256": "617d5472d978fde04ca74400267cb1bb92244b84fbe224545896bddb26bfa802"
+      },
+      {
+        "path": "AI_HLYTests/HanlinCapabilityObservationTests.swift",
+        "equal": true,
+        "sha256": "207b4bb7e2821ff0b3e563dde4131922fceb25c2d6b4142084e1461586a95ac4"
+      },
+      {
+        "path": "AI_HLYTests/HanlinConversationProjectionTests.swift",
+        "equal": true,
+        "sha256": "5689f0ed337357edaabe99cb7fa1ea0c9d7d9792614a39c5dd6ff56e8f5d2da6"
+      },
+      {
+        "path": "AI_HLYTests/HanlinMCPEmbeddingTests.swift",
+        "equal": true,
+        "sha256": "2774f4a60882be0a8eec456f8e6e75ede049981c58f412931311c1db509f6592"
+      },
+      {
+        "path": "AI_HLYTests/HanlinNativeWidgetRendererTests.swift",
+        "equal": true,
+        "sha256": "c43cd512bb45c120fd06f2903b80c1092220efd1ed85045b9513c88a13c055f6"
+      },
+      {
+        "path": "AI_HLYTests/HanlinOrganizerDockParityTests.swift",
+        "equal": true,
+        "sha256": "0e7366d161edcb410ab9707c408540bf5a4d22eb4c7710d09d2adf06530a6d16"
+      },
+      {
+        "path": "AI_HLYTests/HanlinRemoteMediaURLTests.swift",
+        "equal": true,
+        "sha256": "8d529ef1da665e792f9e56b92f746659eb26be6c790765c6f233b81016247059"
+      },
+      {
+        "path": "AI_HLYTests/NativeComposerLineSizingTests.swift",
+        "equal": true,
+        "sha256": "6eb5c1a7f623dac590311d3040c6c0f81cdbb6baec98fdd943d6617151d0f248"
+      },
+      {
+        "path": "AI_HLYTests/RuntimeAutonomyV3Tests.swift",
+        "equal": true,
+        "sha256": "b72a5d8ec0c51144e864776a2e1d4537cbfd0e28e27074b47280af5b108fba7d"
+      },
+      {
+        "path": "AI_HLYTests/ShareInboxHostIntegrationTests.swift",
+        "equal": true,
+        "sha256": "c6ba09129bdab7fadcae8ac02468081332a8f7296a656a84df650b78e8db0195"
+      },
+      {
+        "path": "AI_HLYTests/VoiceRecordingLifecycleTests.swift",
+        "equal": true,
+        "sha256": "6140722d3090e41c7465601624a0fa389509c91bd23054e9a91bd80c0fe4c7c1"
+      },
+      {
+        "path": "AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+        "equal": true,
+        "sha256": "3d9755248a7ac026c2d2a0293d744d45e3c7454c9bd154a7a35e91d65175454a"
+      },
+      {
+        "path": "AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+        "equal": true,
+        "sha256": "11b3cb74033aa95a3a37521ee013a1e05245b4a01a0e974bb147a0e259e70edc"
+      },
+      {
+        "path": "Packages/HanlinPresentationSDK/Tests/HanlinLocalizationTests/HanlinLocalizationTests.swift",
+        "equal": true,
+        "sha256": "4b20056ba96ba0ed9561d32c3b8e8e93bd89d5a6aa093eb5a1a4d8a1b9f0951e"
+      }
+    ],
+    "argument_rows_count": 50,
+    "argument_examples": [
+      {
+        "identifier": "CalendarToolTests/failedReadProducesStructuredOutcomeWithoutPoisoningNextCall(kind:)",
+        "methodURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CalendarToolTests/failedReadProducesStructuredOutcomeWithoutPoisoningNextCall(kind:)",
+        "invocationURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CalendarToolTests/failedReadProducesStructuredOutcomeWithoutPoisoningNextCall(kind:)?args=e5532718eccbf3b707efcf5696a3347b6ac2fad00fe3417fbcf4fe6786394821",
+        "result": "Failure",
+        "orderInTestCaseRun": 0,
+        "parameterName": null,
+        "debugDescription": "\"denied\"",
+        "description": "\"denied\"",
+        "fullyQualifiedTypeName": "Swift.String"
+      },
+      {
+        "identifier": "CalendarToolTests/failedReadProducesStructuredOutcomeWithoutPoisoningNextCall(kind:)",
+        "methodURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CalendarToolTests/failedReadProducesStructuredOutcomeWithoutPoisoningNextCall(kind:)",
+        "invocationURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CalendarToolTests/failedReadProducesStructuredOutcomeWithoutPoisoningNextCall(kind:)?args=492bd0204b74443b7d8d36be9d38f139bd23776b1b1762051c15b89705768595",
+        "result": "Failure",
+        "orderInTestCaseRun": 0,
+        "parameterName": null,
+        "debugDescription": "\"timeout\"",
+        "description": "\"timeout\"",
+        "fullyQualifiedTypeName": "Swift.String"
+      },
+      {
+        "identifier": "CalendarToolTests/failedReadProducesStructuredOutcomeWithoutPoisoningNextCall(kind:)",
+        "methodURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CalendarToolTests/failedReadProducesStructuredOutcomeWithoutPoisoningNextCall(kind:)",
+        "invocationURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CalendarToolTests/failedReadProducesStructuredOutcomeWithoutPoisoningNextCall(kind:)?args=06234c1cf33df85364aedb5de2e65dc2fcb144ff65a249457c5f140fde7ee1d4",
+        "result": "Success",
+        "orderInTestCaseRun": 0,
+        "parameterName": null,
+        "debugDescription": "\"cancelled\"",
+        "description": "\"cancelled\"",
+        "fullyQualifiedTypeName": "Swift.String"
+      },
+      {
+        "identifier": "ChatPresentationTests/mixedMarkdownMathAndStreamingHaveFiniteLayout(width:)",
+        "methodURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatPresentationTests/mixedMarkdownMathAndStreamingHaveFiniteLayout(width:)",
+        "invocationURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatPresentationTests/mixedMarkdownMathAndStreamingHaveFiniteLayout(width:)?args=88820462180e5c893eff2ed73f4ec33e205d1cd5acc4d17fa7b2bca2495d3448",
+        "result": "Success",
+        "orderInTestCaseRun": 0,
+        "parameterName": null,
+        "debugDescription": "320.0",
+        "description": "320.0",
+        "fullyQualifiedTypeName": "Swift.Double"
+      },
+      {
+        "identifier": "ChatPresentationTests/mixedMarkdownMathAndStreamingHaveFiniteLayout(width:)",
+        "methodURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatPresentationTests/mixedMarkdownMathAndStreamingHaveFiniteLayout(width:)",
+        "invocationURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatPresentationTests/mixedMarkdownMathAndStreamingHaveFiniteLayout(width:)?args=d829857eb1366e70be857a69886d1555af0d32681beab068afb93492c2e2b843",
+        "result": "Success",
+        "orderInTestCaseRun": 0,
+        "parameterName": null,
+        "debugDescription": "720.0",
+        "description": "720.0",
+        "fullyQualifiedTypeName": "Swift.Double"
+      },
+      {
+        "identifier": "HanlinAppAgentSessionOwnerTests/originalProviderCredentialRowsReopenAndRecoverWithoutSchemaChanges(kind:)",
+        "methodURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/originalProviderCredentialRowsReopenAndRecoverWithoutSchemaChanges(kind:)",
+        "invocationURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/originalProviderCredentialRowsReopenAndRecoverWithoutSchemaChanges(kind:)?args=18fb9fa0b971b807a1312d3702d18747a3b1b39a129df8c5d1a8f68d512bd1fd",
+        "result": "Success",
+        "orderInTestCaseRun": 0,
+        "parameterName": null,
+        "debugDescription": "HanlinScriptExtensions.HanlinKeychainCredentialStore.Kind.model",
+        "description": ".model",
+        "fullyQualifiedTypeName": "HanlinScriptExtensions.HanlinKeychainCredentialStore.Kind"
+      }
+    ],
+    "all_sources_equal": false,
+    "qualification": "23 files byte-identical to inventory source; one exact added try within existing unchanged method/assertion, with inverse restoring original bytes. Names/arguments/counts unchanged.",
+    "only_syntax_delta": {
+      "path": "AI_HLYTests/HanlinApplicationEmbeddingTests.swift",
+      "added_inner_try_exact_inverse": true
+    }
+  },
+  "invocations": [
+    {
+      "method": "A2UISDKTests/customMediaCatalogResolvesYouTubeThroughOfficialGraphAndBinding",
+      "source": "AI_HLYTests/A2UITests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/A2UISDKTests/customMediaCatalogResolvesYouTubeThroughOfficialGraphAndBinding()",
+      "status": "PASS"
+    },
+    {
+      "method": "A2UISDKTests/customMediaCannotAlterOfficialCatalogOrAdmitScriptFields",
+      "source": "AI_HLYTests/A2UITests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/A2UISDKTests/customMediaCannotAlterOfficialCatalogOrAdmitScriptFields()",
+      "status": "PASS"
+    },
+    {
+      "method": "A2UISDKTests/galleryAndLinkSourcesResolveThroughTheOfficialCatalogAndBindings",
+      "source": "AI_HLYTests/A2UITests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/A2UISDKTests/galleryAndLinkSourcesResolveThroughTheOfficialCatalogAndBindings()",
+      "status": "PASS"
+    },
+    {
+      "method": "A2UISDKTests/richMediaSchemasRejectUnboundedCollectionsMissingSourcesAndScripts",
+      "source": "AI_HLYTests/A2UITests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/A2UISDKTests/richMediaSchemasRejectUnboundedCollectionsMissingSourcesAndScripts()",
+      "status": "PASS"
+    },
+    {
+      "method": "A2UISDKTests/successfulProducerEOFKeepsOriginalModelActionAndClosesInput",
+      "source": "AI_HLYTests/A2UITests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/A2UISDKTests/successfulProducerEOFKeepsOriginalModelActionAndClosesInput()",
+      "status": "PASS"
+    },
+    {
+      "method": "A2UISDKTests/producerEOFDoesNotSurviveRevocationOrFollowAnotherGeneration",
+      "source": "AI_HLYTests/A2UITests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/A2UISDKTests/producerEOFDoesNotSurviveRevocationOrFollowAnotherGeneration()",
+      "status": "PASS"
+    },
+    {
+      "method": "A2UISDKTests/producerEOFCancelsOnlyItsReceiverAndCannotReplaceFinishedTool",
+      "source": "AI_HLYTests/A2UITests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/A2UISDKTests/producerEOFCancelsOnlyItsReceiverAndCannotReplaceFinishedTool()",
+      "status": "PASS"
+    },
+    {
+      "method": "A2UISDKTests/modelPartUsesMessageIdentityWithoutToolCall",
+      "source": "AI_HLYTests/A2UITests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/A2UISDKTests/modelPartUsesMessageIdentityWithoutToolCall()",
+      "status": "PASS"
+    },
+    {
+      "method": "A2UISDKTests/orderedModelProjectionPreservesTextAndRegisteredSurface",
+      "source": "AI_HLYTests/A2UITests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/A2UISDKTests/orderedModelProjectionPreservesTextAndRegisteredSurface()",
+      "status": "PASS"
+    },
+    {
+      "method": "A2UISDKTests/modelProjectionRejectsForeignIdentityAndAmbiguousParts",
+      "source": "AI_HLYTests/A2UITests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/A2UISDKTests/modelProjectionRejectsForeignIdentityAndAmbiguousParts()",
+      "status": "PASS"
+    },
+    {
+      "method": "A2UISDKTests/modelProjectionNeverFollowsReplacedGeneration",
+      "source": "AI_HLYTests/A2UITests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/A2UISDKTests/modelProjectionNeverFollowsReplacedGeneration()",
+      "status": "PASS"
+    },
+    {
+      "method": "A2UISDKTests/transientOwnerLookupKeepsWireIDsIndependent",
+      "source": "AI_HLYTests/A2UITests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/A2UISDKTests/transientOwnerLookupKeepsWireIDsIndependent()",
+      "status": "PASS"
+    },
+    {
+      "method": "A2UISDKTests/transientReceiveRejectsWrongIdentityAndSequence",
+      "source": "AI_HLYTests/A2UITests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/A2UISDKTests/transientReceiveRejectsWrongIdentityAndSequence()",
+      "status": "PASS"
+    },
+    {
+      "method": "A2UISDKTests/sealedResultRetainsModelsAndRevokesActions",
+      "source": "AI_HLYTests/A2UITests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/A2UISDKTests/sealedResultRetainsModelsAndRevokesActions()",
+      "status": "PASS"
+    },
+    {
+      "method": "A2UISDKTests/sealingRunDoesNotRevokeOtherRun",
+      "source": "AI_HLYTests/A2UITests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/A2UISDKTests/sealingRunDoesNotRevokeOtherRun()",
+      "status": "PASS"
+    },
+    {
+      "method": "A2UISDKTests/replacementRevokesOldGenerationBeforeNewDelivery",
+      "source": "AI_HLYTests/A2UITests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/A2UISDKTests/replacementRevokesOldGenerationBeforeNewDelivery()",
+      "status": "PASS"
+    },
+    {
+      "method": "A2UISDKTests/endingResultCancelsOwnedReceiveTask",
+      "source": "AI_HLYTests/A2UITests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/A2UISDKTests/endingResultCancelsOwnedReceiveTask()",
+      "status": "PASS"
+    },
+    {
+      "method": "A2UISDKTests/presentationCopiesDoNotOwnDiscard",
+      "source": "AI_HLYTests/A2UITests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/A2UISDKTests/presentationCopiesDoNotOwnDiscard()",
+      "status": "PASS"
+    },
+    {
+      "method": "A2UISDKTests/eventSinkIsWeakAndCannotKeepAuthorityAlive",
+      "source": "AI_HLYTests/A2UITests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/A2UISDKTests/eventSinkIsWeakAndCannotKeepAuthorityAlive()",
+      "status": "PASS"
+    },
+    {
+      "method": "A2UISDKTests/deletedSurfaceDropsQueuedOwnedEvents",
+      "source": "AI_HLYTests/A2UITests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/A2UISDKTests/deletedSurfaceDropsQueuedOwnedEvents()",
+      "status": "PASS"
+    },
+    {
+      "method": "A2UISDKTests/retiredSurfaceCannotReanimateQueuedEventsInSameResult",
+      "source": "AI_HLYTests/A2UITests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/A2UISDKTests/retiredSurfaceCannotReanimateQueuedEventsInSameResult()",
+      "status": "PASS"
+    },
+    {
+      "method": "A2UISDKTests/parsesAndRendersTextCardInputButton",
+      "source": "AI_HLYTests/A2UITests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/A2UISDKTests/parsesAndRendersTextCardInputButton()",
+      "status": "PASS"
+    },
+    {
+      "method": "A2UISDKTests/nativeInputBindingWritesAndReadsOfficialModel",
+      "source": "AI_HLYTests/A2UITests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/A2UISDKTests/nativeInputBindingWritesAndReadsOfficialModel()",
+      "status": "PASS"
+    },
+    {
+      "method": "A2UISDKTests/stableIDsAndNodeIdentityAcrossUpdates",
+      "source": "AI_HLYTests/A2UITests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/A2UISDKTests/stableIDsAndNodeIdentityAcrossUpdates()",
+      "status": "PASS"
+    },
+    {
+      "method": "A2UISDKTests/malformedAndUnknownContentFallsBackAndRecovers",
+      "source": "AI_HLYTests/A2UITests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/A2UISDKTests/malformedAndUnknownContentFallsBackAndRecovers()",
+      "status": "PASS"
+    },
+    {
+      "method": "A2UISDKTests/officialSchemasRejectInvalidTextInputButton",
+      "source": "AI_HLYTests/A2UITests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/A2UISDKTests/officialSchemasRejectInvalidTextInputButton()",
+      "status": "PASS"
+    },
+    {
+      "method": "A2UISDKTests/independentSurfacesKeepModelsSeparate",
+      "source": "AI_HLYTests/A2UITests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/A2UISDKTests/independentSurfacesKeepModelsSeparate()",
+      "status": "PASS"
+    },
+    {
+      "method": "A2UISDKTests/independentOwnersCanReuseWireSurfaceID",
+      "source": "AI_HLYTests/A2UITests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/A2UISDKTests/independentOwnersCanReuseWireSurfaceID()",
+      "status": "PASS"
+    },
+    {
+      "method": "A2UISDKTests/deleteDisposesAndRecreateStartsWithNewIdentity",
+      "source": "AI_HLYTests/A2UITests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/A2UISDKTests/deleteDisposesAndRecreateStartsWithNewIdentity()",
+      "status": "PASS"
+    },
+    {
+      "method": "A2UISDKTests/closeRejectsLateFramesAndDisposesSurfaces",
+      "source": "AI_HLYTests/A2UITests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/A2UISDKTests/closeRejectsLateFramesAndDisposesSurfaces()",
+      "status": "PASS"
+    },
+    {
+      "method": "A2UISDKTests/buttonEventUsesCurrentBoundValue",
+      "source": "AI_HLYTests/A2UITests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/A2UISDKTests/buttonEventUsesCurrentBoundValue()",
+      "status": "PASS"
+    },
+    {
+      "method": "A2UISDKTests/hebrewFixtureRetainsBindingsInRTLComposition",
+      "source": "AI_HLYTests/A2UITests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/A2UISDKTests/hebrewFixtureRetainsBindingsInRTLComposition()",
+      "status": "PASS"
+    },
+    {
+      "method": "A2UISDKTests/surfaceLimitDoesNotRemoveExistingContent",
+      "source": "AI_HLYTests/A2UITests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/A2UISDKTests/surfaceLimitDoesNotRemoveExistingContent()",
+      "status": "PASS"
+    },
+    {
+      "method": "A2UISDKTests/rejectedSurfaceIDsCannotGrowFallbackStorageWithoutBound",
+      "source": "AI_HLYTests/A2UITests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/A2UISDKTests/rejectedSurfaceIDsCannotGrowFallbackStorageWithoutBound()",
+      "status": "PASS"
+    },
+    {
+      "method": "A2UISDKTests/unsupportedOperationsCannotCreateOrRerouteOwnedSurfaceFallbacks",
+      "source": "AI_HLYTests/A2UITests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/A2UISDKTests/unsupportedOperationsCannotCreateOrRerouteOwnedSurfaceFallbacks()",
+      "status": "PASS"
+    },
+    {
+      "method": "A2UISDKTests/unknownFunctionsAndUnsolicitedResponsesCannotEnableRPC",
+      "source": "AI_HLYTests/A2UITests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/A2UISDKTests/unknownFunctionsAndUnsolicitedResponsesCannotEnableRPC()",
+      "status": "PASS"
+    },
+    {
+      "method": "A2UISDKTests/closeRevokesQueuedAndRetainedActionCallbacks",
+      "source": "AI_HLYTests/A2UITests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/A2UISDKTests/closeRevokesQueuedAndRetainedActionCallbacks()",
+      "status": "PASS"
+    },
+    {
+      "method": "A2UISDKTests/closeCancelsSeededInFlightSDKCallPromptlyAndOnlyOnce",
+      "source": "AI_HLYTests/A2UITests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/A2UISDKTests/closeCancelsSeededInFlightSDKCallPromptlyAndOnlyOnce()",
+      "status": "PASS"
+    },
+    {
+      "method": "A2UIIngressTests/acceptsOfficialV1FixtureFrames",
+      "source": "AI_HLYTests/A2UITests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/A2UIIngressTests/acceptsOfficialV1FixtureFrames()",
+      "status": "PASS"
+    },
+    {
+      "method": "A2UIIngressTests/rejectsMalformedAndAmbiguousFrames",
+      "source": "AI_HLYTests/A2UITests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/A2UIIngressTests/rejectsMalformedAndAmbiguousFrames()",
+      "status": "PASS"
+    },
+    {
+      "method": "A2UIIngressTests/rejectsOtherProtocolVersions",
+      "source": "AI_HLYTests/A2UITests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/A2UIIngressTests/rejectsOtherProtocolVersions()",
+      "status": "PASS"
+    },
+    {
+      "method": "A2UIIngressTests/preservesUnicodeSurfaceIdentity",
+      "source": "AI_HLYTests/A2UITests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/A2UIIngressTests/preservesUnicodeSurfaceIdentity()",
+      "status": "PASS"
+    },
+    {
+      "method": "A2UIIngressTests/boundsUTF8MessageAndComponentBatch",
+      "source": "AI_HLYTests/A2UITests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/A2UIIngressTests/boundsUTF8MessageAndComponentBatch()",
+      "status": "PASS"
+    },
+    {
+      "method": "A2UIIngressTests/rejectsRPCAndUnnegotiatedCatalogs",
+      "source": "AI_HLYTests/A2UITests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/A2UIIngressTests/rejectsRPCAndUnnegotiatedCatalogs()",
+      "status": "PASS"
+    },
+    {
+      "method": "A2UIIngressTests/rejectedEnvelopesNeverExportSurfaceCorrelation",
+      "source": "AI_HLYTests/A2UITests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/A2UIIngressTests/rejectedEnvelopesNeverExportSurfaceCorrelation()",
+      "status": "PASS"
+    },
+    {
+      "method": "A2UIIngressTests/componentValidationRemainsWithSDK",
+      "source": "AI_HLYTests/A2UITests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/A2UIIngressTests/componentValidationRemainsWithSDK()",
+      "status": "PASS"
+    },
+    {
+      "method": "AgentActivityHeaderPhaseTests/completedHistoryNeverRevivesThinkingFromStaleApproval",
+      "source": "AI_HLYTests/AgentActivityHeaderPhaseTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/completedHistoryNeverRevivesThinkingFromStaleApproval()",
+      "status": "PASS"
+    },
+    {
+      "method": "AgentActivityHeaderPhaseTests/permissionWaitPausesShimmerAndCanResumeOnlyWhileActive",
+      "source": "AI_HLYTests/AgentActivityHeaderPhaseTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/permissionWaitPausesShimmerAndCanResumeOnlyWhileActive()",
+      "status": "PASS"
+    },
+    {
+      "method": "AgentActivityHeaderPhaseTests/historicalFooterAndDuplicateActivityStatusAreHidden",
+      "source": "AI_HLYTests/AgentActivityHeaderPhaseTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/historicalFooterAndDuplicateActivityStatusAreHidden()",
+      "status": "PASS"
+    },
+    {
+      "method": "AgentActivityHeaderPhaseTests/completedToolDoesNotReuseItsEarlierRunningSummary",
+      "source": "AI_HLYTests/AgentActivityHeaderPhaseTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/completedToolDoesNotReuseItsEarlierRunningSummary()",
+      "status": "PASS"
+    },
+    {
+      "method": "AgentActivityHeaderPhaseTests/failureCancellationAndConsentDoNotImplyLiveWorkOrSuccess",
+      "source": "AI_HLYTests/AgentActivityHeaderPhaseTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/failureCancellationAndConsentDoNotImplyLiveWorkOrSuccess()",
+      "status": "PASS"
+    },
+    {
+      "method": "AgentActivityHeaderPhaseTests/firstAnswerTextStopsWorkingWithoutFalsifyingConcurrentExecution",
+      "source": "AI_HLYTests/AgentActivityHeaderPhaseTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/firstAnswerTextStopsWorkingWithoutFalsifyingConcurrentExecution()",
+      "status": "PASS"
+    },
+    {
+      "method": "AgentActivityHeaderPhaseTests/shimmerMovesBetweenLeafAndNearestVisibleAncestor",
+      "source": "AI_HLYTests/AgentActivityHeaderPhaseTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/shimmerMovesBetweenLeafAndNearestVisibleAncestor()",
+      "status": "PASS"
+    },
+    {
+      "method": "AgentActivityHeaderPhaseTests/internalPreparationDoesNotCreateToolActivityOrRewriteHistory",
+      "source": "AI_HLYTests/AgentActivityHeaderPhaseTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/internalPreparationDoesNotCreateToolActivityOrRewriteHistory()",
+      "status": "PASS"
+    },
+    {
+      "method": "AgentActivityHeaderPhaseTests/mountedDetailsKeepCallIdentityAndPayloadIndependentOfExpansion",
+      "source": "AI_HLYTests/AgentActivityHeaderPhaseTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/mountedDetailsKeepCallIdentityAndPayloadIndependentOfExpansion()",
+      "status": "PASS"
+    },
+    {
+      "method": "AgentActivityHeaderPhaseTests/providerReasoningSurvivesCompositionAndEndsAtTheFirstAnswer",
+      "source": "AI_HLYTests/AgentActivityHeaderPhaseTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/providerReasoningSurvivesCompositionAndEndsAtTheFirstAnswer()",
+      "status": "PASS"
+    },
+    {
+      "method": "AgentActivityHeaderPhaseTests/reasoningAndRealToolLifecyclesSurviveWhileDiscoveryStaysHidden",
+      "source": "AI_HLYTests/AgentActivityHeaderPhaseTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/reasoningAndRealToolLifecyclesSurviveWhileDiscoveryStaysHidden()",
+      "status": "PASS"
+    },
+    {
+      "method": "AgentActivityHeaderPhaseTests/onlyActualRequestReceiptShowsWaitingAndFirstSemanticOutputClearsIt",
+      "source": "AI_HLYTests/AgentActivityHeaderPhaseTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/onlyActualRequestReceiptShowsWaitingAndFirstSemanticOutputClearsIt()",
+      "status": "PASS"
+    },
+    {
+      "method": "AgentActivityHeaderPhaseTests/olderStoredRunsDoNotInventPendingRequestReceipt",
+      "source": "AI_HLYTests/AgentActivityHeaderPhaseTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/olderStoredRunsDoNotInventPendingRequestReceipt()",
+      "status": "PASS"
+    },
+    {
+      "method": "AgentActivityHeaderPhaseTests/admittedNonTextOutputEndsReasoningWithoutDemotingTheFinalAnswer",
+      "source": "AI_HLYTests/AgentActivityHeaderPhaseTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentActivityHeaderPhaseTests/admittedNonTextOutputEndsReasoningWithoutDemotingTheFinalAnswer()",
+      "status": "PASS"
+    },
+    {
+      "method": "AgentRoundPresentationTests/mcpDeclaredIconsPreferToolThenItsServerForCurrentTheme",
+      "source": "AI_HLYTests/AgentRoundPresentationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/mcpDeclaredIconsPreferToolThenItsServerForCurrentTheme()",
+      "status": "PASS"
+    },
+    {
+      "method": "AgentRoundPresentationTests/mcpUnsafeAndMissingIconsKeepServerOrSystemSymbolFallback",
+      "source": "AI_HLYTests/AgentRoundPresentationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/mcpUnsafeAndMissingIconsKeepServerOrSystemSymbolFallback()",
+      "status": "PASS"
+    },
+    {
+      "method": "AgentRoundPresentationTests/mcpIconMetadataPreservesLegacyCodableAndSkipsMalformedDecoration",
+      "source": "AI_HLYTests/AgentRoundPresentationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/mcpIconMetadataPreservesLegacyCodableAndSkipsMalformedDecoration()",
+      "status": "PASS"
+    },
+    {
+      "method": "AgentRoundPresentationTests/mcpIconsSurviveCanonicalCallPersistenceAndActivityProjectionWithoutChangingAuthority",
+      "source": "AI_HLYTests/AgentRoundPresentationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/mcpIconsSurviveCanonicalCallPersistenceAndActivityProjectionWithoutChangingAuthority()",
+      "status": "PASS"
+    },
+    {
+      "method": "AgentRoundPresentationTests/locationApprovalShowsRealScopeWithoutTrustingProgressNarrative",
+      "source": "AI_HLYTests/AgentRoundPresentationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/locationApprovalShowsRealScopeWithoutTrustingProgressNarrative()",
+      "status": "PASS"
+    },
+    {
+      "method": "AgentRoundPresentationTests/approvalSummaryNeverHidesArgumentsThatNeedReview",
+      "source": "AI_HLYTests/AgentRoundPresentationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/approvalSummaryNeverHidesArgumentsThatNeedReview()",
+      "status": "PASS"
+    },
+    {
+      "method": "AgentRoundPresentationTests/attributedSingletonRoundsKeepTheirHierarchyWithoutInventingLegacyParents",
+      "source": "AI_HLYTests/AgentRoundPresentationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/attributedSingletonRoundsKeepTheirHierarchyWithoutInventingLegacyParents()",
+      "status": "PASS"
+    },
+    {
+      "method": "AgentRoundPresentationTests/exactBuiltInOperationsKeepTheirOwnActivityPresentation",
+      "source": "AI_HLYTests/AgentRoundPresentationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/exactBuiltInOperationsKeepTheirOwnActivityPresentation()",
+      "status": "PASS"
+    },
+    {
+      "method": "AgentRoundPresentationTests/emptySubsecondReasoningDoesNotCreateAZeroSecondHistoryRow",
+      "source": "AI_HLYTests/AgentRoundPresentationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/emptySubsecondReasoningDoesNotCreateAZeroSecondHistoryRow()",
+      "status": "PASS"
+    },
+    {
+      "method": "AgentRoundPresentationTests/chatCompletionsSourceLinksPersistWithoutProviderAnnotationEvents",
+      "source": "AI_HLYTests/AgentRoundPresentationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/chatCompletionsSourceLinksPersistWithoutProviderAnnotationEvents()",
+      "status": "PASS"
+    },
+    {
+      "method": "AgentRoundPresentationTests/sourceURLAliasesSurviveEvidenceDeduplicationAndCodable",
+      "source": "AI_HLYTests/AgentRoundPresentationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/sourceURLAliasesSurviveEvidenceDeduplicationAndCodable()",
+      "status": "PASS"
+    },
+    {
+      "method": "AgentRoundPresentationTests/sourceURLAliasesStayBoundedAndKeepOriginalDestination",
+      "source": "AI_HLYTests/AgentRoundPresentationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/sourceURLAliasesStayBoundedAndKeepOriginalDestination()",
+      "status": "PASS"
+    },
+    {
+      "method": "AgentRoundPresentationTests/sourceURLAliasesKeepClaimAnchorsAndScopedProjectionAfterReplay",
+      "source": "AI_HLYTests/AgentRoundPresentationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/sourceURLAliasesKeepClaimAnchorsAndScopedProjectionAfterReplay()",
+      "status": "PASS"
+    },
+    {
+      "method": "AgentRoundPresentationTests/citationEventBesideItsTextDeltaKeepsTheNewTranscriptOwner",
+      "source": "AI_HLYTests/AgentRoundPresentationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/citationEventBesideItsTextDeltaKeepsTheNewTranscriptOwner()",
+      "status": "PASS"
+    },
+    {
+      "method": "AgentRoundPresentationTests/orderedMarkdownFragmentRetainsOnlyItsVerifiedAnchors",
+      "source": "AI_HLYTests/AgentRoundPresentationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/orderedMarkdownFragmentRetainsOnlyItsVerifiedAnchors()",
+      "status": "PASS"
+    },
+    {
+      "method": "AgentRoundPresentationTests/legacyResourcesRequireExplicitSourceLinksAndNeverGuessNumericIndexes",
+      "source": "AI_HLYTests/AgentRoundPresentationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/legacyResourcesRequireExplicitSourceLinksAndNeverGuessNumericIndexes()",
+      "status": "PASS"
+    },
+    {
+      "method": "AgentRoundPresentationTests/suppliedResourceFaviconSurvivesCanonicalSourceAndInlineAliasProjection",
+      "source": "AI_HLYTests/AgentRoundPresentationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/suppliedResourceFaviconSurvivesCanonicalSourceAndInlineAliasProjection()",
+      "status": "PASS"
+    },
+    {
+      "method": "AgentRoundPresentationTests/missingOrUnsafeResourceFaviconsKeepTheExistingDefault",
+      "source": "AI_HLYTests/AgentRoundPresentationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/missingOrUnsafeResourceFaviconsKeepTheExistingDefault()",
+      "status": "PASS"
+    },
+    {
+      "method": "AgentRoundPresentationTests/providerCitationsKeepTheOriginalAnswerAndCannotBorrowChangedText",
+      "source": "AI_HLYTests/AgentRoundPresentationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/providerCitationsKeepTheOriginalAnswerAndCannotBorrowChangedText()",
+      "status": "PASS"
+    },
+    {
+      "method": "AgentRoundPresentationTests/actualApprovalKeepsCallIdentityAndDenialStaysNeutralThroughFailureReplay",
+      "source": "AI_HLYTests/AgentRoundPresentationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/actualApprovalKeepsCallIdentityAndDenialStaysNeutralThroughFailureReplay()",
+      "status": "PASS"
+    },
+    {
+      "method": "AgentRoundPresentationTests/richToolFollowupPreservesPriorAnswerAndStableActivityIdentity",
+      "source": "AI_HLYTests/AgentRoundPresentationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/richToolFollowupPreservesPriorAnswerAndStableActivityIdentity()",
+      "status": "PASS"
+    },
+    {
+      "method": "AgentRoundPresentationTests/asyncCancellationCannotClearANewerRunWhileRecorderDrains",
+      "source": "AI_HLYTests/AgentRoundPresentationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/asyncCancellationCannotClearANewerRunWhileRecorderDrains()",
+      "status": "PASS"
+    },
+    {
+      "method": "AgentRoundPresentationTests/suspendedBeginCannotReclaimOwnershipFromANewerRun",
+      "source": "AI_HLYTests/AgentRoundPresentationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/suspendedBeginCannotReclaimOwnershipFromANewerRun()",
+      "status": "PASS"
+    },
+    {
+      "method": "AgentRoundPresentationTests/actualRoundMarkersOwnReasoningAndParallelSameNameTools",
+      "source": "AI_HLYTests/AgentRoundPresentationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/actualRoundMarkersOwnReasoningAndParallelSameNameTools()",
+      "status": "PASS"
+    },
+    {
+      "method": "AgentRoundPresentationTests/legacyActivitiesNeverAcquireAParentFromTheirTimeOrName",
+      "source": "AI_HLYTests/AgentRoundPresentationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/AgentRoundPresentationTests/legacyActivitiesNeverAcquireAParentFromTheirTimeOrName()",
+      "status": "PASS"
+    },
+    {
+      "method": "CalendarToolTests/reversedDatesDoNotDispatchAndNextSearchCanComplete",
+      "source": "AI_HLYTests/CalendarToolTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CalendarToolTests/reversedDatesDoNotDispatchAndNextSearchCanComplete()",
+      "status": "PASS"
+    },
+    {
+      "method": "CalendarToolTests/failedReadProducesStructuredOutcomeWithoutPoisoningNextCall(kind:)",
+      "source": "AI_HLYTests/CalendarToolTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CalendarToolTests/failedReadProducesStructuredOutcomeWithoutPoisoningNextCall(kind:)?args=06234c1cf33df85364aedb5de2e65dc2fcb144ff65a249457c5f140fde7ee1d4",
+      "expectedArgumentSwift": "\"cancelled\"",
+      "status": "PASS"
+    },
+    {
+      "method": "CalendarToolTests/failedReadProducesStructuredOutcomeWithoutPoisoningNextCall(kind:)",
+      "source": "AI_HLYTests/CalendarToolTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CalendarToolTests/failedReadProducesStructuredOutcomeWithoutPoisoningNextCall(kind:)?args=e5532718eccbf3b707efcf5696a3347b6ac2fad00fe3417fbcf4fe6786394821",
+      "expectedArgumentSwift": "\"denied\"",
+      "status": "FAIL"
+    },
+    {
+      "method": "CalendarToolTests/failedReadProducesStructuredOutcomeWithoutPoisoningNextCall(kind:)",
+      "source": "AI_HLYTests/CalendarToolTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CalendarToolTests/failedReadProducesStructuredOutcomeWithoutPoisoningNextCall(kind:)?args=492bd0204b74443b7d8d36be9d38f139bd23776b1b1762051c15b89705768595",
+      "expectedArgumentSwift": "\"timeout\"",
+      "status": "FAIL"
+    },
+    {
+      "method": "CalendarToolTests/malformedWriteIsRejectedBeforeExecutorAndCommittedWriteIsRetained",
+      "source": "AI_HLYTests/CalendarToolTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CalendarToolTests/malformedWriteIsRejectedBeforeExecutorAndCommittedWriteIsRetained()",
+      "status": "PASS"
+    },
+    {
+      "method": "CalendarToolTests/failedWriteIsNeverReportedAsCommitted",
+      "source": "AI_HLYTests/CalendarToolTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/CalendarToolTests/failedWriteIsNeverReportedAsCommitted()",
+      "status": "FAIL"
+    },
+    {
+      "method": "ChatAutoFollowTests/sustainedRequestsKeepOneTimerAndMergeAnimationWithoutStarvation",
+      "source": "AI_HLYTests/ChatAutoFollowTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatAutoFollowTests/sustainedRequestsKeepOneTimerAndMergeAnimationWithoutStarvation()",
+      "status": "PASS"
+    },
+    {
+      "method": "ChatAutoFollowTests/interactionCancelsScheduledScrollAndStaleTimerCannotClearNewOne",
+      "source": "AI_HLYTests/ChatAutoFollowTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatAutoFollowTests/interactionCancelsScheduledScrollAndStaleTimerCannotClearNewOne()",
+      "status": "PASS"
+    },
+    {
+      "method": "ChatAutoFollowTests/selectionPauseRejectsLayoutWorkUntilAnExplicitResume",
+      "source": "AI_HLYTests/ChatAutoFollowTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatAutoFollowTests/selectionPauseRejectsLayoutWorkUntilAnExplicitResume()",
+      "status": "PASS"
+    },
+    {
+      "method": "ChatAutoFollowTests/aNewRunRejectsThePreviousPendingScroll",
+      "source": "AI_HLYTests/ChatAutoFollowTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatAutoFollowTests/aNewRunRejectsThePreviousPendingScroll()",
+      "status": "PASS"
+    },
+    {
+      "method": "ChatAutoFollowTests/measuredScrollRangeIncludesOriginalInsetsWithoutDuplicateComposerClearance",
+      "source": "AI_HLYTests/ChatAutoFollowTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatAutoFollowTests/measuredScrollRangeIncludesOriginalInsetsWithoutDuplicateComposerClearance()",
+      "status": "PASS"
+    },
+    {
+      "method": "ChatAutoFollowTests/unmeasuredAndFittingTranscriptsNeverScheduleEvenForcedScrolling",
+      "source": "AI_HLYTests/ChatAutoFollowTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatAutoFollowTests/unmeasuredAndFittingTranscriptsNeverScheduleEvenForcedScrolling()",
+      "status": "PASS"
+    },
+    {
+      "method": "ChatAutoFollowTests/pendingLongTranscriptRequestRechecksGeometryAfterContentShrinks",
+      "source": "AI_HLYTests/ChatAutoFollowTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatAutoFollowTests/pendingLongTranscriptRequestRechecksGeometryAfterContentShrinks()",
+      "status": "PASS"
+    },
+    {
+      "method": "ChatAutoFollowTests/growingTranscriptCanFollowAgainWhileUserPauseRemainsAuthoritative",
+      "source": "AI_HLYTests/ChatAutoFollowTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatAutoFollowTests/growingTranscriptCanFollowAgainWhileUserPauseRemainsAuthoritative()",
+      "status": "PASS"
+    },
+    {
+      "method": "ChatAutoFollowTests/nonFiniteAndOverflowingGeometryCannotRestoreAnOffset",
+      "source": "AI_HLYTests/ChatAutoFollowTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatAutoFollowTests/nonFiniteAndOverflowingGeometryCannotRestoreAnOffset()",
+      "status": "PASS"
+    },
+    {
+      "method": "ChatAutoFollowTests/finiteNearBottomMeasurementHandlesInsetsAndElasticOverscroll",
+      "source": "AI_HLYTests/ChatAutoFollowTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatAutoFollowTests/finiteNearBottomMeasurementHandlesInsetsAndElasticOverscroll()",
+      "status": "PASS"
+    },
+    {
+      "method": "ChatAutoFollowTests/detachedTranscriptCannotReuseCachedLayoutOrQueuedRestoration",
+      "source": "AI_HLYTests/ChatAutoFollowTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatAutoFollowTests/detachedTranscriptCannotReuseCachedLayoutOrQueuedRestoration()",
+      "status": "PASS"
+    },
+    {
+      "method": "ChatAutoFollowTests/invalidGeometryCancelsAnAlreadyQueuedScroll",
+      "source": "AI_HLYTests/ChatAutoFollowTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatAutoFollowTests/invalidGeometryCancelsAnAlreadyQueuedScroll()",
+      "status": "PASS"
+    },
+    {
+      "method": "ChatCodeFenceTests/actualWebKitRendersRequiredMermaidFamiliesAndCachesExactInputs",
+      "source": "AI_HLYTests/ChatCodeFenceTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatCodeFenceTests/actualWebKitRendersRequiredMermaidFamiliesAndCachesExactInputs()",
+      "status": "PASS"
+    },
+    {
+      "method": "ChatCodeFenceTests/actualWebKitParsesFullUnifiedAndSplitDiffWithoutExecutingSource",
+      "source": "AI_HLYTests/ChatCodeFenceTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatCodeFenceTests/actualWebKitParsesFullUnifiedAndSplitDiffWithoutExecutingSource()",
+      "status": "PASS"
+    },
+    {
+      "method": "ChatCodeFenceTests/actualWebKitQueuesDiagramAndDiffAgainstOneColdStartup",
+      "source": "AI_HLYTests/ChatCodeFenceTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatCodeFenceTests/actualWebKitQueuesDiagramAndDiffAgainstOneColdStartup()",
+      "status": "PASS"
+    },
+    {
+      "method": "ChatCodeFenceTests/assetsFailClosedOnTamperingAndVisibleDocumentDisablesScripts",
+      "source": "AI_HLYTests/ChatCodeFenceTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatCodeFenceTests/assetsFailClosedOnTamperingAndVisibleDocumentDisablesScripts()",
+      "status": "PASS"
+    },
+    {
+      "method": "ChatCodeFenceTests/cancellationRejectsAnOfflinePreviewWithoutReturningStaleContent",
+      "source": "AI_HLYTests/ChatCodeFenceTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatCodeFenceTests/cancellationRejectsAnOfflinePreviewWithoutReturningStaleContent()",
+      "status": "PASS"
+    },
+    {
+      "method": "ChatPresentationTests/permissionReceiptDoesNotClaimExecutionOrBecomeItsTitle",
+      "source": "AI_HLYTests/ChatPresentationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatPresentationTests/permissionReceiptDoesNotClaimExecutionOrBecomeItsTitle()",
+      "status": "PASS"
+    },
+    {
+      "method": "ChatPresentationTests/answerDeltasDoNotDuplicateReasoningOrEncodeEveryRunSnapshot",
+      "source": "AI_HLYTests/ChatPresentationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatPresentationTests/answerDeltasDoNotDuplicateReasoningOrEncodeEveryRunSnapshot()",
+      "status": "PASS"
+    },
+    {
+      "method": "ChatPresentationTests/parallelCallsWithSameToolAndArgumentsKeepTheirOwnIdentity",
+      "source": "AI_HLYTests/ChatPresentationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatPresentationTests/parallelCallsWithSameToolAndArgumentsKeepTheirOwnIdentity()",
+      "status": "PASS"
+    },
+    {
+      "method": "ChatPresentationTests/actualCodeToolLifecycleKeepsOneRowPerCallAndRetainsItsFailureAfterRunCompletion",
+      "source": "AI_HLYTests/ChatPresentationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatPresentationTests/actualCodeToolLifecycleKeepsOneRowPerCallAndRetainsItsFailureAfterRunCompletion()",
+      "status": "PASS"
+    },
+    {
+      "method": "ChatPresentationTests/actualStreamProjectionDoesNotLetEventDedupHideCanonicalOutputOrFreezeItsStatus",
+      "source": "AI_HLYTests/ChatPresentationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatPresentationTests/actualStreamProjectionDoesNotLetEventDedupHideCanonicalOutputOrFreezeItsStatus()",
+      "status": "PASS"
+    },
+    {
+      "method": "ChatPresentationTests/personalSaveUsesSelectedQuoteWithoutAddingKnowledge",
+      "source": "AI_HLYTests/ChatPresentationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatPresentationTests/personalSaveUsesSelectedQuoteWithoutAddingKnowledge()",
+      "status": "PASS"
+    },
+    {
+      "method": "ChatPresentationTests/ambiguousOrFormattedQuotesNeverInventOffsets",
+      "source": "AI_HLYTests/ChatPresentationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatPresentationTests/ambiguousOrFormattedQuotesNeverInventOffsets()",
+      "status": "PASS"
+    },
+    {
+      "method": "ChatPresentationTests/savedSnapshotSurvivesStoreReopenAndSourceDeletion",
+      "source": "AI_HLYTests/ChatPresentationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatPresentationTests/savedSnapshotSurvivesStoreReopenAndSourceDeletion()",
+      "status": "PASS"
+    },
+    {
+      "method": "ChatPresentationTests/addingSavedExcerptsMigratesTheExistingApplicationSchemaWithoutDeletingChat",
+      "source": "AI_HLYTests/ChatPresentationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatPresentationTests/addingSavedExcerptsMigratesTheExistingApplicationSchemaWithoutDeletingChat()",
+      "status": "PASS"
+    },
+    {
+      "method": "ChatPresentationTests/nativeSelectionPausesFollowingEvenWhenTheMessageIsNearTheBottom",
+      "source": "AI_HLYTests/ChatPresentationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatPresentationTests/nativeSelectionPausesFollowingEvenWhenTheMessageIsNearTheBottom()",
+      "status": "PASS"
+    },
+    {
+      "method": "ChatPresentationTests/selectionSheetCallbacksUseUnicodeSelectedRange",
+      "source": "AI_HLYTests/ChatPresentationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatPresentationTests/selectionSheetCallbacksUseUnicodeSelectedRange()",
+      "status": "PASS"
+    },
+    {
+      "method": "ChatPresentationTests/mixedMarkdownMathAndStreamingHaveFiniteLayout(width:)",
+      "source": "AI_HLYTests/ChatPresentationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatPresentationTests/mixedMarkdownMathAndStreamingHaveFiniteLayout(width:)?args=88820462180e5c893eff2ed73f4ec33e205d1cd5acc4d17fa7b2bca2495d3448",
+      "expectedArgumentSwift": "320.0",
+      "status": "PASS"
+    },
+    {
+      "method": "ChatPresentationTests/mixedMarkdownMathAndStreamingHaveFiniteLayout(width:)",
+      "source": "AI_HLYTests/ChatPresentationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatPresentationTests/mixedMarkdownMathAndStreamingHaveFiniteLayout(width:)?args=d829857eb1366e70be857a69886d1555af0d32681beab068afb93492c2e2b843",
+      "expectedArgumentSwift": "720.0",
+      "status": "PASS"
+    },
+    {
+      "method": "ChatPresentationTests/rendererSelectionRetainsExactGraphemeAndNativeRange",
+      "source": "AI_HLYTests/ChatPresentationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatPresentationTests/rendererSelectionRetainsExactGraphemeAndNativeRange()",
+      "status": "PASS"
+    },
+    {
+      "method": "ChatPresentationTests/renderedRangesDisambiguateIdenticalSavedQuotes",
+      "source": "AI_HLYTests/ChatPresentationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatPresentationTests/renderedRangesDisambiguateIdenticalSavedQuotes()",
+      "status": "PASS"
+    },
+    {
+      "method": "ChatPresentationTests/internalBrowserAcceptsOnlyRealWebURLs",
+      "source": "AI_HLYTests/ChatPresentationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatPresentationTests/internalBrowserAcceptsOnlyRealWebURLs()",
+      "status": "PASS"
+    },
+    {
+      "method": "ChatScrollViewHandleTests/positiveGeometryWithoutAWindowCannotPositionATranscript",
+      "source": "AI_HLYTests/ChatScrollViewHandleTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatScrollViewHandleTests/positiveGeometryWithoutAWindowCannotPositionATranscript()",
+      "status": "PASS"
+    },
+    {
+      "method": "ChatScrollViewHandleTests/everyReadRechecksWindowDimensionsAndConversation",
+      "source": "AI_HLYTests/ChatScrollViewHandleTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatScrollViewHandleTests/everyReadRechecksWindowDimensionsAndConversation()",
+      "status": "PASS"
+    },
+    {
+      "method": "ChatScrollViewHandleTests/detachAndReplacementInvalidateCapturedRequestsWithoutRetainingViews",
+      "source": "AI_HLYTests/ChatScrollViewHandleTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatScrollViewHandleTests/detachAndReplacementInvalidateCapturedRequestsWithoutRetainingViews()",
+      "status": "PASS"
+    },
+    {
+      "method": "ChatScrollViewHandleTests/lateWindowAttachmentDeliversOneDeferredReadinessCallback",
+      "source": "AI_HLYTests/ChatScrollViewHandleTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatScrollViewHandleTests/lateWindowAttachmentDeliversOneDeferredReadinessCallback()",
+      "status": "PASS"
+    },
+    {
+      "method": "ChatScrollViewHandleTests/cancelledReadinessCannotRestoreAPreviousConversation",
+      "source": "AI_HLYTests/ChatScrollViewHandleTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatScrollViewHandleTests/cancelledReadinessCannotRestoreAPreviousConversation()",
+      "status": "PASS"
+    },
+    {
+      "method": "ChatScrollViewHandleTests/resizedViewportRejectsARequestBeforeTheNextBridgeCallback",
+      "source": "AI_HLYTests/ChatScrollViewHandleTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatScrollViewHandleTests/resizedViewportRejectsARequestBeforeTheNextBridgeCallback()",
+      "status": "PASS"
+    },
+    {
+      "method": "ChatScrollViewHandleTests/movingTheSameScrollViewToAnotherWindowInvalidatesQueuedPositioning",
+      "source": "AI_HLYTests/ChatScrollViewHandleTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatScrollViewHandleTests/movingTheSameScrollViewToAnotherWindowInvalidatesQueuedPositioning()",
+      "status": "PASS"
+    },
+    {
+      "method": "ChatScrollViewHandleTests/contentGrowthAndUserScrollingKeepTheViewportLifetime",
+      "source": "AI_HLYTests/ChatScrollViewHandleTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatScrollViewHandleTests/contentGrowthAndUserScrollingKeepTheViewportLifetime()",
+      "status": "PASS"
+    },
+    {
+      "method": "ChatScrollViewHandleTests/outgoingConversationCallbacksCannotUnbindOrCancelTheCurrentViewport",
+      "source": "AI_HLYTests/ChatScrollViewHandleTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatScrollViewHandleTests/outgoingConversationCallbacksCannotUnbindOrCancelTheCurrentViewport()",
+      "status": "PASS"
+    },
+    {
+      "method": "ChatScrollViewHandleTests/deferredReadinessRechecksResizeAndCanRecoverAtTheNewViewport",
+      "source": "AI_HLYTests/ChatScrollViewHandleTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatScrollViewHandleTests/deferredReadinessRechecksResizeAndCanRecoverAtTheNewViewport()",
+      "status": "PASS"
+    },
+    {
+      "method": "ChatScrollViewHandleTests/incomingBindingBeforeActivationDoesNotNeedAnotherBridgeCallback",
+      "source": "AI_HLYTests/ChatScrollViewHandleTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ChatScrollViewHandleTests/incomingBindingBeforeActivationDoesNotNeedAnotherBridgeCallback()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/originalConsentExpiresRevokesAndRejectsStaleSheetAnswers",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/originalConsentExpiresRevokesAndRejectsStaleSheetAnswers()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/nativeConsentUsesOriginalOperationAcrossForeignAnswerContextAndRevocation",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/nativeConsentUsesOriginalOperationAcrossForeignAnswerContextAndRevocation()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/actualEventKitToolRecoversTheOriginalChatAndReadsTheFullDateWindow",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/actualEventKitToolRecoversTheOriginalChatAndReadsTheFullDateWindow()",
+      "status": "FAIL"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/originalProviderCredentialRowsReopenAndRecoverWithoutSchemaChanges(kind:)",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/originalProviderCredentialRowsReopenAndRecoverWithoutSchemaChanges(kind:)?args=18fb9fa0b971b807a1312d3702d18747a3b1b39a129df8c5d1a8f68d512bd1fd",
+      "expectedArgumentSwift": "HanlinKeychainCredentialStore.Kind.model",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/originalProviderCredentialRowsReopenAndRecoverWithoutSchemaChanges(kind:)",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/originalProviderCredentialRowsReopenAndRecoverWithoutSchemaChanges(kind:)?args=6ad21f9d2ea182f9fe66f7791944c3bfa4eb4281c1609ca95e82a89c65e6a413",
+      "expectedArgumentSwift": ".search",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/originalProviderCredentialRowsReopenAndRecoverWithoutSchemaChanges(kind:)",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/originalProviderCredentialRowsReopenAndRecoverWithoutSchemaChanges(kind:)?args=dd04afac1bebb050783a245ed0d88633759f352c85d4ab3bea3d416bf2019c75",
+      "expectedArgumentSwift": ".tool",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/originalCredentialEditorRemainsTransientAndLegacyCompatible",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/originalCredentialEditorRemainsTransientAndLegacyCompatible()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/originalCredentialStaleContextCannotCheckpointOverNewerSavedValue",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/originalCredentialStaleContextCannotCheckpointOverNewerSavedValue()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/originalSecuredCredentialRotationRetainsPredecessorAndRejectsStaleDraft",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/originalSecuredCredentialRotationRetainsPredecessorAndRejectsStaleDraft()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/originalDiscoveryAndProbesUseUnsavedCredentialWithoutImplicitFallback(storedKey:)",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/originalDiscoveryAndProbesUseUnsavedCredentialWithoutImplicitFallback(storedKey:)?args=12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+      "expectedArgumentSwift": "\"\"",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/originalDiscoveryAndProbesUseUnsavedCredentialWithoutImplicitFallback(storedKey:)",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/originalDiscoveryAndProbesUseUnsavedCredentialWithoutImplicitFallback(storedKey:)?args=0a357e365a051416370fbd83e14841fb715ee1f5cdb1b19ed241a42dd9e1c6ad",
+      "expectedArgumentSwift": "\"synthetic-persisted\"",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/originalCredentialCommitSurvivesPublicationFailureAndRetryDoesNotResave",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/originalCredentialCommitSurvivesPublicationFailureAndRetryDoesNotResave()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/protectedCredentialMetadataSavesPreserveOriginalRowsAndGenerations(kind:)",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/protectedCredentialMetadataSavesPreserveOriginalRowsAndGenerations(kind:)?args=18fb9fa0b971b807a1312d3702d18747a3b1b39a129df8c5d1a8f68d512bd1fd",
+      "expectedArgumentSwift": "HanlinKeychainCredentialStore.Kind.model",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/protectedCredentialMetadataSavesPreserveOriginalRowsAndGenerations(kind:)",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/protectedCredentialMetadataSavesPreserveOriginalRowsAndGenerations(kind:)?args=6ad21f9d2ea182f9fe66f7791944c3bfa4eb4281c1609ca95e82a89c65e6a413",
+      "expectedArgumentSwift": ".search",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/protectedCredentialMetadataSavesPreserveOriginalRowsAndGenerations(kind:)",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/protectedCredentialMetadataSavesPreserveOriginalRowsAndGenerations(kind:)?args=dd04afac1bebb050783a245ed0d88633759f352c85d4ab3bea3d416bf2019c75",
+      "expectedArgumentSwift": ".tool",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/protectedCredentialMetadataSaveRetainsNilAndEmptyRepresentations(initial:)",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/protectedCredentialMetadataSaveRetainsNilAndEmptyRepresentations(initial:)?args=12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+      "expectedArgumentSwift": "Optional<String>.some(\"\")",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/protectedCredentialMetadataSaveRetainsNilAndEmptyRepresentations(initial:)",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/protectedCredentialMetadataSaveRetainsNilAndEmptyRepresentations(initial:)?args=74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "expectedArgumentSwift": "Optional<String>.none",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/protectedCredentialExplicitMigrationIsTargetedAndRecoverable(kind:)",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/protectedCredentialExplicitMigrationIsTargetedAndRecoverable(kind:)?args=18fb9fa0b971b807a1312d3702d18747a3b1b39a129df8c5d1a8f68d512bd1fd",
+      "expectedArgumentSwift": "HanlinKeychainCredentialStore.Kind.model",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/protectedCredentialExplicitMigrationIsTargetedAndRecoverable(kind:)",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/protectedCredentialExplicitMigrationIsTargetedAndRecoverable(kind:)?args=6ad21f9d2ea182f9fe66f7791944c3bfa4eb4281c1609ca95e82a89c65e6a413",
+      "expectedArgumentSwift": ".search",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/protectedCredentialExplicitMigrationIsTargetedAndRecoverable(kind:)",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/protectedCredentialExplicitMigrationIsTargetedAndRecoverable(kind:)?args=dd04afac1bebb050783a245ed0d88633759f352c85d4ab3bea3d416bf2019c75",
+      "expectedArgumentSwift": ".tool",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/protectedCredentialMigrationRejectsBuiltInMarkersAndEmptyKeys",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/protectedCredentialMigrationRejectsBuiltInMarkersAndEmptyKeys()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/protectedCredentialNewProviderCommitsOnlyReferenceAndFailedInsertRetainsExistingRows",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/protectedCredentialNewProviderCommitsOnlyReferenceAndFailedInsertRetainsExistingRows()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/protectedCredentialExplicitReplacementRecoversMissingReferenceWithoutPlaintextFallback(value:)",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/protectedCredentialExplicitReplacementRecoversMissingReferenceWithoutPlaintextFallback(value:)?args=12ae32cb1ec02d01eda3581b127c1fee3b0dc53572ed6baf239721a03d82e126",
+      "expectedArgumentSwift": "\"\"",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/protectedCredentialExplicitReplacementRecoversMissingReferenceWithoutPlaintextFallback(value:)",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/protectedCredentialExplicitReplacementRecoversMissingReferenceWithoutPlaintextFallback(value:)?args=7882c80bf922a5603eac55d7a6bbc2f1c5ff78b689dae3adc340a41159e9a951",
+      "expectedArgumentSwift": "\"synthetic-reentered\"",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/protectedCredentialMetadataFailureAndStaleDraftPreserveOriginalDiskRow",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/protectedCredentialMetadataFailureAndStaleDraftPreserveOriginalDiskRow()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/originalCredentialStageFailureLeavesOriginalDiskRowUnchanged",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/originalCredentialStageFailureLeavesOriginalDiskRowUnchanged()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/originalCredentialReadOnlySaveRetainsStagedRecoveryWithoutReplacingLegacyRow",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/originalCredentialReadOnlySaveRetainsStagedRecoveryWithoutReplacingLegacyRow()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/originalCredentialHandlesFailClosedAndPreserveCurrentRequestAuthority",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/originalCredentialHandlesFailClosedAndPreserveCurrentRequestAuthority()",
+      "status": "FAIL"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/originalSecuredSearchSelectionSurvivesUnavailableKeychain",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/originalSecuredSearchSelectionSurvivesUnavailableKeychain()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/originalCompactPublisherExportsOnlySecuredReferenceAndRetainsLegacyCompatibility",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/originalCompactPublisherExportsOnlySecuredReferenceAndRetainsLegacyCompatibility()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/originalProviderAdmissionRejectsChangesDuringDiagnosticAwait(change:)",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/originalProviderAdmissionRejectsChangesDuringDiagnosticAwait(change:)?args=5a83111e44703c9dd7431bae2754317bb495994fbf736cf7739842ded4dcbc20",
+      "expectedArgumentSwift": "\"cancel\"",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/originalProviderAdmissionRejectsChangesDuringDiagnosticAwait(change:)",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/originalProviderAdmissionRejectsChangesDuringDiagnosticAwait(change:)?args=7a27920f8970e1b56f26273584cc6b123e4bc994b4756550908e87c2e0aaf1d6",
+      "expectedArgumentSwift": "\"deleteOrigin\"",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/originalProviderAdmissionRejectsChangesDuringDiagnosticAwait(change:)",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/originalProviderAdmissionRejectsChangesDuringDiagnosticAwait(change:)?args=a2883e3744bce5f6e5da05fb2ac7600586ea31c1d4a8e38c5bd4388b3679e825",
+      "expectedArgumentSwift": "\"endpoint\"",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/originalProviderAdmissionRejectsChangesDuringDiagnosticAwait(change:)",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/originalProviderAdmissionRejectsChangesDuringDiagnosticAwait(change:)?args=5af7a92da15ba4f764ec247ac3922e6e50215960129809ec60942913c7470ca7",
+      "expectedArgumentSwift": "\"rebind\"",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/originalProviderAdmissionRejectsChangesDuringDiagnosticAwait(change:)",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/originalProviderAdmissionRejectsChangesDuringDiagnosticAwait(change:)?args=4dbb5115705a0de2a6127443c67e751a0baa58326bad39f890b1efc796cc6a3a",
+      "expectedArgumentSwift": "\"revoke\"",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/originalProviderAdmissionRejectsChangesDuringDiagnosticAwait(change:)",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/originalProviderAdmissionRejectsChangesDuringDiagnosticAwait(change:)?args=f66ab9323564942157c358fa5caee94868c1433e5c3e672e8456f747813b9a59",
+      "expectedArgumentSwift": "\"rotate\"",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/originalProviderAdmissionRejectsChangesDuringDiagnosticAwait(change:)",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/originalProviderAdmissionRejectsChangesDuringDiagnosticAwait(change:)?args=0bec9288e6dbbc994b6be9ed54aae242575fee73cd6e7fac07d6824015f8ffdc",
+      "expectedArgumentSwift": "\"rotateSameValue\"",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/originalDirectTransportRechecksOwnerInsideItsProducer",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/originalDirectTransportRechecksOwnerInsideItsProducer()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/originalReusedSDKEngineUsesEachTurnsManagerAndTransport",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/originalReusedSDKEngineUsesEachTurnsManagerAndTransport()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/originalInjectedProviderCannotBeReplacedByTurnTransport",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/originalInjectedProviderCannotBeReplacedByTurnTransport()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/originalCredentialPortRejectsForeignModelNamespaceRequestAndDeletedOrigin",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/originalCredentialPortRejectsForeignModelNamespaceRequestAndDeletedOrigin()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/originalMemoryPortRechecksOptInsAndCannotReplaceOriginlessRows",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/originalMemoryPortRechecksOptInsAndCannotReplaceOriginlessRows()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/originalDataEpochSurvivesEngineReplacementAndIsRevokedDuringPreparation",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/originalDataEpochSurvivesEngineReplacementAndIsRevokedDuringPreparation()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/deletingConversationDuringOriginalEnginePreparationCannotAdmitLateSession",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/deletingConversationDuringOriginalEnginePreparationCannotAdmitLateSession()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/stoppingInlineToolReleasesOnlyItsLeaseBeforeNonCooperativeExecutorDrains",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/stoppingInlineToolReleasesOnlyItsLeaseBeforeNonCooperativeExecutorDrains()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/originalTypedAttachmentStorePreservesBytesAndRejectsForeignSessionMetadataAndTurn",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/originalTypedAttachmentStorePreservesBytesAndRejectsForeignSessionMetadataAndTurn()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/actualSDKAdapterUsesOriginalAttachmentTurnAcrossDiagnosticsRoundsAndRevocation",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/actualSDKAdapterUsesOriginalAttachmentTurnAcrossDiagnosticsRoundsAndRevocation()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/existingSwiftDataRowPreservesLegacyFieldsAndRejectsConflictForeignScopeAndDeletion",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/existingSwiftDataRowPreservesLegacyFieldsAndRejectsConflictForeignScopeAndDeletion()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/clearHistoryCommitsCanonicalBarrierAndVisibleReplacementToOriginalDiskStore",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/clearHistoryCommitsCanonicalBarrierAndVisibleReplacementToOriginalDiskStore()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/clearHistoryRejectsAlreadySuspendedOriginalStoreWriter(hadCanonicalRecord:)",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/clearHistoryRejectsAlreadySuspendedOriginalStoreWriter(hadCanonicalRecord:)?args=fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+      "expectedArgumentSwift": "false",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/clearHistoryRejectsAlreadySuspendedOriginalStoreWriter(hadCanonicalRecord:)",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/clearHistoryRejectsAlreadySuspendedOriginalStoreWriter(hadCanonicalRecord:)?args=b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+      "expectedArgumentSwift": "true",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/clearHistorySaveFailureRestoresOriginalDiskContentWithoutSuccessMarker",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/clearHistorySaveFailureRestoresOriginalDiskContentWithoutSuccessMarker()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/temporaryClearHistoryDropsOriginalSessionHistoryWithoutInsertingStoreRows",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/temporaryClearHistoryDropsOriginalSessionHistoryWithoutInsertingStoreRows()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/clearHistoryPreservesUnrecognizedOrExhaustedCanonicalRecord(futureFormat:)",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/clearHistoryPreservesUnrecognizedOrExhaustedCanonicalRecord(futureFormat:)?args=fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+      "expectedArgumentSwift": "false",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/clearHistoryPreservesUnrecognizedOrExhaustedCanonicalRecord(futureFormat:)",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/clearHistoryPreservesUnrecognizedOrExhaustedCanonicalRecord(futureFormat:)?args=b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+      "expectedArgumentSwift": "true",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/diskBackedOriginalConversationReopensWithoutLosingLegacyOrCanonicalHistory",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/diskBackedOriginalConversationReopensWithoutLosingLegacyOrCanonicalHistory()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/originalStoreKeepsItsContainerAliveAcrossDeferredPersistenceAfterCreatorReturns",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/originalStoreKeepsItsContainerAliveAcrossDeferredPersistenceAfterCreatorReturns()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/identicalContentAndPartIDsKeepExactRowRunBindingAndOriginalReplaySession",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/identicalContentAndPartIDsKeepExactRowRunBindingAndOriginalReplaySession()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/originalHostActionContinuesThroughTheSameOwnerEngineAndCanonicalStore",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/originalHostActionContinuesThroughTheSameOwnerEngineAndCanonicalStore()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/temporaryCanonicalMetadataSurvivesCancellationWithoutDatabaseWrite",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/temporaryCanonicalMetadataSurvivesCancellationWithoutDatabaseWrite()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/historyOpenRejectsDeletedForeignAndCancelledOriginsWithoutCreatingSession",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/historyOpenRejectsDeletedForeignAndCancelledOriginsWithoutCreatingSession()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/historicalReceiptDedupRejectsChangedLargeIntegerOutcomeAndPreservesBytes",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/historicalReceiptDedupRejectsChangedLargeIntegerOutcomeAndPreservesBytes()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/liveSettledAndProvisionalReceiptsHaveDistinctReconciliationRules",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/liveSettledAndProvisionalReceiptsHaveDistinctReconciliationRules()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/acceptedOriginAcknowledgementCannotClearAnotherWindowOrNewerDelivery",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/acceptedOriginAcknowledgementCannotClearAnotherWindowOrNewerDelivery()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/actualNativeBoundaryPreservesExactInputsAndRejectsInvalidOrChangedContextBeforeEffects",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/actualNativeBoundaryPreservesExactInputsAndRejectsInvalidOrChangedContextBeforeEffects()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/officialToolPayloadUsesOriginalRendererAndPersistsExactBytesWithoutInferringArbitraryJSON",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/officialToolPayloadUsesOriginalRendererAndPersistsExactBytesWithoutInferringArbitraryJSON()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/cachedSearchCatalogKeepsOriginalRoutesAndInvalidatesChangedSchemasBeforeDispatch",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/cachedSearchCatalogKeepsOriginalRoutesAndInvalidatesChangedSchemasBeforeDispatch()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinAppAgentSessionOwnerTests/appHostInvokesOriginalExecutorOnceAndUsesExplicitNativeOutcome",
+      "source": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinAppAgentSessionOwnerTests/appHostInvokesOriginalExecutorOnceAndUsesExplicitNativeOutcome()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinApplicationEmbeddingTests/providerCredentialLookupUsesTheRecordsContainer",
+      "source": "AI_HLYTests/HanlinApplicationEmbeddingTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinApplicationEmbeddingTests/providerCredentialLookupUsesTheRecordsContainer()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinApplicationEmbeddingTests/originalRuntimeCannotBeRedirectedToAnotherContainer",
+      "source": "AI_HLYTests/HanlinApplicationEmbeddingTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinApplicationEmbeddingTests/originalRuntimeCannotBeRedirectedToAnotherContainer()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinApplicationEmbeddingTests/programmaticProviderAndModelUseOriginalRowsAndProtectedWriter",
+      "source": "AI_HLYTests/HanlinApplicationEmbeddingTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinApplicationEmbeddingTests/programmaticProviderAndModelUseOriginalRowsAndProtectedWriter()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinApplicationEmbeddingTests/hostConstructedActivitySnapshotPreservesIdentityAndOriginalPayloads",
+      "source": "AI_HLYTests/HanlinApplicationEmbeddingTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinApplicationEmbeddingTests/hostConstructedActivitySnapshotPreservesIdentityAndOriginalPayloads()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinApplicationEmbeddingTests/providerPreloadingPreservesDistinctRoutingIdentitiesWithEqualNames",
+      "source": "AI_HLYTests/HanlinApplicationEmbeddingTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinApplicationEmbeddingTests/providerPreloadingPreservesDistinctRoutingIdentitiesWithEqualNames()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinApplicationEmbeddingTests/providerPreloadingKeepsCustomBuiltinRoutingOverride",
+      "source": "AI_HLYTests/HanlinApplicationEmbeddingTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinApplicationEmbeddingTests/providerPreloadingKeepsCustomBuiltinRoutingOverride()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinApplicationEmbeddingTests/providerPreloadingPreservesRenamedBuiltinCredentials",
+      "source": "AI_HLYTests/HanlinApplicationEmbeddingTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinApplicationEmbeddingTests/providerPreloadingPreservesRenamedBuiltinCredentials()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinApplicationEmbeddingTests/explicitBuiltinRequestOverrideStaysHostOwnedDuringPreload",
+      "source": "AI_HLYTests/HanlinApplicationEmbeddingTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinApplicationEmbeddingTests/explicitBuiltinRequestOverrideStaysHostOwnedDuringPreload()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinApplicationEmbeddingTests/providerPreloadingRetainsAmbiguousLegacyCredentialRows",
+      "source": "AI_HLYTests/HanlinApplicationEmbeddingTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinApplicationEmbeddingTests/providerPreloadingRetainsAmbiguousLegacyCredentialRows()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinApplicationEmbeddingTests/modelPreloadingKeepsCustomMetadataForMatchingCatalogName",
+      "source": "AI_HLYTests/HanlinApplicationEmbeddingTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinApplicationEmbeddingTests/modelPreloadingKeepsCustomMetadataForMatchingCatalogName()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinApplicationEmbeddingTests/modelPreloadingPreservesDistinctCustomRowsWithEqualNames",
+      "source": "AI_HLYTests/HanlinApplicationEmbeddingTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinApplicationEmbeddingTests/modelPreloadingPreservesDistinctCustomRowsWithEqualNames()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinApplicationEmbeddingTests/modelPreloadingRetainsBuiltinCustomNameCollision",
+      "source": "AI_HLYTests/HanlinApplicationEmbeddingTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinApplicationEmbeddingTests/modelPreloadingRetainsBuiltinCustomNameCollision()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinApplicationEmbeddingTests/conversationMetadataMutatesOnlyTheOriginalRowsAndPreservesAnnouncement",
+      "source": "AI_HLYTests/HanlinApplicationEmbeddingTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinApplicationEmbeddingTests/conversationMetadataMutatesOnlyTheOriginalRowsAndPreservesAnnouncement()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinApplicationEmbeddingTests/conversationDeletionRevokesPreparationAndRejectsLateProjection",
+      "source": "AI_HLYTests/HanlinApplicationEmbeddingTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinApplicationEmbeddingTests/conversationDeletionRevokesPreparationAndRejectsLateProjection()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinApplicationEmbeddingTests/conversationMutationRejectsAForeignContainerBeforeRevocation",
+      "source": "AI_HLYTests/HanlinApplicationEmbeddingTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinApplicationEmbeddingTests/conversationMutationRejectsAForeignContainerBeforeRevocation()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinApplicationEmbeddingTests/conversationMetadataAndDeletionReturnSaveFailuresAndRollback",
+      "source": "AI_HLYTests/HanlinApplicationEmbeddingTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinApplicationEmbeddingTests/conversationMetadataAndDeletionReturnSaveFailuresAndRollback()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinApplicationSystemIntegrationTests/widgetIntentMetadataLoadsTheOriginalHostTranslations(language:)",
+      "source": "AI_HLYTests/HanlinApplicationSystemIntegrationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinApplicationSystemIntegrationTests/widgetIntentMetadataLoadsTheOriginalHostTranslations(language:)?args=50eac10e7966a04e139902940a2a8e129a4597574c709cb8d01939ace56ff9c3",
+      "expectedArgumentSwift": "\"en\"",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinApplicationSystemIntegrationTests/widgetIntentMetadataLoadsTheOriginalHostTranslations(language:)",
+      "source": "AI_HLYTests/HanlinApplicationSystemIntegrationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinApplicationSystemIntegrationTests/widgetIntentMetadataLoadsTheOriginalHostTranslations(language:)?args=e03fc3fe6107496bd2d57f8f79990cae5e4da37f71d6a346612807c379bcd405",
+      "expectedArgumentSwift": "\"he\"",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinApplicationSystemIntegrationTests/widgetIntentMetadataLoadsTheOriginalHostTranslations(language:)",
+      "source": "AI_HLYTests/HanlinApplicationSystemIntegrationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinApplicationSystemIntegrationTests/widgetIntentMetadataLoadsTheOriginalHostTranslations(language:)?args=0e73b77b50d66fb7b294e5fe27afb94adb7b95d73750557086bf8c87fcfcde28",
+      "expectedArgumentSwift": "\"zh-Hans\"",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinApplicationSystemIntegrationTests/notificationBootstrapPreservesHostActionsAndCategories",
+      "source": "AI_HLYTests/HanlinApplicationSystemIntegrationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinApplicationSystemIntegrationTests/notificationBootstrapPreservesHostActionsAndCategories()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinApplicationSystemIntegrationTests/plainHostsDoNotInheritHanlinShareGroupOrCameraRoute",
+      "source": "AI_HLYTests/HanlinApplicationSystemIntegrationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinApplicationSystemIntegrationTests/plainHostsDoNotInheritHanlinShareGroupOrCameraRoute()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinApplicationSystemIntegrationTests/liveSystemIntegrationOwnershipCannotBeRedirected",
+      "source": "AI_HLYTests/HanlinApplicationSystemIntegrationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinApplicationSystemIntegrationTests/liveSystemIntegrationOwnershipCannotBeRedirected()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinCapabilityObservationTests/skillEnabledMutationNotifiesAndReadsActualPersistedState",
+      "source": "AI_HLYTests/HanlinCapabilityObservationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinCapabilityObservationTests/skillEnabledMutationNotifiesAndReadsActualPersistedState()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinCapabilityObservationTests/filesystemSkillQueriesObserveCommittedCatalogChanges",
+      "source": "AI_HLYTests/HanlinCapabilityObservationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinCapabilityObservationTests/filesystemSkillQueriesObserveCommittedCatalogChanges()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinCapabilityObservationTests/catalogNotificationsReadTheActualRegisteredEntries",
+      "source": "AI_HLYTests/HanlinCapabilityObservationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinCapabilityObservationTests/catalogNotificationsReadTheActualRegisteredEntries()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinCapabilityObservationTests/nativePreferenceChangesNotifyAndReadActualDefaults",
+      "source": "AI_HLYTests/HanlinCapabilityObservationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinCapabilityObservationTests/nativePreferenceChangesNotifyAndReadActualDefaults()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinCapabilityObservationTests/nativeGroupObservationPreservesIndividualPreferences",
+      "source": "AI_HLYTests/HanlinCapabilityObservationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinCapabilityObservationTests/nativeGroupObservationPreservesIndividualPreferences()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinCapabilityObservationTests/mcpSelectionNotifiesAfterRealCommitAndPreservesOtherChats",
+      "source": "AI_HLYTests/HanlinCapabilityObservationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinCapabilityObservationTests/mcpSelectionNotifiesAfterRealCommitAndPreservesOtherChats()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinCapabilityObservationTests/failedMCPSelectionDoesNotNotifyACommit",
+      "source": "AI_HLYTests/HanlinCapabilityObservationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinCapabilityObservationTests/failedMCPSelectionDoesNotNotifyACommit()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinCapabilityObservationTests/unloadedMCPSelectionKeepsTheExistingAdmissionGuard",
+      "source": "AI_HLYTests/HanlinCapabilityObservationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinCapabilityObservationTests/unloadedMCPSelectionKeepsTheExistingAdmissionGuard()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinCapabilityObservationTests/mcpSignalsAreScopedAndNoopWritesDoNotNotify",
+      "source": "AI_HLYTests/HanlinCapabilityObservationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinCapabilityObservationTests/mcpSignalsAreScopedAndNoopWritesDoNotNotify()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinCapabilityObservationTests/serverRemovalPreservesExplicitEmptyAndNotifiesOnlyAffectedScopes",
+      "source": "AI_HLYTests/HanlinCapabilityObservationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinCapabilityObservationTests/serverRemovalPreservesExplicitEmptyAndNotifiesOnlyAffectedScopes()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinCapabilityObservationTests/concurrentMCPReadsKeepTheirRequestedChatAndStorageScope",
+      "source": "AI_HLYTests/HanlinCapabilityObservationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinCapabilityObservationTests/concurrentMCPReadsKeepTheirRequestedChatAndStorageScope()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinCapabilityObservationTests/delayedConcurrentServerIntentsPreserveBothCanonicalSelections",
+      "source": "AI_HLYTests/HanlinCapabilityObservationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinCapabilityObservationTests/delayedConcurrentServerIntentsPreserveBothCanonicalSelections()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinCapabilityObservationTests/concurrentActorIntentsCommitCurrentStateAndExactMutationScopes",
+      "source": "AI_HLYTests/HanlinCapabilityObservationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinCapabilityObservationTests/concurrentActorIntentsCommitCurrentStateAndExactMutationScopes()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinCapabilityObservationTests/serverIntentsSeedActualDefaultsOnlyForAbsentRecordsAndPreserveEmpty",
+      "source": "AI_HLYTests/HanlinCapabilityObservationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinCapabilityObservationTests/serverIntentsSeedActualDefaultsOnlyForAbsentRecordsAndPreserveEmpty()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinCapabilityObservationTests/serverIntentFailuresBelongToTheirRequestAndDoNotPublishFalseCommits",
+      "source": "AI_HLYTests/HanlinCapabilityObservationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinCapabilityObservationTests/serverIntentFailuresBelongToTheirRequestAndDoNotPublishFalseCommits()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinCapabilityObservationTests/firstIntentPinsRequestDefaultsAcrossGatedConfigurationChanges",
+      "source": "AI_HLYTests/HanlinCapabilityObservationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinCapabilityObservationTests/firstIntentPinsRequestDefaultsAcrossGatedConfigurationChanges()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinCapabilityObservationTests/serverIntentSaveFailureAfterSuccessfulReadPreservesBytesAndRevision",
+      "source": "AI_HLYTests/HanlinCapabilityObservationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinCapabilityObservationTests/serverIntentSaveFailureAfterSuccessfulReadPreservesBytesAndRevision()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinCapabilityObservationTests/migrationOverrideUsesOnlyItsOwnedSource",
+      "source": "AI_HLYTests/HanlinCapabilityObservationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinCapabilityObservationTests/migrationOverrideUsesOnlyItsOwnedSource()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinConversationProjectionTests/originalRichPayloadsAndFailureTextPersistInTheSameRows",
+      "source": "AI_HLYTests/HanlinConversationProjectionTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinConversationProjectionTests/originalRichPayloadsAndFailureTextPersistInTheSameRows()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinConversationProjectionTests/staleRunLeaseCannotReleaseANewerUIOrHeadlessOwner",
+      "source": "AI_HLYTests/HanlinConversationProjectionTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinConversationProjectionTests/staleRunLeaseCannotReleaseANewerUIOrHeadlessOwner()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinMCPEmbeddingTests/conversationSelectionKeepsOriginalDefaultsExplicitEmptyAndOtherChats",
+      "source": "AI_HLYTests/HanlinMCPEmbeddingTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMCPEmbeddingTests/conversationSelectionKeepsOriginalDefaultsExplicitEmptyAndOtherChats()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinMCPEmbeddingTests/failedSelectionReadCannotRestoreDefaultMCPAuthority",
+      "source": "AI_HLYTests/HanlinMCPEmbeddingTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMCPEmbeddingTests/failedSelectionReadCannotRestoreDefaultMCPAuthority()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinMCPEmbeddingTests/failedFeatureCommitDoesNotPublishSuccessOrStartRuntime",
+      "source": "AI_HLYTests/HanlinMCPEmbeddingTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMCPEmbeddingTests/failedFeatureCommitDoesNotPublishSuccessOrStartRuntime()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinMCPEmbeddingTests/staleEditableSettingsPreserveCurrentEnvironmentAndPackageIdentity",
+      "source": "AI_HLYTests/HanlinMCPEmbeddingTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMCPEmbeddingTests/staleEditableSettingsPreserveCurrentEnvironmentAndPackageIdentity()",
+      "status": "FAIL"
+    },
+    {
+      "method": "HanlinMCPEmbeddingTests/disabledRuntimeOperationsReturnTheirOwnFailure",
+      "source": "AI_HLYTests/HanlinMCPEmbeddingTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMCPEmbeddingTests/disabledRuntimeOperationsReturnTheirOwnFailure()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinMCPEmbeddingTests/selectionAcknowledgementRejectsAConversationDeletedDuringCommit",
+      "source": "AI_HLYTests/HanlinMCPEmbeddingTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMCPEmbeddingTests/selectionAcknowledgementRejectsAConversationDeletedDuringCommit()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinMCPEmbeddingTests/overlappingAdministrationCannotReplaceCredentialsOrDisableAnAdmittedOperation",
+      "source": "AI_HLYTests/HanlinMCPEmbeddingTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMCPEmbeddingTests/overlappingAdministrationCannotReplaceCredentialsOrDisableAnAdmittedOperation()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinMCPEmbeddingTests/cancellationBeforeInstallerProgressDoesNotStartRuntimeAndReleasesOnlyItsLease",
+      "source": "AI_HLYTests/HanlinMCPEmbeddingTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMCPEmbeddingTests/cancellationBeforeInstallerProgressDoesNotStartRuntimeAndReleasesOnlyItsLease()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinMCPEmbeddingTests/duplicateEnvironmentNamesFailBeforePersistenceAndCannotCrashRuntimeAssembly",
+      "source": "AI_HLYTests/HanlinMCPEmbeddingTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMCPEmbeddingTests/duplicateEnvironmentNamesFailBeforePersistenceAndCannotCrashRuntimeAssembly()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinMCPEmbeddingTests/duplicatePersistentIdentitiesProduceErrorsInsteadOfTrapsOrAmbiguousRows",
+      "source": "AI_HLYTests/HanlinMCPEmbeddingTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMCPEmbeddingTests/duplicatePersistentIdentitiesProduceErrorsInsteadOfTrapsOrAmbiguousRows()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinNativeWidgetRendererTests/testExpoRawTaggedAndDateWireSurvivePublicationAndSourceAction",
+      "source": "AI_HLYTests/HanlinNativeWidgetRendererTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinNativeWidgetRendererTests/testExpoRawTaggedAndDateWireSurvivePublicationAndSourceAction",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinNativeWidgetRendererTests/testOriginalShapesStacksImagesLinksAndModifiersMatchNativeReferences",
+      "source": "AI_HLYTests/HanlinNativeWidgetRendererTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinNativeWidgetRendererTests/testOriginalShapesStacksImagesLinksAndModifiersMatchNativeReferences",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinNativeWidgetRendererTests/testOriginalTextConcatenationPreservesNativeTypeAndChildStyles",
+      "source": "AI_HLYTests/HanlinNativeWidgetRendererTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinNativeWidgetRendererTests/testOriginalTextConcatenationPreservesNativeTypeAndChildStyles",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinNativeWidgetRendererTests/testOriginalSlotsMatchNativeOverlayBackgroundAndMaskPixels",
+      "source": "AI_HLYTests/HanlinNativeWidgetRendererTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinNativeWidgetRendererTests/testOriginalSlotsMatchNativeOverlayBackgroundAndMaskPixels",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinNativeWidgetRendererTests/testOriginalChartAndGaugeReceiveTheirTypedNativeData",
+      "source": "AI_HLYTests/HanlinNativeWidgetRendererTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinNativeWidgetRendererTests/testOriginalChartAndGaugeReceiveTheirTypedNativeData",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinNativeWidgetRendererTests/testOriginalLabelAndProgressKeepTheirPreparedChildren",
+      "source": "AI_HLYTests/HanlinNativeWidgetRendererTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinNativeWidgetRendererTests/testOriginalLabelAndProgressKeepTheirPreparedChildren",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinNativeWidgetRendererTests/testInstalledExternalSourceRendersThroughAnyChild",
+      "source": "AI_HLYTests/HanlinNativeWidgetRendererTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinNativeWidgetRendererTests/testInstalledExternalSourceRendersThroughAnyChild",
+      "status": "PASS"
+    },
+    {
+      "method": "PendingFirstTurnTests/homeFirstTurnDispatchesOnEndpointRegistration",
+      "source": "AI_HLYTests/HanlinOrganizerDockParityTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/PendingFirstTurnTests/homeFirstTurnDispatchesOnEndpointRegistration()",
+      "status": "PASS"
+    },
+    {
+      "method": "PendingFirstTurnTests/cancellingPendingFirstTurnPreventsExecution",
+      "source": "AI_HLYTests/HanlinOrganizerDockParityTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/PendingFirstTurnTests/cancellingPendingFirstTurnPreventsExecution()",
+      "status": "PASS"
+    },
+    {
+      "method": "PendingFirstTurnTests/rejectedSendRollsBackAndRestoresHomeDraft",
+      "source": "AI_HLYTests/HanlinOrganizerDockParityTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/PendingFirstTurnTests/rejectedSendRollsBackAndRestoresHomeDraft()",
+      "status": "PASS"
+    },
+    {
+      "method": "PendingFirstTurnTests/invalidHomeSelectedModelIndexRefused",
+      "source": "AI_HLYTests/HanlinOrganizerDockParityTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/PendingFirstTurnTests/invalidHomeSelectedModelIndexRefused()",
+      "status": "PASS"
+    },
+    {
+      "method": "ModelPopoverZoomOrderTests/nativeGenerationConfigurationPreservesOriginalSettings",
+      "source": "AI_HLYTests/HanlinOrganizerDockParityTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ModelPopoverZoomOrderTests/nativeGenerationConfigurationPreservesOriginalSettings()",
+      "status": "PASS"
+    },
+    {
+      "method": "ModelPopoverZoomOrderTests/nativeGenerationRejectsUnsupportedTopPThroughOriginalEngine",
+      "source": "AI_HLYTests/HanlinOrganizerDockParityTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ModelPopoverZoomOrderTests/nativeGenerationRejectsUnsupportedTopPThroughOriginalEngine()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinRemoteMediaURLTests/acceptsPublicHTTPS",
+      "source": "AI_HLYTests/HanlinRemoteMediaURLTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinRemoteMediaURLTests/acceptsPublicHTTPS()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinRemoteMediaURLTests/rejectsCredentialsAndOtherSchemes",
+      "source": "AI_HLYTests/HanlinRemoteMediaURLTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinRemoteMediaURLTests/rejectsCredentialsAndOtherSchemes()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinRemoteMediaURLTests/rejectsLiteralNetworkAddresses",
+      "source": "AI_HLYTests/HanlinRemoteMediaURLTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinRemoteMediaURLTests/rejectsLiteralNetworkAddresses()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinRemoteMediaURLTests/rejectsLocalNamesAndAmbiguousHosts",
+      "source": "AI_HLYTests/HanlinRemoteMediaURLTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinRemoteMediaURLTests/rejectsLocalNamesAndAmbiguousHosts()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinRemoteMediaURLTests/boundsURLAndHostLabels",
+      "source": "AI_HLYTests/HanlinRemoteMediaURLTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinRemoteMediaURLTests/boundsURLAndHostLabels()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinRemoteMediaURLTests/preservesOpaqueSourceBytes",
+      "source": "AI_HLYTests/HanlinRemoteMediaURLTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinRemoteMediaURLTests/preservesOpaqueSourceBytes()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinRemoteMediaURLTests/resolvedDestinationsRejectPrivateSpecialAndTranslatedLocalAddresses",
+      "source": "AI_HLYTests/HanlinRemoteMediaURLTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinRemoteMediaURLTests/resolvedDestinationsRejectPrivateSpecialAndTranslatedLocalAddresses()",
+      "status": "PASS"
+    },
+    {
+      "method": "NativeComposerLineSizingTests/editingKeepsDraftAndSelection",
+      "source": "AI_HLYTests/NativeComposerLineSizingTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/NativeComposerLineSizingTests/editingKeepsDraftAndSelection()",
+      "status": "PASS"
+    },
+    {
+      "method": "NativeComposerLineSizingTests/layoutDuringNativeEditPreservesCharactersAndCursor(_:)",
+      "source": "AI_HLYTests/NativeComposerLineSizingTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/NativeComposerLineSizingTests/layoutDuringNativeEditPreservesCharactersAndCursor(_:)?args=2250c66955992669e86939c6b31e196d9cd490466c1e711dd047f673f50376c8",
+      "expectedArgumentSwift": "\"Model picker keeps this draft\"",
+      "status": "PASS"
+    },
+    {
+      "method": "NativeComposerLineSizingTests/layoutDuringNativeEditPreservesCharactersAndCursor(_:)",
+      "source": "AI_HLYTests/NativeComposerLineSizingTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/NativeComposerLineSizingTests/layoutDuringNativeEditPreservesCharactersAndCursor(_:)?args=776e902447d68c1f18df72fe4eedba1363511ff53451722f9150e950e929e873",
+      "expectedArgumentSwift": "String(repeating: \"Wrapped accessible draft text \", count: 35)",
+      "status": "PASS"
+    },
+    {
+      "method": "NativeComposerLineSizingTests/layoutDuringNativeEditPreservesCharactersAndCursor(_:)",
+      "source": "AI_HLYTests/NativeComposerLineSizingTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/NativeComposerLineSizingTests/layoutDuringNativeEditPreservesCharactersAndCursor(_:)?args=b55c61da84bb14f77dbc16cff384453f09ae822d5c971f85595b2f55df0a80aa",
+      "expectedArgumentSwift": "\"שלום 👋 טיוטה ארוכה\"",
+      "status": "PASS"
+    },
+    {
+      "method": "NativeComposerLineSizingTests/coalescedNativeEditsPreserveTextAndSelection(_:)",
+      "source": "AI_HLYTests/NativeComposerLineSizingTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/NativeComposerLineSizingTests/coalescedNativeEditsPreserveTextAndSelection(_:)?args=236e5924a925d3d6664d77b9d0b91e830864db7996d0331128deeebc24266302",
+      "expectedArgumentSwift": "\"Draft preserved across switch\"",
+      "status": "PASS"
+    },
+    {
+      "method": "NativeComposerLineSizingTests/coalescedNativeEditsPreserveTextAndSelection(_:)",
+      "source": "AI_HLYTests/NativeComposerLineSizingTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/NativeComposerLineSizingTests/coalescedNativeEditsPreserveTextAndSelection(_:)?args=c7dd426214401905f680c55057d546baaae4b09ec5a4455d9f9de0b55549e2a5",
+      "expectedArgumentSwift": "\"Run the local Python acceptance tool and report the result.\"",
+      "status": "PASS"
+    },
+    {
+      "method": "NativeComposerLineSizingTests/coalescedNativeEditsPreserveTextAndSelection(_:)",
+      "source": "AI_HLYTests/NativeComposerLineSizingTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/NativeComposerLineSizingTests/coalescedNativeEditsPreserveTextAndSelection(_:)?args=e6fba6505ae9fc1e912896a2c74151dc8a55be8e956f36d88e4daeddc38f1d30",
+      "expectedArgumentSwift": "\"שלום 👋🏽 טיוטה ארוכה\"",
+      "status": "PASS"
+    },
+    {
+      "method": "NativeComposerLineSizingTests/retainedRenderSnapshotPreservesNativeDraftAndCursor(_:)",
+      "source": "AI_HLYTests/NativeComposerLineSizingTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/NativeComposerLineSizingTests/retainedRenderSnapshotPreservesNativeDraftAndCursor(_:)?args=c321bfceaf47161d949dc38dad335a8aaf83d28cb42bab7650641e44a7f7e088",
+      "expectedArgumentSwift": "\"PAIRED_CANCEL_12345678-1234-1234-1234-123456789ABC\"",
+      "status": "PASS"
+    },
+    {
+      "method": "NativeComposerLineSizingTests/retainedRenderSnapshotPreservesNativeDraftAndCursor(_:)",
+      "source": "AI_HLYTests/NativeComposerLineSizingTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/NativeComposerLineSizingTests/retainedRenderSnapshotPreservesNativeDraftAndCursor(_:)?args=738c3f85c22d2d1f12717798195de3bfab167c26f1438b248eb81db098866fec",
+      "expectedArgumentSwift": "\"PAIRED_OPEN_12345678-1234-1234-1234-123456789ABC\"",
+      "status": "PASS"
+    },
+    {
+      "method": "NativeComposerLineSizingTests/retainedRenderSnapshotPreservesNativeDraftAndCursor(_:)",
+      "source": "AI_HLYTests/NativeComposerLineSizingTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/NativeComposerLineSizingTests/retainedRenderSnapshotPreservesNativeDraftAndCursor(_:)?args=b15d262025720a7f367c544faffd6be7aa871d4befc09776a23d8f63cd5253a1",
+      "expectedArgumentSwift": "\"שלום 👋🏽 טיוטה\\nשורה שנייה\"",
+      "status": "PASS"
+    },
+    {
+      "method": "NativeComposerLineSizingTests/liveOwnerClearAndReplacementBeforeRenderAcknowledgement",
+      "source": "AI_HLYTests/NativeComposerLineSizingTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/NativeComposerLineSizingTests/liveOwnerClearAndReplacementBeforeRenderAcknowledgement()",
+      "status": "PASS"
+    },
+    {
+      "method": "NativeComposerLineSizingTests/equalStringOwnerSwitchKeepsPendingInputAndLateDelegateScoped",
+      "source": "AI_HLYTests/NativeComposerLineSizingTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/NativeComposerLineSizingTests/equalStringOwnerSwitchKeepsPendingInputAndLateDelegateScoped()",
+      "status": "PASS"
+    },
+    {
+      "method": "NativeComposerLineSizingTests/canonicalEquivalentOwnerAndNativeReplacementsPreserveExactText",
+      "source": "AI_HLYTests/NativeComposerLineSizingTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/NativeComposerLineSizingTests/canonicalEquivalentOwnerAndNativeReplacementsPreserveExactText()",
+      "status": "PASS"
+    },
+    {
+      "method": "NativeComposerLineSizingTests/sameValueClearPrecedesLateNativeDelegate(_:)",
+      "source": "AI_HLYTests/NativeComposerLineSizingTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/NativeComposerLineSizingTests/sameValueClearPrecedesLateNativeDelegate(_:)?args=fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+      "expectedArgumentSwift": "false",
+      "status": "PASS"
+    },
+    {
+      "method": "NativeComposerLineSizingTests/sameValueClearPrecedesLateNativeDelegate(_:)",
+      "source": "AI_HLYTests/NativeComposerLineSizingTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/NativeComposerLineSizingTests/sameValueClearPrecedesLateNativeDelegate(_:)?args=b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+      "expectedArgumentSwift": "true",
+      "status": "PASS"
+    },
+    {
+      "method": "NativeComposerLineSizingTests/markedTextOwnerSwitchPreservesCompositionAndAuthoritativeClear(_:)",
+      "source": "AI_HLYTests/NativeComposerLineSizingTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/NativeComposerLineSizingTests/markedTextOwnerSwitchPreservesCompositionAndAuthoritativeClear(_:)?args=fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+      "expectedArgumentSwift": "false",
+      "status": "PASS"
+    },
+    {
+      "method": "NativeComposerLineSizingTests/markedTextOwnerSwitchPreservesCompositionAndAuthoritativeClear(_:)",
+      "source": "AI_HLYTests/NativeComposerLineSizingTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/NativeComposerLineSizingTests/markedTextOwnerSwitchPreservesCompositionAndAuthoritativeClear(_:)?args=b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+      "expectedArgumentSwift": "true",
+      "status": "PASS"
+    },
+    {
+      "method": "NativeComposerLineSizingTests/programmaticDraftUpdatesWhileEditing",
+      "source": "AI_HLYTests/NativeComposerLineSizingTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/NativeComposerLineSizingTests/programmaticDraftUpdatesWhileEditing()",
+      "status": "PASS"
+    },
+    {
+      "method": "NativeComposerLineSizingTests/wrappedLinesAndScrolling",
+      "source": "AI_HLYTests/NativeComposerLineSizingTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/NativeComposerLineSizingTests/wrappedLinesAndScrolling()",
+      "status": "PASS"
+    },
+    {
+      "method": "NativeComposerLineSizingTests/textKit2WrappedLinesKeepNativeLayout",
+      "source": "AI_HLYTests/NativeComposerLineSizingTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/NativeComposerLineSizingTests/textKit2WrappedLinesKeepNativeLayout()",
+      "status": "PASS"
+    },
+    {
+      "method": "NativeComposerLineSizingTests/textKit2ParagraphCoverageAndConservativeFallback",
+      "source": "AI_HLYTests/NativeComposerLineSizingTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/NativeComposerLineSizingTests/textKit2ParagraphCoverageAndConservativeFallback()",
+      "status": "PASS"
+    },
+    {
+      "method": "NativeComposerLineSizingTests/fontAndViewport",
+      "source": "AI_HLYTests/NativeComposerLineSizingTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/NativeComposerLineSizingTests/fontAndViewport()",
+      "status": "PASS"
+    },
+    {
+      "method": "RuntimeAutonomyV3Tests/actualMCPTransportPreservesLargeStructuredResultsThroughTheOriginalRendererAndStore",
+      "source": "AI_HLYTests/RuntimeAutonomyV3Tests.swift",
+      "url": null,
+      "status": "NOT_RUN",
+      "reason": "Requested Swift Testing method selector omitted required empty argument parentheses"
+    },
+    {
+      "method": "ShareInboxHostIntegrationTests/mixedBatchBecomesNamedVerifiedChatAttachmentsWithoutConsumingTheInbox",
+      "source": "AI_HLYTests/ShareInboxHostIntegrationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ShareInboxHostIntegrationTests/mixedBatchBecomesNamedVerifiedChatAttachmentsWithoutConsumingTheInbox()",
+      "status": "PASS"
+    },
+    {
+      "method": "ShareInboxHostIntegrationTests/invalidCapacityRejectedItemsAndTamperedBytesCannotChangeTheSourceBatch",
+      "source": "AI_HLYTests/ShareInboxHostIntegrationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ShareInboxHostIntegrationTests/invalidCapacityRejectedItemsAndTamperedBytesCannotChangeTheSourceBatch()",
+      "status": "FAIL"
+    },
+    {
+      "method": "ShareInboxHostIntegrationTests/cancelledDraftPreparationKeepsTheOriginalFile",
+      "source": "AI_HLYTests/ShareInboxHostIntegrationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ShareInboxHostIntegrationTests/cancelledDraftPreparationKeepsTheOriginalFile()",
+      "status": "PASS"
+    },
+    {
+      "method": "ShareInboxHostIntegrationTests/providerBatchSurvivesSourceDeletionAndIsReadByTheRealHostInbox",
+      "source": "AI_HLYTests/ShareInboxHostIntegrationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ShareInboxHostIntegrationTests/providerBatchSurvivesSourceDeletionAndIsReadByTheRealHostInbox()",
+      "status": "PASS"
+    },
+    {
+      "method": "VoiceRecordingLifecycleTests/testVR01_DismissBeforePermissionCallback_IgnoresLateGranted",
+      "source": "AI_HLYTests/VoiceRecordingLifecycleTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/VoiceRecordingLifecycleTests/testVR01_DismissBeforePermissionCallback_IgnoresLateGranted",
+      "status": "PASS"
+    },
+    {
+      "method": "VoiceRecordingLifecycleTests/testVR02_ReopenCreatesNewAttempt_OldCallbackIgnored",
+      "source": "AI_HLYTests/VoiceRecordingLifecycleTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/VoiceRecordingLifecycleTests/testVR02_ReopenCreatesNewAttempt_OldCallbackIgnored",
+      "status": "PASS"
+    },
+    {
+      "method": "VoiceRecordingLifecycleTests/testVR03_PermissionDeniedAndRestricted",
+      "source": "AI_HLYTests/VoiceRecordingLifecycleTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/VoiceRecordingLifecycleTests/testVR03_PermissionDeniedAndRestricted",
+      "status": "PASS"
+    },
+    {
+      "method": "VoiceRecordingLifecycleTests/testVR04_PermissionRevokedInSettings_RecheckedOnForeground",
+      "source": "AI_HLYTests/VoiceRecordingLifecycleTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/VoiceRecordingLifecycleTests/testVR04_PermissionRevokedInSettings_RecheckedOnForeground",
+      "status": "PASS"
+    },
+    {
+      "method": "VoiceRecordingLifecycleTests/testVR05_RapidDoubleStart_OnlyOneActive",
+      "source": "AI_HLYTests/VoiceRecordingLifecycleTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/VoiceRecordingLifecycleTests/testVR05_RapidDoubleStart_OnlyOneActive",
+      "status": "PASS"
+    },
+    {
+      "method": "VoiceRecordingLifecycleTests/testVR06_FailureAfterSetActive_RollsBackAudioSession",
+      "source": "AI_HLYTests/VoiceRecordingLifecycleTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/VoiceRecordingLifecycleTests/testVR06_FailureAfterSetActive_RollsBackAudioSession",
+      "status": "PASS"
+    },
+    {
+      "method": "VoiceRecordingLifecycleTests/testVR07_RollbackAtAllStages",
+      "source": "AI_HLYTests/VoiceRecordingLifecycleTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/VoiceRecordingLifecycleTests/testVR07_RollbackAtAllStages",
+      "status": "PASS"
+    },
+    {
+      "method": "VoiceRecordingLifecycleTests/testVR08_StopPreservesRecognizedText_SecondStopIdempotent",
+      "source": "AI_HLYTests/VoiceRecordingLifecycleTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/VoiceRecordingLifecycleTests/testVR08_StopPreservesRecognizedText_SecondStopIdempotent",
+      "status": "PASS"
+    },
+    {
+      "method": "VoiceRecordingLifecycleTests/testVR09_DismissWhileTapActive_ShutsDownCleanly",
+      "source": "AI_HLYTests/VoiceRecordingLifecycleTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/VoiceRecordingLifecycleTests/testVR09_DismissWhileTapActive_ShutsDownCleanly",
+      "status": "PASS"
+    },
+    {
+      "method": "VoiceRecordingLifecycleTests/testVR10_StaleGenerationCallback_CannotMutateNewSession",
+      "source": "AI_HLYTests/VoiceRecordingLifecycleTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/VoiceRecordingLifecycleTests/testVR10_StaleGenerationCallback_CannotMutateNewSession",
+      "status": "PASS"
+    },
+    {
+      "method": "VoiceRecordingLifecycleTests/testVR11_AudioTapSink_RealTimeSafetyAndRms",
+      "source": "AI_HLYTests/VoiceRecordingLifecycleTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/VoiceRecordingLifecycleTests/testVR11_AudioTapSink_RealTimeSafetyAndRms",
+      "status": "PASS"
+    },
+    {
+      "method": "VoiceRecordingLifecycleTests/testVR12_RouteChangeAndBackgroundHandling",
+      "source": "AI_HLYTests/VoiceRecordingLifecycleTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/VoiceRecordingLifecycleTests/testVR12_RouteChangeAndBackgroundHandling",
+      "status": "PASS"
+    },
+    {
+      "method": "VoiceRecordingLifecycleTests/testVR13_TextToSpeechCoordination_PreservesPlaybackCategory",
+      "source": "AI_HLYTests/VoiceRecordingLifecycleTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/VoiceRecordingLifecycleTests/testVR13_TextToSpeechCoordination_PreservesPlaybackCategory",
+      "status": "PASS"
+    },
+    {
+      "method": "VoiceRecordingLifecycleTests/testVR14_LanguageSelectionAndRequestedVsEffectiveLocale",
+      "source": "AI_HLYTests/VoiceRecordingLifecycleTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/VoiceRecordingLifecycleTests/testVR14_LanguageSelectionAndRequestedVsEffectiveLocale",
+      "status": "PASS"
+    },
+    {
+      "method": "VoiceRecordingLifecycleTests/testVR15_LocalizedStrings_AuthenticJsonIntegrity",
+      "source": "AI_HLYTests/VoiceRecordingLifecycleTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/VoiceRecordingLifecycleTests/testVR15_LocalizedStrings_AuthenticJsonIntegrity",
+      "status": "PASS"
+    },
+    {
+      "method": "VoiceRecordingLifecycleTests/testVR16_VoiceInputViewBindingsAndDismissal",
+      "source": "AI_HLYTests/VoiceRecordingLifecycleTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/VoiceRecordingLifecycleTests/testVR16_VoiceInputViewBindingsAndDismissal",
+      "status": "PASS"
+    },
+    {
+      "method": "VoiceRecordingLifecycleTests/testVR17_StressFiftyRapidCycles",
+      "source": "AI_HLYTests/VoiceRecordingLifecycleTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/VoiceRecordingLifecycleTests/testVR17_StressFiftyRapidCycles",
+      "status": "PASS"
+    },
+    {
+      "method": "VoiceRecordingLifecycleTests/testVR22_OwnRecordingCategoryChangeDoesNotStopMicrophone",
+      "source": "AI_HLYTests/VoiceRecordingLifecycleTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/VoiceRecordingLifecycleTests/testVR22_OwnRecordingCategoryChangeDoesNotStopMicrophone",
+      "status": "PASS"
+    },
+    {
+      "method": "VoiceRecordingLifecycleTests/testVR23_OutputChangesPreserveInputButInputOrFormatLossStopsRecording",
+      "source": "AI_HLYTests/VoiceRecordingLifecycleTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/VoiceRecordingLifecycleTests/testVR23_OutputChangesPreserveInputButInputOrFormatLossStopsRecording",
+      "status": "PASS"
+    },
+    {
+      "method": "VoiceRecordingLifecycleTests/testVR19_AudioTapSink_RealFilePoolBranchExecution_VariousFrameSizes",
+      "source": "AI_HLYTests/VoiceRecordingLifecycleTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/VoiceRecordingLifecycleTests/testVR19_AudioTapSink_RealFilePoolBranchExecution_VariousFrameSizes",
+      "status": "PASS"
+    },
+    {
+      "method": "VoiceRecordingLifecycleTests/testVR20_AudioTapSink_OversizedAndIncompatibleFrameSafety_NoCrash",
+      "source": "AI_HLYTests/VoiceRecordingLifecycleTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/VoiceRecordingLifecycleTests/testVR20_AudioTapSink_OversizedAndIncompatibleFrameSafety_NoCrash",
+      "status": "PASS"
+    },
+    {
+      "method": "VoiceRecordingLifecycleTests/testVR21_RepeatedCyclesWithRealSinkFileMode",
+      "source": "AI_HLYTests/VoiceRecordingLifecycleTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/VoiceRecordingLifecycleTests/testVR21_RepeatedCyclesWithRealSinkFileMode",
+      "status": "PASS"
+    },
+    {
+      "method": "AgentRuntimeConversationUITests/testOriginalChatActivitySurvivesKeyboardRotationAndConversationReattachment",
+      "source": "AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+      "url": null,
+      "status": "NOT_RUN",
+      "reason": "UI runner could not resolve target app bundle before authored tests"
+    },
+    {
+      "method": "AgentRuntimeConversationUITests/testUI03SearchMessageAndDeduplicatedCitations",
+      "source": "AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+      "url": null,
+      "status": "NOT_RUN",
+      "reason": "UI runner could not resolve target app bundle before authored tests"
+    },
+    {
+      "method": "AgentRuntimeConversationUITests/testUI03HebrewRTLSearchMessageAndDeduplicatedCitations",
+      "source": "AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+      "url": null,
+      "status": "NOT_RUN",
+      "reason": "UI runner could not resolve target app bundle before authored tests"
+    },
+    {
+      "method": "AgentRuntimeConversationUITests/testUI06ComposerMultilineAttachmentsModelSelectorNoOverlap",
+      "source": "AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+      "url": null,
+      "status": "NOT_RUN",
+      "reason": "UI runner could not resolve target app bundle before authored tests"
+    },
+    {
+      "method": "HanlinNativeA2UIChatUITests/testOriginalFormSubmitsEditedValueAndPreservesUnsentComposerDraft",
+      "source": "AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+      "url": null,
+      "status": "NOT_RUN",
+      "reason": "UI runner could not resolve target app bundle before authored tests"
+    },
+    {
+      "method": "HanlinNativeA2UIChatUITests/testExpandedDismissalRetainsTheOriginalFormAndDoesNotIssueARequest",
+      "source": "AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+      "url": null,
+      "status": "NOT_RUN",
+      "reason": "UI runner could not resolve target app bundle before authored tests"
+    },
+    {
+      "method": "HanlinNativeA2UIChatUITests/testSameProcessReopenRestoresCanonicalReadOnlyMediaWithoutAnotherModelRequest",
+      "source": "AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+      "url": null,
+      "status": "NOT_RUN",
+      "reason": "UI runner could not resolve target app bundle before authored tests"
+    },
+    {
+      "method": "HanlinNativeA2UIChatUITests/testOriginalGalleryAndLinkRetainSourcesAndReadOnlyHistory",
+      "source": "AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+      "url": null,
+      "status": "NOT_RUN",
+      "reason": "UI runner could not resolve target app bundle before authored tests"
+    },
+    {
+      "method": "HanlinNativeA2UIChatUITests/testSurfaceOnlyNativeResponseUsesTheOriginalAssistantRow",
+      "source": "AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+      "url": null,
+      "status": "NOT_RUN",
+      "reason": "UI runner could not resolve target app bundle before authored tests"
+    },
+    {
+      "method": "HanlinNativeA2UIChatUITests/testOriginalMixedOpenUIReactAndNativeShareStateAndKeepDraft",
+      "source": "AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+      "url": null,
+      "status": "NOT_RUN",
+      "reason": "UI runner could not resolve target app bundle before authored tests"
+    },
+    {
+      "method": "HanlinNativeA2UIChatUITests/testNewConversationWorksWithoutOptimizationModel",
+      "source": "AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+      "url": null,
+      "status": "NOT_RUN",
+      "reason": "UI runner could not resolve target app bundle before authored tests"
+    },
+    {
+      "method": "HanlinLocalizedControlTests/labelsKeepTheOriginalNativeTypes",
+      "source": "Packages/HanlinPresentationSDK/Tests/HanlinLocalizationTests/HanlinLocalizationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinLocalizedControlTests/labelsKeepTheOriginalNativeTypes()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinOriginalAssetTests/sharedAssetsLoadFromTheirCanonicalBundle",
+      "source": "Packages/HanlinPresentationSDK/Tests/HanlinLocalizationTests/HanlinLocalizationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinOriginalAssetTests/sharedAssetsLoadFromTheirCanonicalBundle()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinLocalizationTests/resourceBundleIsIndependentOfHost",
+      "source": "Packages/HanlinPresentationSDK/Tests/HanlinLocalizationTests/HanlinLocalizationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinLocalizationTests/resourceBundleIsIndependentOfHost()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinLocalizationTests/deferredOriginalTitleKeepsItsTableLocaleAndBundle",
+      "source": "Packages/HanlinPresentationSDK/Tests/HanlinLocalizationTests/HanlinLocalizationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinLocalizationTests/deferredOriginalTitleKeepsItsTableLocaleAndBundle()",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinLocalizationTests/originalTranslationTablesRemainAvailable(locale:)",
+      "source": "Packages/HanlinPresentationSDK/Tests/HanlinLocalizationTests/HanlinLocalizationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinLocalizationTests/originalTranslationTablesRemainAvailable(locale:)?args=50eac10e7966a04e139902940a2a8e129a4597574c709cb8d01939ace56ff9c3",
+      "expectedArgumentSwift": "\"en\"",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinLocalizationTests/originalTranslationTablesRemainAvailable(locale:)",
+      "source": "Packages/HanlinPresentationSDK/Tests/HanlinLocalizationTests/HanlinLocalizationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinLocalizationTests/originalTranslationTablesRemainAvailable(locale:)?args=e03fc3fe6107496bd2d57f8f79990cae5e4da37f71d6a346612807c379bcd405",
+      "expectedArgumentSwift": "\"he\"",
+      "status": "PASS"
+    },
+    {
+      "method": "HanlinLocalizationTests/originalTranslationTablesRemainAvailable(locale:)",
+      "source": "Packages/HanlinPresentationSDK/Tests/HanlinLocalizationTests/HanlinLocalizationTests.swift",
+      "url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinLocalizationTests/originalTranslationTablesRemainAvailable(locale:)?args=0e73b77b50d66fb7b294e5fe27afb94adb7b95d73750557086bf8c87fcfcde28",
+      "expectedArgumentSwift": "\"zh-Hans\"",
+      "status": "PASS"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "/mnt/development/projects/worktrees/hanlin-sdk02-interface-capture-20261123/build/sdk-main-tests-45265065184/original/simulator-logs/08-downstream-unit-test-results.json",
+      "sha256": "f61282482c527691359bb8caf9055ea2f05fe4da0ce9fbd8599ecc56c34235cf"
+    },
+    {
+      "path": "/mnt/development/projects/worktrees/hanlin-sdk02-interface-capture-20261123/build/sdk-main-tests-45265065184/original/simulator-logs/08-nativescript-production-ui-test-results.json",
+      "sha256": "3d0b50ca82f5d75ff1da1a244945ff5c1bb926a3df7bf7e2a63555ae9bf9a031"
+    }
+  ],
+  "inventoryFile": "docs/agent-sdk/evidence/selected-app-acceptance-inventory-45230545076/expected-inventory.json",
+  "inventorySHA256": "b49ff364035c999a2734bd6f62ba8c6ea4631cb6eeec20d7f252fa15e49b2031",
+  "argumentDatabaseSHA256": "d890a5498eb4afb2e118c26aac11a4635734e92164a8a2d5c8c0463e9160fb28",
+  "readOnlyOriginalArchive": "original-smoke-artifact.zip",
+  "archiveSHA256": "62dab969033c2f5db51bf9b9e31640521eec6f3848e08b8c20e2ee1a359679e9",
+  "qualification": "Actual frozen-source results; not a PASS for later source changes. Database read in memory from original authenticated ZIP, no Apple build/test/export, no artifact reacquisition."
+}

@@ -1,0 +1,586 @@
+{
+  "runID": 45375410965,
+  "source": "999599c242c064564c40866a1979c463f1d0e95f",
+  "log": {
+    "path": "/dev/shm/hanlin-native-gate-evidence-45375410965/app-split-evidence/paired-product/mini-build.log",
+    "sha256": "bc7c8d4b4e3f034ef264880f1e26e12cff98ada367c3e4025cda33b6bb5d13c0",
+    "bytes": 8391113,
+    "lineCount": 97097
+  },
+  "fullJobLog": {
+    "sha256": "3429754b557a50489ee7bb5bf362870ae53e02e3aa567cbeb8a2aee2cf6b1403",
+    "jobStart": "2026-11-24T10:30:25.9292200Z"
+  },
+  "patterns": {
+    "sourceDiagnostic": "^.*:[0-9]+(?::[0-9]+)?:[ \\t]+(?:fatal[ \\t]+)?error:",
+    "toolDiagnostic": "^[ \\t]*(?:(?:fatal[ \\t]+)?error:|(?:clang|clang[+][+]|swiftc|swift-frontend|xcodebuild): (?:fatal )?error:|Undefined symbols for architecture|ld: (?:error|symbol)|[*][*] BUILD FAILED [*][*])"
+  },
+  "positiveControl": {
+    "source": "docs/miniapp-sdk/evidence/widget-cxx-interop-20261124/native-failure-excerpt.log",
+    "sha256": "66a38d7834099d8a0278636d2d55b810a3f961219fed634f60bbb0d4a292c84d",
+    "matches": [
+      "/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinOriginalExpoWidget.swift:2:24: error: module 'ExpoWidgets' was built with C++ interoperability enabled, but current compilation does not enable C++ interoperability"
+    ]
+  },
+  "diagnosticMatches": {
+    "source_diagnostics": [],
+    "tool_diagnostics": []
+  },
+  "failedCommandHeaders": [],
+  "previousCxxDiagnosticMatches": [],
+  "completedCommand": {
+    "argv": [
+      "xcodebuild",
+      "-project",
+      "AI_HLY.xcodeproj",
+      "-destination",
+      "platform=iOS Simulator,id=9375039A-3B96-4392-A4EF-10466C69578D",
+      "-parallel-testing-enabled",
+      "NO",
+      "-derivedDataPath",
+      "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData",
+      "-clonedSourcePackagesDirPath",
+      "/Users/runner/work/hanlin-ai/hanlin-ai/build/SourcePackages",
+      "-skipPackagePluginValidation",
+      "-skipMacroValidation",
+      "CODE_SIGNING_ALLOWED=YES",
+      "CODE_SIGNING_REQUIRED=YES",
+      "CODE_SIGN_IDENTITY=-",
+      "-scheme",
+      "HanlinMiniApps",
+      "build-for-testing",
+      "-resultBundlePath",
+      "/Users/runner/work/hanlin-ai/hanlin-ai/build/app-split-evidence/paired-product/MiniBuild.xcresult"
+    ],
+    "exit": -1,
+    "seconds": 2402.810748959,
+    "log": "mini-build.log",
+    "sha256": "bc7c8d4b4e3f034ef264880f1e26e12cff98ada367c3e4025cda33b6bb5d13c0"
+  },
+  "finalObservations": [
+    {
+      "command_id": "e163ce2f4f4044228291140964b28d79",
+      "argv": [
+        "xcodebuild",
+        "-project",
+        "AI_HLY.xcodeproj",
+        "-destination",
+        "platform=iOS Simulator,id=9375039A-3B96-4392-A4EF-10466C69578D",
+        "-parallel-testing-enabled",
+        "NO",
+        "-derivedDataPath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/SourcePackages",
+        "-skipPackagePluginValidation",
+        "-skipMacroValidation",
+        "CODE_SIGNING_ALLOWED=YES",
+        "CODE_SIGNING_REQUIRED=YES",
+        "CODE_SIGN_IDENTITY=-",
+        "-scheme",
+        "HanlinMiniApps",
+        "build-for-testing",
+        "-resultBundlePath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/app-split-evidence/paired-product/MiniBuild.xcresult"
+      ],
+      "log": "mini-build.log",
+      "runner_pid": 52256,
+      "pid": 53067,
+      "started_at": 1795517597.716256,
+      "timeout": 2400,
+      "status": "running",
+      "observed_at": 1795519855.41397,
+      "seconds": 2257.507726875,
+      "log_bytes": 5209968,
+      "completion_recorded": false,
+      "observed_returncode": null
+    },
+    {
+      "command_id": "e163ce2f4f4044228291140964b28d79",
+      "argv": [
+        "xcodebuild",
+        "-project",
+        "AI_HLY.xcodeproj",
+        "-destination",
+        "platform=iOS Simulator,id=9375039A-3B96-4392-A4EF-10466C69578D",
+        "-parallel-testing-enabled",
+        "NO",
+        "-derivedDataPath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/SourcePackages",
+        "-skipPackagePluginValidation",
+        "-skipMacroValidation",
+        "CODE_SIGNING_ALLOWED=YES",
+        "CODE_SIGNING_REQUIRED=YES",
+        "CODE_SIGN_IDENTITY=-",
+        "-scheme",
+        "HanlinMiniApps",
+        "build-for-testing",
+        "-resultBundlePath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/app-split-evidence/paired-product/MiniBuild.xcresult"
+      ],
+      "log": "mini-build.log",
+      "runner_pid": 52256,
+      "pid": 53067,
+      "started_at": 1795517597.716256,
+      "timeout": 2400,
+      "status": "running",
+      "observed_at": 1795519885.547606,
+      "seconds": 2287.641351167,
+      "log_bytes": 5209968,
+      "completion_recorded": false,
+      "observed_returncode": null
+    },
+    {
+      "command_id": "e163ce2f4f4044228291140964b28d79",
+      "argv": [
+        "xcodebuild",
+        "-project",
+        "AI_HLY.xcodeproj",
+        "-destination",
+        "platform=iOS Simulator,id=9375039A-3B96-4392-A4EF-10466C69578D",
+        "-parallel-testing-enabled",
+        "NO",
+        "-derivedDataPath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/SourcePackages",
+        "-skipPackagePluginValidation",
+        "-skipMacroValidation",
+        "CODE_SIGNING_ALLOWED=YES",
+        "CODE_SIGNING_REQUIRED=YES",
+        "CODE_SIGN_IDENTITY=-",
+        "-scheme",
+        "HanlinMiniApps",
+        "build-for-testing",
+        "-resultBundlePath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/app-split-evidence/paired-product/MiniBuild.xcresult"
+      ],
+      "log": "mini-build.log",
+      "runner_pid": 52256,
+      "pid": 53067,
+      "started_at": 1795517597.716256,
+      "timeout": 2400,
+      "status": "running",
+      "observed_at": 1795519915.560437,
+      "seconds": 2317.654205417,
+      "log_bytes": 7802005,
+      "completion_recorded": false,
+      "observed_returncode": null
+    },
+    {
+      "command_id": "e163ce2f4f4044228291140964b28d79",
+      "argv": [
+        "xcodebuild",
+        "-project",
+        "AI_HLY.xcodeproj",
+        "-destination",
+        "platform=iOS Simulator,id=9375039A-3B96-4392-A4EF-10466C69578D",
+        "-parallel-testing-enabled",
+        "NO",
+        "-derivedDataPath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/SourcePackages",
+        "-skipPackagePluginValidation",
+        "-skipMacroValidation",
+        "CODE_SIGNING_ALLOWED=YES",
+        "CODE_SIGNING_REQUIRED=YES",
+        "CODE_SIGN_IDENTITY=-",
+        "-scheme",
+        "HanlinMiniApps",
+        "build-for-testing",
+        "-resultBundlePath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/app-split-evidence/paired-product/MiniBuild.xcresult"
+      ],
+      "log": "mini-build.log",
+      "runner_pid": 52256,
+      "pid": 53067,
+      "started_at": 1795517597.716256,
+      "timeout": 2400,
+      "status": "running",
+      "observed_at": 1795519945.670261,
+      "seconds": 2347.763997167,
+      "log_bytes": 8066240,
+      "completion_recorded": false,
+      "observed_returncode": null
+    },
+    {
+      "command_id": "e163ce2f4f4044228291140964b28d79",
+      "argv": [
+        "xcodebuild",
+        "-project",
+        "AI_HLY.xcodeproj",
+        "-destination",
+        "platform=iOS Simulator,id=9375039A-3B96-4392-A4EF-10466C69578D",
+        "-parallel-testing-enabled",
+        "NO",
+        "-derivedDataPath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/SourcePackages",
+        "-skipPackagePluginValidation",
+        "-skipMacroValidation",
+        "CODE_SIGNING_ALLOWED=YES",
+        "CODE_SIGNING_REQUIRED=YES",
+        "CODE_SIGN_IDENTITY=-",
+        "-scheme",
+        "HanlinMiniApps",
+        "build-for-testing",
+        "-resultBundlePath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/app-split-evidence/paired-product/MiniBuild.xcresult"
+      ],
+      "log": "mini-build.log",
+      "runner_pid": 52256,
+      "pid": 53067,
+      "started_at": 1795517597.716256,
+      "timeout": 2400,
+      "status": "running",
+      "observed_at": 1795519975.780725,
+      "seconds": 2377.874469584,
+      "log_bytes": 8270829,
+      "completion_recorded": false,
+      "observed_returncode": null
+    },
+    {
+      "command_id": "e163ce2f4f4044228291140964b28d79",
+      "argv": [
+        "xcodebuild",
+        "-project",
+        "AI_HLY.xcodeproj",
+        "-destination",
+        "platform=iOS Simulator,id=9375039A-3B96-4392-A4EF-10466C69578D",
+        "-parallel-testing-enabled",
+        "NO",
+        "-derivedDataPath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/SourcePackages",
+        "-skipPackagePluginValidation",
+        "-skipMacroValidation",
+        "CODE_SIGNING_ALLOWED=YES",
+        "CODE_SIGNING_REQUIRED=YES",
+        "CODE_SIGN_IDENTITY=-",
+        "-scheme",
+        "HanlinMiniApps",
+        "build-for-testing",
+        "-resultBundlePath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/app-split-evidence/paired-product/MiniBuild.xcresult"
+      ],
+      "log": "mini-build.log",
+      "runner_pid": 52256,
+      "pid": 53067,
+      "started_at": 1795517597.716256,
+      "timeout": 2400,
+      "status": "timed_out",
+      "observed_at": 1795520000.868927,
+      "seconds": 2402.962650375,
+      "log_bytes": 8391113,
+      "completion_recorded": true,
+      "exit": -1,
+      "observed_returncode": -9
+    }
+  ],
+  "lastNativeBuildProgress": [
+    {
+      "line": 96967,
+      "text": "SwiftCompile normal arm64 /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptUI/HanlinScriptUIContracts.swift (in target 'HanlinScriptUI' from project 'HanlinSDK')"
+    },
+    {
+      "line": 96971,
+      "text": "SwiftCompile normal arm64 Compiling\\ HanlinScriptUIReconciler.swift,\\ HanlinScriptUIView.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptUI/HanlinScriptUIReconciler.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptUI/HanlinScriptUIView.swift (in target 'HanlinScriptUI' from project 'HanlinSDK')"
+    },
+    {
+      "line": 96973,
+      "text": "SwiftCompile normal arm64 /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptUI/HanlinScriptUIReconciler.swift (in target 'HanlinScriptUI' from project 'HanlinSDK')"
+    },
+    {
+      "line": 96977,
+      "text": "SwiftCompile normal arm64 /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptUI/HanlinScriptUIView.swift (in target 'HanlinScriptUI' from project 'HanlinSDK')"
+    },
+    {
+      "line": 96981,
+      "text": "SwiftDriverJobDiscovery normal arm64 Compiling HanlinAISDKAgentEngine.swift, HanlinAISDKModels.swift, HanlinAISDKProviderFactory.swift, HanlinCapturedStreamReplay.swift, HanlinChatEngine.swift (in target 'HanlinChatCore' from project 'HanlinSDK')"
+    },
+    {
+      "line": 96983,
+      "text": "SwiftCompile normal arm64 Compiling\\ resource_bundle_accessor.swift,\\ HanlinChatUIComponents.swift /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinScriptUI-t.build/DerivedSources/resource_bundle_accessor.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptUI/HanlinChatUIComponents.swift (in target 'HanlinScriptUI' from project 'HanlinSDK')"
+    },
+    {
+      "line": 96985,
+      "text": "SwiftCompile normal arm64 /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinScriptUI-t.build/DerivedSources/resource_bundle_accessor.swift (in target 'HanlinScriptUI' from project 'HanlinSDK')"
+    },
+    {
+      "line": 96989,
+      "text": "SwiftCompile normal arm64 /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptUI/HanlinChatUIComponents.swift (in target 'HanlinScriptUI' from project 'HanlinSDK')"
+    },
+    {
+      "line": 96993,
+      "text": "SwiftDriverJobDiscovery normal arm64 Emitting module for HanlinScriptUI (in target 'HanlinScriptUI' from project 'HanlinSDK')"
+    },
+    {
+      "line": 96999,
+      "text": "SwiftDriverJobDiscovery normal arm64 Compiling resource_bundle_accessor.swift, HanlinChatUIComponents.swift (in target 'HanlinScriptUI' from project 'HanlinSDK')"
+    },
+    {
+      "line": 97015,
+      "text": "Copy /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/HanlinScriptUI.swiftmodule/arm64-apple-ios-simulator.swiftmodule /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinScriptUI-t.build/Objects-normal/arm64/HanlinScriptUI.swiftmodule (in target 'HanlinScriptUI' from project 'HanlinSDK')"
+    },
+    {
+      "line": 97019,
+      "text": "Copy /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/HanlinScriptUI.swiftmodule/arm64-apple-ios-simulator.swiftdoc /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinScriptUI-t.build/Objects-normal/arm64/HanlinScriptUI.swiftdoc (in target 'HanlinScriptUI' from project 'HanlinSDK')"
+    },
+    {
+      "line": 97023,
+      "text": "Copy /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/HanlinScriptUI.swiftmodule/arm64-apple-ios-simulator.abi.json /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinScriptUI-t.build/Objects-normal/arm64/HanlinScriptUI.abi.json (in target 'HanlinScriptUI' from project 'HanlinSDK')"
+    },
+    {
+      "line": 97027,
+      "text": "Copy /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/HanlinScriptUI.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinScriptUI-t.build/Objects-normal/arm64/HanlinScriptUI.swiftsourceinfo (in target 'HanlinScriptUI' from project 'HanlinSDK')"
+    },
+    {
+      "line": 97045,
+      "text": "SwiftDriverJobDiscovery normal arm64 Compiling HanlinSVGView.swift, HanlinScriptUIContracts.swift (in target 'HanlinScriptUI' from project 'HanlinSDK')"
+    },
+    {
+      "line": 97047,
+      "text": "CodeSign /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/HanlinMiniAppsShare.appex/HanlinMiniAppsShare.debug.dylib (in target 'HanlinMiniAppsShare' from project 'AI_HLY')"
+    },
+    {
+      "line": 97054,
+      "text": "CodeSign /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/HanlinMiniAppsShare.appex/__preview.dylib (in target 'HanlinMiniAppsShare' from project 'AI_HLY')"
+    },
+    {
+      "line": 97061,
+      "text": "CodeSign /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/HanlinMiniAppsShare.appex (in target 'HanlinMiniAppsShare' from project 'AI_HLY')"
+    },
+    {
+      "line": 97068,
+      "text": "CodeSign /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/A2UISwiftCore_BasicCatalog.bundle (in target 'A2UISwiftCore_BasicCatalog' from project 'A2UISwiftCore')"
+    },
+    {
+      "line": 97075,
+      "text": "ProcessInfoPlistFile /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/OpenAICompatibleProvider_-12EEEC9CC3715281_PackageProduct.framework/Info.plist /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/SwiftAISDK.build/Debug-iphonesimulator/OpenAICompatibleProvider-product-t.build/empty-OpenAICompatibleProvider_-12EEEC9CC3715281_PackageProduct.plist (in target 'OpenAICompatibleProviderdynamic-product' from project 'SwiftAISDK')"
+    },
+    {
+      "line": 97079,
+      "text": "Ld /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks/OpenAICompatibleProvider_-12EEEC9CC3715281_PackageProduct.framework/OpenAICompatibleProvider_-12EEEC9CC3715281_PackageProduct normal (in target 'OpenAICompatibleProviderdynamic-product' from project 'SwiftAISDK')"
+    },
+    {
+      "line": 97087,
+      "text": "SwiftEmitModule normal arm64 Emitting\\ module\\ for\\ A2UICore (in target 'A2UICore' from project 'A2UISwiftCore')"
+    },
+    {
+      "line": 97089,
+      "text": "SwiftCompile normal arm64 (in target 'A2UICore' from project 'A2UISwiftCore')"
+    },
+    {
+      "line": 97097,
+      "text": "SwiftCompile normal arm64 Compiling\\ InternalOperation.swift,\\ InternalUpdateComponentsOp.swift,\\ InternalUpdateDataModelOp.swift,\\ MessageErrorMapper.swift,\\ MessageParser.swift,\\ MessageProcessor.swift,\\ RPCHandler.swift,\\ NodeResolver.swift,\\ ComponentModel.swift,\\ DataContext.swift,\\ DataModel.swift,\\ FunctionHandler.swift,\\ SurfaceComponentsModel.swift,\\ CatalogResolutionErrors.swift,\\ ComponentEnvelope.swift,\\ ComponentGraphBound.swift,\\ GraphTopologyValidator.swift,\\ MetadataValidator.swift,\\ PayloadValidator.swift,\\ UnicodeIdentifierValidator.swift,\\ ValidationConfig.swift /Users/runner/work/hanlin-ai/hanlin-ai/build/SourcePackages/checkouts/a2ui/swift/core/Sources/A2UICore/Processing/InternalOperation.swift /Users/runner/work/hanlin-ai/hanlin-ai/build/SourcePackages/checkouts/a2ui/swift/core/Sources/A2UICore/Processing/InternalUpdateComponentsOp.swift /Users/runner/work/hanlin-ai/hanlin-ai/build/SourcePackages/checkouts/a2ui/swift/core/Sources/A2UICore/Processing/InternalUpdateDataModelOp.swift /Users/runner/work/hanlin-ai/hanlin-ai/build/SourcePackages/checkouts/a2ui/swift/core/Sources/A2UICore/Processing/MessageErrorMapper.swift /Users/runner/work/hanlin-ai/hanlin-ai/build/SourcePackages/checkouts/a2ui/swift/core/Sources/A2UICore/Processing/MessageParser.swift /Users/runner/work/hanlin-ai/hanlin-ai/build/SourcePackages/checkouts/a2ui/swift/core/Sources/A2UICore/Processing/MessageProcessor.swift /Users/runner/work/hanlin-ai/hanlin-ai/build/SourcePackages/checkouts/a2ui/swift/core/Sources/A2UICore/RPC/RPCHandler.swift /Users/runner/work/hanlin-ai/hanlin-ai/build/SourcePackages/checkouts/a2ui/swift/core/Sources/A2UICore/Resolution/NodeResolver.swift /Users/runner/work/hanlin-ai/hanlin-ai/build/SourcePackages/checkouts/a2ui/swift/core/Sources/A2UICore/State/ComponentModel.swift /Users/runner/work/hanlin-ai/hanlin-ai/build/SourcePackages/checkouts/a2ui/swift/core/Sources/A2UICore/State/DataContext.swift /Users/runner/work/hanlin-ai/hanlin-ai/build/SourcePackages/checkouts/a2ui/swift/core/Sources/A2UICore/State/DataModel.swift /Users/runner/work/hanlin-ai/hanlin-ai/build/SourcePackages/checkouts/a2ui/swift/core/Sources/A2UICore/State/FunctionHandler.swift /Users/runner/work/hanlin-ai/hanlin-ai/build/SourcePackages/checkouts/a2ui/swift/core/Sources/A2UICore/State/SurfaceComponentsModel.swift /Users/runner/work/hanlin-ai/hanlin-ai/build/SourcePackages/checkouts/a2ui/swift/core/Sources/A2UICore/Validation/CatalogResolutionErrors.swift /Users/runner/work/hanlin-ai/hanlin-ai/build/SourcePackages/checkouts/a2ui/swift/core/Sources/A2UICore/Validation/ComponentEnvelope.swift /Users/runner/work/hanlin-ai/hanlin-ai/build/SourcePackages/checkouts/a2ui/swift/core/Sources/A2UICore/Validation/ComponentGraphBound.swift /Users/runner/work/hanlin-ai/hanlin-ai/build/SourcePackages/checkouts/a2ui/swift/core/Sources/A2UICore/Validation/GraphTopologyValidator.swift /Users/runner/work/hanlin-ai/hanlin-ai/build/SourcePackages/checkouts/a2ui/swift/core/Sources/A2UICore/Validation/MetadataValidator.swift /Users/runner/work/hanlin-ai/hanlin-ai/build/SourcePackages/checkouts/a2ui/swift/core/Sources/A2UICore/Validation/PayloadValidator.swift /Users/runner/work/hanlin-ai/hanlin-ai/build/SourcePackages/checkouts/a2ui/swift/core/Sources/A2UICore/Validation/UnicodeIdentifierValidator.swift /Users/runner/work/hanlin-ai/hanlin-ai/build/SourcePackages/checkouts/a2ui/swift/core/Sources/A2UICore/Validation/ValidationConfig.swift (in target 'A2UICore' from project 'A2UISwiftCore')"
+    }
+  ],
+  "widgetBoundary": {
+    "ExpoWidgets": {
+      "emitOrCompile": [
+        {
+          "line": 50166,
+          "text": "SwiftEmitModule normal arm64 Emitting\\ module\\ for\\ ExpoWidgets (in target 'ExpoWidgets' from project 'HanlinSDK')"
+        },
+        {
+          "line": 50168,
+          "text": "SwiftCompile normal arm64 (in target 'ExpoWidgets' from project 'HanlinSDK')"
+        },
+        {
+          "line": 50533,
+          "text": "SwiftCompile normal arm64 Compiling\\ DynamicView.swift,\\ EntryView.swift,\\ Fragment.swift,\\ LiveActivityBanner.swift,\\ RedBoxView.swift,\\ TimelineEntry.swift,\\ TimelineProvider.swift,\\ Type.swift,\\ Utils.swift,\\ ViewRenderer.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/DynamicView.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/EntryView.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/Fragment.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/LiveActivityBanner.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/RedBoxView.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/TimelineEntry.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/TimelineProvider.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/Type.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/Utils.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/ViewRenderer.swift (in target 'ExpoWidgets' from project 'HanlinSDK')"
+        },
+        {
+          "line": 50535,
+          "text": "SwiftCompile normal arm64 /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/DynamicView.swift (in target 'ExpoWidgets' from project 'HanlinSDK')"
+        },
+        {
+          "line": 50539,
+          "text": "SwiftCompile normal arm64 /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/EntryView.swift (in target 'ExpoWidgets' from project 'HanlinSDK')"
+        },
+        {
+          "line": 50543,
+          "text": "SwiftCompile normal arm64 /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/Fragment.swift (in target 'ExpoWidgets' from project 'HanlinSDK')"
+        },
+        {
+          "line": 50547,
+          "text": "SwiftCompile normal arm64 /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/LiveActivityBanner.swift (in target 'ExpoWidgets' from project 'HanlinSDK')"
+        },
+        {
+          "line": 50551,
+          "text": "SwiftCompile normal arm64 /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/RedBoxView.swift (in target 'ExpoWidgets' from project 'HanlinSDK')"
+        },
+        {
+          "line": 50555,
+          "text": "SwiftCompile normal arm64 /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/TimelineEntry.swift (in target 'ExpoWidgets' from project 'HanlinSDK')"
+        },
+        {
+          "line": 50559,
+          "text": "SwiftCompile normal arm64 /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/TimelineProvider.swift (in target 'ExpoWidgets' from project 'HanlinSDK')"
+        },
+        {
+          "line": 50563,
+          "text": "SwiftCompile normal arm64 /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/Type.swift (in target 'ExpoWidgets' from project 'HanlinSDK')"
+        },
+        {
+          "line": 50567,
+          "text": "SwiftCompile normal arm64 /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/Utils.swift (in target 'ExpoWidgets' from project 'HanlinSDK')"
+        },
+        {
+          "line": 50571,
+          "text": "SwiftCompile normal arm64 /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/ViewRenderer.swift (in target 'ExpoWidgets' from project 'HanlinSDK')"
+        },
+        {
+          "line": 50581,
+          "text": "SwiftCompile normal arm64 Compiling\\ WidgetLiveActivity.swift,\\ WidgetModifiers.swift,\\ WidgetsJSRuntime.swift,\\ WidgetsLayoutRegistry.swift,\\ WidgetsContext.swift,\\ WidgetsEvents.swift,\\ WidgetsExceptions.swift,\\ WidgetsModule.swift,\\ WidgetsRecords.swift,\\ WidgetsStorage.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/WidgetLiveActivity.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/WidgetModifiers.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/WidgetsJSRuntime.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/WidgetsLayoutRegistry.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetsContext.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetsEvents.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetsExceptions.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetsModule.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetsRecords.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetsStorage.swift (in target 'ExpoWidgets' from project 'HanlinSDK')"
+        },
+        {
+          "line": 50583,
+          "text": "SwiftCompile normal arm64 /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/WidgetLiveActivity.swift (in target 'ExpoWidgets' from project 'HanlinSDK')"
+        },
+        {
+          "line": 50587,
+          "text": "SwiftCompile normal arm64 /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/WidgetModifiers.swift (in target 'ExpoWidgets' from project 'HanlinSDK')"
+        },
+        {
+          "line": 50591,
+          "text": "SwiftCompile normal arm64 /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/WidgetsJSRuntime.swift (in target 'ExpoWidgets' from project 'HanlinSDK')"
+        },
+        {
+          "line": 50595,
+          "text": "SwiftCompile normal arm64 /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/WidgetsLayoutRegistry.swift (in target 'ExpoWidgets' from project 'HanlinSDK')"
+        },
+        {
+          "line": 50599,
+          "text": "SwiftCompile normal arm64 /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetsContext.swift (in target 'ExpoWidgets' from project 'HanlinSDK')"
+        },
+        {
+          "line": 50603,
+          "text": "SwiftCompile normal arm64 /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetsEvents.swift (in target 'ExpoWidgets' from project 'HanlinSDK')"
+        },
+        {
+          "line": 50607,
+          "text": "SwiftCompile normal arm64 /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetsExceptions.swift (in target 'ExpoWidgets' from project 'HanlinSDK')"
+        },
+        {
+          "line": 50611,
+          "text": "SwiftCompile normal arm64 /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetsModule.swift (in target 'ExpoWidgets' from project 'HanlinSDK')"
+        },
+        {
+          "line": 50615,
+          "text": "SwiftCompile normal arm64 /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetsRecords.swift (in target 'ExpoWidgets' from project 'HanlinSDK')"
+        },
+        {
+          "line": 50619,
+          "text": "SwiftCompile normal arm64 /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetsStorage.swift (in target 'ExpoWidgets' from project 'HanlinSDK')"
+        },
+        {
+          "line": 50625,
+          "text": "SwiftCompile normal arm64 Compiling\\ resource_bundle_accessor.swift,\\ HanlinExpoWidgetsIntegration.swift,\\ HanlinExpoWidgetsIntentsPackage.swift,\\ LiveActivity.swift,\\ LiveActivityFactory.swift,\\ WidgetObject.swift,\\ AccessoryWidgetBackgroundView.swift,\\ AppIntent.swift,\\ Buttons.swift,\\ ChildView.swift /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/ExpoWidgets-t.build/DerivedSources/resource_bundle_accessor.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/HanlinExpoWidgetsIntegration.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/HanlinExpoWidgetsIntentsPackage.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/LiveActivity.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/LiveActivityFactory.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetObject.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/AccessoryWidgetBackgroundView.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/AppIntent.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/Buttons.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/ChildView.swift (in target 'ExpoWidgets' from project 'HanlinSDK')"
+        },
+        {
+          "line": 50627,
+          "text": "SwiftCompile normal arm64 /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/ExpoWidgets-t.build/DerivedSources/resource_bundle_accessor.swift (in target 'ExpoWidgets' from project 'HanlinSDK')"
+        },
+        {
+          "line": 50631,
+          "text": "SwiftCompile normal arm64 /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/HanlinExpoWidgetsIntegration.swift (in target 'ExpoWidgets' from project 'HanlinSDK')"
+        },
+        {
+          "line": 50635,
+          "text": "SwiftCompile normal arm64 /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/HanlinExpoWidgetsIntentsPackage.swift (in target 'ExpoWidgets' from project 'HanlinSDK')"
+        },
+        {
+          "line": 50639,
+          "text": "SwiftCompile normal arm64 /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/LiveActivity.swift (in target 'ExpoWidgets' from project 'HanlinSDK')"
+        },
+        {
+          "line": 50643,
+          "text": "SwiftCompile normal arm64 /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/LiveActivityFactory.swift (in target 'ExpoWidgets' from project 'HanlinSDK')"
+        },
+        {
+          "line": 50647,
+          "text": "SwiftCompile normal arm64 /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetObject.swift (in target 'ExpoWidgets' from project 'HanlinSDK')"
+        },
+        {
+          "line": 50651,
+          "text": "SwiftCompile normal arm64 /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/AccessoryWidgetBackgroundView.swift (in target 'ExpoWidgets' from project 'HanlinSDK')"
+        },
+        {
+          "line": 50655,
+          "text": "SwiftCompile normal arm64 /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/AppIntent.swift (in target 'ExpoWidgets' from project 'HanlinSDK')"
+        },
+        {
+          "line": 50659,
+          "text": "SwiftCompile normal arm64 /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/Buttons.swift (in target 'ExpoWidgets' from project 'HanlinSDK')"
+        },
+        {
+          "line": 50663,
+          "text": "SwiftCompile normal arm64 /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/ChildView.swift (in target 'ExpoWidgets' from project 'HanlinSDK')"
+        }
+      ],
+      "last": [
+        {
+          "line": 50667,
+          "text": "SwiftDriverJobDiscovery normal arm64 Compiling DynamicView.swift, EntryView.swift, Fragment.swift, LiveActivityBanner.swift, RedBoxView.swift, TimelineEntry.swift, TimelineProvider.swift, Type.swift, Utils.swift, ViewRenderer.swift (in target 'ExpoWidgets' from project 'HanlinSDK')"
+        },
+        {
+          "line": 50704,
+          "text": "SwiftDriverJobDiscovery normal arm64 Compiling resource_bundle_accessor.swift, HanlinExpoWidgetsIntegration.swift, HanlinExpoWidgetsIntentsPackage.swift, LiveActivity.swift, LiveActivityFactory.swift, WidgetObject.swift, AccessoryWidgetBackgroundView.swift, AppIntent.swift, Buttons.swift, ChildView.swift (in target 'ExpoWidgets' from project 'HanlinSDK')"
+        },
+        {
+          "line": 50756,
+          "text": "SwiftDriverJobDiscovery normal arm64 Compiling WidgetLiveActivity.swift, WidgetModifiers.swift, WidgetsJSRuntime.swift, WidgetsLayoutRegistry.swift, WidgetsContext.swift, WidgetsEvents.swift, WidgetsExceptions.swift, WidgetsModule.swift, WidgetsRecords.swift, WidgetsStorage.swift (in target 'ExpoWidgets' from project 'HanlinSDK')"
+        },
+        {
+          "line": 51144,
+          "text": "Ld /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/ExpoWidgets.o normal (in target 'ExpoWidgets' from project 'HanlinSDK')"
+        },
+        {
+          "line": 93332,
+          "text": "CodeSign /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/ExpoWidgets.o (in target 'ExpoWidgets' from project 'HanlinSDK')"
+        }
+      ]
+    },
+    "HanlinScriptingWidgets": {
+      "emitOrCompile": [],
+      "last": [
+        {
+          "line": 4804,
+          "text": "Copy /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/GeneratedModuleMaps-iphonesimulator/HanlinScriptingWidgets.modulemap /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinScriptingWidgets-t.build/HanlinScriptingWidgets.modulemap (in target 'HanlinScriptingWidgets' from project 'HanlinSDK')"
+        }
+      ]
+    },
+    "HanlinWidgetUI": {
+      "emitOrCompile": [],
+      "last": [
+        {
+          "line": 4768,
+          "text": "Copy /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/GeneratedModuleMaps-iphonesimulator/HanlinWidgetUI.modulemap /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinWidgetUI-t.build/HanlinWidgetUI.modulemap (in target 'HanlinWidgetUI' from project 'HanlinSDK')"
+        }
+      ]
+    },
+    "HanlinMiniAppsWidgets": {
+      "emitOrCompile": [],
+      "last": []
+    }
+  },
+  "observedPreparationBeforeFirstBuildMinutes": 22.863117265701295,
+  "conclusion": "The runner's recorded 2400-second deadline killed the first build while output and compiler/link/signing progress continued. No matching compiler diagnostic headers or failed-command headers were observed in the authenticated log. The direct/re-export widget consumers had not reached SwiftEmitModule/SwiftCompile, so absence of the old C++ error is not an Apple validation of its fix.",
+  "nativeResult": "mini_build TIMED_OUT; ai_build/ui NOT_RUN; no completed result bundles or test attachments.",
+  "existingCacheSaveRows": [
+    {
+      "line": 24887,
+      "text": "miniapps\tSave changed compiler state without treating it as test evidence\t2026-11-24T11:34:32.8995760Z Cache saved with key: split-derived-v2-macOS-arm64-27B52-27.2-32ccd2f542fbe61e2a987574d50f3db7e5cfe8f1688336fbc1ba36b968c2ab2f-b914d37936bfefa3a318a675b7cdd16aad561146486621bf37812da288fb061b"
+    },
+    {
+      "line": 24924,
+      "text": "miniapps\tSave changed Swift package dependency cache\t2026-11-24T11:35:17.1371080Z Cache saved with key: ios-sourcepackages-v3-macOS-arm64-27B52-826cec2c9bdbccb7c93f9a9cd7840db69e96bbfad9e5660af6fcbb449b3c4756"
+    }
+  ]
+}

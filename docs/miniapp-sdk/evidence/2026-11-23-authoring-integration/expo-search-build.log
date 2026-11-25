@@ -1,0 +1,73 @@
+
+                        ▒▒▓▓▓▓▒▒
+                     ▒▓▓▓▒▒░░▒▒▓▓▓▒
+                  ▒▓▓▓▓░░░▒▒▒▒░░░▓▓▓▓▒
+                 ▓▓▒▒▒▓▓▓▓▓▓▓▓▓▓▓▓▒▒▒▓▓
+                 ▓▓░░░░░▒▓▓▓▓▓▓▒░░░░░▓▓
+                 ▓▓░░▓▓▒░░░▒▒░░░▒▓▒░░▓▓
+                 ▓▓░░▓▓▓▓▓▒▒▒▒▓▓▓▓▒░░▓▓
+                 ▓▓░░▓▓▓▓▓▓▓▓▓▓▓▓▓▒░░▓▓
+                 ▓▓▒░░▒▒▓▓▓▓▓▓▓▓▒░░░▒▓▓
+                  ▒▓▓▓▒░░░▒▓▓▒░░░▒▓▓▓▒
+                     ▒▓▓▓▒░░░░▒▓▓▓▒
+                        ▒▒▓▓▓▓▒▒
+
+
+                Welcome to Metro v0.87.1
+              Fast - Scalable - Integrated
+
+
+{
+  "schemaVersion": 1,
+  "engine": "expo",
+  "operation": "build",
+  "succeeded": true,
+  "diagnostics": [],
+  "sourceRoot": "/dev/shm/hanlin-miniapp-integration-20261123/expo-search",
+  "sdk": {
+    "packageVersions": {
+      "@expo/ui": "58.0.3",
+      "@hanlin/expo-native-api": "1.0.0",
+      "@hanlin/expo-ui": "1.0.0",
+      "@nativescript/react-native": "9.1.2",
+      "expo": "58.0.0",
+      "expo-brownfield": "58.0.3",
+      "expo-modules-core": "58.0.3",
+      "expo-modules-jsi": "58.0.2",
+      "react": "19.3.0",
+      "react-native": "0.88.0",
+      "react-native-worklets": "0.13.1",
+      "@babel/core": "7.29.7",
+      "@react-native-community/cli": "20.2.0",
+      "@react-native/codegen": "0.88.0",
+      "@react-native/metro-config": "0.88.0",
+      "@types/react": "19.3.0",
+      "babel-preset-expo": "58.0.20",
+      "esbuild": "0.25.12",
+      "typescript": "6.0.2"
+    },
+    "manifestSHA256": "64f09368fc6af79651488ba27c6c5770f7b1e63a085b46ecf5a37fa49cbc0186",
+    "compilerVersion": "6.0.3"
+  },
+  "typecheck": {
+    "strict": true,
+    "skipLibCheck": false,
+    "dependencyDeclarationsChecked": true
+  },
+  "preparedPackagePath": "/dev/shm/hanlin-miniapp-integration-20261123/expo-search/.hanlin-build/bec7c6fc-f40f-4a6d-ab8d-94140ea8cd18/package",
+  "archivePath": "/dev/shm/hanlin-miniapp-integration-20261123/expo-search/.hanlin-build/bec7c6fc-f40f-4a6d-ab8d-94140ea8cd18/MiniApp.hanlinExpo"
+}
+[metro-file-map] Cache write error
+: Error: ENOENT: no such file or directory, open '/dev/shm/hanlin-miniapp-integration-20261123/expo-search/.hanlin-build/bec7c6fc-f40f-4a6d-ab8d-94140ea8cd18/package/.metro-cache/metro-file-map-58f3c6ec35d2654dab7e2eec86847fbe-f4e0247fe9b1ded158e23de16eed2121'
+    at async open (node:internal/fs/promises:1345:25)
+    at async Object.writeFile (node:internal/fs/promises:1972:14)
+    at async /dev/shm/hanlin-miniapp-sdk-combined-20261123/expo/node_modules/metro-file-map/src/cache/DiskCacheManager.js:80:11
+    at async DiskCacheManager.write (/dev/shm/hanlin-miniapp-sdk-combined-20261123/expo/node_modules/metro-file-map/src/cache/DiskCacheManager.js:106:7)
+    at async #takeSnapshotAndPersist (/dev/shm/hanlin-miniapp-sdk-combined-20261123/expo/node_modules/metro-file-map/src/index.js:492:5)
+    at async /dev/shm/hanlin-miniapp-sdk-combined-20261123/expo/node_modules/metro-file-map/src/index.js:319:9
+    at async DependencyGraph.ready (/dev/shm/hanlin-miniapp-sdk-combined-20261123/expo/node_modules/metro/src/node-haste/DependencyGraph.js:95:5) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/dev/shm/hanlin-miniapp-integration-20261123/expo-search/.hanlin-build/bec7c6fc-f40f-4a6d-ab8d-94140ea8cd18/package/.metro-cache/metro-file-map-58f3c6ec35d2654dab7e2eec86847fbe-f4e0247fe9b1ded158e23de16eed2121'
+}

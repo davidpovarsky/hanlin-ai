@@ -1,0 +1,30 @@
+{
+  "reviewer": "/root/entrypoints",
+  "sourceCommit": "89b27bcf1d1decd835ee3d1dacc7ac90af617372",
+  "documentedScopeReference": {
+    "fileName": "ORIGINAL_UPSTREAM_BUILD.md",
+    "line": 52
+  },
+  "workflows": [
+    ".github/workflows/testflight.yml",
+    ".github/workflows/build-ios26-unsigned-ipa.yml",
+    ".github/workflows/validate-app-split.yml",
+    ".github/workflows/validate-expo-runtime-spike.yml",
+    ".github/workflows/validate-performance-regression.yml"
+  ],
+  "directHelpers": [
+    "Scripts/CI/SimulatorAcceptance/run_app.py",
+    "Scripts/ProductSplit/run_native_acceptance.py",
+    "Scripts/ProductSplit/run_paired_acceptance.py",
+    "Scripts/ProductSplit/prepare_signed_products.py"
+  ],
+  "onlyCLIOverrides": "The four removed unsigned-workflow arguments; the other four workflows and four listed helpers have no explicit-module CLI NO setting.",
+  "affectedConsumers": "AI_HLY scheme reaches HanlinApp and HanlinScriptingWidgets; AI_HLYTests is included when selected for testing. MiniApps product routes use the separate split helpers.",
+  "inheritableConfigLocations": [
+    "testflight.yml:199",
+    "validate-app-split.yml:402",
+    "build-ios26-unsigned-ipa.yml:1360",
+    "build-ios26-unsigned-ipa.yml:2249"
+  ],
+  "scopeBoundary": "Existing documented full-host build entrypoints and their directly invoked helpers only. Source mapping, not execution or native success."
+}

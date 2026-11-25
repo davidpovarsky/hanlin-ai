@@ -60,13 +60,10 @@ public struct HanlinExpoWidgetsRuntime: Sendable {
             return .failure(HanlinExpoWidgetError("Could not initialize JavaScriptCore context."))
         }
 
-        guard layout.utf8.count <= 2 * 1_024 * 1_024 else { return .failure(.init("Expo layout exceeds its compiled-source budget")) }
-        let deadline = ContinuousClock.now.advanced(by: .seconds(5))
-        let checkExecution: @convention(block) () -> Void = {
-            if ContinuousClock.now >= deadline, let current = JSContext.current() {
-                current.exception = JSValue(newErrorFromMessage: "Widget execution budget exceeded", in: current)
-            }
-        }
+        // Compatibility with already prepared Hanlin layouts. Current Expo
+        // compilation uses Expo's own parser/runtime without a ScriptWidget
+        // execution deadline or source-size contract.
+        let checkExecution: @convention(block) () -> Void = {}
         ctx.setObject(checkExecution, forKeyedSubscript: "__scriptWidgetCheckExecution" as NSString)
 
         ctx.exception = nil
@@ -98,11 +95,10 @@ public struct HanlinExpoWidgetsRuntime: Sendable {
         // transfer boundary; native views never receive a JSValue or closure.
         guard let res, !res.isUndefined, !res.isNull else { return .success(nil) }
         guard let json = ctx.objectForKeyedSubscript("JSON")?.invokeMethod("stringify", withArguments: [res])?.toString(),
-              let data = json.data(using: .utf8), data.count <= 256 * 1_024,
+              let data = json.data(using: .utf8),
               let object = try? JSONSerialization.jsonObject(with: data) else {
-            return .failure(.init("Expo output is not bounded JSON"))
+            return .failure(.init(ctx.exception?.toString() ?? "Expo output is not valid JSON"))
         }
-        guard ContinuousClock.now < deadline else { return .failure(.init("Expo execution budget exceeded")) }
         return .success(object)
     }
 

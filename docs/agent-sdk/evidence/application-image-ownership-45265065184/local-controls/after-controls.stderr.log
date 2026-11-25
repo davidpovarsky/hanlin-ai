@@ -1,0 +1,8 @@
+test_checked_in_hosts_link_only_the_shared_application_image (test_host_link_ownership.HostLinkOwnershipTests.test_checked_in_hosts_link_only_the_shared_application_image) ... ok
+test_every_declared_host_product_remains_reachable_and_unknown_products_are_kept (test_host_link_ownership.HostLinkOwnershipTests.test_every_declared_host_product_remains_reachable_and_unknown_products_are_kept) ... ok
+test_generator_preserves_declared_source_closure_and_all_unrelated_objects (test_host_link_ownership.HostLinkOwnershipTests.test_generator_preserves_declared_source_closure_and_all_unrelated_objects) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 2.665s
+
+OK

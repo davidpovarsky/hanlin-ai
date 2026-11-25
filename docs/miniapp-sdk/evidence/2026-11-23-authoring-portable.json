@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "dateUTC": "2026-11-23",
+  "scope": "MiniApp authoring portable implementation",
+  "sourceSHA256": {
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinMiniAppAuthoring.swift": "24e0f7075e50b639b7b2d357251c2552fe765ff33fb0ed6a0289156e6a249b82",
+    "AI_HLY/Downstream/RuntimeCore/Core/MiniAppAuthoringService.swift": "1b014760855e258223c619d002296cd1529cc14d12e7d4b756ea72bb00fd2f4b",
+    "AI_HLY/Downstream/RuntimeCore/Tools/MiniAppAuthoringTool.swift": "f726d7574e36a281979e44f2110ed90b06ac0d7bb69d4d5d04b243edf813bf10",
+    "AI_HLY/Downstream/RuntimeCore/Tools/NativeToolCatalog+RuntimeTools.swift": "49c7579f019e5777e0fc7bd3c5d20d100f795a353b673c53add46ee723466f7c",
+    "AI_HLY/Downstream/RuntimeCore/Node/NodeRuntimeService.swift": "fd0c4d7afcafb33518cde1f2e99dd212b42f763f420c6831975af97aa062891b",
+    "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs": "2bc16ee0046ad32a03f65d9228c6462eb87f0da4133bdc2570f3dbb03a5dfe90",
+    "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-authoring.test.mjs": "4a68e32775001941503c1c3aed969a5f37bff246e8510cf353f5bc4e0be0fa0a",
+    "Scripts/MiniApps/miniapp.mjs": "dd8d0cdba6b96618e966ed4c1b24048f8384533b1232b3132539d649f5108fcb"
+  },
+  "toolchain": {
+    "node": "24.22.0",
+    "typescript": "6.0.3",
+    "swift": "6.4.3 Linux aarch64"
+  },
+  "checks": [
+    {
+      "command": "HANLIN_AUTHORING_TYPESCRIPT=file:///dev/shm/hanlin-miniapp-authoring-tests-20261123/node_modules/typescript/lib/typescript.js HANLIN_AUTHORING_TMP=/dev/shm node --test AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-authoring.test.mjs",
+      "passed": 11,
+      "failed": 0,
+      "output": "\u2714 real TypeScript reports semantic errors with original source locations (2288.513373ms)\n\u2714 validation uses actual original package declarations from the supplied SDK (2213.840935ms)\n\u2714 NativeScript package emits a runnable ESM graph and retains exact editable sources (3072.610569ms)\n\u2714 import rechecks retained source and ignores a stale successful report (3651.047078ms)\n\u2714 ScriptWidget keeps original source and its explicit ABI declaration (1261.420433ms)\n\u2714 failed typecheck emits no package (1134.787771ms)\n\u2714 a requested existing output directory is preserved (1158.52167ms)\n\u2714 SDK discovery reads its real manifest and requested documentation (5.830194ms)\n\u2714 bundle-only imports do not receive a fabricated source typecheck pass (6.119196ms)\n\u2714 modified compiled output is rejected even when retained TypeScript is still valid (3633.715137ms)\n\u2714 the real CLI archives and revalidates retained source, diagnostics and output identity (5673.828334ms)\n\u2139 tests 11\n\u2139 suites 0\n\u2139 pass 11\n\u2139 fail 0\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 todo 0\n\u2139 duration_ms 24603.702361\n"
+    },
+    {
+      "command": "swiftc -frontend -parse <five affected Swift files>",
+      "exitCode": 0
+    },
+    {
+      "command": "swiftc -typecheck Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinMiniAppAuthoring.swift",
+      "exitCode": 0
+    },
+    {
+      "command": "node --check AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs && node --check Scripts/MiniApps/miniapp.mjs",
+      "exitCode": 0
+    }
+  ],
+  "notEstablishedByTheseChecks": [
+    "Apple target compilation and on-device execution",
+    "Expo Metro bundle integration (separate original-SDK acceptance follows)",
+    "NativeScript UI/native-plugin execution",
+    "ScriptWidget native rendering"
+  ]
+}

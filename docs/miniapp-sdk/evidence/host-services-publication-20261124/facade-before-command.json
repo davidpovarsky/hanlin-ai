@@ -1,0 +1,8 @@
+{
+  "command": [
+    "node",
+    "--test",
+    "Packages/HanlinExpoUI/tests/host-services-publication.test.mjs"
+  ],
+  "exitCode": 1
+}

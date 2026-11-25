@@ -1,0 +1,13 @@
+{
+  "atUTC": "2026-11-24T07:57:37.928943+00:00",
+  "repository": "everettjf/scriptwidget",
+  "commit": "4da256d58247bbafb9a5cd443a285250b97b3c4b",
+  "path": "Shared/ScriptWidgetRuntime/Widget/Component/Elements/ScriptWidgetElementTagStack.swift",
+  "url": "https://raw.githubusercontent.com/everettjf/scriptwidget/4da256d58247bbafb9a5cd443a285250b97b3c4b/Shared/ScriptWidgetRuntime/Widget/Component/Elements/ScriptWidgetElementTagStack.swift",
+  "gitBlob": "97cb355ccd4a7acd214a3e53c8ab10f5ad6fecbb",
+  "sha256": "2214ccbb0a035d72630cb4b3825afca6ff1146bf9d9d55405a7dff3aea3996f0",
+  "bytes": 8493,
+  "fixture": "Scripts/MiniApps/Tests/Fixtures/scriptwidget-4da256d5/ScriptWidgetElementTagStack.swift",
+  "source": "Existing immutable original cache; Git blob matches the checked-in upstream provenance.",
+  "baseCommit": "c2fe34037531462a23ce1e69c5de0890e3a35911"
+}

@@ -1,0 +1,18 @@
+{
+  "command": [
+    "sudo",
+    "-u",
+    "ubuntu",
+    "gh",
+    "run",
+    "view",
+    "45360272675",
+    "--repo",
+    "davidpovarsky/hanlin-ai",
+    "--job",
+    "138328276796",
+    "--log"
+  ],
+  "code": 0,
+  "stderr": ""
+}

@@ -3,10 +3,10 @@ import UIKit
 import HanlinExpoNativeAPICore
 
 public struct HanlinExpoNativeAPIMetadata: Sendable {
-    public static let nativeApiVersion = "9.1.2"
-    public static let workletsVersion = "0.13.1"
+    public static let nativeApiVersion = HanlinExpoNativeAPIHostVersions.nativeApiVersion
+    public static let workletsVersion = HanlinExpoNativeAPIHostVersions.workletsVersion
     public static let contractVersion = "1.0.0"
-    public static let reactNativeVersion = "0.88.0"
+    public static let reactNativeVersion = HanlinExpoNativeAPIHostVersions.reactNativeVersion
     public static let nativeApiSupported = true
 }
 

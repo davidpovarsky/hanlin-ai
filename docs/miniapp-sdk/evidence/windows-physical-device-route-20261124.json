@@ -1,0 +1,125 @@
+{
+  "schemaVersion": 1,
+  "baseline": {
+    "sourceCommit": "0b05cc62",
+    "path": "docs/miniapp-sdk/evidence/available-device-test-route-20261124.json",
+    "scope": "Host inventory only; no prior tethered-device or device-tool query."
+  },
+  "host": {
+    "kind": "Windows",
+    "kernel": "11",
+    "arch": "AMD64",
+    "agentVersion": "0.23.34",
+    "executionMode": "unrestricted"
+  },
+  "observation": {
+    "observedAtUTC": "2026-11-24T10:52:30.6190477Z",
+    "toolAvailability": [
+      {
+        "name": "apple-test-focused",
+        "type": "Application",
+        "path": "C:\\Users\\DAVID\\Code\\apple-devtools\\bin\\apple-test-focused.cmd"
+      },
+      {
+        "name": "python",
+        "type": "Application",
+        "path": "C:\\WINDOWS\\system32\\python"
+      },
+      {
+        "name": "python3",
+        "type": "Application",
+        "path": "C:\\Users\\DAVID\\AppData\\Local\\Microsoft\\WindowsApps\\python3.exe"
+      },
+      {
+        "name": "py",
+        "type": "Application",
+        "path": "C:\\WINDOWS\\py.exe"
+      }
+    ],
+    "appleUSB": [],
+    "deviceStatus": "PRESENT_ONLY_QUERY_COMPLETED",
+    "mobileDeviceServices": [],
+    "privacy": "No serial numbers, UDIDs, user-assigned device names or device contents collected"
+  },
+  "operations": [
+    {
+      "name": "present-apple-usb-and-tool-availability",
+      "command": "$ErrorActionPreference = 'Stop'\n$names = @('idevice_id','ideviceinstaller','ideviceinfo','ios','go-ios','tidevice','pymobiledevice3','xcrun','xcodebuild','apple-device','apple-devices','apple-test-focused','apple-install','python','python3','py')\n$tools = @()\nforeach ($name in $names) {\n  $found = Get-Command $name -ErrorAction SilentlyContinue\n  if ($found) { $tools += [pscustomobject]@{name=$name; type=[string]$found.CommandType; path=$found.Source} }\n}\n$devices = @()\n$provider = Get-Command Get-PnpDevice -ErrorAction SilentlyContinue\nif ($provider) {\n  $apple = @(Get-PnpDevice -PresentOnly -ErrorAction Stop | Where-Object {$_.InstanceId -match '^USB\\\\VID_05AC'})\n  foreach ($device in $apple) {\n    $category = if ($device.FriendlyName -match 'iPad') {'iPad'} elseif ($device.FriendlyName -match 'iPhone') {'iPhone'} elseif ($device.FriendlyName -match 'iPod') {'iPod'} elseif ($device.FriendlyName -match 'Apple Mobile') {'Apple Mobile Device'} else {'Apple USB peripheral'}\n    $hardware = [regex]::Match($device.InstanceId, 'VID_[0-9A-F]{4}&PID_[0-9A-F]{4}').Value\n    $devices += [pscustomobject]@{category=$category; class=[string]$device.Class; status=[string]$device.Status; hardware=$hardware}\n  }\n  $deviceStatus = 'PRESENT_ONLY_QUERY_COMPLETED'\n} else { $deviceStatus = 'GET_PNP_DEVICE_UNAVAILABLE' }\n$services = @(Get-Service -ErrorAction SilentlyContinue | Where-Object {$_.Name -match 'Apple.*Mobile|AppleMobileDevice|usbmux'} | ForEach-Object { [pscustomobject]@{name=$_.Name;status=[string]$_.Status} })\n[pscustomobject]@{observedAtUTC=[DateTime]::UtcNow.ToString('o'); toolAvailability=$tools; appleUSB=$devices; deviceStatus=$deviceStatus; mobileDeviceServices=$services; privacy='No serial numbers, UDIDs, user-assigned device names or device contents collected'} | ConvertTo-Json -Depth 5",
+      "result": {
+        "ok": true,
+        "output": "{\r\n    \"observedAtUTC\":  \"2026-11-24T10:52:30.6190477Z\",\r\n    \"toolAvailability\":  [\r\n                             {\r\n                                 \"name\":  \"apple-test-focused\",\r\n                                 \"type\":  \"Application\",\r\n                                 \"path\":  \"C:\\\\Users\\\\DAVID\\\\Code\\\\apple-devtools\\\\bin\\\\apple-test-focused.cmd\"\r\n                             },\r\n                             {\r\n                                 \"name\":  \"python\",\r\n                                 \"type\":  \"Application\",\r\n                                 \"path\":  \"C:\\\\WINDOWS\\\\system32\\\\python\"\r\n                             },\r\n                             {\r\n                                 \"name\":  \"python3\",\r\n                                 \"type\":  \"Application\",\r\n                                 \"path\":  \"C:\\\\Users\\\\DAVID\\\\AppData\\\\Local\\\\Microsoft\\\\WindowsApps\\\\python3.exe\"\r\n                             },\r\n                             {\r\n                                 \"name\":  \"py\",\r\n                                 \"type\":  \"Application\",\r\n                                 \"path\":  \"C:\\\\WINDOWS\\\\py.exe\"\r\n                             }\r\n                         ],\r\n    \"appleUSB\":  [\r\n\r\n                 ],\r\n    \"deviceStatus\":  \"PRESENT_ONLY_QUERY_COMPLETED\",\r\n    \"mobileDeviceServices\":  [\r\n\r\n                             ],\r\n    \"privacy\":  \"No serial numbers, UDIDs, user-assigned device names or device contents collected\"\r\n}",
+        "duration": 35.06,
+        "returncode": 0
+      }
+    },
+    {
+      "name": "python-launcher-and-toolkit-shell-read",
+      "command": "$ErrorActionPreference = 'Stop'\n$launcher = 'C:\\Users\\DAVID\\Code\\apple-devtools\\bin\\apple-test-focused.cmd'\n$entry = if (Test-Path -LiteralPath $launcher) { @(Get-Content -LiteralPath $launcher -TotalCount 30) } else { @() }\n$pythonLaunchers = @(& py -0p 2>&1 | ForEach-Object { [string]$_ })\n[pscustomobject]@{observedAtUTC=[DateTime]::UtcNow.ToString('o'); appleTestFocusedLauncher=$entry; pythonLaunchers=$pythonLaunchers} | ConvertTo-Json -Depth 4",
+      "result": {
+        "ok": true,
+        "output": "⏱️ Timeout",
+        "duration": 20.99,
+        "returncode": -1,
+        "timed_out": true,
+        "guidance": "This operation timed out and the process was killed. For long-running work, retry with background=true: the call returns immediately with a job_id, the work runs asynchronously (ceiling 3600s), and the result lands in the notifications pool -- read it with notifications_check. Add notify_telegram=true (or notify_resend=true) to be pushed a message when it finishes. Do not simply retry with a longer timeout."
+      }
+    },
+    {
+      "name": "toolkit-shell-read",
+      "command": "Get-Content -LiteralPath 'C:\\Users\\DAVID\\Code\\apple-devtools\\bin\\apple-test-focused.cmd' -TotalCount 30",
+      "result": {
+        "ok": true,
+        "output": "⏱️ Timeout",
+        "duration": 11.42,
+        "returncode": -1,
+        "timed_out": true,
+        "guidance": "This operation timed out and the process was killed. For long-running work, retry with background=true: the call returns immediately with a job_id, the work runs asynchronously (ceiling 3600s), and the result lands in the notifications pool -- read it with notifications_check. Add notify_telegram=true (or notify_resend=true) to be pushed a message when it finishes. Do not simply retry with a longer timeout."
+      }
+    }
+  ],
+  "toolkit": {
+    "launcher": {
+      "ok": true,
+      "path": "C:\\Users\\DAVID\\Code\\apple-devtools\\bin\\apple-test-focused.cmd",
+      "encoding": "utf-8",
+      "content": "@echo off\npython \"%~dp0..\\src\\apple_devtools.py\" apple-test-focused %*\n",
+      "total_lines": 2,
+      "total_lines_exact": true,
+      "lines_returned": 2,
+      "size_bytes": 71,
+      "truncated": false,
+      "modified_at": "2026-09-09T17:55:19+0200",
+      "view_range": [
+        1,
+        2
+      ]
+    },
+    "source": {
+      "ok": true,
+      "path": "C:\\Users\\DAVID\\Code\\apple-devtools\\src\\apple_devtools.py",
+      "encoding": "utf-8",
+      "content": "#!/usr/bin/env python3\nfrom __future__ import annotations\nimport argparse, json, os, platform, re, shutil, subprocess, sys, urllib.parse\nfrom pathlib import Path\n\nAPPLE_MODULES={\"AppKit\",\"ARKit\",\"AuthenticationServices\",\"AVKit\",\"CallKit\",\"CloudKit\",\"CoreML\",\"HealthKit\",\"MapKit\",\"MetalKit\",\"PassKit\",\"RealityKit\",\"SwiftData\",\"SwiftUI\",\"TVUIKit\",\"UIKit\",\"VisionKit\",\"WatchKit\",\"WidgetKit\",\"Testing\",\"XCTest\"}\nREMOTE={\"apple-sdk-info\":\"sdk-info\",\"apple-sdk-interface\":\"sdk-interface\",\"apple-api\":\"api\",\"apple-symbol\":\"api\",\"apple-build\":\"build\",\"apple-test\":\"test\",\"apple-test-focused\":\"test-focused\",\"apple-sim\":\"sim\",\"apple-signing-doctor\":\"signing-doctor\",\"apple-entitlements\":\"entitlements\",\"apple-archive-check\":\"archive-check\",\"apple-ci\":\"ci\",\"apple-compile-sweep\":\"compile-sweep\"}\n\ndef emit(v,j=False):\n    print(json.dumps(v,separators=(\",\",\":\"),sort_keys=True) if j else (\" \".join(f\"{k}={x}\" for k,x in v.items()) if isinstance(v,dict) else v))\ndef run(a,cwd=None): return subprocess.run(a,cwd=cwd,text=True,capture_output=True)\ndef ver(n):\n    p=shutil.which(n)\n    if not p:return None\n    if n==\"python\": return {\"path\":sys.executable,\"version\":platform.python_version()}\n    try:r=run([p,\"--version\"])\n    except OSError:return {\"path\":p,\"version\":\"present\"}\n    lines=(r.stdout or r.stderr).strip().splitlines()\n    return {\"path\":p,\"version\":lines[0] if lines else \"unknown\"}\ndef imports(p):\n    found=set(re.findall(r\"^\\s*(?:@testable\\s+)?import\\s+([A-Za-z_]\\w*)\",p.read_text(encoding=\"utf-8\"),re.M))\n    return sorted(found&APPLE_MODULES)\ndef slug():\n    r=run([\"gh\",\"repo\",\"view\",\"--json\",\"nameWithOwner\",\"--jq\",\".nameWithOwner\"])\n    return r.stdout.strip() if r.returncode==0 else \"\"\ndef dispatch(op,n,extra=None):\n    if not shutil.which(\"gh\"):raise SystemExit(\"GitHub CLI is required for macOS/Xcode dispatch\")\n    target=n.repository or slug(); fields={\"operation\":op,\"repository\":target,\"ref\":n.ref,\"xcode\":n.xcode,\"sdk\":n.sdk,\"path\":n.path or \"\",\"scheme\":n.scheme or \"\",\"destination\":n.destination or \"\",\"only_testing\":n.only_testing or \"\",\"targets\":getattr(n,\"targets\",None) or \"\",\"runs_on\":getattr(n,\"runs_on\",None) or \"\"}\n    fields.update(extra or {}); cmd=[\"gh\",\"workflow\",\"run\",\"apple-authority.yml\",\"--repo\",\"davidpovarsky/apple-devtools\",\"--ref\",n.toolkit_ref]\n    for k,v in fields.items():\n        if v:cmd += [\"-f\",f\"{k}={v}\"]\n    rc=subprocess.run(cmd).returncode\n    if rc:raise SystemExit(rc)\n    emit({\"status\":\"dispatched\",\"operation\":op,\"repository\":target or \"apple-devtools\"},n.json);return 0\ndef add_common(p):\n    p.add_argument(\"--json\",action=\"store_true\");p.add_argument(\"--repository\");p.add_argument(\"--ref\",default=\"main\");p.add_argument(\"--toolkit-ref\",default=os.environ.get(\"APPLE_DEVTOOLS_REF\",\"main\"));p.add_argument(\"--xcode\",choices=(\"default\",\"stable\",\"beta\"),default=\"default\");p.add_argument(\"--sdk\",default=\"iphonesimulator\");p.add_argument(\"--path\");p.add_argument(\"--scheme\");p.add_argument(\"--destination\");p.add_argument(\"--only-testing\");p.add_argument(\"--targets\");p.add_argument(\"--runs-on\")\ndef main(argv=None):\n    a=list(sys.argv[1:] if argv is None else argv); invoked=Path(sys.argv[0]).stem.lower(); cmd=invoked if invoked.startswith(\"apple-\") else (a.pop(0) if a else \"apple-doctor\")\n    p=argparse.ArgumentParser(prog=cmd);add_common(p);p.add_argument(\"terms\",nargs=\"*\");p.add_argument(\"--local\",action=\"store_true\");n=p.parse_args(a)\n    if cmd==\"apple-doctor\":\n        tools={x:ver(x) for x in (\"swift\",\"swiftc\",\"sourcekit-lsp\",\"swift-format\",\"git\",\"gh\",\"python\")};data={\"platform\":platform.system(),\"portable_swift_only\":platform.system()==\"Windows\",\"apple_sdk_available\":platform.system()==\"Darwin\" and bool(shutil.which(\"xcrun\")),\"tools\":tools};emit(data,n.json);return 0 if tools[\"swift\"] and tools[\"swiftc\"] else 1\n    if cmd==\"apple-doc\":\n        q=\" \".join(n.terms);emit({\"authority\":\"Apple Developer Documentation\",\"query\":q,\"url\":\"https://developer.apple.com/search/?q=\"+urllib.parse.quote(q)},n.json);return 0\n    if cmd==\"apple-typecheck\":\n        if not n.path:p.error(\"--path is required\")\n        source=Path(n.path).resolve();mods=imports(source)\n        if platform.system()==\"Windows\" and mods:\n            if n.local:emit({\"status\":\"routed\",\"authority\":\"macOS/Xcode\",\"apple_modules\":mods},n.json);return 0\n            return dispatch(\"typecheck\",n)\n        compiler=shutil.which(\"swiftc\")\n        if not compiler:raise SystemExit(\"swiftc is not available\")\n        r=run([compiler,\"-typecheck\",str(source)]);diag=\"\\n\".join((r.stdout+r.stderr).splitlines()[-80:]);emit({\"status\":\"passed\" if r.returncode==0 else \"failed\",\"authority\":\"local Swift compiler\",\"diagnostics\":diag},n.json);return r.returncode\n    if cmd in (\"apple-api\",\"apple-symbol\"):\n        if len(n.terms)<2:p.error(\"provide MODULE SYMBOL, for example: SwiftUI searchable\")\n        return dispatch(\"api\",n,{\"module\":n.terms[0],\"symbol\":n.terms[1]})\n    if cmd==\"apple-sdk-interface\":\n        if not n.terms:p.error(\"provide one or more Swift module names, for example: SwiftUI SwiftUICore\")\n        invalid=[module for module in n.terms if not re.fullmatch(r\"[A-Za-z_]\\w*\",module)]\n        if invalid:p.error(\"invalid Swift module name: \"+invalid[0])\n        return dispatch(\"sdk-interface\",n,{\"modules\":\",\".join(n.terms)})\n    if cmd==\"apple-sdk-info\" and n.local and platform.system()!=\"Darwin\":emit({\"platform\":platform.system(),\"apple_sdks\":[],\"note\":\"Real Apple SDK discovery requires macOS/Xcode\"},n.json);return 0\n    if cmd in REMOTE:return dispatch(REMOTE[cmd],n)\n    p.error(f\"unknown command: {cmd}\")\nif __name__==\"__main__\":raise SystemExit(main())\n",
+      "total_lines": 64,
+      "total_lines_exact": true,
+      "lines_returned": 64,
+      "size_bytes": 5621,
+      "truncated": false,
+      "modified_at": "2026-10-05T09:16:05+0200",
+      "view_range": [
+        1,
+        64
+      ]
+    },
+    "finding": "Installed apple-test-focused delegates to Python REMOTE dispatch, issuing gh workflow run apple-authority.yml in davidpovarsky/apple-devtools. It is not an observed local USB device-install/test route. The command was not executed."
+  },
+  "conclusion": {
+    "status": "PHYSICAL_IPAD_EXECUTION_ROUTE_NOT_ESTABLISHED",
+    "externalBlock": "No current present Apple USB device or usable local device CLI route established by the bounded probe.",
+    "boundaries": [
+      "No statement that an iPad does not exist or could not be connected by another route.",
+      "Tool absence is limited to current PATH queries; Python module availability remains unknown because the launcher query timed out.",
+      "Both shell follow-ups timed out; toolkit entry/source were subsequently read via the permitted file-read API.",
+      "No pairing, installation, software changes, disconnection, service restart, device-content access, signing access, CI dispatch or notifications inspection performed."
+    ]
+  }
+}

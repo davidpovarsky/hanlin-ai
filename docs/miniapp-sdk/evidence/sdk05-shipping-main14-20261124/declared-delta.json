@@ -1,0 +1,78 @@
+{
+  "sourceInputs": [
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.json",
+      "before": {
+        "path": "docs/miniapp-sdk/extension-reachability.json",
+        "sha256": "f4e2bd0bead729e6a05c591947ee1cd7f13eaf85e3f1a193510f65ac83c95008"
+      },
+      "after": {
+        "path": "docs/miniapp-sdk/extension-reachability.json",
+        "sha256": "b315a5c0724192dbd500b259e7eb2e3446347910e2b121d8ee4df2a990079921"
+      }
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.md",
+      "before": {
+        "path": "docs/miniapp-sdk/extension-reachability.md",
+        "sha256": "8d9c979eedf51d8fd8a2f0535d616a3c03950d6b47f9cccb7fb1bb3a1b26487c"
+      },
+      "after": {
+        "path": "docs/miniapp-sdk/extension-reachability.md",
+        "sha256": "db5b13d3d47bfbe6a97887a51795446378a046ae8d295281aa8aa8452a4eb415"
+      }
+    },
+    {
+      "path": "docs/miniapp-sdk/source-inventory.json",
+      "before": {
+        "path": "docs/miniapp-sdk/source-inventory.json",
+        "sha256": "0fd0bc2eb8aa0ab33bfaa74a48c4e2ad3d743d682cbf3bcc059d7a17aacdd515"
+      },
+      "after": {
+        "path": "docs/miniapp-sdk/source-inventory.json",
+        "sha256": "1c4129ad6174891c1085eb3cc99e8e4face1689898116d0648a9a12b0ba59d4c"
+      }
+    }
+  ],
+  "files": [
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.json",
+      "before": {
+        "path": "docs/miniapp-sdk/extension-reachability.json",
+        "sha256": "f4e2bd0bead729e6a05c591947ee1cd7f13eaf85e3f1a193510f65ac83c95008",
+        "bytes": 147521
+      },
+      "after": {
+        "path": "docs/miniapp-sdk/extension-reachability.json",
+        "sha256": "b315a5c0724192dbd500b259e7eb2e3446347910e2b121d8ee4df2a990079921",
+        "bytes": 147521
+      }
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.md",
+      "before": {
+        "path": "docs/miniapp-sdk/extension-reachability.md",
+        "sha256": "8d9c979eedf51d8fd8a2f0535d616a3c03950d6b47f9cccb7fb1bb3a1b26487c",
+        "bytes": 21494
+      },
+      "after": {
+        "path": "docs/miniapp-sdk/extension-reachability.md",
+        "sha256": "db5b13d3d47bfbe6a97887a51795446378a046ae8d295281aa8aa8452a4eb415",
+        "bytes": 21494
+      }
+    },
+    {
+      "path": "docs/miniapp-sdk/source-inventory.json",
+      "before": {
+        "path": "docs/miniapp-sdk/source-inventory.json",
+        "sha256": "0fd0bc2eb8aa0ab33bfaa74a48c4e2ad3d743d682cbf3bcc059d7a17aacdd515",
+        "bytes": 493311
+      },
+      "after": {
+        "path": "docs/miniapp-sdk/source-inventory.json",
+        "sha256": "1c4129ad6174891c1085eb3cc99e8e4face1689898116d0648a9a12b0ba59d4c",
+        "bytes": 493266
+      }
+    }
+  ]
+}

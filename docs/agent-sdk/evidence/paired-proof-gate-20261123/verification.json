@@ -1,0 +1,20 @@
+{
+  "base_source": "0b40a021c6d28e4d1c47ed87060d063c8456ba9f",
+  "controls": {
+    "command": "python3 -m unittest Scripts.ProductSplit.test_restore_host_proof -v",
+    "status": "PASS",
+    "count": 21,
+    "native_tests_executed": 0
+  },
+  "proof_predicates_unchanged": {
+    "restore": "332349e9631589cffa97a01403a712a1e7248179833997034f54337227c10aab",
+    "foreground_inputs": "927279a88afed5ebd036b6ff69e22f8d73e5a73f91398a9695eafdf5e878888f",
+    "file_record": "0df3cd69faf5de4a0365c5b2c27a74093b2737eef68293530c440400838aa001",
+    "validate_foreground": "b47b71a3f27c887f14de4479133215a453f83a3900bdaebfcbc69a37cbdbdf1b",
+    "restore_foreground": "ad10505f21236e25ca58e6287c9b4c8e5f3cd1e8a8d94246638216adc63e343b"
+  },
+  "workflow_change": "Only PAIRED_PROOF_REUSE_REQUIRED environment expression, true exactly for paired mode plus both explicit proof IDs",
+  "original_paired_runner_and_three_cases": "BYTE_IDENTICAL_TO_6772dce6304fc6761a2200314f7d2020dc782e47",
+  "native_reuse_and_paired_three_cases": "NOT_RUN",
+  "baseline_replay_on_requested_pair_mismatch": "BLOCKED_BY_NONZERO_PROCESS_EXIT"
+}

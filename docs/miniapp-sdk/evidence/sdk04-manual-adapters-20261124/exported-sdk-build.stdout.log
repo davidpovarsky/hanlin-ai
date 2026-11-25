@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "engine": "expo",
+  "operation": "build",
+  "succeeded": true,
+  "diagnostics": [],
+  "sourceRoot": "/mnt/development/projects/worktrees/hanlin-sdk04-manual-adapters-20261124/build/acceptance/sdk04-manual-adapters-sdk-project",
+  "sdk": {
+    "packageVersions": {
+      "@expo/ui": "58.0.29",
+      "@hanlin/expo-native-api": "1.0.0",
+      "@hanlin/expo-ui": "1.0.0",
+      "@nativescript/react-native": "9.1.2",
+      "expo": "58.0.26",
+      "expo-brownfield": "58.0.20",
+      "expo-modules-core": "58.1.0",
+      "expo-modules-jsi": "58.0.23",
+      "react": "19.3.0",
+      "react-native": "0.88.1",
+      "react-native-worklets": "0.13.0",
+      "expo-widgets": "58.0.29",
+      "@babel/core": "7.29.7",
+      "@react-native-community/cli": "20.2.0",
+      "@react-native/codegen": "0.88.1",
+      "@react-native/metro-config": "0.88.1",
+      "@types/react": "19.3.0",
+      "babel-preset-expo": "58.0.26",
+      "esbuild": "0.25.12",
+      "typescript": "6.0.2"
+    },
+    "manifestSHA256": "fa1e737ec63e640175cdb5c9dad51903cd86d50ae7b340ba5b8ec1ff4e408d85",
+    "compilerVersion": "6.0.3"
+  },
+  "typecheck": {
+    "strict": true,
+    "checkJs": false,
+    "skipLibCheck": false,
+    "dependencyDeclarationsChecked": true
+  },
+  "preparedPackagePath": "/mnt/development/projects/worktrees/hanlin-sdk04-manual-adapters-20261124/build/acceptance/sdk04-manual-adapters-sdk-project/.hanlin-build/00d587d7-95d7-41fd-8ee3-550fd63698f9/package",
+  "archivePath": "/mnt/development/projects/worktrees/hanlin-sdk04-manual-adapters-20261124/build/acceptance/sdk04-manual-adapters/ManualAdapterProbe.hanlinExpo"
+}

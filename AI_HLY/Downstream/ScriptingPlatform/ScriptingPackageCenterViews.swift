@@ -16,6 +16,8 @@ struct ScriptingPackageImportView: View {
     let platform: HanlinScriptingPlatform
     @Environment(\.dismiss) private var dismiss
     @State private var showsImporter = false
+    @State private var diagnosticsSelection: MiniAppImportDiagnosticsSelection?
+    @State private var importPresentationID = UUID()
     private var stagedDocumentPackages: [URL] {
         guard let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first,
               let contents = try? FileManager.default.contentsOfDirectory(at: documentsURL, includingPropertiesForKeys: nil) else {
@@ -55,12 +57,22 @@ struct ScriptingPackageImportView: View {
                 }
             }
 
+            if !platform.importDiagnostics.isEmpty {
+                Section {
+                    Button {
+                        diagnosticsSelection = .init(id: platform.importAttemptID)
+                    } label: {
+                        Label(hanlin: "Review package diagnostics", systemImage: "list.bullet.rectangle")
+                    }
+                    .accessibilityIdentifier("hanlin-import-diagnostics-open")
+                }
+            }
             if let preview = platform.preview {
                 Section {
                     Button(hanlin: "Install") { Task { await platform.installPreview() } }
                         .accessibilityIdentifier("hanlin-package-install")
                         .disabled(
-                            !preview.canInstall
+                            !platform.canInstallPreview
                                 || platform.activity == .installing
                         )
                     Button(hanlin: "Discard", role: .destructive) { platform.discardPreview() }
@@ -102,9 +114,22 @@ struct ScriptingPackageImportView: View {
             }
         }
         .onAppear {
+            platform.setImportPresentation(importPresentationID, visible: true)
             if platform.activity == .idle && platform.preview != nil {
                 platform.discardPreview()
             }
+        }
+        .onDisappear { platform.setImportPresentation(importPresentationID, visible: false) }
+        .onChange(of: platform.importAttemptID) { diagnosticsSelection = nil }
+        .onChange(of: platform.activity, initial: true) {
+            if platform.activity == .idle { diagnosticsSelection = nil }
+            else if platform.activity != .importing && platform.activity != .installing,
+               platform.importDiagnostics.contains(where: { $0.category == "error" }) {
+                diagnosticsSelection = .init(id: platform.importAttemptID)
+            }
+        }
+        .sheet(item: $diagnosticsSelection) { _ in
+            NavigationStack { MiniAppImportDiagnosticsView(platform: platform) }
         }
         .id(platform.preview == nil ? "browse" : "preview")
         .accessibilityIdentifier("hanlin-package-import-list")
@@ -181,8 +206,8 @@ private struct ScriptingImportPreviewSections: View {
         case .hanlinQuickJS: return "Hanlin manifest selected constrained JavaScript."
         case .hanlinNode: return "Hanlin manifest selected a trusted Node worker."
         case .hanlinPython: return "Python entrypoint requires trusted local execution."
-        case .hanlinNativeScript: return "NativeScript 9.1 provides trusted Apple-native interop and Core UI."
-        case .hanlinExpo: return "Expo 58.0 provides dynamic Apple SwiftUI via Expo UI."
+        case .hanlinNativeScript: return "NativeScript provides original native iOS APIs and Core UI."
+        case .hanlinExpo: return "Expo renders React Native and original Expo UI components."
         }
     }
 }
@@ -282,6 +307,15 @@ struct ScriptingInstalledPackageDetailView: View {
                 Section(hanlin: "Widget instances") {
                     ForEach(widgetInstances, id: \.entityID) { instance in
                         LabeledContent(instance.displayName, value: instance.engine.rawValue)
+                        if instance.engine == .scriptwidget {
+                            NavigationLink {
+                                platform.scriptWidgetServicesView(for: instance.entityID)
+                            } label: {
+                                Label(hanlin: "Services and Data", systemImage: "slider.horizontal.3")
+                            }
+                            .accessibilityIdentifier("hanlin-widget-services-\(instance.entityID)")
+                            MiniAppScriptWidgetActivityControls(platform: platform, entityID: instance.entityID)
+                        }
                     }
                     Picker(hanlin: "Copy from", selection: $sourceInstanceID) {
                         ForEach(widgetInstances, id: \.entityID) { instance in
@@ -416,6 +450,57 @@ struct ScriptingInstalledPackageDetailView: View {
                 error: error,
                 storeDiagnostic: HanlinScriptExtensionStore.latestDiagnostic
             )
+        }
+    }
+}
+
+private struct MiniAppScriptWidgetActivityControls: View {
+    let platform: HanlinScriptingPlatform
+    let entityID: String
+    @State private var isRunning = false
+    @State private var status: String?
+    @State private var failure: String?
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                Button { run(starting: true) } label: {
+                    Label(hanlin: "Start Live Activity", systemImage: "waveform.path")
+                }
+                .accessibilityIdentifier("hanlin-widget-live-activity-start-" + entityID)
+                Spacer()
+                Menu {
+                    Button(hanlin: "End Live Activities") { run(starting: false) }
+                } label: {
+                    Image(systemName: "ellipsis.circle")
+                        .accessibilityLabel(Text("Live Activities", bundle: HanlinLocalization.bundle))
+                }
+                .accessibilityIdentifier("hanlin-widget-live-activity-menu-" + entityID)
+            }
+            .buttonStyle(.borderless)
+            .disabled(isRunning)
+            if isRunning { ProgressView() }
+            if let status { Text(status).font(HanlinTypography.footnote).foregroundStyle(.secondary) }
+            if let failure { Text(failure).font(HanlinTypography.footnote).foregroundStyle(.red) }
+        }
+    }
+
+    private func run(starting: Bool) {
+        guard !isRunning else { return }
+        isRunning = true
+        failure = nil
+        status = nil
+        Task {
+            defer { isRunning = false }
+            do {
+                if starting {
+                    try await platform.startScriptWidgetLiveActivity(for: entityID)
+                    status = String(localized: "Live Activity started.", bundle: HanlinLocalization.bundle)
+                } else {
+                    try await platform.endScriptWidgetLiveActivities(for: entityID)
+                    status = String(localized: "Live Activities ended.", bundle: HanlinLocalization.bundle)
+                }
+            } catch { failure = error.localizedDescription }
         }
     }
 }

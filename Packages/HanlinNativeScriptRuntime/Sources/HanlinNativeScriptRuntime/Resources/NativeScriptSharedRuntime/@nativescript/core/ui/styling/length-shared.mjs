@@ -2,6 +2,17 @@
 // Only put platform-agnostic logic here.
 import { layout } from '../../utils/layout-helper';
 import { isCssWideKeyword } from '../core/properties/property-shared';
+let rootFontSize = 16;
+function parseRem(value) {
+    if (!value.endsWith('rem')) {
+        return undefined;
+    }
+    const rem = parseFloat(value.substring(0, value.length - 3));
+    if (isNaN(rem) || !isFinite(rem)) {
+        throw new Error(`Invalid value: ${value}`);
+    }
+    return rem * rootFontSize;
+}
 function equalsCommon(a, b) {
     if (a == 'auto' || isCssWideKeyword(a)) {
         return b == 'auto' || isCssWideKeyword(b);
@@ -87,6 +98,9 @@ export var PercentLength;
                 }
                 return { unit: '%', value };
             }
+            else if (stringValue.endsWith('rem')) {
+                return parseRem(stringValue);
+            }
             else if (stringValue.indexOf('px') !== -1) {
                 stringValue = stringValue.replace('px', '').trim();
                 const value = parseFloat(stringValue);
@@ -123,6 +137,9 @@ export var FixedLength;
     function parse(fromValue) {
         if (typeof fromValue === 'string') {
             let stringValue = fromValue.trim();
+            if (stringValue.endsWith('rem')) {
+                return parseRem(stringValue);
+            }
             if (stringValue.indexOf('px') !== -1) {
                 stringValue = stringValue.replace('px', '').trim();
                 const value = parseFloat(stringValue);
@@ -169,5 +186,15 @@ export var Length;
      */
     Length.toDevicePixels = toDevicePixelsCommon;
     Length.convertToString = convertToStringCommon;
+    function getRootFontSize() {
+        return rootFontSize;
+    }
+    Length.getRootFontSize = getRootFontSize;
+    function setRootFontSize(size) {
+        if (size > 0 && isFinite(size)) {
+            rootFontSize = size;
+        }
+    }
+    Length.setRootFontSize = setRootFontSize;
 })(Length || (Length = {}));
 //# sourceMappingURL=length-shared.js.map

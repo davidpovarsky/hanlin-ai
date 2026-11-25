@@ -1,0 +1,14 @@
+{
+  "reviewer": "control_authoring",
+  "reviewedCommit": "354f5099dbe733d7ba6a41f39626da01201e67c7",
+  "mode": "Read-only source review; no new tests/CI",
+  "result": "NO_CONCRETE_BLOCKER",
+  "confirmed": [
+    "internal AppIntent decoder accessible through explicit @testable import",
+    "Int.max compared only, no sentinel allocation/overflow",
+    "queue readToEnd preserves regular-file/no-follow/single-link/identity/schema/leases/atomicity/batching",
+    "active unbounded policy preserves explicit caller budgets and frozen ScriptUI"
+  ],
+  "boundary": "4 portable cases remain portable; strengthened native capacity selector remains NOT_RUN",
+  "recordedAtUTC": "2026-11-24T08:03:49.690717+00:00"
+}

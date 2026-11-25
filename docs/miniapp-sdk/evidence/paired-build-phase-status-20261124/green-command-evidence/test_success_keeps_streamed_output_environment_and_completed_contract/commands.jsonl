@@ -1,0 +1,1 @@
+{"argv": ["/usr/bin/python3", "-c", "import os,sys; print('out:'+os.environ['PAIRED_COMMAND_PROBE'], flush=True); print('err', file=sys.stderr, flush=True); print('cwd:'+os.getcwd(), flush=True)"], "exit": 0, "seconds": 0.025574907660484314, "log": "success.log", "sha256": "debd04a40550fbb08d8cb09773017fc7d647929804cb7e4bf06e97d83a07fe2f"}

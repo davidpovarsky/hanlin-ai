@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "utc": "2026-11-24T08:04:39.496057+00:00",
+  "argv": [
+    "/usr/local/bin/node",
+    "/mnt/development/projects/worktrees/hanlin-sdk04-manual-adapters-20261124/Scripts/Expo/node_modules/@react-native-community/cli/build/bin.js",
+    "bundle",
+    "--entry-file",
+    "/mnt/development/projects/worktrees/hanlin-sdk04-manual-adapters-20261124/Fixtures/ExpoSwiftUIProbe/variant-a.ts",
+    "--platform",
+    "ios",
+    "--dev",
+    "false",
+    "--bundle-output",
+    "/mnt/development/projects/worktrees/hanlin-sdk04-manual-adapters-20261124/build/acceptance/sdk04-manual-adapters/bundle.js",
+    "--sourcemap-output",
+    "/mnt/development/projects/worktrees/hanlin-sdk04-manual-adapters-20261124/build/acceptance/sdk04-manual-adapters/bundle.js.map",
+    "--config",
+    "/mnt/development/projects/worktrees/hanlin-sdk04-manual-adapters-20261124/Scripts/Expo/metro.config.cjs",
+    "--max-workers",
+    "2"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-sdk04-manual-adapters-20261124/Scripts/Expo",
+  "environmentOverrides": {
+    "TMPDIR": "/mnt/development/projects/worktrees/hanlin-sdk04-manual-adapters-20261124/build/acceptance/sdk04-manual-adapters/tmp"
+  },
+  "exitCode": 1,
+  "artifacts": {},
+  "native": "NOT_RUN"
+}

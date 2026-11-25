@@ -57,7 +57,7 @@ struct HanlinArchivePolicyTests {
         #expect(!result.isInstallable)
     }
 
-    @Test("Rejects links, normalization collisions, bombs, and hidden encrypted entries")
+    @Test("Rejects links, collisions, configured ratio excess and hidden encrypted entries")
     func hostileEntries() {
         let entries = [
             entry("script.json"),
@@ -71,7 +71,7 @@ struct HanlinArchivePolicyTests {
                 uncompressedBytes: 10_000
             )
         ]
-        let result = HanlinArchivePolicy().inspect(
+        let result = HanlinArchivePolicy(limits: .init(maximumCompressionRatio: 100)).inspect(
             entries: entries,
             centralDirectoryEntryCount: entries.count + 1,
             archiveBytes: 200
@@ -86,7 +86,7 @@ struct HanlinArchivePolicyTests {
 
     @Test("Rejects ambiguous manifests and case collisions")
     func ambiguousManifest() {
-        let entries = [entry("script.json"), entry("Nested/script.json"), entry("INDEX.TSX"), entry("index.tsx")]
+        let entries = [entry("One/script.json"), entry("Two/script.json"), entry("INDEX.TSX"), entry("index.tsx")]
         let result = HanlinArchivePolicy().inspect(
             entries: entries,
             centralDirectoryEntryCount: entries.count,
@@ -106,7 +106,7 @@ struct HanlinArchivePolicyTests {
             entries: entries, centralDirectoryEntryCount: entries.count, archiveBytes: 300_000_100)
         #expect(autonomous.isInstallable)
         #expect(autonomous.uncompressedBytes == 600_000_010)
-        let bounded = HanlinArchivePolicy().inspectSkillArchive(
+        let bounded = HanlinArchivePolicy(limits: .init(maximumArchiveBytes: 64 * 1_048_576)).inspectSkillArchive(
             entries: entries, centralDirectoryEntryCount: entries.count, archiveBytes: 300_000_100)
         #expect(!bounded.isInstallable)
         #expect(bounded.findings.contains { $0.code == .compressedSizeLimit })
@@ -129,6 +129,41 @@ struct HanlinArchivePolicyTests {
         let negative = policy.inspectSkillArchive(entries: [entry("SKILL.md")],
             centralDirectoryEntryCount: 1, archiveBytes: -1)
         #expect(negative.findings.contains { $0.code == .malformedArchive })
+    }
+
+    @Test("Default imports accept original engine resources beyond former host budgets")
+    func ordinaryPackageCapacity() {
+        var entries = [entry("script.json"), entry("source/script.json")]
+        entries += (0..<4_097).map { entry("assets/item-\($0).bin") }
+        entries += (0..<1_025).map { entry("directories/\($0)/", kind: .directory) }
+        let deep = Array(repeating: "nested", count: 25).joined(separator: "/") + "/data.bin"
+        entries += [entry(deep), .init(path: "large.bin", kind: .file,
+            compressedBytes: 1, uncompressedBytes: 300_000_000)]
+        let result = HanlinArchivePolicy().inspect(entries: entries,
+            centralDirectoryEntryCount: entries.count, archiveBytes: 70_000_000)
+        #expect(result.isInstallable)
+        #expect(result.fileCount > 4_096)
+        #expect(result.directoryCount > 1_024)
+        #expect(result.maximumDepth > 24)
+        #expect(result.uncompressedBytes > 256 * 1_048_576)
+    }
+
+    @Test("Root and single-wrapper manifests retain source metadata and ordinary resources")
+    func retainedSourcesAndAssets() {
+        let paths = ["script.json", "source/script.json", "assets/font.ttf", "assets/module.wasm",
+            "bundle.js.map", "data/config.yaml", "LICENSE"]
+        for prefix in ["", "Package/"] {
+            let entries = paths.map { entry(prefix + $0) }
+            let result = HanlinArchivePolicy().inspect(entries: entries,
+                centralDirectoryEntryCount: entries.count, archiveBytes: 100)
+            #expect(result.isInstallable)
+            #expect(result.manifestPath == prefix + "script.json")
+        }
+        let unrelated = [entry("Package/script.json"), entry("Package/source/script.json"), entry("Other/data.json")]
+        let rejected = HanlinArchivePolicy().inspect(entries: unrelated,
+            centralDirectoryEntryCount: unrelated.count, archiveBytes: 100)
+        #expect(!rejected.isInstallable)
+        #expect(rejected.findings.contains { $0.code == .ambiguousManifest })
     }
 
     private func entry(

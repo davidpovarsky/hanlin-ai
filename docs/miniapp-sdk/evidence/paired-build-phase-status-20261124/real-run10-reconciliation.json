@@ -1,0 +1,56 @@
+{
+  "method": "Read-only application of corrected finalization to retained actual run10 journal; not a native rerun or rewrite of original acceptance.json.",
+  "runID": 45354940642,
+  "jobID": 138310323164,
+  "sourceSHA": "a12eb646aeb5c484f746c07ecffafc7d9f34f167",
+  "before": {
+    "status": "BUILD_FAILED",
+    "build": "NOT_RUN",
+    "mini_build": null,
+    "ai_build": null,
+    "ui": "NOT_RUN"
+  },
+  "after": {
+    "status": "BUILD_FAILED",
+    "build": "EXECUTED_FAIL",
+    "mini_build": "EXECUTED_FAIL",
+    "ai_build": "NOT_RUN",
+    "ui": "NOT_RUN"
+  },
+  "recordedBuildCommands": {
+    "mini_build": {
+      "log": "mini-build.log",
+      "command_id": "cfe5bf69b34142058a1b6bfc6cafd84a",
+      "status": "completed",
+      "completion_recorded": true,
+      "exit": 65,
+      "observed_returncode": 65
+    }
+  },
+  "retainedEvidence": {
+    "docs/miniapp-sdk/evidence/native-gate-10-button-role-20261124/acceptance.json": {
+      "bytes": 2085,
+      "sha256": "f138c5ccf67d31ac3546e7056a1f5974ffd5bcc1bc9d75fb957476053880e730"
+    },
+    "docs/miniapp-sdk/evidence/native-gate-10-button-role-20261124/command-events.jsonl": {
+      "bytes": 58252,
+      "sha256": "ce78a309d7391ca5f09e2b9401399b2dff2e1b2748427118891fcba4d9f13e44"
+    },
+    "docs/miniapp-sdk/evidence/native-gate-10-button-role-20261124/commands.jsonl": {
+      "bytes": 4366,
+      "sha256": "c1ae2a0c3bad0eb82bcaefc2c4d47eaf90ab8b8e0fc3531e59cd110c19dbc836"
+    },
+    "docs/miniapp-sdk/evidence/native-gate-10-button-role-20261124/receipt.json": {
+      "bytes": 5890,
+      "sha256": "77fc9a4be0dfc93bc8d9a3fa7aeae84ed7a22c7886a3abbdc9fb5ee4b0d272a5"
+    },
+    "docs/miniapp-sdk/evidence/native-gate-10-button-role-20261124/mini-build.log.gz": {
+      "bytes": 151274,
+      "sha256": "374008bdf118985c160d0c88b697893bb8e6be6a792b28e9a215917b5d5e5d64"
+    },
+    "docs/miniapp-sdk/evidence/native-gate-10-button-role-20261124/job-138310323164.log.gz": {
+      "bytes": 479693,
+      "sha256": "028d06cc38edae2c352b922b327a0a7d3ef15b27a1f2752880db23141526bd6d"
+    }
+  }
+}

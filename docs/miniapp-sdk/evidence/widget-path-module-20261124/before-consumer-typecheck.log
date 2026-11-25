@@ -1,0 +1,7 @@
+/mnt/development/projects/worktrees/hanlin-miniapps-path-contract-20261124/docs/miniapp-sdk/evidence/widget-path-module-20261124/before-consumer.swift:4:5: error: cannot find 'HanlinArchivePolicy' in scope
+2 | 
+3 | public func presentationPathIsNormalized(_ sourcePath: String) -> Bool {
+4 |     HanlinArchivePolicy.normalizedRelativePath(sourcePath) == sourcePath
+  |     `- error: cannot find 'HanlinArchivePolicy' in scope
+5 | }
+6 | 

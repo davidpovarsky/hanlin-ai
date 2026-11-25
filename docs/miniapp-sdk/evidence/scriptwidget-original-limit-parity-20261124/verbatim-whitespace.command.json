@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "git",
+    "diff",
+    "--cached",
+    "--check"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-scriptwidget-original-limit-parity-20261124",
+  "exitCode": 2,
+  "reason": "Exact upstream source and source-diff evidence contains original trailing whitespace. Those two evidence payloads are archived verbatim, not normalized. This is an evidence storage check, not a compiler/test failure.",
+  "stdout": "verbatim-whitespace.stdout.log.gz"
+}

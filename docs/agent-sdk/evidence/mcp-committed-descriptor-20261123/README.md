@@ -1,0 +1,5 @@
+# Return the committed MCP descriptor
+
+Run [45265065184](https://github.com/davidpovarsky/hanlin-ai/actions/runs/45265065184) reached the original MCP embedding test and failed its complete descriptor equalities at lines 94 and 105. The original Swift Testing value expansion shows disk updatedAt 817163174.0 but returned updatedAt 817163174.904253 (seconds since the reference date). The existing ISO-8601 encoder stores whole seconds. The settings and package identity assertions themselves passed.
+
+The registry already encodes and decodes its candidate before writing both copies. The save method now returns that verified representation after successful writes, and upsert, settings update, environment replacement and removal return it. The serialized format, schemas, stale-package rejection and environment protection remain unchanged. No test assertion was changed. Syntax parsing passed on Oracle; this is not an Apple runtime result. The original failed method remains NOT_RUN after the fix until selected native execution.

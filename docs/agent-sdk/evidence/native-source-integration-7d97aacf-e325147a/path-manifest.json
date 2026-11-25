@@ -1,0 +1,2698 @@
+{
+  "scope": "298 composition paths; this proof directory is additional documentation",
+  "base": "7d97aacf136a75f326caef094b0afe99f3d4fd67",
+  "native_source": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+  "composed_source": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+  "paths": [
+    {
+      "mode": "100644",
+      "blob": "1d420c6ccd19c07ebedf0ce881b8ab0ae1449dce",
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleOnDeviceProvider.swift",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "reviewed-product-or-test-source",
+      "sha256": "65b14d1853f09c600643cbbc9016723916f56baf95c7a223d8808ed765cadde1",
+      "bytes": 9023
+    },
+    {
+      "mode": "100644",
+      "blob": "7f493137649cca6442c1bf5905ced6801a95fd0a",
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleToolHistory.swift",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "reviewed-product-or-test-source",
+      "sha256": "623c15f05db11d4830685a665f765aa53a11c143a51436a73fd1942fdf2b72e1",
+      "bytes": 9002
+    },
+    {
+      "mode": "100644",
+      "blob": "c16522e5e4273146c10346062641e2a8c38b0f8a",
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleToolSchema.swift",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "reviewed-product-or-test-source",
+      "sha256": "8cffe156a8f8346f6b2fa25b8d5b237382d3185b2e24ff7e72bcb98684edafaf",
+      "bytes": 9763
+    },
+    {
+      "mode": "100644",
+      "blob": "6594e319623d993c60e0f12fcfe56e84b3965e3d",
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/Providers/HanlinAppleToolSessionBridge.swift",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "reviewed-product-or-test-source",
+      "sha256": "2f3441ea603b186f71bbb13b5faf37f4e1b01c475dd0a0e7df7faeb97dbff418",
+      "bytes": 13031
+    },
+    {
+      "mode": "100644",
+      "blob": "f1a1443bb061c36687be2072e1ce5d5d4650ddea",
+      "path": "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSchemaTests.swift",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "reviewed-product-or-test-source",
+      "sha256": "7cf017f5f196455239011846ee529057eb17e5bc45821450ea4ed4aedadbe423",
+      "bytes": 3321
+    },
+    {
+      "mode": "100644",
+      "blob": "2327b6f3b423e54ec7f9de789a45ba888547d5ee",
+      "path": "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HanlinAppleToolSessionBridgeTests.swift",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "reviewed-product-or-test-source",
+      "sha256": "1296391072e837f04d05423ecc7c611f59556b414fd5ab085b0096c140e54f57",
+      "bytes": 18442
+    },
+    {
+      "mode": "100644",
+      "blob": "bb03b564e9aaaf964a33a69df8a8df5f5243c2f9",
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "reviewed-product-or-test-source",
+      "sha256": "8abb757a9a9e7da9f90d474b1b036158b01e1f594ca2fb33d28d803cc2be91e8",
+      "bytes": 39712
+    },
+    {
+      "mode": "100644",
+      "blob": "b30506bc6f3569aa72cbd53d621ae1cf14e27b61",
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKModels.swift",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "reviewed-product-or-test-source",
+      "sha256": "39e14e004a2b1d894ded12b666160dadc2900a00aafafa33974caa56c5a31a06",
+      "bytes": 9234
+    },
+    {
+      "mode": "100644",
+      "blob": "a59d9f086f174c79683cea13bc5a2946170d04ba",
+      "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/HanlinAppleToolInputBoundaryTests.swift",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "reviewed-product-or-test-source",
+      "sha256": "0c24a0b2cb54e5ed7589d20f18325e5b93a5946aa68dee1ffcef05ee9fab8815",
+      "bytes": 12846
+    },
+    {
+      "mode": "100644",
+      "blob": "f4bf10e7c4afede66c96aabe845bc7b1804df748",
+      "path": "Scripts/CI/IntegrationValidation/reuse_native_header_ios_build.py",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "native-historical-runner-or-verifier",
+      "sha256": "a2662de378628bc740234f158827af937c18b295357029e17f116b73edb5781f",
+      "bytes": 8842
+    },
+    {
+      "mode": "100644",
+      "blob": "ad277fdc636bb99f83dd46e1acc1702a945427c9",
+      "path": "Scripts/CI/IntegrationValidation/reuse_native_tool_baseline.py",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "native-historical-runner-or-verifier",
+      "sha256": "bfd5c3fda502efcca6e562fc999c6fea86eebf5f6612c6f3bcc22239ad0a86db",
+      "bytes": 7964
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/run_agent_sdk.sh",
+      "mode": "100644",
+      "blob": "5d5f3a4f4d9551cccbae4b9113795fdb346a4551",
+      "origin_commit": "7d97aacf136a75f326caef094b0afe99f3d4fd67",
+      "kind": "additive-router-glue",
+      "preamble_origins": [
+        "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+        "1b3c4cf0e27683b0af106a8e97b1c7c453062d08"
+      ],
+      "sha256": "12fdebd950bd4a87a50e38f7f1bb2c568175cb00d25af4a6afbbba630c5b44d6",
+      "bytes": 11940
+    },
+    {
+      "mode": "100644",
+      "blob": "a4b44d30a09980ec2c489ec8380e23871eecc541",
+      "path": "Scripts/CI/IntegrationValidation/run_native_tool_candidate.py",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "native-historical-runner-or-verifier",
+      "sha256": "239402454e16c438f799243116151cac4a6b7fa83223ccfa46fc81e4bc9651d2",
+      "bytes": 19368
+    },
+    {
+      "mode": "100644",
+      "blob": "ada80474cc569b8a89f05782414e42d22fea56c6",
+      "path": "Scripts/CI/IntegrationValidation/run_stop_continuation_delta.py",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "composed-current-runner-or-verifier",
+      "sha256": "928388954c0ff0c673c82bd80647c5e81149756e3c9a0f67871588256a114d87",
+      "bytes": 17380
+    },
+    {
+      "mode": "100644",
+      "blob": "8ea6a4224644e13f9a47b6f8aed9ca5db9cce067",
+      "path": "Scripts/CI/IntegrationValidation/verify_native_tool_bridge_recheck.py",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "native-historical-runner-or-verifier",
+      "sha256": "4eee9e418bfc4498f6d06628671d854053fad38374f184b0b2d582db45833d9b",
+      "bytes": 26868
+    },
+    {
+      "mode": "100644",
+      "blob": "bddee6c1aea0f649452c735b1e580b5d8ffe6157",
+      "path": "Scripts/CI/IntegrationValidation/verify_native_tool_cancellation_recheck.py",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "composed-current-runner-or-verifier",
+      "sha256": "b791865d45bd09fa01c974080486fd6131df3410bc213f3c9a9c506a172a886c",
+      "bytes": 26063
+    },
+    {
+      "mode": "100644",
+      "blob": "e8041b8b844fbb637e40269c1e6efbfaded79041",
+      "path": "Scripts/CI/IntegrationValidation/verify_native_tool_candidate.py",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "native-historical-runner-or-verifier",
+      "sha256": "3543dcc8bb30ac050e8203aa4d05cfdc39f7d175308c336a66794482a25c81da",
+      "bytes": 15102
+    },
+    {
+      "mode": "100644",
+      "blob": "dc835e413fadf99cbd5911034ce24a2270d85320",
+      "path": "Scripts/CI/IntegrationValidation/verify_native_tool_header_recheck.py",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "native-historical-runner-or-verifier",
+      "sha256": "d725d318ca24f062c47c430708f6fce81bc93ccc6baa956adaaaddc2230c0bb9",
+      "bytes": 12936
+    },
+    {
+      "mode": "100644",
+      "blob": "70cb3c7910926105e02461f09e69da5b8783166e",
+      "path": "Scripts/CI/IntegrationValidation/verify_stop_continuation_delta.py",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "composed-current-runner-or-verifier",
+      "sha256": "74f5f2e4beb3b96bb11de1842be661586cffa51e04f9730919d3014535f52f75",
+      "bytes": 6334
+    },
+    {
+      "mode": "100644",
+      "blob": "be452d5caed3be6381a461e533eeefc4385442e8",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/baseline/05-xcode.stdout.log",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "67c5b47bcf0e788aecae2f9b3af345813bdf7fe736faefb9666a7f4b2bf27ba7",
+      "bytes": 31
+    },
+    {
+      "mode": "100644",
+      "blob": "2070a8fda6ba011bc4b7cc6c3cf06943e6c5a95f",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/baseline/06-swift.stdout.log",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "4b59da256292ae42e3f04ef6d06ea3e139678613a3cd3d0dc37a6757c0bd290a",
+      "bytes": 98
+    },
+    {
+      "mode": "100644",
+      "blob": "40682b3dccc10dbe4563a9b0e83bc36bff8dd3d0",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/baseline/07-macos-sdk.stdout.log",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "53e1ae253beb3b8a3b99dd2d4ec1eb641d392378329fcdccb560779fdf46de0b",
+      "bytes": 5
+    },
+    {
+      "mode": "100644",
+      "blob": "40682b3dccc10dbe4563a9b0e83bc36bff8dd3d0",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/baseline/08-ios-sdk.stdout.log",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "53e1ae253beb3b8a3b99dd2d4ec1eb641d392378329fcdccb560779fdf46de0b",
+      "bytes": 5
+    },
+    {
+      "mode": "100644",
+      "blob": "88752e44750f552adad4172155edd182ed8f4816",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/baseline/09-os.stdout.log",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "4ef10a0fc370704ea84699cf3851e51488598c5f1ab35cb572eb6b96278a8e5c",
+      "bytes": 66
+    },
+    {
+      "mode": "100644",
+      "blob": "1533d29dd45feafce4eb811857fe87ed89a2e37b",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/baseline/BaselineCoreTests.json",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "5a1da0ade219ac177d3e664c65939ce03a8c8f5ea817d83fd0e980c180203d84",
+      "bytes": 40687
+    },
+    {
+      "mode": "100644",
+      "blob": "15d07d094b002dbf3d81536aec99c106b1b9720c",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/baseline/artifact-receipt.json",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "5eb7b0ecb5539fcc1494a69df69b3068b138cdaf3e50983371beb47449915bf5",
+      "bytes": 505
+    },
+    {
+      "mode": "100644",
+      "blob": "8b01c8f20723b1ae6a0962915ce71652a21e94e5",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/baseline/baseline-variant.json",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "f8f9727707a246302af0fe91740cc53c8d9aa525815ab74c26465bec93f7ee58",
+      "bytes": 785
+    },
+    {
+      "mode": "100644",
+      "blob": "73046f8a09962bbfb869834b6fd4230fc251aaa6",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/baseline/commands.json",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "bd9c811bf8a63818f3fcd5143844bd53c10abdd5c468701147c456617606bbaa",
+      "bytes": 21657
+    },
+    {
+      "mode": "100644",
+      "blob": "6a996f133f2840d76de59b02036a2ca1cbe4985d",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/baseline/core-Package.resolved",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "7882ef847a4aaa1bfa2ee128122393cf718f393485d9658bb93f402f740f2c17",
+      "bytes": 1198
+    },
+    {
+      "mode": "100644",
+      "blob": "7a8dbf324d206b833d09b8c2190cf37fd72ec93c",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/baseline/process-status.json",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "ab842f6cc89bde3bed296cb56cb3e659ee56983bac9c203dffcfdb04c8ec9ad1",
+      "bytes": 125
+    },
+    {
+      "mode": "100644",
+      "blob": "4f08f1bee4db80c9d7bc4f25b17d030d8f7f8aaf",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/baseline/producer-commit.txt",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "6e2c1d5358a9bebbc4d79e7e9d73c12b4636001e8448de5dcbb54de2f267a121",
+      "bytes": 41
+    },
+    {
+      "mode": "100644",
+      "blob": "c859e1c07eef70387a9e747698ab42d2615dd7d2",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/baseline/reference.json",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "ba8a05d787ab250ad4400c85cea842e5b7ec23e5a8af4d3f6ec1c70c94a5afb2",
+      "bytes": 1719
+    },
+    {
+      "mode": "100644",
+      "blob": "d16c27a14886c0e84fa3c5dcddc71220cc08b4d6",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/baseline/terminal-run.json",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "f3f1a0bf512d615c2161030464e8207de7a408e7ad53dd3866180315505ce0d7",
+      "bytes": 15730
+    },
+    {
+      "mode": "100644",
+      "blob": "e485f42a1ec3bd64ae48b47ee411f7f6357835d1",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/baseline/tested-source-sha256.json",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "723df62caf58ceb1fe13e998a834eb041ad1e329a5a9162535f933860f41324b",
+      "bytes": 66666
+    },
+    {
+      "mode": "100644",
+      "blob": "57eccdcc672ec93f95e10d0f5b01e9231b3c87c2",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/bridge/04-select-xcode.stderr.log",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "43aa03c0f021d590a4ac56edce3f8ac3754b88842aa24f8302b73e3e47625b70",
+      "bytes": 186
+    },
+    {
+      "mode": "100644",
+      "blob": "c8456ef0dc900b9b7db8e5ded4dceab8dce6b274",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/bridge/04-select-xcode.stdout.log",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "8d652b3e258a63181e163aa5c534b30b06052368fc3d2ccb2dad57211f17302d",
+      "bytes": 29
+    },
+    {
+      "mode": "100644",
+      "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/bridge/05-xcode.stderr.log",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "mode": "100644",
+      "blob": "be452d5caed3be6381a461e533eeefc4385442e8",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/bridge/05-xcode.stdout.log",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "67c5b47bcf0e788aecae2f9b3af345813bdf7fe736faefb9666a7f4b2bf27ba7",
+      "bytes": 31
+    },
+    {
+      "mode": "100644",
+      "blob": "156c118032d5dbcad7097b0cc1bb24ee84a59d72",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/bridge/06-swift.stderr.log",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "bbc8b176d3c74d4c5a7fd00b40280f98168e116d5272273bfe8e71407625540e",
+      "bytes": 30
+    },
+    {
+      "mode": "100644",
+      "blob": "2070a8fda6ba011bc4b7cc6c3cf06943e6c5a95f",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/bridge/06-swift.stdout.log",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "4b59da256292ae42e3f04ef6d06ea3e139678613a3cd3d0dc37a6757c0bd290a",
+      "bytes": 98
+    },
+    {
+      "mode": "100644",
+      "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/bridge/07-macos-sdk.stderr.log",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "mode": "100644",
+      "blob": "40682b3dccc10dbe4563a9b0e83bc36bff8dd3d0",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/bridge/07-macos-sdk.stdout.log",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "53e1ae253beb3b8a3b99dd2d4ec1eb641d392378329fcdccb560779fdf46de0b",
+      "bytes": 5
+    },
+    {
+      "mode": "100644",
+      "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/bridge/08-ios-sdk.stderr.log",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "mode": "100644",
+      "blob": "40682b3dccc10dbe4563a9b0e83bc36bff8dd3d0",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/bridge/08-ios-sdk.stdout.log",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "53e1ae253beb3b8a3b99dd2d4ec1eb641d392378329fcdccb560779fdf46de0b",
+      "bytes": 5
+    },
+    {
+      "mode": "100644",
+      "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/bridge/09-os.stderr.log",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "mode": "100644",
+      "blob": "88752e44750f552adad4172155edd182ed8f4816",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/bridge/09-os.stdout.log",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "4ef10a0fc370704ea84699cf3851e51488598c5f1ab35cb572eb6b96278a8e5c",
+      "bytes": 66
+    },
+    {
+      "mode": "100644",
+      "blob": "3b090eb999f6b77db75543b4fc8281ca0fb1f818",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/bridge/SDKTests.json",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "90bf1297e8b38a74e6330d74ba1f5a4d7989e9de01364d9c364abff367ede385",
+      "bytes": 4913
+    },
+    {
+      "mode": "100644",
+      "blob": "a09381e9142b470e303ed4c17acb8348cf02dfdd",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/bridge/artifact-receipt.json",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "21062e7ace72925afd9de58195d0fe68f1b2ec6ab48de356d2c92c2b282546bf",
+      "bytes": 668
+    },
+    {
+      "mode": "100644",
+      "blob": "2eb50bbaea58e9bf678d61a20b88c05bbd08eba1",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/bridge/commands.json",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "8372e4a812bd39bd5b94b5ad5a064f0693452a13b690c1c061a5f1f3b86d00f5",
+      "bytes": 12621
+    },
+    {
+      "mode": "100644",
+      "blob": "6a996f133f2840d76de59b02036a2ca1cbe4985d",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/bridge/core-Package.resolved",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "7882ef847a4aaa1bfa2ee128122393cf718f393485d9658bb93f402f740f2c17",
+      "bytes": 1198
+    },
+    {
+      "mode": "100644",
+      "blob": "3df1d7a6c4a489a73e81ffe5a2a263b5620c017f",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/bridge/post-build-resolution.json",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "33077a6c3676ff01102af1958480ac307e0d1fa2119e7b9cd668b73c98e5a86e",
+      "bytes": 3230
+    },
+    {
+      "mode": "100644",
+      "blob": "a86192b73a50360e0b61ff156213d4c5c066fd13",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/bridge/process-status.json",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "ded63cabfba2875695b9a17d17dc68915039068d45cbc01c0bd389608577787f",
+      "bytes": 258
+    },
+    {
+      "mode": "100644",
+      "blob": "4f08f1bee4db80c9d7bc4f25b17d030d8f7f8aaf",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/bridge/producer-commit.txt",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "6e2c1d5358a9bebbc4d79e7e9d73c12b4636001e8448de5dcbb54de2f267a121",
+      "bytes": 41
+    },
+    {
+      "mode": "100644",
+      "blob": "88dda8acaf2e4f032f52299e272eef6199129d5c",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/bridge/raw-locks/00-Package.resolved",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "9ed17ca6cd2647c50e17521ea6c69c326b551a1ee13f2e1f87c658f92e55d2ea",
+      "bytes": 1198
+    },
+    {
+      "mode": "100644",
+      "blob": "6a996f133f2840d76de59b02036a2ca1cbe4985d",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/bridge/raw-locks/01-Package.resolved",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "7882ef847a4aaa1bfa2ee128122393cf718f393485d9658bb93f402f740f2c17",
+      "bytes": 1198
+    },
+    {
+      "mode": "100644",
+      "blob": "88dda8acaf2e4f032f52299e272eef6199129d5c",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/bridge/sdk-Package.resolved",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "9ed17ca6cd2647c50e17521ea6c69c326b551a1ee13f2e1f87c658f92e55d2ea",
+      "bytes": 1198
+    },
+    {
+      "mode": "100644",
+      "blob": "a2c50636138a2e34bfdfd19fb8a47cfb4570fd33",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/bridge/terminal-run.json",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "27c099e53e63042ea0f0a4518a36e5ee63f0053d304462608cb6dd89cdae33ba",
+      "bytes": 15666
+    },
+    {
+      "mode": "100644",
+      "blob": "17b384deedb0a0c998451357382032a706c33210",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/bridge/tested-source-commit.txt",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "e37ca59138f0565db03115c04f14288d93598ff9810139ed7b37bbc66e9e8b1b",
+      "bytes": 41
+    },
+    {
+      "mode": "100644",
+      "blob": "95409c387d55e146d644fda27d592e32e8004cab",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/bridge/tested-source-sha256.json",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "9aedb81b40d0d6676f9725a33ae3f8cd5771057f6eb6d95a6efa0b99c61143bb",
+      "bytes": 66666
+    },
+    {
+      "mode": "100644",
+      "blob": "ea235ece0b2ea71a36bb58435877ea6522b8b1fd",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/bridge/workflow-sha256.json",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "479ded87a3c27f2e763af87ee78c2fb0ae2e356158a7a4a0b3ac8ad457d9018a",
+      "bytes": 12457
+    },
+    {
+      "mode": "100644",
+      "blob": "57eccdcc672ec93f95e10d0f5b01e9231b3c87c2",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/c93/04-select-xcode.stderr.log",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "43aa03c0f021d590a4ac56edce3f8ac3754b88842aa24f8302b73e3e47625b70",
+      "bytes": 186
+    },
+    {
+      "mode": "100644",
+      "blob": "c8456ef0dc900b9b7db8e5ded4dceab8dce6b274",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/c93/04-select-xcode.stdout.log",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "8d652b3e258a63181e163aa5c534b30b06052368fc3d2ccb2dad57211f17302d",
+      "bytes": 29
+    },
+    {
+      "mode": "100644",
+      "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/c93/05-xcode.stderr.log",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "mode": "100644",
+      "blob": "be452d5caed3be6381a461e533eeefc4385442e8",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/c93/05-xcode.stdout.log",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "67c5b47bcf0e788aecae2f9b3af345813bdf7fe736faefb9666a7f4b2bf27ba7",
+      "bytes": 31
+    },
+    {
+      "mode": "100644",
+      "blob": "156c118032d5dbcad7097b0cc1bb24ee84a59d72",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/c93/06-swift.stderr.log",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "bbc8b176d3c74d4c5a7fd00b40280f98168e116d5272273bfe8e71407625540e",
+      "bytes": 30
+    },
+    {
+      "mode": "100644",
+      "blob": "2070a8fda6ba011bc4b7cc6c3cf06943e6c5a95f",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/c93/06-swift.stdout.log",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "4b59da256292ae42e3f04ef6d06ea3e139678613a3cd3d0dc37a6757c0bd290a",
+      "bytes": 98
+    },
+    {
+      "mode": "100644",
+      "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/c93/07-macos-sdk.stderr.log",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "mode": "100644",
+      "blob": "40682b3dccc10dbe4563a9b0e83bc36bff8dd3d0",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/c93/07-macos-sdk.stdout.log",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "53e1ae253beb3b8a3b99dd2d4ec1eb641d392378329fcdccb560779fdf46de0b",
+      "bytes": 5
+    },
+    {
+      "mode": "100644",
+      "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/c93/08-ios-sdk.stderr.log",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "mode": "100644",
+      "blob": "40682b3dccc10dbe4563a9b0e83bc36bff8dd3d0",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/c93/08-ios-sdk.stdout.log",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "53e1ae253beb3b8a3b99dd2d4ec1eb641d392378329fcdccb560779fdf46de0b",
+      "bytes": 5
+    },
+    {
+      "mode": "100644",
+      "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/c93/09-os.stderr.log",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "mode": "100644",
+      "blob": "88752e44750f552adad4172155edd182ed8f4816",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/c93/09-os.stdout.log",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "4ef10a0fc370704ea84699cf3851e51488598c5f1ab35cb572eb6b96278a8e5c",
+      "bytes": 66
+    },
+    {
+      "mode": "100644",
+      "blob": "14fed23cda72a2651919a1f541cca98411be5c20",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/c93/CoreTests.json",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "5567644e11e5f2983c6e03d02d3d501b0fbe77204366a5c1e0aed5cf9c4c6515",
+      "bytes": 9949
+    },
+    {
+      "mode": "100644",
+      "blob": "1de4498aebacb8e7b1b9e9d3899ea379d666471b",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/c93/SDKTests.json",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "ad48e338d72fb171f756f20a9131641a166ee3eab613184ff6be460681a3bd4d",
+      "bytes": 23825
+    },
+    {
+      "mode": "100644",
+      "blob": "5879763c9bfb2b432c6de54c8c65f604aca69c26",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/c93/artifact-receipt.json",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "4ab3dcc4abdd2a4106ef3989fc94e9937a92266f76ba6da946a455becf0a8b01",
+      "bytes": 505
+    },
+    {
+      "mode": "100644",
+      "blob": "9edaec2b62f1ee42f7a7f25c20a40a2d7e91d7b8",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/c93/commands.json",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "eddb5fd944a5d7ad5e941c7d27bcc535f72fef3ae430a5c4c9d3ccb961ad873b",
+      "bytes": 17723
+    },
+    {
+      "mode": "100644",
+      "blob": "6a996f133f2840d76de59b02036a2ca1cbe4985d",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/c93/core-Package.resolved",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "7882ef847a4aaa1bfa2ee128122393cf718f393485d9658bb93f402f740f2c17",
+      "bytes": 1198
+    },
+    {
+      "mode": "100644",
+      "blob": "50950c9f362e1b9aa2510005e27f4a4e07df0f4d",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/c93/post-build-resolution.json",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "b2ce65005ed0f07bb7bd511bd4ea1969cf7fdfb73d5fee359eb08079f5480ae8",
+      "bytes": 3230
+    },
+    {
+      "mode": "100644",
+      "blob": "fb8f301f76bb2e769184f416a8c7feaa290d95ef",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/c93/process-status.json",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "d208b2f86c658ee324d722df82bacc900d7b9aa2b3a2452b6dba820bb884454a",
+      "bytes": 169
+    },
+    {
+      "mode": "100644",
+      "blob": "4f08f1bee4db80c9d7bc4f25b17d030d8f7f8aaf",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/c93/producer-commit.txt",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "6e2c1d5358a9bebbc4d79e7e9d73c12b4636001e8448de5dcbb54de2f267a121",
+      "bytes": 41
+    },
+    {
+      "mode": "100644",
+      "blob": "88dda8acaf2e4f032f52299e272eef6199129d5c",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/c93/raw-locks/00-Package.resolved",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "9ed17ca6cd2647c50e17521ea6c69c326b551a1ee13f2e1f87c658f92e55d2ea",
+      "bytes": 1198
+    },
+    {
+      "mode": "100644",
+      "blob": "6a996f133f2840d76de59b02036a2ca1cbe4985d",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/c93/raw-locks/01-Package.resolved",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "7882ef847a4aaa1bfa2ee128122393cf718f393485d9658bb93f402f740f2c17",
+      "bytes": 1198
+    },
+    {
+      "mode": "100644",
+      "blob": "88dda8acaf2e4f032f52299e272eef6199129d5c",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/c93/sdk-Package.resolved",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "9ed17ca6cd2647c50e17521ea6c69c326b551a1ee13f2e1f87c658f92e55d2ea",
+      "bytes": 1198
+    },
+    {
+      "mode": "100644",
+      "blob": "1901f2e4ed3a08479bd00b83c22e80182c295e07",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/c93/terminal-run.json",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "3b771b5e61000bd2dafa6320d39af0bb6de4ef695ea33a0f041c0261b33a3dab",
+      "bytes": 15653
+    },
+    {
+      "mode": "100644",
+      "blob": "fd41913c8704da9522a773a371ba0299be0f67c2",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/c93/tested-source-commit.txt",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "9127c043573d910b419af3df7a83c7ee1ffde0fe3489e26f856b8c0f7318c8d0",
+      "bytes": 41
+    },
+    {
+      "mode": "100644",
+      "blob": "7af7749ab565e41b1c690527e548a9646f485f73",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/c93/tested-source-sha256.json",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "0902c0c0774f1234abb03647e731428c74ab0fce9d6032a38b8e0b3512623b54",
+      "bytes": 66666
+    },
+    {
+      "mode": "100644",
+      "blob": "c8f62b3bf4f7c8b65db7c95f97bfec46d6deaa24",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/c93/workflow-sha256.json",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "abea884ccc8c3b273c16dc3870ddbf8fa04f2a0196dcfd1a5a4976686a9595b5",
+      "bytes": 3413
+    },
+    {
+      "mode": "100644",
+      "blob": "07083ddd7df5e82cbade25b376a5779ed35ed9ce",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/current-source-sha256.json",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "b9dcaf9f525ba1e572aa18105818501d9fe180ef913f31a12d8fb33db193573e",
+      "bytes": 66667
+    },
+    {
+      "mode": "100644",
+      "blob": "57eccdcc672ec93f95e10d0f5b01e9231b3c87c2",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/delta/03-select-xcode.stderr.log",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "43aa03c0f021d590a4ac56edce3f8ac3754b88842aa24f8302b73e3e47625b70",
+      "bytes": 186
+    },
+    {
+      "mode": "100644",
+      "blob": "c8456ef0dc900b9b7db8e5ded4dceab8dce6b274",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/delta/03-select-xcode.stdout.log",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "8d652b3e258a63181e163aa5c534b30b06052368fc3d2ccb2dad57211f17302d",
+      "bytes": 29
+    },
+    {
+      "mode": "100644",
+      "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/delta/04-xcode.stderr.log",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "mode": "100644",
+      "blob": "be452d5caed3be6381a461e533eeefc4385442e8",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/delta/04-xcode.stdout.log",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "67c5b47bcf0e788aecae2f9b3af345813bdf7fe736faefb9666a7f4b2bf27ba7",
+      "bytes": 31
+    },
+    {
+      "mode": "100644",
+      "blob": "156c118032d5dbcad7097b0cc1bb24ee84a59d72",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/delta/05-swift.stderr.log",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "bbc8b176d3c74d4c5a7fd00b40280f98168e116d5272273bfe8e71407625540e",
+      "bytes": 30
+    },
+    {
+      "mode": "100644",
+      "blob": "2070a8fda6ba011bc4b7cc6c3cf06943e6c5a95f",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/delta/05-swift.stdout.log",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "4b59da256292ae42e3f04ef6d06ea3e139678613a3cd3d0dc37a6757c0bd290a",
+      "bytes": 98
+    },
+    {
+      "mode": "100644",
+      "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/delta/06-macos-sdk.stderr.log",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "mode": "100644",
+      "blob": "40682b3dccc10dbe4563a9b0e83bc36bff8dd3d0",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/delta/06-macos-sdk.stdout.log",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "53e1ae253beb3b8a3b99dd2d4ec1eb641d392378329fcdccb560779fdf46de0b",
+      "bytes": 5
+    },
+    {
+      "mode": "100644",
+      "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/delta/07-ios-sdk.stderr.log",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "mode": "100644",
+      "blob": "40682b3dccc10dbe4563a9b0e83bc36bff8dd3d0",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/delta/07-ios-sdk.stdout.log",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "53e1ae253beb3b8a3b99dd2d4ec1eb641d392378329fcdccb560779fdf46de0b",
+      "bytes": 5
+    },
+    {
+      "mode": "100644",
+      "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/delta/08-os.stderr.log",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "mode": "100644",
+      "blob": "88752e44750f552adad4172155edd182ed8f4816",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/delta/08-os.stdout.log",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "4ef10a0fc370704ea84699cf3851e51488598c5f1ab35cb572eb6b96278a8e5c",
+      "bytes": 66
+    },
+    {
+      "mode": "100644",
+      "blob": "8dc9468a06f2eb83e89524e63fa10178a4691c69",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/delta/StopContinuationTests.json",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "250fefbf523a6661c9af624b94a4eee7ad86b7ee5a88433efa5a2746b15fdc6f",
+      "bytes": 3178
+    },
+    {
+      "mode": "100644",
+      "blob": "af4f4bd242b605c45f1fb66a501674137fb15f8f",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/delta/artifact-receipt.json",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "d38b8f9ddb2bc5c016514792d6e5aa7ccf948529d0681008c5f114fdb363e961",
+      "bytes": 663
+    },
+    {
+      "mode": "100644",
+      "blob": "c86c458c971510aa2043d4a1af57b9ffc96c57c9",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/delta/commands.json",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "1e0900896c673b7fc7933f77c7c3a7b814351a6f474502f083580033347107ea",
+      "bytes": 11069
+    },
+    {
+      "mode": "100644",
+      "blob": "21dcddf142e290aa1f5a89aac6fd41f27a6af36c",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/delta/core-Package.resolved",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "8f67ee59e5ba54c1d9bdd312efff89ddc946e00443fef8faddfeb4e7eb5387c8",
+      "bytes": 1198
+    },
+    {
+      "mode": "100644",
+      "blob": "be0b037a0025d3e652f891382a1d5cbfb2beb9b9",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/delta/post-build-resolution.json",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "71acd6540c9ff171e1993757904d959df1a8cc1164db82aa6900631628660f3f",
+      "bytes": 3222
+    },
+    {
+      "mode": "100644",
+      "blob": "8db79113e8c15ca7d4e6b73a2aa4f6554a593077",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/delta/process-status.json",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "489867099397a3e83356ed231b090a02354cb045a43d8885c2b9bdbcfb76dc52",
+      "bytes": 155
+    },
+    {
+      "mode": "100644",
+      "blob": "178de11fff9718c221924eae3042765e584304b3",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/delta/producer-commit.txt",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "99c5647f2c32bdaff92f8ca02e7b229a99443cea347139b75f1ecaf456ca36e1",
+      "bytes": 41
+    },
+    {
+      "mode": "100644",
+      "blob": "51efd3013b7fa45854f61e5dece0412121692ee3",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/delta/raw-locks/00-Package.resolved",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "b771042794841f2e759cffc68181ca37214794b4fc9c02981a1c86176a9bde83",
+      "bytes": 1198
+    },
+    {
+      "mode": "100644",
+      "blob": "21dcddf142e290aa1f5a89aac6fd41f27a6af36c",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/delta/raw-locks/01-Package.resolved",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "8f67ee59e5ba54c1d9bdd312efff89ddc946e00443fef8faddfeb4e7eb5387c8",
+      "bytes": 1198
+    },
+    {
+      "mode": "100644",
+      "blob": "51efd3013b7fa45854f61e5dece0412121692ee3",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/delta/sdk-Package.resolved",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "b771042794841f2e759cffc68181ca37214794b4fc9c02981a1c86176a9bde83",
+      "bytes": 1198
+    },
+    {
+      "mode": "100644",
+      "blob": "9676e5a29ef0f8eef1257dbfbaafdcd1c6a425fb",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/delta/terminal-run.json",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "a9b7bd6b59a7b0e1f513f501a83f59cc520b1fc8c57d89674e99fe7d660a1d2a",
+      "bytes": 15644
+    },
+    {
+      "mode": "100644",
+      "blob": "f69fc5c2f047dbfbce77e2fc272445ec235e3ac3",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/delta/tested-source-commit.txt",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "688f79ae81a702bb185c5ceadc93de5dc399d60f19eaa2240bd6f536600f8158",
+      "bytes": 41
+    },
+    {
+      "mode": "100644",
+      "blob": "873f7dce21569e5be8631c6bcd0392d86824067d",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/delta/tested-source-sha256.json",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "b04db0139aff4535583a78728700ce288628c019468ae8147e9ac5caeffc9daf",
+      "bytes": 66666
+    },
+    {
+      "mode": "100644",
+      "blob": "910c8353c799b4546d4d697a0e73c3437f71beb0",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/delta/workflow-sha256.json",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "8b6aec876a58ff8e4116913d73d59c18741bd84456411e0700eb128553f0dc74",
+      "bytes": 1006
+    },
+    {
+      "mode": "100644",
+      "blob": "57eccdcc672ec93f95e10d0f5b01e9231b3c87c2",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/header/04-select-xcode.stderr.log",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "43aa03c0f021d590a4ac56edce3f8ac3754b88842aa24f8302b73e3e47625b70",
+      "bytes": 186
+    },
+    {
+      "mode": "100644",
+      "blob": "c8456ef0dc900b9b7db8e5ded4dceab8dce6b274",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/header/04-select-xcode.stdout.log",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "8d652b3e258a63181e163aa5c534b30b06052368fc3d2ccb2dad57211f17302d",
+      "bytes": 29
+    },
+    {
+      "mode": "100644",
+      "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/header/05-xcode.stderr.log",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "mode": "100644",
+      "blob": "be452d5caed3be6381a461e533eeefc4385442e8",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/header/05-xcode.stdout.log",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "67c5b47bcf0e788aecae2f9b3af345813bdf7fe736faefb9666a7f4b2bf27ba7",
+      "bytes": 31
+    },
+    {
+      "mode": "100644",
+      "blob": "156c118032d5dbcad7097b0cc1bb24ee84a59d72",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/header/06-swift.stderr.log",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "bbc8b176d3c74d4c5a7fd00b40280f98168e116d5272273bfe8e71407625540e",
+      "bytes": 30
+    },
+    {
+      "mode": "100644",
+      "blob": "2070a8fda6ba011bc4b7cc6c3cf06943e6c5a95f",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/header/06-swift.stdout.log",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "4b59da256292ae42e3f04ef6d06ea3e139678613a3cd3d0dc37a6757c0bd290a",
+      "bytes": 98
+    },
+    {
+      "mode": "100644",
+      "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/header/07-macos-sdk.stderr.log",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "mode": "100644",
+      "blob": "40682b3dccc10dbe4563a9b0e83bc36bff8dd3d0",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/header/07-macos-sdk.stdout.log",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "53e1ae253beb3b8a3b99dd2d4ec1eb641d392378329fcdccb560779fdf46de0b",
+      "bytes": 5
+    },
+    {
+      "mode": "100644",
+      "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/header/08-ios-sdk.stderr.log",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "mode": "100644",
+      "blob": "40682b3dccc10dbe4563a9b0e83bc36bff8dd3d0",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/header/08-ios-sdk.stdout.log",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "53e1ae253beb3b8a3b99dd2d4ec1eb641d392378329fcdccb560779fdf46de0b",
+      "bytes": 5
+    },
+    {
+      "mode": "100644",
+      "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/header/09-os.stderr.log",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "mode": "100644",
+      "blob": "88752e44750f552adad4172155edd182ed8f4816",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/header/09-os.stdout.log",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "4ef10a0fc370704ea84699cf3851e51488598c5f1ab35cb572eb6b96278a8e5c",
+      "bytes": 66
+    },
+    {
+      "mode": "100644",
+      "blob": "6d497b448afca2a84891254c3bb083ee3495645c",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/header/SDKTests.json",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "d9986e1a415164c27b33ce804e486a2a946695d28d4d230beaa5a654d93dbfc7",
+      "bytes": 7947
+    },
+    {
+      "mode": "100644",
+      "blob": "8961553af4dc17d1a52c1142d6a9223463a27186",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/header/artifact-receipt.json",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "f1a025878859a8f6e464bbea1db9b0cf0bbf8c665c8e06eab3a6b27d7fad1cc0",
+      "bytes": 668
+    },
+    {
+      "mode": "100644",
+      "blob": "17474e82efc684fe535b02e31a783df860d7b06d",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/header/commands.json",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "53efd4500462ecf62619b00649cd9b1fd38bab6df5542169df5e77f9031eaad5",
+      "bytes": 11566
+    },
+    {
+      "mode": "100644",
+      "blob": "6a996f133f2840d76de59b02036a2ca1cbe4985d",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/header/core-Package.resolved",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "7882ef847a4aaa1bfa2ee128122393cf718f393485d9658bb93f402f740f2c17",
+      "bytes": 1198
+    },
+    {
+      "mode": "100644",
+      "blob": "d8b5d2f4445d3971c77d62fd7b82d31dd4c8a74e",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/header/post-build-resolution.json",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "61efd25acfad5a796d7cd8d465a3ee2e68da2714f8ee9b885268a19a6f92235f",
+      "bytes": 3230
+    },
+    {
+      "mode": "100644",
+      "blob": "7692821f658a55052d5ae38e60414d1f5e93f0b6",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/header/process-status.json",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "7ca8b5692781ec6ff99a20c8e390b600ffef6a407495c608fec3a82522cd53c1",
+      "bytes": 268
+    },
+    {
+      "mode": "100644",
+      "blob": "4f08f1bee4db80c9d7bc4f25b17d030d8f7f8aaf",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/header/producer-commit.txt",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "6e2c1d5358a9bebbc4d79e7e9d73c12b4636001e8448de5dcbb54de2f267a121",
+      "bytes": 41
+    },
+    {
+      "mode": "100644",
+      "blob": "88dda8acaf2e4f032f52299e272eef6199129d5c",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/header/raw-locks/00-Package.resolved",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "9ed17ca6cd2647c50e17521ea6c69c326b551a1ee13f2e1f87c658f92e55d2ea",
+      "bytes": 1198
+    },
+    {
+      "mode": "100644",
+      "blob": "6a996f133f2840d76de59b02036a2ca1cbe4985d",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/header/raw-locks/01-Package.resolved",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "7882ef847a4aaa1bfa2ee128122393cf718f393485d9658bb93f402f740f2c17",
+      "bytes": 1198
+    },
+    {
+      "mode": "100644",
+      "blob": "88dda8acaf2e4f032f52299e272eef6199129d5c",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/header/sdk-Package.resolved",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "9ed17ca6cd2647c50e17521ea6c69c326b551a1ee13f2e1f87c658f92e55d2ea",
+      "bytes": 1198
+    },
+    {
+      "mode": "100644",
+      "blob": "273400157a5a1a259191b6acc92849c77bbb45a8",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/header/terminal-run.json",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "c6926cd0bc7dccde909c3f49b67255e42881d8490196497bfc2901a1526485df",
+      "bytes": 15657
+    },
+    {
+      "mode": "100644",
+      "blob": "264e4ad92381efa922690162f44e7cd78967f71c",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/header/tested-source-commit.txt",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "f8fcd8f79423693d1a7fcd066cb93e1a5ce5f91dc16ce755d0e671fcc5bdf88e",
+      "bytes": 41
+    },
+    {
+      "mode": "100644",
+      "blob": "051d9dfad1647d453d99d44688dece5b60df50c6",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/header/tested-source-sha256.json",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "8b6f7e6a8c6075317f002c55aa43011f8eed0fda5d8126092febc20d96e973d0",
+      "bytes": 66666
+    },
+    {
+      "mode": "100644",
+      "blob": "a79d62330d7460c78aff6ac3ecb55b9213cf956f",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/header/workflow-sha256.json",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "e174a3b65d9b41737e504b378d23e4a2f0b1aab5c98f190fda49ecf4129b9e74",
+      "bytes": 13010
+    },
+    {
+      "mode": "100644",
+      "blob": "6e2a02aa4115c460cf0ea66d755722113ded32ff",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/producer-07431-guard.swift",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "e3204508d5ce56ccbb9b43c6663fda3300a0abaebb57aac0009793813a5df08a",
+      "bytes": 736
+    },
+    {
+      "mode": "100644",
+      "blob": "a6fb99e980f63d2b405ba45f11e2279051db37bd",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/producer-07431-sha256.json",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "326b705c8ba48ade6ff9bb0ff4fe73c3880ec02da6f2f1410010fa73f0a82041",
+      "bytes": 115819
+    },
+    {
+      "mode": "100644",
+      "blob": "ad30946722093823707d83d82df07a07b41d6d2d",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/producer-e7-guard.swift",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "9886a95b59c5ce10d25cbd59cb0314fcf99bf916410633a3ba9f3b1821487273",
+      "bytes": 643
+    },
+    {
+      "mode": "100644",
+      "blob": "af8615838c1dae2f363b0d2a6d8aa9441a636cfc",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/producer-e7-sha256.json",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "8c64debae4f1d2815b3f30ab835ef607727e8b2e6320c7b9b300055865d28f43",
+      "bytes": 115819
+    },
+    {
+      "mode": "100644",
+      "blob": "c278f00ab717c73e144f9128cfc674dff5aa6c54",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/qualification.json",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "20b215c22293308cc5d82e5aaaa71e929dd4e6f714db387beadc1f65e7d5df57",
+      "bytes": 14311
+    },
+    {
+      "mode": "100644",
+      "blob": "20ba4f3d4b85d419e1e4c04ce2935d1bb709f045",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/reference.json",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "676dbcdb376fa334925385bf6ce0b17e777cb2b24b74168a3edcd7d5a250c6c0",
+      "bytes": 20656
+    },
+    {
+      "mode": "100644",
+      "blob": "88dda8acaf2e4f032f52299e272eef6199129d5c",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/source-snapshots/bridge/00-Package.resolved",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "9ed17ca6cd2647c50e17521ea6c69c326b551a1ee13f2e1f87c658f92e55d2ea",
+      "bytes": 1198
+    },
+    {
+      "mode": "100644",
+      "blob": "1af275c3f3097eb361251e4ed2a6d12e5271a174",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/source-snapshots/bridge/01-Package.swift",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "9af2a15811e934e4082360e46f368ea2b0d5ba5d97a77d8bb0ddb34d48e0666b",
+      "bytes": 3056
+    },
+    {
+      "mode": "100644",
+      "blob": "6594e319623d993c60e0f12fcfe56e84b3965e3d",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/source-snapshots/bridge/02-HanlinAppleToolSessionBridge.swift",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "2f3441ea603b186f71bbb13b5faf37f4e1b01c475dd0a0e7df7faeb97dbff418",
+      "bytes": 13031
+    },
+    {
+      "mode": "100644",
+      "blob": "2327b6f3b423e54ec7f9de789a45ba888547d5ee",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/source-snapshots/bridge/03-HanlinAppleToolSessionBridgeTests.swift",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "1296391072e837f04d05423ecc7c611f59556b414fd5ab085b0096c140e54f57",
+      "bytes": 18442
+    },
+    {
+      "mode": "100644",
+      "blob": "6a996f133f2840d76de59b02036a2ca1cbe4985d",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/source-snapshots/bridge/04-Package.resolved",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "7882ef847a4aaa1bfa2ee128122393cf718f393485d9658bb93f402f740f2c17",
+      "bytes": 1198
+    },
+    {
+      "mode": "100644",
+      "blob": "4639439e843b7101387a578ecac097b110151d40",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/source-snapshots/bridge/05-Package.swift",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "e27c872f7b9972be7667ea0f8e126131d42379d2a8b66527887ee97a32616e41",
+      "bytes": 9800
+    },
+    {
+      "mode": "100644",
+      "blob": "f905a047f8850af48b1351bde494735317f1f5a8",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/source-snapshots/bridge/06-HanlinAISDKAgentEngine.swift",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "7738b399f1eff40ddd5e99ac9e3976c47f384d94ddb9ba8b37901080a49b3d45",
+      "bytes": 38988
+    },
+    {
+      "mode": "100644",
+      "blob": "4028b62c853af86d3d7d8f1fff046cf9b999623f",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/source-snapshots/bridge/07-HanlinAppleToolInputBoundaryTests.swift",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "4658930f64a61adbbcd888e17124497f28177ab81bb70ebab3cb20e7e4011f05",
+      "bytes": 6822
+    },
+    {
+      "mode": "100644",
+      "blob": "88dda8acaf2e4f032f52299e272eef6199129d5c",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/source-snapshots/c93/00-Package.resolved",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "9ed17ca6cd2647c50e17521ea6c69c326b551a1ee13f2e1f87c658f92e55d2ea",
+      "bytes": 1198
+    },
+    {
+      "mode": "100644",
+      "blob": "1af275c3f3097eb361251e4ed2a6d12e5271a174",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/source-snapshots/c93/01-Package.swift",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "9af2a15811e934e4082360e46f368ea2b0d5ba5d97a77d8bb0ddb34d48e0666b",
+      "bytes": 3056
+    },
+    {
+      "mode": "100644",
+      "blob": "9b85192b47c9d7819f83609f5b6f017ea509ccb5",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/source-snapshots/c93/02-HanlinAppleToolSessionBridge.swift",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "52b011d931fcae6c9be2da94ade98e00a13b5fd8379812f8ad293cd9bcbf98ab",
+      "bytes": 12853
+    },
+    {
+      "mode": "100644",
+      "blob": "313b141570b40e361d6cf568a66e3e171b3f5318",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/source-snapshots/c93/03-HanlinAppleToolSessionBridgeTests.swift",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "484933369535fd96b5c17d77532ec9e63c2481a1d46b8515c3e8dcb50078988c",
+      "bytes": 16392
+    },
+    {
+      "mode": "100644",
+      "blob": "6a996f133f2840d76de59b02036a2ca1cbe4985d",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/source-snapshots/c93/04-Package.resolved",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "7882ef847a4aaa1bfa2ee128122393cf718f393485d9658bb93f402f740f2c17",
+      "bytes": 1198
+    },
+    {
+      "mode": "100644",
+      "blob": "4639439e843b7101387a578ecac097b110151d40",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/source-snapshots/c93/05-Package.swift",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "e27c872f7b9972be7667ea0f8e126131d42379d2a8b66527887ee97a32616e41",
+      "bytes": 9800
+    },
+    {
+      "mode": "100644",
+      "blob": "f905a047f8850af48b1351bde494735317f1f5a8",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/source-snapshots/c93/06-HanlinAISDKAgentEngine.swift",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "7738b399f1eff40ddd5e99ac9e3976c47f384d94ddb9ba8b37901080a49b3d45",
+      "bytes": 38988
+    },
+    {
+      "mode": "100644",
+      "blob": "4028b62c853af86d3d7d8f1fff046cf9b999623f",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/source-snapshots/c93/07-HanlinAppleToolInputBoundaryTests.swift",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "4658930f64a61adbbcd888e17124497f28177ab81bb70ebab3cb20e7e4011f05",
+      "bytes": 6822
+    },
+    {
+      "mode": "100644",
+      "blob": "51efd3013b7fa45854f61e5dece0412121692ee3",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/source-snapshots/current/00-Package.resolved",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "b771042794841f2e759cffc68181ca37214794b4fc9c02981a1c86176a9bde83",
+      "bytes": 1198
+    },
+    {
+      "mode": "100644",
+      "blob": "8c20b5769e1f90dda9bd8047601293fdf69f3297",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/source-snapshots/current/01-Package.swift",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "9373a783d26e514b2dba8e11e52b8d2ae6f3b5bb7c5edbeddd8a563c5584c4d8",
+      "bytes": 3056
+    },
+    {
+      "mode": "100644",
+      "blob": "6594e319623d993c60e0f12fcfe56e84b3965e3d",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/source-snapshots/current/02-HanlinAppleToolSessionBridge.swift",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "2f3441ea603b186f71bbb13b5faf37f4e1b01c475dd0a0e7df7faeb97dbff418",
+      "bytes": 13031
+    },
+    {
+      "mode": "100644",
+      "blob": "2327b6f3b423e54ec7f9de789a45ba888547d5ee",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/source-snapshots/current/03-HanlinAppleToolSessionBridgeTests.swift",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "1296391072e837f04d05423ecc7c611f59556b414fd5ab085b0096c140e54f57",
+      "bytes": 18442
+    },
+    {
+      "mode": "100644",
+      "blob": "21dcddf142e290aa1f5a89aac6fd41f27a6af36c",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/source-snapshots/current/04-Package.resolved",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "8f67ee59e5ba54c1d9bdd312efff89ddc946e00443fef8faddfeb4e7eb5387c8",
+      "bytes": 1198
+    },
+    {
+      "mode": "100644",
+      "blob": "eda3bab0fa0ecb90cc3c3026056a36ef11424ea2",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/source-snapshots/current/05-Package.swift",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "a22b7948988b776de98f51d6a9c493b9b2f9db62deae097f31ced5971b842665",
+      "bytes": 9800
+    },
+    {
+      "mode": "100644",
+      "blob": "bb03b564e9aaaf964a33a69df8a8df5f5243c2f9",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/source-snapshots/current/06-HanlinAISDKAgentEngine.swift",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "8abb757a9a9e7da9f90d474b1b036158b01e1f594ca2fb33d28d803cc2be91e8",
+      "bytes": 39712
+    },
+    {
+      "mode": "100644",
+      "blob": "a59d9f086f174c79683cea13bc5a2946170d04ba",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/source-snapshots/current/07-HanlinAppleToolInputBoundaryTests.swift",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "0c24a0b2cb54e5ed7589d20f18325e5b93a5946aa68dee1ffcef05ee9fab8815",
+      "bytes": 12846
+    },
+    {
+      "mode": "100644",
+      "blob": "51efd3013b7fa45854f61e5dece0412121692ee3",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/source-snapshots/delta/00-Package.resolved",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "b771042794841f2e759cffc68181ca37214794b4fc9c02981a1c86176a9bde83",
+      "bytes": 1198
+    },
+    {
+      "mode": "100644",
+      "blob": "8c20b5769e1f90dda9bd8047601293fdf69f3297",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/source-snapshots/delta/01-Package.swift",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "9373a783d26e514b2dba8e11e52b8d2ae6f3b5bb7c5edbeddd8a563c5584c4d8",
+      "bytes": 3056
+    },
+    {
+      "mode": "100644",
+      "blob": "76917695c9b9640266a9c6bf98fc22be9c7d83ee",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/source-snapshots/delta/02-HanlinAppleToolSessionBridge.swift",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "0ec97844b22e808240bda44715c02c23576c96a91d3eaa4e458afb45085e1c18",
+      "bytes": 13092
+    },
+    {
+      "mode": "100644",
+      "blob": "1854b30c3f2091ee98bb12aa902f8bc591d1fc82",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/source-snapshots/delta/03-HanlinAppleToolSessionBridgeTests.swift",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "74cc8de390b586e4aa4826755375bcc0d3f4f05c1c6404ed725c846b3f9a15ef",
+      "bytes": 17706
+    },
+    {
+      "mode": "100644",
+      "blob": "21dcddf142e290aa1f5a89aac6fd41f27a6af36c",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/source-snapshots/delta/04-Package.resolved",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "8f67ee59e5ba54c1d9bdd312efff89ddc946e00443fef8faddfeb4e7eb5387c8",
+      "bytes": 1198
+    },
+    {
+      "mode": "100644",
+      "blob": "eda3bab0fa0ecb90cc3c3026056a36ef11424ea2",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/source-snapshots/delta/05-Package.swift",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "a22b7948988b776de98f51d6a9c493b9b2f9db62deae097f31ced5971b842665",
+      "bytes": 9800
+    },
+    {
+      "mode": "100644",
+      "blob": "f905a047f8850af48b1351bde494735317f1f5a8",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/source-snapshots/delta/06-HanlinAISDKAgentEngine.swift",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "7738b399f1eff40ddd5e99ac9e3976c47f384d94ddb9ba8b37901080a49b3d45",
+      "bytes": 38988
+    },
+    {
+      "mode": "100644",
+      "blob": "a59d9f086f174c79683cea13bc5a2946170d04ba",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/source-snapshots/delta/07-HanlinAppleToolInputBoundaryTests.swift",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "0c24a0b2cb54e5ed7589d20f18325e5b93a5946aa68dee1ffcef05ee9fab8815",
+      "bytes": 12846
+    },
+    {
+      "mode": "100644",
+      "blob": "88dda8acaf2e4f032f52299e272eef6199129d5c",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/source-snapshots/header/00-Package.resolved",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "9ed17ca6cd2647c50e17521ea6c69c326b551a1ee13f2e1f87c658f92e55d2ea",
+      "bytes": 1198
+    },
+    {
+      "mode": "100644",
+      "blob": "1af275c3f3097eb361251e4ed2a6d12e5271a174",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/source-snapshots/header/01-Package.swift",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "9af2a15811e934e4082360e46f368ea2b0d5ba5d97a77d8bb0ddb34d48e0666b",
+      "bytes": 3056
+    },
+    {
+      "mode": "100644",
+      "blob": "76917695c9b9640266a9c6bf98fc22be9c7d83ee",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/source-snapshots/header/02-HanlinAppleToolSessionBridge.swift",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "0ec97844b22e808240bda44715c02c23576c96a91d3eaa4e458afb45085e1c18",
+      "bytes": 13092
+    },
+    {
+      "mode": "100644",
+      "blob": "1854b30c3f2091ee98bb12aa902f8bc591d1fc82",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/source-snapshots/header/03-HanlinAppleToolSessionBridgeTests.swift",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "74cc8de390b586e4aa4826755375bcc0d3f4f05c1c6404ed725c846b3f9a15ef",
+      "bytes": 17706
+    },
+    {
+      "mode": "100644",
+      "blob": "6a996f133f2840d76de59b02036a2ca1cbe4985d",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/source-snapshots/header/04-Package.resolved",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "7882ef847a4aaa1bfa2ee128122393cf718f393485d9658bb93f402f740f2c17",
+      "bytes": 1198
+    },
+    {
+      "mode": "100644",
+      "blob": "4639439e843b7101387a578ecac097b110151d40",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/source-snapshots/header/05-Package.swift",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "e27c872f7b9972be7667ea0f8e126131d42379d2a8b66527887ee97a32616e41",
+      "bytes": 9800
+    },
+    {
+      "mode": "100644",
+      "blob": "f905a047f8850af48b1351bde494735317f1f5a8",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/source-snapshots/header/06-HanlinAISDKAgentEngine.swift",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "7738b399f1eff40ddd5e99ac9e3976c47f384d94ddb9ba8b37901080a49b3d45",
+      "bytes": 38988
+    },
+    {
+      "mode": "100644",
+      "blob": "4028b62c853af86d3d7d8f1fff046cf9b999623f",
+      "path": "Scripts/CI/Tests/Fixtures/native-cancellation-07431/source-snapshots/header/07-HanlinAppleToolInputBoundaryTests.swift",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "immutable-original-reference",
+      "sha256": "4658930f64a61adbbcd888e17124497f28177ab81bb70ebab3cb20e7e4011f05",
+      "bytes": 6822
+    },
+    {
+      "mode": "100644",
+      "blob": "57eccdcc672ec93f95e10d0f5b01e9231b3c87c2",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-bridge-45273580428/04-select-xcode.stderr.log",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "43aa03c0f021d590a4ac56edce3f8ac3754b88842aa24f8302b73e3e47625b70",
+      "bytes": 186
+    },
+    {
+      "mode": "100644",
+      "blob": "c8456ef0dc900b9b7db8e5ded4dceab8dce6b274",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-bridge-45273580428/04-select-xcode.stdout.log",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "8d652b3e258a63181e163aa5c534b30b06052368fc3d2ccb2dad57211f17302d",
+      "bytes": 29
+    },
+    {
+      "mode": "100644",
+      "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-bridge-45273580428/05-xcode.stderr.log",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "mode": "100644",
+      "blob": "be452d5caed3be6381a461e533eeefc4385442e8",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-bridge-45273580428/05-xcode.stdout.log",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "67c5b47bcf0e788aecae2f9b3af345813bdf7fe736faefb9666a7f4b2bf27ba7",
+      "bytes": 31
+    },
+    {
+      "mode": "100644",
+      "blob": "156c118032d5dbcad7097b0cc1bb24ee84a59d72",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-bridge-45273580428/06-swift.stderr.log",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "bbc8b176d3c74d4c5a7fd00b40280f98168e116d5272273bfe8e71407625540e",
+      "bytes": 30
+    },
+    {
+      "mode": "100644",
+      "blob": "2070a8fda6ba011bc4b7cc6c3cf06943e6c5a95f",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-bridge-45273580428/06-swift.stdout.log",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "4b59da256292ae42e3f04ef6d06ea3e139678613a3cd3d0dc37a6757c0bd290a",
+      "bytes": 98
+    },
+    {
+      "mode": "100644",
+      "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-bridge-45273580428/07-macos-sdk.stderr.log",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "mode": "100644",
+      "blob": "40682b3dccc10dbe4563a9b0e83bc36bff8dd3d0",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-bridge-45273580428/07-macos-sdk.stdout.log",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "53e1ae253beb3b8a3b99dd2d4ec1eb641d392378329fcdccb560779fdf46de0b",
+      "bytes": 5
+    },
+    {
+      "mode": "100644",
+      "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-bridge-45273580428/08-ios-sdk.stderr.log",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "mode": "100644",
+      "blob": "40682b3dccc10dbe4563a9b0e83bc36bff8dd3d0",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-bridge-45273580428/08-ios-sdk.stdout.log",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "53e1ae253beb3b8a3b99dd2d4ec1eb641d392378329fcdccb560779fdf46de0b",
+      "bytes": 5
+    },
+    {
+      "mode": "100644",
+      "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-bridge-45273580428/09-os.stderr.log",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "mode": "100644",
+      "blob": "88752e44750f552adad4172155edd182ed8f4816",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-bridge-45273580428/09-os.stdout.log",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "4ef10a0fc370704ea84699cf3851e51488598c5f1ab35cb572eb6b96278a8e5c",
+      "bytes": 66
+    },
+    {
+      "mode": "100644",
+      "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-bridge-45273580428/12-producer-clean.stderr.log",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "mode": "100644",
+      "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-bridge-45273580428/12-producer-clean.stdout.log",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "mode": "100644",
+      "blob": "6d497b448afca2a84891254c3bb083ee3495645c",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-bridge-45273580428/SDKTests.json",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "d9986e1a415164c27b33ce804e486a2a946695d28d4d230beaa5a654d93dbfc7",
+      "bytes": 7947
+    },
+    {
+      "mode": "100644",
+      "blob": "8961553af4dc17d1a52c1142d6a9223463a27186",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-bridge-45273580428/artifact-receipt.json",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "f1a025878859a8f6e464bbea1db9b0cf0bbf8c665c8e06eab3a6b27d7fad1cc0",
+      "bytes": 668
+    },
+    {
+      "mode": "100644",
+      "blob": "17474e82efc684fe535b02e31a783df860d7b06d",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-bridge-45273580428/commands.json",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "53efd4500462ecf62619b00649cd9b1fd38bab6df5542169df5e77f9031eaad5",
+      "bytes": 11566
+    },
+    {
+      "mode": "100644",
+      "blob": "6a996f133f2840d76de59b02036a2ca1cbe4985d",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-bridge-45273580428/core-Package.resolved",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "7882ef847a4aaa1bfa2ee128122393cf718f393485d9658bb93f402f740f2c17",
+      "bytes": 1198
+    },
+    {
+      "mode": "100644",
+      "blob": "d8b5d2f4445d3971c77d62fd7b82d31dd4c8a74e",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-bridge-45273580428/post-build-resolution.json",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "61efd25acfad5a796d7cd8d465a3ee2e68da2714f8ee9b885268a19a6f92235f",
+      "bytes": 3230
+    },
+    {
+      "mode": "100644",
+      "blob": "7692821f658a55052d5ae38e60414d1f5e93f0b6",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-bridge-45273580428/process-status.json",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "7ca8b5692781ec6ff99a20c8e390b600ffef6a407495c608fec3a82522cd53c1",
+      "bytes": 268
+    },
+    {
+      "mode": "100644",
+      "blob": "4f08f1bee4db80c9d7bc4f25b17d030d8f7f8aaf",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-bridge-45273580428/producer-commit.txt",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "6e2c1d5358a9bebbc4d79e7e9d73c12b4636001e8448de5dcbb54de2f267a121",
+      "bytes": 41
+    },
+    {
+      "mode": "100644",
+      "blob": "484524e4fd1ff06632f63675671957c7b93c1eec",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-bridge-45273580428/reference.json",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "3f62752b77b154d3e028c5bef517488a97336c768dd6e53fce097e3e2b025615",
+      "bytes": 3678
+    },
+    {
+      "mode": "100644",
+      "blob": "88dda8acaf2e4f032f52299e272eef6199129d5c",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-bridge-45273580428/sdk-Package.resolved",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "9ed17ca6cd2647c50e17521ea6c69c326b551a1ee13f2e1f87c658f92e55d2ea",
+      "bytes": 1198
+    },
+    {
+      "mode": "100644",
+      "blob": "4979f5f3bf37ffd2a484ebba8d8381e33449409e",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-bridge-45273580428/selected-route.json",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "129ad05c9e0ca56c3686150b4b7212d8635e9a6a1664d7ae751f2e0f42a1a3f6",
+      "bytes": 203
+    },
+    {
+      "mode": "100644",
+      "blob": "76917695c9b9640266a9c6bf98fc22be9c7d83ee",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-bridge-45273580428/source-before-0.swift",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "0ec97844b22e808240bda44715c02c23576c96a91d3eaa4e458afb45085e1c18",
+      "bytes": 13092
+    },
+    {
+      "mode": "100644",
+      "blob": "1854b30c3f2091ee98bb12aa902f8bc591d1fc82",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-bridge-45273580428/source-before-1.swift",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "74cc8de390b586e4aa4826755375bcc0d3f4f05c1c6404ed725c846b3f9a15ef",
+      "bytes": 17706
+    },
+    {
+      "mode": "100644",
+      "blob": "cb376a2a38e208e1cbb96e0294b7b3aa72ac2035",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-bridge-45273580428/terminal-audit.json",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "b645c44e9826d29df6da4fb7d89a4e1c93798d1df987a35815b400c83078037a",
+      "bytes": 4800
+    },
+    {
+      "mode": "100644",
+      "blob": "273400157a5a1a259191b6acc92849c77bbb45a8",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-bridge-45273580428/terminal-run.json",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "c6926cd0bc7dccde909c3f49b67255e42881d8490196497bfc2901a1526485df",
+      "bytes": 15657
+    },
+    {
+      "mode": "100644",
+      "blob": "051d9dfad1647d453d99d44688dece5b60df50c6",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-bridge-45273580428/tested-source-sha256.json",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "8b6f7e6a8c6075317f002c55aa43011f8eed0fda5d8126092febc20d96e973d0",
+      "bytes": 66666
+    },
+    {
+      "mode": "100644",
+      "blob": "a79d62330d7460c78aff6ac3ecb55b9213cf956f",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-bridge-45273580428/workflow-sha256.json",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "e174a3b65d9b41737e504b378d23e4a2f0b1aab5c98f190fda49ecf4129b9e74",
+      "bytes": 13010
+    },
+    {
+      "mode": "100644",
+      "blob": "1533d29dd45feafce4eb811857fe87ed89a2e37b",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-candidate-45240721804/BaselineCoreTests.json",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "5a1da0ade219ac177d3e664c65939ce03a8c8f5ea817d83fd0e980c180203d84",
+      "bytes": 40687
+    },
+    {
+      "mode": "100644",
+      "blob": "bdf3fae1390001a7f6cda38646d3abacf70921ef",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-candidate-45240721804/CoreTests.json",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "e5ab426ea3a4835a5618f4868cf0daa84c012929b3df3305ecd77e14c8199245",
+      "bytes": 14154
+    },
+    {
+      "mode": "100644",
+      "blob": "be452d5caed3be6381a461e533eeefc4385442e8",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-candidate-45240721804/baseline-proof/05-xcode.stdout.log",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "67c5b47bcf0e788aecae2f9b3af345813bdf7fe736faefb9666a7f4b2bf27ba7",
+      "bytes": 31
+    },
+    {
+      "mode": "100644",
+      "blob": "2070a8fda6ba011bc4b7cc6c3cf06943e6c5a95f",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-candidate-45240721804/baseline-proof/06-swift.stdout.log",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "4b59da256292ae42e3f04ef6d06ea3e139678613a3cd3d0dc37a6757c0bd290a",
+      "bytes": 98
+    },
+    {
+      "mode": "100644",
+      "blob": "40682b3dccc10dbe4563a9b0e83bc36bff8dd3d0",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-candidate-45240721804/baseline-proof/07-macos-sdk.stdout.log",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "53e1ae253beb3b8a3b99dd2d4ec1eb641d392378329fcdccb560779fdf46de0b",
+      "bytes": 5
+    },
+    {
+      "mode": "100644",
+      "blob": "40682b3dccc10dbe4563a9b0e83bc36bff8dd3d0",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-candidate-45240721804/baseline-proof/08-ios-sdk.stdout.log",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "53e1ae253beb3b8a3b99dd2d4ec1eb641d392378329fcdccb560779fdf46de0b",
+      "bytes": 5
+    },
+    {
+      "mode": "100644",
+      "blob": "88752e44750f552adad4172155edd182ed8f4816",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-candidate-45240721804/baseline-proof/09-os.stdout.log",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "4ef10a0fc370704ea84699cf3851e51488598c5f1ab35cb572eb6b96278a8e5c",
+      "bytes": 66
+    },
+    {
+      "mode": "100644",
+      "blob": "1533d29dd45feafce4eb811857fe87ed89a2e37b",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-candidate-45240721804/baseline-proof/BaselineCoreTests.json",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "5a1da0ade219ac177d3e664c65939ce03a8c8f5ea817d83fd0e980c180203d84",
+      "bytes": 40687
+    },
+    {
+      "mode": "100644",
+      "blob": "15d07d094b002dbf3d81536aec99c106b1b9720c",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-candidate-45240721804/baseline-proof/artifact-receipt.json",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "5eb7b0ecb5539fcc1494a69df69b3068b138cdaf3e50983371beb47449915bf5",
+      "bytes": 505
+    },
+    {
+      "mode": "100644",
+      "blob": "8b01c8f20723b1ae6a0962915ce71652a21e94e5",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-candidate-45240721804/baseline-proof/baseline-variant.json",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "f8f9727707a246302af0fe91740cc53c8d9aa525815ab74c26465bec93f7ee58",
+      "bytes": 785
+    },
+    {
+      "mode": "100644",
+      "blob": "73046f8a09962bbfb869834b6fd4230fc251aaa6",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-candidate-45240721804/baseline-proof/commands.json",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "bd9c811bf8a63818f3fcd5143844bd53c10abdd5c468701147c456617606bbaa",
+      "bytes": 21657
+    },
+    {
+      "mode": "100644",
+      "blob": "6a996f133f2840d76de59b02036a2ca1cbe4985d",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-candidate-45240721804/baseline-proof/core-Package.resolved",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "7882ef847a4aaa1bfa2ee128122393cf718f393485d9658bb93f402f740f2c17",
+      "bytes": 1198
+    },
+    {
+      "mode": "100644",
+      "blob": "7a8dbf324d206b833d09b8c2190cf37fd72ec93c",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-candidate-45240721804/baseline-proof/process-status.json",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "ab842f6cc89bde3bed296cb56cb3e659ee56983bac9c203dffcfdb04c8ec9ad1",
+      "bytes": 125
+    },
+    {
+      "mode": "100644",
+      "blob": "4f08f1bee4db80c9d7bc4f25b17d030d8f7f8aaf",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-candidate-45240721804/baseline-proof/producer-commit.txt",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "6e2c1d5358a9bebbc4d79e7e9d73c12b4636001e8448de5dcbb54de2f267a121",
+      "bytes": 41
+    },
+    {
+      "mode": "100644",
+      "blob": "c859e1c07eef70387a9e747698ab42d2615dd7d2",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-candidate-45240721804/baseline-proof/reference.json",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "ba8a05d787ab250ad4400c85cea842e5b7ec23e5a8af4d3f6ec1c70c94a5afb2",
+      "bytes": 1719
+    },
+    {
+      "mode": "100644",
+      "blob": "d16c27a14886c0e84fa3c5dcddc71220cc08b4d6",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-candidate-45240721804/baseline-proof/terminal-run.json",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "f3f1a0bf512d615c2161030464e8207de7a408e7ad53dd3866180315505ce0d7",
+      "bytes": 15730
+    },
+    {
+      "mode": "100644",
+      "blob": "e485f42a1ec3bd64ae48b47ee411f7f6357835d1",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-candidate-45240721804/baseline-proof/tested-source-sha256.json",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "723df62caf58ceb1fe13e998a834eb041ad1e329a5a9162535f933860f41324b",
+      "bytes": 66666
+    },
+    {
+      "mode": "100644",
+      "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-45259715158/05-xcode.stderr.log",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "mode": "100644",
+      "blob": "be452d5caed3be6381a461e533eeefc4385442e8",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-45259715158/05-xcode.stdout.log",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "67c5b47bcf0e788aecae2f9b3af345813bdf7fe736faefb9666a7f4b2bf27ba7",
+      "bytes": 31
+    },
+    {
+      "mode": "100644",
+      "blob": "156c118032d5dbcad7097b0cc1bb24ee84a59d72",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-45259715158/06-swift.stderr.log",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "bbc8b176d3c74d4c5a7fd00b40280f98168e116d5272273bfe8e71407625540e",
+      "bytes": 30
+    },
+    {
+      "mode": "100644",
+      "blob": "2070a8fda6ba011bc4b7cc6c3cf06943e6c5a95f",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-45259715158/06-swift.stdout.log",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "4b59da256292ae42e3f04ef6d06ea3e139678613a3cd3d0dc37a6757c0bd290a",
+      "bytes": 98
+    },
+    {
+      "mode": "100644",
+      "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-45259715158/07-macos-sdk.stderr.log",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "mode": "100644",
+      "blob": "40682b3dccc10dbe4563a9b0e83bc36bff8dd3d0",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-45259715158/07-macos-sdk.stdout.log",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "53e1ae253beb3b8a3b99dd2d4ec1eb641d392378329fcdccb560779fdf46de0b",
+      "bytes": 5
+    },
+    {
+      "mode": "100644",
+      "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-45259715158/08-ios-sdk.stderr.log",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "mode": "100644",
+      "blob": "40682b3dccc10dbe4563a9b0e83bc36bff8dd3d0",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-45259715158/08-ios-sdk.stdout.log",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "53e1ae253beb3b8a3b99dd2d4ec1eb641d392378329fcdccb560779fdf46de0b",
+      "bytes": 5
+    },
+    {
+      "mode": "100644",
+      "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-45259715158/09-os.stderr.log",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "mode": "100644",
+      "blob": "88752e44750f552adad4172155edd182ed8f4816",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-45259715158/09-os.stdout.log",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "4ef10a0fc370704ea84699cf3851e51488598c5f1ab35cb572eb6b96278a8e5c",
+      "bytes": 66
+    },
+    {
+      "mode": "100644",
+      "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-45259715158/12-producer-clean.stderr.log",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "mode": "100644",
+      "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-45259715158/12-producer-clean.stdout.log",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "mode": "100644",
+      "blob": "14fed23cda72a2651919a1f541cca98411be5c20",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-45259715158/CoreTests.json",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "5567644e11e5f2983c6e03d02d3d501b0fbe77204366a5c1e0aed5cf9c4c6515",
+      "bytes": 9949
+    },
+    {
+      "mode": "100644",
+      "blob": "1de4498aebacb8e7b1b9e9d3899ea379d666471b",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-45259715158/SDKTests.json",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "ad48e338d72fb171f756f20a9131641a166ee3eab613184ff6be460681a3bd4d",
+      "bytes": 23825
+    },
+    {
+      "mode": "100644",
+      "blob": "5879763c9bfb2b432c6de54c8c65f604aca69c26",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-45259715158/artifact-receipt.json",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "4ab3dcc4abdd2a4106ef3989fc94e9937a92266f76ba6da946a455becf0a8b01",
+      "bytes": 505
+    },
+    {
+      "mode": "100644",
+      "blob": "9edaec2b62f1ee42f7a7f25c20a40a2d7e91d7b8",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-45259715158/commands.json",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "eddb5fd944a5d7ad5e941c7d27bcc535f72fef3ae430a5c4c9d3ccb961ad873b",
+      "bytes": 17723
+    },
+    {
+      "mode": "100644",
+      "blob": "6a996f133f2840d76de59b02036a2ca1cbe4985d",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-45259715158/core-Package.resolved",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "7882ef847a4aaa1bfa2ee128122393cf718f393485d9658bb93f402f740f2c17",
+      "bytes": 1198
+    },
+    {
+      "mode": "100644",
+      "blob": "fb8f301f76bb2e769184f416a8c7feaa290d95ef",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-45259715158/process-status.json",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "d208b2f86c658ee324d722df82bacc900d7b9aa2b3a2452b6dba820bb884454a",
+      "bytes": 169
+    },
+    {
+      "mode": "100644",
+      "blob": "4f08f1bee4db80c9d7bc4f25b17d030d8f7f8aaf",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-45259715158/producer-commit.txt",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "6e2c1d5358a9bebbc4d79e7e9d73c12b4636001e8448de5dcbb54de2f267a121",
+      "bytes": 41
+    },
+    {
+      "mode": "100644",
+      "blob": "d9c1ec2f784e25080b26a7c2865901ba776db2fd",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-45259715158/reference.json",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "785bf2b27c4c9ec5b4c107135a52bc9568f1c12f4e07cea67c469b12c3310ddd",
+      "bytes": 7948
+    },
+    {
+      "mode": "100644",
+      "blob": "88dda8acaf2e4f032f52299e272eef6199129d5c",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-45259715158/sdk-Package.resolved",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "9ed17ca6cd2647c50e17521ea6c69c326b551a1ee13f2e1f87c658f92e55d2ea",
+      "bytes": 1198
+    },
+    {
+      "mode": "100644",
+      "blob": "c32048c7753e74a57d66c0b3edc6b9244082ec01",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-45259715158/selected-route.json",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "144a7fabd312c643d997fda4b5287fcae9c15fabfb73607027fbf68c19301bab",
+      "bytes": 206
+    },
+    {
+      "mode": "100644",
+      "blob": "9b85192b47c9d7819f83609f5b6f017ea509ccb5",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-45259715158/source-before-0.swift",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "52b011d931fcae6c9be2da94ade98e00a13b5fd8379812f8ad293cd9bcbf98ab",
+      "bytes": 12853
+    },
+    {
+      "mode": "100644",
+      "blob": "313b141570b40e361d6cf568a66e3e171b3f5318",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-45259715158/source-before-1.swift",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "484933369535fd96b5c17d77532ec9e63c2481a1d46b8515c3e8dcb50078988c",
+      "bytes": 16392
+    },
+    {
+      "mode": "100644",
+      "blob": "d385557bd0b63cd3f0250a43a9a8d89e4570c700",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-45259715158/summary.json",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "74e0ce08a239dcebdd3905112b2e0da77ce71932ae1d94008d87e3025de82e69",
+      "bytes": 38412
+    },
+    {
+      "mode": "100644",
+      "blob": "ee98cc1306dac2a1bba8f0e0999e4613cd965872",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-45259715158/terminal-audit.json",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "f3a47978400288cb3795801de30e850e5c90a7c0394ff2166fb9879a3b950ba3",
+      "bytes": 1678
+    },
+    {
+      "mode": "100644",
+      "blob": "1901f2e4ed3a08479bd00b83c22e80182c295e07",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-45259715158/terminal-run.json",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "3b771b5e61000bd2dafa6320d39af0bb6de4ef695ea33a0f041c0261b33a3dab",
+      "bytes": 15653
+    },
+    {
+      "mode": "100644",
+      "blob": "7af7749ab565e41b1c690527e548a9646f485f73",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-45259715158/tested-source-sha256.json",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "0902c0c0774f1234abb03647e731428c74ab0fce9d6032a38b8e0b3512623b54",
+      "bytes": 66666
+    },
+    {
+      "mode": "100644",
+      "blob": "c8f62b3bf4f7c8b65db7c95f97bfec46d6deaa24",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-45259715158/workflow-sha256.json",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "abea884ccc8c3b273c16dc3870ddbf8fa04f2a0196dcfd1a5a4976686a9595b5",
+      "bytes": 3413
+    },
+    {
+      "mode": "100644",
+      "blob": "57eccdcc672ec93f95e10d0f5b01e9231b3c87c2",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-compile-45268041311/04-select-xcode.stderr.log",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "43aa03c0f021d590a4ac56edce3f8ac3754b88842aa24f8302b73e3e47625b70",
+      "bytes": 186
+    },
+    {
+      "mode": "100644",
+      "blob": "c8456ef0dc900b9b7db8e5ded4dceab8dce6b274",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-compile-45268041311/04-select-xcode.stdout.log",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "8d652b3e258a63181e163aa5c534b30b06052368fc3d2ccb2dad57211f17302d",
+      "bytes": 29
+    },
+    {
+      "mode": "100644",
+      "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-compile-45268041311/05-xcode.stderr.log",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "mode": "100644",
+      "blob": "be452d5caed3be6381a461e533eeefc4385442e8",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-compile-45268041311/05-xcode.stdout.log",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "67c5b47bcf0e788aecae2f9b3af345813bdf7fe736faefb9666a7f4b2bf27ba7",
+      "bytes": 31
+    },
+    {
+      "mode": "100644",
+      "blob": "156c118032d5dbcad7097b0cc1bb24ee84a59d72",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-compile-45268041311/06-swift.stderr.log",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "bbc8b176d3c74d4c5a7fd00b40280f98168e116d5272273bfe8e71407625540e",
+      "bytes": 30
+    },
+    {
+      "mode": "100644",
+      "blob": "2070a8fda6ba011bc4b7cc6c3cf06943e6c5a95f",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-compile-45268041311/06-swift.stdout.log",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "4b59da256292ae42e3f04ef6d06ea3e139678613a3cd3d0dc37a6757c0bd290a",
+      "bytes": 98
+    },
+    {
+      "mode": "100644",
+      "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-compile-45268041311/07-macos-sdk.stderr.log",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "mode": "100644",
+      "blob": "40682b3dccc10dbe4563a9b0e83bc36bff8dd3d0",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-compile-45268041311/07-macos-sdk.stdout.log",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "53e1ae253beb3b8a3b99dd2d4ec1eb641d392378329fcdccb560779fdf46de0b",
+      "bytes": 5
+    },
+    {
+      "mode": "100644",
+      "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-compile-45268041311/08-ios-sdk.stderr.log",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "mode": "100644",
+      "blob": "40682b3dccc10dbe4563a9b0e83bc36bff8dd3d0",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-compile-45268041311/08-ios-sdk.stdout.log",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "53e1ae253beb3b8a3b99dd2d4ec1eb641d392378329fcdccb560779fdf46de0b",
+      "bytes": 5
+    },
+    {
+      "mode": "100644",
+      "blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-compile-45268041311/09-os.stderr.log",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "mode": "100644",
+      "blob": "88752e44750f552adad4172155edd182ed8f4816",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-compile-45268041311/09-os.stdout.log",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "4ef10a0fc370704ea84699cf3851e51488598c5f1ab35cb572eb6b96278a8e5c",
+      "bytes": 66
+    },
+    {
+      "mode": "100644",
+      "blob": "c52eda41ee101f5adf27c0fc180150c92c7f0365",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-compile-45268041311/17-IOSBuild.stderr.log",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "c955e554a9e617581705a39658a0dfab406445f011c2aa9c4ac91cd95fb32b0a",
+      "bytes": 404
+    },
+    {
+      "mode": "100644",
+      "blob": "0aaede220c0bd4300a14862bc6676b56ccaac767",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-compile-45268041311/17-IOSBuild.stdout.log",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "3f3195225c3822a91a366b22884add507335fb58c53a1221a67b07760ff5b726",
+      "bytes": 2261728
+    },
+    {
+      "mode": "100644",
+      "blob": "5ec645d79fc30e081e88c701416edd73a8340f4f",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-compile-45268041311/archive-members.json",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "2ebe875a0c9660dfc129740b42256d239377f80f068448382be5d57b657e12f8",
+      "bytes": 37366
+    },
+    {
+      "mode": "100644",
+      "blob": "6c6f90c69c5c7687eeb209f424f750012baa37db",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-compile-45268041311/artifact-receipt.json",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "3471cd2204c8b713968c0af0d34fa86e744555e296a5e8286645b1ee9148cf58",
+      "bytes": 663
+    },
+    {
+      "mode": "100644",
+      "blob": "abc13b5fb30bbe91789be74f63a7946d88b67846",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-compile-45268041311/commands.json",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "a65e949ffd4a2839769242c3153e67f9bcbf36d2ac87b1263615622bfd291dac",
+      "bytes": 12613
+    },
+    {
+      "mode": "100644",
+      "blob": "6a996f133f2840d76de59b02036a2ca1cbe4985d",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-compile-45268041311/core-Package.resolved",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "7882ef847a4aaa1bfa2ee128122393cf718f393485d9658bb93f402f740f2c17",
+      "bytes": 1198
+    },
+    {
+      "mode": "100644",
+      "blob": "e933439a96625ea21a0cbe139baa1dc190f7507d",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-compile-45268041311/post-build-resolution.json",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "61144628887d5f6317c8a8a57babaa80ae1630a85bc5ea1937cc693d8da273f5",
+      "bytes": 3230
+    },
+    {
+      "mode": "100644",
+      "blob": "39e3a19282a71c7b6f7ace67f7f2ce20e9332dab",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-compile-45268041311/process-status.json",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "0f269f8b24c70a6c0d7074ec6d6f3536cb71a6fc957762a8c45d984b457244c0",
+      "bytes": 220
+    },
+    {
+      "mode": "100644",
+      "blob": "4f08f1bee4db80c9d7bc4f25b17d030d8f7f8aaf",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-compile-45268041311/producer-commit.txt",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "6e2c1d5358a9bebbc4d79e7e9d73c12b4636001e8448de5dcbb54de2f267a121",
+      "bytes": 41
+    },
+    {
+      "mode": "100644",
+      "blob": "88dda8acaf2e4f032f52299e272eef6199129d5c",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-compile-45268041311/raw-locks/00-Package.resolved",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "9ed17ca6cd2647c50e17521ea6c69c326b551a1ee13f2e1f87c658f92e55d2ea",
+      "bytes": 1198
+    },
+    {
+      "mode": "100644",
+      "blob": "6a996f133f2840d76de59b02036a2ca1cbe4985d",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-compile-45268041311/raw-locks/01-Package.resolved",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "7882ef847a4aaa1bfa2ee128122393cf718f393485d9658bb93f402f740f2c17",
+      "bytes": 1198
+    },
+    {
+      "mode": "100644",
+      "blob": "5bc2b07b60e72e029ceae5962f60a0d09e770f8d",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-compile-45268041311/reference.json",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "e87046d8b0944d0eb91d7001050ba668b2902210dc43fc2d4131f58ce2ceebea",
+      "bytes": 3353
+    },
+    {
+      "mode": "100644",
+      "blob": "88dda8acaf2e4f032f52299e272eef6199129d5c",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-compile-45268041311/sdk-Package.resolved",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "9ed17ca6cd2647c50e17521ea6c69c326b551a1ee13f2e1f87c658f92e55d2ea",
+      "bytes": 1198
+    },
+    {
+      "mode": "100644",
+      "blob": "2cafee72716c9be2d5839e3623852996b46927b3",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-compile-45268041311/terminal-audit.json",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "d8e3c360e8a18e98607d11e28188f166190c40d25e36530a62ec7c3f9a1199e2",
+      "bytes": 1770
+    },
+    {
+      "mode": "100644",
+      "blob": "54d876db11d2bfc8b13d2e01aa19ed032a04b564",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-compile-45268041311/terminal-run.json",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "ad364022af746ef13f878f571cf5640961c63a769c82a003d1ff8c2f4992aa30",
+      "bytes": 15640
+    },
+    {
+      "mode": "100644",
+      "blob": "c25e920d2e2f1592b997e26a48cc6106c7194ed4",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-compile-45268041311/tested-source-commit.txt",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "8c4127e89e12f00ebd8b4cf631d90e6bc3a5deee6c8f096e07606ab01337ddec",
+      "bytes": 41
+    },
+    {
+      "mode": "100644",
+      "blob": "051d9dfad1647d453d99d44688dece5b60df50c6",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-compile-45268041311/tested-source-sha256.json",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "8b6f7e6a8c6075317f002c55aa43011f8eed0fda5d8126092febc20d96e973d0",
+      "bytes": 66666
+    },
+    {
+      "mode": "100644",
+      "blob": "c25e920d2e2f1592b997e26a48cc6106c7194ed4",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-compile-45268041311/workflow-commit.txt",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "8c4127e89e12f00ebd8b4cf631d90e6bc3a5deee6c8f096e07606ab01337ddec",
+      "bytes": 41
+    },
+    {
+      "mode": "100644",
+      "blob": "8f580f7da07b6a63f2992518504ce92a38b43838",
+      "path": "Scripts/CI/Tests/Fixtures/native-tool-header-compile-45268041311/workflow-sha256.json",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "immutable-original-reference",
+      "sha256": "f45b279511674cfa77b2b5230d8ba86e9d81c92dd0fb2b24849d4381dc22f9aa",
+      "bytes": 7915
+    },
+    {
+      "mode": "100644",
+      "blob": "0575962d055f7b3cec084613de60816c12506c67",
+      "path": "Scripts/CI/Tests/test_native_tool_bridge_recheck_report.py",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "existing-report-control",
+      "sha256": "d1663043ee0c24d04d71ac1e9a79c78d06228135be25dfa8a25f33a46433e3bb",
+      "bytes": 11099
+    },
+    {
+      "mode": "100644",
+      "blob": "51e56c299f0e6223121a20d8485a6149f8af13b1",
+      "path": "Scripts/CI/Tests/test_native_tool_cancellation_recheck_report.py",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "existing-report-control",
+      "sha256": "147045e00a39da6f40f2e3df104a403ecb9f6aafa92561edc14cfaf41cce6320",
+      "bytes": 12982
+    },
+    {
+      "mode": "100644",
+      "blob": "b152dbfe25ae32000933387efff659cbc91a73f9",
+      "path": "Scripts/CI/Tests/test_native_tool_candidate_report.py",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "authorized-integration-control-compatibility",
+      "sha256": "6c354ce6bd2ecadaff86ccf56ec987a99045184c04a2bf10c984ec3e6b4abe77",
+      "bytes": 22824,
+      "reviewed_original_blob": "e8e633d7e23e311fa3f31612099af48f3aab97a4",
+      "reviewed_original_sha256": "778626578601833dafa6ec0ee19bf1310727b6e4301da24b34366de134ad5303"
+    },
+    {
+      "mode": "100644",
+      "blob": "cffb3c762b1f7ff31ee80eb73e770bc4753ab022",
+      "path": "Scripts/CI/Tests/test_native_tool_header_recheck_report.py",
+      "origin_commit": "1b3c4cf0e27683b0af106a8e97b1c7c453062d08",
+      "kind": "existing-report-control",
+      "sha256": "f53a37602bb2e4e07163aefa05ee9546ada0d08468f1b46d609335cd478f98ae",
+      "bytes": 16006
+    },
+    {
+      "mode": "100644",
+      "blob": "d4bca16d9ba22410cb92214b3dbc0d7ed139d0be",
+      "path": "Scripts/CI/Tests/test_stop_continuation_delta_report.py",
+      "origin_commit": "e325147a7ecf9f0c728ae524d116b7c6d78379b0",
+      "kind": "authorized-integration-control-compatibility",
+      "sha256": "2fac23b255f9592a770e85078db1c0905a1ca183d42a7c4ba9781f051575996e",
+      "bytes": 8724,
+      "reviewed_original_blob": "278920fb36fd5224905115ccff7ab983a155969a",
+      "reviewed_original_sha256": "b4b8f92549612f9760ec1d2025f206f54a7c3fafd9b66b712d186ef5bb0578ef"
+    }
+  ]
+}

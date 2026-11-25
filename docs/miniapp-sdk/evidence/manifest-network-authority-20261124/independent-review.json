@@ -1,0 +1,15 @@
+{
+  "status": "NO_CONCRETE_BLOCKER",
+  "reviewerAgent": "/root/entrypoints",
+  "sourceSHA256": {
+    "Scripts/Audit/miniapp-manifest-contracts.mjs": "484a0f05eeee4818da22aeb9eab5de9a509bc10e3b63b7226a20206a839a5aaa",
+    "Scripts/Audit/Tests/manifest-contracts.test.mjs": "eaf8b67004a39c559254a10178971913c3b334d185fad64680fd1726e4331336"
+  },
+  "scope": [
+    "explicit source registry feeds existing source text/hash validation",
+    "equal count plus exact expected paths reject duplicate, missing, extra or substituted authorities",
+    "hash lookup limited to the three expected source records",
+    "real network helper anchor present; field rows and semantics unchanged"
+  ],
+  "verificationBoundary": "Read-only source review; reviewer did not rerun tests, regenerate inventory, or execute native CI."
+}

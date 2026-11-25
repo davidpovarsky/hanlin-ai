@@ -67,7 +67,7 @@ for p in scratch.rglob('Package.resolved'):
     records.append({'path':str(p.relative_to(scratch)),'raw_file':name,'sha256':hashlib.sha256(raw).hexdigest(),'resolved':json.loads(raw)})
 (evidence/'resolution.json').write_text(json.dumps(records,indent=2))
 pins=json.loads((scratch/'Packages/HanlinAgentSDK/Package.resolved').read_text())['pins']
-assert next(p for p in pins if p['identity']=='swift-ai-sdk')['state']['revision']=='e7bf34111e603ca977becd007dd4e5bb109af857'
+assert next(p for p in pins if p['identity']=='swift-ai-sdk')['state']['revision']=='07431abccbfb151ca2dab67bca6cf86fcb2bd3b8'
 vendor=scratch/'Packages/HanlinAgentSDK/Vendor/Swift-JSON'
 provenance=json.loads((vendor/'PROVENANCE.json').read_text())
 assert provenance['revision']=='f2a0d12da7028edfbcb0cb307f19a921a3a12d03'

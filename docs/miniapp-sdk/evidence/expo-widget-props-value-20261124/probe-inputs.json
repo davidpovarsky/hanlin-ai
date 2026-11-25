@@ -1,0 +1,30 @@
+[
+  {
+    "source": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinValue.swift",
+    "projection": "whole unmodified file",
+    "sha256": "cd266a8b820ae8673fd576697bc30d77ba5dd563feaa670f7e5b2f18319ff3d8",
+    "probeFile": "HanlinValue.swift"
+  },
+  {
+    "source": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinContractError.swift",
+    "projection": "whole unmodified file",
+    "sha256": "ad59a698345d7c218b3787c721b93fc6104ae462f7f11000d9204b1dd03e8518",
+    "probeFile": "HanlinContractError.swift"
+  },
+  {
+    "source": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinDescriptors.swift",
+    "projection": "Verbatim terminal HanlinManifestIssueCode and HanlinManifestIssue declarations; only needed to close the real HanlinContractError payload type. No declaration/body edits.",
+    "sourceSHA256": "48fe15520f4758ad6d856c2deb40b2e5437392131c16717088f32edc3d163b64",
+    "projectionSHA256": "55bfe2a2ab836cfd4d00e19b36bddcf4b9d5dbc307701e930f1150c8bea0fc0e",
+    "startLine": 1158,
+    "probeFile": "HanlinManifestIssue.swift"
+  },
+  {
+    "source": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinExpoWidgetPublication.swift",
+    "sourceSHA256": "ce2b136f95d1eccfd27fc876e10307133602d673fd42d860816559510b5a5960",
+    "projection": "Exact validation statement embedded in a function with the same dictionary argument type; remaining code checks real member/UTF-8 retention, canonical round trip and existing non-finite rejection.",
+    "statement": "_ = try HanlinValue.object(HanlinObject(uniqueMembers: Array(props))).canonicalJSONData(limits: .unbounded)",
+    "probeFile": "Probe.swift",
+    "probeSHA256": "2d4f4403ea1822b26d5309355e0ccbaa8bb17053edc8c5c7dfe85896f006aa70"
+  }
+]

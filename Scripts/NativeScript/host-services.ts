@@ -1,3 +1,5 @@
+import type { MiniAppLiveActivities } from "../../Packages/HanlinExpoUI/src/system-surfaces";
+export type { NativeSurfaceJSON, NativeSurfaceAction, NativeSurfaceNode, NativeSurfaceProperties, LiveActivityStart, NativeSurfaceLiveActivityStart, ScriptWidgetLiveActivityStart, LiveActivityUpdate, LiveActivityEnd, MiniAppLiveActivities } from "../../Packages/HanlinExpoUI/src/system-surfaces";
 /** Typed facade over the existing Objective-C metadata bridge. No extra runtime. */
 export type HanlinRuntimeKind = 'node' | 'typeScript' | 'localPython' | 'javaScriptCore' | 'shell';
 export type RuntimeJSONValue = null | boolean | number | string | RuntimeJSONValue[] | { [key: string]: RuntimeJSONValue };
@@ -104,6 +106,23 @@ export function createHostServicesForBridge(bridge: NativeRuntimeBridge) {
         });
     });
   }
+  function surface<T>(operation: string, payload: unknown = {}): Promise<T> {
+    return new Promise((resolve, reject) => {
+      boundBridge.sendRequestActionCapabilityPayloadJSONCompletion(
+        'hanlin.host-services', operation, 'live-activity', JSON.stringify(payload), (receipt, error) => {
+          if (error !== null) { reject(new Error(error)); return; }
+          if (receipt === null) { reject(new Error('Live Activity operation returned no result.')); return; }
+          try { resolve(JSON.parse(receipt) as T); } catch { reject(new Error('Live Activity operation returned invalid JSON.')); }
+        });
+    });
+  }
+  const liveActivities: MiniAppLiveActivities = {
+    areEnabled: async () => (await surface<{enabled: boolean}>('liveActivities.areEnabled')).enabled,
+    list: async () => (await surface<{activityIDs: string[]}>('liveActivities.list')).activityIDs,
+    start: request => surface('liveActivities.start', request),
+    update: (activityID, request) => surface('liveActivities.update', {...request, activityID}),
+    end: (activityID, request = {}) => surface('liveActivities.end', {...request, activityID}),
+  };
   const miniapps: MiniAppSharing = {
     getContext: () => share('miniapps.context'),
     complete: async output => {
@@ -121,6 +140,7 @@ export function createHostServicesForBridge(bridge: NativeRuntimeBridge) {
   };
   return {
     miniapps,
+    liveActivities,
     startRuntime,
     executeRuntime(kind: HanlinRuntimeKind, source: string, options: RuntimeExecutionOptions = {}): Promise<RuntimeExecutionResult> {
       return startRuntime(kind, source, options).result;

@@ -1,0 +1,10 @@
+{
+  "endpoint": "repos/davidpovarsky/hanlin-ai/releases/tags/runtime-core-v1-2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194",
+  "exit": 1,
+  "data": {
+    "message": "Not Found",
+    "documentation_url": "https://docs.github.com/rest/releases/releases#get-a-release-by-tag-name",
+    "status": "404"
+  },
+  "stderr": "gh: Not Found (HTTP 404)\n"
+}

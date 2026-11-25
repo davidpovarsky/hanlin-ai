@@ -1,0 +1,29 @@
+{
+  "baseCommit": "25b14790e5c79b8ddd821984ed97d37e6af0bfa4",
+  "scope": "SDK05 source-only complete example delivery; no runtime/native acceptance change",
+  "affected": [
+    "Scripts/MiniApps/stage-sdk.mjs",
+    "Scripts/MiniApps/Tests/stage-sdk.test.mjs",
+    "Scripts/MiniApps/Examples/index.json",
+    "Scripts/MiniApps/Examples/expo-hello-world",
+    "Scripts/MiniApps/Examples/nativescript-hello-world",
+    "docs/miniapp-sdk/EXAMPLES.md",
+    "docs/miniapp-sdk/README.md",
+    "docs/miniapp-sdk/AUTHORING_WORKFLOW.md",
+    "docs/miniapp-sdk/SCRIPTWIDGET_AUTHORING.md"
+  ],
+  "execute": [
+    "One existing staging case, strengthened for actual project bytes, original resource ZIP/build/dist retention, exact known output exclusion and engine-selected index",
+    "Public original-SDK build (including actual validation) for each newly authored Hello World project"
+  ],
+  "reuse": [
+    "Two sealed independent SDK-only complex source/build results by exact original file identities; no rebuild"
+  ],
+  "notRun": [
+    "unaffected staging cases",
+    "guide compiler suite",
+    "full SDK/native preparation",
+    "Apple build/UI/device",
+    "CI"
+  ]
+}

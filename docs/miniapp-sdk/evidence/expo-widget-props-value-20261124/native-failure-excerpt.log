@@ -1,0 +1,7 @@
+/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinExpoWidgetPublication.swift:26:36: error: cannot convert value of type '[String : HanlinValue]' to expected argument type 'HanlinObject<HanlinValue>'
+24 |     ) throws -> HanlinExpoWidgetStateReceipt {
+25 |         // Validate actual JSON before entering the transaction; no host size budget.
+26 |         _ = try HanlinValue.object(props).canonicalJSONData(limits: .unbounded)
+   |                                    `- error: cannot convert value of type '[String : HanlinValue]' to expected argument type 'HanlinObject<HanlinValue>'
+27 |         var receipt: HanlinExpoWidgetStateReceipt?
+28 |         try update { current in

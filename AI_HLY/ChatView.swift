@@ -167,6 +167,12 @@ struct ChatView: View {
     @State private var showScrollToBottomButton = false     // 控制滚动到底部按钮显示
     @State private var needScrollToBottomButton = false     // 是否需要显示滚动到底部按钮
     @State private var autoFollowController = ChatAutoFollowController(onTrace: { event, fields in
+        #if DEBUG || HANLIN_TESTING
+        if ProcessInfo.processInfo.environment["HANLIN_COMPOSER_EDIT_DIAGNOSTICS"] == "1" {
+            // Controller fields contain geometry, counters and policy state only.
+            print("HANLIN_TRANSCRIPT_AUTOFOLLOW event=\(event) fields=\(fields)")
+        }
+        #endif
         guard AgentDiagnosticsConfiguration.level != .off else { return }
         NativeToolTraceLogger.shared.log(event, fields)
     })
@@ -316,7 +322,7 @@ struct ChatView: View {
         if let inset = externalComposerBottomInset, inset.isFinite { return max(0, inset) }
         if isExternalCompactComposerHost {
             let height = externalDockHeight + 24
-            return height.isFinite ? max(225, height) : 225
+            return height.isFinite ? max(24, height) : 24
         }
         return Self.calculateDynamicBottomPadding(
             measuredComposerHeight: measuredComposerHeight,
@@ -472,7 +478,8 @@ struct ChatView: View {
             if surface == .composer {
                 canonicalComposer
             } else {
-                HanlinChatView(shell: resolvedChatShell) {
+                HanlinChatView(shell: resolvedChatShell,
+                               showsComposerBackdrop: !isExternalCompactComposerHost) {
                     ScrollViewReader { scrollViewProxy in
                         buildScrollContent(scrollViewProxy).padding(.bottom, 6)
                     }
@@ -1097,12 +1104,14 @@ struct ChatView: View {
                         .id(TranscriptBottomTarget(conversationID: effectiveChatSessionID))
                 }
                 .onChange(of: agentSessionOwner.consent.pending?.id) { _, _ in
+                    traceAutoFollowBoundary("consent-changed")
                     scheduleAutoFollow(using: scrollViewProxy, animated: true)
                 }
                 .padding(.horizontal)
                 .frame(maxWidth: .infinity)
                 .chatScrollImmediateContentTouches { [transcriptScrollView, conversationID = effectiveChatSessionID] scrollView in
                     transcriptScrollView.bind(scrollView, conversationID: conversationID)
+                    traceAutoFollowBoundary(scrollView == nil ? "viewport-unbound" : "viewport-bound")
                     scheduleScrollWhenViewportReady(using: scrollViewProxy)
                 }
             }
@@ -1256,21 +1265,41 @@ struct ChatView: View {
         animated: Bool,
         force: Bool = false
     ) {
-        guard pendingSourceScroll == nil, force || nativeSelectionIDs.isEmpty else { return }
+        guard pendingSourceScroll == nil, force || nativeSelectionIDs.isEmpty else {
+            traceAutoFollowBoundary("request-blocked-by-selection-or-source")
+            return
+        }
         let conversationID = effectiveChatSessionID
         guard let layout = transcriptScrollView.layout(conversationID: conversationID) else {
             autoFollowController.invalidateLayout()
+            traceAutoFollowBoundary("request-without-current-viewport")
             return
         }
         autoFollowController.updateLayout(layout)
+        traceAutoFollowBoundary("request", layout: layout)
         let viewportGeneration = transcriptScrollView.generation
         autoFollowController.scheduleScroll(animated: animated, force: force) { animate in
             guard pendingSourceScroll == nil, force || nativeSelectionIDs.isEmpty,
                   effectiveChatSessionID == conversationID,
                   transcriptScrollView.layout(conversationID: conversationID,
-                      expectedGeneration: viewportGeneration)?.hasScrollableContent == true else { return }
+                      expectedGeneration: viewportGeneration)?.hasScrollableContent == true else {
+                traceAutoFollowBoundary("execution-rejected")
+                return
+            }
+            traceAutoFollowBoundary("perform")
             scrollToLastMessage(using: scrollViewProxy, animated: animate)
         }
+    }
+
+    private func traceAutoFollowBoundary(_ event: String, layout: ChatAutoFollowLayout? = nil) {
+        #if DEBUG || HANLIN_TESTING
+        guard ProcessInfo.processInfo.environment["HANLIN_COMPOSER_EDIT_DIAGNOSTICS"] == "1" else { return }
+        // Never include draft text, request arguments or tool results.
+        let geometry = layout.map {
+            "content=\($0.contentHeight) viewport=\($0.viewportHeight) top=\($0.topInset) bottom=\($0.bottomInset)"
+        } ?? "layout=unmeasured"
+        print("HANLIN_TRANSCRIPT_BOUNDARY event=\(event) mode=\(autoFollowController.state.mode.rawValue) nearBottom=\(autoFollowController.state.isNearBottom) interacting=\(autoFollowController.state.isUserInteracting) sourcePending=\(pendingSourceScroll != nil) nativeSelection=\(!nativeSelectionIDs.isEmpty) generation=\(transcriptScrollView.generation) \(geometry)")
+        #endif
     }
 
     private func richMessageContext(for row: ChatMessages) -> HanlinRichMessageContext? {

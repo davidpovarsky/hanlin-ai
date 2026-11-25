@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "atUTC": "2026-11-24T11:48:55.885984+00:00",
+  "owner": "root",
+  "scope": "Next unchanged complete52 acceptance after actual main12 first-build timeout",
+  "skillsRead": [
+    "/home/ubuntu/.agents/skills/build-runner-router/SKILL.md",
+    "/home/ubuntu/.agents/skills/hybrid-workspace-bridge/SKILL.md"
+  ],
+  "newWorkspaceInstruction": "Externally added uncommitted AGENTS.md scaleway-apple-build-primary-v2 preserved unchanged",
+  "primaryMac": {
+    "reachable": true,
+    "xcode": "Xcode 27.0\nBuild version 27A266a",
+    "swift": "Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)\nTarget: arm64-apple-macosx27.0.0",
+    "runtimeVersions": [
+      "27.0"
+    ],
+    "diskFree": 405460787200,
+    "appleBuildProcesses": []
+  },
+  "requiredCurrentLane": {
+    "xcode": "27.2",
+    "build": "27B52",
+    "iOSSimulatorSDK": "27.2",
+    "source": "Existing current project CI workflow/latest-stable requirement and actual main12 accepted execution environment"
+  },
+  "decision": "GITHUB_MACOS_FALLBACK_FOR_CURRENT_27_2_ACCEPTANCE",
+  "reason": "Primary Mac is online but has only Xcode27.0 and iOS27.0 runtime, with no alternate Xcode27.2 installation. It does not supply this current required27.2 acceptance environment; no downgrade or incompatible compiler-cache transfer is performed.",
+  "boundary": "No Mac build/test/install/upgrade/signing or CI dispatch occurred in this routing check. The dedicated Mac remains primary when it meets the actual requested lane. Physical iPad execution is a separate still-unestablished route.",
+  "rawEvidence": [
+    {
+      "path": "docs/miniapp-sdk/evidence/native-gate-13-runner-routing-20261124/router.json",
+      "sha256": "eede7b2537a87f299f7ea55d710d045bb53ecf01cebdfae685c17cc5de2e040c"
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/native-gate-13-runner-routing-20261124/mac.json",
+      "sha256": "1dbce9433feb9391967a1add3115e97690fef2f3f3fcc6e24f4c5db0db9d00e4"
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/native-gate-13-runner-routing-20261124/mac-xcode-apps.json",
+      "sha256": "0917a0600d04a2772e5842166b285df43732cdc224303caae05ace29b62d0255"
+    }
+  ]
+}

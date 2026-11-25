@@ -1,0 +1,32 @@
+{
+  "timestampUTC": "2026-11-24T09:56:31.106025+00:00",
+  "command": [
+    "swiftc",
+    "-frontend",
+    "-parse",
+    "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift"
+  ],
+  "exitCode": 0,
+  "swiftVersion": "Swift version 6.4.3 (swift-6.4.3-RELEASE)\nTarget: aarch64-unknown-linux-gnu\n",
+  "file": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+  "sourceSHA256": "3543f3b21538725dad5e46b03c173ee4e8cf03c915720204389244eb9d277d59",
+  "baseline": {
+    "commit": "6d9a59bfc1bd1830a8d56e694c42b19c6bd7d468",
+    "methodCount": 15
+  },
+  "currentMethodCount": 22,
+  "newMethods": [
+    "testStandaloneExpoGeneratedEditButtonEditsOriginalList",
+    "testStandaloneExpoGeneratedEmptyViewReportsNativeLayout",
+    "testStandaloneExpoGeneratedGroupBoxSlotsAndInstalledMetadata",
+    "testStandaloneExpoGeneratedModifierAccessibilityAndGeometry",
+    "testStandaloneExpoGeneratedModifierHitTestingAndSubmitScope",
+    "testStandaloneExpoGeneratedModifierNativeContainerContexts",
+    "testStandaloneExpoHostServicesUseRealStorageRuntimeAndWidgetPublication"
+  ],
+  "baselineMethodsPreserved": true,
+  "deletedOrReplacedBaselineSourceLines": 0,
+  "existingFileWireAssertionAdded": true,
+  "status": "SYNTAX_AND_SOURCE_CHECK_PASS",
+  "boundary": "Linux Swift syntax parsing and exact source-diff preservation only; XCTest/SwiftUI type checking, simulator and device execution NOT_RUN."
+}

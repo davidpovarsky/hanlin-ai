@@ -1,0 +1,56 @@
+{
+  "status": "PASS",
+  "owned_simulator": {
+    "simulator": "6DC972D7-0F22-4828-86A3-8A48B6E448E5",
+    "run_id": "45265065184",
+    "run_attempt": "1",
+    "selection_sha256": "533a834a51a1f9c8b6c0dec46d459c70623ea438d208a092800f5f9b8c3ff00a",
+    "boot_receipt_sha256": "aa563e8812923753b980a70f11df3330f44f31263fc56f4ad74c1e94d9454553"
+  },
+  "bundle_id": "com.itorah.chavrusachat",
+  "xctestrun_sha256": "991676610443473c1f6d71bf7727d8626082c257f77a970d1951403e46871a2c",
+  "original_host": "/Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/AI_Hanlin.app",
+  "selected_method": "AI_HLYTests/HanlinAppAgentSessionOwnerTests/actualEventKitToolRecoversTheOriginalChatAndReadsTheFullDateWindow",
+  "commands": [
+    {
+      "command": [
+        "xcrun",
+        "simctl",
+        "install",
+        "6DC972D7-0F22-4828-86A3-8A48B6E448E5",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/Debug-iphonesimulator/AI_Hanlin.app"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "xcrun",
+        "simctl",
+        "privacy",
+        "6DC972D7-0F22-4828-86A3-8A48B6E448E5",
+        "grant",
+        "calendar",
+        "com.itorah.chavrusachat"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "xcrun",
+        "simctl",
+        "privacy",
+        "6DC972D7-0F22-4828-86A3-8A48B6E448E5",
+        "grant",
+        "reminders",
+        "com.itorah.chavrusachat"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ]
+}

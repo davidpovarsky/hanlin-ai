@@ -3,21 +3,26 @@ import { parseComponentValue } from '../../../@csstools/css-parser-algorithms/in
 import { serializeRGB } from '../../../@csstools/css-color-parser/index.mjs';
 import { tokenize } from '../../../@csstools/css-tokenizer/index.mjs';
 export const HEX_REGEX = /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)|(^#[0-9A-F]{8}$)|(^#[0-9A-F]{4}$)/i;
+const CSS_COLOR_FUNCTION_REGEX = /^(?:oklch|oklab|lab|lch|hwb|color)\(/;
 export function isCssColorMixExpression(value) {
     return value.includes('color-mix(');
+}
+export function isCssColorFunction(value) {
+    return CSS_COLOR_FUNCTION_REGEX.test(value);
+}
+export function isModernRgbOrHsl(value) {
+    return value.includes('/') || value.includes('none') || value.includes('from ') || (value.startsWith('rgb') && value.includes('%'));
+}
+export function argbFromCssColor(value) {
+    return argbFromColorMix(value);
 }
 export function argbFromColorMix(value) {
     const astComponentValue = parseComponentValue(tokenize({ css: value }));
     const colorData = color(astComponentValue);
-    let argb;
-    if (colorData) {
-        const serialized = serializeRGB(colorData);
-        argb = argbFromRgbOrRgba(serialized.toString());
+    if (!colorData) {
+        return null;
     }
-    else {
-        argb = -1;
-    }
-    return argb;
+    return argbFromRgbOrRgba(serializeRGB(colorData).toString());
 }
 export function fromArgbToRgba(argb) {
     return {
