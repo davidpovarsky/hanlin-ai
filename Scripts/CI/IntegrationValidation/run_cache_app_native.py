@@ -21,12 +21,10 @@ import shutil
 import subprocess
 import sys
 import textwrap
-from urllib.parse import unquote, urlparse
+from verify_cache_app_tests import SUITES, source_inventory
 
 ROOT = Path(__file__).resolve().parents[3]
 WORKFLOW = ROOT / ".github/workflows/build-ios26-unsigned-ipa.yml"
-SUITES = ("HanlinPromptCachingIntegrationTests", "ClassicChatRestorationTests",
-          "HanlinMiniAppAssistantIntegrationTests", "HanlinModelPromptCachePersistenceTests")
 SELECTORS = tuple("AI_HLYTests/" + suite for suite in SUITES)
 IMPORT_SETTINGS = (
     "CLANG_CXX_LANGUAGE_STANDARD", "FRAMEWORK_SEARCH_PATHS", "HEADER_SEARCH_PATHS",
@@ -137,13 +135,17 @@ class Run:
         self.folder = evidence / phase
         self.folder.mkdir(parents=True, exist_ok=False)
         self.receipt = self.folder / "receipt.json"
+        self.inventory = source_inventory(ROOT)
+        write_json(self.folder / "expected-test-inventory.json", self.inventory)
         self.state = {
             "phase": phase, "status": "RUNNING", "startedAtUTC": utc(),
             "repository": str(ROOT), "derivedData": str(derived),
             "recipe": str(WORKFLOW.relative_to(ROOT)), "recipeSHA256": sha(WORKFLOW),
             "selectors": list(SELECTORS), "commands": [], "actions": [],
-            "declaredTestCounts": {suite: len(re.findall(r"(?m)^\s*@Test\b",
-                (ROOT / "AI_HLYTests" / (suite + ".swift")).read_text())) for suite in SUITES},
+            "declaredTestCounts": {suite: len(methods) for suite, methods in self.inventory["suites"].items()},
+            "expectedMethodCount": self.inventory["expectedMethodCount"],
+            "expectedInvocationCount": self.inventory["expectedInvocationCount"],
+            "expectedInventorySHA256": sha(self.folder / "expected-test-inventory.json"),
             "python": sys.executable, "developerDirectory": os.environ.get("DEVELOPER_DIR"),
             "executables": {name: shutil.which(name) for name in ("xcodebuild", "xcrun", "node", "npm")},
         }
@@ -198,6 +200,9 @@ class Run:
                      "--evidence", self.folder / "a2ui-generation"])
 
     def test(self, before):
+        if any(before["files"].get(name) != digest
+               for name, digest in self.inventory["sourceFiles"].items()):
+            raise RuntimeError("Test declarations changed while capturing the source inventory")
         prepared = json.loads((self.evidence / "prepare/receipt.json").read_text())
         if prepared["status"] != "PREPARED" or prepared["derivedData"] != str(self.derived):
             raise RuntimeError("Complete prepare for this DerivedData and evidence directory first")
@@ -263,23 +268,21 @@ class Run:
             verify_exit, _ = self.command("verify-selected-tests", [sys.executable,
                 "Scripts/CI/verify_selected_tests.py", "--results", result_file,
                 "--selectors", ",".join(SELECTORS)], check=False)
-            nodes = list(json.loads(result_file.read_text()).get("testNodes", []))
-            cases = []
-            while nodes:
-                node = nodes.pop()
-                nodes.extend(node.get("children", []))
-                if node.get("nodeType") != "Test Case" or node.get("result") not in {
-                        "Passed", "Failed", "Expected Failure"}:
-                    continue
-                identifier = node.get("nodeIdentifierURL") or node.get("nodeIdentifier", "")
-                if identifier.startswith("test://"):
-                    identifier = unquote(urlparse(identifier).path).strip("/")
-                cases.append({"identifier": identifier, "result": node["result"]})
-            self.state["executedCases"] = cases
-            self.state["executedCount"] = len(cases)
+            if sha(self.folder / "expected-test-inventory.json") != self.state["expectedInventorySHA256"]:
+                raise RuntimeError("Captured source test inventory changed during execution")
+            exact_exit, exact_file = self.command("verify-exact-test-invocations", [sys.executable,
+                "Scripts/CI/IntegrationValidation/verify_cache_app_tests.py",
+                "--inventory", self.folder / "expected-test-inventory.json",
+                "--results", result_file], check=False, json_output=True)
+            exact = json.loads(exact_file.read_text())
+            self.state["exactTestAcceptance"] = exact
+            self.state["executedCases"] = [case for case in exact["cases"]
+                                           if case.get("node_identifier_url")]
+            self.state["executedCount"] = exact["observedInvocationCount"]
+            self.state["passedInvocationCount"] = exact["passedInvocationCount"]
             self.save()
-            if test_exit or verify_exit or not cases or any(case["result"] == "Failed" for case in cases):
-                raise RuntimeError("Selected tests failed, were omitted, or executed zero cases")
+            if test_exit or verify_exit or exact_exit or exact["status"] != "PASS":
+                raise RuntimeError("Every selected source-declared test invocation must be present once and Passed")
         finally:
             if simulator:
                 shutdown, _ = self.command("shutdown-owned-simulator",
