@@ -7,8 +7,11 @@ from pathlib import Path, PurePosixPath
 import plistlib
 import re
 import subprocess
+import sys
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT))
+from Scripts.CI.IntegrationValidation.project_graph import parse_project
 OUT = ROOT / "docs/miniapp-sdk"
 RUNTIMES = ["node", "typeScript", "localPython", "javaScriptCore", "shell"]
 ENGINES = ["hanlinNativeScript", "hanlinExpo"]
@@ -190,9 +193,10 @@ def build() -> dict:
         raise ValueError(f"Share inbox callers changed; re-audit reachability: {share_references}")
     optional_surfaces = {symbol: [p for p in tracked if re.search(rf"\b{symbol}\b", swift[p])]
                          for symbol in ["ControlWidget", "CSSearchableIndex", "CoreSpotlight"]}
-    project = sources.read_text("AI_HLY.xcodeproj/project.pbxproj")
-    targets = project.split("/* Begin PBXNativeTarget section */")[1].split("/* End PBXNativeTarget section */")[0]
-    target_names = sorted(re.findall(r"\bname = ([^;]+);", targets))
+    project = parse_project(sources.read_text("AI_HLY.xcodeproj/project.pbxproj"))
+    objects = project["objects"]
+    target_names = sorted(objects[key]["name"] for key in objects[project["rootObject"]]["targets"]
+                          if objects[key].get("isa") == "PBXNativeTarget")
     entitlement_files = ["AI_HLY/AI_HLY.entitlements", "HanlinMiniAppsApp/HanlinMiniApps.entitlements"] + [
         f"{directory}/{target}.entitlements" for target, directory in extension_directories.items()]
     entitlements = {}
