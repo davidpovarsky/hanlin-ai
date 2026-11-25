@@ -1,0 +1,29 @@
+{
+  "method": "Original PREPARED receipt remains in attempt04/prepare atitsactual1710source; retainedexactreusecomparisonandthreecurrentoriginalchecks. Noadditionalresolver/header/schemaexecutionclaimed.",
+  "files": [
+    {
+      "original": "prepare-reuse.json",
+      "retained": "prepare-reuse.json",
+      "sha256": "e67263e49cbb6ab081a4597640d27ec7d178eff98730cdc69093a8b8f26b14b8",
+      "storedSHA256": "e67263e49cbb6ab081a4597640d27ec7d178eff98730cdc69093a8b8f26b14b8"
+    },
+    {
+      "original": "reuse-check-01.log",
+      "retained": "reuse-check-01.log.gz",
+      "sha256": "f9392dbc1f4415decb9bc390be9f49d5b7e6f3fbd636c72710ef278e45b31783",
+      "storedSHA256": "7aac6ed8ba7e7e1b0a273eb68d16a808909f0589331f1a6269766eba71632c92"
+    },
+    {
+      "original": "reuse-check-02.log",
+      "retained": "reuse-check-02.log.gz",
+      "sha256": "bc234237931951c0e0e70dc212b9f47da2f6c76a61109e41c235f0f7f0eabcef",
+      "storedSHA256": "3bbc94444f21908ebdd99795b981608c78639a31e284ca504be9e7be3d666f95"
+    },
+    {
+      "original": "reuse-check-03.log",
+      "retained": "reuse-check-03.log.gz",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    }
+  ]
+}
