@@ -1,0 +1,28 @@
+{
+  "files": [
+    {
+      "original": "README.md",
+      "originalSHA256": "8c11206112ec610a8e15e5f5c08b39a8b1f8f1c59d8a84dddffe42b9e1e4c627",
+      "stored": "README.md",
+      "storedSHA256": "8c11206112ec610a8e15e5f5c08b39a8b1f8f1c59d8a84dddffe42b9e1e4c627"
+    },
+    {
+      "original": "delegate-forwarding.patch",
+      "originalSHA256": "a215edead188a734a077e86f148f94e635d70010b25b4753ed8f6e2be3276eb3",
+      "stored": "delegate-forwarding.patch.gz",
+      "storedSHA256": "d9e5c30cd7a69e087d0c3436bb61623b6758ab220ed7805dcc424b48330f552b"
+    },
+    {
+      "original": "index.json",
+      "originalSHA256": "f296a2ac2836eaf0abc45f49d07b434329b46f4352f435884260017b220ea94e",
+      "stored": "index.json",
+      "storedSHA256": "f296a2ac2836eaf0abc45f49d07b434329b46f4352f435884260017b220ea94e"
+    },
+    {
+      "original": "receipt.json",
+      "originalSHA256": "2e76eb13c2a68c2de277d230032679b59ccdcfe8cfd819ea61050df091bc366c",
+      "stored": "receipt.json",
+      "storedSHA256": "2e76eb13c2a68c2de277d230032679b59ccdcfe8cfd819ea61050df091bc366c"
+    }
+  ]
+}

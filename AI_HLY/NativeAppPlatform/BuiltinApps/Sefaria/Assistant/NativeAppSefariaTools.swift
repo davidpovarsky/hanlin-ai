@@ -1,6 +1,7 @@
 import HanlinLocalization
 import Foundation
 import HanlinSefariaMiniApp
+import HanlinPlatformContracts
 
 struct SefariaAssistantSearchTool: NativeTool {
     let service: NativeAppSefariaSearchService
@@ -21,7 +22,13 @@ struct SefariaAssistantSearchTool: NativeTool {
                 runningTitle: HanlinLocalization.resource("Searching Sefaria"),
                 completedTitle: HanlinLocalization.resource("Searched Sefaria"),
                 visibleArgumentKeys: ["query"]
-            )
+            ),
+            composerConfiguration: .init(panels: [
+                .init(id: "search", title: String(localized: "Search settings", bundle: HanlinLocalization.bundle), fields: [
+                    .init(key: "limit", title: String(localized: "Maximum results", bundle: HanlinLocalization.bundle),
+                          kind: .number, defaultValue: .integer(5), minimum: 1, maximum: 20)
+                ])
+            ])
         )
     }
 
@@ -42,7 +49,15 @@ struct SefariaAssistantSearchTool: NativeTool {
     func execute(argumentsJSON: String, context: NativeToolExecutionContext) async -> NativeToolResult {
         let object = NativeAppJSON.decodeObject(from: argumentsJSON)
         let query = NativeAppJSON.string(object, "query")
-        let limit = max(1, min(NativeAppJSON.int(object, "limit", default: 5), 20))
+        let selectedLimit: Int?
+        if let configuration = context.composerConfiguration, case .object(let settings) = configuration {
+            switch settings["limit"] {
+            case .integer(let value): selectedLimit = Int(exactly: value)
+            case .number(let value) where value.isFinite && (1 ... 20).contains(value): selectedLimit = Int(value)
+            default: selectedLimit = nil
+            }
+        } else { selectedLimit = nil }
+        let limit = max(1, min(selectedLimit ?? NativeAppJSON.int(object, "limit", default: 5), 20))
         guard !query.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
             return NativeToolResult(modelText: "Missing Sefaria query.", uiBlocks: [NativeUIBlock(type: .error, title: "Missing query")])
         }

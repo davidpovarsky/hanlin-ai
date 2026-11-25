@@ -164,7 +164,9 @@ final class HanlinNativeA2UIChatUITests: XCTestCase {
         ```
         OPENUI_AFTER
         """
-        try launch(continuation: true, openUI: output)
+        try launch(continuation: true, openUI: output, persistentStore: true)
+        let conversationID = element("hanlin-native-a2ui-chat-id").label
+        XCTAssertNotNil(UUID(uuidString: conversationID))
         input().tap(); input().typeText(prompt)
         sendReadyPrompt()
         let native = app.textFields["openui-native-Input-nativeNights"].firstMatch
@@ -212,6 +214,23 @@ final class HanlinNativeA2UIChatUITests: XCTestCase {
         assertTransport(count: 2)
         XCTAssertEqual(input().value as? String, "UNSENT_DRAFT_MUST_STAY_LOCAL")
         record("original-mixed-openui-react-native-state-and-action")
+
+        // Destroy the process and both renderer runtimes. Restoration must come
+        // from the original message's SwiftData snapshot, with no provider replay.
+        app.terminate()
+        app.launch()
+        openAcceptanceConversation()
+        XCTAssertEqual(element("hanlin-native-a2ui-chat-id").label, conversationID)
+        XCTAssertTrue(native.waitForExistence(timeout: 45))
+        XCTAssertTrue(react.waitForExistence(timeout: 15))
+        XCTAssertTrue(wait(NSPredicate(format: "value == '9'"), on: native))
+        XCTAssertTrue(wait(NSPredicate(format: "value == '9'"), on: react))
+        assertText("OPENUI_BEFORE"); assertText("OPENUI_BETWEEN"); assertText("OPENUI_AFTER")
+        assertText("Budget: 1200, nights: 9")
+        assertText("NATIVE_A2UI_CONTINUATION_OK")
+        XCTAssertEqual(input().value as? String, "UNSENT_DRAFT_MUST_STAY_LOCAL")
+        assertTransport(count: 0)
+        record("original-mixed-openui-cold-reopen")
     }
 
     func testNewConversationWorksWithoutOptimizationModel() throws {
@@ -251,7 +270,8 @@ final class HanlinNativeA2UIChatUITests: XCTestCase {
     }
 
     private func launch(continuation: Bool, surfaceOnly: Bool = false, openUI: String? = nil,
-                        fixtureName: String = "A2UIReplayMedia", noOptimizer: Bool = false) throws {
+                        fixtureName: String = "A2UIReplayMedia", noOptimizer: Bool = false,
+                        persistentStore: Bool = false) throws {
         let bundle = Bundle(for: Self.self)
         let url = bundle.url(forResource: fixtureName, withExtension: "jsonl", subdirectory: "Fixtures")
             ?? bundle.url(forResource: fixtureName, withExtension: "jsonl")
@@ -287,14 +307,20 @@ final class HanlinNativeA2UIChatUITests: XCTestCase {
         app.launchEnvironment["HANLIN_NATIVE_A2UI_ACCEPTANCE"] = "1"
         app.launchEnvironment["HANLIN_NATIVE_A2UI_FIXTURE_PLAN"] = plan
         app.launchEnvironment["HANLIN_NATIVE_A2UI_NO_OPTIMIZER"] = noOptimizer ? "1" : "0"
+        if persistentStore {
+            app.launchEnvironment["HANLIN_NATIVE_A2UI_STORE_ID"] = UUID().uuidString
+        }
         app.launch()
+        openAcceptanceConversation()
+        assertTransport(count: 0)
+    }
+    private func openAcceptanceConversation() {
         let home = element("hanlin-home-tab")
         if home.waitForExistence(timeout: 10), home.isHittable { home.tap() }
         let original = app.buttons.matching(NSPredicate(format: "label CONTAINS %@", "Native A2UI Acceptance")).firstMatch
         XCTAssertTrue(original.waitForExistence(timeout: 20), "The isolated SDK bootstrap did not expose its original seeded conversation")
         original.tap()
         XCTAssertTrue(input().waitForExistence(timeout: 15))
-        assertTransport(count: 0)
     }
     private func textPart(_ id: String, _ text: String) -> [String: Any] {
         ["part": id, "kind": "text", "text": text, "a2uiJSON": NSNull()]

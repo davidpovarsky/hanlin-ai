@@ -1,0 +1,443 @@
+{
+  "schemaVersion": 1,
+  "status": "FAILED",
+  "sourceCommit": "0bf5a16789952cdd07a2a6431ae010211679466a",
+  "command": [
+    "nice",
+    "-n",
+    "10",
+    "xcrun",
+    "swift",
+    "test",
+    "--package-path",
+    "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/Packages/HanlinPlatform",
+    "--scratch-path",
+    "/Users/m1/caches/DerivedData/hanlin-composer-platform-spm",
+    "--cache-path",
+    "/Users/m1/caches/DerivedData/hanlin-composer-platform-spm-cache",
+    "--force-resolved-versions",
+    "--skip-update",
+    "--jobs",
+    "1",
+    "--filter",
+    "HanlinCapabilityAttachmentTests|HanlinScriptAnalyzerTests|HanlinScriptMiniAppRegistrationTests",
+    "--xunit-output",
+    "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/composer-platform-attempt3-tests.xml"
+  ],
+  "startedAtUTC": "2026-11-24T23:59:41.137635+00:00",
+  "expectedTests": [
+    {
+      "suite": "HanlinCapabilityAttachmentTests",
+      "method": "identityIncludesProviderButRevisionRemainsSeparate",
+      "displayName": "Provider-scoped identities cannot collide through separators or titles",
+      "status": "EXECUTED_PASS",
+      "durationSeconds": 0.001
+    },
+    {
+      "suite": "HanlinCapabilityAttachmentTests",
+      "method": "draftConfigurationDoesNotMutateDescriptorOrSentSnapshot",
+      "displayName": "Default configuration is a value snapshot, independent between drafts",
+      "status": "EXECUTED_PASS",
+      "durationSeconds": 0.001
+    },
+    {
+      "suite": "HanlinCapabilityAttachmentTests",
+      "method": "catalogAndMapValidation",
+      "displayName": "Catalog and map input cannot silently carry invalid or undeclared values",
+      "status": "EXECUTED_PASS",
+      "durationSeconds": 0.001
+    },
+    {
+      "suite": "HanlinCapabilityAttachmentTests",
+      "method": "staleAttachmentRequiresReselection",
+      "displayName": "Stale versions and actions are rejected independently of catalog display labels",
+      "status": "EXECUTED_PASS",
+      "durationSeconds": 0.001
+    },
+    {
+      "suite": "HanlinCapabilityAttachmentTests",
+      "method": "minimalManifestDecoding",
+      "displayName": "Configuration decoder defaults support minimal author manifests",
+      "status": "EXECUTED_PASS",
+      "durationSeconds": 0.001
+    },
+    {
+      "suite": "HanlinCapabilityAttachmentTests",
+      "method": "declarationValidation",
+      "displayName": "Duplicate fields across panels and invalid defaults fail declaration validation",
+      "status": "EXECUTED_PASS",
+      "durationSeconds": 0.001
+    },
+    {
+      "suite": "HanlinCapabilityAttachmentTests",
+      "method": "assistantDeclarationRoundTrip",
+      "displayName": "Assistant metadata preserves raw schemas and declared rich result IDs",
+      "status": "EXECUTED_PASS",
+      "durationSeconds": 0.002
+    },
+    {
+      "suite": "HanlinCapabilityAttachmentTests",
+      "method": "rawManifestDefaultsRoundTrip",
+      "displayName": "Author defaults use ordinary JSON while preserving absent and explicit null values",
+      "status": "EXECUTED_PASS",
+      "durationSeconds": 0.001
+    },
+    {
+      "suite": "HanlinCapabilityAttachmentTests",
+      "method": "assistantMetadataOmissionsMatchManifestContract",
+      "displayName": "Required metadata and optional omissions agree with the author manifest schema",
+      "status": "EXECUTED_PASS",
+      "durationSeconds": 0.006
+    },
+    {
+      "suite": "HanlinCapabilityAttachmentTests",
+      "method": "assistantActionIDsPreserveCase",
+      "displayName": "Assistant action IDs preserve case and reject only exact duplicates",
+      "status": "EXECUTED_PASS",
+      "durationSeconds": 0.001
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "preparedAssistantToolMetadataSurvivesInstallation",
+      "displayName": "Dedicated prepared assistant tools survive analysis and installed entrypoint mapping",
+      "status": "EXECUTED_PASS",
+      "durationSeconds": 0.049
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "invalidAssistantEntrypointsCannotInstall",
+      "displayName": "Assistant selection cannot fall back to the foreground app or malformed metadata",
+      "status": "EXECUTED_PASS",
+      "durationSeconds": 0.052
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "modernAssistantNeedsExplicitManifestMetadata",
+      "displayName": "Modern filename convention does not create an undeclared assistant capability",
+      "status": "EXECUTED_PASS",
+      "durationSeconds": 0.043
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "expoMainMustMatchTheInspectedForegroundEntrypoint",
+      "displayName": "Expo import main matches the manifest entry and cannot redirect launch elsewhere",
+      "status": "EXECUTED_PASS",
+      "durationSeconds": 0.062
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "preparedRuntimeVersionsUseTheActualReleasedSemverBoundary",
+      "displayName": "Prepared runtimes reject malformed, wildcard and future required versions",
+      "status": "EXECUTED_PASS",
+      "durationSeconds": 0.083
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "malformedBridgeVersionsNeverBypassPreparedPackageValidation",
+      "displayName": "Bridge version types and complete semantic versions are validated before import",
+      "status": "EXECUTED_PASS",
+      "durationSeconds": 0.066
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "legacyCompatibilityFindingsDecodeWithoutInventingACode",
+      "displayName": "Legacy finding JSON remains readable without a diagnostic code",
+      "status": "EXECUTED_PASS",
+      "durationSeconds": 0.043
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "malformedPreparedDependenciesAreRejectedWithTheirSourcePath",
+      "displayName": "Malformed dependency maps cannot bypass version validation",
+      "status": "EXECUTED_PASS",
+      "durationSeconds": 0.059
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "preview",
+      "displayName": "Discovers entrypoints, resolves modules, and derives capabilities deterministically",
+      "status": "EXECUTED_PASS",
+      "durationSeconds": 0.044
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "pythonProfile",
+      "displayName": "Routes original Python entrypoint deterministically without engine fallback",
+      "status": "EXECUTED_PASS",
+      "durationSeconds": 0.043
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "nativeScriptProfile",
+      "displayName": "Routes only explicitly declared NativeScript packages to the native runtime",
+      "status": "EXECUTED_PASS",
+      "durationSeconds": 0.043
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "nativeScriptPreparedEntrypointIsAlwaysTheCanonicalBundle",
+      "displayName": "Prepared NativeScript entry metadata uses the canonical bundle across sessions",
+      "status": "EXECUTED_PASS",
+      "durationSeconds": 0.057
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "nativeScriptSwiftUIContract",
+      "displayName": "Validates the embedded NativeScript SwiftUI plugin contract without changing ordinary Scripting",
+      "status": "EXECUTED_PASS",
+      "durationSeconds": 0.051
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "nativeScriptCoreContract",
+      "displayName": "Validates declared @nativescript/core dependency compatibility",
+      "status": "EXECUTED_PASS",
+      "durationSeconds": 0.043
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "expoSwiftUIContract",
+      "displayName": "Validates the embedded Expo SwiftUI plugin contract",
+      "status": "EXECUTED_PASS",
+      "durationSeconds": 0.044
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "unavailableModernNativePluginsFailBeforeImport",
+      "displayName": "Unavailable native plugins fail before Expo and NativeScript import",
+      "status": "EXECUTED_PASS",
+      "durationSeconds": 0.043
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "ambientGlobals",
+      "displayName": "Detects capability-bearing ambient Scripting globals",
+      "status": "EXECUTED_PASS",
+      "durationSeconds": 0.043
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "forbiddenModules",
+      "displayName": "Rejects dynamic imports, eval, unresolved paths, and arbitrary bare modules",
+      "status": "EXECUTED_PASS",
+      "durationSeconds": 0.044
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "declaredCapabilitiesInManifest",
+      "displayName": "Extracts declared capabilities from script.json manifest",
+      "status": "EXECUTED_PASS",
+      "durationSeconds": 0.043
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "expoMultiExposureMatrix",
+      "displayName": "Expo import evaluates foreground app and multi-exposure support fail-closed",
+      "status": "EXECUTED_PASS",
+      "durationSeconds": 0.044
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "explicitPreparedEntrypointsPreserveAllIDs",
+      "displayName": "Prepared Expo and NativeScript exposures retain independent action and embedded identities",
+      "status": "EXECUTED_PASS",
+      "durationSeconds": 0.043
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "malformedPreparedEntrypointsFailWithStableDiagnostic",
+      "displayName": "Malformed and duplicate prepared entrypoints are visible import failures",
+      "status": "EXECUTED_PASS",
+      "durationSeconds": 0.048
+    },
+    {
+      "suite": "HanlinScriptMiniAppRegistrationTests",
+      "method": "storedPackageProducesValidDescriptor",
+      "displayName": "Stored package snapshot conforms to HanlinMiniAppRegistration and validates",
+      "status": "EXECUTED_PASS",
+      "durationSeconds": 0.003
+    },
+    {
+      "suite": "HanlinScriptMiniAppRegistrationTests",
+      "method": "entrypointKindBridging",
+      "displayName": "Package entrypoint kinds bridge bidirectionally to canonical kinds",
+      "status": "EXECUTED_PASS",
+      "durationSeconds": 0.003
+    },
+    {
+      "suite": "HanlinScriptMiniAppRegistrationTests",
+      "method": "scriptPackageDiscovery",
+      "displayName": "HanlinScriptPackageDiscovery discovers registrations and builds catalog snapshot",
+      "status": "EXECUTED_PASS",
+      "durationSeconds": 0.003
+    },
+    {
+      "suite": "HanlinScriptMiniAppRegistrationTests",
+      "method": "nativeScriptPreservesExecutionIdentityAndExposures",
+      "displayName": "NativeScript package preserves nativeScript implementation, runtimeProfile, and exposures",
+      "status": "EXECUTED_PASS",
+      "durationSeconds": 0.003
+    },
+    {
+      "suite": "HanlinScriptMiniAppRegistrationTests",
+      "method": "exposureOnlyPackageDoesNotFabricateApp",
+      "displayName": "Exposure-only package does not get fake .app entrypoint and retains declared exposures in catalog snapshot",
+      "status": "EXECUTED_PASS",
+      "durationSeconds": 0.003
+    },
+    {
+      "suite": "HanlinScriptMiniAppRegistrationTests",
+      "method": "legacyForegroundScriptPackageGetsDefaultApp",
+      "displayName": "Normal legacy foreground script package gets expected app/index.tsx behavior",
+      "status": "EXECUTED_PASS",
+      "durationSeconds": 0.003
+    },
+    {
+      "suite": "HanlinScriptMiniAppRegistrationTests",
+      "method": "unknownExposureRawValueSurvivesCodable",
+      "displayName": "Unknown and future exposure raw values survive Codable round-trip",
+      "status": "EXECUTED_PASS",
+      "durationSeconds": 0.003
+    },
+    {
+      "suite": "HanlinScriptMiniAppRegistrationTests",
+      "method": "legacyDescriptorWithoutSupportedExposuresDecodes",
+      "displayName": "Legacy descriptor JSON without supportedExposures decodes seamlessly with default derivation",
+      "status": "EXECUTED_PASS",
+      "durationSeconds": 0.003
+    },
+    {
+      "suite": "HanlinScriptMiniAppRegistrationTests",
+      "method": "legacyFormatNativeScriptPackageResolvesProperly",
+      "displayName": "Legacy-format NativeScript package with hanlinRuntime manifest field resolves to .nativeScript",
+      "status": "EXECUTED_PASS",
+      "durationSeconds": 0.003
+    },
+    {
+      "suite": "HanlinScriptMiniAppRegistrationTests",
+      "method": "manifestDeclaredSupportedExposures",
+      "displayName": "Manifest declared supportedExposures (translation_ui, widget, app_intent) are exposed in appDescriptor",
+      "status": "EXECUTED_PASS",
+      "durationSeconds": 0.003
+    },
+    {
+      "suite": "HanlinScriptMiniAppRegistrationTests",
+      "method": "preparedActionHandlersUseInstalledEntrypointPath",
+      "displayName": "Prepared action handlers resolve to the installed bundle without a second source prefix",
+      "status": "EXECUTED_PASS",
+      "durationSeconds": 0.003
+    },
+    {
+      "suite": "HanlinScriptMiniAppRegistrationTests",
+      "method": "preparedActionExportsShareCanonicalBridge",
+      "displayName": "Prepared action exports retain their identities behind one canonical App Intent bridge",
+      "status": "EXECUTED_PASS",
+      "durationSeconds": 0.003
+    },
+    {
+      "suite": "HanlinScriptMiniAppRegistrationTests",
+      "method": "conflictingAppIntentBridgesRemainInvalid",
+      "displayName": "Different App Intent handlers, runtimes and context sets remain conflicting canonical routes",
+      "status": "EXECUTED_PASS",
+      "durationSeconds": 0.003
+    },
+    {
+      "suite": "HanlinScriptMiniAppRegistrationTests",
+      "method": "duplicateForegroundEntrypointsRemainInvalid",
+      "displayName": "Identical foreground entries still violate the canonical unique-kind contract",
+      "status": "EXECUTED_PASS",
+      "durationSeconds": 0.003
+    },
+    {
+      "suite": "HanlinScriptMiniAppRegistrationTests",
+      "method": "preparedActionIdentifiersPreserveCaseAndRejectMalformedValues",
+      "displayName": "Prepared action identifiers preserve export case, round trip, and reject malformed values",
+      "status": "EXECUTED_PASS",
+      "durationSeconds": 0.009
+    },
+    {
+      "suite": "HanlinScriptMiniAppRegistrationTests",
+      "method": "preparedAssistantEntrypointsRemainDistinctInCatalog",
+      "displayName": "Several dedicated assistant tools preserve their sources, configuration and installed identities",
+      "status": "FAILED",
+      "durationSeconds": 0.0
+    },
+    {
+      "suite": "HanlinScriptMiniAppRegistrationTests",
+      "method": "assistantEntrypointResolutionRequiresExactHandler",
+      "displayName": "Ambiguous assistant kinds need an exact registered handler without foreground fallback",
+      "status": "FAILED",
+      "durationSeconds": 0.0
+    },
+    {
+      "suite": "HanlinScriptMiniAppRegistrationTests",
+      "method": "duplicateAssistantHandlersRemainInvalid",
+      "displayName": "Different assistant identities cannot alias the same dedicated handler",
+      "status": "FAILED",
+      "durationSeconds": 0.0
+    }
+  ],
+  "expectedCount": 50,
+  "newRegistrationMethodsSinceA3": [
+    "preparedActionExportsShareCanonicalBridge",
+    "conflictingAppIntentBridgesRemainInvalid",
+    "duplicateForegroundEntrypointsRemainInvalid",
+    "preparedActionIdentifiersPreserveCaseAndRejectMalformedValues",
+    "preparedAssistantEntrypointsRemainDistinctInCatalog",
+    "assistantEntrypointResolutionRequiresExactHandler",
+    "duplicateAssistantHandlersRemainInvalid"
+  ],
+  "parameterizedTestMethods": 0,
+  "lockSHA256Before": "8f67ee59e5ba54c1d9bdd312efff89ddc946e00443fef8faddfeb4e7eb5387c8",
+  "log": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/composer-platform-attempt3-tests.log",
+  "requestedNativeXML": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/composer-platform-attempt3-tests.xml",
+  "sourceInputs": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/composer-platform-attempt3-inputs.json",
+  "sourceInputsSHA256": "6abf59c6b1d55bbfb508c37a10b4946dbdfbf6aa672ca85fa8d583d3f9455223",
+  "toolchain": "Xcode 27.0\nBuild version 27A266a",
+  "resourcePreflight": {
+    "atUTC": "2026-11-24T23:59:41.071829+00:00",
+    "availableGiB": 9.221,
+    "unusedGiB": 2.823,
+    "memoryPressureFreePercent": 78,
+    "diskFreeGiB": 48.885
+  },
+  "resourceSamples": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/composer-platform-attempt3-resources.jsonl",
+  "operationalStopThresholds": {
+    "availableGiBBelow": 2,
+    "memoryPressureFreePercentBelow": 10,
+    "diskFreeGiBBelow": 10
+  },
+  "preservedPriorLogHashes": {
+    "composer-platform-tests.log": "71ddc57409d22f718dd69c356d887304808812d814d0dd62639454c8dc1abb4b",
+    "composer-platform-attempt2-tests.log": "5ec770300eddafb8cbdc1085bf7b31bf6057fe1a567b1b60d33560269cc887be"
+  },
+  "pid": 59692,
+  "exitCode": 1,
+  "timedOut": false,
+  "stopReason": null,
+  "durationSeconds": 31.62,
+  "finishedAtUTC": "2026-11-25T00:00:12.825809+00:00",
+  "executedPassCount": 47,
+  "failureNames": [
+    "Different assistant identities cannot alias the same dedicated handler",
+    "Ambiguous assistant kinds need an exact registered handler without foreground fallback",
+    "Several dedicated assistant tools preserve their sources, configuration and installed identities"
+  ],
+  "skipRows": [],
+  "unexpectedPasses": [],
+  "lockUnchanged": true,
+  "lockSHA256After": "8f67ee59e5ba54c1d9bdd312efff89ddc946e00443fef8faddfeb4e7eb5387c8",
+  "logSHA256": "b9cced5cdf95e36b12777a6de9b6a38f047ac7789aaca7d2f4ee1b5c00074f81",
+  "nativeXMLProduced": false,
+  "priorLogsUnchanged": true,
+  "summaryRows": [
+    "\u2718 Test \"Different assistant identities cannot alias the same dedicated handler\" recorded an issue at HanlinScriptMiniAppRegistrationTests.swift:755:6: Caught error: .invalidSchema(reason: \"schema dialect is required when the document omits $schema\")",
+    "\u2718 Test \"Ambiguous assistant kinds need an exact registered handler without foreground fallback\" recorded an issue at HanlinScriptMiniAppRegistrationTests.swift:722:6: Caught error: .invalidSchema(reason: \"schema dialect is required when the document omits $schema\")",
+    "\u2718 Test \"Several dedicated assistant tools preserve their sources, configuration and installed identities\" recorded an issue at HanlinScriptMiniAppRegistrationTests.swift:694:6: Caught error: .invalidSchema(reason: \"schema dialect is required when the document omits $schema\")",
+    "\u2718 Test run with 18 tests in 1 suite failed after 0.010 seconds with 3 issues.",
+    "\u2714 Test run with 22 tests in 1 suite passed after 0.084 seconds.",
+    "\u2714 Test run with 10 tests in 1 suite passed after 0.006 seconds."
+  ],
+  "derivedJUnitXML": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/composer-platform-attempt3-tests.derived.junit.xml",
+  "derivedJUnitSHA256": "9e76b374ef0e15a21b9806444d36fe763b0fe8abc2727201229bb81235e01b10"
+}

@@ -20,6 +20,7 @@ const hooks = registerHooks({
   resolve(specifier, context, next) {
     if (specifier === 'expo') return {url: 'hanlin-test:expo', shortCircuit: true};
     if (specifier === 'base64-js') return {url: 'hanlin-test:base64', shortCircuit: true};
+    if (specifier === './miniapp-assistant') return next('./miniapp-assistant.ts', context);
     if (specifier === './miniapp-actions') return next('./miniapp-actions.ts', context);
     return next(specifier, context);
   },

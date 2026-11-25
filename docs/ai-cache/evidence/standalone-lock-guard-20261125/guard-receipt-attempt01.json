@@ -1,0 +1,60 @@
+{
+  "base_commit": "495680e928d5f4fd9735d14b0be5f267ced84b42",
+  "native_builds": 0,
+  "native_tests": 0,
+  "swift_resolutions": 0,
+  "source_files": {
+    "Scripts/CI/IntegrationValidation/resolve_agent_sdk_locks.sh": "d0bc02b951574812844726de7d0995c8b1c1bc94e5393afa80dffb587bdb2dd5",
+    "Scripts/CI/Tests/test_agent_sdk_lock_resolution.py": "4b11b05cd2146ab429f4d7c7291d11c69bb5b895beed90d5a790d378c6b79a5e"
+  },
+  "checks": [
+    {
+      "name": "guard-tests",
+      "command": [
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "Scripts/CI/Tests",
+        "-p",
+        "test_agent_sdk_lock_resolution.py",
+        "-v"
+      ],
+      "started_at_utc": "2026-11-25T04:53:44.990016+00:00",
+      "exit_code": 0,
+      "log": "guard-tests.log",
+      "sha256": "15242ca3dcaa37d04b02d5ec2f07af3a6d7204c4d5f3b16bb76c3c0bf4cf741e"
+    },
+    {
+      "name": "shell-syntax",
+      "command": [
+        "bash",
+        "-n",
+        "Scripts/CI/IntegrationValidation/resolve_agent_sdk_locks.sh"
+      ],
+      "started_at_utc": "2026-11-25T04:53:45.240447+00:00",
+      "exit_code": 0,
+      "log": "shell-syntax.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "diff-check",
+      "command": [
+        "git",
+        "-c",
+        "safe.directory=/mnt/development/projects/worktrees/hanlin-ai-cache-lock-closure-20261125",
+        "-C",
+        "/mnt/development/projects/worktrees/hanlin-ai-cache-lock-closure-20261125",
+        "diff",
+        "--check"
+      ],
+      "started_at_utc": "2026-11-25T04:53:45.242440+00:00",
+      "exit_code": 0,
+      "log": "diff-check.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "status": "PASS"
+}

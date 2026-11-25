@@ -1,0 +1,34 @@
+{
+  "source": "8ec309c0e800baf537c349e6fa66d60c499dff49",
+  "generatedCommit": "66617073226ab252d51d493295d6104a9a3f6888",
+  "status": "PASS",
+  "fixtureSHA256": "9f5665b47844272dc366f1e5cc8895023bf3a4e578d5d2629ac96c878b2f16a7",
+  "archiveSHA256": "9fb7998ee48fe913e98f865d5b962e8a46dce9c836ff2efd295598206741b2cd",
+  "files": [
+    {
+      "path": "01.log.gz",
+      "sha256": "804aa24f6c2493a96140db58ca2f8fd71cabfcf27a2102f93a437784e2f97e5f",
+      "bytes": 575
+    },
+    {
+      "path": "02.log.gz",
+      "sha256": "7aac6ed8ba7e7e1b0a273eb68d16a808909f0589331f1a6269766eba71632c92",
+      "bytes": 91
+    },
+    {
+      "path": "03.log.gz",
+      "sha256": "3bbc94444f21908ebdd99795b981608c78639a31e284ca504be9e7be3d666f95",
+      "bytes": 92
+    },
+    {
+      "path": "04.log.gz",
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "bytes": 20
+    },
+    {
+      "path": "receipt.json",
+      "sha256": "21fbf24d8185ad5c4dd851743e10f284abd8c9d6d6f79d85d36d0068102a7635",
+      "bytes": 1411
+    }
+  ]
+}

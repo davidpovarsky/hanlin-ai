@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "capturedAtUTC": "2026-11-25T03:00:37.572803+00:00",
+  "observedApplicationSourceCommit": "b739ada91aca115093e3511f9df58c15edcb5923",
+  "files": [
+    {
+      "path": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/acceptance/nativescript-metadata/iphonesimulator-arm64/FrameworkSearchView.inventory.json",
+      "bytes": 1526259,
+      "sha256": "72d8d2420ea42faa0bbe3a62262586627d7f699b26fe3a077417363ce4083bbf",
+      "modifiedAtUTC": "2026-11-25T02:49:28.038156+00:00"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/acceptance/nativescript-metadata/iphonesimulator-arm64/HanlinMetadataInput.h",
+      "bytes": 4056,
+      "sha256": "4b2eeb938c104bfda51cccc496200a27dcd125c7e8fbe0cc35e8cc80ef22ca50",
+      "modifiedAtUTC": "2026-11-25T02:49:28.713640+00:00"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/acceptance/nativescript-metadata/iphonesimulator-arm64/HanlinMetadataInput.inventory.json",
+      "bytes": 127914,
+      "sha256": "70d32cb9bad7740f567ed6b3be73314a55dbcf5a2e85accd36af6686271a48eb",
+      "modifiedAtUTC": "2026-11-25T02:49:28.715484+00:00"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/acceptance/nativescript-metadata/iphonesimulator-arm64/metadata-arm64.bin",
+      "bytes": 3359846,
+      "sha256": "5a3385b02b9f1c626301a326d32068aadc5d6ef6ceb4fa5bae486a978321fbba",
+      "modifiedAtUTC": "2026-11-25T02:49:35.100908+00:00"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/acceptance/nativescript-metadata/iphonesimulator-arm64/metadata-generation-stderr-arm64.txt",
+      "bytes": 2207738,
+      "sha256": "9518b950dd8d66ddec4588cd2f52552330b306ad93de0578f135e1b493192220",
+      "modifiedAtUTC": "2026-11-25T02:49:35.098758+00:00"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/acceptance/nativescript-metadata/iphonesimulator-arm64/provenance.json",
+      "bytes": 935,
+      "sha256": "f83479c7a5cdf9014fb7b5f2bf8425ecf9809c4de9680666ca255706022b9696",
+      "modifiedAtUTC": "2026-11-25T00:44:05.052637+00:00"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/acceptance/nativescript-metadata/iphonesimulator-arm64/umbrella-arm64.h",
+      "bytes": 4056,
+      "sha256": "4b2eeb938c104bfda51cccc496200a27dcd125c7e8fbe0cc35e8cc80ef22ca50",
+      "modifiedAtUTC": "2026-11-25T02:49:35.100002+00:00"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/acceptance/nativescript-metadata/iphonesimulator-arm64/visibility.json",
+      "bytes": 973,
+      "sha256": "ee2499dca17090de31c058652ca6e22e6df9fb87b0ff7e73c8d7c65910a3ee01",
+      "modifiedAtUTC": "2026-11-25T02:49:35.178945+00:00"
+    }
+  ],
+  "metadataBinaryRetainedOnMac": true,
+  "buildTimeOnly": true
+}

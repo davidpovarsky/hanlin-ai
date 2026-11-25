@@ -1,0 +1,69 @@
+{
+  "files": [
+    {
+      "originalPath": "01-command.log",
+      "originalSHA256": "af65af7873cae6353035b4b01053d256d5d1ddbf6d4e48f0c2ea56754f8bc6f2",
+      "storedPath": "01-command.log.gz",
+      "storedSHA256": "c790541e90e83c5064f7a8e1d148d319eb59b8c6907ce71f57dc417d6446a9bb",
+      "bytes": 7858
+    },
+    {
+      "originalPath": "02-command.log",
+      "originalSHA256": "3419e4e0a67a900c68670492d5db6002fdc14957bf974083d7999d9131bd3286",
+      "storedPath": "02-command.log.gz",
+      "storedSHA256": "6ad406da0a58c9768024357becba226e3125ff42a64e911c4f3a6f717f372c11",
+      "bytes": 497
+    },
+    {
+      "originalPath": "03-command.log",
+      "originalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedPath": "03-command.log.gz",
+      "storedSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "bytes": 20
+    },
+    {
+      "originalPath": "04-command.log",
+      "originalSHA256": "e0300c6a4ee73c2d65c9f67597ea4adcb0f6f627c0c7d1e9a7e3d1231d5441f0",
+      "storedPath": "04-command.log.gz",
+      "storedSHA256": "d5e0de714c6e1392820b8d21e12290b9dcb4fd6b2bd735161c8634e9d90da358",
+      "bytes": 86
+    },
+    {
+      "originalPath": "05-command.log",
+      "originalSHA256": "7508a7853f31951cf96f73cf5a4d2a0392e6acc3d6b3e682e6119451b674f42e",
+      "storedPath": "05-command.log.gz",
+      "storedSHA256": "182f0dbacf83c294c6a420d44ecac9d11f45c0e363ad262e3016c27f4762e7b7",
+      "bytes": 1292
+    },
+    {
+      "originalPath": "host-metadata.json",
+      "originalSHA256": "2f38588730beca43138c88c7618d77e31d85eba2fe52f58cc16cf170223fac34",
+      "storedPath": "host-metadata.json",
+      "storedSHA256": "2f38588730beca43138c88c7618d77e31d85eba2fe52f58cc16cf170223fac34",
+      "bytes": 358
+    },
+    {
+      "originalPath": "receipt.json",
+      "originalSHA256": "eb8a3fb972c2879dfd6b075c2e9b86ef5eb65b40984e293f1f6d5ac1f662bf55",
+      "storedPath": "receipt.json",
+      "storedSHA256": "eb8a3fb972c2879dfd6b075c2e9b86ef5eb65b40984e293f1f6d5ac1f662bf55",
+      "bytes": 3315
+    },
+    {
+      "originalPath": "runtime-host.sha256",
+      "originalSHA256": "449ab52b67630d3f5df417a7c76209475deea2aa406dfcd648d959920f536006",
+      "storedPath": "runtime-host.sha256",
+      "storedSHA256": "449ab52b67630d3f5df417a7c76209475deea2aa406dfcd648d959920f536006",
+      "bytes": 91
+    },
+    {
+      "originalPath": "tracked-changes.patch",
+      "originalSHA256": "54bd7ca58a8e3e0edb34ea4da1f4d0f71735c7583835b2bbe7334e257d03bd77",
+      "storedPath": "tracked-changes.patch.gz",
+      "storedSHA256": "4259d8c803094e81592f15c4d961da7c6ec3f5b6d3e7c99e4c1adb57b929e560",
+      "bytes": 4906
+    }
+  ],
+  "generatedCommit": "d2471a70cd1c88657ffd4ca414fb8c9874a55662",
+  "transportSHA256": "d04b83f6d7068d9240ac9e7074abc9cf750eb80de9fb3b5c6f3a6d69534dd0b7"
+}

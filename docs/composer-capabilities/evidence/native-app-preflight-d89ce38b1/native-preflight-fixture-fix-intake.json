@@ -1,0 +1,7 @@
+{
+  "sourceCommit": "d89ce38b170bc9af4734cd11e30ca793b16698d0",
+  "parentCommit": "59838a47979f8d875618687708e0334fb63454a5",
+  "atUTC": "2026-11-25T03:21:12.824792+00:00",
+  "bundleSHA256": "32283cac0c658795a04eb13f3cce29557192ed854502f939b99d26ea75c587df",
+  "scope": "Test fixture temp root canonicalization only; production checker byte-identical to actual app preflight PASS59838a479"
+}

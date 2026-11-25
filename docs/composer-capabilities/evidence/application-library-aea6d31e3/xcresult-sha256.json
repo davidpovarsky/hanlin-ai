@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "capturedAtUTC": "2026-11-25T02:41:23.942730+00:00",
+  "resultBundle": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/application-module-build-attempt1.xcresult",
+  "sourceCommit": "aea6d31e311a3f3096014ea2f1c39432371e3ecc",
+  "files": [
+    {
+      "path": "Data/data.0~4C_0VA-frkQt1gcJGyeYy0tHkYtvejyGKj2kjzgNUtGmxs1d1-zquVbLGvtElWJnf9uyFLGGA8KzmR_RJutIOg==",
+      "bytes": 23308,
+      "sha256": "6d8ec9de0fd5baae2c55be6c374d211df81562de44d26a37b7b687711e327a57"
+    },
+    {
+      "path": "Data/data.0~jW4LK7KsZmFU8Vv8B5Nnc56xfxdEoQoo106w5nhlpgZSpYEZPXBB3jOd6bM2UZzN40E8r-K5rrkTACKBl1qdWQ==",
+      "bytes": 308,
+      "sha256": "525ccfbb12a422c9413dde10eef9991ef3c092e6a34a3f833561729dc2887888"
+    },
+    {
+      "path": "Data/data.0~u-wWOw2Mgaq4G8bTtQMpcdKwQtpUChLK7rWrE3uCxzEz3Cue0jhVLJPuyVysA1LdG3EfLONClpHBudEdxMDWzQ==",
+      "bytes": 526037,
+      "sha256": "36d0a0b56164fccaceeb6f1a29aded3e44ccccc77e6233d19f5a64a5c1b66213"
+    },
+    {
+      "path": "Data/refs.0~4C_0VA-frkQt1gcJGyeYy0tHkYtvejyGKj2kjzgNUtGmxs1d1-zquVbLGvtElWJnf9uyFLGGA8KzmR_RJutIOg==",
+      "bytes": 133,
+      "sha256": "2656ad76339e662f82a6a5a9d8ac64184c880e0aaa27623a6628c36b60674c01"
+    },
+    {
+      "path": "Data/refs.0~jW4LK7KsZmFU8Vv8B5Nnc56xfxdEoQoo106w5nhlpgZSpYEZPXBB3jOd6bM2UZzN40E8r-K5rrkTACKBl1qdWQ==",
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    {
+      "path": "Data/refs.0~u-wWOw2Mgaq4G8bTtQMpcdKwQtpUChLK7rWrE3uCxzEz3Cue0jhVLJPuyVysA1LdG3EfLONClpHBudEdxMDWzQ==",
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    {
+      "path": "Info.plist",
+      "bytes": 776,
+      "sha256": "8e7d95175245632e421301ff31f9ef5ddd7295f26bdcf4ceb37f4d6c94540e78"
+    }
+  ],
+  "method": "Read-only SHA256 inventory of completed original HanlinApplication library xcresult; no native export or tests rerun."
+}

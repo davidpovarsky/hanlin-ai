@@ -1,0 +1,320 @@
+{
+  "sourceCommit": "d8150350901b245d52b2637277f454a6f2da5446",
+  "sourceTree": "78242f94c61f2e8f2be3a64f4a59d7af23f35fc7",
+  "recordedAt": "2026-11-25T05:29:14.850340+00:00",
+  "scope": "Candidate Git source binding for original generator/check/source-fixture evidence. Original fixtures ran on these workingtree bytes before committing; only read-only checks and git commit followed. This is not an OS/toolchain/transitive build-input inventory.",
+  "files": [
+    {
+      "path": "AI_HLY.xcodeproj/project.pbxproj",
+      "sha256": "df2a72a6dff60393710609e5ee4fb6a40f3ef6ec0884df532e6cd171bf9a333e"
+    },
+    {
+      "path": "HanlinMiniAppsExtensions/Notification/HanlinMiniAppsNotificationService.entitlements",
+      "sha256": "cbce7e438c63d23cdcbc737379709ab6220997a2e39447dd962492a46d3930cc"
+    },
+    {
+      "path": "HanlinMiniAppsExtensions/Notification/Info.plist",
+      "sha256": "9f1fc3aa8ef55f957f6b14151c982c7ee3b006783d08c1de77d4a05a634ee6e4"
+    },
+    {
+      "path": "HanlinMiniAppsExtensions/Share/HanlinMiniAppsShare.entitlements",
+      "sha256": "cbce7e438c63d23cdcbc737379709ab6220997a2e39447dd962492a46d3930cc"
+    },
+    {
+      "path": "HanlinMiniAppsExtensions/Share/Info.plist",
+      "sha256": "bcea278049fc7f38563831d9cb402001149003d3a345a472bc4288c47f4e8e19"
+    },
+    {
+      "path": "HanlinMiniAppsExtensions/Translation/HanlinMiniAppsTranslationProvider.entitlements",
+      "sha256": "cbce7e438c63d23cdcbc737379709ab6220997a2e39447dd962492a46d3930cc"
+    },
+    {
+      "path": "HanlinMiniAppsExtensions/Translation/Info.plist",
+      "sha256": "bf5c1390e86f7e1fcfb4fa7f0dc893a86a0fd55a722d8dede51c034b8bc56177"
+    },
+    {
+      "path": "HanlinMiniAppsExtensions/Widgets/HanlinMiniAppsWidgets.entitlements",
+      "sha256": "0da89872d45b5e9b990de71c4f9c0855f1117f81cb1867a07aa3bfb8b6106254"
+    },
+    {
+      "path": "HanlinMiniAppsExtensions/Widgets/Info.plist",
+      "sha256": "b9b2e338be2912730274870fafb4d356951b1c164f78699c7a5c6d5d564df25a"
+    },
+    {
+      "path": "Package.swift",
+      "sha256": "6141ec7cbdd283324c83a2a5525ebe2f9f95ce035b439720f6c691ea300101e0"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Package.swift",
+      "sha256": "16becff5f9e626f171d21f0277684c249c773f3169334fc9a63a37876c44a36e"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Package.swift",
+      "sha256": "91ce8ff3a2fdb1edc409b0cb2c2c75fec716db6af59a8508dd1dad6a080f37c9"
+    },
+    {
+      "path": "Packages/HanlinAppExtensionsSDK/Package.swift",
+      "sha256": "23056fa7df2e2aca75c3195452085a42151aa113f54370aeceb5a07df269d9bc"
+    },
+    {
+      "path": "Packages/HanlinExpoNativeAPI/Package.swift",
+      "sha256": "1bf2b967d85c4759f94f39330b1b435148a9d3956ec6b8e645cec7dd65bec83d"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Package.swift",
+      "sha256": "d4157d16c1d505b408cf4b78f7ab59f53ff607ea94e0c4e51a4e2c088a691f37"
+    },
+    {
+      "path": "Packages/HanlinExpoWidgetSubset/Package.swift",
+      "sha256": "ed50b8b4f6ee4532ff3ed2af82d7994c7718e958387495280f9a939218323a41"
+    },
+    {
+      "path": "Packages/HanlinMiniAppsBridge/Package.swift",
+      "sha256": "579cdb6febf974d7f463aee0cd6592cdf0cfd5a4c8e53840009ff170e52b6e2e"
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Package.swift",
+      "sha256": "88a4926e884e6804246a7d077efed3837271886a9825585b1e561b4ce1576120"
+    },
+    {
+      "path": "Packages/HanlinParityMiniApp/Package.swift",
+      "sha256": "66025f0b1fb7db7db9b8a24426319b651858f3454295780ee807edd335cec90b"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Package.swift",
+      "sha256": "ac0e2b793a9df8329f12fbb27cd02ee91cb8cb29257f185e0969ebffa2510ebc"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Package.swift",
+      "sha256": "72d91889acd4745dbd5532c223ae1147387114517c4a16c434504666387c6f04"
+    },
+    {
+      "path": "Packages/HanlinProductSplit/Package.swift",
+      "sha256": "31234398119e82e9895391040f281e9c9895c2cc73f962c12f1b37489e7f5e3a"
+    },
+    {
+      "path": "Packages/HanlinQuickJS/Package.swift",
+      "sha256": "3b3e64732c71724b027fd28236f635073d02a3c208cbd9060fafaf802a47480e"
+    },
+    {
+      "path": "Packages/HanlinSefariaMiniApp/Package.swift",
+      "sha256": "7ac94c46688313d32e03c2ffa3bb74c1f1dc00fc8b0b8b7322ae1286b918d50c"
+    },
+    {
+      "path": "Packages/HanlinSkillFormat/Package.swift",
+      "sha256": "3878f654329884843943a463a901537c45f894b198a4bc9b9b9169410dc66741"
+    },
+    {
+      "path": "Packages/HanlinSwiftUIBridgeGenerator/Package.swift",
+      "sha256": "e11b7f704d956a7ef293b8ed309c3f715b2797daada2a14d4a0cdadf4dcbc378"
+    },
+    {
+      "path": "Packages/HanlinTextStudioMiniApp/Package.swift",
+      "sha256": "d2049eb9401b85c9ab1734a369b818f930db964aee7ce7bb7bf865ec21af291d"
+    },
+    {
+      "path": "Packages/HanlinWidgetSDK/Package.swift",
+      "sha256": "970610b13278a21fad358fa9c6f19b15789c6c7cb219fc2984f2aa92298502e6"
+    },
+    {
+      "path": "Packages/HanlinWikipediaMiniApp/Package.swift",
+      "sha256": "01b8cc014f8a5e853b644947fd6684df56b65b37feb08ef23f410fb56c902d8e"
+    },
+    {
+      "path": "Packages/IOSSystemLite/Package.swift",
+      "sha256": "06c6721c4b59328ba4f78997c9a8b23330357db12d3a619207dc1bac8cb76bab"
+    },
+    {
+      "path": "Packages/TorahLibraryKit/Package.swift",
+      "sha256": "4423074f870fe146b8914dc275db77aedef4cc1b6c0b856dfad844b65c3a21d6"
+    },
+    {
+      "path": "Scripts/Audit/audit-miniapp-sdk.mjs",
+      "sha256": "f2a38e9af505a02e231c67294b8e21de4d7b4bc0fd539bf46935ab706993ab18"
+    },
+    {
+      "path": "Scripts/Audit/audit_miniapp_reachability.py",
+      "sha256": "39b24956ef354e6adb3ed918ebc8ea067645c462b73bbbfea82f46d7ccd6224e"
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/extract_target.py",
+      "sha256": "5842d5b3004d266bd40607cfe4bd44a9a076908efae42534d385554b6eddecf3"
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/prepare_ai_cache_mac_dependencies.py",
+      "sha256": "66977886bfe275628675bacd057a29c392d7c900a38fa229d181554c516c13a4"
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/prepare_bootstrap_proof.py",
+      "sha256": "09f15f9f798a1520e67331aa8672032f233fa2a00180d0044d02edfbe60216f7"
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/prepare_ordinary_scriptui.py",
+      "sha256": "723c60b49af8ffeeda6369deb255d826eb8381941251bd8f08308c5404d0ca5c"
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/project_graph.py",
+      "sha256": "fc46f1e5266f054794811a0756fa51677a291b0533f816f1342a5d42f9ba85b8"
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/reuse_native_header_ios_build.py",
+      "sha256": "a2662de378628bc740234f158827af937c18b295357029e17f116b73edb5781f"
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/reuse_native_tool_baseline.py",
+      "sha256": "bfd5c3fda502efcca6e562fc999c6fea86eebf5f6612c6f3bcc22239ad0a86db"
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/run_cache_app_native.py",
+      "sha256": "c6598a3a732da60d6f45d920f1adc34ddcaa6c6be58a372961c0ff632b83709c"
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/run_cache_native.py",
+      "sha256": "01add0c269fd56fd502e9daf801db417feee8445865c05100a5835d588cbbc00"
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/run_native_tool_candidate.py",
+      "sha256": "239402454e16c438f799243116151cac4a6b7fa83223ccfa46fc81e4bc9651d2"
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/run_native_tool_pin_build.py",
+      "sha256": "1ac7c3d7b21aa972ce6482fc2b34e4d2cf9e169832df90186a1ae2217176981e"
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/run_navigation_transition.py",
+      "sha256": "3e2fad95f9c92c684ee2e5de93324228ca0021749b736c67db7cc5431caa07ce"
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/run_stop_continuation_delta.py",
+      "sha256": "928388954c0ff0c673c82bd80647c5e81149756e3c9a0f67871588256a114d87"
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/swift_ai_sdk_pin.py",
+      "sha256": "6571c18a626a27a825b2d5c3f80d8e14c484e7d2c3b950dffff657ad0271d846"
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/test_project_graph.py",
+      "sha256": "1028fb5f023b4f4c157c4927e0684debc2fcb9bc7a26c862656acc88827eebd2"
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/validate.py",
+      "sha256": "6201e920a34caee08eb90f1e7646857020debfb7688d93765c8f5d3f6a40f0e7"
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/verify_agent_sdk.py",
+      "sha256": "9eb47dde9a2ed51ac4133cc7ff0f98855cd8aa79a5a77dfb9435a291bb5079ad"
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/verify_cache_app_tests.py",
+      "sha256": "01edc92789d141e29ad88d4826809b648bd4c95357973f97699944e8c8d8a90c"
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/verify_native_tool_bridge_recheck.py",
+      "sha256": "4eee9e418bfc4498f6d06628671d854053fad38374f184b0b2d582db45833d9b"
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/verify_native_tool_cancellation_recheck.py",
+      "sha256": "b791865d45bd09fa01c974080486fd6131df3410bc213f3c9a9c506a172a886c"
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/verify_native_tool_candidate.py",
+      "sha256": "3543dcc8bb30ac050e8203aa4d05cfdc39f7d175308c336a66794482a25c81da"
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/verify_native_tool_header_recheck.py",
+      "sha256": "d725d318ca24f062c47c430708f6fce81bc93ccc6baa956adaaaddc2230c0bb9"
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/verify_native_tool_pin_build.py",
+      "sha256": "910f10cda646baa74c2c0840c621e4fff3fb0faf9c47218b22c4bf3e7909d3a0"
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/verify_results.py",
+      "sha256": "db7b48737b06cd1b5857bf41f7705cc0a89262968e45e3d317576cc9e9f1a28e"
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/verify_stop_continuation_delta.py",
+      "sha256": "74f5f2e4beb3b96bb11de1842be661586cffa51e04f9730919d3014535f52f75"
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/xcresult_to_xunit.py",
+      "sha256": "41720f0fa414875f05a3b96e9364e6659c230f96a4d5cbb708fad801eb3b3afb"
+    },
+    {
+      "path": "Scripts/MiniApps/stage-sdk.mjs",
+      "sha256": "f385bf951a360d83263be0c6ed25f80c9294eec93964e6b151a5c91af8b9252a"
+    },
+    {
+      "path": "Scripts/SDK/check_bridge_input_boundary.py",
+      "sha256": "af4ef5402fb8f5c95adf519e26231cf2da03bcb0b51b81133c627aa4fc2cf552"
+    },
+    {
+      "path": "Scripts/SDK/check_registry_identity_boundary.py",
+      "sha256": "654110c8b532777d992c3c27fa03f7573be60a02e54da7908cdec31f689cc44f"
+    },
+    {
+      "path": "Scripts/SDK/generate_app_intents_resources.py",
+      "sha256": "8a540888de190dcec5d9e80a7127eccf48322473213cd78a157a6574a72dfd9f"
+    },
+    {
+      "path": "Scripts/SDK/generate_manifest.py",
+      "sha256": "6f63564559c7bffd0fab033110b7cf4d760643f6bc544d5ff0de0bbde2b24089"
+    },
+    {
+      "path": "Scripts/SDK/install.py",
+      "sha256": "4cf99955317a83e3d882834fe0235f505af41e335fd1e84e475524081d301677"
+    },
+    {
+      "path": "Scripts/SDK/native_artifacts.py",
+      "sha256": "6c11725c13a7ba9a47ac1c6e2e6056606ef9f5da4899b265daaf62e326f2574b"
+    },
+    {
+      "path": "Scripts/SDK/tests/test_app_intents_install.py",
+      "sha256": "f1c9903bd3cb3786102c884c4651ee6d5a14840e6c41b04b4874feeb3b8b2ffc"
+    },
+    {
+      "path": "Scripts/SDK/tests/test_application_external_packages.py",
+      "sha256": "237bc65735aa3940706d0fcbf18e0add19850af6c66695f2a6983b27ef91f8f0"
+    },
+    {
+      "path": "Scripts/SDK/tests/test_bundle_resources.py",
+      "sha256": "677e0dc6d170f4811545a03146570a85f654888b80a847041dbbe8b3c2218a02"
+    },
+    {
+      "path": "Scripts/SDK/tests/test_host_link_ownership.py",
+      "sha256": "30ce20bd976b04f0dbc7b1a60765a8fea781548473641caed0d4918ab7f61fe7"
+    },
+    {
+      "path": "Scripts/SDK/tests/test_install.py",
+      "sha256": "b5995e0f1aa6cff7d62026f8cc9bc2d7d79b48aa037a9c28adf155bbba7234e3"
+    },
+    {
+      "path": "Scripts/SDK/tests/test_native_artifacts.py",
+      "sha256": "90094228fa8e2dec474e49d14251ce5afe1036babba4af77300198658e50f3d1"
+    },
+    {
+      "path": "Scripts/SDK/tests/test_native_provenance.py",
+      "sha256": "a9fee2d128b62e5b75f783fd5f3d94c7f2c721960d8cf228c0292ee5b7bfa3ae"
+    },
+    {
+      "path": "Scripts/SDK/tests/test_widget_cxx_imports.py",
+      "sha256": "e9e294918807571e154d3112c0ae52c9b0f7853aab1f5deff2bf978e0d6eb863"
+    },
+    {
+      "path": "Scripts/SDK/update_project.py",
+      "sha256": "1b5d810909953ec55914b9e706eeae6a5523ec31a80c60a8c05a920d346bf270"
+    },
+    {
+      "path": "Scripts/SDK/verify_bundle_resources.py",
+      "sha256": "321fd8cf770b4461de8514394c1a1397539c483b893a96890a25f9a0c6f5bb5d"
+    },
+    {
+      "path": "Scripts/SDK/verify_miniapps_source_preservation.py",
+      "sha256": "328b7fda8474270016448271e36ef7605876d80aa06d8a9dff4250e1964745e9"
+    },
+    {
+      "path": "docs/agent-sdk/unified-package-manifest.json",
+      "sha256": "f1e85d729e76d0d8dd9c96f2a6d5d188f459fd7fa17606845259becfd2bfaa73"
+    }
+  ]
+}

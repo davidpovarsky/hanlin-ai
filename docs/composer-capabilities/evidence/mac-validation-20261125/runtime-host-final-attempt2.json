@@ -1,0 +1,19 @@
+{
+  "sourceCommit": "f54aebbb35169ea63eca146a1ba3ef4e8bf4f84d",
+  "startedAtUTC": "2026-11-25T00:13:35.325364+00:00",
+  "finishedAtUTC": "2026-11-25T00:14:56.006608+00:00",
+  "command": [
+    "nice",
+    "-n",
+    "10",
+    "bash",
+    "Scripts/Runtime/prepare-runtime-host.sh"
+  ],
+  "exitCode": 0,
+  "durationSeconds": 80.681,
+  "logSHA256": "8fd1285ddc70567972d3b48bce0a47d6ef9cc534196db54787a3f2f48b7347a7",
+  "log": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/runtime-host-final-attempt2.log",
+  "archiveSHA256": "6adde15222b2c0b0ba32d3c46f0ce76a6b0790b7594bedaa8f862cb8e1c4c5d1",
+  "archiveBytes": 81837488,
+  "trackedChanges": " M docs/miniapp-sdk/MANIFEST_REFERENCE.md\n M docs/miniapp-sdk/extension-reachability.json\n M docs/miniapp-sdk/extension-reachability.md\n M docs/miniapp-sdk/source-inventory.json\n"
+}

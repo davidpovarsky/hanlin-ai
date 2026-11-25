@@ -1,0 +1,10 @@
+{
+  "sourceCommit": "b739ada91aca115093e3511f9df58c15edcb5923",
+  "parentCommit": "bcd44d23a0d2fc2804fa34f3cc5407e51b0adc2f",
+  "hostPreparationReceipt": "runtime-host-final-attempt8.json",
+  "bundlePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/composer-runtime-provenance-host8-20261125.bundle",
+  "bundleSHA256": "4eb55fe33f3a412082ba209116a600f8059809f01c381215df873e71f542d8f9",
+  "bundleBytes": 1046,
+  "trackedChanges": "",
+  "createdAtUTC": "2026-11-25T02:38:09.768030+00:00"
+}

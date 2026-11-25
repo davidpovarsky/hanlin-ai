@@ -1,3 +1,5 @@
+import { createMiniAppAssistant } from '../../Packages/HanlinExpoUI/src/miniapp-assistant';
+export type { MiniAppAssistant, MiniAppAssistantRequest, MiniAppAssistantPart, MiniAppAssistantModel, MiniAppAssistantEvent, MiniAppAssistantUsage, MiniAppAssistantRun, MiniAppAssistantResult, MiniAppAssistantOptions, MiniAppAssistantAbortSignal, MiniAppAssistantJSON } from '../../Packages/HanlinExpoUI/src/miniapp-assistant';
 import type { MiniAppLiveActivities } from "../../Packages/HanlinExpoUI/src/system-surfaces";
 export type { NativeSurfaceJSON, NativeSurfaceAction, NativeSurfaceNode, NativeSurfaceProperties, LiveActivityStart, NativeSurfaceLiveActivityStart, ScriptWidgetLiveActivityStart, LiveActivityUpdate, LiveActivityEnd, MiniAppLiveActivities } from "../../Packages/HanlinExpoUI/src/system-surfaces";
 /** Typed facade over the existing Objective-C metadata bridge. No extra runtime. */
@@ -116,6 +118,16 @@ export function createHostServicesForBridge(bridge: NativeRuntimeBridge) {
         });
     });
   }
+  function assistant<T>(operation: string, payload: unknown): Promise<T> {
+    return new Promise((resolve, reject) => {
+      boundBridge.sendRequestActionCapabilityPayloadJSONCompletion(
+        'hanlin.host-services', operation, 'assistant', JSON.stringify(payload), (receipt, error) => {
+          if (error !== null) { reject(new Error(error)); return; }
+          if (receipt === null) { reject(new Error('Assistant returned no result.')); return; }
+          try { resolve(JSON.parse(receipt) as T); } catch { reject(new Error('Assistant returned invalid JSON.')); }
+        });
+    });
+  }
   const liveActivities: MiniAppLiveActivities = {
     areEnabled: async () => (await surface<{enabled: boolean}>('liveActivities.areEnabled')).enabled,
     list: async () => (await surface<{activityIDs: string[]}>('liveActivities.list')).activityIDs,
@@ -139,6 +151,7 @@ export function createHostServicesForBridge(bridge: NativeRuntimeBridge) {
     writeAttachment: file => share('miniapps.writeAttachment', file),
   };
   return {
+    assistant: createMiniAppAssistant(assistant),
     miniapps,
     liveActivities,
     startRuntime,

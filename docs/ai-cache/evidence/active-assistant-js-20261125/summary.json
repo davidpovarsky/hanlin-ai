@@ -1,0 +1,30 @@
+{
+  "implementationCommit": "e0a98a2d7c495644f643c44e7cc417e4522185ab",
+  "generatedAndHarnessCommit": "0cf7fd486c789d488e438cb62192e34a0ae712f7",
+  "node": "v24.22.0",
+  "nativeScriptTypeScript": "5.9.3",
+  "expoVMTypeScript": "6.0.3",
+  "results": {
+    "sharedAssistantAndPublication": {
+      "pass": 7,
+      "fail": 0,
+      "log": "expo-assistant-tests.log"
+    },
+    "nativeScriptAndExpoVM": {
+      "pass": 8,
+      "fail": 0,
+      "log": "host-facade-tests-after.log"
+    },
+    "strictGenerationAndDrift": "PASS"
+  },
+  "nativeBuildsRun": false,
+  "files": {
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.mjs": "832169736b6d84a6caa983192ceb3d9e9947a8cbda029093eba269c065e8f033",
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.d.ts": "4200223f5be97ee12ddd5ffc05479fa7be99748998a716b3e2eb6197c14bc8cc",
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/miniapp-assistant.mjs": "8d429190e524ba8612462503e20f88eab8e1d029ca794c5821ad01b69623edfc",
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/miniapp-assistant.d.ts": "3e15fb2fada80ea4dd158b146cc36d66c6aa71e46e073f02eca23b98b55e73f2",
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/system-surfaces.mjs": "72051d0da201b6e8f6cd7c5939267e083b8199ed62e56f631a198cdccf121669",
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/system-surfaces.d.ts": "e9e225da56c0fad5a6a827d457fbbcb988468d2232e1f876cbe60fcbb05f0686",
+    "Scripts/Expo/Tests/host-services.test.mjs": "625d69af766f88690bdb528d17b8aea46ffbed5edfd46fa9c1c471ca9b8339f1"
+  }
+}

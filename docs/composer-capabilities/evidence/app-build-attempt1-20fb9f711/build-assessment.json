@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "assessedAtUTC": "2026-11-25T01:26:38.515858+00:00",
+  "sourceCommit": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91",
+  "buildAttempt": {
+    "id": "AI_HLY attempt1",
+    "sentinelJobReportedByOwner": "job_8807a8836db9",
+    "commandKind": "build-for-testing",
+    "status": "FAILED",
+    "exitCode": 65,
+    "durationSeconds": 330.678,
+    "receipt": "ai-hly-build-attempt1.json",
+    "rawLog": "ai-hly-build-attempt1.log.gz",
+    "rawLogSHA256": "8638ebde19ff53fbd8564aa1613d726a06bf4503f96a30f4ca09ea94924e61fe",
+    "rawLogBytes": 13619832,
+    "resultBundle": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/ai-hly-build-attempt1.xcresult",
+    "resultBundleFileHashes": "xcresult-sha256.json",
+    "failureClassification": "RELOCATED_PRECOMPILED_MODULE_CACHE",
+    "diagnostics": [
+      "Precompiled file '/Users/m1/caches/DerivedData/hanlin-composer-app-20261124/ModuleCache.noindex/1DMYBG2U74F55/SwiftShims-ETMZL06LU75E.pcm' was compiled with module cache path '/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/ModuleCache.noindex/1DMYBG2U74F55', but the path is currently '/Users/m1/caches/DerivedData/hanlin-composer-app-20261124/ModuleCache.noindex/1DMYBG2U74F55'",
+      "Missing required module 'SwiftShims'"
+    ],
+    "failedTarget": "ChavrusaChatNotificationService",
+    "acceptanceTestsExecuted": 0,
+    "testStatus": "NOT_RUN_BY_BUILD_FOR_TESTING",
+    "resolvedLockUnchanged": true,
+    "trackedChanges": ""
+  },
+  "cacheProvenance": {
+    "receipt": "derived-cache-reuse.json",
+    "originalStatus": "NOT_A_TEST_PASS",
+    "reason": "The original APFS clone retained a PCM with the producer absolute cache path."
+  },
+  "repair": {
+    "status": "RECORDED_RETRY_RESULT_PENDING",
+    "receipt": "app-build-attempt1-cache-repair.json",
+    "action": "Move only our isolated ModuleCache aside for regeneration",
+    "from": "/Users/m1/caches/DerivedData/hanlin-composer-app-20261124/ModuleCache.noindex",
+    "to": "/Users/m1/caches/DerivedData/hanlin-composer-app-20261124.ModuleCache-before-attempt2",
+    "sourceFilesChanged": false,
+    "otherOwnerCachesChanged": false,
+    "successfulRecompileClaimed": false
+  },
+  "historicalRetryAdmission": {
+    "receipt": "app-build-admission.json",
+    "originalStatus": "WAITING_FOR_MEASURED_CAPACITY",
+    "observedAtUTC": "2026-11-25T01:21:53.348228+00:00",
+    "classification": "WAITING_UNDER_SUPERSEDED_ADMISSION_POLICY",
+    "buildOrTestFailure": false
+  },
+  "capacityPolicyRefresh": {
+    "receipt": "app-build-capacity-policy-refresh.json",
+    "status": "WAITING_ADMISSION_STOPPED_NO_COMPILER",
+    "reason": "Current build-runner-router mandates measured memory/disk constraints, no fixed CPU-idle/job-count gate.",
+    "stoppedPID": 5958,
+    "children": [],
+    "memoryPressureValue": "1",
+    "buildOrTestFailure": false,
+    "sourceChanged": false
+  },
+  "actualRetryStart": {
+    "receipt": "ai-hly-build-attempt2-process.json",
+    "sentinelJobReportedByOwner": "job_e9db205b711d",
+    "sourceCommit": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91",
+    "startedAtUTC": "2026-11-25T01:23:17.863531+00:00",
+    "pid": 15399,
+    "status": "STARTED_NO_COMPLETED_RESULT",
+    "observedAtUTC": "2026-11-25T01:25:39.507812+00:00",
+    "completedReceiptExistsAtCapture": false
+  },
+  "admissionRaceResolution": {
+    "receipt": "app-build-admission-race-resolution.json",
+    "scope": "Original receipt records stopping only a duplicate waiting admission process; preserve the sole active attempt1 compiler."
+  },
+  "allApplicationNativeEditorAndUIGatesRemainPending": true,
+  "noBuildTestOrRepairExecutedDuringPackaging": true
+}

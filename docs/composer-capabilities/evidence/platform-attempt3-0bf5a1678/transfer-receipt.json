@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "copiedAtUTC": "2026-11-25T00:07:04.738314+00:00",
+  "sourceHost": "scaleway-mac",
+  "sourceDirectory": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/",
+  "sourceCommit": "0bf5a16789952cdd07a2a6431ae010211679466a",
+  "destinationDirectory": "/mnt/development/projects/evidence-staging/hanlin-composer-capabilities-20261124/platform-attempt3-0bf5a1678",
+  "verifiedExactSHA256": {
+    "composer-platform-attempt3-tests.log": "b9cced5cdf95e36b12777a6de9b6a38f047ac7789aaca7d2f4ee1b5c00074f81",
+    "composer-platform-attempt3-tests.json": "00f1dc265a8a7ebc38dc244736415759c5413d7e110fdeb033da3595b110d999",
+    "composer-platform-attempt3-inputs.json": "6abf59c6b1d55bbfb508c37a10b4946dbdfbf6aa672ca85fa8d583d3f9455223",
+    "composer-platform-attempt3-tests.derived.junit.xml": "9e76b374ef0e15a21b9806444d36fe763b0fe8abc2727201229bb81235e01b10",
+    "composer-platform-attempt3-resources.jsonl": "b7abb0a2c595c4811e89eb8753082614d365a7ae461a5ec51b21b7f9e388f103"
+  },
+  "nativeXMLProduced": false,
+  "xmlEvidence": "Explicitly log-derived JUnit; raw Swift Testing log preserved."
+}

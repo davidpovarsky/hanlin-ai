@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-anytype-delivery-sdk-final-20261125/Scripts/SDK/generate_manifest.py", line 295, in <module>
+    text,receipt=generate(selection)
+                 ^^^^^^^^^^^^^^^^^^^
+  File "/mnt/development/projects/worktrees/hanlin-anytype-delivery-sdk-final-20261125/Scripts/SDK/generate_manifest.py", line 185, in generate
+    project=parse_project((ROOT/"AI_HLY.xcodeproj/project.pbxproj").read_text())
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/pathlib.py", line 1029, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/pathlib.py", line 1015, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/mnt/development/projects/worktrees/hanlin-anytype-delivery-sdk-final-20261125/AI_HLY.xcodeproj/project.pbxproj'

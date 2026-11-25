@@ -1,0 +1,32 @@
+{
+  "actual_previous_methods": 4194,
+  "archive_bytes": 1466569,
+  "archive_sha256": "2551d96f45597c6263af456321eec7a53a13f0093d142f9e74a4b4c9f715b5f4",
+  "artifact": 14867946517,
+  "attempt": 1,
+  "compiler_and_environment_equal": true,
+  "index_sha256": "47bdb5fa3ba75b2414627e51bb2d2a798a8b5173aa5ea3340b3ce6a537e4e057",
+  "previous_failed_methods": 1,
+  "previous_failure_preserved": true,
+  "previous_test_binary_hash_absence": "Original finalizer stopped at swift exit 1.",
+  "previous_test_binary_hash_retained": false,
+  "replay_of_retained_methods_permitted": false,
+  "retained_passing_methods": 4193,
+  "run": 45275019854,
+  "source": "d4286d1afa661af930f7addd6f63fff0effe4414",
+  "source_binding": {
+    "changed_inputs": [
+      ".github/workflows/otzaria-stream-continuation.yml",
+      "Tests/SwiftAISDKTests/GenerateText/StreamTextThoughtSignatureContinuationTests.swift",
+      "plan/otzaria-thought-signature-inputs.json",
+      "scripts/otzaria-thought-signature-evidence.py"
+    ],
+    "only_three_expected_text_literals_changed": true,
+    "product_and_all_retained_tests_unchanged": true,
+    "same_input_paths": 1401,
+    "unchanged_inputs": 1397
+  },
+  "source_index_sha256": "3fe83fd2f4d6da6f86b46a928a24baacf9f47d2c86d69df7175fd514dd8292d6",
+  "tree": "aaa0512eee2676ce650baff4d0a26c5998e7d0f7",
+  "xml_sha256": "89e344224390072e09dfa5eb89282a816eac570e364c21cd4da9b4a1428ce6ad"
+}

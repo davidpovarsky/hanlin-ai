@@ -1,0 +1,28 @@
+{
+  "sourceCommit": "756d7f1517f64295d4ce8ff9ea01d88c1f5f1194",
+  "startedAtUTC": "2026-11-25T01:40:47.512221+00:00",
+  "finishedAtUTC": "2026-11-25T01:45:11.962448+00:00",
+  "durationSeconds": 264.447,
+  "command": [
+    "xcodebuild",
+    "-resolvePackageDependencies",
+    "-project",
+    "AI_HLY.xcodeproj",
+    "-scheme",
+    "AI_HLY",
+    "-clonedSourcePackagesDirPath",
+    "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/SourcePackages",
+    "-disableAutomaticPackageResolution",
+    "-onlyUsePackageVersionsFromResolvedFile",
+    "-skipPackageUpdates",
+    "-skipPackagePluginValidation",
+    "-skipMacroValidation"
+  ],
+  "exitCode": 0,
+  "lockBeforeSHA256": "4a55e370d71d69933efb0bc54a08973da962b4d7270da59791aa3b1ed58910bd",
+  "lockAfterSHA256": "4a55e370d71d69933efb0bc54a08973da962b4d7270da59791aa3b1ed58910bd",
+  "lockUnchanged": true,
+  "sdkRevision": "3f38f1302764635c9991d0d00fd7b12471a5373c",
+  "sdkDirty": "",
+  "logSHA256": "40ad9a0514e4a17dafe9ac37264a707033c02cb7a3d3733ffcb33eeb5689e846"
+}

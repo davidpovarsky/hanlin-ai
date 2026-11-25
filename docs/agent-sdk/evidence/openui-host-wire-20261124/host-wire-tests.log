@@ -1,0 +1,12 @@
+✔ React MCP requests reach the original Host and retain structured results (1.641666ms)
+✔ native lang-core preserves its positional request and raw Host result (0.126958ms)
+✔ React omitted arguments are an empty Host object (0.492125ms)
+✔ both renderers preserve a rejected Host permission without a success envelope (0.266417ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 57.203959

@@ -1,5 +1,6 @@
 import Foundation
 import HanlinChatCore
+import HanlinPlatformContracts
 
 /// Immutable projection of an original SwiftData message. Rich payloads keep
 /// their original types and serialized forms; no alternate renderer schema is
@@ -19,6 +20,7 @@ public struct HanlinConversationMessageSnapshot: Identifiable, Sendable {
     public let documents: [URL]
     public let documentText: String?
     public let prompts: [PromptCard]
+    public let capabilityAttachments: [HanlinCapabilityAttachment]
     public let locations: [Location]
     public let routes: [RouteInfo]
     public let events: [EventItem]
@@ -54,7 +56,8 @@ public struct HanlinConversationMessageSnapshot: Identifiable, Sendable {
         canvas: CanvasData? = nil, nativeUIBlocksJSON: String? = nil,
         agentRunJSON: String? = nil, presentationSnapshot: Data? = nil,
         modelName: String? = nil, modelDisplayName: String? = nil,
-        groupID: UUID? = nil, timestamp: Date = Date(), finishReason: String? = nil
+        groupID: UUID? = nil, timestamp: Date = Date(), finishReason: String? = nil,
+        capabilityAttachments: [HanlinCapabilityAttachment] = []
     ) {
         self.id = id; self.role = role; self.text = text
         self.reasoning = reasoning; self.reasoningTime = reasoningTime
@@ -62,6 +65,7 @@ public struct HanlinConversationMessageSnapshot: Identifiable, Sendable {
         self.resources = resources; self.searchEngine = searchEngine
         self.imageData = imageData; self.documents = documents; self.documentText = documentText
         self.prompts = prompts; self.locations = locations; self.routes = routes
+        self.capabilityAttachments = capabilityAttachments
         self.events = events; self.html = html; self.health = health
         self.code = code; self.knowledge = knowledge; self.audio = audio
         self.canvas = canvas; self.nativeUIBlocksJSON = nativeUIBlocksJSON
@@ -85,6 +89,7 @@ public struct HanlinConversationMessageSnapshot: Identifiable, Sendable {
         documents = row.documentURLs ?? []
         documentText = row.document_text
         prompts = row.promptUse ?? []
+        capabilityAttachments = row.capabilityAttachments
         locations = row.locationsInfo ?? []
         routes = row.routeInfos ?? []
         events = row.events ?? []
@@ -129,6 +134,7 @@ public struct HanlinApplicationModel: Identifiable, Sendable {
     public let supportsImageInput: Bool
     public let supportsImageGeneration: Bool
     public let supportsVoice: Bool
+    public let promptCachePolicy: HanlinPromptCachePolicy?
 
     @MainActor
     init(_ model: AllModels) {
@@ -148,5 +154,6 @@ public struct HanlinApplicationModel: Identifiable, Sendable {
         supportsImageInput = model.supportsMultimodal
         supportsImageGeneration = model.supportsImageGen
         supportsVoice = model.supportsVoiceGen
+        promptCachePolicy = model.promptCachePolicy
     }
 }

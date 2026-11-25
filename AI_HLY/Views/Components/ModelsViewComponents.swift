@@ -1,4 +1,5 @@
 import HanlinLocalization
+import HanlinChatCore
 //
 //  ModelsViewComponents.swift
 //  AI_HLY
@@ -1103,6 +1104,10 @@ struct EditModelSheetView: View {
     @State private var editedCharacterDesign: String
     @State private var original: String = ""
 
+    @State private var explicitCacheSelection: HanlinPromptCachePolicySelection? = nil
+    @State private var showSaveError = false
+    @State private var saveErrorMessage = ""
+
     // 基座模型选择
     @Query(filter: #Predicate<AllModels> {
         $0.identity == "model" && $0.supportsTextGen == true
@@ -1182,6 +1187,10 @@ struct EditModelSheetView: View {
                     .tint(.hanlinHLBlue)
                 }
                 
+                if showsPromptCacheSettings {
+                    promptCacheSettingsSection
+                }
+
                 // 智能体人物概述
                 if model.identity == "agent", model.systemProvision == true {
                     Section(header: Text(String(localized: "编辑智能体描述", bundle: HanlinLocalization.bundle))) {
@@ -1244,6 +1253,40 @@ struct EditModelSheetView: View {
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button(String(localized: "保存", bundle: HanlinLocalization.bundle)) {
+                        // Validate both rows before mutating any existing fields.
+                        // A preserved policy keeps its original serialized value.
+                        let cacheMutation = cachePolicyMutation
+                        let validatedModelCachePolicyJSON: String?
+                        let validatedCopyCachePolicyJSON: String?
+                        do {
+                            if case .preset(let preset) = explicitCacheSelection {
+                                guard availableCachePresets.contains(preset) else {
+                                    throw HanlinChatError.invalidRequest(String(
+                                        localized: "This cache option is no longer available for this provider and model. Choose another option.",
+                                        bundle: HanlinLocalization.bundle
+                                    ))
+                                }
+                            }
+                            if case .replace(let policy) = cacheMutation {
+                                validatedModelCachePolicyJSON = try HanlinModelPromptCachePreferences.encode(policy)
+                            } else {
+                                validatedModelCachePolicyJSON = nil
+                            }
+                            if model.identity == "agent", let selectedCopyBaseModel {
+                                validatedCopyCachePolicyJSON = try HanlinModelPromptCachePreferences.encode(
+                                    selectedCopyBaseModel.promptCachePolicy
+                                )
+                            } else {
+                                validatedCopyCachePolicyJSON = nil
+                            }
+                        } catch {
+                            saveErrorMessage = error.localizedDescription
+                            showSaveError = true
+                            return
+                        }
+                        if case .replace = cacheMutation {
+                            model.promptCachePolicyJSON = validatedModelCachePolicyJSON
+                        }
                         model.displayName = editedDisplayName
                         if model.identity == "model", model.company != "LOCAL" {
                             model.supportsTextGen = editedSupportsTextGen
@@ -1292,18 +1335,25 @@ struct EditModelSheetView: View {
                                 )
                                 newModel.icon = model.icon
                                 newModel.characterDesign = model.characterDesign
+                                newModel.promptCachePolicyJSON = validatedCopyCachePolicyJSON
                                 
                                 modelContext.insert(newModel)
                             }
                         }
                         do {
                             try modelContext.save()
+                            dismiss()
                         } catch {
-                            print("保存失败: \(error.localizedDescription)")
+                            saveErrorMessage = error.localizedDescription
+                            showSaveError = true
                         }
-                        dismiss()
                     }
                 }
+            }
+            .alert(String(localized: "Could not save model", bundle: HanlinLocalization.bundle), isPresented: $showSaveError) {
+                Button(String(localized: "确定", bundle: HanlinLocalization.bundle), role: .cancel) {}
+            } message: {
+                Text(saveErrorMessage)
             }
             .sheet(isPresented: $inputExpanded) {
                 BottomSheetView(message: $editedCharacterDesign, isExpanded: $inputExpanded)
@@ -1322,6 +1372,134 @@ struct EditModelSheetView: View {
         }
     }
     
+    private var isEditableCacheAgent: Bool {
+        model.identity?.lowercased() == "agent" && model.systemProvision == false
+    }
+
+    private var cacheSettingsModel: AllModels {
+        isEditableCacheAgent ? (selectedBaseModel ?? model) : model
+    }
+
+    private var showsPromptCacheSettings: Bool {
+        guard model.identity?.lowercased() == "model" || isEditableCacheAgent else { return false }
+        let supportsText = isEditableCacheAgent ? cacheSettingsModel.supportsTextGen : editedSupportsTextGen
+        // Keep a pending selection visible after a provider change so an
+        // unsupported choice can be replaced with inheritance or preservation.
+        return supportsText && (!availableCachePresets.isEmpty || explicitCacheSelection != nil)
+    }
+
+    private var availableCachePresets: [HanlinPromptCachePreset] {
+        let cacheModel = cacheSettingsModel
+        let providers = apiKeys.filter { $0.company == cacheModel.company }
+        let provider = providers.count == 1 ? providers.first : nil
+        return HanlinPromptCachePreset.available(
+            company: cacheModel.company,
+            apiType: provider?.apiType.rawValue,
+            endpoint: provider?.requestURL.flatMap(URL.init(string:)),
+            modelID: cacheModel.name ?? ""
+        )
+    }
+
+    private var cachePolicyMutation: HanlinPromptCachePolicyMutation {
+        guard model.identity?.lowercased() == "model" || isEditableCacheAgent else { return .preserve }
+        let base = isEditableCacheAgent ? selectedBaseModel : nil
+        return HanlinPromptCachePolicyMutation.resolve(
+            originalModelID: model.name ?? "",
+            originalCompany: model.company,
+            selectedBaseModelID: base.map { $0.name ?? "" },
+            selectedBaseCompany: base?.company,
+            selectedBasePolicy: base?.promptCachePolicy,
+            selection: explicitCacheSelection
+        )
+    }
+
+    private var cachePolicySelection: HanlinPromptCachePolicySelection {
+        if let explicitCacheSelection { return explicitCacheSelection }
+        if case .replace = cachePolicyMutation { return .inheritBase }
+        if let preset = HanlinPromptCachePreset.matching(model.promptCachePolicy),
+           availableCachePresets.contains(preset) {
+            return .preset(preset)
+        }
+        return .preserveSaved
+    }
+
+    private var cachePolicyBinding: Binding<HanlinPromptCachePolicySelection> {
+        Binding(
+            get: { cachePolicySelection },
+            set: { explicitCacheSelection = $0 }
+        )
+    }
+
+    private var promptCacheSettingsSection: some View {
+        Section {
+            Picker(String(localized: "Cache policy", bundle: HanlinLocalization.bundle), selection: cachePolicyBinding) {
+                if isEditableCacheAgent, selectedBaseModel != nil {
+                    Text(String(localized: "Use selected base model policy", bundle: HanlinLocalization.bundle))
+                        .tag(HanlinPromptCachePolicySelection.inheritBase)
+                }
+                ForEach(availableCachePresets, id: \.self) { preset in
+                    Text(cachePresetTitle(preset)).tag(HanlinPromptCachePolicySelection.preset(preset))
+                }
+                if isEditableCacheAgent || cachePolicySelection == .preserveSaved
+                    || HanlinPromptCachePreset.matching(model.promptCachePolicy) == nil {
+                    Text(String(
+                        localized: HanlinPromptCachePreset.matching(model.promptCachePolicy) == nil
+                            ? "Custom policy (unchanged)" : "Saved policy (unchanged)",
+                        bundle: HanlinLocalization.bundle
+                    ))
+                        .tag(HanlinPromptCachePolicySelection.preserveSaved)
+                }
+                if case .preset(let preset) = cachePolicySelection, !availableCachePresets.contains(preset) {
+                    Text(cachePresetTitle(preset))
+                        .tag(HanlinPromptCachePolicySelection.preset(preset))
+                        .disabled(true)
+                }
+            }
+        } header: {
+            Text(String(localized: "Prompt cache", bundle: HanlinLocalization.bundle))
+        } footer: {
+            VStack(alignment: .leading, spacing: 6) {
+                Text(cachePresetExplanation)
+                Text(String(
+                    localized: "Only supported options are shown. Cache writes and longer lifetimes may have different costs; the provider decides whether a request can be reused.",
+                    bundle: HanlinLocalization.bundle
+                ))
+            }
+        }
+    }
+
+    private func cachePresetTitle(_ preset: HanlinPromptCachePreset) -> String {
+        switch preset {
+        case .automatic: String(localized: "Automatic (recommended)", bundle: HanlinLocalization.bundle)
+        case .providerDefault: String(localized: "Provider defaults", bundle: HanlinLocalization.bundle)
+        case .noExplicitCaching: String(localized: "No explicit cache controls", bundle: HanlinLocalization.bundle)
+        case .anthropicOneHour: String(localized: "Anthropic: 1 hour", bundle: HanlinLocalization.bundle)
+        case .openAITwentyFourHours: String(localized: "OpenAI: up to 24 hours", bundle: HanlinLocalization.bundle)
+        case .openAIExplicitThirtyMinutes: String(localized: "Explicit cache: 30 minutes", bundle: HanlinLocalization.bundle)
+        case .openAIExplicitTwelveHours: String(localized: "Explicit cache: 12 hours", bundle: HanlinLocalization.bundle)
+        }
+    }
+
+    private var cachePresetExplanation: String {
+        switch cachePolicySelection {
+        case .preserveSaved:
+            String(localized: "Keep the policy currently saved on this model or agent.", bundle: HanlinLocalization.bundle)
+        case .inheritBase:
+            String(localized: "Use the selected base model's saved cache policy.", bundle: HanlinLocalization.bundle)
+        case .preset(let preset):
+            switch preset {
+            case .automatic:
+                String(localized: "Use Hanlin's automatic caching policy for this provider.", bundle: HanlinLocalization.bundle)
+            case .providerDefault:
+                String(localized: "Use the provider's defaults without Hanlin's cache hints.", bundle: HanlinLocalization.bundle)
+            case .noExplicitCaching:
+                String(localized: "Send no explicit cache controls. The provider may still use automatic caching.", bundle: HanlinLocalization.bundle)
+            case .anthropicOneHour, .openAITwentyFourHours, .openAIExplicitThirtyMinutes, .openAIExplicitTwelveHours:
+                String(localized: "Request this cache lifetime for reusable context. Availability and billing follow the provider's rules.", bundle: HanlinLocalization.bundle)
+            }
+        }
+    }
+
     /// 获取当前最大 position 并 +1
     private var nextPosition: Int {
         return (allModels.map { $0.position ?? 999 }.max() ?? 0) + 1

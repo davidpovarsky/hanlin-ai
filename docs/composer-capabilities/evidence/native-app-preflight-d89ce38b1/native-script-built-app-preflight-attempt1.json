@@ -1,0 +1,20 @@
+{
+  "sourceCommit": "b739ada91aca115093e3511f9df58c15edcb5923",
+  "startedAtUTC": "2026-11-25T03:00:05.278935+00:00",
+  "finishedAtUTC": "2026-11-25T03:01:42.649896+00:00",
+  "exitCode": 1,
+  "durationSeconds": 97.371,
+  "command": [
+    "npm",
+    "run",
+    "preflight:ios-dependencies",
+    "--prefix",
+    "Scripts/NativeScript",
+    "--",
+    "--app",
+    "/Users/m1/caches/DerivedData/hanlin-composer-app-20261124/Build/Products/Debug-iphonesimulator/AI_Hanlin.app"
+  ],
+  "logSHA256": "1d9b8db4ff21e0d699b1526e41f35b45dd1c174305953146b7c6bb03ab715187",
+  "appPath": "/Users/m1/caches/DerivedData/hanlin-composer-app-20261124/Build/Products/Debug-iphonesimulator/AI_Hanlin.app",
+  "buildReceipt": "ai-hly-build-attempt5.json"
+}

@@ -1,0 +1,20 @@
+{
+  "started_at": "2026-11-25T00:22:55.018761+00:00",
+  "exit_code": 0,
+  "command": [
+    "/opt/homebrew/bin/python3.12",
+    "Scripts/CI/IntegrationValidation/prepare_ai_cache_mac_dependencies.py",
+    "--source",
+    "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124",
+    "--destination",
+    "/Users/m1/builds/hanlin-ai-cache-native-20261125",
+    "--node-bin",
+    "/Users/m1/builds/actions-maktabah-native116-20261124/externals/node24/bin",
+    "--derived-data-source",
+    "/Users/m1/caches/DerivedData/hanlin-composer-app-20261124",
+    "--derived-data-destination",
+    "/Users/m1/caches/DerivedData/hanlin-ai-cache-app-20261125",
+    "--apply-clones"
+  ],
+  "source_sha": "050e43773dee9f0a0bf68a7698c56b58e4bd1691"
+}

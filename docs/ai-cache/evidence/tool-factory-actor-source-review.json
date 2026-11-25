@@ -1,0 +1,25 @@
+{
+  "base": "b2b17ca2078c632c87b95d6f766ec13b09b344d7",
+  "file": "AI_HLY/Downstream/MCP/ToolIntegration/AssistantToolBridge.swift",
+  "change": "Explicit MainActor on both Executors.live factory entrypoints only",
+  "sourceSHA256": "fd5d33100cdff4918ebc88af5e530568fc0185546ece6ed3fdbc803d5fb3162c",
+  "bodyBytesUnchangedApartFromAnnotationsAndComment": true,
+  "sdkAuditSourceRecord": [],
+  "reviewedCallers": [
+    "MainActor AssistantToolBridge.prepare",
+    "MainActor AssistantToolBridge.PreparedTools.init default live factory"
+  ],
+  "adjacentOrderingReview": {
+    "HanlinAISDKToolAdapter": "MainActor method sorts String aliases; existing priority/recent-discovery sequence unchanged",
+    "HanlinAppHostIntegration": "MainActor catalog method sorts Sendable HanlinAISDKToolDefinition.name",
+    "HanlinSkillIndex": "Sorts Sendable HanlinSkillDescriptor.id",
+    "NativeToolCatalog": "MainActor allEntries method projects entries before name sorting"
+  },
+  "diffCheck": "PASS",
+  "nativeBuildsRun": false,
+  "macOperations": false,
+  "nativeCompilerVerification": "Root-owned actual app retry pending",
+  "commit": "3a19d8b41b19dda3a36c5fe6d3315da5aa84f011",
+  "sdkAndReachabilityDirectReferences": [],
+  "hostArchiveRefreshRequiredByThisPatch": false
+}

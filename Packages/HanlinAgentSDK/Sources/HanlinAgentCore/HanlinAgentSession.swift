@@ -162,6 +162,12 @@ public final class HanlinAgentSession {
                     try await self.requireCurrent(run: run)
                     return allowed
                 },
+                cacheScope: .init(
+                    namespace: [identity.context.namespace.app, identity.context.namespace.account,
+                                identity.context.namespace.workspace, identity.context.namespace.space],
+                    conversationID: identity.conversationID.uuidString,
+                    promptVersion: "hanlin-system-v2"
+                ),
                 transport: transport,
                 prepareStep: { [weak self] index in
                     guard let self, !self.invalidated, self.activeRun == run else { return .init(activeToolAliases: []) }

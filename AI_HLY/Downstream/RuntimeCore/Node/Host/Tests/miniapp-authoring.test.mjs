@@ -279,3 +279,57 @@ test('NativeScript preserves the original npm runtime package rather than leavin
   assert.equal(module.actualVersion, ts.version);
   await assert.rejects(fs.stat(path.join(app, 'node_modules/@nativescript/core')), {code: 'ENOENT'});
 });
+
+test('dedicated assistant build preserves the app entry without executing it and validates named exports', async t => {
+  const f = await fixture(t);
+  await fs.writeFile(f.entry, 'throw new Error("APP_ENTRYPOINT_MUST_NOT_RUN");\nexport {};\n');
+  await fs.writeFile(path.join(f.project, 'echo.ts'),
+    'export function echo(args: {query: string}, context: {configuration: {scope: string}; actionID: string; caller: string}) {\n'
+    + '  return {query: args.query, configuration: context.configuration, actionID: context.actionID, caller: context.caller};\n}\n');
+  const script = JSON.parse(await fs.readFile(path.join(f.project, 'script.json'), 'utf8'));
+  script.entrypoints.push({id: 'echo-tool', kind: 'assistantTool', sourcePath: 'assistant/echo/bundle.mjs',
+    assistantTool: {title: 'Echo', summary: 'Echo the configured request', actions: [
+      {id: 'echo', title: 'Echo', summary: 'Echo args and context',
+        inputSchema: {type: 'object', properties: {query: {type: 'string'}}, required: ['query']}}
+    ]}});
+  await fs.writeFile(path.join(f.project, 'script.json'), JSON.stringify(script));
+  const author = JSON.parse(await fs.readFile(path.join(f.project, 'hanlin.authoring.json'), 'utf8'));
+  author.assistantTools = {'echo-tool': 'echo.ts'};
+  await fs.writeFile(path.join(f.project, 'hanlin.authoring.json'), JSON.stringify(author));
+  const report = await f.run('build');
+  assert.equal(report.succeeded, true, JSON.stringify(report));
+  const stage = report.preparedPackagePath;
+  const prepared = JSON.parse(await fs.readFile(path.join(stage, 'assistant/echo/package.json'), 'utf8'));
+  assert.equal(prepared.main, 'bundle.mjs');
+  assert.equal(prepared.hanlinRuntime, 'hanlin-nativescript');
+  const toolBundle = await fs.readFile(path.join(stage, 'assistant/echo/bundle.mjs'), 'utf8');
+  assert.match(toolBundle, /import \* as tool from "\.\/modules\/echo\.mjs"/);
+  await assert.rejects(fs.stat(path.join(stage, 'assistant/echo/modules/echo.js')), {code: 'ENOENT'});
+  const toolMap = JSON.parse(await fs.readFile(path.join(stage, 'assistant/echo/modules/echo.mjs.map'), 'utf8'));
+  assert.equal(toolMap.file, 'echo.mjs');
+  assert.match(await fs.readFile(path.join(stage, 'source/echo.ts'), 'utf8'), /context.configuration/);
+  const registered = new Map(), previous = globalThis.HanlinNativeServicesBridge;
+  globalThis.HanlinNativeServicesBridge = {activeSessionBridge: () => ({
+    registerRequestHandlerCapabilityHandler: (id, capability, callback) => {
+      assert.equal(capability, 'assistant-tool'); registered.set(id, callback);
+    }
+  })};
+  try {
+    // This validates the actual generated JS wrapper in Node. The separate
+    // native integration suite owns original NativeScript VM execution.
+    await import(pathToFileURL(path.join(stage, 'assistant/echo/bundle.mjs')).href);
+    assert.deepEqual([...registered.keys()], ['echo']);
+    const response = await new Promise((resolve, reject) => registered.get('echo')('caller',
+      JSON.stringify({arguments: {query: 'hello'}, configuration: {scope: 'chosen'}}),
+      (value, error) => error ? reject(new Error(error)) : resolve(JSON.parse(value))));
+    assert.deepEqual(response, {query: 'hello', configuration: {scope: 'chosen'}, actionID: 'echo', caller: 'caller'});
+  } finally {
+    if (previous === undefined) delete globalThis.HanlinNativeServicesBridge;
+    else globalThis.HanlinNativeServicesBridge = previous;
+  }
+  script.entrypoints.at(-1).assistantTool.actions[0].exportedSymbol = 'missing';
+  await fs.writeFile(path.join(f.project, 'script.json'), JSON.stringify(script));
+  const invalid = await f.run('validate');
+  assert.equal(invalid.succeeded, false);
+  assert.ok(invalid.diagnostics.some(item => item.code === 'MINIAPP_ASSISTANT_EXPORT_MISSING'));
+});

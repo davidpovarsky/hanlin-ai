@@ -444,7 +444,7 @@ final class HanlinConversationStreamProjection {
 
     static func requestMessages(from messages: [ChatMessages], limit: Int) -> [RequestMessage] {
         messages.suffix(limit < 0 ? 999 : limit).map { chat in
-            RequestMessage(role: chat.role ?? "system", text: chat.text ?? "",
+            RequestMessage(role: chat.role ?? "system", text: HanlinComposerCapabilities.messageText(for: chat),
                 images: chat.imageArray.isEmpty ? nil : chat.imageArray,
                 imageText: chat.images_text ?? "",
                 document: chat.documentURLs?.isEmpty == false ? chat.documentURLs : nil,

@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "preparedAt": "2026-11-25T01:33:51.745014+00:00",
+  "hanlinBaseRevision": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91",
+  "swiftAIRevisionBefore": "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8",
+  "swiftAIRevisionAfter": "3f38f1302764635c9991d0d00fd7b12471a5373c",
+  "sourceCheckout": {
+    "path": "/mnt/development/projects/worktrees/swift-ai-sdk-otzaria-thought-signature-20261123",
+    "revision": "3f38f1302764635c9991d0d00fd7b12471a5373c",
+    "clean": true
+  },
+  "upstreamProductionCommit": "d4286d1afa661af930f7addd6f63fff0effe4414",
+  "upstreamFixtureCorrectionCommit": "3f38f1302764635c9991d0d00fd7b12471a5373c",
+  "productionFilesChanged": [
+    "Sources/AISDKProviderUtils/StreamingToolCallTracker.swift",
+    "Sources/OpenAICompatibleProvider/Chat/ConvertToOpenAICompatibleChatMessages.swift",
+    "Sources/OpenAICompatibleProvider/Chat/OpenAICompatibleChatLanguageModel.swift"
+  ],
+  "fixtureCorrectionChangesProductionSources": false,
+  "ownerFullSuite": {
+    "url": "https://github.com/davidpovarsky/swift-ai-sdk/actions/runs/45275019854",
+    "revision": "d4286d1afa661af930f7addd6f63fff0effe4414",
+    "actualMethods": 4194,
+    "passed": 4193,
+    "failed": 1,
+    "skipped": 0,
+    "originalFailurePreserved": true
+  },
+  "ownerQualifiedContinuation": {
+    "url": "https://github.com/davidpovarsky/swift-ai-sdk/actions/runs/45281860828",
+    "artifactID": 14869369511,
+    "artifactSHA256": "5862195ce9de4fafac90cfe85dcbff3e4fd72c81c9286b7f8b37ce1597b8b2ae",
+    "actualFocusedMethodsPassed": 1,
+    "unchangedAuthenticatedPassesRetained": 4193,
+    "retainedMethodsReexecuted": 0,
+    "qualifiedMethods": 4194,
+    "failed": 0,
+    "skipped": 0,
+    "notRunObligations": 0,
+    "newMethods": 9,
+    "newScenarioVectors": 18
+  },
+  "qualificationReceipts": {
+    "QUALIFICATION_RESULT.json": "83ff2505a18b94d13937bc319f867b61c568f1b243a4e83fd18d99a376ad7946",
+    "AUTHENTICATED_INTAKE.json": "582777caabdf4cad2b202e8a8fafafc563d63a351ec6dd1ef5ed655650517722",
+    "RETAINED_PASS_ADMISSION.json": "bf05e6ff1637eedb9ba1ec18ef813e3153e06b69972990333560f7f2f955330d"
+  },
+  "operativePinPaths": [
+    "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+    "Package.swift",
+    "Packages/HanlinAgentSDK/Package.resolved",
+    "Packages/HanlinAgentSDK/Package.swift",
+    "Packages/HanlinParityMiniApp/Package.resolved",
+    "Packages/HanlinPlatform/Package.resolved",
+    "Packages/HanlinPlatform/Package.swift",
+    "Packages/HanlinSefariaMiniApp/Package.resolved",
+    "Packages/HanlinTextStudioMiniApp/Package.resolved",
+    "Packages/HanlinWikipediaMiniApp/Package.resolved"
+  ],
+  "appPackageResolvedSHA256": "4a55e370d71d69933efb0bc54a08973da962b4d7270da59791aa3b1ed58910bd",
+  "checks": {
+    "eachPinChangeIsExactlyOneRevisionLiteral": true,
+    "unifiedGraphUnchanged": true,
+    "applicationSourceCount": 519,
+    "targets": 114,
+    "unifiedManifestInputHashChanges": {
+      "Packages/HanlinAgentSDK/Package.swift": {
+        "before": "9373a783d26e514b2dba8e11e52b8d2ae6f3b5bb7c5edbeddd8a563c5584c4d8",
+        "after": "c3bb3448ea9982002427728db59de9ff83de7d456141c3bdf2ee7377b6c37796"
+      },
+      "Packages/HanlinPlatform/Package.swift": {
+        "before": "864210a4e3d3a77c375c3211095467e876f41352e5f25bcf72730353d77d6981",
+        "after": "f1405a67420b0bc2ad74ac4881c7056cc1fafae1db9062aa6d0ae8272436a5ed"
+      }
+    },
+    "compilerOrTestsExecutedForThisIntegration": false
+  },
+  "runtimeHost": {
+    "sourceIdentityAffected": true,
+    "reason": "Scripts/MiniApps/stage-sdk.mjs sdkInputs includes Packages/HanlinPlatform/Package.swift; original Host SDK/source-input fingerprint must be refreshed.",
+    "packagingPerformed": false,
+    "nativeArtifactsInputsChanged": false
+  },
+  "scope": "Only ten operative SDK revision literals, two unified-report input hashes and retained verification receipts. Historical evidence pins remain unchanged. No application/native acceptance claim."
+}

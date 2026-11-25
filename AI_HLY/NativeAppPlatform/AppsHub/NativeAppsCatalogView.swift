@@ -58,7 +58,7 @@ public struct NativeAppsCatalogView<AdditionalToolbar: ToolbarContent>: View {
             }
             .accessibilityIdentifier("hanlin-apps-catalog")
             .background(Color(uiColor: .systemGroupedBackground))
-            .navigationTitle(String(localized: "hanlin.morph.miniAppsTitle", bundle: HanlinLocalization.bundle))
+            .navigationTitle(String(localized: "Apps", bundle: HanlinLocalization.bundle))
             .searchable(text: $searchText, prompt: Text("hanlin.apps.search", bundle: HanlinLocalization.bundle))
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
@@ -69,8 +69,7 @@ public struct NativeAppsCatalogView<AdditionalToolbar: ToolbarContent>: View {
                     .accessibilityLabel(Text("hanlin-apps-add", bundle: HanlinLocalization.bundle))
                 }
                 ToolbarItem(placement: .topBarLeading) {
-                    Button(hanlin: isEditingApps ? "完成" : "编辑") { isEditingApps.toggle() }
-                        .accessibilityIdentifier("hanlin-apps-edit")
+                    Button(isEditingApps ? "Done" : "Edit") { isEditingApps.toggle() }
                 }
                 ToolbarItem(placement: .topBarLeading) {
                     Button { showsTorahCapture = true } label: {

@@ -1,0 +1,298 @@
+{
+  "schemaVersion": 1,
+  "status": "FAILED",
+  "sourceCommit": "a27e1a36e1272e17413c283ad928916f0489c1b5",
+  "command": [
+    "xcrun",
+    "swift",
+    "test",
+    "--package-path",
+    "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/Packages/HanlinPlatform",
+    "--scratch-path",
+    "/Users/m1/caches/DerivedData/hanlin-composer-platform-spm",
+    "--cache-path",
+    "/Users/m1/caches/DerivedData/hanlin-composer-platform-spm-cache",
+    "--force-resolved-versions",
+    "--skip-update",
+    "--jobs",
+    "2",
+    "--filter",
+    "HanlinCapabilityAttachmentTests|HanlinScriptAnalyzerTests",
+    "--xunit-output",
+    "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/composer-platform-tests.xml"
+  ],
+  "startedAtUTC": "2026-11-24T23:16:39.640883+00:00",
+  "expectedTests": [
+    {
+      "suite": "HanlinCapabilityAttachmentTests",
+      "method": "identityIncludesProviderButRevisionRemainsSeparate",
+      "title": "Provider-scoped identities cannot collide through separators or titles",
+      "passRows": [
+        "\u2714 Test \"Provider-scoped identities cannot collide through separators or titles\" passed after 0.001 seconds."
+      ],
+      "executedPass": true
+    },
+    {
+      "suite": "HanlinCapabilityAttachmentTests",
+      "method": "draftConfigurationDoesNotMutateDescriptorOrSentSnapshot",
+      "title": "Default configuration is a value snapshot, independent between drafts",
+      "passRows": [
+        "\u2714 Test \"Default configuration is a value snapshot, independent between drafts\" passed after 0.001 seconds."
+      ],
+      "executedPass": true
+    },
+    {
+      "suite": "HanlinCapabilityAttachmentTests",
+      "method": "catalogAndMapValidation",
+      "title": "Catalog and map input cannot silently carry invalid or undeclared values",
+      "passRows": [
+        "\u2714 Test \"Catalog and map input cannot silently carry invalid or undeclared values\" passed after 0.001 seconds."
+      ],
+      "executedPass": true
+    },
+    {
+      "suite": "HanlinCapabilityAttachmentTests",
+      "method": "staleAttachmentRequiresReselection",
+      "title": "Stale versions and actions are rejected independently of catalog display labels",
+      "passRows": [
+        "\u2714 Test \"Stale versions and actions are rejected independently of catalog display labels\" passed after 0.001 seconds."
+      ],
+      "executedPass": true
+    },
+    {
+      "suite": "HanlinCapabilityAttachmentTests",
+      "method": "minimalManifestDecoding",
+      "title": "Configuration decoder defaults support minimal author manifests",
+      "passRows": [
+        "\u2714 Test \"Configuration decoder defaults support minimal author manifests\" passed after 0.001 seconds."
+      ],
+      "executedPass": true
+    },
+    {
+      "suite": "HanlinCapabilityAttachmentTests",
+      "method": "declarationValidation",
+      "title": "Duplicate fields across panels and invalid defaults fail declaration validation",
+      "passRows": [
+        "\u2714 Test \"Duplicate fields across panels and invalid defaults fail declaration validation\" passed after 0.001 seconds."
+      ],
+      "executedPass": true
+    },
+    {
+      "suite": "HanlinCapabilityAttachmentTests",
+      "method": "assistantDeclarationRoundTrip",
+      "title": "Assistant metadata preserves raw schemas and declared rich result IDs",
+      "passRows": [],
+      "executedPass": false
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "preparedAssistantToolMetadataSurvivesInstallation",
+      "title": "Dedicated prepared assistant tools survive analysis and installed entrypoint mapping",
+      "passRows": [],
+      "executedPass": false
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "invalidAssistantEntrypointsCannotInstall",
+      "title": "Assistant selection cannot fall back to the foreground app or malformed metadata",
+      "passRows": [
+        "\u2714 Test \"Assistant selection cannot fall back to the foreground app or malformed metadata\" passed after 0.072 seconds."
+      ],
+      "executedPass": true
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "modernAssistantNeedsExplicitManifestMetadata",
+      "title": "Modern filename convention does not create an undeclared assistant capability",
+      "passRows": [
+        "\u2714 Test \"Modern filename convention does not create an undeclared assistant capability\" passed after 0.053 seconds."
+      ],
+      "executedPass": true
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "expoMainMustMatchTheInspectedForegroundEntrypoint",
+      "title": "Expo import main matches the manifest entry and cannot redirect launch elsewhere",
+      "passRows": [
+        "\u2714 Test \"Expo import main matches the manifest entry and cannot redirect launch elsewhere\" passed after 0.069 seconds."
+      ],
+      "executedPass": true
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "preparedRuntimeVersionsUseTheActualReleasedSemverBoundary",
+      "title": "Prepared runtimes reject malformed, wildcard and future required versions",
+      "passRows": [],
+      "executedPass": false
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "malformedBridgeVersionsNeverBypassPreparedPackageValidation",
+      "title": "Bridge version types and complete semantic versions are validated before import",
+      "passRows": [
+        "\u2714 Test \"Bridge version types and complete semantic versions are validated before import\" passed after 0.066 seconds."
+      ],
+      "executedPass": true
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "legacyCompatibilityFindingsDecodeWithoutInventingACode",
+      "title": "Legacy finding JSON remains readable without a diagnostic code",
+      "passRows": [
+        "\u2714 Test \"Legacy finding JSON remains readable without a diagnostic code\" passed after 0.054 seconds."
+      ],
+      "executedPass": true
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "malformedPreparedDependenciesAreRejectedWithTheirSourcePath",
+      "title": "Malformed dependency maps cannot bypass version validation",
+      "passRows": [
+        "\u2714 Test \"Malformed dependency maps cannot bypass version validation\" passed after 0.053 seconds."
+      ],
+      "executedPass": true
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "preview",
+      "title": "Discovers entrypoints, resolves modules, and derives capabilities deterministically",
+      "passRows": [
+        "\u2714 Test \"Discovers entrypoints, resolves modules, and derives capabilities deterministically\" passed after 0.054 seconds."
+      ],
+      "executedPass": true
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "pythonProfile",
+      "title": "Routes original Python entrypoint deterministically without engine fallback",
+      "passRows": [
+        "\u2714 Test \"Routes original Python entrypoint deterministically without engine fallback\" passed after 0.054 seconds."
+      ],
+      "executedPass": true
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "nativeScriptProfile",
+      "title": "Routes only explicitly declared NativeScript packages to the native runtime",
+      "passRows": [
+        "\u2714 Test \"Routes only explicitly declared NativeScript packages to the native runtime\" passed after 0.057 seconds."
+      ],
+      "executedPass": true
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "nativeScriptPreparedEntrypointIsAlwaysTheCanonicalBundle",
+      "title": "Prepared NativeScript entry metadata uses the canonical bundle across sessions",
+      "passRows": [
+        "\u2714 Test \"Prepared NativeScript entry metadata uses the canonical bundle across sessions\" passed after 0.058 seconds."
+      ],
+      "executedPass": true
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "nativeScriptSwiftUIContract",
+      "title": "Validates the embedded NativeScript SwiftUI plugin contract without changing ordinary Scripting",
+      "passRows": [
+        "\u2714 Test \"Validates the embedded NativeScript SwiftUI plugin contract without changing ordinary Scripting\" passed after 0.061 seconds."
+      ],
+      "executedPass": true
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "nativeScriptCoreContract",
+      "title": "Validates declared @nativescript/core dependency compatibility",
+      "passRows": [
+        "\u2714 Test \"Validates declared @nativescript/core dependency compatibility\" passed after 0.053 seconds."
+      ],
+      "executedPass": true
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "expoSwiftUIContract",
+      "title": "Validates the embedded Expo SwiftUI plugin contract",
+      "passRows": [
+        "\u2714 Test \"Validates the embedded Expo SwiftUI plugin contract\" passed after 0.054 seconds."
+      ],
+      "executedPass": true
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "unavailableModernNativePluginsFailBeforeImport",
+      "title": "Unavailable native plugins fail before Expo and NativeScript import",
+      "passRows": [
+        "\u2714 Test \"Unavailable native plugins fail before Expo and NativeScript import\" passed after 0.068 seconds."
+      ],
+      "executedPass": true
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "ambientGlobals",
+      "title": "Detects capability-bearing ambient Scripting globals",
+      "passRows": [
+        "\u2714 Test \"Detects capability-bearing ambient Scripting globals\" passed after 0.054 seconds."
+      ],
+      "executedPass": true
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "forbiddenModules",
+      "title": "Rejects dynamic imports, eval, unresolved paths, and arbitrary bare modules",
+      "passRows": [
+        "\u2714 Test \"Rejects dynamic imports, eval, unresolved paths, and arbitrary bare modules\" passed after 0.053 seconds."
+      ],
+      "executedPass": true
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "declaredCapabilitiesInManifest",
+      "title": "Extracts declared capabilities from script.json manifest",
+      "passRows": [
+        "\u2714 Test \"Extracts declared capabilities from script.json manifest\" passed after 0.059 seconds."
+      ],
+      "executedPass": true
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "expoMultiExposureMatrix",
+      "title": "Expo import evaluates foreground app and multi-exposure support fail-closed",
+      "passRows": [
+        "\u2714 Test \"Expo import evaluates foreground app and multi-exposure support fail-closed\" passed after 0.054 seconds."
+      ],
+      "executedPass": true
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "explicitPreparedEntrypointsPreserveAllIDs",
+      "title": "Prepared Expo and NativeScript exposures retain independent action and embedded identities",
+      "passRows": [],
+      "executedPass": false
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "malformedPreparedEntrypointsFailWithStableDiagnostic",
+      "title": "Malformed and duplicate prepared entrypoints are visible import failures",
+      "passRows": [
+        "\u2714 Test \"Malformed and duplicate prepared entrypoints are visible import failures\" passed after 0.054 seconds."
+      ],
+      "executedPass": true
+    }
+  ],
+  "expectedCount": 29,
+  "lockSHA256Before": "8f67ee59e5ba54c1d9bdd312efff89ddc946e00443fef8faddfeb4e7eb5387c8",
+  "log": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/composer-platform-tests.log",
+  "xml": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/composer-platform-tests.xml",
+  "pid": 40620,
+  "exitCode": 1,
+  "timedOut": false,
+  "durationSeconds": 209.696,
+  "finishedAtUTC": "2026-11-24T23:20:09.336791+00:00",
+  "executedPassCount": 25,
+  "lockUnchanged": true,
+  "lockSHA256After": "8f67ee59e5ba54c1d9bdd312efff89ddc946e00443fef8faddfeb4e7eb5387c8",
+  "logSHA256": "71ddc57409d22f718dd69c356d887304808812d814d0dd62639454c8dc1abb4b",
+  "summaryRows": [
+    "\u2718 Test run with 22 tests in 1 suite failed after 0.083 seconds with 5 issues.",
+    "\u2718 Test \"Assistant metadata preserves raw schemas and declared rich result IDs\" recorded an issue at HanlinCapabilityAttachmentTests.swift:76:6: Caught error: DecodingError.keyNotFound: Key 'value' not found in keyed decoding container. Path: actions[0].inputSchema. Debug description: No value associated with key CodingKeys(stringValue: \"value\", intValue: nil) (\"value\").",
+    "\u2718 Test run with 7 tests in 1 suite failed after 0.001 seconds with 1 issue."
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "sourceCommit": "d89ce38b170bc9af4734cd11e30ca793b16698d0",
+  "startedAtUTC": "2026-11-25T03:21:12.826088+00:00",
+  "finishedAtUTC": "2026-11-25T03:21:13.309332+00:00",
+  "exitCode": 0,
+  "durationSeconds": 0.483,
+  "command": [
+    "node",
+    "--test",
+    "Scripts/NativeScript/Tests/app-binary-preflight.test.mjs"
+  ],
+  "logSHA256": "4b4e4f11506cd15e028dc33218b981a58155895befe8a8c52adaed313c518413",
+  "counts": {
+    "tests": 9,
+    "pass": 9,
+    "fail": 0,
+    "skipped": 0
+  },
+  "exactNinePassesVerified": true
+}

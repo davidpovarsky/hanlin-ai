@@ -1,0 +1,71 @@
+{
+  "startedAtUTC": "2026-11-25T03:41:11.151478+00:00",
+  "status": "PREPARED",
+  "source": "1710bc6119983799f7d22cb723659ac274fe96b1",
+  "freeBytes": 19403767808,
+  "runnerTemp": "/tmp/hanlin-cache-app04.a6jiji",
+  "incrementalPrepareEstimateBytes": 536870912,
+  "estimateReason": "Existing dependencies, archive and4.75GB app products reused; only original checks/resolution/staging during this phase. No new workspace or dependency clone. Build/test admission separately measured.",
+  "memory": "Mach Virtual Memory Statistics: (page size of 16384 bytes)\nPages free:                                     4254.\nPages active:                                 247980.\nPages inactive:                               246101.\nPages speculative:                               456.\nPages throttled:                                   0.\nPages wired down:                             172523.\nPages purgeable:                                  39.\n\"Translation faults\":                     4484073403.\nPages copy-on-write:                        67469323.\nPages zero filled:                        3113492576.\nPages reactivated:                          77379709.\nPages purged:                                3578990.\nFile-backed pages:                            165584.\nAnonymous pages:                              328953.\nPages stored in compressor:                   844197.\nPages occupied by compressor:                 343734.\nDecompressions:                             45508634.\nCompressions:                               75013866.\nPageins:                                   109757337.\nPageouts:                                     112080.\nSwapins:                                       16183.\nSwapouts:                                      51112.\n",
+  "swap": "vm.swapusage: total = 1024.00M  used = 256.19M  free = 767.81M  (encrypted)\n",
+  "commands": [
+    {
+      "argv": [
+        "node",
+        "Scripts/Audit/audit-miniapp-sdk.mjs",
+        "--check"
+      ],
+      "startedAtUTC": "2026-11-25T03:41:11.256280+00:00",
+      "log": "preparation-command-01.log",
+      "exitCode": 0,
+      "finishedAtUTC": "2026-11-25T03:41:15.156053+00:00",
+      "sha256": "f9392dbc1f4415decb9bc390be9f49d5b7e6f3fbd636c72710ef278e45b31783"
+    },
+    {
+      "argv": [
+        "python3",
+        "Scripts/Audit/audit_miniapp_reachability.py",
+        "--check"
+      ],
+      "startedAtUTC": "2026-11-25T03:41:15.156873+00:00",
+      "log": "preparation-command-02.log",
+      "exitCode": 0,
+      "finishedAtUTC": "2026-11-25T03:41:21.542446+00:00",
+      "sha256": "bc234237931951c0e0e70dc212b9f47da2f6c76a61109e41c235f0f7f0eabcef"
+    },
+    {
+      "argv": [
+        "python3",
+        "Scripts/Runtime/runtime_host_archive.py",
+        "validate",
+        "AI_HLY/RuntimeHostResources.zip"
+      ],
+      "startedAtUTC": "2026-11-25T03:41:21.544272+00:00",
+      "log": "preparation-command-03.log",
+      "exitCode": 0,
+      "finishedAtUTC": "2026-11-25T03:41:28.989756+00:00",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "/opt/homebrew/opt/python@3.12/bin/python3.12",
+        "Scripts/CI/IntegrationValidation/run_cache_app_native.py",
+        "--phase",
+        "prepare",
+        "--derived",
+        "/Users/m1/caches/DerivedData/hanlin-ai-cache-app-20261125",
+        "--evidence",
+        "/Users/m1/builds/hanlin-ai-cache-native-20261125/build/cache-app-native-evidence-04-20261125"
+      ],
+      "startedAtUTC": "2026-11-25T03:41:28.991403+00:00",
+      "log": "preparation-command-04.log",
+      "exitCode": 0,
+      "finishedAtUTC": "2026-11-25T03:45:37.053222+00:00",
+      "sha256": "abfc7804784d0b7bfbb8059ebf06462ddcefc4eec34c9706d651016e6d446fb4"
+    }
+  ],
+  "finishedAtUTC": "2026-11-25T03:45:37.054294+00:00",
+  "freeBytesAfter": 12648185856,
+  "sourceAfter": "1710bc6119983799f7d22cb723659ac274fe96b1",
+  "trackedChanges": ""
+}

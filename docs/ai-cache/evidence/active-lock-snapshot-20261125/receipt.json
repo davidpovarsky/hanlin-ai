@@ -1,0 +1,30 @@
+{
+  "scope": "Oracle Python fixtures and source checks only; no Mac or native execution",
+  "baseSourceSHA": "48e3d4ff72c89758fdd55cce083bac039978935d",
+  "commit": "2d2d0a396848b97338dce62f57d8334462afc362",
+  "timeUTC": "2026-11-25T03:16:02.392386+00:00",
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "Scripts/CI/Tests",
+    "-p",
+    "test_cache_app_native_locks.py",
+    "-v"
+  ],
+  "exitCode": 0,
+  "testsPassed": 7,
+  "sourceHashes": {
+    "Scripts/CI/IntegrationValidation/run_cache_app_native.py": "c6598a3a732da60d6f45d920f1adc34ddcaa6c6be58a372961c0ff632b83709c",
+    "Scripts/CI/Tests/test_cache_app_native_locks.py": "90304bc6b81c4225764adea1d80197d4d835a7149f2291a74fdc39e5eba7a1a0"
+  },
+  "syntax": "PASS",
+  "diffCheck": "PASS",
+  "rawLogs": {
+    "fixtures.stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "fixtures.stderr.log": "4cfad4c82c24032b1bffcd7b632c5629d581d997afb42fef189589fe12a6eceb",
+    "change.patch": "ed6b72793b484fddca277c2d0f544f56c37664d4d269188612f0fbee35af71b0"
+  }
+}

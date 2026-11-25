@@ -1,0 +1,96 @@
+Fetching https://github.com/nicklockwood/LRUCache.git
+[1/397] Fetching lrucache
+Fetched https://github.com/nicklockwood/LRUCache.git (0.71s)
+Computing version for https://github.com/nicklockwood/LRUCache.git
+Computed https://github.com/nicklockwood/LRUCache.git at 1.3.0 (1.12s)
+Creating working copy for https://github.com/nicklockwood/LRUCache.git
+Working copy of https://github.com/nicklockwood/LRUCache.git resolved at 1.3.0
+Building for debugging...
+[Planning deferred tasks]
+[33 / 64]
+[34 / 65] LRUCache
+[41 / 101]
+[46 / 101]
+[49 / 101]
+[52 / 101]
+[53 / 101]
+[57 / 101]
+[60 / 101]
+[65 / 101]
+[67 / 101]
+[68 / 101]
+[77 / 102]
+[80 / 146]
+[82 / 146]
+[86 / 146]
+[87 / 146]
+[89 / 146]
+[92 / 146]
+[96 / 146]
+[98 / 146]
+[101 / 146]
+[103 / 146]
+[105 / 146]
+[110 / 146]
+[112 / 146]
+[113 / 146]
+[116 / 146] HanlinCacheProof
+[117 / 146] HanlinCacheProof
+[126 / 146] HanlinCacheProof
+[128 / 146] HanlinCacheProofTests-product
+[129 / 146]
+[131 / 146] HanlinCacheProof
+[136 / 147] HanlinCacheProofTests-product
+[137 / 153]
+[141 / 153] HanlinCacheProofTests-product
+[143 / 153] HanlinCacheProofTests-product
+[148 / 153] HanlinCacheProofTests-product
+[149 / 153] HanlinCacheProofTests-product
+Build complete! (10,64 secs)
+Test Suite 'All tests' started at 2026-11-25 00:33:04.630.
+Test Suite 'All tests' passed at 2026-11-25 00:33:04.632.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.002) seconds
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite "Provider cache diagnostics accounting" started.
+◇ Suite "Automatic search cache lifecycle" started.
+◇ Test cacheReadAndWriteAreSubsetsNotAdditionalTokenCharges() started.
+◇ Test readableReportIncludesCoverageAndKeepsUnknownUnavailable() started.
+◇ Test completeRoundAggregationRetainsWritesAndUsesWeightedReadFraction() started.
+◇ Test legacyJSONAndRoundTripPreserveMissingAndReportedCacheValues() started.
+◇ Test freshnessStartsWhenProviderCompletes() started.
+◇ Test aggregateFractionRequiresCompleteProviderMeasurementCoverage() started.
+◇ Test genuineZeroDiffersFromMissingAndInconsistentMeasurements() started.
+◇ Test unavailableAndPartialMeasurementsDoNotInventTotals() started.
+◇ Test originalLRULibraryEvictsLeastRecentlyUsedEntry() started.
+◇ Test cancellingAllWaitersCancelsTheFlightAndAllowsFreshRequest() started.
+◇ Test oversizedResultsReturnWithoutEvictingUsefulEntries() started.
+◇ Test simultaneousEquivalentSearchesShareOneProviderCall() started.
+◇ Test cancellingOneWaiterPreservesTheOtherWaiter() started.
+◇ Test invalidationSeparatesGenerationsAndPreventsLateRepopulation() started.
+◇ Test diagnosticBypassDoesNotReplaceNormalCachedResults() started.
+◇ Test failuresAreNotCachedAndDifferentCountsAreSeparateRequests() started.
+◇ Test cacheHitExpiryAndClockRollback() started.
+◇ Test bypassDoesNotJoinAnOrdinaryFlight() started.
+✔ Test unavailableAndPartialMeasurementsDoNotInventTotals() passed after 0.001 seconds.
+✔ Test cacheReadAndWriteAreSubsetsNotAdditionalTokenCharges() passed after 0.001 seconds.
+✔ Test readableReportIncludesCoverageAndKeepsUnknownUnavailable() passed after 0.001 seconds.
+✔ Test genuineZeroDiffersFromMissingAndInconsistentMeasurements() passed after 0.001 seconds.
+✔ Test aggregateFractionRequiresCompleteProviderMeasurementCoverage() passed after 0.001 seconds.
+✔ Test completeRoundAggregationRetainsWritesAndUsesWeightedReadFraction() passed after 0.001 seconds.
+✔ Test legacyJSONAndRoundTripPreserveMissingAndReportedCacheValues() passed after 0.001 seconds.
+✔ Suite "Provider cache diagnostics accounting" passed after 0.001 seconds.
+✔ Test cancellingAllWaitersCancelsTheFlightAndAllowsFreshRequest() passed after 0.005 seconds.
+✔ Test freshnessStartsWhenProviderCompletes() passed after 0.005 seconds.
+✔ Test simultaneousEquivalentSearchesShareOneProviderCall() passed after 0.005 seconds.
+✔ Test cancellingOneWaiterPreservesTheOtherWaiter() passed after 0.005 seconds.
+✔ Test bypassDoesNotJoinAnOrdinaryFlight() passed after 0.005 seconds.
+✔ Test failuresAreNotCachedAndDifferentCountsAreSeparateRequests() passed after 0.005 seconds.
+✔ Test invalidationSeparatesGenerationsAndPreventsLateRepopulation() passed after 0.005 seconds.
+✔ Test diagnosticBypassDoesNotReplaceNormalCachedResults() passed after 0.005 seconds.
+✔ Test cacheHitExpiryAndClockRollback() passed after 0.005 seconds.
+✔ Test originalLRULibraryEvictsLeastRecentlyUsedEntry() passed after 0.005 seconds.
+✔ Test oversizedResultsReturnWithoutEvictingUsefulEntries() passed after 0.006 seconds.
+✔ Suite "Automatic search cache lifecycle" passed after 0.006 seconds.
+✔ Test run with 18 tests in 2 suites passed after 0.007 seconds.

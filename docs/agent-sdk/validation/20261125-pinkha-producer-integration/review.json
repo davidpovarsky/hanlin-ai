@@ -1,0 +1,112 @@
+{
+  "schema_version": 1,
+  "status": "SOURCE_MERGE_AND_MANIFEST_VALIDATION_PASS",
+  "parents": [
+    "44bcebf687206a37893cb584cf72c6aafbc5ca48",
+    "4b772b5a7f0eb826c9b9204122bba516af777592"
+  ],
+  "canonical_consumer_scopes": [
+    "Packages/HanlinAgentSDK",
+    "Packages/HanlinMiniAppsBridge",
+    "Packages/HanlinPlatform",
+    "Packages/HanlinPresentationSDK"
+  ],
+  "canonical_delta": [
+    "Packages/HanlinPlatform/Package.swift"
+  ],
+  "unchanged_canonical_implementation_and_test_sources": true,
+  "conflict_resolution": {
+    "application_sources": 515,
+    "retained_from_44": "Downstream/ChatInput/OrganizerDock/HanlinSidebarReveal.swift",
+    "retained_from_4b": "Downstream/ScriptingPlatform/HanlinNotificationApplicationDelegate.swift",
+    "exact_source_list_matches_git_tree": true,
+    "platform_manifest_input_hash_corrected": "44672b009cf596efe29772da8e13595b1e526cc3651ef9092e7f118e58bf1a0a"
+  },
+  "actual_manifest_checks": [
+    {
+      "scope": "platform",
+      "command": [
+        "/usr/local/bin/swift",
+        "package",
+        "--package-path",
+        "/mnt/development/projects/worktrees/hanlin-anytype-delivery-sdk-final-20261125/Packages/HanlinPlatform",
+        "dump-package"
+      ],
+      "exit": 0,
+      "duration_seconds": 0.6326126726344228,
+      "manifest_sha256": "5a81b1423e044e579e47988400eb4e954bb220c9a5529366efa069e3605be1e3",
+      "zip_dependency": {
+        "sourceControl": [
+          {
+            "identity": "zipfoundation",
+            "location": {
+              "remote": [
+                {
+                  "urlString": "https://github.com/weichsel/ZIPFoundation.git"
+                }
+              ]
+            },
+            "productFilter": null,
+            "requirement": {
+              "range": [
+                {
+                  "lowerBound": "0.9.19",
+                  "upperBound": "0.10.0"
+                }
+              ]
+            },
+            "traits": [
+              {
+                "name": "default"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "scope": "unified",
+      "command": [
+        "/usr/local/bin/swift",
+        "package",
+        "--package-path",
+        "/mnt/development/projects/worktrees/hanlin-anytype-delivery-sdk-final-20261125",
+        "dump-package"
+      ],
+      "exit": 0,
+      "duration_seconds": 2.084488255903125,
+      "manifest_sha256": "7ae7b958b9804b02a06d153d3951725432c0e1ac41858fe606de8047c3d91974",
+      "zip_dependency": {
+        "sourceControl": [
+          {
+            "identity": "zipfoundation",
+            "location": {
+              "remote": [
+                {
+                  "urlString": "https://github.com/weichsel/ZIPFoundation.git"
+                }
+              ]
+            },
+            "productFilter": null,
+            "requirement": {
+              "range": [
+                {
+                  "lowerBound": "0.9.19",
+                  "upperBound": "0.10.0"
+                }
+              ]
+            },
+            "traits": [
+              {
+                "name": "default"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "native_or_app_tests": "NOT_RUN_ON_THIS_MERGE",
+  "previous_44_evidence": "Do not reinterpret as newly executed; unchanged source provenance is retained, resolved dependency verification still required in consuming final app.",
+  "preserved_raw_logs": "Incoming genuine machine logs retain their original trailing whitespace; code diff --check passes."
+}

@@ -1,0 +1,72 @@
+[
+  {
+    "name": "manifest-check",
+    "command": [
+      "python3",
+      "-B",
+      "Scripts/SDK/generate_manifest.py",
+      "--check"
+    ],
+    "started_at_utc": "2026-11-25T05:23:37.173232+00:00",
+    "finished_at_utc": "2026-11-25T05:23:39.407222+00:00",
+    "exit_code": 0,
+    "log": "manifest-check.log",
+    "sha256": "ef1d5f337d63832d7b11fad2f23da38bf3cdee83bd82bfecfddc56df7dcefdc5"
+  },
+  {
+    "name": "project-check",
+    "command": [
+      "python3",
+      "-B",
+      "Scripts/SDK/update_project.py",
+      "--check"
+    ],
+    "started_at_utc": "2026-11-25T05:23:39.407328+00:00",
+    "finished_at_utc": "2026-11-25T05:23:40.087706+00:00",
+    "exit_code": 0,
+    "log": "project-check.log",
+    "sha256": "7b205399ea53f72db8afa2fe3d77370cd6f0ac3d9ea8d19cea47a806236d4d18"
+  },
+  {
+    "name": "stage-sdk-syntax",
+    "command": [
+      "node",
+      "--check",
+      "Scripts/MiniApps/stage-sdk.mjs"
+    ],
+    "started_at_utc": "2026-11-25T05:23:40.087783+00:00",
+    "finished_at_utc": "2026-11-25T05:23:40.120698+00:00",
+    "exit_code": 0,
+    "log": "stage-sdk-syntax.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "name": "sdk-audit-check",
+    "command": [
+      "node",
+      "Scripts/Audit/audit-miniapp-sdk.mjs",
+      "--check",
+      "--typescript-module",
+      "/mnt/development/projects/worktrees/hanlin-ai-cache-bridge-20261125/Scripts/Expo/node_modules/typescript/lib/typescript.js"
+    ],
+    "started_at_utc": "2026-11-25T05:23:40.120772+00:00",
+    "finished_at_utc": "2026-11-25T05:23:40.801138+00:00",
+    "exit_code": 1,
+    "log": "sdk-audit-check.log",
+    "sha256": "c19db8b259f4ad0b52fc91d6a1459254f6e8d53cd577898d5b722ce6175ff2ec"
+  },
+  {
+    "name": "reachability-check",
+    "command": [
+      "python3",
+      "-B",
+      "Scripts/Audit/audit_miniapp_reachability.py",
+      "--check"
+    ],
+    "started_at_utc": "2026-11-25T05:23:40.801218+00:00",
+    "finished_at_utc": "2026-11-25T05:23:41.007751+00:00",
+    "exit_code": 1,
+    "log": "reachability-check.log",
+    "sha256": "00c8e9089bb61d19c1a6c0df66dbac3aee1c7ad61aa1feaa475f6b348d9d0034"
+  }
+]

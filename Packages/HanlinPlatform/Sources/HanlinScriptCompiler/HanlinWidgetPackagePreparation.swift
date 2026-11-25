@@ -14,7 +14,8 @@ public enum HanlinWidgetPackagePreparation {
                 exportedSymbol: entry.exportedSymbol, supportedContexts: entry.supportedContexts,
                 requiredCapabilities: entry.requiredCapabilities, runtimePolicyID: entry.runtimePolicyID,
                 runtimeProfile: entry.runtimeProfile, artifactDigest: artifactDigest,
-                compatibility: entry.compatibility, widgetEngine: entry.widgetEngine)
+                compatibility: entry.compatibility, widgetEngine: entry.widgetEngine,
+                assistantTool: entry.assistantTool)
         }
     }
 

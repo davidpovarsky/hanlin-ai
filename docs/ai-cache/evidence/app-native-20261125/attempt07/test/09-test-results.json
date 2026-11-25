@@ -1,0 +1,508 @@
+{
+  "devices" : [
+    {
+      "architecture" : "arm64",
+      "deviceId" : "14A7445A-0B66-4288-9CF9-0CF7CC7FED5E",
+      "deviceName" : "Hanlin-AI-Cache-948bdb1f-cache-app-native-evidence-07-20261125",
+      "modelName" : "iPhone 18 Pro",
+      "osBuildNumber" : "24A434",
+      "osVersion" : "27.0",
+      "platform" : "iOS Simulator"
+    }
+  ],
+  "testNodes" : [
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "duration" : "0,012s",
+                  "durationInSeconds" : 0.0123748779296875,
+                  "name" : "1. Classic bubble authority never suppresses user, search, assistant, error, or information rows",
+                  "nodeIdentifier" : "ClassicChatRestorationTests/classicBubbleAuthorityNeverSuppressesMessageRows()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/classicBubbleAuthorityNeverSuppressesMessageRows()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,0054s",
+                  "durationInSeconds" : 0.0053598880767822266,
+                  "name" : "2. Web search message row updates in place and citations/sources are deduplicated across Resource and AgentEvidenceItem",
+                  "nodeIdentifier" : "ClassicChatRestorationTests/webSearchCitationsAndSourcesDeduplicated()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/webSearchCitationsAndSourcesDeduplicated()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,057s",
+                  "durationInSeconds" : 0.056729793548583984,
+                  "name" : "3. Retry cleans up failed assistant, search, error, and info rows for the retried turn without duplicate bubbles",
+                  "nodeIdentifier" : "ClassicChatRestorationTests/retryReplacesFailedAssistantGroupWithoutDuplicateBubbles()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/retryReplacesFailedAssistantGroupWithoutDuplicateBubbles()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,0002s",
+                  "durationInSeconds" : 0.0002048015594482422,
+                  "name" : "4. Dynamic bottom padding tracks measured composer height across compact, multiline, and attachment trays",
+                  "nodeIdentifier" : "ClassicChatRestorationTests/dynamicBottomPaddingTracksMeasuredComposerHeight()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/dynamicBottomPaddingTracksMeasuredComposerHeight()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,0036s",
+                  "durationInSeconds" : 0.0035669803619384766,
+                  "name" : "5. User bubble uses classic CustomCorners(20, 20, 20, 5) shape and supports images, documents, and prompt cards",
+                  "nodeIdentifier" : "ClassicChatRestorationTests/userBubbleUsesClassicShapeAndAttachments()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/userBubbleUsesClassicShapeAndAttachments()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,0012s",
+                  "durationInSeconds" : 0.001233816146850586,
+                  "name" : "6. Assistant bubble owns final answer text, subordinate AgentActivitySummaryView, and tool result cards",
+                  "nodeIdentifier" : "ClassicChatRestorationTests/assistantBubbleOwnsFinalAnswerAndActionButtons()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/assistantBubbleOwnsFinalAnswerAndActionButtons()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,00019s",
+                  "durationInSeconds" : 0.00019097328186035156,
+                  "name" : "7. Classic action buttons are directly visible when completed and retry is hidden during active streaming",
+                  "nodeIdentifier" : "ClassicChatRestorationTests/classicActionButtonsDirectVisibilityAndStates()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/classicActionButtonsDirectVisibilityAndStates()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,0005s",
+                  "durationInSeconds" : 0.0004961490631103516,
+                  "name" : "8. CodeBlockRow renders normal and error states with container-relative width",
+                  "nodeIdentifier" : "ClassicChatRestorationTests/codeBlockRowClassicPresentation()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/codeBlockRowClassicPresentation()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,015s",
+                  "durationInSeconds" : 0.0145721435546875,
+                  "name" : "9. Conversation list supports pinning, sorting, search filtering, draft preservation, and deletion",
+                  "nodeIdentifier" : "ClassicChatRestorationTests/conversationListClassicNavigationAndPinnedRows()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/conversationListClassicNavigationAndPinnedRows()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,00027s",
+                  "durationInSeconds" : 0.0002727508544921875,
+                  "name" : "10. Composer accessory bar and send guard prevent duplicate sends and support attachment-only send",
+                  "nodeIdentifier" : "ClassicChatRestorationTests/composerAccessoryBarNoOverlap()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/composerAccessoryBarNoOverlap()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,0054s",
+                  "durationInSeconds" : 0.005374908447265625,
+                  "name" : "11. Agent reasoning sanitizer blocks raw CoT across all patterns and languages before reaching views",
+                  "nodeIdentifier" : "ClassicChatRestorationTests/agentReasoningNeverLeaksRawCoTToViews()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/agentReasoningNeverLeaksRawCoTToViews()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,0015s",
+                  "durationInSeconds" : 0.0015461444854736328,
+                  "name" : "Expanded activity rejects private transcript text and keeps approved operational summaries",
+                  "nodeIdentifier" : "ClassicChatRestorationTests/expandedReasoningUsesApprovedSummaryProjection()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/expandedReasoningUsesApprovedSummaryProjection()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,023s",
+                  "durationInSeconds" : 0.02311396598815918,
+                  "name" : "12. Tool results and final answer persist in ChatMessages.agentRunJSON and reload across reopen without duplication",
+                  "nodeIdentifier" : "ClassicChatRestorationTests/toolResultVisibilityAndHistory()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/toolResultVisibilityAndHistory()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "40s",
+                  "durationInSeconds" : 40.35789203643799,
+                  "name" : "13. Conversational MCP lifecycle: status, preview, install, auto-enable, Turn 1 & Turn 2 tool invocation, restart, stop, uninstall",
+                  "nodeIdentifier" : "ClassicChatRestorationTests/mcpInstallSelectInvokeUninstallE2E()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/mcpInstallSelectInvokeUninstallE2E()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,0041s",
+                  "durationInSeconds" : 0.004128932952880859,
+                  "name" : "14. Model routing and capability preservation survive transient probe failures",
+                  "nodeIdentifier" : "ClassicChatRestorationTests/modelRoutingAcrossPersistentProbeRefresh()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/modelRoutingAcrossPersistentProbeRefresh()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,036s",
+                  "durationInSeconds" : 0.035531044006347656,
+                  "name" : "15. AgentRunLifecycleCoordinator and AgentEventAccumulator isolate cancelled runs and reject late ghost events on retry",
+                  "nodeIdentifier" : "ClassicChatRestorationTests/lifecycleCancelRetryLateEventsAcrossRuns()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/lifecycleCancelRetryLateEventsAcrossRuns()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,00081s",
+                  "durationInSeconds" : 0.0008070468902587891,
+                  "name" : "16. APIManager.convertFormattedMessagesToSDKMessages preserves base64 imageData, remote imageURL, text, and system/developer roles without empty-string destruction",
+                  "nodeIdentifier" : "ClassicChatRestorationTests/multimodalFormattedMessagesToSDKConversion()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/multimodalFormattedMessagesToSDKConversion()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,035s",
+                  "durationInSeconds" : 0.03503894805908203,
+                  "name" : "17. ClassicChatAgentProjection maps provider-native .source and .file and rejects fabricated search.local URLs",
+                  "nodeIdentifier" : "ClassicChatRestorationTests/classicChatAgentProjectionSourceFileAndValidResources()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/classicChatAgentProjectionSourceFileAndValidResources()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,0026s",
+                  "durationInSeconds" : 0.002607107162475586,
+                  "name" : "18. Build 84001 defect 7A: calling web_research as a tool or load_skill(skill_id: search_online) returns explicit Skill ID vs tool name guidance",
+                  "nodeIdentifier" : "ClassicChatRestorationTests/build84001SkillVsToolNameDisambiguation()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/build84001SkillVsToolNameDisambiguation()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,0003s",
+                  "durationInSeconds" : 0.0002999305725097656,
+                  "name" : "19. Build 84001 defect 7B: ManageMCPServersTool rejects known nonexistent or native-addon MCP packages and supports action/parameter aliases",
+                  "nodeIdentifier" : "ClassicChatRestorationTests/build84001MCPValidationAndIncompatiblePackageGuard()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/build84001MCPValidationAndIncompatiblePackageGuard()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,0018s",
+                  "durationInSeconds" : 0.0017702579498291016,
+                  "name" : "20. Build 84001 defect 7B: server-worker.mjs includes ICU-less Node regex compatibility shim for \\P{ASCII} and \\p{ASCII}",
+                  "nodeIdentifier" : "ClassicChatRestorationTests/build84001UnicodePropertyRegexSanitizerInServerWorker()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/build84001UnicodePropertyRegexSanitizerInServerWorker()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,0095s",
+                  "durationInSeconds" : 0.009464025497436523,
+                  "name" : "21. Build 84001 defect 7C: execute_shell_command supports pwd builtin and NodeRuntimeService infers CommonJS for require() snippets",
+                  "nodeIdentifier" : "ClassicChatRestorationTests/build84001ShellPwdAndNodeCommonJSInference()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/build84001ShellPwdAndNodeCommonJSInference()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,00016s",
+                  "durationInSeconds" : 0.00015997886657714844,
+                  "name" : "22. Schema transport budgets are explicit and do not silently cap ordinary sessions",
+                  "nodeIdentifier" : "ClassicChatRestorationTests/build84001SchemaOverheadTokenBudget()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/build84001SchemaOverheadTokenBudget()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,00019s",
+                  "durationInSeconds" : 0.000186920166015625,
+                  "name" : "23. HanlinComposerPopupCoordinator preserves drawer routes across independent model presentation",
+                  "nodeIdentifier" : "ClassicChatRestorationTests/hanlinComposerPopupCoordinatorMutualExclusionAndV33TwoPhaseZoom()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/hanlinComposerPopupCoordinatorMutualExclusionAndV33TwoPhaseZoom()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,0037s",
+                  "durationInSeconds" : 0.003689289093017578,
+                  "name" : "24. HanlinComposerActionBridge derives truthful capability snapshot, active mode chips, and tools shortcut count",
+                  "nodeIdentifier" : "ClassicChatRestorationTests/hanlinComposerActionBridgeCapabilityAndActiveChips()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/hanlinComposerActionBridgeCapabilityAndActiveChips()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,0073s",
+                  "durationInSeconds" : 0.007253885269165039,
+                  "name" : "25. Original tool projection preserves per-call skill and MCP audit while keeping internal skill activity out of the visible domain result",
+                  "nodeIdentifier" : "ClassicChatRestorationTests/build84701P0ToolContentSeparationAndPerCallProjection()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/build84701P0ToolContentSeparationAndPerCallProjection()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,0028s",
+                  "durationInSeconds" : 0.002752065658569336,
+                  "name" : "26. NativeMultilineTextEditor.effectiveMeasurementWidth uses actual view bounds on narrow split-screen widths before fallback",
+                  "nodeIdentifier" : "ClassicChatRestorationTests/nativeMultilineTextEditorEffectiveMeasurementWidth()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/nativeMultilineTextEditorEffectiveMeasurementWidth()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,00083s",
+                  "durationInSeconds" : 0.0008296966552734375,
+                  "name" : "27. Track 1 P0: Two calls with identical toolName and identical output retain distinct identities, stable IDs, and execution order",
+                  "nodeIdentifier" : "ClassicChatRestorationTests/duplicateOutputsDifferentCallsRetainOrderAndIdentity()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/duplicateOutputsDifferentCallsRetainOrderAndIdentity()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,00044s",
+                  "durationInSeconds" : 0.00044417381286621094,
+                  "name" : "28. Track 1 P0: Complex tool sequence (load_skill -> MCP status -> MCP call -> failed MCP call) preserves order, statuses, and error details",
+                  "nodeIdentifier" : "ClassicChatRestorationTests/complexToolSequenceAndErrorPreservation()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/complexToolSequenceAndErrorPreservation()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,000089s",
+                  "durationInSeconds" : 8.869171142578125e-05,
+                  "name" : "29. Track 1 P0: Domain tools preserve legitimate '### Instructions' headings in user view; meta skill tools sanitize user view while preserving modelText",
+                  "nodeIdentifier" : "ClassicChatRestorationTests/domainToolLegitimateInstructionsHeadingPreserved()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/domainToolLegitimateInstructionsHeadingPreserved()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,0032s",
+                  "durationInSeconds" : 0.0031588077545166016,
+                  "name" : "30. Track 4 P0: Four meta-tool user summaries support Hebrew, English, and Simplified Chinese without falling back to English/Chinese for Hebrew",
+                  "nodeIdentifier" : "ClassicChatRestorationTests/hebrewEnglishChineseToolSummaryLocalization()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/hebrewEnglishChineseToolSummaryLocalization()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,00012s",
+                  "durationInSeconds" : 0.0001201629638671875,
+                  "name" : "31. Track 1 P0: Legacy stored chat without agentRunJSON falls back gracefully to toolContent without crashing or showing duplicate cards",
+                  "nodeIdentifier" : "ClassicChatRestorationTests/legacyToolContentOnlyChatFallback()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/legacyToolContentOnlyChatFallback()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "Classic Source-First Chat Restoration & Agent Capability Verification",
+              "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "0,33s",
+                  "durationInSeconds" : 0.3259711265563965,
+                  "name" : "Schema output stays buffered until exact validation and preserves cache counters",
+                  "nodeIdentifier" : "HanlinMiniAppAssistantIntegrationTests/validatedStructuredOutput()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMiniAppAssistantIntegrationTests/validatedStructuredOutput()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "children" : [
+                    {
+                      "duration" : "0,32s",
+                      "durationInSeconds" : 0.31909799575805664,
+                      "name" : "\"{\"count\":\"seven\"}\"",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMiniAppAssistantIntegrationTests/invalidStructuredOutput(_:)?args=615a4e0b9e466a04d829acd00d3901c18bc8032fbb37b27d0630a177e71d3847",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    },
+                    {
+                      "duration" : "0,3s",
+                      "durationInSeconds" : 0.30222010612487793,
+                      "name" : "\"{\"count\":7,\"extra\":true}\"",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMiniAppAssistantIntegrationTests/invalidStructuredOutput(_:)?args=479b27f19b80424d7b2dbd8a54eabded92919941435712a856cf898c432c4b8d",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    },
+                    {
+                      "duration" : "0,31s",
+                      "durationInSeconds" : 0.3107340335845947,
+                      "name" : "\"{\"count\":9007199254740993}\"",
+                      "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMiniAppAssistantIntegrationTests/invalidStructuredOutput(_:)?args=52655fc1c22e9115cb39fc0fb30e8789fb5d849fe81ee08f7fb13902661fcb73",
+                      "nodeType" : "Arguments",
+                      "result" : "Passed"
+                    }
+                  ],
+                  "duration" : "0,31s",
+                  "durationInSeconds" : 0.3106840451558431,
+                  "name" : "Wrong schema values and lossy JavaScript numbers never become structured events",
+                  "nodeIdentifier" : "HanlinMiniAppAssistantIntegrationTests/invalidStructuredOutput(_:)",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMiniAppAssistantIntegrationTests/invalidStructuredOutput(_:)",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,3s",
+                  "durationInSeconds" : 0.29917025566101074,
+                  "name" : "Truncated JSON is not published as a successful object",
+                  "nodeIdentifier" : "HanlinMiniAppAssistantIntegrationTests/incompleteStructuredOutput()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMiniAppAssistantIntegrationTests/incompleteStructuredOutput()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,00021s",
+                  "durationInSeconds" : 0.00020623207092285156,
+                  "name" : "A different session cannot consume or cancel an original handle",
+                  "nodeIdentifier" : "HanlinMiniAppAssistantIntegrationTests/sessionBoundHandles()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMiniAppAssistantIntegrationTests/sessionBoundHandles()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,0069s",
+                  "durationInSeconds" : 0.0069217681884765625,
+                  "name" : "Adapter teardown revokes new admission and cancels a pending native read",
+                  "nodeIdentifier" : "HanlinMiniAppAssistantIntegrationTests/teardownCancellation()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMiniAppAssistantIntegrationTests/teardownCancellation()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,0041s",
+                  "durationInSeconds" : 0.004075050354003906,
+                  "name" : "Unknown credential and implicit tool fields fail before producer creation",
+                  "nodeIdentifier" : "HanlinMiniAppAssistantIntegrationTests/noImplicitToolsOrCredentials()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMiniAppAssistantIntegrationTests/noImplicitToolsOrCredentials()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,0021s",
+                  "durationInSeconds" : 0.002125978469848633,
+                  "name" : "Both active adapters call their injected host service and revoke it",
+                  "nodeIdentifier" : "HanlinMiniAppAssistantIntegrationTests/activeAdapterDispatch()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMiniAppAssistantIntegrationTests/activeAdapterDispatch()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "Active MiniApp native assistant",
+              "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMiniAppAssistantIntegrationTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "0,03s",
+                  "durationInSeconds" : 0.02977585792541504,
+                  "name" : "oldRowsAndOriginalSwiftDataRoundTrip()",
+                  "nodeIdentifier" : "HanlinModelPromptCachePersistenceTests/oldRowsAndOriginalSwiftDataRoundTrip()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinModelPromptCachePersistenceTests/oldRowsAndOriginalSwiftDataRoundTrip()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,0067s",
+                  "durationInSeconds" : 0.006700277328491211,
+                  "name" : "scopedResourcesCannotReplaceGlobalPreferences()",
+                  "nodeIdentifier" : "HanlinModelPromptCachePersistenceTests/scopedResourcesCannotReplaceGlobalPreferences()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinModelPromptCachePersistenceTests/scopedResourcesCannotReplaceGlobalPreferences()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,0025s",
+                  "durationInSeconds" : 0.0024840831756591797,
+                  "name" : "compactConfigurationPreservesPreferencesAndLegacyDecoding()",
+                  "nodeIdentifier" : "HanlinModelPromptCachePersistenceTests/compactConfigurationPreservesPreferencesAndLegacyDecoding()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinModelPromptCachePersistenceTests/compactConfigurationPreservesPreferencesAndLegacyDecoding()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "Original model prompt-cache persistence",
+              "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinModelPromptCachePersistenceTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "0,00027s",
+                  "durationInSeconds" : 0.00026798248291015625,
+                  "name" : "Current time and retrieved memory change only the trailing system block",
+                  "nodeIdentifier" : "HanlinPromptCachingIntegrationTests/stableInstructionsSurviveContextChanges()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinPromptCachingIntegrationTests/stableInstructionsSurviveContextChanges()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,00014s",
+                  "durationInSeconds" : 0.00013780593872070312,
+                  "name" : "SDK conversion preserves system authority and one stable cache boundary",
+                  "nodeIdentifier" : "HanlinPromptCachingIntegrationTests/distinctSystemBlocks()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinPromptCachingIntegrationTests/distinctSystemBlocks()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,00019s",
+                  "durationInSeconds" : 0.0001850128173828125,
+                  "name" : "No synthetic delimiters or empty context are added to prompt text",
+                  "nodeIdentifier" : "HanlinPromptCachingIntegrationTests/emptyAndVerbatimSections()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinPromptCachingIntegrationTests/emptyAndVerbatimSections()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,00013s",
+                  "durationInSeconds" : 0.0001308917999267578,
+                  "name" : "Skill discovery order is stable across catalog enumeration order",
+                  "nodeIdentifier" : "HanlinPromptCachingIntegrationTests/stableSkillCatalogOrder()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinPromptCachingIntegrationTests/stableSkillCatalogOrder()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "Native prompt cache integration",
+              "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinPromptCachingIntegrationTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            }
+          ],
+          "name" : "AI_HLYTests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests",
+          "nodeType" : "Unit test bundle",
+          "result" : "Passed"
+        }
+      ],
+      "name" : "AI_HLY",
+      "nodeType" : "Test Plan",
+      "result" : "Passed"
+    }
+  ],
+  "testPlanConfigurations" : [
+    {
+      "configurationId" : "1",
+      "configurationName" : "Test Scheme Action"
+    }
+  ]
+}

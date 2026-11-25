@@ -1,0 +1,39 @@
+{
+  "source_sha": "670984a3af6d0f4dfc00c5221293aaacaea62c9c",
+  "records": [
+    {
+      "command": [
+        "python3",
+        "Scripts/SDK/generate_manifest.py"
+      ],
+      "exit_code": 0,
+      "log": "/Users/m1/builds/hanlin-ai-cache-graph-evidence-20261125/1-graph.log"
+    },
+    {
+      "command": [
+        "python3",
+        "Scripts/SDK/update_project.py"
+      ],
+      "exit_code": 0,
+      "log": "/Users/m1/builds/hanlin-ai-cache-graph-evidence-20261125/2-graph.log"
+    },
+    {
+      "command": [
+        "python3",
+        "Scripts/SDK/generate_manifest.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "log": "/Users/m1/builds/hanlin-ai-cache-graph-evidence-20261125/3-graph.log"
+    },
+    {
+      "command": [
+        "python3",
+        "Scripts/SDK/update_project.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "log": "/Users/m1/builds/hanlin-ai-cache-graph-evidence-20261125/4-graph.log"
+    }
+  ]
+}

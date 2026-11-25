@@ -1,0 +1,101 @@
+diff --git a/Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinMiniAppHostVersions.swift b/Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinMiniAppHostVersions.swift
+index 7aafd230..007141ea 100644
+--- a/Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinMiniAppHostVersions.swift
++++ b/Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinMiniAppHostVersions.swift
+@@ -6,6 +6,7 @@ public enum HanlinMiniAppHostVersions {
+     public static let nativeScriptSwiftUIVersion = "4.0.2"
+     public static let expoSDKVersion = "58.0.26"
+     public static let expoUIVersion = "58.0.29"
++    public static let expoAssetVersion = "58.0.21"
+     public static let expoWidgetsVersion = "58.0.29"
+     public static let reactNativeVersion = "0.88.1"
+     public static let nativeApiVersion = "9.1.2"
+diff --git a/Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift b/Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift
+index 063ea4d0..40bc96bc 100644
+--- a/Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift
++++ b/Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift
+@@ -626,6 +626,7 @@ public struct HanlinScriptAnalyzer: Sendable {
+                 }
+                 let supported = switch name {
+                 case "@expo/ui": isExpoVersionCompatible(version)
++                case "expo-asset": version == HanlinMiniAppHostVersions.expoAssetVersion
+                 case "expo-widgets": HanlinPreparedRuntimeVersion.supportsMinimum(version, installed: HanlinMiniAppHostVersions.expoWidgetsVersion)
+                 case "@hanlin/expo-ui": isVersion(version, atMost: expoUIBridgeVersion)
+                 default: false
+@@ -635,14 +636,16 @@ public struct HanlinScriptAnalyzer: Sendable {
+                         state: .unsupported,
+                         severity: .error,
+                         sourcePath: packageJSONPath,
+-                        message: "This Hanlin build supports @expo/ui \(expoUIVersion), expo-widgets \(HanlinMiniAppHostVersions.expoWidgetsVersion), and @hanlin/expo-ui \(expoUIBridgeVersion), but the package requires \(name) \(version)."
++                        message: "This Hanlin build supports @expo/ui \(expoUIVersion), expo-asset \(HanlinMiniAppHostVersions.expoAssetVersion), expo-widgets \(HanlinMiniAppHostVersions.expoWidgetsVersion), and @hanlin/expo-ui \(expoUIBridgeVersion), but the package requires \(name) \(version)."
+                     ))
+                 } else {
+                     findings.append(.init(
+                         state: .supported,
+                         severity: .information,
+                         sourcePath: packageJSONPath,
+-                        message: "Expo plugin \(name) \(version) has embedded native SwiftUI support."
++                        message: name == "expo-asset"
++                            ? "Expo plugin \(name) \(version) has embedded original native asset support."
++                            : "Expo plugin \(name) \(version) has embedded native SwiftUI support."
+                     ))
+                 }
+             }
+diff --git a/Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinScriptAnalyzerTests.swift b/Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinScriptAnalyzerTests.swift
+index 0a2fcd97..7adecac9 100644
+--- a/Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinScriptAnalyzerTests.swift
++++ b/Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinScriptAnalyzerTests.swift
+@@ -165,6 +165,39 @@ struct HanlinScriptAnalyzerTests {
+         }
+     }
+ 
++    @Test("Prepared Expo packages preserve the embedded original asset version contract")
++    func expoAssetPluginRequiresItsActualEmbeddedVersion() throws {
++        let analyzer = HanlinScriptAnalyzer(inventory: .init(
++            baselineID: "fixture", baselineDigest: String(repeating: "a", count: 64), symbols: []
++        ))
++        let cases = [
++            ("expo-asset", HanlinMiniAppHostVersions.expoAssetVersion, true),
++            ("expo-asset", "999.0.0", false),
++            ("expo-not-embedded", HanlinMiniAppHostVersions.expoAssetVersion, false)
++        ]
++        for (name, version, expected) in cases {
++            let prepared = try JSONSerialization.data(withJSONObject: [
++                "name": "fixture", "main": "bundle.js", "hanlinRuntime": "hanlin-expo",
++                "hanlinExpo": [
++                    "runtimeVersion": HanlinMiniAppHostVersions.expoUIVersion,
++                    "plugins": ["@expo/ui": HanlinMiniAppHostVersions.expoUIVersion, name: version]
++                ]
++            ])
++            let fixture = try package(files: [
++                "script.json": #"{"name":"Expo Asset Fixture","version":"1.0.0","entry":"expo/app/bundle.js","hanlinRuntime":"hanlin-expo"}"#,
++                "expo/app/bundle.js": "console.log('asset version fixture')",
++                "expo/app/package.json": String(decoding: prepared, as: UTF8.self)
++            ])
++            defer { try? FileManager.default.removeItem(at: fixture.stagingRoot) }
++            let preview = try analyzer.analyze(fixture)
++            #expect(preview.canInstall == expected, "\(name) required version \(version)")
++            #expect(preview.findings.contains {
++                $0.sourcePath == "expo/app/package.json" && $0.message.contains(name) &&
++                $0.state == (expected ? .supported : .unsupported)
++            })
++        }
++    }
++
+     @Test("Bridge version types and complete semantic versions are validated before import")
+     func malformedBridgeVersionsNeverBypassPreparedPackageValidation() throws {
+         let analyzer = HanlinScriptAnalyzer(inventory: .init(baselineID: "fixture", baselineDigest: String(repeating: "a", count: 64), symbols: []))
+diff --git a/Packages/HanlinPlatform/Tests/HanlinScriptStoreTests/HanlinScriptMiniAppRegistrationTests.swift b/Packages/HanlinPlatform/Tests/HanlinScriptStoreTests/HanlinScriptMiniAppRegistrationTests.swift
+index bc8c61d9..0c78fb55 100644
+--- a/Packages/HanlinPlatform/Tests/HanlinScriptStoreTests/HanlinScriptMiniAppRegistrationTests.swift
++++ b/Packages/HanlinPlatform/Tests/HanlinScriptStoreTests/HanlinScriptMiniAppRegistrationTests.swift
+@@ -770,7 +770,8 @@ struct HanlinScriptMiniAppRegistrationTests {
+         secondaryRuntime: HanlinRuntimeProfile? = nil
+     ) throws -> HanlinStoredPackageSnapshot {
+         let main = runtime == .hanlinNativeScript ? "bundle.mjs" : "bundle.js"
+-        let inputSchema = try HanlinJSONSchemaDocument.decodeCanonicalJSON(Data(#"{"type":"object"}"#.utf8))
++        let inputSchema = try HanlinJSONSchemaDocument.decodeCanonicalJSON(
++            Data(#"{"$schema":"https://json-schema.org/draft/2020-12/schema","type":"object"}"#.utf8))
+         let app = HanlinPackageEntrypointDescriptor(
+             id: "app", kind: .app, sourcePath: "source/app/\(main)",
+             supportedContexts: [.mainApplication], runtimePolicyID: "foreground-app-v1",

@@ -1,0 +1,62 @@
+[
+  {
+    "name": "host-link-ownership",
+    "command": [
+      "python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "Scripts/SDK/tests",
+      "-p",
+      "test_host_link_ownership.py",
+      "-v"
+    ],
+    "started_at_utc": "2026-11-25T05:22:22.592086+00:00",
+    "finished_at_utc": "2026-11-25T05:22:25.172953+00:00",
+    "exit_code": 0,
+    "log": "host-link-ownership.log",
+    "sha256": "e0b76a77594bd32a707ff439757b03cc0327868f402867958c1c081138b76f9d"
+  },
+  {
+    "name": "widget-cxx-imports",
+    "command": [
+      "python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "Scripts/SDK/tests",
+      "-p",
+      "test_widget_cxx_imports.py",
+      "-v"
+    ],
+    "started_at_utc": "2026-11-25T05:22:25.173053+00:00",
+    "finished_at_utc": "2026-11-25T05:22:26.928887+00:00",
+    "exit_code": 0,
+    "log": "widget-cxx-imports.log",
+    "sha256": "f6fbf6a2ad3926f7c7493cc4fbf491ec71de5bcc25721f7f30474e149e22c98b"
+  },
+  {
+    "name": "project-graph-fixtures",
+    "command": [
+      "python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "Scripts/CI/IntegrationValidation",
+      "-p",
+      "test_project_graph.py",
+      "-v"
+    ],
+    "started_at_utc": "2026-11-25T05:22:26.928968+00:00",
+    "finished_at_utc": "2026-11-25T05:22:27.644840+00:00",
+    "exit_code": 0,
+    "log": "project-graph-fixtures.log",
+    "sha256": "0a6753df2b4d900d33c2bf50242cef673726ec74705dbafde0d191b0a494556b"
+  }
+]

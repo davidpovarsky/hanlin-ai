@@ -47,6 +47,11 @@ test('all current manifest fields have source authorities and future reader/sche
   const expo = family('expo prepared package.json');
   assert.equal(expo.fields.find(item => item.field === 'hanlinExpo.nativeApi.abiIdentity').status, 'partial');
   assert(expo.fields.find(item => item.field === 'hanlinExpo.runtimeVersion').semantics.includes('separate stage authorities'));
+  const expoAsset = expo.fields.find(item => item.field === 'hanlinExpo.plugins.expo-asset');
+  assert.equal(expoAsset.status, 'supported');
+  assert(expoAsset.semantics.includes('Exact installed original ExpoAsset version'));
+  assert(expoAsset.semantics.includes('HanlinMiniAppHostVersions.expoAssetVersion'));
+  assert(expoAsset.sources.some(item => item.path === manifestSources.analyzer && item.line));
   const dependency = family('NativeScript installed dependency package.json');
   for (const key of ['version', 'nativescript.platforms.ios', 'peerDependenciesMeta.*.optional', 'optionalDependencies.*'])
     assert(dependency.fields.some(item => item.field === key));
@@ -84,6 +89,12 @@ test('all current manifest fields have source authorities and future reader/sche
     '_ = packageJSON["futurePreparedContract"]\n        if let contractValue = packageJSON["hanlinNativeScript"]');
   await assert.rejects(auditManifestContracts({source: reader(original, new Map([[manifestSources.analyzer, changedPackage]]))}),
     /Unmapped manifest field drift: nativescript package.json reader/);
+  const changedPlugin = original.get(manifestSources.analyzer).replace(
+    'case "expo-asset": version == HanlinMiniAppHostVersions.expoAssetVersion',
+    'case "future-asset-plugin": version == HanlinMiniAppHostVersions.expoAssetVersion');
+  assert.notEqual(changedPlugin, original.get(manifestSources.analyzer));
+  await assert.rejects(auditManifestContracts({source: reader(original, new Map([[manifestSources.analyzer, changedPlugin]]))}),
+    /Unmapped manifest field drift: expo embedded plugins/);
   const changedDependency = original.get(manifestSources.authoring).replace(
     "const pkg = await json(path.join(source, 'package.json'));",
     "const pkg = await json(path.join(source, 'package.json')); void pkg.futureDependencyContract;");
@@ -120,6 +131,7 @@ test('all current manifest fields have source authorities and future reader/sche
     sourceSHA256: Object.fromEntries([...original].map(([file, text]) => [file, sha(text)])),
     originalProvenanceSources: expectedOriginalPaths, provenanceMutationsRejected: provenanceCases.map(([label]) => label),
     driftCases: ['new retained-field consumer rejected', 'renamed native input field rejected',
-      'new prepared package reader field rejected', 'new installed-dependency field rejected', 'original schema/Codable mismatch rejected',
+      'new prepared package reader field rejected', 'changed embedded-plugin identity rejected',
+      'new installed-dependency field rejected', 'original schema/Codable mismatch rejected',
       'new canonical schema property automatically reaches checked outputs']}));
 });
