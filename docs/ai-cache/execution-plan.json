@@ -51,10 +51,10 @@
       "asana": "1220884194759247",
       "status": "EXECUTED_PASS",
       "evidence": [
-        "evidence/app-native-20261125/attempt05/test/receipt.json",
+        "evidence/app-native-20261125/attempt06/test/receipt.json",
         "evidence/native-core-20261125/final-pin/receipt.json"
       ],
-      "acceptance_note": "Actual original appbuild and48requiredinvocations passed on300fe80b, source/locks unchanged. C9 latest-source synchronization/publication remains separate; live-provider/billing notrun."
+      "acceptance_note": "Actual App05 and App06 original builds and all48requiredinvocations passed at their recorded source revisions. C9 final synchronized source/standalone dependency locks/publication remains separate; live-provider/billing NOT_RUN."
     },
     {
       "id": "C4",
@@ -64,10 +64,10 @@
       "asana": "1220884041034869",
       "status": "EXECUTED_PASS",
       "evidence": [
-        "evidence/app-native-20261125/attempt05/test/receipt.json",
+        "evidence/app-native-20261125/attempt06/test/receipt.json",
         "evidence/native-core-20261125/final-pin/receipt.json"
       ],
-      "acceptance_note": "Actual original appbuild and48requiredinvocations passed on300fe80b, source/locks unchanged. C9 latest-source synchronization/publication remains separate; live-provider/billing notrun."
+      "acceptance_note": "Actual App05 and App06 original builds and all48requiredinvocations passed at their recorded source revisions. C9 final synchronized source/standalone dependency locks/publication remains separate; live-provider/billing NOT_RUN."
     },
     {
       "id": "C5",
@@ -89,10 +89,10 @@
       "asana": "1220884013885908",
       "status": "EXECUTED_PASS",
       "evidence": [
-        "evidence/app-native-20261125/attempt05/test/receipt.json",
+        "evidence/app-native-20261125/attempt06/test/receipt.json",
         "evidence/native-core-20261125/final-pin/receipt.json"
       ],
-      "acceptance_note": "Actual original appbuild and48requiredinvocations passed on300fe80b, source/locks unchanged. C9 latest-source synchronization/publication remains separate; live-provider/billing notrun."
+      "acceptance_note": "Actual App05 and App06 original builds and all48requiredinvocations passed at their recorded source revisions. C9 final synchronized source/standalone dependency locks/publication remains separate; live-provider/billing NOT_RUN."
     },
     {
       "id": "C7",
@@ -117,10 +117,10 @@
       "asana": "1220884040998180",
       "status": "EXECUTED_PASS",
       "evidence": [
-        "evidence/app-native-20261125/attempt05/test/receipt.json",
+        "evidence/app-native-20261125/attempt06/test/receipt.json",
         "evidence/native-core-20261125/final-pin/receipt.json"
       ],
-      "acceptance_note": "Actual original appbuild and48requiredinvocations passed on300fe80b, source/locks unchanged. C9 latest-source synchronization/publication remains separate; live-provider/billing notrun."
+      "acceptance_note": "Actual App05 and App06 original builds and all48requiredinvocations passed at their recorded source revisions. C9 final synchronized source/standalone dependency locks/publication remains separate; live-provider/billing NOT_RUN."
     },
     {
       "id": "C9",
@@ -153,30 +153,20 @@
       "receipt": "evidence/native-core-20261125/final-pin/receipt.json",
       "source_unchanged": true
     },
-    "reuse_receipt": "evidence/reuse-receipt-20261125.json",
+    "reuse_receipt": "evidence/final-reuse-20261125/reuse-receipt.json",
     "current_app_result": {
-      "source": "300fe80b0927f898740fba8a926e852906f52660",
+      "source": "495680e928d5f4fd9735d14b0be5f267ced84b42",
       "status": "EXECUTED_PASS",
-      "declared_cases": 46,
-      "executed": 48,
-      "latest_attempt": "evidence/app-native-20261125/attempt05/test-index.json",
-      "fix": "4f2bc9864a4fefa62f69ca54fb9f6b33351ba1df",
-      "preparation_reason": "Latest source synchronized; exact source-declared invocation gate installed; current original Host and fixtures remain valid.",
-      "expected_invocations": 48,
-      "prepare_status": "REUSED_VERIFIED_PREPARED",
-      "prepare_receipt": "evidence/app-native-20261125/attempt04/prepare/receipt.json",
       "expected_methods": 46,
-      "fixes": [
-        "a48ba95d351374de3f70189a9a7d6bd61670b2f1",
-        "36d97c5a2b9fde92bbbc480adcff473dcb66698e"
-      ],
-      "prepare_reuse_receipt": "evidence/app-native-20261125/attempt05/prepare-reuse.json",
-      "preparation_input_count": 58,
+      "expected_invocations": 48,
+      "executed": 48,
       "passed": 48,
       "failed": 0,
       "source_unchanged": true,
-      "receipt": "evidence/app-native-20261125/attempt05/test/receipt.json",
-      "summary": "evidence/app-native-20261125/attempt05/test/acceptance-summary.json"
+      "receipt": "evidence/app-native-20261125/attempt06/test/receipt.json",
+      "summary": "evidence/app-native-20261125/attempt06/test/acceptance-summary.json",
+      "raw_log_sha256": "afba612d4ea2ad45dcd7dd1447b01d94e22136b2815259b51c6d21998a612f8b",
+      "final_current_source_gate": "C9 pending startup/standalone-lock reconciliation and final native execution"
     },
     "runtime_host_result": {
       "source": "04c1942bc88cd4de7deafda7dd342b9b6c401dcf",
@@ -187,12 +177,16 @@
       "skip": "Original opt-in >300-second worker duration test; not a cache/assistant acceptance case.",
       "evidence": "evidence/native-preparation-20261125/host-final/index.json"
     },
-    "latest_sync_receipt": "evidence/latest-sync-during-app04-20261125.json",
+    "latest_sync_receipt": "evidence/latest-sync-f391-20261125/receipt.json",
     "current_host_refresh": {
-      "source": "53593c3749dbd2be1e56739576fcdd5ea2c1cf06",
+      "source": "6fbcf703dd9f40f5b1d42592d58a0a69573dcdfa",
       "status": "EXECUTED_PASS",
-      "evidence": "evidence/native-preparation-20261125/retry3-native/receipt.json",
-      "archive_sha256": "9fb7998ee48fe913e98f865d5b962e8a46dce9c836ff2efd295598206741b2cd"
+      "passed": 177,
+      "failed": 0,
+      "skipped": 1,
+      "evidence": "evidence/app-native-20261125/attempt06/host-refresh/receipt.json",
+      "archive_sha256": "b912c83f4fcad09c8c97721d2a95276f4cbcbd2c2df7035a648f3be46b417c5d",
+      "source_inputs_hash": "bbd870604cb6c943916392a99ef06607e2279516399a557e7f21fd08b5cab3d1"
     },
     "app_attempts": [
       {
@@ -250,6 +244,30 @@
         "test_process_exit_code": -15,
         "simulator_shutdown_exit_code": 0,
         "source_unchanged": true
+      },
+      {
+        "source": "300fe80b0927f898740fba8a926e852906f52660",
+        "status": "EXECUTED_PASS",
+        "declared_cases": 46,
+        "executed": 48,
+        "latest_attempt": "evidence/app-native-20261125/attempt05/test-index.json",
+        "fix": "4f2bc9864a4fefa62f69ca54fb9f6b33351ba1df",
+        "preparation_reason": "Latest source synchronized; exact source-declared invocation gate installed; current original Host and fixtures remain valid.",
+        "expected_invocations": 48,
+        "prepare_status": "REUSED_VERIFIED_PREPARED",
+        "prepare_receipt": "evidence/app-native-20261125/attempt04/prepare/receipt.json",
+        "expected_methods": 46,
+        "fixes": [
+          "a48ba95d351374de3f70189a9a7d6bd61670b2f1",
+          "36d97c5a2b9fde92bbbc480adcff473dcb66698e"
+        ],
+        "prepare_reuse_receipt": "evidence/app-native-20261125/attempt05/prepare-reuse.json",
+        "preparation_input_count": 58,
+        "passed": 48,
+        "failed": 0,
+        "source_unchanged": true,
+        "receipt": "evidence/app-native-20261125/attempt05/test/receipt.json",
+        "summary": "evidence/app-native-20261125/attempt05/test/acceptance-summary.json"
       }
     ],
     "future_runner_lock_correction": {
@@ -257,13 +275,24 @@
       "fixture_tests_passed": 7,
       "receipt": "evidence/active-lock-snapshot-20261125/receipt.json",
       "scope": "Only validation tooling; full tracked source hashing retained, historical-proof mutation rejected; nine actual tracked locks copied. App03 remains sealed at5b69bbb5 and is not relabeled."
+    },
+    "standalone_package_resolution": {
+      "status": "RUNNING",
+      "source": "37367b3d6bbd7e8321d6828a9052d502dd9d7522",
+      "producer_fix": "26e94ea93cc16dee392138b2a40c9f699f263f79",
+      "guard_fixtures_passed": 12,
+      "guard_evidence": "evidence/standalone-lock-guard-20261125/guard-receipt.json",
+      "recipe": "Scripts/CI/IntegrationValidation/resolve_agent_sdk_locks.sh",
+      "job": "job_220cdb233362",
+      "scope": "Original six standalone SwiftPM graphs; canonical app lock remains authority; no hand-edited pins"
     }
   },
-  "updated_at": "2026-11-25T04:24:59.775718+00:00",
-  "latest_integrated_source": "74b4946ce229e43ed2908e41691840e6eb3bd6d8",
+  "updated_at": "2026-11-25T04:59:33.264867+00:00",
+  "latest_integrated_source": "37367b3d6bbd7e8321d6828a9052d502dd9d7522",
   "synchronized_heads": {
-    "composer": "d89ce38b170bc9af4734cd11e30ca793b16698d0",
-    "miniapps_sdk": "97bab5394e206133d1fefa797b85fa2deffc1012",
-    "wave3": "12d25da36451acc72b65144df79bedae878ba8ec"
-  }
+    "composer": "f39142d3d14ae1bbbb81febceeef61fdc605f2a0",
+    "miniapps_sdk": "3d3a89bbfb5921490764f01b20632f62fb398433",
+    "wave3": "a2127598a677e0b8a67d41cdb422c4e19c8d1afc"
+  },
+  "synchronization_cutoff_utc": "2026-11-25T04:43:43Z"
 }

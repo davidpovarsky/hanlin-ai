@@ -1,0 +1,16 @@
+{
+  "commit": "c67df56e050157d45e8ded77ebbc4a056181b171",
+  "parents": [
+    "495680e928d5f4fd9735d14b0be5f267ced84b42",
+    "f39142d3d14ae1bbbb81febceeef61fdc605f2a0"
+  ],
+  "tree": "55b45b7ed9eff3d98fbc5ec7c12903adcacfef3c",
+  "preserved_exact_documents": [
+    "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+    "docs/miniapp-sdk/extension-reachability.json",
+    "docs/miniapp-sdk/extension-reachability.md",
+    "docs/miniapp-sdk/source-inventory.json"
+  ],
+  "host_resolver_unchanged": true,
+  "status": ""
+}
