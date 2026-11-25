@@ -135,13 +135,14 @@
     },
     "reuse_receipt": "evidence/reuse-receipt-20261125.json",
     "current_app_result": {
-      "source": "7c5b3bb59e1b505e6186ba7070cd0420e144c366",
+      "source": "94a929a26355e4a586238a31e3a4fc2628e8e548",
       "status": "PREPARING_RETRY",
       "declared_cases": 46,
       "executed": 0,
       "latest_attempt": "evidence/app-native-20261125/attempt02-factory-isolation/index.json",
       "fix": "Explicit MainActor isolation of both existing live tool factory entrypoints, no body/order/tool-set change",
-      "preparation_reason": "Latest fixture generator derives versions from original resolvedNativeScriptlock; no Host/SDKinputclosurechange. Validate originalaudit/archiveafterfixturegeneration."
+      "preparation_reason": "Latest source synchronized; exact source-declared invocation gate installed; current original Host and fixtures remain valid.",
+      "expected_invocations": 48
     },
     "runtime_host_result": {
       "source": "04c1942bc88cd4de7deafda7dd342b9b6c401dcf",
@@ -152,7 +153,7 @@
       "skip": "Original opt-in >300-second worker duration test; not a cache/assistant acceptance case.",
       "evidence": "evidence/native-preparation-20261125/host-final/index.json"
     },
-    "latest_sync_receipt": "evidence/latest-sync-20261125.json",
+    "latest_sync_receipt": "evidence/latest-sync-before-app03-20261125.json",
     "current_host_refresh": {
       "source": "53593c3749dbd2be1e56739576fcdd5ea2c1cf06",
       "status": "EXECUTED_PASS",
@@ -188,11 +189,11 @@
       }
     ]
   },
-  "updated_at": "2026-11-25T02:31:32.034411+00:00",
-  "latest_integrated_source": "7c5b3bb59e1b505e6186ba7070cd0420e144c366",
+  "updated_at": "2026-11-25T02:49:25.648923+00:00",
+  "latest_integrated_source": "94a929a26355e4a586238a31e3a4fc2628e8e548",
   "synchronized_heads": {
-    "composer": "199da0f9e61a0d99998bce906001e565f3138d1c",
-    "miniapps_sdk": "fda6948ca6a1f541293a1a1dd20e97f75eb0a527",
-    "wave3": "bad6e68df21d4ecfe11f3b6fc3f4242eba5b23ed"
+    "composer": "b739ada91aca115093e3511f9df58c15edcb5923",
+    "miniapps_sdk": "d4fbdf731dbadc95a13ead306a6d02ae61a88aad",
+    "wave3": "c76371717ec3c0c6eb9dfd16d7ab6d4b11680b86"
   }
 }
