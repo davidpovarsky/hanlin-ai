@@ -127,6 +127,7 @@ struct HanlinCompactChatWorkspace: View {
         }
         .modifier(HanlinCompactKeyboardAvoidance(owner: keyboardOwner))
         .onChange(of: showsHistory) { _, presented in
+            keyboardOwner.setHistoryPresented(presented)
             if presented {
                 isCompactComposerInputActive = false
                 keyboardOwner.editor?.resignFirstResponder()
@@ -156,6 +157,7 @@ struct HanlinCompactChatWorkspace: View {
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("hanlin-compact-chat-workspace")
         .onDisappear {
+            keyboardOwner.setHistoryPresented(false)
             showsHistory = false
         }
     }
@@ -188,9 +190,11 @@ struct HanlinCompactChatWorkspace: View {
             conversationLibrary(isPresented: showsHistory)
                 .navigationTitle(Text("History", bundle: HanlinLocalization.bundle))
                 .toolbar {
-                    ToolbarItem(placement: .cancellationAction) {
-                        Button(hanlin: "Done") { showsHistory = false }
-                            .accessibilityIdentifier("hanlin-history-done")
+                    if showsHistory {
+                        ToolbarItem(placement: .cancellationAction) {
+                            Button(hanlin: "Done") { showsHistory = false }
+                                .accessibilityIdentifier("hanlin-history-done")
+                        }
                     }
                 }
                 .safeAreaInset(edge: .bottom, spacing: 0) {
@@ -203,6 +207,7 @@ struct HanlinCompactChatWorkspace: View {
                     }
                     .accessibilityIdentifier("hanlin-settings-tab")
                     .background(.bar)
+                    .accessibilityHidden(true, isEnabled: !showsHistory)
                 }
         }
     }
@@ -526,6 +531,8 @@ final class HanlinCompactKeyboardOwner {
     private(set) weak var editor: UITextView?
     fileprivate weak var observer: HanlinCompactKeyboardFrameView?
     private var modelPopoverIDs: Set<UUID> = []
+    private var historyPresented = false
+    private var editorAccessibilityBeforeHistory: (isElement: Bool, elementsHidden: Bool)?
     private struct SearchFocus {
         weak var anchor: UIView?
         weak var window: UIWindow?
@@ -567,11 +574,49 @@ final class HanlinCompactKeyboardOwner {
         return ownsComposer || ownsSearch
     }
 
+    /// The mounted editor belongs to this workspace. History temporarily owns
+    /// accessibility without replacing the editor or changing its text/focus.
+    func setHistoryPresented(_ presented: Bool) {
+        historyPresented = presented
+        applyEditorAccessibilityOwnership()
+    }
+
+    private func applyEditorAccessibilityOwnership() {
+        guard let editor else {
+            editorAccessibilityBeforeHistory = nil
+            return
+        }
+        if historyPresented {
+            if editorAccessibilityBeforeHistory == nil {
+                editorAccessibilityBeforeHistory = (
+                    editor.isAccessibilityElement, editor.accessibilityElementsHidden)
+            }
+            editor.isAccessibilityElement = false
+            editor.accessibilityElementsHidden = true
+        } else {
+            restoreEditorAccessibility()
+        }
+    }
+
+    private func restoreEditorAccessibility() {
+        guard let original = editorAccessibilityBeforeHistory else { return }
+        editor?.isAccessibilityElement = original.isElement
+        editor?.accessibilityElementsHidden = original.elementsHidden
+        editorAccessibilityBeforeHistory = nil
+    }
+
     func observe(_ editor: UITextView, event: NativeMultilineTextEditor.LifecycleEvent) {
         switch event {
         case .attached:
-            guard self.editor !== editor else { return }
-            self.editor = editor
+            let changed = self.editor !== editor
+            if changed {
+                restoreEditorAccessibility()
+                self.editor = editor
+            }
+            // Every native update reports attachment, including active IME
+            // composition. Reassert ownership before the same-editor fast path.
+            applyEditorAccessibilityOwnership()
+            guard changed else { return }
             observer?.ownershipDidChange("editor-attached")
         case .focusChanged(let focused):
             guard self.editor === editor else { return }
@@ -579,6 +624,7 @@ final class HanlinCompactKeyboardOwner {
         case .detached:
             // A late teardown from a replaced editor cannot unregister its successor.
             guard self.editor === editor else { return }
+            restoreEditorAccessibility()
             self.editor = nil
             observer?.ownershipDidChange("editor-detached")
         }

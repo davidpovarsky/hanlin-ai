@@ -110,3 +110,104 @@ struct HanlinSidebarGestureTests {
         focused.disconnect()
     }
 }
+
+
+@MainActor
+@Suite("Sidebar native accessibility ownership")
+struct HanlinSidebarAccessibilityOwnershipTests {
+    @Test("History temporarily owns editor accessibility without changing editing state")
+    func historyTemporarilyOwnsEditorAccessibility() {
+        let owner = HanlinCompactKeyboardOwner()
+        let editor = UITextView()
+        editor.isAccessibilityElement = true
+        editor.accessibilityElementsHidden = false
+        editor.isUserInteractionEnabled = false
+        editor.text = "Preserve the original draft"
+        editor.selectedRange = NSRange(location: 3, length: 4)
+        owner.observe(editor, event: .attached)
+
+        owner.setHistoryPresented(true)
+        #expect(!editor.isAccessibilityElement)
+        #expect(editor.accessibilityElementsHidden)
+        #expect(!editor.isUserInteractionEnabled)
+        #expect(editor.text == "Preserve the original draft")
+        #expect(editor.selectedRange == NSRange(location: 3, length: 4))
+
+        // A repeated native update must reassert the gate without replacing
+        // the original snapshot with these transient native values.
+        editor.isAccessibilityElement = true
+        editor.accessibilityElementsHidden = false
+        owner.observe(editor, event: .attached)
+        #expect(!editor.isAccessibilityElement)
+        #expect(editor.accessibilityElementsHidden)
+
+        owner.setHistoryPresented(false)
+        #expect(editor.isAccessibilityElement)
+        #expect(!editor.accessibilityElementsHidden)
+        #expect(!editor.isUserInteractionEnabled)
+        #expect(editor.text == "Preserve the original draft")
+        #expect(editor.selectedRange == NSRange(location: 3, length: 4))
+
+        // Once ownership ends, a later close must not overwrite another
+        // accessibility choice made while History is already closed.
+        editor.isAccessibilityElement = false
+        editor.accessibilityElementsHidden = true
+        owner.setHistoryPresented(false)
+        #expect(!editor.isAccessibilityElement)
+        #expect(editor.accessibilityElementsHidden)
+    }
+
+    @Test("Replacement and detach restore only the registered editor's original accessibility")
+    func replacementAndDetachRestoreScopedAccessibility() {
+        let owner = HanlinCompactKeyboardOwner()
+        let oldEditor = UITextView()
+        oldEditor.isAccessibilityElement = true
+        oldEditor.accessibilityElementsHidden = false
+        let currentEditor = UITextView()
+        currentEditor.isAccessibilityElement = false
+        currentEditor.accessibilityElementsHidden = false
+        owner.observe(oldEditor, event: .attached)
+        owner.setHistoryPresented(true)
+
+        owner.observe(currentEditor, event: .attached)
+        #expect(oldEditor.isAccessibilityElement)
+        #expect(!oldEditor.accessibilityElementsHidden)
+        #expect(!currentEditor.isAccessibilityElement)
+        #expect(currentEditor.accessibilityElementsHidden)
+
+        owner.observe(oldEditor, event: .detached)
+        #expect(owner.editor === currentEditor)
+        #expect(currentEditor.accessibilityElementsHidden)
+
+        owner.observe(currentEditor, event: .detached)
+        #expect(owner.editor == nil)
+        #expect(!currentEditor.isAccessibilityElement)
+        #expect(!currentEditor.accessibilityElementsHidden)
+        owner.setHistoryPresented(false)
+    }
+
+    @Test("History ownership applies to a later attachment and preserves previously hidden editors")
+    func historyBeforeAttachmentPreservesPriorHiddenState() {
+        let owner = HanlinCompactKeyboardOwner()
+        owner.setHistoryPresented(true)
+        let editor = UITextView()
+        editor.isAccessibilityElement = false
+        editor.accessibilityElementsHidden = true
+        owner.observe(editor, event: .attached)
+        #expect(!editor.isAccessibilityElement)
+        #expect(editor.accessibilityElementsHidden)
+
+        owner.setHistoryPresented(false)
+        #expect(!editor.isAccessibilityElement)
+        #expect(editor.accessibilityElementsHidden)
+        owner.observe(editor, event: .detached)
+
+        // A closed workspace must not hide the next native editor.
+        let successor = UITextView()
+        successor.isAccessibilityElement = true
+        successor.accessibilityElementsHidden = false
+        owner.observe(successor, event: .attached)
+        #expect(successor.isAccessibilityElement)
+        #expect(!successor.accessibilityElementsHidden)
+    }
+}
