@@ -239,6 +239,9 @@ public struct AgentRun: Codable, Hashable, Identifiable {
   public var transcriptItems: [AgentTranscriptItem]
   public var evidenceItems: [AgentEvidenceItem]
   public var finalAnswer: String?
+  /// The actual start of text subsequently confirmed as the final answer.
+  /// Kept separately so activity snapshots can omit every answer delta.
+  public var finalAnswerStartedAt: Date? = nil
   public var approvals: [AgentToolApproval] = []
   /// Receipt of a currently dispatched model request, cleared by its first semantic output.
   /// Optional for older persisted runs; presentation also requires current live-run ownership.
@@ -272,13 +275,17 @@ public struct AgentRun: Codable, Hashable, Identifiable {
     self.finalAnswer = finalAnswer
   }
 
+  public var activityCompletedAt: Date? {
+    finalAnswerStartedAt ?? completedAt
+  }
+
   public var elapsedTime: TimeInterval {
     max(0, (completedAt ?? Date()).timeIntervalSince(startedAt))
   }
 
   private enum CodingKeys: String, CodingKey {
     case schemaVersion, id, groupID, providerID, modelID, startedAt, completedAt
-    case status, steps, transcriptItems, evidenceItems, finalAnswer, approvals, pendingModelRequestID
+    case status, steps, transcriptItems, evidenceItems, finalAnswer, finalAnswerStartedAt, approvals, pendingModelRequestID
   }
 
   public init(from decoder: Decoder) throws {
@@ -306,6 +313,13 @@ public struct AgentRun: Codable, Hashable, Identifiable {
     approvals = try container.decodeIfPresent([AgentToolApproval].self, forKey: .approvals) ?? []
     pendingModelRequestID = try container.decodeIfPresent(String.self, forKey: .pendingModelRequestID)
     if status != .running && status != .pending { pendingModelRequestID = nil }
+    finalAnswerStartedAt = try container.decodeIfPresent(Date.self, forKey: .finalAnswerStartedAt)
+    if finalAnswerStartedAt == nil, status != .running && status != .pending {
+      finalAnswerStartedAt = transcriptItems.last(where: {
+        $0.kind == .assistantText && $0.textRole == .final
+          && $0.text?.contains(where: { !$0.isWhitespace }) == true
+      })?.startedAt
+    }
     let transcriptFinalAnswer = AgentTranscriptValidation.finalAnswer(in: transcriptItems)
     let persistedFinalAnswer = try container.decodeIfPresent(String.self, forKey: .finalAnswer)
     finalAnswer =

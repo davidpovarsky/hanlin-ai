@@ -134,11 +134,6 @@ struct HanlinCompactChatWorkspace: View {
             }
         }
         .onChange(of: path) { oldPath, newPath in
-            #if DEBUG || HANLIN_TESTING
-            keyboardOwner.traceNavigation(
-                "path-change", path: newPath, previousPath: oldPath,
-                requestedHistory: showsHistory, readAfterYield: true)
-            #endif
             showsHistory = false
             isCompactComposerInputActive = false
             sessionBridge.expectedActiveSessionID = activeChatID
@@ -316,11 +311,6 @@ struct HanlinCompactChatWorkspace: View {
                     matchedMessageIDByChat[id] = matchedMsgID
                 }
                 showsHistory = false
-                #if DEBUG || HANLIN_TESTING
-                keyboardOwner.traceNavigation(
-                    "callback-before-path", path: path,
-                    requestedHistory: showsHistory)
-                #endif
                 path = [.chat(id)]
             },
             onAddNewChat: {
@@ -341,6 +331,7 @@ struct HanlinCompactChatWorkspace: View {
             },
             onRefresh: onRefresh,
             isPresented: isPresented,
+            selectedConversationID: sessionBridge.expectedActiveSessionID,
             keyboardOwner: keyboardOwner
         )
     }
@@ -543,14 +534,6 @@ final class HanlinCompactKeyboardOwner {
     private var modelPopoverIDs: Set<UUID> = []
     private var historyPresented = false
     private var editorAccessibilityBeforeHistory: (isElement: Bool, elementsHidden: Bool)?
-    #if DEBUG || HANLIN_TESTING
-    private var accessibilityTraceSequence = 0
-    private var accessibilityTraceGeneration: UInt = 0
-    private var accessibilityTraceTask: Task<Void, Never>?
-    private var navigationTraceSequence = 0
-    private var navigationTraceGeneration: UInt = 0
-    private var navigationTraceTask: Task<Void, Never>?
-    #endif
     private struct SearchFocus {
         weak var anchor: UIView?
         weak var window: UIWindow?
@@ -597,212 +580,7 @@ final class HanlinCompactKeyboardOwner {
     func setHistoryPresented(_ presented: Bool) {
         historyPresented = presented
         applyEditorAccessibilityOwnership()
-        #if DEBUG || HANLIN_TESTING
-        traceEditorAccessibility("history-set-immediate")
-        scheduleAccessibilityReadback()
-        #endif
     }
-
-    #if DEBUG || HANLIN_TESTING
-    /// Observational only: read the existing owned editor, without traversing
-    /// ancestors, changing accessibility, or recording draft/selection content.
-    private func traceEditorAccessibility(_ phase: String) {
-        guard ProcessInfo.processInfo.environment["HANLIN_COMPOSER_EDIT_DIAGNOSTICS"] == "1",
-              accessibilityTraceSequence < 96 else { return }
-        accessibilityTraceSequence += 1
-        var record: [String: Any] = [
-            "epoch": Date().timeIntervalSince1970,
-            "pid": ProcessInfo.processInfo.processIdentifier,
-            "phase": phase,
-            "sequence": accessibilityTraceSequence,
-            "owner": String(describing: ObjectIdentifier(self)),
-            "historyPresented": historyPresented,
-            "editorPresent": editor != nil
-        ]
-        if let editor {
-            record["editor"] = String(describing: ObjectIdentifier(editor))
-            record["nativeClass"] = String(reflecting: type(of: editor))
-            record["identifier"] = editor.accessibilityIdentifier ?? ""
-            record["isAccessibilityElement"] = editor.isAccessibilityElement
-            record["accessibilityElementsHidden"] = editor.accessibilityElementsHidden
-            // Keep diagnostics independent of optional getter implementations;
-            // this editor rejected a block getter during native startup.
-            record["blockGetterInspection"] = "not-read"
-            record["containerGetterInspection"] = "not-read"
-            record["isUserInteractionEnabled"] = editor.isUserInteractionEnabled
-            record["isHidden"] = editor.isHidden
-            record["alpha"] = editor.alpha
-            record["isFirstResponder"] = editor.isFirstResponder
-            record["traits"] = editor.accessibilityTraits.rawValue
-            record["notEnabledTrait"] = editor.accessibilityTraits.contains(.notEnabled)
-            record["layoutDirection"] = editor.effectiveUserInterfaceLayoutDirection == .rightToLeft ? "rtl" : "ltr"
-            record["bounds"] = String(describing: editor.bounds)
-            if let window = editor.window {
-                record["window"] = String(describing: ObjectIdentifier(window))
-                record["windowFrame"] = String(describing: editor.convert(editor.bounds, to: window))
-            }
-        }
-        if let original = editorAccessibilityBeforeHistory {
-            record["savedOriginalIsElement"] = original.isElement
-            record["savedOriginalElementsHidden"] = original.elementsHidden
-        }
-        guard let data = try? JSONSerialization.data(withJSONObject: record, options: [.sortedKeys]),
-              let message = String(data: data, encoding: .utf8) else { return }
-        NSLog("%@", "[HANLIN_SIDEBAR_EDITOR_AX] " + message as NSString)
-    }
-
-    /// One yielded readback per visibility change or new editor attachment.
-    /// This is not a timing gate and never alters the original test or UI state.
-    private func scheduleAccessibilityReadback() {
-        guard ProcessInfo.processInfo.environment["HANLIN_COMPOSER_EDIT_DIAGNOSTICS"] == "1",
-              accessibilityTraceSequence < 96, let editor else { return }
-        accessibilityTraceGeneration &+= 1
-        let generation = accessibilityTraceGeneration
-        accessibilityTraceTask?.cancel()
-        accessibilityTraceTask = Task { @MainActor [weak self, weak editor] in
-            await Task.yield()
-            guard !Task.isCancelled, let self, let editor, self.editor === editor,
-                  self.accessibilityTraceGeneration == generation else { return }
-            self.traceEditorAccessibility("deferred-yield-readback")
-            self.accessibilityTraceTask = nil
-        }
-    }
-    #endif
-
-    #if DEBUG || HANLIN_TESTING
-    /// Observe only the controllers in this editor's actual window. No view is
-    /// loaded, no delegate is replaced, and no navigation or focus is changed.
-    func traceNavigation(
-        _ phase: String,
-        path: [HanlinCompactWorkspaceRoute]? = nil,
-        previousPath: [HanlinCompactWorkspaceRoute]? = nil,
-        requestedHistory: Bool? = nil,
-        readAfterYield: Bool = false
-    ) {
-        guard ProcessInfo.processInfo.environment["HANLIN_COMPOSER_EDIT_DIAGNOSTICS"] == "1",
-              navigationTraceSequence < 24 else { return }
-        navigationTraceSequence += 1
-        let capture = navigationTraceSequence
-        func identity(_ object: AnyObject?) -> String {
-            guard let object else { return "nil" }
-            return "0x" + String(UInt(bitPattern: ObjectIdentifier(object)), radix: 16)
-        }
-        func kinds(_ routes: [HanlinCompactWorkspaceRoute]?) -> [String] {
-            (routes ?? []).prefix(8).map { route in
-                switch route {
-                case .allConversations: return "allConversations"
-                case .chat(_): return "chat"
-                }
-            }
-        }
-        func emit(_ fields: [String: Any]) {
-            var record = fields
-            record["epoch"] = Date().timeIntervalSince1970
-            record["pid"] = ProcessInfo.processInfo.processIdentifier
-            record["capture"] = capture
-            record["phase"] = phase
-            record["owner"] = identity(self)
-            guard let data = try? JSONSerialization.data(withJSONObject: record, options: [.sortedKeys]),
-                  let message = String(data: data, encoding: .utf8) else { return }
-            NSLog("%@", ("[HANLIN_SIDEBAR_NAVIGATION] " + message) as NSString)
-        }
-        let window = editor?.window
-        let root = window?.rootViewController
-        emit([
-            "kind": "begin", "window": identity(window), "root": identity(root),
-            "ownerHistoryNow": historyPresented,
-            "requestedHistoryAtEvent": requestedHistory.map { $0 as Any } ?? NSNull(),
-            "pathSnapshotSupplied": path != nil, "pathSnapshotKinds": kinds(path),
-            "pathSnapshotCount": path?.count ?? 0,
-            "previousPathSnapshotKinds": kinds(previousPath),
-            "previousPathSnapshotCount": previousPath?.count ?? 0,
-            "nodeLimit": 32, "depthLimit": 8, "captureLimit": 24
-        ])
-        if let root {
-            // Strong references keep each public controller identity stable for
-            // this synchronous capture; cycles never create a second node.
-            var nodes: [(controller: UIViewController, depth: Int)] = [(root, 0)]
-            var seen: Set<ObjectIdentifier> = [ObjectIdentifier(root)]
-            var reachedLimit = false
-            var index = 0
-            func enqueue(_ controller: UIViewController, depth: Int) {
-                let id = ObjectIdentifier(controller)
-                guard !seen.contains(id) else { return }
-                guard depth <= 8, nodes.count < 32 else {
-                    reachedLimit = true
-                    return
-                }
-                seen.insert(id)
-                nodes.append((controller, depth))
-            }
-            while index < nodes.count {
-                let (controller, depth) = nodes[index]
-                index += 1
-                let id = identity(controller)
-                let children = controller.children
-                let presented = controller.presentedViewController
-                emit([
-                    "kind": "controller", "id": id, "depth": depth,
-                    "type": String(String(reflecting: type(of: controller)).prefix(120)),
-                    "beingPresented": controller.isBeingPresented,
-                    "beingDismissed": controller.isBeingDismissed,
-                    "presented": identity(presented), "childrenCount": children.count
-                ])
-                // Small records keep the retained diagnostic stream bounded and
-                // avoid truncating a controller with many public children.
-                let childIDs = children.prefix(32).map { identity($0) }
-                for start in stride(from: 0, to: childIDs.count, by: 8) {
-                    emit(["kind": "children", "id": id, "offset": start,
-                          "ids": Array(childIDs[start..<min(start + 8, childIDs.count)])])
-                }
-                if children.count > 32 { reachedLimit = true }
-                if let navigation = controller as? UINavigationController {
-                    let stack = navigation.viewControllers
-                    emit([
-                        "kind": "navigation", "id": id,
-                        "top": identity(navigation.topViewController),
-                        "visible": identity(navigation.visibleViewController),
-                        "stackCount": stack.count,
-                        "stackIDs": stack.prefix(8).map { identity($0) },
-                        "stackIDsTruncated": stack.count > 8
-                    ])
-                }
-                if let transition = controller.transitionCoordinator {
-                    emit([
-                        "kind": "transition", "controller": id,
-                        "id": identity(transition as AnyObject),
-                        "duration": transition.transitionDuration,
-                        "animated": transition.isAnimated,
-                        "interactive": transition.isInteractive,
-                        "cancelled": transition.isCancelled,
-                        "from": identity(transition.viewController(forKey: .from)),
-                        "to": identity(transition.viewController(forKey: .to))
-                    ])
-                }
-                for child in children.prefix(32) { enqueue(child, depth: depth + 1) }
-                if let presented { enqueue(presented, depth: depth + 1) }
-            }
-            emit(["kind": "end", "nodes": nodes.count, "limitReached": reachedLimit])
-        } else {
-            emit(["kind": "end", "nodes": 0, "limitReached": false, "rootUnavailable": true])
-        }
-        if readAfterYield, let window {
-            navigationTraceGeneration &+= 1
-            let generation = navigationTraceGeneration
-            navigationTraceTask?.cancel()
-            navigationTraceTask = Task { @MainActor [weak self, weak window] in
-                // This is an observation, never a readiness or routing gate.
-                await Task.yield()
-                guard !Task.isCancelled, let self, let window,
-                      self.editor?.window === window,
-                      self.navigationTraceGeneration == generation else { return }
-                self.traceNavigation(
-                    "path-change-yield", path: path, previousPath: previousPath)
-                self.navigationTraceTask = nil
-            }
-        }
-    }
-    #endif
 
     private func applyEditorAccessibilityOwnership() {
         guard let editor else {
@@ -839,10 +617,6 @@ final class HanlinCompactKeyboardOwner {
             // Every native update reports attachment, including active IME
             // composition. Reassert ownership before the same-editor fast path.
             applyEditorAccessibilityOwnership()
-            #if DEBUG || HANLIN_TESTING
-            traceEditorAccessibility("attached-immediate")
-            if changed { scheduleAccessibilityReadback() }
-            #endif
             guard changed else { return }
             observer?.ownershipDidChange("editor-attached")
         case .focusChanged(let focused):

@@ -65,12 +65,30 @@ def motion_run_from_environment(environment=None):
                                environment.get("GITHUB_RUN_ATTEMPT"))
 
 
+def simulator_run_identity(run_id, run_attempt, run_provider="github"):
+    """Use Motion's validated providers while keeping ordinary app runs distinct."""
+    identity = motion_run_identity(run_id, run_attempt, run_provider)
+    name = (_job(run_id, run_attempt) if run_provider == "github"
+            else "Hanlin-Phase2-local-" + run_id + "-" + run_attempt)
+    return {**identity, "name": name}
+
+
+def simulator_run_from_environment(environment=None):
+    identity = motion_run_from_environment(environment)
+    return simulator_run_identity(identity["run_id"], identity["run_attempt"],
+                                  identity["run_provider"])
+
+
 def created_selection(selected, before, observed, requested_name, created_udid,
                       run_id, run_attempt, *, run_provider="github"):
     """Attach provenance only after native create returned a genuinely new UUID."""
     if run_provider == "local-mac":
-        if requested_name != motion_run_identity(run_id, run_attempt, run_provider)["name"]:
-            raise RuntimeError("Local Mac ownership is scoped to the current Motion run")
+        allowed_names = {
+            motion_run_identity(run_id, run_attempt, run_provider)["name"],
+            simulator_run_identity(run_id, run_attempt, run_provider)["name"],
+        }
+        if requested_name not in allowed_names:
+            raise RuntimeError("Local Mac simulator name must match the current run provenance")
     elif run_provider != "github":
         raise RuntimeError("Unsupported simulator run provider")
     simulator = _uuid(created_udid)
@@ -117,9 +135,10 @@ def _created_selection(path, simulator, run_id, run_attempt, expected_name, *, r
     return selected, hashlib.sha256(raw).hexdigest()
 
 
-def _selection(log, simulator, run_id, run_attempt):
+def _selection(log, simulator, run_id, run_attempt, *, run_provider="github"):
+    identity = simulator_run_identity(run_id, run_attempt, run_provider)
     return _created_selection(Path(log) / SELECTION_FILE, simulator, run_id, run_attempt,
-                              _job(run_id, run_attempt))
+                              identity["name"], run_provider=run_provider)
 
 
 def verify_owned_motion_creation(path, simulator, run_id, run_attempt, *, run_provider="github"):
@@ -131,12 +150,17 @@ def verify_owned_motion_creation(path, simulator, run_id, run_attempt, *, run_pr
     return {**identity, "simulator": simulator, "selection_sha256": digest}
 
 
-def record_owned_boot(log, simulator, result, run_id=None, run_attempt=None):
+def record_owned_boot(log, simulator, result, run_id=None, run_attempt=None, *, run_provider="github"):
     """Call only with the real completed targeted bootstatus command."""
     simulator = _uuid(simulator)
-    run_id = run_id if run_id is not None else os.environ.get("GITHUB_RUN_ID")
-    run_attempt = run_attempt if run_attempt is not None else os.environ.get("GITHUB_RUN_ATTEMPT")
-    _, digest = _selection(log, simulator, run_id, run_attempt)
+    if run_id is None and run_attempt is None:
+        identity = simulator_run_from_environment()
+        run_id, run_attempt = identity["run_id"], identity["run_attempt"]
+        run_provider = identity["run_provider"]
+    else:
+        run_id = run_id if run_id is not None else os.environ.get("GITHUB_RUN_ID")
+        run_attempt = run_attempt if run_attempt is not None else os.environ.get("GITHUB_RUN_ATTEMPT")
+    _, digest = _selection(log, simulator, run_id, run_attempt, run_provider=run_provider)
     expected_command = ["xcrun", "simctl", "bootstatus", simulator, "-b"]
     observed_command = [str(value) for value in result.args]
     if len(observed_command) == 5:
@@ -144,7 +168,7 @@ def record_owned_boot(log, simulator, result, run_id=None, run_attempt=None):
     if result.returncode != 0 or observed_command != expected_command:
         raise RuntimeError("Owned simulator has no successful targeted bootstatus result")
     receipt = {"schema_version": 1, "status": "BOOTED", "simulator": simulator,
-               "run_id": run_id, "run_attempt": run_attempt,
+               "run_provider": run_provider, "run_id": run_id, "run_attempt": run_attempt,
                "selection_sha256": digest, "command": expected_command, "exit_code": 0,
                "output_sha256": hashlib.sha256((result.stdout + result.stderr).encode()).hexdigest()}
     path = Path(log) / BOOT_FILE
@@ -154,19 +178,21 @@ def record_owned_boot(log, simulator, result, run_id=None, run_attempt=None):
     return receipt
 
 
-def verify_owned_simulator(log, run_id, run_attempt):
+def verify_owned_simulator(log, run_id, run_attempt, *, run_provider="github"):
     log = Path(log)
     simulator = _uuid((log / "simulator-udid.txt").read_text(encoding="utf-8").strip())
-    _, digest = _selection(log, simulator, run_id, run_attempt)
+    _, digest = _selection(log, simulator, run_id, run_attempt, run_provider=run_provider)
     raw = (log / BOOT_FILE).read_bytes()
     boot = json.loads(raw)
     if (boot.get("schema_version") != 1 or boot.get("status") != "BOOTED"
+            or boot.get("run_provider", "github") != run_provider
             or boot.get("run_id") != run_id or boot.get("run_attempt") != run_attempt
             or _uuid(boot.get("simulator")) != simulator or boot.get("selection_sha256") != digest
             or boot.get("exit_code") != 0
             or boot.get("command") != ["xcrun", "simctl", "bootstatus", simulator, "-b"]):
         raise RuntimeError("Owned simulator lacks this creation's successful boot receipt")
-    return {"simulator": simulator, "run_id": run_id, "run_attempt": run_attempt,
+    return {"simulator": simulator, "run_provider": run_provider,
+            "run_id": run_id, "run_attempt": run_attempt,
             "selection_sha256": digest, "boot_receipt_sha256": hashlib.sha256(raw).hexdigest()}
 
 
@@ -176,17 +202,21 @@ def verify_staged_owner(staged, observed):
     expected = staged.get("ownership", {})
     fields = ("simulator", "run_id", "run_attempt", "selection_sha256")
     if (staged.get("simulator") != observed["simulator"]
+            or expected.get("run_provider", "github") != observed.get("run_provider", "github")
             or any(expected.get(field) != observed[field] for field in fields)):
         raise RuntimeError("Live credential ownership changed after staging")
 
 
 if __name__ == "__main__":
     import argparse
-    parser = argparse.ArgumentParser(description="Resolve explicit Motion run provenance without native commands")
-    parser.add_argument("--motion-name", action="store_true", required=True)
+    parser = argparse.ArgumentParser(description="Resolve explicit simulator run provenance without native commands")
+    names = parser.add_mutually_exclusive_group(required=True)
+    names.add_argument("--motion-name", action="store_true")
+    names.add_argument("--name", action="store_true")
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()
-    identity = motion_run_from_environment()
+    identity = (motion_run_from_environment() if args.motion_name
+                else simulator_run_from_environment())
     if args.output:
         args.output.write_text(json.dumps(identity, indent=2) + "\n", encoding="utf-8")
     print(identity["name"])

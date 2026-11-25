@@ -211,3 +211,78 @@ struct HanlinSidebarAccessibilityOwnershipTests {
         #expect(!successor.accessibilityElementsHidden)
     }
 }
+
+
+@MainActor
+@Suite("Conversation history sections")
+struct HanlinConversationHistorySectionTests {
+    private func date(_ value: String) throws -> Date {
+        try #require(ISO8601DateFormatter().date(from: value))
+    }
+
+    @Test("Pinned conversations occur once and precede chronological day sections")
+    func pinnedAndDaySectionsKeepIdentityAndOrder() throws {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = try #require(TimeZone(identifier: "Asia/Jerusalem"))
+        let now = try date("2026-11-25T15:00:00+02:00")
+        let oldPin = ChatRecords(name: "Old pin", type: "chat",
+            lastEdited: try date("2026-10-01T12:00:00+03:00"), isPinned: true)
+        let todayPin = ChatRecords(name: "Today's pin", type: "chat",
+            lastEdited: now, isPinned: true)
+        let earlier = ChatRecords(name: "Earlier", type: "chat",
+            lastEdited: try date("2026-11-20T12:00:00+02:00"))
+        let yesterday = ChatRecords(name: "Yesterday", type: "chat",
+            lastEdited: try date("2026-11-24T23:59:59+02:00"))
+        let todayOlder = ChatRecords(name: "Morning", type: "chat",
+            lastEdited: try date("2026-11-25T00:00:00+02:00"))
+        let todayNewer = ChatRecords(name: "Afternoon", type: "chat", lastEdited: now)
+        let rows = [earlier, todayOlder, oldPin, yesterday, todayPin, todayNewer]
+        let sections = HanlinConversationHistory.sections(from: rows, now: now, calendar: calendar)
+        #expect(sections.map(\.id) == [.pinned, .today, .yesterday, .earlier])
+        #expect(sections[0].records.map(\.id) == [todayPin.id, oldPin.id])
+        #expect(sections[1].records.map(\.id) == [todayNewer.id, todayOlder.id])
+        let projected = sections.flatMap(\.records)
+        #expect(projected.count == rows.count)
+        #expect(Set(projected.compactMap(\.id)).count == rows.count)
+        #expect(projected.first === todayPin)
+    }
+
+    @Test("Yesterday uses the local calendar across a 25-hour daylight-saving day")
+    func calendarDayBoundaryHandlesDaylightSaving() throws {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = try #require(TimeZone(identifier: "America/New_York"))
+        let now = try date("2026-11-02T00:30:00-05:00")
+        let earlyYesterday = ChatRecords(name: "First hour yesterday", type: "chat",
+            lastEdited: try date("2026-11-01T00:15:00-04:00"))
+        let lateYesterday = ChatRecords(name: "Last hour yesterday", type: "chat",
+            lastEdited: try date("2026-11-01T23:15:00-05:00"))
+        let earlier = ChatRecords(name: "Previous date", type: "chat",
+            lastEdited: try date("2026-10-31T23:59:59-04:00"))
+        let sections = HanlinConversationHistory.sections(
+            from: [earlyYesterday, earlier, lateYesterday], now: now, calendar: calendar)
+        #expect(sections.map(\.id) == [.yesterday, .earlier])
+        #expect(sections[0].records.map(\.id) == [lateYesterday.id, earlyYesterday.id])
+        #expect(sections[1].records.first === earlier)
+    }
+
+    @Test("Search and pin changes reuse the original rows and omit empty sections")
+    func searchAndPinChangesDoNotDuplicateRows() throws {
+        let now = try date("2026-11-25T13:00:00Z")
+        let matched = ChatRecords(name: "Architecture Notes", type: "chat", lastEdited: now)
+        let other = ChatRecords(name: "Unrelated", type: "chat", lastEdited: now, isPinned: true)
+        let filtered = ListView.filterAndSortChatRecords([other, matched], searchText: "architecture")
+        #expect(filtered.count == 1)
+        #expect(filtered.first === matched)
+        matched.isPinned = true
+        let pinned = HanlinConversationHistory.sections(from: filtered, now: now)
+        #expect(pinned.count == 1)
+        #expect(pinned[0].id == .pinned)
+        #expect(pinned[0].records.first === matched)
+        matched.isPinned = false
+        let unpinned = HanlinConversationHistory.sections(from: filtered, now: now)
+        #expect(unpinned.count == 1)
+        #expect(unpinned[0].id == .today)
+        #expect(unpinned[0].records.first === matched)
+        #expect(HanlinConversationHistory.sections(from: [], now: now).isEmpty)
+    }
+}

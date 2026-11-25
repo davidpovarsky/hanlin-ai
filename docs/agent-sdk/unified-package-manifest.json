@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "sourceOwnership": "one original source path per target",
   "applicationModule": "AI_Hanlin",
-  "applicationSourceCount": 514,
+  "applicationSourceCount": 517,
   "selectedProducts": null,
   "products": [
     "HanlinHostContracts",
@@ -57,8 +57,8 @@
   "localPackageEdgesRemaining": 0,
   "inputs": {
     "Packages/HanlinAgentSDK/Package.swift": "9373a783d26e514b2dba8e11e52b8d2ae6f3b5bb7c5edbeddd8a563c5584c4d8",
-    "Packages/HanlinAppExtensionsSDK/Package.swift": "64d5594128c50035fd2dc37665d92927b45badefcc52b1ec521a5bfc8c8e3cde",
-    "Packages/HanlinExpoNativeAPI/Package.swift": "1bf2b967d85c4759f94f39330b1b435148a9d3956ec6b8e645cec7dd65bec83d",
+    "Packages/HanlinAppExtensionsSDK/Package.swift": "23056fa7df2e2aca75c3195452085a42151aa113f54370aeceb5a07df269d9bc",
+    "Packages/HanlinExpoNativeAPI/Package.swift": "c5fd18fa28a1842be0351053d978cc55b752546dc798c663f0dedabfdbefc28c",
     "Packages/HanlinExpoRuntime/Package.swift": "d4157d16c1d505b408cf4b78f7ab59f53ff607ea94e0c4e51a4e2c088a691f37",
     "Packages/HanlinExpoWidgetSubset/Package.swift": "ed50b8b4f6ee4532ff3ed2af82d7994c7718e958387495280f9a939218323a41",
     "Packages/HanlinMiniAppsBridge/Package.swift": "579cdb6febf974d7f463aee0cd6592cdf0cfd5a4c8e53840009ff170e52b6e2e",

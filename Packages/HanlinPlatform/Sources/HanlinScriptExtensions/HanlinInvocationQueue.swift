@@ -179,7 +179,7 @@ extension HanlinScriptExtensionStore {
         if let delivery = command.invocation.delivery {
             guard delivery.schemaVersion == 1, delivery.expiresAt.timeIntervalSince1970.isFinite,
                   delivery.expiresAt > command.createdAt,
-                  delivery.expiresAt.timeIntervalSince(command.createdAt) <= 86_400,
+                  delivery.expiresAt.timeIntervalSince(command.createdAt) <= HanlinInvocationDelivery.maximumLifetime,
                   (1...16).contains(delivery.maximumAttempts),
                   delivery.idempotent || delivery.maximumAttempts == 1,
                   let action = command.invocation.entityID, (try? HanlinActionID(validating: action)) != nil else {

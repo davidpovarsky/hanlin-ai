@@ -32,11 +32,6 @@ public struct HanlinSourcesList: View {
     public init(sources: [HanlinSourceReference], title: String, open: @escaping @MainActor (HanlinSourceReference) -> Void) {
         self.sources = sources; self.title = title; self.open = open
     }
-    // Adapt the source sheet to its actual content instead of leaving large empty space.
-    private var listHeight: CGFloat {
-        min(max(CGFloat(sources.count) * 62 + 36, 140), 500)
-    }
-
     public var body: some View {
         NavigationStack {
             List(sources) { source in
@@ -46,8 +41,12 @@ public struct HanlinSourcesList: View {
                         Text(source.title).foregroundStyle(.primary).multilineTextAlignment(.leading)
                     }.padding(.vertical, 4)
                 }.buttonStyle(.plain)
+                    .listRowBackground(Color.clear)
                     .accessibilityIdentifier("hanlin-source-\(source.id)")
-            }.frame(height: listHeight)
+            }
+                .listStyle(.plain)
+                .scrollContentBackground(.hidden)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .navigationTitle(title).navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .confirmationAction) {
@@ -55,8 +54,15 @@ public struct HanlinSourcesList: View {
                             .accessibilityIdentifier("hanlin-sources-close")
                     }
                 }
-        }.presentationSizing(.fitted)
-            .accessibilityIdentifier("hanlin-scoped-sources")
+        }
+        // A List has no useful intrinsic width. Content-fitted presentation
+        // compressed the entire list into a tiny popover on iPad. Native form
+        // sizing supplies a readable platform floor and keeps long lists scrollable.
+        .presentationSizing(.form)
+        .presentationDetents([.medium, .large])
+        .presentationDragIndicator(.visible)
+        .presentationBackground(.regularMaterial)
+        .accessibilityIdentifier("hanlin-scoped-sources")
     }
 }
 

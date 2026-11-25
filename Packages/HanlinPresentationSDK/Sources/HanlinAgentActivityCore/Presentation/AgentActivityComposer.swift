@@ -25,17 +25,14 @@ public enum AgentActivityComposer {
     }
     activities = removeNarrativeDuplicates(activities)
     activities.removeAll { activity in
-      // An empty, sub-second provider reasoning fragment is a transport
-      // boundary, not useful history. Keep real summaries and longer work;
-      // preserve the original steps/transcript unchanged for diagnostics.
-      guard activity.kind == .reasoning, activity.status == .completed,
-        let start = activity.startedAt, let end = activity.completedAt,
-        end.timeIntervalSince(start) < 1
-      else { return false }
-      return reasoningDisplayText(for: activity, in: run) == String(localized: "Thinking", bundle: HanlinLocalization.bundle)
+      // A completed empty reasoning receipt is not historical content, regardless
+      // of its latency. Keep the canonical event for diagnostics and show only
+      // the temporary Thinking indicator while its real lifetime is running.
+      activity.kind == .reasoning && activity.status != .running
+        && reasoningDisplayText(for: activity, in: run).isEmpty
     }
 
-    let duration = run.completedAt.map { max(0, $0.timeIntervalSince(run.startedAt)) }
+    let duration = run.activityCompletedAt.map { max(0, $0.timeIntervalSince(run.startedAt)) }
     return AgentDisplayTimeline(
       summaryTitle: summaryTitle(for: run, duration: duration),
       activities: activities,
@@ -44,15 +41,22 @@ public enum AgentActivityComposer {
     )
   }
 
-  /// Expanded reasoning uses the same approved-summary boundary as its header.
-  /// Raw provider transcript storage is never a separate display permission.
+  /// Expanded reasoning has no short-title length limit. Raw provider transcript
+  /// storage still does not grant permission to display internal reasoning.
   public static func reasoningDisplayText(for activity: AgentDisplayActivity, in run: AgentRun) -> String {
     let stepIDs = Set(activity.sourceStepIDs)
     let reasoning = run.transcriptItems.filter {
       $0.kind == .reasoning && $0.activityStepID.map(stepIDs.contains) == true
     }.compactMap(\.text).joined(separator: "\n")
-    let candidate = reasoning.isEmpty ? activity.outputPreview : reasoning
-    return ProgressSummarySanitizer.sanitizeProviderReasoningSummary(candidate) ?? activity.title
+    let storedOutput = run.steps.filter { stepIDs.contains($0.id) }
+      .compactMap(\.output).joined(separator: "\n")
+    let candidate = reasoning.isEmpty
+      ? (storedOutput.isEmpty ? activity.outputPreview : storedOutput) : reasoning
+    if let display = ProgressSummarySanitizer.sanitizeProviderReasoningDisplay(candidate) { return display }
+    guard activity.title != String(localized: "Thinking", bundle: HanlinLocalization.bundle),
+      activity.title != String(localized: "Reasoning", bundle: HanlinLocalization.bundle)
+    else { return "" }
+    return ProgressSummarySanitizer.sanitizeProviderReasoningDisplay(activity.title) ?? ""
   }
 
   private static func lifecycleKey(_ step: AgentActivityStep) -> String {
@@ -219,6 +223,10 @@ public enum AgentActivityComposer {
   }
 
   private static func summaryTitle(for run: AgentRun, duration: TimeInterval?) -> String {
+    if run.finalAnswerStartedAt != nil, let duration {
+      return String(format: String(localized: "Worked for %@", bundle: HanlinLocalization.bundle),
+        AgentActivityDurationFormatter.string(duration))
+    }
     switch run.status {
     case .pending, .running: return String(localized: "Working…", bundle: HanlinLocalization.bundle)
     case .completed:

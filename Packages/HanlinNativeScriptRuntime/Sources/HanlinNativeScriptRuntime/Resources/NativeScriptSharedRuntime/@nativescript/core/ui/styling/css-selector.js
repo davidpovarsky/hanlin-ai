@@ -1,6 +1,6 @@
 import { parse as convertToCSSWhatSelector } from '../../../../css-what/index.mjs';
 import '../../globals';
-import { _expandCssShorthand, _pendingCssShorthandSubstitution, isCssVariable } from '../core/properties';
+import { _expandCssShorthand, _getCssShorthandsVersion, _isCssShorthand, _pendingCssShorthandSubstitution, isCssVariable } from '../core/properties';
 import { isNullOrUndefined } from '../../utils/types';
 import { cleanupImportantFlags } from './css-utils';
 import { checkIfMediaQueryMatches } from '../../media-query-list';
@@ -300,10 +300,11 @@ let AttributeSelector = class AttributeSelector extends SimpleSelector {
         return false;
     }
     mayMatch(node) {
-        // Registered properties live on the prototype and anything already assigned is
-        // an own value; an attribute on neither can never start matching without the
-        // css state being invalidated anyway.
-        return this.attribute in node;
+        // An attribute the node does not carry yet cannot be ruled out: assigning a
+        // plain instance value (Angular's `_ngcontent-*` markers, `[attr.x]` bindings)
+        // neither raises a change event nor invalidates the match, so a selector
+        // dropped here would never be reconsidered.
+        return true;
     }
     trackChanges(node, map) {
         if (attributeNotifiesChanges(node, this.attribute)) {
@@ -731,9 +732,38 @@ export var Selector;
 })(Selector || (Selector = {}));
 export class RuleSet {
     constructor(selectors, declarations) {
+        this.shorthandsVersion = _getCssShorthandsVersion();
         this.selectors = selectors;
         this.declarations = declarations;
         this.selectors.forEach((sel) => (sel.ruleset = this));
+    }
+    /** Expands, once, shorthands registered after this rule was parsed (e.g. by a plugin). */
+    expandLateShorthands() {
+        const version = _getCssShorthandsVersion();
+        if (this.shorthandsVersion === version) {
+            return;
+        }
+        this.shorthandsVersion = version;
+        const declarations = this.declarations;
+        let expanded;
+        for (let i = 0, length = declarations.length; i < length; i++) {
+            const declaration = declarations[i];
+            if (!expanded && typeof declaration.value === 'string' && _isCssShorthand(declaration.property)) {
+                expanded = declarations.slice(0, i);
+            }
+            if (!expanded) {
+                continue;
+            }
+            if (typeof declaration.value === 'string') {
+                pushDeclaration(expanded, declaration.property, declaration.value);
+            }
+            else {
+                expanded.push(declaration);
+            }
+        }
+        if (expanded) {
+            this.declarations = expanded;
+        }
     }
     toString() {
         let desc = `${this.selectors.join(', ')} {${this.declarations.map((d, i) => `${i === 0 ? ' ' : ''}${d.property}: ${d.value}`).join('; ')} }`;
@@ -760,7 +790,9 @@ export function fromAstNode(astRule) {
 }
 function appendDeclaration(declarations, decl) {
     const property = isCssVariable(decl.property) ? decl.property : decl.property.toLowerCase();
-    const value = cleanupImportantFlags(decl.value, decl.property);
+    pushDeclaration(declarations, property, cleanupImportantFlags(decl.value, decl.property));
+}
+function pushDeclaration(declarations, property, value) {
     // The cascade is defined on longhands: a shorthand declares each of its
     // longhands in its place, so it is expanded here to keep source order meaningful.
     const expanded = _expandCssShorthand(property, value);

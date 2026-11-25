@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/usr/bin/xcrun",
+    "swiftc",
+    "-frontend",
+    "-parse",
+    "/Users/m1/builds/hanlin-149001-calendar-checks-20261125/source/CalendarToolSchema.swift",
+    "/Users/m1/builds/hanlin-149001-calendar-checks-20261125/source/CalendarService.swift",
+    "/Users/m1/builds/hanlin-149001-calendar-checks-20261125/source/HanlinCalendarItemOpenButton.swift",
+    "/Users/m1/builds/hanlin-149001-calendar-checks-20261125/source/CalendarToolTests.swift"
+  ],
+  "returncode": 0,
+  "seconds": 0.11703205108642578
+}

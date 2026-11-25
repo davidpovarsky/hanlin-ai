@@ -195,6 +195,58 @@ def wire_expo_cxx_imports(text, package, host_name):
     return text
 
 
+def wire_widget_cxx_imports(text, package):
+    objects = parse_project(text)["objects"]
+    consumers = {"HanlinApp", "HanlinMiniApps", "AI_HLYTests", "HanlinMiniAppsTests",
+                 "HanlinScriptingWidgets", "HanlinMiniAppsWidgets"}
+    actual = {value.get("name") for value in objects.values()
+              if value.get("isa") == "PBXNativeTarget" and value.get("name") in consumers}
+    if actual != consumers:
+        raise ValueError("Missing native consumer of the original Expo import contract")
+    for name in sorted(consumers):
+        text = wire_expo_cxx_imports(text, package, name)
+    return text
+
+
+def wire_miniapps_ios_system_resources(text):
+    """Copy the original ios_system main-bundle dictionaries into MiniApps."""
+    project = parse_project(text)
+    objects = project["objects"]
+    targets = [objects[key] for key in objects[project["rootObject"]]["targets"]
+               if objects[key].get("isa") == "PBXNativeTarget"
+               and objects[key].get("name") == "HanlinMiniApps"
+               and objects[key].get("productType") == "com.apple.product-type.application"]
+    if len(targets) != 1:
+        raise ValueError("Expected one HanlinMiniApps application target")
+    phases = [key for key in targets[0]["buildPhases"]
+              if objects[key].get("isa") == "PBXResourcesBuildPhase"]
+    if len(phases) != 1:
+        raise ValueError("Expected one HanlinMiniApps resource phase")
+    files = list(objects[phases[0]]["files"])
+    for name, build_id in [("commandDictionary.plist", "AC1900000000000000000140"),
+                           ("extraCommandsDictionary.plist", "AC1900000000000000000141")]:
+        path = "Packages/IOSSystemLite/Sources/IOSSystemLite/Resources/" + name
+        references = [key for key, value in objects.items()
+                      if value.get("isa") == "PBXFileReference" and value.get("path") == path]
+        if len(references) != 1:
+            raise ValueError("Expected one canonical ios_system resource reference: " + name)
+        reference = objects[references[0]]
+        if reference.get("sourceTree") != "SOURCE_ROOT" or reference.get("explicitFileType") != "text":
+            raise ValueError("ios_system dictionaries must retain canonical raw source bytes")
+        copies = [key for key in files if objects[key].get("fileRef") == references[0]]
+        if len(copies) > 1:
+            raise ValueError("Duplicate MiniApps ios_system resource: " + name)
+        if not copies:
+            if build_id in objects and (objects[build_id].get("isa") != "PBXBuildFile"
+                                        or objects[build_id].get("fileRef") != references[0]):
+                raise ValueError("MiniApps ios_system build ID is already owned by another resource")
+            text = insert_object(text, "PBXBuildFile", build_id,
+                "\t\t\tisa = PBXBuildFile;\n\t\t\tfileRef = " + references[0] + ";\n")
+            objects[build_id] = {"isa": "PBXBuildFile", "fileRef": references[0]}
+            files.append(build_id)
+    return edit_object(text, phases[0], lambda block: replace_list(block, "files", files))
+
+
 def update(package=None):
     if package is None:
         package = json.loads(subprocess.check_output(
@@ -313,7 +365,8 @@ def update(package=None):
             "AI_HLY/NativeAppPlatform/Support/NativeAppColor.swift",
             "AI_HLY/Downstream/ProductSplitIntegration/MiniAppAuthoringDelivery.swift",
             "AI_HLY/Downstream/ScriptingPlatform/MiniAppImportDiagnosticsView.swift",
-            "AI_HLY/Downstream/RuntimeCore/Core/MiniAppAuthoringService.swift"]
+            "AI_HLY/Downstream/RuntimeCore/Core/MiniAppAuthoringService.swift",
+            "AI_HLY/Downstream/ScriptingPlatform/HanlinNotificationApplicationDelegate.swift"]
     shared_group="F9F4C452EBF2FA6B1274B4D7"
     shared_children=list(objects[shared_group]["children"])
     for index,path in enumerate(shared):
@@ -385,13 +438,11 @@ def update(package=None):
     text=edit_object(text,group,lambda b:replace_list(b,"children",children))
     sys.path.insert(0, str(ROOT / "Scripts/ProductSplit"))
     from miniapps_extensions import wire_miniapps_extensions
-    # The original widget host is configured first; its real standalone
-    # MiniApps counterpart is then cloned with the same import contract.
-    text = wire_expo_cxx_imports(text, package, "HanlinScriptingWidgets")
-    # Unit tests import the original implementation and its Expo dependencies.
-    # Preserve that producer context when Xcode compiles the native test target.
-    text = wire_expo_cxx_imports(text, package, "AI_HLYTests")
+    # Clone standalone extensions first, then preserve the same original
+    # Expo import context for every app, unit-test and widget consumer.
     text = wire_miniapps_extensions(text, edit_object, replace_list, insert_object)
+    text = wire_widget_cxx_imports(text, package)
+    text = wire_miniapps_ios_system_resources(text)
     parse_project(text)
     return text
 

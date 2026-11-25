@@ -88,7 +88,8 @@ struct AgentToolCall: Sendable {
       hadInvalidResultPresentation: extraction.hadInvalidResultPresentation,
       presentationProfile: ToolPresentationProfileRegistry.resolve(
         toolName: name,
-        explicitProfile: presentationProfile
+        explicitProfile: presentationProfile,
+        argumentsJSON: extraction.sanitizedArgumentsJSON
       )
     )
   }

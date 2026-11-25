@@ -219,6 +219,20 @@ enum AgentRuntimeUIAcceptanceProvider {
                     modelDisplayName: "Agent Acceptance", record: acceptanceChat))
             }
 #endif
+            #if (DEBUG || HANLIN_TESTING) && targetEnvironment(simulator)
+            if let countText = ProcessInfo.processInfo.environment["HANLIN_SOURCES_SHEET_ACCEPTANCE_COUNT"],
+               let count = Int(countText), (1...100).contains(count) {
+                let resources = (1...count).map { index in
+                    Resource(icon: "", title: "Source \(index): מקור לבדיקה — a readable reference title",
+                             link: "https://agent.acceptance/sources/\(index)")
+                }
+                let message = ChatMessages(role: "assistant",
+                    text: "SOURCES_SHEET_ACCEPTANCE_READY", modelDisplayName: "Agent Acceptance",
+                    record: acceptanceChat)
+                message.resources = resources
+                context.insert(message)
+            }
+            #endif
             if isDockFixturesEnabled {
                 for prompt in try context.fetch(FetchDescriptor<PromptRepo>()) {
                     context.delete(prompt)
@@ -403,7 +417,19 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
     private nonisolated(unsafe) static var responseIndex = 0
     private nonisolated(unsafe) static var ui07FailCount = 0
     private nonisolated(unsafe) static var phase2Requests = 0
-    private var isStopped = false
+    private let cancellationLock = NSLock()
+    private var stopped = false
+    private var isStopped: Bool {
+        get {
+            cancellationLock.lock(); defer { cancellationLock.unlock() }
+            return stopped
+        }
+        set {
+            cancellationLock.lock(); defer { cancellationLock.unlock() }
+            stopped = newValue
+        }
+    }
+    private var activityLifecycleTask: Task<Void, Never>?
 
     static var observedPhase2Requests: Int {
         lock.lock(); defer { lock.unlock() }
@@ -464,19 +490,25 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
         if ProcessInfo.processInfo.environment["HANLIN_MINIAPP_AUTHORING_ACCEPTANCE"] == "1",
            currentText.contains("[MiniApp repair "),
            currentText.contains("MiniAppTypeError.hanlinNativeScript") {
-            func object(_ id: String) -> [String: Any]? {
-                guard let text = toolResult(id), let data = text.data(using: .utf8) else { return nil }
-                return (try? JSONSerialization.jsonObject(with: data)) as? [String: Any]
-            }
-            func call(_ id: String, _ name: String, _ arguments: [String: Any]) {
+            var objects: [String: [String: Any]] = [:]
+            func object(_ id: String) -> [String: Any]? { objects[id] }
+            func call(_ id: String, _ name: String, _ arguments: [String: Any], after delay: TimeInterval = 0) {
                 var payload = arguments
-                if name != "tool_search" {
+                if name != "tool_search" && name != "read_tool_result" {
                     payload["progress_summary"] = "Run the requested MiniApp authoring step and inspect its actual result."
                 }
                 guard let data = try? JSONSerialization.data(withJSONObject: payload, options: [.sortedKeys]) else {
                     emitFinalAnswer("MINIAPP_AUTHORING_ARGUMENT_ERROR"); return
                 }
-                emitToolCall(id: id, name: name, arguments: String(decoding: data, as: UTF8.self))
+                let encodedArguments = String(decoding: data, as: UTF8.self)
+                if delay > 0 {
+                    DispatchQueue.global().asyncAfter(deadline: .now() + delay) { [weak self] in
+                        guard let self, !self.isStopped else { return }
+                        self.emitToolCall(id: id, name: name, arguments: encodedArguments)
+                    }
+                } else {
+                    emitToolCall(id: id, name: name, arguments: encodedArguments)
+                }
             }
             let project = currentText.components(separatedBy: "\n")
                 .first(where: { $0.hasPrefix("Working project: ") })?
@@ -484,18 +516,102 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
             guard let project, !project.isEmpty else {
                 emitFinalAnswer("MINIAPP_AUTHORING_PROJECT_MISSING"); return
             }
-            let ids = ["miniapp-find", "miniapp-sdk", "miniapp-invalid", "miniapp-write",
-                       "miniapp-valid", "miniapp-build", "miniapp-import", "miniapp-status"]
-            // Fail on actual tool errors. Never synthesize a compiler report,
-            // edited file, built package, or installation result in this model fixture.
-            for id in ids.dropFirst() where toolResult(id) != nil && object(id) == nil {
-                emitFinalAnswer("MINIAPP_AUTHORING_NONJSON_RESULT_" + id); return
+            let statusIDs = (messages ?? []).compactMap { message -> String? in
+                guard message["role"] as? String == "tool",
+                      let id = message["tool_call_id"] as? String else { return nil }
+                if id == "miniapp-status" { return id }
+                let prefix = "miniapp-status-"
+                return id.hasPrefix(prefix) && Int(id.dropFirst(prefix.count)) != nil ? id : nil
             }
-            if let receipt = object("miniapp-status") {
-                let installed = receipt["status"] as? String == "installed"
-                    && !(receipt["installedPackageID"] as? String ?? "").isEmpty
-                emitFinalAnswer(installed ? "MINIAPP_AUTHORING_INSTALLED_VERIFIED"
-                    : "MINIAPP_AUTHORING_INSTALL_NOT_VERIFIED_" + (receipt["status"] as? String ?? "unknown"))
+            let ids = ["miniapp-find", "miniapp-sdk", "miniapp-invalid", "miniapp-write",
+                       "miniapp-valid", "miniapp-build", "miniapp-import"] + statusIDs
+            // Follow the same stored-result references as a real model. Only
+            // actual read_tool_result responses supply the JSON; byte offsets
+            // preserve Unicode and exclude the tool's pagination footer.
+            for id in ids.dropFirst() {
+                guard let text = toolResult(id) else { continue }
+                var data = Data(text.utf8)
+                let storedPrefix = "[Large result stored behind reference: "
+                if text.hasPrefix(storedPrefix) {
+                    let header = String(text.prefix { $0 != "\n" })
+                    let storedSuffix = " bytes)]"
+                    guard header.hasSuffix(storedSuffix),
+                          let countStart = header.range(of: " (", options: .backwards) else {
+                        emitFinalAnswer("MINIAPP_AUTHORING_INVALID_REFERENCE_" + id); return
+                    }
+                    let reference = String(header[header.index(header.startIndex, offsetBy: storedPrefix.count)..<countStart.lowerBound])
+                    let countText = header[countStart.upperBound...].dropLast(storedSuffix.count)
+                    guard !reference.isEmpty, let total = Int(countText), total > 0 else {
+                        emitFinalAnswer("MINIAPP_AUTHORING_INVALID_REFERENCE_" + id); return
+                    }
+                    data = Data()
+                    var offset = 0
+                    while offset < total {
+                        let readID = "\(id)-read-\(offset)"
+                        guard let slice = toolResult(readID) else {
+                            call(readID, "read_tool_result",
+                                 ["reference": reference, "offset": offset, "limit": 4096])
+                            return
+                        }
+                        guard let separator = slice.range(of: "\n\n") else {
+                            emitFinalAnswer("MINIAPP_AUTHORING_RESULT_READ_FAILED_" + id); return
+                        }
+                        let sliceHeader = String(slice[..<separator.lowerBound])
+                        let slicePrefix = "Result slice for `\(reference)` [offset: \(offset), bytes: "
+                        guard sliceHeader.hasPrefix(slicePrefix), sliceHeader.hasSuffix("]:") else {
+                            emitFinalAnswer("MINIAPP_AUTHORING_INVALID_SLICE_" + id); return
+                        }
+                        let sizes = sliceHeader.dropFirst(slicePrefix.count).dropLast(2)
+                            .split(separator: "/", omittingEmptySubsequences: false)
+                        guard sizes.count == 2, let count = Int(sizes[0]),
+                              let actualTotal = Int(sizes[1]), actualTotal == total,
+                              count > 0, count <= total - offset else {
+                            emitFinalAnswer("MINIAPP_AUTHORING_INVALID_SLICE_" + id); return
+                        }
+                        let body = Data(slice[separator.upperBound...].utf8)
+                        guard body.count >= count,
+                              String(data: Data(body.prefix(count)), encoding: .utf8) != nil else {
+                            emitFinalAnswer("MINIAPP_AUTHORING_INVALID_SLICE_" + id); return
+                        }
+                        let nextOffset = offset + count
+                        let footer = nextOffset < total
+                            ? "\n\n[... \(total - nextOffset) more bytes available. Call `read_tool_result(reference: \"\(reference)\", offset: \(nextOffset))` to read more.]"
+                            : ""
+                        guard Data(body.dropFirst(count)) == Data(footer.utf8) else {
+                            emitFinalAnswer("MINIAPP_AUTHORING_INVALID_SLICE_" + id); return
+                        }
+                        data.append(contentsOf: body.prefix(count))
+                        offset = nextOffset
+                    }
+                }
+                // Fail on genuine tool errors. Never synthesize a compiler
+                // report, edited file, built package, or installation result.
+                guard let value = (try? JSONSerialization.jsonObject(with: data)) as? [String: Any] else {
+                    emitFinalAnswer("MINIAPP_AUTHORING_NONJSON_RESULT_" + id); return
+                }
+                objects[id] = value
+            }
+            if let statusID = statusIDs.last, let receipt = object(statusID) {
+                guard let id = object("miniapp-import")?["transfer_id"] as? String,
+                      let expectedID = UUID(uuidString: id),
+                      let actualID = receipt["transferID"] as? String,
+                      UUID(uuidString: actualID) == expectedID else {
+                    emitFinalAnswer("MINIAPP_AUTHORING_TRANSFER_MISMATCH"); return
+                }
+                let status = receipt["status"] as? String ?? "unknown"
+                if ["queued", "received", "submitted"].contains(status) {
+                    // The original receiver can still be validating or publishing.
+                    // Observe it again through the real tool; unique call IDs retain
+                    // every actual receipt. Cancellation and the whole XCTest case
+                    // bound this fixture's wait without manufacturing completion.
+                    call("miniapp-status-\(statusIDs.count)", "import_miniapp",
+                         ["transfer_id": id], after: 2)
+                } else {
+                    let installed = status == "installed"
+                        && !(receipt["installedPackageID"] as? String ?? "").isEmpty
+                    emitFinalAnswer(installed ? "MINIAPP_AUTHORING_INSTALLED_VERIFIED"
+                        : "MINIAPP_AUTHORING_INSTALL_NOT_VERIFIED_" + status)
+                }
             } else if let queued = object("miniapp-import") {
                 guard let id = queued["transfer_id"] as? String else {
                     emitFinalAnswer("MINIAPP_AUTHORING_TRANSFER_MISSING"); return
@@ -754,6 +870,11 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
 
         if bodyString.contains("PROMPT_CHAT_PRESENTATION") {
             emitFinalAnswer("alpha beta gamma\n\nשלום 👋🏽 **bold** and \\(E=mc^2\\).\n\n[Example](https://example.com)\n\nCHAT_PRESENTATION_READY")
+            return
+        }
+
+        if currentText.contains("PROMPT_ACTIVITY_LIFECYCLE") {
+            emitActivityLifecycleStream()
             return
         }
 
@@ -1082,7 +1203,55 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
     }
 
     override func stopLoading() {
-        isStopped = true
+        cancellationLock.lock()
+        stopped = true
+        let task = activityLifecycleTask
+        activityLifecycleTask = nil
+        cancellationLock.unlock()
+        task?.cancel()
+    }
+
+    private func installActivityLifecycleTask(_ task: Task<Void, Never>) {
+        cancellationLock.lock()
+        let shouldCancel = stopped
+        if !shouldCancel { activityLifecycleTask = task }
+        cancellationLock.unlock()
+        // stopLoading may have run before the new task could be installed.
+        // Cancellation stays outside the lock to avoid reentrant deadlocks.
+        if shouldCancel { task.cancel() }
+    }
+
+    /// Controlled provider traffic through the original chat projection. This
+    /// fixture supplies no tool effect and installs no replacement activity view.
+    private func emitActivityLifecycleStream() {
+        let response = HTTPURLResponse(url: request.url!, statusCode: 200,
+            httpVersion: "HTTP/1.1", headerFields: ["Content-Type": "text/event-stream"])!
+        client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
+        let task = Task { [weak self] in
+            guard let self else { return }
+            func emit(_ delta: [String: Any], final: Bool = false) {
+                guard !self.isStopped else { return }
+                var choice: [String: Any] = ["delta": delta]
+                if final { choice["finish_reason"] = "stop" }
+                else { choice["finish_reason"] = NSNull() }
+                let payload: [String: Any] = ["choices": [choice]]
+                guard let data = try? JSONSerialization.data(withJSONObject: payload) else { return }
+                let suffix = final ? "data: [DONE]\n\n" : ""
+                self.client?.urlProtocol(self, didLoad:
+                    Data(("data: " + String(decoding: data, as: UTF8.self) + "\n\n" + suffix).utf8))
+                if final { self.client?.urlProtocolDidFinishLoading(self) }
+            }
+            let first = "ACTIVITY_FIRST_CHECKPOINT. "
+                + String(repeating: "Checking the requested calendar dates and comparing the available appointments. ", count: 3)
+            emit(["reasoning_content": first])
+            do { try await Task.sleep(for: .seconds(10)) } catch { return }
+            emit(["content": "ACTIVITY_INTERIM_CHECKPOINT"])
+            do { try await Task.sleep(for: .seconds(10)) } catch { return }
+            emit(["reasoning_content": "ACTIVITY_SECOND_CHECKPOINT. I need to check the remaining appointment details."])
+            do { try await Task.sleep(for: .seconds(10)) } catch { return }
+            emit(["content": "ACTIVITY_FINAL_COMPLETE"], final: true)
+        }
+        installActivityLifecycleTask(task)
     }
 
     private func emitToolCall(id: String, name: String, arguments: String) {

@@ -11,6 +11,7 @@ EXTENSIONS = (
     ("HanlinMiniAppsWidgets", "HanlinScriptingWidgets", "Widgets", "widgets"),
     ("HanlinMiniAppsShare", "ChavrusaChatShare", "Share", "share"),
     ("HanlinMiniAppsTranslationProvider", "ChavrusaChatTranslationProvider", "Translation", "translation-provider"),
+    ("HanlinMiniAppsNotificationService", "ChavrusaChatNotificationService", "Notification", "notification-service"),
 )
 
 def extension_id(role):

@@ -2,6 +2,7 @@ import Foundation
 import Testing
 import MCP
 import HanlinPresentationKit
+import HanlinPlatformContracts
 @testable import AI_Hanlin
 
 @Suite("Source-correlated Thinking hierarchy")
@@ -171,7 +172,36 @@ struct AgentRoundPresentationTests {
         #expect(weather.activity.runningTitle == String(localized: "Checking the weather"))
     }
 
-    @Test func emptySubsecondReasoningDoesNotCreateAZeroSecondHistoryRow() throws {
+    @Test func calendarAndMemoryOperationsSelectTheirOwnTrustedMotion() {
+        let families: [(String, HanlinExecutionPresentationFamilyID)] = [
+            ("search_calendar_and_reminders", .calendarSearch),
+            ("write_system_event", .calendarCreate),
+            ("save_memory", .memorySave),
+            ("retrieve_memory", .memoryRecall),
+            ("update_memory", .memoryUpdate)
+        ]
+        for (name, family) in families {
+            #expect(ToolPresentationProfileRegistry.resolve(toolName: name)
+                .canonicalExecutionPresentation?.familyID == family)
+        }
+        for (operation, family) in [
+            ("update_event", HanlinExecutionPresentationFamilyID.calendarUpdate),
+            ("delete_reminder", .calendarDelete),
+            ("complete_reminder", .calendarComplete)
+        ] {
+            let arguments = "{\"operation\":\"" + operation + "\"}"
+            let call = AgentToolCall.parse(id: "calendar-" + operation,
+                name: "manage_calendar", argumentsJSON: arguments)
+            #expect(call.canonicalExecutionPresentation?.familyID == family,
+                "The presentation must use the exact operation that will execute")
+        }
+        let explicit = ToolPresentationProfileRegistry.resolve(toolName: "mcp__fixture__calendar")
+        let preserved = ToolPresentationProfileRegistry.resolve(toolName: "manage_calendar",
+            explicitProfile: explicit, argumentsJSON: #"{"operation":"delete_reminder"}"#)
+        #expect(preserved == explicit, "An unrelated MCP declaration retains its own trusted profile")
+    }
+
+    @Test func emptyReasoningDoesNotCreateHistoryAtAnyDuration() throws {
         var accumulator = AgentEventAccumulator(run: .init(groupID: UUID(), providerID: "fixture", modelID: "fixture"))
         accumulator.apply(.reasoningStarted(.init(id: "brief", title: String(localized: "Thinking"), startedAt: .now)))
         accumulator.apply(.reasoningCompleted(id: "brief"))
@@ -182,7 +212,8 @@ struct AgentRoundPresentationTests {
         #expect(AgentActivityComposer.compose(run).activities.isEmpty)
         #expect(run.steps.count == 1 && !run.transcriptItems.isEmpty)
         run.steps[0].completedAt = start.addingTimeInterval(7)
-        #expect(AgentActivityComposer.compose(run).activities.count == 1)
+        #expect(AgentActivityComposer.compose(run).activities.isEmpty,
+            "A long empty wait is not reasoning content")
         run.steps[0].completedAt = start.addingTimeInterval(0.2)
         run.steps[0].title = "Checking sources"
         #expect(AgentActivityComposer.compose(run).activities.first?.title == "Checking sources")

@@ -1,4 +1,4 @@
-"NSCalendarsFullAccessUsageDescription" = "需要访问您的日历以读取和添加事件。";
+"NSCalendarsFullAccessUsageDescription" = "需要访问您的日历以按您的请求读取和修改事件。";
 "NSCameraUsageDescription" = "需要访问您的相机用于拍照";
 "NSHealthClinicalHealthRecordsShareUsageDescription" = "需要访问健康数据以便提供相关服务";
 "NSHealthShareUsageDescription" = "需要访问健康数据以便提供相关服务";
@@ -8,5 +8,6 @@
 "NSMicrophoneUsageDescription" = "需要访问您的麦克风进行录音";
 "NSPhotoLibraryAddUsageDescription" = "需要访问您的相册以保存图片";
 "NSPhotoLibraryUsageDescription" = "需要访问您的相册用于选择图片";
-"NSRemindersFullAccessUsageDescription" = "需要访问您的提醒事项以读取和添加任务。";
+"NSRemindersFullAccessUsageDescription" = "需要访问提醒事项以按您的请求读取和修改任务。";
 "NSSpeechRecognitionUsageDescription" = "我们需要访问您的语音识别权限";
+"NSCalendarsWriteOnlyAccessUsageDescription" = "需要访问您的日历以按您的请求添加事件。";

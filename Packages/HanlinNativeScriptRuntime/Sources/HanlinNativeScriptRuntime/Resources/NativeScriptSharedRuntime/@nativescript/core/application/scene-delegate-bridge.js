@@ -82,6 +82,22 @@ export function forwardContinueUserActivity(delegate, application, userActivity)
     return true;
 }
 /**
+ * The continuation activities a scene was launched with. The activity `openWindow()` attaches
+ * to carry window data is left out: it addresses the new window, not the app's handlers.
+ */
+export function getLaunchUserActivities(connectionOptions, sceneActivityType) {
+    const activities = connectionOptions?.userActivities?.allObjects;
+    const count = activities?.count ?? 0;
+    const result = [];
+    for (let i = 0; i < count; i++) {
+        const activity = activities.objectAtIndex(i);
+        if (activity && activity.activityType !== sceneActivityType) {
+            result.push(activity);
+        }
+    }
+    return result;
+}
+/**
  * Hands a scene quick action to `applicationPerformActionForShortcutItemCompletionHandler`,
  * or reports it unhandled when no such handler is registered.
  *

@@ -58,6 +58,7 @@ export async function copyCompilerClosure(source,destination,files,label,ancesto
 }
 
 export const sdkInputs = [
+ 'Scripts/CI/IntegrationValidation/project_graph.py',
  'Scripts/Expo/package.json','Scripts/Expo/package-lock.json','Scripts/Expo/dependency-lock.json',
  'Scripts/Expo/babel.config.cjs','Scripts/Expo/metro.config.cjs','Scripts/Expo/prepare-types.mjs',
  'Scripts/Expo/build-original-widget-runtime.mjs','Scripts/Expo/sync-original-ui-exports.mjs',
@@ -66,6 +67,12 @@ export const sdkInputs = [
  'Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPI/HanlinExpoNativeAPIManager.swift',
  'Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPI/HanlinExpoNativeAPIHostVersions.swift',
  'Packages/HanlinPlatform/Package.swift',
+ 'Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNotificationEvent.swift',
+ 'Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNotificationInvocation.swift',
+ 'Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationDelivery.swift',
+ 'Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationQueue.swift',
+ 'Packages/HanlinAppExtensionsSDK/Sources/HanlinNotificationExtension/HanlinNotificationService.swift',
+ 'AI_HLY/Downstream/ScriptingPlatform/HanlinNotificationApplicationDelegate.swift',
  'docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json','docs/miniapp-sdk/source-inventory.json',
  'docs/miniapp-sdk/extension-reachability.json'
 ];
@@ -180,6 +187,12 @@ export async function stageSDK({root=repositoryRoot,output,engines:requestedEngi
       const destination=path.join(staging,engine);
       await mkdir(destination,{recursive:true});
       await copyAuthoringTree(path.join(source,'node_modules'),path.join(destination,'node_modules'),files,engine+'/node_modules');
+      // This is Hanlin's declaration-only notification wire contract. Native
+      // event delivery still uses the existing Host action broker and queue.
+      const notificationTypes=path.join(root,'Scripts/MiniApps/notification-events');
+      await copyAuthoringTree(notificationTypes,path.join(destination,'node_modules/@hanlin/notification-events'),
+        files,engine+'/node_modules/@hanlin/notification-events');
+      graph.versions['@hanlin/notification-events']=(await readJSON(path.join(notificationTypes,'package.json'))).version;
       if(engine==='nativescript') {
         const hostServices=path.join(root,'Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services');
         await copyAuthoringTree(hostServices,path.join(destination,'node_modules/@hanlin/host-services'),files,'nativescript/node_modules/@hanlin/host-services');
@@ -221,6 +234,9 @@ export async function stageSDK({root=repositoryRoot,output,engines:requestedEngi
           explanation:engine==='expo'?'Original declarations and source are checked.':'Original NativeScript consumer mode: source is strict; original declaration bodies are not revalidated. Set skipLibCheck:false for SDK declaration diagnostics.'},
         docs:engine==='expo'?['docs/hanlin-expo-runtime.md','docs/miniapp-sdk/README.md','docs/miniapp-sdk/EXPO_WIDGETS_ORIGINAL.md']:['docs/hanlin-nativescript-guide.md','docs/miniapp-sdk/README.md'],
         capabilities:engine==='expo'?['foreground','native-ui','host-services','prepared-widgets','original-widget-api','original-live-activity-api']:['foreground','native-ui','host-services','esm-package'],
+        notificationEvents:{schemaVersion:1,packageName:'@hanlin/notification-events',
+          schemaPath:'docs/miniapp-sdk/notification-event.schema.json',
+          docsPath:'docs/miniapp-sdk/NOTIFICATION_EVENTS.md',delivery:'foreground',entrypointKind:'appIntent'},
         build:{nativeHostRebuildRequiredForNativeDependencyChanges:true}};
     }
     const expected={
@@ -235,7 +251,7 @@ export async function stageSDK({root=repositoryRoot,output,engines:requestedEngi
     const exampleProjects=await copySDKExamples(path.join(root,exampleSourceRoot),path.join(staging,'examples'),requestedEngines);
     for(const engine of ['expo','nativescript']) if(engines[engine]) {
       engines[engine].examples=exampleProjects.filter(project=>project.engine===engine);
-      engines[engine].docs.push('docs/miniapp-sdk/EXAMPLES.md');
+      engines[engine].docs.push('docs/miniapp-sdk/EXAMPLES.md','docs/miniapp-sdk/NOTIFICATION_EVENTS.md');
     }
     await copySDKDocumentation(path.join(root,'docs/miniapp-sdk'),path.join(staging,'docs/miniapp-sdk'));
     for(const file of ['hanlin-expo-runtime.md','hanlin-nativescript-guide.md']) {

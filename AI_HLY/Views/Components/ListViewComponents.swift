@@ -10,34 +10,82 @@ import SwiftUI
 import SwiftData
 
 
+/// One section projection shared by wide and compact history. Pinned records
+/// occur once; date buckets use the user's calendar rather than 24-hour offsets.
+@MainActor
+enum HanlinConversationHistory {
+    enum Period: String, CaseIterable {
+        case pinned, today, yesterday, earlier
+    }
+
+    struct Section: Identifiable {
+        let id: Period
+        let records: [ChatRecords]
+
+        var title: String {
+            switch id {
+            case .pinned: String(localized: "Pinned", bundle: HanlinLocalization.bundle)
+            case .today: String(localized: "Today", bundle: HanlinLocalization.bundle)
+            case .yesterday: String(localized: "Yesterday", bundle: HanlinLocalization.bundle)
+            case .earlier: String(localized: "Earlier", bundle: HanlinLocalization.bundle)
+            }
+        }
+    }
+
+    static func sections(from records: [ChatRecords], now: Date = .now,
+                         calendar: Calendar = .current) -> [Section] {
+        let today = calendar.startOfDay(for: now)
+        let yesterday = calendar.date(byAdding: .day, value: -1, to: today) ?? today
+        var buckets: [Period: [ChatRecords]] = [:]
+        for record in records {
+            let period: Period
+            if record.isPinned {
+                period = .pinned
+            } else if record.lastEdited >= today {
+                period = .today
+            } else if record.lastEdited >= yesterday {
+                period = .yesterday
+            } else {
+                period = .earlier
+            }
+            buckets[period, default: []].append(record)
+        }
+        return Period.allCases.compactMap { period in
+            guard let rows = buckets[period], !rows.isEmpty else { return nil }
+            return Section(id: period, records: rows.sorted {
+                if $0.lastEdited != $1.lastEdited { return $0.lastEdited > $1.lastEdited }
+                return ($0.id?.uuidString ?? "") < ($1.id?.uuidString ?? "")
+            })
+        }
+    }
+}
+
 struct ChatRowView: View {
-    @Environment(\.modelContext) private var modelContext
     var record: ChatRecords
     var searchText: String
     var matchedSnippet: AttributedString?
+    var isSelected: Bool
 
-    @State private var selectedIcon: String
-    @State private var selectedColor: Color
-    @ScaledMetric(relativeTo: .body) var size_48: CGFloat = 48
+    private var selectedIcon: String { record.icon ?? "bubble.left.circle" }
+    private var selectedColor: Color { Color.from(name: record.color ?? ".hlBlue") }
 
-    init(record: ChatRecords, searchText: String, matchedSnippet: AttributedString? = nil) {
+    init(record: ChatRecords, searchText: String, matchedSnippet: AttributedString? = nil,
+         isSelected: Bool = false) {
         self.record = record
         self.searchText = searchText
         self.matchedSnippet = matchedSnippet
-        self._selectedIcon = State(initialValue: record.icon ?? "bubble.left.circle")
-        self._selectedColor = State(initialValue: Color.from(name: record.color ?? ".hlBlue"))
+        self.isSelected = isSelected
     }
 
     var body: some View {
-        HStack(spacing: 12) {
+        HStack(spacing: 10) {
             Image(systemName: selectedIcon)
-                .font(HanlinTypography.fixed(size: 18))
-                .foregroundColor(selectedColor)
-                .frame(width: 36, height: 36)
-                .background(selectedColor.opacity(0.12))
-                .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                .font(HanlinTypography.body)
+                .foregroundStyle(selectedColor)
+                .frame(width: 22)
+                .accessibilityHidden(true)
 
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 3) {
                 HStack {
                     highlightedChatName()
                         .lineLimit(1)
@@ -46,36 +94,41 @@ struct ChatRowView: View {
                     Spacer()
                     
                     Text(formattedDate(record.lastEdited))
-                        .font(HanlinTypography.caption)
-                        .foregroundColor(.gray)
+                        .font(HanlinTypography.caption2)
+                        .foregroundStyle(.secondary)
+                        .lineLimit(1)
+                        .fixedSize(horizontal: true, vertical: false)
                 }
                 
                 // 如果存在匹配片段，则显示出来
                 if let snippet = matchedSnippet {
                     Text(snippet)
-                        .font(HanlinTypography.caption)
-                        .lineLimit(2)
+                        .font(HanlinTypography.caption2)
+                        .lineLimit(searchText.isEmpty ? 1 : 2)
                         .truncationMode(.tail)
                 } else {
                     if let highlightedDescription = highlightedText(record.infoDescription ?? "", searchText: searchText) {
                         Text(highlightedDescription)
-                            .font(HanlinTypography.caption)
+                            .font(HanlinTypography.caption2)
                             .foregroundColor(Color(.systemGray))
-                            .lineLimit(2)
+                            .lineLimit(searchText.isEmpty ? 1 : 2)
                             .truncationMode(.tail)
                             .multilineTextAlignment(.leading)
                     } else {
                         Text(String(localized: "暂无消息", bundle: HanlinLocalization.bundle))
-                            .font(HanlinTypography.caption)
+                            .font(HanlinTypography.caption2)
                             .foregroundColor(Color(.systemGray))
-                            .lineLimit(2)
+                            .lineLimit(searchText.isEmpty ? 1 : 2)
                             .truncationMode(.tail)
                             .multilineTextAlignment(.leading)
                     }
                 }
             }
         }
-        .padding(.vertical, 8)
+        .padding(10)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(isSelected ? selectedColor.opacity(0.12) : Color.clear,
+                    in: RoundedRectangle(cornerRadius: 10, style: .continuous))
     }
     
     private func formattedDate(_ date: Date) -> String {
@@ -112,7 +165,7 @@ struct ChatRowView: View {
             displayText = text
         }
         var attributedString = AttributedString(displayText)
-        attributedString.font = .caption
+        attributedString.font = .caption2
         
         // 检查开头是否为 "[草稿]" 或 "[图像]" 并做颜色处理
         if displayText.hasPrefix(draftMarker) {
@@ -139,14 +192,14 @@ struct ChatRowView: View {
         // 如果名称为空，则返回默认“Unknown”
         guard let name = record.name, !name.isEmpty else {
             return Text("Unknown", bundle: HanlinLocalization.bundle)
-                .font(HanlinTypography.headline)
+                .font(HanlinTypography.subheadline.weight(.medium))
                 .foregroundColor(.primary)
         }
         
         // 去除搜索词前后空格，并提前处理空搜索
         let trimmedSearch = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
         if trimmedSearch.isEmpty {
-            return Text(name).font(HanlinTypography.headline)
+            return Text(name).font(HanlinTypography.subheadline.weight(.medium))
         }
         
         // 构建富文本对象
@@ -158,13 +211,13 @@ struct ChatRowView: View {
             let nsRange = NSRange(foundRange, in: name)
             if let attrRange = Range(nsRange, in: attributedName) {
                 attributedName[attrRange].foregroundColor = .hanlinHLBlue
-                attributedName[attrRange].font = .headline.bold()
+                attributedName[attrRange].font = .subheadline.bold()
             }
             searchRange = foundRange.upperBound..<name.endIndex
         }
         
         return Text(attributedName)
-            .font(HanlinTypography.headline)
+            .font(HanlinTypography.subheadline.weight(.medium))
     }
 }
 

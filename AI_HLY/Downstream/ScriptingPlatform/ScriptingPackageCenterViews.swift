@@ -113,6 +113,10 @@ struct ScriptingPackageImportView: View {
 
             }
         }
+        // Only the list contents change identity between browse and preview.
+        // Keep this screen's presentation registration and diagnostics sheet
+        // outside that identity so replacing content cannot release its owner.
+        .id(platform.preview == nil ? "browse" : "preview")
         .onAppear {
             platform.setImportPresentation(importPresentationID, visible: true)
             if platform.activity == .idle && platform.preview != nil {
@@ -131,7 +135,6 @@ struct ScriptingPackageImportView: View {
         .sheet(item: $diagnosticsSelection) { _ in
             NavigationStack { MiniAppImportDiagnosticsView(platform: platform) }
         }
-        .id(platform.preview == nil ? "browse" : "preview")
         .accessibilityIdentifier("hanlin-package-import-list")
         .navigationTitle(Text("Script Package", bundle: HanlinLocalization.bundle))
         .navigationBarTitleDisplayMode(.inline)
