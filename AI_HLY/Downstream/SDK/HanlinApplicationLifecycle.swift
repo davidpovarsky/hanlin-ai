@@ -24,9 +24,11 @@ extension HanlinApplicationContext {
                 return
             }
             HanlinExpoSession.ensureAppDefinesLoaded()
+            // The mounted workspace reads this store immediately. Prepare its
+            // original data before waiting for independent system integrations.
+            dataManager.preloadDataIfNeeded()
             await ChavrusaSystemIntegrationBootstrap.configure()
             HanlinNativeScriptProductionBootstrap.prepareEmbeddedProviders()
-            dataManager.preloadDataIfNeeded()
             HanlinScriptingPlatform.shared.configure(modelContext: modelContainer.mainContext)
             await HanlinScriptingPlatform.shared.publishCompactAgentConfig()
             await RuntimeLifecycleBridge.prepareApplication()
