@@ -226,6 +226,7 @@ export async function auditManifestContracts({source}) {
       'Native plugins must be embedded; unknown names rejected. Current individual rules below.', [ref(scope, 'contract["plugins"]')]));
     const plugins = engine === 'expo'
       ? {'@expo/ui': 'Minimum policy against installed Expo UI; exact pin for native widgets.',
+        'expo-asset': 'Exact installed original Expo Asset version.',
         'expo-widgets': 'Minimum compatible requirement against installed original Expo Widgets.',
         '@hanlin/expo-ui': 'Released bridge version at most installed bridge baseline; not npm wrapper version.',
         '@nativescript/react-native': 'Exact installed native API version.',
