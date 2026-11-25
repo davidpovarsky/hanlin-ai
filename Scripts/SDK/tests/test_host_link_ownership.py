@@ -124,9 +124,10 @@ class HostLinkOwnershipTests(unittest.TestCase):
         manifest = json.loads(subprocess.check_output(
             ["swift", "package", "--package-path", str(ROOT), "dump-package"], text=True))
         self.assertEqual(len(manifest["products"]), 47)
-        self.assertEqual(len(manifest["targets"]), 113)
+        self.assertEqual(len(manifest["targets"]), 114)
         target_names = {target["name"] for target in manifest["targets"]}
         self.assertIn("AI_Hanlin", target_names)
+        self.assertIn("ExpoAsset", target_names)
         self.assertNotIn("HanlinApp", target_names)
         closure = update_project.application_product_closure(manifest)
         objects = self.project["objects"]
