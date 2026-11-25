@@ -12,6 +12,7 @@ let package = Package(
         .library(name: "HanlinPresentationKit", targets: ["HanlinPresentationKit"]),
         .library(name: "HanlinRichUI", targets: ["HanlinRichUI"]),
         .library(name: "HanlinChatUI", targets: ["HanlinChatUI"]),
+        .library(name: "HanlinChatPresentation", targets: ["HanlinChatPresentation"]),
         .library(name: "HanlinA2UI", targets: ["HanlinA2UI"]),
         .library(name: "HanlinMiniAppsUI", targets: ["HanlinMiniAppsUI"])
     ],
@@ -32,6 +33,7 @@ let package = Package(
             .product(name: "HanlinPlatformContracts", package: "HanlinPlatform")
         ]),
         .target(name: "HanlinPresentationKit"),
+        .target(name: "HanlinChatPresentation"),
         .target(name: "HanlinAgentActivityCore", dependencies: [
             "HanlinPresentationKit", "HanlinLocalization",
             .product(name: "HanlinPlatformContracts", package: "HanlinPlatform")
@@ -61,7 +63,8 @@ let package = Package(
         ]),
         .testTarget(name: "HanlinLocalizationTests", dependencies: ["HanlinLocalization"]),
         .testTarget(name: "HanlinChatUITests", dependencies: ["HanlinChatUI"]),
-        .testTarget(name: "HanlinPresentationKitTests", dependencies: ["HanlinPresentationKit"])
+        .testTarget(name: "HanlinPresentationKitTests", dependencies: ["HanlinPresentationKit"]),
+        .testTarget(name: "HanlinChatPresentationTests", dependencies: ["HanlinChatPresentation"])
     ],
     swiftLanguageModes: [.v6]
 )

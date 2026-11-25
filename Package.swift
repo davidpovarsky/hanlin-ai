@@ -42,6 +42,7 @@ let package = Package(
         .library(name: "HanlinPresentationKit", targets: ["HanlinPresentationKit"]),
         .library(name: "HanlinRichUI", targets: ["HanlinRichUI"]),
         .library(name: "HanlinChatUI", targets: ["HanlinChatUI"]),
+        .library(name: "HanlinChatPresentation", targets: ["HanlinChatPresentation"]),
         .library(name: "HanlinA2UI", targets: ["HanlinA2UI"]),
         .library(name: "HanlinMiniAppsUI", targets: ["HanlinMiniAppsUI"]),
         .library(name: "HanlinProductSplit", targets: ["HanlinProductSplit"]),
@@ -441,6 +442,10 @@ let package = Package(
             path: "Packages/HanlinPresentationSDK/Sources/HanlinPresentationKit"
         ),
         .target(
+            name: "HanlinChatPresentation",
+            path: "Packages/HanlinPresentationSDK/Sources/HanlinChatPresentation"
+        ),
+        .target(
             name: "HanlinAgentActivityCore",
             dependencies: [.target(name: "HanlinPresentationKit"), .target(name: "HanlinLocalization"), .target(name: "HanlinPlatformContracts")],
             path: "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore"
@@ -481,6 +486,11 @@ let package = Package(
             name: "HanlinPresentationKitTests",
             dependencies: [.target(name: "HanlinPresentationKit")],
             path: "Packages/HanlinPresentationSDK/Tests/HanlinPresentationKitTests"
+        ),
+        .testTarget(
+            name: "HanlinChatPresentationTests",
+            dependencies: [.target(name: "HanlinChatPresentation")],
+            path: "Packages/HanlinPresentationSDK/Tests/HanlinChatPresentationTests"
         ),
         .target(
             name: "HanlinProductSplit",

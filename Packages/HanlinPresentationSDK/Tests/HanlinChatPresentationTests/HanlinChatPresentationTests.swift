@@ -1,0 +1,62 @@
+import XCTest
+@testable import HanlinChatPresentation
+
+final class HanlinChatPresentationTests: XCTestCase {
+    func testSingleModePolicies() {
+        var sheet = HanlinChatPresentationState(policy: .init(modes: [.sheet], initialMode: .inspector))
+        sheet.open()
+        XCTAssertEqual(sheet.mode, .sheet)
+        sheet.request(.inspector)
+        XCTAssertEqual(sheet.mode, .sheet)
+        XCTAssertNil(sheet.policy.alternative(to: .sheet))
+        var inspector = HanlinChatPresentationState(policy: .init(modes: [.inspector]))
+        inspector.open()
+        XCTAssertEqual(inspector.mode, .inspector)
+        XCTAssertNil(inspector.policy.alternative(to: .inspector))
+    }
+
+    func testBidirectionalHandoffWaitsForDismissal() {
+        var state = HanlinChatPresentationState()
+        state.open()
+        state.request(.inspector)
+        XCTAssertEqual(state.phase, .dismissing(.sheet, next: .inspector))
+        XCTAssertFalse(state.isShowing(.sheet))
+        XCTAssertFalse(state.isShowing(.inspector))
+        state.finishDismissal(.inspector)
+        XCTAssertTrue(state.isTransitioning)
+        state.finishDismissal(.sheet)
+        XCTAssertEqual(state.mode, .inspector)
+        state.request(.sheet)
+        XCTAssertEqual(state.phase, .dismissing(.inspector, next: .sheet))
+        state.finishDismissal(.inspector)
+        XCTAssertEqual(state.mode, .sheet)
+        state.finishDismissal(.inspector)
+        XCTAssertEqual(state.mode, .sheet)
+    }
+
+    func testCancellationAndNativeDismissal() {
+        var state = HanlinChatPresentationState()
+        state.open()
+        state.request(.inspector)
+        state.close()
+        state.finishDismissal(.sheet)
+        XCTAssertEqual(state.phase, .closed)
+        state.open(.inspector)
+        state.systemDismissed(.inspector)
+        state.finishDismissal(.inspector)
+        XCTAssertEqual(state.phase, .closed)
+    }
+
+    func testEmptyPolicyAndActiveReconfiguration() {
+        var state = HanlinChatPresentationState(policy: .init(modes: [], initialMode: .inspector))
+        XCTAssertEqual(state.policy.initialMode, .sheet)
+        state.open()
+        XCTAssertFalse(state.configure(.init(modes: [.inspector])))
+        state.close()
+        state.finishDismissal(.sheet)
+        XCTAssertTrue(state.configure(.init(modes: [.inspector])))
+        state.open()
+        XCTAssertEqual(state.mode, .inspector)
+    }
+}
+
