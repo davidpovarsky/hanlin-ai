@@ -25,7 +25,11 @@
       "owner": "יעל + איתן",
       "contract": "לאמת מה מתוחזק ונדרש בפועל: Swift AI SDK, MCP, OTel; להחליט מפורשות על Vercel/LRUCache/NSCache/GRDB/Redis/Valkey/RediStack/LiteLLM/Langfuse/SwiftMetrics. למפות capabilities נגישים, ממשקי מוצר, מגבלות ומניעת כפילות; לעדכן pin רק בהיקף נחוץ עם הבדלי source. קבלה: ADR ומטריצה עם primary sources, צרכן לכל dependency שנוספה.",
       "asana": "1220884041330206",
-      "status": "IN_PROGRESS"
+      "status": "EXECUTED_PASS",
+      "evidence": [
+        "CACHE_AND_OBSERVABILITY_ADR.md",
+        "evidence/canonical-graph-20261125/graph-tests-receipt.json"
+      ]
     },
     {
       "id": "C2",
@@ -57,7 +61,11 @@
       "owner": "נועם",
       "contract": "שיפור AutomaticWebSearchCoordinator המקורי: TTL מתחילת השלמה, LRU מוגבל, איחוד בקשות זהות, per-waiter cancellation, כשל לא נשמר, bypass/invalidation וסטטיסטיקה לא רגישה. מאגרי תוצאות כלים נשארים עמידים. קבלה: בדיקות התנהגות עם provider נשלט/clock מוזרק, בלי sleep, כולל ביטול ושינוי generation תוך כדי בקשה.",
       "asana": "1220884013934618",
-      "status": "IN_PROGRESS"
+      "status": "EXECUTED_PASS",
+      "evidence": [
+        "evidence/local-cache-20261125/receipt.json"
+      ],
+      "acceptance_note": "11 actual original local cache lifecycle tests passed; 7 accounting tests in same run are recorded separately for C4."
     },
     {
       "id": "C6",
@@ -73,7 +81,14 @@
       "owner": "נועם",
       "contract": "מנהל native מצומצם דרך API המקורי התומך create/get/updateTTL/delete; model eligibility, קשירת endpoint/model/scope, reference expiry, ביטול ושגיאות. רק explicit opt-in; implicit נשאר ברירת מחדל. הגנה ממידע stale ומסכמת tools/system לא תואמת. קבלה: חוזה REST ובדיקות lifecycle; live provider receipt כאשר חשבון מורשה זמין.",
       "asana": "1220884013901248",
-      "status": "IN_PROGRESS"
+      "status": "EXECUTED_PASS",
+      "evidence": [
+        "USAGE.md",
+        "evidence/native-core-20261125/attempts/04-runtime-cancellation-redirect/receipt.json",
+        "evidence/native-core-20261125/attempts/04-runtime-cancellation-redirect/raw.log.gz"
+      ],
+      "acceptance_note": "9 Google native lifecycle tests passed individually within combined failing run; full integrated native gate remains C8. Public Swift API boundary, no automatic paid app/JS manager.",
+      "live_status": "NOT_RUN: no authorized live provider account configured in isolated validation environment; no actual-hit or billing claim."
     },
     {
       "id": "C8",
@@ -103,6 +118,26 @@
     "policy": "Execute affected/new/unknown checks; reuse only authenticated unchanged evidence; fixtures are not live provider hits",
     "live": "No existing account credential has been accessed; locate intended runtime channel before live calls; never expose credentials",
     "other_work": "Preserve other active branches/worktrees and running jobs; synchronize completed source changes after each stage",
-    "publication": "Normal push only; no main force/rewrite; exact reviewable commits"
+    "publication": "Normal push only; no main force/rewrite; exact reviewable commits",
+    "current_core_result": {
+      "source": "0c243d6cf20a702239a645c2f5c4b0f65d955702",
+      "executed": 47,
+      "passed": 44,
+      "failed_tests": 3,
+      "status": "FAILED",
+      "remaining": [
+        "original producer telemetry observation synchronization",
+        "compact cancellation transport propagation",
+        "redirect native fixture"
+      ],
+      "receipt": "evidence/native-core-20261125/attempts/04-runtime-cancellation-redirect/receipt.json"
+    }
+  },
+  "updated_at": "2026-11-25T00:43:05.350943+00:00",
+  "latest_integrated_source": "b3bc838a60b6b002586cceac011f4017645b4ff5",
+  "synchronized_heads": {
+    "composer": "7b7f7e4460200d7e98162dd525d67f8ca1860911",
+    "miniapps_sdk": "1812bff50571c9907d15cd8b4bfbe4874be24756",
+    "wave3": "de1312733098d3c066254687c037a84ea7134ad2"
   }
 }
