@@ -1,0 +1,61 @@
+{
+  "capturedAt": "2026-11-25T08:56:04.790596+00:00",
+  "source": "1d5e598614f2bc7c689f34f5d7b364f67e1d5ae1",
+  "files": [
+    {
+      "path": "AI_HLY.xcodeproj/project.pbxproj",
+      "size": 252023,
+      "sha256": "a80e2947b4dedf0ce95b326cf44b0efac613b7b044058e3afc3fccb870cb0087"
+    },
+    {
+      "path": "Package.swift",
+      "size": 88328,
+      "sha256": "392ece3430f8e61eb28afdaa925adf006b1a3dbf82a233568c2c279ab768e53b"
+    },
+    {
+      "path": "docs/agent-sdk/unified-package-manifest.json",
+      "size": 3901,
+      "sha256": "dd14c80e4223465e6a600f93c153c0f4c80a290b28520dfb8aa65d33f1862e4d"
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/miniapps_provider_sources.json",
+      "size": 9957,
+      "sha256": "56c217fd7bdda512e88bc90f64595336e9621ca0f29b202b31a2b175884d7952"
+    },
+    {
+      "path": "docs/product-split/target-membership.json",
+      "size": 8770,
+      "sha256": "20b6f6efecede2ee7ef476e7854cb5fedd7db07868a99e84930ee03eb9bbe699"
+    },
+    {
+      "path": "build/primary-control/final-prefix-continuation-attempt18/state.json",
+      "size": 4406,
+      "sha256": "03d3bad3d8306b42e539de5606001fc44cc1d3366bb80068a239dbe66c328d1b"
+    },
+    {
+      "path": "build/primary-control/final-prefix-continuation-attempt18/logs/verify-targets.log",
+      "size": 807,
+      "sha256": "e67a4b6f4cef0bb1043e4e3b9196b3368827b21cdb86083e1686b1d141b1d966"
+    },
+    {
+      "path": "build/primary-control/final-prefix-continuation-attempt18/logs/generate-manifest.log",
+      "size": 3605,
+      "sha256": "11ffb997c112dd4c5954bd29a572fb89d05c9048e373d844133bf0580cca034c"
+    },
+    {
+      "path": "build/primary-control/final-prefix-continuation-attempt18/logs/generate-project.log",
+      "size": 88,
+      "sha256": "7b205399ea53f72db8afa2fe3d77370cd6f0ac3d9ea8d19cea47a806236d4d18"
+    },
+    {
+      "path": "build/primary-control/final-prefix-continuation-attempt18/logs/split-upstreams.log",
+      "size": 7885,
+      "sha256": "0bd3d45fd013bc4cd51cbd54b10f71add41aff73fd97a974d7c11211b3564d26"
+    },
+    {
+      "path": "build/primary-control/state.json",
+      "size": 86837,
+      "sha256": "8d6d47dae024be85279a9fbefec2535c02f49a91a975825e161bee6d24c0f054"
+    }
+  ]
+}
