@@ -1,0 +1,26 @@
+✔ canonical module and type references use the supplied SDK while retaining its nested dependency (1863.633019ms)
+✔ NativeScript emission and copied bodies agree with canonical types and preserve project aliases and extra dependencies (2536.770593ms)
+✔ missing canonical exports, configs and SDK dependencies never resolve from ancestor packages (3280.926777ms)
+✔ runJS accepts an asynchronous void result without invoking a synchronous fallback (5.681593ms)
+✔ runJS uses the existing asynchronous alias on a later bridge candidate (1.152086ms)
+✔ runJS preserves compatibility results when no asynchronous selector exists (1.989051ms)
+✔ runNode accepts an asynchronous void result without invoking a synchronous fallback (1.014365ms)
+✔ runNode uses the existing asynchronous alias on a later bridge candidate (0.889125ms)
+✔ runNode preserves compatibility results when no asynchronous selector exists (1.557129ms)
+✔ runPython accepts an asynchronous void result without invoking a synchronous fallback (0.985086ms)
+✔ runPython uses the existing asynchronous alias on a later bridge candidate (0.961725ms)
+✔ runPython preserves compatibility results when no asynchronous selector exists (1.488449ms)
+✔ fetchHTTPS accepts an asynchronous void result without invoking a synchronous fallback (1.087086ms)
+✔ fetchHTTPS uses the existing asynchronous alias on a later bridge candidate (0.781045ms)
+✔ fetchHTTPS preserves compatibility results when no asynchronous selector exists (1.419688ms)
+✔ sendInterApp accepts an asynchronous void result without invoking a synchronous fallback (1.84513ms)
+✔ sendInterApp uses the existing asynchronous alias on a later bridge candidate (0.796124ms)
+✔ sendInterApp preserves compatibility results when no asynchronous selector exists (1.430969ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8268.506025

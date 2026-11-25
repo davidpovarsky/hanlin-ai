@@ -3,9 +3,13 @@
 ## Current source
 
 The final integration branch is `codex/hanlin-miniapps-final-integration-20261125`.
-It includes PR18 source `60afd124`, PR19 execution source `1812bff5` via
-`27b891d8`, shared picker correction `7b8cbba34`, and consumer SDK lineage
-`f8cf6ca54` via merge `309bf4c61`.
+The native gate is executing from source571a1ab79171d59415c85cfeea6e8e01c74596db.
+It includes PR18 source60afd124, PR19 current sourceb0cf26a6, native per-window
+package work8557d605, shared Picker7b8cbba3, and current consumer SDK4e921b951.
+Nine source conflicts were individually reconciled. The original Mac canonical
+generators materialized the notification extension and SDK source membership;
+strict source/target graph verification then passed. Export now freezes its exact
+build receipt, and can publish a build-only consumer artifact while native tests run.
 
 The dependency conflict retains `swift-ai-sdk@3f38f1302764635c9991d0d00fd7b12471a5373c`.
 GitHub comparison on 25 November confirmed that the former `07431abccbfb151ca2dab67bca6cf86fcb2bd3b8`
@@ -82,3 +86,38 @@ needs, concurrent growth and a situational OS margin. The200/100/50 GB levels ar
 aspirational/warnings, not hard stop thresholds. One writer per mutable cache remains
 required. Cleanup of a bounded inactive compiler cache recovered1.07 GB while
 retaining source, products, logs, native evidence and newer reusable configurations.
+
+## Current controls and original native run
+
+The merged Node SDK resolver and asynchronous original-bridge selection controls
+ran on5cca5d79:18 PASS,0 FAIL,0 SKIP. Their source modules are unchanged in571a.
+See merged-source-controls/. The first attempt failed before test execution because
+sparse-checkout source files were absent; the original log is retained. Exact tracked
+files were materialized and the actual test run then passed. These controls are not
+native application acceptance.
+
+The actual Mac23-case run started from571a in
+/Users/m1/builds/hanlin-miniapps-final-native-20261125/build/native-final-evidence/attempt-571a1ab7-01.
+A distinct private APFS cache reuses only content-verified original dependencies;
+the donor application's acceptance is not reused. Source admission passed.
+Actual build/UI outcomes will be recorded separately when available.
+
+## MiniApps extension identities
+
+The original source declares four MiniApps extensions. Their necessary identifiers
+were absent from the earlier Apple inventory. They were registered with the same
+existing team and parent namespace; public capability readback passed at05:38 UTC.
+The exact source entitlements and target recipe are bound in extension-signing-plan.json.
+The original failed CloudKit-version request and identifier-prefix lookup are retained
+next to the corrected successful receipt; no uncertain mutation was blindly retried.
+
+- Widgets: com.itorah.hanlinminiapps.widgets / R2N62AFGF6; App Groups, HealthKit, HomeKit, iCloud (XCODE_6).
+- Share: com.itorah.hanlinminiapps.share / WM658PXWFD; App Groups.
+- Translation: com.itorah.hanlinminiapps.translation-provider /99R3HH5NK9; App Groups.
+- Notification: com.itorah.hanlinminiapps.notification-service /9YMYD4YPQ6; App Groups.
+
+The API added its normal In-App Purchase capability by default; no original capabilities
+were removed. Actual group/container association and matching distribution profiles
+remain unverified for these extension IDs. Their public capability registration does
+not establish an exportable signed MiniApps product. No certificate was created,
+revoked or exported, no tester was contacted, and no new TestFlight build is claimed.

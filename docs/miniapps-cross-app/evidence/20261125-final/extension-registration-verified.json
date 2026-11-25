@@ -1,0 +1,337 @@
+{
+  "source_sha": "5aaa4471924aec0fbf086e68feb08fa10d9f01c8",
+  "team_id": "NA6HPWARQ2",
+  "started_at": "2026-11-25T05:38:09.334219+00:00",
+  "plan_sha256": "6afab1a72e155200be6764706cd0b43ef5b6b08a8fdfee763f888e37bb79d253",
+  "apply": true,
+  "operations": [
+    {
+      "method": "GET",
+      "path": "/v1/bundleIds",
+      "started_at": "2026-11-25T05:38:09.345433+00:00",
+      "http_status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/v1/bundleIds",
+      "started_at": "2026-11-25T05:38:09.882457+00:00",
+      "http_status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/v1/bundleIds/R2N62AFGF6/bundleIdCapabilities",
+      "started_at": "2026-11-25T05:38:10.448505+00:00",
+      "http_status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/v1/bundleIdCapabilities",
+      "started_at": "2026-11-25T05:38:10.989441+00:00",
+      "request": {
+        "data": {
+          "type": "bundleIdCapabilities",
+          "attributes": {
+            "capabilityType": "ICLOUD",
+            "settings": [
+              {
+                "key": "ICLOUD_VERSION",
+                "options": [
+                  {
+                    "key": "XCODE_6",
+                    "enabled": true
+                  }
+                ]
+              }
+            ]
+          },
+          "relationships": {
+            "bundleId": {
+              "data": {
+                "type": "bundleIds",
+                "id": "R2N62AFGF6"
+              }
+            }
+          }
+        }
+      },
+      "http_status": 201
+    },
+    {
+      "method": "GET",
+      "path": "/v1/bundleIds/R2N62AFGF6/bundleIdCapabilities",
+      "started_at": "2026-11-25T05:38:11.550451+00:00",
+      "http_status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/v1/bundleIds",
+      "started_at": "2026-11-25T05:38:12.082733+00:00",
+      "http_status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/v1/bundleIds",
+      "started_at": "2026-11-25T05:38:12.611036+00:00",
+      "request": {
+        "data": {
+          "type": "bundleIds",
+          "attributes": {
+            "name": "Hanlin MiniApps Share",
+            "identifier": "com.itorah.hanlinminiapps.share",
+            "platform": "IOS"
+          }
+        }
+      },
+      "http_status": 201
+    },
+    {
+      "method": "GET",
+      "path": "/v1/bundleIds",
+      "started_at": "2026-11-25T05:38:13.169951+00:00",
+      "http_status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/v1/bundleIds/WM658PXWFD/bundleIdCapabilities",
+      "started_at": "2026-11-25T05:38:13.665441+00:00",
+      "http_status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/v1/bundleIdCapabilities",
+      "started_at": "2026-11-25T05:38:14.194705+00:00",
+      "request": {
+        "data": {
+          "type": "bundleIdCapabilities",
+          "attributes": {
+            "capabilityType": "APP_GROUPS"
+          },
+          "relationships": {
+            "bundleId": {
+              "data": {
+                "type": "bundleIds",
+                "id": "WM658PXWFD"
+              }
+            }
+          }
+        }
+      },
+      "http_status": 201
+    },
+    {
+      "method": "GET",
+      "path": "/v1/bundleIds/WM658PXWFD/bundleIdCapabilities",
+      "started_at": "2026-11-25T05:38:14.707217+00:00",
+      "http_status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/v1/bundleIds",
+      "started_at": "2026-11-25T05:38:15.215503+00:00",
+      "http_status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/v1/bundleIds",
+      "started_at": "2026-11-25T05:38:15.711963+00:00",
+      "request": {
+        "data": {
+          "type": "bundleIds",
+          "attributes": {
+            "name": "Hanlin MiniApps Translation",
+            "identifier": "com.itorah.hanlinminiapps.translation-provider",
+            "platform": "IOS"
+          }
+        }
+      },
+      "http_status": 201
+    },
+    {
+      "method": "GET",
+      "path": "/v1/bundleIds",
+      "started_at": "2026-11-25T05:38:16.272115+00:00",
+      "http_status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/v1/bundleIds/99R3HH5NK9/bundleIdCapabilities",
+      "started_at": "2026-11-25T05:38:16.761356+00:00",
+      "http_status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/v1/bundleIdCapabilities",
+      "started_at": "2026-11-25T05:38:17.272798+00:00",
+      "request": {
+        "data": {
+          "type": "bundleIdCapabilities",
+          "attributes": {
+            "capabilityType": "APP_GROUPS"
+          },
+          "relationships": {
+            "bundleId": {
+              "data": {
+                "type": "bundleIds",
+                "id": "99R3HH5NK9"
+              }
+            }
+          }
+        }
+      },
+      "http_status": 201
+    },
+    {
+      "method": "GET",
+      "path": "/v1/bundleIds/99R3HH5NK9/bundleIdCapabilities",
+      "started_at": "2026-11-25T05:38:17.808313+00:00",
+      "http_status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/v1/bundleIds",
+      "started_at": "2026-11-25T05:38:18.296140+00:00",
+      "http_status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/v1/bundleIds",
+      "started_at": "2026-11-25T05:38:18.816419+00:00",
+      "request": {
+        "data": {
+          "type": "bundleIds",
+          "attributes": {
+            "name": "Hanlin MiniApps Notification",
+            "identifier": "com.itorah.hanlinminiapps.notification-service",
+            "platform": "IOS"
+          }
+        }
+      },
+      "http_status": 201
+    },
+    {
+      "method": "GET",
+      "path": "/v1/bundleIds",
+      "started_at": "2026-11-25T05:38:19.360643+00:00",
+      "http_status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/v1/bundleIds/9YMYD4YPQ6/bundleIdCapabilities",
+      "started_at": "2026-11-25T05:38:19.872035+00:00",
+      "http_status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/v1/bundleIdCapabilities",
+      "started_at": "2026-11-25T05:38:20.422533+00:00",
+      "request": {
+        "data": {
+          "type": "bundleIdCapabilities",
+          "attributes": {
+            "capabilityType": "APP_GROUPS"
+          },
+          "relationships": {
+            "bundleId": {
+              "data": {
+                "type": "bundleIds",
+                "id": "9YMYD4YPQ6"
+              }
+            }
+          }
+        }
+      },
+      "http_status": 201
+    },
+    {
+      "method": "GET",
+      "path": "/v1/bundleIds/9YMYD4YPQ6/bundleIdCapabilities",
+      "started_at": "2026-11-25T05:38:20.935586+00:00",
+      "http_status": 200
+    }
+  ],
+  "extensions": [
+    {
+      "bundle_id": "com.itorah.hanlinminiapps.widgets",
+      "source_entitlements_sha256": "0da89872d45b5e9b990de71c4f9c0855f1117f81cb1867a07aa3bfb8b6106254",
+      "created": false,
+      "capabilities_enabled": [
+        "ICLOUD"
+      ],
+      "id": "R2N62AFGF6",
+      "capabilities_readback": [
+        "APP_GROUPS",
+        "HEALTHKIT",
+        "HOMEKIT",
+        "ICLOUD",
+        "IN_APP_PURCHASE"
+      ],
+      "icloud_settings_readback": [
+        {
+          "key": "ICLOUD_VERSION",
+          "options": [
+            {
+              "key": "XCODE_6"
+            }
+          ]
+        }
+      ],
+      "missing_public_capabilities": [],
+      "status": "PUBLIC_CAPABILITIES_VERIFIED"
+    },
+    {
+      "bundle_id": "com.itorah.hanlinminiapps.share",
+      "source_entitlements_sha256": "cbce7e438c63d23cdcbc737379709ab6220997a2e39447dd962492a46d3930cc",
+      "created": true,
+      "capabilities_enabled": [
+        "APP_GROUPS"
+      ],
+      "id": "WM658PXWFD",
+      "capabilities_readback": [
+        "APP_GROUPS",
+        "IN_APP_PURCHASE"
+      ],
+      "missing_public_capabilities": [],
+      "status": "PUBLIC_CAPABILITIES_VERIFIED"
+    },
+    {
+      "bundle_id": "com.itorah.hanlinminiapps.translation-provider",
+      "source_entitlements_sha256": "cbce7e438c63d23cdcbc737379709ab6220997a2e39447dd962492a46d3930cc",
+      "created": true,
+      "capabilities_enabled": [
+        "APP_GROUPS"
+      ],
+      "id": "99R3HH5NK9",
+      "capabilities_readback": [
+        "APP_GROUPS",
+        "IN_APP_PURCHASE"
+      ],
+      "missing_public_capabilities": [],
+      "status": "PUBLIC_CAPABILITIES_VERIFIED"
+    },
+    {
+      "bundle_id": "com.itorah.hanlinminiapps.notification-service",
+      "source_entitlements_sha256": "cbce7e438c63d23cdcbc737379709ab6220997a2e39447dd962492a46d3930cc",
+      "created": true,
+      "capabilities_enabled": [
+        "APP_GROUPS"
+      ],
+      "id": "9YMYD4YPQ6",
+      "capabilities_readback": [
+        "APP_GROUPS",
+        "IN_APP_PURCHASE"
+      ],
+      "missing_public_capabilities": [],
+      "status": "PUBLIC_CAPABILITIES_VERIFIED"
+    }
+  ],
+  "app_group_assignment": "REQUIRES_SEPARATE_VERIFICATION",
+  "icloud_container_assignment": "REQUIRES_SEPARATE_VERIFICATION",
+  "profile_signing_and_upload": "NOT_PERFORMED",
+  "parent": {
+    "id": "ZMP944AT2R",
+    "identifier": "com.itorah.hanlinminiapps",
+    "seedId": "NA6HPWARQ2"
+  },
+  "status": "PUBLIC_IDENTITIES_AND_CAPABILITIES_VERIFIED",
+  "finished_at": "2026-11-25T05:38:21.428911+00:00"
+}

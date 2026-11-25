@@ -1,0 +1,14 @@
+{
+  "source": "5cca5d7913e992564bdd2c78326ab86f22d728da",
+  "utc": "2026-11-25T05:26:32.682116+00:00",
+  "command": [
+    "node",
+    "--test",
+    "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-sdk-resolution.test.mjs",
+    "Scripts/CI/Tests/nativescript_parity_async_startup.test.mjs"
+  ],
+  "exit": 0,
+  "compiler_sha256": "3ae902c92cc44dace175c0e69e13a4b0899f6983c6121d76b9ab8dd5795e7675",
+  "log_sha256": "b9ec2698cac503c0f4b7aae356c9781d8806247ad224b25c648079b7255f50ca",
+  "scope": "Real Node resolver/async bridge selection control tests; not application acceptance"
+}
