@@ -34,23 +34,25 @@ private final class HanlinNotificationCenterDelegate: NSObject, UNUserNotificati
         super.init()
     }
 
+    // The two canonical consumers use objcxx, whose optional Objective-C
+    // requirement returns the raw Int option bitmask. Match that witness exactly.
     func userNotificationCenter(_ center: UNUserNotificationCenter,
-                                willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
+                                willPresent notification: UNNotification) async -> Int {
         await receive(notification.request.content.userInfo)
         // No original delegate meant no foreground presentation. Preserve that
         // behavior and any installed delegate's actual presentation decision.
-        return await withCheckedContinuation { continuation in
+        return await withCheckedContinuation { (continuation: CheckedContinuation<Int, Never>) in
             // Register the original callback synchronously on this actor. The
             // callback carries only the continuation across its execution queue.
             let forwarded: Void? = previous?.userNotificationCenter?(
                 center,
                 willPresent: notification,
                 withCompletionHandler: { options in
-                    continuation.resume(returning: Self.presentationOptions(options))
+                    continuation.resume(returning: options)
                 }
             )
             if forwarded == nil {
-                continuation.resume(returning: [])
+                continuation.resume(returning: 0)
             }
         }
     }
@@ -77,21 +79,6 @@ private final class HanlinNotificationCenterDelegate: NSObject, UNUserNotificati
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 openSettingsFor notification: UNNotification?) {
         previous?.userNotificationCenter?(center, openSettingsFor: notification)
-    }
-
-    // The optional Objective-C block parameter imports as an Int under the
-    // existing C++ consumer. Preserve its full bit pattern, while retaining
-    // the native option-set form for consumers using the ordinary importer.
-    nonisolated private static func presentationOptions(
-        _ options: UNNotificationPresentationOptions
-    ) -> UNNotificationPresentationOptions {
-        options
-    }
-
-    nonisolated private static func presentationOptions(
-        _ rawValue: Int
-    ) -> UNNotificationPresentationOptions {
-        UNNotificationPresentationOptions(rawValue: UInt(bitPattern: rawValue))
     }
 
     private func receive(_ userInfo: [AnyHashable: Any]) async {
