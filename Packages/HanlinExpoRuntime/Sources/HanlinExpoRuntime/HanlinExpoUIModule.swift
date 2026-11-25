@@ -27,7 +27,7 @@ public final class HanlinExpoUIModule: Module {
 
 public final class HanlinTextEditorProps: UIBaseViewProps {
     @Field public var value: String?
-    @Field public var defaultValue = ""
+    @Field public var defaultValue: String?
     @Field public var placeholder: String?
     @Field public var isEditable = true
     public var onValueChange = EventDispatcher()
@@ -35,14 +35,43 @@ public final class HanlinTextEditorProps: UIBaseViewProps {
 
 public struct HanlinTextEditorView: ExpoSwiftUI.View {
     @ObservedObject public var props: HanlinTextEditorProps
-    @State private var text: String
 
     public init(props: HanlinTextEditorProps) {
         self.props = props
-        _text = State(initialValue: props.value ?? props.defaultValue)
     }
 
     public var body: some View {
+        HanlinTextEditorContent(props: props)
+    }
+}
+
+private struct HanlinTextEditorContent: View {
+    @ObservedObject var props: HanlinTextEditorProps
+    @State private var text: String
+    @State private var hasInitialValue: Bool
+
+    init(props: HanlinTextEditorProps) {
+        self.props = props
+        // Expo constructs its exported view before delivering React props.
+        // Initialize state in the mounted SwiftUI child and accept a late first value.
+        _text = State(initialValue: props.value ?? props.defaultValue ?? "")
+        _hasInitialValue = State(initialValue: props.value != nil || props.defaultValue != nil)
+    }
+
+    private var textBinding: Binding<String> {
+        Binding(
+            get: { text },
+            set: { newValue in
+                guard newValue != text else { return }
+                hasInitialValue = true
+                text = newValue
+                // Only native edits emit events; incoming React values do not.
+                props.onValueChange(["value": newValue])
+            }
+        )
+    }
+
+    var body: some View {
         ZStack(alignment: .topLeading) {
             if text.isEmpty, let placeholder = props.placeholder {
                 Text(placeholder)
@@ -50,17 +79,19 @@ public struct HanlinTextEditorView: ExpoSwiftUI.View {
                     .allowsHitTesting(false)
                     .accessibilityHidden(true)
             }
-            TextEditor(text: $text)
+            TextEditor(text: textBinding)
                 .scrollContentBackground(.hidden)
                 .disabled(!props.isEditable)
         }
-        .onChange(of: props.value) { _, newValue in
-            guard let newValue, newValue != text else { return }
-            text = newValue
+        .onChange(of: props.value, initial: true) { _, newValue in
+            guard let newValue else { return }
+            hasInitialValue = true
+            if newValue != text { text = newValue }
         }
-        .onChange(of: text) { _, newValue in
-            guard newValue != props.value else { return }
-            props.onValueChange(["value": newValue])
+        .onChange(of: props.defaultValue, initial: true) { _, newValue in
+            guard !hasInitialValue, props.value == nil, let newValue else { return }
+            hasInitialValue = true
+            text = newValue
         }
     }
 }
