@@ -1,32 +1,32 @@
 [
   {
     "archive": "Hanlin-Expo-Widget-Counter.hanlinExpo",
-    "sha256": "07bc97e06a1c4b638272dda7eeeb132e2b91499d5546cccfe7fbfd5bfc4cae0e",
-    "bytes": 1148,
+    "sha256": "64ddee41b1551385a86ec868c7d3ee6bef0202380d4d21b9f6b250ce9fd778a0",
+    "bytes": 1147,
     "engine": "expo",
     "expected": "IMPORT_AND_NATIVE_TEST_REQUIRED",
     "sources": {
       "script.json": "80c22aeab814f67b488edf0f48fb6c5f552b2cf6f30c00e6a92457a086c5ac0b",
-      "package.json": "654f333f2ea880593c03ea667ed552730cbea8bbb419a124fd702f9e233e7379",
+      "package.json": "f9e58f8ca6ca9ec463dd9a4a15915a4dc4bef52ecca7da4d8b51556a93faf037",
       "widget.tsx": "1ab32165c7ae1d0c2d0a3d45a673e323c22a27bc09fe8bb4c0dccf237b4ff824"
     }
   },
   {
     "archive": "Hanlin-Expo-Widget-Visuals.hanlinExpo",
-    "sha256": "2584982f4077b022860a1197c62d3bc85fdaa454e907e6749cd5734e7886cb68",
-    "bytes": 1281,
+    "sha256": "539be1e79390f1c94002914c393400e26328efaf3f063bc673afb95494b2002d",
+    "bytes": 1273,
     "engine": "expo",
     "expected": "IMPORT_AND_NATIVE_TEST_REQUIRED",
     "sources": {
       "script.json": "a931e3e24e79587ac5030d0931ce9d8b82cc316427374b0190fc27637cd355c1",
-      "package.json": "92e3dead62810727abe07f25596ac40dcd7b314312133322ccd1be5736fc27a2",
+      "package.json": "04ec5106e01a1a0f5c4e586676237b76fd9e554ad6155875fdc9c22eded57cd9",
       "widget.jsx": "e94a3349aff5092029f02e17572bb84f9cf803d2b83578c51893beaed9a924d8"
     }
   },
   {
     "archive": "Hanlin-ScriptWidget-Dashboard.scripting",
-    "sha256": "478cd567e9731cc7342aefa9024ea498edf8d12d340cc5c558484e60a210dace",
-    "bytes": 968,
+    "sha256": "43b9b75e6f9708f1ce95dfcef2fd18f284de3f0fbc6c1b9919c0e539c32494ec",
+    "bytes": 957,
     "engine": "scriptwidget",
     "expected": "IMPORT_AND_NATIVE_TEST_REQUIRED",
     "sources": {
@@ -37,8 +37,8 @@
   },
   {
     "archive": "Hanlin-ScriptWidget-Actions.scripting",
-    "sha256": "33c717e2a454d8831364cb24b15b9e9e799cd3161b526013a15efe46485ebccb",
-    "bytes": 825,
+    "sha256": "160ff9251c1560d38e401a5ac16727ac4840b9501c08b297c7c37f8a6fa10910",
+    "bytes": 823,
     "engine": "scriptwidget",
     "expected": "IMPORT_AND_NATIVE_TEST_REQUIRED",
     "sources": {
@@ -48,21 +48,21 @@
   },
   {
     "archive": "Hanlin-Mixed-Native-Widget.hanlinExpo",
-    "sha256": "7dc83c351a276573bf8fc8591b1be081401433247a656306d54fb9c16cda0d2e",
-    "bytes": 999,
+    "sha256": "abc2cae226c212dc7362a1e1aefa7c6c7f6c38f62fb39747adc3ffc3658241d4",
+    "bytes": 1000,
     "engine": "expo",
     "expected": "DEFERRED_OPTIONAL",
     "sources": {
       "script.json": "1d8e2d59fd7bd37aa2e5ef63448a9bb068673cbde9aa725a2fd4b4847f1c14d9",
-      "package.json": "134d880cc27eab880f7cbb4357c5808a31033ad97180645ba83e2274e078b9e5",
+      "package.json": "d02b0b4ce05a01620dadf11ee26da55f7b9649cd579c0e194bd519a085aa1c9c",
       "widget.jsx": "b57ec0ea5ae1bfc97b374b6b0ec1f880cf4483428007c84d7db6075c1f446a12",
       "README.txt": "6e25fe76db504eed99b59fe7d058d3e84abb5117bc646668040ffc389f8689ff"
     }
   },
   {
     "archive": "Hanlin-Widget-Legacy-Regression.scripting",
-    "sha256": "787bf97e48164d7b9021c64bfa7122e48131a82b388efc3bad26c58276f4bb2f",
-    "bytes": 444,
+    "sha256": "f69e85615e9fcdfc06870f11fadd5f7628a91210b699535ef4239f5039a37184",
+    "bytes": 445,
     "engine": "legacy",
     "expected": "IMPORT_AND_NATIVE_TEST_REQUIRED",
     "sources": {
@@ -72,13 +72,13 @@
   },
   {
     "archive": "Hanlin-Widget-Invalid-Cases.hanlinExpo",
-    "sha256": "077a6ea43342877550f495b1bb885a3c93d8d6c60389459bf55ff05d2db5982c",
-    "bytes": 948,
+    "sha256": "8eea8a1972a053cc9ab90d7d01d07dc8c70c4adc5a0a04cb1aad891acad7c98b",
+    "bytes": 947,
     "engine": "foowidget",
     "expected": "REJECT_IMPORT",
     "sources": {
       "script.json": "5c227caedcc50532bca25796b6cf1d576c304109ccbd3ef446889f7c397bc248",
-      "package.json": "d9e5982141be29b6e31f7552163556f4f9bd0283dcf94345c40a658bd4d0832d",
+      "package.json": "6d6f329f7e68b40c90fe03632598e7f89804b312a4597b4bee3727785c9a2382",
       "widget.jsx": "29bbbe6a63f5381d5575b3a8a29272db8d21579b24130bdf7f43d800f4bc992c",
       "negative-cases.json": "1823cdae5c48142036aece46a0af7c9e6a88540aaeea9c9c5125f8bf48def6b0"
     }

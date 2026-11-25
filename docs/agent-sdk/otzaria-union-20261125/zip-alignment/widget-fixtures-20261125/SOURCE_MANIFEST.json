@@ -1,0 +1,224 @@
+{
+  "schema": 1,
+  "source_sha": "3f622f786bcd493d9068f35ad0b149d49d6fd793",
+  "scope": "Original widget fixture generation and existing Node source controls only; not native widget runtime",
+  "files": [
+    {
+      "path": "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Expo-Widget-Counter.hanlinExpo",
+      "git_mode": "100644",
+      "git_blob": "7db0262fb457379d88b2902bd7f4bac4fa62c019",
+      "size": 1148,
+      "sha256": "07bc97e06a1c4b638272dda7eeeb132e2b91499d5546cccfe7fbfd5bfc4cae0e"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Expo-Widget-Visuals.hanlinExpo",
+      "git_mode": "100644",
+      "git_blob": "1434d5e1a5546cdfe3ecc6c9f5d8e184c9c68636",
+      "size": 1281,
+      "sha256": "2584982f4077b022860a1197c62d3bc85fdaa454e907e6749cd5734e7886cb68"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Mixed-Native-Widget.hanlinExpo",
+      "git_mode": "100644",
+      "git_blob": "779be8e7fdc45421ca7683c9ed34edb5e28b7dd9",
+      "size": 999,
+      "sha256": "7dc83c351a276573bf8fc8591b1be081401433247a656306d54fb9c16cda0d2e"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-ScriptWidget-Actions.scripting",
+      "git_mode": "100644",
+      "git_blob": "60b75892d301552659e5de4b7df6813186b527e7",
+      "size": 825,
+      "sha256": "33c717e2a454d8831364cb24b15b9e9e799cd3161b526013a15efe46485ebccb"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-ScriptWidget-Dashboard.scripting",
+      "git_mode": "100644",
+      "git_blob": "6f64a02b3f7d355e6452b1b753b1e42c79f0d81d",
+      "size": 968,
+      "sha256": "478cd567e9731cc7342aefa9024ea498edf8d12d340cc5c558484e60a210dace"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Widget-Invalid-Cases.hanlinExpo",
+      "git_mode": "100644",
+      "git_blob": "88f65eafb149526086d53ec5ac844795cde47d8a",
+      "size": 948,
+      "sha256": "077a6ea43342877550f495b1bb885a3c93d8d6c60389459bf55ff05d2db5982c"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Widget-Legacy-Regression.scripting",
+      "git_mode": "100644",
+      "git_blob": "31bd2a33d7d078d70b54d1861e3c74cad766fcba",
+      "size": 444,
+      "sha256": "787bf97e48164d7b9021c64bfa7122e48131a82b388efc3bad26c58276f4bb2f"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/Hanlin-Expo-Widget-Counter.hanlinExpo",
+      "git_mode": "100644",
+      "git_blob": "7db0262fb457379d88b2902bd7f4bac4fa62c019",
+      "size": 1148,
+      "sha256": "07bc97e06a1c4b638272dda7eeeb132e2b91499d5546cccfe7fbfd5bfc4cae0e"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/Hanlin-Expo-Widget-Visuals.hanlinExpo",
+      "git_mode": "100644",
+      "git_blob": "1434d5e1a5546cdfe3ecc6c9f5d8e184c9c68636",
+      "size": 1281,
+      "sha256": "2584982f4077b022860a1197c62d3bc85fdaa454e907e6749cd5734e7886cb68"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/Hanlin-Mixed-Native-Widget.hanlinExpo",
+      "git_mode": "100644",
+      "git_blob": "779be8e7fdc45421ca7683c9ed34edb5e28b7dd9",
+      "size": 999,
+      "sha256": "7dc83c351a276573bf8fc8591b1be081401433247a656306d54fb9c16cda0d2e"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/Hanlin-ScriptWidget-Actions.scripting",
+      "git_mode": "100644",
+      "git_blob": "60b75892d301552659e5de4b7df6813186b527e7",
+      "size": 825,
+      "sha256": "33c717e2a454d8831364cb24b15b9e9e799cd3161b526013a15efe46485ebccb"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/Hanlin-ScriptWidget-Dashboard.scripting",
+      "git_mode": "100644",
+      "git_blob": "6f64a02b3f7d355e6452b1b753b1e42c79f0d81d",
+      "size": 968,
+      "sha256": "478cd567e9731cc7342aefa9024ea498edf8d12d340cc5c558484e60a210dace"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/Hanlin-Widget-Invalid-Cases.hanlinExpo",
+      "git_mode": "100644",
+      "git_blob": "88f65eafb149526086d53ec5ac844795cde47d8a",
+      "size": 948,
+      "sha256": "077a6ea43342877550f495b1bb885a3c93d8d6c60389459bf55ff05d2db5982c"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/Hanlin-Widget-Legacy-Regression.scripting",
+      "git_mode": "100644",
+      "git_blob": "31bd2a33d7d078d70b54d1861e3c74cad766fcba",
+      "size": 444,
+      "sha256": "787bf97e48164d7b9021c64bfa7122e48131a82b388efc3bad26c58276f4bb2f"
+    },
+    {
+      "path": "Fixtures/Widgets/Hanlin-Expo-Widget-Counter.hanlinExpo",
+      "git_mode": "100644",
+      "git_blob": "7db0262fb457379d88b2902bd7f4bac4fa62c019",
+      "size": 1148,
+      "sha256": "07bc97e06a1c4b638272dda7eeeb132e2b91499d5546cccfe7fbfd5bfc4cae0e"
+    },
+    {
+      "path": "Fixtures/Widgets/Hanlin-Expo-Widget-Visuals.hanlinExpo",
+      "git_mode": "100644",
+      "git_blob": "1434d5e1a5546cdfe3ecc6c9f5d8e184c9c68636",
+      "size": 1281,
+      "sha256": "2584982f4077b022860a1197c62d3bc85fdaa454e907e6749cd5734e7886cb68"
+    },
+    {
+      "path": "Fixtures/Widgets/Hanlin-Mixed-Native-Widget.hanlinExpo",
+      "git_mode": "100644",
+      "git_blob": "779be8e7fdc45421ca7683c9ed34edb5e28b7dd9",
+      "size": 999,
+      "sha256": "7dc83c351a276573bf8fc8591b1be081401433247a656306d54fb9c16cda0d2e"
+    },
+    {
+      "path": "Fixtures/Widgets/Hanlin-ScriptWidget-Actions.scripting",
+      "git_mode": "100644",
+      "git_blob": "60b75892d301552659e5de4b7df6813186b527e7",
+      "size": 825,
+      "sha256": "33c717e2a454d8831364cb24b15b9e9e799cd3161b526013a15efe46485ebccb"
+    },
+    {
+      "path": "Fixtures/Widgets/Hanlin-ScriptWidget-Dashboard.scripting",
+      "git_mode": "100644",
+      "git_blob": "6f64a02b3f7d355e6452b1b753b1e42c79f0d81d",
+      "size": 968,
+      "sha256": "478cd567e9731cc7342aefa9024ea498edf8d12d340cc5c558484e60a210dace"
+    },
+    {
+      "path": "Fixtures/Widgets/Hanlin-Widget-Invalid-Cases.hanlinExpo",
+      "git_mode": "100644",
+      "git_blob": "88f65eafb149526086d53ec5ac844795cde47d8a",
+      "size": 948,
+      "sha256": "077a6ea43342877550f495b1bb885a3c93d8d6c60389459bf55ff05d2db5982c"
+    },
+    {
+      "path": "Fixtures/Widgets/Hanlin-Widget-Legacy-Regression.scripting",
+      "git_mode": "100644",
+      "git_blob": "31bd2a33d7d078d70b54d1861e3c74cad766fcba",
+      "size": 444,
+      "sha256": "787bf97e48164d7b9021c64bfa7122e48131a82b388efc3bad26c58276f4bb2f"
+    },
+    {
+      "path": "Fixtures/Widgets/SHA256.json",
+      "git_mode": "100644",
+      "git_blob": "a0586143f4fb17a487d33f328e191b2e2420450c",
+      "size": 3702,
+      "sha256": "4964eeee90ef13fc28a6f059bfdd4d6316cdd0c60cdc151de192ff6f49d6208c"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/Resources/ExpoWidgets.bundle",
+      "git_mode": "100644",
+      "git_blob": "c6348eea875de9c0a1eff71f79de2ae4d54c7378",
+      "size": 102063,
+      "sha256": "cad96de7b40d7ae2a5234af49fecdb06e30eb44da062e5ae32dc68bd751e7a00"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/Resources/support.bundle/util.js",
+      "git_mode": "100644",
+      "git_blob": "7b31855c353f2884c9a909da6695989ab5820952",
+      "size": 1025,
+      "sha256": "08f291ad3d1ddcc0a9c7637bef13506a978b7d2f47da1a69e8adaaf1618ba642"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/Resources/core.js",
+      "git_mode": "100644",
+      "git_blob": "dc20f84735ca553e83d606ab06807593151a907a",
+      "size": 2805380,
+      "sha256": "01546b893cd7951ab5e3dce30009b0e684022f334e9a49d4b498b85b4c4bf163"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/Resources/prepare-widget.js",
+      "git_mode": "100644",
+      "git_blob": "75d2d98dc381d07a37a6a83e13c3214b64813c9e",
+      "size": 11782,
+      "sha256": "5053e0587036008a1ae85d24b4d469271d5f6c880e1a1244e752ec436b32813c"
+    },
+    {
+      "path": "Scripts/Expo/dependency-lock.json",
+      "git_mode": "100644",
+      "git_blob": "dc939d165152f098e06f9950e90f227dda9c6ea2",
+      "size": 5375,
+      "sha256": "b9e3ad6d863e3e5136ad93924ce4edcb37da87578b113523640110af347eec65"
+    },
+    {
+      "path": "Scripts/Widgets/Tests/compiler-and-actions.test.mjs",
+      "git_mode": "100644",
+      "git_blob": "f3df68988da1d371103296f4d0eb7f9afa6b580a",
+      "size": 7879,
+      "sha256": "0c639cc68bf8d9acc9ead622c2d58a40845f072ccaec041388a1e1931a5d98dc"
+    },
+    {
+      "path": "Scripts/Widgets/build-sample-packages.mjs",
+      "git_mode": "100644",
+      "git_blob": "1c099bf45fa1e9df78feef41149af232e66fffd5",
+      "size": 1360,
+      "sha256": "ab9684c50845292b29f259264425caf70706e0c63eb3ea24a253c2dfe2575c3c"
+    },
+    {
+      "path": "Scripts/Widgets/deterministic-zip.mjs",
+      "git_mode": "100644",
+      "git_blob": "961bea239d697ed09fde949891f228934da9fc6f",
+      "size": 2215,
+      "sha256": "853b5c831fe3cc80c6c52f87991095930f5084c99d43f5999990782cdd4c1da0"
+    },
+    {
+      "path": "Scripts/Widgets/samples.mjs",
+      "git_mode": "100644",
+      "git_blob": "2fdf7e9af3689d6f8c378ff83a1b204135c17e26",
+      "size": 7984,
+      "sha256": "da556ad590813380ce5cdebcab19e49a1dc0af48ea39ad5c2ab75a728e50c296"
+    }
+  ]
+}
