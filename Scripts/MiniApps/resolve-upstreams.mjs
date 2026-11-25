@@ -137,6 +137,18 @@ export function updatedNativeAPIFacadeVersions(source, versions) {
   return source;
 }
 
+// The original C++ runtime stringizes this bare macro token as its native version.
+// Keep the local SwiftPM input in the same resolver write/rollback set as npm.
+export function updatedWorkletsPackageVersion(source, versions) {
+  const version=versions.expo['react-native-worklets'];
+  if(!/^\d+\.\d+\.\d+(?:[-+][\w.-]+)?$/.test(version??''))throw new Error('Missing exact Worklets compiler version');
+  // Accept the former quoted input only to repair it to the original podspec form.
+  const pattern=/"-DWORKLETS_VERSION=(?:\d+\.\d+\.\d+(?:[-+][\w.-]+)?|\\"\d+\.\d+\.\d+(?:[-+][\w.-]+)?\\")"/g;
+  if([...source.matchAll(pattern)].length!==1||(source.match(/-DWORKLETS_VERSION\b/g)??[]).length!==1)
+    throw new Error('Expected one literal Worklets compiler version in the native package');
+  return source.replace(pattern,JSON.stringify('-DWORKLETS_VERSION='+version));
+}
+
 // Runtime identity follows the installed original Expo UI graph. The reviewed
 // Apple API inventory and the independent Hanlin bridge ABI remain unchanged.
 export const expoBridgeRuntimeMetadataPaths = Object.freeze([
@@ -249,6 +261,7 @@ export async function resolveUpstreams({root=path.resolve(here,'../..'),cache=pa
     ['Scripts/Expo/package.json',pretty(expoPackage)],['Scripts/Expo/dependency-lock.json',pretty(updatedExpo)],
     ['Scripts/NativeScript/package.json',pretty(nsPackage)],['Scripts/NativeScript/dependency-lock.json',pretty(updatedNS)],
     ['Scripts/ExpoNativeAPI/dependency-lock.json',pretty(updatedNative)],
+    ['Packages/HanlinExpoNativeAPI/Package.swift',updatedWorkletsPackageVersion(await readFile(path.join(root,'Packages/HanlinExpoNativeAPI/Package.swift'),'utf8'),versions)],
     ['Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinMiniAppHostVersions.swift',generatedHostVersions(versions)],
     ['Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptHostVersions.swift',generatedNativeScriptHostVersions(versions)],
     ['Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoHostVersions.swift',generatedExpoHostVersions(versions,hermes)],
