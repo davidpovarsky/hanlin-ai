@@ -1,0 +1,14 @@
+{
+  "sourceCommit": "6a3c194a1951aa8394c76efcb6e100e76ade56c2",
+  "startedAtUTC": "2026-11-25T00:08:36.534197+00:00",
+  "finishedAtUTC": "2026-11-25T00:08:51.476333+00:00",
+  "command": [
+    "bash",
+    "Scripts/Runtime/prepare-runtime-host.sh"
+  ],
+  "exitCode": 1,
+  "durationSeconds": 14.942,
+  "logSHA256": "9a9782b3e63c14ec28ba4f42c1cafefd89947b2365703811deec960307bcbfb2",
+  "log": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/runtime-host-final-attempt1.log",
+  "trackedChanges": ""
+}

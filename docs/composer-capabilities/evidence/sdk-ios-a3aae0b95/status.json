@@ -1,0 +1,18 @@
+{
+  "status": "COMPLETED_PENDING_RESULT_INSPECTION",
+  "attempt": 3,
+  "started_at": "2026-11-24T23:37:01.521194+00:00",
+  "source_sha": "a3aae0b952b0518cb8c40ed4a511d4cffadab99f",
+  "device": {
+    "name": "Hanlin Composer SDK iPhone 27.0",
+    "udid": "DB71066B-C1F5-4242-84C0-1BC814E3ACCA",
+    "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-27-0",
+    "state": "Shutdown"
+  },
+  "log": "/Users/m1/caches/DerivedData/hanlin-composer-sdk-ios/evidence-a3aae0b95/xcodebuild.log",
+  "result_bundle": "/Users/m1/caches/DerivedData/hanlin-composer-sdk-ios/evidence-a3aae0b95/ComposerSDK-attempt3.xcresult",
+  "pid": 47402,
+  "exit_code": 0,
+  "elapsed_seconds": 116.68,
+  "completed_at": "2026-11-24T23:38:58.198840+00:00"
+}

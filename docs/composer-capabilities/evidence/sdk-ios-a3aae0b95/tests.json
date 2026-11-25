@@ -1,0 +1,167 @@
+{
+  "devices" : [
+    {
+      "architecture" : "arm64",
+      "deviceId" : "DB71066B-C1F5-4242-84C0-1BC814E3ACCA",
+      "deviceName" : "Hanlin Composer SDK iPhone 27.0",
+      "modelName" : "iPhone 17 Pro Max",
+      "osBuildNumber" : "24A434",
+      "osVersion" : "27.0",
+      "platform" : "iOS Simulator"
+    }
+  ],
+  "testNodes" : [
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "duration" : "0,021s",
+                  "durationInSeconds" : 0.021013975143432617,
+                  "name" : "registrationRoutesOnlyTheDeclaredReferenceAndForwardsTheDraftBinding()",
+                  "nodeIdentifier" : "HanlinCapabilityCustomPanelProviderTests/registrationRoutesOnlyTheDeclaredReferenceAndForwardsTheDraftBinding()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinPresentationSDK/HanlinChatUITests/HanlinCapabilityCustomPanelProviderTests/registrationRoutesOnlyTheDeclaredReferenceAndForwardsTheDraftBinding()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "Composer custom panel host registration",
+              "nodeIdentifierURL" : "test://com.apple.xcode/HanlinPresentationSDK/HanlinChatUITests/HanlinCapabilityCustomPanelProviderTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "0,0043s",
+                  "durationInSeconds" : 0.004340171813964844,
+                  "name" : "decimalAndNegativeIntermediateEditsKeepTheirExactText()",
+                  "nodeIdentifier" : "HanlinCapabilityNumberInputTests/decimalAndNegativeIntermediateEditsKeepTheirExactText()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinPresentationSDK/HanlinChatUITests/HanlinCapabilityNumberInputTests/decimalAndNegativeIntermediateEditsKeepTheirExactText()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,0026s",
+                  "durationInSeconds" : 0.0026111602783203125,
+                  "name" : "invalidCoordinatesReachValidationAndExternalMapUpdatesResynchronize()",
+                  "nodeIdentifier" : "HanlinCapabilityNumberInputTests/invalidCoordinatesReachValidationAndExternalMapUpdatesResynchronize()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinPresentationSDK/HanlinChatUITests/HanlinCapabilityNumberInputTests/invalidCoordinatesReachValidationAndExternalMapUpdatesResynchronize()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "Composer numeric input fidelity",
+              "nodeIdentifierURL" : "test://com.apple.xcode/HanlinPresentationSDK/HanlinChatUITests/HanlinCapabilityNumberInputTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "0,00044s",
+                  "durationInSeconds" : 0.00043702125549316406,
+                  "name" : "replacesOnlyTheWholeTokenAtTheCaretInRTLText()",
+                  "nodeIdentifier" : "HanlinComposerCapabilityQueryTests/replacesOnlyTheWholeTokenAtTheCaretInRTLText()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinPresentationSDK/HanlinChatUITests/HanlinComposerCapabilityQueryTests/replacesOnlyTheWholeTokenAtTheCaretInRTLText()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,00011s",
+                  "durationInSeconds" : 0.00011277198791503906,
+                  "name" : "slashSelectionPreservesFollowingTextAndProducesCorrectCaret()",
+                  "nodeIdentifier" : "HanlinComposerCapabilityQueryTests/slashSelectionPreservesFollowingTextAndProducesCorrectCaret()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinPresentationSDK/HanlinChatUITests/HanlinComposerCapabilityQueryTests/slashSelectionPreservesFollowingTextAndProducesCorrectCaret()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,00006s",
+                  "durationInSeconds" : 5.984306335449219e-05,
+                  "name" : "rejectsStaleChoicesAndComposition()",
+                  "nodeIdentifier" : "HanlinComposerCapabilityQueryTests/rejectsStaleChoicesAndComposition()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinPresentationSDK/HanlinChatUITests/HanlinComposerCapabilityQueryTests/rejectsStaleChoicesAndComposition()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,000065s",
+                  "durationInSeconds" : 6.508827209472656e-05,
+                  "name" : "ignoresEmailsURLsAndInvalidUTF16Caret()",
+                  "nodeIdentifier" : "HanlinComposerCapabilityQueryTests/ignoresEmailsURLsAndInvalidUTF16Caret()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinPresentationSDK/HanlinChatUITests/HanlinComposerCapabilityQueryTests/ignoresEmailsURLsAndInvalidUTF16Caret()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,000037s",
+                  "durationInSeconds" : 3.695487976074219e-05,
+                  "name" : "modelMentionsRetainTheExistingTextRepresentation()",
+                  "nodeIdentifier" : "HanlinComposerCapabilityQueryTests/modelMentionsRetainTheExistingTextRepresentation()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinPresentationSDK/HanlinChatUITests/HanlinComposerCapabilityQueryTests/modelMentionsRetainTheExistingTextRepresentation()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "Composer capability token selection",
+              "nodeIdentifierURL" : "test://com.apple.xcode/HanlinPresentationSDK/HanlinChatUITests/HanlinComposerCapabilityQueryTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "0,00071s",
+                  "durationInSeconds" : 0.0007121562957763672,
+                  "name" : "submittedSnapshotAndOtherDraftRemainUnchanged()",
+                  "nodeIdentifier" : "HanlinComposerCapabilityDraftTests/submittedSnapshotAndOtherDraftRemainUnchanged()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinPresentationSDK/HanlinChatUITests/HanlinComposerCapabilityDraftTests/submittedSnapshotAndOtherDraftRemainUnchanged()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,00024s",
+                  "durationInSeconds" : 0.00023818016052246094,
+                  "name" : "changingAnActionConsolidatesOnlyItsDuplicateAndKeepsTheEditingIdentity()",
+                  "nodeIdentifier" : "HanlinComposerCapabilityDraftTests/changingAnActionConsolidatesOnlyItsDuplicateAndKeepsTheEditingIdentity()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinPresentationSDK/HanlinChatUITests/HanlinComposerCapabilityDraftTests/changingAnActionConsolidatesOnlyItsDuplicateAndKeepsTheEditingIdentity()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,00085s",
+                  "durationInSeconds" : 0.0008490085601806641,
+                  "name" : "repeatedPickerSelectionKeepsConfigurationAndRemovalIsScoped()",
+                  "nodeIdentifier" : "HanlinComposerCapabilityDraftTests/repeatedPickerSelectionKeepsConfigurationAndRemovalIsScoped()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinPresentationSDK/HanlinChatUITests/HanlinComposerCapabilityDraftTests/repeatedPickerSelectionKeepsConfigurationAndRemovalIsScoped()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "Composer attachment ownership",
+              "nodeIdentifierURL" : "test://com.apple.xcode/HanlinPresentationSDK/HanlinChatUITests/HanlinComposerCapabilityDraftTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            }
+          ],
+          "name" : "HanlinChatUITests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/HanlinPresentationSDK/HanlinChatUITests",
+          "nodeType" : "Unit test bundle",
+          "result" : "Passed"
+        }
+      ],
+      "name" : "HanlinPresentationSDK-Package",
+      "nodeType" : "Test Plan",
+      "result" : "Passed"
+    }
+  ],
+  "testPlanConfigurations" : [
+    {
+      "configurationId" : "1",
+      "configurationName" : "Test Scheme Action"
+    }
+  ]
+}
