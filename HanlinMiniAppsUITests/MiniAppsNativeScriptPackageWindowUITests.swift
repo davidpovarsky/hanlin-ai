@@ -13,6 +13,8 @@ final class MiniAppsNativeScriptPackageWindowUITests: XCTestCase {
         "beta": "1e23b002-6a2c-4c0f-b002-202611240012",
         "gamma": "1e23b003-6a2c-4c0f-b003-202611240013",
         "delta": "1e23b004-6a2c-4c0f-b004-202611240014",
+        "epsilon": "1e23b005-6a2c-4c0f-b005-202611240015",
+        "zeta": "1e23b006-6a2c-4c0f-b006-202611240016",
     ]
     private let packages = [
         (name: "Hanlin NativeScript Package Alpha E2E", archive: "package-window-alpha"),
@@ -98,6 +100,114 @@ final class MiniAppsNativeScriptPackageWindowUITests: XCTestCase {
         assertClosedRequestsStayClosedAfterColdRelaunch()
     }
 
+    func testReturningToCatalogKeepsPendingRequestInExistingRootWindow() throws {
+        installPackagesIfNeeded()
+        let catalog = app.buttons["hanlin-apps-add"].firstMatch
+        XCTAssertTrue(catalog.waitForExistence(timeout: 20))
+        XCTAssertTrue(catalog.isHittable)
+        try NativeScriptWindowUIInteractions.assertSameProcess(
+            in: app, expected: &nativeProcessID, requestID: try XCTUnwrap(requests["epsilon"])
+        )
+
+        // epsilon is staged with opensInNewWindow=false. It must replace the
+        // actual initial catalog, then remain alive while zeta owns a new scene.
+        let epsilon = try open("epsilon")
+        XCTAssertTrue(catalog.waitForNonExistence(timeout: 15),
+                      "The first request must occupy the existing catalog window.")
+        editAndPrepare(epsilon, name: "epsilon", increments: 1)
+        capture("native-existing-root-epsilon-prepared")
+
+        let zeta = try open("zeta")
+        editAndPrepare(zeta, name: "zeta", increments: 1)
+        complete(zeta)
+        closeCompleted(zeta)
+        XCTAssertTrue(catalog.isHittable,
+                      "Closing zeta must show a catalog without replacing pending epsilon.")
+        capture("native-catalog-with-existing-root-request-pending")
+
+        // Do not redeliver epsilon's false/new-window URL to reselect it:
+        // that would exercise routing instead of proving its old scene survived.
+        let survivingEpsilon = try selectExistingWindowUsingAppExpose("epsilon")
+        assertValue(survivingEpsilon.textViews["hanlin-ns-window-input"], equals: "epsilon-edited")
+        assertLabel(survivingEpsilon.staticTexts["hanlin-ns-window-counter"], equals: "1")
+        assertLabel(survivingEpsilon.staticTexts["hanlin-ns-window-status"], equals: "Prepared")
+        XCTAssertEqual(app.windows.containing(.navigationBar,
+            identifier: "NativeScript package epsilon").count, 1)
+
+        // Only after genuine scene reselection, exercise a duplicate OS URL.
+        // It must retain this same live request, not restart its native factory.
+        let repeatedEpsilon = try focus("epsilon")
+        XCTAssertEqual(app.windows.containing(.navigationBar,
+            identifier: "NativeScript package epsilon").count, 1)
+        assertValue(repeatedEpsilon.textViews["hanlin-ns-window-input"], equals: "epsilon-edited")
+        assertLabel(repeatedEpsilon.staticTexts["hanlin-ns-window-counter"], equals: "1")
+        assertLabel(repeatedEpsilon.staticTexts["hanlin-ns-window-status"], equals: "Prepared")
+        repeatedEpsilon.buttons["hanlin-ns-window-increment"].tap()
+        assertLabel(repeatedEpsilon.staticTexts["hanlin-ns-window-counter"], equals: "2")
+        // The real Bridge verifier still requires the callback's earlier counter=1.
+        complete(repeatedEpsilon)
+        capture("native-existing-root-original-callback-completed")
+        closeCompleted(repeatedEpsilon)
+        assertClosedRequestsStayClosedAfterColdRelaunch()
+    }
+
+    private func selectExistingWindowUsingAppExpose(_ name: String) throws -> XCUIElement {
+        let title = "NativeScript package " + name
+        let system = XCUIApplication(bundleIdentifier: "com.apple.springboard")
+        XCUIDevice.shared.press(.home)
+        let icon = system.icons["Hanlin MiniApps"].firstMatch
+        for _ in 0..<4 {
+            if icon.exists && icon.isHittable { break }
+            system.swipeLeft()
+        }
+        XCTAssertTrue(icon.waitForExistence(timeout: 10))
+        XCTAssertTrue(icon.isHittable)
+        icon.press(forDuration: 1)
+        captureSystemWindowPicker(system, name: "native-open-windows-menu")
+
+        // The real iPadOS menu can list a named window directly. Otherwise use
+        // Apple's Show All Windows surface and select its actual named preview.
+        let titlePredicate = NSPredicate(format: "label CONTAINS[c] %@", title)
+        func namedWindow() -> XCUIElement {
+            let button = system.buttons.matching(titlePredicate).firstMatch
+            return button.exists ? button : system.menuItems.matching(titlePredicate).firstMatch
+        }
+        if !(namedWindow().exists && namedWindow().isHittable) {
+            let button = system.buttons["Show All Windows"].firstMatch
+            let showAll = button.exists ? button : system.menuItems["Show All Windows"].firstMatch
+            XCTAssertTrue(showAll.waitForExistence(timeout: 10))
+            XCTAssertTrue(showAll.isHittable)
+            showAll.tap()
+            captureSystemWindowPicker(system, name: "native-app-expose-existing-windows")
+        }
+        let choice = namedWindow()
+        XCTAssertTrue(choice.waitForExistence(timeout: 15),
+                      "App Exposé must expose the still-pending named original window.")
+        XCTAssertTrue(choice.isHittable)
+        choice.tap()
+        let window = app.windows.containing(.navigationBar, identifier: title).firstMatch
+        XCTAssertTrue(window.waitForExistence(timeout: 20))
+        XCTAssertTrue(window.buttons["hanlin-ns-window-increment"].isHittable)
+        try NativeScriptWindowUIInteractions.assertSameProcess(
+            in: app, expected: &nativeProcessID, requestID: try XCTUnwrap(requests[name])
+        )
+        assertLabel(window.staticTexts["hanlin-ns-window-request"],
+                    equals: try XCTUnwrap(UUID(uuidString: try XCTUnwrap(requests[name]))).uuidString)
+        capture("native-existing-root-reselected-without-url")
+        return window
+    }
+
+    private func captureSystemWindowPicker(_ system: XCUIApplication, name: String) {
+        let tree = XCTAttachment(string: system.debugDescription)
+        tree.name = name
+        tree.lifetime = .keepAlways
+        add(tree)
+        let screenshot = XCTAttachment(screenshot: system.screenshot())
+        screenshot.name = name
+        screenshot.lifetime = .keepAlways
+        add(screenshot)
+    }
+
     private func open(_ name: String) throws -> XCUIElement {
         let window = try focus(name)
         assertLabel(window.staticTexts["hanlin-ns-window-status"], equals: "Ready", timeout: 90)
@@ -122,7 +232,7 @@ final class MiniAppsNativeScriptPackageWindowUITests: XCTestCase {
         )
         assertLabel(window.staticTexts["hanlin-ns-window-request"],
                     equals: try XCTUnwrap(UUID(uuidString: id)).uuidString, timeout: 90)
-        let package = (name == "alpha" || name == "gamma") ? "alpha" : "beta"
+        let package = ["alpha", "gamma", "epsilon"].contains(name) ? "alpha" : "beta"
         assertLabel(window.staticTexts["hanlin-ns-window-package"],
                     equals: "hanlin.nativescript.package-" + package)
         return window

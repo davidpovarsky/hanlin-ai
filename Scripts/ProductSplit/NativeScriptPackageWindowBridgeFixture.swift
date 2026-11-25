@@ -4,11 +4,13 @@ import Foundation
 /// cancellation and completion are performed by the actual application.
 @main
 struct NativeScriptPackageWindowBridgeFixture {
-    static let windows: [(name: String, package: String, id: String)] = [
-        ("alpha", "alpha", "1e23b001-6a2c-4c0f-b001-202611240011"),
-        ("beta", "beta", "1e23b002-6a2c-4c0f-b002-202611240012"),
-        ("gamma", "alpha", "1e23b003-6a2c-4c0f-b003-202611240013"),
-        ("delta", "beta", "1e23b004-6a2c-4c0f-b004-202611240014"),
+    static let windows: [(name: String, package: String, id: String, opensInNewWindow: Bool)] = [
+        ("alpha", "alpha", "1e23b001-6a2c-4c0f-b001-202611240011", true),
+        ("beta", "beta", "1e23b002-6a2c-4c0f-b002-202611240012", true),
+        ("gamma", "alpha", "1e23b003-6a2c-4c0f-b003-202611240013", true),
+        ("delta", "beta", "1e23b004-6a2c-4c0f-b004-202611240014", true),
+        ("epsilon", "alpha", "1e23b005-6a2c-4c0f-b005-202611240015", false),
+        ("zeta", "beta", "1e23b006-6a2c-4c0f-b006-202611240016", true),
     ]
 
     static func main() throws {
@@ -37,16 +39,17 @@ struct NativeScriptPackageWindowBridgeFixture {
                         documentText: "before " + window.name + " after"
                     ),
                     inputs: [.init(kind: .text, text: window.name)],
-                    operation: .replaceSelection, opensInNewWindow: true
+                    operation: .replaceSelection, opensInNewWindow: window.opensInNewWindow
                 )
                 let url = try store.enqueue(request)
                 incoming.append([
                     "name": window.name, "package_id": appID,
                     "request_id": window.id, "launch_url": url.absoluteString,
+                    "opens_in_new_window": String(window.opensInNewWindow),
                 ])
             }
             try emit([
-                "status": "FOUR_DISTINCT_PACKAGE_INCOMING_REQUESTS_STAGED",
+                "status": "SIX_DISTINCT_PACKAGE_INCOMING_REQUESTS_STAGED",
                 "requests": incoming, "result_synthesized": false,
             ])
         case "verify":
@@ -56,7 +59,7 @@ struct NativeScriptPackageWindowBridgeFixture {
                 let id = UUID(uuidString: window.id)!
                 let appID = "hanlin.nativescript.package-" + window.package
                 guard let request = try store.request(id: id),
-                      request.appID == appID, request.opensInNewWindow,
+                      request.appID == appID, request.opensInNewWindow == window.opensInNewWindow,
                       request.source.documentID == "ns-package-" + window.name,
                       request.inputs.count == 1, request.inputs[0].text == window.name,
                       let result = try store.result(id: id), result.requestID == id
@@ -88,11 +91,12 @@ struct NativeScriptPackageWindowBridgeFixture {
                 }
                 results.append(result)
             }
-            guard sessions.count == 3 else { throw Failure.actualRuntimeResultMissingOrIncorrect }
+            guard sessions.count == 5 else { throw Failure.actualRuntimeResultMissingOrIncorrect }
             let payload = try JSONSerialization.jsonObject(with: JSONEncoder().encode(results))
             try emit([
                 "status": "ACTUAL_DISTINCT_PACKAGE_WINDOW_RESULTS_VERIFIED",
-                "results": payload, "successful_request_scopes": 3, "cancelled_request_scopes": 1,
+                "results": payload, "successful_request_scopes": 5, "cancelled_request_scopes": 1,
+                "existing_window_request_ids": windows.filter { !$0.opensInNewWindow }.map { $0.id },
                 "distinct_package_ids": ["hanlin.nativescript.package-alpha", "hanlin.nativescript.package-beta"],
                 "distinct_successful_window_session_ids": sessions.map { $0.uuidString.lowercased() }.sorted(),
                 "verified_from_runtime_outputs": [

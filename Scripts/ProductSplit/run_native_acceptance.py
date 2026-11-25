@@ -25,7 +25,7 @@ UI_PLANS = {
                   'HanlinMiniAppsTests/NativeScriptWindowOwnershipTests',
                   'HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests',
                   'HanlinMiniAppsUITests/MiniAppsNativeScriptWindowUITests',
-                  'HanlinMiniAppsUITests/MiniAppsNativeScriptPackageWindowUITests'], 21),
+                  'HanlinMiniAppsUITests/MiniAppsNativeScriptPackageWindowUITests'], 22),
     'baseline': (['HanlinMiniAppsUITests/HanlinMiniAppsUITests',
                   'HanlinMiniAppsUITests/MiniAppsProviderUITests'], 7),
     # The complete affected scope includes the original producer cases plus
@@ -40,7 +40,7 @@ UI_PLANS = {
         'HanlinMiniAppsUITests/MiniAppsNativeScriptWindowUITests',
         'HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch',
         'HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents',
-        'HanlinMiniAppsUITests/MiniAppsNativeScriptPackageWindowUITests'], 23),
+        'HanlinMiniAppsUITests/MiniAppsNativeScriptPackageWindowUITests'], 24),
 }
 
 
