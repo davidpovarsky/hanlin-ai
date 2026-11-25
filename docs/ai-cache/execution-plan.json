@@ -135,13 +135,13 @@
     },
     "reuse_receipt": "evidence/reuse-receipt-20261125.json",
     "current_app_result": {
-      "source": "2ece1c684626eb2a65b815bedcc013af873aef8c",
+      "source": "7c5b3bb59e1b505e6186ba7070cd0420e144c366",
       "status": "PREPARING_RETRY",
       "declared_cases": 46,
       "executed": 0,
       "latest_attempt": "evidence/app-native-20261125/attempt02-factory-isolation/index.json",
       "fix": "Explicit MainActor isolation of both existing live tool factory entrypoints, no body/order/tool-set change",
-      "preparation_reason": "Latest shared NativeScript metadata wrapper requires original dependency preparation, source audits and Host refresh; actor factory fix retained once."
+      "preparation_reason": "Latest fixture generator derives versions from original resolvedNativeScriptlock; no Host/SDKinputclosurechange. Validate originalaudit/archiveafterfixturegeneration."
     },
     "runtime_host_result": {
       "source": "04c1942bc88cd4de7deafda7dd342b9b6c401dcf",
@@ -154,10 +154,10 @@
     },
     "latest_sync_receipt": "evidence/latest-sync-20261125.json",
     "current_host_refresh": {
-      "source": "02619cfab1a52519d436441abd1f732a7bbd91c5",
+      "source": "53593c3749dbd2be1e56739576fcdd5ea2c1cf06",
       "status": "EXECUTED_PASS",
-      "evidence": "evidence/native-preparation-20261125/host-after-composer/receipt.json",
-      "archive_sha256": "7971c8c9fb9e8269c6798cd8e0f6679b67e735095cd399552e2a9d99824d32f6"
+      "evidence": "evidence/native-preparation-20261125/retry3-native/receipt.json",
+      "archive_sha256": "9fb7998ee48fe913e98f865d5b962e8a46dce9c836ff2efd295598206741b2cd"
     },
     "app_attempts": [
       {
@@ -188,10 +188,10 @@
       }
     ]
   },
-  "updated_at": "2026-11-25T02:23:08.499775+00:00",
-  "latest_integrated_source": "2ece1c684626eb2a65b815bedcc013af873aef8c",
+  "updated_at": "2026-11-25T02:31:32.034411+00:00",
+  "latest_integrated_source": "7c5b3bb59e1b505e6186ba7070cd0420e144c366",
   "synchronized_heads": {
-    "composer": "aea6d31e311a3f3096014ea2f1c39432371e3ecc",
+    "composer": "199da0f9e61a0d99998bce906001e565f3138d1c",
     "miniapps_sdk": "fda6948ca6a1f541293a1a1dd20e97f75eb0a527",
     "wave3": "bad6e68df21d4ecfe11f3b6fc3f4242eba5b23ed"
   }
