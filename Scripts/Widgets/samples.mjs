@@ -1,11 +1,21 @@
+import { readFileSync } from 'node:fs';
+
+// Native widget examples must use the same reviewed dependency lock as the
+// embedded engines. Do not relax the shared analyzer's exact widget contract.
+const expoVersions = JSON.parse(readFileSync(new URL('../Expo/dependency-lock.json', import.meta.url), 'utf8')).expo;
+for (const key of ['uiVersion', 'widgetsVersion', 'reactVersion']) {
+  if (typeof expoVersions?.[key] !== 'string' || !/^\d+\.\d+\.\d+$/.test(expoVersions[key])) {
+    throw new Error('Invalid original Expo dependency lock field: ' + key);
+  }
+}
 const json = value => JSON.stringify(value, null, 2) + '\n';
 const families = ['systemSmall', 'systemMedium', 'systemLarge', 'systemExtraLarge'];
 const metadata = (actions, sourceFormat = 'jsx') => ({ abiVersion: 1, sourceFormat, families, actions });
 const manifest = (name, engine, actions, entry = 'widget.jsx') => ({ name, version: '1.0.0', entry, kind: 'widget', widgetEngine: engine,
   hanlinRuntime: engine === 'expo' ? 'hanlin-expo' : 'scripting-jsc', hanlinWidget: metadata(actions, entry.endsWith('.tsx') ? 'tsx' : 'jsx') });
 const expoPackage = name => json({ name, version: '1.0.0', hanlinRuntime: 'hanlin-expo',
-  hanlinExpo: { runtimeVersion: '58.0.3', plugins: { '@expo/ui': '58.0.3' } },
-  dependencies: { '@expo/ui': '58.0.3', 'expo-widgets': '58.0.3', react: '19.3.0' } });
+  hanlinExpo: { runtimeVersion: expoVersions.uiVersion, plugins: { '@expo/ui': expoVersions.uiVersion } },
+  dependencies: { '@expo/ui': expoVersions.uiVersion, 'expo-widgets': expoVersions.widgetsVersion, react: expoVersions.reactVersion } });
 const png = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+jBqkAAAAASUVORK5CYII=', 'base64');
 const counterActions = ['increment', 'decrement', 'status'].map(id => ({ id, kind: 'expoCallback' }));
 const scriptActions = [{ id: 'sync', kind: 'function', handler: 'syncNow' }, { id: 'backup', kind: 'setValue', stateKey: 'backup' },
