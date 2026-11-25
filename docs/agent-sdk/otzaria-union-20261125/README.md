@@ -107,3 +107,14 @@ product census observed without an executable before continuation. This exact de
 target replaces the unexecuted old package-binary-name postprocessing assumption; all six
 original methods, both parameter invocations, raw XML, source equality and binary hash/UUID
 remain required. Status at authoring: NOT RUN.
+
+## Upstream app04 synchronization
+
+The current shared branch additionally merges the original owner preparation head 96f7ca23
+and its sealed app source 1710bc61. upstream-app04-reuse.json records the actual merge and
+all nine active lockfiles. Its only tree differences from that incoming head are our prior
+evidence; every prior proof blob survives. All 754 exact canonical graph input modes/blobs
+match the real Mac PASS, so that graph result is reused without a duplicate native run.
+Core remains abf0921c throughout. Original demo fixture improvements, the test-host scheme,
+canPresentUI fixture correction and active-lock validator are included. C8 actual app tests
+and the incremental Core7 continuation remain pending; this merge claims neither as PASS.

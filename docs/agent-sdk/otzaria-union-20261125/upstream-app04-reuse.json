@@ -1,0 +1,188 @@
+{
+  "active_package_locks": [
+    {
+      "git_blob": "1338c859a6b9e41c22f8615b5f4a8949a7ccf031",
+      "path": "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "pins": {
+        "a2ui": "3ed9601862ecc78027e20ac80ad8b1b98a5d9079",
+        "bitbytedata": "e1a5443be67daf0833cbb5f4fa3a06a265ca3105",
+        "corexlsx": "1391f3832ea2eeee5186ea8abb81ea49ed0609cc",
+        "equatable": "597c2bb34af0c51331eb3b5e705f942d8ee20daa",
+        "eventsource": "e83f076811f32757305b8bf69ac92d05626ffdd7",
+        "hanlin-streaming-markdown": "5cbb4b6c950051f98f02a0b0ae56756f5174a9b8",
+        "highlightswift": "99c431b38a1444a5fd6a4978307fbbefe3a7af53",
+        "ios-spm": "33605a91197dc86bd9f15fecaad6e897223caa8a",
+        "iosmath": "ba9ab7729b151329c54fd895a7c1859981d9484c",
+        "latexswiftui": "c45e0fd45f64923c49c5904a9f9626bc8939f05f",
+        "llm.swift": "4b2517839f24498bea0695bae8967b359b9a35c4",
+        "lrucache": "f0570e943ea4445d258113ba73f50cb2b7e564ac",
+        "markdownui": "5f613358148239d0292c0cef674a3c2314737f9e",
+        "mathjaxswift": "e23d6eab941da699ac4a60fb0e60f3ba5c937459",
+        "networkimage": "2849f5323265386e200484b0d0f896e73c3411b9",
+        "opentelemetry-swift-core": "c6fcee77cfc21ba400366f12475217c7b6e1d605",
+        "richtextkit": "8aa44cfa645404ad84e52e3ab7723ecf4b82f92b",
+        "swcompression": "c729f0baa49e91bafef3921fea663db2b75acc46",
+        "swift-ai-sdk": "abf0921c6e89e6521cc2b510ff11016b45a0ef08",
+        "swift-argument-parser": "6a52f3251125d74daf04fcbd5e6f08a75d074382",
+        "swift-atomics": "0442cb5a3f98ab802acb777929fdb446bda11a34",
+        "swift-cmark": "08ddb528923cc1a6527e02b7a1aee9e516ca749a",
+        "swift-collections": "7b847a3b7008b2dc2f47ca3110d8c782fb2e5c7e",
+        "swift-html-entities": "d8ca73197f59ce260c71bd6d7f6eb8bbdccf508b",
+        "swift-json-schema": "c0a9375ea9cd3fd47d875c98ed7f027ea61c03cb",
+        "swift-log": "96a2f8a0fa41e9e09af4585e2724c4e825410b91",
+        "swift-markdown": "7d9a5ce307528578dfa777d505496bd5f544ad94",
+        "swift-nio": "5e72fc102906ebe75a3487595a653e6f43725552",
+        "swift-sdk": "a0ae212ebf6eab5f754c3129608bc5557637e605",
+        "swift-syntax": "79e4b74a295b6eb74a8b585e3a39d29e70c1dbd1",
+        "swift-system": "c8a44d836fe7913603e246acab7c528c2e780168",
+        "swift-tree-sitter": "08ef81eb8620617b55b08868126707ad72bf754f",
+        "swiftdraw": "2a36e6ce369cbecdd031ee95f5b5b3faa69ef50f",
+        "swiftsoup": "bba848db50462894e7fc0891d018dfecad4ef11e",
+        "swiftui-shimmer": "0226e21f9bf355d40e07e5f5e1c33679d50e167f",
+        "swiftyjson": "b3dcd7dbd0d488e1a7077cb33b00f2083e382f07",
+        "tree-sitter": "da6fe9beb4f7f67beb75914ca8e0d48ae48d6406",
+        "tree-sitter-bash": "a06c2e4415e9bc0346c6b86d401879ffb44058f7",
+        "xmlcoder": "ca932442d7481700f5434a7b138c47dd42d9902b",
+        "yams": "a27b21e0c81c5bf42049b897a62aaf387e80f279",
+        "zipfoundation": "02b6abe5f6eef7e3cbd5f247c5cc24e246efcfe0"
+      }
+    },
+    {
+      "git_blob": "caef0bec59ce2c9601e77538a73fa3ca278af881",
+      "path": "Packages/HanlinAgentSDK/Package.resolved",
+      "pins": {
+        "swift-ai-sdk": "abf0921c6e89e6521cc2b510ff11016b45a0ef08",
+        "swift-argument-parser": "6a52f3251125d74daf04fcbd5e6f08a75d074382",
+        "swiftyjson": "b3dcd7dbd0d488e1a7077cb33b00f2083e382f07",
+        "zipfoundation": "02b6abe5f6eef7e3cbd5f247c5cc24e246efcfe0"
+      }
+    },
+    {
+      "git_blob": "c84bc1505daba257929ba8084edad601c0be9cba",
+      "path": "Packages/HanlinParityMiniApp/Package.resolved",
+      "pins": {
+        "swift-ai-sdk": "abf0921c6e89e6521cc2b510ff11016b45a0ef08",
+        "swift-argument-parser": "6a52f3251125d74daf04fcbd5e6f08a75d074382",
+        "swiftyjson": "b3dcd7dbd0d488e1a7077cb33b00f2083e382f07",
+        "zipfoundation": "02b6abe5f6eef7e3cbd5f247c5cc24e246efcfe0"
+      }
+    },
+    {
+      "git_blob": "7633eb3afedbdef408b9aca410a15565419af06d",
+      "path": "Packages/HanlinPlatform/Package.resolved",
+      "pins": {
+        "swift-ai-sdk": "abf0921c6e89e6521cc2b510ff11016b45a0ef08",
+        "swift-argument-parser": "6a52f3251125d74daf04fcbd5e6f08a75d074382",
+        "swiftyjson": "b3dcd7dbd0d488e1a7077cb33b00f2083e382f07",
+        "zipfoundation": "02b6abe5f6eef7e3cbd5f247c5cc24e246efcfe0"
+      }
+    },
+    {
+      "git_blob": "3bf1b46a288fcd8de52b7fe505c4b990e18e3e1a",
+      "path": "Packages/HanlinSefariaMiniApp/Package.resolved",
+      "pins": {
+        "swift-ai-sdk": "abf0921c6e89e6521cc2b510ff11016b45a0ef08",
+        "swift-argument-parser": "6a52f3251125d74daf04fcbd5e6f08a75d074382",
+        "swiftyjson": "b3dcd7dbd0d488e1a7077cb33b00f2083e382f07",
+        "zipfoundation": "02b6abe5f6eef7e3cbd5f247c5cc24e246efcfe0"
+      }
+    },
+    {
+      "git_blob": "304293712b3e38387fd47f9543c21039c4eb8d29",
+      "path": "Packages/HanlinSkillFormat/Package.resolved",
+      "pins": {
+        "yams": "a27b21e0c81c5bf42049b897a62aaf387e80f279"
+      }
+    },
+    {
+      "git_blob": "b64e2d80c7f4cd10dd7601c42974271592de2aa1",
+      "path": "Packages/HanlinSwiftUIBridgeGenerator/Package.resolved",
+      "pins": {
+        "swift-syntax": "79e4b74a295b6eb74a8b585e3a39d29e70c1dbd1"
+      }
+    },
+    {
+      "git_blob": "898acc84732e41985b321d71607a31138ced99ec",
+      "path": "Packages/HanlinTextStudioMiniApp/Package.resolved",
+      "pins": {
+        "swift-ai-sdk": "abf0921c6e89e6521cc2b510ff11016b45a0ef08",
+        "swift-argument-parser": "6a52f3251125d74daf04fcbd5e6f08a75d074382",
+        "swiftyjson": "b3dcd7dbd0d488e1a7077cb33b00f2083e382f07",
+        "zipfoundation": "02b6abe5f6eef7e3cbd5f247c5cc24e246efcfe0"
+      }
+    },
+    {
+      "git_blob": "ee2ae48eb31cfa3b713970481c07b6c683bb4f86",
+      "path": "Packages/HanlinWikipediaMiniApp/Package.resolved",
+      "pins": {
+        "swift-ai-sdk": "abf0921c6e89e6521cc2b510ff11016b45a0ef08",
+        "swift-argument-parser": "6a52f3251125d74daf04fcbd5e6f08a75d074382",
+        "swiftyjson": "b3dcd7dbd0d488e1a7077cb33b00f2083e382f07",
+        "zipfoundation": "02b6abe5f6eef7e3cbd5f247c5cc24e246efcfe0"
+      }
+    }
+  ],
+  "actual_merge": "c42f80e57d926292d844bd79e3fca071f9cbaa29",
+  "actual_parents": [
+    "dcc765d2f0c4dbd5ece536de816a682d96d3c369",
+    "96f7ca23126cc0dac714b240795a0e343087ab4f"
+  ],
+  "all_previous_evidence_blobs_preserved": true,
+  "c8_app04_status": "RUNNING_LAST_OBSERVED_NO_APP_PASS_CLAIM",
+  "canonical_manifest_reuse": {
+    "actual_job": "job_723e56f227ee",
+    "changed_input_paths": [],
+    "exact_verified_original_inputs": 754,
+    "native_result_sha256": "fec337b2f8ed915e2571718cf23f3e95f9ec2b535c40fac64be444358d600d0d",
+    "original_source": "c92c3f904872b37287861dfafa9cc668d5dc44c3",
+    "source_inventory_sha256": "04f5f9d9a703ae8c94baea9047b6b750478ecf0c2586ec6fed5d11653c1d1e88",
+    "status": "REUSED_EXACT_754_INPUT_MAC_MANIFEST_PASS"
+  },
+  "core": "abf0921c6e89e6521cc2b510ff11016b45a0ef08",
+  "core7_status": "INCREMENTAL_CONTINUATION_RUNNING_NO_PASS_CLAIM",
+  "difference_is_only_prior_preserved_evidence": true,
+  "incoming_preparation_proof": "96f7ca23126cc0dac714b240795a0e343087ab4f",
+  "incoming_source": "1710bc6119983799f7d22cb723659ac274fe96b1",
+  "previous_union": "dcc765d2f0c4dbd5ece536de816a682d96d3c369",
+  "reviewed_at_utc": "2026-11-25T04:11:59.480725+00:00",
+  "tree_difference_from_incoming": [
+    "docs/agent-sdk/otzaria-integration-20261125/README.md",
+    "docs/agent-sdk/otzaria-integration-20261125/check.stderr.log",
+    "docs/agent-sdk/otzaria-integration-20261125/check.stdout.log",
+    "docs/agent-sdk/otzaria-integration-20261125/generate.stderr.log",
+    "docs/agent-sdk/otzaria-integration-20261125/generate.stdout.log",
+    "docs/agent-sdk/otzaria-union-20261125/README.md",
+    "docs/agent-sdk/otzaria-union-20261125/active-package-pins.json",
+    "docs/agent-sdk/otzaria-union-20261125/c8-asana-snapshot.json",
+    "docs/agent-sdk/otzaria-union-20261125/manifest-source.json",
+    "docs/agent-sdk/otzaria-union-20261125/merge-receipt.json",
+    "docs/agent-sdk/otzaria-union-20261125/native-evidence-01/ARTIFACTS.json",
+    "docs/agent-sdk/otzaria-union-20261125/native-evidence-01/admission-blocked.json",
+    "docs/agent-sdk/otzaria-union-20261125/native-evidence-01/c8-after-fixture-fix.json",
+    "docs/agent-sdk/otzaria-union-20261125/native-evidence-01/core-attempt01/Package.resolved",
+    "docs/agent-sdk/otzaria-union-20261125/native-evidence-01/core-attempt01/Package.swift",
+    "docs/agent-sdk/otzaria-union-20261125/native-evidence-01/core-attempt01/active-process.json",
+    "docs/agent-sdk/otzaria-union-20261125/native-evidence-01/core-attempt01/clone-compatible-cache.log",
+    "docs/agent-sdk/otzaria-union-20261125/native-evidence-01/core-attempt01/cloned-cache-quarantine.json",
+    "docs/agent-sdk/otzaria-union-20261125/native-evidence-01/core-attempt01/failure.txt",
+    "docs/agent-sdk/otzaria-union-20261125/native-evidence-01/core-attempt01/original-checkout-after.json",
+    "docs/agent-sdk/otzaria-union-20261125/native-evidence-01/core-attempt01/original-core-inputs-before.json",
+    "docs/agent-sdk/otzaria-union-20261125/native-evidence-01/core-attempt01/original-core7.log.gz",
+    "docs/agent-sdk/otzaria-union-20261125/native-evidence-01/core-attempt01/os-version.log",
+    "docs/agent-sdk/otzaria-union-20261125/native-evidence-01/core-attempt01/receipt.json",
+    "docs/agent-sdk/otzaria-union-20261125/native-evidence-01/core-attempt01/resolve.log",
+    "docs/agent-sdk/otzaria-union-20261125/native-evidence-01/core-attempt01/sdk-version.log",
+    "docs/agent-sdk/otzaria-union-20261125/native-evidence-01/core-attempt01/swift-version.log",
+    "docs/agent-sdk/otzaria-union-20261125/native-evidence-01/core-attempt01/test-selection.json",
+    "docs/agent-sdk/otzaria-union-20261125/native-evidence-01/core-attempt01/xcode-version.log",
+    "docs/agent-sdk/otzaria-union-20261125/native-evidence-01/manifest/RESULT.json",
+    "docs/agent-sdk/otzaria-union-20261125/native-evidence-01/manifest/canonical-manifest.stderr.log",
+    "docs/agent-sdk/otzaria-union-20261125/native-evidence-01/manifest/canonical-manifest.stdout.log",
+    "docs/agent-sdk/otzaria-union-20261125/native-evidence-01/phase12-launch.py",
+    "docs/agent-sdk/otzaria-union-20261125/native-evidence-01/remaining-product-census.json",
+    "docs/agent-sdk/otzaria-union-20261125/native-evidence-01/sentinel-job_723e56f227ee.json",
+    "docs/agent-sdk/otzaria-union-20261125/resume-core7.py",
+    "docs/agent-sdk/otzaria-union-20261125/run-core7.py",
+    "docs/agent-sdk/otzaria-union-20261125/source-checks.json"
+  ]
+}
