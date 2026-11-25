@@ -1,0 +1,74 @@
+{
+  "files": [
+    {
+      "originalPath": "README.md",
+      "originalSHA256": "9c0da52936bcbde38f4e6600c945f96dcf9cd2bd88dee1f97202e5aa5524b798",
+      "storedPath": "README.md.gz",
+      "storedSHA256": "be5ceb333ceea98b1455e70c9e4c6d825bb14c7c002e329a022ca0c7d40b53b6",
+      "bytes": 2008
+    },
+    {
+      "originalPath": "core/README.md",
+      "originalSHA256": "bb449f5f2db25a9b58230be062c0a94c4caddc3b58e69adadacfe6eef0b1a919",
+      "storedPath": "core/README.md",
+      "storedSHA256": "bb449f5f2db25a9b58230be062c0a94c4caddc3b58e69adadacfe6eef0b1a919",
+      "bytes": 4949
+    },
+    {
+      "originalPath": "core/core48-reuse.json",
+      "originalSHA256": "af7019c665a9321cb4735b4f14f5f62d3b0a53313b269ddd8b4c44bda4b829e0",
+      "storedPath": "core/core48-reuse.json",
+      "storedSHA256": "af7019c665a9321cb4735b4f14f5f62d3b0a53313b269ddd8b4c44bda4b829e0",
+      "bytes": 64602
+    },
+    {
+      "originalPath": "index.json",
+      "originalSHA256": "cd81ac8a25f0ba74a1390d56f96a371917e25f96cf8b81cd9cdf398efc7027f2",
+      "storedPath": "index.json",
+      "storedSHA256": "cd81ac8a25f0ba74a1390d56f96a371917e25f96cf8b81cd9cdf398efc7027f2",
+      "bytes": 1606
+    },
+    {
+      "originalPath": "local-js/README.md",
+      "originalSHA256": "aafaf42ba090ffd77fb65fb262c5e16ae44aab57440480351a1a933a8ccf1e5e",
+      "storedPath": "local-js/README.md",
+      "storedSHA256": "aafaf42ba090ffd77fb65fb262c5e16ae44aab57440480351a1a933a8ccf1e5e",
+      "bytes": 1908
+    },
+    {
+      "originalPath": "local-js/receipt.json",
+      "originalSHA256": "2974f7b08f06cceca828564f9d2a337cd19da1374a06ef353bf8366e95228da4",
+      "storedPath": "local-js/receipt.json",
+      "storedSHA256": "2974f7b08f06cceca828564f9d2a337cd19da1374a06ef353bf8366e95228da4",
+      "bytes": 84574
+    },
+    {
+      "originalPath": "local-js/verification-execution.json",
+      "originalSHA256": "a27e5c239d8d09af41d5e2a1a8f713f5d5867a879439d89d226f53e00713bdda",
+      "storedPath": "local-js/verification-execution.json",
+      "storedSHA256": "a27e5c239d8d09af41d5e2a1a8f713f5d5867a879439d89d226f53e00713bdda",
+      "bytes": 439
+    },
+    {
+      "originalPath": "local-js/verification.log",
+      "originalSHA256": "ce0a76b9554672e43f38336260977cc5a63bb85716395e32cf1096bb0afdb0c6",
+      "storedPath": "local-js/verification.log.gz",
+      "storedSHA256": "586c9db452a0a2f3ef389030e5ef6c62a58e78f60f8fb48a2369ead9bdf32331",
+      "bytes": 834
+    },
+    {
+      "originalPath": "local-js/verify-reuse.py",
+      "originalSHA256": "f4153ddf75b571f501136481dc02fffa2b021cc534f3c468bc838330eb883ed7",
+      "storedPath": "local-js/verify-reuse.py",
+      "storedSHA256": "f4153ddf75b571f501136481dc02fffa2b021cc534f3c468bc838330eb883ed7",
+      "bytes": 16311
+    },
+    {
+      "originalPath": "reuse-receipt.json",
+      "originalSHA256": "1885c617ffc01134ec354604d68a8a4092f45968e999bc3a7be01e8ea3005d7e",
+      "storedPath": "reuse-receipt.json",
+      "storedSHA256": "1885c617ffc01134ec354604d68a8a4092f45968e999bc3a7be01e8ea3005d7e",
+      "bytes": 5828
+    }
+  ]
+}
