@@ -243,12 +243,28 @@ final class MiniAppsNativeScriptPackageWindowUITests: XCTestCase {
                 in: app, expected: &nativeProcessID, requestID: try XCTUnwrap(requests[name])
             )
             capture("native-existing-window-card-opened-\(index)")
-            // The actual AX query orders the foreground Window (Main) first.
-            // Other scenes still expose their controls with full-screen frames,
-            // and asking their buttons for hittability can throw instead of
-            // returning false. Identify the front scene before that assertion.
-            let window = app.windows.firstMatch
-            let foregroundTree = XCTAttachment(string: window.debugDescription)
+            // AX window order is not the foreground order: after selecting an
+            // existing preview a background scene can still be the first match.
+            // Identify the main window from its own first Attributes line, not
+            // a later query-chain reference or another scene in its subtree.
+            let windowSnapshots = app.windows.allElementsBoundByIndex.map {
+                (element: $0, description: $0.debugDescription)
+            }
+            let headers = windowSnapshots.enumerated().map { index, snapshot in
+                "[\(index)] " + (snapshot.description.components(separatedBy: "\n").first ?? "")
+            }
+            let windowInventory = XCTAttachment(string: headers.joined(separator: "\n"))
+            windowInventory.name = "native-existing-window-headers-\(index)"
+            windowInventory.lifetime = .keepAlways
+            add(windowInventory)
+            let mainWindows = windowSnapshots.filter {
+                ($0.description.components(separatedBy: "\n").first ?? "")
+                    .hasPrefix("Attributes: Window (Main),")
+            }
+            let mainWindow = try XCTUnwrap(mainWindows.count == 1 ? mainWindows.first : nil,
+                "The actual foreground must expose exactly one main window.")
+            let window = mainWindow.element
+            let foregroundTree = XCTAttachment(string: mainWindow.description)
             foregroundTree.name = "native-existing-window-foreground-\(index)"
             foregroundTree.lifetime = .keepAlways
             add(foregroundTree)
