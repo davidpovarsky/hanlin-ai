@@ -1,0 +1,24 @@
+Working copy of https://github.com/weichsel/ZIPFoundation.git resolved at 0.9.19
+Updating https://github.com/davidpovarsky/swift-ai-sdk.git
+Updated https://github.com/davidpovarsky/swift-ai-sdk.git (0.41s)
+Updating https://github.com/apple/swift-argument-parser
+Updating https://github.com/SwiftyJSON/SwiftyJSON.git
+Updating https://github.com/apple/swift-atomics.git
+Updating https://github.com/weichsel/ZIPFoundation.git
+Updating https://github.com/open-telemetry/opentelemetry-swift-core.git
+Updated https://github.com/open-telemetry/opentelemetry-swift-core.git (0.41s)
+Updated https://github.com/SwiftyJSON/SwiftyJSON.git (0.41s)
+Updated https://github.com/apple/swift-argument-parser (0.41s)
+Updated https://github.com/apple/swift-atomics.git (0.41s)
+Updated https://github.com/weichsel/ZIPFoundation.git (0.41s)
+Computing version for https://github.com/apple/swift-argument-parser
+Computed https://github.com/apple/swift-argument-parser at 1.8.2 (0.49s)
+Computing version for https://github.com/weichsel/ZIPFoundation.git
+Computed https://github.com/weichsel/ZIPFoundation.git at 0.9.20 (0.04s)
+Computing version for https://github.com/open-telemetry/opentelemetry-swift-core.git
+Computed https://github.com/open-telemetry/opentelemetry-swift-core.git at 2.6.0 (0.03s)
+Computing version for https://github.com/SwiftyJSON/SwiftyJSON.git
+Computed https://github.com/SwiftyJSON/SwiftyJSON.git at 5.0.1 (0.03s)
+Computing version for https://github.com/apple/swift-atomics.git
+Computed https://github.com/apple/swift-atomics.git at 1.3.1 (0.03s)
+Working copy of https://github.com/weichsel/ZIPFoundation.git resolved at 0.9.20

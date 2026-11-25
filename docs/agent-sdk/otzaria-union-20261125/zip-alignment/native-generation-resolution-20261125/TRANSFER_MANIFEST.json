@@ -1,0 +1,195 @@
+{
+  "files": [
+    {
+      "path": "generated/Package.swift",
+      "sha256": "7f989201b2238a0420aa2d8909205cb5613332a922c5797bddebeaa277fa5e36",
+      "size": 89440
+    },
+    {
+      "path": "generated/docs/agent-sdk/unified-package-manifest.json",
+      "sha256": "1c0437744e1b4cb1c091afbb15eaa9762ec8fab0956a2a76a4d6f85785b04018",
+      "size": 3901
+    },
+    {
+      "path": "generated/Packages/HanlinPlatform/Package.resolved",
+      "sha256": "c75981600c9f61a4bd404c94e1c76692defa8d514dd0bc985fb9d5a3ac531075",
+      "size": 1771
+    },
+    {
+      "path": "generated/Packages/HanlinAgentSDK/Package.resolved",
+      "sha256": "1519e59a98d639f584066f13712b896fcb9b2544f0b5b56dfae80420ffd9d572",
+      "size": 1771
+    },
+    {
+      "path": "generated/Packages/HanlinParityMiniApp/Package.resolved",
+      "sha256": "46c8e40fb1b5b94977a94a43de500efa807b64cb70a6cde5eb77e3ae469cffb5",
+      "size": 1771
+    },
+    {
+      "path": "generated/Packages/HanlinTextStudioMiniApp/Package.resolved",
+      "sha256": "1ff8d78b2d938058907b44d7d2c5f910ed051d858429f73a2c3d8aaacc4a41f3",
+      "size": 1771
+    },
+    {
+      "path": "generated/Packages/HanlinSefariaMiniApp/Package.resolved",
+      "sha256": "aefab9f267ff1ac08372ac6f5da7a1a0426ca13b114f3e8de798b1e72a4e063f",
+      "size": 1771
+    },
+    {
+      "path": "generated/Packages/HanlinWikipediaMiniApp/Package.resolved",
+      "sha256": "9285d61cc4633c01ceee14e46890acfddfc82a71811be32ce8e5ea325de67b6e",
+      "size": 1771
+    },
+    {
+      "path": "evidence/SOURCE_PREPARATION.json",
+      "sha256": "71cd3a4a599ba1232f96f8cf84e0a4c2295f41304bb46b06bab823cde7c0c567",
+      "size": 520
+    },
+    {
+      "path": "evidence/canonical-generation-attempt01/RESULT.json",
+      "sha256": "feef71ba1f5ba4417144a069804ab14d079e407623be0e67bd113c221a2d6e16",
+      "size": 197614
+    },
+    {
+      "path": "evidence/canonical-generation-attempt02/RESULT.json",
+      "sha256": "d260269ec82b6c7efbfc5bd9075926cc8581e406eb6ecd529e6895a5e8015440",
+      "size": 198055
+    },
+    {
+      "path": "evidence/canonical-generation-attempt03/RESULT.json",
+      "sha256": "2c481da9f20ecbddd10628f964523d6f5fab51ce39ee248313978e599cbb632c",
+      "size": 401115
+    },
+    {
+      "path": "evidence/canonical-generation-attempt03/before-Package.swift",
+      "sha256": "afef4a0c438afc8cf0586b1665d96bc1559db09833086af9e3b2f47811b6568c",
+      "size": 89440
+    },
+    {
+      "path": "evidence/canonical-generation-attempt03/before-unified-package-manifest.json",
+      "sha256": "4c92451d692c01d99681b793ac862444e93b9cc5e0cc26a22e71c9faf22d713f",
+      "size": 3901
+    },
+    {
+      "path": "evidence/canonical-generation-attempt03/check.log",
+      "sha256": "217ce542c95d95c575350f32c991d691b2f55bc4bcc44753aeeb2fec4b41b28d",
+      "size": 3605
+    },
+    {
+      "path": "evidence/canonical-generation-attempt03/generate.log",
+      "sha256": "217ce542c95d95c575350f32c991d691b2f55bc4bcc44753aeeb2fec4b41b28d",
+      "size": 3605
+    },
+    {
+      "path": "evidence/canonical-generation-attempt03/generated-Package.swift",
+      "sha256": "7f989201b2238a0420aa2d8909205cb5613332a922c5797bddebeaa277fa5e36",
+      "size": 89440
+    },
+    {
+      "path": "evidence/canonical-generation-attempt03/generated-unified-package-manifest.json",
+      "sha256": "1c0437744e1b4cb1c091afbb15eaa9762ec8fab0956a2a76a4d6f85785b04018",
+      "size": 3901
+    },
+    {
+      "path": "evidence/canonical-generation-attempt03/generated.diff",
+      "sha256": "4de5d7ced649d53d38f3d82eb7a9ed41bf7ee9c34d19c40d6b5a17541ef5f2f6",
+      "size": 621
+    },
+    {
+      "path": "evidence/resolution-attempt01/HanlinAgentSDK-resolve.log",
+      "sha256": "8aa2636c56904444ce4bee81d2c8c3a1ed4e1e534ee42b129e9be471116bf609",
+      "size": 1467
+    },
+    {
+      "path": "evidence/resolution-attempt01/HanlinParityMiniApp-resolve.log",
+      "sha256": "7bb9d77aa1189fe6528aa2a41cd725cdfa8df27a4af6108f733a4c5813214e83",
+      "size": 1629
+    },
+    {
+      "path": "evidence/resolution-attempt01/HanlinPlatform-resolve.log",
+      "sha256": "01f7b4e277b7d06269948ae7efd1123641e9ab92a677b0b5c8eab30a6f77755c",
+      "size": 4984
+    },
+    {
+      "path": "evidence/resolution-attempt01/HanlinSefariaMiniApp-resolve.log",
+      "sha256": "dade4d161536703f00bf767ad1cf4910e98e058d32bc3db65dc97d713e627eef",
+      "size": 1629
+    },
+    {
+      "path": "evidence/resolution-attempt01/HanlinTextStudioMiniApp-resolve.log",
+      "sha256": "59c5acc267db04921b25b75dc9845ffec4398f49a6a9b93aafe24d1d397e9293",
+      "size": 1629
+    },
+    {
+      "path": "evidence/resolution-attempt01/HanlinWikipediaMiniApp-resolve.log",
+      "sha256": "0c1e6e645afe1765160e273a871ff5a6378bcd7f03de2b8b20f90c8259efd820",
+      "size": 1629
+    },
+    {
+      "path": "evidence/resolution-attempt01/RESULT.json",
+      "sha256": "76e7e6ae1ca9a89d85a1ee64539ad2b7f2d8860857e9f470c117476f950c834c",
+      "size": 414124
+    },
+    {
+      "path": "evidence/resolution-attempt01/before/Packages/HanlinAgentSDK/Package.resolved",
+      "sha256": "2acb720310279d62c48a54d2a856f25937a9abed054b5a2661b03c548fee457f",
+      "size": 1198
+    },
+    {
+      "path": "evidence/resolution-attempt01/before/Packages/HanlinParityMiniApp/Package.resolved",
+      "sha256": "e0a1d86319347dd23c139babb2864cfc7da0e7365419eef82da71ce354b25fde",
+      "size": 1198
+    },
+    {
+      "path": "evidence/resolution-attempt01/before/Packages/HanlinPlatform/Package.resolved",
+      "sha256": "3e20591d1ac1c23db5258e6fbaee9386e94a58546e814fd5dfad6bf910551c0b",
+      "size": 1198
+    },
+    {
+      "path": "evidence/resolution-attempt01/before/Packages/HanlinSefariaMiniApp/Package.resolved",
+      "sha256": "6252f1f037cf0d5514ad4f8d04ae5391eeb074a837bbc562148b7858bd946210",
+      "size": 1198
+    },
+    {
+      "path": "evidence/resolution-attempt01/before/Packages/HanlinTextStudioMiniApp/Package.resolved",
+      "sha256": "43ef7974e3631a0534bc85aa462b2396c052d8e991043ee28a31941db3869f5c",
+      "size": 1198
+    },
+    {
+      "path": "evidence/resolution-attempt01/before/Packages/HanlinWikipediaMiniApp/Package.resolved",
+      "sha256": "c31e1e6bd9f3b22b5046ab6e776bd0ebf9ac1804ff857dac9742ddc9be5c8094",
+      "size": 1198
+    },
+    {
+      "path": "evidence/resolution-attempt01/resolved/Packages/HanlinAgentSDK/Package.resolved",
+      "sha256": "1519e59a98d639f584066f13712b896fcb9b2544f0b5b56dfae80420ffd9d572",
+      "size": 1771
+    },
+    {
+      "path": "evidence/resolution-attempt01/resolved/Packages/HanlinParityMiniApp/Package.resolved",
+      "sha256": "46c8e40fb1b5b94977a94a43de500efa807b64cb70a6cde5eb77e3ae469cffb5",
+      "size": 1771
+    },
+    {
+      "path": "evidence/resolution-attempt01/resolved/Packages/HanlinPlatform/Package.resolved",
+      "sha256": "c75981600c9f61a4bd404c94e1c76692defa8d514dd0bc985fb9d5a3ac531075",
+      "size": 1771
+    },
+    {
+      "path": "evidence/resolution-attempt01/resolved/Packages/HanlinSefariaMiniApp/Package.resolved",
+      "sha256": "aefab9f267ff1ac08372ac6f5da7a1a0426ca13b114f3e8de798b1e72a4e063f",
+      "size": 1771
+    },
+    {
+      "path": "evidence/resolution-attempt01/resolved/Packages/HanlinTextStudioMiniApp/Package.resolved",
+      "sha256": "1ff8d78b2d938058907b44d7d2c5f910ed051d858429f73a2c3d8aaacc4a41f3",
+      "size": 1771
+    },
+    {
+      "path": "evidence/resolution-attempt01/resolved/Packages/HanlinWikipediaMiniApp/Package.resolved",
+      "sha256": "9285d61cc4633c01ceee14e46890acfddfc82a71811be32ce8e5ea325de67b6e",
+      "size": 1771
+    }
+  ],
+  "source": "23040c6c95147d100a8729a9964bd09f984c0435"
+}

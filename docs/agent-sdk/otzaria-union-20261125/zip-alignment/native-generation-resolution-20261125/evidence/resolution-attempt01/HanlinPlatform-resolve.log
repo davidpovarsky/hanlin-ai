@@ -1,0 +1,70 @@
+Fetching https://github.com/davidpovarsky/swift-ai-sdk.git from cache
+Fetched https://github.com/davidpovarsky/swift-ai-sdk.git from cache (1.80s)
+Fetching https://github.com/open-telemetry/opentelemetry-swift-core.git from cache
+Fetching https://github.com/SwiftyJSON/SwiftyJSON.git from cache
+Fetching https://github.com/apple/swift-argument-parser from cache
+Fetching https://github.com/weichsel/ZIPFoundation.git from cache
+Fetched https://github.com/open-telemetry/opentelemetry-swift-core.git from cache (1.53s)
+Fetched https://github.com/apple/swift-argument-parser from cache (1.71s)
+Fetched https://github.com/SwiftyJSON/SwiftyJSON.git from cache (1.76s)
+Fetched https://github.com/weichsel/ZIPFoundation.git from cache (1.73s)
+Computing version for https://github.com/apple/swift-argument-parser
+Computed https://github.com/apple/swift-argument-parser at 1.8.2 (9.94s)
+Computing version for https://github.com/weichsel/ZIPFoundation.git
+warning: 'zipfoundation': /Package@swift-5.9.swift:23:61: warning: 'v4' is deprecated: watchOS 9.0 is the oldest supported version [#DeprecatedDeclaration]
+21 |     name: "ZIPFoundation",
+22 |     platforms: [
+23 |         .macOS(.v10_13), .iOS(.v12), .tvOS(.v12), .watchOS(.v4), .visionOS(.v1)
+   |                                                             `- warning: 'v4' is deprecated: watchOS 9.0 is the oldest supported version [#DeprecatedDeclaration]
+24 |     ],
+25 |     products: [
+
+[#DeprecatedDeclaration]: <https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration>
+Computed https://github.com/weichsel/ZIPFoundation.git at 0.9.20 (4.66s)
+Computing version for https://github.com/open-telemetry/opentelemetry-swift-core.git
+warning: 'opentelemetry-swift-core': /Package.swift:13:15: warning: 'v4' is deprecated: watchOS 9.0 is the oldest supported version [#DeprecatedDeclaration]
+11 |     .iOS(.v12),
+12 |     .tvOS(.v12),
+13 |     .watchOS(.v4),
+   |               `- warning: 'v4' is deprecated: watchOS 9.0 is the oldest supported version [#DeprecatedDeclaration]
+14 |     .visionOS(.v1),
+15 |   ],
+
+[#DeprecatedDeclaration]: <https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration>
+Computed https://github.com/open-telemetry/opentelemetry-swift-core.git at 2.6.0 (5.97s)
+Fetching https://github.com/apple/swift-atomics.git from cache
+Fetched https://github.com/apple/swift-atomics.git from cache (2.25s)
+Computing version for https://github.com/SwiftyJSON/SwiftyJSON.git
+Computed https://github.com/SwiftyJSON/SwiftyJSON.git at 5.0.1 (5.86s)
+Computing version for https://github.com/apple/swift-atomics.git
+Computed https://github.com/apple/swift-atomics.git at 1.3.1 (0.83s)
+Creating working copy for https://github.com/SwiftyJSON/SwiftyJSON.git
+Working copy of https://github.com/SwiftyJSON/SwiftyJSON.git resolved at 5.0.1
+Creating working copy for https://github.com/apple/swift-argument-parser
+Working copy of https://github.com/apple/swift-argument-parser resolved at 1.8.2
+Creating working copy for https://github.com/apple/swift-atomics.git
+Working copy of https://github.com/apple/swift-atomics.git resolved at 1.3.1
+Creating working copy for https://github.com/weichsel/ZIPFoundation.git
+Working copy of https://github.com/weichsel/ZIPFoundation.git resolved at 0.9.20
+Creating working copy for https://github.com/davidpovarsky/swift-ai-sdk.git
+Working copy of https://github.com/davidpovarsky/swift-ai-sdk.git resolved at abf0921c6e89e6521cc2b510ff11016b45a0ef08
+Creating working copy for https://github.com/open-telemetry/opentelemetry-swift-core.git
+Working copy of https://github.com/open-telemetry/opentelemetry-swift-core.git resolved at 2.6.0
+warning: 'zipfoundation': /Users/m1/builds/hanlin-zip-23040c6c-native-20261125/package-resolution-shared/checkouts/ZIPFoundation/Package@swift-5.9.swift:23:61: warning: 'v4' is deprecated: watchOS 9.0 is the oldest supported version [#DeprecatedDeclaration]
+21 |     name: "ZIPFoundation",
+22 |     platforms: [
+23 |         .macOS(.v10_13), .iOS(.v12), .tvOS(.v12), .watchOS(.v4), .visionOS(.v1)
+   |                                                             `- warning: 'v4' is deprecated: watchOS 9.0 is the oldest supported version [#DeprecatedDeclaration]
+24 |     ],
+25 |     products: [
+
+[#DeprecatedDeclaration]: <https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration>
+warning: 'opentelemetry-swift-core': /Users/m1/builds/hanlin-zip-23040c6c-native-20261125/package-resolution-shared/checkouts/opentelemetry-swift-core/Package.swift:13:15: warning: 'v4' is deprecated: watchOS 9.0 is the oldest supported version [#DeprecatedDeclaration]
+11 |     .iOS(.v12),
+12 |     .tvOS(.v12),
+13 |     .watchOS(.v4),
+   |               `- warning: 'v4' is deprecated: watchOS 9.0 is the oldest supported version [#DeprecatedDeclaration]
+14 |     .visionOS(.v1),
+15 |   ],
+
+[#DeprecatedDeclaration]: <https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration>
