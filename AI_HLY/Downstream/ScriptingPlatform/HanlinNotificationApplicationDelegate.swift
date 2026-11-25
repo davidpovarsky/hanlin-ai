@@ -46,7 +46,7 @@ private final class HanlinNotificationCenterDelegate: NSObject, UNUserNotificati
                 center,
                 willPresent: notification,
                 withCompletionHandler: { options in
-                    continuation.resume(returning: options)
+                    continuation.resume(returning: Self.presentationOptions(options))
                 }
             )
             if forwarded == nil {
@@ -77,6 +77,21 @@ private final class HanlinNotificationCenterDelegate: NSObject, UNUserNotificati
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 openSettingsFor notification: UNNotification?) {
         previous?.userNotificationCenter?(center, openSettingsFor: notification)
+    }
+
+    // The optional Objective-C block parameter imports as an Int under the
+    // existing C++ consumer. Preserve its full bit pattern, while retaining
+    // the native option-set form for consumers using the ordinary importer.
+    nonisolated private static func presentationOptions(
+        _ options: UNNotificationPresentationOptions
+    ) -> UNNotificationPresentationOptions {
+        options
+    }
+
+    nonisolated private static func presentationOptions(
+        _ rawValue: Int
+    ) -> UNNotificationPresentationOptions {
+        UNNotificationPresentationOptions(rawValue: UInt(bitPattern: rawValue))
     }
 
     private func receive(_ userInfo: [AnyHashable: Any]) async {
