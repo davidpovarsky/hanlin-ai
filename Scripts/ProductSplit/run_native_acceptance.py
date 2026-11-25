@@ -8,6 +8,7 @@ import re
 import shutil
 import subprocess
 import sys
+import tempfile
 import time
 
 from simulator_entitlements import read_simulator_entitlements
@@ -23,7 +24,8 @@ UI_PLANS = {
                   'HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests',
                   'HanlinMiniAppsTests/NativeScriptWindowOwnershipTests',
                   'HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests',
-                  'HanlinMiniAppsUITests/MiniAppsNativeScriptWindowUITests'], 18),
+                  'HanlinMiniAppsUITests/MiniAppsNativeScriptWindowUITests',
+                  'HanlinMiniAppsUITests/MiniAppsNativeScriptPackageWindowUITests'], 21),
     'baseline': (['HanlinMiniAppsUITests/HanlinMiniAppsUITests',
                   'HanlinMiniAppsUITests/MiniAppsProviderUITests'], 7),
     # The complete affected scope includes the original producer cases plus
@@ -37,16 +39,17 @@ UI_PLANS = {
         'HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests',
         'HanlinMiniAppsUITests/MiniAppsNativeScriptWindowUITests',
         'HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch',
-        'HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents'], 20),
+        'HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents',
+        'HanlinMiniAppsUITests/MiniAppsNativeScriptPackageWindowUITests'], 23),
 }
 
 
-def command(argv, name, timeout=60):
+def command(argv, name, timeout=60, env=None):
     started = time.monotonic()
     code = None
     output = b''
     try:
-        result = subprocess.run(argv, cwd=ROOT, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=timeout)
+        result = subprocess.run(argv, cwd=ROOT, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=timeout, env=env)
         code, output = result.returncode, result.stdout
     except subprocess.TimeoutExpired as error:
         code, output = -1, error.stdout or b'No output before subprocess timeout.'
@@ -87,6 +90,29 @@ def main():
             p = ROOT / name
             inputs[name] = hashlib.sha256(p.read_bytes()).hexdigest()
         (EVIDENCE / 'source-inputs.json').write_text(json.dumps(inputs, indent=2)+'\n')
+        source_identity = {
+            'commit': state['sha'],
+            'tree': command(['git', 'rev-parse', 'HEAD^{tree}'], 'source-tree.txt').strip(),
+            'git_status_porcelain': command(['git', 'status', '--porcelain=v1', '--untracked-files=no'],
+                                             'source-status.txt'),
+            'tracked_file_sha256': inputs,
+        }
+        prepared_diff = command(['git', 'diff', '--binary', 'HEAD'], 'source-preparation.diff')
+        source_identity['preparation_diff_name'] = 'source-preparation.diff'
+        source_identity['preparation_diff_sha256'] = hashlib.sha256(prepared_diff.encode()).hexdigest()
+        # Reconstruct the prepared source tree in an isolated index. Do not
+        # alter the worktree/index or claim generated preparation was committed.
+        with tempfile.TemporaryDirectory(prefix='hanlin-producer-source-') as temporary:
+            index_environment = dict(os.environ, GIT_INDEX_FILE=str(Path(temporary)/'index'))
+            command(['git', 'read-tree', state['sha']], 'prepared-source-read-tree.log', env=index_environment)
+            if prepared_diff:
+                command(['git', 'apply', '--cached', '--binary', str(EVIDENCE/'source-preparation.diff')],
+                        'prepared-source-apply.log', env=index_environment)
+            source_identity['prepared_tree'] = command(
+                ['git', 'write-tree'], 'prepared-source-tree.txt', env=index_environment).strip()
+        (EVIDENCE/'source-identity.json').write_text(json.dumps(source_identity, indent=2)+'\n')
+        state['source_identity_sha256'] = hashlib.sha256((EVIDENCE/'source-identity.json').read_bytes()).hexdigest()
+
         state['impact'] = 'Integrated preserved production transport and namespace into current provider/bootstrap. Only affected or previously unexecuted native cases selected; no prior Host proof counted as fresh UI evidence.'
         package_arguments = ['-clonedSourcePackagesDirPath', str(ROOT/'build/SourcePackages')]
         # The actual build-for-testing below resolves and verifies this scheme.
@@ -148,7 +174,7 @@ def main():
                 'CODE_SIGNING_ALLOWED=YES', 'CODE_SIGNING_REQUIRED=YES', 'CODE_SIGN_IDENTITY=-']
         build = base + ['build-for-testing', '-resultBundlePath', str(EVIDENCE/'Build.xcresult')]
         state['build_command'] = build
-        if TEST_SCOPE in {'cross_app', 'production_runtimes'}:
+        if TEST_SCOPE in {'cross_app', 'production_runtimes'} and os.environ.get('SPLIT_REUSE_NATIVE_PROOF') == '1':
             from reuse_cross_app_native_proof import (
                 capture_current_environment, download_origin, plan_reuse)
             origin = download_origin(ROOT, ROOT/'build/miniapps-native-proof-cache')
@@ -168,6 +194,12 @@ def main():
                 'fresh_execution_required': expected_tests,
                 'authenticated_previous_passes': len(previous['reusable_selectors']),
                 'previous_run_overall_status': 'failure',
+            }
+        else:
+            state['native_proof_coverage'] = {
+                'full_affected_scope': expected_tests, 'fresh_execution_required': expected_tests,
+                'authenticated_previous_passes': 0,
+                'reason': 'Current integrated runtime, SDK and toolchain require fresh execution.',
             }
         # A real Swift 6 XCTest isolation error in run 45316423267 appeared only
         # after 26 minutes of app compilation. Check the same XCTest-only source
@@ -350,6 +382,10 @@ def main():
                      '--simulator-udid', simulator, '--app-path', str(app_product),
                      '--evidence', str(EVIDENCE/'nativescript-windows')],
                     'nativescript-window-staging.log', timeout=180)
+            command([sys.executable, 'Scripts/ProductSplit/stage_nativescript_window_fixture.py',
+                     '--simulator-udid', simulator, '--app-path', str(app_product),
+                     '--evidence', str(EVIDENCE/'nativescript-package-windows'), '--package-windows'],
+                    'nativescript-package-window-staging.log', timeout=180)
         argv = base + ['test-without-building',
                 '-resultBundlePath', str(EVIDENCE/'MiniApps.xcresult')]
         argv += ['-only-testing:' + selector for selector in selectors]
@@ -392,6 +428,9 @@ def main():
                     window_staging = json.loads((EVIDENCE/'nativescript-windows/staging.json').read_text())
                     command(window_staging['verify_command'], 'nativescript-window-actual-results.json')
                     state['nativescript_window_results'] = 'ACTUAL_RUNTIME_RESULTS_VERIFIED'
+                    package_staging = json.loads((EVIDENCE/'nativescript-package-windows/staging.json').read_text())
+                    command(package_staging['verify_command'], 'nativescript-package-window-actual-results.json')
+                    state['nativescript_package_window_results'] = 'ACTUAL_RUNTIME_RESULTS_VERIFIED'
                 state.update(status='EXECUTED_PASS',ui='EXECUTED_PASS')
             elif failed:
                 state.update(status='TEST_FAILED',ui='TEST_FAILED')

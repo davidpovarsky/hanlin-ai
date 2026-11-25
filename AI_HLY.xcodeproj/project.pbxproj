@@ -1600,6 +1600,8 @@
 			sourceTree = SOURCE_ROOT;
 		};
 		8DB406D08DA41E642ACB7F6F = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HanlinMiniAppsUITests/MiniAppsNativeScriptWindowUITests.swift; sourceTree = SOURCE_ROOT; };
+		A1B493CA26A1406FA702F001 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HanlinMiniAppsUITests/MiniAppsNativeScriptPackageWindowUITests.swift; sourceTree = SOURCE_ROOT; };
+		A1B493CA26A1406FA702F002 = {isa = PBXBuildFile; fileRef = A1B493CA26A1406FA702F001; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -3486,6 +3488,7 @@
 			"buildActionMask" = "2147483647";
 			files = (
 				"0C3FDCCD259FF6F6E9905865",
+				"A1B493CA26A1406FA702F002",
 				"FD2B21070BBD04C64242ADD1" ,
 				"F927041F0B429D7A68AD6E86" ,
 				"AC4F02D6D50561F3F8BF1799" ,

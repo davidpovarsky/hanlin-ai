@@ -1,0 +1,26 @@
+{
+  "createdAtUTC": "2026-11-25T04:58:56.327104+00:00",
+  "authorBase": "3d3a89bbfb5921490764f01b20632f62fb398433",
+  "scope": "Existing native acceptance case extended; native NOT_RUN",
+  "sourceChanges": [
+    {
+      "path": "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests.swift",
+      "beforeSHA256": "0e7e2a2c38ed4449869ea61e5e9757cd4dc67e66258ae340958ebe617c93a829",
+      "afterSHA256": "b9d463b6fdddd37feb857a077d739ea87ff668be7f2e28b57c8bd557609ec0f0",
+      "afterBytes": 18534
+    }
+  ],
+  "members": [
+    {
+      "path": "README.md",
+      "bytes": 1938,
+      "sha256": "f6ef03186ec76b77a680a7c45e87037b19b3be427ebb3a9ab83468c01ccdb5b4"
+    }
+  ],
+  "selector": "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testInstalledExpoActionsReturnActualReplyAndFailure",
+  "native": "NOT_RUN",
+  "osIngress": "NOT_RUN",
+  "originalAISelectedCount": 27,
+  "originalCaseAllowanceSeconds": 240,
+  "addedReceiptWaitSeconds": 60
+}

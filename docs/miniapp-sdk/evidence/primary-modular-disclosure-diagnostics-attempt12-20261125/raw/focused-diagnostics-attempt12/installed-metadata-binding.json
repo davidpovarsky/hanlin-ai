@@ -1,0 +1,70 @@
+{
+  "observedAt": "2026-11-25T03:38:46.971262+00:00",
+  "source": "1a611764779b0a57cc57d71b26d2cd6449895d8d",
+  "products": [
+    {
+      "bundle": "com.itorah.hanlinminiapps",
+      "built": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app",
+      "installed": "/Users/m1/Library/Developer/CoreSimulator/Devices/4EC498EF-82B7-4FC1-B1CF-20AB8BD5CB25/data/Containers/Bundle/Application/BECFFFCD-27E0-4100-BD4F-3CA458E89BF0/HanlinMiniApps.app",
+      "binaries": [
+        {
+          "name": "HanlinMiniApps",
+          "bytes": 40496,
+          "sha256": "8b408b35a300dc1d3a19ff86bf516f9aa91e74970a73abbca2a080a5dc3cd407",
+          "metadata": []
+        },
+        {
+          "name": "HanlinMiniApps.debug.dylib",
+          "bytes": 127799584,
+          "sha256": "8569df32d56174c924904db80623695f5025db2085a03ddf115cbdca7f245b9a",
+          "metadata": [
+            {
+              "binary": "/Users/m1/Library/Developer/CoreSimulator/Devices/4EC498EF-82B7-4FC1-B1CF-20AB8BD5CB25/data/Containers/Bundle/Application/BECFFFCD-27E0-4100-BD4F-3CA458E89BF0/HanlinMiniApps.app/HanlinMiniApps.debug.dylib",
+              "offset": 47193384,
+              "bytes": 3363373,
+              "sha256": "8720bf1bb3b498c049300d10b25ee137f6463ffdada5a68b4dbc1874f164e528",
+              "requiredNames": {
+                "TNSLabel": true,
+                "NSCCrypto": true,
+                "UIView": true,
+                "HanlinNativeServicesBridge": true
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "bundle": "com.itorah.chavrusachat",
+      "built": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app",
+      "installed": "/Users/m1/Library/Developer/CoreSimulator/Devices/4EC498EF-82B7-4FC1-B1CF-20AB8BD5CB25/data/Containers/Bundle/Application/1EF0B4B0-4D38-4279-A761-EC51ACD6176E/AI_Hanlin.app",
+      "binaries": [
+        {
+          "name": "AI_Hanlin",
+          "bytes": 40496,
+          "sha256": "0bb0ee8584816cec24da9a508237dcc74a8b6c5a574569e13faeea43a6fb1be3",
+          "metadata": []
+        },
+        {
+          "name": "AI_Hanlin.debug.dylib",
+          "bytes": 3469728,
+          "sha256": "309aac62ba0e39fbb28b994cb41b3445384a76ef873f4907ac25b84aa23c270a",
+          "metadata": [
+            {
+              "binary": "/Users/m1/Library/Developer/CoreSimulator/Devices/4EC498EF-82B7-4FC1-B1CF-20AB8BD5CB25/data/Containers/Bundle/Application/1EF0B4B0-4D38-4279-A761-EC51ACD6176E/AI_Hanlin.app/AI_Hanlin.debug.dylib",
+              "offset": 50280,
+              "bytes": 3359846,
+              "sha256": "5a3385b02b9f1c626301a326d32068aadc5d6ef6ceb4fa5bae486a978321fbba",
+              "requiredNames": {
+                "TNSLabel": true,
+                "NSCCrypto": true,
+                "UIView": true,
+                "HanlinNativeServicesBridge": true
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

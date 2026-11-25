@@ -1,0 +1,172 @@
+
+/Users/m1/Library/Developer/CoreSimulator/Devices/80E29B83-02CF-4481-B1AF-80A85CDE0247/data/Containers/Bundle/Application/5CD68A54-53C4-41DE-87EA-B12B4AA1FBF9/HanlinMiniApps.app/HanlinMiniApps.debug.dylib:	file format mach-o arm64
+
+Disassembly of section __TEXT,__text:
+
+0000000000e7cba4 <-[HanlinNativeServicesPendingCallback deliverValue:error:]>:
+  e7cba4: d10443ff     	sub	sp, sp, #0x110
+  e7cba8: a90f6ffc     	stp	x28, x27, [sp, #0xf0]
+  e7cbac: a9107bfd     	stp	x29, x30, [sp, #0x100]
+  e7cbb0: 910403fd     	add	x29, sp, #0x100
+  e7cbb4: aa0103e8     	mov	x8, x1
+  e7cbb8: aa0203e1     	mov	x1, x2
+  e7cbbc: f90033e3     	str	x3, [sp, #0x60]
+  e7cbc0: f81e83a0     	stur	x0, [x29, #-0x18]
+  e7cbc4: f81e03a8     	stur	x8, [x29, #-0x20]
+  e7cbc8: d100a3a0     	sub	x0, x29, #0x28
+  e7cbcc: f81d83bf     	stur	xzr, [x29, #-0x28]
+  e7cbd0: 945db84e     	bl	0x25ead08 <dyld_stub_binder+0x25ead08>
+  e7cbd4: f94033e1     	ldr	x1, [sp, #0x60]
+  e7cbd8: d100c3a0     	sub	x0, x29, #0x30
+  e7cbdc: f81d03bf     	stur	xzr, [x29, #-0x30]
+  e7cbe0: 945db84a     	bl	0x25ead08 <dyld_stub_binder+0x25ead08>
+  e7cbe4: f94037e1     	ldr	x1, [sp, #0x68]
+  e7cbe8: f000ef08     	adrp	x8, 0x2c5f000 <dyld_stub_binder+0x2c5f000>
+  e7cbec: f9476900     	ldr	x0, [x8, #0xed0]
+  e7cbf0: 945dfc24     	bl	0x25fbc80 <_objc_msgSend$isMainThread>
+  e7cbf4: 37000860     	tbnz	w0, #0x0, 0xe7cd00 <-[HanlinNativeServicesPendingCallback deliverValue:error:]+0x15c>
+  e7cbf8: 14000001     	b	0xe7cbfc <-[HanlinNativeServicesPendingCallback deliverValue:error:]+0x58>
+  e7cbfc: 945daf10     	bl	0x25e883c <dyld_stub_binder+0x25e883c>
+  e7cc00: f81c83a0     	stur	x0, [x29, #-0x38]
+  e7cc04: f85c83a8     	ldur	x8, [x29, #-0x38]
+  e7cc08: f9001fe8     	str	x8, [sp, #0x38]
+  e7cc0c: f000ef28     	adrp	x8, 0x2c63000 <dyld_stub_binder+0x2c63000>
+  e7cc10: f9442d08     	ldr	x8, [x8, #0x858]
+  e7cc14: f9400108     	ldr	x8, [x8]
+  e7cc18: f90017e8     	str	x8, [sp, #0x28]
+  e7cc1c: d101c3a8     	sub	x8, x29, #0x70
+  e7cc20: f9001be8     	str	x8, [sp, #0x30]
+  e7cc24: f000ef29     	adrp	x9, 0x2c63000 <dyld_stub_binder+0x2c63000>
+  e7cc28: f9415529     	ldr	x9, [x9, #0x2a8]
+  e7cc2c: f81903a9     	stur	x9, [x29, #-0x70]
+  e7cc30: 52b84009     	mov	w9, #-0x3e000000        ; =-1040187392
+  e7cc34: b81983a9     	stur	w9, [x29, #-0x68]
+  e7cc38: b819c3bf     	stur	wzr, [x29, #-0x64]
+  e7cc3c: 90000009     	adrp	x9, 0xe7c000 <-[HanlinNativeScriptPresenter presentNativeScriptApp:]+0x328>
+  e7cc40: 9138f129     	add	x9, x9, #0xe3c
+  e7cc44: f81a03a9     	stur	x9, [x29, #-0x60]
+  e7cc48: f000eb09     	adrp	x9, 0x2bdf000 <_$s25HanlinNativeScriptRuntime0abC17SharedModuleLinksVMf>
+  e7cc4c: 91086129     	add	x9, x9, #0x218
+  e7cc50: f81a83a9     	stur	x9, [x29, #-0x58]
+  e7cc54: 91008108     	add	x8, x8, #0x20
+  e7cc58: f9002be8     	str	x8, [sp, #0x50]
+  e7cc5c: f85e83a0     	ldur	x0, [x29, #-0x18]
+  e7cc60: f000ef28     	adrp	x8, 0x2c63000 <dyld_stub_binder+0x2c63000>
+  e7cc64: f9413d08     	ldr	x8, [x8, #0x278]
+  e7cc68: d63f0100     	blr	x8
+  e7cc6c: f9401be8     	ldr	x8, [sp, #0x30]
+  e7cc70: f81b03a0     	stur	x0, [x29, #-0x50]
+  e7cc74: 9100a108     	add	x8, x8, #0x28
+  e7cc78: f90027e8     	str	x8, [sp, #0x48]
+  e7cc7c: f85d83a0     	ldur	x0, [x29, #-0x28]
+  e7cc80: f000ef28     	adrp	x8, 0x2c63000 <dyld_stub_binder+0x2c63000>
+  e7cc84: f9413d08     	ldr	x8, [x8, #0x278]
+  e7cc88: d63f0100     	blr	x8
+  e7cc8c: f9401be8     	ldr	x8, [sp, #0x30]
+  e7cc90: f81b83a0     	stur	x0, [x29, #-0x48]
+  e7cc94: 9100c108     	add	x8, x8, #0x30
+  e7cc98: f90023e8     	str	x8, [sp, #0x40]
+  e7cc9c: f85d03a0     	ldur	x0, [x29, #-0x30]
+  e7cca0: f000ef28     	adrp	x8, 0x2c63000 <dyld_stub_binder+0x2c63000>
+  e7cca4: f9413d08     	ldr	x8, [x8, #0x278]
+  e7cca8: d63f0100     	blr	x8
+  e7ccac: f94017e1     	ldr	x1, [sp, #0x28]
+  e7ccb0: f9401be2     	ldr	x2, [sp, #0x30]
+  e7ccb4: aa0003e8     	mov	x8, x0
+  e7ccb8: f9401fe0     	ldr	x0, [sp, #0x38]
+  e7ccbc: f81c03a8     	stur	x8, [x29, #-0x40]
+  e7ccc0: 945daee2     	bl	0x25e8848 <dyld_stub_binder+0x25e8848>
+  e7ccc4: f85c83a0     	ldur	x0, [x29, #-0x38]
+  e7ccc8: 945daee6     	bl	0x25e8860 <dyld_stub_binder+0x25e8860>
+  e7cccc: f94023e0     	ldr	x0, [sp, #0x40]
+  e7ccd0: 52800028     	mov	w8, #0x1                ; =1
+  e7ccd4: b818c3a8     	stur	w8, [x29, #-0x74]
+  e7ccd8: d2800001     	mov	x1, #0x0                ; =0
+  e7ccdc: f9002fe1     	str	x1, [sp, #0x58]
+  e7cce0: 945db80a     	bl	0x25ead08 <dyld_stub_binder+0x25ead08>
+  e7cce4: f94027e0     	ldr	x0, [sp, #0x48]
+  e7cce8: f9402fe1     	ldr	x1, [sp, #0x58]
+  e7ccec: 945db807     	bl	0x25ead08 <dyld_stub_binder+0x25ead08>
+  e7ccf0: f9402be0     	ldr	x0, [sp, #0x50]
+  e7ccf4: f9402fe1     	ldr	x1, [sp, #0x58]
+  e7ccf8: 945db804     	bl	0x25ead08 <dyld_stub_binder+0x25ead08>
+  e7ccfc: 14000043     	b	0xe7ce08 <-[HanlinNativeServicesPendingCallback deliverValue:error:]+0x264>
+  e7cd00: f90043ff     	str	xzr, [sp, #0x80]
+  e7cd04: f85e83a0     	ldur	x0, [x29, #-0x18]
+  e7cd08: f000ef28     	adrp	x8, 0x2c63000 <dyld_stub_binder+0x2c63000>
+  e7cd0c: f9413d08     	ldr	x8, [x8, #0x278]
+  e7cd10: d63f0100     	blr	x8
+  e7cd14: f9000fe0     	str	x0, [sp, #0x18]
+  e7cd18: 945db802     	bl	0x25ead20 <dyld_stub_binder+0x25ead20>
+  e7cd1c: f94037e1     	ldr	x1, [sp, #0x68]
+  e7cd20: f85e83a0     	ldur	x0, [x29, #-0x18]
+  e7cd24: 945df2ff     	bl	0x25f9920 <_objc_msgSend$completion>
+  e7cd28: f90013e0     	str	x0, [sp, #0x20]
+  e7cd2c: 14000001     	b	0xe7cd30 <-[HanlinNativeServicesPendingCallback deliverValue:error:]+0x18c>
+  e7cd30: f94013e0     	ldr	x0, [sp, #0x20]
+  e7cd34: aa1d03fd     	mov	x29, x29
+  e7cd38: 945db7c7     	bl	0x25eac54 <dyld_stub_binder+0x25eac54>
+  e7cd3c: aa0003e8     	mov	x8, x0
+  e7cd40: f94043e0     	ldr	x0, [sp, #0x80]
+  e7cd44: f90043e8     	str	x8, [sp, #0x80]
+  e7cd48: f000ef28     	adrp	x8, 0x2c63000 <dyld_stub_binder+0x2c63000>
+  e7cd4c: f9413908     	ldr	x8, [x8, #0x270]
+  e7cd50: d63f0100     	blr	x8
+  e7cd54: f94037e1     	ldr	x1, [sp, #0x68]
+  e7cd58: f85e83a0     	ldur	x0, [x29, #-0x18]
+  e7cd5c: d2800002     	mov	x2, #0x0                ; =0
+  e7cd60: 945e0478     	bl	0x25fdf40 <_objc_msgSend$setCompletion:>
+  e7cd64: 14000001     	b	0xe7cd68 <-[HanlinNativeServicesPendingCallback deliverValue:error:]+0x1c4>
+  e7cd68: f9400fe0     	ldr	x0, [sp, #0x18]
+  e7cd6c: 945db7f0     	bl	0x25ead2c <dyld_stub_binder+0x25ead2c>
+  e7cd70: f9400fe0     	ldr	x0, [sp, #0x18]
+  e7cd74: f000ef28     	adrp	x8, 0x2c63000 <dyld_stub_binder+0x2c63000>
+  e7cd78: f9413908     	ldr	x8, [x8, #0x270]
+  e7cd7c: d63f0100     	blr	x8
+  e7cd80: f94037e1     	ldr	x1, [sp, #0x68]
+  e7cd84: f85e83a0     	ldur	x0, [x29, #-0x18]
+  e7cd88: 945dfebe     	bl	0x25fc880 <_objc_msgSend$owner>
+  e7cd8c: aa1d03fd     	mov	x29, x29
+  e7cd90: 945db7b1     	bl	0x25eac54 <dyld_stub_binder+0x25eac54>
+  e7cd94: f94037e1     	ldr	x1, [sp, #0x68]
+  e7cd98: f9000be0     	str	x0, [sp, #0x10]
+  e7cd9c: f85e83a2     	ldur	x2, [x29, #-0x18]
+  e7cda0: 945e0120     	bl	0x25fd220 <_objc_msgSend$removePendingCallback:>
+  e7cda4: f9400be0     	ldr	x0, [sp, #0x10]
+  e7cda8: f000ef28     	adrp	x8, 0x2c63000 <dyld_stub_binder+0x2c63000>
+  e7cdac: f9413908     	ldr	x8, [x8, #0x270]
+  e7cdb0: d63f0100     	blr	x8
+  e7cdb4: f94043e8     	ldr	x8, [sp, #0x80]
+  e7cdb8: b40001e8     	cbz	x8, 0xe7cdf4 <-[HanlinNativeServicesPendingCallback deliverValue:error:]+0x250>
+  e7cdbc: 14000001     	b	0xe7cdc0 <-[HanlinNativeServicesPendingCallback deliverValue:error:]+0x21c>
+  e7cdc0: f94043e0     	ldr	x0, [sp, #0x80]
+  e7cdc4: f85d83a1     	ldur	x1, [x29, #-0x28]
+  e7cdc8: f85d03a2     	ldur	x2, [x29, #-0x30]
+  e7cdcc: f9400808     	ldr	x8, [x0, #0x10]
+  e7cdd0: d63f0100     	blr	x8
+  e7cdd4: 14000008     	b	0xe7cdf4 <-[HanlinNativeServicesPendingCallback deliverValue:error:]+0x250>
+  e7cdd8: aa0003e8     	mov	x8, x0
+  e7cddc: f9400fe0     	ldr	x0, [sp, #0x18]
+  e7cde0: f9003fe8     	str	x8, [sp, #0x78]
+  e7cde4: aa0103e8     	mov	x8, x1
+  e7cde8: b90077e8     	str	w8, [sp, #0x74]
+  e7cdec: 945db7d0     	bl	0x25ead2c <dyld_stub_binder+0x25ead2c>
+  e7cdf0: 14000011     	b	0xe7ce34 <-[HanlinNativeServicesPendingCallback deliverValue:error:]+0x290>
+  e7cdf4: 910203e0     	add	x0, sp, #0x80
+  e7cdf8: d2800001     	mov	x1, #0x0                ; =0
+  e7cdfc: 945db7c3     	bl	0x25ead08 <dyld_stub_binder+0x25ead08>
+  e7ce00: b818c3bf     	stur	wzr, [x29, #-0x74]
+  e7ce04: 14000001     	b	0xe7ce08 <-[HanlinNativeServicesPendingCallback deliverValue:error:]+0x264>
+  e7ce08: d100c3a0     	sub	x0, x29, #0x30
+  e7ce0c: d2800001     	mov	x1, #0x0                ; =0
+  e7ce10: f90007e1     	str	x1, [sp, #0x8]
+  e7ce14: 945db7bd     	bl	0x25ead08 <dyld_stub_binder+0x25ead08>
+  e7ce18: f94007e1     	ldr	x1, [sp, #0x8]
+  e7ce1c: d100a3a0     	sub	x0, x29, #0x28
+  e7ce20: 945db7ba     	bl	0x25ead08 <dyld_stub_binder+0x25ead08>
+  e7ce24: a9507bfd     	ldp	x29, x30, [sp, #0x100]
+  e7ce28: a94f6ffc     	ldp	x28, x27, [sp, #0xf0]
+  e7ce2c: 910443ff     	add	sp, sp, #0x110
+  e7ce30: d65f03c0     	ret
+  e7ce34: f9403fe0     	ldr	x0, [sp, #0x78]
+  e7ce38: 945dafbf     	bl	0x25e8d34 <dyld_stub_binder+0x25e8d34>

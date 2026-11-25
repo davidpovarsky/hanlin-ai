@@ -1,0 +1,37 @@
+{
+  "startedAt": "2026-11-25T03:56:22.323568+00:00",
+  "uid": "9DB610ED-23EB-451F-B74C-4C46438D25E8",
+  "candidateSHA256": "88a7ccb192bddf39e2f4f84e9d31bee069d182244525f336485991e9d9272d2d",
+  "command": [
+    "xcrun",
+    "simctl",
+    "delete",
+    "9DB610ED-23EB-451F-B74C-4C46438D25E8"
+  ],
+  "freeBytesBefore": 9446154240,
+  "candidateLogicalBytes": 6244032512,
+  "ownership": "Own completed attempt10; no matching processes/open files; retained raw results/control/SDK proof outside device",
+  "preserved": [
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt10/paired-prefix/AIBuild.xcresult",
+      "duKiB": 120,
+      "InfoPlistExists": true
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt10/paired-prefix/MiniBuild.xcresult",
+      "duKiB": 72,
+      "InfoPlistExists": true
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt10/paired-prefix/ParityStartupDiagnostic.xcresult",
+      "duKiB": 33320,
+      "InfoPlistExists": true
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt10/paired-prefix/RemainingFocused.xcresult",
+      "duKiB": 116808,
+      "InfoPlistExists": true
+    }
+  ],
+  "status": "STARTING"
+}

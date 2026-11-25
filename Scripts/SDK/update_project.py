@@ -319,7 +319,8 @@ def update(package=None):
             "AI_HLY/NativeAppPlatform/Support/NativeAppColor.swift",
             "AI_HLY/Downstream/ProductSplitIntegration/MiniAppAuthoringDelivery.swift",
             "AI_HLY/Downstream/ScriptingPlatform/MiniAppImportDiagnosticsView.swift",
-            "AI_HLY/Downstream/RuntimeCore/Core/MiniAppAuthoringService.swift"]
+            "AI_HLY/Downstream/RuntimeCore/Core/MiniAppAuthoringService.swift",
+            "AI_HLY/Downstream/ScriptingPlatform/HanlinNotificationApplicationDelegate.swift"]
     shared_group="F9F4C452EBF2FA6B1274B4D7"
     shared_children=list(objects[shared_group]["children"])
     for index,path in enumerate(shared):

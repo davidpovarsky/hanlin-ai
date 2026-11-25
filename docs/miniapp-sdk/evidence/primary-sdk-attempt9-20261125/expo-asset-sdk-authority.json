@@ -1,0 +1,912 @@
+{
+  "source": "1812bff50571c9907d15cd8b4bfbe4874be24756",
+  "hostModuleSHA256": "fa5121902e231d5d44ad08bf47699784fd4d0bc2a98102f3a156e6e4ae79b9b9",
+  "packageVersionsCount": 21,
+  "packages": [
+    {
+      "name": "@expo/ui",
+      "version": "58.0.29",
+      "packageJSONSHA256": "5332dd3b83612fcc7e30f50cb2e137f1e0051b6b2032b0d006f5840a13cf5281",
+      "resourceLocators": {
+        "name": "@expo/ui",
+        "packageJSON": "expo/node_modules/@expo/ui/package.json"
+      }
+    },
+    {
+      "name": "@hanlin/expo-native-api",
+      "version": "1.0.0",
+      "packageJSONSHA256": "7a46122e4b3ca8e9fb1caa54bb7bdd0a6e4c56226b6c3bdded20e6134bb5909e",
+      "resourceLocators": {
+        "name": "@hanlin/expo-native-api",
+        "packageJSON": "expo/node_modules/@hanlin/expo-native-api/package.json",
+        "types": "expo/node_modules/@hanlin/expo-native-api/src/index.ts"
+      }
+    },
+    {
+      "name": "@hanlin/expo-ui",
+      "version": "1.0.0",
+      "packageJSONSHA256": "18dbddebb3c641742ca5f83d0492cec1cbbc7bb1affbefe641477b7481110568",
+      "resourceLocators": {
+        "name": "@hanlin/expo-ui",
+        "packageJSON": "expo/node_modules/@hanlin/expo-ui/package.json",
+        "types": "expo/node_modules/@hanlin/expo-ui/src/index.ts"
+      }
+    },
+    {
+      "name": "@nativescript/react-native",
+      "version": "9.1.2",
+      "packageJSONSHA256": "f9a2782902877c9d966fa81d37b09469a33b5dc8855a808fc47ec83e2fe86b9c",
+      "resourceLocators": {
+        "name": "@nativescript/react-native",
+        "packageJSON": "expo/node_modules/@nativescript/react-native/package.json",
+        "types": "expo/node_modules/@nativescript/react-native/src/index.d.ts"
+      }
+    },
+    {
+      "name": "expo",
+      "version": "58.0.26",
+      "packageJSONSHA256": "d31ae95bbfa77080c46056d92209b2f613855ffc81f1de6f0df8e63bcb279e09",
+      "resourceLocators": {
+        "name": "expo",
+        "packageJSON": "expo/node_modules/expo/package.json",
+        "types": "expo/node_modules/expo/build/Expo.d.ts"
+      }
+    },
+    {
+      "name": "expo-asset",
+      "version": "58.0.21",
+      "packageJSONSHA256": "a317879b994f92128624136f42832597fc411015de25aa1125dfb73a82487427",
+      "resourceLocators": {
+        "name": "expo-asset",
+        "packageJSON": "expo/node_modules/expo-asset/package.json",
+        "types": "expo/node_modules/expo-asset/build/index.d.ts"
+      }
+    },
+    {
+      "name": "expo-brownfield",
+      "version": "58.0.20",
+      "packageJSONSHA256": "99e2d9a35cb6c0cbf5f59ebad82fd790a913ffed39d629ea8ed0a9fb1f81d502",
+      "resourceLocators": {
+        "name": "expo-brownfield",
+        "packageJSON": "expo/node_modules/expo-brownfield/package.json",
+        "types": "expo/node_modules/expo-brownfield/build/index.d.ts"
+      }
+    },
+    {
+      "name": "expo-modules-core",
+      "version": "58.1.0",
+      "packageJSONSHA256": "285de31be98571eea2a85f8eac1d30fce6a1474e2dc4b1772dd4465333762004",
+      "resourceLocators": {
+        "name": "expo-modules-core",
+        "packageJSON": "expo/node_modules/expo-modules-core/package.json",
+        "types": "expo/node_modules/expo-modules-core/build/index.d.ts"
+      }
+    },
+    {
+      "name": "expo-modules-jsi",
+      "version": "58.0.23",
+      "packageJSONSHA256": "9a5e38bb71634e1cf9bfe8bc2c47ee8a46e0469a34043ca4f6138f4515557311",
+      "resourceLocators": {
+        "name": "expo-modules-jsi",
+        "packageJSON": "expo/node_modules/expo-modules-jsi/package.json"
+      }
+    },
+    {
+      "name": "react",
+      "version": "19.3.0",
+      "packageJSONSHA256": "6e003e4e9ed25afa7fdd55613f8aa877cefa9b359d9c13f81ee704030248e24e",
+      "resourceLocators": {
+        "name": "react",
+        "packageJSON": "expo/node_modules/react/package.json"
+      }
+    },
+    {
+      "name": "react-native",
+      "version": "0.88.1",
+      "packageJSONSHA256": "3f2bf69ed883e97a295b1de43f5a2d75d112ab45495153360c2fb521023c7f3f",
+      "resourceLocators": {
+        "name": "react-native",
+        "packageJSON": "expo/node_modules/react-native/package.json"
+      }
+    },
+    {
+      "name": "react-native-worklets",
+      "version": "0.13.0",
+      "packageJSONSHA256": "aa8f3e796568bedf9b72b8cac0b1935a2356a5cd5ba5bd7735e75e1bad7e9ead",
+      "resourceLocators": {
+        "name": "react-native-worklets",
+        "packageJSON": "expo/node_modules/react-native-worklets/package.json",
+        "types": "expo/node_modules/react-native-worklets/lib/typescript/index.d.ts"
+      }
+    },
+    {
+      "name": "expo-widgets",
+      "version": "58.0.29",
+      "packageJSONSHA256": "645f89606fd11556371840926d3b07b7ec302a25ccc5709b6413ec508ec2f9ee",
+      "resourceLocators": {
+        "name": "expo-widgets",
+        "packageJSON": "expo/node_modules/expo-widgets/package.json",
+        "types": "expo/node_modules/expo-widgets/build/index.d.ts"
+      }
+    },
+    {
+      "name": "@babel/core",
+      "version": "7.29.7",
+      "packageJSONSHA256": "6c2893db41b54a1c03ba68e676aa3ea987db9a5c9b9a3a3aa2e8d0d9a63066c4",
+      "resourceLocators": {
+        "name": "@babel/core",
+        "packageJSON": "expo/node_modules/@babel/core/package.json"
+      }
+    },
+    {
+      "name": "@react-native-community/cli",
+      "version": "20.2.0",
+      "packageJSONSHA256": "0d88a325a8e0139c7e3571debd6b170a85811b7016ac17736cc870deda8e5c35",
+      "resourceLocators": {
+        "name": "@react-native-community/cli",
+        "packageJSON": "expo/node_modules/@react-native-community/cli/package.json"
+      }
+    },
+    {
+      "name": "@react-native/codegen",
+      "version": "0.88.1",
+      "packageJSONSHA256": "c0ffa28d0fe95aa8d5ff0fb011e773b6cdbfc49690ed3cc7f5d27d9c16bb7329",
+      "resourceLocators": {
+        "name": "@react-native/codegen",
+        "packageJSON": "expo/node_modules/@react-native/codegen/package.json"
+      }
+    },
+    {
+      "name": "@react-native/metro-config",
+      "version": "0.88.1",
+      "packageJSONSHA256": "f19e7fd81bbef1f026ace95bdb81280b06ea9ad474978e1b2bbeea9740e6d6a8",
+      "resourceLocators": {
+        "name": "@react-native/metro-config",
+        "packageJSON": "expo/node_modules/@react-native/metro-config/package.json"
+      }
+    },
+    {
+      "name": "@types/react",
+      "version": "19.3.1",
+      "packageJSONSHA256": "c451e7793fe35d3cb42ce3d86ecd3716f859b67443d4ea32c9c57b8bd51e02ed",
+      "resourceLocators": {
+        "name": "@types/react",
+        "packageJSON": "expo/node_modules/@types/react/package.json",
+        "types": "expo/node_modules/@types/react/index.d.ts"
+      }
+    },
+    {
+      "name": "babel-preset-expo",
+      "version": "58.0.26",
+      "packageJSONSHA256": "c32d700465a4bc29ad1bf79552b7060132049fc1311c3930dd58a58f824d1949",
+      "resourceLocators": {
+        "name": "babel-preset-expo",
+        "packageJSON": "expo/node_modules/babel-preset-expo/package.json",
+        "types": "expo/node_modules/babel-preset-expo/build/index.d.ts"
+      }
+    },
+    {
+      "name": "esbuild",
+      "version": "0.25.12",
+      "packageJSONSHA256": "cb7d5b1fe478f8cbaae566a86031b6fdf5f7d444354f35d1cb3cba9adf6d2935",
+      "resourceLocators": {
+        "name": "esbuild",
+        "packageJSON": "expo/node_modules/esbuild/package.json",
+        "types": "expo/node_modules/esbuild/lib/main.d.ts"
+      }
+    },
+    {
+      "name": "typescript",
+      "version": "6.0.2",
+      "packageJSONSHA256": "d9b8fb53c67c947fece83bcb73fa8512227ea6a12b110e096fdab8ecdc02b655",
+      "resourceLocators": {
+        "name": "typescript",
+        "packageJSON": "expo/node_modules/typescript/package.json",
+        "types": "expo/node_modules/typescript/lib/typescript.d.ts"
+      }
+    }
+  ],
+  "assetPackage": {
+    "name": "expo-asset",
+    "version": "58.0.21",
+    "packageJSONSHA256": "a317879b994f92128624136f42832597fc411015de25aa1125dfb73a82487427",
+    "resourceLocators": {
+      "name": "expo-asset",
+      "packageJSON": "expo/node_modules/expo-asset/package.json",
+      "types": "expo/node_modules/expo-asset/build/index.d.ts"
+    }
+  },
+  "assetMembers": [
+    {
+      "path": "expo/node_modules/expo-asset/app.plugin.js",
+      "sha256": "9df38eaf9dd525857b5fc8dad4ecd02d6689283e4f4553fd9095f581b44a3729",
+      "bytes": 55,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/Asset.d.ts",
+      "sha256": "6ca7ea94ddccfa25be3274737e3d7ce93b6dfeb4aca70cf2e558c6578dd0c3b1",
+      "bytes": 5069,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/Asset.fx.d.ts",
+      "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
+      "bytes": 11,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/Asset.fx.js",
+      "sha256": "dafad758766c665786900a2b28208092352190aaeae0d163b69d57830b1825a9",
+      "bytes": 1648,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/Asset.fx.js.map",
+      "sha256": "799667614f49d39803f0dfa9a138401b05d3bd89c237bcfa8542b55fe54d6472",
+      "bytes": 1039,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/Asset.js",
+      "sha256": "d464c35f57665b4786100cf4761d8d3a5b648a3802f4fa20d4e01d8860e9e78e",
+      "bytes": 10316,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/Asset.js.map",
+      "sha256": "f2cbcb1bec66ca04733d1f090b8ff754c7586877e0b556900ce85a8b9f5abf8f",
+      "bytes": 5659,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/Asset.server.d.ts",
+      "sha256": "1dbf276b883d4cbc74d046533a2781d485cdd2c37d03c811b4786445f255bfcc",
+      "bytes": 836,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/Asset.server.js",
+      "sha256": "1a014e8388e34d43b47c54e2a589772fac7e84de6f969dcacb9d80a9c4a9d6e1",
+      "bytes": 5644,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/Asset.server.js.map",
+      "sha256": "86ed9d49f80245f99324e205feba326f35fad3dbdb7dc4424977b0d656f8cae9",
+      "bytes": 4513,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/AssetHooks.d.ts",
+      "sha256": "775736643d4369528a4c45a9c2adb73fcdcc5d4c841e05cf60b9c459037e9f46",
+      "bytes": 925,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/AssetHooks.js",
+      "sha256": "cc47bed3604a337288206e6cbdeb8350a7fc2bf4e3f2152c1664defd47438477",
+      "bytes": 1195,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/AssetHooks.js.map",
+      "sha256": "aaaf8c54b958a28aec173b222d36f54aa6676d55282bf115cd66266a1e11c010",
+      "bytes": 528,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/AssetSourceResolver.d.ts",
+      "sha256": "9b9417500503d9de85bed60ccad0dcd92982603bcbf43106e42c6364000067e3",
+      "bytes": 884,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/AssetSourceResolver.js",
+      "sha256": "a8e75e49ee7a6d5e863552d5b668053d60b2f06e03676ea254d41c53607b8ca6",
+      "bytes": 2266,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/AssetSourceResolver.js.map",
+      "sha256": "2de38e33bbef76e33e30f67049d5bc9549e91c2e3c1e24bd97325e67267aa2f0",
+      "bytes": 2114,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/AssetSourceResolver.native.d.ts",
+      "sha256": "8bd171bd4ed2424788eb14d27dbc5f22ef525084763c1c8cc6565a158e18b12a",
+      "bytes": 118,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/AssetSourceResolver.native.js",
+      "sha256": "384ca35107e189e32c8928d84ae95d5af6e65a15d5c59cb223650644d21fcf91",
+      "bytes": 174,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/AssetSourceResolver.native.js.map",
+      "sha256": "92341e9c641e84bf7496b6742c23021498e5adb4a722b497f9fb719b22fb01d9",
+      "bytes": 175,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/AssetSources.d.ts",
+      "sha256": "cc76debb89bf8aee0560216ac099ecf7d34570cd18f3e2b66047e154fdd1a29d",
+      "bytes": 916,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/AssetSources.js",
+      "sha256": "cc5421bcb0a908d0c805b1c445b5d13aa90365697877002c3ba4b9e06d67fab7",
+      "bytes": 3831,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/AssetSources.js.map",
+      "sha256": "0ac410c8e7d9f7f981305bcd7b7937d7331d5cceff574336cf7aa740a412b82f",
+      "bytes": 2617,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/AssetUris.d.ts",
+      "sha256": "f74bda87e71fe1bb34b00d036b07e390dc96d2db1a5215da9ccd965cea9cf939",
+      "bytes": 748,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/AssetUris.js",
+      "sha256": "193f8144e541eb18c64d415f19ac454b1289cec272691a6cdd9cc97a69768326",
+      "bytes": 2488,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/AssetUris.js.map",
+      "sha256": "e6956ba52ffa5ab585f07faa93b7cad8114eb861804ec2916d5fb3e7d37b896c",
+      "bytes": 1440,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/ExpoAsset.d.ts",
+      "sha256": "9d4ae891976e6ab36922aca0bb70d84e697d6a413f6606efe244d646df4850ba",
+      "bytes": 581,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/ExpoAsset.js",
+      "sha256": "fb5e09071b5bab5a0eab7672b9d36f4402af8fb4f980927cff45f46765ab9aa9",
+      "bytes": 742,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/ExpoAsset.js.map",
+      "sha256": "fe157a97961a8ca7318fe52a1bbf644cd764ba058b58fca2966993659b15d795",
+      "bytes": 333,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/ExpoAsset.web.d.ts",
+      "sha256": "2ceb6e75dc8751d75cfce90d42917d8a8640c9fe47c4158cbf770e0ab675e433",
+      "bytes": 106,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/ExpoAsset.web.js",
+      "sha256": "db28b7b00e57088422d036c0d6a22e1dc002c4b76ca313cb02c6670e3ce56b9f",
+      "bytes": 118,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/ExpoAsset.web.js.map",
+      "sha256": "d3c846115f00ac68bae12ebd75eaa88bb48537ee00a957c19d15fda6b4dd29d3",
+      "bytes": 197,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/ImageAssets.d.ts",
+      "sha256": "50bdb113d7ca1ad9b3ce0568cf789ff3d4d158123c6790ba8691aab9332db0ef",
+      "bytes": 226,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/ImageAssets.js",
+      "sha256": "7b5115fc336dd904835959a10f388306a4c85b8a737540d895a7b22dc133a47f",
+      "bytes": 760,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/ImageAssets.js.map",
+      "sha256": "bc18f9a44db2de4c56ab9efd2a62023df433a0a5e31b250f5fcb3748de9bef02",
+      "bytes": 753,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/index.d.ts",
+      "sha256": "d13143ef38f2d4ae059fd11345909a4de633b7df37ed98c82c2f4a58d4a6d341",
+      "bytes": 76,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/index.js",
+      "sha256": "5970589cba4c0e94afb6f08d3d90cf0c77b0616774bf2d6629bcfabf4dc34f44",
+      "bytes": 111,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/index.js.map",
+      "sha256": "4188312ce8dcc01c9a4352b732082c3d4a4c6ccbe211da1d115c3cdcf1906fc5",
+      "bytes": 131,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/index.server.d.ts",
+      "sha256": "f4ed439f534d949ecb1375c0a360160f8c320e4a0f870a8b0ebb88e5a161b5a7",
+      "bytes": 94,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/index.server.js",
+      "sha256": "fe7ec75aeedbe838448747e82c2576d9715042d37255493302fdb8840c79626c",
+      "bytes": 156,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/index.server.js.map",
+      "sha256": "2959d1e5540ce0a1606575c029839dcd22e29ae036142e3abe58c9e9bc7a8847",
+      "bytes": 185,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/LocalAssets.d.ts",
+      "sha256": "85d12258f59b042e398e6d624e1c7d14c0224a223a1ba6a1a450eeca67b27a32",
+      "bytes": 197,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/LocalAssets.js",
+      "sha256": "c0cf3b8a1e7778cb4fc145cfde11564dc15c1f12bcfaa5f7d9347dfe1d30eae3",
+      "bytes": 836,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/LocalAssets.js.map",
+      "sha256": "ab21741a9d105913b6913a3409485222ac7a7f30c3d767ec223a8a0222720c00",
+      "bytes": 556,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/LocalAssets.web.d.ts",
+      "sha256": "333de8fe426c41b08c5345a71e1c1a74cfa244fc31dca385fd0092068cedac54",
+      "bytes": 92,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/LocalAssets.web.js",
+      "sha256": "e5b17cd3ac62f5245f3d9419a6bae391b84af608b1407fe1096fdd55e9301f74",
+      "bytes": 130,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/LocalAssets.web.js.map",
+      "sha256": "38ba4ecaa9d021e46f654c574a1156be306e1a52d6fd6e6d1bc195cee16e767d",
+      "bytes": 193,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/PlatformUtils.d.ts",
+      "sha256": "ec9922b804027a22750297626942e64cc6752466f7fa88934c9058fd9a58f481",
+      "bytes": 297,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/PlatformUtils.js",
+      "sha256": "2ae1c65385c7b9e0fd855381809fc2db4192d862d3bd8c5d2c432dad69c8aea2",
+      "bytes": 1740,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/PlatformUtils.js.map",
+      "sha256": "d1eaeac2d36401f1afaf4f90eb1c04323cca8b492eac610a28ea46f14442f9f3",
+      "bytes": 1181,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/PlatformUtils.web.d.ts",
+      "sha256": "6e4860e30b2b47428c0644cd80e0cf8a14cfb71ef94d0c5f35205d9187560df8",
+      "bytes": 209,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/PlatformUtils.web.js",
+      "sha256": "e1b03701d7e6589537521ac1d116e2d07cd0d2d5a6601e1f930849cbad611b96",
+      "bytes": 275,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/PlatformUtils.web.js.map",
+      "sha256": "e879cf96026c7de661cfd661bf35006749ba9f4bb984aff04ff958f54a3e5640",
+      "bytes": 314,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/resolveAssetSource.d.ts",
+      "sha256": "d276af3e162bf73bf807607ee4fa8a783e7f0bd694e7a86e9390b2d9a8dc5c1a",
+      "bytes": 823,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/resolveAssetSource.js",
+      "sha256": "d36c6c4c1c4ecc8eae616ad39b2f458386dafc57724ed1cf2fea1f4ffba807d4",
+      "bytes": 1129,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/resolveAssetSource.js.map",
+      "sha256": "63cb7f8750f882c5238c1f584f11c8c6a8423d2b0db188f33fb29d1f7dc97ffd",
+      "bytes": 846,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/resolveAssetSource.native.d.ts",
+      "sha256": "a870ac11d329323e0ba14f59ee5cf1e36d5a8825e4d599b402d6368a2c7a5c41",
+      "bytes": 120,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/resolveAssetSource.native.js",
+      "sha256": "d4efb4ebe407c309856e4257a7b20c145dccf58b583b62bf15beb2a573cabaa8",
+      "bytes": 134,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/build/resolveAssetSource.native.js.map",
+      "sha256": "f0883b584c318ef81fe557dd71beb853fe50823922f27b0ad9a1fa34adbad049",
+      "bytes": 188,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/CHANGELOG.md",
+      "sha256": "bf28e07105aa5ed3616895a44b3e57c3aee9a5398a8b5c2653f881730a3f277d",
+      "bytes": 24662,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/expo-module.config.json",
+      "sha256": "58c11112e257db494f137e470e4a944d92c861b649bb95e6afafb2a22b5981ed",
+      "bytes": 314,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/LICENSE",
+      "sha256": "fb3ca4a837f5779e83cef89b78253a8949cfb9429c340309f62d0465ec6610b4",
+      "bytes": 1106,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/mocks/ExpoAsset.ts",
+      "sha256": "b3cde4267c63af81865690aef2e285d0126b9f863972adb3e4e74aa8831258cc",
+      "bytes": 329,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/package.json",
+      "sha256": "a317879b994f92128624136f42832597fc411015de25aa1125dfb73a82487427",
+      "bytes": 2350,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/plugin/build/AssetContents.d.ts",
+      "sha256": "a4f53ad2346ead7c949eb3222917949b323de1fdad22b79e0f04a5dc6dd2bfe4",
+      "bytes": 953,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/plugin/build/AssetContents.js",
+      "sha256": "78fc95a1f88b7526c29d9a56789955fe6cc12838a04b0d3df52d4c8b4841797b",
+      "bytes": 1502,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/plugin/build/AssetContents.js.map",
+      "sha256": "2613090e7a206f23a1a553da23490aeb4faeaab80a0c9fbeb7ed0e11a14d3622",
+      "bytes": 605,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/plugin/build/index.d.ts",
+      "sha256": "0e68846bd1064104d2e0bd760f88c4e8d14f52623111d0ed6772db1468a7011b",
+      "bytes": 137,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/plugin/build/index.js",
+      "sha256": "1488faebe48ce5d0a4e2ad9af94f064816a592f1be11a77b61800a8e3b2e8377",
+      "bytes": 315,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/plugin/build/index.js.map",
+      "sha256": "fed38f41ca958b17af7fd3ba0de0397d63b8691b4b4cfb4eeecbd138d65e2abd",
+      "bytes": 163,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/plugin/build/utils.d.ts",
+      "sha256": "e6e59651711ca05c0f9987a79a56da808276ee41dbe2533525d0ad4a1e112145",
+      "bytes": 420,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/plugin/build/utils.js",
+      "sha256": "91587a4fcb927192f19b3ddb05315014a2b7cbb0da3c0fab5bcfaacf0c482cc8",
+      "bytes": 3640,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/plugin/build/utils.js.map",
+      "sha256": "58fec9aec7d1c31593d207bd5b238613378669cac14f4415f2c0342c88924e47",
+      "bytes": 1906,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/plugin/build/withAssets.d.ts",
+      "sha256": "a4e34673cb7b3e6784235448fe4ff5f23133da55c5120f8b92fec552a30d5687",
+      "bytes": 303,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/plugin/build/withAssets.js",
+      "sha256": "19e65ddc6b696253fcd6a445f5d89d922978996368dee7cbbe6115d9c0057a0b",
+      "bytes": 999,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/plugin/build/withAssets.js.map",
+      "sha256": "e77455a9c8d8a39c0b681cb1e8bf239791ceecae73b0d233a84bacf33b98f754",
+      "bytes": 639,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/plugin/build/withAssetsAndroid.d.ts",
+      "sha256": "29bf90ede0f8fe378fa18a0a15374f83839a3f160456211f214c799ae5f8b4a4",
+      "bytes": 121,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/plugin/build/withAssetsAndroid.js",
+      "sha256": "078a06800ae10f71c482216d20b00cbc3ea9096c0b46d6130831d24e51c735a9",
+      "bytes": 2761,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/plugin/build/withAssetsAndroid.js.map",
+      "sha256": "8a10585003371663fb2f9d87ad89a587a0d5c591ff49140fa46e88eb045315ff",
+      "bytes": 1671,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/plugin/build/withAssetsIos.d.ts",
+      "sha256": "4e49dd4a6bb04042ce3f1882f73d8b25127a4870080f6b0a0b3f2b3cbf5c974e",
+      "bytes": 117,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/plugin/build/withAssetsIos.js",
+      "sha256": "2ed4c0324f0a4fc3a1afe22b1c2a46d97fd4cfff0da0fb147aca1040b087d7aa",
+      "bytes": 4012,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/plugin/build/withAssetsIos.js.map",
+      "sha256": "35d242695dcab493e37a82e73b50e09bf5dbfc125aa4a9c02093959b1e0bfc5c",
+      "bytes": 2812,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/plugin/src/AssetContents.ts",
+      "sha256": "de37b7e6e22b339e00be50574a8a7a4248b7e725735f40613d06c1795744db15",
+      "bytes": 1561,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/plugin/src/index.ts",
+      "sha256": "bf0fdfbb330099e8791c1f98681da9c3308dd05206d5c07e30b4bf17f3c6ff91",
+      "bytes": 131,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/plugin/src/utils.ts",
+      "sha256": "2d933ae2712ffd04a0d35012c22af36b39503c32620182758b63b6ce98411f60",
+      "bytes": 2036,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/plugin/src/withAssets.ts",
+      "sha256": "708fcc4fcb5d2100e09d78e79b547ae91aab9a24b7a7a6635cbaa706a24e713a",
+      "bytes": 784,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/plugin/src/withAssetsAndroid.ts",
+      "sha256": "3fb02fffe03dbd731f8015dfb10cfce865cd1307ea11c2a83404d3457a86e781",
+      "bytes": 1604,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/plugin/src/withAssetsIos.ts",
+      "sha256": "c26128356f39928048a16bef60f3d452e4afb7bd72fd7f6f142dac8eb737225c",
+      "bytes": 2988,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/README.md",
+      "sha256": "f8833143c90b30ea198e4614ee74c5129d484bf3f111ac6beb8675eff63f876a",
+      "bytes": 1232,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/spm.config.json",
+      "sha256": "10006e4f892880396d62a6a6b817d871d53a362abdc4398a936f4a9b50c12c05",
+      "bytes": 718,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/src/Asset.fx.ts",
+      "sha256": "e9ceab5357a7914b1994babb782225916cc10adc2a8ff097505e9588bb289421",
+      "bytes": 1642,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/src/Asset.server.ts",
+      "sha256": "57be0a266e336f97259a0af924c66becb3edac9385d8500c5275b368e155cfc5",
+      "bytes": 5698,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/src/Asset.ts",
+      "sha256": "60c7b3e25fde79041c3d5796f0d8ecd7d85b8e7f89d959def3303e304248986e",
+      "bytes": 10552,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/src/AssetHooks.ts",
+      "sha256": "4e7089bc2fb5636d64355e1e5dd18aa7292c36da7c44cbb4400e646e89bed2fb",
+      "bytes": 1202,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/src/AssetSourceResolver.native.ts",
+      "sha256": "27948c53466e618473c33f489797e0a243be5a6a437c423e4b96290a91f45c27",
+      "bytes": 119,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/src/AssetSourceResolver.ts",
+      "sha256": "173db54816e5165049061e52424744768cb8f22c295d83201f2506800f2629da",
+      "bytes": 2632,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/src/AssetSources.ts",
+      "sha256": "02bb9c52384e9fb125a2be4f33883912fc47aaeef79ab15acdd47112385b6cd7",
+      "bytes": 3959,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/src/AssetUris.ts",
+      "sha256": "94dab2aeabf3430bea8b15f0b5bd9ff910a1af6f8ec778b00caf3d6a93d61908",
+      "bytes": 2446,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/src/ExpoAsset.ts",
+      "sha256": "aa6242252197244d06e3da57df3fedcf99fb5f191e0d1ae55f822e27fe0465bb",
+      "bytes": 759,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/src/ExpoAsset.web.ts",
+      "sha256": "ce436e89e0d6aad6cd70762aea076f423418ef41746a678fa55b71f82223ffa8",
+      "bytes": 129,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/src/ImageAssets.ts",
+      "sha256": "aa865f6415deb8be29d8949896f4f6ce4dbd1ed3c6e7d5143bb07682a9618816",
+      "bytes": 731,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/src/index.server.ts",
+      "sha256": "6bf23c7aa876512dbd0411b2c7c650594a731ac989b4b73401c9e3e3c14b05d7",
+      "bytes": 91,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/src/index.ts",
+      "sha256": "d6be3d28bce308e7f7c62a15f183ff220b89458a41ea29e499b9a4e068a95d69",
+      "bytes": 77,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/src/LocalAssets.ts",
+      "sha256": "5d2d11e5986a3120c0b3a993194ee220537f7fc41f3255680624701b096ba760",
+      "bytes": 742,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/src/LocalAssets.web.ts",
+      "sha256": "53d7a0b94ef50c61ac153bf7edff1481e62e02f895a982f12680c8835e162db5",
+      "bytes": 119,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/src/PlatformUtils.ts",
+      "sha256": "95aeecf9bbfff1038efa123b6c2c2897c79f0c89ff4a1f3ba38c244da02ee6bd",
+      "bytes": 1930,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/src/PlatformUtils.web.ts",
+      "sha256": "f8e7c72ba93678e6b13a6e6aac1339c3057d37616a467268c1d6d3f0f86fc565",
+      "bytes": 251,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/src/resolveAssetSource.native.ts",
+      "sha256": "4a224cba822e55c4bfc7854f976ddb27bf00208bd929ff0859140fedbbb08649",
+      "bytes": 80,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/src/resolveAssetSource.ts",
+      "sha256": "f2c58065214ee1262dc2db243ed7f8bbe2cc0a1e524657fa1c32edf7ca600408",
+      "bytes": 1516,
+      "unchangedFromSDK7": true
+    },
+    {
+      "path": "expo/node_modules/expo-asset/tools/hashAssetFiles.js",
+      "sha256": "edfb7c991cda12b73e119dcfae1bde17221f51514a421b42c47f28352615d0d4",
+      "bytes": 2099,
+      "unchangedFromSDK7": true
+    }
+  ],
+  "assetMemberCount": 109,
+  "allAssetOriginalPublishedMemberBytesUnchangedFromSDK7": true,
+  "hostPluginVersion": "58.0.21",
+  "upstreamAssetVersion": "58.0.21",
+  "toolingInstallation": {
+    "inputs": {
+      "schemaVersion": 1,
+      "packageSHA256": "e2b50fae013276229c78619bbbe0b63d8c29b00fefde3afeccea98af117aa206",
+      "lockSHA256": "c08757cf46ac4d5c86a873f676af4a3be585db64ae2e1aa1e8288277d4eb63b8",
+      "policySHA256": "6fb5f130d1a381d628ffa5042eff7ce36d48431ed7636a36c28fec20e5b79120",
+      "node": "24.5.0",
+      "platform": "darwin",
+      "architecture": "arm64"
+    },
+    "files": 19594,
+    "contentSHA256": "cb4e932b2f4ed0baf0fde6f87335e6ae53a126df2bcec99bc925558ac5cc4b7e",
+    "command": [
+      "npm",
+      "ci",
+      "--ignore-scripts",
+      "--no-audit",
+      "--no-fund",
+      "--prefix",
+      "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/Expo"
+    ]
+  },
+  "publicResourceContract": {
+    "implementation": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
+    "lines": [
+      53,
+      87
+    ],
+    "derivation": "Source readMiniAppSDK maps each actual packageVersions key to package.json and its types/typings field; locators above are independently derived from actual archive bytes.",
+    "endpointExecutedByThisInspector": false
+  },
+  "canonicalResolverAuthority": "Existing TypeScript module/type/config and Metro authority consumes the same actual packageVersions keys; Asset is now included.",
+  "nativeBinaryPolicy": "Native host binaries are installed by the host build. This SDK contains original JavaScript and declaration sources."
+}

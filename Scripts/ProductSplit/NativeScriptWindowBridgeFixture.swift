@@ -59,6 +59,7 @@ struct NativeScriptWindowBridgeFixture {
                     guard result.status == .success, result.operation == .replaceSelection,
                           result.items.count == 1, result.items[0].kind == .text,
                           result.items[0].text == window.name + "-edited",
+                          result.metadata["storedValue"] == window.name + "-edited",
                           let metadataRequestID = result.metadata["requestID"],
                           UUID(uuidString: metadataRequestID) == id,
                           result.metadata["documentID"] == "ns-window-" + window.name,

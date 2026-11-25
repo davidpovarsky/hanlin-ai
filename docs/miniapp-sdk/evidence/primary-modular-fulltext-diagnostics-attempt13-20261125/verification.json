@@ -1,0 +1,386 @@
+{
+  "verifiedAtUTC": "2026-11-25T04:35:10.983201+00:00",
+  "status": "IMMUTABLE_NATIVE_FAILURE_PACKET_VERIFIED",
+  "sourceCommit": "42e34eff615a6d599ddfd01ea9382d920b5f9a5c",
+  "producerReceiptSHA256": "829a77be384d17182bf1f27c3cdfe687b37e7ad996f77e180583eeadd500ab7c",
+  "producerMemberCount": 51,
+  "producerMemberBytes": 5862741,
+  "firstPacketReceiptSHA256": "58d3bc087263a29c1274f03d24112dee421b2ce36cb55f608fe1200dcaf2ce99",
+  "firstPacketFilesVerified": 14,
+  "supplementalFileOutsidePrimary51": {
+    "path": "source-advance-42e34eff/receipt.json",
+    "bytes": 33605,
+    "sha256": "ec640dc02e01871b8954a48e0cae7f6ba6fc74a4bb60057005b88a9d1a8db724",
+    "authorityProducerReceiptSHA256": "56f0da9a8d9723adaeaeb60176ab64f5ee0a482b53523969c00c0e3fcb530b4a",
+    "exactlyMatchesStoragePacket": true
+  },
+  "compressedOriginals": [
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt13/runtime-logstream.jsonl",
+      "path": "focused-diagnostics-attempt13/runtime-logstream.jsonl.gz",
+      "rawBytes": 7151138,
+      "rawSHA256": "d0be31395bb4ec6dd2e33d04d8abc62fe60f7933a95da8621833ae49d451b964",
+      "bytes": 755843,
+      "sha256": "851f94d41117a7b5164d772e6129dc877f9da36f916817ceba01d32c0af59fdd",
+      "roundtripVerified": true
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt13/paired-prefix/mini-build.log",
+      "path": "focused-diagnostics-attempt13/paired-prefix/mini-build.log.gz",
+      "rawBytes": 981647,
+      "rawSHA256": "4cfc8febf69dd1529ad6e84e28da5e2bb6e7a1208ac1ab2467359f9e273f4b5b",
+      "bytes": 66755,
+      "sha256": "3f0709dcff9c1d894d7bc049de0bf52c96ab74ad298d87b26812b5d3147b7042",
+      "roundtripVerified": true
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt13/paired-prefix/ai-build.log",
+      "path": "focused-diagnostics-attempt13/paired-prefix/ai-build.log.gz",
+      "rawBytes": 949088,
+      "rawSHA256": "d99c5e3894af0f403e742f353e2e4c568de70f95d99a2da25b817a0620f29791",
+      "bytes": 50124,
+      "sha256": "48c617455f8c34c1c474a2190cc1e14b0e6dcfb0e40d8eba2e9fe9afefc685fd",
+      "roundtripVerified": true
+    }
+  ],
+  "gitSourceBindings": [
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/App.tsx",
+      "bytes": 26038,
+      "sha256": "ac62c2f394dceedb422c0fbe05d4182afba07e1bf78fb15828d3f936d212ae8a",
+      "authority": "exact Git source 42e34eff615a6d599ddfd01ea9382d920b5f9a5c",
+      "verified": true
+    },
+    {
+      "path": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+      "bytes": 78468,
+      "sha256": "84ede1a7dbafac2415c88cb276d2b04c0c0bce0a139f704b7737bcd307dd4ad8",
+      "authority": "exact Git source 42e34eff615a6d599ddfd01ea9382d920b5f9a5c",
+      "verified": true
+    },
+    {
+      "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+      "bytes": 47460,
+      "sha256": "6e3abbb16c9b55b048b69c2391784510d8c143c7ed00e760a73ecb903cdbb61d",
+      "authority": "exact Git source 42e34eff615a6d599ddfd01ea9382d920b5f9a5c",
+      "verified": true
+    },
+    {
+      "path": "DemoMiniApps/hanlin-script-parity.hanlinNativeScript",
+      "bytes": 7512,
+      "sha256": "2e48509336edba2b301490422102dbf25cb7f1b894430d52994febdc1c33c199",
+      "authority": "exact Git source 42e34eff615a6d599ddfd01ea9382d920b5f9a5c",
+      "verified": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
+      "bytes": 50327,
+      "sha256": "fa5121902e231d5d44ad08bf47699784fd4d0bc2a98102f3a156e6e4ae79b9b9",
+      "authority": "exact Git source 42e34eff615a6d599ddfd01ea9382d920b5f9a5c",
+      "verified": true
+    }
+  ],
+  "sdk10Binding": {
+    "producerBinding": {
+      "path": "AI_HLY/RuntimeHostResources.zip",
+      "bytes": 81813686,
+      "sha256": "86733eba5d80156edf52da87f0f371c208122d6e60f618f182990330514984c3"
+    },
+    "authorityReceipt": "docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/receipt.json",
+    "authorityReceiptSHA256": "6abde3960cc6283dfc624377e94c4af89568ca89e5bcf27cfe15251a4d699bfc",
+    "snapshotReceipt": "docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/raw/snapshot-receipt.json",
+    "snapshotSHA256": "20ee3233d5094aec1e3f476fecfa66dd43c9b64129f8e235a96529a6e9cfbb35",
+    "sealedHost": {
+      "path": "build/runtime-host/RuntimeHostResources.zip",
+      "snapshotPath": "files/build/runtime-host/RuntimeHostResources.zip",
+      "bytes": 81813686,
+      "sha256": "86733eba5d80156edf52da87f0f371c208122d6e60f618f182990330514984c3",
+      "mode": "0o644"
+    },
+    "disposition": "Matches already independently verified complete SDK10 archive; not stored in Git source and not re-audited or recopied here"
+  },
+  "modularArchiveBinding": {
+    "path": "focused-diagnostics-attempt13/paired-prefix/ModularTextSearch.hanlinExpo",
+    "bytes": 2203460,
+    "sha256": "121dc036e54564397bed0ad8394f1ac71189a8c74f74eef5874870f9ea44ad41",
+    "memberCount": 55,
+    "crcVerified": true,
+    "sourceAppBytes": 26038,
+    "sourceAppSHA256": "ac62c2f394dceedb422c0fbe05d4182afba07e1bf78fb15828d3f936d212ae8a",
+    "sourceAppExactlyMatchesGit": true
+  },
+  "actualCommandRecords": [
+    {
+      "exit": 0,
+      "seconds": 96.43535379199602,
+      "log": "mini-build.log",
+      "sha256": "4cfc8febf69dd1529ad6e84e28da5e2bb6e7a1208ac1ab2467359f9e273f4b5b"
+    },
+    {
+      "exit": 0,
+      "seconds": 61.61836941599904,
+      "log": "ai-build.log",
+      "sha256": "d99c5e3894af0f403e742f353e2e4c568de70f95d99a2da25b817a0620f29791"
+    },
+    {
+      "exit": 0,
+      "seconds": 11.812120958995365,
+      "log": "modular-search-build.log",
+      "sha256": "025a9a7e55b457b89f24400b6c17ae80890e10379a2e9fe10d0a8c0df2fbfbe8"
+    },
+    {
+      "exit": 65,
+      "seconds": 179.4477541660017,
+      "log": "ModularFocusedDiagnostic.log",
+      "sha256": "b096d034368f3643a214f8294219a01faa32c27a4042d130276effb2bab858ca"
+    }
+  ],
+  "finalSummary": {
+    "devicesAndConfigurations": [
+      {
+        "device": {
+          "architecture": "arm64",
+          "deviceId": "1F3AB83E-F409-4B71-BD56-4669DB61627A",
+          "deviceName": "HanlinPaired-primary-ce49e30d-20261124",
+          "modelName": "iPad Pro 13-inch (M5)",
+          "osBuildNumber": "24A434",
+          "osVersion": "27.0",
+          "platform": "iOS Simulator"
+        },
+        "expectedFailures": 0,
+        "failedTests": 1,
+        "passedTests": 0,
+        "skippedTests": 0,
+        "testPlanConfiguration": {
+          "configurationId": "1",
+          "configurationName": "Test Scheme Action"
+        }
+      }
+    ],
+    "environmentDescription": "HanlinMiniApps · Built with macOS 27.0",
+    "expectedFailures": 0,
+    "failedTests": 1,
+    "finishTime": 1795580074.195,
+    "passedTests": 0,
+    "result": "Failed",
+    "runtimeWarnings": [
+      {
+        "issueType": "Runtime Warning",
+        "message": "Update the Info.plist: Support for all orientations will soon be required."
+      }
+    ],
+    "skippedTests": 0,
+    "startTime": 1795579915.153,
+    "statistics": [],
+    "testFailures": [
+      {
+        "failureText": "XCTUnwrap failed: expected non-nil value of type \"XCUIElement\" - Expanding the API response must render a nonempty full text, not only the search snippet or metadata",
+        "targetName": "HanlinMiniAppsUITests",
+        "testIdentifier": 1,
+        "testIdentifierString": "MiniAppsProductionRuntimeUITests/testStandaloneModularSearchLoadsActualSefariaText()",
+        "testIdentifierURL": "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneModularSearchLoadsActualSefariaText",
+        "testName": "testStandaloneModularSearchLoadsActualSefariaText()"
+      }
+    ],
+    "title": "Test - HanlinMiniApps",
+    "topInsights": [],
+    "totalTestCount": 1
+  },
+  "finalizedCase": {
+    "status": "FAIL",
+    "startedAt": "2026-11-25T04:11:35.257350+00:00",
+    "selectors": [
+      "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneModularSearchLoadsActualSefariaText"
+    ],
+    "originalUI": true,
+    "exitCode": 65,
+    "finishedAt": "2026-11-25T04:14:34.711686+00:00",
+    "resultFinalized": true,
+    "error": "Original runtime acceptance did not execute every selected case: ModularFocusedDiagnostic",
+    "log": {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt13/paired-prefix/ModularFocusedDiagnostic.log",
+      "bytes": 56335,
+      "sha256": "b096d034368f3643a214f8294219a01faa32c27a4042d130276effb2bab858ca"
+    }
+  },
+  "ownedCleanup": {
+    "simulator": "1F3AB83E-F409-4B71-BD56-4669DB61627A",
+    "state": "Shutdown",
+    "remainingOwnedRunners": []
+  },
+  "actualImportValidation": {
+    "executionID": "e62141b7-87bf-4cfa-b2cc-8eab28f2e5da",
+    "durationMilliseconds": 34476,
+    "exitCode": 0,
+    "diagnosticCount": 0,
+    "typecheck": {
+      "strict": true,
+      "checkJs": false,
+      "skipLibCheck": false,
+      "dependencyDeclarationsChecked": true
+    },
+    "sdk": {
+      "packageVersions": {
+        "@expo/ui": "58.0.29",
+        "@hanlin/expo-native-api": "1.0.0",
+        "@hanlin/expo-ui": "1.0.0",
+        "@nativescript/react-native": "9.1.2",
+        "expo": "58.0.26",
+        "expo-asset": "58.0.21",
+        "expo-brownfield": "58.0.20",
+        "expo-modules-core": "58.1.0",
+        "expo-modules-jsi": "58.0.23",
+        "react": "19.3.0",
+        "react-native": "0.88.1",
+        "react-native-worklets": "0.13.0",
+        "expo-widgets": "58.0.29",
+        "@babel/core": "7.29.7",
+        "@react-native-community/cli": "20.2.0",
+        "@react-native/codegen": "0.88.1",
+        "@react-native/metro-config": "0.88.1",
+        "@types/react": "19.3.1",
+        "babel-preset-expo": "58.0.26",
+        "esbuild": "0.25.12",
+        "typescript": "6.0.2"
+      },
+      "manifestSHA256": "19726b5eecc1459e30dae9e7ec4ca6761001de92b22055ac41b9a96aabdd7a88",
+      "compilerVersion": "6.0.3"
+    }
+  },
+  "attachments": {
+    "manifestExportCount": 48,
+    "retainedCount": 8,
+    "retained": [
+      {
+        "file": "0CF48360-1711-455E-9CE1-123CCDCF124C.png",
+        "bytes": 274510,
+        "sha256": "b0b2d8351b98a43f2a7cc775324bead27fc5951b4107d081c0745c3043f1a292",
+        "manifestEntry": {
+          "configurationName": "Test Scheme Action",
+          "deviceId": "1F3AB83E-F409-4B71-BD56-4669DB61627A",
+          "deviceName": "HanlinPaired-primary-ce49e30d-20261124",
+          "exportedFileName": "0CF48360-1711-455E-9CE1-123CCDCF124C.png",
+          "isAssociatedWithFailure": false,
+          "suggestedHumanReadableName": "modular-search-native-detail_0_6F9AE228-23D4-4A0D-B36E-44D2051D3EBE.png",
+          "timestamp": 1795580048.064
+        }
+      },
+      {
+        "file": "1599FE0E-BBC7-4E85-8C40-258FE68BE1C0.png",
+        "bytes": 1155796,
+        "sha256": "cfd35f5e95f5b5588c42660a40828febcdfd34dfd15ae910466a27eefad57b3c",
+        "manifestEntry": {
+          "configurationName": "Test Scheme Action",
+          "deviceId": "1F3AB83E-F409-4B71-BD56-4669DB61627A",
+          "deviceName": "HanlinPaired-primary-ce49e30d-20261124",
+          "exportedFileName": "1599FE0E-BBC7-4E85-8C40-258FE68BE1C0.png",
+          "isAssociatedWithFailure": false,
+          "suggestedHumanReadableName": "companion-import-ModularTextSearch_0_91C6EA58-2BE5-48A7-8A14-7A65A5AD2FE4.png",
+          "timestamp": 1795580029.493
+        }
+      },
+      {
+        "file": "1B8B66AE-21A7-4B0A-9BB3-208C75466CA9.txt",
+        "bytes": 8755,
+        "sha256": "f52a8de15c81b1a5adba419f7c4f7431af4d4474a23659b1821f48feb76de9cf",
+        "manifestEntry": {
+          "configurationName": "Test Scheme Action",
+          "deviceId": "1F3AB83E-F409-4B71-BD56-4669DB61627A",
+          "deviceName": "HanlinPaired-primary-ce49e30d-20261124",
+          "exportedFileName": "1B8B66AE-21A7-4B0A-9BB3-208C75466CA9.txt",
+          "isAssociatedWithFailure": false,
+          "suggestedHumanReadableName": "companion-import-ModularTextSearch-accessibility_0_97A576A7-330E-4889-8322-4108DA25E2AA.txt",
+          "timestamp": 1795580029.837
+        }
+      },
+      {
+        "file": "2F1DBB27-6B97-4A37-85EB-58F57AE3FC53.png",
+        "bytes": 349650,
+        "sha256": "7d65c9d1ce532b3166c23fc10e596fc6d2f317fa49dc3002aaef24b6c5027412",
+        "manifestEntry": {
+          "configurationName": "Test Scheme Action",
+          "deviceId": "1F3AB83E-F409-4B71-BD56-4669DB61627A",
+          "deviceName": "HanlinPaired-primary-ce49e30d-20261124",
+          "exportedFileName": "2F1DBB27-6B97-4A37-85EB-58F57AE3FC53.png",
+          "isAssociatedWithFailure": false,
+          "suggestedHumanReadableName": "modular-search-live-sefaria-results_0_A6234CF5-9E9B-45F0-ABED-12921E0E8E41.png",
+          "timestamp": 1795580044.017
+        }
+      },
+      {
+        "file": "82D9470E-E8F0-4B69-AE75-25C542F6165D.png",
+        "bytes": 426308,
+        "sha256": "3962a60d2bef1a391f31002462f57a3ba3433c9583586e60f93a9f202b7159f0",
+        "manifestEntry": {
+          "configurationName": "Test Scheme Action",
+          "deviceId": "1F3AB83E-F409-4B71-BD56-4669DB61627A",
+          "deviceName": "HanlinPaired-primary-ce49e30d-20261124",
+          "exportedFileName": "82D9470E-E8F0-4B69-AE75-25C542F6165D.png",
+          "isAssociatedWithFailure": false,
+          "suggestedHumanReadableName": "companion-runtime-failure_0_BB44FC27-236D-4D6C-8DBC-9836D3F69C87.png",
+          "timestamp": 1795580071.626
+        }
+      },
+      {
+        "file": "BCBA6A1E-74C7-45F7-8F09-7BA3C6BE20FD.txt",
+        "bytes": 33802,
+        "sha256": "9926907abc2eee11751996957106300a44819941a8c5a1ab0c6c01f9957942c4",
+        "manifestEntry": {
+          "configurationName": "Test Scheme Action",
+          "deviceId": "1F3AB83E-F409-4B71-BD56-4669DB61627A",
+          "deviceName": "HanlinPaired-primary-ce49e30d-20261124",
+          "exportedFileName": "BCBA6A1E-74C7-45F7-8F09-7BA3C6BE20FD.txt",
+          "isAssociatedWithFailure": false,
+          "suggestedHumanReadableName": "modular-search-native-detail-accessibility_0_57C6B4F5-C348-4F57-B427-07CD2E476BAE.txt",
+          "timestamp": 1795580048.873
+        }
+      },
+      {
+        "file": "E1DBEE7A-591E-413A-BDA6-F0132F1FF361.txt",
+        "bytes": 36975,
+        "sha256": "7bf9b621f68831ba2f873c923ef48ae3c1207e0c9a1cfcf26d7a2905da3be02f",
+        "manifestEntry": {
+          "configurationName": "Test Scheme Action",
+          "deviceId": "1F3AB83E-F409-4B71-BD56-4669DB61627A",
+          "deviceName": "HanlinPaired-primary-ce49e30d-20261124",
+          "exportedFileName": "E1DBEE7A-591E-413A-BDA6-F0132F1FF361.txt",
+          "isAssociatedWithFailure": false,
+          "suggestedHumanReadableName": "companion-runtime-failure-accessibility_0_1D21C279-3A2A-416E-AC0B-4682DD53DF38.txt",
+          "timestamp": 1795580072.471
+        }
+      },
+      {
+        "file": "F68C25DE-DC82-4BE5-87E7-5B58F4A1EE6C.txt",
+        "bytes": 30756,
+        "sha256": "7ededa419a1abc04a829bfdca1bd098197c8004a3375ed2334532873c3a569dd",
+        "manifestEntry": {
+          "configurationName": "Test Scheme Action",
+          "deviceId": "1F3AB83E-F409-4B71-BD56-4669DB61627A",
+          "deviceName": "HanlinPaired-primary-ce49e30d-20261124",
+          "exportedFileName": "F68C25DE-DC82-4BE5-87E7-5B58F4A1EE6C.txt",
+          "isAssociatedWithFailure": false,
+          "suggestedHumanReadableName": "modular-search-live-sefaria-results-accessibility_0_CD3541E2-0CE3-41DC-A74C-DABBB2408ED6.txt",
+          "timestamp": 1795580044.735
+        }
+      }
+    ],
+    "visualReview": "Root and SDK peer report inspecting the actual failure PNG; this inspector verifies exact retained bytes and AX bindings, not a fresh visual review"
+  },
+  "actualVisibleBody": {
+    "axFile": "E1DBEE7A-591E-413A-BDA6-F0132F1FF361.txt",
+    "line": 164,
+    "exactAXLine": "                                StaticText, 0x115029a40, {{20.0, 348.0}, {992.0, 52.0}}, identifier: 'modular-full-text-body-Genesis 1:1 (The Holy Scriptures: A New Translation (JPS 1917) [en]):he-0', label: 'בְּרֵאשִׁ֖ית בָּרָ֣א אֱלֹהִ֑ים אֵ֥ת הַשָּׁמַ֖יִם וְאֵ֥ת הָאָֽרֶץ׃'",
+    "scalarCount": 65,
+    "whitespaceWordCount": 7,
+    "baseCharactersAfterRemovingCombiningMarks": 35,
+    "graphemeAuthority": "Root/SDK peer independently verified35 Swift-style graphemes using actual body and Node Intl.Segmenter; published correction evidence primary-modular-language-readability-20261125 receiptc39379c5234bb0e6ae36a1ce24bfe9c459b6044ef8953883e8c0faf85f79951f"
+  },
+  "optionalAbsent": [
+    "focused-diagnostics-attempt13/job-observation-errors.jsonl"
+  ],
+  "collectorBoundary": "The preserved generic did-not-execute-every-selected-case error is not evidence of zero execution. Final summary proves one executed failed case.",
+  "original52": "NOT_RUN",
+  "SDK03OwnershipLifetime3": "NOT_RUN",
+  "nativeExecutionByThisInspector": false,
+  "taskClosuresChanged": false
+}

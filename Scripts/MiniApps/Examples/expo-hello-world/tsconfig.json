@@ -1,6 +1,7 @@
 {
   "include": [
     "index.ts",
-    "App.tsx"
+    "App.tsx",
+    "notification-event.ts"
   ]
 }

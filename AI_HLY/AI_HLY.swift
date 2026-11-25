@@ -15,6 +15,7 @@ struct HanlinNativeScriptPOCApp: App {
 @main
 @MainActor
 struct MyApp: App {
+    @UIApplicationDelegateAdaptor(HanlinNotificationApplicationDelegate.self) private var notificationDelegate
     private let context: HanlinApplicationContext
 
     init() {

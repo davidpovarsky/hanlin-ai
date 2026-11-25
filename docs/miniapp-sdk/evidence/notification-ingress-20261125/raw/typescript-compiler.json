@@ -1,0 +1,7 @@
+{
+  "node": "v24.22.0",
+  "wrapper": "/dev/shm/hanlin-expo-widgets-sdk-20261124/Scripts/Expo/node_modules/typescript/lib/typescript.js",
+  "actual": "/dev/shm/hanlin-expo-widgets-sdk-20261124/Scripts/Expo/node_modules/@typescript/old/lib/typescript.js",
+  "compilerVersion": "6.0.3",
+  "actualSha256": "569177652966bd528c319171c7dd22860dbf72bde116cbc4f644f1d02bb12e39"
+}

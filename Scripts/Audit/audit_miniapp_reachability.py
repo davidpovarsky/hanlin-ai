@@ -109,6 +109,12 @@ def build() -> dict:
     ref("shortcutIntent", "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinScriptingAppIntents.swift", "struct HanlinRunScriptActionIntent")
     ref("hostShortcuts", "AI_HLY/Downstream/SystemIntegrations/ChavrusaSystemIntegrations.swift", "struct ChavrusaChatShortcuts")
     ref("notification", "Packages/HanlinAppExtensionsSDK/Sources/HanlinNotificationExtension/HanlinNotificationService.swift", "override func didReceive(")
+    ref("miniAppsNotificationPrincipal", "HanlinMiniAppsExtensions/Notification/NotificationService.swift", "final class NotificationService")
+    ref("notificationEvent", "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNotificationEvent.swift", "public struct HanlinNotificationEvent")
+    ref("notificationQueue", "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNotificationInvocation.swift", "public static func enqueue(")
+    ref("notificationTarget", "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNotificationInvocation.swift", "public static func validateTarget(")
+    ref("notificationHostDelegate", "AI_HLY/Downstream/ScriptingPlatform/HanlinNotificationApplicationDelegate.swift", "public final class HanlinNotificationApplicationDelegate")
+    ref("notificationForeground", "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift", "func resumePendingInvocations(")
     ref("requestBroker", "Packages/HanlinPlatform/Sources/HanlinMiniAppCore/HanlinMiniAppRequestBroker.swift", "public func request(")
     ref("nativeBridge", "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include/HanlinNativeServicesBridge.h", "@protocol HanlinNativeServicesProvider")
     ref("nativeAdapter", "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift", "public func executeRuntime(")
@@ -160,6 +166,7 @@ def build() -> dict:
         "ChavrusaChatTranslationProvider": "ChavrusaChatTranslationProvider",
         "HanlinScriptingWidgets": "HanlinScriptingWidgets",
         "ChavrusaChatNotificationService": "ChavrusaChatNotificationService",
+        "HanlinMiniAppsNotificationService": "HanlinMiniAppsExtensions/Notification",
         "HanlinMiniAppsShare": "HanlinMiniAppsExtensions/Share",
         "HanlinMiniAppsTranslationProvider": "HanlinMiniAppsExtensions/Translation",
         "HanlinMiniAppsWidgets": "HanlinMiniAppsExtensions/Widgets",
@@ -200,8 +207,9 @@ def build() -> dict:
                         "stop": "A declared NativeScript/Expo foreground action can carry selected text through an App Intent and the same Host action dispatch. Separately, native presentation programs render/edit/finish translation in the extension through original widget engines; that local presentation is not a canonical Host runtime passthrough. Neither route implies per-surface executed receipt coverage.", "owner": "INT-02/INT-03"},
         "widget": {"target": "HanlinScriptingWidgets / HanlinMiniAppsWidgets", "refs": ["widgetBundle", "miniAppsWidgetBundle", "widgetIntent", "widgetCallback", "originalExpoWidget", "originalExpoModule"],
                    "stop": "Original Expo/ScriptWidget widgets and their widget-local callbacks are implemented. Revision/nonces and installed identities govern local actions. This does not establish an extension ingress to the five canonical Host runtimes or a NativeScript foreground VM.", "owner": "INT-02/INT-03"},
-        "notification": {"target": "ChavrusaChatNotificationService", "refs": ["notification"],
-                         "stop": "Media attachment/category delivery only; no package event envelope, canonical Host consumer or MiniApp action receipt is established by this source route.", "owner": "INT-05"},
+        "notification": {"target": "ChavrusaChatNotificationService / HanlinMiniAppsNotificationService / both foreground Hosts",
+                         "refs": ["notification", "miniAppsNotificationPrincipal", "notificationEvent", "notificationQueue", "notificationTarget", "notificationHostDelegate", "notificationForeground", "extensionQueue", "extensionReceipts", "extensionExecutor", "resumeDispatch", "nativeActionDispatch", "expoActionDispatch"],
+                         "stop": "A versioned tagged event is durably queued in its product App Group. Mutable remote alerts use the shared service; both early application delegates handle actual local/remote foreground delivery and responses, and foreground recovery reads actual OS-delivered notifications. The live Host rechecks installation/generation and a declared Expo/NativeScript appIntent action, then persists its real result/error. No VM executes in the notification extension; OS delivery, locked storage, and surface-to-runtime cases still require actual attempt evidence.", "owner": "INT-05"},
         "liveActivity": {"target": "HanlinScriptingWidgets / HanlinMiniAppsWidgets", "refs": ["widgetBundle", "miniAppsWidgetBundle", "scriptWidgetLiveActivity", "scriptWidgetActivityRenderer", "originalExpoActivity", "originalExpoModule"],
                          "stop": "Original Expo ActivityKit and ScriptWidget original-renderer activities have native start/update/end and local action paths. They are distinct from the retained legacy presentation. None is classified here as a Node/TypeScript/Python/JSC/Shell extension passthrough.", "owner": "INT-02/INT-03"},
         "hostAppIntent": {"target": "HanlinApp / HanlinMiniApps / HanlinScriptExtensions", "refs": ["extensionIntent", "extensionQueue", "extensionReceipts", "extensionExecutor", "resume", "resumeDispatch", "requestBroker", "headless", "nativeSession", "nativeActionDispatch", "expoActionDispatch"],
@@ -232,7 +240,7 @@ def build() -> dict:
     for surface, route in paths.items():
         for engine in ENGINES:
             for runtime in RUNTIMES:
-                wired = surface in ["foreground", "share", "translation", "hostAppIntent", "shortcuts"]
+                wired = surface in ["foreground", "share", "translation", "notification", "hostAppIntent", "shortcuts"]
                 structured_receipt = wired and surface == "foreground"
                 rows.append({"surface": surface, "engine": engine, "runtime": runtime,
                     "status": "not-tested" if structured_receipt else "partially-wired" if wired else "disconnected", "path": surface,
@@ -241,7 +249,8 @@ def build() -> dict:
                     "sourcePathReachesCanonicalExecutor": wired,
                     "structuredReceiptReturnedToIngressInSource": structured_receipt,
                     "durableActionReceiptInSource": wired and surface != "foreground",
-                    "routeCondition": "Foreground package action continuation; original native presentations remain separate" if surface == "translation" else
+                    "routeCondition": "Typed notification event resumes only a current installed action in the foreground Host" if surface == "notification" else
+                                      "Foreground package action continuation; original native presentations remain separate" if surface == "translation" else
                                       "Declared registered package handler can call its canonical Host facade" if wired and surface != "foreground" else
                                       "Direct canonical Host facade call" if wired else "No canonical Host runtime route established",
                     "realSurfaceE2E": False, "onDeviceProof": None,

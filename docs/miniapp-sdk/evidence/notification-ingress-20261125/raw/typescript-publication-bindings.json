@@ -1,0 +1,30 @@
+{
+  "readOnlyExistingOriginalDependencies": true,
+  "files": [
+    {
+      "path": "/dev/shm/hanlin-expo-widgets-sdk-20261124/Scripts/Expo/node_modules/typescript/package.json",
+      "sha256": "d9b8fb53c67c947fece83bcb73fa8512227ea6a12b110e096fdab8ecdc02b655",
+      "bytes": 841,
+      "packageVersion": "6.0.2"
+    },
+    {
+      "path": "/dev/shm/hanlin-expo-widgets-sdk-20261124/Scripts/Expo/node_modules/typescript/lib/typescript.js",
+      "sha256": "d3f3cd2b04b7f466f4484df921b744223f7bd1f3e353ec9110bdf52695b983d5",
+      "bytes": 45,
+      "packageVersion": null
+    },
+    {
+      "path": "/dev/shm/hanlin-expo-widgets-sdk-20261124/Scripts/Expo/node_modules/@typescript/old/package.json",
+      "sha256": "9332e97c30d3e53ed54910b89207ed657fb444066484df6e5b6965bf130865e9",
+      "bytes": 3527,
+      "packageVersion": "6.0.3"
+    },
+    {
+      "path": "/dev/shm/hanlin-expo-widgets-sdk-20261124/Scripts/Expo/node_modules/@typescript/old/lib/typescript.js",
+      "sha256": "569177652966bd528c319171c7dd22860dbf72bde116cbc4f644f1d02bb12e39",
+      "bytes": 9144216,
+      "packageVersion": null
+    }
+  ],
+  "alias": "typescript (published @typescript/typescript6 6.0.2) -> @typescript/old (npm:typescript 6.0.3)"
+}

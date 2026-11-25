@@ -5,7 +5,7 @@ const source = import.meta.dirname;
 const root = path.resolve(source, '../..');
 const output = path.join(root, 'Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/window-factory');
 const files = new Map();
-for (const [input, name] of [['window-factory.mjs', 'index.mjs'], ['window-factory.d.ts', 'index.d.ts']]) {
+for (const [input, name] of [['window-factory.mjs', 'index.mjs'], ['window-factory.d.ts', 'index.d.ts'], ['window-host.mjs', 'host.mjs']]) {
   const bytes = await readFile(path.join(source, input), 'utf8');
   const hash = createHash('sha256').update(bytes).digest('hex');
   files.set(name, '// Generated from Scripts/NativeScript/' + input + '; SHA256 ' + hash + '\n' + bytes);
