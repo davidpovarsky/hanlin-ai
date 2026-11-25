@@ -87,25 +87,28 @@ struct HanlinCompactConversationLibrary: View {
             onRefresh()
         }
         .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                Button { showsSavedMessages = true } label: {
-                    Label(hanlin: "Saved messages", systemImage: "bookmark")
+            if isPresented {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button { showsSavedMessages = true } label: {
+                        Label(hanlin: "Saved messages", systemImage: "bookmark")
+                    }
+                    .accessibilityIdentifier("hanlin-saved-messages-open")
                 }
-                .accessibilityIdentifier("hanlin-saved-messages-open")
-            }
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-                    endSearch()
-                    onAddNewChat()
-                } label: {
-                    Label(hanlin: "New chat", systemImage: "plus.bubble")
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        endSearch()
+                        onAddNewChat()
+                    } label: {
+                        Label(hanlin: "New chat", systemImage: "plus.bubble")
+                    }
+                    .accessibilityIdentifier("hanlin-new-chat-button")
                 }
-                .accessibilityIdentifier("hanlin-new-chat-button")
             }
         }
         .sheet(isPresented: $showsSavedMessages) { ChatSavedExcerptsView() }
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("hanlin-compact-conversation-library")
+        .accessibilityHidden(true, isEnabled: !isPresented)
     }
 
     private func endSearch() {
