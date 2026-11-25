@@ -171,13 +171,18 @@
       "result_bundle_manifest_sha256": "798725b1c5e427b69f87a84c5cd3a5ca6304e772f8cd106669f9771ad4a52747"
     },
     "runtime_host_result": {
-      "source": "04c1942bc88cd4de7deafda7dd342b9b6c401dcf",
+      "source": "4eb1af2a625cddcf896e88edc54de7eb649ae7a2",
+      "generated_commit": "ecfd3fd0768bba0c1be5a92be81f31775ee6ea3e",
       "status": "EXECUTED_PASS",
       "passed": 177,
       "failed": 0,
       "skipped": 1,
-      "skip": "Original opt-in >300-second worker duration test; not a cache/assistant acceptance case.",
-      "evidence": "evidence/native-preparation-20261125/host-final/index.json"
+      "skip": "Original opt-in long worker duration test",
+      "jitless_actual_archive_smoke": "PASS",
+      "raw_log_sha256": "d9017d3704fd5d51ac1726f4b5efd9cfa82bd36e28a1579389a01768686e5a81",
+      "archive_sha256": "965d9d2b4e211305df01c6c3ed974f7dbf8df524bc4ad9950cae9d4f420fc5df",
+      "source_inputs_hash": "2b4c7c0226d27c13d4acc20fe03ef5b4953a46379ff3615f927a58bd2f553949",
+      "receipt": "evidence/app-native-20261125/attempt08/host-refresh/receipt.json"
     },
     "latest_sync_receipt": "evidence/latest-sync-f391-20261125/receipt.json",
     "current_host_refresh": {
@@ -327,8 +332,8 @@
       "notification_native_owner_scope": "NOT_RUN_HERE"
     }
   },
-  "updated_at": "2026-11-25T05:28:34.082303+00:00",
-  "latest_integrated_source": "d8150350901b245d52b2637277f454a6f2da5446",
+  "updated_at": "2026-11-25T05:32:20.558510+00:00",
+  "latest_integrated_source": "ecfd3fd0768bba0c1be5a92be81f31775ee6ea3e",
   "synchronized_heads": {
     "composer": "f39142d3d14ae1bbbb81febceeef61fdc605f2a0",
     "miniapps_sdk": "b0cf26a668a698682f5307252f14cf0af8c6d00a",
