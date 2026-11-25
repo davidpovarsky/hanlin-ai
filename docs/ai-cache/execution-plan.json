@@ -135,14 +135,17 @@
     },
     "reuse_receipt": "evidence/reuse-receipt-20261125.json",
     "current_app_result": {
-      "source": "94a929a26355e4a586238a31e3a4fc2628e8e548",
-      "status": "PREPARING_RETRY",
+      "source": "5b69bbb52013686922efa7c4e7d9f2d44b774f94",
+      "status": "BUILDING_AND_TESTING",
       "declared_cases": 46,
       "executed": 0,
       "latest_attempt": "evidence/app-native-20261125/attempt02-factory-isolation/index.json",
       "fix": "Explicit MainActor isolation of both existing live tool factory entrypoints, no body/order/tool-set change",
       "preparation_reason": "Latest source synchronized; exact source-declared invocation gate installed; current original Host and fixtures remain valid.",
-      "expected_invocations": 48
+      "expected_invocations": 48,
+      "prepare_status": "PREPARED",
+      "prepare_receipt": "evidence/app-native-20261125/attempt03/prepare/receipt.json",
+      "expected_methods": 46
     },
     "runtime_host_result": {
       "source": "04c1942bc88cd4de7deafda7dd342b9b6c401dcf",
@@ -189,7 +192,7 @@
       }
     ]
   },
-  "updated_at": "2026-11-25T02:49:25.648923+00:00",
+  "updated_at": "2026-11-25T03:10:02.709509+00:00",
   "latest_integrated_source": "94a929a26355e4a586238a31e3a4fc2628e8e548",
   "synchronized_heads": {
     "composer": "b739ada91aca115093e3511f9df58c15edcb5923",
