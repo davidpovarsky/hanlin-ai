@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "sourceBase": "b0cf26a668a698682f5307252f14cf0af8c6d00a",
+  "currentPublishedProductFix": "c259b72243ccb62188f24e551648544bc57cc7c1",
+  "recordedAt": "2026-11-25T06:06:26.024838+00:00",
+  "files": [
+    {
+      "path": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+      "beforeSHA256": "472a3cab5f3b57b5572fb81bccc78a19fe02c731af322337d7b4c9a8ff9b5149",
+      "beforeBytes": 81523,
+      "afterSHA256": "0fe914bfd7b913ba2cb84002df8302582d4d66f0aafbff1ea3c73a976b696a38",
+      "afterBytes": 90363,
+      "mode": "100644",
+      "existingPrefixByteIdentical": true
+    },
+    {
+      "path": "Scripts/CI/observe_notification_os_delivery.py",
+      "beforeSHA256": null,
+      "afterSHA256": "f6cf4e040f592fa94ebf9fd813b6e03d125d5c7c32dc2d2a43f3b42cdb33d085",
+      "afterBytes": 18899,
+      "mode": "100644"
+    }
+  ],
+  "fixture": {
+    "name": "Hanlin-ScriptWidget-Actions.scripting",
+    "bytes": 825,
+    "sha256": "33c717e2a454d8831364cb24b15b9e9e799cd3161b526013a15efe46485ebccb",
+    "node": "v24.22.0",
+    "files": [
+      "script.json",
+      "widget.jsx"
+    ]
+  },
+  "originalRunner": {
+    "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+    "sha256": "6e3abbb16c9b55b048b69c2391784510d8c143c7ed00e760a73ecb903cdbb61d",
+    "changed": false
+  },
+  "validation": {
+    "pythonAST": "PASS",
+    "existingUICasesByteIdentical": "PASS",
+    "swiftCompilation": "NOT_RUN",
+    "osExecution": "NOT_RUN"
+  }
+}

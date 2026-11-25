@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "kind": "EXTRA_OS_NOTIFICATION_OBSERVER_SOURCE_ONLY",
+  "members": [
+    {
+      "path": "README.md",
+      "bytes": 3623,
+      "sha256": "988993ebef34a4283859984fd41deee4e92e3fc96f885858fd704bbf72d54652"
+    },
+    {
+      "path": "fixture-original-producer.json",
+      "bytes": 892,
+      "sha256": "34fbead0fd36d111de5e785291e15cc56a52058c610b6a351051dc55d7697b1d"
+    },
+    {
+      "path": "source-binding.json",
+      "bytes": 1459,
+      "sha256": "49410fc1dae0abccdc370f4805627baacaff47105a3d5b52875577d3dc3d2118"
+    }
+  ],
+  "memberCount": 3,
+  "memberBytes": 5974,
+  "boundary": "No native compilation or OS observation performed by this source commit."
+}
