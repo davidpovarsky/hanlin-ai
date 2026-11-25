@@ -1,0 +1,8 @@
+Hanlin-Expo-Widget-Counter.hanlinExpo: 1147 bytes; IMPORT_AND_NATIVE_TEST_REQUIRED
+Hanlin-Expo-Widget-Visuals.hanlinExpo: 1273 bytes; IMPORT_AND_NATIVE_TEST_REQUIRED
+Hanlin-ScriptWidget-Dashboard.scripting: 957 bytes; IMPORT_AND_NATIVE_TEST_REQUIRED
+Hanlin-ScriptWidget-Actions.scripting: 823 bytes; IMPORT_AND_NATIVE_TEST_REQUIRED
+Hanlin-Mixed-Native-Widget.hanlinExpo: 1000 bytes; DEFERRED_OPTIONAL
+Hanlin-Widget-Legacy-Regression.scripting: 445 bytes; IMPORT_AND_NATIVE_TEST_REQUIRED
+Hanlin-Widget-Invalid-Cases.hanlinExpo: 947 bytes; REJECT_IMPORT
+Archives generated. Import, installation, native rendering and interaction require separate executed tests.

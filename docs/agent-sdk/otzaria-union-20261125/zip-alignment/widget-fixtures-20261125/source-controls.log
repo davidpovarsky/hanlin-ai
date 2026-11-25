@@ -1,0 +1,58 @@
+TAP version 13
+# Subtest: P3-02: real Expo JSX wrappers run source callbacks, including arbitrary props
+ok 1 - P3-02: real Expo JSX wrappers run source callbacks, including arbitrary props
+  ---
+  duration_ms: 3586.140458
+  type: 'test'
+  ...
+# Subtest: P3-09: original Expo JSX preserves named slot and nested text nodes
+ok 2 - P3-09: original Expo JSX preserves named slot and nested text nodes
+  ---
+  duration_ms: 849.950875
+  type: 'test'
+  ...
+# Subtest: P3-08: separate executions cannot retain another package global
+ok 3 - P3-08: separate executions cannot retain another package global
+  ---
+  duration_ms: 1823.84825
+  type: 'test'
+  ...
+# Subtest: P3-15: the widget module closure excludes an unrelated foreground bundle
+ok 4 - P3-15: the widget module closure excludes an unrelated foreground bundle
+  ---
+  duration_ms: 316.87725
+  type: 'test'
+  ...
+# Subtest: P3-03/P3-24: ScriptWidget source functions preserve typed state
+ok 5 - P3-03/P3-24: ScriptWidget source functions preserve typed state
+  ---
+  duration_ms: 699.410334
+  type: 'test'
+  ...
+# Subtest: ScriptWidget starts an independent original compile budget for every Babel operation
+ok 6 - ScriptWidget starts an independent original compile budget for every Babel operation
+  ---
+  duration_ms: 1495.00675
+  type: 'test'
+  ...
+# Subtest: P3-12: reserved guard identifiers and malformed JSX fail compilation
+ok 7 - P3-12: reserved guard identifiers and malformed JSX fail compilation
+  ---
+  duration_ms: 646.886584
+  type: 'test'
+  ...
+# Subtest: P3-26: fixture archives rebuild byte-for-byte in all three locations
+ok 8 - P3-26: fixture archives rebuild byte-for-byte in all three locations
+  ---
+  duration_ms: 273.931166
+  type: 'test'
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 18156.706708

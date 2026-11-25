@@ -1,0 +1,63 @@
+Building for debugging...
+[Pre-planning 1 / 182]
+[Planning deferred tasks]
+[49 / 82]
+[50 / 83] HanlinMiniAppsBridge
+[59 / 121]
+[62 / 121]
+[67 / 121]
+[69 / 121]
+[73 / 121]
+[76 / 121]
+[81 / 121]
+[83 / 121]
+[84 / 121]
+[88 / 121] HanlinMiniAppsBridge
+[97 / 122]
+[98 / 157]
+[101 / 157]
+[102 / 157]
+[104 / 157]
+[108 / 157]
+[116 / 157]
+[124 / 157] HanlinMiniAppsBridge-product
+[128 / 158]
+[132 / 158]
+[135 / 163]
+[139 / 163] HanlinMiniAppsBridgeTests-product
+[144 / 163]
+[148 / 163] HanlinMiniAppsPicker
+[154 / 163] HanlinMiniAppsBridgeTests-product
+[156 / 163] HanlinMiniAppsBridgeTests-product
+[160 / 163] HanlinMiniAppsPicker
+Build complete! (9,15 secs)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Test largeInputAndAttachmentRemainByteExact() started.
+◇ Test preIconSchemaV1CatalogRemainsCompatible() started.
+◇ Test concurrentStoresDoNotLosePreferenceUpdates() started.
+◇ Test duplicateDeliveryCannotOverwriteOrReplayCompletedResult() started.
+◇ Test callbackVariantsPreserveContextAndEncodeErrors() started.
+◇ Test favoritesEditAndVisibilitySurviveReopen() started.
+◇ Test catalogProjectionPreservesIdentityAndRejectsDuplicateEntries() started.
+◇ Test unicodeSelectionReplacementInsertionAndChangedSelection() started.
+◇ Test newWindowDefaultAndDistinctInvocationIdentity() started.
+◇ Test unsupportedOnDiskSchemaIsNotSilentlyReset() started.
+◇ Test requestRoundTripColdReturnAndDurableAcknowledgement() started.
+◇ Test originalIconsAndLocalizedSubtitlesSurviveColdCatalogRead() started.
+◇ Test wrongSourceAcknowledgementPreservesOriginalResult() started.
+✔ Test newWindowDefaultAndDistinctInvocationIdentity() passed after 0.001 seconds.
+✔ Test preIconSchemaV1CatalogRemainsCompatible() passed after 0.001 seconds.
+✔ Test callbackVariantsPreserveContextAndEncodeErrors() passed after 0.001 seconds.
+✔ Test unicodeSelectionReplacementInsertionAndChangedSelection() passed after 0.001 seconds.
+✔ Test originalIconsAndLocalizedSubtitlesSurviveColdCatalogRead() passed after 0.012 seconds.
+✔ Test catalogProjectionPreservesIdentityAndRejectsDuplicateEntries() passed after 0.012 seconds.
+✔ Test unsupportedOnDiskSchemaIsNotSilentlyReset() passed after 0.012 seconds.
+✔ Test wrongSourceAcknowledgementPreservesOriginalResult() passed after 0.012 seconds.
+✔ Test favoritesEditAndVisibilitySurviveReopen() passed after 0.012 seconds.
+✔ Test duplicateDeliveryCannotOverwriteOrReplayCompletedResult() passed after 0.012 seconds.
+✔ Test requestRoundTripColdReturnAndDurableAcknowledgement() passed after 0.012 seconds.
+✔ Test concurrentStoresDoNotLosePreferenceUpdates() passed after 0.015 seconds.
+✔ Test largeInputAndAttachmentRemainByteExact() passed after 0.076 seconds.
+✔ Test run with 13 tests in 0 suites passed after 0.076 seconds.

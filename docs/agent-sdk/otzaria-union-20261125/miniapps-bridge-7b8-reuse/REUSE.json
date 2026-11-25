@@ -1,0 +1,212 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "scope": "Exact original thirteen-test Foundation/SwiftUI compilation receipt reuse; no application UI/runtime proof",
+  "candidate_source": "850de66432fc872d349469a2a63aaa564c61f0a8",
+  "applied_original_commit": "7b8cbba34943ee069b00ad4f9d5beff60cf32e4c",
+  "newer_consumer_sdk_reviewed": "9ef80a6ddfc997724360a9a34bb1d05cbf7cad40",
+  "source_package_files": 16,
+  "source_binding": [
+    {
+      "path": "Packages/HanlinMiniAppsBridge/Package.swift",
+      "size": 711,
+      "sha256": "579cdb6febf974d7f463aee0cd6592cdf0cfd5a4c8e53840009ff170e52b6e2e",
+      "git_blobs": {
+        "850de66432fc872d349469a2a63aaa564c61f0a8": "927b2801029268b21f42b663452ee4a9f6f2876b",
+        "7b8cbba34943ee069b00ad4f9d5beff60cf32e4c": "927b2801029268b21f42b663452ee4a9f6f2876b",
+        "9ef80a6ddfc997724360a9a34bb1d05cbf7cad40": "927b2801029268b21f42b663452ee4a9f6f2876b"
+      },
+      "preserved_mac_source_sha256": "579cdb6febf974d7f463aee0cd6592cdf0cfd5a4c8e53840009ff170e52b6e2e"
+    },
+    {
+      "path": "Packages/HanlinMiniAppsBridge/README.md",
+      "size": 3999,
+      "sha256": "e506bbcee3c9c10ae42d3b961a9b7fecd40e900f6d55a1742bbc042a43cec486",
+      "git_blobs": {
+        "850de66432fc872d349469a2a63aaa564c61f0a8": "208727b410c28337b07d81b1830ccf4ee7f73b13",
+        "7b8cbba34943ee069b00ad4f9d5beff60cf32e4c": "208727b410c28337b07d81b1830ccf4ee7f73b13",
+        "9ef80a6ddfc997724360a9a34bb1d05cbf7cad40": "208727b410c28337b07d81b1830ccf4ee7f73b13"
+      },
+      "preserved_mac_source_sha256": "e506bbcee3c9c10ae42d3b961a9b7fecd40e900f6d55a1742bbc042a43cec486"
+    },
+    {
+      "path": "Packages/HanlinMiniAppsBridge/Sources/HanlinMiniAppsBridge/MiniAppBridgeStore.swift",
+      "size": 11436,
+      "sha256": "a50fcd574c1716c62440ec46ed58e4576d0906c3084b9a7a0e1b3ddad97a1048",
+      "git_blobs": {
+        "850de66432fc872d349469a2a63aaa564c61f0a8": "6e53a5dcaec0b46e36ee314cba4e2c152bae6b4d",
+        "7b8cbba34943ee069b00ad4f9d5beff60cf32e4c": "6e53a5dcaec0b46e36ee314cba4e2c152bae6b4d",
+        "9ef80a6ddfc997724360a9a34bb1d05cbf7cad40": "6e53a5dcaec0b46e36ee314cba4e2c152bae6b4d"
+      },
+      "preserved_mac_source_sha256": "a50fcd574c1716c62440ec46ed58e4576d0906c3084b9a7a0e1b3ddad97a1048"
+    },
+    {
+      "path": "Packages/HanlinMiniAppsBridge/Sources/HanlinMiniAppsBridge/MiniAppContracts.swift",
+      "size": 9297,
+      "sha256": "68dd3e2a75baa2cb92b3b8dacf2595ca7d73d1421316c00ac29f5bad18c93f42",
+      "git_blobs": {
+        "850de66432fc872d349469a2a63aaa564c61f0a8": "b9ecd557d14a1248faa1be84d2fe0ac842c1b972",
+        "7b8cbba34943ee069b00ad4f9d5beff60cf32e4c": "b9ecd557d14a1248faa1be84d2fe0ac842c1b972",
+        "9ef80a6ddfc997724360a9a34bb1d05cbf7cad40": "b9ecd557d14a1248faa1be84d2fe0ac842c1b972"
+      },
+      "preserved_mac_source_sha256": "68dd3e2a75baa2cb92b3b8dacf2595ca7d73d1421316c00ac29f5bad18c93f42"
+    },
+    {
+      "path": "Packages/HanlinMiniAppsBridge/Sources/HanlinMiniAppsBridge/MiniAppPreferences.swift",
+      "size": 3755,
+      "sha256": "8a359491aac0f7602cd5347395f7c36755e5450b16edea2388818d3aa46357d4",
+      "git_blobs": {
+        "850de66432fc872d349469a2a63aaa564c61f0a8": "3ab044676ea540822e5c9bf648282dc1eca05bc7",
+        "7b8cbba34943ee069b00ad4f9d5beff60cf32e4c": "3ab044676ea540822e5c9bf648282dc1eca05bc7",
+        "9ef80a6ddfc997724360a9a34bb1d05cbf7cad40": "3ab044676ea540822e5c9bf648282dc1eca05bc7"
+      },
+      "preserved_mac_source_sha256": "8a359491aac0f7602cd5347395f7c36755e5450b16edea2388818d3aa46357d4"
+    },
+    {
+      "path": "Packages/HanlinMiniAppsBridge/Sources/HanlinMiniAppsPicker/MiniAppPicker.swift",
+      "size": 18347,
+      "sha256": "03993583c5be506133e8849499f99ccfe20226323e293284ba6e2a9f0858ebbd",
+      "git_blobs": {
+        "850de66432fc872d349469a2a63aaa564c61f0a8": "44e1ec3c59f647c51862a3b886d29443af46d7ef",
+        "7b8cbba34943ee069b00ad4f9d5beff60cf32e4c": "44e1ec3c59f647c51862a3b886d29443af46d7ef",
+        "9ef80a6ddfc997724360a9a34bb1d05cbf7cad40": "44e1ec3c59f647c51862a3b886d29443af46d7ef"
+      },
+      "preserved_mac_source_sha256": "03993583c5be506133e8849499f99ccfe20226323e293284ba6e2a9f0858ebbd"
+    },
+    {
+      "path": "Packages/HanlinMiniAppsBridge/Sources/HanlinMiniAppsPicker/Resources/en.lproj/Localizable.strings",
+      "size": 1848,
+      "sha256": "1e7e5001049acf763bb950d8c6bc7906a82300e25ded7904caaefc37c820534e",
+      "git_blobs": {
+        "850de66432fc872d349469a2a63aaa564c61f0a8": "04a63692ad44042db1e5341af1fc3a6ccbf9d185",
+        "7b8cbba34943ee069b00ad4f9d5beff60cf32e4c": "04a63692ad44042db1e5341af1fc3a6ccbf9d185",
+        "9ef80a6ddfc997724360a9a34bb1d05cbf7cad40": "04a63692ad44042db1e5341af1fc3a6ccbf9d185"
+      },
+      "preserved_mac_source_sha256": "1e7e5001049acf763bb950d8c6bc7906a82300e25ded7904caaefc37c820534e"
+    },
+    {
+      "path": "Packages/HanlinMiniAppsBridge/Sources/HanlinMiniAppsPicker/Resources/he.lproj/Localizable.strings",
+      "size": 2431,
+      "sha256": "5c12392611d138854e20ca02ac56105501d583378bfad4a3de7d2c3db738d156",
+      "git_blobs": {
+        "850de66432fc872d349469a2a63aaa564c61f0a8": "2dd968c9fc86259f5d0ba0ab12ac5ca50c2662c6",
+        "7b8cbba34943ee069b00ad4f9d5beff60cf32e4c": "2dd968c9fc86259f5d0ba0ab12ac5ca50c2662c6",
+        "9ef80a6ddfc997724360a9a34bb1d05cbf7cad40": "2dd968c9fc86259f5d0ba0ab12ac5ca50c2662c6"
+      },
+      "preserved_mac_source_sha256": "5c12392611d138854e20ca02ac56105501d583378bfad4a3de7d2c3db738d156"
+    },
+    {
+      "path": "Packages/HanlinMiniAppsBridge/Tests/HanlinMiniAppsBridgeTests/MiniAppBridgeTests.swift",
+      "size": 11987,
+      "sha256": "29b90907c4caa183291d2aea307d48dad4f6a91d49e464dbb3d72360270db557",
+      "git_blobs": {
+        "850de66432fc872d349469a2a63aaa564c61f0a8": "2a2604704a2eee7e5911628ac99672a244bdfad8",
+        "7b8cbba34943ee069b00ad4f9d5beff60cf32e4c": "2a2604704a2eee7e5911628ac99672a244bdfad8",
+        "9ef80a6ddfc997724360a9a34bb1d05cbf7cad40": "2a2604704a2eee7e5911628ac99672a244bdfad8"
+      },
+      "preserved_mac_source_sha256": "29b90907c4caa183291d2aea307d48dad4f6a91d49e464dbb3d72360270db557"
+    },
+    {
+      "path": "Packages/HanlinMiniAppsBridge/Verification/AppleCompilation/BridgeCompilation.xcodeproj/project.pbxproj",
+      "size": 4489,
+      "sha256": "c5ba64f0c889c5dfacca3e32c841e6f397a23e394cdeac570947104715c0a2e8",
+      "git_blobs": {
+        "850de66432fc872d349469a2a63aaa564c61f0a8": "bc8ce0950ad57d59b32f2fe73f8153e69c0401d2",
+        "7b8cbba34943ee069b00ad4f9d5beff60cf32e4c": "bc8ce0950ad57d59b32f2fe73f8153e69c0401d2",
+        "9ef80a6ddfc997724360a9a34bb1d05cbf7cad40": "bc8ce0950ad57d59b32f2fe73f8153e69c0401d2"
+      },
+      "preserved_mac_source_sha256": "c5ba64f0c889c5dfacca3e32c841e6f397a23e394cdeac570947104715c0a2e8"
+    },
+    {
+      "path": "Packages/HanlinMiniAppsBridge/Verification/AppleCompilation/BridgeCompilation.xcodeproj/xcshareddata/xcschemes/HanlinMiniAppsBridgeCompilation.xcscheme",
+      "size": 1137,
+      "sha256": "c86649c7b6be80d5a89451fb1e8395bd0c029ecf9bed88c8608560318bb3e42c",
+      "git_blobs": {
+        "850de66432fc872d349469a2a63aaa564c61f0a8": "5efea91b6a993e1473ae19abc415bff89e447a15",
+        "7b8cbba34943ee069b00ad4f9d5beff60cf32e4c": "5efea91b6a993e1473ae19abc415bff89e447a15",
+        "9ef80a6ddfc997724360a9a34bb1d05cbf7cad40": "5efea91b6a993e1473ae19abc415bff89e447a15"
+      },
+      "preserved_mac_source_sha256": "c86649c7b6be80d5a89451fb1e8395bd0c029ecf9bed88c8608560318bb3e42c"
+    },
+    {
+      "path": "Packages/HanlinMiniAppsBridge/Verification/AppleCompilation/CompilationProbe.swift",
+      "size": 899,
+      "sha256": "7c460732e7972e3194387de304bafa343f81249325a44826cfb65a4c9aafb10a",
+      "git_blobs": {
+        "850de66432fc872d349469a2a63aaa564c61f0a8": "0edcfb94d428a04af3fdf15d3febb4ac483ea4e5",
+        "7b8cbba34943ee069b00ad4f9d5beff60cf32e4c": "0edcfb94d428a04af3fdf15d3febb4ac483ea4e5",
+        "9ef80a6ddfc997724360a9a34bb1d05cbf7cad40": "0edcfb94d428a04af3fdf15d3febb4ac483ea4e5"
+      },
+      "preserved_mac_source_sha256": "7c460732e7972e3194387de304bafa343f81249325a44826cfb65a4c9aafb10a"
+    },
+    {
+      "path": "Packages/HanlinMiniAppsBridge/Verification/apple-swiftui-20261123-excerpt.txt",
+      "size": 1144,
+      "sha256": "4274afefa09cdde7c317da66c65d58d596970aba3e471fe0372cc972d30b71eb",
+      "git_blobs": {
+        "850de66432fc872d349469a2a63aaa564c61f0a8": "bc2209434c1ed9c559576f1361dcd51d8b6ba84d",
+        "7b8cbba34943ee069b00ad4f9d5beff60cf32e4c": "bc2209434c1ed9c559576f1361dcd51d8b6ba84d",
+        "9ef80a6ddfc997724360a9a34bb1d05cbf7cad40": "bc2209434c1ed9c559576f1361dcd51d8b6ba84d"
+      },
+      "preserved_mac_source_sha256": "4274afefa09cdde7c317da66c65d58d596970aba3e471fe0372cc972d30b71eb"
+    },
+    {
+      "path": "Packages/HanlinMiniAppsBridge/Verification/apple-swiftui-20261123.json",
+      "size": 3486,
+      "sha256": "4aa15164091ef2f6d6b58d5114ba46db94481ffdb17da8cfe116a95564c5ced5",
+      "git_blobs": {
+        "850de66432fc872d349469a2a63aaa564c61f0a8": "f12609271152f51988d287723c98deab86329cda",
+        "7b8cbba34943ee069b00ad4f9d5beff60cf32e4c": "f12609271152f51988d287723c98deab86329cda",
+        "9ef80a6ddfc997724360a9a34bb1d05cbf7cad40": "f12609271152f51988d287723c98deab86329cda"
+      },
+      "preserved_mac_source_sha256": "4aa15164091ef2f6d6b58d5114ba46db94481ffdb17da8cfe116a95564c5ced5"
+    },
+    {
+      "path": "Packages/HanlinMiniAppsBridge/Verification/portable-manifest-20261123.json",
+      "size": 1330,
+      "sha256": "6f71bdc7f82302ce811f37ec10ff278a9a9b08b01663acddeff49fb533bad4be",
+      "git_blobs": {
+        "850de66432fc872d349469a2a63aaa564c61f0a8": "b8ca9b8523dfb4f03c8ea0fac14727acdda545a7",
+        "7b8cbba34943ee069b00ad4f9d5beff60cf32e4c": "b8ca9b8523dfb4f03c8ea0fac14727acdda545a7",
+        "9ef80a6ddfc997724360a9a34bb1d05cbf7cad40": "b8ca9b8523dfb4f03c8ea0fac14727acdda545a7"
+      },
+      "preserved_mac_source_sha256": "6f71bdc7f82302ce811f37ec10ff278a9a9b08b01663acddeff49fb533bad4be"
+    },
+    {
+      "path": "Packages/HanlinMiniAppsBridge/Verification/portable-swift-20261123.txt",
+      "size": 2972,
+      "sha256": "5fb7a5af356a554e42820b7acf82ccabf8b62eefb615577c89afb3dac756447f",
+      "git_blobs": {
+        "850de66432fc872d349469a2a63aaa564c61f0a8": "4d6783b55a773e036e03d4c5fa2cf7ca542b7945",
+        "7b8cbba34943ee069b00ad4f9d5beff60cf32e4c": "4d6783b55a773e036e03d4c5fa2cf7ca542b7945",
+        "9ef80a6ddfc997724360a9a34bb1d05cbf7cad40": "4d6783b55a773e036e03d4c5fa2cf7ca542b7945"
+      },
+      "preserved_mac_source_sha256": "5fb7a5af356a554e42820b7acf82ccabf8b62eefb615577c89afb3dac756447f"
+    }
+  ],
+  "original_receipts": {
+    "RESULT.json": "13926b307cae4cc2adc8646b5b0ca1b18146f28d79d7c2652a22dea2632fa8e1",
+    "swift-test.log": "78cfdad2fae0960f8be34d70c222192a4d437561a7c1e671f38eefb5333baddd",
+    "toolchain.txt": "e9394cc6d6e71fdf9a92a8374ad61cda52914242550f890f4d1817c0adba974b"
+  },
+  "original_tests": [
+    "callbackVariantsPreserveContextAndEncodeErrors",
+    "catalogProjectionPreservesIdentityAndRejectsDuplicateEntries",
+    "concurrentStoresDoNotLosePreferenceUpdates",
+    "duplicateDeliveryCannotOverwriteOrReplayCompletedResult",
+    "favoritesEditAndVisibilitySurviveReopen",
+    "largeInputAndAttachmentRemainByteExact",
+    "newWindowDefaultAndDistinctInvocationIdentity",
+    "originalIconsAndLocalizedSubtitlesSurviveColdCatalogRead",
+    "preIconSchemaV1CatalogRemainsCompatible",
+    "requestRoundTripColdReturnAndDurableAcknowledgement",
+    "unicodeSelectionReplacementInsertionAndChangedSelection",
+    "unsupportedOnDiskSchemaIsNotSilentlyReset",
+    "wrongSourceAcknowledgementPreservesOriginalResult"
+  ],
+  "external_package_dependencies": [],
+  "new_test_invocations": 0,
+  "mac_retained_source_path": "/Users/m1/builds/hanlin-miniapps-bridge-4e37d47a-20261125/Packages/HanlinMiniAppsBridge",
+  "limitation": "The owner receipt declares7b8 as its package source. We independently verified its raw execution log and the complete retained Mac source against7b8,9ef and the integrated candidate. This does not add historical pre/post hashes absent from that original receipt.",
+  "verified_at": "2026-11-25T07:14:35.869121+00:00"
+}
