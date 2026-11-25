@@ -1,6 +1,7 @@
 {
-  "sourceCommit": "fda6948ca6a1f541293a1a1dd20e97f75eb0a527",
+  "sourceCommit": "a2c8a1b1be746461272ba77254603304567c309d",
   "uncommittedSourcePaths": [
+    "Package.swift",
     "Scripts/Expo/package-lock.json",
     "Scripts/Expo/package.json"
   ],
@@ -1100,7 +1101,7 @@
       ],
       "generatedViewProducer": {
         "source": "Packages/HanlinSwiftUIBridgeGenerator/Sources/HanlinSwiftUIBridgeCore/OutputGenerator.swift",
-        "sha256": "936e7c000c5a3170b47450d57a7a7fbac7416e94da92fc548333966f0222f6a4"
+        "sha256": "9468d0da401cbe55a4f041918c107ecc2b676159ee0f6d309d26de7d19750cd8"
       }
     },
     "nativeAPIFacade": {
@@ -5718,7 +5719,7 @@
       },
       {
         "source": "Packages/HanlinExpoUI/src/manual-components.tsx",
-        "line": 22,
+        "line": 23,
         "name": "TextEditorProps",
         "kind": "InterfaceDeclaration",
         "members": [
@@ -5756,20 +5757,20 @@
       },
       {
         "source": "Packages/HanlinExpoUI/src/manual-components.tsx",
-        "line": 34,
+        "line": 36,
         "name": "TextEditor",
         "kind": "FunctionDeclaration"
       },
       {
         "source": "Packages/HanlinExpoUI/src/manual-components.tsx",
-        "line": 45,
+        "line": 54,
         "name": "GridItem",
         "kind": "TypeAliasDeclaration",
         "type": "| { size: 'fixed'; value: number; spacing?: number }\n  | { size: 'flexible'; minimum?: number; maximum?: number; spacing?: number }\n  | { size: 'adaptive'; minimum: number; maximum?: number; spacing?: number }"
       },
       {
         "source": "Packages/HanlinExpoUI/src/manual-components.tsx",
-        "line": 50,
+        "line": 59,
         "name": "LazyGridProps",
         "kind": "InterfaceDeclaration",
         "members": [
@@ -5807,19 +5808,19 @@
       },
       {
         "source": "Packages/HanlinExpoUI/src/manual-components.tsx",
-        "line": 75,
+        "line": 84,
         "name": "LazyVGrid",
         "kind": "variable"
       },
       {
         "source": "Packages/HanlinExpoUI/src/manual-components.tsx",
-        "line": 76,
+        "line": 85,
         "name": "LazyHGrid",
         "kind": "variable"
       },
       {
         "source": "Packages/HanlinExpoUI/src/manual-components.tsx",
-        "line": 78,
+        "line": 87,
         "name": "ViewThatFitsProps",
         "kind": "InterfaceDeclaration",
         "members": [
@@ -5839,13 +5840,13 @@
       },
       {
         "source": "Packages/HanlinExpoUI/src/manual-components.tsx",
-        "line": 85,
+        "line": 94,
         "name": "ViewThatFits",
         "kind": "FunctionDeclaration"
       },
       {
         "source": "Packages/HanlinExpoUI/src/manual-components.tsx",
-        "line": 95,
+        "line": 104,
         "name": "SearchableProps",
         "kind": "InterfaceDeclaration",
         "members": [
@@ -5919,13 +5920,13 @@
       },
       {
         "source": "Packages/HanlinExpoUI/src/manual-components.tsx",
-        "line": 121,
+        "line": 130,
         "name": "Searchable",
         "kind": "FunctionDeclaration"
       },
       {
         "source": "Packages/HanlinExpoUI/src/manual-components.tsx",
-        "line": 144,
+        "line": 153,
         "name": "PresentationProps",
         "kind": "InterfaceDeclaration",
         "members": [
@@ -5969,25 +5970,25 @@
       },
       {
         "source": "Packages/HanlinExpoUI/src/manual-components.tsx",
-        "line": 187,
+        "line": 196,
         "name": "Sheet",
         "kind": "variable"
       },
       {
         "source": "Packages/HanlinExpoUI/src/manual-components.tsx",
-        "line": 188,
+        "line": 197,
         "name": "FullScreenCover",
         "kind": "variable"
       },
       {
         "source": "Packages/HanlinExpoUI/src/manual-components.tsx",
-        "line": 189,
+        "line": 198,
         "name": "PopoverPresentation",
         "kind": "variable"
       },
       {
         "source": "Packages/HanlinExpoUI/src/manual-components.tsx",
-        "line": 191,
+        "line": 200,
         "name": "InspectorProps",
         "kind": "InterfaceDeclaration",
         "members": [
@@ -6025,13 +6026,13 @@
       },
       {
         "source": "Packages/HanlinExpoUI/src/manual-components.tsx",
-        "line": 206,
+        "line": 215,
         "name": "Inspector",
         "kind": "FunctionDeclaration"
       },
       {
         "source": "Packages/HanlinExpoUI/src/manual-components.tsx",
-        "line": 219,
+        "line": 228,
         "name": "FocusedProps",
         "kind": "InterfaceDeclaration",
         "members": [
@@ -6063,13 +6064,13 @@
       },
       {
         "source": "Packages/HanlinExpoUI/src/manual-components.tsx",
-        "line": 233,
+        "line": 242,
         "name": "Focused",
         "kind": "FunctionDeclaration"
       },
       {
         "source": "Packages/HanlinExpoUI/src/manual-components.tsx",
-        "line": 245,
+        "line": 254,
         "name": "SafeAreaInsetProps",
         "kind": "InterfaceDeclaration",
         "members": [
@@ -6101,13 +6102,13 @@
       },
       {
         "source": "Packages/HanlinExpoUI/src/manual-components.tsx",
-        "line": 258,
+        "line": 267,
         "name": "SafeAreaInset",
         "kind": "FunctionDeclaration"
       },
       {
         "source": "Packages/HanlinExpoUI/src/manual-components.tsx",
-        "line": 270,
+        "line": 279,
         "name": "AsyncImageProps",
         "kind": "InterfaceDeclaration",
         "members": [
@@ -6145,13 +6146,13 @@
       },
       {
         "source": "Packages/HanlinExpoUI/src/manual-components.tsx",
-        "line": 285,
+        "line": 294,
         "name": "AsyncImage",
         "kind": "FunctionDeclaration"
       },
       {
         "source": "Packages/HanlinExpoUI/src/manual-components.tsx",
-        "line": 298,
+        "line": 307,
         "name": "TableColumn",
         "kind": "InterfaceDeclaration",
         "members": [
@@ -6171,7 +6172,7 @@
       },
       {
         "source": "Packages/HanlinExpoUI/src/manual-components.tsx",
-        "line": 303,
+        "line": 312,
         "name": "TableRow",
         "kind": "InterfaceDeclaration",
         "members": [
@@ -6191,7 +6192,7 @@
       },
       {
         "source": "Packages/HanlinExpoUI/src/manual-components.tsx",
-        "line": 308,
+        "line": 317,
         "name": "TableProps",
         "kind": "InterfaceDeclaration",
         "members": [
@@ -6223,13 +6224,13 @@
       },
       {
         "source": "Packages/HanlinExpoUI/src/manual-components.tsx",
-        "line": 322,
+        "line": 331,
         "name": "Table",
         "kind": "FunctionDeclaration"
       },
       {
         "source": "Packages/HanlinExpoUI/src/manual-components.tsx",
-        "line": 339,
+        "line": 348,
         "name": "getInstalledBridgeMetadata",
         "kind": "FunctionDeclaration",
         "type": "BridgeMetadata"
@@ -7548,8 +7549,8 @@
             },
             {
               "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-              "sha256": "44dfc39f53d8b39f6e54675ea02a9e4682578ed36985d5939948c2006335ae6f",
-              "line": 1526
+              "sha256": "0bd52a056289803eb8fa01c45e681df8b3e2f9ac4ac9639fb59577c8624f4efc",
+              "line": 1602
             }
           ]
         },
@@ -13646,7 +13647,7 @@
     },
     {
       "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-      "sha256": "44dfc39f53d8b39f6e54675ea02a9e4682578ed36985d5939948c2006335ae6f"
+      "sha256": "0bd52a056289803eb8fa01c45e681df8b3e2f9ac4ac9639fb59577c8624f4efc"
     },
     {
       "path": "Fixtures/ExpoNativeAPIProbe/tsconfig.json",
@@ -13658,15 +13659,19 @@
     },
     {
       "path": "Generated/SwiftUIBridge/HanlinGeneratedViews.swift",
-      "sha256": "838154d4e8a44b07eb312dee19df283b217842633c6dbeb84bc369edba77699e"
+      "sha256": "659364752ba7b69ef70d90f5aad061f391526cb8b6f135a47bf72f0f19b00e18"
     },
     {
       "path": "Generated/SwiftUIBridge/bridge-manifest.ts",
       "sha256": "a56c8a16334bfe76ebe6489fc1f018f25f28f7cadba6c1ef11a268e5336f3b37"
     },
     {
+      "path": "Package.swift",
+      "sha256": "392ece3430f8e61eb28afdaa925adf006b1a3dbf82a233568c2c279ab768e53b"
+    },
+    {
       "path": "Packages/HanlinExpoNativeAPI/Package.swift",
-      "sha256": "1bf2b967d85c4759f94f39330b1b435148a9d3956ec6b8e645cec7dd65bec83d"
+      "sha256": "c5fd18fa28a1842be0351053d978cc55b752546dc798c663f0dedabfdbefc28c"
     },
     {
       "path": "Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPI/HanlinExpoNativeAPIHostVersions.swift",
@@ -13694,7 +13699,7 @@
     },
     {
       "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/Generated/HanlinGeneratedViews.swift",
-      "sha256": "838154d4e8a44b07eb312dee19df283b217842633c6dbeb84bc369edba77699e"
+      "sha256": "659364752ba7b69ef70d90f5aad061f391526cb8b6f135a47bf72f0f19b00e18"
     },
     {
       "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoBridgeMetadata.swift",
@@ -13742,7 +13747,7 @@
     },
     {
       "path": "Packages/HanlinExpoUI/src/manual-components.tsx",
-      "sha256": "23315409689a8fb0f1a652a3d62428eade12822a4626224d0080046f08a80fe2"
+      "sha256": "b95b387fce797a3c0ffe8c258e1fe0b411e76956e6cd50ae9235267f5b638da6"
     },
     {
       "path": "Packages/HanlinExpoUI/src/miniapp-actions.ts",
@@ -13866,7 +13871,7 @@
     },
     {
       "path": "Packages/HanlinSwiftUIBridgeGenerator/Sources/HanlinSwiftUIBridgeCore/OutputGenerator.swift",
-      "sha256": "936e7c000c5a3170b47450d57a7a7fbac7416e94da92fc548333966f0222f6a4"
+      "sha256": "9468d0da401cbe55a4f041918c107ecc2b676159ee0f6d309d26de7d19750cd8"
     },
     {
       "path": "Scripts/Audit/audit-miniapp-sdk.mjs",
@@ -13882,7 +13887,7 @@
     },
     {
       "path": "Scripts/Audit/miniapp-runtime-contract.mjs",
-      "sha256": "61f5e1b1bbf09236ee000388ca0c7451e5d151b7712f9420abcfea5bb4c7dd0f"
+      "sha256": "8682bb4d11fb38ebaeddc4543745916b313c341da26075791b929726fe630fa7"
     },
     {
       "path": "Scripts/Expo/build-probe.mjs",
@@ -13898,11 +13903,11 @@
     },
     {
       "path": "Scripts/Expo/package-lock.json",
-      "sha256": "c08757cf46ac4d5c86a873f676af4a3be585db64ae2e1aa1e8288277d4eb63b8"
+      "sha256": "3b31e1c8fd34145df900764a2cda013ab02ecea7f890c969ad5e0a92925d0dd8"
     },
     {
       "path": "Scripts/Expo/package.json",
-      "sha256": "e2b50fae013276229c78619bbbe0b63d8c29b00fefde3afeccea98af117aa206"
+      "sha256": "bb447094c0ef2250c445f580fa91c81a55fc3187c7d49e145b84e9c1c3756dce"
     },
     {
       "path": "Scripts/Expo/prepare-types.mjs",
@@ -13918,7 +13923,7 @@
     },
     {
       "path": "Scripts/MiniApps/resolve-upstreams.mjs",
-      "sha256": "7973977cf986cbee14fd147fd8b10c1d54a6f1a1c790511d2df5cf054063e7a2"
+      "sha256": "4e2c12f497d312db93132f69741b783f6e31b1f2604dd852129f3c61109d7428"
     },
     {
       "path": "Scripts/MiniApps/scriptwidget/manifest-validation.mjs",
