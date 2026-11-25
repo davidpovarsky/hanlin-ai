@@ -5,6 +5,8 @@ import { execFileSync } from 'node:child_process';
 import { writeFile,mkdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
+import { verifiedLocalMacReceiptAccounting } from './local-mac-host-accounting.mjs';
+export { accountLocalMacHostExecution, localMacHostLog, LOCAL_MAC_HOST_COUNTS } from './local-mac-host-accounting.mjs';
 export const digest = value => createHash('sha256').update(value).digest('hex');
 export const EXPECTED_HOST_COUNTS = Object.freeze({tests:153,pass:152,fail:0,skipped:1});
 const stages=['native-origin','host'];
@@ -63,7 +65,8 @@ export function accountHostExecution({run,archiveSHA256,sourceInputsHash,nodeFin
     repositoryCredentialFreeHostTests:{status:origin?.callerEnvironment?.repositoryCredentialsPresent===false?'EXECUTED_PASS':'NOT_RUN'},
     crossRunReuse:'NOT_ACCEPTED_WITHOUT_A_SEPARATE_AUTHENTICATED_ORIGIN_AND_COMPLETE_UNCHANGED_INPUT_CLOSURE'};
 }
-export function verifiedReceiptAccounting(receipt,entries) {
+export function verifiedReceiptAccounting(receipt,entries,authentication) {
+  if(receipt?.schemaVersion===3)return verifiedLocalMacReceiptAccounting(receipt,entries,authentication);
   const accounting=receipt?.hostAccounting;
   if(receipt?.schemaVersion!==2 || receipt.status!=='EXECUTED_PASS' || accounting?.accepted!==true
       || accounting.status!=='EXECUTED_PASS' || !validRun(accounting.origin?.run)

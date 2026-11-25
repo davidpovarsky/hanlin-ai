@@ -1,0 +1,27 @@
+{
+  "scope": "Portable accounting validation only; no Host original suite or native execution",
+  "baseSource": "8f26449ca98911fb197fc332606794c263e68a51",
+  "requestedObligations": [
+    "existing schema2 GitHub153 origin regression",
+    "new schema3 localMac170 trust and failure paths"
+  ],
+  "affectedConsumers": [
+    "Scripts/Runtime/record-upstream-receipt.mjs",
+    "Scripts/Runtime/check-upstream-merge-gate.mjs",
+    "Scripts/Runtime/record-local-mac-host-receipt.mjs"
+  ],
+  "unchangedNativeAndHostTests": "NOT_RUN; no native/Host implementation or assertions changed",
+  "command": [
+    "node",
+    "--test",
+    "--test-reporter=tap",
+    "Scripts/Runtime/Tests/upstream-host-accounting.test.mjs",
+    "Scripts/Runtime/Tests/local-mac-host-accounting.test.mjs"
+  ],
+  "sourceHashes": {
+    "Scripts/Runtime/upstream-host-accounting.mjs": "551e3ae5855346f630f4878e3635dd79dfe52855d50f10f729ccf4a4b44d28fa",
+    "Scripts/Runtime/local-mac-host-accounting.mjs": "d5888106170a4404d116d9112d8c54d32c36f49e7cd857b61741583a3020e576",
+    "Scripts/Runtime/record-local-mac-host-receipt.mjs": "fd650033c0355670730941ea7ce0f4bf9033a19f5a9a4564452407d0a315ba71",
+    "Scripts/Runtime/Tests/local-mac-host-accounting.test.mjs": "30db2b5a6a243106d5181d3bcb83d2c467f5eef1f7b3fe04656818d4bc36b17a"
+  }
+}
