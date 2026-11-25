@@ -203,6 +203,17 @@ extension HanlinExecutionPresentationFamilyID {
     public static let codeExecution: Self = "code-execution"
     /// Image generation/processing.
     public static let imageGeneration: Self = "image-generation"
+    // Exact host-owned calendar and memory operations. Persisted raw IDs stay extensible.
+    public static let calendarSearch: Self = "calendar-search"
+    public static let calendarRead: Self = "calendar-read"
+    public static let calendarCreate: Self = "calendar-create"
+    public static let calendarUpdate: Self = "calendar-update"
+    public static let calendarDelete: Self = "calendar-delete"
+    public static let calendarComplete: Self = "calendar-complete"
+    public static let calendarAccess: Self = "calendar-access"
+    public static let memorySave: Self = "memory-save"
+    public static let memoryRecall: Self = "memory-recall"
+    public static let memoryUpdate: Self = "memory-update"
     /// Custom Mini App-provided execution UI.
     public static let custom: Self = "custom"
 }
