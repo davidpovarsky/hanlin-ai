@@ -1455,3 +1455,154 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
         add(tree)
     }
 }
+
+
+/// Extra, separately selected OS-ingress check. The original paired selectors
+/// remain unchanged. The external controller may only submit real simulator
+/// pushes and read the product's durable receipts; it never writes that queue.
+/// Handshake files belong to this UI-test runner, outside either product store.
+extension MiniAppsProductionRuntimeUITests {
+    func testOriginalNotificationAuthorizationAndOSDeliveryToBothEngines() throws {
+        executionTimeAllowance = 600
+        let runID = UUID().uuidString.lowercased()
+        let challenge = "notification-os-" + UUID().uuidString.lowercased()
+        let documents = try XCTUnwrap(FileManager.default.urls(
+            for: .documentDirectory, in: .userDomainMask).first)
+        let exchange = documents.appendingPathComponent("HanlinNotificationOSProbe", isDirectory: true)
+        let runDirectory = exchange.appendingPathComponent(runID, isDirectory: true)
+        try FileManager.default.createDirectory(at: runDirectory, withIntermediateDirectories: true)
+        try writeNotificationProbeJSON([
+            "version": 1, "runID": runID, "challenge": challenge
+        ], to: exchange.appendingPathComponent("active.json"))
+
+        // The unchanged original widget fixture exposes the original system
+        // access UI. Grant only the notification permission through Apple's UI.
+        importAndInstall(archive: "Hanlin-ScriptWidget-Actions")
+        // Widget-only packages are configured in the original Add Apps sheet.
+        app.buttons["hanlin-apps-add"].tap()
+        launchInstalledPackage(named: "ScriptWidget Actions")
+        let services = app.buttons.matching(NSPredicate(
+            format: "identifier BEGINSWITH %@", "hanlin-widget-services-")).firstMatch
+        revealNotificationControl(services)
+        services.tap()
+        let systemAccess = app.buttons["Contacts, Home, Files, Notifications and Alarms"].firstMatch
+        revealNotificationControl(systemAccess)
+        systemAccess.tap()
+        let authorize = app.buttons["Authorize Notifications"].firstMatch
+        revealNotificationControl(authorize)
+        capture(name: "notification-original-authorization-control")
+        authorize.tap()
+
+        let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
+        let permissionAlert = springboard.alerts.firstMatch
+        if permissionAlert.waitForExistence(timeout: 10) {
+            XCTAssertTrue(permissionAlert.staticTexts.matching(NSPredicate(
+                format: "label CONTAINS[c] %@", "notification")).firstMatch.exists,
+                "Only the actual notification authorization alert may be accepted")
+            let permissionImage = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+            permissionImage.name = "notification-original-system-permission"
+            permissionImage.lifetime = .keepAlways
+            add(permissionImage)
+            let allow = permissionAlert.buttons["Allow"].firstMatch
+            XCTAssertTrue(allow.exists && allow.isHittable)
+            allow.tap()
+        }
+        let authorizationMessage = app.staticTexts["system-access-message"].firstMatch
+        revealNotificationControl(authorizationMessage, maximumSwipes: 14)
+        XCTAssertTrue(waitUntil(timeout: 15) {
+            authorizationMessage.label == "Notifications authorized."
+        }, "The original UNUserNotificationCenter request must actually grant notification authorization")
+        capture(name: "notification-original-authorization-result")
+        app.terminate()
+        app.launch()
+
+        openAdditionalExpoProbe("Open Host Services Probe")
+        XCTAssertTrue(app.buttons["Run Host Services Files"].firstMatch.waitForExistence(timeout: 20))
+        try exchangeNotificationProbe(
+            runtime: "expo", packageName: probeAPackageName,
+            runID: runID, challenge: challenge, directory: runDirectory)
+        capture(name: "notification-os-expo-terminal-receipts")
+        closeExpoApp()
+
+        importAndInstall(archive: "hanlin-script-parity")
+        launchInstalledPackage(named: parityPackageName)
+        XCTAssertTrue(app.descendants(matching: .any)["hanlin-script-parity-title"]
+            .firstMatch.waitForExistence(timeout: 30))
+        try exchangeNotificationProbe(
+            runtime: "nativescript", packageName: parityPackageName,
+            runID: runID, challenge: challenge, directory: runDirectory)
+        capture(name: "notification-os-nativescript-terminal-receipts")
+        closeNativeScriptApp()
+        try writeNotificationProbeJSON([
+            "version": 1, "runID": runID, "challenge": challenge, "status": "EXECUTED_PASS"
+        ], to: runDirectory.appendingPathComponent("ui-finished.json"))
+    }
+
+    private func revealNotificationControl(_ element: XCUIElement, maximumSwipes: Int = 10) {
+        for _ in 0..<maximumSwipes {
+            if element.exists && element.isHittable { return }
+            app.swipeUp()
+        }
+        XCTAssertTrue(element.waitForExistence(timeout: 10))
+        XCTAssertTrue(element.isHittable, "The original control must be visible in its native form")
+    }
+
+    private func writeNotificationProbeJSON(_ value: [String: Any], to url: URL) throws {
+        let data = try JSONSerialization.data(withJSONObject: value, options: [.sortedKeys])
+        try data.write(to: url, options: .atomic)
+    }
+
+    private func exchangeNotificationProbe(
+        runtime: String, packageName: String, runID: String, challenge: String, directory: URL
+    ) throws {
+        let requestURL = directory.appendingPathComponent(runtime + ".request.json")
+        let completionURL = directory.appendingPathComponent(runtime + ".complete.json")
+        XCTAssertFalse(FileManager.default.fileExists(atPath: requestURL.path))
+        XCTAssertFalse(FileManager.default.fileExists(atPath: completionURL.path))
+        try writeNotificationProbeJSON([
+            "version": 1, "runID": runID, "challenge": challenge,
+            "runtime": runtime, "packageName": packageName
+        ], to: requestURL)
+        XCTAssertTrue(waitUntil(timeout: 120) {
+            FileManager.default.fileExists(atPath: completionURL.path)
+        }, "The external simulator-push controller must return actual product receipts")
+        let data = try Data(contentsOf: completionURL)
+        let attachment = XCTAttachment(data: data, uniformTypeIdentifier: "public.json")
+        attachment.name = "notification-os-" + runtime + "-actual-receipts"
+        attachment.lifetime = .keepAlways
+        add(attachment)
+        let completion = try XCTUnwrap(JSONSerialization.jsonObject(with: data) as? [String: Any])
+        XCTAssertEqual(completion["version"] as? Int, 1)
+        XCTAssertEqual(completion["runID"] as? String, runID)
+        XCTAssertEqual(completion["challenge"] as? String, challenge)
+        XCTAssertEqual(completion["runtime"] as? String, runtime)
+        XCTAssertEqual(completion["transport"] as? String, "simctl_push")
+        XCTAssertEqual(completion["status"] as? String, "EXECUTED_PASS",
+                       completion["reason"] as? String ?? "No verified OS receipt result")
+        let observations = try XCTUnwrap(completion["observations"] as? [[String: Any]])
+        let expectedKinds = runtime == "expo" ? ["success", "duplicate", "failure"] : ["success", "duplicate"]
+        XCTAssertEqual(observations.compactMap { $0["kind"] as? String }, expectedKinds)
+        for observation in observations {
+            let record = try XCTUnwrap(observation["record"] as? [String: Any])
+            let receipt = try XCTUnwrap(record["receipt"] as? [String: Any])
+            let invocationID = try XCTUnwrap(receipt["invocationID"] as? String)
+            XCTAssertNotNil(UUID(uuidString: invocationID))
+            XCTAssertEqual(record["id"] as? String, invocationID)
+            XCTAssertEqual(receipt["attempt"] as? Int, 1)
+            XCTAssertFalse(receipt["cancellationRequested"] as? Bool ?? true)
+            XCTAssertEqual(observation["pushExitCode"] as? Int, 0)
+            if observation["kind"] as? String == "failure" {
+                XCTAssertEqual(receipt["status"] as? String, "failed")
+                XCTAssertEqual(receipt["failure"] as? String, "actionFailed")
+                XCTAssertNil(receipt["value"])
+            } else {
+                XCTAssertEqual(receipt["status"] as? String, "succeeded")
+                XCTAssertNil(receipt["failure"])
+                XCTAssertNotNil(receipt["value"])
+            }
+        }
+        let first = try XCTUnwrap(observations.first?["record"] as? NSDictionary)
+        let duplicate = try XCTUnwrap(observations.dropFirst().first?["record"] as? NSDictionary)
+        XCTAssertEqual(first, duplicate, "A second successful simctl submission must retain the identical completed record")
+    }
+}
