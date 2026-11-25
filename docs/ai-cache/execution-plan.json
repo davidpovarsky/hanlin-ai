@@ -135,12 +135,12 @@
     },
     "reuse_receipt": "evidence/reuse-receipt-20261125.json",
     "current_app_result": {
-      "source": "5b69bbb52013686922efa7c4e7d9f2d44b774f94",
-      "status": "BUILDING_AND_TESTING",
+      "source": "5769972abc4586c13bb77429ceb36b215ebae8b4",
+      "status": "PREPARING_RETRY",
       "declared_cases": 46,
       "executed": 0,
-      "latest_attempt": "evidence/app-native-20261125/attempt02-factory-isolation/index.json",
-      "fix": "Explicit MainActor isolation of both existing live tool factory entrypoints, no body/order/tool-set change",
+      "latest_attempt": "evidence/app-native-20261125/attempt03/test-index.json",
+      "fix": "4f2bc9864a4fefa62f69ca54fb9f6b33351ba1df",
       "preparation_reason": "Latest source synchronized; exact source-declared invocation gate installed; current original Host and fixtures remain valid.",
       "expected_invocations": 48,
       "prepare_status": "PREPARED",
@@ -189,6 +189,15 @@
         "build_exit_code": 65,
         "reason": "AssistantToolBridge.Executors.live factory is not implicitly MainActor-isolated by its enclosing type; NativeTool.name access fails Swift6isolation check.",
         "receipt": "evidence/app-native-20261125/attempt02-factory-isolation/test/receipt.json"
+      },
+      {
+        "source": "5b69bbb52013686922efa7c4e7d9f2d44b774f94",
+        "status": "BUILD_FAILED_BEFORE_TESTS",
+        "executed": 0,
+        "build_exit_code": 65,
+        "receipt": "evidence/app-native-20261125/attempt03/test/receipt.json",
+        "reason": "HanlinMiniAppAssistantIntegrationTests.swift:11 missing requiredcanPresentUI argument",
+        "fix": "4f2bc9864a4fefa62f69ca54fb9f6b33351ba1df"
       }
     ],
     "future_runner_lock_correction": {
@@ -198,11 +207,11 @@
       "scope": "Only validation tooling; full tracked source hashing retained, historical-proof mutation rejected; nine actual tracked locks copied. App03 remains sealed at5b69bbb5 and is not relabeled."
     }
   },
-  "updated_at": "2026-11-25T03:17:12.613266+00:00",
+  "updated_at": "2026-11-25T03:35:22.332446+00:00",
   "latest_integrated_source": "94a929a26355e4a586238a31e3a4fc2628e8e548",
   "synchronized_heads": {
-    "composer": "b739ada91aca115093e3511f9df58c15edcb5923",
-    "miniapps_sdk": "d4fbdf731dbadc95a13ead306a6d02ae61a88aad",
+    "composer": "d89ce38b170bc9af4734cd11e30ca793b16698d0",
+    "miniapps_sdk": "bff06a5998e9d584c9a5de2bd9aa187dc9cb4dd0",
     "wave3": "c76371717ec3c0c6eb9dfd16d7ab6d4b11680b86"
   }
 }
