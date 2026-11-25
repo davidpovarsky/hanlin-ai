@@ -1,0 +1,36 @@
+{
+  "owner": "/root/native_execution",
+  "source": "fda6948ca6a1f541293a1a1dd20e97f75eb0a527",
+  "status": "FAIL",
+  "pid": 52375,
+  "startedAt": "2026-11-25T02:28:56.766206+00:00",
+  "original52": "NOT_RUN",
+  "wrapperSHA256": "992f699afed5c0e8af4e610ae7c345e5e7bbc827080802f92b3babebbd60d645",
+  "diagnosticState": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt10/state.json",
+  "resourceObservation": {
+    "observedAt": "2026-11-25T02:28:56.782033+00:00",
+    "df": "Filesystem   1024-blocks      Used Available Capacity iused     ifree %iused  Mounted on\n/dev/disk3s5   482797652 397728932  41183944    91% 5201095 411839440    1%   /System/Volumes/Data\n",
+    "freeBytes": 42172358656,
+    "estimatedIncrementalBytes": 11811160064,
+    "concurrentGrowthAndOSAllowanceBytes": 4294967296,
+    "basis": "One fresh dedicated simulator; retained measured6.2GB data footprint,0.6GB evidence, existing compatible product cache and <=4GB incremental compilation. No CPU-idle/load/job-count gate.",
+    "decision": "ADMITTED"
+  },
+  "admittedAt": "2026-11-25T02:28:56.782705+00:00",
+  "argv": [
+    "/opt/homebrew/bin/python3.12",
+    "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt10.py",
+    "--source",
+    "fda6948ca6a1f541293a1a1dd20e97f75eb0a527",
+    "--output",
+    "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt10"
+  ],
+  "maximumActiveSeconds": 5257.517583708006,
+  "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt10.log",
+  "wrapperPID": 52378,
+  "elapsedSeconds": 950.9807370830022,
+  "logBytes": 24021,
+  "exitCode": 1,
+  "finishedAt": "2026-11-25T02:44:47.762952+00:00",
+  "sourceRestored": true
+}
