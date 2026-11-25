@@ -70,10 +70,12 @@ enum AssistantToolBridge {
       }
     }
 
+    @MainActor
     static var live: Self {
       live(scriptingRegistry: .shared)
     }
 
+    @MainActor
     static func live(
       scriptingRegistry: HanlinScriptingProviderRegistry,
       explicitlySelectedNativeNames: Set<String> = [],
