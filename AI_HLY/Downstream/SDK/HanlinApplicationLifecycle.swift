@@ -7,6 +7,7 @@ import SwiftUI
 @MainActor
 final class HanlinApplicationLifecycleState {
     var preparationTask: Task<Void, Never>?
+    var systemIntegrationTask: Task<Void, Never>?
     var saveObserver: AnyCancellable?
 }
 
@@ -27,9 +28,11 @@ extension HanlinApplicationContext {
             // The mounted workspace reads this store immediately. Prepare its
             // original data before waiting for independent system integrations.
             dataManager.preloadDataIfNeeded()
-            await ChavrusaSystemIntegrationBootstrap.configure()
             HanlinNativeScriptProductionBootstrap.prepareEmbeddedProviders()
             HanlinScriptingPlatform.shared.configure(modelContext: modelContainer.mainContext)
+            applicationLifecycle.systemIntegrationTask = Task { @MainActor in
+                await ChavrusaSystemIntegrationBootstrap.configure()
+            }
             await HanlinScriptingPlatform.shared.publishCompactAgentConfig()
             await RuntimeLifecycleBridge.prepareApplication()
             applicationLifecycle.saveObserver = NotificationCenter.default.publisher(for: ModelContext.didSave)
