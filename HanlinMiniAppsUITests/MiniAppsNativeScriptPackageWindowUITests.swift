@@ -5,6 +5,7 @@ import XCTest
 @MainActor
 final class MiniAppsNativeScriptPackageWindowUITests: XCTestCase {
     private let app = XCUIApplication(bundleIdentifier: "com.itorah.hanlinminiapps")
+    private var openedRequests: [NativeScriptWindowUIInteractions.Request] = []
     private static var installedPackages: Set<String> = []
     private let requests = [
         "alpha": "1e23b001-6a2c-4c0f-b001-202611240011",
@@ -25,18 +26,21 @@ final class MiniAppsNativeScriptPackageWindowUITests: XCTestCase {
         app.launch()
     }
 
-    override func tearDownWithError() throws {
-        if testRun?.hasSucceeded == false {
-            let screenshot = XCTAttachment(screenshot: app.screenshot())
-            screenshot.name = "native-package-window-failure"
-            screenshot.lifetime = .keepAlways
-            add(screenshot)
-            let tree = XCTAttachment(string: app.debugDescription)
-            tree.name = "native-package-window-accessibility"
-            tree.lifetime = .keepAlways
-            add(tree)
+    override func tearDown() async throws {
+        await MainActor.run {
+            if (testRun?.totalFailureCount ?? 0) > 0 {
+                let screenshot = XCTAttachment(screenshot: app.screenshot())
+                screenshot.name = "native-package-window-failure"
+                screenshot.lifetime = .keepAlways
+                add(screenshot)
+                let tree = XCTAttachment(string: app.debugDescription)
+                tree.name = "native-package-window-accessibility"
+                tree.lifetime = .keepAlways
+                add(tree)
+                NativeScriptWindowUIInteractions.closeFailedRequestWindows(in: app, requests: openedRequests)
+            }
+            app.terminate()
         }
-        app.terminate()
     }
 
     func testDifferentPackagesKeepModulesResourcesAndCallbacksWhenCompletingInReverseOrder() throws {
@@ -107,6 +111,9 @@ final class MiniAppsNativeScriptPackageWindowUITests: XCTestCase {
         ).firstMatch
         XCTAssertTrue(window.waitForExistence(timeout: 60),
                       "Each incoming package request must own its actual iPad scene.")
+        if !openedRequests.contains(where: { $0.id == id }) {
+            openedRequests.append(.init(id: id, title: "NativeScript package " + name))
+        }
         assertLabel(window.staticTexts["hanlin-ns-window-request"],
                     equals: try XCTUnwrap(UUID(uuidString: id)).uuidString, timeout: 90)
         let package = (name == "alpha" || name == "gamma") ? "alpha" : "beta"
@@ -121,8 +128,7 @@ final class MiniAppsNativeScriptPackageWindowUITests: XCTestCase {
         let input = window.textViews["hanlin-ns-window-input"]
         XCTAssertTrue(input.waitForExistence(timeout: 15))
         XCTAssertTrue(input.isHittable)
-        input.tap()
-        input.typeText("-edited")
+        NativeScriptWindowUIInteractions.append("-edited", to: input)
         assertValue(input, equals: name + "-edited")
         let prepare = window.buttons["hanlin-ns-window-prepare-return"]
         XCTAssertTrue(prepare.isHittable)
