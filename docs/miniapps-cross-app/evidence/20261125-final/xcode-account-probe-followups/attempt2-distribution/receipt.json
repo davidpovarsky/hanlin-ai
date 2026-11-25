@@ -1,0 +1,141 @@
+{
+  "scope": "REAL_XCODE_ACCOUNT_RESOURCE_PROBE_ONLY_NOT_ORIGINAL_APP_ACCEPTANCE",
+  "started_at": "2026-11-25T06:25:24.803768+00:00",
+  "source_sha": "9ef80a6ddfc997724360a9a34bb1d05cbf7cad40",
+  "source_entitlements_sha256": "cbce7e438c63d23cdcbc737379709ab6220997a2e39447dd962492a46d3930cc",
+  "bundle_id": "com.itorah.hanlinminiapps.share",
+  "team": "NA6HPWARQ2",
+  "required_entitlements": {
+    "com.apple.security.application-groups": [
+      "group.com.itorah.chavrusachat",
+      "group.com.itorah.shared"
+    ]
+  },
+  "user": "m1",
+  "effective_uid": 501,
+  "command": [
+    "xcodebuild",
+    "-project",
+    "/Users/m1/builds/_preflight/miniapps-xcode-group-probe-20261125/attempt2-distribution/ProfileDiscovery.xcodeproj",
+    "-scheme",
+    "ProfileDiscovery",
+    "-configuration",
+    "Release",
+    "-destination",
+    "generic/platform=iOS",
+    "-derivedDataPath",
+    "/Users/m1/builds/_preflight/miniapps-xcode-group-probe-20261125/attempt2-distribution/DerivedData",
+    "-archivePath",
+    "/Users/m1/builds/_preflight/miniapps-xcode-group-probe-20261125/attempt2-distribution/ProfileDiscovery.xcarchive",
+    "archive",
+    "PRODUCT_BUNDLE_IDENTIFIER=com.itorah.hanlinminiapps.share",
+    "CODE_SIGN_STYLE=Automatic",
+    "DEVELOPMENT_TEAM=NA6HPWARQ2",
+    "CODE_SIGN_ENTITLEMENTS=/Users/m1/builds/_preflight/miniapps-xcode-group-probe-20261125/helpers/HanlinMiniAppsShare.entitlements",
+    "APS_ENVIRONMENT=production",
+    "COMPILER_INDEX_STORE_ENABLE=NO",
+    "CODE_SIGNING_ALLOWED=NO"
+  ],
+  "identities_before": [
+    "644940FCF25D1730DBD1BF7596AEBA7229E2B8FD"
+  ],
+  "mode": "existing-distribution-export",
+  "free_bytes_before": 6045933568,
+  "status": "PROBE_FAILED",
+  "deadline_seconds": 180,
+  "no_upload_or_install_requested": true,
+  "stages": [
+    {
+      "label": "unsigned-discovery-archive",
+      "command": [
+        "xcodebuild",
+        "-project",
+        "/Users/m1/builds/_preflight/miniapps-xcode-group-probe-20261125/attempt2-distribution/ProfileDiscovery.xcodeproj",
+        "-scheme",
+        "ProfileDiscovery",
+        "-configuration",
+        "Release",
+        "-destination",
+        "generic/platform=iOS",
+        "-derivedDataPath",
+        "/Users/m1/builds/_preflight/miniapps-xcode-group-probe-20261125/attempt2-distribution/DerivedData",
+        "-archivePath",
+        "/Users/m1/builds/_preflight/miniapps-xcode-group-probe-20261125/attempt2-distribution/ProfileDiscovery.xcarchive",
+        "archive",
+        "PRODUCT_BUNDLE_IDENTIFIER=com.itorah.hanlinminiapps.share",
+        "CODE_SIGN_STYLE=Automatic",
+        "DEVELOPMENT_TEAM=NA6HPWARQ2",
+        "CODE_SIGN_ENTITLEMENTS=/Users/m1/builds/_preflight/miniapps-xcode-group-probe-20261125/helpers/HanlinMiniAppsShare.entitlements",
+        "APS_ENVIRONMENT=production",
+        "COMPILER_INDEX_STORE_ENABLE=NO",
+        "CODE_SIGNING_ALLOWED=NO"
+      ],
+      "started_at": "2026-11-25T06:25:24.849077+00:00",
+      "owned_pid": 36018,
+      "exit_code": 0,
+      "status": "EXECUTED_PASS",
+      "finished_at": "2026-11-25T06:25:28.105301+00:00"
+    },
+    {
+      "label": "local-ad-hoc-entitlement-discovery-only",
+      "command": [
+        "codesign",
+        "--force",
+        "--sign",
+        "-",
+        "--timestamp=none",
+        "--entitlements",
+        "/Users/m1/builds/_preflight/miniapps-xcode-group-probe-20261125/helpers/HanlinMiniAppsShare.entitlements",
+        "/Users/m1/builds/_preflight/miniapps-xcode-group-probe-20261125/attempt2-distribution/ProfileDiscovery.xcarchive/Products/Applications/ProfileDiscovery.app"
+      ],
+      "started_at": "2026-11-25T06:25:28.105630+00:00",
+      "owned_pid": 36048,
+      "exit_code": 0,
+      "status": "EXECUTED_PASS",
+      "finished_at": "2026-11-25T06:25:28.131057+00:00"
+    },
+    {
+      "label": "distribution-export-with-existing-identity",
+      "command": [
+        "xcodebuild",
+        "-exportArchive",
+        "-archivePath",
+        "/Users/m1/builds/_preflight/miniapps-xcode-group-probe-20261125/attempt2-distribution/ProfileDiscovery.xcarchive",
+        "-exportPath",
+        "/Users/m1/builds/_preflight/miniapps-xcode-group-probe-20261125/attempt2-distribution/export",
+        "-exportOptionsPlist",
+        "/Users/m1/builds/_preflight/miniapps-xcode-group-probe-20261125/attempt2-distribution/ExportOptions.plist",
+        "-allowProvisioningUpdates",
+        "-authenticationKeyPath",
+        "/Users/m1/.appstoreconnect/private_keys/AuthKey_BMFQPP6252.p8",
+        "-authenticationKeyID",
+        "BMFQPP6252",
+        "-authenticationKeyIssuerID",
+        "b5ac6a24-597d-4c46-924e-712ad41bf667"
+      ],
+      "started_at": "2026-11-25T06:25:28.131460+00:00",
+      "owned_pid": 36050,
+      "exit_code": 70,
+      "status": "EXECUTED_FAIL",
+      "finished_at": "2026-11-25T06:25:39.308476+00:00"
+    }
+  ],
+  "exit_code": 70,
+  "finished_at": "2026-11-25T06:25:39.339257+00:00",
+  "identities_after": [
+    "644940FCF25D1730DBD1BF7596AEBA7229E2B8FD"
+  ],
+  "original_identities_preserved": true,
+  "newly_available_identities": [],
+  "private_log_sha256": "ae0e92f612fc0075cb2af0ac876d5f21d1ff3e83cf4f97f4aa788252d6213741",
+  "sanitized_log_sha256": "ae0e92f612fc0075cb2af0ac876d5f21d1ff3e83cf4f97f4aa788252d6213741",
+  "free_bytes_after": 7700410368,
+  "diagnostics": [
+    "GatherProvisioningInputs",
+    "error: exportArchive Cloud signing permission error",
+    "  You haven't been given access to cloud-managed distribution certificates. Please contact your team's Account Holder or an Admin to give you access. If you need further assistance, contact Apple Developer Program Support at https://developer.apple.com/contact/.",
+    "error: exportArchive No profiles for 'com.itorah.hanlinminiapps.share' were found",
+    "  Xcode couldn't find any iOS App Store provisioning profiles matching 'com.itorah.hanlinminiapps.share'.",
+    "** EXPORT FAILED **"
+  ]
+}
