@@ -625,11 +625,10 @@ final class HanlinCompactKeyboardOwner {
             record["identifier"] = editor.accessibilityIdentifier ?? ""
             record["isAccessibilityElement"] = editor.isAccessibilityElement
             record["accessibilityElementsHidden"] = editor.accessibilityElementsHidden
-            record["isAccessibilityElementBlockPresent"] = editor.isAccessibilityElementBlock != nil
-            record["accessibilityElementsHiddenBlockPresent"] = editor.accessibilityElementsHiddenBlock != nil
-            record["automationElementsBlockPresent"] = editor.automationElementsBlock != nil
-            record["ordinaryChildrenCountOrUnspecified"] = editor.accessibilityElements?.count ?? -1
-            record["automationChildrenCountOrUnspecified"] = editor.automationElements?.count ?? -1
+            // Keep diagnostics independent of optional getter implementations;
+            // this editor rejected a block getter during native startup.
+            record["blockGetterInspection"] = "not-read"
+            record["containerGetterInspection"] = "not-read"
             record["isUserInteractionEnabled"] = editor.isUserInteractionEnabled
             record["isHidden"] = editor.isHidden
             record["alpha"] = editor.alpha
