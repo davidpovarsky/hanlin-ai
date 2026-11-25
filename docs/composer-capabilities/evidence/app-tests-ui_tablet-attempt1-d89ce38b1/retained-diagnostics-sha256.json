@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "capturedAtUTC": "2026-11-25T04:22:04.900566+00:00",
+  "sourceExportDirectory": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/app-tests-ui_tablet-attempt1/tablet-startup-retained-diagnostics",
+  "files": [
+    {
+      "path": "0_Test_Hanlin-Composer-iPad-20261124_Diagnostics/AI_HLYUITests-34776184-66DB-4092-9C5E-81E890D1840D-Configuration-Test Scheme Action-Iteration-1/AI_HLYUITests-6E03C4D0-CA64-4778-BA76-275AC7B1BEAD/Session-AI_HLYUITests-2026-11-25_045732-rtGyAW.log",
+      "bytes": 1707936,
+      "sha256": "03e3fcb4f5580ce4e15c9ca61ea9b66f3b6164bdb43a244210ac9402f13d0073"
+    },
+    {
+      "path": "0_Test_Hanlin-Composer-iPad-20261124_Diagnostics/AI_HLYUITests-34776184-66DB-4092-9C5E-81E890D1840D-Configuration-Test Scheme Action-Iteration-1/AI_HLYUITests-6E03C4D0-CA64-4778-BA76-275AC7B1BEAD/StandardOutputAndStandardError-com.itorah.chavrusachat.txt",
+      "bytes": 7852181,
+      "sha256": "974d9c41bff7c0b8ea0c9eddb6a0b530f087654dbddd5b0747489ede5633ea80"
+    },
+    {
+      "path": "0_Test_Hanlin-Composer-iPad-20261124_Diagnostics/AI_HLYUITests-34776184-66DB-4092-9C5E-81E890D1840D-Configuration-Test Scheme Action-Iteration-1/AI_HLYUITests-6E03C4D0-CA64-4778-BA76-275AC7B1BEAD/StandardOutputAndStandardError.txt",
+      "bytes": 17952,
+      "sha256": "ae2c3ddc0c0b038aa90d209fb2f711c442949e343c2cbc371e83c93afd9c085c"
+    },
+    {
+      "path": "0_Test_Hanlin-Composer-iPad-20261124_Diagnostics/AI_HLYUITests-34776184-66DB-4092-9C5E-81E890D1840D-Configuration-Test Scheme Action-Iteration-1/scheduling.log",
+      "bytes": 700,
+      "sha256": "8ae10299955045ac4bfb001ba531fc13f53fe16b6f0ef142f388cf7aec320171"
+    },
+    {
+      "path": "0_Test_Hanlin-Composer-iPad-20261124_Diagnostics/Hanlin-Composer-iPad-20261124_096F698B-7016-4922-8F97-82B4A975A2B6/testmanagerd.log",
+      "bytes": 3571,
+      "sha256": "5f467c992421308ed25f98d6a853af9b0c196d732a666e66f40a7ffbfce782a1"
+    }
+  ],
+  "allOriginalExportedBytesHashed": true,
+  "copiedAppLog": "tablet-app-stdout-stderr.txt.gz",
+  "definesLoadedMarkerOccurrences": 3,
+  "scope": "Original completed xcresult diagnostics export only. App startup reached the defines-loaded marker. Exact cause of the later empty startup remains under source review; no relaunch or successful UI execution inferred."
+}

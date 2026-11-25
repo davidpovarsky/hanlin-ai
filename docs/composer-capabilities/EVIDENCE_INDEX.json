@@ -138,6 +138,10 @@
       "sameSource": true,
       "testsAssertionsAndBudgetsUnchanged": true,
       "causalAttribution": "Not proven to be the sole cause of the preceding failures."
+    },
+    "postCorrectionFreshness": {
+      "status": "PENDING",
+      "reason": "Subsequent runtime/SDK UI source corrections require refreshed original generated Host/app inputs. Earlier Host8 execution remains an authentic pass at bcd44d23; it is not relabeled as final-source execution."
     }
   },
   "appPreparation": {
@@ -148,11 +152,9 @@
   },
   "pending": [
     "Remaining HanlinMiniApps application build-for-testing scheme",
-    "Fresh generated test-manifest environment verification after integrated scheme correction",
-    "Thirteen app integration methods",
-    "Four actual native-engine methods",
-    "Four native editor regression methods",
-    "Four iPhone UI executions and three iPad UI executions"
+    "Original native-engine acceptance: two failed dedicated-source methods; preserve two adapter passes pending final source applicability review",
+    "Four failed iPhone UI executions and three failed iPad UI executions",
+    "Regenerate affected Host/app inputs and verify failed or affected cases after reviewed source corrections; assess exact prior-pass applicability to the final source"
   ],
   "packaging": {
     "index": "evidence/package-20261125.json",
@@ -161,7 +163,7 @@
   },
   "applicability": "evidence/applicability-37a788a4a.json",
   "documentationBranchBase": "189ca0d73a8f9b92451d343ca84b4b7074c57c6c",
-  "updatedAtUTC": "2026-11-25T03:33:05.302517+00:00",
+  "updatedAtUTC": "2026-11-25T04:21:03.569992+00:00",
   "latestRecordedExecutionSource": "d89ce38b170bc9af4734cd11e30ca793b16698d0",
   "manifestAudit": {
     "status": "EXECUTED_PASS",
@@ -223,9 +225,9 @@
     }
   },
   "applicationBuildProgress": {
-    "status": "AI_HLY_BUILD_PASSED_TEST_MANIFEST_REVALIDATION_PENDING",
-    "latestCompletedAttempt": 5,
-    "latestCompletedBuildSource": "b739ada91aca115093e3511f9df58c15edcb5923",
+    "status": "AI_HLY_BUILD_AND_FRESH_TEST_MANIFEST_PASSED",
+    "latestCompletedAttempt": 6,
+    "latestCompletedBuildSource": "d89ce38b170bc9af4734cd11e30ca793b16698d0",
     "latestCompletedBuildStatus": "PASSED",
     "actorCorrectionIntegratedCommit": "aea6d31e311a3f3096014ea2f1c39432371e3ecc",
     "metadataIntakeIntegratedCommit": "e08a77146a6bef97a0be8cd90dfdf1d30e2255ba",
@@ -238,10 +240,11 @@
     "pendingBuildSchemes": [
       "HanlinMiniApps"
     ],
-    "latestBuildReceipt": "evidence/app-build-attempt5-b739ada91/ai-hly-build-attempt5.json",
+    "latestBuildReceipt": "evidence/app-build-attempt6-d89ce38b1/ai-hly-build-attempt6.json",
     "testsExecutedByLatestBuild": 0,
     "schemeCorrectionSource": "eefe96321c9d83cdb300fbf84fd1da3977f5362e",
-    "freshGeneratedManifestVerification": "NOT_RECORDED_IN_THIS_PACKET"
+    "freshGeneratedManifestVerification": "EXECUTED_PASS",
+    "postCorrectionBuildFreshness": "PENDING_FINAL_SOURCE"
   },
   "applicationBuildAttempts": [
     {
@@ -317,6 +320,21 @@
       "resolvedLockUnchanged": true,
       "trackedChangesEmpty": true,
       "acceptanceTestsExecuted": 0
+    },
+    {
+      "id": "AI_HLY attempt6",
+      "source": "d89ce38b170bc9af4734cd11e30ca793b16698d0",
+      "status": "PASSED",
+      "startedAtUTC": "2026-11-25T03:36:50.226249+00:00",
+      "finishedAtUTC": "2026-11-25T03:40:17.832877+00:00",
+      "exitCode": 0,
+      "durationSeconds": 207.607,
+      "receipt": "evidence/app-build-attempt6-d89ce38b1/ai-hly-build-attempt6.json",
+      "assessment": "evidence/app-build-attempt6-d89ce38b1/build-and-orchestration-assessment.json",
+      "rawLogSHA256": "479775e23c60d7ccbf2ee82cf297de84acfc927d68f65320498de12070692bd8",
+      "resolvedLockUnchanged": true,
+      "trackedChangesEmpty": true,
+      "acceptanceTestsExecutedByBuildCommand": 0
     }
   ],
   "moduleCacheRepair": {
@@ -502,17 +520,19 @@
   },
   "asanaMilestone": {
     "status": "UPDATED_AND_READ_BACK",
-    "updatedAtUTC": "2026-11-25T03:24:02Z",
+    "receiptTimeUTC": "2026-11-25T04:05:00Z",
+    "latestTaskModifiedAtUTC": "2026-11-25T04:05:37.920Z",
     "taskIDs": [
       "1220882717750164",
+      "1220882660881299",
+      "1220882660883773",
       "1220882600644494"
     ],
-    "updatedTasks": 2,
+    "updatedTasks": 4,
     "taskCompletionChanged": false,
-    "allOriginalPlainAndRichNotesByteIdentical": true,
-    "newSummariesExact": true,
-    "receipt": "evidence/asana-milestone-20261125-032402.json",
-    "scope": "Real built-app preflight PASS and nine checker regressions PASS; prior failures retained, fresh manifest and actual acceptance gates open."
+    "allOriginalNotesPreserved": true,
+    "receipt": "evidence/asana-focused-groups-milestone-20261125T0405Z.json",
+    "scope": "Actual integration/editor passes and native/UI failures; all tasks remain incomplete."
   },
   "asanaMilestoneHistory": [
     {
@@ -553,6 +573,34 @@
       "newSummariesExact": true,
       "receipt": "evidence/asana-milestone-20261125-025920.json",
       "scope": "Full AI_HLY build-for-testing PASS and build-time metadata completeness; companion and functional/native/editor/UI acceptance remain open."
+    },
+    {
+      "status": "UPDATED_AND_READ_BACK",
+      "updatedAtUTC": "2026-11-25T03:24:02Z",
+      "taskIDs": [
+        "1220882717750164",
+        "1220882600644494"
+      ],
+      "updatedTasks": 2,
+      "taskCompletionChanged": false,
+      "allOriginalPlainAndRichNotesByteIdentical": true,
+      "newSummariesExact": true,
+      "receipt": "evidence/asana-milestone-20261125-032402.json",
+      "scope": "Real built-app preflight PASS and nine checker regressions PASS; prior failures retained, fresh manifest and actual acceptance gates open."
+    },
+    {
+      "status": "UPDATED_AND_READ_BACK",
+      "updatedAtUTC": "2026-11-25T03:49:30Z",
+      "taskIDs": [
+        "1220882717750164",
+        "1220882600644494"
+      ],
+      "updatedTasks": 2,
+      "taskCompletionChanged": false,
+      "allOriginalPlainAndRichNotesByteIdentical": true,
+      "newSummariesExact": true,
+      "receipt": "evidence/asana-milestone-20261125-034930.json",
+      "scope": "AI_HLY attempt6, actual fresh manifest guard, scoped capacity and cache-retirement facts; acceptance cases were not inferred."
     }
   ],
   "buildTimeMetadata": {
@@ -569,22 +617,51 @@
     "nativeVMAcceptance": "NOT_INFERRED"
   },
   "testManifestPrerequisite": {
-    "status": "SOURCE_CORRECTION_INTEGRATED_FRESH_MANIFEST_PENDING",
-    "source": "b739ada91aca115093e3511f9df58c15edcb5923",
-    "receipt": "evidence/app-build-attempt5-b739ada91/built-products-preflight-attempt1.json",
-    "checkedAtUTC": "2026-11-25T03:00:05.269599+00:00",
-    "manifestSHA256": "b2cc79f4b3780daec837e119cc5e4a07d5ecccd618ab793b88bb0b80dbfa2062",
-    "missingVariable": "HANLIN_UNIT_TEST_HOST",
-    "affectedTargets": [
-      "AI_HLYTests",
-      "AI_HLYUITests"
+    "status": "EXECUTED_PASS",
+    "source": "d89ce38b170bc9af4734cd11e30ca793b16698d0",
+    "receipt": "evidence/app-build-attempt6-d89ce38b1/built-products-preflight-attempt2.json",
+    "checkedAtUTC": "2026-11-25T03:43:36.389381+00:00",
+    "manifestSHA256": "7a298177b07b04a7554677049a6f557865f0aa9387e352107bec3ea2c60253e5",
+    "manifestMtimeUTC": "2026-11-25T03:40:15.538609+00:00",
+    "buildReceiptSHA256": "aeb414df2dc399bb14b792f4482b6ffc2b8545c9dec745a7b6e3ef176aeff958",
+    "targets": [
+      {
+        "blueprint": "AI_HLYTests",
+        "testBundlePath": "__TESTHOST__/PlugIns/AI_HLYTests.xctest",
+        "testHostPath": "__TESTROOT__/Debug-iphonesimulator/AI_Hanlin.app",
+        "unitHostEnvironment": "1",
+        "unitHostTestingEnvironment": null
+      },
+      {
+        "blueprint": "AI_HLYUITests",
+        "testBundlePath": "__TESTHOST__/PlugIns/AI_HLYUITests.xctest",
+        "testHostPath": "__TESTROOT__/Debug-iphonesimulator/AI_HLYUITests-Runner.app",
+        "unitHostEnvironment": "1",
+        "unitHostTestingEnvironment": null
+      }
     ],
-    "appTestsLaunched": false,
-    "successfulBuildRetained": true,
-    "originalGuardStatus": "BLOCKED_TEST_ENVIRONMENT",
-    "schemeCorrectionSource": "eefe96321c9d83cdb300fbf84fd1da3977f5362e",
-    "schemeIntakeReceipt": "evidence/native-app-preflight-d89ce38b1/test-environment-fix-intake.json",
-    "freshGeneratedManifestVerification": "NOT_RECORDED_IN_THIS_PACKET"
+    "appBinaryHashesIdenticalToActualPriorPreflight": true,
+    "checkerFilesUnchangedSinceActualPreflight": true,
+    "boundaryAtOriginalReceipt": "Fresh manifest environment is verified; no functional/native/editor/UI cases have run yet",
+    "subsequentActualGroups": "evidence/app-focused-groups-d89ce38b1/assessment.json",
+    "previousPrerequisite": {
+      "status": "SOURCE_CORRECTION_INTEGRATED_FRESH_MANIFEST_PENDING",
+      "source": "b739ada91aca115093e3511f9df58c15edcb5923",
+      "receipt": "evidence/app-build-attempt5-b739ada91/built-products-preflight-attempt1.json",
+      "checkedAtUTC": "2026-11-25T03:00:05.269599+00:00",
+      "manifestSHA256": "b2cc79f4b3780daec837e119cc5e4a07d5ecccd618ab793b88bb0b80dbfa2062",
+      "missingVariable": "HANLIN_UNIT_TEST_HOST",
+      "affectedTargets": [
+        "AI_HLYTests",
+        "AI_HLYUITests"
+      ],
+      "appTestsLaunched": false,
+      "successfulBuildRetained": true,
+      "originalGuardStatus": "BLOCKED_TEST_ENVIRONMENT",
+      "schemeCorrectionSource": "eefe96321c9d83cdb300fbf84fd1da3977f5362e",
+      "schemeIntakeReceipt": "evidence/native-app-preflight-d89ce38b1/test-environment-fix-intake.json",
+      "freshGeneratedManifestVerification": "NOT_RECORDED_IN_THIS_PACKET"
+    }
   },
   "nativeBuiltAppPreflight": {
     "status": "EXECUTED_PASS",
@@ -674,5 +751,175 @@
     "sourceEqualityAssessmentThroughD89": "evidence/native-app-preflight-d89ce38b1/repair-scope-and-results.json",
     "selectedCasesRequireParityIntake": false,
     "nativeAcceptanceNotInferred": true
+  },
+  "applicationFocusedExecutions": [
+    {
+      "id": "app_scope",
+      "status": "EXECUTED_PASS",
+      "source": "d89ce38b170bc9af4734cd11e30ca793b16698d0",
+      "startedAtUTC": "2026-11-25T03:49:11.153765+00:00",
+      "finishedAtUTC": "2026-11-25T03:51:34.037196+00:00",
+      "runnerDurationSeconds": 120.372,
+      "exitCode": 0,
+      "methodCount": 13,
+      "invocationCount": 13,
+      "passedMethods": 13,
+      "failedMethods": 0,
+      "skipped": 0,
+      "expectedFailures": 0,
+      "destinationID": "F1D52257-55E0-4927-8029-E19D47B51AC0",
+      "rawLogSHA256": "a1defca21e17a2d5d9e1b172857510cc1193212837cc477d31e3ed28e09b294c",
+      "receipt": "evidence/app-tests-app_scope-attempt1-d89ce38b1/receipt.json",
+      "caseIdentities": "evidence/app-tests-app_scope-attempt1-d89ce38b1/case-identities.json",
+      "rawCaseTree": "evidence/app-tests-app_scope-attempt1-d89ce38b1/tests.json",
+      "xcresultFilesManifest": "evidence/app-tests-app_scope-attempt1-d89ce38b1/xcresult-files.json",
+      "originalMethodIdentitiesAndArgumentResultsIndependentlyMatched": true,
+      "sourceInputsLockAndManifestUnchanged": true,
+      "finalSourceApplicability": "NOT_ASSESSED_AFTER_SUBSEQUENT_SOURCE_CORRECTIONS"
+    },
+    {
+      "id": "native_editor",
+      "status": "EXECUTED_PASS",
+      "source": "d89ce38b170bc9af4734cd11e30ca793b16698d0",
+      "startedAtUTC": "2026-11-25T03:51:57.803393+00:00",
+      "finishedAtUTC": "2026-11-25T03:53:00.122127+00:00",
+      "runnerDurationSeconds": 61.581,
+      "exitCode": 0,
+      "methodCount": 4,
+      "invocationCount": 5,
+      "passedMethods": 4,
+      "failedMethods": 0,
+      "skipped": 0,
+      "expectedFailures": 0,
+      "destinationID": "F1D52257-55E0-4927-8029-E19D47B51AC0",
+      "rawLogSHA256": "b019158e6422e3824ea03db27b9613df747e666222a317df04492d44d02517a2",
+      "receipt": "evidence/app-tests-native_editor-attempt1-d89ce38b1/receipt.json",
+      "caseIdentities": "evidence/app-tests-native_editor-attempt1-d89ce38b1/case-identities.json",
+      "rawCaseTree": "evidence/app-tests-native_editor-attempt1-d89ce38b1/tests.json",
+      "xcresultFilesManifest": "evidence/app-tests-native_editor-attempt1-d89ce38b1/xcresult-files.json",
+      "originalMethodIdentitiesAndArgumentResultsIndependentlyMatched": true,
+      "sourceInputsLockAndManifestUnchanged": true,
+      "finalSourceApplicability": "NOT_ASSESSED_AFTER_SUBSEQUENT_SOURCE_CORRECTIONS"
+    },
+    {
+      "id": "native_engines",
+      "status": "FAILED",
+      "source": "d89ce38b170bc9af4734cd11e30ca793b16698d0",
+      "startedAtUTC": "2026-11-25T03:53:14.068780+00:00",
+      "finishedAtUTC": "2026-11-25T03:56:01.273846+00:00",
+      "runnerDurationSeconds": 166.453,
+      "exitCode": 65,
+      "methodCount": 4,
+      "invocationCount": 4,
+      "passedMethods": 2,
+      "failedMethods": 2,
+      "skipped": 0,
+      "expectedFailures": 0,
+      "destinationID": "F1D52257-55E0-4927-8029-E19D47B51AC0",
+      "rawLogSHA256": "4d84455f3f906666f5f8abb0028f34acafcc7b643ffee279c49b9c631d46a2ba",
+      "receipt": "evidence/app-tests-native_engines-attempt1-d89ce38b1/receipt.json",
+      "caseIdentities": "evidence/app-tests-native_engines-attempt1-d89ce38b1/case-identities.json",
+      "rawCaseTree": "evidence/app-tests-native_engines-attempt1-d89ce38b1/tests.json",
+      "xcresultFilesManifest": "evidence/app-tests-native_engines-attempt1-d89ce38b1/xcresult-files.json",
+      "originalMethodIdentitiesAndArgumentResultsIndependentlyMatched": true,
+      "sourceInputsLockAndManifestUnchanged": true,
+      "finalSourceApplicability": "NOT_ASSESSED_AFTER_SUBSEQUENT_SOURCE_CORRECTIONS"
+    },
+    {
+      "id": "ui_phone",
+      "status": "FAILED",
+      "source": "d89ce38b170bc9af4734cd11e30ca793b16698d0",
+      "startedAtUTC": "2026-11-25T03:57:09.924866+00:00",
+      "finishedAtUTC": "2026-11-25T04:04:26.574538+00:00",
+      "runnerDurationSeconds": 424.962,
+      "exitCode": 65,
+      "methodCount": 4,
+      "invocationCount": 4,
+      "passedMethods": 0,
+      "failedMethods": 4,
+      "skipped": 0,
+      "expectedFailures": 0,
+      "destinationID": "F1D52257-55E0-4927-8029-E19D47B51AC0",
+      "rawLogSHA256": "87cb58b4622dc7e181d59bc4b7cb2e8139ab83e93f5f87006d290d9ad52e2c4c",
+      "receipt": "evidence/app-tests-ui_phone-attempt1-d89ce38b1/receipt.json",
+      "caseIdentities": "evidence/app-tests-ui_phone-attempt1-d89ce38b1/case-identities.json",
+      "rawCaseTree": "evidence/app-tests-ui_phone-attempt1-d89ce38b1/tests.json",
+      "xcresultFilesManifest": "evidence/app-tests-ui_phone-attempt1-d89ce38b1/xcresult-files.json",
+      "originalMethodIdentitiesAndArgumentResultsIndependentlyMatched": true,
+      "sourceInputsLockAndManifestUnchanged": true,
+      "finalSourceApplicability": "NOT_ASSESSED_AFTER_SUBSEQUENT_SOURCE_CORRECTIONS"
+    },
+    {
+      "id": "ui_tablet",
+      "status": "FAILED",
+      "source": "d89ce38b170bc9af4734cd11e30ca793b16698d0",
+      "startedAtUTC": "2026-11-25T03:57:06.447683+00:00",
+      "finishedAtUTC": "2026-11-25T04:03:14.765687+00:00",
+      "runnerDurationSeconds": 353.353,
+      "exitCode": 65,
+      "methodCount": 3,
+      "invocationCount": 3,
+      "passedMethods": 0,
+      "failedMethods": 3,
+      "skipped": 0,
+      "expectedFailures": 0,
+      "destinationID": "096F698B-7016-4922-8F97-82B4A975A2B6",
+      "rawLogSHA256": "3a6cb46f516772d51718594446d52de8f27e4156489ccc8fd2cdc3c51d03bad9",
+      "receipt": "evidence/app-tests-ui_tablet-attempt1-d89ce38b1/receipt.json",
+      "caseIdentities": "evidence/app-tests-ui_tablet-attempt1-d89ce38b1/case-identities.json",
+      "rawCaseTree": "evidence/app-tests-ui_tablet-attempt1-d89ce38b1/tests.json",
+      "xcresultFilesManifest": "evidence/app-tests-ui_tablet-attempt1-d89ce38b1/xcresult-files.json",
+      "originalMethodIdentitiesAndArgumentResultsIndependentlyMatched": true,
+      "sourceInputsLockAndManifestUnchanged": true,
+      "finalSourceApplicability": "NOT_ASSESSED_AFTER_SUBSEQUENT_SOURCE_CORRECTIONS"
+    }
+  ],
+  "focusedExecutionAssessment": "evidence/app-focused-groups-d89ce38b1/assessment.json",
+  "testPlanMigration": {
+    "status": "EXECUTED_ORIGINAL_XCTESTRUN",
+    "source": "d89ce38b170bc9af4734cd11e30ca793b16698d0",
+    "receipt": "evidence/app-test-plan-xctestrun-d89ce38b1/xctestrun-migration-receipt.json",
+    "preparedOnlyReceiptPreserved": "evidence/app-test-plan-xctestrun-d89ce38b1/preparation-receipt.json",
+    "planSHA256": "f7dea489f9bbadcb7aec787be9e349de45117c092d3040971db2262a7d709005",
+    "runnerSHA256": "d39c301f90753d692bb1d1d829ac6f35a4b26d9aaeaf46f8c82d147b6d74016a",
+    "manifestSHA256": "7a298177b07b04a7554677049a6f557865f0aa9387e352107bec3ea2c60253e5",
+    "buildReceiptSHA256": "aeb414df2dc399bb14b792f4482b6ffc2b8545c9dec745a7b6e3ef176aeff958",
+    "packageResolvedSHA256": "4a55e370d71d69933efb0bc54a08973da962b4d7270da59791aa3b1ed58910bd",
+    "allFiveOriginalSelectorListsUnchanged": true,
+    "freshTestHostEnvironment": "1 in each target EnvironmentVariables; TestingEnvironmentVariables value remains null",
+    "rawMethodAndArgumentIdentitiesMatched": true
+  },
+  "incrementalBuildOrchestration": {
+    "classification": "ORCHESTRATION_NOT_ACCEPTANCE",
+    "assessment": "evidence/app-build-attempt6-d89ce38b1/build-and-orchestration-assessment.json",
+    "priorWaitingRunnerHadNoCompilerLogOrResult": true,
+    "originalAdmissionGiB": {
+      "incrementalGrowth": 2,
+      "concurrentOwners": 4,
+      "operatingSystem": 2
+    },
+    "laterConservativeReassessmentGiB": {
+      "incrementalGrowth": 4,
+      "concurrentOwners": 4,
+      "operatingSystem": 2
+    },
+    "retiredInactiveOwnedPaths": 12,
+    "recordedAllocatedBytesRetired": 1579753472,
+    "observedFreeByteDelta": -1436356608,
+    "netSpaceRecoveredClaimed": false
+  },
+  "integrationCutoffAudit": {
+    "receipt": "evidence/integration-cutoff-d89ce38b-20261125T034957Z.json",
+    "source": "d89ce38b170bc9af4734cd11e30ca793b16698d0",
+    "actualRemoteCutoffUTC": "2026-11-25T03:49:57.767147Z",
+    "localTypecheckOwnershipSupplement": "2026-11-25 03:57 UTC",
+    "newRelevantSharedRuntimeIntakeRequiredAtThatCutoff": false
+  },
+  "postFailureSourceCorrections": {
+    "keyboardOwnershipAndSemanticConfigAssertions": "8879c607eab05830ab3aad7bf011d63f8b5a3f2a",
+    "sharedAccessoryMountingPredicate": "8529b0c4b69e96895f1920bc5772b22c23f571d8",
+    "nativeScriptFixtureConsumerPolicy": "2aefb47064f8dfd8c8418b1886f039a842744ec0",
+    "originalArtifactPathResolution": "8dfa8a547fe6b61a2e98750c1c9ee4cf8a683b18",
+    "status": "SOURCE_ONLY_UNEXECUTED_IN_THIS_PACKET"
   }
 }
