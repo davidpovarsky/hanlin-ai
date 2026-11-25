@@ -813,7 +813,9 @@ struct ChatViewBottom: View {
 
     private var hasComposerAccessories: Bool {
         !selectedImages.isEmpty || !selectedDocumentURLs.isEmpty || !selectedURLs.isEmpty
-            || !selectedPrompts.isEmpty || (showModelSuggestions && !filteredModels.isEmpty)
+            || !selectedPrompts.isEmpty || !attachedCapabilities.isEmpty
+            || !capabilityConfigurationsAreValid || !filteredCapabilitySuggestions.isEmpty
+            || (showModelSuggestions && !filteredModels.isEmpty)
     }
 
     private var morphLayout: HanlinMorphGeometry.Layout {

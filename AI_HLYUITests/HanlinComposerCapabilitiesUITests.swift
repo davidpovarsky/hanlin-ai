@@ -47,7 +47,8 @@ final class HanlinComposerCapabilitiesUITests: XCTestCase {
         XCTAssertTrue(automatic.waitForExistence(timeout: 5))
         automatic.tap()
 
-        XCTAssertTrue(element("hanlin-capability-configuration").waitForExistence(timeout: 5))
+        XCTAssertTrue(configurationDone.waitForExistence(timeout: 5))
+        XCTAssertTrue(app.textFields["hanlin-capability-input-limit"].firstMatch.exists)
         XCTAssertTrue(element("morphing-action-panel").exists)
         XCTAssertFalse(app.navigationBars["Sefaria"].exists,
                        "Choosing the assistant entrypoint must not open the foreground Sefaria app")
@@ -148,7 +149,7 @@ final class HanlinComposerCapabilitiesUITests: XCTestCase {
         XCTAssertTrue(chip.waitForExistence(timeout: 5))
         XCTAssertTrue(chip.label.contains("Talmud"))
         chip.tap()
-        XCTAssertTrue(element("hanlin-capability-configuration").waitForExistence(timeout: 5))
+        XCTAssertTrue(configurationDone.waitForExistence(timeout: 5))
         selectPanel("Catalog")
         revealInBubble(talmud)
         XCTAssertEqual(talmud.value as? String, "1")
@@ -163,6 +164,12 @@ final class HanlinComposerCapabilitiesUITests: XCTestCase {
         closeBubble()
         removeAttachments()
         XCTAssertFalse(editChip(reference: fixtureReference).exists)
+    }
+
+    // SwiftUI merges the configuration stack into its parent's AX container.
+    // Its real child controls retain distinct identifiers in the captured tree.
+    private var configurationDone: XCUIElement {
+        app.buttons["hanlin-capability-configuration-done"].firstMatch
     }
 
     private var toolActivities: XCUIElementQuery {

@@ -436,8 +436,8 @@ final class HanlinScriptingPlatform {
     }
 
     func activeArtifactURL(for package: HanlinStoredPackageSnapshot) -> URL? {
-        guard let installedRoot else { return nil }
-        return installedRoot
+        guard let storeRoot = store?.root else { return nil }
+        return storeRoot
             .appending(path: "packages/\(package.record.installedPackageID.rawValue)/generations/\(package.record.activeGeneration)", directoryHint: .isDirectory)
     }
 

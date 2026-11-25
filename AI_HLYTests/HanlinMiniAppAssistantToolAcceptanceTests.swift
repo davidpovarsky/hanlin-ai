@@ -122,8 +122,12 @@ extension HanlinUnifiedHostServicesE2ETests {
             "schemaVersion": 1, "engine": engine, "entry": "index.ts",
             "tsconfig": "tsconfig.json", "assistantTools": ["echo-tool": "echo.ts"]
         ]
-        var compiler: [String: Any] = ["strict": true, "skipLibCheck": false]
-        if !nativeScript { compiler["lib"] = ["ES2023"] }
+        // NativeScript inherits its SDK's original strict-source consumer policy.
+        var compiler: [String: Any] = ["strict": true]
+        if !nativeScript {
+            compiler["skipLibCheck"] = false
+            compiler["lib"] = ["ES2023"]
+        }
         var tsconfig: [String: Any] = ["compilerOptions": compiler, "include": ["*.ts"]]
         if !nativeScript { tsconfig["extends"] = "expo/tsconfig.base" }
         let files: [[String: String]] = [

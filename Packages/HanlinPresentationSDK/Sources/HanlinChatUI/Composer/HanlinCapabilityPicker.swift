@@ -9,6 +9,7 @@ public struct HanlinCapabilityPicker: View {
     public let attachments: [HanlinCapabilityAttachment]
     public let onSelect: (HanlinComposerCapabilityDescriptor, String?) -> Void
     @State private var query = ""
+    @FocusState private var searchIsFocused: Bool
 
     public init(capabilities: [HanlinComposerCapabilityDescriptor],
                 attachments: [HanlinCapabilityAttachment],
@@ -32,6 +33,8 @@ public struct HanlinCapabilityPicker: View {
             TextField(String(localized: "hanlin.composer.capabilities.search", bundle: HanlinLocalization.bundle),
                       text: $query)
                 .textFieldStyle(.roundedBorder)
+                .focused($searchIsFocused)
+                .hanlinComposerFieldFocus(searchIsFocused)
                 .accessibilityIdentifier("hanlin-capability-search")
             if filtered.isEmpty {
                 ContentUnavailableView.search(text: query)

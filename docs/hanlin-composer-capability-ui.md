@@ -63,13 +63,36 @@ HanlinCapabilityConfigurationView(
 }
 ```
 
-Both registration routes edit the same attachment binding. The host validates custom component output against the declared action/input contract before dispatch. Catalog rows, panel/action menus, coordinate/radius inputs and the map-center action retain at least 44-point targets inside the existing bubble's scroll viewport.
+Both registration routes edit the same attachment binding. The shared validator checks the configuration schema and declared fields. Providers validate additional fields edited by custom panels before dispatch; an action’s inputSchema validates model arguments and does not replace custom configuration validation. Catalog rows, panel/action menus, coordinate/radius inputs and the map-center action retain at least 44-point targets inside the existing bubble's scroll viewport.
 
 ## @ and / queries
 
 `HanlinComposerCapabilityQuery.parse(text:selection:hasMarkedText:)` uses the UTF-16 insertion point rather than assuming the caret is at the end. It ignores marked text, nonempty selections, emails and URLs, and tracks the whole token containing the caret. Before replacing a token, `replacingToken(in:with:)` checks that the original token is still present.
 
 `NativeMultilineTextEditor` exposes `onCapabilityQueryChange` and a one-shot `SelectionRequest`. The request is accepted only for matching text and draft ownership, so choosing a suggestion in the middle of RTL/emoji text preserves surrounding content and places the caret after the replacement. Existing AI-model mentions remain available alongside capability suggestions.
+
+## Keyboard focus in custom panels
+
+The shared search, text and numeric controls publish native text-input focus with
+`hanlinComposerFieldFocus(_:)`. A custom panel uses the same modifier with its
+`@FocusState` value:
+
+```swift
+@FocusState private var isSearchFocused: Bool
+
+TextField("Search within catalog", text: $query)
+    .focused($isSearchFocused)
+    .hanlinComposerFieldFocus(isSearchFocused)
+```
+
+Embedding hosts can observe `HanlinComposerFieldFocusPreferenceKey` on their
+composer subtree and register that focus with their existing keyboard owner.
+The compact app workspace uses its original window-scoped
+`HanlinCompactSearchFocusRegistration` and the existing keyboard-frame observer.
+The modifier neither moves focus nor changes configuration. Native
+[FocusState](https://developer.apple.com/documentation/swiftui/focusstate/) and
+[SwiftUI preferences](https://developer.apple.com/documentation/swiftui/preferences)
+carry the state; no second keyboard observer is installed.
 
 ## Validation evidence
 
