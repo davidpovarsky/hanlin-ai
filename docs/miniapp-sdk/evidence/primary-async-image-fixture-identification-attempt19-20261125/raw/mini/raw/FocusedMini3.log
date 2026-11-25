@@ -1,0 +1,1341 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project AI_HLY.xcodeproj -destination "platform=iOS Simulator,id=E742FBCD-8FF0-4130-B143-7F8328637138" -parallel-testing-enabled NO -derivedDataPath /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete -clonedSourcePackagesDirPath /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/SourcePackages -skipPackagePluginValidation -skipMacroValidation CODE_SIGNING_ALLOWED=YES CODE_SIGNING_REQUIRED=YES CODE_SIGN_IDENTITY=- -collect-test-diagnostics never -scheme HanlinMiniApps test-without-building -resultBundlePath /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v2/native-result/paired-prefix/FocusedMini3.xcresult "-only-testing:HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEditButtonEditsOriginalList" "-only-testing:HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierHitTestingAndSubmitScope" "-only-testing:HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualInputLayoutAndDataAdapters"
+
+Build settings from command line:
+    CODE_SIGN_IDENTITY = -
+    CODE_SIGNING_ALLOWED = YES
+    CODE_SIGNING_REQUIRED = YES
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  swift-log: https://github.com/apple/swift-log.git @ 96a2f8a
+  swift-collections: https://github.com/apple/swift-collections.git @ 1.3.0
+  Yams: https://github.com/jpsim/Yams.git @ 6.2.2
+  SwiftTreeSitter: https://github.com/tree-sitter/swift-tree-sitter @ 08ef81e
+  RichTextKit: https://github.com/danielsaidi/RichTextKit.git @ 8aa44cf
+  TreeSitterBash: https://github.com/tree-sitter/tree-sitter-bash @ a06c2e4
+  HTMLEntities: https://github.com/Kitura/swift-html-entities @ 4.0.1
+  iosMath: https://github.com/junyan72/iosMath @ ba9ab77
+  CoreXLSX: https://github.com/CoreOffice/CoreXLSX @ 1391f38
+  NetworkImage: https://github.com/gonzalezreal/NetworkImage @ 6.0.1
+  swift-argument-parser: https://github.com/apple/swift-argument-parser @ 1.8.2
+  XMLCoder: https://github.com/maxdesiatov/XMLCoder.git @ 0.14.0
+  ZIPFoundation: https://github.com/weichsel/ZIPFoundation @ 0.9.19
+  swift-system: https://github.com/apple/swift-system.git @ 1.4.0
+  NativeScriptSDK: https://github.com/NativeScript/ios-spm.git @ 9.1.1
+  swift-nio: https://github.com/apple/swift-nio.git @ 2.94.0
+  MathJaxSwift: https://github.com/colinc86/MathJaxSwift @ 3.4.0
+  mcp-swift-sdk: https://github.com/modelcontextprotocol/swift-sdk.git @ a0ae212
+  swift-atomics: https://github.com/apple/swift-atomics.git @ 1.3.0
+  swift-syntax: https://github.com/swiftlang/swift-syntax.git @ 603.0.2
+  TreeSitter: https://github.com/tree-sitter/tree-sitter @ da6fe9b
+  LaTeXSwiftUI: https://github.com/colinc86/LaTeXSwiftUI @ c45e0fd
+  LLM: https://github.com/eastriverlee/LLM.swift/ @ 4b25178
+  swift-json-schema: https://github.com/ajevans99/swift-json-schema @ 0.13.2
+  HanlinSDK: /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete @ local
+  SwiftDraw: https://github.com/swhitty/SwiftDraw @ 0.21.0
+  SwiftStreamingMarkdown: https://github.com/davidpovarsky/hanlin-streaming-markdown @ 5cbb4b6
+  cmark-gfm: https://github.com/swiftlang/swift-cmark @ 0.9.0
+  HighlightSwift: https://github.com/appstefan/highlightswift @ 99c431b
+  EventSource: https://github.com/mattt/eventsource.git @ 1.1.0
+  SwiftUI-Shimmer: https://github.com/markiv/SwiftUI-Shimmer @ 1.5.1
+  Equatable: https://github.com/ordo-one/equatable @ 1.4.1
+  swift-markdown-ui: https://github.com/gonzalezreal/MarkdownUI.git @ 5f61335
+  SwiftSoup: https://github.com/scinfu/SwiftSoup @ bba848d
+  swift-markdown: https://github.com/swiftlang/swift-markdown.git @ 0.7.3
+  SwiftyJSON: https://github.com/SwiftyJSON/SwiftyJSON.git @ 5.0.1
+  BitByteData: https://github.com/tsolomko/BitByteData @ 2.1.0
+  SWCompression: https://github.com/tsolomko/SWCompression.git @ c729f0b
+  A2UISwiftCore: https://github.com/a2ui-project/a2ui @ 3ed9601
+  SwiftAISDK: https://github.com/davidpovarsky/swift-ai-sdk.git @ 07431ab
+
+Writing result bundle at path:
+	/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v2/native-result/paired-prefix/FocusedMini3.xcresult
+
+Resolve Package Graph
+2026-11-25 12:27:47.397986+0100 HanlinMiniAppsUITests-Runner[8815:5218740] [Default] Running tests...
+2026-11-25 12:27:47.444436+0100 HanlinMiniAppsUITests-Runner[8815:5218740] [UIKit App Config] Update the Info.plist: Launch screens will soon be required.
+
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-11-25 12:27:50.372.
+Test Suite 'HanlinMiniAppsUITests.xctest' started at 2026-11-25 12:27:50.372.
+Test Suite 'MiniAppsProductionRuntimeUITests' started at 2026-11-25 12:27:50.373.
+Test Case '-[HanlinMiniAppsUITests.MiniAppsProductionRuntimeUITests testStandaloneExpoGeneratedEditButtonEditsOriginalList]' started.
+    t =     0.00s Start Test at 2026-11-25 12:27:50.375
+    t =     0.30s Set Up
+    t =     0.30s     Open com.itorah.hanlinminiapps
+    t =     0.30s         Launch com.itorah.hanlinminiapps
+2026-11-25 12:27:50.904 xcodebuild[8709:5217524] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-25 12:27:50.905 xcodebuild[8709:5217524] [MT] IDELaunchParametersSnapshot: no debugger version
+objc[8815]: Class UIAccessibilityLoaderWebShared is implemented in both /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.dmYYVr/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x104d9c398) and /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.dmYYVr/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x104ed4310). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+Resolve Package Graph
+
+    t =     5.72s             Setting up automation session
+    t =     9.04s             Wait for com.itorah.hanlinminiapps to idle
+<unknown>:0: warning: -[HanlinMiniAppsUITests.MiniAppsProductionRuntimeUITests testStandaloneExpoGeneratedEditButtonEditsOriginalList] : Update the Info.plist: Support for all orientations will soon be required.
+    t =    10.71s Waiting 30.0s for "hanlin-apps-add" Button to exist
+    t =    11.78s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-apps-add" Button`
+    t =    11.78s         Checking existence of `"hanlin-apps-add" Button`
+    t =    11.89s Waiting 30.0s for "hanlin-apps-add" Button to exist
+    t =    12.96s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-apps-add" Button`
+    t =    12.96s         Checking existence of `"hanlin-apps-add" Button`
+    t =    13.00s Tap "hanlin-apps-add" Button
+    t =    13.00s     Wait for com.itorah.hanlinminiapps to idle
+    t =    13.01s     Find the "hanlin-apps-add" Button
+    t =    13.08s     Check for interrupting elements affecting "hanlin-apps-add" Button
+    t =    13.15s         Wait for com.apple.springboard to idle
+    t =    13.23s     Synthesize event
+    t =    13.67s     Wait for com.itorah.hanlinminiapps to idle
+    t =    14.24s Waiting 15.0s for "hanlin-import-script-package" Button to exist
+    t =    15.31s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-script-package" Button`
+    t =    15.31s         Checking existence of `"hanlin-import-script-package" Button`
+    t =    15.44s Tap "hanlin-import-script-package" Button
+    t =    15.44s     Wait for com.itorah.hanlinminiapps to idle
+    t =    15.45s     Find the "hanlin-import-script-package" Button
+    t =    15.56s     Check for interrupting elements affecting "hanlin-import-script-package" Button
+    t =    15.63s         Wait for com.apple.springboard to idle
+    t =    15.65s     Synthesize event
+    t =    15.93s     Wait for com.itorah.hanlinminiapps to idle
+    t =    16.38s Waiting 15.0s for "hanlin-package-import-list" CollectionView to exist
+    t =    17.46s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-import-list" CollectionView`
+    t =    17.46s         Checking existence of `"hanlin-package-import-list" CollectionView`
+    t =    17.54s Checking existence of `"ExpoSwiftUIProbeA" Button`
+    t =    17.65s Find the "ExpoSwiftUIProbeA" Button
+    t =    17.76s Waiting 15.0s for "ExpoSwiftUIProbeA" Button to exist
+    t =    18.83s     Checking `Expect predicate `existsNoRetry == 1` for object "ExpoSwiftUIProbeA" Button`
+    t =    18.83s         Checking existence of `"ExpoSwiftUIProbeA" Button`
+    t =    18.93s Find the "ExpoSwiftUIProbeA" Button
+    t =    19.04s Tap "ExpoSwiftUIProbeA" Button
+    t =    19.04s     Wait for com.itorah.hanlinminiapps to idle
+    t =    19.05s     Find the "ExpoSwiftUIProbeA" Button
+    t =    19.14s     Check for interrupting elements affecting "ExpoSwiftUIProbeA" Button
+    t =    19.22s         Wait for com.apple.springboard to idle
+    t =    19.23s     Synthesize event
+    t =    19.53s     Wait for com.itorah.hanlinminiapps to idle
+    t =    19.53s Checking existence of `"hanlin-package-install" Button`
+    t =    19.68s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    19.78s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    20.19s Checking existence of `"hanlin-package-install" Button`
+    t =    20.33s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    20.46s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    20.69s Checking existence of `"hanlin-package-install" Button`
+    t =    20.81s Checking existence of `"hanlin-approve-all-capabilities" Button`
+    t =    20.88s Find the "hanlin-package-install" Button
+    t =    21.01s Find the "hanlin-package-install" Button
+    t =    21.14s Find the "hanlin-package-install" Button
+    t =    21.27s Tap "hanlin-package-install" Button
+    t =    21.27s     Wait for com.itorah.hanlinminiapps to idle
+    t =    21.27s     Find the "hanlin-package-install" Button
+    t =    21.40s     Check for interrupting elements affecting "hanlin-package-install" Button
+    t =    21.47s         Wait for com.apple.springboard to idle
+    t =    21.49s     Synthesize event
+    t =    21.78s     Wait for com.itorah.hanlinminiapps to idle
+    t =    21.85s Checking existence of `"hanlin-package-install" Button`
+    t =    22.00s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    22.16s Checking existence of `"hanlin-package-install" Button`
+    t =    22.32s Waiting 10.0s for "Done" Button to exist
+    t =    23.40s     Checking `Expect predicate `existsNoRetry == 1` for object "Done" Button`
+    t =    23.40s         Checking existence of `"Done" Button`
+    t =    23.48s Tap "Done" Button
+    t =    23.48s     Wait for com.itorah.hanlinminiapps to idle
+    t =    23.48s     Find the "Done" Button
+    t =    23.53s     Check for interrupting elements affecting "hanlin-package-import-done" Button
+    t =    23.61s         Wait for com.apple.springboard to idle
+    t =    23.64s     Synthesize event
+    t =    23.93s     Wait for com.itorah.hanlinminiapps to idle
+    t =    24.30s Waiting 10.0s for "hanlin-apps-add-done" Button to exist
+    t =    25.38s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-apps-add-done" Button`
+    t =    25.38s         Checking existence of `"hanlin-apps-add-done" Button`
+    t =    25.46s Tap "hanlin-apps-add-done" Button
+    t =    25.46s     Wait for com.itorah.hanlinminiapps to idle
+    t =    25.47s     Find the "hanlin-apps-add-done" Button
+    t =    25.53s     Check for interrupting elements affecting "hanlin-apps-add-done" Button
+    t =    25.60s         Wait for com.apple.springboard to idle
+    t =    25.62s     Synthesize event
+    t =    25.91s     Wait for com.itorah.hanlinminiapps to idle
+    t =    26.31s Waiting 30.0s for "hanlin-apps-add" Button to exist
+    t =    27.37s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-apps-add" Button`
+    t =    27.37s         Checking existence of `"hanlin-apps-add" Button`
+    t =    27.42s Find the Target Application 'com.itorah.hanlinminiapps'
+    t =    27.66s Added attachment named 'companion-import-ExpoSwiftUIProbeA'
+    t =    27.66s Requesting snapshot of accessibility hierarchy for app with pid 8848
+    t =    27.88s Requesting snapshot of accessibility hierarchy for app with pid 8848
+    t =    27.98s Added attachment named 'companion-import-ExpoSwiftUIProbeA-accessibility'
+    t =    27.98s Checking existence of `"hanlin-package-card-Expo SwiftUI Probe A" Button`
+    t =    28.04s Find the "hanlin-package-card-Expo SwiftUI Probe A" Button
+    t =    28.11s Waiting 30.0s for "hanlin-package-card-Expo SwiftUI Probe A" Button to exist
+    t =    29.19s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-card-Expo SwiftUI Probe A" Button`
+    t =    29.19s         Checking existence of `"hanlin-package-card-Expo SwiftUI Probe A" Button`
+    t =    29.26s Find the "hanlin-package-card-Expo SwiftUI Probe A" Button
+    t =    29.32s Tap "hanlin-package-card-Expo SwiftUI Probe A" Button
+    t =    29.32s     Wait for com.itorah.hanlinminiapps to idle
+    t =    29.33s     Find the "hanlin-package-card-Expo SwiftUI Probe A" Button
+    t =    29.39s     Check for interrupting elements affecting "hanlin-package-card-Expo SwiftUI Probe A" Button
+    t =    29.44s         Wait for com.apple.springboard to idle
+    t =    29.47s     Synthesize event
+    t =    29.78s     Wait for com.itorah.hanlinminiapps to idle
+    t =    29.82s Waiting 5.0s for "Open Generated Views Probe" Button to exist
+    t =    30.87s     Checking `Expect predicate `existsNoRetry == 1` for object "Open Generated Views Probe" Button`
+    t =    30.87s         Checking existence of `"Open Generated Views Probe" Button`
+    t =    31.09s         Capturing element debug description
+    t =    31.85s     Checking `Expect predicate `existsNoRetry == 1` for object "Open Generated Views Probe" Button`
+    t =    31.85s         Checking existence of `"Open Generated Views Probe" Button`
+    t =    32.02s         Capturing element debug description
+    t =    32.88s     Checking `Expect predicate `existsNoRetry == 1` for object "Open Generated Views Probe" Button`
+    t =    32.88s         Checking existence of `"Open Generated Views Probe" Button`
+    t =    33.05s         Capturing element debug description
+    t =    33.91s     Checking `Expect predicate `existsNoRetry == 1` for object "Open Generated Views Probe" Button`
+    t =    33.91s         Checking existence of `"Open Generated Views Probe" Button`
+    t =    34.15s         Capturing element debug description
+    t =    34.83s     Checking `Expect predicate `existsNoRetry == 1` for object "Open Generated Views Probe" Button`
+    t =    34.83s         Checking existence of `"Open Generated Views Probe" Button`
+    t =    35.05s         Capturing element debug description
+    t =    35.05s     Checking existence of `"Open Generated Views Probe" Button`
+    t =    35.24s Collecting debug information to assist test failure triage
+    t =    35.24s     Requesting snapshot of accessibility hierarchy for app with pid 8848
+    t =    35.43s Checking existence of `Button (First Match)`
+    t =    35.58s Find the Button (First Match)
+    t =    35.85s Tap "Show Sidebar" Button
+    t =    35.85s     Wait for com.itorah.hanlinminiapps to idle
+    t =    35.86s     Find the "Show Sidebar" Button
+    t =    35.99s     Check for interrupting elements affecting "Show Sidebar" Button
+    t =    36.09s         Wait for com.apple.springboard to idle
+    t =    36.11s     Synthesize event
+    t =    36.45s     Wait for com.itorah.hanlinminiapps to idle
+    t =    37.25s Waiting 15.0s for Button (First Match) to exist
+    t =    38.33s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    38.33s         Checking existence of `Button (First Match)`
+    t =    38.56s Find the Button (First Match)
+    t =    38.78s Tap "Open Generated Views Probe" Button
+    t =    38.78s     Wait for com.itorah.hanlinminiapps to idle
+    t =    38.79s     Find the "Open Generated Views Probe" Button
+    t =    39.01s     Check for interrupting elements affecting "Open Generated Views Probe" Button
+    t =    39.13s         Wait for com.apple.springboard to idle
+    t =    39.15s     Synthesize event
+    t =    39.46s     Wait for com.itorah.hanlinminiapps to idle
+    t =    39.46s Waiting 15.0s for Button (First Match) to exist
+    t =    40.53s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    40.53s         Checking existence of `Button (First Match)`
+    t =    40.64s Find the Button (First Match)
+    t =    40.77s Tap "Generated EditButton list" Button
+    t =    40.77s     Wait for com.itorah.hanlinminiapps to idle
+    t =    40.77s     Find the "Generated EditButton list" Button
+    t =    40.88s     Check for interrupting elements affecting "Generated EditButton list" Button
+    t =    40.95s         Wait for com.apple.springboard to idle
+    t =    40.97s     Synthesize event
+    t =    41.28s     Wait for com.itorah.hanlinminiapps to idle
+    t =    41.28s Waiting 15.0s for StaticText (First Match) to exist
+    t =    42.35s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =    42.35s         Checking existence of `StaticText (First Match)`
+    t =    42.49s Waiting 15.0s for StaticText (First Match) to exist
+    t =    43.54s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =    43.54s         Checking existence of `StaticText (First Match)`
+    t =    43.68s Waiting 15.0s for "generated-edit-button" Button to exist
+    t =    44.75s     Checking `Expect predicate `existsNoRetry == 1` for object "generated-edit-button" Button`
+    t =    44.75s         Checking existence of `"generated-edit-button" Button`
+    t =    44.77s Find the "generated-edit-button" Button
+    t =    44.79s Find the "generated-edit-button" Button
+    t =    44.83s Tap "generated-edit-button" Button
+    t =    44.83s     Wait for com.itorah.hanlinminiapps to idle
+    t =    44.83s     Find the "generated-edit-button" Button
+    t =    44.85s     Check for interrupting elements affecting "generated-edit-button" Button
+    t =    44.93s         Wait for com.apple.springboard to idle
+    t =    44.96s     Synthesize event
+    t =    45.27s     Wait for com.itorah.hanlinminiapps to idle
+    t =    46.00s Find the "generated-edit-button" Button
+    t =    46.03s Waiting 10.0s for Cell (First Match) to exist
+    t =    47.10s     Checking `Expect predicate `existsNoRetry == 1` for object Cell (First Match)`
+    t =    47.10s         Checking existence of `Cell (First Match)`
+    t =    47.20s Waiting 10.0s for "minus.circle.fill" Image to exist
+    t =    48.24s     Checking `Expect predicate `existsNoRetry == 1` for object "minus.circle.fill" Image`
+    t =    48.24s         Checking existence of `"minus.circle.fill" Image`
+    t =    48.34s Find the "minus.circle.fill" Image
+    t =    48.45s Tap "minus.circle.fill" Image
+    t =    48.45s     Wait for com.itorah.hanlinminiapps to idle
+    t =    48.46s     Find the "minus.circle.fill" Image
+    t =    48.56s     Check for interrupting elements affecting "minus.circle.fill" Image
+    t =    48.63s         Wait for com.apple.springboard to idle
+    t =    48.65s     Synthesize event
+    t =    48.96s     Wait for com.itorah.hanlinminiapps to idle
+    t =    49.72s Checking existence of `StaticText (First Match)`
+    t =    49.87s Checking existence of `Button (First Match)`
+    t =    49.99s Find the Button (First Match)
+    t =    50.12s Checking existence of `StaticText (First Match)`
+    t =    50.25s Tap "Delete" Button
+    t =    50.25s     Wait for com.itorah.hanlinminiapps to idle
+    t =    50.25s     Find the "Delete" Button
+    t =    50.37s     Check for interrupting elements affecting "Delete" Button
+    t =    50.45s         Wait for com.apple.springboard to idle
+    t =    50.47s     Synthesize event
+    t =    50.78s     Wait for com.itorah.hanlinminiapps to idle
+    t =    51.00s Waiting 15.0s for StaticText (First Match) to exist
+    t =    52.02s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =    52.02s         Checking existence of `StaticText (First Match)`
+    t =    52.14s Waiting 15.0s for StaticText (First Match) to exist
+    t =    53.19s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =    53.19s         Checking existence of `StaticText (First Match)`
+    t =    53.31s Checking existence of `Cell (First Match)`
+    t =    53.43s Tap "generated-edit-button" Button
+    t =    53.43s     Wait for com.itorah.hanlinminiapps to idle
+    t =    53.43s     Find the "generated-edit-button" Button
+    t =    53.45s     Check for interrupting elements affecting "generated-edit-button" Button
+    t =    53.53s         Wait for com.apple.springboard to idle
+    t =    53.55s     Synthesize event
+    t =    53.86s     Wait for com.itorah.hanlinminiapps to idle
+    t =    54.57s Find the "generated-edit-button" Button
+    t =    54.59s Checking existence of `StaticText (First Match)`
+    t =    54.70s Checking existence of `StaticText (First Match)`
+    t =    54.81s Find the Target Application 'com.itorah.hanlinminiapps'
+    t =    55.03s Added attachment named 'generated-edit-button-original-delete-event'
+    t =    55.03s Requesting snapshot of accessibility hierarchy for app with pid 8848
+    t =    55.34s Requesting snapshot of accessibility hierarchy for app with pid 8848
+    t =    55.47s Added attachment named 'generated-edit-button-original-delete-event-accessibility'
+    t =    55.47s Waiting 15.0s for Button (First Match) to exist
+    t =    56.50s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    56.50s         Checking existence of `Button (First Match)`
+    t =    56.61s Find the Button (First Match)
+    t =    56.72s Tap "Generated view menu" Button
+    t =    56.72s     Wait for com.itorah.hanlinminiapps to idle
+    t =    56.73s     Find the "Generated view menu" Button
+    t =    56.84s     Check for interrupting elements affecting "Generated view menu" Button
+    t =    56.91s         Wait for com.apple.springboard to idle
+    t =    56.93s     Synthesize event
+    t =    57.23s     Wait for com.itorah.hanlinminiapps to idle
+    t =    57.23s Waiting 15.0s for Button (First Match) to exist
+    t =    58.26s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    58.26s         Checking existence of `Button (First Match)`
+    t =    58.39s Find the Button (First Match)
+    t =    58.53s Tap "Close generated views" Button
+    t =    58.53s     Wait for com.itorah.hanlinminiapps to idle
+    t =    58.53s     Find the "Close generated views" Button
+    t =    58.65s     Check for interrupting elements affecting "Close generated views" Button
+    t =    58.71s         Wait for com.apple.springboard to idle
+    t =    58.73s     Synthesize event
+    t =    59.03s     Wait for com.itorah.hanlinminiapps to idle
+    t =    59.03s Waiting 15.0s for "hanlin-script-app-close" Button to exist
+    t =    60.07s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-script-app-close" Button`
+    t =    60.07s         Checking existence of `"hanlin-script-app-close" Button`
+    t =    60.13s Find the "hanlin-script-app-close" Button
+    t =    60.19s Tap "hanlin-script-app-close" Button
+    t =    60.19s     Wait for com.itorah.hanlinminiapps to idle
+    t =    60.19s     Find the "hanlin-script-app-close" Button
+    t =    60.25s     Check for interrupting elements affecting "hanlin-script-app-close" Button
+    t =    60.35s         Wait for com.apple.springboard to idle
+    t =    60.37s     Synthesize event
+    t =    60.67s     Wait for com.itorah.hanlinminiapps to idle
+    t =    61.44s Waiting 15.0s for "hanlin-script-app-close" Button to not exist
+    t =    62.47s     Checking `Expect predicate `existsNoRetry == 0` for object "hanlin-script-app-close" Button`
+    t =    62.47s         Checking existence of `"hanlin-script-app-close" Button`
+    t =    62.55s Waiting 15.0s for "hanlin-apps-add" Button to exist
+    t =    63.58s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-apps-add" Button`
+    t =    63.58s         Checking existence of `"hanlin-apps-add" Button`
+    t =    63.63s Tear Down
+    t =    63.63s     Find the Target Application 'com.itorah.hanlinminiapps'
+    t =    63.87s     Added attachment named 'companion-runtime-failure'
+    t =    63.87s     Requesting snapshot of accessibility hierarchy for app with pid 8848
+    t =    64.06s     Requesting snapshot of accessibility hierarchy for app with pid 8848
+    t =    64.15s     Added attachment named 'companion-runtime-failure-accessibility'
+    t =    64.15s     Terminate com.itorah.hanlinminiapps:8848
+Resolve Package Graph
+Test Case '-[HanlinMiniAppsUITests.MiniAppsProductionRuntimeUITests testStandaloneExpoGeneratedEditButtonEditsOriginalList]' passed (65.342 seconds).
+Test Case '-[HanlinMiniAppsUITests.MiniAppsProductionRuntimeUITests testStandaloneExpoGeneratedModifierHitTestingAndSubmitScope]' started.
+    t =     0.00s Start Test at 2026-11-25 12:28:55.717
+    t =     0.02s Set Up
+    t =     0.02s     Open com.itorah.hanlinminiapps
+    t =     0.02s         Launch com.itorah.hanlinminiapps
+2026-11-25 12:28:55.737 xcodebuild[8709:5217524] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-25 12:28:55.737 xcodebuild[8709:5217524] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     0.23s             Setting up automation session
+
+Resolve Package Graph
+    t =     3.10s             Wait for com.itorah.hanlinminiapps to idle
+<unknown>:0: warning: -[HanlinMiniAppsUITests.MiniAppsProductionRuntimeUITests testStandaloneExpoGeneratedModifierHitTestingAndSubmitScope] : Update the Info.plist: Support for all orientations will soon be required.
+    t =     4.55s Waiting 30.0s for "hanlin-apps-add" Button to exist
+
+    t =     5.60s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-apps-add" Button`
+    t =     5.60s         Checking existence of `"hanlin-apps-add" Button`
+    t =     5.68s Waiting 30.0s for "hanlin-apps-add" Button to exist
+    t =     6.73s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-apps-add" Button`
+    t =     6.73s         Checking existence of `"hanlin-apps-add" Button`
+    t =     6.79s Tap "hanlin-apps-add" Button
+    t =     6.79s     Wait for com.itorah.hanlinminiapps to idle
+    t =     6.80s     Find the "hanlin-apps-add" Button
+    t =     6.87s     Check for interrupting elements affecting "hanlin-apps-add" Button
+    t =     6.93s         Wait for com.apple.springboard to idle
+    t =     6.95s     Synthesize event
+    t =     7.27s     Wait for com.itorah.hanlinminiapps to idle
+    t =     7.79s Waiting 15.0s for "hanlin-import-script-package" Button to exist
+    t =     8.82s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-script-package" Button`
+    t =     8.82s         Checking existence of `"hanlin-import-script-package" Button`
+    t =     8.99s Tap "hanlin-import-script-package" Button
+    t =     8.99s     Wait for com.itorah.hanlinminiapps to idle
+    t =     8.99s     Find the "hanlin-import-script-package" Button
+    t =     9.11s     Check for interrupting elements affecting "hanlin-import-script-package" Button
+    t =     9.18s         Wait for com.apple.springboard to idle
+    t =     9.20s     Synthesize event
+    t =     9.49s     Wait for com.itorah.hanlinminiapps to idle
+    t =     9.91s Waiting 15.0s for "hanlin-package-import-list" CollectionView to exist
+    t =    10.94s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-import-list" CollectionView`
+    t =    10.94s         Checking existence of `"hanlin-package-import-list" CollectionView`
+    t =    11.02s Checking existence of `"ExpoSwiftUIProbeA" Button`
+    t =    11.12s Find the "ExpoSwiftUIProbeA" Button
+    t =    11.23s Waiting 15.0s for "ExpoSwiftUIProbeA" Button to exist
+    t =    12.28s     Checking `Expect predicate `existsNoRetry == 1` for object "ExpoSwiftUIProbeA" Button`
+    t =    12.29s         Checking existence of `"ExpoSwiftUIProbeA" Button`
+    t =    12.38s Find the "ExpoSwiftUIProbeA" Button
+    t =    12.49s Tap "ExpoSwiftUIProbeA" Button
+    t =    12.49s     Wait for com.itorah.hanlinminiapps to idle
+    t =    12.49s     Find the "ExpoSwiftUIProbeA" Button
+    t =    12.59s     Check for interrupting elements affecting "ExpoSwiftUIProbeA" Button
+    t =    12.67s         Wait for com.apple.springboard to idle
+    t =    12.69s     Synthesize event
+    t =    12.98s     Wait for com.itorah.hanlinminiapps to idle
+    t =    12.99s Checking existence of `"hanlin-package-install" Button`
+    t =    13.13s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    13.27s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    13.51s Checking existence of `"hanlin-package-install" Button`
+    t =    13.64s Checking existence of `"hanlin-approve-all-capabilities" Button`
+    t =    13.72s Find the "hanlin-package-install" Button
+    t =    13.85s Find the "hanlin-package-install" Button
+    t =    13.99s Find the "hanlin-package-install" Button
+    t =    14.12s Tap "hanlin-package-install" Button
+    t =    14.12s     Wait for com.itorah.hanlinminiapps to idle
+    t =    14.13s     Find the "hanlin-package-install" Button
+    t =    14.26s     Check for interrupting elements affecting "hanlin-package-install" Button
+    t =    14.33s         Wait for com.apple.springboard to idle
+    t =    14.35s     Synthesize event
+    t =    14.64s     Wait for com.itorah.hanlinminiapps to idle
+    t =    14.69s Checking existence of `"hanlin-package-install" Button`
+    t =    14.86s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    15.01s Checking existence of `"hanlin-package-install" Button`
+    t =    15.16s Waiting 10.0s for "Done" Button to exist
+    t =    16.21s     Checking `Expect predicate `existsNoRetry == 1` for object "Done" Button`
+    t =    16.21s         Checking existence of `"Done" Button`
+    t =    16.26s Tap "Done" Button
+    t =    16.26s     Wait for com.itorah.hanlinminiapps to idle
+    t =    16.26s     Find the "Done" Button
+    t =    16.32s     Check for interrupting elements affecting "hanlin-package-import-done" Button
+    t =    16.40s         Wait for com.apple.springboard to idle
+    t =    16.42s     Synthesize event
+    t =    16.72s     Wait for com.itorah.hanlinminiapps to idle
+    t =    17.04s Waiting 10.0s for "hanlin-apps-add-done" Button to exist
+    t =    18.11s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-apps-add-done" Button`
+    t =    18.11s         Checking existence of `"hanlin-apps-add-done" Button`
+    t =    18.17s Tap "hanlin-apps-add-done" Button
+    t =    18.17s     Wait for com.itorah.hanlinminiapps to idle
+    t =    18.18s     Find the "hanlin-apps-add-done" Button
+    t =    18.23s     Check for interrupting elements affecting "hanlin-apps-add-done" Button
+    t =    18.31s         Wait for com.apple.springboard to idle
+    t =    18.33s     Synthesize event
+    t =    18.62s     Wait for com.itorah.hanlinminiapps to idle
+    t =    19.01s Waiting 30.0s for "hanlin-apps-add" Button to exist
+    t =    20.04s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-apps-add" Button`
+    t =    20.04s         Checking existence of `"hanlin-apps-add" Button`
+    t =    20.08s Find the Target Application 'com.itorah.hanlinminiapps'
+    t =    20.32s Added attachment named 'companion-import-ExpoSwiftUIProbeA'
+    t =    20.32s Requesting snapshot of accessibility hierarchy for app with pid 9013
+    t =    20.52s Requesting snapshot of accessibility hierarchy for app with pid 9013
+    t =    20.62s Added attachment named 'companion-import-ExpoSwiftUIProbeA-accessibility'
+    t =    20.62s Checking existence of `"hanlin-package-card-Expo SwiftUI Probe A" Button`
+    t =    20.69s Find the "hanlin-package-card-Expo SwiftUI Probe A" Button
+    t =    20.78s Waiting 30.0s for "hanlin-package-card-Expo SwiftUI Probe A" Button to exist
+    t =    21.80s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-card-Expo SwiftUI Probe A" Button`
+    t =    21.80s         Checking existence of `"hanlin-package-card-Expo SwiftUI Probe A" Button`
+    t =    21.86s Find the "hanlin-package-card-Expo SwiftUI Probe A" Button
+    t =    21.93s Tap "hanlin-package-card-Expo SwiftUI Probe A" Button
+    t =    21.93s     Wait for com.itorah.hanlinminiapps to idle
+    t =    21.93s     Find the "hanlin-package-card-Expo SwiftUI Probe A" Button
+    t =    21.99s     Check for interrupting elements affecting "hanlin-package-card-Expo SwiftUI Probe A" Button
+    t =    22.05s         Wait for com.apple.springboard to idle
+    t =    22.07s     Synthesize event
+    t =    22.36s     Wait for com.itorah.hanlinminiapps to idle
+    t =    22.96s Waiting 5.0s for "Open Generated Modifiers Probe" Button to exist
+    t =    23.97s     Checking `Expect predicate `existsNoRetry == 1` for object "Open Generated Modifiers Probe" Button`
+    t =    23.97s         Checking existence of `"Open Generated Modifiers Probe" Button`
+    t =    24.21s         Capturing element debug description
+    t =    25.05s     Checking `Expect predicate `existsNoRetry == 1` for object "Open Generated Modifiers Probe" Button`
+    t =    25.05s         Checking existence of `"Open Generated Modifiers Probe" Button`
+    t =    25.23s         Capturing element debug description
+    t =    25.96s     Checking `Expect predicate `existsNoRetry == 1` for object "Open Generated Modifiers Probe" Button`
+    t =    25.96s         Checking existence of `"Open Generated Modifiers Probe" Button`
+    t =    26.14s         Capturing element debug description
+    t =    26.99s     Checking `Expect predicate `existsNoRetry == 1` for object "Open Generated Modifiers Probe" Button`
+    t =    26.99s         Checking existence of `"Open Generated Modifiers Probe" Button`
+    t =    27.18s         Capturing element debug description
+    t =    27.97s     Checking `Expect predicate `existsNoRetry == 1` for object "Open Generated Modifiers Probe" Button`
+    t =    27.97s         Checking existence of `"Open Generated Modifiers Probe" Button`
+    t =    28.16s         Capturing element debug description
+    t =    28.17s     Checking existence of `"Open Generated Modifiers Probe" Button`
+    t =    28.34s Collecting debug information to assist test failure triage
+    t =    28.34s     Requesting snapshot of accessibility hierarchy for app with pid 9013
+    t =    28.52s Checking existence of `Button (First Match)`
+    t =    28.62s Find the Button (First Match)
+    t =    28.73s Tap "Show Sidebar" Button
+    t =    28.73s     Wait for com.itorah.hanlinminiapps to idle
+    t =    28.73s     Find the "Show Sidebar" Button
+    t =    28.84s     Check for interrupting elements affecting "Show Sidebar" Button
+    t =    28.93s         Wait for com.apple.springboard to idle
+    t =    28.95s     Synthesize event
+    t =    29.26s     Wait for com.itorah.hanlinminiapps to idle
+    t =    30.04s Waiting 15.0s for Button (First Match) to exist
+    t =    31.08s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    31.09s         Checking existence of `Button (First Match)`
+    t =    31.30s Find the Button (First Match)
+    t =    31.52s Tap "Open Generated Modifiers Probe" Button
+    t =    31.52s     Wait for com.itorah.hanlinminiapps to idle
+    t =    31.52s     Find the "Open Generated Modifiers Probe" Button
+    t =    31.73s     Check for interrupting elements affecting "Open Generated Modifiers Probe" Button
+    t =    31.85s         Wait for com.apple.springboard to idle
+    t =    31.87s     Synthesize event
+    t =    32.17s     Wait for com.itorah.hanlinminiapps to idle
+    t =    32.18s Waiting 15.0s for Button (First Match) to exist
+    t =    33.25s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    33.25s         Checking existence of `Button (First Match)`
+    t =    33.33s Find the Button (First Match)
+    t =    33.43s Tap "Modifiers: Input" Button
+    t =    33.43s     Wait for com.itorah.hanlinminiapps to idle
+    t =    33.43s     Find the "Modifiers: Input" Button
+    t =    33.52s     Check for interrupting elements affecting "Modifiers: Input" Button
+    t =    33.58s         Wait for com.apple.springboard to idle
+    t =    33.60s     Synthesize event
+    t =    33.90s     Wait for com.itorah.hanlinminiapps to idle
+    t =    33.91s Waiting 15.0s for StaticText (First Match) to exist
+    t =    34.96s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =    34.96s         Checking existence of `StaticText (First Match)`
+    t =    35.06s Waiting 10.0s for "generated-modifier-affinity-editor" TextView to exist
+    t =    36.10s     Checking `Expect predicate `existsNoRetry == 1` for object "generated-modifier-affinity-editor" TextView`
+    t =    36.10s         Checking existence of `"generated-modifier-affinity-editor" TextView`
+    t =    36.19s Find the "generated-modifier-affinity-editor" TextView
+    t =    36.28s Find the "generated-modifier-affinity-editor" TextView
+    t =    36.36s Waiting 15.0s for StaticText (First Match) to exist
+    t =    37.40s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =    37.40s         Checking existence of `StaticText (First Match)`
+    t =    37.51s Waiting 10.0s for "Generated back target" Button to exist
+    t =    38.58s     Checking `Expect predicate `existsNoRetry == 1` for object "Generated back target" Button`
+    t =    38.58s         Checking existence of `"Generated back target" Button`
+    t =    38.68s Find the "Generated back target" Button
+    t =    38.77s Tap "Generated back target" Button[0.50, 0.50]
+    t =    38.77s     Wait for com.itorah.hanlinminiapps to idle
+    t =    38.78s     Find the "Generated back target" Button
+    t =    38.87s     Check for interrupting elements affecting "Generated back target" Button
+    t =    38.94s         Wait for com.apple.springboard to idle
+    t =    38.96s     Synthesize event
+    t =    38.97s         Find the "Generated back target" Button
+    t =    39.07s         Find the "Generated back target" Button
+    t =    39.17s         Find the "Generated back target" Button
+    t =    39.56s     Wait for com.itorah.hanlinminiapps to idle
+    t =    39.56s Waiting 15.0s for StaticText (First Match) to exist
+    t =    40.61s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =    40.61s         Checking existence of `StaticText (First Match)`
+    t =    40.72s Waiting 15.0s for Button (First Match) to exist
+    t =    41.74s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    41.74s         Checking existence of `Button (First Match)`
+    t =    41.83s Find the Button (First Match)
+    t =    41.93s Tap "Enable generated front target" Button
+    t =    41.93s     Wait for com.itorah.hanlinminiapps to idle
+    t =    41.93s     Find the "Enable generated front target" Button
+    t =    42.02s     Check for interrupting elements affecting "Enable generated front target" Button
+    t =    42.08s         Wait for com.apple.springboard to idle
+    t =    42.11s     Synthesize event
+    t =    42.42s     Wait for com.itorah.hanlinminiapps to idle
+    t =    42.42s Waiting 10.0s for "Generated front target enabled" Button to exist
+    t =    43.45s     Checking `Expect predicate `existsNoRetry == 1` for object "Generated front target enabled" Button`
+    t =    43.45s         Checking existence of `"Generated front target enabled" Button`
+    t =    43.56s Tap "Generated back target" Button[0.50, 0.50]
+    t =    43.56s     Wait for com.itorah.hanlinminiapps to idle
+    t =    43.56s     Find the "Generated back target" Button
+    t =    43.66s     Check for interrupting elements affecting "Generated back target" Button
+    t =    43.73s         Wait for com.apple.springboard to idle
+    t =    43.75s     Synthesize event
+    t =    43.76s         Find the "Generated back target" Button
+    t =    43.86s         Find the "Generated back target" Button
+    t =    43.96s         Find the "Generated back target" Button
+    t =    44.35s     Wait for com.itorah.hanlinminiapps to idle
+    t =    44.35s Waiting 15.0s for StaticText (First Match) to exist
+    t =    45.36s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =    45.36s         Checking existence of `StaticText (First Match)`
+    t =    45.45s Find the Target Application 'com.itorah.hanlinminiapps'
+    t =    45.68s Added attachment named 'generated-modifier-native-hit-testing'
+    t =    45.68s Requesting snapshot of accessibility hierarchy for app with pid 9013
+    t =    46.13s Requesting snapshot of accessibility hierarchy for app with pid 9013
+    t =    46.26s Added attachment named 'generated-modifier-native-hit-testing-accessibility'
+    t =    46.27s Waiting 10.0s for "generated-modifier-input" TextField to exist
+    t =    47.30s     Checking `Expect predicate `existsNoRetry == 1` for object "generated-modifier-input" TextField`
+    t =    47.30s         Checking existence of `"generated-modifier-input" TextField`
+    t =    47.38s Find the "generated-modifier-input" TextField
+    t =    47.47s Tap "generated-modifier-input" TextField
+    t =    47.47s     Wait for com.itorah.hanlinminiapps to idle
+    t =    47.47s     Find the "generated-modifier-input" TextField
+    t =    47.56s     Check for interrupting elements affecting "generated-modifier-input" TextField
+    t =    47.63s         Wait for com.apple.springboard to idle
+    t =    47.65s     Synthesize event
+    t =    47.96s     Wait for com.itorah.hanlinminiapps to idle
+    t =    49.16s Type 'native input
+' into "generated-modifier-input" TextField
+    t =    49.16s     Wait for com.itorah.hanlinminiapps to idle
+    t =    49.52s     Find the "generated-modifier-input" TextField
+    t =    49.67s     Check for interrupting elements affecting "generated-modifier-input" TextField
+    t =    49.77s         Wait for com.apple.springboard to idle
+    t =    49.80s     Synthesize event
+    t =    50.23s     Wait for com.itorah.hanlinminiapps to idle
+    t =    50.48s Waiting 15.0s for StaticText (First Match) to exist
+    t =    51.52s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =    51.52s         Checking existence of `StaticText (First Match)`
+    t =    51.61s Checking existence of `StaticText (First Match)`
+    t =    51.81s Checking existence of `StaticText (First Match)`
+    t =    52.01s Checking existence of `StaticText (First Match)`
+    t =    52.20s Checking existence of `StaticText (First Match)`
+    t =    52.40s Checking existence of `StaticText (First Match)`
+    t =    52.60s Checking existence of `StaticText (First Match)`
+    t =    52.80s Checking existence of `StaticText (First Match)`
+    t =    53.00s Checking existence of `StaticText (First Match)`
+    t =    53.20s Checking existence of `StaticText (First Match)`
+    t =    53.39s Checking existence of `StaticText (First Match)`
+    t =    53.58s Checking existence of `StaticText (First Match)`
+    t =    53.78s Checking existence of `StaticText (First Match)`
+    t =    53.87s Waiting 15.0s for StaticText (First Match) to exist
+    t =    54.93s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =    54.93s         Checking existence of `StaticText (First Match)`
+    t =    55.02s Waiting 15.0s for Button (First Match) to exist
+    t =    56.07s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    56.07s         Checking existence of `Button (First Match)`
+    t =    56.16s Find the Button (First Match)
+    t =    56.26s Tap "Allow generated submit" Button
+    t =    56.26s     Wait for com.itorah.hanlinminiapps to idle
+    t =    56.27s     Find the "Allow generated submit" Button
+    t =    56.36s     Check for interrupting elements affecting "Allow generated submit" Button
+    t =    56.43s         Wait for com.apple.springboard to idle
+    t =    56.45s     Synthesize event
+    t =    56.75s     Wait for com.itorah.hanlinminiapps to idle
+    t =    56.75s Waiting 10.0s for "Generated submit allowed" Button to exist
+    t =    57.81s     Checking `Expect predicate `existsNoRetry == 1` for object "Generated submit allowed" Button`
+    t =    57.81s         Checking existence of `"Generated submit allowed" Button`
+    t =    57.91s Tap "generated-modifier-input" TextField
+    t =    57.91s     Wait for com.itorah.hanlinminiapps to idle
+    t =    57.92s     Find the "generated-modifier-input" TextField
+    t =    58.00s     Check for interrupting elements affecting "generated-modifier-input" TextField
+    t =    58.07s         Wait for com.apple.springboard to idle
+    t =    58.09s     Synthesize event
+    t =    58.38s     Wait for com.itorah.hanlinminiapps to idle
+    t =    58.71s Type '
+' into "generated-modifier-input" TextField
+    t =    58.71s     Wait for com.itorah.hanlinminiapps to idle
+    t =    58.71s     Find the "generated-modifier-input" TextField
+    t =    58.83s     Check for interrupting elements affecting "generated-modifier-input" TextField
+    t =    58.93s         Wait for com.apple.springboard to idle
+    t =    58.95s     Synthesize event
+    t =    59.17s     Wait for com.itorah.hanlinminiapps to idle
+    t =    59.43s Waiting 15.0s for StaticText (First Match) to exist
+    t =    60.47s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =    60.47s         Checking existence of `StaticText (First Match)`
+    t =    60.58s Find the Target Application 'com.itorah.hanlinminiapps'
+    t =    60.80s Added attachment named 'generated-modifier-native-submit-scope'
+    t =    60.80s Requesting snapshot of accessibility hierarchy for app with pid 9013
+    t =    61.07s Requesting snapshot of accessibility hierarchy for app with pid 9013
+    t =    61.19s Added attachment named 'generated-modifier-native-submit-scope-accessibility'
+    t =    61.19s Waiting 15.0s for Button (First Match) to exist
+    t =    62.22s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    62.22s         Checking existence of `Button (First Match)`
+    t =    62.31s Find the Button (First Match)
+    t =    62.41s Tap "Generated modifier menu" Button
+    t =    62.41s     Wait for com.itorah.hanlinminiapps to idle
+    t =    62.42s     Find the "Generated modifier menu" Button
+    t =    62.51s     Check for interrupting elements affecting "Generated modifier menu" Button
+    t =    62.58s         Wait for com.apple.springboard to idle
+    t =    62.60s     Synthesize event
+    t =    62.89s     Wait for com.itorah.hanlinminiapps to idle
+    t =    62.90s Waiting 15.0s for Button (First Match) to exist
+    t =    63.93s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    63.93s         Checking existence of `Button (First Match)`
+    t =    64.02s Find the Button (First Match)
+    t =    64.12s Tap "Exit Generated Modifiers Probe" Button
+    t =    64.12s     Wait for com.itorah.hanlinminiapps to idle
+    t =    64.13s     Find the "Exit Generated Modifiers Probe" Button
+    t =    64.22s     Check for interrupting elements affecting "Exit Generated Modifiers Probe" Button
+    t =    64.29s         Wait for com.apple.springboard to idle
+    t =    64.31s     Synthesize event
+    t =    64.60s     Wait for com.itorah.hanlinminiapps to idle
+    t =    64.67s Waiting 15.0s for "hanlin-script-app-close" Button to exist
+    t =    65.75s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-script-app-close" Button`
+    t =    65.75s         Checking existence of `"hanlin-script-app-close" Button`
+    t =    65.80s Find the "hanlin-script-app-close" Button
+    t =    65.87s Tap "hanlin-script-app-close" Button
+    t =    65.87s     Wait for com.itorah.hanlinminiapps to idle
+    t =    65.87s     Find the "hanlin-script-app-close" Button
+    t =    65.93s     Check for interrupting elements affecting "hanlin-script-app-close" Button
+    t =    66.05s         Wait for com.apple.springboard to idle
+    t =    66.06s     Synthesize event
+    t =    66.37s     Wait for com.itorah.hanlinminiapps to idle
+    t =    67.14s Waiting 15.0s for "hanlin-script-app-close" Button to not exist
+    t =    68.19s     Checking `Expect predicate `existsNoRetry == 0` for object "hanlin-script-app-close" Button`
+    t =    68.19s         Checking existence of `"hanlin-script-app-close" Button`
+    t =    68.28s Waiting 15.0s for "hanlin-apps-add" Button to exist
+    t =    69.32s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-apps-add" Button`
+    t =    69.32s         Checking existence of `"hanlin-apps-add" Button`
+    t =    69.36s Tear Down
+    t =    69.36s     Find the Target Application 'com.itorah.hanlinminiapps'
+    t =    69.60s     Added attachment named 'companion-runtime-failure'
+    t =    69.60s     Requesting snapshot of accessibility hierarchy for app with pid 9013
+    t =    69.81s     Requesting snapshot of accessibility hierarchy for app with pid 9013
+    t =    69.91s     Added attachment named 'companion-runtime-failure-accessibility'
+    t =    69.91s     Terminate com.itorah.hanlinminiapps:9013
+Test Case '-[HanlinMiniAppsUITests.MiniAppsProductionRuntimeUITests testStandaloneExpoGeneratedModifierHitTestingAndSubmitScope]' passed (71.060 seconds).
+Test Case '-[HanlinMiniAppsUITests.MiniAppsProductionRuntimeUITests testStandaloneExpoManualInputLayoutAndDataAdapters]' started.
+    t =     0.00s Start Test at 2026-11-25 12:30:06.777
+    t =     0.02s Set Up
+    t =     0.02s     Open com.itorah.hanlinminiapps
+    t =     0.02s         Launch com.itorah.hanlinminiapps
+2026-11-25 12:30:06.799 xcodebuild[8709:5217524] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-25 12:30:06.799 xcodebuild[8709:5217524] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     0.24s             Setting up automation session
+Resolve Package Graph
+
+    t =     3.15s             Wait for com.itorah.hanlinminiapps to idle
+<unknown>:0: warning: -[HanlinMiniAppsUITests.MiniAppsProductionRuntimeUITests testStandaloneExpoManualInputLayoutAndDataAdapters] : Update the Info.plist: Support for all orientations will soon be required.
+    t =     4.60s Waiting 30.0s for "hanlin-apps-add" Button to exist
+    t =     5.61s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-apps-add" Button`
+    t =     5.61s         Checking existence of `"hanlin-apps-add" Button`
+    t =     5.70s Waiting 30.0s for "hanlin-apps-add" Button to exist
+    t =     6.76s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-apps-add" Button`
+    t =     6.76s         Checking existence of `"hanlin-apps-add" Button`
+    t =     6.80s Tap "hanlin-apps-add" Button
+    t =     6.80s     Wait for com.itorah.hanlinminiapps to idle
+    t =     6.80s     Find the "hanlin-apps-add" Button
+    t =     6.88s     Check for interrupting elements affecting "hanlin-apps-add" Button
+    t =     6.94s         Wait for com.apple.springboard to idle
+    t =     6.96s     Synthesize event
+    t =     7.28s     Wait for com.itorah.hanlinminiapps to idle
+    t =     7.81s Waiting 15.0s for "hanlin-import-script-package" Button to exist
+    t =     8.83s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-script-package" Button`
+    t =     8.83s         Checking existence of `"hanlin-import-script-package" Button`
+    t =     8.99s Tap "hanlin-import-script-package" Button
+    t =     8.99s     Wait for com.itorah.hanlinminiapps to idle
+    t =     8.99s     Find the "hanlin-import-script-package" Button
+    t =     9.12s     Check for interrupting elements affecting "hanlin-import-script-package" Button
+    t =     9.19s         Wait for com.apple.springboard to idle
+    t =     9.21s     Synthesize event
+    t =     9.51s     Wait for com.itorah.hanlinminiapps to idle
+    t =     9.90s Waiting 15.0s for "hanlin-package-import-list" CollectionView to exist
+    t =    10.94s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-import-list" CollectionView`
+    t =    10.94s         Checking existence of `"hanlin-package-import-list" CollectionView`
+    t =    11.02s Checking existence of `"ExpoSwiftUIProbeA" Button`
+    t =    11.14s Find the "ExpoSwiftUIProbeA" Button
+    t =    11.26s Waiting 15.0s for "ExpoSwiftUIProbeA" Button to exist
+    t =    12.29s     Checking `Expect predicate `existsNoRetry == 1` for object "ExpoSwiftUIProbeA" Button`
+    t =    12.29s         Checking existence of `"ExpoSwiftUIProbeA" Button`
+    t =    12.40s Find the "ExpoSwiftUIProbeA" Button
+    t =    12.52s Tap "ExpoSwiftUIProbeA" Button
+    t =    12.52s     Wait for com.itorah.hanlinminiapps to idle
+    t =    12.53s     Find the "ExpoSwiftUIProbeA" Button
+    t =    12.64s     Check for interrupting elements affecting "ExpoSwiftUIProbeA" Button
+    t =    12.72s         Wait for com.apple.springboard to idle
+    t =    12.74s     Synthesize event
+    t =    13.04s     Wait for com.itorah.hanlinminiapps to idle
+    t =    13.07s Checking existence of `"hanlin-package-install" Button`
+    t =    13.21s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    13.36s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    13.60s Checking existence of `"hanlin-package-install" Button`
+    t =    13.74s Checking existence of `"hanlin-approve-all-capabilities" Button`
+    t =    13.82s Find the "hanlin-package-install" Button
+    t =    13.97s Find the "hanlin-package-install" Button
+    t =    14.09s Find the "hanlin-package-install" Button
+    t =    14.23s Tap "hanlin-package-install" Button
+    t =    14.23s     Wait for com.itorah.hanlinminiapps to idle
+    t =    14.23s     Find the "hanlin-package-install" Button
+    t =    14.37s     Check for interrupting elements affecting "hanlin-package-install" Button
+    t =    14.44s         Wait for com.apple.springboard to idle
+    t =    14.46s     Synthesize event
+    t =    14.75s     Wait for com.itorah.hanlinminiapps to idle
+    t =    14.79s Checking existence of `"hanlin-package-install" Button`
+    t =    14.95s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    15.11s Checking existence of `"hanlin-package-install" Button`
+    t =    15.27s Waiting 10.0s for "Done" Button to exist
+    t =    16.29s     Checking `Expect predicate `existsNoRetry == 1` for object "Done" Button`
+    t =    16.29s         Checking existence of `"Done" Button`
+    t =    16.34s Tap "Done" Button
+    t =    16.34s     Wait for com.itorah.hanlinminiapps to idle
+    t =    16.34s     Find the "Done" Button
+    t =    16.39s     Check for interrupting elements affecting "hanlin-package-import-done" Button
+    t =    16.47s         Wait for com.apple.springboard to idle
+    t =    16.49s     Synthesize event
+    t =    16.79s     Wait for com.itorah.hanlinminiapps to idle
+    t =    17.12s Waiting 10.0s for "hanlin-apps-add-done" Button to exist
+    t =    18.15s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-apps-add-done" Button`
+    t =    18.15s         Checking existence of `"hanlin-apps-add-done" Button`
+    t =    18.22s Tap "hanlin-apps-add-done" Button
+    t =    18.22s     Wait for com.itorah.hanlinminiapps to idle
+    t =    18.23s     Find the "hanlin-apps-add-done" Button
+    t =    18.29s     Check for interrupting elements affecting "hanlin-apps-add-done" Button
+    t =    18.37s         Wait for com.apple.springboard to idle
+    t =    18.39s     Synthesize event
+    t =    18.69s     Wait for com.itorah.hanlinminiapps to idle
+    t =    19.11s Waiting 30.0s for "hanlin-apps-add" Button to exist
+    t =    20.17s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-apps-add" Button`
+    t =    20.17s         Checking existence of `"hanlin-apps-add" Button`
+    t =    20.21s Find the Target Application 'com.itorah.hanlinminiapps'
+    t =    20.44s Added attachment named 'companion-import-ExpoSwiftUIProbeA'
+    t =    20.44s Requesting snapshot of accessibility hierarchy for app with pid 9539
+    t =    20.63s Requesting snapshot of accessibility hierarchy for app with pid 9539
+    t =    20.72s Added attachment named 'companion-import-ExpoSwiftUIProbeA-accessibility'
+    t =    20.73s Checking existence of `"hanlin-package-card-Expo SwiftUI Probe A" Button`
+    t =    20.78s Find the "hanlin-package-card-Expo SwiftUI Probe A" Button
+    t =    20.85s Waiting 30.0s for "hanlin-package-card-Expo SwiftUI Probe A" Button to exist
+    t =    21.88s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-card-Expo SwiftUI Probe A" Button`
+    t =    21.88s         Checking existence of `"hanlin-package-card-Expo SwiftUI Probe A" Button`
+    t =    21.95s Find the "hanlin-package-card-Expo SwiftUI Probe A" Button
+    t =    22.02s Tap "hanlin-package-card-Expo SwiftUI Probe A" Button
+    t =    22.02s     Wait for com.itorah.hanlinminiapps to idle
+    t =    22.02s     Find the "hanlin-package-card-Expo SwiftUI Probe A" Button
+    t =    22.08s     Check for interrupting elements affecting "hanlin-package-card-Expo SwiftUI Probe A" Button
+    t =    22.14s         Wait for com.apple.springboard to idle
+    t =    22.16s     Synthesize event
+    t =    22.45s     Wait for com.itorah.hanlinminiapps to idle
+    t =    23.09s Waiting 5.0s for "Open Manual Adapter Probe" Button to exist
+    t =    24.12s     Checking `Expect predicate `existsNoRetry == 1` for object "Open Manual Adapter Probe" Button`
+    t =    24.12s         Checking existence of `"Open Manual Adapter Probe" Button`
+    t =    24.33s         Capturing element debug description
+    t =    25.17s     Checking `Expect predicate `existsNoRetry == 1` for object "Open Manual Adapter Probe" Button`
+    t =    25.18s         Checking existence of `"Open Manual Adapter Probe" Button`
+    t =    25.37s         Capturing element debug description
+    t =    26.10s     Checking `Expect predicate `existsNoRetry == 1` for object "Open Manual Adapter Probe" Button`
+    t =    26.10s         Checking existence of `"Open Manual Adapter Probe" Button`
+    t =    26.28s         Capturing element debug description
+    t =    27.13s     Checking `Expect predicate `existsNoRetry == 1` for object "Open Manual Adapter Probe" Button`
+    t =    27.13s         Checking existence of `"Open Manual Adapter Probe" Button`
+    t =    27.32s         Capturing element debug description
+    t =    28.09s     Checking `Expect predicate `existsNoRetry == 1` for object "Open Manual Adapter Probe" Button`
+    t =    28.09s         Checking existence of `"Open Manual Adapter Probe" Button`
+    t =    28.30s         Capturing element debug description
+    t =    28.30s     Checking existence of `"Open Manual Adapter Probe" Button`
+    t =    28.49s Collecting debug information to assist test failure triage
+    t =    28.50s     Requesting snapshot of accessibility hierarchy for app with pid 9539
+    t =    28.68s Checking existence of `Button (First Match)`
+    t =    28.79s Find the Button (First Match)
+    t =    28.91s Tap "Show Sidebar" Button
+    t =    28.91s     Wait for com.itorah.hanlinminiapps to idle
+    t =    28.91s     Find the "Show Sidebar" Button
+    t =    29.02s     Check for interrupting elements affecting "Show Sidebar" Button
+    t =    29.12s         Wait for com.apple.springboard to idle
+    t =    29.14s     Synthesize event
+    t =    29.45s     Wait for com.itorah.hanlinminiapps to idle
+    t =    30.23s Waiting 15.0s for Button (First Match) to exist
+    t =    31.29s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    31.29s         Checking existence of `Button (First Match)`
+    t =    31.53s Find the Button (First Match)
+    t =    31.74s Tap "Open Manual Adapter Probe" Button
+    t =    31.74s     Wait for com.itorah.hanlinminiapps to idle
+    t =    31.75s     Find the "Open Manual Adapter Probe" Button
+    t =    31.97s     Check for interrupting elements affecting "Open Manual Adapter Probe" Button
+    t =    32.09s         Wait for com.apple.springboard to idle
+    t =    32.11s     Synthesize event
+    t =    32.42s     Wait for com.itorah.hanlinminiapps to idle
+    t =    32.42s Waiting 10.0s for "Input adapters" Button to exist
+    t =    33.44s     Checking `Expect predicate `existsNoRetry == 1` for object "Input adapters" Button`
+    t =    33.45s         Checking existence of `"Input adapters" Button`
+    t =    33.60s Waiting 15.0s for Button (First Match) to exist
+    t =    34.68s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    34.68s         Checking existence of `Button (First Match)`
+    t =    34.83s Find the Button (First Match)
+    t =    34.96s Tap "Input adapters" Button
+    t =    34.96s     Wait for com.itorah.hanlinminiapps to idle
+    t =    34.96s     Find the "Input adapters" Button
+    t =    35.08s     Check for interrupting elements affecting "Input adapters" Button
+    t =    35.15s         Wait for com.apple.springboard to idle
+    t =    35.17s     Synthesize event
+    t =    35.48s     Wait for com.itorah.hanlinminiapps to idle
+    t =    35.48s Waiting 15.0s for StaticText (First Match) to exist
+    t =    36.53s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =    36.53s         Checking existence of `StaticText (First Match)`
+    t =    36.63s Waiting 15.0s for Button (First Match) to exist
+    t =    37.64s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    37.65s         Checking existence of `Button (First Match)`
+    t =    37.74s Find the Button (First Match)
+    t =    37.84s Tap "Focus manual editor" Button
+    t =    37.84s     Wait for com.itorah.hanlinminiapps to idle
+    t =    37.84s     Find the "Focus manual editor" Button
+    t =    37.93s     Check for interrupting elements affecting "Focus manual editor" Button
+    t =    38.00s         Wait for com.apple.springboard to idle
+    t =    38.02s     Synthesize event
+    t =    38.33s     Wait for com.itorah.hanlinminiapps to idle
+    t =    38.50s Waiting 10.0s for "manual-editor" TextView to exist
+    t =    39.54s     Checking `Expect predicate `existsNoRetry == 1` for object "manual-editor" TextView`
+    t =    39.54s         Checking existence of `"manual-editor" TextView`
+    t =    39.70s Waiting 10.0s for Keyboard (First Match) to exist
+    t =    40.72s     Checking `Expect predicate `existsNoRetry == 1` for object Keyboard (First Match)`
+    t =    40.72s         Checking existence of `Keyboard (First Match)`
+    t =    40.74s Type 'alpha' into "manual-editor" TextView
+    t =    40.74s     Wait for com.itorah.hanlinminiapps to idle
+    t =    40.75s     Find the "manual-editor" TextView
+    t =    40.88s     Check for interrupting elements affecting "manual-editor" TextView
+    t =    40.96s         Wait for com.apple.springboard to idle
+    t =    40.99s     Synthesize event
+    t =    41.28s     Wait for com.itorah.hanlinminiapps to idle
+    t =    41.29s Waiting 15.0s for StaticText (First Match) to exist
+    t =    42.33s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =    42.33s         Checking existence of `StaticText (First Match)`
+    t =    42.47s Waiting 10.0s for "manual-other-field" TextField to exist
+    t =    43.49s     Checking `Expect predicate `existsNoRetry == 1` for object "manual-other-field" TextField`
+    t =    43.49s         Checking existence of `"manual-other-field" TextField`
+    t =    43.62s Tap "manual-other-field" TextField
+    t =    43.62s     Wait for com.itorah.hanlinminiapps to idle
+    t =    43.63s     Find the "manual-other-field" TextField
+    t =    43.76s     Check for interrupting elements affecting "manual-other-field" TextField
+    t =    43.85s         Wait for com.apple.springboard to idle
+    t =    43.87s     Synthesize event
+    t =    44.18s     Wait for com.itorah.hanlinminiapps to idle
+    t =    44.18s Waiting 15.0s for StaticText (First Match) to exist
+    t =    45.20s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =    45.20s         Checking existence of `StaticText (First Match)`
+    t =    45.35s Waiting 15.0s for StaticText (First Match) to exist
+    t =    46.39s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =    46.40s         Checking existence of `StaticText (First Match)`
+    t =    46.54s Waiting 15.0s for Button (First Match) to exist
+    t =    47.56s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    47.56s         Checking existence of `Button (First Match)`
+    t =    47.70s Find the Button (First Match)
+    t =    47.85s Tap "Reset editor from React" Button
+    t =    47.85s     Wait for com.itorah.hanlinminiapps to idle
+    t =    47.85s     Find the "Reset editor from React" Button
+    t =    47.99s     Check for interrupting elements affecting "Reset editor from React" Button
+    t =    48.08s         Wait for com.apple.springboard to idle
+    t =    48.10s     Synthesize event
+    t =    48.41s     Wait for com.itorah.hanlinminiapps to idle
+    t =    48.41s Find the "manual-editor" TextView
+    t =    48.54s Find the Target Application 'com.itorah.hanlinminiapps'
+    t =    48.79s Added attachment named 'Manual TextEditor and Focused native results'
+    t =    48.79s Requesting snapshot of accessibility hierarchy for app with pid 9539
+    t =    49.23s Requesting snapshot of accessibility hierarchy for app with pid 9539
+    t =    49.38s Added attachment named 'Manual TextEditor and Focused native results-accessibility'
+    t =    49.38s Waiting 15.0s for Button (First Match) to exist
+    t =    50.45s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    50.45s         Checking existence of `Button (First Match)`
+    t =    50.60s Find the Button (First Match)
+    t =    50.77s Tap "Adapter menu" Button
+    t =    50.77s     Wait for com.itorah.hanlinminiapps to idle
+    t =    50.77s     Find the "Adapter menu" Button
+    t =    50.93s     Check for interrupting elements affecting "Adapter menu" Button
+    t =    51.01s         Wait for com.apple.springboard to idle
+    t =    51.04s     Synthesize event
+    t =    51.34s     Wait for com.itorah.hanlinminiapps to idle
+    t =    51.69s Waiting 15.0s for Button (First Match) to exist
+    t =    52.71s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    52.71s         Checking existence of `Button (First Match)`
+    t =    52.86s Find the Button (First Match)
+    t =    53.00s Tap "Search adapter" Button
+    t =    53.00s     Wait for com.itorah.hanlinminiapps to idle
+    t =    53.00s     Find the "Search adapter" Button
+    t =    53.13s     Check for interrupting elements affecting "Search adapter" Button
+    t =    53.21s         Wait for com.apple.springboard to idle
+    t =    53.23s     Synthesize event
+    t =    53.53s     Wait for com.itorah.hanlinminiapps to idle
+    t =    53.54s Waiting 15.0s for StaticText (First Match) to exist
+    t =    54.59s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =    54.60s         Checking existence of `StaticText (First Match)`
+    t =    54.73s Waiting 15.0s for Button (First Match) to exist
+    t =    55.75s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    55.75s         Checking existence of `Button (First Match)`
+    t =    55.89s Find the Button (First Match)
+    t =    56.03s Tap "MANUAL_SEARCH_ACTIONS:0" Button
+    t =    56.03s     Wait for com.itorah.hanlinminiapps to idle
+    t =    56.03s     Find the "MANUAL_SEARCH_ACTIONS:0" Button
+    t =    56.16s     Check for interrupting elements affecting "MANUAL_SEARCH_ACTIONS:0" Button
+    t =    56.23s         Wait for com.apple.springboard to idle
+    t =    56.25s     Synthesize event
+    t =    56.56s     Wait for com.itorah.hanlinminiapps to idle
+    t =    56.81s Waiting 10.0s for "MANUAL_SEARCH_ACTIONS:1" Button to exist
+    t =    57.88s     Checking `Expect predicate `existsNoRetry == 1` for object "MANUAL_SEARCH_ACTIONS:1" Button`
+    t =    57.88s         Checking existence of `"MANUAL_SEARCH_ACTIONS:1" Button`
+    t =    58.02s Waiting 10.0s for SearchField (First Match) to exist
+    t =    59.05s     Checking `Expect predicate `existsNoRetry == 1` for object SearchField (First Match)`
+    t =    59.05s         Checking existence of `SearchField (First Match)`
+    t =    59.07s Tap SearchField (First Match)
+    t =    59.07s     Wait for com.itorah.hanlinminiapps to idle
+    t =    59.08s     Find the SearchField (First Match)
+    t =    59.10s     Check for interrupting elements affecting "Manual adapter query" SearchField
+    t =    59.18s         Wait for com.apple.springboard to idle
+    t =    59.19s     Synthesize event
+    t =    59.51s     Wait for com.itorah.hanlinminiapps to idle
+    t =    60.33s Type 'hanlin' into "Manual adapter query" SearchField
+    t =    60.33s     Wait for com.itorah.hanlinminiapps to idle
+    t =    60.34s     Find the "Manual adapter query" SearchField
+    t =    60.37s     Check for interrupting elements affecting "Manual adapter query" SearchField
+    t =    60.46s         Wait for com.apple.springboard to idle
+    t =    60.49s     Synthesize event
+    t =    60.81s     Wait for com.itorah.hanlinminiapps to idle
+    t =    60.81s Waiting 15.0s for StaticText (First Match) to exist
+    t =    61.88s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =    61.88s         Checking existence of `StaticText (First Match)`
+    t =    62.07s Waiting 15.0s for StaticText (First Match) to exist
+    t =    63.11s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =    63.11s         Checking existence of `StaticText (First Match)`
+    t =    63.28s Waiting 2.0s for Button (First Match) to exist
+    t =    64.32s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    64.32s         Checking existence of `Button (First Match)`
+    t =    64.35s Find the Button (First Match)
+    t =    64.39s Tap "Search" Button
+    t =    64.39s     Wait for com.itorah.hanlinminiapps to idle
+    t =    64.40s     Find the "Search" Button
+    t =    64.43s     Check for interrupting elements affecting "Search" Button
+    t =    64.52s         Wait for com.apple.springboard to idle
+    t =    64.55s     Synthesize event
+    t =    64.85s     Wait for com.itorah.hanlinminiapps to idle
+    t =    65.14s Waiting 15.0s for StaticText (First Match) to exist
+    t =    66.17s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =    66.17s         Checking existence of `StaticText (First Match)`
+    t =    66.30s Waiting 15.0s for StaticText (First Match) to exist
+    t =    67.35s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =    67.35s         Checking existence of `StaticText (First Match)`
+    t =    67.48s Find the Target Application 'com.itorah.hanlinminiapps'
+    t =    67.72s Added attachment named 'Manual Searchable complete native submit'
+    t =    67.72s Requesting snapshot of accessibility hierarchy for app with pid 9539
+    t =    68.19s Requesting snapshot of accessibility hierarchy for app with pid 9539
+    t =    68.33s Added attachment named 'Manual Searchable complete native submit-accessibility'
+    t =    68.34s Waiting 15.0s for Button (First Match) to exist
+    t =    69.38s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    69.38s         Checking existence of `Button (First Match)`
+    t =    69.60s Find the Button (First Match)
+    t =    69.73s Tap "Adapter menu" Button
+    t =    69.73s     Wait for com.itorah.hanlinminiapps to idle
+    t =    69.73s     Find the "Adapter menu" Button
+    t =    69.85s     Check for interrupting elements affecting "Adapter menu" Button
+    t =    69.93s         Wait for com.apple.springboard to idle
+    t =    69.95s     Synthesize event
+    t =    70.27s     Wait for com.itorah.hanlinminiapps to idle
+    t =    70.28s Waiting 15.0s for Button (First Match) to exist
+    t =    71.34s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    71.34s         Checking existence of `Button (First Match)`
+    t =    71.46s Find the Button (First Match)
+    t =    71.60s Tap "Layout adapters" Button
+    t =    71.60s     Wait for com.itorah.hanlinminiapps to idle
+    t =    71.60s     Find the "Layout adapters" Button
+    t =    71.74s     Check for interrupting elements affecting "Layout adapters" Button
+    t =    71.82s         Wait for com.apple.springboard to idle
+    t =    71.84s     Synthesize event
+    t =    72.14s     Wait for com.itorah.hanlinminiapps to idle
+    t =    72.15s Waiting 10.0s for "V1" Button to exist
+    t =    73.17s     Checking `Expect predicate `existsNoRetry == 1` for object "V1" Button`
+    t =    73.17s         Checking existence of `"V1" Button`
+    t =    73.28s Waiting 10.0s for "V2" Button to exist
+    t =    74.32s     Checking `Expect predicate `existsNoRetry == 1` for object "V2" Button`
+    t =    74.32s         Checking existence of `"V2" Button`
+    t =    74.43s Waiting 10.0s for "V3" Button to exist
+    t =    75.48s     Checking `Expect predicate `existsNoRetry == 1` for object "V3" Button`
+    t =    75.48s         Checking existence of `"V3" Button`
+    t =    75.58s Waiting 10.0s for "H1" Button to exist
+    t =    76.64s     Checking `Expect predicate `existsNoRetry == 1` for object "H1" Button`
+    t =    76.64s         Checking existence of `"H1" Button`
+    t =    76.76s Waiting 10.0s for "H2" Button to exist
+    t =    77.82s     Checking `Expect predicate `existsNoRetry == 1` for object "H2" Button`
+    t =    77.82s         Checking existence of `"H2" Button`
+    t =    77.94s Waiting 10.0s for "H3" Button to exist
+    t =    78.95s     Checking `Expect predicate `existsNoRetry == 1` for object "H3" Button`
+    t =    78.95s         Checking existence of `"H3" Button`
+    t =    79.06s Find the "V1" Button
+    t =    79.17s Find the "V2" Button
+    t =    79.27s Find the "V3" Button
+    t =    79.38s Find the "V1" Button
+    t =    79.48s Find the "H1" Button
+    t =    79.59s Find the "H2" Button
+    t =    79.70s Find the "H3" Button
+    t =    79.81s Find the "H1" Button
+    t =    79.92s Waiting 15.0s for Button (First Match) to exist
+    t =    80.97s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    80.97s         Checking existence of `Button (First Match)`
+    t =    81.06s Find the Button (First Match)
+    t =    81.16s Tap "V3" Button
+    t =    81.16s     Wait for com.itorah.hanlinminiapps to idle
+    t =    81.17s     Find the "V3" Button
+    t =    81.26s     Check for interrupting elements affecting "V3" Button
+    t =    81.33s         Wait for com.apple.springboard to idle
+    t =    81.35s     Synthesize event
+    t =    81.65s     Wait for com.itorah.hanlinminiapps to idle
+    t =    81.65s Waiting 15.0s for StaticText (First Match) to exist
+    t =    82.69s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =    82.69s         Checking existence of `StaticText (First Match)`
+    t =    82.80s Waiting 15.0s for Button (First Match) to exist
+    t =    83.83s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    83.83s         Checking existence of `Button (First Match)`
+    t =    83.94s Find the Button (First Match)
+    t =    84.05s Tap "H3" Button
+    t =    84.05s     Wait for com.itorah.hanlinminiapps to idle
+    t =    84.05s     Find the "H3" Button
+    t =    84.14s     Check for interrupting elements affecting "H3" Button
+    t =    84.20s         Wait for com.apple.springboard to idle
+    t =    84.22s     Synthesize event
+    t =    84.52s     Wait for com.itorah.hanlinminiapps to idle
+    t =    84.53s Waiting 15.0s for StaticText (First Match) to exist
+    t =    85.60s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =    85.60s         Checking existence of `StaticText (First Match)`
+    t =    85.68s Waiting 10.0s for "FIT_COMPACT" Button to exist
+    t =    86.70s     Checking `Expect predicate `existsNoRetry == 1` for object "FIT_COMPACT" Button`
+    t =    86.70s         Checking existence of `"FIT_COMPACT" Button`
+    t =    86.80s Checking existence of `"FIT_WIDE" Button`
+    t =    86.92s Waiting 15.0s for Button (First Match) to exist
+    t =    87.97s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    87.97s         Checking existence of `Button (First Match)`
+    t =    88.06s Find the Button (First Match)
+    t =    88.16s Tap "FIT_COMPACT" Button
+    t =    88.16s     Wait for com.itorah.hanlinminiapps to idle
+    t =    88.16s     Find the "FIT_COMPACT" Button
+    t =    88.26s     Check for interrupting elements affecting "FIT_COMPACT" Button
+    t =    88.32s         Wait for com.apple.springboard to idle
+    t =    88.34s     Synthesize event
+    t =    88.65s     Wait for com.itorah.hanlinminiapps to idle
+    t =    88.65s Waiting 15.0s for StaticText (First Match) to exist
+    t =    89.69s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =    89.69s         Checking existence of `StaticText (First Match)`
+    t =    89.79s Waiting 15.0s for Button (First Match) to exist
+    t =    90.85s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    90.85s         Checking existence of `Button (First Match)`
+    t =    90.94s Find the Button (First Match)
+    t =    91.05s Tap "Expand fit proposal" Button
+    t =    91.05s     Wait for com.itorah.hanlinminiapps to idle
+    t =    91.05s     Find the "Expand fit proposal" Button
+    t =    91.15s     Check for interrupting elements affecting "Expand fit proposal" Button
+    t =    91.21s         Wait for com.apple.springboard to idle
+    t =    91.23s     Synthesize event
+    t =    91.53s     Wait for com.itorah.hanlinminiapps to idle
+    t =    91.54s Waiting 10.0s for "FIT_WIDE" Button to exist
+    t =    92.58s     Checking `Expect predicate `existsNoRetry == 1` for object "FIT_WIDE" Button`
+    t =    92.58s         Checking existence of `"FIT_WIDE" Button`
+    t =    92.68s Checking existence of `"FIT_COMPACT" Button`
+    t =    92.80s Waiting 15.0s for Button (First Match) to exist
+    t =    93.86s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    93.86s         Checking existence of `Button (First Match)`
+    t =    93.97s Find the Button (First Match)
+    t =    94.07s Tap "FIT_WIDE" Button
+    t =    94.07s     Wait for com.itorah.hanlinminiapps to idle
+    t =    94.08s     Find the "FIT_WIDE" Button
+    t =    94.17s     Check for interrupting elements affecting "FIT_WIDE" Button
+    t =    94.24s         Wait for com.apple.springboard to idle
+    t =    94.26s     Synthesize event
+    t =    94.56s     Wait for com.itorah.hanlinminiapps to idle
+    t =    94.57s Waiting 15.0s for StaticText (First Match) to exist
+    t =    95.59s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =    95.59s         Checking existence of `StaticText (First Match)`
+    t =    95.69s Waiting 10.0s for "INSET_ACTIONS:0" Button to exist
+    t =    96.75s     Checking `Expect predicate `existsNoRetry == 1` for object "INSET_ACTIONS:0" Button`
+    t =    96.75s         Checking existence of `"INSET_ACTIONS:0" Button`
+    t =    96.85s Find the "INSET_ACTIONS:0" Button
+    t =    96.96s Find the "H3" Button
+    t =    97.07s Waiting 15.0s for Button (First Match) to exist
+    t =    98.10s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    98.10s         Checking existence of `Button (First Match)`
+    t =    98.19s Find the Button (First Match)
+    t =    98.29s Tap "INSET_ACTIONS:0" Button
+    t =    98.29s     Wait for com.itorah.hanlinminiapps to idle
+    t =    98.29s     Find the "INSET_ACTIONS:0" Button
+    t =    98.38s     Check for interrupting elements affecting "INSET_ACTIONS:0" Button
+    t =    98.44s         Wait for com.apple.springboard to idle
+    t =    98.46s     Synthesize event
+    t =    98.77s     Wait for com.itorah.hanlinminiapps to idle
+    t =    98.77s Waiting 10.0s for "INSET_ACTIONS:1" Button to exist
+    t =    99.85s     Checking `Expect predicate `existsNoRetry == 1` for object "INSET_ACTIONS:1" Button`
+    t =    99.85s         Checking existence of `"INSET_ACTIONS:1" Button`
+    t =    99.96s Waiting 15.0s for Button (First Match) to exist
+    t =   100.99s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =   100.99s         Checking existence of `Button (First Match)`
+    t =   101.09s Find the Button (First Match)
+    t =   101.19s Tap "Move inset to top" Button
+    t =   101.19s     Wait for com.itorah.hanlinminiapps to idle
+    t =   101.19s     Find the "Move inset to top" Button
+    t =   101.28s     Check for interrupting elements affecting "Move inset to top" Button
+    t =   101.35s         Wait for com.apple.springboard to idle
+    t =   101.37s     Synthesize event
+    t =   101.68s     Wait for com.itorah.hanlinminiapps to idle
+    t =   101.69s Find the "INSET_ACTIONS:1" Button
+    t =   101.80s Find the "V1" Button
+    t =   101.91s Find the Target Application 'com.itorah.hanlinminiapps'
+    t =   102.19s Added attachment named 'Manual grids adaptive fit and safe area slots'
+    t =   102.19s Requesting snapshot of accessibility hierarchy for app with pid 9539
+    t =   102.47s Requesting snapshot of accessibility hierarchy for app with pid 9539
+    t =   102.58s Added attachment named 'Manual grids adaptive fit and safe area slots-accessibility'
+    t =   102.58s Waiting 15.0s for Button (First Match) to exist
+    t =   103.63s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =   103.63s         Checking existence of `Button (First Match)`
+    t =   103.73s Find the Button (First Match)
+    t =   103.84s Tap "Adapter menu" Button
+    t =   103.84s     Wait for com.itorah.hanlinminiapps to idle
+    t =   103.84s     Find the "Adapter menu" Button
+    t =   103.94s     Check for interrupting elements affecting "Adapter menu" Button
+    t =   104.01s         Wait for com.apple.springboard to idle
+    t =   104.03s     Synthesize event
+    t =   104.33s     Wait for com.itorah.hanlinminiapps to idle
+    t =   104.34s Waiting 15.0s for Button (First Match) to exist
+    t =   105.39s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =   105.39s         Checking existence of `Button (First Match)`
+    t =   105.52s Find the Button (First Match)
+    t =   105.66s Tap "Table adapter" Button
+    t =   105.66s     Wait for com.itorah.hanlinminiapps to idle
+    t =   105.66s     Find the "Table adapter" Button
+    t =   105.79s     Check for interrupting elements affecting "Table adapter" Button
+    t =   105.87s         Wait for com.apple.springboard to idle
+    t =   105.89s     Synthesize event
+    t =   106.19s     Wait for com.itorah.hanlinminiapps to idle
+    t =   106.19s Waiting 15.0s for StaticText (First Match) to exist
+    t =   107.25s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =   107.25s         Checking existence of `StaticText (First Match)`
+    t =   107.34s Waiting 10.0s for StaticText (First Match) to exist
+    t =   108.39s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =   108.39s         Checking existence of `StaticText (First Match)`
+    t =   108.50s Tap StaticText (First Match)
+    t =   108.50s     Wait for com.itorah.hanlinminiapps to idle
+    t =   108.50s     Find the StaticText (First Match)
+    t =   108.61s     Check for interrupting elements affecting "Kiwi" StaticText
+    t =   108.68s         Wait for com.apple.springboard to idle
+    t =   108.70s     Synthesize event
+    t =   109.00s     Wait for com.itorah.hanlinminiapps to idle
+    t =   109.00s Waiting 15.0s for StaticText (First Match) to exist
+    t =   110.01s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =   110.01s         Checking existence of `StaticText (First Match)`
+    t =   110.11s Waiting 15.0s for StaticText (First Match) to exist
+    t =   111.17s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =   111.17s         Checking existence of `StaticText (First Match)`
+    t =   111.26s Waiting 15.0s for Button (First Match) to exist
+    t =   112.30s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =   112.30s         Checking existence of `Button (First Match)`
+    t =   112.42s Find the Button (First Match)
+    t =   112.52s Tap "Clear table selection" Button
+    t =   112.52s     Wait for com.itorah.hanlinminiapps to idle
+    t =   112.52s     Find the "Clear table selection" Button
+    t =   112.61s     Check for interrupting elements affecting "Clear table selection" Button
+    t =   112.68s         Wait for com.apple.springboard to idle
+    t =   112.70s     Synthesize event
+    t =   113.00s     Wait for com.itorah.hanlinminiapps to idle
+    t =   113.01s Waiting 15.0s for StaticText (First Match) to exist
+    t =   114.04s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =   114.04s         Checking existence of `StaticText (First Match)`
+    t =   114.13s Tap "Kiwi" StaticText
+    t =   114.13s     Wait for com.itorah.hanlinminiapps to idle
+    t =   114.13s     Find the "Kiwi" StaticText
+    t =   114.24s     Check for interrupting elements affecting "Kiwi" StaticText
+    t =   114.31s         Wait for com.apple.springboard to idle
+    t =   114.33s     Synthesize event
+    t =   114.63s     Wait for com.itorah.hanlinminiapps to idle
+    t =   114.64s Waiting 15.0s for StaticText (First Match) to exist
+    t =   115.70s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =   115.70s         Checking existence of `StaticText (First Match)`
+    t =   115.79s Waiting 15.0s for Button (First Match) to exist
+    t =   116.81s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =   116.81s         Checking existence of `Button (First Match)`
+    t =   116.91s Find the Button (First Match)
+    t =   117.03s Tap "Update table values" Button
+    t =   117.03s     Wait for com.itorah.hanlinminiapps to idle
+    t =   117.03s     Find the "Update table values" Button
+    t =   117.12s     Check for interrupting elements affecting "Update table values" Button
+    t =   117.19s         Wait for com.apple.springboard to idle
+    t =   117.21s     Synthesize event
+    t =   117.51s     Wait for com.itorah.hanlinminiapps to idle
+    t =   117.51s Waiting 15.0s for StaticText (First Match) to exist
+    t =   118.55s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =   118.55s         Checking existence of `StaticText (First Match)`
+    t =   118.65s Waiting 15.0s for StaticText (First Match) to exist
+    t =   119.69s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =   119.69s         Checking existence of `StaticText (First Match)`
+    t =   119.80s Find the Target Application 'com.itorah.hanlinminiapps'
+    t =   120.03s Added attachment named 'Manual Table native selection and changed rows'
+    t =   120.03s Requesting snapshot of accessibility hierarchy for app with pid 9539
+    t =   120.33s Requesting snapshot of accessibility hierarchy for app with pid 9539
+    t =   120.46s Added attachment named 'Manual Table native selection and changed rows-accessibility'
+    t =   120.46s Waiting 15.0s for Button (First Match) to exist
+    t =   121.48s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =   121.48s         Checking existence of `Button (First Match)`
+    t =   121.59s Find the Button (First Match)
+    t =   121.69s Tap "Adapter menu" Button
+    t =   121.69s     Wait for com.itorah.hanlinminiapps to idle
+    t =   121.70s     Find the "Adapter menu" Button
+    t =   121.79s     Check for interrupting elements affecting "Adapter menu" Button
+    t =   121.87s         Wait for com.apple.springboard to idle
+    t =   121.89s     Synthesize event
+    t =   122.18s     Wait for com.itorah.hanlinminiapps to idle
+    t =   122.19s Waiting 15.0s for Button (First Match) to exist
+    t =   123.26s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =   123.26s         Checking existence of `Button (First Match)`
+    t =   123.40s Find the Button (First Match)
+    t =   123.53s Tap "Image adapter" Button
+    t =   123.53s     Wait for com.itorah.hanlinminiapps to idle
+    t =   123.53s     Find the "Image adapter" Button
+    t =   123.66s     Check for interrupting elements affecting "Image adapter" Button
+    t =   123.73s         Wait for com.apple.springboard to idle
+    t =   123.75s     Synthesize event
+    t =   124.05s     Wait for com.itorah.hanlinminiapps to idle
+    t =   124.06s Waiting 15.0s for StaticText (First Match) to exist
+    t =   125.07s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =   125.07s         Checking existence of `StaticText (First Match)`
+    t =   125.18s         Capturing element debug description
+    t =   126.12s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =   126.12s         Checking existence of `StaticText (First Match)`
+    t =   126.21s         Capturing element debug description
+    t =   127.06s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =   127.06s         Checking existence of `StaticText (First Match)`
+    t =   127.14s         Capturing element debug description
+    t =   128.09s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =   128.09s         Checking existence of `StaticText (First Match)`
+    t =   128.18s         Capturing element debug description
+    t =   129.10s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =   129.10s         Checking existence of `StaticText (First Match)`
+    t =   129.19s         Capturing element debug description
+    t =   130.13s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =   130.13s         Checking existence of `StaticText (First Match)`
+    t =   130.22s         Capturing element debug description
+    t =   131.08s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =   131.08s         Checking existence of `StaticText (First Match)`
+    t =   131.16s         Capturing element debug description
+    t =   132.06s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =   132.06s         Checking existence of `StaticText (First Match)`
+    t =   132.15s         Capturing element debug description
+    t =   133.08s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =   133.08s         Checking existence of `StaticText (First Match)`
+    t =   133.17s         Capturing element debug description
+    t =   134.10s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =   134.10s         Checking existence of `StaticText (First Match)`
+    t =   134.19s         Capturing element debug description
+    t =   135.13s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =   135.13s         Checking existence of `StaticText (First Match)`
+    t =   135.21s         Capturing element debug description
+    t =   136.15s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =   136.15s         Checking existence of `StaticText (First Match)`
+    t =   136.24s         Capturing element debug description
+    t =   137.08s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =   137.08s         Checking existence of `StaticText (First Match)`
+    t =   137.17s         Capturing element debug description
+    t =   138.12s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =   138.12s         Checking existence of `StaticText (First Match)`
+    t =   138.21s         Capturing element debug description
+    t =   139.06s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =   139.06s         Checking existence of `StaticText (First Match)`
+    t =   139.16s         Capturing element debug description
+    t =   139.16s     Checking existence of `StaticText (First Match)`
+    t =   139.25s Collecting debug information to assist test failure triage
+    t =   139.25s     Requesting snapshot of accessibility hierarchy for app with pid 9539
+/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift:633: error: -[HanlinMiniAppsUITests.MiniAppsProductionRuntimeUITests testStandaloneExpoManualInputLayoutAndDataAdapters] : XCTAssertTrue failed - Missing exact native adapter result: IMAGE_EMPTY_SLOT
+    t =   139.65s Tear Down
+    t =   139.65s     Find the Target Application 'com.itorah.hanlinminiapps'
+    t =   140.05s     Added attachment named 'companion-runtime-failure'
+    t =   140.05s     Requesting snapshot of accessibility hierarchy for app with pid 9539
+    t =   140.33s     Requesting snapshot of accessibility hierarchy for app with pid 9539
+    t =   140.44s     Added attachment named 'companion-runtime-failure-accessibility'
+    t =   140.44s     Terminate com.itorah.hanlinminiapps:9539
+Test Case '-[HanlinMiniAppsUITests.MiniAppsProductionRuntimeUITests testStandaloneExpoManualInputLayoutAndDataAdapters]' failed (141.827 seconds).
+Test Suite 'MiniAppsProductionRuntimeUITests' failed at 2026-11-25 12:32:28.605.
+	 Executed 3 tests, with 1 failure (0 unexpected) in 278.229 (278.232) seconds
+Test Suite 'HanlinMiniAppsUITests.xctest' failed at 2026-11-25 12:32:28.605.
+	 Executed 3 tests, with 1 failure (0 unexpected) in 278.229 (278.233) seconds
+Test Suite 'Selected tests' failed at 2026-11-25 12:32:28.606.
+	 Executed 3 tests, with 1 failure (0 unexpected) in 278.229 (278.234) seconds
+2026-11-25 12:32:28.942 xcodebuild[8709:5217524] [MT] IDETestOperationsObserverDebug: 284.212 elapsed -- Testing started completed.
+2026-11-25 12:32:28.942 xcodebuild[8709:5217524] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-25 12:32:28.942 xcodebuild[8709:5217524] [MT] IDETestOperationsObserverDebug: 284.212 sec, +284.212 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v2/native-result/paired-prefix/FocusedMini3.xcresult
+
+Failing tests:
+	MiniAppsProductionRuntimeUITests.testStandaloneExpoManualInputLayoutAndDataAdapters()
+
+** TEST EXECUTE FAILED **
+
+Resolve Package Graph
+Testing started

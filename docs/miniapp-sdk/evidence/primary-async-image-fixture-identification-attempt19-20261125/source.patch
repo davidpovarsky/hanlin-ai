@@ -1,0 +1,22 @@
+diff --git a/Fixtures/ExpoSwiftUIProbe/ManualAdapterProbe.tsx b/Fixtures/ExpoSwiftUIProbe/ManualAdapterProbe.tsx
+index 7cde5283..804ea730 100644
+--- a/Fixtures/ExpoSwiftUIProbe/ManualAdapterProbe.tsx
++++ b/Fixtures/ExpoSwiftUIProbe/ManualAdapterProbe.tsx
+@@ -7,7 +7,7 @@ import {
+   type TableRow,
+ } from '@hanlin/expo-ui';
+ import {
+-  accessibilityIdentifier, accessibilityLabel, autocorrectionDisabled, textInputAutocapitalization,
++  accessibilityIdentifier, autocorrectionDisabled, textInputAutocapitalization,
+   frame, fixedSize, navigationTitle,
+ } from '@hanlin/expo-ui/modifiers';
+ 
+@@ -135,7 +135,7 @@ function ImagePanel({ back }: { back: () => void }) {
+   const [successes, setSuccesses] = useState(0);
+   const [failures, setFailures] = useState(0);
+   return <VStack spacing={12}>
+-    <AsyncImage url={url} modifiers={[frame({width: 80, height: 80}), accessibilityLabel('Decoded adapter image')]}
++    <AsyncImage url={url} modifiers={[frame({width: 80, height: 80}), accessibilityIdentifier('Decoded adapter image')]}
+       placeholder={<Text>IMAGE_EMPTY_SLOT</Text>} failure={<Text>IMAGE_FAILURE_SLOT</Text>}
+       onPhaseChange={value => {
+         setPhase(value);

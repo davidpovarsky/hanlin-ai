@@ -1,0 +1,139 @@
+{
+  "schema": 1,
+  "observedAt": "2026-11-25T11:40:04.882260+00:00",
+  "source": "62dfff9aebd0a272486c7770d4f77ba603d535ab",
+  "members": [
+    {
+      "path": "attachments/0F5B5858-086F-415A-82D5-C415AABF0FB2.png",
+      "bytes": 148182,
+      "sha256": "02cf8717b300db7b6173d977484762bfd07dd080b9f3f79470fe5965577027fd"
+    },
+    {
+      "path": "attachments/12090BFA-5C8A-4152-A511-8FBC64359057.png",
+      "bytes": 153774,
+      "sha256": "b124dca3ff78b856ddfad42efc894368f2b796d00b9b8d6cbd8df9fe1c59d47e"
+    },
+    {
+      "path": "attachments/4C7A2A6F-06F4-41CD-A3BE-D990BD68DF78.txt",
+      "bytes": 20498,
+      "sha256": "ca4e41c3f64273abd3f22b82091e53329340ffbb3049e1da84e36820a2b96f85"
+    },
+    {
+      "path": "attachments/622356C8-D9D4-47ED-82F6-33EEE0AF87F1.txt",
+      "bytes": 12168,
+      "sha256": "38b56faf76f16573fdcdb704714faeb48282e502cdf06891f36e6cf049a6f8c5"
+    },
+    {
+      "path": "attachments/82402E02-BFB4-4251-85AA-3B9EB8E21DBD.png",
+      "bytes": 145211,
+      "sha256": "e0d88f2f343db0bc4af73cecca93455ff916a5a28e81973f642ccc214571c07f"
+    },
+    {
+      "path": "attachments/99A6E1C4-59E7-4926-9442-E68BFE844B8C.txt",
+      "bytes": 17505,
+      "sha256": "b2a0d1a78cfa0e34b899b6a9a29bb06bb50c87dd0f943143325e3a71369b18f7"
+    },
+    {
+      "path": "attachments/9C9E0875-9BA0-4FDB-AA31-703B5FF76DFE.txt",
+      "bytes": 11313,
+      "sha256": "e9765a002f02f95f934470b03be135a1b39e4e0485a3957dd170e05dd4e707b8"
+    },
+    {
+      "path": "attachments/C7E1C314-6715-47E8-BE4C-0626F5FAEAFB.png",
+      "bytes": 233873,
+      "sha256": "8a2ba3e3feb6192647b84ff7f7bdd50c235a09c3b535252ea9dd6591c2c366ef"
+    },
+    {
+      "path": "attachments/E1858AFD-532F-4FEE-9253-A2EB3A6D3B6F.txt",
+      "bytes": 14286,
+      "sha256": "981d063a1bf69ec31d1f13a621f8cac4c41b6c3e09984e8ac509991cc225513d"
+    },
+    {
+      "path": "attachments/E769238E-0B60-4E8D-B8B4-47A08077B853.png",
+      "bytes": 153781,
+      "sha256": "aa9139c4cde90685d4e8e1084aabafb3993e3256e6beaef00569290dcdca1d6e"
+    },
+    {
+      "path": "attachments/F0C5DE7B-1394-44E2-B1F8-CC6A10D917C2.txt",
+      "bytes": 16764,
+      "sha256": "47c76c055b18dd42bfac52885b5fcb1d6c9c9aa4c99f008ed0a3ad4d4cbb9368"
+    },
+    {
+      "path": "attachments/manifest.json",
+      "bytes": 51968,
+      "sha256": "fa7bc9055fa3da88af25f1fd760da889023f1b6dd0bbbf1d4caffcdde64d82ee"
+    },
+    {
+      "path": "capture.json",
+      "bytes": 6195,
+      "sha256": "e5f7fb18867fc93636c8bb383af56071c047f8860c738b6f523522af4e8fef37"
+    },
+    {
+      "path": "raw/FocusedMini3-attachments-export.log",
+      "bytes": 15384,
+      "sha256": "c32d02c8adf9791bf82d12d7aed6926aeed9d58363a1770c2bfbe9ae42040430"
+    },
+    {
+      "path": "raw/FocusedMini3-nodes.json",
+      "bytes": 4288,
+      "sha256": "4e3feaa687a6cd9f3625101166867c6fff705f33a205b3580f0e7ff5f27e7219"
+    },
+    {
+      "path": "raw/FocusedMini3-selected-tests.log",
+      "bytes": 57,
+      "sha256": "df5ef130980769b652356a28c34429171445d43d45f5ac7fa0ca4cc9ff1c5e96"
+    },
+    {
+      "path": "raw/FocusedMini3-summary.json",
+      "bytes": 2009,
+      "sha256": "134b3f1313f29a9fb84e14709b7800ac291614abc442e763653bd0bb0c91340a"
+    },
+    {
+      "path": "raw/FocusedMini3.log",
+      "bytes": 97762,
+      "sha256": "ef0a6ca469f7eea091ace70476493e7c956f593996a5e5b9cc682f472da76f95"
+    },
+    {
+      "path": "raw/child-state-at-capture.json",
+      "bytes": 22872,
+      "sha256": "5a0005645e789fc4979ff7515faf2c7ed28a589ff1f5aacdaa35cfdb388a3339"
+    },
+    {
+      "path": "raw/current-command-at-capture.json",
+      "bytes": 705,
+      "sha256": "2bebf9624026a1f915d59007a2fe0c32eea09453f67136497fc16130f41e5113"
+    },
+    {
+      "path": "raw/sample-package-hashes.json",
+      "bytes": 443,
+      "sha256": "85a9d20da00f78cb67dc6742184f96c493f8159fc91eeb538bb601b68cfc81de"
+    },
+    {
+      "path": "raw/source-sha.txt",
+      "bytes": 41,
+      "sha256": "d7cbb16b720b8e38eb7c2f12b743ee62bb6706e0122eec573f72ab00eb671f16"
+    },
+    {
+      "path": "source/Fixtures/ExpoSwiftUIProbe/ManualAdapterProbe.tsx",
+      "bytes": 11112,
+      "sha256": "4794f92fc158639b806c0f80bf74cf71775651ad2acd2c24c9462f9d810ff48e"
+    },
+    {
+      "path": "source/Fixtures/ExpoSwiftUIProbe/native-adapter-assets/pixel.png",
+      "bytes": 82,
+      "sha256": "7713482a5fab3ae135193484df75f4d0a7ce5c8ee50f6b5c33f7aacef5c5ea45"
+    },
+    {
+      "path": "source/HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+      "bytes": 91719,
+      "sha256": "da0fa21f26b677f4d18f8e1972208b39e30401a127e9dd2a9643e0fe8d7ad17c"
+    },
+    {
+      "path": "source/Scripts/ProductSplit/run_paired_acceptance.py",
+      "bytes": 47871,
+      "sha256": "a99b6194f8dd20bc30998ff2ad9e86ec219415a00615b250c65670f7dfcdba7d"
+    }
+  ],
+  "memberCount": 26,
+  "totalBytes": 1279863
+}
