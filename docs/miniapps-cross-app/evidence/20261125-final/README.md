@@ -15,7 +15,13 @@ The picker now transports original asset/package icons as bounded PNG data and l
 subtitles, reads older schema-v1 catalogs, filters context-incompatible apps consistently,
 uses the same native editing view in source-app settings, and prevents launching an app
 while editing favorites. Hebrew bridge error strings are supplied. Two new catalog
-persistence/backward-compatibility tests are added; their Apple execution is pending.
+persistence/backward-compatibility tests are added and passed on the primary Mac.
+
+At 05:09 UTC the exact package from source4e37d47a5 (implementation7b8cbba34)
+compiled both products, including native SwiftUI Picker, and executed13 actual tests:
+13 PASS,0 FAIL,0 SKIP. This is a macOS Swift package run, not iOS app acceptance.
+The command, toolchain, log and content hashes are in bridge-mac-4e37d47a/.
+It used123 MB incremental storage and completed in12 seconds.
 
 ## Live signing inventory
 
@@ -44,6 +50,11 @@ The installed distribution identity is usable in the normal m1 SSH bootstrap. Se
 direct System bootstrap produced misleading keychain/cms failures; no trust or certificate
 changes were made to compensate.
 
+A fresh independent API read at05:14 UTC confirmed unchanged profile grants and
+historical build numbers, with zero API errors. See signing-profile-inventory-0514.json
+(SHA256 cb568176d6f52636c0b1dea8e4424fc7fb7d29401b6911bb65aa88e2a5a05d88).
+The interactive Apple sign-in request was cancelled; it was not retried.
+
 ## Native evidence boundary
 
 The original artifact 14892950855 from run45325776062 was authenticated and its original
@@ -51,13 +62,23 @@ xcresult inspected on the Mac. It contains12 actual tests:9 passed,3 failed. The
 window cases stop at installation because package metadata lacks required plugins.
 The nonce case enters the actual runtime but does not reach its required output.
 
-A later, separately owned PR19 six-case diagnostic on1812bff5 reported3 raw passes and
+Historical intermediate result: a separately owned PR19 six-case diagnostic on1812bff5 reported3 raw passes and
 3 raw failures by01:29 UTC. Its nonce failure persists; SDKOnlyNativeScript also reports
 TNSLabel undefined because original TNSWidgets/NSCWinterTC metadata was excluded.
 That correction is actively owned in the parallel SDK lane. Do not duplicate it or claim
 the callback unit-test pass proves the full application. The full52-case SDK gate remains
-pending. Its latest published evidence-only PR head is05a40d39.
+pending. That snapshot was superseded during the sign-in wait. The parallel owner reports
+real upstream metadata/cold-start fixes on newer PR19 sources; the native integration
+lane is rechecking exact sources and evidence before accepting them here.
 
 Native window work and original editor integration remain in separate owned worktrees.
 No new full application acceptance, official final archive, upload or task completion
 is asserted by this source/evidence checkpoint.
+
+## Resource admission
+
+The current mac-storage-lifecycle-v2 policy admits work by actual incremental phase
+needs, concurrent growth and a situational OS margin. The200/100/50 GB levels are
+aspirational/warnings, not hard stop thresholds. One writer per mutable cache remains
+required. Cleanup of a bounded inactive compiler cache recovered1.07 GB while
+retaining source, products, logs, native evidence and newer reusable configurations.
