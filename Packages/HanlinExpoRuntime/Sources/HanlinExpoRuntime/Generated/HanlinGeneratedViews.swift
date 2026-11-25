@@ -64,7 +64,13 @@ public struct HanlinGeneratedGroupBoxView: ExpoSwiftUI.View {
     }
 
     @ViewBuilder private func namedSlot(_ name: String) -> some View {
-        if let slot = props.children?.compactMap({ $0.childView as? HanlinGeneratedSlotView }).first(where: { $0.props.name == name }) {
+        if let slot = props.children?.compactMap({ child -> HanlinGeneratedSlotView? in
+            let view = child.childView
+            if let wrapper = view as? ExpoSwiftUI.ViewWrapper {
+                return wrapper.getWrappedView() as? HanlinGeneratedSlotView
+            }
+            return view as? HanlinGeneratedSlotView
+        }).first(where: { $0.props.name == name }) {
             slot
         }
     }

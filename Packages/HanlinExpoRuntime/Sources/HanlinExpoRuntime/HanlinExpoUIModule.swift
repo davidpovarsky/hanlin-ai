@@ -188,10 +188,19 @@ public struct HanlinSlotView: ExpoSwiftUI.View {
     public var body: some View { Children() }
 }
 
+// ExpoUIView retains the original UIBaseView wrapper around authored slots.
+private func hanlinSlotView(_ child: any ExpoSwiftUI.AnyChild) -> HanlinSlotView? {
+    let view = child.childView
+    if let wrapper = view as? ExpoSwiftUI.ViewWrapper {
+        return wrapper.getWrappedView() as? HanlinSlotView
+    }
+    return view as? HanlinSlotView
+}
+
 @ViewBuilder
 private func hanlinNamedSlot(_ props: UIBaseViewProps, _ name: String) -> some View {
     if let slot = props.children?
-        .compactMap({ $0.childView as? HanlinSlotView })
+        .compactMap(hanlinSlotView)
         .first(where: { $0.props.name == name }) {
         slot
     }
@@ -264,7 +273,7 @@ public struct HanlinSearchableView: ExpoSwiftUI.View {
     // children into the root rather than mounting HanlinSlotView itself.
     @ViewBuilder private var searchableRootContent: some View {
         if let legacyContent = props.children?
-            .compactMap({ $0.childView as? HanlinSlotView })
+            .compactMap(hanlinSlotView)
             .first(where: { $0.props.name == "content" }) {
             ForEach(legacyContent.props.children ?? [], id: \.id) { child in
                 let view: any View = child.childView
@@ -272,7 +281,7 @@ public struct HanlinSearchableView: ExpoSwiftUI.View {
             }
         } else {
             ForEach(props.children?.filter { child in
-                guard let slot = child.childView as? HanlinSlotView else { return true }
+                guard let slot = hanlinSlotView(child) else { return true }
                 return slot.props.name != "suggestions"
             } ?? [], id: \.id) { child in
                 let view: any View = child.childView
@@ -283,7 +292,7 @@ public struct HanlinSearchableView: ExpoSwiftUI.View {
 
     private var hasSuggestions: Bool {
         props.children?.contains {
-            ($0.childView as? HanlinSlotView)?.props.name == "suggestions"
+            hanlinSlotView($0)?.props.name == "suggestions"
         } ?? false
     }
 
