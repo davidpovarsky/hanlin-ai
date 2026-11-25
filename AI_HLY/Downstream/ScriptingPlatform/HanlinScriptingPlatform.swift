@@ -21,6 +21,7 @@ import HanlinProductSplit
 import Observation
 import OSLog
 import UIKit
+import UserNotifications
 import WidgetKit
 
 /// Application-owned services; the runtime carries no model/credential store.
@@ -181,6 +182,7 @@ final class HanlinScriptingPlatform {
     private var isExecutingHeadlessNativeScriptAction = false
     private var isProcessingResumeCommands = false
     private var resumeDrainRequested = false
+    private var pendingNotificationEvents: [UUID: HanlinNotificationEvent] = [:]
     private var queuedNativeScriptAdmissions: Set<UUID> = []
     private var systemUIContinuation: CheckedContinuation<HanlinScriptingSystemUIResult, any Error>?
     private var applicationServices: (any HanlinScriptingApplicationServices)?
@@ -396,6 +398,7 @@ final class HanlinScriptingPlatform {
 
     func restore() async {
         guard !isTransferringProductData else { return }
+        persistPendingNotificationEvents()
         activeStoreOperations += 1
         defer { activeStoreOperations -= 1 }
         guard let store else { return }
@@ -446,6 +449,79 @@ final class HanlinScriptingPlatform {
         try extensionStore.enqueue(command)
         try reloadPendingResumeCommands()
         Task { @MainActor [weak self] in try? await self?.processPendingResumeCommands() }
+    }
+
+    /// Delivery and a later tap use the same sender-owned event ID. Persist,
+    /// retaining transient failures for retry; action execution continues apart
+    /// from the notification presentation deadline and obeys Host admission.
+    func receiveNotificationEvent(_ event: HanlinNotificationEvent) throws {
+        if let previous = pendingNotificationEvents[event.id], previous != event {
+            throw HanlinInvocationQueueError.duplicateIdentity
+        }
+        // A tapped notification may already have left the OS delivered list.
+        // Keep its decoded value until canonical storage is actually available.
+        pendingNotificationEvents[event.id] = event
+        persistPendingNotificationEvents()
+        Task { @MainActor [weak self] in await self?.resumePendingInvocations() }
+    }
+
+    private func persistPendingNotificationEvents() {
+        guard !pendingNotificationEvents.isEmpty, !isTransferringProductData else { return }
+        if extensionStore == nil {
+            do {
+                let sharedStore = try initialization.makeExtensionStore()
+                extensionStore = sharedStore
+                invocationExecutor = HanlinInvocationExecutor(store: sharedStore)
+            } catch {
+                Self.logger.error("Notification ingress retained until its App Group is available.")
+                return
+            }
+        }
+        guard let extensionStore else { return }
+        for event in pendingNotificationEvents.values.sorted(by: { $0.createdAt < $1.createdAt }) {
+            do {
+                try HanlinNotificationInvocation.enqueue(event, in: extensionStore)
+                pendingNotificationEvents.removeValue(forKey: event.id)
+            } catch HanlinInvocationQueueError.duplicateIdentity {
+                pendingNotificationEvents.removeValue(forKey: event.id)
+                Self.logger.error("Conflicting notification identity rejected; original event retained.")
+            } catch {
+                // Locked/busy/unavailable storage is retried by the normal
+                // preparation/foreground path, without a parallel disk inbox.
+                Self.logger.error("Notification ingress retained until canonical storage can be written.")
+            }
+        }
+    }
+
+    /// Called by both products' existing foreground lifecycle. Persisted
+    /// extension events remain queued while the Host is inactive/unavailable.
+    func resumePendingInvocations(recoverDeliveredNotifications: Bool = false) async {
+        guard UIApplication.shared.applicationState == .active, !isTransferringProductData else { return }
+        persistPendingNotificationEvents()
+        if recoverDeliveredNotifications {
+            // Local/nonmutable background notifications have no service
+            // extension callback. Recover the OS's actual delivered envelopes
+            // once on foreground, including delivery while storage was locked.
+            for notification in await UNUserNotificationCenter.current().deliveredNotifications() {
+                do {
+                    if let event = try HanlinNotificationEvent.decode(userInfo: notification.request.content.userInfo) {
+                        if let previous = pendingNotificationEvents[event.id], previous != event {
+                            throw HanlinInvocationQueueError.duplicateIdentity
+                        }
+                        pendingNotificationEvents[event.id] = event
+                    }
+                } catch {
+                    Self.logger.error("Delivered notification event could not be enqueued.")
+                }
+            }
+        }
+        persistPendingNotificationEvents()
+        do {
+            try reloadPendingResumeCommands()
+            try await processPendingResumeCommands()
+        } catch {
+            Self.logger.error("Foreground invocation queue could not be read.")
+        }
     }
 
     func resumeReceipt(_ id: UUID) throws -> HanlinInvocationReceipt? {
@@ -1964,6 +2040,10 @@ final class HanlinScriptingPlatform {
             for command in pendingResumeCommands {
                 let expiresAt = command.invocation.delivery?.expiresAt
                     ?? command.createdAt.addingTimeInterval(86_400)
+                if expiresAt > .now, command.invocation.delivery?.source == .notification,
+                   UIApplication.shared.applicationState != .active {
+                    continue
+                }
                 // Leave unstarted work queued while the only NS VM is owned.
                 // Expired records still reach the queue's terminal transition.
                 if expiresAt > .now,
@@ -2001,7 +2081,12 @@ final class HanlinScriptingPlatform {
         guard let store else { throw HanlinInvocationDispatchError(.needsForeground, .unavailableHost) }
         installedPackages = try await store.restore()
         let identity = command.invocation.identity
-        if let provider = CompiledMiniAppExposureRegistry.provider(packageID: identity.packageID) {
+        if command.invocation.delivery?.source == .notification {
+            try HanlinNotificationInvocation.validateTarget(command, packages: installedPackages,
+                                                             hostIsActive: UIApplication.shared.applicationState == .active)
+        }
+        if command.invocation.delivery?.source != .notification,
+           let provider = CompiledMiniAppExposureRegistry.provider(packageID: identity.packageID) {
             guard let actionName = command.invocation.entityID,
                   let expectedInstalledID = try? provider.installedPackageID,
                   identity.installedPackageID == expectedInstalledID,

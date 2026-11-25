@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Hanlin notification event v1",
+  "description": "Custom userInfo hanlin-miniapp-event data, queued for the installed Expo or NativeScript appIntent action in its product Host.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "id",
+    "createdAtUnixMilliseconds",
+    "expiresAtUnixMilliseconds",
+    "appID",
+    "identity",
+    "actionID",
+    "parameters"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "createdAtUnixMilliseconds": {
+      "type": "integer"
+    },
+    "expiresAtUnixMilliseconds": {
+      "type": "integer",
+      "description": "After createdAt; the existing invocation queue permits at most 24 hours. Checked together by native decoding."
+    },
+    "appID": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255,
+      "pattern": "^[a-z0-9]+([._-][a-z0-9]+)*$"
+    },
+    "identity": {
+      "type": "object",
+      "required": [
+        "installedPackageID",
+        "packageID",
+        "generation",
+        "entrypointID"
+      ],
+      "properties": {
+        "installedPackageID": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255,
+          "pattern": "^[a-z0-9]+([._-][a-z0-9]+)*$"
+        },
+        "packageID": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 255,
+          "pattern": "^[a-z0-9]+([._-][a-z0-9]+)*$"
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 18446744073709551615
+        },
+        "entrypointID": {
+          "type": "string",
+          "minLength": 1
+        },
+        "variantID": {
+          "type": "string",
+          "default": "default"
+        }
+      }
+    },
+    "actionID": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255,
+      "pattern": "^[A-Za-z0-9]+([._-][A-Za-z0-9]+)*$"
+    },
+    "parameters": {
+      "$ref": "#/$defs/jsonValue"
+    }
+  },
+  "$defs": {
+    "jsonValue": {
+      "anyOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/jsonValue"
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/jsonValue"
+          }
+        }
+      ]
+    }
+  }
+}

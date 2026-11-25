@@ -52,6 +52,7 @@ extension HanlinApplicationContext {
         await prepareApplication()
         await RuntimeLifecycleBridge.handleScenePhase(phase)
         if phase == .active {
+            await HanlinScriptingPlatform.shared.resumePendingInvocations(recoverDeliveredNotifications: true)
             await HanlinScriptingPlatform.shared.publishCompactAgentConfig()
         }
     }
