@@ -67,9 +67,12 @@ final class MiniAppsCrossAppPreferencesUITests: XCTestCase {
         // Package title/row/dismissal strings come from the real en/he resources.
         // Native EditButton may render a symbol: never guess its translated label.
         let variants: [(language: String, locale: String, title: String,
-                        newWindow: String, dismissal: String, isRTL: Bool)] = [
-            ("en", "en_US", "Apps", "Open shared MiniApps in a new window", "Done", false),
-            ("he", "he_IL", "אפליקציות", "פתיחת מיני־אפליקציות משותפות בחלון חדש", "סיום", true)
+                        newWindow: String, dismissal: String, isRTL: Bool,
+                        catalogTitle: String, catalogEdit: String, catalogDone: String)] = [
+            ("en", "en_US", "Apps", "Open shared MiniApps in a new window", "Done", false,
+             "Mini Apps", "Edit", "Done"),
+            ("he", "he_IL", "אפליקציות", "פתיחת מיני־אפליקציות משותפות בחלון חדש", "סיום", true,
+             "יישומים קטנים", "עריכה", "סיום")
         ]
         for (index, variant) in variants.enumerated() {
             if index > 0 {
@@ -78,6 +81,21 @@ final class MiniAppsCrossAppPreferencesUITests: XCTestCase {
                                        "-AppleLocale", variant.locale]
                 app.launch()
             }
+            let catalogToolbar = app.navigationBars[variant.catalogTitle]
+            XCTAssertTrue(catalogToolbar.waitForExistence(timeout: 15),
+                          "The original catalog must resolve its title from the shared locale resources.")
+            let catalogEdit = app.buttons["hanlin-apps-edit"]
+            XCTAssertTrue(catalogEdit.waitForExistence(timeout: 10))
+            XCTAssertEqual(catalogEdit.label, variant.catalogEdit)
+            catalogEdit.tap()
+            XCTAssertEqual(catalogEdit.label, variant.catalogDone,
+                           "The original catalog's editing confirmation must use the active language.")
+            catalogEdit.tap()
+            XCTAssertEqual(catalogEdit.label, variant.catalogEdit)
+            let catalog = XCTAttachment(screenshot: app.screenshot())
+            catalog.name = "MiniApps \(variant.language) localized original catalog"
+            catalog.lifetime = .keepAlways
+            self.add(catalog)
             openPreferences()
             let edit = app.buttons["miniapps-editor-edit"]
             let close = app.buttons["miniapps-editor-dismiss"]

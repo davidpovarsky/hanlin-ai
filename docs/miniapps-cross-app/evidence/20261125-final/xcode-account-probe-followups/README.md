@@ -24,3 +24,15 @@ Anytype also has no accessible ASC app record on the exact bundle lookup; Apple'
 https://developer.apple.com/documentation/appstoreconnectapi/apps
 
 The prior interactive Apple login was cancelled. It has not been retried. Source integration and actual native acceptance continue independently; distribution remains blocked until actual account resources carry the original required grants.
+
+## Original Anytype ASC association readback, 07:06 UTC
+
+The exact original Anytype bundle lookup returned HTTP200 with an empty complete apps list. The positive-control lookup for com.itorah.hanlinminiapps in the same authorized session returned the existing app6836449016. The two documented bundle-to-app relationship routes returned HTTP404 PATH_ERROR_REALTIONSHIP (URL path not valid); those route errors establish neither permission denial nor global absence of an app record. The supported conclusion remains **no accessible Anytype ASC record on the exact bundle lookup**, requiring account-level verification before creating anything.
+
+The immutable readback SHA256 is058f194cd4c0cbd494420a6b2b26952d8c15cd0fd09c677b31e081ff9df33df6. Its records are in actual request order:
+1. GET /v1/bundleIds/KTRM7V4TCD/relationships/app; no query.
+2. GET /v1/bundleIds/KTRM7V4TCD/app; fields[apps]=name,bundleId.
+3. GET /v1/apps; filter[bundleId]=io.anytype.app.NA6HPWARQ2; fields[apps]=name,bundleId; limit=200.
+4. GET /v1/apps; filter[bundleId]=com.itorah.hanlinminiapps; fields[apps]=name,bundleId; limit=200.
+
+This request metadata records the executed audit input; the original response receipt remains unchanged. No app record or identifier was created by this read-only audit.

@@ -58,6 +58,7 @@ export async function copyCompilerClosure(source,destination,files,label,ancesto
 }
 
 export const sdkInputs = [
+ 'Scripts/CI/IntegrationValidation/project_graph.py',
  'Scripts/Expo/package.json','Scripts/Expo/package-lock.json','Scripts/Expo/dependency-lock.json',
  'Scripts/Expo/babel.config.cjs','Scripts/Expo/metro.config.cjs','Scripts/Expo/prepare-types.mjs',
  'Scripts/Expo/build-original-widget-runtime.mjs','Scripts/Expo/sync-original-ui-exports.mjs',
