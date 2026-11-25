@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "6fbcf703dd9f40f5b1d42592d58a0a69573dcdfa",
+  "sourceCommit": "4eb1af2a625cddcf896e88edc54de7eb649ae7a2",
   "snapshotIdentity": "Base commit plus exact current hashes; uncommitted audit sources are listed separately",
   "uncommittedSourcePaths": [],
   "status": "IN_PROGRESS_SOURCE_AUDIT",
@@ -52,7 +52,7 @@
     },
     {
       "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-      "sha256": "e0bb88c13e8acb7cb4c7d9ad8e4482642ef5c7deffc79e555682b442a5491693"
+      "sha256": "820217e6c6072e2209a8bcc3d2e0c860b6acdbabab2cee396f07fa031f509939"
     },
     {
       "path": "Fixtures/ExpoNativeAPIProbe/tsconfig.json",
@@ -515,6 +515,16 @@
       "sha256": "cbce7e438c63d23cdcbc737379709ab6220997a2e39447dd962492a46d3930cc",
       "exportedSignatureVerified": false
     },
+    "HanlinMiniAppsExtensions/Notification/HanlinMiniAppsNotificationService.entitlements": {
+      "declared": {
+        "com.apple.security.application-groups": [
+          "group.com.itorah.chavrusachat",
+          "group.com.itorah.shared"
+        ]
+      },
+      "sha256": "cbce7e438c63d23cdcbc737379709ab6220997a2e39447dd962492a46d3930cc",
+      "exportedSignatureVerified": false
+    },
     "HanlinMiniAppsExtensions/Share/HanlinMiniAppsShare.entitlements": {
       "declared": {
         "com.apple.security.application-groups": [
@@ -621,13 +631,13 @@
       "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationQueue.swift",
       "line": 8,
       "anchor": "public func enqueue(",
-      "sha256": "fbc500e1ee59d0d5c014ee0d0dcf54f9bd0048e2696267f27c276666086878b6"
+      "sha256": "b9671f1d78db83f6786320a68878d01852d5a81a3383866cb26a5e52a87da5ff"
     },
     "extensionReceipts": {
       "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationDelivery.swift",
-      "line": 36,
+      "line": 39,
       "anchor": "public struct HanlinInvocationReceipt",
-      "sha256": "a5bfb9b1aa24952538ab1a5c790e2d1b2eafbf412265e337dfb56ab726e495f0"
+      "sha256": "b029004be2138cb11ef6221ab7b2c64489ec05b8e22ead565b822da1a946431f"
     },
     "extensionExecutor": {
       "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationExecutor.swift",
@@ -637,21 +647,21 @@
     },
     "resume": {
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-      "line": 1953,
+      "line": 2029,
       "anchor": "private func processPendingResumeCommands()",
-      "sha256": "e0bb88c13e8acb7cb4c7d9ad8e4482642ef5c7deffc79e555682b442a5491693"
+      "sha256": "820217e6c6072e2209a8bcc3d2e0c860b6acdbabab2cee396f07fa031f509939"
     },
     "headless": {
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-      "line": 1170,
+      "line": 1246,
       "anchor": "func executeHeadlessAction(",
-      "sha256": "e0bb88c13e8acb7cb4c7d9ad8e4482642ef5c7deffc79e555682b442a5491693"
+      "sha256": "820217e6c6072e2209a8bcc3d2e0c860b6acdbabab2cee396f07fa031f509939"
     },
     "expoActionDispatch": {
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-      "line": 1212,
+      "line": 1288,
       "anchor": "return try await adapter.actionChannel.invoke(",
-      "sha256": "e0bb88c13e8acb7cb4c7d9ad8e4482642ef5c7deffc79e555682b442a5491693"
+      "sha256": "820217e6c6072e2209a8bcc3d2e0c860b6acdbabab2cee396f07fa031f509939"
     },
     "nativeActionDispatch": {
       "file": "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
@@ -661,15 +671,15 @@
     },
     "resumeDispatch": {
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-      "line": 1997,
+      "line": 2077,
       "anchor": "func dispatchResumeCommand(",
-      "sha256": "e0bb88c13e8acb7cb4c7d9ad8e4482642ef5c7deffc79e555682b442a5491693"
+      "sha256": "820217e6c6072e2209a8bcc3d2e0c860b6acdbabab2cee396f07fa031f509939"
     },
     "translationContinuation": {
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-      "line": 1536,
+      "line": 1612,
       "anchor": "\"source\": .string(\"translationUI\")",
-      "sha256": "e0bb88c13e8acb7cb4c7d9ad8e4482642ef5c7deffc79e555682b442a5491693"
+      "sha256": "820217e6c6072e2209a8bcc3d2e0c860b6acdbabab2cee396f07fa031f509939"
     },
     "translationAction": {
       "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinExtensionNodeView.swift",
@@ -709,9 +719,45 @@
     },
     "notification": {
       "file": "Packages/HanlinAppExtensionsSDK/Sources/HanlinNotificationExtension/HanlinNotificationService.swift",
-      "line": 26,
+      "line": 29,
       "anchor": "override func didReceive(",
-      "sha256": "c0d9dfb00212b2da93cc74dc44340e7fd439b587ca643c3097c0a9324243b716"
+      "sha256": "fd2568e373da3dfdd2c35a2f0138f02cf46d7e6bd67c70b4d38109718b39480e"
+    },
+    "miniAppsNotificationPrincipal": {
+      "file": "HanlinMiniAppsExtensions/Notification/NotificationService.swift",
+      "line": 4,
+      "anchor": "final class NotificationService",
+      "sha256": "82f906b9759f275e52db99a9354642546f0b4f9f89437c4c9031e92460e627a9"
+    },
+    "notificationEvent": {
+      "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNotificationEvent.swift",
+      "line": 6,
+      "anchor": "public struct HanlinNotificationEvent",
+      "sha256": "982bbdff39e2baeb944ab476bc16d8f826f36ca38e9a3e6a75e6efaeaf3b318b"
+    },
+    "notificationQueue": {
+      "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNotificationInvocation.swift",
+      "line": 20,
+      "anchor": "public static func enqueue(",
+      "sha256": "210a1266c9b276cd0865bf9238faec73c8caaf464329a22b2c470f71f6f76706"
+    },
+    "notificationTarget": {
+      "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNotificationInvocation.swift",
+      "line": 48,
+      "anchor": "public static func validateTarget(",
+      "sha256": "210a1266c9b276cd0865bf9238faec73c8caaf464329a22b2c470f71f6f76706"
+    },
+    "notificationHostDelegate": {
+      "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinNotificationApplicationDelegate.swift",
+      "line": 11,
+      "anchor": "public final class HanlinNotificationApplicationDelegate",
+      "sha256": "65e908cc29df4bab76ef3a1b44e032fe2651b47ed4b438035b4e5757a468fa67"
+    },
+    "notificationForeground": {
+      "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+      "line": 498,
+      "anchor": "func resumePendingInvocations(",
+      "sha256": "820217e6c6072e2209a8bcc3d2e0c860b6acdbabab2cee396f07fa031f509939"
     },
     "requestBroker": {
       "file": "Packages/HanlinPlatform/Sources/HanlinMiniAppCore/HanlinMiniAppRequestBroker.swift",
@@ -789,25 +835,25 @@
       "file": "AI_HLY/AI_HLY.swift",
       "line": 8,
       "anchor": "@main",
-      "sha256": "11840d5e3f1dc0c87dba1dbe7380f8e761bdf3ed89e4d5a365d824045df72c51"
+      "sha256": "68e1f6a51fdc9bf9a313c5fea760085844d3980fd54a937075b2e3ca42879bd7"
     },
     "projectTargets": {
       "file": "AI_HLY.xcodeproj/project.pbxproj",
-      "line": 2714,
+      "line": 2785,
       "anchor": "/* Begin PBXNativeTarget section */",
-      "sha256": "c4a800e1205cb54559a7416eb33fb61eb4c369b28857087ad5a4c8bd7abaf6e6"
+      "sha256": "df2a72a6dff60393710609e5ee4fb6a40f3ef6ec0884df532e6cd171bf9a333e"
     },
     "audit": {
       "file": "Scripts/Audit/audit_miniapp_reachability.py",
       "line": 2,
       "anchor": "Curated source-backed extension matrix",
-      "sha256": "a28d4702744f94e265489ca9df18ae6a2fd666290598d6faa693810d794a0dce"
+      "sha256": "39b24956ef354e6adb3ed918ebc8ea067645c462b73bbbfea82f46d7ccd6224e"
     },
     "miniAppsBootstrap": {
       "file": "HanlinMiniAppsApp/HanlinMiniAppsApp.swift",
       "line": 12,
       "anchor": "@main",
-      "sha256": "d809d6a2e17fa989466c3c2a908884510d850d6a3070ddb691ab931af452a202"
+      "sha256": "579a27ec799ea414cd1ae58533748e79840167fca9d8b849e8a0b3d9d55118c2"
     },
     "miniAppsWidgetBundle": {
       "file": "HanlinMiniAppsExtensions/Widgets/HanlinMiniAppsWidgets.swift",
@@ -1013,6 +1059,12 @@
       "anchor": "<plist",
       "sha256": "1be4f0c17e74fd20645a76009f6ec7ad13bc59798580a50899c10789f82fbbc0"
     },
+    "HanlinMiniAppsNotificationServiceInfo": {
+      "file": "HanlinMiniAppsExtensions/Notification/Info.plist",
+      "line": 3,
+      "anchor": "<plist",
+      "sha256": "9f1fc3aa8ef55f957f6b14151c982c7ee3b006783d08c1de77d4a05a634ee6e4"
+    },
     "HanlinMiniAppsShareInfo": {
       "file": "HanlinMiniAppsExtensions/Share/Info.plist",
       "line": 3,
@@ -1089,11 +1141,23 @@
       "owner": "INT-02/INT-03"
     },
     "notification": {
-      "target": "ChavrusaChatNotificationService",
+      "target": "ChavrusaChatNotificationService / HanlinMiniAppsNotificationService / both foreground Hosts",
       "refs": [
-        "notification"
+        "notification",
+        "miniAppsNotificationPrincipal",
+        "notificationEvent",
+        "notificationQueue",
+        "notificationTarget",
+        "notificationHostDelegate",
+        "notificationForeground",
+        "extensionQueue",
+        "extensionReceipts",
+        "extensionExecutor",
+        "resumeDispatch",
+        "nativeActionDispatch",
+        "expoActionDispatch"
       ],
-      "stop": "Media attachment/category delivery only; no package event envelope, canonical Host consumer or MiniApp action receipt is established by this source route.",
+      "stop": "A versioned tagged event is durably queued in its product App Group. Mutable remote alerts use the shared service; both early application delegates handle actual local/remote foreground delivery and responses, and foreground recovery reads actual OS-delivered notifications. The live Host rechecks installation/generation and a declared Expo/NativeScript appIntent action, then persists its real result/error. No VM executes in the notification extension; OS delivery, locked storage, and surface-to-runtime cases still require actual attempt evidence.",
       "owner": "INT-05"
     },
     "liveActivity": {
@@ -2100,21 +2164,27 @@
       "surface": "notification",
       "engine": "hanlinNativeScript",
       "runtime": "node",
-      "status": "disconnected",
+      "status": "partially-wired",
       "path": "notification",
-      "runtimeTail": [],
-      "sourcePathReachesCanonicalExecutor": false,
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
-      "durableActionReceiptInSource": false,
-      "routeCondition": "No canonical Host runtime route established",
+      "durableActionReceiptInSource": true,
+      "routeCondition": "Typed notification event resumes only a current installed action in the foreground Host",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "No connected canonical-runtime receipt",
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
       "callerContext": {
-        "hostAdapterReachable": false,
+        "hostAdapterReachable": true,
         "canPresentUI": null,
-        "userGesturePresent": null,
-        "note": "No canonical Host call context is connected from this ingress"
+        "userGesturePresent": false,
+        "note": "NativeScript uses the existing foreground context when available; a new headless provider sets canPresentUI=false. Foreground continuation depends on the declared app handler."
       },
       "engineVersionSource": "source-inventory.json#/nativeScript",
       "permissions": [
@@ -2127,21 +2197,27 @@
       "surface": "notification",
       "engine": "hanlinNativeScript",
       "runtime": "typeScript",
-      "status": "disconnected",
+      "status": "partially-wired",
       "path": "notification",
-      "runtimeTail": [],
-      "sourcePathReachesCanonicalExecutor": false,
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
-      "durableActionReceiptInSource": false,
-      "routeCondition": "No canonical Host runtime route established",
+      "durableActionReceiptInSource": true,
+      "routeCondition": "Typed notification event resumes only a current installed action in the foreground Host",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "No connected canonical-runtime receipt",
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
       "callerContext": {
-        "hostAdapterReachable": false,
+        "hostAdapterReachable": true,
         "canPresentUI": null,
-        "userGesturePresent": null,
-        "note": "No canonical Host call context is connected from this ingress"
+        "userGesturePresent": false,
+        "note": "NativeScript uses the existing foreground context when available; a new headless provider sets canPresentUI=false. Foreground continuation depends on the declared app handler."
       },
       "engineVersionSource": "source-inventory.json#/nativeScript",
       "permissions": [
@@ -2154,21 +2230,27 @@
       "surface": "notification",
       "engine": "hanlinNativeScript",
       "runtime": "localPython",
-      "status": "disconnected",
+      "status": "partially-wired",
       "path": "notification",
-      "runtimeTail": [],
-      "sourcePathReachesCanonicalExecutor": false,
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
-      "durableActionReceiptInSource": false,
-      "routeCondition": "No canonical Host runtime route established",
+      "durableActionReceiptInSource": true,
+      "routeCondition": "Typed notification event resumes only a current installed action in the foreground Host",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "No connected canonical-runtime receipt",
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
       "callerContext": {
-        "hostAdapterReachable": false,
+        "hostAdapterReachable": true,
         "canPresentUI": null,
-        "userGesturePresent": null,
-        "note": "No canonical Host call context is connected from this ingress"
+        "userGesturePresent": false,
+        "note": "NativeScript uses the existing foreground context when available; a new headless provider sets canPresentUI=false. Foreground continuation depends on the declared app handler."
       },
       "engineVersionSource": "source-inventory.json#/nativeScript",
       "permissions": [
@@ -2181,21 +2263,27 @@
       "surface": "notification",
       "engine": "hanlinNativeScript",
       "runtime": "javaScriptCore",
-      "status": "disconnected",
+      "status": "partially-wired",
       "path": "notification",
-      "runtimeTail": [],
-      "sourcePathReachesCanonicalExecutor": false,
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
-      "durableActionReceiptInSource": false,
-      "routeCondition": "No canonical Host runtime route established",
+      "durableActionReceiptInSource": true,
+      "routeCondition": "Typed notification event resumes only a current installed action in the foreground Host",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "No connected canonical-runtime receipt",
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
       "callerContext": {
-        "hostAdapterReachable": false,
+        "hostAdapterReachable": true,
         "canPresentUI": null,
-        "userGesturePresent": null,
-        "note": "No canonical Host call context is connected from this ingress"
+        "userGesturePresent": false,
+        "note": "NativeScript uses the existing foreground context when available; a new headless provider sets canPresentUI=false. Foreground continuation depends on the declared app handler."
       },
       "engineVersionSource": "source-inventory.json#/nativeScript",
       "permissions": [
@@ -2208,21 +2296,27 @@
       "surface": "notification",
       "engine": "hanlinNativeScript",
       "runtime": "shell",
-      "status": "disconnected",
+      "status": "partially-wired",
       "path": "notification",
-      "runtimeTail": [],
-      "sourcePathReachesCanonicalExecutor": false,
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
-      "durableActionReceiptInSource": false,
-      "routeCondition": "No canonical Host runtime route established",
+      "durableActionReceiptInSource": true,
+      "routeCondition": "Typed notification event resumes only a current installed action in the foreground Host",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "No connected canonical-runtime receipt",
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
       "callerContext": {
-        "hostAdapterReachable": false,
+        "hostAdapterReachable": true,
         "canPresentUI": null,
-        "userGesturePresent": null,
-        "note": "No canonical Host call context is connected from this ingress"
+        "userGesturePresent": false,
+        "note": "NativeScript uses the existing foreground context when available; a new headless provider sets canPresentUI=false. Foreground continuation depends on the declared app handler."
       },
       "engineVersionSource": "source-inventory.json#/nativeScript",
       "permissions": [
@@ -2235,21 +2329,27 @@
       "surface": "notification",
       "engine": "hanlinExpo",
       "runtime": "node",
-      "status": "disconnected",
+      "status": "partially-wired",
       "path": "notification",
-      "runtimeTail": [],
-      "sourcePathReachesCanonicalExecutor": false,
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
-      "durableActionReceiptInSource": false,
-      "routeCondition": "No canonical Host runtime route established",
+      "durableActionReceiptInSource": true,
+      "routeCondition": "Typed notification event resumes only a current installed action in the foreground Host",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "No connected canonical-runtime receipt",
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
       "callerContext": {
-        "hostAdapterReachable": false,
-        "canPresentUI": null,
-        "userGesturePresent": null,
-        "note": "No canonical Host call context is connected from this ingress"
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "Host-bound package/session identity"
       },
       "engineVersionSource": "source-inventory.json#/expo",
       "permissions": [
@@ -2262,21 +2362,27 @@
       "surface": "notification",
       "engine": "hanlinExpo",
       "runtime": "typeScript",
-      "status": "disconnected",
+      "status": "partially-wired",
       "path": "notification",
-      "runtimeTail": [],
-      "sourcePathReachesCanonicalExecutor": false,
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
-      "durableActionReceiptInSource": false,
-      "routeCondition": "No canonical Host runtime route established",
+      "durableActionReceiptInSource": true,
+      "routeCondition": "Typed notification event resumes only a current installed action in the foreground Host",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "No connected canonical-runtime receipt",
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
       "callerContext": {
-        "hostAdapterReachable": false,
-        "canPresentUI": null,
-        "userGesturePresent": null,
-        "note": "No canonical Host call context is connected from this ingress"
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "Host-bound package/session identity"
       },
       "engineVersionSource": "source-inventory.json#/expo",
       "permissions": [
@@ -2289,21 +2395,27 @@
       "surface": "notification",
       "engine": "hanlinExpo",
       "runtime": "localPython",
-      "status": "disconnected",
+      "status": "partially-wired",
       "path": "notification",
-      "runtimeTail": [],
-      "sourcePathReachesCanonicalExecutor": false,
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
-      "durableActionReceiptInSource": false,
-      "routeCondition": "No canonical Host runtime route established",
+      "durableActionReceiptInSource": true,
+      "routeCondition": "Typed notification event resumes only a current installed action in the foreground Host",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "No connected canonical-runtime receipt",
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
       "callerContext": {
-        "hostAdapterReachable": false,
-        "canPresentUI": null,
-        "userGesturePresent": null,
-        "note": "No canonical Host call context is connected from this ingress"
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "Host-bound package/session identity"
       },
       "engineVersionSource": "source-inventory.json#/expo",
       "permissions": [
@@ -2316,21 +2428,27 @@
       "surface": "notification",
       "engine": "hanlinExpo",
       "runtime": "javaScriptCore",
-      "status": "disconnected",
+      "status": "partially-wired",
       "path": "notification",
-      "runtimeTail": [],
-      "sourcePathReachesCanonicalExecutor": false,
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
-      "durableActionReceiptInSource": false,
-      "routeCondition": "No canonical Host runtime route established",
+      "durableActionReceiptInSource": true,
+      "routeCondition": "Typed notification event resumes only a current installed action in the foreground Host",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "No connected canonical-runtime receipt",
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
       "callerContext": {
-        "hostAdapterReachable": false,
-        "canPresentUI": null,
-        "userGesturePresent": null,
-        "note": "No canonical Host call context is connected from this ingress"
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "Host-bound package/session identity"
       },
       "engineVersionSource": "source-inventory.json#/expo",
       "permissions": [
@@ -2343,21 +2461,27 @@
       "surface": "notification",
       "engine": "hanlinExpo",
       "runtime": "shell",
-      "status": "disconnected",
+      "status": "partially-wired",
       "path": "notification",
-      "runtimeTail": [],
-      "sourcePathReachesCanonicalExecutor": false,
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
-      "durableActionReceiptInSource": false,
-      "routeCondition": "No canonical Host runtime route established",
+      "durableActionReceiptInSource": true,
+      "routeCondition": "Typed notification event resumes only a current installed action in the foreground Host",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "No connected canonical-runtime receipt",
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
       "callerContext": {
-        "hostAdapterReachable": false,
-        "canPresentUI": null,
-        "userGesturePresent": null,
-        "note": "No canonical Host call context is connected from this ingress"
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "Host-bound package/session identity"
       },
       "engineVersionSource": "source-inventory.json#/expo",
       "permissions": [
