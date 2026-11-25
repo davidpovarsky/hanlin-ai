@@ -108,7 +108,7 @@ export interface NativeRuntimeBridge {
 /** Capture once inside this package's active session. A later global session
  * cannot redirect the returned facade's calls or cancellation handles. */
 export declare function createHostServices(): {
-    assistant: import("./host-services").MiniAppAssistant;
+    assistant: import("./index").MiniAppAssistant;
     miniapps: MiniAppSharing;
     liveActivities: MiniAppLiveActivities;
     startRuntime: (kind: HanlinRuntimeKind, source: string, options?: RuntimeExecutionOptions) => RuntimeRequestHandle;
@@ -116,7 +116,7 @@ export declare function createHostServices(): {
 };
 /** The Host supplies this opaque provider-bound bridge to one cooperating window. */
 export declare function createHostServicesForBridge(bridge: NativeRuntimeBridge): {
-    assistant: import("./host-services").MiniAppAssistant;
+    assistant: import("./index").MiniAppAssistant;
     miniapps: MiniAppSharing;
     liveActivities: MiniAppLiveActivities;
     startRuntime: (kind: HanlinRuntimeKind, source: string, options?: RuntimeExecutionOptions) => RuntimeRequestHandle;

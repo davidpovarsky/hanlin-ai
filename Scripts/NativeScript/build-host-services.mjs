@@ -36,7 +36,11 @@ const emitted = program.emit(undefined, (file, text) => {
     : base.startsWith('miniapp-assistant.') ? 'miniapp-assistant' : 'index';
   const portable = text.replaceAll('../../Packages/HanlinExpoUI/src/system-surfaces', './system-surfaces')
     .replaceAll('../../Packages/HanlinExpoUI/src/miniapp-assistant', file.endsWith('.d.ts') ? './miniapp-assistant' : './miniapp-assistant.mjs');
-  files.set(stem + (file.endsWith('.d.ts') ? '.d.ts' : '.mjs'), banner + portable.replaceAll('\r\n', '\n'));
+  // Inferred return types can refer back to the source module; the shipped
+  // package renames that module from host-services to index.
+  const relocated = file.endsWith('.d.ts')
+    ? portable.replaceAll('import("./host-services")', 'import("./index")') : portable;
+  files.set(stem + (file.endsWith('.d.ts') ? '.d.ts' : '.mjs'), banner + relocated.replaceAll('\r\n', '\n'));
 });
 if (emitted.emitSkipped || files.size !== 6) throw new Error('NativeScript Host Services did not emit both JS and declarations.');
 files.set('package.json', JSON.stringify({name: '@hanlin/host-services', version: '1.0.0', private: true,
@@ -47,4 +51,9 @@ if (process.argv.includes('--write')) {
 } else if (process.argv.includes('--check')) {
   for (const [name, bytes] of files) if (await readFile(path.join(output, name), 'utf8') !== bytes) throw new Error(`Generated NativeScript Host Services drift: ${name}`);
 } else throw new Error('Use --write after reviewing source changes, or --check for read-only compiler/drift verification.');
+// Resolve the actual package.json/types entry after emission and relocation,
+// rather than testing only imports of the TypeScript source module.
+const packaged = ts.getPreEmitDiagnostics(ts.createProgram([fixture('packaged')], {...options, noEmit: true}));
+if (packaged.length) throw new Error(ts.formatDiagnosticsWithColorAndContext(packaged, {
+  getCanonicalFileName: p => p, getCurrentDirectory: () => root, getNewLine: () => '\n'}));
 console.log(`PASS: TypeScript${ts.version} strict native facade, declarations and JS ${process.argv.includes('--write') ? 'generated' : 'unchanged'}; native execution is a separate gate.`);
