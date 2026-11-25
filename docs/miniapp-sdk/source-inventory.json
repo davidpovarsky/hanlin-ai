@@ -1,5 +1,5 @@
 {
-  "sourceCommit": "bcd44d23a0d2fc2804fa34f3cc5407e51b0adc2f",
+  "sourceCommit": "c9a806654466ea254e5c81ae45933b33d026962e",
   "uncommittedSourcePaths": [],
   "schemaVersion": 1,
   "auditParser": {
@@ -8000,7 +8000,7 @@
             },
             {
               "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-              "sha256": "3821b5ff6657b75895b66e56ac366186717c32fd128aa852dbaf99b49318b473",
+              "sha256": "ef60a9d455102b89f9295e162e3bd783969e87b84a62fa3df5d353992b19699b",
               "line": 1543
             }
           ]
@@ -8627,8 +8627,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "3656f7daf6b291e6ef63b72bbd2daa898f4d406ca68f01dea1818c08c2ebf641",
-              "line": 631
+              "sha256": "659270748cdb6c3f46b9a406770b168545f1cf320e8cc6af216e6e9d821732c6",
+              "line": 637
             }
           ]
         },
@@ -8819,8 +8819,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "3656f7daf6b291e6ef63b72bbd2daa898f4d406ca68f01dea1818c08c2ebf641",
-              "line": 633
+              "sha256": "659270748cdb6c3f46b9a406770b168545f1cf320e8cc6af216e6e9d821732c6",
+              "line": 639
             }
           ]
         }
@@ -8861,8 +8861,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "3656f7daf6b291e6ef63b72bbd2daa898f4d406ca68f01dea1818c08c2ebf641",
-              "line": 742
+              "sha256": "659270748cdb6c3f46b9a406770b168545f1cf320e8cc6af216e6e9d821732c6",
+              "line": 748
             }
           ]
         },
@@ -8992,8 +8992,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "3656f7daf6b291e6ef63b72bbd2daa898f4d406ca68f01dea1818c08c2ebf641",
-              "line": 739
+              "sha256": "659270748cdb6c3f46b9a406770b168545f1cf320e8cc6af216e6e9d821732c6",
+              "line": 745
             }
           ]
         },
@@ -9006,8 +9006,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "3656f7daf6b291e6ef63b72bbd2daa898f4d406ca68f01dea1818c08c2ebf641",
-              "line": 739
+              "sha256": "659270748cdb6c3f46b9a406770b168545f1cf320e8cc6af216e6e9d821732c6",
+              "line": 745
             }
           ]
         },
@@ -9020,8 +9020,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "3656f7daf6b291e6ef63b72bbd2daa898f4d406ca68f01dea1818c08c2ebf641",
-              "line": 739
+              "sha256": "659270748cdb6c3f46b9a406770b168545f1cf320e8cc6af216e6e9d821732c6",
+              "line": 745
             }
           ]
         },
@@ -9242,7 +9242,7 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "3656f7daf6b291e6ef63b72bbd2daa898f4d406ca68f01dea1818c08c2ebf641",
+              "sha256": "659270748cdb6c3f46b9a406770b168545f1cf320e8cc6af216e6e9d821732c6",
               "line": 165
             }
           ]
@@ -9256,7 +9256,7 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "3656f7daf6b291e6ef63b72bbd2daa898f4d406ca68f01dea1818c08c2ebf641",
+              "sha256": "659270748cdb6c3f46b9a406770b168545f1cf320e8cc6af216e6e9d821732c6",
               "line": 165
             }
           ]
@@ -9270,7 +9270,7 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "3656f7daf6b291e6ef63b72bbd2daa898f4d406ca68f01dea1818c08c2ebf641",
+              "sha256": "659270748cdb6c3f46b9a406770b168545f1cf320e8cc6af216e6e9d821732c6",
               "line": 122
             }
           ]
@@ -9284,7 +9284,7 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "3656f7daf6b291e6ef63b72bbd2daa898f4d406ca68f01dea1818c08c2ebf641",
+              "sha256": "659270748cdb6c3f46b9a406770b168545f1cf320e8cc6af216e6e9d821732c6",
               "line": 126
             }
           ]
@@ -9298,8 +9298,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "3656f7daf6b291e6ef63b72bbd2daa898f4d406ca68f01dea1818c08c2ebf641",
-              "line": 430
+              "sha256": "659270748cdb6c3f46b9a406770b168545f1cf320e8cc6af216e6e9d821732c6",
+              "line": 436
             }
           ]
         },
@@ -9312,7 +9312,7 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "3656f7daf6b291e6ef63b72bbd2daa898f4d406ca68f01dea1818c08c2ebf641",
+              "sha256": "659270748cdb6c3f46b9a406770b168545f1cf320e8cc6af216e6e9d821732c6",
               "line": 111
             }
           ]
@@ -9326,13 +9326,13 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "3656f7daf6b291e6ef63b72bbd2daa898f4d406ca68f01dea1818c08c2ebf641",
-              "line": 859
+              "sha256": "659270748cdb6c3f46b9a406770b168545f1cf320e8cc6af216e6e9d821732c6",
+              "line": 865
             },
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "3656f7daf6b291e6ef63b72bbd2daa898f4d406ca68f01dea1818c08c2ebf641",
-              "line": 816
+              "sha256": "659270748cdb6c3f46b9a406770b168545f1cf320e8cc6af216e6e9d821732c6",
+              "line": 822
             }
           ]
         },
@@ -9345,13 +9345,13 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "3656f7daf6b291e6ef63b72bbd2daa898f4d406ca68f01dea1818c08c2ebf641",
-              "line": 859
+              "sha256": "659270748cdb6c3f46b9a406770b168545f1cf320e8cc6af216e6e9d821732c6",
+              "line": 865
             },
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "3656f7daf6b291e6ef63b72bbd2daa898f4d406ca68f01dea1818c08c2ebf641",
-              "line": 816
+              "sha256": "659270748cdb6c3f46b9a406770b168545f1cf320e8cc6af216e6e9d821732c6",
+              "line": 822
             }
           ]
         },
@@ -9364,13 +9364,13 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "3656f7daf6b291e6ef63b72bbd2daa898f4d406ca68f01dea1818c08c2ebf641",
-              "line": 859
+              "sha256": "659270748cdb6c3f46b9a406770b168545f1cf320e8cc6af216e6e9d821732c6",
+              "line": 865
             },
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "3656f7daf6b291e6ef63b72bbd2daa898f4d406ca68f01dea1818c08c2ebf641",
-              "line": 816
+              "sha256": "659270748cdb6c3f46b9a406770b168545f1cf320e8cc6af216e6e9d821732c6",
+              "line": 822
             }
           ]
         },
@@ -9383,13 +9383,13 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "3656f7daf6b291e6ef63b72bbd2daa898f4d406ca68f01dea1818c08c2ebf641",
-              "line": 859
+              "sha256": "659270748cdb6c3f46b9a406770b168545f1cf320e8cc6af216e6e9d821732c6",
+              "line": 865
             },
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "3656f7daf6b291e6ef63b72bbd2daa898f4d406ca68f01dea1818c08c2ebf641",
-              "line": 816
+              "sha256": "659270748cdb6c3f46b9a406770b168545f1cf320e8cc6af216e6e9d821732c6",
+              "line": 822
             }
           ]
         },
@@ -9402,7 +9402,7 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "3656f7daf6b291e6ef63b72bbd2daa898f4d406ca68f01dea1818c08c2ebf641",
+              "sha256": "659270748cdb6c3f46b9a406770b168545f1cf320e8cc6af216e6e9d821732c6",
               "line": 164
             }
           ]
@@ -9416,7 +9416,7 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "3656f7daf6b291e6ef63b72bbd2daa898f4d406ca68f01dea1818c08c2ebf641",
+              "sha256": "659270748cdb6c3f46b9a406770b168545f1cf320e8cc6af216e6e9d821732c6",
               "line": 164
             }
           ]
@@ -9430,7 +9430,7 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "3656f7daf6b291e6ef63b72bbd2daa898f4d406ca68f01dea1818c08c2ebf641",
+              "sha256": "659270748cdb6c3f46b9a406770b168545f1cf320e8cc6af216e6e9d821732c6",
               "line": 112
             }
           ]
@@ -9444,7 +9444,7 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "3656f7daf6b291e6ef63b72bbd2daa898f4d406ca68f01dea1818c08c2ebf641",
+              "sha256": "659270748cdb6c3f46b9a406770b168545f1cf320e8cc6af216e6e9d821732c6",
               "line": 196
             }
           ]
@@ -9474,8 +9474,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "3656f7daf6b291e6ef63b72bbd2daa898f4d406ca68f01dea1818c08c2ebf641",
-              "line": 543
+              "sha256": "659270748cdb6c3f46b9a406770b168545f1cf320e8cc6af216e6e9d821732c6",
+              "line": 549
             }
           ]
         },
@@ -9488,8 +9488,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "3656f7daf6b291e6ef63b72bbd2daa898f4d406ca68f01dea1818c08c2ebf641",
-              "line": 543
+              "sha256": "659270748cdb6c3f46b9a406770b168545f1cf320e8cc6af216e6e9d821732c6",
+              "line": 549
             }
           ]
         },
@@ -9502,8 +9502,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "3656f7daf6b291e6ef63b72bbd2daa898f4d406ca68f01dea1818c08c2ebf641",
-              "line": 536
+              "sha256": "659270748cdb6c3f46b9a406770b168545f1cf320e8cc6af216e6e9d821732c6",
+              "line": 542
             }
           ]
         },
@@ -9516,8 +9516,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "3656f7daf6b291e6ef63b72bbd2daa898f4d406ca68f01dea1818c08c2ebf641",
-              "line": 536
+              "sha256": "659270748cdb6c3f46b9a406770b168545f1cf320e8cc6af216e6e9d821732c6",
+              "line": 542
             }
           ]
         },
@@ -9530,8 +9530,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "3656f7daf6b291e6ef63b72bbd2daa898f4d406ca68f01dea1818c08c2ebf641",
-              "line": 536
+              "sha256": "659270748cdb6c3f46b9a406770b168545f1cf320e8cc6af216e6e9d821732c6",
+              "line": 542
             }
           ]
         },
@@ -9544,8 +9544,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "3656f7daf6b291e6ef63b72bbd2daa898f4d406ca68f01dea1818c08c2ebf641",
-              "line": 544
+              "sha256": "659270748cdb6c3f46b9a406770b168545f1cf320e8cc6af216e6e9d821732c6",
+              "line": 550
             }
           ]
         },
@@ -9558,8 +9558,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "3656f7daf6b291e6ef63b72bbd2daa898f4d406ca68f01dea1818c08c2ebf641",
-              "line": 544
+              "sha256": "659270748cdb6c3f46b9a406770b168545f1cf320e8cc6af216e6e9d821732c6",
+              "line": 550
             }
           ]
         },
@@ -9572,8 +9572,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "3656f7daf6b291e6ef63b72bbd2daa898f4d406ca68f01dea1818c08c2ebf641",
-              "line": 543
+              "sha256": "659270748cdb6c3f46b9a406770b168545f1cf320e8cc6af216e6e9d821732c6",
+              "line": 549
             }
           ]
         },
@@ -9586,8 +9586,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "3656f7daf6b291e6ef63b72bbd2daa898f4d406ca68f01dea1818c08c2ebf641",
-              "line": 543
+              "sha256": "659270748cdb6c3f46b9a406770b168545f1cf320e8cc6af216e6e9d821732c6",
+              "line": 549
             }
           ]
         },
@@ -9600,8 +9600,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "3656f7daf6b291e6ef63b72bbd2daa898f4d406ca68f01dea1818c08c2ebf641",
-              "line": 545
+              "sha256": "659270748cdb6c3f46b9a406770b168545f1cf320e8cc6af216e6e9d821732c6",
+              "line": 551
             }
           ]
         },
@@ -9614,8 +9614,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "3656f7daf6b291e6ef63b72bbd2daa898f4d406ca68f01dea1818c08c2ebf641",
-              "line": 546
+              "sha256": "659270748cdb6c3f46b9a406770b168545f1cf320e8cc6af216e6e9d821732c6",
+              "line": 552
             }
           ]
         },
@@ -9628,8 +9628,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "3656f7daf6b291e6ef63b72bbd2daa898f4d406ca68f01dea1818c08c2ebf641",
-              "line": 535
+              "sha256": "659270748cdb6c3f46b9a406770b168545f1cf320e8cc6af216e6e9d821732c6",
+              "line": 541
             }
           ]
         }
@@ -14850,11 +14850,11 @@
     },
     {
       "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-      "sha256": "3656f7daf6b291e6ef63b72bbd2daa898f4d406ca68f01dea1818c08c2ebf641"
+      "sha256": "659270748cdb6c3f46b9a406770b168545f1cf320e8cc6af216e6e9d821732c6"
     },
     {
       "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-      "sha256": "3821b5ff6657b75895b66e56ac366186717c32fd128aa852dbaf99b49318b473"
+      "sha256": "ef60a9d455102b89f9295e162e3bd783969e87b84a62fa3df5d353992b19699b"
     },
     {
       "path": "Fixtures/ExpoNativeAPIProbe/tsconfig.json",

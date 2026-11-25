@@ -2,7 +2,7 @@
 
 Status: **IN_PROGRESS — source audit only**.
 
-Base commit: `bcd44d23a0d2fc2804fa34f3cc5407e51b0adc2f`. Exact current file hashes and line anchors are in [the JSON matrix](extension-reachability.json).
+Base commit: `c9a806654466ea254e5c81ae45933b33d026962e`. Exact current file hashes and line anchors are in [the JSON matrix](extension-reachability.json).
 Runtime/API/version authority is [source-inventory.json](source-inventory.json); this matrix consumes it rather than maintaining a second SDK contract.
 
 The share, translation, widget and notification ingress categories × two native app engines × five canonical Host runtimes form 40 cells. Live Activity, Host AppIntent, Shortcuts and foreground add 40 more. These 80 cells describe Host-runtime passthrough, not all original widget, control or presentation capabilities.
