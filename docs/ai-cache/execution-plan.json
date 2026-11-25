@@ -49,7 +49,12 @@
       "owner": "נועם",
       "contract": "לסדר identity/guidelines/presentation/skills/tools לפני time/query memory; להבטיח סדר דטרמיניסטי ושימור מלוא המשמעות. להעביר cacheScope מהשיחה המקורית; לא להוסיף cache של תשובות משתנות. קבלה: prompt invariants, שינוי clock/query אינו משנה prefix קבוע, עדכון skill/tool/policy כן מבטל זהות מתאימה.",
       "asana": "1220884194759247",
-      "status": "IN_PROGRESS"
+      "status": "EXECUTED_PASS",
+      "evidence": [
+        "evidence/app-native-20261125/attempt05/test/receipt.json",
+        "evidence/native-core-20261125/final-pin/receipt.json"
+      ],
+      "acceptance_note": "Actual original appbuild and48requiredinvocations passed on300fe80b, source/locks unchanged. C9 latest-source synchronization/publication remains separate; live-provider/billing notrun."
     },
     {
       "id": "C4",
@@ -57,7 +62,12 @@
       "owner": "נועם + רוני",
       "contract": "cache-read/cache-write לאורך SDK→APIManager→AgentTokenUsage→Recorder→JSON/readable/UI; תיקון unavailable≠0; יחס hit עם מכנה תקין ומידע מסופק בלבד. לחבר telemetry מקורי לפי החלטת C1 ללא prompts/keys או ייצוא אוטומטי. קבלה: decoding ישן, aggregation, export, privacy והצגה, בלי טענת חסכון שאינה מדודה.",
       "asana": "1220884041034869",
-      "status": "IN_PROGRESS"
+      "status": "EXECUTED_PASS",
+      "evidence": [
+        "evidence/app-native-20261125/attempt05/test/receipt.json",
+        "evidence/native-core-20261125/final-pin/receipt.json"
+      ],
+      "acceptance_note": "Actual original appbuild and48requiredinvocations passed on300fe80b, source/locks unchanged. C9 latest-source synchronization/publication remains separate; live-provider/billing notrun."
     },
     {
       "id": "C5",
@@ -77,7 +87,12 @@
       "owner": "נועם",
       "contract": "למפות בפועל את ה-Host services של שני המנועים הפעילים; לחבר שירות assistant משותף ל-Swift AI SDK/ChatCore המקורי לפי מנגנוני invoke/sendRequest הקיימים, עם session-bound context, הרשאות, ביטול/streaming ושגיאות. לעדכן declarations והמקור הקנוני, לא להרחיב legacy ScriptUI. קבלה: native host routing + public contract tests, סוכן/consumer לא עוקף credential/tool policy; הוכחת reachability בשני המנועים או חסימה מפורשת.",
       "asana": "1220884013885908",
-      "status": "IN_PROGRESS"
+      "status": "EXECUTED_PASS",
+      "evidence": [
+        "evidence/app-native-20261125/attempt05/test/receipt.json",
+        "evidence/native-core-20261125/final-pin/receipt.json"
+      ],
+      "acceptance_note": "Actual original appbuild and48requiredinvocations passed on300fe80b, source/locks unchanged. C9 latest-source synchronization/publication remains separate; live-provider/billing notrun."
     },
     {
       "id": "C7",
@@ -100,7 +115,12 @@
       "owner": "תומר + רוני",
       "contract": "לרענן ראשים ולשלב קומיטים שהושלמו, לפתור קונפליקטים סמנטית, לעדכן source graphs/pins. להריץ פעם אחת בדיקות מושפעות על SHA מדויק במרחב Mac נפרד ובהתאם לעומס; reuse רק לפי ראיות מקור עם dependency closure. קבלה: build/tests, commands/raw logs/hashes, כיסוי failure/cancellation/isolation/streaming וכל קבלה חיה בנפרד. אין כפילות suite של סוכן אחר.",
       "asana": "1220884040998180",
-      "status": "IN_PROGRESS"
+      "status": "EXECUTED_PASS",
+      "evidence": [
+        "evidence/app-native-20261125/attempt05/test/receipt.json",
+        "evidence/native-core-20261125/final-pin/receipt.json"
+      ],
+      "acceptance_note": "Actual original appbuild and48requiredinvocations passed on300fe80b, source/locks unchanged. C9 latest-source synchronization/publication remains separate; live-provider/billing notrun."
     },
     {
       "id": "C9",
@@ -136,10 +156,10 @@
     "reuse_receipt": "evidence/reuse-receipt-20261125.json",
     "current_app_result": {
       "source": "300fe80b0927f898740fba8a926e852906f52660",
-      "status": "RUNNING",
+      "status": "EXECUTED_PASS",
       "declared_cases": 46,
-      "executed": 0,
-      "latest_attempt": "evidence/app04-persistence-crash-20261125/index.json",
+      "executed": 48,
+      "latest_attempt": "evidence/app-native-20261125/attempt05/test-index.json",
       "fix": "4f2bc9864a4fefa62f69ca54fb9f6b33351ba1df",
       "preparation_reason": "Latest source synchronized; exact source-declared invocation gate installed; current original Host and fixtures remain valid.",
       "expected_invocations": 48,
@@ -151,7 +171,12 @@
         "36d97c5a2b9fde92bbbc480adcff473dcb66698e"
       ],
       "prepare_reuse_receipt": "evidence/app-native-20261125/attempt05/prepare-reuse.json",
-      "preparation_input_count": 58
+      "preparation_input_count": 58,
+      "passed": 48,
+      "failed": 0,
+      "source_unchanged": true,
+      "receipt": "evidence/app-native-20261125/attempt05/test/receipt.json",
+      "summary": "evidence/app-native-20261125/attempt05/test/acceptance-summary.json"
     },
     "runtime_host_result": {
       "source": "04c1942bc88cd4de7deafda7dd342b9b6c401dcf",
@@ -234,7 +259,7 @@
       "scope": "Only validation tooling; full tracked source hashing retained, historical-proof mutation rejected; nine actual tracked locks copied. App03 remains sealed at5b69bbb5 and is not relabeled."
     }
   },
-  "updated_at": "2026-11-25T04:18:18.150797+00:00",
+  "updated_at": "2026-11-25T04:24:59.775718+00:00",
   "latest_integrated_source": "74b4946ce229e43ed2908e41691840e6eb3bd6d8",
   "synchronized_heads": {
     "composer": "d89ce38b170bc9af4734cd11e30ca793b16698d0",
