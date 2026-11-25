@@ -69,6 +69,7 @@ final class MiniAppsNativeScriptPackageWindowUITests: XCTestCase {
         complete(survivingAlpha)
         capture("native-package-alpha-completed-after-beta-closed")
         closeCompleted(survivingAlpha)
+        assertClosedRequestsStayClosedAfterColdRelaunch()
     }
 
     func testCancellingOnePackageKeepsOtherPackageAndItsPreparedCallbackAlive() throws {
@@ -94,6 +95,7 @@ final class MiniAppsNativeScriptPackageWindowUITests: XCTestCase {
         complete(survivingDelta)
         capture("native-package-beta-completed-after-alpha-cancelled")
         closeCompleted(survivingDelta)
+        assertClosedRequestsStayClosedAfterColdRelaunch()
     }
 
     private func open(_ name: String) throws -> XCUIElement {
@@ -132,7 +134,7 @@ final class MiniAppsNativeScriptPackageWindowUITests: XCTestCase {
         let input = window.textViews["hanlin-ns-window-input"]
         XCTAssertTrue(input.waitForExistence(timeout: 15))
         XCTAssertTrue(input.isHittable)
-        NativeScriptWindowUIInteractions.replaceContents(of: input, with: name + "-edited")
+        NativeScriptWindowUIInteractions.replaceContents(of: input, with: name + "-edited", app: app)
         assertValue(input, equals: name + "-edited")
         let prepare = window.buttons["hanlin-ns-window-prepare-return"]
         XCTAssertTrue(prepare.isHittable)
@@ -156,6 +158,35 @@ final class MiniAppsNativeScriptPackageWindowUITests: XCTestCase {
         button.tap()
         XCTAssertTrue(window.waitForNonExistence(timeout: 15))
         XCTAssertTrue(app.buttons["hanlin-apps-add"].firstMatch.waitForExistence(timeout: 20))
+    }
+
+    private func assertClosedRequestsStayClosedAfterColdRelaunch() {
+        // A catalog in a background scene is not evidence that the completed
+        // request's actual iPad window has been closed. The original 08ef run
+        // restored a cancelled scene after its title disappeared before exit.
+        let catalog = app.buttons["hanlin-apps-add"].firstMatch
+        XCTAssertTrue(catalog.waitForExistence(timeout: 20))
+        XCTAssertTrue(catalog.isHittable, "The native catalog must be usable before termination.")
+        for request in openedRequests {
+            XCTAssertTrue(app.windows.containing(.navigationBar, identifier: request.title)
+                .firstMatch.waitForNonExistence(timeout: 15))
+        }
+        capture("native-package-catalog-before-cold-relaunch")
+        app.terminate()
+        XCTAssertEqual(app.state, .notRunning)
+        app.launch()
+        XCTAssertTrue(catalog.waitForExistence(timeout: 30))
+        XCTAssertTrue(catalog.isHittable, "Cold launch must restore a usable catalog.")
+        XCTAssertEqual(app.state, .runningForeground)
+        for request in openedRequests {
+            XCTAssertFalse(app.windows.containing(.navigationBar, identifier: request.title).firstMatch.exists,
+                           "Explicitly closed request \(request.id) must not restore its terminal scene.")
+        }
+        capture("native-package-catalog-after-cold-relaunch")
+        let tree = XCTAttachment(string: app.debugDescription)
+        tree.name = "native-package-cold-relaunch-accessibility"
+        tree.lifetime = .keepAlways
+        add(tree)
     }
 
     private func assertLabel(_ element: XCUIElement, equals value: String, timeout: TimeInterval = 15) {

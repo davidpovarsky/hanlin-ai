@@ -126,7 +126,7 @@ final class MiniAppsNativeScriptWindowUITests: XCTestCase {
         let input = window.textViews["hanlin-ns-window-input"]
         XCTAssertTrue(input.waitForExistence(timeout: 15))
         XCTAssertTrue(input.isHittable)
-        NativeScriptWindowUIInteractions.replaceContents(of: input, with: name + "-edited")
+        NativeScriptWindowUIInteractions.replaceContents(of: input, with: name + "-edited", app: app)
         assertValue(input, equals: name + "-edited")
         let prepare = window.buttons["hanlin-ns-window-prepare-return"]
         XCTAssertTrue(prepare.isHittable)
@@ -248,14 +248,34 @@ enum NativeScriptWindowUIInteractions {
         }
     }
 
-    static func replaceContents(of input: XCUIElement, with value: String) {
+    static func replaceContents(of input: XCUIElement, with value: String, app: XCUIApplication) {
         input.tap()
-        // Edit the real native UITextView through its hardware Select All
-        // command. A center tap and Command-Right did not establish a stable
-        // insertion point in the second iPad scene in the e1a25038 run.
-        // The caller already verified the original value and still requires
-        // the exact edited value, independent counters and prepared callback.
-        input.typeKey("a", modifierFlags: .command)
+        // These fixtures first verify one complete word: alpha/beta/gamma/delta.
+        // Use UIKit's actual word-selection gesture and visible edit menu.
+        // In the 08ef run Command-A left alpha unselected, producing
+        // alpha-editedalpha; a key event alone is not evidence of selection.
+        input.doubleTap()
+        let menuItem = app.menuItems["Cut"].firstMatch
+        let cut = menuItem.exists ? menuItem : app.buttons["Cut"].firstMatch
+        XCTAssertTrue(cut.waitForExistence(timeout: 5),
+                      "UIKit must offer Cut for the visibly selected original text.")
+        XCTAssertTrue(cut.isHittable)
+        XCTContext.runActivity(named: "Original UITextView native edit menu") { activity in
+            let tree = XCTAttachment(string: app.debugDescription)
+            tree.name = "native-text-selection-menu"
+            tree.lifetime = .keepAlways
+            activity.add(tree)
+            let screenshot = XCTAttachment(screenshot: app.screenshot())
+            screenshot.name = "native-text-selection-menu"
+            screenshot.lifetime = .keepAlways
+            activity.add(screenshot)
+        }
+        cut.tap()
+        let empty = XCTNSPredicateExpectation(
+            predicate: NSPredicate(format: "value == %@", ""), object: input
+        )
+        XCTAssertEqual(XCTWaiter.wait(for: [empty], timeout: 5), .completed,
+                       "The native Cut action must remove the complete original word before replacement.")
         input.typeText(value)
     }
 
