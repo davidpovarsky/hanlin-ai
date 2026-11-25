@@ -782,6 +782,8 @@ final class AgentRuntimeConversationUITests: XCTestCase {
                                "-AppleLocale", hebrew ? "he_IL" : "en_US"]
         app.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
         app.launchEnvironment["HANLIN_AGENT_RUNTIME_UI_ACCEPTANCE"] = "1"
+        // Each count fixture owns a fresh store; prior cases cannot supply its answer.
+        app.launchEnvironment["HANLIN_PHASE2_STORE_ID"] = UUID().uuidString
         app.launchEnvironment["HANLIN_SOURCES_SHEET_ACCEPTANCE_COUNT"] = String(count)
         app.launch()
         defer { app.terminate() }
@@ -789,7 +791,9 @@ final class AgentRuntimeConversationUITests: XCTestCase {
 
         let footer = app.buttons["hanlin-all-sources"].firstMatch
         XCTAssertTrue(footer.waitForExistence(timeout: 20))
-        XCTAssertTrue(footer.label.contains(String(count)), "The original footer must retain every source.")
+        let footerLabel = footer.label
+        XCTAssertTrue(footerLabel.contains(String(count)),
+            "The original footer must retain every source. Expected \(count); label=\(footerLabel); value=\(String(describing: footer.value))")
         tapElement(footer)
         let sheet = app.descendants(matching: .any)["hanlin-scoped-sources"].firstMatch
         XCTAssertTrue(sheet.waitForExistence(timeout: 10))
@@ -2231,7 +2235,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         }
     }
 
-    private func openChat(in app: XCUIApplication) {
+    private func openChat(in app: XCUIApplication, file: StaticString = #filePath, line: UInt = #line) {
         while app.navigationBars["Runtime diagnostics"].exists {
             let backButton = app.navigationBars.buttons.element(boundBy: 0)
             if backButton.waitForExistence(timeout: 2) && backButton.isHittable {
@@ -2240,52 +2244,65 @@ final class AgentRuntimeConversationUITests: XCTestCase {
                 break
             }
         }
-        _ = selectTab(identifier: "hanlin-home-tab", labels: ["Chats", "Messages", "Home", "列表"], in: app)
 
-        let input = chatInputElement(in: app)
         let compactViewAll = app.buttons["hanlin-compact-view-all-button"].firstMatch
-        if input.waitForExistence(timeout: 3) && !compactViewAll.exists { return }
+        let seededRow = app.descendants(matching: .any)["hanlin-chat-row-Agent Acceptance Chat"].firstMatch
+        let recentRow = app.buttons.matching(NSPredicate(
+            format: "identifier BEGINSWITH %@ AND label CONTAINS %@",
+            "hanlin-compact-recent-row-", "Agent Acceptance Chat"
+        )).firstMatch
 
-        // If on compact Home, tap the seeded Agent Acceptance Chat row directly
-        if compactViewAll.exists {
-            let recentRow0 = app.buttons["hanlin-compact-recent-row-0"].firstMatch
-            if recentRow0.waitForExistence(timeout: 3) && recentRow0.label.contains("Agent Acceptance Chat") {
-                tapElement(recentRow0)
-                _ = input.waitForExistence(timeout: 10)
-                return
+        func currentChatIsReady() -> Bool {
+            let input = chatInputElement(in: app)
+            let title = app.navigationBars.descendants(matching: .any).matching(
+                NSPredicate(format: "label == %@", "Agent Acceptance Chat")
+            ).firstMatch
+            return input.exists && input.isHittable && !compactViewAll.exists && title.exists
+        }
+        func selectVisibleSeededRow() -> Bool {
+            for row in [seededRow, recentRow] where row.exists && row.isHittable {
+                row.tap()
+                XCTAssertTrue(chatInputElement(in: app).waitForExistence(timeout: 15),
+                    "Selecting the actual seeded conversation must open its editor", file: file, line: line)
+                return true
             }
+            return false
         }
 
-        // Expand sidebar on iPad if collapsed
-        let sidebarToggle = app.navigationBars.buttons.matching(
-            NSPredicate(format: "identifier == 'ToggleSidebar' OR label CONTAINS[c] 'Sidebar' OR label CONTAINS[c] 'סרגל'")
-        ).firstMatch
-        if sidebarToggle.waitForExistence(timeout: 2) && sidebarToggle.isHittable {
-            sidebarToggle.tap()
-        }
+        // A wide launch can already expose the seeded row. Do not hide that
+        // sidebar or navigate through unrelated tabs before selecting it.
+        if selectVisibleSeededRow() || currentChatIsReady() { return }
+        _ = selectTab(identifier: "hanlin-home-tab", labels: ["Chats", "Messages", "Home", "列表"], in: app)
+        if selectVisibleSeededRow() || currentChatIsReady() { return }
 
-        let chatPredicate = NSPredicate(format: "label CONTAINS 'Agent Acceptance Chat' OR identifier CONTAINS 'Agent Acceptance Chat'")
-        var seededChat = app.buttons.matching(chatPredicate).firstMatch
-        if !seededChat.exists {
-            seededChat = app.descendants(matching: .any).matching(chatPredicate).firstMatch
-        }
-        if !seededChat.exists {
-            seededChat = app.cells.matching(chatPredicate).firstMatch
-        }
-        if !seededChat.exists {
-            seededChat = app.descendants(matching: .any).matching(chatPredicate).firstMatch
-        }
-
-        if seededChat.waitForExistence(timeout: 15) {
-            tapElement(seededChat)
+        let compactHistory = app.buttons["hanlin-history-open"].firstMatch
+        if compactHistory.exists && compactHistory.isHittable {
+            compactHistory.tap()
+        } else if compactViewAll.exists && compactViewAll.isHittable {
+            compactViewAll.tap()
         } else {
-            let anyChat = app.cells.firstMatch
-            if anyChat.waitForExistence(timeout: 3) {
-                tapElement(anyChat)
+            // These are the actual iOS 27 English/Hebrew "show" labels.
+            // ToggleSidebar alone also matches "Hide Sidebar"; never tap that.
+            let showSidebar = app.navigationBars.buttons.matching(NSPredicate(
+                format: "label IN %@", ["Show Sidebar", "הצגת סרגל הצד"]
+            )).firstMatch
+            if showSidebar.waitForExistence(timeout: 2) && showSidebar.isHittable {
+                showSidebar.tap()
             }
         }
 
-        _ = input.waitForExistence(timeout: 15)
+        XCTAssertTrue(seededRow.waitForExistence(timeout: 15),
+            "The original seeded conversation row must be available", file: file, line: line)
+        guard seededRow.exists else { return }
+        let hittable = XCTNSPredicateExpectation(
+            predicate: NSPredicate(format: "hittable == true"), object: seededRow)
+        let ready = XCTWaiter.wait(for: [hittable], timeout: 5)
+        XCTAssertEqual(ready, .completed,
+            "The seeded row must be visible before selection", file: file, line: line)
+        guard ready == .completed else { return }
+        seededRow.tap()
+        XCTAssertTrue(chatInputElement(in: app).waitForExistence(timeout: 15),
+            "Selecting the seeded conversation must open its original editor", file: file, line: line)
     }
 
     private func runtimeState(for kindRaw: String, in app: XCUIApplication) -> XCUIElement {
