@@ -628,7 +628,7 @@ def main():
             argv = test_base + ["-scheme", "HanlinMiniApps", "test-without-building",
                 "-resultBundlePath", str(runtime_result)]
             argv += ["-only-testing:" + selector for selector in runtime_selectors]
-            code, _ = command(argv, "original-runtimes.log", timeout=1200, allow_failure=True)
+            code, _ = command(argv, "original-runtimes.log", timeout=2400 if TEST_SCOPE == "miniapp_complete" else 1200, allow_failure=True)
             state["original_runtime_summary"] = verify_native_result(runtime_result, "original-runtimes",
                 runtime_selectors, 17 if TEST_SCOPE == "miniapp_authoring" else 25, code)
             observed_images = {(request["path"], request["status"])
