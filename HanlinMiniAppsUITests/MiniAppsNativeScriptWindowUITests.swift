@@ -5,6 +5,7 @@ import XCTest
 @MainActor
 final class MiniAppsNativeScriptWindowUITests: XCTestCase {
     private let app = XCUIApplication(bundleIdentifier: "com.itorah.hanlinminiapps")
+    private var openedRequests: [NativeScriptWindowUIInteractions.Request] = []
     private static var fixtureInstalled = false
     private let packageName = "Hanlin NativeScript Window Factory E2E"
     private let requests = [
@@ -22,18 +23,21 @@ final class MiniAppsNativeScriptWindowUITests: XCTestCase {
         app.launch()
     }
 
-    override func tearDownWithError() throws {
-        if testRun?.hasSucceeded == false {
-            let screenshot = XCTAttachment(screenshot: app.screenshot())
-            screenshot.name = "native-window-failure"
-            screenshot.lifetime = .keepAlways
-            add(screenshot)
-            let tree = XCTAttachment(string: app.debugDescription)
-            tree.name = "native-window-accessibility"
-            tree.lifetime = .keepAlways
-            add(tree)
+    override func tearDown() async throws {
+        await MainActor.run {
+            if testRun?.hasSucceeded == false {
+                let screenshot = XCTAttachment(screenshot: app.screenshot())
+                screenshot.name = "native-window-failure"
+                screenshot.lifetime = .keepAlways
+                add(screenshot)
+                let tree = XCTAttachment(string: app.debugDescription)
+                tree.name = "native-window-accessibility"
+                tree.lifetime = .keepAlways
+                add(tree)
+                NativeScriptWindowUIInteractions.closeFailedRequestWindows(in: app, requests: openedRequests)
+            }
+            app.terminate()
         }
-        app.terminate()
     }
 
     func testTwoNativeWindowsCompleteInReverseOrderWithoutContextMixing() throws {
@@ -104,6 +108,9 @@ final class MiniAppsNativeScriptWindowUITests: XCTestCase {
         app.open(try XCTUnwrap(URL(string: "hanlinminiapps://x-callback-url/run?request=" + id)))
         let window = app.windows.containing(.navigationBar, identifier: "NativeScript window " + name).firstMatch
         XCTAssertTrue(window.waitForExistence(timeout: 60), "The incoming request must open/focus its own actual iPad scene.")
+        if !openedRequests.contains(where: { $0.id == id }) {
+            openedRequests.append(.init(id: id, title: "NativeScript window " + name))
+        }
         let requestID = try XCTUnwrap(UUID(uuidString: id))
         assertLabel(window.staticTexts["hanlin-ns-window-request"], equals: requestID.uuidString, timeout: 90)
         return window
@@ -115,10 +122,7 @@ final class MiniAppsNativeScriptWindowUITests: XCTestCase {
         let input = window.textViews["hanlin-ns-window-input"]
         XCTAssertTrue(input.waitForExistence(timeout: 15))
         XCTAssertTrue(input.isHittable)
-        // The 150pt native text view contains one short line; tapping below that
-        // line places the caret at its end. Assert the actual native edit.
-        input.tap()
-        input.typeText("-edited")
+        NativeScriptWindowUIInteractions.append("-edited", to: input)
         assertValue(input, equals: name + "-edited")
         let prepare = window.buttons["hanlin-ns-window-prepare-return"]
         XCTAssertTrue(prepare.isHittable)
@@ -201,5 +205,47 @@ final class MiniAppsNativeScriptWindowUITests: XCTestCase {
         attachment.name = name
         attachment.lifetime = .keepAlways
         add(attachment)
+    }
+}
+
+
+// Shared real-input actions for both NativeScript acceptance suites.
+@MainActor
+enum NativeScriptWindowUIInteractions {
+    struct Request {
+        let id: String
+        let title: String
+    }
+
+    static func append(_ suffix: String, to input: XCUIElement) {
+        input.tap()
+        // The original 4b772 run's AX snapshots contain "-editedgamma" and
+        // "-editedalpha": a center tap put the native caret at the beginning.
+        // Use the public iPad hardware-key event to move to the end of this
+        // one-line value, then preserve the same real edit and exact assertion.
+        input.typeKey(XCUIKeyboardKey.rightArrow.rawValue, modifierFlags: .command)
+        input.typeText(suffix)
+    }
+
+    static func closeFailedRequestWindows(in app: XCUIApplication, requests: [Request]) {
+        // Called only after preserving failure screenshot and AX evidence.
+        // Touch only request scenes this exact test actually opened.
+        for request in requests.reversed() {
+            let window = app.windows.containing(.navigationBar, identifier: request.title).firstMatch
+            guard window.exists,
+                  let url = URL(string: "hanlinminiapps://x-callback-url/run?request=" + request.id)
+            else { continue }
+            app.open(url)
+            let close = window.buttons["miniapps.external.cancel"]
+            guard close.waitForExistence(timeout: 5), close.isHittable else { continue }
+            close.tap()
+            if window.waitForNonExistence(timeout: 3) { continue }
+            // An unfinished request first persists cancellation. The remaining
+            // native Close control then returns only that request's scene.
+            if close.waitForExistence(timeout: 5), close.isHittable {
+                close.tap()
+                _ = window.waitForNonExistence(timeout: 5)
+            }
+        }
     }
 }
