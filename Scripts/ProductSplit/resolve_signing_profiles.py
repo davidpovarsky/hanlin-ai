@@ -1,4 +1,4 @@
-"""Resolve profiles for the six original targets and the existing distribution key.
+"""Resolve profiles for the source-declared original targets and the existing distribution key.
 
 The only permitted Apple mutation is creating a missing compatible App Store
 profile. Never create/revoke a certificate, change capabilities, register a device,
@@ -128,7 +128,7 @@ def resolve_profile(role, bundle, required, certificate_sha, certificate_id, tea
                     private_directory, *, get=apple_get, create=create_profile,
                     decode_content=decode_cms, local_source_sha=None, local_build_number=None):
     if (role, bundle) not in {(r, b) for r, b, _, _ in ROLES}:
-        raise ValueError("Profile preparation is scoped to the six original targets")
+        raise ValueError("Profile preparation is scoped to the source-declared original targets")
     local_context = None
     if local_source_sha is not None or local_build_number is not None:
         local_context = local_release_context(local_source_sha, local_build_number)

@@ -5,6 +5,7 @@ import tempfile
 import unittest
 
 from prepare_signed_products import exported_bundle_targets
+from audit_release_resources import product_roles
 
 
 MAIN = "com.itorah.chavrusachat"
@@ -61,11 +62,33 @@ class ExportedBundleTargetsTests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, "Duplicate signed bundle identity"):
             exported_bundle_targets(self.app, EXPECTED)
 
-    def test_separate_miniapps_product_has_exact_app_only_coverage(self):
+    def test_miniapps_app_only_cannot_satisfy_source_extension_coverage(self):
         app = self.app.parent / "HanlinMiniApps.app"
         identity = "com.itorah.hanlinminiapps"
         self.bundle(app, identity)
-        self.assertEqual(exported_bundle_targets(app, {identity}), {identity: app})
+        required = {row[1] for row in product_roles("miniapps")}
+        expected = {identity, identity + ".widgets", identity + ".share",
+                    identity + ".translation-provider", identity + ".notification-service"}
+        self.assertEqual(required, expected)
+        with self.assertRaisesRegex(RuntimeError, "missing="):
+            exported_bundle_targets(app, required)
+        for name, suffix, container in (
+            ("HanlinMiniAppsWidgets", "widgets", "PlugIns"),
+            ("HanlinMiniAppsShare", "share", "PlugIns"),
+            ("HanlinMiniAppsNotificationService", "notification-service", "PlugIns"),
+            ("HanlinMiniAppsTranslationProvider", "translation-provider", "Extensions"),
+        ):
+            self.bundle(app / container / (name + ".appex"), identity + "." + suffix)
+        self.assertEqual(set(exported_bundle_targets(app, required)), expected)
+
+    def test_profile_selection_retains_both_disjoint_original_app_families(self):
+        ai = {row[1] for row in product_roles("ai")}
+        miniapps = {row[1] for row in product_roles("miniapps")}
+        self.assertEqual(ai, EXPECTED)
+        self.assertEqual(len(miniapps), 5)
+        self.assertFalse(ai & miniapps)
+        with self.assertRaisesRegex(ValueError, "Unknown"):
+            product_roles("unregistered-product")
 
 
 if __name__ == "__main__":

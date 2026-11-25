@@ -5,7 +5,6 @@ Only new extension objects are rendered; existing native build phases remain int
 import copy
 import hashlib
 import json
-from project_graph import parse_project
 
 EXTENSIONS = (
     ("HanlinMiniAppsWidgets", "HanlinScriptingWidgets", "Widgets", "widgets"),
@@ -26,6 +25,7 @@ def render(value, level=3):
     return json.dumps(value)
 
 def wire_miniapps_extensions(text, edit_object, replace_list, insert_object):
+    from project_graph import parse_project
     project = parse_project(text)
     objects = project["objects"]
     root = objects[project["rootObject"]]

@@ -1,7 +1,7 @@
 """Bounded Xcode profile-discovery preflight, not product acceptance.
 
 All probe products remain in the existing private signing directory. Xcode builds
-and locally exports tiny applications using the six original bundle/profile
+and locally exports tiny applications using the source-declared original bundle/profile
 identities. Nothing is uploaded, installed, or treated as a release artifact.
 """
 from __future__ import annotations
