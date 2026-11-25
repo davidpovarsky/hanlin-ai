@@ -136,15 +136,15 @@
     "reuse_receipt": "evidence/reuse-receipt-20261125.json",
     "current_app_result": {
       "source": "1710bc6119983799f7d22cb723659ac274fe96b1",
-      "status": "PREPARING_RETRY04",
+      "status": "RUNNING",
       "declared_cases": 46,
       "executed": 0,
       "latest_attempt": "evidence/app-native-20261125/attempt03/test-index.json",
       "fix": "4f2bc9864a4fefa62f69ca54fb9f6b33351ba1df",
       "preparation_reason": "Latest source synchronized; exact source-declared invocation gate installed; current original Host and fixtures remain valid.",
       "expected_invocations": 48,
-      "prepare_status": "RUNNING",
-      "prepare_receipt": "Mac:build/cache-app-native-evidence-04-20261125/prepare/receipt.json",
+      "prepare_status": "PREPARED",
+      "prepare_receipt": "evidence/app-native-20261125/attempt04/prepare/receipt.json",
       "expected_methods": 46
     },
     "runtime_host_result": {
@@ -207,7 +207,7 @@
       "scope": "Only validation tooling; full tracked source hashing retained, historical-proof mutation rejected; nine actual tracked locks copied. App03 remains sealed at5b69bbb5 and is not relabeled."
     }
   },
-  "updated_at": "2026-11-25T03:42:24.681531+00:00",
+  "updated_at": "2026-11-25T03:46:25.426680+00:00",
   "latest_integrated_source": "1710bc6119983799f7d22cb723659ac274fe96b1",
   "synchronized_heads": {
     "composer": "d89ce38b170bc9af4734cd11e30ca793b16698d0",
