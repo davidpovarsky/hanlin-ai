@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-11-25T21:42:56.466810+00:00",
+  "kind": "READ_ONLY_ORIGINAL_PREPARED_NATIVE_REUSE_QUALIFICATION",
+  "root": "/mnt/development/projects/worktrees/hanlin-149001-fixes-root-20261125",
+  "observedRootCommit": "84d1a85cbf5dfc567f8f3ff0caa941fd14565b17",
+  "rootCommitAfter": "84d1a85cbf5dfc567f8f3ff0caa941fd14565b17",
+  "producerCommit": "a2c8a1b1be746461272ba77254603304567c309d",
+  "originalCatalog": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/prepared-snapshot-attempt19/files/build/app-split-evidence-attempt19/prepared-native/native-artifacts.json",
+    "sha256": "3a8dc08f21556547720111e3ad31df314458f5cf75428adf2d69450965036a0d",
+    "state": "prepared",
+    "contentSHA256": "04b079a1c2d2e90943bf4ff9379c0877a3d353c70a800f3bf0e5c7b81ec17b09"
+  },
+  "catalogSourceInputVerification": {
+    "function": "Scripts/SDK/native_artifacts.py verify_source_inputs",
+    "status": "PASS",
+    "count": 16,
+    "inputSHA256": {
+      "RuntimeDependencies.lock.json": "6cdbc18a474febbfc912b35ecbf5b0b55438a6a3e6daf2c33a43792cd04bd50a",
+      "Scripts/Expo/babel.config.cjs": "62581fd5caf7b97cb36290093b7bbf7103e1c1b1300e0e11a1b3eaaf96c998ba",
+      "Scripts/Expo/build-original-expo-source.mjs": "855a9a79f1c27a2ba2f3796cf784ebb66a4a48df928b2ea8f6ca1ffd9e886c03",
+      "Scripts/Expo/build-original-widget-runtime.mjs": "5928bb12ed2fd2f6b2ecfeb6d8fc309d46e5837c58dcc4272d73af13434eb549",
+      "Scripts/Expo/dependency-lock.json": "b9e3ad6d863e3e5136ad93924ce4edcb37da87578b113523640110af347eec65",
+      "Scripts/Expo/package-lock.json": "3b31e1c8fd34145df900764a2cda013ab02ecea7f890c969ad5e0a92925d0dd8",
+      "Scripts/Expo/prepare-ios-dependencies.mjs": "97069b0e1ec619d906f4b6d196e38e6527790c3661f798abcca6258dacf18163",
+      "Scripts/ExpoNativeAPI/dependency-lock.json": "08657d657c1f4efa36149075b632cfc75685fc1ca9af0397fc1168fe9253b768",
+      "Scripts/ExpoNativeAPI/multiscene-patch.mjs": "cafa8348a764155789169c411eb59555c6c7a2d3ef363b870e36f8d6b52c7cbd",
+      "Scripts/ExpoNativeAPI/prepare-ios-dependencies.mjs": "950a2eb6e8713bdd1a395eee6df1779d91f63864af95c33658efa6d090676f66",
+      "Scripts/NativeScript/build-metadata-tool.py": "f4318f38b1c6a9c56ba54edb0d270a6374178fa5a8e024ebfddb9790f7ae3cf5",
+      "Scripts/NativeScript/build-step-metadata-generator-wrapper.py": "71bf1d521abff7cc29c1e8d397a9ef2a55b09f758afb36f0a148be12350b664f",
+      "Scripts/NativeScript/dependency-lock.json": "8499976a4ea0a069ed654b09b597d8fabede4bbbfb62227451a68707b851e8e5",
+      "Scripts/NativeScript/package-lock.json": "16f569f4bfa6f8806cfe72449866a0dc9a9331f33d2c67170d5292455c48b60b",
+      "Scripts/NativeScript/prepare-ios-dependencies.mjs": "b5114a3be1fc846e288128af08cef9f38b0cac8e34923780325c4edc2976ebd9",
+      "Scripts/Runtime/prepare-runtime-core.sh": "1ff99fabcbf8f40d515f3f1b944299286c1094a19520f9892a97f99cf8b64540"
+    }
+  },
+  "oldPublishedCatalog": {
+    "path": "/mnt/development/projects/worktrees/hanlin-149001-fixes-root-20261125/docs/native-artifacts.json",
+    "sha256": "dbe59f99192406be1260e6d17d087f4d49b0f500e1e78814ce151d8e1693f9dc",
+    "state": "published",
+    "sourceCommit": "0a8e90dcf81c1ce71d01555d64b07d0142362f1d",
+    "differences": {
+      "Scripts/Expo/package-lock.json": {
+        "published": "c08757cf46ac4d5c86a873f676af4a3be585db64ae2e1aa1e8288277d4eb63b8",
+        "preparedSDK19": "3b31e1c8fd34145df900764a2cda013ab02ecea7f890c969ad5e0a92925d0dd8"
+      }
+    }
+  },
+  "donorBinaryQualification": {
+    "status": "PASS",
+    "frameworkCount": 15,
+    "sliceCount": 36,
+    "detail": "donor-native-inventory.json",
+    "scope": "All actual native slice bytes, platform, architecture, binary-path records and original framework_libraries validations; not a claim of exact SDK19 ZIP bytes."
+  },
+  "donorSupportValidation": {
+    "status": "PASS",
+    "groups": {
+      "HanlinExpoHeaderSupport": [
+        "Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks",
+        "Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders"
+      ],
+      "HanlinExpoWidgetRuntimeSupport": [
+        "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle"
+      ],
+      "HanlinNativeScriptHostSupport": [
+        "Packages/HanlinNativeScriptRuntime/Artifacts/native-api-usage.json",
+        "Packages/HanlinNativeScriptRuntime/Artifacts/dependency-closure.json",
+        "build/nativescript-metadata-tool/bin",
+        "build/nativescript-metadata-tool/provenance.json",
+        "Scripts/NativeScript/node_modules/@nativescript/ios/framework/internal/metadata-generator-arm64/bin/build-step-metadata-generator.py",
+        "Scripts/NativeScript/node_modules/@nativescript/ios/framework/internal/metadata-generator-arm64/bin/build-step-metadata-generator-upstream.py"
+      ],
+      "HanlinNodeHostSupport": [
+        "AI_HLY/RuntimeHostResources.zip"
+      ],
+      "HanlinPythonHostSupport": [
+        "Vendor/Python/Python-VERSIONS"
+      ]
+    },
+    "metadataTool": {
+      "schemaVersion": 1,
+      "sourceCommit": "5d4569c197810cdd4c1e02e7c16d42a01a77d5c0",
+      "sourceArchiveSHA256": "fad3c54f5d321148e39c46eae6d9cbc8e2891afb414064eb3a10f64ba25d3f8b",
+      "cmakeSourceCommit": "8856ee520a44641dfed313a71cfc01dd47e0352b",
+      "cmakeSHA256": {
+        "metadata-generator/CMakeLists.txt": "0d64383530493f13d1bce04d367984bb6081e665814d893693f4b065fd1bcf51",
+        "metadata-generator/src/CMakeLists.txt": "0f0a48c60391e75c62db3387639de62088cb688e2d004a7576db36e02f18788b"
+      },
+      "llvmArchiveSHA256": "4d2eade1e9fb7a5fae1a502d0e5d935d20190007477743a1379d81838d87b832",
+      "architecture": "arm64",
+      "xcode": "Xcode 27.0\nBuild version 27A266a",
+      "patchSourceSHA256": "f4318f38b1c6a9c56ba54edb0d270a6374178fa5a8e024ebfddb9790f7ae3cf5",
+      "generatorSHA256": "e2bfd9ecd5f5b235dda04b05b6b1b838c799323a558dee7e6651c8d6a93f9e25",
+      "boundary": "Build tool only. No NativeScript/Node/Python engine or app rebuilt; no VM pass."
+    }
+  },
+  "widget": {
+    "rootFiles": {
+      "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/ExpoWidgets.bundle": "6ec4f91b442f8c387f2ea339f503b5a39082878811806cb58179236d06323aed",
+      "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/ExpoWidgetsLayoutRegistry.json": "71c9d33ca106b100af05bbb627934736fc082bfcf2bb33c412ead9eb0c5840b5",
+      "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/Info.plist": "06a9c2c6630712a6761042823033448a59a6242cf6e93ddd57edabad88ff724b",
+      "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/README.txt": "ecab392c89bea2ecf2153f046c9107dec788736ed800907c2c51ab353a5d4a06",
+      "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/original-runtime-receipt.json": "930fa2685c39e238da2ff557a6653bc7530a5a64edc9166b63dd720b410c01d0"
+    },
+    "donorDifferences": {
+      "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/original-runtime-receipt.json": {
+        "root": "930fa2685c39e238da2ff557a6653bc7530a5a64edc9166b63dd720b410c01d0",
+        "donor": "11bce470854088208234f0143dbf4c713a2eadb0968a9a5bfcc350933db205e9"
+      }
+    }
+  },
+  "originalHost": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/prepared-snapshot-attempt19/files/build/runtime-host/RuntimeHostResources.zip",
+    "bytes": 81824721,
+    "sha256": "7a426675109c5ebc4c8b5824565547f8aea10584785932280fdb623128530ecc",
+    "frozenLockedDependencySDKValidationErrors": [],
+    "fullCurrentSourceValidationErrors": [
+      "Host module differs from current source: miniapp-authoring.mjs"
+    ],
+    "requiredAction": "Copy original archive to release-owned path; existing synchronize_archive with fail-closed builder overlays source modules only, then validate full archive. Do not relabel original metadata as new execution."
+  },
+  "worklets": {
+    "path": "Packages/HanlinExpoNativeAPI/Package.swift",
+    "sha256": "c5fd18fa28a1842be0351053d978cc55b752546dc798c663f0dedabfdbefc28c",
+    "currentFlag": "-DWORKLETS_VERSION=0.13.0",
+    "macroIsAuthorCompiledSourceNotVendorBinary": "original prior SDK18 consumer object/response proved bare0.13.0; new root consumer build must compile changed target normally"
+  },
+  "buildGraph": {
+    "publishedCatalogRequiredByDirectXcodeBuild": false,
+    "binaryTargets": "local path declarations",
+    "verifySourceCallSites": [
+      "Scripts/SDK/install.py:353"
+    ],
+    "catalogUsedBy": "SDK dependency installer/publication, not direct prepared Xcode graph"
+  },
+  "boundary": "No root/donor source/catalog mutation, no native compiler/test/build/package resolver ran. No published catalog status assigned. Original prepared artifacts and execution identities retained."
+}
