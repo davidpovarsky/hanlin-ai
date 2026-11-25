@@ -1,0 +1,35 @@
+{
+  "sourceCommit": "b0cf26a668a698682f5307252f14cf0af8c6d00a",
+  "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinNotificationApplicationDelegate.swift",
+  "before": {
+    "sha256": "65e908cc29df4bab76ef3a1b44e032fe2651b47ed4b438035b4e5757a468fa67",
+    "bytes": 3109,
+    "mode": "100644"
+  },
+  "after": {
+    "sha256": "eacf5e748287603ef4e6796d2f2d0016b7563aa5de62bca4478a693d2b82eb83",
+    "bytes": 3078,
+    "mode": "100644"
+  },
+  "changes": [
+    "Match the actual imported async protocol requirement return type Int.",
+    "Forward the original previous-delegate raw Int unchanged and preserve absent-delegate zero presentation bits."
+  ],
+  "sdk14InputRow": {
+    "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinNotificationApplicationDelegate.swift",
+    "sha256": "65e908cc29df4bab76ef3a1b44e032fe2651b47ed4b438035b4e5757a468fa67"
+  },
+  "invalidates": [
+    "Original Host preparation input fingerprint",
+    "SDK ordered source-input identity and generated provenance",
+    "MiniApps and AI consumer compilation of the shared delegate"
+  ],
+  "unchanged": [
+    "Notification event/queue/receipt implementation and tests",
+    "Original upstream package bodies, locks, native frameworks and compiler inputs",
+    "Prior delegate response/settings forwarding",
+    "Actor isolation, event decoding and Host dispatch",
+    "Original paired 25 + 27 case selectors"
+  ],
+  "requiredValidation": "Sole native owner runs normal affected Host/SDK preparation and original consumer builds; no compiler or generator was run by this source author."
+}

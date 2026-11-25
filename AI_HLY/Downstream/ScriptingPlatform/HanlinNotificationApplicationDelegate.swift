@@ -35,11 +35,11 @@ private final class HanlinNotificationCenterDelegate: NSObject, UNUserNotificati
     }
 
     func userNotificationCenter(_ center: UNUserNotificationCenter,
-                                willPresent notification: UNNotification) async -> UNNotificationPresentationOptions {
+                                willPresent notification: UNNotification) async -> Int {
         await receive(notification.request.content.userInfo)
         // No original delegate meant no foreground presentation. Preserve that
         // behavior and any installed delegate's actual presentation decision.
-        return await previous?.userNotificationCenter?(center, willPresent: notification) ?? []
+        return await previous?.userNotificationCenter?(center, willPresent: notification) ?? 0
     }
 
     func userNotificationCenter(_ center: UNUserNotificationCenter,
