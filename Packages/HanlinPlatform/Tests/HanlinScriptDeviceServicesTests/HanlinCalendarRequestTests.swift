@@ -214,6 +214,70 @@ struct HanlinCalendarOperationRequestTests {
         }
     }
 
+    @Test
+    func dueTimestampCannotBeSetWhileClearingDueComponents() throws {
+        #expect(throws: HanlinCalendarRequestError.invalidField("cannot set and clear due_date/due_components")) {
+            try HanlinCalendarOperationRequest.decode(#"{"operation":"update_reminder","identifier":"saved-id","item":{"due_date":"2026-11-27T15:30:00+02:00","clear_fields":["due_components"]}}"#)
+        }
+        let valid = try HanlinCalendarOperationRequest.decode(#"{"operation":"update_reminder","identifier":"saved-id","item":{"due_date":"2026-11-27T15:30:00+02:00"}}"#)
+        #expect(valid.item?.dueDate == "2026-11-27T15:30:00+02:00")
+    }
+
+    @Test
+    func dueComponentsCannotBeSetWhileClearingDueTimestamp() throws {
+        #expect(throws: HanlinCalendarRequestError.invalidField("cannot set and clear due_date/due_components")) {
+            try HanlinCalendarOperationRequest.decode(#"{"operation":"update_reminder","identifier":"saved-id","item":{"due_components":{"year":2026,"month":11,"day":27,"hour":15,"minute":30},"clear_fields":["due_date"]}}"#)
+        }
+        let valid = try HanlinCalendarOperationRequest.decode(#"{"operation":"update_reminder","identifier":"saved-id","item":{"clear_fields":["due_date"]}}"#)
+        #expect(valid.item?.clearFields == ["due_date"])
+    }
+
+    @Test(arguments: [
+        #"{"operation":"update_event","identifier":"saved-id","item":{}}"#,
+        #"{"operation":"update_reminder","identifier":"saved-id","item":{}}"#,
+        #"{"operation":"update_event","identifier":"saved-id","item":{"clear_fields":[]}}"#,
+        #"{"operation":"update_reminder","identifier":"saved-id","item":{"clear_fields":[]}}"#,
+        #"{"operation":"update_calendar","entity_type":"event","identifier":"saved-id","calendar":{}}"#,
+        #"{"operation":"update_calendar","entity_type":"event","identifier":"saved-id","calendar":{"title":null}}"#,
+        #"{"operation":"update_calendar","entity_type":"reminder","identifier":"saved-id","calendar":{"color":null}}"#,
+        #"{"operation":"update_calendar","entity_type":"event","identifier":"saved-id","calendar":{"source_identifier":null}}"#,
+        #"{"operation":"update_calendar","entity_type":"event","identifier":"saved-id","calendar":{"title":"New title","color":null}}"#
+    ])
+    func emptyMutationAndNullCalendarFieldsAreRejected(json: String) {
+        #expect(throws: HanlinCalendarRequestError.self) {
+            try HanlinCalendarOperationRequest.decode(json)
+        }
+    }
+
+    @Test(arguments: ["update_event", "update_reminder"])
+    func clearOnlyUpdateStillExpressesAMutation(operation: String) throws {
+        let json = "{\"operation\":\"\(operation)\",\"identifier\":\"saved-id\",\"item\":{\"clear_fields\":[\"notes\"]}}"
+        let request = try HanlinCalendarOperationRequest.decode(json)
+        #expect(request.item?.clearFields == ["notes"] && request.item?.notes == nil)
+        let emptyArrays = "{\"operation\":\"\(operation)\",\"identifier\":\"saved-id\",\"item\":{\"alarms\":[],\"recurrence_rules\":[]}}"
+        let clearedArrays = try HanlinCalendarOperationRequest.decode(emptyArrays)
+        #expect(clearedArrays.item?.alarms?.isEmpty == true)
+        #expect(clearedArrays.item?.recurrenceRules?.isEmpty == true)
+    }
+
+    @Test(arguments: [
+        #"{"operation":"update_reminder","identifier":"saved-id","item":{"due_date":""}}"#,
+        #"{"operation":"update_reminder","identifier":"saved-id","item":{"due_date":" \t\n "}}"#,
+        #"{"operation":"update_reminder","identifier":"saved-id","item":{"completion_date":""}}"#,
+        #"{"operation":"update_event","identifier":"saved-id","item":{"start_date":""}}"#,
+        #"{"operation":"update_event","identifier":"saved-id","item":{"end_date":" "}}"#,
+        #"{"operation":"update_event","identifier":"saved-id","occurrence_date":"","item":{"notes":"Updated"}}"#,
+        #"{"operation":"list_events","start_date":"","end_date":"2026-11-27"}"#,
+        #"{"operation":"list_reminders","end_date":"          "}"#,
+        #"{"operation":"update_event","identifier":"saved-id","item":{"alarms":[{"absolute_date":""}]}}"#,
+        #"{"operation":"update_event","identifier":"saved-id","item":{"recurrence_rules":[{"frequency":"weekly","end_date":" "}]}}"#
+    ])
+    func suppliedBlankOperationDatesAreRejected(json: String) {
+        #expect(throws: HanlinCalendarRequestError.self) {
+            try HanlinCalendarOperationRequest.decode(json)
+        }
+    }
+
     @Test(arguments: [
         #"{"operation":"update_event","identifier":"id","item":{"attendees":["a@example.com"]}}"#,
         #"{"operation":"create_event","item":{"title":"A","start_date":"2026-11-27T15:00:00Z"}}"#,

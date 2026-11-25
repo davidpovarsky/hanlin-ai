@@ -1,5 +1,15 @@
 import Foundation
 
+/// Operation fields are patches: a supplied blank timestamp is invalid, not an
+/// omitted field. Keep the legacy parser's normalization behavior unchanged.
+private func calendarOperationTimestamp(_ value: String?, field: String) throws -> Date? {
+    guard let value else { return nil }
+    guard HanlinCalendarDateParser.nonempty(value) != nil else {
+        throw HanlinCalendarRequestError.invalidDate(field)
+    }
+    return try HanlinCalendarDateParser.timestamp(value, field: field)
+}
+
 /// Public iOS EventKit operations. Calendar data changes are committed within one
 /// invocation; no unsaved transaction is left behind for a later model turn.
 public enum HanlinCalendarOperation: String, Codable, Sendable, CaseIterable {
@@ -77,7 +87,7 @@ public struct HanlinCalendarAlarmFields: Decodable, Sendable {
               proximity.map({ ["none", "enter", "leave"].contains($0) }) ?? true else {
             throw HanlinCalendarRequestError.invalidField("alarms")
         }
-        _ = try HanlinCalendarDateParser.timestamp(absoluteDate, field: "alarm.absolute_date")
+        _ = try calendarOperationTimestamp(absoluteDate, field: "alarm.absolute_date")
         try structuredLocation?.validate()
         guard relativeOffset != nil || absoluteDate != nil || structuredLocation != nil else {
             throw HanlinCalendarRequestError.invalidField("alarm requires a time or structured_location")
@@ -109,7 +119,7 @@ public struct HanlinCalendarRecurrenceFields: Decodable, Sendable {
               occurrenceCount.map({ $0 > 0 }) ?? true else {
             throw HanlinCalendarRequestError.invalidField("recurrence_rules")
         }
-        _ = try HanlinCalendarDateParser.timestamp(endDate, field: "recurrence.end_date")
+        _ = try calendarOperationTimestamp(endDate, field: "recurrence.end_date")
         for day in daysOfWeek ?? [] {
             guard (1...7).contains(day.day), (-53...53).contains(day.week ?? 0) else {
                 throw HanlinCalendarRequestError.invalidField("recurrence.days_of_week")
@@ -171,11 +181,11 @@ public struct HanlinCalendarItemFields: Decodable, Sendable {
               Set(clearFields ?? []).isSubset(of: Self.clearable) else {
             throw HanlinCalendarRequestError.invalidField("item")
         }
-        let start = try HanlinCalendarDateParser.timestamp(startDate, field: "start_date")
-        let end = try HanlinCalendarDateParser.timestamp(endDate, field: "end_date")
+        let start = try calendarOperationTimestamp(startDate, field: "start_date")
+        let end = try calendarOperationTimestamp(endDate, field: "end_date")
         try HanlinCalendarDateParser.validateRange(start: start, end: end)
-        _ = try HanlinCalendarDateParser.timestamp(dueDate, field: "due_date")
-        _ = try HanlinCalendarDateParser.timestamp(completionDate, field: "completion_date")
+        _ = try calendarOperationTimestamp(dueDate, field: "due_date")
+        _ = try calendarOperationTimestamp(completionDate, field: "completion_date")
         if operation == .createEvent, start == nil || end == nil {
             throw HanlinCalendarRequestError.missingCalendarDates
         }
@@ -206,6 +216,10 @@ public struct HanlinCalendarItemFields: Decodable, Sendable {
         guard dueDate == nil || dueComponents == nil else {
             throw HanlinCalendarRequestError.invalidField("supply due_date or due_components, not both")
         }
+        if dueDate != nil || dueComponents != nil,
+           (clearFields ?? []).contains(where: { $0 == "due_date" || $0 == "due_components" }) {
+            throw HanlinCalendarRequestError.invalidField("cannot set and clear due_date/due_components")
+        }
         for (name, values) in [("start_components", startComponents), ("due_components", dueComponents)] {
             if let values {
                 _ = try Self.dateComponents(values, timeZone: timeZone)
@@ -226,6 +240,17 @@ public struct HanlinCalendarItemFields: Decodable, Sendable {
         try structuredLocation?.validate()
         for alarm in alarms ?? [] { try alarm.validate() }
         for rule in recurrenceRules ?? [] { try rule.validate() }
+        if operation == .updateEvent || operation == .updateReminder {
+            let hasMutation = [title != nil, calendarIdentifier != nil, notes != nil,
+                location != nil, url != nil, timeZone != nil, startDate != nil, endDate != nil,
+                dueDate != nil, startComponents != nil, dueComponents != nil, isAllDay != nil,
+                priority != nil, isCompleted != nil, completionDate != nil, availability != nil,
+                structuredLocation != nil, alarms != nil, recurrenceRules != nil,
+                !(clearFields ?? []).isEmpty].contains(true)
+            guard hasMutation else {
+                throw HanlinCalendarRequestError.invalidField("update requires at least one item field or clear_fields entry")
+            }
+        }
     }
 
     static func dateComponents(_ values: [String: Int], timeZone: String?) throws -> DateComponents {
@@ -299,9 +324,11 @@ public struct HanlinCalendarOperationRequest: Decodable, Sendable {
                     throw HanlinCalendarRequestError.invalidField("unknown item field; use clear_fields to clear optional values")
                 }
             }
-            if let fields = object["calendar"] as? [String: Any],
-               !Set(fields.keys).isSubset(of: ["title", "source_identifier", "color"]) {
-                throw HanlinCalendarRequestError.invalidField("unknown calendar field")
+            if let fields = object["calendar"] as? [String: Any] {
+                guard Set(fields.keys).isSubset(of: ["title", "source_identifier", "color"]),
+                      !fields.values.contains(where: { $0 is NSNull }) else {
+                    throw HanlinCalendarRequestError.invalidField("unknown or null calendar field")
+                }
             }
             func check(_ value: Any?, keys: Set<String>, name: String) throws {
                 guard let value else { return }
@@ -375,7 +402,7 @@ public struct HanlinCalendarOperationRequest: Decodable, Sendable {
         if let item, operation == .completeReminder || operation == .reopenReminder {
             try item.validate(for: operation)
         }
-        _ = try HanlinCalendarDateParser.timestamp(occurrenceDate, field: "occurrence_date")
+        _ = try calendarOperationTimestamp(occurrenceDate, field: "occurrence_date")
         let bounds = try queryBounds()
         try HanlinCalendarDateParser.validateRange(start: bounds.start, end: bounds.end)
         if let start = bounds.start, let end = bounds.end, start >= end {
@@ -405,6 +432,9 @@ public struct HanlinCalendarOperationRequest: Decodable, Sendable {
             if operation == .updateCalendar, calendar.sourceIdentifier != nil {
                 throw HanlinCalendarRequestError.invalidField("a calendar source is chosen on creation and cannot be changed")
             }
+            if operation == .updateCalendar, calendar.title == nil && calendar.color == nil {
+                throw HanlinCalendarRequestError.invalidField("update requires at least one calendar field")
+            }
         }
     }
 
@@ -415,11 +445,14 @@ public struct HanlinCalendarOperationRequest: Decodable, Sendable {
         calendar.timeZone = timeZone
         func value(_ text: String?, end: Bool) throws -> Date? {
             guard let text else { return nil }
+            guard HanlinCalendarDateParser.nonempty(text) != nil else {
+                throw HanlinCalendarRequestError.invalidDate(end ? "end_date" : "start_date")
+            }
             if text.count == 10 {
                 guard let date = try HanlinCalendarDateParser.day(text, field: end ? "end_date" : "start_date", timeZone: timeZone) else { return nil }
                 return end ? calendar.date(byAdding: .day, value: 1, to: date) : date
             }
-            return try HanlinCalendarDateParser.timestamp(text, field: end ? "end_date" : "start_date")
+            return try calendarOperationTimestamp(text, field: end ? "end_date" : "start_date")
         }
         return try (value(startDate, end: false), value(endDate, end: true))
     }
