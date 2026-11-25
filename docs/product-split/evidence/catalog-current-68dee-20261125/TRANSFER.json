@@ -1,0 +1,41 @@
+{
+  "files": {
+    "Package.resolved": {
+      "bytes": 1088,
+      "sha256": "330952becde60c5d094007badd292c82684a43946ed41b9792cb74ded919e872"
+    },
+    "Package.swift": {
+      "bytes": 644,
+      "sha256": "d5dd028393a2f97b87e606a30012d567020c71bde6a6b3c7f2406b18da389e8f"
+    },
+    "current.log": {
+      "bytes": 580991,
+      "sha256": "f14fcca1354708006cc134a63ebe4c1d80dfc32df647b12516fb0ee23ec25d21"
+    },
+    "current.xml": {
+      "bytes": 520,
+      "sha256": "ac66df2cfb458635fef0c4d528d602aa6c9cf5b11bae273f441d68d94b665735"
+    },
+    "preparation.json": {
+      "bytes": 513,
+      "sha256": "f98e7d87e322a5d04eb08985ec2a8766748d68bbe31b185300e80152b46eb4e6"
+    },
+    "result.json": {
+      "bytes": 4353,
+      "sha256": "229147e6ee19e94c19c2fcfec70a185c00dfd597b789009ef2c1f0296030a79c"
+    },
+    "run.py": {
+      "bytes": 4442,
+      "sha256": "98526953cd45ecf665430851b3dffc49022a5cc52504f7464e28790a32fd3f07"
+    },
+    "source-manifest.json": {
+      "bytes": 77228,
+      "sha256": "78b1fde5d0179f24039c377c6d9d13256ca087c55a6899c34648b95ff6ece616"
+    }
+  },
+  "result_sha256": "229147e6ee19e94c19c2fcfec70a185c00dfd597b789009ef2c1f0296030a79c",
+  "scope": "Two unchanged original host unit regressions; real macOS compile/execution, mock fetch provider; no app/UI/native signing acceptance",
+  "sentinel_job": "job_ef95acc7f044",
+  "source": "68dee3512bd92ad733b5204cb69c710e2708ae84",
+  "transfer_archive_sha256": "a9a7f2d56f99144757d8c8a70cdc13ffe3c30d64e50da516699f41fb8d549225"
+}

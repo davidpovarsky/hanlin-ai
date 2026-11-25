@@ -1,0 +1,129 @@
+{
+  "app_builds": 0,
+  "capacity_observations": [
+    {
+      "free_bytes": 4435898368,
+      "time_utc": "2026-11-25T09:11:12.805352+00:00"
+    },
+    {
+      "free_bytes": 4061270016,
+      "time_utc": "2026-11-25T09:11:24.814605+00:00"
+    },
+    {
+      "free_bytes": 3560583168,
+      "time_utc": "2026-11-25T09:11:36.819354+00:00"
+    },
+    {
+      "free_bytes": 2841722880,
+      "time_utc": "2026-11-25T09:11:48.826393+00:00"
+    },
+    {
+      "free_bytes": 2414272512,
+      "time_utc": "2026-11-25T09:12:00.830509+00:00"
+    },
+    {
+      "free_bytes": 2299133952,
+      "time_utc": "2026-11-25T09:12:12.837839+00:00"
+    },
+    {
+      "free_bytes": 2122518528,
+      "time_utc": "2026-11-25T09:12:24.855385+00:00"
+    },
+    {
+      "free_bytes": 3873628160,
+      "time_utc": "2026-11-25T09:12:36.856385+00:00"
+    },
+    {
+      "free_bytes": 3811696640,
+      "time_utc": "2026-11-25T09:12:48.863070+00:00"
+    },
+    {
+      "free_bytes": 4259172352,
+      "time_utc": "2026-11-25T09:13:00.863393+00:00"
+    },
+    {
+      "free_bytes": 3985596416,
+      "time_utc": "2026-11-25T09:13:12.864256+00:00"
+    },
+    {
+      "free_bytes": 4071276544,
+      "time_utc": "2026-11-25T09:13:24.874290+00:00"
+    }
+  ],
+  "cases": [
+    {
+      "classname": "HanlinChatCoreTests.HanlinCatalogReloadCancellationTests",
+      "failure_count": 0,
+      "name": "cancellationDuringFinalCatalogLookupStopsBeforeAnotherProviderStep()",
+      "skipped": 0
+    },
+    {
+      "classname": "HanlinChatCoreTests.HanlinTransientToolCatalogTests",
+      "failure_count": 0,
+      "name": "restoredCatalogContinuesTheOriginalEmptyToolResult()",
+      "skipped": 0
+    }
+  ],
+  "command": [
+    "xcrun",
+    "swift",
+    "test",
+    "--package-path",
+    "/Users/m1/builds/hanlin-miniapps-current-catalog-20261125/host-harness",
+    "--scratch-path",
+    "/Users/m1/builds/hanlin-miniapps-current-catalog-20261125/host-build",
+    "--cache-path",
+    "/Users/m1/builds/hanlin-miniapps-current-catalog-20261125/host-cache",
+    "--force-resolved-versions",
+    "--skip-update",
+    "--verbose",
+    "-j",
+    "1",
+    "--disable-xctest",
+    "--enable-swift-testing",
+    "--no-parallel",
+    "--filter",
+    "(HanlinTransientToolCatalogTests|HanlinCatalogReloadCancellationTests)",
+    "--xunit-output",
+    "/Users/m1/builds/hanlin-miniapps-current-catalog-20261125/evidence/current.xml"
+  ],
+  "controller_sha256": "98526953cd45ecf665430851b3dffc49022a5cc52504f7464e28790a32fd3f07",
+  "dependency_pins_after": {
+    "swift-ai-sdk": "3f38f1302764635c9991d0d00fd7b12471a5373c",
+    "swift-argument-parser": "6a52f3251125d74daf04fcbd5e6f08a75d074382",
+    "swiftyjson": "b3dcd7dbd0d488e1a7077cb33b00f2083e382f07",
+    "zipfoundation": "02b6abe5f6eef7e3cbd5f247c5cc24e246efcfe0"
+  },
+  "dependency_pins_before": {
+    "swift-ai-sdk": "3f38f1302764635c9991d0d00fd7b12471a5373c",
+    "swift-argument-parser": "6a52f3251125d74daf04fcbd5e6f08a75d074382",
+    "swiftyjson": "b3dcd7dbd0d488e1a7077cb33b00f2083e382f07",
+    "zipfoundation": "02b6abe5f6eef7e3cbd5f247c5cc24e246efcfe0"
+  },
+  "exit_code": 0,
+  "finished_utc": "2026-11-25T09:13:31.368032+00:00",
+  "free_bytes_after": 3906228224,
+  "free_bytes_before": 4440494080,
+  "log_sha256": "f14fcca1354708006cc134a63ebe4c1d80dfc32df647b12516fb0ee23ec25d21",
+  "native_app_acceptance_credit": false,
+  "pid": 38947,
+  "provider_is_mock_fetch": true,
+  "schema": "hanlin.current-catalog-regressions/1",
+  "simulator_creations": 0,
+  "source_after": {
+    "files": 326,
+    "harness_sha256": "d5dd028393a2f97b87e606a30012d567020c71bde6a6b3c7f2406b18da389e8f",
+    "manifest_sha256": "78b1fde5d0179f24039c377c6d9d13256ca087c55a6899c34648b95ff6ece616",
+    "source_commit": "68dee3512bd92ad733b5204cb69c710e2708ae84"
+  },
+  "source_before": {
+    "files": 326,
+    "harness_sha256": "d5dd028393a2f97b87e606a30012d567020c71bde6a6b3c7f2406b18da389e8f",
+    "manifest_sha256": "78b1fde5d0179f24039c377c6d9d13256ca087c55a6899c34648b95ff6ece616",
+    "source_commit": "68dee3512bd92ad733b5204cb69c710e2708ae84"
+  },
+  "started_utc": "2026-11-25T09:11:12.596292+00:00",
+  "status": "ACTUAL_CURRENT_TWO_METHODS_PASS",
+  "toolchain": "Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)\nTarget: arm64-apple-macosx27.0.0",
+  "xunit_sha256": "ac66df2cfb458635fef0c4d528d602aa6c9cf5b11bae273f441d68d94b665735"
+}

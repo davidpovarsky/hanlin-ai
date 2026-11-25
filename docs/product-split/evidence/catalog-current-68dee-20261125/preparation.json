@@ -1,0 +1,12 @@
+{
+  "app_builds": 0,
+  "archive_sha256": "28d78898b7e204b74bd590b94d0d9723000172623e33dbf066a4715116b779ec",
+  "free_bytes": 5025738752,
+  "host_harness_sha256": "d5dd028393a2f97b87e606a30012d567020c71bde6a6b3c7f2406b18da389e8f",
+  "original_tests_unchanged": true,
+  "simulator_creations": 0,
+  "source_commit": "68dee3512bd92ad733b5204cb69c710e2708ae84",
+  "source_files": 326,
+  "source_manifest_sha256": "78b1fde5d0179f24039c377c6d9d13256ca087c55a6899c34648b95ff6ece616",
+  "status": "PREPARED_SOURCE_ONLY"
+}

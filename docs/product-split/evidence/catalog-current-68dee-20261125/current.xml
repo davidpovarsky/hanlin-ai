@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="TestResults" errors="0" tests="2" failures="0" skipped="0" time="0.013681333">
+    <testcase classname="HanlinChatCoreTests.HanlinCatalogReloadCancellationTests" name="cancellationDuringFinalCatalogLookupStopsBeforeAnotherProviderStep()" time="0.010515458" />
+    <testcase classname="HanlinChatCoreTests.HanlinTransientToolCatalogTests" name="restoredCatalogContinuesTheOriginalEmptyToolResult()" time="0.002007583" />
+  </testsuite>
+</testsuites>
