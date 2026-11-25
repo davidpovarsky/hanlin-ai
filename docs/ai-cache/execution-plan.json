@@ -217,7 +217,12 @@
           "a48ba95d351374de3f70189a9a7d6bd61670b2f1",
           "36d97c5a2b9fde92bbbc480adcff473dcb66698e"
         ],
-        "complete_xcresult": "Unavailable: after crash/restart completion, idle xcodebuild required scoped SIGINT thenSIGTERM; xcresulttool exited64 on partialbundle. RawfailuresandIPSretained."
+        "complete_xcresult": "Unavailable: after crash/restart completion, idle xcodebuild required scoped SIGINT thenSIGTERM; xcresulttool exited64 on partialbundle. RawfailuresandIPSretained.",
+        "receipt": "evidence/app-native-20261125/attempt04/test/receipt.json",
+        "evidence_index": "evidence/app-native-20261125/attempt04/test-index.json",
+        "test_process_exit_code": -15,
+        "simulator_shutdown_exit_code": 0,
+        "source_unchanged": true
       }
     ],
     "future_runner_lock_correction": {
