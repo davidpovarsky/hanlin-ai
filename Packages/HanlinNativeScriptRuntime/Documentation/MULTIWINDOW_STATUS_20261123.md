@@ -1,163 +1,125 @@
-# NativeScript multiwindow status — 2026-11-23
+# NativeScript windows — current status, 25 November 2026
 
-## Confirmed boundary
+## Supported architecture
 
-The pinned NativeScript/ios-spm 9.1.0 wrapper owns one process-global main VM.
-Creating a second NativeScript object destroys the former VM. Concurrent independent
-NativeScript MiniApp invocations remain BLOCKED_UPSTREAM; the existing guard stays.
-This is a dependency architecture limitation, not a new user-facing permission.
+The current integration uses the original NativeScript iOS **9.1.1** runtime and
+the original Core **9.1.4** implementation. Packages that opt into
+`hanlinNativeScript.windowFactory: 1` can create concurrent windows through
+the original Core `NativeWindow` and the runtime's `ns:module`
+`configureLoader` / `createPumpingRequire` APIs.
 
-## Source evidence
+Each invocation receives a separate staged source namespace below a neutral,
+host-owned application root. This covers multiple windows of one package as
+well as windows belonging to different packages. The implementation binds
+relative and dynamic imports, package-local bare dependencies, resource paths,
+root CSS, window storage, host services and callbacks to the invocation.
+Module-level mutable state is separated by the distinct module paths.
 
-NativeScript/ios-spm 9.1.0 commit: a8e26efad02d792a62d2d015f0f7a632e336b2d1.
-NativeScript/ios v9.1.0 commit: 5d4569c197810cdd4c1e02e7c16d42a01a77d5c0.
-Pinned XCFramework SHA-256: 7fe4225faf085c61cef93d7faaa6c70fa3c97bf0631d53f4c868eea2d819c209.
+The process-level provider is neutral: it cannot silently inherit the first
+window's capabilities or data directory. Closing one window retires its own
+bridge, view and callbacks. Module files remain available while other windows
+are live, including for late imports. The host tree is removed only after the
+last window and the original VM have stopped.
 
-- NativeScript.mm:42 declares one process-global unique_ptr runtime. Initialization
-  at168–169 resets it before allocation; shutdown at143–145 clears global tasks
-  and resets that same pointer.
-- RuntimeConfig.cpp defines a global config. Initialization overwrites BaseDir,
-  ApplicationPath and other values for the entire process.
-- Tasks.cpp uses a static task collection; shutdown clears it.
-- Runtime.mm has worker-isolate structures, but AppPackageJson/AppConfigCache
-  remain global. Worker support does not make the main UIKit wrapper independent.
-- NapiRuntime returns the current-thread environment. JSIRuntime caches a static
-  runtime. Neither provides a separate main application-session constructor.
+Relevant implementation:
 
-## A cooperating application's own windows
+- [Window package staging](../Sources/HanlinNativeScriptRuntime/HanlinNativeScriptWindowPackage.swift)
+- [Window session ownership](../Sources/HanlinNativeScriptRuntime/HanlinNativeScriptWindowSession.swift)
+- [Native window factory](../Sources/HanlinNativeScriptCoreSupport/HanlinNativeScriptWindowFactory.mm)
 
-The shipped @nativescript/core application.ios.mjs implements
-Application.ios.openWindow at1203 and keeps a NativeWindow scene registry.
-One cooperating application can author multiple scenes within its existing VM.
-That does not isolate arbitrary catalog packages or per-invocation input: the
-embedded path still uses Application._rootView and one NativeScriptEmbedder
-delegate, while configuration, module caches and globals remain shared.
-No existing per-invocation view-factory contract turns this into independent apps.
+## Shared-process boundary
 
-## In-scope fixes
+This contract does **not** create independent JavaScript global objects or an
+operating-system sandbox. Arbitrary writes to `globalThis`, native singleton
+state, process-global `ApplicationSettings`, `Application.addCss`, and global
+application configuration remain shared. Cooperative packages must use their
+supplied services, storage, resources and root styling.
 
-- Expose activeSessionIdentifier for preflight immediately before provider changes.
-- Pass the actual runtime session ID to setActiveContainer.
-- Guard clearActiveContainer(forSessionID:) by owner; unrelated and late-window
-  teardown leaves the active bridge unchanged.
-- Clear the legacy provider only when its object identity matches the caller.
-- Preserve the live VM/environment/shared-runtime ownership; no implicit restart.
+Whole-application entries using the original application bootstrap retain the
+single-owner admission guard. Starting a second such application would replace
+the existing upstream main VM. The new window factory is an explicit alternative
+for cooperating packages; it is not permission to remove the whole-application
+guard. Independent arbitrary main-thread NativeScript applications remain an
+upstream architecture gap.
 
-The caller must perform preflight, provider registration and start without an
-intervening await. Only the owner should tear down its runtime.
+The public NativeScript 9.1.1 header offers one whole-application initializer.
+`NativeScript.mm` owns a process-global main Runtime and resets it before
+initializing another. Worker contexts provide separate background execution;
+they do not provide independent main-thread UIKit application instances.
+The recorded source review includes exact upstream blob IDs and SHA-256 values:
 
-## Minimum complete architecture
+- [Current upstream review](../../../docs/product-split/evidence/cross-app-20261123/native-package-window-20261125/upstream-runtime-review.json)
+- [NativeScript multi-window guide](https://docs.nativescript.org/guide/multi-window)
+- [Original 9.1.1 public header](https://github.com/NativeScript/ios/blob/v9.1.1/NativeScript/NativeScript.h)
+- [Original main-runtime implementation](https://github.com/NativeScript/ios/blob/v9.1.1/NativeScript/NativeScript.mm)
+- [Original module APIs](https://github.com/NativeScript/ios/blob/v9.1.1/types/ns-module.d.ts)
+- [Original worker APIs](https://github.com/NativeScript/ios/blob/v9.1.1/types/ns-worker-threads.d.ts)
 
-Keeping the current whole-application wrapper would require an upstream artifact
-change: scope its main runtime, config, tasks and application cache per instance,
-then route presentation, Host Services and package paths by session. The separate
-Node-API interoperability APIs could instead underpin a host-owned application
-runner, but that is a new engine/module/filesystem/bootstrap/presenter integration,
-not a transparent dependency update. Either route needs actual two-window proof
-for distinct roots, timers, callbacks, module loads, inputs and independent teardown.
-Deleting only the Hanlin singleton guard cannot provide that behavior.
+Earlier observations for 9.1.0 remain in Git history and the retained upstream
+review JSON. They must not be read as the version of the current shipped input.
 
-## Current supported runtime review
+## Corrections and coverage
 
-The official latest stable iOS release `v9.1.1` and published SPM prerelease
-`9.1.2-next.2026-11-23-45255582945` were inspected without changing dependencies.
-Both still hold one process-global main runtime. Their initialization writes the
-shared configuration and destroys the previous main runtime before replacing it.
-The current Node-API runtime repository at `8cdc398d30339e809fc2c491238e0af0deb3442d`
-keeps the same single-main-wrapper architecture and a shared application path.
+The original window input package omitted the required `plugins: {}` declaration.
+Commit `3e871e428` corrected admission without weakening the window assertions.
+The production nonce check requires the real NativeScript parity view and its
+actual JavaScript result. The SDK branch's original ESM loader and callback
+run-loop corrections are incorporated in the current integrated candidate.
 
-The Node-API bridge itself does expose per-environment native interoperability.
-That provides useful building blocks for a separate host integration; it does not
-provide an independent whole-package launch contract compatible with our current
-`runMainApplication` entrypoints. Existing package entries call `Application.run`
-and use its one embedded primary window. `NativeWindow` can support multiple
-cooperating views of one application, but using it here would require an explicit
-per-invocation view factory, bound services and a scene-aware presenter.
+Closing a window previously set `closed = true` before invoking a setter that
+ignores changes on a closed context. That retained the JavaScript lifecycle
+block across VM shutdown. The native context now clears the ivar while the VM
+is live. Its ownership regression retains the closed context and checks that
+the captured lifecycle has been released.
 
-Exact release dates, official SPM checksum, source blob hashes, published npm
-channels and source links are retained in
-`multiwindow-current-upstream-20261123.json`. No runtime binary was downloaded,
-no migration was applied, and no prior native tests were repeated for this review.
+The current standalone gate has **25 selected cases**. It includes the original
+bridge/producer/preferences/runtime obligations, same-package reverse completion
+and cancellation, distinct-package import/resource/style/storage isolation,
+existing-scene selection, and native lifecycle ownership. Input fixtures seed
+requests and inspect actual persisted results; they do not fabricate completion.
 
-## Verification
+## Current verification boundary
 
-The new Apple case unrelatedAndLateWindowCleanupPreservesNativeScriptOwner checks
-unrelated and stale-owner teardown against actual bridge/provider classes.
-Swift source parsing passed. Apple compilation/execution is NOT_RUN in this lane
-and belongs to the integrated MiniApps gate. No baseline engine suite reran.
+The current integrated producer source is
+`fe3f75d0638671c749225e9a8ddd487db70981cf`. It combines the exact reviewed
+foreground-window and iPad orientation changes with PR19 through `dc53a6c8`.
+The original multiscene implementation is retained. The complete `Packages`
+tree is unchanged from `70eb9c2d`; the next actual full 25-case run is being
+prepared on installed iOS 27.2. No previous-platform pass is relabeled.
 
-Sources:
+The actual `70eb9c2d` run finished with **23 pass, 2 fail, 0 skip**. All three
+original stopping-point failures passed: same-package reverse completion,
+cancellation preserving the other prepared callback, and genuine NativeScript
+JavaScript output with a nonce plus relaunch. All 13 host methods passed.
 
-- https://github.com/NativeScript/ios-spm/blob/9.1.0/Package.swift
-- https://github.com/NativeScript/ios/blob/v9.1.0/NativeScript/NativeScript.mm
-- https://github.com/NativeScript/ios/blob/v9.1.0/NativeScript/runtime/RuntimeConfig.cpp
-- https://github.com/NativeScript/ios/blob/v9.1.0/NativeScript/runtime/Tasks.cpp
-- https://github.com/NativeScript/ios/blob/v9.1.0/NativeScript/runtime/Runtime.mm
-- https://github.com/NativeScript/ios/blob/v9.1.0/NativeScript/NapiRuntime.mm
-- https://github.com/NativeScript/ios/blob/v9.1.0/NativeScript/JSIRuntime.m
+The two remaining failures have different causes. During different-package
+reverse completion, backboardd aborted after Metal texture validation reported
+an invalid pixel format at 14:49:09 UTC. Runningboardd then explicitly killed
+the test runner for backboardd respawn. A separate existing-root test queried a
+background scene's control for hittability; the actual first AX window and
+Exposé screenshots identify the foreground and the preserved pending scene.
+The new helper selects that actual foreground window before touching controls.
 
-## Cooperating package namespace implementation — 2026-11-25
+The new iPad-only Info.plist declaration includes all four supported orientations.
+The existing-root method now requests four actual device orientations while the
+original request remains prepared. It checks rendered landscape/portrait
+geometry, process/request identity, edited text and callback state, then still
+completes through the original return path. Width/height alone does not prove
+the distinct scene angles for portrait and upside-down.
 
-The current implementation uses the original pinned NativeScript 9.1.1 runtime,
-its original `ns:module` `configureLoader` / `createPumpingRequire`, and the
-original Core `NativeWindow`. It stages a distinct source namespace for each
-window under a neutral, host-owned application root. Relative/static/dynamic
-module identities, package-local bare dependencies, resources, root CSS,
-window storage, Host Services and callbacks are explicitly bound to that window.
-A neutral process-global provider cannot silently acquire the first window's
-capabilities or data paths. Closing a window retains module files needed by live
-windows and retires only its own bridge, view and callbacks. The host tree is
-removed after the last window and the original VM stop.
+The preceding `27381e90` run remains **20 pass, 5 fail, 0 skip**. Its distinct-
+package cases passed, but another authentic backboardd Metal assertion killed
+the same-package runner. It also exposed the catalog localization regression
+corrected in 70eb and verified by the actual EN/HE UI. The installed 27.2 runtime
+is an empirical mitigation to evaluate; no documented Apple Metal fix is claimed.
 
-This is cooperating package support, not independent V8 global objects or a
-native security sandbox. Packages opt into `hanlinNativeScript.windowFactory: 1`
-and use their supplied services, storage and resource context. Arbitrary writes
-to `globalThis`, native singleton state, process-global ApplicationSettings,
-`Application.addCss`, or global application configuration remain shared. Whole
-application entries retain the original singleton guard. No wrapper reset,
-monkey-patched evaluator, or cloned original engine is introduced.
+Full raw attempts, screenshots, accessibility output, xcresults, verifiers and
+OS diagnostics are retained, including an authenticated off-host readback of
+the complete 70eb attempt. Sampling timeouts remain recorded separately. The
+next scoped observer has a bounded 20-second process-query deadline and retains
+all PID/image, missing-process and foreign-image semantic checks. It does not
+change any test deadline or convert an incomplete old receipt to a pass.
 
-The v9.1.1 public NativeScript header still offers one whole-application
-initializer; NativeScript.mm owns a process-global main Runtime pointer and
-destroys it before initializing another. The original Worker API creates
-separate background runtime/isolate contexts and copies loader policy; it does
-not supply independent main-thread UIKit application instances. Exact upstream
-file blob IDs and SHA-256 values are recorded in
-`../../../docs/product-split/evidence/cross-app-20261123/native-package-window-20261125/upstream-runtime-review.json`.
-Official references:
-- https://docs.nativescript.org/guide/multi-window
-- https://github.com/NativeScript/ios/blob/v9.1.1/NativeScript/NativeScript.h
-- https://github.com/NativeScript/ios/blob/v9.1.1/NativeScript/NativeScript.mm
-- https://github.com/NativeScript/ios/blob/v9.1.1/types/ns-module.d.ts
-- https://github.com/NativeScript/ios/blob/v9.1.1/types/ns-worker-threads.d.ts
-
-### Runtime and acceptance corrections
-
-The original NativeScript fixture lacked the required `plugins: {}` declaration;
-commit 3e871e428 fixed that admission failure without changing the original
-window assertions. The nonce production check now also requires the real
-NativeScript parity root. The later SDK/metadata correction belongs to PR19
-and must be integrated before current native execution.
-
-A separate retained-lifecycle defect was found in the real Objective-C++
-window context: closing set `closed = true`, then used a setter that ignores
-changes when closed, leaving the JavaScript lifecycle block retained across
-VM shutdown. Close now clears the ivar directly while the VM is still live.
-A native ownership regression explicitly holds the closed context and verifies
-its lifecycle capture is released before the runtime ends.
-
-The original twenty obligations remain. Two real package-window UI cases add
-different packages, module-name collisions, late imports, resource bytes,
-computed root CSS, storage readback, reverse completion and cancellation.
-The original same-package fixture now also uses module-level mutable state and
-identical storage filenames, preserving its original callback assertions.
-One lifecycle ownership case brings the current affected gate to 23 cases.
-These input packages run in the real producer app; the Foundation fixture only
-seeds incoming requests and independently checks persisted actual outputs.
-No fixture synthesizes a completion result.
-
-Current source checkpoint: JavaScript syntax, Python parsing, archive/source
-byte identity and diff whitespace have passed. Original-runtime acceptance for
-this source is still NOT_RUN; the separate native gate must compile and run on
-the actual Mac with retained xcresult and source-bound receipts. Independent
-global isolation and physical iPad acceptance are not claimed.
+Full independent globals, original consumer-app acceptance, signed device App
+Group sharing and a physical iPad run are separate obligations. Their completion
+is not implied by cooperating-window tests.
