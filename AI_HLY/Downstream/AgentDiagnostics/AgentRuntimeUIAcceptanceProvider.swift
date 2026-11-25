@@ -1203,8 +1203,22 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
     }
 
     override func stopLoading() {
-        isStopped = true
-        activityLifecycleTask?.cancel()
+        cancellationLock.lock()
+        stopped = true
+        let task = activityLifecycleTask
+        activityLifecycleTask = nil
+        cancellationLock.unlock()
+        task?.cancel()
+    }
+
+    private func installActivityLifecycleTask(_ task: Task<Void, Never>) {
+        cancellationLock.lock()
+        let shouldCancel = stopped
+        if !shouldCancel { activityLifecycleTask = task }
+        cancellationLock.unlock()
+        // stopLoading may have run before the new task could be installed.
+        // Cancellation stays outside the lock to avoid reentrant deadlocks.
+        if shouldCancel { task.cancel() }
     }
 
     /// Controlled provider traffic through the original chat projection. This
@@ -1213,7 +1227,7 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
         let response = HTTPURLResponse(url: request.url!, statusCode: 200,
             httpVersion: "HTTP/1.1", headerFields: ["Content-Type": "text/event-stream"])!
         client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
-        activityLifecycleTask = Task { [weak self] in
+        let task = Task { [weak self] in
             guard let self else { return }
             func emit(_ delta: [String: Any], final: Bool = false) {
                 guard !self.isStopped else { return }
@@ -1237,6 +1251,7 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
             do { try await Task.sleep(for: .seconds(10)) } catch { return }
             emit(["content": "ACTIVITY_FINAL_COMPLETE"], final: true)
         }
+        installActivityLifecycleTask(task)
     }
 
     private func emitToolCall(id: String, name: String, arguments: String) {
