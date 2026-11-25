@@ -1,0 +1,23 @@
+{
+  "createdAtUTC": "2026-11-25T04:09:17.168360+00:00",
+  "baseSHA": "8562a7a15d04d9380052265982d0ec891d629093",
+  "patchSHA": "36d97c5a2b9fde92bbbc480adcff473dcb66698e",
+  "patchTree": "3714bbc2a3bba7fd19e433b541b8362e61899ce4",
+  "file": "AI_HLYTests/HanlinModelPromptCachePersistenceTests.swift",
+  "sourceBeforeSHA256": "3ec89f04d9c6d5a83b5bce566fbec92f903dfbd8fe7ceec0629e16aeec68d6b7",
+  "sourceAfterSHA256": "da9b9b3d35a9194b2cb54833f3a5bebe552833ae9fe133e415a9b88513252bfe",
+  "methods": [
+    "oldRowsAndOriginalSwiftDataRoundTrip",
+    "scopedResourcesCannotReplaceGlobalPreferences",
+    "compactConfigurationPreservesPreferencesAndLegacyDecoding"
+  ],
+  "expectationStatementsUnchanged": 12,
+  "requireStatementsUnchanged": 2,
+  "originalSavePreserved": true,
+  "originalFetchPreserved": true,
+  "diffCheck": "PASS",
+  "trackedWorkingTreeClean": true,
+  "nativeBuildOrTest": "NOT_RUN: root owns retry",
+  "crashReason": "Uncaught NSInternalInconsistencyException: No eligible connection available at original context.save(); SIGABRT PID42140, simulator34B2DB02-626B-4393-81A2-45AB371865C8",
+  "causalityBoundary": "The original named container remains alive before its failing save. Explicit no-AppGroup/no-CloudKit fixture configuration and mainContext align with local-only intended semantics; the subsequent fresh read context is now retained. Low-level SDK connection defect or contribution of each change is not proven without native retry; no production store change."
+}

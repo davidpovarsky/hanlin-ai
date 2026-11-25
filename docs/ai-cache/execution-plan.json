@@ -135,17 +135,21 @@
     },
     "reuse_receipt": "evidence/reuse-receipt-20261125.json",
     "current_app_result": {
-      "source": "1710bc6119983799f7d22cb723659ac274fe96b1",
-      "status": "RUNNING",
+      "source": "7ef4795083ce559de64366d42c3c0c9495d739b6",
+      "status": "PREPARING_RETRY05",
       "declared_cases": 46,
       "executed": 0,
-      "latest_attempt": "evidence/app-native-20261125/attempt03/test-index.json",
+      "latest_attempt": "evidence/app04-persistence-crash-20261125/index.json",
       "fix": "4f2bc9864a4fefa62f69ca54fb9f6b33351ba1df",
       "preparation_reason": "Latest source synchronized; exact source-declared invocation gate installed; current original Host and fixtures remain valid.",
       "expected_invocations": 48,
-      "prepare_status": "PREPARED",
+      "prepare_status": "REUSE_CANDIDATE_UNCHANGED_PREPARATION_INPUTS",
       "prepare_receipt": "evidence/app-native-20261125/attempt04/prepare/receipt.json",
-      "expected_methods": 46
+      "expected_methods": 46,
+      "fixes": [
+        "a48ba95d351374de3f70189a9a7d6bd61670b2f1",
+        "36d97c5a2b9fde92bbbc480adcff473dcb66698e"
+      ]
     },
     "runtime_host_result": {
       "source": "04c1942bc88cd4de7deafda7dd342b9b6c401dcf",
@@ -198,6 +202,22 @@
         "receipt": "evidence/app-native-20261125/attempt03/test/receipt.json",
         "reason": "HanlinMiniAppAssistantIntegrationTests.swift:11 missing requiredcanPresentUI argument",
         "fix": "4f2bc9864a4fefa62f69ca54fb9f6b33351ba1df"
+      },
+      {
+        "source": "1710bc6119983799f7d22cb723659ac274fe96b1",
+        "status": "BUILD_PASS_RUNTIME_FAILED",
+        "build_exit_code": 0,
+        "executed": null,
+        "runtime_failures": [
+          "ClassicChatRestoration case25: three obsolete pre-policy UI expectations",
+          "SwiftData round-trip case: NSInternalInconsistencyException No eligible connection available at context.save; process abort"
+        ],
+        "failure_evidence": "evidence/app04-persistence-crash-20261125/index.json",
+        "fixture_fixes": [
+          "a48ba95d351374de3f70189a9a7d6bd61670b2f1",
+          "36d97c5a2b9fde92bbbc480adcff473dcb66698e"
+        ],
+        "complete_xcresult": "Unavailable: after crash/restart completion, idle xcodebuild required scoped SIGINT thenSIGTERM; xcresulttool exited64 on partialbundle. RawfailuresandIPSretained."
       }
     ],
     "future_runner_lock_correction": {
@@ -207,7 +227,7 @@
       "scope": "Only validation tooling; full tracked source hashing retained, historical-proof mutation rejected; nine actual tracked locks copied. App03 remains sealed at5b69bbb5 and is not relabeled."
     }
   },
-  "updated_at": "2026-11-25T03:59:56.349220+00:00",
+  "updated_at": "2026-11-25T04:13:11.913774+00:00",
   "latest_integrated_source": "74b4946ce229e43ed2908e41691840e6eb3bd6d8",
   "synchronized_heads": {
     "composer": "d89ce38b170bc9af4734cd11e30ca793b16698d0",
