@@ -1,0 +1,267 @@
+{
+  "baselineManifestSHA256": "19726b5eecc1459e30dae9e7ec4ca6761001de92b22055ac41b9a96aabdd7a88",
+  "currentManifestSHA256": "039f061558cc53d51e929f07e2df222709ab078d8417af527bc448750bda5593",
+  "files": {
+    "oldCount": 25661,
+    "newCount": 25669,
+    "unchangedCount": 25655,
+    "added": [
+      {
+        "path": "docs/miniapp-sdk/NOTIFICATION_EVENTS.md",
+        "sha256": "d027d20f9b95087ec7adcfb290ee7f4dab7ee057d623a81c87eeb561e321998f",
+        "bytes": 8433
+      },
+      {
+        "path": "docs/miniapp-sdk/notification-event.schema.json",
+        "sha256": "519d0ffaf9bb70368de9f2772d141082cef5feefe77d7a2117495f5a19ad7699",
+        "bytes": 2615
+      },
+      {
+        "path": "examples/expo-hello-world/notification-event.ts",
+        "sha256": "3faaf31c55f30954b8c3a74cce95d0461bdef531269bcd7832a886be4ac390de",
+        "bytes": 650
+      },
+      {
+        "path": "examples/nativescript-hello-world/notification-event.ts",
+        "sha256": "3faaf31c55f30954b8c3a74cce95d0461bdef531269bcd7832a886be4ac390de",
+        "bytes": 650
+      },
+      {
+        "path": "expo/node_modules/@hanlin/notification-events/index.d.ts",
+        "sha256": "1fca542efed873474b4541f09945af3db035b570c691be63982a3ddf9ae2f837",
+        "bytes": 1306
+      },
+      {
+        "path": "expo/node_modules/@hanlin/notification-events/package.json",
+        "sha256": "b6ec9ece2d15d32b029e720cd5dde983a681cba511e807cd5766862d79ef8456",
+        "bytes": 134
+      },
+      {
+        "path": "nativescript/node_modules/@hanlin/notification-events/index.d.ts",
+        "sha256": "1fca542efed873474b4541f09945af3db035b570c691be63982a3ddf9ae2f837",
+        "bytes": 1306
+      },
+      {
+        "path": "nativescript/node_modules/@hanlin/notification-events/package.json",
+        "sha256": "b6ec9ece2d15d32b029e720cd5dde983a681cba511e807cd5766862d79ef8456",
+        "bytes": 134
+      }
+    ],
+    "removed": [],
+    "changed": [
+      {
+        "path": "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+        "before": {
+          "path": "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+          "sha256": "768731f0c748276aeab4d34f57ad3ad89fd38aa30f562ff0cc9b5ad9a3767368",
+          "bytes": 118804
+        },
+        "after": {
+          "path": "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+          "sha256": "283c96260a51c095be32f262f9f77ba58bebc5372aa1af994176816c8fb5d538",
+          "bytes": 118804
+        }
+      },
+      {
+        "path": "docs/miniapp-sdk/extension-reachability.json",
+        "before": {
+          "path": "docs/miniapp-sdk/extension-reachability.json",
+          "sha256": "9a9843d277a3e76ad64fc7589029801960c5c98b9aba09f3ed7746552ee3d42d",
+          "bytes": 147521
+        },
+        "after": {
+          "path": "docs/miniapp-sdk/extension-reachability.json",
+          "sha256": "54e72317c384d85ca502d3ee5c93080fc438fd9e2dff1735b582eca4d445f8c7",
+          "bytes": 153229
+        }
+      },
+      {
+        "path": "docs/miniapp-sdk/extension-reachability.md",
+        "before": {
+          "path": "docs/miniapp-sdk/extension-reachability.md",
+          "sha256": "cae21720cab9b31211796a5d82309d6e779f46ddb1d946d1ec1e322f4cf952cb",
+          "bytes": 21494
+        },
+        "after": {
+          "path": "docs/miniapp-sdk/extension-reachability.md",
+          "sha256": "a132faaf5a40550b2c8a843f97a6f094d7c8f288cc9fba9d6c8d0090a38727ff",
+          "bytes": 23332
+        }
+      },
+      {
+        "path": "docs/miniapp-sdk/source-inventory.json",
+        "before": {
+          "path": "docs/miniapp-sdk/source-inventory.json",
+          "sha256": "856bc8aca1473f8f4255b324e840ef2ebcdf5eb7352d1041d2433391e9f4bfd8",
+          "bytes": 493871
+        },
+        "after": {
+          "path": "docs/miniapp-sdk/source-inventory.json",
+          "sha256": "b4752902d3097f4d1637585e1367e797187063351975e20ea8bfef459ee69baa",
+          "bytes": 493798
+        }
+      },
+      {
+        "path": "examples/expo-hello-world/tsconfig.json",
+        "before": {
+          "path": "examples/expo-hello-world/tsconfig.json",
+          "sha256": "02e14c4b983c0f436d32ce0eb2f96309512a7d69774ed0c7d39ffa4175ccf7df",
+          "bytes": 53
+        },
+        "after": {
+          "path": "examples/expo-hello-world/tsconfig.json",
+          "sha256": "989df0a97a5ac05cb6b26df1d7f2d18896e2627da8ac72d4d35e66a60da84b19",
+          "bytes": 82
+        }
+      },
+      {
+        "path": "examples/nativescript-hello-world/tsconfig.json",
+        "before": {
+          "path": "examples/nativescript-hello-world/tsconfig.json",
+          "sha256": "c979f6e45b2a9c6151dbb12b4d9f04b76a5ce3822a270680ce479ee25f28e43e",
+          "bytes": 38
+        },
+        "after": {
+          "path": "examples/nativescript-hello-world/tsconfig.json",
+          "sha256": "089155f616dd73ff0bebb1469f21fda41c51ad93c7b7db83d2745fa5e88ce0e5",
+          "bytes": 67
+        }
+      }
+    ]
+  },
+  "sourceInputs": {
+    "oldCount": 222,
+    "newCount": 234,
+    "unchangedCount": 215,
+    "added": [
+      {
+        "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinNotificationApplicationDelegate.swift",
+        "sha256": "65e908cc29df4bab76ef3a1b44e032fe2651b47ed4b438035b4e5757a468fa67"
+      },
+      {
+        "path": "Packages/HanlinAppExtensionsSDK/Sources/HanlinNotificationExtension/HanlinNotificationService.swift",
+        "sha256": "fd2568e373da3dfdd2c35a2f0138f02cf46d7e6bd67c70b4d38109718b39480e"
+      },
+      {
+        "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationDelivery.swift",
+        "sha256": "b029004be2138cb11ef6221ab7b2c64489ec05b8e22ead565b822da1a946431f"
+      },
+      {
+        "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationQueue.swift",
+        "sha256": "b9671f1d78db83f6786320a68878d01852d5a81a3383866cb26a5e52a87da5ff"
+      },
+      {
+        "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNotificationEvent.swift",
+        "sha256": "982bbdff39e2baeb944ab476bc16d8f826f36ca38e9a3e6a75e6efaeaf3b318b"
+      },
+      {
+        "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNotificationInvocation.swift",
+        "sha256": "210a1266c9b276cd0865bf9238faec73c8caaf464329a22b2c470f71f6f76706"
+      },
+      {
+        "path": "Scripts/MiniApps/Examples/expo-hello-world/notification-event.ts",
+        "sha256": "3faaf31c55f30954b8c3a74cce95d0461bdef531269bcd7832a886be4ac390de"
+      },
+      {
+        "path": "Scripts/MiniApps/Examples/nativescript-hello-world/notification-event.ts",
+        "sha256": "3faaf31c55f30954b8c3a74cce95d0461bdef531269bcd7832a886be4ac390de"
+      },
+      {
+        "path": "Scripts/MiniApps/notification-events/index.d.ts",
+        "sha256": "1fca542efed873474b4541f09945af3db035b570c691be63982a3ddf9ae2f837"
+      },
+      {
+        "path": "Scripts/MiniApps/notification-events/package.json",
+        "sha256": "b6ec9ece2d15d32b029e720cd5dde983a681cba511e807cd5766862d79ef8456"
+      },
+      {
+        "path": "docs/miniapp-sdk/NOTIFICATION_EVENTS.md",
+        "sha256": "d027d20f9b95087ec7adcfb290ee7f4dab7ee057d623a81c87eeb561e321998f"
+      },
+      {
+        "path": "docs/miniapp-sdk/notification-event.schema.json",
+        "sha256": "519d0ffaf9bb70368de9f2772d141082cef5feefe77d7a2117495f5a19ad7699"
+      }
+    ],
+    "removed": [],
+    "changed": [
+      {
+        "path": "Scripts/MiniApps/Examples/expo-hello-world/tsconfig.json",
+        "before": {
+          "path": "Scripts/MiniApps/Examples/expo-hello-world/tsconfig.json",
+          "sha256": "02e14c4b983c0f436d32ce0eb2f96309512a7d69774ed0c7d39ffa4175ccf7df"
+        },
+        "after": {
+          "path": "Scripts/MiniApps/Examples/expo-hello-world/tsconfig.json",
+          "sha256": "989df0a97a5ac05cb6b26df1d7f2d18896e2627da8ac72d4d35e66a60da84b19"
+        }
+      },
+      {
+        "path": "Scripts/MiniApps/Examples/nativescript-hello-world/tsconfig.json",
+        "before": {
+          "path": "Scripts/MiniApps/Examples/nativescript-hello-world/tsconfig.json",
+          "sha256": "c979f6e45b2a9c6151dbb12b4d9f04b76a5ce3822a270680ce479ee25f28e43e"
+        },
+        "after": {
+          "path": "Scripts/MiniApps/Examples/nativescript-hello-world/tsconfig.json",
+          "sha256": "089155f616dd73ff0bebb1469f21fda41c51ad93c7b7db83d2745fa5e88ce0e5"
+        }
+      },
+      {
+        "path": "Scripts/MiniApps/stage-sdk.mjs",
+        "before": {
+          "path": "Scripts/MiniApps/stage-sdk.mjs",
+          "sha256": "b1b0a3bd2c560fcf93eca064053aba7bcbf7786fb800e083bb7f297a0a300c40"
+        },
+        "after": {
+          "path": "Scripts/MiniApps/stage-sdk.mjs",
+          "sha256": "1c23351919756510899c02f4f8b9ce305f4d31edeed49110b6b3d310e51b3d10"
+        }
+      },
+      {
+        "path": "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+        "before": {
+          "path": "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+          "sha256": "768731f0c748276aeab4d34f57ad3ad89fd38aa30f562ff0cc9b5ad9a3767368"
+        },
+        "after": {
+          "path": "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+          "sha256": "283c96260a51c095be32f262f9f77ba58bebc5372aa1af994176816c8fb5d538"
+        }
+      },
+      {
+        "path": "docs/miniapp-sdk/extension-reachability.json",
+        "before": {
+          "path": "docs/miniapp-sdk/extension-reachability.json",
+          "sha256": "9a9843d277a3e76ad64fc7589029801960c5c98b9aba09f3ed7746552ee3d42d"
+        },
+        "after": {
+          "path": "docs/miniapp-sdk/extension-reachability.json",
+          "sha256": "54e72317c384d85ca502d3ee5c93080fc438fd9e2dff1735b582eca4d445f8c7"
+        }
+      },
+      {
+        "path": "docs/miniapp-sdk/extension-reachability.md",
+        "before": {
+          "path": "docs/miniapp-sdk/extension-reachability.md",
+          "sha256": "cae21720cab9b31211796a5d82309d6e779f46ddb1d946d1ec1e322f4cf952cb"
+        },
+        "after": {
+          "path": "docs/miniapp-sdk/extension-reachability.md",
+          "sha256": "a132faaf5a40550b2c8a843f97a6f094d7c8f288cc9fba9d6c8d0090a38727ff"
+        }
+      },
+      {
+        "path": "docs/miniapp-sdk/source-inventory.json",
+        "before": {
+          "path": "docs/miniapp-sdk/source-inventory.json",
+          "sha256": "856bc8aca1473f8f4255b324e840ef2ebcdf5eb7352d1041d2433391e9f4bfd8"
+        },
+        "after": {
+          "path": "docs/miniapp-sdk/source-inventory.json",
+          "sha256": "b4752902d3097f4d1637585e1367e797187063351975e20ea8bfef459ee69baa"
+        }
+      }
+    ]
+  }
+}

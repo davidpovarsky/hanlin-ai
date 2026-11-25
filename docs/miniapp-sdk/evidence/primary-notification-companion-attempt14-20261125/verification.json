@@ -1,0 +1,61 @@
+{
+  "verifiedAt": "2026-11-25T06:06:13.014378+00:00",
+  "sourceCommit": "b0cf26a668a698682f5307252f14cf0af8c6d00a",
+  "snapshotRoot": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-companion-attempt14",
+  "originalReceiptSHA256": "0bb547feb1c3d6e7138ee6e1d225ba4a644cf204ff56bdc11b54bd177eeb196d",
+  "originalMembersVerified": 16,
+  "originalMemberBytes": 199381,
+  "actualResultReview": {
+    "status": "EXECUTED_PASS",
+    "source": "b0cf26a668a698682f5307252f14cf0af8c6d00a",
+    "commandExitCode": 0,
+    "testFunctions": 8,
+    "parameterInstances": 9,
+    "suiteCount": 1,
+    "failed": 0,
+    "skipped": 0,
+    "functions": [
+      "identicalEventIDsStayInsideTheirProductNamespace",
+      "missingCatalogStillDurablyRetainsTheEventForLiveHostValidation",
+      "cancellationExpiryAndActionErrorsRemainDistinct",
+      "cachedCatalogCannotOverrideLiveInstallationOrItsFailureReceipt",
+      "malformedTaggedEventsAndUnknownVersionsDoNotBecomeCommands",
+      "typedEventExecutesOnceAndKeepsItsActualResultAfterReopen",
+      "changedInstallationsAndUndeclaredTargetsProduceRealFailureReceipts",
+      "foregroundAdmissionLeavesUnstartedWorkQueuedWithoutConsumingAnAttempt"
+    ],
+    "parameterizedFunction": {
+      "name": "typedEventExecutesOnceAndKeepsItsActualResultAfterReopen",
+      "actualCases": [
+        "hanlinNativeScript",
+        "hanlinExpo"
+      ],
+      "reportedPassedCases": 2
+    },
+    "actualTestDurationSeconds": 0.059,
+    "commandElapsedSeconds": 26.137203625010443,
+    "logSHA256": "3e8a1217f04fe6f439d0adf25f691f1af33123b6a9b5a045ffc5ee4b58b941fe",
+    "reviewedAt": "2026-11-25T05:38:07.491324+00:00",
+    "boundary": "Actual canonical queue/unit integration tests; no claim of OS notification or physical delivery."
+  },
+  "rawLogReview": {
+    "sha256": "3e8a1217f04fe6f439d0adf25f691f1af33123b6a9b5a045ffc5ee4b58b941fe",
+    "exactPassedLines": [
+      "✔ Test malformedTaggedEventsAndUnknownVersionsDoNotBecomeCommands() passed after 0.003 seconds.",
+      "✔ Test missingCatalogStillDurablyRetainsTheEventForLiveHostValidation() passed after 0.011 seconds.",
+      "✔ Test foregroundAdmissionLeavesUnstartedWorkQueuedWithoutConsumingAnAttempt() passed after 0.020 seconds.",
+      "✔ Test identicalEventIDsStayInsideTheirProductNamespace() passed after 0.024 seconds.",
+      "✔ Test typedEventExecutesOnceAndKeepsItsActualResultAfterReopen(_:) with 2 test cases passed after 0.027 seconds.",
+      "✔ Test cachedCatalogCannotOverrideLiveInstallationOrItsFailureReceipt() passed after 0.027 seconds.",
+      "✔ Test cancellationExpiryAndActionErrorsRemainDistinct() passed after 0.031 seconds.",
+      "✔ Test changedInstallationsAndUndeclaredTargetsProduceRealFailureReceipts() passed after 0.059 seconds.",
+      "✔ Suite \"Notification ingress on the canonical durable queue\" passed after 0.059 seconds.",
+      "✔ Test run with 8 tests in 1 suite passed after 0.059 seconds."
+    ],
+    "runtimeArguments": [
+      "hanlinNativeScript",
+      "hanlinExpo"
+    ]
+  },
+  "laterPairedSupersession": "The paired state in this original companion packet is only STARTING. The subsequent actual MiniApps compiler failure and zero executed original52 cases are independently retained in primary-notification-delegate-build-attempt14-20261125; do not rewrite the frozen companion packet."
+}

@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "baselineSource": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+  "candidateSource": "b1029dfb868fa690720ea8690c8a740f031bb827",
+  "changedPaths": [
+    "AI_HLY/ChatView.swift"
+  ],
+  "bindings": [
+    {
+      "path": "AI_HLY/ChatView.swift",
+      "baseline": {
+        "commit": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+        "bytes": 116058,
+        "sha256": "9ee718346af556976ec12b93d0db7cbbe212ab74fad02881dc9d38603db78120"
+      },
+      "candidate": {
+        "commit": "b1029dfb868fa690720ea8690c8a740f031bb827",
+        "bytes": 115590,
+        "sha256": "d21659cdaa7d3e6141d4677d10ccaee067e7238ba8c4ccc2f689b63db4c41ffe"
+      },
+      "unchanged": false
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinComposerSessionBridge.swift",
+      "baseline": {
+        "commit": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+        "bytes": 25876,
+        "sha256": "e1c857753fafaf410c8d87d65968fdba42977705970b50fd2282fab5154e533d"
+      },
+      "candidate": {
+        "commit": "b1029dfb868fa690720ea8690c8a740f031bb827",
+        "bytes": 25876,
+        "sha256": "e1c857753fafaf410c8d87d65968fdba42977705970b50fd2282fab5154e533d"
+      },
+      "unchanged": true
+    },
+    {
+      "path": "AI_HLY/ListView.swift",
+      "baseline": {
+        "commit": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+        "bytes": 31477,
+        "sha256": "4733dd540f401ed80882bd6f6c71245adfa438ce410354acea494d30bc155966"
+      },
+      "candidate": {
+        "commit": "b1029dfb868fa690720ea8690c8a740f031bb827",
+        "bytes": 31477,
+        "sha256": "4733dd540f401ed80882bd6f6c71245adfa438ce410354acea494d30bc155966"
+      },
+      "unchanged": true
+    },
+    {
+      "path": "AI_HLYUITests/MiniAppAuthoringUITests.swift",
+      "baseline": {
+        "commit": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+        "bytes": 7453,
+        "sha256": "f60502af88a5e4b1166146cf5834e5d54eaa0451159b11f95ff26207f210fd72"
+      },
+      "candidate": {
+        "commit": "b1029dfb868fa690720ea8690c8a740f031bb827",
+        "bytes": 7453,
+        "sha256": "f60502af88a5e4b1166146cf5834e5d54eaa0451159b11f95ff26207f210fd72"
+      },
+      "unchanged": true
+    }
+  ],
+  "review": "CLEAR source-only; compiler/native tests NOT_RUN",
+  "unchangedUITestSHA256": "f60502af88a5e4b1166146cf5834e5d54eaa0451159b11f95ff26207f210fd72"
+}

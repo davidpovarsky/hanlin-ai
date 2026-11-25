@@ -1,0 +1,103 @@
+{
+  "schema": 1,
+  "snippets": [
+    {
+      "path": "AI_HLYTests/A2UITests.swift",
+      "commit": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+      "sourceSHA256": "c66ab3fbd7e6087208336737c8ea6dcfa28c26c3215cdfc9ffe0d00fb6774f89",
+      "firstLine": 202,
+      "lastLine": 220,
+      "lines": [
+        "private enum A2UIWaitError: Error { case deadline, ended }",
+        "",
+        "/// A callback drives progress; the clock only bounds a missing callback. No yield/poll assumption.",
+        "private func nextA2UIValue<Element: Sendable>(",
+        "    _ stream: AsyncStream<Element>, timeout: Duration = .seconds(2)",
+        ") async throws -> Element {",
+        "    try await withThrowingTaskGroup(of: Element.self) { group in",
+        "        defer { group.cancelAll() }",
+        "        group.addTask {",
+        "            for await value in stream { return value }",
+        "            throw A2UIWaitError.ended",
+        "        }",
+        "        group.addTask {",
+        "            try await Task.sleep(for: timeout)",
+        "            throw A2UIWaitError.deadline",
+        "        }",
+        "        guard let value = try await group.next() else { throw A2UIWaitError.ended }",
+        "        return value",
+        "    }"
+      ]
+    },
+    {
+      "path": "AI_HLYTests/HanlinAppSplitOriginTests.swift",
+      "commit": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+      "sourceSHA256": "476b3a6cca2635a68dc2436f2aba261a5f32633a268d4e163edc0cb0c75277a0",
+      "firstLine": 54,
+      "lastLine": 60,
+      "lines": [
+        "@MainActor private func splitBounded<T: Sendable>(_ operation: @escaping @MainActor @Sendable () async throws -> T) async throws -> T {",
+        "    try await withThrowingTaskGroup(of: T.self) { group in",
+        "        group.addTask { try await operation() }",
+        "        group.addTask { try await Task.sleep(for: .seconds(8)); throw SplitComponentError.timeout }",
+        "        defer { group.cancelAll() }",
+        "        guard let value = try await group.next() else { throw SplitComponentError.missing }",
+        "        return value"
+      ]
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptWidgetLiveActivity.swift",
+      "commit": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+      "sourceSHA256": "05e64cd225c0af6056f579b00c494378fd828957396e8bbc507f422ba464a8d4",
+      "firstLine": 116,
+      "lastLine": 131,
+      "lines": [
+        "    public static func load(store: HanlinScriptExtensionStore,",
+        "                            attributes: HanlinScriptWidgetLiveActivityAttributes,",
+        "                            state: HanlinScriptWidgetLiveActivityAttributes.ContentState) throws",
+        "        -> HanlinScriptWidgetLiveActivitySnapshot {",
+        "        guard let current = try store.load(),",
+        "              let widget = currentWidget(attributes: attributes, in: current) else {",
+        "            throw HanlinWidgetActionError.inactiveInstance",
+        "        }",
+        "        let (_, currentDigest) = try store.loadProgram(for: widget)",
+        "        let data = try store.loadVerifiedArtifact(ref: state.snapshotRef, sha256: state.snapshotSHA256,",
+        "            installedPackageID: attributes.identity.installedPackageID, generation: attributes.identity.generation)",
+        "        let prepared = try JSONDecoder().decode(HanlinScriptWidgetLiveActivitySnapshot.self, from: data)",
+        "        guard prepared.context.identity == attributes.identity, prepared.context.engine == .scriptwidget,",
+        "              prepared.context.family == attributes.family else { throw HanlinWidgetActionError.invalidIdentity }",
+        "        guard prepared.context.artifactSHA256 == currentDigest else { throw HanlinWidgetActionError.staleArtifact }",
+        "        return prepared"
+      ]
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptWidgetLiveActivity.swift",
+      "commit": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+      "sourceSHA256": "05e64cd225c0af6056f579b00c494378fd828957396e8bbc507f422ba464a8d4",
+      "firstLine": 168,
+      "lastLine": 187,
+      "lines": [
+        "    public static func update(store: HanlinScriptExtensionStore, systemActivityID: String,",
+        "                              installedPackageID: String, title: String? = nil,",
+        "                              values: [String: HanlinValue] = [:], staleDate: Date? = nil,",
+        "                              relevanceScore: Double = 0) async throws -> Bool {",
+        "        guard let activity = Activity<HanlinScriptWidgetLiveActivityAttributes>.activities.first(where: {",
+        "            $0.id == systemActivityID && $0.attributes.identity.installedPackageID.rawValue == installedPackageID",
+        "        }) else { return false }",
+        "        let attributes = activity.attributes",
+        "        let previous = activity.content.state",
+        "        guard previous.revision < UInt64.max else { throw HanlinWidgetActionError.invalidState }",
+        "        let prepared = try await Task.detached(priority: .userInitiated) {",
+        "            try HanlinScriptWidgetLiveActivityPreparation.prepare(store: store,",
+        "                entityID: attributes.entityID, family: attributes.family, values: values,",
+        "                revision: previous.revision + 1, title: title ?? previous.title)",
+        "        }.value",
+        "        try Task.checkCancellation()",
+        "        guard prepared.attributes == attributes else { throw HanlinWidgetActionError.inactiveInstance }",
+        "        _ = try HanlinScriptWidgetLiveActivityPreparation.load(store: store, attributes: attributes, state: prepared.state)",
+        "        await activity.update(ActivityContent(state: prepared.state, staleDate: staleDate, relevanceScore: relevanceScore))",
+        "        return true"
+      ]
+    }
+  ]
+}

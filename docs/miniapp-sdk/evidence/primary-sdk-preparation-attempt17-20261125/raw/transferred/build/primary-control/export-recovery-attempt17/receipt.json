@@ -1,0 +1,52 @@
+{
+  "utc": "2026-11-25T07:12:18.979727+00:00",
+  "owner": "/root/native_execution",
+  "reason": "The original export and slice verification passed, but its final carry-forward cp lacked the unchanged prior upstream-inputs.patch. Restore the authenticated original patch and rerun only the original export/restore/input phases.",
+  "source": "cffe7f75436aa2e37ec5d82891937965c0407d2d",
+  "priorStateSHA256": "40e928a03c4cc3397ce70a01cdcbcc10a833c68d466e2bae33ea56244afb8ea4",
+  "failedPhase": {
+    "status": "FAIL",
+    "startedAt": "2026-11-25T06:58:48.403849+00:00",
+    "argv": [
+      "/bin/bash",
+      "-e",
+      "-o",
+      "pipefail",
+      "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-native-artifacts.sh"
+    ],
+    "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt17/split-native-artifacts.log",
+    "scriptSHA256": "eb0405f89f5da3d48e1591650d42e2f7a8ff8f86eebac9b82ded2e5c70cefebd",
+    "pid": 55940,
+    "exitCode": 1,
+    "elapsedSeconds": 21.957456875010394,
+    "finishedAt": "2026-11-25T06:59:10.362457+00:00",
+    "logBytes": 1745,
+    "logSHA256": "5ce8bc79792a24ba854ce1c0c2f59db6bd03e0f880173d180bd25444350b4063"
+  },
+  "priorActiveElapsedSeconds": 11061.297643458038,
+  "patchSources": [
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence-attempt14/upstream-inputs.patch",
+      "bytes": 66742,
+      "sha256": "9e03e8dd40b1e7cba182615afa6a7511239058e1a2b1553891770c656cdeb6c5"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence-attempt15/upstream-inputs.patch",
+      "bytes": 66742,
+      "sha256": "9e03e8dd40b1e7cba182615afa6a7511239058e1a2b1553891770c656cdeb6c5"
+    }
+  ],
+  "restoredPatch": {
+    "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence-attempt17/upstream-inputs.patch",
+    "bytes": 66742,
+    "sha256": "9e03e8dd40b1e7cba182615afa6a7511239058e1a2b1553891770c656cdeb6c5"
+  },
+  "upstreamResolution": {
+    "current": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/MiniApps/upstream-resolution.json",
+    "prior": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence-attempt15/prepared-native/upstream-resolution.json",
+    "sha256": "e0c2944ea24c09330825dee58badedcec58606ba603ccdedc888abf1a63a13cb"
+  },
+  "controllerSHA256": "962fa980b8fa23163a2b2d32d9ba9cf87fb2e553924d345b42564cbda7b41a47",
+  "controllerOnlyDifference": "log directory; phase bodies, environment, source and budgets unchanged",
+  "through": "split-inputs"
+}

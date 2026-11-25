@@ -1,0 +1,175 @@
+{
+  "status": "SOURCE_READY_NATIVE_NOT_STARTED",
+  "sourceBase": "c259b72243ccb62188f24e551648544bc57cc7c1",
+  "target": "46225e5af9aa253c8aa3b7d0d6ce2f282c88e7ad",
+  "tree": "85eb294debb1d8e89f197636106bcd9563a02e4c",
+  "packSHA256": "bde915f8601e699d3fc42ae7791666de5506c96e2e54940edffdab4032fa12c3",
+  "preparedWorkingFiles": [
+    {
+      "path": "AI_HLY.xcodeproj/project.pbxproj",
+      "headSHA256": "24206ae0f0f66d3669cae5ccd4ffcff25ae582ec4620359a2becca7ad8e16780",
+      "headMode": "100644",
+      "kind": "file",
+      "bytes": 251761,
+      "sha256": "71409346bb25cdc8fd5d1d3e8b7363549146e9038044360c93b659615c3b3b3d",
+      "mode": "0o644",
+      "contentFrom": "tracked-delta/AI_HLY.xcodeproj/project.pbxproj"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbe.hanlinExpo",
+      "headSHA256": "e9b662011c5ef37c2cf4491f4c6516b86886a1d0e93104cec534745395f8076a",
+      "headMode": "100644",
+      "kind": "file",
+      "bytes": 325823,
+      "sha256": "b81e8ecccb8e8495f203b51273787df1ab10d64d4236abfa061dc6cb9dd60b1c",
+      "mode": "0o644",
+      "contentFrom": "tracked-delta/AI_HLYUITests/Fixtures/ExpoSwiftUIProbe.hanlinExpo"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo",
+      "headSHA256": "e9b662011c5ef37c2cf4491f4c6516b86886a1d0e93104cec534745395f8076a",
+      "headMode": "100644",
+      "kind": "file",
+      "bytes": 325823,
+      "sha256": "b81e8ecccb8e8495f203b51273787df1ab10d64d4236abfa061dc6cb9dd60b1c",
+      "mode": "0o644",
+      "contentFrom": "tracked-delta/AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbeB.hanlinExpo",
+      "headSHA256": "843b3147f81c4022759e01e29264f93273fbad47daad4ba45a5d1fc425d164da",
+      "headMode": "100644",
+      "kind": "file",
+      "bytes": 325825,
+      "sha256": "cdf1b95be3e210621095a6269f9d17bf6cab11c6b7e6c6d8895265fcb8a4b84b",
+      "mode": "0o644",
+      "contentFrom": "tracked-delta/AI_HLYUITests/Fixtures/ExpoSwiftUIProbeB.hanlinExpo"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbe.hanlinExpo",
+      "headSHA256": "e9b662011c5ef37c2cf4491f4c6516b86886a1d0e93104cec534745395f8076a",
+      "headMode": "100644",
+      "kind": "file",
+      "bytes": 325823,
+      "sha256": "b81e8ecccb8e8495f203b51273787df1ab10d64d4236abfa061dc6cb9dd60b1c",
+      "mode": "0o644",
+      "contentFrom": "tracked-delta/Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbe.hanlinExpo"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeA.hanlinExpo",
+      "headSHA256": "e9b662011c5ef37c2cf4491f4c6516b86886a1d0e93104cec534745395f8076a",
+      "headMode": "100644",
+      "kind": "file",
+      "bytes": 325823,
+      "sha256": "b81e8ecccb8e8495f203b51273787df1ab10d64d4236abfa061dc6cb9dd60b1c",
+      "mode": "0o644",
+      "contentFrom": "tracked-delta/Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeA.hanlinExpo"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeB.hanlinExpo",
+      "headSHA256": "843b3147f81c4022759e01e29264f93273fbad47daad4ba45a5d1fc425d164da",
+      "headMode": "100644",
+      "kind": "file",
+      "bytes": 325825,
+      "sha256": "cdf1b95be3e210621095a6269f9d17bf6cab11c6b7e6c6d8895265fcb8a4b84b",
+      "mode": "0o644",
+      "contentFrom": "tracked-delta/Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeB.hanlinExpo"
+    },
+    {
+      "path": "Package.swift",
+      "headSHA256": "2238e4db391c3460cd81d6bfaf972ad7fa6683828e105de4e7df234d14ab3b0c",
+      "headMode": "100644",
+      "kind": "file",
+      "bytes": 88332,
+      "sha256": "c58ad5f37b35c38e9199b1ad5641a4b38523d13542c75e90a34f862877409bb1",
+      "mode": "0o644",
+      "contentFrom": "tracked-delta/Package.swift"
+    },
+    {
+      "path": "docs/agent-sdk/unified-package-manifest.json",
+      "headSHA256": "3051ec46a9e5bcdebccf3a1e7091c5df8c659cd8f49968678bfaf012c40712ec",
+      "headMode": "100644",
+      "kind": "file",
+      "bytes": 3901,
+      "sha256": "2dce00d3544b324ea9b2df5fa1a744a1bad534e2faa3e54c10195b4ce0a2e66f",
+      "mode": "0o644",
+      "contentFrom": "tracked-delta/docs/agent-sdk/unified-package-manifest.json"
+    },
+    {
+      "path": "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+      "headSHA256": "768731f0c748276aeab4d34f57ad3ad89fd38aa30f562ff0cc9b5ad9a3767368",
+      "headMode": "100644",
+      "kind": "file",
+      "bytes": 118804,
+      "sha256": "283c96260a51c095be32f262f9f77ba58bebc5372aa1af994176816c8fb5d538",
+      "mode": "0o644",
+      "contentFrom": "tracked-delta/docs/miniapp-sdk/MANIFEST_REFERENCE.md"
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.json",
+      "headSHA256": "9a9843d277a3e76ad64fc7589029801960c5c98b9aba09f3ed7746552ee3d42d",
+      "headMode": "100644",
+      "kind": "file",
+      "bytes": 153229,
+      "sha256": "25003ece56c9c4b6093f3e1b7ebbe5df38af6b3fa9a3c825f927363e361af1b5",
+      "mode": "0o644",
+      "contentFrom": "tracked-delta/docs/miniapp-sdk/extension-reachability.json"
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.md",
+      "headSHA256": "cae21720cab9b31211796a5d82309d6e779f46ddb1d946d1ec1e322f4cf952cb",
+      "headMode": "100644",
+      "kind": "file",
+      "bytes": 23332,
+      "sha256": "7f36a7e3b3def224bddccb3f447152645d171841c2b8ccc6ebe86eb7acc810e9",
+      "mode": "0o644",
+      "contentFrom": "tracked-delta/docs/miniapp-sdk/extension-reachability.md"
+    },
+    {
+      "path": "docs/miniapp-sdk/source-inventory.json",
+      "headSHA256": "856bc8aca1473f8f4255b324e840ef2ebcdf5eb7352d1041d2433391e9f4bfd8",
+      "headMode": "100644",
+      "kind": "file",
+      "bytes": 493798,
+      "sha256": "1eb0f6f00994274baef6159806ad6397c81587278130f276d64a85a0158f143c",
+      "mode": "0o644",
+      "contentFrom": "tracked-delta/docs/miniapp-sdk/source-inventory.json"
+    }
+  ],
+  "workingArchiveSHA256": "558d20b38b70232b43b129abcefdcde754e128591758758fb48482c21f165585",
+  "preservedHostArchiveSHA256": "602669f4d915cb3dd216ad14cb07a23f4da3885ef0fadf772ea3c6f2d1f06e0d",
+  "sourceHashes": {
+    "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift": "0fe914bfd7b913ba2cb84002df8302582d4d66f0aafbff1ea3c73a976b696a38",
+    "Scripts/CI/observe_notification_os_delivery.py": "f6cf4e040f592fa94ebf9fd813b6e03d125d5c7c32dc2d2a43f3b42cdb33d085",
+    "docs/miniapp-sdk/evidence/notification-os-observer-source-20261125/README.md": "988993ebef34a4283859984fd41deee4e92e3fc96f885858fd704bbf72d54652",
+    "docs/miniapp-sdk/evidence/notification-os-observer-source-20261125/fixture-original-producer.json": "34fbead0fd36d111de5e785291e15cc56a52058c610b6a351051dc55d7697b1d",
+    "docs/miniapp-sdk/evidence/notification-os-observer-source-20261125/receipt.json": "0f680038715ef2ad50dc1ca06cd3f624548d9ff7e7d671ef9941a09fc53b9159",
+    "docs/miniapp-sdk/evidence/notification-os-observer-source-20261125/source-binding.json": "49410fc1dae0abccdc370f4805627baacaff47105a3d5b52875577d3dc3d2118"
+  },
+  "retainedPhases": [
+    "split-metadata",
+    "split-platform",
+    "split-upstreams",
+    "host-proof",
+    "split-foreground",
+    "split-host-lifecycle",
+    "split-native-preparation",
+    "split-native-artifacts"
+  ],
+  "invalidatedPhases": [
+    "split-restore-inputs",
+    "split-inputs"
+  ],
+  "inputClosureReason": "Only an append-only optional OS UI test and its separate observer/evidence changed. Every original UI source byte and original52 selector remains unchanged. All234SDK source inputs and prepared13 outputs match SDK15 producer c259; preserve original native/Host/docs/catalog proofs and refresh only original timestamp/input capture before consumer test build. No SDK regeneration is required.",
+  "cumulativeActiveSeconds": 10665.094783543002,
+  "sdkSourceInputsVerified": 234,
+  "sdkProducerSource": "c259b72243ccb62188f24e551648544bc57cc7c1",
+  "sdkInputSHA256": "6b1347a88bcd22ddc077f150be3e62f4f1e825160ba42a10911446ba9d17a71f",
+  "originalMaximumActiveSeconds": 12600,
+  "remainingPairedAllowanceSeconds": 4361.568010207993,
+  "remainingCompanionAllowanceSeconds": 1173.8627963749896,
+  "newPlanSHA256": "ecf1958863cebca15adbbcaeb05d4dac75547563eba1f3dd4e9da1d5937a7948",
+  "controllerSHA256": "1c7a598322d7c449937b52ec9a52bb442570306d96ae8fcf9d0bf9225c05d932",
+  "advancedAt": "2026-11-25T06:13:34.010173+00:00",
+  "nativeStarted": false
+}

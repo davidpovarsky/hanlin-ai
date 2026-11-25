@@ -1,0 +1,172 @@
+Attributes: Application, 0x10a250b40, pid: 89690, label: 'Hanlin MiniApps'
+Element subtree:
+ →Application, 0x10a250b40, pid: 89690, label: 'Hanlin MiniApps'
+    Window (Main), 0x10a250c80, {{0.0, 0.0}, {1032.0, 1376.0}}
+      Other, 0x10a2508c0, {{0.0, 0.0}, {1032.0, 1376.0}}
+        Other, 0x10a250a00, {{0.0, 0.0}, {1032.0, 1376.0}}
+          Other, 0x10a250640, {{0.0, 0.0}, {1032.0, 1376.0}}
+            Other, 0x10a250780, {{0.0, 0.0}, {1032.0, 1376.0}}
+              Other, 0x10a250500, {{0.0, 0.0}, {1032.0, 1376.0}}
+                NavigationBar, 0x10a250000, {{0.0, 32.0}, {1032.0, 106.0}}, identifier: 'Apps'
+                  Other, 0x10a250140, {{14.0, 36.0}, {43.5, 36.0}}
+                    Other, 0x10a250280, {{14.0, 36.0}, {43.5, 36.0}}
+                      Button, 0x10a2503c0, {{14.0, 36.0}, {43.5, 36.0}}, label: 'Edit'
+                  Button, 0x10a250f00, {{73.5, 36.0}, {40.0, 36.0}}, identifier: 'hanlin-apps-torah-capture', label: 'לימוד מצילום'
+                  Button, 0x10a251040, {{618.5, 36.0}, {37.0, 36.0}}, identifier: 'hanlin-apps-add', label: 'hanlin-apps-add'
+                  Other, 0x10a251180, {{671.5, 36.0}, {41.0, 36.0}}
+                    Other, 0x10a2512c0, {{671.5, 36.0}, {41.0, 36.0}}
+                      Button, 0x10a251400, {{671.5, 36.0}, {41.0, 36.0}}, identifier: 'miniapps-preferences', label: 'Edit MiniApps and windows'
+                  Button, 0x10a251540, {{728.5, 36.0}, {37.5, 36.0}}, identifier: 'hanlin-miniapps-transfer', label: 'Transfer from Hanlin'
+                  SearchField, 0x10a251680, {{782.0, 32.0}, {240.0, 44.0}}, label: 'Search Apps', placeholderValue: 'Search Apps'
+                    Image, 0x10a2517c0, {{794.0, 43.5}, {20.5, 20.0}}, identifier: 'magnifyingglass', label: 'Search'
+                  StaticText, 0x10a251900, {{20.0, 89.5}, {83.0, 41.0}}, label: 'Apps'
+                Other, 0x10a251a40, {{0.0, 0.0}, {1032.0, 1376.0}}
+                  Other, 0x10a251b80, {{0.0, 0.0}, {1032.0, 1376.0}}
+                    Other, 0x10a251cc0, {{0.0, 0.0}, {1032.0, 1376.0}}
+                      Other, 0x10a251e00, {{0.0, 0.0}, {1032.0, 1376.0}}
+                        ScrollView, 0x10a251f40, {{0.0, 0.0}, {1032.0, 1376.0}}, identifier: 'hanlin-apps-catalog'
+                          Other, 0x10a252080, {{0.0, 0.0}, {1032.0, 1376.0}}
+                            Other, 0x10a2521c0, {{0.0, 0.0}, {1032.0, 126.0}}
+                          Other, 0x10a252300, {{0.0, 0.0}, {1032.0, 1376.0}}
+                          Other, 0x10a252440, {{0.0, 138.0}, {1032.0, 509.0}}
+                            Other, 0x10a252580, {{23.5, 156.0}, {985.0, 473.5}}
+                              StaticText, 0x10a2526c0, {{24.0, 156.0}, {54.0, 26.5}}, identifier: 'hanlin-miniapps-section-swift', label: 'Swift'
+                              Other, 0x10a252800, {{23.5, 210.0}, {985.0, 169.0}}
+                                Button, 0x10a252940, {{23.5, 210.0}, {232.0, 169.0}}, identifier: 'hanlin-package-card-Swift Parity', label: 'Swift Parity'
+                                  Image, 0x10a252a80, {{204.0, 231.0}, {30.5, 27.0}}, identifier: 'swift', label: 'Swift Programming Language Bird Logo'
+                                  StaticText, 0x10a252bc0, {{42.0, 318.0}, {105.5, 24.0}}, label: 'Swift Parity'
+                                  StaticText, 0x10a252d00, {{42.0, 346.0}, {139.0, 14.5}}, label: 'Native SwiftPM Mini App'
+                                Button, 0x10a252e40, {{36.0, 222.5}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-hanlin.demo.swift-parity', label: 'App Actions'
+                                  Button, 0x10a252f80, {{36.0, 222.5}, {38.0, 38.0}}
+                                    Image, 0x10a2530c0, {{47.0, 239.5}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                                Button, 0x10a253200, {{274.5, 210.0}, {232.0, 169.0}}, identifier: 'hanlin-package-card-Sefaria', label: 'Sefaria'
+                                  Image, 0x10a253340, {{451.0, 231.0}, {34.0, 30.0}}, identifier: 'books.vertical.fill', label: 'Bookshelf'
+                                  StaticText, 0x10a253480, {{293.0, 302.0}, {64.5, 24.0}}, label: 'Sefaria'
+                                  StaticText, 0x10a2535c0, {{293.0, 330.0}, {132.0, 30.5}}, label: 'Search, read, save and revisit sources'
+                                Button, 0x10a253700, {{287.0, 222.5}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-nativeapp.sefaria', label: 'App Actions'
+                                  Button, 0x10a253840, {{287.0, 222.5}, {38.0, 38.0}}
+                                    Image, 0x10a253980, {{298.0, 239.5}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                                Button, 0x10a253ac0, {{525.5, 210.0}, {232.0, 169.0}}, identifier: 'hanlin-package-card-Text Studio', label: 'Text Studio'
+                                  Image, 0x10a253c00, {{702.5, 231.0}, {33.0, 20.5}}, identifier: 'textformat.alt', label: 'Text Formatting'
+                                  StaticText, 0x10a253d40, {{544.0, 302.0}, {103.0, 24.0}}, label: 'Text Studio'
+                                  StaticText, 0x10a253e80, {{544.0, 330.0}, {168.5, 30.5}}, label: 'Write, inspect, transform and keep history'
+                                Button, 0x10a216580, {{538.0, 222.5}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-nativeapp.textstudio', label: 'App Actions'
+                                  Button, 0x10a215f40, {{538.0, 222.5}, {38.0, 38.0}}
+                                    Image, 0x10a216080, {{549.0, 239.5}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                                Button, 0x10a2170c0, {{776.5, 210.0}, {232.0, 169.0}}, identifier: 'hanlin-package-card-Wikipedia', label: 'Wikipedia'
+                                  Image, 0x10a217200, {{960.0, 231.0}, {27.5, 27.5}}, identifier: 'globe.americas.fill', label: 'Globe Showing The Americas, Filled'
+                                  StaticText, 0x10a2161c0, {{795.0, 302.0}, {90.5, 24.0}}, label: 'Wikipedia'
+                                  StaticText, 0x10a216300, {{795.0, 330.0}, {103.0, 30.5}}, label: 'Explore, save and revisit knowledge'
+                                Button, 0x10a216940, {{789.0, 222.5}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-nativeapp.wikipedia', label: 'App Actions'
+                                  Button, 0x10a216a80, {{789.0, 222.5}, {38.0, 38.0}}
+                                    Image, 0x10a216bc0, {{800.0, 239.5}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                              StaticText, 0x10a216d00, {{24.0, 406.5}, {51.0, 26.5}}, identifier: 'hanlin-miniapps-section-expo', label: 'Expo'
+                              Other, 0x10a217340, {{23.5, 460.5}, {232.0, 169.0}}
+                                Button, 0x10a217480, {{23.5, 460.5}, {232.0, 169.0}}, identifier: 'hanlin-package-card-Expo SwiftUI Probe A', label: 'Expo SwiftUI Probe A'
+                                  Image, 0x10a216800, {{209.0, 481.5}, {25.5, 30.5}}, identifier: 'sparkles', label: 'Sparkle'
+                                  StaticText, 0x10a216f80, {{42.0, 552.5}, {194.5, 24.0}}, label: 'Expo SwiftUI Probe A'
+                                  StaticText, 0x10a2166c0, {{42.0, 580.5}, {188.0, 30.5}}, label: 'Dynamic Expo MiniApp Variant A rendering Apple SwiftUI.'
+                                Button, 0x10a216e40, {{36.0, 473.0}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-script-ec17057f5a2c82aaed6ab6ca', label: 'App Actions'
+                                  Button, 0x10a217c00, {{36.0, 473.0}, {38.0, 38.0}}
+                                    Image, 0x10a217d40, {{47.0, 490.0}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                          Other, 0x10a217e80, {{999.0, 86.0}, {30.0, 1260.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                            Other, 0x10a217ac0, {{1026.0, 798.0}, {3.0, 545.0}}
+                          Other, 0x10a217980, {{999.0, 86.0}, {30.0, 1260.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                            Other, 0x10a2175c0, {{1026.0, 798.0}, {3.0, 545.0}}
+                Toolbar, 0x10a217700, {{0.0, 0.0}, {1032.0, 1376.0}}, identifier: 'Toolbar', label: 'Toolbar'
+                  Other, 0x10a217840, {{0.0, 0.0}, {1032.0, 1376.0}}
+      Other, 0x10a2152c0, {{0.0, 0.0}, {1032.0, 1376.0}}
+        Other, 0x10a215400, {{0.0, 0.0}, {1032.0, 1376.0}}
+          Other, 0x10a215040, {{0.0, 0.0}, {1032.0, 1376.0}}
+            Other, 0x10a215180, {{0.0, 0.0}, {1032.0, 1376.0}}
+              NavigationBar, 0x10a214c80, {{0.0, 32.0}, {1032.0, 106.0}}, identifier: 'Generated Native Views'
+                Button, 0x10a214dc0, {{895.0, 36.0}, {36.0, 36.0}}, identifier: 'generated-edit-button', label: 'Done'
+                Other, 0x10a214f00, {{951.0, 36.0}, {67.0, 36.0}}
+                  Other, 0x10a214a00, {{951.0, 36.0}, {67.0, 36.0}}
+                    Button, 0x10a214b40, {{951.0, 36.0}, {67.0, 36.0}}, identifier: 'hanlin-script-app-close', label: 'Close'
+                StaticText, 0x10a214640, {{20.0, 89.5}, {378.5, 41.0}}, label: 'Generated Native Views'
+              Other, 0x10a2148c0, {{0.0, 0.0}, {1032.0, 1376.0}}
+                Other, 0x10a214780, {{0.0, 0.0}, {1032.0, 1376.0}}
+                  Other, 0x10a214140, {{0.0, 0.0}, {1032.0, 1376.0}}
+                    Other, 0x10a214500, {{0.0, 0.0}, {1032.0, 1376.0}}
+                      Other, 0x10a2143c0, {{0.0, 138.0}, {1032.0, 1218.0}}
+                        Other, 0x10a214280, {{0.0, 138.0}, {1032.0, 1218.0}}
+                          Other, 0x10a214000, {{0.0, 138.0}, {1032.0, 1218.0}}
+                            Other, 0x10a1d1540, {{0.0, 138.0}, {1032.0, 1218.0}}
+                              Other, 0x10a1df840, {{0.0, 138.0}, {1032.0, 1218.0}}
+                                Other, 0x10a1dd680, {{0.0, 138.0}, {1032.0, 1218.0}}
+                                  Other, 0x10a1df980, {{0.0, 138.0}, {1032.0, 1218.0}}
+                                    CollectionView, 0x10a1de080, {{0.0, 138.0}, {1032.0, 1218.0}}
+                                      Other, 0x10a1def80, {{-20.0, -2298.0}, {1072.0, 2598.0}}
+                                      Cell, 0x10a1ded00, {{20.0, 138.0}, {992.0, 40.5}}
+                                        Other, 0x10a1dee40, {{20.0, 138.0}, {992.0, 40.5}}
+                                        Other, 0x10a1debc0, {{20.0, 138.0}, {992.0, 40.5}}
+                                          Other, 0x10a1de800, {{20.0, 138.0}, {992.0, 40.5}}
+                                            Other, 0x10a1ddf40, {{20.0, 138.0}, {992.0, 40.5}}
+                                              StaticText, 0x10a1df0c0, {{20.0, 138.0}, {992.0, 40.5}}, label: 'Original editable list'
+                                      Cell, 0x10a1df200, {{20.0, 178.5}, {992.0, 52.0}}
+                                        Other, 0x10a1df340, {{20.0, 178.5}, {992.0, 52.0}}
+                                          Other, 0x10a1df480, {{20.0, 178.5}, {992.0, 52.0}}
+                                        Other, 0x10a1dfe80, {{64.0, 178.5}, {948.0, 52.0}}
+                                          Other, 0x10a1dfd40, {{64.0, 178.5}, {948.0, 52.0}}
+                                            Other, 0x10a1df700, {{64.0, 178.5}, {948.0, 52.0}}
+                                              StaticText, 0x10a1dfc00, {{20.0, 178.5}, {992.0, 52.0}}, label: 'Remove, Generated Alpha'
+                                        Other, 0x10a1df5c0, {{39.0, 191.5}, {26.0, 26.0}}
+                                          Image, 0x10a1dfac0, {{39.0, 191.5}, {26.0, 26.0}}, identifier: 'minus.circle.fill', label: 'remove'
+                                        Other, 0x10a1de940, {{39.0, 191.5}, {26.0, 26.0}}
+                                          Image, 0x10a1dde00, {{39.0, 191.5}, {26.0, 26.0}}, identifier: 'minus.circle.fill', label: 'remove'
+                                      Cell, 0x10a1dda40, {{20.0, 230.5}, {992.0, 52.0}}
+                                        Other, 0x10a1ddcc0, {{20.0, 230.5}, {992.0, 52.0}}
+                                          Other, 0x10a1dd900, {{20.0, 230.5}, {992.0, 52.0}}
+                                        Other, 0x10a1de440, {{64.0, 230.5}, {948.0, 52.0}}
+                                          Other, 0x10a1ddb80, {{64.0, 230.5}, {948.0, 52.0}}
+                                            Other, 0x10a1dd7c0, {{64.0, 230.5}, {948.0, 52.0}}
+                                              StaticText, 0x10a1de300, {{20.0, 230.5}, {992.0, 52.0}}, label: 'Remove, Generated Beta'
+                                        Other, 0x10a1de1c0, {{39.0, 243.5}, {26.0, 26.0}}
+                                          Image, 0x10a1dea80, {{39.0, 243.5}, {26.0, 26.0}}, identifier: 'minus.circle.fill', label: 'remove'
+                                        Other, 0x10a1de6c0, {{39.0, 243.5}, {26.0, 26.0}}
+                                          Image, 0x10a1de580, {{39.0, 243.5}, {26.0, 26.0}}, identifier: 'minus.circle.fill', label: 'remove'
+                                      Other, 0x10a274000, {{80.0, 229.5}, {912.0, 1.0}}
+                                      Other, 0x10a274140, {{-20.0, 300.0}, {1072.0, 2652.5}}
+                                      Cell, 0x10a274280, {{20.0, 300.0}, {992.0, 40.5}}
+                                        Other, 0x10a2743c0, {{20.0, 300.0}, {992.0, 40.5}}
+                                        Other, 0x10a274500, {{20.0, 300.0}, {992.0, 40.5}}
+                                          Other, 0x10a274640, {{20.0, 300.0}, {992.0, 40.5}}
+                                            Other, 0x10a274780, {{20.0, 300.0}, {992.0, 40.5}}
+                                              StaticText, 0x10a2748c0, {{20.0, 300.0}, {992.0, 40.5}}, label: 'Native deletion events'
+                                      Cell, 0x10a274a00, {{20.0, 340.5}, {992.0, 52.0}}
+                                        Other, 0x10a274b40, {{20.0, 340.5}, {992.0, 52.0}}
+                                          Other, 0x10a274c80, {{20.0, 340.5}, {992.0, 52.0}}
+                                        Other, 0x10a274dc0, {{20.0, 340.5}, {992.0, 52.0}}
+                                          Other, 0x10a274f00, {{20.0, 340.5}, {992.0, 52.0}}
+                                            Other, 0x10a275040, {{20.0, 340.5}, {992.0, 52.0}}
+                                              StaticText, 0x10a275180, {{20.0, 340.5}, {992.0, 52.0}}, label: 'EDIT_DELETE_EVENTS:0'
+                                      Cell, 0x10a2752c0, {{20.0, 392.5}, {992.0, 52.0}}
+                                        Other, 0x10a275400, {{20.0, 392.5}, {992.0, 52.0}}
+                                          Other, 0x10a275540, {{20.0, 392.5}, {992.0, 52.0}}
+                                        Other, 0x10a275680, {{20.0, 392.5}, {992.0, 52.0}}
+                                          Other, 0x10a2757c0, {{20.0, 392.5}, {992.0, 52.0}}
+                                            Other, 0x10a275900, {{20.0, 392.5}, {992.0, 52.0}}
+                                              StaticText, 0x10a275a40, {{20.0, 392.5}, {992.0, 52.0}}, label: 'EDIT_ROWS:alpha,beta'
+                                      Other, 0x10a275b80, {{40.0, 391.5}, {952.0, 1.0}}
+                                      Cell, 0x10a275cc0, {{20.0, 444.5}, {992.0, 52.0}}
+                                        Other, 0x10a275e00, {{20.0, 444.5}, {992.0, 52.0}}
+                                          Other, 0x10a275f40, {{20.0, 444.5}, {992.0, 52.0}}
+                                        Other, 0x10a276080, {{20.0, 444.5}, {992.0, 52.0}}
+                                          Other, 0x10a2761c0, {{20.0, 444.5}, {992.0, 52.0}}
+                                            Other, 0x10a276300, {{20.0, 444.5}, {992.0, 52.0}}
+                                              Button, 0x10a276440, {{20.0, 444.5}, {992.0, 52.0}}, label: 'Generated view menu'
+                                      Other, 0x10a276580, {{40.0, 443.5}, {952.0, 1.0}}
+                                      Other, 0x10a2766c0, {{999.0, 138.0}, {30.0, 1208.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                        Other, 0x10a276800, {{1026.0, 1336.0}, {3.0, 7.0}}
+                                      Other, 0x10a276940, {{999.0, 138.0}, {30.0, 1208.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                        Other, 0x10a276a80, {{1026.0, 1336.0}, {3.0, 7.0}}
+              Toolbar, 0x10a276bc0, {{0.0, 0.0}, {1032.0, 1376.0}}, identifier: 'Toolbar', label: 'Toolbar'
+                Other, 0x10a276d00, {{0.0, 0.0}, {1032.0, 1376.0}}
+Path to element:
+ →Application, 0x10a250b40, pid: 89690, label: 'Hanlin MiniApps'
+Query chain:
+ →Find: Target Application 'com.itorah.hanlinminiapps'
+  Output: {
+    Application, 0x10a276e40, pid: 89690, label: 'Hanlin MiniApps'
+  }

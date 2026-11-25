@@ -1,0 +1,927 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-11-25T09:40:33.767413+00:00",
+  "source": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+  "status": "CONSUMER_AND_PRODUCED_PACKAGE_IDENTITY_RECONCILIATION_PASS",
+  "sdk": {
+    "hostSHA256": "ce240d8d4083a2babfa3827fd12f93e0ad469b45c5f7055a259fcb8babe1881f",
+    "manifestSHA256": "1ca059acbc56b0d8d33f3d678c5023fd5aff26c744ac1e5412c3b1663529dfcd",
+    "inputSHA256": "ca69ce053b0d82c258ffd29f1e0ec07eb77da9f8f6893ffe1a68eecdbe02c7ca",
+    "moduleSHA256": "fa5121902e231d5d44ad08bf47699784fd4d0bc2a98102f3a156e6e4ae79b9b9"
+  },
+  "consumerPacket": {
+    "directory": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/consumer-binding-attempt18",
+    "receiptSHA256": "20350c7e3d9f4d97491aead8dd511177ee9fb2e703fd657368e289b254d92bf1",
+    "transferIndexSHA256": "a89f8e8ba7de1e8219e79711b1b49bce70986b52678fc6e4f07769cf6f3fb081",
+    "members": 11,
+    "bytes": 227531,
+    "hostCopies": 5,
+    "products": [
+      {
+        "product": "HanlinMiniApps.app",
+        "build": {
+          "command_id": "ca1c76dcabc4480ea291d3c28c8e2783",
+          "pid": 42230,
+          "started_at": 1795598590.9962811,
+          "seconds": 129.56036616599886,
+          "exit": 0,
+          "status": "completed",
+          "observed_at": 1795598720.556271
+        },
+        "archiveCopies": 1,
+        "extension": {
+          "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/PlugIns/HanlinMiniAppsNotificationService.appex",
+          "bundleID": "com.itorah.hanlinminiapps.notification-service",
+          "extension": {
+            "NSExtensionPointIdentifier": "com.apple.usernotifications.service",
+            "NSExtensionPrincipalClass": "HanlinMiniAppsNotificationServiceHost.NotificationService"
+          },
+          "storageNamespace": "HanlinMiniApps/v1",
+          "infoSHA256": "176d667ec09408832340ae438a7e26886a9f080625c445c3f192850a7b9a467b",
+          "executable": {
+            "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/PlugIns/HanlinMiniAppsNotificationService.appex/HanlinMiniAppsNotificationService",
+            "bytes": 37888,
+            "sha256": "906dd4a0f2e2cb88e6d902a4784d63fc5d6a7b4155b5d094555901eb844739c8"
+          },
+          "implementationFiles": [
+            {
+              "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/PlugIns/HanlinMiniAppsNotificationService.appex/HanlinMiniAppsNotificationService",
+              "bytes": 37888,
+              "sha256": "906dd4a0f2e2cb88e6d902a4784d63fc5d6a7b4155b5d094555901eb844739c8"
+            },
+            {
+              "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/PlugIns/HanlinMiniAppsNotificationService.appex/HanlinMiniAppsNotificationService.debug.dylib",
+              "bytes": 21564144,
+              "sha256": "e180275d27cb648701745887a90925c9bdd1822443bda29eec14138b29999a3e"
+            }
+          ],
+          "signatureReadCommand": [
+            "codesign",
+            "-d",
+            "--entitlements",
+            ":-",
+            "--verbose=4",
+            "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/PlugIns/HanlinMiniAppsNotificationService.appex"
+          ],
+          "signatureReadExit": 0,
+          "signatureDetailsSHA256": "ccc754895ae9a52b5a0fbaddcb40d80eee2619a44ab16fcbb7842154e0800e3d",
+          "codeSignatureEntitlementsSHA256": "00491886daae07a5296c8bad50f116bf006b0004d7bf7338ad46669fbd903a4a",
+          "codeSignatureEntitlements": {},
+          "actualSimulatorEntitlements": {
+            "source": "__TEXT,__entitlements",
+            "executable": "HanlinMiniAppsNotificationService",
+            "executable_sha256": "906dd4a0f2e2cb88e6d902a4784d63fc5d6a7b4155b5d094555901eb844739c8",
+            "offset": 10364,
+            "bytes": 460,
+            "section_sha256": "ed4604c7101f9f0a9f7291c6463e52ec9fc3e862c35a0cd8bad61a0a444a7bc8",
+            "entitlements": {
+              "application-identifier": "NA6HPWARQ2.com.itorah.hanlinminiapps.notification-service",
+              "com.apple.security.application-groups": [
+                "group.com.itorah.chavrusachat",
+                "group.com.itorah.shared"
+              ]
+            }
+          }
+        },
+        "appBinaries": [
+          {
+            "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/HanlinMiniApps",
+            "bytes": 40496,
+            "sha256": "1ec56863a38dfe3d0d0181c80658097306e855397fb395ca3527bcf519aef9fd"
+          },
+          {
+            "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/HanlinMiniApps.debug.dylib",
+            "bytes": 128005328,
+            "sha256": "218734c598246c191899be4be99edc1642e1ad56d7dbcfdafc959e28abd614de"
+          }
+        ],
+        "dictionaryValidator": {
+          "appPath": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app",
+          "approvedCommandCount": 23,
+          "approvedCommands": [
+            "awk",
+            "cat",
+            "cp",
+            "curl",
+            "grep",
+            "head",
+            "ln",
+            "ls",
+            "mkdir",
+            "mv",
+            "readlink",
+            "rm",
+            "rmdir",
+            "sed",
+            "sort",
+            "stat",
+            "tail",
+            "tar",
+            "touch",
+            "tr",
+            "uniq",
+            "unlink",
+            "wc"
+          ],
+          "commandDictionarySHA256": "bc70ee9fce71b624c9f80c55be93d8a7c7d67bd06d48902ebe9fef32a906173b",
+          "extraDictionarySHA256": "97704a8960b4facceef54397a08fb5d0a456247c3627359215aa2a27df22656c",
+          "unexpectedCommands": []
+        },
+        "signature": {
+          "command_id": "0acb75fc60cc4a60b79075711ec956fe",
+          "argv": [
+            "codesign",
+            "--verify",
+            "--deep",
+            "--strict",
+            "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app"
+          ],
+          "log": "com.itorah.hanlinminiapps-signature.log",
+          "runner_pid": 41946,
+          "pid": 47043,
+          "started_at": 1795598908.013634,
+          "timeout": 60,
+          "status": "completed",
+          "observed_at": 1795598908.884512,
+          "seconds": 0.8709093749930616,
+          "log_bytes": 0,
+          "completion_recorded": true,
+          "exit": 0,
+          "observed_returncode": 0
+        }
+      },
+      {
+        "product": "AI_Hanlin.app",
+        "build": {
+          "command_id": "7ab2a5334a86409fb2e28a05f803adda",
+          "pid": 44440,
+          "started_at": 1795598721.760611,
+          "seconds": 184.79897500001243,
+          "exit": 0,
+          "status": "completed",
+          "observed_at": 1795598906.559093
+        },
+        "archiveCopies": 4,
+        "extension": {
+          "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/ChavrusaChatNotificationService.appex",
+          "bundleID": "com.itorah.chavrusachat.notification-service",
+          "extension": {
+            "NSExtensionPointIdentifier": "com.apple.usernotifications.service",
+            "NSExtensionPrincipalClass": "ChavrusaChatNotificationService.NotificationService"
+          },
+          "storageNamespace": null,
+          "infoSHA256": "cf22dfcabc37e0108e7d7a24ed8f7566d0934e60290d16e8427b2370532ae32c",
+          "executable": {
+            "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/ChavrusaChatNotificationService.appex/ChavrusaChatNotificationService",
+            "bytes": 37888,
+            "sha256": "900fcab50ef218c7356b1fd5e069970ed5b5d5413f5d6f6c55f0847512ddea3d"
+          },
+          "implementationFiles": [
+            {
+              "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/ChavrusaChatNotificationService.appex/ChavrusaChatNotificationService",
+              "bytes": 37888,
+              "sha256": "900fcab50ef218c7356b1fd5e069970ed5b5d5413f5d6f6c55f0847512ddea3d"
+            },
+            {
+              "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/ChavrusaChatNotificationService.appex/ChavrusaChatNotificationService.debug.dylib",
+              "bytes": 28194512,
+              "sha256": "116e44f3f59bbe9a3a7c8881ccc2ecb99e9521dec60c3af8768d4f20c8f9d94a"
+            }
+          ],
+          "signatureReadCommand": [
+            "codesign",
+            "-d",
+            "--entitlements",
+            ":-",
+            "--verbose=4",
+            "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/ChavrusaChatNotificationService.appex"
+          ],
+          "signatureReadExit": 0,
+          "signatureDetailsSHA256": "f8767154099e0c2e966f5c50ad211bd81b790d9bdb75eff6f72ec0b3654c6fce",
+          "codeSignatureEntitlementsSHA256": "00491886daae07a5296c8bad50f116bf006b0004d7bf7338ad46669fbd903a4a",
+          "codeSignatureEntitlements": {},
+          "actualSimulatorEntitlements": {
+            "source": "__TEXT,__entitlements",
+            "executable": "ChavrusaChatNotificationService",
+            "executable_sha256": "900fcab50ef218c7356b1fd5e069970ed5b5d5413f5d6f6c55f0847512ddea3d",
+            "offset": 10352,
+            "bytes": 458,
+            "section_sha256": "c4a08ac8db4d42ca842cf9e110a6bdb99fd43b9aa8c7d1e7ad3b227664669140",
+            "entitlements": {
+              "application-identifier": "NA6HPWARQ2.com.itorah.chavrusachat.notification-service",
+              "com.apple.security.application-groups": [
+                "group.com.itorah.chavrusachat",
+                "group.com.itorah.shared"
+              ]
+            }
+          }
+        },
+        "appBinaries": [
+          {
+            "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/AI_Hanlin",
+            "bytes": 40496,
+            "sha256": "283c3bbfd41b8791fc0c1c542cda4a753777c4b45a58fb78354a0c10e00af51f"
+          },
+          {
+            "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/AI_Hanlin.debug.dylib",
+            "bytes": 3473824,
+            "sha256": "80ba1b05240eb988af275c12edaef7d4d0a194542a2de60dd56f4ce57f336abb"
+          }
+        ],
+        "dictionaryValidator": {
+          "appPath": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app",
+          "approvedCommandCount": 23,
+          "approvedCommands": [
+            "awk",
+            "cat",
+            "cp",
+            "curl",
+            "grep",
+            "head",
+            "ln",
+            "ls",
+            "mkdir",
+            "mv",
+            "readlink",
+            "rm",
+            "rmdir",
+            "sed",
+            "sort",
+            "stat",
+            "tail",
+            "tar",
+            "touch",
+            "tr",
+            "uniq",
+            "unlink",
+            "wc"
+          ],
+          "commandDictionarySHA256": "bc70ee9fce71b624c9f80c55be93d8a7c7d67bd06d48902ebe9fef32a906173b",
+          "extraDictionarySHA256": "97704a8960b4facceef54397a08fb5d0a456247c3627359215aa2a27df22656c",
+          "unexpectedCommands": []
+        },
+        "signature": {
+          "command_id": "78fde3db46854d5baa9384c8a4c3278a",
+          "argv": [
+            "codesign",
+            "--verify",
+            "--deep",
+            "--strict",
+            "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app"
+          ],
+          "log": "com.itorah.chavrusachat-signature.log",
+          "runner_pid": 41946,
+          "pid": 47039,
+          "started_at": 1795598906.7669618,
+          "timeout": 60,
+          "status": "completed",
+          "observed_at": 1795598907.929814,
+          "seconds": 1.1628827920067124,
+          "log_bytes": 0,
+          "completion_recorded": true,
+          "exit": 0,
+          "observed_returncode": 0
+        }
+      }
+    ],
+    "worklets": {
+      "version": "0.13.0",
+      "definition": "-DWORKLETS_VERSION=0.13.0",
+      "objectPath": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinExpoWorklets-t.build/Objects-normal/arm64/WorkletsVersion.o",
+      "objectSHA256": "7132ad932d55d3cde0061cdd6cff0cb00a68a2a762a26116d7ea5bcd90e94a90",
+      "objectBytes": 199440,
+      "bareVersionStringOffset": 4448,
+      "responsePath": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinExpoWorklets-t.build/Objects-normal/arm64/82b82416624d2658e5098eb0a28c15c5-common-args.resp",
+      "responseSHA256": "a5e0da230d3c8dac3f83e69c514be9b81473c53d9cefff4b55d5fd0fddb26d55",
+      "sourcePath": "Packages/HanlinExpoNativeAPI/Sources/HanlinExpoWorklets/Common/cpp/worklets/Tools/WorkletsVersion.cpp",
+      "boundary": "Actual original native object and compiled command bind the bare version. Runtime warning/feature success is separate original test evidence."
+    }
+  },
+  "producerPacket": {
+    "directory": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/produced-packages-attempt18",
+    "receiptSHA256": "a9a9a05eb3ebddcdaba5b62986a2215887fcba24aaea02df926430ed7992761f",
+    "members": 11,
+    "bytes": 4193912,
+    "packages": [
+      {
+        "archive": "MiniAppTypeError.hanlinNativeScript",
+        "bytes": 4400,
+        "sha256": "c5006389c6b1e09209d173ccad8f6397cb06c8cfaf7a395233827822c1b181a9",
+        "manifest": {
+          "name": "MiniApp Authoring Acceptance",
+          "version": "1.0.0",
+          "entry": "nativescript/app/bundle.mjs",
+          "runInApp": true,
+          "hanlinRuntime": "hanlin-nativescript"
+        },
+        "members": 12,
+        "uncompressedBytes": 5326,
+        "sourceHashCount": 5,
+        "compiledHashCount": 5,
+        "intentionalSourceMismatches": [
+          {
+            "path": "index.ts",
+            "expected": "9ca13f866936891fd664e0001e366632c94fe2f069308ae6cca0cc09149a6101",
+            "actual": "a0150df126fe244e9d1b49fee0fe10a11756569e8e82cfe4381584e30f79dcaa"
+          }
+        ],
+        "sdk": {
+          "packageVersions": {
+            "@nativescript/core": "9.1.4",
+            "@nativescript/swift-ui": "4.0.2",
+            "@nativescript/ios": "9.1.1",
+            "@nativescript/types": "9.1.4",
+            "@nativescript/vite": "8.0.24",
+            "typescript": "5.9.3",
+            "vite": "8.0.0",
+            "@hanlin/notification-events": "1.0.0",
+            "@hanlin/host-services": "1.0.0"
+          },
+          "manifestSHA256": "1ca059acbc56b0d8d33f3d678c5023fd5aff26c744ac1e5412c3b1663529dfcd",
+          "compilerVersion": "5.9.3"
+        },
+        "typecheck": null
+      },
+      {
+        "archive": "ModularTextSearch.hanlinExpo",
+        "bytes": 2203502,
+        "sha256": "3476c670b551dcf2b8d1df5642d18470876feb1bbd0eecb0c1b7dacf8e0673f0",
+        "manifest": {
+          "name": "חיפוש טקסטים מודולרי — Expo",
+          "version": "1.4.0",
+          "description": "Original native Expo search app, Share, interactive native Shortcuts snippets and editable Translation UI with original ScriptWidget services.",
+          "entry": "bundle.js",
+          "runInApp": true,
+          "hanlinRuntime": "hanlin-expo",
+          "author": {
+            "name": "david povarsky"
+          },
+          "icon": "magnifyingglass",
+          "color": "#007AFF",
+          "capabilities": [
+            "ios-native-api",
+            "network",
+            "inter-app.share"
+          ],
+          "entrypoints": [
+            {
+              "id": "appIntents",
+              "kind": "appIntent",
+              "sourcePath": "bundle.js",
+              "exportedSymbol": "search"
+            },
+            {
+              "id": "share",
+              "kind": "share",
+              "sourcePath": "bundle.js",
+              "exportedSymbol": "search"
+            },
+            {
+              "id": "translation",
+              "kind": "translationUI",
+              "sourcePath": "bundle.js",
+              "exportedSymbol": "search"
+            }
+          ],
+          "actions": [
+            {
+              "id": "search",
+              "title": "חיפוש טקסטים",
+              "handler": "bundle.js",
+              "capability": "inter-app.share"
+            }
+          ],
+          "intentInputTypes": [
+            "Text",
+            "URLs"
+          ],
+          "nativePresentations": {
+            "appIntents": {
+              "engine": "scriptwidget",
+              "sourcePath": "native/search.tsx",
+              "sourceFormat": "tsx",
+              "actions": [
+                {
+                  "id": "retry",
+                  "kind": "function",
+                  "handler": "retry"
+                },
+                {
+                  "id": "toggleVersions",
+                  "kind": "function",
+                  "handler": "toggleVersions"
+                },
+                {
+                  "id": "loadFullText",
+                  "kind": "function",
+                  "handler": "loadFullText"
+                },
+                {
+                  "id": "closeFullText",
+                  "kind": "function",
+                  "handler": "closeFullText"
+                },
+                {
+                  "id": "loadMore",
+                  "kind": "function",
+                  "handler": "loadMore"
+                },
+                {
+                  "id": "replaceText",
+                  "kind": "function",
+                  "handler": "replaceText"
+                }
+              ]
+            },
+            "translation": {
+              "engine": "scriptwidget",
+              "sourcePath": "native/search.tsx",
+              "sourceFormat": "tsx",
+              "actions": [
+                {
+                  "id": "retry",
+                  "kind": "function",
+                  "handler": "retry"
+                },
+                {
+                  "id": "toggleVersions",
+                  "kind": "function",
+                  "handler": "toggleVersions"
+                },
+                {
+                  "id": "loadFullText",
+                  "kind": "function",
+                  "handler": "loadFullText"
+                },
+                {
+                  "id": "closeFullText",
+                  "kind": "function",
+                  "handler": "closeFullText"
+                },
+                {
+                  "id": "loadMore",
+                  "kind": "function",
+                  "handler": "loadMore"
+                },
+                {
+                  "id": "replaceText",
+                  "kind": "function",
+                  "handler": "replaceText"
+                }
+              ],
+              "input": {
+                "title": "טקסט לחיפוש",
+                "placeholder": "כתוב מילה או משפט",
+                "submitTitle": "חפש מחדש"
+              }
+            }
+          }
+        },
+        "members": 55,
+        "uncompressedBytes": 10702797,
+        "sourceHashCount": 35,
+        "compiledHashCount": 18,
+        "intentionalSourceMismatches": [],
+        "sdk": {
+          "packageVersions": {
+            "@expo/ui": "58.0.29",
+            "@hanlin/expo-native-api": "1.0.0",
+            "@hanlin/expo-ui": "1.0.0",
+            "@nativescript/react-native": "9.1.2",
+            "expo": "58.0.26",
+            "expo-asset": "58.0.21",
+            "expo-brownfield": "58.0.20",
+            "expo-modules-core": "58.1.0",
+            "expo-modules-jsi": "58.0.23",
+            "react": "19.3.0",
+            "react-native": "0.88.1",
+            "react-native-worklets": "0.13.0",
+            "expo-widgets": "58.0.29",
+            "@babel/core": "7.29.7",
+            "@react-native-community/cli": "20.2.0",
+            "@react-native/codegen": "0.88.1",
+            "@react-native/metro-config": "0.88.1",
+            "@types/react": "19.3.2",
+            "babel-preset-expo": "58.0.26",
+            "esbuild": "0.25.12",
+            "typescript": "6.0.2",
+            "@hanlin/notification-events": "1.0.0"
+          },
+          "manifestSHA256": "1ca059acbc56b0d8d33f3d678c5023fd5aff26c744ac1e5412c3b1663529dfcd",
+          "compilerVersion": "6.0.3"
+        },
+        "typecheck": {
+          "strict": true,
+          "checkJs": false,
+          "skipLibCheck": false,
+          "dependencyDeclarationsChecked": true
+        }
+      },
+      {
+        "archive": "NativeScriptAuthoringExample.hanlinNativeScript",
+        "bytes": 4400,
+        "sha256": "ef3b5b14f120e4327685eb9b69e0a9f6614f785d90ff3d567c7b567d0b39f5bd",
+        "manifest": {
+          "name": "MiniApp Authoring Acceptance",
+          "version": "1.0.0",
+          "entry": "nativescript/app/bundle.mjs",
+          "runInApp": true,
+          "hanlinRuntime": "hanlin-nativescript"
+        },
+        "members": 12,
+        "uncompressedBytes": 5321,
+        "sourceHashCount": 5,
+        "compiledHashCount": 5,
+        "intentionalSourceMismatches": [],
+        "sdk": {
+          "packageVersions": {
+            "@nativescript/core": "9.1.4",
+            "@nativescript/swift-ui": "4.0.2",
+            "@nativescript/ios": "9.1.1",
+            "@nativescript/types": "9.1.4",
+            "@nativescript/vite": "8.0.24",
+            "typescript": "5.9.3",
+            "vite": "8.0.0",
+            "@hanlin/notification-events": "1.0.0",
+            "@hanlin/host-services": "1.0.0"
+          },
+          "manifestSHA256": "1ca059acbc56b0d8d33f3d678c5023fd5aff26c744ac1e5412c3b1663529dfcd",
+          "compilerVersion": "5.9.3"
+        },
+        "typecheck": null
+      },
+      {
+        "archive": "SDKOnlyDepartureBudget.hanlinExpo",
+        "bytes": 1956755,
+        "sha256": "50dc3fd2cb47f9ec0959ad23911ac110b8f0c7b9dc99da60cc282905e88d82de",
+        "manifest": {
+          "name": "Departure Budget",
+          "version": "1.0.0",
+          "description": "Plan preparation, travel and arrival buffer with native SwiftUI controls.",
+          "entry": "bundle.js",
+          "runInApp": true,
+          "hanlinRuntime": "hanlin-expo",
+          "icon": "clock",
+          "color": "#146C78"
+        },
+        "members": 14,
+        "uncompressedBytes": 9642311,
+        "sourceHashCount": 8,
+        "compiledHashCount": 4,
+        "intentionalSourceMismatches": [],
+        "sdk": {
+          "packageVersions": {
+            "@expo/ui": "58.0.29",
+            "@hanlin/expo-native-api": "1.0.0",
+            "@hanlin/expo-ui": "1.0.0",
+            "@nativescript/react-native": "9.1.2",
+            "expo": "58.0.26",
+            "expo-asset": "58.0.21",
+            "expo-brownfield": "58.0.20",
+            "expo-modules-core": "58.1.0",
+            "expo-modules-jsi": "58.0.23",
+            "react": "19.3.0",
+            "react-native": "0.88.1",
+            "react-native-worklets": "0.13.0",
+            "expo-widgets": "58.0.29",
+            "@babel/core": "7.29.7",
+            "@react-native-community/cli": "20.2.0",
+            "@react-native/codegen": "0.88.1",
+            "@react-native/metro-config": "0.88.1",
+            "@types/react": "19.3.2",
+            "babel-preset-expo": "58.0.26",
+            "esbuild": "0.25.12",
+            "typescript": "6.0.2",
+            "@hanlin/notification-events": "1.0.0"
+          },
+          "manifestSHA256": "1ca059acbc56b0d8d33f3d678c5023fd5aff26c744ac1e5412c3b1663529dfcd",
+          "compilerVersion": "6.0.3"
+        },
+        "typecheck": {
+          "strict": true,
+          "checkJs": false,
+          "skipLibCheck": false,
+          "dependencyDeclarationsChecked": true
+        }
+      },
+      {
+        "archive": "SDKOnlyTableShare.hanlinNativeScript",
+        "bytes": 12933,
+        "sha256": "718ecbcc4c7e365e8f737c25b60f16b7017eec6f6533e1574c70edb9c068e0e3",
+        "manifest": {
+          "name": "Table Share",
+          "version": "1.0.0",
+          "description": "Split a restaurant bill exactly, with tax, tip and optional whole-dollar contributions.",
+          "entry": "nativescript/app/bundle.mjs",
+          "runInApp": true,
+          "hanlinRuntime": "hanlin-nativescript",
+          "icon": "person.3",
+          "color": "#315ACB"
+        },
+        "members": 16,
+        "uncompressedBytes": 31114,
+        "sourceHashCount": 7,
+        "compiledHashCount": 7,
+        "intentionalSourceMismatches": [],
+        "sdk": {
+          "packageVersions": {
+            "@nativescript/core": "9.1.4",
+            "@nativescript/swift-ui": "4.0.2",
+            "@nativescript/ios": "9.1.1",
+            "@nativescript/types": "9.1.4",
+            "@nativescript/vite": "8.0.24",
+            "typescript": "5.9.3",
+            "vite": "8.0.0",
+            "@hanlin/notification-events": "1.0.0",
+            "@hanlin/host-services": "1.0.0"
+          },
+          "manifestSHA256": "1ca059acbc56b0d8d33f3d678c5023fd5aff26c744ac1e5412c3b1663529dfcd",
+          "compilerVersion": "5.9.3"
+        },
+        "typecheck": {
+          "strict": true,
+          "checkJs": false,
+          "skipLibCheck": true,
+          "dependencyDeclarationsChecked": false
+        }
+      }
+    ],
+    "negativeValidation": {
+      "schemaVersion": 1,
+      "engine": "nativescript",
+      "operation": "validate",
+      "succeeded": false,
+      "diagnostics": [
+        {
+          "code": "TS2322",
+          "category": "error",
+          "message": "Type 'string' is not assignable to type 'number'.",
+          "file": "index.ts",
+          "line": 1,
+          "column": 14,
+          "endLine": 1,
+          "endColumn": 20
+        },
+        {
+          "code": "MINIAPP_SOURCE_CHANGED",
+          "category": "error",
+          "message": "The package no longer matches its recorded build: index.ts",
+          "file": "index.ts",
+          "remediation": "Repair and validate the source project, then build a fresh archive before importing."
+        }
+      ],
+      "sourceRoot": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v4/evidence/paired-product/authoring-fixture/project/.hanlin-build/22a0df29-e877-4a54-a7a0-cea1e0173d58/package/source",
+      "sdk": {
+        "packageVersions": {
+          "@nativescript/core": "9.1.4",
+          "@nativescript/swift-ui": "4.0.2",
+          "@nativescript/ios": "9.1.1",
+          "@nativescript/types": "9.1.4",
+          "@nativescript/vite": "8.0.24",
+          "typescript": "5.9.3",
+          "vite": "8.0.0",
+          "@hanlin/notification-events": "1.0.0",
+          "@hanlin/host-services": "1.0.0"
+        },
+        "manifestSHA256": "1ca059acbc56b0d8d33f3d678c5023fd5aff26c744ac1e5412c3b1663529dfcd",
+        "compilerVersion": "5.9.3"
+      },
+      "typecheck": {
+        "strict": true,
+        "checkJs": false,
+        "skipLibCheck": true,
+        "dependencyDeclarationsChecked": false
+      }
+    },
+    "invalidArchiveSHA256Meaning": "Separate InvalidMiniApp.zip deliberately non-ZIP bytes, not the source-bearing MiniAppTypeError archive."
+  },
+  "sourceBindings": {
+    "Packages/IOSSystemLite/Sources/IOSSystemLite/Resources/commandDictionary.plist": {
+      "bytes": 3560,
+      "sha256": "bc70ee9fce71b624c9f80c55be93d8a7c7d67bd06d48902ebe9fef32a906173b"
+    },
+    "Packages/IOSSystemLite/Sources/IOSSystemLite/Resources/extraCommandsDictionary.plist": {
+      "bytes": 181,
+      "sha256": "97704a8960b4facceef54397a08fb5d0a456247c3627359215aa2a27df22656c"
+    },
+    "Scripts/ProductSplit/simulator_entitlements.py": {
+      "bytes": 3658,
+      "sha256": "aa1cfcd4f371dd25a637bc56ab281ef94f8bcdcc2bb415b9125dd0b0aa0b27a8"
+    },
+    "Scripts/Expo/miniapps/modular-text-search/App.tsx": {
+      "bytes": 26038,
+      "sha256": "ac62c2f394dceedb422c0fbe05d4182afba07e1bf78fb15828d3f936d212ae8a"
+    },
+    "Scripts/Expo/miniapps/modular-text-search/README.md": {
+      "bytes": 7058,
+      "sha256": "8ceff65d4f7248d58389792f86032bbf74f7228b566ed0e77d02b08e6d93e6ce"
+    },
+    "Scripts/Expo/miniapps/modular-text-search/build.ps1": {
+      "bytes": 1682,
+      "sha256": "394476bb932e3608709fe455af351585fc692d4255acd2f6dc41a1471a7fcd1f"
+    },
+    "Scripts/Expo/miniapps/modular-text-search/hanlin.authoring.json": {
+      "bytes": 134,
+      "sha256": "e2cd4f27d796b5ba5888348e9f3e10af45195d383fcb5f5946f94b9d05763030"
+    },
+    "Scripts/Expo/miniapps/modular-text-search/index.ts": {
+      "bytes": 214,
+      "sha256": "00e02d45f2f2a702f611c680663da217bfca69cd375b1dfe9f8f14562f9fb3e0"
+    },
+    "Scripts/Expo/miniapps/modular-text-search/native/original-source-proof.json": {
+      "bytes": 3455,
+      "sha256": "f3622f772c9437a79db1d46d750e5e151818bc7ce44b5abc7729aa6527833765"
+    },
+    "Scripts/Expo/miniapps/modular-text-search/native/search.tsx": {
+      "bytes": 9790,
+      "sha256": "e1e94967febb0f8aea8be64296e9ad384b7f65d29f7744d7cd39dcfcf775a15b"
+    },
+    "Scripts/Expo/miniapps/modular-text-search/native/src/engines/preferences.js": {
+      "bytes": 775,
+      "sha256": "124ed5937e1a69f51657d8c9bc58b7326269bc2ea77510fc9a6fafece5cb43ac"
+    },
+    "Scripts/Expo/miniapps/modular-text-search/native/src/engines/registry.js": {
+      "bytes": 1317,
+      "sha256": "9be4d34fecd98447cb94585be1b5bd589a5a0cbe47c726905a398bfd3d4a09cb"
+    },
+    "Scripts/Expo/miniapps/modular-text-search/native/src/engines/sefaria/client.js": {
+      "bytes": 4889,
+      "sha256": "c2221c450bf897c69f2796e3a9867384abc0fefa3d29f18e59a2bd24c64dfd2f"
+    },
+    "Scripts/Expo/miniapps/modular-text-search/native/src/engines/sefaria/constants.js": {
+      "bytes": 1177,
+      "sha256": "f6dc8d774ac727b25c3ff278f514ee6f6d0ddd9b74541c9c96d3fec246f7601d"
+    },
+    "Scripts/Expo/miniapps/modular-text-search/native/src/engines/sefaria/engine.js": {
+      "bytes": 1607,
+      "sha256": "0fe3b94e5ef58a668990270761336ed5fe200a7472fe853a5e614b1ad64929c3"
+    },
+    "Scripts/Expo/miniapps/modular-text-search/native/src/engines/sefaria/searchPayload.js": {
+      "bytes": 3132,
+      "sha256": "6e4c77c4248d0d1ae84d6172bd184a1d61594250517a545dae53fb09723b85c5"
+    },
+    "Scripts/Expo/miniapps/modular-text-search/native/src/intent/snippetDefaults.js": {
+      "bytes": 1648,
+      "sha256": "82b15d94edeeda146e04a90a6fa35e44cfbbff891acdbd0bfc3ab3f4cf212809"
+    },
+    "Scripts/Expo/miniapps/modular-text-search/native/src/intent/snippetViewModel.js": {
+      "bytes": 4531,
+      "sha256": "22853b612b79dfe8e3d13822417cf7d63ba55144c29111bf9be533adb6a68787"
+    },
+    "Scripts/Expo/miniapps/modular-text-search/native/src/logic/localization.js": {
+      "bytes": 9792,
+      "sha256": "d3469b6512a6b9cf02d87ac0fa348b8d29bae0f21443f85af11965db3e98d873"
+    },
+    "Scripts/Expo/miniapps/modular-text-search/native/src/logic/searchGrouping.js": {
+      "bytes": 1475,
+      "sha256": "d7f8fe70f0355878624c2faa356f9cad88032cd7068aa7cef5763dd239af0424"
+    },
+    "Scripts/Expo/miniapps/modular-text-search/native/src/logic/textUtils.js": {
+      "bytes": 2060,
+      "sha256": "23a5ed4e316acf547ff7505002e10d451f559b56f957cb45ada6e9da324453e0"
+    },
+    "Scripts/Expo/miniapps/modular-text-search/native/tsconfig.json": {
+      "bytes": 348,
+      "sha256": "04f9897c1e27a4f1bfb0b948d70c482618c84961a61567447ef110ea43dcce93"
+    },
+    "Scripts/Expo/miniapps/modular-text-search/package.json": {
+      "bytes": 739,
+      "sha256": "81664c98d9d9e5e26d5206e96fddb5ace83c6bc810d3f8d4b91585b21ab79dbb"
+    },
+    "Scripts/Expo/miniapps/modular-text-search/script.json": {
+      "bytes": 3042,
+      "sha256": "c5412f79281a38363bab23697f85d0af24ad735f93a9b30ebac076ff3b6820c2"
+    },
+    "Scripts/Expo/miniapps/modular-text-search/src/engines/preferences.js": {
+      "bytes": 796,
+      "sha256": "38e699d09b942887b84c200c7b07467f3b28f092f3385d9ba9f756a6fc6f6896"
+    },
+    "Scripts/Expo/miniapps/modular-text-search/src/engines/registry.js": {
+      "bytes": 1317,
+      "sha256": "9be4d34fecd98447cb94585be1b5bd589a5a0cbe47c726905a398bfd3d4a09cb"
+    },
+    "Scripts/Expo/miniapps/modular-text-search/src/engines/sefaria/client.js": {
+      "bytes": 3987,
+      "sha256": "8d2b61f6eaf6cadf286ea3f97379b009c344badcbea52c06d5a6fc437cb6ba85"
+    },
+    "Scripts/Expo/miniapps/modular-text-search/src/engines/sefaria/constants.js": {
+      "bytes": 1177,
+      "sha256": "f6dc8d774ac727b25c3ff278f514ee6f6d0ddd9b74541c9c96d3fec246f7601d"
+    },
+    "Scripts/Expo/miniapps/modular-text-search/src/engines/sefaria/engine.js": {
+      "bytes": 1607,
+      "sha256": "0fe3b94e5ef58a668990270761336ed5fe200a7472fe853a5e614b1ad64929c3"
+    },
+    "Scripts/Expo/miniapps/modular-text-search/src/engines/sefaria/nativeTransport.js": {
+      "bytes": 4734,
+      "sha256": "d82632b3803c352ea3f4f71aadb6365472e0aa819ef1fad459648e62436d90b5"
+    },
+    "Scripts/Expo/miniapps/modular-text-search/src/engines/sefaria/searchPayload.js": {
+      "bytes": 3132,
+      "sha256": "6e4c77c4248d0d1ae84d6172bd184a1d61594250517a545dae53fb09723b85c5"
+    },
+    "Scripts/Expo/miniapps/modular-text-search/src/logic/entrypointInput.js": {
+      "bytes": 952,
+      "sha256": "08329ca5f219ba893cbcb796009fb47000f2ef07fa1e213acb3b15a4004a18c5"
+    },
+    "Scripts/Expo/miniapps/modular-text-search/src/logic/localization.js": {
+      "bytes": 9792,
+      "sha256": "d3469b6512a6b9cf02d87ac0fa348b8d29bae0f21443f85af11965db3e98d873"
+    },
+    "Scripts/Expo/miniapps/modular-text-search/src/logic/searchGrouping.js": {
+      "bytes": 1475,
+      "sha256": "d7f8fe70f0355878624c2faa356f9cad88032cd7068aa7cef5763dd239af0424"
+    },
+    "Scripts/Expo/miniapps/modular-text-search/src/logic/textUtils.js": {
+      "bytes": 2060,
+      "sha256": "23a5ed4e316acf547ff7505002e10d451f559b56f957cb45ada6e9da324453e0"
+    },
+    "Scripts/Expo/miniapps/modular-text-search/tests/native-transport.integration.cjs": {
+      "bytes": 4414,
+      "sha256": "2cfc69a1c9f6ac2865971c2494f65ec90aa9c28c507b8709cae16e7e88ce4ae0"
+    },
+    "Scripts/Expo/miniapps/modular-text-search/tests/ui-regression.test.cjs": {
+      "bytes": 3571,
+      "sha256": "79f9d4d532ec77e0a393757f6636f6a73737c39c21801931124ede0ef7e5a884"
+    },
+    "Scripts/Expo/miniapps/modular-text-search/tsconfig.json": {
+      "bytes": 446,
+      "sha256": "55a7c670ed7cbb03772ab431e18904fe7a66b801541bd4c6133e87a26685ae8e"
+    },
+    "Scripts/MiniApps/Examples/sdk-only-departure-budget/App.tsx": {
+      "bytes": 4556,
+      "sha256": "b2cdbefb1cdfc9c392294692e0c2d4aec7f79176505f3fd4714585716920e0f6"
+    },
+    "Scripts/MiniApps/Examples/sdk-only-departure-budget/README.md": {
+      "bytes": 636,
+      "sha256": "2e14a982ddb34ee47eeba68605d938f580c0706333d58756544037f05a32f192"
+    },
+    "Scripts/MiniApps/Examples/sdk-only-departure-budget/hanlin.authoring.json": {
+      "bytes": 99,
+      "sha256": "23628daa17919961823da4ebc9a4166ab9e1d7a9b3ec2ff47fdc70d7b444bf94"
+    },
+    "Scripts/MiniApps/Examples/sdk-only-departure-budget/index.ts": {
+      "bytes": 120,
+      "sha256": "f3532a443c0193cbb6866cb1a7474d0f5055917ffdc7f5e60efe35159e544d19"
+    },
+    "Scripts/MiniApps/Examples/sdk-only-departure-budget/model.ts": {
+      "bytes": 809,
+      "sha256": "b1b7c165ad8bce614aaf59657750eb508ce867f2e03dedf76119cf76270e05eb"
+    },
+    "Scripts/MiniApps/Examples/sdk-only-departure-budget/package.json": {
+      "bytes": 223,
+      "sha256": "eaca3101f64376e4a2f23475839757d2215fc565b8be582d5e40e0542c89734b"
+    },
+    "Scripts/MiniApps/Examples/sdk-only-departure-budget/script.json": {
+      "bytes": 268,
+      "sha256": "fce829f1ede25e2a95377b3d270c36b974a342c61dd9d8038ae8682d26361a60"
+    },
+    "Scripts/MiniApps/Examples/sdk-only-departure-budget/tsconfig.json": {
+      "bytes": 69,
+      "sha256": "48dc261d79c7417b5e10c2ab83bdce581d8be8f16b70e867789ae7b3f5c9eb59"
+    },
+    "Scripts/MiniApps/Examples/sdk-only-table-share/README.md": {
+      "bytes": 773,
+      "sha256": "2ca21af20c04538813dc2799b29d7b2e44525cd4c92b77ce985361b509a6951f"
+    },
+    "Scripts/MiniApps/Examples/sdk-only-table-share/hanlin.authoring.json": {
+      "bytes": 107,
+      "sha256": "1bf949fb4ba1fd14481df380299652fe9b587aa5c30afdb6621fe23be6c02094"
+    },
+    "Scripts/MiniApps/Examples/sdk-only-table-share/index.ts": {
+      "bytes": 4782,
+      "sha256": "afbfe5116695db1f0a2641a19e474493c3559f5c9f6e470bf0b72d500c9c461c"
+    },
+    "Scripts/MiniApps/Examples/sdk-only-table-share/model.ts": {
+      "bytes": 1491,
+      "sha256": "f9fbaa39afdd00df325ada8177d0bb8213557672a9af7c54fc98936f00d95e9e"
+    },
+    "Scripts/MiniApps/Examples/sdk-only-table-share/package.json": {
+      "bytes": 212,
+      "sha256": "1341e9a334dcd928fcdee84456d6069e5476a54440395e1bf1732c271836bccb"
+    },
+    "Scripts/MiniApps/Examples/sdk-only-table-share/script.json": {
+      "bytes": 306,
+      "sha256": "1cd5129c60227b1ab53e2752e27b3acc29b73d8161de9495d46b2470393653f1"
+    },
+    "Scripts/MiniApps/Examples/sdk-only-table-share/tsconfig.json": {
+      "bytes": 54,
+      "sha256": "b70b632b881af38c566610fa375116ee8172fc20ed495f58b0d0261f0226ac0f"
+    },
+    "Scripts/ProductSplit/prepare_authoring_fixture.mjs": {
+      "bytes": 3460,
+      "sha256": "7db762a97f15611eeb84c530b63b9062763f70d9eccb1666809214b533405f5b"
+    },
+    "Scripts/ProductSplit/run_paired_acceptance.py": {
+      "bytes": 47859,
+      "sha256": "014a10ca33badfc036a3713d4715423a361c6c9fea2e76c24411b5725ac2719f"
+    }
+  },
+  "boundary": [
+    "Oracle-only read/hash/source comparison; no native query, build, generator, or test was executed by this verification.",
+    "Full app, extension executable/debug dylib and actual embedded archive identities are authenticated native owner observations; only transferred metadata, Worklets object and response bytes were independently read here.",
+    "Original package build reports pass and bind SDK18. Native importer, runtime interaction, repair, original25/27, OS delivery and physical-device results remain separate.",
+    "Current original25 is running and has reported failures; this identity PASS is not application acceptance."
+  ],
+  "verificationNote": "An initial read-only regex assumed whitespace after the response flag and stopped before writing any result. The actual response single-quotes the complete argument. shlex parsing independently confirms the bare argument, and original object bytes contain the unquoted version at offset4448."
+}

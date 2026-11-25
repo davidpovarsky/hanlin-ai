@@ -1,0 +1,212 @@
+{
+  "schema": 1,
+  "baseline": {
+    "source": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+    "packet": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/terminal-packet-attempt18",
+    "receiptSHA256": "e1e13b636b481d4745f26aaa63a97b47371176d94d26b772d96872f92484904a",
+    "capturedAt": "2026-11-25T09:52:02.206120+00:00",
+    "pairedStatus": "FAILED",
+    "miniApps": {
+      "total": 25,
+      "passed": 22,
+      "failed": 3,
+      "skipped": 0,
+      "summarySHA256": "938213ec14a051462fc168c2cc3509a04658b2c2fb3c9823818ded373c54db39"
+    },
+    "ai27": "NOT_RUN in this paired attempt; any separately authorized unchanged-source diagnostic is a separate execution",
+    "pairedOriginal52": "FAILED_OR_INCOMPLETE",
+    "pairedStateSHA256": "439cd234a138a0e37f895345d2580df2ec70f5272e7e25534c6428bec94968ac",
+    "chargedSeconds": 1669.903415416993,
+    "runtimeWarningsPreserved": [
+      {
+        "issueType": "Runtime Warning",
+        "message": "Update the Info.plist: Support for all orientations will soon be required."
+      },
+      {
+        "issueType": "Runtime Warning",
+        "message": "Update the Info.plist: Support for all orientations will soon be required."
+      },
+      {
+        "issueType": "Runtime Warning",
+        "message": "Update the Info.plist: Support for all orientations will soon be required."
+      },
+      {
+        "issueType": "Runtime Warning",
+        "message": "Update the Info.plist: Support for all orientations will soon be required."
+      },
+      {
+        "issueType": "Runtime Warning",
+        "message": "Update the Info.plist: Support for all orientations will soon be required."
+      },
+      {
+        "issueType": "Runtime Warning",
+        "message": "Update the Info.plist: Support for all orientations will soon be required."
+      },
+      {
+        "issueType": "Runtime Warning",
+        "message": "Update the Info.plist: Support for all orientations will soon be required."
+      },
+      {
+        "issueType": "Runtime Warning",
+        "message": "Update the Info.plist: Support for all orientations will soon be required."
+      },
+      {
+        "issueType": "Runtime Warning",
+        "message": "Update the Info.plist: Support for all orientations will soon be required."
+      },
+      {
+        "issueType": "Runtime Warning",
+        "message": "Update the Info.plist: Support for all orientations will soon be required."
+      },
+      {
+        "issueType": "Runtime Warning",
+        "message": "Update the Info.plist: Support for all orientations will soon be required."
+      },
+      {
+        "issueType": "Runtime Warning",
+        "message": "Update the Info.plist: Support for all orientations will soon be required."
+      },
+      {
+        "issueType": "Runtime Warning",
+        "message": "Update the Info.plist: Support for all orientations will soon be required."
+      },
+      {
+        "issueType": "Runtime Warning",
+        "message": "Update the Info.plist: Support for all orientations will soon be required."
+      },
+      {
+        "issueType": "Runtime Warning",
+        "message": "Update the Info.plist: Support for all orientations will soon be required."
+      },
+      {
+        "issueType": "Runtime Warning",
+        "message": "Update the Info.plist: Support for all orientations will soon be required."
+      },
+      {
+        "issueType": "Runtime Warning",
+        "message": "Update the Info.plist: Support for all orientations will soon be required."
+      }
+    ]
+  },
+  "selectedOriginalMembers": [
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v4/state.json",
+      "path": "paired52-continuation-v4/state.json",
+      "bytes": 3511,
+      "sha256": "439cd234a138a0e37f895345d2580df2ec70f5272e7e25534c6428bec94968ac",
+      "storedPath": "raw/terminal/paired-state.json"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v4/evidence/paired-product/original-runtimes-summary.json",
+      "path": "paired52-continuation-v4/evidence/paired-product/original-runtimes-summary.json",
+      "bytes": 5213,
+      "sha256": "938213ec14a051462fc168c2cc3509a04658b2c2fb3c9823818ded373c54db39",
+      "storedPath": "raw/terminal/original-runtimes-summary.json"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v4/evidence/paired-product/originalruntimes-attachments/manifest.json",
+      "path": "paired52-continuation-v4/evidence/paired-product/originalruntimes-attachments/manifest.json",
+      "bytes": 112925,
+      "sha256": "2d79b6f23aa757438b806e7e5f61c636f375371cb1d04848a63919c0cacc8c74",
+      "storedPath": "raw/terminal/attachment-manifest.json"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v4/evidence/paired-product/originalruntimes-attachments/B6672F64-86BA-4A96-8999-45326DF519E6.txt",
+      "path": "paired52-continuation-v4/evidence/paired-product/originalruntimes-attachments/B6672F64-86BA-4A96-8999-45326DF519E6.txt",
+      "bytes": 13682,
+      "sha256": "d3b6bb3042fccbdd2f3dd07313c1e8d6100ed21cade23984e0af5497c3a4041c",
+      "storedPath": "raw/terminal/attachments/B6672F64-86BA-4A96-8999-45326DF519E6.txt"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v4/evidence/paired-product/originalruntimes-attachments/88EBBB24-4500-4515-8268-EEB23BACB985.png",
+      "path": "paired52-continuation-v4/evidence/paired-product/originalruntimes-attachments/88EBBB24-4500-4515-8268-EEB23BACB985.png",
+      "bytes": 185020,
+      "sha256": "1811732ba16caf0eaf71b89561682dc8b58fed467a50dd7d1f0980f0ddc96b16",
+      "storedPath": "raw/terminal/attachments/88EBBB24-4500-4515-8268-EEB23BACB985.png"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v4/evidence/paired-product/originalruntimes-attachments/963819DA-7DC1-41B1-8C6F-BAB13317A31E.txt",
+      "path": "paired52-continuation-v4/evidence/paired-product/originalruntimes-attachments/963819DA-7DC1-41B1-8C6F-BAB13317A31E.txt",
+      "bytes": 21637,
+      "sha256": "0081d347ceba52e7eaf4f251ab2cdcd542420468f0c70a58bf0e5bb9e72d66a9",
+      "storedPath": "raw/terminal/attachments/963819DA-7DC1-41B1-8C6F-BAB13317A31E.txt"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v4/evidence/paired-product/originalruntimes-attachments/DA2C0030-C2A1-4564-B87B-AD0E3982EDB3.png",
+      "path": "paired52-continuation-v4/evidence/paired-product/originalruntimes-attachments/DA2C0030-C2A1-4564-B87B-AD0E3982EDB3.png",
+      "bytes": 227660,
+      "sha256": "00a8c314961ed27ca3016746bbbc6b499150f94132e817d9756c42b48b32330d",
+      "storedPath": "raw/terminal/attachments/DA2C0030-C2A1-4564-B87B-AD0E3982EDB3.png"
+    }
+  ],
+  "attachmentMappings": [
+    {
+      "testIdentifier": "MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierHitTestingAndSubmitScope()",
+      "testIdentifierURL": "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierHitTestingAndSubmitScope",
+      "configurationName": "Test Scheme Action",
+      "deviceId": "50D2F667-196E-4382-A86A-802710579EA9",
+      "deviceName": "HanlinPaired-primary-ce49e30d-20261124",
+      "exportedFileName": "B6672F64-86BA-4A96-8999-45326DF519E6.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "companion-runtime-failure-accessibility_0_9EA73FBD-9881-4890-A1F1-CD55EAC1D8B7.txt",
+      "timestamp": 1795599361.868
+    },
+    {
+      "testIdentifier": "MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierHitTestingAndSubmitScope()",
+      "testIdentifierURL": "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierHitTestingAndSubmitScope",
+      "configurationName": "Test Scheme Action",
+      "deviceId": "50D2F667-196E-4382-A86A-802710579EA9",
+      "deviceName": "HanlinPaired-primary-ce49e30d-20261124",
+      "exportedFileName": "88EBBB24-4500-4515-8268-EEB23BACB985.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "companion-runtime-failure_0_795E2955-87AE-4CF9-AA8F-BCD189D894CD.png",
+      "timestamp": 1795599361.517
+    },
+    {
+      "testIdentifier": "MiniAppsProductionRuntimeUITests/testStandaloneExpoManualInputLayoutAndDataAdapters()",
+      "testIdentifierURL": "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualInputLayoutAndDataAdapters",
+      "configurationName": "Test Scheme Action",
+      "deviceId": "50D2F667-196E-4382-A86A-802710579EA9",
+      "deviceName": "HanlinPaired-primary-ce49e30d-20261124",
+      "exportedFileName": "963819DA-7DC1-41B1-8C6F-BAB13317A31E.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "companion-runtime-failure-accessibility_0_2D56F2DB-5318-4463-ADEC-2E8AC0DB87C0.txt",
+      "timestamp": 1795599614.716
+    },
+    {
+      "testIdentifier": "MiniAppsProductionRuntimeUITests/testStandaloneExpoManualInputLayoutAndDataAdapters()",
+      "testIdentifierURL": "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualInputLayoutAndDataAdapters",
+      "configurationName": "Test Scheme Action",
+      "deviceId": "50D2F667-196E-4382-A86A-802710579EA9",
+      "deviceName": "HanlinPaired-primary-ce49e30d-20261124",
+      "exportedFileName": "DA2C0030-C2A1-4564-B87B-AD0E3982EDB3.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "companion-runtime-failure_0_8444AFBE-FF48-4344-8FF4-3541EC993E17.png",
+      "timestamp": 1795599613.904
+    }
+  ],
+  "interpretation": {
+    "generatedAffinity": "Actual assertion records empty value instead of the supplied bilingual default; selected AX identifies the mounted editor and screenshot shows no default text.",
+    "manualInput": "Actual native TextView value and React-derived EDITOR_VALUE label are both ala after original typeText(alpha). Events were delivered; the missing p/h characters plus unguarded controlled synchronization support a stale-echo race. This is a source-backed causal explanation, pending corrected native execution.",
+    "correction": "A real SwiftUI content view initializes delivered default/control props; explicit native event counts and JS acknowledgements prevent earlier controlled echoes from replacing newer native edits. Count-only acknowledgement changes synchronize parent rejection/normalization. Legacy packages omitting the nullable field retain their original behavior."
+  },
+  "validation": {
+    "sourceReview": "REVIEWED_BY_ROOT",
+    "diffWhitespace": "PASS for authored two-source correction",
+    "typescript": "NOT_RUN for this correction",
+    "nativeCompilation": "NOT_RUN for this correction",
+    "affectedCases": [
+      {
+        "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierHitTestingAndSubmitScope",
+        "status": "NEEDS_TEST",
+        "fixtureAndAssertionsUnchanged": true
+      },
+      {
+        "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualInputLayoutAndDataAdapters",
+        "status": "NEEDS_TEST",
+        "fixtureAndAssertionsUnchanged": true
+      }
+    ],
+    "boundary": "No corrected runtime pass, full paired pass, simulator rerun, compiler run or regenerated SDK is claimed by this record."
+  }
+}

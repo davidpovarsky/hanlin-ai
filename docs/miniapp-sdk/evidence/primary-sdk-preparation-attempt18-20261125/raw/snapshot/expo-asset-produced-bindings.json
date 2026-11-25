@@ -1,0 +1,182 @@
+{
+  "originalSourceReceipt": {
+    "schemaVersion": 1,
+    "inputSHA256": "4939d8a43c4a36e9373396d26fbf46f12c30eff34ee57f486dc1a07acb0c4d83",
+    "xcode": "Xcode 27.0\nBuild version 27A266a",
+    "cocoaPods": "1.17.0",
+    "podLockSHA256": "c012c6f8ee2ca782aea7788349d75a3a57e6e4be8d324037a8b9dce573e4d8e6",
+    "originalPackage": {
+      "name": "expo-asset",
+      "version": "58.0.21",
+      "sha256": "2bfbb115da9111702530e5df550eac7e2a074aa12b6297fcc332744767623126",
+      "integrity": "sha512-qaJmuTtswggXdBQfiUdpxrVGM7l+tH8iEDHwVDMuxyCF/kAau8sUGVuWrDKYNW4yAx7Z8ncgsT8s27pXjRH5GA=="
+    },
+    "nativeBuild": "original Expo CLI prebuild + original CocoaPods podspec + Xcode device/simulator frameworks",
+    "swiftModuleDistribution": "same-Xcode internal build input; exact compiler identity is part of inputSHA256",
+    "slices": [
+      {
+        "LibraryPath": "ExpoAsset.framework",
+        "SupportedPlatformVariant": "simulator",
+        "SupportedPlatform": "ios",
+        "BinaryPath": "ExpoAsset.framework/ExpoAsset",
+        "LibraryIdentifier": "ios-arm64_x86_64-simulator",
+        "SupportedArchitectures": [
+          "arm64",
+          "x86_64"
+        ]
+      },
+      {
+        "LibraryPath": "ExpoAsset.framework",
+        "SupportedPlatform": "ios",
+        "BinaryPath": "ExpoAsset.framework/ExpoAsset",
+        "LibraryIdentifier": "ios-arm64",
+        "SupportedArchitectures": [
+          "arm64"
+        ]
+      }
+    ]
+  },
+  "stage": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/miniapp-upstreams/expo-native-source/ExpoAsset.xcframework",
+  "target": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework",
+  "files": [
+    {
+      "path": "Info.plist",
+      "bytes": 1196,
+      "sha256": "db115db71f445276b867261df90bf4597d77f0de2a87a10e44e101a8d31221c8",
+      "preparedTargetSHA256": "db115db71f445276b867261df90bf4597d77f0de2a87a10e44e101a8d31221c8"
+    },
+    {
+      "path": "ios-arm64/ExpoAsset.framework/ExpoAsset",
+      "bytes": 106376,
+      "sha256": "bc4ec32879fe696af9246f6d2280c75f95ac7a136b712ba4e823d7e9c8e5c90e",
+      "preparedTargetSHA256": "bc4ec32879fe696af9246f6d2280c75f95ac7a136b712ba4e823d7e9c8e5c90e"
+    },
+    {
+      "path": "ios-arm64/ExpoAsset.framework/Headers/ExpoAsset-Swift.h",
+      "bytes": 13000,
+      "sha256": "995a44d05897963d5284a2af22fa842f17f239000f9fa994986cca132398bf64",
+      "preparedTargetSHA256": "995a44d05897963d5284a2af22fa842f17f239000f9fa994986cca132398bf64"
+    },
+    {
+      "path": "ios-arm64/ExpoAsset.framework/Headers/ExpoAsset-umbrella.h",
+      "bytes": 310,
+      "sha256": "a1076adb8dd130bf5ad5df63e6d5f6ab9adedfa624ca82897a2c128bbb31a985",
+      "preparedTargetSHA256": "a1076adb8dd130bf5ad5df63e6d5f6ab9adedfa624ca82897a2c128bbb31a985"
+    },
+    {
+      "path": "ios-arm64/ExpoAsset.framework/Info.plist",
+      "bytes": 785,
+      "sha256": "dafbc0c5a42ba76c2a824fbdd63d2f2ad59d14d222cc673780a09644f4b6f88d",
+      "preparedTargetSHA256": "dafbc0c5a42ba76c2a824fbdd63d2f2ad59d14d222cc673780a09644f4b6f88d"
+    },
+    {
+      "path": "ios-arm64/ExpoAsset.framework/Modules/ExpoAsset.swiftmodule/Project/arm64-apple-ios.swiftsourceinfo",
+      "bytes": 1008,
+      "sha256": "5922b50a9be0425ee61b50519cf9d1c61520861f34a07d4ad4a4219f0500f39c",
+      "preparedTargetSHA256": "5922b50a9be0425ee61b50519cf9d1c61520861f34a07d4ad4a4219f0500f39c"
+    },
+    {
+      "path": "ios-arm64/ExpoAsset.framework/Modules/ExpoAsset.swiftmodule/arm64-apple-ios.abi.json",
+      "bytes": 149,
+      "sha256": "4277ac6b49f8511196028a5ac20f5b1b1dfa754c24615d34068089f0b1739728",
+      "preparedTargetSHA256": "4277ac6b49f8511196028a5ac20f5b1b1dfa754c24615d34068089f0b1739728"
+    },
+    {
+      "path": "ios-arm64/ExpoAsset.framework/Modules/ExpoAsset.swiftmodule/arm64-apple-ios.swiftdoc",
+      "bytes": 408,
+      "sha256": "9a2c943c724d21c8e0576d07d00056f852e37f820afc83a50da5107367992f3b",
+      "preparedTargetSHA256": "9a2c943c724d21c8e0576d07d00056f852e37f820afc83a50da5107367992f3b"
+    },
+    {
+      "path": "ios-arm64/ExpoAsset.framework/Modules/ExpoAsset.swiftmodule/arm64-apple-ios.swiftmodule",
+      "bytes": 118428,
+      "sha256": "f11ead66394239f46ae6bd3aa4e9ee8b36aaf8f71347f1d5d2c584bbc3d712f9",
+      "preparedTargetSHA256": "f11ead66394239f46ae6bd3aa4e9ee8b36aaf8f71347f1d5d2c584bbc3d712f9"
+    },
+    {
+      "path": "ios-arm64/ExpoAsset.framework/Modules/module.modulemap",
+      "bytes": 165,
+      "sha256": "aac06fabbe4f3ecf82b88309c177eaff5ca139255b9f721ee96c62fb91e6e30a",
+      "preparedTargetSHA256": "aac06fabbe4f3ecf82b88309c177eaff5ca139255b9f721ee96c62fb91e6e30a"
+    },
+    {
+      "path": "ios-arm64_x86_64-simulator/ExpoAsset.framework/ExpoAsset",
+      "bytes": 208696,
+      "sha256": "61fb7c7abb126eb34b1b7c5ce7cd99b6d0c0ba22bc1767f19da38a9a191bbd94",
+      "preparedTargetSHA256": "61fb7c7abb126eb34b1b7c5ce7cd99b6d0c0ba22bc1767f19da38a9a191bbd94"
+    },
+    {
+      "path": "ios-arm64_x86_64-simulator/ExpoAsset.framework/Headers/ExpoAsset-Swift.h",
+      "bytes": 25945,
+      "sha256": "4db151d6403aeb6843ddae9c200dffd6588956c554ca734e9feb6a60918104f7",
+      "preparedTargetSHA256": "4db151d6403aeb6843ddae9c200dffd6588956c554ca734e9feb6a60918104f7"
+    },
+    {
+      "path": "ios-arm64_x86_64-simulator/ExpoAsset.framework/Headers/ExpoAsset-umbrella.h",
+      "bytes": 310,
+      "sha256": "a1076adb8dd130bf5ad5df63e6d5f6ab9adedfa624ca82897a2c128bbb31a985",
+      "preparedTargetSHA256": "a1076adb8dd130bf5ad5df63e6d5f6ab9adedfa624ca82897a2c128bbb31a985"
+    },
+    {
+      "path": "ios-arm64_x86_64-simulator/ExpoAsset.framework/Info.plist",
+      "bytes": 765,
+      "sha256": "ca4e80486af2f9846e06ca89453971cdc44ce5ed0d75ff7191849ecd990814fe",
+      "preparedTargetSHA256": "ca4e80486af2f9846e06ca89453971cdc44ce5ed0d75ff7191849ecd990814fe"
+    },
+    {
+      "path": "ios-arm64_x86_64-simulator/ExpoAsset.framework/Modules/ExpoAsset.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo",
+      "bytes": 1020,
+      "sha256": "98fd637c9286a0c6dbfe626a3d9633dbb372fba633beee7c9a97ae4bf19e0fc4",
+      "preparedTargetSHA256": "98fd637c9286a0c6dbfe626a3d9633dbb372fba633beee7c9a97ae4bf19e0fc4"
+    },
+    {
+      "path": "ios-arm64_x86_64-simulator/ExpoAsset.framework/Modules/ExpoAsset.swiftmodule/Project/x86_64-apple-ios-simulator.swiftsourceinfo",
+      "bytes": 1020,
+      "sha256": "8ba408611353cc3ede13cc188571433fb6958c4dee2f749a24f2ded1577a18a9",
+      "preparedTargetSHA256": "8ba408611353cc3ede13cc188571433fb6958c4dee2f749a24f2ded1577a18a9"
+    },
+    {
+      "path": "ios-arm64_x86_64-simulator/ExpoAsset.framework/Modules/ExpoAsset.swiftmodule/arm64-apple-ios-simulator.abi.json",
+      "bytes": 149,
+      "sha256": "4277ac6b49f8511196028a5ac20f5b1b1dfa754c24615d34068089f0b1739728",
+      "preparedTargetSHA256": "4277ac6b49f8511196028a5ac20f5b1b1dfa754c24615d34068089f0b1739728"
+    },
+    {
+      "path": "ios-arm64_x86_64-simulator/ExpoAsset.framework/Modules/ExpoAsset.swiftmodule/arm64-apple-ios-simulator.swiftdoc",
+      "bytes": 420,
+      "sha256": "06eed8832c0ca9366faedc02026eaf11fedf80fa192faea2d3dc87431b94705b",
+      "preparedTargetSHA256": "06eed8832c0ca9366faedc02026eaf11fedf80fa192faea2d3dc87431b94705b"
+    },
+    {
+      "path": "ios-arm64_x86_64-simulator/ExpoAsset.framework/Modules/ExpoAsset.swiftmodule/arm64-apple-ios-simulator.swiftmodule",
+      "bytes": 120828,
+      "sha256": "04d3088e6cf10da061febc56bfaa0e3d985755b6c2afc2b25f581ab92430be88",
+      "preparedTargetSHA256": "04d3088e6cf10da061febc56bfaa0e3d985755b6c2afc2b25f581ab92430be88"
+    },
+    {
+      "path": "ios-arm64_x86_64-simulator/ExpoAsset.framework/Modules/ExpoAsset.swiftmodule/x86_64-apple-ios-simulator.abi.json",
+      "bytes": 149,
+      "sha256": "4277ac6b49f8511196028a5ac20f5b1b1dfa754c24615d34068089f0b1739728",
+      "preparedTargetSHA256": "4277ac6b49f8511196028a5ac20f5b1b1dfa754c24615d34068089f0b1739728"
+    },
+    {
+      "path": "ios-arm64_x86_64-simulator/ExpoAsset.framework/Modules/ExpoAsset.swiftmodule/x86_64-apple-ios-simulator.swiftdoc",
+      "bytes": 420,
+      "sha256": "bb801c477df17420d0990638cc9a8b1d477b8dec36da97a857e5c4adaa8556d2",
+      "preparedTargetSHA256": "bb801c477df17420d0990638cc9a8b1d477b8dec36da97a857e5c4adaa8556d2"
+    },
+    {
+      "path": "ios-arm64_x86_64-simulator/ExpoAsset.framework/Modules/ExpoAsset.swiftmodule/x86_64-apple-ios-simulator.swiftmodule",
+      "bytes": 120884,
+      "sha256": "5b26ff9a9795e457e9ad8920ee8ca06c05148cb262968d364b84cb9e12d5ef0f",
+      "preparedTargetSHA256": "5b26ff9a9795e457e9ad8920ee8ca06c05148cb262968d364b84cb9e12d5ef0f"
+    },
+    {
+      "path": "ios-arm64_x86_64-simulator/ExpoAsset.framework/Modules/module.modulemap",
+      "bytes": 165,
+      "sha256": "aac06fabbe4f3ecf82b88309c177eaff5ca139255b9f721ee96c62fb91e6e30a",
+      "preparedTargetSHA256": "aac06fabbe4f3ecf82b88309c177eaff5ca139255b9f721ee96c62fb91e6e30a"
+    }
+  ],
+  "boundary": "Actual completed original device/simulator products and prepared XCFramework match byte-for-byte; no rebuild or artifact-copy inference."
+}

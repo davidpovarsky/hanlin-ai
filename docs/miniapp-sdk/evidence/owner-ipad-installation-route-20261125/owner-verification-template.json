@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "kind": "OWNER_FILLABLE_PHYSICAL_VERIFICATION_TEMPLATE_NOT_A_RESULT",
+  "status": "NOT_RUN",
+  "observedAt": null,
+  "device": {
+    "model": null,
+    "iPadOSVersion": null,
+    "deviceIdentifierLocal": null,
+    "physical": true,
+    "pairedToMac": null
+  },
+  "build": {
+    "sourceCommit": null,
+    "xcodeVersion": null,
+    "sdkManifestSHA256": null,
+    "sdkInputSHA256": null,
+    "signingAndCapabilitiesResult": null
+  },
+  "products": [
+    {
+      "scheme": "HanlinMiniApps",
+      "bundleID": "com.itorah.hanlinminiapps",
+      "build": "NOT_RUN",
+      "install": "NOT_RUN",
+      "launch": "NOT_RUN",
+      "evidence": []
+    },
+    {
+      "scheme": "AI_HLY",
+      "bundleID": "com.itorah.chavrusachat",
+      "build": "NOT_RUN",
+      "install": "NOT_RUN",
+      "launch": "NOT_RUN",
+      "evidence": []
+    }
+  ],
+  "packages": [
+    {
+      "file": "ModularTextSearch.hanlinExpo",
+      "expectedSHA256": "3476c670b551dcf2b8d1df5642d18470876feb1bbd0eecb0c1b7dacf8e0673f0",
+      "status": "NOT_RUN",
+      "installedPackageID": null,
+      "transferID": null,
+      "interactionChecks": [],
+      "evidence": []
+    },
+    {
+      "file": "SDKOnlyDepartureBudget.hanlinExpo",
+      "expectedSHA256": "50dc3fd2cb47f9ec0959ad23911ac110b8f0c7b9dc99da60cc282905e88d82de",
+      "status": "NOT_RUN",
+      "installedPackageID": null,
+      "transferID": null,
+      "interactionChecks": [],
+      "evidence": []
+    },
+    {
+      "file": "SDKOnlyTableShare.hanlinNativeScript",
+      "expectedSHA256": "718ecbcc4c7e365e8f737c25b60f16b7017eec6f6533e1574c70edb9c068e0e3",
+      "status": "NOT_RUN",
+      "installedPackageID": null,
+      "transferID": null,
+      "interactionChecks": [],
+      "evidence": []
+    },
+    {
+      "file": "MiniAppTypeError.hanlinNativeScript",
+      "expectedSHA256": "c5006389c6b1e09209d173ccad8f6397cb06c8cfaf7a395233827822c1b181a9",
+      "status": "NOT_RUN",
+      "installedPackageID": null,
+      "transferID": null,
+      "interactionChecks": [],
+      "evidence": []
+    }
+  ],
+  "repair": {
+    "expectedInput": "MiniAppTypeError.hanlinNativeScript",
+    "expectedDiagnostic": "TS2322",
+    "expectedFinalNativeText": "MiniApp repair result 42",
+    "diagnosticsSheet": "NOT_RUN",
+    "agentHandoff": "NOT_RUN",
+    "originalToolsValidationBuildImport": "NOT_RUN",
+    "actualInstalledReceipt": "NOT_RUN",
+    "relaunch": "NOT_RUN",
+    "evidence": []
+  },
+  "separateCapabilities": {
+    "APNs": "NOT_RUN",
+    "notificationServiceExtension": "NOT_RUN",
+    "backgroundLockRestart": "NOT_RUN",
+    "hardwareSpecificFeatures": "NOT_RUN"
+  },
+  "blockers": [],
+  "notes": []
+}

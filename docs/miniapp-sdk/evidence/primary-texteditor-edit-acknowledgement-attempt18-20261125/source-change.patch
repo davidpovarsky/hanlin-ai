@@ -1,0 +1,110 @@
+diff --git a/Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoUIModule.swift b/Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoUIModule.swift
+index dbd89a5d..fa2a220b 100644
+--- a/Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoUIModule.swift
++++ b/Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoUIModule.swift
+@@ -28,6 +28,7 @@ public final class HanlinExpoUIModule: Module {
+ public final class HanlinTextEditorProps: UIBaseViewProps {
+     @Field public var value: String?
+     @Field public var defaultValue: String?
++    @Field public var mostRecentEventCount: Int?
+     @Field public var placeholder: String?
+     @Field public var isEditable = true
+     public var onValueChange = EventDispatcher()
+@@ -49,6 +50,7 @@ private struct HanlinTextEditorContent: View {
+     @ObservedObject var props: HanlinTextEditorProps
+     @State private var text: String
+     @State private var hasInitialValue: Bool
++    @State private var nativeEventCount: Int
+ 
+     init(props: HanlinTextEditorProps) {
+         self.props = props
+@@ -56,6 +58,7 @@ private struct HanlinTextEditorContent: View {
+         // Initialize state in the mounted SwiftUI child and accept a late first value.
+         _text = State(initialValue: props.value ?? props.defaultValue ?? "")
+         _hasInitialValue = State(initialValue: props.value != nil || props.defaultValue != nil)
++        _nativeEventCount = State(initialValue: props.mostRecentEventCount ?? 0)
+     }
+ 
+     private var textBinding: Binding<String> {
+@@ -65,12 +68,24 @@ private struct HanlinTextEditorContent: View {
+                 guard newValue != text else { return }
+                 hasInitialValue = true
+                 text = newValue
++                nativeEventCount = max(nativeEventCount, props.mostRecentEventCount ?? 0) + 1
+                 // Only native edits emit events; incoming React values do not.
+-                props.onValueChange(["value": newValue])
++                props.onValueChange(["value": newValue, "eventCount": nativeEventCount])
+             }
+         )
+     }
+ 
++    private func applyControlledValue() {
++        guard let value = props.value else { return }
++        // Older compiled packages omit the acknowledgement and keep their existing behavior.
++        if let acknowledged = props.mostRecentEventCount {
++            guard acknowledged >= nativeEventCount else { return }
++            nativeEventCount = acknowledged
++        }
++        hasInitialValue = true
++        if value != text { text = value }
++    }
++
+     var body: some View {
+         ZStack(alignment: .topLeading) {
+             if text.isEmpty, let placeholder = props.placeholder {
+@@ -83,10 +98,12 @@ private struct HanlinTextEditorContent: View {
+                 .scrollContentBackground(.hidden)
+                 .disabled(!props.isEditable)
+         }
+-        .onChange(of: props.value, initial: true) { _, newValue in
+-            guard let newValue else { return }
+-            hasInitialValue = true
+-            if newValue != text { text = newValue }
++        .onChange(of: props.value, initial: true) { _, _ in
++            applyControlledValue()
++        }
++        .onChange(of: props.mostRecentEventCount) { _, _ in
++            // A parent can reject or normalize an edit without changing its value.
++            applyControlledValue()
+         }
+         .onChange(of: props.defaultValue, initial: true) { _, newValue in
+             guard !hasInitialValue, props.value == nil, let newValue else { return }
+diff --git a/Packages/HanlinExpoUI/src/manual-components.tsx b/Packages/HanlinExpoUI/src/manual-components.tsx
+index ad733fcc..5623377b 100644
+--- a/Packages/HanlinExpoUI/src/manual-components.tsx
++++ b/Packages/HanlinExpoUI/src/manual-components.tsx
+@@ -5,6 +5,7 @@ import type { CommonViewModifierProps } from '@expo/ui/swift-ui';
+ import { createViewModifierEventListener } from '@expo/ui/swift-ui/modifiers';
+ 
+ type ValueChangeEvent = NativeSyntheticEvent<{ value: string }>;
++type TextEditorChangeEvent = NativeSyntheticEvent<{ value: string; eventCount: number }>;
+ type BooleanChangeEvent = NativeSyntheticEvent<{ value: boolean }>;
+ type PhaseChangeEvent = NativeSyntheticEvent<{ phase: 'empty' | 'success' | 'failure' }>;
+ 
+@@ -28,16 +29,24 @@ export interface TextEditorProps extends CommonViewModifierProps {
+ }
+ 
+ const NativeTextEditor = requireNativeView<Omit<TextEditorProps, 'onValueChange'> & {
+-  onValueChange?: (event: ValueChangeEvent) => void;
++  mostRecentEventCount: number;
++  onValueChange?: (event: TextEditorChangeEvent) => void;
+ }>('HanlinExpoUI', 'HanlinTextEditorView');
+ 
+ export function TextEditor({ modifiers, onValueChange, ...props }: TextEditorProps) {
++  const [mostRecentEventCount, setMostRecentEventCount] = React.useState(0);
+   return (
+     <NativeTextEditor
+       {...props}
++      mostRecentEventCount={mostRecentEventCount}
+       modifiers={modifiers}
+       {...(modifiers ? createViewModifierEventListener(modifiers) : undefined)}
+-      onValueChange={(event) => onValueChange?.(event.nativeEvent.value)}
++      onValueChange={(event) => {
++        onValueChange?.(event.nativeEvent.value);
++        // Acknowledge after the callback so controlled props settle before native synchronization.
++        // State also forces a render when the parent rejects or normalizes this edit.
++        setMostRecentEventCount(event.nativeEvent.eventCount);
++      }}
+     />
+   );
+ }

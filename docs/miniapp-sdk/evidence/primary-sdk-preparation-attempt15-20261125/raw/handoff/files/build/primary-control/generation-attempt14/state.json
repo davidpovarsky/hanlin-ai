@@ -1,0 +1,90 @@
+{
+  "source": "b0cf26a668a698682f5307252f14cf0af8c6d00a",
+  "attempt": 14,
+  "owner": "/root/native_execution",
+  "status": "PASS",
+  "startedAt": "2026-11-25T05:17:14.570271+00:00",
+  "pid": 84482,
+  "commands": [
+    {
+      "argv": [
+        "python3",
+        "Scripts/SDK/generate_manifest.py"
+      ],
+      "startedAt": "2026-11-25T05:17:14.571614+00:00",
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/generation-attempt14/1-generate_manifest.py.log",
+      "pid": 84484,
+      "exitCode": 0,
+      "elapsedSeconds": 7.57302070800506,
+      "finishedAt": "2026-11-25T05:17:22.144864+00:00",
+      "logSHA256": "eddd4ef7539f88d74f80e958861d9db7bee352562aa1df62f2e2225512c53980",
+      "logBytes": 3605
+    },
+    {
+      "argv": [
+        "python3",
+        "Scripts/SDK/update_project.py"
+      ],
+      "startedAt": "2026-11-25T05:17:22.145405+00:00",
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/generation-attempt14/2-update_project.py.log",
+      "pid": 84896,
+      "exitCode": 0,
+      "elapsedSeconds": 1.8386366250051651,
+      "finishedAt": "2026-11-25T05:17:23.984254+00:00",
+      "logSHA256": "7b205399ea53f72db8afa2fe3d77370cd6f0ac3d9ea8d19cea47a806236d4d18",
+      "logBytes": 88
+    },
+    {
+      "argv": [
+        "python3",
+        "Scripts/ProductSplit/verify_targets.py"
+      ],
+      "startedAt": "2026-11-25T05:17:23.984686+00:00",
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/generation-attempt14/3-verify_targets.py.log",
+      "pid": 84922,
+      "exitCode": 0,
+      "elapsedSeconds": 0.13120366699877195,
+      "finishedAt": "2026-11-25T05:17:24.116108+00:00",
+      "logSHA256": "4f49124a3b6c18a0b8c4540cb46c33b31c436deed0ad97c4084e189157ed9c8e",
+      "logBytes": 1438
+    },
+    {
+      "argv": [
+        "plutil",
+        "-lint",
+        "AI_HLY.xcodeproj/project.pbxproj",
+        "HanlinMiniAppsExtensions/Notification/Info.plist",
+        "HanlinMiniAppsExtensions/Notification/HanlinMiniAppsNotificationService.entitlements"
+      ],
+      "startedAt": "2026-11-25T05:17:24.116465+00:00",
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/generation-attempt14/4--lint.log",
+      "pid": 84923,
+      "exitCode": 0,
+      "elapsedSeconds": 0.011259916995186359,
+      "finishedAt": "2026-11-25T05:17:24.127924+00:00",
+      "logSHA256": "b019c7e18b5b8a4825f382e7c3a04552e29a406d658592b9f6105fe88a6fe18a",
+      "logBytes": 179
+    }
+  ],
+  "baselineActiveSeconds": 9861.598917747997,
+  "finishedAt": "2026-11-25T05:17:24.128215+00:00",
+  "elapsedSeconds": 9.557829084005789,
+  "generatedPatchSHA256": "8154eb6689fcfd37e79073eac36736f45df3bda845964b46ed39d22ab877d982",
+  "generatedFiles": [
+    {
+      "path": "AI_HLY.xcodeproj/project.pbxproj",
+      "sha256": "71409346bb25cdc8fd5d1d3e8b7363549146e9038044360c93b659615c3b3b3d",
+      "bytes": 251761
+    },
+    {
+      "path": "Package.swift",
+      "sha256": "c58ad5f37b35c38e9199b1ad5641a4b38523d13542c75e90a34f862877409bb1",
+      "bytes": 88332
+    },
+    {
+      "path": "docs/agent-sdk/unified-package-manifest.json",
+      "sha256": "2dce00d3544b324ea9b2df5fa1a744a1bad534e2faa3e54c10195b4ce0a2e66f",
+      "bytes": 3901
+    }
+  ]
+}

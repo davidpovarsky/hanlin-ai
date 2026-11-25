@@ -1,0 +1,89 @@
+{
+  "schema": 1,
+  "kind": "TEST_ONLY_ACTIVITYKIT_ASYNCHRONOUS_OBSERVATION_CORRECTION",
+  "recordedAt": "2026-11-25T10:30:15.790832+00:00",
+  "sourceCommit": "ebf40f335fe8af5cdc61c910ee722922f5fed330",
+  "baselineExecutionSource": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+  "members": [
+    {
+      "path": "README.md",
+      "bytes": 4306,
+      "sha256": "5adb1a45099660123093cf4918bc717355c2706a64dd16702aebb73987792ed2"
+    },
+    {
+      "path": "observations.json",
+      "bytes": 5521,
+      "sha256": "8d378d0ffc29b77187f1af87dd76dd09f796f33fc9ec5f627082627281a3eda7"
+    },
+    {
+      "path": "official-references.json",
+      "bytes": 1488,
+      "sha256": "ca451813638d1f02e9f6a4660a86d8d321e22cb8e2689ca85579c1206a65db68"
+    },
+    {
+      "path": "original-source-snippets.json",
+      "bytes": 6016,
+      "sha256": "203f86f59a885679d44001066eae3cdcdd0ad336b2e43a2f48e0538d1a122245"
+    },
+    {
+      "path": "raw/ai27-nodes.json",
+      "bytes": 18626,
+      "sha256": "c50f0a371d0bbbe07b2a90eb4d95158b85485a4bcd388c3542f5a3bfb610d674"
+    },
+    {
+      "path": "raw/ai27-selected-tests.log",
+      "bytes": 575,
+      "sha256": "22fb978e34009bed2c9ff3c80c7b021501b9cb6ca1ad314362a9be282faf601e"
+    },
+    {
+      "path": "raw/ai27-state.json",
+      "bytes": 2301,
+      "sha256": "9ce14c6e9b7370652b2658c681f7c0b8810235eece6c77d77883ab90f6dc4626"
+    },
+    {
+      "path": "raw/ai27-summary.json",
+      "bytes": 2929,
+      "sha256": "7abe74639707e83dc1cb5927ffb823a437943f21671bfbba61c7955976eb33b4"
+    },
+    {
+      "path": "raw/live-activity-case-extract.json",
+      "bytes": 1895,
+      "sha256": "b7b6f9be72c739f49ece9246c8d78ab2e7d667cc3a3d2740167a17543d69dddf"
+    },
+    {
+      "path": "raw/paired-terminal-before.json",
+      "bytes": 3511,
+      "sha256": "439cd234a138a0e37f895345d2580df2ec70f5272e7e25534c6428bec94968ac"
+    },
+    {
+      "path": "raw/result-review.json",
+      "bytes": 5123,
+      "sha256": "2566738bf353027edf3118fed701fa2ded46fb7eb03cb51b9ae5cc1cfd6e9513"
+    },
+    {
+      "path": "raw/selected-command.json",
+      "bytes": 3781,
+      "sha256": "5012b7caeece82c5340dea10ca44293878af4c442db7869929105bbad4b5dd05"
+    },
+    {
+      "path": "raw/source-packet-receipt.json",
+      "bytes": 57033,
+      "sha256": "4de255af777d3cdaedbae706651c13bf16af748f175d63dc7db19c81f1f28baa"
+    },
+    {
+      "path": "source-bindings.json",
+      "bytes": 3664,
+      "sha256": "d97a52f94cc4ddd8403780bbbe4df1976d5d8c6a9dc254fec8c5db0d9047d5d0"
+    },
+    {
+      "path": "source-change.patch",
+      "bytes": 3091,
+      "sha256": "9b05fe082aee1377209c537f69e52d4fc653c5b33f431d780126e50f16389dbb"
+    }
+  ],
+  "memberCount": 15,
+  "memberBytes": 119860,
+  "evidenceOnly": true,
+  "nativeCorrectedResult": "NEEDS_TEST",
+  "boundary": "Immutable failed baseline plus source-reviewed test observation correction; no new production or native success claim."
+}

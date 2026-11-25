@@ -1,0 +1,120 @@
+{
+  "schemaVersion": 1,
+  "kind": "ACTUAL_NATIVE_BUILD_FAILURE_AND_MATCHING_SIGNATURE_PROOF",
+  "recordedAt": "2026-11-25T05:57:56.989621+00:00",
+  "sourceCommit": "b0cf26a668a698682f5307252f14cf0af8c6d00a",
+  "correctedSourceCommit": "b10bd9746b06edc88e5d5b525f1ef0eb1b4317bc",
+  "originalReceiptSHA256": "2212a879f0e323c838bae554776ad57e5fb44277aa07c0c7de659b837af21a2c",
+  "originalFileCount": 17,
+  "originalFileBytes": 1381098,
+  "members": [
+    {
+      "path": "README.md",
+      "bytes": 2270,
+      "sha256": "676d516f4604ab059b3f064997fa00214c8a589a5d55725ceaeca58c125aaae8"
+    },
+    {
+      "path": "raw/apple-sdk/UNUserNotificationCenter.h",
+      "bytes": 8450,
+      "sha256": "7e79a7672061ab07511f71aa9cd5b7883dc83107cfabfb100d32d758bae3d281"
+    },
+    {
+      "path": "raw/diagnostics.txt.gz",
+      "bytes": 1120,
+      "sha256": "afb427f3b43b16974dfa65096c93136c327bd142d7c444ffec95cad1d6f40fd1"
+    },
+    {
+      "path": "raw/raw/AI_HLY/Downstream/ScriptingPlatform/HanlinNotificationApplicationDelegate.swift",
+      "bytes": 3109,
+      "sha256": "65e908cc29df4bab76ef3a1b44e032fe2651b47ed4b438035b4e5757a468fa67"
+    },
+    {
+      "path": "raw/raw/build/primary-control/notification-signature-proof-attempt14/NotificationDelegateSignature.swift",
+      "bytes": 696,
+      "sha256": "18dc51fa7d456ec89f653b83cd983f833e3788d901016caf4552b4a497afd22a"
+    },
+    {
+      "path": "raw/raw/build/primary-control/notification-signature-proof-attempt14/state.json",
+      "bytes": 1375,
+      "sha256": "60ad08225143eb65fde91917223f2de9b6d839d37d68d02a2f2746e52fdfa87d"
+    },
+    {
+      "path": "raw/raw/build/primary-control/notification-signature-proof-attempt14/swiftc.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "raw/raw/build/primary-control/paired52-continuation-v1/decision.json.gz",
+      "bytes": 21562,
+      "sha256": "0f9fc6d417c1adcc9beec0ff266b0d591821d29e36886fcaf848700e0a138ec5"
+    },
+    {
+      "path": "raw/raw/build/primary-control/paired52-continuation-v1/events.jsonl",
+      "bytes": 1259,
+      "sha256": "37fcf5bd5d13c69afefa89fa9b3cc3528f3a544621feb93097c246bd0f6bae88"
+    },
+    {
+      "path": "raw/raw/build/primary-control/paired52-continuation-v1/evidence/paired-product/MiniBuild.xcresult/Info.plist",
+      "bytes": 776,
+      "sha256": "216e4f316d28e46a3d46563a9b18010e14f1dc95308f2e9cebed59dd4061a9f1"
+    },
+    {
+      "path": "raw/raw/build/primary-control/paired52-continuation-v1/evidence/paired-product/acceptance.json",
+      "bytes": 2632,
+      "sha256": "bf82704c8b490606e3ebbc982de87da231c802407243e41832332c74c427b7dd"
+    },
+    {
+      "path": "raw/raw/build/primary-control/paired52-continuation-v1/evidence/paired-product/command-events.jsonl",
+      "bytes": 25320,
+      "sha256": "cef54ae42a02797fa95bfc90cbd06fb283f9cc316399f2e07075ce782e7204fd"
+    },
+    {
+      "path": "raw/raw/build/primary-control/paired52-continuation-v1/evidence/paired-product/commands.jsonl",
+      "bytes": 4506,
+      "sha256": "322e03369908349af27d2e2dca65e9b5e127efee3ac78bcaced8555ad36185f4"
+    },
+    {
+      "path": "raw/raw/build/primary-control/paired52-continuation-v1/evidence/paired-product/created-simulator.txt",
+      "bytes": 37,
+      "sha256": "983d9fa88838b33e101e35e8b8db4b19cd366314baf440eb57f3fc405ab73070"
+    },
+    {
+      "path": "raw/raw/build/primary-control/paired52-continuation-v1/evidence/paired-product/mini-build.log.gz",
+      "bytes": 74777,
+      "sha256": "c5e77692eddecb1ed6a3cb799c880604be276754464ea8b7a96f5a5b9da322b4"
+    },
+    {
+      "path": "raw/raw/build/primary-control/paired52-continuation-v1/original-paired-phase.log",
+      "bytes": 5545,
+      "sha256": "5afec25e92b759c6d806fdecef582337a4654e6ac84b7ddd76ff4787c2e88cf1"
+    },
+    {
+      "path": "raw/raw/build/primary-control/paired52-continuation-v1/state.json",
+      "bytes": 2930,
+      "sha256": "9297e6f13487e3b21874f65ac7d1fc66f7a1617d790201d42c59b09b6dd3d1ba"
+    },
+    {
+      "path": "raw/raw/build/primary-control/state.json.gz",
+      "bytes": 10228,
+      "sha256": "42bf288b7a95d5bf90ec3f20a6830c038c5919fb222581634aeefd28c49baccc"
+    },
+    {
+      "path": "raw/receipt.json",
+      "bytes": 6643,
+      "sha256": "2212a879f0e323c838bae554776ad57e5fb44277aa07c0c7de659b837af21a2c"
+    },
+    {
+      "path": "retained-members.json",
+      "bytes": 8165,
+      "sha256": "1329928fe2a2555734596908226b1c6be647a4a8dddfbc75f42eb4eedf954aa3"
+    },
+    {
+      "path": "verification.json",
+      "bytes": 5509,
+      "sha256": "acf057b7d516b8338c004d0aa2113fea0f34abe4e3936d2633245ef508977440"
+    }
+  ],
+  "memberCount": 21,
+  "memberBytes": 186909,
+  "statusBoundary": "Original52 ended before tests. Signature probe checks actual imported async return and Objective-C selector only; no app/runtime success implied."
+}

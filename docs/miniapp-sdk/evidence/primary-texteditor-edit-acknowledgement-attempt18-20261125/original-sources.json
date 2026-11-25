@@ -1,0 +1,78 @@
+{
+  "schema": 1,
+  "package": "react-native",
+  "version": "0.88.1",
+  "originals": [
+    {
+      "sourcePath": "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/Scripts/Expo/node_modules/react-native/package.json",
+      "storedPath": "raw/original-react-native/package.json",
+      "bytes": 6286,
+      "sha256": "3f2bf69ed883e97a295b1de43f5a2d75d112ab45495153360c2fb521023c7f3f",
+      "sdk18Member": "MiniAppSDK/expo/node_modules/react-native/package.json",
+      "byteIdenticalToSDK18": true,
+      "boundary": "exact existing SDK18 ZIP member read and compared"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/Scripts/Expo/node_modules/react-native/LICENSE",
+      "storedPath": "raw/original-react-native/LICENSE",
+      "bytes": 1088,
+      "sha256": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93",
+      "sdk18Member": "MiniAppSDK/expo/node_modules/react-native/LICENSE",
+      "byteIdenticalToSDK18": true,
+      "boundary": "exact existing SDK18 ZIP member read and compared"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/Scripts/Expo/node_modules/react-native/Libraries/Components/TextInput/TextInput.js",
+      "storedPath": "raw/original-react-native/Libraries/Components/TextInput/TextInput.js",
+      "bytes": 31163,
+      "sha256": "7019827ab332d4f8357efd37849acf306fd3524c500eaec0113e3a8e089204d8",
+      "sdk18Member": "MiniAppSDK/expo/node_modules/react-native/Libraries/Components/TextInput/TextInput.js",
+      "byteIdenticalToSDK18": true,
+      "boundary": "exact existing SDK18 ZIP member read and compared"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/Scripts/Expo/node_modules/react-native/React/Fabric/Mounting/ComponentViews/TextInput/RCTTextInputComponentView.mm",
+      "storedPath": "raw/original-react-native/React/Fabric/Mounting/ComponentViews/TextInput/RCTTextInputComponentView.mm",
+      "bytes": 37075,
+      "sha256": "796c5a19c1edcfa290f301ce0cbe67f42f9966336d90c210e1ab8b164c3f9f15",
+      "sdk18Member": null,
+      "byteIdenticalToSDK18": null,
+      "boundary": "retained original npm native source; not a new SDK/Mac/remote retrieval"
+    }
+  ],
+  "upstreamSemantics": [
+    {
+      "path": "Libraries/Components/TextInput/TextInput.js",
+      "lines": [
+        393,
+        409
+      ],
+      "claim": "Original public callbacks occur before acknowledgement state update."
+    },
+    {
+      "path": "React/Fabric/Mounting/ComponentViews/TextInput/RCTTextInputComponentView.mm",
+      "lines": [
+        359,
+        366
+      ],
+      "claim": "Original native implementation applies the acknowledged state only when its event count matches."
+    },
+    {
+      "path": "React/Fabric/Mounting/ComponentViews/TextInput/RCTTextInputComponentView.mm",
+      "lines": [
+        590,
+        603
+      ],
+      "claim": "Original native programmatic update rejects a mismatched event count."
+    },
+    {
+      "path": "React/Fabric/Mounting/ComponentViews/TextInput/RCTTextInputComponentView.mm",
+      "lines": [
+        746,
+        757
+      ],
+      "claim": "Original native event count advances for native changes, not incoming JS state."
+    }
+  ],
+  "boundary": "Reference for an explicit acknowledgement mechanism; Hanlin's adapter is authored code, not a byte-identical copy of RN TextInput. No original RN source was modified."
+}

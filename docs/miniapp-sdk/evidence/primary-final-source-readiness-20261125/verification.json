@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "verifiedAtUTC": "2026-11-25T05:04:01.157498+00:00",
+  "kind": "READ_ONLY_RETAINED_READINESS_AND_PHYSICAL_ROUTE_VERIFICATION",
+  "producerReceipt": {
+    "path": "raw/receipt.json",
+    "bytes": 676,
+    "sha256": "2537ddae120732038bf8a4108ea5966df86b7febe9441b8b2b0d762bba389ead"
+  },
+  "originalMembers": {
+    "count": 3,
+    "totalBytes": 31239,
+    "allBytesAndSHA256Match": true
+  },
+  "source": {
+    "observedCommit": "42e34eff615a6d599ddfd01ea9382d920b5f9a5c",
+    "gitTreeResolvedFromRetainedRepository": "0d01ddaa4861c19b5376e5d726b992531b9e442f",
+    "observationUTC": "2026-11-25T04:57:30.987498+00:00",
+    "trackedDirty": [],
+    "untrackedCount": 47,
+    "newSourceAdvancePerformed": false
+  },
+  "execution": {
+    "prefixStatus": "PAUSED_AFTER_PHASE",
+    "prefixHistoricalFinishedAt": "2026-11-25T03:59:37.147846+00:00",
+    "focusedLaunchStatus": "FAIL",
+    "focusedDiagnosticStatus": "DIAGNOSTIC_FAILED",
+    "focusedHistoricalFinishedAt": "2026-11-25T04:14:38.572061+00:00",
+    "ownedProcessesObserved": [],
+    "ownedSimulatorCleanup": {
+      "simulator": "1F3AB83E-F409-4B71-BD56-4669DB61627A",
+      "state": "Shutdown",
+      "remainingOwnedRunners": []
+    },
+    "newNativeRunPerformed": false,
+    "newNativePassClaimed": false
+  },
+  "disk": {
+    "observedFreeBytes": 8248918016,
+    "rawDFRetained": "raw/mac-readiness-045730.json",
+    "arbitraryAdmissionThresholdApplied": false,
+    "cleanupPerformedByReviewer": false,
+    "reclaimedBytesClaimed": false
+  },
+  "physicalRoute": {
+    "observedAtUTC": "2026-11-25T05:00:15.976606+00:00",
+    "argv": [
+      "xcrun",
+      "xcdevice",
+      "list",
+      "--timeout",
+      "5"
+    ],
+    "exitCode": 0,
+    "rawPath": "raw/xcdevice-list-050015.json",
+    "rawBytes": 27002,
+    "rawSHA256": "f74ce64c4b72346f70685d8486f8b6606c9ffda3c774789e966b3501f2c695a6",
+    "entries": 58,
+    "simulatorEntries": 57,
+    "iOSSimulatorEntries": 52,
+    "watchSimulatorEntries": 5,
+    "physicalIOSOrIPadOSEntries": 0,
+    "physicalMacEntries": 1,
+    "claimBoundary": "No physical iOS/iPadOS device was exposed by this observed xcdevice route at this time; no claim about every possible external route."
+  },
+  "reviewerOperations": "Read/hash the three transferred JSON members, classify the actual inventory, resolve observed Git tree locally, and copy exact bytes. No Mac query, native build/test, generator, device action, cleanup, Asana update or PR mutation."
+}

@@ -1,0 +1,143 @@
+{
+  "baseSource": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+  "candidateSource": "38785cff47b019f15a6304484b5a979406978a14",
+  "sources": [
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoUIModule.swift",
+      "beforeBytes": 19417,
+      "beforeSHA256": "ccb46dbdf9bdcd03eea952c6699cec1f83d40822bc944bad57e69feb8815cf28",
+      "afterBytes": 20533,
+      "afterSHA256": "bd8c397a2227cfee6765b798c3bb0d453296df9ce02f4f6adb75d75dbf48ec3b",
+      "changed": true
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/manual-components.tsx",
+      "beforeBytes": 11311,
+      "beforeSHA256": "23315409689a8fb0f1a652a3d62428eade12822a4626224d0080046f08a80fe2",
+      "afterBytes": 11311,
+      "afterSHA256": "23315409689a8fb0f1a652a3d62428eade12822a4626224d0080046f08a80fe2",
+      "changed": false
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/GeneratedModifiersProbe.tsx",
+      "beforeBytes": 16879,
+      "beforeSHA256": "ea8594b03cf65e8b06a83faa25fd86e3cb7fa065ac6f0e3d5eea663198ad958e",
+      "afterBytes": 16879,
+      "afterSHA256": "ea8594b03cf65e8b06a83faa25fd86e3cb7fa065ac6f0e3d5eea663198ad958e",
+      "changed": false
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/ManualAdapterProbe.tsx",
+      "beforeBytes": 11112,
+      "beforeSHA256": "4794f92fc158639b806c0f80bf74cf71775651ad2acd2c24c9462f9d810ff48e",
+      "afterBytes": 11112,
+      "afterSHA256": "4794f92fc158639b806c0f80bf74cf71775651ad2acd2c24c9462f9d810ff48e",
+      "changed": false
+    },
+    {
+      "path": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+      "beforeBytes": 91512,
+      "beforeSHA256": "12d0d1c7a3a46044ccc00f995fb8cf0090058a373aca492b181c522238002537",
+      "afterBytes": 91512,
+      "afterSHA256": "12d0d1c7a3a46044ccc00f995fb8cf0090058a373aca492b181c522238002537",
+      "changed": false
+    },
+    {
+      "path": "Scripts/MiniApps/stage-sdk.mjs",
+      "beforeBytes": 22599,
+      "beforeSHA256": "f0d2b438ee79ac0973f8d261ecf626b2a94268e5140c6dcb67f48b07cabd1f25",
+      "afterBytes": 22599,
+      "afterSHA256": "f0d2b438ee79ac0973f8d261ecf626b2a94268e5140c6dcb67f48b07cabd1f25",
+      "changed": false
+    },
+    {
+      "path": "Scripts/Runtime/runtime_host_archive.py",
+      "beforeBytes": 11341,
+      "beforeSHA256": "c446a8bcd0bebb30193eab35e6588662d9c989c4e656be020259a94428c0c8c6",
+      "afterBytes": 11341,
+      "afterSHA256": "c446a8bcd0bebb30193eab35e6588662d9c989c4e656be020259a94428c0c8c6",
+      "changed": false
+    },
+    {
+      "path": "Scripts/Runtime/prepare-runtime-host.sh",
+      "beforeBytes": 4998,
+      "beforeSHA256": "af0fda26d53a6b72b495a73e104835af176dccfc39cda2d5bcfffa3f7a04cbd6",
+      "afterBytes": 4998,
+      "afterSHA256": "af0fda26d53a6b72b495a73e104835af176dccfc39cda2d5bcfffa3f7a04cbd6",
+      "changed": false
+    }
+  ],
+  "originalReferences": [
+    {
+      "path": "@expo/ui/package.json",
+      "referencePath": "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/Scripts/Expo/node_modules/@expo/ui/package.json",
+      "storedPath": "original-reference/@expo/ui/package.json",
+      "bytes": 6032,
+      "sha256": "5332dd3b83612fcc7e30f50cb2e137f1e0051b6b2032b0d006f5840a13cf5281"
+    },
+    {
+      "path": "expo-modules-core/package.json",
+      "referencePath": "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/Scripts/Expo/node_modules/expo-modules-core/package.json",
+      "storedPath": "original-reference/expo-modules-core/package.json",
+      "bytes": 2845,
+      "sha256": "285de31be98571eea2a85f8eac1d30fce6a1474e2dc4b1772dd4465333762004"
+    },
+    {
+      "path": "@expo/ui/ios/UIBaseView.swift",
+      "referencePath": "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/Scripts/Expo/node_modules/@expo/ui/ios/UIBaseView.swift",
+      "storedPath": "original-reference/@expo/ui/ios/UIBaseView.swift",
+      "bytes": 4053,
+      "sha256": "654fcc032fd3fa219ddb21ad2789659076571b256f699f9371bafd128de95b0a"
+    },
+    {
+      "path": "@expo/ui/ios/UIBaseViewProps.swift",
+      "referencePath": "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/Scripts/Expo/node_modules/@expo/ui/ios/UIBaseViewProps.swift",
+      "storedPath": "original-reference/@expo/ui/ios/UIBaseViewProps.swift",
+      "bytes": 705,
+      "sha256": "50ff7eeda309c0868eb2b8eeb88a984c652c9da0c58a1259300bb48e7f4c35b3"
+    },
+    {
+      "path": "@expo/ui/ios/TextFieldView.swift",
+      "referencePath": "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/Scripts/Expo/node_modules/@expo/ui/ios/TextFieldView.swift",
+      "storedPath": "original-reference/@expo/ui/ios/TextFieldView.swift",
+      "bytes": 9493,
+      "sha256": "38489d3129dd69c37c9bff8dfbda4e586a64f9aa1c25e382dcd24fa5c933e867"
+    },
+    {
+      "path": "@expo/ui/ios/UniversalLayout.swift",
+      "referencePath": "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/Scripts/Expo/node_modules/@expo/ui/ios/UniversalLayout.swift",
+      "storedPath": "original-reference/@expo/ui/ios/UniversalLayout.swift",
+      "bytes": 27188,
+      "sha256": "4e97e3dba83ad299965580e214eb44bb27b9a511b73563745753578bd68614d8"
+    },
+    {
+      "path": "expo-modules-core/ios/Core/Views/SwiftUI/SwiftUIViewDefinition.swift",
+      "referencePath": "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/Scripts/Expo/node_modules/expo-modules-core/ios/Core/Views/SwiftUI/SwiftUIViewDefinition.swift",
+      "storedPath": "original-reference/expo-modules-core/ios/Core/Views/SwiftUI/SwiftUIViewDefinition.swift",
+      "bytes": 5906,
+      "sha256": "a6d0f75833370aa16cf7a1ee0a91eea3ae0f48101900dedfb0a3c9b641b6b581"
+    },
+    {
+      "path": "expo-modules-core/ios/Core/Views/SwiftUI/SwiftUIViewProps.swift",
+      "referencePath": "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/Scripts/Expo/node_modules/expo-modules-core/ios/Core/Views/SwiftUI/SwiftUIViewProps.swift",
+      "storedPath": "original-reference/expo-modules-core/ios/Core/Views/SwiftUI/SwiftUIViewProps.swift",
+      "bytes": 3413,
+      "sha256": "fb8bc6d329eaaf20c80f9871236339ba28ff946aa51886d8d70456b171346c6a"
+    },
+    {
+      "path": "expo-modules-core/ios/Core/Views/SwiftUI/SwiftUIVirtualView.swift",
+      "referencePath": "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/Scripts/Expo/node_modules/expo-modules-core/ios/Core/Views/SwiftUI/SwiftUIVirtualView.swift",
+      "storedPath": "original-reference/expo-modules-core/ios/Core/Views/SwiftUI/SwiftUIVirtualView.swift",
+      "bytes": 13794,
+      "sha256": "b3467a932c999cd5cf3c0d8affbcaec37f31b2c3d0b8d9c946d2c7b265da947e"
+    },
+    {
+      "path": "expo-modules-core/ios/Core/Views/SwiftUI/AnyChild.swift",
+      "referencePath": "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/Scripts/Expo/node_modules/expo-modules-core/ios/Core/Views/SwiftUI/AnyChild.swift",
+      "storedPath": "original-reference/expo-modules-core/ios/Core/Views/SwiftUI/AnyChild.swift",
+      "bytes": 1621,
+      "sha256": "8815f34a12b9a3246461409db0f8f980713ab857f0cf5006696fde452402e17b"
+    }
+  ],
+  "referenceBoundary": "Original npm package metadata is byte-identical to SDK18 package.json for @expo/ui58.0.29 and expo-modules-core58.1.0. The retained native source files were read from the existing Oracle installation; no remote fetch or native compiler run was used here."
+}

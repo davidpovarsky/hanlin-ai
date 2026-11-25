@@ -1,0 +1,270 @@
+{
+  "source": "cffe7f75436aa2e37ec5d82891937965c0407d2d",
+  "attempt": 17,
+  "capturedAt": "2026-11-25T07:38:30.132838+00:00",
+  "archiveSHA256": "4c71d23f55391e0b7eb87073bea65bec8b323d6f688214b60e49b9600c80e857",
+  "moduleSHA256": "fa5121902e231d5d44ad08bf47699784fd4d0bc2a98102f3a156e6e4ae79b9b9",
+  "sdkManifestSHA256": "0ef02a708019c0401c50222e4186f0bbad2e6576fdc333b7d748eb7702cad66f",
+  "sdkInputSHA256": "d381e9db6bce1c74e1c52ff43d7f948d23f5ad07a103701dbf442327f420ed31",
+  "products": {
+    "HanlinMiniApps.app": {
+      "observedAt": "2026-11-25T07:38:31.313622+00:00",
+      "buildCommand": {
+        "command_id": "e375d9756ec14387a85c7f7e466bbd7b",
+        "pid": 75620,
+        "started_at": 1795591634.979691,
+        "seconds": 127.32387604100222,
+        "exit": 0,
+        "status": "completed",
+        "observed_at": 1795591762.303226
+      },
+      "originalDeepStrictSignatureCommand": {
+        "command_id": "93199bbbda554ab2afd125826b32445d",
+        "argv": [
+          "codesign",
+          "--verify",
+          "--deep",
+          "--strict",
+          "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app"
+        ],
+        "log": "com.itorah.hanlinminiapps-signature.log",
+        "runner_pid": 75121,
+        "pid": 84059,
+        "started_at": 1795592121.372503,
+        "timeout": 60,
+        "status": "completed",
+        "observed_at": 1795592122.282636,
+        "seconds": 0.9102338750089984,
+        "log_bytes": 0,
+        "completion_recorded": true,
+        "exit": 0,
+        "observed_returncode": 0
+      },
+      "archives": [
+        {
+          "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/RuntimeHostResources.zip",
+          "relativePath": "RuntimeHostResources.zip",
+          "bytes": 81823972,
+          "sha256": "4c71d23f55391e0b7eb87073bea65bec8b323d6f688214b60e49b9600c80e857",
+          "moduleSHA256": "fa5121902e231d5d44ad08bf47699784fd4d0bc2a98102f3a156e6e4ae79b9b9",
+          "sdkManifestSHA256": "0ef02a708019c0401c50222e4186f0bbad2e6576fdc333b7d748eb7702cad66f"
+        }
+      ],
+      "appBinaries": [
+        {
+          "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/HanlinMiniApps",
+          "bytes": 40496,
+          "sha256": "0e47a8bfce7f1b45fae15b699d99b5fdec0f01d79ce77f4c8c9562e5712b0cc0"
+        },
+        {
+          "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/HanlinMiniApps.debug.dylib",
+          "bytes": 128004400,
+          "sha256": "5c5f5a0f2987d0400aee70b5cd0d946ea917d1fc927f63e493a36cc9fd8f41a9"
+        }
+      ],
+      "notificationExtension": {
+        "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/PlugIns/HanlinMiniAppsNotificationService.appex",
+        "bundleID": "com.itorah.hanlinminiapps.notification-service",
+        "extension": {
+          "NSExtensionPointIdentifier": "com.apple.usernotifications.service",
+          "NSExtensionPrincipalClass": "HanlinMiniAppsNotificationServiceHost.NotificationService"
+        },
+        "storageNamespace": "HanlinMiniApps/v1",
+        "infoSHA256": "176d667ec09408832340ae438a7e26886a9f080625c445c3f192850a7b9a467b",
+        "executable": {
+          "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/PlugIns/HanlinMiniAppsNotificationService.appex/HanlinMiniAppsNotificationService",
+          "bytes": 37888,
+          "sha256": "a21b08060aaee4ea8fb92104f9d1e5ab807bbd0821aefbf84f57b41ba1379873"
+        },
+        "signatureReadCommand": [
+          "codesign",
+          "-d",
+          "--entitlements",
+          ":-",
+          "--verbose=4",
+          "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/PlugIns/HanlinMiniAppsNotificationService.appex"
+        ],
+        "signatureReadExit": 0,
+        "signatureDetailsSHA256": "86cbd036bd097a043c7f83664dd1bb7e1920dba86da814f32da5acac41f5349d",
+        "codeSignatureEntitlementsSHA256": "00491886daae07a5296c8bad50f116bf006b0004d7bf7338ad46669fbd903a4a",
+        "codeSignatureEntitlements": {},
+        "actualSimulatorEntitlements": {
+          "source": "__TEXT,__entitlements",
+          "executable": "HanlinMiniAppsNotificationService",
+          "executable_sha256": "a21b08060aaee4ea8fb92104f9d1e5ab807bbd0821aefbf84f57b41ba1379873",
+          "offset": 10364,
+          "bytes": 460,
+          "section_sha256": "ed4604c7101f9f0a9f7291c6463e52ec9fc3e862c35a0cd8bad61a0a444a7bc8",
+          "entitlements": {
+            "application-identifier": "NA6HPWARQ2.com.itorah.hanlinminiapps.notification-service",
+            "com.apple.security.application-groups": [
+              "group.com.itorah.chavrusachat",
+              "group.com.itorah.shared"
+            ]
+          }
+        }
+      }
+    },
+    "AI_Hanlin.app": {
+      "observedAt": "2026-11-25T07:38:33.221653+00:00",
+      "buildCommand": {
+        "command_id": "75e663b639fc454cb818f70192258475",
+        "pid": 79007,
+        "started_at": 1795591764.998817,
+        "seconds": 354.757575791009,
+        "exit": 0,
+        "status": "completed",
+        "observed_at": 1795592119.755571
+      },
+      "originalDeepStrictSignatureCommand": {
+        "command_id": "9f41fb3a84eb40b591be01fb765ee044",
+        "argv": [
+          "codesign",
+          "--verify",
+          "--deep",
+          "--strict",
+          "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app"
+        ],
+        "log": "com.itorah.chavrusachat-signature.log",
+        "runner_pid": 75121,
+        "pid": 84043,
+        "started_at": 1795592119.905503,
+        "timeout": 60,
+        "status": "completed",
+        "observed_at": 1795592121.363792,
+        "seconds": 1.4583940000011353,
+        "log_bytes": 0,
+        "completion_recorded": true,
+        "exit": 0,
+        "observed_returncode": 0
+      },
+      "archives": [
+        {
+          "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/Frameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinSDK_AI_Hanlin.bundle/RuntimeHostResources.zip",
+          "relativePath": "Frameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinSDK_AI_Hanlin.bundle/RuntimeHostResources.zip",
+          "bytes": 81823972,
+          "sha256": "4c71d23f55391e0b7eb87073bea65bec8b323d6f688214b60e49b9600c80e857",
+          "moduleSHA256": "fa5121902e231d5d44ad08bf47699784fd4d0bc2a98102f3a156e6e4ae79b9b9",
+          "sdkManifestSHA256": "0ef02a708019c0401c50222e4186f0bbad2e6576fdc333b7d748eb7702cad66f"
+        },
+        {
+          "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/HanlinSDK_AI_Hanlin.bundle/RuntimeHostResources.zip",
+          "relativePath": "HanlinSDK_AI_Hanlin.bundle/RuntimeHostResources.zip",
+          "bytes": 81823972,
+          "sha256": "4c71d23f55391e0b7eb87073bea65bec8b323d6f688214b60e49b9600c80e857",
+          "moduleSHA256": "fa5121902e231d5d44ad08bf47699784fd4d0bc2a98102f3a156e6e4ae79b9b9",
+          "sdkManifestSHA256": "0ef02a708019c0401c50222e4186f0bbad2e6576fdc333b7d748eb7702cad66f"
+        },
+        {
+          "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/Frameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinSDK_AI_Hanlin.bundle/RuntimeHostResources.zip",
+          "relativePath": "PlugIns/AI_HLYTests.xctest/Frameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinSDK_AI_Hanlin.bundle/RuntimeHostResources.zip",
+          "bytes": 81823972,
+          "sha256": "4c71d23f55391e0b7eb87073bea65bec8b323d6f688214b60e49b9600c80e857",
+          "moduleSHA256": "fa5121902e231d5d44ad08bf47699784fd4d0bc2a98102f3a156e6e4ae79b9b9",
+          "sdkManifestSHA256": "0ef02a708019c0401c50222e4186f0bbad2e6576fdc333b7d748eb7702cad66f"
+        },
+        {
+          "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/HanlinSDK_AI_Hanlin.bundle/RuntimeHostResources.zip",
+          "relativePath": "PlugIns/AI_HLYTests.xctest/HanlinSDK_AI_Hanlin.bundle/RuntimeHostResources.zip",
+          "bytes": 81823972,
+          "sha256": "4c71d23f55391e0b7eb87073bea65bec8b323d6f688214b60e49b9600c80e857",
+          "moduleSHA256": "fa5121902e231d5d44ad08bf47699784fd4d0bc2a98102f3a156e6e4ae79b9b9",
+          "sdkManifestSHA256": "0ef02a708019c0401c50222e4186f0bbad2e6576fdc333b7d748eb7702cad66f"
+        }
+      ],
+      "appBinaries": [
+        {
+          "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/AI_Hanlin",
+          "bytes": 40496,
+          "sha256": "20b0a0355fc1c1b1994ace853f3473c7b41dcbc45e3edd19db94c56d3ad6a44a"
+        },
+        {
+          "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/AI_Hanlin.debug.dylib",
+          "bytes": 3473824,
+          "sha256": "80ba1b05240eb988af275c12edaef7d4d0a194542a2de60dd56f4ce57f336abb"
+        }
+      ],
+      "notificationExtension": {
+        "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/ChavrusaChatNotificationService.appex",
+        "bundleID": "com.itorah.chavrusachat.notification-service",
+        "extension": {
+          "NSExtensionPointIdentifier": "com.apple.usernotifications.service",
+          "NSExtensionPrincipalClass": "ChavrusaChatNotificationService.NotificationService"
+        },
+        "storageNamespace": null,
+        "infoSHA256": "cf22dfcabc37e0108e7d7a24ed8f7566d0934e60290d16e8427b2370532ae32c",
+        "executable": {
+          "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/ChavrusaChatNotificationService.appex/ChavrusaChatNotificationService",
+          "bytes": 37888,
+          "sha256": "27172fa08398d4024f95eb877d4bb800f2f6d7ab00620a57ce2b3128107f7571"
+        },
+        "signatureReadCommand": [
+          "codesign",
+          "-d",
+          "--entitlements",
+          ":-",
+          "--verbose=4",
+          "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/ChavrusaChatNotificationService.appex"
+        ],
+        "signatureReadExit": 0,
+        "signatureDetailsSHA256": "4de7f482954c3cb9346cdabeb51cc908dc7cd274f1fc4912ea37fec9e043733d",
+        "codeSignatureEntitlementsSHA256": "00491886daae07a5296c8bad50f116bf006b0004d7bf7338ad46669fbd903a4a",
+        "codeSignatureEntitlements": {},
+        "actualSimulatorEntitlements": {
+          "source": "__TEXT,__entitlements",
+          "executable": "ChavrusaChatNotificationService",
+          "executable_sha256": "27172fa08398d4024f95eb877d4bb800f2f6d7ab00620a57ce2b3128107f7571",
+          "offset": 10352,
+          "bytes": 458,
+          "section_sha256": "c4a08ac8db4d42ca842cf9e110a6bdb99fd43b9aa8c7d1e7ad3b227664669140",
+          "entitlements": {
+            "application-identifier": "NA6HPWARQ2.com.itorah.chavrusachat.notification-service",
+            "com.apple.security.application-groups": [
+              "group.com.itorah.chavrusachat",
+              "group.com.itorah.shared"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "status": "BOTH_BUILT_PRODUCTS_AND_NOTIFICATION_EXTENSIONS_BOUND",
+  "acceptanceBoundary": "Actual completed build/resources/signature observations only. Original52 and companion/runtime/OS results remain independently recorded.",
+  "simulatorEntitlementsReader": {
+    "path": "Scripts/ProductSplit/simulator_entitlements.py",
+    "sha256": "aa1cfcd4f371dd25a637bc56ab281ef94f8bcdcc2bb415b9125dd0b0aa0b27a8"
+  },
+  "collectorCorrection": "Initial collector wrongly expected ad-hoc codesign entitlements and a top-level StorageNamespace. Actual original simulator reader uses Mach-O __TEXT,__entitlements; source namespace is nested under HanlinExtensionHost. Original build/signature/test results are unchanged; first collector output retained.",
+  "files": [
+    {
+      "path": "AI_Hanlin.app/NotificationService-Info.plist",
+      "bytes": 1220,
+      "sha256": "cf22dfcabc37e0108e7d7a24ed8f7566d0934e60290d16e8427b2370532ae32c"
+    },
+    {
+      "path": "AI_Hanlin.app/notification-codesign.stderr",
+      "bytes": 1145,
+      "sha256": "4de7f482954c3cb9346cdabeb51cc908dc7cd274f1fc4912ea37fec9e043733d"
+    },
+    {
+      "path": "AI_Hanlin.app/notification-codesign.stdout",
+      "bytes": 184,
+      "sha256": "00491886daae07a5296c8bad50f116bf006b0004d7bf7338ad46669fbd903a4a"
+    },
+    {
+      "path": "HanlinMiniApps.app/NotificationService-Info.plist",
+      "bytes": 1278,
+      "sha256": "176d667ec09408832340ae438a7e26886a9f080625c445c3f192850a7b9a467b"
+    },
+    {
+      "path": "HanlinMiniApps.app/notification-codesign.stderr",
+      "bytes": 1156,
+      "sha256": "86cbd036bd097a043c7f83664dd1bb7e1920dba86da814f32da5acac41f5349d"
+    },
+    {
+      "path": "HanlinMiniApps.app/notification-codesign.stdout",
+      "bytes": 184,
+      "sha256": "00491886daae07a5296c8bad50f116bf006b0004d7bf7338ad46669fbd903a4a"
+    }
+  ]
+}

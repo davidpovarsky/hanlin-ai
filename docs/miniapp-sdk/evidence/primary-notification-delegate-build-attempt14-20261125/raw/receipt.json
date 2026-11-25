@@ -1,0 +1,112 @@
+{
+  "capturedAt": "2026-11-25T05:48:46.455868+00:00",
+  "source": "b0cf26a668a698682f5307252f14cf0af8c6d00a",
+  "actualOriginal52": "NOT_RUN_BUILD_FAILED",
+  "actualSignatureProof": "PASS_WARNINGS_AS_ERRORS",
+  "candidateSourceSHA256": "eacf5e748287603ef4e6796d2f2d0016b7563aa5de62bca4478a693d2b82eb83",
+  "files": [
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v1/state.json",
+      "snapshotPath": "raw/build/primary-control/paired52-continuation-v1/state.json",
+      "bytes": 2930,
+      "sha256": "9297e6f13487e3b21874f65ac7d1fc66f7a1617d790201d42c59b09b6dd3d1ba"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v1/decision.json",
+      "snapshotPath": "raw/build/primary-control/paired52-continuation-v1/decision.json",
+      "bytes": 75465,
+      "sha256": "492f9c7b75e7776d7a48a34ce2531f140c0c0f9585c437d42922e8308582a734"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v1/events.jsonl",
+      "snapshotPath": "raw/build/primary-control/paired52-continuation-v1/events.jsonl",
+      "bytes": 1259,
+      "sha256": "37fcf5bd5d13c69afefa89fa9b3cc3528f3a544621feb93097c246bd0f6bae88"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v1/original-paired-phase.log",
+      "snapshotPath": "raw/build/primary-control/paired52-continuation-v1/original-paired-phase.log",
+      "bytes": 5545,
+      "sha256": "5afec25e92b759c6d806fdecef582337a4654e6ac84b7ddd76ff4787c2e88cf1"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/state.json",
+      "snapshotPath": "raw/build/primary-control/state.json",
+      "bytes": 66283,
+      "sha256": "82bdf6980c3273bb88f1019c56a2590bd085ee8eb2eec6341fca0a1d6901b96b"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v1/evidence/paired-product/commands.jsonl",
+      "snapshotPath": "raw/build/primary-control/paired52-continuation-v1/evidence/paired-product/commands.jsonl",
+      "bytes": 4506,
+      "sha256": "322e03369908349af27d2e2dca65e9b5e127efee3ac78bcaced8555ad36185f4"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v1/evidence/paired-product/command-events.jsonl",
+      "snapshotPath": "raw/build/primary-control/paired52-continuation-v1/evidence/paired-product/command-events.jsonl",
+      "bytes": 25320,
+      "sha256": "cef54ae42a02797fa95bfc90cbd06fb283f9cc316399f2e07075ce782e7204fd"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v1/evidence/paired-product/acceptance.json",
+      "snapshotPath": "raw/build/primary-control/paired52-continuation-v1/evidence/paired-product/acceptance.json",
+      "bytes": 2632,
+      "sha256": "bf82704c8b490606e3ebbc982de87da231c802407243e41832332c74c427b7dd"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v1/evidence/paired-product/mini-build.log",
+      "snapshotPath": "raw/build/primary-control/paired52-continuation-v1/evidence/paired-product/mini-build.log",
+      "bytes": 1179589,
+      "sha256": "9efe279b1895c019f683bd39afe2b714bc107078491eeb7270564bdf1194ba34"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v1/evidence/paired-product/created-simulator.txt",
+      "snapshotPath": "raw/build/primary-control/paired52-continuation-v1/evidence/paired-product/created-simulator.txt",
+      "bytes": 37,
+      "sha256": "983d9fa88838b33e101e35e8b8db4b19cd366314baf440eb57f3fc405ab73070"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v1/evidence/paired-product/MiniBuild.xcresult/Info.plist",
+      "snapshotPath": "raw/build/primary-control/paired52-continuation-v1/evidence/paired-product/MiniBuild.xcresult/Info.plist",
+      "bytes": 776,
+      "sha256": "216e4f316d28e46a3d46563a9b18010e14f1dc95308f2e9cebed59dd4061a9f1"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/AI_HLY/Downstream/ScriptingPlatform/HanlinNotificationApplicationDelegate.swift",
+      "snapshotPath": "raw/AI_HLY/Downstream/ScriptingPlatform/HanlinNotificationApplicationDelegate.swift",
+      "bytes": 3109,
+      "sha256": "65e908cc29df4bab76ef3a1b44e032fe2651b47ed4b438035b4e5757a468fa67"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-signature-proof-attempt14/NotificationDelegateSignature.swift",
+      "snapshotPath": "raw/build/primary-control/notification-signature-proof-attempt14/NotificationDelegateSignature.swift",
+      "bytes": 696,
+      "sha256": "18dc51fa7d456ec89f653b83cd983f833e3788d901016caf4552b4a497afd22a"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-signature-proof-attempt14/state.json",
+      "snapshotPath": "raw/build/primary-control/notification-signature-proof-attempt14/state.json",
+      "bytes": 1375,
+      "sha256": "60ad08225143eb65fde91917223f2de9b6d839d37d68d02a2f2746e52fdfa87d"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-signature-proof-attempt14/swiftc.log",
+      "snapshotPath": "raw/build/primary-control/notification-signature-proof-attempt14/swiftc.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/System/Library/Frameworks/UserNotifications.framework/Headers/UNUserNotificationCenter.h",
+      "snapshotPath": "apple-sdk/UNUserNotificationCenter.h",
+      "bytes": 8450,
+      "sha256": "7e79a7672061ab07511f71aa9cd5b7883dc83107cfabfb100d32d758bae3d281"
+    },
+    {
+      "path": "bounded extracted warning/error context",
+      "snapshotPath": "diagnostics.txt",
+      "bytes": 3126,
+      "sha256": "5f98aa18065f586597a4d473bfa303f98e62cc22b61def1d349522693e0f2be3"
+    }
+  ],
+  "boundary": "Original52 ended before tests. Signature probe checks actual imported async return and Objective-C selector only; no app/runtime success implied."
+}

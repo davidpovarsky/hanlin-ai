@@ -1,0 +1,32 @@
+{
+  "appPath": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app",
+  "approvedCommandCount": 23,
+  "approvedCommands": [
+    "awk",
+    "cat",
+    "cp",
+    "curl",
+    "grep",
+    "head",
+    "ln",
+    "ls",
+    "mkdir",
+    "mv",
+    "readlink",
+    "rm",
+    "rmdir",
+    "sed",
+    "sort",
+    "stat",
+    "tail",
+    "tar",
+    "touch",
+    "tr",
+    "uniq",
+    "unlink",
+    "wc"
+  ],
+  "commandDictionarySHA256": "bc70ee9fce71b624c9f80c55be93d8a7c7d67bd06d48902ebe9fef32a906173b",
+  "extraDictionarySHA256": "97704a8960b4facceef54397a08fb5d0a456247c3627359215aa2a27df22656c",
+  "unexpectedCommands": []
+}
