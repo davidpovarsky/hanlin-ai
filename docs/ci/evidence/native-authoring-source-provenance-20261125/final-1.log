@@ -1,0 +1,16 @@
+test_actual_source_edit_is_preserved_and_blocks_update (test_install.SDKInstallTests.test_actual_source_edit_is_preserved_and_blocks_update) ... ok
+test_interrupted_install_preserves_external_generated_and_source_edits (test_install.SDKInstallTests.test_interrupted_install_preserves_external_generated_and_source_edits) ... ok
+test_interrupted_selected_source_update_is_retryable (test_install.SDKInstallTests.test_interrupted_selected_source_update_is_retryable) ... ok
+test_manual_generated_manifest_edit_is_not_silently_overwritten (test_install.SDKInstallTests.test_manual_generated_manifest_edit_is_not_silently_overwritten) ... ok
+test_mutable_ref_and_destination_escape_are_rejected (test_install.SDKInstallTests.test_mutable_ref_and_destination_escape_are_rejected) ... ok
+test_product_update_replaces_only_expected_generated_files (test_install.SDKInstallTests.test_product_update_replaces_only_expected_generated_files) ... ok
+test_revision_update_reuses_the_canonical_checkout (test_install.SDKInstallTests.test_revision_update_reuses_the_canonical_checkout) ... ok
+test_selected_native_product_requires_published_assets (test_install.SDKInstallTests.test_selected_native_product_requires_published_assets) ... ok
+test_shared_source_cache_borrows_existing_objects_and_preserves_canonical_origin (test_install.SDKInstallTests.test_shared_source_cache_borrows_existing_objects_and_preserves_canonical_origin) ... ok
+test_source_only_profile_uses_pinned_git_without_native_preparation (test_install.SDKInstallTests.test_source_only_profile_uses_pinned_git_without_native_preparation) ... ok
+test_sparse_bootstrap_never_materializes_unselected_application_payload (test_install.SDKInstallTests.test_sparse_bootstrap_never_materializes_unselected_application_payload) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 15.262s
+
+OK
