@@ -1,0 +1,17 @@
+{
+  "consumer_file": "Source/ChavrusaText/HanlinHostAdapter/OtzariaHanlinChatView.swift",
+  "consumer_sha256": "265643c14396f1fd1794def68c9cf1aa348a14cd97a5ebe68abbe6a5938194fc",
+  "consumer_source": "2de354bf38d3db38b34a96f25aaaa10bd649558a",
+  "hanlin_source": "1abcc4749056d4c1c364f378732e137e7fead8b3",
+  "incoming_proof_commit": "1f27a36e257573df0a74ec5b3b0ca3586f6854ad",
+  "incoming_receipt_sha256": "a5c0fabfecc9cc6bc5169e139e23ea838597eadb28836ac60aa1a15a8d008d13",
+  "incoming_source": "948bdb1fe75d31559dc8d65ae8d2e70fa69de276",
+  "native_ui_live_credit": false,
+  "new_tests_executed": 0,
+  "observed_at": "2026-11-25T06:36:47.337517+00:00",
+  "original_composer_fix": "d3da55417a30e9a06b0255e2d0b561955034b260",
+  "review_sha256": "9b2eccaaf0d74ba477c838d09f34de2aed50735a412599e2f351623f6aa7b5b2",
+  "safe_area_fix_present": true,
+  "schema": "otzaria.hanlin-app07-impact-review/1",
+  "status": "SOURCE_AND_EXISTING_RECEIPT_REVIEW_ONLY"
+}
