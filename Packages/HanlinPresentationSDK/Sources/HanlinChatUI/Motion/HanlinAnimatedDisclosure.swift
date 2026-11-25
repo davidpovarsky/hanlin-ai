@@ -43,6 +43,8 @@ public struct HanlinAnimatedDisclosure<Content: View>: View {
     @Environment(\.chatMotion) private var motion
     @State private var mounted = false
     @State private var progress: CGFloat = 0
+    @State private var nativeContentHidden = true
+    @State private var transitionGeneration: UInt = 0
 
     public var body: some View {
         ChatDisclosureLayout(progress: progress, spacing: spacing) {
@@ -71,6 +73,7 @@ public struct HanlinAnimatedDisclosure<Content: View>: View {
     private var retainedContent: some View {
         #if canImport(UIKit)
         ChatDisclosureAccessibilityScope(isHidden: !isExpanded,
+            isPhysicallyHidden: nativeContentHidden,
             content: VStack(alignment: .leading, spacing: 6, content: content))
         #else
         VStack(alignment: .leading, spacing: 6, content: content)
@@ -81,6 +84,8 @@ public struct HanlinAnimatedDisclosure<Content: View>: View {
         var transaction = Transaction(animation: nil)
         transaction.disablesAnimations = true
         withTransaction(transaction) {
+            transitionGeneration &+= 1
+            nativeContentHidden = !isExpanded
             mounted = isExpanded
             progress = isExpanded ? 1 : 0
         }
@@ -96,13 +101,23 @@ public struct HanlinAnimatedDisclosure<Content: View>: View {
     private func animateToTarget() {
         guard motion.isAnimated else { settle(); return }
         let expanding = isExpanded
+        transitionGeneration &+= 1
+        let generation = transitionGeneration
+        // Restore the same native subtree before its opening animation begins.
+        if expanding { nativeContentHidden = false }
         // Reuse the measured content across animated collapse and reversal.
         // Recreating complex descendants here can delay the next visible frame
-        // past rapid input. The zero-height clip, AX and hit-testing guards still
-        // hide collapsed content; settle() resets it on reattachment or no motion.
-        withAnimation(motion.disclosureAnimation(expanding: expanding)) {
+        // past rapid input. The native visibility gate closes only after the
+        // original reveal animation finishes, without unmounting that content.
+        withAnimation(motion.disclosureAnimation(expanding: expanding), completionCriteria: .removed) {
             if expanding { mounted = true }
             progress = expanding ? 1 : 0
+        } completion: {
+            // A reversal or an immediate settle invalidates an older completion.
+            guard !expanding, transitionGeneration == generation else { return }
+            var transaction = Transaction(animation: nil)
+            transaction.disablesAnimations = true
+            withTransaction(transaction) { nativeContentHidden = true }
         }
     }
 }
@@ -111,10 +126,11 @@ public struct HanlinAnimatedDisclosure<Content: View>: View {
 /// Own the native semantic boundary for the retained content. On iOS, the
 /// transparent SwiftUI clip can still expose native-backed accessibility nodes.
 /// This root is created once while mounted; closing never replaces its type or
-/// controller, and reopening restores only this root's accessibility visibility.
+/// controller, and reopening restores visibility on the same mounted root.
 @MainActor
 private struct ChatDisclosureAccessibilityScope<Content: View>: UIViewControllerRepresentable {
     let isHidden: Bool
+    let isPhysicallyHidden: Bool
     let content: Content
 
     struct Root: View {
@@ -137,6 +153,7 @@ private struct ChatDisclosureAccessibilityScope<Content: View>: UIViewController
         controller.sizingOptions = [.intrinsicContentSize]
         controller.view.backgroundColor = .clear
         controller.view.isAccessibilityElement = false
+        controller.view.isHidden = isPhysicallyHidden
         controller.view.accessibilityElementsHidden = isHidden
         return controller
     }
@@ -145,6 +162,7 @@ private struct ChatDisclosureAccessibilityScope<Content: View>: UIViewController
         withTransaction(context.transaction) {
             controller.rootView = Root(content: content, environment: context.environment, isHidden: isHidden)
         }
+        controller.view.isHidden = isPhysicallyHidden
         controller.view.accessibilityElementsHidden = isHidden
     }
 
