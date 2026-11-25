@@ -1,4 +1,5 @@
 import json
+import subprocess
 import unittest
 import zipfile
 from pathlib import Path
@@ -23,6 +24,17 @@ class NativeScriptParityFixtureTests(unittest.TestCase):
                 if not name.endswith("/")
             }
         self.assertEqual(archive_files, source_files)
+
+    def test_async_host_service_helpers_do_not_block_or_execute_twice(self) -> None:
+        result = subprocess.run(
+            ["node", "--test", "--test-reporter=tap", str(Path(__file__).with_name(
+                "nativescript_parity_async_startup.test.mjs"))],
+            cwd=REPOSITORY_ROOT,
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
 
     def test_actions_and_intent_use_the_same_declared_handler(self) -> None:
         manifest = json.loads((SOURCE_ROOT / "script.json").read_text(encoding="utf-8"))

@@ -1,0 +1,50 @@
+{
+  "observedAt": "2026-11-25T02:36:51.368387+00:00",
+  "pid": 58434,
+  "command": "/Users/m1/Library/Developer/CoreSimulator/Devices/9DB610ED-23EB-451F-B74C-4C46438D25E8/data/Containers/Bundle/Application/7FE3DBE7-3820-4343-B15C-40C34F2721E4/HanlinMiniApps.app/HanlinMiniApps -AppleLanguages (en) -AppleLocale en_US",
+  "trigger": {
+    "timezoneName": "",
+    "messageType": "Default",
+    "eventType": "logEvent",
+    "source": null,
+    "launchPersonaName": "",
+    "formatString": "HANLIN_NS_RUN_MAIN_BEGIN",
+    "userID": 501,
+    "activityIdentifier": 19275293,
+    "subsystem": "",
+    "category": "",
+    "personaType": 0,
+    "threadID": 3030636,
+    "launchPersonaType": 0,
+    "senderImageUUID": "A8220318-5E91-3AFB-BE2F-186A5707CD39",
+    "launchPersonaID": 4294967295,
+    "backtrace": {
+      "frames": [
+        {
+          "imageOffset": 15172036,
+          "imageUUID": "A8220318-5E91-3AFB-BE2F-186A5707CD39"
+        }
+      ]
+    },
+    "bootUUID": "",
+    "processImagePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/9DB610ED-23EB-451F-B74C-4C46438D25E8/data/Containers/Bundle/Application/7FE3DBE7-3820-4343-B15C-40C34F2721E4/HanlinMiniApps.app/HanlinMiniApps",
+    "senderImagePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/9DB610ED-23EB-451F-B74C-4C46438D25E8/data/Containers/Bundle/Application/7FE3DBE7-3820-4343-B15C-40C34F2721E4/HanlinMiniApps.app/HanlinMiniApps.debug.dylib",
+    "personaID": 4294967295,
+    "timestamp": "2026-11-25 03:36:51.001098+0100",
+    "machTimestamp": 1392606453708,
+    "personaName": "",
+    "eventMessage": "HANLIN_NS_RUN_MAIN_BEGIN",
+    "processImageUUID": "E358DC29-3EA8-3889-9CA6-A59DAB961921",
+    "traceID": 173825650116329476,
+    "processID": 58434,
+    "senderProgramCounter": 15172036,
+    "parentActivityIdentifier": 0
+  },
+  "durationSeconds": 3,
+  "activeCase": "ParityStartupDiagnostic",
+  "exitCode": 0,
+  "finishedAt": "2026-11-25T02:37:00.727116+00:00",
+  "stderr": "Sampling process 58434 for 3 seconds with 1 millisecond of run time between samples\nSampling completed, processing symbols...\nSample analysis of process 58434 written to file /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt10/parity-run-main-owned-app-sample.txt\n",
+  "bytes": 857845,
+  "sha256": "665ce904e621bec6564098cb4aef3e8a24475aab276f172e1f933105d8726f8f"
+}

@@ -1,0 +1,15 @@
+[
+  {
+    "argv": [
+      "node",
+      "--test",
+      "--test-reporter=tap",
+      "/mnt/development/projects/worktrees/hanlin-ai-cache-incoming-fixtures-20261125/Scripts/CI/Tests/nativescript_parity_async_startup.test.mjs"
+    ],
+    "exitCode": 0,
+    "startedAt": "2026-11-25T03:43:45.288822+00:00",
+    "durationSeconds": 0.17104147840291262,
+    "stdout": "parity-nested-1.stdout.log",
+    "stderr": "parity-nested-1.stderr.log"
+  }
+]

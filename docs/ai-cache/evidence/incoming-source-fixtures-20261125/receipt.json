@@ -1,0 +1,292 @@
+{
+  "status": "EXECUTED_PASS",
+  "sourceSHA": "1710bc6119983799f7d22cb723659ac274fe96b1",
+  "sourceTree": "5e6e9fb059a26f27d96ec4042f4702f32f3b0629",
+  "recordedAt": "2026-11-25T03:44:28.105753+00:00",
+  "runner": {
+    "platform": "Linux-6.17.0-1020-oracle-aarch64-with-glibc2.39",
+    "machine": "aarch64",
+    "worktree": "/mnt/development/projects/worktrees/hanlin-ai-cache-incoming-fixtures-20261125",
+    "toolchains": {
+      "node": {
+        "path": "/usr/local/bin/node",
+        "realpath": "/opt/chatgpt-skills/node/bin/node",
+        "version": "v24.22.0",
+        "sha256": "719a43d185f3b6a59d8fcbba1ff06b93c75f76fb0bb9916f81d33921615d4cb5"
+      },
+      "python3": {
+        "path": "/usr/bin/python3",
+        "realpath": "/usr/bin/python3.12",
+        "version": "Python 3.12.3",
+        "sha256": "c86f21d0da9290ece2d7d49a3f7ed52aed59cb029abdf0ea25c79634f6cbe960"
+      }
+    }
+  },
+  "sourceInputs": [
+    {
+      "path": "DemoMiniApps/hanlin-script-parity.hanlinNativeScript",
+      "bytes": 7512,
+      "sha256": "2e48509336edba2b301490422102dbf25cb7f1b894430d52994febdc1c33c199",
+      "gitBlob": "f2d4f5a93a9131286b7322fba45ab2b554cc0df5"
+    },
+    {
+      "path": "DemoMiniApps/hanlin-script-parity/intent.json",
+      "bytes": 212,
+      "sha256": "2bc31c09891193ee5cf04a2ba55cc7fa831d20583ce60dd755a4f2d9b888de06",
+      "gitBlob": "6a0f650514b711dc02219580321926d704a6cf0e"
+    },
+    {
+      "path": "DemoMiniApps/hanlin-script-parity/nativescript/app/bundle.mjs",
+      "bytes": 25868,
+      "sha256": "5f21796994e3880ba5d5c9f0e6d23b3fa12a667ff6082183f604d214a61284b1",
+      "gitBlob": "8d4871deeaf559381f9fc8a5b92b767bcc2778cf"
+    },
+    {
+      "path": "DemoMiniApps/hanlin-script-parity/nativescript/app/package.json",
+      "bytes": 222,
+      "sha256": "264c767b3bd3c172741ab4ea9ffc6ad65b373270c898b69d1085a3d4813e3534",
+      "gitBlob": "2fd5c787ecd3a2589bd20e4862e7e24017f91a97"
+    },
+    {
+      "path": "DemoMiniApps/hanlin-script-parity/script.json",
+      "bytes": 989,
+      "sha256": "2275afdd4700ea93436a114ce03ae5fe56e2e3f2f54bc9a3412daf2c933034f5",
+      "gitBlob": "f1d686021f9b6f862c3e5fd88a7f2b251b4db674"
+    },
+    {
+      "path": "DemoMiniApps/hanlin-script-parity/translation.json",
+      "bytes": 882,
+      "sha256": "e2244f2725cace1b90d717caf2612d8265c1b44a545b83d585d6b47308a368eb",
+      "gitBlob": "41601e3657d67954b20bbe6b4b13a0083d88f9ab"
+    },
+    {
+      "path": "DemoMiniApps/hanlin-script-parity/widget.json",
+      "bytes": 401,
+      "sha256": "ced0519ad3ce1d7794d3fdc8ff78c544c5d8abfed2600f5463cb496c7e986167",
+      "gitBlob": "52974d3c3bb66da41488fc3a68e90758e44a3c16"
+    },
+    {
+      "path": "Scripts/CI/Tests/nativescript_parity_async_startup.test.mjs",
+      "bytes": 4301,
+      "sha256": "a7bd2ebc42afc8942ba43d7abecac80921469fde70e51bee896874deb14a18e9",
+      "gitBlob": "adc201cb2016ce6239e4650e95313c37a70d82e6"
+    },
+    {
+      "path": "Scripts/CI/Tests/test_nativescript_parity_fixture.py",
+      "bytes": 3588,
+      "sha256": "3332ba2adf3c9e180eaecdcaeac8f23c4545f5887adaafe70650ad6f4e39414e",
+      "gitBlob": "7a29436ab9e5a4fe0f1808119e122e6d88f659be"
+    },
+    {
+      "path": "Scripts/NativeScript/Tests/app-binary-preflight.test.mjs",
+      "bytes": 5779,
+      "sha256": "85d9896cb61759d17081bd851e626c6c1148eb07e797209892ec7bdf07699ebb",
+      "gitBlob": "2267d53e25a2f6df7b607772e42cde19979e917f"
+    },
+    {
+      "path": "Scripts/NativeScript/app-binary-preflight.mjs",
+      "bytes": 6387,
+      "sha256": "f7aa0390c863534688b71df86437b0f5583489d6c5e54b2cc097730603216f87",
+      "gitBlob": "ffce10f7ba83a4dfca47e525adca4540762a66ba"
+    },
+    {
+      "path": "Scripts/NativeScript/build-step-metadata-generator-wrapper.py",
+      "bytes": 11566,
+      "sha256": "71bf1d521abff7cc29c1e8d397a9ef2a55b09f758afb36f0a148be12350b664f",
+      "gitBlob": "25f8477169b7ec030d25d32d957a877403b4f4d7"
+    },
+    {
+      "path": "Scripts/NativeScript/preflight-ios-dependencies.mjs",
+      "bytes": 9406,
+      "sha256": "80b6abe07b87aa3a44dbf16d73c79a5ff1c001cd29ff09cd13af038ab6b54c60",
+      "gitBlob": "4b304755d34e345179eed065a775fc1b2383266e"
+    }
+  ],
+  "sourceInputsUnchangedAfterExecution": true,
+  "trackedWorkingTreeCleanAfterExecution": true,
+  "sourceFilesOrAssertionsModified": false,
+  "preflight": {
+    "id": "preflight",
+    "sourceSHA": "1710bc6119983799f7d22cb723659ac274fe96b1",
+    "argv": [
+      "node",
+      "--test",
+      "--test-reporter=tap",
+      "Scripts/NativeScript/Tests/app-binary-preflight.test.mjs"
+    ],
+    "cwd": "/mnt/development/projects/worktrees/hanlin-ai-cache-incoming-fixtures-20261125",
+    "startedAt": "2026-11-25T03:43:40.376818+00:00",
+    "finishedAt": "2026-11-25T03:43:40.592169+00:00",
+    "durationSeconds": 0.21581762097775936,
+    "exitCode": 0,
+    "summary": {
+      "tests": 9,
+      "pass": 9,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "stdout": {
+      "path": "preflight.stdout.log",
+      "bytes": 1904,
+      "sha256": "1f84cdfe62e4942ee3b6de719f9829ad97ccd80db34a4512598564be0d03cf0e"
+    },
+    "stderr": {
+      "path": "preflight.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "parityPython": {
+    "id": "parity",
+    "sourceSHA": "1710bc6119983799f7d22cb723659ac274fe96b1",
+    "argv": [
+      "python3",
+      "/mnt/development/projects/artifacts/hanlin-ai-cache-incoming-fixtures-20261125/observe_original_parity.py"
+    ],
+    "cwd": "/mnt/development/projects/worktrees/hanlin-ai-cache-incoming-fixtures-20261125",
+    "startedAt": "2026-11-25T03:43:45.210751+00:00",
+    "finishedAt": "2026-11-25T03:43:45.475674+00:00",
+    "durationSeconds": 0.2654350306838751,
+    "exitCode": 0,
+    "summary": {
+      "tests": 5,
+      "unittestOK": true
+    },
+    "stdout": {
+      "path": "parity.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stderr": {
+      "path": "parity.stderr.log",
+      "bytes": 1015,
+      "sha256": "8425c43ec2f3fe120a7623a019cba057b52327d3db38907b58b179c895a16b11"
+    }
+  },
+  "parityNestedNode": {
+    "argv": [
+      "node",
+      "--test",
+      "--test-reporter=tap",
+      "/mnt/development/projects/worktrees/hanlin-ai-cache-incoming-fixtures-20261125/Scripts/CI/Tests/nativescript_parity_async_startup.test.mjs"
+    ],
+    "exitCode": 0,
+    "startedAt": "2026-11-25T03:43:45.288822+00:00",
+    "durationSeconds": 0.17104147840291262,
+    "stdout": "parity-nested-1.stdout.log",
+    "stderr": "parity-nested-1.stderr.log",
+    "summary": {
+      "tests": 15,
+      "pass": 15,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    }
+  },
+  "counts": {
+    "preflightNode": 9,
+    "parityPython": 5,
+    "parityNestedNode": 15,
+    "nestedNodeExecutions": 1
+  },
+  "cases": {
+    "preflightNode": [
+      "accepts metadata in the normal main executable",
+      "accepts the linked debug dylib and exposes it for the provider checks",
+      "rejects missing, empty and wrong-segment host metadata",
+      "rejects two metadata owners in the same loaded architecture",
+      "does not admit framework metadata or an unlinked app-local dylib",
+      "resolves actual rpath order without substituting an app-local shadow",
+      "deduplicates linked aliases of the same direct host image",
+      "checks metadata ownership per architecture instead of counting fat slices as images",
+      "does not let one fat slice satisfy another architecture without metadata"
+    ],
+    "parityNestedNode": [
+      "runJS accepts an asynchronous void result without invoking a synchronous fallback",
+      "runJS uses the existing asynchronous alias on a later bridge candidate",
+      "runJS preserves compatibility results when no asynchronous selector exists",
+      "runNode accepts an asynchronous void result without invoking a synchronous fallback",
+      "runNode uses the existing asynchronous alias on a later bridge candidate",
+      "runNode preserves compatibility results when no asynchronous selector exists",
+      "runPython accepts an asynchronous void result without invoking a synchronous fallback",
+      "runPython uses the existing asynchronous alias on a later bridge candidate",
+      "runPython preserves compatibility results when no asynchronous selector exists",
+      "fetchHTTPS accepts an asynchronous void result without invoking a synchronous fallback",
+      "fetchHTTPS uses the existing asynchronous alias on a later bridge candidate",
+      "fetchHTTPS preserves compatibility results when no asynchronous selector exists",
+      "sendInterApp accepts an asynchronous void result without invoking a synchronous fallback",
+      "sendInterApp uses the existing asynchronous alias on a later bridge candidate",
+      "sendInterApp preserves compatibility results when no asynchronous selector exists"
+    ],
+    "parityPython": [
+      "test_actions_and_intent_use_the_same_declared_handler (test_nativescript_parity_fixture.NativeScriptParityFixtureTests.test_actions_and_intent_use_the_same_declared_handler)",
+      "test_archive_matches_source_byte_for_byte (test_nativescript_parity_fixture.NativeScriptParityFixtureTests.test_archive_matches_source_byte_for_byte)",
+      "test_async_host_service_helpers_do_not_block_or_execute_twice (test_nativescript_parity_fixture.NativeScriptParityFixtureTests.test_async_host_service_helpers_do_not_block_or_execute_twice)",
+      "test_bundle_contains_no_synthetic_fallbacks_or_literal_successes (test_nativescript_parity_fixture.NativeScriptParityFixtureTests.test_bundle_contains_no_synthetic_fallbacks_or_literal_successes)",
+      "test_bundle_uses_exported_bridge_and_canonical_roots (test_nativescript_parity_fixture.NativeScriptParityFixtureTests.test_bundle_uses_exported_bridge_and_canonical_roots)"
+    ]
+  },
+  "observationMethod": "External runpy observer passively records the return value of the original subprocess.run; does not replace subprocess.run, alter arguments/results, edit assertions, or repeat nested cases.",
+  "scope": "Original affected Oracle source fixtures only. Node binary preflight receives original synthetic Mach-O inspection fixtures; parity Node executes actual shipped helper source with explicit bridge fixtures. No native Mach-O tools, Apple/NativeScript runtime, app, UI, provider or billing execution. Python5 includes one wrapper that invokes Node15; keep nested counts separate.",
+  "dependencies": "Node and Python standard libraries only; no package installation, network or Apple tools required. Preflight uses original fixture-supplied Mach-O inspection output; parity runs actual shipped helper source in Node VM with explicit bridge fixtures.",
+  "evidenceFiles": [
+    {
+      "path": "observe_original_parity.py",
+      "bytes": 1687,
+      "sha256": "680b106dcf353450c380a8cfe125c19fe7a96fd029f2faff37ec3fa3a843e789"
+    },
+    {
+      "path": "parity-nested-1.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "parity-nested-1.stdout.log",
+      "bytes": 3550,
+      "sha256": "d3063f3f9c123979b093b43c67864f024e4073e9eaaceafdb4e8d1d99193c851"
+    },
+    {
+      "path": "parity-nested-observations.json",
+      "bytes": 442,
+      "sha256": "83fad6ed7a1888972d9a0d8b44c5c2fe37bcb3ccdfbbef748cf5337532219c7f"
+    },
+    {
+      "path": "parity-receipt.json",
+      "bytes": 836,
+      "sha256": "4ce4a1106984ae72692f4a41089c0055b2ebba459c7b4b601330ed2dda5f85d4"
+    },
+    {
+      "path": "parity.stderr.log",
+      "bytes": 1015,
+      "sha256": "8425c43ec2f3fe120a7623a019cba057b52327d3db38907b58b179c895a16b11"
+    },
+    {
+      "path": "parity.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plan.json",
+      "bytes": 5967,
+      "sha256": "2994aa6073f830e4e8baa6a10d804c257961d1df078ab8c76802f587d0334107"
+    },
+    {
+      "path": "preflight-receipt.json",
+      "bytes": 894,
+      "sha256": "6640671401475a58ca8306d3026467372d3b130c5495721dea8a459588696829"
+    },
+    {
+      "path": "preflight.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "preflight.stdout.log",
+      "bytes": 1904,
+      "sha256": "1f84cdfe62e4942ee3b6de719f9829ad97ccd80db34a4512598564be0d03cf0e"
+    }
+  ]
+}
