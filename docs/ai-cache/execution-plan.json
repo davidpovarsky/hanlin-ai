@@ -155,13 +155,14 @@
       "skipped": 1,
       "skip": "Original opt-in >300-second worker duration test; not a cache/assistant acceptance case.",
       "evidence": "evidence/native-preparation-20261125/host-final/index.json"
-    }
+    },
+    "latest_sync_receipt": "evidence/latest-sync-20261125.json"
   },
-  "updated_at": "2026-11-25T01:31:23.403172+00:00",
-  "latest_integrated_source": "72bff522e6a13bff60c16d7a82e7c12f86abf8f9",
+  "updated_at": "2026-11-25T01:34:24.461229+00:00",
+  "latest_integrated_source": "deeab80ef98b5fb97db6bbbd51f9943130617e3f",
   "synchronized_heads": {
     "composer": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91",
-    "miniapps_sdk": "1812bff50571c9907d15cd8b4bfbe4874be24756",
-    "wave3": "cd9930c27bb476b3b40907df2605596b04f86e62"
+    "miniapps_sdk": "05a40d39a8b28ec3fd3741800ebf079834a00070",
+    "wave3": "bad6e68df21d4ecfe11f3b6fc3f4242eba5b23ed"
   }
 }
