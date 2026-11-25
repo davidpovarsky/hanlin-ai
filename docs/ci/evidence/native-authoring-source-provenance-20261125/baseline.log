@@ -1,0 +1,18 @@
+test_prepared_authoring_host_uses_original_sdk_fingerprint (test_native_authoring_provenance.NativeAuthoringProvenanceTests.test_prepared_authoring_host_uses_original_sdk_fingerprint) ... ERROR
+
+======================================================================
+ERROR: test_prepared_authoring_host_uses_original_sdk_fingerprint (test_native_authoring_provenance.NativeAuthoringProvenanceTests.test_prepared_authoring_host_uses_original_sdk_fingerprint)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-native-catalog-sdk-inputs-20261125/Scripts/SDK/tests/test_native_authoring_provenance.py", line 133, in test_prepared_authoring_host_uses_original_sdk_fingerprint
+    fixture.validate()
+  File "/mnt/development/projects/worktrees/hanlin-native-catalog-sdk-inputs-20261125/Scripts/SDK/tests/test_native_authoring_provenance.py", line 104, in validate
+    native.validate_node_support(self.sdk, self.host_archive, self.git("rev-parse", "HEAD"))
+  File "/mnt/development/projects/worktrees/hanlin-native-catalog-sdk-inputs-20261125/build/native-authoring-provenance-20261125/original-native-artifacts.py", line 245, in validate_node_support
+    raise ValueError("Node Host support differs from pinned source: " +
+ValueError: Node Host support differs from pinned source: Invalid/incomplete Host archive: Command '['node', '/tmp/hanlin-sdk-source-sffs0940/Scripts/MiniApps/stage-sdk.mjs', '--fingerprint']' returned non-zero exit status 1.
+
+----------------------------------------------------------------------
+Ran 1 test in 2.873s
+
+FAILED (errors=1)

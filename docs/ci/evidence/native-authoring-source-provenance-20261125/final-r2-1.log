@@ -1,0 +1,15 @@
+test_archive_paths_and_symlinks_cannot_escape_installation (test_native_artifacts.NativeArtifactsTests.test_archive_paths_and_symlinks_cannot_escape_installation) ... ok
+test_archive_roundtrip_preserves_bytes_permissions_and_internal_symlinks (test_native_artifacts.NativeArtifactsTests.test_archive_roundtrip_preserves_bytes_permissions_and_internal_symlinks) ... ok
+test_catalog_rejects_retargeted_url_and_changed_content_identity (test_native_artifacts.NativeArtifactsTests.test_catalog_rejects_retargeted_url_and_changed_content_identity) ... ok
+test_corrupt_checksum_stops_before_installing_any_file (test_native_artifacts.NativeArtifactsTests.test_corrupt_checksum_stops_before_installing_any_file) ... ok
+test_deferred_internal_links_still_reject_a_resolved_escape (test_native_artifacts.NativeArtifactsTests.test_deferred_internal_links_still_reject_a_resolved_escape) ... ok
+test_missing_or_non_native_slices_are_not_publishable (test_native_artifacts.NativeArtifactsTests.test_missing_or_non_native_slices_are_not_publishable) ... ok
+test_selected_install_does_not_download_unrelated_runtime_or_host_support (test_native_artifacts.NativeArtifactsTests.test_selected_install_does_not_download_unrelated_runtime_or_host_support) ... ok
+test_versioned_framework_metadata_binary_paths_and_link_chain_roundtrip (test_native_artifacts.NativeArtifactsTests.test_versioned_framework_metadata_binary_paths_and_link_chain_roundtrip) ... Verified every ZIP checksum, archive path and native slice hash.
+ok
+test_versioned_framework_rejects_foreign_binary_metadata_and_missing_platform (test_native_artifacts.NativeArtifactsTests.test_versioned_framework_rejects_foreign_binary_metadata_and_missing_platform) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.232s
+
+OK
