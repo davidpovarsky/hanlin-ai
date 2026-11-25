@@ -1,0 +1,22 @@
+Building for debugging...
+[2 / 17] HanlinNativeScriptCoreSupport
+[5 / 16] NativeScriptMainRunLoopCallbackTests-product
+[8 / 19] NativeScriptMainRunLoopCallbackTests-product
+[9 / 19] NativeScriptMainRunLoopCallbackTests-product
+[15 / 19] AllIncludingTests
+Build complete! (1,19 secs)
+Test Suite 'Selected tests' started at 2026-11-25 01:02:15.579.
+Test Suite 'NativeScriptMainRunLoopCallbackTests.xctest' started at 2026-11-25 01:02:15.579.
+Test Suite 'NativeScriptMainRunLoopCallbackTests' started at 2026-11-25 01:02:15.579.
+Test Case '-[NativeScriptMainRunLoopCallbackTests.NativeScriptMainRunLoopCallbackTests testBackgroundCompletionReentersRunLoopInsideMainQueueSynchronousCall]' started.
+/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/bridge-runloop-regression-attempt7/package/Tests/NativeScriptMainRunLoopCallbackTests.swift:19: error: -[NativeScriptMainRunLoopCallbackTests.NativeScriptMainRunLoopCallbackTests testBackgroundCompletionReentersRunLoopInsideMainQueueSynchronousCall] : XCTAssertEqual failed: ("Optional("Err: Execution timed out after 20s")") is not equal to ("Optional("native-result")")
+/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/bridge-runloop-regression-attempt7/package/Tests/NativeScriptMainRunLoopCallbackTests.swift:20: error: -[NativeScriptMainRunLoopCallbackTests.NativeScriptMainRunLoopCallbackTests testBackgroundCompletionReentersRunLoopInsideMainQueueSynchronousCall] : XCTAssertLessThan failed: ("20.07488989830017") is not less than ("2.0") - An already-completed native operation must not wait for the original 20-second bridge timeout.
+Test Case '-[NativeScriptMainRunLoopCallbackTests.NativeScriptMainRunLoopCallbackTests testBackgroundCompletionReentersRunLoopInsideMainQueueSynchronousCall]' failed (20.077 seconds).
+Test Suite 'NativeScriptMainRunLoopCallbackTests' failed at 2026-11-25 01:02:35.657.
+	 Executed 1 test, with 2 failures (0 unexpected) in 20.077 (20.077) seconds
+Test Suite 'NativeScriptMainRunLoopCallbackTests.xctest' failed at 2026-11-25 01:02:35.657.
+	 Executed 1 test, with 2 failures (0 unexpected) in 20.077 (20.077) seconds
+Test Suite 'Selected tests' failed at 2026-11-25 01:02:35.657.
+	 Executed 1 test, with 2 failures (0 unexpected) in 20.077 (20.078) seconds
+Note: Some test targets reported failures:
+  - NativeScriptMainRunLoopCallbackTests (XCTest)

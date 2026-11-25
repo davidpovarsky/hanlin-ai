@@ -215,7 +215,7 @@ export async function stageSDK({root=repositoryRoot,output,engines:requestedEngi
         ...(engine==='expo'?{hostContract:{runtimeVersion:expoLock.expo.uiVersion,expoSDKVersion:expoLock.expo.sdkVersion,
           bridgeVersion:bridgeConfiguration.bridgeVersion,nativeApiContractVersion,
           nativeApiAbiIdentity:`rn${expoLock.expo.reactNativeVersion}-hermes${expoLock.expo.hermesVersion}`,
-          plugins:{'@expo/ui':expoLock.expo.uiVersion,'expo-widgets':expoLock.expo.widgetsVersion,'@hanlin/expo-ui':bridgeConfiguration.bridgeVersion,
+          plugins:{'@expo/ui':expoLock.expo.uiVersion,'expo-asset':expoLock.expo.assetVersion,'expo-widgets':expoLock.expo.widgetsVersion,'@hanlin/expo-ui':bridgeConfiguration.bridgeVersion,
             '@nativescript/react-native':nativeAPILock.nativeApi.version,'react-native-worklets':nativeAPILock.worklets.version}}}:{}),
         typeCheckingPolicy:{strictSource:true,checkOriginalDeclarationBodies:engine==='expo',
           explanation:engine==='expo'?'Original declarations and source are checked.':'Original NativeScript consumer mode: source is strict; original declaration bodies are not revalidated. Set skipLibCheck:false for SDK declaration diagnostics.'},
@@ -224,7 +224,7 @@ export async function stageSDK({root=repositoryRoot,output,engines:requestedEngi
         build:{nativeHostRebuildRequiredForNativeDependencyChanges:true}};
     }
     const expected={
-      expo:{expo:expoLock.expo.sdkVersion,'@expo/ui':expoLock.expo.uiVersion,'expo-widgets':expoLock.expo.widgetsVersion,'react-native':expoLock.expo.reactNativeVersion,'react':expoLock.expo.reactVersion,
+      expo:{expo:expoLock.expo.sdkVersion,'@expo/ui':expoLock.expo.uiVersion,'expo-asset':expoLock.expo.assetVersion,'expo-widgets':expoLock.expo.widgetsVersion,'react-native':expoLock.expo.reactNativeVersion,'react':expoLock.expo.reactVersion,
         '@nativescript/react-native':nativeAPILock.nativeApi.version,'react-native-worklets':nativeAPILock.worklets.version},
       nativescript:{'@nativescript/core':nativeLock.nativeScript.coreVersion,'@nativescript/ios':nativeLock.nativeScript.iosRuntimeVersion,
         '@nativescript/swift-ui':nativeLock.swiftUI.version}

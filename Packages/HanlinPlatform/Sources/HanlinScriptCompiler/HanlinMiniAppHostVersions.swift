@@ -6,6 +6,7 @@ public enum HanlinMiniAppHostVersions {
     public static let nativeScriptSwiftUIVersion = "4.0.2"
     public static let expoSDKVersion = "58.0.26"
     public static let expoUIVersion = "58.0.29"
+    public static let expoAssetVersion = "58.0.21"
     public static let expoWidgetsVersion = "58.0.29"
     public static let reactNativeVersion = "0.88.1"
     public static let nativeApiVersion = "9.1.2"

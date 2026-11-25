@@ -1,0 +1,120 @@
+{
+  "locations": [
+    "ios/ExpoModulesCore.h:17:#import <ExpoModulesCore/EXFileSystemInterface.h>",
+    "ios/Core/AppContext.swift:280:  public lazy var fileSystem: FileSystemManager? = FileSystemManager(appGroupSharedDirectories: self.config.appGroupSharedDirectories)",
+    "ios/Legacy/LegacyModuleRegistry.swift:39:    if let fileSystemClass = NSClassFromString(\"EXFileSystemLegacyUtilities\") {",
+    "ios/FileSystemUtilities/FileSystemManager.swift:9:public class FileSystemManager: NSObject, EXInternalModule, EXFileSystemInterface, EXFilePermissionModuleInterface {",
+    "ios/FileSystemUtilities/FileSystemManager.swift:59:    return [EXFileSystemInterface.self, EXFilePermissionModuleInterface.self]",
+    "ios/Core/Exceptions/CommonExceptions.swift:94:   An exception to throw when there is no module implementing the `EXFileSystemInterface` interface.",
+    "ios/Interfaces/FileSystem/EXFilePermissionModuleInterface.h:3:#import <ExpoModulesCore/EXFileSystemInterface.h>",
+    "ios/Interfaces/FileSystem/EXFileSystemInterface.h:12:@protocol EXFileSystemInterface"
+  ],
+  "implementation": "270:   /**\n271:    Provides access to app's constants.\n272:    */\n273:   public lazy var constants: EXConstantsInterface? = ConstantsProvider.shared\n274: \n275:   /**\n276:    Provides access to the file system utilities. Can be overridden if the app should use different directories or file permissions.\n277:    For instance, Expo Go uses sandboxed environment per project where the cache and document directories must be scoped.\n278:    It's an optional type for historical reasons, for now let's keep it like this for backwards compatibility.\n279:    */\n280:   public lazy var fileSystem: FileSystemManager? = FileSystemManager(appGroupSharedDirectories: self.config.appGroupSharedDirectories)\n281: \n282:   /**\n283:    Provides access to the permissions manager.\n284:    */\n285:   public lazy var permissions: EXPermissionsService? = EXPermissionsService()\n286: \n287:   /**\n288:    Provides access to the image loader from legacy module registry.\n289:    */\n290:   public var imageLoader: EXImageLoaderInterface? {\n291:     guard let loader = hostWrapper?.findModule(withName: \"RCTImageLoader\", lazilyLoadIfNecessary: true) as? RCTImageLoader else {\n292:       log.warn(\"Unable to get the RCTImageLoader module.\")\n293:       return nil\n294:     }\n295:     return ImageLoader(rctImageLoader: loader)\n296:   }\n297: \n298:   /**\n299:    Provides access to a native React Native module by name.\n300:    In new arch the lookup goes through the host wrapper; in old arch through the bridge.\n301:    */\n302:   public func nativeModule<T>(named name: String) -> T? {\n303:     guard let module = hostWrapper?.findModule(withName: name, lazilyLoadIfNecessary: true) as? T else {\n304:       log.warn(\"Unable to get the \\(name) module.\")\n305:       return nil\n306:     }\n307:     return module",
+  "expo-file-system/package.json": {
+    "name": "expo-file-system",
+    "version": "58.0.14",
+    "description": "Provides access to the local file system on the device.",
+    "keywords": [
+      "expo",
+      "file",
+      "file-system",
+      "react-native"
+    ],
+    "homepage": "https://docs.expo.dev/versions/latest/sdk/filesystem/",
+    "bugs": {
+      "url": "https://github.com/expo/expo/issues"
+    },
+    "license": "MIT",
+    "author": "650 Industries, Inc.",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/expo/expo.git",
+      "directory": "packages/expo-file-system"
+    },
+    "sideEffects": false,
+    "main": "build/index.js",
+    "types": "build/index.d.ts",
+    "exports": {
+      "./app.plugin": "./app.plugin.js",
+      "./app.plugin.js": "./app.plugin.js",
+      "./package.json": "./package.json",
+      "./plugin": "./plugin/build/index.js",
+      ".": {
+        "types": {
+          "expo-source": "./src/index.ts",
+          "default": "./build/index.d.ts"
+        },
+        "expo-source": "./src/index.ts",
+        "default": "./build/index.js"
+      },
+      "./legacy": {
+        "types": {
+          "expo-source": "./src/legacy/index.ts",
+          "default": "./build/legacy/index.d.ts"
+        },
+        "expo-source": "./src/legacy/index.ts",
+        "default": "./build/legacy/index.js"
+      },
+      "./next": {
+        "types": {
+          "expo-source": "./src/index.ts",
+          "default": "./build/index.d.ts"
+        },
+        "expo-source": "./src/index.ts",
+        "default": "./build/index.js"
+      }
+    },
+    "devDependencies": {
+      "@expo/internal-scripts": "58.0.6",
+      "@types/jest": "^30.0.0",
+      "@types/node": "^22.14.0",
+      "jest-expo": "58.0.15"
+    },
+    "peerDependencies": {
+      "expo": "*",
+      "react-native": "*"
+    },
+    "jest": {
+      "preset": "@expo/internal-scripts"
+    },
+    "scripts": {
+      "precompile-ios": "et prebuild-package-for-publish",
+      "precompile-android": "et prebuild-android-package-for-publish",
+      "build": "pnpm run build:lib && pnpm run build:plugin",
+      "build:lib": "expo-build src",
+      "build:plugin": "expo-build --base plugin cjs:src",
+      "clean": "expo-module clean",
+      "lint": "oxlint --config oxlint.config.mjs .",
+      "format": "expo-module format",
+      "test": "jest",
+      "depscheck": "expo-module depscheck",
+      "typecheck": "tsc -b tsconfig.all.json"
+    }
+  },
+  "expo-file-system/expo-module.config.json": {
+    "platforms": [
+      "apple",
+      "android"
+    ],
+    "apple": {
+      "modules": [
+        "FileSystemModule",
+        "FileSystemLegacyModule"
+      ],
+      "appDelegateSubscribers": [
+        "FileSystemBackgroundSessionHandler"
+      ]
+    },
+    "android": {
+      "modules": [
+        "expo.modules.filesystem.FileSystemModule",
+        "expo.modules.filesystem.legacy.FileSystemLegacyModule"
+      ],
+      "publication": {
+        "groupId": "host.exp.exponent",
+        "artifactId": "expo.modules.filesystem",
+        "repository": "local-maven-repo"
+      }
+    }
+  }
+}

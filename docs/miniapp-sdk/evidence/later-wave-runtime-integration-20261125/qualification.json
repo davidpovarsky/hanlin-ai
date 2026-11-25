@@ -1,0 +1,289 @@
+{
+  "schemaVersion": 1,
+  "owner": "/root/sdk_completion",
+  "createdAt": "2026-11-25T00:47:35.341746+00:00",
+  "status": "SOURCE_INTEGRATED_PORTABLE_GRAPH_PASS_NATIVE_PENDING",
+  "baseWave2": "89f758d56a4945acc52dfe604b78835539d5df85",
+  "functionalSourceCommit": "4c9c1451f10e8c1a71c5dc07bfe3b858d2f37f51",
+  "branch": "codex/hanlin-later-wave-runtime-integration-20261125",
+  "scope": "Separate later-wave candidate. Root/Wave1/Wave2/Wave3 and foreign checkout were not modified.",
+  "integratedHistory": [
+    "ac05617702025e969239eb796ed876a59f5cc7e8\tIntegrate original ExpoAsset native module and publication graph",
+    "1da91bcb7de537e16cfe08fea4246b051fd77714\tfix(miniapps): emit NativeScript ESM with native loader extensions",
+    "ce097dc09d806fdf49c988f0ed70969cb0f3715e\tExpose original ExpoAsset SDK types and native version contract",
+    "124d3c4d30289c364cfe21a71e6c945aeca1dea9\tDeliver NativeScript callbacks through the active main run loop",
+    "351cbfe5c4f5659ee7364eef2551e8d2c631737e\tMap the embedded Expo Asset manifest contract",
+    "4c9c1451f10e8c1a71c5dc07bfe3b858d2f37f51\tRegenerate canonical SDK graph for later-wave runtime integration"
+  ],
+  "selectedOriginalDonors": [
+    "9784a44652187f049aed853ac8549bc0db39bc90",
+    "3109d5e2f92631cdbf4bcf3d66e70bed8177c7f9",
+    "edd5bcf494d181b642e28d5f5663df5840678fc6",
+    "2b3271824e0338f0d7f5239e3b3a14c2b8c9f3b0",
+    "1812bff50571c9907d15cd8b4bfbe4874be24756"
+  ],
+  "generatedIntentOnly": "d72b1625dff19bda079183da31d1065c88a0f028 was not copied; original canonical generators ran on the actual Wave2-plus-five-donors source.",
+  "conflicts": [],
+  "applicationSourceCount": 514,
+  "unifiedTargetCount": 114,
+  "nativeArtifactTargets": 15,
+  "protectedExactFiles": {
+    "AI_HLY.xcodeproj/project.pbxproj": "a3386442c307f0edfe73d418de6059c2c1aeb6405ff4c9d90c2975014f725e6e",
+    "Scripts/SDK/application_products.json": "8be55195f1bbceb2867f9f12f48994f382d1b6ec3df43e3597d1ee7d3f562d55",
+    "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift": "249433273bc4c7d04e561100dbb9be034c0dda5318d0fc5aeabde7829d8452ce",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinIdentifiers.swift": "2287b3e02197a940f01ee4470fe7bd50206865480f9eadb0f4e975098c47163a",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json": "5f3ba01bde7fb46fa7e3e2b1822f5ca14657251dd017df91e7b577d911d11d91",
+    "AI_HLYTests/HanlinMiniAppHostDiscoveryTests.swift": "cb57318fa2e3d91eb9f16a1061044332aa20ff69b911c7b5e35b2a363383f7d0",
+    "Packages/HanlinPlatform/Tests/HanlinScriptStoreTests/HanlinScriptMiniAppRegistrationTests.swift": "d6589e5b51b32f72707ca6b54f2ddd7a3c2f3c9cbd79692cd1c267bf1bca089b"
+  },
+  "unchangedTrees": [
+    "Packages/HanlinPresentationSDK",
+    "HanlinMiniAppsUITests",
+    "AI_HLYUITests",
+    ".github"
+  ],
+  "freshPortableChecks": {
+    "sourceBeforeGeneration": "351cbfe5c4f5659ee7364eef2551e8d2c631737e",
+    "startedAt": "2026-11-25T00:37:08.126875+00:00",
+    "status": "PASS",
+    "scope": "Original portable manifest/project generation and --check; no native build or tests",
+    "steps": [
+      {
+        "label": "manifest-generate",
+        "argv": [
+          "python3",
+          "Scripts/SDK/generate_manifest.py"
+        ],
+        "startedAt": "2026-11-25T00:37:08.207015+00:00",
+        "exitCode": 0,
+        "finishedAt": "2026-11-25T00:37:13.922637+00:00",
+        "seconds": 5.715645673684776,
+        "stdoutSHA256": "573f787f1f9335941caf571ef3a01d811b5bca445333a188691e8e76eb92e7a4",
+        "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "label": "project-generate",
+        "argv": [
+          "python3",
+          "Scripts/SDK/update_project.py"
+        ],
+        "startedAt": "2026-11-25T00:37:13.923021+00:00",
+        "exitCode": 0,
+        "finishedAt": "2026-11-25T00:37:16.848758+00:00",
+        "seconds": 2.92575806286186,
+        "stdoutSHA256": "7b205399ea53f72db8afa2fe3d77370cd6f0ac3d9ea8d19cea47a806236d4d18",
+        "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "label": "manifest-check",
+        "argv": [
+          "python3",
+          "Scripts/SDK/generate_manifest.py",
+          "--check"
+        ],
+        "startedAt": "2026-11-25T00:37:16.849142+00:00",
+        "exitCode": 0,
+        "finishedAt": "2026-11-25T00:37:19.022986+00:00",
+        "seconds": 2.1738636130467057,
+        "stdoutSHA256": "573f787f1f9335941caf571ef3a01d811b5bca445333a188691e8e76eb92e7a4",
+        "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "label": "project-check",
+        "argv": [
+          "python3",
+          "Scripts/SDK/update_project.py",
+          "--check"
+        ],
+        "startedAt": "2026-11-25T00:37:19.023393+00:00",
+        "exitCode": 0,
+        "finishedAt": "2026-11-25T00:37:19.640196+00:00",
+        "seconds": 0.6168291280046105,
+        "stdoutSHA256": "7b205399ea53f72db8afa2fe3d77370cd6f0ac3d9ea8d19cea47a806236d4d18",
+        "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "swiftToolchain": "Swift version 6.4.3 (swift-6.4.3-RELEASE)\nTarget: aarch64-unknown-linux-gnu",
+    "generatorSHA256": {
+      "Scripts/SDK/generate_manifest.py": "47ae0d5c34fa5c3baa870b4213a98c6999958f57c71f19a8be421fb6723182ec",
+      "Scripts/SDK/update_project.py": "47fe76286f6396ae4b2157f842e2d284f05e4004f856423902843b8299a7520f",
+      "Scripts/CI/IntegrationValidation/project_graph.py": "39af26a39620977cc306b65e58b6cdbaa5aea3d6baea21b440499bd80965ff49"
+    },
+    "active": "project-check",
+    "finishedAt": "2026-11-25T00:37:19.641074+00:00",
+    "generated": {
+      "Package.swift": "c62a115ec0f633ca634b3853bd05e194ad2605d658f0eed618942096a8d7c597",
+      "docs/agent-sdk/unified-package-manifest.json": "0bd654688bed250640665b6eb071450bec46ac7149de7a85f872f6f55c373671",
+      "AI_HLY.xcodeproj/project.pbxproj": "a3386442c307f0edfe73d418de6059c2c1aeb6405ff4c9d90c2975014f725e6e"
+    }
+  },
+  "graphCheck": {
+    "observedAt": "2026-11-25T00:42:34.546669+00:00",
+    "status": "PASS",
+    "base": "89f758d56a4945acc52dfe604b78835539d5df85",
+    "sourceBeforeGeneration": "351cbfe5c4f5659ee7364eef2551e8d2c631737e",
+    "graph": {
+      "miniapps_products": [
+        "HanlinA2UI",
+        "HanlinAgentActivityCore",
+        "HanlinExpoNativeAPI",
+        "HanlinExpoRuntime",
+        "HanlinExpoWidgetsOriginal",
+        "HanlinExtensionContracts",
+        "HanlinLocalization",
+        "HanlinMiniAppCore",
+        "HanlinMiniAppsBridge",
+        "HanlinMiniAppsPicker",
+        "HanlinMiniAppsUI",
+        "HanlinNativeScriptRuntime",
+        "HanlinParityMiniApp",
+        "HanlinPlatformContracts",
+        "HanlinPresentationKit",
+        "HanlinProductSplit",
+        "HanlinScriptCompiler",
+        "HanlinScriptContracts",
+        "HanlinScriptDeviceServices",
+        "HanlinScriptExtensions",
+        "HanlinScriptStore",
+        "HanlinScriptUI",
+        "HanlinScriptingApplicationRuntime",
+        "HanlinScriptingSDK",
+        "HanlinSefariaMiniApp",
+        "HanlinTextStudioMiniApp",
+        "HanlinTranslationUI",
+        "HanlinWidgetUI",
+        "HanlinWikipediaMiniApp",
+        "IOSSystemLite",
+        "SWCompression",
+        "TorahLibraryKit",
+        "ZIPFoundation"
+      ],
+      "miniapps_source_groups": [
+        "HanlinMiniAppsApp"
+      ],
+      "deployment_target": "27.0",
+      "signed_or_install_proof": false
+    },
+    "linkage": {
+      "ai_products": [
+        "HanlinApplication"
+      ],
+      "unit_test_products": [
+        "HanlinApplication"
+      ],
+      "miniapps_agent_products": [],
+      "sdk_application_sources": 514,
+      "host_sources": [
+        "AI_HLY.swift"
+      ],
+      "native_adapter": "Model/HanlinAppleModelCatalogAdapter.swift",
+      "linked_application_products": {
+        "HanlinApp": [
+          "HanlinApplication"
+        ],
+        "AI_HLYTests": [
+          "HanlinApplication"
+        ]
+      },
+      "apple_compilation": "NOT_RUN"
+    },
+    "generatedTargetCount": 114,
+    "applicationSourcesEqualBase": true,
+    "protectedCatalogActionSourcesEqualBase": true,
+    "presentationSDKTreeEqualBase": true,
+    "xcodeProjectEqualBase": true,
+    "miniappsUnitProjectSources": [],
+    "nativeCompilation": "NOT_RUN"
+  },
+  "qualifiedReuse": [
+    {
+      "status": "REUSED_VERIFIED_PASS",
+      "group": "NativeScript ESM authoring contract",
+      "originalPublishedDonor": "3109d5e2f92631cdbf4bcf3d66e70bed8177c7f9",
+      "originalState": "docs/miniapp-sdk/evidence/primary-nativescript-esm-20261124/proof/state.json",
+      "originalStateSHA256": "1da085e4246d6a9ebc069ba4847900fdce768432504cb6aaca2296c5f097d6fb",
+      "passedCases": 5,
+      "failedCases": 0,
+      "skippedCases": 0,
+      "baseline": "Original producer failed ESM regression; CommonJS control passed. Both logs retained unchanged.",
+      "exactCandidateInputs": {
+        "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs": "fa5121902e231d5d44ad08bf47699784fd4d0bc2a98102f3a156e6e4ae79b9b9",
+        "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-authoring.test.mjs": "41f4df51d49ebf48e8ecda9c205372281b2bce2b4e865f1b343474ca8f38b853",
+        "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-sdk-resolution.test.mjs": "5feff98ed62727330f2a64abedff0d4a3af9f71d5a8b1f7c8e39396c90e7d65f",
+        "Scripts/MiniApps/miniapp.mjs": "1c256c00392c626a54ebee2abe3ededaa792c5bfa6dd9b6c5aceb89be84e5b30"
+      },
+      "toolchain": {
+        "compilerVersion": "5.9.3",
+        "compilerSHA256": "3ae902c92cc44dace175c0e69e13a4b0899f6983c6121d76b9ab8dd5795e7675",
+        "nodeVersion": "v24.5.0",
+        "runnerSHA256": "76e68ab18a958909690141b97423017010fe2deecebb2e131c81cf8a88242fa6"
+      },
+      "nativeToolingLocksUnchangedFromProofSource": true,
+      "closure": "Only these repository implementation/test/CLI files are imported. Tests construct their own SDK/project fixtures and use the original pinned TypeScript package. All other imports are Node builtins; the real CLI archive child uses original macOS Python zipfile. The incoming Expo native graph and app/sidebar changes are outside this producer-test closure.",
+      "excludes": "No claim that NativeScript V8 or a native application rendered; original UI remains pending."
+    },
+    {
+      "status": "REUSED_VERIFIED_PASS",
+      "group": "Original NativeScript Objective-C callback delivery",
+      "originalPublishedDonor": "2b3271824e0338f0d7f5239e3b3a14c2b8c9f3b0",
+      "originalState": "docs/miniapp-sdk/evidence/primary-native-callback-runloop-20261125/raw/state.json",
+      "originalStateSHA256": "8cddd70a8312c0f3a2f3037cbb9a5471cea34d51cf68edb6de2539588bedeaca",
+      "passedCases": 3,
+      "failedCases": 0,
+      "skippedCases": 0,
+      "baseline": "Exact original bridge timed out at20seconds from a main-GCD synchronous call. Original failed log and initial harness compile error retained.",
+      "exactCandidateInputs": {
+        "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeServicesBridge.m": "e36a9d2ba06dd7878d17df7c9e8f17df8952ac67f087c0a43174742c1c0ebe0c",
+        "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include/HanlinNativeServicesBridge.h": "c2e8a138628dfd568a30dcaf0b2fd899347b6065354c86350db7d3f36f4c0b19",
+        "HanlinMiniAppsTests/NativeScriptMainRunLoopCallbackTests.swift": "ad4b516db151867a80413646be9dfed9313f3f356d972c112fdf0f0d5806fd99"
+      },
+      "toolchain": {
+        "swift": "Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)\nTarget: arm64-apple-macosx27.0.0",
+        "manifestSHA256": "4217e9b52f4809f0d56ec6cccef364d8cc0f3f646475bc2bf9847e0c5c46590a",
+        "runnerSHA256": "efa18d758671f14df7dce3a3fcb8850f6dd0b4eef8e820e458830acb4beb1e60"
+      },
+      "closure": "The original Objective-C bridge, unchanged public header and exact test implementation match the retained Apple Foundation/XCTest harness. Controlled provider only; no original runtime engine substitution claim.",
+      "excludes": "Not an iOS application build, simulator/UI pass, engine acceptance, or full52 result."
+    }
+  ],
+  "freshTestsRun": 0,
+  "nativeJobsRun": 0,
+  "sourceWhitespace": "PASS except two byte-preserved original failed raw logs listed in generation/source-diff-check.json; unfiltered diff output is retained.",
+  "remainingObligations": [
+    {
+      "status": "NOT_RUN",
+      "name": "Original Host/SDK preparation, inventories, public-guide snippets and embedded resources on final combined source"
+    },
+    {
+      "status": "NOT_RUN",
+      "name": "15-target native catalog export/verify with exact source and original ExpoAsset artifact identity"
+    },
+    {
+      "status": "NOT_RUN",
+      "name": "Both original Apple consumer builds and affected extension/test compilation"
+    },
+    {
+      "status": "NOT_RUN",
+      "name": "Original SDK-only NativeScript, parity reopen and three Expo startup/interaction selectors on corrected app"
+    },
+    {
+      "status": "NOT_RUN",
+      "name": "Ten formerly missing-card Expo cases after current catalog/action fixes and new native bootstrap"
+    },
+    {
+      "status": "NOT_RUN",
+      "name": "Original owner full52 acceptance; preserve original selectors and ownership"
+    },
+    {
+      "status": "OPEN",
+      "name": "ModularTextSearch validation completion, physical iPad/account observations and signed distribution remain independent"
+    }
+  ],
+  "nativeReusePreparation": {
+    "path": "docs/miniapp-sdk/evidence/later-wave-runtime-integration-20261125/native-reuse-preparation.json",
+    "sha256": "689aab75d590fef9517cd3d41192455260a6fdb535bd44abfd644eaa3a789c58",
+    "nativeInputsMatchingForeignSource": 16,
+    "foreignSource": "1812bff50571c9907d15cd8b4bfbe4874be24756",
+    "scope": "Native binary/source-input qualification only. No15-target catalog is present in the recorded observation; no restore or native execution performed. Final combined-source Host/SDK remains pending."
+  }
+}

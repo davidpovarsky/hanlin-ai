@@ -90,15 +90,15 @@ test('NativeScript emission and copied bodies agree with canonical types and pre
   const report = await f.run('build');
   assert.equal(report.succeeded, true, JSON.stringify(report.diagnostics));
   const app = path.join(report.preparedPackagePath, 'nativescript/app');
-  const emitted = await fs.readFile(path.join(app, 'modules/index.js'), 'utf8');
+  const emitted = await fs.readFile(path.join(app, 'modules/index.mjs'), 'utf8');
   assert.match(emitted, /from "fixture-canonical"/);
-  assert.match(emitted, /from "\.\/src\/value.js"/);
-  assert.doesNotMatch(emitted, /local-canonical.js/);
+  assert.match(emitted, /from "\.\/src\/value.mjs"/);
+  assert.doesNotMatch(emitted, /local-canonical.mjs/);
   assert.equal(await fs.readFile(path.join(app, 'node_modules/fixture-canonical/index.js'), 'utf8'),
     await fs.readFile(path.join(f.canonical, 'index.js'), 'utf8'));
   assert.notEqual(await fs.readFile(path.join(app, 'node_modules/fixture-canonical/index.js'), 'utf8'),
     await fs.readFile(path.join(local, 'index.js'), 'utf8'));
-  assert.equal((await import(pathToFileURL(path.join(app, 'modules/index.js')).href)).result, 'sdk:nested:project:alias');
+  assert.equal((await import(pathToFileURL(path.join(app, 'modules/index.mjs')).href)).result, 'sdk:nested:project:alias');
 });
 
 test('missing canonical exports, configs and SDK dependencies never resolve from ancestor packages', async t => {

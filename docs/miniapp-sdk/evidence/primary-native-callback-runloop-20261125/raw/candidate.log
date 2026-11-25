@@ -1,0 +1,20 @@
+Building for debugging...
+[1 / 3]
+[3 / 7] HanlinNativeScriptCoreSupport
+[5 / 6] NativeScriptMainRunLoopCallbackTests-product
+Build complete! (0,72 secs)
+Test Suite 'Selected tests' started at 2026-11-25 01:02:37.294.
+Test Suite 'NativeScriptMainRunLoopCallbackTests.xctest' started at 2026-11-25 01:02:37.294.
+Test Suite 'NativeScriptMainRunLoopCallbackTests' started at 2026-11-25 01:02:37.294.
+Test Case '-[NativeScriptMainRunLoopCallbackTests.NativeScriptMainRunLoopCallbackTests testAsynchronousBackgroundCompletionStillRunsOnMainThread]' started.
+Test Case '-[NativeScriptMainRunLoopCallbackTests.NativeScriptMainRunLoopCallbackTests testAsynchronousBackgroundCompletionStillRunsOnMainThread]' passed (0.001 seconds).
+Test Case '-[NativeScriptMainRunLoopCallbackTests.NativeScriptMainRunLoopCallbackTests testBackgroundCompletionReentersRunLoopInsideMainQueueSynchronousCall]' started.
+Test Case '-[NativeScriptMainRunLoopCallbackTests.NativeScriptMainRunLoopCallbackTests testBackgroundCompletionReentersRunLoopInsideMainQueueSynchronousCall]' passed (0.023 seconds).
+Test Case '-[NativeScriptMainRunLoopCallbackTests.NativeScriptMainRunLoopCallbackTests testQueuedBackgroundResultLosesJSCompletionBeforeSessionInvalidationReturns]' started.
+Test Case '-[NativeScriptMainRunLoopCallbackTests.NativeScriptMainRunLoopCallbackTests testQueuedBackgroundResultLosesJSCompletionBeforeSessionInvalidationReturns]' passed (0.155 seconds).
+Test Suite 'NativeScriptMainRunLoopCallbackTests' passed at 2026-11-25 01:02:37.473.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.179 (0.179) seconds
+Test Suite 'NativeScriptMainRunLoopCallbackTests.xctest' passed at 2026-11-25 01:02:37.474.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.179 (0.179) seconds
+Test Suite 'Selected tests' passed at 2026-11-25 01:02:37.474.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.179 (0.180) seconds

@@ -32,7 +32,16 @@ typedef void (^HanlinPendingResultBlock)(id _Nullable value, NSString * _Nullabl
 @implementation HanlinNativeServicesPendingCallback
 - (void)deliverValue:(nullable id)value error:(nullable NSString *)error {
     if (![NSThread isMainThread]) {
-        dispatch_async(dispatch_get_main_queue(), ^{ [self deliverValue:value error:error]; });
+        // A legacy synchronous call can already be inside a main-queue block
+        // while it pumps the main run loop. Main GCD cannot reenter that block;
+        // schedule on the run loop so its existing wait can receive the result.
+        // Only this native box is retained; invalidation still detaches its JS
+        // completion before a queued delivery can access a closed session.
+        CFRunLoopRef mainRunLoop = CFRunLoopGetMain();
+        CFRunLoopPerformBlock(mainRunLoop, kCFRunLoopDefaultMode, ^{
+            [self deliverValue:value error:error];
+        });
+        CFRunLoopWakeUp(mainRunLoop);
         return;
     }
     HanlinPendingResultBlock completion;
