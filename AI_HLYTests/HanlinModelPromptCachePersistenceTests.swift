@@ -9,16 +9,24 @@ import Testing
 @MainActor
 struct HanlinModelPromptCachePersistenceTests {
     @Test func oldRowsAndOriginalSwiftDataRoundTrip() throws {
-        let container = try ModelContainer(for: AllModels.self,
-            configurations: ModelConfiguration(isStoredInMemoryOnly: true))
-        let context = ModelContext(container)
+        // This hosted fixture owns a local store independently of app-group or
+        // CloudKit entitlement discovery in the production application.
+        let configuration = ModelConfiguration(
+            isStoredInMemoryOnly: true,
+            groupContainer: .none,
+            cloudKitDatabase: .none
+        )
+        let container = try ModelContainer(for: AllModels.self, configurations: configuration)
+        let context = container.mainContext
         let row = AllModels(name: "claude", displayName: "Claude", position: 0, company: "ANTHROPIC")
         #expect(row.promptCachePolicy == nil)
         context.insert(row)
         let policy = HanlinPromptCachePolicy(anthropicTTL: .oneHour)
         try row.setPromptCachePolicy(policy)
         try context.save()
-        let reloaded = try #require(ModelContext(container).fetch(FetchDescriptor<AllModels>()).first)
+        let readContext = ModelContext(container)
+        defer { withExtendedLifetime((container, readContext)) {} }
+        let reloaded = try #require(readContext.fetch(FetchDescriptor<AllModels>()).first)
         #expect(reloaded.promptCachePolicy == policy)
         #expect(HanlinApplicationModel(reloaded).promptCachePolicy == policy)
         try reloaded.setPromptCachePolicy(nil)
