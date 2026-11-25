@@ -770,7 +770,8 @@ struct HanlinScriptMiniAppRegistrationTests {
         secondaryRuntime: HanlinRuntimeProfile? = nil
     ) throws -> HanlinStoredPackageSnapshot {
         let main = runtime == .hanlinNativeScript ? "bundle.mjs" : "bundle.js"
-        let inputSchema = try HanlinJSONSchemaDocument.decodeCanonicalJSON(Data(#"{"type":"object"}"#.utf8))
+        let inputSchema = try HanlinJSONSchemaDocument.decodeCanonicalJSON(
+            Data(#"{"$schema":"https://json-schema.org/draft/2020-12/schema","type":"object"}"#.utf8))
         let app = HanlinPackageEntrypointDescriptor(
             id: "app", kind: .app, sourcePath: "source/app/\(main)",
             supportedContexts: [.mainApplication], runtimePolicyID: "foreground-app-v1",
