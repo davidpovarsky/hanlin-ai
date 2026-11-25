@@ -1284,22 +1284,12 @@ struct ChatBubbleView: View {
                         
                         Spacer()
                         
-                        if event.type.lowercased() == "calendar" {
-                            VStack(alignment: .center) {
-                                Spacer()
-                                // 点击跳转至系统日历
-                                Button(action: {
-                                    // 使用 "calshow" URL scheme 打开系统日历
-                                    if let url = URL(string: "calshow://") {
-                                        UIApplication.shared.open(url)
-                                    }
-                                }, label: {
-                                    Image(systemName: "arrow.up.forward.square")
-                                        .foregroundColor(.hanlinHLGreen)
-                                        .padding(3)
-                                })
-                                Spacer()
-                            }
+                        VStack {
+                            Spacer()
+                            HanlinCalendarItemOpenButton(item: event)
+                                .foregroundColor(.hanlinHLGreen)
+                                .padding(3)
+                            Spacer()
                         }
                     }
                     .padding(10)

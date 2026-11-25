@@ -62,6 +62,7 @@ func buildMemoryTools(
 
     // MARK: Calendar & Reminders
     if calendarEnabled {
+        tools.append(calendarOperationToolSchema())
         tools.append(["type": "function", "function": [
             "name": "search_calendar_and_reminders",
             "description": zh ? "用途：筛选系统日历事件与提醒事项。触发场景：用户查看空闲时间、确认提醒、按地点查找会议等。至少需提供关键词、日期范围或地点之一。日期字段格式 yyyy‑MM‑dd，并以本地时区解析。约束：若所有过滤条件为空，不应调用。可与 get_current_location 联用，如需先确定所在城市。" :
@@ -71,14 +72,14 @@ func buildMemoryTools(
                 "start_date": ["type": "string", "format": "date", "description": zh ? "开始日期（含），格式 yyyy‑MM‑dd" : "Start date (inclusive) yyyy‑MM‑dd"],
                 "end_date":   ["type": "string", "format": "date", "description": zh ? "结束日期（含），格式 yyyy‑MM‑dd" : "End date (inclusive) yyyy‑MM‑dd"],
                 "location":   ["type": "string", "description": zh ? "地点关键词，例如‘上海’" : "Location keyword, e.g., 'Shanghai'"],
-                "event_type": ["type": "string", "enum": ["calendar", "reminder"], "description": zh ? "'calendar' 表示日历事件，'reminder' 表示提醒事项" : "'calendar' or 'reminder'"]
+                "event_type": ["type": "string", "enum": ["calendar", "reminder", "both"], "description": zh ? "'calendar' 表示日历事件，'reminder' 表示提醒事项" : "'calendar' or 'reminder'"]
             ], "required": []]
         ]])
 
         tools.append(["type": "function", "function": [
             "name": "write_system_event",
-            "description": zh ? "用途：向系统写入日历或提醒。触发场景：用户新增会议、待办、提醒药物等。输入要求：时间字段必须为 ISO‑8601 且包含时区，例如 2025‑04‑22T14:00:00+08:00；若 type=calendar，需同时给出 start_date 与 end_date；若 type=reminder，需提供 due_date。约束：提醒不支持单独地点字段，请放入 notes。可与 search_calendar_and_reminders 联用，写入后可立即检索确认。" :
-                "Purpose: add a calendar event or reminder. Use when user schedules meetings, tasks, medication alerts, etc. Time fields must be ISO‑8601 with timezone, e.g., 2025‑04‑22T14:00:00+08:00. If type=calendar provide both start_date and end_date; if type=reminder provide due_date. Reminder has no separate location field—include it in 'notes'. Can pair with: search_calendar_and_reminders to verify write.",
+            "description": zh ? "用途：仅新增系统日历或提醒；更新或删除已有项目必须使用 manage_calendar 和真实 identifier。触发场景：用户新增会议、待办、提醒药物等。输入要求：时间字段必须为 ISO‑8601 且包含时区，例如 2025‑04‑22T14:00:00+08:00；若 type=calendar，需同时给出 start_date 与 end_date；若 type=reminder，需提供 due_date。约束：提醒不支持单独地点字段，请放入 notes。可与 search_calendar_and_reminders 联用，写入后可立即检索确认。" :
+                "Purpose: CREATE a new calendar event or reminder. This never edits an existing item. For changes, completion or deletion, use manage_calendar with its exact identifier. Use when user schedules meetings, tasks, medication alerts, etc. Time fields must be ISO‑8601 with timezone, e.g., 2025‑04‑22T14:00:00+08:00. If type=calendar provide both start_date and end_date; if type=reminder provide due_date. Reminder has no separate location field—include it in 'notes'. Can pair with: search_calendar_and_reminders to verify write.",
             "parameters": ["type": "object", "properties": [
                 "type":       ["type": "string", "description": zh ? "'calendar' 或 'reminder'" : "'calendar' or 'reminder'"],
                 "title":      ["type": "string", "description": zh ? "标题" : "Title"],
@@ -88,7 +89,7 @@ func buildMemoryTools(
                 "location":   ["type": "string", "description": zh ? "地点(仅 calendar 类型适用)" : "Location (calendar only)"],
                 "notes":      ["type": "string", "description": zh ? "备注，可包含提醒的地点信息" : "Notes; include location for reminders"],
                 "priority":   ["type": "integer", "description": zh ? "提醒优先级 1‑9，0 表示未设置" : "Reminder priority 1‑9, 0 means unset"],
-                "reminder_minutes": ["type": "integer", "description": zh ? "提醒事项的提前提醒时间(分钟)，默认5分钟，仅 reminder 类型适用" : "Advance reminder time in minutes for reminders, default 5 minutes, reminder type only"]
+                "reminder_minutes": ["type": "integer", "description": zh ? "提醒事项的提前提醒时间(分钟)，省略时不添加闹钟，仅 reminder 类型适用" : "Advance reminder time in minutes for reminders, omit for no alarm; positive minutes schedule an advance reminder, reminder type only"]
             ], "required": ["type", "title"]]
         ]])
     }

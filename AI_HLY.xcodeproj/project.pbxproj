@@ -3772,7 +3772,8 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "Hanlin AI";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
-				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "Hanlin AI accesses your calendars only when you ask it to read or add an event.";
+				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "Hanlin AI accesses your calendars only when you ask it to read or change your events.";
+				INFOPLIST_KEY_NSCalendarsWriteOnlyAccessUsageDescription = "Hanlin AI adds calendar events only when you ask it to.";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Hanlin AI accesses the camera only when you ask it to take a photo.";
 				INFOPLIST_KEY_NSContactsUsageDescription = "Hanlin AI accesses your contacts only when you ask it to find a person or use contact information for a feature you requested.";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "Hanlin AI uses Face ID only when you ask it to unlock or authorize a protected action in the app.";
@@ -4080,7 +4081,8 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "Hanlin AI";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
-				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "Hanlin AI accesses your calendars only when you ask it to read or add an event.";
+				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "Hanlin AI accesses your calendars only when you ask it to read or change your events.";
+				INFOPLIST_KEY_NSCalendarsWriteOnlyAccessUsageDescription = "Hanlin AI adds calendar events only when you ask it to.";
 				INFOPLIST_KEY_NSCameraUsageDescription = "Hanlin AI accesses the camera only when you ask it to take a photo.";
 				INFOPLIST_KEY_NSContactsUsageDescription = "Hanlin AI accesses your contacts only when you ask it to find a person or use contact information for a feature you requested.";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "Hanlin AI uses Face ID only when you ask it to unlock or authorize a protected action in the app.";
