@@ -1,0 +1,42 @@
+64: Test Suite 'Selected tests' started at 2026-11-25 08:37:10.981.
+65: Test Suite 'HanlinMiniAppsUITests.xctest' started at 2026-11-25 08:37:10.981.
+66: Test Suite 'MiniAppsExternalModalLifetimeUITests' started at 2026-11-25 08:37:10.982.
+67: Test Case '-[HanlinMiniAppsUITests.MiniAppsExternalModalLifetimeUITests testExternalInvocationSurvivesNestedFullScreenModal]' started.
+68:     t =     0.06s Start Test at 2026-11-25 08:37:11.045
+69:     t =     0.34s Set Up
+121:     t =    25.27s     Wait for com.itorah.hanlinminiapps to idle
+122:     t =    25.28s Waiting 30.0s for "hanlin-package-install" Button to exist
+123:     t =    26.37s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-install" Button`
+124:     t =    26.38s         Checking existence of `"hanlin-package-install" Button`
+125:     t =    27.45s Find the "hanlin-package-install" Button
+126:     t =    27.71s Tap "hanlin-package-install" Button
+127:     t =    27.71s     Wait for com.itorah.hanlinminiapps to idle
+128:     t =    27.72s     Find the "hanlin-package-install" Button
+129:     t =    27.90s     Check for interrupting elements affecting "hanlin-package-install" Button
+130:     t =    28.01s         Wait for com.apple.springboard to idle
+131:     t =    28.07s     Synthesize event
+132:     t =    28.39s     Wait for com.itorah.hanlinminiapps to idle
+133:     t =    28.64s Waiting 60.0s for "hanlin-package-install" Button to not exist
+134:     t =    29.71s     Checking `Expect predicate `existsNoRetry == 0` for object "hanlin-package-install" Button`
+437:     t =    88.65s     Checking `Expect predicate `existsNoRetry == 0` for object "hanlin-package-install" Button`
+438:     t =    88.65s         Checking existence of `"hanlin-package-install" Button`
+439:     t =    88.87s         Capturing element debug description
+440:     t =    88.87s             Requesting snapshot of accessibility hierarchy for app with pid 88965
+441:     t =    88.97s             Requesting snapshot of accessibility hierarchy for app with pid 88965
+442:     t =    88.98s             Requesting snapshot of accessibility hierarchy for app with pid 88965
+443:     t =    88.98s             Requesting snapshot of accessibility hierarchy for app with pid 88965
+444:     t =    88.98s     Checking existence of `"hanlin-package-install" Button`
+445:     t =    89.21s Collecting debug information to assist test failure triage
+446:     t =    89.21s     Requesting snapshot of accessibility hierarchy for app with pid 88965
+447: /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests.swift:52: error: -[HanlinMiniAppsUITests.MiniAppsExternalModalLifetimeUITests testExternalInvocationSurvivesNestedFullScreenModal] : XCTAssertTrue failed - The original compiler and installer must finish
+448: 
+449:     t =    91.33s Tear Down
+450:     t =    91.33s     Find the Target Application 'com.itorah.hanlinminiapps'
+451:     t =    91.71s     Added attachment named 'external-modal-failure'
+452:     t =    91.71s     Requesting snapshot of accessibility hierarchy for app with pid 88965
+453:     t =    92.31s     Requesting snapshot of accessibility hierarchy for app with pid 88965
+454:     t =    92.46s     Added attachment named 'external-modal-accessibility'
+455:     t =    92.46s     Terminate com.itorah.hanlinminiapps:88965
+456: Test Case '-[HanlinMiniAppsUITests.MiniAppsExternalModalLifetimeUITests testExternalInvocationSurvivesNestedFullScreenModal]' failed (94.288 seconds).
+457: Test Suite 'MiniAppsExternalModalLifetimeUITests' failed at 2026-11-25 08:38:45.331.
+458: 	 Executed 1 test, with 1 failure (0 unexpected) in 94.288 (94.350) seconds
