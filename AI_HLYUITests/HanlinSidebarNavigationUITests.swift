@@ -83,6 +83,28 @@ final class HanlinSidebarNavigationUITests: XCTestCase {
         add(hierarchy)
     }
 
+
+    func testHistorySeparatesPinnedAndTodayWithoutDuplicatingChats() throws {
+        launch()
+        tap("hanlin-history-open")
+        assertOpen()
+        let pinned = app.staticTexts["hanlin-history-section-pinned"].firstMatch
+        let today = app.staticTexts["hanlin-history-section-today"].firstMatch
+        XCTAssertTrue(pinned.waitForExistence(timeout: 10))
+        XCTAssertTrue(today.waitForExistence(timeout: 10))
+        XCTAssertLessThan(pinned.frame.minY, today.frame.minY)
+        let pinnedRows = app.buttons.matching(identifier: "hanlin-chat-row-Older Archived Thread")
+        XCTAssertEqual(pinnedRows.count, 1, "Pinned conversations must not be repeated in date sections.")
+        XCTAssertTrue(pinnedRows.firstMatch.isHittable)
+        let todayRow = app.buttons["hanlin-chat-row-Architecture Review Notes"].firstMatch
+        XCTAssertTrue(todayRow.exists)
+        XCTAssertGreaterThan(todayRow.frame.minY, today.frame.minY)
+        XCTAssertGreaterThan(todayRow.frame.width, library.frame.width * 0.6)
+        attach("grouped-history-pinned-and-today")
+        tap("hanlin-history-done")
+        assertClosed()
+    }
+
     func testHistoryRevealKeepsDraftAndOriginalProfileRoute() throws {
         launch()
         editor.tap()

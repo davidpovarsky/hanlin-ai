@@ -29,6 +29,7 @@ struct HanlinCompactConversationLibrary: View {
     let onDeleteRecord: (ChatRecords) -> Void
     let onRefresh: () -> Void
     var isPresented: Bool = true
+    var selectedConversationID: UUID? = nil
     var keyboardOwner: HanlinCompactKeyboardOwner? = nil
 
     private var filteredRecords: [ChatRecords] {
@@ -53,14 +54,24 @@ struct HanlinCompactConversationLibrary: View {
                 .listRowSeparator(.hidden)
                 .padding(.top, 28)
             } else {
-                Section {
-                    ForEach(filteredRecords, id: \.id) { record in
-                        libraryRow(for: record)
+                ForEach(HanlinConversationHistory.sections(from: filteredRecords)) { section in
+                    Section {
+                        ForEach(section.records, id: \.id) { record in
+                            libraryRow(for: record)
+                        }
+                    } header: {
+                        Text(section.title)
+                            .font(HanlinTypography.subheadline.weight(.semibold))
+                            .textCase(nil)
+                            .accessibilityIdentifier("hanlin-history-section-\(section.id.rawValue)")
                     }
                 }
             }
         }
-        .listStyle(.plain)
+        .listStyle(.sidebar)
+        .background {
+            Color(uiColor: .secondarySystemGroupedBackground).ignoresSafeArea(.container)
+        }
         .navigationTitle(String(localized: "All Conversations", bundle: HanlinLocalization.bundle))
         .navigationBarTitleDisplayMode(.inline)
         .toolbarVisibility(.visible, for: .navigationBar)
@@ -131,7 +142,8 @@ struct HanlinCompactConversationLibrary: View {
             ChatRowView(
                 record: record,
                 searchText: searchText,
-                matchedSnippet: snippet
+                matchedSnippet: snippet,
+                isSelected: selectedConversationID != nil && selectedConversationID == record.id
             )
             .contentShape(Rectangle())
         }
@@ -158,10 +170,9 @@ struct HanlinCompactConversationLibrary: View {
                 Label(hanlin: "删除消息", systemImage: "trash")
             }
         }
-        .padding(.horizontal)
-        .padding(.vertical, 5)
-        .listRowInsets(EdgeInsets())
-        .listRowBackground(pinnedBackground(for: record))
+        .listRowInsets(EdgeInsets(top: 2, leading: 12, bottom: 2, trailing: 12))
+        .listRowBackground(Color.clear)
+        .listRowSeparator(.hidden)
         .swipeActions(edge: .trailing, allowsFullSwipe: true) {
             Button(role: .destructive) {
                 onDeleteRecord(record)
@@ -193,15 +204,4 @@ struct HanlinCompactConversationLibrary: View {
         .accessibilityIdentifier("hanlin-chat-row-\(record.name ?? "")")
     }
 
-    @ViewBuilder
-    private func pinnedBackground(for record: ChatRecords) -> some View {
-        if record.isPinned {
-            BlurView(style: .systemUltraThinMaterial)
-                .clipShape(RoundedRectangle(cornerRadius: 20))
-                .shadow(color: Color.from(name: record.color ?? "hlBlue"), radius: 1)
-                .padding(3)
-        } else {
-            Color.clear
-        }
-    }
 }

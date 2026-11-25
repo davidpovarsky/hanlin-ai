@@ -110,7 +110,11 @@ struct MainTabView: View {
             set: { if !$0 { splitCoordinator.dismissFailure(forReceivingWindowID: receivingWindowID) } }
         )) { Button(hanlin: "OK") { splitCoordinator.dismissFailure(forReceivingWindowID: receivingWindowID) } }
         message: { Text("Open the original conversation to check this request. Its result could not be returned to this window.", bundle: HanlinLocalization.bundle) }
-        .background(Color(.systemBackground))
+        .background {
+            // Fill the available scene, including its container safe area,
+            // without moving controls under the iPad window controls or keyboard.
+            Color(uiColor: .systemBackground).ignoresSafeArea(.container)
+        }
         .sheet(isPresented: $torahRouter.isPresentingReader) {
             if let link = torahRouter.activeDeepLink {
                 TorahSourceReaderView(deepLink: link)

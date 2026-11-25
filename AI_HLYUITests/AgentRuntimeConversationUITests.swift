@@ -729,8 +729,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
 
         let sourceSheet = app.descendants(matching: .any)["hanlin-scoped-sources"].firstMatch
         XCTAssertTrue(sourceSheet.waitForExistence(timeout: 10), "Tapping the inline chip must open its scoped sources")
-        XCTAssertLessThan(sourceSheet.frame.height, app.frame.height * 0.42,
-                          "A one-source sheet must be compact instead of leaving a large empty iPad panel")
+        assertReadableSourcesSheet(sourceSheet, in: app)
         let sourceRows = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH 'hanlin-source-'"))
         XCTAssertEqual(sourceRows.count, 1, "This sentence cites one canonical returned source")
         XCTAssertTrue(sourceRows.firstMatch.label.contains("Hanlin Reference Source"))
@@ -751,6 +750,73 @@ final class AgentRuntimeConversationUITests: XCTestCase {
             add(paragraph)
             attachScreenshot(screenshotPrefix + "_FinalRTLAnswer", in: app)
         }
+    }
+
+
+    // Regression for the real all-sources footer: both one and many sources
+    // must use the shared native sheet at a usable width, with real scrolling.
+    func testSourcesSheetSingleSourceHasReadableNativeSize() throws {
+        try exerciseSourcesSheet(count: 1, hebrew: false)
+    }
+
+    func testSourcesSheetTwentySevenSourcesScrollsInHebrew() throws {
+        try exerciseSourcesSheet(count: 27, hebrew: true)
+    }
+
+    private func assertReadableSourcesSheet(_ sheet: XCUIElement, in app: XCUIApplication) {
+        let window = app.windows.firstMatch.frame
+        XCTAssertGreaterThanOrEqual(sheet.frame.width, min(320, window.width * 0.7),
+            "A sources list must retain native readable width instead of fitting to a favicon.")
+        XCTAssertGreaterThanOrEqual(sheet.frame.height, min(300, window.height * 0.35),
+            "The native sheet must provide useful space for text and scrolling.")
+        XCTAssertLessThanOrEqual(sheet.frame.width, window.width + 2)
+        XCTAssertLessThanOrEqual(sheet.frame.height, window.height + 2)
+        let close = app.buttons["hanlin-sources-close"].firstMatch
+        XCTAssertTrue(close.isHittable, "The native dismiss control must stay reachable.")
+    }
+
+    private func exerciseSourcesSheet(count: Int, hebrew: Bool) throws {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        app.launchArguments = ["-AppleLanguages", hebrew ? "(he)" : "(en)",
+                               "-AppleLocale", hebrew ? "he_IL" : "en_US"]
+        app.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
+        app.launchEnvironment["HANLIN_AGENT_RUNTIME_UI_ACCEPTANCE"] = "1"
+        app.launchEnvironment["HANLIN_SOURCES_SHEET_ACCEPTANCE_COUNT"] = String(count)
+        app.launch()
+        defer { app.terminate() }
+        openChat(in: app)
+
+        let footer = app.buttons["hanlin-all-sources"].firstMatch
+        XCTAssertTrue(footer.waitForExistence(timeout: 20))
+        XCTAssertTrue(footer.label.contains(String(count)), "The original footer must retain every source.")
+        tapElement(footer)
+        let sheet = app.descendants(matching: .any)["hanlin-scoped-sources"].firstMatch
+        XCTAssertTrue(sheet.waitForExistence(timeout: 10))
+        assertReadableSourcesSheet(sheet, in: app)
+
+        let first = app.buttons.matching(NSPredicate(
+            format: "identifier BEGINSWITH 'hanlin-source-' AND label BEGINSWITH 'Source 1:'"
+        )).firstMatch
+        XCTAssertTrue(first.waitForExistence(timeout: 10))
+        XCTAssertGreaterThan(first.frame.width, sheet.frame.width * 0.6,
+            "A readable title must occupy the sheet, not a compressed icon-width column.")
+        XCTAssertTrue(first.isHittable)
+        attachScreenshot("Sources-\(count)-Readable-\(hebrew ? "HE" : "EN")", in: app)
+
+        if count > 1 {
+            let last = app.buttons.matching(NSPredicate(
+                format: "identifier BEGINSWITH 'hanlin-source-' AND label BEGINSWITH %@",
+                "Source \(count):"
+            )).firstMatch
+            for _ in 0..<12 where !last.isHittable { sheet.swipeUp() }
+            XCTAssertTrue(last.isHittable, "Every returned source must remain reachable by scrolling.")
+            XCTAssertTrue(last.label.contains("מקור לבדיקה"))
+            attachScreenshot("Sources-\(count)-Last-Row", in: app)
+        }
+        tapElement(app.buttons["hanlin-sources-close"].firstMatch)
+        XCTAssertTrue(sheet.waitForNonExistence(timeout: 10))
+        XCTAssertTrue(footer.isHittable, "Closing sources must restore the same answer footer.")
     }
 
     func testNativePartialSelectionSaveAndOriginalLongPressPreview() throws {
