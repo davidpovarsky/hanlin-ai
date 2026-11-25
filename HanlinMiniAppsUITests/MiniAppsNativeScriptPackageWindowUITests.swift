@@ -1,4 +1,5 @@
 import XCTest
+import UIKit
 
 /// Two separately imported packages must keep their own modules, resources,
 /// document callbacks and data while sharing the actual NativeScript runtime.
@@ -116,6 +117,7 @@ final class MiniAppsNativeScriptPackageWindowUITests: XCTestCase {
                       "The first request must occupy the existing catalog window.")
         editAndPrepare(epsilon, name: "epsilon", increments: 1)
         capture("native-existing-root-epsilon-prepared")
+        try assertPendingRootSurvivesOrientationChanges("epsilon")
 
         let zeta = try open("zeta")
         editAndPrepare(zeta, name: "zeta", increments: 1)
@@ -149,6 +151,38 @@ final class MiniAppsNativeScriptPackageWindowUITests: XCTestCase {
         capture("native-existing-root-original-callback-completed")
         closeCompleted(repeatedEpsilon)
         assertClosedRequestsStayClosedAfterColdRelaunch()
+    }
+
+    private func assertPendingRootSurvivesOrientationChanges(_ name: String) throws {
+        defer { XCUIDevice.shared.orientation = .portrait }
+        let orientations: [UIDeviceOrientation] = [
+            .landscapeLeft, .portraitUpsideDown, .landscapeRight, .portrait,
+        ]
+        for orientation in orientations {
+            XCUIDevice.shared.orientation = orientation
+            XCTAssertEqual(XCUIDevice.shared.orientation, orientation)
+            let window = app.windows.firstMatch
+            XCTAssertTrue(window.navigationBars["NativeScript package " + name]
+                .waitForExistence(timeout: 10))
+            XCTAssertTrue(window.buttons["hanlin-ns-window-increment"].isHittable)
+            let frame = window.frame
+            if orientation.isLandscape {
+                XCTAssertGreaterThan(frame.width, frame.height,
+                    "The active iPad scene must actually render in landscape.")
+            } else {
+                XCTAssertGreaterThan(frame.height, frame.width,
+                    "The active iPad scene must actually render in portrait.")
+            }
+            try NativeScriptWindowUIInteractions.assertSameProcess(
+                in: app, expected: &nativeProcessID, requestID: try XCTUnwrap(requests[name])
+            )
+            assertLabel(window.staticTexts["hanlin-ns-window-request"],
+                equals: try XCTUnwrap(UUID(uuidString: try XCTUnwrap(requests[name]))).uuidString)
+            assertValue(window.textViews["hanlin-ns-window-input"], equals: name + "-edited")
+            assertLabel(window.staticTexts["hanlin-ns-window-counter"], equals: "1")
+            assertLabel(window.staticTexts["hanlin-ns-window-status"], equals: "Prepared")
+            capture("native-pending-root-orientation-\(orientation.rawValue)")
+        }
     }
 
     private func selectExistingWindowUsingAppExpose(_ name: String) throws -> XCUIElement {
@@ -209,11 +243,18 @@ final class MiniAppsNativeScriptPackageWindowUITests: XCTestCase {
                 in: app, expected: &nativeProcessID, requestID: try XCTUnwrap(requests[name])
             )
             capture("native-existing-window-card-opened-\(index)")
-            let window = app.windows.containing(.navigationBar, identifier: title).firstMatch
-            let increment = window.buttons["hanlin-ns-window-increment"]
+            // The actual AX query orders the foreground Window (Main) first.
+            // Other scenes still expose their controls with full-screen frames,
+            // and asking their buttons for hittability can throw instead of
+            // returning false. Identify the front scene before that assertion.
+            let window = app.windows.firstMatch
+            let foregroundTree = XCTAttachment(string: window.debugDescription)
+            foregroundTree.name = "native-existing-window-foreground-\(index)"
+            foregroundTree.lifetime = .keepAlways
+            add(foregroundTree)
             let foreground = XCTNSPredicateExpectation(
-                predicate: NSPredicate(format: "exists == true AND hittable == true"),
-                object: increment
+                predicate: NSPredicate(format: "exists == true"),
+                object: window.navigationBars[title]
             )
             if XCTWaiter.wait(for: [foreground], timeout: 5) == .completed,
                app.state == .runningForeground {
