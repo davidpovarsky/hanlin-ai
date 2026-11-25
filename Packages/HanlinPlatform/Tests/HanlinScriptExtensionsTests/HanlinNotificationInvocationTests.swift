@@ -48,6 +48,66 @@ struct HanlinNotificationInvocationTests {
         #expect(try reopened.receipt(for: event.id) == result)
     }
 
+    @Test func independentlyAuthoredAPNsParametersDecodeAsPlainJSON() throws {
+        for example in notificationParameterExamples {
+            let object = try plainNotificationObject(parametersJSON: example.json)
+            let decoded = try #require(try HanlinNotificationEvent.decode(
+                userInfo: [HanlinNotificationEvent.userInfoKey: object]))
+            #expect(decoded.parameters == example.value, "Parameters: \(example.json)")
+            #expect(decoded.actionID.rawValue == "hostServicesEcho")
+            #expect(decoded.appID.rawValue == "notification.demo")
+        }
+        #expect(try HanlinNotificationEvent.decode(userInfo: ["message": "ordinary notification"]) == nil)
+    }
+
+    @Test func userInfoEmitsPlainJSONWhileInternalCodableKeepsItsTags() throws {
+        for example in notificationParameterExamples {
+            let event = try event(parameters: example.value)
+            let external = try #require(try event.userInfo()[HanlinNotificationEvent.userInfoKey] as? [String: Any])
+            let parameters = try #require(external["parameters"])
+            let actual = try JSONSerialization.data(withJSONObject: parameters,
+                options: [.fragmentsAllowed, .sortedKeys])
+            let expected = try JSONSerialization.data(
+                withJSONObject: JSONSerialization.jsonObject(
+                    with: Data(example.json.utf8), options: [.fragmentsAllowed]),
+                options: [.fragmentsAllowed, .sortedKeys])
+            #expect(actual == expected, "Parameters: \(example.json)")
+            #expect(try HanlinNotificationEvent.decode(userInfo: event.userInfo()) == event)
+
+            let stored = try JSONEncoder().encode(event)
+            let storedObject = try #require(try JSONSerialization.jsonObject(with: stored) as? [String: Any])
+            let tagged = try #require(storedObject["parameters"] as? [String: Any])
+            #expect(tagged["type"] as? String == example.storageType)
+            #expect(try JSONDecoder().decode(HanlinNotificationEvent.self, from: stored) == event)
+        }
+    }
+
+    @Test func independentlyAuthoredAPNsStillRequiresTheCompleteValidEnvelope() throws {
+        let original = try plainNotificationObject(parametersJSON: "null")
+        for field in ["schemaVersion", "id", "createdAtUnixMilliseconds", "expiresAtUnixMilliseconds",
+                      "appID", "identity", "actionID", "parameters"] {
+            var object = original
+            object.removeValue(forKey: field)
+            #expect(throws: HanlinInvocationQueueError.invalidEnvelope) {
+                _ = try HanlinNotificationEvent.decode(userInfo: [HanlinNotificationEvent.userInfoKey: object])
+            }
+        }
+        let malformed: [(String, Any)] = [
+            ("schemaVersion", 2), ("id", "not-a-uuid"),
+            ("createdAtUnixMilliseconds", 1_795_639_549_002.5),
+            ("expiresAtUnixMilliseconds", 1_795_639_549_002),
+            ("appID", "bad/app"), ("identity", NSNull()), ("actionID", "bad/action"),
+            ("parameters", ["invalid": Double.infinity]), ("unexpected", true)
+        ]
+        for (field, value) in malformed {
+            var object = original
+            object[field] = value
+            #expect(throws: (any Error).self) {
+                _ = try HanlinNotificationEvent.decode(userInfo: [HanlinNotificationEvent.userInfoKey: object])
+            }
+        }
+    }
+
     @Test func foregroundAdmissionLeavesUnstartedWorkQueuedWithoutConsumingAnAttempt() async throws {
         let root = try fixture()
         defer { try? FileManager.default.removeItem(at: root) }
@@ -227,6 +287,46 @@ struct HanlinNotificationInvocationTests {
         #expect(rejected?.status == .stale && rejected?.failure == .staleGeneration)
         #expect(rejected?.value == nil)
         #expect(try store.receipt(for: stale.id) == rejected)
+    }
+
+    private var notificationParameterExamples: [(json: String, value: HanlinJSONValue, storageType: String)] {
+        [
+            ("null", .null, "null"),
+            ("true", .bool(true), "bool"),
+            ("41", .integer(41), "integer"),
+            ("1.5", .number(1.5), "number"),
+            (#""שלום🙂""#, .string("שלום🙂"), "string"),
+            (#"[null,true,41,"שלום🙂"]"#, .array([.null, .bool(true), .integer(41), .string("שלום🙂")]), "array"),
+            (#"{"challenge":"notification-os-regression","ordinal":41,"unicode":"שלום🙂"}"#,
+             .object(["challenge": .string("notification-os-regression"), "ordinal": .integer(41),
+                      "unicode": .string("שלום🙂")]), "object"),
+            (#"{"type":"integer","value":"41"}"#,
+             .object(["type": .string("integer"), "value": .string("41")]), "object")
+        ]
+    }
+
+    private func plainNotificationObject(parametersJSON: String) throws -> [String: Any] {
+        // Independently authored APNs data, never produced by event.userInfo()
+        // or the internal HanlinJSONValue encoder.
+        let json = """
+        {
+          "schemaVersion": 1,
+          "id": "1a36dea1-72a1-4ba4-b23d-f36ad3f693b5",
+          "createdAtUnixMilliseconds": 1795639549002,
+          "expiresAtUnixMilliseconds": 1795639729002,
+          "appID": "notification.demo",
+          "identity": {
+            "installedPackageID": "installed.notification.demo",
+            "packageID": "notification.demo",
+            "generation": 1,
+            "entrypointID": "hostServicesEcho",
+            "variantID": "default"
+          },
+          "actionID": "hostServicesEcho",
+          "parameters": \(parametersJSON)
+        }
+        """
+        return try #require(try JSONSerialization.jsonObject(with: Data(json.utf8)) as? [String: Any])
     }
 
     private func publish(_ event: HanlinNotificationEvent, in store: HanlinScriptExtensionStore) throws {
