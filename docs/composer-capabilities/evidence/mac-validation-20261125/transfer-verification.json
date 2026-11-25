@@ -1,0 +1,9 @@
+{
+  "status": "VERIFIED",
+  "verifiedAtUTC": "2026-11-25T00:23:40.973338+00:00",
+  "destination": "/mnt/development/projects/transfer/hanlin-composer-capabilities-20261124/mac-validation-evidence-20261125",
+  "copiedFiles": 15,
+  "originalLogsPreserved": true,
+  "sha256sumsSHA256": "0681c8a75a33f8ae56aa9f60ea43a9421c83dffd56a055c66dcfd2c36b05b722",
+  "archiveBytes": 133120
+}

@@ -82,6 +82,10 @@ Focused tests are in `HanlinComposerCapabilityTests.swift`:
 
 `HanlinCapabilityCustomPanelProviderTests.swift` checks capability-scoped routing, unavailable routes, registration without rendering, and forwarding the live draft binding.
 
+`HanlinCapabilityNumberInputTests.swift` verifies exact decimal/negative intermediate edits, invalid coordinate validation and resynchronization after an external map update.
+
 `AI_HLYUITests/HanlinComposerCapabilitiesUITests.swift` uses the existing acceptance launch infrastructure to exercise MiniApp attachment without foreground launch, attachment-only send availability, Hebrew text and the real caret with `@` and `/`, and catalog/map edit preservation. The catalog/map fixture contains metadata only; these tests do not claim a model response or tool execution.
 
 The draft tests require UIKit and therefore an iOS test destination. Native compilation, simulator interaction and application integration must be recorded separately; source tests and documentation are not build receipts.
+
+The current [execution evidence index](composer-capabilities/EVIDENCE_INDEX.md) records the eleven shared SDK iOS tests as executed passes at their original source, preserves failed/interrupted attempts, keeps application/native-engine/UI validation pending, and records the latest RuntimeHost archive freshness separately. [VALIDATION_PLAN.json](composer-capabilities/VALIDATION_PLAN.json) contains the exact remaining selectors.

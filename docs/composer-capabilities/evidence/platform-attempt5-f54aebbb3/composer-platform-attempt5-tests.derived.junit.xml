@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuite name="Hanlin assistant fixture and Expo plugin focused validation" tests="6" failures="0" errors="0" skipped="0" time="9.792">
+  <properties>
+    <property name="evidenceFormat" value="derived from exact Swift Testing result rows" />
+    <property name="sourceCommit" value="f54aebbb35169ea63eca146a1ba3ef4e8bf4f84d" />
+    <property name="rawLogSHA256" value="cd4f7f085fc4142f2a411c5733e2e95f3fdd2757b47204015580c491a4524b69" />
+    <property name="expectedCount" value="6" />
+  </properties>
+  <testcase classname="HanlinScriptAnalyzerTests" name="expoAssetPluginRequiresItsActualEmbeddedVersion" time="0.01">
+    <system-out>Prepared Expo packages preserve the embedded original asset version contract — EXECUTED_PASS</system-out>
+  </testcase>
+  <testcase classname="HanlinScriptAnalyzerTests" name="expoSwiftUIContract" time="0.013">
+    <system-out>Validates the embedded Expo SwiftUI plugin contract — EXECUTED_PASS</system-out>
+  </testcase>
+  <testcase classname="HanlinScriptAnalyzerTests" name="unavailableModernNativePluginsFailBeforeImport" time="0.013">
+    <system-out>Unavailable native plugins fail before Expo and NativeScript import — EXECUTED_PASS</system-out>
+  </testcase>
+  <testcase classname="HanlinScriptMiniAppRegistrationTests" name="preparedAssistantEntrypointsRemainDistinctInCatalog" time="0.006">
+    <system-out>Several dedicated assistant tools preserve their sources, configuration and installed identities — EXECUTED_PASS</system-out>
+  </testcase>
+  <testcase classname="HanlinScriptMiniAppRegistrationTests" name="assistantEntrypointResolutionRequiresExactHandler" time="0.004">
+    <system-out>Ambiguous assistant kinds need an exact registered handler without foreground fallback — EXECUTED_PASS</system-out>
+  </testcase>
+  <testcase classname="HanlinScriptMiniAppRegistrationTests" name="duplicateAssistantHandlersRemainInvalid" time="0.002">
+    <system-out>Different assistant identities cannot alias the same dedicated handler — EXECUTED_PASS</system-out>
+  </testcase>
+</testsuite>
