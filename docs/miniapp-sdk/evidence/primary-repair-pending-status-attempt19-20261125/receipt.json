@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "capturedAt": "2026-11-25T15:25:11.326390+00:00",
+  "status": "EVIDENCE_ONLY_NOT_A_PASS",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 2381,
+      "sha256": "9440e1915c32bbbf9f2f2ae8c0b2640e77e7668c0d8805e00ed34a7fc4b8cf9c"
+    },
+    {
+      "path": "actual-status-observations.json",
+      "bytes": 2645,
+      "sha256": "43488149ffbb381fd80c3ed74c88d6126213be4b85ed0af2a4b486efc35dd7cb"
+    },
+    {
+      "path": "pending-status-provider.patch",
+      "bytes": 6458,
+      "sha256": "dbcbc8f4a2dd32162e13edc464dd4d856f77dee806312c3863e03670d26e4815"
+    },
+    {
+      "path": "raw-model/agent-session-2026-11-25T14-43-02-d10787ff-manifest.json",
+      "bytes": 881,
+      "sha256": "cedba555ab475980b1e1bb3d7aff546c6e82de4340a5f70f2125b91bc391afae"
+    },
+    {
+      "path": "raw-model/agent-session-2026-11-25T14-43-02-d10787ff-stage-snapshots.json",
+      "bytes": 5623,
+      "sha256": "f4d39ae0eb6d50ab9e0e9c45bc248360b6a896eabe4335f1b29acc3ada8badbe"
+    },
+    {
+      "path": "raw-model/agent-session-2026-11-25T14-43-02-d10787ff.json",
+      "bytes": 2147887,
+      "sha256": "1180dfbe26176e3ddb255d2c950548087b82955ad0c8949031dabadd7bbb6c6f"
+    },
+    {
+      "path": "raw-model/receipt.json",
+      "bytes": 1402,
+      "sha256": "450d730ff9e799bce51fb3670978995a73d0408a4ac15d189e1686d6dc66a4d0"
+    },
+    {
+      "path": "source-bindings.json",
+      "bytes": 992,
+      "sha256": "373ce0c179890ec4dd1f345be9a0ddfd90ecc0d978c35cceb0ecd37c4805c03b"
+    }
+  ]
+}
