@@ -148,9 +148,10 @@ public actor HanlinChatEngine {
         let (stream, continuation) = AsyncThrowingStream<HanlinChatStreamEvent, Error>.makeStream()
 
 #if os(iOS) || os(macOS) || os(watchOS) || os(tvOS) || os(visionOS)
-        let session = URLSession(configuration: sessionConfiguration)
+        let owner = HanlinChatProviderSession(configuration: sessionConfiguration)
         let traceID = UUID()
         let task = Task.detached(priority: .userInitiated) {
+            let session = owner.session
             defer { session.finishTasksAndInvalidate() }
             var transportStarted = false
             var tracePending = Data()

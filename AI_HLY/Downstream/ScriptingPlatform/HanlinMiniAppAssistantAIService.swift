@@ -365,7 +365,8 @@ actor HanlinMiniAppAssistantAIService: HanlinMiniAppAssistantService {
 }
 
 /// Reads the original app-owned rows and credential registry. Every HTTP attempt
-/// checks the captured provider generation again, including retries and redirects.
+/// checks the captured provider generation again on each attempt, including retries.
+/// The shared provider transport rejects redirects; the configured endpoint must be canonical.
 @MainActor
 final class HanlinMiniAppAssistantModelResolver {
     private let context: ModelContext

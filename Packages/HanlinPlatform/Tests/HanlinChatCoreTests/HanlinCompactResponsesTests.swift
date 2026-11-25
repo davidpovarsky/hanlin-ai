@@ -72,6 +72,51 @@ private final class HangingCompactResponsesProtocol: URLProtocol, @unchecked Sen
     override func stopLoading() { Self.state.stop() }
 }
 
+
+#if os(macOS) || os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
+private final class ProviderRedirectState: @unchecked Sendable {
+    private let lock = NSLock()
+    private var requests: [URLRequest] = []
+    private var admissions = 0
+    func record(_ request: URLRequest) { lock.withLock { requests.append(request) } }
+    func admit() { lock.withLock { admissions += 1 } }
+    func reset() { lock.withLock { requests = []; admissions = 0 } }
+    var captured: [URLRequest] { lock.withLock { requests } }
+    var admissionCount: Int { lock.withLock { admissions } }
+}
+
+private final class RedirectingProviderProtocol: URLProtocol, @unchecked Sendable {
+    static let state = ProviderRedirectState()
+    static let original = URL(string: "https://provider-source.invalid/v1/chat/completions")!
+    static let destination = URL(string: "https://unadmitted-destination.invalid/stolen-request")!
+
+    override class func canInit(with request: URLRequest) -> Bool {
+        request.url == original || request.url == destination
+    }
+    override class func canonicalRequest(for request: URLRequest) -> URLRequest { request }
+    override func startLoading() {
+        Self.state.record(request)
+        if request.url == Self.original {
+            let response = HTTPURLResponse(url: Self.original, statusCode: 307, httpVersion: "HTTP/1.1",
+                headerFields: ["Location": Self.destination.absoluteString, "Content-Length": "0"])!
+            var redirect = request
+            redirect.url = Self.destination
+            // A real redirect callback is essential: merely returning a 3xx
+            // response would not exercise URLSession's automatic redirect path.
+            client?.urlProtocol(self, wasRedirectedTo: redirect, redirectResponse: response)
+            client?.urlProtocolDidFinishLoading(self)
+        } else {
+            let response = HTTPURLResponse(url: Self.destination, statusCode: 200, httpVersion: "HTTP/1.1",
+                headerFields: ["Content-Type": "text/event-stream"])!
+            client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
+            client?.urlProtocol(self, didLoad: Data("data: [DONE]\n\n".utf8))
+            client?.urlProtocolDidFinishLoading(self)
+        }
+    }
+    override func stopLoading() {}
+}
+#endif
+
 @Suite("Compact Responses canonical SDK route", .serialized)
 struct HanlinCompactResponsesTests {
     private func configuration(
@@ -248,4 +293,55 @@ struct HanlinCompactResponsesTests {
         }
         #expect(HangingCompactResponsesProtocol.state.stopCount > 0)
     }
+#if os(macOS) || os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
+    @Test("Provider redirects cannot bypass admission or forward credential headers")
+    func redirectsCannotEscapeProviderAdmission() async throws {
+        for sdkFetch in [true, false] {
+            RedirectingProviderProtocol.state.reset()
+            let session = URLSessionConfiguration.ephemeral
+            session.protocolClasses = [RedirectingProviderProtocol.self]
+            session.timeoutIntervalForRequest = 5
+            session.timeoutIntervalForResource = 5
+            let engine = HanlinChatEngine(sessionConfiguration: session)
+            var request = URLRequest(url: RedirectingProviderProtocol.original)
+            request.httpMethod = "POST"
+            request.httpBody = Data(#"{"model":"fixture","messages":[]}"#.utf8)
+            request.setValue("Bearer fixture-only", forHTTPHeaderField: "Authorization")
+            request.setValue("fixture-api-key", forHTTPHeaderField: "x-api-key")
+            let admission: HanlinChatRequestAdmission = { _ in
+                RedirectingProviderProtocol.state.admit()
+            }
+
+            if sdkFetch {
+                let fetch = await engine.makeAISDKFetch(requestAdmission: admission)
+                let response = try await fetch(request)
+                #expect((response.urlResponse as? HTTPURLResponse)?.statusCode == 307)
+                #expect(response.urlResponse.url == RedirectingProviderProtocol.original)
+                if case .stream(let body) = response.body {
+                    for try await _ in body {}
+                }
+            } else {
+                let model = HanlinChatModelConfiguration(modelID: "gpt-4o", company: "OpenAI",
+                    apiType: "openai", endpoint: RedirectingProviderProtocol.original,
+                    apiKey: "fixture-only")
+                let stream = await engine.stream(request: request, configuration: model,
+                    requestAdmission: admission)
+                do {
+                    for try await _ in stream {}
+                    Issue.record("The original HTTP redirect must be reported as a provider error.")
+                } catch HanlinChatError.serverError(let status, _) {
+                    #expect(status == 307)
+                }
+            }
+
+            let captured = RedirectingProviderProtocol.state.captured
+            #expect(captured.count == 1)
+            #expect(captured.first?.url == RedirectingProviderProtocol.original)
+            #expect(captured.first?.value(forHTTPHeaderField: "Authorization") == "Bearer fixture-only")
+            #expect(captured.first?.value(forHTTPHeaderField: "x-api-key") == "fixture-api-key")
+            #expect(RedirectingProviderProtocol.state.admissionCount == 1)
+        }
+    }
+#endif
+
 }

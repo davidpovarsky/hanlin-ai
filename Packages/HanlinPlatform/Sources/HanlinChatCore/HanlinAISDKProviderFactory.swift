@@ -343,8 +343,9 @@ extension HanlinAISDKProviderFactory {
         transportObserver: HanlinChatTransportObserver? = nil,
         requestAdmission: HanlinChatRequestAdmission? = nil
     ) -> FetchFunction {
-        let session = URLSession(configuration: sessionConfiguration)
+        let owner = HanlinChatProviderSession(configuration: sessionConfiguration)
         return { request in
+            let session = owner.session
             await onRequest?(request)
             try Task.checkCancellation()
             try await requestAdmission?(request)
