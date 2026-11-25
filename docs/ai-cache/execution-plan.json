@@ -170,29 +170,33 @@
       "repair_commit": "5c51b3f2a5c97ae374a8dfbbb0be73ecba7908fc"
     },
     "runtime_host_result": {
-      "source": "4eb1af2a625cddcf896e88edc54de7eb649ae7a2",
-      "generated_commit": "ecfd3fd0768bba0c1be5a92be81f31775ee6ea3e",
+      "source": "c05d8de55d5a38c0365581c297bc5b70bb34513a",
+      "generated_commit": "40a778f5faf9df99e692033a2c762d4664d6d8f8",
       "status": "EXECUTED_PASS",
       "passed": 177,
       "failed": 0,
       "skipped": 1,
       "skip": "Original opt-in long worker duration test",
       "jitless_actual_archive_smoke": "PASS",
-      "raw_log_sha256": "d9017d3704fd5d51ac1726f4b5efd9cfa82bd36e28a1579389a01768686e5a81",
-      "archive_sha256": "965d9d2b4e211305df01c6c3ed974f7dbf8df524bc4ad9950cae9d4f420fc5df",
-      "source_inputs_hash": "2b4c7c0226d27c13d4acc20fe03ef5b4953a46379ff3615f927a58bd2f553949",
-      "receipt": "evidence/app-native-20261125/attempt08/host-refresh/receipt.json"
+      "raw_log_sha256": "e494e84d65a7f6fc910dd69c0666d84d3857a9e3cfc2205ecd06df2c684d4d26",
+      "archive_sha256": "7aa1e384b69cd61b49040b9f8f9df422fab9cfb4d1ca3b744fd77ca680333d79",
+      "source_inputs_hash": "2813dd432b0cfd9f18c40e1d656c27b07820571e813d7155a1534a39f29d75a7",
+      "receipt": "evidence/app-native-20261125/attempt09/host-refresh/receipt.json"
     },
     "latest_sync_receipt": "evidence/latest-sync-f391-20261125/receipt.json",
     "current_host_refresh": {
-      "source": "6fbcf703dd9f40f5b1d42592d58a0a69573dcdfa",
+      "source": "c05d8de55d5a38c0365581c297bc5b70bb34513a",
+      "generated_commit": "40a778f5faf9df99e692033a2c762d4664d6d8f8",
       "status": "EXECUTED_PASS",
       "passed": 177,
       "failed": 0,
       "skipped": 1,
-      "evidence": "evidence/app-native-20261125/attempt06/host-refresh/receipt.json",
-      "archive_sha256": "b912c83f4fcad09c8c97721d2a95276f4cbcbd2c2df7035a648f3be46b417c5d",
-      "source_inputs_hash": "bbd870604cb6c943916392a99ef06607e2279516399a557e7f21fd08b5cab3d1"
+      "skip": "Original opt-in long worker duration test",
+      "jitless_actual_archive_smoke": "PASS",
+      "raw_log_sha256": "e494e84d65a7f6fc910dd69c0666d84d3857a9e3cfc2205ecd06df2c684d4d26",
+      "archive_sha256": "7aa1e384b69cd61b49040b9f8f9df422fab9cfb4d1ca3b744fd77ca680333d79",
+      "source_inputs_hash": "2813dd432b0cfd9f18c40e1d656c27b07820571e813d7155a1534a39f29d75a7",
+      "receipt": "evidence/app-native-20261125/attempt09/host-refresh/receipt.json"
     },
     "app_attempts": [
       {
@@ -351,10 +355,11 @@
       "status": "SOURCE_REVIEWED_NATIVE_PENDING",
       "receipt": "evidence/notification-delegate-fix-20261125/receipt.json"
     },
-    "latest_head_observation": "evidence/final-head-observation-app08-20261125/observation.json"
+    "latest_head_observation": "evidence/final-head-observation-app08-20261125/observation.json",
+    "next_app_source": "40a778f5faf9df99e692033a2c762d4664d6d8f8"
   },
-  "updated_at": "2026-11-25T05:41:56.819759+00:00",
-  "latest_integrated_source": "5c51b3f2a5c97ae374a8dfbbb0be73ecba7908fc",
+  "updated_at": "2026-11-25T05:48:17.923342+00:00",
+  "latest_integrated_source": "40a778f5faf9df99e692033a2c762d4664d6d8f8",
   "synchronized_heads": {
     "composer": "f39142d3d14ae1bbbb81febceeef61fdc605f2a0",
     "miniapps_sdk": "b0cf26a668a698682f5307252f14cf0af8c6d00a",
