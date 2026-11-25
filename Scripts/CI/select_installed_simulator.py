@@ -7,9 +7,9 @@ import subprocess
 
 
 if __package__:
-    from .owned_simulator_receipts import created_selection, motion_run_from_environment
+    from .owned_simulator_receipts import created_selection, motion_run_from_environment, simulator_run_from_environment
 else:
-    from owned_simulator_receipts import created_selection, motion_run_from_environment
+    from owned_simulator_receipts import created_selection, motion_run_from_environment, simulator_run_from_environment
 
 
 def family_for_selectors(selectors: str) -> str:
@@ -71,7 +71,9 @@ if __name__ == "__main__":
             if args.create_owned != identity["name"]:
                 raise ValueError("Motion simulator name must match the current run provenance")
         elif any(key in os.environ for key in ("HANLIN_LOCAL_RUN_ID", "HANLIN_LOCAL_RUN_ATTEMPT")):
-            raise ValueError("Local Mac ownership is scoped to Motion")
+            identity = simulator_run_from_environment()
+            if args.create_owned != identity["name"]:
+                raise ValueError("Local Mac simulator name must match the current run provenance")
         original = selected["device"]
         identifier = read(["xcrun", "simctl", "create", args.create_owned,
                            original["deviceTypeIdentifier"], selected["runtime"]["identifier"]]).strip()
