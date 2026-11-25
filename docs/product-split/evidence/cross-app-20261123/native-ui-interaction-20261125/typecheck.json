@@ -1,6 +1,6 @@
 {
   "exit_code": 0,
-  "seconds": 3.8235192090069177,
+  "seconds": 1.3848972089908784,
   "command": [
     "xcrun",
     "--sdk",
@@ -31,15 +31,15 @@
     "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
     "HanlinMiniAppsUITests/MiniAppsCrossAppPreferencesUITests.swift",
     "HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests.swift",
-    "/Users/m1/builds/_preflight/hanlin-native-ui-caret-20261125-final/MiniAppsNativeScriptPackageWindowUITests.swift",
-    "/Users/m1/builds/_preflight/hanlin-native-ui-caret-20261125-final/MiniAppsNativeScriptWindowUITests.swift",
+    "/Users/m1/builds/_preflight/hanlin-native-ui-caret-20261125-failure-count/MiniAppsNativeScriptPackageWindowUITests.swift",
+    "/Users/m1/builds/_preflight/hanlin-native-ui-caret-20261125-failure-count/MiniAppsNativeScriptWindowUITests.swift",
     "Scripts/CI/IntegrationValidation/MiniAppsProviderUITests.swift"
   ],
   "source_sha256": {
-    "MiniAppsNativeScriptWindowUITests.swift": "863a3753f5b73a0e1208cdca612dab47177c3eb0e34eeb5e28d799cf2bd86662",
-    "MiniAppsNativeScriptPackageWindowUITests.swift": "d8c7877b5fe1b4e75a6f154d35b779706447c3b6232a3d6443cb120bfc3c630c"
+    "MiniAppsNativeScriptWindowUITests.swift": "6962b69652361e6f936630a60a98b7688746e716667fc33b7e49b80240988f74",
+    "MiniAppsNativeScriptPackageWindowUITests.swift": "65f71dee63d05336659d700c2596280d9029ccd44ca624f9fcdef78837813a91"
   },
-  "log_sha256": "9dab296a1d08304682eaa091ab24daefe236c7cfdb014fb3be1af69eaf2548ac",
-  "meaning": "Actual original iOS simulator UI source set typechecked with2 isolated modified test files; active4b app/source unchanged; not native acceptance.",
+  "log_sha256": "53d890fa2417c81dbe1bd8304ee09417ddb6989a067f1ef8ef05fb4b82e2e385",
+  "meaning": "Actual original iOS simulator UI source set typechecked with2 isolated modified test files and exact failure-only cleanup guard. Active4b source/app unchanged; not native acceptance.",
   "warnings": 25
 }

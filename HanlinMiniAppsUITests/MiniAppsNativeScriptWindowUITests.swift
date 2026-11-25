@@ -25,7 +25,7 @@ final class MiniAppsNativeScriptWindowUITests: XCTestCase {
 
     override func tearDown() async throws {
         await MainActor.run {
-            if testRun?.hasSucceeded == false {
+            if (testRun?.totalFailureCount ?? 0) > 0 {
                 let screenshot = XCTAttachment(screenshot: app.screenshot())
                 screenshot.name = "native-window-failure"
                 screenshot.lifetime = .keepAlways

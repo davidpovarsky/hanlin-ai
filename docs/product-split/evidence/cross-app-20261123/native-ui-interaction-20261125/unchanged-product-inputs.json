@@ -23,7 +23,7 @@
   "files": {
     "HanlinMiniAppsUITests/MiniAppsNativeScriptWindowUITests.swift": {
       "original_sha256": "29cdaeed1141124d7367a975df3f32e6432af972555880e93cb563b72eab18f0",
-      "updated_sha256": "863a3753f5b73a0e1208cdca612dab47177c3eb0e34eeb5e28d799cf2bd86662",
+      "updated_sha256": "6962b69652361e6f936630a60a98b7688746e716667fc33b7e49b80240988f74",
       "test_methods_identical": [
         "testTwoNativeWindowsCompleteInReverseOrderWithoutContextMixing",
         "testCancellingOneNativeWindowKeepsOtherWindowAndPreparedCallbackAlive"
@@ -32,7 +32,7 @@
     },
     "HanlinMiniAppsUITests/MiniAppsNativeScriptPackageWindowUITests.swift": {
       "original_sha256": "b67ef09103d96d694c46d52be6c6325a331250d5fd07ebdf03d9cdd5f91a746d",
-      "updated_sha256": "d8c7877b5fe1b4e75a6f154d35b779706447c3b6232a3d6443cb120bfc3c630c",
+      "updated_sha256": "65f71dee63d05336659d700c2596280d9029ccd44ca624f9fcdef78837813a91",
       "test_methods_identical": [
         "testDifferentPackagesKeepModulesResourcesAndCallbacksWhenCompletingInReverseOrder",
         "testCancellingOnePackageKeepsOtherPackageAndItsPreparedCallbackAlive"

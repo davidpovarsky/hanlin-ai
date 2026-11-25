@@ -34,7 +34,7 @@ singleton guard and lifecycle assertions are unchanged.
 
 ## Verification and next execution
 
-The actual iOS 27 simulator Swift 6 UI source set typechecked in 3.824 seconds
+The actual iOS 27 simulator Swift 6 UI source set typechecked in 1.385 seconds
 with the two modified files in a separate preflight directory. Exit status was 0.
 Existing setup actor warnings remain; this is not a warning-free compilation or
 an app acceptance result. See typecheck.json for full command and source hashes.
@@ -48,3 +48,5 @@ The next run must rebuild the real UI test bundle, recheck the complete actual
 app inventory against the immutable producer receipt, and execute the failed
 native acceptance goals. No assertion, selector or success criterion is relaxed.
 The original failure xcresult, logs, screenshots and AX evidence must be retained.
+
+The cleanup guard uses the documented XCTestRun.totalFailureCount, which includes failures and uncaught exceptions. Unlike hasSucceeded, it describes actual failures while teardown is still executing. Successful tests do not trigger failure cleanup.
