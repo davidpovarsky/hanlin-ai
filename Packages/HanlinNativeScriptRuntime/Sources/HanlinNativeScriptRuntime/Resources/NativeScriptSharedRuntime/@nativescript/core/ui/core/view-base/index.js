@@ -636,6 +636,14 @@ export class ViewBase extends Observable {
         }
     }
     /**
+     * Whether a child is the one currently shown. Containers that keep several children
+     * alive but show one at a time (a TabView's items) override it for the hidden ones.
+     * @param child A direct child of this view.
+     */
+    _isChildPresented(child) {
+        return true;
+    }
+    /**
      * Core logic for removing a child view from this instance. Used by the framework to handle lifecycle events more centralized. Do not use outside the UI Stack implementation.
      */
     _removeView(view) {
@@ -1168,9 +1176,11 @@ export const classNameProperty = new Property({
             cssClasses.add(windowScopedCssClasses[i]);
         }
         if (typeof newValue === 'string' && newValue !== '') {
-            const classes = newValue.split(' ');
+            const classes = newValue.split(/\s+/);
             for (let i = 0, length = classes.length; i < length; i++) {
-                cssClasses.add(classes[i]);
+                if (classes[i]) {
+                    cssClasses.add(classes[i]);
+                }
             }
         }
         view._onCssStateChange();

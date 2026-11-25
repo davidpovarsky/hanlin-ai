@@ -36,6 +36,13 @@ function requireAgreement(component, values) {
   }
 }
 
+function workletsCompilerVersion(record) {
+  const matches=[...record.text.matchAll(/"-DWORKLETS_VERSION=(\d+\.\d+\.\d+(?:[-+][\w.-]+)?)"/g)];
+  if(matches.length!==1||(record.text.match(/-DWORKLETS_VERSION\b/g)??[]).length!==1)
+    throw new Error('Unreviewed Worklets compiler version in '+record.path);
+  return matches[0][1];
+}
+
 // Shared by the current source audit and the active native preflight. The
 // checked constants identify the original resolved graph, not a separate pin.
 export async function auditNativeAPIVersionContract({source, json, version}) {
@@ -79,6 +86,13 @@ export async function auditNativeAPIVersionContract({source, json, version}) {
       publicNativeMetadata: version('HanlinExpoNativeAPIMetadata', field),
     });
   }
+  const workletsManifests=await Promise.all([
+    'Packages/HanlinExpoNativeAPI/Package.swift','Package.swift'
+  ].map(file=>source(file)));
+  requireAgreement('Expo Worklets native compiler', {
+    resolvedOriginal: result.workletsVersion,
+    ...Object.fromEntries(workletsManifests.map(record=>[record.path,workletsCompilerVersion(record)])),
+  });
   requireAgreement('Expo React Native', {
     nativeLock: nativeLock.runtimeClosure?.reactNativeVersion, expoLock: result.reactNativeVersion,
     tooling: tooling.dependencies?.['react-native'], packageLock: lock.packages?.['node_modules/react-native']?.version,

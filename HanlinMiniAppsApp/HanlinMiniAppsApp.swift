@@ -11,6 +11,7 @@ import HanlinMiniAppsBridge
 /// model or assistant credential adapter is configured in the MiniApps target.
 @main
 struct HanlinMiniAppsApplication: App {
+    @UIApplicationDelegateAdaptor(HanlinNotificationApplicationDelegate.self) private var notificationDelegate
     var body: some Scene {
         WindowGroup { HanlinMiniAppsWindow() }
         WindowGroup("MiniApp", id: "miniapp-invocation", for: UUID.self) { $requestID in
@@ -103,6 +104,10 @@ struct HanlinMiniAppsWindow: View {
             .task(id: bootstrap.phase == .ready ? incomingURL : nil) {
                 guard bootstrap.phase == .ready, let url = incomingURL else { return }
                 if let transferID = MiniAppAuthoringTransfer.reference(in: url, purpose: .install) {
+                    // Keep an existing import presentation under its owner's
+                    // control. Completing publication after it was dismissed
+                    // must not reopen an empty importer over the installed app.
+                    let hadImportPresentation = HanlinScriptingPlatform.shared.hasImportPresentation
                     do {
                         try await MiniAppAuthoringDelivery.receiveImport(transferID, platform: .shared)
                     } catch {
@@ -112,7 +117,7 @@ struct HanlinMiniAppsWindow: View {
                                 message: error.localizedDescription))
                         }
                     }
-                    if !HanlinScriptingPlatform.shared.hasImportPresentation {
+                    if !hadImportPresentation && !HanlinScriptingPlatform.shared.hasImportPresentation {
                         showsImport = true
                     }
                 } else if url.scheme?.lowercased() == "hanlinminiapps",
@@ -199,6 +204,7 @@ private struct HanlinMiniAppsReadyRoot: View {
         MiniAppsLibrary(provider: provider)
                 .task {
                     await AppRuntimeCore.shared.handleForegroundIfLaunched()
+                    await provider.platform.resumePendingInvocations(recoverDeliveredNotifications: true)
                 }
                 .fullScreenCover(isPresented: Binding(
                     get: { provider.platform.presentsForegroundAction },
@@ -208,7 +214,10 @@ private struct HanlinMiniAppsReadyRoot: View {
                 }
                 .onChange(of: scenePhase) { _, phase in
                     if phase == .active {
-                        Task { await AppRuntimeCore.shared.handleForegroundIfLaunched() }
+                        Task {
+                            await AppRuntimeCore.shared.handleForegroundIfLaunched()
+                            await provider.platform.resumePendingInvocations(recoverDeliveredNotifications: true)
+                        }
                     }
                 }
     }

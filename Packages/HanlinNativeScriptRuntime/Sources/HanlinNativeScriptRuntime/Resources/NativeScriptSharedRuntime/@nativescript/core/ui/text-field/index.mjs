@@ -3,7 +3,7 @@ import { textOverflowProperty, textProperty, whiteSpaceProperty } from '../text-
 import { hintProperty, placeholderColorProperty, _updateCharactersInRangeReplacementString } from '../editable-text-base';
 import { CoreTypes } from '../../core-types';
 import { Color } from '../../color';
-import { colorProperty, directionProperty, paddingInternalProperty, paddingTopProperty, paddingRightProperty, paddingBottomProperty, paddingLeftProperty } from '../styling/style-properties';
+import { colorProperty, directionProperty, paddingInternalProperty } from '../styling/style-properties';
 import { layout, isEmoji } from '../../utils';
 export * from './text-field-common';
 var UITextFieldDelegateImpl = (function (_super) {
@@ -168,13 +168,21 @@ export class TextField extends TextFieldBase {
                 // 2. emoji's should not replace value
                 // 3. convenient keyboard shortcuts should not replace value (eg, '.com')
                 const shouldReplaceString = (textField.secureTextEntry && this._firstEdit) || (delta > 1 && !isEmoji(replacementString) && delta !== replacementString.length);
+                let typedText;
                 if (shouldReplaceString) {
-                    textProperty.nativeValueChange(this, replacementString);
+                    typedText = replacementString;
                 }
-                else {
-                    if (range.location <= textField.text.length) {
-                        const newText = NSString.stringWithString(textField.text).stringByReplacingCharactersInRangeWithString(range, replacementString);
-                        textProperty.nativeValueChange(this, newText);
+                else if (range.location <= textField.text.length) {
+                    typedText = NSString.stringWithString(textField.text).stringByReplacingCharactersInRangeWithString(range, replacementString);
+                }
+                if (typedText !== undefined) {
+                    textProperty.nativeValueChange(this, typedText);
+                    // A textChange listener that set a different `text` has already
+                    // pushed it to the native field; letting UIKit apply the typed
+                    // replacement on top of it would repeat the keystroke.
+                    if (this.text !== typedText) {
+                        this._firstEdit = false;
+                        return false;
                     }
                 }
             }
@@ -285,30 +293,6 @@ export class TextField extends TextFieldBase {
         }
         const attributedPlaceholder = NSAttributedString.alloc().initWithStringAttributes(stringValue, attributes);
         this.nativeTextViewProtected.attributedPlaceholder = attributedPlaceholder;
-    }
-    [paddingTopProperty.getDefault]() {
-        return CoreTypes.zeroLength;
-    }
-    [paddingTopProperty.setNative](_value) {
-        // Padding is realized via UITextFieldImpl.textRectForBounds method
-    }
-    [paddingRightProperty.getDefault]() {
-        return CoreTypes.zeroLength;
-    }
-    [paddingRightProperty.setNative](_value) {
-        // Padding is realized via UITextFieldImpl.textRectForBounds method
-    }
-    [paddingBottomProperty.getDefault]() {
-        return CoreTypes.zeroLength;
-    }
-    [paddingBottomProperty.setNative](_value) {
-        // Padding is realized via UITextFieldImpl.textRectForBounds method
-    }
-    [paddingLeftProperty.getDefault]() {
-        return CoreTypes.zeroLength;
-    }
-    [paddingLeftProperty.setNative](_value) {
-        // Padding is realized via UITextFieldImpl.textRectForBounds method
     }
     [paddingInternalProperty.setNative](_value) {
         // Padding is realized via UITextFieldImpl.textRectForBounds method

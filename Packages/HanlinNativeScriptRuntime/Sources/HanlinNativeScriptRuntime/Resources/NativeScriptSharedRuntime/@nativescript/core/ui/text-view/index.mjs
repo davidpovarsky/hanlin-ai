@@ -4,7 +4,7 @@ import { iosWritingToolsAllowedInputProperty, iosWritingToolsBehaviorProperty, T
 import { editableProperty, hintProperty, placeholderColorProperty, _updateCharactersInRangeReplacementString } from '../editable-text-base';
 import { CoreTypes } from '../../core-types';
 import { CSSType } from '../core/view';
-import { colorProperty, borderTopWidthProperty, borderRightWidthProperty, borderBottomWidthProperty, borderLeftWidthProperty, directionProperty, paddingInternalProperty, paddingTopProperty, paddingRightProperty, paddingBottomProperty, paddingLeftProperty, _hasPaddingSetNativeOverrides } from '../styling/style-properties';
+import { colorProperty, borderTopWidthProperty, borderRightWidthProperty, borderBottomWidthProperty, borderLeftWidthProperty, directionProperty, paddingInternalProperty } from '../styling/style-properties';
 import { layout, isRealDevice } from '../../utils';
 import { SDK_VERSION } from '../../utils/constants';
 export { WritingToolsAllowedInput, WritingToolsBehavior } from './text-view-common';
@@ -79,6 +79,9 @@ var UITextViewDelegateImpl = (function (_super) {
     };
     UITextViewDelegateImpl.ObjCProtocols = [UITextViewDelegate];
     return UITextViewDelegateImpl;
+    // UITextView internally scrolls the text you are currently typing to visible when newline character
+    // is typed but the scroll animation is not needed because at the same time we are expanding
+    // the textview (setting its frame)
 }(NSObject));
 var NoScrollAnimationUITextView = (function (_super) {
     __extends(NoScrollAnimationUITextView, _super);
@@ -318,104 +321,13 @@ let TextView = TextView_1 = class TextView extends TextViewBaseCommon {
             right: inset.right,
         });
     }
-    [paddingTopProperty.getDefault]() {
-        return {
-            value: this.nativeTextViewProtected.textContainerInset.top,
-            unit: 'px',
-        };
-    }
-    [paddingTopProperty.setNative](_value) {
-        if (this._pendingPadding) {
-            this._pendingPadding.top = layout.toDeviceIndependentPixels(this.effectivePaddingTop + this.effectiveBorderTopWidth);
-        }
-        else if (_hasPaddingSetNativeOverrides(this, TextView_1.prototype)) {
-            const nativeView = this.nativeTextViewProtected;
-            const inset = nativeView.textContainerInset;
-            nativeView.textContainerInset = new UIEdgeInsets({
-                top: layout.toDeviceIndependentPixels(this.effectivePaddingTop + this.effectiveBorderTopWidth),
-                right: inset.right,
-                bottom: inset.bottom,
-                left: inset.left,
-            });
-        }
-    }
-    [paddingRightProperty.getDefault]() {
-        return {
-            value: this.nativeTextViewProtected.textContainerInset.right,
-            unit: 'px',
-        };
-    }
-    [paddingRightProperty.setNative](_value) {
-        if (this._pendingPadding) {
-            this._pendingPadding.right = layout.toDeviceIndependentPixels(this.effectivePaddingRight + this.effectiveBorderRightWidth);
-        }
-        else if (_hasPaddingSetNativeOverrides(this, TextView_1.prototype)) {
-            const nativeView = this.nativeTextViewProtected;
-            const inset = nativeView.textContainerInset;
-            nativeView.textContainerInset = new UIEdgeInsets({
-                top: inset.top,
-                right: layout.toDeviceIndependentPixels(this.effectivePaddingRight + this.effectiveBorderRightWidth),
-                bottom: inset.bottom,
-                left: inset.left,
-            });
-        }
-    }
-    [paddingBottomProperty.getDefault]() {
-        return {
-            value: this.nativeTextViewProtected.textContainerInset.bottom,
-            unit: 'px',
-        };
-    }
-    [paddingBottomProperty.setNative](_value) {
-        if (this._pendingPadding) {
-            this._pendingPadding.bottom = layout.toDeviceIndependentPixels(this.effectivePaddingBottom + this.effectiveBorderBottomWidth);
-        }
-        else if (_hasPaddingSetNativeOverrides(this, TextView_1.prototype)) {
-            const nativeView = this.nativeTextViewProtected;
-            const inset = nativeView.textContainerInset;
-            nativeView.textContainerInset = new UIEdgeInsets({
-                top: inset.top,
-                right: inset.right,
-                bottom: layout.toDeviceIndependentPixels(this.effectivePaddingBottom + this.effectiveBorderBottomWidth),
-                left: inset.left,
-            });
-        }
-    }
-    [paddingLeftProperty.getDefault]() {
-        return {
-            value: this.nativeTextViewProtected.textContainerInset.left,
-            unit: 'px',
-        };
-    }
-    [paddingLeftProperty.setNative](_value) {
-        if (this._pendingPadding) {
-            this._pendingPadding.left = layout.toDeviceIndependentPixels(this.effectivePaddingLeft + this.effectiveBorderLeftWidth);
-        }
-        else if (_hasPaddingSetNativeOverrides(this, TextView_1.prototype)) {
-            const nativeView = this.nativeTextViewProtected;
-            const inset = nativeView.textContainerInset;
-            nativeView.textContainerInset = new UIEdgeInsets({
-                top: inset.top,
-                right: inset.right,
-                bottom: inset.bottom,
-                left: layout.toDeviceIndependentPixels(this.effectivePaddingLeft + this.effectiveBorderLeftWidth),
-            });
-        }
-    }
     [paddingInternalProperty.setNative](_value) {
-        if (_hasPaddingSetNativeOverrides(this, TextView_1.prototype)) {
-            // An override owns padding application; each side applies through its own handler.
-            return;
-        }
-        const nativeView = this.nativeTextViewProtected;
-        const inset = nativeView.textContainerInset;
-        this._pendingPadding = { top: inset.top, right: inset.right, bottom: inset.bottom, left: inset.left };
-        this[paddingTopProperty.setNative](this.style.paddingTop);
-        this[paddingRightProperty.setNative](this.style.paddingRight);
-        this[paddingBottomProperty.setNative](this.style.paddingBottom);
-        this[paddingLeftProperty.setNative](this.style.paddingLeft);
-        nativeView.textContainerInset = new UIEdgeInsets(this._pendingPadding);
-        this._pendingPadding = null;
+        this.nativeTextViewProtected.textContainerInset = new UIEdgeInsets({
+            top: layout.toDeviceIndependentPixels(this.effectivePaddingTop + this.effectiveBorderTopWidth),
+            right: layout.toDeviceIndependentPixels(this.effectivePaddingRight + this.effectiveBorderRightWidth),
+            bottom: layout.toDeviceIndependentPixels(this.effectivePaddingBottom + this.effectiveBorderBottomWidth),
+            left: layout.toDeviceIndependentPixels(this.effectivePaddingLeft + this.effectiveBorderLeftWidth),
+        });
     }
     [iosWritingToolsBehaviorProperty.setNative](value) {
         if (SDK_VERSION >= 18 && isRealDevice()) {

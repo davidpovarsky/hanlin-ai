@@ -21,7 +21,8 @@ let package = Package(
             .product(name: "HanlinLocalization", package: "HanlinPresentationSDK")
         ]),
         .target(name: "HanlinNotificationExtension", dependencies: [
-            .product(name: "HanlinExtensionContracts", package: "HanlinPlatform")
+            .product(name: "HanlinExtensionContracts", package: "HanlinPlatform"),
+            .product(name: "HanlinScriptExtensions", package: "HanlinPlatform")
         ]),
         .target(name: "HanlinTranslationUI", dependencies: [
             .product(name: "HanlinExpoWidgetNative", package: "HanlinExpoRuntime"),

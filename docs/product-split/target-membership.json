@@ -81,7 +81,8 @@
     "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsAddSheet.swift",
     "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsCatalogView.swift",
     "AI_HLY/NativeAppPlatform/BuiltinApps/BuiltinCanonicalRegistrations.swift",
-    "AI_HLY/NativeAppPlatform/Support/NativeAppColor.swift"
+    "AI_HLY/NativeAppPlatform/Support/NativeAppColor.swift",
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinNotificationApplicationDelegate.swift"
   ],
   "excludes": [
     "AI_HLY/AI_HLY.swift",
@@ -110,7 +111,9 @@
     "AI_HLY/Downstream/RuntimeCore/Resources/RuntimeManifest.json",
     "AI_HLY/RuntimeHostResources.zip",
     "AI_HLY/Assets.xcassets",
-    "Packages/HanlinWidgetSDK/HostResources/HanlinAppIntents.xcstrings"
+    "Packages/HanlinWidgetSDK/HostResources/HanlinAppIntents.xcstrings",
+    "Packages/IOSSystemLite/Sources/IOSSystemLite/Resources/commandDictionary.plist",
+    "Packages/IOSSystemLite/Sources/IOSSystemLite/Resources/extraCommandsDictionary.plist"
   ],
   "integration_base": "16934250",
   "sdk_resources": {

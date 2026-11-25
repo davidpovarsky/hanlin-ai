@@ -94,14 +94,47 @@ final class SplitAppStorageLayoutTests: XCTestCase {
         let ai = HanlinScriptExtensionStore(root: try root("com.itorah.chavrusachat", group))
         let command = try seed(ai)
         let original = try bytes(ai.root)
+        let storage = NotificationStorageAvailability()
         let platform = HanlinScriptingPlatform(rootOverride: group.appending(path: "private-mini"), initialization: .init(registerExpoDefines: {}, makeExtensionStore: {
-            let unavailable = try self.root(SplitAppStorageLayout.miniAppsBundleIdentifier, nil)
+            let unavailable = try self.root(SplitAppStorageLayout.miniAppsBundleIdentifier, storage.available ? group : nil)
             return HanlinScriptExtensionStore(root: unavailable)
         }, enqueuePublication: { $0() }))
         await platform.restore()
         XCTAssertTrue(platform.pendingResumeCommands.isEmpty)
         XCTAssertThrowsError(try platform.submitResumeCommand(command))
         XCTAssertEqual(try bytes(ai.root), original)
+
+        // A cold notification response can arrive before App Group access.
+        // Retain it without relying on the OS to keep a tapped notification.
+        let now = Date.now
+        let event = try HanlinNotificationEvent(id: UUID(), createdAt: now, expiresAt: now.addingTimeInterval(300),
+            appID: .init(validating: "notification.demo"),
+            identity: .init(installedPackageID: .init(validating: "installed.notification.demo"),
+                            packageID: .init(validating: "notification.demo"), generation: 1, entrypointID: "notify"),
+            actionID: .init(validating: "receiveNotification"), parameters: .string("retained-original"))
+        try platform.receiveNotificationEvent(event)
+        XCTAssertNil(try platform.resumeReceipt(event.id))
+        let conflicting = try HanlinNotificationEvent(id: event.id, createdAt: event.createdAt, expiresAt: event.expiresAt,
+            appID: event.appID, identity: event.identity, actionID: event.actionID, parameters: .string("must-not-replace"))
+        XCTAssertThrowsError(try platform.receiveNotificationEvent(conflicting)) { error in
+            XCTAssertEqual(error as? HanlinInvocationQueueError, .duplicateIdentity)
+        }
+
+        storage.available = true
+        await platform.restore()
+        let mini = HanlinScriptExtensionStore(root: try root(SplitAppStorageLayout.miniAppsBundleIdentifier, group))
+        let persisted = try XCTUnwrap(try mini.command(for: event.id))
+        XCTAssertEqual(persisted.id, event.id)
+        XCTAssertEqual(persisted.invocation.parameters, .string("retained-original"))
+        XCTAssertEqual(persisted.invocation.delivery?.source, .notification)
+        XCTAssertNotNil(try mini.receipt(for: event.id))
+        XCTAssertNil(try ai.receipt(for: event.id))
+        XCTAssertEqual(try bytes(ai.root), original)
+    }
+
+    @MainActor
+    private final class NotificationStorageAvailability {
+        var available = false
     }
 
     private func root(_ bundle: String?, _ group: URL?) throws -> URL {
