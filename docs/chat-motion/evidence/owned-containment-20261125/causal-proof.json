@@ -1,0 +1,171 @@
+{
+  "schemaVersion": 1,
+  "status": "SOURCE_CANDIDATE_NATIVE_NOT_RUN",
+  "candidateBase": "b7856bb23b2f415f78b752fe2222ea654f3aa8b2",
+  "candidateBranch": "codex/hanlin-motion-owned-containment-20261125",
+  "actualDiagnostic": {
+    "source": "cff1e85b4a8996d4ba76db2816314fe0b4347eeb",
+    "control": "/Users/m1/caches/HanlinThreeWaves/motion-native-visibility-cff1-control",
+    "statusSHA256": "cca80d14abb0d562ad152a9ce3dd661f70a57a03297ccc14c672be8b3d4a3595",
+    "rootExecutionSHA256": "b211aa642aad824d57757f355e1d4c3c24e4ae56f2d6656728dcda7440e6eae5",
+    "test": "MotionUITests/testBRapidReversalPresetSwitchAndPersistence()",
+    "actualCount": 1,
+    "result": "Failed",
+    "durationSeconds": 12.823348999023438,
+    "nativeExitCode": 65,
+    "nativeAcceptance": "NOT_CLAIMED",
+    "cleanup": "ORIGINAL_RUNNER_REMOVED_OWNED_SIMULATOR",
+    "AUTProcessID": 40857,
+    "rawTraceMatches": 68,
+    "uniqueTraceEvents": 34,
+    "deduplicationKey": [
+      "processID",
+      "machTimestamp",
+      "kind",
+      "fields"
+    ],
+    "uniqueCountsByKind": {
+      "STATE": 18,
+      "HOST": 11,
+      "ROOT": 5
+    },
+    "captureComplete": {
+      "elements": 66,
+      "epoch": 1795609543.4119492,
+      "layers": 73,
+      "phase": "complete",
+      "pid": 40857,
+      "truncated": false,
+      "views": 36
+    },
+    "artifacts": [
+      {
+        "path": "attachments/527C7443-B7B9-4583-BD8B-CE277C6193B1.txt",
+        "bytes": 85,
+        "sha256": "4d66f30bf44b2791e38fc3375e4f01c02762825c0da102b0262b49615b35c0e8"
+      },
+      {
+        "path": "attachments/C76421EF-E7A5-4B0D-8760-41081DDB21B7.txt",
+        "bytes": 6209,
+        "sha256": "e3f9125605bac049a123fb1f0c76c45b61d8af814e0da7d42dd3945efe1a2dde"
+      },
+      {
+        "path": "gate-trace/motion-native-state-40857.jsonl",
+        "bytes": 160358,
+        "sha256": "50a535b94ad9524eb5a20923a0c7d423364568c11e0816d9df6aafe89acb1c81"
+      },
+      {
+        "path": "gate-trace/trace-records.json",
+        "bytes": 66683,
+        "sha256": "43a0d24387bab2f58638f8e17d77e1385fd8435e8e7b9f7b88c55fdf68c9d094"
+      }
+    ]
+  },
+  "callflow": {
+    "outerContentType": "ObjectIdentifier(0x0000000108bd7370)",
+    "hostToken": "DB8D814E-AFD6-44A5-8592-8F5A8C8D92E0",
+    "hostView": "ObjectIdentifier(0x0000000105da1200)",
+    "generation": 3,
+    "collapseRequestEpoch": 1795609541.676756,
+    "completionEpoch": 1795609542.009278,
+    "completionAppliedEpoch": 1795609542.009969,
+    "nativeHiddenSetterReadbackEpoch": 1795609542.0114388,
+    "freshAXCaptureStartEpoch": 1795609543.029818,
+    "freshAXCaptureEndEpoch": 1795609543.284141,
+    "secondsFromNativeHiddenReadbackToFreshAX": 1.0183792114257812,
+    "nativeHostDumpEpoch": 1795609543.372637,
+    "secondsFromNativeHiddenReadbackToNativeHostDump": 1.3611981868743896,
+    "hostNativeHidden": true,
+    "hostAXHidden": true,
+    "layerModelHidden": true,
+    "layerPresentationHidden": true,
+    "layerAnimationKeys": [],
+    "ordinaryAXChildCount": 0,
+    "automationChildCount": 1,
+    "automationPath": [
+      "ObjectIdentifier(0x0000000105da1200)",
+      "ObjectIdentifier(0x0000000110dd1540)",
+      "ObjectIdentifier(0x0000000110dd0500)"
+    ],
+    "summaryFrame": "(0.0, 292.5, 474.5, 52.5)",
+    "summaryAXHidden": true,
+    "summaryIsAXElement": false,
+    "freshXCUIExists": true,
+    "freshXCUIHittable": false
+  },
+  "conclusions": [
+    "The real collapse completion reached the current generation and applied physical hidden state.",
+    "The same owned hosting UIView and model/presentation layer remained hidden at the post-failure capture.",
+    "The public automation graph still exposed the summary; undelivered completion or a hidden-setter overwrite is not supported by these records.",
+    "The candidate changes owned presentation containment, retaining the same hosting controller/root value type; successful native semantics and state persistence are not yet established."
+  ],
+  "sourceScope": {
+    "componentBefore": "90e19b7abb2a39cddd2ad9b326ffd7bd987d3b1f7bff3b49436803a42044720e",
+    "componentAfter": "e81a6cf8f4b3adf59d6c7b0d86d459b6a607468d7536a285b9f03e8f7b851760",
+    "unchangedOuterStateAnimationCompletion": "5f6c821b3c5540c272d857b4c60fb11a325f6ae017fa2f79fa40698cb544e638",
+    "unchangedRootValueEnvironmentAndSemanticGate": "63afa300dd4fba3dfdc00eb8ccb1eaab5a9487c80e2a5b62853d232fddd37b96",
+    "unchangedDisclosureStyleAndLayout": "957c1ab0a195c57139c3188214c7e39ef7636a8ec553f0d8630154fe03d76f58",
+    "originalConsumers": [
+      {
+        "path": "docs/chat-motion/MotionUI/App.swift",
+        "sha256": "7323a83f5ed539b25d12f944a7bd256faba63c2d5806168d0def42e829454b25",
+        "status": "UNCHANGED_SOURCE"
+      },
+      {
+        "path": "docs/chat-motion/MotionUI/MotionUITests.swift",
+        "sha256": "ed053de2cf5013ef001fc198f4d730f7d8d7bf9d55991e784dbc454b90c46724",
+        "status": "UNCHANGED_SOURCE"
+      },
+      {
+        "path": "docs/chat-motion/run_motion_ui.sh",
+        "sha256": "985cd3ea5244bf4dce4e0309510ae9e8af5f8157806adae6c1a45de3c8107c2e",
+        "status": "UNCHANGED_SOURCE"
+      },
+      {
+        "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/ChatMotionConfiguration.swift",
+        "sha256": "d8ff25aa0ba06895108f09edf00709db04efe4f7467d1b8302adf1bae1785577",
+        "status": "UNCHANGED_SOURCE"
+      }
+    ],
+    "gitDiffCheck": "PASS",
+    "nativeCompilation": "NOT_RUN",
+    "nativeAcceptance": "NOT_RUN"
+  },
+  "nativeObligations": [
+    {
+      "selector": "MotionUITests/testBRapidReversalPresetSwitchAndPersistence()",
+      "status": "NOT_RUN_ON_CANDIDATE"
+    },
+    {
+      "selector": "MotionUITests/testAAllFivePresetsTwentyCompleteCyclesEach()",
+      "status": "NOT_RUN_ON_CANDIDATE"
+    },
+    {
+      "selector": "MotionUITests/testCReadableLongContentRTLTypeOrientationAndCompletion()",
+      "status": "NOT_RUN_ON_CANDIDATE"
+    }
+  ],
+  "primarySources": [
+    {
+      "url": "https://developer.apple.com/documentation/uikit/creating-a-custom-container-view-controller.md",
+      "supports": "Ordered public add/remove containment calls; a removed child controller may still be retained by other references."
+    },
+    {
+      "url": "https://developer.apple.com/documentation/uikit/uiview/ishidden.md",
+      "supports": "Hidden UIView remains a subview; property is a visibility/input state rather than removal from the hierarchy."
+    }
+  ],
+  "limitations": [
+    "Diagnostic source and failure-only observer are distinct from the clean candidate; original B failed, not passed.",
+    "No native compile, native run, simulator action, or Apple account mutation performed by this source task.",
+    "Neither Apple documentation nor source review proves SwiftUI state/appearance and natural-size behavior after detach/reattach; original native gates remain required."
+  ],
+  "sourcePeerReview": {
+    "reviewer": "/root/sidebar (built-in ChatGPT agent)",
+    "scope": "Read-only source/API/lifetime/measurement review",
+    "componentSHA256": "e81a6cf8f4b3adf59d6c7b0d86d459b6a607468d7536a285b9f03e8f7b851760",
+    "result": "CLEAR_NO_CONCRETE_SOURCE_BLOCKER",
+    "nativeOrCompilerExecution": false,
+    "remaining": "Actual automation pruning, restored state/height and reversal behavior require original native B/A/C"
+  }
+}

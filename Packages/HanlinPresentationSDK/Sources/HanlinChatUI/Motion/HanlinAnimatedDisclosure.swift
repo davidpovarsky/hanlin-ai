@@ -125,8 +125,8 @@ public struct HanlinAnimatedDisclosure<Content: View>: View {
 #if canImport(UIKit)
 /// Own the native semantic boundary for the retained content. On iOS, the
 /// transparent SwiftUI clip can still expose native-backed accessibility nodes.
-/// This root is created once while mounted; closing never replaces its type or
-/// controller, and reopening restores visibility on the same mounted root.
+/// This root is created once while mounted. Completed collapse detaches the
+/// owned child controller/view; reopening reattaches that same hosting graph.
 @MainActor
 private struct ChatDisclosureAccessibilityScope<Content: View>: UIViewControllerRepresentable {
     let isHidden: Bool
@@ -147,31 +147,84 @@ private struct ChatDisclosureAccessibilityScope<Content: View>: UIViewController
         }
     }
 
-    func makeUIViewController(context: Context) -> UIHostingController<Root> {
-        let controller = UIHostingController(rootView: Root(content: content, environment: context.environment, isHidden: isHidden))
-        controller.safeAreaRegions = []
-        controller.sizingOptions = [.intrinsicContentSize]
-        controller.view.backgroundColor = .clear
-        controller.view.isAccessibilityElement = false
-        controller.view.isHidden = isPhysicallyHidden
-        controller.view.accessibilityElementsHidden = isHidden
+    // Keep the same hosting graph alive while its native presentation leaves the
+    // container. isHidden alone leaves SwiftUI automation children discoverable.
+    final class ContainerController: UIViewController {
+        let hostingController: UIHostingController<Root>
+
+        init(rootView: Root) {
+            hostingController = UIHostingController(rootView: rootView)
+            super.init(nibName: nil, bundle: nil)
+            hostingController.safeAreaRegions = []
+            hostingController.sizingOptions = [.intrinsicContentSize]
+            hostingController.view.backgroundColor = .clear
+            hostingController.view.isAccessibilityElement = false
+            hostingController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        }
+
+        required init?(coder: NSCoder) { return nil }
+
+        override func loadView() {
+            let container = ContainerView(frame: .zero)
+            container.hostedView = hostingController.view
+            container.backgroundColor = .clear
+            container.isAccessibilityElement = false
+            view = container
+        }
+
+        func updateVisibility(isHidden: Bool, isPhysicallyHidden: Bool) {
+            hostingController.view.isHidden = isPhysicallyHidden
+            hostingController.view.accessibilityElementsHidden = isHidden
+            view.accessibilityElementsHidden = isHidden
+            if isPhysicallyHidden {
+                if hostingController.parent === self {
+                    hostingController.willMove(toParent: nil)
+                    hostingController.view.removeFromSuperview()
+                    hostingController.removeFromParent()
+                }
+            } else if hostingController.parent == nil {
+                addChild(hostingController)
+                hostingController.view.frame = view.bounds
+                view.addSubview(hostingController.view)
+                hostingController.didMove(toParent: self)
+            }
+            view.invalidateIntrinsicContentSize()
+        }
+    }
+
+    // Preserve the hosting view's intrinsic fallback for unspecified proposals,
+    // including while its view is detached but its measured content is retained.
+    private final class ContainerView: UIView {
+        weak var hostedView: UIView?
+
+        override var intrinsicContentSize: CGSize {
+            hostedView?.intrinsicContentSize ?? super.intrinsicContentSize
+        }
+
+        override func sizeThatFits(_ size: CGSize) -> CGSize {
+            hostedView?.sizeThatFits(size) ?? super.sizeThatFits(size)
+        }
+    }
+
+    func makeUIViewController(context: Context) -> ContainerController {
+        let controller = ContainerController(rootView: Root(content: content, environment: context.environment, isHidden: isHidden))
+        controller.updateVisibility(isHidden: isHidden, isPhysicallyHidden: isPhysicallyHidden)
         return controller
     }
 
-    func updateUIViewController(_ controller: UIHostingController<Root>, context: Context) {
+    func updateUIViewController(_ controller: ContainerController, context: Context) {
         withTransaction(context.transaction) {
-            controller.rootView = Root(content: content, environment: context.environment, isHidden: isHidden)
+            controller.hostingController.rootView = Root(content: content, environment: context.environment, isHidden: isHidden)
         }
-        controller.view.isHidden = isPhysicallyHidden
-        controller.view.accessibilityElementsHidden = isHidden
+        controller.updateVisibility(isHidden: isHidden, isPhysicallyHidden: isPhysicallyHidden)
     }
 
-    func sizeThatFits(_ proposal: ProposedViewSize, uiViewController controller: UIHostingController<Root>,
+    func sizeThatFits(_ proposal: ProposedViewSize, uiViewController controller: ContainerController,
                       context: Context) -> CGSize? {
         // Unspecified width uses the hosting view's native intrinsic sizing.
         // Height is always natural, never the collapsing viewport's height.
         guard let width = proposal.width, width.isFinite else { return nil }
-        let natural = controller.sizeThatFits(in: CGSize(width: max(0, width), height: .greatestFiniteMagnitude))
+        let natural = controller.hostingController.sizeThatFits(in: CGSize(width: max(0, width), height: .greatestFiniteMagnitude))
         return CGSize(width: ChatDisclosureGeometry.extent(Double(natural.width)),
             height: ChatDisclosureGeometry.extent(Double(natural.height)))
     }
