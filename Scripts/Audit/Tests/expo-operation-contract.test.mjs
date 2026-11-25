@@ -34,3 +34,23 @@ test('a delegated prefix cannot hide a missing operation or a disconnected callb
   assert.throws(() => auditExpoOperationRoutes({...input, platform: {...input.platform, text: input.platform.text.replace('expectedGeneration: package.record.activeGeneration', 'expectedGeneration: 0')}}), /callback linkage changed/);
   assert.throws(() => auditExpoOperationRoutes({...input, nativeNames: input.nativeNames.filter(name => name !== 'invoke')}), /missing invoke/);
 });
+
+test('the connected assistant factory is explicit without relaxing other constructor arguments', async () => {
+  const input = await fixture();
+  const argument = 'assistantServiceFactory: assistantServiceFactory,';
+  assert.ok(input.platform.text.includes(argument), 'fixture must exercise the active Expo constructor');
+  const spaced = input.platform.text.replace(argument, 'assistantServiceFactory:\n                        assistantServiceFactory,');
+  assert.deepEqual(auditExpoOperationRoutes({...input, platform: {...input.platform, text: spaced}}).operations,
+    auditExpoOperationRoutes(input).operations);
+  for (const replacement of [
+    '',
+    'assistantServiceFactory: nil,',
+    'assistantServiceFactory: HanlinScriptingPlatform.shared.assistantServiceFactory,',
+    'assistantServiceFactory: assistantServiceFactory, unrelatedCapability: anotherOwner,',
+  ]) {
+    const text = input.platform.text.replace(argument, replacement);
+    assert.notEqual(text, input.platform.text);
+    assert.throws(() => auditExpoOperationRoutes({...input, platform: {...input.platform, text}}),
+      /callback linkage changed/, replacement || 'missing assistant factory');
+  }
+});
