@@ -1283,13 +1283,23 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
         XCTAssertTrue(source.isHittable)
         source.tap()
         let install = app.buttons["hanlin-package-install"].firstMatch
-        XCTAssertTrue(install.waitForExistence(timeout: 30))
+        let importError = app.staticTexts["hanlin-import-error-message"].firstMatch
+        let diagnostics = app.descendants(matching: .any)["hanlin-import-diagnostics-sheet"].firstMatch
+        // The original strict compiler took 64.537s in the measured SDK9 import.
+        // Wait for the real import outcome within the existing 420s case budget.
+        // A compiler/import error ends this wait immediately instead of hiding it.
+        XCTAssertTrue(waitUntil(timeout: 240) {
+            install.exists || importError.exists || diagnostics.exists
+        }, "Original package validation must finish with an install preview or diagnostics")
+        XCTAssertFalse(importError.exists,
+                       "The original importer failed: \(importError.exists ? importError.label : "")")
+        XCTAssertFalse(diagnostics.exists, "The valid original package produced import diagnostics")
+        XCTAssertTrue(install.exists, "The original compiler must produce an installable preview")
         XCTAssertFalse(app.buttons["hanlin-approve-all-capabilities"].exists,
                        "Current original framework imports must not add an application capability approval step")
         if !install.isHittable { app.swipeDown() }
         XCTAssertTrue(waitUntil(timeout: 15) { install.isEnabled && install.isHittable })
         install.tap()
-        let importError = app.staticTexts["hanlin-import-error-message"].firstMatch
         XCTAssertTrue(waitUntil(timeout: 60) { !install.exists || importError.exists },
                       "The existing installer must complete in the companion's own namespace")
         XCTAssertFalse(importError.exists, "The original installer failed: \(importError.exists ? importError.label : "")")
