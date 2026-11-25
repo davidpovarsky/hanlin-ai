@@ -4,6 +4,8 @@ Status: implementation contract for the November 2026 cache integration. Native 
 
 Source and maintenance review: 2026-11-24 UTC. Implementation branches use the integration-stage date 20261125.
 
+For app settings, public Swift Google lifecycle examples, rollback and telemetry ownership, see [Usage and validation boundaries](USAGE.md).
+
 ## Decision
 
 Keep Hanlin's native Swift model execution. Use the original Swift AI SDK for provider request/stream/tool semantics, original LRUCache for bounded reproducible local search results, and original OpenTelemetry Swift API/SDK for the existing model spans. Retain SwiftData and the existing durable tool-result store. A distributed cache, another model gateway, and a remote observability service are separate deployment decisions; none is required to repair native prompt caching.
@@ -77,9 +79,15 @@ The existing model editor exposes automatic, provider-default and no-explicit-co
 
 The settings helper recognizes the native singular OpenAI-Response dialect as well as its plural SDK spelling. It recognizes documented dated legacy snapshots without assuming every similarly named mini/nano variant supports extended retention. Future major model families require review before paid TTL presets appear.
 
-An untouched custom or historical policy is not rewritten. Selecting automatic deliberately stores the historical nil default. Model preferences expose neither scoped Google resource references nor comparison response IDs. Validation occurs before other model-field edits, and validation/persistence errors remain visible in the editor instead of dismissing as success. Agent copying and unrelated model editing retain their existing behavior.
+An untouched custom or historical policy is not rewritten. Selecting automatic deliberately stores the historical nil default. Model preferences expose neither scoped Google resource references nor comparison response IDs. Validation occurs before other model-field edits, and validation/persistence errors remain visible in the editor instead of dismissing as success. A new agent copy inherits the selected copy base's cache policy. Rebinding an editable agent inherits the selected base policy only when the normalized wire model or provider changes, unless the user explicitly chooses a preset, preservation or inheritance. Saving an unchanged base preserves the agent's serialized custom policy. Existing unrelated copy/name/capability behavior remains unchanged.
 
-Five focused preset tests cover migration/custom preservation, old/new OpenAI lifetime differences, Responses restrictions, endpoint/transport boundaries, malformed identifiers and Anthropic/local availability. They are separate from view rendering and persistence verification.
+Five focused preset tests cover migration/custom preservation, old/new OpenAI lifetime differences, Responses restrictions, endpoint/transport boundaries, malformed identifiers and Anthropic/local availability. They are separate from view rendering and persistence verification. Four separate policy-mutation cases cover unchanged normalized identities, provider/model rebinding, inheritance including nil, and explicit override/preservation. Their execution status belongs to the native evidence, not this ADR.
+
+## Explicit Google resource boundary
+
+`HanlinGoogleCachedContentManager` exposes opt-in create/get/updateTTL/delete through the public native ChatCore API. Its content-only references are consumed by the shared provider policy with model/scope/expiry checks. No app settings screen or JavaScript Host API creates or renews paid Google resources; ordinary agent conversations keep implicit caching. This is the documented public-API path allowed by the execution contract, not a claim of an app resource-management workflow.
+
+The [usage guide](USAGE.md#google-explicit-cached-content-public-swift-api-only) explains scoped creation, generation, reference persistence, renewal/deletion and full-context fallback. System/tool conflicts reject explicitly rather than dropping context. Live creation/use/cleanup receipts and billing remain separate acceptance evidence; source fixtures cannot establish them.
 
 ## Provider accounting and native diagnostics
 
