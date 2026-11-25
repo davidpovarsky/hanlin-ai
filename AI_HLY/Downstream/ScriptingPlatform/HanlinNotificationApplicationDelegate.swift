@@ -39,7 +39,20 @@ private final class HanlinNotificationCenterDelegate: NSObject, UNUserNotificati
         await receive(notification.request.content.userInfo)
         // No original delegate meant no foreground presentation. Preserve that
         // behavior and any installed delegate's actual presentation decision.
-        return await previous?.userNotificationCenter?(center, willPresent: notification) ?? []
+        return await withCheckedContinuation { continuation in
+            // Register the original callback synchronously on this actor. The
+            // callback carries only the continuation across its execution queue.
+            let forwarded: Void? = previous?.userNotificationCenter?(
+                center,
+                willPresent: notification,
+                withCompletionHandler: { options in
+                    continuation.resume(returning: options)
+                }
+            )
+            if forwarded == nil {
+                continuation.resume(returning: [])
+            }
+        }
     }
 
     func userNotificationCenter(_ center: UNUserNotificationCenter,
@@ -47,7 +60,18 @@ private final class HanlinNotificationCenterDelegate: NSObject, UNUserNotificati
         if response.actionIdentifier != UNNotificationDismissActionIdentifier {
             await receive(response.notification.request.content.userInfo)
         }
-        await previous?.userNotificationCenter?(center, didReceive: response)
+        await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
+            let forwarded: Void? = previous?.userNotificationCenter?(
+                center,
+                didReceive: response,
+                withCompletionHandler: {
+                    continuation.resume()
+                }
+            )
+            if forwarded == nil {
+                continuation.resume()
+            }
+        }
     }
 
     func userNotificationCenter(_ center: UNUserNotificationCenter,
