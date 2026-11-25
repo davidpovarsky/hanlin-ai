@@ -1,0 +1,24 @@
+{
+  "source": "0d3b614ea34e01fb381f2289130fff83323c8f4f",
+  "transport": "SentinelX direct Mac",
+  "status": "PASS",
+  "command": [
+    "bash",
+    "Scripts/Runtime/prepare-runtime-host.sh"
+  ],
+  "startedAtUTC": "2026-11-24T23:02:13.340863+00:00",
+  "exitCode": 0,
+  "durationSeconds": 74.74,
+  "log": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/runtime-host.log",
+  "logSHA256": "93e8d79b0042ad4b1d93248c2d6964a83f4aae05fa5a4f9d97ed47e6d3116e68",
+  "finishedAtUTC": "2026-11-24T23:03:28.085214+00:00",
+  "archiveSHA256": "23acc1cad07dcdd14aef8bed53fd3a29511af4a83f73ba2260b4495f0aa49d86",
+  "hostMetadata": {
+    "nodeVersion": "v24.5.0",
+    "archiveSha256": "23acc1cad07dcdd14aef8bed53fd3a29511af4a83f73ba2260b4495f0aa49d86",
+    "sourceInputsHash": "01b4d34974b708f94afb8e0e993f5e5cc9629dc79c1cad318b6df321403b9c36",
+    "jitlessArchiveSmoke": "passed",
+    "npmInstall": "npm ci --omit=dev --ignore-scripts --workspaces=false --no-audit --no-fund",
+    "tests": "passed"
+  }
+}

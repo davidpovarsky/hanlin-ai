@@ -15,6 +15,15 @@ final class HanlinScriptingPlatformAIIntegration: HanlinScriptingApplicationServ
         self.compactConfigStore = compactConfigStore
     }
 
+    var assistantServiceFactory: HanlinMiniAppAssistantServiceFactory? {
+        let resolver = HanlinMiniAppAssistantModelResolver(context: modelContext)
+        return { host in
+            HanlinMiniAppAssistantAIService(context: host,
+                makeStream: { request, lease in try await resolver.stream(request, host: host, lease: lease) },
+                listModels: { try await resolver.models() })
+        }
+    }
+
     func loadAssistant(
         _ request: HanlinScriptingAssistantRequest
     ) async throws -> AsyncThrowingStream<HanlinScriptingAssistantChunk, Error> {
@@ -86,6 +95,7 @@ final class HanlinScriptingPlatformAIIntegration: HanlinScriptingApplicationServ
             supportReasoningChange: selectedModel.supportReasoningChange,
             thinkingLength: HanlinDefaultChatPolicy.thinkingLength,
             supportsToolUse: false,
+            promptCachePolicy: selectedModel.promptCachePolicy,
             updatedAt: .now
         )
         let store = try compactConfigStore ?? HanlinCompactAgentConfigStore()

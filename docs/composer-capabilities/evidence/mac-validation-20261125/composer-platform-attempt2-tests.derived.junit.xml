@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuite name="Hanlin composer shared contracts and analyzer" tests="31" failures="0" errors="0" skipped="0" time="74.904">
+  <properties>
+    <property name="evidenceFormat" value="derived from exact Swift Testing pass rows" />
+    <property name="sourceCommit" value="a3aae0b952b0518cb8c40ed4a511d4cffadab99f" />
+    <property name="rawLogSHA256" value="5ec770300eddafb8cbdc1085bf7b31bf6057fe1a567b1b60d33560269cc887be" />
+  </properties>
+  <testcase classname="HanlinCapabilityAttachmentTests" name="identityIncludesProviderButRevisionRemainsSeparate" time="0.001">
+    <system-out>Provider-scoped identities cannot collide through separators or titles — EXECUTED_PASS</system-out>
+  </testcase>
+  <testcase classname="HanlinCapabilityAttachmentTests" name="draftConfigurationDoesNotMutateDescriptorOrSentSnapshot" time="0.001">
+    <system-out>Default configuration is a value snapshot, independent between drafts — EXECUTED_PASS</system-out>
+  </testcase>
+  <testcase classname="HanlinCapabilityAttachmentTests" name="catalogAndMapValidation" time="0.001">
+    <system-out>Catalog and map input cannot silently carry invalid or undeclared values — EXECUTED_PASS</system-out>
+  </testcase>
+  <testcase classname="HanlinCapabilityAttachmentTests" name="staleAttachmentRequiresReselection" time="0.001">
+    <system-out>Stale versions and actions are rejected independently of catalog display labels — EXECUTED_PASS</system-out>
+  </testcase>
+  <testcase classname="HanlinCapabilityAttachmentTests" name="minimalManifestDecoding" time="0.001">
+    <system-out>Configuration decoder defaults support minimal author manifests — EXECUTED_PASS</system-out>
+  </testcase>
+  <testcase classname="HanlinCapabilityAttachmentTests" name="declarationValidation" time="0.001">
+    <system-out>Duplicate fields across panels and invalid defaults fail declaration validation — EXECUTED_PASS</system-out>
+  </testcase>
+  <testcase classname="HanlinCapabilityAttachmentTests" name="assistantDeclarationRoundTrip" time="0.002">
+    <system-out>Assistant metadata preserves raw schemas and declared rich result IDs — EXECUTED_PASS</system-out>
+  </testcase>
+  <testcase classname="HanlinCapabilityAttachmentTests" name="rawManifestDefaultsRoundTrip" time="0.001">
+    <system-out>Author defaults use ordinary JSON while preserving absent and explicit null values — EXECUTED_PASS</system-out>
+  </testcase>
+  <testcase classname="HanlinCapabilityAttachmentTests" name="assistantMetadataOmissionsMatchManifestContract" time="0.006">
+    <system-out>Required metadata and optional omissions agree with the author manifest schema — EXECUTED_PASS</system-out>
+  </testcase>
+  <testcase classname="HanlinScriptAnalyzerTests" name="preparedAssistantToolMetadataSurvivesInstallation" time="0.042">
+    <system-out>Dedicated prepared assistant tools survive analysis and installed entrypoint mapping — EXECUTED_PASS</system-out>
+  </testcase>
+  <testcase classname="HanlinScriptAnalyzerTests" name="invalidAssistantEntrypointsCannotInstall" time="0.059">
+    <system-out>Assistant selection cannot fall back to the foreground app or malformed metadata — EXECUTED_PASS</system-out>
+  </testcase>
+  <testcase classname="HanlinScriptAnalyzerTests" name="modernAssistantNeedsExplicitManifestMetadata" time="0.042">
+    <system-out>Modern filename convention does not create an undeclared assistant capability — EXECUTED_PASS</system-out>
+  </testcase>
+  <testcase classname="HanlinScriptAnalyzerTests" name="expoMainMustMatchTheInspectedForegroundEntrypoint" time="0.071">
+    <system-out>Expo import main matches the manifest entry and cannot redirect launch elsewhere — EXECUTED_PASS</system-out>
+  </testcase>
+  <testcase classname="HanlinScriptAnalyzerTests" name="preparedRuntimeVersionsUseTheActualReleasedSemverBoundary" time="0.084">
+    <system-out>Prepared runtimes reject malformed, wildcard and future required versions — EXECUTED_PASS</system-out>
+  </testcase>
+  <testcase classname="HanlinScriptAnalyzerTests" name="malformedBridgeVersionsNeverBypassPreparedPackageValidation" time="0.07">
+    <system-out>Bridge version types and complete semantic versions are validated before import — EXECUTED_PASS</system-out>
+  </testcase>
+  <testcase classname="HanlinScriptAnalyzerTests" name="legacyCompatibilityFindingsDecodeWithoutInventingACode" time="0.042">
+    <system-out>Legacy finding JSON remains readable without a diagnostic code — EXECUTED_PASS</system-out>
+  </testcase>
+  <testcase classname="HanlinScriptAnalyzerTests" name="malformedPreparedDependenciesAreRejectedWithTheirSourcePath" time="0.058">
+    <system-out>Malformed dependency maps cannot bypass version validation — EXECUTED_PASS</system-out>
+  </testcase>
+  <testcase classname="HanlinScriptAnalyzerTests" name="preview" time="0.042">
+    <system-out>Discovers entrypoints, resolves modules, and derives capabilities deterministically — EXECUTED_PASS</system-out>
+  </testcase>
+  <testcase classname="HanlinScriptAnalyzerTests" name="pythonProfile" time="0.042">
+    <system-out>Routes original Python entrypoint deterministically without engine fallback — EXECUTED_PASS</system-out>
+  </testcase>
+  <testcase classname="HanlinScriptAnalyzerTests" name="nativeScriptProfile" time="0.042">
+    <system-out>Routes only explicitly declared NativeScript packages to the native runtime — EXECUTED_PASS</system-out>
+  </testcase>
+  <testcase classname="HanlinScriptAnalyzerTests" name="nativeScriptPreparedEntrypointIsAlwaysTheCanonicalBundle" time="0.059">
+    <system-out>Prepared NativeScript entry metadata uses the canonical bundle across sessions — EXECUTED_PASS</system-out>
+  </testcase>
+  <testcase classname="HanlinScriptAnalyzerTests" name="nativeScriptSwiftUIContract" time="0.042">
+    <system-out>Validates the embedded NativeScript SwiftUI plugin contract without changing ordinary Scripting — EXECUTED_PASS</system-out>
+  </testcase>
+  <testcase classname="HanlinScriptAnalyzerTests" name="nativeScriptCoreContract" time="0.047">
+    <system-out>Validates declared @nativescript/core dependency compatibility — EXECUTED_PASS</system-out>
+  </testcase>
+  <testcase classname="HanlinScriptAnalyzerTests" name="expoSwiftUIContract" time="0.06">
+    <system-out>Validates the embedded Expo SwiftUI plugin contract — EXECUTED_PASS</system-out>
+  </testcase>
+  <testcase classname="HanlinScriptAnalyzerTests" name="unavailableModernNativePluginsFailBeforeImport" time="0.043">
+    <system-out>Unavailable native plugins fail before Expo and NativeScript import — EXECUTED_PASS</system-out>
+  </testcase>
+  <testcase classname="HanlinScriptAnalyzerTests" name="ambientGlobals" time="0.042">
+    <system-out>Detects capability-bearing ambient Scripting globals — EXECUTED_PASS</system-out>
+  </testcase>
+  <testcase classname="HanlinScriptAnalyzerTests" name="forbiddenModules" time="0.042">
+    <system-out>Rejects dynamic imports, eval, unresolved paths, and arbitrary bare modules — EXECUTED_PASS</system-out>
+  </testcase>
+  <testcase classname="HanlinScriptAnalyzerTests" name="declaredCapabilitiesInManifest" time="0.042">
+    <system-out>Extracts declared capabilities from script.json manifest — EXECUTED_PASS</system-out>
+  </testcase>
+  <testcase classname="HanlinScriptAnalyzerTests" name="expoMultiExposureMatrix" time="0.042">
+    <system-out>Expo import evaluates foreground app and multi-exposure support fail-closed — EXECUTED_PASS</system-out>
+  </testcase>
+  <testcase classname="HanlinScriptAnalyzerTests" name="explicitPreparedEntrypointsPreserveAllIDs" time="0.042">
+    <system-out>Prepared Expo and NativeScript exposures retain independent action and embedded identities — EXECUTED_PASS</system-out>
+  </testcase>
+  <testcase classname="HanlinScriptAnalyzerTests" name="malformedPreparedEntrypointsFailWithStableDiagnostic" time="0.067">
+    <system-out>Malformed and duplicate prepared entrypoints are visible import failures — EXECUTED_PASS</system-out>
+  </testcase>
+</testsuite>

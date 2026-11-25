@@ -1,0 +1,20 @@
+{
+  "sourceCommit": "37a788a4a10a293653e307c05ba1a507d518d1f0",
+  "startedAtUTC": "2026-11-25T00:24:46.630170+00:00",
+  "finishedAtUTC": "2026-11-25T00:26:30.215420+00:00",
+  "command": [
+    "nice",
+    "-n",
+    "10",
+    "bash",
+    "Scripts/Runtime/prepare-runtime-host.sh"
+  ],
+  "exitCode": 0,
+  "durationSeconds": 103.584,
+  "logSHA256": "c2657aebf954ae63ea467fa2fa696b409f304024d2bb6951c39315d0f44eac9f",
+  "log": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/runtime-host-final-attempt3.log",
+  "reason": "exact owner-generated React19.3.1 type declaration lock matches native producer inputs",
+  "archiveSHA256": "043f27b7c8b884c3095c97a99672d58bcf2ba7a1df5276ce8eaefa7eeae1e9d9",
+  "archiveBytes": 81837535,
+  "trackedChanges": " M docs/miniapp-sdk/extension-reachability.json\n M docs/miniapp-sdk/extension-reachability.md\n M docs/miniapp-sdk/source-inventory.json\n"
+}

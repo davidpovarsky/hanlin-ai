@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "assessedAtUTC": "2026-11-25T02:16:47.657975+00:00",
+  "runtimeHost": {
+    "sourceCommit": "801bb3f66cfe6d4d0ff9e49e0094ea2887525fbd",
+    "status": "EXECUTED_PASS",
+    "receipt": "runtime-host-final-attempt6.json",
+    "durationSeconds": 84.718,
+    "nodeTotal": 178,
+    "nodePassed": 177,
+    "nodeFailed": 0,
+    "nodeSkipped": 1,
+    "skipName": "actual Node job crosses 300 seconds with no hidden deadline",
+    "skipUnchanged": true,
+    "originalZIPAndJITlessChecks": "PASS",
+    "archive": {
+      "path": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/runtime-host/RuntimeHostResources.zip",
+      "bytes": 81837524,
+      "sha256": "9d2390718e8cbd9161438392789a69a60bcfe537c8cd4ac5b8088323cb3339cc"
+    },
+    "archiveMatchesRun": true,
+    "rawLogSHA256": "84dad869cb29f0bd357f2f857d2cc1a0f7b68fb847ebe709890fa775006baae0"
+  },
+  "adapterTypeCorrection": {
+    "commit": "801bb3f66cfe6d4d0ff9e49e0094ea2887525fbd",
+    "file": "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
+    "change": "Explicit optional Result return type on the existing lock closure; one-line correction.",
+    "patch": {
+      "path": "nativescript-result-type-801bb3f66.patch.gz",
+      "rawSHA256": "6ce48c6697d869c8ee5a8d81c9e4ba1cf4bd336039462614df07c92c82e48023"
+    }
+  },
+  "generatedDocumentationFreeze": {
+    "commit": "712fc49fe656e0b9a4c7e691752377b879fd6e24",
+    "changedFiles": [
+      "docs/miniapp-sdk/extension-reachability.json",
+      "docs/miniapp-sdk/extension-reachability.md",
+      "docs/miniapp-sdk/source-inventory.json"
+    ],
+    "addedLines": 8,
+    "removedLines": 8,
+    "scope": "Only three generated source-commit lines and five copies of the corrected adapter source hash.",
+    "adapterSourceSHA256": "2fb653e99c97bd3f252e88cb8c507d4a55f4fc4d994cf0dfe526dc2df6b21b90",
+    "patch": {
+      "path": "sdk-inventory-freeze-712fc49fe.patch.gz",
+      "rawSHA256": "e43acab3e4f4dd77ed180092b461a5d1a5709146d738ca1c10fe1b047343f6cc"
+    }
+  },
+  "appBuildAttempt4": {
+    "sourceCommit": "712fc49fe656e0b9a4c7e691752377b879fd6e24",
+    "status": "FAILED",
+    "receipt": "../app-build-attempt4-712fc49fe/ai-hly-build-attempt4.json",
+    "exitCode": 65,
+    "durationSeconds": 175.793,
+    "diagnostics": "../app-build-attempt4-712fc49fe/derived-compiler-errors.json",
+    "diagnosticProvenance": "Explicitly log-derived, not an xcresult export",
+    "rawCompilerErrorLines": [
+      "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/AI_HLY/Downstream/MCP/ToolIntegration/AssistantToolBridge.swift:83:62: error: main actor-isolated property 'name' can not be referenced from a nonisolated context"
+    ],
+    "rawLogSHA256": "565d4477238385a062ad2ece425960abfa5e40b1edba10f0412dd2d30a3bbf87",
+    "acceptanceTestsExecuted": 0
+  },
+  "actorIsolationCorrection": {
+    "originalCommit": "4c18f43cabad800e6069d601b39ca534e720e8a0",
+    "integratedCommit": "aea6d31e311a3f3096014ea2f1c39432371e3ecc",
+    "changedFiles": [
+      "AI_HLY/Downstream/MCP/ToolIntegration/AssistantToolBridge.swift"
+    ],
+    "addedAnnotations": 2,
+    "exactDiffBytesEqual": true,
+    "diffSHA256": "2e91ab42c51277b206489a9422c8eab3b613873292536eb846e9d4f9ca07b981",
+    "patch": {
+      "path": "executor-mainactor-4c18f43ca.patch.gz",
+      "rawSHA256": "fc8736c07346f35aa9ddffefa8c7d56a945f3b21c661ede82bb5efdf288e4cb2"
+    },
+    "compilationAfterCorrection": "NOT_INCLUDED"
+  },
+  "originalOwnerMetadataIntake": {
+    "ownerCommit": "4d8c0d0ac0e49e4a14dc64970b75bfca4e8b2aed",
+    "intakeCommit": "d4258d2cc9bdce5fdcac846c9d4d86380e40793b",
+    "integratedCommit": "e08a77146a6bef97a0be8cd90dfdf1d30e2255ba",
+    "changedFiles": [
+      "Scripts/NativeScript/README.md",
+      "Scripts/NativeScript/build-step-metadata-generator-wrapper.py"
+    ],
+    "exactDiffBytesEqualAtAllThreeCommits": true,
+    "diffSHA256": "f8e534eeae7ce53c8812e5d54175bb735e1552e206d285983e2cc5e80afe159a",
+    "patch": {
+      "path": "nativescript-owner-metadata-4d8c0d0ac.patch.gz",
+      "rawSHA256": "79b3061a3f441cf64cc0a7b27b3aaf550742cb162d728fd5fb976cb23e01377f"
+    },
+    "executionProof": "SOURCE_INTAKE_ONLY; subsequent original NativeScript preparation/preflight not included."
+  },
+  "nextPreparationAndValidation": {
+    "ownerReportedJob": "job_9cebc5d796cb",
+    "outcomeInThisPacket": "NOT_INCLUDED",
+    "postIntakeNativePreparationFreshness": "PENDING_EVIDENCE",
+    "postIntakeArchiveFreshness": "PENDING_EVIDENCE",
+    "applicationBuildAndTests": "PENDING"
+  },
+  "noNativeCommandsTestsPreparersOrSourceChangesDuringPackaging": true
+}

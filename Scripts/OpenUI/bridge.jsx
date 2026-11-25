@@ -5,6 +5,7 @@ import { ThemeProvider } from '@openuidev/react-ui';
 import { libraries } from './catalogs.jsx';
 import { NativeRuntime } from './native-runtime.mjs';
 import { encodeState, decodeState } from './state-wire.mjs';
+import { createHostToolProviders } from './tool-wire.mjs';
 import '@openuidev/react-ui/index.css';
 import './bridge.css';
 
@@ -15,7 +16,7 @@ let previousState = {};
 let current;
 // UI arguments remain normalized JSON; the original Host provenance checks apply.
 const plainJSON = value => JSON.parse(JSON.stringify(value));
-const toolProvider = { callTool: (name, args) => post({ kind: 'tool', name, args: plainJSON(args) }) };
+const { nativeToolProvider, reactToolProvider } = createHostToolProviders(post);
 function stateChanged(state, previous = previousState) {
   const before = encodeState(previous); previousState = state;
   const encoded = encodeState(state);
@@ -34,7 +35,7 @@ window.hanlinOpenUI = {
     if (input.target === 'swiftui') {
       if (!native || libraryKey !== key) {
         native?.dispose();
-        native = new NativeRuntime({ library, toolProvider,
+        native = new NativeRuntime({ library, toolProvider: nativeToolProvider,
           onTree: tree => post({ kind: 'tree', tree: encodeState(tree) }).catch(report),
           onState: stateChanged, onAction: action, onError: report });
       }
@@ -44,7 +45,7 @@ window.hanlinOpenUI = {
       mounted ??= createRoot(document.getElementById('root'));
       mounted.render(<ThemeProvider><Renderer library={library} response={input.program} isStreaming={!input.complete}
         initialState={restoredState} onStateUpdate={stateChanged} onAction={action}
-        toolProvider={toolProvider} publishObservability={false} /></ThemeProvider>);
+        toolProvider={reactToolProvider} publishObservability={false} /></ThemeProvider>);
     }
   },
   field(id, value) { native?.setField(id, decodeState(value)); },

@@ -1,0 +1,156 @@
+{
+  "reason": "Existing global *.gz ignore requires explicit addition of checksum-bound retained proof logs; ignore policy unchanged.",
+  "sourceBeforeRetention": "0d6280a4dc56b8de6dad7947d4c776cbf368bbaa",
+  "files": [
+    {
+      "path": "docs/ai-cache/evidence/active-lock-snapshot-20261125/fixtures.stderr.log.gz",
+      "rawSHA256": "4cfad4c82c24032b1bffcd7b632c5629d581d997afb42fef189589fe12a6eceb",
+      "compressedSHA256": "6eee69ca41f5900588f35d7c913da14f6bc23879c21729dd3c7a1b11b59782a2"
+    },
+    {
+      "path": "docs/ai-cache/evidence/active-lock-snapshot-20261125/fixtures.stdout.log.gz",
+      "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compressedSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "path": "docs/ai-cache/evidence/app-native-20261125/attempt03/preparation-command-01.log.gz",
+      "rawSHA256": "f9392dbc1f4415decb9bc390be9f49d5b7e6f3fbd636c72710ef278e45b31783",
+      "compressedSHA256": "7aac6ed8ba7e7e1b0a273eb68d16a808909f0589331f1a6269766eba71632c92"
+    },
+    {
+      "path": "docs/ai-cache/evidence/app-native-20261125/attempt03/preparation-command-02.log.gz",
+      "rawSHA256": "bc234237931951c0e0e70dc212b9f47da2f6c76a61109e41c235f0f7f0eabcef",
+      "compressedSHA256": "3bbc94444f21908ebdd99795b981608c78639a31e284ca504be9e7be3d666f95"
+    },
+    {
+      "path": "docs/ai-cache/evidence/app-native-20261125/attempt03/preparation-command-03.log.gz",
+      "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compressedSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "path": "docs/ai-cache/evidence/app-native-20261125/attempt03/preparation-command-04.log.gz",
+      "rawSHA256": "9525db1c9f1aad02bad326e3fe460e88039f17d4026be8b8b24e3eb98f708ccf",
+      "compressedSHA256": "da52386cf320ee2be1c35497203b91af8ffb237cf2bfa453cf1f74d2f68885dc"
+    },
+    {
+      "path": "docs/ai-cache/evidence/app-native-20261125/attempt03/prepare/01-xcode-version.log.gz",
+      "rawSHA256": "694b44731d0b415c5b11d844151e466d7f5e200a95627efda377f232f1a6ab77",
+      "compressedSHA256": "0d8ae8f99ad37887e8c643e6aa54eb419bdcccbeac5d985530d01ecd43b5bf28"
+    },
+    {
+      "path": "docs/ai-cache/evidence/app-native-20261125/attempt03/prepare/01-xcode-version.stderr.log.gz",
+      "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compressedSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "path": "docs/ai-cache/evidence/app-native-20261125/attempt03/prepare/02-swift-version.log.gz",
+      "rawSHA256": "04630ab8fa201f57c63c59730e638135e32584a97e16e004a417eb8ed283dc83",
+      "compressedSHA256": "0934835c29031c4d993fb5c03c679104e862d89d770e67dcc336593d9d2cd8ce"
+    },
+    {
+      "path": "docs/ai-cache/evidence/app-native-20261125/attempt03/prepare/02-swift-version.stderr.log.gz",
+      "rawSHA256": "bbc8b176d3c74d4c5a7fd00b40280f98168e116d5272273bfe8e71407625540e",
+      "compressedSHA256": "12919eb3b241936fe8b140e777c7e67f606c0c293f0d89edb13a52cd5e1e85be"
+    },
+    {
+      "path": "docs/ai-cache/evidence/app-native-20261125/attempt03/prepare/03-node-version.log.gz",
+      "rawSHA256": "2f30156cd7f9137514ea68d53554f583cf6541fd107dbc8ae8a19253379a735a",
+      "compressedSHA256": "84683bc4dd861c26440317460b1453e607e0becfc0eb60fbe9e9badf4d557e3d"
+    },
+    {
+      "path": "docs/ai-cache/evidence/app-native-20261125/attempt03/prepare/03-node-version.stderr.log.gz",
+      "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compressedSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "path": "docs/ai-cache/evidence/app-native-20261125/attempt03/prepare/04-manifest-check.log.gz",
+      "rawSHA256": "6a3adc34271cba4ee688071b7aec9eb7f0ee9731bedf3e215a77efb8648947f0",
+      "compressedSHA256": "f77dbe6799f3751a9b9008f100a73ff659101fc4d3170a8d455119c96b40c095"
+    },
+    {
+      "path": "docs/ai-cache/evidence/app-native-20261125/attempt03/prepare/04-manifest-check.stderr.log.gz",
+      "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compressedSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "path": "docs/ai-cache/evidence/app-native-20261125/attempt03/prepare/05-project-check.log.gz",
+      "rawSHA256": "7b205399ea53f72db8afa2fe3d77370cd6f0ac3d9ea8d19cea47a806236d4d18",
+      "compressedSHA256": "b44fe6e0a9fe538f4926f1682de104830f83fafbeb7a206b936ee8e8d9e48210"
+    },
+    {
+      "path": "docs/ai-cache/evidence/app-native-20261125/attempt03/prepare/05-project-check.stderr.log.gz",
+      "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compressedSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "path": "docs/ai-cache/evidence/app-native-20261125/attempt03/prepare/06-resolve-packages.log.gz",
+      "rawSHA256": "576f55c375dd9156601db24736424de3e93694563dea3d71d546100cf5c793fc",
+      "compressedSHA256": "6b1901a9a77757692211bcdd228db7eaebfb973dfffed8c4099b8bb36386e22c"
+    },
+    {
+      "path": "docs/ai-cache/evidence/app-native-20261125/attempt03/prepare/06-resolve-packages.stderr.log.gz",
+      "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compressedSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "path": "docs/ai-cache/evidence/app-native-20261125/attempt03/prepare/07-modular-headers.log.gz",
+      "rawSHA256": "42270fb11cdbd4a1f48143e002bdf5533ab0d13bc5402af4b3ce9f672bf94647",
+      "compressedSHA256": "eefee7f61df0678b186f4de133816708390770168c85d491af1d0fa930fd3c12"
+    },
+    {
+      "path": "docs/ai-cache/evidence/app-native-20261125/attempt03/prepare/07-modular-headers.stderr.log.gz",
+      "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compressedSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "path": "docs/ai-cache/evidence/app-native-20261125/attempt03/prepare/08-a2ui-schemas.log.gz",
+      "rawSHA256": "c11ddfaf20d4cde581f1246b36c3399ff46baede57f73a40a1f14524344c8b06",
+      "compressedSHA256": "94a35e28205ca79a888ed35b3bc3d252210565bbdbcafd0f44a5473b76523b47"
+    },
+    {
+      "path": "docs/ai-cache/evidence/app-native-20261125/attempt03/prepare/08-a2ui-schemas.stderr.log.gz",
+      "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compressedSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "path": "docs/ai-cache/evidence/app-native-20261125/attempt03/prepare/a2ui-generation/compiler.log.gz",
+      "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compressedSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "path": "docs/ai-cache/evidence/exact-app-test-acceptance-20261125/test_cache_app_native_acceptance.py.log.gz",
+      "rawSHA256": "a1c8ba24fab5fb7fb805e95669dc32caebac770290cd6cce520339d90a536a4d",
+      "compressedSHA256": "7d085ff2c7a5a0b279faca89bc11b95c7386db668d5bd49a8c27928a14d991a6"
+    },
+    {
+      "path": "docs/ai-cache/evidence/exact-app-test-acceptance-20261125/test_native_tool_candidate_report.py.log.gz",
+      "rawSHA256": "e7c3af5f7fe77c754722d91f98c3528e8147c852e239b00e689d70022f257218",
+      "compressedSHA256": "849417dda3488bfcf45a0e44552dd1e94abf58846a135c324e4813dcf9a05a7f"
+    },
+    {
+      "path": "docs/ai-cache/evidence/exact-app-test-acceptance-20261125/test_verify_selected_tests.py.log.gz",
+      "rawSHA256": "8ba94604f8d25db8cd36629d9da5128ac4b8daabb7ed277b2f40410475950658",
+      "compressedSHA256": "9181a9e250d401666539fb5f4e56dc04c0bdab0ccc6d1af13ffa52f7035b780f"
+    },
+    {
+      "path": "docs/ai-cache/evidence/native-preparation-20261125/retry3-fixture/01.log.gz",
+      "rawSHA256": "ee074a2ffd7d1f95b632379086fecb2741c4128b6cf4acf8d2a55fac394ba838",
+      "compressedSHA256": "804aa24f6c2493a96140db58ca2f8fd71cabfcf27a2102f93a437784e2f97e5f"
+    },
+    {
+      "path": "docs/ai-cache/evidence/native-preparation-20261125/retry3-fixture/02.log.gz",
+      "rawSHA256": "f9392dbc1f4415decb9bc390be9f49d5b7e6f3fbd636c72710ef278e45b31783",
+      "compressedSHA256": "7aac6ed8ba7e7e1b0a273eb68d16a808909f0589331f1a6269766eba71632c92"
+    },
+    {
+      "path": "docs/ai-cache/evidence/native-preparation-20261125/retry3-fixture/03.log.gz",
+      "rawSHA256": "bc234237931951c0e0e70dc212b9f47da2f6c76a61109e41c235f0f7f0eabcef",
+      "compressedSHA256": "3bbc94444f21908ebdd99795b981608c78639a31e284ca504be9e7be3d666f95"
+    },
+    {
+      "path": "docs/ai-cache/evidence/native-preparation-20261125/retry3-fixture/04.log.gz",
+      "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compressedSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    }
+  ]
+}

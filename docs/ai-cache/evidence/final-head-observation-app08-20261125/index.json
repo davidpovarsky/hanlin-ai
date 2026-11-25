@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "files": {
+    "README.md": {
+      "bytes": 1212,
+      "sha256": "bcc9bda18748db1baf89d9fee5021fee8c390c8f4cfd484c705c08d4e30403ec"
+    },
+    "observation.json": {
+      "bytes": 11533,
+      "sha256": "5cdac66771abeb8e4b468a60dee99a72ed9bd31167599754e2fb097076d7364c"
+    }
+  }
+}

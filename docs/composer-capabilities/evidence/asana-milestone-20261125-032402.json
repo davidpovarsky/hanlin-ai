@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "updatedAtUTC": "2026-11-25 03:24:02 UTC",
+  "mutationFields": [
+    "html_notes"
+  ],
+  "writeAttempts": 1,
+  "readBackRetries": 0,
+  "completionChanged": false,
+  "acknowledgement": {
+    "data": [
+      {
+        "gid": "1220882717750164",
+        "name": "[HANLIN-COMPOSER-CAPABILITIES][P0] צירוף מפורש לכל הודעה + assistantTool + ממשק הגדרות בבועה"
+      },
+      {
+        "gid": "1220882600644494",
+        "name": "[M5][רוני | QA] שילוב עדכני ובדיקות Mac ממוקדות"
+      }
+    ],
+    "failed": [],
+    "summary": "Updated 2 of 2 tasks."
+  },
+  "verification": [
+    {
+      "id": "1220882717750164",
+      "readBackSucceeded": true,
+      "completed": false,
+      "completionUnchanged": true,
+      "modifiedAt": "2026-11-25T03:24:03.961Z",
+      "originalPlainNotesExact": true,
+      "originalRichNotesExact": true,
+      "expectedHTMLExact": true,
+      "newPlainSummaryExact": true,
+      "permalinkURL": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1220882717750164"
+    },
+    {
+      "id": "1220882600644494",
+      "readBackSucceeded": true,
+      "completed": false,
+      "completionUnchanged": true,
+      "modifiedAt": "2026-11-25T03:24:03.926Z",
+      "originalPlainNotesExact": true,
+      "originalRichNotesExact": true,
+      "expectedHTMLExact": true,
+      "newPlainSummaryExact": true,
+      "permalinkURL": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1220882600644494"
+    }
+  ],
+  "newMilestoneSummary": "עדכון אבן דרך — קדם-בדיקת native ו-9 בדיקות הבודק עברו — 2026-11-25 03:24:02 UTC\n\nהפקודה המקורית preflight:ios-dependencies --app הושלמה בפועל בהצלחה על האפליקציה שנבנתה במק: מקור הבודק 59838a47979f8d875618687708e0334fb63454a5, מקור האפליקציה הבנויה b739ada91aca115093e3511f9df58c15edcb5923. התחלה 03:19:20.986473 UTC, סיום 03:19:51.667870 UTC, ‏exit 0, ‏30.620 שניות. היומן המקורי: SHA-256 ‏94806496b987d0d71f28e783c9c123ac1bd9f9ce9138a58bd41ad6b3afadca1c.\nהבינארים של האפליקציה לא נבנו מחדש עבור התוצאה הזו ולא הוחלפו: AI_Hanlin נשאר 2cb23f37bc5a707fb0bfc1c6deedbbc12e3f27b011d02937414f6f2c62507fb8, ו-AI_Hanlin.debug.dylib נשאר e498a5fafbf5058b1c0ee3a885eac138232c39dd7711e2aa153e47e685904c09. תיקון הבודק בוחן את תמונות המאכסן המקושרות בפועל ומאפשר לזהות metadata ב-debug dylib הטעון, עם שמירת בדיקות השלמות והדחייה.\nהכישלון הראשון של קדם-הבדיקה על b739ada91 נשמר: ‏exit 1 לאחר 97.371 שניות, בשל הנחת הבודק שה-metadata חייב להיות בקובץ ה-main stub. אין מחיקה או שינוי בדיעבד של התוצאה המקורית.\n\nגם 9 בדיקות הרגרסיה של סקריפט הבודק רצו בפועל ועברו כולן במק על d89ce38b170bc9af4734cd11e30ca793b16698d0: ‏9 עברו, 0 נכשלו, 0 דולגו, exit 0, משך 0.483 שניות; 03:21:12.826088–03:21:13.309332 UTC. קבלה: native-app-preflight-regressions-attempt2.json; SHA-256 של היומן: 4b4e4f11506cd15e028dc33218b981a58155895befe8a8c52adaed313c518413.\nהבדיקות כוללות metadata ב-main וב-debug dylib מקושר, דחיית metadata חסר/ריק/במקטע שגוי, דחיית בעלות כפולה, דחיית framework או dylib שאינם תמונת מאכסן טעונה, סדר rpath, aliases, ובדיקת הבעלות לכל architecture. אלה בדיקות של הבודק, לא תשע בדיקות קבלה פונקציונליות של האפליקציה.\nניסיון הרגרסיה הראשון על 598 נשמר ככישלון אמיתי: 0 עברו ו-9 נכשלו בגלל מפתחות fixture שהשתמשו ב-/var בעוד macOS החזיר /private/var, עוד לפני assertions של metadata. תיקון d89 הוא קנוניזציה של נתיב ה-fixture בלבד; הבודק בייצור נשאר זהה לבודק שכבר עבר את קדם-הבדיקה האמיתית. לא הורחבו תקציבי זמן ולא הוחלפו בדיקות בהדמיית הצלחה.\n\nתיקון סכמת XCTest ב-eefe96321c9d83cdb300fbf84fd1da3977f5362e הוטמע גם הוא: שינוי TestAction יחיד מ-YES ל-NO, כדי לכבד את הגדרת HANLIN_UNIT_TEST_HOST של הבדיקות. ההרצה הבאה חייבת עדיין לאמת שהסביבה מגיעה למניפסט הבנוי בפועל; עצם תיקון המקור אינו תוצאת בדיקה.\nה-PASS של בניית AI_HLY החמישית נשמר במקורו. הסוכן הראשי ממשיך את הבנייה/אימות המניפסט ואת קבוצות בדיקות האפליקציה על המק. בניית HanlinMiniApps ובדיקות האינטגרציה, מנועי native, העורך וה-UI עדיין פתוחות; אין הסקת הצלחת VM או UI מקדם-הבדיקה ומה-unit tests של הבודק. שתי המשימות נשארות לא הושלמו.",
+  "originalTaskBodiesIncluded": false,
+  "checkerSourceCommit": "59838a47979f8d875618687708e0334fb63454a5",
+  "unitRetrySourceCommit": "d89ce38b170bc9af4734cd11e30ca793b16698d0",
+  "builtApplicationSourceCommit": "b739ada91aca115093e3511f9df58c15edcb5923",
+  "runtimeAndUIAcceptanceInferred": false
+}

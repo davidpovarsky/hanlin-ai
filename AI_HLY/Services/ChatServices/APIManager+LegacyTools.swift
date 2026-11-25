@@ -433,8 +433,13 @@ extension APIManager {
                                                     }
                                                     
                                                     useFunctionName = functionName
-                                                    let coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-                                                    let results = try await searchNearbyLocations(around: coordinate, with: keyword, company: mapInfo.company, apiKey: mapInfo.apiKey)
+                                                    let region = try HanlinNearbySearchRegion.resolve(
+                                                        latitude: latitude, longitude: longitude,
+                                                        configuration: context.composerConfiguration)
+                                                    let coordinate = CLLocationCoordinate2D(latitude: region.latitude, longitude: region.longitude)
+                                                    let results = try await searchNearbyLocations(
+                                                        around: coordinate, with: keyword, company: mapInfo.company,
+                                                        apiKey: mapInfo.apiKey, radiusMeters: region.radiusMeters)
                                                     
                                                     if results.isEmpty {
                                                         toolResult = currentLanguagePrefix ?

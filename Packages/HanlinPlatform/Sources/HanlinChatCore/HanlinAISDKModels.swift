@@ -51,15 +51,19 @@ public struct HanlinAISDKMessage: Hashable, Sendable {
 
     public let role: Role
     public let parts: [HanlinAISDKMessagePart]
+    /// Explicit end of stable content; used only by supported native cache policies.
+    public let cacheBreakpoint: Bool
 
-    public init(role: Role, text: String) {
+    public init(role: Role, text: String, cacheBreakpoint: Bool = false) {
         self.role = role
         self.parts = [.text(text)]
+        self.cacheBreakpoint = cacheBreakpoint
     }
 
-    public init(role: Role, parts: [HanlinAISDKMessagePart]) {
+    public init(role: Role, parts: [HanlinAISDKMessagePart], cacheBreakpoint: Bool = false) {
         self.role = role
         self.parts = parts
+        self.cacheBreakpoint = cacheBreakpoint
     }
 }
 

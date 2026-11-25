@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "transferredAtUTC": "2026-11-25T02:15:07.525022+00:00",
+  "transport": "Oracle pinned scaleway-mac SSH alias, BatchMode=yes, StrictHostKeyChecking=yes",
+  "sourceReadOnly": true,
+  "allSourceSHA256Verified": true,
+  "noBuildsTestsGeneratorsDevicesOrMacWrites": true,
+  "files": [
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt4-712fc49fe/ai-hly-build-attempt4.json",
+      "bytes": 1459,
+      "sha256": "22407fe2122149b5ac9b42dde8342016dba986628eae648123f6637ac4ef2f0e",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/ai-hly-build-attempt4.json",
+      "sourceBytes": 1459,
+      "sourceSHA256": "22407fe2122149b5ac9b42dde8342016dba986628eae648123f6637ac4ef2f0e",
+      "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt4-712fc49fe/ai-hly-build-attempt4.log.gz",
+      "bytes": 37168,
+      "sha256": "84617c96b64c55dee2ffe4d93c339c8ad44677ebb012d7ac09daa8772cfdd122",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/ai-hly-build-attempt4.log",
+      "sourceBytes": 489706,
+      "sourceSHA256": "565d4477238385a062ad2ece425960abfa5e40b1edba10f0412dd2d30a3bbf87",
+      "compressedForRepository": true,
+      "uncompressedLogSHA256": "565d4477238385a062ad2ece425960abfa5e40b1edba10f0412dd2d30a3bbf87",
+      "uncompressedLogBytes": 489706
+    }
+  ],
+  "rawCompilerErrorLines": [
+    "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/AI_HLY/Downstream/MCP/ToolIntegration/AssistantToolBridge.swift:83:62: error: main actor-isolated property 'name' can not be referenced from a nonisolated context"
+  ],
+  "originalExportedXCResultErrorsPresent": false
+}

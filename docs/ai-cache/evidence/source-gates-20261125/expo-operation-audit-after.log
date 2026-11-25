@@ -1,0 +1,11 @@
+✔ actual Expo grouped cases and explicitly connected external cases cover the typed facade (11.720547ms)
+✔ a delegated prefix cannot hide a missing operation or a disconnected callback (12.004589ms)
+✔ the connected assistant factory is explicit without relaxing other constructor arguments (12.845753ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 117.539793

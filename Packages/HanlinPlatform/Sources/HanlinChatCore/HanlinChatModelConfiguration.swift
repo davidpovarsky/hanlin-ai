@@ -31,6 +31,7 @@ public struct HanlinChatTokenUsage: Codable, Hashable, Sendable {
     public let outputTokens: Int?
     public let reasoningTokens: Int?
     public let cachedInputTokens: Int?
+    public let cacheWriteTokens: Int?
     public let totalTokens: Int?
 
     public var promptTokens: Int? { inputTokens }
@@ -41,12 +42,14 @@ public struct HanlinChatTokenUsage: Codable, Hashable, Sendable {
         outputTokens: Int? = nil,
         reasoningTokens: Int? = nil,
         cachedInputTokens: Int? = nil,
+        cacheWriteTokens: Int? = nil,
         totalTokens: Int? = nil
     ) {
         self.inputTokens = inputTokens
         self.outputTokens = outputTokens
         self.reasoningTokens = reasoningTokens
         self.cachedInputTokens = cachedInputTokens
+        self.cacheWriteTokens = cacheWriteTokens
         self.totalTokens = totalTokens
     }
 
@@ -55,12 +58,14 @@ public struct HanlinChatTokenUsage: Codable, Hashable, Sendable {
         completionTokens: Int? = nil,
         reasoningTokens: Int? = nil,
         cachedInputTokens: Int? = nil,
+        cacheWriteTokens: Int? = nil,
         totalTokens: Int? = nil
     ) {
         self.inputTokens = promptTokens
         self.outputTokens = completionTokens
         self.reasoningTokens = reasoningTokens
         self.cachedInputTokens = cachedInputTokens
+        self.cacheWriteTokens = cacheWriteTokens
         self.totalTokens = totalTokens
     }
 }
@@ -83,6 +88,8 @@ public struct HanlinChatModelConfiguration: Codable, Hashable, Sendable {
     public let supportsToolUse: Bool
     public let supportsTextGen: Bool
     public let systemPrompt: String?
+    /// Nil in historical records adopts automatic native caching.
+    public let promptCachePolicy: HanlinPromptCachePolicy?
     public let updatedAt: Date
 
     public init(
@@ -103,6 +110,7 @@ public struct HanlinChatModelConfiguration: Codable, Hashable, Sendable {
         supportsToolUse: Bool = false,
         supportsTextGen: Bool = true,
         systemPrompt: String? = nil,
+        promptCachePolicy: HanlinPromptCachePolicy? = nil,
         updatedAt: Date = .now
     ) {
         self.modelID = modelID
@@ -123,6 +131,7 @@ public struct HanlinChatModelConfiguration: Codable, Hashable, Sendable {
         self.supportsToolUse = supportsToolUse
         self.supportsTextGen = supportsTextGen
         self.systemPrompt = systemPrompt
+        self.promptCachePolicy = promptCachePolicy
         self.updatedAt = updatedAt
     }
 
@@ -145,6 +154,7 @@ public struct HanlinChatModelConfiguration: Codable, Hashable, Sendable {
         supportsToolUse: Bool = false,
         supportsTextGen: Bool = true,
         systemPrompt: String? = nil,
+        promptCachePolicy: HanlinPromptCachePolicy? = nil,
         updatedAt: Date = .now
     ) {
         let key = apiKey ?? credential ?? ""
@@ -167,6 +177,7 @@ public struct HanlinChatModelConfiguration: Codable, Hashable, Sendable {
             supportsToolUse: supportsToolUse,
             supportsTextGen: supportsTextGen,
             systemPrompt: systemPrompt,
+            promptCachePolicy: promptCachePolicy,
             updatedAt: updatedAt
         )
     }

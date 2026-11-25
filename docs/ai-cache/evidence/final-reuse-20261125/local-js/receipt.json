@@ -1,0 +1,1499 @@
+{
+  "active_assistant_javascript": {
+    "original_commands": {
+      "expo-assistant-tests.json": [
+        "node",
+        "--test",
+        "Packages/HanlinExpoUI/tests/miniapp-assistant.test.mjs",
+        "Packages/HanlinExpoUI/tests/host-services-publication.test.mjs"
+      ],
+      "host-facade-tests-after.json": [
+        "node",
+        "--test",
+        "Scripts/NativeScript/Tests/assistant.test.mjs",
+        "Scripts/NativeScript/Tests/miniapps-sharing.test.mjs",
+        "Scripts/NativeScript/Tests/live-activities.test.mjs",
+        "Scripts/Expo/Tests/host-services.test.mjs"
+      ],
+      "nativescript-generation.json": [
+        "node",
+        "Scripts/NativeScript/build-host-services.mjs",
+        "--typescript-module",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/Scripts/NativeScript/node_modules/typescript/lib/typescript.js",
+        "--write"
+      ]
+    },
+    "original_expo_vm_typescript": "6.0.3",
+    "original_generated_and_harness_source": "0cf7fd486c789d488e438cb62192e34a0ae712f7",
+    "original_implementation_source": "e0a98a2d7c495644f643c44e7cc417e4522185ab",
+    "original_native_script_typescript": "5.9.3",
+    "original_node": "v24.22.0",
+    "reuse_scope": "Original Node facade/unit/VM tests and original strict NativeScript facade generation only. No native Expo/NativeScript Host, app, live model, billing or UI acceptance follows from this result.",
+    "status": "REUSED_VERIFIED_PASS",
+    "strict_generation_and_drift": "Original retained PASS; generation was not rerun",
+    "tests": {
+      "native_script_and_expo_vm": 8,
+      "shared_assistant_and_publication": 7,
+      "total": 15
+    },
+    "unique_source_inputs": 25
+  },
+  "all_input_and_consumed_dependency_comparisons_equal": true,
+  "checkpoint_comparisons": [
+    {
+      "all_equal": true,
+      "checkpoint_commit": "1710bc6119983799f7d22cb723659ac274fe96b1",
+      "checkpoint_receipt_sha256": "2e0e25875906f15876b8035d0863482510163ae4a82865eb376b788ff95e3c2c",
+      "checkpoint_sha256": "2e0e25875906f15876b8035d0863482510163ae4a82865eb376b788ff95e3c2c",
+      "path": "Packages/HanlinExpoUI/src/miniapp-assistant.ts",
+      "target_git_blob": "9759c84d462c473bf72f092db98b4d4cab7dc672",
+      "target_sha256": "2e0e25875906f15876b8035d0863482510163ae4a82865eb376b788ff95e3c2c"
+    },
+    {
+      "all_equal": true,
+      "checkpoint_commit": "1710bc6119983799f7d22cb723659ac274fe96b1",
+      "checkpoint_receipt_sha256": "7055a22e3aa4a685b970c1eaaf66f538eeb34f560bb2c345446c55305a045d21",
+      "checkpoint_sha256": "7055a22e3aa4a685b970c1eaaf66f538eeb34f560bb2c345446c55305a045d21",
+      "path": "Packages/HanlinExpoUI/src/host-services.ts",
+      "target_git_blob": "a725d80170315b79bcab9e7e762147466aa6e52b",
+      "target_sha256": "7055a22e3aa4a685b970c1eaaf66f538eeb34f560bb2c345446c55305a045d21"
+    },
+    {
+      "all_equal": true,
+      "checkpoint_commit": "1710bc6119983799f7d22cb723659ac274fe96b1",
+      "checkpoint_receipt_sha256": "fc1465119ea944d674b91e00ec6127092dbc3ef6e191a80eb3d6cfffaac969ba",
+      "checkpoint_sha256": "fc1465119ea944d674b91e00ec6127092dbc3ef6e191a80eb3d6cfffaac969ba",
+      "path": "Packages/HanlinExpoUI/tests/miniapp-assistant.test.mjs",
+      "target_git_blob": "4c9628b02bf295ddb5c872683db7cd9a17779000",
+      "target_sha256": "fc1465119ea944d674b91e00ec6127092dbc3ef6e191a80eb3d6cfffaac969ba"
+    },
+    {
+      "all_equal": true,
+      "checkpoint_commit": "1710bc6119983799f7d22cb723659ac274fe96b1",
+      "checkpoint_receipt_sha256": "6a3afe9ee3704d052d7337828763c80eea5c765d50bd217574836df5124b4a57",
+      "checkpoint_sha256": "6a3afe9ee3704d052d7337828763c80eea5c765d50bd217574836df5124b4a57",
+      "path": "Packages/HanlinExpoUI/tests/host-services-publication.test.mjs",
+      "target_git_blob": "8508850edeba21287bbe041a702ec821db95e10b",
+      "target_sha256": "6a3afe9ee3704d052d7337828763c80eea5c765d50bd217574836df5124b4a57"
+    },
+    {
+      "all_equal": true,
+      "checkpoint_commit": "1710bc6119983799f7d22cb723659ac274fe96b1",
+      "checkpoint_receipt_sha256": "0f39ba3362fcde8c9975c98a2eba5aebc510190f6c8e1fdb3cab4f55a1dcdcd5",
+      "checkpoint_sha256": "0f39ba3362fcde8c9975c98a2eba5aebc510190f6c8e1fdb3cab4f55a1dcdcd5",
+      "path": "Scripts/NativeScript/Tests/assistant.test.mjs",
+      "target_git_blob": "f5fcf5695fdbc8d4053d541cdda6d03d5e5138aa",
+      "target_sha256": "0f39ba3362fcde8c9975c98a2eba5aebc510190f6c8e1fdb3cab4f55a1dcdcd5"
+    },
+    {
+      "all_equal": true,
+      "checkpoint_commit": "1710bc6119983799f7d22cb723659ac274fe96b1",
+      "checkpoint_receipt_sha256": "f968bca7095d2b80e64a4ecde69316929e062e3754fc62d4362743dff7887ed3",
+      "checkpoint_sha256": "f968bca7095d2b80e64a4ecde69316929e062e3754fc62d4362743dff7887ed3",
+      "path": "Scripts/NativeScript/Tests/miniapps-sharing.test.mjs",
+      "target_git_blob": "56c27e7dea7057fff51c7a244348b2ff27904162",
+      "target_sha256": "f968bca7095d2b80e64a4ecde69316929e062e3754fc62d4362743dff7887ed3"
+    },
+    {
+      "all_equal": true,
+      "checkpoint_commit": "1710bc6119983799f7d22cb723659ac274fe96b1",
+      "checkpoint_receipt_sha256": "c0e65560079b04441d94f8023a403d41a076e14d1b31437db9ee28410ad862f5",
+      "checkpoint_sha256": "c0e65560079b04441d94f8023a403d41a076e14d1b31437db9ee28410ad862f5",
+      "path": "Scripts/NativeScript/Tests/live-activities.test.mjs",
+      "target_git_blob": "cd2a3004b2b7f0f883b5e1019926c66b4c41a72c",
+      "target_sha256": "c0e65560079b04441d94f8023a403d41a076e14d1b31437db9ee28410ad862f5"
+    },
+    {
+      "all_equal": true,
+      "checkpoint_commit": "1710bc6119983799f7d22cb723659ac274fe96b1",
+      "checkpoint_receipt_sha256": "625d69af766f88690bdb528d17b8aea46ffbed5edfd46fa9c1c471ca9b8339f1",
+      "checkpoint_sha256": "625d69af766f88690bdb528d17b8aea46ffbed5edfd46fa9c1c471ca9b8339f1",
+      "path": "Scripts/Expo/Tests/host-services.test.mjs",
+      "target_git_blob": "74f494a3f9700b5c16744b5b44e8ad9af8b697a9",
+      "target_sha256": "625d69af766f88690bdb528d17b8aea46ffbed5edfd46fa9c1c471ca9b8339f1"
+    },
+    {
+      "all_equal": true,
+      "checkpoint_commit": "1710bc6119983799f7d22cb723659ac274fe96b1",
+      "checkpoint_receipt_sha256": "4200223f5be97ee12ddd5ffc05479fa7be99748998a716b3e2eb6197c14bc8cc",
+      "checkpoint_sha256": "4200223f5be97ee12ddd5ffc05479fa7be99748998a716b3e2eb6197c14bc8cc",
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.d.ts",
+      "target_git_blob": "43d462b387053c122557b2036d4fa27b8b85ea7f",
+      "target_sha256": "4200223f5be97ee12ddd5ffc05479fa7be99748998a716b3e2eb6197c14bc8cc"
+    },
+    {
+      "all_equal": true,
+      "checkpoint_commit": "1710bc6119983799f7d22cb723659ac274fe96b1",
+      "checkpoint_receipt_sha256": "3e15fb2fada80ea4dd158b146cc36d66c6aa71e46e073f02eca23b98b55e73f2",
+      "checkpoint_sha256": "3e15fb2fada80ea4dd158b146cc36d66c6aa71e46e073f02eca23b98b55e73f2",
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/miniapp-assistant.d.ts",
+      "target_git_blob": "a28ea7f29cab801e82ae1f79cb09ff06702c13e1",
+      "target_sha256": "3e15fb2fada80ea4dd158b146cc36d66c6aa71e46e073f02eca23b98b55e73f2"
+    },
+    {
+      "all_equal": true,
+      "checkpoint_commit": "1710bc6119983799f7d22cb723659ac274fe96b1",
+      "checkpoint_receipt_sha256": "c42e3fe3eb38b7289ba3cf49ca0b56bcbd7ac2d27d68955f27e3d5e33e642a7e",
+      "checkpoint_sha256": "c42e3fe3eb38b7289ba3cf49ca0b56bcbd7ac2d27d68955f27e3d5e33e642a7e",
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/package.json",
+      "target_git_blob": "67c1071c58c9e62984720f225a3ada3d2f147fd1",
+      "target_sha256": "c42e3fe3eb38b7289ba3cf49ca0b56bcbd7ac2d27d68955f27e3d5e33e642a7e"
+    },
+    {
+      "all_equal": true,
+      "checkpoint_commit": "1710bc6119983799f7d22cb723659ac274fe96b1",
+      "checkpoint_receipt_sha256": "8d429190e524ba8612462503e20f88eab8e1d029ca794c5821ad01b69623edfc",
+      "checkpoint_sha256": "8d429190e524ba8612462503e20f88eab8e1d029ca794c5821ad01b69623edfc",
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/miniapp-assistant.mjs",
+      "target_git_blob": "6b07044663a7a9d60f59a9d977b40e9ea3b84390",
+      "target_sha256": "8d429190e524ba8612462503e20f88eab8e1d029ca794c5821ad01b69623edfc"
+    },
+    {
+      "all_equal": true,
+      "checkpoint_commit": "1710bc6119983799f7d22cb723659ac274fe96b1",
+      "checkpoint_receipt_sha256": "e9e225da56c0fad5a6a827d457fbbcb988468d2232e1f876cbe60fcbb05f0686",
+      "checkpoint_sha256": "e9e225da56c0fad5a6a827d457fbbcb988468d2232e1f876cbe60fcbb05f0686",
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/system-surfaces.d.ts",
+      "target_git_blob": "f0426f6fa2ef5e2f8e5df1612504be80060585d8",
+      "target_sha256": "e9e225da56c0fad5a6a827d457fbbcb988468d2232e1f876cbe60fcbb05f0686"
+    },
+    {
+      "all_equal": true,
+      "checkpoint_commit": "1710bc6119983799f7d22cb723659ac274fe96b1",
+      "checkpoint_receipt_sha256": "832169736b6d84a6caa983192ceb3d9e9947a8cbda029093eba269c065e8f033",
+      "checkpoint_sha256": "832169736b6d84a6caa983192ceb3d9e9947a8cbda029093eba269c065e8f033",
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.mjs",
+      "target_git_blob": "7836c56b6a72df12ee5a8f4a60d90071cbb1f621",
+      "target_sha256": "832169736b6d84a6caa983192ceb3d9e9947a8cbda029093eba269c065e8f033"
+    },
+    {
+      "all_equal": true,
+      "checkpoint_commit": "1710bc6119983799f7d22cb723659ac274fe96b1",
+      "checkpoint_receipt_sha256": "72051d0da201b6e8f6cd7c5939267e083b8199ed62e56f631a198cdccf121669",
+      "checkpoint_sha256": "72051d0da201b6e8f6cd7c5939267e083b8199ed62e56f631a198cdccf121669",
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/system-surfaces.mjs",
+      "target_git_blob": "674ad7cfa2fb0bfba242d69c52fb82b18e240142",
+      "target_sha256": "72051d0da201b6e8f6cd7c5939267e083b8199ed62e56f631a198cdccf121669"
+    },
+    {
+      "all_equal": true,
+      "checkpoint_commit": "1710bc6119983799f7d22cb723659ac274fe96b1",
+      "checkpoint_receipt_sha256": "435a550ab05ef7785113fb8849a0e8019e32427338591a8fd53428a8c19a854b",
+      "checkpoint_sha256": "435a550ab05ef7785113fb8849a0e8019e32427338591a8fd53428a8c19a854b",
+      "path": "AI_HLY/Services/ChatServices/WebSearchTool.swift",
+      "target_git_blob": "9c462de3a7ddfb121916abc0d38753ae0f459ae6",
+      "target_sha256": "435a550ab05ef7785113fb8849a0e8019e32427338591a8fd53428a8c19a854b"
+    },
+    {
+      "all_equal": true,
+      "checkpoint_commit": "1710bc6119983799f7d22cb723659ac274fe96b1",
+      "checkpoint_receipt_sha256": "ea9473749962a6c078d36a6972abe2ce30ecf38cd23dffa92231a02b53b7c665",
+      "checkpoint_sha256": "ea9473749962a6c078d36a6972abe2ce30ecf38cd23dffa92231a02b53b7c665",
+      "path": "AI_HLY/Downstream/AgentDiagnostics/AgentTokenUsage.swift",
+      "target_git_blob": "88728c477e7efdbc0974536d48f5aae18e60616a",
+      "target_sha256": "ea9473749962a6c078d36a6972abe2ce30ecf38cd23dffa92231a02b53b7c665"
+    },
+    {
+      "all_equal": true,
+      "checkpoint_commit": "1710bc6119983799f7d22cb723659ac274fe96b1",
+      "checkpoint_receipt_sha256": "51196278174564c14b1568c21fcaf0b95adcb31bbcea07a57fe3c045075240fb",
+      "checkpoint_sha256": "51196278174564c14b1568c21fcaf0b95adcb31bbcea07a57fe3c045075240fb",
+      "path": "AI_HLY/Services/ChatServices/AutomaticSearch/AutomaticWebSearchCoordinator.swift",
+      "target_git_blob": "884c8cfcc3336bb6582a47c510f2c04d2d9f5cf9",
+      "target_sha256": "51196278174564c14b1568c21fcaf0b95adcb31bbcea07a57fe3c045075240fb"
+    },
+    {
+      "all_equal": true,
+      "checkpoint_commit": "1710bc6119983799f7d22cb723659ac274fe96b1",
+      "checkpoint_receipt_sha256": "96c88b7fcc0de48e6b30570850fbd80f82a679499eb339fcf53cd363d4de9c54",
+      "checkpoint_sha256": "96c88b7fcc0de48e6b30570850fbd80f82a679499eb339fcf53cd363d4de9c54",
+      "path": "AI_HLY/Services/ChatServices/AutomaticSearch/KeenablePublicSearchAdapter.swift",
+      "target_git_blob": "e510531f257c8f533adbde1cacfe1ba613390f3f",
+      "target_sha256": "96c88b7fcc0de48e6b30570850fbd80f82a679499eb339fcf53cd363d4de9c54"
+    },
+    {
+      "all_equal": true,
+      "checkpoint_commit": "1710bc6119983799f7d22cb723659ac274fe96b1",
+      "checkpoint_receipt_sha256": "8143549a517e6717c85fb64e903a27958fd61cba875899ec38d7fb10a1154a68",
+      "checkpoint_sha256": "8143549a517e6717c85fb64e903a27958fd61cba875899ec38d7fb10a1154a68",
+      "path": "AI_HLY/Services/ChatServices/AutomaticSearch/TavilyKeylessSearchAdapter.swift",
+      "target_git_blob": "a3927637a284fd4a364333786a5e58a17cf16e9a",
+      "target_sha256": "8143549a517e6717c85fb64e903a27958fd61cba875899ec38d7fb10a1154a68"
+    },
+    {
+      "all_equal": true,
+      "checkpoint_commit": "1710bc6119983799f7d22cb723659ac274fe96b1",
+      "checkpoint_receipt_sha256": "2cb061ddfdd1536a417d630c6f776cf3bb9ec95328452afbbf20dc08337ef537",
+      "checkpoint_sha256": "2cb061ddfdd1536a417d630c6f776cf3bb9ec95328452afbbf20dc08337ef537",
+      "path": "AI_HLY/Services/ChatServices/AutomaticSearch/WebSearchProviderProtocol.swift",
+      "target_git_blob": "546bb51c4d893fc08d7dbe2610ea8ed5c6e10656",
+      "target_sha256": "2cb061ddfdd1536a417d630c6f776cf3bb9ec95328452afbbf20dc08337ef537"
+    },
+    {
+      "all_equal": true,
+      "checkpoint_commit": "1710bc6119983799f7d22cb723659ac274fe96b1",
+      "checkpoint_receipt_sha256": "2ec1352dcce9a19ede76148c540caf98a36dc076f7c2740015395656192a4158",
+      "checkpoint_sha256": "2ec1352dcce9a19ede76148c540caf98a36dc076f7c2740015395656192a4158",
+      "path": "AI_HLY/Services/ChatServices/AutomaticSearch/WebSearchRelevanceEvaluator.swift",
+      "target_git_blob": "b217839e453a1367d58edce1cd7428fb0c67af0c",
+      "target_sha256": "2ec1352dcce9a19ede76148c540caf98a36dc076f7c2740015395656192a4158"
+    },
+    {
+      "all_equal": true,
+      "checkpoint_commit": "1710bc6119983799f7d22cb723659ac274fe96b1",
+      "checkpoint_receipt_sha256": "d3b69274d06eb3403c44a2ec1d2a78399baef65bc875b8888bd8af1e3887e751",
+      "checkpoint_sha256": "d3b69274d06eb3403c44a2ec1d2a78399baef65bc875b8888bd8af1e3887e751",
+      "path": "AI_HLY/Services/ChatServices/AutomaticSearch/WebSearchResult.swift",
+      "target_git_blob": "34d7db717173d40f894e47ed69d0286d57a04411",
+      "target_sha256": "d3b69274d06eb3403c44a2ec1d2a78399baef65bc875b8888bd8af1e3887e751"
+    },
+    {
+      "all_equal": true,
+      "checkpoint_commit": "1710bc6119983799f7d22cb723659ac274fe96b1",
+      "checkpoint_receipt_sha256": "d07f829a5896928f43bbbf4b49fa16e10f98f4d76cd6a6862525cf4d02305520",
+      "checkpoint_sha256": "d07f829a5896928f43bbbf4b49fa16e10f98f4d76cd6a6862525cf4d02305520",
+      "path": "AI_HLY/Services/ChatServices/AutomaticSearch/YouKeylessSearchAdapter.swift",
+      "target_git_blob": "48a4fb1f4f5b4b79f95df9b0be91ea6219c2d034",
+      "target_sha256": "d07f829a5896928f43bbbf4b49fa16e10f98f4d76cd6a6862525cf4d02305520"
+    },
+    {
+      "all_equal": true,
+      "checkpoint_commit": "1710bc6119983799f7d22cb723659ac274fe96b1",
+      "checkpoint_receipt_sha256": "faa0342db6fe61bac1eb65da32622e47284b00e669ca1ff1d3ebd276f105438c",
+      "checkpoint_sha256": "faa0342db6fe61bac1eb65da32622e47284b00e669ca1ff1d3ebd276f105438c",
+      "path": "AI_HLYTests/AutomaticWebSearchCacheTests.swift",
+      "target_git_blob": "a63165a9b72721e30b227823ffa6b493be74ec24",
+      "target_sha256": "faa0342db6fe61bac1eb65da32622e47284b00e669ca1ff1d3ebd276f105438c"
+    },
+    {
+      "all_equal": true,
+      "checkpoint_commit": "1710bc6119983799f7d22cb723659ac274fe96b1",
+      "checkpoint_receipt_sha256": "622fa32878079e11c3f3dcd502b216f270d22ad3a0c277e021b0aa77a3afa33f",
+      "checkpoint_sha256": "622fa32878079e11c3f3dcd502b216f270d22ad3a0c277e021b0aa77a3afa33f",
+      "path": "AI_HLYTests/AgentTokenUsageCacheTests.swift",
+      "target_git_blob": "4c4f9c11ea5652bc6b673fa9f3734c358696fa80",
+      "target_sha256": "622fa32878079e11c3f3dcd502b216f270d22ad3a0c277e021b0aa77a3afa33f"
+    },
+    {
+      "all_equal": true,
+      "checkpoint_commit": "1710bc6119983799f7d22cb723659ac274fe96b1",
+      "checkpoint_receipt_sha256": "e405a962b090e5786466ef0be2509cd629b16ba2d6d70f40f83dd92fb1e5f442",
+      "checkpoint_sha256": "e405a962b090e5786466ef0be2509cd629b16ba2d6d70f40f83dd92fb1e5f442",
+      "path": "Scripts/NativeScript/host-services.ts",
+      "target_git_blob": "09f36125f5b5d80ecc20908356c4590f15705036",
+      "target_sha256": "e405a962b090e5786466ef0be2509cd629b16ba2d6d70f40f83dd92fb1e5f442"
+    },
+    {
+      "all_equal": true,
+      "checkpoint_commit": "1710bc6119983799f7d22cb723659ac274fe96b1",
+      "checkpoint_receipt_sha256": "1ca742df46a70d3ee838de98d4ac128eebeeea99d93c9cfa6475e388fee28cc3",
+      "checkpoint_sha256": "1ca742df46a70d3ee838de98d4ac128eebeeea99d93c9cfa6475e388fee28cc3",
+      "path": "Scripts/NativeScript/build-host-services.mjs",
+      "target_git_blob": "ecdb7db89012044792cd24c80a39a68af93a9889",
+      "target_sha256": "1ca742df46a70d3ee838de98d4ac128eebeeea99d93c9cfa6475e388fee28cc3"
+    },
+    {
+      "all_equal": true,
+      "checkpoint_commit": "1710bc6119983799f7d22cb723659ac274fe96b1",
+      "checkpoint_receipt_sha256": "3a2c4424ce074056ef76d62a4502fb16c389e10a46967fcde15835efde94543f",
+      "checkpoint_sha256": "3a2c4424ce074056ef76d62a4502fb16c389e10a46967fcde15835efde94543f",
+      "path": "Packages/HanlinExpoUI/src/system-surfaces.ts",
+      "target_git_blob": "e0577b9824f48e9dde02f4d8b73b815beb16e99f",
+      "target_sha256": "3a2c4424ce074056ef76d62a4502fb16c389e10a46967fcde15835efde94543f"
+    },
+    {
+      "all_equal": true,
+      "checkpoint_commit": "1710bc6119983799f7d22cb723659ac274fe96b1",
+      "checkpoint_receipt_sha256": "0c0d2964715e4da0f8418c5925fad3171c6776c64ba310a7be4b54c662965198",
+      "checkpoint_sha256": "0c0d2964715e4da0f8418c5925fad3171c6776c64ba310a7be4b54c662965198",
+      "path": "Scripts/NativeScript/Fixtures/HostServices/assistant.ts",
+      "target_git_blob": "04d26155d680e80f7b771651f8ed1219753fdd2e",
+      "target_sha256": "0c0d2964715e4da0f8418c5925fad3171c6776c64ba310a7be4b54c662965198"
+    },
+    {
+      "all_equal": true,
+      "checkpoint_commit": "1710bc6119983799f7d22cb723659ac274fe96b1",
+      "checkpoint_receipt_sha256": "d5d38fc209d8d8dedb2832ffd037e53d4eabd8b8c92320bd79e791fdfef2c607",
+      "checkpoint_sha256": "d5d38fc209d8d8dedb2832ffd037e53d4eabd8b8c92320bd79e791fdfef2c607",
+      "path": "Packages/HanlinExpoUI/src/miniapp-actions.ts",
+      "target_git_blob": "62d386f2fcc79a073c5bac3328c2233817ec34bb",
+      "target_sha256": "d5d38fc209d8d8dedb2832ffd037e53d4eabd8b8c92320bd79e791fdfef2c607"
+    },
+    {
+      "all_equal": true,
+      "checkpoint_commit": "1710bc6119983799f7d22cb723659ac274fe96b1",
+      "checkpoint_receipt_sha256": "18dbddebb3c641742ca5f83d0492cec1cbbc7bb1affbefe641477b7481110568",
+      "checkpoint_sha256": "18dbddebb3c641742ca5f83d0492cec1cbbc7bb1affbefe641477b7481110568",
+      "path": "Packages/HanlinExpoUI/package.json",
+      "target_git_blob": "ebb835c8b080e4769db7640768d62b8acf84225d",
+      "target_sha256": "18dbddebb3c641742ca5f83d0492cec1cbbc7bb1affbefe641477b7481110568"
+    },
+    {
+      "all_equal": true,
+      "checkpoint_commit": "1710bc6119983799f7d22cb723659ac274fe96b1",
+      "checkpoint_receipt_sha256": "c99e376b70dc4e0b1ce5442cb86bf3115b11f72cf6154f1e808240392c724466",
+      "checkpoint_sha256": "c99e376b70dc4e0b1ce5442cb86bf3115b11f72cf6154f1e808240392c724466",
+      "path": "Scripts/NativeScript/Fixtures/HostServices/valid.ts",
+      "target_git_blob": "2c68d519a6006a28c72ca4512571d0a57c21d249",
+      "target_sha256": "c99e376b70dc4e0b1ce5442cb86bf3115b11f72cf6154f1e808240392c724466"
+    },
+    {
+      "all_equal": true,
+      "checkpoint_commit": "1710bc6119983799f7d22cb723659ac274fe96b1",
+      "checkpoint_receipt_sha256": "47f20182b5dfe1051d380453ad6b467adf3b439fd07e433500f4a87d5b7cfd8d",
+      "checkpoint_sha256": "47f20182b5dfe1051d380453ad6b467adf3b439fd07e433500f4a87d5b7cfd8d",
+      "path": "Scripts/NativeScript/Fixtures/HostServices/invalid.ts",
+      "target_git_blob": "93d7bd2bd7093d5dd76b99ce8152af69de27793e",
+      "target_sha256": "47f20182b5dfe1051d380453ad6b467adf3b439fd07e433500f4a87d5b7cfd8d"
+    },
+    {
+      "all_equal": true,
+      "checkpoint_commit": "1710bc6119983799f7d22cb723659ac274fe96b1",
+      "checkpoint_receipt_sha256": "5d9427bad52584fa0f022658376f2496434e826b144c56e500ce4720bac42efb",
+      "checkpoint_sha256": "5d9427bad52584fa0f022658376f2496434e826b144c56e500ce4720bac42efb",
+      "path": "Scripts/NativeScript/Fixtures/HostServices/live-activities.ts",
+      "target_git_blob": "6534ee6cd0761637774f3704ff66718eb9fde40f",
+      "target_sha256": "5d9427bad52584fa0f022658376f2496434e826b144c56e500ce4720bac42efb"
+    },
+    {
+      "all_equal": true,
+      "checkpoint_commit": "1710bc6119983799f7d22cb723659ac274fe96b1",
+      "checkpoint_receipt_sha256": "08fc03bfa87cd78f4f21f80e9324a4840061105f6e9ab081ed794c569ca7324b",
+      "checkpoint_sha256": "08fc03bfa87cd78f4f21f80e9324a4840061105f6e9ab081ed794c569ca7324b",
+      "path": "Scripts/NativeScript/package.json",
+      "target_git_blob": "aba15c8760c59aa95e438620612d36df11f267dc",
+      "target_sha256": "08fc03bfa87cd78f4f21f80e9324a4840061105f6e9ab081ed794c569ca7324b"
+    }
+  ],
+  "checkpoint_unique_input_files": 36,
+  "current_application_acceptance_claimed": false,
+  "dependencies": {
+    "compiler_hash_limit": "The original Expo VM receipt records TypeScript API 6.0.3, not its compiler-file or codec hash. Comparison proves equal locked wrapper @typescript/typescript6 6.0.2 -> @typescript/old (typescript 6.0.3), base64-js 1.5.1 and complete recorded npm entries/integrities; current observed file hashes are not retroactively historical hashes.",
+    "consumed_npm_lock_entries": [
+      {
+        "consumed_entries": [
+          {
+            "exact_entry_equal": true,
+            "original_entry": {
+              "bin": {
+                "tsc": "bin/tsc",
+                "tsserver": "bin/tsserver"
+              },
+              "dev": true,
+              "engines": {
+                "node": ">=14.17"
+              },
+              "integrity": "sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==",
+              "license": "Apache-2.0",
+              "resolved": "https://registry.npmjs.org/typescript/-/typescript-5.9.3.tgz",
+              "version": "5.9.3"
+            },
+            "original_entry_sha256": "747342024b378e408bd0b0d6e9f7df3108e04af10315b6a6b84ae7a0413db84d",
+            "package": "node_modules/typescript",
+            "target_entry": {
+              "bin": {
+                "tsc": "bin/tsc",
+                "tsserver": "bin/tsserver"
+              },
+              "dev": true,
+              "engines": {
+                "node": ">=14.17"
+              },
+              "integrity": "sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==",
+              "license": "Apache-2.0",
+              "resolved": "https://registry.npmjs.org/typescript/-/typescript-5.9.3.tgz",
+              "version": "5.9.3"
+            },
+            "target_entry_sha256": "747342024b378e408bd0b0d6e9f7df3108e04af10315b6a6b84ae7a0413db84d"
+          }
+        ],
+        "entire_lockfile_equal": false,
+        "path": "Scripts/NativeScript/package-lock.json",
+        "proof_commit": "0cf7fd486c789d488e438cb62192e34a0ae712f7",
+        "proof_lock_sha256": "16f569f4bfa6f8806cfe72449866a0dc9a9331f33d2c67170d5292455c48b60b",
+        "target_lock_sha256": "fccc5039c760759c5a5751b2056300cd23204f897e5d1ce26408c4a108e4de78"
+      },
+      {
+        "consumed_entries": [
+          {
+            "exact_entry_equal": true,
+            "original_entry": {
+              "bin": {
+                "tsc6": "bin/tsc6"
+              },
+              "dependencies": {
+                "@typescript/old": "npm:typescript@^6"
+              },
+              "devOptional": true,
+              "integrity": "sha512-mbCddXd+jm7hfx7w2YU64/Av4/NqqeG3GoRZgxPcgoTxYjhrcfJRw9ULch71SS4G+Q3bOXFhRvPqjguN0Hyp5w==",
+              "license": "Apache-2.0",
+              "name": "@typescript/typescript6",
+              "resolved": "https://registry.npmjs.org/@typescript/typescript6/-/typescript6-6.0.2.tgz",
+              "version": "6.0.2"
+            },
+            "original_entry_sha256": "051c491a29ff3cf9fbd203278533216f1eca25cbd881c8e7507c42c47d3cb326",
+            "package": "node_modules/typescript",
+            "target_entry": {
+              "bin": {
+                "tsc6": "bin/tsc6"
+              },
+              "dependencies": {
+                "@typescript/old": "npm:typescript@^6"
+              },
+              "devOptional": true,
+              "integrity": "sha512-mbCddXd+jm7hfx7w2YU64/Av4/NqqeG3GoRZgxPcgoTxYjhrcfJRw9ULch71SS4G+Q3bOXFhRvPqjguN0Hyp5w==",
+              "license": "Apache-2.0",
+              "name": "@typescript/typescript6",
+              "resolved": "https://registry.npmjs.org/@typescript/typescript6/-/typescript6-6.0.2.tgz",
+              "version": "6.0.2"
+            },
+            "target_entry_sha256": "051c491a29ff3cf9fbd203278533216f1eca25cbd881c8e7507c42c47d3cb326"
+          },
+          {
+            "exact_entry_equal": true,
+            "original_entry": {
+              "bin": {
+                "tsc": "bin/tsc",
+                "tsserver": "bin/tsserver"
+              },
+              "devOptional": true,
+              "engines": {
+                "node": ">=14.17"
+              },
+              "integrity": "sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw==",
+              "license": "Apache-2.0",
+              "name": "typescript",
+              "resolved": "https://registry.npmjs.org/typescript/-/typescript-6.0.3.tgz",
+              "version": "6.0.3"
+            },
+            "original_entry_sha256": "0ed8b27ac07f4d5ca782edfec6f1cd79f0bd83242fe882ee34984bd0fbb78b1b",
+            "package": "node_modules/@typescript/old",
+            "target_entry": {
+              "bin": {
+                "tsc": "bin/tsc",
+                "tsserver": "bin/tsserver"
+              },
+              "devOptional": true,
+              "engines": {
+                "node": ">=14.17"
+              },
+              "integrity": "sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw==",
+              "license": "Apache-2.0",
+              "name": "typescript",
+              "resolved": "https://registry.npmjs.org/typescript/-/typescript-6.0.3.tgz",
+              "version": "6.0.3"
+            },
+            "target_entry_sha256": "0ed8b27ac07f4d5ca782edfec6f1cd79f0bd83242fe882ee34984bd0fbb78b1b"
+          },
+          {
+            "exact_entry_equal": true,
+            "original_entry": {
+              "funding": [
+                {
+                  "type": "github",
+                  "url": "https://github.com/sponsors/feross"
+                },
+                {
+                  "type": "patreon",
+                  "url": "https://www.patreon.com/feross"
+                },
+                {
+                  "type": "consulting",
+                  "url": "https://feross.org/support"
+                }
+              ],
+              "integrity": "sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==",
+              "license": "MIT",
+              "resolved": "https://registry.npmjs.org/base64-js/-/base64-js-1.5.1.tgz",
+              "version": "1.5.1"
+            },
+            "original_entry_sha256": "999d34d353d51f8128aa640691f4b7026cc56a4b394751235fd0a0b3d5867830",
+            "package": "node_modules/base64-js",
+            "target_entry": {
+              "funding": [
+                {
+                  "type": "github",
+                  "url": "https://github.com/sponsors/feross"
+                },
+                {
+                  "type": "patreon",
+                  "url": "https://www.patreon.com/feross"
+                },
+                {
+                  "type": "consulting",
+                  "url": "https://feross.org/support"
+                }
+              ],
+              "integrity": "sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==",
+              "license": "MIT",
+              "resolved": "https://registry.npmjs.org/base64-js/-/base64-js-1.5.1.tgz",
+              "version": "1.5.1"
+            },
+            "target_entry_sha256": "999d34d353d51f8128aa640691f4b7026cc56a4b394751235fd0a0b3d5867830"
+          }
+        ],
+        "entire_lockfile_equal": false,
+        "path": "Scripts/Expo/package-lock.json",
+        "proof_commit": "0cf7fd486c789d488e438cb62192e34a0ae712f7",
+        "proof_lock_sha256": "95d2a560d4eb01de64fcd0d43875a4ef2392e9747ed9fa79c2e0a0e58abececf",
+        "target_lock_sha256": "c08757cf46ac4d5c86a873f676af4a3be585db64ae2e1aa1e8288277d4eb63b8"
+      }
+    ],
+    "current_installed_native_script_entry_file_matches_original": true,
+    "environment_limit": "Original Node/Swift versions and original retained results are preserved. This comparison does not execute or hash an original compiler/Node binary, prove the entire historical OS image, or reconstruct unrecorded standard-library files.",
+    "original_native_script_typescript_file_sha256": "3ae902c92cc44dace175c0e69e13a4b0899f6983c6121d76b9ab8dd5795e7675",
+    "read_only_current_installed_observations": [
+      {
+        "bytes": 9112572,
+        "matches_prior_assessment": true,
+        "path": "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/Scripts/NativeScript/node_modules/typescript/lib/typescript.js",
+        "present": true,
+        "prior_assessment_sha256": "3ae902c92cc44dace175c0e69e13a4b0899f6983c6121d76b9ab8dd5795e7675",
+        "prior_assessment_was_historical_execution_hash": true,
+        "sha256": "3ae902c92cc44dace175c0e69e13a4b0899f6983c6121d76b9ab8dd5795e7675"
+      },
+      {
+        "bytes": 45,
+        "matches_prior_assessment": true,
+        "path": "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/Scripts/Expo/node_modules/typescript/lib/typescript.js",
+        "present": true,
+        "prior_assessment_sha256": "d3f3cd2b04b7f466f4484df921b744223f7bd1f3e353ec9110bdf52695b983d5",
+        "prior_assessment_was_historical_execution_hash": false,
+        "sha256": "d3f3cd2b04b7f466f4484df921b744223f7bd1f3e353ec9110bdf52695b983d5"
+      },
+      {
+        "bytes": 9144216,
+        "matches_prior_assessment": true,
+        "path": "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/Scripts/Expo/node_modules/@typescript/old/lib/typescript.js",
+        "present": true,
+        "prior_assessment_sha256": "569177652966bd528c319171c7dd22860dbf72bde116cbc4f644f1d02bb12e39",
+        "prior_assessment_was_historical_execution_hash": false,
+        "sha256": "569177652966bd528c319171c7dd22860dbf72bde116cbc4f644f1d02bb12e39"
+      },
+      {
+        "bytes": 3932,
+        "matches_prior_assessment": true,
+        "path": "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/Scripts/Expo/node_modules/base64-js/index.js",
+        "present": true,
+        "prior_assessment_sha256": "829eadd8a1a441d25be0cb93b00e16a0d0c20fd294db95d8f2ed87e6954b7182",
+        "prior_assessment_was_historical_execution_hash": false,
+        "sha256": "829eadd8a1a441d25be0cb93b00e16a0d0c20fd294db95d8f2ed87e6954b7182"
+      }
+    ]
+  },
+  "failures": [],
+  "local_cache_accounting": {
+    "lru_pins_equal": true,
+    "original_command": [
+      "swift",
+      "test",
+      "--package-path",
+      "/Users/m1/builds/hanlin-ai-cache-1bb4bdb0-20261125/local-proof",
+      "--scratch-path",
+      "/Users/m1/caches/DerivedData/hanlin-ai-cache-20261125/local-proof",
+      "--jobs",
+      "2"
+    ],
+    "original_execution_exit_code": 0,
+    "original_lru_pin": {
+      "identity": "lrucache",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/nicklockwood/LRUCache.git",
+      "state": {
+        "revision": "f0570e943ea4445d258113ba73f50cb2b7e564ac",
+        "version": "1.3.0"
+      }
+    },
+    "original_source": "1bb4bdb08bf860f123803e48871a401ef165ab82",
+    "original_toolchain": "Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)\nTarget: arm64-apple-macosx27.0.0\n",
+    "production_files": 9,
+    "retained_fixture_manifest": {
+      "bytes": 449,
+      "git_blob": "583e950b704b746fc2d42c9b9629713d8cc89221",
+      "path": "docs/ai-cache/evidence/local-cache-20261125/proof-Package.swift",
+      "sha256": "90f371dcdaf89a9786ad35d5b9802332bf6bd014106354b21553bbacc6e063d4",
+      "source_commit": "6fbcf703dd9f40f5b1d42592d58a0a69573dcdfa"
+    },
+    "retained_fixture_resolution": {
+      "bytes": 390,
+      "git_blob": "12190cd48f58713a95216cf81ee8cb82dc86d205",
+      "path": "docs/ai-cache/evidence/local-cache-20261125/proof-Package.resolved",
+      "sha256": "cad224f799d21b36089c0bfe38c9808757b8f1752a8b6f7ed746adc8f0b7fc3f",
+      "source_commit": "6fbcf703dd9f40f5b1d42592d58a0a69573dcdfa"
+    },
+    "retained_raw_log_sha256": "90d1ce95dde3db51280b07e098e95f373bbb9ef16d3d173c925cc86231a85ccb",
+    "reuse_scope": "Original HanlinCacheProof macOS source harness, with its nine real production files, two real test files and LRUCache 1.3.0. This does not certify the full iOS app, UI, live providers, SwiftData or billing.",
+    "source_files": 11,
+    "status": "REUSED_VERIFIED_PASS",
+    "target_canonical_lru_pin": {
+      "identity": "lrucache",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/nicklockwood/LRUCache.git",
+      "state": {
+        "revision": "f0570e943ea4445d258113ba73f50cb2b7e564ac",
+        "version": "1.3.0"
+      }
+    },
+    "target_canonical_lru_resolution_path": "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+    "target_manifest_lru_declaration": ".package(url: \"https://github.com/nicklockwood/LRUCache.git\", exact: \"1.3.0\"),",
+    "test_files": 2,
+    "test_import_behavior": "Original source includes canImport(HanlinCacheProof) branches; no test/import rewriting is needed or performed in this verification.",
+    "tests": {
+      "cache_lifecycle": 11,
+      "total": 18,
+      "usage_accounting": 7
+    }
+  },
+  "new_build_execution": false,
+  "new_dependency_installation": false,
+  "new_test_execution": false,
+  "recorded_comparison_count": 38,
+  "recorded_input_comparisons": [
+    {
+      "group": "expo-assistant-tests.json",
+      "original_receipt": "docs/ai-cache/evidence/active-assistant-js-20261125/expo-assistant-tests.json",
+      "path": "Packages/HanlinExpoUI/src/miniapp-assistant.ts",
+      "proof_commit": "e0a98a2d7c495644f643c44e7cc417e4522185ab",
+      "proof_git_blob": "9759c84d462c473bf72f092db98b4d4cab7dc672",
+      "proof_sha256": "2e0e25875906f15876b8035d0863482510163ae4a82865eb376b788ff95e3c2c",
+      "receipt_matches_original_git": true,
+      "recorded_sha256": "2e0e25875906f15876b8035d0863482510163ae4a82865eb376b788ff95e3c2c",
+      "target_git_blob": "9759c84d462c473bf72f092db98b4d4cab7dc672",
+      "target_matches_original_bytes": true,
+      "target_sha256": "2e0e25875906f15876b8035d0863482510163ae4a82865eb376b788ff95e3c2c"
+    },
+    {
+      "group": "expo-assistant-tests.json",
+      "original_receipt": "docs/ai-cache/evidence/active-assistant-js-20261125/expo-assistant-tests.json",
+      "path": "Packages/HanlinExpoUI/src/host-services.ts",
+      "proof_commit": "e0a98a2d7c495644f643c44e7cc417e4522185ab",
+      "proof_git_blob": "a725d80170315b79bcab9e7e762147466aa6e52b",
+      "proof_sha256": "7055a22e3aa4a685b970c1eaaf66f538eeb34f560bb2c345446c55305a045d21",
+      "receipt_matches_original_git": true,
+      "recorded_sha256": "7055a22e3aa4a685b970c1eaaf66f538eeb34f560bb2c345446c55305a045d21",
+      "target_git_blob": "a725d80170315b79bcab9e7e762147466aa6e52b",
+      "target_matches_original_bytes": true,
+      "target_sha256": "7055a22e3aa4a685b970c1eaaf66f538eeb34f560bb2c345446c55305a045d21"
+    },
+    {
+      "group": "expo-assistant-tests.json",
+      "original_receipt": "docs/ai-cache/evidence/active-assistant-js-20261125/expo-assistant-tests.json",
+      "path": "Packages/HanlinExpoUI/tests/miniapp-assistant.test.mjs",
+      "proof_commit": "e0a98a2d7c495644f643c44e7cc417e4522185ab",
+      "proof_git_blob": "4c9628b02bf295ddb5c872683db7cd9a17779000",
+      "proof_sha256": "fc1465119ea944d674b91e00ec6127092dbc3ef6e191a80eb3d6cfffaac969ba",
+      "receipt_matches_original_git": true,
+      "recorded_sha256": "fc1465119ea944d674b91e00ec6127092dbc3ef6e191a80eb3d6cfffaac969ba",
+      "target_git_blob": "4c9628b02bf295ddb5c872683db7cd9a17779000",
+      "target_matches_original_bytes": true,
+      "target_sha256": "fc1465119ea944d674b91e00ec6127092dbc3ef6e191a80eb3d6cfffaac969ba"
+    },
+    {
+      "group": "expo-assistant-tests.json",
+      "original_receipt": "docs/ai-cache/evidence/active-assistant-js-20261125/expo-assistant-tests.json",
+      "path": "Packages/HanlinExpoUI/tests/host-services-publication.test.mjs",
+      "proof_commit": "e0a98a2d7c495644f643c44e7cc417e4522185ab",
+      "proof_git_blob": "8508850edeba21287bbe041a702ec821db95e10b",
+      "proof_sha256": "6a3afe9ee3704d052d7337828763c80eea5c765d50bd217574836df5124b4a57",
+      "receipt_matches_original_git": true,
+      "recorded_sha256": "6a3afe9ee3704d052d7337828763c80eea5c765d50bd217574836df5124b4a57",
+      "target_git_blob": "8508850edeba21287bbe041a702ec821db95e10b",
+      "target_matches_original_bytes": true,
+      "target_sha256": "6a3afe9ee3704d052d7337828763c80eea5c765d50bd217574836df5124b4a57"
+    },
+    {
+      "group": "host-facade-tests-after.json",
+      "original_receipt": "docs/ai-cache/evidence/active-assistant-js-20261125/host-facade-tests-after.json",
+      "path": "Scripts/NativeScript/Tests/assistant.test.mjs",
+      "proof_commit": "0cf7fd486c789d488e438cb62192e34a0ae712f7",
+      "proof_git_blob": "f5fcf5695fdbc8d4053d541cdda6d03d5e5138aa",
+      "proof_sha256": "0f39ba3362fcde8c9975c98a2eba5aebc510190f6c8e1fdb3cab4f55a1dcdcd5",
+      "receipt_matches_original_git": true,
+      "recorded_sha256": "0f39ba3362fcde8c9975c98a2eba5aebc510190f6c8e1fdb3cab4f55a1dcdcd5",
+      "target_git_blob": "f5fcf5695fdbc8d4053d541cdda6d03d5e5138aa",
+      "target_matches_original_bytes": true,
+      "target_sha256": "0f39ba3362fcde8c9975c98a2eba5aebc510190f6c8e1fdb3cab4f55a1dcdcd5"
+    },
+    {
+      "group": "host-facade-tests-after.json",
+      "original_receipt": "docs/ai-cache/evidence/active-assistant-js-20261125/host-facade-tests-after.json",
+      "path": "Scripts/NativeScript/Tests/miniapps-sharing.test.mjs",
+      "proof_commit": "0cf7fd486c789d488e438cb62192e34a0ae712f7",
+      "proof_git_blob": "56c27e7dea7057fff51c7a244348b2ff27904162",
+      "proof_sha256": "f968bca7095d2b80e64a4ecde69316929e062e3754fc62d4362743dff7887ed3",
+      "receipt_matches_original_git": true,
+      "recorded_sha256": "f968bca7095d2b80e64a4ecde69316929e062e3754fc62d4362743dff7887ed3",
+      "target_git_blob": "56c27e7dea7057fff51c7a244348b2ff27904162",
+      "target_matches_original_bytes": true,
+      "target_sha256": "f968bca7095d2b80e64a4ecde69316929e062e3754fc62d4362743dff7887ed3"
+    },
+    {
+      "group": "host-facade-tests-after.json",
+      "original_receipt": "docs/ai-cache/evidence/active-assistant-js-20261125/host-facade-tests-after.json",
+      "path": "Scripts/NativeScript/Tests/live-activities.test.mjs",
+      "proof_commit": "0cf7fd486c789d488e438cb62192e34a0ae712f7",
+      "proof_git_blob": "cd2a3004b2b7f0f883b5e1019926c66b4c41a72c",
+      "proof_sha256": "c0e65560079b04441d94f8023a403d41a076e14d1b31437db9ee28410ad862f5",
+      "receipt_matches_original_git": true,
+      "recorded_sha256": "c0e65560079b04441d94f8023a403d41a076e14d1b31437db9ee28410ad862f5",
+      "target_git_blob": "cd2a3004b2b7f0f883b5e1019926c66b4c41a72c",
+      "target_matches_original_bytes": true,
+      "target_sha256": "c0e65560079b04441d94f8023a403d41a076e14d1b31437db9ee28410ad862f5"
+    },
+    {
+      "group": "host-facade-tests-after.json",
+      "original_receipt": "docs/ai-cache/evidence/active-assistant-js-20261125/host-facade-tests-after.json",
+      "path": "Scripts/Expo/Tests/host-services.test.mjs",
+      "proof_commit": "0cf7fd486c789d488e438cb62192e34a0ae712f7",
+      "proof_git_blob": "74f494a3f9700b5c16744b5b44e8ad9af8b697a9",
+      "proof_sha256": "625d69af766f88690bdb528d17b8aea46ffbed5edfd46fa9c1c471ca9b8339f1",
+      "receipt_matches_original_git": true,
+      "recorded_sha256": "625d69af766f88690bdb528d17b8aea46ffbed5edfd46fa9c1c471ca9b8339f1",
+      "target_git_blob": "74f494a3f9700b5c16744b5b44e8ad9af8b697a9",
+      "target_matches_original_bytes": true,
+      "target_sha256": "625d69af766f88690bdb528d17b8aea46ffbed5edfd46fa9c1c471ca9b8339f1"
+    },
+    {
+      "group": "host-facade-tests-after.json",
+      "original_receipt": "docs/ai-cache/evidence/active-assistant-js-20261125/host-facade-tests-after.json",
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.d.ts",
+      "proof_commit": "0cf7fd486c789d488e438cb62192e34a0ae712f7",
+      "proof_git_blob": "43d462b387053c122557b2036d4fa27b8b85ea7f",
+      "proof_sha256": "4200223f5be97ee12ddd5ffc05479fa7be99748998a716b3e2eb6197c14bc8cc",
+      "receipt_matches_original_git": true,
+      "recorded_sha256": "4200223f5be97ee12ddd5ffc05479fa7be99748998a716b3e2eb6197c14bc8cc",
+      "target_git_blob": "43d462b387053c122557b2036d4fa27b8b85ea7f",
+      "target_matches_original_bytes": true,
+      "target_sha256": "4200223f5be97ee12ddd5ffc05479fa7be99748998a716b3e2eb6197c14bc8cc"
+    },
+    {
+      "group": "host-facade-tests-after.json",
+      "original_receipt": "docs/ai-cache/evidence/active-assistant-js-20261125/host-facade-tests-after.json",
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/miniapp-assistant.d.ts",
+      "proof_commit": "0cf7fd486c789d488e438cb62192e34a0ae712f7",
+      "proof_git_blob": "a28ea7f29cab801e82ae1f79cb09ff06702c13e1",
+      "proof_sha256": "3e15fb2fada80ea4dd158b146cc36d66c6aa71e46e073f02eca23b98b55e73f2",
+      "receipt_matches_original_git": true,
+      "recorded_sha256": "3e15fb2fada80ea4dd158b146cc36d66c6aa71e46e073f02eca23b98b55e73f2",
+      "target_git_blob": "a28ea7f29cab801e82ae1f79cb09ff06702c13e1",
+      "target_matches_original_bytes": true,
+      "target_sha256": "3e15fb2fada80ea4dd158b146cc36d66c6aa71e46e073f02eca23b98b55e73f2"
+    },
+    {
+      "group": "host-facade-tests-after.json",
+      "original_receipt": "docs/ai-cache/evidence/active-assistant-js-20261125/host-facade-tests-after.json",
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/package.json",
+      "proof_commit": "0cf7fd486c789d488e438cb62192e34a0ae712f7",
+      "proof_git_blob": "67c1071c58c9e62984720f225a3ada3d2f147fd1",
+      "proof_sha256": "c42e3fe3eb38b7289ba3cf49ca0b56bcbd7ac2d27d68955f27e3d5e33e642a7e",
+      "receipt_matches_original_git": true,
+      "recorded_sha256": "c42e3fe3eb38b7289ba3cf49ca0b56bcbd7ac2d27d68955f27e3d5e33e642a7e",
+      "target_git_blob": "67c1071c58c9e62984720f225a3ada3d2f147fd1",
+      "target_matches_original_bytes": true,
+      "target_sha256": "c42e3fe3eb38b7289ba3cf49ca0b56bcbd7ac2d27d68955f27e3d5e33e642a7e"
+    },
+    {
+      "group": "host-facade-tests-after.json",
+      "original_receipt": "docs/ai-cache/evidence/active-assistant-js-20261125/host-facade-tests-after.json",
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/miniapp-assistant.mjs",
+      "proof_commit": "0cf7fd486c789d488e438cb62192e34a0ae712f7",
+      "proof_git_blob": "6b07044663a7a9d60f59a9d977b40e9ea3b84390",
+      "proof_sha256": "8d429190e524ba8612462503e20f88eab8e1d029ca794c5821ad01b69623edfc",
+      "receipt_matches_original_git": true,
+      "recorded_sha256": "8d429190e524ba8612462503e20f88eab8e1d029ca794c5821ad01b69623edfc",
+      "target_git_blob": "6b07044663a7a9d60f59a9d977b40e9ea3b84390",
+      "target_matches_original_bytes": true,
+      "target_sha256": "8d429190e524ba8612462503e20f88eab8e1d029ca794c5821ad01b69623edfc"
+    },
+    {
+      "group": "host-facade-tests-after.json",
+      "original_receipt": "docs/ai-cache/evidence/active-assistant-js-20261125/host-facade-tests-after.json",
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/system-surfaces.d.ts",
+      "proof_commit": "0cf7fd486c789d488e438cb62192e34a0ae712f7",
+      "proof_git_blob": "f0426f6fa2ef5e2f8e5df1612504be80060585d8",
+      "proof_sha256": "e9e225da56c0fad5a6a827d457fbbcb988468d2232e1f876cbe60fcbb05f0686",
+      "receipt_matches_original_git": true,
+      "recorded_sha256": "e9e225da56c0fad5a6a827d457fbbcb988468d2232e1f876cbe60fcbb05f0686",
+      "target_git_blob": "f0426f6fa2ef5e2f8e5df1612504be80060585d8",
+      "target_matches_original_bytes": true,
+      "target_sha256": "e9e225da56c0fad5a6a827d457fbbcb988468d2232e1f876cbe60fcbb05f0686"
+    },
+    {
+      "group": "host-facade-tests-after.json",
+      "original_receipt": "docs/ai-cache/evidence/active-assistant-js-20261125/host-facade-tests-after.json",
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.mjs",
+      "proof_commit": "0cf7fd486c789d488e438cb62192e34a0ae712f7",
+      "proof_git_blob": "7836c56b6a72df12ee5a8f4a60d90071cbb1f621",
+      "proof_sha256": "832169736b6d84a6caa983192ceb3d9e9947a8cbda029093eba269c065e8f033",
+      "receipt_matches_original_git": true,
+      "recorded_sha256": "832169736b6d84a6caa983192ceb3d9e9947a8cbda029093eba269c065e8f033",
+      "target_git_blob": "7836c56b6a72df12ee5a8f4a60d90071cbb1f621",
+      "target_matches_original_bytes": true,
+      "target_sha256": "832169736b6d84a6caa983192ceb3d9e9947a8cbda029093eba269c065e8f033"
+    },
+    {
+      "group": "host-facade-tests-after.json",
+      "original_receipt": "docs/ai-cache/evidence/active-assistant-js-20261125/host-facade-tests-after.json",
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/system-surfaces.mjs",
+      "proof_commit": "0cf7fd486c789d488e438cb62192e34a0ae712f7",
+      "proof_git_blob": "674ad7cfa2fb0bfba242d69c52fb82b18e240142",
+      "proof_sha256": "72051d0da201b6e8f6cd7c5939267e083b8199ed62e56f631a198cdccf121669",
+      "receipt_matches_original_git": true,
+      "recorded_sha256": "72051d0da201b6e8f6cd7c5939267e083b8199ed62e56f631a198cdccf121669",
+      "target_git_blob": "674ad7cfa2fb0bfba242d69c52fb82b18e240142",
+      "target_matches_original_bytes": true,
+      "target_sha256": "72051d0da201b6e8f6cd7c5939267e083b8199ed62e56f631a198cdccf121669"
+    },
+    {
+      "group": "local_cache_accounting",
+      "original_receipt": "docs/ai-cache/evidence/local-cache-20261125/receipt.json",
+      "path": "AI_HLY/Services/ChatServices/WebSearchTool.swift",
+      "proof_commit": "1bb4bdb08bf860f123803e48871a401ef165ab82",
+      "proof_git_blob": "9c462de3a7ddfb121916abc0d38753ae0f459ae6",
+      "proof_sha256": "435a550ab05ef7785113fb8849a0e8019e32427338591a8fd53428a8c19a854b",
+      "receipt_matches_original_git": true,
+      "recorded_sha256": "435a550ab05ef7785113fb8849a0e8019e32427338591a8fd53428a8c19a854b",
+      "target_git_blob": "9c462de3a7ddfb121916abc0d38753ae0f459ae6",
+      "target_matches_original_bytes": true,
+      "target_sha256": "435a550ab05ef7785113fb8849a0e8019e32427338591a8fd53428a8c19a854b"
+    },
+    {
+      "group": "local_cache_accounting",
+      "original_receipt": "docs/ai-cache/evidence/local-cache-20261125/receipt.json",
+      "path": "AI_HLY/Downstream/AgentDiagnostics/AgentTokenUsage.swift",
+      "proof_commit": "1bb4bdb08bf860f123803e48871a401ef165ab82",
+      "proof_git_blob": "88728c477e7efdbc0974536d48f5aae18e60616a",
+      "proof_sha256": "ea9473749962a6c078d36a6972abe2ce30ecf38cd23dffa92231a02b53b7c665",
+      "receipt_matches_original_git": true,
+      "recorded_sha256": "ea9473749962a6c078d36a6972abe2ce30ecf38cd23dffa92231a02b53b7c665",
+      "target_git_blob": "88728c477e7efdbc0974536d48f5aae18e60616a",
+      "target_matches_original_bytes": true,
+      "target_sha256": "ea9473749962a6c078d36a6972abe2ce30ecf38cd23dffa92231a02b53b7c665"
+    },
+    {
+      "group": "local_cache_accounting",
+      "original_receipt": "docs/ai-cache/evidence/local-cache-20261125/receipt.json",
+      "path": "AI_HLY/Services/ChatServices/AutomaticSearch/AutomaticWebSearchCoordinator.swift",
+      "proof_commit": "1bb4bdb08bf860f123803e48871a401ef165ab82",
+      "proof_git_blob": "884c8cfcc3336bb6582a47c510f2c04d2d9f5cf9",
+      "proof_sha256": "51196278174564c14b1568c21fcaf0b95adcb31bbcea07a57fe3c045075240fb",
+      "receipt_matches_original_git": true,
+      "recorded_sha256": "51196278174564c14b1568c21fcaf0b95adcb31bbcea07a57fe3c045075240fb",
+      "target_git_blob": "884c8cfcc3336bb6582a47c510f2c04d2d9f5cf9",
+      "target_matches_original_bytes": true,
+      "target_sha256": "51196278174564c14b1568c21fcaf0b95adcb31bbcea07a57fe3c045075240fb"
+    },
+    {
+      "group": "local_cache_accounting",
+      "original_receipt": "docs/ai-cache/evidence/local-cache-20261125/receipt.json",
+      "path": "AI_HLY/Services/ChatServices/AutomaticSearch/KeenablePublicSearchAdapter.swift",
+      "proof_commit": "1bb4bdb08bf860f123803e48871a401ef165ab82",
+      "proof_git_blob": "e510531f257c8f533adbde1cacfe1ba613390f3f",
+      "proof_sha256": "96c88b7fcc0de48e6b30570850fbd80f82a679499eb339fcf53cd363d4de9c54",
+      "receipt_matches_original_git": true,
+      "recorded_sha256": "96c88b7fcc0de48e6b30570850fbd80f82a679499eb339fcf53cd363d4de9c54",
+      "target_git_blob": "e510531f257c8f533adbde1cacfe1ba613390f3f",
+      "target_matches_original_bytes": true,
+      "target_sha256": "96c88b7fcc0de48e6b30570850fbd80f82a679499eb339fcf53cd363d4de9c54"
+    },
+    {
+      "group": "local_cache_accounting",
+      "original_receipt": "docs/ai-cache/evidence/local-cache-20261125/receipt.json",
+      "path": "AI_HLY/Services/ChatServices/AutomaticSearch/TavilyKeylessSearchAdapter.swift",
+      "proof_commit": "1bb4bdb08bf860f123803e48871a401ef165ab82",
+      "proof_git_blob": "a3927637a284fd4a364333786a5e58a17cf16e9a",
+      "proof_sha256": "8143549a517e6717c85fb64e903a27958fd61cba875899ec38d7fb10a1154a68",
+      "receipt_matches_original_git": true,
+      "recorded_sha256": "8143549a517e6717c85fb64e903a27958fd61cba875899ec38d7fb10a1154a68",
+      "target_git_blob": "a3927637a284fd4a364333786a5e58a17cf16e9a",
+      "target_matches_original_bytes": true,
+      "target_sha256": "8143549a517e6717c85fb64e903a27958fd61cba875899ec38d7fb10a1154a68"
+    },
+    {
+      "group": "local_cache_accounting",
+      "original_receipt": "docs/ai-cache/evidence/local-cache-20261125/receipt.json",
+      "path": "AI_HLY/Services/ChatServices/AutomaticSearch/WebSearchProviderProtocol.swift",
+      "proof_commit": "1bb4bdb08bf860f123803e48871a401ef165ab82",
+      "proof_git_blob": "546bb51c4d893fc08d7dbe2610ea8ed5c6e10656",
+      "proof_sha256": "2cb061ddfdd1536a417d630c6f776cf3bb9ec95328452afbbf20dc08337ef537",
+      "receipt_matches_original_git": true,
+      "recorded_sha256": "2cb061ddfdd1536a417d630c6f776cf3bb9ec95328452afbbf20dc08337ef537",
+      "target_git_blob": "546bb51c4d893fc08d7dbe2610ea8ed5c6e10656",
+      "target_matches_original_bytes": true,
+      "target_sha256": "2cb061ddfdd1536a417d630c6f776cf3bb9ec95328452afbbf20dc08337ef537"
+    },
+    {
+      "group": "local_cache_accounting",
+      "original_receipt": "docs/ai-cache/evidence/local-cache-20261125/receipt.json",
+      "path": "AI_HLY/Services/ChatServices/AutomaticSearch/WebSearchRelevanceEvaluator.swift",
+      "proof_commit": "1bb4bdb08bf860f123803e48871a401ef165ab82",
+      "proof_git_blob": "b217839e453a1367d58edce1cd7428fb0c67af0c",
+      "proof_sha256": "2ec1352dcce9a19ede76148c540caf98a36dc076f7c2740015395656192a4158",
+      "receipt_matches_original_git": true,
+      "recorded_sha256": "2ec1352dcce9a19ede76148c540caf98a36dc076f7c2740015395656192a4158",
+      "target_git_blob": "b217839e453a1367d58edce1cd7428fb0c67af0c",
+      "target_matches_original_bytes": true,
+      "target_sha256": "2ec1352dcce9a19ede76148c540caf98a36dc076f7c2740015395656192a4158"
+    },
+    {
+      "group": "local_cache_accounting",
+      "original_receipt": "docs/ai-cache/evidence/local-cache-20261125/receipt.json",
+      "path": "AI_HLY/Services/ChatServices/AutomaticSearch/WebSearchResult.swift",
+      "proof_commit": "1bb4bdb08bf860f123803e48871a401ef165ab82",
+      "proof_git_blob": "34d7db717173d40f894e47ed69d0286d57a04411",
+      "proof_sha256": "d3b69274d06eb3403c44a2ec1d2a78399baef65bc875b8888bd8af1e3887e751",
+      "receipt_matches_original_git": true,
+      "recorded_sha256": "d3b69274d06eb3403c44a2ec1d2a78399baef65bc875b8888bd8af1e3887e751",
+      "target_git_blob": "34d7db717173d40f894e47ed69d0286d57a04411",
+      "target_matches_original_bytes": true,
+      "target_sha256": "d3b69274d06eb3403c44a2ec1d2a78399baef65bc875b8888bd8af1e3887e751"
+    },
+    {
+      "group": "local_cache_accounting",
+      "original_receipt": "docs/ai-cache/evidence/local-cache-20261125/receipt.json",
+      "path": "AI_HLY/Services/ChatServices/AutomaticSearch/YouKeylessSearchAdapter.swift",
+      "proof_commit": "1bb4bdb08bf860f123803e48871a401ef165ab82",
+      "proof_git_blob": "48a4fb1f4f5b4b79f95df9b0be91ea6219c2d034",
+      "proof_sha256": "d07f829a5896928f43bbbf4b49fa16e10f98f4d76cd6a6862525cf4d02305520",
+      "receipt_matches_original_git": true,
+      "recorded_sha256": "d07f829a5896928f43bbbf4b49fa16e10f98f4d76cd6a6862525cf4d02305520",
+      "target_git_blob": "48a4fb1f4f5b4b79f95df9b0be91ea6219c2d034",
+      "target_matches_original_bytes": true,
+      "target_sha256": "d07f829a5896928f43bbbf4b49fa16e10f98f4d76cd6a6862525cf4d02305520"
+    },
+    {
+      "group": "local_cache_accounting",
+      "original_receipt": "docs/ai-cache/evidence/local-cache-20261125/receipt.json",
+      "path": "AI_HLYTests/AutomaticWebSearchCacheTests.swift",
+      "proof_commit": "1bb4bdb08bf860f123803e48871a401ef165ab82",
+      "proof_git_blob": "a63165a9b72721e30b227823ffa6b493be74ec24",
+      "proof_sha256": "faa0342db6fe61bac1eb65da32622e47284b00e669ca1ff1d3ebd276f105438c",
+      "receipt_matches_original_git": true,
+      "recorded_sha256": "faa0342db6fe61bac1eb65da32622e47284b00e669ca1ff1d3ebd276f105438c",
+      "target_git_blob": "a63165a9b72721e30b227823ffa6b493be74ec24",
+      "target_matches_original_bytes": true,
+      "target_sha256": "faa0342db6fe61bac1eb65da32622e47284b00e669ca1ff1d3ebd276f105438c"
+    },
+    {
+      "group": "local_cache_accounting",
+      "original_receipt": "docs/ai-cache/evidence/local-cache-20261125/receipt.json",
+      "path": "AI_HLYTests/AgentTokenUsageCacheTests.swift",
+      "proof_commit": "1bb4bdb08bf860f123803e48871a401ef165ab82",
+      "proof_git_blob": "4c4f9c11ea5652bc6b673fa9f3734c358696fa80",
+      "proof_sha256": "622fa32878079e11c3f3dcd502b216f270d22ad3a0c277e021b0aa77a3afa33f",
+      "receipt_matches_original_git": true,
+      "recorded_sha256": "622fa32878079e11c3f3dcd502b216f270d22ad3a0c277e021b0aa77a3afa33f",
+      "target_git_blob": "4c4f9c11ea5652bc6b673fa9f3734c358696fa80",
+      "target_matches_original_bytes": true,
+      "target_sha256": "622fa32878079e11c3f3dcd502b216f270d22ad3a0c277e021b0aa77a3afa33f"
+    },
+    {
+      "group": "nativescript-generation.json",
+      "original_receipt": "docs/ai-cache/evidence/active-assistant-js-20261125/nativescript-generation.json",
+      "path": "Scripts/NativeScript/host-services.ts",
+      "proof_commit": "e0a98a2d7c495644f643c44e7cc417e4522185ab",
+      "proof_git_blob": "09f36125f5b5d80ecc20908356c4590f15705036",
+      "proof_sha256": "e405a962b090e5786466ef0be2509cd629b16ba2d6d70f40f83dd92fb1e5f442",
+      "receipt_matches_original_git": true,
+      "recorded_sha256": "e405a962b090e5786466ef0be2509cd629b16ba2d6d70f40f83dd92fb1e5f442",
+      "target_git_blob": "09f36125f5b5d80ecc20908356c4590f15705036",
+      "target_matches_original_bytes": true,
+      "target_sha256": "e405a962b090e5786466ef0be2509cd629b16ba2d6d70f40f83dd92fb1e5f442"
+    },
+    {
+      "group": "nativescript-generation.json",
+      "original_receipt": "docs/ai-cache/evidence/active-assistant-js-20261125/nativescript-generation.json",
+      "path": "Scripts/NativeScript/build-host-services.mjs",
+      "proof_commit": "e0a98a2d7c495644f643c44e7cc417e4522185ab",
+      "proof_git_blob": "ecdb7db89012044792cd24c80a39a68af93a9889",
+      "proof_sha256": "1ca742df46a70d3ee838de98d4ac128eebeeea99d93c9cfa6475e388fee28cc3",
+      "receipt_matches_original_git": true,
+      "recorded_sha256": "1ca742df46a70d3ee838de98d4ac128eebeeea99d93c9cfa6475e388fee28cc3",
+      "target_git_blob": "ecdb7db89012044792cd24c80a39a68af93a9889",
+      "target_matches_original_bytes": true,
+      "target_sha256": "1ca742df46a70d3ee838de98d4ac128eebeeea99d93c9cfa6475e388fee28cc3"
+    },
+    {
+      "group": "nativescript-generation.json",
+      "original_receipt": "docs/ai-cache/evidence/active-assistant-js-20261125/nativescript-generation.json",
+      "path": "Packages/HanlinExpoUI/src/miniapp-assistant.ts",
+      "proof_commit": "e0a98a2d7c495644f643c44e7cc417e4522185ab",
+      "proof_git_blob": "9759c84d462c473bf72f092db98b4d4cab7dc672",
+      "proof_sha256": "2e0e25875906f15876b8035d0863482510163ae4a82865eb376b788ff95e3c2c",
+      "receipt_matches_original_git": true,
+      "recorded_sha256": "2e0e25875906f15876b8035d0863482510163ae4a82865eb376b788ff95e3c2c",
+      "target_git_blob": "9759c84d462c473bf72f092db98b4d4cab7dc672",
+      "target_matches_original_bytes": true,
+      "target_sha256": "2e0e25875906f15876b8035d0863482510163ae4a82865eb376b788ff95e3c2c"
+    },
+    {
+      "group": "nativescript-generation.json",
+      "original_receipt": "docs/ai-cache/evidence/active-assistant-js-20261125/nativescript-generation.json",
+      "path": "Packages/HanlinExpoUI/src/system-surfaces.ts",
+      "proof_commit": "e0a98a2d7c495644f643c44e7cc417e4522185ab",
+      "proof_git_blob": "e0577b9824f48e9dde02f4d8b73b815beb16e99f",
+      "proof_sha256": "3a2c4424ce074056ef76d62a4502fb16c389e10a46967fcde15835efde94543f",
+      "receipt_matches_original_git": true,
+      "recorded_sha256": "3a2c4424ce074056ef76d62a4502fb16c389e10a46967fcde15835efde94543f",
+      "target_git_blob": "e0577b9824f48e9dde02f4d8b73b815beb16e99f",
+      "target_matches_original_bytes": true,
+      "target_sha256": "3a2c4424ce074056ef76d62a4502fb16c389e10a46967fcde15835efde94543f"
+    },
+    {
+      "group": "nativescript-generation.json",
+      "original_receipt": "docs/ai-cache/evidence/active-assistant-js-20261125/nativescript-generation.json",
+      "path": "Scripts/NativeScript/Fixtures/HostServices/assistant.ts",
+      "proof_commit": "e0a98a2d7c495644f643c44e7cc417e4522185ab",
+      "proof_git_blob": "04d26155d680e80f7b771651f8ed1219753fdd2e",
+      "proof_sha256": "0c0d2964715e4da0f8418c5925fad3171c6776c64ba310a7be4b54c662965198",
+      "receipt_matches_original_git": true,
+      "recorded_sha256": "0c0d2964715e4da0f8418c5925fad3171c6776c64ba310a7be4b54c662965198",
+      "target_git_blob": "04d26155d680e80f7b771651f8ed1219753fdd2e",
+      "target_matches_original_bytes": true,
+      "target_sha256": "0c0d2964715e4da0f8418c5925fad3171c6776c64ba310a7be4b54c662965198"
+    },
+    {
+      "group": "summary.json",
+      "original_receipt": "docs/ai-cache/evidence/active-assistant-js-20261125/summary.json",
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.mjs",
+      "proof_commit": "0cf7fd486c789d488e438cb62192e34a0ae712f7",
+      "proof_git_blob": "7836c56b6a72df12ee5a8f4a60d90071cbb1f621",
+      "proof_sha256": "832169736b6d84a6caa983192ceb3d9e9947a8cbda029093eba269c065e8f033",
+      "receipt_matches_original_git": true,
+      "recorded_sha256": "832169736b6d84a6caa983192ceb3d9e9947a8cbda029093eba269c065e8f033",
+      "target_git_blob": "7836c56b6a72df12ee5a8f4a60d90071cbb1f621",
+      "target_matches_original_bytes": true,
+      "target_sha256": "832169736b6d84a6caa983192ceb3d9e9947a8cbda029093eba269c065e8f033"
+    },
+    {
+      "group": "summary.json",
+      "original_receipt": "docs/ai-cache/evidence/active-assistant-js-20261125/summary.json",
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.d.ts",
+      "proof_commit": "0cf7fd486c789d488e438cb62192e34a0ae712f7",
+      "proof_git_blob": "43d462b387053c122557b2036d4fa27b8b85ea7f",
+      "proof_sha256": "4200223f5be97ee12ddd5ffc05479fa7be99748998a716b3e2eb6197c14bc8cc",
+      "receipt_matches_original_git": true,
+      "recorded_sha256": "4200223f5be97ee12ddd5ffc05479fa7be99748998a716b3e2eb6197c14bc8cc",
+      "target_git_blob": "43d462b387053c122557b2036d4fa27b8b85ea7f",
+      "target_matches_original_bytes": true,
+      "target_sha256": "4200223f5be97ee12ddd5ffc05479fa7be99748998a716b3e2eb6197c14bc8cc"
+    },
+    {
+      "group": "summary.json",
+      "original_receipt": "docs/ai-cache/evidence/active-assistant-js-20261125/summary.json",
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/miniapp-assistant.mjs",
+      "proof_commit": "0cf7fd486c789d488e438cb62192e34a0ae712f7",
+      "proof_git_blob": "6b07044663a7a9d60f59a9d977b40e9ea3b84390",
+      "proof_sha256": "8d429190e524ba8612462503e20f88eab8e1d029ca794c5821ad01b69623edfc",
+      "receipt_matches_original_git": true,
+      "recorded_sha256": "8d429190e524ba8612462503e20f88eab8e1d029ca794c5821ad01b69623edfc",
+      "target_git_blob": "6b07044663a7a9d60f59a9d977b40e9ea3b84390",
+      "target_matches_original_bytes": true,
+      "target_sha256": "8d429190e524ba8612462503e20f88eab8e1d029ca794c5821ad01b69623edfc"
+    },
+    {
+      "group": "summary.json",
+      "original_receipt": "docs/ai-cache/evidence/active-assistant-js-20261125/summary.json",
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/miniapp-assistant.d.ts",
+      "proof_commit": "0cf7fd486c789d488e438cb62192e34a0ae712f7",
+      "proof_git_blob": "a28ea7f29cab801e82ae1f79cb09ff06702c13e1",
+      "proof_sha256": "3e15fb2fada80ea4dd158b146cc36d66c6aa71e46e073f02eca23b98b55e73f2",
+      "receipt_matches_original_git": true,
+      "recorded_sha256": "3e15fb2fada80ea4dd158b146cc36d66c6aa71e46e073f02eca23b98b55e73f2",
+      "target_git_blob": "a28ea7f29cab801e82ae1f79cb09ff06702c13e1",
+      "target_matches_original_bytes": true,
+      "target_sha256": "3e15fb2fada80ea4dd158b146cc36d66c6aa71e46e073f02eca23b98b55e73f2"
+    },
+    {
+      "group": "summary.json",
+      "original_receipt": "docs/ai-cache/evidence/active-assistant-js-20261125/summary.json",
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/system-surfaces.mjs",
+      "proof_commit": "0cf7fd486c789d488e438cb62192e34a0ae712f7",
+      "proof_git_blob": "674ad7cfa2fb0bfba242d69c52fb82b18e240142",
+      "proof_sha256": "72051d0da201b6e8f6cd7c5939267e083b8199ed62e56f631a198cdccf121669",
+      "receipt_matches_original_git": true,
+      "recorded_sha256": "72051d0da201b6e8f6cd7c5939267e083b8199ed62e56f631a198cdccf121669",
+      "target_git_blob": "674ad7cfa2fb0bfba242d69c52fb82b18e240142",
+      "target_matches_original_bytes": true,
+      "target_sha256": "72051d0da201b6e8f6cd7c5939267e083b8199ed62e56f631a198cdccf121669"
+    },
+    {
+      "group": "summary.json",
+      "original_receipt": "docs/ai-cache/evidence/active-assistant-js-20261125/summary.json",
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/system-surfaces.d.ts",
+      "proof_commit": "0cf7fd486c789d488e438cb62192e34a0ae712f7",
+      "proof_git_blob": "f0426f6fa2ef5e2f8e5df1612504be80060585d8",
+      "proof_sha256": "e9e225da56c0fad5a6a827d457fbbcb988468d2232e1f876cbe60fcbb05f0686",
+      "receipt_matches_original_git": true,
+      "recorded_sha256": "e9e225da56c0fad5a6a827d457fbbcb988468d2232e1f876cbe60fcbb05f0686",
+      "target_git_blob": "f0426f6fa2ef5e2f8e5df1612504be80060585d8",
+      "target_matches_original_bytes": true,
+      "target_sha256": "e9e225da56c0fad5a6a827d457fbbcb988468d2232e1f876cbe60fcbb05f0686"
+    },
+    {
+      "group": "summary.json",
+      "original_receipt": "docs/ai-cache/evidence/active-assistant-js-20261125/summary.json",
+      "path": "Scripts/Expo/Tests/host-services.test.mjs",
+      "proof_commit": "0cf7fd486c789d488e438cb62192e34a0ae712f7",
+      "proof_git_blob": "74f494a3f9700b5c16744b5b44e8ad9af8b697a9",
+      "proof_sha256": "625d69af766f88690bdb528d17b8aea46ffbed5edfd46fa9c1c471ca9b8339f1",
+      "receipt_matches_original_git": true,
+      "recorded_sha256": "625d69af766f88690bdb528d17b8aea46ffbed5edfd46fa9c1c471ca9b8339f1",
+      "target_git_blob": "74f494a3f9700b5c16744b5b44e8ad9af8b697a9",
+      "target_matches_original_bytes": true,
+      "target_sha256": "625d69af766f88690bdb528d17b8aea46ffbed5edfd46fa9c1c471ca9b8339f1"
+    }
+  ],
+  "remaining_independent_gates": [
+    "Latest native Host refresh",
+    "Latest full app build and 48 selected app-test invocations",
+    "Any live-provider/cache-hit/billing/paid-lifecycle verification",
+    "Release or TestFlight acceptance"
+  ],
+  "result": "UNCHANGED_BOUNDED_INPUTS_REUSE_SUPPORTED",
+  "retained_evidence": [
+    {
+      "bytes": 49873,
+      "git_blob": "43975ebd1d7997c34b0edb804ac8d183b3baa522",
+      "path": "docs/ai-cache/evidence/reuse-receipt-20261125.json",
+      "sha256": "414c63699706af507fc21cdce4a4c8815ec9ec56c0402f1c2fa8515c0dba2574",
+      "source_commit": "6fbcf703dd9f40f5b1d42592d58a0a69573dcdfa"
+    },
+    {
+      "bytes": 9069,
+      "git_blob": "869cbafdc813bbf39d1684cdd9ab1c6436c7876a",
+      "path": "docs/ai-cache/evidence/latest-sync-before-app04-20261125.json",
+      "sha256": "e9e81b27a832b28789a3119a4344b9412710b1c20dcea114ac70a6183060bdff",
+      "source_commit": "6fbcf703dd9f40f5b1d42592d58a0a69573dcdfa"
+    },
+    {
+      "bytes": 3808,
+      "git_blob": "286e1c91e1288c34a43e06455eb344150ac2ae92",
+      "path": "docs/ai-cache/evidence/local-cache-20261125/receipt.json",
+      "sha256": "ea28ebb171d797c3a555f4b00a6b7b90f1e4b7455db3962b414ccb9e8738291b",
+      "source_commit": "6fbcf703dd9f40f5b1d42592d58a0a69573dcdfa"
+    },
+    {
+      "bytes": 449,
+      "git_blob": "583e950b704b746fc2d42c9b9629713d8cc89221",
+      "path": "docs/ai-cache/evidence/local-cache-20261125/proof-Package.swift",
+      "sha256": "90f371dcdaf89a9786ad35d5b9802332bf6bd014106354b21553bbacc6e063d4",
+      "source_commit": "6fbcf703dd9f40f5b1d42592d58a0a69573dcdfa"
+    },
+    {
+      "bytes": 390,
+      "git_blob": "12190cd48f58713a95216cf81ee8cb82dc86d205",
+      "path": "docs/ai-cache/evidence/local-cache-20261125/proof-Package.resolved",
+      "sha256": "cad224f799d21b36089c0bfe38c9808757b8f1752a8b6f7ed746adc8f0b7fc3f",
+      "source_commit": "6fbcf703dd9f40f5b1d42592d58a0a69573dcdfa"
+    },
+    {
+      "bytes": 4902,
+      "git_blob": "0e75527110244225992c9830e7a7f86c4d8beb8c",
+      "path": "docs/ai-cache/evidence/local-cache-20261125/raw.log",
+      "sha256": "90d1ce95dde3db51280b07e098e95f373bbb9ef16d3d173c925cc86231a85ccb",
+      "source_commit": "6fbcf703dd9f40f5b1d42592d58a0a69573dcdfa"
+    },
+    {
+      "bytes": 2013,
+      "git_blob": "1b2358d00b7383078c9397881696314f10f8d64a",
+      "path": "docs/ai-cache/evidence/active-assistant-js-20261125/summary.json",
+      "sha256": "11a2f5e6f331593a97a49e7257fac39ce396347d74f114f14ef070b682b0eb0d",
+      "source_commit": "6fbcf703dd9f40f5b1d42592d58a0a69573dcdfa"
+    },
+    {
+      "bytes": 805,
+      "git_blob": "34385eddc98bbc84736a8e37593153eebc8720fe",
+      "path": "docs/ai-cache/evidence/active-assistant-js-20261125/expo-assistant-tests.json",
+      "sha256": "54312ffa6bb0723c8e1af63d67c1483d84e4d759f8bb3b294bcced0e99af70dc",
+      "source_commit": "6fbcf703dd9f40f5b1d42592d58a0a69573dcdfa"
+    },
+    {
+      "bytes": 1881,
+      "git_blob": "d4f70b26adefc4af1566ab2f55b45338cb1b8586",
+      "path": "docs/ai-cache/evidence/active-assistant-js-20261125/expo-assistant-tests.log",
+      "sha256": "fe4cd4375fee97b34f191caca690b8d6a4dc6ff4c17a2b06a0e975384187b373",
+      "source_commit": "6fbcf703dd9f40f5b1d42592d58a0a69573dcdfa"
+    },
+    {
+      "bytes": 2352,
+      "git_blob": "874a6eae2046786cd567dc13804e6494936adaff",
+      "path": "docs/ai-cache/evidence/active-assistant-js-20261125/host-facade-tests-after.json",
+      "sha256": "31bb9ec2899a37f07b1c28f732337cf7120022a459534b03886814e7a873e040",
+      "source_commit": "6fbcf703dd9f40f5b1d42592d58a0a69573dcdfa"
+    },
+    {
+      "bytes": 899,
+      "git_blob": "1caed578b5e77873e4cc802009074f01c86f4ca5",
+      "path": "docs/ai-cache/evidence/active-assistant-js-20261125/host-facade-tests-after.log",
+      "sha256": "d733f6b0cfac51717207adca9a2a805d36249cfbfa3e4b8ca9a04018c25dcbf2",
+      "source_commit": "6fbcf703dd9f40f5b1d42592d58a0a69573dcdfa"
+    },
+    {
+      "bytes": 1097,
+      "git_blob": "96e53b64a32200915760753c83ed3d4bc12fc810",
+      "path": "docs/ai-cache/evidence/active-assistant-js-20261125/nativescript-generation.json",
+      "sha256": "9542962c21e81e689f42fe6796ddebbac085856d177f4252c7a750048f70b2a0",
+      "source_commit": "6fbcf703dd9f40f5b1d42592d58a0a69573dcdfa"
+    },
+    {
+      "bytes": 112,
+      "git_blob": "d520d7a09a3927d107ff8ca5d9a048ad1cd4065d",
+      "path": "docs/ai-cache/evidence/active-assistant-js-20261125/nativescript-generation.log",
+      "sha256": "7f655f532fc99ed42bc980f3062eea39147697d1bf6d6a3cfd8aeaeabf55e6d3",
+      "source_commit": "6fbcf703dd9f40f5b1d42592d58a0a69573dcdfa"
+    },
+    {
+      "bytes": 112,
+      "git_blob": "112cfd786bbf31e7aad1e61a72eafd45b0b3c804",
+      "path": "docs/ai-cache/evidence/active-assistant-js-20261125/nativescript-generated-check.log",
+      "sha256": "480742f18b8ef01a023f07eff2064a34b4a8f65a59deef55e49b505788f8b263",
+      "source_commit": "6fbcf703dd9f40f5b1d42592d58a0a69573dcdfa"
+    }
+  ],
+  "retained_log_observations": {
+    "docs/ai-cache/evidence/active-assistant-js-20261125/expo-assistant-tests.log": {
+      "bytes": 1881,
+      "executed_pass_names": [
+        "modern publication uses typed prepared props and preserves the distinct legacy transport",
+        "native schema bytes, ordered chunks and cache write/read usage survive the public facade",
+        "breaking iteration cancels the native producer exactly once",
+        "abort unblocks an in-flight native next and cleans the listener",
+        "abort during admission cancels the returned native handle before consuming it",
+        "provider errors reject and release only their original request handle",
+        "one native handle has one reader and manual cancellation is idempotent"
+      ],
+      "git_blob": "d4f70b26adefc4af1566ab2f55b45338cb1b8586",
+      "path": "docs/ai-cache/evidence/active-assistant-js-20261125/expo-assistant-tests.log",
+      "sha256": "fe4cd4375fee97b34f191caca690b8d6a4dc6ff4c17a2b06a0e975384187b373",
+      "source_commit": "6fbcf703dd9f40f5b1d42592d58a0a69573dcdfa",
+      "summary_lines": [
+        "ℹ tests 7",
+        "ℹ pass 7",
+        "ℹ fail 0",
+        "ℹ cancelled 0",
+        "ℹ skipped 0",
+        "ℹ todo 0"
+      ]
+    },
+    "docs/ai-cache/evidence/active-assistant-js-20261125/host-facade-tests-after.log": {
+      "bytes": 899,
+      "executed_pass_names": [
+        "file bytes roundtrip without browser globals, including empty and all byte values",
+        "native rejection is preserved; absent Base64 stays distinct from empty data",
+        "Expo assistant uses the actual shared facade through the bound native module",
+        "assistant reaches the original captured NativeScript session through host-services",
+        "Live Activity operations stay bound to their owning native session and return its actual values",
+        "The typed facade propagates an actual native failure without a fabricated activity id",
+        "cross-app facade keeps each captured native session and all payload bytes",
+        "native errors and invalid replies reject without inventing completion"
+      ],
+      "git_blob": "1caed578b5e77873e4cc802009074f01c86f4ca5",
+      "path": "docs/ai-cache/evidence/active-assistant-js-20261125/host-facade-tests-after.log",
+      "sha256": "d733f6b0cfac51717207adca9a2a805d36249cfbfa3e4b8ca9a04018c25dcbf2",
+      "source_commit": "6fbcf703dd9f40f5b1d42592d58a0a69573dcdfa",
+      "summary_lines": [
+        "ℹ tests 8",
+        "ℹ pass 8",
+        "ℹ fail 0",
+        "ℹ cancelled 0",
+        "ℹ skipped 0",
+        "ℹ todo 0"
+      ]
+    },
+    "docs/ai-cache/evidence/active-assistant-js-20261125/nativescript-generated-check.log": {
+      "bytes": 112,
+      "executed_pass_names": [],
+      "git_blob": "112cfd786bbf31e7aad1e61a72eafd45b0b3c804",
+      "path": "docs/ai-cache/evidence/active-assistant-js-20261125/nativescript-generated-check.log",
+      "sha256": "480742f18b8ef01a023f07eff2064a34b4a8f65a59deef55e49b505788f8b263",
+      "source_commit": "6fbcf703dd9f40f5b1d42592d58a0a69573dcdfa",
+      "summary_lines": [
+        "PASS: TypeScript5.9.3 strict native facade, declarations and JS unchanged; native execution is a separate gate."
+      ]
+    },
+    "docs/ai-cache/evidence/active-assistant-js-20261125/nativescript-generation.log": {
+      "bytes": 112,
+      "executed_pass_names": [],
+      "git_blob": "d520d7a09a3927d107ff8ca5d9a048ad1cd4065d",
+      "path": "docs/ai-cache/evidence/active-assistant-js-20261125/nativescript-generation.log",
+      "sha256": "7f655f532fc99ed42bc980f3062eea39147697d1bf6d6a3cfd8aeaeabf55e6d3",
+      "source_commit": "6fbcf703dd9f40f5b1d42592d58a0a69573dcdfa",
+      "summary_lines": [
+        "PASS: TypeScript5.9.3 strict native facade, declarations and JS generated; native execution is a separate gate."
+      ]
+    },
+    "docs/ai-cache/evidence/local-cache-20261125/raw.log": {
+      "bytes": 4902,
+      "executed_pass_names": [
+        "unavailableAndPartialMeasurementsDoNotInventTotals()",
+        "cacheReadAndWriteAreSubsetsNotAdditionalTokenCharges()",
+        "readableReportIncludesCoverageAndKeepsUnknownUnavailable()",
+        "genuineZeroDiffersFromMissingAndInconsistentMeasurements()",
+        "aggregateFractionRequiresCompleteProviderMeasurementCoverage()",
+        "completeRoundAggregationRetainsWritesAndUsesWeightedReadFraction()",
+        "legacyJSONAndRoundTripPreserveMissingAndReportedCacheValues()",
+        "cancellingAllWaitersCancelsTheFlightAndAllowsFreshRequest()",
+        "freshnessStartsWhenProviderCompletes()",
+        "simultaneousEquivalentSearchesShareOneProviderCall()",
+        "cancellingOneWaiterPreservesTheOtherWaiter()",
+        "bypassDoesNotJoinAnOrdinaryFlight()",
+        "failuresAreNotCachedAndDifferentCountsAreSeparateRequests()",
+        "invalidationSeparatesGenerationsAndPreventsLateRepopulation()",
+        "diagnosticBypassDoesNotReplaceNormalCachedResults()",
+        "cacheHitExpiryAndClockRollback()",
+        "originalLRULibraryEvictsLeastRecentlyUsedEntry()",
+        "oversizedResultsReturnWithoutEvictingUsefulEntries()"
+      ],
+      "git_blob": "0e75527110244225992c9830e7a7f86c4d8beb8c",
+      "path": "docs/ai-cache/evidence/local-cache-20261125/raw.log",
+      "sha256": "90d1ce95dde3db51280b07e098e95f373bbb9ef16d3d173c925cc86231a85ccb",
+      "source_commit": "6fbcf703dd9f40f5b1d42592d58a0a69573dcdfa",
+      "summary_lines": [
+        "✔ Test run with 18 tests in 2 suites passed after 0.007 seconds."
+      ]
+    }
+  },
+  "source_or_branch_modified": false,
+  "supplemental_comparison_count": 12,
+  "supplemental_source_comparisons": [
+    {
+      "byte_identical": true,
+      "historical_input_hash_recorded_at_execution": false,
+      "matches_retained_source_assessment": true,
+      "path": "Packages/HanlinExpoUI/src/miniapp-actions.ts",
+      "proof_commit": "e0a98a2d7c495644f643c44e7cc417e4522185ab",
+      "proof_git_blob": "62d386f2fcc79a073c5bac3328c2233817ec34bb",
+      "proof_sha256": "d5d38fc209d8d8dedb2832ffd037e53d4eabd8b8c92320bd79e791fdfef2c607",
+      "target_git_blob": "62d386f2fcc79a073c5bac3328c2233817ec34bb",
+      "target_sha256": "d5d38fc209d8d8dedb2832ffd037e53d4eabd8b8c92320bd79e791fdfef2c607"
+    },
+    {
+      "byte_identical": true,
+      "historical_input_hash_recorded_at_execution": false,
+      "matches_retained_source_assessment": true,
+      "path": "Packages/HanlinExpoUI/package.json",
+      "proof_commit": "e0a98a2d7c495644f643c44e7cc417e4522185ab",
+      "proof_git_blob": "ebb835c8b080e4769db7640768d62b8acf84225d",
+      "proof_sha256": "18dbddebb3c641742ca5f83d0492cec1cbbc7bb1affbefe641477b7481110568",
+      "target_git_blob": "ebb835c8b080e4769db7640768d62b8acf84225d",
+      "target_sha256": "18dbddebb3c641742ca5f83d0492cec1cbbc7bb1affbefe641477b7481110568"
+    },
+    {
+      "byte_identical": true,
+      "historical_input_hash_recorded_at_execution": false,
+      "matches_retained_source_assessment": true,
+      "path": "Scripts/NativeScript/Fixtures/HostServices/valid.ts",
+      "proof_commit": "e0a98a2d7c495644f643c44e7cc417e4522185ab",
+      "proof_git_blob": "2c68d519a6006a28c72ca4512571d0a57c21d249",
+      "proof_sha256": "c99e376b70dc4e0b1ce5442cb86bf3115b11f72cf6154f1e808240392c724466",
+      "target_git_blob": "2c68d519a6006a28c72ca4512571d0a57c21d249",
+      "target_sha256": "c99e376b70dc4e0b1ce5442cb86bf3115b11f72cf6154f1e808240392c724466"
+    },
+    {
+      "byte_identical": true,
+      "historical_input_hash_recorded_at_execution": false,
+      "matches_retained_source_assessment": true,
+      "path": "Scripts/NativeScript/Fixtures/HostServices/invalid.ts",
+      "proof_commit": "e0a98a2d7c495644f643c44e7cc417e4522185ab",
+      "proof_git_blob": "93d7bd2bd7093d5dd76b99ce8152af69de27793e",
+      "proof_sha256": "47f20182b5dfe1051d380453ad6b467adf3b439fd07e433500f4a87d5b7cfd8d",
+      "target_git_blob": "93d7bd2bd7093d5dd76b99ce8152af69de27793e",
+      "target_sha256": "47f20182b5dfe1051d380453ad6b467adf3b439fd07e433500f4a87d5b7cfd8d"
+    },
+    {
+      "byte_identical": true,
+      "historical_input_hash_recorded_at_execution": false,
+      "matches_retained_source_assessment": true,
+      "path": "Scripts/NativeScript/Fixtures/HostServices/live-activities.ts",
+      "proof_commit": "e0a98a2d7c495644f643c44e7cc417e4522185ab",
+      "proof_git_blob": "6534ee6cd0761637774f3704ff66718eb9fde40f",
+      "proof_sha256": "5d9427bad52584fa0f022658376f2496434e826b144c56e500ce4720bac42efb",
+      "target_git_blob": "6534ee6cd0761637774f3704ff66718eb9fde40f",
+      "target_sha256": "5d9427bad52584fa0f022658376f2496434e826b144c56e500ce4720bac42efb"
+    },
+    {
+      "byte_identical": true,
+      "historical_input_hash_recorded_at_execution": false,
+      "matches_retained_source_assessment": true,
+      "path": "Scripts/NativeScript/package.json",
+      "proof_commit": "e0a98a2d7c495644f643c44e7cc417e4522185ab",
+      "proof_git_blob": "aba15c8760c59aa95e438620612d36df11f267dc",
+      "proof_sha256": "08fc03bfa87cd78f4f21f80e9324a4840061105f6e9ab081ed794c569ca7324b",
+      "target_git_blob": "aba15c8760c59aa95e438620612d36df11f267dc",
+      "target_sha256": "08fc03bfa87cd78f4f21f80e9324a4840061105f6e9ab081ed794c569ca7324b"
+    },
+    {
+      "byte_identical": true,
+      "historical_input_hash_recorded_at_execution": false,
+      "matches_retained_source_assessment": true,
+      "path": "Packages/HanlinExpoUI/src/miniapp-actions.ts",
+      "proof_commit": "0cf7fd486c789d488e438cb62192e34a0ae712f7",
+      "proof_git_blob": "62d386f2fcc79a073c5bac3328c2233817ec34bb",
+      "proof_sha256": "d5d38fc209d8d8dedb2832ffd037e53d4eabd8b8c92320bd79e791fdfef2c607",
+      "target_git_blob": "62d386f2fcc79a073c5bac3328c2233817ec34bb",
+      "target_sha256": "d5d38fc209d8d8dedb2832ffd037e53d4eabd8b8c92320bd79e791fdfef2c607"
+    },
+    {
+      "byte_identical": true,
+      "historical_input_hash_recorded_at_execution": false,
+      "matches_retained_source_assessment": true,
+      "path": "Packages/HanlinExpoUI/package.json",
+      "proof_commit": "0cf7fd486c789d488e438cb62192e34a0ae712f7",
+      "proof_git_blob": "ebb835c8b080e4769db7640768d62b8acf84225d",
+      "proof_sha256": "18dbddebb3c641742ca5f83d0492cec1cbbc7bb1affbefe641477b7481110568",
+      "target_git_blob": "ebb835c8b080e4769db7640768d62b8acf84225d",
+      "target_sha256": "18dbddebb3c641742ca5f83d0492cec1cbbc7bb1affbefe641477b7481110568"
+    },
+    {
+      "byte_identical": true,
+      "historical_input_hash_recorded_at_execution": false,
+      "matches_retained_source_assessment": true,
+      "path": "Scripts/NativeScript/Fixtures/HostServices/valid.ts",
+      "proof_commit": "0cf7fd486c789d488e438cb62192e34a0ae712f7",
+      "proof_git_blob": "2c68d519a6006a28c72ca4512571d0a57c21d249",
+      "proof_sha256": "c99e376b70dc4e0b1ce5442cb86bf3115b11f72cf6154f1e808240392c724466",
+      "target_git_blob": "2c68d519a6006a28c72ca4512571d0a57c21d249",
+      "target_sha256": "c99e376b70dc4e0b1ce5442cb86bf3115b11f72cf6154f1e808240392c724466"
+    },
+    {
+      "byte_identical": true,
+      "historical_input_hash_recorded_at_execution": false,
+      "matches_retained_source_assessment": true,
+      "path": "Scripts/NativeScript/Fixtures/HostServices/invalid.ts",
+      "proof_commit": "0cf7fd486c789d488e438cb62192e34a0ae712f7",
+      "proof_git_blob": "93d7bd2bd7093d5dd76b99ce8152af69de27793e",
+      "proof_sha256": "47f20182b5dfe1051d380453ad6b467adf3b439fd07e433500f4a87d5b7cfd8d",
+      "target_git_blob": "93d7bd2bd7093d5dd76b99ce8152af69de27793e",
+      "target_sha256": "47f20182b5dfe1051d380453ad6b467adf3b439fd07e433500f4a87d5b7cfd8d"
+    },
+    {
+      "byte_identical": true,
+      "historical_input_hash_recorded_at_execution": false,
+      "matches_retained_source_assessment": true,
+      "path": "Scripts/NativeScript/Fixtures/HostServices/live-activities.ts",
+      "proof_commit": "0cf7fd486c789d488e438cb62192e34a0ae712f7",
+      "proof_git_blob": "6534ee6cd0761637774f3704ff66718eb9fde40f",
+      "proof_sha256": "5d9427bad52584fa0f022658376f2496434e826b144c56e500ce4720bac42efb",
+      "target_git_blob": "6534ee6cd0761637774f3704ff66718eb9fde40f",
+      "target_sha256": "5d9427bad52584fa0f022658376f2496434e826b144c56e500ce4720bac42efb"
+    },
+    {
+      "byte_identical": true,
+      "historical_input_hash_recorded_at_execution": false,
+      "matches_retained_source_assessment": true,
+      "path": "Scripts/NativeScript/package.json",
+      "proof_commit": "0cf7fd486c789d488e438cb62192e34a0ae712f7",
+      "proof_git_blob": "aba15c8760c59aa95e438620612d36df11f267dc",
+      "proof_sha256": "08fc03bfa87cd78f4f21f80e9324a4840061105f6e9ab081ed794c569ca7324b",
+      "target_git_blob": "aba15c8760c59aa95e438620612d36df11f267dc",
+      "target_sha256": "08fc03bfa87cd78f4f21f80e9324a4840061105f6e9ab081ed794c569ca7324b"
+    }
+  ],
+  "target_commit": "6fbcf703dd9f40f5b1d42592d58a0a69573dcdfa",
+  "target_snapshot_read_from_git": true,
+  "target_tree": "d0dc201253ea9a57a4837c9a47cf4049004185fb",
+  "unique_input_files": 36,
+  "verification_kind": "READ_ONLY_EXACT_SOURCE_AND_RETAINED_EVIDENCE_COMPARISON",
+  "verified_at_utc": "2026-11-25T04:43:12.832754+00:00"
+}

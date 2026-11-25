@@ -1,0 +1,27 @@
+{
+  "id": "parity",
+  "sourceSHA": "1710bc6119983799f7d22cb723659ac274fe96b1",
+  "argv": [
+    "python3",
+    "/mnt/development/projects/artifacts/hanlin-ai-cache-incoming-fixtures-20261125/observe_original_parity.py"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-ai-cache-incoming-fixtures-20261125",
+  "startedAt": "2026-11-25T03:43:45.210751+00:00",
+  "finishedAt": "2026-11-25T03:43:45.475674+00:00",
+  "durationSeconds": 0.2654350306838751,
+  "exitCode": 0,
+  "summary": {
+    "tests": 5,
+    "unittestOK": true
+  },
+  "stdout": {
+    "path": "parity.stdout.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stderr": {
+    "path": "parity.stderr.log",
+    "bytes": 1015,
+    "sha256": "8425c43ec2f3fe120a7623a019cba057b52327d3db38907b58b179c895a16b11"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-25T05:40:51.420652+00:00",
+  "base": "1ae93941a34cf555f8a7293106efeff80978ebfa",
+  "candidate": "5c51b3f2a5c97ae374a8dfbbb0be73ecba7908fc",
+  "tree": "36da2213e8ea6b8c5bc66d758e961acbf92c54d6",
+  "worktree": "/mnt/development/projects/worktrees/hanlin-ai-cache-notification-delegate-fix-20261125",
+  "clean": true,
+  "changedFiles": [
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinNotificationApplicationDelegate.swift"
+  ],
+  "sourceBeforeSHA256": "65e908cc29df4bab76ef3a1b44e032fe2651b47ed4b438035b4e5757a468fa67",
+  "sourceAfterSHA256": "3ffc6143a68699bcecd3e6d24af8d50c119886462e3495db476308ec11cecb20",
+  "diagnosticAuthority": "Parent-owned actual App08 Xcode27/Swift6.4 build on frozen base; this agent did not execute or independently reread Mac logs. Parent retains actual failed-run evidence.",
+  "reportedErrors": [
+    "Optional imported async foreground selector produces Int? instead of UNNotificationPresentationOptions?.",
+    "Awaiting previous delegate through imported nonisolated async selector transfers a non-Sendable delegate out of inherited isolation."
+  ],
+  "originalSDKHeader": {
+    "path": "docs/miniapp-sdk/evidence/notification-ingress-20261125/raw/0-UNUserNotificationCenter.h",
+    "sha256": "7e79a7672061ab07511f71aa9cd5b7883dc83107cfabfb100d32d758bae3d281",
+    "verifiedSelectors": [
+      "userNotificationCenter:willPresentNotification:withCompletionHandler:",
+      "userNotificationCenter:didReceiveNotificationResponse:withCompletionHandler:"
+    ]
+  },
+  "fix": "Keep async protocol entrypoints and await ingress. Register original completion-handler selectors synchronously inside checked continuation closure. Only the continuation is captured by each callback. Use optional Void return solely to detect absent delegate/selector; otherwise await actual callback.",
+  "preservedSemantics": [
+    "Foreground options from prior delegate are returned unchanged.",
+    "Missing prior delegate/selector defaults to empty presentation options or completed response.",
+    "Notification route ingress precedes forwarding.",
+    "Default/custom actions retain ingress; dismissal skips ingress but still forwards.",
+    "openSettings synchronous forwarding unchanged."
+  ],
+  "sourceReview": {
+    "reviewer": "/root/native_bridge",
+    "result": "APPROVED_SOURCE_SEMANTICS",
+    "nativeCompilation": "NOT_RUN"
+  },
+  "validation": {
+    "gitDiffCheck": "PASS",
+    "workingtree": "CLEAN",
+    "nativeBuild": "NOT_RUN",
+    "tests": "NOT_RUN",
+    "unsafeConcurrencySuppressionsAdded": false,
+    "unstructuredTasksAdded": false
+  },
+  "preparationImpact": {
+    "stageSDKFingerprintReferences": [
+      " 'AI_HLY/Downstream/ScriptingPlatform/HanlinNotificationApplicationDelegate.swift',"
+    ],
+    "canonicalGraph": "UNCHANGED",
+    "packageManifestsAndLocks": "UNCHANGED",
+    "hostArchive": "Parent must use original preparation authority for changed native fingerprint; no hand-edited output."
+  }
+}

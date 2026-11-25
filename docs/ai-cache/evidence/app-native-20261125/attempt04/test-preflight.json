@@ -1,0 +1,14 @@
+{
+  "startedAtUTC": "2026-11-25T03:45:58.288671+00:00",
+  "source": "1710bc6119983799f7d22cb723659ac274fe96b1",
+  "freeBytes": 14721638400,
+  "incrementalEstimateBytes": 6442450944,
+  "concurrentGrowthAndOSMarginBytes": 4294967296,
+  "estimateReason": "Reuse prior app03 compilation and existing4.75GB products. Actual main app allocated1.705GB; remaining test compilation/link, one simulator data tree and app installation, result bundles. Estimate6GiB incremental incl buffer,4GiB OS/concurrent growth margin; no new dependency/workspace clones. Source changed only fixture/scheme and completed other-owner preflight/parity inputs.",
+  "memory": "Mach Virtual Memory Statistics: (page size of 16384 bytes)\nPages free:                                   287892.\nPages active:                                 256336.\nPages inactive:                               254108.\nPages speculative:                              8883.\nPages throttled:                                   0.\nPages wired down:                             104862.\nPages purgeable:                                 746.\n\"Translation faults\":                     4523605181.\nPages copy-on-write:                        68058692.\nPages zero filled:                        3135404435.\nPages reactivated:                          78945609.\nPages purged:                                3601092.\nFile-backed pages:                            331689.\nAnonymous pages:                              187638.\nPages stored in compressor:                   178785.\nPages occupied by compressor:                 102967.\nDecompressions:                             47283809.\nCompressions:                               76947679.\nPageins:                                   110796477.\nPageouts:                                     112210.\nSwapins:                                       16215.\nSwapouts:                                      51112.\n",
+  "swap": "vm.swapusage: total = 1024.00M  used = 256.19M  free = 767.81M  (encrypted)\n",
+  "finishedAtUTC": "2026-11-25T04:11:00.958633+00:00",
+  "exitCode": 1,
+  "logSHA256": "d0ed15c9709b2c2f92536056c691f8a752ed38057127aa082780250f41908ade",
+  "freeBytesAfter": 7417565184
+}

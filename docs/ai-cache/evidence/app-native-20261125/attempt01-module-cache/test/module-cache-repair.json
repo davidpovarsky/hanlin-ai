@@ -1,0 +1,12 @@
+{
+  "at_utc": "2026-11-25T01:50:22.552294+00:00",
+  "source": "72bff522e6a13bff60c16d7a82e7c12f86abf8f9",
+  "failure": "Clang SwiftShims precompiled module embeds previous donor ModuleCache path; original extension compile rejects relocation.",
+  "original_module_cache": "/Users/m1/caches/DerivedData/hanlin-ai-cache-app-20261125/ModuleCache.noindex",
+  "retained_module_cache": "/Users/m1/caches/DerivedData/hanlin-ai-cache-app-20261125-retained-modulecache-01",
+  "bad_pcm_relative": "1DMYBG2U74F55/SwiftShims-ETMZL06LU75E.pcm",
+  "bad_pcm_sha256": "7d92cfbfe3b2d38841cf8c39cfa226404db2d2edd2344390f4a6ba3d6dec5b99",
+  "action": "rename owned nonportable ModuleCache.noindex; original donor and other build outputs untouched",
+  "app_tests_executed": 0,
+  "status": "REPAIRED_REQUIRES_NATIVE_RETRY"
+}

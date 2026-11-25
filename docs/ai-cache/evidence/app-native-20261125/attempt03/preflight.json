@@ -1,0 +1,22 @@
+{
+  "timeUTC": "2026-11-25T02:50:26.187242+00:00",
+  "source": "5b69bbb52013686922efa7c4e7d9f2d44b774f94",
+  "freeBytes": 37092360192,
+  "loadAverage": [
+    108.37841796875,
+    303.5390625,
+    323.86572265625
+  ],
+  "runnerTemp": "/tmp/hanlin-cache-app03.kSYMAM",
+  "incrementalEstimateBytes": 8589934592,
+  "concurrentGrowthAndOSMarginBytes": 8589934592,
+  "estimateReason": "Reuse existing completed native dependencies, package downloads, own two-attempt DerivedData and original Host archive; remaining app/test linking and one owned simulator/results. No full workspace/dependency clone.",
+  "memory": {
+    "exitCode": 0,
+    "output": "Mach Virtual Memory Statistics: (page size of 16384 bytes)\nPages free:                                    88757.\nPages active:                                 330836.\nPages inactive:                               327659.\nPages speculative:                              1654.\nPages throttled:                                   0.\nPages wired down:                             131597.\nPages purgeable:                                1937.\n\"Translation faults\":                     4148958958.\nPages copy-on-write:                        60255107.\nPages zero filled:                        2929289449.\nPages reactivated:                          59207536.\nPages purged:                                3077750.\nFile-backed pages:                            272656.\nAnonymous pages:                              387493.\nPages stored in compressor:                   287466.\nPages occupied by compressor:                 134545.\nDecompressions:                             31939596.\nCompressions:                               55653123.\nPageins:                                    95970386.\nPageouts:                                      82584.\nSwapins:                                       15168.\nSwapouts:                                      51112.\n"
+  },
+  "swap": {
+    "exitCode": 0,
+    "output": "total = 1024.00M  used = 272.19M  free = 751.81M  (encrypted)\n"
+  }
+}

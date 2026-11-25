@@ -166,11 +166,17 @@ private struct AgentDiagnosticsSessionView: View {
                 LabeledContent(String(localized: "Tools", bundle: HanlinLocalization.bundle), value: "\(file.session.efficiency.toolCallCount)")
                 LabeledContent(String(localized: "Tokens", bundle: HanlinLocalization.bundle), value: file.session.totals.totalTokens.map(String.init) ?? String(localized: "Unavailable", bundle: HanlinLocalization.bundle))
             }
+            Section(String(localized: "Prompt cache", bundle: HanlinLocalization.bundle)) {
+                cacheUsageRows(file.session.promptCacheSummary)
+                Text(String(localized: "Cache tokens are provider-reported input tokens. Missing data is unavailable, not zero. These counts are not a price or a cost estimate.", bundle: HanlinLocalization.bundle))
+                    .font(HanlinTypography.caption).foregroundStyle(.secondary)
+            }
             Section(String(localized: "Model rounds", bundle: HanlinLocalization.bundle)) {
                 ForEach(file.session.rounds.sorted(by: { $0.index < $1.index })) { round in
                     DisclosureGroup("Round \(round.index) — \(round.trigger)") {
                         Text("Input: \(round.usage.inputTokens.map(String.init) ?? "—") · Output: \(round.usage.outputTokens.map(String.init) ?? "—") · \(round.usage.source.rawValue)", bundle: HanlinLocalization.bundle)
                             .font(HanlinTypography.caption)
+                        cacheUsageRows(AgentPromptCacheSummary(usages: [round.usage]))
                         if let request = round.request.sanitizedJSON {
                             diagnosticsBlock(String(localized: "Request", bundle: HanlinLocalization.bundle), request)
                         }
@@ -302,6 +308,22 @@ private struct AgentDiagnosticsSessionView: View {
                     }
                 }
             }
+        }
+    }
+
+    private func cacheUsageRows(_ summary: AgentPromptCacheSummary) -> some View {
+        Group {
+            LabeledContent(String(localized: "Reported cache read tokens", bundle: HanlinLocalization.bundle),
+                           value: summary.cachedInputTokens.map(String.init) ?? String(localized: "Unavailable", bundle: HanlinLocalization.bundle))
+            LabeledContent(String(localized: "Reported cache write tokens", bundle: HanlinLocalization.bundle),
+                           value: summary.cacheWriteTokens.map(String.init) ?? String(localized: "Unavailable", bundle: HanlinLocalization.bundle))
+            LabeledContent(String(localized: "Cache read fraction of input", bundle: HanlinLocalization.bundle),
+                           value: summary.cacheReadFraction.map { $0.formatted(.percent.precision(.fractionLength(1))) }
+                            ?? String(localized: "Unavailable", bundle: HanlinLocalization.bundle))
+            LabeledContent(String(localized: "Rounds with cache read data", bundle: HanlinLocalization.bundle),
+                           value: "\(summary.readReportedRoundCount)/\(summary.roundCount)")
+            LabeledContent(String(localized: "Rounds with cache write data", bundle: HanlinLocalization.bundle),
+                           value: "\(summary.writeReportedRoundCount)/\(summary.roundCount)")
         }
     }
 

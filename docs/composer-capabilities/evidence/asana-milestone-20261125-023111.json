@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "updatedAtUTC": "2026-11-25 02:31:11 UTC",
+  "mutationFields": [
+    "html_notes"
+  ],
+  "writeAttempts": 1,
+  "requestedCompletionChange": false,
+  "acknowledgement": {
+    "data": [
+      {
+        "gid": "1220882717750164",
+        "name": "[HANLIN-COMPOSER-CAPABILITIES][P0] צירוף מפורש לכל הודעה + assistantTool + ממשק הגדרות בבועה"
+      },
+      {
+        "gid": "1220882600644494",
+        "name": "[M5][רוני | QA] שילוב עדכני ובדיקות Mac ממוקדות"
+      }
+    ],
+    "failed": [],
+    "summary": "Updated 2 of 2 tasks."
+  },
+  "verification": [
+    {
+      "taskID": "1220882717750164",
+      "status": "VERIFIED",
+      "newHeaderPresent": true,
+      "completedBefore": false,
+      "completedAfter": false,
+      "modifiedAt": "2026-11-25T02:31:13.193Z",
+      "permalink": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1220882717750164",
+      "originalPlainBytesExact": false,
+      "originalRichBytesExact": false,
+      "allOriginalContentPreserved": true,
+      "allOriginalRichContentPreserved": true,
+      "serverNormalization": "Asana added /f/ to six existing internal task URLs; all other plain/rich content is byte-identical.",
+      "verificationReadAttempts": 2
+    },
+    {
+      "taskID": "1220882600644494",
+      "status": "VERIFIED",
+      "newHeaderPresent": true,
+      "completedBefore": false,
+      "completedAfter": false,
+      "modifiedAt": "2026-11-25T02:31:13.021Z",
+      "permalink": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1220882600644494",
+      "originalPlainBytesExact": true,
+      "originalRichBytesExact": true,
+      "allOriginalContentPreserved": true,
+      "allOriginalRichContentPreserved": true,
+      "serverNormalization": "None",
+      "verificationReadAttempts": 1
+    }
+  ],
+  "retryScope": "One parent-task read-back retried after a transient network_error. No repeated write.",
+  "newMilestoneSummary": "2026-11-25 02:31:11 UTC — אבן דרך מאומתת: קמפול HanlinApplication והכנת NativeScript\n\nספריית HanlinApplication המקורית, הכוללת 519 קובצי Swift, נבנתה בהצלחה בפועל בשרת המק דרך SentinelX על המקור aea6d31e311a3f3096014ea2f1c39432371e3ecc. ההרצה התקיימה ב־25.11.2026 בשעות 02:14:13–02:23:45 UTC ונמשכה 571.716 שניות. SHA-256 של הלוג: 5f7a8d6b6714b532a0d4240dd58b92e7c34ec18d0c214ee9d77c56b7d24fd403.\n\nהיקף ה־PASS הוא קמפול ספריית Swift המקורית בלבד, עם משאב Host6 הקיים. אין בכך PASS לבניית האפליקציות המלאות, לאריזה עדכנית, להרצת המנועים הנייטיב או לממשק. שערי הבניות המלאות על המקור המעודכן וה־app/native/editor/UI acceptance עדיין NOT_RUN; ניסיונות הבנייה המלאה הקודמים וכשליהם נשמרים כראיות. המשימות נשארות IN PROGRESS ואינן מסומנות כהושלמו.\n\nה־preparer המקורי של NativeScript עבר בפועל ב־6.674 שניות; הותקן wrapper עם SHA-256 ‏71bf1d521abff7cc29c1e8d397a9ef2a55b09f758afb36f0a148be12350b664f. ה־preflight הראשון נכשל בגלל fixture של SwiftUI שהיה חסר; הכשל נשמר ולא הוסתר.\n\nתיקון ממוקד בן שלוש שורות, המשתמש בגרסה מתוך ה־lock המקורי עבור ייצור ה־fixtures, שולב ב־199da0f9e61a0d99998bce906001e565f3138d1c. בדיקת receipts עדכנית מאשרת: יצרן ה־fixtures המקורי עבר exit 0 ב־24.598 שניות (02:25:21–02:25:46 UTC), וה־preflight השני עבר exit 0 ב־2.291 שניות (02:25:46–02:25:48 UTC). אלה תוצאות הכנה ו־preflight בלבד, ללא טענת הרצת VM או בדיקות קבלה.\n\nראיות מקור: native-script-fixture-production.json, native-script-metadata-preflight-attempt2.json ב־build/composer-evidence על המק. לוג fixtures: bc3dc67e30e38fbf07ec3ca08e1b774901468b5eced3f826d06e31c603a52cbe; לוג preflight שני: 9f4ee924d89fc111b0a7cde31a74ff862d866fe481bb079ca49aa205ba876cfb. בשתי ההרצות package.json נותר עם אותו SHA-256 ‏08fc03bfa87cd78f4f21f80e9324a4840061105f6e9ab081ed794c569ca7324b. נוצרו שינויים רק בשני ה־bundles של fixture-a/fixture-b; אימות המקור והתוצרים העדכניים ובדיקות האפליקציות ממשיכים אצל בעל נתיב הבנייה.",
+  "originalTaskBodiesIncluded": false
+}

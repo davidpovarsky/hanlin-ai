@@ -1,0 +1,26 @@
+{
+  "command": [
+    "node",
+    "--test",
+    "Scripts/NativeScript/Tests/assistant.test.mjs",
+    "Scripts/NativeScript/Tests/miniapps-sharing.test.mjs",
+    "Scripts/NativeScript/Tests/live-activities.test.mjs",
+    "Scripts/Expo/Tests/host-services.test.mjs"
+  ],
+  "exitCode": 0,
+  "inputs": {
+    "Scripts/NativeScript/Tests/assistant.test.mjs": "0f39ba3362fcde8c9975c98a2eba5aebc510190f6c8e1fdb3cab4f55a1dcdcd5",
+    "Scripts/NativeScript/Tests/miniapps-sharing.test.mjs": "f968bca7095d2b80e64a4ecde69316929e062e3754fc62d4362743dff7887ed3",
+    "Scripts/NativeScript/Tests/live-activities.test.mjs": "c0e65560079b04441d94f8023a403d41a076e14d1b31437db9ee28410ad862f5",
+    "Scripts/Expo/Tests/host-services.test.mjs": "625d69af766f88690bdb528d17b8aea46ffbed5edfd46fa9c1c471ca9b8339f1"
+  },
+  "generated": {
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.d.ts": "4200223f5be97ee12ddd5ffc05479fa7be99748998a716b3e2eb6197c14bc8cc",
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/miniapp-assistant.d.ts": "3e15fb2fada80ea4dd158b146cc36d66c6aa71e46e073f02eca23b98b55e73f2",
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/package.json": "c42e3fe3eb38b7289ba3cf49ca0b56bcbd7ac2d27d68955f27e3d5e33e642a7e",
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/miniapp-assistant.mjs": "8d429190e524ba8612462503e20f88eab8e1d029ca794c5821ad01b69623edfc",
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/system-surfaces.d.ts": "e9e225da56c0fad5a6a827d457fbbcb988468d2232e1f876cbe60fcbb05f0686",
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.mjs": "832169736b6d84a6caa983192ceb3d9e9947a8cbda029093eba269c065e8f033",
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/system-surfaces.mjs": "72051d0da201b6e8f6cd7c5939267e083b8199ed62e56f631a198cdccf121669"
+  }
+}

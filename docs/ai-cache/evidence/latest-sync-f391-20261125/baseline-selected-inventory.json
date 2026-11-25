@@ -1,0 +1,364 @@
+{
+  "suites": {
+    "HanlinPromptCachingIntegrationTests": {
+      "stableInstructionsSurviveContextChanges": null,
+      "distinctSystemBlocks": null,
+      "emptyAndVerbatimSections": null,
+      "stableSkillCatalogOrder": null
+    },
+    "ClassicChatRestorationTests": {
+      "classicBubbleAuthorityNeverSuppressesMessageRows": null,
+      "webSearchCitationsAndSourcesDeduplicated": null,
+      "retryReplacesFailedAssistantGroupWithoutDuplicateBubbles": null,
+      "dynamicBottomPaddingTracksMeasuredComposerHeight": null,
+      "userBubbleUsesClassicShapeAndAttachments": null,
+      "assistantBubbleOwnsFinalAnswerAndActionButtons": null,
+      "classicActionButtonsDirectVisibilityAndStates": null,
+      "codeBlockRowClassicPresentation": null,
+      "conversationListClassicNavigationAndPinnedRows": null,
+      "composerAccessoryBarNoOverlap": null,
+      "agentReasoningNeverLeaksRawCoTToViews": null,
+      "expandedReasoningUsesApprovedSummaryProjection": null,
+      "toolResultVisibilityAndHistory": null,
+      "mcpInstallSelectInvokeUninstallE2E": null,
+      "modelRoutingAcrossPersistentProbeRefresh": null,
+      "lifecycleCancelRetryLateEventsAcrossRuns": null,
+      "multimodalFormattedMessagesToSDKConversion": null,
+      "classicChatAgentProjectionSourceFileAndValidResources": null,
+      "build84001SkillVsToolNameDisambiguation": null,
+      "build84001MCPValidationAndIncompatiblePackageGuard": null,
+      "build84001UnicodePropertyRegexSanitizerInServerWorker": null,
+      "build84001ShellPwdAndNodeCommonJSInference": null,
+      "build84001SchemaOverheadTokenBudget": null,
+      "hanlinComposerPopupCoordinatorMutualExclusionAndV33TwoPhaseZoom": null,
+      "hanlinComposerActionBridgeCapabilityAndActiveChips": null,
+      "build84701P0ToolContentSeparationAndPerCallProjection": null,
+      "nativeMultilineTextEditorEffectiveMeasurementWidth": null,
+      "duplicateOutputsDifferentCallsRetainOrderAndIdentity": null,
+      "complexToolSequenceAndErrorPreservation": null,
+      "domainToolLegitimateInstructionsHeadingPreserved": null,
+      "hebrewEnglishChineseToolSummaryLocalization": null,
+      "legacyToolContentOnlyChatFallback": null
+    },
+    "HanlinMiniAppAssistantIntegrationTests": {
+      "validatedStructuredOutput": null,
+      "invalidStructuredOutput": [
+        [
+          "{\"count\":\"seven\"}"
+        ],
+        [
+          "{\"count\":9007199254740993}"
+        ],
+        [
+          "{\"count\":7,\"extra\":true}"
+        ]
+      ],
+      "incompleteStructuredOutput": null,
+      "sessionBoundHandles": null,
+      "teardownCancellation": null,
+      "noImplicitToolsOrCredentials": null,
+      "activeAdapterDispatch": null
+    },
+    "HanlinModelPromptCachePersistenceTests": {
+      "oldRowsAndOriginalSwiftDataRoundTrip": null,
+      "scopedResourcesCannotReplaceGlobalPreferences": null,
+      "compactConfigurationPreservesPreferencesAndLegacyDecoding": null
+    }
+  },
+  "sourceFiles": {
+    "AI_HLYTests/HanlinPromptCachingIntegrationTests.swift": "7c211e86bb78c0e48421f3a532769362e7a8e4dad95babd09d25e4b8e597a127",
+    "AI_HLYTests/ClassicChatRestorationTests.swift": "e6055f2196de6afee93d27ac56449e0c5db8edbb902f0987f4925c9c40aa4261",
+    "AI_HLYTests/HanlinMiniAppAssistantIntegrationTests.swift": "b1244b4e53b4cda305bda25382d43cccd4b1b60bc8c02c9c15f2d0649c70976a",
+    "AI_HLYTests/HanlinModelPromptCachePersistenceTests.swift": "da9b9b3d35a9194b2cb54833f3a5bebe552833ae9fe133e415a9b88513252bfe"
+  },
+  "declarations": [
+    {
+      "id": "HanlinPromptCachingIntegrationTests/stableInstructionsSurviveContextChanges()",
+      "line": 9,
+      "arguments": null,
+      "source": "AI_HLYTests/HanlinPromptCachingIntegrationTests.swift"
+    },
+    {
+      "id": "HanlinPromptCachingIntegrationTests/distinctSystemBlocks()",
+      "line": 26,
+      "arguments": null,
+      "source": "AI_HLYTests/HanlinPromptCachingIntegrationTests.swift"
+    },
+    {
+      "id": "HanlinPromptCachingIntegrationTests/emptyAndVerbatimSections()",
+      "line": 42,
+      "arguments": null,
+      "source": "AI_HLYTests/HanlinPromptCachingIntegrationTests.swift"
+    },
+    {
+      "id": "HanlinPromptCachingIntegrationTests/stableSkillCatalogOrder()",
+      "line": 51,
+      "arguments": null,
+      "source": "AI_HLYTests/HanlinPromptCachingIntegrationTests.swift"
+    },
+    {
+      "id": "ClassicChatRestorationTests/classicBubbleAuthorityNeverSuppressesMessageRows()",
+      "line": 35,
+      "arguments": null,
+      "source": "AI_HLYTests/ClassicChatRestorationTests.swift"
+    },
+    {
+      "id": "ClassicChatRestorationTests/webSearchCitationsAndSourcesDeduplicated()",
+      "line": 116,
+      "arguments": null,
+      "source": "AI_HLYTests/ClassicChatRestorationTests.swift"
+    },
+    {
+      "id": "ClassicChatRestorationTests/retryReplacesFailedAssistantGroupWithoutDuplicateBubbles()",
+      "line": 169,
+      "arguments": null,
+      "source": "AI_HLYTests/ClassicChatRestorationTests.swift"
+    },
+    {
+      "id": "ClassicChatRestorationTests/dynamicBottomPaddingTracksMeasuredComposerHeight()",
+      "line": 219,
+      "arguments": null,
+      "source": "AI_HLYTests/ClassicChatRestorationTests.swift"
+    },
+    {
+      "id": "ClassicChatRestorationTests/userBubbleUsesClassicShapeAndAttachments()",
+      "line": 254,
+      "arguments": null,
+      "source": "AI_HLYTests/ClassicChatRestorationTests.swift"
+    },
+    {
+      "id": "ClassicChatRestorationTests/assistantBubbleOwnsFinalAnswerAndActionButtons()",
+      "line": 373,
+      "arguments": null,
+      "source": "AI_HLYTests/ClassicChatRestorationTests.swift"
+    },
+    {
+      "id": "ClassicChatRestorationTests/classicActionButtonsDirectVisibilityAndStates()",
+      "line": 477,
+      "arguments": null,
+      "source": "AI_HLYTests/ClassicChatRestorationTests.swift"
+    },
+    {
+      "id": "ClassicChatRestorationTests/codeBlockRowClassicPresentation()",
+      "line": 579,
+      "arguments": null,
+      "source": "AI_HLYTests/ClassicChatRestorationTests.swift"
+    },
+    {
+      "id": "ClassicChatRestorationTests/conversationListClassicNavigationAndPinnedRows()",
+      "line": 621,
+      "arguments": null,
+      "source": "AI_HLYTests/ClassicChatRestorationTests.swift"
+    },
+    {
+      "id": "ClassicChatRestorationTests/composerAccessoryBarNoOverlap()",
+      "line": 685,
+      "arguments": null,
+      "source": "AI_HLYTests/ClassicChatRestorationTests.swift"
+    },
+    {
+      "id": "ClassicChatRestorationTests/agentReasoningNeverLeaksRawCoTToViews()",
+      "line": 724,
+      "arguments": null,
+      "source": "AI_HLYTests/ClassicChatRestorationTests.swift"
+    },
+    {
+      "id": "ClassicChatRestorationTests/expandedReasoningUsesApprovedSummaryProjection()",
+      "line": 772,
+      "arguments": null,
+      "source": "AI_HLYTests/ClassicChatRestorationTests.swift"
+    },
+    {
+      "id": "ClassicChatRestorationTests/toolResultVisibilityAndHistory()",
+      "line": 822,
+      "arguments": null,
+      "source": "AI_HLYTests/ClassicChatRestorationTests.swift"
+    },
+    {
+      "id": "ClassicChatRestorationTests/mcpInstallSelectInvokeUninstallE2E()",
+      "line": 892,
+      "arguments": null,
+      "source": "AI_HLYTests/ClassicChatRestorationTests.swift"
+    },
+    {
+      "id": "ClassicChatRestorationTests/modelRoutingAcrossPersistentProbeRefresh()",
+      "line": 1112,
+      "arguments": null,
+      "source": "AI_HLYTests/ClassicChatRestorationTests.swift"
+    },
+    {
+      "id": "ClassicChatRestorationTests/lifecycleCancelRetryLateEventsAcrossRuns()",
+      "line": 1163,
+      "arguments": null,
+      "source": "AI_HLYTests/ClassicChatRestorationTests.swift"
+    },
+    {
+      "id": "ClassicChatRestorationTests/multimodalFormattedMessagesToSDKConversion()",
+      "line": 1219,
+      "arguments": null,
+      "source": "AI_HLYTests/ClassicChatRestorationTests.swift"
+    },
+    {
+      "id": "ClassicChatRestorationTests/classicChatAgentProjectionSourceFileAndValidResources()",
+      "line": 1275,
+      "arguments": null,
+      "source": "AI_HLYTests/ClassicChatRestorationTests.swift"
+    },
+    {
+      "id": "ClassicChatRestorationTests/build84001SkillVsToolNameDisambiguation()",
+      "line": 1332,
+      "arguments": null,
+      "source": "AI_HLYTests/ClassicChatRestorationTests.swift"
+    },
+    {
+      "id": "ClassicChatRestorationTests/build84001MCPValidationAndIncompatiblePackageGuard()",
+      "line": 1358,
+      "arguments": null,
+      "source": "AI_HLYTests/ClassicChatRestorationTests.swift"
+    },
+    {
+      "id": "ClassicChatRestorationTests/build84001UnicodePropertyRegexSanitizerInServerWorker()",
+      "line": 1386,
+      "arguments": null,
+      "source": "AI_HLYTests/ClassicChatRestorationTests.swift"
+    },
+    {
+      "id": "ClassicChatRestorationTests/build84001ShellPwdAndNodeCommonJSInference()",
+      "line": 1401,
+      "arguments": null,
+      "source": "AI_HLYTests/ClassicChatRestorationTests.swift"
+    },
+    {
+      "id": "ClassicChatRestorationTests/build84001SchemaOverheadTokenBudget()",
+      "line": 1425,
+      "arguments": null,
+      "source": "AI_HLYTests/ClassicChatRestorationTests.swift"
+    },
+    {
+      "id": "ClassicChatRestorationTests/hanlinComposerPopupCoordinatorMutualExclusionAndV33TwoPhaseZoom()",
+      "line": 1455,
+      "arguments": null,
+      "source": "AI_HLYTests/ClassicChatRestorationTests.swift"
+    },
+    {
+      "id": "ClassicChatRestorationTests/hanlinComposerActionBridgeCapabilityAndActiveChips()",
+      "line": 1516,
+      "arguments": null,
+      "source": "AI_HLYTests/ClassicChatRestorationTests.swift"
+    },
+    {
+      "id": "ClassicChatRestorationTests/build84701P0ToolContentSeparationAndPerCallProjection()",
+      "line": 1580,
+      "arguments": null,
+      "source": "AI_HLYTests/ClassicChatRestorationTests.swift"
+    },
+    {
+      "id": "ClassicChatRestorationTests/nativeMultilineTextEditorEffectiveMeasurementWidth()",
+      "line": 1693,
+      "arguments": null,
+      "source": "AI_HLYTests/ClassicChatRestorationTests.swift"
+    },
+    {
+      "id": "ClassicChatRestorationTests/duplicateOutputsDifferentCallsRetainOrderAndIdentity()",
+      "line": 1705,
+      "arguments": null,
+      "source": "AI_HLYTests/ClassicChatRestorationTests.swift"
+    },
+    {
+      "id": "ClassicChatRestorationTests/complexToolSequenceAndErrorPreservation()",
+      "line": 1804,
+      "arguments": null,
+      "source": "AI_HLYTests/ClassicChatRestorationTests.swift"
+    },
+    {
+      "id": "ClassicChatRestorationTests/domainToolLegitimateInstructionsHeadingPreserved()",
+      "line": 1908,
+      "arguments": null,
+      "source": "AI_HLYTests/ClassicChatRestorationTests.swift"
+    },
+    {
+      "id": "ClassicChatRestorationTests/hebrewEnglishChineseToolSummaryLocalization()",
+      "line": 1942,
+      "arguments": null,
+      "source": "AI_HLYTests/ClassicChatRestorationTests.swift"
+    },
+    {
+      "id": "ClassicChatRestorationTests/legacyToolContentOnlyChatFallback()",
+      "line": 1984,
+      "arguments": null,
+      "source": "AI_HLYTests/ClassicChatRestorationTests.swift"
+    },
+    {
+      "id": "HanlinMiniAppAssistantIntegrationTests/validatedStructuredOutput()",
+      "line": 43,
+      "arguments": null,
+      "source": "AI_HLYTests/HanlinMiniAppAssistantIntegrationTests.swift"
+    },
+    {
+      "id": "HanlinMiniAppAssistantIntegrationTests/invalidStructuredOutput(_:)",
+      "line": 62,
+      "arguments": [
+        [
+          "{\"count\":\"seven\"}"
+        ],
+        [
+          "{\"count\":9007199254740993}"
+        ],
+        [
+          "{\"count\":7,\"extra\":true}"
+        ]
+      ],
+      "source": "AI_HLYTests/HanlinMiniAppAssistantIntegrationTests.swift"
+    },
+    {
+      "id": "HanlinMiniAppAssistantIntegrationTests/incompleteStructuredOutput()",
+      "line": 74,
+      "arguments": null,
+      "source": "AI_HLYTests/HanlinMiniAppAssistantIntegrationTests.swift"
+    },
+    {
+      "id": "HanlinMiniAppAssistantIntegrationTests/sessionBoundHandles()",
+      "line": 85,
+      "arguments": null,
+      "source": "AI_HLYTests/HanlinMiniAppAssistantIntegrationTests.swift"
+    },
+    {
+      "id": "HanlinMiniAppAssistantIntegrationTests/teardownCancellation()",
+      "line": 100,
+      "arguments": null,
+      "source": "AI_HLYTests/HanlinMiniAppAssistantIntegrationTests.swift"
+    },
+    {
+      "id": "HanlinMiniAppAssistantIntegrationTests/noImplicitToolsOrCredentials()",
+      "line": 117,
+      "arguments": null,
+      "source": "AI_HLYTests/HanlinMiniAppAssistantIntegrationTests.swift"
+    },
+    {
+      "id": "HanlinMiniAppAssistantIntegrationTests/activeAdapterDispatch()",
+      "line": 135,
+      "arguments": null,
+      "source": "AI_HLYTests/HanlinMiniAppAssistantIntegrationTests.swift"
+    },
+    {
+      "id": "HanlinModelPromptCachePersistenceTests/oldRowsAndOriginalSwiftDataRoundTrip()",
+      "line": 11,
+      "arguments": null,
+      "source": "AI_HLYTests/HanlinModelPromptCachePersistenceTests.swift"
+    },
+    {
+      "id": "HanlinModelPromptCachePersistenceTests/scopedResourcesCannotReplaceGlobalPreferences()",
+      "line": 36,
+      "arguments": null,
+      "source": "AI_HLYTests/HanlinModelPromptCachePersistenceTests.swift"
+    },
+    {
+      "id": "HanlinModelPromptCachePersistenceTests/compactConfigurationPreservesPreferencesAndLegacyDecoding()",
+      "line": 52,
+      "arguments": null,
+      "source": "AI_HLYTests/HanlinModelPromptCachePersistenceTests.swift"
+    }
+  ],
+  "expectedMethodCount": 46,
+  "expectedInvocationCount": 48
+}

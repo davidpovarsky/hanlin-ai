@@ -118,7 +118,10 @@ class ProjectGraphTests(unittest.TestCase):
             config = plistlib.loads(info.read_bytes())["HanlinExtensionHost"]
             self.assertEqual(config["AppGroupIdentifier"], "group.com.itorah.chavrusachat")
             self.assertEqual(config["StorageNamespace"], "HanlinMiniApps/v1")
-        self.assertEqual(len(list((ROOT / "HanlinMiniAppsExtensions").glob("*/Info.plist"))), 3)
+        self.assertEqual(
+            {path.parent.name for path in (ROOT / "HanlinMiniAppsExtensions").glob("*/Info.plist")},
+            {"Notification", "Share", "Translation", "Widgets"},
+        )
         for entitlements in (ROOT / "HanlinMiniAppsExtensions").glob("*/*.entitlements"):
             self.assertIn("group.com.itorah.chavrusachat",
                           plistlib.loads(entitlements.read_bytes())["com.apple.security.application-groups"])

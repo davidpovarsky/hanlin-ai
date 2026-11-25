@@ -1,0 +1,169 @@
+{
+  "expectedMethodCount": 13,
+  "expectedInvocationCount": 13,
+  "observedMethodCount": 13,
+  "observedInvocationCount": 13,
+  "observedDeviceIDs": [
+    "F1D52257-55E0-4927-8029-E19D47B51AC0"
+  ],
+  "cases": [
+    {
+      "selector": "AI_HLYTests/HanlinComposerCapabilityIntegrationTests/sentSDKRequestAndPersistedMessageKeepIndependentCapabilitySnapshots()",
+      "relativeIdentity": "HanlinComposerCapabilityIntegrationTests/sentSDKRequestAndPersistedMessageKeepIndependentCapabilitySnapshots()",
+      "expectedInvocations": 1,
+      "observedCopies": 1,
+      "rawIdentity": "HanlinComposerCapabilityIntegrationTests/sentSDKRequestAndPersistedMessageKeepIndependentCapabilitySnapshots()",
+      "rawIdentityURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinComposerCapabilityIntegrationTests/sentSDKRequestAndPersistedMessageKeepIndependentCapabilitySnapshots()",
+      "rawResult": "Passed",
+      "durationSeconds": 0.6326701641082764,
+      "arguments": [],
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "selector": "AI_HLYTests/HanlinComposerCapabilityIntegrationTests/mcpAttachmentChangesOnlyThisRequestAndResolvesCurrentAliases()",
+      "relativeIdentity": "HanlinComposerCapabilityIntegrationTests/mcpAttachmentChangesOnlyThisRequestAndResolvesCurrentAliases()",
+      "expectedInvocations": 1,
+      "observedCopies": 1,
+      "rawIdentity": "HanlinComposerCapabilityIntegrationTests/mcpAttachmentChangesOnlyThisRequestAndResolvesCurrentAliases()",
+      "rawIdentityURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinComposerCapabilityIntegrationTests/mcpAttachmentChangesOnlyThisRequestAndResolvesCurrentAliases()",
+      "rawResult": "Passed",
+      "durationSeconds": 0.026268959045410156,
+      "arguments": [],
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "selector": "AI_HLYTests/HanlinComposerCapabilityIntegrationTests/nativeAndLegacySelectionsDispatchOriginalArgumentsWithIndependentConfiguration()",
+      "relativeIdentity": "HanlinComposerCapabilityIntegrationTests/nativeAndLegacySelectionsDispatchOriginalArgumentsWithIndependentConfiguration()",
+      "expectedInvocations": 1,
+      "observedCopies": 1,
+      "rawIdentity": "HanlinComposerCapabilityIntegrationTests/nativeAndLegacySelectionsDispatchOriginalArgumentsWithIndependentConfiguration()",
+      "rawIdentityURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinComposerCapabilityIntegrationTests/nativeAndLegacySelectionsDispatchOriginalArgumentsWithIndependentConfiguration()",
+      "rawResult": "Passed",
+      "durationSeconds": 0.010970115661621094,
+      "arguments": [],
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "selector": "AI_HLYTests/HanlinComposerCapabilityIntegrationTests/explicitNativeRequestAdmitsADisabledToolWithoutEnablingItsPreferences()",
+      "relativeIdentity": "HanlinComposerCapabilityIntegrationTests/explicitNativeRequestAdmitsADisabledToolWithoutEnablingItsPreferences()",
+      "expectedInvocations": 1,
+      "observedCopies": 1,
+      "rawIdentity": "HanlinComposerCapabilityIntegrationTests/explicitNativeRequestAdmitsADisabledToolWithoutEnablingItsPreferences()",
+      "rawIdentityURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinComposerCapabilityIntegrationTests/explicitNativeRequestAdmitsADisabledToolWithoutEnablingItsPreferences()",
+      "rawResult": "Passed",
+      "durationSeconds": 0.018299341201782227,
+      "arguments": [],
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "selector": "AI_HLYTests/HanlinComposerCapabilityIntegrationTests/overlappingNativeAndMiniAppSelectionsRejectDifferentConfigurationsAtomically()",
+      "relativeIdentity": "HanlinComposerCapabilityIntegrationTests/overlappingNativeAndMiniAppSelectionsRejectDifferentConfigurationsAtomically()",
+      "expectedInvocations": 1,
+      "observedCopies": 1,
+      "rawIdentity": "HanlinComposerCapabilityIntegrationTests/overlappingNativeAndMiniAppSelectionsRejectDifferentConfigurationsAtomically()",
+      "rawIdentityURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinComposerCapabilityIntegrationTests/overlappingNativeAndMiniAppSelectionsRejectDifferentConfigurationsAtomically()",
+      "rawResult": "Passed",
+      "durationSeconds": 0.001470804214477539,
+      "arguments": [],
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "selector": "AI_HLYTests/HanlinComposerCapabilityIntegrationTests/selectedMapRegionOverridesModelCoordinatesAndNeverBecomesADefault()",
+      "relativeIdentity": "HanlinComposerCapabilityIntegrationTests/selectedMapRegionOverridesModelCoordinatesAndNeverBecomesADefault()",
+      "expectedInvocations": 1,
+      "observedCopies": 1,
+      "rawIdentity": "HanlinComposerCapabilityIntegrationTests/selectedMapRegionOverridesModelCoordinatesAndNeverBecomesADefault()",
+      "rawIdentityURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinComposerCapabilityIntegrationTests/selectedMapRegionOverridesModelCoordinatesAndNeverBecomesADefault()",
+      "rawResult": "Passed",
+      "durationSeconds": 0.00020313262939453125,
+      "arguments": [],
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "selector": "AI_HLYTests/HanlinMiniAppAssistantToolTests/discoveryAndSelectionUseMetadataWithoutOpeningTheApp()",
+      "relativeIdentity": "HanlinMiniAppAssistantToolTests/discoveryAndSelectionUseMetadataWithoutOpeningTheApp()",
+      "expectedInvocations": 1,
+      "observedCopies": 1,
+      "rawIdentity": "HanlinMiniAppAssistantToolTests/discoveryAndSelectionUseMetadataWithoutOpeningTheApp()",
+      "rawIdentityURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMiniAppAssistantToolTests/discoveryAndSelectionUseMetadataWithoutOpeningTheApp()",
+      "rawResult": "Passed",
+      "durationSeconds": 0.3286008834838867,
+      "arguments": [],
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "selector": "AI_HLYTests/HanlinMiniAppAssistantToolTests/originalArgumentsAndSnapshotConfigurationHaveSeparateAuthorities()",
+      "relativeIdentity": "HanlinMiniAppAssistantToolTests/originalArgumentsAndSnapshotConfigurationHaveSeparateAuthorities()",
+      "expectedInvocations": 1,
+      "observedCopies": 1,
+      "rawIdentity": "HanlinMiniAppAssistantToolTests/originalArgumentsAndSnapshotConfigurationHaveSeparateAuthorities()",
+      "rawIdentityURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMiniAppAssistantToolTests/originalArgumentsAndSnapshotConfigurationHaveSeparateAuthorities()",
+      "rawResult": "Passed",
+      "durationSeconds": 0.0171658992767334,
+      "arguments": [],
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "selector": "AI_HLYTests/HanlinMiniAppAssistantToolTests/staleSelectionAndOverlappingDifferentConfigurationsAreRejected()",
+      "relativeIdentity": "HanlinMiniAppAssistantToolTests/staleSelectionAndOverlappingDifferentConfigurationsAreRejected()",
+      "expectedInvocations": 1,
+      "observedCopies": 1,
+      "rawIdentity": "HanlinMiniAppAssistantToolTests/staleSelectionAndOverlappingDifferentConfigurationsAreRejected()",
+      "rawIdentityURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMiniAppAssistantToolTests/staleSelectionAndOverlappingDifferentConfigurationsAreRejected()",
+      "rawResult": "Passed",
+      "durationSeconds": 0.6418349742889404,
+      "arguments": [],
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "selector": "AI_HLYTests/HanlinMiniAppAssistantToolTests/runtimeRootMustLoadTheDeclaredToolAndCannotFallBackToIndex()",
+      "relativeIdentity": "HanlinMiniAppAssistantToolTests/runtimeRootMustLoadTheDeclaredToolAndCannotFallBackToIndex()",
+      "expectedInvocations": 1,
+      "observedCopies": 1,
+      "rawIdentity": "HanlinMiniAppAssistantToolTests/runtimeRootMustLoadTheDeclaredToolAndCannotFallBackToIndex()",
+      "rawIdentityURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMiniAppAssistantToolTests/runtimeRootMustLoadTheDeclaredToolAndCannotFallBackToIndex()",
+      "rawResult": "Passed",
+      "durationSeconds": 0.0028083324432373047,
+      "arguments": [],
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "selector": "AI_HLYTests/HanlinMiniAppAssistantToolTests/modernRenderersReceivePlainExactJavaScriptJSON()",
+      "relativeIdentity": "HanlinMiniAppAssistantToolTests/modernRenderersReceivePlainExactJavaScriptJSON()",
+      "expectedInvocations": 1,
+      "observedCopies": 1,
+      "rawIdentity": "HanlinMiniAppAssistantToolTests/modernRenderersReceivePlainExactJavaScriptJSON()",
+      "rawIdentityURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMiniAppAssistantToolTests/modernRenderersReceivePlainExactJavaScriptJSON()",
+      "rawResult": "Passed",
+      "durationSeconds": 0.007550954818725586,
+      "arguments": [],
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "selector": "AI_HLYTests/SkillOpenClawPolicyTests/currentOriginalPolicyControlsLoadReadAndActualSDKContinuation()",
+      "relativeIdentity": "SkillOpenClawPolicyTests/currentOriginalPolicyControlsLoadReadAndActualSDKContinuation()",
+      "expectedInvocations": 1,
+      "observedCopies": 1,
+      "rawIdentity": "SkillOpenClawPolicyTests/currentOriginalPolicyControlsLoadReadAndActualSDKContinuation()",
+      "rawIdentityURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/SkillOpenClawPolicyTests/currentOriginalPolicyControlsLoadReadAndActualSDKContinuation()",
+      "rawResult": "Passed",
+      "durationSeconds": 41.52953004837036,
+      "arguments": [],
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "selector": "AI_HLYTests/HanlinMiniAppHostDiscoveryTests/preparedExpoActionExportsKeepTheirInstalledAppInTheCatalog()",
+      "relativeIdentity": "HanlinMiniAppHostDiscoveryTests/preparedExpoActionExportsKeepTheirInstalledAppInTheCatalog()",
+      "expectedInvocations": 1,
+      "observedCopies": 1,
+      "rawIdentity": "HanlinMiniAppHostDiscoveryTests/preparedExpoActionExportsKeepTheirInstalledAppInTheCatalog()",
+      "rawIdentityURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMiniAppHostDiscoveryTests/preparedExpoActionExportsKeepTheirInstalledAppInTheCatalog()",
+      "rawResult": "Passed",
+      "durationSeconds": 0.010161876678466797,
+      "arguments": [],
+      "status": "EXECUTED_PASS"
+    }
+  ],
+  "problems": [],
+  "passed": true
+}

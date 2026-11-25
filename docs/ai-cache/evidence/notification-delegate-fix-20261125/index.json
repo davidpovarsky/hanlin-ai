@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "candidate": "5c51b3f2a5c97ae374a8dfbbb0be73ecba7908fc",
+  "files": {
+    "README.md": {
+      "bytes": 1456,
+      "sha256": "8c11206112ec610a8e15e5f5c08b39a8b1f8f1c59d8a84dddffe42b9e1e4c627"
+    },
+    "delegate-forwarding.patch": {
+      "bytes": 2378,
+      "sha256": "a215edead188a734a077e86f148f94e635d70010b25b4753ed8f6e2be3276eb3"
+    },
+    "receipt.json": {
+      "bytes": 2995,
+      "sha256": "2e76eb13c2a68c2de277d230032679b59ccdcfe8cfd819ea61050df091bc366c"
+    }
+  }
+}

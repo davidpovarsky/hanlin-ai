@@ -116,7 +116,8 @@ extension HanlinStoredPackageSnapshot: HanlinMiniAppRegistration {
                 kind: canonicalKind,
                 handler: ep.sourcePath,
                 allowedContexts: contexts,
-                runtimeProfile: ep.runtimeProfile
+                runtimeProfile: ep.runtimeProfile,
+                assistantTool: ep.assistantTool
             )
             // Distinct prepared action exports can share one canonical bridge.
             // Their IDs and symbols remain in the installed entrypoints/actions.

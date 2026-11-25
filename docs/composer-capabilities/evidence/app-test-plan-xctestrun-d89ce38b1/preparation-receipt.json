@@ -1,0 +1,41 @@
+{
+  "status": "PREPARED_NOT_EXECUTED",
+  "pythonSyntax": "ast.parse PASS; runner not executed",
+  "selectorSourceCommit": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91",
+  "groups": {
+    "app_scope": {
+      "methods": 13,
+      "invocations": 13
+    },
+    "native_editor": {
+      "methods": 4,
+      "invocations": 5
+    },
+    "native_engines": {
+      "methods": 4,
+      "invocations": 4
+    },
+    "ui_phone": {
+      "methods": 4,
+      "invocations": 4
+    },
+    "ui_tablet": {
+      "methods": 3,
+      "invocations": 3
+    }
+  },
+  "files": {
+    "app-test-plan.json": "0d1848b652b07aba06452c33de77ea8bd3cda278a31114e8b5548d3a345b3252",
+    "run_app_test_group.py": "04ace987d51870b3c88b1e05c32a652ba68d53154c70d7f151fe7cdfa7a131fa"
+  },
+  "resultGuards": [
+    "Exact selected Test Case identities, no missing or duplicate methods, no extra cases.",
+    "Both false/true Arguments identities for the parameterized native-editor method must be present and Passed.",
+    "Exact simulator device binding in both summary and test tree.",
+    "No failed/skipped/expected-failure counts, and summary must corroborate positive coverage.",
+    "Exit0 with zero tests or a missing xcresult is failure, never a pass.",
+    "Pinned package lock, selected source inputs and existing build-for-testing manifests are checked before/after.",
+    "No simulator creation/boot/shutdown, compiler invocation, dependency mutation or test execution occurred during preparation."
+  ],
+  "staticCommandChecks": "PASS: xcodebuild test-without-building only; no -sdk; explicit nonparallel flag; exact selector/method/invocation counts"
+}

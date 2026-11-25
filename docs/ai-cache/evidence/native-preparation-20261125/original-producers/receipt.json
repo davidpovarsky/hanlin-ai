@@ -1,0 +1,56 @@
+{
+  "status": "FAILED",
+  "source_sha": "0c243d6cf20a702239a645c2f5c4b0f65d955702",
+  "started_at": "2026-11-25T00:33:10.694682+00:00",
+  "runner_temp": "/Users/m1/builds/hanlin-ai-cache-prep.6ke2oont",
+  "commands": [
+    {
+      "command": [
+        "node",
+        "--version"
+      ],
+      "version": "v24.22.1"
+    },
+    {
+      "command": [
+        "python3",
+        "--version"
+      ],
+      "version": "Python 3.12.16"
+    },
+    {
+      "command": [
+        "pod",
+        "--version"
+      ],
+      "version": "1.17.0"
+    },
+    {
+      "command": [
+        "node",
+        "Scripts/MiniApps/install-tooling.mjs",
+        "--engine=expo",
+        "--ignore-scripts"
+      ],
+      "started_at": "2026-11-25T00:33:21.843775+00:00",
+      "log": "01-stage.log",
+      "exit_code": 0,
+      "finished_at": "2026-11-25T00:35:30.508024+00:00",
+      "log_sha256": "67425fc1f6909409f18ae2eb07b6858ee06db32121df1a618f4dbde10b199855"
+    },
+    {
+      "command": [
+        "node",
+        "Scripts/MiniApps/install-tooling.mjs",
+        "--engine=nativescript",
+        "--ignore-scripts"
+      ],
+      "started_at": "2026-11-25T00:35:30.509418+00:00",
+      "log": "02-stage.log",
+      "exit_code": 1,
+      "finished_at": "2026-11-25T00:35:36.260727+00:00",
+      "log_sha256": "924e3b961dc056dae1627252ffb3527020fd8dc161159b8db485374200d62275"
+    }
+  ],
+  "finished_at": "2026-11-25T00:35:36.261531+00:00"
+}

@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "candidate": "d8150350901b245d52b2637277f454a6f2da5446",
+  "tree": "78242f94c61f2e8f2be3a64f4a59d7af23f35fc7",
+  "files": {
+    "README.md": {
+      "bytes": 5896,
+      "sha256": "1a32e51ad130c39a71a8f18f9a4094f8c1ff9b341d77addfd2807601b0a579b7"
+    },
+    "app-intents-check.log": {
+      "bytes": 93,
+      "sha256": "dee7c7cc1ea4e0689e5f02b0dc6fc6ccf217e0f7a744f91bd9a91e7053b641cf"
+    },
+    "candidate-receipt.json": {
+      "bytes": 10166,
+      "sha256": "40dc5b66dd205ae9c5091ef3f4edc4bd7d0bac0e1e403cad0f7fcea717acd800"
+    },
+    "host-link-ownership.log": {
+      "bytes": 1334,
+      "sha256": "e0b76a77594bd32a707ff439757b03cc0327868f402867958c1c081138b76f9d"
+    },
+    "manifest-check.log": {
+      "bytes": 3605,
+      "sha256": "ef1d5f337d63832d7b11fad2f23da38bf3cdee83bd82bfecfddc56df7dcefdc5"
+    },
+    "manifest-generation.log": {
+      "bytes": 3605,
+      "sha256": "ef1d5f337d63832d7b11fad2f23da38bf3cdee83bd82bfecfddc56df7dcefdc5"
+    },
+    "minisdk-merge-completed.log": {
+      "bytes": 171,
+      "sha256": "360a882ed6bcda3376d7e91ab008a28fe65aeed6d2ec2091ee9a7f4434bf16a7"
+    },
+    "minisdk-merge.log": {
+      "bytes": 458,
+      "sha256": "5fa7fed265e8c820c345561a42b6a7f1a9e9ff96a92f70ad74616ad8db835a5d"
+    },
+    "preservation-receipt.json": {
+      "bytes": 31258,
+      "sha256": "c4a5f16cff2a985620ab9432cf772a5fd1b6102d55107a29e33ca4896ec488e2"
+    },
+    "project-check.log": {
+      "bytes": 88,
+      "sha256": "7b205399ea53f72db8afa2fe3d77370cd6f0ac3d9ea8d19cea47a806236d4d18"
+    },
+    "project-generation.log": {
+      "bytes": 88,
+      "sha256": "7b205399ea53f72db8afa2fe3d77370cd6f0ac3d9ea8d19cea47a806236d4d18"
+    },
+    "project-graph-fixtures.log": {
+      "bytes": 2677,
+      "sha256": "0a6753df2b4d900d33c2bf50242cef673726ec74705dbafde0d191b0a494556b"
+    },
+    "reachability-check.log": {
+      "bytes": 768,
+      "sha256": "00c8e9089bb61d19c1a6c0df66dbac3aee1c7ad61aa1feaa475f6b348d9d0034"
+    },
+    "sdk-audit-check.log": {
+      "bytes": 594,
+      "sha256": "c19db8b259f4ad0b52fc91d6a1459254f6e8d53cd577898d5b722ce6175ff2ec"
+    },
+    "selected-cache-test-inventory.json": {
+      "bytes": 13535,
+      "sha256": "557e716eba15309a68f1f980a1d9795827fee89b99a09cac2622445fd5d3de26"
+    },
+    "source-bindings.json": {
+      "bytes": 13149,
+      "sha256": "4201a1b42904ecb6b654f91873eb467dcf3764b1d96d259ea1a42152f6e7b3ca"
+    },
+    "source-checks.json": {
+      "bytes": 2160,
+      "sha256": "7ea5066355c4f2665a9139de35f00b07adeb95a9d399125cd39e73c6cbd7b696"
+    },
+    "source-fixture-results.json": {
+      "bytes": 1515,
+      "sha256": "c558efae690746e2e42080bc4e6a215b21d1d04621c619f7f556dd31f305c7b2"
+    },
+    "source-generation-commands.json": {
+      "bytes": 1206,
+      "sha256": "44d2064497999dad0373eaf2817e8f353a30fbc6355c12b0a73b179f02136671"
+    },
+    "stage-sdk-syntax.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "wave3-merge.log": {
+      "bytes": 412,
+      "sha256": "9a865949db53795703eb849d00a0681578d0ca9710baaef06176c45095409f29"
+    },
+    "widget-cxx-imports.log": {
+      "bytes": 291,
+      "sha256": "f6fbf6a2ad3926f7c7493cc4fbf491ec71de5bcc25721f7f30474e149e22c98b"
+    },
+    "worktree.log": {
+      "bytes": 184,
+      "sha256": "1c9109c67acfc47bd334af5742b4bf45ab75615a5348b3de90186877edcc87b2"
+    }
+  }
+}

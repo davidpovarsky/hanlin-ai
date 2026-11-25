@@ -23,6 +23,7 @@ struct NativeToolCatalogEntry: Identifiable, Hashable {
     var isEnabledByDefault: Bool
     var isVisibleInSettings: Bool
     var presentationProfile: ToolPresentationProfile
+    var composerConfiguration: HanlinComposerConfiguration?
 
     init(
         name: String,
@@ -39,7 +40,8 @@ struct NativeToolCatalogEntry: Identifiable, Hashable {
         sourceAppTitle: String? = nil,
         isEnabledByDefault: Bool = true,
         isVisibleInSettings: Bool = true,
-        presentationProfile: ToolPresentationProfile
+        presentationProfile: ToolPresentationProfile,
+        composerConfiguration: HanlinComposerConfiguration? = nil
     ) {
         self.name = name
         self.title = title
@@ -56,5 +58,6 @@ struct NativeToolCatalogEntry: Identifiable, Hashable {
         self.isEnabledByDefault = isEnabledByDefault
         self.isVisibleInSettings = isVisibleInSettings
         self.presentationProfile = presentationProfile
+        self.composerConfiguration = composerConfiguration
     }
 }

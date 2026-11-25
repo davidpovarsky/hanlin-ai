@@ -33,6 +33,110 @@
       "kind": "translationUI",
       "sourcePath": "bundle.js",
       "exportedSymbol": "search"
+    },
+    {
+      "id": "assistant-search",
+      "kind": "assistantTool",
+      "sourcePath": "assistant/search/bundle.js",
+      "assistantTool": {
+        "title": "חיפוש בספריא",
+        "summary": "Search Sefaria using the user's explicitly selected text collections, matching mode and result limit.",
+        "actions": [
+          {
+            "id": "search",
+            "title": "חיפוש טקסטים",
+            "summary": "Search a query in the user's selected Sefaria catalog; configuration is supplied separately by the host.",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "query": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "query"
+              ],
+              "additionalProperties": false
+            }
+          }
+        ],
+        "configuration": {
+          "schemaVersion": 1,
+          "panels": [
+            {
+              "id": "catalog",
+              "title": "קטלוג",
+              "fields": [
+                {
+                  "key": "filters",
+                  "title": "מקורות לחיפוש",
+                  "kind": "catalog",
+                  "defaultValue": [],
+                  "options": [
+                    {
+                      "id": "Tanakh",
+                      "title": "תנ״ך"
+                    },
+                    {
+                      "id": "Mishnah",
+                      "title": "משנה"
+                    },
+                    {
+                      "id": "Talmud",
+                      "title": "תלמוד"
+                    },
+                    {
+                      "id": "Midrash",
+                      "title": "מדרש"
+                    },
+                    {
+                      "id": "Halakhah",
+                      "title": "הלכה"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "search-settings",
+              "title": "הגדרות חיפוש",
+              "fields": [
+                {
+                  "key": "field",
+                  "title": "התאמת מילים",
+                  "kind": "choice",
+                  "required": true,
+                  "defaultValue": "naive_lemmatizer",
+                  "options": [
+                    {
+                      "id": "naive_lemmatizer",
+                      "title": "צורות דקדוקיות"
+                    },
+                    {
+                      "id": "exact",
+                      "title": "התאמה מדויקת"
+                    },
+                    {
+                      "id": "content",
+                      "title": "תוכן"
+                    }
+                  ]
+                },
+                {
+                  "key": "size",
+                  "title": "מספר תוצאות",
+                  "kind": "number",
+                  "required": true,
+                  "defaultValue": 20,
+                  "minimum": 1,
+                  "maximum": 100
+                }
+              ]
+            }
+          ]
+        }
+      }
     }
   ],
   "actions": [

@@ -1,0 +1,45 @@
+{
+  "status": "PASS",
+  "sourceSHA": "948bdb1fe75d31559dc8d65ae8d2e70fa69de276",
+  "sourceSHAAfter": "948bdb1fe75d31559dc8d65ae8d2e70fa69de276",
+  "startedAtUTC": "2026-11-25T05:05:53.563322+00:00",
+  "finishedAtUTC": "2026-11-25T05:09:35.034804+00:00",
+  "expectedMethodCount": 46,
+  "expectedInvocationCount": 48,
+  "executedCount": 48,
+  "passedInvocationCount": 48,
+  "testExitCode": 0,
+  "ownedSimulator": "14A7445A-0B66-4288-9CF9-0CF7CC7FED5E",
+  "simulatorShutdownExitCode": 0,
+  "changedSourcePaths": [],
+  "changedLockPaths": [],
+  "rawTestLogSHA256": "07c830e0b4fb16158ffe41a6e584a14b75635fa3c9a5aaefe5d2191f8f499f07",
+  "receiptSHA256": "a5c0fabfecc9cc6bc5169e139e23ea838597eadb28836ac60aa1a15a8d008d13",
+  "preparationReceiptSHA256": "f88b112f2caa244d5a3c02cc107fc4af85b4465469e4bf02ba763c259150160e",
+  "exactAcceptance": {
+    "errors": [],
+    "expectedInvocationCount": 48,
+    "expectedMethodCount": 46,
+    "nonPassingResultNodes": [],
+    "observedInvocationCount": 48,
+    "passedInvocationCount": 48,
+    "resultSHA256": "337e4c9cbb54e6db7233b2b85f4794a347c3fd21a7d458acdc736d63ef41ec64",
+    "status": "PASS"
+  },
+  "resultBundles": [
+    {
+      "path": "/Users/m1/builds/hanlin-ai-cache-native-20261125/build/cache-app-native-evidence-07-20261125/test/AppBuild.xcresult",
+      "fileCount": 7,
+      "bytes": 62382,
+      "infoPlistPresent": true,
+      "manifestSHA256": "08053f928ba7eb1b169ff764b79076aca9c6e344433814848fa8488b05533143"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-cache-native-20261125/build/cache-app-native-evidence-07-20261125/test/AppCacheTests.xcresult",
+      "fileCount": 124,
+      "bytes": 348594,
+      "infoPlistPresent": true,
+      "manifestSHA256": "798725b1c5e427b69f87a84c5cd3a5ca6304e772f8cd106669f9771ad4a52747"
+    }
+  ]
+}

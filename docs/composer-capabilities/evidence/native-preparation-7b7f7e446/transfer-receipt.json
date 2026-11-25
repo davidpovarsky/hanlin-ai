@@ -1,0 +1,164 @@
+{
+  "schemaVersion": 1,
+  "transferredAtUTC": "2026-11-25T01:03:30.116529+00:00",
+  "transport": "Oracle pinned scaleway-mac SSH alias, BatchMode=yes, StrictHostKeyChecking=yes",
+  "sourceReadOnly": true,
+  "noBuildsOrTestsOrDevicesDuringTransfer": true,
+  "allSourceSHA256Verified": true,
+  "files": [
+    {
+      "path": "docs/composer-capabilities/evidence/native-preparation-7b7f7e446/native-current-byte-reuse.json",
+      "bytes": 3268,
+      "sha256": "d92656924dde62a76461eabef8821c5ce3f2759c54f79c5f792c1ac1a9710c0f",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/native-current-byte-reuse.json",
+      "sourceBytes": 3268,
+      "sourceSHA256": "d92656924dde62a76461eabef8821c5ce3f2759c54f79c5f792c1ac1a9710c0f",
+      "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/native-preparation-7b7f7e446/native-current-byte-reuse.log.gz",
+      "bytes": 20,
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/native-current-byte-reuse.log",
+      "sourceBytes": 0,
+      "sourceSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compressedForRepository": true,
+      "uncompressedLogSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "uncompressedLogBytes": 0
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/native-preparation-7b7f7e446/native-current-byte-reuse-attempt3.json",
+      "bytes": 5650,
+      "sha256": "eda2ea753c1c1180573292672a04665e717906d44690ef671088f95c2f6ce050",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/native-current-byte-reuse-attempt3.json",
+      "sourceBytes": 5650,
+      "sourceSHA256": "eda2ea753c1c1180573292672a04665e717906d44690ef671088f95c2f6ce050",
+      "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/native-preparation-7b7f7e446/native-current-byte-reuse-attempt3.log.gz",
+      "bytes": 794,
+      "sha256": "9baf83d2afe9b3b867ec9733acb415cdf1bf3db7a51437f4338bb425cfbd2320",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/native-current-byte-reuse-attempt3.log",
+      "sourceBytes": 1503,
+      "sourceSHA256": "28278809654456d6da11ae56a64572d4a6084d0b91f7495bf10b965c94ed2c77",
+      "compressedForRepository": true,
+      "uncompressedLogSHA256": "28278809654456d6da11ae56a64572d4a6084d0b91f7495bf10b965c94ed2c77",
+      "uncompressedLogBytes": 1503
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/native-preparation-7b7f7e446/native-current-byte-reuse-attempt4.json",
+      "bytes": 7295,
+      "sha256": "7663deb37eb7d44efc53815e571482372003aa62e5a438c4824b35d0a2215712",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/native-current-byte-reuse-attempt4.json",
+      "sourceBytes": 7295,
+      "sourceSHA256": "7663deb37eb7d44efc53815e571482372003aa62e5a438c4824b35d0a2215712",
+      "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/native-preparation-7b7f7e446/native-current-byte-reuse-attempt4.log.gz",
+      "bytes": 20,
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/native-current-byte-reuse-attempt4.log",
+      "sourceBytes": 0,
+      "sourceSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compressedForRepository": true,
+      "uncompressedLogSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "uncompressedLogBytes": 0
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/native-preparation-7b7f7e446/native-current-byte-reuse-attempt5.json",
+      "bytes": 8246,
+      "sha256": "35c98f21dbc7d7ee4999131ce71b9dc30f73357ba33404cc13ac524d694fd50c",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/native-current-byte-reuse-attempt5.json",
+      "sourceBytes": 8246,
+      "sourceSHA256": "35c98f21dbc7d7ee4999131ce71b9dc30f73357ba33404cc13ac524d694fd50c",
+      "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/native-preparation-7b7f7e446/native-current-byte-reuse-attempt5.log.gz",
+      "bytes": 163,
+      "sha256": "1be27bc628727c316391f0e273dcd41504b1bf8963a608c45a413d2287357d79",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/native-current-byte-reuse-attempt5.log",
+      "sourceBytes": 166,
+      "sourceSHA256": "1d217d69bef23f7359a80ccab90df56480fbe50d00969aa8dcc1c1e45e3b19fa",
+      "compressedForRepository": true,
+      "uncompressedLogSHA256": "1d217d69bef23f7359a80ccab90df56480fbe50d00969aa8dcc1c1e45e3b19fa",
+      "uncompressedLogBytes": 166
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/native-preparation-7b7f7e446/native-producer-cache-metadata.json",
+      "bytes": 3076,
+      "sha256": "0c322a020adb9c698c963aa734465bcdd7fd546381f25cc27fbf3eabba497dd7",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/native-producer-cache-metadata.json",
+      "sourceBytes": 3076,
+      "sourceSHA256": "0c322a020adb9c698c963aa734465bcdd7fd546381f25cc27fbf3eabba497dd7",
+      "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/native-preparation-7b7f7e446/expo-current-cached-preparation.json",
+      "bytes": 475,
+      "sha256": "ab5e364e23ee461bec2e6f6f8613fe32ed5fd5ab85d406de9b23493f90eb2ffe",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/expo-current-cached-preparation.json",
+      "sourceBytes": 475,
+      "sourceSHA256": "ab5e364e23ee461bec2e6f6f8613fe32ed5fd5ab85d406de9b23493f90eb2ffe",
+      "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/native-preparation-7b7f7e446/expo-current-cached-preparation.log.gz",
+      "bytes": 2115,
+      "sha256": "053cb493e78db317cf11233bf6f514c7ad380ea57dcfe6d2891a3d522720d961",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/expo-current-cached-preparation.log",
+      "sourceBytes": 8110,
+      "sourceSHA256": "5aeae751df080bcc7fa5efe02c22e3975f1cc6674eeafc9c0b3e25f30416d5fc",
+      "compressedForRepository": true,
+      "uncompressedLogSHA256": "5aeae751df080bcc7fa5efe02c22e3975f1cc6674eeafc9c0b3e25f30416d5fc",
+      "uncompressedLogBytes": 8110
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/native-preparation-7b7f7e446/native-preparation-final.json",
+      "bytes": 1074,
+      "sha256": "4b1743c01c95778d08c8a14b6fd4613194ee0f26d0e1680eb9a897ed0259b3fd",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/native-preparation-final.json",
+      "sourceBytes": 1074,
+      "sourceSHA256": "4b1743c01c95778d08c8a14b6fd4613194ee0f26d0e1680eb9a897ed0259b3fd",
+      "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/native-preparation-7b7f7e446/post-native-source-check-1.log.gz",
+      "bytes": 91,
+      "sha256": "46898741f287df7f1cc93c80ea610e18d35f313f40c74d4e4ffcd213955a4b91",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/post-native-source-check-1.log",
+      "sourceBytes": 76,
+      "sourceSHA256": "102ca01eb91b32d9498d2aa22040bf0933ed9083322a0cb1dd2e9b39257321c6",
+      "compressedForRepository": true,
+      "uncompressedLogSHA256": "102ca01eb91b32d9498d2aa22040bf0933ed9083322a0cb1dd2e9b39257321c6",
+      "uncompressedLogBytes": 76
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/native-preparation-7b7f7e446/post-native-source-check-2.log.gz",
+      "bytes": 72,
+      "sha256": "0ddcc2c87d642c396609ee5810893e3a1e03eb90430631aee13a6ca07ed5466e",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/post-native-source-check-2.log",
+      "sourceBytes": 52,
+      "sourceSHA256": "e9f2baa1c22fe1e7a981a49345b6a536a00b3c0880043a2c588ff5fcadb015d4",
+      "compressedForRepository": true,
+      "uncompressedLogSHA256": "e9f2baa1c22fe1e7a981a49345b6a536a00b3c0880043a2c588ff5fcadb015d4",
+      "uncompressedLogBytes": 52
+    }
+  ]
+}

@@ -1,0 +1,108 @@
+{
+  "schemaVersion": 1,
+  "transferredAtUTC": "2026-11-25T04:14:35.952751+00:00",
+  "transport": "Oracle pinned scaleway-mac SSH alias, BatchMode=yes, StrictHostKeyChecking=yes",
+  "sourceReadOnly": true,
+  "allSourceSHA256Verified": true,
+  "noBuildsTestsGeneratorsDevicesCacheActionsOrSourceChanges": true,
+  "files": [
+    {
+      "path": "docs/composer-capabilities/evidence/app-tests-ui_tablet-attempt1-d89ce38b1/receipt.json",
+      "bytes": 9594,
+      "sha256": "fe6aaa3ccdf3980df656f7cd06fa84624fa55c1621c39d26d2d1cbcf99dc2563",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/app-tests-ui_tablet-attempt1/receipt.json",
+      "sourceBytes": 9594,
+      "sourceSHA256": "fe6aaa3ccdf3980df656f7cd06fa84624fa55c1621c39d26d2d1cbcf99dc2563",
+      "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-tests-ui_tablet-attempt1-d89ce38b1/case-identities.json",
+      "bytes": 3136,
+      "sha256": "591987e1e3a353ad008012c5835dfeeca88a635e4bbda68372d18a10b1b3e42d",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/app-tests-ui_tablet-attempt1/case-identities.json",
+      "sourceBytes": 3136,
+      "sourceSHA256": "591987e1e3a353ad008012c5835dfeeca88a635e4bbda68372d18a10b1b3e42d",
+      "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-tests-ui_tablet-attempt1-d89ce38b1/source-inputs.json",
+      "bytes": 513,
+      "sha256": "fe3d9f07604f71a5d4a06875ee7b286871dab6bf86afb3f0e4ad118fd0b226c6",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/app-tests-ui_tablet-attempt1/source-inputs.json",
+      "sourceBytes": 513,
+      "sourceSHA256": "fe3d9f07604f71a5d4a06875ee7b286871dab6bf86afb3f0e4ad118fd0b226c6",
+      "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-tests-ui_tablet-attempt1-d89ce38b1/summary.json",
+      "bytes": 2641,
+      "sha256": "a9c5feee828ec4dd818673ded6db6a17ee5ca1f04f22c4cac37f3a6744441852",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/app-tests-ui_tablet-attempt1/summary.json",
+      "sourceBytes": 2641,
+      "sourceSHA256": "a9c5feee828ec4dd818673ded6db6a17ee5ca1f04f22c4cac37f3a6744441852",
+      "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-tests-ui_tablet-attempt1-d89ce38b1/summary.stderr.log.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/app-tests-ui_tablet-attempt1/summary.stderr.log",
+      "sourceBytes": 0,
+      "sourceSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compressedForRepository": true,
+      "uncompressedLogSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "uncompressedLogBytes": 0
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-tests-ui_tablet-attempt1-d89ce38b1/test.log.gz",
+      "bytes": 2938,
+      "sha256": "031dcf4316d1ed74f30d98dd2520885024c5ddead89f2aada503e98ba9f1651a",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/app-tests-ui_tablet-attempt1/test.log",
+      "sourceBytes": 20804,
+      "sourceSHA256": "3a6cb46f516772d51718594446d52de8f27e4156489ccc8fd2cdc3c51d03bad9",
+      "compressedForRepository": true,
+      "uncompressedLogSHA256": "3a6cb46f516772d51718594446d52de8f27e4156489ccc8fd2cdc3c51d03bad9",
+      "uncompressedLogBytes": 20804
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-tests-ui_tablet-attempt1-d89ce38b1/tests.json",
+      "bytes": 4550,
+      "sha256": "2b4912244d229f197dca0dd2e88619005d7f60ae6c17dbb7988632312499c7f9",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/app-tests-ui_tablet-attempt1/tests.json",
+      "sourceBytes": 4550,
+      "sourceSHA256": "2b4912244d229f197dca0dd2e88619005d7f60ae6c17dbb7988632312499c7f9",
+      "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-tests-ui_tablet-attempt1-d89ce38b1/tests.stderr.log.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/app-tests-ui_tablet-attempt1/tests.stderr.log",
+      "sourceBytes": 0,
+      "sourceSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compressedForRepository": true,
+      "uncompressedLogSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "uncompressedLogBytes": 0
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-tests-ui_tablet-attempt1-d89ce38b1/xcresult-files.json",
+      "bytes": 13053,
+      "sha256": "2a28837dcb43f5fb77e75c09ce75e2223fde7a2333dfdfb5ebbb76c7cf45a85a",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/app-tests-ui_tablet-attempt1/xcresult-files.json",
+      "sourceBytes": 13053,
+      "sourceSHA256": "2a28837dcb43f5fb77e75c09ce75e2223fde7a2333dfdfb5ebbb76c7cf45a85a",
+      "compressedForRepository": false
+    }
+  ],
+  "attachmentScope": "Selected original unfiltered xcresulttool export hierarchy/screenshot attachments only; full original bundle and recordings retained on Mac. KeepAlways attachments are not all marked isAssociatedWithFailure.",
+  "selectedAttachments": []
+}

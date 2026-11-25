@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "copiedAtUTC": "2026-11-25T00:14:11.654119+00:00",
+  "sourceHost": "scaleway-mac",
+  "sourceDirectory": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/",
+  "sourceCommit": "6a3c194a1951aa8394c76efcb6e100e76ade56c2",
+  "destinationDirectory": "/mnt/development/projects/evidence-staging/hanlin-composer-capabilities-20261124/platform-attempt4-6a3c194a1",
+  "verifiedExactSHA256": {
+    "composer-platform-attempt4-tests.log": "ceec8da6e6a670896dc4f2f8c0e99abec2e2098598f5239986bb53d879349d6f",
+    "composer-platform-attempt4-tests.json": "de5289058557e19ff208e637e12b9bb0945467b8e6a5830c641059ffc5fc6dc2",
+    "composer-platform-attempt4-original-execution-report.json": "a769eed29936e5f43d783f557c0c9073f88d978a7143fbc567bf99d4866c6ebf",
+    "composer-platform-attempt4-inputs.json": "7eb71e33b27e43db41726d5bc417e49482f159fe7c90fe3c829e2b7109a08152",
+    "composer-platform-attempt4-tests.derived.junit.xml": "a93d8e87033d9d2905c04bbd6f200683adda75af396513729aa9b8f5fe61e238",
+    "composer-platform-attempt4-resources.jsonl": "92a8adb260eefa670e3cf8caa9c284b7e373f8efb51c2e6a8478e2105467badb",
+    "composer-platform-attempt4-impact.diff": "6ca8cbba5daca4792c32dfe3675b1c2b21867bdfc870e5fa621a1abebd9043ff",
+    "composer-platform-attempt4-capacity-check.json": "6d5b39d9748b25f04757dae11e9d0af6332b80bbc3328b7a65b7e63a30ada9a5"
+  },
+  "executionStatus": "BLOCKED_CAPACITY",
+  "actualExecutedCount": 0,
+  "actualFailedCount": 0,
+  "actualSkippedCount": 0,
+  "notRunCount": 6,
+  "nativeXMLProduced": false,
+  "xmlEvidence": "Log-derived JUnit reflects zero executed cases; original automation JSON preserved separately."
+}

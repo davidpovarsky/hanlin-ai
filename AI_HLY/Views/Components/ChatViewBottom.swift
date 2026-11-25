@@ -12,6 +12,7 @@ import UniformTypeIdentifiers
 import UIKit
 import HanlinPresentationKit
 import HanlinChatUI
+import HanlinPlatformContracts
 
 
 struct InputTextField: UIViewRepresentable {
@@ -282,9 +283,13 @@ struct ChatViewBottom: View {
     var onModelPopoverPresentationChange: (@MainActor (UUID, Bool) -> Void)? = nil
     /// Synchronous read from the same owner written by the message Binding.
     var readCurrentMessageState: (() -> NativeMultilineTextEditor.TextState?)? = nil
+    /// The same draft consumed by send; choosing a capability never changes catalog settings.
+    var capabilityDraft: HanlinComposerDraft? = nil
+    var composerCapabilities: [HanlinComposerCapabilityDescriptor] = []
 
     @Environment(\.modelContext) private var context
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.hanlinCapabilityCustomPanelProvider) private var capabilityCustomPanels
     @Query(sort: [SortDescriptor(\PromptRepo.position, order: .forward)]) private var promptTemps: [PromptRepo]
     @Query private var userInfos: [UserInfo]
 
@@ -298,6 +303,9 @@ struct ChatViewBottom: View {
     @State private var showDocumentPicker = false
     @State private var showShareInbox = false
     @State private var miniAppsLaunchSession = NativeAppsLaunchSession()
+    @State private var editingCapabilityID: UUID?
+    @State private var capabilityQuery: HanlinComposerCapabilityQuery?
+    @State private var capabilitySelectionRequest: NativeMultilineTextEditor.SelectionRequest?
     @State private var shareDraftContext: String?
     @State private var isSourceOptionsVisible = false
     @State private var debounceWorkItem: DispatchWorkItem?
@@ -341,11 +349,12 @@ struct ChatViewBottom: View {
         selectedImagesCount: Int,
         selectedDocumentsCount: Int,
         selectedPromptsCount: Int,
+        selectedCapabilitiesCount: Int = 0,
         isResponding: Bool = false
     ) -> Bool {
         guard !isResponding else { return false }
         let hasText = !message.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-        return hasText || selectedImagesCount > 0 || selectedDocumentsCount > 0 || selectedPromptsCount > 0
+        return hasText || selectedImagesCount > 0 || selectedDocumentsCount > 0 || selectedPromptsCount > 0 || selectedCapabilitiesCount > 0
     }
 
     @ScaledMetric(relativeTo: .body) var size_16: CGFloat = 16
@@ -362,7 +371,6 @@ struct ChatViewBottom: View {
 
     var body: some View {
         composerSurface
-            .modifier(NativeAppsLaunchPresentation(session: miniAppsLaunchSession))
     }
 
     private var composerSurface: some View {
@@ -533,10 +541,22 @@ struct ChatViewBottom: View {
         .onChange(of: effectiveDockContextKey) { _, newKey in
             showShareInbox = false
             shareDraftContext = nil
+            editingCapabilityID = nil
+            capabilityQuery = nil
+            capabilitySelectionRequest = nil
+            showModelSuggestions = false
+            filteredModels = []
             voiceExpanded = false
             inputExpanded = false
             popupCoordinator.dockState.handleContextKeyChange(newKey)
             popupCoordinator.closeAll()
+        }
+        .onChange(of: capabilityDraft?.snapshot.ownerID) { _, _ in
+            editingCapabilityID = nil
+            capabilityQuery = nil
+            capabilitySelectionRequest = nil
+            showModelSuggestions = false
+            filteredModels = []
         }
         .onChange(of: availableWorkspaceSize) { _, newSize in
             if newSize.height > 160 {
@@ -793,7 +813,9 @@ struct ChatViewBottom: View {
 
     private var hasComposerAccessories: Bool {
         !selectedImages.isEmpty || !selectedDocumentURLs.isEmpty || !selectedURLs.isEmpty
-            || !selectedPrompts.isEmpty || (showModelSuggestions && !filteredModels.isEmpty)
+            || !selectedPrompts.isEmpty || !attachedCapabilities.isEmpty
+            || !capabilityConfigurationsAreValid || !filteredCapabilitySuggestions.isEmpty
+            || (showModelSuggestions && !filteredModels.isEmpty)
     }
 
     private var morphLayout: HanlinMorphGeometry.Layout {
@@ -855,6 +877,7 @@ struct ChatViewBottom: View {
                     case .general(.parameters): return String(localized: "Model Parameters", bundle: HanlinLocalization.bundle)
                     case .general(.imageSize): return String(localized: "Image Settings", bundle: HanlinLocalization.bundle)
                     case .general(.miniApps): return String(localized: "hanlin.morph.miniAppsTitle", bundle: HanlinLocalization.bundle)
+                    case .general(.capabilities): return String(localized: "hanlin.composer.capabilities.title", bundle: HanlinLocalization.bundle)
                     case .tools(.none): return String(localized: "Tools, Skills & MCP", bundle: HanlinLocalization.bundle)
                     case .tools(.some(.toolsCatalog)): return String(localized: "Tools", bundle: HanlinLocalization.bundle)
                     case .tools(.some(.skillsCenter)): return String(localized: "Skills", bundle: HanlinLocalization.bundle)
@@ -923,7 +946,9 @@ struct ChatViewBottom: View {
         if !selectedDocumentURLs.isEmpty { overhead += 58 }
         if !selectedURLs.isEmpty { overhead += 48 }
         if !selectedPrompts.isEmpty { overhead += 52 }
-        if showModelSuggestions && !filteredModels.isEmpty { overhead += 48 }
+        if !attachedCapabilities.isEmpty { overhead += 60 }
+        if !capabilityConfigurationsAreValid { overhead += 32 }
+        if !filteredCapabilitySuggestions.isEmpty || (showModelSuggestions && !filteredModels.isEmpty) { overhead += 48 }
         return overhead
     }
 
@@ -946,6 +971,10 @@ struct ChatViewBottom: View {
                 showShareInbox = true
             },
             miniAppsSession: miniAppsLaunchSession,
+            capabilityDraft: capabilityDraft,
+            composerCapabilities: composerCapabilities,
+            editingCapabilityID: $editingCapabilityID,
+            onAttachCapability: { attachCapability($0, actionID: $1) },
             ifSearch: $ifSearch,
             ifKnowledge: $ifKnowledge,
             ifThink: $ifThink,
@@ -979,6 +1008,7 @@ struct ChatViewBottom: View {
             morphHomeOnly: morphHomeOnly,
             enabledCapabilities: detachedCapabilities
         )
+        .environment(\.hanlinCapabilityCustomPanelProvider, capabilityCustomPanels)
     }
 
     private var toolsDrawerView: some View {
@@ -990,8 +1020,12 @@ struct ChatViewBottom: View {
             ifToolUse: $ifToolUse,
             embeddedInDrawer: true,
             embeddedInMorph: true,
-            enabledCapabilities: detachedCapabilities
+            enabledCapabilities: detachedCapabilities,
+            capabilityDraft: capabilityDraft,
+            composerCapabilities: composerCapabilities,
+            onAttachCapability: { attachCapability($0, actionID: $1) }
         )
+        .environment(\.hanlinCapabilityCustomPanelProvider, capabilityCustomPanels)
     }
 
     // Keep live attachment, prompt, suggestion and mode views together so a
@@ -1002,6 +1036,16 @@ struct ChatViewBottom: View {
             documentPreviewSection
             linkPreviewSection
             promptSection
+            HanlinCapabilityAttachmentChips(
+                attachments: attachedCapabilities, capabilities: composerCapabilities,
+                onEdit: openCapabilityConfiguration,
+                onRemove: { capabilityDraft?.removeCapability(id: $0) })
+            if !capabilityConfigurationsAreValid {
+                Label(String(localized: "hanlin.composer.capabilities.reviewSettings", bundle: HanlinLocalization.bundle),
+                      systemImage: "exclamationmark.circle")
+                    .font(.caption).foregroundStyle(.red)
+                    .accessibilityIdentifier("hanlin-capability-validation-error")
+            }
             modelSuggestionSection
         }
         .onGeometryChange(for: CGFloat.self) { proxy in
@@ -1363,43 +1407,40 @@ struct ChatViewBottom: View {
         }
     }
 
-    // MARK: - 模型建议区域
+    // MARK: - Caret-aware capability and model suggestions
     private var modelSuggestionSection: some View {
         Group {
-            if showModelSuggestions && !filteredModels.isEmpty {
-                HStack {
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack {
+            if !filteredCapabilitySuggestions.isEmpty || (showModelSuggestions && !filteredModels.isEmpty) {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 8) {
+                        ForEach(filteredCapabilitySuggestions) { capability in
+                            Button {
+                                attachCapability(capability, actionID: nil, replacing: capabilityQuery)
+                            } label: {
+                                Label(capability.title, systemImage: capability.systemImage)
+                                    .font(.footnote)
+                            }
+                            .buttonStyle(.bordered)
+                            .accessibilityIdentifier("hanlin-capability-suggestion-\(capability.id)")
+                        }
+                        if showModelSuggestions {
                             ForEach(filteredModels, id: \.id) { model in
-                                Button(action: {
-                                    // 用正则表达式匹配最后一次出现的"@…"
-                                    if let range = message.range(of: "@[^\\s]*$", options: .regularExpression) {
-                                        message.replaceSubrange(range, with: "@\(model.presentationName) ")
-                                    }
+                                Button {
+                                    replaceComposerQuery(with: "@\(model.presentationName) ")
                                     showModelSuggestions = false
                                     isFeedBack.toggle()
-                                }) {
-                                    Image(systemName: "at")
-                                        .foregroundColor(TemporaryRecord ? .primary : .hanlinHLBluefont)
-                                        .font(HanlinTypography.footnote)
-                                    highlightedModelText(for: model.presentationName)
-                                        .font(HanlinTypography.footnote)
-                                        .foregroundColor(.primary)
-                                        .lineLimit(1)
-                                        .truncationMode(.middle)
+                                } label: {
+                                    Label(model.presentationName, systemImage: "brain")
+                                        .font(.footnote)
                                 }
-                                .hanlinFeedback(.impact, trigger: isFeedBack)
-                                .padding(6)
-                                .background(.background.opacity(0.6))
-                                .cornerRadius(20)
+                                .buttonStyle(.bordered)
+                                .accessibilityIdentifier("hanlin-model-mention-\(model.presentationName)")
                             }
                         }
                     }
-                    .cornerRadius(20)
+                    .padding(.horizontal, 12)
                 }
-                .padding(.top, 12)
-                .padding(.horizontal, 12)
-                .transition(.opacity.combined(with: .move(edge: .bottom)))
+                .accessibilityIdentifier("hanlin-composer-capability-suggestions")
             }
         }
     }
@@ -1426,8 +1467,9 @@ struct ChatViewBottom: View {
                         selectedImagesCount: selectedImages.count,
                         selectedDocumentsCount: selectedDocumentURLs.count,
                         selectedPromptsCount: selectedPrompts.count,
+                        selectedCapabilitiesCount: attachedCapabilities.count,
                         isResponding: isResponding
-                    ) { onSendUser() }
+                    ) && capabilityConfigurationsAreValid { onSendUser() }
                 },
                 onMentionTriggered: { updateModelSuggestions() },
                 onFocusChange: { focused in
@@ -1439,7 +1481,14 @@ struct ChatViewBottom: View {
                     popupCoordinator.dockState.handleInputFocusChange(focused, preserveExpandedDrawer: true)
                 },
                 onLifecycleEvent: onNativeEditorLifecycle,
-                readCurrentTextState: readCurrentMessageState
+                readCurrentTextState: readCurrentMessageState,
+                onCapabilityQueryChange: { query in
+                    if capabilityQuery != query {
+                        capabilityQuery = query
+                        updateModelSuggestions()
+                    }
+                },
+                selectionRequest: capabilitySelectionRequest
             )
             .frame(height: layout.editorHeight)
             .focused(isInputActive)
@@ -1459,6 +1508,9 @@ struct ChatViewBottom: View {
                 if message.isEmpty {
                     inputExpanded = false
                     compactEditorHeight = HanlinMorphStyle.editorMinimumHeight
+                    capabilityQuery = nil
+                    showModelSuggestions = false
+                    filteredModels = []
                 }
                 popupCoordinator.dockState.handleDraftTextChange(message)
                 debounceWorkItem?.cancel()
@@ -1643,14 +1695,16 @@ struct ChatViewBottom: View {
             } else if !selectedImages.isEmpty
                         || !selectedDocumentURLs.isEmpty
                         || !selectedPrompts.isEmpty
+                        || !attachedCapabilities.isEmpty
                         || !message.isEmpty {
                 let sendEnabled = Self.shouldEnableSend(
                     message: message,
                     selectedImagesCount: selectedImages.count,
                     selectedDocumentsCount: selectedDocumentURLs.count,
                     selectedPromptsCount: selectedPrompts.count,
+                    selectedCapabilitiesCount: attachedCapabilities.count,
                     isResponding: isResponding
-                )
+                ) && capabilityConfigurationsAreValid
                 Button(action: onSendUser) {
                     Image(systemName: "arrow.up")
                         .font(HanlinTypography.fixed(size: 15, weight: .bold))
@@ -1819,53 +1873,79 @@ struct ChatViewBottom: View {
         selectedPrompts.removeAll(where: { $0.id == prompt.id })
     }
 
-    // 辅助函数，用于检测输入中最后一个"@"后面的内容并进行过滤：
-    private func updateModelSuggestions() {
-        // 使用正则匹配最后一个"@"后面的非空白字符
-        if let range = message.range(of: "@[^\\s]*$", options: .regularExpression) {
-            let query = String(message[range]).dropFirst() // 去掉"@"
-            if query.isEmpty {
-                // 如果没有输入字符，则默认显示前8个模型
-                filteredModels = Array(modelTemp.prefix(8))
-            } else {
-                // 根据 query 进行不区分大小写的过滤
-                filteredModels = modelTemp.filter { model in
-                    let modelName = model.presentationName
-                    return modelName.localizedCaseInsensitiveContains(query)
-                }
-                filteredModels = Array(filteredModels.prefix(8))
-            }
-            showModelSuggestions = true
-        } else {
-            showModelSuggestions = false
-            filteredModels = []
+    private var attachedCapabilities: [HanlinCapabilityAttachment] {
+        capabilityDraft?.capabilityAttachments ?? []
+    }
+
+    private var capabilityConfigurationsAreValid: Bool {
+        attachedCapabilities.allSatisfy { attachment in
+            guard let descriptor = composerCapabilities.first(where: { $0.id == attachment.reference.id }),
+                  descriptor.reference.revision == attachment.reference.revision else { return false }
+            if let actionID = attachment.actionID,
+               !descriptor.actions.contains(where: { $0.id == actionID }) { return false }
+            guard descriptor.validationIssues(for: attachment).isEmpty else { return false }
+            return descriptor.configuration?.panels.allSatisfy { panel in
+                guard let panelID = panel.customViewID else { return true }
+                return capabilityCustomPanels?.supports(panelID, for: descriptor.reference) == true
+            } ?? true
         }
     }
 
-    // 高亮辅助函数
-    private func highlightedModelText(for fullText: String) -> Text {
-        var query = ""
-        if let range = message.range(of: "@[^\\s]*$", options: .regularExpression) {
-            // 使用 dropFirst() 后转换为 String
-            query = String(message[range].dropFirst())
-        }
+    private var filteredCapabilitySuggestions: [HanlinComposerCapabilityDescriptor] {
+        guard capabilityDraft != nil, let query = capabilityQuery,
+              query.replacingToken(in: message) != nil else { return [] }
+        return Array(composerCapabilities.filter {
+            query.query.isEmpty || $0.title.localizedStandardContains(query.query)
+                || $0.reference.capabilityID.localizedStandardContains(query.query)
+        }.prefix(10))
+    }
 
-        // 如果查询为空，则直接返回全称
-        if query.isEmpty {
-            return Text(fullText)
+    private func attachCapability(_ capability: HanlinComposerCapabilityDescriptor,
+                                  actionID: String?,
+                                  replacing query: HanlinComposerCapabilityQuery? = nil) {
+        guard let capabilityDraft else { return }
+        if let query {
+            guard let text = query.replacingToken(in: message) else { return }
+            message = text
+            capabilitySelectionRequest = .init(text: text, range: query.selectionAfterReplacing(),
+                                               ownerID: readCurrentMessageState?()?.ownerID)
         }
+        let id = capabilityDraft.attach(capability.makeAttachment(actionID: actionID))
+        capabilityQuery = nil
+        showModelSuggestions = false
+        filteredModels = []
+        if capability.configuration != nil || !capability.actions.isEmpty,
+           let attachment = capabilityDraft.capabilityAttachments.first(where: { $0.id == id }) {
+            openCapabilityConfiguration(attachment)
+        }
+    }
 
-        // 尝试在 fullText 中查找 query（不区分大小写）
-        if let matchRange = fullText.range(of: query, options: .caseInsensitive) {
-            let prefix = String(fullText[..<matchRange.lowerBound])
-            let match = String(fullText[matchRange])
-            let suffix = String(fullText[matchRange.upperBound...])
-            // 根据 TemporaryRecord 状态选择颜色
-            let matchColor: Color = TemporaryRecord ? .primary : .hanlinHLBluefont
-            return Text(prefix) + Text(match).bold().foregroundColor(matchColor) + Text(suffix)
-        } else {
-            return Text(fullText)
+    private func openCapabilityConfiguration(_ attachment: HanlinCapabilityAttachment) {
+        editingCapabilityID = attachment.id
+        popupCoordinator.open(.general, isInputCurrentlyFocused: isInputActive.wrappedValue)
+        popupCoordinator.navigateToGeneralSubpage(.capabilities)
+    }
+
+    private func replaceComposerQuery(with replacement: String) {
+        guard let query = capabilityQuery,
+              let text = query.replacingToken(in: message, with: replacement) else { return }
+        message = text
+        capabilitySelectionRequest = .init(text: text, range: query.selectionAfterReplacing(with: replacement),
+                                           ownerID: readCurrentMessageState?()?.ownerID)
+        capabilityQuery = nil
+    }
+
+    private func updateModelSuggestions() {
+        guard let query = capabilityQuery, query.trigger == .mention,
+              query.replacingToken(in: message) != nil else {
+            showModelSuggestions = false
+            filteredModels = []
+            return
         }
+        filteredModels = Array(modelTemp.filter {
+            query.query.isEmpty || $0.presentationName.localizedStandardContains(query.query)
+        }.prefix(8))
+        showModelSuggestions = !filteredModels.isEmpty
     }
 
     // 实时检测并更新 URL 数组

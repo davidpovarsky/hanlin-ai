@@ -11,6 +11,7 @@ public final class HanlinChatStreamParser: @unchecked Sendable {
     private var inThinkTag: Bool = false
     private var buffer: String = ""
     private var anthropicToolBlocks: [Int: (id: String, name: String)] = [:]
+    private var anthropicUsageSnapshot: [String: Any] = [:]
 
     public init(apiType: String? = "OpenAI") {
         self.apiType = (apiType ?? "OpenAI").lowercased()
@@ -68,6 +69,7 @@ public final class HanlinChatStreamParser: @unchecked Sendable {
                 outputTokens: usage["completion_tokens"] as? Int,
                 reasoningTokens: completionDetails?["reasoning_tokens"] as? Int,
                 cachedInputTokens: promptDetails?["cached_tokens"] as? Int,
+                cacheWriteTokens: promptDetails?["cache_write_tokens"] as? Int,
                 totalTokens: usage["total_tokens"] as? Int
             )
         }
@@ -122,6 +124,11 @@ public final class HanlinChatStreamParser: @unchecked Sendable {
     private func parseAnthropic(json: [String: Any]) -> HanlinChatStreamEvent {
         var event = HanlinChatStreamEvent()
         let type = json["type"] as? String ?? ""
+
+        if type == "message_start" {
+            anthropicUsageSnapshot.removeAll(keepingCapacity: true)
+            anthropicToolBlocks.removeAll(keepingCapacity: true)
+        }
 
         if type == "message_stop" {
             event.isDone = true
@@ -234,7 +241,11 @@ public final class HanlinChatStreamParser: @unchecked Sendable {
         if let usageMetadata = json["usageMetadata"] as? [String: Any] {
             event.tokenUsage = HanlinChatTokenUsage(
                 inputTokens: usageMetadata["promptTokenCount"] as? Int,
-                outputTokens: usageMetadata["candidatesTokenCount"] as? Int,
+                outputTokens: (usageMetadata["candidatesTokenCount"] as? Int).map {
+                    $0 + (usageMetadata["thoughtsTokenCount"] as? Int ?? 0)
+                },
+                reasoningTokens: usageMetadata["thoughtsTokenCount"] as? Int,
+                cachedInputTokens: usageMetadata["cachedContentTokenCount"] as? Int,
                 totalTokens: usageMetadata["totalTokenCount"] as? Int
             )
         }
@@ -243,13 +254,26 @@ public final class HanlinChatStreamParser: @unchecked Sendable {
     }
 
     private func anthropicUsage(_ usage: [String: Any]) -> HanlinChatTokenUsage {
-        let outputDetails = usage["output_tokens_details"] as? [String: Any]
+        // Anthropic's message_delta contains cumulative output usage and may omit
+        // all input fields. Keep the current message snapshot instead of replacing
+        // its cache accounting with nil or summing repeated cumulative values.
+        for key in ["input_tokens", "output_tokens", "cache_read_input_tokens",
+                    "cache_creation_input_tokens", "output_tokens_details"] {
+            if let value = usage[key] { anthropicUsageSnapshot[key] = value }
+        }
+        let uncached = anthropicUsageSnapshot["input_tokens"] as? Int
+        let read = anthropicUsageSnapshot["cache_read_input_tokens"] as? Int
+        let written = anthropicUsageSnapshot["cache_creation_input_tokens"] as? Int
+        let input = uncached.map { $0 + (read ?? 0) + (written ?? 0) }
+        let output = anthropicUsageSnapshot["output_tokens"] as? Int
+        let outputDetails = anthropicUsageSnapshot["output_tokens_details"] as? [String: Any]
         return HanlinChatTokenUsage(
-            inputTokens: usage["input_tokens"] as? Int,
-            outputTokens: usage["output_tokens"] as? Int,
+            inputTokens: input,
+            outputTokens: output,
             reasoningTokens: outputDetails?["thinking_tokens"] as? Int,
-            cachedInputTokens: usage["cache_read_input_tokens"] as? Int,
-            totalTokens: nil
+            cachedInputTokens: read,
+            cacheWriteTokens: written,
+            totalTokens: input.flatMap { input in output.map { input + $0 } }
         )
     }
 

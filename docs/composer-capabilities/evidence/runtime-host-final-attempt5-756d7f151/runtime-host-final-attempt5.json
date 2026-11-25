@@ -1,0 +1,20 @@
+{
+  "sourceCommit": "756d7f1517f64295d4ce8ff9ea01d88c1f5f1194",
+  "startedAtUTC": "2026-11-25T01:35:45.081480+00:00",
+  "finishedAtUTC": "2026-11-25T01:43:31.114149+00:00",
+  "command": [
+    "nice",
+    "-n",
+    "10",
+    "bash",
+    "Scripts/Runtime/prepare-runtime-host.sh"
+  ],
+  "exitCode": 0,
+  "durationSeconds": 466.034,
+  "logSHA256": "754ea129dbab59da74471bf0093977ba6c3c25a28b853dd7a6355a45fef98a09",
+  "reason": "Qualified SwiftAI revision changes archived Platform Package.swift input; refresh original SDK/RuntimeHost without rerunning native producers",
+  "appPinSHA256": "4a55e370d71d69933efb0bc54a08973da962b4d7270da59791aa3b1ed58910bd",
+  "archiveSHA256": "120bc8a6396f4202284d8a4e61ca3d772d15d791f750b9824f6a57a735f1f70b",
+  "archiveBytes": 81837507,
+  "trackedChanges": " M docs/miniapp-sdk/extension-reachability.json\n M docs/miniapp-sdk/extension-reachability.md\n M docs/miniapp-sdk/source-inventory.json\n"
+}

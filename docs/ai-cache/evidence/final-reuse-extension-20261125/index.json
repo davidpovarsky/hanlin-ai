@@ -1,0 +1,31 @@
+{
+  "target_source": "948bdb1fe75d31559dc8d65ae8d2e70fa69de276",
+  "new_test_execution": false,
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 3973,
+      "sha256": "ee44e8d428d44d4d143efbcdfe43afbb2421572148c66d58c4d8d566a2c9c6a9"
+    },
+    {
+      "path": "reuse-extension.json",
+      "bytes": 83365,
+      "sha256": "7315294b3b31ff2dadcefd0b329fb72bf2189b84cf591938ad57a356522a19fb"
+    },
+    {
+      "path": "verification-execution.json",
+      "bytes": 349,
+      "sha256": "cc5d10eb1c8ba8ea3340c1465a073c4fa0ec82bb2626fea7791888396a80fc47"
+    },
+    {
+      "path": "verification.log",
+      "bytes": 846,
+      "sha256": "b656dc08b578788627d7ce13560684609e5513e600f4097d50ac5d75483ad491"
+    },
+    {
+      "path": "verify-extension.py",
+      "bytes": 14732,
+      "sha256": "38ee9286df4a04d3f54428a9a2a4b0f23ed392b2ddc53f17480d9c43d2ed5648"
+    }
+  ]
+}

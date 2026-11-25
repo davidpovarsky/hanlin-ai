@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "assessedAtUTC": "2026-11-25T01:36:37.138996+00:00",
+  "originalCommit": "8cf5b3e3023852ab41fec7d9db1592218c1bcfd1",
+  "originalParent": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91",
+  "integratedCommit": "e5a3e6d9216a69552b2b25a096fd3f3fcf8e2876",
+  "integratedParent": "6c11e7995ffb2ce91611a9ce01ddde5463006755",
+  "changedFiles": [
+    "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinCompactChatWorkspace.swift"
+  ],
+  "additions": 4,
+  "deletions": 4,
+  "exactDiffBytesEqual": true,
+  "diffSHA256": "e8c25f5c093a6b9d57a2ce6ccc26e1cde6a9a7eff26fda8fd2b423e4a8befab3",
+  "originalPatch": "focus-fix-8cf5b3e30.patch.gz",
+  "change": "Rename only Anchor stored Bool focused to searchIsFocused and its three uses; initializer/update argument labels and focus publication behavior unchanged.",
+  "ownership": {
+    "introducedBy": "10644a720287952d09aa6661e6ebbea025eb20f4",
+    "equivalentCompletedBranchCommit": "c8a8250fa512d24fde11ae8314a4a2b5b500c839",
+    "checkedBeforeEdit": "No later fix in current refs and no modified file in registered Oracle worktrees. Integration owner assigned the four-substitution correction."
+  },
+  "verification": "Exact Git diff equivalence, one-file 4-addition/4-deletion scope and recorded whitespace checks; no new tests or native build in the fix lane.",
+  "compilationAfterFix": "NOT_VERIFIED_BY_THIS_PACKET"
+}

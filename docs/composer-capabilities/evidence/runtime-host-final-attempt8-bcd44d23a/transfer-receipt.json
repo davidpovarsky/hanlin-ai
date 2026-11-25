@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "transferredAtUTC": "2026-11-25T02:41:23.942730+00:00",
+  "transport": "Oracle pinned scaleway-mac SSH alias, BatchMode=yes, StrictHostKeyChecking=yes",
+  "sourceReadOnly": true,
+  "allSourceSHA256Verified": true,
+  "noBuildsTestsGeneratorsDevicesOrMacWrites": true,
+  "files": [
+    {
+      "path": "docs/composer-capabilities/evidence/runtime-host-final-attempt8-bcd44d23a/runtime-host-final-attempt8.json",
+      "bytes": 930,
+      "sha256": "77f8ac0ca3507c9aaacc724393da8e137f1be8b91027e7ac3c63e6789468e0a1",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/runtime-host-final-attempt8.json",
+      "sourceBytes": 930,
+      "sourceSHA256": "77f8ac0ca3507c9aaacc724393da8e137f1be8b91027e7ac3c63e6789468e0a1",
+      "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/runtime-host-final-attempt8-bcd44d23a/runtime-host-final-attempt8.log.gz",
+      "bytes": 7855,
+      "sha256": "1db816f3b452705791c2cab3eea3cb27e125cd7179574d17b4afb96c194c3571",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/runtime-host-final-attempt8.log",
+      "sourceBytes": 20059,
+      "sourceSHA256": "0c87e20007d3a248b4ef781e1c3eb2ce6fb4fc9038a3a8774807e37ad752bd9f",
+      "compressedForRepository": true,
+      "uncompressedLogSHA256": "0c87e20007d3a248b4ef781e1c3eb2ce6fb4fc9038a3a8774807e37ad752bd9f",
+      "uncompressedLogBytes": 20059
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/runtime-host-final-attempt8-bcd44d23a/runtime-provenance-host8-commit.json",
+      "bytes": 526,
+      "sha256": "165e7ac2e845b7ca837ec53ed8b84c193d3da72cf694038606e260715b2d67b2",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/runtime-provenance-host8-commit.json",
+      "sourceBytes": 526,
+      "sourceSHA256": "165e7ac2e845b7ca837ec53ed8b84c193d3da72cf694038606e260715b2d67b2",
+      "compressedForRepository": false
+    }
+  ],
+  "observedArchive": {
+    "path": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/runtime-host/RuntimeHostResources.zip",
+    "bytes": 81837544,
+    "sha256": "8b05742603572e8b3309a647fc04880fa59d891beb13f4623fbd79a0cb9c49a1"
+  },
+  "archiveMatchesThisHostRun": true
+}

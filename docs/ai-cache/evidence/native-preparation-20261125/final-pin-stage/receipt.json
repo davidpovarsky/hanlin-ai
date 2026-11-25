@@ -1,0 +1,89 @@
+{
+  "status": "FAILED",
+  "initial_source": "3a8f9c9e65c9f5a971a50506b0d4035ae35b7883",
+  "started_at": "2026-11-25T01:00:55.283696+00:00",
+  "commands": [
+    {
+      "label": "generate-manifest",
+      "command": [
+        "python3",
+        "Scripts/SDK/generate_manifest.py"
+      ],
+      "started_at": "2026-11-25T01:00:55.283862+00:00",
+      "log": "01-generate-manifest.log",
+      "exit_code": 0,
+      "finished_at": "2026-11-25T01:01:03.912632+00:00",
+      "log_sha256": "6a3adc34271cba4ee688071b7aec9eb7f0ee9731bedf3e215a77efb8648947f0"
+    },
+    {
+      "label": "update-project",
+      "command": [
+        "python3",
+        "Scripts/SDK/update_project.py"
+      ],
+      "started_at": "2026-11-25T01:01:03.912972+00:00",
+      "log": "02-update-project.log",
+      "exit_code": 0,
+      "finished_at": "2026-11-25T01:01:05.786329+00:00",
+      "log_sha256": "7b205399ea53f72db8afa2fe3d77370cd6f0ac3d9ea8d19cea47a806236d4d18"
+    },
+    {
+      "label": "check-manifest",
+      "command": [
+        "python3",
+        "Scripts/SDK/generate_manifest.py",
+        "--check"
+      ],
+      "started_at": "2026-11-25T01:01:05.786626+00:00",
+      "log": "03-check-manifest.log",
+      "exit_code": 0,
+      "finished_at": "2026-11-25T01:01:08.520587+00:00",
+      "log_sha256": "6a3adc34271cba4ee688071b7aec9eb7f0ee9731bedf3e215a77efb8648947f0"
+    },
+    {
+      "label": "check-project",
+      "command": [
+        "python3",
+        "Scripts/SDK/update_project.py",
+        "--check"
+      ],
+      "started_at": "2026-11-25T01:01:08.520952+00:00",
+      "log": "04-check-project.log",
+      "exit_code": 0,
+      "finished_at": "2026-11-25T01:01:09.085466+00:00",
+      "log_sha256": "7b205399ea53f72db8afa2fe3d77370cd6f0ac3d9ea8d19cea47a806236d4d18"
+    },
+    {
+      "label": "core-final-pin",
+      "command": [
+        "python3",
+        "Scripts/CI/IntegrationValidation/run_cache_native.py",
+        "--proof",
+        "/Users/m1/builds/hanlin-ai-cache-core-proof-20261125",
+        "--scratch",
+        "/Users/m1/caches/DerivedData/hanlin-ai-cache-20261125/core-proof",
+        "--producer-tests",
+        "/Users/m1/builds/hanlin-ai-cache-producer-test-inputs-20261125"
+      ],
+      "started_at": "2026-11-25T01:01:09.168949+00:00",
+      "log": "05-core-final-pin.log",
+      "exit_code": 0,
+      "finished_at": "2026-11-25T01:03:24.489624+00:00",
+      "log_sha256": "0d88414d0ea92c037ea4abd5e9848f663868181b5fcc6fe48363134256c2e2f3"
+    },
+    {
+      "label": "runtime-host",
+      "command": [
+        "bash",
+        "Scripts/Runtime/prepare-runtime-host.sh"
+      ],
+      "started_at": "2026-11-25T01:03:24.490293+00:00",
+      "log": "06-runtime-host.log",
+      "exit_code": 1,
+      "finished_at": "2026-11-25T01:03:47.912797+00:00",
+      "log_sha256": "cf3b844197b83a0b7ef1c91b88d5c04b870d1c244f8dc422eb31fca6732740ad"
+    }
+  ],
+  "generated_source": "04c1942bc88cd4de7deafda7dd342b9b6c401dcf",
+  "finished_at": "2026-11-25T01:03:47.913318+00:00"
+}

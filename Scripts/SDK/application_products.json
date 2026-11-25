@@ -201,6 +201,16 @@
     {
       "product": "HanlinExpoWidgetsOriginal",
       "package": "HanlinSDK"
+    },
+    {
+      "product": "LRUCache",
+      "package": "LRUCache"
+    }
+  ],
+  "externalPackages": [
+    {
+      "url": "https://github.com/nicklockwood/LRUCache.git",
+      "exact": "1.3.0"
     }
   ]
 }

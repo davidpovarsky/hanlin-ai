@@ -1,0 +1,64 @@
+{
+  "status": "VERIFIED",
+  "verified_at": "2026-11-25T00:05:55.761070+00:00",
+  "destination": "/mnt/development/projects/transfer/hanlin-composer-capabilities-20261124/sdk-ui-evidence",
+  "source_sha": "a3aae0b952b0518cb8c40ed4a511d4cffadab99f",
+  "job_id": "job_2ba935ae0db2",
+  "json_bytes_preserved": true,
+  "validated_sha256_entries": 10,
+  "sha256sums_sha256": "9a7333a9f1981f14f78342582c3e58053bc2089ad147dd1538a949232652c14a",
+  "decompressed_log_sha256": "e6f652f8ca70a8d67e0dc71616f811dfd0205f9549c7e6bfbac5835b5227f61c",
+  "result": {
+    "total": 11,
+    "passed": 11,
+    "failed": 0,
+    "skipped": 0
+  },
+  "transport_archive_bytes": 286720,
+  "files": [
+    {
+      "path": "SHA256SUMS",
+      "bytes": 826
+    },
+    {
+      "path": "lane-plan.json",
+      "bytes": 3720
+    },
+    {
+      "path": "preflight.json",
+      "bytes": 610
+    },
+    {
+      "path": "receipt.json",
+      "bytes": 5702
+    },
+    {
+      "path": "source-input-sha256.json",
+      "bytes": 136000
+    },
+    {
+      "path": "status.json",
+      "bytes": 725
+    },
+    {
+      "path": "summary.json",
+      "bytes": 1064
+    },
+    {
+      "path": "tests.json",
+      "bytes": 9310
+    },
+    {
+      "path": "transfer-manifest.json",
+      "bytes": 2132
+    },
+    {
+      "path": "xcodebuild.log.gz",
+      "bytes": 102234
+    },
+    {
+      "path": "xcresult-sha256.json",
+      "bytes": 10616
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "status": "FAILED",
+  "source_sha": "7c8efcfb1efa2c1f5e1999dac54f045ba872e138",
+  "started_at": "2026-11-25T00:39:59.094038+00:00",
+  "runner_temp": "/Users/m1/builds/hanlin-ai-cache-prep.jpyqkmdh",
+  "commands": [
+    {
+      "command": [
+        "node",
+        "Scripts/MiniApps/install-tooling.mjs",
+        "--engine=nativescript",
+        "--ignore-scripts"
+      ],
+      "started_at": "2026-11-25T00:39:59.094218+00:00",
+      "log": "01-stage.log",
+      "exit_code": 0,
+      "finished_at": "2026-11-25T00:40:02.655371+00:00",
+      "log_sha256": "2569622034d16f21e2fe972e7153cbf59d2e7daf72fb44e2068c0636eab26fe0"
+    },
+    {
+      "command": [
+        "node",
+        "Scripts/Expo/prepare-ios-dependencies.mjs"
+      ],
+      "started_at": "2026-11-25T00:40:02.655760+00:00",
+      "log": "02-stage.log",
+      "exit_code": 0,
+      "finished_at": "2026-11-25T00:46:37.160642+00:00",
+      "log_sha256": "8084c71d09f0ea22f3dc4a963985478889af39e228f6d52751227928282576fa"
+    },
+    {
+      "command": [
+        "node",
+        "Scripts/NativeScript/prepare-ios-dependencies.mjs"
+      ],
+      "started_at": "2026-11-25T00:46:37.167725+00:00",
+      "log": "03-stage.log",
+      "exit_code": 0,
+      "finished_at": "2026-11-25T00:46:41.744417+00:00",
+      "log_sha256": "1c6bc9bd180147cb61d38dc56c18c45cfaee3c541d9c12725e8c0ca6b0b09e87"
+    },
+    {
+      "command": [
+        "bash",
+        "Scripts/Runtime/prepare-runtime-host.sh"
+      ],
+      "started_at": "2026-11-25T00:46:41.745063+00:00",
+      "log": "04-stage.log",
+      "exit_code": 1,
+      "finished_at": "2026-11-25T00:46:52.252795+00:00",
+      "log_sha256": "8b5cee028ba5b7ef60995b7c1bce5decbdda4dcdf68be1122ce267ec0e9a4d8e"
+    }
+  ],
+  "reused": "Expo npm install PASS from prior original-producers/01-stage.log; its inputs unchanged.",
+  "finished_at": "2026-11-25T00:46:52.253432+00:00"
+}

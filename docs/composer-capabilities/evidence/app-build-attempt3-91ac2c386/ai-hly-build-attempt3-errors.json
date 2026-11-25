@@ -1,0 +1,42 @@
+{
+  "sourceCommit": "91ac2c3868d9a056815bca56448e0cfcabd54eed",
+  "exitCode": 65,
+  "logSHA256": "81679428a7a197b18ebf412364c63851ebcb8bb3a05d83363234a03dafdc09ff",
+  "capturedAtUTC": "2026-11-25T01:49:34.386314+00:00",
+  "errors": [
+    {
+      "_type": {
+        "_name": "IssueSummary"
+      },
+      "documentLocationInCreatingWorkspace": {
+        "_type": {
+          "_name": "DocumentLocation"
+        },
+        "concreteTypeName": {
+          "_type": {
+            "_name": "String"
+          },
+          "_value": "DVTTextDocumentLocation"
+        },
+        "url": {
+          "_type": {
+            "_name": "String"
+          },
+          "_value": "file:///Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift#EndingColumnNumber=27&EndingLineNumber=37&StartingColumnNumber=27&StartingLineNumber=37&Timestamp=817264011.2451251"
+        }
+      },
+      "issueType": {
+        "_type": {
+          "_name": "String"
+        },
+        "_value": "Swift Compiler Error"
+      },
+      "message": {
+        "_type": {
+          "_name": "String"
+        },
+        "_value": "Value of optional type 'Result<HanlinValue, any Error>?' must be unwrapped to a value of type 'Result<HanlinValue, any Error>'"
+      }
+    }
+  ]
+}

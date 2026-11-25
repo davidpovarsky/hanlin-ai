@@ -1,0 +1,63 @@
+{
+  "source_commit": "04c1942bc88cd4de7deafda7dd342b9b6c401dcf",
+  "status": "EXECUTED_PASS",
+  "test_counts": {
+    "total": 178,
+    "passed": 177,
+    "failed": 0,
+    "skipped": 1
+  },
+  "skip": "actual Node job crosses300seconds with no hidden deadline (original conditional long-duration case)",
+  "additional_acceptance": [
+    "JITless runtime smoke",
+    "archive sync",
+    "archive validation",
+    "runtime manifest",
+    "native artifact inventory",
+    "git diff --check"
+  ],
+  "files": [
+    {
+      "source": "./05-native-inventory.log",
+      "stored": "05-native-inventory.log.gz",
+      "raw_sha256": "362f93efb1cb547c8f0040deb6e95fdcac5ac46e35221a964fbd6996c1bc4ee6",
+      "bytes": 3572
+    },
+    {
+      "source": "./02-archive-sync.log",
+      "stored": "02-archive-sync.log.gz",
+      "raw_sha256": "3419e4e0a67a900c68670492d5db6002fdc14957bf974083d7999d9131bd3286",
+      "bytes": 932
+    },
+    {
+      "source": "./03-archive-validate.log",
+      "stored": "03-archive-validate.log.gz",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "./04-runtime-manifest.log",
+      "stored": "04-runtime-manifest.log.gz",
+      "raw_sha256": "e0300c6a4ee73c2d65c9f67597ea4adcb0f6f627c0c7d1e9a7e3d1231d5441f0",
+      "bytes": 72
+    },
+    {
+      "source": "./01-runtime-host.log",
+      "stored": "01-runtime-host.log.gz",
+      "raw_sha256": "61596ac3ff304e3188bdd2704ee6379498b6a15eb4f141ed4f2077420b2ec573",
+      "bytes": 24321
+    },
+    {
+      "source": "./06-diff-check.log",
+      "stored": "06-diff-check.log.gz",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "source": "./receipt.json",
+      "stored": "receipt.json",
+      "raw_sha256": "7cef83b63d92371d2c65631f0df62b20f4a46e5807b936ec038fc141556ac13f",
+      "bytes": 3954
+    }
+  ]
+}
