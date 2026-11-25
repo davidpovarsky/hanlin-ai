@@ -63,6 +63,35 @@ struct HanlinMiniAppHostDiscoveryTests {
         #expect(try await items([named]).first?.engine == .scriptingJSC)
     }
 
+    @Test func preparedExpoActionExportsKeepTheirInstalledAppInTheCatalog() async throws {
+        let actionIDs = ["hostServicesEcho", "hostServicesFail", "hostServicesPublishWidget"]
+        let app = HanlinPackageEntrypointDescriptor(
+            id: "app", kind: .app, sourcePath: "source/bundle.js",
+            supportedContexts: [.mainApplication], runtimePolicyID: "foreground-app-v1",
+            runtimeProfile: .hanlinExpo, compatibility: .supported)
+        let actions = actionIDs.map { id in
+            HanlinPackageEntrypointDescriptor(
+                id: id, kind: .appIntent, sourcePath: "source/bundle.js", exportedSymbol: id,
+                supportedContexts: [.mainApplication, .appIntent],
+                runtimePolicyID: "prepared-foreground-action-v1",
+                runtimeProfile: .hanlinExpo, compatibility: .supported)
+        }
+        let manifest = HanlinScriptingManifest(
+            name: "Expo SwiftUI Probe A", version: "1.0.0", entry: "bundle.js",
+            hanlinRuntime: HanlinRuntimeProfile.hanlinExpo.rawValue)
+        let package = try snapshot(entrypoints: [app] + actions, manifest: manifest)
+        let catalog = try await items([package])
+        let item = try #require(catalog.first)
+        #expect(catalog.count == 1)
+        #expect(item.id == package.appID)
+        #expect(item.descriptor.name.preferredValue(forLocale: "en") == "Expo SwiftUI Probe A")
+        #expect(item.engine == .expo)
+        #expect(try HanlinMiniAppLaunchPlan(descriptor: item.descriptor).entryPoint.handler == "source/bundle.js")
+        #expect(item.descriptor.entryPoints.filter { $0.kind == .appIntentBridge }.count == 1)
+        #expect(package.entrypoints.filter { $0.kind == .appIntent }.map(\.id) == actionIDs)
+        #expect(try await items([snapshot(entrypoints: actions, manifest: manifest)]).isEmpty)
+    }
+
     private func items(_ snapshots: [HanlinStoredPackageSnapshot]) async throws -> [HanlinMiniAppCatalogItem] {
         try await HanlinCanonicalMiniAppCatalog(
             discovery: HanlinMiniAppHost.packageDiscovery(installedPackages: snapshots)

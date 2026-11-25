@@ -1,0 +1,17 @@
+{
+  "argv": [
+    "git",
+    "diff",
+    "--check",
+    "89f758d56a4945acc52dfe604b78835539d5df85",
+    "--",
+    ".",
+    ":(exclude)docs/miniapp-sdk/evidence/primary-native-callback-runloop-20261125/raw/harness-compile-failure/baseline.log",
+    ":(exclude)docs/miniapp-sdk/evidence/primary-nativescript-esm-20261124/proof/baseline.log"
+  ],
+  "exitCode": 0,
+  "preservedRawLogWhitespaceOnly": [
+    "docs/miniapp-sdk/evidence/primary-native-callback-runloop-20261125/raw/harness-compile-failure/baseline.log",
+    "docs/miniapp-sdk/evidence/primary-nativescript-esm-20261124/proof/baseline.log"
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "sourceBeforeGeneration": "351cbfe5c4f5659ee7364eef2551e8d2c631737e",
+  "startedAt": "2026-11-25T00:37:08.126875+00:00",
+  "status": "PASS",
+  "scope": "Original portable manifest/project generation and --check; no native build or tests",
+  "steps": [
+    {
+      "label": "manifest-generate",
+      "argv": [
+        "python3",
+        "Scripts/SDK/generate_manifest.py"
+      ],
+      "startedAt": "2026-11-25T00:37:08.207015+00:00",
+      "exitCode": 0,
+      "finishedAt": "2026-11-25T00:37:13.922637+00:00",
+      "seconds": 5.715645673684776,
+      "stdoutSHA256": "573f787f1f9335941caf571ef3a01d811b5bca445333a188691e8e76eb92e7a4",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "project-generate",
+      "argv": [
+        "python3",
+        "Scripts/SDK/update_project.py"
+      ],
+      "startedAt": "2026-11-25T00:37:13.923021+00:00",
+      "exitCode": 0,
+      "finishedAt": "2026-11-25T00:37:16.848758+00:00",
+      "seconds": 2.92575806286186,
+      "stdoutSHA256": "7b205399ea53f72db8afa2fe3d77370cd6f0ac3d9ea8d19cea47a806236d4d18",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "manifest-check",
+      "argv": [
+        "python3",
+        "Scripts/SDK/generate_manifest.py",
+        "--check"
+      ],
+      "startedAt": "2026-11-25T00:37:16.849142+00:00",
+      "exitCode": 0,
+      "finishedAt": "2026-11-25T00:37:19.022986+00:00",
+      "seconds": 2.1738636130467057,
+      "stdoutSHA256": "573f787f1f9335941caf571ef3a01d811b5bca445333a188691e8e76eb92e7a4",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "project-check",
+      "argv": [
+        "python3",
+        "Scripts/SDK/update_project.py",
+        "--check"
+      ],
+      "startedAt": "2026-11-25T00:37:19.023393+00:00",
+      "exitCode": 0,
+      "finishedAt": "2026-11-25T00:37:19.640196+00:00",
+      "seconds": 0.6168291280046105,
+      "stdoutSHA256": "7b205399ea53f72db8afa2fe3d77370cd6f0ac3d9ea8d19cea47a806236d4d18",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "swiftToolchain": "Swift version 6.4.3 (swift-6.4.3-RELEASE)\nTarget: aarch64-unknown-linux-gnu",
+  "generatorSHA256": {
+    "Scripts/SDK/generate_manifest.py": "47ae0d5c34fa5c3baa870b4213a98c6999958f57c71f19a8be421fb6723182ec",
+    "Scripts/SDK/update_project.py": "47fe76286f6396ae4b2157f842e2d284f05e4004f856423902843b8299a7520f",
+    "Scripts/CI/IntegrationValidation/project_graph.py": "39af26a39620977cc306b65e58b6cdbaa5aea3d6baea21b440499bd80965ff49"
+  },
+  "active": "project-check",
+  "finishedAt": "2026-11-25T00:37:19.641074+00:00",
+  "generated": {
+    "Package.swift": "c62a115ec0f633ca634b3853bd05e194ad2605d658f0eed618942096a8d7c597",
+    "docs/agent-sdk/unified-package-manifest.json": "0bd654688bed250640665b6eb071450bec46ac7149de7a85f872f6f55c373671",
+    "AI_HLY.xcodeproj/project.pbxproj": "a3386442c307f0edfe73d418de6059c2c1aeb6405ff4c9d90c2975014f725e6e"
+  }
+}

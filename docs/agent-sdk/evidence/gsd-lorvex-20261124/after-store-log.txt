@@ -1,0 +1,91 @@
+Building for debugging...
+[Computing dependencies]
+[Pre-planning 1 / 153]
+[Planning deferred tasks]
+[15 / 93] HanlinPrivateStoreProof_HanlinPlatformContracts
+[27 / 93] HanlinPersistenceAdaptersTests-product
+[47 / 93] HanlinPrivateStoreProof_HanlinPlatformContracts
+[50 / 93]
+[51 / 93]
+[53 / 93]
+[54 / 94] HanlinPlatformContracts
+[57 / 139]
+[59 / 139]
+[61 / 139]
+[63 / 139]
+[64 / 139]
+[66 / 139]
+[69 / 139]
+[71 / 139]
+[72 / 139]
+[73 / 139]
+[76 / 139]
+[77 / 139]
+[78 / 139]
+[79 / 139]
+[80 / 139]
+[82 / 139]
+[85 / 139]
+[86 / 139]
+[87 / 139]
+[88 / 139]
+[91 / 139] HanlinPlatformContracts
+[92 / 139] HanlinPlatformContracts
+[95 / 139] HanlinPlatformContracts
+[100 / 139] HanlinPlatformContracts
+[102 / 139] HanlinPlatformContracts
+[103 / 139] HanlinPlatformContracts
+[104 / 139] HanlinPlatformContracts
+[105 / 139] HanlinPlatformContracts
+[105 / 139] HanlinHostContracts
+[106 / 140]
+[108 / 147] HanlinHostContracts
+[109 / 147] HanlinHostContracts
+[111 / 147] HanlinHostContracts
+[117 / 147] HanlinPersistenceAdapters
+[119 / 147] HanlinHostContracts
+[120 / 147] HanlinHostContracts
+[121 / 147] HanlinHostContracts
+[122 / 148]
+[124 / 148] HanlinPersistenceAdapters
+[127 / 151] HanlinPersistenceAdapters
+[128 / 151] HanlinPersistenceAdapters
+[140 / 152]
+[141 / 152] HanlinPersistenceAdaptersTests-product
+[142 / 158]
+[143 / 158]
+[146 / 158] HanlinPersistenceAdaptersTests-product
+[147 / 158] HanlinPersistenceAdaptersTests-product
+[149 / 158] HanlinPersistenceAdaptersTests-product
+[152 / 158] HanlinPersistenceAdaptersTests-product
+[154 / 158] HanlinPersistenceAdaptersTests-product
+[156 / 158] HanlinPersistenceAdaptersTests-product
+Build complete! (25,91 secs)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite StoreTests started.
+◇ Suite StoreSystemPathTests started.
+◇ Test versionOneCheckpointCanBeRestoredWithoutDestructiveMigration() started.
+◇ Test privateSymlinksRemainRejected(position:) started.
+◇ Test systemAliasCreatesReloadsUpdatesAndDeletesSameConversation() started.
+◇ Test systemAliasReadsExistingVersionOneWithoutRewriting() started.
+◇ Test case passing 1 argument position → "root" to privateSymlinksRemainRejected(position:) started.
+◇ Test case passing 1 argument position → "ancestor" to privateSymlinksRemainRejected(position:) started.
+◇ Test case passing 1 argument position → "namespace" to privateSymlinksRemainRejected(position:) started.
+◇ Test case passing 1 argument position → "record" to privateSymlinksRemainRejected(position:) started.
+◇ Test case passing 1 argument position → "dangling-root" to privateSymlinksRemainRejected(position:) started.
+CHECKPOINT_FILE_STANDARDIZATION_CHANGED_ROOT=false
+CHECKPOINT_STAGE=save_v1
+CHECKPOINT_STAGE=checkpoint
+CHECKPOINT_STAGE=save_v2
+CHECKPOINT_STAGE=restore
+✔ Test systemAliasReadsExistingVersionOneWithoutRewriting() passed after 0.019 seconds.
+CHECKPOINT_STAGE=load_restored
+CHECKPOINT_STAGE=reject_symlink
+✔ Test versionOneCheckpointCanBeRestoredWithoutDestructiveMigration() passed after 0.027 seconds.
+✔ Suite StoreTests passed after 0.028 seconds.
+✔ Test privateSymlinksRemainRejected(position:) with 5 test cases passed after 0.028 seconds.
+✔ Test systemAliasCreatesReloadsUpdatesAndDeletesSameConversation() passed after 0.030 seconds.
+✔ Suite StoreSystemPathTests passed after 0.030 seconds.
+✔ Test run with 4 tests in 2 suites passed after 0.030 seconds.

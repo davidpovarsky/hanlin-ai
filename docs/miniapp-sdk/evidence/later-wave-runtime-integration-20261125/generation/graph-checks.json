@@ -1,0 +1,78 @@
+{
+  "observedAt": "2026-11-25T00:42:34.546669+00:00",
+  "status": "PASS",
+  "base": "89f758d56a4945acc52dfe604b78835539d5df85",
+  "sourceBeforeGeneration": "351cbfe5c4f5659ee7364eef2551e8d2c631737e",
+  "graph": {
+    "miniapps_products": [
+      "HanlinA2UI",
+      "HanlinAgentActivityCore",
+      "HanlinExpoNativeAPI",
+      "HanlinExpoRuntime",
+      "HanlinExpoWidgetsOriginal",
+      "HanlinExtensionContracts",
+      "HanlinLocalization",
+      "HanlinMiniAppCore",
+      "HanlinMiniAppsBridge",
+      "HanlinMiniAppsPicker",
+      "HanlinMiniAppsUI",
+      "HanlinNativeScriptRuntime",
+      "HanlinParityMiniApp",
+      "HanlinPlatformContracts",
+      "HanlinPresentationKit",
+      "HanlinProductSplit",
+      "HanlinScriptCompiler",
+      "HanlinScriptContracts",
+      "HanlinScriptDeviceServices",
+      "HanlinScriptExtensions",
+      "HanlinScriptStore",
+      "HanlinScriptUI",
+      "HanlinScriptingApplicationRuntime",
+      "HanlinScriptingSDK",
+      "HanlinSefariaMiniApp",
+      "HanlinTextStudioMiniApp",
+      "HanlinTranslationUI",
+      "HanlinWidgetUI",
+      "HanlinWikipediaMiniApp",
+      "IOSSystemLite",
+      "SWCompression",
+      "TorahLibraryKit",
+      "ZIPFoundation"
+    ],
+    "miniapps_source_groups": [
+      "HanlinMiniAppsApp"
+    ],
+    "deployment_target": "27.0",
+    "signed_or_install_proof": false
+  },
+  "linkage": {
+    "ai_products": [
+      "HanlinApplication"
+    ],
+    "unit_test_products": [
+      "HanlinApplication"
+    ],
+    "miniapps_agent_products": [],
+    "sdk_application_sources": 514,
+    "host_sources": [
+      "AI_HLY.swift"
+    ],
+    "native_adapter": "Model/HanlinAppleModelCatalogAdapter.swift",
+    "linked_application_products": {
+      "HanlinApp": [
+        "HanlinApplication"
+      ],
+      "AI_HLYTests": [
+        "HanlinApplication"
+      ]
+    },
+    "apple_compilation": "NOT_RUN"
+  },
+  "generatedTargetCount": 114,
+  "applicationSourcesEqualBase": true,
+  "protectedCatalogActionSourcesEqualBase": true,
+  "presentationSDKTreeEqualBase": true,
+  "xcodeProjectEqualBase": true,
+  "miniappsUnitProjectSources": [],
+  "nativeCompilation": "NOT_RUN"
+}

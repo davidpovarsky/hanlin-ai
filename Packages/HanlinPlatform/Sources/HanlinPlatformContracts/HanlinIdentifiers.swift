@@ -152,6 +152,8 @@ public struct HanlinRouteID: HanlinStringIdentifier {
     }
 }
 
+/// Action identifiers preserve the case of prepared JavaScript export names.
+/// Other canonical identifiers retain their lowercase-only contract.
 public struct HanlinActionID: HanlinStringIdentifier {
     public static let identifierKind = "action"
     public let rawValue: String

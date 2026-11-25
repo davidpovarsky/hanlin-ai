@@ -180,6 +180,7 @@
       "type": "object"
     },
     "actionIdentifier": {
+      "description": "Case-sensitive action identity, including prepared JavaScript export names.",
       "maxLength": 255,
       "pattern": "^[A-Za-z0-9]+(?:[._-][A-Za-z0-9]+)*(?![\\s\\S])",
       "type": "string"

@@ -45,8 +45,6 @@ public struct HanlinAnimatedDisclosure<Content: View>: View {
         ChatDisclosureLayout(progress: progress, spacing: spacing) {
             if mounted {
                 VStack(alignment: .leading, spacing: 6, content: content)
-                    .accessibilityElement(children: .contain)
-                    .accessibilityHidden(!isExpanded)
                     .transition(.identity)
             }
         }
@@ -54,7 +52,11 @@ public struct HanlinAnimatedDisclosure<Content: View>: View {
         .clipped()
         .contentShape(Rectangle())
         .allowsHitTesting(isExpanded)
-        .accessibilityHidden(!isExpanded)
+        // The layout owns the whole retained branch, including native-backed
+        // descendants. Suppress its children at that boundary when collapsed.
+        // An expanded parent must not override a nested disclosure's hidden state.
+        .accessibilityElement(children: isExpanded ? .contain : .ignore)
+        .accessibilityHidden(true, isEnabled: !isExpanded)
         .onAppear { settle() }
         .onChange(of: isExpanded) { _, _ in transition() }
         .onChange(of: motion.isAnimated) { _, animated in

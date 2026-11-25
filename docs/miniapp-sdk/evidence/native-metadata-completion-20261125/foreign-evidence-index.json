@@ -1,0 +1,68 @@
+{
+  "logs": {
+    "build/primary-control/focused-diagnostics-attempt10/paired-prefix/mini-build.log": {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt10/paired-prefix/mini-build.log",
+      "bytes": 451667,
+      "sha256": "c105609469b3c4ee0f1af342a60ef4554d8fd163904c20ed2a0919db0cafe8d6",
+      "markers": [
+        "PhaseScriptExecution Generate\\ NativeScript\\ metadata /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/HanlinMiniApps.build/Script-F989CF55282FA3F9E392899B.sh (in target 'HanlinMiniApps' from project 'AI_HLY')",
+        "Hanlin metadata required strings present; actual JS visibility remains an execution gate.",
+        "** TEST BUILD SUCCEEDED **"
+      ]
+    },
+    "build/primary-control/focused-diagnostics-attempt10/paired-prefix/ai-build.log": {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt10/paired-prefix/ai-build.log",
+      "bytes": 1153987,
+      "sha256": "cd722d49bb3e2867180a038184e64b36f4dd535f181a8c74500e0d94c34b61f2",
+      "markers": [
+        "PhaseScriptExecution Generate\\ NativeScript\\ metadata /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/HanlinApp.build/Script-A10000000000000000000051.sh (in target 'HanlinApp' from project 'AI_HLY')",
+        "Hanlin metadata required strings present; actual JS visibility remains an execution gate.",
+        "** TEST BUILD SUCCEEDED **"
+      ]
+    }
+  },
+  "actualNativeInputs": {
+    "RuntimeDependencies.lock.json": "6cdbc18a474febbfc912b35ecbf5b0b55438a6a3e6daf2c33a43792cd04bd50a",
+    "Scripts/Expo/babel.config.cjs": "62581fd5caf7b97cb36290093b7bbf7103e1c1b1300e0e11a1b3eaaf96c998ba",
+    "Scripts/Expo/build-original-expo-source.mjs": "855a9a79f1c27a2ba2f3796cf784ebb66a4a48df928b2ea8f6ca1ffd9e886c03",
+    "Scripts/Expo/build-original-widget-runtime.mjs": "5928bb12ed2fd2f6b2ecfeb6d8fc309d46e5837c58dcc4272d73af13434eb549",
+    "Scripts/Expo/dependency-lock.json": "b9e3ad6d863e3e5136ad93924ce4edcb37da87578b113523640110af347eec65",
+    "Scripts/Expo/package-lock.json": "c08757cf46ac4d5c86a873f676af4a3be585db64ae2e1aa1e8288277d4eb63b8",
+    "Scripts/Expo/prepare-ios-dependencies.mjs": "97069b0e1ec619d906f4b6d196e38e6527790c3661f798abcca6258dacf18163",
+    "Scripts/ExpoNativeAPI/dependency-lock.json": "08657d657c1f4efa36149075b632cfc75685fc1ca9af0397fc1168fe9253b768",
+    "Scripts/ExpoNativeAPI/multiscene-patch.mjs": "cafa8348a764155789169c411eb59555c6c7a2d3ef363b870e36f8d6b52c7cbd",
+    "Scripts/ExpoNativeAPI/prepare-ios-dependencies.mjs": "950a2eb6e8713bdd1a395eee6df1779d91f63864af95c33658efa6d090676f66",
+    "Scripts/NativeScript/build-metadata-tool.py": "f4318f38b1c6a9c56ba54edb0d270a6374178fa5a8e024ebfddb9790f7ae3cf5",
+    "Scripts/NativeScript/build-step-metadata-generator-wrapper.py": "71bf1d521abff7cc29c1e8d397a9ef2a55b09f758afb36f0a148be12350b664f",
+    "Scripts/NativeScript/dependency-lock.json": "8499976a4ea0a069ed654b09b597d8fabede4bbbfb62227451a68707b851e8e5",
+    "Scripts/NativeScript/package-lock.json": "16f569f4bfa6f8806cfe72449866a0dc9a9331f33d2c67170d5292455c48b60b",
+    "Scripts/NativeScript/prepare-ios-dependencies.mjs": "b5114a3be1fc846e288128af08cef9f38b0cac8e34923780325c4edc2976ebd9",
+    "Scripts/Runtime/prepare-runtime-core.sh": "1ff99fabcbf8f40d515f3f1b944299286c1094a19520f9892a97f99cf8b64540"
+  },
+  "retainedFiles": {
+    "original-native15-catalog-d13aed21.json": {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/prepared-native/native-artifacts.json",
+      "sha256": "d13aed210768d84475c28201a973e3d59645c3e27f69e7069a30fb9b685e91dc"
+    },
+    "installed-metadata-binding.json": {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt10/installed-metadata-binding.json",
+      "sha256": "d58a79c7815fc9e7a14ae0c9d11bea492b1d08449aab761f2ee5ea6fd0c98234"
+    },
+    "baseline-metadata-binding.json": {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/metadata-collector-baseline-attempt10.json",
+      "sha256": "2d08b133b8d44bd32ea172b0e73a0be7b571d462c72b23f33c4ae61e5c4546d1"
+    },
+    "original-visibility.json": {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/acceptance/nativescript-metadata/iphonesimulator-arm64/visibility.json",
+      "sha256": "81af2ed415f915cc82f72739333daa2a9a1489fe6fe008e97f5ee524e7faca50"
+    },
+    "original-six-summary.json": {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt9/paired-prefix/FocusedOriginal-summary.json",
+      "sha256": "f9061fe38021648d490b42a14913541a97e7ca3a995ca3ceec2c4fedbf9a1a37"
+    },
+    "original-six-nodes.json": {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt9/paired-prefix/FocusedOriginal-nodes.json",
+      "sha256": "f21fa1bb82078d8007131b14259bc9dde92df7db079d6a316eaf82cae0590c12"
+    }
+  }
+}
