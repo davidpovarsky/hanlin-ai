@@ -1,0 +1,18 @@
+Monitoring boot status for HanlinPaired-local (E742FBCD-8FF0-4130-B143-7F8328637138).
+[2026-11-25 12:22:29 +0000] Status=2, isTerminal=NO, Elapsed=00:03.
+	Waiting on Data Migration
+		Reason:(null)
+		Migration Elapsed:00:00 seconds
+
+[2026-11-25 12:22:29 +0000] Status=4, isTerminal=NO, Elapsed=00:03.
+	Waiting on System App
+
+[2026-11-25 12:22:30 +0000] Status=4, isTerminal=NO, Elapsed=00:04.
+	Waiting on System App
+
+[2026-11-25 12:22:33 +0000] Status=4, isTerminal=NO, Elapsed=00:07.
+	Waiting on System App
+
+[2026-11-25 12:22:35 +0000] Status=4294967295, isTerminal=YES, Elapsed=00:09.
+	Finished
+

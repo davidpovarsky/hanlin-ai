@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "status": "PREFLIGHT_REJECTED_NOT_RUN",
+  "chargedSeconds": 0,
+  "source": "6c006c948f0a6f371f7fc68b90e393f43734f8dd",
+  "nativeOutputCreated": false,
+  "reason": "Historical numeric PID comparison rejected a live PID without retaining its identity; follow-up observed none. Controller identity guard corrected separately; no process was stopped.",
+  "members": [
+    {
+      "path": "focused19-v4-decision.json",
+      "bytes": 68394,
+      "sha256": "e8ada819b562484a9834662c33d2452d77c49eeb314f66e29469ae582c24a603"
+    },
+    {
+      "path": "focused19-v4-launch.json",
+      "bytes": 2292,
+      "sha256": "a210df388b4cce520c7975b9ca090f89f3a64a787c3ea6ddf7de20cbd796f749"
+    },
+    {
+      "path": "focused19-v4-launch.log",
+      "bytes": 572,
+      "sha256": "5cb15346a4bbafd69c0385dfe77356ab8dc03cc717b5ab5b1ee314d0de90d292"
+    }
+  ]
+}
