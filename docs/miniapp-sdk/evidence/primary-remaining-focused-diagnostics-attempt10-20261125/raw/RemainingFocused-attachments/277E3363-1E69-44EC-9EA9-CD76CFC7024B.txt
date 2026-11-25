@@ -1,0 +1,349 @@
+Attributes: Application, 0x114d86800, pid: 60442, label: 'Hanlin MiniApps'
+Element subtree:
+ →Application, 0x114d86800, pid: 60442, label: 'Hanlin MiniApps'
+    Window (Main), 0x114d86940, {{0.0, 0.0}, {1032.0, 1376.0}}
+      Other, 0x114d86a80, {{0.0, 0.0}, {1032.0, 1376.0}}
+        Other, 0x114d86bc0, {{0.0, 0.0}, {1032.0, 1376.0}}
+          Other, 0x114d86d00, {{0.0, 0.0}, {1032.0, 1376.0}}
+            Other, 0x114d86e40, {{0.0, 0.0}, {1032.0, 1376.0}}
+              Other, 0x114d86f80, {{0.0, 0.0}, {1032.0, 1376.0}}
+                NavigationBar, 0x114d870c0, {{0.0, 32.0}, {1032.0, 106.0}}, identifier: 'Apps'
+                  Other, 0x114d87200, {{14.0, 36.0}, {43.5, 36.0}}
+                    Other, 0x114d87340, {{14.0, 36.0}, {43.5, 36.0}}
+                      Button, 0x114d87480, {{14.0, 36.0}, {43.5, 36.0}}, label: 'Edit'
+                  Button, 0x114d875c0, {{73.5, 36.0}, {40.0, 36.0}}, identifier: 'hanlin-apps-torah-capture', label: 'לימוד מצילום'
+                  Button, 0x114d87700, {{618.5, 36.0}, {37.0, 36.0}}, identifier: 'hanlin-apps-add', label: 'hanlin-apps-add'
+                  Other, 0x114d87840, {{671.5, 36.0}, {41.0, 36.0}}
+                    Other, 0x114d87980, {{671.5, 36.0}, {41.0, 36.0}}
+                      Button, 0x114d87ac0, {{671.5, 36.0}, {41.0, 36.0}}, identifier: 'miniapps-preferences', label: 'Edit MiniApps and windows'
+                  Button, 0x114d87c00, {{728.5, 36.0}, {37.5, 36.0}}, identifier: 'hanlin-miniapps-transfer', label: 'Transfer from Hanlin'
+                  SearchField, 0x114d87d40, {{782.0, 32.0}, {240.0, 44.0}}, label: 'Search Apps', placeholderValue: 'Search Apps'
+                    Image, 0x114d87e80, {{794.0, 43.5}, {20.5, 20.0}}, identifier: 'magnifyingglass', label: 'Search'
+                  StaticText, 0x113609cc0, {{20.0, 89.5}, {83.0, 41.0}}, label: 'Apps'
+                Other, 0x113609e00, {{0.0, 0.0}, {1032.0, 1376.0}}
+                  Other, 0x113609f40, {{0.0, 0.0}, {1032.0, 1376.0}}
+                    Other, 0x113609a40, {{0.0, 0.0}, {1032.0, 1376.0}}
+                      Other, 0x113609b80, {{0.0, 0.0}, {1032.0, 1376.0}}
+                        ScrollView, 0x113609680, {{0.0, 0.0}, {1032.0, 1376.0}}, identifier: 'hanlin-apps-catalog'
+                          Other, 0x1136097c0, {{0.0, 0.0}, {1032.0, 1376.0}}
+                            Other, 0x113609900, {{0.0, 0.0}, {1032.0, 126.0}}
+                          Other, 0x113609400, {{0.0, 0.0}, {1032.0, 1376.0}}
+                          Other, 0x113609540, {{0.0, 138.0}, {1032.0, 760.0}}
+                            Other, 0x113609180, {{23.5, 156.0}, {985.0, 724.0}}
+                              StaticText, 0x1136092c0, {{24.0, 156.0}, {54.0, 26.5}}, identifier: 'hanlin-miniapps-section-swift', label: 'Swift'
+                              Other, 0x113609040, {{23.5, 210.0}, {985.0, 169.0}}
+                                Button, 0x113608500, {{23.5, 210.0}, {232.0, 169.0}}, identifier: 'hanlin-package-card-Swift Parity', label: 'Swift Parity'
+                                  Image, 0x1136088c0, {{204.0, 231.0}, {30.5, 27.0}}, identifier: 'swift', label: 'Swift Programming Language Bird Logo'
+                                  StaticText, 0x113608a00, {{42.0, 318.0}, {105.5, 24.0}}, label: 'Swift Parity'
+                                  StaticText, 0x113608b40, {{42.0, 346.0}, {139.0, 14.5}}, label: 'Native SwiftPM Mini App'
+                                Button, 0x113608c80, {{36.0, 222.5}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-hanlin.demo.swift-parity', label: 'App Actions'
+                                  Button, 0x113608f00, {{36.0, 222.5}, {38.0, 38.0}}
+                                    Image, 0x113608dc0, {{47.0, 239.5}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                                Button, 0x113608640, {{274.5, 210.0}, {232.0, 169.0}}, identifier: 'hanlin-package-card-Sefaria', label: 'Sefaria'
+                                  Image, 0x113608780, {{451.0, 231.0}, {34.0, 30.0}}, identifier: 'books.vertical.fill', label: 'Bookshelf'
+                                  StaticText, 0x1136083c0, {{293.0, 302.0}, {64.5, 24.0}}, label: 'Sefaria'
+                                  StaticText, 0x113608000, {{293.0, 330.0}, {132.0, 30.5}}, label: 'Search, read, save and revisit sources'
+                                Button, 0x113608280, {{287.0, 222.5}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-nativeapp.sefaria', label: 'App Actions'
+                                  Button, 0x113608140, {{287.0, 222.5}, {38.0, 38.0}}
+                                    Image, 0x113585900, {{298.0, 239.5}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                                Button, 0x113585a40, {{525.5, 210.0}, {232.0, 169.0}}, identifier: 'hanlin-package-card-Text Studio', label: 'Text Studio'
+                                  Image, 0x113584f00, {{702.5, 231.0}, {33.0, 20.5}}, identifier: 'textformat.alt', label: 'Text Formatting'
+                                  StaticText, 0x113585040, {{544.0, 302.0}, {103.0, 24.0}}, label: 'Text Studio'
+                                  StaticText, 0x113584dc0, {{544.0, 330.0}, {168.5, 30.5}}, label: 'Write, inspect, transform and keep history'
+                                Button, 0x113584280, {{538.0, 222.5}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-nativeapp.textstudio', label: 'App Actions'
+                                  Button, 0x1135843c0, {{538.0, 222.5}, {38.0, 38.0}}
+                                    Image, 0x113584500, {{549.0, 239.5}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                                Button, 0x113584640, {{776.5, 210.0}, {232.0, 169.0}}, identifier: 'hanlin-package-card-Wikipedia', label: 'Wikipedia'
+                                  Image, 0x113584780, {{960.0, 231.0}, {27.5, 27.5}}, identifier: 'globe.americas.fill', label: 'Globe Showing The Americas, Filled'
+                                  StaticText, 0x113585180, {{795.0, 302.0}, {90.5, 24.0}}, label: 'Wikipedia'
+                                  StaticText, 0x113584a00, {{795.0, 330.0}, {103.0, 30.5}}, label: 'Explore, save and revisit knowledge'
+                                Button, 0x113584c80, {{789.0, 222.5}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-nativeapp.wikipedia', label: 'App Actions'
+                                  Button, 0x113584b40, {{789.0, 222.5}, {38.0, 38.0}}
+                                    Image, 0x1135852c0, {{800.0, 239.5}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                              StaticText, 0x113585400, {{24.0, 406.5}, {127.5, 26.5}}, identifier: 'hanlin-miniapps-section-nativeScript', label: 'NativeScript'
+                              Other, 0x1135848c0, {{23.5, 460.5}, {232.0, 169.0}}
+                                Button, 0x113585680, {{23.5, 460.5}, {232.0, 169.0}}, identifier: 'hanlin-package-card-HanlinScript Parity', label: 'HanlinScript Parity'
+                                  StaticText, 0x1135857c0, {{49.0, 483.0}, {29.5, 13.5}}, label: 'BETA'
+                                  Image, 0x113586080, {{202.0, 481.5}, {31.5, 25.0}}, identifier: 'terminal.fill', label: 'Terminal Command Prompt, Filled'
+                                  StaticText, 0x113585540, {{42.0, 552.5}, {171.0, 24.0}}, label: 'HanlinScript Parity'
+                                  StaticText, 0x113585e00, {{42.0, 580.5}, {194.5, 30.5}}, label: 'Real HanlinScript parity MiniApp with deterministic Node, Python, JavaScript, and HTTPS execution.'
+                                Button, 0x113585f40, {{36.0, 473.0}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-hanlin.demo.script-parity', label: 'App Actions'
+                                  Button, 0x113586d00, {{36.0, 473.0}, {38.0, 38.0}}
+                                    Image, 0x1135866c0, {{47.0, 490.0}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                              StaticText, 0x113585b80, {{24.0, 657.0}, {51.0, 26.5}}, identifier: 'hanlin-miniapps-section-expo', label: 'Expo'
+                              Other, 0x113585cc0, {{23.5, 711.0}, {232.0, 169.0}}
+                                Button, 0x1135861c0, {{23.5, 711.0}, {232.0, 169.0}}, identifier: 'hanlin-package-card-חיפוש טקסטים מודולרי — Expo', label: 'חיפוש טקסטים מודולרי — Expo'
+                                  Image, 0x113586580, {{207.5, 732.0}, {26.5, 26.5}}, identifier: 'magnifyingglass', label: 'Search'
+                                  StaticText, 0x113586440, {{42.0, 803.0}, {195.0, 24.0}}, label: 'חיפוש טקסטים מודולרי — Expo'
+                                  StaticText, 0x113586300, {{42.0, 831.0}, {194.5, 30.5}}, label: 'Original native Expo search app, Share, interactive native Shortcuts snippets and editable Translation UI with original ScriptWidget services.'
+                                Button, 0x113586bc0, {{36.0, 723.5}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-script-470d111992ef6fd2dfdc24b6', label: 'App Actions'
+                                  Button, 0x113586800, {{36.0, 723.5}, {38.0, 38.0}}
+                                    Image, 0x113586940, {{47.0, 740.5}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                          Other, 0x113586a80, {{999.0, 86.0}, {30.0, 1260.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                            Other, 0x113584140, {{1026.0, 547.0}, {3.0, 796.0}}
+                          Other, 0x113584000, {{999.0, 86.0}, {30.0, 1260.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                            Other, 0x109883980, {{1026.0, 547.0}, {3.0, 796.0}}
+                Toolbar, 0x109883ac0, {{0.0, 0.0}, {1032.0, 1376.0}}, identifier: 'Toolbar', label: 'Toolbar'
+                  Other, 0x109883c00, {{0.0, 0.0}, {1032.0, 1376.0}}
+      Other, 0x109883840, {{0.0, 0.0}, {1032.0, 1376.0}}
+        Other, 0x109881e00, {{0.0, 0.0}, {1032.0, 1376.0}}
+          Other, 0x109883e80, {{0.0, 0.0}, {1032.0, 1376.0}}
+            Other, 0x109882300, {{0.0, 0.0}, {1032.0, 1376.0}}
+              NavigationBar, 0x1098821c0, {{0.0, 32.0}, {1032.0, 106.0}}, identifier: 'בראשית א׳:א׳'
+                Button, 0x109881680, {{10.0, 32.0}, {44.0, 44.0}}, identifier: 'BackButton', label: 'Text Search'
+                StaticText, 0x109881180, {{20.0, 89.5}, {205.0, 41.0}}, label: 'בראשית א׳:א׳'
+              Other, 0x1098817c0, {{0.0, 0.0}, {1032.0, 1376.0}}
+                Other, 0x109883340, {{0.0, 0.0}, {1032.0, 1376.0}}
+                  Other, 0x1135f0dc0, {{0.0, 0.0}, {1032.0, 1376.0}}
+                    Other, 0x1135f2580, {{0.0, 0.0}, {1032.0, 1376.0}}
+                      CollectionView, 0x1135f26c0, {{0.0, 0.0}, {1032.0, 1376.0}}
+                        Other, 0x1135f2800, {{-20.0, -2614.0}, {1072.0, 3174.0}}
+                        Other, 0x1135f2080, {{0.0, 0.0}, {1032.0, 1376.0}}
+                          Other, 0x1135f2440, {{0.0, 0.0}, {1032.0, 126.0}}
+                        Other, 0x1135f2300, {{0.0, 0.0}, {1032.0, 1376.0}}
+                        Cell, 0x1135f21c0, {{20.0, 138.0}, {992.0, 40.5}}
+                          Other, 0x1135f1cc0, {{20.0, 138.0}, {992.0, 40.5}}
+                          Other, 0x1135f1e00, {{20.0, 138.0}, {992.0, 40.5}}
+                            Other, 0x1135f1f40, {{20.0, 138.0}, {992.0, 40.5}}
+                              Other, 0x1135f17c0, {{20.0, 138.0}, {992.0, 40.5}}
+                                StaticText, 0x1135f1b80, {{20.0, 138.0}, {992.0, 40.5}}, label: 'Source'
+                        Cell, 0x1135f1a40, {{20.0, 178.5}, {992.0, 52.0}}
+                          Other, 0x1135f1900, {{20.0, 178.5}, {992.0, 52.0}}
+                            Other, 0x1135f1400, {{20.0, 178.5}, {992.0, 52.0}}
+                          Other, 0x1135f1540, {{20.0, 178.5}, {992.0, 52.0}}
+                            Other, 0x1135f1680, {{20.0, 178.5}, {992.0, 52.0}}
+                              Other, 0x1135f0f00, {{20.0, 178.5}, {992.0, 52.0}}
+                                StaticText, 0x1135f12c0, {{20.0, 178.5}, {992.0, 52.0}}, label: 'In the beginning God created the heaven and the earth.'
+                        Cell, 0x1135f1180, {{20.0, 230.5}, {992.0, 52.0}}
+                          Other, 0x1135f1040, {{20.0, 230.5}, {992.0, 52.0}}
+                            Other, 0x1135f2940, {{20.0, 230.5}, {992.0, 52.0}}
+                          Other, 0x1130b1e00, {{20.0, 230.5}, {992.0, 52.0}}
+                            Other, 0x1130b1f40, {{20.0, 230.5}, {992.0, 52.0}}
+                              Other, 0x1130b2080, {{20.0, 230.5}, {992.0, 52.0}}
+                                StaticText, 0x1130b21c0, {{20.0, 230.5}, {992.0, 52.0}}, label: 'Reference, Genesis 1:1'
+                                StaticText, 0x1130b2300, {{40.0, 246.2}, {77.5, 20.5}}, label: 'Reference'
+                        Other, 0x1130b2800, {{40.0, 229.5}, {952.0, 1.0}}
+                        Cell, 0x1130b2940, {{20.0, 282.5}, {992.0, 52.0}}
+                          Other, 0x1130b26c0, {{20.0, 282.5}, {992.0, 52.0}}
+                            Other, 0x1130b2440, {{20.0, 282.5}, {992.0, 52.0}}
+                          Other, 0x1130b2580, {{20.0, 282.5}, {992.0, 52.0}}
+                            Other, 0x1130b1b80, {{20.0, 282.5}, {992.0, 52.0}}
+                              Other, 0x1131ad540, {{20.0, 282.5}, {992.0, 52.0}}
+                                StaticText, 0x1131ad680, {{20.0, 282.5}, {992.0, 52.0}}, label: 'Sources, Tanakh/Torah/Genesis'
+                                StaticText, 0x1131ad400, {{40.0, 298.2}, {62.5, 20.5}}, label: 'Sources'
+                        Other, 0x1131ad040, {{40.0, 281.5}, {952.0, 1.0}}
+                        Cell, 0x1131ad180, {{20.0, 334.5}, {992.0, 52.0}}
+                          Other, 0x1131ac640, {{20.0, 334.5}, {992.0, 52.0}}
+                            Other, 0x1131acc80, {{20.0, 334.5}, {992.0, 52.0}}
+                          Other, 0x1131acdc0, {{20.0, 334.5}, {992.0, 52.0}}
+                            Other, 0x1131ac000, {{20.0, 334.5}, {992.0, 52.0}}
+                              Other, 0x1131ae440, {{20.0, 334.5}, {992.0, 52.0}}
+                                StaticText, 0x1131ac3c0, {{20.0, 334.5}, {992.0, 52.0}}, label: 'Primary version, The Holy Scriptures: A New Translation (JPS 1917)'
+                                StaticText, 0x1131ac500, {{40.0, 350.2}, {118.0, 20.5}}, label: 'Primary version'
+                        Other, 0x1131ac140, {{40.0, 333.5}, {952.0, 1.0}}
+                        Cell, 0x1131ac280, {{20.0, 386.5}, {992.0, 52.0}}
+                          Other, 0x1131ac8c0, {{20.0, 386.5}, {992.0, 52.0}}
+                            Other, 0x1131aca00, {{20.0, 386.5}, {992.0, 52.0}}
+                          Other, 0x1131acf00, {{20.0, 386.5}, {992.0, 52.0}}
+                            Other, 0x1131ac780, {{20.0, 386.5}, {992.0, 52.0}}
+                              Other, 0x1131acb40, {{20.0, 386.5}, {992.0, 52.0}}
+                                StaticText, 0x1131ad2c0, {{20.0, 386.5}, {992.0, 52.0}}, label: 'Score, 3085598500.00'
+                                StaticText, 0x1131a4000, {{40.0, 402.2}, {44.5, 20.5}}, label: 'Score'
+                        Other, 0x1131a4140, {{40.0, 385.5}, {952.0, 1.0}}
+                        Cell, 0x1131a4280, {{20.0, 438.5}, {992.0, 52.0}}
+                          Other, 0x1131a43c0, {{20.0, 438.5}, {992.0, 52.0}}
+                            Other, 0x1131a4500, {{20.0, 438.5}, {992.0, 52.0}}
+                          Other, 0x1131a4640, {{20.0, 438.5}, {992.0, 52.0}}
+                            Other, 0x1131a4780, {{20.0, 438.5}, {992.0, 52.0}}
+                              Other, 0x1131a48c0, {{20.0, 438.5}, {992.0, 52.0}}
+                                StaticText, 0x1131a4a00, {{20.0, 438.5}, {992.0, 52.0}}, label: 'Date, -1400'
+                                StaticText, 0x1131a4b40, {{40.0, 454.2}, {36.0, 20.5}}, label: 'Date'
+                        Other, 0x1131a4c80, {{40.0, 437.5}, {952.0, 1.0}}
+                        Cell, 0x1131a4dc0, {{20.0, 490.5}, {992.0, 52.0}}
+                          Other, 0x1131a4f00, {{20.0, 490.5}, {992.0, 52.0}}
+                            Other, 0x1131a5040, {{20.0, 490.5}, {992.0, 52.0}}
+                          Other, 0x1131a5180, {{20.0, 490.5}, {992.0, 52.0}}
+                            Other, 0x1131a52c0, {{20.0, 490.5}, {992.0, 52.0}}
+                              Other, 0x1131a5400, {{20.0, 490.5}, {992.0, 52.0}}
+                                Link, 0x1131a5540, {{20.0, 490.5}, {992.0, 52.0}}, label: 'Open in Sefaria'
+                        Other, 0x1131a5680, {{40.0, 489.5}, {952.0, 1.0}}
+                        Other, 0x1131a57c0, {{-20.0, 560.0}, {1072.0, 3644.5}}
+                        Cell, 0x1131a5900, {{20.0, 560.0}, {992.0, 40.5}}
+                          Other, 0x1131a5a40, {{20.0, 560.0}, {992.0, 40.5}}
+                          Other, 0x1131a5b80, {{20.0, 560.0}, {992.0, 40.5}}
+                            Other, 0x1131a5cc0, {{20.0, 560.0}, {992.0, 40.5}}
+                              Other, 0x1131a5e00, {{20.0, 560.0}, {992.0, 40.5}}
+                                StaticText, 0x1131a5f40, {{20.0, 560.0}, {992.0, 40.5}}, label: 'Full text'
+                        Cell, 0x1131a6080, {{20.0, 600.5}, {992.0, 52.0}}
+                          Other, 0x1131a61c0, {{20.0, 600.5}, {992.0, 52.0}}
+                            Other, 0x1131a6300, {{20.0, 600.5}, {992.0, 52.0}}
+                          Other, 0x1131a6440, {{20.0, 600.5}, {992.0, 52.0}}
+                            Other, 0x1131a6580, {{20.0, 600.5}, {992.0, 52.0}}
+                              Other, 0x1131a66c0, {{20.0, 600.5}, {992.0, 52.0}}
+                                Button, 0x1131a6800, {{20.0, 600.5}, {992.0, 52.0}}, label: 'The Holy Scriptures: A New Translation (JPS 1917)'
+                                  StaticText, 0x1131a6940, {{40.0, 616.2}, {382.0, 20.5}}, label: 'The Holy Scriptures: A New Translation (JPS 1917)'
+                                  Button, 0x1131a6a80, {{981.5, 619.5}, {10.5, 14.0}}
+                                    Image, 0x1131a6bc0, {{981.5, 619.5}, {10.5, 14.0}}, identifier: 'expanded'
+                        Cell, 0x1131a6d00, {{20.0, 652.5}, {992.0, 52.0}}
+                          Other, 0x1131a6e40, {{20.0, 652.5}, {992.0, 52.0}}
+                            Other, 0x1131a6f80, {{20.0, 652.5}, {992.0, 52.0}}
+                          Other, 0x1131a70c0, {{20.0, 652.5}, {992.0, 52.0}}
+                            Other, 0x1131a7200, {{20.0, 652.5}, {992.0, 52.0}}
+                              Other, 0x1131a7340, {{20.0, 652.5}, {992.0, 52.0}}
+                                Button, 0x1131a7480, {{20.0, 652.5}, {992.0, 52.0}}, label: 'Full text'
+                                  Image, 0x1131a75c0, {{61.5, 665.5}, {20.5, 26.5}}, identifier: 'book.pages', label: 'Book With Visible Pages'
+                                  StaticText, 0x1131a7700, {{61.5, 665.5}, {98.5, 26.5}}, label: 'Full text'
+                        Other, 0x1131a7840, {{40.0, 651.5}, {952.0, 1.0}}
+                        Cell, 0x1131a7980, {{20.0, 704.5}, {992.0, 52.0}}
+                          Other, 0x1131a7ac0, {{20.0, 704.5}, {992.0, 52.0}}
+                            Other, 0x1131a7c00, {{20.0, 704.5}, {992.0, 52.0}}
+                          Other, 0x1131a7d40, {{20.0, 704.5}, {992.0, 52.0}}
+                            Other, 0x1131a7e80, {{20.0, 704.5}, {992.0, 52.0}}
+                              Other, 0x1135f4000, {{20.0, 704.5}, {992.0, 52.0}}
+                                Button, 0x1135f4140, {{20.0, 704.5}, {992.0, 52.0}}, label: 'The Koren Jerusalem Bible'
+                                  StaticText, 0x1135f4280, {{40.0, 720.2}, {203.0, 20.5}}, label: 'The Koren Jerusalem Bible'
+                                  Button, 0x1135f43c0, {{981.5, 723.5}, {10.5, 14.0}}
+                                    Image, 0x1135f4500, {{981.5, 723.5}, {10.5, 14.0}}, identifier: 'expanded'
+                        Other, 0x1135f4640, {{100.0, 703.5}, {892.0, 1.0}}
+                        Cell, 0x1135f4780, {{20.0, 756.5}, {992.0, 52.0}}
+                          Other, 0x1135f48c0, {{20.0, 756.5}, {992.0, 52.0}}
+                            Other, 0x1135f4a00, {{20.0, 756.5}, {992.0, 52.0}}
+                          Other, 0x1135f4b40, {{20.0, 756.5}, {992.0, 52.0}}
+                            Other, 0x1135f4c80, {{20.0, 756.5}, {992.0, 52.0}}
+                              Other, 0x1135f4dc0, {{20.0, 756.5}, {992.0, 52.0}}
+                                Button, 0x1135f4f00, {{20.0, 756.5}, {992.0, 52.0}}, label: 'Full text'
+                                  Image, 0x1135f5040, {{61.5, 769.5}, {20.5, 26.5}}, identifier: 'book.pages', label: 'Book With Visible Pages'
+                                  StaticText, 0x1135f5180, {{61.5, 769.5}, {98.5, 26.5}}, label: 'Full text'
+                        Other, 0x1135f52c0, {{40.0, 755.5}, {952.0, 1.0}}
+                        Cell, 0x1135f5400, {{20.0, 808.5}, {992.0, 52.0}}
+                          Other, 0x1135f5540, {{20.0, 808.5}, {992.0, 52.0}}
+                            Other, 0x1135f5680, {{20.0, 808.5}, {992.0, 52.0}}
+                          Other, 0x1135f57c0, {{20.0, 808.5}, {992.0, 52.0}}
+                            Other, 0x1135f5900, {{20.0, 808.5}, {992.0, 52.0}}
+                              Other, 0x1135f5a40, {{20.0, 808.5}, {992.0, 52.0}}
+                                Button, 0x1135f5b80, {{20.0, 808.5}, {992.0, 52.0}}, label: 'Jewish English Torah'
+                                  StaticText, 0x1135f5cc0, {{40.0, 824.2}, {159.0, 20.5}}, label: 'Jewish English Torah'
+                                  Button, 0x1135f5e00, {{981.5, 827.5}, {10.5, 14.0}}
+                                    Image, 0x1135f5f40, {{981.5, 827.5}, {10.5, 14.0}}, identifier: 'expanded'
+                        Other, 0x1135f6080, {{100.0, 807.5}, {892.0, 1.0}}
+                        Cell, 0x1135f61c0, {{20.0, 860.5}, {992.0, 52.0}}
+                          Other, 0x1135f6300, {{20.0, 860.5}, {992.0, 52.0}}
+                            Other, 0x1135f6440, {{20.0, 860.5}, {992.0, 52.0}}
+                          Other, 0x1135f6580, {{20.0, 860.5}, {992.0, 52.0}}
+                            Other, 0x1135f66c0, {{20.0, 860.5}, {992.0, 52.0}}
+                              Other, 0x1135f6800, {{20.0, 860.5}, {992.0, 52.0}}
+                                Button, 0x1135f6940, {{20.0, 860.5}, {992.0, 52.0}}, label: 'Full text'
+                                  Image, 0x1135f6a80, {{61.5, 873.5}, {20.5, 26.5}}, identifier: 'book.pages', label: 'Book With Visible Pages'
+                                  StaticText, 0x1135f6bc0, {{61.5, 873.5}, {98.5, 26.5}}, label: 'Full text'
+                        Other, 0x1135f6d00, {{40.0, 859.5}, {952.0, 1.0}}
+                        Cell, 0x1135f6e40, {{20.0, 912.5}, {992.0, 52.0}}
+                          Other, 0x1135f6f80, {{20.0, 912.5}, {992.0, 52.0}}
+                            Other, 0x1135f70c0, {{20.0, 912.5}, {992.0, 52.0}}
+                          Other, 0x1135f7200, {{20.0, 912.5}, {992.0, 52.0}}
+                            Other, 0x1135f7340, {{20.0, 912.5}, {992.0, 52.0}}
+                              Other, 0x1135f7480, {{20.0, 912.5}, {992.0, 52.0}}
+                                Button, 0x1135f75c0, {{20.0, 912.5}, {992.0, 52.0}}, label: 'Modernized Tanakh - Based on JPS 1917, Edited by Adam Cohn'
+                                  StaticText, 0x1135f7700, {{40.0, 928.2}, {480.5, 20.5}}, label: 'Modernized Tanakh - Based on JPS 1917, Edited by Adam Cohn'
+                                  Button, 0x1135f7840, {{981.5, 931.5}, {10.5, 14.0}}
+                                    Image, 0x1135f7980, {{981.5, 931.5}, {10.5, 14.0}}, identifier: 'expanded'
+                        Other, 0x1135f7ac0, {{100.0, 911.5}, {892.0, 1.0}}
+                        Cell, 0x1135f7c00, {{20.0, 964.5}, {992.0, 52.0}}
+                          Other, 0x1135f7d40, {{20.0, 964.5}, {992.0, 52.0}}
+                            Other, 0x1135f7e80, {{20.0, 964.5}, {992.0, 52.0}}
+                          Other, 0x1135fc000, {{20.0, 964.5}, {992.0, 52.0}}
+                            Other, 0x1135fc140, {{20.0, 964.5}, {992.0, 52.0}}
+                              Other, 0x1135fc280, {{20.0, 964.5}, {992.0, 52.0}}
+                                Button, 0x1135fc3c0, {{20.0, 964.5}, {992.0, 52.0}}, label: 'Full text'
+                                  Image, 0x1135fc500, {{61.5, 977.5}, {20.5, 26.5}}, identifier: 'book.pages', label: 'Book With Visible Pages'
+                                  StaticText, 0x1135fc640, {{61.5, 977.5}, {98.5, 26.5}}, label: 'Full text'
+                        Other, 0x1135fc780, {{40.0, 963.5}, {952.0, 1.0}}
+                        Cell, 0x1135fc8c0, {{20.0, 1016.5}, {992.0, 52.0}}
+                          Other, 0x1135fca00, {{20.0, 1016.5}, {992.0, 52.0}}
+                            Other, 0x1135fcb40, {{20.0, 1016.5}, {992.0, 52.0}}
+                          Other, 0x1135fcc80, {{20.0, 1016.5}, {992.0, 52.0}}
+                            Other, 0x1135fcdc0, {{20.0, 1016.5}, {992.0, 52.0}}
+                              Other, 0x1135fcf00, {{20.0, 1016.5}, {992.0, 52.0}}
+                                Button, 0x1135fd040, {{20.0, 1016.5}, {992.0, 52.0}}, label: 'Tanakh: The Holy Scriptures, published by JPS'
+                                  StaticText, 0x1135fd180, {{40.0, 1032.2}, {354.0, 20.5}}, label: 'Tanakh: The Holy Scriptures, published by JPS'
+                                  Button, 0x1135fd2c0, {{981.5, 1035.5}, {10.5, 14.0}}
+                                    Image, 0x1135fd400, {{981.5, 1035.5}, {10.5, 14.0}}, identifier: 'expanded'
+                        Other, 0x1135fd540, {{100.0, 1015.5}, {892.0, 1.0}}
+                        Cell, 0x1135fd680, {{20.0, 1068.5}, {992.0, 52.0}}
+                          Other, 0x1135fd7c0, {{20.0, 1068.5}, {992.0, 52.0}}
+                            Other, 0x1135fd900, {{20.0, 1068.5}, {992.0, 52.0}}
+                          Other, 0x1135fda40, {{20.0, 1068.5}, {992.0, 52.0}}
+                            Other, 0x1135fdb80, {{20.0, 1068.5}, {992.0, 52.0}}
+                              Other, 0x1135fdcc0, {{20.0, 1068.5}, {992.0, 52.0}}
+                                Button, 0x1135fde00, {{20.0, 1068.5}, {992.0, 52.0}}, label: 'Full text'
+                                  Image, 0x1135fdf40, {{61.5, 1081.5}, {20.5, 26.5}}, identifier: 'book.pages', label: 'Book With Visible Pages'
+                                  StaticText, 0x1135fe080, {{61.5, 1081.5}, {98.5, 26.5}}, label: 'Full text'
+                        Other, 0x1135fe1c0, {{40.0, 1067.5}, {952.0, 1.0}}
+                        Cell, 0x1135fe300, {{20.0, 1120.5}, {992.0, 52.0}}
+                          Other, 0x1135fe440, {{20.0, 1120.5}, {992.0, 52.0}}
+                            Other, 0x1135fe580, {{20.0, 1120.5}, {992.0, 52.0}}
+                          Other, 0x1135fe6c0, {{20.0, 1120.5}, {992.0, 52.0}}
+                            Other, 0x1135fe800, {{20.0, 1120.5}, {992.0, 52.0}}
+                              Other, 0x1135fe940, {{20.0, 1120.5}, {992.0, 52.0}}
+                                Button, 0x1135fea80, {{20.0, 1120.5}, {992.0, 52.0}}, label: 'The Contemporary Torah, Jewish Publication Society, 2006'
+                                  StaticText, 0x1135febc0, {{40.0, 1136.2}, {450.0, 20.5}}, label: 'The Contemporary Torah, Jewish Publication Society, 2006'
+                                  Button, 0x1135fed00, {{981.5, 1139.5}, {10.5, 14.0}}
+                                    Image, 0x1135fee40, {{981.5, 1139.5}, {10.5, 14.0}}, identifier: 'expanded'
+                        Other, 0x1135fef80, {{100.0, 1119.5}, {892.0, 1.0}}
+                        Cell, 0x1135ff0c0, {{20.0, 1172.5}, {992.0, 52.0}}
+                          Other, 0x1135ff200, {{20.0, 1172.5}, {992.0, 52.0}}
+                            Other, 0x1135ff340, {{20.0, 1172.5}, {992.0, 52.0}}
+                          Other, 0x1135ff480, {{20.0, 1172.5}, {992.0, 52.0}}
+                            Other, 0x1135ff5c0, {{20.0, 1172.5}, {992.0, 52.0}}
+                              Other, 0x1135ff700, {{20.0, 1172.5}, {992.0, 52.0}}
+                                Button, 0x1135ff840, {{20.0, 1172.5}, {992.0, 52.0}}, label: 'Full text'
+                                  Image, 0x1135ff980, {{61.5, 1185.5}, {20.5, 26.5}}, identifier: 'book.pages', label: 'Book With Visible Pages'
+                                  StaticText, 0x1135ffac0, {{61.5, 1185.5}, {98.5, 26.5}}, label: 'Full text'
+                        Other, 0x1135ffc00, {{40.0, 1171.5}, {952.0, 1.0}}
+                        Cell, 0x1135ffd40, {{20.0, 1224.5}, {992.0, 52.0}}
+                          Other, 0x1135ffe80, {{20.0, 1224.5}, {992.0, 52.0}}
+                            Other, 0x114d90000, {{20.0, 1224.5}, {992.0, 52.0}}
+                          Other, 0x114d90140, {{20.0, 1224.5}, {992.0, 52.0}}
+                            Other, 0x114d90280, {{20.0, 1224.5}, {992.0, 52.0}}
+                              Other, 0x114d903c0, {{20.0, 1224.5}, {992.0, 52.0}}
+                                Button, 0x114d90500, {{20.0, 1224.5}, {992.0, 52.0}}, label: 'THE JPS TANAKH: Gender-Sensitive Edition'
+                                  StaticText, 0x114d90640, {{40.0, 1240.2}, {334.0, 20.5}}, label: 'THE JPS TANAKH: Gender-Sensitive Edition'
+                                  Button, 0x114d90780, {{981.5, 1243.5}, {10.5, 14.0}}
+                                    Image, 0x114d908c0, {{981.5, 1243.5}, {10.5, 14.0}}, identifier: 'expanded'
+                        Other, 0x114d90a00, {{100.0, 1223.5}, {892.0, 1.0}}
+                        Cell, 0x114d90b40, {{20.0, 1276.5}, {992.0, 52.0}}
+                          Other, 0x114d90c80, {{20.0, 1276.5}, {992.0, 52.0}}
+                            Other, 0x114d90dc0, {{20.0, 1276.5}, {992.0, 52.0}}
+                          Other, 0x114d90f00, {{20.0, 1276.5}, {992.0, 52.0}}
+                            Other, 0x114d91040, {{20.0, 1276.5}, {992.0, 52.0}}
+                              Other, 0x114d91180, {{20.0, 1276.5}, {992.0, 52.0}}
+                                Button, 0x114d912c0, {{20.0, 1276.5}, {992.0, 52.0}}, label: 'Full text'
+                                  Image, 0x114d91400, {{61.5, 1289.5}, {20.5, 26.5}}, identifier: 'book.pages', label: 'Book With Visible Pages'
+                                  StaticText, 0x114d91540, {{61.5, 1289.5}, {98.5, 26.5}}, label: 'Full text'
+                        Other, 0x114d91680, {{40.0, 1275.5}, {952.0, 1.0}}
+                        Cell, 0x114d917c0, {{20.0, 1328.5}, {992.0, 52.0}}
+                          Other, 0x114d91900, {{20.0, 1328.5}, {992.0, 52.0}}
+                            Other, 0x114d91a40, {{20.0, 1328.5}, {992.0, 52.0}}
+                          Other, 0x114d91b80, {{20.0, 1328.5}, {992.0, 52.0}}
+                            Other, 0x114d91cc0, {{20.0, 1328.5}, {992.0, 52.0}}
+                              Other, 0x114d91e00, {{20.0, 1328.5}, {992.0, 52.0}}
+                                Button, 0x114d91f40, {{20.0, 1328.5}, {992.0, 52.0}}, label: 'The Five Books of Moses, by Everett Fox. New York, Schocken Books, 1995'
+                                  StaticText, 0x114d92080, {{40.0, 1344.2}, {571.0, 20.5}}, label: 'The Five Books of Moses, by Everett Fox. New York, Schocken Books, 1995'
+                                  Button, 0x114d921c0, {{981.5, 1347.5}, {10.5, 14.0}}
+                                    Image, 0x114d92300, {{981.5, 1347.5}, {10.5, 14.0}}, identifier: 'expanded'
+                        Other, 0x114d92440, {{100.0, 1327.5}, {892.0, 1.0}}
+                        Other, 0x114d92580, {{999.0, 86.0}, {30.0, 1260.0}}, label: 'Vertical scroll bar, 2 pages', value: 0%
+                          Other, 0x114d926c0, {{1026.0, 1307.0}, {3.0, 40.5}}
+                        Other, 0x114d92800, {{999.0, 86.0}, {30.0, 1260.0}}, label: 'Vertical scroll bar, 2 pages', value: 0%
+                          Other, 0x114d92940, {{1026.0, 1307.0}, {3.0, 40.5}}
+              Toolbar, 0x114d92a80, {{0.0, 0.0}, {1032.0, 1376.0}}, identifier: 'Toolbar', label: 'Toolbar'
+                Other, 0x114d92bc0, {{0.0, 0.0}, {1032.0, 1376.0}}
+    Window, 0x114d92d00, {{0.0, 0.0}, {1032.0, 1376.0}}
+      Other, 0x114d92e40, {{0.0, 0.0}, {1032.0, 1376.0}}
+        Other, 0x114d92f80, {{0.0, 0.0}, {1032.0, 1376.0}}
+Path to element:
+ →Application, 0x114d86800, pid: 60442, label: 'Hanlin MiniApps'
+Query chain:
+ →Find: Target Application 'com.itorah.hanlinminiapps'
+  Output: {
+    Application, 0x114d930c0, pid: 60442, label: 'Hanlin MiniApps'
+  }

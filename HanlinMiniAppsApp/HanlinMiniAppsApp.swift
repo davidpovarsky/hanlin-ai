@@ -11,6 +11,7 @@ import HanlinMiniAppsBridge
 /// model or assistant credential adapter is configured in the MiniApps target.
 @main
 struct HanlinMiniAppsApplication: App {
+    @UIApplicationDelegateAdaptor(HanlinNotificationApplicationDelegate.self) private var notificationDelegate
     var body: some Scene {
         WindowGroup { HanlinMiniAppsWindow() }
         WindowGroup("MiniApp", id: "miniapp-invocation", for: UUID.self) { $requestID in
@@ -199,6 +200,7 @@ private struct HanlinMiniAppsReadyRoot: View {
         MiniAppsLibrary(provider: provider)
                 .task {
                     await AppRuntimeCore.shared.handleForegroundIfLaunched()
+                    await provider.platform.resumePendingInvocations(recoverDeliveredNotifications: true)
                 }
                 .fullScreenCover(isPresented: Binding(
                     get: { provider.platform.presentsForegroundAction },
@@ -208,7 +210,10 @@ private struct HanlinMiniAppsReadyRoot: View {
                 }
                 .onChange(of: scenePhase) { _, phase in
                     if phase == .active {
-                        Task { await AppRuntimeCore.shared.handleForegroundIfLaunched() }
+                        Task {
+                            await AppRuntimeCore.shared.handleForegroundIfLaunched()
+                            await provider.platform.resumePendingInvocations(recoverDeliveredNotifications: true)
+                        }
                     }
                 }
     }

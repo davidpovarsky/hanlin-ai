@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "kind": "NOTIFICATION_INGRESS_SOURCE_WITH_PORTABLE_TYPE_PROOF_NATIVE_PENDING",
+  "recordedAt": "2026-11-25T05:02:20.842913+00:00",
+  "baseCommit": "2aa24f1460f238d9b1a8e046bb0774c238306028",
+  "branch": "codex/hanlin-notification-ingress-20261125",
+  "sourceCount": 32,
+  "sourceBindings": "raw/source-bindings.json",
+  "members": [
+    {
+      "path": "README.md",
+      "bytes": 3145,
+      "sha256": "92af410c59b08fa2bf9dd16e3aedb436625b33c53578ea772b37ed5ba2010321"
+    },
+    {
+      "path": "raw/0-UNUserNotificationCenter.h",
+      "bytes": 8450,
+      "sha256": "7e79a7672061ab07511f71aa9cd5b7883dc83107cfabfb100d32d758bae3d281"
+    },
+    {
+      "path": "raw/1-UNNotificationResponse.h",
+      "bytes": 1463,
+      "sha256": "8144e989eac5165a0784495cf0353634e7d6c99e858f4c3dc3b5d948015d137e"
+    },
+    {
+      "path": "raw/2-UNNotification.h",
+      "bytes": 658,
+      "sha256": "352ed42e9da32bb6cc74ce359620eeb230274990e9abca68033e8560ec546eb9"
+    },
+    {
+      "path": "raw/apple-sdk-header-observation.json",
+      "bytes": 1789,
+      "sha256": "768ed0aef54fb3120aa96341a8f3b090675b626b2d0183dfd88fdae4a0b6a563"
+    },
+    {
+      "path": "raw/source-bindings.json",
+      "bytes": 10438,
+      "sha256": "d9492fa4d7948adfae00a65f1405fd9a238669c21bd66d2aa13fe1cafd680cd9"
+    },
+    {
+      "path": "raw/typescript-compiler.json",
+      "bytes": 371,
+      "sha256": "3f7f87f08dcf68cea065efe9d367d19ce19e820a099e6f454d8985d16251fb55"
+    },
+    {
+      "path": "raw/typescript-contract-run.json",
+      "bytes": 1107,
+      "sha256": "b9146a504e116a53901e3d54e9ee37a4674164936b8586c2a0e098fbff71ba93"
+    },
+    {
+      "path": "raw/typescript-contract.log",
+      "bytes": 214,
+      "sha256": "a73b4107feeddb5e701482b33cead920e6c7534ffde0ac9d23287b9432b79bd7"
+    },
+    {
+      "path": "raw/typescript-publication-bindings.json",
+      "bytes": 1227,
+      "sha256": "04dc22c5d6493924c6d98490915f387c3a8473940cc1869b396d32b8cd48c356"
+    }
+  ],
+  "actualVerification": {
+    "typescript": {
+      "status": "PASS",
+      "testFunctions": 1,
+      "validCases": 1,
+      "negativeCases": 5,
+      "exitCode": 0,
+      "durationSeconds": 2.8424918204545975,
+      "compilerVersion": "6.0.3",
+      "raw": "raw/typescript-contract.log"
+    },
+    "jsonPlistPythonAST": "PASS",
+    "gitDiffCheck": "PASS",
+    "existingMiniAppsStorageSelectorsUnchanged": 5
+  },
+  "pendingVerification": [
+    "HanlinNotificationInvocationTests (original Swift test target)",
+    "extended existing MiniApps storage unavailable-namespace selector",
+    "actual imported Expo/NativeScript notification action execution",
+    "both native consumers and extension embedding",
+    "OS foreground/response/service delivery and provider/device contexts",
+    "original paired25+27"
+  ],
+  "generatorsRun": [],
+  "nativeExecutions": [],
+  "boundaries": {
+    "cachedPublishedCatalogIsNotAuthority": true,
+    "liveRestoredTargetValidationRequired": true,
+    "noNewDeliveryQuota": true,
+    "sharedMaximumLifetimeIsExistingQueue86400Seconds": true,
+    "noSourceRuntimeInNotificationPayload": true,
+    "noVMInNotificationExtension": true,
+    "priorSDK10IsNotNewIngressProof": true,
+    "newOwnDeclarationPackageIsNotUpstreamLibrary": true
+  }
+}

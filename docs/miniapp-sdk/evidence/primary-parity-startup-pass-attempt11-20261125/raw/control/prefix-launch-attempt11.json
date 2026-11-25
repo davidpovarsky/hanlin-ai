@@ -1,0 +1,9 @@
+{
+  "source": "318b251b11a4816eb9cc3c1337c7bfe287f4a890",
+  "startedAt": "2026-11-25T03:04:02.766495+00:00",
+  "pid": 85790,
+  "through": "split-inputs",
+  "scope": "Original input timestamp restore and capture only; native/Host producers retained by unchanged closure.",
+  "df": "Filesystem   1024-blocks      Used Available Capacity iused     ifree %iused  Mounted on\n/dev/disk3s5   482797652 408782956  30129920    94% 5514841 301299200    2%   /System/Volumes/Data\n",
+  "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/prefix-attempt11.log"
+}

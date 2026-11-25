@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "owner": "/root/native_execution",
+  "recordedAt": "2026-11-25T04:54:36.039013+00:00",
+  "scope": "Source and operational-control review only; native execution NOT_RUN. Final source/SDK/preparation/actual baseline decision must be sealed separately before launch.",
+  "files": [
+    {
+      "path": "controller.py",
+      "bytes": 18835,
+      "sha256": "bb7b62bc75e16c8bd524ba4602868104688ec49d8cbe76d3edf686510d582c53"
+    }
+  ],
+  "originalPlanMaximumActiveSeconds": 12600,
+  "separatePairedAllowanceSeconds": 4500,
+  "expectedOriginalCases": 52,
+  "counts": {
+    "miniApps": 25,
+    "ai": 27
+  },
+  "originalCommandCeilingsSeconds": {
+    "miniApps": 1200,
+    "ai": 2100
+  },
+  "originalCaseCeilingsSeconds": {
+    "productionUI": 420,
+    "externalModalUI": 300,
+    "aiAuthoringUI": 600
+  },
+  "historicalLedgerObservedAfterAttempt13Seconds": 9861.598917747997,
+  "authorization": {
+    "by": "/root",
+    "scope": "one original paired52 continuation",
+    "reason": "Original210minute workflow limit is per-job; cumulative focused-attempt ledger was a local adaptation, not a user deadline. Preserve every charge, originalplan and acceptance scope; do not reset history.",
+    "nativeGO": "PENDING exact final source handoff"
+  },
+  "review": {
+    "parent": "Exact owned PGID cleanup accepted; bind final source/SDK/decision before launch.",
+    "syntax": "Python AST parsed, no controller execution",
+    "unchangedRunnerSHA256": "6e3abbb16c9b55b048b69c2391784510d8c143c7ed00e760a73ecb903cdbb61d",
+    "unchangedPhaseSHA256": "f271e6f1b95bb261417cee5fc13104e41df44f8ec35d2ab565b1f6135191c0c8"
+  },
+  "separateCompanionBoundary": "Root separately authorized up to1200active seconds for exact new notification/NS companion checks. This controller does not execute or count those tests."
+}

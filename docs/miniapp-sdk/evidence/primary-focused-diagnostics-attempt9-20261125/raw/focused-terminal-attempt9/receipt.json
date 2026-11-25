@@ -1,0 +1,77 @@
+{
+  "source": "1812bff50571c9907d15cd8b4bfbe4874be24756",
+  "observedAt": "2026-11-25T01:59:07.558537+00:00",
+  "scope": "Terminal controlled diagnostic; source restored; original binary rebuild required; original52 NOT_RUN.",
+  "members": [
+    {
+      "path": "state.json",
+      "bytes": 9813,
+      "sha256": "da6143e29aad6a1347415a464c0df4b85fa248f6f4a3705b064d2dcdd265eb2b"
+    },
+    {
+      "path": "node-job-observations.jsonl",
+      "bytes": 23948,
+      "sha256": "a06acb6c4fb532eb347f01532f460b67ccd08956e49163b41113dd220cf67c4d"
+    },
+    {
+      "path": "container-observations.jsonl",
+      "bytes": 882,
+      "sha256": "fc5db8933288bf44a81ea3aa0e95c920fb3023a4dc462e0158f49a54afedb053"
+    },
+    {
+      "path": "ModularDiagnostic-runtime-markers.json",
+      "bytes": 8559,
+      "sha256": "97be0d7b2b527cc82204bf76138b5b2afeae7c617b37ef069ba2dc61d378a998"
+    },
+    {
+      "path": "paired-prefix/ModularDiagnostic.log",
+      "bytes": 37604,
+      "sha256": "86d7290f113656efc36c1ff442e19425123b0ba34f0eb3077a42b285c4d64692"
+    },
+    {
+      "path": "paired-prefix/ModularDiagnostic-summary.json",
+      "bytes": 420,
+      "sha256": "7e81723efed18b44322577a71a1ff1d7113b726b7a24d444781d5db1e226f310"
+    },
+    {
+      "path": "triage/nativescript-core-metadata-baseline.json",
+      "bytes": 1051,
+      "sha256": "aa9095321f4fe2c20e16b6950ba60d30e0b77a6a192d23ccaaa16117147555bc"
+    },
+    {
+      "path": "triage/host-ready-observation-terminal.json",
+      "bytes": 723,
+      "sha256": "45156e0183058cf9b87f13127b2a4ce04a90495e8ab2859be3132e195f95c23a"
+    },
+    {
+      "path": "triage/modular-final-stdout-tail.txt",
+      "bytes": 350000,
+      "sha256": "aa31c5f53c5d418d27daf906d9569637ce4ce7215800e8dc14e0a09c3a2fcc8f"
+    },
+    {
+      "path": "FocusedOriginal-attachments/manifest.json",
+      "bytes": 77084,
+      "sha256": "35f55c2b27a219609a8cadfb70d5b30f349a745dd8f3c9b3cad3df4127681e48"
+    },
+    {
+      "path": "FocusedOriginal-attachments/0DB3555F-E488-4281-BDCA-0AF7EED9B90C.txt",
+      "bytes": 12975,
+      "sha256": "8797186c53eefb1e20d889e606ebc467f234549a37c84ebc11d6371aebe0ec9f"
+    },
+    {
+      "path": "FocusedOriginal-attachments/BE4030DB-BED7-4109-AF2B-352F03E87E47.png",
+      "bytes": 1837355,
+      "sha256": "7dee645df313254d171437953c51945aa2962115fb0fcb18e47337430e884dd1"
+    },
+    {
+      "path": "FocusedOriginal-attachments/5C4A2BC8-C5E4-4207-A156-145DC5487AC8.txt",
+      "bytes": 29182,
+      "sha256": "b8e65b99f597251e8fd254a802fc1c27322c349437cee0c0b90bef3ffdaf1a7c"
+    },
+    {
+      "path": "FocusedOriginal-attachments/8B33B950-A758-4695-92C8-159CD2B1287E.txt",
+      "bytes": 17701,
+      "sha256": "13ba8eddee75bedb10692d199cdc053580ddb52c7fbf9887d871872dc86caa24"
+    }
+  ]
+}

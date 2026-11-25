@@ -1,0 +1,43 @@
+{
+  "owner": "/root/native_execution",
+  "source": "1a611764779b0a57cc57d71b26d2cd6449895d8d",
+  "status": "FAIL",
+  "pid": 15442,
+  "startedAt": "2026-11-25T03:32:34.069090+00:00",
+  "original52": "NOT_RUN",
+  "wrapperSHA256": "b8122500556429a554a1a63286e19e5af119c0f6b60d6b8c5f1ace64d54d3e8a",
+  "diagnosticState": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12/state.json",
+  "continuation": {
+    "reason": "Explicit continuation after measured owned obsolete-simulator retirement; original pre-launch rejection preserved unchanged.",
+    "priorState": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-launch-attempt12.json",
+    "priorSHA256": "8d615b9f36e076d8132ab386bedae8147ff49c22511fe1bc5f70e91c4657796a",
+    "retirementReceipt": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/storage-recovery-attempt12/attempt9-retirement.json",
+    "retirementSHA256": "547657935d800931528c18c3e5f940f73c3a3ff1af3b591ac64fe3bb905fd6c9"
+  },
+  "resourceObservation": {
+    "observedAt": "2026-11-25T03:32:34.086145+00:00",
+    "df": "Filesystem   1024-blocks      Used Available Capacity iused     ifree %iused  Mounted on\n/dev/disk3s5   482797652 424191412  14721464    97% 5713380 147214640    4%   /System/Volumes/Data\n",
+    "freeBytes": 15074779136,
+    "estimatedIncrementalBytes": 7854645248,
+    "concurrentGrowthAndOSAllowanceBytes": 4294967296,
+    "basis": "Fresh device uses the larger actually retained attempt10/11 footprint6,244,032,512B; unchanged SDK/native products and changed UI test only allow1GiB incremental products; one-case evidence0.5GiB. Concurrent/OS allowance4GiB covers the actual2.34GB observed burst plus margin. No fixed free-space/CPU/load/job-count threshold.",
+    "decision": "ADMITTED"
+  },
+  "admittedAt": "2026-11-25T03:32:34.086834+00:00",
+  "argv": [
+    "/opt/homebrew/bin/python3.12",
+    "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12.py",
+    "--source",
+    "1a611764779b0a57cc57d71b26d2cd6449895d8d",
+    "--output",
+    "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12"
+  ],
+  "maximumActiveSeconds": 3769.719503126009,
+  "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12.log",
+  "wrapperPID": 15445,
+  "elapsedSeconds": 581.5945308750015,
+  "logBytes": 19325,
+  "exitCode": 1,
+  "finishedAt": "2026-11-25T03:42:15.683546+00:00",
+  "sourceRestored": true
+}

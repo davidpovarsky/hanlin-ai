@@ -65,6 +65,7 @@ def validate_miniapps_extension_targets(project):
         "HanlinMiniAppsWidgets": ("HanlinScriptingWidgets", "Widgets", "widgets"),
         "HanlinMiniAppsShare": ("ChavrusaChatShare", "Share", "share"),
         "HanlinMiniAppsTranslationProvider": ("ChavrusaChatTranslationProvider", "Translation", "translation-provider"),
+        "HanlinMiniAppsNotificationService": ("ChavrusaChatNotificationService", "Notification", "notification-service"),
     }
     dependencies = mini.get("dependencies", [])
     assert all(objects.get(key, {}).get("isa") == "PBXTargetDependency" for key in dependencies), \

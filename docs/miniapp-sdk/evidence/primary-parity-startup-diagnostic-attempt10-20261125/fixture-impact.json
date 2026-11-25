@@ -1,0 +1,178 @@
+{
+  "source": "fda6948ca6a1f541293a1a1dd20e97f75eb0a527",
+  "sources": [
+    {
+      "path": "DemoMiniApps/hanlin-script-parity/nativescript/app/bundle.mjs",
+      "bytes": 26084,
+      "sha256": "7d0fb4935d1727e04d656bb4ba026509fb0720178d27d442d480b6dfcb102204",
+      "lineRanges": [
+        "209-337",
+        "501",
+        "528-615"
+      ]
+    },
+    {
+      "path": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+      "bytes": 75742,
+      "sha256": "6c87c9751bf4b5910cc72716bfa1a6cb384c3ef53908a6ca074f713656f5730e",
+      "lineRanges": [
+        "225-263"
+      ]
+    },
+    {
+      "path": "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
+      "bytes": 22872,
+      "sha256": "e8da50eb4d076d995135132810444f16900a65d55edd901270a2af07132a57a3",
+      "lineRanges": [
+        "180-207"
+      ]
+    },
+    {
+      "path": "AI_HLY/Downstream/HostServices/Runtime/HanlinRuntimeBroker.swift",
+      "bytes": 7912,
+      "sha256": "5f24ed0174ff4378b28ea8f32b14de8b99dc73cf348b00008e101fdfd670631b",
+      "lineRanges": [
+        "18-40"
+      ]
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Core/RuntimeModels.swift",
+      "bytes": 9678,
+      "sha256": "b9ea45c988129aa39bae892edc43f1e19bb007986f4fa1ba640b074a889e6283",
+      "lineRanges": [
+        "55-60",
+        "95-109"
+      ]
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/NodeRuntimeService.swift",
+      "bytes": 48836,
+      "sha256": "fd0c4d7afcafb33518cde1f2e99dd212b42f763f420c6831975af97aa062891b",
+      "lineRanges": [
+        "222-245",
+        "680-703",
+        "862-883"
+      ]
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeServicesBridge.m",
+      "bytes": 37015,
+      "sha256": "e36a9d2ba06dd7878d17df7c9e8f17df8952ac67f087c0a43174742c1c0ebe0c",
+      "lineRanges": [
+        "598-603"
+      ]
+    },
+    {
+      "path": "Scripts/Runtime/runtime_host_archive.py",
+      "bytes": 11341,
+      "sha256": "c446a8bcd0bebb30193eab35e6588662d9c989c4e656be020259a94428c0c8c6",
+      "lineRanges": [
+        "137-161"
+      ]
+    },
+    {
+      "path": "Scripts/Runtime/prepare-runtime-host.sh",
+      "bytes": 4998,
+      "sha256": "af0fda26d53a6b72b495a73e104835af176dccfc39cda2d5bcfffa3f7a04cbd6",
+      "lineRanges": [
+        "13-30"
+      ]
+    },
+    {
+      "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+      "bytes": 47460,
+      "sha256": "6e3abbb16c9b55b048b69c2391784510d8c143c7ed00e760a73ecb903cdbb61d",
+      "lineRanges": [
+        "567-591"
+      ]
+    },
+    {
+      "path": "Scripts/NativeScript/prepare-production-package.mjs",
+      "bytes": 3682,
+      "sha256": "7416143a06724819de595cce6eddb6d8b1b63f737e656a2becf2801be243725d",
+      "lineRanges": [
+        "86-90"
+      ]
+    },
+    {
+      "path": "Scripts/CI/Tests/test_nativescript_parity_fixture.py",
+      "bytes": 3100,
+      "sha256": "e4e087fba92825036ec8c91d769775727bd8115b578030a9a8ecb8afd97ee34e",
+      "lineRanges": [
+        "7-25"
+      ]
+    },
+    {
+      "path": "AI_HLY.xcodeproj/project.pbxproj",
+      "bytes": 245807,
+      "sha256": "24206ae0f0f66d3669cae5ccd4ffcff25ae582ec4620359a2becca7ad8e16780",
+      "lineRanges": []
+    }
+  ],
+  "fixtureArchive": {
+    "path": "DemoMiniApps/hanlin-script-parity.hanlinNativeScript",
+    "bytes": 7396,
+    "sha256": "2c31e104d2b8e7a8c7356e3d2a15c2537e79266a1df1a8de7846deeddc923cc3",
+    "members": [
+      {
+        "path": "intent.json",
+        "archiveSHA256": "a18e6a42cd73498067f7b3165ba0077179d548f6da83ff9b63fb17f7acd23663",
+        "sourceSHA256": "2bc31c09891193ee5cf04a2ba55cc7fa831d20583ce60dd755a4f2d9b888de06",
+        "exactBytesEqual": false,
+        "equalAfterLineEndingNormalization": true
+      },
+      {
+        "path": "nativescript/app/bundle.mjs",
+        "archiveSHA256": "f266852fe1217562d2f92b3437cc8c95e4185800ed7e72ee9c4c25448a98494a",
+        "sourceSHA256": "7d0fb4935d1727e04d656bb4ba026509fb0720178d27d442d480b6dfcb102204",
+        "exactBytesEqual": false,
+        "equalAfterLineEndingNormalization": true
+      },
+      {
+        "path": "nativescript/app/package.json",
+        "archiveSHA256": "8c13ed97d48fe9a37bda76d2de8dab5ff084e7ffd93cb791b6cdc9b63e4cecef",
+        "sourceSHA256": "264c767b3bd3c172741ab4ea9ffc6ad65b373270c898b69d1085a3d4813e3534",
+        "exactBytesEqual": false,
+        "equalAfterLineEndingNormalization": true
+      },
+      {
+        "path": "script.json",
+        "archiveSHA256": "609ca8f2fc9d24faab6c6b515acd5940aee062b59bab1fe9a37cbb9874712613",
+        "sourceSHA256": "2275afdd4700ea93436a114ce03ae5fe56e2e3f2f54bc9a3412daf2c933034f5",
+        "exactBytesEqual": false,
+        "equalAfterLineEndingNormalization": true
+      },
+      {
+        "path": "translation.json",
+        "archiveSHA256": "89db33269a60e3d1362897f2e06f210fcea70d3d9773d98a8a05409227b3d769",
+        "sourceSHA256": "e2244f2725cace1b90d717caf2612d8265c1b44a545b83d585d6b47308a368eb",
+        "exactBytesEqual": false,
+        "equalAfterLineEndingNormalization": true
+      },
+      {
+        "path": "widget.json",
+        "archiveSHA256": "98a588de1927b5994c59eb4e923b5ce19a4daecd066e4c1442b90eef3e9fa523",
+        "sourceSHA256": "ced0519ad3ce1d7794d3fdc8ff78c544c5d8abfed2600f5463cb496c7e986167",
+        "exactBytesEqual": false,
+        "equalAfterLineEndingNormalization": true
+      }
+    ],
+    "lineEndingBoundary": "All six original archive members differ from Git-source bytes only by CRLF/LF line endings; normalized equality matches the original fixture-test contract. Actual archived and Git source hashes remain separately recorded."
+  },
+  "directDependencies": {
+    "SDKSourceInputs": false,
+    "SDKMembers": false,
+    "inventorySources": false,
+    "nativeCatalogInputs": false,
+    "xcodeProjectResources": false
+  },
+  "hostFingerprint": "runtime_host_archive.py137-161 covers SDK input identity, Host source tree, named producer/grammar inputs and RuntimeNetworkFixtures; it does not traverse DemoMiniApps.",
+  "actualStaging": "Original paired runner574-590 copies the tracked archive directly to app Documents and checks SHA; prepare-production-package.mjs86-90 copies it into NativeScriptE2E.",
+  "minimalRoute": "For fixture-only changes, preserve source/archive matching and restage the exact archive. Existing consumer/SDK bytes can retain their actual source/input bindings when the relevant closures are unchanged. A Swift title-assertion edit separately requires rebuilding the test bundle.",
+  "provenanceCaveat": "Full prepare-runtime-host.sh always runs source-commit audit generators before checking cache reuse; invoking it would produce new provenance and a new SDK archive even though this fixture is not a direct input.",
+  "executedByThisLane": {
+    "archiveGeneration": false,
+    "productBuild": false,
+    "test": false
+  }
+}

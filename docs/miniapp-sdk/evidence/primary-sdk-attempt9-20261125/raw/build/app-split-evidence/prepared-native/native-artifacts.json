@@ -1,0 +1,725 @@
+{
+  "acceptance": {
+    "appleBuild": "reuse-producer-evidence; this exporter does not build or test runtimes",
+    "nativeSlices": "validated-existing-binaries",
+    "ordinaryVersionDependency": "requires original host acceptance; prepared Expo header paths and host build phases need integration"
+  },
+  "artifacts": [
+    {
+      "archive": "ReactNativeHeaders.xcframework.zip",
+      "bytes": 2219846,
+      "checksum": "2caf25a408560b400c00eca977a96f5bdcbed6eb520e742ac1175649a4e51a23",
+      "installPath": "Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework",
+      "kind": "xcframework",
+      "libraries": [
+        {
+          "architectures": [
+            "arm64"
+          ],
+          "binary": "ios-arm64/libReactNativeHeaders-ios.a",
+          "binarySHA256": "770c9bd74f4c398ba46c307536f26ca51ae5c50b668ab076c8f38077484df068",
+          "identifier": "ios-arm64",
+          "platform": "ios",
+          "variant": null
+        },
+        {
+          "architectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "binary": "ios-arm64_x86_64-simulator/libReactNativeHeaders-ios-simulator.a",
+          "binarySHA256": "dacca1290ec6b34f1f9820068f2e3fa00dfe31e9d57408e970de742a77638920",
+          "identifier": "ios-arm64_x86_64-simulator",
+          "platform": "ios",
+          "variant": "simulator"
+        }
+      ],
+      "root": "ReactNativeHeaders.xcframework",
+      "target": "ReactNativeHeaders",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/releases/download/sdk-native-v1-9b3b714bf5a29ac92472e5ffe530ec0c2f6ebf79f65faa506ad0d7f8ce88e37b/ReactNativeHeaders.xcframework.zip"
+    },
+    {
+      "archive": "React.xcframework.zip",
+      "bytes": 21787924,
+      "checksum": "6162481ee94054c8e03a9e4559aa6381a5a631ecc8f78bb7203b6e221b5efe01",
+      "installPath": "Packages/HanlinExpoRuntime/Artifacts/React.xcframework",
+      "kind": "xcframework",
+      "libraries": [
+        {
+          "architectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "binary": "ios-arm64_x86_64-simulator/React.framework/React",
+          "binarySHA256": "b14f9d4a824d6919d13de0db204195f2caba856fde2f8a2ea4cddf9f3ceff27b",
+          "identifier": "ios-arm64_x86_64-simulator",
+          "platform": "ios",
+          "variant": "simulator"
+        },
+        {
+          "architectures": [
+            "arm64"
+          ],
+          "binary": "ios-arm64/React.framework/React",
+          "binarySHA256": "553c55df62d1472bafa9483317f193469864c4953c5e2b3ce5f673fc2a6cd3e8",
+          "identifier": "ios-arm64",
+          "platform": "ios",
+          "variant": null
+        }
+      ],
+      "root": "React.xcframework",
+      "target": "React",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/releases/download/sdk-native-v1-9b3b714bf5a29ac92472e5ffe530ec0c2f6ebf79f65faa506ad0d7f8ce88e37b/React.xcframework.zip"
+    },
+    {
+      "archive": "ReactNativeDependencies.xcframework.zip",
+      "bytes": 4839174,
+      "checksum": "39f90b4a8875af5b817e6383f54a8d1ed0557e0e77022222f329e117bfca12d8",
+      "installPath": "Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework",
+      "kind": "xcframework",
+      "libraries": [
+        {
+          "architectures": [
+            "arm64"
+          ],
+          "binary": "ios-arm64/ReactNativeDependencies.framework/ReactNativeDependencies",
+          "binarySHA256": "5c612c23ad6904b9b771ccbab0b4221a0b74cda384c151235c8cf91a43fe2b91",
+          "identifier": "ios-arm64",
+          "platform": "ios",
+          "variant": null
+        },
+        {
+          "architectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "binary": "ios-arm64_x86_64-simulator/ReactNativeDependencies.framework/ReactNativeDependencies",
+          "binarySHA256": "41eb01ffcbcad6ddf93ce5cf4eac65b87e14f18257b1ee0f313f7eceb5843ac7",
+          "identifier": "ios-arm64_x86_64-simulator",
+          "platform": "ios",
+          "variant": "simulator"
+        }
+      ],
+      "root": "ReactNativeDependencies.xcframework",
+      "target": "ReactNativeDependencies",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/releases/download/sdk-native-v1-9b3b714bf5a29ac92472e5ffe530ec0c2f6ebf79f65faa506ad0d7f8ce88e37b/ReactNativeDependencies.xcframework.zip"
+    },
+    {
+      "archive": "hermesvm.xcframework.zip",
+      "bytes": 5310852,
+      "checksum": "f11b12dbb34160d16398787089c77a1b66e6e4c66fd8524f555bd6c7d71a4bd3",
+      "installPath": "Packages/HanlinExpoRuntime/Artifacts/hermesvm.xcframework",
+      "kind": "xcframework",
+      "libraries": [
+        {
+          "architectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "binary": "ios-arm64_x86_64-simulator/hermesvm.framework/hermesvm",
+          "binarySHA256": "effde4b7c515ca4b95e8e1f7ee93983d12dbe675281362e147644eec657f947c",
+          "identifier": "ios-arm64_x86_64-simulator",
+          "platform": "ios",
+          "variant": "simulator"
+        },
+        {
+          "architectures": [
+            "arm64"
+          ],
+          "binary": "ios-arm64/hermesvm.framework/hermesvm",
+          "binarySHA256": "b1476b4a43dabab8ed267283d279f3b67db5e72d1e5670b834bb3aedd662f136",
+          "identifier": "ios-arm64",
+          "platform": "ios",
+          "variant": null
+        }
+      ],
+      "root": "hermesvm.xcframework",
+      "target": "hermesvm",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/releases/download/sdk-native-v1-9b3b714bf5a29ac92472e5ffe530ec0c2f6ebf79f65faa506ad0d7f8ce88e37b/hermesvm.xcframework.zip"
+    },
+    {
+      "archive": "ExpoModulesJSI.xcframework.zip",
+      "bytes": 7971900,
+      "checksum": "c0e285370bb368969124df20377d8f931b632cc5b43a1591fbdf4ce8b1cc30f6",
+      "installPath": "Packages/HanlinExpoRuntime/Artifacts/ExpoModulesJSI.xcframework",
+      "kind": "xcframework",
+      "libraries": [
+        {
+          "architectures": [
+            "arm64"
+          ],
+          "binary": "ios-arm64/ExpoModulesJSI.framework/ExpoModulesJSI",
+          "binarySHA256": "d332f5a4655670b2c2110e71e3dc7cb32a4aa14dfe04d75104be69a940179bd8",
+          "identifier": "ios-arm64",
+          "platform": "ios",
+          "variant": null
+        },
+        {
+          "architectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "binary": "ios-arm64_x86_64-simulator/ExpoModulesJSI.framework/ExpoModulesJSI",
+          "binarySHA256": "1bdef96de621d6b390248eec43bf8d8a845398f2d89b4fd270498d9792447155",
+          "identifier": "ios-arm64_x86_64-simulator",
+          "platform": "ios",
+          "variant": "simulator"
+        }
+      ],
+      "root": "ExpoModulesJSI.xcframework",
+      "target": "ExpoModulesJSI",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/releases/download/sdk-native-v1-9b3b714bf5a29ac92472e5ffe530ec0c2f6ebf79f65faa506ad0d7f8ce88e37b/ExpoModulesJSI.xcframework.zip"
+    },
+    {
+      "archive": "ExpoModulesCore.xcframework.zip",
+      "bytes": 14697097,
+      "checksum": "b3a6f07a8100094076f06d6bb1f0e25b8381d01915eac4b9174eb77ded04ce4a",
+      "installPath": "Packages/HanlinExpoRuntime/Artifacts/ExpoModulesCore.xcframework",
+      "kind": "xcframework",
+      "libraries": [
+        {
+          "architectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "binary": "ios-arm64_x86_64-simulator/ExpoModulesCore.framework/ExpoModulesCore",
+          "binarySHA256": "7825f81ffec8d42676554af4e2e7efbaf171f276a467cffcf9e74a4c8b3ec906",
+          "identifier": "ios-arm64_x86_64-simulator",
+          "platform": "ios",
+          "variant": "simulator"
+        },
+        {
+          "architectures": [
+            "arm64"
+          ],
+          "binary": "ios-arm64/ExpoModulesCore.framework/ExpoModulesCore",
+          "binarySHA256": "4b4b8a271c2394083fecb55afa4514767ff99d432916353e038c01870961d64c",
+          "identifier": "ios-arm64",
+          "platform": "ios",
+          "variant": null
+        }
+      ],
+      "root": "ExpoModulesCore.xcframework",
+      "target": "ExpoModulesCore",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/releases/download/sdk-native-v1-9b3b714bf5a29ac92472e5ffe530ec0c2f6ebf79f65faa506ad0d7f8ce88e37b/ExpoModulesCore.xcframework.zip"
+    },
+    {
+      "archive": "ExpoModulesWorklets.xcframework.zip",
+      "bytes": 1060981,
+      "checksum": "c4dbb6691c248dd652a9028c3cbb24fb1a9d2c41831750a619b0df50a9e5abbd",
+      "installPath": "Packages/HanlinExpoRuntime/Artifacts/ExpoModulesWorklets.xcframework",
+      "kind": "xcframework",
+      "libraries": [
+        {
+          "architectures": [
+            "arm64"
+          ],
+          "binary": "ios-arm64/ExpoModulesWorklets.framework/ExpoModulesWorklets",
+          "binarySHA256": "f6e9c5e3829e41031e08ef466d3f6ec8199fa6aba03b4644f3cd937f5a1ffcf8",
+          "identifier": "ios-arm64",
+          "platform": "ios",
+          "variant": null
+        },
+        {
+          "architectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "binary": "ios-arm64_x86_64-simulator/ExpoModulesWorklets.framework/ExpoModulesWorklets",
+          "binarySHA256": "a0fddc922b70655a68f4d99da9328c77f52f989c444980f87962cc4df55295e1",
+          "identifier": "ios-arm64_x86_64-simulator",
+          "platform": "ios",
+          "variant": "simulator"
+        }
+      ],
+      "root": "ExpoModulesWorklets.xcframework",
+      "target": "ExpoModulesWorklets",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/releases/download/sdk-native-v1-9b3b714bf5a29ac92472e5ffe530ec0c2f6ebf79f65faa506ad0d7f8ce88e37b/ExpoModulesWorklets.xcframework.zip"
+    },
+    {
+      "archive": "ExpoUI.xcframework.zip",
+      "bytes": 19903079,
+      "checksum": "a5d7beda06fcb5ca893d4c17d5d89384c4dcca395c0b6efdabb4433c4e190a22",
+      "installPath": "Packages/HanlinExpoRuntime/Artifacts/ExpoUI.xcframework",
+      "kind": "xcframework",
+      "libraries": [
+        {
+          "architectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "binary": "ios-arm64_x86_64-simulator/ExpoUI.framework/ExpoUI",
+          "binarySHA256": "a38e45501457d47a49f6fa006df014c6dbb58d0bfae1598cfd001d995245ea9b",
+          "identifier": "ios-arm64_x86_64-simulator",
+          "platform": "ios",
+          "variant": "simulator"
+        },
+        {
+          "architectures": [
+            "arm64"
+          ],
+          "binary": "ios-arm64/ExpoUI.framework/ExpoUI",
+          "binarySHA256": "2044d9461cac651a900b33394a5aa7eff02eb6ae310a410294b5185f170355af",
+          "identifier": "ios-arm64",
+          "platform": "ios",
+          "variant": null
+        }
+      ],
+      "root": "ExpoUI.xcframework",
+      "target": "ExpoUI",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/releases/download/sdk-native-v1-9b3b714bf5a29ac92472e5ffe530ec0c2f6ebf79f65faa506ad0d7f8ce88e37b/ExpoUI.xcframework.zip"
+    },
+    {
+      "archive": "ExpoAsset.xcframework.zip",
+      "bytes": 236835,
+      "checksum": "5786adf1e037e948ec74cc722bb4eb4f59089aad839e7abc8c254196c143d53e",
+      "installPath": "Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework",
+      "kind": "xcframework",
+      "libraries": [
+        {
+          "architectures": [
+            "arm64"
+          ],
+          "binary": "ios-arm64/ExpoAsset.framework/ExpoAsset",
+          "binarySHA256": "bc4ec32879fe696af9246f6d2280c75f95ac7a136b712ba4e823d7e9c8e5c90e",
+          "identifier": "ios-arm64",
+          "platform": "ios",
+          "variant": null
+        },
+        {
+          "architectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "binary": "ios-arm64_x86_64-simulator/ExpoAsset.framework/ExpoAsset",
+          "binarySHA256": "61fb7c7abb126eb34b1b7c5ce7cd99b6d0c0ba22bc1767f19da38a9a191bbd94",
+          "identifier": "ios-arm64_x86_64-simulator",
+          "platform": "ios",
+          "variant": "simulator"
+        }
+      ],
+      "root": "ExpoAsset.xcframework",
+      "target": "ExpoAsset",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/releases/download/sdk-native-v1-9b3b714bf5a29ac92472e5ffe530ec0c2f6ebf79f65faa506ad0d7f8ce88e37b/ExpoAsset.xcframework.zip"
+    },
+    {
+      "archive": "ExpoBrownfield.xcframework.zip",
+      "bytes": 1177320,
+      "checksum": "5624ddbeb566108b83416538d69ed405e3502bd40d416d751bb43d9ce1a1fa70",
+      "installPath": "Packages/HanlinExpoRuntime/Artifacts/ExpoBrownfield.xcframework",
+      "kind": "xcframework",
+      "libraries": [
+        {
+          "architectures": [
+            "arm64"
+          ],
+          "binary": "ios-arm64/ExpoBrownfield.framework/ExpoBrownfield",
+          "binarySHA256": "fb08be09caafea6790641e3f5de1607834a0a5180f0cf56551a84053d40802ce",
+          "identifier": "ios-arm64",
+          "platform": "ios",
+          "variant": null
+        },
+        {
+          "architectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "binary": "ios-arm64_x86_64-simulator/ExpoBrownfield.framework/ExpoBrownfield",
+          "binarySHA256": "77e6bbb2ce166391c590647655c813b0505e968352f993cf2a28a7034cf33076",
+          "identifier": "ios-arm64_x86_64-simulator",
+          "platform": "ios",
+          "variant": "simulator"
+        }
+      ],
+      "root": "ExpoBrownfield.xcframework",
+      "target": "ExpoBrownfield",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/releases/download/sdk-native-v1-9b3b714bf5a29ac92472e5ffe530ec0c2f6ebf79f65faa506ad0d7f8ce88e37b/ExpoBrownfield.xcframework.zip"
+    },
+    {
+      "archive": "Libffi.xcframework.zip",
+      "bytes": 52120,
+      "checksum": "6a50e1bc7fb52c15372278b54e721e4f22887a50ba7bdd9bf93bb6c3507795cf",
+      "installPath": "Packages/HanlinExpoNativeAPI/Artifacts/Libffi.xcframework",
+      "kind": "xcframework",
+      "libraries": [
+        {
+          "architectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "binary": "ios-arm64_x86_64-simulator/libffi.a",
+          "binarySHA256": "bc606b462e39d126c40accc8b87a7fb293b6ddf9e29b038d71c56b5a8df4edb1",
+          "identifier": "ios-arm64_x86_64-simulator",
+          "platform": "ios",
+          "variant": "simulator"
+        },
+        {
+          "architectures": [
+            "arm64"
+          ],
+          "binary": "ios-arm64/libffi.a",
+          "binarySHA256": "b9af1e0fa8fef0ef42f2318909edf2d45a589388fb4927b48585bec99123d4ab",
+          "identifier": "ios-arm64",
+          "platform": "ios",
+          "variant": null
+        }
+      ],
+      "root": "Libffi.xcframework",
+      "target": "Libffi",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/releases/download/sdk-native-v1-9b3b714bf5a29ac92472e5ffe530ec0c2f6ebf79f65faa506ad0d7f8ce88e37b/Libffi.xcframework.zip"
+    },
+    {
+      "archive": "TNSWidgets.xcframework.zip",
+      "bytes": 5898178,
+      "checksum": "861178adca25cb37cbc9372566da3ab7bbb09ee81a552a667c78025b257f214e",
+      "installPath": "Packages/HanlinNativeScriptRuntime/Artifacts/TNSWidgets.xcframework",
+      "kind": "xcframework",
+      "libraries": [
+        {
+          "architectures": [
+            "arm64"
+          ],
+          "binary": "ios-arm64/TNSWidgets.framework/TNSWidgets",
+          "binarySHA256": "1139ca728fd26962074bab0ef9be77cebfe267f57684228131a09b3b268e8c3d",
+          "identifier": "ios-arm64",
+          "platform": "ios",
+          "variant": null
+        },
+        {
+          "architectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "binary": "ios-arm64_x86_64-maccatalyst/TNSWidgets.framework/Versions/A/TNSWidgets",
+          "binarySHA256": "d9e634e975b9c5e0540a8e573eaebfb125f9dd44e6636d2891e3f803b88e1c3a",
+          "identifier": "ios-arm64_x86_64-maccatalyst",
+          "platform": "ios",
+          "variant": "maccatalyst"
+        },
+        {
+          "architectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "binary": "ios-arm64_x86_64-simulator/TNSWidgets.framework/TNSWidgets",
+          "binarySHA256": "c9f33af5cd4389d62637e612e734ab3875eff71d0ae0aaaa31309015d69142e9",
+          "identifier": "ios-arm64_x86_64-simulator",
+          "platform": "ios",
+          "variant": "simulator"
+        },
+        {
+          "architectures": [
+            "arm64"
+          ],
+          "binary": "xros-arm64/TNSWidgets.framework/TNSWidgets",
+          "binarySHA256": "20156193a0f68f91709bb0acd2cffb441bd6584d0c5aeaa343dd7a7187fdc3d6",
+          "identifier": "xros-arm64",
+          "platform": "xros",
+          "variant": null
+        },
+        {
+          "architectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "binary": "xros-arm64_x86_64-simulator/TNSWidgets.framework/TNSWidgets",
+          "binarySHA256": "330be5d2ae9304e2b5cfecf7b686fb9df42a1f8f2c99a6f7febcb009cd959624",
+          "identifier": "xros-arm64_x86_64-simulator",
+          "platform": "xros",
+          "variant": "simulator"
+        }
+      ],
+      "root": "TNSWidgets.xcframework",
+      "target": "TNSWidgets",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/releases/download/sdk-native-v1-9b3b714bf5a29ac92472e5ffe530ec0c2f6ebf79f65faa506ad0d7f8ce88e37b/TNSWidgets.xcframework.zip"
+    },
+    {
+      "archive": "NSCWinterTC.xcframework.zip",
+      "bytes": 2843711,
+      "checksum": "2399fcd150e44cf6fff99beb2d3ddc483c6c527830d176293852f44378e83190",
+      "installPath": "Packages/HanlinNativeScriptRuntime/Artifacts/NSCWinterTC.xcframework",
+      "kind": "xcframework",
+      "libraries": [
+        {
+          "architectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "binary": "ios-arm64_x86_64-simulator/NSCWinterTC.framework/NSCWinterTC",
+          "binarySHA256": "70a681e0a9df00a2dfbfe2758993adfab987c59002426b0685c8351ef358481d",
+          "identifier": "ios-arm64_x86_64-simulator",
+          "platform": "ios",
+          "variant": "simulator"
+        },
+        {
+          "architectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "binary": "ios-arm64_x86_64-maccatalyst/NSCWinterTC.framework/Versions/A/NSCWinterTC",
+          "binarySHA256": "fdfe3fe639cf603e283dfc9caf792abfb4d60ec4d7b99a07fc9f9f12a58add48",
+          "identifier": "ios-arm64_x86_64-maccatalyst",
+          "platform": "ios",
+          "variant": "maccatalyst"
+        },
+        {
+          "architectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "binary": "xros-arm64_x86_64-simulator/NSCWinterTC.framework/NSCWinterTC",
+          "binarySHA256": "016ebe799a5f063d08ca9900b3fd33ba4e342976c8dcf31cc60efc4147ae637e",
+          "identifier": "xros-arm64_x86_64-simulator",
+          "platform": "xros",
+          "variant": "simulator"
+        },
+        {
+          "architectures": [
+            "arm64"
+          ],
+          "binary": "xros-arm64/NSCWinterTC.framework/NSCWinterTC",
+          "binarySHA256": "96c2fd2401cae85993c4907cddb75ce1703e8d3e775c524a2097d18d88c6edb7",
+          "identifier": "xros-arm64",
+          "platform": "xros",
+          "variant": null
+        },
+        {
+          "architectures": [
+            "arm64"
+          ],
+          "binary": "ios-arm64/NSCWinterTC.framework/NSCWinterTC",
+          "binarySHA256": "3eae0169d57e6606c550f6daa2f8a3bef59e6c9d7dee1c520ed82ed661104584",
+          "identifier": "ios-arm64",
+          "platform": "ios",
+          "variant": null
+        }
+      ],
+      "root": "NSCWinterTC.xcframework",
+      "target": "NSCWinterTC",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/releases/download/sdk-native-v1-9b3b714bf5a29ac92472e5ffe530ec0c2f6ebf79f65faa506ad0d7f8ce88e37b/NSCWinterTC.xcframework.zip"
+    },
+    {
+      "archive": "NodeMobile.xcframework.zip",
+      "bytes": 35086561,
+      "checksum": "755769361a77d53ac930ff0b28526a6a9085619f15dc7bd169fcadcc3ee290fc",
+      "installPath": "Vendor/NodeMobile/NodeMobile.xcframework",
+      "kind": "xcframework",
+      "libraries": [
+        {
+          "architectures": [
+            "arm64"
+          ],
+          "binary": "ios-arm64-simulator/NodeMobile.framework/NodeMobile",
+          "binarySHA256": "a0daa0ebeb6a1f819726fff5228f2efadd58be9b8475ffe142edc992194bb8a0",
+          "identifier": "ios-arm64-simulator",
+          "platform": "ios",
+          "variant": "simulator"
+        },
+        {
+          "architectures": [
+            "arm64"
+          ],
+          "binary": "ios-arm64/NodeMobile.framework/NodeMobile",
+          "binarySHA256": "86492ee2e27c580f38747522a443094b5db02aa74b9460b3a593545f5bc2a23c",
+          "identifier": "ios-arm64",
+          "platform": "ios",
+          "variant": null
+        }
+      ],
+      "root": "NodeMobile.xcframework",
+      "target": "NodeMobile",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/releases/download/sdk-native-v1-9b3b714bf5a29ac92472e5ffe530ec0c2f6ebf79f65faa506ad0d7f8ce88e37b/NodeMobile.xcframework.zip"
+    },
+    {
+      "archive": "Python.xcframework.zip",
+      "bytes": 38395469,
+      "checksum": "cd0978e95d2b68ac234cf2bad7d8ac83e4ed3afd6266bee402141e3ed9eb2d13",
+      "installPath": "Vendor/Python/Python.xcframework",
+      "kind": "xcframework",
+      "libraries": [
+        {
+          "architectures": [
+            "arm64"
+          ],
+          "binary": "ios-arm64/Python.framework/Python",
+          "binarySHA256": "bab15643505f43f9902515f48f8d198161e1a0207303c454860eed8337375df5",
+          "identifier": "ios-arm64",
+          "platform": "ios",
+          "variant": null
+        },
+        {
+          "architectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "binary": "ios-arm64_x86_64-simulator/Python.framework/Python",
+          "binarySHA256": "3503ecf5bbf78bfb9aed1918b5ac386ea837917967b9d32b53bf98340ac792bc",
+          "identifier": "ios-arm64_x86_64-simulator",
+          "platform": "ios",
+          "variant": "simulator"
+        }
+      ],
+      "root": "Python.xcframework",
+      "target": "Python",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/releases/download/sdk-native-v1-9b3b714bf5a29ac92472e5ffe530ec0c2f6ebf79f65faa506ad0d7f8ce88e37b/Python.xcframework.zip"
+    }
+  ],
+  "contentSHA256": "9b3b714bf5a29ac92472e5ffe530ec0c2f6ebf79f65faa506ad0d7f8ce88e37b",
+  "inputSHA256": {
+    "RuntimeDependencies.lock.json": "6cdbc18a474febbfc912b35ecbf5b0b55438a6a3e6daf2c33a43792cd04bd50a",
+    "Scripts/Expo/babel.config.cjs": "62581fd5caf7b97cb36290093b7bbf7103e1c1b1300e0e11a1b3eaaf96c998ba",
+    "Scripts/Expo/build-original-expo-source.mjs": "855a9a79f1c27a2ba2f3796cf784ebb66a4a48df928b2ea8f6ca1ffd9e886c03",
+    "Scripts/Expo/build-original-widget-runtime.mjs": "5928bb12ed2fd2f6b2ecfeb6d8fc309d46e5837c58dcc4272d73af13434eb549",
+    "Scripts/Expo/dependency-lock.json": "b9e3ad6d863e3e5136ad93924ce4edcb37da87578b113523640110af347eec65",
+    "Scripts/Expo/package-lock.json": "c08757cf46ac4d5c86a873f676af4a3be585db64ae2e1aa1e8288277d4eb63b8",
+    "Scripts/Expo/prepare-ios-dependencies.mjs": "97069b0e1ec619d906f4b6d196e38e6527790c3661f798abcca6258dacf18163",
+    "Scripts/ExpoNativeAPI/dependency-lock.json": "08657d657c1f4efa36149075b632cfc75685fc1ca9af0397fc1168fe9253b768",
+    "Scripts/ExpoNativeAPI/multiscene-patch.mjs": "cafa8348a764155789169c411eb59555c6c7a2d3ef363b870e36f8d6b52c7cbd",
+    "Scripts/ExpoNativeAPI/prepare-ios-dependencies.mjs": "950a2eb6e8713bdd1a395eee6df1779d91f63864af95c33658efa6d090676f66",
+    "Scripts/NativeScript/build-metadata-tool.py": "f4318f38b1c6a9c56ba54edb0d270a6374178fa5a8e024ebfddb9790f7ae3cf5",
+    "Scripts/NativeScript/build-step-metadata-generator-wrapper.py": "0c053414f573ff2f88498099d7f1ae591d289ca3029390cd421dd938bf089ba3",
+    "Scripts/NativeScript/dependency-lock.json": "8499976a4ea0a069ed654b09b597d8fabede4bbbfb62227451a68707b851e8e5",
+    "Scripts/NativeScript/package-lock.json": "16f569f4bfa6f8806cfe72449866a0dc9a9331f33d2c67170d5292455c48b60b",
+    "Scripts/NativeScript/prepare-ios-dependencies.mjs": "b5114a3be1fc846e288128af08cef9f38b0cac8e34923780325c4edc2976ebd9",
+    "Scripts/Runtime/prepare-runtime-core.sh": "1ff99fabcbf8f40d515f3f1b944299286c1094a19520f9892a97f99cf8b64540"
+  },
+  "missingTargets": [],
+  "releaseTag": "sdk-native-v1-9b3b714bf5a29ac92472e5ffe530ec0c2f6ebf79f65faa506ad0d7f8ce88e37b",
+  "repository": "davidpovarsky/hanlin-ai",
+  "requiredTargets": [
+    "ReactNativeHeaders",
+    "React",
+    "ReactNativeDependencies",
+    "hermesvm",
+    "ExpoModulesJSI",
+    "ExpoModulesCore",
+    "ExpoModulesWorklets",
+    "ExpoUI",
+    "ExpoAsset",
+    "ExpoBrownfield",
+    "Libffi",
+    "TNSWidgets",
+    "NSCWinterTC",
+    "NodeMobile",
+    "Python"
+  ],
+  "schemaVersion": 1,
+  "scope": "full",
+  "sourceCommit": "1812bff50571c9907d15cd8b4bfbe4874be24756",
+  "state": "prepared",
+  "supportArtifacts": [
+    {
+      "archive": "HanlinExpoHeaderSupport.zip",
+      "bytes": 10675681,
+      "checksum": "90b3af259a3347adffb021f56e66ff82e926ea1e8668d5774b1d384650394c45",
+      "installPaths": [
+        "Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks",
+        "Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders"
+      ],
+      "kind": "host-support",
+      "metadataTool": null,
+      "requiredBy": [
+        "ReactNativeHeaders",
+        "React",
+        "ReactNativeDependencies",
+        "hermesvm",
+        "ExpoModulesJSI",
+        "ExpoModulesCore",
+        "ExpoModulesWorklets",
+        "ExpoUI",
+        "ExpoAsset",
+        "ExpoBrownfield",
+        "Libffi"
+      ],
+      "root": "HanlinExpoHeaderSupport",
+      "target": "HanlinExpoHeaderSupport",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/releases/download/sdk-native-v1-9b3b714bf5a29ac92472e5ffe530ec0c2f6ebf79f65faa506ad0d7f8ce88e37b/HanlinExpoHeaderSupport.zip"
+    },
+    {
+      "archive": "HanlinExpoWidgetRuntimeSupport.zip",
+      "bytes": 40471,
+      "checksum": "e81c064305804bb14fc5df401ac2c914d22e4172c4ddcd4fae3f7aa5b61b4dac",
+      "installPaths": [
+        "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle"
+      ],
+      "kind": "host-support",
+      "metadataTool": null,
+      "requiredBy": [
+        "ExpoUI",
+        "ExpoModulesCore"
+      ],
+      "root": "HanlinExpoWidgetRuntimeSupport",
+      "target": "HanlinExpoWidgetRuntimeSupport",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/releases/download/sdk-native-v1-9b3b714bf5a29ac92472e5ffe530ec0c2f6ebf79f65faa506ad0d7f8ce88e37b/HanlinExpoWidgetRuntimeSupport.zip"
+    },
+    {
+      "archive": "HanlinNativeScriptHostSupport.zip",
+      "bytes": 12837341,
+      "checksum": "e5e2e937e033ac46558c4de29113f0fd964a7098fe817d4f74a386b615a0fb10",
+      "installPaths": [
+        "Packages/HanlinNativeScriptRuntime/Artifacts/native-api-usage.json",
+        "Packages/HanlinNativeScriptRuntime/Artifacts/dependency-closure.json",
+        "build/nativescript-metadata-tool/bin",
+        "build/nativescript-metadata-tool/provenance.json",
+        "Scripts/NativeScript/node_modules/@nativescript/ios/framework/internal/metadata-generator-arm64/bin/build-step-metadata-generator.py",
+        "Scripts/NativeScript/node_modules/@nativescript/ios/framework/internal/metadata-generator-arm64/bin/build-step-metadata-generator-upstream.py"
+      ],
+      "kind": "host-support",
+      "metadataTool": {
+        "architecture": "arm64",
+        "boundary": "Build tool only. No NativeScript/Node/Python engine or app rebuilt; no VM pass.",
+        "cmakeSHA256": {
+          "metadata-generator/CMakeLists.txt": "0d64383530493f13d1bce04d367984bb6081e665814d893693f4b065fd1bcf51",
+          "metadata-generator/src/CMakeLists.txt": "0f0a48c60391e75c62db3387639de62088cb688e2d004a7576db36e02f18788b"
+        },
+        "cmakeSourceCommit": "8856ee520a44641dfed313a71cfc01dd47e0352b",
+        "generatorSHA256": "e2bfd9ecd5f5b235dda04b05b6b1b838c799323a558dee7e6651c8d6a93f9e25",
+        "llvmArchiveSHA256": "4d2eade1e9fb7a5fae1a502d0e5d935d20190007477743a1379d81838d87b832",
+        "patchSourceSHA256": "f4318f38b1c6a9c56ba54edb0d270a6374178fa5a8e024ebfddb9790f7ae3cf5",
+        "schemaVersion": 1,
+        "sourceArchiveSHA256": "fad3c54f5d321148e39c46eae6d9cbc8e2891afb414064eb3a10f64ba25d3f8b",
+        "sourceCommit": "5d4569c197810cdd4c1e02e7c16d42a01a77d5c0",
+        "xcode": "Xcode 27.0\nBuild version 27A266a"
+      },
+      "requiredBy": [
+        "TNSWidgets",
+        "NSCWinterTC"
+      ],
+      "root": "HanlinNativeScriptHostSupport",
+      "target": "HanlinNativeScriptHostSupport",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/releases/download/sdk-native-v1-9b3b714bf5a29ac92472e5ffe530ec0c2f6ebf79f65faa506ad0d7f8ce88e37b/HanlinNativeScriptHostSupport.zip"
+    },
+    {
+      "archive": "HanlinNodeHostSupport.zip",
+      "bytes": 76269863,
+      "checksum": "6b70979d06b7ad2418dcbe0a5ea8c47971299c4bf91d5db027bee7348ae872f0",
+      "installPaths": [
+        "AI_HLY/RuntimeHostResources.zip"
+      ],
+      "kind": "host-support",
+      "metadataTool": null,
+      "requiredBy": [
+        "NodeMobile"
+      ],
+      "root": "HanlinNodeHostSupport",
+      "target": "HanlinNodeHostSupport",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/releases/download/sdk-native-v1-9b3b714bf5a29ac92472e5ffe530ec0c2f6ebf79f65faa506ad0d7f8ce88e37b/HanlinNodeHostSupport.zip"
+    },
+    {
+      "archive": "HanlinPythonHostSupport.zip",
+      "bytes": 360,
+      "checksum": "9a69b3ab8a633dfa68df54bc94a780593372eec8305ca6df6962d4ff0aae89a8",
+      "installPaths": [
+        "Vendor/Python/Python-VERSIONS"
+      ],
+      "kind": "host-support",
+      "metadataTool": null,
+      "requiredBy": [
+        "Python"
+      ],
+      "root": "HanlinPythonHostSupport",
+      "target": "HanlinPythonHostSupport",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/releases/download/sdk-native-v1-9b3b714bf5a29ac92472e5ffe530ec0c2f6ebf79f65faa506ad0d7f8ce88e37b/HanlinPythonHostSupport.zip"
+    }
+  ]
+}

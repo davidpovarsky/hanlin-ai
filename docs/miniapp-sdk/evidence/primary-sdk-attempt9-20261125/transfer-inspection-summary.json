@@ -1,0 +1,147 @@
+{
+  "status": "VERIFIED",
+  "recordedAtUTC": "2026-11-25T00:40:31.110055+00:00",
+  "elapsedSeconds": 0.604359433054924,
+  "source": "1812bff50571c9907d15cd8b4bfbe4874be24756",
+  "sourceTree": "d06c5752c33c787df957a01d33461889cf5d7f4e",
+  "verifiedTransferMembers": 23,
+  "archive": {
+    "path": "build/runtime-host/RuntimeHostResources.zip",
+    "snapshotPath": "files/build/runtime-host/RuntimeHostResources.zip",
+    "bytes": 81813684,
+    "sha256": "3c94ebea1e314c280031ac475e2d42b63ebcf2dc2eb32d2c6e31905e3eda3240",
+    "mode": "0o644",
+    "actualSHA256": "3c94ebea1e314c280031ac475e2d42b63ebcf2dc2eb32d2c6e31905e3eda3240",
+    "verified": true
+  },
+  "preparedPaths": 9,
+  "preparedBytes": 1150910,
+  "canonicalBinding": {
+    "algorithm": "SHA256 of compact UTF-8 JSON rows sorted by path; keys path,beforeSHA256,afterSHA256,bytes,contentFrom",
+    "sha256": "651412fc7d95567ac27daa6c757bd3aa2f3cacaf6e50f85e6e96348073f64600"
+  },
+  "preparedRows": [
+    {
+      "path": "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "beforeSHA256": "08fe8608ac946c2759a05389b69c5601039cff61f41ad24fa55cee8d222cc2c2",
+      "afterSHA256": "610bcbb9a7f90c27e3bd3ecd3b1d139fe3ff72ed18086327d1d96c437de932f5",
+      "bytes": 9960,
+      "contentFrom": "tracked-delta/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "beforeMode": "100644",
+      "afterMode": "100644",
+      "contentChanged": true,
+      "modeChanged": false,
+      "pinComparison": {
+        "beforeCount": 39,
+        "afterCount": 39,
+        "added": [],
+        "removed": [],
+        "changes": [],
+        "allExistingRevisionsUnchanged": true,
+        "originHashBefore": "2d4c7d488dfeb79de7082ee7ae5ad1641c3f328e2ca38586de6711d0b6501c51",
+        "originHashAfter": "2d4c7d488dfeb79de7082ee7ae5ad1641c3f328e2ca38586de6711d0b6501c51"
+      }
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/original-runtime-receipt.json",
+      "beforeSHA256": "f7ad6d7bf5841f5a0be2f722a1b2735620aa06dcf4801cb73210688a7a135e64",
+      "afterSHA256": "3d619674297acb22ae4d0a97f5e7d8a878b0eccbc3bfc49769cfdb5a05248a0b",
+      "bytes": 6085,
+      "contentFrom": "tracked-delta/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/original-runtime-receipt.json",
+      "beforeMode": "100644",
+      "afterMode": "100644",
+      "contentChanged": true,
+      "modeChanged": false
+    },
+    {
+      "path": "Scripts/Expo/package-lock.json",
+      "beforeSHA256": "9ee1d2babe6266148d8f969b25f542c00897c569969e5aae6dd6f744e2a0c53c",
+      "afterSHA256": "c08757cf46ac4d5c86a873f676af4a3be585db64ae2e1aa1e8288277d4eb63b8",
+      "bytes": 336324,
+      "contentFrom": "tracked-delta/Scripts/Expo/package-lock.json",
+      "beforeMode": "100644",
+      "afterMode": "100644",
+      "contentChanged": true,
+      "modeChanged": false
+    },
+    {
+      "path": "Scripts/Expo/package.json",
+      "beforeSHA256": "da083105462f40368adb89acba0dbc1b623d2249b26b2ac1cbe1d326edc2bd3d",
+      "afterSHA256": "e2b50fae013276229c78619bbbe0b63d8c29b00fefde3afeccea98af117aa206",
+      "bytes": 1759,
+      "contentFrom": "tracked-delta/Scripts/Expo/package.json",
+      "beforeMode": "100644",
+      "afterMode": "100644",
+      "contentChanged": true,
+      "modeChanged": false
+    },
+    {
+      "path": "Scripts/MiniApps/upstream-resolution.json",
+      "beforeSHA256": "2bf8f371f06949fbe56858c38addeb417a07f9b598fc38ff72aedb39d5f364eb",
+      "afterSHA256": "e0c2944ea24c09330825dee58badedcec58606ba603ccdedc888abf1a63a13cb",
+      "bytes": 15092,
+      "contentFrom": "tracked-delta/Scripts/MiniApps/upstream-resolution.json",
+      "beforeMode": "100644",
+      "afterMode": "100644",
+      "contentChanged": true,
+      "modeChanged": false
+    },
+    {
+      "path": "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+      "beforeSHA256": "ad9c59d1962d516cd480de78cf5ee01fad11159cc0a73ee1a9cb3ea2f324b8a1",
+      "afterSHA256": "768731f0c748276aeab4d34f57ad3ad89fd38aa30f562ff0cc9b5ad9a3767368",
+      "bytes": 118804,
+      "contentFrom": "tracked-delta/docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+      "beforeMode": "100644",
+      "afterMode": "100644",
+      "contentChanged": true,
+      "modeChanged": false
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.json",
+      "beforeSHA256": "152806a609b662c373eedd382758f1298bf945883f0c467dc5595050f8f0fa29",
+      "afterSHA256": "854dd9133f9de88d62912273c16d11df484c357fb8cd309826e13c1f98fa7885",
+      "bytes": 147521,
+      "contentFrom": "tracked-delta/docs/miniapp-sdk/extension-reachability.json",
+      "beforeMode": "100644",
+      "afterMode": "100644",
+      "contentChanged": true,
+      "modeChanged": false
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.md",
+      "beforeSHA256": "f2cd972c7366043028bbaea078291717ae363b288d29ecf242fd358103f7a9b1",
+      "afterSHA256": "39e0f358f0597cdcc890d716a2b3631a72e751b4096296bd0d35543d03639ba6",
+      "bytes": 21494,
+      "contentFrom": "tracked-delta/docs/miniapp-sdk/extension-reachability.md",
+      "beforeMode": "100644",
+      "afterMode": "100644",
+      "contentChanged": true,
+      "modeChanged": false
+    },
+    {
+      "path": "docs/miniapp-sdk/source-inventory.json",
+      "beforeSHA256": "b126e18f8a228e2235ef8ef324a31f0b9b6e3384e6af0f82755e35c4bcccaeef",
+      "afterSHA256": "104df0d315f5ddd5b8897e305d20d37c667dd43b6f7d788a3fc872692a13300e",
+      "bytes": 493871,
+      "contentFrom": "tracked-delta/docs/miniapp-sdk/source-inventory.json",
+      "beforeMode": "100644",
+      "afterMode": "100644",
+      "contentChanged": true,
+      "modeChanged": false
+    }
+  ],
+  "semanticDifferenceCounts": {
+    "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved": 0,
+    "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/original-runtime-receipt.json": 2,
+    "Scripts/Expo/package-lock.json": 4,
+    "Scripts/Expo/package.json": 1,
+    "Scripts/MiniApps/upstream-resolution.json": 4,
+    "docs/miniapp-sdk/MANIFEST_REFERENCE.md": 0,
+    "docs/miniapp-sdk/extension-reachability.json": 14,
+    "docs/miniapp-sdk/extension-reachability.md": 0,
+    "docs/miniapp-sdk/source-inventory.json": 294
+  },
+  "nativeStatusAtCapture": "PAUSED_AFTER_PHASE",
+  "rawMembersRetained": 33
+}

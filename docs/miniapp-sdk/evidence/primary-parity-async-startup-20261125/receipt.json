@@ -1,0 +1,76 @@
+{
+  "schema": 1,
+  "createdAt": "2026-11-25T02:55:36.671604+00:00",
+  "base": "d4fbdf731dbadc95a13ead306a6d02ae61a88aad",
+  "nativeCauseReceiptSHA256": "56cd644b34012d4e4f690621f7c734bc0d3b58143d3fa9e6605e822a8c91161f",
+  "status": "PORTABLE_PASS_NATIVE_PENDING",
+  "members": [
+    {
+      "path": "README.md",
+      "bytes": 3043,
+      "sha256": "b7bf348a8476317dffb80009c1ca417dd4d4399f09cc558aabf4f79e03144768"
+    },
+    {
+      "path": "baseline-contract-tests.log",
+      "bytes": 11264,
+      "sha256": "e4321077f08ff097016c8f56b6de446955bad62c2c4919d411943f23cf7f0c24"
+    },
+    {
+      "path": "candidate-contract-tests.log",
+      "bytes": 3551,
+      "sha256": "79db4ba436031468513915cfc6dad5d4789bd519ca121e3308ff91c94b06a9c9"
+    },
+    {
+      "path": "ci-fixture-test-discovery.log",
+      "bytes": 103,
+      "sha256": "173a3bc2a72b7de3f3dcb844913a3dff7d6feb050c28b66ba4475f4811d76264"
+    },
+    {
+      "path": "diff-check.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "existing-fixture-tests.log",
+      "bytes": 102,
+      "sha256": "56e03afda220e7ba78bbcecf9a2e53a0149cfc3e311fa10bbd01b25e8e5ba671"
+    },
+    {
+      "path": "portable-verification.json",
+      "bytes": 3189,
+      "sha256": "520e6fadf7bdb3ec243d1d39bcd5f1883760eec8a0f77ebac4158acd2b776ded"
+    },
+    {
+      "path": "syntax-check.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "sourceBindings": [
+    {
+      "path": "DemoMiniApps/hanlin-script-parity/nativescript/app/bundle.mjs",
+      "bytes": 25868,
+      "sha256": "5f21796994e3880ba5d5c9f0e6d23b3fa12a667ff6082183f604d214a61284b1"
+    },
+    {
+      "path": "DemoMiniApps/hanlin-script-parity.hanlinNativeScript",
+      "bytes": 7512,
+      "sha256": "2e48509336edba2b301490422102dbf25cb7f1b894430d52994febdc1c33c199"
+    },
+    {
+      "path": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+      "bytes": 75966,
+      "sha256": "995e98e35d5f4f464c3b83062b136b14f74c7445c040d2118baffd3bcaea9052"
+    },
+    {
+      "path": "Scripts/CI/Tests/nativescript_parity_async_startup.test.mjs",
+      "bytes": 4301,
+      "sha256": "a7bd2ebc42afc8942ba43d7abecac80921469fde70e51bee896874deb14a18e9"
+    },
+    {
+      "path": "Scripts/CI/Tests/test_nativescript_parity_fixture.py",
+      "bytes": 3588,
+      "sha256": "3332ba2adf3c9e180eaecdcaeac8f23c4545f5887adaafe70650ad6f4e39414e"
+    }
+  ]
+}

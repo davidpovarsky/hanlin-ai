@@ -1,0 +1,65 @@
+{
+  "status": "PASS",
+  "observedAt": "2026-11-25T02:34:34.867125+00:00",
+  "inspectionStartedAt": "2026-11-25T02:34:31.128714+00:00",
+  "elapsedSeconds": 3.7384072467684746,
+  "source": "fda6948ca6a1f541293a1a1dd20e97f75eb0a527",
+  "archiveSHA256": "86733eba5d80156edf52da87f0f371c208122d6e60f618f182990330514984c3",
+  "archiveBytes": 81813686,
+  "manifestSHA256": "19726b5eecc1459e30dae9e7ec4ca6761001de92b22055ac41b9a96aabdd7a88",
+  "manifestBytes": 5219389,
+  "inputSHA256": "998e474dfeb225185e91ac4886d4b3aec517dfc55cd16cac0f46366b55494d56",
+  "actualSDKMembersVerified": 25661,
+  "actualSDKBytesVerified": 294393847,
+  "changedInputs": 3,
+  "unchangedInputs": 219,
+  "changedSDKMembers": 3,
+  "unchangedSDKMembers": 25658,
+  "unchangedOutsideSDKHostMembers": 3102,
+  "changedOutsideSDKHostMembers": 0,
+  "groups": {
+    "declarations": {
+      "members": 5210,
+      "unchanged": 5210,
+      "changed": []
+    },
+    "examples": {
+      "members": 29,
+      "unchanged": 29,
+      "changed": []
+    },
+    "public-docs": {
+      "members": 25,
+      "unchanged": 22,
+      "changed": [
+        "docs/miniapp-sdk/extension-reachability.json",
+        "docs/miniapp-sdk/extension-reachability.md",
+        "docs/miniapp-sdk/source-inventory.json"
+      ]
+    },
+    "original-compiler-entrypoints": {
+      "members": 2,
+      "unchanged": 2,
+      "changed": []
+    }
+  },
+  "originalDeclarationCompatibilityFiles": 5,
+  "originalDeclarationSubstitutions": 7,
+  "documentationProjects": 4,
+  "documentationDiagnostics": 0,
+  "nativeRequiredTargets": 15,
+  "missingNativeTargets": 0,
+  "hostTests": {
+    "tests": 170,
+    "pass": 169,
+    "fail": 0,
+    "skipped": 1
+  },
+  "preparedSourceRows": 9,
+  "preparedSourceBytes": 1150910,
+  "preparedCanonicalBinding": {
+    "algorithm": "SHA256 of compact UTF-8 JSON rows sorted by path; keys path,beforeSHA256,afterSHA256,bytes,contentFrom",
+    "sha256": "2ede76e578db6102b726978de94fbd15507028644926cf5404af7cd0f8734834"
+  },
+  "consumerAndAcceptance": "PENDING_SEPARATE_ACTUAL_OBSERVATION"
+}
