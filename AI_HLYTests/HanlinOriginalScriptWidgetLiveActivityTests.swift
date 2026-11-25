@@ -103,6 +103,35 @@ struct HanlinOriginalScriptWidgetLiveActivityTests {
     }
 
 #if os(iOS)
+    private enum ActivityContentObservationError: Error { case timedOut, ended }
+
+    @MainActor
+    private func waitForContentState(
+        of activity: Activity<HanlinScriptWidgetLiveActivityAttributes>, revision: UInt64
+    ) async throws -> HanlinScriptWidgetLiveActivityAttributes.ContentState {
+        try await withThrowingTaskGroup(of: HanlinScriptWidgetLiveActivityAttributes.ContentState.self) { group in
+            defer { group.cancelAll() }
+            group.addTask { @MainActor in
+                // Prepare asynchronous observation before checking an already-published state.
+                var updates = activity.contentUpdates.makeAsyncIterator()
+                try Task.checkCancellation()
+                let current = activity.content.state
+                if current.revision == revision { return current }
+                while let content = await updates.next() {
+                    try Task.checkCancellation()
+                    if content.state.revision == revision { return content.state }
+                }
+                throw ActivityContentObservationError.ended
+            }
+            group.addTask {
+                try await Task.sleep(for: .seconds(5))
+                throw ActivityContentObservationError.timedOut
+            }
+            guard let observed = try await group.next() else { throw ActivityContentObservationError.ended }
+            return observed
+        }
+    }
+
     @Test @MainActor
     func actualActivityKitStartsUpdatesAndEndsTheOriginalProgram() async throws {
         let (temporaryRoot, temporaryStore, originalInstance) = try fixture()
@@ -143,9 +172,10 @@ struct HanlinOriginalScriptWidgetLiveActivityTests {
             let updated = try await HanlinScriptWidgetLiveActivityController.update(store: store,
                 systemActivityID: systemID, installedPackageID: installedID.rawValue, values: ["count": .number(9)])
             #expect(updated)
-            #expect(activity.content.state.revision == 2)
+            let observedState = try await waitForContentState(of: activity, revision: 2)
+            #expect(observedState.revision == 2)
             let rendered = try HanlinScriptWidgetLiveActivityPreparation.load(
-                store: store, attributes: activity.attributes, state: activity.content.state)
+                store: store, attributes: activity.attributes, state: observedState)
             #expect(rendered.node.children == [.value(.string("Count 9"))])
             #expect(rendered.dynamicIsland?.minimal?.children == [.value(.string("m9"))])
             let ended = try await HanlinScriptWidgetLiveActivityController.end(store: store,
