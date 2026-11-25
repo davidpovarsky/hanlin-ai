@@ -2,6 +2,7 @@ import Foundation
 
 public enum HanlinCalendarRequestError: Error, Equatable, Sendable, LocalizedError {
     case invalidDate(String)
+    case invalidField(String)
     case invalidInteger(String)
     case invalidDateRange
     case invalidEventType
@@ -13,6 +14,7 @@ public enum HanlinCalendarRequestError: Error, Equatable, Sendable, LocalizedErr
 
     public var errorDescription: String? {
         switch self {
+        case .invalidField(let field): "Invalid calendar argument: \(field)."
         case .invalidDate(let field): "The \(field) date is invalid."
         case .invalidInteger(let field): "The \(field) value must be an integer."
         case .invalidDateRange: "The calendar start date must not be after the end date."
@@ -119,22 +121,32 @@ public struct HanlinCalendarSearchRequest: Sendable {
         self.eventType = type
     }
 
-    /// Preserve the original one-day padding and five-year default lookaround.
-    /// The fallback is anchored to a supplied endpoint, so a future-only or
-    /// historical-only query cannot manufacture an inverted DateInterval.
+    /// Date-only searches use [start of first day, start of following day).
+    /// Never broaden the lower bound into the previous day.
     public func calendarInterval(now: Date = .now, calendar: Calendar = .current) throws -> DateInterval {
         try HanlinCalendarDateParser.validate(now, field: "reference")
         let window: TimeInterval = 5 * 365 * 24 * 60 * 60
-        let lower = startDate.flatMap { calendar.date(byAdding: .day, value: -1, to: $0) }
+        let lower = startDate.map { calendar.startOfDay(for: $0) }
             ?? min(now, endDate ?? now).addingTimeInterval(-window)
-        let upper = endDate.flatMap { calendar.date(byAdding: .day, value: 1, to: $0) }
-            ?? max(now, startDate ?? now).addingTimeInterval(window)
+        let upper = endDate.flatMap {
+            calendar.date(byAdding: .day, value: 1, to: calendar.startOfDay(for: $0))
+        } ?? max(now, startDate ?? now).addingTimeInterval(window)
         guard lower.timeIntervalSinceReferenceDate.isFinite,
-              upper.timeIntervalSinceReferenceDate.isFinite, lower <= upper else {
+              upper.timeIntervalSinceReferenceDate.isFinite, lower < upper else {
             throw HanlinCalendarRequestError.invalidDateRange
         }
         return DateInterval(start: lower, end: upper)
     }
+
+    public func matchesDate(_ date: Date?, calendar: Calendar = .current) -> Bool {
+        guard let date else { return startDate == nil && endDate == nil }
+        let lower = startDate.map { calendar.startOfDay(for: $0) }
+        let upper = endDate.flatMap {
+            calendar.date(byAdding: .day, value: 1, to: calendar.startOfDay(for: $0))
+        }
+        return (lower.map { date >= $0 } ?? true) && (upper.map { date < $0 } ?? true)
+    }
+
 }
 
 public struct HanlinCalendarWriteRequest: Sendable {
@@ -195,12 +207,16 @@ public struct HanlinSystemEvent: Sendable {
     public let priority: Int?
     public let completed: Bool?
     public let identifier: String
+    public let calendarID: String?
+    public let occurrenceDate: Date?
 
     public init(type: String, title: String, startDate: Date? = nil, endDate: Date? = nil,
                 dueDate: Date? = nil, location: String? = nil, notes: String? = nil,
-                priority: Int? = nil, completed: Bool? = nil, identifier: String) {
+                priority: Int? = nil, completed: Bool? = nil, identifier: String,
+                calendarID: String? = nil, occurrenceDate: Date? = nil) {
         self.type = type; self.title = title; self.startDate = startDate; self.endDate = endDate
         self.dueDate = dueDate; self.location = location; self.notes = notes
         self.priority = priority; self.completed = completed; self.identifier = identifier
+        self.calendarID = calendarID; self.occurrenceDate = occurrenceDate
     }
 }

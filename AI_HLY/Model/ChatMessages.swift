@@ -72,7 +72,13 @@ public struct EventItem: Codable, Hashable, Sendable {
     public var notes: String?
     public var priority: Int?             // 仅 reminder 用
     public var completed: Bool?           // 仅 reminder 用
+    /// Historical messages stored the item ID under this misleading name.
     public var calendarIdentifier: String?
+    public var itemIdentifier: String? = nil
+    public var calendarID: String? = nil
+    public var occurrenceDate: Date? = nil
+
+    public var resolvedItemIdentifier: String? { itemIdentifier ?? calendarIdentifier }
 }
 
 // 健康数据结构体

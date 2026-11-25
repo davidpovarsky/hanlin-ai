@@ -58,7 +58,7 @@ struct LegacyToolMigrationTests {
     @Test("Category toggles correctly filter legacy tool sources")
     func legacyAdapterCategoryFiltering() throws {
         let allSources = LegacyToolCanonicalAdapter.sources()
-        #expect(allSources.count == 24)
+        #expect(allSources.count == 25)
 
         // Memory toggle
         let noMemory = LegacyToolCanonicalAdapter.sources(memoryEnabled: false)
@@ -66,16 +66,16 @@ struct LegacyToolMigrationTests {
         for name in memoryNames {
             #expect(!noMemory.contains(where: { $0.toolName == name }))
         }
-        #expect(noMemory.count == 21)
+        #expect(noMemory.count == 22)
 
         // Weather toggle
         let noWeather = LegacyToolCanonicalAdapter.sources(weatherEnabled: false)
         #expect(!noWeather.contains(where: { $0.toolName == "query_weather" }))
-        #expect(noWeather.count == 23)
+        #expect(noWeather.count == 24)
 
         // Calendar toggle
         let noCalendar = LegacyToolCanonicalAdapter.sources(calendarEnabled: false)
-        let calendarNames = ["search_calendar_and_reminders", "write_system_event"]
+        let calendarNames = ["search_calendar_and_reminders", "write_system_event", "manage_calendar"]
         for name in calendarNames {
             #expect(!noCalendar.contains(where: { $0.toolName == name }))
         }
@@ -87,7 +87,7 @@ struct LegacyToolMigrationTests {
         for name in mapNames {
             #expect(!noMap.contains(where: { $0.toolName == name }))
         }
-        #expect(noMap.count == 20)
+        #expect(noMap.count == 21)
 
         // Health toggle
         let noHealth = LegacyToolCanonicalAdapter.sources(healthEnabled: false)
@@ -95,7 +95,7 @@ struct LegacyToolMigrationTests {
         for name in healthNames {
             #expect(!noHealth.contains(where: { $0.toolName == name }))
         }
-        #expect(noHealth.count == 20)
+        #expect(noHealth.count == 21)
     }
 
     @MainActor

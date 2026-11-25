@@ -165,3 +165,91 @@ struct HanlinCalendarCallbackOperationTests {
         #expect(!didStart)
     }
 }
+
+@Suite("Calendar operation contracts")
+struct HanlinCalendarOperationRequestTests {
+    @Test
+    func reminderEndDayIncludesAfternoonAndExcludesFollowingMidnight() throws {
+        let zone = try #require(TimeZone(identifier: "Asia/Jerusalem"))
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = zone
+        let start = try #require(try HanlinCalendarDateParser.day("2026-11-25", field: "start", timeZone: zone))
+        let end = try #require(try HanlinCalendarDateParser.day("2026-11-27", field: "end", timeZone: zone))
+        let request = try HanlinCalendarSearchRequest(startDate: start, endDate: end, eventType: "reminder")
+        let afternoon = try #require(try HanlinCalendarDateParser.timestamp("2026-11-27T15:30:00+02:00", field: "due"))
+        let nextDay = try #require(try HanlinCalendarDateParser.timestamp("2026-11-28T00:00:00+02:00", field: "due"))
+        let previousDay = try #require(try HanlinCalendarDateParser.timestamp("2026-11-24T23:59:00+02:00", field: "due"))
+        #expect(request.matchesDate(afternoon, calendar: calendar))
+        #expect(!request.matchesDate(nextDay, calendar: calendar))
+        #expect(!request.matchesDate(previousDay, calendar: calendar))
+        #expect(try request.calendarInterval(calendar: calendar).start == start)
+    }
+
+    @Test
+    func inclusiveDayRangeUsesCalendarArithmeticAcrossDST() throws {
+        let zone = try #require(TimeZone(identifier: "America/New_York"))
+        let request = try HanlinCalendarOperationRequest.decode(#"{"operation":"list_events","start_date":"2026-03-08","end_date":"2026-03-08"}"#)
+        let bounds = try request.queryBounds(timeZone: zone)
+        let start = try #require(bounds.start)
+        let end = try #require(bounds.end)
+        #expect(end.timeIntervalSince(start) == 23 * 60 * 60)
+    }
+
+    @Test(arguments: ["update_event", "delete_event", "update_reminder", "delete_reminder", "complete_reminder", "reopen_reminder"])
+    func mutationRequiresAnActualIdentifier(operation: String) {
+        let json = "{\"operation\":\"\(operation)\",\"item\":{\"notes\":\"changed\"}}"
+        #expect(throws: HanlinCalendarRequestError.self) { try HanlinCalendarOperationRequest.decode(json) }
+    }
+
+    @Test
+    func patchKeepsOmittedFieldsAndExplicitClearDistinct() throws {
+        let patch = try HanlinCalendarOperationRequest.decode(#"{"operation":"update_reminder","identifier":"saved-id","item":{"notes":"trip home"}} "#)
+        #expect(patch.identifier == "saved-id")
+        #expect(patch.item?.notes == "trip home")
+        #expect(patch.item?.title == nil && patch.item?.alarms == nil && patch.item?.recurrenceRules == nil)
+        let cleared = try HanlinCalendarOperationRequest.decode(#"{"operation":"update_reminder","identifier":"saved-id","item":{"clear_fields":["notes"]}}"#)
+        #expect(cleared.item?.notes == nil && cleared.item?.clearFields == ["notes"])
+        #expect(throws: HanlinCalendarRequestError.self) {
+            try HanlinCalendarOperationRequest.decode(#"{"operation":"update_reminder","identifier":"saved-id","item":{"notes":"keep","clear_fields":["notes"]}}"#)
+        }
+    }
+
+    @Test(arguments: [
+        #"{"operation":"update_event","identifier":"id","item":{"attendees":["a@example.com"]}}"#,
+        #"{"operation":"create_event","item":{"title":"A","start_date":"2026-11-27T15:00:00Z"}}"#,
+        #"{"operation":"update_reminder","identifier":"id","item":{"is_all_day":true}}"#,
+        #"{"operation":"request_access","entity_type":"reminder","access":"write_only"}"#,
+        #"{"operation":"create_calendar","entity_type":"event","calendar":{"title":"A"}}"#,
+        #"{"operation":"list_events","start_date":"2026-11-27","end_date":"2026-11-26"}"#,
+        #"{"operation":"update_reminder","identifier":"id","item":{"notes":null}}"#
+    ])
+    func invalidArgumentsCannotReachEventKit(json: String) {
+        #expect(throws: HanlinCalendarRequestError.self) { try HanlinCalendarOperationRequest.decode(json) }
+    }
+
+    @Test
+    func completePublicWritablePayloadDecodes() throws {
+        let request = try HanlinCalendarOperationRequest.decode(#"""
+        {"operation":"create_event","item":{"title":"Weekly visit","calendar_identifier":"list",
+        "start_date":"2026-11-27T15:00:00+02:00","end_date":"2026-11-27T16:00:00+02:00",
+        "time_zone":"Asia/Jerusalem","is_all_day":false,"availability":"busy",
+        "location":"Home","structured_location":{"title":"Home","latitude":31.7,"longitude":35.2,"radius":100},
+        "url":"https://example.com","notes":"Bring notes",
+        "alarms":[{"relative_offset":-900},{"absolute_date":"2026-11-27T10:00:00+02:00"}],
+        "recurrence_rules":[{"frequency":"weekly","interval":1,"days_of_week":[{"day":6}],"occurrence_count":4}]}}
+        """#)
+        #expect(request.operation == .createEvent)
+        #expect(request.item?.alarms?.count == 2)
+        #expect(request.item?.recurrenceRules?.first?.daysOfWeek?.first?.day == 6)
+    }
+
+    @Test
+    func invalidRecurrenceAndAlarmAreRejected() {
+        #expect(throws: HanlinCalendarRequestError.self) {
+            try HanlinCalendarOperationRequest.decode(#"{"operation":"update_event","identifier":"id","item":{"recurrence_rules":[{"frequency":"weekly","interval":0}]}}"#)
+        }
+        #expect(throws: HanlinCalendarRequestError.self) {
+            try HanlinCalendarOperationRequest.decode(#"{"operation":"update_reminder","identifier":"id","item":{"alarms":[{"relative_offset":-10,"absolute_date":"2026-11-27T12:00:00Z"}]}}"#)
+        }
+    }
+}

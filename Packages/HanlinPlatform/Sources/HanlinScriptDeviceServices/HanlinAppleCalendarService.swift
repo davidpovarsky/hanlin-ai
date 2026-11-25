@@ -23,7 +23,7 @@ public struct HanlinScriptReminderItem: Sendable {
 
 @MainActor
 public final class HanlinAppleCalendarService {
-    private let store: EKEventStore
+    let store: EKEventStore
 
     public init(store: EKEventStore = .init()) { self.store = store }
 
@@ -67,12 +67,12 @@ public final class HanlinAppleCalendarService {
                 let locationMatches = request.location.map {
                     (event.location ?? "").localizedCaseInsensitiveContains($0)
                 } ?? true
-                let dateMatches = event.startDate.map(interval.contains)
-                    ?? (request.startDate == nil && request.endDate == nil)
+                let dateMatches = request.matchesDate(event.startDate)
                 if keywordMatches && locationMatches && dateMatches {
                     result.append(.init(type: "calendar", title: title, startDate: event.startDate,
                         endDate: event.endDate, location: event.location, notes: event.notes,
-                        identifier: event.calendarItemIdentifier))
+                        identifier: event.calendarItemIdentifier, calendarID: event.calendar?.calendarIdentifier,
+                        occurrenceDate: event.occurrenceDate))
                 }
             }
         }
@@ -84,7 +84,8 @@ public final class HanlinAppleCalendarService {
                     .init(type: "reminder", title: reminder.title ?? "",
                         dueDate: reminder.dueDateComponents?.date, notes: reminder.notes,
                         priority: reminder.priority == 0 ? nil : reminder.priority,
-                        completed: reminder.isCompleted, identifier: reminder.calendarItemIdentifier)
+                        completed: reminder.isCompleted, identifier: reminder.calendarItemIdentifier,
+                        calendarID: reminder.calendar?.calendarIdentifier)
                 }
             }
             result += reminders.filter { reminder in
@@ -95,13 +96,7 @@ public final class HanlinAppleCalendarService {
                 let locationMatches = request.location.map {
                     reminder.title.localizedCaseInsensitiveContains($0) || notes.localizedCaseInsensitiveContains($0)
                 } ?? true
-                let dateMatches: Bool
-                if let due = reminder.dueDate {
-                    dateMatches = (request.startDate.map { due >= $0 } ?? true)
-                        && (request.endDate.map { due <= $0 } ?? true)
-                } else {
-                    dateMatches = request.startDate == nil && request.endDate == nil
-                }
+                let dateMatches = request.matchesDate(reminder.dueDate)
                 return keywordMatches && locationMatches && dateMatches
             }
         }
@@ -126,7 +121,8 @@ public final class HanlinAppleCalendarService {
             try store.save(event, span: .thisEvent)
             return .init(type: request.type, title: request.title, startDate: request.startDate,
                 endDate: request.endDate, location: request.location, notes: request.notes,
-                identifier: event.calendarItemIdentifier)
+                identifier: event.calendarItemIdentifier, calendarID: event.calendar?.calendarIdentifier,
+                occurrenceDate: event.occurrenceDate)
         }
         let due = request.dueDate.map {
             Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second, .timeZone], from: $0)
@@ -145,7 +141,7 @@ public final class HanlinAppleCalendarService {
 
     /// EventKit shortens a single predicate to four years. Partition the original
     /// five-years-each-way search so current and future events are not silently lost.
-    private func calendarEvents(from startDate: Date, to endDate: Date) throws -> [EKEvent] {
+    func calendarEvents(from startDate: Date, to endDate: Date, calendars: [EKCalendar]? = nil) throws -> [EKEvent] {
         let intervals = try HanlinCalendarDateParser.eventIntervals(start: startDate, end: endDate)
         let deadline = ContinuousClock.now.advanced(by: .seconds(30))
         var result: [EKEvent] = []
@@ -153,7 +149,7 @@ public final class HanlinAppleCalendarService {
         for interval in intervals {
             try Task.checkCancellation()
             guard ContinuousClock.now < deadline else { throw HanlinCalendarRequestError.timedOut }
-            let predicate = store.predicateForEvents(withStart: interval.start, end: interval.end, calendars: nil)
+            let predicate = store.predicateForEvents(withStart: interval.start, end: interval.end, calendars: calendars)
             for event in store.events(matching: predicate) {
                 // Recurring occurrences share an identifier but have different dates.
                 let key = event.calendarItemIdentifier + "/" + String(event.startDate?.timeIntervalSinceReferenceDate ?? 0)
@@ -163,7 +159,7 @@ public final class HanlinAppleCalendarService {
         return result
     }
 
-    private func fetchReminders<Value: Sendable>(
+    func fetchReminders<Value: Sendable>(
         matching predicate: NSPredicate,
         transform: @escaping @Sendable ([EKReminder]) throws -> Value
     ) async throws -> Value {

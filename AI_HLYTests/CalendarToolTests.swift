@@ -170,3 +170,167 @@ final class HanlinEventKitAcceptanceFixture {
     }
 }
 #endif
+
+@MainActor
+@Suite("Calendar operation dispatch and receipts")
+struct CalendarOperationToolTests {
+    @Test
+    func noteUpdateDispatchesExistingIDAndEmitsSavedCard() async throws {
+        let container = try ModelContainer(for: ToolKeys.self,
+            configurations: ModelConfiguration(isStoredInMemoryOnly: true))
+        let api = APIManager(context: container.mainContext)
+        var dispatches = 0
+        let result = await api.executeLegacyTool(name: "manage_calendar",
+            argumentsJSON: #"{"operation":"update_reminder","identifier":"existing-reminder","item":{"notes":"Trip to parents"}}"#,
+            context: .init(localeIdentifier: "he"), continuation: nil,
+            calendarOperationProvider: { request in
+                dispatches += 1
+                #expect(request.operation == .updateReminder && request.identifier == "existing-reminder")
+                #expect(request.item?.notes == "Trip to parents" && request.item?.title == nil)
+                return .init(operation: .updateReminder, committed: true,
+                    modelText: #"{"status":"succeeded","operation":"update_reminder","committed":true,"identifier":"existing-reminder","notes":"Trip to parents"}"#,
+                    items: [.init(type: "reminder", title: "Candles", notes: "Trip to parents", identifier: "existing-reminder")])
+            })
+        #expect(dispatches == 1 && result.outcome == .succeeded && !result.isError)
+        #expect(result.hasLegacyPresentationPayload)
+        #expect(api.events?.count == 1 && api.events?.first?.resolvedItemIdentifier == "existing-reminder")
+        #expect(result.modelText.contains("\"committed\":true"))
+    }
+
+    @Test
+    func updateWithoutIDNeverDispatchesAndCannotCreateReplacement() async throws {
+        let container = try ModelContainer(for: ToolKeys.self,
+            configurations: ModelConfiguration(isStoredInMemoryOnly: true))
+        let api = APIManager(context: container.mainContext)
+        var dispatches = 0
+        let result = await api.executeLegacyTool(name: "manage_calendar",
+            argumentsJSON: #"{"operation":"update_reminder","item":{"notes":"Changed"}}"#,
+            context: .init(localeIdentifier: "en"), continuation: nil,
+            calendarOperationProvider: { _ in
+                dispatches += 1
+                return .init(operation: .updateReminder, committed: true, modelText: "unexpected")
+            })
+        #expect(dispatches == 0 && result.outcome == .invalidArguments && result.isError)
+        #expect(api.events == nil && !result.hasLegacyPresentationPayload)
+    }
+
+    @Test
+    func failedUpdateHasNoSuccessCardOrCommittedReceipt() async throws {
+        let container = try ModelContainer(for: ToolKeys.self,
+            configurations: ModelConfiguration(isStoredInMemoryOnly: true))
+        let api = APIManager(context: container.mainContext)
+        let result = await api.executeLegacyTool(name: "manage_calendar",
+            argumentsJSON: #"{"operation":"update_reminder","identifier":"missing","item":{"notes":"Changed"}}"#,
+            context: .init(localeIdentifier: "en"), continuation: nil,
+            calendarOperationProvider: { _ in throw HanlinAppleDeviceServiceError.denied(.reminders) })
+        #expect(result.outcome == .rejectedByCapability && result.isError)
+        #expect(api.events == nil && !result.hasLegacyPresentationPayload)
+        #expect(!result.modelText.contains("\"committed\":true"))
+    }
+
+    @Test
+    func legacyItemIdentifierSurvivesHistoryDecoding() throws {
+        let item = try JSONDecoder().decode(EventItem.self,
+            from: Data(#"{"type":"reminder","title":"Old item","calendarIdentifier":"real-item-id"}"#.utf8))
+        #expect(item.resolvedItemIdentifier == "real-item-id")
+        #expect(item.calendarID == nil)
+        let reread = try JSONDecoder().decode(EventItem.self, from: JSONEncoder().encode(item))
+        #expect(reread.resolvedItemIdentifier == "real-item-id")
+    }
+
+    @Test
+    func calendarSchemaAndSkillExposeOperationsAndReceiptRules() throws {
+        let function = try #require(calendarOperationToolSchema()["function"] as? [String: Any])
+        let parameters = try #require(function["parameters"] as? [String: Any])
+        let properties = try #require(parameters["properties"] as? [String: Any])
+        let operation = try #require(properties["operation"] as? [String: Any])
+        #expect(Set(try #require(operation["enum"] as? [String])) == Set(HanlinCalendarOperation.allCases.map(\.rawValue)))
+        let sources = LegacyToolCanonicalAdapter.sources()
+        let tool = try #require(sources.first(where: { $0.toolName == "manage_calendar" }))
+        #expect(tool.descriptor.risk == .write)
+        #expect(tool.descriptor.approvalPolicy.actionParameter == "operation")
+        #expect(tool.descriptor.approvalPolicy.nonSensitiveActions == ["authorization_status"])
+    }
+}
+
+#if targetEnvironment(simulator)
+@MainActor
+@Suite("Native saved calendar item regression")
+struct CalendarNativeMutationTests {
+    @Test
+    func updateReminderNotesPreservesIdentityAndEndDaySearchFindsIt() async throws {
+        let store = EKEventStore()
+        try #require(EKEventStore.authorizationStatus(for: .reminder) == .fullAccess,
+                     "Run the existing calendar simulator permission preparation first.")
+        let service = HanlinAppleCalendarService(store: store)
+        let title = "Hanlin owned note regression " + UUID().uuidString
+        func request(_ payload: [String: Any]) throws -> HanlinCalendarOperationRequest {
+            let data = try JSONSerialization.data(withJSONObject: payload)
+            return try .decode(String(decoding: data, as: UTF8.self))
+        }
+        let create = try await service.execute(request([
+            "operation": "create_reminder",
+            "item": ["title": title, "due_date": "2026-11-27T15:30:00+02:00", "notes": "Original"]
+        ]))
+        let id = try #require(create.items.first?.identifier)
+        defer {
+            if let remaining = store.calendarItem(withIdentifier: id) as? EKReminder {
+                do { try store.remove(remaining, commit: true) }
+                catch { Issue.record("Could not remove the owned reminder fixture: \(error)") }
+            }
+        }
+        let update = try await service.execute(request([
+            "operation": "update_reminder", "identifier": id, "item": ["notes": "Trip to parents"]
+        ]))
+        #expect(update.committed && update.items.first?.identifier == id)
+        let saved = try #require(store.calendarItem(withIdentifier: id) as? EKReminder)
+        #expect(saved.title == title && saved.notes == "Trip to parents")
+        let search = try await service.execute(request([
+            "operation": "list_reminders", "start_date": "2026-11-27", "end_date": "2026-11-27", "keyword": title
+        ]))
+        let result = try #require(try JSONSerialization.jsonObject(with: Data(search.modelText.utf8)) as? [String: Any])
+        let data = try #require(result["data"] as? [String: Any])
+        #expect(data["total_count"] as? Int == 1)
+        _ = try await service.execute(request(["operation": "complete_reminder", "identifier": id]))
+        #expect((store.calendarItem(withIdentifier: id) as? EKReminder)?.isCompleted == true)
+        _ = try await service.execute(request(["operation": "reopen_reminder", "identifier": id]))
+        #expect((store.calendarItem(withIdentifier: id) as? EKReminder)?.isCompleted == false)
+        _ = try await service.execute(request(["operation": "delete_reminder", "identifier": id]))
+        #expect(store.calendarItem(withIdentifier: id) == nil)
+    }
+
+    @Test
+    func eventNotePatchPreservesAlarmAndRecurrence() async throws {
+        let store = EKEventStore()
+        try #require(EKEventStore.authorizationStatus(for: .event) == .fullAccess,
+                     "Run the existing calendar simulator permission preparation first.")
+        let service = HanlinAppleCalendarService(store: store)
+        let title = "Hanlin owned event regression " + UUID().uuidString
+        func request(_ payload: [String: Any]) throws -> HanlinCalendarOperationRequest {
+            try .decode(String(decoding: JSONSerialization.data(withJSONObject: payload), as: UTF8.self))
+        }
+        let create = try await service.execute(request([
+            "operation": "create_event", "item": ["title": title,
+                "start_date": "2027-01-08T15:00:00+02:00", "end_date": "2027-01-08T16:00:00+02:00",
+                "alarms": [["relative_offset": -900]],
+                "recurrence_rules": [["frequency": "weekly", "occurrence_count": 3]]]
+        ]))
+        let id = try #require(create.items.first?.identifier)
+        defer {
+            if let event = store.calendarItem(withIdentifier: id) as? EKEvent {
+                do { try store.remove(event, span: .futureEvents, commit: true) }
+                catch { Issue.record("Could not remove the owned event fixture: \(error)") }
+            }
+        }
+        let update = try await service.execute(request([
+            "operation": "update_event", "identifier": id, "span": "future_events",
+            "occurrence_date": "2027-01-08T15:00:00+02:00", "item": ["notes": "Saved note"]
+        ]))
+        #expect(update.committed)
+        let saved = try await service.eventForPresentation(identifier: try #require(update.items.first?.identifier))
+        #expect(saved.title == title && saved.notes == "Saved note")
+        #expect(saved.alarms?.first?.relativeOffset == -900)
+        #expect(saved.recurrenceRules?.first?.frequency == .weekly)
+    }
+}
+#endif

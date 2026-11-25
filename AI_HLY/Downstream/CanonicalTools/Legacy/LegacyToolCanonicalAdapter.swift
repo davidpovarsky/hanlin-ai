@@ -9,7 +9,7 @@ enum LegacyToolCanonicalAdapter {
         switch toolName {
         case "save_memory", "retrieve_memory", "update_memory":
             return "memory"
-        case "search_calendar_and_reminders", "write_system_event":
+        case "search_calendar_and_reminders", "write_system_event", "manage_calendar":
             return "calendar"
         case "query_location", "get_current_location", "search_nearby_locations", "get_route":
             return "map"
@@ -36,7 +36,7 @@ enum LegacyToolCanonicalAdapter {
         switch toolName {
         case "save_memory", "retrieve_memory", "update_memory":
             words += ["remember", "notes", "fact", "preference", "recall"]
-        case "search_calendar_and_reminders", "write_system_event":
+        case "search_calendar_and_reminders", "write_system_event", "manage_calendar":
             words += ["schedule", "event", "meeting", "task", "reminder", "appointment"]
         case "query_location", "get_current_location", "search_nearby_locations", "get_route":
             words += ["place", "poi", "navigate", "directions", "coordinates", "gps"]
@@ -65,7 +65,7 @@ enum LegacyToolCanonicalAdapter {
         case "retrieve_memory", "search_calendar_and_reminders", "get_current_location",
              "fetch_step_details", "fetch_energy_details", "fetch_nutrition_details", "search_knowledge_bag":
             return .sensitiveRead
-        case "save_memory", "update_memory", "write_system_event", "create_knowledge_document",
+        case "save_memory", "update_memory", "write_system_event", "manage_calendar", "create_knowledge_document",
              "create_canvas", "edit_canvas", "make_nutrition_data":
             return .write
         case "create_web_view", "execute_remote_python_code", "execute_python_code":
@@ -151,7 +151,11 @@ enum LegacyToolCanonicalAdapter {
                 outputSchema: nil,
                 capabilities: [],
                 risk: risk(for: name),
-                presentation: presentationDesc
+                presentation: presentationDesc,
+                approval: name == "manage_calendar"
+                    ? .init(requiresApproval: true, actionParameter: "operation",
+                            nonSensitiveActions: ["authorization_status"], scopeParameters: ["entity_type"])
+                    : nil
             )
 
             return HanlinCanonicalToolAuthority.LegacySource(

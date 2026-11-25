@@ -1,0 +1,28 @@
+{
+  "command": [
+    "/usr/bin/xcrun",
+    "swiftc",
+    "-typecheck",
+    "-swift-version",
+    "6",
+    "-strict-concurrency=complete",
+    "-sdk",
+    "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk",
+    "-target",
+    "arm64-apple-ios27.0",
+    "-module-name",
+    "HanlinScriptDeviceServices",
+    "-module-cache-path",
+    "/Users/m1/builds/hanlin-149001-calendar-checks-20261125/ModuleCache",
+    "-I",
+    "/Users/m1/builds/hanlin-testflight-ca631-direct-20261125/DerivedData/Build/Intermediates.noindex/ArchiveIntermediates/AI_HLY/BuildProductsPath/Release-iphoneos",
+    "/Users/m1/builds/hanlin-149001-calendar-checks-20261125/source/HanlinCalendarRequest.swift",
+    "/Users/m1/builds/hanlin-149001-calendar-checks-20261125/source/HanlinCalendarOperationRequest.swift",
+    "/Users/m1/builds/hanlin-149001-calendar-checks-20261125/source/HanlinCalendarCallbackOperation.swift",
+    "/Users/m1/builds/hanlin-149001-calendar-checks-20261125/source/HanlinAppleCalendarService.swift",
+    "/Users/m1/builds/hanlin-149001-calendar-checks-20261125/source/HanlinAppleCalendarOperations.swift",
+    "/Users/m1/builds/hanlin-149001-calendar-checks-20261125/source/HanlinAppleServiceContracts.swift"
+  ],
+  "returncode": 0,
+  "seconds": 3.0659449100494385
+}
