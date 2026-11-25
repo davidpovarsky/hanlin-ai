@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "53593c3749dbd2be1e56739576fcdd5ea2c1cf06",
+  "sourceCommit": "6fbcf703dd9f40f5b1d42592d58a0a69573dcdfa",
   "snapshotIdentity": "Base commit plus exact current hashes; uncommitted audit sources are listed separately",
   "uncommittedSourcePaths": [],
   "status": "IN_PROGRESS_SOURCE_AUDIT",
@@ -48,11 +48,11 @@
     },
     {
       "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-      "sha256": "3656f7daf6b291e6ef63b72bbd2daa898f4d406ca68f01dea1818c08c2ebf641"
+      "sha256": "659270748cdb6c3f46b9a406770b168545f1cf320e8cc6af216e6e9d821732c6"
     },
     {
       "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-      "sha256": "46d3674d1d8f2d1013fa4563b10ed3266143f067aeda92c65ddb796f4c334934"
+      "sha256": "e0bb88c13e8acb7cb4c7d9ad8e4482642ef5c7deffc79e555682b442a5491693"
     },
     {
       "path": "Fixtures/ExpoNativeAPIProbe/tsconfig.json",
@@ -639,19 +639,19 @@
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
       "line": 1953,
       "anchor": "private func processPendingResumeCommands()",
-      "sha256": "46d3674d1d8f2d1013fa4563b10ed3266143f067aeda92c65ddb796f4c334934"
+      "sha256": "e0bb88c13e8acb7cb4c7d9ad8e4482642ef5c7deffc79e555682b442a5491693"
     },
     "headless": {
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
       "line": 1170,
       "anchor": "func executeHeadlessAction(",
-      "sha256": "46d3674d1d8f2d1013fa4563b10ed3266143f067aeda92c65ddb796f4c334934"
+      "sha256": "e0bb88c13e8acb7cb4c7d9ad8e4482642ef5c7deffc79e555682b442a5491693"
     },
     "expoActionDispatch": {
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
       "line": 1212,
       "anchor": "return try await adapter.actionChannel.invoke(",
-      "sha256": "46d3674d1d8f2d1013fa4563b10ed3266143f067aeda92c65ddb796f4c334934"
+      "sha256": "e0bb88c13e8acb7cb4c7d9ad8e4482642ef5c7deffc79e555682b442a5491693"
     },
     "nativeActionDispatch": {
       "file": "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
@@ -663,13 +663,13 @@
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
       "line": 1997,
       "anchor": "func dispatchResumeCommand(",
-      "sha256": "46d3674d1d8f2d1013fa4563b10ed3266143f067aeda92c65ddb796f4c334934"
+      "sha256": "e0bb88c13e8acb7cb4c7d9ad8e4482642ef5c7deffc79e555682b442a5491693"
     },
     "translationContinuation": {
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
       "line": 1536,
       "anchor": "\"source\": .string(\"translationUI\")",
-      "sha256": "46d3674d1d8f2d1013fa4563b10ed3266143f067aeda92c65ddb796f4c334934"
+      "sha256": "e0bb88c13e8acb7cb4c7d9ad8e4482642ef5c7deffc79e555682b442a5491693"
     },
     "translationAction": {
       "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinExtensionNodeView.swift",
@@ -957,7 +957,7 @@
       "file": "AI_HLY/Views/Components/ChatViewBottom.swift",
       "line": 472,
       "anchor": "ChavrusaShareInboxView(platform: .shared, useInChat:",
-      "sha256": "63638a735c7b198403525b66a80084f7d02c981b78c4221a6dbd90965d73cfc1"
+      "sha256": "b5b4e5fc8de65892ee51fac6b54066b40a8a56982d132072f2a09ca2221d748d"
     },
     "hostControlButtonRegistration": {
       "file": "HanlinScriptingWidgets/HanlinScriptingWidgets.swift",
