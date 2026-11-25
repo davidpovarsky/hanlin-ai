@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "801bb3f66cfe6d4d0ff9e49e0094ea2887525fbd",
+  "sourceCommit": "bcd44d23a0d2fc2804fa34f3cc5407e51b0adc2f",
   "snapshotIdentity": "Base commit plus exact current hashes; uncommitted audit sources are listed separately",
   "uncommittedSourcePaths": [],
   "status": "IN_PROGRESS_SOURCE_AUDIT",
@@ -360,7 +360,7 @@
     },
     {
       "path": "Scripts/NativeScript/build-step-metadata-generator-wrapper.py",
-      "sha256": "0c053414f573ff2f88498099d7f1ae591d289ca3029390cd421dd938bf089ba3"
+      "sha256": "71bf1d521abff7cc29c1e8d397a9ef2a55b09f758afb36f0a148be12350b664f"
     },
     {
       "path": "Scripts/NativeScript/dependency-lock.json",
