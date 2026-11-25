@@ -1,0 +1,536 @@
+{
+  "status": "SOURCE_READY_NATIVE_NOT_STARTED",
+  "utc": "2026-11-25T03:03:12.169540+00:00",
+  "sourceBase": "fda6948ca6a1f541293a1a1dd20e97f75eb0a527",
+  "target": "318b251b11a4816eb9cc3c1337c7bfe287f4a890",
+  "targetTree": "dabce49b133bd1b7a68e8bbdf334861116311ebb",
+  "packSHA256": "66e7a233daa00e695c859512e3382880b08840a53130e980fddd80ce0ec1e6f3",
+  "workingFiles": [
+    {
+      "path": "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "oldHEADSHA256": "08fe8608ac946c2759a05389b69c5601039cff61f41ad24fa55cee8d222cc2c2",
+      "workingSHA256": "610bcbb9a7f90c27e3bd3ecd3b1d139fe3ff72ed18086327d1d96c437de932f5",
+      "newHEADSHA256": "08fe8608ac946c2759a05389b69c5601039cff61f41ad24fa55cee8d222cc2c2",
+      "workingMode": 33188,
+      "preserved": true
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/original-runtime-receipt.json",
+      "oldHEADSHA256": "f7ad6d7bf5841f5a0be2f722a1b2735620aa06dcf4801cb73210688a7a135e64",
+      "workingSHA256": "3d619674297acb22ae4d0a97f5e7d8a878b0eccbc3bfc49769cfdb5a05248a0b",
+      "newHEADSHA256": "f7ad6d7bf5841f5a0be2f722a1b2735620aa06dcf4801cb73210688a7a135e64",
+      "workingMode": 33188,
+      "preserved": true
+    },
+    {
+      "path": "Scripts/Expo/package-lock.json",
+      "oldHEADSHA256": "9ee1d2babe6266148d8f969b25f542c00897c569969e5aae6dd6f744e2a0c53c",
+      "workingSHA256": "c08757cf46ac4d5c86a873f676af4a3be585db64ae2e1aa1e8288277d4eb63b8",
+      "newHEADSHA256": "9ee1d2babe6266148d8f969b25f542c00897c569969e5aae6dd6f744e2a0c53c",
+      "workingMode": 33188,
+      "preserved": true
+    },
+    {
+      "path": "Scripts/Expo/package.json",
+      "oldHEADSHA256": "da083105462f40368adb89acba0dbc1b623d2249b26b2ac1cbe1d326edc2bd3d",
+      "workingSHA256": "e2b50fae013276229c78619bbbe0b63d8c29b00fefde3afeccea98af117aa206",
+      "newHEADSHA256": "da083105462f40368adb89acba0dbc1b623d2249b26b2ac1cbe1d326edc2bd3d",
+      "workingMode": 33188,
+      "preserved": true
+    },
+    {
+      "path": "Scripts/MiniApps/upstream-resolution.json",
+      "oldHEADSHA256": "2bf8f371f06949fbe56858c38addeb417a07f9b598fc38ff72aedb39d5f364eb",
+      "workingSHA256": "e0c2944ea24c09330825dee58badedcec58606ba603ccdedc888abf1a63a13cb",
+      "newHEADSHA256": "2bf8f371f06949fbe56858c38addeb417a07f9b598fc38ff72aedb39d5f364eb",
+      "workingMode": 33188,
+      "preserved": true
+    },
+    {
+      "path": "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+      "oldHEADSHA256": "ad9c59d1962d516cd480de78cf5ee01fad11159cc0a73ee1a9cb3ea2f324b8a1",
+      "workingSHA256": "768731f0c748276aeab4d34f57ad3ad89fd38aa30f562ff0cc9b5ad9a3767368",
+      "newHEADSHA256": "ad9c59d1962d516cd480de78cf5ee01fad11159cc0a73ee1a9cb3ea2f324b8a1",
+      "workingMode": 33188,
+      "preserved": true
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.json",
+      "oldHEADSHA256": "152806a609b662c373eedd382758f1298bf945883f0c467dc5595050f8f0fa29",
+      "workingSHA256": "9a9843d277a3e76ad64fc7589029801960c5c98b9aba09f3ed7746552ee3d42d",
+      "newHEADSHA256": "152806a609b662c373eedd382758f1298bf945883f0c467dc5595050f8f0fa29",
+      "workingMode": 33188,
+      "preserved": true
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.md",
+      "oldHEADSHA256": "f2cd972c7366043028bbaea078291717ae363b288d29ecf242fd358103f7a9b1",
+      "workingSHA256": "cae21720cab9b31211796a5d82309d6e779f46ddb1d946d1ec1e322f4cf952cb",
+      "newHEADSHA256": "f2cd972c7366043028bbaea078291717ae363b288d29ecf242fd358103f7a9b1",
+      "workingMode": 33188,
+      "preserved": true
+    },
+    {
+      "path": "docs/miniapp-sdk/source-inventory.json",
+      "oldHEADSHA256": "b126e18f8a228e2235ef8ef324a31f0b9b6e3384e6af0f82755e35c4bcccaeef",
+      "workingSHA256": "856bc8aca1473f8f4255b324e840ef2ebcdf5eb7352d1041d2433391e9f4bfd8",
+      "newHEADSHA256": "b126e18f8a228e2235ef8ef324a31f0b9b6e3384e6af0f82755e35c4bcccaeef",
+      "workingMode": 33188,
+      "preserved": true
+    }
+  ],
+  "workingArchiveSHA256": "8bc9550ab55406be11e7e4e4802bd6b5f31fbbbeee246e1573f3ba8524ed4375",
+  "untrackedPathSetSHA256": "6258e1ba3d0ce1416c6653d589790583b91f51b0f20e7b5ebe8833f0c2ce2344",
+  "caseAliasObservation": [
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/README.md",
+      "tracked": "docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/README.md",
+      "sha256": "c6cc95b264c9c0627b1e9eb2b9bb9aa95070d5702e16e8dc4ac724dab4e28d6b"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/assessment.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/assessment.json",
+      "sha256": "12a4e5c235e3a4eaa63310588bf1a1a3283ba5d5b002c1dd6a0453bdb90d0773"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/raw-bindings.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/raw-bindings.json",
+      "sha256": "9e4e6b50d42f272ffc4fe70dc92ecf60aa9d600ea567cb342506cf51c8acb737"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/raw/focused-terminal-attempt9/FocusedOriginal-attachments/0DB3555F-E488-4281-BDCA-0AF7EED9B90C.txt",
+      "tracked": "docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/raw/focused-terminal-attempt9/FocusedOriginal-attachments/0DB3555F-E488-4281-BDCA-0AF7EED9B90C.txt",
+      "sha256": "8797186c53eefb1e20d889e606ebc467f234549a37c84ebc11d6371aebe0ec9f"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/raw/focused-terminal-attempt9/FocusedOriginal-attachments/5C4A2BC8-C5E4-4207-A156-145DC5487AC8.txt",
+      "tracked": "docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/raw/focused-terminal-attempt9/FocusedOriginal-attachments/5C4A2BC8-C5E4-4207-A156-145DC5487AC8.txt",
+      "sha256": "b8e65b99f597251e8fd254a802fc1c27322c349437cee0c0b90bef3ffdaf1a7c"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/raw/focused-terminal-attempt9/FocusedOriginal-attachments/8B33B950-A758-4695-92C8-159CD2B1287E.txt",
+      "tracked": "docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/raw/focused-terminal-attempt9/FocusedOriginal-attachments/8B33B950-A758-4695-92C8-159CD2B1287E.txt",
+      "sha256": "13ba8eddee75bedb10692d199cdc053580ddb52c7fbf9887d871872dc86caa24"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/raw/focused-terminal-attempt9/FocusedOriginal-attachments/BE4030DB-BED7-4109-AF2B-352F03E87E47.png",
+      "tracked": "docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/raw/focused-terminal-attempt9/FocusedOriginal-attachments/BE4030DB-BED7-4109-AF2B-352F03E87E47.png",
+      "sha256": "7dee645df313254d171437953c51945aa2962115fb0fcb18e47337430e884dd1"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/raw/focused-terminal-attempt9/FocusedOriginal-attachments/manifest.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/raw/focused-terminal-attempt9/FocusedOriginal-attachments/manifest.json",
+      "sha256": "35f55c2b27a219609a8cadfb70d5b30f349a745dd8f3c9b3cad3df4127681e48"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/raw/focused-terminal-attempt9/ModularDiagnostic-runtime-markers.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/raw/focused-terminal-attempt9/ModularDiagnostic-runtime-markers.json",
+      "sha256": "97be0d7b2b527cc82204bf76138b5b2afeae7c617b37ef069ba2dc61d378a998"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/raw/focused-terminal-attempt9/container-observations.jsonl",
+      "tracked": "docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/raw/focused-terminal-attempt9/container-observations.jsonl",
+      "sha256": "fc5db8933288bf44a81ea3aa0e95c920fb3023a4dc462e0158f49a54afedb053"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/raw/focused-terminal-attempt9/node-job-observations.jsonl",
+      "tracked": "docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/raw/focused-terminal-attempt9/node-job-observations.jsonl",
+      "sha256": "a06acb6c4fb532eb347f01532f460b67ccd08956e49163b41113dd220cf67c4d"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/raw/focused-terminal-attempt9/paired-prefix/ModularDiagnostic-summary.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/raw/focused-terminal-attempt9/paired-prefix/ModularDiagnostic-summary.json",
+      "sha256": "7e81723efed18b44322577a71a1ff1d7113b726b7a24d444781d5db1e226f310"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/raw/focused-terminal-attempt9/receipt.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/raw/focused-terminal-attempt9/receipt.json",
+      "sha256": "d9432fedfa6489c86c4933a8b03d38117d5cae794092f9339176a1c6d1d670a6"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/raw/focused-terminal-attempt9/state.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/raw/focused-terminal-attempt9/state.json",
+      "sha256": "da6143e29aad6a1347415a464c0df4b85fa248f6f4a3705b064d2dcdd265eb2b"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/raw/focused-terminal-attempt9/triage/host-ready-observation-terminal.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/raw/focused-terminal-attempt9/triage/host-ready-observation-terminal.json",
+      "sha256": "45156e0183058cf9b87f13127b2a4ce04a90495e8ab2859be3132e195f95c23a"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/raw/focused-terminal-attempt9/triage/nativescript-core-metadata-baseline.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/raw/focused-terminal-attempt9/triage/nativescript-core-metadata-baseline.json",
+      "sha256": "aa9095321f4fe2c20e16b6950ba60d30e0b77a6a192d23ccaaa16117147555bc"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/raw/focused-triage-attempt9/container-observations.jsonl",
+      "tracked": "docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/raw/focused-triage-attempt9/container-observations.jsonl",
+      "sha256": "c628e6702599df617e0249c8aa232fc19d158e0b5de078752c564bf76a99b83a"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/raw/focused-triage-attempt9/node-job-observations.jsonl",
+      "tracked": "docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/raw/focused-triage-attempt9/node-job-observations.jsonl",
+      "sha256": "0d88188b98748a947889332edb822b77a84235083bd5fe48764e698107c28981"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/raw/focused-triage-attempt9/paired-prefix/FocusedOriginal-summary.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/raw/focused-triage-attempt9/paired-prefix/FocusedOriginal-summary.json",
+      "sha256": "f9061fe38021648d490b42a14913541a97e7ca3a995ca3ceec2c4fedbf9a1a37"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/raw/focused-triage-attempt9/receipt.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/raw/focused-triage-attempt9/receipt.json",
+      "sha256": "caa56205a34c4d450275da7bc45143f2cff07c122bc7b0de98ea9c1e477bc0c5"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/raw/focused-triage-attempt9/triage/bridge-binary-initial-binding.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/raw/focused-triage-attempt9/triage/bridge-binary-initial-binding.json",
+      "sha256": "d47304671e230eacb86842df3d9592b4d23b85b819338f62cccb3051effaf3f4"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/raw/focused-triage-attempt9/triage/focused-application-markers.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/raw/focused-triage-attempt9/triage/focused-application-markers.json",
+      "sha256": "2d03974170335aeaf7a5d945e512e7035c003b1c4949b4c0f94eeffc596e4ed8"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/raw/focused-triage-attempt9/triage/focused-process-tree-0132.txt",
+      "tracked": "docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/raw/focused-triage-attempt9/triage/focused-process-tree-0132.txt",
+      "sha256": "97cf46739f0e02e74b9c08a130e70fcb73ca4d4ee0e3593caee118015caa494d"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/raw/focused-triage-attempt9/triage/installed-bridge-cf-stubs.txt",
+      "tracked": "docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/raw/focused-triage-attempt9/triage/installed-bridge-cf-stubs.txt",
+      "sha256": "fcf6f01a06ef009e044274eb02f5036e12ac3e0e90de5b013c404597cfc015bf"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/raw/focused-triage-attempt9/triage/installed-bridge-delivery-disassembly.txt",
+      "tracked": "docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/raw/focused-triage-attempt9/triage/installed-bridge-delivery-disassembly.txt",
+      "sha256": "397c39d5c12c3b0539f1054f3326cdb99a0682dd85406561042c6387423952f2"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/raw/focused-triage-attempt9/triage/installed-bridge-delivery-observation.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/raw/focused-triage-attempt9/triage/installed-bridge-delivery-observation.json",
+      "sha256": "2b19d09762ac00f743b46b9bffb9450064131227cc8788e463c905645e8b40cb"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/raw/focused-triage-attempt9/triage/object-symbols.txt",
+      "tracked": "docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/raw/focused-triage-attempt9/triage/object-symbols.txt",
+      "sha256": "3e468c237b2a2de4f9583e13a1f277d9e06775e57f1594b21e93b655adfa80e0"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/raw/focused-triage-attempt9/triage/xcodebuild-diagnostics-help.txt",
+      "tracked": "docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/raw/focused-triage-attempt9/triage/xcodebuild-diagnostics-help.txt",
+      "sha256": "38b43f277c7dc68a0e1601cdc1700b65a1518d0859cb477b9dc9a6a429420624"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/receipt.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/receipt.json",
+      "sha256": "21c64fcc2333fab49acb8515896e40bbeea903b5f85643c1010fb815e70a0225"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/source-review.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/source-review.json",
+      "sha256": "f1aa273d12bfe02874f9a587e762d9f09b9259918dc565e51dd5ca46f0652fc7"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/verification.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-focused-diagnostics-attempt9-20261125/verification.json",
+      "sha256": "140e9c3c607398e664e67f4579444c5445e79ae4d2d7c408bd86ff2f28d3476b"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-parity-async-startup-20261125/README.md",
+      "tracked": "docs/miniapp-sdk/evidence/primary-parity-async-startup-20261125/README.md",
+      "sha256": "b7bf348a8476317dffb80009c1ca417dd4d4399f09cc558aabf4f79e03144768"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-parity-async-startup-20261125/portable-verification.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-parity-async-startup-20261125/portable-verification.json",
+      "sha256": "520e6fadf7bdb3ec243d1d39bcd5f1883760eec8a0f77ebac4158acd2b776ded"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-parity-async-startup-20261125/receipt.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-parity-async-startup-20261125/receipt.json",
+      "sha256": "4aab868913f2fe762365ff4671956abb8fbc12edf683f39a75e1908acd441406"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/README.md",
+      "tracked": "docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/README.md",
+      "sha256": "f4851057d2dcc7766bdb6ea152646eecbef0d88232ce4e789eacdcc87b4a9bad"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/consumer-build-binding.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/consumer-build-binding.json",
+      "sha256": "5e5a813693ddfefa797d80acbf8d572a33857931ee58d586ef5a4cffdd48d3ef"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/documentation-execution-binding.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/documentation-execution-binding.json",
+      "sha256": "11b87afc4822083a15018ec70eabe380a482c57de687959f5d28c9159fbbe91e"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/execution-checkpoint.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/execution-checkpoint.json",
+      "sha256": "c9873fb30756eb278245d2100837b1257d026f5ef289b421dc969b92f48ef3df"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/host-member-comparison.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/host-member-comparison.json",
+      "sha256": "7483c958e01fd465d24867707356052c752951d1f4736380115f9bc7e5f0d203"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/inspect_sdk.py",
+      "tracked": "docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/inspect_sdk.py",
+      "sha256": "bcdef851f18ec11c72f77eecae8f791ba929f22c31350ab2239072f2aad11241"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/inspection-initial-receipt-schema-error.txt",
+      "tracked": "docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/inspection-initial-receipt-schema-error.txt",
+      "sha256": "813823f83f7fc34271ff8f4bbadba598b8281c7d63d36763200256967b0d57e6"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/inspection-stderr.txt",
+      "tracked": "docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/inspection-stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/inspection-stdout.txt",
+      "tracked": "docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/inspection-stdout.txt",
+      "sha256": "1295f91911ea87deeee594988f79e327d2d94590b95dddc0811f940bcd5b6406"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/inspection-summary.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/inspection-summary.json",
+      "sha256": "3e2cc53887af7719597ad643f866873c4cc49427358cec1a5dcecc461187aa25"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/installed-metadata-binding.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/installed-metadata-binding.json",
+      "sha256": "65e159fbb841258b93f0206d7170c75f9f41a2e236fb0cf8839373c1d21f51fe"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/native-catalog-binding.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/native-catalog-binding.json",
+      "sha256": "55273f44d3e4d8ba6b8d59d1d01d04a1f0114fadb6579966773ba0ba69206acb"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/prepared-materialization-plan.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/prepared-materialization-plan.json",
+      "sha256": "5468ecf7211e2778cc823722e2a4008130aac9d3db00932e3382293dbd6063d2"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/prepared-provenance.diff",
+      "tracked": "docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/prepared-provenance.diff",
+      "sha256": "6f3b7730e44da45c0da1adbeabdc6ec5d7ade3147f8d5e4eb8c5759b69294221"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/prepared-source-delta.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/prepared-source-delta.json",
+      "sha256": "0d8a24c521d68278c147add7299ede7f129240a140fa7e5e9268cc70e342aafb"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/raw/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "tracked": "docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/raw/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "sha256": "610bcbb9a7f90c27e3bd3ecd3b1d139fe3ff72ed18086327d1d96c437de932f5"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/raw/Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/.artifact-manifest.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/raw/Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/.artifact-manifest.json",
+      "sha256": "80afcbce26c01da5a63f951e04c6fea5959d3b3a51271d6a24002c35c07ceb47"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/raw/Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/.source-build-receipt.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/raw/Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/.source-build-receipt.json",
+      "sha256": "78a6b4b85330189dd162c09ae250cb280bf7dbe62608ca6438e6f3fabde6ee3b"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/raw/Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/Info.plist",
+      "tracked": "docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/raw/Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/Info.plist",
+      "sha256": "b239db0645c42fb07b6dd21e54c6012289f62593186b64b880c419d293da984d"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/raw/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/original-runtime-receipt.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/raw/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/original-runtime-receipt.json",
+      "sha256": "3d619674297acb22ae4d0a97f5e7d8a878b0eccbc3bfc49769cfdb5a05248a0b"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/raw/RuntimeDependencies.lock.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/raw/RuntimeDependencies.lock.json",
+      "sha256": "6cdbc18a474febbfc912b35ecbf5b0b55438a6a3e6daf2c33a43792cd04bd50a"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/raw/Scripts/Expo/dependency-lock.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/raw/Scripts/Expo/dependency-lock.json",
+      "sha256": "b9e3ad6d863e3e5136ad93924ce4edcb37da87578b113523640110af347eec65"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/raw/Scripts/Expo/package-lock.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/raw/Scripts/Expo/package-lock.json",
+      "sha256": "c08757cf46ac4d5c86a873f676af4a3be585db64ae2e1aa1e8288277d4eb63b8"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/raw/Scripts/Expo/package.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/raw/Scripts/Expo/package.json",
+      "sha256": "e2b50fae013276229c78619bbbe0b63d8c29b00fefde3afeccea98af117aa206"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/raw/Scripts/MiniApps/upstream-resolution.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/raw/Scripts/MiniApps/upstream-resolution.json",
+      "sha256": "e0c2944ea24c09330825dee58badedcec58606ba603ccdedc888abf1a63a13cb"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/raw/Scripts/NativeScript/package-lock.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/raw/Scripts/NativeScript/package-lock.json",
+      "sha256": "16f569f4bfa6f8806cfe72449866a0dc9a9331f33d2c67170d5292455c48b60b"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/raw/Scripts/NativeScript/package.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/raw/Scripts/NativeScript/package.json",
+      "sha256": "08fc03bfa87cd78f4f21f80e9324a4840061105f6e9ab081ed794c569ca7324b"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/raw/controller-state-at-capture.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/raw/controller-state-at-capture.json",
+      "sha256": "e70af8102445c975a82d716b1f862eaa30507be892604d107a57b776703ca549"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/raw/docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+      "tracked": "docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/raw/docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+      "sha256": "768731f0c748276aeab4d34f57ad3ad89fd38aa30f562ff0cc9b5ad9a3767368"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/raw/docs/miniapp-sdk/extension-reachability.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/raw/docs/miniapp-sdk/extension-reachability.json",
+      "sha256": "9a9843d277a3e76ad64fc7589029801960c5c98b9aba09f3ed7746552ee3d42d"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/raw/docs/miniapp-sdk/extension-reachability.md",
+      "tracked": "docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/raw/docs/miniapp-sdk/extension-reachability.md",
+      "sha256": "cae21720cab9b31211796a5d82309d6e779f46ddb1d946d1ec1e322f4cf952cb"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/raw/docs/miniapp-sdk/source-inventory.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/raw/docs/miniapp-sdk/source-inventory.json",
+      "sha256": "856bc8aca1473f8f4255b324e840ef2ebcdf5eb7352d1041d2433391e9f4bfd8"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/raw/embedded-host-binding-attempt10.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/raw/embedded-host-binding-attempt10.json",
+      "sha256": "d40cec6574c779f8e7dd191b28f5f11eeb57ef7c7d2a436ecb76ca330f63496e"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/raw/expo-asset-produced-bindings.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/raw/expo-asset-produced-bindings.json",
+      "sha256": "299f617ecc8909c16d2a2776488181b5d399a25abed4f255f6b526f8b78ece52"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/raw/installed-metadata-binding-attempt10.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/raw/installed-metadata-binding-attempt10.json",
+      "sha256": "d58a79c7815fc9e7a14ae0c9d11bea492b1d08449aab761f2ee5ea6fd0c98234"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/raw/snapshot-receipt.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/raw/snapshot-receipt.json",
+      "sha256": "20ee3233d5094aec1e3f476fecfa66dd43c9b64129f8e235a96529a6e9cfbb35"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/raw/tracked-delta.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/raw/tracked-delta.json",
+      "sha256": "0d97b8de1b354c375d5d47b4405f3cd10aa83d2cd6cf5c8ca5901b5796ad9e9a"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/receipt.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/receipt.json",
+      "sha256": "6abde3960cc6283dfc624377e94c4af89568ca89e5bcf27cfe15251a4d699bfc"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/retained-raw-files.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/retained-raw-files.json",
+      "sha256": "621aedf38a15af18fac5fc5237476d31453e3268802b95f450db6fed1d81e841"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/sdk-reconciliation.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/sdk-reconciliation.json",
+      "sha256": "8b5df38d823564ca0f475bc73a0af9eab979a5952899df2de887a6b290193649"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/sdk-source-binding.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/sdk-source-binding.json",
+      "sha256": "2be07647dcc2ea33605ef902deb23a27e0e3d02785de75e96104bc142f8f10b9"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/shipped-provenance-binding.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/shipped-provenance-binding.json",
+      "sha256": "8582e9f9686d110bc274d16add5254bc8db003be77fbf8674e9731be715175f4"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/transfer-inspection-stderr.txt",
+      "tracked": "docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/transfer-inspection-stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/transfer-inspection-stdout.txt",
+      "tracked": "docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/transfer-inspection-stdout.txt",
+      "sha256": "96f78668c02910b23d433686333f5bac7022d1f7e2322829626819b96d3bdd87"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/transfer-inspection-summary.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/transfer-inspection-summary.json",
+      "sha256": "1e3b03948dd1edb3d1ca6222efd296231bef7d8635083c1201da6d1a221b5eea"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/transfer-verification.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/transfer-verification.json",
+      "sha256": "b17c6793204b453d9fecaa48c2ab0395e114743326bcbf6fc9d1fda1c3775d72"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/unchanged-original-library-bindings.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/unchanged-original-library-bindings.json",
+      "sha256": "1bb11c55fba5a4893276541876c42d333f29e493a6f0ddb1f98abafe2a1b8cf7"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/verification.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/verification.json",
+      "sha256": "7feff645f6110158afdb5b9e81a93cd3ba045ab7f10530a032872e0dbb185483"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/verify_transfer.py",
+      "tracked": "docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/verify_transfer.py",
+      "sha256": "e53045881584da13851d9c0b1833edc9986dfa870e552cf47e2423d1ae1f9c4e"
+    }
+  ],
+  "sourceHashes": {
+    "DemoMiniApps/hanlin-script-parity.hanlinNativeScript": "2e48509336edba2b301490422102dbf25cb7f1b894430d52994febdc1c33c199",
+    "DemoMiniApps/hanlin-script-parity/nativescript/app/bundle.mjs": "5f21796994e3880ba5d5c9f0e6d23b3fa12a667ff6082183f604d214a61284b1",
+    "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift": "995e98e35d5f4f464c3b83062b136b14f74c7445c040d2118baffd3bcaea9052",
+    "Scripts/CI/Tests/nativescript_parity_async_startup.test.mjs": "a7bd2ebc42afc8942ba43d7abecac80921469fde70e51bee896874deb14a18e9",
+    "Scripts/CI/Tests/test_nativescript_parity_fixture.py": "3332ba2adf3c9e180eaecdcaeac8f23c4545f5887adaafe70650ad6f4e39414e"
+  },
+  "productionDelta": [
+    "DemoMiniApps/hanlin-script-parity.hanlinNativeScript",
+    "DemoMiniApps/hanlin-script-parity/nativescript/app/bundle.mjs",
+    "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+    "Scripts/CI/Tests/nativescript_parity_async_startup.test.mjs",
+    "Scripts/CI/Tests/test_nativescript_parity_fixture.py"
+  ],
+  "retainedPhaseIDs": [
+    "split-metadata",
+    "split-platform",
+    "split-upstreams",
+    "host-proof",
+    "split-foreground",
+    "split-host-lifecycle",
+    "split-native-preparation",
+    "split-native-artifacts"
+  ],
+  "invalidatedPhaseIDs": [
+    "split-restore-inputs",
+    "split-inputs"
+  ],
+  "inputClosureReason": "Only the shipped parity fixture/archive, UI acceptance source and portable fixture checks changed. These paths are outside the sealed SDK10/Host/native-artifact input closure. Preserve exact prepared SDK10 and native products; refresh original timestamp/input capture and rebuild the changed UI test bundle. Original 52 remains independently required.",
+  "newPlanSHA256": "21d96429cce58cb6a5a08d1dfa61989cc733176d37899d268e361917731b8813",
+  "controllerAttempt11SHA256": "576e975e879559d11e43f9a77e94af6cb4380b73628e219d9ca042e9f915a411",
+  "maximumActiveSeconds": 12600,
+  "preservedActiveElapsedSeconds": 8293.463153374996,
+  "preservedHostArchiveSHA256": "86733eba5d80156edf52da87f0f371c208122d6e60f618f182990330514984c3",
+  "nativeStarted": false
+}

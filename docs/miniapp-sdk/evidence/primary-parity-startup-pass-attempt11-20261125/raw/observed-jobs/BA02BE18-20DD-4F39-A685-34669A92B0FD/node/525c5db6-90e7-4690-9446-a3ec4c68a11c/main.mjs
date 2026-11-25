@@ -1,0 +1,1 @@
+const n = 'companion-1aa05256-84ff-48bc-b702-69af29ea5a84'; if (typeof process === 'object' && process.versions && process.versions.node) { const calc = n.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0) * 2; console.log(JSON.stringify({ runtime: 'Node', version: process.versions.node, nonce: n, calc: calc })); } else { throw new Error('Not Node runtime'); }

@@ -1,0 +1,150 @@
+{
+  "sourceCommit": "1a611764779b0a57cc57d71b26d2cd6449895d8d",
+  "comparisonCommit": "9875fecdbf85e643a084e4936aa6a4cd51d0f77b",
+  "files": [
+    {
+      "path": "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests.swift",
+      "bytes": 11632,
+      "sha256": "0e7e2a2c38ed4449869ea61e5e9757cd4dc67e66258ae340958ebe617c93a829",
+      "unchangedFrom9875fecd": true
+    },
+    {
+      "path": "AI_HLYTests/HanlinMiniAppStorageCapacityTests.swift",
+      "bytes": 5236,
+      "sha256": "95ea844181b906f5449dab7129646b7e8144d71abba7894be62b9681c6d8227d",
+      "unchangedFrom9875fecd": true
+    },
+    {
+      "path": "AI_HLYTests/HanlinNativePresentationTests.swift",
+      "bytes": 14928,
+      "sha256": "200e2c5b9e02b38b2bebbdb91e222893d4622ee3fcaf06186a09c6eda33be182",
+      "unchangedFrom9875fecd": true
+    },
+    {
+      "path": "AI_HLYTests/HanlinOrganizerDockParityTests.swift",
+      "bytes": 94119,
+      "sha256": "5dc4ca52a85f45daf9640834b0a224df902b6648e72437b9bd4ceb64a7491f3a",
+      "unchangedFrom9875fecd": true
+    },
+    {
+      "path": "AI_HLYTests/HanlinOriginalExpoWidgetTests.swift",
+      "bytes": 10070,
+      "sha256": "4ffadc5573c5fc69e2b1276e5f86cb69a84eb4466f7c819085ba7f0e72b23860",
+      "unchangedFrom9875fecd": true
+    },
+    {
+      "path": "AI_HLYTests/HanlinOriginalScriptWidgetAPITests.swift",
+      "bytes": 5423,
+      "sha256": "7a0bf25e1cb46c63c194efe6d7bc16b878726231aee54b9bbd1653b18d86cbf2",
+      "unchangedFrom9875fecd": true
+    },
+    {
+      "path": "AI_HLYTests/HanlinOriginalScriptWidgetControlTests.swift",
+      "bytes": 13937,
+      "sha256": "b07a43b29328d069577c96af025bda496b5b216d38099f3b9297b93294bf9e46",
+      "unchangedFrom9875fecd": true
+    },
+    {
+      "path": "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests.swift",
+      "bytes": 11136,
+      "sha256": "3f41a14d9754cb24e74cb5656b8975485459259bc27acc08a4f845d5675446ec",
+      "unchangedFrom9875fecd": true
+    },
+    {
+      "path": "AI_HLYTests/HanlinScriptingPlatformCompositionTests.swift",
+      "bytes": 10722,
+      "sha256": "6d71ccfbb6018696de27ccaf014162ee470f8148c5fd30733e5bf5d89e2763e9",
+      "unchangedFrom9875fecd": true
+    },
+    {
+      "path": "AI_HLYTests/MiniAppAuthoringToolTests.swift",
+      "bytes": 9383,
+      "sha256": "e516af0f7ecfa920cbb4e226224934fdbb389bbd43b063cdfaacd1a2d909f750",
+      "unchangedFrom9875fecd": true
+    },
+    {
+      "path": "AI_HLYUITests/MiniAppAuthoringUITests.swift",
+      "bytes": 7453,
+      "sha256": "f60502af88a5e4b1166146cf5834e5d54eaa0451159b11f95ff26207f210fd72",
+      "unchangedFrom9875fecd": true
+    },
+    {
+      "path": "HanlinMiniAppsTests/CrossAppInvocationTests.swift",
+      "bytes": 11524,
+      "sha256": "22f91c12d0953f0d1e08ee1a1157bd595a6da01adb85ac8a104c069c4073b936",
+      "unchangedFrom9875fecd": true
+    },
+    {
+      "path": "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests.swift",
+      "bytes": 8275,
+      "sha256": "fac1a7336a3b233a18015f56df18fe615c04f56064029af2d292a7f8ea9d4386",
+      "unchangedFrom9875fecd": true
+    },
+    {
+      "path": "HanlinMiniAppsTests/NativeScriptWindowOwnershipTests.swift",
+      "bytes": 3489,
+      "sha256": "54458a7424737807a43d3c0f0b4a3009a951c37343c40cdb17ca0fbe238cbff8",
+      "unchangedFrom9875fecd": true
+    },
+    {
+      "path": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+      "bytes": 76913,
+      "sha256": "93db32b6af9af1eeba85070086c5d0eb6b9b80198dc161004d5729c7cc38d4d0",
+      "unchangedFrom9875fecd": true
+    },
+    {
+      "path": "HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests.swift",
+      "bytes": 5432,
+      "sha256": "762f3c7c10aa4ce6e7d2bd661265fb022ff9cc255d6438c3b96b27fe85a08189",
+      "unchangedFrom9875fecd": true
+    },
+    {
+      "path": "Scripts/CI/verify_selected_tests.py",
+      "bytes": 2000,
+      "sha256": "4ae4a28934341461b364a9b83fb891ca214da64cf3046635278fb4e6837caad5",
+      "unchangedFrom9875fecd": true
+    },
+    {
+      "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+      "bytes": 47460,
+      "sha256": "6e3abbb16c9b55b048b69c2391784510d8c143c7ed00e760a73ecb903cdbb61d",
+      "unchangedFrom9875fecd": true
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/acceptance-criteria-map-20261124.json",
+      "bytes": 347373,
+      "sha256": "976579943e340b9c94ef705d85ad6e20dff8d0aeb7542db6e88dcecbfe7d6139",
+      "unchangedFrom9875fecd": true
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/task-scope-reconciliation-20261124.json",
+      "bytes": 11953,
+      "sha256": "af6787efb997859a4412e30f79f23a59a53bd7e4a9ac6c503c431bc82dfd5575",
+      "unchangedFrom9875fecd": true
+    },
+    {
+      "path": "docs/product-split/COMPANION_RUNTIME_ACCEPTANCE_20261118.md",
+      "bytes": 3238,
+      "sha256": "bfad0362f54af6467bd07efa93874d60bd7d41ecc1e96ea81e4e26fcd0862d2a",
+      "unchangedFrom9875fecd": true
+    },
+    {
+      "path": "docs/product-split/CROSS_APP_MINIAPPS_20261123.md",
+      "bytes": 6724,
+      "sha256": "96faeae9568777d083b689f4d8cbe1fd8b7ced4a6c1eb4baf5ba56e7a5b7265c",
+      "unchangedFrom9875fecd": true
+    },
+    {
+      "path": "docs/product-split/CURRENT_BUILD_AND_RUN.md",
+      "bytes": 5646,
+      "sha256": "891c8b33fe5b94f57a38aa6627fb9323957809034cac57b327ab9f088871f038",
+      "unchangedFrom9875fecd": true
+    },
+    {
+      "path": "docs/runtime/CORE_ACCEPTANCE_EVIDENCE_POLICY_2026-11-13.md",
+      "bytes": 6231,
+      "sha256": "01b0d2f16f137306bf063bed8859b8bcd23e06a85e208494e197ac68a3086daf",
+      "unchangedFrom9875fecd": true
+    }
+  ]
+}
