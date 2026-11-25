@@ -1,0 +1,25 @@
+{
+  "observedAt": "2026-11-25T01:57:35.571364+00:00",
+  "source": "1812bff50571c9907d15cd8b4bfbe4874be24756",
+  "actualGeneratedMetadata": {
+    "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/metadata-arm64.bin",
+    "bytes": 3204694,
+    "sha256": "255704a01b47cfa2b590cb99e9a729d360441f4f3f003b1788a7748540321bc5",
+    "nulTerminatedNames": {
+      "TNSLabel": false,
+      "NSCCrypto": false,
+      "UIView": true,
+      "HanlinNativeServicesBridge": true
+    }
+  },
+  "installedTNSWidgets": {
+    "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/80E29B83-02CF-4481-B1AF-80A85CDE0247/data/Containers/Bundle/Application/927C77CC-ED50-4C14-AA37-C5C21A70B68D/HanlinMiniApps.app/Frameworks/TNSWidgets.framework/TNSWidgets",
+    "bytes": 154112,
+    "sha256": "ebfef00f94a97446671ac3f1315a10f0001cba02a38ae07c24271fe8a2d7196e",
+    "nmExit": 0,
+    "symbols": [
+      "000000000000c690 S _OBJC_CLASS_$_TNSLabel",
+      "000000000000c6b8 S _OBJC_METACLASS_$_TNSLabel"
+    ]
+  }
+}

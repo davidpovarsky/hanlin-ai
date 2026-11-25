@@ -1,0 +1,82 @@
+{
+  "source": "1812bff50571c9907d15cd8b4bfbe4874be24756",
+  "observedAt": "2026-11-25T01:42:20.438106+00:00",
+  "scope": "Focused six completed; Modular diagnostic still RUNNING, original52 NOT_RUN. Immutable copy of selected existing observations only.",
+  "members": [
+    {
+      "path": "triage/focused-application-markers.json",
+      "bytes": 7564,
+      "sha256": "2d03974170335aeaf7a5d945e512e7035c003b1c4949b4c0f94eeffc596e4ed8"
+    },
+    {
+      "path": "triage/focused-xcode14268-sample-0132.txt",
+      "bytes": 387685,
+      "sha256": "c2064c083a451a6790d3bef3bffcf98ba910bafe566365c12a6643c3b84d1fe1"
+    },
+    {
+      "path": "triage/focused-process-tree-0132.txt",
+      "bytes": 2124,
+      "sha256": "97cf46739f0e02e74b9c08a130e70fcb73ca4d4ee0e3593caee118015caa494d"
+    },
+    {
+      "path": "triage/bridge-binary-initial-binding.json",
+      "bytes": 2375,
+      "sha256": "d47304671e230eacb86842df3d9592b4d23b85b819338f62cccb3051effaf3f4"
+    },
+    {
+      "path": "triage/object-symbols.txt",
+      "bytes": 48738,
+      "sha256": "3e468c237b2a2de4f9583e13a1f277d9e06775e57f1594b21e93b655adfa80e0"
+    },
+    {
+      "path": "triage/object-disassembly.txt",
+      "bytes": 292928,
+      "sha256": "96dd7c11b99dae472469d38cbda6fb57626c525f8175a36a50a09aac761cd1da"
+    },
+    {
+      "path": "triage/installed-bridge-delivery-disassembly.txt",
+      "bytes": 9135,
+      "sha256": "397c39d5c12c3b0539f1054f3326cdb99a0682dd85406561042c6387423952f2"
+    },
+    {
+      "path": "triage/installed-bridge-delivery-observation.json",
+      "bytes": 10185,
+      "sha256": "2b19d09762ac00f743b46b9bffb9450064131227cc8788e463c905645e8b40cb"
+    },
+    {
+      "path": "triage/installed-bridge-cf-stubs.txt",
+      "bytes": 278,
+      "sha256": "fcf6f01a06ef009e044274eb02f5036e12ac3e0e90de5b013c404597cfc015bf"
+    },
+    {
+      "path": "triage/xcodebuild-diagnostics-help.txt",
+      "bytes": 297,
+      "sha256": "38b43f277c7dc68a0e1601cdc1700b65a1518d0859cb477b9dc9a6a429420624"
+    },
+    {
+      "path": "triage/node-runtime-current.log",
+      "bytes": 2288,
+      "sha256": "0a1e185b413a88432813067a0fc3f5115a5112897959ac6c3371b99dfd3e2866"
+    },
+    {
+      "path": "node-job-observations.jsonl",
+      "bytes": 10095,
+      "sha256": "0d88188b98748a947889332edb822b77a84235083bd5fe48764e698107c28981"
+    },
+    {
+      "path": "container-observations.jsonl",
+      "bytes": 441,
+      "sha256": "c628e6702599df617e0249c8aa232fc19d158e0b5de078752c564bf76a99b83a"
+    },
+    {
+      "path": "paired-prefix/FocusedOriginal.log",
+      "bytes": 118054,
+      "sha256": "0303d4bae08f882d234230276ff780dfdf8f22676ffb2ac58706d297a9e580a7"
+    },
+    {
+      "path": "paired-prefix/FocusedOriginal-summary.json",
+      "bytes": 3689,
+      "sha256": "f9061fe38021648d490b42a14913541a97e7ca3a995ca3ceec2c4fedbf9a1a37"
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "observedAt": "2026-11-25T01:35:28.852008+00:00",
+  "bridgeObject": {
+    "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinNativeScriptCoreSupport-t.build/Objects-normal/arm64/HanlinNativeServicesBridge.o",
+    "bytes": 152328,
+    "sha256": "1dc6e296ceacb8b9780fb2f28ef17577936227a699a2c7947208f37b7bc4b6fc"
+  },
+  "object-symbols": {
+    "exit": 0,
+    "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt9/triage/object-symbols.txt",
+    "sha256": "3e468c237b2a2de4f9583e13a1f277d9e06775e57f1594b21e93b655adfa80e0",
+    "bytes": 48738,
+    "matches": [
+      "0000000000000000 (__TEXT,__text) non-external -[HanlinNativeServicesPendingCallback deliverValue:error:]",
+      "                 (undefined) external _CFRunLoopPerformBlock",
+      "                 (undefined) external _CFRunLoopWakeUp",
+      "0000000000000298 (__TEXT,__text) non-external ___58-[HanlinNativeServicesPendingCallback deliverValue:error:]_block_invoke",
+      "                 (undefined) external _objc_msgSend$deliverValue:error:"
+    ]
+  },
+  "object-disassembly": {
+    "exit": 0,
+    "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt9/triage/object-disassembly.txt",
+    "sha256": "96dd7c11b99dae472469d38cbda6fb57626c525f8175a36a50a09aac761cd1da",
+    "bytes": 292928,
+    "matches": [
+      "-[HanlinNativeServicesPendingCallback deliverValue:error:]:",
+      "___58-[HanlinNativeServicesPendingCallback deliverValue:error:]_block_invoke:"
+    ]
+  },
+  "installedBinaryFiles": [
+    {
+      "name": "__preview.dylib",
+      "bytes": 16800
+    },
+    {
+      "name": "HanlinMiniApps",
+      "bytes": 40496
+    },
+    {
+      "name": "HanlinMiniApps.debug.dylib",
+      "bytes": 127635424
+    }
+  ],
+  "HanlinMiniApps": {
+    "builtSHA256": "a8184f10138e3f2e4feeea6cd3dc67a788104f5b2973bddb6b1a785530c62c2e",
+    "installedSHA256": "a8184f10138e3f2e4feeea6cd3dc67a788104f5b2973bddb6b1a785530c62c2e",
+    "bytes": 40496
+  },
+  "HanlinMiniApps.debug.dylib": {
+    "builtSHA256": "452bbbf66652f223035f973935e9af20195496e74504eee4b9b287dc432cad46",
+    "installedSHA256": "452bbbf66652f223035f973935e9af20195496e74504eee4b9b287dc432cad46",
+    "bytes": 127635424
+  }
+}

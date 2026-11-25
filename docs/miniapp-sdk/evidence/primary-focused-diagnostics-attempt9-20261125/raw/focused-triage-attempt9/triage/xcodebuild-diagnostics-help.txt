@@ -1,0 +1,2 @@
+    -enablePerformanceTestsDiagnostics YES|NO                enables performance trace and memgraph collection for performance XCTests
+    -collect-test-diagnostics on-failure|never               Whether or not testing collects verbose diagnostics (like a sysdiagnose) when encountering a failure
