@@ -18,7 +18,7 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[3]
 DEFAULT_FILTER = (
-    "HanlinPromptCacheTests|HanlinPromptCachePresetTests|HanlinGoogleCachedContentTests|HanlinOpenTelemetryTracerTests|"
+    "HanlinPromptCacheTests|HanlinPromptCachePresetTests|HanlinPromptCachePolicyMutationTests|HanlinGoogleCachedContentTests|HanlinOpenTelemetryTracerTests|"
     "HanlinAISDKJSONOutputTests|OpenAIPromptCacheControlTests|HanlinCompactResponsesTests|"
     "testAnthropicRequestBuilder|testOpenAIResponseRouting"
 )
