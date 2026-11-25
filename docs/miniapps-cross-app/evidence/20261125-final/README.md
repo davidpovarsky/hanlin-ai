@@ -3,8 +3,8 @@
 ## Current source
 
 The final integration branch is `codex/hanlin-miniapps-final-integration-20261125`.
-The native gate is executing from source571a1ab79171d59415c85cfeea6e8e01c74596db.
-It includes PR18 source60afd124, PR19 current sourceb0cf26a6, native per-window
+The native gate is executing from source9ef80a6ddfc997724360a9a34bb1d05cbf7cad40.
+It includes PR18 source60afd124, PR19 current sourcec259b722, native per-window
 package work8557d605, shared Picker7b8cbba3, and current consumer SDK4e921b951.
 Nine source conflicts were individually reconciled. The original Mac canonical
 generators materialized the notification extension and SDK source membership;
@@ -121,3 +121,51 @@ were removed. Actual group/container association and matching distribution profi
 remain unverified for these extension IDs. Their public capability registration does
 not establish an exportable signed MiniApps product. No certificate was created,
 revoked or exported, no tester was contacted, and no new TestFlight build is claimed.
+
+
+## 05:59–06:03 continuation
+
+The current PR19 correction c259b722 matches the installed Xcode27 imported
+notification delegate async result (Int) and forwards the original delegate's
+presentation bits unchanged. It is merged in9ef80a6d. The native owner refreshed
+original Host/SDK provenance:169 PASS,0 FAIL,1 existing opt-in SKIP; original SDK
+examples and source graph passed. The actual MiniApps build is in progress.
+No original23 application case is counted as passed yet.
+
+The571a first attempt stopped before compilation on generated Artifacts inside
+its isolated copied opentelemetry checkout. The complete generated tree was
+preserved with hashes outside that checkout; tracked dependency bytes and the
+donor stayed unchanged. The second571a attempt was stopped by its owner after
+the current notification correction became available. Both failed/interrupted
+attempts remain evidence, with no application acceptance credit.
+
+The signed-product checks now require every original MiniApps extension, through
+both PlugIns and ExtensionKit containers. The local profile resolver reuses the
+same full entitlement validation for all five MiniApps roles without changing
+the existing AI main/Widgets wrapper. The43 focused portable controls passed
+at05:55:22 UTC; see local-miniapps-profiles-controls/. These fixture-based
+controls do not establish actual Apple grants, signed products or native app
+acceptance. Their sparse-checkout first failure is retained separately.
+
+A fresh installed-key Apple read began at06:00 UTC and completed without errors.
+The full sanitized audit is signing-post-registration-inventory.json,
+SHA25664dbd3ea3f323e206a88edf9bdb43c59c8411bb1ee4c42577a0ef6e2a75db2e6.
+All four newly registered MiniApps extension IDs and capabilities persist;
+none has an issued profile. Existing Maktabah and Anytype grants remain
+insufficient. Historical App Store Connect build numbers are unchanged; no new
+TestFlight upload or processing is claimed.
+
+## Native picker reference
+
+The source review used Apple's current iPad sharing customization instructions:
+https://support.apple.com/guide/ipad/customize-sharing-options-ipad29729577/ipados
+and activity-view guidance:
+https://developer.apple.com/design/human-interface-guidelines/activity-views
+
+The shared native editor provides the matching More/Edit path, favorites,
+visibility controls, native reordering and Done. Original icons and short
+localized titles remain part of the shared catalog; applicable choices are
+filtered by the incoming context. Unlike per-app system share-menu preferences,
+the user explicitly requested a common preference store, which remains in the
+shared App Group. This is a source/reference review. Screenshots from actual
+consumer acceptance, Hebrew/RTL and phone visual checks are still pending.
