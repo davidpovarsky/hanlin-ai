@@ -9,7 +9,7 @@ import {
 } from '@hanlin/expo-ui';
 import {
   navigationTitle, navigationBarTitleDisplayMode, listStyle, font,
-  foregroundStyle, lineLimit, pickerStyle, tag, disabled
+  foregroundStyle, lineLimit, pickerStyle, tag, disabled, accessibilityIdentifier
 } from '@hanlin/expo-ui/modifiers';
 import {
   getSearchEngine, listSearchEngines,
@@ -175,15 +175,18 @@ function NativeSettings(props: {
   </Form>;
 }
 
-function NativeTextVersion({version, locale}: {version:any; locale:string}) {
+function NativeTextVersion({version, locale, entryID}: {version:any; locale:string; entryID:string}) {
   const t = tFactory(locale);
   const heading = version.versionTitleInHebrew || version.versionTitle || t('untitledVersion');
-  return <DisclosureGroup label={String(heading)}>
+  const versionID = `${entryID}:${String(version.id)}`;
+  return <DisclosureGroup label={String(heading)} testID={`modular-loaded-version-${versionID}`}>
     {version.language &&
       <LabeledContent label={t('language')}><Text>{version.language}</Text></LabeledContent>}
     {version.license &&
       <LabeledContent label="License"><Text>{version.license}</Text></LabeledContent>}
-    <Text>{plainText(version.text) || t('noVersionText')}</Text>
+    <Text modifiers={[accessibilityIdentifier(`modular-full-text-body-${versionID}`)]}>
+      {plainText(version.text) || t('noVersionText')}
+    </Text>
   </DisclosureGroup>;
 }
 
@@ -193,6 +196,7 @@ function NativeFullText({entry, locale, onLoad}: {
   const t = tFactory(locale);
   return <>
     <Button label={t('fullText')} systemImage="book.pages"
+      testID={`modular-full-text-load-${String(entry.id)}`}
       onPress={() => onLoad(entry)} modifiers={[disabled(!entry.ref)]}/>
   </>;
 }
@@ -234,7 +238,8 @@ function NativeResultDetail(props: {
       {entries.map((entry:any) => {
         const state = expanded[entry.id];
         const entryTitle = entry.version || entry.heRef || entry.ref || t('variantVersion');
-        return <DisclosureGroup key={String(entry.id)} label={String(entryTitle)}>
+        return <DisclosureGroup key={String(entry.id)} label={String(entryTitle)}
+          testID={`modular-source-version-${String(entry.id)}`}>
           <NativeFullText entry={entry} locale={locale} onLoad={onLoadFullText}/>
           {state?.loading && <ProgressView/>}
           {state?.error && <Text modifiers={[foregroundStyle('red')]}>{state.error}</Text>}
@@ -244,7 +249,8 @@ function NativeResultDetail(props: {
             </Text>}
           {state?.data?.versions?.length > 0
             ? state.data.versions.map((version:any) =>
-                <NativeTextVersion key={String(version.id)} version={version} locale={locale}/>)
+                <NativeTextVersion key={String(version.id)} version={version} locale={locale}
+                  entryID={String(entry.id)}/>)
             : !state?.loading && state?.data &&
                 <Text>{t('noVersions')}</Text>}
         </DisclosureGroup>;
