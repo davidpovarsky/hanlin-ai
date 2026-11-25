@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "status": "BOTH_CURRENT_CONSUMER_BUILDS_PASS",
+  "recordedAt": "2026-11-25T22:53:21.325600+00:00",
+  "source": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+  "SDKProducerSource": "dff3b45c99a57bf8fe8ec721db3fa1fafce7134b",
+  "sourceCaptureSHA256": "4611802147ac1f4524e8cad8157ef97b8554f2563f73bdcd40ecfa5bb49cb50e",
+  "files": [
+    {
+      "path": "AI_HLY_iphonesimulator27.0-arm64.xctestrun",
+      "bytes": 10920,
+      "sha256": "b2cc79f4b3780daec837e119cc5e4a07d5ecccd618ab793b88bb0b80dbfa2062"
+    },
+    {
+      "path": "HanlinMiniApps_iphonesimulator27.0-arm64.xctestrun",
+      "bytes": 16737,
+      "sha256": "2d6b493aa93663d03e17a15722eab010326b260ccbbb454ed12077cae45cda96"
+    },
+    {
+      "path": "built-input-bindings.json",
+      "bytes": 13996,
+      "sha256": "569140d17e5176caf7f5e4ae6367e3a840eff0fce4d1b6e1c833a401394b00e5"
+    },
+    {
+      "path": "remaining-native-product-metadata.json",
+      "bytes": 12497,
+      "sha256": "e33d3f0d84457949f0199f7ce6c1029bb0ed949779d9e3aabfbc2d37bc6c914e"
+    },
+    {
+      "path": "build-commands-through-capture.jsonl",
+      "bytes": 12975,
+      "sha256": "0cf9cb1cd4446abde41c3f47aa59aff3c94ff92b673b4142283eb0e51253bd0d"
+    },
+    {
+      "path": "original-capture-receipt.json",
+      "bytes": 2491,
+      "sha256": "4611802147ac1f4524e8cad8157ef97b8554f2563f73bdcd40ecfa5bb49cb50e"
+    },
+    {
+      "path": "README.md",
+      "bytes": 1302,
+      "sha256": "6bfb5cd7a0f1d03d04757e6a677b34d5408e068ed3d28e3517499731b9134a78"
+    }
+  ],
+  "runtimeCaseResults": "NOT_CLAIMED_BY_THIS_BUILD_CAPTURE"
+}

@@ -1,0 +1,50 @@
+{
+  "startedAt": "2026-11-25T22:37:55.323118+00:00",
+  "finishedAt": "2026-11-25T22:37:57.148996+00:00",
+  "exitCode": 0,
+  "stderr": "",
+  "scriptSHA256": "31018a8c1e6f45e781f4c6adc1ab09531d517eaa92a38f17ec9f0744f067b602",
+  "captureAt": "2026-11-25T22:37:56.972100+00:00",
+  "builtInputBindings": {
+    "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v1/product-capture/built-input-bindings.json",
+    "bytes": 13996,
+    "sha256": "569140d17e5176caf7f5e4ae6367e3a840eff0fce4d1b6e1c833a401394b00e5"
+  },
+  "metadata": {
+    "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v1/product-capture/remaining-native-product-metadata.json",
+    "bytes": 12497,
+    "sha256": "e33d3f0d84457949f0199f7ce6c1029bb0ed949779d9e3aabfbc2d37bc6c914e"
+  },
+  "members": [
+    {
+      "name": "AI_HLY_iphonesimulator27.0-arm64.xctestrun",
+      "bytes": 10920,
+      "sha256": "b2cc79f4b3780daec837e119cc5e4a07d5ecccd618ab793b88bb0b80dbfa2062",
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-built-inputs/AI_HLY_iphonesimulator27.0-arm64.xctestrun"
+    },
+    {
+      "name": "HanlinMiniApps_iphonesimulator27.0-arm64.xctestrun",
+      "bytes": 16737,
+      "sha256": "2d6b493aa93663d03e17a15722eab010326b260ccbbb454ed12077cae45cda96",
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-built-inputs/HanlinMiniApps_iphonesimulator27.0-arm64.xctestrun"
+    },
+    {
+      "name": "built-input-bindings.json",
+      "bytes": 13996,
+      "sha256": "569140d17e5176caf7f5e4ae6367e3a840eff0fce4d1b6e1c833a401394b00e5",
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-built-inputs/built-input-bindings.json"
+    },
+    {
+      "name": "remaining-native-product-metadata.json",
+      "bytes": 12497,
+      "sha256": "e33d3f0d84457949f0199f7ce6c1029bb0ed949779d9e3aabfbc2d37bc6c914e",
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-built-inputs/remaining-native-product-metadata.json"
+    },
+    {
+      "name": "build-commands-through-capture.jsonl",
+      "bytes": 12975,
+      "sha256": "0cf9cb1cd4446abde41c3f47aa59aff3c94ff92b673b4142283eb0e51253bd0d",
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-built-inputs/build-commands-through-capture.jsonl"
+    }
+  ]
+}
