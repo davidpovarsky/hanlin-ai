@@ -107,26 +107,31 @@ extension HanlinStoredPackageSnapshot: HanlinMiniAppRegistration {
             return nil
         }()
 
+        var appIntentBridges = Set<HanlinEntryPointDescriptor>()
         let mappedEntryPoints: [HanlinEntryPointDescriptor] = entrypoints.compactMap { ep in
             guard let canonicalKind = ep.kind.canonicalKind else { return nil }
-            let contexts = ep.supportedContexts.isEmpty
-                ? [.mainApplication]
+            let contexts = ep.supportedContexts.isEmpty ? [.mainApplication]
                 : ep.supportedContexts.sorted { $0.rawValue < $1.rawValue }
-            let epRuntime = ep.runtimeProfile
-            return HanlinEntryPointDescriptor(
+            let entryPoint = HanlinEntryPointDescriptor(
                 kind: canonicalKind,
                 handler: ep.sourcePath,
                 allowedContexts: contexts,
-                runtimeProfile: epRuntime
+                runtimeProfile: ep.runtimeProfile
             )
+            // Distinct prepared action exports can share one canonical bridge.
+            // Their IDs and symbols remain in the installed entrypoints/actions.
+            // Conflicting routes still reach the canonical duplicate-kind check.
+            if ep.kind == .appIntent, !appIntentBridges.insert(entryPoint).inserted {
+                return nil
+            }
+            return entryPoint
         }
 
         let finalEntryPoints: [HanlinEntryPointDescriptor]
         if !mappedEntryPoints.isEmpty {
-            // Distinct package action IDs may expose the same canonical handler.
-            // Preserve differing descriptors so validation still rejects conflicts.
-            var seenEntryPoints = Set<HanlinEntryPointDescriptor>()
-            finalEntryPoints = mappedEntryPoints.filter { seenEntryPoints.insert($0).inserted }
+            // Only equivalent appIntent bridges are coalesced above. Keep every
+            // other declared entrypoint so canonical validation rejects duplicates.
+            finalEntryPoints = mappedEntryPoints
         } else if entrypoints.isEmpty {
             // Legacy script package with no explicit entrypoints.
             // Synthesize foreground app entrypoint when the legacy manifest represents an app.
