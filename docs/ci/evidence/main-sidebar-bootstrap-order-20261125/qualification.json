@@ -1,0 +1,166 @@
+{
+  "schemaVersion": 1,
+  "status": "SOURCE_REVIEWED_NATIVE_NOT_RUN",
+  "baseSource": "0a8e90dcf81c1ce71d01555d64b07d0142362f1d",
+  "writtenAtUTC": "2026-11-25T08:29:37.732861+00:00",
+  "originalEvidence": {
+    "terminalReceiptSHA256": "51c1e6947d076c73c929db14d78204bf23d6aac1b700402b6ce8a341547ce427",
+    "actualUI": {
+      "passed": 2,
+      "failed": 3,
+      "skipped": 0
+    },
+    "missingSwiftMethods": 4,
+    "correctedFourStatus": "RETIRED_NOT_RUN",
+    "rowFailure": "Missing Agent Acceptance Chat before swipe; failure hierarchy contains No Conversations.",
+    "searchFailure": "Architecture row exists and tap is recorded; closed drawer and absent keyboard pass, transcript absent.",
+    "rawAUTStdoutSHA256": "7ccea648da1a2f3704b8fcb0891b737095808822327a4409d2f336606d1f5a4b",
+    "bootstrapMarkerSHA256": "ff5cc0ac8527b32c7548891dc94bd22ff4070f42b4225a7c2765d308445101b2"
+  },
+  "normalOrderBefore": [
+    "Expo app defines",
+    "await notification category registration",
+    "NativeScript provider registration",
+    "original data preload",
+    "scripting model-context configuration",
+    "publish compact configuration",
+    "runtime lifecycle prepare",
+    "save observer"
+  ],
+  "normalOrderAfter": [
+    "Expo app defines",
+    "original data preload",
+    "await notification category registration",
+    "NativeScript provider registration",
+    "scripting model-context configuration",
+    "publish compact configuration",
+    "runtime lifecycle prepare",
+    "save observer"
+  ],
+  "requiredPriorInputs": [
+    "HanlinApplicationContext initialization: schema/container",
+    "process runtime configuration installed",
+    "context and credential registry registration"
+  ],
+  "scope": {
+    "nativeA2UIEarlyBranch": "UNCHANGED",
+    "singlePreparationTask": "UNCHANGED",
+    "fixtureBytes": "UNCHANGED",
+    "defaultModelPolicy": "UNCHANGED",
+    "testsAssertionsActionsTimeouts": "UNCHANGED",
+    "searchRouting": "UNCHANGED_UNRESOLVED",
+    "nativeExecution": "NOT_RUN",
+    "macSourceCache": "NOT_TOUCHED_ROOT_OWNED",
+    "normalCallMultiset": "UNCHANGED"
+  },
+  "qualificationLimits": [
+    "The notification await can delay canonical data readiness by source order; existing logs do not establish the exact wait duration in the Row process.",
+    "Swift stdout buffering prevents treating absence of preload prints as proof of absence of execution.",
+    "Original Search warning predates the tap by about 20 seconds and is not established as its cause.",
+    "The original failed and missing native methods require genuine affected-scope execution on the final integrated source."
+  ],
+  "files": {
+    "AI_HLY/Downstream/SDK/HanlinApplicationLifecycle.swift": {
+      "baseSHA256": "011fe718a59dc468efcc97415e94cd65eac62b648437d1ce38f1cb4d134262bd",
+      "candidateSHA256": "4e8364f8537ec2dd4e5b3eab04137bdeafbf00d95ce67e4b214584827d74c323",
+      "changed": true
+    },
+    "AI_HLY/Downstream/SDK/HanlinApplicationContext.swift": {
+      "baseSHA256": "482c7e5d1eaa04a6c1f410b1ef3fda9ce85362ced3aa874aaf049cb234c72602",
+      "candidateSHA256": "482c7e5d1eaa04a6c1f410b1ef3fda9ce85362ced3aa874aaf049cb234c72602",
+      "changed": false
+    },
+    "AI_HLY/Downstream/SDK/HanlinApplicationData.swift": {
+      "baseSHA256": "0ba258404062c8d78e14c9fd9087fb5585988b30b9b208df513c918f500185e0",
+      "candidateSHA256": "0ba258404062c8d78e14c9fd9087fb5585988b30b9b208df513c918f500185e0",
+      "changed": false
+    },
+    "AI_HLY/Downstream/SDK/HanlinApplicationScene.swift": {
+      "baseSHA256": "a94798aed7e96d6355c0e233da4babd9c8c6b1c26f0f0ce7921932432714d540",
+      "candidateSHA256": "a94798aed7e96d6355c0e233da4babd9c8c6b1c26f0f0ce7921932432714d540",
+      "changed": false
+    },
+    "AI_HLY/Services/DataServices/PreLoad.swift": {
+      "baseSHA256": "8f229c0bc81d988bf165296e7c9d55be2e950f88c632648d72729adff7de5c9b",
+      "candidateSHA256": "8f229c0bc81d988bf165296e7c9d55be2e950f88c632648d72729adff7de5c9b",
+      "changed": false
+    },
+    "AI_HLY/Services/DataServices/InfoServices.swift": {
+      "baseSHA256": "429e7a83ffc92626d054d0822823fbb5421077eabe024732a47e34a53a563206",
+      "candidateSHA256": "429e7a83ffc92626d054d0822823fbb5421077eabe024732a47e34a53a563206",
+      "changed": false
+    },
+    "AI_HLY/Model/HanlinAppleModelCatalogAdapter.swift": {
+      "baseSHA256": "b6241c2e58835f8ea6c65ae130bc12e8f90521a65e5680503921339a2b4fd8aa",
+      "candidateSHA256": "b6241c2e58835f8ea6c65ae130bc12e8f90521a65e5680503921339a2b4fd8aa",
+      "changed": false
+    },
+    "AI_HLY/Services/ChatServices/AutomaticSearch/AutomaticSearchMigration.swift": {
+      "baseSHA256": "3101c3ea76352d842b1060da2bd23919e74aa9b980fb273da22ef32eb3bf2281",
+      "candidateSHA256": "3101c3ea76352d842b1060da2bd23919e74aa9b980fb273da22ef32eb3bf2281",
+      "changed": false
+    },
+    "AI_HLY/Downstream/AgentDiagnostics/AgentRuntimeUIAcceptanceProvider.swift": {
+      "baseSHA256": "1de8600e13a011aa35d4f7fbb748b42f971e9b9008b17bbe98cf113702691203",
+      "candidateSHA256": "1de8600e13a011aa35d4f7fbb748b42f971e9b9008b17bbe98cf113702691203",
+      "changed": false
+    },
+    "AI_HLY/Downstream/SystemIntegrations/ChavrusaSystemIntegrations.swift": {
+      "baseSHA256": "29793c75803318c10d9abcd2b02945b16852f32ec3cebeabe1742a9a4746b702",
+      "candidateSHA256": "29793c75803318c10d9abcd2b02945b16852f32ec3cebeabe1742a9a4746b702",
+      "changed": false
+    },
+    "AI_HLY/Downstream/NativeScript/HanlinNativeScriptProductionBootstrap.swift": {
+      "baseSHA256": "d4a086d3684efccffea99ba701a6fa259d02a4c1be8587d739e3eefb6ea5a0bb",
+      "candidateSHA256": "d4a086d3684efccffea99ba701a6fa259d02a4c1be8587d739e3eefb6ea5a0bb",
+      "changed": false
+    },
+    "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoSession.swift": {
+      "baseSHA256": "852828b5e9548de003195cef2253b892a5b4a1c039e71946bb0e7fb0b61d7107",
+      "candidateSHA256": "852828b5e9548de003195cef2253b892a5b4a1c039e71946bb0e7fb0b61d7107",
+      "changed": false
+    },
+    "AI_HLYUITests/HanlinSidebarNavigationUITests.swift": {
+      "baseSHA256": "ca7a6a5d18143e12cbe558ed3ce67d77e19afe128adc1474d8bfd76c39e56113",
+      "candidateSHA256": "ca7a6a5d18143e12cbe558ed3ce67d77e19afe128adc1474d8bfd76c39e56113",
+      "changed": false
+    },
+    "AI_HLYTests/HanlinSidebarGestureTests.swift": {
+      "baseSHA256": "31bee1d3369658bbacf72b7b7dcb82067363fc20c738f45800d094429c316e65",
+      "candidateSHA256": "31bee1d3369658bbacf72b7b7dcb82067363fc20c738f45800d094429c316e65",
+      "changed": false
+    },
+    "AI_HLYTests/HanlinApplicationEmbeddingTests.swift": {
+      "baseSHA256": "d647361dbef8f576f18e13fc852df7f61b7d06a7f5757e5b29bfd503aafc4463",
+      "candidateSHA256": "d647361dbef8f576f18e13fc852df7f61b7d06a7f5757e5b29bfd503aafc4463",
+      "changed": false
+    },
+    "AI_HLYTests/HanlinApplicationSystemIntegrationTests.swift": {
+      "baseSHA256": "617d5472d978fde04ca74400267cb1bb92244b84fbe224545896bddb26bfa802",
+      "candidateSHA256": "617d5472d978fde04ca74400267cb1bb92244b84fbe224545896bddb26bfa802",
+      "changed": false
+    },
+    "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinCompactChatWorkspace.swift": {
+      "baseSHA256": "2b214d3c56cb1c7acc2effd391ebab521431b25ac0d2562684317339f5f22ab5",
+      "candidateSHA256": "2b214d3c56cb1c7acc2effd391ebab521431b25ac0d2562684317339f5f22ab5",
+      "changed": false
+    },
+    "AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinCompactConversationLibrary.swift": {
+      "baseSHA256": "8d3487f22a16b5ad1d9220c426ab25f7105a13c682bf8c9fbd6a8587a2b4df19",
+      "candidateSHA256": "8d3487f22a16b5ad1d9220c426ab25f7105a13c682bf8c9fbd6a8587a2b4df19",
+      "changed": false
+    }
+  },
+  "checks": {
+    "unchangedStatementMultiset": "PASS",
+    "nativeA2UIBranchByteEquality": "PASS",
+    "reviewedInputHashInventory": "PASS",
+    "gitDiffCheck": "PASS"
+  },
+  "peerReview": {
+    "agent": "/root/sidebar",
+    "status": "NO_CONCRETE_BLOCKER",
+    "sourceSHA256": "4e8364f8537ec2dd4e5b3eab04137bdeafbf00d95ce67e4b214584827d74c323",
+    "scope": "Context init, full preload dependency chain, notification configuration and NativeScript bootstrap; source only, no execution."
+  }
+}
