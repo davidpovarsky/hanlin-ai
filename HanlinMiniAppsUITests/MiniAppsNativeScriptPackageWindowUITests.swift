@@ -105,7 +105,7 @@ final class MiniAppsNativeScriptPackageWindowUITests: XCTestCase {
 
     private func focus(_ name: String) throws -> XCUIElement {
         let id = try XCTUnwrap(requests[name])
-        app.open(try XCTUnwrap(URL(string: "hanlinminiapps://x-callback-url/run?request=" + id)))
+        XCUIDevice.shared.system.open(try XCTUnwrap(URL(string: "hanlinminiapps://x-callback-url/run?request=" + id)))
         let window = app.windows.containing(
             .navigationBar, identifier: "NativeScript package " + name
         ).firstMatch
@@ -128,7 +128,7 @@ final class MiniAppsNativeScriptPackageWindowUITests: XCTestCase {
         let input = window.textViews["hanlin-ns-window-input"]
         XCTAssertTrue(input.waitForExistence(timeout: 15))
         XCTAssertTrue(input.isHittable)
-        NativeScriptWindowUIInteractions.append("-edited", to: input)
+        NativeScriptWindowUIInteractions.replaceContents(of: input, with: name + "-edited")
         assertValue(input, equals: name + "-edited")
         let prepare = window.buttons["hanlin-ns-window-prepare-return"]
         XCTAssertTrue(prepare.isHittable)

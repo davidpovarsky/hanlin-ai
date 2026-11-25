@@ -105,7 +105,7 @@ final class MiniAppsNativeScriptWindowUITests: XCTestCase {
 
     private func focus(_ name: String) throws -> XCUIElement {
         let id = try XCTUnwrap(requests[name])
-        app.open(try XCTUnwrap(URL(string: "hanlinminiapps://x-callback-url/run?request=" + id)))
+        XCUIDevice.shared.system.open(try XCTUnwrap(URL(string: "hanlinminiapps://x-callback-url/run?request=" + id)))
         let window = app.windows.containing(.navigationBar, identifier: "NativeScript window " + name).firstMatch
         XCTAssertTrue(window.waitForExistence(timeout: 60), "The incoming request must open/focus its own actual iPad scene.")
         if !openedRequests.contains(where: { $0.id == id }) {
@@ -122,7 +122,7 @@ final class MiniAppsNativeScriptWindowUITests: XCTestCase {
         let input = window.textViews["hanlin-ns-window-input"]
         XCTAssertTrue(input.waitForExistence(timeout: 15))
         XCTAssertTrue(input.isHittable)
-        NativeScriptWindowUIInteractions.append("-edited", to: input)
+        NativeScriptWindowUIInteractions.replaceContents(of: input, with: name + "-edited")
         assertValue(input, equals: name + "-edited")
         let prepare = window.buttons["hanlin-ns-window-prepare-return"]
         XCTAssertTrue(prepare.isHittable)
@@ -217,14 +217,15 @@ enum NativeScriptWindowUIInteractions {
         let title: String
     }
 
-    static func append(_ suffix: String, to input: XCUIElement) {
+    static func replaceContents(of input: XCUIElement, with value: String) {
         input.tap()
-        // The original 4b772 run's AX snapshots contain "-editedgamma" and
-        // "-editedalpha": a center tap put the native caret at the beginning.
-        // Use the public iPad hardware-key event to move to the end of this
-        // one-line value, then preserve the same real edit and exact assertion.
-        input.typeKey(XCUIKeyboardKey.rightArrow.rawValue, modifierFlags: .command)
-        input.typeText(suffix)
+        // Edit the real native UITextView through its hardware Select All
+        // command. A center tap and Command-Right did not establish a stable
+        // insertion point in the second iPad scene in the e1a25038 run.
+        // The caller already verified the original value and still requires
+        // the exact edited value, independent counters and prepared callback.
+        input.typeKey("a", modifierFlags: .command)
+        input.typeText(value)
     }
 
     static func closeFailedRequestWindows(in app: XCUIApplication, requests: [Request]) {
@@ -232,10 +233,13 @@ enum NativeScriptWindowUIInteractions {
         // Touch only request scenes this exact test actually opened.
         for request in requests.reversed() {
             let window = app.windows.containing(.navigationBar, identifier: request.title).firstMatch
-            guard window.exists,
-                  let url = URL(string: "hanlinminiapps://x-callback-url/run?request=" + request.id)
+            guard let url = URL(string: "hanlinminiapps://x-callback-url/run?request=" + request.id)
             else { continue }
-            app.open(url)
+            // A background iPad scene may be absent from the current AX tree.
+            // Deliver only this test's recorded request through the OS so its
+            // existing scene can become accessible without restarting the app.
+            XCUIDevice.shared.system.open(url)
+            guard window.waitForExistence(timeout: 5) else { continue }
             let close = window.buttons["miniapps.external.cancel"]
             guard close.waitForExistence(timeout: 5), close.isHittable else { continue }
             close.tap()
