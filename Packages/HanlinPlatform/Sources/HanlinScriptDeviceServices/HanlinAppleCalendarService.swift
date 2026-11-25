@@ -71,7 +71,7 @@ public final class HanlinAppleCalendarService {
                 if keywordMatches && locationMatches && dateMatches {
                     result.append(.init(type: "calendar", title: title, startDate: event.startDate,
                         endDate: event.endDate, location: event.location, notes: event.notes,
-                        identifier: event.calendarItemIdentifier, calendarID: event.calendar.calendarIdentifier,
+                        identifier: event.calendarItemIdentifier, calendarID: event.calendar?.calendarIdentifier,
                         occurrenceDate: event.occurrenceDate))
                 }
             }
@@ -85,7 +85,7 @@ public final class HanlinAppleCalendarService {
                         dueDate: reminder.dueDateComponents?.date, notes: reminder.notes,
                         priority: reminder.priority == 0 ? nil : reminder.priority,
                         completed: reminder.isCompleted, identifier: reminder.calendarItemIdentifier,
-                        calendarID: reminder.calendar.calendarIdentifier)
+                        calendarID: reminder.calendar?.calendarIdentifier)
                 }
             }
             result += reminders.filter { reminder in
@@ -121,7 +121,7 @@ public final class HanlinAppleCalendarService {
             try store.save(event, span: .thisEvent)
             return .init(type: request.type, title: request.title, startDate: request.startDate,
                 endDate: request.endDate, location: request.location, notes: request.notes,
-                identifier: event.calendarItemIdentifier, calendarID: event.calendar.calendarIdentifier,
+                identifier: event.calendarItemIdentifier, calendarID: event.calendar?.calendarIdentifier,
                 occurrenceDate: event.occurrenceDate)
         }
         let due = request.dueDate.map {

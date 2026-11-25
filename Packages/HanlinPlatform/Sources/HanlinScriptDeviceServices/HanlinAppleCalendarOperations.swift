@@ -43,7 +43,7 @@ extension HanlinAppleCalendarService {
             var seen = Set<String>()
             let calendars = types.flatMap { store.calendars(for: $0) }.filter {
                 seen.insert($0.calendarIdentifier).inserted &&
-                (request.sourceIdentifier == nil || $0.source.sourceIdentifier == request.sourceIdentifier)
+                (request.sourceIdentifier == nil || $0.source?.sourceIdentifier == request.sourceIdentifier)
             }
             return operationResult(request, data: calendars.map(Self.calendarJSON))
         case .getCalendar:
