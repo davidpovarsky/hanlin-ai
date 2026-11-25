@@ -1,0 +1,90 @@
+{"observedAt": "2026-11-25T11:03:15.440955+00:00", "status": "RUNNING", "phase": "original-build-install-fixture-prefix", "elapsedSeconds": 1.966700074262917e-05, "simulator": null}
+{"observedAt": "2026-11-25T11:03:15.441573+00:00", "status": "RUNNING", "phase": "source-sha.txt", "elapsedSeconds": 0.0006317090010270476, "simulator": null}
+Paired command starting: source-sha.txt; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: source-sha.txt; pid=88361; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command completed: source-sha.txt; pid=88361; elapsed=0.0s; log_bytes=41; observed_exit=0
+{"observedAt": "2026-11-25T11:03:15.456139+00:00", "status": "RUNNING", "phase": "sdk.txt", "elapsedSeconds": 0.01519979200384114, "simulator": null}
+Paired command starting: sdk.txt; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: sdk.txt; pid=88362; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command completed: sdk.txt; pid=88362; elapsed=0.0s; log_bytes=5; observed_exit=0
+{"observedAt": "2026-11-25T11:03:15.464375+00:00", "status": "RUNNING", "phase": "runtimes.json", "elapsedSeconds": 0.023439250013325363, "simulator": null}
+Paired command starting: runtimes.json; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: runtimes.json; pid=88363; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command completed: runtimes.json; pid=88363; elapsed=0.2s; log_bytes=45201; observed_exit=0
+{"observedAt": "2026-11-25T11:03:15.676672+00:00", "status": "RUNNING", "phase": "device-types.json", "elapsedSeconds": 0.23573750001378357, "simulator": null}
+Paired command starting: device-types.json; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: device-types.json; pid=88372; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command completed: device-types.json; pid=88372; elapsed=0.2s; log_bytes=64328; observed_exit=0
+{"observedAt": "2026-11-25T11:03:15.828473+00:00", "status": "RUNNING", "phase": "created-simulator.txt", "elapsedSeconds": 0.38754008400428575, "simulator": null}
+Paired command starting: created-simulator.txt; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: created-simulator.txt; pid=88381; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command completed: created-simulator.txt; pid=88381; elapsed=0.3s; log_bytes=37; observed_exit=0
+{"observedAt": "2026-11-25T11:03:16.100787+00:00", "status": "RUNNING", "phase": "container-command-help.txt", "elapsedSeconds": 0.6598565420135856, "simulator": null}
+Paired command starting: container-command-help.txt; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: container-command-help.txt; pid=88390; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command completed: container-command-help.txt; pid=88390; elapsed=0.2s; log_bytes=386; observed_exit=0
+{"observedAt": "2026-11-25T11:03:16.253348+00:00", "status": "RUNNING", "phase": "before-boot-host-resources.txt", "elapsedSeconds": 0.8124165840126807, "simulator": null}
+Paired command starting: before-boot-host-resources.txt; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: before-boot-host-resources.txt; pid=88399; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command completed: before-boot-host-resources.txt; pid=88399; elapsed=0.0s; log_bytes=36; observed_exit=0
+{"observedAt": "2026-11-25T11:03:16.259760+00:00", "status": "RUNNING", "phase": "before-boot-memory.txt", "elapsedSeconds": 0.8188238750008168, "simulator": null}
+Paired command starting: before-boot-memory.txt; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: before-boot-memory.txt; pid=88400; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command completed: before-boot-memory.txt; pid=88400; elapsed=0.0s; log_bytes=1247; observed_exit=0
+{"observedAt": "2026-11-25T11:03:16.265469+00:00", "status": "RUNNING", "phase": "before-boot-processes.txt", "elapsedSeconds": 0.8245311250066152, "simulator": null}
+Paired command starting: before-boot-processes.txt; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: before-boot-processes.txt; pid=88401; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command completed: before-boot-processes.txt; pid=88401; elapsed=0.0s; log_bytes=22100; observed_exit=0
+{"observedAt": "2026-11-25T11:03:16.279272+00:00", "status": "RUNNING", "phase": "boot.log", "elapsedSeconds": 0.8383368750073714, "simulator": null}
+Paired command starting: boot.log; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: boot.log; pid=88402; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command completed: boot.log; pid=88402; elapsed=0.6s; log_bytes=0; observed_exit=0
+{"observedAt": "2026-11-25T11:03:16.840794+00:00", "status": "RUNNING", "phase": "bootstatus.log", "elapsedSeconds": 1.3998737920046551, "simulator": null}
+Paired command starting: bootstatus.log; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: bootstatus.log; pid=88458; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command completed: bootstatus.log; pid=88458; elapsed=23.8s; log_bytes=5014; observed_exit=0
+{"observedAt": "2026-11-25T11:03:40.690588+00:00", "status": "RUNNING", "phase": "mini-build.log", "elapsedSeconds": 25.24987162501202, "simulator": null}
+Paired command starting: mini-build.log; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: mini-build.log; pid=88611; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: mini-build.log; pid=88611; elapsed=30.0s; log_bytes=873; observed_exit=None
+Paired command running: mini-build.log; pid=88611; elapsed=60.0s; log_bytes=13443; observed_exit=None
+Paired command running: mini-build.log; pid=88611; elapsed=90.1s; log_bytes=87012; observed_exit=None
+Paired command running: mini-build.log; pid=88611; elapsed=120.1s; log_bytes=728674; observed_exit=None
+Paired command running: mini-build.log; pid=88611; elapsed=150.1s; log_bytes=921285; observed_exit=None
+Paired command completed: mini-build.log; pid=88611; elapsed=161.9s; log_bytes=1119438; observed_exit=0
+App Intents metadata evidence: HanlinMiniApps.app CAPTURED
+{"observedAt": "2026-11-25T11:06:22.821491+00:00", "status": "RUNNING", "phase": "original-a2ui-generator.log", "elapsedSeconds": 187.38111108400335, "simulator": null}
+Paired command starting: original-a2ui-generator.log; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: original-a2ui-generator.log; pid=91154; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command completed: original-a2ui-generator.log; pid=91154; elapsed=3.2s; log_bytes=2622; observed_exit=0
+{"observedAt": "2026-11-25T11:06:25.981523+00:00", "status": "RUNNING", "phase": "ai-build.log", "elapsedSeconds": 190.54119120900577, "simulator": null}
+Paired command starting: ai-build.log; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: ai-build.log; pid=91181; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: ai-build.log; pid=91181; elapsed=30.0s; log_bytes=863; observed_exit=None
+Paired command running: ai-build.log; pid=91181; elapsed=60.0s; log_bytes=97727; observed_exit=None
+Paired command running: ai-build.log; pid=91181; elapsed=90.0s; log_bytes=138202; observed_exit=None
+Paired command running: ai-build.log; pid=91181; elapsed=120.1s; log_bytes=683785; observed_exit=None
+Paired command running: ai-build.log; pid=91181; elapsed=150.1s; log_bytes=871221; observed_exit=None
+Paired command completed: ai-build.log; pid=91181; elapsed=168.7s; log_bytes=1123351; observed_exit=65
+xcodebuild exit 65; inspect ai-build.log
+{"observedAt": "2026-11-25T11:09:14.694804+00:00", "status": "RUNNING", "phase": "failure-device-state.json", "elapsedSeconds": 359.25489725000807, "simulator": null}
+Paired command starting: failure-device-state.json; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: failure-device-state.json; pid=95342; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command completed: failure-device-state.json; pid=95342; elapsed=0.4s; log_bytes=32555; observed_exit=0
+{"observedAt": "2026-11-25T11:09:15.140301+00:00", "status": "RUNNING", "phase": "failure-installed-apps.plist", "elapsedSeconds": 359.70038308401126, "simulator": null}
+Paired command starting: failure-installed-apps.plist; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: failure-installed-apps.plist; pid=95355; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command completed: failure-installed-apps.plist; pid=95355; elapsed=0.2s; log_bytes=54554; observed_exit=0
+{"observedAt": "2026-11-25T11:09:15.343032+00:00", "status": "RUNNING", "phase": "failure-processes.txt", "elapsedSeconds": 359.90311270901293, "simulator": null}
+Paired command starting: failure-processes.txt; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: failure-processes.txt; pid=95364; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command completed: failure-processes.txt; pid=95364; elapsed=0.0s; log_bytes=178038; observed_exit=0
+{"observedAt": "2026-11-25T11:09:15.387256+00:00", "status": "RUNNING", "phase": "failure-memory.txt", "elapsedSeconds": 359.94733883401204, "simulator": null}
+Paired command starting: failure-memory.txt; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: failure-memory.txt; pid=95365; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command completed: failure-memory.txt; pid=95365; elapsed=0.0s; log_bytes=1247; observed_exit=0
+{"observedAt": "2026-11-25T11:09:15.392458+00:00", "status": "RUNNING", "phase": "screenshot.log", "elapsedSeconds": 359.95253404200776, "simulator": null}
+Paired command starting: screenshot.log; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: screenshot.log; pid=95366; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command completed: screenshot.log; pid=95366; elapsed=1.9s; log_bytes=301; observed_exit=0
+{"observedAt": "2026-11-25T11:09:20.976564+00:00", "status": "FOCUSED_FAILED", "phase": null, "elapsedSeconds": 365.5366509170126, "simulator": "E742FBCD-8FF0-4130-B143-7F8328637138"}

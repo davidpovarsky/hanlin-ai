@@ -1,0 +1,60 @@
+{
+  "schema": 1,
+  "owner": "/root/native_execution",
+  "source": "a2c8a1b1be746461272ba77254603304567c309d",
+  "tree": "c3cfefa7775c91e2b2a9eaff980bbde6e681cc37",
+  "status": "FOCUSED_FAILED",
+  "startedAt": "2026-11-25T11:03:15.401082+00:00",
+  "pid": 88350,
+  "phase": null,
+  "original52": "NOT_RUN",
+  "original25": "NOT_RUN",
+  "original27": "NOT_RUN",
+  "scope": "Three original failed MiniApps selectors and eight original AI selectors; separate focused proof only.",
+  "selectors": {
+    "FocusedMini3": [
+      "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEditButtonEditsOriginalList",
+      "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierHitTestingAndSubmitScope",
+      "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualInputLayoutAndDataAdapters"
+    ],
+    "FocusedAI8": [
+      "AI_HLYTests/PendingFirstTurnTests/importedMiniAppRepairDispatchesOnceAndPreservesDraftAndSettings()",
+      "AI_HLYTests/PendingFirstTurnTests/cancelledMiniAppRepairPreservesHomeDraft()",
+      "AI_HLYTests/HanlinScriptingPlatformCompositionTests/malformedImportedArchiveRetainsOriginalAndStructuredDiagnostic()",
+      "AI_HLYTests/MiniAppAuthoringToolTests/originalSDKWriteValidateBuildAndRepair()",
+      "AI_HLYTests/MiniAppAuthoringToolTests/sourceWritePreservesUnrelatedFilesAndTargetsRetainedSource()",
+      "AI_HLYTests/MiniAppAuthoringToolTests/originalExpoMetroBuildOnEmbeddedNode()",
+      "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests/actualActivityKitStartsUpdatesAndEndsTheOriginalProgram()",
+      "AI_HLYUITests/MiniAppAuthoringUITests/testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport"
+    ]
+  },
+  "groups": {},
+  "errors": [
+    "Original setup ended before focused checkpoint"
+  ],
+  "sourceErrors": [],
+  "cleanupErrors": [],
+  "originalRunnerSHA256": "a99b6194f8dd20bc30998ff2ad9e86ec219415a00615b250c65670f7dfcdba7d",
+  "sourceHashes": {
+    "AI_HLY/ChatView.swift": "d21659cdaa7d3e6141d4677d10ccaee067e7238ba8c4ccc2f689b63db4c41ffe",
+    "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests.swift": "7d6b159d580636269daf67f6ed04634d586b94d07c960bd099cc9c5f4da9e164",
+    "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift": "da0fa21f26b677f4d18f8e1972208b39e30401a127e9dd2a9643e0fe8d7ad17c",
+    "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoUIModule.swift": "3ad8217ce87005fab1fe3dc256e7d7680ced7c330f7cd9dc5561f1a5e5905e09",
+    "Packages/HanlinExpoUI/src/manual-components.tsx": "b95b387fce797a3c0ffe8c258e1fe0b411e76956e6cd50ae9235267f5b638da6",
+    "Scripts/ProductSplit/run_paired_acceptance.py": "a99b6194f8dd20bc30998ff2ad9e86ec219415a00615b250c65670f7dfcdba7d",
+    "Scripts/ProductSplit/test_run_paired_acceptance.py": "3791b4178c5cc49b64c38ead6f913284f29fc990c7223953aa74f2075f3771f1"
+  },
+  "hostArchiveSHA256": "7a426675109c5ebc4c8b5824565547f8aea10584785932280fdb623128530ecc",
+  "checkpointReached": false,
+  "observedAt": "2026-11-25T11:09:20.976564+00:00",
+  "elapsedSeconds": 365.5366509170126,
+  "prefixExit": 1,
+  "simulator": "E742FBCD-8FF0-4130-B143-7F8328637138",
+  "ownedSimulatorCleanup": {
+    "device": "E742FBCD-8FF0-4130-B143-7F8328637138",
+    "ownershipPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v1/native-result/paired-prefix/created-simulator.txt",
+    "state": "Shutdown",
+    "remainingOwnedRunners": []
+  },
+  "finishedAt": "2026-11-25T11:09:20.976530+00:00"
+}

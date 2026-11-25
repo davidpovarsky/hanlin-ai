@@ -1,0 +1,17 @@
+{"at": "2026-11-25T11:03:15.227827+00:00", "event": "prepared", "startedAt": "2026-11-25T11:03:15.227477+00:00", "argv": ["/opt/homebrew/opt/python@3.12/bin/python3.12", "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-native-child-v1.py", "--source", "a2c8a1b1be746461272ba77254603304567c309d", "--output", "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v1/native-result"]}
+{"at": "2026-11-25T11:03:15.231666+00:00", "event": "launched", "status": "RUNNING", "phasePID": 88350, "nativeResult": "RUNNING"}
+{"at": "2026-11-25T11:03:45.241127+00:00", "event": "heartbeat", "elapsedSeconds": 30.011855457996717, "logBytes": 5641}
+{"at": "2026-11-25T11:04:15.245135+00:00", "event": "heartbeat", "elapsedSeconds": 60.01660487499612, "logBytes": 5741}
+{"at": "2026-11-25T11:04:45.248581+00:00", "event": "heartbeat", "elapsedSeconds": 90.01884758299275, "logBytes": 5843}
+{"at": "2026-11-25T11:05:15.270873+00:00", "event": "heartbeat", "elapsedSeconds": 120.03673812499619, "logBytes": 5945}
+{"at": "2026-11-25T11:05:45.282685+00:00", "event": "heartbeat", "elapsedSeconds": 150.05303133299458, "logBytes": 6049}
+{"at": "2026-11-25T11:06:15.297015+00:00", "event": "heartbeat", "elapsedSeconds": 180.068373874994, "logBytes": 6153}
+{"at": "2026-11-25T11:06:45.304484+00:00", "event": "heartbeat", "elapsedSeconds": 210.0767119999946, "logBytes": 7161}
+{"at": "2026-11-25T11:07:15.308911+00:00", "event": "heartbeat", "elapsedSeconds": 240.08061754200025, "logBytes": 7259}
+{"at": "2026-11-25T11:07:45.323120+00:00", "event": "heartbeat", "elapsedSeconds": 270.08918308299326, "logBytes": 7359}
+{"at": "2026-11-25T11:08:15.331435+00:00", "event": "heartbeat", "elapsedSeconds": 300.102892416995, "logBytes": 7460}
+{"at": "2026-11-25T11:08:45.342300+00:00", "event": "heartbeat", "elapsedSeconds": 330.1151329580025, "logBytes": 7562}
+{"at": "2026-11-25T11:09:15.353338+00:00", "event": "heartbeat", "elapsedSeconds": 360.125726667, "logBytes": 9179}
+{"at": "2026-11-25T11:09:21.030393+00:00", "event": "actual_terminal", "status": "FOCUSED_FAILED", "nativeResult": "FAILED_OR_INCOMPLETE", "error": "AssertionError: ", "exitCode": 1}
+{"at": "2026-11-25T11:09:21.949877+00:00", "event": "charge_ready", "finishedAt": "2026-11-25T11:09:21.948746+00:00", "elapsedSeconds": 366.7222996670025, "chargedSeconds": 366.7222996670025, "cumulativeActiveSeconds": 15839.63407225104, "allowanceExceededDuringCleanup": false, "logBytes": 10384, "logSHA256": "50e1e8e69dc605e6e1b848865df43258820bffe759fce30baafddb4f1e1466aa"}
+{"at": "2026-11-25T11:09:21.957811+00:00", "event": "finalized", "status": "FOCUSED_FAILED"}

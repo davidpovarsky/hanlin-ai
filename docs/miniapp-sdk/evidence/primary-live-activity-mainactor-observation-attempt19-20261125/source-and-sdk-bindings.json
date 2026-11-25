@@ -1,0 +1,25 @@
+{
+  "sourceCommit": "fcfcfb193acbf98e0d77a67be6db88849fd7af8f",
+  "parent": "a2c8a1b1be746461272ba77254603304567c309d",
+  "publishedConsumer": "62dfff9aebd0a272486c7770d4f77ba603d535ab",
+  "changedPaths": [
+    "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests.swift"
+  ],
+  "path": "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests.swift",
+  "beforeSHA256": "7d6b159d580636269daf67f6ed04634d586b94d07c960bd099cc9c5f4da9e164",
+  "afterSHA256": "ea6c76e33bb4594931bb118ab713e2de2d85e561f0e40eb21d64d154c45f9c90",
+  "afterBytes": 12242,
+  "expectationCount": 22,
+  "testFunctionCount": 3,
+  "scope": "Only the private test observation helper and its unused ended error case changed. Every test body and expectation remains byte-identical.",
+  "sdkClosure": {
+    "producerSource": "a2c8a1b1be746461272ba77254603304567c309d",
+    "manifestSHA256": "4505c28495d8b6ecd1073254e0e395adcc898cc02dd1d40699591f51db4dee92",
+    "sourceInputCount": 235,
+    "changedTestPathInInputs": false,
+    "recomputedInputSHA256": "ba8f3f1f09054887eed62532fa1d5ca2ac3bd60e6aa99a98ab1035c7653882a2",
+    "hostArchiveSHA256": "7a426675109c5ebc4c8b5824565547f8aea10584785932280fdb623128530ecc",
+    "exportSHA256": "1bf347311b9547054725f8674419a11b3c502a4994feb6dbd9283c3af7400210",
+    "result": "SDK19 identity unchanged; original producer remains a2c8 and the subsequent consumer source may advance for the test-only correction."
+  }
+}

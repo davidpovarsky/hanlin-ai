@@ -1,0 +1,52 @@
+diff --git a/AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests.swift b/AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests.swift
+index b0eb4410..06a212c6 100644
+--- a/AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests.swift
++++ b/AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests.swift
+@@ -103,33 +103,26 @@ struct HanlinOriginalScriptWidgetLiveActivityTests {
+     }
+ 
+ #if os(iOS)
+-    private enum ActivityContentObservationError: Error { case timedOut, ended }
++    private enum ActivityContentObservationError: Error { case timedOut }
+ 
+     @MainActor
+     private func waitForContentState(
+         of activity: Activity<HanlinScriptWidgetLiveActivityAttributes>, revision: UInt64
+     ) async throws -> HanlinScriptWidgetLiveActivityAttributes.ContentState {
+-        try await withThrowingTaskGroup(of: HanlinScriptWidgetLiveActivityAttributes.ContentState.self) { group in
+-            defer { group.cancelAll() }
+-            group.addTask { @MainActor in
+-                // Prepare asynchronous observation before checking an already-published state.
+-                var updates = activity.contentUpdates.makeAsyncIterator()
+-                try Task.checkCancellation()
+-                let current = activity.content.state
+-                if current.revision == revision { return current }
+-                while let content = await updates.next() {
+-                    try Task.checkCancellation()
+-                    if content.state.revision == revision { return content.state }
+-                }
+-                throw ActivityContentObservationError.ended
+-            }
+-            group.addTask {
+-                try await Task.sleep(for: .seconds(5))
+-                throw ActivityContentObservationError.timedOut
+-            }
+-            guard let observed = try await group.next() else { throw ActivityContentObservationError.ended }
+-            return observed
++        let clock = ContinuousClock()
++        let deadline = clock.now.advanced(by: .seconds(5))
++        // Keep Activity and every content read on MainActor. The native SDK's
++        // Activity and content iterator cannot be sent into concurrent tasks.
++        while clock.now < deadline {
++            try Task.checkCancellation()
++            let current = activity.content.state
++            if current.revision == revision { return current }
++            let remaining = clock.now.duration(to: deadline)
++            guard remaining > .zero else { break }
++            try await Task.sleep(for: min(.milliseconds(20), remaining))
+         }
++        try Task.checkCancellation()
++        throw ActivityContentObservationError.timedOut
+     }
+ 
+     @Test @MainActor
