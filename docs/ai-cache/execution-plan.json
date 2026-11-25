@@ -155,7 +155,7 @@
     },
     "reuse_receipt": "evidence/final-reuse-20261125/reuse-receipt.json",
     "current_app_result": {
-      "source": "495680e928d5f4fd9735d14b0be5f267ced84b42",
+      "source": "948bdb1fe75d31559dc8d65ae8d2e70fa69de276",
       "status": "EXECUTED_PASS",
       "expected_methods": 46,
       "expected_invocations": 48,
@@ -163,10 +163,12 @@
       "passed": 48,
       "failed": 0,
       "source_unchanged": true,
-      "receipt": "evidence/app-native-20261125/attempt06/test/receipt.json",
-      "summary": "evidence/app-native-20261125/attempt06/test/acceptance-summary.json",
-      "raw_log_sha256": "afba612d4ea2ad45dcd7dd1447b01d94e22136b2815259b51c6d21998a612f8b",
-      "final_current_source_gate": "C9 pending startup/standalone-lock reconciliation and final native execution"
+      "receipt": "evidence/app-native-20261125/attempt07/test/receipt.json",
+      "summary": "evidence/app-native-20261125/attempt07/test/acceptance-summary.json",
+      "raw_log_sha256": "07c830e0b4fb16158ffe41a6e584a14b75635fa3c9a5aaefe5d2191f8f499f07",
+      "prepare_status": "PREPARED",
+      "prepare_receipt": "evidence/app-native-20261125/attempt07/prepare/receipt.json",
+      "result_bundle_manifest_sha256": "798725b1c5e427b69f87a84c5cd3a5ca6304e772f8cd106669f9771ad4a52747"
     },
     "runtime_host_result": {
       "source": "04c1942bc88cd4de7deafda7dd342b9b6c401dcf",
@@ -268,6 +270,20 @@
         "source_unchanged": true,
         "receipt": "evidence/app-native-20261125/attempt05/test/receipt.json",
         "summary": "evidence/app-native-20261125/attempt05/test/acceptance-summary.json"
+      },
+      {
+        "source": "495680e928d5f4fd9735d14b0be5f267ced84b42",
+        "status": "EXECUTED_PASS",
+        "expected_methods": 46,
+        "expected_invocations": 48,
+        "executed": 48,
+        "passed": 48,
+        "failed": 0,
+        "source_unchanged": true,
+        "receipt": "evidence/app-native-20261125/attempt06/test/receipt.json",
+        "summary": "evidence/app-native-20261125/attempt06/test/acceptance-summary.json",
+        "raw_log_sha256": "afba612d4ea2ad45dcd7dd1447b01d94e22136b2815259b51c6d21998a612f8b",
+        "final_current_source_gate": "C9 pending startup/standalone-lock reconciliation and final native execution"
       }
     ],
     "future_runner_lock_correction": {
@@ -292,9 +308,17 @@
       "evidence": "evidence/standalone-lock-resolution-20261125/receipt.json",
       "unrelated_pins_changed": false,
       "canonical_app_lock_unchanged": true
+    },
+    "reuse_extension": "evidence/final-reuse-extension-20261125/reuse-extension.json",
+    "latest_observed_owner_heads": {
+      "observed_at": "2026-11-25T05:13:09Z",
+      "composer": "f39142d3d14ae1bbbb81febceeef61fdc605f2a0",
+      "miniapps_sdk": "b0cf26a668a698682f5307252f14cf0af8c6d00a",
+      "wave3": "f3a0a97e63cc38acd58c0673447efe8d61b556da",
+      "status": "READ_ONLY_REVIEW: new MiniSDK notification/Host source not included in App07; preserve separate acceptance boundary"
     }
   },
-  "updated_at": "2026-11-25T05:01:37.217687+00:00",
+  "updated_at": "2026-11-25T05:15:06.346498+00:00",
   "latest_integrated_source": "37367b3d6bbd7e8321d6828a9052d502dd9d7522",
   "synchronized_heads": {
     "composer": "f39142d3d14ae1bbbb81febceeef61fdc605f2a0",

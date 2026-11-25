@@ -1,0 +1,48 @@
+{
+  "status": "PASS",
+  "sourceSHA": "948bdb1fe75d31559dc8d65ae8d2e70fa69de276",
+  "startedAtUTC": "2026-11-25T05:05:22.229831+00:00",
+  "commands": [
+    {
+      "argv": [
+        "node",
+        "Scripts/Audit/audit-miniapp-sdk.mjs",
+        "--check"
+      ],
+      "startedAtUTC": "2026-11-25T05:05:22.230233+00:00",
+      "log": "01-check.log",
+      "exitCode": 0,
+      "finishedAtUTC": "2026-11-25T05:05:22.690038+00:00",
+      "logSHA256": "f9392dbc1f4415decb9bc390be9f49d5b7e6f3fbd636c72710ef278e45b31783"
+    },
+    {
+      "argv": [
+        "/opt/homebrew/opt/python@3.12/bin/python3.12",
+        "Scripts/Audit/audit_miniapp_reachability.py",
+        "--check"
+      ],
+      "startedAtUTC": "2026-11-25T05:05:22.690484+00:00",
+      "log": "02-check.log",
+      "exitCode": 0,
+      "finishedAtUTC": "2026-11-25T05:05:23.785205+00:00",
+      "logSHA256": "bc234237931951c0e0e70dc212b9f47da2f6c76a61109e41c235f0f7f0eabcef"
+    },
+    {
+      "argv": [
+        "/opt/homebrew/opt/python@3.12/bin/python3.12",
+        "Scripts/Runtime/runtime_host_archive.py",
+        "validate",
+        "AI_HLY/RuntimeHostResources.zip"
+      ],
+      "startedAtUTC": "2026-11-25T05:05:23.785520+00:00",
+      "log": "03-check.log",
+      "exitCode": 0,
+      "finishedAtUTC": "2026-11-25T05:05:24.743731+00:00",
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "reason": "Original standalone locks changed through six-graph Apple resolution; execute fresh original app preparation.",
+  "freeBytesBefore": 7388897280,
+  "finishedAtUTC": "2026-11-25T05:05:24.793445+00:00",
+  "freeBytesAfter": 7389519872
+}
