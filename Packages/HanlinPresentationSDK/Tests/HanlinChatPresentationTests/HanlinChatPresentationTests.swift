@@ -47,6 +47,39 @@ final class HanlinChatPresentationTests: XCTestCase {
         XCTAssertEqual(state.phase, .closed)
     }
 
+    func testLauncherVisibilityAcrossAllModesAndHandoffs() {
+        for initial in HanlinChatPresentationMode.allCases {
+            var state = HanlinChatPresentationState(policy: .init(initialMode: initial))
+            XCTAssertTrue(state.showsLauncher)
+            state.open()
+            XCTAssertFalse(state.showsLauncher)
+            let other: HanlinChatPresentationMode = initial == .sheet ? .inspector : .sheet
+            state.request(other)
+            XCTAssertFalse(state.showsLauncher)
+            state.finishDismissal(other)
+            XCTAssertFalse(state.showsLauncher)
+            state.finishDismissal(initial)
+            XCTAssertEqual(state.mode, other)
+            XCTAssertFalse(state.showsLauncher)
+            state.close()
+            XCTAssertFalse(state.showsLauncher)
+            state.finishDismissal(other)
+            XCTAssertTrue(state.showsLauncher)
+        }
+    }
+
+    func testLauncherVisibilityAfterNativeDismissal() {
+        for mode in HanlinChatPresentationMode.allCases {
+            var state = HanlinChatPresentationState(policy: .init(modes: [mode]))
+            state.open()
+            XCTAssertFalse(state.showsLauncher)
+            state.systemDismissed(mode)
+            XCTAssertFalse(state.showsLauncher)
+            state.finishDismissal(mode)
+            XCTAssertTrue(state.showsLauncher)
+        }
+    }
+
     func testEmptyPolicyAndActiveReconfiguration() {
         var state = HanlinChatPresentationState(policy: .init(modes: [], initialMode: .inspector))
         XCTAssertEqual(state.policy.initialMode, .sheet)
@@ -59,4 +92,3 @@ final class HanlinChatPresentationTests: XCTestCase {
         XCTAssertEqual(state.mode, .inspector)
     }
 }
-

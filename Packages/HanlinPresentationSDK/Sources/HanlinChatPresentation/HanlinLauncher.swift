@@ -27,13 +27,16 @@ public struct HanlinLauncher: View {
 
     public var body: some View {
         Group {
-            if let transition {
-                launcher.matchedTransitionSource(id: transition.sourceID, in: transition.namespace)
-            } else {
-                launcher
+            // Remove entry controls from layout and accessibility while either
+            // native surface owns the conversation, including handoffs.
+            if controller.showsLauncher {
+                if let transition {
+                    launcher.matchedTransitionSource(id: transition.sourceID, in: transition.namespace)
+                } else {
+                    launcher
+                }
             }
         }
-        .disabled(controller.isTransitioning)
         .onChange(of: controller.isPresented) { _, open in
             if open {
                 quickFocused = false
@@ -45,22 +48,22 @@ public struct HanlinLauncher: View {
     @ViewBuilder private var launcher: some View {
         switch style {
         case .toolbarCapsule:
-            Button(action: controller.toggle) {
-                Label(labels.title, systemImage: controller.isPresented ? "sparkles.rectangle.stack.fill" : "sparkles")
+            Button { controller.present() } label: {
+                Label(labels.title, systemImage: "sparkles")
                     .font(.subheadline.weight(.semibold))
                     .lineLimit(1)
             }
-            .buttonStyle(.glass)
-            .accessibilityLabel(controller.isPresented ? labels.close : labels.ask)
+            // A native ToolbarItem already supplies its own Liquid Glass.
+            // Do not nest a GlassButtonStyle inside the system toolbar glass.
+            .buttonStyle(.automatic)
+            .accessibilityLabel(labels.ask)
             .accessibilityIdentifier("hanlin-launcher-toolbar")
         case .floatingCapsule:
-            Button(action: controller.toggle) {
+            Button { controller.present() } label: {
                 HStack(spacing: 10) {
                     Image(systemName: "sparkles").font(.title3.weight(.semibold))
-                    Text(controller.isPresented ? labels.close : labels.ask)
+                    Text(labels.ask)
                         .font(.subheadline.weight(.semibold))
-                    Image(systemName: controller.isPresented ? "xmark" : "arrow.up.right")
-                        .font(.caption.weight(.semibold))
                 }
                 .padding(.horizontal, 18)
                 .frame(minHeight: 48)
@@ -71,24 +74,21 @@ public struct HanlinLauncher: View {
             .accessibilityIdentifier("hanlin-launcher-floating")
         case .quickComposer:
             GlassEffectContainer(spacing: 10) {
-                if quickExpanded && !controller.isPresented {
+                if quickExpanded {
                     quickField
                 } else {
                     Button {
-                        if controller.isPresented { controller.dismiss() }
-                        else {
-                            quickExpanded = true
-                            quickFocused = true
-                        }
+                        quickExpanded = true
+                        quickFocused = true
                     } label: {
-                        Image(systemName: controller.isPresented ? "xmark" : "sparkles")
+                        Image(systemName: "sparkles")
                             .font(.title3.weight(.semibold))
                             .frame(width: 52, height: 52)
                             .contentShape(Circle())
                     }
                     .buttonStyle(.plain)
                     .glassEffect(.regular.interactive(), in: Circle())
-                    .accessibilityLabel(controller.isPresented ? labels.close : labels.ask)
+                    .accessibilityLabel(labels.ask)
                     .accessibilityIdentifier("hanlin-launcher-quick")
                 }
             }
@@ -139,7 +139,7 @@ public struct HanlinLauncher: View {
 
     private func submit() {
         let text = draft.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !text.isEmpty, !controller.isTransitioning else { return }
+        guard !text.isEmpty, controller.showsLauncher else { return }
         quickFocused = false
         controller.present()
         onQuickSubmit(text)
@@ -147,4 +147,3 @@ public struct HanlinLauncher: View {
     }
 }
 #endif
-

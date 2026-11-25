@@ -90,7 +90,8 @@ public final class HanlinChatPresentationController {
     }
 
     public var mode: HanlinChatPresentationMode? { state.mode }
-    public var isPresented: Bool { state.phase != .closed }
+    public var isPresented: Bool { !state.showsLauncher }
+    public var showsLauncher: Bool { state.showsLauncher }
     public var isTransitioning: Bool { state.isTransitioning }
 
     @discardableResult
@@ -280,4 +281,3 @@ public extension View {
     }
 }
 #endif
-

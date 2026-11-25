@@ -43,6 +43,10 @@ public struct HanlinChatPresentationState: Equatable, Sendable {
         if case let .presented(mode) = phase { return mode }
         return nil
     }
+    /// Entry controls are visible only while no conversation surface is open.
+    /// Keep them hidden through native dismissal and presentation handoffs.
+    public var showsLauncher: Bool { phase == .closed }
+
     public var isTransitioning: Bool {
         if case .dismissing = phase { return true }; return false
     }
@@ -91,4 +95,3 @@ public struct HanlinChatPresentationState: Equatable, Sendable {
         phase = next.map(Phase.presented) ?? .closed
     }
 }
-

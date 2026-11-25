@@ -162,14 +162,14 @@ private struct LabReader: View {
             .navigationTitle("Hanlin SDK")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                if style == .toolbarCapsule {
+                if style == .toolbarCapsule && presentation.showsLauncher {
                     ToolbarItem(placement: .topBarTrailing) {
                         launcher
                     }
                 }
             }
             .overlay(alignment: .bottomTrailing) {
-                if style != .toolbarCapsule {
+                if style != .toolbarCapsule && presentation.showsLauncher {
                     launcher
                         .padding(.horizontal, 20)
                         .padding(.bottom, 18)
@@ -286,4 +286,3 @@ private struct LabChat: View {
         }
     }
 }
-
