@@ -156,7 +156,7 @@
       "skip": "Original opt-in >300-second worker duration test; not a cache/assistant acceptance case.",
       "evidence": "evidence/native-preparation-20261125/host-final/index.json"
     },
-    "latest_sync_receipt": "evidence/latest-sync-before-app04-20261125.json",
+    "latest_sync_receipt": "evidence/latest-sync-during-app04-20261125.json",
     "current_host_refresh": {
       "source": "53593c3749dbd2be1e56739576fcdd5ea2c1cf06",
       "status": "EXECUTED_PASS",
@@ -207,11 +207,11 @@
       "scope": "Only validation tooling; full tracked source hashing retained, historical-proof mutation rejected; nine actual tracked locks copied. App03 remains sealed at5b69bbb5 and is not relabeled."
     }
   },
-  "updated_at": "2026-11-25T03:46:25.426680+00:00",
-  "latest_integrated_source": "1710bc6119983799f7d22cb723659ac274fe96b1",
+  "updated_at": "2026-11-25T03:59:56.349220+00:00",
+  "latest_integrated_source": "74b4946ce229e43ed2908e41691840e6eb3bd6d8",
   "synchronized_heads": {
     "composer": "d89ce38b170bc9af4734cd11e30ca793b16698d0",
-    "miniapps_sdk": "bff06a5998e9d584c9a5de2bd9aa187dc9cb4dd0",
-    "wave3": "c76371717ec3c0c6eb9dfd16d7ab6d4b11680b86"
+    "miniapps_sdk": "97bab5394e206133d1fefa797b85fa2deffc1012",
+    "wave3": "12d25da36451acc72b65144df79bedae878ba8ec"
   }
 }
