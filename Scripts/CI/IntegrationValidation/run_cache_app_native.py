@@ -53,6 +53,27 @@ def git(*arguments):
     return subprocess.check_output(["git", "-C", str(ROOT), *arguments])
 
 
+def is_active_package_lock(name, files):
+    """Classify live lock locations using this same captured source inventory."""
+    if name in {"Package.resolved",
+                "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved"}:
+        return True
+    path = Path(name)
+    return (len(path.parts) == 3 and path.parts[0] == "Packages"
+            and path.name == "Package.resolved"
+            and str(path.with_name("Package.swift")) in files)
+
+
+def compare_sources(before, after, phase):
+    changed = sorted(name for name in before["files"].keys() | after["files"].keys()
+                     if before["files"].get(name) != after["files"].get(name))
+    inventory = before["files"] | after["files"]
+    changed_locks = [name for name in changed if is_active_package_lock(name, inventory)]
+    allowed = set(changed_locks) | {"Config.xcconfig"} if phase == "prepare" else set()
+    unexpected = before["sourceSHA"] != after["sourceSHA"] or bool(set(changed) - allowed)
+    return changed, changed_locks, unexpected
+
+
 def snapshot(folder, label):
     tracked = {os.fsdecode(name) for name in git("ls-files", "-z").split(b"\0") if name}
     extra = {ROOT / "Config.xcconfig", ROOT / "Package.resolved"}
@@ -69,7 +90,7 @@ def snapshot(folder, label):
             missing.append(name)
     if missing:
         raise RuntimeError("Tracked inputs are not materialized: " + ", ".join(missing[:12]))
-    locks = {name: digest for name, digest in files.items() if Path(name).name == "Package.resolved"}
+    locks = {name: digest for name, digest in files.items() if is_active_package_lock(name, files)}
     for name in locks:
         destination = folder / (label + "-locks") / name
         destination.parent.mkdir(parents=True, exist_ok=True)
@@ -121,7 +142,8 @@ def original_import_settings():
 
 def preparation_inputs(files):
     return {name: digest for name, digest in files.items()
-            if Path(name).name in {"Package.swift", "Package.resolved", "project.pbxproj",
+            if is_active_package_lock(name, files)
+            or Path(name).name in {"Package.swift", "project.pbxproj",
                                    "Config.xcconfig", "RuntimeDependencies.lock.json"}
             or name.endswith(".xcscheme")
             or name in {str(WORKFLOW.relative_to(ROOT)),
@@ -324,12 +346,10 @@ def main():
             after = snapshot(run.folder, "after")
             run.state["sourceSHAAfter"] = after["sourceSHA"]
             if before:
-                changed = sorted(name for name in before["files"].keys() | after["files"].keys()
-                                 if before["files"].get(name) != after["files"].get(name))
+                changed, changed_locks, unexpected = compare_sources(before, after, args.phase)
                 run.state["changedSourcePaths"] = changed
-                run.state["changedLockPaths"] = [name for name in changed if Path(name).name == "Package.resolved"]
-                allowed = set(run.state["changedLockPaths"]) | {"Config.xcconfig"} if args.phase == "prepare" else set()
-                if before["sourceSHA"] != after["sourceSHA"] or set(changed) - allowed:
+                run.state["changedLockPaths"] = changed_locks
+                if unexpected:
                     error = error or "Source inputs changed during this phase"
         except Exception as caught:
             error = error or "Cannot retain final source evidence: " + str(caught)
