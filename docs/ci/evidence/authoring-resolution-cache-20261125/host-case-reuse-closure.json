@@ -1,0 +1,1847 @@
+{
+  "targetSource": "8f26449ca98911fb197fc332606794c263e68a51",
+  "baselineSource": "a146bc7af248e4fe4d518c74c810474d39baa93e",
+  "mainNativeSource": "705163fb2a952522ca6cbfdcdebddd8bd6b22532",
+  "originalHostLogSHA256": "715c163601a4873f3d0e2be71be385e8735fc3f7f7007ae6ac0aded6802a4181",
+  "originalHostCounts": {
+    "total": 170,
+    "pass": 169,
+    "fail": 0,
+    "skip": 1
+  },
+  "affectedRetestedCases": [
+    {
+      "name": "real TypeScript reports semantic errors with original source locations",
+      "sourceFile": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-authoring.test.mjs"
+    },
+    {
+      "name": "validation uses actual original package declarations from the supplied SDK",
+      "sourceFile": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-authoring.test.mjs"
+    },
+    {
+      "name": "NativeScript package emits a runnable ESM graph and retains exact editable sources",
+      "sourceFile": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-authoring.test.mjs"
+    },
+    {
+      "name": "NativeScript preserves authored CommonJS JavaScript and its source-map mode",
+      "sourceFile": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-authoring.test.mjs"
+    },
+    {
+      "name": "import rechecks retained source and ignores a stale successful report",
+      "sourceFile": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-authoring.test.mjs"
+    },
+    {
+      "name": "ScriptWidget keeps original source and its explicit ABI declaration",
+      "sourceFile": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-authoring.test.mjs"
+    },
+    {
+      "name": "failed typecheck emits no package",
+      "sourceFile": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-authoring.test.mjs"
+    },
+    {
+      "name": "a requested existing output directory is preserved",
+      "sourceFile": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-authoring.test.mjs"
+    },
+    {
+      "name": "SDK discovery reads its real manifest and requested documentation",
+      "sourceFile": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-authoring.test.mjs"
+    },
+    {
+      "name": "bundle-only imports do not receive a fabricated source typecheck pass",
+      "sourceFile": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-authoring.test.mjs"
+    },
+    {
+      "name": "modified compiled output is rejected even when retained TypeScript is still valid",
+      "sourceFile": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-authoring.test.mjs"
+    },
+    {
+      "name": "the real CLI archives and revalidates retained source, diagnostics and output identity",
+      "sourceFile": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-authoring.test.mjs"
+    },
+    {
+      "name": "compiler-used sources named build or dist survive source retention and archive revalidation",
+      "sourceFile": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-authoring.test.mjs"
+    },
+    {
+      "name": "NativeScript preserves the original npm runtime package rather than leaving an unresolved bare import",
+      "sourceFile": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-authoring.test.mjs"
+    },
+    {
+      "name": "canonical module and type references use the supplied SDK while retaining its nested dependency",
+      "sourceFile": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-sdk-resolution.test.mjs"
+    },
+    {
+      "name": "NativeScript emission and copied bodies agree with canonical types and preserve project aliases and extra dependencies",
+      "sourceFile": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-sdk-resolution.test.mjs"
+    },
+    {
+      "name": "missing canonical exports, configs and SDK dependencies never resolve from ancestor packages",
+      "sourceFile": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-sdk-resolution.test.mjs"
+    }
+  ],
+  "unchangedOtherPassedCases": [
+    {
+      "name": "real archive inventory exceeds former file/size caps with bounded I/O and preserves caller budgets",
+      "durationMS": 5763.854541,
+      "status": "PASS"
+    },
+    {
+      "name": "actual CLI Worker resolves extensionless scripts and directory mains using Node resolution",
+      "durationMS": 211.278041,
+      "status": "PASS"
+    },
+    {
+      "name": "runtime probe retries opaque Worker exits and loader diagnostics from stderr",
+      "durationMS": 0.718875,
+      "status": "PASS"
+    },
+    {
+      "name": "unused client stdio and cross-spawn code do not reject the selected server path",
+      "durationMS": 122.897875,
+      "status": "PASS"
+    },
+    {
+      "name": "direct-blocked may import child_process without executing it",
+      "durationMS": 84.755,
+      "status": "PASS"
+    },
+    {
+      "name": "esm-import-only may import child_process without executing it",
+      "durationMS": 107.621667,
+      "status": "PASS"
+    },
+    {
+      "name": "transitive-blocked may import child_process without executing it",
+      "durationMS": 81.866334,
+      "status": "PASS"
+    },
+    {
+      "name": "commonjs-blocked may import child_process without executing it",
+      "durationMS": 197.313667,
+      "status": "PASS"
+    },
+    {
+      "name": "dynamic-blocked may import child_process without executing it",
+      "durationMS": 123.579334,
+      "status": "PASS"
+    },
+    {
+      "name": "get-builtin-blocked may import child_process without executing it",
+      "durationMS": 107.601333,
+      "status": "PASS"
+    },
+    {
+      "name": "spawn-call is rejected when subprocess execution is attempted",
+      "durationMS": 97.130334,
+      "status": "PASS"
+    },
+    {
+      "name": "exec-call is rejected when subprocess execution is attempted",
+      "durationMS": 60.573042,
+      "status": "PASS"
+    },
+    {
+      "name": "exec-file-call is rejected when subprocess execution is attempted",
+      "durationMS": 105.361542,
+      "status": "PASS"
+    },
+    {
+      "name": "fork-call is rejected when subprocess execution is attempted",
+      "durationMS": 95.83725,
+      "status": "PASS"
+    },
+    {
+      "name": "spawn-sync-call is rejected when subprocess execution is attempted",
+      "durationMS": 146.14725,
+      "status": "PASS"
+    },
+    {
+      "name": "exec-sync-call is rejected when subprocess execution is attempted",
+      "durationMS": 97.303666,
+      "status": "PASS"
+    },
+    {
+      "name": "exec-file-sync-call is rejected when subprocess execution is attempted",
+      "durationMS": 67.698417,
+      "status": "PASS"
+    },
+    {
+      "name": "child-process-bypass is rejected when subprocess execution is attempted",
+      "durationMS": 78.639417,
+      "status": "PASS"
+    },
+    {
+      "name": "fork-child-call is rejected when subprocess execution is attempted",
+      "durationMS": 54.755709,
+      "status": "PASS"
+    },
+    {
+      "name": "commonjs-spawn-call is rejected when subprocess execution is attempted",
+      "durationMS": 88.922375,
+      "status": "PASS"
+    },
+    {
+      "name": "get-builtin-call is rejected when subprocess execution is attempted",
+      "durationMS": 140.632666,
+      "status": "PASS"
+    },
+    {
+      "name": "transitive-call is rejected when subprocess execution is attempted",
+      "durationMS": 126.191042,
+      "status": "PASS"
+    },
+    {
+      "name": "cluster-blocked is rejected by the Worker runtime policy",
+      "durationMS": 110.919458,
+      "status": "PASS"
+    },
+    {
+      "name": "binding-blocked is rejected by the Worker runtime policy",
+      "durationMS": 106.538,
+      "status": "PASS"
+    },
+    {
+      "name": "process-wrap-blocked is rejected by the Worker runtime policy",
+      "durationMS": 110.628625,
+      "status": "PASS"
+    },
+    {
+      "name": "unreachable native build material is inventory, not an execution-path rejection",
+      "durationMS": 52.052792,
+      "status": "PASS"
+    },
+    {
+      "name": "bounded concurrent archive scanning preserves serial safety results",
+      "durationMS": 13.610958,
+      "status": "PASS"
+    },
+    {
+      "name": "only the selected reachable TypeScript entry is compiled by the Worker loader",
+      "durationMS": 281.782375,
+      "status": "PASS"
+    },
+    {
+      "name": "a native addon actually resolved by the selected entry is rejected",
+      "durationMS": 69.851458,
+      "status": "PASS"
+    },
+    {
+      "name": "archive safety rejects a symlink that escapes packageRoot",
+      "durationMS": 57.170792,
+      "status": "PASS"
+    },
+    {
+      "name": "canonical parent aliases do not make a contained entry point appear to escape",
+      "durationMS": 177.299708,
+      "status": "PASS"
+    },
+    {
+      "name": "execution-path analysis requires an explicit selected entry point",
+      "durationMS": 0.854875,
+      "status": "PASS"
+    },
+    {
+      "name": "runtime probe bounds forced shutdown after MCP protocol success",
+      "durationMS": 1080.964667,
+      "status": "PASS"
+    },
+    {
+      "name": "the production installer rejects executed child_process and preserves the prior package",
+      "durationMS": 1589.558291,
+      "status": "PASS"
+    },
+    {
+      "name": "MCP probe forwards explicitly supplied paths and credentials after bootstrap without argv caps",
+      "durationMS": 220.69625,
+      "status": "PASS"
+    },
+    {
+      "name": "owned UTF-8 input remains strict without ICU TextDecoder, including scalar splits and BOM",
+      "durationMS": 321.68525,
+      "status": "PASS"
+    },
+    {
+      "name": "actual authenticated HTTP control executes >32MiB Unicode input with exact durable hashes and no replay",
+      "durationMS": 2355.811959,
+      "status": "PASS"
+    },
+    {
+      "name": "wrong digest, size, identity and invalid UTF8 preserve failed input without executing its source",
+      "durationMS": 14.273125,
+      "status": "PASS"
+    },
+    {
+      "name": "interruption during claimed input preparation settles the original ID without a Worker or later replay",
+      "durationMS": 105.5145,
+      "status": "PASS"
+    },
+    {
+      "name": "never-started receipts and nonregular inbox paths cannot be claimed as fresh execution",
+      "durationMS": 27.522084,
+      "status": "PASS"
+    },
+    {
+      "name": "actual process termination during preflight recovers the claimed input as interrupted without source replay",
+      "durationMS": 85.201666,
+      "status": "PASS"
+    },
+    {
+      "name": "ordinary cancellation before POST persists the first cause and prevents delayed file or Host operation side effects",
+      "durationMS": 18.114375,
+      "status": "PASS"
+    },
+    {
+      "name": "cancelling an unregistered pre-existing journal never overwrites or classifies its history as never-started",
+      "durationMS": 11.388042,
+      "status": "PASS"
+    },
+    {
+      "name": "Host-generated child job identity reaches input validation and its durable receipt",
+      "durationMS": 63.965542,
+      "status": "PASS"
+    },
+    {
+      "name": "actual Worker interruption retains its cause and full output through reopen",
+      "durationMS": 73.168042,
+      "status": "PASS"
+    },
+    {
+      "name": "late Host operation completion cannot erase an already requested system interruption",
+      "durationMS": 77.312916,
+      "status": "PASS"
+    },
+    {
+      "name": "interruption before POST or during journal creation cannot start or replay side effects",
+      "durationMS": 93.258084,
+      "status": "PASS"
+    },
+    {
+      "name": "esm resolves workspace modules and local exports before pinned global packages",
+      "durationMS": 188.011917,
+      "status": "PASS"
+    },
+    {
+      "name": "commonjs resolves workspace modules and local exports before pinned global packages",
+      "durationMS": 126.90475,
+      "status": "PASS"
+    },
+    {
+      "name": "managed CLI preload does not configure or leak its private bootstrap into nested Workers",
+      "durationMS": 101.820583,
+      "status": "PASS"
+    },
+    {
+      "name": "Host command wait wakes for actual requests and aborts without cancelling the execution",
+      "durationMS": 332.57075,
+      "status": "PASS"
+    },
+    {
+      "name": "full stdout and stderr survive preview limits and store reopen with verified hashes",
+      "durationMS": 2626.789375,
+      "status": "PASS"
+    },
+    {
+      "name": "ordinary event-loop work finishes after module evaluation without being terminated early",
+      "durationMS": 175.234917,
+      "status": "PASS"
+    },
+    {
+      "name": "explicit timeout retains partial output and is distinct from user cancellation",
+      "durationMS": 1507.757667,
+      "status": "PASS"
+    },
+    {
+      "name": "explicit cancellation terminates the actual worker and retains partial output",
+      "durationMS": 73.88975,
+      "status": "PASS"
+    },
+    {
+      "name": "a later nonzero exit cannot be hidden by an earlier successful module export",
+      "durationMS": 79.81725,
+      "status": "PASS"
+    },
+    {
+      "name": "user worker messages cannot hide the final module result",
+      "durationMS": 67.936958,
+      "status": "PASS"
+    },
+    {
+      "name": "a restored job with no opened streams has an empty lossless output page",
+      "durationMS": 11.52,
+      "status": "PASS"
+    },
+    {
+      "name": "actual CommonJS CLI main preserves argv, cwd, environment, binary stdin and late stdout",
+      "durationMS": 258.257875,
+      "status": "PASS"
+    },
+    {
+      "name": "actual ESM CLI errors and exit status are retained without interpreting user messages as results",
+      "durationMS": 150.1105,
+      "status": "PASS"
+    },
+    {
+      "name": "CLI cancellation stops the actual main and retains partial output; launch environment is frozen",
+      "durationMS": 228.736083,
+      "status": "PASS"
+    },
+    {
+      "name": "user PATH HOME and NODE_OPTIONS apply to the job without reconfiguring Worker bootstrap",
+      "durationMS": 155.246083,
+      "status": "PASS"
+    },
+    {
+      "name": "approved Skill job does not inherit host secrets and keeps its explicit environment",
+      "durationMS": 68.581041,
+      "status": "PASS"
+    },
+    {
+      "name": "Fetch transport follows actual WebAssembly availability",
+      "durationMS": 0.383458,
+      "status": "PASS"
+    },
+    {
+      "name": "real JITless Node supports Fetch request, streaming, clone, redirects, gzip, multipart and abort",
+      "durationMS": 351.245167,
+      "status": "PASS"
+    },
+    {
+      "name": "native Fetch reference proves TLS, SRI and actual controlled Proxy routing",
+      "durationMS": 614.89625,
+      "status": "PASS"
+    },
+    {
+      "name": "actual published Yarn patch is idempotent and refuses changed bytes or versions",
+      "durationMS": 253.776666,
+      "status": "PASS"
+    },
+    {
+      "name": "Host operation survives observer loss and retains complete progress, UTF8 previews, digests and reopen",
+      "durationMS": 28.481375,
+      "status": "PASS"
+    },
+    {
+      "name": "Host cancellation stays requested until the real asynchronous operation drains",
+      "durationMS": 19.745416,
+      "status": "PASS"
+    },
+    {
+      "name": "a real Host journal failure aborts extraction and exposes failed in-memory status with partial output",
+      "durationMS": 9.549833,
+      "status": "PASS"
+    },
+    {
+      "name": "Host operation claims real oversized owned inputs before invoking the existing callback and never replays",
+      "durationMS": 261.150666,
+      "status": "PASS"
+    },
+    {
+      "name": "Host operation ingress rejects changed input identity without executing its callback and retains the real bytes",
+      "durationMS": 9.922167,
+      "status": "PASS"
+    },
+    {
+      "name": "worker stdin and stdout remain isolated for multiple servers",
+      "durationMS": 58.105625,
+      "status": "PASS"
+    },
+    {
+      "name": "lifecycle scripts retain native execution metadata while incompatible engines remain rejected",
+      "durationMS": 1.776666,
+      "status": "PASS"
+    },
+    {
+      "name": "integrity mismatch fails closed",
+      "durationMS": 1.121875,
+      "status": "PASS"
+    },
+    {
+      "name": "install cancellation aborts work",
+      "durationMS": 0.551625,
+      "status": "PASS"
+    },
+    {
+      "name": "multiple package bins are listed and an explicit path preserves its bin name",
+      "durationMS": 1.399459,
+      "status": "PASS"
+    },
+    {
+      "name": "unknown legacy transactions preserve both the installed package and its backup",
+      "durationMS": 9.919917,
+      "status": "PASS"
+    },
+    {
+      "name": "host redirects npm state before preview and install modules initialize",
+      "durationMS": 10320.410083,
+      "status": "PASS"
+    },
+    {
+      "name": "worker terminal status is observable only after its actual atomic journal rename",
+      "durationMS": 98.841459,
+      "status": "PASS"
+    },
+    {
+      "name": "operation terminal status is observable only after its actual atomic journal rename",
+      "durationMS": 18.535667,
+      "status": "PASS"
+    },
+    {
+      "name": "actual MCP installation executes lifecycle before initialize/tools-list and preserves the prior server after failure",
+      "durationMS": 4744.1005,
+      "status": "PASS"
+    },
+    {
+      "name": "actual MCP tools/list above the former one-MiB probe cap passes by default",
+      "durationMS": 71.131125,
+      "status": "PASS"
+    },
+    {
+      "name": "ordinary installation probes a real >one-MiB schema after the former thirty-second deadline and journals exact output",
+      "durationMS": 31435.821167,
+      "status": "PASS"
+    },
+    {
+      "name": "a stopped probe cancels its actual Worker without waiting for a protocol timeout",
+      "durationMS": 1154.930333,
+      "status": "PASS"
+    },
+    {
+      "name": "exit zero without a protocol response fails promptly instead of waiting forever",
+      "durationMS": 22.752334,
+      "status": "PASS"
+    },
+    {
+      "name": "complete protocol reply immediately followed by exit zero remains a valid probe",
+      "durationMS": 25.795583,
+      "status": "PASS"
+    },
+    {
+      "name": "a caller-selected probe byte budget is honored without a hidden minimum",
+      "durationMS": 22.661042,
+      "status": "PASS"
+    },
+    {
+      "name": "real MCP HTTP transport retains >eight-MiB disconnected frames, accepts owned >ten-MiB input, and binds generation",
+      "durationMS": 1497.962792,
+      "status": "PASS"
+    },
+    {
+      "name": "cancelling an actual pending MCP startup settles the managed job and permits a clean later generation",
+      "durationMS": 3500.063042,
+      "status": "PASS"
+    },
+    {
+      "name": "MCP generations retain actual late Worker imports across commit, rollback and process-style reopen",
+      "durationMS": 40.740833,
+      "status": "PASS"
+    },
+    {
+      "name": "explicit esm native command module executes a real CLI and retains complete binary streams",
+      "durationMS": 206.235208,
+      "status": "PASS"
+    },
+    {
+      "name": "explicit commonjs native command module executes a real CLI and retains complete binary streams",
+      "durationMS": 194.213083,
+      "status": "PASS"
+    },
+    {
+      "name": "an unattached context never fabricates an execution, PID or successful empty output",
+      "durationMS": 0.621333,
+      "status": "PASS"
+    },
+    {
+      "name": "actual persistent MCP Worker can inspect the module but cannot inherit a chat command owner",
+      "durationMS": 22.652791,
+      "status": "PASS"
+    },
+    {
+      "name": "network diagnostics preserve bounded cyclic AggregateError cause codes",
+      "durationMS": 0.505417,
+      "status": "PASS"
+    },
+    {
+      "name": "the HTTPS diagnostic never disables TLS or accepts credential-bearing echo URLs",
+      "durationMS": 0.341542,
+      "status": "PASS"
+    },
+    {
+      "name": "real TLS handshake failures remain failures for both fetch and node:https GET/POST",
+      "durationMS": 27.815083,
+      "status": "PASS"
+    },
+    {
+      "name": "actual optional failure prunes its required ancestor and cyclic private deps, preserving required/shared builds and journals",
+      "durationMS": 484.217666,
+      "status": "PASS"
+    },
+    {
+      "name": "required failures and forged optional flags cannot erase required packages",
+      "durationMS": 358.933708,
+      "status": "PASS"
+    },
+    {
+      "name": "aborted optional work never becomes an optional success or omission",
+      "durationMS": 11.0325,
+      "status": "PASS"
+    },
+    {
+      "name": "malformed optional shell syntax is a real journaled build failure, while required syntax remains rejected",
+      "durationMS": 456.996875,
+      "status": "PASS"
+    },
+    {
+      "name": "actual registry reify retries previously omitted hooks after an unrelated root version update",
+      "durationMS": 312.572166,
+      "status": "PASS"
+    },
+    {
+      "name": "actual Arborist tree plans dependency phases, root project phases and skips unchanged build products",
+      "durationMS": 31.318167,
+      "status": "PASS"
+    },
+    {
+      "name": "immutable package generations preserve old files, reject conflicting commits and retain published generations",
+      "durationMS": 9.060459,
+      "status": "PASS"
+    },
+    {
+      "name": "root aliases expose the same physical legacy and published generation without mutating reads",
+      "durationMS": 5.213042,
+      "status": "PASS"
+    },
+    {
+      "name": "competing commits through host root aliases preserve conflict rejection",
+      "durationMS": 2.920583,
+      "status": "PASS"
+    },
+    {
+      "name": "reading a missing legacy host does not create directories or introduce a missing-path error",
+      "durationMS": 0.466125,
+      "status": "PASS"
+    },
+    {
+      "name": "npm lifecycle environment retains user values and flattens RFC183 package metadata",
+      "durationMS": 0.846083,
+      "status": "PASS"
+    },
+    {
+      "name": "actual registry extraction and Arborist dependency hooks publish atomically and preserve unchanged builds",
+      "durationMS": 503.696417,
+      "status": "PASS"
+    },
+    {
+      "name": "command-only package validation hashes actual entries without executing invented CLI arguments",
+      "durationMS": 53.142334,
+      "status": "PASS"
+    },
+    {
+      "name": "actual Worker loads import and require-only public roots from the staged package generation",
+      "durationMS": 61.854167,
+      "status": "PASS"
+    },
+    {
+      "name": "an actual root dependency failure is not hidden by CLI or require fallback",
+      "durationMS": 26.652625,
+      "status": "PASS"
+    },
+    {
+      "name": "subpath metadata does not pretend a nonexistent root was imported; invalid bin targets still fail",
+      "durationMS": 30.006666,
+      "status": "PASS"
+    },
+    {
+      "name": "source execution preserves explicit positional arguments through the original parser",
+      "durationMS": 4.997959,
+      "status": "PASS"
+    },
+    {
+      "name": "actual Yarn language preserves quoting, Unicode argv, environment and cwd across command adapters",
+      "durationMS": 2.228334,
+      "status": "PASS"
+    },
+    {
+      "name": "original multiline shell source retains file redirection and stdout-to-stderr duplication",
+      "durationMS": 3.6715,
+      "status": "PASS"
+    },
+    {
+      "name": "grammar newline boundaries preserve quoted text, comments, CRLF and continued commands",
+      "durationMS": 2.47875,
+      "status": "PASS"
+    },
+    {
+      "name": "real interpreter pipes stdin and redirects output while retaining exact failing exit status",
+      "durationMS": 1.933291,
+      "status": "PASS"
+    },
+    {
+      "name": "dynamic command names and command substitutions always reach adapters, never OS spawn",
+      "durationMS": 0.8785,
+      "status": "PASS"
+    },
+    {
+      "name": "globs, groups and logical short-circuiting use the actual parser/interpreter",
+      "durationMS": 4.837875,
+      "status": "PASS"
+    },
+    {
+      "name": "missing adapters fail truthfully and can be handled with shell control flow",
+      "durationMS": 1.647917,
+      "status": "PASS"
+    },
+    {
+      "name": "capability facts identify the actual Node process and its actual built-in namespace",
+      "durationMS": 0.633916,
+      "status": "PASS"
+    },
+    {
+      "name": "real parent Worker spools a >10MiB Unicode pipeline through actual CLI jobs without output loss",
+      "durationMS": 499.025209,
+      "status": "PASS"
+    },
+    {
+      "name": "npm run uses actual pre/main/post CLI jobs, lifecycle environment and stops at real exit23",
+      "durationMS": 538.218625,
+      "status": "PASS"
+    },
+    {
+      "name": "durable completion receipt is idempotent across lost/reordered acknowledgements and rejects conflicts",
+      "durationMS": 9.562125,
+      "status": "PASS"
+    },
+    {
+      "name": "parent cancellation remains pending until the actual linked-command receipt arrives",
+      "durationMS": 168.373125,
+      "status": "PASS"
+    },
+    {
+      "name": "actual journal write failure returns a failed in-memory status and retains partial output",
+      "durationMS": 39.683167,
+      "status": "PASS"
+    },
+    {
+      "name": "manifest compatibility uses the actual Node version, OS and architecture",
+      "durationMS": 2.817583,
+      "status": "PASS"
+    },
+    {
+      "name": "an iOS target is not substituted with Darwin and CPU constraints remain effective",
+      "durationMS": 0.158167,
+      "status": "PASS"
+    },
+    {
+      "name": "actual registry preview and global install use the running interpreter target",
+      "durationMS": 85.122584,
+      "status": "PASS"
+    },
+    {
+      "name": "MCP candidate selection uses the actual interpreter against supplied registry metadata",
+      "durationMS": 2.421917,
+      "status": "PASS"
+    },
+    {
+      "name": "actual global installation retains and executes a package beyond fifty thousand files",
+      "durationMS": 10281.283375,
+      "status": "PASS"
+    },
+    {
+      "name": "commonjs waits for an exported asynchronous network operation before worker teardown",
+      "durationMS": 59.497125,
+      "status": "PASS"
+    },
+    {
+      "name": "esm waits for an exported asynchronous network operation before worker teardown",
+      "durationMS": 47.543417,
+      "status": "PASS"
+    },
+    {
+      "name": "generic ESM execution captures Hebrew output and a structured value",
+      "durationMS": 24.761542,
+      "status": "PASS"
+    },
+    {
+      "name": "generic CommonJS execution returns module.exports",
+      "durationMS": 24.824042,
+      "status": "PASS"
+    },
+    {
+      "name": "TypeScript 6 compiler emits JavaScript and source maps",
+      "durationMS": 20.09925,
+      "status": "PASS"
+    },
+    {
+      "name": "execution output is capped without splitting the worker protocol",
+      "durationMS": 25.254791,
+      "status": "PASS"
+    },
+    {
+      "name": "UTF-8 output budgets never split Hebrew or emoji",
+      "durationMS": 247.691291,
+      "status": "PASS"
+    },
+    {
+      "name": "lifecycle planner preserves original portable shell source and rejects malformed syntax",
+      "durationMS": 3.065417,
+      "status": "PASS"
+    },
+    {
+      "name": "failed executions preserve aggregate HTTPS cause codes",
+      "durationMS": 22.601917,
+      "status": "PASS"
+    },
+    {
+      "name": "console errors preserve cyclic causes within the output budget",
+      "durationMS": 22.789167,
+      "status": "PASS"
+    },
+    {
+      "name": "actual compiler Worker accepts >10MiB durable source and retains full typed output/hash/reopen",
+      "durationMS": 1812.367792,
+      "status": "PASS"
+    },
+    {
+      "name": "actual project compiler preserves >128 argv values, emits files and reports locked compiler identity",
+      "durationMS": 472.936375,
+      "status": "PASS"
+    },
+    {
+      "name": "compiler diagnostics are preserved with actual failing exit and no emitted JavaScript",
+      "durationMS": 454.574541,
+      "status": "PASS"
+    },
+    {
+      "name": "virtual source does not replace an installed dependency with the same basename",
+      "durationMS": 435.465,
+      "status": "PASS"
+    },
+    {
+      "name": "actual compiler job cancellation retains entered Worker output and does not block another job",
+      "durationMS": 229.735167,
+      "status": "PASS"
+    },
+    {
+      "name": "warning tracing is scoped, reference counted and idempotent",
+      "durationMS": 0.385709,
+      "status": "PASS"
+    },
+    {
+      "name": "diagnostic execution retains the actual warning stack and worker identity",
+      "durationMS": 27.907125,
+      "status": "PASS"
+    },
+    {
+      "name": "named fs and fs/promises imports use the execution workspace",
+      "durationMS": 24.379917,
+      "status": "PASS"
+    },
+    {
+      "name": "relative copy and rename destinations plus native realpath stay in the execution workspace",
+      "durationMS": 21.428167,
+      "status": "PASS"
+    }
+  ],
+  "originalSkippedCases": [
+    {
+      "name": "actual Node job crosses 300 seconds with no hidden deadline",
+      "status": "SKIP"
+    }
+  ],
+  "testFileSHA256": {
+    "Tests/miniapp-authoring.test.mjs": "41f4df51d49ebf48e8ecda9c205372281b2bce2b4e865f1b343474ca8f38b853",
+    "Tests/miniapp-sdk-resolution.test.mjs": "5feff98ed62727330f2a64abedff0d4a3af9f71d5a8b1f7c8e39396c90e7d65f"
+  },
+  "HostOnlyChangedPath": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
+  "nativeToTargetChangedPaths": [
+    "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
+    "PROJECT_BOARD.md",
+    "docs/ci/evidence/authoring-resolution-cache-20261125/README.md",
+    "docs/ci/evidence/authoring-resolution-cache-20261125/qualification.json",
+    "docs/ci/evidence/authoring-resolution-cache-20261125/raw-evidence.tar.gz"
+  ],
+  "moduleSHA256": "6eb7130890499768b72990cc48cf84b515232635bf00b4ca023bcc1b161182fc",
+  "parityArchiveSHA256": "089678e1b8fa03af23130e3b48fd0d75f394274c9d75e8959ca19e1d618988b8",
+  "status": "SOURCE_AND_AUTHENTIC_CASE_CLOSURE; module-only archive sync NOT_RUN; main10 PASS not inferred",
+  "schemaVersion": 1,
+  "originalPreparedSourceManifestSHA256": "1b162c06465074a690593e9422738d186892bb020f9529fc93317a0b144616c4",
+  "originalPreHostSourceManifestSHA256": "51324343631d65727458fd31dcc9b0ac917ce422d326254582814326576e3940",
+  "originalPreparationReceiptSHA256": "7f30dbf3092177faa4788615ab115aa0fe87511963da3cdc7890b7f85c2527e6",
+  "originalExecutedHostFiles": [
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/PEGJS-LICENSE.txt",
+      "originalExecutedSHA256": "e56890ff38a31e1adc0617f57c23056289dd27a9ff6263eaf6137dacd1253d9d",
+      "targetSHA256": "e56890ff38a31e1adc0617f57c23056289dd27a9ff6263eaf6137dacd1253d9d",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/child-process-bypass/package.json",
+      "originalExecutedSHA256": "00e01b16d1e612ae0dd4a4d92a2fafc1f7e52cfc952cb2b5f7e7d30356c12803",
+      "targetSHA256": "00e01b16d1e612ae0dd4a4d92a2fafc1f7e52cfc952cb2b5f7e7d30356c12803",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/child-process-bypass/server.mjs",
+      "originalExecutedSHA256": "7e1521b53b692c7d8a98b58b993c839b4ad4d0ff88671833d85bb4e2111c6d26",
+      "targetSHA256": "7e1521b53b692c7d8a98b58b993c839b4ad4d0ff88671833d85bb4e2111c6d26",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/commonjs-spawn-call/package.json",
+      "originalExecutedSHA256": "8622d224936d7b9f0cd9e0ca3871f274ee47d196e3f3322968800195ebbac52a",
+      "targetSHA256": "8622d224936d7b9f0cd9e0ca3871f274ee47d196e3f3322968800195ebbac52a",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/commonjs-spawn-call/server.cjs",
+      "originalExecutedSHA256": "f1c60042da7ad7b09e38656e645554a683ee4ada24758f4460678c1e7d79dd44",
+      "targetSHA256": "f1c60042da7ad7b09e38656e645554a683ee4ada24758f4460678c1e7d79dd44",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/esm-import-only/package.json",
+      "originalExecutedSHA256": "38acff3bdeae5c7501d06d7a4689e4b375df1f1db014e3c6d6aa8e9ecc2fe6ab",
+      "targetSHA256": "38acff3bdeae5c7501d06d7a4689e4b375df1f1db014e3c6d6aa8e9ecc2fe6ab",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/esm-import-only/server.mjs",
+      "originalExecutedSHA256": "af757b65e58926dae8f3589bb7dc0c59b02830f745ea6731676aa6ef8db42cd8",
+      "targetSHA256": "af757b65e58926dae8f3589bb7dc0c59b02830f745ea6731676aa6ef8db42cd8",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/exec-call/package.json",
+      "originalExecutedSHA256": "a80e372624f66eb2b4bd96b0fdc369dc77d582c303db8d7b9e0e5b1364b97b97",
+      "targetSHA256": "a80e372624f66eb2b4bd96b0fdc369dc77d582c303db8d7b9e0e5b1364b97b97",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/exec-call/server.mjs",
+      "originalExecutedSHA256": "bf25ec65bbcc4ad87197761ef3480767a83db0e8acc4f833c7ccca4fa59b1aaf",
+      "targetSHA256": "bf25ec65bbcc4ad87197761ef3480767a83db0e8acc4f833c7ccca4fa59b1aaf",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/exec-file-call/package.json",
+      "originalExecutedSHA256": "4d962a17360a513f662edb370115bee50c6aa0e67df4b66493b2ee0f4ecb0c44",
+      "targetSHA256": "4d962a17360a513f662edb370115bee50c6aa0e67df4b66493b2ee0f4ecb0c44",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/exec-file-call/server.mjs",
+      "originalExecutedSHA256": "1666731ee4e9de5e6dc5fb001b0a70e74e72b023f03fb4295daf0a7651806932",
+      "targetSHA256": "1666731ee4e9de5e6dc5fb001b0a70e74e72b023f03fb4295daf0a7651806932",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/exec-file-sync-call/package.json",
+      "originalExecutedSHA256": "d781369bc650080b31ac795cd65b0c1d3ccc4ef372fe0e2ed9f1f0ba64b904a5",
+      "targetSHA256": "d781369bc650080b31ac795cd65b0c1d3ccc4ef372fe0e2ed9f1f0ba64b904a5",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/exec-file-sync-call/server.mjs",
+      "originalExecutedSHA256": "be8004c181241556663195ccb4ec16be1945e92cadb321e7bad1e710a1fd628c",
+      "targetSHA256": "be8004c181241556663195ccb4ec16be1945e92cadb321e7bad1e710a1fd628c",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/exec-sync-call/package.json",
+      "originalExecutedSHA256": "74df0885beac53df29c26fa8a82b2dd405a68b721425be1588e6b78d7afb6ea3",
+      "targetSHA256": "74df0885beac53df29c26fa8a82b2dd405a68b721425be1588e6b78d7afb6ea3",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/exec-sync-call/server.mjs",
+      "originalExecutedSHA256": "d60241ae2bf053b0def9fb275a50df155e24e3018f4914fdb7c3ade25fe8f6d4",
+      "targetSHA256": "d60241ae2bf053b0def9fb275a50df155e24e3018f4914fdb7c3ade25fe8f6d4",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/fork-call/package.json",
+      "originalExecutedSHA256": "1b3e7faeb79ae38dc7331ce3f4ca8986e192d1007b1fa0cf4b569dabde29b19c",
+      "targetSHA256": "1b3e7faeb79ae38dc7331ce3f4ca8986e192d1007b1fa0cf4b569dabde29b19c",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/fork-call/server.mjs",
+      "originalExecutedSHA256": "f48c749f711648c7a2e66a13f9b57ddf02bdf27c79c86bbe010bedaa14469786",
+      "targetSHA256": "f48c749f711648c7a2e66a13f9b57ddf02bdf27c79c86bbe010bedaa14469786",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/fork-child-call/package.json",
+      "originalExecutedSHA256": "6899eb61afe0b952925b0d6ffad7cea93b833901650ba3236c221f01bc3eb972",
+      "targetSHA256": "6899eb61afe0b952925b0d6ffad7cea93b833901650ba3236c221f01bc3eb972",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/fork-child-call/server.mjs",
+      "originalExecutedSHA256": "469e6811ee4107c85e9c677ce9671cb97e27d0a09e75cde21b80c2c37cac0e2b",
+      "targetSHA256": "469e6811ee4107c85e9c677ce9671cb97e27d0a09e75cde21b80c2c37cac0e2b",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/get-builtin-call/package.json",
+      "originalExecutedSHA256": "b27d0c617678bcefe25116729f5d0159165ce46ff7d05033e77f4ca8cd76a5fe",
+      "targetSHA256": "b27d0c617678bcefe25116729f5d0159165ce46ff7d05033e77f4ca8cd76a5fe",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/get-builtin-call/server.mjs",
+      "originalExecutedSHA256": "97d410354e56192ad76696be8fc87a2667f31e94427b79ea69ee85e625c735ec",
+      "targetSHA256": "97d410354e56192ad76696be8fc87a2667f31e94427b79ea69ee85e625c735ec",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/process-wrap-blocked/package.json",
+      "originalExecutedSHA256": "288bd243a5bf5ccb282441295f9b2d969185dd3196699860d90fd73147b7be29",
+      "targetSHA256": "288bd243a5bf5ccb282441295f9b2d969185dd3196699860d90fd73147b7be29",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/process-wrap-blocked/server.mjs",
+      "originalExecutedSHA256": "f8fa6c96fde4f2ecbf2dde0501c302fe92d126cd7e932244e9d2886e53ba658f",
+      "targetSHA256": "f8fa6c96fde4f2ecbf2dde0501c302fe92d126cd7e932244e9d2886e53ba658f",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/spawn-call/package.json",
+      "originalExecutedSHA256": "6b721ece791b04f850a6e41bf441ea9829b27c1c9a81b551bef4d9adf8f87b2e",
+      "targetSHA256": "6b721ece791b04f850a6e41bf441ea9829b27c1c9a81b551bef4d9adf8f87b2e",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/spawn-call/server.mjs",
+      "originalExecutedSHA256": "3ad8fcd57978a902487b9cca7f9a7fed05e10e3201cf77308810e934e410a6b6",
+      "targetSHA256": "3ad8fcd57978a902487b9cca7f9a7fed05e10e3201cf77308810e934e410a6b6",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/spawn-sync-call/package.json",
+      "originalExecutedSHA256": "3ed20ec5e1ba9bbe45afcc79dd3637cd105e0bd50265443921ff611782410e9c",
+      "targetSHA256": "3ed20ec5e1ba9bbe45afcc79dd3637cd105e0bd50265443921ff611782410e9c",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/spawn-sync-call/server.mjs",
+      "originalExecutedSHA256": "77e660683b86d631a4ec91a19933d87e88ab23a1b1af33677c95ffa0d350ac67",
+      "targetSHA256": "77e660683b86d631a4ec91a19933d87e88ab23a1b1af33677c95ffa0d350ac67",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/transitive-call/module-a.mjs",
+      "originalExecutedSHA256": "3ad8fcd57978a902487b9cca7f9a7fed05e10e3201cf77308810e934e410a6b6",
+      "targetSHA256": "3ad8fcd57978a902487b9cca7f9a7fed05e10e3201cf77308810e934e410a6b6",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/transitive-call/package.json",
+      "originalExecutedSHA256": "073e7cfb564a0dffc4e971f41d1fa5a6c4d4dd4c2bbb4270d9d576f792df530d",
+      "targetSHA256": "073e7cfb564a0dffc4e971f41d1fa5a6c4d4dd4c2bbb4270d9d576f792df530d",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/DownstreamFixtures/transitive-call/server.mjs",
+      "originalExecutedSHA256": "b475e1821d9ffa16c29e7ee7f84b42c43b97071a013c36450f32274af8ed72f1",
+      "targetSHA256": "b475e1821d9ffa16c29e7ee7f84b42c43b97071a013c36450f32274af8ed72f1",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/binding-blocked/package.json",
+      "originalExecutedSHA256": "d9558e8ef6ca0b8cf830e098e56036de5588e892031d9b82880bba8a5fee39d0",
+      "targetSHA256": "d9558e8ef6ca0b8cf830e098e56036de5588e892031d9b82880bba8a5fee39d0",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/binding-blocked/server.mjs",
+      "originalExecutedSHA256": "107ad2aec7efd4e2cda5882c8d885fe5fa47e872279b79a1f868c5e7478330fa",
+      "targetSHA256": "107ad2aec7efd4e2cda5882c8d885fe5fa47e872279b79a1f868c5e7478330fa",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/cluster-blocked/package.json",
+      "originalExecutedSHA256": "520f86a8f824a1a36db10e16751e33e78873e47b71f14569ccc80f17aa9a23df",
+      "targetSHA256": "520f86a8f824a1a36db10e16751e33e78873e47b71f14569ccc80f17aa9a23df",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/cluster-blocked/server.mjs",
+      "originalExecutedSHA256": "734230e94ef0bdf1ea36dd6fb2cf747ee6793da6253c54156819fd4d070fd50d",
+      "targetSHA256": "734230e94ef0bdf1ea36dd6fb2cf747ee6793da6253c54156819fd4d070fd50d",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/commonjs-blocked/package.json",
+      "originalExecutedSHA256": "5ee27b2f7a1afca8eabba3bc5ff0c2bc06e184e6b84c0fd48492fd9b26b36bd1",
+      "targetSHA256": "5ee27b2f7a1afca8eabba3bc5ff0c2bc06e184e6b84c0fd48492fd9b26b36bd1",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/commonjs-blocked/server.cjs",
+      "originalExecutedSHA256": "1c58d346a4326d5167252008021aaddc2f262d313cc8efda04e3d5f1b1f1a94f",
+      "targetSHA256": "1c58d346a4326d5167252008021aaddc2f262d313cc8efda04e3d5f1b1f1a94f",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/direct-blocked/package.json",
+      "originalExecutedSHA256": "ddd0b4c123f16ab60eb0f5baf91b2abed3b2acf12e22718fdc6a3621e4396f90",
+      "targetSHA256": "ddd0b4c123f16ab60eb0f5baf91b2abed3b2acf12e22718fdc6a3621e4396f90",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/direct-blocked/server.mjs",
+      "originalExecutedSHA256": "35ef18067a5ebf605ecce7716a83867e86af0d3e4e962c4e4b6140f9c82e1573",
+      "targetSHA256": "35ef18067a5ebf605ecce7716a83867e86af0d3e4e962c4e4b6140f9c82e1573",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/dynamic-blocked/package.json",
+      "originalExecutedSHA256": "06ac762d77ae6b9d7b193d86101b83654f5c8e00d30b0af96050d48e0b52238c",
+      "targetSHA256": "06ac762d77ae6b9d7b193d86101b83654f5c8e00d30b0af96050d48e0b52238c",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/dynamic-blocked/server.mjs",
+      "originalExecutedSHA256": "89f6cf99c2588c96b646a27509251e65d3dbcc83162b0f0d16b5d12ef05f9002",
+      "targetSHA256": "89f6cf99c2588c96b646a27509251e65d3dbcc83162b0f0d16b5d12ef05f9002",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/false-positive-sdk/node_modules/cross-spawn/index.js",
+      "originalExecutedSHA256": "19a9007ac313dbe6f7dd8aee89b30f278716000e812acdd8f7b29ae5b320d089",
+      "targetSHA256": "19a9007ac313dbe6f7dd8aee89b30f278716000e812acdd8f7b29ae5b320d089",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/false-positive-sdk/node_modules/cross-spawn/package.json",
+      "originalExecutedSHA256": "649338383b3b9be7aee4058f9a5b4aa71253ab2fbed6ceb73bd695f620f4ef7c",
+      "targetSHA256": "649338383b3b9be7aee4058f9a5b4aa71253ab2fbed6ceb73bd695f620f4ef7c",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/false-positive-sdk/node_modules/fake-sdk/client/stdio.js",
+      "originalExecutedSHA256": "3e106c01408b46e7e73871171446e6c08520cb913c0308c408d08518becb9c63",
+      "targetSHA256": "3e106c01408b46e7e73871171446e6c08520cb913c0308c408d08518becb9c63",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/false-positive-sdk/node_modules/fake-sdk/package.json",
+      "originalExecutedSHA256": "8eb3dc9742270c91937517cecc77d55873130733c0bea30ddb89f5ef5ca27e0c",
+      "targetSHA256": "8eb3dc9742270c91937517cecc77d55873130733c0bea30ddb89f5ef5ca27e0c",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/false-positive-sdk/node_modules/fake-sdk/server/stdio.js",
+      "originalExecutedSHA256": "0084cf7753dd64d55db54fa6f6fae0d9315e06e9dd2f3e2ab3b2085c3418140d",
+      "targetSHA256": "0084cf7753dd64d55db54fa6f6fae0d9315e06e9dd2f3e2ab3b2085c3418140d",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/false-positive-sdk/package.json",
+      "originalExecutedSHA256": "cfc386f20c8abf2edb64079f87d35c65b03e8b8227103a9e842904d97944763a",
+      "targetSHA256": "cfc386f20c8abf2edb64079f87d35c65b03e8b8227103a9e842904d97944763a",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/false-positive-sdk/server.mjs",
+      "originalExecutedSHA256": "e32b05eac2c5aff8741a3789ea663508ba158e32daa351edfc646792095d3ddf",
+      "targetSHA256": "e32b05eac2c5aff8741a3789ea663508ba158e32daa351edfc646792095d3ddf",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/fetch-compatibility-probe.mjs",
+      "originalExecutedSHA256": "35074bed12cc9b999a442d2df93b52823d2b367e2ce71fad029ae16be2c108c3",
+      "targetSHA256": "35074bed12cc9b999a442d2df93b52823d2b367e2ce71fad029ae16be2c108c3",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/get-builtin-blocked/package.json",
+      "originalExecutedSHA256": "5b865d55da12ec8172084346336a14a7c78c9b149c03ca844c0b32b281de1cfa",
+      "targetSHA256": "5b865d55da12ec8172084346336a14a7c78c9b149c03ca844c0b32b281de1cfa",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/get-builtin-blocked/server.mjs",
+      "originalExecutedSHA256": "f4aaafa9ee2a7d17a9be772e7248445e0bda288ce76f66859f23f2a89444fde0",
+      "targetSHA256": "f4aaafa9ee2a7d17a9be772e7248445e0bda288ce76f66859f23f2a89444fde0",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/mcp-reference-lifecycle.mjs",
+      "originalExecutedSHA256": "b9731a89cf08147c9ab88b25e517e0935b757ff970f7c808085baf8dfe9fc2f6",
+      "targetSHA256": "b9731a89cf08147c9ab88b25e517e0935b757ff970f7c808085baf8dfe9fc2f6",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/reachable-native/addon.node",
+      "originalExecutedSHA256": "41b2bfdf8d25d33ec58a2a677b0a78c79c29b5030a7fbd5262a706190aa9a73d",
+      "targetSHA256": "41b2bfdf8d25d33ec58a2a677b0a78c79c29b5030a7fbd5262a706190aa9a73d",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/reachable-native/package.json",
+      "originalExecutedSHA256": "4bfd432e8f8aa167c2e4847c7841eb7ea70f0aea2940221abbc28b01d7b9c778",
+      "targetSHA256": "4bfd432e8f8aa167c2e4847c7841eb7ea70f0aea2940221abbc28b01d7b9c778",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/reachable-native/server.cjs",
+      "originalExecutedSHA256": "c9f5901a33f9455a608a8cef81378caf5d4fdd155f63d9cd7e6c2ea2349f76c1",
+      "targetSHA256": "c9f5901a33f9455a608a8cef81378caf5d4fdd155f63d9cd7e6c2ea2349f76c1",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/transitive-blocked/module-a.mjs",
+      "originalExecutedSHA256": "518dbab9b57fdde73a9d8d7a450ec07dee293c0b2293026ff901a0974cbf0cec",
+      "targetSHA256": "518dbab9b57fdde73a9d8d7a450ec07dee293c0b2293026ff901a0974cbf0cec",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/transitive-blocked/package.json",
+      "originalExecutedSHA256": "97d7d397153d509c7ddb7e48b000add70b0fecf7d3f62838b6656487b76dc924",
+      "targetSHA256": "97d7d397153d509c7ddb7e48b000add70b0fecf7d3f62838b6656487b76dc924",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/transitive-blocked/server.mjs",
+      "originalExecutedSHA256": "777da3779c5b19b5f52aa0d3e0377350771f11d034b0b2ee9b93da71edc88a1d",
+      "targetSHA256": "777da3779c5b19b5f52aa0d3e0377350771f11d034b0b2ee9b93da71edc88a1d",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/typescript-selected/package.json",
+      "originalExecutedSHA256": "165f5204a88ecf18e31ac4531e57b18d49187f7b83c0d06310070a330ffc1c84",
+      "targetSHA256": "165f5204a88ecf18e31ac4531e57b18d49187f7b83c0d06310070a330ffc1c84",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/typescript-selected/server.ts",
+      "originalExecutedSHA256": "6d6a7e2810b2448e84187b0937e7b5090c497255405811598dace1911a97d4f0",
+      "targetSHA256": "6d6a7e2810b2448e84187b0937e7b5090c497255405811598dace1911a97d4f0",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/unreachable-native/package.json",
+      "originalExecutedSHA256": "056a752de536a4149bcc9f13f83c3e44452a2e7ddc5ccd8d397fbf3b46234f92",
+      "targetSHA256": "056a752de536a4149bcc9f13f83c3e44452a2e7ddc5ccd8d397fbf3b46234f92",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/unreachable-native/server.mjs",
+      "originalExecutedSHA256": "7e655246f02417a2d116db324363e9aee036ebf7de04d829a2e68bcb8a0670f8",
+      "targetSHA256": "7e655246f02417a2d116db324363e9aee036ebf7de04d829a2e68bcb8a0670f8",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/unreachable-native/unused/addon.node",
+      "originalExecutedSHA256": "41b2bfdf8d25d33ec58a2a677b0a78c79c29b5030a7fbd5262a706190aa9a73d",
+      "targetSHA256": "41b2bfdf8d25d33ec58a2a677b0a78c79c29b5030a7fbd5262a706190aa9a73d",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/Fixtures/unreachable-native/unused/binding.gyp",
+      "originalExecutedSHA256": "a758f0791313b284d4e230a4d5f162fb002bbb9c0e814277ddc24b07ace36cb2",
+      "targetSHA256": "a758f0791313b284d4e230a4d5f162fb002bbb9c0e814277ddc24b07ace36cb2",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/archive-resources.test.mjs",
+      "originalExecutedSHA256": "ef0caf9c8e714e3d943f0f14845c731f3a183c782bae055d9886a2b2a62b8712",
+      "targetSHA256": "ef0caf9c8e714e3d943f0f14845c731f3a183c782bae055d9886a2b2a62b8712",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/cablate-google-map.integration.mjs",
+      "originalExecutedSHA256": "d9adab3a75c797ba3225b1c35f95b9bbc0f21da242f0db37fba94e16afa5bdc9",
+      "targetSHA256": "d9adab3a75c797ba3225b1c35f95b9bbc0f21da242f0db37fba94e16afa5bdc9",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/cli-entry-resolution.test.mjs",
+      "originalExecutedSHA256": "c425716dad74710ae6d914ac54f2269ed8df11229beaf30272fc5a9088cc2ebc",
+      "targetSHA256": "c425716dad74710ae6d914ac54f2269ed8df11229beaf30272fc5a9088cc2ebc",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/compatibility.test.mjs",
+      "originalExecutedSHA256": "f2abaa0927107ca4ed1761637077381967127c48ca4ae4613b83d21ab91e6cce",
+      "targetSHA256": "f2abaa0927107ca4ed1761637077381967127c48ca4ae4613b83d21ab91e6cce",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/execution-input.test.mjs",
+      "originalExecutedSHA256": "36da4dac42aefe9c0d08e46d8146e848ed642c12618c0fb9aad4ebad4054affb",
+      "targetSHA256": "36da4dac42aefe9c0d08e46d8146e848ed642c12618c0fb9aad4ebad4054affb",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/execution-jobs.test.mjs",
+      "originalExecutedSHA256": "6278094d448ab43c5f8bfdbd80dcc8f98ebd7d803892778878b54ae227bcc9fa",
+      "targetSHA256": "6278094d448ab43c5f8bfdbd80dcc8f98ebd7d803892778878b54ae227bcc9fa",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/fetch-compatibility.test.mjs",
+      "originalExecutedSHA256": "72b68cd74580c9bac8f48f01eb38dec4c8e1ca1541f57191dad29eae9041b7f5",
+      "targetSHA256": "72b68cd74580c9bac8f48f01eb38dec4c8e1ca1541f57191dad29eae9041b7f5",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/fetch-conformance.test.mjs",
+      "originalExecutedSHA256": "4057560be54e16a5c1a3193852ff15534c352bdf02ba80ad1258a3c0a5ff8dfe",
+      "targetSHA256": "4057560be54e16a5c1a3193852ff15534c352bdf02ba80ad1258a3c0a5ff8dfe",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/host-dependency-patches.test.mjs",
+      "originalExecutedSHA256": "404fb0ad2f3fca8597e03aaa48b6d4ffc98938ec71774806baaf2bbe3118718a",
+      "targetSHA256": "404fb0ad2f3fca8597e03aaa48b6d4ffc98938ec71774806baaf2bbe3118718a",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/host-operations.test.mjs",
+      "originalExecutedSHA256": "8340059bf2c5d2c3e92a99e4e625787ac6119aa1d44d8dde144fb23a1fa9142b",
+      "targetSHA256": "8340059bf2c5d2c3e92a99e4e625787ac6119aa1d44d8dde144fb23a1fa9142b",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/host.test.mjs",
+      "originalExecutedSHA256": "9a235851048a63be088a5835251072d36a6d73b5f1fb0d54c2bfeadaff5a1df5",
+      "targetSHA256": "9a235851048a63be088a5835251072d36a6d73b5f1fb0d54c2bfeadaff5a1df5",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/job-terminal-publication.test.mjs",
+      "originalExecutedSHA256": "0b01e02fa3c3792e78ed0c8e79817176c62256e732c925438ec2340ffaa25acf",
+      "targetSHA256": "0b01e02fa3c3792e78ed0c8e79817176c62256e732c925438ec2340ffaa25acf",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/lifecycle.integration.mjs",
+      "originalExecutedSHA256": "250459bbe1026aaea1ff91610c409a783525072ff8ef5c56afb67ee8fd184e77",
+      "targetSHA256": "250459bbe1026aaea1ff91610c409a783525072ff8ef5c56afb67ee8fd184e77",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/mcp-install-lifecycle.test.mjs",
+      "originalExecutedSHA256": "2b9b60e58bb374daaa4650c9e3907545f13dea699139b0ec0fb117200cffe2e8",
+      "targetSHA256": "2b9b60e58bb374daaa4650c9e3907545f13dea699139b0ec0fb117200cffe2e8",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/mcp-large-probe.test.mjs",
+      "originalExecutedSHA256": "a3ebc3f8f39167dc48825a6c6c41bf41dcea071ffbe788d3c775828c90f50df2",
+      "targetSHA256": "a3ebc3f8f39167dc48825a6c6c41bf41dcea071ffbe788d3c775828c90f50df2",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/mcp-large-transport.test.mjs",
+      "originalExecutedSHA256": "f3ea855dabb03883ae87db7a06acae4936a6be01a13e344bd1f974e762cf5b7b",
+      "targetSHA256": "f3ea855dabb03883ae87db7a06acae4936a6be01a13e344bd1f974e762cf5b7b",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/mcp-package-generations.test.mjs",
+      "originalExecutedSHA256": "96ea36d1338f056e0bff77adef5c0bbd60cca586af5d37c3c87436eecdc341dc",
+      "targetSHA256": "96ea36d1338f056e0bff77adef5c0bbd60cca586af5d37c3c87436eecdc341dc",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/mcp-server-regression.integration.mjs",
+      "originalExecutedSHA256": "9d206b38579703a08800ecdb62b42a4f53666224ccd5611716ab7917ffcadf0b",
+      "targetSHA256": "9d206b38579703a08800ecdb62b42a4f53666224ccd5611716ab7917ffcadf0b",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-authoring.test.mjs",
+      "originalExecutedSHA256": "41f4df51d49ebf48e8ecda9c205372281b2bce2b4e865f1b343474ca8f38b853",
+      "targetSHA256": "41f4df51d49ebf48e8ecda9c205372281b2bce2b4e865f1b343474ca8f38b853",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-native-presentation.integration.mjs",
+      "originalExecutedSHA256": "12000ca578a0aab96685faa544a2f70647f7b9462f18df2ea52f5b1e9d0c54b1",
+      "targetSHA256": "12000ca578a0aab96685faa544a2f70647f7b9462f18df2ea52f5b1e9d0c54b1",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-sdk-resolution.test.mjs",
+      "originalExecutedSHA256": "5feff98ed62727330f2a64abedff0d4a3af9f71d5a8b1f7c8e39396c90e7d65f",
+      "targetSHA256": "5feff98ed62727330f2a64abedff0d4a3af9f71d5a8b1f7c8e39396c90e7d65f",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/native-commands.test.mjs",
+      "originalExecutedSHA256": "add7f47c2b9de3881646a7ef1e7890e920fa39653f7a71ba10d4c1ea70864e0d",
+      "targetSHA256": "add7f47c2b9de3881646a7ef1e7890e920fa39653f7a71ba10d4c1ea70864e0d",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/network-diagnostics.test.mjs",
+      "originalExecutedSHA256": "8d0c8edfc99e5ca37f75b7bcceb68f04fb0b637c2be7f1d4749ad48a3f5faba5",
+      "targetSHA256": "8d0c8edfc99e5ca37f75b7bcceb68f04fb0b637c2be7f1d4749ad48a3f5faba5",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/optional-lifecycle.test.mjs",
+      "originalExecutedSHA256": "54d1ed12d8f044fda90e1ab5a81af5f7b33d306aa6c97a29479835912353f0b7",
+      "targetSHA256": "54d1ed12d8f044fda90e1ab5a81af5f7b33d306aa6c97a29479835912353f0b7",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/package-lifecycle.test.mjs",
+      "originalExecutedSHA256": "c7d0fb58af6b07e61bfd235e01bdb9d11483254ed0601d4f9363b375c2e0f2f9",
+      "targetSHA256": "c7d0fb58af6b07e61bfd235e01bdb9d11483254ed0601d4f9363b375c2e0f2f9",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/package-validation.test.mjs",
+      "originalExecutedSHA256": "6cfec074c956d98500c6c840f83970d2ec6ee076e1abb9024701af2dc34dc2df",
+      "targetSHA256": "6cfec074c956d98500c6c840f83970d2ec6ee076e1abb9024701af2dc34dc2df",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/portable-shell.test.mjs",
+      "originalExecutedSHA256": "709ad1b564b1f7a0daa87a35059d25dd8f4bd89db28bdcf4f4436a0706801b8a",
+      "targetSHA256": "709ad1b564b1f7a0daa87a35059d25dd8f4bd89db28bdcf4f4436a0706801b8a",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/runtime-capabilities.test.mjs",
+      "originalExecutedSHA256": "2c8fd6849c15517c1af5eb347533a174ab76f4c2d7cd50bc6881f7a7aa51d0ae",
+      "targetSHA256": "2c8fd6849c15517c1af5eb347533a174ab76f4c2d7cd50bc6881f7a7aa51d0ae",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/runtime-command-broker.test.mjs",
+      "originalExecutedSHA256": "31d9ba300648b0c13c558d49e99956aa6f6dbde8b833327cad7501ef5778b383",
+      "targetSHA256": "31d9ba300648b0c13c558d49e99956aa6f6dbde8b833327cad7501ef5778b383",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/runtime-package-target.test.mjs",
+      "originalExecutedSHA256": "318c7c035661d3ee4461a42931c97416c0eb92d6e6b51891f77dc6425a8ea7fa",
+      "targetSHA256": "318c7c035661d3ee4461a42931c97416c0eb92d6e6b51891f77dc6425a8ea7fa",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/runtime.test.mjs",
+      "originalExecutedSHA256": "cbd84f7ef1d192ec3ba171982f6597aafea72e7efa4be14f69e207b9dbfee320",
+      "targetSHA256": "cbd84f7ef1d192ec3ba171982f6597aafea72e7efa4be14f69e207b9dbfee320",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/server-everything.integration.mjs",
+      "originalExecutedSHA256": "9789308a914581e96608eb80b192cfc39d4af945aac8b7939dcea79d307bc022",
+      "targetSHA256": "9789308a914581e96608eb80b192cfc39d4af945aac8b7939dcea79d307bc022",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/typescript-jobs.test.mjs",
+      "originalExecutedSHA256": "a96406171b1ec35e06be5abe6b9772b5eb9501b883b9295d48d068686228203c",
+      "targetSHA256": "a96406171b1ec35e06be5abe6b9772b5eb9501b883b9295d48d068686228203c",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/warning-diagnostics.test.mjs",
+      "originalExecutedSHA256": "40a6a53c243c06a01bf64b341ac535c6131b143c76fb1d598030fd0708ef28c1",
+      "targetSHA256": "40a6a53c243c06a01bf64b341ac535c6131b143c76fb1d598030fd0708ef28c1",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/workspace-io.test.mjs",
+      "originalExecutedSHA256": "d817d3b2d244013c900dfa2b72287bee4d577a07b4a1cb3aaddd4b681ab9f2a2",
+      "targetSHA256": "d817d3b2d244013c900dfa2b72287bee4d577a07b4a1cb3aaddd4b681ab9f2a2",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/UNICODE-LICENSE.txt",
+      "originalExecutedSHA256": "e7a93b009565cfce55919a381437ac4db883e9da2126fa28b91d12732bc53d96",
+      "targetSHA256": "e7a93b009565cfce55919a381437ac4db883e9da2126fa28b91d12732bc53d96",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/apply-host-dependency-patches.mjs",
+      "originalExecutedSHA256": "ad74dbf9ffdf23d8fe0a75905f11cf52760a0d815e601813fea9bab1aa2d5d96",
+      "targetSHA256": "ad74dbf9ffdf23d8fe0a75905f11cf52760a0d815e601813fea9bab1aa2d5d96",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/cli-preload.mjs",
+      "originalExecutedSHA256": "f1443f786a3fe2e80c735c819242c311399f666cbaf80c6d89813e2903e5a833",
+      "targetSHA256": "f1443f786a3fe2e80c735c819242c311399f666cbaf80c6d89813e2903e5a833",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/diagnostic-worker.mjs",
+      "originalExecutedSHA256": "2b7d4ecd3651521ccef6b3860ca13ba530e03b040e627c96f1e6ec87ffb95ddc",
+      "targetSHA256": "2b7d4ecd3651521ccef6b3860ca13ba530e03b040e627c96f1e6ec87ffb95ddc",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/execution-context.mjs",
+      "originalExecutedSHA256": "ab9d145b80ffcae8f4e8fccd02e4c8f5db67f15dae57f5cacea49ed84424e4c7",
+      "targetSHA256": "ab9d145b80ffcae8f4e8fccd02e4c8f5db67f15dae57f5cacea49ed84424e4c7",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/execution-input.mjs",
+      "originalExecutedSHA256": "127a06f12bb687736c0e28a7fd0a8f6e060325d4b518e487ed37c0bef8b5c3b0",
+      "targetSHA256": "127a06f12bb687736c0e28a7fd0a8f6e060325d4b518e487ed37c0bef8b5c3b0",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/execution-jobs.mjs",
+      "originalExecutedSHA256": "84ace56b53c85047b2105ce8b5b790afb6fc2b055e59d7c7b2ae4047eee2980f",
+      "targetSHA256": "84ace56b53c85047b2105ce8b5b790afb6fc2b055e59d7c7b2ae4047eee2980f",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/execution-modules.mjs",
+      "originalExecutedSHA256": "3a581b4f68a80b39ae013a0e345d973146533551eb1d6166e09cf970357e0252",
+      "targetSHA256": "3a581b4f68a80b39ae013a0e345d973146533551eb1d6166e09cf970357e0252",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/execution-worker.mjs",
+      "originalExecutedSHA256": "92e0368e0ab09270c8ab3f0a4c989b570c0f7bebb0d2a41fda35b7efb9e993f1",
+      "targetSHA256": "92e0368e0ab09270c8ab3f0a4c989b570c0f7bebb0d2a41fda35b7efb9e993f1",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/fetch-compatibility.mjs",
+      "originalExecutedSHA256": "e1c2bdbe192a2d9b3f0e0aed7141796d91a730d76ce8746015eef1e4a5fff483",
+      "targetSHA256": "e1c2bdbe192a2d9b3f0e0aed7141796d91a730d76ce8746015eef1e4a5fff483",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/global-package-manager.mjs",
+      "originalExecutedSHA256": "de4a56d9936dcb9cf7270e469ed54fc14ed646bbfb9447840910d418b256920d",
+      "targetSHA256": "de4a56d9936dcb9cf7270e469ed54fc14ed646bbfb9447840910d418b256920d",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/global-package-state.mjs",
+      "originalExecutedSHA256": "1ec7ffe20def4025cec4d228b8432c9d9950d01ccdf5b076a3c4b92dd3a16a5c",
+      "targetSHA256": "1ec7ffe20def4025cec4d228b8432c9d9950d01ccdf5b076a3c4b92dd3a16a5c",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/host-dependency-patches.json",
+      "originalExecutedSHA256": "adff17c32c653f0e3b99db277f42718218fb1a19c03a0c158079fceee873fba8",
+      "targetSHA256": "adff17c32c653f0e3b99db277f42718218fb1a19c03a0c158079fceee873fba8",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/host.mjs",
+      "originalExecutedSHA256": "808c80eaef48bdf5772871b8065ef24b00d4f01b2663b87366986ff538bd8147",
+      "targetSHA256": "808c80eaef48bdf5772871b8065ef24b00d4f01b2663b87366986ff538bd8147",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/lifecycle-executor.mjs",
+      "originalExecutedSHA256": "f989f12f516ab4e9ef4bc2471ba0603cc566716d746444ab5364c1f415653c92",
+      "targetSHA256": "f989f12f516ab4e9ef4bc2471ba0603cc566716d746444ab5364c1f415653c92",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/lifecycle-planner.mjs",
+      "originalExecutedSHA256": "7e8937094fed66ae25fbdac8bfc3fd5a91779855a51bbe2f97517d313e137b58",
+      "targetSHA256": "7e8937094fed66ae25fbdac8bfc3fd5a91779855a51bbe2f97517d313e137b58",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/mcp-framing.mjs",
+      "originalExecutedSHA256": "6c558bb28dae24ea4582450a0af7067bbbb7cee9d675e6ccb047ce3140eebffb",
+      "targetSHA256": "6c558bb28dae24ea4582450a0af7067bbbb7cee9d675e6ccb047ce3140eebffb",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/mcp-package-generations.mjs",
+      "originalExecutedSHA256": "67b608d52a7bdc7dea854c50e777ab4d466517958903bcc746a13e98a132d96c",
+      "targetSHA256": "67b608d52a7bdc7dea854c50e777ab4d466517958903bcc746a13e98a132d96c",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
+      "originalExecutedSHA256": "fa5121902e231d5d44ad08bf47699784fd4d0bc2a98102f3a156e6e4ae79b9b9",
+      "targetSHA256": "6eb7130890499768b72990cc48cf84b515232635bf00b4ca023bcc1b161182fc",
+      "same": false,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/native-commands.mjs",
+      "originalExecutedSHA256": "c4ab93a40ef6ae316ccfe0fa870f18b5ec8a1a40484c3e27ebdc40c469e5f3b2",
+      "targetSHA256": "c4ab93a40ef6ae316ccfe0fa870f18b5ec8a1a40484c3e27ebdc40c469e5f3b2",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/network-diagnostics.mjs",
+      "originalExecutedSHA256": "e8cda97ae01cae485138c1f9d01f246935ece9c26da3cfd5f94e09bd08c6bc26",
+      "targetSHA256": "e8cda97ae01cae485138c1f9d01f246935ece9c26da3cfd5f94e09bd08c6bc26",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/optional-lifecycle.mjs",
+      "originalExecutedSHA256": "1f668656e67d4be59536fd606f7ab92ef2587d45d3f9fc1fb509eedd3a8134ba",
+      "targetSHA256": "1f668656e67d4be59536fd606f7ab92ef2587d45d3f9fc1fb509eedd3a8134ba",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/package-compatibility.mjs",
+      "originalExecutedSHA256": "32424b3a6e153d655677c524e85ab6b96a1085941d7d356906cfe3dfd609cd45",
+      "targetSHA256": "32424b3a6e153d655677c524e85ab6b96a1085941d7d356906cfe3dfd609cd45",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/package-installer.mjs",
+      "originalExecutedSHA256": "fbc7c68aafafdbc8b80a8ff70466ab0d2b780a733975d4442a887cb7a884ee05",
+      "targetSHA256": "fbc7c68aafafdbc8b80a8ff70466ab0d2b780a733975d4442a887cb7a884ee05",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/package-lock.json",
+      "originalExecutedSHA256": "4a1f2ecaae83c3f68cb02b605c03323260bc4bbb32923865d5c654be5736c7b4",
+      "targetSHA256": "4a1f2ecaae83c3f68cb02b605c03323260bc4bbb32923865d5c654be5736c7b4",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/package-validation.mjs",
+      "originalExecutedSHA256": "b95da83e38ee55603712c17fed092232c8f23a13ce7c86d3bba1c450d185560c",
+      "targetSHA256": "b95da83e38ee55603712c17fed092232c8f23a13ce7c86d3bba1c450d185560c",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/package.json",
+      "originalExecutedSHA256": "1794af1338974e7f024e67daceb586fb0b7d897a702ce26ab66b690d41e20968",
+      "targetSHA256": "1794af1338974e7f024e67daceb586fb0b7d897a702ce26ab66b690d41e20968",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/portable-shell.mjs",
+      "originalExecutedSHA256": "2059b49ae6e86d45d8533e2a2bd66e2f9604307c73b3784f04c370f8c87b91f3",
+      "targetSHA256": "2059b49ae6e86d45d8533e2a2bd66e2f9604307c73b3784f04c370f8c87b91f3",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/runtime-capabilities.mjs",
+      "originalExecutedSHA256": "43bd9d0fe8696a9578ec6df30b5c7e86b7f265c77013ee11f1bd28234180b2fa",
+      "targetSHA256": "43bd9d0fe8696a9578ec6df30b5c7e86b7f265c77013ee11f1bd28234180b2fa",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/runtime-command-broker.mjs",
+      "originalExecutedSHA256": "7e7d289ecee36a20041e5237a834d6fd7435e49b33922f0541ac4582a93efae7",
+      "targetSHA256": "7e7d289ecee36a20041e5237a834d6fd7435e49b33922f0541ac4582a93efae7",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/runtime-command-client.mjs",
+      "originalExecutedSHA256": "621af880e349fd99b6ec888e0d8cefa0fa4b447c64d96a7216c4d8d2803d1bc7",
+      "targetSHA256": "621af880e349fd99b6ec888e0d8cefa0fa4b447c64d96a7216c4d8d2803d1bc7",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/runtime-command-resolution.mjs",
+      "originalExecutedSHA256": "88e0308f25b4d489098cff0973d6d742553e53bc1ee346a7ee3df3de17385211",
+      "targetSHA256": "88e0308f25b4d489098cff0973d6d742553e53bc1ee346a7ee3df3de17385211",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/runtime-dependency-overrides.json",
+      "originalExecutedSHA256": "20f62dcb9696e3c85825bf4297bff5af7527b87dd19bc290daabeea78077dea8",
+      "targetSHA256": "20f62dcb9696e3c85825bf4297bff5af7527b87dd19bc290daabeea78077dea8",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/runtime-probe.mjs",
+      "originalExecutedSHA256": "8f6c140c337ea0524747450162ce8a712bc9c0142e305ad6fc3c24de2ba442b7",
+      "targetSHA256": "8f6c140c337ea0524747450162ce8a712bc9c0142e305ad6fc3c24de2ba442b7",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/server-worker.mjs",
+      "originalExecutedSHA256": "53255b3b3d1cd77671219afa2dde6440636250804b3719e32b2d50e2add8a2d1",
+      "targetSHA256": "53255b3b3d1cd77671219afa2dde6440636250804b3719e32b2d50e2add8a2d1",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/typescript-compiler.mjs",
+      "originalExecutedSHA256": "c21a05fdc704305815e130ad913a2c63b4e705bf06b68bacf0a855e0aab2631e",
+      "targetSHA256": "c21a05fdc704305815e130ad913a2c63b4e705bf06b68bacf0a855e0aab2631e",
+      "same": true,
+      "originalMode": 420
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/warning-diagnostics.mjs",
+      "originalExecutedSHA256": "b2d4111e9f22f2ae9c1ef61716040646b9e1e5aa7f93d4b7fc2a16ae3fe73d08",
+      "targetSHA256": "b2d4111e9f22f2ae9c1ef61716040646b9e1e5aa7f93d4b7fc2a16ae3fe73d08",
+      "same": true,
+      "originalMode": 420
+    }
+  ],
+  "retestedReceiptSHA256": "8b75ac33bb634e8b7de5f03d06638f2bb4252e68250acc665d39f3a3b39d9b0b",
+  "retestedLogSHA256": "0d7162fdb17b7b03f237e4ed3db6e109289082aee5642f4ab3be56fbb761a027",
+  "countsArePartitionNotAddition": true,
+  "runtimeReachability": {
+    "onlyHostDefaultSuiteCallers": [
+      "Tests/miniapp-authoring.test.mjs",
+      "Tests/miniapp-sdk-resolution.test.mjs"
+    ],
+    "additionalIntegrationCallerOutsideOriginal170": "Tests/miniapp-native-presentation.integration.mjs",
+    "changedCodeBoundary": "private parseProject invoked only by explicit runMiniAppOperation validate/build and native presentation validation",
+    "topLevelImportsOrSideEffectsChanged": false,
+    "mainAppWarmup": "RuntimeLifecycleBridge.prepareApplication calls node.healthCheck; do not describe Host resource as unreachable",
+    "zipIdentityConsumer": "NodeRuntimeService.prepareHostRuntime SHA256-hashes ZIP and extracts to host-<archiveHash>; new archive requires new extraction identity",
+    "main10Limit": "Conditional selective reuse of unchanged sidebar assertions only after authentic705 result. No claim of a fresh8f run, new ZIP extraction acceptance, MiniApp E2E or physical-device pass."
+  },
+  "archiveSync": {
+    "status": "NOT_RUN",
+    "originalZipSHA256": "052c71626ea07c213e098ee04ebfa1a9ba528b8124accc6f35cd715e15f0e4dc",
+    "originalZipBytes": 81813655,
+    "SDKManifestSHA256": "02e57f0738b55b1e0d9e6bd2c0ea2d8a2fa8cd99636179c8085dec2d965201ea",
+    "SDKInputSHA256": "ba577dec2da7ecce14ed8adef5b3879c8b4229e0fc9453d4e6d123a4002288c7",
+    "supportedFunction": "Scripts/Runtime/runtime_host_archive.py:synchronize_archive",
+    "producerMetadataPolicy": "Retain original build/runtime-host archive and metadata with actual a146 execution origin; do not overwrite with invented fresh-pass flags. Record derivative app ZIP and reused/fresh case partition separately."
+  },
+  "parityPreparedConsumer": {
+    "source": "DemoMiniApps/hanlin-script-parity.hanlinNativeScript",
+    "sha256": "089678e1b8fa03af23130e3b48fd0d75f394274c9d75e8959ca19e1d618988b8",
+    "generator": "Scripts/NativeScript/prepare-production-package.mjs",
+    "destination": "build/NativeScriptE2E/hanlin-script-parity.hanlinNativeScript",
+    "status": "Must refresh and hash-check before later parity consumer; absent from main10 scope; no active705 mutation."
+  }
+}
