@@ -1,7 +1,9 @@
-import { Page, StackLayout, Label, TextView, Button } from '@nativescript/core';
+import { Page, StackLayout, Label, TextView, Button, File } from '@nativescript/core';
 import { registerWindowFactory } from '@hanlin/window-factory';
 
-registerWindowFactory(({id, services}) => {
+// Module state must also be isolated for two windows of this same package.
+let increments = 0;
+registerWindowFactory(({id, services, storage}) => {
   const page = new Page();
   page.actionBarHidden = true;
   const layout = new StackLayout();
@@ -18,7 +20,6 @@ registerWindowFactory(({id, services}) => {
   const counter = new Label();
   counter.accessibilityIdentifier = 'hanlin-ns-window-counter';
   counter.text = '0';
-  let increments = 0;
   let documentID = '';
   let prepared;
   const button = (title, id, run) => {
@@ -34,10 +35,11 @@ registerWindowFactory(({id, services}) => {
   const prepare = button('Prepare Return', 'hanlin-ns-window-prepare-return', () => {
     input.dismissSoftInput();
     const text = input.text ?? '';
+    File.fromPath(storage.state + '/same-name.txt').writeTextSync(text);
     const metadata = {windowSessionID: id, requestID: request.text, documentID, counter: String(increments)};
     prepared = () => services.miniapps.complete({
       operation: 'replaceSelection', items: [{kind: 'text', text}],
-      metadata
+      metadata: {...metadata, storedValue: File.fromPath(storage.state + '/same-name.txt').readTextSync()}
     });
     status.text = 'Prepared';
   });

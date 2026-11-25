@@ -1,9 +1,15 @@
-// Generated from Scripts/NativeScript/window-factory.d.ts; SHA256 62a777a514ed7bc260ee1d098c81ffb519ed095ecb8c0e6da81b60f13f4ba94e
+// Generated from Scripts/NativeScript/window-factory.d.ts; SHA256 1074405a24858b34596ef951dbfc4804a5cbc9d6353d67272b3287d0c90674f5
 import type { NativeWindow, View, NavigationEntry } from '@nativescript/core';
 import type { createHostServicesForBridge } from '@hanlin/host-services';
 
 export interface MiniAppWindowContext {
   readonly id: string;
+  readonly packageID: string;
+  /** Explicit package/window environment; never process-global environment. */
+  readonly environment: Readonly<Record<string, string>>;
+  readonly storage: Readonly<{root?: string; state?: string; documents?: string; cache?: string}>;
+  /** Absolute path constrained to this live window's immutable source namespace. */
+  resourcePath(relativePath: string): string;
   readonly window: NativeWindow;
   readonly services: ReturnType<typeof createHostServicesForBridge>;
 }

@@ -27,6 +27,7 @@ def main():
     parser.add_argument("--simulator-udid", required=True)
     parser.add_argument("--app-path", type=Path, required=True)
     parser.add_argument("--evidence", type=Path, required=True)
+    parser.add_argument("--package-windows", action="store_true")
     args = parser.parse_args()
     if platform.system() != "Darwin":
         raise RuntimeError("Staging requires actual CoreSimulator OS containers")
@@ -38,34 +39,50 @@ def main():
     if not data.is_dir() or not group.is_dir():
         raise RuntimeError("CoreSimulator did not return the app's actual data and App Group containers")
 
-    archive_relative = "Scripts/NativeScript/Fixtures/window-factory.hanlinNativeScript"
-    source_paths = [
-        archive_relative,
-        "Scripts/NativeScript/Fixtures/window-factory-source/script.json",
-        "Scripts/NativeScript/Fixtures/window-factory-source/nativescript/app/package.json",
-        "Scripts/NativeScript/Fixtures/window-factory-source/nativescript/app/bundle.mjs",
-        "Scripts/NativeScript/build-window-factory-fixture.mjs",
-    ]
+    if args.package_windows:
+        archive_paths = ["Scripts/NativeScript/Fixtures/package-window-" + name + ".hanlinNativeScript"
+                         for name in ("alpha", "beta")]
+        source_paths = archive_paths + ["Scripts/NativeScript/build_package_window_fixtures.py"]
+        for name in ("alpha", "beta"):
+            source_root = ROOT / ("Scripts/NativeScript/Fixtures/package-window-" + name + "-source")
+            source_paths += [path.relative_to(ROOT).as_posix() for path in sorted(source_root.rglob("*"))
+                             if path.is_file()]
+        fixture_source = "Scripts/ProductSplit/NativeScriptPackageWindowBridgeFixture.swift"
+        fixture_name = "nativescript-package-window-bridge-fixture"
+    else:
+        archive_paths = ["Scripts/NativeScript/Fixtures/window-factory.hanlinNativeScript"]
+        source_paths = archive_paths + [
+            "Scripts/NativeScript/Fixtures/window-factory-source/script.json",
+            "Scripts/NativeScript/Fixtures/window-factory-source/nativescript/app/package.json",
+            "Scripts/NativeScript/Fixtures/window-factory-source/nativescript/app/bundle.mjs",
+            "Scripts/NativeScript/build-window-factory-fixture.mjs",
+        ]
+        fixture_source = "Scripts/ProductSplit/NativeScriptWindowBridgeFixture.swift"
+        fixture_name = "nativescript-window-bridge-fixture"
+    source_paths += [fixture_source]
     hashes = {}
     for relative in source_paths:
         raw = (ROOT / relative).read_bytes()
         if raw != subprocess.check_output(["git", "show", "HEAD:" + relative], cwd=ROOT):
             raise RuntimeError("Fixture differs from its committed source: " + relative)
         hashes[relative] = hashlib.sha256(raw).hexdigest()
-    archive = ROOT / archive_relative
-    destination = data / "Documents" / archive.name
-    destination.parent.mkdir(exist_ok=True)
-    with destination.open("xb") as output, archive.open("rb") as source:
-        shutil.copyfileobj(source, output)
-    if hashlib.sha256(destination.read_bytes()).hexdigest() != hashes[archive_relative]:
-        raise RuntimeError("Staged NativeScript archive bytes changed")
+    destinations = []
+    for archive_relative in archive_paths:
+        archive = ROOT / archive_relative
+        destination = data / "Documents" / archive.name
+        destination.parent.mkdir(exist_ok=True)
+        with destination.open("xb") as output, archive.open("rb") as source:
+            shutil.copyfileobj(source, output)
+        if hashlib.sha256(destination.read_bytes()).hexdigest() != hashes[archive_relative]:
+            raise RuntimeError("Staged NativeScript archive bytes changed")
+        destinations.append(str(destination))
 
-    executable = args.evidence / "nativescript-window-bridge-fixture"
+    executable = args.evidence / fixture_name
     sources = sorted((ROOT / "Packages/HanlinMiniAppsBridge/Sources/HanlinMiniAppsBridge").glob("*.swift"))
     if not sources:
         raise RuntimeError("The original Foundation bridge sources are missing")
     run(["xcrun", "swiftc", "-parse-as-library", *sources,
-         ROOT / "Scripts/ProductSplit/NativeScriptWindowBridgeFixture.swift", "-o", executable])
+         ROOT / fixture_source, "-o", executable])
     requests = json.loads(run([executable, "seed", group]))
     proof = {
         "status": "REAL_NATIVESCRIPT_IMPORT_AND_INCOMING_REQUESTS_STAGED",
@@ -73,7 +90,9 @@ def main():
         "bundle_id": BUNDLE,
         "source_sha": run(["git", "rev-parse", "HEAD"]),
         "fixture_sources": hashes,
-        "archive": str(destination),
+        "archive": destinations[0],
+        "archives": destinations,
+        "distinct_packages": args.package_windows,
         "shared_group": GROUP,
         "shared_group_container": str(group),
         "seeder": str(executable),

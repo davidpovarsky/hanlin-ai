@@ -95,3 +95,69 @@ Sources:
 - https://github.com/NativeScript/ios/blob/v9.1.0/NativeScript/runtime/Runtime.mm
 - https://github.com/NativeScript/ios/blob/v9.1.0/NativeScript/NapiRuntime.mm
 - https://github.com/NativeScript/ios/blob/v9.1.0/NativeScript/JSIRuntime.m
+
+## Cooperating package namespace implementation — 2026-11-25
+
+The current implementation uses the original pinned NativeScript 9.1.1 runtime,
+its original `ns:module` `configureLoader` / `createPumpingRequire`, and the
+original Core `NativeWindow`. It stages a distinct source namespace for each
+window under a neutral, host-owned application root. Relative/static/dynamic
+module identities, package-local bare dependencies, resources, root CSS,
+window storage, Host Services and callbacks are explicitly bound to that window.
+A neutral process-global provider cannot silently acquire the first window's
+capabilities or data paths. Closing a window retains module files needed by live
+windows and retires only its own bridge, view and callbacks. The host tree is
+removed after the last window and the original VM stop.
+
+This is cooperating package support, not independent V8 global objects or a
+native security sandbox. Packages opt into `hanlinNativeScript.windowFactory: 1`
+and use their supplied services, storage and resource context. Arbitrary writes
+to `globalThis`, native singleton state, process-global ApplicationSettings,
+`Application.addCss`, or global application configuration remain shared. Whole
+application entries retain the original singleton guard. No wrapper reset,
+monkey-patched evaluator, or cloned original engine is introduced.
+
+The v9.1.1 public NativeScript header still offers one whole-application
+initializer; NativeScript.mm owns a process-global main Runtime pointer and
+destroys it before initializing another. The original Worker API creates
+separate background runtime/isolate contexts and copies loader policy; it does
+not supply independent main-thread UIKit application instances. Exact upstream
+file blob IDs and SHA-256 values are recorded in
+`../../../docs/product-split/evidence/cross-app-20261123/native-package-window-20261125/upstream-runtime-review.json`.
+Official references:
+- https://docs.nativescript.org/guide/multi-window
+- https://github.com/NativeScript/ios/blob/v9.1.1/NativeScript/NativeScript.h
+- https://github.com/NativeScript/ios/blob/v9.1.1/NativeScript/NativeScript.mm
+- https://github.com/NativeScript/ios/blob/v9.1.1/types/ns-module.d.ts
+- https://github.com/NativeScript/ios/blob/v9.1.1/types/ns-worker-threads.d.ts
+
+### Runtime and acceptance corrections
+
+The original NativeScript fixture lacked the required `plugins: {}` declaration;
+commit 3e871e428 fixed that admission failure without changing the original
+window assertions. The nonce production check now also requires the real
+NativeScript parity root. The later SDK/metadata correction belongs to PR19
+and must be integrated before current native execution.
+
+A separate retained-lifecycle defect was found in the real Objective-C++
+window context: closing set `closed = true`, then used a setter that ignores
+changes when closed, leaving the JavaScript lifecycle block retained across
+VM shutdown. Close now clears the ivar directly while the VM is still live.
+A native ownership regression explicitly holds the closed context and verifies
+its lifecycle capture is released before the runtime ends.
+
+The original twenty obligations remain. Two real package-window UI cases add
+different packages, module-name collisions, late imports, resource bytes,
+computed root CSS, storage readback, reverse completion and cancellation.
+The original same-package fixture now also uses module-level mutable state and
+identical storage filenames, preserving its original callback assertions.
+One lifecycle ownership case brings the current affected gate to 23 cases.
+These input packages run in the real producer app; the Foundation fixture only
+seeds incoming requests and independently checks persisted actual outputs.
+No fixture synthesizes a completion result.
+
+Current source checkpoint: JavaScript syntax, Python parsing, archive/source
+byte identity and diff whitespace have passed. Original-runtime acceptance for
+this source is still NOT_RUN; the separate native gate must compile and run on
+the actual Mac with retained xcresult and source-bound receipts. Independent
+global isolation and physical iPad acceptance are not claimed.

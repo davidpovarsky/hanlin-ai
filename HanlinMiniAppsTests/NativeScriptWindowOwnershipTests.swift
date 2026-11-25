@@ -1,4 +1,5 @@
 import Foundation
+import HanlinNativeScriptCoreSupport
 import XCTest
 @testable import HanlinMiniApps
 
@@ -46,6 +47,33 @@ final class NativeScriptWindowOwnershipTests: XCTestCase {
         XCTAssertTrue(HanlinNativeServicesHostProvider.clearActiveContainer(forSessionID: secondID))
         XCTAssertNil(HanlinNativeServicesBridge.activeSessionBridge())
         XCTAssertNil(HanlinNativeServicesBridge.legacyProvider())
+    }
+
+    func testClosingWindowReleasesLifecycleCaptureBeforeRuntimeStops() throws {
+        let runtimeID = UUID().uuidString.lowercased()
+        let windowID = UUID().uuidString.lowercased()
+        XCTAssertTrue(HanlinNativeScriptWindowFactoryRegistry.beginRuntime(sessionID: runtimeID))
+        defer { HanlinNativeScriptWindowFactoryRegistry.endRuntime(sessionID: runtimeID) }
+        let provider = HanlinNativeScriptWindowFactoryRegistry.neutralRuntimeProvider()
+        HanlinNativeServicesBridge.register(provider, forSessionID: windowID)
+        defer { HanlinNativeServicesBridge.unregisterProvider(forSessionID: windowID) }
+        let bootstrap = try XCTUnwrap(HanlinNativeServicesPrepareSessionBootstrap(windowID))
+        let bridge = try XCTUnwrap(HanlinNativeServicesBridge.claimSessionBridge(withToken: bootstrap))
+        weak var capturedObject: NSObject?
+        XCTAssertTrue(HanlinNativeScriptWindowFactoryRegistry.registerFactory { context in
+            let token = NSObject()
+            capturedObject = token
+            context.setLifecycleHandler { [token] _, _ in withExtendedLifetime(token) {} }
+        })
+        let context = try autoreleasepool {
+            try XCTUnwrap(HanlinNativeScriptWindowFactoryRegistry.openWindow(id: windowID, bridge: bridge))
+        }
+        XCTAssertNotNil(capturedObject)
+        autoreleasepool { HanlinNativeScriptWindowFactoryRegistry.closeWindow(id: windowID) }
+        XCTAssertTrue(context.isClosed)
+        XCTAssertNil(capturedObject,
+                     "A closed native context must drop its lifecycle capture while the original VM is still alive.")
+        XCTAssertEqual(HanlinNativeScriptWindowFactoryRegistry.openWindowCount(), 0)
     }
 
     private func removeOwnedTestContainer(dataRoot: String, appID: String) {

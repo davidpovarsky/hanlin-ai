@@ -1,0 +1,60 @@
+{
+  "checked_at": "2026-11-25T05:13:26.934497+00:00",
+  "upstream": [
+    {
+      "path": "NativeScript/NativeScript.h",
+      "ref": "v9.1.1",
+      "git_blob": "85b56f9eba886dfa195ae5d5d12fc821faac2c67",
+      "sha256": "9a7256633ff8404cb94730ca9fcd18fc3a7358e0984c3833759f013d6533aa15",
+      "source_url": "https://github.com/NativeScript/ios/blob/v9.1.1/NativeScript/NativeScript.h"
+    },
+    {
+      "path": "NativeScript/NativeScript.mm",
+      "ref": "v9.1.1",
+      "git_blob": "0576ea727c8ba6af0ae530158e0f999dae66c661",
+      "sha256": "827b1c4c12aa9d71fa58bfe00920ae780e1a93bbb8dcb80c5e65036c0f6317b2",
+      "source_url": "https://github.com/NativeScript/ios/blob/v9.1.1/NativeScript/NativeScript.mm"
+    },
+    {
+      "path": "NativeScript/runtime/RuntimeConfig.cpp",
+      "ref": "v9.1.1",
+      "git_blob": "18f87a1a8727577527a7bef203a614eb2c540da1",
+      "sha256": "9986bb251de299ffb1808b6ee5666cbd412d5ebbf11c0696d0f8186e53cf53b2",
+      "source_url": "https://github.com/NativeScript/ios/blob/v9.1.1/NativeScript/runtime/RuntimeConfig.cpp"
+    },
+    {
+      "path": "NativeScript/runtime/Worker.mm",
+      "ref": "v9.1.1",
+      "git_blob": "d4223994302353aad17aa9980a5ac159f293eb3e",
+      "sha256": "6fec8b828e0545d2b19a129fd8d7509f23344f79f9f4b7e82b5fa8697e531585",
+      "source_url": "https://github.com/NativeScript/ios/blob/v9.1.1/NativeScript/runtime/Worker.mm"
+    },
+    {
+      "path": "types/ns-module.d.ts",
+      "ref": "v9.1.1",
+      "git_blob": "348f4485a26cb0f6689533daf82d29ca103b8809",
+      "sha256": "efb704e713d4b51e10e3fb292bc2c495ff64ab42aa2e1ee8538a8f63551e6b33",
+      "source_url": "https://github.com/NativeScript/ios/blob/v9.1.1/types/ns-module.d.ts"
+    },
+    {
+      "path": "types/ns-worker-threads.d.ts",
+      "ref": "v9.1.1",
+      "git_blob": "bc5a2ed6f5d9288238b76cc1746f6ab571755fe5",
+      "sha256": "10d4df15adf88142aa37784d371731b5b5d1d6c5456498e8640db7122c5a95e6",
+      "source_url": "https://github.com/NativeScript/ios/blob/v9.1.1/types/ns-worker-threads.d.ts"
+    }
+  ],
+  "review": {
+    "public_main_runtime": "One process-global Runtime*; initializeWithConfig destroys previous main runtime.",
+    "workers": "Original Worker creates separate runtime/isolate on a background operation queue; inherits per-isolate loader policy.",
+    "cooperating_windows": "Original NativeWindow plus original ns:module scoped imports in one main JavaScript context.",
+    "not_claimed": [
+      "separate globalThis for UIKit windows",
+      "isolation of arbitrary native singletons",
+      "independent whole-application Application.run entrypoints"
+    ],
+    "legacy_guard": "Retained; no second main Runtime is constructed while a window owner or legacy application is alive."
+  },
+  "native_acceptance": "NOT_RUN_FOR_CURRENT_SOURCE",
+  "required_case_count": 23
+}

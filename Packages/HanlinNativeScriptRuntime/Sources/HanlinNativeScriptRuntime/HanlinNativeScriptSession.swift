@@ -62,6 +62,16 @@ public final class HanlinNativeScriptSession {
         environment: [String: String] = [:],
         sessionID: String = UUID().uuidString.lowercased()
     ) throws {
+        let root = try Self.validatePreparedApplication(applicationRoot)
+        self.applicationRoot = root
+        self.environment = environment
+        self.sessionID = sessionID
+        presenter = HanlinNativeScriptPresenter()
+        containerController = presenter.containerController
+    }
+
+    /// Shared admission for legacy applications and isolated cooperating entries.
+    static func validatePreparedApplication(_ applicationRoot: URL) throws -> URL {
         let root = applicationRoot.standardizedFileURL
         guard root.isFileURL else {
             throw HanlinNativeScriptError.invalidApplicationRoot("the URL is not a file URL")
@@ -85,11 +95,7 @@ public final class HanlinNativeScriptSession {
         }
         try Self.validateNativePluginRequirements(packageJSONURL: packageJSONURL)
         try Self.validateCoreRequirements(packageJSONURL: packageJSONURL)
-        self.applicationRoot = root
-        self.environment = environment
-        self.sessionID = sessionID
-        presenter = HanlinNativeScriptPresenter()
-        containerController = presenter.containerController
+        return root
     }
 
     public func start() throws {

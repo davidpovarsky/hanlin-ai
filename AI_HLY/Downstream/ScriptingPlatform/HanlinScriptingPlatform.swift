@@ -933,31 +933,14 @@ final class HanlinScriptingPlatform {
                     let windowSession = try HanlinNativeScriptWindowSession.open(
                         applicationRoot: applicationRoot,
                         environment: env,
-                        makeRuntimeProvider: { runtimeID in
-                            NativeScriptHostServicesAdapter(
-                                appID: appID, installedPackageID: installedPackageID,
-                                grantedCapabilities: capabilities, sessionID: runtimeID,
-                                externalMiniAppOperation: nil)
-                        },
                         makeWindowProvider: { windowID in
                             let adapter = NativeScriptHostServicesAdapter(
                                 appID: appID, installedPackageID: installedPackageID,
                                 grantedCapabilities: capabilities, sessionID: windowID,
+                                isolatesWindowStorage: true,
                                 externalMiniAppOperation: operation)
                             windowAdapter = adapter
                             return adapter
-                        },
-                        configureRuntime: { runtimeID in
-                            // Runtime callbacks capture package values, never the first
-                            // request's platform, view or external operation.
-                            HanlinNativeServicesHostProvider.setActiveContainer(
-                                appID: appID.rawValue, dataRoot: dataRootStr,
-                                stateDir: stateDirStr, docsDir: docsDirStr,
-                                cacheDir: cacheDirStr,
-                                grantedCapabilities: Array(capabilities), sessionID: runtimeID)
-                        },
-                        releaseRuntime: { runtimeID in
-                            _ = HanlinNativeServicesHostProvider.clearActiveContainer(forSessionID: runtimeID)
                         })
                     nativeScriptWindowSession = windowSession
                     nativeScriptHostServices = windowAdapter
