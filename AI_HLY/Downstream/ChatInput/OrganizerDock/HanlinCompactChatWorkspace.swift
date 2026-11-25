@@ -341,6 +341,7 @@ struct HanlinCompactChatWorkspace: View {
             },
             onRefresh: onRefresh,
             isPresented: isPresented,
+            selectedConversationID: sessionBridge.expectedActiveSessionID,
             keyboardOwner: keyboardOwner
         )
     }

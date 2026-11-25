@@ -219,6 +219,20 @@ enum AgentRuntimeUIAcceptanceProvider {
                     modelDisplayName: "Agent Acceptance", record: acceptanceChat))
             }
 #endif
+            #if (DEBUG || HANLIN_TESTING) && targetEnvironment(simulator)
+            if let countText = ProcessInfo.processInfo.environment["HANLIN_SOURCES_SHEET_ACCEPTANCE_COUNT"],
+               let count = Int(countText), (1...100).contains(count) {
+                let resources = (1...count).map { index in
+                    Resource(icon: "", title: "Source \(index): מקור לבדיקה — a readable reference title",
+                             link: "https://agent.acceptance/sources/\(index)")
+                }
+                let message = ChatMessages(role: "assistant",
+                    text: "SOURCES_SHEET_ACCEPTANCE_READY", modelDisplayName: "Agent Acceptance",
+                    record: acceptanceChat)
+                message.resources = resources
+                context.insert(message)
+            }
+            #endif
             if isDockFixturesEnabled {
                 for prompt in try context.fetch(FetchDescriptor<PromptRepo>()) {
                     context.delete(prompt)
