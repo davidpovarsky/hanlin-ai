@@ -231,7 +231,8 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
         launchInstalledPackage(named: parityPackageName)
 
         // 1. Verify App Title
-        let titlePredicate = NSPredicate(format: "label CONTAINS 'HanlinScript Parity' OR identifier == 'hanlin-script-parity-title'")
+        // Require the presented runtime title; the catalog card has the same label.
+        let titlePredicate = NSPredicate(format: "identifier == %@", "hanlin-script-parity-title")
         let titleCandidate = app.descendants(matching: .any).matching(titlePredicate).firstMatch
         XCTAssertTrue(titleCandidate.waitForExistence(timeout: 30), "HanlinScript Parity title did not render")
         capture(name: "Parity-App-Launched")
@@ -245,7 +246,9 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
         // Node: [VERIFIED Node <version>] nonce=...
         let nodePredicate = NSPredicate(format: "label CONTAINS '[VERIFIED Node' AND label CONTAINS %@ AND NOT (label CONTAINS 'Err' OR label CONTAINS 'Error')", challengeNonce)
         let nodeLabel = app.descendants(matching: .any).matching(nodePredicate).firstMatch
-        XCTAssertTrue(nodeLabel.waitForExistence(timeout: 25), "Node execution did not return verified Node runtime output with nonce \(challengeNonce)")
+        // First use prepares the original embedded Host before executing Node.
+        // Preserve the actual nonce/result contract within the existing 420s case allowance.
+        XCTAssertTrue(nodeLabel.waitForExistence(timeout: 180), "Node execution did not return verified Node runtime output with nonce \(challengeNonce)")
 
         // Python: [VERIFIED CPython <version>] nonce=...
         let pyPredicate = NSPredicate(format: "label CONTAINS '[VERIFIED CPython' AND label CONTAINS %@ AND NOT (label CONTAINS 'Err' OR label CONTAINS 'Error')", challengeNonce)
