@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "status": "ROOT_VERIFIED_CURRENT_CANONICAL235_AND_EXACT_SDK25682_FILES",
+  "observedAt": "2026-11-25T21:28:08.280884+00:00",
+  "targetSource": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+  "SDKProducer": "dff3b45c99a57bf8fe8ec721db3fa1fafce7134b",
+  "sourceInputCount": 235,
+  "SDKPayloadCount": 25681,
+  "SDKFileCountIncludingManifest": 25682,
+  "SDKUncompressedBytes": 299676426,
+  "SDKManifestSHA256": "6f11ed8da3df18627f05932d47b5b68dec54eb26ac396151a21cbc8c3e65800e",
+  "SDKInputSHA256": "0388d52ec3ceef1adddb21a8718566876db0ef693520bc761e4ec57573a96514",
+  "SDKArchiveSHA256": "c1c181182d1e47db1f7977a284cea507397dc47e9170645b019dbdec5ab858ca",
+  "HostArchiveSHA256": "ed18d93a88a1020bc2140417cea3847daf3d03472cdd4769d9a5ac4e44f48a22",
+  "actualOriginalHostTests": {
+    "total": 170,
+    "pass": 169,
+    "fail": 0,
+    "skip": 1
+  },
+  "proofFilesVerified": 10,
+  "nativeBuild": "NOT_YET_EXECUTED_FOR_SDK20"
+}

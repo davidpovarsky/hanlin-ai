@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "observedAt": "2026-11-25T21:17:14.119433+00:00",
+  "source": "dff3b45c99a57bf8fe8ec721db3fa1fafce7134b",
+  "members": [
+    {
+      "path": "state.json",
+      "bytes": 2488,
+      "sha256": "95d72c8829b026d2e61b08c037e0cc6a332c2ccd0cdb5ea13d391b174c7aef80"
+    },
+    {
+      "path": "ledger.json",
+      "bytes": 259,
+      "sha256": "e23efb609fdc817b652ba1c2777ac286c3932e88ca614ef608e0975f3b5d8e2a"
+    },
+    {
+      "path": "swift-test.log",
+      "bytes": 24225,
+      "sha256": "5b163aa2413597185cf99bd7cb0e6ea52446b3c3cc7d9974fe35431ee76afef8"
+    },
+    {
+      "path": "source-transfer-receipt.json",
+      "bytes": 806,
+      "sha256": "11f33de4039dfb1a2b8235bd7f339039e7f320be4fe96a04ec0305fa2da4fb38"
+    },
+    {
+      "path": "launch-receipt.json",
+      "bytes": 440,
+      "sha256": "ab36a6325c7da6e8745e9372f9f2c484db61bd02dbd3136ea7bf631492dd5174"
+    }
+  ]
+}

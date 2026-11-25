@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "source": "dff3b45c99a57bf8fe8ec721db3fa1fafce7134b",
+  "sourceTree": "52619d4ca19658c559c8378abe320e7b5cd736e3",
+  "root": "/Users/m1/builds/hanlin-notification-wire-fix-20261125",
+  "sourceFiles": 320,
+  "sourceBytes": 11761608,
+  "archiveSHA256": "b3807a9c5fc25bd74999592c40dee585bc381afccd9ddcdb5cdf8f98cc36fb0a",
+  "manifestSHA256": "ada11f6466f7658c565569d4fd1358184bff573d6f6f733cc9ff7a6666608dad",
+  "planSHA256": "962c38104f591915f925dc6d62950d8d29af9229676af2f12270af9f0d5a99dd",
+  "controllerSHA256": "3db1a1c2c13dd30a5c4e6d0bcb0ced0935fc960201f62ba8ceaa1f13ae0c8574",
+  "freeBytesBefore": 159100030976,
+  "elapsedSeconds": 0.5414957920002053,
+  "preparedAt": "2026-11-25T21:15:23.643337+00:00",
+  "scope": "Exact package snapshot; not a reconstructed historical checkout."
+}
