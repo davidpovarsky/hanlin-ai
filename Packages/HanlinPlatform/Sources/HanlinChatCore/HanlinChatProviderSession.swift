@@ -1,4 +1,5 @@
 import Foundation
+import Synchronization
 #if canImport(FoundationNetworking)
 import FoundationNetworking
 #endif
@@ -36,22 +37,24 @@ final class HanlinChatProviderSession: @unchecked Sendable {
 /// Bind native request cancellation to the owning Hanlin turn, independently of
 /// the SDK's intentionally graceful stop() operation. Child Tasks inherit only
 /// this turn's value; a shared fetch/session can serve other turns concurrently.
-final class HanlinChatTransportCancellation: @unchecked Sendable {
+final class HanlinChatTransportCancellation: Sendable {
     @TaskLocal static var current: HanlinChatTransportCancellation?
 
-    private let lock = NSLock()
-    private var cancelled = false
-    private var callbacks: [UUID: @Sendable () -> Void] = [:]
+    private struct State: Sendable {
+        var cancelled = false
+        var callbacks: [UUID: @Sendable () -> Void] = [:]
+    }
+    private let state = Mutex(State())
 
     func checkCancellation() throws {
-        if lock.withLock({ cancelled }) { throw CancellationError() }
+        if state.withLock({ $0.cancelled }) { throw CancellationError() }
     }
 
     func register(_ callback: @escaping @Sendable () -> Void) -> UUID {
         let id = UUID()
-        let alreadyCancelled = lock.withLock {
-            if cancelled { return true }
-            callbacks[id] = callback
+        let alreadyCancelled = state.withLock { state in
+            if state.cancelled { return true }
+            state.callbacks[id] = callback
             return false
         }
         if alreadyCancelled { callback() }
@@ -60,14 +63,14 @@ final class HanlinChatTransportCancellation: @unchecked Sendable {
 
     func unregister(_ id: UUID?) {
         guard let id else { return }
-        _ = lock.withLock { callbacks.removeValue(forKey: id) }
+        _ = state.withLock { $0.callbacks.removeValue(forKey: id) }
     }
 
     func cancel() {
-        let pending = lock.withLock {
-            cancelled = true
-            let pending = Array(callbacks.values)
-            callbacks.removeAll()
+        let pending = state.withLock { state in
+            state.cancelled = true
+            let pending = Array(state.callbacks.values)
+            state.callbacks.removeAll()
             return pending
         }
         for callback in pending { callback() }
