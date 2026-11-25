@@ -70,10 +70,13 @@ enum AssistantToolBridge {
       }
     }
 
+    // Nested Executors does not inherit the enclosing bridge's actor isolation.
+    @MainActor
     static var live: Self {
       live(scriptingRegistry: .shared)
     }
 
+    @MainActor
     static func live(
       scriptingRegistry: HanlinScriptingProviderRegistry,
       explicitlySelectedNativeNames: Set<String> = [],
