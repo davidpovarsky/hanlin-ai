@@ -640,7 +640,9 @@ async function buildNativeScript(ts, input, parsed, stage, sdkEngine) {
     const toolRoot = path.dirname(child(stage, tool.sourcePath));
     if (inside(app, toolRoot) || inside(toolRoot, app)) throw new Error('Assistant program must have a separate prepared folder.');
     await fs.cp(app, toolRoot, {recursive: true});
-    const toolEntry = slash(tool.source).replace(/\.mts$/, '.mjs').replace(/\.cts$/, '.cjs').replace(/\.(tsx?|jsx?)$/, '.js');
+    const toolOutput = sourceOutputs.get(path.resolve(tool.sourceFile));
+    if (!toolOutput) throw new Error('The compiler did not emit the dedicated NativeScript assistant module: ' + tool.id);
+    const toolEntry = slash(path.relative(modules, toolOutput));
     await fs.writeFile(path.join(toolRoot, 'bundle.mjs'), assistantToolWrapper(tool, './modules/' + toolEntry, 'nativescript'));
   }
   await writeJSON(path.join(stage, 'script.json'), {...input.script,

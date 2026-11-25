@@ -302,6 +302,11 @@ test('dedicated assistant build preserves the app entry without executing it and
   const prepared = JSON.parse(await fs.readFile(path.join(stage, 'assistant/echo/package.json'), 'utf8'));
   assert.equal(prepared.main, 'bundle.mjs');
   assert.equal(prepared.hanlinRuntime, 'hanlin-nativescript');
+  const toolBundle = await fs.readFile(path.join(stage, 'assistant/echo/bundle.mjs'), 'utf8');
+  assert.match(toolBundle, /import \* as tool from "\.\/modules\/echo\.mjs"/);
+  await assert.rejects(fs.stat(path.join(stage, 'assistant/echo/modules/echo.js')), {code: 'ENOENT'});
+  const toolMap = JSON.parse(await fs.readFile(path.join(stage, 'assistant/echo/modules/echo.mjs.map'), 'utf8'));
+  assert.equal(toolMap.file, 'echo.mjs');
   assert.match(await fs.readFile(path.join(stage, 'source/echo.ts'), 'utf8'), /context.configuration/);
   const registered = new Map(), previous = globalThis.HanlinNativeServicesBridge;
   globalThis.HanlinNativeServicesBridge = {activeSessionBridge: () => ({
