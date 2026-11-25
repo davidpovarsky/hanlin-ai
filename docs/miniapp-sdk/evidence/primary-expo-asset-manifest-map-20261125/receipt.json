@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-25T00:24:30.819356+00:00",
+  "status": "SOURCE_MAPPING_CORRECTED_ORIGINAL_GENERATION_AND_VALIDATION_PENDING",
+  "baseSource": "2b3271824e0338f0d7f5239e3b3a14c2b8c9f3b0",
+  "baseTree": "13017941590143dcce0df3112d1bc1c21a496a83",
+  "branch": "codex/hanlin-expo-asset-manifest-map-20261125",
+  "sourceChange": {
+    "path": "Scripts/Audit/miniapp-manifest-contracts.mjs",
+    "beforeSHA256": "484a0f05eeee4818da22aeb9eab5de9a509bc10e3b63b7226a20206a839a5aaa",
+    "afterSHA256": "9f592ef1d6d280923c473041a078e7f63757633ff55c3ee08f80af6d80b057e3",
+    "beforeBytes": 39206,
+    "afterBytes": 39276,
+    "mode": "100644",
+    "addedRows": 1,
+    "removedRows": 0
+  },
+  "preservedGuard": {
+    "functionSHA256": "adfd2746c57a3e724f83814796052e44b6bc95953eae3c053c8e5e56c2b377ac",
+    "functionByteIdentical": true,
+    "sourceReaderComparisonByteIdentical": true,
+    "unknownPluginRejection": "unchanged; original execution proof pending"
+  },
+  "consumer": {
+    "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
+    "sha256": "7c58f10cc6a5f89c452842490b8ee6eb2378066929c8db27c5dfe6139d441527",
+    "recognizedPluginNames": [
+      "@expo/ui",
+      "@hanlin/expo-ui",
+      "@nativescript/react-native",
+      "expo-asset",
+      "expo-widgets",
+      "react-native-worklets"
+    ],
+    "expoAssetRule": "version == HanlinMiniAppHostVersions.expoAssetVersion"
+  },
+  "generatedCompanions": {
+    "producer": "Scripts/Audit/audit-miniapp-sdk.mjs",
+    "producerSHA256": "f2a38e9af505a02e231c67294b8e21de4d7b4bc0fd539bf46935ab706993ab18",
+    "paths": [
+      "docs/miniapp-sdk/source-inventory.json",
+      "docs/miniapp-sdk/MANIFEST_REFERENCE.md"
+    ],
+    "status": "PENDING_ORIGINAL_NATIVE_OWNER_GENERATION_WITH_PRESERVED_PREPARED_INPUTS",
+    "packagePinsModifiedByThisLane": false
+  },
+  "priorFailure": {
+    "evidenceStatus": "reported by root/native_execution; raw log not independently re-read in this lane",
+    "attempt": 8,
+    "executionSource": "2b3271824e0338f0d7f5239e3b3a14c2b8c9f3b0",
+    "finishedAtUTC": "2026-11-25T00:19:13.587+00:00",
+    "exitCode": 1,
+    "logBytes": 4019345,
+    "logSHA256": "9451f196a79ec7de542b05d86d75ecb75825ee993f02c60a92ff3876a157dbbc",
+    "diagnostic": "Unmapped manifest field drift: expo embedded plugins"
+  },
+  "impact": {
+    "nativeArtifactInputsChanged": [],
+    "packageOrLockChanged": false,
+    "HostAuditMappingChanged": true,
+    "generatedInventoryAndReferenceAffected": true,
+    "SDKSourceInputIdentityAffected": true,
+    "nativeRuntimeBehaviorChanged": false,
+    "testsOrFixtureAssertionsChanged": false
+  },
+  "execution": {
+    "auditGeneratorRun": false,
+    "testRun": false,
+    "compilerRun": false,
+    "nativeRun": false,
+    "SDKRepacked": false
+  },
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 1599,
+      "sha256": "402d5afb481cdb6a9394b55357f29d0691b89ff813e4d5e0a482acac46856508"
+    }
+  ]
+}
