@@ -304,6 +304,7 @@ struct HanlinDualWidgetEnginesTests {
             #expect(program.engine == widget.engine)
             switch HanlinWidgetPreparation.prepare(store: fixture.store, entityID: fixture.entityID, family: "systemMedium") {
             case .expo, .scriptwidget: break
+            case .failure(let reason): Issue.record("The actual installed program failed to prepare: \(reason)")
             default: Issue.record("The actual installed program failed to prepare")
             }
         }
