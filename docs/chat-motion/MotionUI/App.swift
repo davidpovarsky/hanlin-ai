@@ -1,4 +1,5 @@
 import HanlinChatUI
+import CoreFoundation
 import Observation
 import SwiftUI
 import UIKit
@@ -9,6 +10,9 @@ private typealias ToggleButton = HanlinActivityToggleButton
 @main
 struct MotionProofApp: App {
     init() {
+        #if DEBUG
+        MotionNativeDiagnostic.install()
+        #endif
         let arguments = ProcessInfo.processInfo.arguments
         if arguments.contains("--reset-motion") {
             UserDefaults.standard.removeObject(forKey: ChatMotionPreset.storageKey)
@@ -609,3 +613,203 @@ private struct MotionScrollTouchProbe: UIViewRepresentable {
         }
     }
 }
+
+#if DEBUG
+// Diagnostic only: invoked after an already-failed XCTest assertion. No view is
+// inserted, no layout is forced, and no UIKit/animation property is changed.
+@MainActor
+private enum MotionNativeDiagnostic {
+    private static var captured = false
+    private static var installed = false
+    private static var requestName: String { "ai.hanlin.motion-proof.native-capture.\(ProcessInfo.processInfo.processIdentifier)" }
+    private static var completionName: String { "ai.hanlin.motion-proof.native-complete.\(ProcessInfo.processInfo.processIdentifier)" }
+
+    static func install() {
+        guard !installed else { return }
+        installed = true
+        CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(), nil,
+            { _, _, _, _, _ in
+                Task { @MainActor in MotionNativeDiagnostic.capture() }
+            }, requestName as CFString, nil, .deliverImmediately)
+    }
+
+    private static func emit(_ value: [String: Any]) {
+        var record = value
+        record["epoch"] = Date().timeIntervalSince1970
+        record["pid"] = ProcessInfo.processInfo.processIdentifier
+        guard let data = try? JSONSerialization.data(withJSONObject: record, options: [.sortedKeys]),
+              let text = String(data: data, encoding: .utf8) else { return }
+        let url = FileManager.default.temporaryDirectory.appendingPathComponent(
+            "motion-native-state-\(ProcessInfo.processInfo.processIdentifier).jsonl")
+        if !FileManager.default.fileExists(atPath: url.path) {
+            FileManager.default.createFile(atPath: url.path, contents: nil)
+        }
+        guard let handle = try? FileHandle(forWritingTo: url) else { return }
+        defer { try? handle.close() }
+        _ = try? handle.seekToEnd()
+        try? handle.write(contentsOf: Data((text + "\n").utf8))
+        if value["phase"] as? String == "begin" || value["phase"] as? String == "complete" {
+            NSLog("%@", "[HANLIN_MOTION_NATIVE] \(text)" as NSString)
+        }
+    }
+
+    private static func childElements(_ children: [Any]?) -> Any {
+        guard let children else { return NSNull() }
+        let entries: [[String: String]] = children.prefix(128).map { child in
+            ["id": String(describing: ObjectIdentifier(child as AnyObject)),
+             "class": String(reflecting: type(of: child))]
+        }
+        return ["count": children.count, "truncated": children.count > 128, "elements": entries] as [String: Any]
+    }
+
+    private static func layerValues(_ layer: CALayer) -> [String: Any] {
+        var values: [String: Any] = ["id": String(describing: ObjectIdentifier(layer)),
+            "class": String(reflecting: type(of: layer)), "frame": String(describing: layer.frame),
+            "bounds": String(describing: layer.bounds), "opacity": layer.opacity,
+            "hidden": layer.isHidden, "masksToBounds": layer.masksToBounds,
+            "animationKeys": layer.animationKeys() ?? []]
+        if let presentation = layer.presentation() {
+            values["presentation"] = ["opacity": presentation.opacity, "hidden": presentation.isHidden,
+                "frame": String(describing: presentation.frame), "bounds": String(describing: presentation.bounds)]
+        } else {
+            values["presentation"] = NSNull()
+        }
+        values["animations"] = (layer.animationKeys() ?? []).compactMap { key -> [String: Any]? in
+            guard let animation = layer.animation(forKey: key) else { return nil }
+            var result: [String: Any] = ["key": key, "class": String(reflecting: type(of: animation)),
+                "duration": animation.duration, "beginTime": animation.beginTime, "speed": animation.speed,
+                "timeOffset": animation.timeOffset, "removedOnCompletion": animation.isRemovedOnCompletion,
+                "fillMode": animation.fillMode.rawValue]
+            if let basic = animation as? CABasicAnimation {
+                result["keyPath"] = basic.keyPath ?? ""
+                result["from"] = String(describing: basic.fromValue)
+                result["to"] = String(describing: basic.toValue)
+            }
+            return result
+        }
+        return values
+    }
+
+    private static func capture() {
+        guard !captured else { return }
+        captured = true
+        let windows = UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.flatMap(\.windows)
+        emit(["phase": "begin", "mainThread": Thread.isMainThread, "windows": windows.count])
+        var views = 0
+        var layers = 0
+        var truncated = false
+        let deadline = Date().timeIntervalSince1970 + 2
+        var viewObjects: [UIView] = []
+        var elementIDs = Set<ObjectIdentifier>()
+        var retainedElementObjects: [NSObject] = []
+        defer { withExtendedLifetime(retainedElementObjects) {} }
+        var elements = 0
+
+        func objectReference(_ value: Any?) -> Any {
+            guard let value else { return NSNull() }
+            guard let object = value as? NSObject else {
+                return ["class": String(reflecting: type(of: value)), "objectIdentity": "unavailable"]
+            }
+            return ["id": String(describing: ObjectIdentifier(object)),
+                "class": String(reflecting: type(of: object))]
+        }
+
+        // Public accessibility/automation getters only. Every edge is retained,
+        // but each object is read once; no property, layout, or AX cache is changed.
+        func walkElement(_ value: Any, parent: String, edge: String, depth: Int) {
+            guard let object = value as? NSObject else {
+                emit(["phase": "element-edge", "parent": parent, "edge": edge,
+                    "child": objectReference(value), "notNSObject": true])
+                return
+            }
+            let identity = ObjectIdentifier(object)
+            let identifier = String(describing: identity)
+            emit(["phase": "element-edge", "parent": parent, "edge": edge,
+                "child": objectReference(object), "previouslyRead": elementIDs.contains(identity)])
+            guard !elementIDs.contains(identity) else { return }
+            guard depth < 32, elements < 512, Date().timeIntervalSince1970 < deadline else {
+                truncated = true
+                return
+            }
+            elementIDs.insert(identity)
+            retainedElementObjects.append(object)
+            elements += 1
+            let accessible = object.accessibilityElements
+            let automated = object.automationElements
+            let count = object.accessibilityElementCount()
+            let container = (object as? UIAccessibilityElement)?.accessibilityContainer
+            emit(["phase": "element", "id": identifier,
+                "class": String(reflecting: type(of: object)),
+                "identifier": (object as? any UIAccessibilityIdentification)?.accessibilityIdentifier ?? "",
+                "label": object.accessibilityLabel ?? "", "value": object.accessibilityValue ?? "",
+                "frame": String(describing: object.accessibilityFrame),
+                "isAXElement": object.isAccessibilityElement,
+                "axElementsHidden": object.accessibilityElementsHidden,
+                "traits": String(object.accessibilityTraits.rawValue),
+                "publicContainer": objectReference(container),
+                "containerPropertyAvailable": object is UIAccessibilityElement,
+                "accessibilityChildren": childElements(accessible),
+                "automationChildren": childElements(automated),
+                "indexedCount": count, "indexedCountIsNotFound": count == NSNotFound])
+            for (index, child) in (accessible ?? []).prefix(128).enumerated() {
+                walkElement(child, parent: identifier, edge: "accessibilityElements[\(index)]", depth: depth + 1)
+            }
+            for (index, child) in (automated ?? []).prefix(128).enumerated() {
+                walkElement(child, parent: identifier, edge: "automationElements[\(index)]", depth: depth + 1)
+            }
+            if let accessible, accessible.count > 128 { truncated = true }
+            if let automated, automated.count > 128 { truncated = true }
+            if count != NSNotFound, count > 0 {
+                if count > 128 { truncated = true }
+                for index in 0..<min(128, count) {
+                    if let child = object.accessibilityElement(at: index) {
+                        walkElement(child, parent: identifier, edge: "accessibilityElement[\(index)]", depth: depth + 1)
+                    }
+                }
+            }
+        }
+
+        func walkView(_ view: UIView, path: String, depth: Int) {
+            guard depth < 40, views < 1024 else { truncated = true; return }
+            views += 1
+            viewObjects.append(view)
+            emit(["phase": "view", "path": path, "id": String(describing: ObjectIdentifier(view)),
+                "class": String(reflecting: type(of: view)), "identifier": view.accessibilityIdentifier ?? "",
+                "label": view.accessibilityLabel ?? "", "frame": String(describing: view.frame),
+                "bounds": String(describing: view.bounds), "alpha": view.alpha, "hidden": view.isHidden,
+                "axElementsHidden": view.accessibilityElementsHidden, "isAXElement": view.isAccessibilityElement,
+                "accessibilityChildren": childElements(view.accessibilityElements),
+                "automationChildren": childElements(view.automationElements),
+                "layer": layerValues(view.layer)])
+            for (index, child) in view.subviews.enumerated() {
+                walkView(child, path: path + "/\(index)", depth: depth + 1)
+            }
+        }
+        func walkLayer(_ layer: CALayer, path: String, depth: Int) {
+            guard depth < 48, layers < 2048 else { truncated = true; return }
+            layers += 1
+            var values = layerValues(layer)
+            values["phase"] = "layer"
+            values["path"] = path
+            if let delegate = layer.delegate as? UIView {
+                values["viewID"] = String(describing: ObjectIdentifier(delegate))
+            }
+            emit(values)
+            for (index, child) in (layer.sublayers ?? []).enumerated() {
+                walkLayer(child, path: path + "/\(index)", depth: depth + 1)
+            }
+        }
+        for (index, window) in windows.enumerated() {
+            walkView(window, path: "window\(index)", depth: 0)
+            walkLayer(window.layer, path: "window\(index)", depth: 0)
+        }
+        for view in viewObjects {
+            walkElement(view, parent: "native-view-tree", edge: "view", depth: 0)
+        }
+        emit(["phase": "complete", "views": views, "layers": layers,
+            "elements": elements, "truncated": truncated])
+        CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(),
+            CFNotificationName(rawValue: completionName as CFString), nil, nil, false)
+    }
+}
+#endif

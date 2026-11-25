@@ -47,6 +47,7 @@ public struct HanlinAnimatedDisclosure<Content: View>: View {
     @State private var transitionGeneration: UInt = 0
 
     public var body: some View {
+        let _ = NSLog("%@", "[HANLIN_MOTION_STATE] epoch=\(Date().timeIntervalSince1970) phase=body type=\(ObjectIdentifier(Content.self)) expanded=\(isExpanded) semanticHidden=\(!isExpanded) mounted=\(mounted) progress=\(progress) nativeHidden=\(nativeContentHidden) generation=\(transitionGeneration)" as NSString)
         ChatDisclosureLayout(progress: progress, spacing: spacing) {
             if mounted {
                 retainedContent
@@ -103,6 +104,7 @@ public struct HanlinAnimatedDisclosure<Content: View>: View {
         let expanding = isExpanded
         transitionGeneration &+= 1
         let generation = transitionGeneration
+        NSLog("%@", "[HANLIN_MOTION_STATE] epoch=\(Date().timeIntervalSince1970) phase=request type=\(ObjectIdentifier(Content.self)) expanding=\(expanding) generation=\(generation) nativeHidden=\(nativeContentHidden) progress=\(progress)" as NSString)
         // Restore the same native subtree before its opening animation begins.
         if expanding { nativeContentHidden = false }
         // Reuse the measured content across animated collapse and reversal.
@@ -113,11 +115,13 @@ public struct HanlinAnimatedDisclosure<Content: View>: View {
             if expanding { mounted = true }
             progress = expanding ? 1 : 0
         } completion: {
+            NSLog("%@", "[HANLIN_MOTION_STATE] epoch=\(Date().timeIntervalSince1970) phase=completion type=\(ObjectIdentifier(Content.self)) expanding=\(expanding) generation=\(generation) currentGeneration=\(transitionGeneration) expanded=\(isExpanded) mounted=\(mounted) nativeHidden=\(nativeContentHidden) progress=\(progress)" as NSString)
             // A reversal or an immediate settle invalidates an older completion.
             guard !expanding, transitionGeneration == generation else { return }
             var transaction = Transaction(animation: nil)
             transaction.disablesAnimations = true
             withTransaction(transaction) { nativeContentHidden = true }
+            NSLog("%@", "[HANLIN_MOTION_STATE] epoch=\(Date().timeIntervalSince1970) phase=completion-applied type=\(ObjectIdentifier(Content.self)) generation=\(generation) nativeHidden=\(nativeContentHidden)" as NSString)
         }
     }
 }
@@ -137,8 +141,11 @@ private struct ChatDisclosureAccessibilityScope<Content: View>: UIViewController
         let content: Content
         let environment: EnvironmentValues
         let isHidden: Bool
+        // Diagnostic value only; never used as a SwiftUI identity.
+        let diagnosticToken: String
 
         var body: some View {
+            let _ = NSLog("%@", "[HANLIN_MOTION_ROOT] epoch=\(Date().timeIntervalSince1970) token=\(diagnosticToken) type=\(ObjectIdentifier(Content.self)) hidden=\(isHidden) layoutDirection=\(environment.layoutDirection) dynamicType=\(environment.dynamicTypeSize) locale=\(environment.locale.identifier) colorScheme=\(environment.colorScheme) isEnabled=\(environment.isEnabled) reduceMotion=\(environment.accessibilityReduceMotion) motionAnimated=\(environment.chatMotion.isAnimated)" as NSString)
             // Forward the complete environment, including custom chat values.
             // Virtual SwiftUI children belong to this hosting graph, so its
             // semantic visibility must receive the same logical disclosure state.
@@ -148,22 +155,29 @@ private struct ChatDisclosureAccessibilityScope<Content: View>: UIViewController
     }
 
     func makeUIViewController(context: Context) -> UIHostingController<Root> {
-        let controller = UIHostingController(rootView: Root(content: content, environment: context.environment, isHidden: isHidden))
+        let controller = UIHostingController(rootView: Root(content: content, environment: context.environment, isHidden: isHidden, diagnosticToken: UUID().uuidString))
         controller.safeAreaRegions = []
         controller.sizingOptions = [.intrinsicContentSize]
         controller.view.backgroundColor = .clear
         controller.view.isAccessibilityElement = false
         controller.view.isHidden = isPhysicallyHidden
         controller.view.accessibilityElementsHidden = isHidden
+        trace("make", controller: controller)
         return controller
     }
 
     func updateUIViewController(_ controller: UIHostingController<Root>, context: Context) {
+        trace("update-begin", controller: controller)
         withTransaction(context.transaction) {
-            controller.rootView = Root(content: content, environment: context.environment, isHidden: isHidden)
+            controller.rootView = Root(content: content, environment: context.environment, isHidden: isHidden, diagnosticToken: controller.rootView.diagnosticToken)
         }
         controller.view.isHidden = isPhysicallyHidden
         controller.view.accessibilityElementsHidden = isHidden
+        trace("update-end", controller: controller)
+    }
+
+    private func trace(_ phase: String, controller: UIHostingController<Root>) {
+        NSLog("%@", "[HANLIN_MOTION_HOST] epoch=\(Date().timeIntervalSince1970) phase=\(phase) token=\(controller.rootView.diagnosticToken) type=\(ObjectIdentifier(Content.self)) view=\(ObjectIdentifier(controller.view)) requestedHidden=\(isHidden) requestedPhysicalHidden=\(isPhysicallyHidden) rootHidden=\(controller.rootView.isHidden) actualHidden=\(controller.view.accessibilityElementsHidden) nativeHidden=\(controller.view.isHidden) alpha=\(controller.view.alpha)" as NSString)
     }
 
     func sizeThatFits(_ proposal: ProposedViewSize, uiViewController controller: UIHostingController<Root>,

@@ -1,9 +1,39 @@
 import XCTest
+import CoreFoundation
 
 @MainActor
 final class MotionUITests: XCTestCase {
     private var app: XCUIApplication!
     private var originalReduceMotion: Bool?
+
+    nonisolated override func record(_ issue: XCTIssue) {
+        let guardKey = "HanlinMotionRecordingFailureHierarchy"
+        let threadState = Thread.current.threadDictionary
+        if issue.type == .assertionFailure, threadState[guardKey] == nil {
+            threadState[guardKey] = true
+            defer { threadState.removeObject(forKey: guardKey) }
+            // A fresh handle addresses the existing target app; it does not
+            // launch it or change the original assertion's result.
+            let captureStart = Date().timeIntervalSince1970
+            let target = XCUIApplication()
+            let description = target.debugDescription
+            let query = target.staticTexts.matching(identifier: "proof-summary")
+            let matches = query.allElementsBoundByIndex
+            let summary = matches.prefix(8).enumerated().map { index, element in
+                "index=\(index);identifier=\(element.identifier);label=\(element.label);frame=\(element.frame);hittable=\(element.isHittable)"
+            }.joined(separator: "\n")
+            let observed = "captureStart=\(captureStart);captureEnd=\(Date().timeIntervalSince1970);summaryCount=\(matches.count)\n\(summary)\n\(description)"
+            let attachment = XCTAttachment(string: observed)
+            attachment.name = "motion-failure-accessibility-hierarchy"
+            attachment.lifetime = .keepAlways
+            add(attachment)
+            let nativeReceipt = XCTAttachment(string: captureNativeHierarchy(for: description))
+            nativeReceipt.name = "motion-failure-native-capture-receipt"
+            nativeReceipt.lifetime = .keepAlways
+            add(nativeReceipt)
+        }
+        super.record(issue)
+    }
 
     override func tearDown() async throws {
         if let originalReduceMotion {
@@ -418,4 +448,42 @@ final class MotionUITests: XCTestCase {
         add(attachment)
     }
 
+}
+
+private final class MotionNativeCaptureLatch: @unchecked Sendable {
+    let expectation = XCTestExpectation(description: "Diagnostic native hierarchy completed")
+    private let lock = NSLock()
+    private var completed = false
+
+    func complete() {
+        lock.lock()
+        defer { lock.unlock() }
+        guard !completed else { return }
+        completed = true
+        expectation.fulfill()
+    }
+}
+
+private func captureNativeHierarchy(for description: String) -> String {
+    guard let range = description.range(of: "pid: [0-9]+", options: .regularExpression),
+          let pid = description[range].split(separator: " ").last else { return "INCOMPLETE: AUT PID missing" }
+    let request = "ai.hanlin.motion-proof.native-capture.\(pid)"
+    let completion = "ai.hanlin.motion-proof.native-complete.\(pid)"
+    let center = CFNotificationCenterGetDarwinNotifyCenter()
+    let latch = MotionNativeCaptureLatch()
+    let retained = Unmanaged.passRetained(latch)
+    let context = retained.toOpaque()
+    CFNotificationCenterAddObserver(center, context, { _, observer, _, _, _ in
+        guard let observer else { return }
+        Unmanaged<MotionNativeCaptureLatch>.fromOpaque(observer).takeUnretainedValue().complete()
+    }, completion as CFString, nil, .deliverImmediately)
+    defer {
+        CFNotificationCenterRemoveObserver(center, context, CFNotificationName(rawValue: completion as CFString), nil)
+        retained.release()
+    }
+    CFNotificationCenterPostNotification(center, CFNotificationName(rawValue: request as CFString), nil, nil, false)
+    // This bounded wait happens only after the original assertion has failed.
+    // It neither retries that assertion nor changes its recorded issue.
+    let result = XCTWaiter.wait(for: [latch.expectation], timeout: 3)
+    return "pid=\(pid);request=\(request);completed=\(result == .completed);waiter=\(result.rawValue)"
 }
