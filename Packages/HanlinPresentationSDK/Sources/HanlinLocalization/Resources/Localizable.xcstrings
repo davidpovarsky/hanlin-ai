@@ -19231,6 +19231,28 @@
           }
         }
       }
+    },
+    "Tool details": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tool details"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "פרטי הכלי"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "工具详情"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"
