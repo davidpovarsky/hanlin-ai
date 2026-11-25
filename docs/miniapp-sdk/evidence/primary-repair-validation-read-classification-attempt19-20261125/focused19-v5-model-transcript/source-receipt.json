@@ -1,0 +1,47 @@
+{
+  "capturedAt": "2026-11-25T13:01:27.924744+00:00",
+  "members": [
+    {
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/E2B02896-9E6E-47FD-A342-0AE8024D3604/Documents/Diagnostics/Hanlin-Chat-2026-11-25-134831.jsonl",
+      "path": "Hanlin-Chat-2026-11-25-134831.jsonl",
+      "bytes": 82779,
+      "sha256": "91c2fadbf77466d7da65a6aaf78979c3e4d62ab0bbcb703e89b7434df279860e",
+      "mtimeNs": "1795610974384866395"
+    },
+    {
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/E2B02896-9E6E-47FD-A342-0AE8024D3604/Documents/Diagnostics/agent-session-2026-11-25T12-48-32-4f2db8d2-manifest.json",
+      "path": "agent-session-2026-11-25T12-48-32-4f2db8d2-manifest.json",
+      "bytes": 880,
+      "sha256": "808a2f8b26929dc7ca8823351bde046aa59fac9af6d002b0bf8c72ee3a973240",
+      "mtimeNs": "1795610974099093900"
+    },
+    {
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/E2B02896-9E6E-47FD-A342-0AE8024D3604/Documents/Diagnostics/agent-session-2026-11-25T12-48-32-4f2db8d2-stage-events.jsonl",
+      "path": "agent-session-2026-11-25T12-48-32-4f2db8d2-stage-events.jsonl",
+      "bytes": 2105400,
+      "sha256": "d6c679d07789275f2d3c7d5f9b1f1783d179d585dac768faca3baf0d2979458f",
+      "mtimeNs": "1795610974136774098"
+    },
+    {
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/E2B02896-9E6E-47FD-A342-0AE8024D3604/Documents/Diagnostics/agent-session-2026-11-25T12-48-32-4f2db8d2-stage-snapshots.json",
+      "path": "agent-session-2026-11-25T12-48-32-4f2db8d2-stage-snapshots.json",
+      "bytes": 2069,
+      "sha256": "0c04e78b4c86e2aa5c9e963fa97144c4cd31ed433821e1401987cfb7adb5f5fe",
+      "mtimeNs": "1795610974098505110"
+    },
+    {
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/E2B02896-9E6E-47FD-A342-0AE8024D3604/Documents/Diagnostics/agent-session-2026-11-25T12-48-32-4f2db8d2.json",
+      "path": "agent-session-2026-11-25T12-48-32-4f2db8d2.json",
+      "bytes": 1069609,
+      "sha256": "9b0eb7fe5bed9714d91b71bb3c23fc4e0716eca83432eec6fbe0df98f50d67a9",
+      "mtimeNs": "1795610973936952804"
+    },
+    {
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/E2B02896-9E6E-47FD-A342-0AE8024D3604/Documents/Diagnostics/agent-session-2026-11-25T12-48-32-4f2db8d2.txt",
+      "path": "agent-session-2026-11-25T12-48-32-4f2db8d2.txt",
+      "bytes": 1227529,
+      "sha256": "99939c6de7d0796fd7c52fcf9b0e67edaaecb5aac611f6ac4d9aca64c81fad36",
+      "mtimeNs": "1795610974093974329"
+    }
+  ]
+}
