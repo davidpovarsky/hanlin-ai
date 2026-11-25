@@ -1,0 +1,27 @@
+{
+  "owner": "/root/native_execution",
+  "status": "DELETED",
+  "startedAt": "2026-11-25T03:29:23.089942+00:00",
+  "udid": "80E29B83-02CF-4481-B1AF-80A85CDE0247",
+  "candidateSHA256": "f15da146c89397a417f9b292423fbb52d40fa075e69e9e097ce1df8c93bb3b99",
+  "logicalDiskKiB": 6308424,
+  "argv": [
+    "xcrun",
+    "simctl",
+    "delete",
+    "80E29B83-02CF-4481-B1AF-80A85CDE0247"
+  ],
+  "beforeDF": "Filesystem   1024-blocks      Used Available Capacity iused     ifree %iused  Mounted on\n/dev/disk3s5   482797652 426876016  12036860    98% 5781075 120368600    5%   /System/Volumes/Data\n",
+  "retention": "Full raw xcresults/control logs, source/Git, SDK9/10, active/latest passed simulators and other owners untouched.",
+  "exitCode": 0,
+  "stdout": "",
+  "stderr": "",
+  "finishedAt": "2026-11-25T03:29:23.388911+00:00",
+  "elapsedSeconds": 0.28685829199821455,
+  "afterDF": "Filesystem   1024-blocks      Used Available Capacity iused     ifree %iused  Mounted on\n/dev/disk3s5   482797652 426883780  12029096    98% 5781032 120290960    5%   /System/Volumes/Data\n",
+  "stillRegistered": false,
+  "deviceDirectoryExists": false,
+  "beforeFreeBytes": 12325744640,
+  "afterFreeBytes": 12317794304,
+  "observedFreeByteChange": -7950336
+}
