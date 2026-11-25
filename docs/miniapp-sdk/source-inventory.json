@@ -1,5 +1,5 @@
 {
-  "sourceCommit": "756d7f1517f64295d4ce8ff9ea01d88c1f5f1194",
+  "sourceCommit": "801bb3f66cfe6d4d0ff9e49e0094ea2887525fbd",
   "uncommittedSourcePaths": [],
   "schemaVersion": 1,
   "auditParser": {
@@ -14814,7 +14814,7 @@
     },
     {
       "path": "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
-      "sha256": "60bbc9ee2dc045d19c54db56761ec99e0d927576002e48fd11a13c239b768bc3"
+      "sha256": "2fb653e99c97bd3f252e88cb8c507d4a55f4fc4d994cf0dfe526dc2df6b21b90"
     },
     {
       "path": "AI_HLY/Downstream/HostServices/Core/HanlinHostCallContext.swift",

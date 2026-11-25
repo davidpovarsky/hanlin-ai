@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "756d7f1517f64295d4ce8ff9ea01d88c1f5f1194",
+  "sourceCommit": "801bb3f66cfe6d4d0ff9e49e0094ea2887525fbd",
   "snapshotIdentity": "Base commit plus exact current hashes; uncommitted audit sources are listed separately",
   "uncommittedSourcePaths": [],
   "status": "IN_PROGRESS_SOURCE_AUDIT",
@@ -12,7 +12,7 @@
     },
     {
       "path": "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
-      "sha256": "60bbc9ee2dc045d19c54db56761ec99e0d927576002e48fd11a13c239b768bc3"
+      "sha256": "2fb653e99c97bd3f252e88cb8c507d4a55f4fc4d994cf0dfe526dc2df6b21b90"
     },
     {
       "path": "AI_HLY/Downstream/HostServices/Core/HanlinHostCallContext.swift",
@@ -653,7 +653,7 @@
       "file": "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
       "line": 507,
       "anchor": "func invokeRegisteredAction(",
-      "sha256": "60bbc9ee2dc045d19c54db56761ec99e0d927576002e48fd11a13c239b768bc3"
+      "sha256": "2fb653e99c97bd3f252e88cb8c507d4a55f4fc4d994cf0dfe526dc2df6b21b90"
     },
     "resumeDispatch": {
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
@@ -725,7 +725,7 @@
       "file": "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
       "line": 134,
       "anchor": "public func executeRuntime(",
-      "sha256": "60bbc9ee2dc045d19c54db56761ec99e0d927576002e48fd11a13c239b768bc3"
+      "sha256": "2fb653e99c97bd3f252e88cb8c507d4a55f4fc4d994cf0dfe526dc2df6b21b90"
     },
     "nativeFacade": {
       "file": "Scripts/NativeScript/host-services.ts",
@@ -827,7 +827,7 @@
       "file": "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
       "line": 142,
       "anchor": "HanlinRuntimeWireProtocol.execute(",
-      "sha256": "60bbc9ee2dc045d19c54db56761ec99e0d927576002e48fd11a13c239b768bc3"
+      "sha256": "2fb653e99c97bd3f252e88cb8c507d4a55f4fc4d994cf0dfe526dc2df6b21b90"
     },
     "expoRuntimeDispatch": {
       "file": "AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift",
