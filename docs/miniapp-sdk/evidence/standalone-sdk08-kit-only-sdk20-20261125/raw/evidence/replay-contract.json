@@ -1,0 +1,575 @@
+{
+  "schema": 1,
+  "description": "Replay the six retained SDK08 CLI commands against frozen SDK20.\nNo retained runner script existed. Commands/fixtures/assertions are retained;\nthis operational harness only changes the isolated destination and SDK identity.\n",
+  "oldReceipt": {
+    "path": "evidence/receipt.json",
+    "bytes": 13018,
+    "sha256": "8408547fc4351508d8a6ed349be59dba0631aa963a29bb699921202ced902919",
+    "mode": "0o644"
+  },
+  "oldVerification": {
+    "path": "evidence/verification-summary.json",
+    "bytes": 12347,
+    "sha256": "7d1885c948302bc7a4b8151be968105bc41ffbebee715d2d5cdc4800fea9970f",
+    "mode": "0o644"
+  },
+  "originalRecords": {
+    "expo-validate": {
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/standalone-sdk08-kit-only/evidence/expo-validate-command.json",
+      "bytes": 1427,
+      "sha256": "a33ba79dcc2a988f06177054863c353225a81073b577a7c976a22e073a93dd84",
+      "record": {
+        "schema": 1,
+        "id": "expo-validate",
+        "startedAt": "2026-11-25T18:01:40.315906+00:00",
+        "finishedAt": "2026-11-25T18:01:53.142128+00:00",
+        "elapsedSeconds": 12.826216597110033,
+        "cwd": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/standalone-sdk08-kit-only/kit",
+        "command": [
+          "/usr/local/bin/node",
+          "Scripts/MiniApps/miniapp.mjs",
+          "validate",
+          "--sdk",
+          "./MiniAppSDK",
+          "--engine",
+          "expo",
+          "--project",
+          "./workspace/expo-hello-world",
+          "--report",
+          "./artifacts/expo-validate.json"
+        ],
+        "traceCommand": [
+          "/usr/bin/strace",
+          "-f",
+          "-qq",
+          "-e",
+          "trace=%file,%process,%network",
+          "-s",
+          "2048",
+          "-o",
+          "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/standalone-sdk08-kit-only/evidence/expo-validate.strace",
+          "/usr/local/bin/node",
+          "Scripts/MiniApps/miniapp.mjs",
+          "validate",
+          "--sdk",
+          "./MiniAppSDK",
+          "--engine",
+          "expo",
+          "--project",
+          "./workspace/expo-hello-world",
+          "--report",
+          "./artifacts/expo-validate.json"
+        ],
+        "environment": {
+          "PATH": "/usr/local/bin:/usr/bin:/bin",
+          "LANG": "C.UTF-8",
+          "LC_ALL": "C.UTF-8",
+          "TZ": "UTC",
+          "CI": "1",
+          "TERM": "dumb",
+          "TMPDIR": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/standalone-sdk08-kit-only/tmp"
+        },
+        "returncode": 0,
+        "report": "kit/artifacts/expo-validate.json"
+      }
+    },
+    "expo-build": {
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/standalone-sdk08-kit-only/evidence/expo-build-command.json",
+      "bytes": 1554,
+      "sha256": "45f18c4d07449b55158543a58575c173734a611538bb4d4ad9779cdab9dd01ee",
+      "record": {
+        "schema": 1,
+        "id": "expo-build",
+        "startedAt": "2026-11-25T18:02:29.059288+00:00",
+        "finishedAt": "2026-11-25T18:03:17.864313+00:00",
+        "elapsedSeconds": 48.80502138566226,
+        "cwd": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/standalone-sdk08-kit-only/kit",
+        "command": [
+          "/usr/local/bin/node",
+          "Scripts/MiniApps/miniapp.mjs",
+          "build",
+          "--sdk",
+          "./MiniAppSDK",
+          "--engine",
+          "expo",
+          "--project",
+          "./workspace/expo-hello-world",
+          "--archive",
+          "./artifacts/Expo-Hello-World.hanlinExpo",
+          "--report",
+          "./artifacts/expo-build.json"
+        ],
+        "traceCommand": [
+          "/usr/bin/strace",
+          "-f",
+          "-qq",
+          "-e",
+          "trace=%file,%process,%network",
+          "-s",
+          "2048",
+          "-o",
+          "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/standalone-sdk08-kit-only/evidence/expo-build.strace",
+          "/usr/local/bin/node",
+          "Scripts/MiniApps/miniapp.mjs",
+          "build",
+          "--sdk",
+          "./MiniAppSDK",
+          "--engine",
+          "expo",
+          "--project",
+          "./workspace/expo-hello-world",
+          "--archive",
+          "./artifacts/Expo-Hello-World.hanlinExpo",
+          "--report",
+          "./artifacts/expo-build.json"
+        ],
+        "environment": {
+          "PATH": "/usr/local/bin:/usr/bin:/bin",
+          "LANG": "C.UTF-8",
+          "LC_ALL": "C.UTF-8",
+          "TZ": "UTC",
+          "CI": "1",
+          "TERM": "dumb",
+          "TMPDIR": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/standalone-sdk08-kit-only/tmp"
+        },
+        "returncode": 0,
+        "timedOut": false,
+        "report": "kit/artifacts/expo-build.json"
+      }
+    },
+    "nativescript-validate": {
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/standalone-sdk08-kit-only/evidence/nativescript-validate-command.json",
+      "bytes": 1520,
+      "sha256": "1748b2cabfc6b4715db96c83268c6c97ec49c5160bd7c5054cff03c842d5e659",
+      "record": {
+        "schema": 1,
+        "id": "nativescript-validate",
+        "startedAt": "2026-11-25T18:04:04.664501+00:00",
+        "finishedAt": "2026-11-25T18:04:17.435077+00:00",
+        "elapsedSeconds": 12.770573919638991,
+        "cwd": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/standalone-sdk08-kit-only/kit",
+        "command": [
+          "/usr/local/bin/node",
+          "Scripts/MiniApps/miniapp.mjs",
+          "validate",
+          "--sdk",
+          "./MiniAppSDK",
+          "--engine",
+          "nativescript",
+          "--project",
+          "./workspace/nativescript-hello-world",
+          "--report",
+          "./artifacts/nativescript-validate.json"
+        ],
+        "traceCommand": [
+          "/usr/bin/strace",
+          "-f",
+          "-qq",
+          "-e",
+          "trace=%file,%process,%network",
+          "-s",
+          "2048",
+          "-o",
+          "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/standalone-sdk08-kit-only/evidence/nativescript-validate.strace",
+          "/usr/local/bin/node",
+          "Scripts/MiniApps/miniapp.mjs",
+          "validate",
+          "--sdk",
+          "./MiniAppSDK",
+          "--engine",
+          "nativescript",
+          "--project",
+          "./workspace/nativescript-hello-world",
+          "--report",
+          "./artifacts/nativescript-validate.json"
+        ],
+        "environment": {
+          "PATH": "/usr/local/bin:/usr/bin:/bin",
+          "LANG": "C.UTF-8",
+          "LC_ALL": "C.UTF-8",
+          "TZ": "UTC",
+          "CI": "1",
+          "TERM": "dumb",
+          "TMPDIR": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/standalone-sdk08-kit-only/tmp"
+        },
+        "returncode": 0,
+        "timedOut": false,
+        "report": "kit/artifacts/nativescript-validate.json"
+      }
+    },
+    "nativescript-build": {
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/standalone-sdk08-kit-only/evidence/nativescript-build-command.json",
+      "bytes": 1658,
+      "sha256": "a4f4e40d4b0cc2066fdc69035cac7cb355c6a560500fb603cf2ff434e0b2e9ab",
+      "record": {
+        "schema": 1,
+        "id": "nativescript-build",
+        "startedAt": "2026-11-25T18:04:17.435891+00:00",
+        "finishedAt": "2026-11-25T18:04:41.238652+00:00",
+        "elapsedSeconds": 23.80277142021805,
+        "cwd": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/standalone-sdk08-kit-only/kit",
+        "command": [
+          "/usr/local/bin/node",
+          "Scripts/MiniApps/miniapp.mjs",
+          "build",
+          "--sdk",
+          "./MiniAppSDK",
+          "--engine",
+          "nativescript",
+          "--project",
+          "./workspace/nativescript-hello-world",
+          "--report",
+          "./artifacts/nativescript-build.json",
+          "--archive",
+          "./artifacts/NativeScript-Hello-World.hanlinNativeScript"
+        ],
+        "traceCommand": [
+          "/usr/bin/strace",
+          "-f",
+          "-qq",
+          "-e",
+          "trace=%file,%process,%network",
+          "-s",
+          "2048",
+          "-o",
+          "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/standalone-sdk08-kit-only/evidence/nativescript-build.strace",
+          "/usr/local/bin/node",
+          "Scripts/MiniApps/miniapp.mjs",
+          "build",
+          "--sdk",
+          "./MiniAppSDK",
+          "--engine",
+          "nativescript",
+          "--project",
+          "./workspace/nativescript-hello-world",
+          "--report",
+          "./artifacts/nativescript-build.json",
+          "--archive",
+          "./artifacts/NativeScript-Hello-World.hanlinNativeScript"
+        ],
+        "environment": {
+          "PATH": "/usr/local/bin:/usr/bin:/bin",
+          "LANG": "C.UTF-8",
+          "LC_ALL": "C.UTF-8",
+          "TZ": "UTC",
+          "CI": "1",
+          "TERM": "dumb",
+          "TMPDIR": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/standalone-sdk08-kit-only/tmp"
+        },
+        "returncode": 0,
+        "timedOut": false,
+        "report": "kit/artifacts/nativescript-build.json"
+      }
+    },
+    "negative-type-error-validate": {
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/standalone-sdk08-kit-only/evidence/negative-type-error-validate-command.json",
+      "bytes": 1579,
+      "sha256": "1422b5e31f401451b6a594705ec54a09260514961e6deca59478d8a7f37e4f26",
+      "record": {
+        "schema": 1,
+        "id": "negative-type-error-validate",
+        "startedAt": "2026-11-25T18:05:33.886607+00:00",
+        "finishedAt": "2026-11-25T18:05:41.515659+00:00",
+        "elapsedSeconds": 7.629047626629472,
+        "cwd": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/standalone-sdk08-kit-only/kit",
+        "command": [
+          "/usr/local/bin/node",
+          "Scripts/MiniApps/miniapp.mjs",
+          "validate",
+          "--sdk",
+          "./MiniAppSDK",
+          "--engine",
+          "nativescript",
+          "--project",
+          "./workspace/nativescript-type-error",
+          "--report",
+          "./artifacts/negative-type-error-validate.json"
+        ],
+        "traceCommand": [
+          "/usr/bin/strace",
+          "-f",
+          "-qq",
+          "-e",
+          "trace=%file,%process,%network",
+          "-s",
+          "2048",
+          "-o",
+          "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/standalone-sdk08-kit-only/evidence/negative-type-error-validate.strace",
+          "/usr/local/bin/node",
+          "Scripts/MiniApps/miniapp.mjs",
+          "validate",
+          "--sdk",
+          "./MiniAppSDK",
+          "--engine",
+          "nativescript",
+          "--project",
+          "./workspace/nativescript-type-error",
+          "--report",
+          "./artifacts/negative-type-error-validate.json"
+        ],
+        "environment": {
+          "PATH": "/usr/local/bin:/usr/bin:/bin",
+          "LANG": "C.UTF-8",
+          "LC_ALL": "C.UTF-8",
+          "TZ": "UTC",
+          "CI": "1",
+          "TERM": "dumb",
+          "TMPDIR": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/standalone-sdk08-kit-only/tmp"
+        },
+        "returncode": 1,
+        "timedOut": false,
+        "report": "kit/artifacts/negative-type-error-validate.json",
+        "expectedReturnCode": 1
+      }
+    },
+    "negative-type-error-build": {
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/standalone-sdk08-kit-only/evidence/negative-type-error-build-command.json",
+      "bytes": 1708,
+      "sha256": "22ebff22b72c74c9aad08f73870c72e41c4d0cb39758db9524bef8cd5d5c6875",
+      "record": {
+        "schema": 1,
+        "id": "negative-type-error-build",
+        "startedAt": "2026-11-25T18:05:41.516244+00:00",
+        "finishedAt": "2026-11-25T18:05:48.977180+00:00",
+        "elapsedSeconds": 7.460949081927538,
+        "cwd": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/standalone-sdk08-kit-only/kit",
+        "command": [
+          "/usr/local/bin/node",
+          "Scripts/MiniApps/miniapp.mjs",
+          "build",
+          "--sdk",
+          "./MiniAppSDK",
+          "--engine",
+          "nativescript",
+          "--project",
+          "./workspace/nativescript-type-error",
+          "--report",
+          "./artifacts/negative-type-error-build.json",
+          "--archive",
+          "./artifacts/Rejected-Type-Error.hanlinNativeScript"
+        ],
+        "traceCommand": [
+          "/usr/bin/strace",
+          "-f",
+          "-qq",
+          "-e",
+          "trace=%file,%process,%network",
+          "-s",
+          "2048",
+          "-o",
+          "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/standalone-sdk08-kit-only/evidence/negative-type-error-build.strace",
+          "/usr/local/bin/node",
+          "Scripts/MiniApps/miniapp.mjs",
+          "build",
+          "--sdk",
+          "./MiniAppSDK",
+          "--engine",
+          "nativescript",
+          "--project",
+          "./workspace/nativescript-type-error",
+          "--report",
+          "./artifacts/negative-type-error-build.json",
+          "--archive",
+          "./artifacts/Rejected-Type-Error.hanlinNativeScript"
+        ],
+        "environment": {
+          "PATH": "/usr/local/bin:/usr/bin:/bin",
+          "LANG": "C.UTF-8",
+          "LC_ALL": "C.UTF-8",
+          "TZ": "UTC",
+          "CI": "1",
+          "TERM": "dumb",
+          "TMPDIR": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/standalone-sdk08-kit-only/tmp"
+        },
+        "returncode": 1,
+        "timedOut": false,
+        "report": "kit/artifacts/negative-type-error-build.json",
+        "expectedReturnCode": 1
+      }
+    }
+  },
+  "ids": [
+    "expo-validate",
+    "expo-build",
+    "nativescript-validate",
+    "nativescript-build",
+    "negative-type-error-validate",
+    "negative-type-error-build"
+  ],
+  "productionFiles": [
+    {
+      "path": "kit/Scripts/MiniApps/miniapp.mjs",
+      "bytes": 4101,
+      "sha256": "1c256c00392c626a54ebee2abe3ededaa792c5bfa6dd9b6c5aceb89be84e5b30",
+      "mode": "0o644"
+    },
+    {
+      "path": "kit/AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
+      "bytes": 50327,
+      "sha256": "fa5121902e231d5d44ad08bf47699784fd4d0bc2a98102f3a156e6e4ae79b9b9",
+      "mode": "0o644"
+    }
+  ],
+  "fixtureFiles": [
+    {
+      "path": "kit/workspace/expo-hello-world/App.tsx",
+      "bytes": 478,
+      "sha256": "e0ec9b33bbe972668b0be87b6f8263faff0977e5bfea7654334c7f7f68b95531",
+      "mode": "0o644"
+    },
+    {
+      "path": "kit/workspace/expo-hello-world/README.md",
+      "bytes": 831,
+      "sha256": "367e2b77ec0d06230ed8b7a3756cc5ef6bd2b4328c2405977e383f8ecc52b403",
+      "mode": "0o644"
+    },
+    {
+      "path": "kit/workspace/expo-hello-world/hanlin.authoring.json",
+      "bytes": 99,
+      "sha256": "23628daa17919961823da4ebc9a4166ab9e1d7a9b3ec2ff47fdc70d7b444bf94",
+      "mode": "0o644"
+    },
+    {
+      "path": "kit/workspace/expo-hello-world/index.ts",
+      "bytes": 120,
+      "sha256": "f3532a443c0193cbb6866cb1a7474d0f5055917ffdc7f5e60efe35159e544d19",
+      "mode": "0o644"
+    },
+    {
+      "path": "kit/workspace/expo-hello-world/notification-event.ts",
+      "bytes": 650,
+      "sha256": "3faaf31c55f30954b8c3a74cce95d0461bdef531269bcd7832a886be4ac390de",
+      "mode": "0o644"
+    },
+    {
+      "path": "kit/workspace/expo-hello-world/package.json",
+      "bytes": 223,
+      "sha256": "ce6b14d9dd58a68d245000b2d9997086754acba6b3213087e9531b59701cd9bc",
+      "mode": "0o644"
+    },
+    {
+      "path": "kit/workspace/expo-hello-world/script.json",
+      "bytes": 264,
+      "sha256": "308768a8274c3f58254c4f6daafa7b16a07f0c68dc519f17d3e5feae895dcafb",
+      "mode": "0o644"
+    },
+    {
+      "path": "kit/workspace/expo-hello-world/tsconfig.json",
+      "bytes": 82,
+      "sha256": "989df0a97a5ac05cb6b26df1d7f2d18896e2627da8ac72d4d35e66a60da84b19",
+      "mode": "0o644"
+    },
+    {
+      "path": "kit/workspace/nativescript-hello-world/README.md",
+      "bytes": 914,
+      "sha256": "aae06c1b3c963f8a6cf246ea52642d73f5e6ec237cfb19fc4737dd4072570e6a",
+      "mode": "0o644"
+    },
+    {
+      "path": "kit/workspace/nativescript-hello-world/hanlin.authoring.json",
+      "bytes": 107,
+      "sha256": "1bf949fb4ba1fd14481df380299652fe9b587aa5c30afdb6621fe23be6c02094",
+      "mode": "0o644"
+    },
+    {
+      "path": "kit/workspace/nativescript-hello-world/index.ts",
+      "bytes": 991,
+      "sha256": "bfb34d9b7ac0f50488468a5cf8200d55cefbb9d0d345d080bb652323a1df9bf6",
+      "mode": "0o644"
+    },
+    {
+      "path": "kit/workspace/nativescript-hello-world/notification-event.ts",
+      "bytes": 650,
+      "sha256": "3faaf31c55f30954b8c3a74cce95d0461bdef531269bcd7832a886be4ac390de",
+      "mode": "0o644"
+    },
+    {
+      "path": "kit/workspace/nativescript-hello-world/package.json",
+      "bytes": 225,
+      "sha256": "ab65e0e388ac19daf337b29965fd030e6196faf90cee439c786de9e1c3f49cb6",
+      "mode": "0o644"
+    },
+    {
+      "path": "kit/workspace/nativescript-hello-world/script.json",
+      "bytes": 320,
+      "sha256": "521f9d8332544a7858dca222d635cf8530e13d72cfb4e2e62d4196acc3a249cb",
+      "mode": "0o644"
+    },
+    {
+      "path": "kit/workspace/nativescript-hello-world/tsconfig.json",
+      "bytes": 67,
+      "sha256": "089155f616dd73ff0bebb1469f21fda41c51ad93c7b7db83d2745fa5e88ce0e5",
+      "mode": "0o644"
+    },
+    {
+      "path": "kit/workspace/nativescript-type-error/README.md",
+      "bytes": 914,
+      "sha256": "aae06c1b3c963f8a6cf246ea52642d73f5e6ec237cfb19fc4737dd4072570e6a",
+      "mode": "0o644"
+    },
+    {
+      "path": "kit/workspace/nativescript-type-error/hanlin.authoring.json",
+      "bytes": 107,
+      "sha256": "1bf949fb4ba1fd14481df380299652fe9b587aa5c30afdb6621fe23be6c02094",
+      "mode": "0o644"
+    },
+    {
+      "path": "kit/workspace/nativescript-type-error/index.ts",
+      "bytes": 1063,
+      "sha256": "2a252e2317feeb876cb935c0890f841cb108e9fb7973784675437d4d7d968cfe",
+      "mode": "0o644"
+    },
+    {
+      "path": "kit/workspace/nativescript-type-error/notification-event.ts",
+      "bytes": 650,
+      "sha256": "3faaf31c55f30954b8c3a74cce95d0461bdef531269bcd7832a886be4ac390de",
+      "mode": "0o644"
+    },
+    {
+      "path": "kit/workspace/nativescript-type-error/package.json",
+      "bytes": 225,
+      "sha256": "ab65e0e388ac19daf337b29965fd030e6196faf90cee439c786de9e1c3f49cb6",
+      "mode": "0o644"
+    },
+    {
+      "path": "kit/workspace/nativescript-type-error/script.json",
+      "bytes": 320,
+      "sha256": "521f9d8332544a7858dca222d635cf8530e13d72cfb4e2e62d4196acc3a249cb",
+      "mode": "0o644"
+    },
+    {
+      "path": "kit/workspace/nativescript-type-error/tsconfig.json",
+      "bytes": 67,
+      "sha256": "089155f616dd73ff0bebb1469f21fda41c51ad93c7b7db83d2745fa5e88ce0e5",
+      "mode": "0o644"
+    }
+  ],
+  "sdkArchive": {
+    "path": "MiniAppSDK20.zip",
+    "bytes": 68739954,
+    "sha256": "c1c181182d1e47db1f7977a284cea507397dc47e9170645b019dbdec5ab858ca",
+    "mode": "0o644"
+  },
+  "SDKManifestSHA256": "6f11ed8da3df18627f05932d47b5b68dec54eb26ac396151a21cbc8c3e65800e",
+  "SDKInputSHA256": "0388d52ec3ceef1adddb21a8718566876db0ef693520bc761e4ec57573a96514",
+  "prerequisites": {
+    "node": {
+      "path": "/usr/local/bin/node",
+      "version": "v24.22.0",
+      "sha256": "719a43d185f3b6a59d8fcbba1ff06b93c75f76fb0bb9916f81d33921615d4cb5"
+    },
+    "python": {
+      "path": "/usr/bin/python3",
+      "version": "Python 3.12.3",
+      "sha256": "c86f21d0da9290ece2d7d49a3f7ed52aed59cb029abdf0ea25c79634f6cbe960"
+    },
+    "strace": {
+      "path": "/usr/bin/strace",
+      "version": "strace -- version 6.8",
+      "sha256": "33b3ea325915f1213dc477d80e0f0b2b09ffeff5e81d98b25a35320fbcbcaf42"
+    }
+  },
+  "ancestorNodeModules": [],
+  "operationalWrapper": "New replay of retained argv/environment/strace; no historical runner-script identity is claimed.",
+  "networkAndDependencies": "No install/resolver invoked. Complete syscall traces retained for independent network/dependency audit."
+}

@@ -1,0 +1,6 @@
+{
+  "include": [
+    "index.ts",
+    "notification-event.ts"
+  ]
+}

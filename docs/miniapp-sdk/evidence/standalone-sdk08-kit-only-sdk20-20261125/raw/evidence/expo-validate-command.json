@@ -1,0 +1,61 @@
+{
+  "schema": 1,
+  "id": "expo-validate",
+  "startedAt": "2026-11-25T21:30:49.459718+00:00",
+  "finishedAt": "2026-11-25T21:30:58.676942+00:00",
+  "elapsedSeconds": 9.217229077592492,
+  "cwd": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/standalone-sdk08-kit-only-sdk20/kit",
+  "command": [
+    "/usr/local/bin/node",
+    "Scripts/MiniApps/miniapp.mjs",
+    "validate",
+    "--sdk",
+    "./MiniAppSDK",
+    "--engine",
+    "expo",
+    "--project",
+    "./workspace/expo-hello-world",
+    "--report",
+    "./artifacts/expo-validate.json"
+  ],
+  "traceCommand": [
+    "/usr/bin/strace",
+    "-f",
+    "-qq",
+    "-e",
+    "trace=%file,%process,%network",
+    "-s",
+    "2048",
+    "-o",
+    "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/standalone-sdk08-kit-only-sdk20/evidence/expo-validate.strace",
+    "/usr/local/bin/node",
+    "Scripts/MiniApps/miniapp.mjs",
+    "validate",
+    "--sdk",
+    "./MiniAppSDK",
+    "--engine",
+    "expo",
+    "--project",
+    "./workspace/expo-hello-world",
+    "--report",
+    "./artifacts/expo-validate.json"
+  ],
+  "environment": {
+    "PATH": "/usr/local/bin:/usr/bin:/bin",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "TZ": "UTC",
+    "CI": "1",
+    "TERM": "dumb",
+    "TMPDIR": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/standalone-sdk08-kit-only-sdk20/tmp"
+  },
+  "returncode": 0,
+  "expectedReturnCode": 0,
+  "expectedOutcomeMatched": true,
+  "report": "kit/artifacts/expo-validate.json",
+  "originalRecord": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/standalone-sdk08-kit-only/evidence/expo-validate-command.json",
+    "bytes": 1427,
+    "sha256": "a33ba79dcc2a988f06177054863c353225a81073b577a7c976a22e073a93dd84"
+  }
+}

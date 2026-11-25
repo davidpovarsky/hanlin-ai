@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "engine": "nativescript",
+  "operation": "validate",
+  "succeeded": true,
+  "diagnostics": [],
+  "sourceRoot": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/standalone-sdk08-kit-only-sdk20/kit/workspace/nativescript-hello-world",
+  "sdk": {
+    "packageVersions": {
+      "@nativescript/core": "9.1.4",
+      "@nativescript/swift-ui": "4.0.2",
+      "@nativescript/ios": "9.1.1",
+      "@nativescript/types": "9.1.4",
+      "@nativescript/vite": "8.0.24",
+      "typescript": "5.9.3",
+      "vite": "8.0.0",
+      "@hanlin/notification-events": "1.0.0",
+      "@hanlin/host-services": "1.0.0"
+    },
+    "manifestSHA256": "6f11ed8da3df18627f05932d47b5b68dec54eb26ac396151a21cbc8c3e65800e",
+    "compilerVersion": "5.9.3"
+  },
+  "typecheck": {
+    "strict": true,
+    "checkJs": false,
+    "skipLibCheck": true,
+    "dependencyDeclarationsChecked": false
+  }
+}
