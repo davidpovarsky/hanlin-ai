@@ -1,0 +1,184 @@
+{
+  "status": "PASS",
+  "source_sha": "53593c3749dbd2be1e56739576fcdd5ea2c1cf06",
+  "started_at": "2026-11-25T02:24:53.786507+00:00",
+  "commands": [
+    {
+      "label": "nativescript-prepare",
+      "command": [
+        "node",
+        "Scripts/NativeScript/prepare-ios-dependencies.mjs"
+      ],
+      "started_at": "2026-11-25T02:24:53.869114+00:00",
+      "log": "01-nativescript-prepare.log",
+      "exit_code": 0,
+      "finished_at": "2026-11-25T02:24:56.931606+00:00",
+      "log_sha256": "1c6bc9bd180147cb61d38dc56c18c45cfaee3c541d9c12725e8c0ca6b0b09e87"
+    },
+    {
+      "label": "sdk-audit-write",
+      "command": [
+        "node",
+        "Scripts/Audit/audit-miniapp-sdk.mjs",
+        "--write"
+      ],
+      "started_at": "2026-11-25T02:24:56.932046+00:00",
+      "log": "02-sdk-audit-write.log",
+      "exit_code": 0,
+      "finished_at": "2026-11-25T02:24:57.515167+00:00",
+      "log_sha256": "c08cc7d202d4343fa2dac7a3d70605c9d4ad13ccc8bd28896cf2f4afe5abd83b"
+    },
+    {
+      "label": "sdk-audit-check",
+      "command": [
+        "node",
+        "Scripts/Audit/audit-miniapp-sdk.mjs",
+        "--check"
+      ],
+      "started_at": "2026-11-25T02:24:57.515547+00:00",
+      "log": "03-sdk-audit-check.log",
+      "exit_code": 0,
+      "finished_at": "2026-11-25T02:24:57.834047+00:00",
+      "log_sha256": "f9392dbc1f4415decb9bc390be9f49d5b7e6f3fbd636c72710ef278e45b31783"
+    },
+    {
+      "label": "reachability-write",
+      "command": [
+        "python3",
+        "Scripts/Audit/audit_miniapp_reachability.py"
+      ],
+      "started_at": "2026-11-25T02:24:57.834592+00:00",
+      "log": "04-reachability-write.log",
+      "exit_code": 0,
+      "finished_at": "2026-11-25T02:24:58.670220+00:00",
+      "log_sha256": "25235e2042af248e065488522e1e5aba9995de6ebb75ade7cbcfbd507c1d271e"
+    },
+    {
+      "label": "reachability-check",
+      "command": [
+        "python3",
+        "Scripts/Audit/audit_miniapp_reachability.py",
+        "--check"
+      ],
+      "started_at": "2026-11-25T02:24:58.670576+00:00",
+      "log": "05-reachability-check.log",
+      "exit_code": 0,
+      "finished_at": "2026-11-25T02:24:59.368640+00:00",
+      "log_sha256": "bc234237931951c0e0e70dc212b9f47da2f6c76a61109e41c235f0f7f0eabcef"
+    },
+    {
+      "label": "archive-sync",
+      "command": [
+        "python3",
+        "Scripts/Runtime/runtime_host_archive.py",
+        "sync",
+        "AI_HLY/RuntimeHostResources.zip"
+      ],
+      "started_at": "2026-11-25T02:24:59.369243+00:00",
+      "log": "06-archive-sync.log",
+      "exit_code": 0,
+      "finished_at": "2026-11-25T02:27:26.054668+00:00",
+      "log_sha256": "0faa78a6842290cb2823e10ac2801e68bb0352bb5be52c5ce48c8aa85302e5cc"
+    },
+    {
+      "label": "archive-validate",
+      "command": [
+        "python3",
+        "Scripts/Runtime/runtime_host_archive.py",
+        "validate",
+        "AI_HLY/RuntimeHostResources.zip"
+      ],
+      "started_at": "2026-11-25T02:27:26.055504+00:00",
+      "log": "07-archive-validate.log",
+      "exit_code": 0,
+      "finished_at": "2026-11-25T02:28:18.173320+00:00",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "runtime-manifest",
+      "command": [
+        "node",
+        "Scripts/Runtime/generate-runtime-manifest.mjs",
+        "RuntimeDependencies.lock.json",
+        "AI_HLY/Downstream/RuntimeCore/Resources/RuntimeManifest.json"
+      ],
+      "started_at": "2026-11-25T02:28:18.174759+00:00",
+      "log": "08-runtime-manifest.log",
+      "exit_code": 0,
+      "finished_at": "2026-11-25T02:28:18.295215+00:00",
+      "log_sha256": "e0300c6a4ee73c2d65c9f67597ea4adcb0f6f627c0c7d1e9a7e3d1231d5441f0"
+    },
+    {
+      "label": "native-inventory",
+      "command": [
+        "python3",
+        "Scripts/SDK/native_artifacts.py",
+        "inventory",
+        "--root",
+        "."
+      ],
+      "started_at": "2026-11-25T02:28:18.296780+00:00",
+      "log": "09-native-inventory.log",
+      "exit_code": 0,
+      "finished_at": "2026-11-25T02:28:18.678312+00:00",
+      "log_sha256": "d83e4e592aa377615b3ac9437d1f0c2f6748cd7dd3590d8bebc24dddbca26707"
+    },
+    {
+      "label": "diff-check",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "started_at": "2026-11-25T02:28:18.680134+00:00",
+      "log": "10-diff-check.log",
+      "exit_code": 0,
+      "finished_at": "2026-11-25T02:28:19.024250+00:00",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "reason": "Latest shared NativeScript wrapper/framework metadata correction plus explicit native tool factory isolation",
+  "node_path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/node-v24.5.0-darwin-arm64/bin/node",
+  "node_sha256": "336b5b3ebc5deb86df842102b20b6e4761605b7a667823e68dda7761b91a161b",
+  "node_versions": {
+    "node": "24.5.0",
+    "acorn": "8.15.0",
+    "ada": "3.2.6",
+    "amaro": "1.1.1",
+    "ares": "1.34.5",
+    "brotli": "1.1.0",
+    "cjs_module_lexer": "2.1.0",
+    "cldr": "47.0",
+    "icu": "77.1",
+    "llhttp": "9.3.0",
+    "modules": "137",
+    "napi": "10",
+    "nbytes": "0.1.1",
+    "ncrypto": "0.0.1",
+    "nghttp2": "1.66.0",
+    "openssl": "3.5.1",
+    "simdjson": "3.13.0",
+    "simdutf": "6.4.0",
+    "sqlite": "3.50.3",
+    "tz": "2025b",
+    "undici": "7.12.0",
+    "unicode": "16.0",
+    "uv": "1.51.0",
+    "uvwasi": "0.0.21",
+    "v8": "13.6.233.10-node.21",
+    "zlib": "1.3.1-470d3a2",
+    "zstd": "1.5.7"
+  },
+  "tracked_changes": [
+    "docs/miniapp-sdk/extension-reachability.json",
+    "docs/miniapp-sdk/extension-reachability.md",
+    "docs/miniapp-sdk/source-inventory.json"
+  ],
+  "archive": {
+    "path": "/Users/m1/builds/hanlin-ai-cache-native-20261125/AI_HLY/RuntimeHostResources.zip",
+    "sha256": "9fb7998ee48fe913e98f865d5b962e8a46dce9c836ff2efd295598206741b2cd",
+    "bytes": 81846634
+  },
+  "host_metadata_sha256": "1a14a1244adee5b55f9982285bcf49bc17b89c412df1ec972ac7ef95893134b0",
+  "finished_at": "2026-11-25T02:28:19.500847+00:00"
+}

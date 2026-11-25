@@ -3,10 +3,10 @@ import UIKit
 import HanlinExpoNativeAPICore
 
 public struct HanlinExpoNativeAPIMetadata: Sendable {
-    public static let nativeApiVersion = "9.1.2"
-    public static let workletsVersion = "0.13.1"
+    public static let nativeApiVersion = HanlinExpoNativeAPIHostVersions.nativeApiVersion
+    public static let workletsVersion = HanlinExpoNativeAPIHostVersions.workletsVersion
     public static let contractVersion = "1.0.0"
-    public static let reactNativeVersion = "0.88.0"
+    public static let reactNativeVersion = HanlinExpoNativeAPIHostVersions.reactNativeVersion
     public static let nativeApiSupported = true
 }
 
@@ -49,6 +49,10 @@ public final class HanlinExpoNativeAPIManager {
 
     nonisolated public static func bindRuntime(_ runtimePointer: UnsafeMutableRawPointer?, forSessionID sessionID: String) {
         HanlinExpoNativeAPIGate.bindRuntime(runtimePointer, forSessionID: sessionID)
+    }
+
+    public static func bindView(_ view: UIView, forSessionID sessionID: String) {
+        HanlinExpoNativeAPIGate.bindView(view, forSessionID: sessionID)
     }
 
     nonisolated public static func revokeSession(sessionID: String) {

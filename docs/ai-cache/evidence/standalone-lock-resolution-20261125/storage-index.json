@@ -1,0 +1,153 @@
+{
+  "generatedCommit": "0e782f60bb28c704cae6200d5ff161826b771154",
+  "transportSHA256": "7ec5787956eb635677e3c3fac5d9c6340b427dbe8c12f445cd00eab7953d2186",
+  "files": [
+    {
+      "originalPath": "original/HanlinAgentSDK-resolve.log",
+      "originalSHA256": "3ca0729327b584a1f3ef717527e3d071dcc363e4d0524368ba05d2b63e5fc72a",
+      "storedPath": "original/HanlinAgentSDK-resolve.log.gz",
+      "storedSHA256": "d074eb557b4fb817f897d8fcb3001f25ee45606615294d9f85aca4f7e2d3b505",
+      "bytes": 469
+    },
+    {
+      "originalPath": "original/HanlinParityMiniApp-resolve.log",
+      "originalSHA256": "675374a7da8e7e616cac728fe52d082ed75575b74baacd0d7ce0768ae87b9a8c",
+      "storedPath": "original/HanlinParityMiniApp-resolve.log.gz",
+      "storedSHA256": "f95401bc916d9f7a5c3a1466614b0abd89516d7a8893aaf1435908c1e97bbcbd",
+      "bytes": 510
+    },
+    {
+      "originalPath": "original/HanlinPlatform-resolve.log",
+      "originalSHA256": "23c65b9942166e7b8014e1cac3f72d3ef5081338a537486913badfd0a4df0c9a",
+      "storedPath": "original/HanlinPlatform-resolve.log.gz",
+      "storedSHA256": "223aebb9931ae3ebe7f4607758deb3ce8681687e17811d90e855527b6da04218",
+      "bytes": 874
+    },
+    {
+      "originalPath": "original/HanlinSefariaMiniApp-resolve.log",
+      "originalSHA256": "a5ba67207ef627f7842f9f8bdca3b5405ce12837b83411ab682248718246de30",
+      "storedPath": "original/HanlinSefariaMiniApp-resolve.log.gz",
+      "storedSHA256": "35ea18cfe7e862d7bf4d234bf2f73dc9364cad3951c91843a4fec3c5dea1a95a",
+      "bytes": 508
+    },
+    {
+      "originalPath": "original/HanlinTextStudioMiniApp-resolve.log",
+      "originalSHA256": "a980c0c39c11abde97836030e5462fe66d660a4d0a8221d8c2847a4a247718c7",
+      "storedPath": "original/HanlinTextStudioMiniApp-resolve.log.gz",
+      "storedSHA256": "5c683fbff0c0e6c9d22c34100c8616d0a1ac4bb8096a193272fc821bb4d173bb",
+      "bytes": 511
+    },
+    {
+      "originalPath": "original/HanlinWikipediaMiniApp-resolve.log",
+      "originalSHA256": "1df90ab02742658eaa6fbe5a2f0e76fe3155bc50617d54ce6b2e5550cfc85c4e",
+      "storedPath": "original/HanlinWikipediaMiniApp-resolve.log.gz",
+      "storedSHA256": "69f8d480c5a77ec887987ea3cb518f82e6eae49babc4813f4c04f03acc504e46",
+      "bytes": 511
+    },
+    {
+      "originalPath": "original/Packages/HanlinAgentSDK/Package.resolved",
+      "originalSHA256": "543da4b8e9fe589c8d071fa3599d30034cb39bd57e839ba6130f754cdad701ca",
+      "storedPath": "original/Packages/HanlinAgentSDK/Package.resolved",
+      "storedSHA256": "543da4b8e9fe589c8d071fa3599d30034cb39bd57e839ba6130f754cdad701ca",
+      "bytes": 1771
+    },
+    {
+      "originalPath": "original/Packages/HanlinParityMiniApp/Package.resolved",
+      "originalSHA256": "12bab0ef874ee4bc8a1ca62b982a912be3c6b70077ff4eb13cc9e8e9c294f711",
+      "storedPath": "original/Packages/HanlinParityMiniApp/Package.resolved",
+      "storedSHA256": "12bab0ef874ee4bc8a1ca62b982a912be3c6b70077ff4eb13cc9e8e9c294f711",
+      "bytes": 1771
+    },
+    {
+      "originalPath": "original/Packages/HanlinPlatform/Package.resolved",
+      "originalSHA256": "453087cb3345b7c6bb24c00a682f41ffa9708ebd328e60b583f6e04276bf789d",
+      "storedPath": "original/Packages/HanlinPlatform/Package.resolved",
+      "storedSHA256": "453087cb3345b7c6bb24c00a682f41ffa9708ebd328e60b583f6e04276bf789d",
+      "bytes": 1771
+    },
+    {
+      "originalPath": "original/Packages/HanlinSefariaMiniApp/Package.resolved",
+      "originalSHA256": "826482079b436a8eb7fd2cbabe1f47976f1fb049e7461fe2da2a6dfbb0f0c643",
+      "storedPath": "original/Packages/HanlinSefariaMiniApp/Package.resolved",
+      "storedSHA256": "826482079b436a8eb7fd2cbabe1f47976f1fb049e7461fe2da2a6dfbb0f0c643",
+      "bytes": 1771
+    },
+    {
+      "originalPath": "original/Packages/HanlinTextStudioMiniApp/Package.resolved",
+      "originalSHA256": "4f501a5aee7c6bc060b8e0edc92735f713c2633d5dc4f6b71718b0c73636b097",
+      "storedPath": "original/Packages/HanlinTextStudioMiniApp/Package.resolved",
+      "storedSHA256": "4f501a5aee7c6bc060b8e0edc92735f713c2633d5dc4f6b71718b0c73636b097",
+      "bytes": 1771
+    },
+    {
+      "originalPath": "original/Packages/HanlinWikipediaMiniApp/Package.resolved",
+      "originalSHA256": "6c0486d70cbf33a29a3b62bb9bda998fde0163b90295098a694a0d0ac5b8f23f",
+      "storedPath": "original/Packages/HanlinWikipediaMiniApp/Package.resolved",
+      "storedSHA256": "6c0486d70cbf33a29a3b62bb9bda998fde0163b90295098a694a0d0ac5b8f23f",
+      "bytes": 1771
+    },
+    {
+      "originalPath": "original/canonical-app-Package.resolved",
+      "originalSHA256": "0dd6abbd4f31d4187a4a69caf97f92aa6d3cf19b241d300be5d19cd32e3aa037",
+      "storedPath": "original/canonical-app-Package.resolved",
+      "storedSHA256": "0dd6abbd4f31d4187a4a69caf97f92aa6d3cf19b241d300be5d19cd32e3aa037",
+      "bytes": 10750
+    },
+    {
+      "originalPath": "original/input-sha256.json",
+      "originalSHA256": "3104b4b81642200daf9d7a047db0395b72d33ad65b107500477ba7cb34d4676b",
+      "storedPath": "original/input-sha256.json",
+      "storedSHA256": "3104b4b81642200daf9d7a047db0395b72d33ad65b107500477ba7cb34d4676b",
+      "bytes": 90042
+    },
+    {
+      "originalPath": "original/resolution.json",
+      "originalSHA256": "741dd6376f5b5c23a3397f9d2531e50fae01e8469a1f6ab1b78c3ab7e61f5a32",
+      "storedPath": "original/resolution.json",
+      "storedSHA256": "741dd6376f5b5c23a3397f9d2531e50fae01e8469a1f6ab1b78c3ab7e61f5a32",
+      "bytes": 13912
+    },
+    {
+      "originalPath": "original/source-commit.txt",
+      "originalSHA256": "1979c26d49a32efef8f2085f893053c62471c4a718d7c72d6d5c1ae5b47646ba",
+      "storedPath": "original/source-commit.txt",
+      "storedSHA256": "1979c26d49a32efef8f2085f893053c62471c4a718d7c72d6d5c1ae5b47646ba",
+      "bytes": 41
+    },
+    {
+      "originalPath": "original/summary.json",
+      "originalSHA256": "71056a975c778608971b6cf43dc43eb6ba4e32c4d9eb659926d5bce1ef1bbdf8",
+      "storedPath": "original/summary.json",
+      "storedSHA256": "71056a975c778608971b6cf43dc43eb6ba4e32c4d9eb659926d5bce1ef1bbdf8",
+      "bytes": 908
+    },
+    {
+      "originalPath": "original/swift.txt",
+      "originalSHA256": "04630ab8fa201f57c63c59730e638135e32584a97e16e004a417eb8ed283dc83",
+      "storedPath": "original/swift.txt",
+      "storedSHA256": "04630ab8fa201f57c63c59730e638135e32584a97e16e004a417eb8ed283dc83",
+      "bytes": 98
+    },
+    {
+      "originalPath": "original/xcode.txt",
+      "originalSHA256": "694b44731d0b415c5b11d844151e466d7f5e200a95627efda377f232f1a6ab77",
+      "storedPath": "original/xcode.txt",
+      "storedSHA256": "694b44731d0b415c5b11d844151e466d7f5e200a95627efda377f232f1a6ab77",
+      "bytes": 33
+    },
+    {
+      "originalPath": "original-resolution.log",
+      "originalSHA256": "bbc8b176d3c74d4c5a7fd00b40280f98168e116d5272273bfe8e71407625540e",
+      "storedPath": "original-resolution.log.gz",
+      "storedSHA256": "12919eb3b241936fe8b140e777c7e67f606c0c293f0d89edb13a52cd5e1e85be",
+      "bytes": 48
+    },
+    {
+      "originalPath": "receipt.json",
+      "originalSHA256": "2345b03849087834b24fdd08d6ae91f62797eb1d631f0d7bfe8753b8b57d1a12",
+      "storedPath": "receipt.json",
+      "storedSHA256": "2345b03849087834b24fdd08d6ae91f62797eb1d631f0d7bfe8753b8b57d1a12",
+      "bytes": 1890
+    }
+  ]
+}

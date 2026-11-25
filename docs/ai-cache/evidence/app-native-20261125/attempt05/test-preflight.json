@@ -1,0 +1,14 @@
+{
+  "startedAtUTC": "2026-11-25T04:16:45.948482+00:00",
+  "source": "300fe80b0927f898740fba8a926e852906f52660",
+  "freeBytes": 11779731456,
+  "incrementalEstimateBytes": 4294967296,
+  "concurrentGrowthAndOSMarginBytes": 4294967296,
+  "estimateReason": "Reuse successful app04 production/test products and exact58prepared inputs; onlytwo testfixtureschanged. Budget4GiB for testrelink/newownedsimulator+1.7GBappinstall/results, plus4GiB concurrentgrowth/OSmargin. No header/sourceproducer invalidation or new dependency/workspaceclone.",
+  "memory": "Mach Virtual Memory Statistics: (page size of 16384 bytes)\nPages free:                                   183150.\nPages active:                                 346093.\nPages inactive:                               306918.\nPages speculative:                             38154.\nPages throttled:                                   0.\nPages wired down:                             103257.\nPages purgeable:                                1577.\n\"Translation faults\":                     4681862241.\nPages copy-on-write:                        71221293.\nPages zero filled:                        3232292368.\nPages reactivated:                          82280745.\nPages purged:                                3785572.\nFile-backed pages:                            389042.\nAnonymous pages:                              302123.\nPages stored in compressor:                    62714.\nPages occupied by compressor:                  37476.\nDecompressions:                             49423546.\nCompressions:                               80348962.\nPageins:                                   115645154.\nPageouts:                                     119527.\nSwapins:                                       16756.\nSwapouts:                                      51112.\n",
+  "swap": "vm.swapusage: total = 1024.00M  used = 248.19M  free = 775.81M  (encrypted)\n",
+  "finishedAtUTC": "2026-11-25T04:20:15.557288+00:00",
+  "exitCode": 0,
+  "logSHA256": "98492ae071983218f06a381f5b7b072f2e01e5c832be3df3cc738df5896c9e76",
+  "freeBytesAfter": 6016856064
+}

@@ -1,0 +1,84 @@
+test_method_filters_match_the_original_swift_testing_signatures (Scripts.ProductSplit.test_run_paired_acceptance.PairedSwiftTestingSelectorTests.test_method_filters_match_the_original_swift_testing_signatures) ... 
+  test_method_filters_match_the_original_swift_testing_signatures (Scripts.ProductSplit.test_run_paired_acceptance.PairedSwiftTestingSelectorTests.test_method_filters_match_the_original_swift_testing_signatures) (suite='PendingFirstTurnTests', method='importedMiniAppRepairDispatchesOnceAndPreservesDraftAndSettings') ... FAIL
+  test_method_filters_match_the_original_swift_testing_signatures (Scripts.ProductSplit.test_run_paired_acceptance.PairedSwiftTestingSelectorTests.test_method_filters_match_the_original_swift_testing_signatures) (suite='PendingFirstTurnTests', method='cancelledMiniAppRepairPreservesHomeDraft') ... FAIL
+  test_method_filters_match_the_original_swift_testing_signatures (Scripts.ProductSplit.test_run_paired_acceptance.PairedSwiftTestingSelectorTests.test_method_filters_match_the_original_swift_testing_signatures) (suite='HanlinScriptingPlatformCompositionTests', method='malformedImportedArchiveRetainsOriginalAndStructuredDiagnostic') ... FAIL
+  test_method_filters_match_the_original_swift_testing_signatures (Scripts.ProductSplit.test_run_paired_acceptance.PairedSwiftTestingSelectorTests.test_method_filters_match_the_original_swift_testing_signatures) (suite='MiniAppAuthoringToolTests', method='originalSDKWriteValidateBuildAndRepair') ... FAIL
+  test_method_filters_match_the_original_swift_testing_signatures (Scripts.ProductSplit.test_run_paired_acceptance.PairedSwiftTestingSelectorTests.test_method_filters_match_the_original_swift_testing_signatures) (suite='MiniAppAuthoringToolTests', method='sourceWritePreservesUnrelatedFilesAndTargetsRetainedSource') ... FAIL
+  test_method_filters_match_the_original_swift_testing_signatures (Scripts.ProductSplit.test_run_paired_acceptance.PairedSwiftTestingSelectorTests.test_method_filters_match_the_original_swift_testing_signatures) (suite='MiniAppAuthoringToolTests', method='originalExpoMetroBuildOnEmbeddedNode') ... FAIL
+
+======================================================================
+FAIL: test_method_filters_match_the_original_swift_testing_signatures (Scripts.ProductSplit.test_run_paired_acceptance.PairedSwiftTestingSelectorTests.test_method_filters_match_the_original_swift_testing_signatures) (suite='PendingFirstTurnTests', method='importedMiniAppRepairDispatchesOnceAndPreservesDraftAndSettings')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-miniapps-host-services-20261124/Scripts/ProductSplit/test_run_paired_acceptance.py", line 334, in test_method_filters_match_the_original_swift_testing_signatures
+    self.assertEqual(method, name + "()",
+AssertionError: 'importedMiniAppRepairDispatchesOnceAndPreservesDraftAndSettings' != 'importedMiniAppRepairDispatchesOnceAndPreservesDraftAndSettings()'
+- importedMiniAppRepairDispatchesOnceAndPreservesDraftAndSettings
++ importedMiniAppRepairDispatchesOnceAndPreservesDraftAndSettings()
+?                                                                ++
+ : Use the declared Swift Testing identity, not a bare name.
+
+======================================================================
+FAIL: test_method_filters_match_the_original_swift_testing_signatures (Scripts.ProductSplit.test_run_paired_acceptance.PairedSwiftTestingSelectorTests.test_method_filters_match_the_original_swift_testing_signatures) (suite='PendingFirstTurnTests', method='cancelledMiniAppRepairPreservesHomeDraft')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-miniapps-host-services-20261124/Scripts/ProductSplit/test_run_paired_acceptance.py", line 334, in test_method_filters_match_the_original_swift_testing_signatures
+    self.assertEqual(method, name + "()",
+AssertionError: 'cancelledMiniAppRepairPreservesHomeDraft' != 'cancelledMiniAppRepairPreservesHomeDraft()'
+- cancelledMiniAppRepairPreservesHomeDraft
++ cancelledMiniAppRepairPreservesHomeDraft()
+?                                         ++
+ : Use the declared Swift Testing identity, not a bare name.
+
+======================================================================
+FAIL: test_method_filters_match_the_original_swift_testing_signatures (Scripts.ProductSplit.test_run_paired_acceptance.PairedSwiftTestingSelectorTests.test_method_filters_match_the_original_swift_testing_signatures) (suite='HanlinScriptingPlatformCompositionTests', method='malformedImportedArchiveRetainsOriginalAndStructuredDiagnostic')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-miniapps-host-services-20261124/Scripts/ProductSplit/test_run_paired_acceptance.py", line 334, in test_method_filters_match_the_original_swift_testing_signatures
+    self.assertEqual(method, name + "()",
+AssertionError: 'malformedImportedArchiveRetainsOriginalAndStructuredDiagnostic' != 'malformedImportedArchiveRetainsOriginalAndStructuredDiagnostic()'
+- malformedImportedArchiveRetainsOriginalAndStructuredDiagnostic
++ malformedImportedArchiveRetainsOriginalAndStructuredDiagnostic()
+?                                                               ++
+ : Use the declared Swift Testing identity, not a bare name.
+
+======================================================================
+FAIL: test_method_filters_match_the_original_swift_testing_signatures (Scripts.ProductSplit.test_run_paired_acceptance.PairedSwiftTestingSelectorTests.test_method_filters_match_the_original_swift_testing_signatures) (suite='MiniAppAuthoringToolTests', method='originalSDKWriteValidateBuildAndRepair')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-miniapps-host-services-20261124/Scripts/ProductSplit/test_run_paired_acceptance.py", line 334, in test_method_filters_match_the_original_swift_testing_signatures
+    self.assertEqual(method, name + "()",
+AssertionError: 'originalSDKWriteValidateBuildAndRepair' != 'originalSDKWriteValidateBuildAndRepair()'
+- originalSDKWriteValidateBuildAndRepair
++ originalSDKWriteValidateBuildAndRepair()
+?                                       ++
+ : Use the declared Swift Testing identity, not a bare name.
+
+======================================================================
+FAIL: test_method_filters_match_the_original_swift_testing_signatures (Scripts.ProductSplit.test_run_paired_acceptance.PairedSwiftTestingSelectorTests.test_method_filters_match_the_original_swift_testing_signatures) (suite='MiniAppAuthoringToolTests', method='sourceWritePreservesUnrelatedFilesAndTargetsRetainedSource')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-miniapps-host-services-20261124/Scripts/ProductSplit/test_run_paired_acceptance.py", line 334, in test_method_filters_match_the_original_swift_testing_signatures
+    self.assertEqual(method, name + "()",
+AssertionError: 'sourceWritePreservesUnrelatedFilesAndTargetsRetainedSource' != 'sourceWritePreservesUnrelatedFilesAndTargetsRetainedSource()'
+- sourceWritePreservesUnrelatedFilesAndTargetsRetainedSource
++ sourceWritePreservesUnrelatedFilesAndTargetsRetainedSource()
+?                                                           ++
+ : Use the declared Swift Testing identity, not a bare name.
+
+======================================================================
+FAIL: test_method_filters_match_the_original_swift_testing_signatures (Scripts.ProductSplit.test_run_paired_acceptance.PairedSwiftTestingSelectorTests.test_method_filters_match_the_original_swift_testing_signatures) (suite='MiniAppAuthoringToolTests', method='originalExpoMetroBuildOnEmbeddedNode')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-miniapps-host-services-20261124/Scripts/ProductSplit/test_run_paired_acceptance.py", line 334, in test_method_filters_match_the_original_swift_testing_signatures
+    self.assertEqual(method, name + "()",
+AssertionError: 'originalExpoMetroBuildOnEmbeddedNode' != 'originalExpoMetroBuildOnEmbeddedNode()'
+- originalExpoMetroBuildOnEmbeddedNode
++ originalExpoMetroBuildOnEmbeddedNode()
+?                                     ++
+ : Use the declared Swift Testing identity, not a bare name.
+
+----------------------------------------------------------------------
+Ran 1 test in 0.008s
+
+FAILED (failures=6)

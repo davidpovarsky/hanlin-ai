@@ -1,0 +1,16 @@
+{
+  "name": "hanlin-window-factory",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "main": "bundle.mjs",
+  "hanlinRuntime": "hanlin-nativescript",
+  "hanlinNativeScript": {
+    "runtimeVersion": "9.1.1",
+    "plugins": {},
+    "windowFactory": 1
+  },
+  "dependencies": {
+    "@nativescript/core": "9.1.4"
+  }
+}

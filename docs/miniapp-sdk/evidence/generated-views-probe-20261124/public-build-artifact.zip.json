@@ -1,0 +1,136 @@
+{
+  "schemaVersion": 1,
+  "operation": "existing deterministic fixture ZIP writer",
+  "archive": "public-build-artifact.zip",
+  "bytes": 3021260,
+  "sha256": "79ff7fe0261476d1cf7ea4198fd9b43985a77677dee73bdbfbf8a25f83a4dd0e",
+  "writerSHA256": "853b5c831fe3cc80c6c52f87991095930f5084c99d43f5999990782cdd4c1da0",
+  "entries": [
+    {
+      "name": "bundle.js",
+      "bytes": 3246867,
+      "sha256": "1ce3a7a6939f7f36f0c637a6c0155319982ee86db839c35ab27c9e37cb82b040"
+    },
+    {
+      "name": "bundle.js.map",
+      "bytes": 6834943,
+      "sha256": "889d503aa2ed016ec9488c0143164ab21889d65d4d4c21e34b28fb5cfa1801e6"
+    },
+    {
+      "name": "hanlin.authoring.json",
+      "bytes": 3202,
+      "sha256": "10bb7e1114cc7f82605bce804b5c7a590e5822f1feecd14c45749fdb22b0e64b"
+    },
+    {
+      "name": "hanlin.validation.json",
+      "bytes": 1146,
+      "sha256": "8dcc232857ddc17796016767a73a24987a896b843402d4a66c908e6f1223e799"
+    },
+    {
+      "name": "package.json",
+      "bytes": 675,
+      "sha256": "6b2786e6b943559007b7697aa9f4645a79d58ae78a4d6906a19b1e7b02987a91"
+    },
+    {
+      "name": "script.json",
+      "bytes": 1659,
+      "sha256": "f2dc6198cef3289e3461327a05e38bd061c752b64cdbaa98bae142f1c1fcb474"
+    },
+    {
+      "name": "source/App.tsx",
+      "bytes": 17788,
+      "sha256": "199f024921e35fbedca737045e342b75cf903b37e6692be5faf524a19a8e91ca"
+    },
+    {
+      "name": "source/ExpoSwiftUIMalformed.hanlinExpo",
+      "bytes": 274,
+      "sha256": "a2115ad2fc9395154e793c15fc0c42fffb056e7b259b6c63852b7b61531313e4"
+    },
+    {
+      "name": "source/ExpoSwiftUIProbe.hanlinExpo",
+      "bytes": 319850,
+      "sha256": "f0b314cfb4d150b0451241e5d21a40d2ae4fcdbb10b2ae52976092dca05820ae"
+    },
+    {
+      "name": "source/ExpoSwiftUIProbeA.hanlinExpo",
+      "bytes": 319850,
+      "sha256": "f0b314cfb4d150b0451241e5d21a40d2ae4fcdbb10b2ae52976092dca05820ae"
+    },
+    {
+      "name": "source/ExpoSwiftUIProbeB.hanlinExpo",
+      "bytes": 319851,
+      "sha256": "5dfc9a504008ab100fc1159f86f791da3c3643711357073106a168de944b0d90"
+    },
+    {
+      "name": "source/GeneratedModifiersProbe.tsx",
+      "bytes": 16669,
+      "sha256": "3b20939a057885bd2293fc65080bfdb28b51ecaa68adab8a26298e8fd251ea1d"
+    },
+    {
+      "name": "source/GeneratedViewsProbe.tsx",
+      "bytes": 7237,
+      "sha256": "c3be93227141ac5d52ed52d02272eb631b6923d76fb66c4d02b024bb09ef3878"
+    },
+    {
+      "name": "source/HostServicesProbe.tsx",
+      "bytes": 7050,
+      "sha256": "108eac3bf0d3b908089b37ad2175de8eb3be2cf1a81d601a649b02fe48a39801"
+    },
+    {
+      "name": "source/ManualAdapterProbe.tsx",
+      "bytes": 11112,
+      "sha256": "4794f92fc158639b806c0f80bf74cf71775651ad2acd2c24c9462f9d810ff48e"
+    },
+    {
+      "name": "source/hanlin.authoring.json",
+      "bytes": 142,
+      "sha256": "5baf5452caa0edf8685abbabc8a12448c9e503e4bb27effd4c0b53dc25127879"
+    },
+    {
+      "name": "source/index.ts",
+      "bytes": 402,
+      "sha256": "f31cbcd820fca2a4df6a5f2730e16d5b69b3646c75b5218e811af9ff0c830b59"
+    },
+    {
+      "name": "source/native-adapter-assets/pixel.png",
+      "bytes": 82,
+      "sha256": "7713482a5fab3ae135193484df75f4d0a7ce5c8ee50f6b5c33f7aacef5c5ea45"
+    },
+    {
+      "name": "source/package.json",
+      "bytes": 444,
+      "sha256": "7234c13c597bc7c71862cc1562ba3b4c68cea4528e1c8fa20bd512eb7d2510e7"
+    },
+    {
+      "name": "source/script.json",
+      "bytes": 1639,
+      "sha256": "12d5c8abf129dbe22ea6a4a2e8746de2c2224261ec11cf386943626674a63fbf"
+    },
+    {
+      "name": "source/tsconfig.json",
+      "bytes": 1144,
+      "sha256": "1b682272df710c0d8b97b3fcde9c795204e28e287e6e7ba9b1850112e92854f4"
+    },
+    {
+      "name": "source/variant-a.ts",
+      "bytes": 288,
+      "sha256": "98a563ae71b1621c65dab5f494b055ec9bf8a401eef1ecd3771e2b1059e5eda6"
+    },
+    {
+      "name": "source/variant-b.ts",
+      "bytes": 288,
+      "sha256": "12bdc8a3c40cbf87890d527abb9343af94b575342e256f0c5040e900ff465394"
+    },
+    {
+      "name": "source/widget.tsx",
+      "bytes": 1299,
+      "sha256": "aa7271e38789ccecff5e284f1a3846f17af1da56dc4152c7a3bc174989a86119"
+    },
+    {
+      "name": "widget.tsx",
+      "bytes": 1299,
+      "sha256": "aa7271e38789ccecff5e284f1a3846f17af1da56dc4152c7a3bc174989a86119"
+    }
+  ],
+  "boundary": "Archive of the actual public authoring checkpoint for evidence. Repository-specific temporary authoring context is recorded separately. Not a distribution example or native import/UI pass; the native gate stages its canonical fresh fixture independently."
+}

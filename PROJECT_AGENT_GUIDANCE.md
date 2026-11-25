@@ -298,7 +298,7 @@ The user wants modern, advanced, clean Swift and SwiftUI code, targets current s
 When building, modifying, or packaging NativeScript MiniApps and scripts for Hanlin:
 - Consult the full agent and developer guide: [`docs/hanlin-nativescript-guide.md`](file:///c:/Users/DAVID/Code/hanlin-ai/docs/hanlin-nativescript-guide.md).
 - MiniApps support both the `@nativescript/core` API (e.g. `Application`, `Page`, `StackLayout`, `Button`, `Label`, `Http`) and the direct NativeScript iOS Metadata Bridge (`UIKit`, `Foundation`, `Auto Layout`, `UITabBarController`, `UINavigationController`). Both paradigms coexist and can be mixed.
-- Hanlin embeds and pins `@nativescript/core@9.1.0` in the application runtime; MiniApps can declare `"@nativescript/core": "9.1.0"` in `package.json` dependencies and import standard Core modules without on-device npm installations.
+- Hanlin embeds original `@nativescript/core` and resolves its exact version with the native runtime/types during host preparation. Read `get_miniapp_sdk(engine: "nativescript")` and declare the returned `selectedEngine.packageVersions["@nativescript/core"]`; an old guide version is not the current host contract. Use the original authoring/build tools to prepare the package.
 - Direct bridge-only packages that do not use `@nativescript/core` continue to be supported.
 - Pass the root controller to the host UI using `NativeScriptEmbedder.sharedInstance().delegate.presentNativeScriptApp(...)` when managing view controllers directly, or let `Application.run()` present automatically.
 - For TypeScript typings, reference `@nativescript/types-ios` and `@nativescript/core`.

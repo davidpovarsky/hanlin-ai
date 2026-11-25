@@ -11,6 +11,48 @@ import MapKit
 import CoreLocation
 import WeatherKit
 import HanlinScriptDeviceServices
+import HanlinPlatformContracts
+
+/// The user's selected region is kept apart from the model's arguments. Providers
+/// receive this resolved value only after the canonical call has been validated.
+struct HanlinNearbySearchRegion: Equatable {
+    let latitude: Double
+    let longitude: Double
+    let radiusMeters: Double
+
+    static func resolve(latitude: Double, longitude: Double,
+                        configuration: HanlinJSONValue?) throws -> Self {
+        var region = Self(latitude: latitude, longitude: longitude, radiusMeters: 5_000)
+        if let configuration {
+            guard case .object(let settings) = configuration else {
+                throw HanlinComposerCapabilityError.invalid("The search settings must be an object.")
+            }
+            if let location = settings["location"] {
+                guard case .object(let values) = location,
+                      let selectedLatitude = number(values["latitude"]),
+                      let selectedLongitude = number(values["longitude"]),
+                      let radius = number(values["radiusMeters"]) else {
+                    throw HanlinComposerCapabilityError.invalid("Select a valid search area and radius.")
+                }
+                region = Self(latitude: selectedLatitude, longitude: selectedLongitude, radiusMeters: radius)
+            }
+        }
+        guard region.latitude.isFinite, (-90 ... 90).contains(region.latitude),
+              region.longitude.isFinite, (-180 ... 180).contains(region.longitude),
+              region.radiusMeters.isFinite, region.radiusMeters > 0 else {
+            throw HanlinComposerCapabilityError.invalid("Select a valid search area and radius.")
+        }
+        return region
+    }
+
+    private static func number(_ value: HanlinJSONValue?) -> Double? {
+        switch value {
+        case .number(let number): number
+        case .integer(let integer): Double(integer)
+        default: nil
+        }
+    }
+}
 
 @MainActor
 func reverseGeocode(coordinate: CLLocationCoordinate2D) async throws -> String {
@@ -271,75 +313,58 @@ func searchNearbyLocations(
     around coordinate: CLLocationCoordinate2D,
     with keyword: String,
     company: String,
-    apiKey: String
+    apiKey: String,
+    radiusMeters: Double = 5_000
 ) async throws -> [Location] {
+    guard radiusMeters.isFinite, radiusMeters > 0 else {
+        throw HanlinComposerCapabilityError.invalid("Select a positive search radius.")
+    }
     // 根据不同地图服务调用不同适配函数
     if company.uppercased() == "APPLEMAP" {
         // 苹果地图附近搜索
-        return try await searchNearbyLocationsFromAppleMap(around: coordinate, with: keyword)
+        return try await searchNearbyLocationsFromAppleMap(around: coordinate, with: keyword, radiusMeters: radiusMeters)
     } else if company.uppercased() == "AMAP" {
         // 高德地图附近搜索
-        return try await searchNearbyLocationsFromAmap(around: coordinate, with: keyword, apiKey: apiKey)
+        return try await searchNearbyLocationsFromAmap(around: coordinate, with: keyword, apiKey: apiKey, radiusMeters: radiusMeters)
     } else if company.uppercased() == "GOOGLEMAP" {
         // 谷歌地图附近搜索
-        return try await searchNearbyLocationsFromGoogle(around: coordinate, with: keyword, apiKey: apiKey)
+        return try await searchNearbyLocationsFromGoogle(around: coordinate, with: keyword, apiKey: apiKey, radiusMeters: radiusMeters)
     } else {
         // 未识别的地图服务，默认使用 Apple Map
-        return try await searchNearbyLocationsFromAppleMap(around: coordinate, with: keyword)
+        return try await searchNearbyLocationsFromAppleMap(around: coordinate, with: keyword, radiusMeters: radiusMeters)
     }
 }
 
 // 附近搜索实现
 private func searchNearbyLocationsFromAppleMap(
     around coordinate: CLLocationCoordinate2D,
-    with keyword: String
+    with keyword: String,
+    radiusMeters: Double
 ) async throws -> [Location] {
     let request = MKLocalSearch.Request()
     request.naturalLanguageQuery = keyword
-    // 设置搜索区域为中心周边约 5 公里（经纬度 0.05）范围，适合“附近”搜索
     request.region = MKCoordinateRegion(
         center: coordinate,
-        span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+        latitudinalMeters: radiusMeters * 2,
+        longitudinalMeters: radiusMeters * 2
     )
-    
-    let search = MKLocalSearch(request: request)
-    
-    return try await withCheckedThrowingContinuation { continuation in
-        search.start { response, error in
-            if let error = error {
-                if let mkError = error as? MKError, mkError.code == .placemarkNotFound {
-                    continuation.resume(returning: [])
-                } else {
-                    continuation.resume(throwing: error)
-                }
-                return
+    do {
+        let response = try await MKLocalSearch(request: request).start()
+        let center = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
+        // MapKit treats the region as a search hint. Honor the selected radius
+        // explicitly in the actual results as well.
+        return response.mapItems
+            .filter { $0.location.distance(from: center) <= radiusMeters }
+            .sorted { $0.location.distance(from: center) < $1.location.distance(from: center) }
+            .prefix(10)
+            .map { item in
+                Location(id: UUID(), identifier: item.identifier?.rawValue ?? UUID().uuidString,
+                         name: item.name ?? "Unknown place",
+                         latitude: item.location.coordinate.latitude,
+                         longitude: item.location.coordinate.longitude, style: "mark")
             }
-            
-            guard let items = response?.mapItems, !items.isEmpty else {
-                continuation.resume(returning: [])
-                return
-            }
-            
-            // 按中心点距离排序，并取最多前 10 个结果
-            let sortedItems = items.sorted {
-                let distanceA = $0.placemark.location?.distance(from: CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)) ?? .greatestFiniteMagnitude
-                let distanceB = $1.placemark.location?.distance(from: CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)) ?? .greatestFiniteMagnitude
-                return distanceA < distanceB
-            }
-            
-            let locations: [Location] = sortedItems.prefix(10).compactMap { item in
-                let placemark = item.placemark
-                return Location(
-                    id: UUID(),
-                    identifier: item.identifier?.rawValue ?? UUID().uuidString,
-                    name: item.name ?? placemark.name ?? "未知地点",
-                    latitude: placemark.coordinate.latitude,
-                    longitude: placemark.coordinate.longitude,
-                    style: "mark"
-                )
-            }
-            continuation.resume(returning: locations)
-        }
+    } catch let error as MKError where error.code == .placemarkNotFound {
+        return []
     }
 }
 
@@ -347,7 +372,8 @@ private func searchNearbyLocationsFromAppleMap(
 private func searchNearbyLocationsFromAmap(
     around coordinate: CLLocationCoordinate2D,
     with keyword: String,
-    apiKey: String
+    apiKey: String,
+    radiusMeters: Double
 ) async throws -> [Location] {
     // 先对关键词进行 URL 编码
     guard let encodedKeyword = keyword.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
@@ -356,14 +382,14 @@ private func searchNearbyLocationsFromAmap(
     
     // 高德地图周边搜索: v5/place/around
     // 按照官方文档，location 需使用 "经度,纬度" 格式
-    // 这里设置 radius=5000(约 5 km)，page_size=10 (一次最多拉取 10 条)
+    // Forward the user-selected radius to the original provider.
     let lonLat = "\(coordinate.longitude),\(coordinate.latitude)"
     let urlString = """
         https://restapi.amap.com/v5/place/around\
         ?key=\(apiKey)\
         &location=\(lonLat)\
         &keywords=\(encodedKeyword)\
-        &radius=5000\
+        &radius=\(radiusMeters)\
         &page_size=10
         """
     
@@ -432,7 +458,8 @@ private func searchNearbyLocationsFromAmap(
 private func searchNearbyLocationsFromGoogle(
     around coordinate: CLLocationCoordinate2D,
     with keyword: String,
-    apiKey: String
+    apiKey: String,
+    radiusMeters: Double
 ) async throws -> [Location] {
     // 对关键词进行 URL 编码
     guard let encodedKeyword = keyword.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
@@ -447,7 +474,7 @@ private func searchNearbyLocationsFromGoogle(
     let urlString = """
     https://maps.googleapis.com/maps/api/place/nearbysearch/json\
     ?location=\(lat),\(lng)\
-    &radius=5000\
+    &radius=\(radiusMeters)\
     &keyword=\(encodedKeyword)\
     &key=\(apiKey)
     """

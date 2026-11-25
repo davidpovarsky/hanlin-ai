@@ -1,0 +1,230 @@
+{
+  "snapshotReceiptSHA256": "84ecaace9bd43f9e275047e28ba5755f7a2551ec5decc726940293cd1bd296aa",
+  "memberCount": 20,
+  "allVerified": true,
+  "members": [
+    {
+      "path": "build/primary-control/host-prefix-attempt7.json",
+      "snapshotPath": "files/build/primary-control/host-prefix-attempt7.json",
+      "bytes": 2172,
+      "sha256": "1a00256211a4abf55a3da6d1c996c9739dcbe4e0ee9d2c071d4c0b20dbba2202",
+      "mode": "0o644",
+      "actualSHA256": "1a00256211a4abf55a3da6d1c996c9739dcbe4e0ee9d2c071d4c0b20dbba2202",
+      "verified": true
+    },
+    {
+      "path": "build/primary-control/run-host-prefix-attempt7.py",
+      "snapshotPath": "files/build/primary-control/run-host-prefix-attempt7.py",
+      "bytes": 4161,
+      "sha256": "6b48a328c992c3e4299901eb95c4e34cb5ccd1f4099858a83b2908fb6d913472",
+      "mode": "0o644",
+      "actualSHA256": "6b48a328c992c3e4299901eb95c4e34cb5ccd1f4099858a83b2908fb6d913472",
+      "verified": true
+    },
+    {
+      "path": "build/primary-control/logs-attempt7/split-host-lifecycle.log",
+      "snapshotPath": "files/build/primary-control/logs-attempt7/split-host-lifecycle.log",
+      "bytes": 2345,
+      "sha256": "4685988e182745ba00a11ed63a51dc8277d01ead7ab96c24f4960af9aea2c155",
+      "mode": "0o644",
+      "actualSHA256": "4685988e182745ba00a11ed63a51dc8277d01ead7ab96c24f4960af9aea2c155",
+      "verified": true
+    },
+    {
+      "path": "build/primary-control/observation-attempt7/first-controller-state.json",
+      "snapshotPath": "files/build/primary-control/observation-attempt7/first-controller-state.json",
+      "bytes": 24502,
+      "sha256": "2e0150155f8fe91854c7869672809bc34bfe5fcca05eb6f070b29c1b9ae9bc93",
+      "mode": "0o644",
+      "actualSHA256": "2e0150155f8fe91854c7869672809bc34bfe5fcca05eb6f070b29c1b9ae9bc93",
+      "verified": true
+    },
+    {
+      "path": "build/primary-control/capacity-admission-attempt7.json",
+      "snapshotPath": "files/build/primary-control/capacity-admission-attempt7.json",
+      "bytes": 1915,
+      "sha256": "9bc2b1c273bdd744acd99194a8284b49668836cdfa9082e39f09fb386ba733f6",
+      "mode": "0o644",
+      "actualSHA256": "9bc2b1c273bdd744acd99194a8284b49668836cdfa9082e39f09fb386ba733f6",
+      "verified": true
+    },
+    {
+      "path": "RuntimeDependencies.lock.json",
+      "snapshotPath": "files/RuntimeDependencies.lock.json",
+      "bytes": 7925,
+      "sha256": "6cdbc18a474febbfc912b35ecbf5b0b55438a6a3e6daf2c33a43792cd04bd50a",
+      "mode": "0o644",
+      "actualSHA256": "6cdbc18a474febbfc912b35ecbf5b0b55438a6a3e6daf2c33a43792cd04bd50a",
+      "verified": true
+    },
+    {
+      "path": "Scripts/Expo/package-lock.json",
+      "snapshotPath": "files/Scripts/Expo/package-lock.json",
+      "bytes": 336291,
+      "sha256": "95d2a560d4eb01de64fcd0d43875a4ef2392e9747ed9fa79c2e0a0e58abececf",
+      "mode": "0o644",
+      "actualSHA256": "95d2a560d4eb01de64fcd0d43875a4ef2392e9747ed9fa79c2e0a0e58abececf",
+      "verified": true
+    },
+    {
+      "path": "Scripts/Expo/package.json",
+      "snapshotPath": "files/Scripts/Expo/package.json",
+      "bytes": 1730,
+      "sha256": "db6fd60dbc8f2b15eac5fee7029781cf14834ffbad53f0c8948fc4c2945c1e91",
+      "mode": "0o644",
+      "actualSHA256": "db6fd60dbc8f2b15eac5fee7029781cf14834ffbad53f0c8948fc4c2945c1e91",
+      "verified": true
+    },
+    {
+      "path": "Scripts/MiniApps/upstream-resolution.json",
+      "snapshotPath": "files/Scripts/MiniApps/upstream-resolution.json",
+      "bytes": 14118,
+      "sha256": "2bf8f371f06949fbe56858c38addeb417a07f9b598fc38ff72aedb39d5f364eb",
+      "mode": "0o644",
+      "actualSHA256": "2bf8f371f06949fbe56858c38addeb417a07f9b598fc38ff72aedb39d5f364eb",
+      "verified": true
+    },
+    {
+      "path": "Scripts/NativeScript/package-lock.json",
+      "snapshotPath": "files/Scripts/NativeScript/package-lock.json",
+      "bytes": 110219,
+      "sha256": "16f569f4bfa6f8806cfe72449866a0dc9a9331f33d2c67170d5292455c48b60b",
+      "mode": "0o644",
+      "actualSHA256": "16f569f4bfa6f8806cfe72449866a0dc9a9331f33d2c67170d5292455c48b60b",
+      "verified": true
+    },
+    {
+      "path": "Scripts/NativeScript/package.json",
+      "snapshotPath": "files/Scripts/NativeScript/package.json",
+      "bytes": 851,
+      "sha256": "08fc03bfa87cd78f4f21f80e9324a4840061105f6e9ab081ed794c569ca7324b",
+      "mode": "0o644",
+      "actualSHA256": "08fc03bfa87cd78f4f21f80e9324a4840061105f6e9ab081ed794c569ca7324b",
+      "verified": true
+    },
+    {
+      "path": "build/runtime-host/RuntimeHostResources.zip",
+      "snapshotPath": "files/build/runtime-host/RuntimeHostResources.zip",
+      "bytes": 81813086,
+      "sha256": "c4e85e967f873ffbe907990c5d9d612b5b6f95871b4e85c736ec0799f09cb1af",
+      "mode": "0o644",
+      "actualSHA256": "c4e85e967f873ffbe907990c5d9d612b5b6f95871b4e85c736ec0799f09cb1af",
+      "verified": true
+    },
+    {
+      "path": "build/runtime-host/host-metadata.json",
+      "snapshotPath": "files/build/runtime-host/host-metadata.json",
+      "bytes": 358,
+      "sha256": "b8540c390547715d3010ceefe8856587bc159d69f8e00ba0fd023a7c3e103ce0",
+      "mode": "0o644",
+      "actualSHA256": "b8540c390547715d3010ceefe8856587bc159d69f8e00ba0fd023a7c3e103ce0",
+      "verified": true
+    },
+    {
+      "path": "build/app-split-evidence/miniapp-documentation-snippets.json",
+      "snapshotPath": "files/build/app-split-evidence/miniapp-documentation-snippets.json",
+      "bytes": 20066,
+      "sha256": "2a1f6965444ab15758810d9ece587c18426d6026765f58a8156e97f1e02f9748",
+      "mode": "0o644",
+      "actualSHA256": "2a1f6965444ab15758810d9ece587c18426d6026765f58a8156e97f1e02f9748",
+      "verified": true
+    },
+    {
+      "path": "build/app-split-evidence/prepared-native/native-artifacts.json",
+      "snapshotPath": "files/build/app-split-evidence/prepared-native/native-artifacts.json",
+      "bytes": 28574,
+      "sha256": "b7bf734b3bd35595f90c3d3a841fa57ad63f0529dc0a5b6b2bee942e747022a6",
+      "mode": "0o644",
+      "actualSHA256": "b7bf734b3bd35595f90c3d3a841fa57ad63f0529dc0a5b6b2bee942e747022a6",
+      "verified": true
+    },
+    {
+      "path": "build/primary-control/logs-attempt7/split-native-preparation.log",
+      "snapshotPath": "files/build/primary-control/logs-attempt7/split-native-preparation.log",
+      "bytes": 32324,
+      "sha256": "89de966b4bd071efec1bb3fcab4a69421d82a6874d1d6f9853fb2e41c56bfb9e",
+      "mode": "0o644",
+      "actualSHA256": "89de966b4bd071efec1bb3fcab4a69421d82a6874d1d6f9853fb2e41c56bfb9e",
+      "verified": true
+    },
+    {
+      "path": "build/primary-control/logs-attempt7/split-native-artifacts.log",
+      "snapshotPath": "files/build/primary-control/logs-attempt7/split-native-artifacts.log",
+      "bytes": 1504,
+      "sha256": "4bcb3412ad77315881450fb4bb11693e9f50b3fb27967b3e228c4d62c82727ae",
+      "mode": "0o644",
+      "actualSHA256": "4bcb3412ad77315881450fb4bb11693e9f50b3fb27967b3e228c4d62c82727ae",
+      "verified": true
+    },
+    {
+      "path": "build/primary-control/plan.json",
+      "snapshotPath": "files/build/primary-control/plan.json",
+      "bytes": 12076,
+      "sha256": "3bb8675ff52d1a4b9d48915f968e22e44f1353e86425557349c8100a628abc89",
+      "mode": "0o644",
+      "actualSHA256": "3bb8675ff52d1a4b9d48915f968e22e44f1353e86425557349c8100a628abc89",
+      "verified": true
+    },
+    {
+      "path": "build/primary-control/reuse-closure-attempt7.json",
+      "snapshotPath": "files/build/primary-control/reuse-closure-attempt7.json",
+      "bytes": 12508,
+      "sha256": "69983927a4585e6b9f81faa9adc0e79005a55453151b16051804166f7ad6dfd7",
+      "mode": "0o644",
+      "actualSHA256": "69983927a4585e6b9f81faa9adc0e79005a55453151b16051804166f7ad6dfd7",
+      "verified": true
+    },
+    {
+      "path": "build/primary-control/source-advance-fd81d602/receipt.json",
+      "snapshotPath": "files/build/primary-control/source-advance-fd81d602/receipt.json",
+      "bytes": 4302,
+      "sha256": "92cc12addcbe4cbdad99b28ef1bf1d3b76cd051b3f5408e180f39d7ea7a990fa",
+      "mode": "0o644",
+      "actualSHA256": "92cc12addcbe4cbdad99b28ef1bf1d3b76cd051b3f5408e180f39d7ea7a990fa",
+      "verified": true
+    }
+  ],
+  "manifestVerified": {
+    "archiveMember": "MiniAppSDK/miniapp-sdk.json",
+    "snapshotPath": "extracted-sdk/miniapp-sdk.json",
+    "bytes": 5219288,
+    "sha256": "6a5ce216ab722741314a893f8bb226773da27c9d6151f6cbc28f46901b8fcb94"
+  },
+  "deltaLedgerSHA256": "b4d82aae8e71de76b30d01e73e4364db76e8131c4aef48833ececff6e4ac6207",
+  "deltaPayloadsVerified": 4,
+  "controllerStateAtCaptureSHA256": "ee8a67764cda65a0a5a874973db5e49b5ce7d1a6b5e57a5c9cafa252af1f6a47",
+  "sourceInputFilesVerifiedWithoutDuplicating": [
+    {
+      "path": "RuntimeDependencies.lock.json",
+      "sha256": "6cdbc18a474febbfc912b35ecbf5b0b55438a6a3e6daf2c33a43792cd04bd50a",
+      "matchesExecutionSource": true
+    },
+    {
+      "path": "Scripts/Expo/package-lock.json",
+      "sha256": "95d2a560d4eb01de64fcd0d43875a4ef2392e9747ed9fa79c2e0a0e58abececf",
+      "matchesExecutionSource": true
+    },
+    {
+      "path": "Scripts/Expo/package.json",
+      "sha256": "db6fd60dbc8f2b15eac5fee7029781cf14834ffbad53f0c8948fc4c2945c1e91",
+      "matchesExecutionSource": true
+    },
+    {
+      "path": "Scripts/MiniApps/upstream-resolution.json",
+      "sha256": "2bf8f371f06949fbe56858c38addeb417a07f9b598fc38ff72aedb39d5f364eb",
+      "matchesExecutionSource": true
+    },
+    {
+      "path": "Scripts/NativeScript/package-lock.json",
+      "sha256": "16f569f4bfa6f8806cfe72449866a0dc9a9331f33d2c67170d5292455c48b60b",
+      "matchesExecutionSource": true
+    },
+    {
+      "path": "Scripts/NativeScript/package.json",
+      "sha256": "08fc03bfa87cd78f4f21f80e9324a4840061105f6e9ab081ed794c569ca7324b",
+      "matchesExecutionSource": true
+    }
+  ],
+  "separateBuiltResourceReceiptSHA256": "ab377226d4312c5cccbdaa20bf9dc6bc236250df35868ad98878729e67fb8067",
+  "boundary": "Archive inspected in place; no duplicated archive, full SDK extraction or full native export."
+}

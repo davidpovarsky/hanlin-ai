@@ -1,0 +1,205 @@
+{
+  "schemaVersion": 1,
+  "status": "FAILED_VALIDATION",
+  "startedAtUTC": "2026-11-25T03:53:14.068780+00:00",
+  "sourceCommit": "d89ce38b170bc9af4734cd11e30ca793b16698d0",
+  "group": "native_engines",
+  "command": [
+    "xcodebuild",
+    "test-without-building",
+    "-xctestrun",
+    "/Users/m1/caches/DerivedData/hanlin-composer-app-20261124/Build/Products/AI_HLY_iphonesimulator27.0-arm64.xctestrun",
+    "-destination-timeout",
+    "60",
+    "-parallel-testing-enabled",
+    "NO",
+    "-maximum-concurrent-test-simulator-destinations",
+    "1",
+    "-maximum-parallel-testing-workers",
+    "1",
+    "-collect-test-diagnostics",
+    "never",
+    "-destination",
+    "platform=iOS Simulator,id=F1D52257-55E0-4927-8029-E19D47B51AC0",
+    "-resultBundlePath",
+    "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/app-tests-native_engines-attempt1/Tests.xcresult",
+    "-only-testing:AI_HLYTests/HanlinUnifiedHostServicesE2ETests/actualNativeScriptAssistantUsesDedicatedSourceAndImmutableConfiguration()",
+    "-only-testing:AI_HLYTests/HanlinUnifiedHostServicesE2ETests/actualExpoAssistantUsesDedicatedSourceAndImmutableConfiguration()",
+    "-only-testing:AI_HLYTests/HanlinUnifiedHostServicesE2ETests/nativeScriptAssistantRepliesSettleOnceAndRejectMalformedJSON()",
+    "-only-testing:AI_HLYTests/HanlinUnifiedHostServicesE2ETests/nativeScriptAssistantCancellationAndInvalidationReleaseWaiters()"
+  ],
+  "planSHA256": "f7dea489f9bbadcb7aec787be9e349de45117c092d3040971db2262a7d709005",
+  "expectedMethods": [
+    {
+      "target": "AI_HLYTests",
+      "suite": "HanlinUnifiedHostServicesE2ETests",
+      "method": "actualNativeScriptAssistantUsesDedicatedSourceAndImmutableConfiguration",
+      "signature": "actualNativeScriptAssistantUsesDedicatedSourceAndImmutableConfiguration()",
+      "relativeIdentity": "HanlinUnifiedHostServicesE2ETests/actualNativeScriptAssistantUsesDedicatedSourceAndImmutableConfiguration()",
+      "selector": "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/actualNativeScriptAssistantUsesDedicatedSourceAndImmutableConfiguration()",
+      "sourceFile": "AI_HLYTests/HanlinMiniAppAssistantToolAcceptanceTests.swift",
+      "sourceLine": 14,
+      "framework": "Swift Testing",
+      "argumentNames": [],
+      "expectedInvocations": 1
+    },
+    {
+      "target": "AI_HLYTests",
+      "suite": "HanlinUnifiedHostServicesE2ETests",
+      "method": "actualExpoAssistantUsesDedicatedSourceAndImmutableConfiguration",
+      "signature": "actualExpoAssistantUsesDedicatedSourceAndImmutableConfiguration()",
+      "relativeIdentity": "HanlinUnifiedHostServicesE2ETests/actualExpoAssistantUsesDedicatedSourceAndImmutableConfiguration()",
+      "selector": "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/actualExpoAssistantUsesDedicatedSourceAndImmutableConfiguration()",
+      "sourceFile": "AI_HLYTests/HanlinMiniAppAssistantToolAcceptanceTests.swift",
+      "sourceLine": 18,
+      "framework": "Swift Testing",
+      "argumentNames": [],
+      "expectedInvocations": 1
+    },
+    {
+      "target": "AI_HLYTests",
+      "suite": "HanlinUnifiedHostServicesE2ETests",
+      "method": "nativeScriptAssistantRepliesSettleOnceAndRejectMalformedJSON",
+      "signature": "nativeScriptAssistantRepliesSettleOnceAndRejectMalformedJSON()",
+      "relativeIdentity": "HanlinUnifiedHostServicesE2ETests/nativeScriptAssistantRepliesSettleOnceAndRejectMalformedJSON()",
+      "selector": "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/nativeScriptAssistantRepliesSettleOnceAndRejectMalformedJSON()",
+      "sourceFile": "AI_HLYTests/HanlinMiniAppAssistantToolTests.swift",
+      "sourceLine": 146,
+      "framework": "Swift Testing",
+      "argumentNames": [],
+      "expectedInvocations": 1
+    },
+    {
+      "target": "AI_HLYTests",
+      "suite": "HanlinUnifiedHostServicesE2ETests",
+      "method": "nativeScriptAssistantCancellationAndInvalidationReleaseWaiters",
+      "signature": "nativeScriptAssistantCancellationAndInvalidationReleaseWaiters()",
+      "relativeIdentity": "HanlinUnifiedHostServicesE2ETests/nativeScriptAssistantCancellationAndInvalidationReleaseWaiters()",
+      "selector": "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/nativeScriptAssistantCancellationAndInvalidationReleaseWaiters()",
+      "sourceFile": "AI_HLYTests/HanlinMiniAppAssistantToolTests.swift",
+      "sourceLine": 165,
+      "framework": "Swift Testing",
+      "argumentNames": [],
+      "expectedInvocations": 1
+    }
+  ],
+  "resultBundle": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/app-tests-native_engines-attempt1/Tests.xcresult",
+  "executionOwner": "/root",
+  "timeoutSeconds": 1800,
+  "buildForTestingManifests": {
+    "/Users/m1/caches/DerivedData/hanlin-composer-app-20261124/Build/Products/AI_HLY_iphonesimulator27.0-arm64.xctestrun": {
+      "sha256": "7a298177b07b04a7554677049a6f557865f0aa9387e352107bec3ea2c60253e5",
+      "mtime": 1795578015.538609
+    }
+  },
+  "buildReceipt": {
+    "path": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/ai-hly-build-attempt6.json",
+    "sha256": "aeb414df2dc399bb14b792f4482b6ffc2b8545c9dec745a7b6e3ef176aeff958"
+  },
+  "executedManifest": {
+    "path": "/Users/m1/caches/DerivedData/hanlin-composer-app-20261124/Build/Products/AI_HLY_iphonesimulator27.0-arm64.xctestrun",
+    "sha256": "7a298177b07b04a7554677049a6f557865f0aa9387e352107bec3ea2c60253e5",
+    "sourceCommit": "d89ce38b170bc9af4734cd11e30ca793b16698d0",
+    "buildReceiptSHA256": "aeb414df2dc399bb14b792f4482b6ffc2b8545c9dec745a7b6e3ef176aeff958",
+    "preflightReceipt": "built-products-preflight-attempt2.json"
+  },
+  "schemeEnvironment": {
+    "HANLIN_UNIT_TEST_HOST": "1"
+  },
+  "packageResolvedSHA256Before": "4a55e370d71d69933efb0bc54a08973da962b4d7270da59791aa3b1ed58910bd",
+  "sourceInputs": {
+    "AI_HLY.xcodeproj/project.pbxproj": "541fc1bfc13a5ba7a5ad34b27c5b7d230a9a7e2b4b46e7bc1c64fb44da9fd645",
+    "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved": "4a55e370d71d69933efb0bc54a08973da962b4d7270da59791aa3b1ed58910bd",
+    "AI_HLY.xcodeproj/xcshareddata/xcschemes/AI_HLY.xcscheme": "1a37dc5e015ee2e29e873f3e6d6035d6e933ec4eb27848c1263e51c9958af480",
+    "AI_HLYTests/HanlinMiniAppAssistantToolAcceptanceTests.swift": "28d210f043f2cda7e09951a7c2c8977f3ca5e1ae98a0c5c0e285de6611805fbc",
+    "AI_HLYTests/HanlinMiniAppAssistantToolTests.swift": "7cdd51b1ae123240c6e9cda58c837221ad8daec3385e79a8edf53dd010b74b25"
+  },
+  "allowedDocumentationChanges": [],
+  "toolchain": "Xcode 27.0\nBuild version 27A266a",
+  "pid": 39809,
+  "exitCode": 65,
+  "durationSeconds": 166.453,
+  "logSHA256": "4d84455f3f906666f5f8abb0028f34acafcc7b643ffee279c49b9c631d46a2ba",
+  "actual": {
+    "expectedMethodCount": 4,
+    "expectedInvocationCount": 4,
+    "observedMethodCount": 4,
+    "observedInvocationCount": 4,
+    "observedDeviceIDs": [
+      "F1D52257-55E0-4927-8029-E19D47B51AC0"
+    ],
+    "cases": [
+      {
+        "selector": "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/actualNativeScriptAssistantUsesDedicatedSourceAndImmutableConfiguration()",
+        "relativeIdentity": "HanlinUnifiedHostServicesE2ETests/actualNativeScriptAssistantUsesDedicatedSourceAndImmutableConfiguration()",
+        "expectedInvocations": 1,
+        "observedCopies": 1,
+        "rawIdentity": "HanlinUnifiedHostServicesE2ETests/actualNativeScriptAssistantUsesDedicatedSourceAndImmutableConfiguration()",
+        "rawIdentityURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesE2ETests/actualNativeScriptAssistantUsesDedicatedSourceAndImmutableConfiguration()",
+        "rawResult": "Failed",
+        "durationSeconds": 40.25452208518982,
+        "arguments": [],
+        "status": "OBSERVED_NONPASS"
+      },
+      {
+        "selector": "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/actualExpoAssistantUsesDedicatedSourceAndImmutableConfiguration()",
+        "relativeIdentity": "HanlinUnifiedHostServicesE2ETests/actualExpoAssistantUsesDedicatedSourceAndImmutableConfiguration()",
+        "expectedInvocations": 1,
+        "observedCopies": 1,
+        "rawIdentity": "HanlinUnifiedHostServicesE2ETests/actualExpoAssistantUsesDedicatedSourceAndImmutableConfiguration()",
+        "rawIdentityURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesE2ETests/actualExpoAssistantUsesDedicatedSourceAndImmutableConfiguration()",
+        "rawResult": "Failed",
+        "durationSeconds": 89.20253014564514,
+        "arguments": [],
+        "status": "OBSERVED_NONPASS"
+      },
+      {
+        "selector": "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/nativeScriptAssistantRepliesSettleOnceAndRejectMalformedJSON()",
+        "relativeIdentity": "HanlinUnifiedHostServicesE2ETests/nativeScriptAssistantRepliesSettleOnceAndRejectMalformedJSON()",
+        "expectedInvocations": 1,
+        "observedCopies": 1,
+        "rawIdentity": "HanlinUnifiedHostServicesE2ETests/nativeScriptAssistantRepliesSettleOnceAndRejectMalformedJSON()",
+        "rawIdentityURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesE2ETests/nativeScriptAssistantRepliesSettleOnceAndRejectMalformedJSON()",
+        "rawResult": "Passed",
+        "durationSeconds": 0.02624201774597168,
+        "arguments": [],
+        "status": "EXECUTED_PASS"
+      },
+      {
+        "selector": "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/nativeScriptAssistantCancellationAndInvalidationReleaseWaiters()",
+        "relativeIdentity": "HanlinUnifiedHostServicesE2ETests/nativeScriptAssistantCancellationAndInvalidationReleaseWaiters()",
+        "expectedInvocations": 1,
+        "observedCopies": 1,
+        "rawIdentity": "HanlinUnifiedHostServicesE2ETests/nativeScriptAssistantCancellationAndInvalidationReleaseWaiters()",
+        "rawIdentityURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesE2ETests/nativeScriptAssistantCancellationAndInvalidationReleaseWaiters()",
+        "rawResult": "Passed",
+        "durationSeconds": 0.005754709243774414,
+        "arguments": [],
+        "status": "EXECUTED_PASS"
+      }
+    ],
+    "problems": [
+      "METHOD_NONPASS: HanlinUnifiedHostServicesE2ETests/actualNativeScriptAssistantUsesDedicatedSourceAndImmutableConfiguration()",
+      "METHOD_NONPASS: HanlinUnifiedHostServicesE2ETests/actualExpoAssistantUsesDedicatedSourceAndImmutableConfiguration()",
+      "SUMMARY_NONPASS",
+      "SUMMARY_failedTests: 2",
+      "SUMMARY_COUNT_MISMATCH_passedTests: 2",
+      "SUMMARY_HAS_FAILURE_DIAGNOSTICS"
+    ],
+    "passed": false
+  },
+  "summary": {
+    "result": "Failed",
+    "totalTestCount": 4,
+    "passedTests": 2,
+    "failedTests": 2,
+    "skippedTests": 0,
+    "expectedFailures": 0
+  },
+  "packageResolvedSHA256After": "4a55e370d71d69933efb0bc54a08973da962b4d7270da59791aa3b1ed58910bd",
+  "sourceInputsUnchanged": true,
+  "testProductManifestsUnchanged": true,
+  "xcresultFilesManifestSHA256": "f2afd3239205af075ee4bdf8936aeb45112ee4980095939c6e16a0c8194b12d7",
+  "postRunHEAD": "d89ce38b170bc9af4734cd11e30ca793b16698d0",
+  "finishedAtUTC": "2026-11-25T03:56:01.273846+00:00"
+}

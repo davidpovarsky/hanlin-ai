@@ -1,0 +1,84 @@
+{
+  "candidate": "98907b3414ccd2db99253e800e5ac57610047323",
+  "tree": "54f2c6668403752c70956bb3c72d587c3b7cdd0b",
+  "base": "495680e928d5f4fd9735d14b0be5f267ced84b42",
+  "branch": "codex/hanlin-ai-cache-sync-f391-20261125",
+  "worktree": "/mnt/development/projects/worktrees/hanlin-ai-cache-sync-f391-20261125",
+  "clean": true,
+  "changed_paths": 297,
+  "non_docs_paths": [
+    "AI_HLY/Downstream/SDK/HanlinApplicationLifecycle.swift",
+    "AI_HLYUITests/HanlinMorphComposerUITests.swift",
+    "Fixtures/ExpoSwiftUIProbe/HostServicesProbe.tsx",
+    "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift"
+  ],
+  "dependency_changes": [],
+  "host_fingerprint": "bbd870604cb6c943916392a99ef06607e2279516399a557e7f21fd08b5cab3d1",
+  "baseline_host_fingerprint": "bbd870604cb6c943916392a99ef06607e2279516399a557e7f21fd08b5cab3d1",
+  "host_fingerprint_equal": true,
+  "matches_actual_retained_host": true,
+  "sdk_fingerprint": "a479afe87cbd044f856ad58199c52ebb1d5effde61cac918a58f460eb1641ee4",
+  "sdk_input_count": 237,
+  "sdk_changed_paths": [],
+  "selected_methods": 46,
+  "selected_invocations": 48,
+  "selected_inventory_exactly_unchanged": true,
+  "tracked_preparation_input_count": 57,
+  "changed_preparation_paths": [],
+  "generated_documents": {
+    "docs/miniapp-sdk/MANIFEST_REFERENCE.md": {
+      "sha256": "8da08b17fda7f2edf632dac1d577347c05dfd1f9753bfa48827707a73c9f769e",
+      "git_blob": "4124ddd6227efc1ac72411faf476d867a4e0447b",
+      "same_as_sealed4956": true
+    },
+    "docs/miniapp-sdk/extension-reachability.json": {
+      "sha256": "ce95c279320e9d70e6f0252208189118695d2b1af15ce2bd108cfad1fd7e1c4c",
+      "git_blob": "dbaf0858d289b23259746044b46c46f7dc1b47b8",
+      "same_as_sealed4956": true
+    },
+    "docs/miniapp-sdk/extension-reachability.md": {
+      "sha256": "bb9228cc8600bd64d770cd232862e6124c0f02a4feaef2d7a54263e16053237a",
+      "git_blob": "5520232515a08499bd52ec7c5254d67ad63e7371",
+      "same_as_sealed4956": true
+    },
+    "docs/miniapp-sdk/source-inventory.json": {
+      "sha256": "d17f15463b1fb291beddbd9be00aff172ba99adedf195a0b5c060bf7a3ca0dd1",
+      "git_blob": "28ee6955c6699e65449b05916527c3fe534c38b9",
+      "same_as_sealed4956": true
+    }
+  },
+  "owner_ancestry": {
+    "codex/hanlin-composer-capabilities-20261124": {
+      "commit": "f39142d3d14ae1bbbb81febceeef61fdc605f2a0",
+      "ancestor": true
+    },
+    "codex/hanlin-three-waves-wave3-20261124": {
+      "commit": "a2127598a677e0b8a67d41cdb422c4e19c8d1afc",
+      "ancestor": true
+    },
+    "codex/hanlin-miniapps-sdk-completion-20261123": {
+      "commit": "3d3a89bbfb5921490764f01b20632f62fb398433",
+      "ancestor": true
+    }
+  },
+  "normal_merge_commits": [
+    "c67df56e050157d45e8ded77ebbc4a056181b171",
+    "ba177763caca6bd36e33e4f39eefda330fe70cbd",
+    "98907b3414ccd2db99253e800e5ac57610047323"
+  ],
+  "native_tests_or_builds_executed": false,
+  "test_fixtures_executed": false,
+  "app06_source_relabelled": false,
+  "root_worktree_edits": false,
+  "acceptance_boundary": "Source-only integration and original fingerprint/source-inventory comparison. New shared startup code and changed UI/Expo fixtures require owner-selected affected validation. App06 remains bound to495680e9. The parallel lock-producer fix is not included.",
+  "source_comparison_issues": [],
+  "selected_inventory_comparison": {
+    "method": "Exact byte equality of the original source_inventory() outputs serialized identically; normalize JSON rather than comparing in-memory Swift argument tuples to decoded JSON lists.",
+    "baseline_sha256": "557e716eba15309a68f1f980a1d9795827fee89b99a09cac2622445fd5d3de26",
+    "candidate_sha256": "557e716eba15309a68f1f980a1d9795827fee89b99a09cac2622445fd5d3de26",
+    "original_source_file_hashes_equal": true,
+    "method_count": 46,
+    "invocation_count": 48
+  },
+  "preparation_scope_note": "All57 tracked preparation inputs selected by the original recipe are byte-identical. Runtime-only Config.xcconfig is not tracked here and was not modified; the native owner must retain its actual prepared configuration. No original resolver/header/schema/build/test was run by this comparison."
+}

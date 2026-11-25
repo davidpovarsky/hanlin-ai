@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="9.6709e-05"/>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="7.0375e-05"/>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="6.6542e-05"/>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="6.825e-05"/>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="6.1334e-05"/>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="6.3375e-05"/>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="6.8375e-05"/>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="6.675e-05"/>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="5.9375e-05"/>
+    <testsuite name="TestResults" errors="0" tests="22" failures="0" skipped="0" time="0.084987042">
+        <testcase classname="HanlinScriptCompilerTests.HanlinScriptAnalyzerTests" name="unavailableModernNativePluginsFailBeforeImport()" time="0.043035834"/>
+        <testcase classname="HanlinScriptCompilerTests.HanlinScriptAnalyzerTests" name="expoSwiftUIContract()" time="0.0608325"/>
+        <testcase classname="HanlinScriptCompilerTests.HanlinScriptAnalyzerTests" name="malformedBridgeVersionsNeverBypassPreparedPackageValidation()" time="0.070866291"/>
+        <testcase classname="HanlinScriptCompilerTests.HanlinScriptAnalyzerTests" name="preparedRuntimeVersionsUseTheActualReleasedSemverBoundary()" time="0.084476417"/>
+        <testcase classname="HanlinScriptCompilerTests.HanlinScriptAnalyzerTests" name="preparedAssistantToolMetadataSurvivesInstallation()" time="0.042799167"/>
+        <testcase classname="HanlinScriptCompilerTests.HanlinScriptAnalyzerTests" name="pythonProfile()" time="0.042637208"/>
+        <testcase classname="HanlinScriptCompilerTests.HanlinScriptAnalyzerTests" name="malformedPreparedDependenciesAreRejectedWithTheirSourcePath()" time="0.058209834"/>
+        <testcase classname="HanlinScriptCompilerTests.HanlinScriptAnalyzerTests" name="invalidAssistantEntrypointsCannotInstall()" time="0.05946975"/>
+        <testcase classname="HanlinScriptCompilerTests.HanlinScriptAnalyzerTests" name="legacyCompatibilityFindingsDecodeWithoutInventingACode()" time="0.042565834"/>
+        <testcase classname="HanlinScriptCompilerTests.HanlinScriptAnalyzerTests" name="expoMainMustMatchTheInspectedForegroundEntrypoint()" time="0.071899375"/>
+        <testcase classname="HanlinScriptCompilerTests.HanlinScriptAnalyzerTests" name="nativeScriptProfile()" time="0.042437542"/>
+        <testcase classname="HanlinScriptCompilerTests.HanlinScriptAnalyzerTests" name="explicitPreparedEntrypointsPreserveAllIDs()" time="0.042540167"/>
+        <testcase classname="HanlinScriptCompilerTests.HanlinScriptAnalyzerTests" name="ambientGlobals()" time="0.042686208"/>
+        <testcase classname="HanlinScriptCompilerTests.HanlinScriptAnalyzerTests" name="modernAssistantNeedsExplicitManifestMetadata()" time="0.042115167"/>
+        <testcase classname="HanlinScriptCompilerTests.HanlinScriptAnalyzerTests" name="preview()" time="0.042355083"/>
+        <testcase classname="HanlinScriptCompilerTests.HanlinScriptAnalyzerTests" name="nativeScriptSwiftUIContract()" time="0.042804208"/>
+        <testcase classname="HanlinScriptCompilerTests.HanlinScriptAnalyzerTests" name="nativeScriptPreparedEntrypointIsAlwaysTheCanonicalBundle()" time="0.059450333"/>
+        <testcase classname="HanlinScriptCompilerTests.HanlinScriptAnalyzerTests" name="malformedPreparedEntrypointsFailWithStableDiagnostic()" time="0.067488958"/>
+        <testcase classname="HanlinScriptCompilerTests.HanlinScriptAnalyzerTests" name="nativeScriptCoreContract()" time="0.047900875"/>
+        <testcase classname="HanlinScriptCompilerTests.HanlinScriptAnalyzerTests" name="expoMultiExposureMatrix()" time="0.042959667"/>
+        <testcase classname="HanlinScriptCompilerTests.HanlinScriptAnalyzerTests" name="forbiddenModules()" time="0.042584"/>
+        <testcase classname="HanlinScriptCompilerTests.HanlinScriptAnalyzerTests" name="declaredCapabilitiesInManifest()" time="0.042416042"/>
+    </testsuite>
+    <testsuite name="TestResults" errors="0" tests="9" failures="0" skipped="0" time="0.007152292">
+        <testcase classname="HanlinPlatformContractsTests.HanlinCapabilityAttachmentTests" name="identityIncludesProviderButRevisionRemainsSeparate()" time="0.00031225"/>
+        <testcase classname="HanlinPlatformContractsTests.HanlinCapabilityAttachmentTests" name="rawManifestDefaultsRoundTrip()" time="0.001666667"/>
+        <testcase classname="HanlinPlatformContractsTests.HanlinCapabilityAttachmentTests" name="assistantMetadataOmissionsMatchManifestContract()" time="0.006844041"/>
+        <testcase classname="HanlinPlatformContractsTests.HanlinCapabilityAttachmentTests" name="catalogAndMapValidation()" time="0.001026541"/>
+        <testcase classname="HanlinPlatformContractsTests.HanlinCapabilityAttachmentTests" name="assistantDeclarationRoundTrip()" time="0.002160833"/>
+        <testcase classname="HanlinPlatformContractsTests.HanlinCapabilityAttachmentTests" name="draftConfigurationDoesNotMutateDescriptorOrSentSnapshot()" time="0.001073542"/>
+        <testcase classname="HanlinPlatformContractsTests.HanlinCapabilityAttachmentTests" name="declarationValidation()" time="0.001073958"/>
+        <testcase classname="HanlinPlatformContractsTests.HanlinCapabilityAttachmentTests" name="minimalManifestDecoding()" time="0.000647375"/>
+        <testcase classname="HanlinPlatformContractsTests.HanlinCapabilityAttachmentTests" name="staleAttachmentRequiresReselection()" time="0.000843042"/>
+    </testsuite>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="6.6542e-05"/>
+    <testsuite name="TestResults" errors="0" tests="0" failures="0" skipped="0" time="6.5167e-05"/>
+</testsuites>

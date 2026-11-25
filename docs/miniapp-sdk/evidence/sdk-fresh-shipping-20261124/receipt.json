@@ -1,0 +1,275 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-24T09:07:52.190306+00:00",
+  "sourceCommit": "74ba980dbb91f3a38d4531f043801f5e742c283a",
+  "status": "ASSEMBLY_BLOCKED_MISSING_VERIFIED_INSTALLATION_RECEIPT",
+  "scope": "Current source SDK preparation assessment; actual existing preflight failures and prior Mac documentation report. No fresh full SDK assembled in this lane.",
+  "attempts": [
+    {
+      "command": [
+        "/usr/local/bin/node",
+        "Scripts/MiniApps/install-tooling.mjs",
+        "--verify",
+        "--tooling-root=/dev/shm/hanlin-expo-widgets-sdk-20261124/Scripts/Expo"
+      ],
+      "exitCode": 1,
+      "scope": "Existing production preflight, read-only; no preparation/install"
+    },
+    {
+      "command": [
+        "/usr/local/bin/node",
+        "Scripts/MiniApps/install-tooling.mjs",
+        "--verify",
+        "--tooling-root=/dev/shm/hanlin-sdk-only-kit-45335292541/AI_HLY/Downstream/RuntimeCore/Node/Host/MiniAppSDK/expo"
+      ],
+      "exitCode": 1,
+      "scope": "Existing production preflight, read-only; no preparation/install"
+    }
+  ],
+  "blocker": {
+    "required": "stageSDK calls verifyInstalledGraph, which requires node_modules/.hanlin-miniapp-install.json and the matching original installation closure before staging.",
+    "observed": "Both the existing current Expo cache and the immutable exported SDK fail the real verification command because the receipt is absent. Exported SDK manifests do not replace installation receipts; the SDK copy policy intentionally excludes that file.",
+    "nativeScript": "The separately retained NativeScript installation is from an older Core graph; it was not substituted for the current source graph.",
+    "receiptPolicy": "Existing receipt identity includes package/lock/policy digests, Node version, platform and architecture; no receipt was synthesized, copied across incompatible platforms, or resealed to bypass verification.",
+    "resolution": "Parent will use the already required corrected main app Mac preparation to install/verify the exact current original graph, stage the complete SDK, and check the actual shipping ZIP."
+  },
+  "cacheProbe": {
+    "status": "BOUNDED_READ_ONLY_PARTIAL_INVENTORY",
+    "roots": [
+      "/root/.npm/_cacache",
+      "/dev/shm/hanlin-expo-sdk-20261123/npm-cache/_cacache"
+    ],
+    "details": [
+      "cache-availability.json",
+      "expo-cache-inputs.json",
+      "nativescript-cache-inputs.json"
+    ],
+    "boundary": "Only these two npm content stores were checked. Counts are lock package entries, not unique tarballs. Other separately retained resolver archives were noticed but not integrity-accounted; the missing-entry report is not a claim that inputs are absent everywhere. Parent stopped further accounting at the sufficient missing-receipt blocker."
+  },
+  "priorNativeReport": {
+    "runID": "45354940642",
+    "sourceCommit": "a12eb646aeb5c484f746c07ecffafc7d9f34f167",
+    "artifactArchiveSHA256": "9064980406b7c59be8fe5f80113039609faed17e351dd9193ef329e933c6b4c8",
+    "archiveProvenance": "Single authenticated download/extraction owned by control_authoring; this lane only read the extracted report and copied its exact bytes.",
+    "report": "run10-miniapp-documentation-snippets.json",
+    "reportSHA256": "b6b6580828e2d97e3d4c32722dd19fc0db82cb3dbe047033e4ebb29e97c996e1",
+    "status": "EXECUTED_PASS",
+    "sdk": {
+      "manifestSHA256": "c06b2a820976039e600c71bd26aface33a3ccf2bd5bfe6e7ba68f184c1432caf",
+      "inputSHA256": "cf9d3e347e1b6516484b74f22a77e52243e789f3afd17dcea8fcd7c3dd5e97b1"
+    },
+    "sourceBlockCount": 14,
+    "jsonBlockCount": 7,
+    "projects": [
+      {
+        "name": "expo-guide",
+        "engine": "expo",
+        "succeeded": true,
+        "diagnostics": 0
+      },
+      {
+        "name": "nativescript-guide",
+        "engine": "nativescript",
+        "succeeded": true,
+        "diagnostics": 0
+      },
+      {
+        "name": "scriptwidget-guide",
+        "engine": "scriptwidget",
+        "succeeded": true,
+        "diagnostics": 0
+      },
+      {
+        "name": "scriptwidget-controls",
+        "engine": "scriptwidget",
+        "succeeded": true,
+        "diagnostics": 0
+      }
+    ],
+    "allSixStagedGuidesMatched": true,
+    "currentDocumentComparison": [
+      {
+        "path": "docs/hanlin-expo-runtime.md",
+        "run10SHA256": "14ba327519fd1b16c72f398eefcbbb4058eaf7682ba98f267807a5c462939808",
+        "currentSHA256": "14ba327519fd1b16c72f398eefcbbb4058eaf7682ba98f267807a5c462939808",
+        "sameBytes": true
+      },
+      {
+        "path": "docs/hanlin-nativescript-guide.md",
+        "run10SHA256": "5545b69b00e47508121c2d80a7b44241b854a7abad4019cc70696d6c0da8d1c6",
+        "currentSHA256": "5545b69b00e47508121c2d80a7b44241b854a7abad4019cc70696d6c0da8d1c6",
+        "sameBytes": true
+      },
+      {
+        "path": "docs/miniapp-sdk/SCRIPTWIDGET_AUTHORING.md",
+        "run10SHA256": "1fce8faa52105f48f9b3337116030dd6cc0b592b2512b095fc88bdea1d1bbfe9",
+        "currentSHA256": "1c9a43f36b5317c263868ac549567a31d08440e600d20b96fd7fef493e31fbca",
+        "sameBytes": false
+      },
+      {
+        "path": "docs/miniapp-sdk/SCRIPTWIDGET_CONTROLS.md",
+        "run10SHA256": "1a22bcd767f2747a6e522fae41c4ef245594ad43ecacf85bed768c1912f34064",
+        "currentSHA256": "1a22bcd767f2747a6e522fae41c4ef245594ad43ecacf85bed768c1912f34064",
+        "sameBytes": true
+      },
+      {
+        "path": "docs/miniapp-sdk/AUTHORING_WORKFLOW.md",
+        "run10SHA256": "d97e56669d9e7ea07736aa3cc7f1f0032478bfdc40841b26271ef3fd1834e68b",
+        "currentSHA256": "ff5b70055ac532e9f23cf3b56ac28aa01f4211d25fb86be2f16ac530eca7ad06",
+        "sameBytes": false
+      },
+      {
+        "path": "docs/miniapp-sdk/README.md",
+        "run10SHA256": "e504e9391a8e519d2346639e75b9747adb218eb2b04a9ef15c476c3cafeb8e7f",
+        "currentSHA256": "4427f49e5b729658d95d98eb6cdbb84ea08f2e4d2e33d7b7c480192914346637",
+        "sameBytes": false
+      }
+    ],
+    "boundary": "Positive original-SDK static validation and exact shipping-guide bytes for this prior source only. Native app/UI acceptance did not run because compilation failed later; this report does not prove current source full staging or native launch."
+  },
+  "currentSourcePathReview": {
+    "classification": "READ_ONLY_SOURCE_REVIEW_NOT_EXECUTION",
+    "chain": [
+      {
+        "path": ".github/workflows/validate-app-split.yml",
+        "symbols": [
+          "split-native-preparation",
+          "check-authoring-examples.mjs --sdk-archive build/runtime-host/RuntimeHostResources.zip --require-sdk-docs"
+        ],
+        "meaning": "The existing normal preparation verifies original npm tooling, prepares runtime Host resources, and checks the actual produced ZIP before app builds."
+      },
+      {
+        "path": "Scripts/Runtime/prepare-runtime-host.sh",
+        "symbols": [
+          "stage-sdk.mjs",
+          "runtime_host_archive.py validate"
+        ],
+        "meaning": "The current repository stageSDK is invoked without an engine subset, then the packed SDK is validated."
+      },
+      {
+        "path": "Scripts/MiniApps/stage-sdk.mjs",
+        "symbols": [
+          "stageSDK",
+          "copySDKExamples",
+          "copySDKDocumentation",
+          "inputReceipt",
+          "collect"
+        ],
+        "meaning": "Default Expo/NativeScript/ScriptWidget selection copies the four complete source projects, exports engine indexes, copies the public documentation tree including the new index/reference, fingerprints their source bytes and hashes every staged file."
+      },
+      {
+        "path": "Scripts/Runtime/runtime_host_archive.py",
+        "symbols": [
+          "miniapp_sdk_inputs",
+          "validate_archive",
+          "input_hash",
+          "reusable_prepared_archive"
+        ],
+        "meaning": "Archive validation compares current SDK input identity and each recorded staged-file digest. Source-input changes invalidate reuse of a prior Host archive."
+      }
+    ],
+    "examples": [
+      {
+        "id": "expo-hello-world",
+        "engine": "expo",
+        "level": "hello-world",
+        "title": "Expo Hello World",
+        "directory": "expo-hello-world",
+        "expectedSDKPath": "examples/expo-hello-world"
+      },
+      {
+        "id": "sdk-only-departure-budget",
+        "engine": "expo",
+        "level": "complete-app",
+        "title": "Departure Budget",
+        "directory": "sdk-only-departure-budget",
+        "expectedSDKPath": "examples/sdk-only-departure-budget"
+      },
+      {
+        "id": "nativescript-hello-world",
+        "engine": "nativescript",
+        "level": "hello-world",
+        "title": "NativeScript Hello World",
+        "directory": "nativescript-hello-world",
+        "expectedSDKPath": "examples/nativescript-hello-world"
+      },
+      {
+        "id": "sdk-only-table-share",
+        "engine": "nativescript",
+        "level": "complete-app",
+        "title": "Table Share",
+        "directory": "sdk-only-table-share",
+        "expectedSDKPath": "examples/sdk-only-table-share"
+      }
+    ],
+    "newDocumentation": [
+      "docs/miniapp-sdk/EXAMPLES.md",
+      "docs/miniapp-sdk/MANIFEST_REFERENCE.md"
+    ],
+    "newDocumentationFencedBlocks": 0,
+    "snippetCheckerBoundary": "The compiler checker inventories the same six public guides, including their current bytes. EXAMPLES.md and MANIFEST_REFERENCE.md contain no fenced code and are copied/fingerprinted/integrity-checked as documentation, not claimed as additional compiled snippets. Complete project source/build proof remains in the separate existing receipts; the next SDK preparation does not silently rerun those projects.",
+    "exclusionBoundary": "Existing exact evidence/cache exclusions remain. Project-root .hanlin-build/.hanlin-authoring/.metro-cache output paths are excluded; ordinary ZIP data and build/dist resources remain authored inputs."
+  },
+  "sourceIdentities": [
+    {
+      "path": "Scripts/MiniApps/install-tooling.mjs",
+      "sha256": "6fb5f130d1a381d628ffa5042eff7ce36d48431ed7636a36c28fec20e5b79120",
+      "bytes": 10914
+    },
+    {
+      "path": "Scripts/MiniApps/stage-sdk.mjs",
+      "sha256": "a9d02de9128acde4bcdd14b60c3227627a43c004075f55c6d9f41e2045c9bcce",
+      "bytes": 21057
+    },
+    {
+      "path": "Scripts/MiniApps/check-authoring-examples.mjs",
+      "sha256": "419f295ee6f0e7dcbf9cee42560ef1e8760010ae07b1d6767a0f6017fc7b317a",
+      "bytes": 17675
+    },
+    {
+      "path": "Scripts/MiniApps/authoring-examples.json",
+      "sha256": "3ff3b2272bb77eb22fcc3df81063aab3994ec555b1e78562ee9e256b3cd0aa26",
+      "bytes": 4606
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/index.json",
+      "sha256": "a0eddbc0e8dc3b15d6ddf74e8173d674afec99c5a52c77366e1000116eb4c8d1",
+      "bytes": 796
+    },
+    {
+      "path": "Scripts/Runtime/prepare-runtime-host.sh",
+      "sha256": "1116efd0aacd1b0891287d5a9afc8b67f45186fad82f4a0c8a6a35eb17b7519c",
+      "bytes": 4474
+    },
+    {
+      "path": "Scripts/Runtime/runtime_host_archive.py",
+      "sha256": "c446a8bcd0bebb30193eab35e6588662d9c989c4e656be020259a94428c0c8c6",
+      "bytes": 11341
+    },
+    {
+      "path": ".github/workflows/validate-app-split.yml",
+      "sha256": "4e61939d1c7af7940ec5b72afedacef04b9f4e73d183b42b8eb9fc0073d9c185",
+      "bytes": 31358
+    },
+    {
+      "path": "docs/miniapp-sdk/EXAMPLES.md",
+      "sha256": "a17984f1d39f3f8ea73c9fe5be03eebec5884665a8fd18981639442ba1261e70",
+      "bytes": 3722
+    },
+    {
+      "path": "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+      "sha256": "3a4d9e0ec6aa1666112f4ddf6c27096853359d8e88d4575b3bc70b6bebf9b578",
+      "bytes": 118561
+    }
+  ],
+  "executionBoundary": {
+    "freshFullSDK": "NOT_RUN",
+    "currentShippingDocumentationCheck": "NOT_RUN",
+    "newNpmInstall": "NOT_RUN",
+    "nativeTests": "NOT_RUN",
+    "ciActions": "NONE",
+    "frozenSDKMutation": "NONE",
+    "sharedDependencyMutation": "NONE",
+    "newProductionChanges": "NONE"
+  }
+}

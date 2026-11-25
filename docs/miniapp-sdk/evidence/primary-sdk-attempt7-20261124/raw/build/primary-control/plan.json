@@ -1,0 +1,104 @@
+{
+  "schema": 1,
+  "owner": "/root/native_execution",
+  "sha": "fd81d602d3b25f09162a659e1e0cf0582e91a93a",
+  "root": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete",
+  "workflowSHA256": "677ba19c3a2e281e850b182b3bef8bcde709ee167f58d601c1c3aa6ade665982",
+  "metadataActionSHA256": "c02a5ef45e1ee1de883aedbd1d8a8bbfb5b508b3f41530868600d6158bab99af",
+  "scope": "miniapp_complete",
+  "expectedCases": 52,
+  "maximumActiveSeconds": 12600,
+  "phases": [
+    {
+      "id": "split-platform",
+      "script": "set -euo pipefail\nmkdir -p \"$SPLIT_EVIDENCE\"\nsplit_phase_start=$SECONDS\ntrap 'printf \"%s\\n\" \"$(( SECONDS - split_phase_start ))\" > \"$SPLIT_EVIDENCE/preflight-duration-seconds.txt\"' EXIT\nselected_xcode=\"/Applications/Xcode.app\"\ntest -d \"$selected_xcode/Contents/Developer\"\nexport DEVELOPER_DIR=\"$selected_xcode/Contents/Developer\"\necho \"DEVELOPER_DIR=$DEVELOPER_DIR\" >> \"$GITHUB_ENV\"\n{\n  sw_vers\n  uname -m\n  xcodebuild -version\n  xcodebuild -showsdks\n  xcrun simctl list runtimes -j\n  xcrun simctl list devicetypes -j\n  command -v python3\n  python3 --version\n  command -v xcodebuild\n  command -v xcrun\n  df -Pk . \"$RUNNER_TEMP\"\n  command -v idb && idb --version || true\n  command -v maestro && maestro --version || true\n} > \"$SPLIT_EVIDENCE/preflight.log\" 2>&1\ncat \"$SPLIT_EVIDENCE/preflight.log\"\ntest \"$(df -Pk . | awk 'NR==2 {print $4}')\" -gt 15000000\ntest \"$(xcrun --sdk iphonesimulator --show-sdk-version | cut -d. -f1)\" -ge 27\necho \"arch=$(uname -m)\" >> \"$GITHUB_OUTPUT\"\necho \"xcode_build=$(xcodebuild -version | sed -n '2s/^Build version //p')\" >> \"$GITHUB_OUTPUT\"\necho \"sdk=$(xcrun --sdk iphonesimulator --show-sdk-version)\" >> \"$GITHUB_OUTPUT\"\nskill_script=\"$HOME/.codex/skills/ios-simulator-skill/scripts/sim_health_check.sh\"\nif [ -f \"$skill_script\" ]; then\n  bash \"$skill_script\" --json > \"$SPLIT_EVIDENCE/skill-health.json\" 2>&1 || true\nelse\n  echo 'NOT_AVAILABLE: ios-simulator-skill scripts on this Mac; XCUITest remains available.' > \"$SPLIT_EVIDENCE/skill-health.txt\"\nfi\nplutil -lint AI_HLY.xcodeproj/project.pbxproj HanlinMiniAppsApp/HanlinMiniApps.entitlements\npython3 Scripts/ProductSplit/verify_targets.py\n",
+      "source": ".github/workflows/validate-app-split.yml#split-platform; only installed primary Xcode app path selection adapted",
+      "condition": null,
+      "scriptSHA256": "7f1edd791bb43546b753d6834c0cd7b85f558f57883312892364110ad2cbfa4c"
+    },
+    {
+      "id": "split-upstreams",
+      "script": "set -euo pipefail\ntrap 'cp build/acceptance/miniapp-upstreams/resolution.json \"$SPLIT_EVIDENCE/upstream-resolution.json\" 2>/dev/null || true; git diff --binary > \"$SPLIT_EVIDENCE/upstream-inputs.patch\"' EXIT\nnode Scripts/MiniApps/resolve-upstreams.mjs --apply --cache=\"$RUNNER_TEMP/hanlin-miniapp-upstreams\" 2>&1 | tee \"$SPLIT_EVIDENCE/upstream-resolution.log\"\ncp build/acceptance/miniapp-upstreams/resolution.json \"$SPLIT_EVIDENCE/upstream-resolution.json\"\ngit diff --binary > \"$SPLIT_EVIDENCE/upstream-inputs.patch\"\n",
+      "source": ".github/workflows/validate-app-split.yml#split-upstreams",
+      "condition": null,
+      "scriptSHA256": "890c8ac2b02ff5a5909c71789e639e333cbc78c687797f2a060a7dd2591cfa84"
+    },
+    {
+      "id": "host-proof",
+      "script": "python3 Scripts/ProductSplit/restore_host_proof.py",
+      "source": ".github/workflows/validate-app-split.yml#host-proof",
+      "condition": null,
+      "scriptSHA256": "f0f0bbd389a9307dd721135a391b23a20cd9d640f149838fb19fa1cf9daa8bcc"
+    },
+    {
+      "id": "split-foreground",
+      "script": "set -euo pipefail\npython3 Scripts/ProductSplit/run_portable.py --suite foreground | tee \"$SPLIT_EVIDENCE/foreground.log\"\npython3 - <<'PY'\nimport json, os, pathlib, shutil\nroot = pathlib.Path.cwd()\nreport = root / 'docs/product-split/foreground-results.json'\ndata = json.loads(report.read_text())\nassert data['status'] == 'EXECUTED_PASS' and data['count'] == 53\norigin = pathlib.Path(data['raw_evidence_manifest']['path']).parent.resolve()\nassert origin.is_relative_to((root / 'docs/product-split/evidence').resolve())\ndestination = pathlib.Path(os.environ['SPLIT_EVIDENCE']) / 'foreground'\ndestination.mkdir()\nshutil.copy2(report, destination / report.name)\nshutil.copytree(origin, destination / 'raw-origin')\nPY\n",
+      "source": ".github/workflows/validate-app-split.yml#split-foreground",
+      "condition": "foreground_reused",
+      "scriptSHA256": "29e26e4ab82898091d69fadeae7245be79fe86294416919cb1ebb5bbee9ffc43"
+    },
+    {
+      "id": "split-host-lifecycle",
+      "script": "set -euo pipefail\nsplit_phase_start=$SECONDS\ntrap 'printf \"%s\\n\" \"$(( SECONDS - split_phase_start ))\" > \"$SPLIT_EVIDENCE/package-lifecycle-duration-seconds.txt\"' EXIT\ntest \"$(node --version)\" = 'v24.5.0'\nhost_root=\"$PWD/AI_HLY/Downstream/RuntimeCore/Node/Host\"\ngrammar_root=\"$PWD/Scripts/Runtime/HostGrammarTools\"\nexport HANLIN_HOST_GRAMMAR_COMPILER_ROOT=\"$grammar_root\"\nnpm ci --prefix \"$grammar_root\" --ignore-scripts --workspaces=false --no-audit --no-fund\nnpm ci --prefix \"$host_root\" --omit=dev --ignore-scripts --workspaces=false --no-audit --no-fund\n(cd \"$host_root\" && node apply-host-dependency-patches.mjs)\nnode Scripts/Runtime/generate-yarn-unicode-patch.mjs --root \"$host_root\"\nnode Scripts/Runtime/generate-yarn-multiline-patch.mjs --root \"$host_root\" --compiler-root \"$grammar_root\"\n{\n  node --version\n  shasum -a 256 \"$host_root/global-package-state.mjs\" \"$host_root/Tests/package-lifecycle.test.mjs\" \"$host_root/package-lock.json\"\n  node --test \"$host_root/Tests/package-lifecycle.test.mjs\"\n} 2>&1 | tee \"$SPLIT_EVIDENCE/package-lifecycle.log\"\nif [[ 'miniapp_complete' == 'miniapp_authoring' || 'miniapp_complete' == 'miniapp_complete' ]]; then\n  miniapp_cli_root=\"$(mktemp -d \"$RUNNER_TEMP/hanlin-cli-preflight.XXXXXX\")\"\n  mkdir -p \"$miniapp_cli_root/Tests\"\n  cp \"$host_root/miniapp-authoring.mjs\" \"$miniapp_cli_root/\"\n  cp \"$host_root/Tests/miniapp-authoring.test.mjs\" \"$miniapp_cli_root/Tests/\"\n  ln -s \"$host_root/node_modules\" \"$miniapp_cli_root/node_modules\"\n  (cd \"$miniapp_cli_root\"\n    unset HANLIN_AUTHORING_TYPESCRIPT\n    export HANLIN_MINIAPP_REPOSITORY_ROOT=\"$GITHUB_WORKSPACE\"\n    node --test --test-name-pattern='the real CLI archives and revalidates retained source, diagnostics and output identity' Tests/miniapp-authoring.test.mjs\n  ) 2>&1 | tee \"$SPLIT_EVIDENCE/miniapp-cli-relocation.log\"\nfi\n",
+      "source": ".github/workflows/validate-app-split.yml#split-host-lifecycle; exact miniapp_complete input",
+      "condition": "reused",
+      "scriptSHA256": "956541d15f45f12b7777b8ebeb800fe14e1686db5fc7ceae397835547953d7bc"
+    },
+    {
+      "id": "split-metadata",
+      "script": "echo \"digest=$(xcodebuild -version | shasum -a 256 | cut -d ' ' -f 1)\" >> \"$GITHUB_OUTPUT\"\nset -euo pipefail\nif [ ! -f Scripts/NativeScript/node_modules/@nativescript/ios/package.json ]; then\n  npm ci --prefix Scripts/NativeScript --ignore-scripts --no-audit --no-fund\nfi\npython3 Scripts/NativeScript/build-metadata-tool.py\n",
+      "source": ".github/actions/prepare-nativescript-metadata-tool/action.yml; no compatible primary tool cache established",
+      "condition": null,
+      "scriptSHA256": "242b75c7edfb94f90ab0cd5d2032af9e2bfda15141c8d98743074d999b10fc14"
+    },
+    {
+      "id": "split-native-preparation",
+      "script": "set -euo pipefail\nsplit_phase_start=$SECONDS\ntrap 'printf \"%s\\n\" \"$(( SECONDS - split_phase_start ))\" > \"$SPLIT_EVIDENCE/native-dependencies-duration-seconds.txt\"' EXIT\n{\nnode Scripts/MiniApps/install-tooling.mjs --engine=nativescript --ignore-scripts\nnpm run prepare:ios-dependencies --prefix Scripts/NativeScript\nnode Scripts/MiniApps/install-tooling.mjs --engine=expo --ignore-scripts\nnode Scripts/Expo/prepare-ios-dependencies.mjs\nnode Scripts/Expo/prepare-types.mjs\nnode Scripts/Expo/build-probe.mjs\nnode Scripts/ExpoNativeAPI/build-probes.mjs\nbash Scripts/Runtime/prepare-runtime-core.sh\nbash Scripts/Runtime/prepare-runtime-host.sh\ncp build/runtime-host/RuntimeHostResources.zip AI_HLY/RuntimeHostResources.zip\n# Check the actual public guide blocks against the exact SDK in the verified shipping ZIP.\n# Static authoring checks do not imply a MiniApp launched or a native service executed.\nnode Scripts/MiniApps/check-authoring-examples.mjs --sdk-archive build/runtime-host/RuntimeHostResources.zip --require-sdk-docs --report \"$SPLIT_EVIDENCE/miniapp-documentation-snippets.json\"\n# The verified ZIP above is the shipping payload. The lifecycle check's\n# temporary npm tree must not enter Xcode's synchronized app resources.\nrm -rf AI_HLY/Downstream/RuntimeCore/Node/Host/node_modules\ntest ! -e AI_HLY/Downstream/RuntimeCore/Node/Host/node_modules\ncat > Config.xcconfig <<'EOF'\nSWIFT_ENABLE_EXPLICIT_MODULES = NO\nSWIFT_OBJC_INTEROP_MODE = objcxx\nCLANG_CXX_LANGUAGE_STANDARD = gnu++20\nCLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES\nCLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO\nEOF\n} 2>&1 | tee \"$SPLIT_EVIDENCE/native-dependencies.log\"\n",
+      "source": ".github/workflows/validate-app-split.yml#split-native-preparation",
+      "condition": null,
+      "scriptSHA256": "47635289bc9238f28f65b6f72d4980b5cf0aa6def2cf146cd236261260f65a3e"
+    },
+    {
+      "id": "split-native-artifacts",
+      "script": "set -euo pipefail\npython3 Scripts/SDK/native_artifacts.py export --root \"$GITHUB_WORKSPACE\" --output \"$SPLIT_EVIDENCE/prepared-native\"\npython3 Scripts/SDK/native_artifacts.py verify --catalog \"$SPLIT_EVIDENCE/prepared-native/native-artifacts.json\" --assets \"$SPLIT_EVIDENCE/prepared-native\"\ncp Scripts/MiniApps/upstream-resolution.json \"$SPLIT_EVIDENCE/prepared-native/upstream-resolution.json\"\ncp \"$SPLIT_EVIDENCE/upstream-inputs.patch\" \"$SPLIT_EVIDENCE/prepared-native/upstream-inputs.patch\"\n",
+      "source": ".github/workflows/validate-app-split.yml#split-native-artifacts",
+      "condition": null,
+      "scriptSHA256": "eb0405f89f5da3d48e1591650d42e2f7a8ff8f86eebac9b82ded2e5c70cefebd"
+    },
+    {
+      "id": "split-restore-inputs",
+      "script": "python3 Scripts/CI/xcode_cache_inputs.py --repository \"$GITHUB_WORKSPACE\" restore --manifest \"$SPLIT_DERIVED_DATA/CacheMetadata/xcode-build-inputs.json\"",
+      "source": ".github/workflows/validate-app-split.yml#Restore verified input timestamps for incremental compilation",
+      "condition": null,
+      "scriptSHA256": "f848273286ad9fdcecc9635ee01148c5f54b45230a5199938ef3d362a709f39a"
+    },
+    {
+      "id": "split-inputs",
+      "script": "python3 Scripts/CI/xcode_cache_inputs.py --repository \"$GITHUB_WORKSPACE\" capture \\\n  --manifest \"$SPLIT_DERIVED_DATA/CacheMetadata/xcode-build-inputs.json\" --head \"$GITHUB_SHA\" \\\n  --directory-root . AI_HLY AI_HLYTests AI_HLYUITests HanlinMiniAppsApp HanlinMiniAppsUITests HanlinMiniAppsTests Packages AI_HLY.xcodeproj Vendor Config.xcconfig RuntimeDependencies.lock.json\n",
+      "source": ".github/workflows/validate-app-split.yml#split-inputs",
+      "condition": null,
+      "scriptSHA256": "03a05318e9c17e6b2a3fc91dc40ee908b81ee204fb961cda64687179778621bc"
+    },
+    {
+      "id": "split-paired-acceptance",
+      "script": "python3 Scripts/ProductSplit/run_paired_acceptance.py",
+      "source": ".github/workflows/validate-app-split.yml#split-paired-acceptance",
+      "condition": null,
+      "scriptSHA256": "f271e6f1b95bb261417cee5fc13104e41df44f8ec35d2ab565b1f6135191c0c8"
+    }
+  ],
+  "sourceAdvances": [
+    {
+      "from": "ce49e30d69466e44b0aa26582beaa57ee7a91a9b",
+      "to": "36a044c3c147eda2baa4fbe99e0fe698dcd0c13e",
+      "receipt": "source-advance-36a044c3/receipt.json",
+      "originalPhaseBodiesUnchanged": true
+    }
+  ],
+  "sourceAdvance": {
+    "from": "36a044c3c147eda2baa4fbe99e0fe698dcd0c13e",
+    "to": "312472e91c05a7d32bbef4e936c001d713409370",
+    "receipt": "source-advance-312472e9/receipt.json",
+    "originalPhaseBodiesUnchanged": true
+  }
+}

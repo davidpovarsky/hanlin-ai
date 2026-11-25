@@ -1,0 +1,9 @@
+{
+  "name": "Hanlin NativeScript Window Factory E2E",
+  "version": "1.0.0",
+  "hanlinAppID": "hanlin.nativescript.window-factory",
+  "description": "Two fresh NativeScript roots with window-bound MiniApps contexts and callbacks.",
+  "entry": "nativescript/app/bundle.mjs",
+  "runInApp": true,
+  "hanlinRuntime": "hanlin-nativescript"
+}

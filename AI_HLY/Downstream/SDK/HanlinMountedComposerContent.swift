@@ -57,7 +57,9 @@ struct HanlinMountedComposerContent: View {
             isInputActive: isInputActive,
             dockContextKey: endpoint.sessionID.uuidString,
             availableWorkspaceSize: availableWorkspaceSize,
-            readCurrentMessageState: endpoint.readCurrentMessageState
+            readCurrentMessageState: endpoint.readCurrentMessageState,
+            capabilityDraft: endpoint.capabilityDraft,
+            composerCapabilities: HanlinComposerCapabilities.catalog()
         )
     }
 }

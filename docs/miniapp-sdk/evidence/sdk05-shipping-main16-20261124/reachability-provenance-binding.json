@@ -1,0 +1,21 @@
+{
+  "source": "7d1efaa6ada43dd80c57133c09e6a8fb327075cf",
+  "project": {
+    "path": "AI_HLY.xcodeproj/project.pbxproj",
+    "sha256": "24206ae0f0f66d3669cae5ccd4ffcff25ae582ec4620359a2becca7ad8e16780",
+    "actualReference": {
+      "file": "AI_HLY.xcodeproj/project.pbxproj",
+      "line": 2693,
+      "anchor": "/* Begin PBXNativeTarget section */",
+      "sha256": "24206ae0f0f66d3669cae5ccd4ffcff25ae582ec4620359a2becca7ad8e16780"
+    }
+  },
+  "READMEReference": {
+    "file": "docs/miniapp-sdk/README.md",
+    "line": 82,
+    "anchor": "## Entry points and native surfaces",
+    "sha256": "90068db0d87718cc9f995f9d45c1e2e8a7bd670aa8b8f3b324f0bf4cfc591d95"
+  },
+  "unchangedSourceInventorySHA256": "7a9def87c5bf71226b1d120c6f8bd9856732828e8bcdfd7d36a4633d8c9b6b45",
+  "generatorExecuted": false
+}

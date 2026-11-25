@@ -7,9 +7,9 @@ import subprocess
 
 
 if __package__:
-    from .owned_simulator_receipts import created_selection
+    from .owned_simulator_receipts import created_selection, motion_run_from_environment
 else:
-    from owned_simulator_receipts import created_selection
+    from owned_simulator_receipts import created_selection, motion_run_from_environment
 
 
 def family_for_selectors(selectors: str) -> str:
@@ -64,13 +64,21 @@ if __name__ == "__main__":
     if args.create_owned:
         if not args.create_owned.startswith("Hanlin-Phase2-") or len(args.create_owned) > 120:
             raise ValueError("A bounded Phase2-owned simulator name is required")
+        identity = {"run_provider": "github", "run_id": os.environ.get("GITHUB_RUN_ID"),
+                    "run_attempt": os.environ.get("GITHUB_RUN_ATTEMPT")}
+        if args.create_owned.startswith("Hanlin-Phase2-Motion-"):
+            identity = motion_run_from_environment()
+            if args.create_owned != identity["name"]:
+                raise ValueError("Motion simulator name must match the current run provenance")
+        elif any(key in os.environ for key in ("HANLIN_LOCAL_RUN_ID", "HANLIN_LOCAL_RUN_ATTEMPT")):
+            raise ValueError("Local Mac ownership is scoped to Motion")
         original = selected["device"]
         identifier = read(["xcrun", "simctl", "create", args.create_owned,
                            original["deviceTypeIdentifier"], selected["runtime"]["identifier"]]).strip()
         observed = json.loads(read(["xcrun", "simctl", "list", "devices", "available", "-j"]))
         selected = created_selection(
             selected, devices, observed, args.create_owned, identifier,
-            os.environ.get("GITHUB_RUN_ID"), os.environ.get("GITHUB_RUN_ATTEMPT"))
+            identity["run_id"], identity["run_attempt"], run_provider=identity["run_provider"])
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps({**selected, "observed_runtimes": runtimes}, indent=2))
     device, runtime = selected["device"], selected["runtime"]

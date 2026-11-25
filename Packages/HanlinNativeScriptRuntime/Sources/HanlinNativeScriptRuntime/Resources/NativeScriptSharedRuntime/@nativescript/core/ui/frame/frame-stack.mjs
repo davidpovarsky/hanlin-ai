@@ -46,6 +46,17 @@ export function _pushInFrameStack(frame) {
     frameStack.push(frame);
     frame._isInFrameStack = true;
 }
+/**
+ * Keeps a frame in the stack without making it topmost: the frame stays findable by id,
+ * while every frame that is actually shown outranks it.
+ */
+export function _insertAtFrameStackBottom(frame) {
+    if (frame._isInFrameStack) {
+        return;
+    }
+    frameStack.unshift(frame);
+    frame._isInFrameStack = true;
+}
 export function _popFromFrameStack(frame) {
     if (!frame._isInFrameStack) {
         return;

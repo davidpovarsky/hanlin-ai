@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 1,
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 4251,
+      "sha256": "2257491aaa06cc351cd97c077c0fac13faf670e52a2f40e4c5fd97a15158990c"
+    },
+    {
+      "path": "green/active.json",
+      "bytes": 51,
+      "sha256": "818a2cfa7ff6a0640c76182045eab90beffbc356806ee6736d472217072126fa"
+    },
+    {
+      "path": "green/plan.json",
+      "bytes": 17048,
+      "sha256": "7a18eb59c50d2de96b2a050baf1c2f0ac2d82a28bf23856f0e743728d686cbb6"
+    },
+    {
+      "path": "green/projection-Package.swift",
+      "bytes": 981,
+      "sha256": "cc371d84b2d66ad2acd5678dd537edff4f2108c2d8bcba6e459a828751d7f379"
+    },
+    {
+      "path": "green/projection.diff",
+      "bytes": 2393,
+      "sha256": "1368ea44fff7d53af6f22896c387449ac723f836896b5a6b6fadb7287859abca"
+    },
+    {
+      "path": "green/result.json",
+      "bytes": 17349,
+      "sha256": "9dd9e055c68276ac5f9865858ef6eedb7fede586510d11ac05c46eed089f31ea"
+    },
+    {
+      "path": "green/swift-test.txt",
+      "bytes": 1439,
+      "sha256": "7ec01c681a02b564580be9734ae38cd22850524943780fd5f9cac9d7423d7cf5"
+    },
+    {
+      "path": "independent-review.json",
+      "bytes": 769,
+      "sha256": "21478121f497fd1ac12764ff9a49344ba193c67434270da3d000a94c0a263a50"
+    },
+    {
+      "path": "production-and-test.diff",
+      "bytes": 17355,
+      "sha256": "b791ac970ca2583a5cf2a1d26b653dea845c0531f8cec8671a58296d9cda391c"
+    },
+    {
+      "path": "receipt.json",
+      "bytes": 4364,
+      "sha256": "4b0f3bf6541f557dfbb90e664064ea777bab37bfdf19b45a7ab4562f687010d9"
+    },
+    {
+      "path": "red/active.json",
+      "bytes": 51,
+      "sha256": "5659f91dc38fb13e376826feb96bbec618fbb7063147c2cbcb173cba92001592"
+    },
+    {
+      "path": "red/plan.json",
+      "bytes": 17046,
+      "sha256": "d4805c331ef0b78dd332a86df417415a3097bf9b37b876e3d1dbb17eb534ddb6"
+    },
+    {
+      "path": "red/projection-Package.swift",
+      "bytes": 981,
+      "sha256": "cc371d84b2d66ad2acd5678dd537edff4f2108c2d8bcba6e459a828751d7f379"
+    },
+    {
+      "path": "red/projection.diff",
+      "bytes": 2393,
+      "sha256": "d1b153e80c99722163a3d4491a3cc6000a0c6ee803bd969d67de8a2ad501562a"
+    },
+    {
+      "path": "red/result.json",
+      "bytes": 17336,
+      "sha256": "f9ac0feae4bd5de8e16188d2ef8a9c75f238bae41cf148808c3126125df9897e"
+    },
+    {
+      "path": "red/swift-test.txt",
+      "bytes": 17479,
+      "sha256": "f34c2a755f246d0187606df1fa32b213a5706324614d642326ef7b889ccc95f1"
+    },
+    {
+      "path": "red/test-change.diff",
+      "bytes": 6193,
+      "sha256": "255f65bbd7de5f153211a67bdc9d6a24da438ce6b8a443fa0f4b0bbdac37d637"
+    },
+    {
+      "path": "run_portable_lifecycle.py",
+      "bytes": 9215,
+      "sha256": "569134ccfe40a3a7cfb860a689b2662174a031775350afb768090ab0dca0acad"
+    },
+    {
+      "path": "runner-metadata-clarification.json",
+      "bytes": 371,
+      "sha256": "66818dc8e7242b3977c920e45a69e7a154a68e4399057d0b69910247f354a82c"
+    },
+    {
+      "path": "sdk07-scope-map.json",
+      "bytes": 2030,
+      "sha256": "735fceb9eee20a096081984d903b5390151095a7673ad18a8728d130ddb2f37b"
+    }
+  ]
+}

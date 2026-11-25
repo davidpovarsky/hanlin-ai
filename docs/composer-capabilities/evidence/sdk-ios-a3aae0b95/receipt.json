@@ -1,0 +1,142 @@
+{
+  "status": "EXECUTED_PASS",
+  "source_sha": "a3aae0b952b0518cb8c40ed4a511d4cffadab99f",
+  "attempt": 3,
+  "job_id": "job_2ba935ae0db2",
+  "compiler_exit": 0,
+  "elapsed_seconds": 116.68,
+  "scheme": "HanlinPresentationSDK-Package",
+  "actual_devices": [
+    {
+      "architecture": "arm64",
+      "deviceId": "DB71066B-C1F5-4242-84C0-1BC814E3ACCA",
+      "deviceName": "Hanlin Composer SDK iPhone 27.0",
+      "modelName": "iPhone 17 Pro Max",
+      "osBuildNumber": "24A434",
+      "osVersion": "27.0",
+      "platform": "iOS Simulator"
+    }
+  ],
+  "total": 11,
+  "passed": 11,
+  "failed": 0,
+  "skipped": 0,
+  "cases": [
+    {
+      "method": "replacesOnlyTheWholeTokenAtTheCaretInRTLText",
+      "name": "replacesOnlyTheWholeTokenAtTheCaretInRTLText()",
+      "nodeIdentifier": "HanlinComposerCapabilityQueryTests/replacesOnlyTheWholeTokenAtTheCaretInRTLText()",
+      "nodeType": "Test Case",
+      "result": "Passed",
+      "duration": "0,00044s"
+    },
+    {
+      "method": "slashSelectionPreservesFollowingTextAndProducesCorrectCaret",
+      "name": "slashSelectionPreservesFollowingTextAndProducesCorrectCaret()",
+      "nodeIdentifier": "HanlinComposerCapabilityQueryTests/slashSelectionPreservesFollowingTextAndProducesCorrectCaret()",
+      "nodeType": "Test Case",
+      "result": "Passed",
+      "duration": "0,00011s"
+    },
+    {
+      "method": "rejectsStaleChoicesAndComposition",
+      "name": "rejectsStaleChoicesAndComposition()",
+      "nodeIdentifier": "HanlinComposerCapabilityQueryTests/rejectsStaleChoicesAndComposition()",
+      "nodeType": "Test Case",
+      "result": "Passed",
+      "duration": "0,00006s"
+    },
+    {
+      "method": "ignoresEmailsURLsAndInvalidUTF16Caret",
+      "name": "ignoresEmailsURLsAndInvalidUTF16Caret()",
+      "nodeIdentifier": "HanlinComposerCapabilityQueryTests/ignoresEmailsURLsAndInvalidUTF16Caret()",
+      "nodeType": "Test Case",
+      "result": "Passed",
+      "duration": "0,000065s"
+    },
+    {
+      "method": "modelMentionsRetainTheExistingTextRepresentation",
+      "name": "modelMentionsRetainTheExistingTextRepresentation()",
+      "nodeIdentifier": "HanlinComposerCapabilityQueryTests/modelMentionsRetainTheExistingTextRepresentation()",
+      "nodeType": "Test Case",
+      "result": "Passed",
+      "duration": "0,000037s"
+    },
+    {
+      "method": "submittedSnapshotAndOtherDraftRemainUnchanged",
+      "name": "submittedSnapshotAndOtherDraftRemainUnchanged()",
+      "nodeIdentifier": "HanlinComposerCapabilityDraftTests/submittedSnapshotAndOtherDraftRemainUnchanged()",
+      "nodeType": "Test Case",
+      "result": "Passed",
+      "duration": "0,00071s"
+    },
+    {
+      "method": "changingAnActionConsolidatesOnlyItsDuplicateAndKeepsTheEditingIdentity",
+      "name": "changingAnActionConsolidatesOnlyItsDuplicateAndKeepsTheEditingIdentity()",
+      "nodeIdentifier": "HanlinComposerCapabilityDraftTests/changingAnActionConsolidatesOnlyItsDuplicateAndKeepsTheEditingIdentity()",
+      "nodeType": "Test Case",
+      "result": "Passed",
+      "duration": "0,00024s"
+    },
+    {
+      "method": "repeatedPickerSelectionKeepsConfigurationAndRemovalIsScoped",
+      "name": "repeatedPickerSelectionKeepsConfigurationAndRemovalIsScoped()",
+      "nodeIdentifier": "HanlinComposerCapabilityDraftTests/repeatedPickerSelectionKeepsConfigurationAndRemovalIsScoped()",
+      "nodeType": "Test Case",
+      "result": "Passed",
+      "duration": "0,00085s"
+    },
+    {
+      "method": "registrationRoutesOnlyTheDeclaredReferenceAndForwardsTheDraftBinding",
+      "name": "registrationRoutesOnlyTheDeclaredReferenceAndForwardsTheDraftBinding()",
+      "nodeIdentifier": "HanlinCapabilityCustomPanelProviderTests/registrationRoutesOnlyTheDeclaredReferenceAndForwardsTheDraftBinding()",
+      "nodeType": "Test Case",
+      "result": "Passed",
+      "duration": "0,021s"
+    },
+    {
+      "method": "decimalAndNegativeIntermediateEditsKeepTheirExactText",
+      "name": "decimalAndNegativeIntermediateEditsKeepTheirExactText()",
+      "nodeIdentifier": "HanlinCapabilityNumberInputTests/decimalAndNegativeIntermediateEditsKeepTheirExactText()",
+      "nodeType": "Test Case",
+      "result": "Passed",
+      "duration": "0,0043s"
+    },
+    {
+      "method": "invalidCoordinatesReachValidationAndExternalMapUpdatesResynchronize",
+      "name": "invalidCoordinatesReachValidationAndExternalMapUpdatesResynchronize()",
+      "nodeIdentifier": "HanlinCapabilityNumberInputTests/invalidCoordinatesReachValidationAndExternalMapUpdatesResynchronize()",
+      "nodeType": "Test Case",
+      "result": "Passed",
+      "duration": "0,0026s"
+    }
+  ],
+  "macro_compiler_target": [
+    {
+      "target": "arm64-apple-macos12.0",
+      "sdk": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.0.sdk"
+    }
+  ],
+  "lock_sha256_after": {
+    "sdk": "08fe8608ac946c2759a05389b69c5601039cff61f41ad24fa55cee8d222cc2c2",
+    "platform": "8f67ee59e5ba54c1d9bdd312efff89ddc946e00443fef8faddfeb4e7eb5387c8"
+  },
+  "own_simulators_after": [
+    {
+      "udid": "DB71066B-C1F5-4242-84C0-1BC814E3ACCA",
+      "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-27-0",
+      "was": "Shutdown",
+      "now": "Shutdown"
+    },
+    {
+      "udid": "9B3B8C40-4C8D-4635-893E-DF354A08D939",
+      "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-27-2",
+      "was": "Shutdown",
+      "now": "Shutdown"
+    }
+  ],
+  "active_compilers_after": [],
+  "result_bundle": "/Users/m1/caches/DerivedData/hanlin-composer-sdk-ios/evidence-a3aae0b95/ComposerSDK-attempt3.xcresult",
+  "log_sha256": "e6f652f8ca70a8d67e0dc71616f811dfd0205f9549c7e6bfbac5835b5227f61c",
+  "captured_at": "2026-11-24T23:40:58.084227+00:00"
+}

@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "recorded_at": "2026-11-23T23:48:02.029738+00:00",
+  "source_sha": "e3d5a51f6dc7586d2271bc868928d7b76e343131",
+  "run_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45285438881",
+  "artifact_id": 14874111158,
+  "artifact_bytes": 16710130,
+  "artifact_sha256": "dc4c6336e3e82bc73e018a3bd3c24f42153462824d2f36951c59a0a0a02bbbcf",
+  "status": "BUILD_FAILED",
+  "ui": "NOT_RUN",
+  "failure": "A2UISchemaGeneratorPlugin validation stopped the test build before app compilation.",
+  "architecture_selection": "NATIVE_HOST_AND_RUNTIME_CONFIRMED; actual build accepted the destination",
+  "simulator_boot": "EXECUTED_PASS",
+  "producer_archive": "NOT_CREATED",
+  "correction": "Align command-local plugin/macro flags with the existing paired-product/original-app CI policy for the exact committed A2UI revision.",
+  "modal_correction": "An explicit state owner closes the invocation when removed; nested full-screen disappearance no longer ends the externally owned runtime. A real ScriptUI modal fixture and actual-result readback are added.",
+  "next_selected_native_count": 14,
+  "reuse_origin_for_unchanged_host_and_foreground": "45285438881; existing authenticated artifact/source/toolchain verifiers remain in force",
+  "workflow_yaml_changed": false,
+  "portable_source_checks": {
+    "git_diff_check": "PASS",
+    "sdk_generated_manifest": "PASS_508_ORIGINAL_APPLICATION_SOURCES",
+    "target_graph": "PASS_76_SHARED_PRODUCTION_SOURCES",
+    "python_ast": "PASS",
+    "native_execution": "NOT_YET_RUN"
+  },
+  "review": {
+    "selected_tests": 14,
+    "modal_result_written_only_by_actual_runtime": true,
+    "producer_export_required_for_overall_pass": true,
+    "host_foreground_proof_not_weakened": true
+  }
+}

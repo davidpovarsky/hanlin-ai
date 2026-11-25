@@ -1,0 +1,35 @@
+{
+  "at": "2026-11-24T08:17:55.305476+00:00",
+  "sourceCommit": "a12eb646aeb5c484f746c07ecffafc7d9f34f167",
+  "branch": "codex/hanlin-miniapps-sdk-completion-20261123",
+  "workflowID": 419196373,
+  "workflowPath": ".github/workflows/validate-app-split.yml",
+  "inputs": {
+    "paired_product_acceptance": "true",
+    "paired_test_scope": "miniapp_lifecycle",
+    "runtime_bundle_artifact_run_id": "42926628418"
+  },
+  "selectedCases": 1,
+  "previousRunID": 45352972636,
+  "concurrencySuffix": "paired-miniapp_lifecycle",
+  "dispatchExecuted": true,
+  "dispatchOutput": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45354891567\n",
+  "dispatchStderr": "",
+  "boundary": "Require actual selected-case rows and0failure/skip/cancel. Dispatch or compilation alone is not acceptance; no physical-device success inferred.",
+  "newRunID": 45354891567,
+  "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45354891567",
+  "initialReadback": "First immediate gh run view returned nonzero before the run was visible; no duplicate dispatch.",
+  "readbackExit": 0,
+  "readbackStderr": "",
+  "run": {
+    "conclusion": "",
+    "createdAt": "2026-11-24T08:17:56Z",
+    "databaseId": 45354891567,
+    "headSha": "a12eb646aeb5c484f746c07ecffafc7d9f34f167",
+    "status": "in_progress",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45354891567"
+  },
+  "recordedAtUTC": "2026-11-24T08:21:48.418353+00:00",
+  "firstSavedStatus": "in_progress",
+  "firstSavedConclusion": ""
+}

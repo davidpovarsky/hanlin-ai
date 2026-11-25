@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "baseSourceSHA": "ee3b0ede43fcb4aac02def04d469eae542ba035b",
+  "scope": "Pure normalizer relocation across the existing PlatformContracts boundary; no path policy, quotas, formats or ABI changes.",
+  "changedProductionFiles": [
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPackagePath.swift",
+    "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinArchivePolicy.swift",
+    "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/HanlinWidgetCompiler.swift"
+  ],
+  "requestedObligations": [
+    {
+      "name": "existing archive import policy and real ZIP directory parser cases",
+      "whyExecute": "ArchivePolicy forwards through the newly shared module; existing 12 Swift test methods and their assertions remain unchanged.",
+      "command": "python3 Scripts/MiniApps/Tests/test_archive_import_policy.py --output docs/miniapp-sdk/evidence/widget-path-module-20261124/archive-policy"
+    },
+    {
+      "name": "external Swift module visibility",
+      "whyExecute": "The failure was an undefined symbol across targets; emit the complete actual PlatformContracts module and typecheck its public normalizer from a separate HanlinWidgetCompiler-named consumer."
+    },
+    {
+      "name": "normalization semantics",
+      "whyExecute": "Compare the moved normalization and drive-prefix function bodies byte-for-byte with the immutable baseline, including Unicode and path behavior."
+    }
+  ],
+  "notRun": [
+    "Apple WidgetCompiler target compilation",
+    "native gate38",
+    "UI and physical-device acceptance"
+  ],
+  "runner": "Oracle arm64 Linux; installed Swift toolchain; no dependency installs",
+  "nativeFailure": {
+    "runID": 45335292541,
+    "jobID": 138245838421,
+    "artifactID": 14896535402,
+    "artifactSHA256": "19ade9a357346edf6b516e20c4847adca2707254f18d221ee73e59c6bc246b3f",
+    "sourceSHA": "ee3b0ede43fcb4aac02def04d469eae542ba035b",
+    "rawLog": "/dev/shm/hanlin-native-gate-evidence-45335292541/app-split-evidence/paired-product/mini-build.log",
+    "rawLogBytes": 4476459,
+    "rawLogSHA256": "143d3591268ff9bb6fd35987eb28ff35962539d961c8187cb66bdfb2ca3e77e0",
+    "excerpt": "native-before-compiler-error.log",
+    "excerptOriginalLines": [
+      [
+        49174,
+        49181
+      ],
+      [
+        49206,
+        49216
+      ]
+    ],
+    "commandExit": 65,
+    "firstSourceError": "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/HanlinWidgetCompiler.swift:40:15: cannot find HanlinArchivePolicy in scope"
+  },
+  "priorPassesReused": []
+}

@@ -1,0 +1,13 @@
+{
+  "observedAt": "2026-11-25T01:59:07.556712+00:00",
+  "files": [
+    {
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/80E29B83-02CF-4481-B1AF-80A85CDE0247/data/Containers/Data/Application/9400B7E5-EBEA-4359-9B22-19FD5C47A996/Library/Application Support/HanlinRuntime/v1/runtime/node/host-3c94ebea1e314c280031ac475e2d42b63ebcf2dc2eb32d2c6e31905e3eda3240/.ready",
+      "bytes": 64,
+      "sha256": "0dfb3d96efcae213a9d40c40b80562ca7262a6420f6fce36e0023248715e658a",
+      "mtime": "2026-11-25T01:27:59.751136+00:00",
+      "birthtime": "2026-11-25T01:27:59.751066+00:00"
+    }
+  ],
+  "note": "Current post-variant container; timestamps are filesystem birth/mtime, not a claim about launch completion."
+}

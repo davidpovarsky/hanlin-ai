@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "createdAtUTC": "2026-11-24T10:22:23.179350+00:00",
+  "baseCommit": "6d9a59bfc1bd1830a8d56e694c42b19c6bd7d468",
+  "dependencyCommits": {
+    "metadata": "fcf88190ca930130a035ef9150947543713616d1",
+    "modifiers": "4bccb1d82cd4005cac5000e0f74f1112704d6d7e",
+    "hostServices": "f7f16caeea1595f29f84c4faf724dfee30982cce",
+    "groupBox": "d9d3bcd1fb04b7bc68836691de7641f607740b55"
+  },
+  "ownedSources": {
+    "Fixtures/ExpoSwiftUIProbe/GeneratedViewsProbe.tsx": "c3be93227141ac5d52ed52d02272eb631b6923d76fb66c4d02b024bb09ef3878",
+    "Fixtures/ExpoSwiftUIProbe/App.tsx": "199f024921e35fbedca737045e342b75cf903b37e6692be5faf524a19a8e91ca",
+    "Fixtures/ExpoSwiftUIProbe/tsconfig.json": "1b682272df710c0d8b97b3fcde9c795204e28e287e6e7ba9b1850112e92854f4",
+    "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift": "732bc4e23f4f72d8978cdce54e99fe87a7cec9ac9070f0b479524b42fdd50695"
+  },
+  "authoring": {
+    "status": "EXECUTED_PASS",
+    "finalAttempt": "public-build-attempt-02-command.json",
+    "report": "attempt-02-public-build-result.json",
+    "sourceProof": "attempt-02-current-source-proof.json",
+    "strict": true,
+    "skipLibCheck": false,
+    "diagnostics": 0,
+    "originalCompiler": {
+      "packageName": "@typescript/typescript6",
+      "packageVersion": "6.0.2",
+      "compilerVersion": "6.0.3"
+    },
+    "originalSDKManifestSHA256": "fa1e737ec63e640175cdb5c9dad51903cd86d50ae7b340ba5b8ec1ff4e408d85",
+    "bundleSHA256": "1ce3a7a6939f7f36f0c637a6c0155319982ee86db839c35ab27c9e37cb82b040",
+    "sourceMapSHA256": "889d503aa2ed016ec9488c0143164ab21889d65d4d4c21e34b28fb5cfa1801e6",
+    "sourceMapSections": 822,
+    "archive": {
+      "path": "public-build-artifact.zip",
+      "bytes": 3021260,
+      "sha256": "79ff7fe0261476d1cf7ea4198fd9b43985a77677dee73bdbfbf8a25f83a4dd0e",
+      "entries": 25
+    },
+    "boundary": "Earlier immutable exported original dependency/compiler graph with exact current local facade overlay. Not a fresh full stageSDK export or native import/execution."
+  },
+  "priorEvidence": {
+    "initialAuthoringOperation": "EXECUTED_PASS,0diagnostics and original Metro; before GroupBox children correction.",
+    "initialPostProof": "FAILED_HARNESS: flat-map assumption; existing indexed output then verified in proof-only mode without rebuilding.",
+    "affectedRebuildReason": "Real GroupBox public children forwarding and native observable source changed.",
+    "setupIssues": [
+      "Preliminary receipt guessed manifest filename; corrected from actual reader before any build.",
+      "Sparse checkout reapplied during dependency integration; tracked ZIP helper was materialized before retrying packaging only.",
+      "Cleanup guard noticed newly added source-only generator regression; all originally copied runtime/type bytes were unchanged."
+    ],
+    "rawAttemptsRetained": true
+  },
+  "native": {
+    "status": "NOT_RUN",
+    "newMiniAppsMethods": 7,
+    "strengthenedExistingMethod": "testStandaloneExpoRendersNativeControlsAndRunsReactEvents",
+    "baselineMethodsPreserved": 15,
+    "baselineSourceDeletions": 0,
+    "syntaxEvidence": "swift-source-check-attempt-03.json",
+    "independentReview": "independent-native-probe-review.json",
+    "boundaries": [
+      "Linux Swift syntax is not Apple type checking or execution.",
+      "83 factory uses do not prove83 individual native semantics.",
+      "Document actions only typed/unmounted; genuine document-host context absent.",
+      "Prepared widget receipt proves state/catalog/reload, not OS rendering.",
+      "Activity status/list does not prove start/update/end.",
+      "No simulator, physical-device or release pass."
+    ]
+  },
+  "temporarySetup": "Exact owned descriptor/dependency copies removed after capture; selected immutable SDK inputs still match their original manifest."
+}

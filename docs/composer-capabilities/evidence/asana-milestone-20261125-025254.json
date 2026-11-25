@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "updatedAtUTC": "2026-11-25 02:52:54 UTC",
+  "mutationFields": [
+    "html_notes"
+  ],
+  "writeAttempts": 1,
+  "readBackRetries": 0,
+  "completionChanged": false,
+  "acknowledgement": {
+    "data": [
+      {
+        "gid": "1220882717750164",
+        "name": "[HANLIN-COMPOSER-CAPABILITIES][P0] צירוף מפורש לכל הודעה + assistantTool + ממשק הגדרות בבועה"
+      },
+      {
+        "gid": "1220882600644494",
+        "name": "[M5][רוני | QA] שילוב עדכני ובדיקות Mac ממוקדות"
+      }
+    ],
+    "failed": [],
+    "summary": "Updated 2 of 2 tasks."
+  },
+  "verification": [
+    {
+      "id": "1220882717750164",
+      "readBackSucceeded": true,
+      "headerPresent": true,
+      "completed": false,
+      "completionUnchanged": true,
+      "modifiedAt": "2026-11-25T02:52:55.936Z",
+      "notesLength": 12264,
+      "originalPlainNotesExact": true,
+      "originalPlainNotesPreservedAfterAsanaURLNormalization": true,
+      "expectedHTMLExact": false,
+      "expectedHTMLPreservedAfterAsanaURLNormalization": false,
+      "permalinkURL": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1220882717750164",
+      "originalRichNotesExact": true,
+      "allOriginalContentPreserved": true,
+      "expectedHTMLPreservedAfterAsanaBoldNormalization": true,
+      "newPlainSummaryExact": true,
+      "normalization": "Asana changed only the new summary heading's <b> tags to <strong>; prior rich and plain descriptions remained byte-identical."
+    },
+    {
+      "id": "1220882600644494",
+      "readBackSucceeded": true,
+      "headerPresent": true,
+      "completed": false,
+      "completionUnchanged": true,
+      "modifiedAt": "2026-11-25T02:52:55.895Z",
+      "notesLength": 15009,
+      "originalPlainNotesExact": true,
+      "originalPlainNotesPreservedAfterAsanaURLNormalization": true,
+      "expectedHTMLExact": false,
+      "expectedHTMLPreservedAfterAsanaURLNormalization": false,
+      "permalinkURL": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1220882600644494",
+      "originalRichNotesExact": true,
+      "allOriginalContentPreserved": true,
+      "expectedHTMLPreservedAfterAsanaBoldNormalization": true,
+      "newPlainSummaryExact": true,
+      "normalization": "Asana changed only the new summary heading's <b> tags to <strong>; prior rich and plain descriptions remained byte-identical."
+    }
+  ],
+  "newMilestoneSummary": "עדכון אבן דרך — RuntimeHost וקיטלוג native — 2026-11-25 02:52:54 UTC\n\nHost8 המקורי הושלם בהצלחה במק: exit 0, ‏125.160 שניות, 177 בדיקות עברו, 0 נכשלו, ודילוג יחיד של בדיקת 300 השניות הקיימת שמחייבת opt-in. גם אימות ה-ZIP הארוז ו-11 חוזי JITless בפועל עברו. מקור ההרצה: bcd44d23a0d2fc2804fa34f3cc5407e51b0adc2f; סיום 02:37:47 UTC.\nהכישלון האמיתי של Host7 נשמר במלואו: 174 עברו, 3 כשלי readiness/child timeout, דילוג אחד. Host8 רץ על אותו מקור ועם אותן בדיקות, assertions ותקציבי זמן, בעדיפות רגילה ללא nice -n 10. ההצלחה החוזרת אינה הוכחה שהעדיפות הייתה הסיבה היחידה לכשלי התזמון.\nארכיון Host8: ‏81,837,544 בתים; SHA-256 ‏8b05742603572e8b3309a647fc04880fa59d891beb13f4623fbd79a0cb9c49a1. יומן מקורי: 0c87e20007d3a248b4ef781e1c3eb2ce6fb4fc9038a3a8774807e37ad752bd9f. לאחר מכן הוקפאו 5 שורות provenance/hash שנוצרו ב-3 מסמכי SDK בקומיט b739ada91aca115093e3511f9df58c15edcb5923.\n\nייצוא קטלוג ה-native ואימותו המקוריים עברו על b739ada91: ‏266.869 שניות לייצוא ו-9.269 שניות לאימות, שניהם exit 0. הקטלוג מונה 15 frameworks ו-5 רשומות תמיכה, ללא יעדים חסרים.\nבדיקת שימוש חוזר מתועדת ומסויגת: כל 16 קלטי ה-native תואמים לקטלוג המקור של הסוכן האחר. מפות הבינארים של 14 מתוך 15 frameworks ו-34 מתוך 36 slices זהות. ExpoModulesJSI נבנה מחדש על ידי היצרן המקורי לשתי הפלטפורמות ב-56 שניות, כפי שכבר מתועד ביומן ההכנה 5aeae751…; אין טענה שכל 15 הבינארים הועתקו ללא בנייה.\nשני הבדלי ZIP נוספים הוכחו כהבדלי הרשאות תיקיות Headers בלבד (0700→0755), בהשוואה בזיכרון ללא שינוי קובצי המק. ארבע מתוך חמש חבילות התמיכה זהות; NodeHostSupport הוא השינוי היחיד, בהתאם ל-Host8.\n\nבדיקת הענפים והאינטגרציה נשמרת עם זמן fetch אמיתי 02:33:51 UTC ומקור שנבדק bcd44d23a; ‏b739ada91 נוסף לאחר מכן רק כעדכון provenance שנוצר. לא נמצאה השלמת קוד רלוונטית נוספת שיש לקלוט לפני ניסיון האפליקציה הנוכחי. בעיות קבלה native שעדיין אצל הסוכן המקורי לא שוכפלו ולא סומנו כפתורות.\nהראיות נשמרו בקומיט תיעוד מבודד 396b9fc26ab95c377ab8935aec230e35e78dd092, לאחר c182: ‏176 קובצי ראיות, 178 רשומות SHA-256, יומנים מקוריים דחוסים ללא אובדן, קטלוגים והשוואה מסויגת. אינדקס: docs/composer-capabilities/EVIDENCE_INDEX.md; תכנית: docs/composer-capabilities/VALIDATION_PLAN.json. איסוף הראיות לא הריץ קמפול/בדיקות נוספות ולא שינה את מקור המק.\n\nעדיין פתוח: ניסיון AI_HLY החמישי על b739ada91 נמצא בהרצת הקמפול אצל הסוכן הראשי לפי העדכון האחרון; אין עדיין תוצאת הצלחה של אפליקציה מלאה בעדכון זה. גם בניית HanlinMiniApps, ‏13 בדיקות האינטגרציה, 4 בדיקות מנוע native, ‏4 בדיקות העורך ו-4 הרצות UI באייפון/3 באייפד נשארות לביצוע ולאימות. ה-PASS של ספריית HanlinApplication שתועד קודם הוא ספרייה בלבד. המשימות אינן מסומנות כהושלמו.",
+  "originalTaskBodiesIncluded": false,
+  "relatedEvidenceCommit": "396b9fc26ab95c377ab8935aec230e35e78dd092"
+}

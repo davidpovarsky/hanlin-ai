@@ -1,0 +1,387 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-24T21:38:00.309918+00:00",
+  "status": "READ_ONLY_SOURCE_IMPACT_IDENTIFIED_NO_NEW_EXECUTION",
+  "inspectionBase": "77971ea159ed54a473f3c1536edfcd1c6d6e446c",
+  "actualPriorExecutionSource": "bd6da170da7936fe3c5353ddaf8b25c97477a380",
+  "candidateScope": "Expected production resolver correction in actual Host miniapp-authoring.mjs; no finalized candidate hash supplied at this audit checkpoint.",
+  "authoringSource": {
+    "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
+    "beforeSHA256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856"
+  },
+  "originalSDK": {
+    "receiptPath": "docs/miniapp-sdk/evidence/primary-sdk-attempt6-20261124/receipt.json",
+    "receiptSHA256": "2ce330eafec2788a46d184ed4c40bb1dcd281fbc54a7a570da65abc437ca9f4b",
+    "archive": {
+      "archivePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/prepared-snapshot-attempt6/files/build/runtime-host/RuntimeHostResources.zip",
+      "archiveBytes": 81812179,
+      "archiveSHA256": "6b8ab65a1d8c6a2ae51ff12b606ba830cd19a775dc9764587941c569498475d1",
+      "manifestSHA256": "c9491455251124a82a7ca5721cc2fcd78e424670eeac53fdf8b1fc07abd4c325",
+      "manifestBytes": 5219288,
+      "inputSHA256": "78a8ffd73b3f96d984237e7866a723fb876a35d91f6bb16627373d92a6ef1fd9",
+      "sourceInputCount": 222,
+      "fileCount": 25661
+    }
+  },
+  "sourceBindings": [
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
+      "sha256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
+      "lineRanges": [
+        [
+          166,
+          238
+        ],
+        [
+          556,
+          618
+        ]
+      ],
+      "role": "Actual production parser/resolver and Expo bundler; candidate not finalized by this lane.",
+      "unchangedSinceActualAttempt6Execution": true
+    },
+    {
+      "path": "Scripts/MiniApps/miniapp.mjs",
+      "sha256": "1c256c00392c626a54ebee2abe3ededaa792c5bfa6dd9b6c5aceb89be84e5b30",
+      "lineRanges": [
+        [
+          1,
+          8
+        ],
+        [
+          33,
+          37
+        ]
+      ],
+      "role": "CLI imports production source module directly.",
+      "unchangedSinceActualAttempt6Execution": true
+    },
+    {
+      "path": "Scripts/ProductSplit/prepare_authoring_fixture.mjs",
+      "sha256": "7db762a97f15611eeb84c530b63b9062763f70d9eccb1666809214b533405f5b",
+      "lineRanges": [
+        [
+          1,
+          7
+        ],
+        [
+          36,
+          45
+        ]
+      ],
+      "role": "Fixture preparation imports production source directly.",
+      "unchangedSinceActualAttempt6Execution": true
+    },
+    {
+      "path": "Scripts/Audit/miniapp-manifest-contracts.mjs",
+      "sha256": "484a0f05eeee4818da22aeb9eab5de9a509bc10e3b63b7226a20206a839a5aaa",
+      "lineRanges": [
+        [
+          9,
+          19
+        ]
+      ],
+      "role": "Manifest contract audit includes actual authoring source.",
+      "unchangedSinceActualAttempt6Execution": true
+    },
+    {
+      "path": "Scripts/Audit/audit-miniapp-sdk.mjs",
+      "sha256": "f2a38e9af505a02e231c67294b8e21de4d7b4bc0fd539bf46935ab706993ab18",
+      "lineRanges": [
+        [
+          25,
+          36
+        ],
+        [
+          151,
+          155
+        ],
+        [
+          222,
+          239
+        ]
+      ],
+      "role": "Audit collects exact source hashes and writes source-inventory.",
+      "unchangedSinceActualAttempt6Execution": true
+    },
+    {
+      "path": "Scripts/Audit/audit_miniapp_reachability.py",
+      "sha256": "a28d4702744f94e265489ca9df18ae6a2fd666290598d6faa693810d794a0dce",
+      "lineRanges": [
+        [
+          70,
+          75
+        ],
+        [
+          261,
+          281
+        ]
+      ],
+      "role": "Reachability copies inventory sources to sdkSources and records source commit.",
+      "unchangedSinceActualAttempt6Execution": true
+    },
+    {
+      "path": "Scripts/MiniApps/stage-sdk.mjs",
+      "sha256": "a9d02de9128acde4bcdd14b60c3227627a43c004075f55c6d9f41e2045c9bcce",
+      "lineRanges": [
+        [
+          60,
+          74
+        ],
+        [
+          141,
+          156
+        ],
+        [
+          281,
+          286
+        ]
+      ],
+      "role": "Generated docs participate directly in SDK input identity; Host source is not a direct SDK member.",
+      "unchangedSinceActualAttempt6Execution": true
+    },
+    {
+      "path": "Scripts/Runtime/prepare-runtime-host.sh",
+      "sha256": "af0fda26d53a6b72b495a73e104835af176dccfc39cda2d5bcfffa3f7a04cbd6",
+      "lineRanges": [
+        [
+          13,
+          30
+        ],
+        [
+          40,
+          55
+        ],
+        [
+          57,
+          87
+        ]
+      ],
+      "role": "Refresh provenance before reuse; copy Host modules, stage SDK, original checks, archive and metadata.",
+      "unchangedSinceActualAttempt6Execution": true
+    },
+    {
+      "path": "Scripts/Runtime/runtime_host_archive.py",
+      "sha256": "c446a8bcd0bebb30193eab35e6588662d9c989c4e656be020259a94428c0c8c6",
+      "lineRanges": [
+        [
+          79,
+          101
+        ],
+        [
+          106,
+          135
+        ],
+        [
+          137,
+          171
+        ]
+      ],
+      "role": "Full source/tests fingerprint and source-byte validation; source-only sync is distinct from full producer.",
+      "unchangedSinceActualAttempt6Execution": true
+    },
+    {
+      "path": "Scripts/Runtime/prepare-runtime-core.sh",
+      "sha256": "1ff99fabcbf8f40d515f3f1b944299286c1094a19520f9892a97f99cf8b64540",
+      "lineRanges": [
+        [
+          119,
+          136
+        ]
+      ],
+      "role": "Earlier Core stage copies original archive and syncs; final Host producer/copy must still follow.",
+      "unchangedSinceActualAttempt6Execution": true
+    },
+    {
+      "path": "Scripts/SDK/native_artifacts.py",
+      "sha256": "9d093f9207d8f2f3cdfea8c35420c725661c78eda2b97849abb3482240bd7fcc",
+      "lineRanges": [
+        [
+          52,
+          54
+        ],
+        [
+          228,
+          248
+        ],
+        [
+          397,
+          447
+        ]
+      ],
+      "role": "NodeHostSupport embeds Host ZIP; support checksum contributes to catalog content identity.",
+      "unchangedSinceActualAttempt6Execution": true
+    },
+    {
+      "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+      "sha256": "b27ca38423d3d0eb179f2b8bb7f25568d8ee9a7a70a36da7dd9e57e243ca004c",
+      "lineRanges": [
+        [
+          253,
+          288
+        ],
+        [
+          473,
+          505
+        ],
+        [
+          526,
+          540
+        ]
+      ],
+      "role": "Fixture reads actual shipping SDK but runs source CLI; both products built and checked before acceptance fixtures.",
+      "unchangedSinceActualAttempt6Execution": true
+    },
+    {
+      "path": "Scripts/SDK/generate_manifest.py",
+      "sha256": "47ae0d5c34fa5c3baa870b4213a98c6999958f57c71f19a8be421fb6723182ec",
+      "lineRanges": [
+        [
+          197,
+          220
+        ]
+      ],
+      "role": "Shared AI_Hanlin target copies original Host ZIP as package resource.",
+      "unchangedSinceActualAttempt6Execution": true
+    },
+    {
+      "path": "AI_HLY.xcodeproj/project.pbxproj",
+      "sha256": "24206ae0f0f66d3669cae5ccd4ffcff25ae582ec4620359a2becca7ad8e16780",
+      "lineRanges": [
+        [
+          383,
+          385
+        ],
+        [
+          1426,
+          1430
+        ],
+        [
+          2852,
+          2872
+        ],
+        [
+          3157,
+          3179
+        ]
+      ],
+      "role": "MiniApps directly includes the same original Host ZIP resource.",
+      "unchangedSinceActualAttempt6Execution": true
+    },
+    {
+      "path": "AI_HLY/Downstream/SDK/HanlinApplicationResources.swift",
+      "sha256": "22f2db09a91b2989e57ec5198e96f1b4945677664ccca9ffaec57736019e43cc",
+      "lineRanges": [
+        [
+          1,
+          12
+        ]
+      ],
+      "role": "Shared code chooses Bundle.module under Swift Package and Bundle.main otherwise.",
+      "unchangedSinceActualAttempt6Execution": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/NodeRuntimeService.swift",
+      "sha256": "fd0c4d7afcafb33518cde1f2e99dd212b42f763f420c6831975af97aa062891b",
+      "lineRanges": [
+        [
+          862,
+          886
+        ]
+      ],
+      "role": "Runtime hashes bundled ZIP and extracts into host-<SHA>; existing old .ready does not identify new content.",
+      "unchangedSinceActualAttempt6Execution": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Core/Skills/SkillRuntimeInstalledIdentity.swift",
+      "sha256": "82f2ee4307fd7e6facc2183231d1565ffd313873b0965a3676b654ed54813120",
+      "lineRanges": [
+        [
+          4,
+          31
+        ]
+      ],
+      "role": "Installed runtime identity includes bundled Host ZIP and is process cached.",
+      "unchangedSinceActualAttempt6Execution": true
+    },
+    {
+      "path": "Scripts/CI/xcode_cache_inputs.py",
+      "sha256": "defda7c6b7ca28011f71405cea40ba02d30b3ed6e1c1aa483a8556ea04f793f4",
+      "lineRanges": [
+        [
+          62,
+          67
+        ]
+      ],
+      "role": "ZIP resources are excluded from source timestamp restoration.",
+      "unchangedSinceActualAttempt6Execution": true
+    }
+  ],
+  "directAndIndirectIdentity": {
+    "directHostArchiveMember": "miniapp-authoring.mjs",
+    "directMiniAppSDKSourceInput": false,
+    "directMiniAppSDKMember": false,
+    "actualInventorySourceEntrySHA256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
+    "actualReachabilitySDKSourceEntrySHA256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
+    "chain": [
+      "Host authoring source bytes",
+      "manifest-contract source inventory and source-inventory.json",
+      "reachability sdkSources and generated documents",
+      "MiniAppSDK sourceInputs/inputSHA256 and manifest bytes",
+      "RuntimeHostResources.zip module bytes and sourceInputsHash",
+      "HanlinNodeHostSupport checksum and native catalog contentSHA256",
+      "both installed app resource copies and extracted host-<ZIP SHA>"
+    ],
+    "nativeCatalogBoundary": "Its16 direct native producer inputs may remain identical for a Host-JS-only fix; the NodeHostSupport resource checksum/content identity still changes."
+  },
+  "existingNormalPreparationPhase": {
+    "path": ".github/workflows/validate-app-split.yml#split-native-preparation",
+    "scriptSHA256": "47635289bc9238f28f65b6f72d4980b5cf0aa6def2cf146cd236261260f65a3e",
+    "authority": "docs/miniapp-sdk/evidence/primary-sdk-attempt6-20261124/raw/build/primary-control/plan.json"
+  },
+  "minimalExistingRegeneration": [
+    {
+      "step": 1,
+      "action": "Apply and publish reviewed source fix; inspect exact affected source/test closure.",
+      "boundary": "This audit does not implement or approve unreviewed candidate semantics."
+    },
+    {
+      "step": 2,
+      "action": "Retain existing bash Scripts/Runtime/prepare-runtime-host.sh on corrected source.",
+      "reason": "It refreshes original inventory/reachability before reuse; changed Host/source/tests and indirect SDK fingerprint invalidate prior Host reuse and stage the corrected SDK+Host through existing producer checks."
+    },
+    {
+      "step": 3,
+      "action": "Retain existing cp build/runtime-host/RuntimeHostResources.zip AI_HLY/RuntimeHostResources.zip and exact-archive documentation check.",
+      "reason": "This is the actual resource read by paired fixture extraction and shipped to both app routes. The checker imports changed authoring implementation, so prior four-project pass cannot be silently relabeled as new-source execution."
+    },
+    {
+      "step": 4,
+      "action": "Retain existing native-artifacts export/verify and input capture.",
+      "reason": "NodeHostSupport resource and catalog content identity change even if all native framework producer inputs remain equal. Export does not compile frameworks."
+    },
+    {
+      "step": 5,
+      "action": "Retain original paired runner with incremental product resource build/sign/install and affected/missing acceptance.",
+      "reason": "Both embedded archives must contain corrected bytes; direct source CLI success does not establish native tool update. Existing caches may retain unaffected compiled frameworks."
+    },
+    {
+      "step": 6,
+      "action": "Reconcile actual new archive and embedded top-level authoring member SHA against corrected source, actual SDK manifest/input/report and current consumer evidence.",
+      "reason": "Use actual producer outputs and existing reports; do not infer equality from filename, source commit, native catalog input list, or previous passing builds."
+    }
+  ],
+  "reuseBoundary": "A JS-only authoring/test correction does not inherently require rebuilding unchanged Node/Python/Expo/NativeScript framework binaries. Exact unaffected source/toolchain/input proof may be reused. New lockfile/native/Metro/helper changes would require reviewing their own impact. Original Host checks and affected/missing application obligations remain with native owner.",
+  "sourceOnlySyncBoundary": "runtime_host_archive.py sync can replace top-level Host modules while retaining a currently accepted SDK when audits have not yet refreshed. The normal Core sync happens before the final Host hook; preserve final prepare-runtime-host, SDK staging and copy. A source-only CLI or overlay is not proof of the final embedded authoring graph.",
+  "runtimeCacheBoundary": "NodeRuntimeService derives extraction directory from bundled ZIP SHA. Install/launch the app with the new resource; current running processes and process-cached installed fingerprints are not a proof of replacement.",
+  "observedExecutionByThisLane": {
+    "builds": 0,
+    "tests": 0,
+    "compilers": 0,
+    "generators": 0,
+    "nativeQueries": 0,
+    "CI": 0,
+    "productionSourceMutations": 0
+  },
+  "scopeBoundary": "Evidence-only source audit. No new product gate, native compiler run, broad test matrix or source fix is introduced."
+}

@@ -1,0 +1,51 @@
+{
+  "testedSource": "e2227ccdfe0c3111d1c17ef2b4bb1653ac24bb9c",
+  "laterEvidenceBase": "788354f8e9e863eb5e4c9007a8b58ea71d028b19",
+  "postDispatchSDKInputPaths": [
+    "docs/miniapp-sdk/README.md",
+    "docs/miniapp-sdk/extension-reachability.json",
+    "docs/miniapp-sdk/extension-reachability.md"
+  ],
+  "laterChangesNotInArtifact": [
+    {
+      "path": "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests.swift",
+      "testedSourceSHA256": "206953a80ed6258043315e18e18e3a2be2bd44d0afffe93581a51b604093cfd3",
+      "laterBaseSHA256": "0e7e2a2c38ed4449869ea61e5e9757cd4dc67e66258ae340958ebe617c93a829",
+      "sdkInput": false
+    },
+    {
+      "path": "docs/miniapp-sdk/README.md",
+      "testedSourceSHA256": "4427f49e5b729658d95d98eb6cdbb84ea08f2e4d2e33d7b7c480192914346637",
+      "laterBaseSHA256": "90068db0d87718cc9f995f9d45c1e2e8a7bd670aa8b8f3b324f0bf4cfc591d95",
+      "sdkInput": true
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.json",
+      "testedSourceSHA256": "e51ed2435da117bdb77900c5643f1b2c72456d4dda094cffcd1b38e311a34571",
+      "laterBaseSHA256": "677b3cd271dea49659eccfe960baeda45aec7a504aaecb7c4da3d07635007876",
+      "sdkInput": true
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.md",
+      "testedSourceSHA256": "961d8d49d036182f7abe167b6b97a1fc473724c6a546d2459af58dea1d35ca8d",
+      "laterBaseSHA256": "868414b6948afd557b713477c3132088028881c58b913c2b6c285759f02a9d8a",
+      "sdkInput": true
+    }
+  ],
+  "readmeProof": {
+    "actualManifestRow": {
+      "path": "docs/miniapp-sdk/README.md",
+      "sha256": "4427f49e5b729658d95d98eb6cdbb84ea08f2e4d2e33d7b7c480192914346637",
+      "bytes": 15776
+    },
+    "actualExecutedSnippetDocument": {
+      "path": "docs/miniapp-sdk/README.md",
+      "sha256": "4427f49e5b729658d95d98eb6cdbb84ea08f2e4d2e33d7b7c480192914346637",
+      "stagedSDKMatches": true,
+      "stagedSDKSHA256": "4427f49e5b729658d95d98eb6cdbb84ea08f2e4d2e33d7b7c480192914346637"
+    },
+    "priorBodyVerificationReused": true,
+    "bodyReopened": false
+  },
+  "nativeTestBoundary": "The later checked HanlinObject test conversion belongs to a later test source; MAIN15 did not execute its application test cases. It is not a direct SDK input."
+}

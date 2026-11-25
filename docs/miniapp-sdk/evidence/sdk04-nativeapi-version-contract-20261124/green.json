@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "baseCommit": "df436d7650bc5918d29707868565fc114e65c445",
+  "utc": "2026-11-24T07:47:16.992524+00:00",
+  "cwd": "/mnt/development/projects/worktrees/hanlin-sdk04-nativeapi-versions-20261124",
+  "argv": [
+    "/usr/local/bin/node",
+    "--test",
+    "Scripts/Audit/Tests/runtime-version-contract.test.mjs",
+    "Scripts/ExpoNativeAPI/Tests/lock-integrity.test.mjs"
+  ],
+  "exitCode": 0,
+  "impact": "One new actual exported-version regression and the directly affected runtime-contract gate plus active preflight lock check. No native tests or builds.",
+  "stdoutSHA256": "29b115fb9778b81ee58ecd5d9c563c01e57db8dadcd2b552012ac89b6597a421",
+  "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "inputSHA256": {
+    "Packages/HanlinExpoNativeAPIJS/src/index.ts": "000de857839c76e86a426123d4bce30f0b56854f7655d4021342b2d932b98390",
+    "Scripts/MiniApps/resolve-upstreams.mjs": "873bc51d0bd6e859e5929a4f0cefb934cf340e82ad7cee61aafe6f2b0546a337",
+    "Scripts/Audit/miniapp-runtime-contract.mjs": "398cf7a2b1415bf869b5be6be5ce95162cc60fd1bdad34857b94d5d32f12525a",
+    "Scripts/Audit/Tests/runtime-version-contract.test.mjs": "95f49391aecc82567c7fea4cdadc171c344547660bb36b4a82c8d7721d8c287d",
+    "Scripts/ExpoNativeAPI/preflight.mjs": "67260cbf215527ff3aeff429add3a709e61ea13cc2c0fe358333090a5e5879af",
+    "Scripts/ExpoNativeAPI/Tests/lock-integrity.test.mjs": "7f9a69e2d7a863879103484dd4468d88f743f77f0a433534ad9b8a46458a3705"
+  }
+}

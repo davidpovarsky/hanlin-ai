@@ -1,0 +1,557 @@
+{
+  "observed_at_utc": "2026-11-25T01:34:24.461229+00:00",
+  "integration_source": "deeab80ef98b5fb97db6bbbd51f9943130617e3f",
+  "sealed_app_run_source": "72bff522e6a13bff60c16d7a82e7c12f86abf8f9",
+  "heads": {
+    "composer": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91",
+    "miniapps_sdk": "05a40d39a8b28ec3fd3741800ebf079834a00070",
+    "wave3": "bad6e68df21d4ecfe11f3b6fc3f4242eba5b23ed"
+  },
+  "reviews": {
+    "miniapps_sdk": {
+      "previous": "1812bff50571c9907d15cd8b4bfbe4874be24756",
+      "incoming": "05a40d39a8b28ec3fd3741800ebf079834a00070",
+      "paths": [
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-expo-asset-companion-gates-20261125/README.md",
+          "incoming_blob": "49a5db926576b8f5ec32c0f7f214c83d6f804142",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-expo-asset-companion-gates-20261125/raw/node-manifest-upstream.log",
+          "incoming_blob": "bd0024372f27e961b71e7fb4dc9ae8d17afdb9e2",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-expo-asset-companion-gates-20261125/raw/output-parser-reconciliation.json",
+          "incoming_blob": "39f5f0de740492d387f675ff3d7a2b94b5bb8a68",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-expo-asset-companion-gates-20261125/raw/run-companion-gates-attempt9.py",
+          "incoming_blob": "010f49b4819839cf23604093fb0cc7a80bac0ea0",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-expo-asset-companion-gates-20261125/raw/state-before-output-parser-correction.json",
+          "incoming_blob": "b104f83cd5fcca92ad47857b624d4d818cbf73a1",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-expo-asset-companion-gates-20261125/raw/state.json",
+          "incoming_blob": "62fb6d47705aa715bf37f799149f193eb689c459",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-expo-asset-companion-gates-20261125/raw/swift-expo-asset-analyzer.log",
+          "incoming_blob": "61dac77c1b59faeb4b003aa2425df9ce93dbaeb6",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-expo-asset-companion-gates-20261125/receipt.json",
+          "incoming_blob": "ec07503fca3cb16d2966a2ae2f2d287943760445",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/README.md",
+          "incoming_blob": "16c25042b12640faf980e4b2bd30508f80a96d0b",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/classification-stderr.txt",
+          "incoming_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/classification-stdout.txt",
+          "incoming_blob": "e950627a0fb39d83ecb82c08420207a328836fc5",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/classify_prepared.py",
+          "incoming_blob": "d8d54f4620907642b4cc5bce51ae0f2abe518af5",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/compiler-identity-binding.json",
+          "incoming_blob": "2247445a56937c784aa090b4f426fef22b8652bf",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/declaration-transforms-and-react-update.json",
+          "incoming_blob": "be42daf7ddeac562eb159fbf4607c405814c842f",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/documentation-execution-binding.json",
+          "incoming_blob": "e584fe681c260d99efeffdbcec785024f6d35e09",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/execution-checkpoint.json",
+          "incoming_blob": "17187479ee8067bc6b9e18d62b593b7ab07e475d",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/expo-asset-native-binding.json",
+          "incoming_blob": "d6f0106c8afdfa7872407f7906702e03189d47aa",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/expo-asset-sdk-authority.json",
+          "incoming_blob": "41f1634c537a94ccdf1ae381cb2a68e135e5dc7c",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/host-archive-binding.json",
+          "incoming_blob": "6ae3c3aa8c17c230cbfa9b0d02f98ffc1add5ce6",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/host-member-comparison.json",
+          "incoming_blob": "d1253fda67105c08ad503b1d49a5508e604ffcf6",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/inspect_sdk.py",
+          "incoming_blob": "458234804dc135756c90426b006b4cd5b955ff05",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/inspection-stderr.txt",
+          "incoming_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/inspection-stdout.txt",
+          "incoming_blob": "1ed6542278d95cb95038eede789ad37b2bcee39c",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/inspection-summary.json",
+          "incoming_blob": "a46576413a77b6d6d7dd941798ae0a10b3272db6",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/native-catalog-binding.json",
+          "incoming_blob": "5b7af1fe6b81f14f46b3c63f2730bf53099f55f4",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/prepared-change-classification.json",
+          "incoming_blob": "9b4f36d6213de8707f842cf4ed80348985295112",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/prepared-provenance.diff",
+          "incoming_blob": "065e455de396ca19772f390a8f352082bcc7407a",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/prepared-source-delta.json",
+          "incoming_blob": "27f0d2207737b3dc1a5586eb45704c73645d0663",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/raw/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+          "incoming_blob": "6cd60d1ef542e0a6b754f906d22fa9dcf122add9",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/raw/Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/.artifact-manifest.json",
+          "incoming_blob": "16e53c6c48d578413324eddd7b10bec701837d9e",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/raw/Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/.source-build-receipt.json",
+          "incoming_blob": "39ac10f0d65fd0d5e0b8abc6c869e5d149fa8307",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/raw/Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/Info.plist",
+          "incoming_blob": "e32d3e8fbf82b8c1c3ca900135a54d9f00c8aee1",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/raw/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/original-runtime-receipt.json",
+          "incoming_blob": "4984993ee29210cc395b0559a59600349392cad0",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/raw/RuntimeDependencies.lock.json",
+          "incoming_blob": "914e8d51b58a8a4c79cdbb5977d26ef5e55f6f88",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/raw/Scripts/Expo/dependency-lock.json",
+          "incoming_blob": "dc939d165152f098e06f9950e90f227dda9c6ea2",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/raw/Scripts/Expo/package-lock.json",
+          "incoming_blob": "46297c3e8a6f90458b3060ddeb2b61f436bcddcc",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/raw/Scripts/Expo/package.json",
+          "incoming_blob": "0d9bfd976fb3b501b1208d20836dbb0cc8132cd4",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/raw/Scripts/MiniApps/upstream-resolution.json",
+          "incoming_blob": "4c30fc4ac975a907943b7aa54ed0af08d87e3ed6",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/raw/Scripts/NativeScript/package-lock.json",
+          "incoming_blob": "ee378de53445a7efb50221b8558c7d0562ffe4de",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/raw/Scripts/NativeScript/package.json",
+          "incoming_blob": "aba15c8760c59aa95e438620612d36df11f267dc",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/raw/build/acceptance/expo-type-declarations/corrections.json",
+          "incoming_blob": "b1ae37a9280f9215026534f3370008b392cfc096",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/raw/build/app-split-evidence/miniapp-documentation-snippets.json",
+          "incoming_blob": "4c850fcedda21517909564bc81d54944165b22a2",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/raw/build/app-split-evidence/prepared-native/native-artifacts.json",
+          "incoming_blob": "aad3f72926b4b50fd89e5a5944280770471afebc",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/raw/build/miniapp-upstreams/expo-native-source/ios/Podfile.lock",
+          "incoming_blob": "8864c6ebfe7f8e4b428af0399ab9980c58fe42a8",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/raw/build/primary-control/capacity-admission-attempt9.json",
+          "incoming_blob": "bf274e1cace0ee05dbc9a577ab921c97958aa1fd",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/raw/build/primary-control/logs-attempt8/split-native-preparation.log.gz",
+          "incoming_blob": "e3bf0a17bd1dcd36a108b56ca772441197b801e6",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/raw/build/primary-control/logs-attempt9/split-native-artifacts.log",
+          "incoming_blob": "73b58cdc8c127a4e3bdc65cdaf29b87c3c083033",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/raw/build/primary-control/logs-attempt9/split-native-preparation.log",
+          "incoming_blob": "232d1d07effceab5a1a71723009384114d9c3330",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/raw/build/primary-control/plan.json",
+          "incoming_blob": "a348efabb63d8b48922e08470c58cb7e247e4abf",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/raw/build/primary-control/source-advance-1812bff5/receipt.json",
+          "incoming_blob": "ec7162e679a55fec4aa831fd37f10f7aa8356751",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/raw/build/primary-control/source-advance-2b327182/receipt.json",
+          "incoming_blob": "0c1b6462fd345cfe5154bc6c564ed826237a3bc8",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/raw/build/runtime-host/host-metadata.json",
+          "incoming_blob": "e23e6e2ae4f125601730289df26f6b32911aa752",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/raw/controller-state-at-capture.json",
+          "incoming_blob": "d453eebf4777aa1b99103b7eff1ff009d3533fea",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/raw/docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+          "incoming_blob": "a6eaf27f0c6b1660104778c0078f2e8a352312fb",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/raw/docs/miniapp-sdk/extension-reachability.json",
+          "incoming_blob": "01db65af9cfd11c8a878f9c23d3cdf6edada326e",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/raw/docs/miniapp-sdk/extension-reachability.md",
+          "incoming_blob": "3791ae30374cb72570d9aa8dd313c65c0c2dd398",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/raw/docs/miniapp-sdk/source-inventory.json",
+          "incoming_blob": "591da81b37df749a950b318702762d193e626bf8",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/raw/expo-asset-produced-bindings.json",
+          "incoming_blob": "08ca5d9b5b6b1a030b1809b9a17250b8c489d260",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/raw/miniapp-sdk.json.gz",
+          "incoming_blob": "867cd5518552649cec199cbdccb300b6aa3a4af0",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/raw/snapshot-receipt.json",
+          "incoming_blob": "18e8b43fb337c74b4207bc97eb94c7295e2d0de0",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/raw/tracked-delta.json",
+          "incoming_blob": "d9b0093a52828e77f9db201f1068ecb952a5713f",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/receipt.json",
+          "incoming_blob": "421202a76dd0560910b7c25f62507d964494e270",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/retained-raw-files.json",
+          "incoming_blob": "c1e7124b16e1cf2863ac356a5d371c301af640cb",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/sdk-reconciliation.json",
+          "incoming_blob": "488bffa4a74f3007f9b1c03e2407ec824de76919",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/sdk-source-binding.json",
+          "incoming_blob": "385add8360eb20c0a3ffb5b102c6c01f1b5c6f73",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/shipped-provenance-binding.json",
+          "incoming_blob": "cf8c31f96d1ca0e1291d908b4febe68ae8225a4b",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/transfer-inspection-stderr.txt",
+          "incoming_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/transfer-inspection-stdout.txt",
+          "incoming_blob": "a19ee0c341d7bd767c330fa4984e354e51546b57",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/transfer-inspection-summary.json",
+          "incoming_blob": "5184dc62c0d6df80762f5cd55edd315a4d602bba",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/transfer-verification.json",
+          "incoming_blob": "013d4d03dc5a2d1e32db54134b50e9de67496674",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/verify_transfer.py",
+          "incoming_blob": "cd2646263912e6e23b469bf6d5ad1791ce27d2c4",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        }
+      ]
+    },
+    "wave3": {
+      "previous": "cd9930c27bb476b3b40907df2605596b04f86e62",
+      "incoming": "bad6e68df21d4ecfe11f3b6fc3f4242eba5b23ed",
+      "paths": [
+        {
+          "path": "Scripts/Expo/package-lock.json",
+          "incoming_blob": "46297c3e8a6f90458b3060ddeb2b61f436bcddcc",
+          "sealed_blob": "46297c3e8a6f90458b3060ddeb2b61f436bcddcc",
+          "equal": true,
+          "historical_evidence": false
+        },
+        {
+          "path": "Scripts/Expo/package.json",
+          "incoming_blob": "0d9bfd976fb3b501b1208d20836dbb0cc8132cd4",
+          "sealed_blob": "0d9bfd976fb3b501b1208d20836dbb0cc8132cd4",
+          "equal": true,
+          "historical_evidence": false
+        },
+        {
+          "path": "Scripts/MiniApps/upstream-resolution.json",
+          "incoming_blob": "4c30fc4ac975a907943b7aa54ed0af08d87e3ed6",
+          "sealed_blob": "5a69f9b9fa038cdfd6d227e141cddbd761dfd14f",
+          "equal": false,
+          "historical_evidence": false
+        },
+        {
+          "path": "docs/miniapp-sdk/evidence/later-wave-runtime-integration-20261125/producer-source-alignment.json",
+          "incoming_blob": "ff76228a56e47f24378a778015fc9752ac1ce89d",
+          "sealed_blob": null,
+          "equal": false,
+          "historical_evidence": true
+        }
+      ]
+    }
+  },
+  "required_followup": "After sealed app run completes, original Host producer/archive sync/validation must refresh fingerprint for changed upstream-resolution.json. Existing native run retains72bffattribution; final app acceptance must bind regenerated resource.",
+  "host_duration_skip": {
+    "source": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/execution-jobs.test.mjs",
+    "sha256": "6278094d448ab43c5f8bfdbd80dcc8f98ebd7d803892778878b54ae227bcc9fa",
+    "condition": "process.env.HANLIN_RUN_LONG_JOBS !== '1'",
+    "requested_wait_ms": 305000,
+    "actual_status": "SKIPPED_ORIGINAL_OPT_IN_DURATION_CASE"
+  }
+}

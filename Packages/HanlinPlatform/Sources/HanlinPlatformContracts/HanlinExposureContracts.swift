@@ -211,8 +211,8 @@ public enum HanlinExposureCatalog {
             requiredEntitlements: [],
             requiredInfoPlistKeys: [],
             eligibility: .runtimeSelectable,
-            implementationState: .adapterOnly,
-            notes: "Canonical seam defined; legacy chat card adapters exist. Dedicated generic chat transcript UI is under active development on the parallel presentation branch."
+            implementationState: .genericHosted,
+            notes: "Shared transcript host resolves installed Expo/NativeScript prepared entrypoints and compiled Swift result views by owner and handler. Runtime sessions and teardown remain engine-owned; native acceptance is tracked separately."
         ),
         // 4. WidgetKit
         HanlinExposureClassification(
@@ -237,8 +237,8 @@ public enum HanlinExposureCatalog {
             requiredEntitlements: [],
             requiredInfoPlistKeys: ["NSSupportsLiveActivities"],
             eligibility: .hybrid,
-            implementationState: .reserved,
-            notes: "ActivityKit surface reserved; requires a compiled extension target supporting ActivityAttributes and NSSupportsLiveActivities."
+            implementationState: .genericHosted,
+            notes: "Compiled WidgetKit activities render original Expo Widgets and ScriptWidget content from installed Mini Apps. ActivityKit start, update and end use the original Expo module or the shared typed host service."
         ),
         // 6. Controls
         HanlinExposureClassification(
@@ -250,8 +250,8 @@ public enum HanlinExposureCatalog {
             requiredEntitlements: [],
             requiredInfoPlistKeys: [],
             eligibility: .hybrid,
-            implementationState: .reserved,
-            notes: "ControlWidget templates hosted in widget extension invoking AppIntents; reserved until dedicated Control target/type is compiled."
+            implementationState: .genericHosted,
+            notes: "Original ScriptWidget Button and Toggle ControlWidget providers live in the existing widget extension. Original widget.json controls/actions select current installed package instances and execute through their original native session and shared transactional storage."
         ),
         // 7. App Intents
         HanlinExposureClassification(
@@ -289,8 +289,8 @@ public enum HanlinExposureCatalog {
             requiredEntitlements: [],
             requiredInfoPlistKeys: [],
             eligibility: .hybrid,
-            implementationState: .reserved,
-            notes: "Share extension surface reserved; requires a dedicated Share extension target to receive and forward shared items."
+            implementationState: .genericHosted,
+            notes: "Per-product Share extensions persist shared items into the matching product inbox. Installed Expo/NativeScript actions run through the durable host invocation route with actual execution receipts."
         ),
         // 10. Translation UI Provider
         HanlinExposureClassification(

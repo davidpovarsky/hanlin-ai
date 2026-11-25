@@ -1,0 +1,23 @@
+{
+  "scope": "Portable exact retained modal inputs and existing TypeScript Program API; not an embedded/native result",
+  "source": "e39445f56de7a5accac57e4dc226001049ee52c6",
+  "elapsedSeconds": 2.802111047320068,
+  "returncode": 0,
+  "compilerPath": "/dev/shm/hanlin-expo-widgets-sdk-20261124/Scripts/Expo/node_modules/typescript/lib/typescript.js",
+  "compilerSHA256": "d3f3cd2b04b7f466f4484df921b744223f7bd1f3e353ec9110bdf52695b983d5",
+  "sourceInventoryMatched": 9,
+  "actualNativeWorkspaceReceiptSHA256": "ff87133df997599b0be4288e2bc6e1f3506b824f704d366738df3c7a1067ae3c",
+  "result": {
+    "node": "v24.22.0",
+    "compilerVersion": "6.0.3",
+    "defaultCompilerVersion": "6.0.3",
+    "elapsedSeconds": 2.6985061569999997,
+    "files": [
+      "dist/index.js.map",
+      "dist/index.js",
+      "dist/script.json"
+    ],
+    "diagnostics": [],
+    "succeeded": true
+  }
+}

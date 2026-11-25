@@ -1,0 +1,17 @@
+{
+  "sourceCommit": "aea6d31e311a3f3096014ea2f1c39432371e3ecc",
+  "startedAtUTC": "2026-11-25T02:11:59.268624+00:00",
+  "finishedAtUTC": "2026-11-25T02:12:05.943417+00:00",
+  "command": [
+    "npm",
+    "run",
+    "prepare:ios-dependencies",
+    "--prefix",
+    "Scripts/NativeScript"
+  ],
+  "exitCode": 0,
+  "durationSeconds": 6.674,
+  "logSHA256": "a01330e47fa339dae51bb36730b13e39a4bfaf69a901f78f1aec696338ae14cc",
+  "wrapperSHA256": "71bf1d521abff7cc29c1e8d397a9ef2a55b09f758afb36f0a148be12350b664f",
+  "trackedChanges": ""
+}

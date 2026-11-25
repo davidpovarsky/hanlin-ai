@@ -42,6 +42,7 @@ let package = Package(
         .target(name: "HanlinRichUI", dependencies: ["HanlinPresentationKit", "HanlinLocalization"],
                 resources: [.copy("Resources/OpenUI")]),
         .target(name: "HanlinChatUI", dependencies: ["HanlinPresentationKit", "HanlinRichUI", "HanlinLocalization",
+                .product(name: "HanlinPlatformContracts", package: "HanlinPlatform"),
                 .product(name: "SwiftStreamingMarkdown", package: "hanlin-streaming-markdown",
                          condition: .when(platforms: [.iOS]))],
                 resources: [

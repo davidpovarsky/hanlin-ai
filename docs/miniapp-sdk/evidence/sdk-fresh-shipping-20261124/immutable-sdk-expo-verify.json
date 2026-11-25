@@ -1,0 +1,10 @@
+{
+  "command": [
+    "/usr/local/bin/node",
+    "Scripts/MiniApps/install-tooling.mjs",
+    "--verify",
+    "--tooling-root=/dev/shm/hanlin-sdk-only-kit-45335292541/AI_HLY/Downstream/RuntimeCore/Node/Host/MiniAppSDK/expo"
+  ],
+  "exitCode": 1,
+  "scope": "Existing production preflight, read-only; no preparation/install"
+}

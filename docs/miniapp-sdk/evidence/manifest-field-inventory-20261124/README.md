@@ -1,0 +1,13 @@
+# SDK-01 manifest field/source authority mapping
+
+The prior inventory listed only script.json decoderKnownKeys and the canonical schema's root property names. It explicitly marked script.json partial because prepared package/analyzer contracts were additional. This change replaces that gap with the field-level map in the existing audit.
+
+The final source-only check covers 334 field/JSON-pointer rows across eight explicitly scoped families: script.json (83), NativeScript prepared package (14), Expo prepared package (22), hanlin.authoring.json (14), installed NativeScript dependency package metadata (12), original widget.json (48), original compatibility meta.json (7), and separate canonical schema (134). Conditional schema scopes may contain the same semantic field at different pointers; this number is not a count of unique APIs or device capabilities.
+
+Every row is bound to an actual source line/symbol or JSON pointer with SHA-256. The 19 authority sources include real decoders, known extension consumers, analyzer/native-session readers, authoring producers and original ScriptWidget source/schema. Added or renamed recognized fields fail until mapped. Canonical schema additions are enumerated automatically and change the checked JSON/Markdown outputs. The same inventory renders the public reference.
+
+Exactly one focused source-level test was used. Initial 322-row mapping passed, independent review identified actual installed dependency metadata needing explicit rows, and the first expanded check failed because it conflated application input.pkg with the local installed-dependency pkg. That raw failure is retained. Scoping the reader to its actual package.json declaration corrected the checker; final 334-row check passed with six concrete drift mutations, including an added installed-dependency field. No runtime behavior was changed to accommodate a test.
+
+Root must run the existing audit --write and --check after integrating all lanes. --write now emits MANIFEST_REFERENCE.md together with source-inventory.json; --check validates both. This lane does not regenerate combined inventory/reachability or claim shipped-SDK byte identity.
+
+Supported/partial in this map describe existing reader/schema behavior. They do not establish native providers, system permissions, execution of declared exposures, or physical-device success. Legacy compatibility stays frozen. NativeScript dependency traversal uses already installed modules and truthiness metadata; it is neither an npm installer nor a version solver. Original library constraints and unknown-field handling are unchanged.

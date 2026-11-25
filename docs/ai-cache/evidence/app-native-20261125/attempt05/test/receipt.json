@@ -1,0 +1,1581 @@
+{
+  "actions": [
+    {
+      "archivedPriorDescriptors": [
+        {
+          "name": "AI_HLY_iphonesimulator27.0-arm64.xctestrun",
+          "sha256": "df0a5eec8eda3908b94e57e3f5ed3d78e6c45e7c8c8b3042db373445b53904e9"
+        }
+      ]
+    }
+  ],
+  "changedLockPaths": [],
+  "changedSourcePaths": [],
+  "commands": [
+    {
+      "argv": [
+        "xcodebuild",
+        "-version"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-ai-cache-native-20261125",
+      "exitCode": 0,
+      "finishedAtUTC": "2026-11-25T04:16:48.199688+00:00",
+      "name": "xcode-version",
+      "startedAtUTC": "2026-11-25T04:16:47.983818+00:00",
+      "stderr": "01-xcode-version.stderr.log",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "01-xcode-version.log",
+      "stdoutSHA256": "694b44731d0b415c5b11d844151e466d7f5e200a95627efda377f232f1a6ab77"
+    },
+    {
+      "argv": [
+        "xcrun",
+        "swift",
+        "--version"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-ai-cache-native-20261125",
+      "exitCode": 0,
+      "finishedAtUTC": "2026-11-25T04:16:48.325389+00:00",
+      "name": "swift-version",
+      "startedAtUTC": "2026-11-25T04:16:48.200377+00:00",
+      "stderr": "02-swift-version.stderr.log",
+      "stderrSHA256": "bbc8b176d3c74d4c5a7fd00b40280f98168e116d5272273bfe8e71407625540e",
+      "stdout": "02-swift-version.log",
+      "stdoutSHA256": "04630ab8fa201f57c63c59730e638135e32584a97e16e004a417eb8ed283dc83"
+    },
+    {
+      "argv": [
+        "node",
+        "--version"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-ai-cache-native-20261125",
+      "exitCode": 0,
+      "finishedAtUTC": "2026-11-25T04:16:48.405315+00:00",
+      "name": "node-version",
+      "startedAtUTC": "2026-11-25T04:16:48.326104+00:00",
+      "stderr": "03-node-version.stderr.log",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "03-node-version.log",
+      "stdoutSHA256": "2f30156cd7f9137514ea68d53554f583cf6541fd107dbc8ae8a19253379a735a"
+    },
+    {
+      "argv": [
+        "xcodebuild",
+        "-project",
+        "AI_HLY.xcodeproj",
+        "-scheme",
+        "AI_HLY",
+        "-configuration",
+        "Debug",
+        "-destination",
+        "generic/platform=iOS Simulator",
+        "-derivedDataPath",
+        "/Users/m1/caches/DerivedData/hanlin-ai-cache-app-20261125",
+        "-clonedSourcePackagesDirPath",
+        "/Users/m1/builds/hanlin-ai-cache-native-20261125/build/SourcePackages",
+        "-resultBundlePath",
+        "/Users/m1/builds/hanlin-ai-cache-native-20261125/build/cache-app-native-evidence-05-20261125/test/AppBuild.xcresult",
+        "-jobs",
+        "2",
+        "-showBuildTimingSummary",
+        "-skipPackagePluginValidation",
+        "-skipMacroValidation",
+        "CLANG_CXX_LANGUAGE_STANDARD=gnu++20",
+        "FRAMEWORK_SEARCH_PATHS=/Users/m1/builds/hanlin-ai-cache-native-20261125/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks /Users/m1/builds/hanlin-ai-cache-native-20261125/Artifacts/ModularFrameworks $(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks $(SRCROOT)/Artifacts/ModularFrameworks $(inherited)",
+        "HEADER_SEARCH_PATHS=/Users/m1/builds/hanlin-ai-cache-native-20261125/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders /Users/m1/builds/hanlin-ai-cache-native-20261125/Artifacts/ReactModularHeaders /Users/m1/builds/hanlin-ai-cache-native-20261125/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers /Users/m1/builds/hanlin-ai-cache-native-20261125/Artifacts/ReactNativeDependencies.xcframework/Headers /Users/m1/builds/hanlin-ai-cache-native-20261125/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers /Users/m1/builds/hanlin-ai-cache-native-20261125/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react $(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders $(SRCROOT)/Artifacts/ReactModularHeaders $(inherited) $(BUILT_PRODUCTS_DIR)/React.framework/Headers $(BUILT_PRODUCTS_DIR)/react.framework/Headers $(BUILT_PRODUCTS_DIR)/ExpoModulesCore.framework/Headers $(BUILT_PRODUCTS_DIR)/Python.framework/Headers",
+        "CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES=YES",
+        "CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER=NO",
+        "WARNING_CFLAGS=$(inherited) -Wno-quoted-include-in-framework-header -Wno-non-modular-include-in-framework-module",
+        "OTHER_CFLAGS=$(inherited) -Wno-quoted-include-in-framework-header -Wno-non-modular-include-in-framework-module",
+        "OTHER_SWIFT_FLAGS=-Xcc -F/Users/m1/builds/hanlin-ai-cache-native-20261125/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks -Xcc -F/Users/m1/builds/hanlin-ai-cache-native-20261125/Artifacts/ModularFrameworks -Xcc -I/Users/m1/builds/hanlin-ai-cache-native-20261125/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders -Xcc -I/Users/m1/builds/hanlin-ai-cache-native-20261125/Artifacts/ReactModularHeaders -Xcc -I/Users/m1/builds/hanlin-ai-cache-native-20261125/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers -Xcc -I/Users/m1/builds/hanlin-ai-cache-native-20261125/Artifacts/ReactNativeDependencies.xcframework/Headers -Xcc -I/Users/m1/builds/hanlin-ai-cache-native-20261125/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers -Xcc -I/Users/m1/builds/hanlin-ai-cache-native-20261125/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react -Xcc -F$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks -Xcc -F$(SRCROOT)/Artifacts/ModularFrameworks $(inherited) -Xcc -Wno-quoted-include-in-framework-header -Xcc -Wno-non-modular-include-in-framework-module -Xcc -I$(BUILT_PRODUCTS_DIR)/React.framework/Headers -Xcc -I$(BUILT_PRODUCTS_DIR)/react.framework/Headers -Xcc -I$(BUILT_PRODUCTS_DIR)/React.framework/Headers/react -Xcc -I$(BUILT_PRODUCTS_DIR)/ExpoModulesCore.framework/Headers",
+        "ENABLE_TESTABILITY=YES",
+        "IPHONEOS_DEPLOYMENT_TARGET=27.0",
+        "ARCHS=arm64",
+        "ONLY_ACTIVE_ARCH=YES",
+        "SWIFT_ACTIVE_COMPILATION_CONDITIONS=$(inherited) HANLIN_TESTING",
+        "-only-testing:AI_HLYTests/HanlinPromptCachingIntegrationTests",
+        "-only-testing:AI_HLYTests/ClassicChatRestorationTests",
+        "-only-testing:AI_HLYTests/HanlinMiniAppAssistantIntegrationTests",
+        "-only-testing:AI_HLYTests/HanlinModelPromptCachePersistenceTests",
+        "build-for-testing"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-ai-cache-native-20261125",
+      "exitCode": 0,
+      "finishedAtUTC": "2026-11-25T04:18:02.216336+00:00",
+      "name": "build-for-testing",
+      "startedAtUTC": "2026-11-25T04:16:48.999234+00:00",
+      "stderr": "04-build-for-testing.stderr.log",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "04-build-for-testing.log",
+      "stdoutSHA256": "8d87ca0247e89071dd4886f01f0972975b1b567fe407c051fe0d78b7f56f1226"
+    },
+    {
+      "argv": [
+        "xcrun",
+        "simctl",
+        "create",
+        "Hanlin-AI-Cache-300fe80b-cache-app-native-evidence-05-20261125",
+        "com.apple.CoreSimulator.SimDeviceType.iPhone-18-Pro",
+        "com.apple.CoreSimulator.SimRuntime.iOS-27-0"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-ai-cache-native-20261125",
+      "exitCode": 0,
+      "finishedAtUTC": "2026-11-25T04:18:02.536771+00:00",
+      "name": "create-simulator",
+      "startedAtUTC": "2026-11-25T04:18:02.218910+00:00",
+      "stderr": "05-create-simulator.stderr.log",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "05-create-simulator.log",
+      "stdoutSHA256": "36f96a045e6b9286c021ef761021327f59f3108a6c38639823a37f8bb9249375"
+    },
+    {
+      "argv": [
+        "xcrun",
+        "simctl",
+        "boot",
+        "265D44E3-2573-44C1-8976-3E10A02B1DA7"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-ai-cache-native-20261125",
+      "exitCode": 0,
+      "finishedAtUTC": "2026-11-25T04:18:03.515123+00:00",
+      "name": "boot-simulator",
+      "startedAtUTC": "2026-11-25T04:18:02.537997+00:00",
+      "stderr": "06-boot-simulator.stderr.log",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "06-boot-simulator.log",
+      "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "xcrun",
+        "simctl",
+        "bootstatus",
+        "265D44E3-2573-44C1-8976-3E10A02B1DA7",
+        "-b"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-ai-cache-native-20261125",
+      "exitCode": 0,
+      "finishedAtUTC": "2026-11-25T04:18:30.424389+00:00",
+      "name": "bootstatus",
+      "startedAtUTC": "2026-11-25T04:18:03.517281+00:00",
+      "stderr": "07-bootstatus.stderr.log",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "07-bootstatus.log",
+      "stdoutSHA256": "22ec3d8dc5f95b012f405090cb080d471c787ff9bae6dcebb77b0cf68d455cc0"
+    },
+    {
+      "argv": [
+        "xcodebuild",
+        "test-without-building",
+        "-xctestrun",
+        "/Users/m1/caches/DerivedData/hanlin-ai-cache-app-20261125/Build/Products/AI_HLY_iphonesimulator27.0-arm64.xctestrun",
+        "-destination",
+        "platform=iOS Simulator,id=265D44E3-2573-44C1-8976-3E10A02B1DA7",
+        "-resultBundlePath",
+        "/Users/m1/builds/hanlin-ai-cache-native-20261125/build/cache-app-native-evidence-05-20261125/test/AppCacheTests.xcresult",
+        "-parallel-testing-enabled",
+        "NO",
+        "-test-timeouts-enabled",
+        "YES",
+        "-maximum-test-execution-time-allowance",
+        "300",
+        "-only-testing:AI_HLYTests/HanlinPromptCachingIntegrationTests",
+        "-only-testing:AI_HLYTests/ClassicChatRestorationTests",
+        "-only-testing:AI_HLYTests/HanlinMiniAppAssistantIntegrationTests",
+        "-only-testing:AI_HLYTests/HanlinModelPromptCachePersistenceTests"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-ai-cache-native-20261125",
+      "exitCode": 0,
+      "finishedAtUTC": "2026-11-25T04:20:02.447111+00:00",
+      "name": "test-without-building",
+      "startedAtUTC": "2026-11-25T04:18:30.439935+00:00",
+      "stderr": "08-test-without-building.stderr.log",
+      "stderrSHA256": "2247a163146c869d87915e5f47051e88494c726a19e7ea1bdd7f195ca1a21ae6",
+      "stdout": "08-test-without-building.log",
+      "stdoutSHA256": "a19b655844871efe13d347b4ea7c006fa0256da56067ea5ddc44ae42e7c10adb"
+    },
+    {
+      "argv": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "tests",
+        "--path",
+        "/Users/m1/builds/hanlin-ai-cache-native-20261125/build/cache-app-native-evidence-05-20261125/test/AppCacheTests.xcresult",
+        "--format",
+        "json"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-ai-cache-native-20261125",
+      "exitCode": 0,
+      "finishedAtUTC": "2026-11-25T04:20:02.545651+00:00",
+      "name": "test-results",
+      "startedAtUTC": "2026-11-25T04:20:02.449045+00:00",
+      "stderr": "09-test-results.stderr.log",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "09-test-results.json",
+      "stdoutSHA256": "fbcfda087bb785188d03f596e47cab791d0bd771542f60ffee45f57eecad1fa9"
+    },
+    {
+      "argv": [
+        "/opt/homebrew/opt/python@3.12/bin/python3.12",
+        "Scripts/CI/verify_selected_tests.py",
+        "--results",
+        "/Users/m1/builds/hanlin-ai-cache-native-20261125/build/cache-app-native-evidence-05-20261125/test/09-test-results.json",
+        "--selectors",
+        "AI_HLYTests/HanlinPromptCachingIntegrationTests,AI_HLYTests/ClassicChatRestorationTests,AI_HLYTests/HanlinMiniAppAssistantIntegrationTests,AI_HLYTests/HanlinModelPromptCachePersistenceTests"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-ai-cache-native-20261125",
+      "exitCode": 0,
+      "finishedAtUTC": "2026-11-25T04:20:02.599377+00:00",
+      "name": "verify-selected-tests",
+      "startedAtUTC": "2026-11-25T04:20:02.546686+00:00",
+      "stderr": "10-verify-selected-tests.stderr.log",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "10-verify-selected-tests.log",
+      "stdoutSHA256": "df5ef130980769b652356a28c34429171445d43d45f5ac7fa0ca4cc9ff1c5e96"
+    },
+    {
+      "argv": [
+        "/opt/homebrew/opt/python@3.12/bin/python3.12",
+        "Scripts/CI/IntegrationValidation/verify_cache_app_tests.py",
+        "--inventory",
+        "/Users/m1/builds/hanlin-ai-cache-native-20261125/build/cache-app-native-evidence-05-20261125/test/expected-test-inventory.json",
+        "--results",
+        "/Users/m1/builds/hanlin-ai-cache-native-20261125/build/cache-app-native-evidence-05-20261125/test/09-test-results.json"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-ai-cache-native-20261125",
+      "exitCode": 0,
+      "finishedAtUTC": "2026-11-25T04:20:02.648849+00:00",
+      "name": "verify-exact-test-invocations",
+      "startedAtUTC": "2026-11-25T04:20:02.600556+00:00",
+      "stderr": "11-verify-exact-test-invocations.stderr.log",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "11-verify-exact-test-invocations.json",
+      "stdoutSHA256": "e7c73519777d07df7cf47f43e6640587977a815e26c2730cd49eff59c105ae32"
+    },
+    {
+      "argv": [
+        "xcrun",
+        "simctl",
+        "shutdown",
+        "265D44E3-2573-44C1-8976-3E10A02B1DA7"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-ai-cache-native-20261125",
+      "exitCode": 0,
+      "finishedAtUTC": "2026-11-25T04:20:05.903303+00:00",
+      "name": "shutdown-owned-simulator",
+      "startedAtUTC": "2026-11-25T04:20:02.650786+00:00",
+      "stderr": "12-shutdown-owned-simulator.stderr.log",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "12-shutdown-owned-simulator.log",
+      "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "declaredTestCounts": {
+    "ClassicChatRestorationTests": 32,
+    "HanlinMiniAppAssistantIntegrationTests": 7,
+    "HanlinModelPromptCachePersistenceTests": 3,
+    "HanlinPromptCachingIntegrationTests": 4
+  },
+  "derivedData": "/Users/m1/caches/DerivedData/hanlin-ai-cache-app-20261125",
+  "developerDirectory": "/Applications/Xcode.app/Contents/Developer",
+  "exactTestAcceptance": {
+    "cases": [
+      {
+        "argument_display": "11. Agent reasoning sanitizer blocks raw CoT across all patterns and languages before reaching views",
+        "arguments": null,
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/agentReasoningNeverLeaksRawCoTToViews",
+        "method": "ClassicChatRestorationTests/agentReasoningNeverLeaksRawCoTToViews",
+        "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/agentReasoningNeverLeaksRawCoTToViews()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "argument_display": "6. Assistant bubble owns final answer text, subordinate AgentActivitySummaryView, and tool result cards",
+        "arguments": null,
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/assistantBubbleOwnsFinalAnswerAndActionButtons",
+        "method": "ClassicChatRestorationTests/assistantBubbleOwnsFinalAnswerAndActionButtons",
+        "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/assistantBubbleOwnsFinalAnswerAndActionButtons()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "argument_display": "19. Build 84001 defect 7B: ManageMCPServersTool rejects known nonexistent or native-addon MCP packages and supports action/parameter aliases",
+        "arguments": null,
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/build84001MCPValidationAndIncompatiblePackageGuard",
+        "method": "ClassicChatRestorationTests/build84001MCPValidationAndIncompatiblePackageGuard",
+        "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/build84001MCPValidationAndIncompatiblePackageGuard()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "argument_display": "22. Schema transport budgets are explicit and do not silently cap ordinary sessions",
+        "arguments": null,
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/build84001SchemaOverheadTokenBudget",
+        "method": "ClassicChatRestorationTests/build84001SchemaOverheadTokenBudget",
+        "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/build84001SchemaOverheadTokenBudget()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "argument_display": "21. Build 84001 defect 7C: execute_shell_command supports pwd builtin and NodeRuntimeService infers CommonJS for require() snippets",
+        "arguments": null,
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/build84001ShellPwdAndNodeCommonJSInference",
+        "method": "ClassicChatRestorationTests/build84001ShellPwdAndNodeCommonJSInference",
+        "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/build84001ShellPwdAndNodeCommonJSInference()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "argument_display": "18. Build 84001 defect 7A: calling web_research as a tool or load_skill(skill_id: search_online) returns explicit Skill ID vs tool name guidance",
+        "arguments": null,
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/build84001SkillVsToolNameDisambiguation",
+        "method": "ClassicChatRestorationTests/build84001SkillVsToolNameDisambiguation",
+        "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/build84001SkillVsToolNameDisambiguation()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "argument_display": "20. Build 84001 defect 7B: server-worker.mjs includes ICU-less Node regex compatibility shim for \\P{ASCII} and \\p{ASCII}",
+        "arguments": null,
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/build84001UnicodePropertyRegexSanitizerInServerWorker",
+        "method": "ClassicChatRestorationTests/build84001UnicodePropertyRegexSanitizerInServerWorker",
+        "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/build84001UnicodePropertyRegexSanitizerInServerWorker()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "argument_display": "25. Original tool projection preserves per-call skill and MCP audit while keeping internal skill activity out of the visible domain result",
+        "arguments": null,
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/build84701P0ToolContentSeparationAndPerCallProjection",
+        "method": "ClassicChatRestorationTests/build84701P0ToolContentSeparationAndPerCallProjection",
+        "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/build84701P0ToolContentSeparationAndPerCallProjection()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "argument_display": "7. Classic action buttons are directly visible when completed and retry is hidden during active streaming",
+        "arguments": null,
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/classicActionButtonsDirectVisibilityAndStates",
+        "method": "ClassicChatRestorationTests/classicActionButtonsDirectVisibilityAndStates",
+        "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/classicActionButtonsDirectVisibilityAndStates()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "argument_display": "1. Classic bubble authority never suppresses user, search, assistant, error, or information rows",
+        "arguments": null,
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/classicBubbleAuthorityNeverSuppressesMessageRows",
+        "method": "ClassicChatRestorationTests/classicBubbleAuthorityNeverSuppressesMessageRows",
+        "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/classicBubbleAuthorityNeverSuppressesMessageRows()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "argument_display": "17. ClassicChatAgentProjection maps provider-native .source and .file and rejects fabricated search.local URLs",
+        "arguments": null,
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/classicChatAgentProjectionSourceFileAndValidResources",
+        "method": "ClassicChatRestorationTests/classicChatAgentProjectionSourceFileAndValidResources",
+        "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/classicChatAgentProjectionSourceFileAndValidResources()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "argument_display": "8. CodeBlockRow renders normal and error states with container-relative width",
+        "arguments": null,
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/codeBlockRowClassicPresentation",
+        "method": "ClassicChatRestorationTests/codeBlockRowClassicPresentation",
+        "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/codeBlockRowClassicPresentation()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "argument_display": "28. Track 1 P0: Complex tool sequence (load_skill -> MCP status -> MCP call -> failed MCP call) preserves order, statuses, and error details",
+        "arguments": null,
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/complexToolSequenceAndErrorPreservation",
+        "method": "ClassicChatRestorationTests/complexToolSequenceAndErrorPreservation",
+        "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/complexToolSequenceAndErrorPreservation()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "argument_display": "10. Composer accessory bar and send guard prevent duplicate sends and support attachment-only send",
+        "arguments": null,
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/composerAccessoryBarNoOverlap",
+        "method": "ClassicChatRestorationTests/composerAccessoryBarNoOverlap",
+        "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/composerAccessoryBarNoOverlap()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "argument_display": "9. Conversation list supports pinning, sorting, search filtering, draft preservation, and deletion",
+        "arguments": null,
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/conversationListClassicNavigationAndPinnedRows",
+        "method": "ClassicChatRestorationTests/conversationListClassicNavigationAndPinnedRows",
+        "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/conversationListClassicNavigationAndPinnedRows()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "argument_display": "29. Track 1 P0: Domain tools preserve legitimate '### Instructions' headings in user view; meta skill tools sanitize user view while preserving modelText",
+        "arguments": null,
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/domainToolLegitimateInstructionsHeadingPreserved",
+        "method": "ClassicChatRestorationTests/domainToolLegitimateInstructionsHeadingPreserved",
+        "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/domainToolLegitimateInstructionsHeadingPreserved()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "argument_display": "27. Track 1 P0: Two calls with identical toolName and identical output retain distinct identities, stable IDs, and execution order",
+        "arguments": null,
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/duplicateOutputsDifferentCallsRetainOrderAndIdentity",
+        "method": "ClassicChatRestorationTests/duplicateOutputsDifferentCallsRetainOrderAndIdentity",
+        "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/duplicateOutputsDifferentCallsRetainOrderAndIdentity()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "argument_display": "4. Dynamic bottom padding tracks measured composer height across compact, multiline, and attachment trays",
+        "arguments": null,
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/dynamicBottomPaddingTracksMeasuredComposerHeight",
+        "method": "ClassicChatRestorationTests/dynamicBottomPaddingTracksMeasuredComposerHeight",
+        "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/dynamicBottomPaddingTracksMeasuredComposerHeight()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "argument_display": "Expanded activity rejects private transcript text and keeps approved operational summaries",
+        "arguments": null,
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/expandedReasoningUsesApprovedSummaryProjection",
+        "method": "ClassicChatRestorationTests/expandedReasoningUsesApprovedSummaryProjection",
+        "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/expandedReasoningUsesApprovedSummaryProjection()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "argument_display": "24. HanlinComposerActionBridge derives truthful capability snapshot, active mode chips, and tools shortcut count",
+        "arguments": null,
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/hanlinComposerActionBridgeCapabilityAndActiveChips",
+        "method": "ClassicChatRestorationTests/hanlinComposerActionBridgeCapabilityAndActiveChips",
+        "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/hanlinComposerActionBridgeCapabilityAndActiveChips()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "argument_display": "23. HanlinComposerPopupCoordinator preserves drawer routes across independent model presentation",
+        "arguments": null,
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/hanlinComposerPopupCoordinatorMutualExclusionAndV33TwoPhaseZoom",
+        "method": "ClassicChatRestorationTests/hanlinComposerPopupCoordinatorMutualExclusionAndV33TwoPhaseZoom",
+        "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/hanlinComposerPopupCoordinatorMutualExclusionAndV33TwoPhaseZoom()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "argument_display": "30. Track 4 P0: Four meta-tool user summaries support Hebrew, English, and Simplified Chinese without falling back to English/Chinese for Hebrew",
+        "arguments": null,
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/hebrewEnglishChineseToolSummaryLocalization",
+        "method": "ClassicChatRestorationTests/hebrewEnglishChineseToolSummaryLocalization",
+        "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/hebrewEnglishChineseToolSummaryLocalization()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "argument_display": "31. Track 1 P0: Legacy stored chat without agentRunJSON falls back gracefully to toolContent without crashing or showing duplicate cards",
+        "arguments": null,
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/legacyToolContentOnlyChatFallback",
+        "method": "ClassicChatRestorationTests/legacyToolContentOnlyChatFallback",
+        "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/legacyToolContentOnlyChatFallback()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "argument_display": "15. AgentRunLifecycleCoordinator and AgentEventAccumulator isolate cancelled runs and reject late ghost events on retry",
+        "arguments": null,
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/lifecycleCancelRetryLateEventsAcrossRuns",
+        "method": "ClassicChatRestorationTests/lifecycleCancelRetryLateEventsAcrossRuns",
+        "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/lifecycleCancelRetryLateEventsAcrossRuns()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "argument_display": "13. Conversational MCP lifecycle: status, preview, install, auto-enable, Turn 1 & Turn 2 tool invocation, restart, stop, uninstall",
+        "arguments": null,
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/mcpInstallSelectInvokeUninstallE2E",
+        "method": "ClassicChatRestorationTests/mcpInstallSelectInvokeUninstallE2E",
+        "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/mcpInstallSelectInvokeUninstallE2E()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "argument_display": "14. Model routing and capability preservation survive transient probe failures",
+        "arguments": null,
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/modelRoutingAcrossPersistentProbeRefresh",
+        "method": "ClassicChatRestorationTests/modelRoutingAcrossPersistentProbeRefresh",
+        "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/modelRoutingAcrossPersistentProbeRefresh()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "argument_display": "16. APIManager.convertFormattedMessagesToSDKMessages preserves base64 imageData, remote imageURL, text, and system/developer roles without empty-string destruction",
+        "arguments": null,
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/multimodalFormattedMessagesToSDKConversion",
+        "method": "ClassicChatRestorationTests/multimodalFormattedMessagesToSDKConversion",
+        "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/multimodalFormattedMessagesToSDKConversion()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "argument_display": "26. NativeMultilineTextEditor.effectiveMeasurementWidth uses actual view bounds on narrow split-screen widths before fallback",
+        "arguments": null,
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/nativeMultilineTextEditorEffectiveMeasurementWidth",
+        "method": "ClassicChatRestorationTests/nativeMultilineTextEditorEffectiveMeasurementWidth",
+        "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/nativeMultilineTextEditorEffectiveMeasurementWidth()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "argument_display": "3. Retry cleans up failed assistant, search, error, and info rows for the retried turn without duplicate bubbles",
+        "arguments": null,
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/retryReplacesFailedAssistantGroupWithoutDuplicateBubbles",
+        "method": "ClassicChatRestorationTests/retryReplacesFailedAssistantGroupWithoutDuplicateBubbles",
+        "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/retryReplacesFailedAssistantGroupWithoutDuplicateBubbles()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "argument_display": "12. Tool results and final answer persist in ChatMessages.agentRunJSON and reload across reopen without duplication",
+        "arguments": null,
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/toolResultVisibilityAndHistory",
+        "method": "ClassicChatRestorationTests/toolResultVisibilityAndHistory",
+        "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/toolResultVisibilityAndHistory()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "argument_display": "5. User bubble uses classic CustomCorners(20, 20, 20, 5) shape and supports images, documents, and prompt cards",
+        "arguments": null,
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/userBubbleUsesClassicShapeAndAttachments",
+        "method": "ClassicChatRestorationTests/userBubbleUsesClassicShapeAndAttachments",
+        "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/userBubbleUsesClassicShapeAndAttachments()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "argument_display": "2. Web search message row updates in place and citations/sources are deduplicated across Resource and AgentEvidenceItem",
+        "arguments": null,
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/webSearchCitationsAndSourcesDeduplicated",
+        "method": "ClassicChatRestorationTests/webSearchCitationsAndSourcesDeduplicated",
+        "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/webSearchCitationsAndSourcesDeduplicated()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "argument_display": "Both active adapters call their injected host service and revoke it",
+        "arguments": null,
+        "expected_status": "PASS",
+        "id": "HanlinMiniAppAssistantIntegrationTests/activeAdapterDispatch",
+        "method": "HanlinMiniAppAssistantIntegrationTests/activeAdapterDispatch",
+        "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMiniAppAssistantIntegrationTests/activeAdapterDispatch()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "argument_display": "Truncated JSON is not published as a successful object",
+        "arguments": null,
+        "expected_status": "PASS",
+        "id": "HanlinMiniAppAssistantIntegrationTests/incompleteStructuredOutput",
+        "method": "HanlinMiniAppAssistantIntegrationTests/incompleteStructuredOutput",
+        "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMiniAppAssistantIntegrationTests/incompleteStructuredOutput()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "argument_display": "\"{\"count\":7,\"extra\":true}\"",
+        "arguments": [
+          "{\"count\":7,\"extra\":true}"
+        ],
+        "expected_status": "PASS",
+        "id": "HanlinMiniAppAssistantIntegrationTests/invalidStructuredOutput [\"{\\\"count\\\":7,\\\"extra\\\":true}\"]",
+        "method": "HanlinMiniAppAssistantIntegrationTests/invalidStructuredOutput",
+        "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMiniAppAssistantIntegrationTests/invalidStructuredOutput(_:)?args=479b27f19b80424d7b2dbd8a54eabded92919941435712a856cf898c432c4b8d",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "argument_display": "\"{\"count\":9007199254740993}\"",
+        "arguments": [
+          "{\"count\":9007199254740993}"
+        ],
+        "expected_status": "PASS",
+        "id": "HanlinMiniAppAssistantIntegrationTests/invalidStructuredOutput [\"{\\\"count\\\":9007199254740993}\"]",
+        "method": "HanlinMiniAppAssistantIntegrationTests/invalidStructuredOutput",
+        "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMiniAppAssistantIntegrationTests/invalidStructuredOutput(_:)?args=52655fc1c22e9115cb39fc0fb30e8789fb5d849fe81ee08f7fb13902661fcb73",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "argument_display": "\"{\"count\":\"seven\"}\"",
+        "arguments": [
+          "{\"count\":\"seven\"}"
+        ],
+        "expected_status": "PASS",
+        "id": "HanlinMiniAppAssistantIntegrationTests/invalidStructuredOutput [\"{\\\"count\\\":\\\"seven\\\"}\"]",
+        "method": "HanlinMiniAppAssistantIntegrationTests/invalidStructuredOutput",
+        "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMiniAppAssistantIntegrationTests/invalidStructuredOutput(_:)?args=615a4e0b9e466a04d829acd00d3901c18bc8032fbb37b27d0630a177e71d3847",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "argument_display": "Unknown credential and implicit tool fields fail before producer creation",
+        "arguments": null,
+        "expected_status": "PASS",
+        "id": "HanlinMiniAppAssistantIntegrationTests/noImplicitToolsOrCredentials",
+        "method": "HanlinMiniAppAssistantIntegrationTests/noImplicitToolsOrCredentials",
+        "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMiniAppAssistantIntegrationTests/noImplicitToolsOrCredentials()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "argument_display": "A different session cannot consume or cancel an original handle",
+        "arguments": null,
+        "expected_status": "PASS",
+        "id": "HanlinMiniAppAssistantIntegrationTests/sessionBoundHandles",
+        "method": "HanlinMiniAppAssistantIntegrationTests/sessionBoundHandles",
+        "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMiniAppAssistantIntegrationTests/sessionBoundHandles()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "argument_display": "Adapter teardown revokes new admission and cancels a pending native read",
+        "arguments": null,
+        "expected_status": "PASS",
+        "id": "HanlinMiniAppAssistantIntegrationTests/teardownCancellation",
+        "method": "HanlinMiniAppAssistantIntegrationTests/teardownCancellation",
+        "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMiniAppAssistantIntegrationTests/teardownCancellation()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "argument_display": "Schema output stays buffered until exact validation and preserves cache counters",
+        "arguments": null,
+        "expected_status": "PASS",
+        "id": "HanlinMiniAppAssistantIntegrationTests/validatedStructuredOutput",
+        "method": "HanlinMiniAppAssistantIntegrationTests/validatedStructuredOutput",
+        "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMiniAppAssistantIntegrationTests/validatedStructuredOutput()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "argument_display": "compactConfigurationPreservesPreferencesAndLegacyDecoding()",
+        "arguments": null,
+        "expected_status": "PASS",
+        "id": "HanlinModelPromptCachePersistenceTests/compactConfigurationPreservesPreferencesAndLegacyDecoding",
+        "method": "HanlinModelPromptCachePersistenceTests/compactConfigurationPreservesPreferencesAndLegacyDecoding",
+        "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinModelPromptCachePersistenceTests/compactConfigurationPreservesPreferencesAndLegacyDecoding()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "argument_display": "oldRowsAndOriginalSwiftDataRoundTrip()",
+        "arguments": null,
+        "expected_status": "PASS",
+        "id": "HanlinModelPromptCachePersistenceTests/oldRowsAndOriginalSwiftDataRoundTrip",
+        "method": "HanlinModelPromptCachePersistenceTests/oldRowsAndOriginalSwiftDataRoundTrip",
+        "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinModelPromptCachePersistenceTests/oldRowsAndOriginalSwiftDataRoundTrip()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "argument_display": "scopedResourcesCannotReplaceGlobalPreferences()",
+        "arguments": null,
+        "expected_status": "PASS",
+        "id": "HanlinModelPromptCachePersistenceTests/scopedResourcesCannotReplaceGlobalPreferences",
+        "method": "HanlinModelPromptCachePersistenceTests/scopedResourcesCannotReplaceGlobalPreferences",
+        "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinModelPromptCachePersistenceTests/scopedResourcesCannotReplaceGlobalPreferences()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "argument_display": "SDK conversion preserves system authority and one stable cache boundary",
+        "arguments": null,
+        "expected_status": "PASS",
+        "id": "HanlinPromptCachingIntegrationTests/distinctSystemBlocks",
+        "method": "HanlinPromptCachingIntegrationTests/distinctSystemBlocks",
+        "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinPromptCachingIntegrationTests/distinctSystemBlocks()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "argument_display": "No synthetic delimiters or empty context are added to prompt text",
+        "arguments": null,
+        "expected_status": "PASS",
+        "id": "HanlinPromptCachingIntegrationTests/emptyAndVerbatimSections",
+        "method": "HanlinPromptCachingIntegrationTests/emptyAndVerbatimSections",
+        "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinPromptCachingIntegrationTests/emptyAndVerbatimSections()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "argument_display": "Current time and retrieved memory change only the trailing system block",
+        "arguments": null,
+        "expected_status": "PASS",
+        "id": "HanlinPromptCachingIntegrationTests/stableInstructionsSurviveContextChanges",
+        "method": "HanlinPromptCachingIntegrationTests/stableInstructionsSurviveContextChanges",
+        "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinPromptCachingIntegrationTests/stableInstructionsSurviveContextChanges()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "argument_display": "Skill discovery order is stable across catalog enumeration order",
+        "arguments": null,
+        "expected_status": "PASS",
+        "id": "HanlinPromptCachingIntegrationTests/stableSkillCatalogOrder",
+        "method": "HanlinPromptCachingIntegrationTests/stableSkillCatalogOrder",
+        "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinPromptCachingIntegrationTests/stableSkillCatalogOrder()",
+        "result": "09-test-results",
+        "status": "PASS"
+      }
+    ],
+    "errors": [],
+    "expectedInvocationCount": 48,
+    "expectedMethodCount": 46,
+    "methods": [
+      {
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/agentReasoningNeverLeaksRawCoTToViews()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/assistantBubbleOwnsFinalAnswerAndActionButtons()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/build84001MCPValidationAndIncompatiblePackageGuard()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/build84001SchemaOverheadTokenBudget()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/build84001ShellPwdAndNodeCommonJSInference()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/build84001SkillVsToolNameDisambiguation()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/build84001UnicodePropertyRegexSanitizerInServerWorker()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/build84701P0ToolContentSeparationAndPerCallProjection()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/classicActionButtonsDirectVisibilityAndStates()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/classicBubbleAuthorityNeverSuppressesMessageRows()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/classicChatAgentProjectionSourceFileAndValidResources()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/codeBlockRowClassicPresentation()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/complexToolSequenceAndErrorPreservation()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/composerAccessoryBarNoOverlap()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/conversationListClassicNavigationAndPinnedRows()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/domainToolLegitimateInstructionsHeadingPreserved()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/duplicateOutputsDifferentCallsRetainOrderAndIdentity()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/dynamicBottomPaddingTracksMeasuredComposerHeight()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/expandedReasoningUsesApprovedSummaryProjection()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/hanlinComposerActionBridgeCapabilityAndActiveChips()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/hanlinComposerPopupCoordinatorMutualExclusionAndV33TwoPhaseZoom()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/hebrewEnglishChineseToolSummaryLocalization()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/legacyToolContentOnlyChatFallback()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/lifecycleCancelRetryLateEventsAcrossRuns()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/mcpInstallSelectInvokeUninstallE2E()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/modelRoutingAcrossPersistentProbeRefresh()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/multimodalFormattedMessagesToSDKConversion()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/nativeMultilineTextEditorEffectiveMeasurementWidth()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/retryReplacesFailedAssistantGroupWithoutDuplicateBubbles()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/toolResultVisibilityAndHistory()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/userBubbleUsesClassicShapeAndAttachments()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "expected_status": "PASS",
+        "id": "ClassicChatRestorationTests/webSearchCitationsAndSourcesDeduplicated()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "expected_status": "PASS",
+        "id": "HanlinMiniAppAssistantIntegrationTests/activeAdapterDispatch()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "expected_status": "PASS",
+        "id": "HanlinMiniAppAssistantIntegrationTests/incompleteStructuredOutput()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "expected_status": "PASS",
+        "id": "HanlinMiniAppAssistantIntegrationTests/invalidStructuredOutput(_:)",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "expected_status": "PASS",
+        "id": "HanlinMiniAppAssistantIntegrationTests/noImplicitToolsOrCredentials()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "expected_status": "PASS",
+        "id": "HanlinMiniAppAssistantIntegrationTests/sessionBoundHandles()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "expected_status": "PASS",
+        "id": "HanlinMiniAppAssistantIntegrationTests/teardownCancellation()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "expected_status": "PASS",
+        "id": "HanlinMiniAppAssistantIntegrationTests/validatedStructuredOutput()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "expected_status": "PASS",
+        "id": "HanlinModelPromptCachePersistenceTests/compactConfigurationPreservesPreferencesAndLegacyDecoding()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "expected_status": "PASS",
+        "id": "HanlinModelPromptCachePersistenceTests/oldRowsAndOriginalSwiftDataRoundTrip()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "expected_status": "PASS",
+        "id": "HanlinModelPromptCachePersistenceTests/scopedResourcesCannotReplaceGlobalPreferences()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "expected_status": "PASS",
+        "id": "HanlinPromptCachingIntegrationTests/distinctSystemBlocks()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "expected_status": "PASS",
+        "id": "HanlinPromptCachingIntegrationTests/emptyAndVerbatimSections()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "expected_status": "PASS",
+        "id": "HanlinPromptCachingIntegrationTests/stableInstructionsSurviveContextChanges()",
+        "result": "09-test-results",
+        "status": "PASS"
+      },
+      {
+        "expected_status": "PASS",
+        "id": "HanlinPromptCachingIntegrationTests/stableSkillCatalogOrder()",
+        "result": "09-test-results",
+        "status": "PASS"
+      }
+    ],
+    "nonPassingResultNodes": [],
+    "observedInvocationCount": 48,
+    "passedInvocationCount": 48,
+    "resultSHA256": "fbcfda087bb785188d03f596e47cab791d0bd771542f60ffee45f57eecad1fa9",
+    "status": "PASS"
+  },
+  "executables": {
+    "node": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/node-v24.5.0-darwin-arm64/bin/node",
+    "npm": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/node-v24.5.0-darwin-arm64/bin/npm",
+    "xcodebuild": "/usr/bin/xcodebuild",
+    "xcrun": "/usr/bin/xcrun"
+  },
+  "executedCases": [
+    {
+      "argument_display": "11. Agent reasoning sanitizer blocks raw CoT across all patterns and languages before reaching views",
+      "arguments": null,
+      "expected_status": "PASS",
+      "id": "ClassicChatRestorationTests/agentReasoningNeverLeaksRawCoTToViews",
+      "method": "ClassicChatRestorationTests/agentReasoningNeverLeaksRawCoTToViews",
+      "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/agentReasoningNeverLeaksRawCoTToViews()",
+      "result": "09-test-results",
+      "status": "PASS"
+    },
+    {
+      "argument_display": "6. Assistant bubble owns final answer text, subordinate AgentActivitySummaryView, and tool result cards",
+      "arguments": null,
+      "expected_status": "PASS",
+      "id": "ClassicChatRestorationTests/assistantBubbleOwnsFinalAnswerAndActionButtons",
+      "method": "ClassicChatRestorationTests/assistantBubbleOwnsFinalAnswerAndActionButtons",
+      "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/assistantBubbleOwnsFinalAnswerAndActionButtons()",
+      "result": "09-test-results",
+      "status": "PASS"
+    },
+    {
+      "argument_display": "19. Build 84001 defect 7B: ManageMCPServersTool rejects known nonexistent or native-addon MCP packages and supports action/parameter aliases",
+      "arguments": null,
+      "expected_status": "PASS",
+      "id": "ClassicChatRestorationTests/build84001MCPValidationAndIncompatiblePackageGuard",
+      "method": "ClassicChatRestorationTests/build84001MCPValidationAndIncompatiblePackageGuard",
+      "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/build84001MCPValidationAndIncompatiblePackageGuard()",
+      "result": "09-test-results",
+      "status": "PASS"
+    },
+    {
+      "argument_display": "22. Schema transport budgets are explicit and do not silently cap ordinary sessions",
+      "arguments": null,
+      "expected_status": "PASS",
+      "id": "ClassicChatRestorationTests/build84001SchemaOverheadTokenBudget",
+      "method": "ClassicChatRestorationTests/build84001SchemaOverheadTokenBudget",
+      "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/build84001SchemaOverheadTokenBudget()",
+      "result": "09-test-results",
+      "status": "PASS"
+    },
+    {
+      "argument_display": "21. Build 84001 defect 7C: execute_shell_command supports pwd builtin and NodeRuntimeService infers CommonJS for require() snippets",
+      "arguments": null,
+      "expected_status": "PASS",
+      "id": "ClassicChatRestorationTests/build84001ShellPwdAndNodeCommonJSInference",
+      "method": "ClassicChatRestorationTests/build84001ShellPwdAndNodeCommonJSInference",
+      "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/build84001ShellPwdAndNodeCommonJSInference()",
+      "result": "09-test-results",
+      "status": "PASS"
+    },
+    {
+      "argument_display": "18. Build 84001 defect 7A: calling web_research as a tool or load_skill(skill_id: search_online) returns explicit Skill ID vs tool name guidance",
+      "arguments": null,
+      "expected_status": "PASS",
+      "id": "ClassicChatRestorationTests/build84001SkillVsToolNameDisambiguation",
+      "method": "ClassicChatRestorationTests/build84001SkillVsToolNameDisambiguation",
+      "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/build84001SkillVsToolNameDisambiguation()",
+      "result": "09-test-results",
+      "status": "PASS"
+    },
+    {
+      "argument_display": "20. Build 84001 defect 7B: server-worker.mjs includes ICU-less Node regex compatibility shim for \\P{ASCII} and \\p{ASCII}",
+      "arguments": null,
+      "expected_status": "PASS",
+      "id": "ClassicChatRestorationTests/build84001UnicodePropertyRegexSanitizerInServerWorker",
+      "method": "ClassicChatRestorationTests/build84001UnicodePropertyRegexSanitizerInServerWorker",
+      "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/build84001UnicodePropertyRegexSanitizerInServerWorker()",
+      "result": "09-test-results",
+      "status": "PASS"
+    },
+    {
+      "argument_display": "25. Original tool projection preserves per-call skill and MCP audit while keeping internal skill activity out of the visible domain result",
+      "arguments": null,
+      "expected_status": "PASS",
+      "id": "ClassicChatRestorationTests/build84701P0ToolContentSeparationAndPerCallProjection",
+      "method": "ClassicChatRestorationTests/build84701P0ToolContentSeparationAndPerCallProjection",
+      "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/build84701P0ToolContentSeparationAndPerCallProjection()",
+      "result": "09-test-results",
+      "status": "PASS"
+    },
+    {
+      "argument_display": "7. Classic action buttons are directly visible when completed and retry is hidden during active streaming",
+      "arguments": null,
+      "expected_status": "PASS",
+      "id": "ClassicChatRestorationTests/classicActionButtonsDirectVisibilityAndStates",
+      "method": "ClassicChatRestorationTests/classicActionButtonsDirectVisibilityAndStates",
+      "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/classicActionButtonsDirectVisibilityAndStates()",
+      "result": "09-test-results",
+      "status": "PASS"
+    },
+    {
+      "argument_display": "1. Classic bubble authority never suppresses user, search, assistant, error, or information rows",
+      "arguments": null,
+      "expected_status": "PASS",
+      "id": "ClassicChatRestorationTests/classicBubbleAuthorityNeverSuppressesMessageRows",
+      "method": "ClassicChatRestorationTests/classicBubbleAuthorityNeverSuppressesMessageRows",
+      "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/classicBubbleAuthorityNeverSuppressesMessageRows()",
+      "result": "09-test-results",
+      "status": "PASS"
+    },
+    {
+      "argument_display": "17. ClassicChatAgentProjection maps provider-native .source and .file and rejects fabricated search.local URLs",
+      "arguments": null,
+      "expected_status": "PASS",
+      "id": "ClassicChatRestorationTests/classicChatAgentProjectionSourceFileAndValidResources",
+      "method": "ClassicChatRestorationTests/classicChatAgentProjectionSourceFileAndValidResources",
+      "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/classicChatAgentProjectionSourceFileAndValidResources()",
+      "result": "09-test-results",
+      "status": "PASS"
+    },
+    {
+      "argument_display": "8. CodeBlockRow renders normal and error states with container-relative width",
+      "arguments": null,
+      "expected_status": "PASS",
+      "id": "ClassicChatRestorationTests/codeBlockRowClassicPresentation",
+      "method": "ClassicChatRestorationTests/codeBlockRowClassicPresentation",
+      "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/codeBlockRowClassicPresentation()",
+      "result": "09-test-results",
+      "status": "PASS"
+    },
+    {
+      "argument_display": "28. Track 1 P0: Complex tool sequence (load_skill -> MCP status -> MCP call -> failed MCP call) preserves order, statuses, and error details",
+      "arguments": null,
+      "expected_status": "PASS",
+      "id": "ClassicChatRestorationTests/complexToolSequenceAndErrorPreservation",
+      "method": "ClassicChatRestorationTests/complexToolSequenceAndErrorPreservation",
+      "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/complexToolSequenceAndErrorPreservation()",
+      "result": "09-test-results",
+      "status": "PASS"
+    },
+    {
+      "argument_display": "10. Composer accessory bar and send guard prevent duplicate sends and support attachment-only send",
+      "arguments": null,
+      "expected_status": "PASS",
+      "id": "ClassicChatRestorationTests/composerAccessoryBarNoOverlap",
+      "method": "ClassicChatRestorationTests/composerAccessoryBarNoOverlap",
+      "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/composerAccessoryBarNoOverlap()",
+      "result": "09-test-results",
+      "status": "PASS"
+    },
+    {
+      "argument_display": "9. Conversation list supports pinning, sorting, search filtering, draft preservation, and deletion",
+      "arguments": null,
+      "expected_status": "PASS",
+      "id": "ClassicChatRestorationTests/conversationListClassicNavigationAndPinnedRows",
+      "method": "ClassicChatRestorationTests/conversationListClassicNavigationAndPinnedRows",
+      "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/conversationListClassicNavigationAndPinnedRows()",
+      "result": "09-test-results",
+      "status": "PASS"
+    },
+    {
+      "argument_display": "29. Track 1 P0: Domain tools preserve legitimate '### Instructions' headings in user view; meta skill tools sanitize user view while preserving modelText",
+      "arguments": null,
+      "expected_status": "PASS",
+      "id": "ClassicChatRestorationTests/domainToolLegitimateInstructionsHeadingPreserved",
+      "method": "ClassicChatRestorationTests/domainToolLegitimateInstructionsHeadingPreserved",
+      "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/domainToolLegitimateInstructionsHeadingPreserved()",
+      "result": "09-test-results",
+      "status": "PASS"
+    },
+    {
+      "argument_display": "27. Track 1 P0: Two calls with identical toolName and identical output retain distinct identities, stable IDs, and execution order",
+      "arguments": null,
+      "expected_status": "PASS",
+      "id": "ClassicChatRestorationTests/duplicateOutputsDifferentCallsRetainOrderAndIdentity",
+      "method": "ClassicChatRestorationTests/duplicateOutputsDifferentCallsRetainOrderAndIdentity",
+      "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/duplicateOutputsDifferentCallsRetainOrderAndIdentity()",
+      "result": "09-test-results",
+      "status": "PASS"
+    },
+    {
+      "argument_display": "4. Dynamic bottom padding tracks measured composer height across compact, multiline, and attachment trays",
+      "arguments": null,
+      "expected_status": "PASS",
+      "id": "ClassicChatRestorationTests/dynamicBottomPaddingTracksMeasuredComposerHeight",
+      "method": "ClassicChatRestorationTests/dynamicBottomPaddingTracksMeasuredComposerHeight",
+      "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/dynamicBottomPaddingTracksMeasuredComposerHeight()",
+      "result": "09-test-results",
+      "status": "PASS"
+    },
+    {
+      "argument_display": "Expanded activity rejects private transcript text and keeps approved operational summaries",
+      "arguments": null,
+      "expected_status": "PASS",
+      "id": "ClassicChatRestorationTests/expandedReasoningUsesApprovedSummaryProjection",
+      "method": "ClassicChatRestorationTests/expandedReasoningUsesApprovedSummaryProjection",
+      "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/expandedReasoningUsesApprovedSummaryProjection()",
+      "result": "09-test-results",
+      "status": "PASS"
+    },
+    {
+      "argument_display": "24. HanlinComposerActionBridge derives truthful capability snapshot, active mode chips, and tools shortcut count",
+      "arguments": null,
+      "expected_status": "PASS",
+      "id": "ClassicChatRestorationTests/hanlinComposerActionBridgeCapabilityAndActiveChips",
+      "method": "ClassicChatRestorationTests/hanlinComposerActionBridgeCapabilityAndActiveChips",
+      "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/hanlinComposerActionBridgeCapabilityAndActiveChips()",
+      "result": "09-test-results",
+      "status": "PASS"
+    },
+    {
+      "argument_display": "23. HanlinComposerPopupCoordinator preserves drawer routes across independent model presentation",
+      "arguments": null,
+      "expected_status": "PASS",
+      "id": "ClassicChatRestorationTests/hanlinComposerPopupCoordinatorMutualExclusionAndV33TwoPhaseZoom",
+      "method": "ClassicChatRestorationTests/hanlinComposerPopupCoordinatorMutualExclusionAndV33TwoPhaseZoom",
+      "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/hanlinComposerPopupCoordinatorMutualExclusionAndV33TwoPhaseZoom()",
+      "result": "09-test-results",
+      "status": "PASS"
+    },
+    {
+      "argument_display": "30. Track 4 P0: Four meta-tool user summaries support Hebrew, English, and Simplified Chinese without falling back to English/Chinese for Hebrew",
+      "arguments": null,
+      "expected_status": "PASS",
+      "id": "ClassicChatRestorationTests/hebrewEnglishChineseToolSummaryLocalization",
+      "method": "ClassicChatRestorationTests/hebrewEnglishChineseToolSummaryLocalization",
+      "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/hebrewEnglishChineseToolSummaryLocalization()",
+      "result": "09-test-results",
+      "status": "PASS"
+    },
+    {
+      "argument_display": "31. Track 1 P0: Legacy stored chat without agentRunJSON falls back gracefully to toolContent without crashing or showing duplicate cards",
+      "arguments": null,
+      "expected_status": "PASS",
+      "id": "ClassicChatRestorationTests/legacyToolContentOnlyChatFallback",
+      "method": "ClassicChatRestorationTests/legacyToolContentOnlyChatFallback",
+      "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/legacyToolContentOnlyChatFallback()",
+      "result": "09-test-results",
+      "status": "PASS"
+    },
+    {
+      "argument_display": "15. AgentRunLifecycleCoordinator and AgentEventAccumulator isolate cancelled runs and reject late ghost events on retry",
+      "arguments": null,
+      "expected_status": "PASS",
+      "id": "ClassicChatRestorationTests/lifecycleCancelRetryLateEventsAcrossRuns",
+      "method": "ClassicChatRestorationTests/lifecycleCancelRetryLateEventsAcrossRuns",
+      "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/lifecycleCancelRetryLateEventsAcrossRuns()",
+      "result": "09-test-results",
+      "status": "PASS"
+    },
+    {
+      "argument_display": "13. Conversational MCP lifecycle: status, preview, install, auto-enable, Turn 1 & Turn 2 tool invocation, restart, stop, uninstall",
+      "arguments": null,
+      "expected_status": "PASS",
+      "id": "ClassicChatRestorationTests/mcpInstallSelectInvokeUninstallE2E",
+      "method": "ClassicChatRestorationTests/mcpInstallSelectInvokeUninstallE2E",
+      "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/mcpInstallSelectInvokeUninstallE2E()",
+      "result": "09-test-results",
+      "status": "PASS"
+    },
+    {
+      "argument_display": "14. Model routing and capability preservation survive transient probe failures",
+      "arguments": null,
+      "expected_status": "PASS",
+      "id": "ClassicChatRestorationTests/modelRoutingAcrossPersistentProbeRefresh",
+      "method": "ClassicChatRestorationTests/modelRoutingAcrossPersistentProbeRefresh",
+      "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/modelRoutingAcrossPersistentProbeRefresh()",
+      "result": "09-test-results",
+      "status": "PASS"
+    },
+    {
+      "argument_display": "16. APIManager.convertFormattedMessagesToSDKMessages preserves base64 imageData, remote imageURL, text, and system/developer roles without empty-string destruction",
+      "arguments": null,
+      "expected_status": "PASS",
+      "id": "ClassicChatRestorationTests/multimodalFormattedMessagesToSDKConversion",
+      "method": "ClassicChatRestorationTests/multimodalFormattedMessagesToSDKConversion",
+      "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/multimodalFormattedMessagesToSDKConversion()",
+      "result": "09-test-results",
+      "status": "PASS"
+    },
+    {
+      "argument_display": "26. NativeMultilineTextEditor.effectiveMeasurementWidth uses actual view bounds on narrow split-screen widths before fallback",
+      "arguments": null,
+      "expected_status": "PASS",
+      "id": "ClassicChatRestorationTests/nativeMultilineTextEditorEffectiveMeasurementWidth",
+      "method": "ClassicChatRestorationTests/nativeMultilineTextEditorEffectiveMeasurementWidth",
+      "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/nativeMultilineTextEditorEffectiveMeasurementWidth()",
+      "result": "09-test-results",
+      "status": "PASS"
+    },
+    {
+      "argument_display": "3. Retry cleans up failed assistant, search, error, and info rows for the retried turn without duplicate bubbles",
+      "arguments": null,
+      "expected_status": "PASS",
+      "id": "ClassicChatRestorationTests/retryReplacesFailedAssistantGroupWithoutDuplicateBubbles",
+      "method": "ClassicChatRestorationTests/retryReplacesFailedAssistantGroupWithoutDuplicateBubbles",
+      "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/retryReplacesFailedAssistantGroupWithoutDuplicateBubbles()",
+      "result": "09-test-results",
+      "status": "PASS"
+    },
+    {
+      "argument_display": "12. Tool results and final answer persist in ChatMessages.agentRunJSON and reload across reopen without duplication",
+      "arguments": null,
+      "expected_status": "PASS",
+      "id": "ClassicChatRestorationTests/toolResultVisibilityAndHistory",
+      "method": "ClassicChatRestorationTests/toolResultVisibilityAndHistory",
+      "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/toolResultVisibilityAndHistory()",
+      "result": "09-test-results",
+      "status": "PASS"
+    },
+    {
+      "argument_display": "5. User bubble uses classic CustomCorners(20, 20, 20, 5) shape and supports images, documents, and prompt cards",
+      "arguments": null,
+      "expected_status": "PASS",
+      "id": "ClassicChatRestorationTests/userBubbleUsesClassicShapeAndAttachments",
+      "method": "ClassicChatRestorationTests/userBubbleUsesClassicShapeAndAttachments",
+      "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/userBubbleUsesClassicShapeAndAttachments()",
+      "result": "09-test-results",
+      "status": "PASS"
+    },
+    {
+      "argument_display": "2. Web search message row updates in place and citations/sources are deduplicated across Resource and AgentEvidenceItem",
+      "arguments": null,
+      "expected_status": "PASS",
+      "id": "ClassicChatRestorationTests/webSearchCitationsAndSourcesDeduplicated",
+      "method": "ClassicChatRestorationTests/webSearchCitationsAndSourcesDeduplicated",
+      "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/ClassicChatRestorationTests/webSearchCitationsAndSourcesDeduplicated()",
+      "result": "09-test-results",
+      "status": "PASS"
+    },
+    {
+      "argument_display": "Both active adapters call their injected host service and revoke it",
+      "arguments": null,
+      "expected_status": "PASS",
+      "id": "HanlinMiniAppAssistantIntegrationTests/activeAdapterDispatch",
+      "method": "HanlinMiniAppAssistantIntegrationTests/activeAdapterDispatch",
+      "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMiniAppAssistantIntegrationTests/activeAdapterDispatch()",
+      "result": "09-test-results",
+      "status": "PASS"
+    },
+    {
+      "argument_display": "Truncated JSON is not published as a successful object",
+      "arguments": null,
+      "expected_status": "PASS",
+      "id": "HanlinMiniAppAssistantIntegrationTests/incompleteStructuredOutput",
+      "method": "HanlinMiniAppAssistantIntegrationTests/incompleteStructuredOutput",
+      "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMiniAppAssistantIntegrationTests/incompleteStructuredOutput()",
+      "result": "09-test-results",
+      "status": "PASS"
+    },
+    {
+      "argument_display": "\"{\"count\":7,\"extra\":true}\"",
+      "arguments": [
+        "{\"count\":7,\"extra\":true}"
+      ],
+      "expected_status": "PASS",
+      "id": "HanlinMiniAppAssistantIntegrationTests/invalidStructuredOutput [\"{\\\"count\\\":7,\\\"extra\\\":true}\"]",
+      "method": "HanlinMiniAppAssistantIntegrationTests/invalidStructuredOutput",
+      "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMiniAppAssistantIntegrationTests/invalidStructuredOutput(_:)?args=479b27f19b80424d7b2dbd8a54eabded92919941435712a856cf898c432c4b8d",
+      "result": "09-test-results",
+      "status": "PASS"
+    },
+    {
+      "argument_display": "\"{\"count\":9007199254740993}\"",
+      "arguments": [
+        "{\"count\":9007199254740993}"
+      ],
+      "expected_status": "PASS",
+      "id": "HanlinMiniAppAssistantIntegrationTests/invalidStructuredOutput [\"{\\\"count\\\":9007199254740993}\"]",
+      "method": "HanlinMiniAppAssistantIntegrationTests/invalidStructuredOutput",
+      "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMiniAppAssistantIntegrationTests/invalidStructuredOutput(_:)?args=52655fc1c22e9115cb39fc0fb30e8789fb5d849fe81ee08f7fb13902661fcb73",
+      "result": "09-test-results",
+      "status": "PASS"
+    },
+    {
+      "argument_display": "\"{\"count\":\"seven\"}\"",
+      "arguments": [
+        "{\"count\":\"seven\"}"
+      ],
+      "expected_status": "PASS",
+      "id": "HanlinMiniAppAssistantIntegrationTests/invalidStructuredOutput [\"{\\\"count\\\":\\\"seven\\\"}\"]",
+      "method": "HanlinMiniAppAssistantIntegrationTests/invalidStructuredOutput",
+      "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMiniAppAssistantIntegrationTests/invalidStructuredOutput(_:)?args=615a4e0b9e466a04d829acd00d3901c18bc8032fbb37b27d0630a177e71d3847",
+      "result": "09-test-results",
+      "status": "PASS"
+    },
+    {
+      "argument_display": "Unknown credential and implicit tool fields fail before producer creation",
+      "arguments": null,
+      "expected_status": "PASS",
+      "id": "HanlinMiniAppAssistantIntegrationTests/noImplicitToolsOrCredentials",
+      "method": "HanlinMiniAppAssistantIntegrationTests/noImplicitToolsOrCredentials",
+      "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMiniAppAssistantIntegrationTests/noImplicitToolsOrCredentials()",
+      "result": "09-test-results",
+      "status": "PASS"
+    },
+    {
+      "argument_display": "A different session cannot consume or cancel an original handle",
+      "arguments": null,
+      "expected_status": "PASS",
+      "id": "HanlinMiniAppAssistantIntegrationTests/sessionBoundHandles",
+      "method": "HanlinMiniAppAssistantIntegrationTests/sessionBoundHandles",
+      "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMiniAppAssistantIntegrationTests/sessionBoundHandles()",
+      "result": "09-test-results",
+      "status": "PASS"
+    },
+    {
+      "argument_display": "Adapter teardown revokes new admission and cancels a pending native read",
+      "arguments": null,
+      "expected_status": "PASS",
+      "id": "HanlinMiniAppAssistantIntegrationTests/teardownCancellation",
+      "method": "HanlinMiniAppAssistantIntegrationTests/teardownCancellation",
+      "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMiniAppAssistantIntegrationTests/teardownCancellation()",
+      "result": "09-test-results",
+      "status": "PASS"
+    },
+    {
+      "argument_display": "Schema output stays buffered until exact validation and preserves cache counters",
+      "arguments": null,
+      "expected_status": "PASS",
+      "id": "HanlinMiniAppAssistantIntegrationTests/validatedStructuredOutput",
+      "method": "HanlinMiniAppAssistantIntegrationTests/validatedStructuredOutput",
+      "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMiniAppAssistantIntegrationTests/validatedStructuredOutput()",
+      "result": "09-test-results",
+      "status": "PASS"
+    },
+    {
+      "argument_display": "compactConfigurationPreservesPreferencesAndLegacyDecoding()",
+      "arguments": null,
+      "expected_status": "PASS",
+      "id": "HanlinModelPromptCachePersistenceTests/compactConfigurationPreservesPreferencesAndLegacyDecoding",
+      "method": "HanlinModelPromptCachePersistenceTests/compactConfigurationPreservesPreferencesAndLegacyDecoding",
+      "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinModelPromptCachePersistenceTests/compactConfigurationPreservesPreferencesAndLegacyDecoding()",
+      "result": "09-test-results",
+      "status": "PASS"
+    },
+    {
+      "argument_display": "oldRowsAndOriginalSwiftDataRoundTrip()",
+      "arguments": null,
+      "expected_status": "PASS",
+      "id": "HanlinModelPromptCachePersistenceTests/oldRowsAndOriginalSwiftDataRoundTrip",
+      "method": "HanlinModelPromptCachePersistenceTests/oldRowsAndOriginalSwiftDataRoundTrip",
+      "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinModelPromptCachePersistenceTests/oldRowsAndOriginalSwiftDataRoundTrip()",
+      "result": "09-test-results",
+      "status": "PASS"
+    },
+    {
+      "argument_display": "scopedResourcesCannotReplaceGlobalPreferences()",
+      "arguments": null,
+      "expected_status": "PASS",
+      "id": "HanlinModelPromptCachePersistenceTests/scopedResourcesCannotReplaceGlobalPreferences",
+      "method": "HanlinModelPromptCachePersistenceTests/scopedResourcesCannotReplaceGlobalPreferences",
+      "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinModelPromptCachePersistenceTests/scopedResourcesCannotReplaceGlobalPreferences()",
+      "result": "09-test-results",
+      "status": "PASS"
+    },
+    {
+      "argument_display": "SDK conversion preserves system authority and one stable cache boundary",
+      "arguments": null,
+      "expected_status": "PASS",
+      "id": "HanlinPromptCachingIntegrationTests/distinctSystemBlocks",
+      "method": "HanlinPromptCachingIntegrationTests/distinctSystemBlocks",
+      "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinPromptCachingIntegrationTests/distinctSystemBlocks()",
+      "result": "09-test-results",
+      "status": "PASS"
+    },
+    {
+      "argument_display": "No synthetic delimiters or empty context are added to prompt text",
+      "arguments": null,
+      "expected_status": "PASS",
+      "id": "HanlinPromptCachingIntegrationTests/emptyAndVerbatimSections",
+      "method": "HanlinPromptCachingIntegrationTests/emptyAndVerbatimSections",
+      "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinPromptCachingIntegrationTests/emptyAndVerbatimSections()",
+      "result": "09-test-results",
+      "status": "PASS"
+    },
+    {
+      "argument_display": "Current time and retrieved memory change only the trailing system block",
+      "arguments": null,
+      "expected_status": "PASS",
+      "id": "HanlinPromptCachingIntegrationTests/stableInstructionsSurviveContextChanges",
+      "method": "HanlinPromptCachingIntegrationTests/stableInstructionsSurviveContextChanges",
+      "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinPromptCachingIntegrationTests/stableInstructionsSurviveContextChanges()",
+      "result": "09-test-results",
+      "status": "PASS"
+    },
+    {
+      "argument_display": "Skill discovery order is stable across catalog enumeration order",
+      "arguments": null,
+      "expected_status": "PASS",
+      "id": "HanlinPromptCachingIntegrationTests/stableSkillCatalogOrder",
+      "method": "HanlinPromptCachingIntegrationTests/stableSkillCatalogOrder",
+      "node_identifier_url": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinPromptCachingIntegrationTests/stableSkillCatalogOrder()",
+      "result": "09-test-results",
+      "status": "PASS"
+    }
+  ],
+  "executedCount": 48,
+  "expectedInventorySHA256": "beeec6c308cf24ec9c6c1ad6d7d35e4b06a4a38e81e79a80dbbef416b1dff190",
+  "expectedInvocationCount": 48,
+  "expectedMethodCount": 46,
+  "finishedAtUTC": "2026-11-25T04:20:15.549867+00:00",
+  "generatedXctestrun": {
+    "path": "/Users/m1/caches/DerivedData/hanlin-ai-cache-app-20261125/Build/Products/AI_HLY_iphonesimulator27.0-arm64.xctestrun",
+    "sha256": "df0a5eec8eda3908b94e57e3f5ed3d78e6c45e7c8c8b3042db373445b53904e9"
+  },
+  "ownedSimulator": "265D44E3-2573-44C1-8976-3E10A02B1DA7",
+  "passedInvocationCount": 48,
+  "phase": "test",
+  "python": "/opt/homebrew/opt/python@3.12/bin/python3.12",
+  "recipe": ".github/workflows/build-ios26-unsigned-ipa.yml",
+  "recipeSHA256": "8db985018d69ed5879533028f8f6d15b4d40bd6a2c49abf866cc2930603ba838",
+  "repository": "/Users/m1/builds/hanlin-ai-cache-native-20261125",
+  "selectors": [
+    "AI_HLYTests/HanlinPromptCachingIntegrationTests",
+    "AI_HLYTests/ClassicChatRestorationTests",
+    "AI_HLYTests/HanlinMiniAppAssistantIntegrationTests",
+    "AI_HLYTests/HanlinModelPromptCachePersistenceTests"
+  ],
+  "simulatorShutdownExitCode": 0,
+  "sourceSHA": "300fe80b0927f898740fba8a926e852906f52660",
+  "sourceSHAAfter": "300fe80b0927f898740fba8a926e852906f52660",
+  "startedAtUTC": "2026-11-25T04:16:46.127410+00:00",
+  "status": "PASS",
+  "testExitCode": 0
+}

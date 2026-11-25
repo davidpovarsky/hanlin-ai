@@ -1,0 +1,15 @@
+{
+  "status": "REVIEWED_PRODUCT_FIX_PENDING_ACTUAL_ORIGINAL_APP_ACCEPTANCE",
+  "source_base": "61bb7061cd4c960e042ff8e5a9073d52e6a2a4aa",
+  "finding": "An already active opensInNewWindow=false request can be rebound into another scene if its URL is delivered there. The previous window view declared no external-event preference.",
+  "public_solution": "Dynamically prefer request=<owned UUID> through SwiftUI handlesExternalEvents(preferring:allowing:), retaining the existing new-window/current-window decision for new requests.",
+  "preserved": "The actual request/result store, original engines, existing UUID WindowGroup, per-scene binding, and main catalog opening are unchanged by this focused follow-up. No global window registry or test-only navigation API.",
+  "api_verification": {
+    "sdk": "Xcode27.0 iPhoneSimulator27 SwiftUI.swiftinterface",
+    "availability": "public iOS14+",
+    "source": "https://developer.apple.com/documentation/swiftui/view/handlesexternalevents(preferring:allowing:)",
+    "semantics": "URL absoluteString matching is case and diacritic insensitive; a preferred existing scene wins over a scene that only allows the event."
+  },
+  "required_verification": "Real original-app root-inline epsilon request survives another request closing to catalog; select it through native iPad window UI, then deliver its duplicate OS URL and require the same PID, one owned window, original edited value/counter/prepared callback before returning.",
+  "new_native_acceptance": "NOT_RUN"
+}

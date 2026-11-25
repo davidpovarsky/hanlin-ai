@@ -16,7 +16,11 @@ export class IOSNativeWindow extends NativeWindow {
          * following scene disconnect is read as a close rather than a detach.
          */
         this._closeRequested = false;
-        this._hasSessionIdentity = !!id;
+        // Only an id taken from the scene's session can be matched back to that session.
+        // Hand-minted ids ('main', 'embedded-main') are ids all the same, so their mere
+        // presence says nothing.
+        const sessionId = scene?.session?.persistentIdentifier;
+        this._hasSessionIdentity = !!sessionId && id === `${sessionId}`;
         this._scene = scene;
         this._window = window;
     }
@@ -95,9 +99,17 @@ export class IOSNativeWindow extends NativeWindow {
             return this._getOrientationValue(NativeScriptEmbedder.sharedInstance().windowScene?.interfaceOrientation);
         }
         if (this._scene) {
-            return this._getOrientationValue(this._scene.interfaceOrientation);
+            return this._getOrientationValue(this._scene.effectiveGeometry?.interfaceOrientation ?? this._scene.interfaceOrientation);
         }
         return this._getOrientationValue(UIApplication.sharedApplication.statusBarOrientation);
+    }
+    /**
+     * @internal – re-reads the native orientation and raises `orientationChanged` if it moved.
+     */
+    _syncOrientation() {
+        if (this.state === 'attached') {
+            this._setOrientation(this._getOrientation());
+        }
     }
     _getSystemAppearance() {
         if (!__VISIONOS__ && SDK_VERSION <= 11) {

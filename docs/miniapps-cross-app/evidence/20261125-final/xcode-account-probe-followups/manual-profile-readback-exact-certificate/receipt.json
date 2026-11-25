@@ -1,0 +1,63 @@
+{
+  "scope": "ACTUAL_APPLE_PROFILE_GRANTS_ONLY_NOT_PRODUCT_SIGNING_OR_ACCEPTANCE",
+  "source_sha": "9ef80a6ddfc997724360a9a34bb1d05cbf7cad40",
+  "entitlements_sha256": "cbce7e438c63d23cdcbc737379709ab6220997a2e39447dd962492a46d3930cc",
+  "bundle": "com.itorah.hanlinminiapps.share",
+  "started_at": "2026-11-25T06:42:51.206691+00:00",
+  "operations": [
+    {
+      "kind": "CREATED_ONE_PROFILE_WITH_EXISTING_CERTIFICATE",
+      "profile_id": "9T4ZL4595L"
+    }
+  ],
+  "status": "BLOCKED_ACTUAL_PROFILE_GRANTS",
+  "existing_certificate_sha256": "5aefaf80b344410af7da85678fcb19de9a4be6885a846644df974b1ee38eba4b",
+  "registered_bundle": {
+    "resource_id": "WM658PXWFD",
+    "identifier": "com.itorah.hanlinminiapps.share",
+    "platform": "UNIVERSAL",
+    "team": "NA6HPWARQ2"
+  },
+  "local_certificate_sha256": "5aefaf80b344410af7da85678fcb19de9a4be6885a846644df974b1ee38eba4b",
+  "existing_profile_count": 0,
+  "examined_profiles": [
+    {
+      "status": "BLOCKED",
+      "checks": {
+        "team_matches": true,
+        "bundle_matches": true,
+        "not_expired": true,
+        "distribution_profile": true,
+        "certificate_matches": true,
+        "required_entitlements_covered": false
+      },
+      "expiration": "2027-09-07T07:25:00+00:00",
+      "missing_or_mismatched_entitlement_keys": [
+        "com.apple.security.application-groups"
+      ],
+      "profile_id": "9T4ZL4595L",
+      "cms_sha256": "89cc50aee0d73d1fccb8493fb9b15c9f89a0705e99b6194ca01d1f3c7fdce16e",
+      "granted_app_groups": []
+    }
+  ],
+  "requested_name": "Hanlin MiniApps Share App Store Resource 20261125 0642",
+  "selected_profile": {
+    "status": "BLOCKED",
+    "checks": {
+      "team_matches": true,
+      "bundle_matches": true,
+      "not_expired": true,
+      "distribution_profile": true,
+      "certificate_matches": true,
+      "required_entitlements_covered": false
+    },
+    "expiration": "2027-09-07T07:25:00+00:00",
+    "missing_or_mismatched_entitlement_keys": [
+      "com.apple.security.application-groups"
+    ],
+    "profile_id": "9T4ZL4595L",
+    "cms_sha256": "89cc50aee0d73d1fccb8493fb9b15c9f89a0705e99b6194ca01d1f3c7fdce16e",
+    "granted_app_groups": []
+  },
+  "finished_at": "2026-11-25T06:42:54.028521+00:00"
+}

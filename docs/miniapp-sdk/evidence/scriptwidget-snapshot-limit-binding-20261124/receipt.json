@@ -1,0 +1,108 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-11-24T04:55:54.058502+00:00",
+  "baseSHA": "3a67bd43ed273a6948207e4db4e3ff446d2fa351",
+  "branch": "codex/hanlin-miniapps-scriptwidget-limit-binding-20261124",
+  "scope": "Replace only the Hanlin prepared-JavaScript snapshot literal with the existing original transpiled-byte contract.",
+  "currentMaximumBytes": 2097152,
+  "currentMaximumMeaning": "2 MiB; identical to the previous Hanlin snapshot value and the unchanged original runtime contract.",
+  "sourceBeforeSHA256": "23f8b73e8e49d5b7a58dfa8874386e7c1b561e39386d667b5458b94659ee8926",
+  "sourceAfterSHA256": "facae6f7b15611a71869ab87fe077c542be22ce58b4c09b280fb7e29236bbe7f",
+  "sourceInitializer": "ScriptWidgetRuntimeContract.maximumTranspiledBytes",
+  "originalContractUnchanged": {
+    "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/ScriptWidgetRuntime.swift",
+    "sha256": "15a60ffc1a6171dde86fa442a7a51764fd073eee4f615e329b6593dc5cf9b34a",
+    "originalExpression": "2 * 1_024 * 1_024"
+  },
+  "refresherUnchanged": {
+    "path": "Scripts/MiniApps/refresh-original-sources.mjs",
+    "sha256": "923113ae997fcea98f24d09d573dc0d84b951564833c168bd2b1dc3884b62e7c",
+    "mechanism": "refreshOriginalSources calls mergeOriginal for this file; non-Expo sources have no extra projection rule. Same-version refresh preserves local bytes; changed upstream uses the existing git three-way merge and reports conflicts."
+  },
+  "sameSwiftPMTarget": "HanlinScriptWidgetOriginal; the existing target includes Original/Common and Original/Widget/Runtime. No dependency or visibility change.",
+  "provenance": [
+    {
+      "local": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptManager.swift",
+      "repository": "everettjf/scriptwidget",
+      "commit": "4da256d58247bbafb9a5cd443a285250b97b3c4b",
+      "upstream": "Shared/ScriptWidgetRuntime/Common/ScriptManager.swift",
+      "url": "https://raw.githubusercontent.com/everettjf/scriptwidget/4da256d58247bbafb9a5cd443a285250b97b3c4b/Shared/ScriptWidgetRuntime/Common/ScriptManager.swift",
+      "upstreamBlob": "1f5c8257450a152370d9296b8de15dcb5fcf850a",
+      "upstreamSHA256": "16d5521c70b797b9acd5c9890792fc29fb00eaedca404b460b5bca75caece5d6"
+    },
+    {
+      "local": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/ScriptWidgetRuntime.swift",
+      "repository": "everettjf/scriptwidget",
+      "commit": "4da256d58247bbafb9a5cd443a285250b97b3c4b",
+      "upstream": "Shared/ScriptWidgetRuntime/Widget/Runtime/ScriptWidgetRuntime.swift",
+      "url": "https://raw.githubusercontent.com/everettjf/scriptwidget/4da256d58247bbafb9a5cd443a285250b97b3c4b/Shared/ScriptWidgetRuntime/Widget/Runtime/ScriptWidgetRuntime.swift",
+      "upstreamBlob": "1504079272e64447a0cba422492ab6a8313c80c9",
+      "upstreamSHA256": "7040cab9a460f5845ee96114c396b7e27e46caf8c9e62614a717e25adb1af574"
+    }
+  ],
+  "validationPlan": {
+    "invalidated": "The snapshot initializer and its projected local digest.",
+    "executed": "Changed-file Swift syntax parse, actual unchanged mergeOriginal helper with immutable original bytes and a controlled independent edit, and whitespace check.",
+    "notExecuted": [
+      "Full original-source inventory refresh",
+      "SDK generation",
+      "Swift Apple type check",
+      "Native app build",
+      "Native or physical-device tests",
+      "CI"
+    ],
+    "reason": "The single reference resolves inside the existing target; only syntax and preserving this local adaptation through the existing merge path are checked here. Native proof remains separately owned."
+  },
+  "mergeHelper": {
+    "status": "PASS",
+    "sameVersion": {
+      "retainsExactLocalBytes": true,
+      "sha256": "facae6f7b15611a71869ab87fe077c542be22ce58b4c09b280fb7e29236bbe7f"
+    },
+    "threeWayHelper": {
+      "retainsReference": true,
+      "retainsControlledUpstreamEdit": true,
+      "idempotentAfterMerge": true,
+      "fixture": "Actual immutable upstream source with one added comment; not a newly published upstream revision"
+    },
+    "fullSourceRefresh": "NOT_RUN",
+    "nativeAppleBuild": "NOT_RUN"
+  },
+  "nodeCheckSource": "import assert from 'node:assert/strict';\nimport {readFile} from 'node:fs/promises';\nimport {createHash} from 'node:crypto';\nimport {pathToFileURL} from 'node:url';\nimport path from 'node:path';\nconst root=process.cwd(), temporary=process.argv[2];\nconst target='Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptManager.swift';\nconst {mergeOriginal}=await import(pathToFileURL(path.join(root,'Scripts/MiniApps/refresh-original-sources.mjs')));\nconst local=await readFile(path.join(root,target)),previous=await readFile(path.join(temporary,'ScriptManager.upstream.swift'));\nconst binding='static let maximumSourceBytes = ScriptWidgetRuntimeContract.maximumTranspiledBytes';\nassert.equal(local.toString().split(binding).length-1,1);\nconst same=await mergeOriginal({local,previous,next:previous,cache:temporary,label:'snapshot-same-version',target});\nassert.deepEqual(same,local);\nconst marker='// Controlled unrelated upstream edit for the three-way merge probe.\\n';\nconst next=Buffer.concat([Buffer.from(marker),previous]);\nconst advanced=await mergeOriginal({local,previous,next,cache:temporary,label:'snapshot-controlled-advance',target});\nassert.equal(advanced.toString().split(binding).length-1,1);\nassert.ok(advanced.toString().startsWith(marker));\nassert.ok(!advanced.toString().includes('static let maximumSourceBytes = 2 * 1024 * 1024'));\nconst repeated=await mergeOriginal({local:advanced,previous:next,next,cache:temporary,label:'snapshot-repeat-after-merge',target});\nassert.deepEqual(repeated,advanced);\nconst digest=bytes=>createHash('sha256').update(bytes).digest('hex');\nconsole.log(JSON.stringify({status:'PASS',sameVersion:{retainsExactLocalBytes:true,sha256:digest(same)},threeWayHelper:{retainsReference:true,retainsControlledUpstreamEdit:true,idempotentAfterMerge:true,fixture:'Actual immutable upstream source with one added comment; not a newly published upstream revision'},fullSourceRefresh:'NOT_RUN',nativeAppleBuild:'NOT_RUN'}));\n",
+  "commands": [
+    {
+      "argv": [
+        "node",
+        "--input-type=module",
+        "-",
+        "/dev/shm/hanlin-snapshot-limit-binding-nhv9yvm3"
+      ],
+      "exit": 0,
+      "stdout": "{\"status\":\"PASS\",\"sameVersion\":{\"retainsExactLocalBytes\":true,\"sha256\":\"facae6f7b15611a71869ab87fe077c542be22ce58b4c09b280fb7e29236bbe7f\"},\"threeWayHelper\":{\"retainsReference\":true,\"retainsControlledUpstreamEdit\":true,\"idempotentAfterMerge\":true,\"fixture\":\"Actual immutable upstream source with one added comment; not a newly published upstream revision\"},\"fullSourceRefresh\":\"NOT_RUN\",\"nativeAppleBuild\":\"NOT_RUN\"}\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "swiftc",
+        "-frontend",
+        "-parse",
+        "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptManager.swift"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "nativeAppleValidation": "NOT_RUN",
+  "ci": "NOT_RUN"
+}

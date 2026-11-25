@@ -1,0 +1,16 @@
+{
+  "status": "PORTABLE_CAPTURE_CHECK_PASSED",
+  "case_count": 3,
+  "cases": [
+    "Opaque app and embedded-extension bytes/relative paths/SHA256 preserved",
+    "Explicit metadata absence in existing app bundle",
+    "Explicit missing app bundle"
+  ],
+  "fixture_scope": "Synthetic filesystem fixtures; no Apple metadata schema or runtime execution is asserted.",
+  "python_syntax": "PASSED",
+  "native_command_calls_unchanged": true,
+  "native_selector_inputs_unchanged": true,
+  "native_case_count": 36,
+  "apple_metadata_extraction": "NOT_RUN",
+  "intent_execution": "NOT_RUN"
+}

@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "original_receipt": "receipt.json",
+  "source_sha": "f5a192f80e732c8bfc4d9c589262c85eee1a42b8",
+  "process_counts": [
+    4,
+    44
+  ],
+  "total_passed": 48,
+  "failed": 0,
+  "source_unchanged": true,
+  "log_sha256": "400bc0606fd848a88a05727ad82c3cc886419e6251ac1bb9b4473e9796241e40",
+  "note": "Original receipt field recorded final process count44; raw log separately records producer4 and core44. This derived summary preserves the original receipt."
+}

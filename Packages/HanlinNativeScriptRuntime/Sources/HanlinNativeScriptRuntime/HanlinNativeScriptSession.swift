@@ -5,9 +5,14 @@ import UIKit
 
 @MainActor
 public final class HanlinNativeScriptSession {
-    private static let supportedRuntimeVersion = "9.1.0"
-    private static let supportedSwiftUIVersion = "4.0.2"
+    private static let supportedRuntimeVersion = HanlinNativeScriptHostVersions.runtimeVersion
+    private static let supportedCoreVersion = HanlinNativeScriptHostVersions.coreVersion
+    private static let supportedSwiftUIVersion = HanlinNativeScriptHostVersions.swiftUIVersion
     private static weak var activeSession: HanlinNativeScriptSession?
+
+    /// The pinned upstream NativeScript wrapper owns a process-global main VM.
+    /// Check before publishing any session-specific provider or presentation state.
+    public static var activeSessionIdentifier: String? { activeSession?.sessionID }
 
     public static var sharedRuntimeURL: URL? {
         if let envPath = ProcessInfo.processInfo.environment["HANLIN_NATIVESCRIPT_SHARED_RUNTIME_PATH"] {
@@ -57,6 +62,16 @@ public final class HanlinNativeScriptSession {
         environment: [String: String] = [:],
         sessionID: String = UUID().uuidString.lowercased()
     ) throws {
+        let root = try Self.validatePreparedApplication(applicationRoot)
+        self.applicationRoot = root
+        self.environment = environment
+        self.sessionID = sessionID
+        presenter = HanlinNativeScriptPresenter()
+        containerController = presenter.containerController
+    }
+
+    /// Shared admission for legacy applications and isolated cooperating entries.
+    static func validatePreparedApplication(_ applicationRoot: URL) throws -> URL {
         let root = applicationRoot.standardizedFileURL
         guard root.isFileURL else {
             throw HanlinNativeScriptError.invalidApplicationRoot("the URL is not a file URL")
@@ -80,11 +95,7 @@ public final class HanlinNativeScriptSession {
         }
         try Self.validateNativePluginRequirements(packageJSONURL: packageJSONURL)
         try Self.validateCoreRequirements(packageJSONURL: packageJSONURL)
-        self.applicationRoot = root
-        self.environment = environment
-        self.sessionID = sessionID
-        presenter = HanlinNativeScriptPresenter()
-        containerController = presenter.containerController
+        return root
     }
 
     public func start() throws {
@@ -167,64 +178,9 @@ public final class HanlinNativeScriptSession {
     }
 
     private func linkSharedRuntimeIfNeeded() throws {
-        guard let sharedRuntime = Self.sharedRuntimeURL else {
-            return
-        }
-        let fm = FileManager.default
-        let items = try fm.contentsOfDirectory(at: sharedRuntime, includingPropertiesForKeys: [.isDirectoryKey], options: [.skipsHiddenFiles])
-        for sourceURL in items {
-            let itemName = sourceURL.lastPathComponent
-            let targetURL = applicationRoot.appending(path: itemName, directoryHint: .isDirectory)
-            let targetPath = targetURL.path(percentEncoded: false)
-
-            if let dest = try? fm.destinationOfSymbolicLink(atPath: targetPath) {
-                if dest == sourceURL.path(percentEncoded: false) {
-                    createdSymlinks.insert(targetURL)
-                    continue
-                } else {
-                    try? fm.removeItem(at: targetURL)
-                }
-            } else if fm.fileExists(atPath: targetPath) {
-                // Already provided by applicationRoot directly (not a symlink)
-                continue
-            }
-
-            do {
-                try fm.createSymbolicLink(at: targetURL, withDestinationURL: sourceURL)
-                createdSymlinks.insert(targetURL)
-            } catch {
-                #if os(Windows)
-                try? fm.copyItem(at: sourceURL, to: targetURL)
-                createdSymlinks.insert(targetURL)
-                #else
-                throw error
-                #endif
-            }
-        }
-
-        let nodeModulesURL = applicationRoot.appending(path: "node_modules", directoryHint: .isDirectory)
-        let nodeModulesPath = nodeModulesURL.path(percentEncoded: false)
-        if let dest = try? fm.destinationOfSymbolicLink(atPath: nodeModulesPath) {
-            if dest == sharedRuntime.path(percentEncoded: false) {
-                createdSymlinks.insert(nodeModulesURL)
-            } else {
-                try? fm.removeItem(at: nodeModulesURL)
-                try? fm.createSymbolicLink(at: nodeModulesURL, withDestinationURL: sharedRuntime)
-                createdSymlinks.insert(nodeModulesURL)
-            }
-        } else if !fm.fileExists(atPath: nodeModulesPath) {
-            do {
-                try fm.createSymbolicLink(at: nodeModulesURL, withDestinationURL: sharedRuntime)
-                createdSymlinks.insert(nodeModulesURL)
-            } catch {
-                #if os(Windows)
-                try? fm.copyItem(at: sharedRuntime, to: nodeModulesURL)
-                createdSymlinks.insert(nodeModulesURL)
-                #else
-                throw error
-                #endif
-            }
-        }
+        guard let sharedRuntime = Self.sharedRuntimeURL else { return }
+        createdSymlinks.formUnion(try HanlinNativeScriptSharedModuleLinks.prepare(
+            sharedRuntime: sharedRuntime, applicationRoot: applicationRoot))
     }
 
     private func unlinkSharedRuntime() {
@@ -236,7 +192,7 @@ public final class HanlinNativeScriptSession {
     }
 
     public static func isCoreVersionCompatible(_ versionString: String) -> Bool {
-        HanlinPreparedRuntimeVersion.supportsMinimum(versionString, installed: supportedRuntimeVersion)
+        HanlinPreparedRuntimeVersion.supportsMinimum(versionString, installed: supportedCoreVersion)
     }
 
     private static func validateCoreRequirements(packageJSONURL: URL) throws {
@@ -259,7 +215,7 @@ public final class HanlinNativeScriptSession {
         if let version = declaredCoreVersion {
             guard isCoreVersionCompatible(version) else {
                 throw HanlinNativeScriptError.unsupportedCoreVersion(
-                    "This Hanlin build supports @nativescript/core \(supportedRuntimeVersion), but the package requires \(version)."
+                    "This Hanlin build supports @nativescript/core \(supportedCoreVersion), but the package requires \(version)."
                 )
             }
         }
@@ -274,9 +230,10 @@ public final class HanlinNativeScriptSession {
         guard let contract = contractValue as? [String: Any] else {
             throw HanlinNativeScriptError.unsupportedNativePlugin("hanlinNativeScript must be an object.")
         }
-        guard contract["runtimeVersion"] as? String == supportedRuntimeVersion else {
+        guard let requiredRuntime = contract["runtimeVersion"] as? String,
+              HanlinPreparedRuntimeVersion.supportsCompatiblePatch(requiredRuntime, installed: supportedRuntimeVersion) else {
             throw HanlinNativeScriptError.unsupportedNativePlugin(
-                "this build requires runtimeVersion \(supportedRuntimeVersion)."
+                "this build requires a stable runtimeVersion with the same major/minor and no newer patch than \(supportedRuntimeVersion)."
             )
         }
         guard let plugins = contract["plugins"] as? [String: Any] else {

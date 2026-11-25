@@ -1,0 +1,157 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-24T18:01:35.617071+00:00",
+  "sourceBase": "ce49e30d69466e44b0aa26582beaa57ee7a91a9b",
+  "route": "primary Scaleway Mac, Xcode27.0/27A266a, original full preparation for unchanged miniapp_complete52",
+  "before": {
+    "phase": "split-native-preparation",
+    "status": "EXECUTED_FAIL",
+    "exitCode": 1,
+    "elapsedSeconds": 6.569998500002839,
+    "rawLog": {
+      "path": "native-preparation-before.log",
+      "bytes": 67105,
+      "sha256": "281d8ee1cfb371167c205d01d38493ca2c7f73c095d68ac79ba6ffedcb80cd1c"
+    },
+    "actualCommand": [
+      "node",
+      "Scripts/NativeScript/build-host-services.mjs",
+      "--check"
+    ],
+    "invocation": "original npm run prepare:ios-dependencies --prefix Scripts/NativeScript",
+    "originalTypeScript": "5.9.3",
+    "firstDiagnostic": "TS6200: default lib.dom.d.ts definitions conflict with unrelated React Native globals",
+    "cause": "createProgram omitted types, so automatic ambient @types discovery traversed into /Users/m1/builds/node_modules/@types, a symlink to an unrelated sibling project. No relevant NODE_PATH/NODE_OPTIONS/TS_NODE overrides were present.",
+    "completedPhases": {
+      "split-platform": "PASS",
+      "split-upstreams": "PASS",
+      "host-proof": "PASS",
+      "split-foreground": "PASS",
+      "split-host-lifecycle": "PASS",
+      "split-metadata": "PASS"
+    },
+    "fullAppBuild": "NOT_RUN",
+    "selected52Cases": "NOT_RUN"
+  },
+  "correction": {
+    "path": "Scripts/NativeScript/build-host-services.mjs",
+    "beforeSHA256": "9389c754c2708ac1592352f9ec0b184f9a154a0a2471259104f2f64dab29726b",
+    "afterSHA256": "b46fcc461ad34fcf49140e4fd0e11e0dcb8f47a8523a15116029435289ee7003",
+    "change": "Set types:[] in the standalone facade compiler options; add one explanatory comment.",
+    "preserved": [
+      "strict:true",
+      "skipLibCheck:false",
+      "noEmitOnError:true",
+      "original compiler standard libraries",
+      "explicit relative system-surfaces import",
+      "valid and live-activity fixture diagnostics",
+      "exact invalid diagnostic codes [2322,2345,2353,7006]",
+      "all generated JavaScript/declaration/package bytes",
+      "all application source and52 selected cases"
+    ],
+    "ambientPolicyScope": "This standalone Host Services generator and its existing fixtures only; no change to original engine/public authoring SDK types."
+  },
+  "after": {
+    "sourceBase": "ce49e30d69466e44b0aa26582beaa57ee7a91a9b",
+    "path": "Scripts/NativeScript/build-host-services.mjs",
+    "beforeSHA256": "9389c754c2708ac1592352f9ec0b184f9a154a0a2471259104f2f64dab29726b",
+    "afterSHA256": "b46fcc461ad34fcf49140e4fd0e11e0dcb8f47a8523a15116029435289ee7003",
+    "argv": [
+      "node",
+      "Scripts/NativeScript/build-host-services.mjs",
+      "--check"
+    ],
+    "cwd": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete",
+    "startedAt": "2026-11-24T17:59:46.459921+00:00",
+    "node": "v24.5.0",
+    "compiler": "5.9.3",
+    "ambientAncestor": "/Users/m1/builds/Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types",
+    "status": "PASS",
+    "exitCode": 0,
+    "elapsedSeconds": 3.347037208000984,
+    "finishedAt": "2026-11-24T17:59:49.936584+00:00",
+    "logBytes": 112,
+    "logSHA256": "480742f18b8ef01a023f07eff2064a34b4a8f65a59deef55e49b505788f8b263"
+  },
+  "proofBoundary": "The existing focused checker passed using the real installed original compiler on the same Mac with the same conflicting ancestor directory. This is generator/types/output validation, not app build, native service execution or52-case acceptance.",
+  "closureInputsSHA256": {
+    "Scripts/NativeScript/build-host-services.mjs": "b46fcc461ad34fcf49140e4fd0e11e0dcb8f47a8523a15116029435289ee7003",
+    "Scripts/NativeScript/host-services.ts": "efe0a28483fa36dbb3745f380b2ddd1bc6348af3b12c41ef10f19c2dd9a486a6",
+    "Packages/HanlinExpoUI/src/system-surfaces.ts": "3a2c4424ce074056ef76d62a4502fb16c389e10a46967fcde15835efde94543f",
+    "Scripts/NativeScript/Fixtures/HostServices/valid.ts": "c99e376b70dc4e0b1ce5442cb86bf3115b11f72cf6154f1e808240392c724466",
+    "Scripts/NativeScript/Fixtures/HostServices/live-activities.ts": "5d9427bad52584fa0f022658376f2496434e826b144c56e500ce4720bac42efb",
+    "Scripts/NativeScript/Fixtures/HostServices/invalid.ts": "47f20182b5dfe1051d380453ad6b467adf3b439fd07e433500f4a87d5b7cfd8d"
+  },
+  "resume": "Native preparation remains stopped until root integrates this source fix and refreshes existing inventory/reachability hashes. Completed phases may be reused only for unchanged actual input closures. Exact final source checkpoint and retained resolver patch must accompany resumed execution.",
+  "review": {
+    "reviewer": "/root/entrypoints",
+    "scope": "Read-only original program/import closure and preservation of strict/negative/emitted-byte checks; no duplicate compiler execution."
+  },
+  "evidenceFiles": [
+    {
+      "path": "before-evidence-manifest.json",
+      "bytes": 12223,
+      "sha256": "cd4a3287de7bc7fc0045f5efa75a14ff74532ef1f0dac5482ec99f3551d3baeb"
+    },
+    {
+      "path": "before-evidence.tar.gz",
+      "bytes": 376755,
+      "sha256": "77de9f9102f3f55c8f0264499d87158b03f263f274483ab754463c8de196c5c0"
+    },
+    {
+      "path": "before-state.json",
+      "bytes": 6040,
+      "sha256": "41bdc015cfacaee365e1bc230dec717f79d8476829591db90fa96a741c7f6d3d"
+    },
+    {
+      "path": "capacity-admission.json",
+      "bytes": 1919,
+      "sha256": "cd207ed7c8939a5e731d540295f403ad60e7aef70cd390edd51c218b97893a54"
+    },
+    {
+      "path": "failure-context.json",
+      "bytes": 23060,
+      "sha256": "52e412d3149ebc7ff054252bd8e4bf44d1b27687ba39bd3a363601b5180d0710"
+    },
+    {
+      "path": "focused-check.json",
+      "bytes": 902,
+      "sha256": "81230cbddde072b9abaa2c5bafb9b7dbbb227c8e5fc7c7c97b17c031630052d8"
+    },
+    {
+      "path": "focused-check.log",
+      "bytes": 112,
+      "sha256": "480742f18b8ef01a023f07eff2064a34b4a8f65a59deef55e49b505788f8b263"
+    },
+    {
+      "path": "foreground.log",
+      "bytes": 214,
+      "sha256": "b9188ca35253124a0fd4bc95bf590cf6b68509f64c16a74203036a2ccc43d374"
+    },
+    {
+      "path": "metadata-tool-provenance.json",
+      "bytes": 935,
+      "sha256": "f83479c7a5cdf9014fb7b5f2bf8425ecf9809c4de9680666ca255706022b9696"
+    },
+    {
+      "path": "miniapp-cli-relocation.log",
+      "bytes": 223,
+      "sha256": "1f217b1b6c35c8684fa9bfa875e76bb880c62c371f0dde4b6aec02d51639393b"
+    },
+    {
+      "path": "native-preparation-before.log",
+      "bytes": 67105,
+      "sha256": "281d8ee1cfb371167c205d01d38493ca2c7f73c095d68ac79ba6ffedcb80cd1c"
+    },
+    {
+      "path": "package-lifecycle.log",
+      "bytes": 1448,
+      "sha256": "07f962742b189e51338084b11925bd5bfc05c3e967094fa48147be64b517788c"
+    },
+    {
+      "path": "source-diff.patch",
+      "bytes": 1090,
+      "sha256": "7656edaf4acd7c6afc6c6a0c4e3f84681a90dd981347a7655013aa23014bb9e2"
+    }
+  ]
+}

@@ -737,6 +737,7 @@ actor AgentDiagnosticsRecorder {
             "Model: \(session.modelID)", "Start time: \(ISO8601DateFormatter().string(from: session.startedAt))",
             "End time: \(session.completedAt.map { ISO8601DateFormatter().string(from: $0) } ?? "—")", "Status: \(session.status)", ""
         ]
+        lines += ["Prompt cache"] + session.promptCacheSummary.readableLines + [""]
         for round in session.rounds.sorted(by: { $0.index < $1.index }) {
             lines += [
                 "Round \(round.index)", "Trigger: \(round.trigger)",
@@ -747,6 +748,7 @@ actor AgentDiagnosticsRecorder {
             if let reasoning = round.response.visibleReasoningSummary { lines += ["Visible reasoning summary", reasoning] }
             if let content = round.response.visibleContent { lines.append(content) }
             lines += ["Finish reason: \(round.response.finishReason ?? "—")", "Token usage: \(round.usage.source.rawValue)"]
+            lines += AgentPromptCacheSummary(usages: [round.usage]).readableLines
             for tool in round.toolCalls {
                 lines += [
                     "", "Tool execution", "Tool name: \(tool.toolName)", "Call ID: \(tool.callID)",

@@ -1,0 +1,12 @@
+[
+  {
+    "log": "ai-build.log",
+    "line": 102885,
+    "text": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYTests/HanlinNativePresentationTests.swift:231:27: error: type 'Void' cannot conform to 'Sequence' [#ProtocolTypeNonConformance]"
+  },
+  {
+    "log": "ai-build.log",
+    "line": 102957,
+    "text": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYTests/HanlinOriginalExpoWidgetTests.swift:16:39: error: reference to static property 'appGroupIdentifier' is not concurrency-safe because it involves shared mutable state"
+  }
+]

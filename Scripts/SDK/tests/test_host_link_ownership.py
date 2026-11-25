@@ -123,17 +123,29 @@ class HostLinkOwnershipTests(unittest.TestCase):
     def test_every_declared_host_product_remains_reachable_and_unknown_products_are_kept(self):
         manifest = json.loads(subprocess.check_output(
             ["swift", "package", "--package-path", str(ROOT), "dump-package"], text=True))
-        self.assertEqual(len(manifest["products"]), 44)
-        self.assertEqual(len(manifest["targets"]), 108)
+        self.assertEqual(len(manifest["products"]), 47)
+        self.assertEqual(len(manifest["targets"]), 114)
         target_names = {target["name"] for target in manifest["targets"]}
         self.assertIn("AI_Hanlin", target_names)
+        self.assertIn("ExpoAsset", target_names)
         self.assertNotIn("HanlinApp", target_names)
         closure = update_project.application_product_closure(manifest)
         objects = self.project["objects"]
         definition = json.loads(generate_manifest.APPLICATION_PRODUCTS.read_text())
         self.assertEqual(definition["module"], "AI_Hanlin")
-        self.assertEqual(len(definition["products"]), 48)
+        self.assertEqual(len(definition["products"]), 51)
+        app_packages = {item["url"].rstrip("/").removesuffix(".git").rsplit("/", 1)[-1].lower()
+                        for item in definition.get("externalPackages", [])}
+        app_target = next(target for target in manifest["targets"] if target["name"] == "AI_Hanlin")
         for entry in definition["products"]:
+            if entry["package"].lower() in app_packages:
+                # New app-owned libraries are linked by the canonical SDK target,
+                # never duplicated on the thin Xcode host.
+                self.assertTrue(any("product" in dependency
+                                    and dependency["product"][0] == entry["product"]
+                                    and dependency["product"][1].lower() == entry["package"].lower()
+                                    for dependency in app_target["dependencies"]), entry)
+                continue
             matches = [obj for obj in objects.values()
                        if obj.get("isa") == "XCSwiftPackageProductDependency"
                        and obj["productName"] == entry["product"]
@@ -148,6 +160,9 @@ class HostLinkOwnershipTests(unittest.TestCase):
         self.assertIn("HanlinScriptStore", closure[0])
         self.assertIn("HanlinScriptDeviceServices", closure[0])
         self.assertIn("HanlinExpoWidgetNative", closure[0])
+        self.assertIn("HanlinTranslationUI", closure[0])
+        self.assertIn("HanlinExpoWidgetsOriginal", closure[0])
+        self.assertTrue({"HanlinMiniAppsBridge", "HanlinMiniAppsPicker"} <= target_names)
 
 
     def test_unknown_independent_host_product_is_preserved_in_both_link_surfaces(self):

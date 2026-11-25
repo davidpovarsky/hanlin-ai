@@ -2,6 +2,7 @@
 # HANLIN_METADATA_WRAPPER_V1
 
 import os
+from fnmatch import fnmatchcase
 import hashlib
 import json
 import re
@@ -14,16 +15,36 @@ import sys
 REQUIRED_METADATA_NAMES = ["HanlinNativeServicesBridge", "HanlinNativeServicesSessionBridge",
     "HanlinNativeScriptCompatibility", "UIView", "NSObject", "NativeScriptEmbedder",
     "SwiftUIProvider", "HanlinNativeScriptSwiftUIFixtureProvider",
-    "WKNavigationDelegate", "WKWebView"]
+    "WKNavigationDelegate", "WKWebView", "TNSLabel", "NSCCrypto"]
 
-# The production host needs Foundation/UIKit, Core's eager WebView declarations,
-# and generated Host/provider declarations. The app's actual generated header
-# also declares its existing camera, location and speech delegate conformances.
-# declarations. Importing every Expo/React public umbrella into the legacy ObjC
-# parser is a separate full-SDK expansion and pulls in C++ declarations. Keep that
-# optional scan in the explicit SDK probe; do not change its generator or guards.
+# Keep the generated Host/provider header dependencies. Original Core adds its
+# own native frameworks and the system frameworks declared in native-api-usage.
+# Importing unrelated Expo/React umbrellas into the ObjC parser remains the
+# separate full-SDK probe; Core's actual native dependencies belong in this host.
 HOST_FRAMEWORKS = {"Foundation.framework", "UIKit.framework", "WebKit.framework",
     "AVFoundation.framework", "CoreLocation.framework", "Speech.framework"}
+
+
+def original_core_frameworks(root: Path, sdk: Path, search_paths: list[Path]) -> set[str]:
+    artifacts = root / "Packages/HanlinNativeScriptRuntime/Artifacts"
+    closure = json.loads((artifacts / "dependency-closure.json").read_text())
+    usage = json.loads((artifacts / "native-api-usage.json").read_text())
+    required = {artifact["name"] + ".framework" for artifact in closure["artifacts"]}
+    available = {framework.name
+                 for directory in [*search_paths, sdk / "System/Library/Frameworks"]
+                 for framework in directory.glob("*.framework")}
+    missing = required - available
+    if missing:
+        raise RuntimeError("Original NativeScript Core framework headers missing: "
+                           + ", ".join(sorted(missing)))
+    # Entries such as TNSWidgets*:* and CoreGraphics.*:* describe native
+    # namespaces. Match their actual framework roots, retaining the original
+    # public umbrella and all its declarations rather than enumerating classes.
+    namespaces = {entry.partition(":")[0].partition(".")[0] for entry in usage["uses"]}
+    declared = {name for name in available
+                if any(fnmatchcase(name.removesuffix(".framework"), namespace)
+                       for namespace in namespaces)}
+    return HOST_FRAMEWORKS | required | declared
 
 
 def required_env(name: str) -> str:
@@ -180,9 +201,11 @@ def main() -> int:
                 [Path(p) for p in shlex.split(environment.get("FRAMEWORK_SEARCH_PATHS", ""))],
                 search_view, search_inventory)
             environment["FRAMEWORK_SEARCH_PATHS"] = shlex.join(str(p) for p in search_paths)
-            write_public_umbrella(Path(required_env("SDKROOT")), umbrella,
+            sdk_root = Path(required_env("SDKROOT"))
+            write_public_umbrella(sdk_root, umbrella,
                                   sorted(core_support_dir.glob("*.h")) + swift_headers,
-                                  search_paths, framework_names=HOST_FRAMEWORKS)
+                                  search_paths,
+                                  framework_names=original_core_frameworks(root, sdk_root, search_paths))
         finally:
             for path in [umbrella, umbrella.with_suffix(".inventory.json"), tool_root / "provenance.json"]:
                 if path.is_file():

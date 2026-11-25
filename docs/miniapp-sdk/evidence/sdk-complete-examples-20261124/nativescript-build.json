@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "engine": "nativescript",
+  "operation": "build",
+  "succeeded": true,
+  "diagnostics": [],
+  "sourceRoot": "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-examples-20261124/Scripts/MiniApps/Examples/nativescript-hello-world",
+  "sdk": {
+    "packageVersions": {
+      "@nativescript/core": "9.1.4",
+      "@nativescript/swift-ui": "4.0.2",
+      "@nativescript/ios": "9.1.1",
+      "@nativescript/types": "9.1.4",
+      "@nativescript/vite": "8.0.24",
+      "typescript": "5.9.3",
+      "vite": "8.0.0",
+      "@hanlin/host-services": "1.0.0"
+    },
+    "manifestSHA256": "fa1e737ec63e640175cdb5c9dad51903cd86d50ae7b340ba5b8ec1ff4e408d85",
+    "compilerVersion": "5.9.3"
+  },
+  "typecheck": {
+    "strict": true,
+    "checkJs": false,
+    "skipLibCheck": true,
+    "dependencyDeclarationsChecked": false
+  },
+  "preparedPackagePath": "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-examples-20261124/Scripts/MiniApps/Examples/nativescript-hello-world/.hanlin-build/c962c808-7bc2-4a8c-a597-054df628ac58/package",
+  "archivePath": "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-examples-20261124/docs/miniapp-sdk/evidence/sdk-complete-examples-20261124/NativeScriptHelloWorld.hanlinNativeScript"
+}

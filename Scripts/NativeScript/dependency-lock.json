@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
   "nativeScript": {
-    "coreVersion": "9.1.0",
-    "iosRuntimeVersion": "9.1.0",
+    "coreVersion": "9.1.4",
+    "iosRuntimeVersion": "9.1.1",
     "iosSPMRepository": "https://github.com/NativeScript/ios-spm.git",
-    "iosSPMTagRevision": "a8e26efad02d792a62d2d015f0f7a632e336b2d1"
+    "iosSPMTagRevision": "33605a91197dc86bd9f15fecaad6e897223caa8a"
   },
   "swiftUI": {
     "package": "@nativescript/swift-ui",

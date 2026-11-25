@@ -1,0 +1,299 @@
+{
+  "schemaVersion": 1,
+  "utc": "2026-11-24T08:14:15.096701+00:00",
+  "baseCommit": "45577ed0c5ea54a997117e9eae250458d84b27c3",
+  "parentBase": "c2fe34037531462a23ce1e69c5de0890e3a35911",
+  "scope": "Repository implementation/acceptance work, independent of the frozen SDK-only authorship experiment.",
+  "status": "READY_FOR_NATIVE_ACCEPTANCE",
+  "sourceSHA256": {
+    "Fixtures/ExpoSwiftUIProbe/ManualAdapterProbe.tsx": "4794f92fc158639b806c0f80bf74cf71775651ad2acd2c24c9462f9d810ff48e",
+    "Fixtures/ExpoSwiftUIProbe/App.tsx": "3570bea58a9584e0b98356d616444f88c38e7a5cda8e47d715a0eacf78d9cfb1",
+    "Fixtures/ExpoSwiftUIProbe/native-adapter-assets/pixel.png": "7713482a5fab3ae135193484df75f4d0a7ce5c8ee50f6b5c33f7aacef5c5ea45",
+    "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift": "6031d8ea46c2deafa3eb18bbdc28ecbf9d9848d858d9b6a47e26e72beb256aee",
+    "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoUIModule.swift": "700fde24b841e544b21ad20edd0bc2edc485465284a81271eaf4cc6630b476cd",
+    "Packages/HanlinExpoUI/src/manual-components.tsx": "23315409689a8fb0f1a652a3d62428eade12822a4626224d0080046f08a80fe2",
+    "Scripts/ProductSplit/run_paired_acceptance.py": "a4ed4cd8eebe1c7b38d8d71fa68a7700db8dbbc1817c1a5c8cc81be68b41d423"
+  },
+  "coverage": [
+    {
+      "adapter": "TextEditor",
+      "nativeImplementation": "HanlinTextEditorView",
+      "selectorGroup": "input",
+      "requiredNativeObservation": "Type alpha -> EDITOR_VALUE:alpha; controlled reset changes actual native textView.value to Reset from React.",
+      "nativeResult": "NOT_RUN"
+    },
+    {
+      "adapter": "Focused",
+      "nativeImplementation": "HanlinFocusedView",
+      "selectorGroup": "input",
+      "requiredNativeObservation": "Controlled focus opens actual keyboard; tapping other native field -> FOCUS_VALUE:false, FOCUS_EVENTS:1.",
+      "nativeResult": "NOT_RUN"
+    },
+    {
+      "adapter": "Searchable",
+      "nativeImplementation": "HanlinSearchableView",
+      "selectorGroup": "input",
+      "requiredNativeObservation": "Native child action changes0->1; type full hanlin and submit -> MANUAL_QUERY:hanlin, MANUAL_SUBMITTED:hanlin, MANUAL_SUBMITS:1.",
+      "nativeResult": "NOT_RUN"
+    },
+    {
+      "adapter": "LazyVGrid",
+      "nativeImplementation": "HanlinLazyVGridView",
+      "selectorGroup": "input",
+      "requiredNativeObservation": "Actual first two cells share Y; third is below; V3 tap -> LAYOUT_ACTION:V3.",
+      "nativeResult": "NOT_RUN"
+    },
+    {
+      "adapter": "LazyHGrid",
+      "nativeImplementation": "HanlinLazyHGridView",
+      "selectorGroup": "input",
+      "requiredNativeObservation": "Actual first two cells share X; third is right; H3 tap -> LAYOUT_ACTION:H3.",
+      "nativeResult": "NOT_RUN"
+    },
+    {
+      "adapter": "ViewThatFits",
+      "nativeImplementation": "HanlinViewThatFitsView",
+      "selectorGroup": "input",
+      "requiredNativeObservation": "160-point proposal exposes only FIT_COMPACT;360 exposes only FIT_WIDE; native tap -> respective callback value.",
+      "nativeResult": "NOT_RUN"
+    },
+    {
+      "adapter": "SafeAreaInset",
+      "nativeImplementation": "HanlinSafeAreaInsetView",
+      "selectorGroup": "input",
+      "requiredNativeObservation": "Bottom slot lies below content; action changes0->1; controlled top edge moves actual native slot above first grid row.",
+      "nativeResult": "NOT_RUN"
+    },
+    {
+      "adapter": "Table",
+      "nativeImplementation": "HanlinTableView",
+      "selectorGroup": "input",
+      "requiredNativeObservation": "Select Kiwi -> kiwi,event1; controlled clear and reselect -> event2; changed row values become Kiwi updated /9.",
+      "nativeResult": "NOT_RUN"
+    },
+    {
+      "adapter": "AsyncImage",
+      "nativeImplementation": "HanlinAsyncImageView",
+      "selectorGroup": "input",
+      "requiredNativeObservation": "Native empty slot/phase, real PNG -> success/event1; actual404 -> failure slot/phase/event1. PNG request bytes and status retained.",
+      "nativeResult": "NOT_RUN"
+    },
+    {
+      "adapter": "Sheet",
+      "nativeImplementation": "HanlinPresentationView",
+      "selectorGroup": "presentation",
+      "requiredNativeObservation": "Controlled close -> dismissal1/change0; native drag dismiss -> dismissal2/change1, actual content absent.",
+      "nativeResult": "NOT_RUN"
+    },
+    {
+      "adapter": "FullScreenCover",
+      "nativeImplementation": "HanlinPresentationView",
+      "selectorGroup": "presentation",
+      "requiredNativeObservation": "Two controlled present/close cycles -> dismissal2/change0, actual content absent after each.",
+      "nativeResult": "NOT_RUN"
+    },
+    {
+      "adapter": "PopoverPresentation",
+      "nativeImplementation": "HanlinPresentationView",
+      "selectorGroup": "presentation",
+      "requiredNativeObservation": "Controlled close -> dismissal1/change0; native outside tap -> dismissal2/change1, actual content absent.",
+      "nativeResult": "NOT_RUN"
+    },
+    {
+      "adapter": "Inspector",
+      "nativeImplementation": "HanlinInspectorView",
+      "selectorGroup": "presentation",
+      "requiredNativeObservation": "Actual inspector slot and button; close/reopen/close applies controlled state; INSPECTOR_ACTIONS:1, no echo change events.",
+      "nativeResult": "NOT_RUN"
+    }
+  ],
+  "selectors": [
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualInputLayoutAndDataAdapters",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualPresentationAdaptersAndDismissalEvents"
+  ],
+  "selectedCounts": {
+    "AI": 25,
+    "MiniApps": 17,
+    "total": 42,
+    "executedNativeCases": 0
+  },
+  "fixturePipeline": {
+    "archive": "ExpoSwiftUIProbeA.hanlinExpo",
+    "producer": "Existing Scripts/Expo/build-probe.mjs; same production Metro and existing archive staging/import helpers.",
+    "newArchiveStagingRequired": false,
+    "imageResource": "Existing MiniApps NSAllowsLocalNetworking remains unchanged. Runner owns localhost49173 and closes only its HTTP server; the source fixture PNG is served as actual transport, not as simulated adapter output."
+  },
+  "nativeFix": {
+    "source": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoUIModule.swift",
+    "defect": "onDismiss was behind the controlled-value echo guard, so a JS isPresented=false transition suppressed it.",
+    "change": "Keep onPresentedChange conditional on native value != controlled prop; emit onDismiss independently once when the native binding changes to false.",
+    "intendedContract": "Transition notification, including controlled closes, with no controlled onPresentedChange echo. No new SwiftUI API, platform policy or runtime restriction.",
+    "nativeRedGreen": "NOT_RUN; source defect identified and exact real UI assertions added."
+  },
+  "exactExportedSDK": {
+    "manifestSHA256": "fa1e737ec63e640175cdb5c9dad51903cd86d50ae7b340ba5b8ec1ff4e408d85",
+    "inputSHA256": "4028f9fc58e1a9a95937ed7b4eb223c3caa2a94714bbbdaae4ddc7b0aa6de795",
+    "compilerVersion": "6.0.3",
+    "compilerPackageVersion": "6.0.2",
+    "validate": "EXECUTED_PASS_ZERO_DIAGNOSTICS",
+    "build": "EXECUTED_PASS_ZERO_DIAGNOSTICS",
+    "strict": true,
+    "skipLibCheck": false,
+    "originalDeclarationBodiesChecked": true,
+    "sourceCopiesRetained": 7,
+    "archiveSHA256": "26d9f62c353a0ee1396fd990522a0b26a1c8b353dd5cbdc0d4a3cc620f1a3223"
+  },
+  "otherEvidence": {
+    "localGraph": "Separate local graph type/Metro checks; initial missing tsc executable and local @hanlin links retained. Actual compiler export is6.0.3 despite package version6.0.2.",
+    "realLocalDiagnostic": "TS2322 ManualAdapterProbe.tsx38:16: string is not ObservableState<string>; fixed by documented uncontrolled auxiliary TextField. No suppressions or compiler overrides.",
+    "swift": "PASS_PARSE_ONLY; no Apple-framework typecheck.",
+    "http": "EXECUTED_PASS_PYTHON_RESOURCE_TRANSPORT_ONLY; Python client and82-byte PNG/404, server shutdown. No native transport success claimed."
+  },
+  "notRun": [
+    "Apple compilation of these updated native sources",
+    "the two native UI selectors",
+    "all13 native adapter semantics",
+    "physical device acceptance",
+    "CI"
+  ],
+  "remainingBoundary": "This adds bounded native acceptance for13 manual Hanlin UI components. It does not assert exhaustive original Expo APIs, all generated modifiers/Apple overloads, or all33 forwarded NativeAPI callables. All33 remain original upstream forwarding; no wrapper implementations were invented.",
+  "frozenExperiment": "No SDK kit/project/receipt/archive from the independent SDK-only experiment was edited.",
+  "artifacts": {
+    "ManualAdapterProbe.hanlinExpo": {
+      "bytes": 2024726,
+      "sha256": "26d9f62c353a0ee1396fd990522a0b26a1c8b353dd5cbdc0d4a3cc620f1a3223"
+    },
+    "compiler-identities.json": {
+      "bytes": 639,
+      "sha256": "faf86a8dca84d73fb3bf554f16ba8b57501d886967f6bb1994f5c262cc2487a5"
+    },
+    "exported-sdk-archive.json": {
+      "bytes": 1433,
+      "sha256": "b0fc15a435896b7dd6d5551ea6239f39cde55fe22dbbaeb3b1c7941c857566c2"
+    },
+    "exported-sdk-build-command.json": {
+      "bytes": 1181,
+      "sha256": "e79ac7f4ede77230d62adb8b780ecfab96b661715ebe9e78cc2c39a3ce094997"
+    },
+    "exported-sdk-build-report.json": {
+      "bytes": 1639,
+      "sha256": "d1fd4b37a67b05a18cda3a471c6c30cd298ca84a0929eff849a51fde3820d8d7"
+    },
+    "exported-sdk-build.stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "exported-sdk-build.stdout.log": {
+      "bytes": 1639,
+      "sha256": "d1fd4b37a67b05a18cda3a471c6c30cd298ca84a0929eff849a51fde3820d8d7"
+    },
+    "exported-sdk-inputs.json": {
+      "bytes": 1381,
+      "sha256": "ba39420b808148aef459fabafef1482780b7f23116fba53db15416a87116e352"
+    },
+    "exported-sdk-validate-command.json": {
+      "bytes": 850,
+      "sha256": "4ba9c4bf66cd99fcc392ab9212f369f1e5377288fcd94fc6b7f9f4dae6c8e4c4"
+    },
+    "exported-sdk-validate-report.json": {
+      "bytes": 1267,
+      "sha256": "551f3ad2061bc6c55bddf476e5dc864be5bc97faf88742be049d2f7c617b0ecd"
+    },
+    "exported-sdk-validate.stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "exported-sdk-validate.stdout.log": {
+      "bytes": 1267,
+      "sha256": "551f3ad2061bc6c55bddf476e5dc864be5bc97faf88742be049d2f7c617b0ecd"
+    },
+    "first-typecheck-input.tsx": {
+      "bytes": 11191,
+      "sha256": "be36b971142046229cb0a8fe3f2ac277a4b4546f5446d56eff63b213da4bc81f"
+    },
+    "http-transport.json": {
+      "bytes": 1213,
+      "sha256": "18838f9f88207781f42946c02f25cc1e6305ec955a44689b28ca26d7701befff"
+    },
+    "local-package-links.json": {
+      "bytes": 456,
+      "sha256": "106c5ca41d15a7d18269a171367c85596fb752daf6fc088e8ed09bd3faf7a8e3"
+    },
+    "metro-final.json": {
+      "bytes": 1834,
+      "sha256": "031dd6da687f436de14a3d28a2b30e0a1d3558e8e3a586be6ec928d5ea330ecb"
+    },
+    "metro-final.stderr.log": {
+      "bytes": 59,
+      "sha256": "467d362f47eb041d253845b5ea29333364d5c6b9b8b0d46be079fbcb2d0f9eb5"
+    },
+    "metro-final.stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "metro.json": {
+      "bytes": 1264,
+      "sha256": "f20be8672632f26c80858cb90ea5e7ab2ad62eef53747684650148d3f49176e5"
+    },
+    "metro.stderr.log": {
+      "bytes": 830,
+      "sha256": "eeafbedff9c2962a748f1fb2b9cb166a2444cd4d5277cb18a1b6ac01a3c518c3"
+    },
+    "metro.stdout.log": {
+      "bytes": 3553,
+      "sha256": "8f792dbd4b0ad420321e0fee00d96c98939059072d91cf0d387c7dfdd721783f"
+    },
+    "source-reconciliation.json": {
+      "bytes": 2452,
+      "sha256": "79c979efa567dac874615f0eca4c0da1871d4dc13b826923744d5209afc3499f"
+    },
+    "swift-parse.json": {
+      "bytes": 714,
+      "sha256": "4ff01d0862a5905e03a5e68a0a96f5f7ba523a96dd0c88fd5f1fe0a2e99c80cb"
+    },
+    "swift-parse.stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "swift-parse.stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "typecheck-final.json": {
+      "bytes": 1029,
+      "sha256": "08fa1f9b0e31af9bdee094a5bc620fc893ea5df5f4929f0ceab9656ffe3541f9"
+    },
+    "typecheck-final.stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "typecheck-final.stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "typecheck-initial.json": {
+      "bytes": 942,
+      "sha256": "8c502fcd90ea3bcd7311e033096a10ce9056cd4fb6f1ea47b22b40a58f488995"
+    },
+    "typecheck-initial.stderr.log": {
+      "bytes": 833,
+      "sha256": "cbd9497e3305b3115e2d233dbcdffe8cfdef2b3b5ab07d945a86d631516cd1aa"
+    },
+    "typecheck-initial.stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "typecheck.json": {
+      "bytes": 903,
+      "sha256": "94a5dd3f5ef17af69ce3173b1c168656ebec53a60a1c472ec769d5e5b053b3f6"
+    },
+    "typecheck.stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "typecheck.stdout.log": {
+      "bytes": 196,
+      "sha256": "3fe7e6460fec542194f9c7027bbbae541465799c56f60701665af0e4ed6cf96f"
+    }
+  }
+}

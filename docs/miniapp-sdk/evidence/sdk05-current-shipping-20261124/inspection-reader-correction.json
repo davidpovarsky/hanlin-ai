@@ -1,0 +1,21 @@
+{
+  "initialAttempt": "inspection-attempt-01-command.json",
+  "result": "INSPECTION_HARNESS_FAILURE_ONLY",
+  "cause": "The independent byte reader initially retained the two-space indentation of NativeScript Markdown fences. The actual existing checker correctly removes opening-fence indentation using CommonMark rules. No product/documentation/compiler failure occurred.",
+  "authority": "Scripts/MiniApps/check-authoring-examples.mjs:45-46 at999599c2",
+  "correction": "Apply exactly the same opening-indent removal before comparing retained snippet hashes.",
+  "sourceBefore": "inspection-attempt-01-source.py",
+  "sourceAfter": "inspect_artifact.py",
+  "productChanges": [],
+  "originalCIResultUnchanged": "EXECUTED_PASS with0diagnostics",
+  "ownedPatchShadowRemovedForReconstruction": "/tmp/hanlin-sdk05-shipping-45375410965-5ndqe_cd/original-input-patch",
+  "secondAttempt": {
+    "command": "inspection-attempt-02-command.json",
+    "result": "INSPECTION_EXPECTATION_CORRECTED",
+    "cause": "The staged ScriptWidget native-api.json is generated against actual current source. Only the recorded runtime-source provenance hash differs from the committed generated catalog; all APIs and declaration bytes are unchanged.",
+    "authority": "Existing stageSDK generateScriptWidgetServiceTypes call and actual source hash",
+    "correction": "Require exact JSON equality after refreshing only the one demonstrated source provenance hash to the actual Git source; retain exact diff. No generator/SDK/compiler execution.",
+    "sourceBefore": "inspection-attempt-02-source.py",
+    "sourceAfter": "inspect_artifact.py"
+  }
+}

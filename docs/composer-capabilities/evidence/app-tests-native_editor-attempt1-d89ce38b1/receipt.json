@@ -1,0 +1,213 @@
+{
+  "schemaVersion": 1,
+  "status": "EXECUTED_PASS",
+  "startedAtUTC": "2026-11-25T03:51:57.803393+00:00",
+  "sourceCommit": "d89ce38b170bc9af4734cd11e30ca793b16698d0",
+  "group": "native_editor",
+  "command": [
+    "xcodebuild",
+    "test-without-building",
+    "-xctestrun",
+    "/Users/m1/caches/DerivedData/hanlin-composer-app-20261124/Build/Products/AI_HLY_iphonesimulator27.0-arm64.xctestrun",
+    "-destination-timeout",
+    "60",
+    "-parallel-testing-enabled",
+    "NO",
+    "-maximum-concurrent-test-simulator-destinations",
+    "1",
+    "-maximum-parallel-testing-workers",
+    "1",
+    "-collect-test-diagnostics",
+    "never",
+    "-destination",
+    "platform=iOS Simulator,id=F1D52257-55E0-4927-8029-E19D47B51AC0",
+    "-resultBundlePath",
+    "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/app-tests-native_editor-attempt1/Tests.xcresult",
+    "-only-testing:AI_HLYTests/NativeComposerLineSizingTests/equalStringOwnerSwitchKeepsPendingInputAndLateDelegateScoped()",
+    "-only-testing:AI_HLYTests/NativeComposerLineSizingTests/canonicalEquivalentOwnerAndNativeReplacementsPreserveExactText()",
+    "-only-testing:AI_HLYTests/NativeComposerLineSizingTests/markedTextOwnerSwitchPreservesCompositionAndAuthoritativeClear(_:)",
+    "-only-testing:AI_HLYTests/NativeComposerLineSizingTests/programmaticDraftUpdatesWhileEditing()"
+  ],
+  "planSHA256": "f7dea489f9bbadcb7aec787be9e349de45117c092d3040971db2262a7d709005",
+  "expectedMethods": [
+    {
+      "target": "AI_HLYTests",
+      "suite": "NativeComposerLineSizingTests",
+      "method": "equalStringOwnerSwitchKeepsPendingInputAndLateDelegateScoped",
+      "signature": "equalStringOwnerSwitchKeepsPendingInputAndLateDelegateScoped()",
+      "relativeIdentity": "NativeComposerLineSizingTests/equalStringOwnerSwitchKeepsPendingInputAndLateDelegateScoped()",
+      "selector": "AI_HLYTests/NativeComposerLineSizingTests/equalStringOwnerSwitchKeepsPendingInputAndLateDelegateScoped()",
+      "sourceFile": "AI_HLYTests/NativeComposerLineSizingTests.swift",
+      "sourceLine": 258,
+      "framework": "Swift Testing",
+      "argumentNames": [],
+      "expectedInvocations": 1
+    },
+    {
+      "target": "AI_HLYTests",
+      "suite": "NativeComposerLineSizingTests",
+      "method": "canonicalEquivalentOwnerAndNativeReplacementsPreserveExactText",
+      "signature": "canonicalEquivalentOwnerAndNativeReplacementsPreserveExactText()",
+      "relativeIdentity": "NativeComposerLineSizingTests/canonicalEquivalentOwnerAndNativeReplacementsPreserveExactText()",
+      "selector": "AI_HLYTests/NativeComposerLineSizingTests/canonicalEquivalentOwnerAndNativeReplacementsPreserveExactText()",
+      "sourceFile": "AI_HLYTests/NativeComposerLineSizingTests.swift",
+      "sourceLine": 302,
+      "framework": "Swift Testing",
+      "argumentNames": [],
+      "expectedInvocations": 1
+    },
+    {
+      "target": "AI_HLYTests",
+      "suite": "NativeComposerLineSizingTests",
+      "method": "markedTextOwnerSwitchPreservesCompositionAndAuthoritativeClear",
+      "signature": "markedTextOwnerSwitchPreservesCompositionAndAuthoritativeClear(_:)",
+      "relativeIdentity": "NativeComposerLineSizingTests/markedTextOwnerSwitchPreservesCompositionAndAuthoritativeClear(_:)",
+      "selector": "AI_HLYTests/NativeComposerLineSizingTests/markedTextOwnerSwitchPreservesCompositionAndAuthoritativeClear(_:)",
+      "sourceFile": "AI_HLYTests/NativeComposerLineSizingTests.swift",
+      "sourceLine": 381,
+      "framework": "Swift Testing",
+      "argumentNames": [
+        "false",
+        "true"
+      ],
+      "expectedInvocations": 2
+    },
+    {
+      "target": "AI_HLYTests",
+      "suite": "NativeComposerLineSizingTests",
+      "method": "programmaticDraftUpdatesWhileEditing",
+      "signature": "programmaticDraftUpdatesWhileEditing()",
+      "relativeIdentity": "NativeComposerLineSizingTests/programmaticDraftUpdatesWhileEditing()",
+      "selector": "AI_HLYTests/NativeComposerLineSizingTests/programmaticDraftUpdatesWhileEditing()",
+      "sourceFile": "AI_HLYTests/NativeComposerLineSizingTests.swift",
+      "sourceLine": 414,
+      "framework": "Swift Testing",
+      "argumentNames": [],
+      "expectedInvocations": 1
+    }
+  ],
+  "resultBundle": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/app-tests-native_editor-attempt1/Tests.xcresult",
+  "executionOwner": "/root",
+  "timeoutSeconds": 900,
+  "buildForTestingManifests": {
+    "/Users/m1/caches/DerivedData/hanlin-composer-app-20261124/Build/Products/AI_HLY_iphonesimulator27.0-arm64.xctestrun": {
+      "sha256": "7a298177b07b04a7554677049a6f557865f0aa9387e352107bec3ea2c60253e5",
+      "mtime": 1795578015.538609
+    }
+  },
+  "buildReceipt": {
+    "path": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/ai-hly-build-attempt6.json",
+    "sha256": "aeb414df2dc399bb14b792f4482b6ffc2b8545c9dec745a7b6e3ef176aeff958"
+  },
+  "executedManifest": {
+    "path": "/Users/m1/caches/DerivedData/hanlin-composer-app-20261124/Build/Products/AI_HLY_iphonesimulator27.0-arm64.xctestrun",
+    "sha256": "7a298177b07b04a7554677049a6f557865f0aa9387e352107bec3ea2c60253e5",
+    "sourceCommit": "d89ce38b170bc9af4734cd11e30ca793b16698d0",
+    "buildReceiptSHA256": "aeb414df2dc399bb14b792f4482b6ffc2b8545c9dec745a7b6e3ef176aeff958",
+    "preflightReceipt": "built-products-preflight-attempt2.json"
+  },
+  "schemeEnvironment": {
+    "HANLIN_UNIT_TEST_HOST": "1"
+  },
+  "packageResolvedSHA256Before": "4a55e370d71d69933efb0bc54a08973da962b4d7270da59791aa3b1ed58910bd",
+  "sourceInputs": {
+    "AI_HLY.xcodeproj/project.pbxproj": "541fc1bfc13a5ba7a5ad34b27c5b7d230a9a7e2b4b46e7bc1c64fb44da9fd645",
+    "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved": "4a55e370d71d69933efb0bc54a08973da962b4d7270da59791aa3b1ed58910bd",
+    "AI_HLY.xcodeproj/xcshareddata/xcschemes/AI_HLY.xcscheme": "1a37dc5e015ee2e29e873f3e6d6035d6e933ec4eb27848c1263e51c9958af480",
+    "AI_HLYTests/NativeComposerLineSizingTests.swift": "6eb5c1a7f623dac590311d3040c6c0f81cdbb6baec98fdd943d6617151d0f248"
+  },
+  "allowedDocumentationChanges": [],
+  "toolchain": "Xcode 27.0\nBuild version 27A266a",
+  "pid": 39005,
+  "exitCode": 0,
+  "durationSeconds": 61.581,
+  "logSHA256": "b019158e6422e3824ea03db27b9613df747e666222a317df04492d44d02517a2",
+  "actual": {
+    "expectedMethodCount": 4,
+    "expectedInvocationCount": 5,
+    "observedMethodCount": 4,
+    "observedInvocationCount": 5,
+    "observedDeviceIDs": [
+      "F1D52257-55E0-4927-8029-E19D47B51AC0"
+    ],
+    "cases": [
+      {
+        "selector": "AI_HLYTests/NativeComposerLineSizingTests/equalStringOwnerSwitchKeepsPendingInputAndLateDelegateScoped()",
+        "relativeIdentity": "NativeComposerLineSizingTests/equalStringOwnerSwitchKeepsPendingInputAndLateDelegateScoped()",
+        "expectedInvocations": 1,
+        "observedCopies": 1,
+        "rawIdentity": "NativeComposerLineSizingTests/equalStringOwnerSwitchKeepsPendingInputAndLateDelegateScoped()",
+        "rawIdentityURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/NativeComposerLineSizingTests/equalStringOwnerSwitchKeepsPendingInputAndLateDelegateScoped()",
+        "rawResult": "Passed",
+        "durationSeconds": 1.4876229763031006,
+        "arguments": [],
+        "status": "EXECUTED_PASS"
+      },
+      {
+        "selector": "AI_HLYTests/NativeComposerLineSizingTests/canonicalEquivalentOwnerAndNativeReplacementsPreserveExactText()",
+        "relativeIdentity": "NativeComposerLineSizingTests/canonicalEquivalentOwnerAndNativeReplacementsPreserveExactText()",
+        "expectedInvocations": 1,
+        "observedCopies": 1,
+        "rawIdentity": "NativeComposerLineSizingTests/canonicalEquivalentOwnerAndNativeReplacementsPreserveExactText()",
+        "rawIdentityURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/NativeComposerLineSizingTests/canonicalEquivalentOwnerAndNativeReplacementsPreserveExactText()",
+        "rawResult": "Passed",
+        "durationSeconds": 0.3095569610595703,
+        "arguments": [],
+        "status": "EXECUTED_PASS"
+      },
+      {
+        "selector": "AI_HLYTests/NativeComposerLineSizingTests/markedTextOwnerSwitchPreservesCompositionAndAuthoritativeClear(_:)",
+        "relativeIdentity": "NativeComposerLineSizingTests/markedTextOwnerSwitchPreservesCompositionAndAuthoritativeClear(_:)",
+        "expectedInvocations": 2,
+        "observedCopies": 1,
+        "rawIdentity": "NativeComposerLineSizingTests/markedTextOwnerSwitchPreservesCompositionAndAuthoritativeClear(_:)",
+        "rawIdentityURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/NativeComposerLineSizingTests/markedTextOwnerSwitchPreservesCompositionAndAuthoritativeClear(_:)",
+        "rawResult": "Passed",
+        "durationSeconds": 0.18605101108551025,
+        "arguments": [
+          {
+            "name": "false",
+            "result": "Passed",
+            "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/NativeComposerLineSizingTests/markedTextOwnerSwitchPreservesCompositionAndAuthoritativeClear(_:)?args=fcbcf165908dd18a9e49f7ff27810176db8e9f63b4352213741664245224f8aa",
+            "durationInSeconds": 0.17465806007385254
+          },
+          {
+            "name": "true",
+            "result": "Passed",
+            "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/NativeComposerLineSizingTests/markedTextOwnerSwitchPreservesCompositionAndAuthoritativeClear(_:)?args=b5bea41b6c623f7c09f1bf24dcae58ebab3c0cdd90ad966bc43a45b44867e12b",
+            "durationInSeconds": 0.19744396209716797
+          }
+        ],
+        "status": "EXECUTED_PASS"
+      },
+      {
+        "selector": "AI_HLYTests/NativeComposerLineSizingTests/programmaticDraftUpdatesWhileEditing()",
+        "relativeIdentity": "NativeComposerLineSizingTests/programmaticDraftUpdatesWhileEditing()",
+        "expectedInvocations": 1,
+        "observedCopies": 1,
+        "rawIdentity": "NativeComposerLineSizingTests/programmaticDraftUpdatesWhileEditing()",
+        "rawIdentityURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/NativeComposerLineSizingTests/programmaticDraftUpdatesWhileEditing()",
+        "rawResult": "Passed",
+        "durationSeconds": 0.017246246337890625,
+        "arguments": [],
+        "status": "EXECUTED_PASS"
+      }
+    ],
+    "problems": [],
+    "passed": true
+  },
+  "summary": {
+    "result": "Passed",
+    "totalTestCount": 4,
+    "passedTests": 4,
+    "failedTests": 0,
+    "skippedTests": 0,
+    "expectedFailures": 0
+  },
+  "packageResolvedSHA256After": "4a55e370d71d69933efb0bc54a08973da962b4d7270da59791aa3b1ed58910bd",
+  "sourceInputsUnchanged": true,
+  "testProductManifestsUnchanged": true,
+  "xcresultFilesManifestSHA256": "a87a8ba63d3b2dd88154f602e29035ab95035bbe1aae014b2617c97e7b1f3c09",
+  "postRunHEAD": "d89ce38b170bc9af4734cd11e30ca793b16698d0",
+  "finishedAtUTC": "2026-11-25T03:53:00.122127+00:00"
+}

@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "transferredAtUTC": "2026-11-25T02:47:51.412392+00:00",
+  "transport": "Oracle pinned scaleway-mac SSH alias, BatchMode=yes, StrictHostKeyChecking=yes; read-only original Oracle audit receipt",
+  "sourceReadOnly": true,
+  "allSourceSHA256Verified": true,
+  "noBuildsTestsGeneratorsDevicesOrMacWrites": true,
+  "nativeBinariesCopied": false,
+  "files": [
+    {
+      "path": "docs/composer-capabilities/evidence/integration-native-catalog-b739ada91/native-catalog-b739ada91-host8.json",
+      "bytes": 1770,
+      "sha256": "6840c7d457724abd6d00fb649c17cc139b6da4c0ad921dacf5497366b1d5cfcb",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/native-catalog-b739ada91-host8.json",
+      "sourceBytes": 1770,
+      "sourceSHA256": "6840c7d457724abd6d00fb649c17cc139b6da4c0ad921dacf5497366b1d5cfcb",
+      "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/integration-native-catalog-b739ada91/native-catalog-b739ada91-host8-export.log.gz",
+      "bytes": 788,
+      "sha256": "661e3cabe213319de6c44787dc249c96996b53ac1acf884f3c7ed3661a8443aa",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/native-catalog-b739ada91-host8-export.log",
+      "sourceBytes": 1539,
+      "sourceSHA256": "ccd1370b757e19b9f2ca2e4a0e2b03c9f62905494d060fb214cb381b77568ee9",
+      "compressedForRepository": true,
+      "uncompressedLogSHA256": "ccd1370b757e19b9f2ca2e4a0e2b03c9f62905494d060fb214cb381b77568ee9",
+      "uncompressedLogBytes": 1539
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/integration-native-catalog-b739ada91/native-catalog-b739ada91-host8-verify.log.gz",
+      "bytes": 82,
+      "sha256": "d261939b32fb443768944d209940448190cfa29faa63c06c3d1cc36a9f4deb67",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/native-catalog-b739ada91-host8-verify.log",
+      "sourceBytes": 65,
+      "sourceSHA256": "4c9d4a5204d1cbac0f74163fc660f12c97db3b8c023041f4855974835bff7a86",
+      "compressedForRepository": true,
+      "uncompressedLogSHA256": "4c9d4a5204d1cbac0f74163fc660f12c97db3b8c023041f4855974835bff7a86",
+      "uncompressedLogBytes": 65
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/integration-native-catalog-b739ada91/native-artifacts.json",
+      "bytes": 29897,
+      "sha256": "c5a4cd759b13e8e426f60f56292bbfd5aace43f756b8304516f060a7ac611ebf",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/native-catalog-b739ada91-host8/native-artifacts.json",
+      "sourceBytes": 29897,
+      "sourceSHA256": "c5a4cd759b13e8e426f60f56292bbfd5aace43f756b8304516f060a7ac611ebf",
+      "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/integration-native-catalog-b739ada91/prebuild-integration-b739ada91.json",
+      "bytes": 5349,
+      "sha256": "7e693ee449f9511defdaa2caf8efd0b796a45b68174c8dd6b225b7b6bc4ff5dd",
+      "sourceHost": "oracle",
+      "sourcePath": "/mnt/development/projects/worktrees/hanlin-composer-capabilities-20261124/build/composer-evidence/prebuild-integration-b739ada91.json",
+      "sourceBytes": 5349,
+      "sourceSHA256": "7e693ee449f9511defdaa2caf8efd0b796a45b68174c8dd6b225b7b6bc4ff5dd",
+      "compressedForRepository": false
+    }
+  ]
+}

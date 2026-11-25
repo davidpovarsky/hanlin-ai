@@ -1,0 +1,23 @@
+{
+  "status": "AUTHENTICATED_ARCHIVE_VERIFIED",
+  "runID": 45354940642,
+  "artifactID": 14905155493,
+  "sourceCommit": "a12eb646aeb5c484f746c07ecffafc7d9f34f167",
+  "archive": "/tmp/hanlin-native-gate-evidence-45354940642/app-split-45354940642.zip",
+  "bytes": 333706641,
+  "sha256": "9064980406b7c59be8fe5f80113039609faed17e351dd9193ef329e933c6b4c8",
+  "expectedDigest": "sha256:9064980406b7c59be8fe5f80113039609faed17e351dd9193ef329e933c6b4c8",
+  "command": [
+    "sudo",
+    "-u",
+    "ubuntu",
+    "gh",
+    "api",
+    "repos/davidpovarsky/hanlin-ai/actions/artifacts/14905155493/zip"
+  ],
+  "exitCode": 0,
+  "downloadSeconds": 67.2749330997467,
+  "textExtractionRoot": "/dev/shm/hanlin-native-gate-evidence-45354940642",
+  "selectedTextBytes": 7925834,
+  "selectedTextFiles": 59
+}

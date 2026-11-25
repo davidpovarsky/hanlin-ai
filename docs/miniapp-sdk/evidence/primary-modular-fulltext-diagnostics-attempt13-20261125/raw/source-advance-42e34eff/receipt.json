@@ -1,0 +1,476 @@
+{
+  "status": "SOURCE_READY_NATIVE_NOT_STARTED",
+  "utc": "2026-11-25T03:58:26.964954+00:00",
+  "sourceBase": "1a611764779b0a57cc57d71b26d2cd6449895d8d",
+  "target": "42e34eff615a6d599ddfd01ea9382d920b5f9a5c",
+  "targetTree": "0d01ddaa4861c19b5376e5d726b992531b9e442f",
+  "packSHA256": "4bb936f2a1c6a537002cc8963ed98e9a14d17fc626fd333ef1d11e30a83f3ae1",
+  "workingFiles": [],
+  "materializedPreparedFiles": [
+    {
+      "path": "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "sha256": "610bcbb9a7f90c27e3bd3ecd3b1d139fe3ff72ed18086327d1d96c437de932f5",
+      "mode": 33188
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/original-runtime-receipt.json",
+      "sha256": "3d619674297acb22ae4d0a97f5e7d8a878b0eccbc3bfc49769cfdb5a05248a0b",
+      "mode": 33188
+    },
+    {
+      "path": "Scripts/Expo/package-lock.json",
+      "sha256": "c08757cf46ac4d5c86a873f676af4a3be585db64ae2e1aa1e8288277d4eb63b8",
+      "mode": 33188
+    },
+    {
+      "path": "Scripts/Expo/package.json",
+      "sha256": "e2b50fae013276229c78619bbbe0b63d8c29b00fefde3afeccea98af117aa206",
+      "mode": 33188
+    },
+    {
+      "path": "Scripts/MiniApps/upstream-resolution.json",
+      "sha256": "e0c2944ea24c09330825dee58badedcec58606ba603ccdedc888abf1a63a13cb",
+      "mode": 33188
+    },
+    {
+      "path": "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+      "sha256": "768731f0c748276aeab4d34f57ad3ad89fd38aa30f562ff0cc9b5ad9a3767368",
+      "mode": 33188
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.json",
+      "sha256": "9a9843d277a3e76ad64fc7589029801960c5c98b9aba09f3ed7746552ee3d42d",
+      "mode": 33188
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.md",
+      "sha256": "cae21720cab9b31211796a5d82309d6e779f46ddb1d946d1ec1e322f4cf952cb",
+      "mode": 33188
+    },
+    {
+      "path": "docs/miniapp-sdk/source-inventory.json",
+      "sha256": "856bc8aca1473f8f4255b324e840ef2ebcdf5eb7352d1041d2433391e9f4bfd8",
+      "mode": 33188
+    }
+  ],
+  "workingArchiveSHA256": "473de996e732ff8982202370230b47870821d7d8012bf87e0a392c5d90864ecf",
+  "untrackedPathSetSHA256": "a4b88899e80b89dd5d153a32fd2dc442d0040edd38c68ee0f70562257d1a8ca3",
+  "caseAliasObservation": [
+    {
+      "alias": "Docs/miniapp-sdk/evidence/paired-acceptance-scope-map-20261125/README.md",
+      "tracked": "docs/miniapp-sdk/evidence/paired-acceptance-scope-map-20261125/README.md",
+      "sha256": "a0b72e19ae6e47223755a417b5124f5b01a36fe55cc70ae2e6d3de4b4361523a"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/paired-acceptance-scope-map-20261125/mapping.json",
+      "tracked": "docs/miniapp-sdk/evidence/paired-acceptance-scope-map-20261125/mapping.json",
+      "sha256": "00b1b022a27104b32943e70efe1c7e4efa8a1a7ab6aa4b4284531205317204e7"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/paired-acceptance-scope-map-20261125/receipt.json",
+      "tracked": "docs/miniapp-sdk/evidence/paired-acceptance-scope-map-20261125/receipt.json",
+      "sha256": "5a2eb9aea31b83e2a7e931a94cf86ead8628fa26c123b62d55eeb25594647e47"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/paired-acceptance-scope-map-20261125/source-bindings.json",
+      "tracked": "docs/miniapp-sdk/evidence/paired-acceptance-scope-map-20261125/source-bindings.json",
+      "sha256": "860a87c9d67950f7e49bba504868ca3341427c22f4485ea8f6178387e988d821"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-modular-disclosure-label-locators-20261125/README.md",
+      "tracked": "docs/miniapp-sdk/evidence/primary-modular-disclosure-label-locators-20261125/README.md",
+      "sha256": "e94aff805bf7977ebff5551d429f53a5239382c6f71f405a89e1654546819f42"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-modular-disclosure-label-locators-20261125/change.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-modular-disclosure-label-locators-20261125/change.json",
+      "sha256": "a93531ed54097f7c8bcbcfae31633383a5b1e6027130ab0d5b9f6aad81263717"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-modular-disclosure-label-locators-20261125/original-api-bindings.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-modular-disclosure-label-locators-20261125/original-api-bindings.json",
+      "sha256": "37fbb5a35bad4316e057be26540b8ecb9331ceda69e5f88b6975d6b16fa3986e"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-modular-disclosure-label-locators-20261125/receipt.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-modular-disclosure-label-locators-20261125/receipt.json",
+      "sha256": "337b4caacd4fe34b8f3cc059f4cbb732a67ba19c6835fc0067d932039e3d42d2"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-modular-disclosure-label-locators-20261125/source.patch",
+      "tracked": "docs/miniapp-sdk/evidence/primary-modular-disclosure-label-locators-20261125/source.patch",
+      "sha256": "023af0c740226b1a01fb48d13f44f0a814762ef5736f3f7dbcc291549ee3f506"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/README.md",
+      "tracked": "docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/README.md",
+      "sha256": "e27f36290ce02525c7b3886c208e23465d096ee9e3fb2fc4c1a65dc133a7596a"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/ParityStartupDiagnostic-attachments/119C017A-ABD7-4155-8A7D-7F014D2C58A2.png",
+      "tracked": "docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/ParityStartupDiagnostic-attachments/119C017A-ABD7-4155-8A7D-7F014D2C58A2.png",
+      "sha256": "927441bfd37cf14d8968a9cfbfdbf6c3f36fd6253bfd86ac636b10dafff08115"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/ParityStartupDiagnostic-attachments/1ADF0C19-74EB-4FBD-AF21-872CE283925C.txt",
+      "tracked": "docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/ParityStartupDiagnostic-attachments/1ADF0C19-74EB-4FBD-AF21-872CE283925C.txt",
+      "sha256": "ac75a83a20d1b412e5c625839d7295a7149378ce7a589427db60c8d065b08d1a"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/ParityStartupDiagnostic-attachments/3A3A5E3D-C3A5-4C45-8DA4-1C5E95D2B8A9.txt",
+      "tracked": "docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/ParityStartupDiagnostic-attachments/3A3A5E3D-C3A5-4C45-8DA4-1C5E95D2B8A9.txt",
+      "sha256": "1d14007f4548d9cdef3bc6fcf09d179bf56aa37ebacc12674961839e2f930cb0"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/ParityStartupDiagnostic-attachments/42EBF8D2-231D-4C78-A361-133733B2712F.png",
+      "tracked": "docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/ParityStartupDiagnostic-attachments/42EBF8D2-231D-4C78-A361-133733B2712F.png",
+      "sha256": "a28569a843c275960cf073184c1b0790ca730e23f1b6638fbff69cf08578e085"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/ParityStartupDiagnostic-attachments/5912EC48-11C0-4C26-BF35-E67BEB0F9CCA.txt",
+      "tracked": "docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/ParityStartupDiagnostic-attachments/5912EC48-11C0-4C26-BF35-E67BEB0F9CCA.txt",
+      "sha256": "9460898db4ae159a732aa399dc63d77f56005926dca840db9499026e689c0d31"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/ParityStartupDiagnostic-attachments/73E04DDA-BF49-4F90-A34A-2A7248813345.txt",
+      "tracked": "docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/ParityStartupDiagnostic-attachments/73E04DDA-BF49-4F90-A34A-2A7248813345.txt",
+      "sha256": "a5be485a80cc28322e790425434e901baeedc03648f5fc3556a1b3b5e8bb733f"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/ParityStartupDiagnostic-attachments/8A5550DC-A62E-4CD0-AE68-3824C9FDDC06.png",
+      "tracked": "docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/ParityStartupDiagnostic-attachments/8A5550DC-A62E-4CD0-AE68-3824C9FDDC06.png",
+      "sha256": "e427cbc657d269604be544e795919b54dc1e57abf762e2535e64dcce396c853e"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/ParityStartupDiagnostic-attachments/9F1072DF-296A-4F54-B356-867F2CB0636E.png",
+      "tracked": "docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/ParityStartupDiagnostic-attachments/9F1072DF-296A-4F54-B356-867F2CB0636E.png",
+      "sha256": "5556efc823e300eabbb971f27faefb275e28c987e9435075b94964b2ee18307f"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/ParityStartupDiagnostic-attachments/D5A7ECF8-A541-4A7C-ACB2-4AE8E1CD5C6A.png",
+      "tracked": "docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/ParityStartupDiagnostic-attachments/D5A7ECF8-A541-4A7C-ACB2-4AE8E1CD5C6A.png",
+      "sha256": "a13bdd44db478ada12b76f08089228c8fa3150277308deaebf58ed701b478325"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/ParityStartupDiagnostic-attachments/F6074B34-32EB-4195-BA6C-B64CB75F62B9.txt",
+      "tracked": "docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/ParityStartupDiagnostic-attachments/F6074B34-32EB-4195-BA6C-B64CB75F62B9.txt",
+      "sha256": "082e7e79aa6dc581bbadfa7bc4ef197272d8e5fe1593ff9aeba46f32dc53dd17"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/ParityStartupDiagnostic-attachments/manifest.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/ParityStartupDiagnostic-attachments/manifest.json",
+      "sha256": "a866c585758d58fa09f02c001b5fe852cf9e45ed626ddc04d2bde96ecc393cae"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/ParityStartupDiagnostic-runtime-markers.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/ParityStartupDiagnostic-runtime-markers.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/actual-runtime-markers.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/actual-runtime-markers.json",
+      "sha256": "20f983934152b33b59c014eedf731c76cd2cc994a01d4b1e048c5c68f5ef8ddd"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/container-observations.jsonl",
+      "tracked": "docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/container-observations.jsonl",
+      "sha256": "26e52eb1123fa5cad495213aac7ad640d0676aed13bf29a814f83203b216476c"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/control/diagnostic-observer-attempt11.py",
+      "tracked": "docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/control/diagnostic-observer-attempt11.py",
+      "sha256": "d36d818a02c5a9ddba660bf83e4827d96af75b38052f9eaa26bf3c7aab2a97e1"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/control/focused-diagnostics-attempt11.py",
+      "tracked": "docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/control/focused-diagnostics-attempt11.py",
+      "sha256": "d52f3d40d4c82344bb5a22bd1e73c027eb96369451e157302f67b9f9c9cd1945"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/control/focused-launch-attempt11.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/control/focused-launch-attempt11.json",
+      "sha256": "71a811dafc1d2883709ca2e74540a5b9c6dbb31114cf48e48b4169468b383aee"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/control/prefix-launch-attempt11.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/control/prefix-launch-attempt11.json",
+      "sha256": "2e18c01686c1720e439a6fe1973de7b9ac5adfba20d138f5dd6ae0e7753976d7"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/control/run-focused-diagnostics-attempt11.py",
+      "tracked": "docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/control/run-focused-diagnostics-attempt11.py",
+      "sha256": "318c1623e66e1dbca5054e5d95863e60b44cf27581a758377b9ceb3d0056b866"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/control/source-advance-318b251b/receipt.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/control/source-advance-318b251b/receipt.json",
+      "sha256": "fb02a92665aae8902cd16aa4e87716fdfade68fb1ae2ba709795dcc8974058f5"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/control/state.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/control/state.json",
+      "sha256": "e8897cc73e2ae185a64e688004334c6f07b1ad6d82e6d2e1bf2e76ff8467456b"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/host-ready-observations.jsonl",
+      "tracked": "docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/host-ready-observations.jsonl",
+      "sha256": "03d9a21999dc941b902349d12754281c2ae0d3a165cc72dd423178771b6868d5"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/inputs/HanlinMiniAppsUITests.original.swift",
+      "tracked": "docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/inputs/HanlinMiniAppsUITests.original.swift",
+      "sha256": "995e98e35d5f4f464c3b83062b136b14f74c7445c040d2118baffd3bcaea9052"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/installed-metadata-binding.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/installed-metadata-binding.json",
+      "sha256": "d4acc2fba86d660f59a12505f9cd5d4670d68fc7871438ec86c7c4ec7d756e7d"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/intercepted-original-command.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/intercepted-original-command.json",
+      "sha256": "bdf2a83b34673d1aabb3f3d36756bc7cbbf4c685c0eb409d362c99bc777dab07"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/node-job-observations.jsonl",
+      "tracked": "docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/node-job-observations.jsonl",
+      "sha256": "e7dee94792acc4f22ddd554f8ed559651a2647ef1ffce8d6e16e121fe88fce17"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/observed-jobs/BA02BE18-20DD-4F39-A685-34669A92B0FD/javaScriptCore/52f9ab88-9e9f-4824-8495-c494972d4c86/job.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/observed-jobs/BA02BE18-20DD-4F39-A685-34669A92B0FD/javaScriptCore/52f9ab88-9e9f-4824-8495-c494972d4c86/job.json",
+      "sha256": "26a05aa26c231112e93ac9cd3cd5cda6bb6961f31905d60806881e47b94af2a7"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/observed-jobs/BA02BE18-20DD-4F39-A685-34669A92B0FD/javaScriptCore/e9107a55-ee02-498a-8bfd-df1a770db202/job.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/observed-jobs/BA02BE18-20DD-4F39-A685-34669A92B0FD/javaScriptCore/e9107a55-ee02-498a-8bfd-df1a770db202/job.json",
+      "sha256": "dc244e6476faeef9dee83a34ebbe65e0fec42b843577d18da0420e971d2fba62"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/observed-jobs/BA02BE18-20DD-4F39-A685-34669A92B0FD/localPython/1cfebcb0-4f96-43b7-bb82-2451ad9389e2/job.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/observed-jobs/BA02BE18-20DD-4F39-A685-34669A92B0FD/localPython/1cfebcb0-4f96-43b7-bb82-2451ad9389e2/job.json",
+      "sha256": "3e5317e7593cd6c5ee84326e983b32efadab0232ab3617f0e254d814868a28c8"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/observed-jobs/BA02BE18-20DD-4F39-A685-34669A92B0FD/localPython/f4e8d975-c10c-457b-8d86-ac1a726b90a1/job.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/observed-jobs/BA02BE18-20DD-4F39-A685-34669A92B0FD/localPython/f4e8d975-c10c-457b-8d86-ac1a726b90a1/job.json",
+      "sha256": "18ffbe58d8f0e68130201dcaeb1fa5d40ebdf0e981791a7c140aefd8e71501eb"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/observed-jobs/BA02BE18-20DD-4F39-A685-34669A92B0FD/node/525c5db6-90e7-4690-9446-a3ec4c68a11c/job.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/observed-jobs/BA02BE18-20DD-4F39-A685-34669A92B0FD/node/525c5db6-90e7-4690-9446-a3ec4c68a11c/job.json",
+      "sha256": "9178801aedf1be44ded6709eef2784289adf229094de8c0411cce1740aebb4c0"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/observed-jobs/BA02BE18-20DD-4F39-A685-34669A92B0FD/node/525c5db6-90e7-4690-9446-a3ec4c68a11c/main.mjs",
+      "tracked": "docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/observed-jobs/BA02BE18-20DD-4F39-A685-34669A92B0FD/node/525c5db6-90e7-4690-9446-a3ec4c68a11c/main.mjs",
+      "sha256": "971687335268b4074ab888424030991b3f9c8e40e8b9dd6b5d28bb0f5d4ecaf5"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/observed-jobs/BA02BE18-20DD-4F39-A685-34669A92B0FD/node/d7147cec-a753-4692-b840-3e3da986360b/job.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/observed-jobs/BA02BE18-20DD-4F39-A685-34669A92B0FD/node/d7147cec-a753-4692-b840-3e3da986360b/job.json",
+      "sha256": "569f46f671ece0858ff4693c47ec3bb94b7ed3398e375a3c790d7c3a0556d71c"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/observed-jobs/BA02BE18-20DD-4F39-A685-34669A92B0FD/node/d7147cec-a753-4692-b840-3e3da986360b/main.mjs",
+      "tracked": "docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/observed-jobs/BA02BE18-20DD-4F39-A685-34669A92B0FD/node/d7147cec-a753-4692-b840-3e3da986360b/main.mjs",
+      "sha256": "971687335268b4074ab888424030991b3f9c8e40e8b9dd6b5d28bb0f5d4ecaf5"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/paired-prefix/ParityStartupDiagnostic-nodes.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/paired-prefix/ParityStartupDiagnostic-nodes.json",
+      "sha256": "cb21d83d43e1ad90f20a14db26f4f8cec7bf8dc2a7423ac1a462cdec94e6d88f"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/paired-prefix/ParityStartupDiagnostic-summary.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/paired-prefix/ParityStartupDiagnostic-summary.json",
+      "sha256": "cff62e646e53b46134cd451d5e80a75fe27096424ac1c9719c6bcf08db27df45"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/paired-prefix/command-events.jsonl",
+      "tracked": "docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/paired-prefix/command-events.jsonl",
+      "sha256": "789154855a5aed582d4bb192ee73d3f417350cb42ac8ec140955bce0c068ea1f"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/paired-prefix/commands.jsonl",
+      "tracked": "docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/paired-prefix/commands.jsonl",
+      "sha256": "7177ff7b7205a3eb9931318e94268b42a564796e3be24b5c20f248a113ddfe3f"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/paired-prefix/original-prefix-state.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/paired-prefix/original-prefix-state.json",
+      "sha256": "12a4c965a5b2da30faf61764d9c0ecd2e9d44672c90696aaf815a344d5347799"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/receipt.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/receipt.json",
+      "sha256": "ce57c1eab185d65c2034faa9cb4a19bf6f9e3ff005c93e05c6539858c1492b8c"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/runtime-logstream.stderr",
+      "tracked": "docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/runtime-logstream.stderr",
+      "sha256": "94fd1a5b55265199a9a6a67d888250b037e52f5788dd490d3721204d6132d8d0"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/state.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/raw/state.json",
+      "sha256": "66fe3d6988875986fbcad152acea015ad10a194ea4f022f6ded9ee9cea7ce8a3"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/receipt.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/receipt.json",
+      "sha256": "12d173a6218698f371290ce6d21f68c1e9ac31331865f9c4fbeef13d3d20acba"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/reconciliation.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/reconciliation.json",
+      "sha256": "315c33dbc6210e01ac9828514806679138b69ded739a818f0241638cdcb11509"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-remaining-focused-diagnostics-attempt10-20261125/README.md",
+      "tracked": "docs/miniapp-sdk/evidence/primary-remaining-focused-diagnostics-attempt10-20261125/README.md",
+      "sha256": "15755524f123462ab9986d32b279377466941ba34a2f1be78e58abcfc58d09f2"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-remaining-focused-diagnostics-attempt10-20261125/raw/RemainingFocused-attachments/277E3363-1E69-44EC-9EA9-CD76CFC7024B.txt",
+      "tracked": "docs/miniapp-sdk/evidence/primary-remaining-focused-diagnostics-attempt10-20261125/raw/RemainingFocused-attachments/277E3363-1E69-44EC-9EA9-CD76CFC7024B.txt",
+      "sha256": "8e52aa8ddc62f7c344f656324b6019decada6dc4ad80f22663f0d648a5caa62d"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-remaining-focused-diagnostics-attempt10-20261125/raw/RemainingFocused-attachments/37B14A7C-FDA2-4195-BB01-9C9B342547CF.txt",
+      "tracked": "docs/miniapp-sdk/evidence/primary-remaining-focused-diagnostics-attempt10-20261125/raw/RemainingFocused-attachments/37B14A7C-FDA2-4195-BB01-9C9B342547CF.txt",
+      "sha256": "5e4776ca8e5af40bd10a16c5011990084740acc0ef2a03886c7786b2593df61d"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-remaining-focused-diagnostics-attempt10-20261125/raw/RemainingFocused-attachments/5F25918F-5775-458E-A48E-BE62294B2972.txt",
+      "tracked": "docs/miniapp-sdk/evidence/primary-remaining-focused-diagnostics-attempt10-20261125/raw/RemainingFocused-attachments/5F25918F-5775-458E-A48E-BE62294B2972.txt",
+      "sha256": "ff8436d9c715e5875a1b546d22cd62bcc481c57ca315b7471ae7f028a049ad5a"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-remaining-focused-diagnostics-attempt10-20261125/raw/RemainingFocused-attachments/67E0F819-FDD1-4293-AE01-D8B126291CB3.txt",
+      "tracked": "docs/miniapp-sdk/evidence/primary-remaining-focused-diagnostics-attempt10-20261125/raw/RemainingFocused-attachments/67E0F819-FDD1-4293-AE01-D8B126291CB3.txt",
+      "sha256": "f124a7388f3e34ee2497779509217da8688e43ac606a2b67e5db322ab3a2df15"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-remaining-focused-diagnostics-attempt10-20261125/raw/RemainingFocused-attachments/8952EA4F-4654-4A1A-9DC5-87676994ABC5.png",
+      "tracked": "docs/miniapp-sdk/evidence/primary-remaining-focused-diagnostics-attempt10-20261125/raw/RemainingFocused-attachments/8952EA4F-4654-4A1A-9DC5-87676994ABC5.png",
+      "sha256": "c257bd61c88b07f48ce42bd81e860948fa89fa5ba6307627a9c6d966007db95f"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-remaining-focused-diagnostics-attempt10-20261125/raw/RemainingFocused-attachments/952C9E91-7222-4EB2-AB9F-40037C715027.txt",
+      "tracked": "docs/miniapp-sdk/evidence/primary-remaining-focused-diagnostics-attempt10-20261125/raw/RemainingFocused-attachments/952C9E91-7222-4EB2-AB9F-40037C715027.txt",
+      "sha256": "2a88b25d1a74f76f81ab0640692796cb3d1f29f6c336240892d61510c4f74414"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-remaining-focused-diagnostics-attempt10-20261125/raw/RemainingFocused-attachments/96EBFA60-581D-4E41-A83F-FE39084C0144.png",
+      "tracked": "docs/miniapp-sdk/evidence/primary-remaining-focused-diagnostics-attempt10-20261125/raw/RemainingFocused-attachments/96EBFA60-581D-4E41-A83F-FE39084C0144.png",
+      "sha256": "4e0306706a72ad9e5a5eea9e8b7d22af51eb00b28a6fa3a26d208dd424bc9d33"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-remaining-focused-diagnostics-attempt10-20261125/raw/RemainingFocused-attachments/CB3FAEE2-1BF0-421A-814D-D4D65FF6B7A6.txt",
+      "tracked": "docs/miniapp-sdk/evidence/primary-remaining-focused-diagnostics-attempt10-20261125/raw/RemainingFocused-attachments/CB3FAEE2-1BF0-421A-814D-D4D65FF6B7A6.txt",
+      "sha256": "342e9ef15ea9d5ae2a585b1362a8afef0964c3d875edf50cd106f5d9f8737810"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-remaining-focused-diagnostics-attempt10-20261125/raw/RemainingFocused-attachments/manifest.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-remaining-focused-diagnostics-attempt10-20261125/raw/RemainingFocused-attachments/manifest.json",
+      "sha256": "aec34e8b5a1a598bba01422757a855f3bf1239d407cfad0e40bc3dd5c247d020"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-remaining-focused-diagnostics-attempt10-20261125/raw/RemainingFocused-runtime-markers.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-remaining-focused-diagnostics-attempt10-20261125/raw/RemainingFocused-runtime-markers.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-remaining-focused-diagnostics-attempt10-20261125/raw/container-observations.jsonl",
+      "tracked": "docs/miniapp-sdk/evidence/primary-remaining-focused-diagnostics-attempt10-20261125/raw/container-observations.jsonl",
+      "sha256": "494822f1d4b649d411d4916a3388fdd992ec4ddc4421ae0c8f6052165e776491"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-remaining-focused-diagnostics-attempt10-20261125/raw/host-ready-observations.jsonl",
+      "tracked": "docs/miniapp-sdk/evidence/primary-remaining-focused-diagnostics-attempt10-20261125/raw/host-ready-observations.jsonl",
+      "sha256": "cbbae2d85efddfb0894f3a153404339fdc85dd5be7d3830f84385d7d84de7a5d"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-remaining-focused-diagnostics-attempt10-20261125/raw/launch-state.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-remaining-focused-diagnostics-attempt10-20261125/raw/launch-state.json",
+      "sha256": "6d977549d7793931ca57da767bebac9f67b44796501a6090cbfef6959334f800"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-remaining-focused-diagnostics-attempt10-20261125/raw/node-job-observations.jsonl",
+      "tracked": "docs/miniapp-sdk/evidence/primary-remaining-focused-diagnostics-attempt10-20261125/raw/node-job-observations.jsonl",
+      "sha256": "2da7bbdf616463ff8324ae5fd11e53acb9441c7d904cc59103ca4a9da2aa6275"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-remaining-focused-diagnostics-attempt10-20261125/raw/paired-prefix/RemainingFocused-nodes.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-remaining-focused-diagnostics-attempt10-20261125/raw/paired-prefix/RemainingFocused-nodes.json",
+      "sha256": "b173f5f1e8d299d3f0c35dba26c4659d7e1bf872392e9d1ceec0b26e6036a95d"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-remaining-focused-diagnostics-attempt10-20261125/raw/paired-prefix/RemainingFocused-summary.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-remaining-focused-diagnostics-attempt10-20261125/raw/paired-prefix/RemainingFocused-summary.json",
+      "sha256": "84be6845eebe1671db186f4159efaf561c626173bede6c76082a38d807bba341"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-remaining-focused-diagnostics-attempt10-20261125/raw/primary-state-at-capture.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-remaining-focused-diagnostics-attempt10-20261125/raw/primary-state-at-capture.json",
+      "sha256": "e1bfe8e2475ba5b7aa992f02a595e1e3e4eeefc548999a1883dab9a159a0b943"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-remaining-focused-diagnostics-attempt10-20261125/raw/receipt.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-remaining-focused-diagnostics-attempt10-20261125/raw/receipt.json",
+      "sha256": "87672e323f4c8cb463fb56916cd8ecb9547d71bf4eb417c74e082ee57c59c767"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-remaining-focused-diagnostics-attempt10-20261125/raw/runtime-logstream.stderr",
+      "tracked": "docs/miniapp-sdk/evidence/primary-remaining-focused-diagnostics-attempt10-20261125/raw/runtime-logstream.stderr",
+      "sha256": "94fd1a5b55265199a9a6a67d888250b037e52f5788dd490d3721204d6132d8d0"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-remaining-focused-diagnostics-attempt10-20261125/raw/state.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-remaining-focused-diagnostics-attempt10-20261125/raw/state.json",
+      "sha256": "c1f061fcc8a8aedaeb5a27795478b5cda3feab67c2fbc7c2575493b9a4614d81"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-remaining-focused-diagnostics-attempt10-20261125/receipt.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-remaining-focused-diagnostics-attempt10-20261125/receipt.json",
+      "sha256": "aa57f9de88843b2eff3634a0fea34fe4b0a5cb9f48c8e8c71d287b0f1039eaad"
+    },
+    {
+      "alias": "Docs/miniapp-sdk/evidence/primary-remaining-focused-diagnostics-attempt10-20261125/reconciliation.json",
+      "tracked": "docs/miniapp-sdk/evidence/primary-remaining-focused-diagnostics-attempt10-20261125/reconciliation.json",
+      "sha256": "e484cc0f11aa58b1cfee9fe00080e0c8a1fce34ea9a7ad11ec1935eafb812b4d"
+    }
+  ],
+  "sourceHashes": {
+    "Scripts/Expo/miniapps/modular-text-search/App.tsx": "ac62c2f394dceedb422c0fbe05d4182afba07e1bf78fb15828d3f936d212ae8a",
+    "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift": "84ede1a7dbafac2415c88cb276d2b04c0c0bce0a139f704b7737bcd307dd4ad8",
+    "Scripts/ProductSplit/run_paired_acceptance.py": "6e3abbb16c9b55b048b69c2391784510d8c143c7ed00e760a73ecb903cdbb61d"
+  },
+  "productionDelta": [
+    "Scripts/Expo/miniapps/modular-text-search/App.tsx",
+    "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+    "Scripts/ProductSplit/run_paired_acceptance.py"
+  ],
+  "retainedPhaseIDs": [
+    "split-metadata",
+    "split-platform",
+    "split-upstreams",
+    "host-proof",
+    "split-foreground",
+    "split-host-lifecycle",
+    "split-native-preparation",
+    "split-native-artifacts"
+  ],
+  "invalidatedPhaseIDs": [
+    "split-restore-inputs",
+    "split-inputs"
+  ],
+  "inputClosureReason": "Only Modular fixture labels and the original UI oracle changed. These paths are outside the sealed SDK10/Host/native-artifact input closure. The nine materialized prepared paths remain exact. Preserve SDK10 and native products; refresh original timestamp/input capture and rebuild changed UI tests. Original52 remains independently required.",
+  "newPlanSHA256": "e9fbce54377376b806eb8e950d8145dcebf217c34d2da3b240c5a533914f9682",
+  "controllerAttempt13SHA256": "81bda2449987f21fb4d22d572fa945fe9a1b6508cd623b6f26dc436f06460dbd",
+  "maximumActiveSeconds": 12600,
+  "preservedActiveElapsedSeconds": 9411.875027748993,
+  "preservedHostArchiveSHA256": "86733eba5d80156edf52da87f0f371c208122d6e60f618f182990330514984c3",
+  "nativeStarted": false
+}

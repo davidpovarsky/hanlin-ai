@@ -1,0 +1,21 @@
+{
+  "timeUTC": "2026-11-25T02:49:25.648923+00:00",
+  "integratedSource": "94a929a26355e4a586238a31e3a4fc2628e8e548",
+  "heads": {
+    "composer": "b739ada91aca115093e3511f9df58c15edcb5923",
+    "miniapps_sdk": "d4fbdf731dbadc95a13ead306a6d02ae61a88aad",
+    "wave3": "c76371717ec3c0c6eb9dfd16d7ab6d4b11680b86"
+  },
+  "allHeadsAreAncestors": true,
+  "resolutions": [
+    "Preserved integrated C6 SDK audit provenance; incoming composer three generated audit documents omitted C6 context.",
+    "Composer Core fixtures equal actual original Mac output66617073 byte for byte.",
+    "Wave NativeScript wrapper and README equal already-prepared integrated files; evidence additions excluded from Host fingerprint."
+  ],
+  "hostProof": "native-preparation-20261125/retry3-native/receipt.json",
+  "hostArchiveSHA256": "9fb7998ee48fe913e98f865d5b962e8a46dce9c836ff2efd295598206741b2cd",
+  "strictVerifierCommit": "1dcd28620f1b18938ff06366f71203f14f352b43",
+  "expectedMethods": 46,
+  "expectedInvocations": 48,
+  "actualAppTests": "NOT_RUN"
+}

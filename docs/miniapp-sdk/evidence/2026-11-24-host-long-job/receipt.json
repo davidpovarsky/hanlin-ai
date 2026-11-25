@@ -1,0 +1,541 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "startedAt": "2026-11-24T04:24:01.176717+00:00",
+  "scope": "One existing Host JavaScript component test on Linux/Node 24.22.0; not embedded Node 24.5.0, iOS, Swift/HTTP/UIKit, or background-lifecycle evidence.",
+  "sourceCommit": "c31c9c5f3bb7172598bc579c33de95ee06ca79b9",
+  "checkoutCommitAtStart": "c31c9c5f3bb7172598bc579c33de95ee06ca79b9",
+  "testName": "actual Node job crosses 300 seconds with no hidden deadline",
+  "cwd": "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123",
+  "argv": [
+    "/usr/local/bin/node",
+    "--test",
+    "--test-reporter=tap",
+    "--test-name-pattern=^actual Node job crosses 300 seconds with no hidden deadline$",
+    "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/execution-jobs.test.mjs"
+  ],
+  "environmentOverrides": {
+    "HANLIN_RUN_LONG_JOBS": "1",
+    "TMPDIR": "/dev/shm/hanlin-host-long-job-20261124-node24_22/tmp"
+  },
+  "inheritedEnvironment": {
+    "LANG": "C.UTF-8"
+  },
+  "runtime": {
+    "version": "v24.22.0",
+    "versions": {
+      "node": "24.22.0",
+      "acorn": "8.18.0",
+      "ada": "4.0.0",
+      "amaro": "1.1.11",
+      "ares": "1.34.8",
+      "brotli": "1.2.0",
+      "cldr": "48.0",
+      "icu": "78.3",
+      "llhttp": "9.4.3",
+      "merve": "1.2.2",
+      "modules": "137",
+      "napi": "10",
+      "nbytes": "0.1.4",
+      "ncrypto": "0.0.1",
+      "nghttp2": "1.70.0",
+      "nghttp3": "",
+      "ngtcp2": "",
+      "openssl": "3.5.8",
+      "simdjson": "4.6.11",
+      "simdutf": "6.4.0",
+      "sqlite": "3.53.4",
+      "tz": "2026c",
+      "undici": "7.29.1",
+      "unicode": "17.0",
+      "uv": "1.52.1",
+      "uvwasi": "0.0.23",
+      "v8": "13.6.233.17-node.57",
+      "zlib": "1.3.2.1-motley-285e94b",
+      "zstd": "1.5.7"
+    },
+    "platform": "linux",
+    "arch": "arm64",
+    "execPath": "/opt/chatgpt-skills/node/bin/node",
+    "execArgv": [
+      "-p",
+      "JSON.stringify({version:process.version,versions:process.versions,platform:process.platform,arch:process.arch,execPath:process.execPath,execArgv:process.execArgv})"
+    ]
+  },
+  "harnessWatchdogSeconds": 540,
+  "sourceFilesBefore": [
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/execution-jobs.test.mjs",
+      "bytes": 23830,
+      "sha256": "6278094d448ab43c5f8bfdbd80dcc8f98ebd7d803892778878b54ae227bcc9fa",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/apply-host-dependency-patches.mjs",
+      "bytes": 3793,
+      "sha256": "ad74dbf9ffdf23d8fe0a75905f11cf52760a0d815e601813fea9bab1aa2d5d96",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/cli-preload.mjs",
+      "bytes": 772,
+      "sha256": "f1443f786a3fe2e80c735c819242c311399f666cbaf80c6d89813e2903e5a833",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/diagnostic-worker.mjs",
+      "bytes": 288,
+      "sha256": "2b7d4ecd3651521ccef6b3860ca13ba530e03b040e627c96f1e6ec87ffb95ddc",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/execution-context.mjs",
+      "bytes": 2959,
+      "sha256": "ab9d145b80ffcae8f4e8fccd02e4c8f5db67f15dae57f5cacea49ed84424e4c7",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/execution-input.mjs",
+      "bytes": 3986,
+      "sha256": "127a06f12bb687736c0e28a7fd0a8f6e060325d4b518e487ed37c0bef8b5c3b0",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/execution-jobs.mjs",
+      "bytes": 27172,
+      "sha256": "84ace56b53c85047b2105ce8b5b790afb6fc2b055e59d7c7b2ae4047eee2980f",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/execution-modules.mjs",
+      "bytes": 3438,
+      "sha256": "3a581b4f68a80b39ae013a0e345d973146533551eb1d6166e09cf970357e0252",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/execution-worker.mjs",
+      "bytes": 1284,
+      "sha256": "92e0368e0ab09270c8ab3f0a4c989b570c0f7bebb0d2a41fda35b7efb9e993f1",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/fetch-compatibility.mjs",
+      "bytes": 2341,
+      "sha256": "e1c2bdbe192a2d9b3f0e0aed7141796d91a730d76ce8746015eef1e4a5fff483",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/global-package-manager.mjs",
+      "bytes": 8853,
+      "sha256": "de4a56d9936dcb9cf7270e469ed54fc14ed646bbfb9447840910d418b256920d",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/global-package-state.mjs",
+      "bytes": 4994,
+      "sha256": "1ec7ffe20def4025cec4d228b8432c9d9950d01ccdf5b076a3c4b92dd3a16a5c",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/host.mjs",
+      "bytes": 42493,
+      "sha256": "808c80eaef48bdf5772871b8065ef24b00d4f01b2663b87366986ff538bd8147",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/lifecycle-executor.mjs",
+      "bytes": 3041,
+      "sha256": "f989f12f516ab4e9ef4bc2471ba0603cc566716d746444ab5364c1f415653c92",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/lifecycle-planner.mjs",
+      "bytes": 8117,
+      "sha256": "7e8937094fed66ae25fbdac8bfc3fd5a91779855a51bbe2f97517d313e137b58",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/mcp-framing.mjs",
+      "bytes": 823,
+      "sha256": "6c558bb28dae24ea4582450a0af7067bbbb7cee9d675e6ccb047ce3140eebffb",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/mcp-package-generations.mjs",
+      "bytes": 4714,
+      "sha256": "67b608d52a7bdc7dea854c50e777ab4d466517958903bcc746a13e98a132d96c",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
+      "bytes": 44312,
+      "sha256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/native-commands.mjs",
+      "bytes": 3493,
+      "sha256": "c4ab93a40ef6ae316ccfe0fa870f18b5ec8a1a40484c3e27ebdc40c469e5f3b2",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/network-diagnostics.mjs",
+      "bytes": 5777,
+      "sha256": "e8cda97ae01cae485138c1f9d01f246935ece9c26da3cfd5f94e09bd08c6bc26",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/optional-lifecycle.mjs",
+      "bytes": 6601,
+      "sha256": "1f668656e67d4be59536fd606f7ab92ef2587d45d3f9fc1fb509eedd3a8134ba",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/package-compatibility.mjs",
+      "bytes": 19815,
+      "sha256": "32424b3a6e153d655677c524e85ab6b96a1085941d7d356906cfe3dfd609cd45",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/package-installer.mjs",
+      "bytes": 16910,
+      "sha256": "fbc7c68aafafdbc8b80a8ff70466ab0d2b780a733975d4442a887cb7a884ee05",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/package-lock.json",
+      "bytes": 74848,
+      "sha256": "4a1f2ecaae83c3f68cb02b605c03323260bc4bbb32923865d5c654be5736c7b4",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/package-validation.mjs",
+      "bytes": 3515,
+      "sha256": "b95da83e38ee55603712c17fed092232c8f23a13ce7c86d3bba1c450d185560c",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/package.json",
+      "bytes": 816,
+      "sha256": "1794af1338974e7f024e67daceb586fb0b7d897a702ce26ab66b690d41e20968",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/portable-shell.mjs",
+      "bytes": 5259,
+      "sha256": "2059b49ae6e86d45d8533e2a2bd66e2f9604307c73b3784f04c370f8c87b91f3",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/runtime-capabilities.mjs",
+      "bytes": 2133,
+      "sha256": "43bd9d0fe8696a9578ec6df30b5c7e86b7f265c77013ee11f1bd28234180b2fa",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/runtime-command-broker.mjs",
+      "bytes": 5849,
+      "sha256": "7e7d289ecee36a20041e5237a834d6fd7435e49b33922f0541ac4582a93efae7",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/runtime-command-client.mjs",
+      "bytes": 3434,
+      "sha256": "621af880e349fd99b6ec888e0d8cefa0fa4b447c64d96a7216c4d8d2803d1bc7",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/runtime-command-resolution.mjs",
+      "bytes": 2192,
+      "sha256": "88e0308f25b4d489098cff0973d6d742553e53bc1ee346a7ee3df3de17385211",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/runtime-probe.mjs",
+      "bytes": 14737,
+      "sha256": "8f6c140c337ea0524747450162ce8a712bc9c0142e305ad6fc3c24de2ba442b7",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/server-worker.mjs",
+      "bytes": 13404,
+      "sha256": "53255b3b3d1cd77671219afa2dde6440636250804b3719e32b2d50e2add8a2d1",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/typescript-compiler.mjs",
+      "bytes": 8341,
+      "sha256": "c21a05fdc704305815e130ad913a2c63b4e705bf06b68bacf0a855e0aab2631e",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/warning-diagnostics.mjs",
+      "bytes": 585,
+      "sha256": "b2d4111e9f22f2ae9c1ef61716040646b9e1e5aa7f93d4b7fc2a16ae3fe73d08",
+      "matchesSourceCommit": true
+    }
+  ],
+  "rawOutput": "long-job.tap.log",
+  "pid": 3470347,
+  "exitCode": 0,
+  "watchdogExpired": false,
+  "elapsedWallSeconds": 305.26710877288133,
+  "completedAt": "2026-11-24T04:29:06.444346+00:00",
+  "emittedProofs": [
+    {
+      "proof": "actual-node-job-over-300-seconds",
+      "elapsedMilliseconds": 305078.587501,
+      "executionID": "eb91769a-1331-48ac-8e2d-4f7ded1266b7"
+    }
+  ],
+  "rawOutputSHA256": "d8b512e5beb49b2b54aaec775cbd68e63fccc59f7988a15e2323334960f5cf2d",
+  "rawOutputBytes": 452,
+  "sourceFilesAfter": [
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/execution-jobs.test.mjs",
+      "bytes": 23830,
+      "sha256": "6278094d448ab43c5f8bfdbd80dcc8f98ebd7d803892778878b54ae227bcc9fa",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/apply-host-dependency-patches.mjs",
+      "bytes": 3793,
+      "sha256": "ad74dbf9ffdf23d8fe0a75905f11cf52760a0d815e601813fea9bab1aa2d5d96",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/cli-preload.mjs",
+      "bytes": 772,
+      "sha256": "f1443f786a3fe2e80c735c819242c311399f666cbaf80c6d89813e2903e5a833",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/diagnostic-worker.mjs",
+      "bytes": 288,
+      "sha256": "2b7d4ecd3651521ccef6b3860ca13ba530e03b040e627c96f1e6ec87ffb95ddc",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/execution-context.mjs",
+      "bytes": 2959,
+      "sha256": "ab9d145b80ffcae8f4e8fccd02e4c8f5db67f15dae57f5cacea49ed84424e4c7",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/execution-input.mjs",
+      "bytes": 3986,
+      "sha256": "127a06f12bb687736c0e28a7fd0a8f6e060325d4b518e487ed37c0bef8b5c3b0",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/execution-jobs.mjs",
+      "bytes": 27172,
+      "sha256": "84ace56b53c85047b2105ce8b5b790afb6fc2b055e59d7c7b2ae4047eee2980f",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/execution-modules.mjs",
+      "bytes": 3438,
+      "sha256": "3a581b4f68a80b39ae013a0e345d973146533551eb1d6166e09cf970357e0252",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/execution-worker.mjs",
+      "bytes": 1284,
+      "sha256": "92e0368e0ab09270c8ab3f0a4c989b570c0f7bebb0d2a41fda35b7efb9e993f1",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/fetch-compatibility.mjs",
+      "bytes": 2341,
+      "sha256": "e1c2bdbe192a2d9b3f0e0aed7141796d91a730d76ce8746015eef1e4a5fff483",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/global-package-manager.mjs",
+      "bytes": 8853,
+      "sha256": "de4a56d9936dcb9cf7270e469ed54fc14ed646bbfb9447840910d418b256920d",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/global-package-state.mjs",
+      "bytes": 4994,
+      "sha256": "1ec7ffe20def4025cec4d228b8432c9d9950d01ccdf5b076a3c4b92dd3a16a5c",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/host.mjs",
+      "bytes": 42493,
+      "sha256": "808c80eaef48bdf5772871b8065ef24b00d4f01b2663b87366986ff538bd8147",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/lifecycle-executor.mjs",
+      "bytes": 3041,
+      "sha256": "f989f12f516ab4e9ef4bc2471ba0603cc566716d746444ab5364c1f415653c92",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/lifecycle-planner.mjs",
+      "bytes": 8117,
+      "sha256": "7e8937094fed66ae25fbdac8bfc3fd5a91779855a51bbe2f97517d313e137b58",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/mcp-framing.mjs",
+      "bytes": 823,
+      "sha256": "6c558bb28dae24ea4582450a0af7067bbbb7cee9d675e6ccb047ce3140eebffb",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/mcp-package-generations.mjs",
+      "bytes": 4714,
+      "sha256": "67b608d52a7bdc7dea854c50e777ab4d466517958903bcc746a13e98a132d96c",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
+      "bytes": 44312,
+      "sha256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/native-commands.mjs",
+      "bytes": 3493,
+      "sha256": "c4ab93a40ef6ae316ccfe0fa870f18b5ec8a1a40484c3e27ebdc40c469e5f3b2",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/network-diagnostics.mjs",
+      "bytes": 5777,
+      "sha256": "e8cda97ae01cae485138c1f9d01f246935ece9c26da3cfd5f94e09bd08c6bc26",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/optional-lifecycle.mjs",
+      "bytes": 6601,
+      "sha256": "1f668656e67d4be59536fd606f7ab92ef2587d45d3f9fc1fb509eedd3a8134ba",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/package-compatibility.mjs",
+      "bytes": 19815,
+      "sha256": "32424b3a6e153d655677c524e85ab6b96a1085941d7d356906cfe3dfd609cd45",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/package-installer.mjs",
+      "bytes": 16910,
+      "sha256": "fbc7c68aafafdbc8b80a8ff70466ab0d2b780a733975d4442a887cb7a884ee05",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/package-lock.json",
+      "bytes": 74848,
+      "sha256": "4a1f2ecaae83c3f68cb02b605c03323260bc4bbb32923865d5c654be5736c7b4",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/package-validation.mjs",
+      "bytes": 3515,
+      "sha256": "b95da83e38ee55603712c17fed092232c8f23a13ce7c86d3bba1c450d185560c",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/package.json",
+      "bytes": 816,
+      "sha256": "1794af1338974e7f024e67daceb586fb0b7d897a702ce26ab66b690d41e20968",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/portable-shell.mjs",
+      "bytes": 5259,
+      "sha256": "2059b49ae6e86d45d8533e2a2bd66e2f9604307c73b3784f04c370f8c87b91f3",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/runtime-capabilities.mjs",
+      "bytes": 2133,
+      "sha256": "43bd9d0fe8696a9578ec6df30b5c7e86b7f265c77013ee11f1bd28234180b2fa",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/runtime-command-broker.mjs",
+      "bytes": 5849,
+      "sha256": "7e7d289ecee36a20041e5237a834d6fd7435e49b33922f0541ac4582a93efae7",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/runtime-command-client.mjs",
+      "bytes": 3434,
+      "sha256": "621af880e349fd99b6ec888e0d8cefa0fa4b447c64d96a7216c4d8d2803d1bc7",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/runtime-command-resolution.mjs",
+      "bytes": 2192,
+      "sha256": "88e0308f25b4d489098cff0973d6d742553e53bc1ee346a7ee3df3de17385211",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/runtime-probe.mjs",
+      "bytes": 14737,
+      "sha256": "8f6c140c337ea0524747450162ce8a712bc9c0142e305ad6fc3c24de2ba442b7",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/server-worker.mjs",
+      "bytes": 13404,
+      "sha256": "53255b3b3d1cd77671219afa2dde6440636250804b3719e32b2d50e2add8a2d1",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/typescript-compiler.mjs",
+      "bytes": 8341,
+      "sha256": "c21a05fdc704305815e130ad913a2c63b4e705bf06b68bacf0a855e0aab2631e",
+      "matchesSourceCommit": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/warning-diagnostics.mjs",
+      "bytes": 585,
+      "sha256": "b2d4111e9f22f2ae9c1ef61716040646b9e1e5aa7f93d4b7fc2a16ae3fe73d08",
+      "matchesSourceCommit": true
+    }
+  ],
+  "sourceUnchangedDuringExecution": true,
+  "tapSummary": {
+    "tests": 1,
+    "suites": 0,
+    "pass": 1,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "collectorCorrection": {
+    "initialDerivedStatus": "FAIL",
+    "reason": "The collection wrapper double-escaped its digit regex, so its derived status and counters did not recognize the successful raw TAP. The unchanged raw TAP and exit code were parsed using literal lines to correct receipt metadata.",
+    "testRerun": false,
+    "authoritativeEvidence": [
+      "process exit code 0",
+      "ok 1 - actual Node job crosses 300 seconds with no hidden deadline",
+      "# tests 1",
+      "# pass 1",
+      "# fail 0",
+      "# skipped 0"
+    ]
+  },
+  "testInvocationCount": 1,
+  "runtimeCaptureCommand": [
+    "/usr/local/bin/node",
+    "-p",
+    "JSON.stringify({version:process.version,versions:process.versions,platform:process.platform,arch:process.arch,execPath:process.execPath,execArgv:process.execArgv})"
+  ],
+  "excludedClaims": [
+    "Embedded Node 24.5.0",
+    "iOS runtime",
+    "Swift or HTTP integration",
+    "UIKit application behavior",
+    "OS background continuation"
+  ]
+}

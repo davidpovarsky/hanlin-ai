@@ -37,7 +37,7 @@ public struct HanlinWidgetProgram: Codable, Hashable, Sendable {
         guard abiVersion == Self.abiVersion, engine == expected, engine != .legacy,
               upstreamCommit == (engine == .expo ? Self.expoCommit : Self.scriptWidgetCommit),
               Self.isSHA256(sourceSHA256), Self.isSHA256(compilerSHA256),
-              javaScript.utf8.count <= 2 * 1_024 * 1_024, !javaScript.isEmpty,
+              !javaScript.isEmpty,
               !families.isEmpty, Set(families).count == families.count,
               families.allSatisfy(Self.supportedFamilies.contains),
               Set(actions.map(\.id)).count == actions.count,
@@ -49,9 +49,7 @@ public struct HanlinWidgetProgram: Codable, Hashable, Sendable {
                   case .expoCallback: return engine == .expo
                   case .reload: return true
                   }
-              }),
-              resources.values.reduce(0, { $0 + $1.count }) <= 1_024 * 1_024,
-              imports.count <= 64, imports.values.reduce(0, { $0 + $1.utf8.count }) + javaScript.utf8.count <= 2 * 1_024 * 1_024 else {
+              }) else {
             throw HanlinWidgetProgramError.invalidProgram
         }
     }

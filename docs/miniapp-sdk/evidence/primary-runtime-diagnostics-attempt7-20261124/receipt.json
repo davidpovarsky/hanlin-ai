@@ -1,0 +1,21 @@
+{
+  "observedAt": "2026-11-24T23:37:41.663024+00:00",
+  "executedSource": "fd81d602d3b25f09162a659e1e0cf0582e91a93a",
+  "kind": "Retained failed-run diagnostic extraction",
+  "members": {
+    "runtime-diagnostic-extract.json": {
+      "bytes": 11519,
+      "sha256": "8c525f914f36a18485fd76631ce7e6e6ae08c8c47ccf2b86bada4d39ef10f201"
+    },
+    "six-failures-application.json": {
+      "bytes": 19669,
+      "sha256": "10e0abf3dfc9b5c74007c30a027840e7ecedc16c92c8128b5ac7ad24c9668dec"
+    },
+    "README.md": {
+      "bytes": 2652,
+      "sha256": "ffc0a67e2c6bccf26c6777a44f633c48a394dd29ab557ae44b78f132a7982e51"
+    }
+  },
+  "nativeAcceptance": "NOT_PASSED",
+  "newExecution": false
+}

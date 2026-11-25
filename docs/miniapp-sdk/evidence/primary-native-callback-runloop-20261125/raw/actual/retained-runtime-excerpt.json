@@ -1,0 +1,25 @@
+{
+  "observedAt": "2026-11-24T23:53:20.617804+00:00",
+  "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/app-split-evidence/paired-product/OriginalRuntimes.xcresult/Staging/1_Test/Diagnostics/HanlinMiniAppsUITests-31337823-F212-4CA8-A8FD-9012B4EBF8EE-Configuration-Test Scheme Action-Iteration-1/HanlinMiniAppsUITests-27FB731C-2339-4EF5-964F-0B4600D7CE25/StandardOutputAndStandardError-com.itorah.hanlinminiapps.txt",
+  "sourceBytes": 280150173,
+  "sourceSHA256": "debaedd9710f7a0c1d706b9bcaefa95587080503552e4ecb3f7455142c483edc",
+  "markers": [
+    {
+      "line": 1920471,
+      "text": "2026-11-24 23:44:35.429150+0100 HanlinMiniApps[22444:2176182] HANLIN_NS_RUN_MAIN_BEGIN",
+      "precedingTimestamp": "2026-11-24 23:44:35.429150+0100 HanlinMiniApps[22444:2176182] HANLIN_NS_RUN_MAIN_BEGIN"
+    },
+    {
+      "line": 1920472,
+      "text": "2026-11-24 23:44:35.431847+0100 HanlinMiniApps[22444:2176182] CONSOLE LOG: [HanlinScriptParity] Initializing bundle...",
+      "precedingTimestamp": "2026-11-24 23:44:35.431847+0100 HanlinMiniApps[22444:2176182] CONSOLE LOG: [HanlinScriptParity] Initializing bundle..."
+    },
+    {
+      "line": 1920477,
+      "text": "2026-11-24 23:44:35.448857+0100 HanlinMiniApps[22444:2176182] CONSOLE LOG: [HanlinScriptParity] Bridge resolution: bridge=found compat=found totalCandidates=9",
+      "precedingTimestamp": "2026-11-24 23:44:35.448857+0100 HanlinMiniApps[22444:2176182] CONSOLE LOG: [HanlinScriptParity] Bridge resolution: bridge=found compat=found"
+    }
+  ],
+  "originalDiagnosticSHA256": "e782a3fbbf6046314203b6ee1eb2575196d9858e8a7135c148cedb23dcecbfcb",
+  "scope": "Read-only retained attempt7 output and actual JSC/Node job receipts, before correction."
+}

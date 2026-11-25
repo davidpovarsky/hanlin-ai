@@ -1,0 +1,3 @@
+Paired command starting: unfinished.log; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: unfinished.log; pid=3513353; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: unfinished.log; pid=3513353; elapsed=0.1s; log_bytes=20; observed_exit=None

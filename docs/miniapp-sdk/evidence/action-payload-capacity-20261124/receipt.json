@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 1,
+  "baseCommit": "df436d7650bc5918d29707868565fc114e65c445",
+  "status": "PORTABLE_PASS_NATIVE_PENDING",
+  "productionSources": {
+    "AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift": "e792e0c8eb6424ca8e989c571746c0679c37c612996e8ea95e8a4e78986e1b16",
+    "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift": "e8da50eb4d076d995135132810444f16900a65d55edd901270a2af07132a57a3",
+    "Packages/HanlinAppExtensionsSDK/Sources/HanlinTranslationUI/HanlinNativePresentationView.swift": "2a25a2bf539f6b19ba96f12cfd4e730d02675d16a0a02d1214116a9614189b2c",
+    "Packages/HanlinPlatform/Sources/HanlinMiniAppCore/HanlinMiniAppActionChannel.swift": "6b759f6c21148cd3b0678b8f32e4c4e04c913aa0d646f2a2e705eb103f8de98e",
+    "Packages/HanlinPlatform/Sources/HanlinMiniAppCore/HanlinMiniAppRequestBroker.swift": "01bf31169e04ca73898fc830d72e0d8824c43563678291823103ac978f114f2c",
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationQueue.swift": "fbc500e1ee59d0d5c014ee0d0dcf54f9bd0048e2696267f27c276666086878b6",
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptAppIntentBridge.swift": "ce28dca905466819536ac77b4a740091bc7092f8096f3ce3dc70ea02ab97a78f"
+  },
+  "testSources": {
+    "AI_HLYTests/HanlinMiniAppStorageCapacityTests.swift": "95ea844181b906f5449dab7129646b7e8144d71abba7894be62b9681c6d8227d",
+    "Packages/HanlinPlatform/Tests/HanlinMiniAppCoreTests/HanlinMiniAppActionChannelTests.swift": "e6842b24c6271dc8f8ba850ebb7e800cdff37c4c0af9b11660a31b3af9ad7e3a",
+    "Packages/HanlinPlatform/Tests/HanlinMiniAppCoreTests/HanlinMiniAppRequestLifetimeTests.swift": "c45b65971304d9279edbe71212d58a79257fa1613481d07c28e2bbc4d14b6c1e",
+    "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinInvocationQueueTests.swift": "6638cda3c9e55db4979bbd9c13f021f748db96a6b6cbf36a2bea5b22f686fa2f"
+  },
+  "focusedHarness": {
+    "path": "Scripts/MiniApps/Tests/test_action_payload_capacity.py",
+    "sha256": "776d40731f13cb9f3152d4ef2ada1cd06a6ed238d58d1e2099b10bf6dd2c9ac1"
+  },
+  "red": {
+    "result": "FAILED_AS_EXPECTED",
+    "cases": 2,
+    "receipt": "red/receipt.json",
+    "observed": [
+      "Real broker rejected the >1 MiB payload.",
+      "Actual action JSON serialization rejected a 1,048,577-byte string."
+    ]
+  },
+  "green": {
+    "result": "EXECUTED_PASS",
+    "cases": 4,
+    "receipt": "green/receipt.json",
+    "coverage": [
+      "Actual default Host broker accepts >1 MiB requests and >4 MiB responses.",
+      "Existing explicit caller byte budgets and deadlines still reject.",
+      "Actual action channel preserves identity and deep/large values, including 100,001 array elements.",
+      "Verbatim NativeScript Foundation codecs round-trip a >4 MiB/depth-65 value and reject malformed JSON.",
+      "Verbatim AppIntent Foundation conversion accepts >256 KiB/depth-65 JSON and rejects malformed JSON."
+    ]
+  },
+  "syntax": {
+    "result": "PASS",
+    "files": 11,
+    "receipt": "syntax-receipt.json",
+    "scope": "Parse only; no Apple SDK typecheck."
+  },
+  "native": {
+    "status": "NOT_RUN",
+    "selectedExistingMethod": "AI_HLYTests/HanlinMiniAppStorageCapacityTests/largeArtifactsResourcesAndSnapshotsRetainIntegrity",
+    "selectedCaseCountChange": 0,
+    "newAssertions": [
+      "Original artifact/resource/snapshot assertions remain.",
+      "Actual AppIntent decoder preserves >4 MiB/depth-65 input.",
+      "129 commands can persist while default pendingCommands remains a 64-command processing batch.",
+      ">4 MiB result plus original command survive the actual Darwin queue receipt path and reopening.",
+      "Malformed JSON rejection remains."
+    ],
+    "otherAffectedExistingMethod": "HanlinInvocationQueueTests/unreadableRecordsCannotBlockAdmissionAndRetainTheirOriginalBytes"
+  },
+  "preserved": [
+    "Original engine and platform behavior; frozen HanlinScriptUI paths.",
+    "Typed values, finite-number checks, JSON/schema validity and declared package identities.",
+    "Atomic queue writes/receipt rename, no-follow regular-file checks, ownership/lease/cancellation/delivery semantics.",
+    "Processing batch sizes and audit retention.",
+    "Already-existing explicitly requested broker budgets.",
+    "Action result types and UUID/snippet ingress result contract."
+  ],
+  "notClaimed": [
+    "Full 80-cell runtime coverage",
+    "Native AppIntents/WidgetKit execution",
+    "Original Expo or NativeScript VM execution",
+    "Physical-device acceptance"
+  ],
+  "rawEvidence": {
+    "green/receipt.json": "6e34857b4549ad75572d9cfc50135eb2f67e18cc07af5ee5b100e56f4b4d940a",
+    "green/swift-test.log": "c29a95dea8bee8e861632ac7929f8d156b48f1eb63e2197bbb5da7cff849eb4d",
+    "green/tests-swift-testing.xml": "c34341fa61073ade6947d918ac840b76641c1bc8639d2037c43a69e7064e8d2d",
+    "reachability-scope-review.json": "1951319e9ccde80488fbcb093af29d07d9f6cc2a3d03a501deb4f81fb06f2eec",
+    "red/receipt.json": "206512000bf8094bec70edecb05bed1da343d9161f9350eae1e4664487b53311",
+    "red/swift-test.log": "ff1ac54d983e6cc8415910cea1c0a9895f62137bdcb8eb76d1cff7b191a035e3",
+    "red/tests-swift-testing.xml": "74bba12b74cdb351f1a81648eea3cdf0f83b41dd656777dca59e8b4bdbc2f521",
+    "swift-parse.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "syntax-receipt.json": "a2e5b1ec470f837f30eff980ff1b479abf2fcec7e04927f183ef4b09ef96b92f"
+  }
+}

@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-24T19:11:08.033518+00:00",
+  "status": "PASS",
+  "integrationCommit": "12dcd932f2003c2660c8ca63ba6377b1212ca170",
+  "commands": [
+    {
+      "argv": [
+        "/usr/local/bin/node",
+        "Scripts/Audit/audit-miniapp-sdk.mjs",
+        "--write"
+      ],
+      "atUTC": "2026-11-24T19:11:02.958679+00:00",
+      "seconds": 0.7128706490620971,
+      "exit": 0,
+      "stdout": "1-stdout.log",
+      "stderr": "1-stderr.log"
+    },
+    {
+      "argv": [
+        "/usr/local/bin/node",
+        "Scripts/Audit/audit-miniapp-sdk.mjs",
+        "--check"
+      ],
+      "atUTC": "2026-11-24T19:11:03.671591+00:00",
+      "seconds": 0.5151023827493191,
+      "exit": 0,
+      "stdout": "2-stdout.log",
+      "stderr": "2-stderr.log"
+    },
+    {
+      "argv": [
+        "python3",
+        "Scripts/Audit/audit_miniapp_reachability.py"
+      ],
+      "atUTC": "2026-11-24T19:11:04.187735+00:00",
+      "seconds": 2.3837195644155145,
+      "exit": 0,
+      "stdout": "3-stdout.log",
+      "stderr": "3-stderr.log"
+    },
+    {
+      "argv": [
+        "python3",
+        "Scripts/Audit/audit_miniapp_reachability.py",
+        "--check"
+      ],
+      "atUTC": "2026-11-24T19:11:06.571475+00:00",
+      "seconds": 1.4358122758567333,
+      "exit": 0,
+      "stdout": "4-stdout.log",
+      "stderr": "4-stderr.log"
+    }
+  ],
+  "before": {
+    "docs/miniapp-sdk/source-inventory.json": "1807bd71b78d31e283904db2b819b63d0ef1b74a41b9a2b68cc09880e37b4764",
+    "docs/miniapp-sdk/extension-reachability.json": "369aa6017ab34660e6b9ca4ca7eb66f8c9bd116f2caccd2291dba1d301d888b5",
+    "docs/miniapp-sdk/extension-reachability.md": "1ed3da502e2b6a4e60bab40a5d5199e091cb74f4e2500f29dbfa0a45207d9a59",
+    "docs/miniapp-sdk/MANIFEST_REFERENCE.md": "ad9c59d1962d516cd480de78cf5ee01fad11159cc0a73ee1a9cb3ea2f324b8a1"
+  },
+  "after": {
+    "docs/miniapp-sdk/source-inventory.json": "0ade0e7aa04d6177fbb31e5007c173c080c4ea41c1ab795ca2c04f7380efa173",
+    "docs/miniapp-sdk/extension-reachability.json": "aee09df416947602e5bf99071c7456888a53bd266b7dbfa1b8a0dd2e440a150c",
+    "docs/miniapp-sdk/extension-reachability.md": "680afe2b7259f95123a510bd75d6cd359dde6a989f44a3635952032a1a51ba9f",
+    "docs/miniapp-sdk/MANIFEST_REFERENCE.md": "ad9c59d1962d516cd480de78cf5ee01fad11159cc0a73ee1a9cb3ea2f324b8a1"
+  },
+  "changedShippingDocuments": [
+    "docs/miniapp-sdk/source-inventory.json",
+    "docs/miniapp-sdk/extension-reachability.json",
+    "docs/miniapp-sdk/extension-reachability.md"
+  ],
+  "sourceCount": 93,
+  "sourceSHA256": {
+    "Scripts/NativeScript/prepare-ios-dependencies.mjs": "b5114a3be1fc846e288128af08cef9f38b0cac8e34923780325c4edc2976ebd9"
+  },
+  "canonicalFacadePackage": {
+    "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/package.json",
+    "bytes": 147,
+    "sha256": "c42e3fe3eb38b7289ba3cf49ca0b56bcbd7ac2d27d68955f27e3d5e33e642a7e"
+  },
+  "evidenceFiles": [
+    {
+      "path": "1-stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "1-stdout.log",
+      "bytes": 80,
+      "sha256": "0b4ad7481d5f4c0e6960056b1bbfd238f9be5d020165e2b88b750540591ebe65"
+    },
+    {
+      "path": "2-stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "2-stdout.log",
+      "bytes": 76,
+      "sha256": "f572ecebbc3912d585bf2afedabf9dc180c67a427b03ca60f73b879dab78b0c9"
+    },
+    {
+      "path": "3-stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "3-stdout.log",
+      "bytes": 130,
+      "sha256": "25235e2042af248e065488522e1e5aba9995de6ebb75ade7cbcfbd507c1d271e"
+    },
+    {
+      "path": "4-stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "4-stdout.log",
+      "bytes": 72,
+      "sha256": "bc234237931951c0e0e70dc212b9f47da2f6c76a61109e41c235f0f7f0eabcef"
+    }
+  ],
+  "scope": "Established source-inventory/reachability refresh once after reviewed NativeScript manifest idempotence correction. Canonical facade bytes were already committed on root; real Mac recovery/check has its separate receipt. No native/compiler test suite was repeated by root; actual future SDK/archive identity remains pending."
+}

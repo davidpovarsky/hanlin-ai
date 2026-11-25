@@ -1181,7 +1181,7 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
         modelInfo: AllModels,
         query: String,
         toolUseEnabled: Bool
-    ) async -> String {
+    ) async -> HanlinSystemPromptSections {
         let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
         let isZh = currentLanguage.hasPrefix("zh")
 
@@ -1326,21 +1326,21 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
         }
 
         // 汇总所有模块
-        let sections = [
+        var stableSections = [
             identitySection,
-            timeSection,
             guidelineSection,
             goalSection,
             userInfoSection,
-            memorySection,
-            HanlinCitationProjection.modelInstructions
-        ].filter { !$0.isEmpty }
-
-        var result = sections.joined(separator: "\n\n")
+            HanlinCitationProjection.modelInstructions,
+            presentationInstructions
+        ]
         if toolUseEnabled && modelInfo.agentCapabilities.supportsReportProgressTool {
-            result += "\n\nFor multi-step tasks, you may use report_progress to provide a brief user-facing update between tool calls. Keep it to one short sentence. Describe only what has been found or what action will happen next. Never reveal private chain-of-thought or hidden reasoning."
+            stableSections.append("For multi-step tasks, you may use report_progress to provide a brief user-facing update between tool calls. Keep it to one short sentence. Describe only what has been found or what action will happen next. Never reveal private chain-of-thought or hidden reasoning.")
         }
-        return result
+        return HanlinSystemPromptSections(
+            stableSections: stableSections,
+            contextSections: [timeSection, memorySection]
+        )
     }
     
     private func getCustomSystemMessageText(
@@ -1349,7 +1349,7 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
         modelInfo: AllModels,
         query: String,
         toolUseEnabled: Bool
-    ) async -> String {
+    ) async -> HanlinSystemPromptSections {
         
         let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
         let isZh = currentLanguage.hasPrefix("zh")
@@ -1473,19 +1473,20 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
         }
         
         // MARK: - 拼接所有非空模块
-        let allSections = [
+        var stableSections = [
             personalitySection,
             userInfoSection,
             systemSection,
-            memorySection,
-            HanlinCitationProjection.modelInstructions
-        ].filter { !$0.isEmpty }
-        
-        var result = allSections.joined(separator: "\n\n")
+            HanlinCitationProjection.modelInstructions,
+            presentationInstructions
+        ]
         if toolUseEnabled && modelInfo.agentCapabilities.supportsReportProgressTool {
-            result += "\n\nFor multi-step tasks, you may use report_progress to provide a brief user-facing update between tool calls. Keep it to one short sentence. Describe only what has been found or what action will happen next. Never reveal private chain-of-thought or hidden reasoning."
+            stableSections.append("For multi-step tasks, you may use report_progress to provide a brief user-facing update between tool calls. Keep it to one short sentence. Describe only what has been found or what action will happen next. Never reveal private chain-of-thought or hidden reasoning.")
         }
-        return result
+        return HanlinSystemPromptSections(
+            stableSections: stableSections,
+            contextSections: [memorySection]
+        )
     }
     
     // MARK: - 任务取消
@@ -1608,7 +1609,7 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
                     continuation.yield(StreamData(operationalState: isChinese ? "处理对话内容" : "Processing dialogue content"))
                     
                     // 构造系统提示（默认或自定义）
-                    var finalSystemMessage: String = systemMessage == "Default" ?
+                    let systemPromptSections = systemMessage == "Default" ?
                     await getSystemMessageText(
                         modelDisplayName: modelInfo.displayName ?? "Unknown",
                         modelInfo: modelInfo,
@@ -1623,7 +1624,7 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
                         toolUseEnabled: false
                     )
                     
-                    if !presentationInstructions.isEmpty { finalSystemMessage += "\n\n" + presentationInstructions }
+                    let finalSystemMessage = systemPromptSections.rendered
 
                     // 利用模板格式化对话记录，转换为 Chat 数组
                     let chats = try await buildLocalFormattedMessages(
@@ -1821,7 +1822,7 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
             }
         }()
         
-        var finalSystemMessage: String
+        let finalSystemMessage: HanlinSystemPromptSections
         
         if systemMessage == "Default" {
             finalSystemMessage = await getSystemMessageText(
@@ -1840,13 +1841,14 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
             )
         }
         
-        if !presentationInstructions.isEmpty { finalSystemMessage += "\n\n" + presentationInstructions }
-
-        if !finalSystemMessage.isEmpty {
-            if updatedMessages.first?.role != "system" {
+        // Keep the stable prefix in its own system block. Time and retrieved
+        // memory remain system context, but cannot invalidate the preceding
+        // provider cache breakpoint on every turn.
+        if updatedMessages.first?.role != "system" {
+            for text in finalSystemMessage.messageTexts.reversed() {
                 let systemMessage = RequestMessage(
                     role: systemRole,
-                    text: finalSystemMessage,
+                    text: text,
                     modelName: "system",
                     modelDisplayName: "system"
                 )
@@ -2487,8 +2489,12 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
         let stableChatID = assistantToolScope.chatID?.uuidString ?? groupID.uuidString
         let session = capabilitySession ?? AssistantCapabilitySession(
             chatID: stableChatID,
-            isTemporaryChat: assistantToolScope.isTemporaryChat
+            isTemporaryChat: assistantToolScope.isTemporaryChat,
+            capabilityAttachments: assistantToolScope.capabilityAttachments
         )
+        guard session.capabilityAttachments == assistantToolScope.capabilityAttachments else {
+            throw HanlinHostError.staleContext
+        }
         let currentRunID = runID ?? session.id
         if let original = agentSDKRequest {
             guard original.uiRunID == currentRunID, original.conversationID.uuidString == stableChatID,
@@ -2747,8 +2753,15 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
                             }
                         }
 
+                        if let prepared = preparedAssistantTools {
+                            try await session.prepareExplicitSelections(using: prepared)
+                        }
                         let modelSkills = await HanlinSkillCatalog.shared.modelVisibleSkills()
-                        session.retainLoadedSkills(allowedIDs: Set(modelSkills.map(\.id)))
+                        await session.retainCurrentlyEligibleSkills(modelSkills: modelSkills)
+                        if let selection = session.explicitSelectionInstruction,
+                           !finalFormattedMessages.contains(where: { ($0["content"] as? String) == selection }) {
+                            finalFormattedMessages.append(["role": "user", "content": selection])
+                        }
 
                         // Inject compact Skill Index once when depth == 0
                         if depth == 0 {
@@ -2807,10 +2820,12 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
                         supportsReasoning: modelInfo.supportsReasoning && ifThink,
                         supportReasoningChange: modelInfo.supportReasoningChange,
                         thinkingLength: thinkingLength,
-                        supportsToolUse: modelInfo.agentCapabilities.supportsNativeToolCalling && ifToolUse
+                        supportsToolUse: modelInfo.agentCapabilities.supportsNativeToolCalling && ifToolUse,
+                        promptCachePolicy: modelInfo.promptCachePolicy
                     )
 
                     if modelInfo.agentCapabilities.supportsNativeToolCalling
+                        || HanlinAISDKProviderFactory.descriptor(for: chatConfig).kind == .openAIResponses
                         || self.agentSessionOwner.canRequestNativeStructured(chatConfig) {
                         await self.agentDiagnosticsRecorder?.setAgentEngineKind("swift_ai_sdk")
                         try await self.processSDKAgentEngine(
@@ -2833,7 +2848,13 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
                     var request = try HanlinChatRequestBuilder.buildRequest(
                         formattedMessages: finalFormattedMessages,
                         configuration: chatConfig,
-                        tools: tools
+                        tools: tools,
+                        cacheScope: .init(
+                            namespace: [access.namespace.app, access.namespace.account,
+                                        access.namespace.workspace, access.namespace.space],
+                            conversationID: stableChatID,
+                            promptVersion: "hanlin-system-v2"
+                        )
                     )
 
                     if modelInfo.supportsVoiceGen && ifAudio && modelInfo.company == "QWEN" {
@@ -2917,6 +2938,7 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
                                 outputTokens: usage.outputTokens,
                                 reasoningTokens: usage.reasoningTokens,
                                 cachedInputTokens: usage.cachedInputTokens,
+                        cacheWriteTokens: usage.cacheWriteTokens,
                                 totalTokens: usage.totalTokens,
                                 source: .providerReported
                             )
@@ -3703,6 +3725,10 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
                            agentSDKRequest: HanlinAppAgentSessionOwner.Request? = nil
     ) async throws -> AsyncThrowingStream<StreamData, Error> {
         // 取消当前任务
+        if !assistantToolScope.capabilityAttachments.isEmpty && !ifToolUse {
+            throw HanlinComposerCapabilityError.toolsUnsupported
+        }
+        try HanlinComposerCapabilities.validate(assistantToolScope.capabilityAttachments)
         initializingRunID = runID
         if let agentSDKRequest, agentSDKRequest.uiRunID != runID { throw HanlinHostError.resultMismatch }
         self.agentSDKRequest = agentSDKRequest
@@ -3834,6 +3860,12 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
                     return nil
                 }.joined(separator: "\n")
                 if !text.isEmpty && !systemParts.contains(text) {
+                    // The generated prompt's first block contains stable
+                    // instructions; subsequent system blocks retain their
+                    // authority and distinct provider-cache boundaries.
+                    sdkMessages.append(HanlinAISDKMessage(
+                        role: .system, text: text, cacheBreakpoint: systemParts.isEmpty
+                    ))
                     systemParts.append(text)
                 }
             } else if role == "assistant" {
@@ -3848,12 +3880,13 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
             }
         }
 
-        if sdkMessages.isEmpty {
+        if !sdkMessages.contains(where: { $0.role != .system }) {
             sdkMessages.append(HanlinAISDKMessage(role: .user, text: ""))
         }
 
-        let baseSystemPrompt = systemParts.isEmpty ? nil : systemParts.joined(separator: "\n\n")
-        return (baseSystemPrompt, sdkMessages)
+        // nil selects the shared engine's structured system-message path.
+        // Collapsing these blocks back to one string loses the stable boundary.
+        return (nil, sdkMessages)
     }
 
     private static func extractMessageParts(from rawContent: Any?) -> [HanlinAISDKMessagePart] {
@@ -3992,7 +4025,9 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
                     guard toolAdapter == nil else { throw HanlinAppleProviderError.unsupportedTools }
                     return try HanlinAppleOnDeviceProvider.makeEngine(configuration: sessionConfiguration)
                 }
-                return try HanlinAISDKAgentEngine(configuration: sessionConfiguration)
+                return try HanlinAISDKAgentEngine(configuration: sessionConfiguration,
+                    telemetry: AgentDiagnosticsConfiguration.level == .off
+                        ? nil : HanlinOpenTelemetryTracer.local.telemetrySettings())
             }, toolAdapter: toolAdapter, messages: sdkMessages, systemPrompt: baseSystemPrompt,
             dataAccess: try requireDataAccess(), transport: turnTransport)
 
@@ -4231,6 +4266,7 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
                         outputTokens: usage.outputTokens,
                         reasoningTokens: usage.reasoningTokens,
                         cachedInputTokens: usage.cachedInputTokens,
+                        cacheWriteTokens: usage.cacheWriteTokens,
                         totalTokens: usage.totalTokens,
                         source: .providerReported
                     )

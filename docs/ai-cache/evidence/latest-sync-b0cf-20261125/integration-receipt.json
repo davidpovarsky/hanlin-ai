@@ -1,0 +1,12 @@
+{
+  "status": "SOURCE_INTEGRATED_NATIVE_PENDING",
+  "acceptedAtUTC": "2026-11-25T05:28:34.081887+00:00",
+  "rootBefore": "1f27a36e257573df0a74ec5b3b0ca3586f6854ad",
+  "normalCandidate": "d8150350901b245d52b2637277f454a6f2da5446",
+  "candidateTree": "78242f94c61f2e8f2be3a64f4a59d7af23f35fc7",
+  "candidateReceiptSHA256": "40dc5b66dd205ae9c5091ef3f4edc4bd7d0bac0e1e403cad0f7fcea717acd800",
+  "actualSourceFixturePasses": 26,
+  "requiredCacheMethods": 46,
+  "requiredCacheInvocations": 48,
+  "scope": "Original Host refresh and App08 required. Notification OS/native owner acceptance is separate and NOT_RUN here."
+}

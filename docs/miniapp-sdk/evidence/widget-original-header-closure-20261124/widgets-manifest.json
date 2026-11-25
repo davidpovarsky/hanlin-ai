@@ -1,0 +1,327 @@
+{
+  "cLanguageStandard" : null,
+  "cxxLanguageStandard" : null,
+  "defaultLocalization" : null,
+  "dependencies" : [
+    {
+      "fileSystem" : [
+        {
+          "identity" : "hanlinplatform",
+          "path" : "/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinPlatform",
+          "productFilter" : null,
+          "traits" : [
+            {
+              "name" : "default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "fileSystem" : [
+        {
+          "identity" : "hanlinpresentationsdk",
+          "path" : "/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinPresentationSDK",
+          "productFilter" : null,
+          "traits" : [
+            {
+              "name" : "default"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "fileSystem" : [
+        {
+          "identity" : "hanlinexporuntime",
+          "path" : "/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinExpoRuntime",
+          "productFilter" : null,
+          "traits" : [
+            {
+              "name" : "default"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "name" : "HanlinWidgetSDK",
+  "packageKind" : {
+    "root" : [
+      "/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinWidgetSDK"
+    ]
+  },
+  "pkgConfig" : null,
+  "platforms" : [
+    {
+      "options" : [
+
+      ],
+      "platformName" : "ios",
+      "version" : "27.0"
+    }
+  ],
+  "products" : [
+    {
+      "name" : "HanlinWidgetUI",
+      "settings" : [
+
+      ],
+      "targets" : [
+        "HanlinWidgetUI"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    }
+  ],
+  "providers" : null,
+  "swiftLanguageVersions" : [
+    "6"
+  ],
+  "targets" : [
+    {
+      "dependencies" : [
+        {
+          "byName" : [
+            "HanlinScriptingWidgets",
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinWidgetUI",
+      "packageAccess" : true,
+      "resources" : [
+
+      ],
+      "settings" : [
+        {
+          "kind" : {
+            "interoperabilityMode" : {
+              "_0" : "Cxx"
+            }
+          },
+          "tool" : "swift"
+        },
+        {
+          "kind" : {
+            "unsafeFlags" : {
+              "_0" : [
+                "-Xcc",
+                "-std=gnu++20",
+                "-Xcc",
+                "-DREACT_NATIVE_PRODUCTION=1",
+                "-Xcc",
+                "-DRN_DEBUG_STRING_CONVERTIBLE=0",
+                "-Xcc",
+                "-Wno-quoted-include-in-framework-header",
+                "-Xcc",
+                "-Wno-non-modular-include-in-framework-module",
+                "-Xcc",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinWidgetSDK/../HanlinExpoRuntime/../HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/include",
+                "-Xcc",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinWidgetSDK/../HanlinExpoRuntime/../HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/bridge",
+                "-Xcc",
+                "-F/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinWidgetSDK/../HanlinExpoRuntime/Artifacts/ModularFrameworks",
+                "-Xcc",
+                "-F../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks",
+                "-Xcc",
+                "-FArtifacts/ModularFrameworks",
+                "-Xcc",
+                "-FPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks",
+                "-Xcc",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinWidgetSDK/../HanlinExpoRuntime/Artifacts/ReactModularHeaders",
+                "-Xcc",
+                "-I../Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders",
+                "-Xcc",
+                "-IArtifacts/ReactModularHeaders",
+                "-Xcc",
+                "-IPackages/HanlinExpoRuntime/Artifacts/ReactModularHeaders",
+                "-Xcc",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinWidgetSDK/../HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers",
+                "-Xcc",
+                "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers",
+                "-Xcc",
+                "-IArtifacts/ModularFrameworks/react.framework/Headers",
+                "-Xcc",
+                "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers",
+                "-Xcc",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinWidgetSDK/../HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react",
+                "-Xcc",
+                "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react",
+                "-Xcc",
+                "-IArtifacts/ModularFrameworks/react.framework/Headers/react",
+                "-Xcc",
+                "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react",
+                "-Xcc",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinWidgetSDK/../HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers",
+                "-Xcc",
+                "-I../Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers",
+                "-Xcc",
+                "-IArtifacts/ReactNativeDependencies.xcframework/Headers",
+                "-Xcc",
+                "-IPackages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers"
+              ]
+            }
+          },
+          "tool" : "swift"
+        }
+      ],
+      "type" : "regular"
+    },
+    {
+      "dependencies" : [
+        {
+          "product" : [
+            "HanlinExtensionContracts",
+            "HanlinPlatform",
+            null,
+            null
+          ]
+        },
+        {
+          "product" : [
+            "HanlinPlatformContracts",
+            "HanlinPlatform",
+            null,
+            null
+          ]
+        },
+        {
+          "product" : [
+            "HanlinScriptExtensions",
+            "HanlinPlatform",
+            null,
+            null
+          ]
+        },
+        {
+          "product" : [
+            "HanlinScriptUI",
+            "HanlinPlatform",
+            null,
+            null
+          ]
+        },
+        {
+          "product" : [
+            "HanlinExpoWidgetNative",
+            "HanlinExpoRuntime",
+            null,
+            null
+          ]
+        },
+        {
+          "product" : [
+            "HanlinExpoWidgetsOriginal",
+            "HanlinExpoRuntime",
+            null,
+            null
+          ]
+        },
+        {
+          "product" : [
+            "HanlinLocalization",
+            "HanlinPresentationSDK",
+            null,
+            null
+          ]
+        }
+      ],
+      "exclude" : [
+
+      ],
+      "name" : "HanlinScriptingWidgets",
+      "packageAccess" : true,
+      "resources" : [
+
+      ],
+      "settings" : [
+        {
+          "kind" : {
+            "interoperabilityMode" : {
+              "_0" : "Cxx"
+            }
+          },
+          "tool" : "swift"
+        },
+        {
+          "kind" : {
+            "unsafeFlags" : {
+              "_0" : [
+                "-Xcc",
+                "-std=gnu++20",
+                "-Xcc",
+                "-DREACT_NATIVE_PRODUCTION=1",
+                "-Xcc",
+                "-DRN_DEBUG_STRING_CONVERTIBLE=0",
+                "-Xcc",
+                "-Wno-quoted-include-in-framework-header",
+                "-Xcc",
+                "-Wno-non-modular-include-in-framework-module",
+                "-Xcc",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinWidgetSDK/../HanlinExpoRuntime/../HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/include",
+                "-Xcc",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinWidgetSDK/../HanlinExpoRuntime/../HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/bridge",
+                "-Xcc",
+                "-F/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinWidgetSDK/../HanlinExpoRuntime/Artifacts/ModularFrameworks",
+                "-Xcc",
+                "-F../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks",
+                "-Xcc",
+                "-FArtifacts/ModularFrameworks",
+                "-Xcc",
+                "-FPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks",
+                "-Xcc",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinWidgetSDK/../HanlinExpoRuntime/Artifacts/ReactModularHeaders",
+                "-Xcc",
+                "-I../Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders",
+                "-Xcc",
+                "-IArtifacts/ReactModularHeaders",
+                "-Xcc",
+                "-IPackages/HanlinExpoRuntime/Artifacts/ReactModularHeaders",
+                "-Xcc",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinWidgetSDK/../HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers",
+                "-Xcc",
+                "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers",
+                "-Xcc",
+                "-IArtifacts/ModularFrameworks/react.framework/Headers",
+                "-Xcc",
+                "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers",
+                "-Xcc",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinWidgetSDK/../HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react",
+                "-Xcc",
+                "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react",
+                "-Xcc",
+                "-IArtifacts/ModularFrameworks/react.framework/Headers/react",
+                "-Xcc",
+                "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react",
+                "-Xcc",
+                "-I/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinWidgetSDK/../HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers",
+                "-Xcc",
+                "-I../Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers",
+                "-Xcc",
+                "-IArtifacts/ReactNativeDependencies.xcframework/Headers",
+                "-Xcc",
+                "-IPackages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers"
+              ]
+            }
+          },
+          "tool" : "swift"
+        }
+      ],
+      "type" : "regular"
+    }
+  ],
+  "toolsVersion" : {
+    "_version" : "6.2.0"
+  },
+  "traits" : [
+
+  ]
+}

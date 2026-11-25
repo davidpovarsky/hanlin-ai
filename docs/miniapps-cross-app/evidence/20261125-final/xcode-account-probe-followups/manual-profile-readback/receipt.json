@@ -1,0 +1,13 @@
+{
+  "scope": "ACTUAL_APPLE_PROFILE_GRANTS_ONLY_NOT_PRODUCT_SIGNING_OR_ACCEPTANCE",
+  "source_sha": "9ef80a6ddfc997724360a9a34bb1d05cbf7cad40",
+  "entitlements_sha256": "cbce7e438c63d23cdcbc737379709ab6220997a2e39447dd962492a46d3930cc",
+  "bundle": "com.itorah.hanlinminiapps.share",
+  "started_at": "2026-11-25T06:32:09.277736+00:00",
+  "operations": [],
+  "status": "FAILED_RECONCILE_ACCOUNT_BEFORE_ANY_RETRY",
+  "existing_certificate_sha256": "5aefaf80b344418af7da85678fcb19de9a4be6885a846644df974b1ee38eba4b",
+  "error_type": "ValueError",
+  "error": "Registered original bundle/team changed",
+  "finished_at": "2026-11-25T06:32:09.882790+00:00"
+}

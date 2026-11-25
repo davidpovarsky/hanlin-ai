@@ -1,0 +1,18 @@
+{
+  "reviewer": "/root/entrypoints",
+  "status": "PASS_NO_CONCRETE_BLOCKER",
+  "sourceSHA256": {
+    "Scripts/SDK/update_project.py": "5aae859211e8bc7cfeb389c50d7d38817de4e0167f8a3ae54d9f1cf5475be550",
+    "Scripts/SDK/tests/test_widget_cxx_imports.py": "e9e294918807571e154d3112c0ae52c9b0f7853aab1f5deff2bf978e0d6eb863",
+    "AI_HLY.xcodeproj/project.pbxproj": "24206ae0f0f66d3669cae5ccd4ffcff25ae582ec4620359a2becca7ad8e16780"
+  },
+  "scope": [
+    "Exact six native consumer targets, both configurations",
+    "All12 changed project objects limited to original flags and explicit mode",
+    "Original producer extraction unchanged; existing flags retained",
+    "Import wiring occurs after actual standalone cloning",
+    "Authentic clean-cache implicit/explicit compiler evidence and existing focused parity log"
+  ],
+  "independentActions": "Read-only source and semantic project comparison; no tests, probes, CI or edits repeated.",
+  "boundary": "Import probe is Xcode27.0/Swift6.4, not configured27.2 full app/native52 acceptance."
+}

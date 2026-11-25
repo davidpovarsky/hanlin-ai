@@ -69,11 +69,15 @@ final class HanlinAppHostIntegration: HanlinHostIntegration, HanlinHostCapabilit
                 outputSchema: source?.outputSchema, capabilities: source?.capabilities ?? [],
                 risk: source?.risk ?? .read, presentation: source?.presentation ?? .init(),
                 approval: source?.approval)
-            // The legacy shadow catalog currently labels general native/legacy tools .read.
-            // That is not an authoritative no-mutation promise (e.g. manage_calendar can write).
-            // Only these existing metadata/progress implementations are proven business-read-only.
+            // The legacy shadow catalog's .read risk does not establish write behavior
+            // (e.g. manage_calendar can write). These two original native MiniApp tools
+            // only read SDK/project inputs: validate returns before source/package emission.
+            // A compiler diagnostic is a failed read, so preserve its model-visible report
+            // instead of converting it into an uncertain write that prevents repair.
+            let isMiniAppRead = logical.providerInstanceID.rawValue == "native.system"
+                && ["get_miniapp_sdk", "validate_miniapp"].contains(logical.localToolID.rawValue)
             return .init(route: .init(alias: definition.name, logicalToolID: logical, descriptorRevision: revision),
-                descriptor: descriptor, writeGuarantee: isMeta ? .readOnly : .hostManagedMutation,
+                descriptor: descriptor, writeGuarantee: (isMeta || isMiniAppRead) ? .readOnly : .hostManagedMutation,
                 originalInputSchemaJSON: definition.inputSchemaData)
         }
         guard !tools.contains(where: { $0.route.alias == Self.splitAlias }) else { throw HanlinHostError.duplicateAlias }
@@ -100,6 +104,8 @@ final class HanlinAppHostIntegration: HanlinHostIntegration, HanlinHostCapabilit
     func prepareStep(_ step: Int, session: HanlinHostSession) async throws -> HanlinHostStepPreparation {
         _ = try await context(for: session)
         guard let toolAdapter else { return .init(activeAliases: []) }
+        try await toolAdapter.session.prepareExplicitSelections(using: toolAdapter.preparedTools,
+            catalog: toolAdapter.catalog, store: toolAdapter.skillStore)
         let prepared = await toolAdapter.prepareStep(stepNumber: step)
         _ = try await context(for: session)
         return .init(activeAliases: prepared.activeToolAliases + (!supportsSplit || prepared.activeToolAliases.contains(Self.splitAlias) ? [] : [Self.splitAlias]), skillIDs: prepared.loadedSkillIDs,

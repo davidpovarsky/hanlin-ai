@@ -1,0 +1,5 @@
+COMMAND: ["swiftc", "-frontend", "-parse", "Packages/HanlinAppExtensionsSDK/Sources/HanlinTranslationUI/HanlinNativePresentationView.swift"]
+EXIT: 0
+STDOUT:
+
+STDERR:

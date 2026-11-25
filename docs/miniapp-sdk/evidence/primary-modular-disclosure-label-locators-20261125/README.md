@@ -1,0 +1,9 @@
+# Original disclosure label locators
+
+The actual attempt12 Modular case failed after the real source-version disclosure correctly collapsed. Before/after screenshots show the first JPS1917 Full text row removed. The original native AX indicator changed from expanded to collapsed. Both AX snapshots contain zero of the expected modular-full-text-load identifiers: the outer DisclosureGroup testID propagated its source-version identifier to the child Button. The old content.exists query therefore observed false before and after and did not measure disclosure state.
+
+The fixture now uses the original @expo/ui58.0.29 DisclosureGroup.Label slot and the original Text accessibilityIdentifier modifier. Identifiers mark only the two label Text views, leaving the load Button and actual returned text body with their own identifiers. No upstream implementation, state transition, content, network request, SDK or Host input changes.
+
+The existing native test resolves the genuine header Button through its own or label descendant identifier. It requires exactly one of the actual expanded/collapsed indicators, matching exact content presence, a real native tap and corresponding state/content transition, and return to expanded. The existing live request, newly returned source-scoped version, actual nonempty body, language/source metadata and screenshots remain required. The original waits and case/command deadlines are unchanged.
+
+All14 first-packet members were independently verified before authoring. The full raw packet is retained separately under focused-terminal-attempt12 with receipt dce3d86d2073def816ba95f5ff6f47c82a1b231657c5748518f99e42941df06c. The separate diagnostic evidence record preserves the actual1FAIL result. This source correction has passed diff whitespace checking and independent source review only. Its actual native emission and full-text API/body acceptance remain pending the next execution.

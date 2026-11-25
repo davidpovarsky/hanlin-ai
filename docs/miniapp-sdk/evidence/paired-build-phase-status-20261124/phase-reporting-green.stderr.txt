@@ -1,0 +1,14 @@
+test_build_phase_aggregation_requires_both_builds_and_ignores_cleanup (Scripts.ProductSplit.test_run_paired_acceptance.PairedCommandEvidenceTests.test_build_phase_aggregation_requires_both_builds_and_ignores_cleanup) ... ok
+test_external_termination_preserves_precompletion_checkpoint_and_partial_output_through_cleanup (Scripts.ProductSplit.test_run_paired_acceptance.PairedCommandEvidenceTests.test_external_termination_preserves_precompletion_checkpoint_and_partial_output_through_cleanup) ... ok
+test_failed_minibuild_records_execution_without_starting_ai_or_ui (Scripts.ProductSplit.test_run_paired_acceptance.PairedCommandEvidenceTests.test_failed_minibuild_records_execution_without_starting_ai_or_ui) ... /usr/bin/python3 exit 65; inspect mini-build.log
+ok
+test_keyboard_interrupt_keeps_child_cleanup_and_unfinished_receipt (Scripts.ProductSplit.test_run_paired_acceptance.PairedCommandEvidenceTests.test_keyboard_interrupt_keeps_child_cleanup_and_unfinished_receipt) ... ok
+test_launch_failure_is_not_reported_as_an_executed_build (Scripts.ProductSplit.test_run_paired_acceptance.PairedCommandEvidenceTests.test_launch_failure_is_not_reported_as_an_executed_build) ... ok
+test_nonzero_and_signal_exit_keep_failure_policy_without_inventing_timeout (Scripts.ProductSplit.test_run_paired_acceptance.PairedCommandEvidenceTests.test_nonzero_and_signal_exit_keep_failure_policy_without_inventing_timeout) ... ok
+test_success_keeps_streamed_output_environment_and_completed_contract (Scripts.ProductSplit.test_run_paired_acceptance.PairedCommandEvidenceTests.test_success_keeps_streamed_output_environment_and_completed_contract) ... ok
+test_timeout_retains_partial_output_kills_child_and_preserves_minus_one (Scripts.ProductSplit.test_run_paired_acceptance.PairedCommandEvidenceTests.test_timeout_retains_partial_output_kills_child_and_preserves_minus_one) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 1.435s
+
+OK

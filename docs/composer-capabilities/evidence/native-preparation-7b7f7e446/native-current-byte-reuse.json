@@ -1,0 +1,32 @@
+{
+  "sourceCommit": "37a788a4a10a293653e307c05ba1a507d518d1f0",
+  "producerSource": "2b3271824e0338f0d7f5239e3b3a14c2b8c9f3b0",
+  "producerWorkingInputs": {
+    "RuntimeDependencies.lock.json": "6cdbc18a474febbfc912b35ecbf5b0b55438a6a3e6daf2c33a43792cd04bd50a",
+    "Scripts/Expo/dependency-lock.json": "b9e3ad6d863e3e5136ad93924ce4edcb37da87578b113523640110af347eec65",
+    "Scripts/Expo/prepare-ios-dependencies.mjs": "97069b0e1ec619d906f4b6d196e38e6527790c3661f798abcca6258dacf18163",
+    "Scripts/Expo/build-original-expo-source.mjs": "855a9a79f1c27a2ba2f3796cf784ebb66a4a48df928b2ea8f6ca1ffd9e886c03",
+    "Scripts/Expo/build-original-widget-runtime.mjs": "5928bb12ed2fd2f6b2ecfeb6d8fc309d46e5837c58dcc4272d73af13434eb549",
+    "Scripts/Expo/package-lock.json": "c08757cf46ac4d5c86a873f676af4a3be585db64ae2e1aa1e8288277d4eb63b8",
+    "Scripts/Expo/babel.config.cjs": "62581fd5caf7b97cb36290093b7bbf7103e1c1b1300e0e11a1b3eaaf96c998ba",
+    "Scripts/ExpoNativeAPI/dependency-lock.json": "08657d657c1f4efa36149075b632cfc75685fc1ca9af0397fc1168fe9253b768",
+    "Scripts/ExpoNativeAPI/prepare-ios-dependencies.mjs": "950a2eb6e8713bdd1a395eee6df1779d91f63864af95c33658efa6d090676f66",
+    "Scripts/ExpoNativeAPI/multiscene-patch.mjs": "cafa8348a764155789169c411eb59555c6c7a2d3ef363b870e36f8d6b52c7cbd",
+    "Scripts/NativeScript/dependency-lock.json": "8499976a4ea0a069ed654b09b597d8fabede4bbbfb62227451a68707b851e8e5",
+    "Scripts/NativeScript/package-lock.json": "16f569f4bfa6f8806cfe72449866a0dc9a9331f33d2c67170d5292455c48b60b",
+    "Scripts/NativeScript/prepare-ios-dependencies.mjs": "b5114a3be1fc846e288128af08cef9f38b0cac8e34923780325c4edc2976ebd9",
+    "Scripts/NativeScript/build-metadata-tool.py": "f4318f38b1c6a9c56ba54edb0d270a6374178fa5a8e024ebfddb9790f7ae3cf5",
+    "Scripts/NativeScript/build-step-metadata-generator-wrapper.py": "0c053414f573ff2f88498099d7f1ae591d289ca3029390cd421dd938bf089ba3",
+    "Scripts/Runtime/prepare-runtime-core.sh": "1ff99fabcbf8f40d515f3f1b944299286c1094a19520f9892a97f99cf8b64540"
+  },
+  "createdAtUTC": "2026-11-25T00:27:02.389877+00:00",
+  "producerLogSHA256": "9451f196a79ec7de542b05d86d75ecb75825ee993f02c60a92ff3876a157dbbc",
+  "producerNativeBuildSuccesses": 4,
+  "producerPhase": "FAIL in later Host audit; original Expo frameworks completed and normalized",
+  "testStatus": "NOT_A_TEST_PASS",
+  "records": [],
+  "status": "FAILED",
+  "error": "Run original prepare-runtime-core.sh before exporting Python host support",
+  "traceback": "Traceback (most recent call last):\n  File \"<stdin>\", line 18, in <module>\n  File \"/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/Scripts/SDK/native_artifacts.py\", line 405, in export\n    support, tool_provenance = support_paths(prepared_root, selected) if include_support else ({}, None)\n                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/Scripts/SDK/native_artifacts.py\", line 278, in support_paths\n    raise ValueError(\"Run original prepare-runtime-core.sh before exporting Python host support\")\nValueError: Run original prepare-runtime-core.sh before exporting Python host support\n",
+  "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

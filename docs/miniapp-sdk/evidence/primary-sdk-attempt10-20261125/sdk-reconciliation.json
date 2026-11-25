@@ -1,0 +1,115 @@
+{
+  "source": "fda6948ca6a1f541293a1a1dd20e97f75eb0a527",
+  "archiveSHA256": "86733eba5d80156edf52da87f0f371c208122d6e60f618f182990330514984c3",
+  "archiveBytes": 81813686,
+  "manifestSHA256": "19726b5eecc1459e30dae9e7ec4ca6761001de92b22055ac41b9a96aabdd7a88",
+  "inputSHA256": "998e474dfeb225185e91ac4886d4b3aec517dfc55cd16cac0f46366b55494d56",
+  "actualSDKMembersVerified": 25661,
+  "actualSDKBytesVerified": 294393847,
+  "changedInputs": [
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.json",
+      "before": {
+        "path": "docs/miniapp-sdk/extension-reachability.json",
+        "sha256": "854dd9133f9de88d62912273c16d11df484c357fb8cd309826e13c1f98fa7885"
+      },
+      "after": {
+        "path": "docs/miniapp-sdk/extension-reachability.json",
+        "sha256": "9a9843d277a3e76ad64fc7589029801960c5c98b9aba09f3ed7746552ee3d42d"
+      }
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.md",
+      "before": {
+        "path": "docs/miniapp-sdk/extension-reachability.md",
+        "sha256": "39e0f358f0597cdcc890d716a2b3631a72e751b4096296bd0d35543d03639ba6"
+      },
+      "after": {
+        "path": "docs/miniapp-sdk/extension-reachability.md",
+        "sha256": "cae21720cab9b31211796a5d82309d6e779f46ddb1d946d1ec1e322f4cf952cb"
+      }
+    },
+    {
+      "path": "docs/miniapp-sdk/source-inventory.json",
+      "before": {
+        "path": "docs/miniapp-sdk/source-inventory.json",
+        "sha256": "104df0d315f5ddd5b8897e305d20d37c667dd43b6f7d788a3fc872692a13300e"
+      },
+      "after": {
+        "path": "docs/miniapp-sdk/source-inventory.json",
+        "sha256": "856bc8aca1473f8f4255b324e840ef2ebcdf5eb7352d1041d2433391e9f4bfd8"
+      }
+    }
+  ],
+  "unchangedInputs": 219,
+  "changedMembers": [
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.json",
+      "before": {
+        "path": "docs/miniapp-sdk/extension-reachability.json",
+        "sha256": "854dd9133f9de88d62912273c16d11df484c357fb8cd309826e13c1f98fa7885",
+        "bytes": 147521
+      },
+      "after": {
+        "path": "docs/miniapp-sdk/extension-reachability.json",
+        "sha256": "9a9843d277a3e76ad64fc7589029801960c5c98b9aba09f3ed7746552ee3d42d",
+        "bytes": 147521
+      }
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.md",
+      "before": {
+        "path": "docs/miniapp-sdk/extension-reachability.md",
+        "sha256": "39e0f358f0597cdcc890d716a2b3631a72e751b4096296bd0d35543d03639ba6",
+        "bytes": 21494
+      },
+      "after": {
+        "path": "docs/miniapp-sdk/extension-reachability.md",
+        "sha256": "cae21720cab9b31211796a5d82309d6e779f46ddb1d946d1ec1e322f4cf952cb",
+        "bytes": 21494
+      }
+    },
+    {
+      "path": "docs/miniapp-sdk/source-inventory.json",
+      "before": {
+        "path": "docs/miniapp-sdk/source-inventory.json",
+        "sha256": "104df0d315f5ddd5b8897e305d20d37c667dd43b6f7d788a3fc872692a13300e",
+        "bytes": 493871
+      },
+      "after": {
+        "path": "docs/miniapp-sdk/source-inventory.json",
+        "sha256": "856bc8aca1473f8f4255b324e840ef2ebcdf5eb7352d1041d2433391e9f4bfd8",
+        "bytes": 493871
+      }
+    }
+  ],
+  "unchangedMembers": 25658,
+  "groupComparison": {
+    "declarations": {
+      "members": 5210,
+      "unchanged": 5210,
+      "changed": []
+    },
+    "examples": {
+      "members": 29,
+      "unchanged": 29,
+      "changed": []
+    },
+    "public-docs": {
+      "members": 25,
+      "unchanged": 22,
+      "changed": [
+        "docs/miniapp-sdk/extension-reachability.json",
+        "docs/miniapp-sdk/extension-reachability.md",
+        "docs/miniapp-sdk/source-inventory.json"
+      ]
+    },
+    "original-compiler-entrypoints": {
+      "members": 2,
+      "unchanged": 2,
+      "changed": []
+    }
+  },
+  "otherManifestMetadataDifferences": [],
+  "boundary": "All actual SDK member hashes/sizes and exact path set verified in place, plus every outside-SDK Host member compared. No extraction/repack/product tool run."
+}

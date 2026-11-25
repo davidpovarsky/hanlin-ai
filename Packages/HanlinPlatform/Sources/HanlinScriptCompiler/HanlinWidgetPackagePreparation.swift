@@ -14,7 +14,8 @@ public enum HanlinWidgetPackagePreparation {
                 exportedSymbol: entry.exportedSymbol, supportedContexts: entry.supportedContexts,
                 requiredCapabilities: entry.requiredCapabilities, runtimePolicyID: entry.runtimePolicyID,
                 runtimeProfile: entry.runtimeProfile, artifactDigest: artifactDigest,
-                compatibility: entry.compatibility, widgetEngine: entry.widgetEngine)
+                compatibility: entry.compatibility, widgetEngine: entry.widgetEngine,
+                assistantTool: entry.assistantTool)
         }
     }
 
@@ -41,6 +42,15 @@ public enum HanlinWidgetPackagePreparation {
             let encoder = JSONEncoder()
             encoder.outputFormatting = [.sortedKeys, .withoutEscapingSlashes]
             programs["widgets/\(entrypoint.id).json"] = try encoder.encode(program)
+        }
+        for (entrypointID, declaration) in try HanlinNativePresentationMetadata.declarations(in: manifest) {
+            guard preview.entrypoints.contains(where: {
+                $0.id == entrypointID && [.appIntent, .translationUI].contains($0.kind)
+            }) else { throw HanlinWidgetProgramError.invalidProgram }
+            let program = try HanlinWidgetCompiler.preparePresentation(declaration, files: files)
+            let encoder = JSONEncoder()
+            encoder.outputFormatting = [.sortedKeys, .withoutEscapingSlashes]
+            programs[HanlinNativePresentationMetadata.artifactPath(for: entrypointID)] = try encoder.encode(program)
         }
         return programs
     }

@@ -1,0 +1,574 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "9C723D21-54CB-44C8-8B3D-9DE17AF8B4BA.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "-[HanlinComposerCapabilitiesUITests testManifestCatalogAndMapPanelsKeepUserConfigurationAcrossEditing]-hierarchy_0_B70A2CA0-7937-49AC-8B96-15E780AFBE29.txt",
+        "timestamp" : 1795579365.684
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "E99148CA-56A7-4CF5-8A88-BC992A59F5F8.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "-[HanlinComposerCapabilitiesUITests testManifestCatalogAndMapPanelsKeepUserConfigurationAcrossEditing]-composer_0_5529AE53-B295-44A9-BD2A-401BFEC50D3A.png",
+        "timestamp" : 1795579365.058
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "67510E3A-4E9C-4B05-9CEB-C2C569176FED",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 05.02.43 AM",
+        "timestamp" : 1795579363.943
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "09763F6E-F12D-4D1F-AFD4-7137B36277FC",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 05.02.42 AM",
+        "timestamp" : 1795579362.359
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "2D7C6B19-7A9F-4E97-989B-529A5FF0E062",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 05.02.40 AM",
+        "timestamp" : 1795579360.505
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "63E603F5-4EFC-40E2-873F-D9999FFDBFF6",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 05.02.38 AM",
+        "timestamp" : 1795579358.997
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "5159C0DB-26E7-44A6-8245-7CA2C7BDE188",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 05.02.37 AM",
+        "timestamp" : 1795579357.176
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "91D3C110-AEEC-4FBA-AF45-109ABC28D2B0",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 05.02.35 AM",
+        "timestamp" : 1795579355.335
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "FEC0F414-6B0D-4ED9-8C80-092ADFA28AE7",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 05.02.34 AM",
+        "timestamp" : 1795579354.089
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "3C16D839-ADF7-4CA0-BF09-FFC408DE02F4",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 05.02.31 AM",
+        "timestamp" : 1795579351.693
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "E24BA670-7590-46E9-8409-29566EF01A90",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 05.02.29 AM",
+        "timestamp" : 1795579349.339
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "CB24FA1E-41AF-4364-A499-3B79053FFB1D",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 05.02.27 AM",
+        "timestamp" : 1795579347.321
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "689D6C48-2EB3-4787-ADC8-37AEB7CE1ECE",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 05.02.24 AM",
+        "timestamp" : 1795579344.076
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "F415E992-2A67-4267-A495-8551FAB638F3",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 05.02.22 AM",
+        "timestamp" : 1795579342.43
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "7AB0B2C4-EE6A-44C7-BE3C-7BF9021FEF68",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 05.02.19 AM",
+        "timestamp" : 1795579339.826
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "1DCE557E-65D5-47A3-AE38-C0EF6801D4E6",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 05.02.10 AM",
+        "timestamp" : 1795579330.042
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "D96B3989-1841-4873-8CD3-A1A695E6D8B4",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 05.02.07 AM",
+        "timestamp" : 1795579327.417
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "5697D57B-5072-4EEA-B813-8E4DF201839C",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 05.02.02 AM",
+        "timestamp" : 1795579322.898
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "2678CF30-B06A-4DEC-8366-EEFEB59BF641",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 05.01.45 AM",
+        "timestamp" : 1795579305.321
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "EDFEA118-1D98-4CC0-9050-5DCA85878794.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `TextView (First Match)`_0_C710E73C-9546-4CF0-B631-F390F0AF4BF1.txt",
+        "timestamp" : 1795579284.663
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "8003E27F-D541-4359-9462-58211C4749A4.mp4",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Screen Recording 2026-11-25 at 04.59.40 AM.mp4",
+        "timestamp" : 1795579180.276
+      }
+    ],
+    "testIdentifier" : "HanlinComposerCapabilitiesUITests/testManifestCatalogAndMapPanelsKeepUserConfigurationAcrossEditing()",
+    "testIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinComposerCapabilitiesUITests/testManifestCatalogAndMapPanelsKeepUserConfigurationAcrossEditing"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "9D4DCB03-246E-461E-BB2A-144DA4616CA4.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "-[HanlinComposerCapabilitiesUITests testMentionAndSlashPreserveHebrewTextAtTheRealCaretAndInsertTheSameIdentity]-hierarchy_0_1D247B33-217C-47F6-B69B-7A7867281C28.txt",
+        "timestamp" : 1795579396.218
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "383B53F7-7D19-4ED9-8D18-374701D56E83.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "-[HanlinComposerCapabilitiesUITests testMentionAndSlashPreserveHebrewTextAtTheRealCaretAndInsertTheSameIdentity]-composer_0_68A03FF5-82B2-4BE8-A9E3-A5AAC5D0FA1B.png",
+        "timestamp" : 1795579395.58
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "FAE77F3A-63A1-4FE2-BFFD-FB16ECE2AF7D.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "App UI hierarchy for com.itorah_0_B0B449F7-4541-43B4-9D79-43E293E9895A.chavrusachat",
+        "timestamp" : 1795579395.349
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "82E569B8-57EF-40A7-99A8-1FD080EB5D91",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-11-25 at 05.03.15 AM",
+        "timestamp" : 1795579395.349
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "8827DB0E-49BF-475E-BCF1-D0BFF317DA7A.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"hanlin-capability-suggestion-4tool13native.system15quick_calculate\" Button`_0_90651465-BA8D-4270-AF58-20A891EDFE4B.txt",
+        "timestamp" : 1795579394.81
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "EA210C93-45E6-4F16-B313-959D7D51AC53.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"hanlin-capability-suggestion-4tool13native.system15quick_calculate\" Button`_0_8CA284E9-6ED4-4E61-AEA4-D2C49D191D53.txt",
+        "timestamp" : 1795579393.664
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "EF0F42B4-A9E1-4F48-9E0C-2A8BD60394E7",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 05.03.09 AM",
+        "timestamp" : 1795579389.474
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "81C3497B-A8C7-449E-BF0E-2E430931576F",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 05.03.08 AM",
+        "timestamp" : 1795579388.688
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "AAE07E3D-F0AB-475C-AE36-656A4689F290",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 05.03.07 AM",
+        "timestamp" : 1795579387.903
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "1914ED67-7AD1-47CF-8BBC-529407C8A866",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 05.03.06 AM",
+        "timestamp" : 1795579386.861
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "7FFCF51C-EFCF-4705-BDAF-90A4D0106244",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 05.03.05 AM",
+        "timestamp" : 1795579385.927
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "4920862A-30D9-4C66-900B-5555E8B1001D",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 05.03.04 AM",
+        "timestamp" : 1795579384.628
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "72971ADC-5964-4B65-8A20-746FFFCB7B23",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 05.03.03 AM",
+        "timestamp" : 1795579383.107
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "A4ED5A4D-36F0-4B51-BF65-F7CB626026E2",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 05.03.02 AM",
+        "timestamp" : 1795579382.03
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "6C05DD41-E895-414C-B718-E98E38CBFB69",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 05.02.59 AM",
+        "timestamp" : 1795579379.913
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "6246A6CC-65D0-4F7B-8FB2-A99BE275E2C0",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 05.02.58 AM",
+        "timestamp" : 1795579378.899
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "5ABBCAC8-FF05-4BA1-8F0C-8D6CD2E1495E",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 05.02.57 AM",
+        "timestamp" : 1795579377.021
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "7B470950-80E0-40F2-B975-7800A3FDA71C.mp4",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Screen Recording 2026-11-25 at 05.02.46 AM.mp4",
+        "timestamp" : 1795579366.967
+      }
+    ],
+    "testIdentifier" : "HanlinComposerCapabilitiesUITests/testMentionAndSlashPreserveHebrewTextAtTheRealCaretAndInsertTheSameIdentity()",
+    "testIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinComposerCapabilitiesUITests/testMentionAndSlashPreserveHebrewTextAtTheRealCaretAndInsertTheSameIdentity"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "ED6ADDA3-89DA-4ECC-905F-54B9CAD80ED8.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "-[HanlinComposerCapabilitiesUITests testMiniAppSelectionAttachesWithoutLaunchingAndEnablesAttachmentOnlySend]-hierarchy_0_46495EE9-78D0-4CEF-A197-9E3CD0E97BA3.txt",
+        "timestamp" : 1795579442.455
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "0FEAA528-429D-4597-8CFF-1DF0D30112A0.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "-[HanlinComposerCapabilitiesUITests testMiniAppSelectionAttachesWithoutLaunchingAndEnablesAttachmentOnlySend]-composer_0_FA3BA6C2-A474-45E7-A869-177C2B3E4C46.png",
+        "timestamp" : 1795579441.466
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "511A3C68-BD50-4414-96DE-5DC387FC02B3.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "App UI hierarchy for com.itorah_0_4A92889A-BDA3-4718-A98E-51A8B2C2685B.chavrusachat",
+        "timestamp" : 1795579441.181
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "6B9D9606-DA8D-45DD-976C-7EF4C8A65E9F",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-11-25 at 05.04.01 AM",
+        "timestamp" : 1795579441.181
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "D3E22A47-5FE5-4F29-A47B-0B05E7518317.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"hanlin-capability-configuration\" Any`_0_38221A4A-0164-43C9-8D78-39AED0231CE2.txt",
+        "timestamp" : 1795579428.05
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "1D76A4D5-0D5F-4760-8D6B-094AA2BAF90A.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"hanlin-capability-configuration\" Any`_0_83609294-F289-4525-AE6A-9E69C224D0F2.txt",
+        "timestamp" : 1795579424.529
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "A598B221-C72A-465F-9D2E-A1C927706275",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 05.03.41 AM",
+        "timestamp" : 1795579421.526
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "A7BD7BEF-5920-4094-B461-4F44AE0DBA27",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 05.03.38 AM",
+        "timestamp" : 1795579418.152
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "4372F0D1-F01E-4A1E-96DD-0D8F47A024C8",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 05.03.35 AM",
+        "timestamp" : 1795579415.801
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "5BDE9734-2EC8-450F-829D-D0B892A7F5AC",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 05.03.33 AM",
+        "timestamp" : 1795579413.963
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "3F4C67BA-3C7E-4304-9A61-0E69D307DFB3",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 05.03.29 AM",
+        "timestamp" : 1795579409.53
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "0E728983-E729-498D-B15C-3068E8BAC297",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 05.03.27 AM",
+        "timestamp" : 1795579407.892
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "821DE9E7-D39C-45AB-BF8B-E5D8224F0EE5",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 05.03.27 AM",
+        "timestamp" : 1795579407.307
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "F9B85752-A571-4A9C-9852-B465901852C2",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 05.03.26 AM",
+        "timestamp" : 1795579406.047
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "8C981FE5-0206-4421-82E9-A7A49B490041.mp4",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Screen Recording 2026-11-25 at 05.03.17 AM.mp4",
+        "timestamp" : 1795579397.279
+      }
+    ],
+    "testIdentifier" : "HanlinComposerCapabilitiesUITests/testMiniAppSelectionAttachesWithoutLaunchingAndEnablesAttachmentOnlySend()",
+    "testIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinComposerCapabilitiesUITests/testMiniAppSelectionAttachesWithoutLaunchingAndEnablesAttachmentOnlySend"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "313A61B7-FD2F-40A7-A77B-A7A639726686",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 05.04.16 AM",
+        "timestamp" : 1795579456.53
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "8B91FCFC-C1D4-47B8-BDCF-782E57F0FD98",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 05.04.14 AM",
+        "timestamp" : 1795579454.451
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "B6DCC450-A263-426F-B357-0FF89C41DFEE",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 05.04.12 AM",
+        "timestamp" : 1795579452.689
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "3F02C2C5-C376-41F0-ADCC-E69362A16AF1.mp4",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Screen Recording 2026-11-25 at 05.04.03 AM.mp4",
+        "timestamp" : 1795579443.61
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "F7F01DFE-DDAA-4B31-AC78-093513D691C1.txt",
+        "isAssociatedWithFailure" : true,
+        "suggestedHumanReadableName" : "Complete Issue Description.txt"
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "3E3796C8-819E-462F-8FF1-9D9C46D471FE.txt",
+        "isAssociatedWithFailure" : true,
+        "suggestedHumanReadableName" : "App UI hierarchy for com.itorah_0_43D65CA4-3D20-4FD6-8A38-754797738C21.chavrusachat",
+        "timestamp" : 1795579461.873
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "exportedFileName" : "F3DD807F-05DC-4568-B34B-D038C0E9FBD1",
+        "isAssociatedWithFailure" : true,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-11-25 at 05.04.21 AM",
+        "timestamp" : 1795579461.873
+      }
+    ],
+    "testIdentifier" : "HanlinMorphComposerUITests/testDismissModelPickerKeepsSelectedModelAndDraft()",
+    "testIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/HanlinMorphComposerUITests/testDismissModelPickerKeepsSelectedModelAndDraft"
+  }
+]

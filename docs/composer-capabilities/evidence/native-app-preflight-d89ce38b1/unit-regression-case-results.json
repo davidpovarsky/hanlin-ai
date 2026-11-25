@@ -1,0 +1,129 @@
+{
+  "schemaVersion": 1,
+  "derivedFromOriginalNodeLogs": true,
+  "originalReceiptsUnchanged": true,
+  "attempts": [
+    {
+      "attempt": 1,
+      "sourceCommit": "59838a47979f8d875618687708e0334fb63454a5",
+      "exitCode": 1,
+      "durationSeconds": 1.38,
+      "cases": [
+        {
+          "name": "accepts metadata in the normal main executable",
+          "durationMilliseconds": 87.464584,
+          "status": "FAILED"
+        },
+        {
+          "name": "accepts the linked debug dylib and exposes it for the provider checks",
+          "durationMilliseconds": 12.700792,
+          "status": "FAILED"
+        },
+        {
+          "name": "rejects missing, empty and wrong-segment host metadata",
+          "durationMilliseconds": 4.321084,
+          "status": "FAILED"
+        },
+        {
+          "name": "rejects two metadata owners in the same loaded architecture",
+          "durationMilliseconds": 11.069709,
+          "status": "FAILED"
+        },
+        {
+          "name": "does not admit framework metadata or an unlinked app-local dylib",
+          "durationMilliseconds": 8.696167,
+          "status": "FAILED"
+        },
+        {
+          "name": "resolves actual rpath order without substituting an app-local shadow",
+          "durationMilliseconds": 50.381125,
+          "status": "FAILED"
+        },
+        {
+          "name": "deduplicates linked aliases of the same direct host image",
+          "durationMilliseconds": 100.671333,
+          "status": "FAILED"
+        },
+        {
+          "name": "checks metadata ownership per architecture instead of counting fat slices as images",
+          "durationMilliseconds": 6.647084,
+          "status": "FAILED"
+        },
+        {
+          "name": "does not let one fat slice satisfy another architecture without metadata",
+          "durationMilliseconds": 6.123042,
+          "status": "FAILED"
+        }
+      ],
+      "counts": {
+        "tests": 9,
+        "passed": 0,
+        "failed": 9,
+        "skipped": 0
+      },
+      "rawLogSHA256": "b60f6f1a006222ab3b0af37e362c4dff0090b86aae00b8a90949d26dc8000f68"
+    },
+    {
+      "attempt": 2,
+      "sourceCommit": "d89ce38b170bc9af4734cd11e30ca793b16698d0",
+      "exitCode": 0,
+      "durationSeconds": 0.483,
+      "cases": [
+        {
+          "name": "accepts metadata in the normal main executable",
+          "durationMilliseconds": 7.686875,
+          "status": "PASSED"
+        },
+        {
+          "name": "accepts the linked debug dylib and exposes it for the provider checks",
+          "durationMilliseconds": 5.017708,
+          "status": "PASSED"
+        },
+        {
+          "name": "rejects missing, empty and wrong-segment host metadata",
+          "durationMilliseconds": 6.17625,
+          "status": "PASSED"
+        },
+        {
+          "name": "rejects two metadata owners in the same loaded architecture",
+          "durationMilliseconds": 2.939875,
+          "status": "PASSED"
+        },
+        {
+          "name": "does not admit framework metadata or an unlinked app-local dylib",
+          "durationMilliseconds": 3.681792,
+          "status": "PASSED"
+        },
+        {
+          "name": "resolves actual rpath order without substituting an app-local shadow",
+          "durationMilliseconds": 3.028625,
+          "status": "PASSED"
+        },
+        {
+          "name": "deduplicates linked aliases of the same direct host image",
+          "durationMilliseconds": 2.876875,
+          "status": "PASSED"
+        },
+        {
+          "name": "checks metadata ownership per architecture instead of counting fat slices as images",
+          "durationMilliseconds": 2.479167,
+          "status": "PASSED"
+        },
+        {
+          "name": "does not let one fat slice satisfy another architecture without metadata",
+          "durationMilliseconds": 2.41225,
+          "status": "PASSED"
+        }
+      ],
+      "counts": {
+        "tests": 9,
+        "passed": 9,
+        "failed": 0,
+        "skipped": 0
+      },
+      "rawLogSHA256": "4b4e4f11506cd15e028dc33218b981a58155895befe8a8c52adaed313c518413"
+    }
+  ],
+  "uniqueCases": 9,
+  "noApplicationNativeEngineOrUIExecutionClaimed": true
+}

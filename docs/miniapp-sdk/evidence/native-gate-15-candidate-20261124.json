@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "sequence": 15,
+  "atUTC": "2026-11-24T14:19:49.391049+00:00",
+  "status": "READY_FOR_SINGLE_DISPATCH",
+  "implementationSource": "88fdce7e632a065c1d2f4c2e4eaab28402952c44",
+  "scope": "miniapp_complete",
+  "selectedCases": 52,
+  "MiniApps": 25,
+  "AI": 27,
+  "priorRun": 45398772829,
+  "priorApplicationStatus": "ALL52_NOT_RUN",
+  "completeNonDocumentationDeltaFromPriorRun": [
+    "AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift",
+    "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinOriginalExpoWidgetOptions.swift"
+  ],
+  "selectionAndHarness": "Unchanged: complete non-documentation Git delta contains only the two production correction files",
+  "whyExecute": "Both application builds and every selected case are missing after main14 stopped at the first build. Correct actual widget compiler errors and same-cause adapter mismatch, then execute the same selected current integration obligations.",
+  "reusedEvidence": "Previously authenticated unchanged scoped component proofs retain their original run/source attribution; no blanket reuse of application tests. No new tests or universal OS gate added.",
+  "productionFixCommit": "b8d3caee19485c4ef4448be9e68dfeb2449d38da",
+  "sourceProof": {
+    "path": "docs/miniapp-sdk/evidence/expo-widget-options-types-20261124/receipt.json",
+    "sha256": "2418fed0f0ef6e89a1565ea4125957d8582c8943e578d53853ae549c69050257",
+    "scope": "One real Swift6/Cxx AppIntents/source-closure compile and executable probe, eight assertions; explicit Expo registry/options fixtures; not full app/native52 proof"
+  },
+  "independentReview": "entrypoints; final exact source hashes in integrated independent-review.json, including corrected post-selection dictionary conversion ordering",
+  "sourceAuthorityRefresh": {
+    "path": "docs/miniapp-sdk/evidence/widget-options-source-refresh-20261124/receipt.json",
+    "sha256": "808b32d2f198e6832a1ebaa4507d0e5384bcd4eac37cfcf8e649d553170d9d85",
+    "commands": 4,
+    "result": "ALL_EXIT0",
+    "shippedProvenanceDocumentsChanged": 3,
+    "manifestReference": "UNCHANGED"
+  },
+  "routing": {
+    "primary": "Scaleway M2Pro",
+    "observation": {
+      "path": "docs/miniapp-sdk/evidence/expo-widget-options-types-20261124/mac-sdk-read.json",
+      "sha256": "57d13ded21655b34222b6f03da21a39b083d2d1518b3253381bdd6c9a90ed90d"
+    },
+    "observedAtUTC": "2026-11-24T14:07Z",
+    "available": "Xcode27.0/27A266a,Swift6.4,SDK27.0 only; no active build processes at observation",
+    "required": "Existing configured full gate Xcode27.2/27B52 and iOS27.2",
+    "decision": "Use existing GitHub lane because primary Mac lacks the required installed SDK/toolchain; no downgrade or duplicate heavy build"
+  },
+  "workflowSHA256": "677ba19c3a2e281e850b182b3bef8bcde709ee167f58d601c1c3aa6ade665982",
+  "budgets": {
+    "firstMiniAppsBuildSeconds": 3600,
+    "aiBuildSeconds": 1800,
+    "runtimeSeconds": 1200,
+    "pairedTestsSeconds": 2100,
+    "pairedJobMinutes": 210
+  },
+  "boundary": "No current application/device PASS, no merge/release. No existing source-contract or library capability was weakened."
+}

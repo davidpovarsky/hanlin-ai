@@ -1,0 +1,117 @@
+{
+  "schemaVersion": 1,
+  "expo": {
+    "sdkVersion": "58.0.26",
+    "uiVersion": "58.0.29",
+    "assetVersion": "58.0.21",
+    "widgetsVersion": "58.0.29",
+    "brownfieldVersion": "58.0.20",
+    "modulesCoreVersion": "58.1.0",
+    "reactNativeVersion": "0.88.1",
+    "reactVersion": "19.3.0",
+    "hermesVersion": "260318099.0.5"
+  },
+  "artifacts": [
+    {
+      "name": "ExpoUI",
+      "source": "npm-source",
+      "package": "@expo/ui",
+      "version": "58.0.29",
+      "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
+      "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+      "target": "Packages/HanlinExpoRuntime/Artifacts/ExpoUI.xcframework",
+      "sourceBuild": {
+        "producer": "original-cocoapods",
+        "packageIntegrity": "sha512-+zeaoDU1zS1rKe1afVsH8sh7+b+HNZyq93ZL0BRJ03RtrxZyYxKljqOcl78Q9NkX1oOO8CdQxzhFa8Dl6o52ug=="
+      }
+    },
+    {
+      "name": "ExpoAsset",
+      "source": "npm-source",
+      "package": "expo-asset",
+      "version": "58.0.21",
+      "tarball": "https://registry.npmjs.org/expo-asset/-/expo-asset-58.0.21.tgz",
+      "sha256": "2bfbb115da9111702530e5df550eac7e2a074aa12b6297fcc332744767623126",
+      "target": "Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework",
+      "sourceBuild": {
+        "producer": "original-cocoapods",
+        "packageIntegrity": "sha512-qaJmuTtswggXdBQfiUdpxrVGM7l+tH8iEDHwVDMuxyCF/kAau8sUGVuWrDKYNW4yAx7Z8ncgsT8s27pXjRH5GA=="
+      }
+    },
+    {
+      "name": "ExpoModulesJSI",
+      "source": "npm-source",
+      "package": "expo-modules-jsi",
+      "version": "58.0.23",
+      "tarball": "https://registry.npmjs.org/expo-modules-jsi/-/expo-modules-jsi-58.0.23.tgz",
+      "sha256": "b432f8a25637f556f89ac780e8981b941cd8598d5ae7593fbcbf40e15df5df93",
+      "target": "Packages/HanlinExpoRuntime/Artifacts/ExpoModulesJSI.xcframework",
+      "sourceBuild": {
+        "producer": "original-swiftpm",
+        "packageIntegrity": "sha512-ex3CnT8KLubsPjUG0RpEL5VgmpnWxf7Ouc+WXEr8jEbIwqcULEWtA2tfhGZwjg6jS3zeNwjygF1w8QSstP7JfQ=="
+      }
+    },
+    {
+      "name": "ExpoModulesCore",
+      "source": "npm",
+      "package": "expo-modules-core",
+      "version": "58.1.0",
+      "tarball": "https://registry.npmjs.org/expo-modules-core/-/expo-modules-core-58.1.0.tgz",
+      "sha256": "bb1bcaac52c1409fa58bb7268bae8eed9b472acb91c1653687013890e1a27524",
+      "subpath": "package/prebuilds/output/release/xcframeworks/ExpoModulesCore.tar.gz",
+      "target": "Packages/HanlinExpoRuntime/Artifacts/ExpoModulesCore.xcframework"
+    },
+    {
+      "name": "ExpoModulesWorklets",
+      "source": "npm",
+      "package": "expo-modules-core",
+      "version": "58.1.0",
+      "tarball": "https://registry.npmjs.org/expo-modules-core/-/expo-modules-core-58.1.0.tgz",
+      "sha256": "bb1bcaac52c1409fa58bb7268bae8eed9b472acb91c1653687013890e1a27524",
+      "subpath": "package/prebuilds/output/release/xcframeworks/ExpoModulesWorklets.tar.gz",
+      "target": "Packages/HanlinExpoRuntime/Artifacts/ExpoModulesWorklets.xcframework"
+    },
+    {
+      "name": "ExpoBrownfield",
+      "source": "npm",
+      "package": "expo-brownfield",
+      "version": "58.0.20",
+      "tarball": "https://registry.npmjs.org/expo-brownfield/-/expo-brownfield-58.0.20.tgz",
+      "sha256": "f7ca2c000242e572f15395f0d0e3edb670e38a79c19d75224af7c6fd424391f8",
+      "subpath": "package/prebuilds/output/release/xcframeworks/ExpoBrownfield.tar.gz",
+      "target": "Packages/HanlinExpoRuntime/Artifacts/ExpoBrownfield.xcframework"
+    },
+    {
+      "name": "React",
+      "source": "maven",
+      "url": "https://repo1.maven.org/maven2/com/facebook/react/react-native-artifacts/0.88.1/react-native-artifacts-0.88.1-reactnative-core-release.tar.gz",
+      "sha256": "1a5658fff6d807f5a249e2497be45d8912f740cdddad976116365cdd9d9a0806",
+      "subpath": "React.xcframework",
+      "target": "Packages/HanlinExpoRuntime/Artifacts/React.xcframework"
+    },
+    {
+      "name": "ReactNativeDependencies",
+      "source": "maven",
+      "url": "https://repo1.maven.org/maven2/com/facebook/react/react-native-artifacts/0.88.1/react-native-artifacts-0.88.1-reactnative-dependencies-release.tar.gz",
+      "sha256": "5bbf9e9cb6178c5705be9ae312fd902585b53d508a1649916dcab4e810b39a74",
+      "subpath": "packages/react-native/third-party/ReactNativeDependencies.xcframework",
+      "target": "Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework"
+    },
+    {
+      "name": "hermesvm",
+      "source": "maven",
+      "url": "https://repo1.maven.org/maven2/com/facebook/hermes/hermes-ios/260318099.0.5/hermes-ios-260318099.0.5-hermes-ios-release.tar.gz",
+      "sha256": "4e137490ffdf5b145bd629c5cabdfe9aee54573308d7c357bc3300ac78d64507",
+      "subpath": "destroot/Library/Frameworks/universal/hermesvm.xcframework",
+      "target": "Packages/HanlinExpoRuntime/Artifacts/hermesvm.xcframework"
+    },
+    {
+      "name": "ReactNativeHeaders",
+      "source": "maven",
+      "url": "https://repo1.maven.org/maven2/com/facebook/react/react-native-artifacts/0.88.1/react-native-artifacts-0.88.1-reactnative-headers-release.tar.gz",
+      "sha256": "ee710a1aa98a8d54d06b56c04ead95f16bd3f10062e12f24464cba27ccbecacd",
+      "subpath": "ReactNativeHeaders.xcframework",
+      "target": "Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework"
+    }
+  ]
+}

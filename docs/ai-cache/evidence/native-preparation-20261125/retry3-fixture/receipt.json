@@ -1,0 +1,49 @@
+{
+  "source": "8ec309c0e800baf537c349e6fa66d60c499dff49",
+  "startedAt": "2026-11-25T02:37:08.166058+00:00",
+  "steps": [
+    {
+      "command": [
+        "node",
+        "Scripts/NativeScript/prepare-fixture.mjs"
+      ],
+      "exitCode": 0,
+      "log": "01.log",
+      "sha256": "ee074a2ffd7d1f95b632379086fecb2741c4128b6cf4acf8d2a55fac394ba838"
+    },
+    {
+      "command": [
+        "node",
+        "Scripts/Audit/audit-miniapp-sdk.mjs",
+        "--check"
+      ],
+      "exitCode": 0,
+      "log": "02.log",
+      "sha256": "f9392dbc1f4415decb9bc390be9f49d5b7e6f3fbd636c72710ef278e45b31783"
+    },
+    {
+      "command": [
+        "python3",
+        "Scripts/Audit/audit_miniapp_reachability.py",
+        "--check"
+      ],
+      "exitCode": 0,
+      "log": "03.log",
+      "sha256": "bc234237931951c0e0e70dc212b9f47da2f6c76a61109e41c235f0f7f0eabcef"
+    },
+    {
+      "command": [
+        "python3",
+        "Scripts/Runtime/runtime_host_archive.py",
+        "validate",
+        "AI_HLY/RuntimeHostResources.zip"
+      ],
+      "exitCode": 0,
+      "log": "04.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "status": "PASS",
+  "finishedAt": "2026-11-25T02:37:26.334303+00:00",
+  "trackedChanges": " M Scripts/NativeScript/Prepared/fixture-a/nativescript/app/bundle.mjs\n M Scripts/NativeScript/Prepared/fixture-b/nativescript/app/bundle.mjs\n"
+}

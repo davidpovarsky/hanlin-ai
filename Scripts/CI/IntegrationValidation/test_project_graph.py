@@ -21,7 +21,21 @@ class ProjectGraphTests(unittest.TestCase):
                          if value.get("isa") == "PBXNativeTarget" and value.get("name") == "HanlinMiniApps")
 
     def test_registered_graph(self):
-        validate_graph(self.project, self.manifest)
+        result = validate_graph(self.project, self.manifest)
+        self.assertIn("HanlinWidgetUI", result["miniapps_products"])
+        source = (ROOT / "HanlinMiniAppsApp/HanlinMiniAppsApp.swift").read_text()
+        self.assertIn("import HanlinWidgetUI", source)
+        self.assertIn("HanlinWidgetIntentsPackage.self", source)
+        # The entity-backed action opens the app; both it and its Widget metadata
+        # need the existing .main localization table, not only the shared binary.
+        for name in ["HanlinMiniApps", "HanlinMiniAppsWidgets"]:
+            target = next(value for value in self.objects.values()
+                          if value.get("isa") == "PBXNativeTarget" and value.get("name") == name)
+            resources = {self.objects[self.objects[key]["fileRef"]]["path"]
+                         for phase in target["buildPhases"]
+                         if self.objects[phase]["isa"] == "PBXResourcesBuildPhase"
+                         for key in self.objects[phase]["files"]}
+            self.assertIn("Packages/HanlinWidgetSDK/HostResources/HanlinAppIntents.xcstrings", resources)
 
     def test_agent_sdk_actual_linkage(self):
         validate_agent_sdk_linkage(self.project, ROOT)
@@ -58,11 +72,13 @@ class ProjectGraphTests(unittest.TestCase):
         with self.assertRaisesRegex(AssertionError, "Shared sources must compile only once"):
             validate_agent_sdk_linkage(self.project, ROOT)
 
-    def test_agent_sdk_test_import_requires_its_real_product(self):
+    def test_agent_sdk_test_import_requires_owning_application_product(self):
         unit = next(value for value in self.objects.values() if value.get("name") == "AI_HLYTests"
                     and value.get("isa") == "PBXNativeTarget")
+        self.assertIn("HanlinApplication",
+                      [self.objects[key]["productName"] for key in unit["packageProductDependencies"]])
         unit["packageProductDependencies"] = [key for key in unit["packageProductDependencies"]
-                                               if self.objects[key].get("productName") != "HanlinAgentCore"]
+                                               if self.objects[key].get("productName") != "HanlinApplication"]
         with self.assertRaisesRegex(AssertionError, "unexpected SDK dependency"):
             validate_agent_sdk_linkage(self.project, ROOT)
 
@@ -70,6 +86,45 @@ class ProjectGraphTests(unittest.TestCase):
         self.mini["dependencies"] = ["D7B6C3C02D50A55D004E3AD6"]
         with self.assertRaises(AssertionError):
             validate_graph(self.project, self.manifest)
+
+    def test_miniapps_extensions_do_not_alias_ai_targets(self):
+        dependency = self.objects[self.mini["dependencies"][0]]
+        dependency["target"] = next(key for key, value in self.objects.items()
+                                    if value.get("name") == "HanlinScriptingWidgets"
+                                    and value.get("isa") == "PBXNativeTarget")
+        with self.assertRaisesRegex(AssertionError, "only on its own"):
+            validate_graph(self.project, self.manifest)
+
+    def test_miniapps_extensions_are_actually_embedded(self):
+        phase = next(self.objects[key] for key in self.mini["buildPhases"]
+                     if self.objects[key].get("name") == "Embed MiniApps App Extensions")
+        phase["files"].pop()
+        with self.assertRaisesRegex(AssertionError, "embed each own extension"):
+            validate_graph(self.project, self.manifest)
+
+    def test_miniapps_extensions_link_original_shared_sdk(self):
+        target = next(value for value in self.objects.values()
+                      if value.get("name") == "HanlinMiniAppsWidgets" and value.get("isa") == "PBXNativeTarget")
+        phase = next(self.objects[key] for key in target["buildPhases"]
+                     if self.objects[key]["isa"] == "PBXFrameworksBuildPhase")
+        phase["files"].pop()
+        with self.assertRaisesRegex(AssertionError, "original SDK closure"):
+            validate_graph(self.project, self.manifest)
+
+    def test_native_surfaces_share_only_miniapps_namespace(self):
+        import plistlib
+        for info in [ROOT / "HanlinMiniAppsApp/Info.plist",
+                     *sorted((ROOT / "HanlinMiniAppsExtensions").glob("*/Info.plist"))]:
+            config = plistlib.loads(info.read_bytes())["HanlinExtensionHost"]
+            self.assertEqual(config["AppGroupIdentifier"], "group.com.itorah.chavrusachat")
+            self.assertEqual(config["StorageNamespace"], "HanlinMiniApps/v1")
+        self.assertEqual(
+            {path.parent.name for path in (ROOT / "HanlinMiniAppsExtensions").glob("*/Info.plist")},
+            {"Notification", "Share", "Translation", "Widgets"},
+        )
+        for entitlements in (ROOT / "HanlinMiniAppsExtensions").glob("*/*.entitlements"):
+            self.assertIn("group.com.itorah.chavrusachat",
+                          plistlib.loads(entitlements.read_bytes())["com.apple.security.application-groups"])
 
     def test_reject_whole_app_source_membership(self):
         self.mini["fileSystemSynchronizedGroups"].append("D7B6C3C32D50A55D004E3AD6")
@@ -96,8 +151,11 @@ class ProjectGraphTests(unittest.TestCase):
     def test_reject_declared_but_unlinked_product(self):
         phase = next(self.objects[key] for key in self.mini["buildPhases"]
                      if self.objects[key]["isa"] == "PBXFrameworksBuildPhase")
-        phase["files"].pop()
-        with self.assertRaises(AssertionError):
+        widget_links = [key for key in phase["files"]
+                        if self.objects.get(self.objects[key].get("productRef"), {}).get("productName") == "HanlinWidgetUI"]
+        self.assertEqual(len(widget_links), 1)
+        phase["files"].remove(widget_links[0])
+        with self.assertRaisesRegex(AssertionError, "Every declared MiniApps product must actually be linked"):
             validate_graph(self.project, self.manifest)
 
     def test_reject_duplicate_project_key(self):

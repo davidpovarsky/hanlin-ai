@@ -1,0 +1,34 @@
+{
+  "files": {
+    "Podfile.lock": {
+      "bytes": 76498,
+      "sha256": "c012c6f8ee2ca782aea7788349d75a3a57e6e4be8d324037a8b9dce573e4d8e6"
+    }
+  },
+  "schemes": [
+    "xcuserdata/m1.xcuserdatad/xcschemes/ExpoUI.xcscheme",
+    "xcuserdata/m1.xcuserdatad/xcschemes/ExpoAsset.xcscheme"
+  ],
+  "npmCacheCandidates": [
+    {
+      "path": "/Users/m1/.npm/_cacache/content-v2/sha512/a9/a2/66b93b6cc2081774141f894769c6b54633b97eb47f221031f054332ec72085fe401abbcb14195b96ac3298356e32031ed9f27720b13f2cdbba578d11f918",
+      "bytes": 88332,
+      "sha256": "2bfbb115da9111702530e5df550eac7e2a074aa12b6297fcc332744767623126",
+      "sha512": "a9a266b93b6cc2081774141f894769c6b54633b97eb47f221031f054332ec72085fe401abbcb14195b96ac3298356e32031ed9f27720b13f2cdbba578d11f918",
+      "matchesLockedIntegrity": true
+    },
+    {
+      "path": "/Users/m1/.npm/_cacache/content-v2/sha512/a9/a2/66b93b6cc2081774141f894769c6b54633b97eb47f221031f054332ec72085fe401abbcb14195b96ac3298356e32031ed9f27720b13f2cdbba578d11f918",
+      "bytes": 88332,
+      "sha256": "2bfbb115da9111702530e5df550eac7e2a074aa12b6297fcc332744767623126",
+      "sha512": "a9a266b93b6cc2081774141f894769c6b54633b97eb47f221031f054332ec72085fe401abbcb14195b96ac3298356e32031ed9f27720b13f2cdbba578d11f918",
+      "matchesLockedIntegrity": true
+    }
+  ],
+  "sdkCandidates": [],
+  "hostDirs": [
+    "build/runtime-host/RuntimeHostResources.zip",
+    "build/runtime-host/host-metadata.json",
+    "build/runtime-host/runtime-host.sha256"
+  ]
+}

@@ -1,0 +1,143 @@
+{
+  "schemaVersion": 1,
+  "sourceDirectory": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence",
+  "sourceHost": "109bcd84-6a7a-475f-9c53-0cf427912d04",
+  "files": [
+    {
+      "source": "runtime-host-final-attempt1.json",
+      "path": "runtime-host-final-attempt1.json",
+      "original_bytes": 528,
+      "original_sha256": "ca10975cd290b1f5be527d3cb9787f3377cf3e5ff0168f39cd7b45c26039493d",
+      "bytes": 528,
+      "sha256": "ca10975cd290b1f5be527d3cb9787f3377cf3e5ff0168f39cd7b45c26039493d",
+      "compression": null
+    },
+    {
+      "source": "runtime-host-final-attempt1.log",
+      "path": "runtime-host-final-attempt1.log.gz",
+      "original_bytes": 5530,
+      "original_sha256": "9a9782b3e63c14ec28ba4f42c1cafefd89947b2365703811deec960307bcbfb2",
+      "bytes": 1087,
+      "sha256": "2204897f023fb033c494c0bd2761b1257d5826d1e02c599ee81e23c8bcc2b6bd",
+      "compression": "gzip"
+    },
+    {
+      "source": "runtime-host-final-attempt2.json",
+      "path": "runtime-host-final-attempt2.json",
+      "original_bytes": 857,
+      "original_sha256": "3ce2970c4d7bb411c46a135222a30d7ebb8419fafe25e891fbaa13a81c854247",
+      "bytes": 857,
+      "sha256": "3ce2970c4d7bb411c46a135222a30d7ebb8419fafe25e891fbaa13a81c854247",
+      "compression": null
+    },
+    {
+      "source": "runtime-host-final-attempt2.log",
+      "path": "runtime-host-final-attempt2.log.gz",
+      "original_bytes": 19995,
+      "original_sha256": "8fd1285ddc70567972d3b48bce0a47d6ef9cc534196db54787a3f2f48b7347a7",
+      "bytes": 7809,
+      "sha256": "620171ca840eb1a7d532b8feecd32827572d901b145bc49ced438a1feac3c8b9",
+      "compression": "gzip"
+    },
+    {
+      "source": "app-preparation.json",
+      "path": "app-preparation.json",
+      "original_bytes": 1135,
+      "original_sha256": "ba684225e9496e228df75c6727a0f32a49dc338b0a6e63f0b004d19dab385bf7",
+      "bytes": 1135,
+      "sha256": "ba684225e9496e228df75c6727a0f32a49dc338b0a6e63f0b004d19dab385bf7",
+      "compression": null
+    },
+    {
+      "source": "app-preparation-1.log",
+      "path": "app-preparation-1.log.gz",
+      "original_bytes": 3605,
+      "original_sha256": "c8e7a124d438a3ed2d05fa552b80ee4b9285d6bd254f468dcfbe1d6e8a2d6d6e",
+      "bytes": 1524,
+      "sha256": "307ccaab2c18914acc6b86a56462e32bf6122f019f6e1fd512d0093e4eee3012",
+      "compression": "gzip"
+    },
+    {
+      "source": "app-preparation-2.log",
+      "path": "app-preparation-2.log.gz",
+      "original_bytes": 88,
+      "original_sha256": "7b205399ea53f72db8afa2fe3d77370cd6f0ac3d9ea8d19cea47a806236d4d18",
+      "bytes": 103,
+      "sha256": "e84bbf8a619bced17b24bd14e88978b1eef257db7a6a9b2f2377b027ec5cf6bb",
+      "compression": "gzip"
+    },
+    {
+      "source": "app-preparation-3.log",
+      "path": "app-preparation-3.log.gz",
+      "original_bytes": 2609,
+      "original_sha256": "bebfeccd07e5eea4c150228e97aee6eb5e46611ca6ee27af012d3d9cd16f7414",
+      "bytes": 1202,
+      "sha256": "b69ceba1b0b045798bfa9d3265201d7948cd8e3b7eec534419d56a8eb4eb4863",
+      "compression": "gzip"
+    },
+    {
+      "source": "a2ui-schemas.json/result.json",
+      "path": "a2ui-schemas.json/result.json",
+      "original_bytes": 2608,
+      "original_sha256": "5d3263330facb2987b670c1ab6a42128a1f389cb7bd72996c40cbf34470dcab7",
+      "bytes": 2608,
+      "sha256": "5d3263330facb2987b670c1ab6a42128a1f389cb7bd72996c40cbf34470dcab7",
+      "compression": null
+    },
+    {
+      "source": "a2ui-schemas.json/compiler.log",
+      "path": "a2ui-schemas.json/compiler.log.gz",
+      "original_bytes": 0,
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+      "compression": "gzip"
+    },
+    {
+      "source": "composer-platform-attempt2-tests.json",
+      "path": "composer-platform-attempt2-tests.json",
+      "original_bytes": 10945,
+      "original_sha256": "3eb69fc6a6e5373d37042af8714075a7d83db71f8aef8ea7fc43adc3b26ce808",
+      "bytes": 10945,
+      "sha256": "3eb69fc6a6e5373d37042af8714075a7d83db71f8aef8ea7fc43adc3b26ce808",
+      "compression": null
+    },
+    {
+      "source": "composer-platform-attempt2-tests.log",
+      "path": "composer-platform-attempt2-tests.log.gz",
+      "original_bytes": 20183,
+      "original_sha256": "5ec770300eddafb8cbdc1085bf7b31bf6057fe1a567b1b60d33560269cc887be",
+      "bytes": 4020,
+      "sha256": "0ee6ef821b0bd005a46ed536aed86dcd84dd1b2b66528bb75f79d2165a0cb414",
+      "compression": "gzip"
+    },
+    {
+      "source": "composer-platform-attempt2-inputs.json",
+      "path": "composer-platform-attempt2-inputs.json",
+      "original_bytes": 56446,
+      "original_sha256": "7d575089e3c19988051f560e753190b782e01a9bcc533e63081bde4020272f43",
+      "bytes": 56446,
+      "sha256": "7d575089e3c19988051f560e753190b782e01a9bcc533e63081bde4020272f43",
+      "compression": null
+    },
+    {
+      "source": "composer-platform-attempt2-tests.derived.junit.xml",
+      "path": "composer-platform-attempt2-tests.derived.junit.xml",
+      "original_bytes": 8068,
+      "original_sha256": "2f9dea834db5356af2dd4738a49108d3c035b35c33e4457218c30fbcafa033de",
+      "bytes": 8068,
+      "sha256": "2f9dea834db5356af2dd4738a49108d3c035b35c33e4457218c30fbcafa033de",
+      "compression": null
+    },
+    {
+      "source": "composer-platform-attempt2-tests-swift-testing.xml",
+      "path": "composer-platform-attempt2-tests-swift-testing.xml",
+      "original_bytes": 6083,
+      "original_sha256": "835ccbb0b9824b41466964d4fbaf463ee75719dd1288f770de51a124b1172df3",
+      "bytes": 6083,
+      "sha256": "835ccbb0b9824b41466964d4fbaf463ee75719dd1288f770de51a124b1172df3",
+      "compression": null
+    }
+  ],
+  "transport": "pinned scaleway-mac alias; BatchMode=yes; StrictHostKeyChecking=yes"
+}

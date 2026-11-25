@@ -14,8 +14,8 @@ import Testing
     }
 
     @Test func versionOneCheckpointCanBeRestoredWithoutDestructiveMigration() async throws {
-        // macOS's temporary root may be a system symlink (/var -> /private/var).
-        // The private store intentionally rejects symlink ancestors; supply a canonical fixture root.
+        // Keep the established checkpoint fixture location. StoreSystemPathTests also
+        // exercises new and existing stores through Darwin system aliases.
         let fixtureRoot = ProcessInfo.processInfo.environment["RUNNER_TEMP"].map { URL(filePath: $0) }
             ?? FileManager.default.homeDirectoryForCurrentUser
         let directory = fixtureRoot

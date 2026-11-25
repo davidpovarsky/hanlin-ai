@@ -21,6 +21,14 @@ def canonical_name(name: str) -> str:
         raise ValueError("Invalid Host archive path")
     return name
 
+def miniapp_sdk_inputs(source: Path) -> dict | None:
+    if not (source / "miniapp-authoring.mjs").is_file():
+        return None
+    result = subprocess.run(
+        ["node", str(REPOSITORY / "Scripts/MiniApps/stage-sdk.mjs"), "--fingerprint"],
+        capture_output=True, text=True, check=True)
+    return json.loads(result.stdout)
+
 def validate_archive(archive: Path, source: Path, *, check_sources: bool = False) -> list[str]:
     errors = []
     try:
@@ -68,6 +76,21 @@ def validate_archive(archive: Path, source: Path, *, check_sources: bool = False
                         raise ValueError("Invalid Host dependency patch path")
                     if hashlib.sha256(read(name)).hexdigest() != patch["patchedSHA256"]:
                         errors.append("Host dependency patch digest mismatch: " + name)
+            sdk_inputs = miniapp_sdk_inputs(source)
+            if sdk_inputs is not None:
+                sdk = json.loads(read("MiniAppSDK/miniapp-sdk.json"))
+                if sdk.get("schemaVersion") != 1 or sdk.get("inputSHA256") != sdk_inputs["sha256"]:
+                    errors.append("MiniApp SDK differs from current host source inputs")
+                if set(sdk.get("engines", {})) != {"expo", "nativescript", "scriptwidget"}:
+                    errors.append("MiniApp SDK is missing an active authoring engine")
+                for item in sdk.get("files", []):
+                    name = "MiniAppSDK/" + canonical_name(item["path"])
+                    if hashlib.sha256(read(name)).hexdigest() != item["sha256"]:
+                        errors.append("MiniApp SDK source digest mismatch: " + name)
+                for engine in sdk.get("engines", {}).values():
+                    for field in ("tsconfigPath", "typescriptPath"):
+                        if "MiniAppSDK/" + canonical_name(engine[field]) not in entries:
+                            errors.append("MiniApp SDK authoring resource missing: " + engine[field])
             if check_sources:
                 expected = {path.name: path.read_bytes() for path in source.glob("*.mjs")}
                 actual = {name for name in entries if "/" not in name and name.endswith(".mjs")}
@@ -76,7 +99,7 @@ def validate_archive(archive: Path, source: Path, *, check_sources: bool = False
                 for name in actual & set(expected):
                     if read(name) != expected[name]:
                         errors.append("Host module differs from current source: " + name)
-    except (OSError, KeyError, ValueError, zipfile.BadZipFile) as error:
+    except (OSError, KeyError, ValueError, subprocess.CalledProcessError, zipfile.BadZipFile) as error:
         errors.append("Invalid/incomplete Host archive: " + str(error))
     return errors
 
@@ -113,6 +136,9 @@ def synchronize_archive(archive: Path, source: Path, builder) -> str:
 
 def input_hash(source: Path, node_fingerprint: str) -> str:
     digest = hashlib.sha256(json.dumps(json.loads(node_fingerprint), sort_keys=True).encode())
+    sdk_inputs = miniapp_sdk_inputs(source)
+    if sdk_inputs is not None:
+        digest.update(b"MiniAppSDK\0" + sdk_inputs["sha256"].encode())
     files = []
     for directory, subdirectories, names in os.walk(source):
         subdirectories[:] = sorted(name for name in subdirectories if name not in {"node_modules", ".git"})
@@ -143,7 +169,7 @@ def reusable_prepared_archive(output: Path, source: Path, fingerprint: str) -> b
                 and metadata.get("tests") == "passed"
                 and metadata.get("jitlessArchiveSmoke") == "passed"
                 and not validate_archive(archive, source, check_sources=True))
-    except (OSError, ValueError):
+    except (OSError, ValueError, subprocess.CalledProcessError):
         return False
 
 def main() -> int:

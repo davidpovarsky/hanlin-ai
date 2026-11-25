@@ -7,5 +7,9 @@
   "hanlinRuntime": "hanlin-nativescript",
   "dependencies": {
     "@nativescript/core": "9.1.0"
+  },
+  "hanlinNativeScript": {
+    "runtimeVersion": "9.1.0",
+    "windowFactory": 1
   }
 }

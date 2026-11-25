@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "baseSourceSHA": "4ea670e120a3217423bc73db68dab514c78079de",
+  "previousCommit": "bbf5eeb71d62412242ddc54cf62c410cf3c7221d",
+  "status": {
+    "missingManifest": "EXECUTED_PASS",
+    "unavailableModernNativePlugins": "NEEDS_APPLE_EXECUTION"
+  },
+  "changedSourceFiles": [
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinScriptAnalyzerTests.swift",
+      "sha256": "e13b930558bc268c319cd28c5a7678e88571554a430476812847bff3b946ff55"
+    },
+    {
+      "path": "Scripts/MiniApps/Tests/test_archive_import_policy.py",
+      "sha256": "fd9a842d4ec979d35c6572b8b1d6968e93cd701ee5ade12dda70973242ec5a77"
+    }
+  ],
+  "productionInputsUnchanged": [
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
+      "sha256": "a8b4b96df4fb0782e78e0c48132def346f63436b9cff96286088f52b5889da54",
+      "unchangedFromBase": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinMiniAppHostVersions.swift",
+      "sha256": "a31357ce803c24ba80aed6f4c81b7e31f82abde1ec6c2ef00c6ee4a57c272717",
+      "unchangedFromBase": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinArchivePolicy.swift",
+      "sha256": "57b142d4770a8f8916d3d651f1a727a0ae55254cc05a082db12e1c5d22f30ba2",
+      "unchangedFromBase": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinPackageCenter.swift",
+      "sha256": "cd98b6ffb24ec4c0463d021a30204b68bcb96f1bd8dc3e2749ca5862f21dac2b",
+      "unchangedFromBase": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPackagePath.swift",
+      "sha256": "ab230354fd913397dfb2cb776bdde629fe0cf603b17729a7b9dc7cd9aab98c76",
+      "unchangedFromBase": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinPackageContracts.swift",
+      "sha256": "25122dd11c471950514e717ffb5f17bbcefaa7219183a0e838c71e02129c94ac",
+      "unchangedFromBase": true
+    }
+  ],
+  "portableResult": "missing-manifest-result.json",
+  "portableRawLog": "missing-manifest/archive-import-policy.txt",
+  "portableRawLogSHA256": "627e93dc9c5e41efddbf7461320f4e16d97fa36d8fe3fc9dacfbf31aa798566d",
+  "executedPortableMethods": 1,
+  "previousArchiveMethodsRerun": 0,
+  "previousPermissionMethodsRerun": 0,
+  "analyzerLocalCheck": "analyzer-test-syntax.json",
+  "analyzerMethod": "HanlinScriptCompilerTests/HanlinScriptAnalyzerTests/unavailableModernNativePluginsFailBeforeImport",
+  "appleFilter": "HanlinScriptAnalyzerTests/(expoMainMustMatchTheInspectedForegroundEntrypoint|nativeScriptPreparedEntrypointIsAlwaysTheCanonicalBundle|nativeScriptSwiftUIContract|nativeScriptCoreContract|expoSwiftUIContract|expoMultiExposureMatrix|malformedPreparedEntrypointsFailWithStableDiagnostic|unavailableModernNativePluginsFailBeforeImport)",
+  "expectedAppleMethods": 8,
+  "scope": "Tests and recorded evidence only. No production rule, capability, grant gate, limit, workflow, app selector, or runtime version changed.",
+  "priorExpectedVersionEvidence": "expected-version-bindings.json/.diff describe the previous bbf commit. Its after-file hash is that checkpoint, before this new method; the final test-source hash is recorded above.",
+  "nativeAcceptance": "Not executed in this lane. Root owns any Mac dispatch and result interpretation."
+}

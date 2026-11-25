@@ -1,0 +1,90 @@
+import { storageAPICatalog } from "./storageAPICatalog.js";
+import { dataAPICatalog } from "./dataAPICatalog.js";
+
+// Editor metadata for the native JSX components selected by
+// ScriptWidgetElementView's switch. The native switch remains the runtime
+// authority; tests verify that this metadata stays aligned with it.
+export const scriptWidgetAPI = {
+  "schemaVersion": 1,
+  "runtimeVersion": "1.6",
+  "documentation": "Public JSX surface shared by ScriptWidget Runtime and Studio.",
+  "platforms": {
+    "ios": "16.0",
+    "macos": "26.0",
+    "widgetExtension": "18.0"
+  },
+  "globalProperties": {
+    "background": { "type": "color", "documentation": "Background color, hex value, or named color." },
+    "backgroundMaterial": { "type": "enum", "values": ["none", "ultraThin", "thin", "regular", "thick", "ultraThick"], "documentation": "Runtime API 1.4. Public SwiftUI frosted material inside the widget, not Home Screen wallpaper blur or system Liquid Glass. At most four material backgrounds per tree. background supplies an opaque-composited Reduce Transparency fallback. In accented/vibrant mode local material is omitted for system rendering; none keeps the ordinary background." },
+    "color": { "type": "color", "documentation": "Foreground color, hex value, or named color." },
+    "font": { "type": "enum", "values": ["largeTitle", "title", "title2", "title3", "headline", "subheadline", "body", "callout", "footnote", "caption", "caption2"], "documentation": "Semantic text style." },
+    "fontWeight": { "type": "enum", "values": ["ultraLight", "thin", "light", "regular", "medium", "semibold", "bold", "heavy", "black"], "documentation": "Font weight." },
+    "fontDesign": { "type": "enum", "values": ["default", "rounded", "serif", "monospaced"], "documentation": "Font design." },
+    "frame": { "type": "number|string", "documentation": "Square size (64 or \"64\"), width,height (\"64,48\"), fill both directions (\"max\"), full width with a fixed height (\"max,48\") or full height with a fixed width (\"64,max\"). An alignment may follow: \"max,leading\", \"64,48,topLeading\", \"max,48,leading\", \"64,max,top\"; one of center, leading, trailing, top, bottom, topLeading, topTrailing, bottomLeading, bottomTrailing. No spaces; a value in another form is ignored, and an unknown alignment is read as center. There is no form for full width with the content's own height: put a <spacer/> in an <hstack>." },
+    "padding": { "type": "number|string", "documentation": "Padding amount or edge description." },
+    "corner": { "type": "number", "documentation": "Corner radius." },
+    "opacity": { "type": "number", "documentation": "Opacity from 0 through 1." },
+    "alignment": { "type": "enum", "values": ["center", "leading", "trailing", "top", "bottom", "topLeading", "topTrailing", "bottomLeading", "bottomTrailing", "firstTextBaseline", "lastTextBaseline"], "documentation": "Layout alignment." },
+    "clip": { "type": "enum", "values": ["circle", "rect", "capsule", "ellipse"], "documentation": "Clip the view to a shape." },
+    "rotation": { "type": "number", "documentation": "Rotation in degrees." },
+    "rotation3d": { "type": "string", "documentation": "Static degree,x,y,z rotation with four finite numbers and a nonzero axis. Invalid values are ignored; axis magnitude is normalized. Reduce Motion removes the tilt. This does not read device motion or provide parallax." },
+    "shadow": { "type": "string", "documentation": "Shadow color, radius, and offset description." },
+    "animation": { "type": "string", "documentation": "Clock hands, custom intervals and swings. iPhone, iPad and Mac widgets move with WidgetKit's clock-hand effect; the iOS app's previews animate, and the Mac app's previews show standard clock poses with other effects at rest. Signed clockCustom intervals specify a half-turn (full cycle = 2 * abs(interval)), minimum magnitude 0.25 seconds. Reduced motion/luminance freezes standard clock poses and keeps custom/swing effects at rest. Dynamic scripts are not rerun on animation ticks." },
+    "widgetAccentable": { "type": "boolean", "documentation": "Group this view into the accent layer in tinted and vibrant widget appearances." },
+    "linkurl": { "type": "url", "documentation": "Widget deep link URL." }
+  },
+  "components": {
+    "VStack": { "documentation": "Arrange children vertically.", "children": true, "properties": { "spacing": { "type": "number" } } },
+    "HStack": { "documentation": "Arrange children horizontally.", "children": true, "properties": { "spacing": { "type": "number" } } },
+    "ZStack": { "documentation": "Overlay children.", "children": true, "properties": {} },
+    "VGrid": { "documentation": "Vertical lazy grid.", "children": true, "properties": { "columns": { "type": "string", "required": true }, "spacing": { "type": "number" }, "alignment": { "type": "enum", "values": ["leading", "center", "trailing"] } } },
+    "HGrid": { "documentation": "Horizontal lazy grid.", "children": true, "properties": { "columns": { "type": "string", "required": true }, "spacing": { "type": "number" }, "alignment": { "type": "enum", "values": ["top", "center", "bottom", "firstTextBaseline", "lastTextBaseline"] } } },
+    "Text": { "documentation": "Display text content.", "children": false, "properties": { "text": { "type": "string" } } },
+    "Date": { "documentation": "Display a formatted date.", "children": false, "properties": { "date": { "type": "date|number", "required": true }, "style": { "type": "enum", "values": ["time", "date", "relative", "offset", "timer"] } } },
+    "Image": { "documentation": "Display a bundled, remote, or SF Symbol image.", "children": false, "properties": { "systemName": { "type": "string" }, "name": { "type": "string" }, "id": { "type": "string", "deprecated": "Use name." }, "url": { "type": "url" }, "src": { "type": "url", "deprecated": "Use url." }, "ratio": { "type": "number" }, "mode": { "type": "enum", "values": ["fit", "fill"] }, "accentedRenderingMode": { "type": "enum", "values": ["accented", "desaturated", "accentedDesaturated", "fullColor"], "documentation": "Control how the image is rendered in tinted and clear widget appearances." } } },
+    "Gif": { "documentation": "Display a bounded package GIF using system decoding: up to 8 MiB input and 1,048,576 canvas pixels. iOS retains at most 60 downsampled frames / 4 MiB decoded pixels; more frames fall back to the first frame. Mac, Reduce Motion and reduced luminance use a static first frame. Active iOS previews use public SwiftUI timing with variable frame delays. Snapshots, inactive scenes, Mac and accessibility fallbacks use the first frame. No private clock bridge or continuous WidgetKit guarantee.", "children": false, "properties": { "file": { "type": "string", "required": true } } },
+    "Spacer": { "documentation": "Flexible layout space.", "children": false, "properties": { "minLength": { "type": "number" } } },
+    "Rect": { "documentation": "Rectangle shape.", "children": false, "properties": { "trim": { "type": "number|string" }, "stroke": { "type": "string" } } },
+    "RoundedRect": { "documentation": "Filled rounded rectangle.", "children": false, "properties": { "radius": { "type": "number" } } },
+    "Capsule": { "documentation": "Capsule shape.", "children": false, "properties": { "trim": { "type": "number|string" }, "stroke": { "type": "string" } } },
+    "Ellipse": { "documentation": "Ellipse shape.", "children": false, "properties": { "trim": { "type": "number|string" }, "stroke": { "type": "string" } } },
+    "Circle": { "documentation": "Circle shape.", "children": false, "properties": { "trim": { "type": "number|string" }, "stroke": { "type": "string" } } },
+    "Gauge": { "documentation": "Display a gauge or instrument.", "children": false, "properties": { "type": { "type": "string" }, "value": { "type": "number" }, "style": { "type": "enum", "values": ["circular", "linear"] }, "text": { "type": "string" }, "current": { "type": "string" }, "min": { "type": "string" }, "max": { "type": "string" }, "angle": { "type": "number" }, "thickness": { "type": "number" }, "needleColor": { "type": "color" }, "label": { "type": "string" }, "title": { "type": "string" }, "sections": { "type": "string" } } },
+    "Chart": { "documentation": "Render chart data.", "children": false, "availability": { "ios": "16.0", "macos": "26.0" }, "properties": { "type": { "type": "enum", "values": ["bar", "bar-x", "bar-y", "bar-gantt", "line", "point", "line-point", "area", "rect", "rule-x"] }, "data": { "type": "json", "required": true }, "category": { "type": "boolean" }, "hideLegend": { "type": "boolean" }, "hideXAxis": { "type": "boolean" }, "hideYAxis": { "type": "boolean" } } },
+    "Link": { "documentation": "Open a URL when selected.", "children": true, "properties": { "url": { "type": "url", "required": true } } },
+    "Divider": { "documentation": "Horizontal or vertical separator.", "children": false, "properties": { "thickness": { "type": "number" }, "axis": { "type": "enum", "values": ["horizontal", "vertical"] } } },
+    "Line": { "documentation": "Fixed-length line.", "children": false, "properties": { "thickness": { "type": "number" }, "length": { "type": "number" }, "axis": { "type": "enum", "values": ["horizontal", "vertical"] } } },
+    "Icon": { "documentation": "SF Symbol icon.", "children": false, "properties": { "systemName": { "type": "string", "required": true }, "size": { "type": "number" } } },
+    "Label": { "documentation": "Text paired with an SF Symbol.", "children": false, "properties": { "title": { "type": "string" }, "systemName": { "type": "string", "required": true } } },
+    "Progress": { "documentation": "Linear or circular progress.", "children": false, "properties": { "value": { "type": "number", "required": true }, "total": { "type": "number" }, "label": { "type": "string" }, "style": { "type": "enum", "values": ["linear", "circular"] }, "trackColor": { "type": "color" }, "thickness": { "type": "number" } } },
+    "Ring": { "documentation": "Circular progress ring.", "children": false, "properties": { "value": { "type": "number", "required": true }, "thickness": { "type": "number" }, "trackColor": { "type": "color" } } },
+    "Badge": { "documentation": "Compact status badge.", "children": false, "properties": { "text": { "type": "string" }, "radius": { "type": "number" } } },
+    "Chip": { "documentation": "Outlined metadata chip.", "children": false, "properties": { "text": { "type": "string" }, "radius": { "type": "number" }, "borderColor": { "type": "color" } } },
+    "Stat": { "documentation": "Title, value, and subtitle statistic.", "children": false, "properties": { "title": { "type": "string" }, "value": { "type": "string", "required": true }, "subtitle": { "type": "string" }, "mutedColor": { "type": "color" } } },
+    "Button": { "documentation": "Interactive widget button. Use actionID to share a declared Package 2.0 action with Siri, Shortcuts, and Control Widgets.", "children": true, "availability": { "interactiveIos": "17.0" }, "requiredAny": ["action", "onClick", "actionID"], "properties": { "action": { "type": "enum", "values": ["reload"], "conflicts": ["actionID"] }, "onClick": { "type": "function", "conflicts": ["actionID"] }, "actionID": { "type": "action-id", "conflicts": ["action", "onClick"] } } },
+    "Toggle": { "documentation": "Interactive widget toggle. A declared actionID requires a package-relative storage stateKey.", "children": true, "availability": { "interactiveIos": "17.0" }, "requiredAny": ["onClick", "actionID"], "properties": { "on": { "type": "boolean", "required": true }, "onClick": { "type": "function", "conflicts": ["actionID"] }, "actionID": { "type": "action-id", "requires": ["stateKey"], "conflicts": ["onClick"] }, "stateKey": { "type": "storage-key", "requires": ["actionID"] } } }
+  },
+  "functions": {
+    ...Object.fromEntries(storageAPICatalog.map((api) => [api.id, api])),
+    ...Object.fromEntries(dataAPICatalog.map((api) => [api.id, {
+      documentation: api.notes,
+      minimumRuntimeVersion: api.minimumRuntimeVersion,
+      arguments: api.arguments,
+      returns: api.asynchronous ? "Promise<json>" : typeof api.value === "object" ? "json" : typeof api.value,
+    }])),
+    "$icloud.readJSON": {"documentation": "Read cached JSON and revision; conflicts preserve all heads. Requires icloud permission and a native connection. Never certifies upload.", "arguments": ["name"], "returns": "Promise<json>", "minimumRuntimeVersion": "1.5"},
+    "$icloud.writeJSON": {"documentation": "Save a new immutable JSON revision locally from a user action. Requires the revision from readJSON. Background exchange is eventual.", "arguments": ["name", "value", "expectedRevision"], "returns": "Promise<json>", "minimumRuntimeVersion": "1.5"},
+    "$icloud.resolveJSON": {"documentation": "Explicitly resolve all observed conflicting heads into a new revision. Stale tokens fail; originals remain.", "arguments": ["name", "value", "expectedRevision"], "returns": "Promise<json>", "minimumRuntimeVersion": "1.5"},
+    "$icloud.sync": {"documentation": "Exchange materialized revisions with iCloud; requires a user action. Upload completion is unknown.", "arguments": [], "returns": "Promise<json>", "minimumRuntimeVersion": "1.5"},
+    "$icloud.status": {"documentation": "Read native connection state. In the app, explicitly connect packages to separate stores for isolation or the same store ID to share JSON documents. Scripts cannot choose store IDs. Sync is eventual; local $storage is not migrated. Web uses preview mocks.", "arguments": [], "returns": "Promise<json>", "minimumRuntimeVersion": "1.5"},
+    "$file.exists": { "documentation": "Return whether a regular file is locally present inside this package, including binary assets. Missing files, directories, unsafe paths and links return false. Does not download iCloud files or read outside the package. Web preview uses workspace file presence.", "arguments": ["path"], "returns": "boolean", "minimumRuntimeVersion": "1.3" },
+    "$file.read": { "documentation": "Read package-relative UTF-8 text. Missing or unavailable files return an empty string.", "arguments": ["path"], "returns": "string" },
+    "$file.readJSON": { "documentation": "Read a package-relative JSON object.", "arguments": ["path"], "returns": "json" },
+    "fetch": { "documentation": "Perform a network request and return its response text. Existing HTTP methods keep this string result." },
+    "$http.getResponse": { "documentation": "GET response metadata: {status, body, headers}. Headers are limited to content-type, cache-control, expires, last-modified, date and retry-after (lowercase; each at most 2048 UTF-8 bytes). Network permissions, public-host policy, redirects, body limits and timeline restrictions still apply. HTTP error statuses resolve; transport errors reject.", "arguments": ["url", "options?"], "returns": "Promise<json>", "minimumRuntimeVersion": "1.3" },
+    "importJS": { "documentation": "Import a package-relative JavaScript file." },
+    "$dataSource.request": { "documentation": "Call a declared Data Source Plugin operation. Requires Package 2.0 plugins, network permission, and networkDomains declarations.", "arguments": ["pluginID", "operationID", "parameters"], "returns": "Promise<json|string>" },
+    "$xml.parse": { "documentation": "Parse up to 256 KiB of XML into {name, attributes, text, children}. DTDs and external entities are rejected; depth and node limits apply.", "arguments": ["source"], "returns": "XMLNode" }
+  },
+  "environmentValues": ["timeline-date", "timeline-time-zone", "timeline-slot", "timeline-is-projection", "widget-size", "widget-param", "widget-rendering-mode", "live-activity-state", "live-activity-is-stale", "live-activity-surface", "action-id", "action-source", "action-value", "control-id", "control-value"]
+};

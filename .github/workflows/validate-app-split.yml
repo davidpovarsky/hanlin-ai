@@ -45,7 +45,7 @@ on:
         required: false
         default: baseline
       paired_test_scope:
-        description: Original cross-product flows or the shared ingress chat consumer
+        description: Original cross-product, shared ingress, authoring or isolated MiniApp checks
         type: string
         required: false
         default: cross_product
@@ -99,9 +99,9 @@ on:
         required: false
         default: baseline
       paired_test_scope:
-        description: Original cross-product flows or the shared ingress chat consumer
+        description: Original cross-product, shared ingress, authoring or isolated MiniApp checks
         type: choice
-        options: [cross_product, shared_ingress, product_and_share]
+        options: [cross_product, shared_ingress, product_and_share, miniapp_authoring, miniapp_sdk04, miniapp_complete, miniapp_contracts, miniapp_lifecycle, miniapp_scriptwidget]
         required: false
         default: cross_product
 
@@ -178,11 +178,42 @@ jobs:
           if-no-files-found: error
           retention-days: 14
 
+  miniapp-contracts:
+    name: Verify MiniApp import contracts
+    if: ${{ !inputs.audit_release_resources && !inputs.prepare_miniapps_registration && inputs.paired_product_acceptance && inputs.paired_test_scope == 'miniapp_contracts' }}
+    uses: ./.github/workflows/validate-scripting-runtime.yml
+    with:
+      runtime_job_foundation_only: false
+      force_clean_build: true
+      test_filter: HanlinScriptAnalyzerTests/(expoMainMustMatchTheInspectedForegroundEntrypoint|nativeScriptPreparedEntrypointIsAlwaysTheCanonicalBundle|nativeScriptSwiftUIContract|nativeScriptCoreContract|expoSwiftUIContract|expoMultiExposureMatrix|malformedPreparedEntrypointsFailWithStableDiagnostic|unavailableModernNativePluginsFailBeforeImport)
+    secrets: inherit
+
+  miniapp-lifecycle:
+    name: Verify MiniApp store lifecycle
+    if: ${{ !inputs.audit_release_resources && !inputs.prepare_miniapps_registration && inputs.paired_product_acceptance && inputs.paired_test_scope == 'miniapp_lifecycle' }}
+    uses: ./.github/workflows/validate-scripting-runtime.yml
+    with:
+      runtime_job_foundation_only: false
+      force_clean_build: true
+      test_filter: HanlinAtomicScriptStoreTests/lifecycle
+    secrets: inherit
+
+  miniapp-scriptwidget:
+    name: Verify original ScriptWidget adapter semantics
+    if: ${{ !inputs.audit_release_resources && !inputs.prepare_miniapps_registration && inputs.paired_product_acceptance && inputs.paired_test_scope == 'miniapp_scriptwidget' }}
+    uses: ./.github/workflows/validate-scripting-runtime.yml
+    with:
+      runtime_job_foundation_only: false
+      force_clean_build: true
+      test_filter: HanlinDualWidgetEnginesTests/(rootFragmentsPreserveOriginalElementAllowances|scriptWidgetUsesOriginalElementLimitsWithoutExtraMaterialQuotas)
+    secrets: inherit
+
   miniapps:
-    if: ${{ !inputs.audit_release_resources && !inputs.prepare_miniapps_registration }}
+    if: ${{ !inputs.audit_release_resources && !inputs.prepare_miniapps_registration && !(inputs.paired_product_acceptance && (inputs.paired_test_scope == 'miniapp_contracts' || inputs.paired_test_scope == 'miniapp_lifecycle' || inputs.paired_test_scope == 'miniapp_scriptwidget')) }}
     runs-on: xcode-27
-    # Include both bounded cold builds, unchanged UI deadlines and evidence upload.
-    timeout-minutes: ${{ inputs.signed_release_archives && 150 || inputs.paired_product_acceptance && 150 || 90 }}
+    # Paired: observed ~23 min prep + 60/30 min builds + 20/35 min tests + 6 min generator;
+    # the remaining 36 min cover simulator setup, metadata and evidence/cache uploads.
+    timeout-minutes: ${{ inputs.signed_release_archives && 150 || inputs.paired_product_acceptance && 210 || 90 }}
     env:
       SPLIT_EVIDENCE: ${{ github.workspace }}/build/app-split-evidence
       GH_TOKEN: ${{ github.token }}
@@ -244,6 +275,16 @@ jobs:
           fi
           plutil -lint AI_HLY.xcodeproj/project.pbxproj HanlinMiniAppsApp/HanlinMiniApps.entitlements
           python3 Scripts/ProductSplit/verify_targets.py
+      - name: Resolve current original MiniApp sources and exact build graph
+        id: split-upstreams
+        if: ${{ !inputs.signing_preflight_only }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          trap 'cp build/acceptance/miniapp-upstreams/resolution.json "$SPLIT_EVIDENCE/upstream-resolution.json" 2>/dev/null || true; git diff --binary > "$SPLIT_EVIDENCE/upstream-inputs.patch"' EXIT
+          node Scripts/MiniApps/resolve-upstreams.mjs --apply --cache="$RUNNER_TEMP/hanlin-miniapp-upstreams" 2>&1 | tee "$SPLIT_EVIDENCE/upstream-resolution.log"
+          cp build/acceptance/miniapp-upstreams/resolution.json "$SPLIT_EVIDENCE/upstream-resolution.json"
+          git diff --binary > "$SPLIT_EVIDENCE/upstream-inputs.patch"
       - name: Restore existing Swift package dependency cache
         if: ${{ !inputs.signing_preflight_only }}
         id: split-sourcepackages
@@ -274,6 +315,7 @@ jobs:
         shell: bash
         run: python3 Scripts/ProductSplit/restore_host_proof.py
       - name: Execute strict foreground route and ledger cases on the actual Mac
+        id: split-foreground
         if: ${{ !inputs.signed_release_archives && steps.host-proof.outputs.foreground_reused != 'true' }}
         shell: bash
         run: |
@@ -293,6 +335,7 @@ jobs:
           shutil.copytree(origin, destination / 'raw-origin')
           PY
       - name: Reproduce and verify affected package lifecycle on the actual Mac first
+        id: split-host-lifecycle
         if: ${{ !inputs.signed_release_archives && steps.host-proof.outputs.reused != 'true' }}
         shell: bash
         run: |
@@ -313,10 +356,24 @@ jobs:
             shasum -a 256 "$host_root/global-package-state.mjs" "$host_root/Tests/package-lifecycle.test.mjs" "$host_root/package-lock.json"
             node --test "$host_root/Tests/package-lifecycle.test.mjs"
           } 2>&1 | tee "$SPLIT_EVIDENCE/package-lifecycle.log"
+          if [[ '${{ inputs.paired_test_scope }}' == 'miniapp_authoring' || '${{ inputs.paired_test_scope }}' == 'miniapp_complete' ]]; then
+            miniapp_cli_root="$(mktemp -d "$RUNNER_TEMP/hanlin-cli-preflight.XXXXXX")"
+            mkdir -p "$miniapp_cli_root/Tests"
+            cp "$host_root/miniapp-authoring.mjs" "$miniapp_cli_root/"
+            cp "$host_root/Tests/miniapp-authoring.test.mjs" "$miniapp_cli_root/Tests/"
+            ln -s "$host_root/node_modules" "$miniapp_cli_root/node_modules"
+            (cd "$miniapp_cli_root"
+              unset HANLIN_AUTHORING_TYPESCRIPT
+              export HANLIN_MINIAPP_REPOSITORY_ROOT="$GITHUB_WORKSPACE"
+              node --test --test-name-pattern='the real CLI archives and revalidates retained source, diagnostics and output identity' Tests/miniapp-authoring.test.mjs
+            ) 2>&1 | tee "$SPLIT_EVIDENCE/miniapp-cli-relocation.log"
+          fi
       - name: Prepare the existing pinned metadata tool
+        id: split-metadata
         if: ${{ !inputs.signing_preflight_only }}
         uses: ./.github/actions/prepare-nativescript-metadata-tool
       - name: Prepare existing native dependencies and Runtime host
+        id: split-native-preparation
         if: ${{ !inputs.signing_preflight_only }}
         shell: bash
         run: |
@@ -324,13 +381,19 @@ jobs:
           split_phase_start=$SECONDS
           trap 'printf "%s\n" "$(( SECONDS - split_phase_start ))" > "$SPLIT_EVIDENCE/native-dependencies-duration-seconds.txt"' EXIT
           {
-          npm ci --ignore-scripts --no-audit --no-fund --prefix Scripts/NativeScript
+          node Scripts/MiniApps/install-tooling.mjs --engine=nativescript --ignore-scripts
           npm run prepare:ios-dependencies --prefix Scripts/NativeScript
-          npm ci --ignore-scripts --no-audit --no-fund --prefix Scripts/Expo
+          node Scripts/MiniApps/install-tooling.mjs --engine=expo --ignore-scripts
           node Scripts/Expo/prepare-ios-dependencies.mjs
+          node Scripts/Expo/prepare-types.mjs
+          node Scripts/Expo/build-probe.mjs
+          node Scripts/ExpoNativeAPI/build-probes.mjs
           bash Scripts/Runtime/prepare-runtime-core.sh
           bash Scripts/Runtime/prepare-runtime-host.sh
           cp build/runtime-host/RuntimeHostResources.zip AI_HLY/RuntimeHostResources.zip
+          # Check the actual public guide blocks against the exact SDK in the verified shipping ZIP.
+          # Static authoring checks do not imply a MiniApp launched or a native service executed.
+          node Scripts/MiniApps/check-authoring-examples.mjs --sdk-archive build/runtime-host/RuntimeHostResources.zip --require-sdk-docs --report "$SPLIT_EVIDENCE/miniapp-documentation-snippets.json"
           # The verified ZIP above is the shipping payload. The lifecycle check's
           # temporary npm tree must not enter Xcode's synchronized app resources.
           rm -rf AI_HLY/Downstream/RuntimeCore/Node/Host/node_modules
@@ -343,6 +406,16 @@ jobs:
           CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO
           EOF
           } 2>&1 | tee "$SPLIT_EVIDENCE/native-dependencies.log"
+      - name: Export exact prepared native artifacts for reuse
+        id: split-native-artifacts
+        if: ${{ !inputs.signing_preflight_only }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 Scripts/SDK/native_artifacts.py export --root "$GITHUB_WORKSPACE" --output "$SPLIT_EVIDENCE/prepared-native"
+          python3 Scripts/SDK/native_artifacts.py verify --catalog "$SPLIT_EVIDENCE/prepared-native/native-artifacts.json" --assets "$SPLIT_EVIDENCE/prepared-native"
+          cp Scripts/MiniApps/upstream-resolution.json "$SPLIT_EVIDENCE/prepared-native/upstream-resolution.json"
+          cp "$SPLIT_EVIDENCE/upstream-inputs.patch" "$SPLIT_EVIDENCE/prepared-native/upstream-inputs.patch"
       - name: Restore verified input timestamps for incremental compilation
         if: ${{ !inputs.signing_preflight_only }}
         continue-on-error: true
@@ -358,16 +431,19 @@ jobs:
             --manifest "$SPLIT_DERIVED_DATA/CacheMetadata/xcode-build-inputs.json" --head "$GITHUB_SHA" \
             --directory-root . AI_HLY AI_HLYTests AI_HLYUITests HanlinMiniAppsApp HanlinMiniAppsUITests HanlinMiniAppsTests Packages AI_HLY.xcodeproj Vendor Config.xcconfig RuntimeDependencies.lock.json
       - name: Execute actual standalone target XCUITests
+        id: split-native-acceptance
         if: ${{ !inputs.paired_product_acceptance && !inputs.signed_release_archives }}
         shell: bash
         run: python3 Scripts/ProductSplit/run_native_acceptance.py
       - name: Exercise actual request, return, cancellation and transfer across both products
+        id: split-paired-acceptance
         if: ${{ inputs.paired_product_acceptance && !inputs.signed_release_archives }}
         shell: bash
         env:
           PAIRED_TEST_SCOPE: ${{ inputs.paired_test_scope || 'cross_product' }}
         run: python3 Scripts/ProductSplit/run_paired_acceptance.py
       - name: Prepare isolated signing inspection dependencies
+        id: split-signing-dependencies
         if: ${{ inputs.signed_release_archives }}
         shell: bash
         run: |
@@ -375,6 +451,7 @@ jobs:
           python3 -m venv "$RUNNER_TEMP/hanlin-signing-python"
           "$RUNNER_TEMP/hanlin-signing-python/bin/pip" install --quiet 'PyJWT[crypto]==2.10.1'
       - name: Build original device archives and export with the existing distribution identity
+        id: split-signed-archives
         if: ${{ inputs.signed_release_archives }}
         env:
           SPLIT_SIGNING_PREFLIGHT_ONLY: ${{ inputs.signing_preflight_only }}
@@ -388,6 +465,21 @@ jobs:
       - name: Keep original logs, status and xcresult even after early failure
         if: always()
         shell: bash
+        env:
+          SPLIT_WORKFLOW_CANCELLED: ${{ job.status == 'cancelled' }}
+          SPLIT_STEP_OUTCOMES: >-
+            {"platform": "${{ steps.split-platform.outcome }}",
+             "upstreams": "${{ steps.split-upstreams.outcome }}",
+             "host_proof": "${{ steps.host-proof.outcome }}",
+             "foreground": "${{ steps.split-foreground.outcome }}",
+             "host_lifecycle": "${{ steps.split-host-lifecycle.outcome }}",
+             "metadata": "${{ steps.split-metadata.outcome }}",
+             "native_preparation": "${{ steps.split-native-preparation.outcome }}",
+             "native_artifacts": "${{ steps.split-native-artifacts.outcome }}",
+             "standalone_acceptance": "${{ steps.split-native-acceptance.outcome }}",
+             "paired_acceptance": "${{ steps.split-paired-acceptance.outcome }}",
+             "signing_dependencies": "${{ steps.split-signing-dependencies.outcome }}",
+             "signed_archives": "${{ steps.split-signed-archives.outcome }}"}
         run: |
           mkdir -p "$SPLIT_EVIDENCE"
           if [ -f "$SPLIT_EVIDENCE/paired-product/acceptance.json" ]; then
@@ -396,15 +488,35 @@ jobs:
           if [ ! -f "$SPLIT_EVIDENCE/acceptance.json" ]; then
             python3 - <<'PY'
           import json, os, pathlib
-          path = pathlib.Path(os.environ['SPLIT_EVIDENCE']) / 'acceptance.json'
-          path.write_text(json.dumps({'status': 'INFRA_ERROR', 'ui': 'NOT_RUN',
-              'xcresult': 'NOT_CREATED: native test step not reached',
-              'sha': os.environ['GITHUB_SHA'], 'reason': 'preflight/dependency preparation failed; inspect original job logs'})+'\n')
+          evidence = pathlib.Path(os.environ['SPLIT_EVIDENCE'])
+          cancelled = os.environ['SPLIT_WORKFLOW_CANCELLED'].lower() == 'true'
+          outcomes = {name: outcome or None for name, outcome in
+              json.loads(os.environ['SPLIT_STEP_OUTCOMES']).items()}
+          results = sorted(path.relative_to(evidence).as_posix()
+              for path in evidence.rglob('*.xcresult') if path.is_dir())
+          # A missing final report cannot establish whether UI cases ran or passed.
+          # Build and partial test bundles are retained evidence, not passing tests.
+          report = {'status': 'CANCELLED' if cancelled else 'INFRA_ERROR',
+              'ui': 'NOT_VERIFIED', 'report_source': 'workflow_fallback',
+              'xcresult': 'PRESENT_UNVERIFIED' if results else 'NOT_FOUND_IN_EVIDENCE',
+              'result_bundles': results, 'step_outcomes': outcomes,
+              'sha': os.environ['GITHUB_SHA'],
+              'reason': ('Workflow cancelled before a final native acceptance report was retained.'
+                  if cancelled else 'No final native acceptance report was retained; inspect step_outcomes and original job logs.')}
+          (evidence / 'acceptance.json').write_text(json.dumps(report, indent=2)+'\n')
           PY
           fi
           python3 Scripts/CI/generate_performance_report.py \
             --log-dir "$SPLIT_EVIDENCE" --run-id "$GITHUB_RUN_ID" --commit-sha "$GITHUB_SHA" \
             --output-json "$SPLIT_EVIDENCE/ci-performance-report.json" --step-summary "$GITHUB_STEP_SUMMARY"
+      - name: Upload MiniApp authoring UI attachments
+        if: ${{ always() && inputs.paired_product_acceptance && (inputs.paired_test_scope == 'miniapp_authoring' || inputs.paired_test_scope == 'miniapp_sdk04' || inputs.paired_test_scope == 'miniapp_complete') }}
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: miniapp-authoring-ui-${{ github.run_id }}
+          path: ${{ env.SPLIT_EVIDENCE }}/paired-product/*-attachments
+          if-no-files-found: ignore
+          retention-days: 14
       - name: Upload evidence
         if: always()
         uses: actions/upload-artifact@v7.0.2

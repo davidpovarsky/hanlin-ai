@@ -1,0 +1,265 @@
+{
+  "schemaVersion": 1,
+  "createdAtUTC": "2026-11-24T11:51:40.353538+00:00",
+  "task": {
+    "id": "1220373832827017",
+    "name": "SDK-05 docs/examples and SDK-only authoring",
+    "decision": "CURRENT_SHIPPING_DOCS_SNIPPETS_EXAMPLES_IDENTITY_COMPLETE; prior independent source/build proof remains separately attributed.",
+    "doesNotClose": [
+      "SDK-03/04/07/08 native/application acceptance",
+      "MINIAPP-SDK parent",
+      "Physical device or release acceptance"
+    ]
+  },
+  "status": "SDK05_CURRENT_SHIPPING_IDENTITY_PASS",
+  "sourceCommit": "999599c242c064564c40866a1979c463f1d0e95f",
+  "comparisonBase": "2f1cfa6e4a702475acfe80ad68bf82c5320902f5",
+  "run": {
+    "id": 45375410965,
+    "jobID": 138380242016,
+    "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45375410965",
+    "overall": "FAILED_BY_FIRST_MINIAPPS_BUILD_TIMEOUT",
+    "preparation": "EXECUTED_PASS",
+    "firstMiniAppsBuild": "TIMED_OUT after2402.8107seconds",
+    "aiBuild": "NOT_RUN",
+    "selectedApplicationCases": 52,
+    "executedApplicationCases": 0,
+    "nativeUI": "NOT_RUN"
+  },
+  "artifact": {
+    "id": 14916730253,
+    "bytes": 333607332,
+    "sha256": "555799b3fa3512c41f757eca7fdf0da998274c311530019a0dff61334a53b05f",
+    "parentAuthenticated": true,
+    "locallyRehashed": true,
+    "runtimeHost": {
+      "member": "runtime-host/RuntimeHostResources.zip",
+      "path": "/tmp/hanlin-sdk05-shipping-45375410965-5ndqe_cd/RuntimeHostResources.zip",
+      "bytes": 81812125,
+      "sha256": "3f8369a26f492aa0cb4c7ca63a03d33104993adad81223ba9b3ee7f0e46ada4c"
+    }
+  },
+  "sdk": {
+    "manifestSHA256": "1b66e9111586a764617a47fafe8f71ac677c14743fc1d0df79290e3ac994cebc",
+    "inputSHA256": "ace5ee5e40a1c4c8c17c2a3744b24ac2793b237e5a2cc9d5dfd3c31959c82d6b",
+    "manifestFiles": 25661,
+    "sourceInputs": 222,
+    "baseExact": 216,
+    "authenticPreparationOutputs": 6,
+    "unexplainedDifferences": 0,
+    "selectedArtifactFilesReconciled": 112,
+    "publicFacadeFilesReconciled": 20,
+    "scope": "Actual full shipping SDK archive. Only requested source/doc/example/compiler/type identity members were read; no new full dependency tree audit or extraction."
+  },
+  "authenticGuideExecution": {
+    "source": "raw/app-split-evidence/miniapp-documentation-snippets.json",
+    "sha256": "d4af6b636f23f004618da047803a7f73a4897f433d2bd9dfe8e5b72311ebe912",
+    "command": "node Scripts/MiniApps/check-authoring-examples.mjs --sdk-archive build/runtime-host/RuntimeHostResources.zip --require-sdk-docs --report \"$SPLIT_EVIDENCE/miniapp-documentation-snippets.json\"",
+    "projects": 4,
+    "typeDiagnostics": 0,
+    "sourceBlocks": 14,
+    "jsonBlocks": 7,
+    "excludedNonAuthoringBlocks": 8,
+    "checkedGuides": 6,
+    "allShippedDocumentationFilesByteMatched": 25,
+    "registration": "main; source-contract check, native launch NOT_RUN",
+    "origin": "Actual main12 preparation, before application build timeout; no new check execution in this lane."
+  },
+  "completeExamples": {
+    "projects": 4,
+    "sourceFiles": 28,
+    "indexFiles": 1,
+    "sourceAndSDKBytesEqual": true,
+    "engineExamplesMetadataMatchesIndex": true,
+    "frozenComplexFilesUnchanged": 15,
+    "priorHelloWorldBuilds": 2,
+    "priorIndependentComplexBuilds": 2,
+    "newExampleBuilds": 0,
+    "newFreshAgentExperiments": 0,
+    "boundary": "Prior package compiler/build results retain their original SDK identity; this receipt establishes current exported source identity, not fresh package builds on the new graph."
+  },
+  "actualToolchains": {
+    "node": "24.5.0",
+    "platform": "darwin",
+    "architecture": "arm64",
+    "expoAndScriptWidgetCompiler": {
+      "package": "@typescript/typescript6",
+      "packageVersion": "6.0.2",
+      "compilerVersion": "6.0.3",
+      "strict": true,
+      "skipLibCheck": false
+    },
+    "nativescriptCompiler": {
+      "package": "typescript",
+      "packageVersion": "5.9.3",
+      "compilerVersion": "5.9.3",
+      "strict": true,
+      "skipLibCheck": true,
+      "dependencyDeclarationBodiesChecked": false
+    },
+    "expo": {
+      "sdk": "58.0.26",
+      "ui": "58.0.29",
+      "widgets": "58.0.29",
+      "reactNative": "0.88.1",
+      "worklets": "0.13.0"
+    },
+    "nativescript": {
+      "core": "9.1.4",
+      "ios": "9.1.1",
+      "types": "9.1.4",
+      "swiftUI": "4.0.2",
+      "vite": "8.0.24"
+    }
+  },
+  "preparationDifferences": {
+    "fourFiles": "Exact retained upstream patch, including NativeScript Vite8.0.23→8.0.24 and npm/resolution data. Replayed only as data in owned temporary storage.",
+    "nativeScriptPackage": "JSON property ordering only; decoded object identical.",
+    "expoWidgetReceipt": "Only actual package-lock/input digests changed; all27 native source hashes, original bundle and registry reconcile.",
+    "generatedScriptWidgetCatalog": "One output provenance hash refreshes to actual HanlinScriptWidgetRuntime.swift d3735e19e7e2603d17449acd0c57c22bc676ee022bfe3152a20d2d846dd58afd. API catalog and declaration content are unchanged; exact diff retained. This is a staged output difference, separate from the6 source-input changes."
+  },
+  "inspection": {
+    "method": "Authenticated archive member reads, Git-object comparisons, SHA256, JSON comparison and exact retained patch reconstruction. No SDK/compiler/native code execution.",
+    "finalAttempt": "inspection-attempt-03-command.json",
+    "earlierAttempts": "Two bounded reader assumptions corrected and retained: CommonMark opening indentation and staging-generated provenance freshness. These were not product/CI/compiler failures.",
+    "newTests": 0,
+    "newBuilds": 0,
+    "newCIPolls": 0,
+    "newArtifactDownloads": 0,
+    "productionChanges": []
+  },
+  "priorEvidence": [
+    {
+      "path": "docs/miniapp-sdk/evidence/sdk-only-authoring-20261124/sdk-only-results.json",
+      "bytes": 18439,
+      "sha256": "e44d9ffefbbd655d20bfc656a59cf4650c60203b08ab9450efabcedaa9f2f92a",
+      "attributedTo": "Original receipt and exact prior compiler/build/source scope; no rerun or relabelling."
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/sdk-only-authoring-20261124/repository-source-provenance.json",
+      "bytes": 3807,
+      "sha256": "7f9ad7f822b2481dd3b5709aa2908cd56aab34e30ed04be201f1b5bc99862a58",
+      "attributedTo": "Original receipt and exact prior compiler/build/source scope; no rerun or relabelling."
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/sdk-complete-examples-20261124/receipt.json",
+      "bytes": 9106,
+      "sha256": "4fe8f6a2366dd1da65368b61e424751bf7c63bc016f84b777379e8d2f0881d92",
+      "attributedTo": "Original receipt and exact prior compiler/build/source scope; no rerun or relabelling."
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/sdk-complete-examples-20261124/complex-proof-reuse.json",
+      "bytes": 3604,
+      "sha256": "af6505af63bd430d54f29a56c579e0df79bcdb0fc56ed852ad4ba2d70f795586",
+      "attributedTo": "Original receipt and exact prior compiler/build/source scope; no rerun or relabelling."
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/authoring-guide-snippets-followup-20261124/receipt.json",
+      "bytes": 4694,
+      "sha256": "62c01ebbc7520297b0e940a719423bd9f571a66a105217232416fb5c8fc1070d",
+      "attributedTo": "Original receipt and exact prior compiler/build/source scope; no rerun or relabelling."
+    }
+  ],
+  "evidence": [
+    {
+      "path": "artifact-origin.json",
+      "bytes": 6705,
+      "sha256": "3f1bd63b885e314fbfe0e1276b7095156ce1c36d637955bdc7e3d93a8969fbaf"
+    },
+    {
+      "path": "inspection-summary.json",
+      "bytes": 1020,
+      "sha256": "ae5b6e8132a97c235a23a147b69efd1f8dc3eb4dde12516bc4a2866fc519845c"
+    },
+    {
+      "path": "source-input-reconciliation.json",
+      "bytes": 81799,
+      "sha256": "09dcc7943985cdccae713b670797f5b2b33d43f88eab2964023362a99823244d"
+    },
+    {
+      "path": "documentation-identity.json",
+      "bytes": 5041,
+      "sha256": "311b11936c4bf8c89c82b3faaf2e6ea1f343ce45b8ff688abec9abc89f9c53fd"
+    },
+    {
+      "path": "snippet-source-identity.json",
+      "bytes": 9534,
+      "sha256": "143e4f9571c052e974b9333089d913a47f9fdd41b5b89d93cbec7591f010150c"
+    },
+    {
+      "path": "example-identity.json",
+      "bytes": 9420,
+      "sha256": "1c2f37a71279b49eb5b2b518cc0c34317fae3853825175d67aa6a05095894ec3"
+    },
+    {
+      "path": "toolchain-and-public-types.json",
+      "bytes": 30921,
+      "sha256": "d8e6ebce30417c64194b22b741328e6459cdb31e029881a472c84cee0bd00a88"
+    },
+    {
+      "path": "checked-artifact-files.json",
+      "bytes": 21049,
+      "sha256": "e8c9a9160e9c37cebe4f8df87b674c5ffddec2a200e900b17b0817a56d028311"
+    },
+    {
+      "path": "commit-source-applicability.json",
+      "bytes": 1038,
+      "sha256": "f300b2e1f253f07887a662f6ab081f3d1fb7caf675afd1684cc6b2433d3f4b18"
+    },
+    {
+      "path": "preparation-patch-replay.json",
+      "bytes": 750,
+      "sha256": "8885c0c91d5c43a367ad27be4ccbbbae8dc9296466cb21ba1790572fee36664f"
+    },
+    {
+      "path": "preparation-log-rows.json",
+      "bytes": 771,
+      "sha256": "6a8f8b09e19b170dfe1de86a77187df63dfacf13aa51306cdbe5bf3de58aaf19"
+    },
+    {
+      "path": "shipping-command-log-rows.json",
+      "bytes": 1406,
+      "sha256": "26826aba17f173b6c598aaab4e4991120e9054cb96a3a2c7bbe4abc9fd99d5f4"
+    },
+    {
+      "path": "inspection-reader-correction.json",
+      "bytes": 1626,
+      "sha256": "f1bec9f79759d43505034ed2234a588d178adbc4aa080e049ded04cd16c8c779"
+    },
+    {
+      "path": "inspection-attempt-01-command.json",
+      "bytes": 1179,
+      "sha256": "f99ae27f6d8a6ef97c9958b4296b8fa0637c6d96a345878265b5149643c885ea"
+    },
+    {
+      "path": "inspection-attempt-02-command.json",
+      "bytes": 1105,
+      "sha256": "9b7a3f13814987019c01c0a9fcb0b9a9807266bdaad37a61e5aac7ce2472ccf8"
+    },
+    {
+      "path": "inspection-attempt-03-command.json",
+      "bytes": 1108,
+      "sha256": "d076e7d3be1cbd96851ab5f3214b28e1f2db2ef94176447a3d623517cfde446c"
+    },
+    {
+      "path": "owned-staging-cleanup.json",
+      "bytes": 640,
+      "sha256": "375eb350b6404ef06fe22ba648c1ce554cf9e7a307051d3fc051acba54673841"
+    }
+  ],
+  "reproduction": {
+    "script": "inspect_artifact.py",
+    "command": [
+      "python3",
+      "docs/miniapp-sdk/evidence/sdk05-current-shipping-20261124/inspect_artifact.py"
+    ],
+    "setup": "Use the authenticated outer archive at artifact-origin.json. Recreate the named owned temporary directory and extract only runtime-host/RuntimeHostResources.zip; verify its SHA before executing the read-only artifact inspector. The original-input-patch directory must not exist at the start.",
+    "cleanup": "owned-staging-cleanup.json"
+  },
+  "boundary": [
+    "All52 current application cases remain NOT_RUN. SDK05 can close independently as docs/examples/authoring delivery; native import/interaction stays with the existing gates.",
+    "No claim of exhaustive native API behavior, OS permissions, physical device, signing/release or whole CI success.",
+    "The original independent SDK-only experiment, original failure and public documentation erratum are unchanged.",
+    "The public CLI layout boundary remains the documented original wrapper plus Host dependency layout; MiniAppSDK alone is not relabelled a standalone CLI executable."
+  ]
+}

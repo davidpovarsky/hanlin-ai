@@ -1,0 +1,46 @@
+{
+  "source_sha": "168d8cd62f30440449b192d9d66cc4cd21b38657",
+  "commands": [
+    {
+      "command": [
+        "/opt/homebrew/bin/python3.12",
+        "Scripts/SDK/generate_manifest.py"
+      ],
+      "exit_code": 0,
+      "log": "1-graph.log",
+      "sha256": "5dee2a7e86c24d45eaf73902b8afe2302565119faf814b21bb182d434f5a7430"
+    },
+    {
+      "command": [
+        "/opt/homebrew/bin/python3.12",
+        "Scripts/SDK/update_project.py"
+      ],
+      "exit_code": 0,
+      "log": "2-graph.log",
+      "sha256": "7b205399ea53f72db8afa2fe3d77370cd6f0ac3d9ea8d19cea47a806236d4d18"
+    },
+    {
+      "command": [
+        "/opt/homebrew/bin/python3.12",
+        "Scripts/SDK/generate_manifest.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "log": "3-graph.log",
+      "sha256": "5dee2a7e86c24d45eaf73902b8afe2302565119faf814b21bb182d434f5a7430"
+    },
+    {
+      "command": [
+        "/opt/homebrew/bin/python3.12",
+        "Scripts/SDK/update_project.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "log": "4-graph.log",
+      "sha256": "7b205399ea53f72db8afa2fe3d77370cd6f0ac3d9ea8d19cea47a806236d4d18"
+    }
+  ],
+  "started_at": "2026-11-25T00:30:26.341251+00:00",
+  "generated_sha": "0c243d6cf20a702239a645c2f5c4b0f65d955702",
+  "finished_at": "2026-11-25T00:31:42.479844+00:00"
+}

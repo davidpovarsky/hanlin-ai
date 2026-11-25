@@ -1,0 +1,42 @@
+{
+  "at": "2026-11-24T07:33:14.630861+00:00",
+  "sourceCommit": "0e48d2f3d7df2b2039b5a3e9f83d7c9536450923",
+  "branch": "codex/hanlin-miniapps-sdk-completion-20261123",
+  "workflowID": 419196373,
+  "workflowPath": ".github/workflows/validate-app-split.yml",
+  "inputs": {
+    "paired_product_acceptance": "true",
+    "paired_test_scope": "miniapp_contracts",
+    "runtime_bundle_artifact_run_id": "42926628418"
+  },
+  "nativeRunUnaffected": 45343362337,
+  "concurrencySuffix": "paired-miniapp_contracts",
+  "dispatchExecuted": true,
+  "newRunID": 45348880385,
+  "beforeRunIDs": [
+    45343362337,
+    45335292541,
+    45324257778,
+    45318878050,
+    45318751956,
+    45314033438,
+    45310162809,
+    45303812645,
+    45300633012,
+    45298658282,
+    45286690474
+  ],
+  "dispatchOutput": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45348880385\n",
+  "run": {
+    "conclusion": "",
+    "createdAt": "2026-11-24T07:33:16Z",
+    "databaseId": 45348880385,
+    "headSha": "0e48d2f3d7df2b2039b5a3e9f83d7c9536450923",
+    "status": "queued",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45348880385"
+  },
+  "recordedAtUTC": "2026-11-24T07:37:02.801872+00:00",
+  "lastObservedStatus": "in_progress",
+  "lastObservedConclusion": "",
+  "executionBoundary": "Eight exact passing method rows and zero failures/skips still required; no pass inferred from dispatch or job start."
+}

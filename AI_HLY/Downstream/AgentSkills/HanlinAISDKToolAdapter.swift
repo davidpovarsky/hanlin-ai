@@ -163,10 +163,11 @@ final class HanlinAISDKToolAdapter {
 
     func refreshPreparedTools() async {
         let chatUUID = session.chatID.flatMap(UUID.init(uuidString:))
-        let scope = await MCPRuntimeProvider.shared.requestScope(
+        let originalScope = await MCPRuntimeProvider.shared.requestScope(
             chatID: chatUUID,
             temporary: session.isTemporaryChat
         )
+        guard let scope = try? HanlinComposerCapabilities.scope(originalScope, attachments: session.capabilityAttachments) else { return }
         if let refreshed = try? await preparedTools.refreshingMCPTools(scope: scope) {
             self.preparedTools = refreshed
             session.syncMCPTools(activeMCPAliases: refreshed.mcpAliases)
@@ -190,12 +191,13 @@ final class HanlinAISDKToolAdapter {
         var currentBytes = aliases.reduce(0) { $0 + (sizes[$1] ?? 350) }
 
         // Priority order for exposed tools:
-        // 1. Active MCP server tools (mcp__*)
-        // 2. Most recently discovered tools via tool_search (reversed)
-        // 3. Active skill preferred tool hints
-        // 4. Any remaining exposed tools
+        // 1. Capabilities explicitly attached to this request
+        // 2. Active MCP server tools (mcp__*)
+        // 3. Most recently discovered tools via tool_search (reversed)
+        // 4. Active skill preferred tool hints and remaining exposed tools
         var prioritizedCandidates: [String] = []
-        for alias in preparedTools.mcpAliases where session.exposedToolAliases.contains(alias) {
+        prioritizedCandidates.append(contentsOf: session.explicitlySelectedToolAliases.sorted())
+        for alias in preparedTools.mcpAliases.sorted() where session.exposedToolAliases.contains(alias) {
             if !prioritizedCandidates.contains(alias) {
                 prioritizedCandidates.append(alias)
             }
@@ -205,12 +207,12 @@ final class HanlinAISDKToolAdapter {
                 prioritizedCandidates.append(alias)
             }
         }
-        for alias in session.activeSkillToolHints where session.exposedToolAliases.contains(alias) {
+        for alias in session.activeSkillToolHints.sorted() where session.exposedToolAliases.contains(alias) {
             if !prioritizedCandidates.contains(alias) {
                 prioritizedCandidates.append(alias)
             }
         }
-        for alias in session.exposedToolAliases {
+        for alias in session.exposedToolAliases.sorted() {
             if !prioritizedCandidates.contains(alias) {
                 prioritizedCandidates.append(alias)
             }
@@ -222,7 +224,8 @@ final class HanlinAISDKToolAdapter {
                 continue
             }
             let toolBytes = sizes[alias] ?? 400
-            if let budget = maxActiveStepSchemaBytes, currentBytes + toolBytes > budget && aliases.count > 6 {
+            if let budget = maxActiveStepSchemaBytes, currentBytes + toolBytes > budget && aliases.count > 6,
+               !session.explicitlySelectedToolAliases.contains(alias) {
                 continue
             }
             aliases.append(alias)
@@ -235,14 +238,14 @@ final class HanlinAISDKToolAdapter {
     func prepareStep(stepNumber: Int) async -> HanlinAISDKStepPreparation {
         currentStepIndex = stepNumber
         let visibleSkills = await catalog.modelVisibleSkills(store: skillStore)
-        session.retainLoadedSkills(allowedIDs: Set(visibleSkills.map(\.id)))
+        await session.retainCurrentlyEligibleSkills(modelSkills: visibleSkills, catalog: catalog, store: skillStore)
         let active = currentActiveToolAliases()
         let sizes = preparedTools.schemaSizes()
         let visibleBytes = active.reduce(0) { $0 + (sizes[$1] ?? 400) }
         let prep = HanlinAISDKStepPreparation(
             activeToolAliases: active,
             loadedSkillIDs: session.loadedSkillIDs.map(\.rawValue).sorted(),
-            loadedSkillInstructions: session.loadedSkillInstructions,
+            loadedSkillInstructions: session.stepInstructions,
             visibleSchemaBytes: visibleBytes
         )
         if let existing = preparedRoundIDs[stepNumber] {
@@ -273,7 +276,7 @@ final class HanlinAISDKToolAdapter {
         return HanlinAISDKStepPreparation(
             activeToolAliases: active,
             loadedSkillIDs: session.loadedSkillIDs.map(\.rawValue).sorted(),
-            loadedSkillInstructions: session.loadedSkillInstructions,
+            loadedSkillInstructions: session.stepInstructions,
             visibleSchemaBytes: visibleBytes
         )
     }

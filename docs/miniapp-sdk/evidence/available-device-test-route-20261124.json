@@ -1,0 +1,21 @@
+{
+  "observedAtUTC": "2026-11-24T09:11:47.095269+00:00",
+  "method": "Read-only SentinelX connected/offline/disabled host inventories for both already connected user accounts and bounded capability summary for the second host. No services, credentials or device configuration changed.",
+  "connectedEnvironments": [
+    {
+      "kind": "Linux",
+      "operational": true,
+      "role": "Existing project build orchestration host"
+    },
+    {
+      "kind": "Windows",
+      "operational": true,
+      "evidence": "Kernel11,AMD64,existing C:\\ProgramData\\SentinelX agent path"
+    }
+  ],
+  "enrolledMacHosts": 0,
+  "offlineHosts": 0,
+  "disabledHosts": 0,
+  "status": "PHYSICAL_IPAD_EXECUTION_ROUTE_NOT_ESTABLISHED",
+  "boundary": "This inventory does not prove absence of an iPad attached to Windows. No accessible physical-device automation/signing route is established; actual macOS CI/Simulator results remain separate."
+}

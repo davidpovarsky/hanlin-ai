@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "status": "EXECUTED_PASS",
+  "command": [
+    "node",
+    "--test",
+    "--test-name-pattern=the real CLI archives and revalidates retained source, diagnostics and output identity",
+    "Tests/miniapp-authoring.test.mjs"
+  ],
+  "cwd": "/dev/shm/hanlin-relocated-authoring-module-20261124",
+  "repository": "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123",
+  "parentCompilerOverride": null,
+  "compilerModuleSymlink": "/dev/shm/hanlin-relocated-authoring-module-20261124/node_modules/typescript",
+  "originalCompilerPackage": "/dev/shm/hanlin-expo-widgets-sdk-20261124/Scripts/Expo/node_modules/typescript",
+  "exitCode": 0,
+  "seconds": 9.113,
+  "coverage": "The existing CLI case always uses a bare npm compiler override from a relocated working directory, then validates its actual extracted archive through SDK compiler loading with no override. The parent test also resolves bare typescript from its local node_modules, matching actual Mac staging rather than using the previous local explicit compiler override. The SDK fixture contains the same typescriptPath field produced by stage-sdk.mjs. No fake compiler, skip or test-count change.",
+  "beforeLogSHA256": "84e5f32f3a543259e20f6910dc23100d442095b5d217f4d1ac01504c97d8ff82",
+  "afterLogSHA256": "fbf1dc036e96541f83f1c7ea82939194ed02d09e6c4a9f6fc4eaef0f85301464",
+  "sourceSHA256": {
+    "Scripts/MiniApps/miniapp.mjs": "1c256c00392c626a54ebee2abe3ededaa792c5bfa6dd9b6c5aceb89be84e5b30",
+    "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-authoring.test.mjs": "bef93d623bae3ffa7ba5320d71cfaaed09d6316c46ec1715d16275e36b535dce"
+  }
+}

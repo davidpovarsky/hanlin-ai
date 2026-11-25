@@ -1,0 +1,108 @@
+diff --git a/Packages/HanlinPlatform/Tests/HanlinScriptStoreTests/HanlinAtomicScriptStoreTests.swift b/Packages/HanlinPlatform/Tests/HanlinScriptStoreTests/HanlinAtomicScriptStoreTests.swift
+index 253afe56..f7dac674 100644
+--- a/Packages/HanlinPlatform/Tests/HanlinScriptStoreTests/HanlinAtomicScriptStoreTests.swift
++++ b/Packages/HanlinPlatform/Tests/HanlinScriptStoreTests/HanlinAtomicScriptStoreTests.swift
+@@ -14,9 +14,31 @@ struct HanlinAtomicScriptStoreTests {
+         defer { fixture.remove() }
+         let clock = FixedClock()
+         let store = try HanlinAtomicScriptStore(root: fixture.storeRoot, now: { clock.date })
++        let firstManifest = HanlinScriptingManifest(
++            name: "Lifecycle Expo", version: "1.0.0", entry: "expo/app/bundle.js",
++            hanlinAppID: "fixture.lifecycle", hanlinRuntime: "hanlin-expo")
++        let secondManifest = HanlinScriptingManifest(
++            name: "Lifecycle NativeScript", version: "2.0.0", entry: "nativescript/app/bundle.mjs",
++            hanlinAppID: "fixture.lifecycle", hanlinRuntime: "hanlin-nativescript")
++        let firstEntrypoint = HanlinPackageEntrypointDescriptor(
++            id: "app", kind: .app, sourcePath: "expo/app/bundle.js",
++            supportedContexts: [.mainApplication], runtimePolicyID: "foreground-app-v1",
++            runtimeProfile: .hanlinExpo, artifactDigest: fixture.first.manifest.cacheFingerprint,
++            compatibility: .supported)
++        let secondEntrypoint = HanlinPackageEntrypointDescriptor(
++            id: "app", kind: .app, sourcePath: "nativescript/app/bundle.mjs",
++            supportedContexts: [.mainApplication], runtimePolicyID: "foreground-app-v1",
++            runtimeProfile: .hanlinNativeScript, artifactDigest: fixture.second.manifest.cacheFingerprint,
++            compatibility: .supported)
++        let firstPlan = try fixture.plan(
++            version: "1.0.0", sourceDigest: fixture.first.manifest.packageContentDigest,
++            entrypoints: [firstEntrypoint], manifest: firstManifest)
++        let secondPlan = try fixture.plan(
++            version: "2.0.0", sourceDigest: fixture.second.manifest.packageContentDigest,
++            entrypoints: [secondEntrypoint], manifest: secondManifest)
+ 
+         let installed = try await store.install(
+-            plan: fixture.plan(version: "1.0.0", sourceDigest: fixture.first.manifest.packageContentDigest),
++            plan: firstPlan,
+             artifactDirectory: fixture.first.url,
+             artifactManifest: fixture.first.manifest
+         )
+@@ -24,25 +46,46 @@ struct HanlinAtomicScriptStoreTests {
+         #expect(installed.installedPackageID == fixture.installedID)
+ 
+         let updated = try await store.update(
+-            plan: fixture.plan(version: "2.0.0", sourceDigest: fixture.second.manifest.packageContentDigest),
++            plan: secondPlan,
+             artifactDirectory: fixture.second.url,
+             artifactManifest: fixture.second.manifest
+         )
+         #expect(updated.activeGeneration == 2)
+         #expect(updated.installedPackageID == installed.installedPackageID)
+         #expect(try await store.activeArtifactURL(for: fixture.installedID).lastPathComponent == "2")
++        let updatedSnapshot = try #require(await store.snapshots().first)
++        #expect(updatedSnapshot.entrypoints == [secondEntrypoint])
++        #expect(updatedSnapshot.manifest == secondManifest)
+ 
+         let rolledBack = try await store.rollback(fixture.installedID, to: 1)
+         #expect(rolledBack.activeGeneration == 1)
+         #expect(rolledBack.version.rawValue == "1.0.0")
++        let rolledBackSnapshot = try #require(await store.snapshots().first)
++        #expect(rolledBackSnapshot.entrypoints == [firstEntrypoint])
++        #expect(rolledBackSnapshot.manifest == firstManifest)
++        #expect(try String(contentsOf: await store.activeArtifactURL(for: fixture.installedID)
++            .appending(path: "main.js"), encoding: .utf8) == "export default 1")
+         try await store.setEnabled(false, for: fixture.installedID)
+         let restored = try await HanlinAtomicScriptStore(root: fixture.storeRoot).restore()
+         #expect(restored.count == 1)
+         #expect(restored[0].enabled == false)
+         #expect(restored[0].availableGenerations == [1, 2])
++        #expect(restored[0].entrypoints == [firstEntrypoint])
++        #expect(restored[0].manifest == firstManifest)
+ 
+         try await store.uninstall(fixture.installedID)
+         #expect(try await store.snapshots().isEmpty)
++        let reinstalled = try await store.install(
++            plan: firstPlan, artifactDirectory: fixture.first.url,
++            artifactManifest: fixture.first.manifest)
++        #expect(reinstalled.installedPackageID == installed.installedPackageID)
++        #expect(reinstalled.activeGeneration == 1)
++        let reopened = try await HanlinAtomicScriptStore(root: fixture.storeRoot).restore()
++        #expect(reopened.count == 1)
++        #expect(reopened[0].enabled)
++        #expect(reopened[0].availableGenerations == [1])
++        #expect(reopened[0].entrypoints == [firstEntrypoint])
++        #expect(reopened[0].manifest == firstManifest)
+     }
+ 
+     @Test(
+@@ -796,16 +839,19 @@ private struct Fixture {
+         version: String,
+         sourceDigest: String,
+         requestedCapabilities: [HanlinCapabilityRequest] = [],
+-        grantedCapabilities: [HanlinCapabilityID] = []
++        grantedCapabilities: [HanlinCapabilityID] = [],
++        entrypoints: [HanlinPackageEntrypointDescriptor]? = nil,
++        manifest: HanlinScriptingManifest? = nil
+     ) throws -> HanlinInstallPlan {
+         HanlinInstallPlan(
+             installedPackageID: installedID,
+             packageID: packageID,
+             version: try #require(HanlinPackageVersion(rawValue: version)),
+             sourceDigest: sourceDigest,
+-            entrypoints: [entrypoint],
++            entrypoints: entrypoints ?? [entrypoint],
+             requestedCapabilities: requestedCapabilities,
+-            grantedCapabilities: grantedCapabilities
++            grantedCapabilities: grantedCapabilities,
++            manifest: manifest
+         )
+     }
+ 

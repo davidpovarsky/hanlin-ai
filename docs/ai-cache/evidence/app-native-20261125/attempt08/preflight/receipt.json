@@ -1,0 +1,48 @@
+{
+  "status": "PASS",
+  "sourceSHA": "1ae93941a34cf555f8a7293106efeff80978ebfa",
+  "startedAtUTC": "2026-11-25T05:33:08.746492+00:00",
+  "commands": [
+    {
+      "argv": [
+        "node",
+        "Scripts/Audit/audit-miniapp-sdk.mjs",
+        "--check"
+      ],
+      "startedAtUTC": "2026-11-25T05:33:08.746953+00:00",
+      "log": "01-check.log",
+      "exitCode": 0,
+      "finishedAtUTC": "2026-11-25T05:33:09.046424+00:00",
+      "logSHA256": "f9392dbc1f4415decb9bc390be9f49d5b7e6f3fbd636c72710ef278e45b31783"
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/python3.12",
+        "Scripts/Audit/audit_miniapp_reachability.py",
+        "--check"
+      ],
+      "startedAtUTC": "2026-11-25T05:33:09.047032+00:00",
+      "log": "02-check.log",
+      "exitCode": 0,
+      "finishedAtUTC": "2026-11-25T05:33:10.810609+00:00",
+      "logSHA256": "bc234237931951c0e0e70dc212b9f47da2f6c76a61109e41c235f0f7f0eabcef"
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/python3.12",
+        "Scripts/Runtime/runtime_host_archive.py",
+        "validate",
+        "AI_HLY/RuntimeHostResources.zip"
+      ],
+      "startedAtUTC": "2026-11-25T05:33:10.811944+00:00",
+      "log": "03-check.log",
+      "exitCode": 0,
+      "finishedAtUTC": "2026-11-25T05:33:14.369394+00:00",
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "reason": "Fresh original preparation for new notification shared Host and extension graph; actual updated Host archive verified.",
+  "freeBytesBefore": 8193142784,
+  "finishedAtUTC": "2026-11-25T05:33:14.370040+00:00",
+  "freeBytesAfter": 9071157248
+}

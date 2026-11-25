@@ -1,0 +1,13 @@
+[
+  {
+    "command": [
+      "node",
+      "Scripts/Audit/audit-miniapp-sdk.mjs",
+      "--write"
+    ],
+    "startedAtUTC": "2026-11-24T09:17:47.321471+00:00",
+    "returncode": 1,
+    "stdout": "docs/miniapp-sdk/evidence/native-corrections-reconciliation-20261124/1.stdout.log",
+    "stderr": "docs/miniapp-sdk/evidence/native-corrections-reconciliation-20261124/1.stderr.log"
+  }
+]

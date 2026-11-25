@@ -1,0 +1,21 @@
+{
+  "frameworks": [],
+  "RNpackage": "0.88.1",
+  "originalAppDelegateFiles": [
+    "Libraries/AppDelegate/RCTRootViewFactory.h",
+    "Libraries/AppDelegate/RCTReactNativeFactory.mm",
+    "Libraries/AppDelegate/RCTUIConfiguratorProtocol.h",
+    "Libraries/AppDelegate/RCTAppSetupUtils.mm",
+    "Libraries/AppDelegate/React-RCTAppDelegate.podspec",
+    "Libraries/AppDelegate/RCTDefaultReactNativeFactoryDelegate.mm",
+    "Libraries/AppDelegate/RCTAppSetupUtils.h",
+    "Libraries/AppDelegate/RCTRootViewFactory.mm",
+    "Libraries/AppDelegate/RCTAppDelegate.h",
+    "Libraries/AppDelegate/RCTAppDelegate.mm",
+    "Libraries/AppDelegate/RCTDependencyProvider.h",
+    "Libraries/AppDelegate/RCTDefaultReactNativeFactoryDelegate.h",
+    "Libraries/AppDelegate/RCTJSRuntimeConfiguratorProtocol.h",
+    "Libraries/AppDelegate/RCTReactNativeFactory.h"
+  ],
+  "frameworkNames": []
+}

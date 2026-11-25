@@ -1,0 +1,35 @@
+{
+  "status": "ORIGINAL_GENERATOR_EXECUTED",
+  "revision": "3ed9601862ecc78027e20ac80ad8b1b98a5d9079",
+  "inputs": {
+    "swift/core/Tools/A2UISchemaGenerator/A2UISchemaGenerator.swift": "0d39e7e6ebdf922847bb82679250dc2ac67132d0515002055e3a0563b1bea972",
+    "specification/v0_9_1/json/common_types.json": "a13897d7dbe14c37512c5cbc9b8561782fc3b01e3a6ff114c1f12c82275b5884",
+    "specification/v0_9_1/json/server_to_client.json": "b586dfffbb23220e881f4563e58b879ceb5d2ad7f65419552d10ba35c9f3a00f",
+    "specification/v0_9_1/json/client_to_server.json": "5d245e8581b07d2b5beb2863175896b8ac7f66f96715c70358dfc02cdca8fd06",
+    "specification/v0_9_1/json/client_capabilities.json": "917ff302b883c8c50475f0fafa836c17620078e7e2089392b322dc5df01de78f",
+    "specification/v0_9_1/catalogs/basic/catalog.json": "8cc94d0a482e67048f9fc989964ca5da56fe42f531d919315a508989fb22e13e",
+    "specification/v1_0/json/common_types.json": "c4e78305be1de73eecb37f8179ba169730250611703683af291b18135a6430dc",
+    "specification/v1_0/json/catalog_definition.json": "836a48b2deb7ae76c3b68cb4e79c2faa24cba36d4d5396474894796797364d44",
+    "specification/v1_0/json/agent_to_renderer.json": "2f575f783fdda0e4d175fe5d331661655e4a4901613262322792dae7e823761d",
+    "specification/v1_0/json/renderer_to_agent.json": "58ecde02101f0f37566b5e238dc6ef6af628c3ff312fce0e17ab7670b7215465",
+    "specification/v1_0/json/renderer_capabilities.json": "3ebd2889764d892df16d034643ecd9e3a3fc02f298fa05577b95d9e287e703de",
+    "catalogs/basic/v1/catalog.json": "d4ce11f8fff2da8d5fd0b2793db524f6aa7eef541eefb6fe2b71f0efc17cbfa9"
+  },
+  "compiler": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+  "sdk": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.0.sdk",
+  "outputs": {
+    "A2UIJSON": {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-cache-app-20261125/Build/Intermediates.noindex/BuildToolPluginIntermediates/a2ui.output/A2UIJSON/A2UISchemaGeneratorPlugin/GeneratedA2UIJSONSchemas.swift",
+      "sha256": "bbfa5901da00ec608aebeae9f8501a7b08025b51beb7a1f7bd9ccc0bfe3ca3ec",
+      "bytes": 83366,
+      "updated": false
+    },
+    "BasicCatalog": {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-cache-app-20261125/Build/Intermediates.noindex/BuildToolPluginIntermediates/a2ui.output/BasicCatalog/A2UISchemaGeneratorPlugin/GeneratedBasicCatalogComponents.swift",
+      "sha256": "44d299b60ebbef0a5e5c11b91bcfbfd9135054f343f2aa0c1cf19deb72e3f0ec",
+      "bytes": 103345,
+      "updated": false
+    }
+  },
+  "seconds": 1.2829507919959724
+}

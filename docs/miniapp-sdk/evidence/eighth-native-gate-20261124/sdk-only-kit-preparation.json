@@ -1,0 +1,16 @@
+{
+  "at": "2026-11-24T06:42:25.832155+00:00",
+  "runID": 45335292541,
+  "sourceCommit": "ee3b0ede43fcb4aac02def04d469eae542ba035b",
+  "hostArchiveSHA256": "db8f8f82e6013f66b49325a1a0cd47ab7deb7799e2488b16248167df0876dbf4",
+  "sdkManifestSHA256": "fa1e737ec63e640175cdb5c9dad51903cd86d50ae7b340ba5b8ec1ff4e408d85",
+  "sdkInputSHA256": "4028f9fc58e1a9a95937ed7b4eb223c3caa2a94714bbbdaae4ddc7b0aa6de795",
+  "verifiedSDKFiles": 25791,
+  "kit": "/dev/shm/hanlin-sdk-only-kit-45335292541",
+  "sdk": "/dev/shm/hanlin-sdk-only-kit-45335292541/AI_HLY/Downstream/RuntimeCore/Node/Host/MiniAppSDK",
+  "cli": "/dev/shm/hanlin-sdk-only-kit-45335292541/Scripts/MiniApps/miniapp.mjs",
+  "cliSHA256": "1c256c00392c626a54ebee2abe3ededaa792c5bfa6dd9b6c5aceb89be84e5b30",
+  "workspace": "/dev/shm/hanlin-sdk-only-kit-45335292541/author-work",
+  "node": "v24.22.0",
+  "nativeApplicationAcceptance": "BUILD_FAILED; no UI/device pass from this kit preparation"
+}

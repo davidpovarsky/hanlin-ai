@@ -39,7 +39,7 @@ public enum HanlinAISDKProviderFactory {
         } else if company == "GOOGLE" || company == "GEMINI" || apiType.contains("gemini") {
             kind = .google
         } else if company == "OPENAI" && !isOpenAICompatibleHost(configuration.endpoint.host) {
-            kind = apiType == "openai-responses" ? .openAIResponses : .openAI
+            kind = ["openai-response", "openairesponse", "openai-responses", "openai-chatgpt-plan"].contains(apiType) ? .openAIResponses : .openAI
         } else {
             kind = .openAICompatible
         }
@@ -131,7 +131,9 @@ extension HanlinAISDKProviderFactory {
                 apiKey: configuration.apiKey,
                 headers: descriptor.headers,
                 name: "hanlin-openai",
-                fetch: fetch
+                fetch: configuration.apiType?.lowercased() == "openai-chatgpt-plan"
+                    ? HanlinChatGPTPlanTransport.wrap(fetch ?? makeFetch(sessionConfiguration: .default))
+                    : fetch
             ))
             if descriptor.kind == .openAIResponses {
                 model = provider.responses(descriptor.modelID)
@@ -175,39 +177,162 @@ extension HanlinAISDKProviderFactory {
         return HanlinAISDKResolvedProvider(
             model: .v3(HanlinNonEmptyLanguageModel(base: model)),
             descriptor: descriptor,
-            providerOptions: providerOptions(configuration: configuration, kind: descriptor.kind)
+            providerOptions: try providerOptions(configuration: configuration, kind: descriptor.kind)
         )
     }
 
-    private static func providerOptions(
+    static func providerOptions(
+        configuration: HanlinChatModelConfiguration,
+        kind: HanlinAISDKProviderKind,
+        cacheScope: HanlinPromptCacheScope? = nil,
+        validateExplicitReference: Bool = false
+    ) throws -> ProviderOptions? {
+        var result: ProviderOptions = [:]
+        if kind == .openAIResponses {
+            // Preserve the existing stateless Responses contract, including SIWC.
+            result["openai"] = ["store": .bool(false)]
+        }
+        if configuration.supportsReasoning {
+            switch kind {
+            case .appleOnDevice:
+                break
+            case .openAI, .openAIResponses:
+                if let effort = configuration.reasoningEffort, !effort.isEmpty {
+                    result["openai", default: [:]]["reasoningEffort"] = .string(effort)
+                }
+            case .openAICompatible:
+                if let effort = configuration.reasoningEffort, !effort.isEmpty {
+                    result["hanlin-openai-compatible"] = ["reasoningEffort": .string(effort)]
+                }
+            case .anthropic:
+                result["anthropic"] = ["thinking": .object([
+                    "type": .string("enabled"),
+                    "budgetTokens": .number(Double(max(configuration.thinkingLength, 1_024)))
+                ])]
+            case .google:
+                var thinking: [String: JSONValue] = ["includeThoughts": .bool(true)]
+                if configuration.thinkingLength > 0 {
+                    thinking["thinkingBudget"] = .number(Double(configuration.thinkingLength))
+                }
+                result["google"] = ["thinkingConfig": .object(thinking)]
+            }
+        }
+        let cache = try cacheProviderOptions(
+            configuration: configuration, kind: kind, cacheScope: cacheScope,
+            validateExplicitReference: validateExplicitReference
+        )
+        for (provider, fields) in cache {
+            result[provider, default: [:]].merge(fields) { _, cacheValue in cacheValue }
+        }
+        return result.isEmpty ? nil : result
+    }
+
+    static func cacheProviderOptions(
+        configuration: HanlinChatModelConfiguration,
+        kind: HanlinAISDKProviderKind,
+        cacheScope: HanlinPromptCacheScope?,
+        validateExplicitReference: Bool
+    ) throws -> ProviderOptions {
+        let policy = configuration.promptCachePolicy ?? .automatic
+        guard policy.requestsExplicitControls,
+              configuration.apiType?.lowercased() != "openai-chatgpt-plan" else { return [:] }
+        switch kind {
+        case .appleOnDevice, .openAICompatible:
+            return [:]
+        case .openAI, .openAIResponses:
+            var options: [String: JSONValue] = [:]
+            if let cacheScope {
+                options["promptCacheKey"] = .string(cacheScope.key(configuration: configuration))
+            }
+            if let openAI = policy.openAI {
+                if let retention = openAI.retention {
+                    options["promptCacheRetention"] = .string(retention.rawValue)
+                }
+                if openAI.hasModernOptions {
+                    if kind == .openAI, openAI.ttl == .twelveHours || openAI.comparisonResponseID != nil {
+                        throw HanlinChatError.invalidRequest("Twelve-hour cache lifetime and cache diagnostics require OpenAI Responses.")
+                    }
+                    var controls: [String: JSONValue] = [:]
+                    if let mode = openAI.mode { controls["mode"] = .string(mode.rawValue) }
+                    if let ttl = openAI.ttl { controls["ttl"] = .string(ttl.rawValue) }
+                    if let responseID = openAI.comparisonResponseID {
+                        guard !responseID.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
+                            throw HanlinChatError.invalidRequest("A cache diagnostic comparison requires a response ID.")
+                        }
+                        controls["comparisonResponseId"] = .string(responseID)
+                    }
+                    options["promptCacheOptions"] = .object(controls)
+                }
+            }
+            return options.isEmpty ? [:] : ["openai": options]
+        case .anthropic:
+            return ["anthropic": ["cacheControl": .object([
+                "type": .string("ephemeral"),
+                "ttl": .string(policy.anthropicTTL.rawValue)
+            ])]]
+        case .google:
+            // Engine construction has no conversation scope. Resolve the reference
+            // only when the actual turn supplies its immutable account/conversation.
+            guard validateExplicitReference, let reference = policy.googleCachedContent else { return [:] }
+            let model = HanlinGoogleCachedContentReference.normalizedModel(configuration.baseModelID)
+            guard model.hasPrefix("gemini-2.5-") || model.hasPrefix("gemini-3.") || model.hasPrefix("gemini-3-") else {
+                throw HanlinGoogleCachedContentError.unsupportedModel
+            }
+            guard let cacheScope else {
+                throw HanlinChatError.invalidRequest("Explicit Google cached content requires a conversation cache scope.")
+            }
+            let name = try reference.validatedName(
+                modelID: configuration.baseModelID,
+                scopeKey: cacheScope.key(configuration: configuration)
+            )
+            return ["google": ["cachedContent": .string(name)]]
+        }
+    }
+
+    static func cacheBreakpointOptions(
         configuration: HanlinChatModelConfiguration,
         kind: HanlinAISDKProviderKind
     ) -> ProviderOptions? {
-        guard configuration.supportsReasoning else { return nil }
-
+        let policy = configuration.promptCachePolicy ?? .automatic
+        guard policy.requestsExplicitControls,
+              configuration.apiType?.lowercased() != "openai-chatgpt-plan" else { return nil }
         switch kind {
-        case .appleOnDevice:
-            return nil
-        case .openAI, .openAIResponses:
-            guard let effort = configuration.reasoningEffort, !effort.isEmpty else { return nil }
-            return ["openai": ["reasoningEffort": .string(effort)]]
-        case .openAICompatible:
-            guard let effort = configuration.reasoningEffort, !effort.isEmpty else { return nil }
-            return ["hanlin-openai-compatible": ["reasoningEffort": .string(effort)]]
         case .anthropic:
-            let budget = max(configuration.thinkingLength, 1_024)
-            return ["anthropic": [
-                "thinking": .object([
-                    "type": .string("enabled"),
-                    "budgetTokens": .number(Double(budget))
-                ])
-            ]]
-        case .google:
-            var thinking: [String: JSONValue] = ["includeThoughts": .bool(true)]
-            if configuration.thinkingLength > 0 {
-                thinking["thinkingBudget"] = .number(Double(configuration.thinkingLength))
-            }
-            return ["google": ["thinkingConfig": .object(thinking)]]
+            return ["anthropic": ["cacheControl": .object([
+                "type": .string("ephemeral"), "ttl": .string(policy.anthropicTTL.rawValue)
+            ])]]
+        case .openAI, .openAIResponses:
+            // Reuse the maintained native/model capability gate from settings.
+            // An extra stable boundary coexists with the provider's implicit
+            // latest-message boundary; it does not select explicit-only mode,
+            // extend TTL, or prewarm. Older/custom/plan transports keep defaults.
+            let automaticStablePrefix = kind == .openAIResponses
+                && HanlinPromptCachePreset.available(
+                    company: configuration.company, apiType: configuration.apiType,
+                    endpoint: configuration.endpoint, modelID: configuration.baseModelID
+                ).contains(.openAIExplicitThirtyMinutes)
+            guard policy.openAI?.hasModernOptions == true || automaticStablePrefix else { return nil }
+            var marker: [String: JSONValue] = ["mode": .string("explicit")]
+            if let ttl = policy.openAI?.ttl { marker["ttl"] = .string(ttl.rawValue) }
+            return ["openai": ["promptCacheBreakpoint": .object(marker)]]
+        default:
+            return nil
+        }
+    }
+
+    static func validateCachedContentContext(
+        configuration: HanlinChatModelConfiguration,
+        kind: HanlinAISDKProviderKind,
+        hasSystemInstructions: Bool,
+        hasTools: Bool
+    ) throws {
+        let policy = configuration.promptCachePolicy ?? .automatic
+        guard kind == .google, policy.requestsExplicitControls,
+              policy.googleCachedContent != nil else { return }
+        guard !hasSystemInstructions, !hasTools else {
+            throw HanlinChatError.invalidRequest(
+                "Content-only Google cached content cannot be combined with system instructions or tools. Keep the full context and use implicit caching."
+            )
         }
     }
 
@@ -218,33 +343,53 @@ extension HanlinAISDKProviderFactory {
         transportObserver: HanlinChatTransportObserver? = nil,
         requestAdmission: HanlinChatRequestAdmission? = nil
     ) -> FetchFunction {
-        let session = URLSession(configuration: sessionConfiguration)
+        let owner = HanlinChatProviderSession(configuration: sessionConfiguration)
         return { request in
+            let session = owner.session
             await onRequest?(request)
             try Task.checkCancellation()
             try await requestAdmission?(request)
             try Task.checkCancellation()
+            let cancellation = HanlinChatTransportCancellation.current
+            try cancellation?.checkCancellation()
             let traceID = UUID()
             transportObserver?(.request(id: traceID, request: request))
 #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
+            let pending = Task {
+                try Task.checkCancellation()
+                return try await session.bytes(for: request)
+            }
+            let pendingID = cancellation?.register { pending.cancel() }
+            defer { cancellation?.unregister(pendingID) }
             let bytes: URLSession.AsyncBytes
             let response: URLResponse
             do {
-                (bytes, response) = try await session.bytes(for: request)
+                (bytes, response) = try await withTaskCancellationHandler {
+                    try await pending.value
+                } onCancel: {
+                    pending.cancel()
+                }
             } catch {
                 transportObserver?(.end(id: traceID, error: String(describing: error)))
                 throw error
             }
+            // After headers, cancelling the Swift fetch task is no longer enough:
+            // the body is consumed by separate original SDK Tasks. Cancel this
+            // URLSession task directly when its owning turn terminates.
+            let networkTask = bytes.task
+            let requestID = cancellation?.register { networkTask.cancel() }
             if let httpResponse = response as? HTTPURLResponse {
                 transportObserver?(.response(id: traceID, response: httpResponse))
                 await onResponse?(request, httpResponse)
             }
             let stream = AsyncThrowingStream<Data, Error> { continuation in
                 let task = Task {
+                    defer { cancellation?.unregister(requestID) }
                     var buffer = Data()
                     buffer.reserveCapacity(16_384)
                     do {
                         for try await byte in bytes {
+                            try Task.checkCancellation()
                             buffer.append(byte)
                             if byte == 0x0A || buffer.count >= 1024 {
                                 transportObserver?(.bytes(id: traceID, data: buffer))
@@ -266,7 +411,11 @@ extension HanlinAISDKProviderFactory {
                         continuation.finish(throwing: error)
                     }
                 }
-                continuation.onTermination = { @Sendable _ in task.cancel() }
+                continuation.onTermination = { @Sendable _ in
+                    task.cancel()
+                    networkTask.cancel()
+                    cancellation?.unregister(requestID)
+                }
             }
             return FetchResponse(body: .stream(stream), urlResponse: response)
 #else

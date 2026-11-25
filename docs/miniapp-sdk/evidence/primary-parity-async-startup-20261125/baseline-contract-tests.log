@@ -1,0 +1,233 @@
+✖ runJS accepts an asynchronous void result without invoking a synchronous fallback (6.56048ms)
+✖ runJS uses the existing asynchronous alias on a later bridge candidate (1.710051ms)
+✔ runJS preserves compatibility results when no asynchronous selector exists (3.1767ms)
+✖ runNode accepts an asynchronous void result without invoking a synchronous fallback (1.225327ms)
+✖ runNode uses the existing asynchronous alias on a later bridge candidate (1.264448ms)
+✔ runNode preserves compatibility results when no asynchronous selector exists (1.979772ms)
+✖ runPython accepts an asynchronous void result without invoking a synchronous fallback (3.492181ms)
+✖ runPython uses the existing asynchronous alias on a later bridge candidate (0.988566ms)
+✔ runPython preserves compatibility results when no asynchronous selector exists (2.873618ms)
+✖ fetchHTTPS accepts an asynchronous void result without invoking a synchronous fallback (2.290895ms)
+✖ fetchHTTPS uses the existing asynchronous alias on a later bridge candidate (1.699011ms)
+✔ fetchHTTPS preserves compatibility results when no asynchronous selector exists (1.764171ms)
+✖ sendInterApp accepts an asynchronous void result without invoking a synchronous fallback (1.524249ms)
+✖ sendInterApp uses the existing asynchronous alias on a later bridge candidate (1.124766ms)
+✔ sendInterApp preserves compatibility results when no asynchronous selector exists (1.494409ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 5
+ℹ fail 10
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 193.802509
+
+✖ failing tests:
+
+test at Scripts/CI/Tests/nativescript_parity_async_startup.test.mjs:40:3
+✖ runJS accepts an asynchronous void result without invoking a synchronous fallback (6.56048ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (file:///mnt/development/projects/worktrees/hanlin-ns-original-core-metadata-20261125/Scripts/CI/Tests/nativescript_parity_async_startup.test.mjs:59:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at Scripts/CI/Tests/nativescript_parity_async_startup.test.mjs:69:3
+✖ runJS uses the existing asynchronous alias on a later bridge candidate (1.710051ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///mnt/development/projects/worktrees/hanlin-ns-original-core-metadata-20261125/Scripts/CI/Tests/nativescript_parity_async_startup.test.mjs:77:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at Scripts/CI/Tests/nativescript_parity_async_startup.test.mjs:40:3
+✖ runNode accepts an asynchronous void result without invoking a synchronous fallback (1.225327ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (file:///mnt/development/projects/worktrees/hanlin-ns-original-core-metadata-20261125/Scripts/CI/Tests/nativescript_parity_async_startup.test.mjs:59:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at Scripts/CI/Tests/nativescript_parity_async_startup.test.mjs:69:3
+✖ runNode uses the existing asynchronous alias on a later bridge candidate (1.264448ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///mnt/development/projects/worktrees/hanlin-ns-original-core-metadata-20261125/Scripts/CI/Tests/nativescript_parity_async_startup.test.mjs:77:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at Scripts/CI/Tests/nativescript_parity_async_startup.test.mjs:40:3
+✖ runPython accepts an asynchronous void result without invoking a synchronous fallback (3.492181ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (file:///mnt/development/projects/worktrees/hanlin-ns-original-core-metadata-20261125/Scripts/CI/Tests/nativescript_parity_async_startup.test.mjs:59:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at Scripts/CI/Tests/nativescript_parity_async_startup.test.mjs:69:3
+✖ runPython uses the existing asynchronous alias on a later bridge candidate (0.988566ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///mnt/development/projects/worktrees/hanlin-ns-original-core-metadata-20261125/Scripts/CI/Tests/nativescript_parity_async_startup.test.mjs:77:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at Scripts/CI/Tests/nativescript_parity_async_startup.test.mjs:40:3
+✖ fetchHTTPS accepts an asynchronous void result without invoking a synchronous fallback (2.290895ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (file:///mnt/development/projects/worktrees/hanlin-ns-original-core-metadata-20261125/Scripts/CI/Tests/nativescript_parity_async_startup.test.mjs:59:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at Scripts/CI/Tests/nativescript_parity_async_startup.test.mjs:69:3
+✖ fetchHTTPS uses the existing asynchronous alias on a later bridge candidate (1.699011ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///mnt/development/projects/worktrees/hanlin-ns-original-core-metadata-20261125/Scripts/CI/Tests/nativescript_parity_async_startup.test.mjs:77:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at Scripts/CI/Tests/nativescript_parity_async_startup.test.mjs:40:3
+✖ sendInterApp accepts an asynchronous void result without invoking a synchronous fallback (1.524249ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 1
+  
+      at TestContext.<anonymous> (file:///mnt/development/projects/worktrees/hanlin-ns-original-core-metadata-20261125/Scripts/CI/Tests/nativescript_parity_async_startup.test.mjs:59:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 1,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at Scripts/CI/Tests/nativescript_parity_async_startup.test.mjs:69:3
+✖ sendInterApp uses the existing asynchronous alias on a later bridge candidate (1.124766ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (file:///mnt/development/projects/worktrees/hanlin-ns-original-core-metadata-20261125/Scripts/CI/Tests/nativescript_parity_async_startup.test.mjs:77:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

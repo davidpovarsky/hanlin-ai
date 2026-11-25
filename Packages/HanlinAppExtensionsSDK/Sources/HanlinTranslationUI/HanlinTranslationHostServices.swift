@@ -7,11 +7,14 @@ import HanlinScriptExtensions
 public struct HanlinTranslationHostServices: Sendable {
     public let agentClient: HanlinCompactAgentClient
     public let loadSnapshot: @Sendable () throws -> HanlinScriptExtensionSnapshot?
+    public let loadStore: @Sendable () throws -> HanlinScriptExtensionStore
 
     public init(agentClient: HanlinCompactAgentClient,
-                loadSnapshot: @escaping @Sendable () throws -> HanlinScriptExtensionSnapshot?) {
+                loadSnapshot: @escaping @Sendable () throws -> HanlinScriptExtensionSnapshot?,
+                loadStore: @escaping @Sendable () throws -> HanlinScriptExtensionStore = { try .init() }) {
         self.agentClient = agentClient
         self.loadSnapshot = loadSnapshot
+        self.loadStore = loadStore
     }
 
     /// Re-read the host's model selection and resolve credentials on every turn.
@@ -24,5 +27,6 @@ public struct HanlinTranslationHostServices: Sendable {
         self.loadSnapshot = {
             try HanlinScriptExtensionStore(hostConfiguration: configuration).load()
         }
+        self.loadStore = { try HanlinScriptExtensionStore(hostConfiguration: configuration) }
     }
 }

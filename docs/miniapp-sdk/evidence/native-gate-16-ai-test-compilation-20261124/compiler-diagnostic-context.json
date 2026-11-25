@@ -1,0 +1,118 @@
+[
+  {
+    "log": "ai-build.log",
+    "firstLine": 102885,
+    "rows": [
+      {
+        "line": 102885,
+        "text": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYTests/HanlinNativePresentationTests.swift:231:27: error: type 'Void' cannot conform to 'Sequence' [#ProtocolTypeNonConformance]"
+      },
+      {
+        "line": 102886,
+        "text": "229 |         guard case let .scriptwidget(node, _) = prepared else { return [] }"
+      },
+      {
+        "line": 102887,
+        "text": "230 |         func collect(_ node: HanlinScriptWidgetPreparedNode) -> [String] {"
+      },
+      {
+        "line": 102888,
+        "text": "231 |             node.children.flatMap { child in"
+      },
+      {
+        "line": 102889,
+        "text": "    |                           |- error: type 'Void' cannot conform to 'Sequence' [#ProtocolTypeNonConformance]"
+      },
+      {
+        "line": 102890,
+        "text": "    |                           |- note: only concrete types such as structs, enums and classes can conform to protocols"
+      },
+      {
+        "line": 102891,
+        "text": "    |                           `- note: required by instance method 'flatMap' where 'SegmentOfResult' = 'Void'"
+      },
+      {
+        "line": 102892,
+        "text": "232 |                 switch child {"
+      },
+      {
+        "line": 102893,
+        "text": "233 |                 case let .element(element): collect(element)"
+      },
+      {
+        "line": 102894,
+        "text": ""
+      },
+      {
+        "line": 102895,
+        "text": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYTests/HanlinNativeWidgetRendererTests.swift:139:37: warning: '+' was deprecated in iOS 26.0: Use string interpolation on `Text` instead: `Text(\"Hello \\(name)\")` [#DeprecatedDeclaration]"
+      },
+      {
+        "line": 102896,
+        "text": "137 |         XCTAssertEqual(native.props.children?.count, 1)"
+      },
+      {
+        "line": 102897,
+        "text": "138 |         XCTAssertTrue(native.props.children?.first?.childView is TextView)"
+      }
+    ]
+  },
+  {
+    "log": "ai-build.log",
+    "firstLine": 102957,
+    "rows": [
+      {
+        "line": 102957,
+        "text": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYTests/HanlinOriginalExpoWidgetTests.swift:16:39: error: reference to static property 'appGroupIdentifier' is not concurrency-safe because it involves shared mutable state"
+      },
+      {
+        "line": 102958,
+        "text": " 14 |     func testOriginalWidgetRegistrationTimelineAndPickerKeepProductAndInstallationIdentity() async throws {"
+      },
+      {
+        "line": 102959,
+        "text": " 15 |         let group = try XCTUnwrap(Bundle.main.object(forInfoDictionaryKey: \"ExpoWidgetsAppGroupIdentifier\") as? String)"
+      },
+      {
+        "line": 102960,
+        "text": " 16 |         XCTAssertEqual(WidgetsStorage.appGroupIdentifier, group)"
+      },
+      {
+        "line": 102961,
+        "text": "    |                                       `- error: reference to static property 'appGroupIdentifier' is not concurrency-safe because it involves shared mutable state"
+      },
+      {
+        "line": 102962,
+        "text": " 17 |         XCTAssertTrue(HanlinExpoWidgetsIntegration.isOriginalRuntimeAvailable,"
+      },
+      {
+        "line": 102963,
+        "text": " 18 |             \"The original Expo Widgets JavaScript runtime must be embedded with its native module.\")"
+      },
+      {
+        "line": 102964,
+        "text": ""
+      },
+      {
+        "line": 102965,
+        "text": "ExpoWidgets.WidgetsStorage.appGroupIdentifier:2:19: note: static property declared here"
+      },
+      {
+        "line": 102966,
+        "text": "1 | enum WidgetsStorage {"
+      },
+      {
+        "line": 102967,
+        "text": "2 | public static var appGroupIdentifier: String?}"
+      },
+      {
+        "line": 102968,
+        "text": "  |                   `- note: static property declared here"
+      },
+      {
+        "line": 102969,
+        "text": "3 | "
+      }
+    ]
+  }
+]

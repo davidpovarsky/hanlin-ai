@@ -1,0 +1,13 @@
+diff --git a/Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinScriptAnalyzerTests.swift b/Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinScriptAnalyzerTests.swift
+index 5e7c1f2f..8deccdb7 100644
+--- a/Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinScriptAnalyzerTests.swift
++++ b/Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinScriptAnalyzerTests.swift
+@@ -255 +255 @@ struct HanlinScriptAnalyzerTests {
+-        #expect(supportedPreview.findings.contains { $0.message.contains("supported by embedded runtime 9.1.0") })
++        #expect(supportedPreview.findings.contains { $0.message.contains("supported by embedded runtime \(HanlinMiniAppHostVersions.nativeScriptCoreVersion)") })
+@@ -266 +266 @@ struct HanlinScriptAnalyzerTests {
+-            $0.message == "This Hanlin build supports @nativescript/core 9.1.0, but the package requires ^10.0.0."
++            $0.message == "This Hanlin build supports @nativescript/core \(HanlinMiniAppHostVersions.nativeScriptCoreVersion), but the package requires ^10.0.0."
+@@ -318 +318 @@ struct HanlinScriptAnalyzerTests {
+-            $0.message.contains("supports @expo/ui 58.0.3") && $0.message.contains("@expo/ui 99.0.0")
++            $0.message.contains("supports @expo/ui \(HanlinMiniAppHostVersions.expoUIVersion)") && $0.message.contains("@expo/ui 99.0.0")

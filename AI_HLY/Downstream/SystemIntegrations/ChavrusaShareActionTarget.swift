@@ -17,11 +17,15 @@ extension HanlinScriptingPlatform {
     var shareActionTargets: [ChavrusaShareActionTarget] {
         installedPackages.filter(\.enabled).flatMap { package -> [ChavrusaShareActionTarget] in
             guard let descriptor = try? package.appDescriptor() else { return [] }
+            let explicitShares = package.entrypoints.filter { $0.kind == .share }
+            let shareEntries = explicitShares.isEmpty
+                ? package.entrypoints.filter { $0.kind == .app } : explicitShares
             return descriptor.actions.compactMap { action in
                 guard action.capabilities.contains(where: { $0.rawValue == "inter-app.share" }),
-                      let entry = package.entrypoints.first(where: {
-                          ($0.kind == .app || $0.kind == .share) && $0.runtimeProfile == .hanlinNativeScript
+                      let entry = shareEntries.first(where: {
+                          [.hanlinNativeScript, .hanlinExpo].contains($0.runtimeProfile)
                               && $0.sourcePath == action.handler
+                              && ($0.exportedSymbol == nil || $0.exportedSymbol == action.id.rawValue)
                       }) else { return nil }
                 return .init(identity: .init(installedPackageID: package.record.installedPackageID,
                     packageID: package.record.packageID, generation: package.record.activeGeneration,

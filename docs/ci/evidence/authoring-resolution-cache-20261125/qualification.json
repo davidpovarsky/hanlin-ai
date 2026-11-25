@@ -1,0 +1,190 @@
+{
+  "kind": "QUALIFIED_COMPONENT_CHANGE_NOT_NATIVE_ACCEPTANCE",
+  "sourceCommit": "707f9c2e3ea8488fafb284e14a7b7636ebb25a48",
+  "baseCommit": "5204240a3d0d5e05e366123bb7f7bbdb9d0ebfd0",
+  "changedSource": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
+  "changedSourceSHA256": "6eb7130890499768b72990cc48cf84b515232635bf00b4ca023bcc1b161182fc",
+  "actualEnvironment": {
+    "node": "24.5.0",
+    "platform": "darwin",
+    "architecture": "arm64",
+    "compiler": "6.0.3",
+    "profileArguments": [
+      "--jitless",
+      "--max-old-space-size=2048",
+      "--cpu-prof"
+    ],
+    "compilerWrapperSHA256": "d3f3cd2b04b7f466f4484df921b744223f7bd1f3e353ec9110bdf52695b983d5",
+    "underlyingCompilerSHA256": "569177652966bd528c319171c7dd22860dbf72bde116cbc4f644f1d02bb12e39",
+    "compilerIdentity": "wrapper and @typescript/old export the identical JavaScript object; original tests use the underlying package via their existing override",
+    "apiDeclarationSHA256": "c967e03c8dbb4770f7e2f0b71b5d13593de679a41cc2b60266c4b69f1342a263"
+  },
+  "profile": {
+    "example": "sdk-only-departure-budget",
+    "baselineMilliseconds": 10315.960167000001,
+    "candidateMilliseconds": 8187.159374999999,
+    "savedPercent": 20.63599274849741,
+    "baselineCounters": {
+      "host.readFile": {
+        "calls": 5296,
+        "milliseconds": 267.96585500001675
+      },
+      "host.directoryExists": {
+        "calls": 11333,
+        "milliseconds": 92.11966900010066
+      },
+      "host.fileExists": {
+        "calls": 11395,
+        "milliseconds": 75.37116100004368
+      },
+      "host.realpath": {
+        "calls": 1419,
+        "milliseconds": 51.63198300000863
+      },
+      "resolveModuleName": {
+        "calls": 1284,
+        "milliseconds": 2752.7844479999876
+      },
+      "resolveTypeReferenceDirective": {
+        "calls": 2,
+        "milliseconds": 3.7307909999990443
+      },
+      "createProgram": {
+        "calls": 1,
+        "milliseconds": 5344.266333
+      },
+      "getPreEmitDiagnostics": {
+        "calls": 1,
+        "milliseconds": 4927.921125
+      }
+    },
+    "candidateCounters": {
+      "host.readFile": {
+        "calls": 992,
+        "milliseconds": 199.37787199999912
+      },
+      "host.directoryExists": {
+        "calls": 4610,
+        "milliseconds": 82.13205700000026
+      },
+      "host.fileExists": {
+        "calls": 4949,
+        "milliseconds": 71.66001400003142
+      },
+      "host.realpath": {
+        "calls": 138,
+        "milliseconds": 5.873369000005368
+      },
+      "resolveModuleName": {
+        "calls": 1284,
+        "milliseconds": 719.9150209999875
+      },
+      "resolveTypeReferenceDirective": {
+        "calls": 2,
+        "milliseconds": 2.3216260000008333
+      },
+      "createProgram": {
+        "calls": 1,
+        "milliseconds": 3294.1788750000005
+      },
+      "getPreEmitDiagnostics": {
+        "calls": 1,
+        "milliseconds": 4796.369583999999
+      }
+    },
+    "baselineMaximumRSSKiB": 397344,
+    "candidateMaximumRSSKiB": 382624,
+    "fullReportEqual": true,
+    "sourceFilesEqual": true,
+    "strictTypecheck": {
+      "strict": true,
+      "checkJs": false,
+      "skipLibCheck": false,
+      "dependencyDeclarationsChecked": true
+    },
+    "diagnostics": [],
+    "candidateProfileExecutions": 1,
+    "interpretation": "One matched component profile, not a repeated statistical benchmark or native end-to-end latency guarantee. Counter categories are nested and must not be added."
+  },
+  "tests": {
+    "counts": {
+      "tests": 17,
+      "pass": 17,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "identities": [
+      "real TypeScript reports semantic errors with original source locations",
+      "validation uses actual original package declarations from the supplied SDK",
+      "NativeScript package emits a runnable ESM graph and retains exact editable sources",
+      "NativeScript preserves authored CommonJS JavaScript and its source-map mode",
+      "import rechecks retained source and ignores a stale successful report",
+      "ScriptWidget keeps original source and its explicit ABI declaration",
+      "failed typecheck emits no package",
+      "a requested existing output directory is preserved",
+      "SDK discovery reads its real manifest and requested documentation",
+      "bundle-only imports do not receive a fabricated source typecheck pass",
+      "modified compiled output is rejected even when retained TypeScript is still valid",
+      "the real CLI archives and revalidates retained source, diagnostics and output identity",
+      "compiler-used sources named build or dist survive source retention and archive revalidation",
+      "NativeScript preserves the original npm runtime package rather than leaving an unresolved bare import",
+      "canonical module and type references use the supplied SDK while retaining its nested dependency",
+      "NativeScript emission and copied bodies agree with canonical types and preserve project aliases and extra dependencies",
+      "missing canonical exports, configs and SDK dependencies never resolve from ancestor packages"
+    ],
+    "logSHA256": "0d7162fdb17b7b03f237e4ed3db6e109289082aee5642f4ab3be56fbb761a027",
+    "status": "EXECUTED_PASS",
+    "originalAuthoringCases": 14,
+    "originalCanonicalResolutionCases": 3,
+    "testsAndCLIUnchanged": true,
+    "durationSeconds": 80.06809591699857,
+    "topLevelNodeArguments": [
+      "--jitless",
+      "--max-old-space-size=2048",
+      "--test-concurrency=1",
+      "--test-reporter=tap",
+      "--test"
+    ],
+    "originalCLIChildInvocationUnchanged": true
+  },
+  "historicalFailure": {
+    "originalCombinedJob": "job_19aa082bb4ed",
+    "status": "FAILED_TEST_FILE_BOOTSTRAP",
+    "selectedCasesExecuted": 0,
+    "fileFailures": 2,
+    "cause": "Python Path.as_uri encoded @ as %40; unchanged test setup used URL.pathname as a filesystem path.",
+    "repair": "Serialize the same exact compiler path with Node pathToFileURL; no source/test/assertion change.",
+    "profileReexecuted": false
+  },
+  "boundaries": {
+    "cacheLifetime": "one parseProject/program; fresh cache per invocation including native presentations",
+    "projectCache": "original compilerHost/options/currentDirectory/canonical filename",
+    "sdkCache": "original sdkResolutionHost/sdkOptions/currentDirectory/canonical filename",
+    "resolutionOrderAndPredicatesUnchanged": true,
+    "allFiveResolveModuleNameCallsCovered": true,
+    "typeReferenceDirectiveResolverUnchanged": true,
+    "sdkTypeReferenceModuleFallbackUsesSDKCache": true,
+    "globalOrCrossOperationCache": false
+  },
+  "proof": {
+    "baselineReceiptSHA256": "99ad8dd38fd35a73157b14033e0c9c550225bbccfa9a5a16cb0831ca1d6c8fe2",
+    "baselineResultSHA256": "51a3f121fbd74f05b3f4fec14d2dcb1db9ea9525875ecaaee80b649c9a57dc7c",
+    "candidateResultSHA256": "71518f0e42e772ec1bb6621a8612fafbeaa266b057915aa05374a574a58a522f",
+    "candidateInitialReceiptSHA256": "55be254c0fbf851739a1bf2d75d8a7141bb49647ba4b26410368d520b6db3fed",
+    "testsReceiptSHA256": "8b75ac33bb634e8b7de5f03d06638f2bb4252e68250acc665d39f3a3b39d9b0b",
+    "testsLogSHA256": "0d7162fdb17b7b03f237e4ed3db6e109289082aee5642f4ab3be56fbb761a027",
+    "rawEvidenceArchiveSHA256": "f89705364e40f462a106429203edd9b02cb43ff6233ca2b36c77f5813f3ea0aa",
+    "rawEvidenceFileCount": 23
+  },
+  "integration": {
+    "shippingSourceAndHost052cUnmodifiedByExperiment": true,
+    "required": "Use existing runtime_host_archive.synchronize_archive after validating the unchanged dependency/SDK closure; retain a new archive SHA and sourceInputsHash. Do not stamp old all-tests metadata as newly executed.",
+    "nativeAcceptance": "NOT_RUN_BY_THIS_EXPERIMENT",
+    "otherHostTests": "NOT_REEXECUTED; any aggregate claim requires separate original evidence and consumer closure."
+  },
+  "review": {
+    "source": "Built-in /root/chat_ui reviewed exact707f source; no concrete blocker.",
+    "orchestration": "Built-in /root/chat_ui reviewed controller8ea3a02f; no concrete blocker."
+  }
+}

@@ -45,8 +45,7 @@ public struct HanlinAnimatedDisclosure<Content: View>: View {
         ChatDisclosureLayout(progress: progress, spacing: spacing) {
             if mounted {
                 VStack(alignment: .leading, spacing: 6, content: content)
-                    .accessibilityElement(children: .contain)
-                    .accessibilityHidden(!isExpanded)
+                    .modifier(ChatDisclosureContentVisibility(progress: progress))
                     .transition(.identity)
             }
         }
@@ -54,7 +53,11 @@ public struct HanlinAnimatedDisclosure<Content: View>: View {
         .clipped()
         .contentShape(Rectangle())
         .allowsHitTesting(isExpanded)
-        .accessibilityHidden(!isExpanded)
+        // The layout owns the whole retained branch, including native-backed
+        // descendants. Suppress its children at that boundary when collapsed.
+        // An expanded parent must not override a nested disclosure's hidden state.
+        .accessibilityElement(children: isExpanded ? .contain : .ignore)
+        .accessibilityHidden(true, isEnabled: !isExpanded)
         .onAppear { settle() }
         .onChange(of: isExpanded) { _, _ in transition() }
         .onChange(of: motion.isAnimated) { _, animated in
@@ -89,6 +92,22 @@ public struct HanlinAnimatedDisclosure<Content: View>: View {
             if expanding { mounted = true }
             progress = expanding ? 1 : 0
         }
+    }
+}
+
+/// Keep the retained subtree render-hidden at the fully collapsed endpoint.
+/// Interpolated progress preserves the preset's opacity for every visible frame;
+/// using the target state here would change the entire collapse's fade curve.
+private nonisolated struct ChatDisclosureContentVisibility: ViewModifier, Animatable {
+    var progress: CGFloat
+
+    var animatableData: CGFloat {
+        get { progress }
+        set { progress = newValue }
+    }
+
+    func body(content: Content) -> some View {
+        content.opacity(ChatDisclosureGeometry.fraction(Double(progress)) > 0 ? 1 : 0)
     }
 }
 

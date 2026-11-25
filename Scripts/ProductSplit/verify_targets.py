@@ -11,7 +11,72 @@ sys.path.insert(0, str(ROOT / "Scripts/CI/IntegrationValidation"))
 from project_graph import parse_project, validate_graph, validate_agent_sdk_linkage
 
 
+def validate_native_test_membership():
+    """Catch an omitted XCTest file before an expensive real application build."""
+    project = parse_project((ROOT / "AI_HLY.xcodeproj/project.pbxproj").read_text(encoding="utf-8"))
+    objects = project["objects"]
+    target = next(value for value in objects.values()
+                  if value.get("isa") == "PBXNativeTarget" and value.get("name") == "HanlinMiniAppsUITests")
+    source_phases = [objects[key] for key in target["buildPhases"]
+                     if objects[key].get("isa") == "PBXSourcesBuildPhase"]
+    paths = [objects[objects[key]["fileRef"]]["path"]
+             for phase in source_phases for key in phase["files"]]
+    expected = {path.relative_to(ROOT).as_posix()
+                for path in (ROOT / "HanlinMiniAppsUITests").glob("*.swift")}
+    # The original provider test is intentionally shared outside the target directory.
+    expected.add("Scripts/CI/IntegrationValidation/MiniAppsProviderUITests.swift")
+    if not expected or len(paths) != len(set(paths)) or set(paths) != expected:
+        raise RuntimeError("MiniApps UI-test target membership mismatch: " + json.dumps({
+            "omitted": sorted(expected - set(paths)), "unexpected": sorted(set(paths) - expected),
+            "duplicates": len(paths) != len(set(paths))}))
+    return sorted(paths)
+
+
+
+def native_ui_typecheck_command(architecture, sdk_path, platform_path, sources):
+    """Typecheck the actual XCTest-only UI target before expensive app compilation."""
+    project = parse_project((ROOT / "AI_HLY.xcodeproj/project.pbxproj").read_text(encoding="utf-8"))
+    objects = project["objects"]
+    target = next(value for value in objects.values()
+                  if value.get("isa") == "PBXNativeTarget" and value.get("name") == "HanlinMiniAppsUITests")
+    scheme = ET.parse(ROOT / "AI_HLY.xcodeproj/xcshareddata/xcschemes/HanlinMiniApps.xcscheme")
+    configuration = scheme.getroot().find("TestAction").attrib["buildConfiguration"]
+    settings = {}
+    for owner in (objects[project["rootObject"]], target):
+        config = next(objects[key] for key in objects[owner["buildConfigurationList"]]["buildConfigurations"]
+                      if objects[key]["name"] == configuration)
+        settings.update(config["buildSettings"])
+    # Match the actual UI compiler command captured in run 45316423267.
+    # This target imports XCTest only; no app or third-party replacement module
+    # is used, and its full original Xcode build and execution remain required.
+    swift_version = str(settings["SWIFT_VERSION"]).split(".")[0]
+    deployment = settings["IPHONEOS_DEPLOYMENT_TARGET"]
+    command = ["xcrun", "--sdk", "iphonesimulator", "swiftc", "-typecheck",
+               "-module-name", "HanlinMiniAppsUITests", "-swift-version", swift_version,
+               "-target", f"{architecture}-apple-ios{deployment}-simulator", "-sdk", str(sdk_path),
+               # XCTest's Swift overlay is outside XCTest.framework. Preserve
+               # Xcode's system import path; framework-only imports expose the
+               # Objective-C assertion macros, which Swift cannot call.
+               "-Isystem", str(Path(platform_path) / "Developer/usr/lib"),
+               "-module-alias", "Testing=_Testing_Unavailable",
+               "-F", str(Path(platform_path) / "Developer/Library/Frameworks"),
+               "-F", str(Path(sdk_path) / "Developer/Library/Frameworks"),
+               "-enable-experimental-feature", "DebugDescriptionMacro"]
+    if settings.get("ENABLE_TESTABILITY") == "YES":
+        command.append("-enable-testing")
+    conditions = settings.get("SWIFT_ACTIVE_COMPILATION_CONDITIONS", "").split()
+    for condition in conditions:
+        if condition != "$(inherited)":
+            command += ["-D", condition]
+    if settings.get("SWIFT_DEFAULT_ACTOR_ISOLATION"):
+        command += ["-default-isolation", settings["SWIFT_DEFAULT_ACTOR_ISOLATION"]]
+    if settings.get("SWIFT_STRICT_CONCURRENCY"):
+        command += ["-strict-concurrency=" + settings["SWIFT_STRICT_CONCURRENCY"]]
+    return command + list(sources)
+
+
 def main():
+    validate_native_test_membership()
     # The parser rejects duplicate IDs/keys and reads quoted and ordinary OpenStep alike.
     project_text = (ROOT / "AI_HLY.xcodeproj/project.pbxproj").read_text(encoding="utf-8")
     project = parse_project(project_text)
@@ -107,7 +172,14 @@ def main():
     entitlements = plistlib.loads((ROOT / "HanlinMiniAppsApp/HanlinMiniApps.entitlements").read_bytes())
     assert set(entitlements["com.apple.security.application-groups"]) == {
         "group.com.itorah.chavrusachat", "group.com.itorah.shared"}
-    assert "com.apple.developer.icloud-container-identifiers" not in entitlements
+    # The original ScriptWidget native cloud/document services use the existing
+    # declared container. Product persistence ownership remains checked above.
+    assert entitlements["com.apple.developer.icloud-container-identifiers"] == [
+        "iCloud.com.itorah.chavrusachat"]
+    assert set(entitlements["com.apple.developer.icloud-services"]) == {"CloudKit", "CloudDocuments"}
+    assert entitlements["com.apple.developer.homekit"] is True
+    assert entitlements["keychain-access-groups"] == [
+        "$(AppIdentifierPrefix)com.itorah.hanlinminiapps.scriptwidget.services"]
     info = plistlib.loads((ROOT / "HanlinMiniAppsApp/Info.plist").read_bytes())
     assert info["UTImportedTypeDeclarations"]
     assert info["CFBundleURLTypes"][0]["CFBundleURLSchemes"] == ["hanlinminiapps"]

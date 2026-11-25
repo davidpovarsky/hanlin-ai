@@ -1,0 +1,149 @@
+{
+  "status": "BUILD_FAILED",
+  "ui": "NOT_RUN",
+  "build": "EXECUTED_FAIL",
+  "mini_build": "EXECUTED_PASS",
+  "ai_build": "EXECUTED_FAIL",
+  "physical_device": "NOT_RUN",
+  "provisioned_distribution": "NOT_RUN",
+  "scope": "Original SDK/tools, source diagnostics, native repair sheet, durable AI handoff, actual build/install and NativeScript/Expo runtime controls in both shipping products",
+  "model_boundary": "Only the HTTP model response sequence and the native adapter image fixture resources are deterministic. All source edits, TypeScript diagnostics, Metro/ESM production, imports, receipts, native rendering and UI events are original production code.",
+  "started_at": 1795536274.5416079,
+  "test_scope": "miniapp_complete",
+  "selected_tests": [
+    "AI_HLYTests/PendingFirstTurnTests/importedMiniAppRepairDispatchesOnceAndPreservesDraftAndSettings",
+    "AI_HLYTests/PendingFirstTurnTests/cancelledMiniAppRepairPreservesHomeDraft",
+    "AI_HLYTests/HanlinScriptingPlatformCompositionTests/malformedImportedArchiveRetainsOriginalAndStructuredDiagnostic",
+    "AI_HLYTests/MiniAppAuthoringToolTests/originalSDKWriteValidateBuildAndRepair",
+    "AI_HLYTests/MiniAppAuthoringToolTests/sourceWritePreservesUnrelatedFilesAndTargetsRetainedSource",
+    "AI_HLYTests/MiniAppAuthoringToolTests/originalExpoMetroBuildOnEmbeddedNode",
+    "AI_HLYTests/HanlinOriginalScriptWidgetAPITests",
+    "AI_HLYTests/HanlinNativePresentationTests",
+    "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests",
+    "AI_HLYTests/HanlinOriginalScriptWidgetControlTests",
+    "AI_HLYTests/HanlinMiniAppStorageCapacityTests",
+    "AI_HLYTests/HanlinOriginalExpoWidgetTests",
+    "AI_HLYUITests/MiniAppAuthoringUITests",
+    "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testInstalledExpoActionsReturnActualReplyAndFailure",
+    "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testPreparedExpoWidgetPublicationReachesExistingConsumer"
+  ],
+  "sha": "7d1efaa6ada43dd80c57133c09e6a8fb327075cf",
+  "simulator": "F522200D-EAF6-4DA1-9B4B-B077D2894A0C",
+  "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-27-2",
+  "device": "iPad mini (A20 Pro)",
+  "app_intents_metadata": {
+    "com.itorah.hanlinminiapps": {
+      "source_app": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app",
+      "status": "CAPTURED",
+      "directories": [
+        {
+          "path": "Extensions/HanlinMiniAppsTranslationProvider.appex/Metadata.appintents",
+          "evidence_path": "app-intents-metadata/HanlinMiniApps.app/Extensions/HanlinMiniAppsTranslationProvider.appex/Metadata.appintents",
+          "files": [
+            {
+              "path": "Extensions/HanlinMiniAppsTranslationProvider.appex/Metadata.appintents/extract.actionsdata",
+              "bytes": 23655,
+              "sha256": "bff65a045e342c3f44dc3606209406cd4407f9d54927241f6ccdf0d8382a2c91"
+            },
+            {
+              "path": "Extensions/HanlinMiniAppsTranslationProvider.appex/Metadata.appintents/extract.packagedata",
+              "bytes": 82,
+              "sha256": "f56a41ca37c3d6ca101ceccc79c5ab8de590e77f34b141686da5182521de2def"
+            },
+            {
+              "path": "Extensions/HanlinMiniAppsTranslationProvider.appex/Metadata.appintents/version.json",
+              "bytes": 51,
+              "sha256": "b63d0f4e634b566140765350e2f4f27c80d481175e3e395f0f7bcd5b9c04f45c"
+            }
+          ]
+        },
+        {
+          "path": "Metadata.appintents",
+          "evidence_path": "app-intents-metadata/HanlinMiniApps.app/Metadata.appintents",
+          "files": [
+            {
+              "path": "Metadata.appintents/extract.actionsdata",
+              "bytes": 53863,
+              "sha256": "7566a912a2437d6f3c2665171fdff5d5beedccfad4b844774eef284c207e8e66"
+            },
+            {
+              "path": "Metadata.appintents/extract.packagedata",
+              "bytes": 182,
+              "sha256": "d107516fb19fed8468a85436908bb01736ecc033a8150be4ebd5ccc439f65226"
+            },
+            {
+              "path": "Metadata.appintents/version.json",
+              "bytes": 51,
+              "sha256": "b63d0f4e634b566140765350e2f4f27c80d481175e3e395f0f7bcd5b9c04f45c"
+            }
+          ]
+        },
+        {
+          "path": "PlugIns/HanlinMiniAppsTests.xctest/Metadata.appintents",
+          "evidence_path": "app-intents-metadata/HanlinMiniApps.app/PlugIns/HanlinMiniAppsTests.xctest/Metadata.appintents",
+          "files": [
+            {
+              "path": "PlugIns/HanlinMiniAppsTests.xctest/Metadata.appintents/extract.actionsdata",
+              "bytes": 53863,
+              "sha256": "27d01505526eab8be0e12e553ea83a084ac8acefa36c3c2ac7e42fe0370d5801"
+            },
+            {
+              "path": "PlugIns/HanlinMiniAppsTests.xctest/Metadata.appintents/version.json",
+              "bytes": 51,
+              "sha256": "b63d0f4e634b566140765350e2f4f27c80d481175e3e395f0f7bcd5b9c04f45c"
+            }
+          ]
+        },
+        {
+          "path": "PlugIns/HanlinMiniAppsWidgets.appex/Metadata.appintents",
+          "evidence_path": "app-intents-metadata/HanlinMiniApps.app/PlugIns/HanlinMiniAppsWidgets.appex/Metadata.appintents",
+          "files": [
+            {
+              "path": "PlugIns/HanlinMiniAppsWidgets.appex/Metadata.appintents/extract.actionsdata",
+              "bytes": 44088,
+              "sha256": "be6f4ce8d3c214888822337aa2a92f2cbc6f913aaecb129b79943224d906f452"
+            },
+            {
+              "path": "PlugIns/HanlinMiniAppsWidgets.appex/Metadata.appintents/extract.packagedata",
+              "bytes": 121,
+              "sha256": "f093c1b7cb57ce68e8cb28828b3d69a14e0b43ea2cf7cdae9dc2ffb3353b4c51"
+            },
+            {
+              "path": "PlugIns/HanlinMiniAppsWidgets.appex/Metadata.appintents/version.json",
+              "bytes": 51,
+              "sha256": "b63d0f4e634b566140765350e2f4f27c80d481175e3e395f0f7bcd5b9c04f45c"
+            }
+          ]
+        }
+      ],
+      "intent_execution": "NOT_RUN",
+      "receipt": "app-intents-metadata/HanlinMiniApps.app.json"
+    }
+  },
+  "error": "xcodebuild exit 65; inspect ai-build.log",
+  "diagnostic_errors": [],
+  "attachment_exports": [],
+  "build_commands": {
+    "mini_build": {
+      "log": "mini-build.log",
+      "command_id": "eca9fe4e30094ca0bf1737fc8c29547c",
+      "status": "completed",
+      "completion_recorded": true,
+      "exit": 0,
+      "observed_returncode": 0
+    },
+    "ai_build": {
+      "log": "ai-build.log",
+      "command_id": "e580678e168540089c47940d9ddf2b73",
+      "status": "completed",
+      "completion_recorded": true,
+      "exit": 65,
+      "observed_returncode": 65
+    }
+  },
+  "result_bundles": [
+    "AIBuild.xcresult",
+    "MiniBuild.xcresult"
+  ],
+  "duration_seconds": 1341.632806301117
+}

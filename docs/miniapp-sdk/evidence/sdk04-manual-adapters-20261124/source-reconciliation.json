@@ -1,0 +1,32 @@
+{
+  "runtimeSelectors": [
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualInputLayoutAndDataAdapters",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualPresentationAdaptersAndDismissalEvents",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoNativeAPIUsesActualUIKitAndWorklets",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoWidgetsUsesOriginalTimelinesAndLiveActivities",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneModularSearchLoadsActualSefariaText",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyExpoPackageImportsRendersAndHandlesEvents",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyNativeScriptPackageImportsRendersAndHandlesEvents",
+    "HanlinMiniAppsTests/CrossAppInvocationTests/testCancelAndDisplayDoneReturnNoDocumentMutation",
+    "HanlinMiniAppsTests/CrossAppInvocationTests/testReusingValueWindowKeepsItsInvocationBindingCurrent",
+    "HanlinMiniAppsTests/CrossAppInvocationTests/testRemovingInvocationOwnerCancelsWhileSessionIsStillRetained",
+    "HanlinMiniAppsTests/CrossAppInvocationTests/testActualIncomingRequestsCreateDistinctIPadScenes",
+    "HanlinMiniAppsTests/NativeScriptWindowOwnershipTests/testUnrelatedAndLateWindowCleanupPreservesNativeScriptOwner",
+    "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests/testInvalidationReleasesHandlersAndRejectsLateActions",
+    "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests/testBridgeInvalidationReleasesPendingCallbacksBeforeProviderCancellation",
+    "HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests/testExternalInvocationSurvivesNestedFullScreenModal"
+  ],
+  "expectedMiniAppsCases": 17,
+  "unchangedAICases": 25,
+  "totalSelectedCases": 42,
+  "native": "NOT_RUN",
+  "localMetroCurrentSource": [
+    {
+      "source": "/mnt/development/projects/worktrees/hanlin-sdk04-manual-adapters-20261124/Fixtures/ExpoSwiftUIProbe/ManualAdapterProbe.tsx",
+      "sha256": "4794f92fc158639b806c0f80bf74cf71775651ad2acd2c24c9462f9d810ff48e",
+      "matchesCurrent": true
+    }
+  ]
+}

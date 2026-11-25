@@ -1,0 +1,307 @@
+{
+  "at": "2026-11-24T06:36:08.394889+00:00",
+  "runID": 45335292541,
+  "sourceCommit": "ee3b0ede43fcb4aac02def04d469eae542ba035b",
+  "artifactID": 14896535402,
+  "artifactBytes": 334147108,
+  "expectedSHA256": "19ade9a357346edf6b516e20c4847adca2707254f18d221ee73e59c6bc246b3f",
+  "actualSHA256": "19ade9a357346edf6b516e20c4847adca2707254f18d221ee73e59c6bc246b3f",
+  "verified": true,
+  "extracted": [
+    {
+      "path": "app-split-evidence/acceptance.json",
+      "bytes": 2011,
+      "sha256": "86d0b7867643d3b0f0fe5d67554bdf64e10f3e0a56a48e942752c4031c0cf714"
+    },
+    {
+      "path": "app-split-evidence/ci-performance-report.json",
+      "bytes": 2240,
+      "sha256": "797f54d48fc45c02969a3bd2be61d8a4cd3ba4ce2ea02ed11daa9a0b7a3f0400"
+    },
+    {
+      "path": "app-split-evidence/foreground/foreground-results.json",
+      "bytes": 22462,
+      "sha256": "814cd1bc1aa222b79ea2896ad53d8546bc11ecec88bee7301fe2b636cacafb1d"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/commands.jsonl",
+      "bytes": 19044,
+      "sha256": "6393fe8ec0ad72f55da37e020795483facb3a9b0442a9f242d0c8a516ba29d04"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/contracts-provenance.json",
+      "bytes": 15668,
+      "sha256": "3a624b1bd218877a025032f956d5f73a36ee5e1519adee47391bcc3df806ac09"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/core-provenance.json",
+      "bytes": 6349,
+      "sha256": "d17e0e64a4d43987e5381fdb68895cec9d70ad29b144757e49f57adecb9240e9"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/foreground-binary-provenance.json",
+      "bytes": 8609,
+      "sha256": "e7fcf39c2054447735a3058bddc329c6d54b87940c6872ff9c9a107001180249"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/manifest.json",
+      "bytes": 5117,
+      "sha256": "8f3d2141b868b2e2ab274b1ac97d67cded304283b647e6ee1021ebd1a50c9819"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/raw-001-toolchain.stderr.log",
+      "bytes": 30,
+      "sha256": "bbc8b176d3c74d4c5a7fd00b40280f98168e116d5272273bfe8e71407625540e"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/raw-001-toolchain.stdout.log",
+      "bytes": 98,
+      "sha256": "4b59da256292ae42e3f04ef6d06ea3e139678613a3cd3d0dc37a6757c0bd290a"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/raw-002-compile-contracts.stderr.log",
+      "bytes": 98,
+      "sha256": "4b59da256292ae42e3f04ef6d06ea3e139678613a3cd3d0dc37a6757c0bd290a"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/raw-002-compile-contracts.stdout.log",
+      "bytes": 106501,
+      "sha256": "5933458b2cfb5a068d1d6829cb6e69fefba9ae92ab15a83068d1f15ce4cf44e5"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/raw-003-compile-core.stderr.log",
+      "bytes": 98,
+      "sha256": "4b59da256292ae42e3f04ef6d06ea3e139678613a3cd3d0dc37a6757c0bd290a"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/raw-003-compile-core.stdout.log",
+      "bytes": 7585,
+      "sha256": "bf6c5b3c0eb40af4ca88efe64e67f5542ce2beb62d7cd5ccb89c69dd647741ea"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/raw-004-link-foreground.stderr.log",
+      "bytes": 98,
+      "sha256": "4b59da256292ae42e3f04ef6d06ea3e139678613a3cd3d0dc37a6757c0bd290a"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/raw-004-link-foreground.stdout.log",
+      "bytes": 46335,
+      "sha256": "fb12f4f37c5ed5b0a3b0f9dd8f82bc9b5262f35193c85fd58305df7786ba22eb"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/raw-005-tests-foreground.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/raw-005-tests-foreground.stdout.log",
+      "bytes": 2090,
+      "sha256": "c617624f4096a37fa8807b3c145449ce20cff0eeae45d1d760bfda13b3bae810"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/raw-006-commit-base.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/raw-006-commit-base.stdout.log",
+      "bytes": 41,
+      "sha256": "a2bc1fb195066422530f02fffe96271c7d6a0ef8a2ae447ce5d74be356c71bc1"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/raw-007-working-tree.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "app-split-evidence/foreground/raw-origin/raw-007-working-tree.stdout.log",
+      "bytes": 288,
+      "sha256": "694d8fdce14e414a53d7146aeea39b64f9e97459b204198d6dbf438d78609d93"
+    },
+    {
+      "path": "app-split-evidence/foreground-reuse.json",
+      "bytes": 83,
+      "sha256": "98f9b73dee20aa724bbd6bc2deb82ceb09d2dc18a1ad374630dc66a052a437f9"
+    },
+    {
+      "path": "app-split-evidence/foreground.log",
+      "bytes": 200,
+      "sha256": "74d6240de0028fccfa242eb978cf5963c49338eabf46f15265f5b36ebaad3e0b"
+    },
+    {
+      "path": "app-split-evidence/host-reuse.json",
+      "bytes": 70,
+      "sha256": "5e22daf5ec19232fe3906c437666b1d7a8f1c5a59ba9cb9fbb9f5ee304ee2289"
+    },
+    {
+      "path": "app-split-evidence/miniapp-cli-relocation.log",
+      "bytes": 223,
+      "sha256": "7aeb91dfd0d28cfa068b2c69f94ffd696562957fdee42494eb3d155a62d06246"
+    },
+    {
+      "path": "app-split-evidence/native-dependencies-duration-seconds.txt",
+      "bytes": 5,
+      "sha256": "a80464ffead72ed0822d444a88790c2f6a443e0024e51bd290d3658694525371"
+    },
+    {
+      "path": "app-split-evidence/native-dependencies.log",
+      "bytes": 2810658,
+      "sha256": "59f3d5236b40f787266e3c2ada9687b2295c4c322e5d467bc935da2bffedaeea"
+    },
+    {
+      "path": "app-split-evidence/package-lifecycle-duration-seconds.txt",
+      "bytes": 3,
+      "sha256": "e6c21e8d260fe71882debdb339d2402a2ca7648529bc2303f48649bce0380017"
+    },
+    {
+      "path": "app-split-evidence/package-lifecycle.log",
+      "bytes": 1415,
+      "sha256": "4935bbe25a937461812d94e992fd2a1b285dd751a3705142c8f86bb58eaa1629"
+    },
+    {
+      "path": "app-split-evidence/paired-product/acceptance.json",
+      "bytes": 2011,
+      "sha256": "86d0b7867643d3b0f0fe5d67554bdf64e10f3e0a56a48e942752c4031c0cf714"
+    },
+    {
+      "path": "app-split-evidence/paired-product/active-command.json",
+      "bytes": 513,
+      "sha256": "0f1f4aa9846cdfb44905b69ce3eecffc22a5cb2099e67b08e8c323e5072dca0a"
+    },
+    {
+      "path": "app-split-evidence/paired-product/before-boot-host-resources.txt",
+      "bytes": 34,
+      "sha256": "8f1c8925647f04af1a1be4971bf5da70ce32f357a192f0373e4d2580881772fb"
+    },
+    {
+      "path": "app-split-evidence/paired-product/before-boot-memory.txt",
+      "bytes": 1247,
+      "sha256": "006fdfd462d7a5b8334d595c9e58e16c8f15cdd06312970dc4804b545670d01a"
+    },
+    {
+      "path": "app-split-evidence/paired-product/before-boot-processes.txt",
+      "bytes": 81092,
+      "sha256": "67aa06b98c58c08b0bdd4cc0d409d5998b955dbca481aae2806c90c56b70ffd7"
+    },
+    {
+      "path": "app-split-evidence/paired-product/boot.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "app-split-evidence/paired-product/bootstatus.log",
+      "bytes": 3036,
+      "sha256": "36f785d9f9055a010d4a64e0880c93cccfcc75124b2f0b6ef90f0df3daa0e456"
+    },
+    {
+      "path": "app-split-evidence/paired-product/command-events.jsonl",
+      "bytes": 67073,
+      "sha256": "365503f99daa39c73eab645dc3a3f55bc5029adb179cc069d5fa9082a8e6236b"
+    },
+    {
+      "path": "app-split-evidence/paired-product/commands.jsonl",
+      "bytes": 4360,
+      "sha256": "8d7cf6147a16520c1a107bb2c2f231c3ecce859724a62cf24c1a296c9d3548d0"
+    },
+    {
+      "path": "app-split-evidence/paired-product/container-command-help.txt",
+      "bytes": 386,
+      "sha256": "62b5b30225c28644c70945a598f2385b4414e2f11c75c4ec2d134d6822f0053b"
+    },
+    {
+      "path": "app-split-evidence/paired-product/created-simulator.txt",
+      "bytes": 37,
+      "sha256": "852bcbc0b88028d458beb9f93fdf35c8ebe6aca2036fbbf3a05d718061426252"
+    },
+    {
+      "path": "app-split-evidence/paired-product/device-types.json",
+      "bytes": 66366,
+      "sha256": "f663b275b7760a98ef28ff760c8efc49703530dd1b45c3d70fa755047bb799a0"
+    },
+    {
+      "path": "app-split-evidence/paired-product/failure-device-state.json",
+      "bytes": 22750,
+      "sha256": "66023d45bf2a1326ced7760172fbdcbe3274a2d9e005168ccb5a59d626c41b3a"
+    },
+    {
+      "path": "app-split-evidence/paired-product/failure-installed-apps.plist",
+      "bytes": 55101,
+      "sha256": "4a921af98e93d83b2c86d073a83ed0c4c787687e202a0141359b4250405c5e89"
+    },
+    {
+      "path": "app-split-evidence/paired-product/failure-memory.txt",
+      "bytes": 1247,
+      "sha256": "004b913ffa3c10f04140f261cf18661c91cb172da1476b281651c24b7c5e80d2"
+    },
+    {
+      "path": "app-split-evidence/paired-product/failure-processes.txt",
+      "bytes": 134014,
+      "sha256": "840d4456359d6b797b7b90b05f5cd896a8f7ecfa4a2c77a02b0bb84d3f3c59bd"
+    },
+    {
+      "path": "app-split-evidence/paired-product/mini-build.log",
+      "bytes": 4476459,
+      "sha256": "143d3591268ff9bb6fd35987eb28ff35962539d961c8187cb66bdfb2ca3e77e0"
+    },
+    {
+      "path": "app-split-evidence/paired-product/runtimes.json",
+      "bytes": 60640,
+      "sha256": "5dd4eba9573d562dd4d01e055f3257b1310894b780a16057c4d37e77d6bc8e8e"
+    },
+    {
+      "path": "app-split-evidence/paired-product/screenshot.log",
+      "bytes": 264,
+      "sha256": "8ff3185e4d625c901919d9fb194300514d8ec01c4b7f6bdb246757fc6a8da5b2"
+    },
+    {
+      "path": "app-split-evidence/paired-product/sdk.txt",
+      "bytes": 5,
+      "sha256": "53e1ae253beb3b8a3b99dd2d4ec1eb641d392378329fcdccb560779fdf46de0b"
+    },
+    {
+      "path": "app-split-evidence/paired-product/source-sha.txt",
+      "bytes": 41,
+      "sha256": "a2bc1fb195066422530f02fffe96271c7d6a0ef8a2ae447ce5d74be356c71bc1"
+    },
+    {
+      "path": "app-split-evidence/preflight-duration-seconds.txt",
+      "bytes": 3,
+      "sha256": "5378796307535df3ec8d8b15a2e2dc5641419c3d3060cfe32238c0fa973f7aa3"
+    },
+    {
+      "path": "app-split-evidence/preflight.log",
+      "bytes": 128111,
+      "sha256": "ff56d8d25c1be42f3427f617f09e0942ebb6a3e28ac652f679be126d0b573dcb"
+    },
+    {
+      "path": "app-split-evidence/prepared-native/native-artifacts.json",
+      "bytes": 28572,
+      "sha256": "7688a38aeb150ef0d36215348fb9181d458881d4a512842c713df1e07de07905"
+    },
+    {
+      "path": "app-split-evidence/prepared-native/upstream-resolution.json",
+      "bytes": 14118,
+      "sha256": "365fb02cfafc4a096bb852f23b2361716b0770a9e05df79d38bd05d94ee9797e"
+    },
+    {
+      "path": "app-split-evidence/skill-health.txt",
+      "bytes": 84,
+      "sha256": "484ea42b543c850d718181e5c283d1b8ff4da076c7ed5b59cc2f38d179f15ee1"
+    },
+    {
+      "path": "app-split-evidence/upstream-resolution.json",
+      "bytes": 14914,
+      "sha256": "dd5fee6acb1df0534c727aa8d59ff752357e37ed3ba6c5fc87f1b8fbc2357cf5"
+    },
+    {
+      "path": "app-split-evidence/upstream-resolution.log",
+      "bytes": 7865,
+      "sha256": "baa3fb0d81201cf09049cde5a020572cfd89c05a05fd34d1cbb6fd2739bf57c4"
+    },
+    {
+      "path": "runtime-host/host-metadata.json",
+      "bytes": 358,
+      "sha256": "c1bb4febd1b2d4a3d939c60dc60da4e434987aa3360e03b179ec66723ffef38e"
+    }
+  ]
+}

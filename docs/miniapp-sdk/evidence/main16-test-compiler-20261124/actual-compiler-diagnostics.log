@@ -1,0 +1,21 @@
+102885: /Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYTests/HanlinNativePresentationTests.swift:231:27: error: type 'Void' cannot conform to 'Sequence' [#ProtocolTypeNonConformance]
+102886: 229 |         guard case let .scriptwidget(node, _) = prepared else { return [] }
+102887: 230 |         func collect(_ node: HanlinScriptWidgetPreparedNode) -> [String] {
+102888: 231 |             node.children.flatMap { child in
+102889:     |                           |- error: type 'Void' cannot conform to 'Sequence' [#ProtocolTypeNonConformance]
+102890:     |                           |- note: only concrete types such as structs, enums and classes can conform to protocols
+102891:     |                           `- note: required by instance method 'flatMap' where 'SegmentOfResult' = 'Void'
+102892: 232 |                 switch child {
+102893: 233 |                 case let .element(element): collect(element)
+
+102957: /Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYTests/HanlinOriginalExpoWidgetTests.swift:16:39: error: reference to static property 'appGroupIdentifier' is not concurrency-safe because it involves shared mutable state
+102958:  14 |     func testOriginalWidgetRegistrationTimelineAndPickerKeepProductAndInstallationIdentity() async throws {
+102959:  15 |         let group = try XCTUnwrap(Bundle.main.object(forInfoDictionaryKey: "ExpoWidgetsAppGroupIdentifier") as? String)
+102960:  16 |         XCTAssertEqual(WidgetsStorage.appGroupIdentifier, group)
+102961:     |                                       `- error: reference to static property 'appGroupIdentifier' is not concurrency-safe because it involves shared mutable state
+102962:  17 |         XCTAssertTrue(HanlinExpoWidgetsIntegration.isOriginalRuntimeAvailable,
+102963:  18 |             "The original Expo Widgets JavaScript runtime must be embedded with its native module.")
+102964: 
+102965: ExpoWidgets.WidgetsStorage.appGroupIdentifier:2:19: note: static property declared here
+102966: 1 | enum WidgetsStorage {
+102967: 2 | public static var appGroupIdentifier: String?}

@@ -1,0 +1,138 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-24T08:26:58.795451+00:00",
+  "scope": "Read-only provenance verification of seven ScriptWidget limits; no tests, builds or CI executed. Source files untouched.",
+  "rootSHA": "a725107b54d40ac7f2c89c646b179270ec4a1bfc",
+  "upstream": {
+    "repository": "everettjf/scriptwidget",
+    "commit": "4da256d58247bbafb9a5cd443a285250b97b3c4b",
+    "path": "Shared/ScriptWidgetRuntime/Widget/Runtime/ScriptWidgetRuntime.swift",
+    "gitBlob": "1504079272e64447a0cba422492ab6a8313c80c9",
+    "sha256": "7040cab9a460f5845ee96114c396b7e27e46caf8c9e62614a717e25adb1af574",
+    "bytes": 70509
+  },
+  "local": {
+    "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/ScriptWidgetRuntime.swift",
+    "sha256": "15a60ffc1a6171dde86fa442a7a51764fd073eee4f615e329b6593dc5cf9b34a",
+    "bytes": 69622
+  },
+  "limits": [
+    {
+      "name": "maximumSourceBytes",
+      "upstream": [
+        {
+          "line": 72,
+          "declaration": "static let maximumSourceBytes = 512 * 1_024"
+        }
+      ],
+      "local": [
+        {
+          "line": 72,
+          "declaration": "static let maximumSourceBytes = 512 * 1_024"
+        }
+      ],
+      "declarationByteEqual": true
+    },
+    {
+      "name": "maximumTranspiledBytes",
+      "upstream": [
+        {
+          "line": 73,
+          "declaration": "static let maximumTranspiledBytes = 2 * 1_024 * 1_024"
+        }
+      ],
+      "local": [
+        {
+          "line": 73,
+          "declaration": "static let maximumTranspiledBytes = 2 * 1_024 * 1_024"
+        }
+      ],
+      "declarationByteEqual": true
+    },
+    {
+      "name": "executionTimeout",
+      "upstream": [
+        {
+          "line": 74,
+          "declaration": "static let executionTimeout: DispatchTimeInterval = .seconds(5)"
+        }
+      ],
+      "local": [
+        {
+          "line": 74,
+          "declaration": "static let executionTimeout: DispatchTimeInterval = .seconds(5)"
+        }
+      ],
+      "declarationByteEqual": true
+    },
+    {
+      "name": "compileTimeout",
+      "upstream": [
+        {
+          "line": 77,
+          "declaration": "static let compileTimeout: TimeInterval = 10"
+        }
+      ],
+      "local": [
+        {
+          "line": 77,
+          "declaration": "static let compileTimeout: TimeInterval = 10"
+        }
+      ],
+      "declarationByteEqual": true
+    },
+    {
+      "name": "maximumElementNodes",
+      "upstream": [
+        {
+          "line": 78,
+          "declaration": "static let maximumElementNodes = 1_000"
+        }
+      ],
+      "local": [
+        {
+          "line": 78,
+          "declaration": "static let maximumElementNodes = 1_000"
+        }
+      ],
+      "declarationByteEqual": true
+    },
+    {
+      "name": "maximumElementDepth",
+      "upstream": [
+        {
+          "line": 80,
+          "declaration": "static let maximumElementDepth = 64"
+        }
+      ],
+      "local": [
+        {
+          "line": 80,
+          "declaration": "static let maximumElementDepth = 64"
+        }
+      ],
+      "declarationByteEqual": true
+    },
+    {
+      "name": "maximumPropsPerElement",
+      "upstream": [
+        {
+          "line": 81,
+          "declaration": "static let maximumPropsPerElement = 128"
+        }
+      ],
+      "local": [
+        {
+          "line": 81,
+          "declaration": "static let maximumPropsPerElement = 128"
+        }
+      ],
+      "declarationByteEqual": true
+    }
+  ],
+  "retrieval": {
+    "ghApiExitCode": 4,
+    "fallback": "One anonymous HTTPS GET of the same manifest-recorded public blob",
+    "httpStatus": 200
+  }
+}

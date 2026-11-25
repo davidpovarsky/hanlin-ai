@@ -14,6 +14,9 @@ import HanlinNativeScriptCoreSupport
 public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendable, HanlinNativeServicesProvider {
     public let sessionID: String
     public let context: HanlinHostCallContext
+    private let isolatesWindowStorage: Bool
+    private let externalMiniAppOperation: HanlinMiniAppExternalOperation?
+    private let assistantService: (any HanlinMiniAppAssistantService)?
 
     private struct RegisteredActionHandler {
         typealias InvokeFn = (String, String, @escaping (String?, String?) -> Void) -> Void
@@ -21,20 +24,56 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
         let invoke: InvokeFn
     }
 
+    /// One reply per native invocation. Cancellation may precede continuation
+    /// installation, and misbehaving JavaScript may reply more than once.
+    private final class ActionInvocationReply: @unchecked Sendable {
+        private let lock = NSLock()
+        private var continuation: CheckedContinuation<HanlinValue, any Error>?
+        private var result: Result<HanlinValue, any Error>?
+
+        var isFinished: Bool { lock.withLock { result != nil } }
+
+        func install(_ continuation: CheckedContinuation<HanlinValue, any Error>) {
+            let completed = lock.withLock { () -> Result<HanlinValue, any Error>? in
+                if let result { return result }
+                self.continuation = continuation
+                return nil as Result<HanlinValue, any Error>?
+            }
+            if let completed { continuation.resume(with: completed) }
+        }
+
+        func finish(_ result: Result<HanlinValue, any Error>) {
+            let pending = lock.withLock {
+                guard self.result == nil else { return nil as CheckedContinuation<HanlinValue, any Error>? }
+                self.result = result
+                let pending = continuation
+                continuation = nil
+                return pending
+            }
+            pending?.resume(with: result)
+        }
+    }
+
     private let lock = NSLock()
     private var registeredActionIDs: Set<HanlinActionID> = []
     private var registeredActionHandlers: [HanlinActionID: RegisteredActionHandler] = [:]
     private var runtimeRequests: [String: Task<Void, Never>] = [:]
     private var runtimeRequestsInvalidated = false
+    private var actionInvocations: [UUID: ActionInvocationReply] = [:]
 
     public init(
         appID: HanlinAppID,
         installedPackageID: HanlinInstalledPackageID? = nil,
         grantedCapabilities: Set<String>,
         sessionID: String = UUID().uuidString.lowercased(),
-        canPresentUI: Bool = true
+        isolatesWindowStorage: Bool = false,
+        canPresentUI: Bool = true,
+        externalMiniAppOperation: HanlinMiniAppExternalOperation? = nil,
+        assistantServiceFactory: HanlinMiniAppAssistantServiceFactory? = nil
     ) {
+        self.isolatesWindowStorage = isolatesWindowStorage
         self.sessionID = sessionID
+        self.externalMiniAppOperation = externalMiniAppOperation
         let appSession = try! HanlinAppSessionID(validating: sessionID)
         self.context = HanlinHostCallContext.forMiniApp(
             appID: appID,
@@ -44,8 +83,11 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
             sessionID: appSession,
             canPresentUI: canPresentUI
         )
+        self.assistantService = assistantServiceFactory?(self.context)
         super.init()
     }
+
+    deinit { assistantService?.invalidate() }
 
     // MARK: - Directory Resolution
 
@@ -60,10 +102,17 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
             appropriateFor: nil,
             create: true
         )) ?? FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else { return nil }
-        let dir = support
+        var dir = support
             .appending(path: "Hanlin/MiniApps", directoryHint: .isDirectory)
             .appending(path: appID.rawValue, directoryHint: .isDirectory)
-            .appending(path: area, directoryHint: .isDirectory)
+        if isolatesWindowStorage {
+            // A simultaneous invocation cannot overwrite the other window's
+            // files using equal relative paths. The original package container
+            // remains available to legacy single-application sessions.
+            dir = dir.appending(path: "Windows", directoryHint: .isDirectory)
+                .appending(path: sessionID, directoryHint: .isDirectory)
+        }
+        dir = dir.appending(path: area, directoryHint: .isDirectory)
         try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
         return dir.path(percentEncoded: false)
     }
@@ -130,11 +179,22 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
 
     @objc(invalidateRuntimeRequests)
     public func invalidateRuntimeRequests() {
-        let tasks = lock.withLock {
+        assistantService?.invalidate()
+        let retired = lock.withLock {
             runtimeRequestsInvalidated = true
-            return Array(runtimeRequests.values)
+            let handlers = registeredActionHandlers
+            registeredActionHandlers.removeAll()
+            registeredActionIDs.removeAll()
+            let invocations = Array(actionInvocations.values)
+            actionInvocations.removeAll()
+            return (tasks: Array(runtimeRequests.values), handlers: handlers, invocations: invocations)
         }
-        for task in tasks { task.cancel() }
+        for task in retired.tasks { task.cancel() }
+        for reply in retired.invocations { reply.finish(.failure(CancellationError())) }
+        // Release JS-owned handler blocks outside the lock, before the caller
+        // tears down its VM. Runtime tasks retain their existing cancellation
+        // and completion behavior; the installed Host router remains untouched.
+        withExtendedLifetime(retired.handlers) {}
     }
 
     public func executeJavaScript(
@@ -289,30 +349,30 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
             return .object([:])
         }
         // First try standard untagged JSON via HanlinJSONValue
-        if let jsonVal = try? HanlinJSONValue.decodeCanonicalJSON(data),
+        if let jsonVal = try? HanlinJSONValue.decodeCanonicalJSON(data, limits: .unbounded),
            let hanlinVal = try? HanlinValue(jsonValue: jsonVal) {
             return hanlinVal
         }
         // Then try tagged JSON representation
-        if let taggedVal = try? HanlinValue.decodeCanonicalJSON(data) {
+        if let taggedVal = try? HanlinValue.decodeCanonicalJSON(data, limits: .unbounded) {
             return taggedVal
         }
         if let decodedVal = try? JSONDecoder().decode(HanlinValue.self, from: data) {
             return decodedVal
         }
         // Fall back to attempting parse with full diagnostic throw
-        let jsonVal = try HanlinJSONValue.decodeCanonicalJSON(data)
+        let jsonVal = try HanlinJSONValue.decodeCanonicalJSON(data, limits: .unbounded)
         return try HanlinValue(jsonValue: jsonVal)
     }
 
     private static func serializeUntaggedJSON(_ value: HanlinValue) throws -> String {
         if let jsonVal = try? value.jsonValue() {
-            let data = try jsonVal.canonicalJSONData()
+            let data = try jsonVal.canonicalJSONData(limits: .unbounded)
             if let str = String(data: data, encoding: .utf8) {
                 return str
             }
         }
-        let fallbackData = try value.canonicalJSONData()
+        let fallbackData = try value.canonicalJSONData(limits: .unbounded)
         return String(data: fallbackData, encoding: .utf8) ?? "{}"
     }
 
@@ -324,6 +384,82 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
         completion: @escaping (String?, String?) -> Void
     ) {
         nonisolated(unsafe) let safeCompletion = completion
+        if targetID == "hanlin.host-services", action.hasPrefix("assistant.") {
+            guard let assistantService else {
+                safeCompletion(nil, "Assistant services are unavailable in this host.")
+                return
+            }
+            let requestID = UUID().uuidString.lowercased()
+            let accepted = lock.withLock {
+                guard !runtimeRequestsInvalidated else { return false }
+                runtimeRequests[requestID] = Task { @MainActor [weak self] in
+                    guard let self else { return }
+                    defer { _ = self.lock.withLock { self.runtimeRequests.removeValue(forKey: requestID) } }
+                    do {
+                        try Task.checkCancellation()
+                        let response = try await assistantService.invoke(operation: action, payloadJSON: payloadJSON)
+                        guard !Task.isCancelled,
+                              self.lock.withLock({ !self.runtimeRequestsInvalidated }) else { return }
+                        safeCompletion(response, nil)
+                    } catch {
+                        guard !Task.isCancelled,
+                              self.lock.withLock({ !self.runtimeRequestsInvalidated }) else { return }
+                        safeCompletion(nil, error.localizedDescription)
+                    }
+                }
+                return true
+            }
+            if !accepted { safeCompletion(nil, "NativeScript Host Services session is no longer active.") }
+            return
+        }
+        if targetID == "hanlin.host-services", action.hasPrefix("liveActivities.") {
+            let ctx = context
+            let requestID = UUID().uuidString.lowercased()
+            let accepted = lock.withLock {
+                guard !runtimeRequestsInvalidated else { return false }
+                runtimeRequests[requestID] = Task { @MainActor [weak self] in
+                    guard let self else { return }
+                    defer { _ = self.lock.withLock { self.runtimeRequests.removeValue(forKey: requestID) } }
+                    do {
+                        try Task.checkCancellation()
+                        let response = try await HanlinScriptingPlatform.shared.invokeLiveActivity(
+                            operation: action, payloadJSON: payloadJSON, context: ctx)
+                        guard !Task.isCancelled,
+                              self.lock.withLock({ !self.runtimeRequestsInvalidated }) else { return }
+                        safeCompletion(response, nil)
+                    } catch {
+                        guard !Task.isCancelled,
+                              self.lock.withLock({ !self.runtimeRequestsInvalidated }) else { return }
+                        safeCompletion(nil, error.localizedDescription)
+                    }
+                }
+                return true
+            }
+            if !accepted { safeCompletion(nil, "NativeScript Host Services session is no longer active.") }
+            return
+        }
+        if targetID == "hanlin.cross-app", let externalMiniAppOperation {
+            let requestID = UUID().uuidString.lowercased()
+            _ = lock.withLock {
+                guard !runtimeRequestsInvalidated else { return false }
+                runtimeRequests[requestID] = Task { @MainActor [weak self] in
+                    guard let self else { return }
+                    defer { _ = self.lock.withLock { self.runtimeRequests.removeValue(forKey: requestID) } }
+                    do {
+                        let response = try await externalMiniAppOperation(action, payloadJSON)
+                        guard !Task.isCancelled,
+                              self.lock.withLock({ !self.runtimeRequestsInvalidated }) else { return }
+                        safeCompletion(response, nil)
+                    } catch {
+                        guard !Task.isCancelled,
+                              self.lock.withLock({ !self.runtimeRequestsInvalidated }) else { return }
+                        safeCompletion(nil, error.localizedDescription)
+                    }
+                }
+                return true
+            }
+            return
+        }
         guard let caller = context.appID else {
             safeCompletion(nil, "Unauthorized: No active Mini App session context.")
             return
@@ -390,6 +526,7 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
         // the lock ensures no concurrent access to registeredActionHandlers.
         nonisolated(unsafe) let safeHandler = handler
         lock.withLock {
+            guard !runtimeRequestsInvalidated else { return }
             registeredActionIDs.insert(actionID)
             registeredActionHandlers[actionID] = RegisteredActionHandler(
                 capability: capabilityID,
@@ -410,43 +547,62 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
         lock.withLock { registeredActionIDs }
     }
 
+    @MainActor
     public func invokeRegisteredAction(
         _ action: HanlinActionID,
         capability: HanlinCapabilityID,
         caller: HanlinAppID,
         payload: HanlinValue
     ) async throws -> HanlinValue {
-        // Extract handler synchronously before any suspension — NSLock requires no await while held
-        let invokeHandler: RegisteredActionHandler.InvokeFn = try lock.withLock {
-            guard let registration = registeredActionHandlers[action] else {
-                throw HanlinMiniAppRequestError.routeNotFound
-            }
-            guard registration.capability == capability else {
-                throw HanlinMiniAppRequestError.capabilityMismatch
-            }
-            return registration.invoke
-        }
-
         let payloadJSON = try Self.serializeUntaggedJSON(payload)
-        return try await withCheckedThrowingContinuation { continuation in
-            invokeHandler(caller.rawValue, payloadJSON) { responseJSON, errorString in
-                if let errorString {
-                    continuation.resume(throwing: NSError(
-                        domain: "HanlinMiniAppRequest",
-                        code: 1,
-                        userInfo: [NSLocalizedDescriptionKey: errorString]
-                    ))
-                } else if let responseJSON {
-                    do {
-                        let value = try Self.decodeJSONPayload(responseJSON)
-                        continuation.resume(returning: value)
-                    } catch {
-                        continuation.resume(returning: .null)
+        let invocationID = UUID()
+        let reply = ActionInvocationReply()
+        let admitted = lock.withLock {
+            guard !runtimeRequestsInvalidated else { return false }
+            actionInvocations[invocationID] = reply
+            return true
+        }
+        guard admitted else { throw HanlinMiniAppRequestError.routeNotFound }
+        defer { _ = lock.withLock { actionInvocations.removeValue(forKey: invocationID) } }
+        return try await withTaskCancellationHandler {
+            try Task.checkCancellation()
+            return try await withCheckedThrowingContinuation { continuation in
+                reply.install(continuation)
+                guard !reply.isFinished else { return }
+                do {
+                    // Resolve the JS-owned block synchronously on the main actor.
+                    // No callback block is retained by a suspended Swift frame.
+                    let invokeHandler: RegisteredActionHandler.InvokeFn = try lock.withLock {
+                        guard !runtimeRequestsInvalidated,
+                              let registration = registeredActionHandlers[action] else {
+                            throw HanlinMiniAppRequestError.routeNotFound
+                        }
+                        guard registration.capability == capability else {
+                            throw HanlinMiniAppRequestError.capabilityMismatch
+                        }
+                        return registration.invoke
                     }
-                } else {
-                    continuation.resume(returning: .null)
+                    invokeHandler(caller.rawValue, payloadJSON) { responseJSON, errorString in
+                        if let errorString {
+                            reply.finish(.failure(NSError(
+                                domain: "HanlinMiniAppRequest", code: 1,
+                                userInfo: [NSLocalizedDescriptionKey: errorString])))
+                        } else if let responseJSON {
+                            do {
+                                reply.finish(.success(try Self.decodeJSONPayload(responseJSON)))
+                            } catch {
+                                reply.finish(.failure(error))
+                            }
+                        } else {
+                            reply.finish(.success(.null))
+                        }
+                    }
+                } catch {
+                    reply.finish(.failure(error))
                 }
             }
+        } onCancel: {
+            reply.finish(.failure(CancellationError()))
         }
     }
 }

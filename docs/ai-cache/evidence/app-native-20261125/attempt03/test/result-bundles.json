@@ -1,0 +1,51 @@
+{
+  "source": "5b69bbb52013686922efa7c4e7d9f2d44b774f94",
+  "capturedAtUTC": "2026-11-25T03:28:41.488332+00:00",
+  "result": "BUILD_FAILED_BEFORE_TESTS",
+  "actualSelectedTests": 0,
+  "bundles": [
+    {
+      "path": "/Users/m1/builds/hanlin-ai-cache-native-20261125/build/cache-app-native-evidence-03-20261125/test/AppBuild.xcresult",
+      "bytes": 538754,
+      "fileCount": 7,
+      "manifestSHA256": "1136d00414bcbf5bd06521dec955691263ddd4e7d623fd428e999216d12ca476",
+      "files": [
+        {
+          "path": "Data/data.0~fncm48OaJrze7oKSf82yutZ6Ohv4dUrwpKNaXq5k_txHHp8N3-11xJ1uFnfE-LWH2HRBIAZdHJdZkOajtagZgg==",
+          "bytes": 34688,
+          "sha256": "489c7aeea3c1e366b7f4f3889723abff46c74574a1cb544faf0ed4f945e165f5"
+        },
+        {
+          "path": "Data/data.0~oYSLJCev3KKkZR3ImbWIkLcuo46N-671aY79CQLZERHOSpOlSxBGzlTYbA_chM_89T-Vi39SISpn9CZzaxjQPg==",
+          "bytes": 502853,
+          "sha256": "8a40939b44aef17f5024cbc5d876e7552ee3eb38cb41c56caf635d4976d71017"
+        },
+        {
+          "path": "Data/data.0~vYSkVV4APQ4NrhIcuN8fCzVXaSBkalTVA14d3aiUyFay4hg4-fPaFhi3uHkl_36aPVMa49Vdesv2bdZqqcKEVA==",
+          "bytes": 302,
+          "sha256": "273192586dcdc1adb48cb39287a780910061adbfa7bcd9b4be096b7da940b86d"
+        },
+        {
+          "path": "Data/refs.0~fncm48OaJrze7oKSf82yutZ6Ohv4dUrwpKNaXq5k_txHHp8N3-11xJ1uFnfE-LWH2HRBIAZdHJdZkOajtagZgg==",
+          "bytes": 133,
+          "sha256": "defd6e343a9b6b2bc7bb79f9505e75993cd511f9d2460135ce9480b33a5273fa"
+        },
+        {
+          "path": "Data/refs.0~oYSLJCev3KKkZR3ImbWIkLcuo46N-671aY79CQLZERHOSpOlSxBGzlTYbA_chM_89T-Vi39SISpn9CZzaxjQPg==",
+          "bytes": 1,
+          "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+        },
+        {
+          "path": "Data/refs.0~vYSkVV4APQ4NrhIcuN8fCzVXaSBkalTVA14d3aiUyFay4hg4-fPaFhi3uHkl_36aPVMa49Vdesv2bdZqqcKEVA==",
+          "bytes": 1,
+          "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+        },
+        {
+          "path": "Info.plist",
+          "bytes": 776,
+          "sha256": "97709136640afbf40fda6a96174359ac532058a7361e3596d1f994b47d069120"
+        }
+      ]
+    }
+  ]
+}

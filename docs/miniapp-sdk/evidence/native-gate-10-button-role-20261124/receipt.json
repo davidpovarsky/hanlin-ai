@@ -1,0 +1,151 @@
+{
+  "status": "SOURCE_FIX_IMPLEMENTED_APPLE_REEXECUTION_REQUIRED",
+  "createdAt": "2026-11-24T09:05:57.788256+00:00",
+  "baseCommit": "74ba980dbb91f3a38d4531f043801f5e742c283a",
+  "runID": 45354940642,
+  "jobID": 138310323164,
+  "executedSource": "a12eb646aeb5c484f746c07ecffafc7d9f34f167",
+  "artifact": {
+    "status": "AUTHENTICATED_ARCHIVE_VERIFIED",
+    "runID": 45354940642,
+    "artifactID": 14905155493,
+    "sourceCommit": "a12eb646aeb5c484f746c07ecffafc7d9f34f167",
+    "archive": "/tmp/hanlin-native-gate-evidence-45354940642/app-split-45354940642.zip",
+    "bytes": 333706641,
+    "sha256": "9064980406b7c59be8fe5f80113039609faed17e351dd9193ef329e933c6b4c8",
+    "expectedDigest": "sha256:9064980406b7c59be8fe5f80113039609faed17e351dd9193ef329e933c6b4c8",
+    "command": [
+      "sudo",
+      "-u",
+      "ubuntu",
+      "gh",
+      "api",
+      "repos/davidpovarsky/hanlin-ai/actions/artifacts/14905155493/zip"
+    ],
+    "exitCode": 0,
+    "downloadSeconds": 67.2749330997467,
+    "textExtractionRoot": "/dev/shm/hanlin-native-gate-evidence-45354940642",
+    "selectedTextBytes": 7925834,
+    "selectedTextFiles": 59
+  },
+  "actualResult": {
+    "stage": "HanlinMiniApps build-for-testing",
+    "build": "FAILED",
+    "ui": "NOT_RUN",
+    "nativeTestCasesExecuted": 0,
+    "exitCode": 65,
+    "buildSeconds": 1203.752151833,
+    "compilerErrorHeaders": [
+      [
+        49811,
+        "/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinAppExtensionsSDK/Sources/HanlinTranslationUI/HanlinNativePresentationView.swift:13:59: error: 'ButtonRole' is ambiguous for type lookup in this context"
+      ],
+      [
+        49832,
+        "/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinAppExtensionsSDK/Sources/HanlinTranslationUI/HanlinNativePresentationView.swift:16:70: error: 'ButtonRole' is ambiguous for type lookup in this context"
+      ]
+    ],
+    "rawAcceptanceBuildField": "NOT_RUN",
+    "rawAcceptanceNote": "The runner field is retained verbatim; completed xcodebuild exit 65 establishes the actual build failure."
+  },
+  "cause": "HanlinExpoWidgetNative reexports original HanlinExpoWidgetSubset.ButtonRole; unqualified ButtonRole in the native presentation API is ambiguous with SwiftUI.ButtonRole. The existing renderer and SwiftUI Button call sites require SwiftUI.ButtonRole.",
+  "change": "Qualify the two existing native-presentation callback annotations as SwiftUI.ButtonRole. No runtime body, exports, original libraries, UI selectors, assertions or runner changes.",
+  "source": {
+    "path": "Packages/HanlinAppExtensionsSDK/Sources/HanlinTranslationUI/HanlinNativePresentationView.swift",
+    "beforeSHA256": "2a25a2bf539f6b19ba96f12cfd4e730d02675d16a0a02d1214116a9614189b2c",
+    "afterSHA256": "768b08c9dacf4bb445368386833c3ff2c5c98fbe4581c85ee80c56aba09c0acd",
+    "failingSourceEqualBefore": true
+  },
+  "authority": {
+    "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoWidgetNative/HanlinExpoWidgetNative.swift",
+    "sha256": "cb3209fa98cde069a47a12ed95d12d830c66a777fe11bd27eb788ac769e3c2bf",
+    "line": 39,
+    "signature": "buttonBuilder: @escaping (String, SwiftUI.ButtonRole?, AnyView) -> AnyView"
+  },
+  "localChecks": [
+    {
+      "name": "swift-parse",
+      "argv": [
+        "swiftc",
+        "-frontend",
+        "-parse",
+        "Packages/HanlinAppExtensionsSDK/Sources/HanlinTranslationUI/HanlinNativePresentationView.swift"
+      ],
+      "exitCode": 0
+    },
+    {
+      "name": "diff-check",
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "localCheckBoundary": "Swift parser only; Linux has no Apple SDK and this is not an Apple module typecheck or test pass. Authentic prior Mac diagnostics establish both type candidates.",
+  "nativeVerification": "NOT_RUN_AFTER_FIX; root owns the next actual app acceptance execution",
+  "evidenceFiles": [
+    {
+      "path": "README.md",
+      "bytes": 1471,
+      "sha256": "091d8469c8f7585a95c1df0c9422da0c91bd8342baaf71dfb9fd51bdc2991926"
+    },
+    {
+      "path": "acceptance.json",
+      "bytes": 2085,
+      "sha256": "f138c5ccf67d31ac3546e7056a1f5974ffd5bcc1bc9d75fb957476053880e730"
+    },
+    {
+      "path": "active-command.json",
+      "bytes": 515,
+      "sha256": "7938caf95d726cf1c97b78ea9106376a6a0ac97bfa7210ab369d5d21ad3a2c2e"
+    },
+    {
+      "path": "artifacts-api.json",
+      "bytes": 771,
+      "sha256": "f1150f097d4d1c40a38e29830cc855463de1244e24fd0cd090d367bb803b35a3"
+    },
+    {
+      "path": "command-events.jsonl",
+      "bytes": 58252,
+      "sha256": "ce78a309d7391ca5f09e2b9401399b2dff2e1b2748427118891fcba4d9f13e44"
+    },
+    {
+      "path": "commands.jsonl",
+      "bytes": 4366,
+      "sha256": "c1ae2a0c3bad0eb82bcaefc2c4d47eaf90ab8b8e0fc3531e59cd110c19dbc836"
+    },
+    {
+      "path": "compiler-error-excerpt.txt",
+      "bytes": 2747,
+      "sha256": "6431b9067416a152a883afe301958b13481d188cfa54a3795c25011ad32be5d7"
+    },
+    {
+      "path": "diff-check.txt",
+      "bytes": 61,
+      "sha256": "fa123c4dba0040a5149376030bb1cc35ddb80ae165d4f921a240a9de5836ba2a"
+    },
+    {
+      "path": "download-verified.json",
+      "bytes": 786,
+      "sha256": "1541e2856518782575d2c4b20737e65860c5adf2c0e5687d18c63ed5981518e5"
+    },
+    {
+      "path": "job-138310323164.log.gz",
+      "bytes": 479693,
+      "sha256": "028d06cc38edae2c352b922b327a0a7d3ef15b27a1f2752880db23141526bd6d"
+    },
+    {
+      "path": "mini-build.log.gz",
+      "bytes": 151274,
+      "sha256": "374008bdf118985c160d0c88b697893bb8e6be6a792b28e9a215917b5d5e5d64"
+    },
+    {
+      "path": "swift-parse.txt",
+      "bytes": 166,
+      "sha256": "78ac71f383864fff00693d4cef5ca836b116a287c9e71485eadc32e2881fb31f"
+    }
+  ],
+  "excerptBoundary": "compiler-error-excerpt.txt adds original line numbers and strips trailing whitespace for review; mini-build.log.gz retains the exact complete raw log."
+}

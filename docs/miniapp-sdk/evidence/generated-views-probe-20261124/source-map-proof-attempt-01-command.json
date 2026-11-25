@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "timestampUTC": "2026-11-24T10:10:55.566208+00:00",
+  "command": [
+    "node",
+    "/mnt/development/projects/worktrees/hanlin-generated-views-probe-20261124/docs/miniapp-sdk/evidence/generated-views-probe-20261124/run-public-authoring-build.mjs",
+    "/mnt/development/projects/worktrees/hanlin-generated-views-probe-20261124",
+    "/dev/shm/hanlin-sdk-only-kit-45335292541/AI_HLY/Downstream/RuntimeCore/Node/Host/MiniAppSDK",
+    "/tmp/hanlin-generated-probe-authoring-20261124/attempt-01",
+    "--proof-only"
+  ],
+  "exitCode": 0,
+  "elapsedSeconds": 0.15986347571015358,
+  "reason": "The original Metro build succeeded; its indexed source map requires recursive inline-section traversal. Read only existing build outputs; compiler and Metro were not rerun."
+}

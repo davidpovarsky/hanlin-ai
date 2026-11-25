@@ -1,0 +1,89 @@
+[
+  {
+    "path": "raw/snapshot-receipt.json",
+    "bytes": 11744,
+    "sha256": "84ecaace9bd43f9e275047e28ba5755f7a2551ec5decc726940293cd1bd296aa"
+  },
+  {
+    "path": "raw/tracked-delta.json",
+    "bytes": 1594,
+    "sha256": "b4d82aae8e71de76b30d01e73e4364db76e8131c4aef48833ececff6e4ac6207"
+  },
+  {
+    "path": "raw/miniapp-sdk.json.gz",
+    "bytes": 1301352,
+    "sha256": "b71e94aabb5a75186c4cb914bb75a4955f8989ff9f0823af5d2af20e8037fb0a",
+    "uncompressedBytes": 5219288,
+    "uncompressedSHA256": "6a5ce216ab722741314a893f8bb226773da27c9d6151f6cbc28f46901b8fcb94"
+  },
+  {
+    "path": "raw/controller-state-at-capture.json",
+    "bytes": 24512,
+    "sha256": "ee8a67764cda65a0a5a874973db5e49b5ce7d1a6b5e57a5c9cafa252af1f6a47"
+  },
+  {
+    "path": "raw/build/primary-control/host-prefix-attempt7.json",
+    "bytes": 2172,
+    "sha256": "1a00256211a4abf55a3da6d1c996c9739dcbe4e0ee9d2c071d4c0b20dbba2202"
+  },
+  {
+    "path": "raw/build/primary-control/run-host-prefix-attempt7.py",
+    "bytes": 4161,
+    "sha256": "6b48a328c992c3e4299901eb95c4e34cb5ccd1f4099858a83b2908fb6d913472"
+  },
+  {
+    "path": "raw/build/primary-control/logs-attempt7/split-host-lifecycle.log",
+    "bytes": 2345,
+    "sha256": "4685988e182745ba00a11ed63a51dc8277d01ead7ab96c24f4960af9aea2c155"
+  },
+  {
+    "path": "raw/build/primary-control/observation-attempt7/first-controller-state.json",
+    "bytes": 24502,
+    "sha256": "2e0150155f8fe91854c7869672809bc34bfe5fcca05eb6f070b29c1b9ae9bc93"
+  },
+  {
+    "path": "raw/build/primary-control/capacity-admission-attempt7.json",
+    "bytes": 1915,
+    "sha256": "9bc2b1c273bdd744acd99194a8284b49668836cdfa9082e39f09fb386ba733f6"
+  },
+  {
+    "path": "raw/build/runtime-host/host-metadata.json",
+    "bytes": 358,
+    "sha256": "b8540c390547715d3010ceefe8856587bc159d69f8e00ba0fd023a7c3e103ce0"
+  },
+  {
+    "path": "raw/build/app-split-evidence/miniapp-documentation-snippets.json",
+    "bytes": 20066,
+    "sha256": "2a1f6965444ab15758810d9ece587c18426d6026765f58a8156e97f1e02f9748"
+  },
+  {
+    "path": "raw/build/app-split-evidence/prepared-native/native-artifacts.json",
+    "bytes": 28574,
+    "sha256": "b7bf734b3bd35595f90c3d3a841fa57ad63f0529dc0a5b6b2bee942e747022a6"
+  },
+  {
+    "path": "raw/build/primary-control/logs-attempt7/split-native-preparation.log",
+    "bytes": 32324,
+    "sha256": "89de966b4bd071efec1bb3fcab4a69421d82a6874d1d6f9853fb2e41c56bfb9e"
+  },
+  {
+    "path": "raw/build/primary-control/logs-attempt7/split-native-artifacts.log",
+    "bytes": 1504,
+    "sha256": "4bcb3412ad77315881450fb4bb11693e9f50b3fb27967b3e228c4d62c82727ae"
+  },
+  {
+    "path": "raw/build/primary-control/plan.json",
+    "bytes": 12076,
+    "sha256": "3bb8675ff52d1a4b9d48915f968e22e44f1353e86425557349c8100a628abc89"
+  },
+  {
+    "path": "raw/build/primary-control/reuse-closure-attempt7.json",
+    "bytes": 12508,
+    "sha256": "69983927a4585e6b9f81faa9adc0e79005a55453151b16051804166f7ad6dfd7"
+  },
+  {
+    "path": "raw/build/primary-control/source-advance-fd81d602/receipt.json",
+    "bytes": 4302,
+    "sha256": "92cc12addcbe4cbdad99b28ef1bf1d3b76cd051b3f5408e180f39d7ea7a990fa"
+  }
+]

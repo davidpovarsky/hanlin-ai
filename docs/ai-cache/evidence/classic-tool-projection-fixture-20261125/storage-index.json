@@ -1,0 +1,17 @@
+{
+  "method": "Lossless gzip for raw logs and original patch payloads; original receipts/index retain original uncompressed names and hashes. Decompress corresponding retained files to inspect byte-identical originals.",
+  "files": [
+    {
+      "original": "change.patch",
+      "retained": "change.patch.gz",
+      "originalSHA256": "3318299bcc9a175e5cf3a6f1c1ef1e1cb83c674973229198ac65f14c45289650",
+      "storedSHA256": "659ee996720b6bd0612797487088dcbdafc4da8a8759f0cc786621f87fba19b3"
+    },
+    {
+      "original": "source-check.log",
+      "retained": "source-check.log.gz",
+      "originalSHA256": "db56bb6a61ec55449fc8a840efbce3b43481715ea3e495b56a9dbfa2b40d7afd",
+      "storedSHA256": "848a55fbc950a51424a22776061dcc1d0aa7765b95bac7ab9083bece5c3610e7"
+    }
+  ]
+}

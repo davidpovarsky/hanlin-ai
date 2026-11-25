@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-11-24T07:08:07.666241+00:00",
+  "baseCommit": "729fdf04910e418d194d0a1a167f8fae94af46d1",
+  "scope": "Prepare actual importer/native UI checks for the two independently authored SDK-only projects",
+  "sourceFiles": [
+    {
+      "path": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+      "sha256": "30ded2e430dc89600bbab610ea327816de5511039256639bd7fa5e6d094cdd7b"
+    },
+    {
+      "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+      "sha256": "d8b754a2488d6a59025b272bc79672cf4d81f746a9503a69c340cab7807b3123"
+    }
+  ],
+  "checks": [
+    {
+      "argv": [
+        "/usr/local/bin/swiftc",
+        "-frontend",
+        "-parse",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift"
+      ],
+      "exit": 0,
+      "seconds": 0.046,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit": 0,
+      "seconds": 0.016,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "pythonSyntax": "PASS ast.parse",
+  "uniqueMiniAppsSelectors": 15,
+  "unchangedAICaseCount": 25,
+  "nextMainGateCases": 40,
+  "activeRun": 45343362337,
+  "activeRunSource": "4ea670e120a3217423bc73db68dab514c78079de",
+  "activeRunCases": 38,
+  "independentReview": {
+    "reviewer": "/root/sdk_only_author",
+    "boundary": "Distinct read-only repository review after the original SDK-only receipt was frozen; no change to that receipt or authoring read-scope claims.",
+    "sourceBindings": "All copied8Expo/7NativeScript files byte-identical",
+    "expectedCalculations": "Reviewed against actual authored models",
+    "acceptedCorrections": [
+      "Snapshot authored source hashes before CLI build and reject mismatch with original proof; exclude only tool-owned .hanlin-build, preserve ordinary build/dist/resources.",
+      "Search the identified lazy native import List before final existence/hittability assertions.",
+      "Require exact native staticText result labels, including the full excess-collection message."
+    ]
+  },
+  "nativeExecution": "NOT_RUN; syntax/source review is not Apple compile, app installation, rendered screenshots or UI interaction proof.",
+  "fixtureBehavior": "Build both source projects with actual embedded SDK; retain source/archive/report/SDK identities; stage real archive bytes; install through existing public importer and observe native model changes."
+}

@@ -1,0 +1,209 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-24T19:09:23.136945+00:00",
+  "status": "FOCUSED_GENERATOR_AND_NORMALIZER_PASS_NATIVE_RESUME_PENDING",
+  "sourceBase": "312472e91c05a7d32bbef4e936c001d713409370",
+  "sourceCorrection": {
+    "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+    "beforeSHA256": "814cb0ff5b5aa4575c0daaced0014e461d51d108059f4cccb396f9c1d5c6e5a5",
+    "afterSHA256": "b5114a3be1fc846e288128af08cef9f38b0cac8e34923780325c4edc2976ebd9",
+    "behavior": "Preserve exact package bytes when parsed JSON has its own type key. Keep original module-default spread/write for absent type, including parsed root null; preserve traversal and catch behavior.",
+    "generatorPath": "Scripts/NativeScript/build-host-services.mjs",
+    "generatorSHA256": "b46fcc461ad34fcf49140e4fd0e11e0dcb8f47a8523a15116029435289ee7003",
+    "generatorChanged": false
+  },
+  "authenticAttempt3Failure": {
+    "source": "312472e91c05a7d32bbef4e936c001d713409370",
+    "completedAt": "2026-11-24T18:46:42.284434+00:00",
+    "exitCode": 1,
+    "elapsedSeconds": 5.539,
+    "phase": "split-native-preparation",
+    "reason": "Generated NativeScript Host Services drift: package.json",
+    "rawLog": "failure.log",
+    "rawLogBytes": 1815,
+    "rawLogSHA256": "45c293b1ef521d92eb66257c20f9019f3b68883848da93c3b12b685a73c3aefe",
+    "reorderedPackageBytes": 147,
+    "reorderedPackageSHA256": "ebe6634d2e019c9da759ac280c1269d721e2105681fdbc8a1796f464d0b9ee9e",
+    "canonicalPackageSHA256": "c42e3fe3eb38b7289ba3cf49ca0b56bcbd7ac2d27d68955f27e3d5e33e642a7e",
+    "difference": "Only key order; parsed JSON values identical.",
+    "JSIAndRuntimeCore": "NOT_REACHED"
+  },
+  "focusedProof": {
+    "startedAt": "2026-11-24T19:08:24.150Z",
+    "completedAt": "2026-11-24T19:08:27.521Z",
+    "node": "v24.5.0",
+    "typescript": "5.9.3",
+    "originalFunctionProjection": {
+      "beforeSourceSHA256": "814cb0ff5b5aa4575c0daaced0014e461d51d108059f4cccb396f9c1d5c6e5a5",
+      "afterSourceSHA256": "b5114a3be1fc846e288128af08cef9f38b0cac8e34923780325c4edc2976ebd9",
+      "beforeFunctionSHA256": "27da430e65c7b9becfd2c5e0a786ef4bd6e0eb38a745eb6dad82fa1df987f446",
+      "afterFunctionSHA256": "7e34bcbb05a7c11cb9cb32e2c4d6189c0bcffd5fd513f8b2684f924a1238bac7",
+      "method": "Exact source function body loaded unchanged with only its three filesystem/path imports; not the full native preparation module."
+    },
+    "assertions": [
+      "Original exact writer reproduced the retained 147-byte key-order-only drift.",
+      "Two recursive production passes preserve exact bytes for own type module/commonjs/null/unknown/false/0.",
+      "Absent own type retains original module-default output, including null JSON and array inputs; second pass is byte-stable.",
+      "Malformed JSON retains existing catch/leave-unchanged behavior.",
+      "Original strict generator --write repaired only the known package bytes; exact candidate writer twice plus original --check PASS; every other prepared tracked path retained."
+    ],
+    "commands": [
+      {
+        "name": "generator-recovery",
+        "argv": [
+          "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/node-v24.5.0-darwin-arm64/bin/node",
+          "Scripts/NativeScript/build-host-services.mjs",
+          "--write"
+        ],
+        "elapsedSeconds": 1.626,
+        "exitCode": 0,
+        "signal": null,
+        "logSHA256": "7f655f532fc99ed42bc980f3062eea39147697d1bf6d6a3cfd8aeaeabf55e6d3"
+      },
+      {
+        "name": "generator-check",
+        "argv": [
+          "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/node-v24.5.0-darwin-arm64/bin/node",
+          "Scripts/NativeScript/build-host-services.mjs",
+          "--check"
+        ],
+        "elapsedSeconds": 1.417,
+        "exitCode": 0,
+        "signal": null,
+        "logSHA256": "480742f18b8ef01a023f07eff2064a34b4a8f65a59deef55e49b505788f8b263"
+      }
+    ],
+    "preparedTrackedPathsBefore": 176,
+    "preparedTrackedPathsAfter": 175,
+    "changedPreparedPaths": [
+      "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/package.json"
+    ],
+    "recovery": "Original generator --write, never hand-written replacement of manifest fields.",
+    "canonicalAfterTwoActualProductionPasses": {
+      "index.d.ts": "75f055c7067c2497b64f64714ca175fc09a323236e236b1d57621d4a07c3f7c1",
+      "index.mjs": "c6cc15960daeb071fc5adc8daf3f041c3e990ee8ce285a0b6c945667763a7dc5",
+      "package.json": "c42e3fe3eb38b7289ba3cf49ca0b56bcbd7ac2d27d68955f27e3d5e33e642a7e",
+      "system-surfaces.d.ts": "04a07d066efe992bc4a421e7a8aadd5e555ac82478dcf4fc613703da3ca417f8",
+      "system-surfaces.mjs": "ff92a9423fcfa566d4e00546e7a8e9fb0c8b206a361911225c1f67dddba68d19"
+    },
+    "resultPath": "focused-result.json",
+    "resultSHA256": "538396ade3032884e91a36645fbc57fdc4338d2271fc129f6f9829ed4f07a24e"
+  },
+  "independentReadOnlyReviews": [
+    {
+      "agent": "/root/entrypoints",
+      "sourceSHA256": "b5114a3be1fc846e288128af08cef9f38b0cac8e34923780325c4edc2976ebd9",
+      "result": "NO_CONCRETE_BLOCKER",
+      "execution": "No test/compiler/native run by reviewer."
+    },
+    {
+      "agent": "/root/sdk_only_author",
+      "sourceSHA256": "b5114a3be1fc846e288128af08cef9f38b0cac8e34923780325c4edc2976ebd9",
+      "result": "NO_CONCRETE_BLOCKER",
+      "execution": "No function/generator tests or mutations by reviewer."
+    }
+  ],
+  "provenanceImpact": {
+    "nativeArtifactInput": true,
+    "sourceInventoryRow": 90,
+    "reachabilitySDKSourceRow": 90,
+    "directSDKInput": false,
+    "requiredRootCommands": [
+      "node Scripts/Audit/audit-miniapp-sdk.mjs --write",
+      "node Scripts/Audit/audit-miniapp-sdk.mjs --check",
+      "python3 Scripts/Audit/audit_miniapp_reachability.py",
+      "python3 Scripts/Audit/audit_miniapp_reachability.py --check"
+    ]
+  },
+  "boundaries": {
+    "originalLoaderSource": "No tracked or installed V8 module-loader implementation was available in the bounded read; no new original parser/classification claim.",
+    "fullNativePreparation": "NOT_RUN_AFTER_FIX",
+    "correctedOriginalJSIProducer": "NOT_REACHED",
+    "originalRuntimeCoreArtifactRoute": "NOT_REACHED",
+    "MiniAppsBuild": "NOT_RUN",
+    "AIBuild": "NOT_RUN",
+    "applicationCases52": "NOT_RUN",
+    "nativeResume": "Requires root integration/current provenance handoff; no resume in this focused proof."
+  },
+  "retainedRequiredInputs": {
+    "expoWrapperSHA256": "81b44608fbc6c04dbbf315435b06c21cd62c43d7a75b511a3105ecb91f3fb44a",
+    "RUNTIME_CORE_ARTIFACT_RUN_ID": "42926628418"
+  },
+  "files": [
+    {
+      "path": "attempt3-state.json",
+      "bytes": 9176,
+      "sha256": "44114ee28ccd1035c35facec287d5e1049804d6483dd4dbf2d23439945866003"
+    },
+    {
+      "path": "before-capture.json",
+      "bytes": 991,
+      "sha256": "fa5f58995d0c7733c7ebb887ae07a32b045bc78fac3a90951e1bacb9597ef121"
+    },
+    {
+      "path": "before-package.json",
+      "bytes": 147,
+      "sha256": "ebe6634d2e019c9da759ac280c1269d721e2105681fdbc8a1796f464d0b9ee9e"
+    },
+    {
+      "path": "expected-package.json",
+      "bytes": 147,
+      "sha256": "c42e3fe3eb38b7289ba3cf49ca0b56bcbd7ac2d27d68955f27e3d5e33e642a7e"
+    },
+    {
+      "path": "failure.log",
+      "bytes": 1815,
+      "sha256": "45c293b1ef521d92eb66257c20f9019f3b68883848da93c3b12b685a73c3aefe"
+    },
+    {
+      "path": "focused-check.mjs",
+      "bytes": 8641,
+      "sha256": "176bda876b22e58fbb020b9489d9d820e651e63b0cea52baed28c5bb840e131e"
+    },
+    {
+      "path": "focused-preflight.json",
+      "bytes": 180,
+      "sha256": "26dabff5883b76dc5f586f9a29e6e63fd12a543b5d48072eded5cb66a30ce064"
+    },
+    {
+      "path": "focused-result.json",
+      "bytes": 80804,
+      "sha256": "538396ade3032884e91a36645fbc57fdc4338d2271fc129f6f9829ed4f07a24e"
+    },
+    {
+      "path": "focused-transport.json",
+      "bytes": 1060,
+      "sha256": "bb72ccb6587005b855d56907c168e3ceb4bd2053d94bcad9f3f42dbd1ee4830c"
+    },
+    {
+      "path": "focused.log",
+      "bytes": 1627,
+      "sha256": "b4dace26738a53b30fa708a2b57f408e39ec41859b9b9c142d2c45aa3980294a"
+    },
+    {
+      "path": "generator-check.log",
+      "bytes": 112,
+      "sha256": "480742f18b8ef01a023f07eff2064a34b4a8f65a59deef55e49b505788f8b263"
+    },
+    {
+      "path": "generator-recovery.log",
+      "bytes": 112,
+      "sha256": "7f655f532fc99ed42bc980f3062eea39147697d1bf6d6a3cfd8aeaeabf55e6d3"
+    },
+    {
+      "path": "normalizer-after.mjs",
+      "bytes": 78750,
+      "sha256": "b5114a3be1fc846e288128af08cef9f38b0cac8e34923780325c4edc2976ebd9"
+    },
+    {
+      "path": "normalizer-before.mjs",
+      "bytes": 78880,
+      "sha256": "814cb0ff5b5aa4575c0daaced0014e461d51d108059f4cccb396f9c1d5c6e5a5"
+    },
+    {
+      "path": "transport-initial-failure.json",
+      "bytes": 282,
+      "sha256": "bc5e6ea21db584a6e70fa6c7fd59389b1ebc9e3aac976478eb2ffdca63e70153"
+    }
+  ]
+}

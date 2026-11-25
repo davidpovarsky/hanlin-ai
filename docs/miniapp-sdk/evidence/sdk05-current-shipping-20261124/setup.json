@@ -1,0 +1,37 @@
+{
+  "atUTC": "2026-11-24T11:40:11.314255+00:00",
+  "base": "2f1cfa6e4a702475acfe80ad68bf82c5320902f5",
+  "commands": [
+    {
+      "argv": [
+        "git",
+        "worktree",
+        "add",
+        "--no-checkout",
+        "-b",
+        "codex/hanlin-sdk05-current-shipping-20261124",
+        "/mnt/development/projects/worktrees/hanlin-sdk05-current-shipping-20261124",
+        "2f1cfa6e4a702475acfe80ad68bf82c5320902f5"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "Preparing worktree (new branch 'codex/hanlin-sdk05-current-shipping-20261124')\n"
+    },
+    {
+      "argv": [
+        "git",
+        "-C",
+        "/mnt/development/projects/worktrees/hanlin-sdk05-current-shipping-20261124",
+        "sparse-checkout",
+        "set",
+        "--no-cone",
+        "/AGENTS.md",
+        "/PROJECT_AGENT_GUIDANCE.md",
+        "/docs/miniapp-sdk/evidence/sdk05-current-shipping-20261124/"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ]
+}

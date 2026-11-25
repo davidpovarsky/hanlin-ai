@@ -1,0 +1,95 @@
+{
+  "sourceCommit": "cf9c18903c03264265557efb446207efa7226912",
+  "comparisonCommit": "dc518aa35d123b611c02b10ad75e11477a7eb131",
+  "file": "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinOriginalExpoWidgetOptions.swift",
+  "sha256": "9ae01d879e0e01992879b74fd9afa7eccedcc1d98c54f6d7095f1693b9b6389e",
+  "sameBytesAtEvidenceBase": true,
+  "directSDKSourceInput": false,
+  "directSDKFile": false,
+  "inventorySourceMatches": [],
+  "reachabilitySDKSourceMatches": [],
+  "reachabilitySourceRefMatches": {},
+  "reachabilityOptionalSymbolMembership": {
+    "ControlWidget": false,
+    "CSSearchableIndex": false,
+    "CoreSpotlight": false
+  },
+  "fileContainsMonitoredOptionalSymbols": {
+    "ControlWidget": false,
+    "CSSearchableIndex": false,
+    "CoreSpotlight": false
+  },
+  "broadSwiftScanBoundary": "The generator reads tracked Swift text for named symbol/caller membership. It does not emit a hash of every scanned Swift file. This options file has no matching named surface entry or source reference; changing only its type/value construction does not change that output.",
+  "sourceRecords": [
+    {
+      "path": "Scripts/MiniApps/stage-sdk.mjs",
+      "sha256": "a9d02de9128acde4bcdd14b60c3227627a43c004075f55c6d9f41e2045c9bcce",
+      "excerpts": [
+        {
+          "firstLine": 46,
+          "lastLine": 85,
+          "text": "\n/** Keep npm alias implementations with the actual compiler, also in a partial SDK. */\nexport async function copyCompilerClosure(source,destination,files,label,ancestors=new Set()) {\n  const canonical=await realpath(source);\n  if(ancestors.has(canonical))throw new Error('Compiler dependency cycle: '+canonical);\n  const next=new Set(ancestors).add(canonical);\n  await copyAuthoringTree(source,destination,files,label,new Set(),true);\n  const packageFile=path.join(source,'package.json'),pkg=await readJSON(packageFile),require=createRequire(packageFile);\n  for(const name of Object.keys(pkg.dependencies??{})) {\n    const dependency=path.dirname(require.resolve(name+'/package.json'));\n    await copyCompilerClosure(dependency,path.join(destination,'node_modules',name),files,path.posix.join(label,'node_modules',name),next);\n  }\n}\n\nexport const sdkInputs = [\n 'Scripts/Expo/package.json','Scripts/Expo/package-lock.json','Scripts/Expo/dependency-lock.json',\n 'Scripts/Expo/babel.config.cjs','Scripts/Expo/metro.config.cjs','Scripts/Expo/prepare-types.mjs',\n 'Scripts/Expo/build-original-widget-runtime.mjs','Scripts/Expo/sync-original-ui-exports.mjs',\n 'Scripts/NativeScript/package.json','Scripts/NativeScript/package-lock.json','Scripts/NativeScript/dependency-lock.json',\n 'Scripts/ExpoNativeAPI/dependency-lock.json','Tools/SwiftUIBridge/configuration.json',\n 'Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPI/HanlinExpoNativeAPIManager.swift',\n 'Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPI/HanlinExpoNativeAPIHostVersions.swift',\n 'Packages/HanlinPlatform/Package.swift',\n 'docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json','docs/miniapp-sdk/source-inventory.json',\n 'docs/miniapp-sdk/extension-reachability.json'\n];\n\nconst excludedSDKInputNames = new Set(['node_modules','Tests','evidence','.git']);\nconst includesSDKInputName = name => !excludedSDKInputNames.has(name) && !name.includes('.bak.');\nconst exampleSourceRoot = 'Scripts/MiniApps/Examples';\n// These are output roots of the public authoring/Metro tools, not arbitrary\n// resource names. Authored build/dist directories and resource ZIPs survive.\nconst exampleOutputRoots = new Set(['.hanlin-build','.hanlin-authoring','.metro-cache']);\nconst includesSDKSourcePath = relative => {\n  if (!relative.split('/').every(includesSDKInputName)) return false;\n  if (!relative.startsWith(exampleSourceRoot+'/')) return true;\n  const [,projectChild] = relative.slice(exampleSourceRoot.length+1).split('/');\n  return !exampleOutputRoots.has(projectChild);\n};\n"
+        },
+        {
+          "firstLine": 141,
+          "lastLine": 157,
+          "text": "export async function inputReceipt(root=repositoryRoot) {\n  const files=[];\n  for(const relative of sdkInputs) {\n    const bytes=await readFile(path.join(root,relative));\n    files.push({path:relative,sha256:sha(bytes)});\n  }\n  for(const relative of ['Scripts/MiniApps','Packages/HanlinExpoUI','Packages/HanlinExpoNativeAPIJS',\n    'Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services',\n    'Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal',\n    'Packages/HanlinExpoRuntime/Sources/ExpoWidgets',\n    'Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/HanlinScriptWidgetRuntime.swift',\n    'docs/miniapp-sdk','docs/hanlin-nativescript-guide.md','docs/hanlin-expo-runtime.md']) {\n    files.push(...await collectSDKSourceInputs(path.join(root,relative),relative));\n  }\n  const unique=[...new Map(files.map(f=>[f.path,f])).values()].sort((a,b)=>a.path.localeCompare(b.path));\n  return {files:unique,sha256:sha(JSON.stringify(unique))};\n}"
+        }
+      ]
+    },
+    {
+      "path": "Scripts/Audit/audit-miniapp-sdk.mjs",
+      "sha256": "f2a38e9af505a02e231c67294b8e21de4d7b4bc0fd539bf46935ab706993ab18",
+      "excerpts": [
+        {
+          "firstLine": 23,
+          "lastLine": 35,
+          "text": "const destination = path.join(root, 'docs/miniapp-sdk/source-inventory.json');\nconst manifestReference = path.join(root, 'docs/miniapp-sdk/MANIFEST_REFERENCE.md');\nconst files = new Map();\nconst compare = (a, b) => a < b ? -1 : a > b ? 1 : 0;\nconst relative = file => path.relative(root, file).replaceAll('\\\\', '/');\nasync function source(file) {\n  file = path.resolve(root, file);\n  if (!files.has(file)) {\n    const bytes = await readFile(file);\n    files.set(file, {path: relative(file), sha256: createHash('sha256').update(bytes).digest('hex'), text: bytes.toString('utf8')});\n  }\n  return files.get(file);\n}"
+        },
+        {
+          "firstLine": 165,
+          "lastLine": 167,
+          "text": "const preparedWidgetPublication = await source('Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinExpoWidgetPublication.swift');\nconst preparedWidgetConsumer = await source('Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinPreparedWidget.swift');\nconst generatedViewProducer = await source('Packages/HanlinSwiftUIBridgeGenerator/Sources/HanlinSwiftUIBridgeCore/OutputGenerator.swift');"
+        },
+        {
+          "firstLine": 200,
+          "lastLine": 204,
+          "text": "    hostInvoke: {source: adapter.path, operations, routes: operationContract.routes, facadeOperations, status: 'partial_source_wiring_not_surface_acceptance'},\n    preparedWidgetPublication: {producer: {source: preparedWidgetPublication.path, sha256: preparedWidgetPublication.sha256},\n      consumer: {source: preparedWidgetConsumer.path, sha256: preparedWidgetConsumer.sha256},\n      status: 'source authorities; installed JS/native/store/prepared-consumer execution is separate evidence',\n      osRendering: 'not inferred from state commit or reload request'},"
+        },
+        {
+          "firstLine": 222,
+          "lastLine": 240,
+          "text": "  sources: [...files.values()].map(({path, sha256}) => ({path, sha256})).sort((a, b) => compare(a.path, b.path)),\n};\nif (process.argv.includes('--check')) {\n  const prior = JSON.parse(await readFile(destination, 'utf8'));\n  delete prior.sourceCommit;\n  delete prior.uncommittedSourcePaths;\n  if (JSON.stringify(prior) !== JSON.stringify(inventory)) throw new Error('SDK source inventory drift. Audit source changes, then regenerate with --write.');\n  if (await readFile(manifestReference, 'utf8') !== manifestMarkdown) throw new Error('Manifest field reference drift. Regenerate with --write after source review.');\n  console.log(`PASS: SDK source inventory matches ${inventory.sources.length} sources and ${exports.length} local public exports.`);\n} else if (process.argv.includes('--write')) {\n  const sourceCommit = execFileSync('git', ['rev-parse', 'HEAD'], {cwd: root, encoding: 'utf8'}).trim();\n  const changed = execFileSync('git', ['status', '--porcelain', '--untracked-files=all'], {cwd: root, encoding: 'utf8'})\n    .split('\\n').filter(Boolean).map(line => line.slice(3).replaceAll('\\\\', '/'));\n  const uncommittedSourcePaths = inventory.sources.map(s => s.path).filter(p => changed.includes(p));\n  await mkdir(path.dirname(destination), {recursive: true});\n  await writeFile(destination, JSON.stringify({sourceCommit, uncommittedSourcePaths, ...inventory}, null, 2) + '\\n');\n  await writeFile(manifestReference, manifestMarkdown);\n  console.log(`Wrote source inventory: ${inventory.sources.length} sources, ${exports.length} local public exports; E2E not inferred.`);\n} else throw new Error('Use --check for read-only drift verification or --write after auditing changes.');"
+        }
+      ]
+    },
+    {
+      "path": "Scripts/Audit/audit_miniapp_reachability.py",
+      "sha256": "a28d4702744f94e265489ca9df18ae6a2fd666290598d6faa693810d794a0dce",
+      "excerpts": [
+        {
+          "firstLine": 70,
+          "lastLine": 85,
+          "text": "def build() -> dict:\n    sources = TrackedSources(ROOT)\n    sdk = json.loads(sources.read_text(\"docs/miniapp-sdk/source-inventory.json\"))\n    sources.prefetch(entry[\"path\"] for entry in sdk[\"sources\"])\n    for entry in sdk[\"sources\"]:\n        if hashlib.sha256(sources.read_bytes(entry[\"path\"])).hexdigest() != entry[\"sha256\"]:\n            raise ValueError(f\"SDK authority is stale: {entry['path']}; run its source audit first.\")\n    refs = {}\n\n    def ref(name: str, file: str, anchor: str) -> str:\n        data = sources.read_bytes(file)\n        text = data.decode(\"utf-8\")\n        if anchor not in text:\n            raise ValueError(f\"Audit anchor changed: {file}: {anchor}\")\n        refs[name] = {\"file\": file, \"line\": text[:text.index(anchor)].count(\"\\n\") + 1,\n                      \"anchor\": anchor, \"sha256\": hashlib.sha256(data).hexdigest()}"
+        },
+        {
+          "firstLine": 155,
+          "lastLine": 185,
+          "text": "    ref(\"miniAppsControlButtonRegistration\", \"HanlinMiniAppsExtensions/Widgets/HanlinMiniAppsWidgets.swift\", \"ScriptWidgetButtonControlWidget()\")\n    ref(\"miniAppsControlToggleRegistration\", \"HanlinMiniAppsExtensions/Widgets/HanlinMiniAppsWidgets.swift\", \"ScriptWidgetControlWidget()\")\n    ref(\"currentScope\", \"docs/miniapp-sdk/README.md\", \"## Entry points and native surfaces\")\n    extension_directories = {\n        \"ChavrusaChatShare\": \"ChavrusaChatShare\",\n        \"ChavrusaChatTranslationProvider\": \"ChavrusaChatTranslationProvider\",\n        \"HanlinScriptingWidgets\": \"HanlinScriptingWidgets\",\n        \"ChavrusaChatNotificationService\": \"ChavrusaChatNotificationService\",\n        \"HanlinMiniAppsShare\": \"HanlinMiniAppsExtensions/Share\",\n        \"HanlinMiniAppsTranslationProvider\": \"HanlinMiniAppsExtensions/Translation\",\n        \"HanlinMiniAppsWidgets\": \"HanlinMiniAppsExtensions/Widgets\",\n    }\n    for target, directory in extension_directories.items():\n        ref(target + \"Info\", directory + \"/Info.plist\", \"<plist\")\n\n    tracked = sorted(p for p in sources.tracked if p.endswith(\".swift\"))\n    sources.prefetch(tracked)\n    swift = {p: sources.read_text(p) for p in tracked}\n    share_references = [p for p in tracked if p.startswith(\"AI_HLY/\") and \"ChavrusaShareInbox\" in swift[p]]\n    if share_references != [\n        \"AI_HLY/Downstream/SDK/HanlinApplicationComponents.swift\",\n        \"AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift\",\n        \"AI_HLY/Downstream/ScriptingPlatform/ScriptingPackageCenterViews.swift\",\n        \"AI_HLY/Downstream/SystemIntegrations/ChavrusaShareActionTarget.swift\",\n        \"AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInbox.swift\",\n        \"AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInboxView.swift\",\n        \"AI_HLY/Views/Components/ChatViewBottom.swift\",\n    ]:\n        raise ValueError(f\"Share inbox callers changed; re-audit reachability: {share_references}\")\n    optional_surfaces = {symbol: [p for p in tracked if re.search(rf\"\\b{symbol}\\b\", swift[p])]\n                         for symbol in [\"ControlWidget\", \"CSSearchableIndex\", \"CoreSpotlight\"]}"
+        },
+        {
+          "firstLine": 259,
+          "lastLine": 275,
+          "text": "    changed = subprocess.check_output([\"git\", \"status\", \"--porcelain\", \"--untracked-files=all\"], cwd=ROOT, text=True, encoding=\"utf-8\").splitlines()\n    changed_paths = {line[3:].replace(\"\\\\\", \"/\") for line in changed if line}\n    return {\"schemaVersion\": 1, \"sourceCommit\": subprocess.check_output([\"git\", \"rev-parse\", \"HEAD\"], cwd=ROOT, text=True).strip(),\n        \"snapshotIdentity\": \"Base commit plus exact current hashes; uncommitted audit sources are listed separately\",\n        \"uncommittedSourcePaths\": sorted({r[\"file\"] for r in refs.values()} & changed_paths),\n        \"status\": \"IN_PROGRESS_SOURCE_AUDIT\", \"sdkAuthority\": \"source-inventory.json\",\n        \"sdkSources\": sdk[\"sources\"], \"history\": {\"ownerTestFlightBuild\": \"93401\", \"source\": \"7fa8fe26\",\n            \"boundary\": \"Historical owner delivery only; not current branch/signature/matrix acceptance\"},\n        \"targetsDeclaredInProject\": target_names, \"entitlements\": entitlements, \"optionalSurfaceSymbolScan\": optional_surfaces,\n        \"sourceRefs\": refs, \"paths\": paths, \"matrix\": rows, \"originalLibrarySurfaces\": original_surfaces,\n        \"matrixScope\": \"Eight ingress categories by two native app engines by five canonical Host runtimes; not an inventory of all original widget/presentation APIs.\",\n        \"sourceReadPolicy\": \"Current local bytes take precedence; only missing tracked files use exact HEAD blobs, including the Swift symbol scan.\",\n        \"systemServices\": {\"authority\": \"source-inventory.json#/systemServices\",\n            \"publicBindingStatus\": {e: \"No generic HanlinSystemServicesBroker facade in the inspected Host adapter. Original native SDK APIs and ScriptWidget service providers are separate API paths; this does not classify them as absent.\" for e in ENGINES},\n            \"availabilityIsNotGrantMetadata\": True, \"devicePermissionChecksExecuted\": False},\n        \"acceptance\": {\"fourExtensionCategoriesByTwoEnginesByFiveRuntimes\": 40, \"additionalSurfaceCells\": 40,\n            \"executedSurfaceE2EPasses\": 0, \"signedPhysicalAcceptance\": \"NOT_RUN\"}}"
+        }
+      ]
+    }
+  ],
+  "recommendation": {
+    "inventoryWriteCheckNeededForDescribedOptionsOnlyFix": false,
+    "reachabilityWriteCheckNeededForDescribedOptionsOnlyFix": false,
+    "adHocSDKRebuildNeeded": false,
+    "generatorsExecutedHere": false,
+    "scope": "The described corrections in this file only, preserving unrelated files and the existing scanned symbol/caller memberships. Actual native compile/acceptance remains owned by the parent lane."
+  }
+}

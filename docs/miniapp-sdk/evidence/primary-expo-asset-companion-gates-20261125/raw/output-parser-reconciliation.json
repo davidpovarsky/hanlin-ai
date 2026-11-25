@@ -1,0 +1,21 @@
+{
+  "reconciledAt": "2026-11-25T00:54:23.924204+00:00",
+  "kind": "COLLECTOR_OUTPUT_WORDING_CORRECTION_NO_TEST_RERUN",
+  "source": "1812bff50571c9907d15cd8b4bfbe4874be24756",
+  "originalFailureState": "state-before-output-parser-correction.json",
+  "rawLog": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/companion-gates-attempt9/swift-expo-asset-analyzer.log",
+  "rawSHA256": "8a83d834e1416aa086dc61cb65837878e7fc17e1051627cd436d8f1913a675ee",
+  "actualCommandExit": 0,
+  "actualCommandFinishedAt": "2026-11-25T00:52:12.408266+00:00",
+  "actualNamedTestPass": true,
+  "actualTestCount": 1,
+  "actualSuiteCount": 1,
+  "versionCasesInUnmodifiedTest": 3,
+  "actualLines": [
+    "\u25c7 Test \"Prepared Expo packages preserve the embedded original asset version contract\" started.",
+    "\u2714 Test \"Prepared Expo packages preserve the embedded original asset version contract\" passed after 0.012 seconds.",
+    "\u2714 Test run with 1 test in 1 suite passed after 0.013 seconds."
+  ],
+  "compilerRerun": false,
+  "testRerun": false
+}

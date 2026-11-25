@@ -1,0 +1,30 @@
+{
+  "source": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptWidgetPackage.swift",
+  "sourceSHA256": "3aa2274d41edd3e7e87edd91697a4a204489d0efc6a2efaa00ea82d517af16fd",
+  "checks": {
+    "timeline": {
+      "status": "EXECUTED_PASS",
+      "originalAllowedKeys": [
+        "dailyTimes",
+        "timeZone"
+      ],
+      "schemaType": "WidgetPackageTimeline"
+    },
+    "author": {
+      "status": "EXECUTED_PASS",
+      "originalAllowedKeys": [
+        "name",
+        "url"
+      ],
+      "schemaType": "WidgetPackageAuthor"
+    },
+    "pushUpdates": {
+      "status": "EXECUTED_PASS",
+      "originalAllowedKeys": [
+        "registrationURL",
+        "channel"
+      ],
+      "schemaType": "WidgetPackagePushUpdates"
+    }
+  }
+}

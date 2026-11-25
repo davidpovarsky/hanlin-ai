@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-24T07:25:47.835600+00:00",
+  "sourceCommit": "87316d23eaf2982df3556ea15c4632576fc31c55",
+  "kind": "Root-observed direct-dispatch preflight failure, no workflow dispatch executed",
+  "preflightArgv": [
+    "sudo",
+    "-u",
+    "ubuntu",
+    "gh",
+    "run",
+    "list",
+    "--repo",
+    "davidpovarsky/hanlin-ai",
+    "--workflow",
+    "validate-scripting-runtime.yml",
+    "--branch",
+    "codex/hanlin-miniapps-sdk-completion-20261123",
+    "--limit",
+    "10",
+    "--json",
+    "databaseId,status,conclusion,headSha"
+  ],
+  "error": "HTTP 404: workflow validate-scripting-runtime.yml not found on the default branch (https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/workflows/validate-scripting-runtime.yml)",
+  "scriptReturncode": 1,
+  "dispatchExecuted": false,
+  "newRunID": null,
+  "registryObservation": {
+    "command": [
+      "sudo",
+      "-u",
+      "ubuntu",
+      "gh",
+      "api",
+      "repos/davidpovarsky/hanlin-ai/actions/workflows?per_page=100"
+    ],
+    "exit": 0,
+    "totalCount": 16,
+    "standaloneScriptingWorkflowRegistered": false,
+    "registeredCaller": {
+      "id": 419196373,
+      "path": ".github/workflows/validate-app-split.yml",
+      "state": "active"
+    }
+  },
+  "proposedRoute": "Existing registered caller with distinct paired_test_scope miniapp_contracts, invoking the existing local reusable workflow at the same commit. Keep current main native run and all other behavior unchanged.",
+  "officialDocumentation": [
+    {
+      "url": "https://docs.github.com/en/actions/how-tos/manage-workflow-runs/manually-run-a-workflow",
+      "fact": "Direct workflow_dispatch requires workflow presence on the default branch."
+    },
+    {
+      "url": "https://docs.github.com/en/actions/how-tos/reuse-automations/reuse-workflows",
+      "fact": "A local reusable workflow reference uses the same commit as the caller."
+    }
+  ]
+}

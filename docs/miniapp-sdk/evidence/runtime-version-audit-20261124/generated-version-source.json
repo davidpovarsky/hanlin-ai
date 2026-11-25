@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "node",
+    "--input-type=module",
+    "-"
+  ],
+  "source": "import {readFile,writeFile} from 'node:fs/promises';\nimport {generatedNativeScriptHostVersions} from './Scripts/MiniApps/resolve-upstreams.mjs';\nconst locked=JSON.parse(await readFile('Scripts/NativeScript/dependency-lock.json','utf8'));\nconst input={nativescript:{'@nativescript/ios':locked.nativeScript.iosRuntimeVersion,'@nativescript/core':locked.nativeScript.coreVersion,'@nativescript/swift-ui':locked.swiftUI.version}};\nawait writeFile('Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptHostVersions.swift',generatedNativeScriptHostVersions(input));\nconsole.log(JSON.stringify(input));\n",
+  "exit": 0,
+  "stdout": "{\"nativescript\":{\"@nativescript/ios\":\"9.1.1\",\"@nativescript/core\":\"9.1.4\",\"@nativescript/swift-ui\":\"4.0.2\"}}\n",
+  "stderr": "",
+  "scope": "Render only the new internal Swift source from the current original lock. No resolution, network or SDK staging."
+}

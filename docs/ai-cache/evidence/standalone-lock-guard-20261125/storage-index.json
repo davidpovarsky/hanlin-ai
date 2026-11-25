@@ -1,0 +1,60 @@
+{
+  "files": [
+    {
+      "originalPath": "diff-check-attempt01.log",
+      "originalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedPath": "diff-check-attempt01.log.gz",
+      "storedSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "bytes": 20
+    },
+    {
+      "originalPath": "diff-check.log",
+      "originalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedPath": "diff-check.log.gz",
+      "storedSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "bytes": 20
+    },
+    {
+      "originalPath": "guard-receipt-attempt01.json",
+      "originalSHA256": "c90846e4dd46cb6b06889391fe7fca1b3adcd58f83cfe1dd716b4f686cadbd63",
+      "storedPath": "guard-receipt-attempt01.json",
+      "storedSHA256": "c90846e4dd46cb6b06889391fe7fca1b3adcd58f83cfe1dd716b4f686cadbd63",
+      "bytes": 1820
+    },
+    {
+      "originalPath": "guard-receipt.json",
+      "originalSHA256": "01ca0c08b3fd807d569b47f122e7f8113b4c57637d33812c90f2cc5216dfbb41",
+      "storedPath": "guard-receipt.json",
+      "storedSHA256": "01ca0c08b3fd807d569b47f122e7f8113b4c57637d33812c90f2cc5216dfbb41",
+      "bytes": 1898
+    },
+    {
+      "originalPath": "guard-tests-attempt01.log",
+      "originalSHA256": "15242ca3dcaa37d04b02d5ec2f07af3a6d7204c4d5f3b16bb76c3c0bf4cf741e",
+      "storedPath": "guard-tests-attempt01.log.gz",
+      "storedSHA256": "afa047f06a1e15e1db1f8e93133e6ef9898ce225f1ecff54c29b71408c97e716",
+      "bytes": 430
+    },
+    {
+      "originalPath": "guard-tests.log",
+      "originalSHA256": "4a771dbf322fedee78ed6d2d44000183cd3a4f2ecb5d253b7a2a0cc2623ad4ba",
+      "storedPath": "guard-tests.log.gz",
+      "storedSHA256": "3bac16a62299afc8be5c9729360dcfdbe5218f86fb9dc97cc74f72fb235a05e7",
+      "bytes": 462
+    },
+    {
+      "originalPath": "shell-syntax-attempt01.log",
+      "originalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedPath": "shell-syntax-attempt01.log.gz",
+      "storedSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "bytes": 20
+    },
+    {
+      "originalPath": "shell-syntax.log",
+      "originalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedPath": "shell-syntax.log.gz",
+      "storedSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "bytes": 20
+    }
+  ]
+}

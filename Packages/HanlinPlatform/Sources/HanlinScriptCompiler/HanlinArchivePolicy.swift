@@ -1,4 +1,5 @@
 import Foundation
+import HanlinPlatformContracts
 import HanlinScriptContracts
 
 public enum HanlinArchiveEntryKind: String, Codable, Hashable, Sendable {
@@ -36,12 +37,12 @@ public struct HanlinArchiveLimits: Codable, Hashable, Sendable {
     public let maximumCompressionRatio: Int64
 
     public init(
-        maximumArchiveBytes: Int64 = 64 * 1_048_576,
-        maximumFiles: Int = 4_096,
-        maximumDirectories: Int = 1_024,
-        maximumDepth: Int = 24,
-        maximumUncompressedBytes: Int64 = 256 * 1_048_576,
-        maximumCompressionRatio: Int64 = 100
+        maximumArchiveBytes: Int64 = .max,
+        maximumFiles: Int = .max,
+        maximumDirectories: Int = .max,
+        maximumDepth: Int = .max,
+        maximumUncompressedBytes: Int64 = .max,
+        maximumCompressionRatio: Int64 = .max
     ) {
         self.maximumArchiveBytes = maximumArchiveBytes
         self.maximumFiles = maximumFiles
@@ -51,6 +52,9 @@ public struct HanlinArchiveLimits: Codable, Hashable, Sendable {
         self.maximumCompressionRatio = maximumCompressionRatio
     }
 
+    /// Ordinary packages retain original engine contracts and actual I/O failures,
+    /// without a second host byte/count/depth/ratio quota. Explicit custom limits
+    /// remain available to callers that deliberately request them.
     public static let packageImport = HanlinArchiveLimits()
 
     /// Personal-runtime Skill imports use streamed storage and actual I/O
@@ -140,13 +144,6 @@ public struct HanlinArchivePolicy: Sendable {
             switch entry.kind {
             case .file:
                 fileCount += 1
-                if !Self.isAllowedFile(path) {
-                    findings.append(finding(
-                        .unsupportedFileType,
-                        path,
-                        "The archive contains a file type that packages cannot install."
-                    ))
-                }
             case .directory:
                 directoryCount += 1
             case .symbolicLink:
@@ -221,8 +218,11 @@ public struct HanlinArchivePolicy: Sendable {
             ))
         }
 
-        let manifests = normalizedPaths.filter {
-            $0 == "script.json" || $0.hasSuffix("/script.json")
+        // A retained source tree and ordinary dependencies may contain their own
+        // script.json. Only the package root, or one actual wrapper root, selects
+        // the executable manifest; nested resource metadata stays intact.
+        let manifests = normalizedPaths.contains("script.json") ? ["script.json"] : normalizedPaths.filter {
+            $0.hasSuffix("/script.json") && $0.split(separator: "/").count == 2
         }
         let manifestPath = manifests.count == 1 ? manifests[0] : nil
         if manifests.count != 1 {
@@ -443,40 +443,7 @@ public struct HanlinArchivePolicy: Sendable {
     }
 
     public static func normalizedRelativePath(_ value: String) -> String? {
-        var path = value.replacingOccurrences(of: "\\", with: "/")
-        while path.hasPrefix("./") {
-            path.removeFirst(2)
-        }
-        if path.hasSuffix("/") {
-            path.removeLast()
-        }
-        guard !path.isEmpty,
-              !path.hasPrefix("/"),
-              !path.contains("\0"),
-              !hasDrivePrefix(path)
-        else {
-            return nil
-        }
-        let rawComponents = path.split(separator: "/", omittingEmptySubsequences: false)
-        var stack: [String] = []
-        for component in rawComponents {
-            if component.isEmpty {
-                return nil
-            }
-            if component == "." {
-                continue
-            }
-            if component == ".." {
-                guard !stack.isEmpty else {
-                    return nil
-                }
-                stack.removeLast()
-            } else {
-                stack.append(String(component))
-            }
-        }
-        guard !stack.isEmpty else { return nil }
-        return stack.joined(separator: "/").precomposedStringWithCanonicalMapping
+        HanlinPackagePath.normalizedRelativePath(value)
     }
 
     private static func wrapperDirectory(for manifestPath: String) -> String? {
@@ -485,25 +452,12 @@ public struct HanlinArchivePolicy: Sendable {
     }
 
     private static func hasDrivePrefix(_ path: String) -> Bool {
-        let scalars = Array(path.unicodeScalars.prefix(3))
-        guard scalars.count >= 2 else { return false }
-        return CharacterSet.letters.contains(scalars[0]) && scalars[1].value == 58
+        HanlinPackagePath.hasDrivePrefix(path)
     }
 
     private static func isIgnored(_ path: String) -> Bool {
         path == "__MACOSX" || path.hasPrefix("__MACOSX/")
             || path.split(separator: "/").last?.hasPrefix("._") == true
-    }
-
-    private static func isAllowedFile(_ path: String) -> Bool {
-        let allowed: Set<String> = [
-            "ts", "tsx", "js", "jsx", "mjs", "json", "md", "txt", "strings",
-            "css", "html", "svg", "png", "jpg", "jpeg", "gif", "webp",
-            "heic", "pdf", "plist", "m4a", "mp3", "wav", "mp4", "mov"
-        ]
-        let name = path.split(separator: "/").last.map(String.init) ?? path
-        guard let dot = name.lastIndex(of: ".") else { return false }
-        return allowed.contains(name[name.index(after: dot)...].lowercased())
     }
 
     private static func isAllowedSkillFile(_ path: String) -> Bool {

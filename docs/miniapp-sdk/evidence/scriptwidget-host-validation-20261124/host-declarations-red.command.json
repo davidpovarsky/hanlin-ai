@@ -1,0 +1,27 @@
+{
+  "cwd": "/mnt/development/projects/worktrees/hanlin-scriptwidget-host-validation-20261124",
+  "argv": [
+    "/usr/local/bin/node",
+    "--test",
+    "--test-name-pattern",
+    "installed network declarations preserve the generated wildcard and reject malformed hosts",
+    "Scripts/MiniApps/Tests/scriptwidget-manifest.test.mjs"
+  ],
+  "environment": {
+    "HANLIN_AUTHORING_TYPESCRIPT": "file:///dev/shm/hanlin-sdk-only-kit-45335292541/AI_HLY/Downstream/RuntimeCore/Node/Host/MiniAppSDK/expo/node_modules/typescript/lib/typescript.js"
+  },
+  "exitCode": 1,
+  "durationSeconds": 0.4341,
+  "outputs": {
+    "host-declarations-red.stdout.txt": {
+      "bytes": 1889,
+      "sha256": "3b76bee978d9755021b14060e54b96e95e6ae6136eadb34d960ac46e23d9c375",
+      "storedAs": "host-declarations-red.stdout.txt.gz",
+      "compressedSHA256": "0797ba89c55d8248e9c0aa0050949a2d9a360ba78995a95406d3c00f78e54d4a"
+    },
+    "host-declarations-red.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  }
+}

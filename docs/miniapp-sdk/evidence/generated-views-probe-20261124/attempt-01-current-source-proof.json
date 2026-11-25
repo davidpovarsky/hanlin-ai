@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "status": "EXECUTED_PASS",
+  "operation": "real public authoring build",
+  "compilerVersion": "6.0.3",
+  "diagnostics": 0,
+  "strict": true,
+  "skipLibCheck": false,
+  "sdkManifestSHA256": "fa1e737ec63e640175cdb5c9dad51903cd86d50ae7b340ba5b8ec1ff4e408d85",
+  "sourceMapSections": 822,
+  "currentSourceMapModules": [
+    {
+      "source": "Fixtures/ExpoSwiftUIProbe/GeneratedViewsProbe.tsx",
+      "mappedSource": "/mnt/development/projects/worktrees/hanlin-generated-views-probe-20261124/Fixtures/ExpoSwiftUIProbe/GeneratedViewsProbe.tsx",
+      "sha256": "61334349b7285dd583e81d327a8a19a57496a0a9c0f4f00683861085d544a22c"
+    },
+    {
+      "source": "Fixtures/ExpoSwiftUIProbe/GeneratedModifiersProbe.tsx",
+      "mappedSource": "/mnt/development/projects/worktrees/hanlin-generated-views-probe-20261124/Fixtures/ExpoSwiftUIProbe/GeneratedModifiersProbe.tsx",
+      "sha256": "3b20939a057885bd2293fc65080bfdb28b51ecaa68adab8a26298e8fd251ea1d"
+    },
+    {
+      "source": "Fixtures/ExpoSwiftUIProbe/HostServicesProbe.tsx",
+      "mappedSource": "/mnt/development/projects/worktrees/hanlin-generated-views-probe-20261124/Fixtures/ExpoSwiftUIProbe/HostServicesProbe.tsx",
+      "sha256": "108eac3bf0d3b908089b37ad2175de8eb3be2cf1a81d601a649b02fe48a39801"
+    },
+    {
+      "source": "Packages/HanlinExpoUI/src/generated/bridge-manifest.ts",
+      "mappedSource": "/mnt/development/projects/worktrees/hanlin-generated-views-probe-20261124/Fixtures/ExpoSwiftUIProbe/node_modules/@hanlin/expo-ui/src/generated/bridge-manifest.ts",
+      "sha256": "a56c8a16334bfe76ebe6489fc1f018f25f28f7cadba6c1ef11a268e5336f3b37"
+    },
+    {
+      "source": "Packages/HanlinExpoUI/src/generated/views.tsx",
+      "mappedSource": "/mnt/development/projects/worktrees/hanlin-generated-views-probe-20261124/Fixtures/ExpoSwiftUIProbe/node_modules/@hanlin/expo-ui/src/generated/views.tsx",
+      "sha256": "4c9170e65f2248556544092000d9a25cd4c25a2cc19ac393281dcbe7cd29281a"
+    },
+    {
+      "source": "Packages/HanlinExpoUI/src/host-services.ts",
+      "mappedSource": "/mnt/development/projects/worktrees/hanlin-generated-views-probe-20261124/Fixtures/ExpoSwiftUIProbe/node_modules/@hanlin/expo-ui/src/host-services.ts",
+      "sha256": "010488e8c6aae2635f67d45cefebb9fdb2d4f97af71161af011a83d626ad60e7"
+    }
+  ],
+  "bundleSHA256": "f08025dd756c38f4b841d1e520e1e7f496ce9b55561c25f1afc0383c53985924",
+  "sourceMapSHA256": "158217b576ec49c48d1bc768e6e99ed3cdd4e3a54bc30af3f73deb64f0835507",
+  "retainedSourceIdentity": "All six selected current fixture sources match sourceHashes and original bytes.",
+  "boundary": "Original exported compiler/dependency graph with exact current repository local facade overlay; no new full SDK assembly, application execution, simulator/device or all-modifier semantic pass."
+}

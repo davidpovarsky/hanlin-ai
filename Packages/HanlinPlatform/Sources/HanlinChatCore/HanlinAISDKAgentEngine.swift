@@ -9,6 +9,7 @@ public actor HanlinAISDKAgentEngine {
     public typealias StepPreparation = @MainActor @Sendable (_ stepNumber: Int) async -> HanlinAISDKStepPreparation
 
     private let configuration: HanlinChatModelConfiguration
+    private let telemetry: TelemetrySettings?
     private let resolvedProvider: HanlinAISDKResolvedProvider
     private let resolvesProviderFromConfiguration: Bool
 
@@ -45,15 +46,29 @@ public actor HanlinAISDKAgentEngine {
         }
     }
 
+    // The stop predicate and the final stream event inspect the live catalog at
+    // different times. A transient catalog change must remain a reload decision
+    // even when the original tools are available again before finalization.
+    private actor ToolReloadDecision {
+        private(set) var wasRequested = false
+
+        func observe(_ changed: Bool) -> Bool {
+            wasRequested = wasRequested || changed
+            return changed
+        }
+    }
+
     public init(
         configuration: HanlinChatModelConfiguration,
-        fetch: FetchFunction? = nil
+        fetch: FetchFunction? = nil,
+        telemetry: TelemetrySettings? = nil
     ) throws {
         self.configuration = configuration
+        self.telemetry = telemetry
         self.resolvesProviderFromConfiguration = true
         self.resolvedProvider = try HanlinAISDKProviderFactory.resolve(
             configuration: configuration,
-            fetch: fetch
+            fetch: fetch ?? HanlinAISDKProviderFactory.makeFetch(sessionConfiguration: .ephemeral)
         )
     }
 
@@ -62,9 +77,11 @@ public actor HanlinAISDKAgentEngine {
         configuration: HanlinChatModelConfiguration,
         model: LanguageModel,
         descriptor: HanlinAISDKProviderDescriptor? = nil,
-        providerOptions: ProviderOptions? = nil
+        providerOptions: ProviderOptions? = nil,
+        telemetry: TelemetrySettings? = nil
     ) {
         self.configuration = configuration
+        self.telemetry = telemetry
         self.resolvesProviderFromConfiguration = false
         self.resolvedProvider = HanlinAISDKResolvedProvider(
             model: model,
@@ -84,7 +101,9 @@ public actor HanlinAISDKAgentEngine {
         maxSteps: Int? = nil,
         dynamicTools: (@MainActor @Sendable () async -> [HanlinAISDKToolDefinition])? = nil,
         structuredResponse: HanlinNativeStructuredResponse? = nil,
+        responseSchema: Data? = nil,
         requestApproval: ApprovalHandler? = nil,
+        cacheScope: HanlinPromptCacheScope? = nil,
         transport: HanlinAISDKTurnTransport? = nil,
         prepareStep: @escaping @MainActor @Sendable () -> HanlinAISDKStepPreparation
     ) throws -> AsyncThrowingStream<HanlinAISDKStreamEvent, Error> {
@@ -95,7 +114,9 @@ public actor HanlinAISDKAgentEngine {
             maxSteps: maxSteps,
             dynamicTools: dynamicTools,
             structuredResponse: structuredResponse,
+            responseSchema: responseSchema,
             requestApproval: requestApproval,
+            cacheScope: cacheScope,
             transport: transport,
             prepareStep: { (_: Int) in prepareStep() }
         )
@@ -108,7 +129,9 @@ public actor HanlinAISDKAgentEngine {
         maxSteps: Int? = nil,
         dynamicTools: (@MainActor @Sendable () async -> [HanlinAISDKToolDefinition])? = nil,
         structuredResponse: HanlinNativeStructuredResponse? = nil,
+        responseSchema: Data? = nil,
         requestApproval: ApprovalHandler? = nil,
+        cacheScope: HanlinPromptCacheScope? = nil,
         transport: HanlinAISDKTurnTransport? = nil,
         prepareStep: @escaping @MainActor @Sendable () async -> HanlinAISDKStepPreparation
     ) throws -> AsyncThrowingStream<HanlinAISDKStreamEvent, Error> {
@@ -119,7 +142,9 @@ public actor HanlinAISDKAgentEngine {
             maxSteps: maxSteps,
             dynamicTools: dynamicTools,
             structuredResponse: structuredResponse,
+            responseSchema: responseSchema,
             requestApproval: requestApproval,
+            cacheScope: cacheScope,
             transport: transport,
             prepareStep: { (_: Int) async in await prepareStep() }
         )
@@ -132,7 +157,9 @@ public actor HanlinAISDKAgentEngine {
         maxSteps: Int? = nil,
         dynamicTools: (@MainActor @Sendable () async -> [HanlinAISDKToolDefinition])? = nil,
         structuredResponse: HanlinNativeStructuredResponse? = nil,
+        responseSchema: Data? = nil,
         requestApproval: ApprovalHandler? = nil,
+        cacheScope: HanlinPromptCacheScope? = nil,
         transport: HanlinAISDKTurnTransport? = nil,
         prepareStep: @escaping StepPreparation
     ) throws -> AsyncThrowingStream<HanlinAISDKStreamEvent, Error> {
@@ -146,6 +173,33 @@ public actor HanlinAISDKAgentEngine {
         let resolvedProvider = try transport.map {
             try HanlinAISDKProviderFactory.resolve(configuration: configuration, fetch: $0.fetch)
         } ?? self.resolvedProvider
+        guard structuredResponse == nil || responseSchema == nil else {
+            throw HanlinChatError.invalidRequest("Select one structured response contract.")
+        }
+        let outputSpecification = try structuredResponse?.specification()
+            ?? responseSchema.map { try HanlinAISDKJSONOutput.specification(schemaData: $0) }
+        let turnProviderOptions = try resolvesProviderFromConfiguration
+            ? HanlinAISDKProviderFactory.providerOptions(
+                configuration: configuration, kind: resolvedProvider.descriptor.kind,
+                cacheScope: cacheScope, validateExplicitReference: true
+            ) : resolvedProvider.providerOptions
+        try HanlinAISDKProviderFactory.validateCachedContentContext(
+            configuration: configuration, kind: resolvedProvider.descriptor.kind,
+            hasSystemInstructions: !(baseSystemPrompt ?? "").isEmpty
+                || messages.contains { message in
+                    message.role == .system && message.parts.contains { part in
+                        if case .text(let text) = part { return !text.isEmpty }
+                        return false
+                    }
+                },
+            hasTools: !definitions.isEmpty || dynamicTools != nil
+        )
+        let breakpointOptions = resolvesProviderFromConfiguration
+            ? HanlinAISDKProviderFactory.cacheBreakpointOptions(
+                configuration: configuration, kind: resolvedProvider.descriptor.kind
+            ) : nil
+        let telemetry = self.telemetry
+        let cacheConfiguration = configuration
         if structuredResponse != nil, !HanlinNativeStructuredResponse.supports(resolvedProvider.descriptor) {
             throw HanlinNativeStructuredResponseError.unsupportedProviderOrModel
         }
@@ -156,17 +210,38 @@ public actor HanlinAISDKAgentEngine {
                 message.parts.allSatisfy { part in if case .text = part { return true }; return false }
             }) else { throw HanlinAISDKError.nativeUnsupportedContent }
         }
-        let modelMessages = try Self.modelMessages(from: messages)
-        guard !modelMessages.isEmpty else {
+        var modelMessages = try Self.modelMessages(
+            from: messages, includeSystemMessages: baseSystemPrompt == nil,
+            breakpointOptions: breakpointOptions
+        )
+        // A legacy base prompt is still authoritative, but a cacheable prefix
+        // must be a message block: top-level OpenAI instructions cannot carry
+        // breakpoints, and loaded skills must not change the stable block.
+        let systemPromptForSDK = breakpointOptions == nil ? baseSystemPrompt : nil
+        if let baseSystemPrompt, !baseSystemPrompt.isEmpty, let breakpointOptions {
+            modelMessages.insert(.system(SystemModelMessage(
+                content: baseSystemPrompt, providerOptions: breakpointOptions
+            )), at: 0)
+        }
+        guard modelMessages.contains(where: { message in
+            if case .system = message { return false }
+            return true
+        }) else {
             throw HanlinAISDKError.invalidConversation("At least one user or assistant message is required.")
         }
+        // Plan credentials use the dedicated stateless Responses transport.
+        // Ordinary API Responses retains its own inference settings.
+        let usesChatGPTPlan = configuration.apiType?.lowercased() == "openai-chatgpt-plan"
         let initialTools = try Self.makeTools(definitions, providerKind: resolvedProvider.descriptor.kind)
         let settings = CallSettings(
-            maxOutputTokens: configuration.maxTokens,
-            temperature: configuration.temperature == HanlinChatGenerationDefaults.temperature
-                ? nil : configuration.temperature,
-            topP: configuration.topP == HanlinChatGenerationDefaults.topP ? nil : configuration.topP,
-            maxRetries: 2
+            maxOutputTokens: usesChatGPTPlan ? nil : configuration.maxTokens,
+            temperature: usesChatGPTPlan ? nil :
+                (configuration.temperature == HanlinChatGenerationDefaults.temperature
+                    ? nil : configuration.temperature),
+            topP: usesChatGPTPlan ? nil :
+                (configuration.topP == HanlinChatGenerationDefaults.topP
+                    ? nil : configuration.topP),
+            maxRetries: usesChatGPTPlan ? 0 : 2
         )
 
         // nil means run until the model completes, the user cancels or a real error occurs.
@@ -175,6 +250,7 @@ public actor HanlinAISDKAgentEngine {
 
         return AsyncThrowingStream { continuation in
             let stopper = StreamStopper()
+            let cancellation = HanlinChatTransportCancellation()
             let streamSettings: CallSettings = {
                 guard resolvedProvider.descriptor.kind == .appleOnDevice else { return settings }
                 var nativeSettings = settings
@@ -183,13 +259,14 @@ public actor HanlinAISDKAgentEngine {
                 nativeSettings.abortSignal = { stopper.isCancellationRequested }
                 return nativeSettings
             }()
-            let task = Task {
+            let task = HanlinChatTransportCancellation.$current.withValue(cancellation) { Task {
                 do {
                     continuation.yield(.runStarted)
                     if let structuredResponse {
                         continuation.yield(.structuredResponseStarted(messageID: structuredResponse.messageID,
                             channel: HanlinChatStructuredPart.channel))
                     }
+                    var accumulatedUsage = LanguageModelUsage()
                     var currentMessages = modelMessages
                     var currentDefinitions = definitions
                     var currentTools = initialTools
@@ -203,7 +280,11 @@ public actor HanlinAISDKAgentEngine {
                     var seenApprovalCallIDs = Set<String>()
 
                     while true {
+                        // A final catalog lookup may suspend after the last stream event.
+                        // Observe cancellation before constructing another provider task.
+                        try Task.checkCancellation()
                         let currentNames = Set(currentDefinitions.map(\.name))
+                        let toolReload = ToolReloadDecision()
                         // The pinned SDK replaces an empty list with stepCountIs(1).
                         // An explicit never-stop condition preserves the nil-budget contract.
                         var stopConditions: [StopCondition] = [{ _ in false }]
@@ -230,28 +311,38 @@ public actor HanlinAISDKAgentEngine {
                         if let dynamicTools {
                             stopConditions.append { _ in
                                 let latest = await dynamicTools()
-                                return Set(latest.map(\.name)) != currentNames
+                                return await toolReload.observe(Set(latest.map(\.name)) != currentNames)
                             }
                         }
 
                         let offsetSnapshot = stepOffset
                         let result: DefaultStreamTextResult<JSONValue, JSONValue> = try streamText(
                             model: resolvedProvider.model,
-                            system: baseSystemPrompt,
+                            system: systemPromptForSDK,
                             messages: currentMessages,
                             tools: currentTools,
-                            providerOptions: resolvedProvider.providerOptions,
-                            experimentalOutput: structuredResponse?.specification(),
+                            providerOptions: turnProviderOptions,
+                            experimentalOutput: outputSpecification,
+                            experimentalTelemetry: telemetry,
                             prepareStep: { options in
                                 let globalStep = offsetSnapshot + options.stepNumber
                                 let preparation = await prepareStep(globalStep)
+                                try HanlinAISDKProviderFactory.validateCachedContentContext(
+                                    configuration: cacheConfiguration, kind: resolvedProvider.descriptor.kind,
+                                    hasSystemInstructions: preparation.loadedSkillInstructions.contains {
+                                        !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+                                    }, hasTools: false
+                                )
                                 continuation.yield(.stepStarted(index: globalStep, preparation: preparation))
                                 return PrepareStepResult(
                                     activeTools: preparation.activeToolAliases,
-                                    system: Self.systemPrompt(
-                                        base: baseSystemPrompt,
-                                        loadedInstructions: preparation.loadedSkillInstructions
-                                    )
+                                    system: systemPromptForSDK.map {
+                                        Self.systemPrompt(base: $0, loadedInstructions: preparation.loadedSkillInstructions) ?? $0
+                                    },
+                                    messages: systemPromptForSDK == nil
+                                        ? Self.messagesWithSkillInstructions(
+                                            options.messages, instructions: preparation.loadedSkillInstructions
+                                        ) : nil
                                 )
                             },
                             stopWhen: stopConditions,
@@ -368,6 +459,7 @@ public actor HanlinAISDKAgentEngine {
                                     meaningfulEventCount: meaningfulEventCount
                                 ))
                             case .finish(let reason, let rawReason, let usage):
+                                accumulatedUsage = addLanguageModelUsage(accumulatedUsage, usage)
                                 let nextOffset = offsetSnapshot + max(localStepIndex + 1, 1)
                                 if !approvalResponses.isEmpty {
                                     // The SDK owns the exact original request/call/raw-input association.
@@ -393,7 +485,8 @@ public actor HanlinAISDKAgentEngine {
                                    limit.map({ nextOffset < $0 }) ?? true,
                                    let dynamicTools {
                                     let latestDefinitions = await dynamicTools()
-                                    if Set(latestDefinitions.map(\.name)) != currentNames {
+                                    let reloadWasRequested = await toolReload.wasRequested
+                                    if reloadWasRequested || Set(latestDefinitions.map(\.name)) != currentNames {
                                         let completedSteps = try await result.steps
                                         for step in completedSteps {
                                             for msg in step.response.messages {
@@ -422,12 +515,20 @@ public actor HanlinAISDKAgentEngine {
                                         continuation.yield(.structuredPart(part))
                                     }
                                 }
+                                if responseSchema != nil {
+                                    guard reason == .stop else {
+                                        throw HanlinAISDKError.incompleteProviderResponse(reason: rawReason ?? reason.rawValue)
+                                    }
+                                    // The producer validates the final output against the original
+                                    // schema. Partial/repaired streaming JSON is never accepted.
+                                    _ = try await result.experimentalOutput
+                                }
                                 guard finalVisibleCharacters > 0 || hasSuccessfulToolAction || hasStructuredContent || hasDeniedToolAction else {
                                     throw HanlinAISDKError.incompleteProviderResponse(reason: rawReason ?? reason.rawValue)
                                 }
                                 continuation.yield(.finished(
                                     reason: rawReason ?? reason.rawValue,
-                                    usage: Self.usage(from: usage)
+                                    usage: Self.usage(from: accumulatedUsage)
                                 ))
                                 continuation.finish()
                                 return
@@ -500,9 +601,10 @@ public actor HanlinAISDKAgentEngine {
                 } catch {
                     continuation.finish(throwing: error)
                 }
-            }
+            } }
             continuation.onTermination = { @Sendable _ in
                 task.cancel()
+                cancellation.cancel()
                 stopper.stop()
             }
         }
@@ -634,29 +736,59 @@ public actor HanlinAISDKAgentEngine {
         return parts.isEmpty ? nil : parts.joined(separator: "\n\n")
     }
 
-    private static func modelMessages(from messages: [HanlinAISDKMessage]) throws -> [ModelMessage] {
+    private static func messagesWithSkillInstructions(
+        _ messages: [ModelMessage], instructions: [String]
+    ) -> [ModelMessage] {
+        guard let text = systemPrompt(base: nil, loadedInstructions: instructions) else { return messages }
+        var result = messages
+        let index = result.firstIndex { message in
+            if case .system = message { return false }
+            return true
+        } ?? result.endIndex
+        result.insert(.system(SystemModelMessage(content: text)), at: index)
+        return result
+    }
+
+    private static func modelMessages(
+        from messages: [HanlinAISDKMessage],
+        includeSystemMessages: Bool,
+        breakpointOptions: ProviderOptions?
+    ) throws -> [ModelMessage] {
         messages.compactMap { message in
+            let cacheOptions = message.cacheBreakpoint ? breakpointOptions : nil
             switch message.role {
             case .system:
-                return nil
+                guard includeSystemMessages else { return nil }
+                let text = message.parts.compactMap { part -> String? in
+                    if case .text(let value) = part { return value }
+                    return nil
+                }.joined(separator: "\n")
+                guard !text.isEmpty else { return nil }
+                return .system(SystemModelMessage(content: text, providerOptions: cacheOptions))
             case .assistant:
                 let text = message.parts.compactMap { part -> String? in
                     if case .text(let value) = part { return value }
                     return nil
                 }.joined(separator: "\n")
+                if let cacheOptions {
+                    return .assistant(AssistantModelMessage(content: .parts([
+                        .text(TextPart(text: text, providerOptions: cacheOptions))
+                    ])))
+                }
                 return .assistant(AssistantModelMessage(content: .text(text)))
             case .user:
-                if message.parts.count == 1, case .text(let text) = message.parts[0] {
+                if cacheOptions == nil, message.parts.count == 1, case .text(let text) = message.parts[0] {
                     return .user(UserModelMessage(content: .text(text)))
                 }
-                let parts = message.parts.compactMap { part -> UserContentPart? in
+                let parts = message.parts.enumerated().map { index, part -> UserContentPart in
+                    let options = index == message.parts.count - 1 ? cacheOptions : nil
                     switch part {
                     case .text(let text):
-                        return .text(TextPart(text: text))
+                        return .text(TextPart(text: text, providerOptions: options))
                     case .imageURL(let url, let mediaType):
-                        return .image(ImagePart(image: .url(url), mediaType: mediaType))
+                        return .image(ImagePart(image: .url(url), mediaType: mediaType, providerOptions: options))
                     case .imageData(let data, let mediaType):
-                        return .image(ImagePart(image: .data(data), mediaType: mediaType))
+                        return .image(ImagePart(image: .data(data), mediaType: mediaType, providerOptions: options))
                     }
                 }
                 return .user(UserModelMessage(content: .parts(parts)))
@@ -695,6 +827,7 @@ public actor HanlinAISDKAgentEngine {
             outputTokens: usage.outputTokens,
             reasoningTokens: usage.outputTokenDetails.reasoningTokens,
             cachedInputTokens: usage.inputTokenDetails.cacheReadTokens,
+            cacheWriteTokens: usage.inputTokenDetails.cacheWriteTokens,
             totalTokens: usage.totalTokens
         )
     }

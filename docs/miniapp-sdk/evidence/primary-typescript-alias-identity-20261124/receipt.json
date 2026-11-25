@@ -1,0 +1,200 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-24T22:06:14.423698+00:00",
+  "kind": "READ_ONLY_ORIGINAL_COMPILER_ALIAS_IDENTITY_CLARIFICATION",
+  "sourceCommit": "fd81d602d3b25f09162a659e1e0cf0582e91a93a",
+  "subject": "Original Expo TypeScript alias package 6.0.2 delegates to locked original TypeScript implementation 6.0.3",
+  "conclusion": "CONSISTENT_LOCKED_ALIAS_WRAPPER_AND_COMPILER_IMPLEMENTATION",
+  "method": "Read immutable Git source/lock and prior original-compiler evidence; hash four actual attempt6 SDK archive members in place and compare them with the embedded manifest and historical evidence. No product compiler execution, test, generator, package download, dependency mutation or native query.",
+  "snapshot": {
+    "attempt": 6,
+    "sourceCommit": "bd6da170da7936fe3c5353ddaf8b25c97477a380",
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/prepared-snapshot-attempt6",
+    "archive": {
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/prepared-snapshot-attempt6/files/build/runtime-host/RuntimeHostResources.zip",
+      "bytes": 81812179,
+      "sha256": "6b8ab65a1d8c6a2ae51ff12b606ba830cd19a775dc9764587941c569498475d1",
+      "verification": "Reused exact archive verification from the committed attempt6 reconciliation; four selected members reread in place for this note."
+    },
+    "manifest": {
+      "member": "MiniAppSDK/miniapp-sdk.json",
+      "bytes": 5219288,
+      "sha256": "c9491455251124a82a7ca5721cc2fcd78e424670eeac53fdf8b1fc07abd4c325"
+    },
+    "reconciliationReceipt": {
+      "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt6-20261124/receipt.json",
+      "sha256": "2ce330eafec2788a46d184ed4c40bb1dcd281fbc54a7a570da65abc437ca9f4b"
+    }
+  },
+  "sourceBinding": {
+    "package": {
+      "path": "Scripts/Expo/package.json",
+      "sha256": "db6fd60dbc8f2b15eac5fee7029781cf14834ffbad53f0c8948fc4c2945c1e91",
+      "devDependencies.typescript": "npm:@typescript/typescript6@6.0.2",
+      "matchesSDKSourceInput": true
+    },
+    "lock": {
+      "path": "Scripts/Expo/package-lock.json",
+      "sha256": "95d2a560d4eb01de64fcd0d43875a4ef2392e9747ed9fa79c2e0a0e58abececf",
+      "matchesSDKSourceInput": true,
+      "entries": {
+        "node_modules/typescript": {
+          "name": "@typescript/typescript6",
+          "version": "6.0.2",
+          "resolved": "https://registry.npmjs.org/@typescript/typescript6/-/typescript6-6.0.2.tgz",
+          "integrity": "sha512-mbCddXd+jm7hfx7w2YU64/Av4/NqqeG3GoRZgxPcgoTxYjhrcfJRw9ULch71SS4G+Q3bOXFhRvPqjguN0Hyp5w==",
+          "devOptional": true,
+          "license": "Apache-2.0",
+          "dependencies": {
+            "@typescript/old": "npm:typescript@^6"
+          },
+          "bin": {
+            "tsc6": "bin/tsc6"
+          }
+        },
+        "node_modules/@typescript/old": {
+          "name": "typescript",
+          "version": "6.0.3",
+          "resolved": "https://registry.npmjs.org/typescript/-/typescript-6.0.3.tgz",
+          "integrity": "sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw==",
+          "devOptional": true,
+          "license": "Apache-2.0",
+          "bin": {
+            "tsc": "bin/tsc",
+            "tsserver": "bin/tsserver"
+          },
+          "engines": {
+            "node": ">=14.17"
+          }
+        }
+      }
+    }
+  },
+  "manifestCompilerIdentity": {
+    "packageName": "@typescript/typescript6",
+    "packageVersion": "6.0.2",
+    "compilerVersion": "6.0.3"
+  },
+  "installationMetadata": {
+    "inputs": {
+      "schemaVersion": 1,
+      "packageSHA256": "db6fd60dbc8f2b15eac5fee7029781cf14834ffbad53f0c8948fc4c2945c1e91",
+      "lockSHA256": "95d2a560d4eb01de64fcd0d43875a4ef2392e9747ed9fa79c2e0a0e58abececf",
+      "policySHA256": "6fb5f130d1a381d628ffa5042eff7ce36d48431ed7636a36c28fec20e5b79120",
+      "node": "24.5.0",
+      "platform": "darwin",
+      "architecture": "arm64"
+    },
+    "files": 19594,
+    "contentSHA256": "7e21449f47399a2048a93cbece2d090f24bfb0174b31135153451ab84d6fba27",
+    "command": [
+      "npm",
+      "ci",
+      "--ignore-scripts",
+      "--no-audit",
+      "--no-fund",
+      "--prefix",
+      "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/Expo"
+    ]
+  },
+  "members": [
+    {
+      "path": "expo/node_modules/typescript/package.json",
+      "bytes": 841,
+      "sha256": "d9b8fb53c67c947fece83bcb73fa8512227ea6a12b110e096fdab8ecdc02b655",
+      "matchesManifestFileRecord": true,
+      "package": {
+        "name": "@typescript/typescript6",
+        "version": "6.0.2",
+        "main": "./lib/typescript.js",
+        "types": "./lib/typescript.d.ts",
+        "dependencies": {
+          "@typescript/old": "npm:typescript@^6"
+        }
+      }
+    },
+    {
+      "path": "expo/node_modules/typescript/lib/typescript.js",
+      "bytes": 45,
+      "sha256": "d3f3cd2b04b7f466f4484df921b744223f7bd1f3e353ec9110bdf52695b983d5",
+      "matchesManifestFileRecord": true,
+      "exactUTF8": "module.exports = require(\"@typescript/old\");\n"
+    },
+    {
+      "path": "expo/node_modules/@typescript/old/package.json",
+      "bytes": 3527,
+      "sha256": "9332e97c30d3e53ed54910b89207ed657fb444066484df6e5b6965bf130865e9",
+      "matchesManifestFileRecord": true,
+      "package": {
+        "name": "typescript",
+        "version": "6.0.3",
+        "main": "./lib/typescript.js",
+        "typings": "./lib/typescript.d.ts"
+      }
+    },
+    {
+      "path": "expo/node_modules/@typescript/old/lib/typescript.js",
+      "bytes": 9144216,
+      "sha256": "569177652966bd528c319171c7dd22860dbf72bde116cbc4f644f1d02bb12e39",
+      "matchesManifestFileRecord": true,
+      "literalCompilerVersion": "6.0.3"
+    }
+  ],
+  "priorEvidence": [
+    {
+      "path": "docs/miniapp-sdk/evidence/2026-11-24-sdk-input-freshness/result.json",
+      "sha256": "09c74e2453d039c125d66cce19774572daeb021816200068cbf3a5df88eea793",
+      "selectedField": "originalCompiler",
+      "selectedEvidence": {
+        "packageName": "@typescript/typescript6",
+        "packageVersion": "6.0.2",
+        "compilerVersion": "6.0.3",
+        "fileSHA256": {
+          "typescript/package.json": "d9b8fb53c67c947fece83bcb73fa8512227ea6a12b110e096fdab8ecdc02b655",
+          "typescript/lib/typescript.js": "d3f3cd2b04b7f466f4484df921b744223f7bd1f3e353ec9110bdf52695b983d5",
+          "@typescript/old/package.json": "9332e97c30d3e53ed54910b89207ed657fb444066484df6e5b6965bf130865e9",
+          "@typescript/old/lib/typescript.js": "569177652966bd528c319171c7dd22860dbf72bde116cbc4f644f1d02bb12e39"
+        }
+      }
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/sdk05-current-shipping-20261124/toolchain-and-public-types.json",
+      "sha256": "d8e6ebce30417c64194b22b741328e6459cdb31e029881a472c84cee0bd00a88",
+      "selectedField": "compilers",
+      "selectedEvidence": {
+        "engine": "expo",
+        "declaredIdentity": {
+          "packageName": "@typescript/typescript6",
+          "packageVersion": "6.0.2",
+          "compilerVersion": "6.0.3"
+        },
+        "loader": {
+          "path": "expo/node_modules/typescript/lib/typescript.js",
+          "bytes": 45,
+          "sha256": "d3f3cd2b04b7f466f4484df921b744223f7bd1f3e353ec9110bdf52695b983d5"
+        },
+        "implementation": {
+          "path": "expo/node_modules/@typescript/old/lib/typescript.js",
+          "bytes": 9144216,
+          "sha256": "569177652966bd528c319171c7dd22860dbf72bde116cbc4f644f1d02bb12e39"
+        },
+        "implementationPackage": {
+          "path": "expo/node_modules/@typescript/old/package.json",
+          "bytes": 3527,
+          "sha256": "9332e97c30d3e53ed54910b89207ed657fb444066484df6e5b6965bf130865e9"
+        },
+        "implementationVersion": "6.0.3",
+        "executedVersion": "6.0.3"
+      }
+    }
+  ],
+  "priorFourMemberHashesAllUnchanged": true,
+  "semantics": {
+    "wrapper": "The local package named typescript is the declared npm alias of @typescript/typescript6@6.0.2. Its 45-byte lib/typescript.js exports require(\"@typescript/old\").",
+    "implementation": "The wrapper dependency @typescript/old is itself an npm alias of typescript@^6, resolved and pinned in this original lock to typescript 6.0.3. Its package metadata and implementation version literal agree with the actually executed compiler API version from existing proof.",
+    "historicalSHAClarification": "d3f3cd2b04b7f466f4484df921b744223f7bd1f3e353ec9110bdf52695b983d5 identifies the 45-byte wrapper entrypoint. 569177652966bd528c319171c7dd22860dbf72bde116cbc4f644f1d02bb12e39 identifies the 9,144,216-byte compiler implementation. Both must be distinguished when stating original compiler identity.",
+    "manifest": "The existing manifest already distinguishes packageVersion 6.0.2 from compilerVersion 6.0.3; no repair or regeneration is required solely for this clarification."
+  },
+  "futureSnapshotBoundary": "This note establishes the already verified attempt6 compiler identity and unchanged source/lock at fd81. Reference this note from the next actual SDK reconciliation only after comparing its corresponding member rows/bytes and source/lock bindings. It does not assert a future archive or application pass.",
+  "scopeBoundary": "The four-member compiler identity chain agrees with original source, lock, manifest and retained previous original-compiler evidence. This read-only note does not independently refetch npm tarballs or rerun the full installed dependency-tree audit."
+}

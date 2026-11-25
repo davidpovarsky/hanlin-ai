@@ -1,4 +1,6 @@
 import HanlinLocalization
+import HanlinMiniAppsBridge
+import HanlinMiniAppsPicker
 import SwiftUI
 
 /// Presents companion-owned launches separately from requests arriving from Hanlin AI.
@@ -17,6 +19,7 @@ public struct HanlinMiniAppsCatalogView: View {
     @State private var presentation: PresentedApp?
     @State private var isLaunching = false
     @State private var showsTransfer = false
+    @State private var preferencesStore: MiniAppBridgeStore?
     @State private var catalogReady = false
     @State private var catalogError: String?
     @State private var launchError: String?
@@ -55,11 +58,28 @@ public struct HanlinMiniAppsCatalogView: View {
             presentsSourceReader: true
         ) {
             ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    do { preferencesStore = try MiniAppBridgeStore() }
+                    catch { launchError = error.localizedDescription }
+                } label: { Image(systemName: "slider.horizontal.3") }
+                .accessibilityLabel(Locale.current.language.languageCode?.identifier == "he"
+                    ? "עריכת המיני אפליקציות וחלונות" : "Edit MiniApps and windows")
+                .accessibilityIdentifier("miniapps-preferences")
+            }
+            ToolbarItem(placement: .topBarTrailing) {
                 Button(hanlin: "Transfer from Hanlin", systemImage: "arrow.down.doc") { showsTransfer = true }
                     .accessibilityIdentifier("hanlin-miniapps-transfer")
             }
         }
         .refreshable { await refreshCatalog() }
+        .sheet(isPresented: Binding(get: { preferencesStore != nil },
+                                    set: { if !$0 { preferencesStore = nil } })) {
+            if let preferencesStore {
+                NavigationStack {
+                    MiniAppPreferencesView(store: preferencesStore)
+                }
+            }
+        }
         .sheet(isPresented: $showsTransfer, onDismiss: {
             Task { await refreshCatalog() }
         }) {

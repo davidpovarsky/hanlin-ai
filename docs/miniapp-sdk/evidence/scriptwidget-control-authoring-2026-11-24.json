@@ -1,0 +1,126 @@
+{
+  "schemaVersion": 1,
+  "status": "EXECUTED_PASS",
+  "scope": "Original ScriptWidget manifest authoring/types/package retention",
+  "baseSHA": "b0327d1c3195e64ad1db56351406bd88b10185fe",
+  "recordedAt": "2026-11-24T01:36:57.919290+00:00",
+  "runner": "Oracle Linux Node v24.22.0",
+  "typescript": {
+    "version": "6.0.2",
+    "moduleSHA256": "d3f3cd2b04b7f466f4484df921b744223f7bd1f3e353ec9110bdf52695b983d5",
+    "strict": true,
+    "skipLibCheck": false,
+    "checkJs": true
+  },
+  "command": "HANLIN_AUTHORING_TYPESCRIPT=<installed original TypeScript module> HANLIN_AUTHORING_TMP=/dev/shm node --test Scripts/MiniApps/Tests/scriptwidget-manifest.test.mjs",
+  "rawLog": "scriptwidget-control-authoring-2026-11-24.txt",
+  "tests": [
+    {
+      "name": "manifest declarations/schema match the installed original source and provenance",
+      "status": "EXECUTED_PASS",
+      "durationMS": 16.535417
+    },
+    {
+      "name": "genuine action references, legacy controls and nullable optional fields validate",
+      "status": "EXECUTED_PASS",
+      "durationMS": 9.573896
+    },
+    {
+      "name": "original semantic and JSON shape errors include precise manifest locations",
+      "status": "EXECUTED_PASS",
+      "durationMS": 14.312044
+    },
+    {
+      "name": "build keeps exact root widget.json, original JSX, declared assets and preview in a real archive",
+      "status": "EXECUTED_PASS",
+      "durationMS": 1911.494407
+    },
+    {
+      "name": "original JSX semantic errors use the actual TypeScript compiler even with checkJs disabled in project config",
+      "status": "EXECUTED_PASS",
+      "durationMS": 435.552634
+    },
+    {
+      "name": "manifest declarations reject incorrect control shapes in the authoring type environment",
+      "status": "EXECUTED_PASS",
+      "durationMS": 339.862593
+    },
+    {
+      "name": "changed original semantic rules cannot silently publish a stale authoring validator",
+      "status": "EXECUTED_PASS",
+      "durationMS": 7.696685
+    }
+  ],
+  "reusedVerifiedPasses": [],
+  "notRun": [
+    "Full SDK restaging",
+    "Apple SDK compilation",
+    "WidgetKit runtime or physical device controls"
+  ],
+  "inputs": [
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
+      "sha256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856"
+    },
+    {
+      "path": "Scripts/MiniApps/Tests/scriptwidget-manifest.test.mjs",
+      "sha256": "93bc4596d363fac13165fc17a1935341da2bea0ba35cd34331769a151b60e5f2"
+    },
+    {
+      "path": "Scripts/MiniApps/generate-scriptwidget-manifest.mjs",
+      "sha256": "ca852f733478f46e5e829b803251aa354a32e48ff0bd21f51b58bfa3d708f791"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/host-globals.d.ts",
+      "sha256": "603148dada2fd81794f8bd2953e6da8aa3f4aaf8bed1176d50435c31b1136c7a"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/manifest-validation.mjs",
+      "sha256": "326176eac507dc298b91065d2ce93de15869ab801bd02c31edfc0a474d9cd7c5"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/native-api.json",
+      "sha256": "6cbaebd91a92ad52784923bd6d66687d59a90c894798ddd6c0d3035d9709266d"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/tsconfig.json",
+      "sha256": "7c3f30d1c5e0e38a5250930cc62aea4a47e1cfd9a9dbe5110f5796f0e6bf2e2b"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/widget-manifest.d.ts",
+      "sha256": "6d9d086bb8d8289390f5b3454b17a435aea0f148724f897c9befb62bf31d5e8f"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
+      "sha256": "4deb4b2a1071ed0557ae6924a4f4ab3a5d57e467eb8796c4e6febb629ddde022"
+    },
+    {
+      "path": "Scripts/MiniApps/stage-sdk.mjs",
+      "sha256": "dd0f37477b1c1bcaa42380d1168a3f32cff930794d87d6ae9aeda35f3920760d"
+    },
+    {
+      "path": "docs/miniapp-sdk/SCRIPTWIDGET_CONTROLS.md",
+      "sha256": "7a3249763887e39c525041db11f3f6c17b92bbda93be4e849841ba34fb9ba87f"
+    }
+  ],
+  "originalSources": {
+    "runtimeVersion": "1.0",
+    "nativeRuntimeVersion": "1.6",
+    "validationSHA256": "743545d3b83a1026d1f61b8297aa7ea67454c2eade0959c85ad5d3de987a4ab8",
+    "sources": [
+      {
+        "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptMetadata.swift",
+        "upstream": "Shared/ScriptWidgetRuntime/Common/ScriptMetadata.swift",
+        "commit": "4da256d58247bbafb9a5cd443a285250b97b3c4b",
+        "sha256": "27dada0499f2d5d3299bc4a8c7131f066ba148c4b89be6d5a48ce24224120075"
+      },
+      {
+        "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptWidgetPackage.swift",
+        "upstream": "Shared/ScriptWidgetRuntime/Common/ScriptWidgetPackage.swift",
+        "commit": "4da256d58247bbafb9a5cd443a285250b97b3c4b",
+        "sha256": "3aa2274d41edd3e7e87edd91697a4a204489d0efc6a2efaa00ea82d517af16fd"
+      }
+    ]
+  },
+  "resolvedRegression": "Initial focused execution found TS18003 because JSX discovery ran before allowJs was applied. The original-manifest config now applies allowJs/checkJs before discovery and in the final compiler options; all seven checks executed and passed after the fix."
+}

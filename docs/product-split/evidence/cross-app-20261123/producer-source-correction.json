@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "status": "SOURCE_VALIDATED",
+  "supersedes_failed_preflight_run": "45270839882",
+  "failure": "Original source graph assertion: new producer source and two bridge products were not listed in the maintained target manifests.",
+  "fix": "Both original manifests now match the unchanged native project validator. Late async launches reject cancelled or closed invocation owners. Expo isolation commit 8cb1d5fd094ebf3c4943fa5129ae1cc4df056654 is integrated.",
+  "verification": {
+    "original_verify_targets": "PASS; 76 shared MiniApps sources; 508 original SDK application sources retained",
+    "sdk_generator_check": "PASS; 508 application sources and canonical resource set unchanged",
+    "changed_swift_syntax": "PASS; producer session, provider and scripting platform",
+    "native_app_build": "NOT_RUN for corrected source",
+    "unchanged_portable_tests": "Prior exact evidence retained; not re-executed"
+  },
+  "sha256": {
+    "AI_HLY/Downstream/ProductSplitIntegration/HanlinExternalMiniAppSession.swift": "6d74bb76741be6dfddc9c74c7cd71a6d36918149c434a27abc044ab3baad7598",
+    "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsProvider.swift": "f67c4794d1e6bc0b59e3eeec1b97a64f6b2665bd4218d8da2de11a2ca75fdcf8",
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift": "7597ef7ec3f18d0016b0bc509ac00ac8e4b22296c1a17a523db256daad5b5281",
+    "Scripts/CI/IntegrationValidation/miniapps_provider_sources.json": "c1a387b69187b5ccaa9e25aa9375b873d40c51aa93c5c351e17018cdd9d950f2",
+    "docs/product-split/target-membership.json": "636154539706cb3a06e666ddf3aadfb402874b1785073e0598cce14917b6f9ac"
+  }
+}

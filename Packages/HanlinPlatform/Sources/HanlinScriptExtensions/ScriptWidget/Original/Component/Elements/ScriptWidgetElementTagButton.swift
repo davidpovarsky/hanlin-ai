@@ -25,10 +25,15 @@ class ScriptWidgetElementTagButton {
     }
 
     @ViewBuilder private static func buildButton(element: ScriptWidgetRuntimeElement, context: ScriptWidgetElementContext) -> some View {
-        if let declaration = context.declaration(for: element),
-           let intent = try? HanlinGenericWidgetActionIntent(command: .init(context: context.actionContext, actionID: declaration.id)) {
-            Button(intent: intent) { buttonLabel(element: element, context: context) }
-                .modifier(ScriptWidgetAttributeGeneralModifier(element, context))
+        if let declaration = context.declaration(for: element) {
+            let command = context.command(for: element, declaration: declaration)
+            if let builder = context.nativeActionBuilder {
+                builder(command, AnyView(buttonLabel(element: element, context: context)))
+                    .modifier(ScriptWidgetAttributeGeneralModifier(element, context))
+            } else if let intent = try? HanlinGenericWidgetActionIntent(command: command) {
+                Button(intent: intent) { buttonLabel(element: element, context: context) }
+                    .modifier(ScriptWidgetAttributeGeneralModifier(element, context))
+            }
         } else {
             Button(action: {}) { buttonLabel(element: element, context: context) }
                 .disabled(true)

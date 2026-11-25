@@ -1,0 +1,542 @@
+{
+  "capturedAt": "2026-11-24T14:07:01.309177+00:00",
+  "owner": "/root/control_authoring",
+  "purpose": "Read actual AppIntents SDK dependency declarations and capacity before one focused type/conversion probe",
+  "xcode": {
+    "argv": [
+      "xcodebuild",
+      "-version"
+    ],
+    "exit": 0,
+    "stdout": "Xcode 27.0\nBuild version 27A266a\n",
+    "stderr": ""
+  },
+  "swift": {
+    "argv": [
+      "xcrun",
+      "swiftc",
+      "--version"
+    ],
+    "exit": 0,
+    "stdout": "Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)\nTarget: arm64-apple-macosx27.0.0\n",
+    "stderr": "swift-driver version: 1.168.6 "
+  },
+  "simulatorSDK": {
+    "argv": [
+      "xcrun",
+      "--sdk",
+      "iphonesimulator",
+      "--show-sdk-version"
+    ],
+    "exit": 0,
+    "stdout": "27.0\n",
+    "stderr": ""
+  },
+  "memory": {
+    "argv": [
+      "sysctl",
+      "-n",
+      "hw.memsize"
+    ],
+    "exit": 0,
+    "stdout": "17179869184\n",
+    "stderr": ""
+  },
+  "vmStat": {
+    "argv": [
+      "vm_stat"
+    ],
+    "exit": 0,
+    "stdout": "Mach Virtual Memory Statistics: (page size of 16384 bytes)\nPages free:                                   219587.\nPages active:                                 269641.\nPages inactive:                               314024.\nPages speculative:                             23924.\nPages throttled:                                   0.\nPages wired down:                             126060.\nPages purgeable:                                3754.\n\"Translation faults\":                      631686057.\nPages copy-on-write:                         3556775.\nPages zero filled:                         549860305.\nPages reactivated:                           3102957.\nPages purged:                                 355788.\nFile-backed pages:                            468999.\nAnonymous pages:                              138590.\nPages stored in compressor:                   183347.\nPages occupied by compressor:                  61812.\nDecompressions:                              1228071.\nCompressions:                                3017855.\nPageins:                                     7487957.\nPageouts:                                       5262.\nSwapins:                                           0.\nSwapouts:                                          0.\n",
+    "stderr": ""
+  },
+  "xcodeApplications": [
+    "/Applications/Xcode.app"
+  ],
+  "disk": {
+    "total": 494384795648,
+    "used": 120715710464,
+    "free": 373669085184
+  },
+  "activeBuildProcesses": [],
+  "interfaces": [
+    {
+      "sdk": "macosx",
+      "path": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.0.sdk/System/Library/Frameworks/AppIntents.framework/Modules/AppIntents.swiftmodule/arm64e-apple-ios-macabi.swiftinterface",
+      "sha256": "c47ac2c038eba781f9a3f673542a4a090684aacee9a4316c8695e0d0a38ab7e3",
+      "excerpts": [
+        {
+          "line": 3918,
+          "text": "extension AppIntents::DynamicOptionsProvider {"
+        },
+        {
+          "line": 3919,
+          "text": "  public func defaultResult() async -> Self.DefaultValue?"
+        },
+        {
+          "line": 3920,
+          "text": "}"
+        },
+        {
+          "line": 3921,
+          "text": "@_hasMissingDesignatedInitializers @available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)"
+        },
+        {
+          "line": 3922,
+          "text": "@propertyWrapper final public class IntentParameterDependency<Intent> : @unchecked Swift::Sendable where Intent : AppIntents::AppIntent {"
+        },
+        {
+          "line": 3923,
+          "text": "  final public var wrappedValue: AppIntents::IntentProjection<Intent>? {"
+        },
+        {
+          "line": 3924,
+          "text": "    get"
+        },
+        {
+          "line": 3925,
+          "text": "  }"
+        },
+        {
+          "line": 3926,
+          "text": "  @objc deinit"
+        },
+        {
+          "line": 3927,
+          "text": "}"
+        },
+        {
+          "line": 3928,
+          "text": "@available(macOS 15.0, iOS 18.0, watchOS 11.0, tvOS 18.0, visionOS 2.0, *)"
+        },
+        {
+          "line": 3929,
+          "text": "extension AppIntents::IntentParameterDependency : Swift::Hashable {"
+        },
+        {
+          "line": 3930,
+          "text": "  public static func == (lhs: AppIntents::IntentParameterDependency<Intent>, rhs: AppIntents::IntentParameterDependency<Intent>) -> Swift::Bool"
+        },
+        {
+          "line": 3931,
+          "text": "  final public func hash(into hasher: inout Swift::Hasher)"
+        },
+        {
+          "line": 3932,
+          "text": "  final public var hashValue: Swift::Int {"
+        },
+        {
+          "line": 3933,
+          "text": "    get"
+        },
+        {
+          "line": 3934,
+          "text": "  }"
+        },
+        {
+          "line": 3935,
+          "text": "}"
+        },
+        {
+          "line": 3936,
+          "text": "@available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)"
+        },
+        {
+          "line": 3937,
+          "text": "extension AppIntents::IntentParameterDependency : Swift::CustomDebugStringConvertible {"
+        },
+        {
+          "line": 3938,
+          "text": "  final public var debugDescription: Swift::String {"
+        },
+        {
+          "line": 3939,
+          "text": "    get"
+        },
+        {
+          "line": 3940,
+          "text": "  }"
+        },
+        {
+          "line": 3941,
+          "text": "}"
+        },
+        {
+          "line": 3942,
+          "text": "@_hasMissingDesignatedInitializers @available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)"
+        },
+        {
+          "line": 3943,
+          "text": "@dynamicMemberLookup final public class IntentProjection<Intent> where Intent : AppIntents::AppIntent {"
+        },
+        {
+          "line": 3944,
+          "text": "  final public subscript<Value>(dynamicMember keyPath: Swift::KeyPath<Intent, Value>) -> Value.UnwrappedType where Value : AppIntents::_IntentValue {"
+        },
+        {
+          "line": 3945,
+          "text": "    get"
+        },
+        {
+          "line": 3946,
+          "text": "  }"
+        },
+        {
+          "line": 3947,
+          "text": "  @objc deinit"
+        },
+        {
+          "line": 3948,
+          "text": "}"
+        },
+        {
+          "line": 3949,
+          "text": "@available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)"
+        },
+        {
+          "line": 3950,
+          "text": "extension AppIntents::DynamicOptionsProvider {"
+        },
+        {
+          "line": 3951,
+          "text": "  public typealias ParameterDependency = AppIntents::IntentParameterDependency"
+        },
+        {
+          "line": 3952,
+          "text": "}"
+        },
+        {
+          "line": 3953,
+          "text": "@available(anyAppleOS 26.0, *)"
+        },
+        {
+          "line": 3954,
+          "text": "@attached(peer, names: prefixed(`$`), prefixed(`_`)) @attached(accessor, names: named(get), named(set)) public macro ComputedProperty() = #externalMacro(module: \"AppIntentsMacros\", type: \"EntityPropertyMacro\")"
+        },
+        {
+          "line": 3955,
+          "text": "@available(anyAppleOS 26.0, *)"
+        },
+        {
+          "line": 3956,
+          "text": "@attached(peer, names: prefixed(`$`), prefixed(`_`)) @attached(accessor, names: named(get), named(set)) public macro ComputedProperty(title: Foundation::LocalizedStringResource) = #externalMacro(module: \"AppIntentsMacros\", type: \"EntityPropertyMacro\")"
+        },
+        {
+          "line": 3957,
+          "text": "@available(anyAppleOS 26.0, *)"
+        },
+        {
+          "line": 3958,
+          "text": "@attached(peer, names: prefixed(`$`), prefixed(`_`)) @attached(accessor, names: named(get), named(set)) public macro DeferredProperty() = #externalMacro(module: \"AppIntentsMacros\", type: \"EntityPropertyMacro\")"
+        },
+        {
+          "line": 3959,
+          "text": "@available(anyAppleOS 26.0, *)"
+        },
+        {
+          "line": 3960,
+          "text": "@attached(peer, names: prefixed(`$`), prefixed(`_`)) @attached(accessor, names: named(get), named(set)) public macro DeferredProperty(title: Foundation::LocalizedStringResource) = #externalMacro(module: \"AppIntentsMacros\", type: \"EntityPropertyMacro\")"
+        },
+        {
+          "line": 3961,
+          "text": "@available(macOS 26.0, iOS 26.0, visionOS 26.0, *)"
+        },
+        {
+          "line": 3962,
+          "text": "@attached(peer, names: prefixed(`$`), prefixed(`_`)) @attached(accessor, names: named(get), named(set)) public macro DeferredProperty(indexingKey: Swift::PartialKeyPath<CoreSpotlight::CSSearchableItemAttributeSet>) = #externalMacro(module: \"AppIntentsMacros\", type: \"EntityPropertyMacro\")"
+        },
+        {
+          "line": 3963,
+          "text": "@available(macOS 26.0, iOS 26.0, visionOS 26.0, *)"
+        },
+        {
+          "line": 3964,
+          "text": "@attached(peer, names: prefixed(`$`), prefixed(`_`)) @attached(accessor, names: named(get), named(set)) public macro DeferredProperty(title: Foundation::LocalizedStringResource, indexingKey: Swift::PartialKeyPath<CoreSpotlight::CSSearchableItemAttributeSet>) = #externalMacro(module: \"AppIntentsMacros\", type: \"EntityPropertyMacro\")"
+        },
+        {
+          "line": 3965,
+          "text": "@available(macOS 26.0, iOS 26.0, visionOS 26.0, *)"
+        },
+        {
+          "line": 3966,
+          "text": "@attached(peer, names: prefixed(`$`), prefixed(`_`)) @attached(accessor, names: named(get), named(set)) public macro ComputedProperty(indexingKey: Swift::PartialKeyPath<CoreSpotlight::CSSearchableItemAttributeSet>) = #externalMacro(module: \"AppIntentsMacros\", type: \"EntityPropertyMacro\")"
+        },
+        {
+          "line": 3967,
+          "text": "@available(macOS 26.0, iOS 26.0, visionOS 26.0, *)"
+        },
+        {
+          "line": 3968,
+          "text": "@attached(peer, names: prefixed(`$`), prefixed(`_`)) @attached(accessor, names: named(get), named(set)) public macro ComputedProperty(title: Foundation::LocalizedStringResource, indexingKey: Swift::PartialKeyPath<CoreSpotlight::CSSearchableItemAttributeSet>) = #externalMacro(module: \"AppIntentsMacros\", type: \"EntityPropertyMacro\")"
+        },
+        {
+          "line": 3969,
+          "text": "@available(macOS 26.0, iOS 26.0, visionOS 26.0, *)"
+        },
+        {
+          "line": 3970,
+          "text": "@attached(peer, names: prefixed(`$`), prefixed(`_`)) @attached(accessor, names: named(get), named(set)) public macro ComputedProperty(customIndexingKey: CoreSpotlight::CSCustomAttributeKey) = #externalMacro(module: \"AppIntentsMacros\", type: \"EntityPropertyMacro\")"
+        },
+        {
+          "line": 3971,
+          "text": "@available(macOS 26.0, iOS 26.0, visionOS 26.0, *)"
+        },
+        {
+          "line": 3972,
+          "text": "@attached(peer, names: prefixed(`$`), prefixed(`_`)) @attached(accessor, names: named(get), named(set)) public macro ComputedProperty(title: Foundation::LocalizedStringResource, customIndexingKey: CoreSpotlight::CSCustomAttributeKey) = #externalMacro(module: \"AppIntentsMacros\", type: \"EntityPropertyMacro\")"
+        },
+        {
+          "line": 3973,
+          "text": "@_hasMissingDesignatedInitializers @available(macOS 13.0, iOS 16.0, watchOS 9.0, tvOS 16.0, *)"
+        },
+        {
+          "line": 3974,
+          "text": "@propertyWrapper final public class EntityProperty<Value> : AppIntents::AnyIntentValue, @unchecked Swift::Sendable where Value : AppIntents::_IntentValue, Value : Swift::Sendable {"
+        },
+        {
+          "line": 3975,
+          "text": "  final public var title: Foundation::LocalizedStringResource {"
+        }
+      ]
+    },
+    {
+      "sdk": "iphonesimulator",
+      "path": "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/System/Library/Frameworks/AppIntents.framework/Modules/AppIntents.swiftmodule/arm64-apple-ios-simulator.swiftinterface",
+      "sha256": "21e7c17d0a1629940444f303bb6ea8c77f88a4fd9c7f0a5009851f44e412205f",
+      "excerpts": [
+        {
+          "line": 3918,
+          "text": "extension AppIntents::DynamicOptionsProvider {"
+        },
+        {
+          "line": 3919,
+          "text": "  public func defaultResult() async -> Self.DefaultValue?"
+        },
+        {
+          "line": 3920,
+          "text": "}"
+        },
+        {
+          "line": 3921,
+          "text": "@_hasMissingDesignatedInitializers @available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)"
+        },
+        {
+          "line": 3922,
+          "text": "@propertyWrapper final public class IntentParameterDependency<Intent> : @unchecked Swift::Sendable where Intent : AppIntents::AppIntent {"
+        },
+        {
+          "line": 3923,
+          "text": "  final public var wrappedValue: AppIntents::IntentProjection<Intent>? {"
+        },
+        {
+          "line": 3924,
+          "text": "    get"
+        },
+        {
+          "line": 3925,
+          "text": "  }"
+        },
+        {
+          "line": 3926,
+          "text": "  @objc deinit"
+        },
+        {
+          "line": 3927,
+          "text": "}"
+        },
+        {
+          "line": 3928,
+          "text": "@available(macOS 15.0, iOS 18.0, watchOS 11.0, tvOS 18.0, visionOS 2.0, *)"
+        },
+        {
+          "line": 3929,
+          "text": "extension AppIntents::IntentParameterDependency : Swift::Hashable {"
+        },
+        {
+          "line": 3930,
+          "text": "  public static func == (lhs: AppIntents::IntentParameterDependency<Intent>, rhs: AppIntents::IntentParameterDependency<Intent>) -> Swift::Bool"
+        },
+        {
+          "line": 3931,
+          "text": "  final public func hash(into hasher: inout Swift::Hasher)"
+        },
+        {
+          "line": 3932,
+          "text": "  final public var hashValue: Swift::Int {"
+        },
+        {
+          "line": 3933,
+          "text": "    get"
+        },
+        {
+          "line": 3934,
+          "text": "  }"
+        },
+        {
+          "line": 3935,
+          "text": "}"
+        },
+        {
+          "line": 3936,
+          "text": "@available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)"
+        },
+        {
+          "line": 3937,
+          "text": "extension AppIntents::IntentParameterDependency : Swift::CustomDebugStringConvertible {"
+        },
+        {
+          "line": 3938,
+          "text": "  final public var debugDescription: Swift::String {"
+        },
+        {
+          "line": 3939,
+          "text": "    get"
+        },
+        {
+          "line": 3940,
+          "text": "  }"
+        },
+        {
+          "line": 3941,
+          "text": "}"
+        },
+        {
+          "line": 3942,
+          "text": "@_hasMissingDesignatedInitializers @available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)"
+        },
+        {
+          "line": 3943,
+          "text": "@dynamicMemberLookup final public class IntentProjection<Intent> where Intent : AppIntents::AppIntent {"
+        },
+        {
+          "line": 3944,
+          "text": "  final public subscript<Value>(dynamicMember keyPath: Swift::KeyPath<Intent, Value>) -> Value.UnwrappedType where Value : AppIntents::_IntentValue {"
+        },
+        {
+          "line": 3945,
+          "text": "    get"
+        },
+        {
+          "line": 3946,
+          "text": "  }"
+        },
+        {
+          "line": 3947,
+          "text": "  @objc deinit"
+        },
+        {
+          "line": 3948,
+          "text": "}"
+        },
+        {
+          "line": 3949,
+          "text": "@available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)"
+        },
+        {
+          "line": 3950,
+          "text": "extension AppIntents::DynamicOptionsProvider {"
+        },
+        {
+          "line": 3951,
+          "text": "  public typealias ParameterDependency = AppIntents::IntentParameterDependency"
+        },
+        {
+          "line": 3952,
+          "text": "}"
+        },
+        {
+          "line": 3953,
+          "text": "@available(anyAppleOS 26.0, *)"
+        },
+        {
+          "line": 3954,
+          "text": "@attached(peer, names: prefixed(`$`), prefixed(`_`)) @attached(accessor, names: named(get), named(set)) public macro ComputedProperty() = #externalMacro(module: \"AppIntentsMacros\", type: \"EntityPropertyMacro\")"
+        },
+        {
+          "line": 3955,
+          "text": "@available(anyAppleOS 26.0, *)"
+        },
+        {
+          "line": 3956,
+          "text": "@attached(peer, names: prefixed(`$`), prefixed(`_`)) @attached(accessor, names: named(get), named(set)) public macro ComputedProperty(title: Foundation::LocalizedStringResource) = #externalMacro(module: \"AppIntentsMacros\", type: \"EntityPropertyMacro\")"
+        },
+        {
+          "line": 3957,
+          "text": "@available(anyAppleOS 26.0, *)"
+        },
+        {
+          "line": 3958,
+          "text": "@attached(peer, names: prefixed(`$`), prefixed(`_`)) @attached(accessor, names: named(get), named(set)) public macro DeferredProperty() = #externalMacro(module: \"AppIntentsMacros\", type: \"EntityPropertyMacro\")"
+        },
+        {
+          "line": 3959,
+          "text": "@available(anyAppleOS 26.0, *)"
+        },
+        {
+          "line": 3960,
+          "text": "@attached(peer, names: prefixed(`$`), prefixed(`_`)) @attached(accessor, names: named(get), named(set)) public macro DeferredProperty(title: Foundation::LocalizedStringResource) = #externalMacro(module: \"AppIntentsMacros\", type: \"EntityPropertyMacro\")"
+        },
+        {
+          "line": 3961,
+          "text": "@available(macOS 26.0, iOS 26.0, visionOS 26.0, *)"
+        },
+        {
+          "line": 3962,
+          "text": "@attached(peer, names: prefixed(`$`), prefixed(`_`)) @attached(accessor, names: named(get), named(set)) public macro DeferredProperty(indexingKey: Swift::PartialKeyPath<CoreSpotlight::CSSearchableItemAttributeSet>) = #externalMacro(module: \"AppIntentsMacros\", type: \"EntityPropertyMacro\")"
+        },
+        {
+          "line": 3963,
+          "text": "@available(macOS 26.0, iOS 26.0, visionOS 26.0, *)"
+        },
+        {
+          "line": 3964,
+          "text": "@attached(peer, names: prefixed(`$`), prefixed(`_`)) @attached(accessor, names: named(get), named(set)) public macro DeferredProperty(title: Foundation::LocalizedStringResource, indexingKey: Swift::PartialKeyPath<CoreSpotlight::CSSearchableItemAttributeSet>) = #externalMacro(module: \"AppIntentsMacros\", type: \"EntityPropertyMacro\")"
+        },
+        {
+          "line": 3965,
+          "text": "@available(macOS 26.0, iOS 26.0, visionOS 26.0, *)"
+        },
+        {
+          "line": 3966,
+          "text": "@attached(peer, names: prefixed(`$`), prefixed(`_`)) @attached(accessor, names: named(get), named(set)) public macro ComputedProperty(indexingKey: Swift::PartialKeyPath<CoreSpotlight::CSSearchableItemAttributeSet>) = #externalMacro(module: \"AppIntentsMacros\", type: \"EntityPropertyMacro\")"
+        },
+        {
+          "line": 3967,
+          "text": "@available(macOS 26.0, iOS 26.0, visionOS 26.0, *)"
+        },
+        {
+          "line": 3968,
+          "text": "@attached(peer, names: prefixed(`$`), prefixed(`_`)) @attached(accessor, names: named(get), named(set)) public macro ComputedProperty(title: Foundation::LocalizedStringResource, indexingKey: Swift::PartialKeyPath<CoreSpotlight::CSSearchableItemAttributeSet>) = #externalMacro(module: \"AppIntentsMacros\", type: \"EntityPropertyMacro\")"
+        },
+        {
+          "line": 3969,
+          "text": "@available(macOS 26.0, iOS 26.0, visionOS 26.0, *)"
+        },
+        {
+          "line": 3970,
+          "text": "@attached(peer, names: prefixed(`$`), prefixed(`_`)) @attached(accessor, names: named(get), named(set)) public macro ComputedProperty(customIndexingKey: CoreSpotlight::CSCustomAttributeKey) = #externalMacro(module: \"AppIntentsMacros\", type: \"EntityPropertyMacro\")"
+        },
+        {
+          "line": 3971,
+          "text": "@available(macOS 26.0, iOS 26.0, visionOS 26.0, *)"
+        },
+        {
+          "line": 3972,
+          "text": "@attached(peer, names: prefixed(`$`), prefixed(`_`)) @attached(accessor, names: named(get), named(set)) public macro ComputedProperty(title: Foundation::LocalizedStringResource, customIndexingKey: CoreSpotlight::CSCustomAttributeKey) = #externalMacro(module: \"AppIntentsMacros\", type: \"EntityPropertyMacro\")"
+        },
+        {
+          "line": 3973,
+          "text": "@_hasMissingDesignatedInitializers @available(macOS 13.0, iOS 16.0, watchOS 9.0, tvOS 16.0, *)"
+        },
+        {
+          "line": 3974,
+          "text": "@propertyWrapper final public class EntityProperty<Value> : AppIntents::AnyIntentValue, @unchecked Swift::Sendable where Value : AppIntents::_IntentValue, Value : Swift::Sendable {"
+        },
+        {
+          "line": 3975,
+          "text": "  final public var title: Foundation::LocalizedStringResource {"
+        }
+      ]
+    }
+  ]
+}

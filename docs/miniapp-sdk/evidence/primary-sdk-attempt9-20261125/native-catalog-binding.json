@@ -1,0 +1,322 @@
+{
+  "catalogSHA256": "c2c8a3624236d252ad82fd42db967cbf76902c54c89f8cfb39a0f7be77fb710b",
+  "contentSHA256": "9b3b714bf5a29ac92472e5ffe530ec0c2f6ebf79f65faa506ad0d7f8ce88e37b",
+  "source": "1812bff50571c9907d15cd8b4bfbe4874be24756",
+  "inputBindings": [
+    {
+      "path": "RuntimeDependencies.lock.json",
+      "sha256": "6cdbc18a474febbfc912b35ecbf5b0b55438a6a3e6daf2c33a43792cd04bd50a",
+      "sameAsSDK7": true
+    },
+    {
+      "path": "Scripts/Expo/babel.config.cjs",
+      "sha256": "62581fd5caf7b97cb36290093b7bbf7103e1c1b1300e0e11a1b3eaaf96c998ba",
+      "sameAsSDK7": true
+    },
+    {
+      "path": "Scripts/Expo/build-original-expo-source.mjs",
+      "sha256": "855a9a79f1c27a2ba2f3796cf784ebb66a4a48df928b2ea8f6ca1ffd9e886c03",
+      "sameAsSDK7": false
+    },
+    {
+      "path": "Scripts/Expo/build-original-widget-runtime.mjs",
+      "sha256": "5928bb12ed2fd2f6b2ecfeb6d8fc309d46e5837c58dcc4272d73af13434eb549",
+      "sameAsSDK7": true
+    },
+    {
+      "path": "Scripts/Expo/dependency-lock.json",
+      "sha256": "b9e3ad6d863e3e5136ad93924ce4edcb37da87578b113523640110af347eec65",
+      "sameAsSDK7": false
+    },
+    {
+      "path": "Scripts/Expo/package-lock.json",
+      "sha256": "c08757cf46ac4d5c86a873f676af4a3be585db64ae2e1aa1e8288277d4eb63b8",
+      "sameAsSDK7": false
+    },
+    {
+      "path": "Scripts/Expo/prepare-ios-dependencies.mjs",
+      "sha256": "97069b0e1ec619d906f4b6d196e38e6527790c3661f798abcca6258dacf18163",
+      "sameAsSDK7": false
+    },
+    {
+      "path": "Scripts/ExpoNativeAPI/dependency-lock.json",
+      "sha256": "08657d657c1f4efa36149075b632cfc75685fc1ca9af0397fc1168fe9253b768",
+      "sameAsSDK7": true
+    },
+    {
+      "path": "Scripts/ExpoNativeAPI/multiscene-patch.mjs",
+      "sha256": "cafa8348a764155789169c411eb59555c6c7a2d3ef363b870e36f8d6b52c7cbd",
+      "sameAsSDK7": true
+    },
+    {
+      "path": "Scripts/ExpoNativeAPI/prepare-ios-dependencies.mjs",
+      "sha256": "950a2eb6e8713bdd1a395eee6df1779d91f63864af95c33658efa6d090676f66",
+      "sameAsSDK7": true
+    },
+    {
+      "path": "Scripts/NativeScript/build-metadata-tool.py",
+      "sha256": "f4318f38b1c6a9c56ba54edb0d270a6374178fa5a8e024ebfddb9790f7ae3cf5",
+      "sameAsSDK7": true
+    },
+    {
+      "path": "Scripts/NativeScript/build-step-metadata-generator-wrapper.py",
+      "sha256": "0c053414f573ff2f88498099d7f1ae591d289ca3029390cd421dd938bf089ba3",
+      "sameAsSDK7": true
+    },
+    {
+      "path": "Scripts/NativeScript/dependency-lock.json",
+      "sha256": "8499976a4ea0a069ed654b09b597d8fabede4bbbfb62227451a68707b851e8e5",
+      "sameAsSDK7": true
+    },
+    {
+      "path": "Scripts/NativeScript/package-lock.json",
+      "sha256": "16f569f4bfa6f8806cfe72449866a0dc9a9331f33d2c67170d5292455c48b60b",
+      "sameAsSDK7": true
+    },
+    {
+      "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+      "sha256": "b5114a3be1fc846e288128af08cef9f38b0cac8e34923780325c4edc2976ebd9",
+      "sameAsSDK7": true
+    },
+    {
+      "path": "Scripts/Runtime/prepare-runtime-core.sh",
+      "sha256": "1ff99fabcbf8f40d515f3f1b944299286c1094a19520f9892a97f99cf8b64540",
+      "sameAsSDK7": true
+    }
+  ],
+  "requiredTargets": [
+    "ReactNativeHeaders",
+    "React",
+    "ReactNativeDependencies",
+    "hermesvm",
+    "ExpoModulesJSI",
+    "ExpoModulesCore",
+    "ExpoModulesWorklets",
+    "ExpoUI",
+    "ExpoAsset",
+    "ExpoBrownfield",
+    "Libffi",
+    "TNSWidgets",
+    "NSCWinterTC",
+    "NodeMobile",
+    "Python"
+  ],
+  "missingTargets": [],
+  "comparison": {
+    "artifacts": {
+      "added": [
+        "ExpoAsset"
+      ],
+      "removed": [],
+      "existing": [
+        {
+          "target": "ExpoBrownfield",
+          "sameContentMetadata": true,
+          "differences": []
+        },
+        {
+          "target": "ExpoModulesCore",
+          "sameContentMetadata": true,
+          "differences": []
+        },
+        {
+          "target": "ExpoModulesJSI",
+          "sameContentMetadata": false,
+          "differences": [
+            {
+              "pointer": "/bytes",
+              "before": 7971896,
+              "after": 7971900
+            },
+            {
+              "pointer": "/checksum",
+              "before": "26ee01b215d9ddb7a70eb85744e8a1b81460c0e657eb136f84c257224e401671",
+              "after": "c0e285370bb368969124df20377d8f931b632cc5b43a1591fbdf4ce8b1cc30f6"
+            }
+          ]
+        },
+        {
+          "target": "ExpoModulesWorklets",
+          "sameContentMetadata": true,
+          "differences": []
+        },
+        {
+          "target": "ExpoUI",
+          "sameContentMetadata": false,
+          "differences": [
+            {
+              "pointer": "/bytes",
+              "before": 19903156,
+              "after": 19903079
+            },
+            {
+              "pointer": "/checksum",
+              "before": "52ef0cabd978f8d483576f9c54110594f2e4a2505af749d28fb64b6bc8053dc3",
+              "after": "a5d7beda06fcb5ca893d4c17d5d89384c4dcca395c0b6efdabb4433c4e190a22"
+            },
+            {
+              "pointer": "/libraries/0/architectures",
+              "beforeLength": 1,
+              "afterLength": 2
+            },
+            {
+              "pointer": "/libraries/0/binary",
+              "before": "ios-arm64/ExpoUI.framework/ExpoUI",
+              "after": "ios-arm64_x86_64-simulator/ExpoUI.framework/ExpoUI"
+            },
+            {
+              "pointer": "/libraries/0/binarySHA256",
+              "before": "2044d9461cac651a900b33394a5aa7eff02eb6ae310a410294b5185f170355af",
+              "after": "a38e45501457d47a49f6fa006df014c6dbb58d0bfae1598cfd001d995245ea9b"
+            },
+            {
+              "pointer": "/libraries/0/identifier",
+              "before": "ios-arm64",
+              "after": "ios-arm64_x86_64-simulator"
+            },
+            {
+              "pointer": "/libraries/0/variant",
+              "before": null,
+              "after": "simulator"
+            },
+            {
+              "pointer": "/libraries/1/architectures",
+              "beforeLength": 2,
+              "afterLength": 1
+            },
+            {
+              "pointer": "/libraries/1/binary",
+              "before": "ios-arm64_x86_64-simulator/ExpoUI.framework/ExpoUI",
+              "after": "ios-arm64/ExpoUI.framework/ExpoUI"
+            },
+            {
+              "pointer": "/libraries/1/binarySHA256",
+              "before": "a38e45501457d47a49f6fa006df014c6dbb58d0bfae1598cfd001d995245ea9b",
+              "after": "2044d9461cac651a900b33394a5aa7eff02eb6ae310a410294b5185f170355af"
+            },
+            {
+              "pointer": "/libraries/1/identifier",
+              "before": "ios-arm64_x86_64-simulator",
+              "after": "ios-arm64"
+            },
+            {
+              "pointer": "/libraries/1/variant",
+              "before": "simulator",
+              "after": null
+            }
+          ]
+        },
+        {
+          "target": "Libffi",
+          "sameContentMetadata": true,
+          "differences": []
+        },
+        {
+          "target": "NSCWinterTC",
+          "sameContentMetadata": true,
+          "differences": []
+        },
+        {
+          "target": "NodeMobile",
+          "sameContentMetadata": true,
+          "differences": []
+        },
+        {
+          "target": "Python",
+          "sameContentMetadata": true,
+          "differences": []
+        },
+        {
+          "target": "React",
+          "sameContentMetadata": true,
+          "differences": []
+        },
+        {
+          "target": "ReactNativeDependencies",
+          "sameContentMetadata": true,
+          "differences": []
+        },
+        {
+          "target": "ReactNativeHeaders",
+          "sameContentMetadata": true,
+          "differences": []
+        },
+        {
+          "target": "TNSWidgets",
+          "sameContentMetadata": true,
+          "differences": []
+        },
+        {
+          "target": "hermesvm",
+          "sameContentMetadata": true,
+          "differences": []
+        }
+      ]
+    },
+    "supportArtifacts": {
+      "added": [],
+      "removed": [],
+      "existing": [
+        {
+          "target": "HanlinExpoHeaderSupport",
+          "sameContentMetadata": false,
+          "differences": [
+            {
+              "pointer": "/requiredBy",
+              "beforeLength": 10,
+              "afterLength": 11
+            }
+          ]
+        },
+        {
+          "target": "HanlinExpoWidgetRuntimeSupport",
+          "sameContentMetadata": false,
+          "differences": [
+            {
+              "pointer": "/bytes",
+              "before": 40469,
+              "after": 40471
+            },
+            {
+              "pointer": "/checksum",
+              "before": "0b43a5d047eb3d9b812c4e65c94753162808713afa27a8a5aba8984eac0b7b4b",
+              "after": "e81c064305804bb14fc5df401ac2c914d22e4172c4ddcd4fae3f7aa5b61b4dac"
+            }
+          ]
+        },
+        {
+          "target": "HanlinNativeScriptHostSupport",
+          "sameContentMetadata": true,
+          "differences": []
+        },
+        {
+          "target": "HanlinNodeHostSupport",
+          "sameContentMetadata": false,
+          "differences": [
+            {
+              "pointer": "/bytes",
+              "before": 76268587,
+              "after": 76269863
+            },
+            {
+              "pointer": "/checksum",
+              "before": "b9c821667d38021aa7bf621f7d262d3288a680124ded3f1c247f34ee2973a3f6",
+              "after": "6b70979d06b7ad2418dcbe0a5ea8c47971299c4bf91d5db027bee7348ae872f0"
+            }
+          ]
+        },
+        {
+          "target": "HanlinPythonHostSupport",
+          "sameContentMetadata": true,
+          "differences": []
+        }
+      ]
+    }
+  },
+  "acceptance": {
+    "appleBuild": "reuse-producer-evidence; this exporter does not build or test runtimes",
+    "nativeSlices": "validated-existing-binaries",
+    "ordinaryVersionDependency": "requires original host acceptance; prepared Expo header paths and host build phases need integration"
+  },
+  "boundary": "Exporter catalog/source-input proof; original native and consumer tests remain separately observed."
+}

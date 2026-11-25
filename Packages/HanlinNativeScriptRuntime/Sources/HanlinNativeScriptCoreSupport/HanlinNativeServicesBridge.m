@@ -1,11 +1,66 @@
 #import "HanlinNativeServicesBridge.h"
+#import <dispatch/dispatch.h>
+
+@class HanlinNativeServicesPendingCallback;
+typedef void (^HanlinPendingResultBlock)(id _Nullable value, NSString * _Nullable error);
 
 @interface HanlinNativeServicesSessionBridge ()
 @property(nonatomic, strong, nullable) id<HanlinNativeServicesProvider> provider;
 @property(nonatomic, copy, readonly) NSString *sessionID;
+@property(nonatomic, strong) NSMutableSet<HanlinNativeServicesPendingCallback *> *pendingCallbacks;
 - (instancetype)initWithProvider:(id<HanlinNativeServicesProvider>)provider
                         sessionID:(NSString *)sessionID;
+- (void)removePendingCallback:(HanlinNativeServicesPendingCallback *)callback;
+- (nullable id<HanlinNativeServicesProvider>)detachCompletions;
+@end
+
+@interface HanlinNativeServicesBridge ()
++ (void)retireSessionID:(NSString *)sessionID
+      expectedProvider:(nullable id<HanlinNativeServicesProvider>)expectedProvider
+          sourceBridge:(nullable HanlinNativeServicesSessionBridge *)sourceBridge;
+@end
+
+/// Native work retains this box, never a JS completion directly. The bridge
+/// detaches its JS block synchronously before cancelling its provider's work.
+@interface HanlinNativeServicesPendingCallback : NSObject
+@property(nonatomic, weak) HanlinNativeServicesSessionBridge *owner;
+@property(nonatomic, copy, nullable) HanlinPendingResultBlock completion;
+- (void)deliverValue:(nullable id)value error:(nullable NSString *)error;
 - (void)invalidate;
+@end
+
+@implementation HanlinNativeServicesPendingCallback
+- (void)deliverValue:(nullable id)value error:(nullable NSString *)error {
+    if (![NSThread isMainThread]) {
+        // A legacy synchronous call can already be inside a main-queue block
+        // while it pumps the main run loop. Main GCD cannot reenter that block;
+        // schedule on the run loop so its existing wait can receive the result.
+        // Only this native box is retained; invalidation still detaches its JS
+        // completion before a queued delivery can access a closed session.
+        CFRunLoopRef mainRunLoop = CFRunLoopGetMain();
+        CFRunLoopPerformBlock(mainRunLoop, kCFRunLoopDefaultMode, ^{
+            [self deliverValue:value error:error];
+        });
+        CFRunLoopWakeUp(mainRunLoop);
+        return;
+    }
+    HanlinPendingResultBlock completion;
+    @synchronized (self) {
+        completion = self.completion;
+        self.completion = nil;
+    }
+    [self.owner removePendingCallback:self];
+    if (completion) completion(value, error);
+}
+- (void)invalidate {
+    __attribute__((objc_precise_lifetime)) HanlinPendingResultBlock retired;
+    @synchronized (self) {
+        retired = _completion;
+        _completion = nil;
+    }
+    // Keep destruction of any captured JS function outside the object monitor.
+    (void)retired;
+}
 @end
 
 static id<HanlinNativeServicesProvider> _currentProvider = nil;
@@ -23,6 +78,7 @@ static NSLock *_sessionLock = nil;
     if (self) {
         _provider = provider;
         _sessionID = [sessionID copy];
+        _pendingCallbacks = [NSMutableSet new];
     }
     return self;
 }
@@ -31,19 +87,67 @@ static NSLock *_sessionLock = nil;
     @synchronized (self) { return self.provider; }
 }
 
-- (void)invalidate {
+- (nullable HanlinNativeServicesPendingCallback *)trackCompletion:(HanlinPendingResultBlock)completion
+                                                        provider:(id<HanlinNativeServicesProvider>)provider {
+    HanlinNativeServicesPendingCallback *callback = [HanlinNativeServicesPendingCallback new];
+    callback.owner = self;
+    callback.completion = completion;
+    BOOL accepted;
+    @synchronized (self) {
+        accepted = self.provider == provider;
+        if (accepted) [self.pendingCallbacks addObject:callback];
+    }
+    if (!accepted) {
+        [callback invalidate];
+        return nil;
+    }
+    return callback;
+}
+
+- (nullable HanlinNativeServicesPendingCallback *)trackStringCompletion:(HanlinBridgeStringResultBlock)completion
+                                                               provider:(id<HanlinNativeServicesProvider>)provider {
+    return [self trackCompletion:^(id value, NSString *error) {
+        if (completion) completion((NSString *)value, error);
+    } provider:provider];
+}
+
+- (void)removePendingCallback:(HanlinNativeServicesPendingCallback *)callback {
+    @synchronized (self) { [self.pendingCallbacks removeObject:callback]; }
+}
+
+- (nullable id<HanlinNativeServicesProvider>)detachCompletions {
     id<HanlinNativeServicesProvider> provider;
-    @synchronized (self) { provider = self.provider; self.provider = nil; }
-    [provider invalidateRuntimeRequests];
+    NSArray<HanlinNativeServicesPendingCallback *> *callbacks;
+    @synchronized (self) {
+        provider = self.provider;
+        self.provider = nil;
+        callbacks = self.pendingCallbacks.allObjects;
+        [self.pendingCallbacks removeAllObjects];
+    }
+    for (HanlinNativeServicesPendingCallback *callback in callbacks) [callback invalidate];
+    return provider;
+}
+
+- (void)invalidate {
+    // Both JS invocation and VM destruction occur on the main thread. A queued
+    // delivery retains only its box; the box loses its JS block before teardown.
+    if (![NSThread isMainThread]) {
+        dispatch_sync(dispatch_get_main_queue(), ^{ [self invalidate]; });
+        return;
+    }
+    id<HanlinNativeServicesProvider> provider = [self providerSnapshot];
+    if (!provider) return;
+    [HanlinNativeServicesBridge retireSessionID:self.sessionID
+                              expectedProvider:provider sourceBridge:self];
 }
 
 - (nullable NSString *)executeRuntime:(NSString *)payloadJSON completion:(HanlinBridgeStringResultBlock)completion {
     id<HanlinNativeServicesProvider> provider = [self providerSnapshot];
     if (!provider) { if (completion) completion(nil, @"NativeScript Host Services session is no longer active."); return nil; }
-    // Never invoke a V8 callback retained by a terminated session or redirect it
-    // through another package's subsequently active global bridge.
+    HanlinNativeServicesPendingCallback *callback = [self trackStringCompletion:completion provider:provider];
+    if (!callback) return nil;
     return [provider executeRuntime:payloadJSON completion:^(NSString *result, NSString *error) {
-        if ([self providerSnapshot] == provider && completion) completion(result, error);
+        [callback deliverValue:result error:error];
     }];
 }
 
@@ -59,25 +163,43 @@ static NSLock *_sessionLock = nil;
 - (void)executeJavaScript:(NSString *)source completion:(HanlinBridgeStringResultBlock)completion {
     id<HanlinNativeServicesProvider> provider = [self providerSnapshot];
     if (!provider) { if (completion) completion(nil, @"NativeScript Host Services session is no longer active."); return; }
-    [provider executeJavaScript:source completion:completion];
+    HanlinNativeServicesPendingCallback *callback = [self trackStringCompletion:completion provider:provider];
+    if (!callback) return;
+    [provider executeJavaScript:source completion:^(NSString *result, NSString *error) {
+        [callback deliverValue:result error:error];
+    }];
 }
 
 - (void)executeNode:(NSString *)source completion:(HanlinBridgeStringResultBlock)completion {
     id<HanlinNativeServicesProvider> provider = [self providerSnapshot];
     if (!provider) { if (completion) completion(nil, @"NativeScript Host Services session is no longer active."); return; }
-    [provider executeNode:source completion:completion];
+    HanlinNativeServicesPendingCallback *callback = [self trackStringCompletion:completion provider:provider];
+    if (!callback) return;
+    [provider executeNode:source completion:^(NSString *result, NSString *error) {
+        [callback deliverValue:result error:error];
+    }];
 }
 
 - (void)nodeHealthCheckWithCompletion:(HanlinBridgeBoolResultBlock)completion {
     id<HanlinNativeServicesProvider> provider = [self providerSnapshot];
     if (!provider) { if (completion) completion(NO, @"NativeScript Host Services session is no longer active."); return; }
-    [provider nodeHealthCheckWithCompletion:completion];
+    HanlinNativeServicesPendingCallback *callback = [self trackCompletion:^(id value, NSString *error) {
+        if (completion) completion([value boolValue], error);
+    } provider:provider];
+    if (!callback) return;
+    [provider nodeHealthCheckWithCompletion:^(BOOL success, NSString *error) {
+        [callback deliverValue:@(success) error:error];
+    }];
 }
 
 - (void)executePython:(NSString *)source completion:(HanlinBridgeStringResultBlock)completion {
     id<HanlinNativeServicesProvider> provider = [self providerSnapshot];
     if (!provider) { if (completion) completion(nil, @"NativeScript Host Services session is no longer active."); return; }
-    [provider executePython:source completion:completion];
+    HanlinNativeServicesPendingCallback *callback = [self trackStringCompletion:completion provider:provider];
+    if (!callback) return;
+    [provider executePython:source completion:^(NSString *result, NSString *error) {
+        [callback deliverValue:result error:error];
+    }];
 }
 
 - (nullable NSString *)pythonVersion { return [[self providerSnapshot] pythonVersion]; }
@@ -85,7 +207,11 @@ static NSLock *_sessionLock = nil;
 - (void)fetchURL:(NSString *)urlString completion:(HanlinBridgeStringResultBlock)completion {
     id<HanlinNativeServicesProvider> provider = [self providerSnapshot];
     if (!provider) { if (completion) completion(nil, @"NativeScript Host Services session is no longer active."); return; }
-    [provider fetchURL:urlString completion:completion];
+    HanlinNativeServicesPendingCallback *callback = [self trackStringCompletion:completion provider:provider];
+    if (!callback) return;
+    [provider fetchURL:urlString completion:^(NSString *result, NSString *error) {
+        [callback deliverValue:result error:error];
+    }];
 }
 
 - (void)sendRequest:(NSString *)targetID
@@ -95,7 +221,10 @@ static NSLock *_sessionLock = nil;
          completion:(HanlinBridgeStringResultBlock)completion {
     id<HanlinNativeServicesProvider> provider = [self providerSnapshot];
     if (!provider) { if (completion) completion(nil, @"NativeScript Host Services session is no longer active."); return; }
-    [provider sendRequest:targetID action:action capability:capability payloadJSON:payloadJSON completion:completion];
+    HanlinNativeServicesPendingCallback *callback = [self trackStringCompletion:completion provider:provider];
+    if (!callback) return;
+    [provider sendRequest:targetID action:action capability:capability payloadJSON:payloadJSON
+        completion:^(NSString *result, NSString *error) { [callback deliverValue:result error:error]; }];
 }
 
 - (void)registerRequestHandler:(NSString *)action
@@ -235,48 +364,87 @@ static NSString *HanlinExecuteSyncWithTimeout(NSTimeInterval timeoutSeconds, Han
     [_sessionLock unlock];
 }
 
-+ (void)unregisterProviderForSessionID:(NSString *)sessionID {
-    if (sessionID.length == 0) return;
+// Retire every bridge before cancelling any provider. One provider may have
+// multiple claimed bridges; cancellation can synchronously complete them all.
++ (void)retireSessionID:(NSString *)sessionID
+      expectedProvider:(nullable id<HanlinNativeServicesProvider>)expectedProvider
+          sourceBridge:(nullable HanlinNativeServicesSessionBridge *)sourceBridge {
+    NSMutableSet<HanlinNativeServicesSessionBridge *> *retired = [NSMutableSet new];
+    NSHashTable<id<HanlinNativeServicesProvider>> *providers = [NSHashTable hashTableWithOptions:
+        NSPointerFunctionsStrongMemory | NSPointerFunctionsObjectPointerPersonality];
     [_sessionLock lock];
-    [_sessionProviders removeObjectForKey:sessionID];
-    for (HanlinNativeServicesSessionBridge *bridge in _boundBridges[sessionID]) {
-        [bridge invalidate];
+    id<HanlinNativeServicesProvider> registered = _sessionProviders[sessionID];
+    BOOL preservingReplacement = expectedProvider && registered != expectedProvider;
+    if (!preservingReplacement) {
+        if (registered) [providers addObject:registered];
+        [_sessionProviders removeObjectForKey:sessionID];
     }
-    [_boundBridges removeObjectForKey:sessionID];
-    if ([_activeSessionBridge.sessionID isEqualToString:sessionID]) {
-        [_activeSessionBridge invalidate];
+    // A stale bridge retires all bridges of its old provider, while preserving
+    // a replacement registered under the same ID and that replacement's bridges.
+    NSMutableArray<HanlinNativeServicesSessionBridge *> *kept = [NSMutableArray new];
+    for (HanlinNativeServicesSessionBridge *bridge in _boundBridges[sessionID]) {
+        if (preservingReplacement && [bridge providerSnapshot] != expectedProvider) [kept addObject:bridge];
+        else [retired addObject:bridge];
+    }
+    if (kept.count) _boundBridges[sessionID] = kept;
+    else [_boundBridges removeObjectForKey:sessionID];
+    if ([_activeSessionBridge.sessionID isEqualToString:sessionID] &&
+        (!preservingReplacement || [_activeSessionBridge providerSnapshot] == expectedProvider)) {
+        [retired addObject:_activeSessionBridge];
         _activeSessionBridge = nil;
     }
     NSArray<NSString *> *tokens = [_bootstrapBridges keysOfEntriesPassingTest:
         ^BOOL(NSString *token, HanlinNativeServicesSessionBridge *bridge, BOOL *stop) {
-            return [bridge.sessionID isEqualToString:sessionID];
+            return [bridge.sessionID isEqualToString:sessionID] &&
+                (!preservingReplacement || [bridge providerSnapshot] == expectedProvider);
         }].allObjects;
-    for (NSString *tok in tokens) {
-        [_bootstrapBridges[tok] invalidate];
-    }
+    for (NSString *tok in tokens) [retired addObject:_bootstrapBridges[tok]];
     [_bootstrapBridges removeObjectsForKeys:tokens];
     [_sessionLock unlock];
+    if (sourceBridge) [retired addObject:sourceBridge];
+    for (HanlinNativeServicesSessionBridge *bridge in retired) {
+        id<HanlinNativeServicesProvider> provider = [bridge detachCompletions];
+        if (provider) [providers addObject:provider];
+    }
+    for (id<HanlinNativeServicesProvider> provider in providers) [provider invalidateRuntimeRequests];
+}
+
++ (void)unregisterProviderForSessionID:(NSString *)sessionID {
+    if (sessionID.length == 0) return;
+    if (![NSThread isMainThread]) {
+        dispatch_sync(dispatch_get_main_queue(), ^{ [self unregisterProviderForSessionID:sessionID]; });
+        return;
+    }
+    [self retireSessionID:sessionID expectedProvider:nil sourceBridge:nil];
 }
 
 + (void)resetAllSessions {
+    if (![NSThread isMainThread]) {
+        dispatch_sync(dispatch_get_main_queue(), ^{ [self resetAllSessions]; });
+        return;
+    }
+    NSMutableSet<HanlinNativeServicesSessionBridge *> *retired = [NSMutableSet new];
+    NSHashTable<id<HanlinNativeServicesProvider>> *providers = [NSHashTable hashTableWithOptions:
+        NSPointerFunctionsStrongMemory | NSPointerFunctionsObjectPointerPersonality];
     [_sessionLock lock];
+    for (id<HanlinNativeServicesProvider> provider in _sessionProviders.allValues) [providers addObject:provider];
+    if (_currentProvider) [providers addObject:_currentProvider];
     [_sessionProviders removeAllObjects];
-    for (NSString *key in [_boundBridges allKeys]) {
-        for (HanlinNativeServicesSessionBridge *bridge in _boundBridges[key]) {
-            [bridge invalidate];
-        }
+    for (NSArray<HanlinNativeServicesSessionBridge *> *bridges in _boundBridges.allValues) {
+        [retired addObjectsFromArray:bridges];
     }
     [_boundBridges removeAllObjects];
-    for (NSString *token in [_bootstrapBridges allKeys]) {
-        [_bootstrapBridges[token] invalidate];
-    }
+    [retired addObjectsFromArray:_bootstrapBridges.allValues];
     [_bootstrapBridges removeAllObjects];
-    if (_activeSessionBridge) {
-        [_activeSessionBridge invalidate];
-        _activeSessionBridge = nil;
-    }
+    if (_activeSessionBridge) [retired addObject:_activeSessionBridge];
+    _activeSessionBridge = nil;
     _currentProvider = nil;
     [_sessionLock unlock];
+    for (HanlinNativeServicesSessionBridge *bridge in retired) {
+        id<HanlinNativeServicesProvider> provider = [bridge detachCompletions];
+        if (provider) [providers addObject:provider];
+    }
+    for (id<HanlinNativeServicesProvider> provider in providers) [provider invalidateRuntimeRequests];
 }
 
 + (nullable id<HanlinNativeServicesProvider>)providerForSessionID:(NSString *)sessionID {
@@ -333,6 +501,14 @@ static NSString *HanlinExecuteSyncWithTimeout(NSTimeInterval timeoutSeconds, Han
     [_sessionLock unlock];
 }
 
++ (void)clearLegacyProviderIfMatches:(id<HanlinNativeServicesProvider>)provider {
+    [_sessionLock lock];
+    if (_currentProvider == provider) {
+        _currentProvider = nil;
+    }
+    [_sessionLock unlock];
+}
+
 + (nullable id<HanlinNativeServicesProvider>)legacyProvider {
     [_sessionLock lock];
     id<HanlinNativeServicesProvider> p = _currentProvider;
@@ -356,27 +532,27 @@ static NSString *HanlinExecuteSyncWithTimeout(NSTimeInterval timeoutSeconds, Han
 + (nullable NSString *)cacheDirectory { return [[self currentProvider] cacheDirectory]; }
 
 + (void)executeJavaScript:(NSString *)source completion:(HanlinBridgeStringResultBlock)completion {
-    id<HanlinNativeServicesProvider> provider = [self currentProvider];
-    if (!provider) { if (completion) completion(nil, @"Host service provider not registered."); return; }
-    [provider executeJavaScript:source completion:completion];
+    HanlinNativeServicesSessionBridge *bridge = [self activeSessionBridge];
+    if (!bridge) { if (completion) completion(nil, @"Host service provider not registered."); return; }
+    [bridge executeJavaScript:source completion:completion];
 }
 
 + (void)executeNode:(NSString *)source completion:(HanlinBridgeStringResultBlock)completion {
-    id<HanlinNativeServicesProvider> provider = [self currentProvider];
-    if (!provider) { if (completion) completion(nil, @"Host service provider not registered."); return; }
-    [provider executeNode:source completion:completion];
+    HanlinNativeServicesSessionBridge *bridge = [self activeSessionBridge];
+    if (!bridge) { if (completion) completion(nil, @"Host service provider not registered."); return; }
+    [bridge executeNode:source completion:completion];
 }
 
 + (void)nodeHealthCheckWithCompletion:(HanlinBridgeBoolResultBlock)completion {
-    id<HanlinNativeServicesProvider> provider = [self currentProvider];
-    if (!provider) { if (completion) completion(NO, @"Host service provider not registered."); return; }
-    [provider nodeHealthCheckWithCompletion:completion];
+    HanlinNativeServicesSessionBridge *bridge = [self activeSessionBridge];
+    if (!bridge) { if (completion) completion(NO, @"Host service provider not registered."); return; }
+    [bridge nodeHealthCheckWithCompletion:completion];
 }
 
 + (void)executePython:(NSString *)source completion:(HanlinBridgeStringResultBlock)completion {
-    id<HanlinNativeServicesProvider> provider = [self currentProvider];
-    if (!provider) { if (completion) completion(nil, @"Host service provider not registered."); return; }
-    [provider executePython:source completion:completion];
+    HanlinNativeServicesSessionBridge *bridge = [self activeSessionBridge];
+    if (!bridge) { if (completion) completion(nil, @"Host service provider not registered."); return; }
+    [bridge executePython:source completion:completion];
 }
 
 + (nullable NSString *)pythonVersion {
@@ -385,9 +561,9 @@ static NSString *HanlinExecuteSyncWithTimeout(NSTimeInterval timeoutSeconds, Han
 }
 
 + (void)fetchURL:(NSString *)urlString completion:(HanlinBridgeStringResultBlock)completion {
-    id<HanlinNativeServicesProvider> provider = [self currentProvider];
-    if (!provider) { if (completion) completion(nil, @"Host service provider not registered."); return; }
-    [provider fetchURL:urlString completion:completion];
+    HanlinNativeServicesSessionBridge *bridge = [self activeSessionBridge];
+    if (!bridge) { if (completion) completion(nil, @"Host service provider not registered."); return; }
+    [bridge fetchURL:urlString completion:completion];
 }
 
 + (void)sendRequest:(NSString *)targetID
@@ -395,9 +571,9 @@ static NSString *HanlinExecuteSyncWithTimeout(NSTimeInterval timeoutSeconds, Han
          capability:(NSString *)capability
         payloadJSON:(NSString *)payloadJSON
          completion:(HanlinBridgeStringResultBlock)completion {
-    id<HanlinNativeServicesProvider> provider = [self currentProvider];
-    if (!provider) { if (completion) completion(nil, @"Host service provider not registered."); return; }
-    [provider sendRequest:targetID action:action capability:capability payloadJSON:payloadJSON completion:completion];
+    HanlinNativeServicesSessionBridge *bridge = [self activeSessionBridge];
+    if (!bridge) { if (completion) completion(nil, @"Host service provider not registered."); return; }
+    [bridge sendRequest:targetID action:action capability:capability payloadJSON:payloadJSON completion:completion];
 }
 
 + (void)registerRequestHandler:(NSString *)action

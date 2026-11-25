@@ -22,10 +22,17 @@ class ScriptWidgetElementTagToggle {
     @ViewBuilder private static func buildToggle(element: ScriptWidgetRuntimeElement, context: ScriptWidgetElementContext) -> some View {
         let on = self.getToggleValue(element)
         if let declaration = context.declaration(for: element),
-           (element.getPropString("stateKey") == declaration.stateKey || declaration.kind == .function),
-           let intent = try? HanlinSetWidgetValueIntent(command: .init(context: context.actionContext, actionID: declaration.id), value: !on) {
-            Toggle(isOn: on, intent: intent) { toggleLabel(element: element, context: context) }
+           (element.getPropString("stateKey") == declaration.stateKey || declaration.kind == .function) {
+            let command = context.command(for: element, declaration: declaration, desiredValue: !on)
+            if let builder = context.nativeActionBuilder {
+                // The host supplies a real native Toggle appropriate to its
+                // surface; keep the original label and attribute modifiers.
+                builder(command, AnyView(toggleLabel(element: element, context: context)))
                 .modifier(ScriptWidgetAttributeGeneralModifier(element, context))
+            } else if let intent = try? HanlinSetWidgetValueIntent(command: command, value: !on) {
+                Toggle(isOn: on, intent: intent) { toggleLabel(element: element, context: context) }
+                    .modifier(ScriptWidgetAttributeGeneralModifier(element, context))
+            }
         } else {
             Toggle(isOn: .constant(on)) { toggleLabel(element: element, context: context) }
                 .disabled(true)

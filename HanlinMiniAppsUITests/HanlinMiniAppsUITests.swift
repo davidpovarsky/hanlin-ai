@@ -90,7 +90,7 @@ final class HanlinMiniAppsUITests: XCTestCase {
         install.tap()
         let installed = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == false"), object: install)
         XCTAssertEqual(XCTWaiter.wait(for: [installed], timeout: 60), .completed)
-        app.navigationBars["Script Package"].buttons["Done"].tap()
+        app.buttons["hanlin-package-import-done"].tap()
         let close = app.buttons["hanlin-apps-add-done"]
         XCTAssertTrue(close.waitForExistence(timeout: 15))
         close.tap()
@@ -231,7 +231,9 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
         launchInstalledPackage(named: parityPackageName)
 
         // 1. Verify App Title
-        let titlePredicate = NSPredicate(format: "label CONTAINS 'HanlinScript Parity' OR identifier == 'hanlin-script-parity-title'")
+        // Only the original NativeScript root can satisfy this identifier.
+        // The catalog card with the same label is not execution evidence.
+        let titlePredicate = NSPredicate(format: "identifier == %@", "hanlin-script-parity-title")
         let titleCandidate = app.descendants(matching: .any).matching(titlePredicate).firstMatch
         XCTAssertTrue(titleCandidate.waitForExistence(timeout: 30), "HanlinScript Parity title did not render")
         capture(name: "Parity-App-Launched")
@@ -245,7 +247,9 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
         // Node: [VERIFIED Node <version>] nonce=...
         let nodePredicate = NSPredicate(format: "label CONTAINS '[VERIFIED Node' AND label CONTAINS %@ AND NOT (label CONTAINS 'Err' OR label CONTAINS 'Error')", challengeNonce)
         let nodeLabel = app.descendants(matching: .any).matching(nodePredicate).firstMatch
-        XCTAssertTrue(nodeLabel.waitForExistence(timeout: 25), "Node execution did not return verified Node runtime output with nonce \(challengeNonce)")
+        // First use prepares the original embedded Host before executing Node.
+        // Preserve the actual nonce/result contract within the existing 420s case allowance.
+        XCTAssertTrue(nodeLabel.waitForExistence(timeout: 180), "Node execution did not return verified Node runtime output with nonce \(challengeNonce)")
 
         // Python: [VERIFIED CPython <version>] nonce=...
         let pyPredicate = NSPredicate(format: "label CONTAINS '[VERIFIED CPython' AND label CONTAINS %@ AND NOT (label CONTAINS 'Err' OR label CONTAINS 'Error')", challengeNonce)
@@ -315,6 +319,12 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
         let variantAPredicate = NSPredicate(format: "label CONTAINS 'Expo Dynamic A' OR label CONTAINS 'Variant A'")
         let variantALabel = app.descendants(matching: .any).matching(variantAPredicate).firstMatch
         XCTAssertTrue(variantALabel.waitForExistence(timeout: 15), "Dynamic Variant A indicator did not render")
+        let hostFiles = app.descendants(matching: .any).matching(
+            NSPredicate(format: "label == 'HOST_FILES_PASS:131073'")
+        ).firstMatch
+        XCTAssertTrue(hostFiles.waitForExistence(timeout: 45),
+                      "The standalone production JS facade must preserve empty/all-byte/131073-byte files and missing-file status.")
+
 
         let genesisTextPredicate = NSPredicate(format: "label CONTAINS 'בראשית ברא' OR label CONTAINS 'בְּרֵאשִׁ֖ית' OR label CONTAINS 'Genesis'")
         let genesisText = app.descendants(matching: .any).matching(genesisTextPredicate).firstMatch
@@ -410,6 +420,960 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
         closeExpoApp()
     }
 
+    func testStandaloneExpoWidgetsUsesOriginalTimelinesAndLiveActivities() throws {
+        for variant in ["A", "B"] {
+            openApps()
+            importAndInstall(archive: "ExpoWidgetsProbe" + variant)
+            launchInstalledPackage(named: "Original Expo Widgets Probe " + variant)
+            let status = app.descendants(matching: .any).matching(identifier: "expo-widgets-status").firstMatch
+            XCTAssertTrue(status.waitForExistence(timeout: 30), "The original Expo Widgets probe did not render")
+            let expected = "EXPO_WIDGETS_PASS:" + variant + ":" + (variant == "A" ? "23" : "31")
+            XCTAssertTrue(waitUntil(timeout: 30) {
+                status.label == expected || status.label.hasPrefix("EXPO_WIDGETS_ERROR:")
+            }, "Original widget methods did not complete: \(status.label)")
+            XCTAssertEqual(status.label, expected, "Original widget API failed: \(status.label)")
+            let start = app.buttons["expo-widgets-start-activity"].firstMatch
+            XCTAssertTrue(start.waitForExistence(timeout: 10))
+            if !start.isHittable { app.swipeUp() }
+            XCTAssertTrue(start.isHittable)
+            start.tap()
+            let activity = app.descendants(matching: .any).matching(identifier: "expo-widgets-activity-status").firstMatch
+            XCTAssertTrue(waitUntil(timeout: 30) {
+                activity.label.hasPrefix("EXPO_WIDGETS_ACTIVITY_PASS:") ||
+                    activity.label.hasPrefix("EXPO_WIDGETS_ACTIVITY_ERROR:")
+            }, "Original ActivityKit methods did not complete: \(activity.label)")
+            XCTAssertTrue(activity.label.hasPrefix("EXPO_WIDGETS_ACTIVITY_PASS:"),
+                "Original create/start/query/update/token/end failed: \(activity.label)")
+            XCTAssertFalse(activity.label.dropFirst("EXPO_WIDGETS_ACTIVITY_PASS:".count).isEmpty,
+                "The actual system activity identifier must be returned")
+            capture(name: "original-expo-widgets-" + variant)
+            closeExpoApp()
+        }
+        // Both packages deliberately use the same public widget names. The
+        // first package checks its existing timeline before writing on relaunch.
+        launchInstalledPackage(named: "Original Expo Widgets Probe A")
+        let retained = app.descendants(matching: .any).matching(identifier: "expo-widgets-status").firstMatch
+        XCTAssertTrue(retained.waitForExistence(timeout: 30))
+        XCTAssertTrue(waitUntil(timeout: 30) {
+            retained.label == "EXPO_WIDGETS_PASS:A:23" || retained.label.hasPrefix("EXPO_WIDGETS_ERROR:")
+        })
+        XCTAssertEqual(retained.label, "EXPO_WIDGETS_PASS:A:23", "The second installation changed the first package's original timeline")
+        capture(name: "original-expo-widgets-relaunch-a")
+        closeExpoApp()
+    }
+
+    func testStandaloneExpoNativeAPIUsesActualUIKitAndWorklets() throws {
+        openApps()
+        importAndInstall(archive: "ExpoNativeAPIProbeA")
+
+        launchInstalledPackage(named: "Hanlin Expo Native API Probe A")
+
+        // 1. Verify Host & NavigationStack rendered
+        let titlePredicate = NSPredicate(format: "label CONTAINS 'Hanlin Expo + NativeScript Hybrid'")
+        let titleText = app.descendants(matching: .any).matching(titlePredicate).firstMatch
+        XCTAssertTrue(titleText.waitForExistence(timeout: 30), "Hybrid title did not render")
+
+        // 2. Verify Worklets runtime executed runOnUI to query UIDevice.currentDevice.systemVersion
+        let systemVersionPredicate = NSPredicate(format: "label CONTAINS 'iOS System Version:' AND NOT label CONTAINS 'Loading...' AND NOT label CONTAINS 'Error' AND NOT label CONTAINS 'failed'")
+        let systemVersionText = app.descendants(matching: .any).matching(systemVersionPredicate).firstMatch
+        XCTAssertTrue(systemVersionText.waitForExistence(timeout: 20), "UIDevice systemVersion was not retrieved via runOnUI Worklet")
+
+        // 3. Verify Fabric Component (NativeScriptUIViewComponentView) hosting UILabel inside RNHostView
+        let nativeLabelPredicate = NSPredicate(format: "label CONTAINS 'Native UIKit Label: Probe Variant A (Hebrew RTL Ready)'")
+        let nativeLabel = app.descendants(matching: .any).matching(nativeLabelPredicate).firstMatch
+        XCTAssertTrue(nativeLabel.waitForExistence(timeout: 15), "Native UIKit UILabel Fabric host did not render Variant A text")
+
+        // 4. Verify native UISwitch with two-way target-action
+        let switchStatusPredicate = NSPredicate(format: "label CONTAINS 'Native Switch Status: DISABLED (OFF)'")
+        let switchStatus = app.descendants(matching: .any).matching(switchStatusPredicate).firstMatch
+        XCTAssertTrue(switchStatus.waitForExistence(timeout: 10), "Initial switch status marker was missing")
+
+        let uiSwitch = app.switches.firstMatch
+        XCTAssertTrue(uiSwitch.waitForExistence(timeout: 10), "Native UISwitch did not render")
+        if !uiSwitch.isHittable {
+            app.swipeUp()
+        }
+        XCTAssertTrue(uiSwitch.isHittable, "Native UISwitch was not hittable")
+        uiSwitch.tap()
+
+        let updatedSwitchStatusPredicate = NSPredicate(format: "label CONTAINS 'Native Switch Status: ENABLED (ON)'")
+        let updatedSwitchStatus = app.descendants(matching: .any).matching(updatedSwitchStatusPredicate).firstMatch
+        XCTAssertTrue(updatedSwitchStatus.waitForExistence(timeout: 10), "Native UISwitch ValueChanged action failed to update state")
+
+        // 5. Test native UIViewController mounting via defineUIViewController
+        let mountVCButton = app.buttons.matching(NSPredicate(format: "label CONTAINS 'Mount Native UIViewController'")).firstMatch
+        XCTAssertTrue(mountVCButton.waitForExistence(timeout: 10), "Mount UIViewController button was missing")
+        if !mountVCButton.isHittable {
+            app.swipeUp()
+        }
+        mountVCButton.tap()
+
+        let controllerLabelPredicate = NSPredicate(format: "label CONTAINS 'Hosted Native UIViewController'")
+        let controllerLabel = app.descendants(matching: .any).matching(controllerLabelPredicate).firstMatch
+        XCTAssertTrue(controllerLabel.waitForExistence(timeout: 15), "Native UIViewController view did not mount in RNHostView")
+
+        // Toggle off
+        let hideVCButton = app.buttons.matching(NSPredicate(format: "label CONTAINS 'Hide Native Controller'")).firstMatch
+        XCTAssertTrue(hideVCButton.waitForExistence(timeout: 5), "Hide Native Controller button was missing")
+        if !hideVCButton.isHittable {
+            app.swipeUp()
+        }
+        hideVCButton.tap()
+        XCTAssertTrue(waitUntil(timeout: 5) { !controllerLabel.exists }, "Native UIViewController did not unmount")
+
+        // 6. Clean host return
+        closeExpoApp()
+    }
+
+    // These cases use the existing production archive/importer and actual public
+    // Hanlin manual adapters. Exact native callbacks and visible state changes are required.
+    func testStandaloneExpoManualInputLayoutAndDataAdapters() throws {
+        openManualAdapterProbe()
+
+        tapAdapterButton("Input adapters")
+        expectAdapterText("FOCUS_EVENTS:0")
+        tapAdapterButton("Focus manual editor")
+        let editor = app.textViews["manual-editor"].firstMatch
+        XCTAssertTrue(editor.waitForExistence(timeout: 10))
+        XCTAssertTrue(app.keyboards.firstMatch.waitForExistence(timeout: 10),
+                      "Focused must make its native editor receive keyboard focus")
+        editor.typeText("alpha")
+        expectAdapterText("EDITOR_VALUE:alpha")
+        let other = app.textFields["manual-other-field"].firstMatch
+        XCTAssertTrue(other.waitForExistence(timeout: 10))
+        other.tap()
+        expectAdapterText("FOCUS_VALUE:false")
+        expectAdapterText("FOCUS_EVENTS:1")
+        tapAdapterButton("Reset editor from React")
+        XCTAssertTrue(waitUntil(timeout: 10) { editor.value as? String == "Reset from React" },
+                      "TextEditor must apply the controlled value to the actual native text view")
+        capture(name: "Manual TextEditor and Focused native results")
+        tapAdapterButton("Adapter menu")
+
+        tapAdapterButton("Search adapter")
+        expectAdapterText("MANUAL_SEARCH_CONTENT")
+        tapAdapterButton("MANUAL_SEARCH_ACTIONS:0")
+        XCTAssertTrue(app.buttons["MANUAL_SEARCH_ACTIONS:1"].firstMatch.waitForExistence(timeout: 10))
+        let field = app.searchFields.firstMatch
+        XCTAssertTrue(field.waitForExistence(timeout: 10))
+        field.tap()
+        field.typeText("hanlin")
+        expectAdapterText("MANUAL_QUERY:hanlin")
+        expectAdapterText("MANUAL_SUBMITS:0")
+        let submit = app.keyboards.buttons.matching(
+            NSPredicate(format: "label == 'Search' OR label == 'search' OR label == 'Go'")).firstMatch
+        if submit.waitForExistence(timeout: 2) && submit.isHittable {
+            submit.tap()
+        } else {
+            field.typeText("\n")
+        }
+        expectAdapterText("MANUAL_SUBMITS:1")
+        expectAdapterText("MANUAL_SUBMITTED:hanlin")
+        capture(name: "Manual Searchable complete native submit")
+        tapAdapterButton("Adapter menu")
+
+        tapAdapterButton("Layout adapters")
+        let v1 = app.buttons["V1"].firstMatch
+        let v2 = app.buttons["V2"].firstMatch
+        let v3 = app.buttons["V3"].firstMatch
+        let h1 = app.buttons["H1"].firstMatch
+        let h2 = app.buttons["H2"].firstMatch
+        let h3 = app.buttons["H3"].firstMatch
+        for element in [v1, v2, v3, h1, h2, h3] {
+            XCTAssertTrue(element.waitForExistence(timeout: 10))
+        }
+        XCTAssertEqual(v1.frame.midY, v2.frame.midY, accuracy: 3, "VGrid must place the first two cells in one row")
+        XCTAssertGreaterThan(v3.frame.minY, v1.frame.minY + 20)
+        XCTAssertEqual(h1.frame.midX, h2.frame.midX, accuracy: 3, "HGrid must place the first two cells in one column")
+        XCTAssertGreaterThan(h3.frame.minX, h1.frame.minX + 30)
+        tapAdapterButton("V3")
+        expectAdapterText("LAYOUT_ACTION:V3")
+        tapAdapterButton("H3")
+        expectAdapterText("LAYOUT_ACTION:H3")
+        let compact = app.buttons["FIT_COMPACT"].firstMatch
+        let wide = app.buttons["FIT_WIDE"].firstMatch
+        XCTAssertTrue(compact.waitForExistence(timeout: 10))
+        XCTAssertFalse(wide.exists, "A 300-point candidate must not fit a 160-point proposal")
+        tapAdapterButton("FIT_COMPACT")
+        expectAdapterText("LAYOUT_ACTION:compact")
+        tapAdapterButton("Expand fit proposal")
+        XCTAssertTrue(wide.waitForExistence(timeout: 10))
+        XCTAssertFalse(compact.exists, "ViewThatFits must switch to its first fitting candidate")
+        tapAdapterButton("FIT_WIDE")
+        expectAdapterText("LAYOUT_ACTION:wide")
+        let inset = app.buttons["INSET_ACTIONS:0"].firstMatch
+        XCTAssertTrue(inset.waitForExistence(timeout: 10))
+        XCTAssertGreaterThan(inset.frame.midY, h3.frame.maxY, "Bottom inset slot must be below its content")
+        tapAdapterButton("INSET_ACTIONS:0")
+        XCTAssertTrue(app.buttons["INSET_ACTIONS:1"].firstMatch.waitForExistence(timeout: 10))
+        tapAdapterButton("Move inset to top")
+        XCTAssertTrue(waitUntil(timeout: 10) {
+            app.buttons["INSET_ACTIONS:1"].firstMatch.frame.maxY < v1.frame.minY
+        }, "Changing the SafeAreaInset edge must move the actual native slot above its content")
+        capture(name: "Manual grids adaptive fit and safe area slots")
+        tapAdapterButton("Adapter menu")
+
+        tapAdapterButton("Table adapter")
+        expectAdapterText("TABLE_SELECTION_EVENTS:0")
+        let kiwi = sdkOnlyText("Kiwi")
+        XCTAssertTrue(kiwi.waitForExistence(timeout: 10))
+        kiwi.tap()
+        expectAdapterText("TABLE_SELECTION:kiwi")
+        expectAdapterText("TABLE_SELECTION_EVENTS:1")
+        tapAdapterButton("Clear table selection")
+        expectAdapterText("TABLE_SELECTION:none")
+        kiwi.tap()
+        expectAdapterText("TABLE_SELECTION_EVENTS:2")
+        tapAdapterButton("Update table values")
+        expectAdapterText("Kiwi updated")
+        expectAdapterText("9")
+        capture(name: "Manual Table native selection and changed rows")
+        tapAdapterButton("Adapter menu")
+
+        tapAdapterButton("Image adapter")
+        expectAdapterText("IMAGE_EMPTY_SLOT")
+        expectAdapterText("IMAGE_PHASE:empty")
+        tapAdapterButton("Load exact PNG")
+        expectAdapterText("IMAGE_PHASE:success")
+        expectAdapterText("IMAGE_SUCCESS_EVENTS:1")
+        capture(name: "Manual AsyncImage decoded exact PNG")
+        tapAdapterButton("Load real missing image")
+        expectAdapterText("IMAGE_FAILURE_SLOT")
+        expectAdapterText("IMAGE_PHASE:failure")
+        expectAdapterText("IMAGE_FAILURE_EVENTS:1")
+        capture(name: "Manual AsyncImage real HTTP failure slot")
+        tapAdapterButton("Adapter menu")
+        tapAdapterButton("Close manual adapters")
+        closeExpoApp()
+    }
+
+    func testStandaloneExpoManualPresentationAdaptersAndDismissalEvents() throws {
+        openManualAdapterProbe()
+        for kind in ["Sheet", "FullScreenCover", "Popover"] {
+            tapAdapterButton(kind + " adapter")
+            expectAdapterText(kind + "_CHANGES:0")
+            expectAdapterText(kind + "_DISMISSALS:0")
+            tapAdapterButton("Open " + kind)
+            let content = sdkOnlyText(kind + " native content")
+            XCTAssertTrue(content.waitForExistence(timeout: 10), kind + " must render its actual presented slot")
+            capture(name: "Manual " + kind + " native presentation")
+            tapAdapterButton("Close " + kind + " from React")
+            XCTAssertTrue(waitUntil(timeout: 10) { !content.exists })
+            expectAdapterText(kind + "_DISMISSALS:1")
+            expectAdapterText(kind + "_CHANGES:0")
+
+            tapAdapterButton("Open " + kind)
+            XCTAssertTrue(content.waitForExistence(timeout: 10))
+            if kind == "Sheet" {
+                content.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+                    .press(forDuration: 0.1, thenDragTo: app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.96)))
+            } else if kind == "Popover" {
+                app.coordinate(withNormalizedOffset: CGVector(dx: 0.02, dy: 0.90)).tap()
+            } else {
+                tapAdapterButton("Close " + kind + " from React")
+            }
+            XCTAssertTrue(waitUntil(timeout: 10) { !content.exists }, kind + " must really dismiss")
+            expectAdapterText(kind + "_DISMISSALS:2")
+            expectAdapterText(kind + (kind == "FullScreenCover" ? "_CHANGES:0" : "_CHANGES:1"))
+            capture(name: "Manual " + kind + " exact dismissal callbacks")
+            tapAdapterButton("Adapter menu")
+        }
+
+        tapAdapterButton("Inspector adapter")
+        expectAdapterText("INSPECTOR_CHANGES:0")
+        tapAdapterButton("Open Inspector")
+        let inspector = sdkOnlyText("Inspector native content")
+        XCTAssertTrue(inspector.waitForExistence(timeout: 10))
+        tapAdapterButton("Inspector native action")
+        capture(name: "Manual Inspector actual native slot")
+        tapAdapterButton("Close Inspector from React")
+        XCTAssertTrue(waitUntil(timeout: 10) { !inspector.exists })
+        expectAdapterText("INSPECTOR_ACTIONS:1")
+        expectAdapterText("INSPECTOR_CHANGES:0")
+        tapAdapterButton("Open Inspector")
+        XCTAssertTrue(inspector.waitForExistence(timeout: 10))
+        tapAdapterButton("Close Inspector from React")
+        XCTAssertTrue(waitUntil(timeout: 10) { !inspector.exists })
+        expectAdapterText("INSPECTOR_CHANGES:0")
+        tapAdapterButton("Adapter menu")
+        tapAdapterButton("Close manual adapters")
+        closeExpoApp()
+    }
+
+    func testStandaloneExpoGeneratedGroupBoxSlotsAndInstalledMetadata() throws {
+        openAdditionalExpoProbe("Open Generated Views Probe")
+        tapAdapterButton("Generated GroupBox slots")
+        expectAdapterText("Generated group label 0")
+        expectAdapterText("Generated group content 0")
+        expectAdapterText("Generated ordinary child group")
+        expectAdapterText("Generated ordinary child content 0")
+        expectAdapterText("Generated explicit empty group")
+        XCTAssertFalse(sdkOnlyText("GENERATED_GROUP_IGNORED_CHILD").exists,
+                       "Explicit named content must take precedence over JSX children.")
+        XCTAssertFalse(sdkOnlyText("GENERATED_GROUP_NULL_CHILD").exists,
+                       "Explicit null content must suppress the JSX child fallback.")
+        tapAdapterButton("Change generated group slots")
+        expectAdapterText("Generated group label 1")
+        expectAdapterText("Generated group content 1")
+        expectAdapterText("Generated ordinary child content 1")
+        XCTAssertFalse(sdkOnlyText("GENERATED_GROUP_IGNORED_CHILD").exists)
+        XCTAssertFalse(sdkOnlyText("GENERATED_GROUP_NULL_CHILD").exists)
+        capture(name: "generated-group-box-native-slots")
+        tapAdapterButton("Generated view menu")
+
+        tapAdapterButton("Installed bridge metadata")
+        expectAdapterText("METADATA_READS:0")
+        expectAdapterText("METADATA_STATUS:NOT_READ")
+        tapAdapterButton("Read native bridge metadata")
+        expectAdapterText("METADATA_READS:1")
+        expectAdapterText("METADATA_STATUS:MATCH")
+        let expectedRuntime = app.descendants(matching: .any).matching(
+            NSPredicate(format: "label BEGINSWITH 'METADATA_EXPECTED_RUNTIME:'")
+        ).firstMatch
+        XCTAssertTrue(expectedRuntime.waitForExistence(timeout: 10))
+        let runtime = String(expectedRuntime.label.dropFirst("METADATA_EXPECTED_RUNTIME:".count))
+        XCTAssertFalse(runtime.isEmpty)
+        expectAdapterText("METADATA_RUNTIME:" + runtime)
+        tapAdapterButton("Read native bridge metadata")
+        expectAdapterText("METADATA_READS:2")
+        expectAdapterText("METADATA_STATUS:MATCH")
+        capture(name: "generated-installed-native-bridge-metadata")
+        tapAdapterButton("Generated view menu")
+        tapAdapterButton("Close generated views")
+        closeExpoApp()
+    }
+
+    func testStandaloneExpoGeneratedEditButtonEditsOriginalList() throws {
+        openAdditionalExpoProbe("Open Generated Views Probe")
+        tapAdapterButton("Generated EditButton list")
+        expectAdapterText("EDIT_DELETE_EVENTS:0")
+        expectAdapterText("EDIT_ROWS:alpha,beta")
+        let edit = app.buttons["generated-edit-button"].firstMatch
+        XCTAssertTrue(edit.waitForExistence(timeout: 15))
+        XCTAssertEqual(edit.label, "Edit")
+        XCTAssertTrue(edit.isHittable)
+        edit.tap()
+        XCTAssertTrue(waitUntil(timeout: 10) { edit.label == "Done" },
+                      "The generated SwiftUI EditButton must change the actual native edit mode.")
+
+        // Native edit mode combines the removal action and row text in one label.
+        let row = app.cells.containing(NSPredicate(
+            format: "label == %@ OR label ENDSWITH %@", "Generated Alpha", ", Generated Alpha")).firstMatch
+        XCTAssertTrue(row.waitForExistence(timeout: 10))
+        let remove = row.images["minus.circle.fill"].firstMatch
+        XCTAssertTrue(remove.waitForExistence(timeout: 10),
+                      "The original List.ForEach onDelete must expose its native removal control.")
+        XCTAssertTrue(remove.isHittable)
+        remove.tap()
+        let event = sdkOnlyText("EDIT_DELETE_EVENTS:1")
+        // UIKit places the trailing delete confirmation beside the swiped cell.
+        let list = app.collectionViews.containing(
+            .staticText, identifier: "Original editable list").firstMatch
+        let confirm = list.buttons.matching(NSPredicate(format: "label == 'Delete'")).firstMatch
+        XCTAssertTrue(waitUntil(timeout: 10) { event.exists || (confirm.exists && confirm.isHittable) })
+        if !event.exists { confirm.tap() }
+        expectAdapterText("EDIT_DELETE_EVENTS:1")
+        expectAdapterText("EDIT_ROWS:beta")
+        XCTAssertFalse(row.exists, "The deleted Alpha row must leave the native list.")
+        edit.tap()
+        XCTAssertTrue(waitUntil(timeout: 10) { edit.label == "Edit" })
+        XCTAssertFalse(sdkOnlyText("Generated Alpha").exists)
+        XCTAssertTrue(sdkOnlyText("Generated Beta").exists)
+        capture(name: "generated-edit-button-original-delete-event")
+        tapAdapterButton("Generated view menu")
+        tapAdapterButton("Close generated views")
+        closeExpoApp()
+    }
+
+    func testStandaloneExpoGeneratedEmptyViewReportsNativeLayout() throws {
+        openAdditionalExpoProbe("Open Generated Views Probe")
+        tapAdapterButton("Generated EmptyView measurement")
+        expectAdapterText("EMPTY_NATIVE_SIZE:120.0x44.0")
+        XCTAssertTrue(sdkOnlyText("Visible measurement control").exists)
+        let initialEvents = try generatedEventCount("EMPTY_LAYOUT_EVENTS:")
+        XCTAssertGreaterThan(initialEvents, 0)
+        tapAdapterButton("Replace measured content with EmptyView")
+        expectAdapterText("EMPTY_NATIVE_SIZE:0.0x0.0")
+        XCTAssertFalse(sdkOnlyText("Visible measurement control").exists)
+        let emptyEvents = try generatedEventCount("EMPTY_LAYOUT_EVENTS:")
+        XCTAssertGreaterThan(emptyEvents, initialEvents,
+                             "EmptyView size must come from a fresh original Host native layout event.")
+        capture(name: "generated-empty-view-zero-native-size")
+        tapAdapterButton("Restore measured content")
+        expectAdapterText("EMPTY_NATIVE_SIZE:120.0x44.0")
+        XCTAssertTrue(sdkOnlyText("Visible measurement control").exists)
+        XCTAssertGreaterThan(try generatedEventCount("EMPTY_LAYOUT_EVENTS:"), emptyEvents)
+        capture(name: "generated-empty-view-restored-native-size")
+        tapAdapterButton("Generated view menu")
+        tapAdapterButton("Close generated views")
+        closeExpoApp()
+    }
+
+    func testStandaloneExpoGeneratedModifierAccessibilityAndGeometry() throws {
+        openAdditionalExpoProbe("Open Generated Modifiers Probe")
+        tapAdapterButton("Modifiers: Accessibility")
+        expectAdapterText("MODIFIER_NATIVE_CONTEXT:Accessibility:appeared")
+        let allowance = app.descendants(matching: .any)["generated-accessibility-value"].firstMatch
+        XCTAssertTrue(allowance.waitForExistence(timeout: 10))
+        XCTAssertEqual(allowance.value as? String, "Allowance 7")
+        tapAdapterButton("Increase modifier allowance")
+        XCTAssertTrue(waitUntil(timeout: 10) { allowance.value as? String == "Allowance 8" },
+                      "The generated accessibility value must update the actual native accessibility element.")
+        tapAdapterButton("Generated accessibility action")
+        expectAdapterText("MODIFIER_ACCESSIBILITY_ACTIONS:1")
+        capture(name: "generated-modifier-native-accessibility-value")
+        tapAdapterButton("Generated modifier menu")
+
+        tapAdapterButton("Modifiers: Geometry")
+        expectAdapterText("MODIFIER_NATIVE_CONTEXT:Geometry:appeared")
+        let positioned = app.descendants(matching: .any)["generated-position-text"].firstMatch
+        let tracked = app.descendants(matching: .any)["generated-tracking-text"].firstMatch
+        XCTAssertTrue(positioned.waitForExistence(timeout: 10))
+        XCTAssertTrue(tracked.waitForExistence(timeout: 10))
+        let initialX = positioned.frame.midX
+        let initialWidth = tracked.frame.width
+        XCTAssertGreaterThan(initialWidth, 0)
+        tapAdapterButton("Change modifier geometry")
+        expectAdapterText("MODIFIER_GEOMETRY_STATE:changed")
+        XCTAssertTrue(waitUntil(timeout: 10) {
+            abs(positioned.frame.midX - initialX - 120) < 2 && tracked.frame.width > initialWidth + 1
+        }, "The generated position and tracking modifiers must change native geometry, not only React labels.")
+        XCTAssertEqual(positioned.frame.midX - initialX, 120, accuracy: 2)
+        XCTAssertGreaterThan(tracked.frame.width, initialWidth + 1)
+        capture(name: "generated-modifier-native-position-and-tracking")
+        tapAdapterButton("Generated modifier menu")
+        tapAdapterButton("Exit Generated Modifiers Probe")
+        closeExpoApp()
+    }
+
+    func testStandaloneExpoGeneratedModifierHitTestingAndSubmitScope() throws {
+        openAdditionalExpoProbe("Open Generated Modifiers Probe")
+        tapAdapterButton("Modifiers: Input")
+        expectAdapterText("MODIFIER_NATIVE_CONTEXT:Input:appeared")
+        let affinityEditor = app.textViews["generated-modifier-affinity-editor"].firstMatch
+        XCTAssertTrue(affinityEditor.waitForExistence(timeout: 10),
+                      "The selection-affinity modifier must mount its actual native TextEditor context.")
+        XCTAssertTrue(affinityEditor.isHittable)
+        XCTAssertEqual(affinityEditor.value as? String, "Affinity example: hello مرحبا")
+        expectAdapterText("MODIFIER_HIT_COUNTS:front=0;back=0")
+        let back = app.buttons["Generated back target"].firstMatch
+        XCTAssertTrue(back.waitForExistence(timeout: 10))
+        XCTAssertGreaterThan(back.frame.width, 0)
+        let nativeTarget = back.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+        nativeTarget.tap()
+        expectAdapterText("MODIFIER_HIT_COUNTS:front=0;back=1")
+        tapAdapterButton("Enable generated front target")
+        XCTAssertTrue(app.buttons["Generated front target enabled"].firstMatch.waitForExistence(timeout: 10))
+        nativeTarget.tap()
+        expectAdapterText("MODIFIER_HIT_COUNTS:front=1;back=1")
+        capture(name: "generated-modifier-native-hit-testing")
+
+        let field = app.textFields["generated-modifier-input"].firstMatch
+        XCTAssertTrue(field.waitForExistence(timeout: 10))
+        XCTAssertTrue(field.isHittable)
+        field.tap()
+        field.typeText("native input\n")
+        expectAdapterText("MODIFIER_INPUT:native input")
+        XCTAssertFalse(waitUntil(timeout: 2) { self.sdkOnlyText("MODIFIER_SUBMITS:1").exists },
+                       "Blocking submitScope must prevent the real ancestor onSubmit callback.")
+        expectAdapterText("MODIFIER_SUBMITS:0")
+        tapAdapterButton("Allow generated submit")
+        XCTAssertTrue(app.buttons["Generated submit allowed"].firstMatch.waitForExistence(timeout: 10))
+        field.tap()
+        field.typeText("\n")
+        expectAdapterText("MODIFIER_SUBMITS:1")
+        capture(name: "generated-modifier-native-submit-scope")
+        tapAdapterButton("Generated modifier menu")
+        tapAdapterButton("Exit Generated Modifiers Probe")
+        closeExpoApp()
+    }
+
+    func testStandaloneExpoGeneratedModifierNativeContainerContexts() throws {
+        openAdditionalExpoProbe("Open Generated Modifiers Probe")
+        tapAdapterButton("Modifiers: Containers")
+        expectAdapterText("MODIFIER_NATIVE_CONTEXT:Containers:appeared")
+        let header = app.descendants(matching: .any).matching(
+            NSPredicate(format: "label == 'Generated item header'")
+        ).firstMatch
+        XCTAssertTrue(header.waitForExistence(timeout: 10))
+        tapAdapterButton("Toggle generated headers")
+        XCTAssertTrue(waitUntil(timeout: 10) { !header.exists },
+                      "tableColumnHeaders must hide the native header.")
+        tapAdapterButton("Toggle generated headers")
+        XCTAssertTrue(header.waitForExistence(timeout: 10))
+        let selectable = sdkOnlyText("Generated selectable row")
+        XCTAssertTrue(selectable.waitForExistence(timeout: 10))
+        selectable.tap()
+        XCTAssertFalse(waitUntil(timeout: 2) { self.sdkOnlyText("MODIFIER_LIST_SELECTION:invoice").exists })
+        expectAdapterText("MODIFIER_LIST_SELECTION:none")
+        tapAdapterButton("Allow generated selection")
+        XCTAssertTrue(app.buttons["Generated selection allowed"].firstMatch.waitForExistence(timeout: 10))
+        selectable.tap()
+        expectAdapterText("MODIFIER_LIST_SELECTION:invoice")
+        let swipeRow = sdkOnlyText("Generated swipe row")
+        XCTAssertTrue(swipeRow.waitForExistence(timeout: 10))
+        swipeRow.swipeLeft()
+        tapAdapterButton("Record generated swipe")
+        expectAdapterText("MODIFIER_SWIPE_ACTIONS:1")
+        capture(name: "generated-modifier-native-table-list-and-swipe")
+
+        tapAdapterButton("Generated search context")
+        let query = app.searchFields.firstMatch
+        XCTAssertTrue(query.waitForExistence(timeout: 10))
+        query.tap()
+        let suggestion = app.descendants(matching: .any).matching(
+            NSPredicate(format: "label == 'Generated suggestion Isaiah'")
+        ).firstMatch
+        XCTAssertTrue(suggestion.waitForExistence(timeout: 10))
+        XCTAssertTrue(suggestion.isHittable)
+        suggestion.tap()
+        expectAdapterText("MODIFIER_SEARCH_QUERY:Isaiah")
+        query.tap()
+        query.typeText("\n")
+        expectAdapterText("MODIFIER_SEARCH_SUBMITTED:Isaiah")
+        capture(name: "generated-modifier-native-search-completion")
+        tapAdapterButton("Generated modifier menu")
+
+        tapAdapterButton("Modifiers: Containers")
+        tapAdapterButton("Generated navigation context")
+        tapAdapterButton("Open generated detail")
+        expectAdapterText("GENERATED_MODIFIER_DETAIL")
+        let navigationBar = app.navigationBars["Generated detail"].firstMatch
+        XCTAssertTrue(navigationBar.waitForExistence(timeout: 10))
+        XCTAssertFalse(navigationBar.buttons.firstMatch.exists,
+                       "The generated back-button modifier must hide the actual native navigation control.")
+        tapAdapterButton("Show generated native back")
+        let nativeBack = navigationBar.buttons.firstMatch
+        XCTAssertTrue(nativeBack.waitForExistence(timeout: 10))
+        XCTAssertTrue(nativeBack.isHittable)
+        nativeBack.tap()
+        expectAdapterText("MODIFIER_NAVIGATION_PATH:")
+        XCTAssertFalse(sdkOnlyText("GENERATED_MODIFIER_DETAIL").exists)
+        capture(name: "generated-modifier-native-navigation-back")
+        tapAdapterButton("Generated modifier menu")
+
+        tapAdapterButton("Modifiers: Containers")
+        tapAdapterButton("Generated inspector context")
+        tapAdapterButton("Open generated inspector")
+        expectAdapterText("GENERATED_MODIFIER_INSPECTOR")
+        capture(name: "generated-modifier-original-inspector-context")
+        tapAdapterButton("Close generated inspector")
+        XCTAssertTrue(waitUntil(timeout: 10) { !self.sdkOnlyText("GENERATED_MODIFIER_INSPECTOR").exists })
+        expectAdapterText("MODIFIER_INSPECTOR_PRESENTED:false")
+        tapAdapterButton("Generated modifier menu")
+
+        tapAdapterButton("Modifiers: Host Context")
+        expectAdapterText("MODIFIER_NATIVE_CONTEXT:Host Context:appeared")
+        expectAdapterText("No document scene or file presenter is created by this probe.")
+        capture(name: "generated-modifier-host-context-boundary")
+        tapAdapterButton("Generated modifier menu")
+        tapAdapterButton("Exit Generated Modifiers Probe")
+        closeExpoApp()
+    }
+
+    func testStandaloneExpoHostServicesUseRealStorageRuntimeAndWidgetPublication() throws {
+        openAdditionalExpoProbe("Open Host Services Probe")
+        tapAdapterButton("Run Host Services Files")
+        expectAdapterText("HOST_SERVICES_FILES_PASS")
+        tapAdapterButton("Run Host Services Runtime")
+        expectAdapterText("HOST_SERVICES_RUNTIME_PASS")
+        tapAdapterButton("Run All Host Runtimes")
+        let allRuntimeStatus = app.descendants(matching: .any).matching(NSPredicate(
+            format: "label == %@ OR label BEGINSWITH %@",
+            "HOST_SERVICES_ALL_RUNTIMES_PASS", "HOST_SERVICES_FAILED:all-runtimes:"
+        )).firstMatch
+        // This additional five-backend check retains the original JSC assertion
+        // above and the original whole-case allowance. Cold Host preparation is
+        // followed by actual original Node, TS, Python, JSC and Shell execution.
+        XCTAssertTrue(allRuntimeStatus.waitForExistence(timeout: 120))
+        XCTAssertEqual(allRuntimeStatus.label, "HOST_SERVICES_ALL_RUNTIMES_PASS")
+        let receiptPrefix = "HOST_SERVICES_ALL_RUNTIMES_RECEIPTS:"
+        let receiptText = app.descendants(matching: .any).matching(
+            NSPredicate(format: "label BEGINSWITH %@", receiptPrefix)).firstMatch
+        XCTAssertTrue(receiptText.waitForExistence(timeout: 10))
+        let receiptData = Data(receiptText.label.dropFirst(receiptPrefix.count).utf8)
+        let evidence = try XCTUnwrap(try JSONSerialization.jsonObject(with: receiptData) as? [String: Any])
+        let nonce = try XCTUnwrap(evidence["nonce"] as? String)
+        XCTAssertFalse(nonce.isEmpty)
+        let rows = try XCTUnwrap(evidence["results"] as? [[String: Any]])
+        let kinds = ["node", "typeScript", "localPython", "javaScriptCore", "shell"]
+        XCTAssertEqual(rows.count, kinds.count)
+        var executionIDs = Set<String>()
+        for (expectedKind, row) in zip(kinds, rows) {
+            let kind = try XCTUnwrap(row["kind"] as? String)
+            XCTAssertEqual(kind, expectedKind)
+            let result = try XCTUnwrap(row["result"] as? [String: Any])
+            let executionID = try XCTUnwrap(result["executionID"] as? String)
+            XCTAssertNotNil(UUID(uuidString: executionID))
+            XCTAssertTrue(executionIDs.insert(executionID).inserted)
+            XCTAssertEqual(result["exitCode"] as? Int, 0)
+            XCTAssertEqual(result["didTimeOut"] as? Bool, false)
+            XCTAssertEqual(result["wasCancelled"] as? Bool, false)
+            XCTAssertEqual(result["outputWasTruncated"] as? Bool, false)
+            let duration = try XCTUnwrap(result["durationMilliseconds"] as? Double)
+            XCTAssertTrue(duration.isFinite && duration >= 0)
+            let stdout = try XCTUnwrap(result["stdout"] as? String)
+            XCTAssertEqual(stdout.trimmingCharacters(in: .whitespacesAndNewlines),
+                           nonce + ":" + kind + ":42")
+        }
+        let runtimeAttachment = XCTAttachment(data: receiptData, uniformTypeIdentifier: "public.json")
+        runtimeAttachment.name = "expo-original-five-runtime-receipts"
+        runtimeAttachment.lifetime = .keepAlways
+        add(runtimeAttachment)
+        tapAdapterButton("Read Host Live Activity Status")
+        let activityStatus = app.descendants(matching: .any).matching(NSPredicate(
+            format: "label BEGINSWITH 'HOST_SERVICES_ACTIVITY_READS_PASS:enabled='"
+        )).firstMatch
+        XCTAssertTrue(activityStatus.waitForExistence(timeout: 15),
+                      "The original ActivityKit status/list result must be read; this does not assert an activity was started.")
+        tapAdapterButton("Publish Prepared Expo Widget")
+        expectAdapterText("HOST_SERVICES_WIDGET_STATE_PASS")
+        capture(name: "host-services-actual-storage-runtime-and-prepared-widget-state")
+        // The typed receipt proves committed state/catalog/reload only. Rendering
+        // by WidgetKit and the installed action request/ack have separate cases.
+        tapAdapterButton("Close Host Services Probe")
+        closeExpoApp()
+    }
+
+    private func generatedEventCount(_ prefix: String) throws -> Int {
+        let value = app.descendants(matching: .any).matching(
+            NSPredicate(format: "label BEGINSWITH %@", prefix)
+        ).firstMatch
+        XCTAssertTrue(value.waitForExistence(timeout: 10))
+        return try XCTUnwrap(Int(value.label.dropFirst(prefix.count)))
+    }
+
+    private func openAdditionalExpoProbe(_ label: String) {
+        openApps()
+        importAndInstall(archive: "ExpoSwiftUIProbeA")
+        launchInstalledPackage(named: probeAPackageName)
+        let open = app.buttons[label].firstMatch
+        if !open.waitForExistence(timeout: 5) || !open.isHittable {
+            let sidebar = app.buttons.matching(NSPredicate(format:
+                "label == 'Show Sidebar' OR identifier == 'ToggleSidebar' OR label CONTAINS[c] 'Sidebar'")).firstMatch
+            if sidebar.exists && sidebar.isHittable {
+                sidebar.tap()
+            } else {
+                app.coordinate(withNormalizedOffset: CGVector(dx: 0.01, dy: 0.5))
+                    .press(forDuration: 0.1, thenDragTo: app.coordinate(withNormalizedOffset: CGVector(dx: 0.45, dy: 0.5)))
+            }
+        }
+        tapAdapterButton(label)
+    }
+
+    private func openManualAdapterProbe() {
+        openApps()
+        importAndInstall(archive: "ExpoSwiftUIProbeA")
+        launchInstalledPackage(named: probeAPackageName)
+        let open = app.buttons["Open Manual Adapter Probe"].firstMatch
+        if !open.waitForExistence(timeout: 5) || !open.isHittable {
+            let sidebar = app.buttons.matching(NSPredicate(format:
+                "label == 'Show Sidebar' OR identifier == 'ToggleSidebar' OR label CONTAINS[c] 'Sidebar'")).firstMatch
+            if sidebar.exists && sidebar.isHittable {
+                sidebar.tap()
+            } else {
+                app.coordinate(withNormalizedOffset: CGVector(dx: 0.01, dy: 0.5))
+                    .press(forDuration: 0.1, thenDragTo: app.coordinate(withNormalizedOffset: CGVector(dx: 0.45, dy: 0.5)))
+            }
+        }
+        tapAdapterButton("Open Manual Adapter Probe")
+        XCTAssertTrue(app.buttons["Input adapters"].firstMatch.waitForExistence(timeout: 10))
+    }
+
+    private func expectAdapterText(_ value: String, file: StaticString = #filePath, line: UInt = #line) {
+        XCTAssertTrue(sdkOnlyText(value).waitForExistence(timeout: 15),
+                      "Missing exact native adapter result: " + value, file: file, line: line)
+    }
+
+    private func tapAdapterButton(_ label: String, file: StaticString = #filePath, line: UInt = #line) {
+        let button = app.buttons.matching(NSPredicate(format: "label == %@", label)).firstMatch
+        XCTAssertTrue(button.waitForExistence(timeout: 15), "Missing adapter button: " + label, file: file, line: line)
+        XCTAssertTrue(button.isHittable, "Native adapter button is not hittable: " + label, file: file, line: line)
+        button.tap()
+    }
+
+    // These two independent source projects were authored by a fresh agent using
+    // only the exported original SDK and public documentation. The runner builds
+    // their unchanged sources with this app's actual SDK before the real importer
+    // installs them. Portable compilation alone is not this native acceptance.
+    func testStandaloneSDKOnlyExpoPackageImportsRendersAndHandlesEvents() throws {
+        openApps()
+        importAndInstall(archive: "SDKOnlyDepartureBudget")
+        launchInstalledPackage(named: "Departure Budget")
+
+        let initial = sdkOnlyText("55 minutes reserved before the target")
+        XCTAssertTrue(initial.waitForExistence(timeout: 30), "SDK-authored Expo root did not render")
+        revealSDKOnlyElement(initial, scrollTowardEnd: false)
+        let city = app.buttons["City"].firstMatch
+        revealSDKOnlyElement(city, scrollTowardEnd: true)
+        city.tap()
+        let cityBudget = sdkOnlyText("70 minutes reserved before the target")
+        revealSDKOnlyElement(cityBudget, scrollTowardEnd: false)
+        XCTAssertTrue(cityBudget.exists, "Native City button did not update the React calculation")
+        capture(name: "SDK-only Expo native City result")
+
+        let local = app.buttons["Local"].firstMatch
+        revealSDKOnlyElement(local, scrollTowardEnd: true)
+        local.tap()
+        let localBudget = sdkOnlyText("35 minutes reserved before the target")
+        revealSDKOnlyElement(localBudget, scrollTowardEnd: false)
+        XCTAssertTrue(localBudget.exists, "Native Local button did not update the React calculation")
+        capture(name: "SDK-only Expo native Local result")
+        closeExpoApp()
+
+        app.terminate()
+        app.launch()
+        openApps()
+        launchInstalledPackage(named: "Departure Budget")
+        XCTAssertTrue(initial.waitForExistence(timeout: 30), "Installed SDK-authored Expo package did not relaunch")
+        capture(name: "SDK-only Expo installed package relaunch")
+        closeExpoApp()
+    }
+
+    func testStandaloneSDKOnlyNativeScriptPackageImportsRendersAndHandlesEvents() throws {
+        openApps()
+        importAndInstall(archive: "SDKOnlyTableShare")
+        launchInstalledPackage(named: "Table Share")
+        XCTAssertTrue(sdkOnlyText("Table Share").waitForExistence(timeout: 30),
+                      "SDK-authored NativeScript Core page did not render")
+        let total = sdkOnlyText("$106.26 total")
+        revealSDKOnlyElement(total, scrollTowardEnd: true)
+        XCTAssertTrue(total.exists)
+        let initialShares = sdkOnlyText("3 people pay $35.42 each.")
+        revealSDKOnlyElement(initialShares, scrollTowardEnd: true)
+        XCTAssertTrue(initialShares.exists)
+
+        let more = app.buttons["+"].firstMatch
+        revealSDKOnlyElement(more, scrollTowardEnd: false)
+        more.tap()
+        let fourShares = sdkOnlyText("2 pay $26.57; 2 pay $26.56.")
+        revealSDKOnlyElement(fourShares, scrollTowardEnd: true)
+        XCTAssertTrue(fourShares.exists, "Original NativeScript tap event did not recalculate cents")
+        let rounding = app.switches.firstMatch
+        revealSDKOnlyElement(rounding, scrollTowardEnd: false)
+        XCTAssertTrue(rounding.isEnabled)
+        rounding.tap()
+        let rounded = sdkOnlyText("4 people pay $27.00 each.")
+        revealSDKOnlyElement(rounded, scrollTowardEnd: true)
+        XCTAssertTrue(rounded.exists, "Original NativeScript checkedChange event did not recalculate contributions")
+        let extra = sdkOnlyText("Whole-dollar rounding collects $1.74 extra. Decide together where that goes.")
+        revealSDKOnlyElement(extra, scrollTowardEnd: true)
+        XCTAssertTrue(extra.exists)
+        capture(name: "SDK-only NativeScript native rounded result")
+
+        let reset = app.buttons["Reset to example bill"].firstMatch
+        revealSDKOnlyElement(reset, scrollTowardEnd: true)
+        reset.tap()
+        revealSDKOnlyElement(initialShares, scrollTowardEnd: false)
+        XCTAssertTrue(initialShares.exists, "NativeScript reset did not restore the actual model")
+        capture(name: "SDK-only NativeScript native reset result")
+        closeNativeScriptApp()
+    }
+
+    private func sdkOnlyText(_ text: String) -> XCUIElement {
+        app.staticTexts.matching(NSPredicate(format: "label == %@", text)).firstMatch
+    }
+
+    private func revealSDKOnlyElement(_ element: XCUIElement, scrollTowardEnd: Bool,
+                                      file: StaticString = #filePath, line: UInt = #line) {
+        for _ in 0..<8 {
+            if element.exists && element.isHittable { return }
+            if scrollTowardEnd { app.swipeUp() } else { app.swipeDown() }
+        }
+        XCTAssertTrue(element.waitForExistence(timeout: 10), "SDK-authored native content was missing", file: file, line: line)
+        XCTAssertTrue(element.isHittable, "SDK-authored native content was not reachable by scrolling", file: file, line: line)
+    }
+
+    func testStandaloneModularSearchLoadsActualSefariaText() throws {
+        openApps()
+        importAndInstall(archive: "ModularTextSearch")
+        launchInstalledPackage(named: "חיפוש טקסטים מודולרי — Expo")
+
+        // The canonical package starts in Hebrew independently of the host locale.
+        let english = app.buttons["English"].firstMatch
+        XCTAssertTrue(english.waitForExistence(timeout: 30), "The canonical search package did not render")
+        english.tap()
+        XCTAssertTrue(app.buttons["Search now"].firstMatch.waitForExistence(timeout: 10))
+
+        // Submit through the shipped native Searchable, using the real Sefaria engine.
+        for _ in 0..<3 {
+            if app.searchFields.allElementsBoundByIndex.contains(where: { $0.isHittable }) { break }
+            app.swipeDown()
+        }
+        let searchField = try XCTUnwrap(
+            app.searchFields.allElementsBoundByIndex.first(where: { $0.isHittable }),
+            "The package's native search field must be available")
+        searchField.tap()
+        searchField.typeText("In the beginning God created\n")
+        XCTAssertTrue(app.staticTexts["Native search submitted."].firstMatch.waitForExistence(timeout: 15),
+            "The native submit event did not reach the package")
+        let resultSummary = app.staticTexts.matching(NSPredicate(
+            format: "label ==[c] %@", "Results summary")).firstMatch
+        XCTAssertTrue(resultSummary.waitForExistence(timeout: 60),
+            "The actual Sefaria request must return a result summary")
+
+        // Result references and ranking belong to the live service. Select a real
+        // result row by its shipped reference + snippet label, not a fixed edition.
+        let resultRows = app.buttons.matching(NSPredicate(
+            format: "label CONTAINS %@ AND NOT (identifier BEGINSWITH %@)", "\n", "hanlin-"))
+        for _ in 0..<5 {
+            if resultRows.allElementsBoundByIndex.contains(where: { $0.isHittable }) { break }
+            app.swipeUp()
+        }
+        let result = try XCTUnwrap(
+            resultRows.allElementsBoundByIndex.first(where: { $0.isHittable }),
+            "The live search must produce a navigable reference and snippet")
+        let selectedReference = String(result.label.split(separator: "\n").first ?? "")
+        XCTAssertFalse(selectedReference.isEmpty)
+        capture(name: "modular-search-live-sefaria-results")
+        result.tap()
+
+        let sourceLink = app.descendants(matching: .any).matching(NSPredicate(
+            format: "label == %@", "Open in Sefaria")).firstMatch
+        XCTAssertTrue(sourceLink.waitForExistence(timeout: 15),
+            "Opening the result must show its real source detail")
+        // The original native list can expose interactive rows without an AX
+        // hit point on the collection itself. Require the actual detail's
+        // version control and verify its real expansion transition below.
+        let sourceVersionPrefix = "modular-source-version-"
+        let loadedVersionPrefix = "modular-loaded-version-"
+        let sourceVersionPredicate = NSPredicate(
+            format: "identifier BEGINSWITH %@", sourceVersionPrefix)
+        func nativeDetailList() -> XCUIElement? {
+            let lists = app.collectionViews.allElementsBoundByIndex + app.tables.allElementsBoundByIndex
+            return lists.first {
+                $0.descendants(matching: .any).matching(NSPredicate(
+                    format: "label == %@", "Open in Sefaria")).firstMatch.exists
+            }
+        }
+        let detailReady = waitUntil(timeout: 15) {
+            nativeDetailList()?.descendants(matching: .any).matching(sourceVersionPredicate)
+                .allElementsBoundByIndex.contains(where: { $0.isHittable }) == true
+        }
+        capture(name: "modular-search-native-detail")
+        XCTAssertTrue(detailReady, "Native detail must expose an interactive original version control")
+        let detailList = try XCTUnwrap(nativeDetailList(),
+            "The result must render its native list containing the actual source link")
+        // Native SwiftUI propagates an identifier on the whole disclosure to
+        // its content rows. The fixture marks only the original label Text, so
+        // the actual load button and returned body keep their own identifiers.
+        func disclosureHeader(labelIdentifier: String) -> XCUIElement {
+            let direct = detailList.buttons.matching(NSPredicate(
+                format: "identifier == %@", labelIdentifier)).firstMatch
+            if direct.exists { return direct }
+            return detailList.buttons.containing(.any, identifier: labelIdentifier).firstMatch
+        }
+        let versionLabels = detailList.descendants(matching: .any).matching(sourceVersionPredicate)
+        for _ in 0..<5 {
+            if versionLabels.allElementsBoundByIndex.contains(where: { $0.isHittable }) { break }
+            detailList.swipeUp()
+        }
+        let sourceVersionLabel = try XCTUnwrap(
+            versionLabels.allElementsBoundByIndex.first(where: { $0.isHittable }),
+            "The result must expose an original version disclosure label")
+        let sourceVersion = disclosureHeader(labelIdentifier: sourceVersionLabel.identifier)
+        XCTAssertTrue(sourceVersion.isHittable)
+        let entryID = String(sourceVersionLabel.identifier.dropFirst(sourceVersionPrefix.count))
+        XCTAssertFalse(entryID.isEmpty)
+        let loadText = detailList.buttons.matching(NSPredicate(
+            format: "identifier == %@", "modular-full-text-load-" + entryID)).firstMatch
+
+        func expandDisclosure(_ header: XCUIElement, content: XCUIElement, name: String) {
+            // Use the original native disclosure's actual state, then require
+            // the matching content transition. A missing locator cannot stand
+            // in for a collapsed group.
+            let expanded = header.images["expanded"].firstMatch
+            let collapsed = header.images["collapsed"].firstMatch
+            let initiallyExpanded = expanded.exists
+            XCTAssertNotEqual(initiallyExpanded, collapsed.exists,
+                "\(name) must expose exactly one native disclosure state")
+            XCTAssertEqual(content.exists, initiallyExpanded,
+                "\(name) must expose its own content in the native expanded state")
+            header.tap()
+            XCTAssertTrue(waitUntil(timeout: 10) {
+                expanded.exists != initiallyExpanded &&
+                collapsed.exists == initiallyExpanded &&
+                content.exists != initiallyExpanded
+            }, "\(name) must respond to the original disclosure control")
+            if initiallyExpanded { header.tap() }
+            XCTAssertTrue(waitUntil(timeout: 15) {
+                expanded.exists && !collapsed.exists && content.exists
+            }, "\(name) must expose its own content after expansion")
+        }
+        expandDisclosure(sourceVersion, content: loadText, name: "Source version")
+        if !loadText.isHittable { detailList.swipeUp() }
+        XCTAssertTrue(loadText.isHittable)
+        let loadedVersions = detailList.descendants(matching: .any).matching(NSPredicate(
+            format: "identifier BEGINSWITH %@", loadedVersionPrefix + entryID + ":"))
+        let versionsBeforeLoad = Set(loadedVersions.allElementsBoundByIndex.map { $0.identifier })
+        loadText.tap()
+
+        // These identifiers are emitted only by versions returned from the
+        // live /api/v3/texts response, scoped to source entry plus version ID.
+        func returnedVersion() -> XCUIElement? {
+            loadedVersions.allElementsBoundByIndex.first {
+                !versionsBeforeLoad.contains($0.identifier)
+            }
+        }
+        let noVersions = detailList.staticTexts["No text versions were returned for this source."].firstMatch
+        XCTAssertTrue(waitUntil(timeout: 60) { returnedVersion() != nil || noVersions.exists },
+            "The actual full-text request did not render any returned version")
+        XCTAssertFalse(noVersions.exists, "The live source returned no full-text versions")
+        for _ in 0..<4 {
+            if returnedVersion()?.isHittable == true { break }
+            detailList.swipeUp()
+        }
+        let textVersionLabel = try XCTUnwrap(returnedVersion(), "A returned full-text version is required")
+        let textVersion = disclosureHeader(labelIdentifier: textVersionLabel.identifier)
+        XCTAssertTrue(textVersion.isHittable)
+        let returnedVersionID = String(textVersionLabel.identifier.dropFirst(loadedVersionPrefix.count))
+        XCTAssertFalse(returnedVersionID.isEmpty)
+        let textBody = detailList.staticTexts.matching(NSPredicate(
+            format: "identifier == %@", "modular-full-text-body-" + returnedVersionID)).firstMatch
+        expandDisclosure(textVersion, content: textBody, name: "Returned text version")
+
+        let language = detailList.staticTexts.matching(NSPredicate(
+            format: "label == %@ OR label BEGINSWITH %@", "Language", "Language,")).firstMatch
+        XCTAssertTrue(language.waitForExistence(timeout: 15),
+            "The returned version must expose its original language metadata")
+        let noText = "No text is available for this version."
+        XCTAssertFalse(detailList.staticTexts[noText].firstMatch.exists)
+
+        // A complete Hebrew verse can be shorter than 40 grapheme clusters.
+        // Its source-scoped API body, native disclosure and real word content
+        // establish a rendered response without an English-length assumption.
+        func visibleFullText() -> XCUIElement? {
+            guard textBody.exists && textBody.isHittable else { return nil }
+            let label = textBody.label.trimmingCharacters(in: .whitespacesAndNewlines)
+            guard label.split(whereSeparator: { $0.isWhitespace }).count >= 6 &&
+                label != noText && !label.hasPrefix("Language,") && !label.hasPrefix("License,") else {
+                return nil
+            }
+            return textBody
+        }
+        for _ in 0..<5 {
+            if visibleFullText() != nil { break }
+            detailList.swipeUp()
+        }
+        let fullText = try XCTUnwrap(visibleFullText(),
+            "Expanding the API response must render a nonempty full text, not only the search snippet or metadata")
+        XCTAssertFalse(fullText.label.isEmpty)
+        let evidence = XCTAttachment(string: "Reference: \(selectedReference)\nFull text: \(fullText.label)")
+        evidence.name = "modular-search-actual-sefaria-text"
+        evidence.lifetime = .keepAlways
+        add(evidence)
+        capture(name: "modular-search-live-sefaria-full-text")
+        let back = app.navigationBars.buttons["BackButton"].firstMatch
+        XCTAssertTrue(back.waitForExistence(timeout: 10),
+                      "The native detail must expose its navigation back control.")
+        XCTAssertTrue(back.isHittable)
+        back.tap()
+        let rootClose = app.buttons["hanlin-script-app-close"].firstMatch
+        XCTAssertTrue(waitUntil(timeout: 10) { rootClose.exists && rootClose.isHittable },
+                      "Returning from the native detail must reveal the original miniapp close control.")
+        closeExpoApp()
+    }
+
     private func openApps() {
         let manage = app.buttons["hanlin-apps-add"].firstMatch
         XCTAssertTrue(manage.waitForExistence(timeout: 30),
@@ -424,28 +1388,39 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
         importButton.tap()
         let list = app.collectionViews["hanlin-package-import-list"].firstMatch
         XCTAssertTrue(list.waitForExistence(timeout: 15))
-        let source = app.buttons[archive].firstMatch
+        let source = list.buttons[archive].firstMatch
+        // The native List creates accessibility rows lazily. Search within that
+        // list before requiring existence, including the later SDK-only inputs.
+        for _ in 0..<8 {
+            if source.exists && source.isHittable { break }
+            list.swipeUp()
+        }
         XCTAssertTrue(source.waitForExistence(timeout: 15))
-        if !source.isHittable { list.swipeUp() }
         XCTAssertTrue(source.isHittable)
         source.tap()
         let install = app.buttons["hanlin-package-install"].firstMatch
-        XCTAssertTrue(install.waitForExistence(timeout: 30))
-        let approve = app.buttons["hanlin-approve-all-capabilities"].firstMatch
-        if approve.waitForExistence(timeout: 2) {
-            if !approve.isHittable { app.swipeUp() }
-            XCTAssertTrue(approve.isHittable)
-            approve.tap() // Actual existing user consent control, never a stored grant seed.
-        }
+        let importError = app.staticTexts["hanlin-import-error-message"].firstMatch
+        let diagnostics = app.descendants(matching: .any)["hanlin-import-diagnostics-sheet"].firstMatch
+        // The original strict compiler took 64.537s in the measured SDK9 import.
+        // Wait for the real import outcome within the existing 420s case budget.
+        // A compiler/import error ends this wait immediately instead of hiding it.
+        XCTAssertTrue(waitUntil(timeout: 240) {
+            install.exists || importError.exists || diagnostics.exists
+        }, "Original package validation must finish with an install preview or diagnostics")
+        XCTAssertFalse(importError.exists,
+                       "The original importer failed: \(importError.exists ? importError.label : "")")
+        XCTAssertFalse(diagnostics.exists, "The valid original package produced import diagnostics")
+        XCTAssertTrue(install.exists, "The original compiler must produce an installable preview")
+        XCTAssertFalse(app.buttons["hanlin-approve-all-capabilities"].exists,
+                       "Current original framework imports must not add an application capability approval step")
         if !install.isHittable { app.swipeDown() }
         XCTAssertTrue(waitUntil(timeout: 15) { install.isEnabled && install.isHittable })
         install.tap()
-        let importError = app.staticTexts["hanlin-import-error-message"].firstMatch
         XCTAssertTrue(waitUntil(timeout: 60) { !install.exists || importError.exists },
                       "The existing installer must complete in the companion's own namespace")
         XCTAssertFalse(importError.exists, "The original installer failed: \(importError.exists ? importError.label : "")")
         XCTAssertFalse(install.exists, "Successful installation must consume the original preview")
-        let done = app.navigationBars["Script Package"].buttons["Done"].firstMatch
+        let done = app.buttons["hanlin-package-import-done"].firstMatch
         XCTAssertTrue(done.waitForExistence(timeout: 10))
         done.tap()
         let close = app.buttons["hanlin-apps-add-done"].firstMatch
@@ -497,5 +1472,156 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
         tree.name = name + "-accessibility"
         tree.lifetime = .keepAlways
         add(tree)
+    }
+}
+
+
+/// Extra, separately selected OS-ingress check. The original paired selectors
+/// remain unchanged. The external controller may only submit real simulator
+/// pushes and read the product's durable receipts; it never writes that queue.
+/// Handshake files belong to this UI-test runner, outside either product store.
+extension MiniAppsProductionRuntimeUITests {
+    func testOriginalNotificationAuthorizationAndOSDeliveryToBothEngines() throws {
+        executionTimeAllowance = 600
+        let runID = UUID().uuidString.lowercased()
+        let challenge = "notification-os-" + UUID().uuidString.lowercased()
+        let documents = try XCTUnwrap(FileManager.default.urls(
+            for: .documentDirectory, in: .userDomainMask).first)
+        let exchange = documents.appendingPathComponent("HanlinNotificationOSProbe", isDirectory: true)
+        let runDirectory = exchange.appendingPathComponent(runID, isDirectory: true)
+        try FileManager.default.createDirectory(at: runDirectory, withIntermediateDirectories: true)
+        try writeNotificationProbeJSON([
+            "version": 1, "runID": runID, "challenge": challenge
+        ], to: exchange.appendingPathComponent("active.json"))
+
+        // The unchanged original widget fixture exposes the original system
+        // access UI. Grant only the notification permission through Apple's UI.
+        importAndInstall(archive: "Hanlin-ScriptWidget-Actions")
+        // Widget-only packages are configured in the original Add Apps sheet.
+        app.buttons["hanlin-apps-add"].tap()
+        launchInstalledPackage(named: "ScriptWidget Actions")
+        let services = app.buttons.matching(NSPredicate(
+            format: "identifier BEGINSWITH %@", "hanlin-widget-services-")).firstMatch
+        revealNotificationControl(services)
+        services.tap()
+        let systemAccess = app.buttons["Contacts, Home, Files, Notifications and Alarms"].firstMatch
+        revealNotificationControl(systemAccess)
+        systemAccess.tap()
+        let authorize = app.buttons["Authorize Notifications"].firstMatch
+        revealNotificationControl(authorize)
+        capture(name: "notification-original-authorization-control")
+        authorize.tap()
+
+        let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
+        let permissionAlert = springboard.alerts.firstMatch
+        if permissionAlert.waitForExistence(timeout: 10) {
+            XCTAssertTrue(permissionAlert.staticTexts.matching(NSPredicate(
+                format: "label CONTAINS[c] %@", "notification")).firstMatch.exists,
+                "Only the actual notification authorization alert may be accepted")
+            let permissionImage = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+            permissionImage.name = "notification-original-system-permission"
+            permissionImage.lifetime = .keepAlways
+            add(permissionImage)
+            let allow = permissionAlert.buttons["Allow"].firstMatch
+            XCTAssertTrue(allow.exists && allow.isHittable)
+            allow.tap()
+        }
+        let authorizationMessage = app.staticTexts["system-access-message"].firstMatch
+        revealNotificationControl(authorizationMessage, maximumSwipes: 14)
+        XCTAssertTrue(waitUntil(timeout: 15) {
+            authorizationMessage.label == "Notifications authorized."
+        }, "The original UNUserNotificationCenter request must actually grant notification authorization")
+        capture(name: "notification-original-authorization-result")
+        app.terminate()
+        app.launch()
+
+        openAdditionalExpoProbe("Open Host Services Probe")
+        XCTAssertTrue(app.buttons["Run Host Services Files"].firstMatch.waitForExistence(timeout: 20))
+        try exchangeNotificationProbe(
+            runtime: "expo", packageName: probeAPackageName,
+            runID: runID, challenge: challenge, directory: runDirectory)
+        capture(name: "notification-os-expo-terminal-receipts")
+        closeExpoApp()
+
+        importAndInstall(archive: "hanlin-script-parity")
+        launchInstalledPackage(named: parityPackageName)
+        XCTAssertTrue(app.descendants(matching: .any)["hanlin-script-parity-title"]
+            .firstMatch.waitForExistence(timeout: 30))
+        try exchangeNotificationProbe(
+            runtime: "nativescript", packageName: parityPackageName,
+            runID: runID, challenge: challenge, directory: runDirectory)
+        capture(name: "notification-os-nativescript-terminal-receipts")
+        closeNativeScriptApp()
+        try writeNotificationProbeJSON([
+            "version": 1, "runID": runID, "challenge": challenge, "status": "EXECUTED_PASS"
+        ], to: runDirectory.appendingPathComponent("ui-finished.json"))
+    }
+
+    private func revealNotificationControl(_ element: XCUIElement, maximumSwipes: Int = 10) {
+        for _ in 0..<maximumSwipes {
+            if element.exists && element.isHittable { return }
+            app.swipeUp()
+        }
+        XCTAssertTrue(element.waitForExistence(timeout: 10))
+        XCTAssertTrue(element.isHittable, "The original control must be visible in its native form")
+    }
+
+    private func writeNotificationProbeJSON(_ value: [String: Any], to url: URL) throws {
+        let data = try JSONSerialization.data(withJSONObject: value, options: [.sortedKeys])
+        try data.write(to: url, options: .atomic)
+    }
+
+    private func exchangeNotificationProbe(
+        runtime: String, packageName: String, runID: String, challenge: String, directory: URL
+    ) throws {
+        let requestURL = directory.appendingPathComponent(runtime + ".request.json")
+        let completionURL = directory.appendingPathComponent(runtime + ".complete.json")
+        XCTAssertFalse(FileManager.default.fileExists(atPath: requestURL.path))
+        XCTAssertFalse(FileManager.default.fileExists(atPath: completionURL.path))
+        try writeNotificationProbeJSON([
+            "version": 1, "runID": runID, "challenge": challenge,
+            "runtime": runtime, "packageName": packageName
+        ], to: requestURL)
+        XCTAssertTrue(waitUntil(timeout: 120) {
+            FileManager.default.fileExists(atPath: completionURL.path)
+        }, "The external simulator-push controller must return actual product receipts")
+        let data = try Data(contentsOf: completionURL)
+        let attachment = XCTAttachment(data: data, uniformTypeIdentifier: "public.json")
+        attachment.name = "notification-os-" + runtime + "-actual-receipts"
+        attachment.lifetime = .keepAlways
+        add(attachment)
+        let completion = try XCTUnwrap(JSONSerialization.jsonObject(with: data) as? [String: Any])
+        XCTAssertEqual(completion["version"] as? Int, 1)
+        XCTAssertEqual(completion["runID"] as? String, runID)
+        XCTAssertEqual(completion["challenge"] as? String, challenge)
+        XCTAssertEqual(completion["runtime"] as? String, runtime)
+        XCTAssertEqual(completion["transport"] as? String, "simctl_push")
+        XCTAssertEqual(completion["status"] as? String, "EXECUTED_PASS",
+                       completion["reason"] as? String ?? "No verified OS receipt result")
+        let observations = try XCTUnwrap(completion["observations"] as? [[String: Any]])
+        let expectedKinds = runtime == "expo" ? ["success", "duplicate", "failure"] : ["success", "duplicate"]
+        XCTAssertEqual(observations.compactMap { $0["kind"] as? String }, expectedKinds)
+        for observation in observations {
+            let record = try XCTUnwrap(observation["record"] as? [String: Any])
+            let receipt = try XCTUnwrap(record["receipt"] as? [String: Any])
+            let invocationID = try XCTUnwrap(receipt["invocationID"] as? String)
+            XCTAssertNotNil(UUID(uuidString: invocationID))
+            XCTAssertEqual(record["id"] as? String, invocationID)
+            XCTAssertEqual(receipt["attempt"] as? Int, 1)
+            XCTAssertFalse(receipt["cancellationRequested"] as? Bool ?? true)
+            XCTAssertEqual(observation["pushExitCode"] as? Int, 0)
+            if observation["kind"] as? String == "failure" {
+                XCTAssertEqual(receipt["status"] as? String, "failed")
+                XCTAssertEqual(receipt["failure"] as? String, "actionFailed")
+                XCTAssertNil(receipt["value"])
+            } else {
+                XCTAssertEqual(receipt["status"] as? String, "succeeded")
+                XCTAssertNil(receipt["failure"])
+                XCTAssertNotNil(receipt["value"])
+            }
+        }
+        let first = try XCTUnwrap(observations.first?["record"] as? NSDictionary)
+        let duplicate = try XCTUnwrap(observations.dropFirst().first?["record"] as? NSDictionary)
+        XCTAssertEqual(first, duplicate, "A second successful simctl submission must retain the identical completed record")
     }
 }

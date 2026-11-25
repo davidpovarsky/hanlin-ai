@@ -1,4 +1,6 @@
 #import "HanlinExpoNativeAPIGate.h"
+#import <UIKit/UIKit.h>
+#import <objc/runtime.h>
 #import <mutex>
 #import <unordered_map>
 #import <string>
@@ -27,76 +29,87 @@
 @end
 
 static std::mutex sGateMutex;
-static HanlinExpoNativeAPISessionContext *sActiveContext = nil;
+static NSMutableDictionary<NSString*, HanlinExpoNativeAPISessionContext*> *sContexts = nil;
 static NSString *sBundledMetadataPathOverride = nil;
 static std::unordered_map<void*, std::string> sRuntimeToSessionMap;
+static char sViewSessionKey;
 
-// Forward declaration from NativeScriptNativeApiModule.mm
+// The runtime module may be omitted by focused consumers of the gate.
 extern "C" void HanlinExpoNativeAPIClearWorkletRuntime(void) __attribute__((weak));
+extern "C" void HanlinExpoNativeAPIClearWorkletRuntimeForSession(NSString *) __attribute__((weak));
 
 @implementation HanlinExpoNativeAPIGate
 
 + (void)registerActiveSessionContext:(HanlinExpoNativeAPISessionContext *)context {
   std::lock_guard<std::mutex> lock(sGateMutex);
-  if (sActiveContext != context) {
-    [sActiveContext release];
-    sActiveContext = [context retain];
-  }
+  if (sContexts == nil) sContexts = [[NSMutableDictionary alloc] init];
+  sContexts[context.sessionID] = context;
   NSLog(@"[HANLIN_EXPO_NATIVEAPI_GATE] Registered session context session=%@ package=%@ gen=%llu granted=%d",
         context.sessionID, context.packageID, (unsigned long long)context.generation, context.isNativeAPIGranted);
 }
 
 + (void)bindRuntime:(nullable void *)runtimePointer forSessionID:(NSString *)sessionID {
-  if (runtimePointer == nullptr || sessionID == nil) {
-    return;
-  }
+  if (runtimePointer == nullptr || sessionID == nil) return;
   std::lock_guard<std::mutex> lock(sGateMutex);
-  sRuntimeToSessionMap[runtimePointer] = [sessionID UTF8String];
-  NSLog(@"[HANLIN_EXPO_NATIVEAPI_GATE] Bound runtime %p to session %@", runtimePointer, sessionID);
+  if (sContexts[sessionID] == nil) return;
+  sRuntimeToSessionMap[runtimePointer] = sessionID.UTF8String;
+}
+
++ (nullable HanlinExpoNativeAPISessionContext *)sessionContextForRuntime:(nullable void *)runtimePointer {
+  if (runtimePointer == nullptr) return nil;
+  std::lock_guard<std::mutex> lock(sGateMutex);
+  auto entry = sRuntimeToSessionMap.find(runtimePointer);
+  if (entry == sRuntimeToSessionMap.end()) return nil;
+  NSString *sessionID = [NSString stringWithUTF8String:entry->second.c_str()];
+  return [[sContexts[sessionID] retain] autorelease];
+}
+
++ (nullable HanlinExpoNativeAPISessionContext *)sessionContextForSessionID:(NSString *)sessionID {
+  if (sessionID == nil) return nil;
+  std::lock_guard<std::mutex> lock(sGateMutex);
+  return [[sContexts[sessionID] retain] autorelease];
+}
+
++ (void)bindView:(UIView *)view forSessionID:(NSString *)sessionID {
+  objc_setAssociatedObject(view, &sViewSessionKey, sessionID, OBJC_ASSOCIATION_COPY_NONATOMIC);
+}
+
++ (nullable HanlinExpoNativeAPISessionContext *)sessionContextForView:(UIView *)view {
+  for (UIView *ancestor = view; ancestor != nil; ancestor = ancestor.superview) {
+    NSString *sessionID = objc_getAssociatedObject(ancestor, &sViewSessionKey);
+    if (sessionID != nil) return [self sessionContextForSessionID:sessionID];
+  }
+  return nil;
 }
 
 + (void)revokeSession:(NSString *)sessionID {
-  std::lock_guard<std::mutex> lock(sGateMutex);
-  if (sActiveContext != nil && [sActiveContext.sessionID isEqualToString:sessionID]) {
-    NSLog(@"[HANLIN_EXPO_NATIVEAPI_GATE] Revoked active session context session=%@ package=%@",
-          sActiveContext.sessionID, sActiveContext.packageID);
-    [sActiveContext release];
-    sActiveContext = nil;
-  }
-  std::string targetSession = [sessionID UTF8String];
-  for (auto it = sRuntimeToSessionMap.begin(); it != sRuntimeToSessionMap.end(); ) {
-    if (it->second == targetSession) {
-      it = sRuntimeToSessionMap.erase(it);
-    } else {
-      ++it;
+  if (sessionID == nil) return;
+  {
+    std::lock_guard<std::mutex> lock(sGateMutex);
+    [sContexts removeObjectForKey:sessionID];
+    std::string targetSession = sessionID.UTF8String;
+    for (auto entry = sRuntimeToSessionMap.begin(); entry != sRuntimeToSessionMap.end();) {
+      if (entry->second == targetSession) entry = sRuntimeToSessionMap.erase(entry);
+      else ++entry;
     }
   }
-  if (&HanlinExpoNativeAPIClearWorkletRuntime != NULL) {
-    HanlinExpoNativeAPIClearWorkletRuntime();
+  // Do not invoke a module while holding the gate mutex. Closing B cannot clear A.
+  if (&HanlinExpoNativeAPIClearWorkletRuntimeForSession != NULL) {
+    HanlinExpoNativeAPIClearWorkletRuntimeForSession(sessionID);
   }
 }
 
 + (void)revokeActiveSession {
-  std::lock_guard<std::mutex> lock(sGateMutex);
-  if (sActiveContext != nil) {
-    NSLog(@"[HANLIN_EXPO_NATIVEAPI_GATE] Revoked active session synchronously session=%@ package=%@",
-          sActiveContext.sessionID, sActiveContext.packageID);
-    [sActiveContext release];
-    sActiveContext = nil;
-  }
-  sRuntimeToSessionMap.clear();
-  if (&HanlinExpoNativeAPIClearWorkletRuntime != NULL) {
-    HanlinExpoNativeAPIClearWorkletRuntime();
-  }
+  HanlinExpoNativeAPISessionContext *context = [self activeSessionContext];
+  if (context != nil) [self revokeSession:context.sessionID];
 }
 
 + (void)invalidateAllSessions {
-  std::lock_guard<std::mutex> lock(sGateMutex);
-  if (sActiveContext != nil) {
-    [sActiveContext release];
-    sActiveContext = nil;
+  {
+    std::lock_guard<std::mutex> lock(sGateMutex);
+    [sContexts removeAllObjects];
+    sRuntimeToSessionMap.clear();
   }
-  sRuntimeToSessionMap.clear();
   if (&HanlinExpoNativeAPIClearWorkletRuntime != NULL) {
     HanlinExpoNativeAPIClearWorkletRuntime();
   }
@@ -104,37 +117,16 @@ extern "C" void HanlinExpoNativeAPIClearWorkletRuntime(void) __attribute__((weak
 
 + (nullable HanlinExpoNativeAPISessionContext *)activeSessionContext {
   std::lock_guard<std::mutex> lock(sGateMutex);
-  return [[sActiveContext retain] autorelease];
+  if (sContexts.count != 1) return nil;
+  return [[[sContexts allValues].firstObject retain] autorelease];
 }
 
 + (BOOL)isNativeAPIAuthorizedForCurrentSession {
-  std::lock_guard<std::mutex> lock(sGateMutex);
-  if (sActiveContext == nil) {
-    NSLog(@"[HANLIN_EXPO_NATIVEAPI_GATE_DENIAL] No active session context registered.");
-    return NO;
-  }
-  return YES;
+  return [self activeSessionContext] != nil;
 }
 
 + (BOOL)isNativeAPIAuthorizedForRuntime:(nullable void *)runtimePointer {
-  std::lock_guard<std::mutex> lock(sGateMutex);
-  if (sActiveContext == nil) {
-    NSLog(@"[HANLIN_EXPO_NATIVEAPI_GATE_DENIAL] No active session context.");
-    return NO;
-  }
-  if (runtimePointer != nullptr) {
-    auto it = sRuntimeToSessionMap.find(runtimePointer);
-    if (it != sRuntimeToSessionMap.end()) {
-      if (it->second != [sActiveContext.sessionID UTF8String]) {
-        NSLog(@"[HANLIN_EXPO_NATIVEAPI_GATE_DENIAL] Runtime %p bound to stale session %s, active is %@",
-              runtimePointer, it->second.c_str(), sActiveContext.sessionID);
-        return NO;
-      }
-    } else {
-      sRuntimeToSessionMap[runtimePointer] = [sActiveContext.sessionID UTF8String];
-    }
-  }
-  return YES;
+  return [self sessionContextForRuntime:runtimePointer] != nil;
 }
 
 + (void)setBundledMetadataPathOverride:(nullable NSString *)path {
@@ -189,15 +181,10 @@ extern "C" void HanlinExpoNativeAPIClearWorkletRuntime(void) __attribute__((weak
 }
 
 + (void)reset {
+  [self invalidateAllSessions];
   std::lock_guard<std::mutex> lock(sGateMutex);
-  [sActiveContext release];
-  sActiveContext = nil;
   [sBundledMetadataPathOverride release];
   sBundledMetadataPathOverride = nil;
-  sRuntimeToSessionMap.clear();
-  if (&HanlinExpoNativeAPIClearWorkletRuntime != NULL) {
-    HanlinExpoNativeAPIClearWorkletRuntime();
-  }
 }
 
 @end

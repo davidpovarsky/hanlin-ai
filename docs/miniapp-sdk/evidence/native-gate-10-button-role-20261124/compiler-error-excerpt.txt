@@ -1,0 +1,42 @@
+49810: SwiftEmitModule normal arm64 Emitting\ module\ for\ HanlinTranslationUI (in target 'HanlinTranslationUI' from project 'HanlinSDK')
+49811: /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinAppExtensionsSDK/Sources/HanlinTranslationUI/HanlinNativePresentationView.swift:13:59: error: 'ButtonRole' is ambiguous for type lookup in this context
+49812:  11 | public struct HanlinNativePresentationView: View {
+49813:  12 |     public let prepared: HanlinPreparedWidget
+49814:  13 |     public let actionBuilder: (HanlinWidgetActionCommand, ButtonRole?, AnyView) -> AnyView
+49815:     |                                                           `- error: 'ButtonRole' is ambiguous for type lookup in this context
+49816:  14 |
+49817:  15 |     public init(prepared: HanlinPreparedWidget,
+49818:
+49819: SwiftUI.ButtonRole:2:15: note: found this candidate
+49820:  1 | @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+49821:  2 | public struct ButtonRole : Equatable, Sendable {
+49822:    |               `- note: found this candidate
+49823:  3 |     public static let destructive: ButtonRole
+49824:  4 |     public static let cancel: ButtonRole
+49825:
+49826: HanlinExpoWidgetSubset.ButtonRole:1:13: note: found this candidate
+49827:  1 | public enum ButtonRole : String, HanlinExpoWidgetSubset.Enumerable {
+49828:    |             `- note: found this candidate
+49829:  2 |     case `default`
+49830:  3 |     case destructive
+49831:
+49832: /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinAppExtensionsSDK/Sources/HanlinTranslationUI/HanlinNativePresentationView.swift:16:70: error: 'ButtonRole' is ambiguous for type lookup in this context
+49833:  14 |
+49834:  15 |     public init(prepared: HanlinPreparedWidget,
+49835:  16 |                 actionBuilder: @escaping (HanlinWidgetActionCommand, ButtonRole?, AnyView) -> AnyView) {
+49836:     |                                                                      `- error: 'ButtonRole' is ambiguous for type lookup in this context
+49837:  17 |         self.prepared = prepared
+49838:  18 |         self.actionBuilder = actionBuilder
+49839:
+49840: SwiftUI.ButtonRole:2:15: note: found this candidate
+49841:  1 | @available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+49842:  2 | public struct ButtonRole : Equatable, Sendable {
+49843:    |               `- note: found this candidate
+49844:  3 |     public static let destructive: ButtonRole
+49845:  4 |     public static let cancel: ButtonRole
+49846:
+49847: HanlinExpoWidgetSubset.ButtonRole:1:13: note: found this candidate
+49848:  1 | public enum ButtonRole : String, HanlinExpoWidgetSubset.Enumerable {
+49849:    |             `- note: found this candidate
+49850:  2 |     case `default`
+49851:  3 |     case destructive

@@ -1,0 +1,164 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-24T03:56:59.073261+00:00",
+  "run": {
+    "id": 45318878050,
+    "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45318878050",
+    "job": 138192265225,
+    "sourceCommit": "d9e076571abfc8af5c6f8cb7acb0d6a33f5d7060",
+    "conclusion": "failure"
+  },
+  "artifact": {
+    "id": 14888292547,
+    "name": "app-split-45318878050",
+    "bytes": 333805858,
+    "sha256": "608e549e8463645976b72a9ec6da5e6802bf35b97ec7d5e299ce3a8569bf9791",
+    "downloadedOuterDigestVerified": true
+  },
+  "actualMacPassed": {
+    "originalSourceResolution": true,
+    "nativeDependencies": true,
+    "runtimeHostPreparation": true,
+    "nativeExport": true,
+    "focusedLifecycle": {
+      "tests": 7,
+      "pass": 7,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "relocatedRealCLI": {
+      "tests": 1,
+      "pass": 1,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "fullHost": {
+      "tests": 166,
+      "pass": 165,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 1
+    },
+    "hostMetadata": {
+      "nodeVersion": "v24.5.0",
+      "archiveSha256": "82b782d56fa3cd1bd0a2cdb5f633003ed5944b75ce8fe2c4f0b5c9f90f3b784f",
+      "sourceInputsHash": "3d665e2a271383f02bedb466c4db3f3f42c0ef6171198b833072983bd6fa20fd",
+      "jitlessArchiveSmoke": "passed",
+      "npmInstall": "npm ci --omit=dev --ignore-scripts --workspaces=false --no-audit --no-fund",
+      "tests": "passed"
+    }
+  },
+  "acceptance": {
+    "status": "BUILD_FAILED",
+    "ui": "NOT_RUN",
+    "build": "NOT_RUN",
+    "physical_device": "NOT_RUN",
+    "provisioned_distribution": "NOT_RUN",
+    "scope": "Original SDK/tools, source diagnostics, native repair sheet, durable AI handoff, actual build/install and NativeScript/Expo runtime controls in both shipping products",
+    "model_boundary": "Only the HTTP model response sequence is deterministic. All source edits, TypeScript diagnostics, Metro/ESM production, imports, receipts and UI are original production code.",
+    "started_at": 1795491410.98265,
+    "test_scope": "miniapp_authoring",
+    "selected_tests": [
+      "AI_HLYTests/PendingFirstTurnTests/importedMiniAppRepairDispatchesOnceAndPreservesDraftAndSettings",
+      "AI_HLYTests/PendingFirstTurnTests/cancelledMiniAppRepairPreservesHomeDraft",
+      "AI_HLYTests/HanlinScriptingPlatformCompositionTests/malformedImportedArchiveRetainsOriginalAndStructuredDiagnostic",
+      "AI_HLYTests/MiniAppAuthoringToolTests/originalSDKWriteValidateBuildAndRepair",
+      "AI_HLYTests/MiniAppAuthoringToolTests/sourceWritePreservesUnrelatedFilesAndTargetsRetainedSource",
+      "AI_HLYTests/MiniAppAuthoringToolTests/originalExpoMetroBuildOnEmbeddedNode",
+      "AI_HLYTests/HanlinOriginalScriptWidgetAPITests",
+      "AI_HLYTests/HanlinNativePresentationTests",
+      "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests",
+      "AI_HLYTests/HanlinOriginalScriptWidgetControlTests",
+      "AI_HLYTests/HanlinMiniAppStorageCapacityTests",
+      "AI_HLYTests/HanlinOriginalExpoWidgetTests",
+      "AI_HLYUITests/MiniAppAuthoringUITests"
+    ],
+    "sha": "d9e076571abfc8af5c6f8cb7acb0d6a33f5d7060",
+    "simulator": "4989452B-3567-4467-A2C1-5BEBFD663F3A",
+    "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-27-2",
+    "device": "iPad mini (A20 Pro)",
+    "error": "xcodebuild exit 65; inspect mini-build.log",
+    "diagnostic_errors": [],
+    "attachment_exports": [],
+    "result_bundles": [
+      "MiniBuild.xcresult"
+    ],
+    "duration_seconds": 899.9508428573608
+  },
+  "diagnosis": {
+    "stage": "MiniApps build-for-testing before application/UI execution",
+    "target": "HanlinExpoWidgetSubset",
+    "source": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/SlotView.swift",
+    "preFixSourceSHA256": "136d5f77582de7690d7ec3d2a3a43678d1fc89e6784b52698dab7e04c24d79ae",
+    "compilerErrors": [
+      "/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/SlotView.swift:19:8: error: value of type 'ForEach<[any ExpoSwiftUI.AnyChild], ExpoSwiftUI.ChildIdentity, AnyView>' has no member 'publishZeroContentOrigin'",
+      "/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/SlotView.swift:19:39: error: value of type 'SlotViewProps' has no dynamic member 'shadowNodeProxy' using key path from root type 'SlotViewProps'",
+      "/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/SlotView.swift:19:33: error: referencing subscript 'subscript(dynamicMember:)' requires wrapper 'ObservedObject<SlotViewProps>.Wrapper'"
+    ],
+    "context": [
+      "",
+      "SwiftCompile normal arm64 Compiling\\ View+AccessibilityModifiers.swift,\\ View+ModifierArray.swift,\\ ViewModifierRegistry.swift,\\ WidgetKitModifiers.swift,\\ WidgetModifiers.swift,\\ NamespaceRegistry.swift,\\ OverlayView.swift,\\ ProgressView.swift,\\ RectangleView.swift,\\ RoundedRectangleView.swift,\\ SlotView.swift,\\ SpacerView.swift,\\ TextView.swift,\\ UIBaseView.swift,\\ UIBaseViewProps.swift,\\ UnevenRoundedRectangleView.swift,\\ UniversalLayout.swift,\\ VStackView.swift,\\ ZStackView.swift,\\ HanlinExpoWidgetOriginalBootstrap.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/View+AccessibilityModifiers.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/View+ModifierArray.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/ViewModifierRegistry.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/WidgetKitModifiers.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/WidgetModifiers.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/NamespaceRegistry.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/OverlayView.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/ProgressView.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/RectangleView.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/RoundedRectangleView.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/SlotView.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/SpacerView.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/TextView.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/UIBaseView.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/UIBaseViewProps.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/UnevenRoundedRectangleView.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/UniversalLayout.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/VStackView.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/ZStackView.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/HanlinExpoWidgetOriginalBootstrap.swift (in target 'HanlinExpoWidgetSubset' from project 'HanlinSDK')",
+      "/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/SlotView.swift:19:8: error: value of type 'ForEach<[any ExpoSwiftUI.AnyChild], ExpoSwiftUI.ChildIdentity, AnyView>' has no member 'publishZeroContentOrigin'",
+      "17 |   public var body: some View {",
+      "18 |     Children()",
+      "19 |       .publishZeroContentOrigin(props.shadowNodeProxy)",
+      "   |        `- error: value of type 'ForEach<[any ExpoSwiftUI.AnyChild], ExpoSwiftUI.ChildIdentity, AnyView>' has no member 'publishZeroContentOrigin'",
+      "20 |   }",
+      "21 | ",
+      "21 | ",
+      "",
+      "/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/SlotView.swift:19:39: error: value of type 'SlotViewProps' has no dynamic member 'shadowNodeProxy' using key path from root type 'SlotViewProps'",
+      "17 |   public var body: some View {",
+      "18 |     Children()",
+      "19 |       .publishZeroContentOrigin(props.shadowNodeProxy)",
+      "   |                                       `- error: value of type 'SlotViewProps' has no dynamic member 'shadowNodeProxy' using key path from root type 'SlotViewProps'",
+      "20 |   }",
+      "21 | ",
+      "21 | ",
+      "",
+      "/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/SlotView.swift:19:33: error: referencing subscript 'subscript(dynamicMember:)' requires wrapper 'ObservedObject<SlotViewProps>.Wrapper'",
+      "17 |   public var body: some View {",
+      "18 |     Children()",
+      "19 |       .publishZeroContentOrigin(props.shadowNodeProxy)",
+      "   |                                 `- error: referencing subscript 'subscript(dynamicMember:)' requires wrapper 'ObservedObject<SlotViewProps>.Wrapper'",
+      "20 |   }",
+      "21 | "
+    ],
+    "rootCause": "The refreshed original Expo UI SlotView invokes publishZeroContentOrigin(props.shadowNodeProxy), but the WidgetKit-specific copied view/props environment has neither React Native layout API. Correct the explicit widget source adaptation and its refresher rather than weakening the gate or reverting upstream."
+  },
+  "retainedEvidence": [
+    {
+      "file": "hanlin-native-gate-45318878050.job.log",
+      "bytes": 3713911,
+      "sha256": "87395211fe1c5a431d2b4758b62447568f7dfa6a30aae03b58de13fa23e66481"
+    },
+    {
+      "file": "app-split-evidence/paired-product/acceptance.json",
+      "bytes": 1979,
+      "sha256": "9ab35921517b73dd095a51eedd4555500a09cf3f9f06a63bda0d4b57f35bcfbf"
+    },
+    {
+      "file": "app-split-evidence/paired-product/mini-build.log",
+      "bytes": 3502959,
+      "sha256": "c797163778337a60dba7fd2c353f07cc49ddcf3eb1756ad95232009e1da1c8e1"
+    },
+    {
+      "file": "app-split-evidence/native-dependencies.log",
+      "bytes": 2810913,
+      "sha256": "d6a1004029c7642df32591c815e9ad86169dc68df6b3471f4301e38657af6276"
+    },
+    {
+      "file": "app-split-evidence/miniapp-cli-relocation.log",
+      "bytes": 221,
+      "sha256": "010b36571fdd27f2cf4dc5cf8199af526f4298704203cc0cec20c424dc45fd41"
+    },
+    {
+      "file": "app-split-evidence/upstream-resolution.json",
+      "bytes": 14914,
+      "sha256": "bd36f6155f9953e48ac2c68b9c0d7e247291c54ba7cad88a91330d809cbc2b7a"
+    }
+  ],
+  "scopeBoundary": "No completed native app build or UI PASS. The actual compiler diagnostic drives the next fix; source parsing alone will not be reported as native acceptance."
+}

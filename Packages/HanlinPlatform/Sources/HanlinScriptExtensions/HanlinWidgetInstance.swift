@@ -225,6 +225,8 @@ extension HanlinScriptExtensionStore {
             var migrations = current.widgetEntityMigrations
             var seen: Set<String> = []
             let activeIDs = Set(templates.map { $0.identity.installedPackageID })
+            let activePresentationIDs = Set(intentEntities.filter { $0.nativePresentation != nil }.map { $0.identity.installedPackageID })
+                .union(translationApps.filter { $0.nativePresentation != nil }.map { $0.identity.installedPackageID })
             for template in templates {
                 let base = HanlinWidgetInstance(identity: template.identity, engine: template.engine, displayName: "Default")
                 guard seen.insert(base.entityID).inserted else { continue }
@@ -292,7 +294,7 @@ extension HanlinScriptExtensionStore {
             return .init(schemaVersion: 2, generatedAt: .now, widgets: widgets, intentEntities: intentEntities,
                 liveActivities: current.liveActivities, translationApps: translationApps, widgetInstances: instances,
                 widgetStates: states, widgetEntityMigrations: migrations,
-                inactiveWidgetInstallations: current.inactiveWidgetInstallations.filter { raw in !activeIDs.contains(where: { $0.rawValue == raw }) })
+                inactiveWidgetInstallations: current.inactiveWidgetInstallations.filter { raw in !activeIDs.union(activePresentationIDs).contains(where: { $0.rawValue == raw }) })
         }
     }
 }

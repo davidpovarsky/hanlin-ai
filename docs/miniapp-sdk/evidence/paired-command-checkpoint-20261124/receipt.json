@@ -1,0 +1,34 @@
+{
+  "status": "FAILED",
+  "base_commit": "3a67bd43ed273a6948207e4db4e3ff446d2fa351",
+  "scope": "Paired runner command checkpoint/heartbeat only; no native build, simulator, CI, workflow or product changes.",
+  "command": [
+    "/usr/bin/python3",
+    "-B",
+    "Scripts/ProductSplit/test_run_paired_acceptance.py",
+    "-v"
+  ],
+  "platform": "Linux-6.17.0-1020-oracle-aarch64-with-glibc2.39",
+  "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+  "expected_test_cases": 5,
+  "obligations": [
+    "durable prelaunch/active PID checkpoint and flushed heartbeat",
+    "partial streamed output survives external SIGTERM",
+    "unfinished journal survives later cleanup",
+    "SIGINT preserves kill/wait and incomplete evidence",
+    "success, inherited environment, nonzero/allow_failure and timeout behavior",
+    "completed commands.jsonl schema/hash unchanged",
+    "native commands/selectors/timeouts/source metadata capture unchanged"
+  ],
+  "source_sha256": {
+    "Scripts/ProductSplit/run_paired_acceptance.py": "d98cee6156657bc6c8148b76e2a35b95b50e10a4785ef6e35c681c883ad746de",
+    "Scripts/ProductSplit/test_run_paired_acceptance.py": "ba5634277afb616eb10d9358e6b2875e6393436e682efbc8e51a902b4598bcd1"
+  },
+  "raw_log": "focused-tests.log",
+  "observations": "observations",
+  "native_acceptance": "NOT_RUN",
+  "external_cancellation_cause": "UNKNOWN; observability only",
+  "exit_code": 1,
+  "elapsed_seconds": 1.3697896292433143,
+  "raw_log_sha256": "21d27437e18b5c8bfd33ee0f92a4ebda991fe76309d3181195365312b9048a5b"
+}

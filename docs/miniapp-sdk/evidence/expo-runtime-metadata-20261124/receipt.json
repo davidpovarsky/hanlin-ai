@@ -1,0 +1,125 @@
+{
+  "schemaVersion": 1,
+  "createdAtUTC": "2026-11-24T09:59:33.927664+00:00",
+  "baseCommit": "b0f2b6589626528021b249d852761b49b1d3dbe7",
+  "cause": "Actual installed original Expo UI 58.0.29 was reported as 58.0.3 by public TypeScript and generated Swift runtime metadata.",
+  "fix": "Update configuration plus canonical and installed TypeScript/Swift runtime identities inside the original upstream resolver atomic write/rollback set. Audit all mirrors against actual installed original UI and native runtime.",
+  "runtimeVersion": "58.0.29",
+  "bridgeVersionUnchanged": "3.0.0",
+  "reviewedCoverageExpoUIVersionUnchanged": "58.0.3",
+  "red": {
+    "tests": 1,
+    "passed": 0,
+    "failed": 1,
+    "command": "red.command.json",
+    "result": "Real stale public metadata assertion failed before implementation"
+  },
+  "green": {
+    "tests": 6,
+    "passed": 6,
+    "failed": 0,
+    "skipped": 0,
+    "command": "green.command.json",
+    "covered": [
+      "Actual independent original runtime versions",
+      "Existing independent NativeScript and Native API rules",
+      "All five public metadata stale mutations rejected",
+      "Controlled future UI version updates exactly five inputs",
+      "Resolving same graph is byte-idempotent",
+      "Missing exact runtime fails",
+      "All other generated API/coverage/bridge bytes preserved"
+    ]
+  },
+  "generatedPreservation": "generated-preservation.json",
+  "sources": [
+    {
+      "path": "Scripts/MiniApps/resolve-upstreams.mjs",
+      "bytes": 28860,
+      "sha256": "b2222aad85f1a6c5ba38a6d52282674bb37627e05ab484b637614dfc7b9892f8"
+    },
+    {
+      "path": "Scripts/Audit/miniapp-runtime-contract.mjs",
+      "bytes": 14541,
+      "sha256": "61f5e1b1bbf09236ee000388ca0c7451e5d151b7712f9420abcfea5bb4c7dd0f"
+    },
+    {
+      "path": "Scripts/Audit/audit-miniapp-sdk.mjs",
+      "bytes": 19366,
+      "sha256": "0a9c8bf6cf9609d82a7c41a4c35a78eefa5b31fc4e18b467fd3d1983c714c7c6"
+    },
+    {
+      "path": "Scripts/Audit/Tests/runtime-version-contract.test.mjs",
+      "bytes": 10248,
+      "sha256": "8384cf0b94173a56ddfa5eb4140683587b2442acfbace5cde0873ce3058dc8d9"
+    },
+    {
+      "path": "Tools/SwiftUIBridge/configuration.json",
+      "bytes": 12350,
+      "sha256": "a8711bcfc51ae85ee58cf8ebd5a5724c6a142994dcbe3d558e8644d9c48fda8a"
+    },
+    {
+      "path": "Generated/SwiftUIBridge/bridge-manifest.ts",
+      "bytes": 39972,
+      "sha256": "a56c8a16334bfe76ebe6489fc1f018f25f28f7cadba6c1ef11a268e5336f3b37"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/generated/bridge-manifest.ts",
+      "bytes": 39972,
+      "sha256": "a56c8a16334bfe76ebe6489fc1f018f25f28f7cadba6c1ef11a268e5336f3b37"
+    },
+    {
+      "path": "Generated/SwiftUIBridge/HanlinGeneratedViews.swift",
+      "bytes": 3020,
+      "sha256": "838154d4e8a44b07eb312dee19df283b217842633c6dbeb84bc369edba77699e"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/Generated/HanlinGeneratedViews.swift",
+      "bytes": 3020,
+      "sha256": "838154d4e8a44b07eb312dee19df283b217842633c6dbeb84bc369edba77699e"
+    }
+  ],
+  "boundary": {
+    "AppleCompilation": "PENDING_FOCUSED_NATIVE_GATE",
+    "getInstalledBridgeMetadataUI": "PENDING_FOCUSED_NATIVE_GATE",
+    "fullUpstreamNetworkResolutionRerun": false,
+    "fullAppleSDKGenerationExpansion": false,
+    "main11Source": "6d9a59bfc1bd1830a8d56e694c42b19c6bd7d468; predates this change"
+  },
+  "artifacts": [
+    {
+      "path": "docs/miniapp-sdk/evidence/expo-runtime-metadata-20261124/generated-preservation.json",
+      "bytes": 1471,
+      "sha256": "5432b1a345ac63a210b98135cf3db334bb4700c47e071eaac2a8b900763a76e7"
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/expo-runtime-metadata-20261124/green.command.json",
+      "bytes": 166,
+      "sha256": "4fb062b2c7780d4b1acc6c7be4ff54a56caab9c42af208c09bd47c701aa9bbf0"
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/expo-runtime-metadata-20261124/green.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/expo-runtime-metadata-20261124/green.stdout.log",
+      "bytes": 747,
+      "sha256": "1fc3a75b84ab05b8239e61157006331a089b423e07a71e86dc446cab1e184401"
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/expo-runtime-metadata-20261124/red.command.json",
+      "bytes": 233,
+      "sha256": "7613dd6ce75220b01877bc45e21117f02c5931ad00a110d9e8e4b195ea481adb"
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/expo-runtime-metadata-20261124/red.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/expo-runtime-metadata-20261124/red.stdout.log",
+      "bytes": 1079,
+      "sha256": "0ffc50833aeee974a8e464f823e0172a4388de6a29a1dd2e104aadd750a463b4"
+    }
+  ]
+}

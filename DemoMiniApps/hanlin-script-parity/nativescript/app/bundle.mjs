@@ -206,7 +206,22 @@ function updateOnMainThread(fn) {
 }
 
 // Helpers to invoke bridge methods with support for asynchronous and fallback ObjC selectors
+// Let module evaluation finish and present the controller while cold host
+// preparation and other services complete. Async Objective-C methods return
+// void: invoking one accepts the request and must never trigger a second call.
+function invokeAsyncBridge(methodNames, args, cb) {
+  for (const target of getBridgeCandidates()) {
+    for (const methodName of methodNames) {
+      if (typeof target[methodName] === "function") {
+        target[methodName](...args, cb);
+        return true;
+      }
+    }
+  }
+  return false;
+}
 function runJS(code, cb) {
+  if (invokeAsyncBridge(["executeJavaScriptCompletion", "executeJavaScript"], [code], cb)) return;
   const direct = invokeCompat(code, "hostService.executeJavaScript");
   if (direct != null) {
     if (direct.startsWith("Err: ")) return cb(null, direct.substring(5));
@@ -214,12 +229,6 @@ function runJS(code, cb) {
   }
   const targets = getBridgeCandidates();
   for (const target of targets) {
-    if (typeof target.executeJavaScriptCompletion === "function") {
-      return target.executeJavaScriptCompletion(code, cb);
-    }
-    if (typeof target.executeJavaScript === "function") {
-      return target.executeJavaScript(code, cb);
-    }
     const syncRes = invokeObjC(target, "executeJavaScriptSync:", code);
     if (syncRes !== undefined && syncRes !== null) {
       const str = syncRes.toString();
@@ -231,6 +240,7 @@ function runJS(code, cb) {
 }
 
 function runNode(code, cb) {
+  if (invokeAsyncBridge(["executeNodeCompletion", "executeNode"], [code], cb)) return;
   const direct = invokeCompat(code, "hostService.executeNode");
   if (direct != null) {
     if (direct.startsWith("Err: ")) return cb(null, direct.substring(5));
@@ -238,12 +248,6 @@ function runNode(code, cb) {
   }
   const targets = getBridgeCandidates();
   for (const target of targets) {
-    if (typeof target.executeNodeCompletion === "function") {
-      return target.executeNodeCompletion(code, cb);
-    }
-    if (typeof target.executeNode === "function") {
-      return target.executeNode(code, cb);
-    }
     const syncRes = invokeObjC(target, "executeNodeSync:", code);
     if (syncRes !== undefined && syncRes !== null) {
       const str = syncRes.toString();
@@ -255,6 +259,7 @@ function runNode(code, cb) {
 }
 
 function runPython(code, cb) {
+  if (invokeAsyncBridge(["executePythonCompletion", "executePython"], [code], cb)) return;
   const direct = invokeCompat(code, "hostService.executePython");
   if (direct != null) {
     if (direct.startsWith("Err: ")) return cb(null, direct.substring(5));
@@ -262,12 +267,6 @@ function runPython(code, cb) {
   }
   const targets = getBridgeCandidates();
   for (const target of targets) {
-    if (typeof target.executePythonCompletion === "function") {
-      return target.executePythonCompletion(code, cb);
-    }
-    if (typeof target.executePython === "function") {
-      return target.executePython(code, cb);
-    }
     const syncRes = invokeObjC(target, "executePythonSync:", code);
     if (syncRes !== undefined && syncRes !== null) {
       const str = syncRes.toString();
@@ -279,6 +278,7 @@ function runPython(code, cb) {
 }
 
 function fetchHTTPS(url, cb) {
+  if (invokeAsyncBridge(["fetchURLCompletion", "fetchURL"], [url], cb)) return;
   const direct = invokeCompat(url, "hostService.fetchURL");
   if (direct != null) {
     if (direct.startsWith("Err: ")) return cb(null, direct.substring(5));
@@ -286,12 +286,6 @@ function fetchHTTPS(url, cb) {
   }
   const targets = getBridgeCandidates();
   for (const target of targets) {
-    if (typeof target.fetchURLCompletion === "function") {
-      return target.fetchURLCompletion(url, cb);
-    }
-    if (typeof target.fetchURL === "function") {
-      return target.fetchURL(url, cb);
-    }
     const syncRes = invokeObjC(target, "fetchURLSync:", url);
     if (syncRes !== undefined && syncRes !== null) {
       const str = syncRes.toString();
@@ -303,6 +297,8 @@ function fetchHTTPS(url, cb) {
 }
 
 function sendInterApp(targetID, action, capability, payloadJSON, cb) {
+  if (invokeAsyncBridge(["sendRequestActionCapabilityPayloadJSONCompletion", "sendRequest"],
+    [targetID, action, capability, payloadJSON], cb)) return;
   const key = "hostService.sendRequest:" + targetID + ":" + action + ":" + capability;
   const direct = invokeCompat(payloadJSON, key);
   if (direct != null) {
@@ -319,12 +315,6 @@ function sendInterApp(targetID, action, capability, payloadJSON, cb) {
 
   const targets = getBridgeCandidates();
   for (const target of targets) {
-    if (typeof target.sendRequestActionCapabilityPayloadJSONCompletion === "function") {
-      return target.sendRequestActionCapabilityPayloadJSONCompletion(targetID, action, capability, payloadJSON, cb);
-    }
-    if (typeof target.sendRequest === "function") {
-      return target.sendRequest(targetID, action, capability, payloadJSON, cb);
-    }
     if (typeof target.sendRequestSyncActionCapabilityPayloadJSON === "function") {
       try {
         const res = target.sendRequestSyncActionCapabilityPayloadJSON(targetID, action, capability, payloadJSON);

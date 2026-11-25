@@ -1,0 +1,9 @@
+error Unable to resolve module @hanlin/expo-ui from /mnt/development/projects/worktrees/hanlin-sdk04-manual-adapters-20261124/Fixtures/ExpoSwiftUIProbe/App.tsx: @hanlin/expo-ui could not be found within the project or in these directories:
+  ../../../../../../../dev/shm/hanlin-expo-widgets-sdk-20261124/Scripts/Expo/node_modules
+[0m [90m 22 |[39m   [33mEmptyView[39m[33m,[39m
+ [90m 23 |[39m   hostServices[33m,[39m
+[31m[1m>[22m[39m[90m 24 |[39m } [36mfrom[39m [32m'@hanlin/expo-ui'[39m[33m;[39m
+ [90m    |[39m         [31m[1m^[22m[39m
+ [90m 25 |[39m [36mimport[39m { renderWidget } [36mfrom[39m [32m'./widget'[39m[33m;[39m
+ [90m 26 |[39m [36mimport[39m { [33mManualAdapterProbe[39m } [36mfrom[39m [32m'./ManualAdapterProbe'[39m[33m;[39m
+ [90m 27 |[39m [36mimport[39m {[0m.

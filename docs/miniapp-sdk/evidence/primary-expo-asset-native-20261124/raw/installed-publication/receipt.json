@@ -1,0 +1,596 @@
+{
+  "at": "2026-11-24T23:27:10.747925+00:00",
+  "source": "fd81d602d3b25f09162a659e1e0cf0582e91a93a",
+  "packageRoot": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/Expo/node_modules/expo-asset",
+  "members": {
+    "Package.swift": {
+      "sha256": "dc49c8256885039c23f11e68c3db8c540861ffd923a6051ea4a57d61f46052cf",
+      "bytes": 818
+    },
+    "expo-module.config.json": {
+      "sha256": "58c11112e257db494f137e470e4a944d92c861b649bb95e6afafb2a22b5981ed",
+      "bytes": 314
+    },
+    "ios/AssetModule.swift": {
+      "sha256": "a8a030696a86ee885d151e0baff359066bf046a6e29f483b1bc44c0e815a02c3",
+      "bytes": 3406
+    },
+    "ios/ExpoAsset.podspec": {
+      "sha256": "1718cbff56334111fd5fc9eda65bd8724bfc4ec7de39b46f260e41cc8db78d7b",
+      "bytes": 823
+    },
+    "package.json": {
+      "sha256": "a317879b994f92128624136f42832597fc411015de25aa1125dfb73a82487427",
+      "bytes": 2350
+    }
+  },
+  "inventory": [
+    {
+      "path": "CHANGELOG.md",
+      "bytes": 24662
+    },
+    {
+      "path": "LICENSE",
+      "bytes": 1106
+    },
+    {
+      "path": "Package.swift",
+      "bytes": 818
+    },
+    {
+      "path": "README.md",
+      "bytes": 1232
+    },
+    {
+      "path": "android/build.gradle",
+      "bytes": 549
+    },
+    {
+      "path": "android/src/main/AndroidManifest.xml",
+      "bytes": 23
+    },
+    {
+      "path": "android/src/main/java/expo/modules/asset/AssetModule.kt",
+      "bytes": 3499
+    },
+    {
+      "path": "android/src/main/java/expo/modules/asset/FileUtils.kt",
+      "bytes": 657
+    },
+    {
+      "path": "android/src/main/java/expo/modules/asset/OkHttpExtensions.kt",
+      "bytes": 838
+    },
+    {
+      "path": "android/src/main/java/expo/modules/asset/ResourceAsset.kt",
+      "bytes": 2791
+    },
+    {
+      "path": "app.plugin.js",
+      "bytes": 55
+    },
+    {
+      "path": "build/Asset.d.ts",
+      "bytes": 5069
+    },
+    {
+      "path": "build/Asset.fx.d.ts",
+      "bytes": 11
+    },
+    {
+      "path": "build/Asset.fx.js",
+      "bytes": 1648
+    },
+    {
+      "path": "build/Asset.fx.js.map",
+      "bytes": 1039
+    },
+    {
+      "path": "build/Asset.js",
+      "bytes": 10316
+    },
+    {
+      "path": "build/Asset.js.map",
+      "bytes": 5659
+    },
+    {
+      "path": "build/Asset.server.d.ts",
+      "bytes": 836
+    },
+    {
+      "path": "build/Asset.server.js",
+      "bytes": 5644
+    },
+    {
+      "path": "build/Asset.server.js.map",
+      "bytes": 4513
+    },
+    {
+      "path": "build/AssetHooks.d.ts",
+      "bytes": 925
+    },
+    {
+      "path": "build/AssetHooks.js",
+      "bytes": 1195
+    },
+    {
+      "path": "build/AssetHooks.js.map",
+      "bytes": 528
+    },
+    {
+      "path": "build/AssetSourceResolver.d.ts",
+      "bytes": 884
+    },
+    {
+      "path": "build/AssetSourceResolver.js",
+      "bytes": 2266
+    },
+    {
+      "path": "build/AssetSourceResolver.js.map",
+      "bytes": 2114
+    },
+    {
+      "path": "build/AssetSourceResolver.native.d.ts",
+      "bytes": 118
+    },
+    {
+      "path": "build/AssetSourceResolver.native.js",
+      "bytes": 174
+    },
+    {
+      "path": "build/AssetSourceResolver.native.js.map",
+      "bytes": 175
+    },
+    {
+      "path": "build/AssetSources.d.ts",
+      "bytes": 916
+    },
+    {
+      "path": "build/AssetSources.js",
+      "bytes": 3831
+    },
+    {
+      "path": "build/AssetSources.js.map",
+      "bytes": 2617
+    },
+    {
+      "path": "build/AssetUris.d.ts",
+      "bytes": 748
+    },
+    {
+      "path": "build/AssetUris.js",
+      "bytes": 2488
+    },
+    {
+      "path": "build/AssetUris.js.map",
+      "bytes": 1440
+    },
+    {
+      "path": "build/ExpoAsset.d.ts",
+      "bytes": 581
+    },
+    {
+      "path": "build/ExpoAsset.js",
+      "bytes": 742
+    },
+    {
+      "path": "build/ExpoAsset.js.map",
+      "bytes": 333
+    },
+    {
+      "path": "build/ExpoAsset.web.d.ts",
+      "bytes": 106
+    },
+    {
+      "path": "build/ExpoAsset.web.js",
+      "bytes": 118
+    },
+    {
+      "path": "build/ExpoAsset.web.js.map",
+      "bytes": 197
+    },
+    {
+      "path": "build/ImageAssets.d.ts",
+      "bytes": 226
+    },
+    {
+      "path": "build/ImageAssets.js",
+      "bytes": 760
+    },
+    {
+      "path": "build/ImageAssets.js.map",
+      "bytes": 753
+    },
+    {
+      "path": "build/LocalAssets.d.ts",
+      "bytes": 197
+    },
+    {
+      "path": "build/LocalAssets.js",
+      "bytes": 836
+    },
+    {
+      "path": "build/LocalAssets.js.map",
+      "bytes": 556
+    },
+    {
+      "path": "build/LocalAssets.web.d.ts",
+      "bytes": 92
+    },
+    {
+      "path": "build/LocalAssets.web.js",
+      "bytes": 130
+    },
+    {
+      "path": "build/LocalAssets.web.js.map",
+      "bytes": 193
+    },
+    {
+      "path": "build/PlatformUtils.d.ts",
+      "bytes": 297
+    },
+    {
+      "path": "build/PlatformUtils.js",
+      "bytes": 1740
+    },
+    {
+      "path": "build/PlatformUtils.js.map",
+      "bytes": 1181
+    },
+    {
+      "path": "build/PlatformUtils.web.d.ts",
+      "bytes": 209
+    },
+    {
+      "path": "build/PlatformUtils.web.js",
+      "bytes": 275
+    },
+    {
+      "path": "build/PlatformUtils.web.js.map",
+      "bytes": 314
+    },
+    {
+      "path": "build/index.d.ts",
+      "bytes": 76
+    },
+    {
+      "path": "build/index.js",
+      "bytes": 111
+    },
+    {
+      "path": "build/index.js.map",
+      "bytes": 131
+    },
+    {
+      "path": "build/index.server.d.ts",
+      "bytes": 94
+    },
+    {
+      "path": "build/index.server.js",
+      "bytes": 156
+    },
+    {
+      "path": "build/index.server.js.map",
+      "bytes": 185
+    },
+    {
+      "path": "build/resolveAssetSource.d.ts",
+      "bytes": 823
+    },
+    {
+      "path": "build/resolveAssetSource.js",
+      "bytes": 1129
+    },
+    {
+      "path": "build/resolveAssetSource.js.map",
+      "bytes": 846
+    },
+    {
+      "path": "build/resolveAssetSource.native.d.ts",
+      "bytes": 120
+    },
+    {
+      "path": "build/resolveAssetSource.native.js",
+      "bytes": 134
+    },
+    {
+      "path": "build/resolveAssetSource.native.js.map",
+      "bytes": 188
+    },
+    {
+      "path": "expo-module.config.json",
+      "bytes": 314
+    },
+    {
+      "path": "ios/AssetModule.swift",
+      "bytes": 3406
+    },
+    {
+      "path": "ios/ExpoAsset.podspec",
+      "bytes": 823
+    },
+    {
+      "path": "local-maven-repo/expo/modules/asset/expo.modules.asset/58.0.21/expo.modules.asset-58.0.21-sources.jar",
+      "bytes": 4034
+    },
+    {
+      "path": "local-maven-repo/expo/modules/asset/expo.modules.asset/58.0.21/expo.modules.asset-58.0.21-sources.jar.md5",
+      "bytes": 32
+    },
+    {
+      "path": "local-maven-repo/expo/modules/asset/expo.modules.asset/58.0.21/expo.modules.asset-58.0.21-sources.jar.sha1",
+      "bytes": 40
+    },
+    {
+      "path": "local-maven-repo/expo/modules/asset/expo.modules.asset/58.0.21/expo.modules.asset-58.0.21-sources.jar.sha256",
+      "bytes": 64
+    },
+    {
+      "path": "local-maven-repo/expo/modules/asset/expo.modules.asset/58.0.21/expo.modules.asset-58.0.21-sources.jar.sha512",
+      "bytes": 128
+    },
+    {
+      "path": "local-maven-repo/expo/modules/asset/expo.modules.asset/58.0.21/expo.modules.asset-58.0.21.aar",
+      "bytes": 30506
+    },
+    {
+      "path": "local-maven-repo/expo/modules/asset/expo.modules.asset/58.0.21/expo.modules.asset-58.0.21.aar.md5",
+      "bytes": 32
+    },
+    {
+      "path": "local-maven-repo/expo/modules/asset/expo.modules.asset/58.0.21/expo.modules.asset-58.0.21.aar.sha1",
+      "bytes": 40
+    },
+    {
+      "path": "local-maven-repo/expo/modules/asset/expo.modules.asset/58.0.21/expo.modules.asset-58.0.21.aar.sha256",
+      "bytes": 64
+    },
+    {
+      "path": "local-maven-repo/expo/modules/asset/expo.modules.asset/58.0.21/expo.modules.asset-58.0.21.aar.sha512",
+      "bytes": 128
+    },
+    {
+      "path": "local-maven-repo/expo/modules/asset/expo.modules.asset/58.0.21/expo.modules.asset-58.0.21.module",
+      "bytes": 3532
+    },
+    {
+      "path": "local-maven-repo/expo/modules/asset/expo.modules.asset/58.0.21/expo.modules.asset-58.0.21.module.md5",
+      "bytes": 32
+    },
+    {
+      "path": "local-maven-repo/expo/modules/asset/expo.modules.asset/58.0.21/expo.modules.asset-58.0.21.module.sha1",
+      "bytes": 40
+    },
+    {
+      "path": "local-maven-repo/expo/modules/asset/expo.modules.asset/58.0.21/expo.modules.asset-58.0.21.module.sha256",
+      "bytes": 64
+    },
+    {
+      "path": "local-maven-repo/expo/modules/asset/expo.modules.asset/58.0.21/expo.modules.asset-58.0.21.module.sha512",
+      "bytes": 128
+    },
+    {
+      "path": "local-maven-repo/expo/modules/asset/expo.modules.asset/58.0.21/expo.modules.asset-58.0.21.pom",
+      "bytes": 2541
+    },
+    {
+      "path": "local-maven-repo/expo/modules/asset/expo.modules.asset/58.0.21/expo.modules.asset-58.0.21.pom.md5",
+      "bytes": 32
+    },
+    {
+      "path": "local-maven-repo/expo/modules/asset/expo.modules.asset/58.0.21/expo.modules.asset-58.0.21.pom.sha1",
+      "bytes": 40
+    },
+    {
+      "path": "local-maven-repo/expo/modules/asset/expo.modules.asset/58.0.21/expo.modules.asset-58.0.21.pom.sha256",
+      "bytes": 64
+    },
+    {
+      "path": "local-maven-repo/expo/modules/asset/expo.modules.asset/58.0.21/expo.modules.asset-58.0.21.pom.sha512",
+      "bytes": 128
+    },
+    {
+      "path": "mocks/ExpoAsset.ts",
+      "bytes": 329
+    },
+    {
+      "path": "package.json",
+      "bytes": 2350
+    },
+    {
+      "path": "plugin/build/AssetContents.d.ts",
+      "bytes": 953
+    },
+    {
+      "path": "plugin/build/AssetContents.js",
+      "bytes": 1502
+    },
+    {
+      "path": "plugin/build/AssetContents.js.map",
+      "bytes": 605
+    },
+    {
+      "path": "plugin/build/index.d.ts",
+      "bytes": 137
+    },
+    {
+      "path": "plugin/build/index.js",
+      "bytes": 315
+    },
+    {
+      "path": "plugin/build/index.js.map",
+      "bytes": 163
+    },
+    {
+      "path": "plugin/build/utils.d.ts",
+      "bytes": 420
+    },
+    {
+      "path": "plugin/build/utils.js",
+      "bytes": 3640
+    },
+    {
+      "path": "plugin/build/utils.js.map",
+      "bytes": 1906
+    },
+    {
+      "path": "plugin/build/withAssets.d.ts",
+      "bytes": 303
+    },
+    {
+      "path": "plugin/build/withAssets.js",
+      "bytes": 999
+    },
+    {
+      "path": "plugin/build/withAssets.js.map",
+      "bytes": 639
+    },
+    {
+      "path": "plugin/build/withAssetsAndroid.d.ts",
+      "bytes": 121
+    },
+    {
+      "path": "plugin/build/withAssetsAndroid.js",
+      "bytes": 2761
+    },
+    {
+      "path": "plugin/build/withAssetsAndroid.js.map",
+      "bytes": 1671
+    },
+    {
+      "path": "plugin/build/withAssetsIos.d.ts",
+      "bytes": 117
+    },
+    {
+      "path": "plugin/build/withAssetsIos.js",
+      "bytes": 4012
+    },
+    {
+      "path": "plugin/build/withAssetsIos.js.map",
+      "bytes": 2812
+    },
+    {
+      "path": "plugin/src/AssetContents.ts",
+      "bytes": 1561
+    },
+    {
+      "path": "plugin/src/index.ts",
+      "bytes": 131
+    },
+    {
+      "path": "plugin/src/utils.ts",
+      "bytes": 2036
+    },
+    {
+      "path": "plugin/src/withAssets.ts",
+      "bytes": 784
+    },
+    {
+      "path": "plugin/src/withAssetsAndroid.ts",
+      "bytes": 1604
+    },
+    {
+      "path": "plugin/src/withAssetsIos.ts",
+      "bytes": 2988
+    },
+    {
+      "path": "spm.config.json",
+      "bytes": 718
+    },
+    {
+      "path": "src/Asset.fx.ts",
+      "bytes": 1642
+    },
+    {
+      "path": "src/Asset.server.ts",
+      "bytes": 5698
+    },
+    {
+      "path": "src/Asset.ts",
+      "bytes": 10552
+    },
+    {
+      "path": "src/AssetHooks.ts",
+      "bytes": 1202
+    },
+    {
+      "path": "src/AssetSourceResolver.native.ts",
+      "bytes": 119
+    },
+    {
+      "path": "src/AssetSourceResolver.ts",
+      "bytes": 2632
+    },
+    {
+      "path": "src/AssetSources.ts",
+      "bytes": 3959
+    },
+    {
+      "path": "src/AssetUris.ts",
+      "bytes": 2446
+    },
+    {
+      "path": "src/ExpoAsset.ts",
+      "bytes": 759
+    },
+    {
+      "path": "src/ExpoAsset.web.ts",
+      "bytes": 129
+    },
+    {
+      "path": "src/ImageAssets.ts",
+      "bytes": 731
+    },
+    {
+      "path": "src/LocalAssets.ts",
+      "bytes": 742
+    },
+    {
+      "path": "src/LocalAssets.web.ts",
+      "bytes": 119
+    },
+    {
+      "path": "src/PlatformUtils.ts",
+      "bytes": 1930
+    },
+    {
+      "path": "src/PlatformUtils.web.ts",
+      "bytes": 251
+    },
+    {
+      "path": "src/index.server.ts",
+      "bytes": 91
+    },
+    {
+      "path": "src/index.ts",
+      "bytes": 77
+    },
+    {
+      "path": "src/resolveAssetSource.native.ts",
+      "bytes": 80
+    },
+    {
+      "path": "src/resolveAssetSource.ts",
+      "bytes": 1516
+    },
+    {
+      "path": "tools/hashAssetFiles.js",
+      "bytes": 2099
+    }
+  ],
+  "lockEntry": {
+    "version": "58.0.21",
+    "resolved": "https://registry.npmjs.org/expo-asset/-/expo-asset-58.0.21.tgz",
+    "integrity": "sha512-qaJmuTtswggXdBQfiUdpxrVGM7l+tH8iEDHwVDMuxyCF/kAau8sUGVuWrDKYNW4yAx7Z8ncgsT8s27pXjRH5GA==",
+    "license": "MIT",
+    "dependencies": {
+      "@expo/image-utils": "^0.12.7",
+      "expo-constants": "~58.0.16"
+    },
+    "peerDependencies": {
+      "expo": "*",
+      "react": "*",
+      "react-native": "*"
+    }
+  }
+}

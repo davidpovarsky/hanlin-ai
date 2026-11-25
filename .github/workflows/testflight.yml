@@ -177,6 +177,14 @@ jobs:
         run: |
           echo 'Simulator UI tests and dependent UI proof gates skipped by operator request; not a validated full release.' >> "$GITHUB_STEP_SUMMARY"
 
+      - name: Resolve current original MiniApp sources and exact release graph
+        shell: bash
+        run: |
+          set -euo pipefail
+          trap 'cp build/acceptance/miniapp-upstreams/resolution.json "$BUILD_DIR/logs/miniapp-upstream-resolution.json" 2>/dev/null || true; git diff --binary > "$BUILD_DIR/logs/miniapp-upstream-inputs.patch"' EXIT
+          node Scripts/MiniApps/resolve-upstreams.mjs --apply --cache="$RUNNER_TEMP/hanlin-miniapp-upstreams" 2>&1 | tee "$BUILD_DIR/logs/miniapp-upstream-resolution.log"
+          cp build/acceptance/miniapp-upstreams/resolution.json "$BUILD_DIR/logs/miniapp-upstream-resolution.json"
+          git diff --binary > "$BUILD_DIR/logs/miniapp-upstream-inputs.patch"
       - name: Prepare application build inputs
         shell: bash
         env:
@@ -190,12 +198,14 @@ jobs:
           HANLIN_OPEN_API_KEY =
           SWIFT_ENABLE_EXPLICIT_MODULES = NO
           EOF
-          npm ci --ignore-scripts --no-audit --no-fund --prefix Scripts/NativeScript
+          node Scripts/MiniApps/install-tooling.mjs --engine=nativescript --ignore-scripts
           npm run prepare:ios-dependencies --prefix Scripts/NativeScript
           node Scripts/NativeScript/prepare-fixture.mjs
           npm run preflight:ios-dependencies --prefix Scripts/NativeScript
-          npm ci --prefix Scripts/Expo
+          node Scripts/MiniApps/install-tooling.mjs --engine=expo
           node Scripts/Expo/prepare-ios-dependencies.mjs
+          node Scripts/Expo/prepare-types.mjs
+          node Scripts/Expo/build-probe.mjs
           bash Scripts/Runtime/prepare-runtime-core.sh
           npm ci --ignore-scripts --no-audit --no-fund --prefix Scripts/ScriptingCompiler
           npm ci --ignore-scripts --no-audit --no-fund --prefix AI_HLY/Downstream/RuntimeCore/Node/Host
@@ -560,6 +570,8 @@ jobs:
           app=$(find "$verify_dir/Payload" -maxdepth 1 -type d -name '*.app' -print -quit)
           test -d "$app"
           python3 Scripts/CI/validate_chat_localization.py --app "$app" --output "$BUILD_DIR/logs/chat-localization-packaged.json"
+          python3 Scripts/SDK/verify_bundle_resources.py --app "$app" --module AI_Hanlin \
+            --json-output "$BUILD_DIR/logs/sdk-bundle-resources.json"
           test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$app/Info.plist")" = "$APP_BUNDLE_ID"
           test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleDisplayName' "$app/Info.plist")" = "Hanlin AI"
           test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$app/Info.plist")" = "$BUILD_NUMBER"
@@ -653,8 +665,12 @@ jobs:
           python3 - "$app" <<'PY'
           import hashlib, json, os, sys
           from pathlib import Path
+          sys.path.insert(0, str(Path("Scripts/SDK").resolve()))
+          from verify_bundle_resources import module_bundle
+          app = Path(sys.argv[1])
+          resources = module_bundle(app, "AI_Hanlin")
           expected = json.loads(Path("AI_HLY/Downstream/RuntimeCore/Resources/RuntimeManifest.json").read_text())
-          packaged = json.loads((Path(sys.argv[1]) / "RuntimeManifest.json").read_text())
+          packaged = json.loads((resources / "RuntimeManifest.json").read_text())
           if packaged != expected:
               raise SystemExit("Packaged Runtime manifest does not match the verified build input")
           def sha256(path):
@@ -664,7 +680,7 @@ jobs:
                       checksum.update(chunk)
               return checksum.hexdigest()
           host_hash = sha256(Path("AI_HLY/RuntimeHostResources.zip"))
-          if sha256(Path(sys.argv[1]) / "RuntimeHostResources.zip") != host_hash:
+          if sha256(resources / "RuntimeHostResources.zip") != host_hash:
               raise SystemExit("Packaged Runtime Host archive does not match the verified build input")
           lock = json.loads(Path("RuntimeDependencies.lock.json").read_text())
           logs = Path(os.environ["BUILD_DIR"]) / "logs"
@@ -675,6 +691,7 @@ jobs:
               "nodeXCFrameworkSha256": lock["node"]["xcframeworkSha256"],
               "nodeImageUUIDs": (logs / "node-packaged-uuid.txt").read_text().splitlines(),
               "runtimeHostArchiveSha256": host_hash,
+              "resourceBundle": str(resources.relative_to(app)),
               "packagedManifestMatches": True,
           }
           (logs / "runtime-distribution.json").write_text(json.dumps(evidence, indent=2) + "\n")

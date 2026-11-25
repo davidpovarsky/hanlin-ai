@@ -1,0 +1,77 @@
+{
+  "recordedAtUTC": "2026-11-24T09:22:21.902832+00:00",
+  "baseCommit": "7b21953bf9a27727935bcfec1adcfc8702c1b8af",
+  "status": "PASS_SOURCE_RECONCILIATION",
+  "priorAttempt": "attempt-01.receipt.json",
+  "priorFailure": "Existing mapper expected exactly2 original semantic sources; explicit required third helper source integrated7b21953b. Prior raw error retained verbatim.",
+  "commands": [
+    {
+      "command": [
+        "node",
+        "Scripts/Audit/audit-miniapp-sdk.mjs",
+        "--write"
+      ],
+      "returncode": 0,
+      "stdout": "docs/miniapp-sdk/evidence/native-corrections-reconciliation-20261124/attempt-02/1.stdout.log",
+      "stderr": "docs/miniapp-sdk/evidence/native-corrections-reconciliation-20261124/attempt-02/1.stderr.log"
+    },
+    {
+      "command": [
+        "python3",
+        "Scripts/Audit/audit_miniapp_reachability.py"
+      ],
+      "returncode": 0,
+      "stdout": "docs/miniapp-sdk/evidence/native-corrections-reconciliation-20261124/attempt-02/2.stdout.log",
+      "stderr": "docs/miniapp-sdk/evidence/native-corrections-reconciliation-20261124/attempt-02/2.stderr.log"
+    },
+    {
+      "command": [
+        "node",
+        "Scripts/Audit/audit-miniapp-sdk.mjs",
+        "--check"
+      ],
+      "returncode": 0,
+      "stdout": "docs/miniapp-sdk/evidence/native-corrections-reconciliation-20261124/attempt-02/3.stdout.log",
+      "stderr": "docs/miniapp-sdk/evidence/native-corrections-reconciliation-20261124/attempt-02/3.stderr.log"
+    },
+    {
+      "command": [
+        "python3",
+        "Scripts/Audit/audit_miniapp_reachability.py",
+        "--check"
+      ],
+      "returncode": 0,
+      "stdout": "docs/miniapp-sdk/evidence/native-corrections-reconciliation-20261124/attempt-02/4.stdout.log",
+      "stderr": "docs/miniapp-sdk/evidence/native-corrections-reconciliation-20261124/attempt-02/4.stderr.log"
+    }
+  ],
+  "boundary": "Single affected combined source/reference/reachability write/check after reviewed native/policy/mapper changes. No component tests repeated. Corrected Apple2 and fullapp42 not yet executed.",
+  "sourceCount": 88,
+  "manifestCoverage": {
+    "fieldCount": 334,
+    "status": "COMPLETE_SOURCE_FIELD_ENUMERATION"
+  },
+  "outputs": [
+    {
+      "path": "docs/miniapp-sdk/source-inventory.json",
+      "bytes": 485841,
+      "sha256": "e85d73025d48169eb190529a709312dff03e985c804fb2cbe8fdaf2f258dd2ce"
+    },
+    {
+      "path": "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+      "bytes": 118561,
+      "sha256": "3a4d9e0ec6aa1666112f4ddf6c27096853359d8e88d4575b3bc70b6bebf9b578"
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.json",
+      "bytes": 146599,
+      "sha256": "3051269583f6bc0b12eb14af8dc75f7b5e7a51235561465fd26070655a535af6"
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.md",
+      "bytes": 21494,
+      "sha256": "fb09cfd7b897685abf1f35298516332d2fcf5d0ec7c7b5a5d43188ea42118e6b"
+    }
+  ],
+  "localPublicExports": 173
+}

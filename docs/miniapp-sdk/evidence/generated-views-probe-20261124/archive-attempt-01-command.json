@@ -1,0 +1,11 @@
+{
+  "command": [
+    "node",
+    "/mnt/development/projects/worktrees/hanlin-generated-views-probe-20261124/docs/miniapp-sdk/evidence/generated-views-probe-20261124/archive-public-build.mjs",
+    "/mnt/development/projects/worktrees/hanlin-generated-views-probe-20261124",
+    "/tmp/hanlin-generated-probe-authoring-20261124/attempt-02/package",
+    "/mnt/development/projects/worktrees/hanlin-generated-views-probe-20261124/docs/miniapp-sdk/evidence/generated-views-probe-20261124/public-build-artifact.zip"
+  ],
+  "exitCode": 1,
+  "elapsedSeconds": 0.049118529073894024
+}

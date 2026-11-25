@@ -1,0 +1,14 @@
+{
+  "name": "native-typescript",
+  "command": [
+    "/usr/local/bin/node",
+    "Scripts/NativeScript/build-host-services.mjs",
+    "--typescript-module",
+    "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/Scripts/NativeScript/node_modules/typescript/lib/typescript.js",
+    "--write"
+  ],
+  "exit": 0,
+  "duration": 4.922043712809682,
+  "stdout_sha256": "7f655f532fc99ed42bc980f3062eea39147697d1bf6d6a3cfd8aeaeabf55e6d3",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

@@ -1,0 +1,37 @@
+{
+  "changedObjects": [
+    {
+      "id": "D20000000000000000000070",
+      "name": "Debug",
+      "changedSettings": [
+        "OTHER_SWIFT_FLAGS",
+        "SWIFT_OBJC_INTEROP_MODE"
+      ]
+    },
+    {
+      "id": "D20000000000000000000071",
+      "name": "Release",
+      "changedSettings": [
+        "OTHER_SWIFT_FLAGS",
+        "SWIFT_OBJC_INTEROP_MODE"
+      ]
+    },
+    {
+      "id": "AC1A1AAAEF4F0104C4B10D76",
+      "name": "Debug",
+      "changedSettings": [
+        "OTHER_SWIFT_FLAGS",
+        "SWIFT_OBJC_INTEROP_MODE"
+      ]
+    },
+    {
+      "id": "AC1A2ADEBAFA5244E61C45C2",
+      "name": "Release",
+      "changedSettings": [
+        "OTHER_SWIFT_FLAGS",
+        "SWIFT_OBJC_INTEROP_MODE"
+      ]
+    }
+  ],
+  "allOtherProjectObjects": "UNCHANGED"
+}

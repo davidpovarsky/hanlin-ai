@@ -1,0 +1,16 @@
+{
+  "baseSHA": "01d08ed453040d74a76211e7fb51a611b0d1e2cc",
+  "runnerBeforeSHA256": "a4ed4cd8eebe1c7b38d8d71fa68a7700db8dbbc1817c1a5c8cc81be68b41d423",
+  "runnerAfterSHA256": "4e63633d57cea6558df3364946d538b0dc29ee9910c0bf5ebb7ed37464ab5fb5",
+  "commandFunctionByteIdentical": true,
+  "mainCommandCallsASTIdentical": true,
+  "mainCommandCallsCompared": 30,
+  "testPlansASTIdentical": true,
+  "uiResultAndAcceptanceBlockByteIdentical": true,
+  "uiResultBlockSHA256": "f692957d2372f06253596ae9d63d96a4dcb9e68e83f888e1d03c34265b3d1cf8",
+  "workflowChanges": false,
+  "SDKSourceInputChange": false,
+  "reachabilityInputChange": false,
+  "reason": "ProductSplit runner/test excluded from explicit sdkInputs and recursive SDK roots and absent from current source-inventory/reachability source references; evidence subtree is already excluded.",
+  "buildReusePathAtBase": false
+}

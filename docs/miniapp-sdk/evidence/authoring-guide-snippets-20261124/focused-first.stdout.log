@@ -1,0 +1,13 @@
+✔ the corrected actual NativeScript guide checks with original source policy and all eight extracted modules (5822.08935ms)
+✔ the historical Expo probe registration fails the actual native default-name contract (12.695113ms)
+✔ new or removed guide blocks and stale staged documentation fail closed (67.698673ms)
+✔ an invalid property in the actual Markdown source produces an original NativeScript diagnostic (5297.070668ms)
+✔ the actual control-manifest excerpt reaches the original semantic validator (1283.177119ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13200.666365

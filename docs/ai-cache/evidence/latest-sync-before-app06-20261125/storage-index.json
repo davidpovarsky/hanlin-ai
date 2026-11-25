@@ -1,0 +1,138 @@
+{
+  "sourceCommit": "6fbcf703dd9f40f5b1d42592d58a0a69573dcdfa",
+  "files": [
+    {
+      "originalPath": "01-app-intents-check.stderr.log",
+      "originalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedPath": "01-app-intents-check.stderr.log.gz",
+      "storedSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "bytes": 20
+    },
+    {
+      "originalPath": "01-app-intents-check.stdout.log",
+      "originalSHA256": "dee7c7cc1ea4e0689e5f02b0dc6fc6ccf217e0f7a744f91bd9a91e7053b641cf",
+      "storedPath": "01-app-intents-check.stdout.log.gz",
+      "storedSHA256": "0756e02a9134b5586e25db3220aec0c7a06a444f7aa218915676720474de51bc",
+      "bytes": 106
+    },
+    {
+      "originalPath": "01-merge-composer.json",
+      "originalSHA256": "bed21f349321543b7b073f77c66941f14ac32a4fc6c17726dba0a3781455209e",
+      "storedPath": "01-merge-composer.json",
+      "storedSHA256": "bed21f349321543b7b073f77c66941f14ac32a4fc6c17726dba0a3781455209e",
+      "bytes": 649
+    },
+    {
+      "originalPath": "02-manifest-check.stderr.log",
+      "originalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedPath": "02-manifest-check.stderr.log.gz",
+      "storedSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "bytes": 20
+    },
+    {
+      "originalPath": "02-manifest-check.stdout.log",
+      "originalSHA256": "6a3adc34271cba4ee688071b7aec9eb7f0ee9731bedf3e215a77efb8648947f0",
+      "storedPath": "02-manifest-check.stdout.log.gz",
+      "storedSHA256": "f77dbe6799f3751a9b9008f100a73ff659101fc4d3170a8d455119c96b40c095",
+      "bytes": 1524
+    },
+    {
+      "originalPath": "02-merge-minisdk.json",
+      "originalSHA256": "85aaa1042dccb7a51a90541257b471a0249098b1117f1199eb231bc5bc9f0bf4",
+      "storedPath": "02-merge-minisdk.json",
+      "storedSHA256": "85aaa1042dccb7a51a90541257b471a0249098b1117f1199eb231bc5bc9f0bf4",
+      "bytes": 282
+    },
+    {
+      "originalPath": "03-merge-wave.json",
+      "originalSHA256": "148f1217b727dbaa89123ad81e792f233abf34b15592ed31282e2f7345b64348",
+      "storedPath": "03-merge-wave.json",
+      "storedSHA256": "148f1217b727dbaa89123ad81e792f233abf34b15592ed31282e2f7345b64348",
+      "bytes": 447
+    },
+    {
+      "originalPath": "03-project-check.stderr.log",
+      "originalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedPath": "03-project-check.stderr.log.gz",
+      "storedSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "bytes": 20
+    },
+    {
+      "originalPath": "03-project-check.stdout.log",
+      "originalSHA256": "7b205399ea53f72db8afa2fe3d77370cd6f0ac3d9ea8d19cea47a806236d4d18",
+      "storedPath": "03-project-check.stdout.log.gz",
+      "storedSHA256": "b44fe6e0a9fe538f4926f1682de104830f83fafbeb7a206b936ee8e8d9e48210",
+      "bytes": 103
+    },
+    {
+      "originalPath": "04-miniapp-sdk-audit-check.stderr.log",
+      "originalSHA256": "867e3dd813f3c62b70df06e63053424a5dde63111e033f7ab41197d5f723d2ef",
+      "storedPath": "04-miniapp-sdk-audit-check.stderr.log.gz",
+      "storedSHA256": "4401de615a49d81838b3a8f4054b6f23b3ac9f0a9f221f9d2d9be329b53bd2f8",
+      "bytes": 268
+    },
+    {
+      "originalPath": "04-miniapp-sdk-audit-check.stdout.log",
+      "originalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedPath": "04-miniapp-sdk-audit-check.stdout.log.gz",
+      "storedSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "bytes": 20
+    },
+    {
+      "originalPath": "05-miniapp-reachability-check.stderr.log",
+      "originalSHA256": "201a9034bcc8adda84daa3e1f8e7b0de9e9eae2f2fa05eae20d055b32535ef97",
+      "storedPath": "05-miniapp-reachability-check.stderr.log.gz",
+      "storedSHA256": "33a1b5608b72eb4e6747e13656ead3e3d9a8d89c0cdda13fcdd80a4d8cdd5547",
+      "bytes": 337
+    },
+    {
+      "originalPath": "05-miniapp-reachability-check.stdout.log",
+      "originalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedPath": "05-miniapp-reachability-check.stdout.log.gz",
+      "storedSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "bytes": 20
+    },
+    {
+      "originalPath": "check-controller.log",
+      "originalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedPath": "check-controller.log.gz",
+      "storedSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "bytes": 20
+    },
+    {
+      "originalPath": "check-controller.py",
+      "originalSHA256": "77e84e5f206d38cce95a538e6e051276f6825fe250c6afebf4794b7eb9220c5e",
+      "storedPath": "check-controller.py",
+      "storedSHA256": "77e84e5f206d38cce95a538e6e051276f6825fe250c6afebf4794b7eb9220c5e",
+      "bytes": 2750
+    },
+    {
+      "originalPath": "checks-receipt.json",
+      "originalSHA256": "bb03831b9a8dd5a268ccf0b6c82414f59d910ac5f15a7dabd1c18239af769f40",
+      "storedPath": "checks-receipt.json",
+      "storedSHA256": "bb03831b9a8dd5a268ccf0b6c82414f59d910ac5f15a7dabd1c18239af769f40",
+      "bytes": 3864
+    },
+    {
+      "originalPath": "merge-preservation-receipt.json",
+      "originalSHA256": "f1ccd2dde5a771e09d57eadd41236ebe3904e193d66ff7c98782ce2051eb456f",
+      "storedPath": "merge-preservation-receipt.json",
+      "storedSHA256": "f1ccd2dde5a771e09d57eadd41236ebe3904e193d66ff7c98782ce2051eb456f",
+      "bytes": 3305
+    },
+    {
+      "originalPath": "selected-test-inventory.json",
+      "originalSHA256": "557e716eba15309a68f1f980a1d9795827fee89b99a09cac2622445fd5d3de26",
+      "storedPath": "selected-test-inventory.json",
+      "storedSHA256": "557e716eba15309a68f1f980a1d9795827fee89b99a09cac2622445fd5d3de26",
+      "bytes": 13535
+    },
+    {
+      "originalPath": "index.json",
+      "originalSHA256": "9521b64a5e0a7b06546f0195fb1dbbce85f2e387ad9776bd885bd9614911f22f",
+      "storedPath": "index.json",
+      "storedSHA256": "9521b64a5e0a7b06546f0195fb1dbbce85f2e387ad9776bd885bd9614911f22f",
+      "bytes": 3304
+    }
+  ]
+}

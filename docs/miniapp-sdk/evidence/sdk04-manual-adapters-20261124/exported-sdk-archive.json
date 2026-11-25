@@ -1,0 +1,35 @@
+{
+  "path": "/mnt/development/projects/worktrees/hanlin-sdk04-manual-adapters-20261124/build/acceptance/sdk04-manual-adapters/ManualAdapterProbe.hanlinExpo",
+  "bytes": 2024726,
+  "sha256": "26d9f62c353a0ee1396fd990522a0b26a1c8b353dd5cbdc0d4a3cc620f1a3223",
+  "retainedSource": {
+    "App.tsx": {
+      "archiveMember": "source/App.tsx",
+      "sha256": "3570bea58a9584e0b98356d616444f88c38e7a5cda8e47d715a0eacf78d9cfb1"
+    },
+    "ManualAdapterProbe.tsx": {
+      "archiveMember": "source/ManualAdapterProbe.tsx",
+      "sha256": "4794f92fc158639b806c0f80bf74cf71775651ad2acd2c24c9462f9d810ff48e"
+    },
+    "variant-a.ts": {
+      "archiveMember": "source/variant-a.ts",
+      "sha256": "98a563ae71b1621c65dab5f494b055ec9bf8a401eef1ecd3771e2b1059e5eda6"
+    },
+    "widget.tsx": {
+      "archiveMember": "source/widget.tsx",
+      "sha256": "ca4d3aa1ec23bb046618fd33a15c9e478e4b3ae4fd79210f686619c2f20ceaa5"
+    },
+    "package.json": {
+      "archiveMember": "source/package.json",
+      "sha256": "7234c13c597bc7c71862cc1562ba3b4c68cea4528e1c8fa20bd512eb7d2510e7"
+    },
+    "script.json": {
+      "archiveMember": "source/script.json",
+      "sha256": "2f9ee6fe589d89f7312e0c3f41c7652f879e2f2944b0b177e8449505a4875187"
+    },
+    "native-adapter-assets/pixel.png": {
+      "archiveMember": "source/native-adapter-assets/pixel.png",
+      "sha256": "7713482a5fab3ae135193484df75f4d0a7ce5c8ee50f6b5c33f7aacef5c5ea45"
+    }
+  }
+}

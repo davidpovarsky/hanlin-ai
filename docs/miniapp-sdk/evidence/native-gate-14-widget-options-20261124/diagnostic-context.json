@@ -1,0 +1,150 @@
+[
+  {
+    "line": 94392,
+    "text": "/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinOriginalExpoWidgetOptions.swift:45:51: error: cannot use optional chaining on non-optional value of type 'Optional<HanlinOriginalExpoWidgetEntity>.UnwrappedType' (aka 'HanlinOriginalExpoWidgetEntity')",
+    "context": [
+      {
+        "line": 94387,
+        "text": "    builtin-SwiftPerFileCompile HanlinWidgetIntentsPackage.swift"
+      },
+      {
+        "line": 94388,
+        "text": ""
+      },
+      {
+        "line": 94389,
+        "text": "SwiftDriverJobDiscovery normal arm64 Compiling FormatNumberFunction.swift, FormatStringFunction.swift, JSONValue+Validity.swift, LengthFunction.swift, NotFunction.swift, NumericFunction.swift, OpenURLFunction.swift, OrFunction.swift, PluralizeFunction.swift, RegexFunction.swift (in target 'BasicCatalog' from project 'A2UISwiftCore')"
+      },
+      {
+        "line": 94390,
+        "text": ""
+      },
+      {
+        "line": 94391,
+        "text": "SwiftCompile normal arm64 Compiling\\ HanlinOriginalExpoWidget.swift,\\ HanlinOriginalExpoWidgetOptions.swift,\\ HanlinScriptingAppIntents.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinOriginalExpoWidget.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinOriginalExpoWidgetOptions.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinScriptingAppIntents.swift (in target 'HanlinScriptingWidgets' from project 'HanlinSDK')"
+      },
+      {
+        "line": 94392,
+        "text": "/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinOriginalExpoWidgetOptions.swift:45:51: error: cannot use optional chaining on non-optional value of type 'Optional<HanlinOriginalExpoWidgetEntity>.UnwrappedType' (aka 'HanlinOriginalExpoWidgetEntity')"
+      },
+      {
+        "line": 94393,
+        "text": " 43 | "
+      },
+      {
+        "line": 94394,
+        "text": " 44 |     public func allEntities() async throws -> [HanlinOriginalExpoWidgetOptionEntity] {"
+      },
+      {
+        "line": 94395,
+        "text": " 45 |         guard let widgetID = configuration?.widget?.id else { return [] }"
+      },
+      {
+        "line": 94396,
+        "text": "    |                                                   `- error: cannot use optional chaining on non-optional value of type 'Optional<HanlinOriginalExpoWidgetEntity>.UnwrappedType' (aka 'HanlinOriginalExpoWidgetEntity')"
+      },
+      {
+        "line": 94397,
+        "text": " 46 |         return HanlinOriginalExpoWidgetOptions.options(widgetID: widgetID)"
+      },
+      {
+        "line": 94398,
+        "text": " 47 |     }"
+      },
+      {
+        "line": 94399,
+        "text": ""
+      },
+      {
+        "line": 94400,
+        "text": "/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinOriginalExpoWidgetOptions.swift:129:16: error: cannot convert return expression of type 'HanlinObject<HanlinValue>' to return type '[String : HanlinValue]'"
+      },
+      {
+        "line": 94401,
+        "text": "127 |             values[current.parameter] = .string(current.value)"
+      },
+      {
+        "line": 94402,
+        "text": "128 |         }"
+      },
+      {
+        "line": 94403,
+        "text": "129 |         return values"
+      }
+    ]
+  },
+  {
+    "line": 94400,
+    "text": "/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinOriginalExpoWidgetOptions.swift:129:16: error: cannot convert return expression of type 'HanlinObject<HanlinValue>' to return type '[String : HanlinValue]'",
+    "context": [
+      {
+        "line": 94395,
+        "text": " 45 |         guard let widgetID = configuration?.widget?.id else { return [] }"
+      },
+      {
+        "line": 94396,
+        "text": "    |                                                   `- error: cannot use optional chaining on non-optional value of type 'Optional<HanlinOriginalExpoWidgetEntity>.UnwrappedType' (aka 'HanlinOriginalExpoWidgetEntity')"
+      },
+      {
+        "line": 94397,
+        "text": " 46 |         return HanlinOriginalExpoWidgetOptions.options(widgetID: widgetID)"
+      },
+      {
+        "line": 94398,
+        "text": " 47 |     }"
+      },
+      {
+        "line": 94399,
+        "text": ""
+      },
+      {
+        "line": 94400,
+        "text": "/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinOriginalExpoWidgetOptions.swift:129:16: error: cannot convert return expression of type 'HanlinObject<HanlinValue>' to return type '[String : HanlinValue]'"
+      },
+      {
+        "line": 94401,
+        "text": "127 |             values[current.parameter] = .string(current.value)"
+      },
+      {
+        "line": 94402,
+        "text": "128 |         }"
+      },
+      {
+        "line": 94403,
+        "text": "129 |         return values"
+      },
+      {
+        "line": 94404,
+        "text": "    |                `- error: cannot convert return expression of type 'HanlinObject<HanlinValue>' to return type '[String : HanlinValue]'"
+      },
+      {
+        "line": 94405,
+        "text": "130 |     }"
+      },
+      {
+        "line": 94406,
+        "text": "131 | }"
+      },
+      {
+        "line": 94407,
+        "text": "Failed frontend command:"
+      },
+      {
+        "line": 94408,
+        "text": ""
+      },
+      {
+        "line": 94409,
+        "text": "SwiftCompile normal arm64 /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinOriginalExpoWidget.swift (in target 'HanlinScriptingWidgets' from project 'HanlinSDK')"
+      },
+      {
+        "line": 94410,
+        "text": "    cd /Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY.xcodeproj"
+      },
+      {
+        "line": 94411,
+        "text": "    builtin-SwiftPerFileCompile HanlinOriginalExpoWidget.swift"
+      }
+    ]
+  }
+]

@@ -1,0 +1,28 @@
+{
+  "scope": "Reconstruct four retained build-input files in owned temporary storage; no product execution.",
+  "commands": [
+    {
+      "argv": [
+        "git",
+        "apply",
+        "--check",
+        "/tmp/hanlin-sdk05-shipping-45375410965-5ndqe_cd/retained-upstream-inputs.patch"
+      ],
+      "cwd": "/tmp/hanlin-sdk05-shipping-45375410965-5ndqe_cd/original-input-patch",
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "apply",
+        "/tmp/hanlin-sdk05-shipping-45375410965-5ndqe_cd/retained-upstream-inputs.patch"
+      ],
+      "cwd": "/tmp/hanlin-sdk05-shipping-45375410965-5ndqe_cd/original-input-patch",
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ]
+}

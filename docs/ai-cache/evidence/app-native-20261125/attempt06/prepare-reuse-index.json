@@ -1,0 +1,46 @@
+{
+  "files": [
+    {
+      "originalPath": "prepare-reuse.json",
+      "originalSHA256": "07089baa89cc4bd253ba1cb915d31cca19325672f366e937f91206b8a71e1f96",
+      "storedPath": "prepare-reuse.json",
+      "storedSHA256": "07089baa89cc4bd253ba1cb915d31cca19325672f366e937f91206b8a71e1f96",
+      "bytes": 10456
+    },
+    {
+      "originalPath": "reuse-check-01.log",
+      "originalSHA256": "f9392dbc1f4415decb9bc390be9f49d5b7e6f3fbd636c72710ef278e45b31783",
+      "storedPath": "reuse-check-01.log.gz",
+      "storedSHA256": "7aac6ed8ba7e7e1b0a273eb68d16a808909f0589331f1a6269766eba71632c92",
+      "bytes": 91
+    },
+    {
+      "originalPath": "reuse-check-02.log",
+      "originalSHA256": "bc234237931951c0e0e70dc212b9f47da2f6c76a61109e41c235f0f7f0eabcef",
+      "storedPath": "reuse-check-02.log.gz",
+      "storedSHA256": "3bbc94444f21908ebdd99795b981608c78639a31e284ca504be9e7be3d666f95",
+      "bytes": 92
+    },
+    {
+      "originalPath": "reuse-check-03.log",
+      "originalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedPath": "reuse-check-03.log.gz",
+      "storedSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec",
+      "bytes": 20
+    },
+    {
+      "originalPath": "reuse-check-04.log",
+      "originalSHA256": "6a3adc34271cba4ee688071b7aec9eb7f0ee9731bedf3e215a77efb8648947f0",
+      "storedPath": "reuse-check-04.log.gz",
+      "storedSHA256": "f77dbe6799f3751a9b9008f100a73ff659101fc4d3170a8d455119c96b40c095",
+      "bytes": 1524
+    },
+    {
+      "originalPath": "reuse-check-05.log",
+      "originalSHA256": "7b205399ea53f72db8afa2fe3d77370cd6f0ac3d9ea8d19cea47a806236d4d18",
+      "storedPath": "reuse-check-05.log.gz",
+      "storedSHA256": "b44fe6e0a9fe538f4926f1682de104830f83fafbeb7a206b936ee8e8d9e48210",
+      "bytes": 103
+    }
+  ]
+}

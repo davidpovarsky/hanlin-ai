@@ -1,0 +1,37 @@
+{
+  "observedAt": "2026-11-25T04:07:19.980787+00:00",
+  "source": "42e34eff615a6d599ddfd01ea9382d920b5f9a5c",
+  "priorEstimate": {
+    "deviceDirectoryBytes": 6244032512,
+    "incrementalProducts": 1073741824,
+    "evidence": 536870912,
+    "concurrentGrowthAndOSAllowance": 4294967296,
+    "total": 12149612544
+  },
+  "revisedEstimate": {
+    "currentSameModularDirectoryUpperBound": 5731033088,
+    "incrementalProducts": 536870912,
+    "evidence": 536870912,
+    "concurrentGrowthAndOSAllowance": 4294967296,
+    "total": 11099742208
+  },
+  "basis": [
+    "Original du was full directory allocation, not measured physical increment. APFS sharing may reduce allocation but is not assumed.",
+    "Current same-Modular device and shared already-built native products bound this narrow update more directly than larger prior parity device.",
+    "MiniApps UI runner current allocated size692KiB; two changed source files require no engine/SDK regeneration. A0.5GiB changed-product allowance is retained.",
+    "Existing global before/afterdf is confounded by concurrent activity; do not claim observed net delta equals job cost.",
+    "Before/after-command and30-second physicaldf observations added to this external diagnostic wrapper; no selector/assertion/deadline/source mutation."
+  ],
+  "files": [
+    {
+      "path": "focused-diagnostics-attempt13.py",
+      "bytes": 13086,
+      "sha256": "7438ab010cedebd87a3ac16b10617113b7d4c71a5b4e9d041d071f7897a68797"
+    },
+    {
+      "path": "run-focused-diagnostics-attempt13.py",
+      "bytes": 6576,
+      "sha256": "7988a2e41e4d3fdf4cdae47942cae0f0e4268acdbdab07f41b88663ae8b16a09"
+    }
+  ]
+}

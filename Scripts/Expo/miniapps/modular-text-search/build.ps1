@@ -1,26 +1,26 @@
 $ErrorActionPreference = 'Stop'
 $repo = (Resolve-Path (Join-Path $PSScriptRoot '..\..\..\..')).Path
-$tool = Join-Path $repo 'Scripts\Expo'
-$local = $PSScriptRoot
-$dist = Join-Path $local 'dist'
-New-Item -ItemType Directory -Path $dist -Force | Out-Null
-Push-Location $tool
+$sdk = Join-Path $repo 'build\MiniAppSDK-Expo'
+$report = Join-Path $PSScriptRoot '.hanlin-authoring\build-report.json'
+$dist = Join-Path $PSScriptRoot 'dist'
+& node (Join-Path $repo 'Scripts\MiniApps\install-tooling.mjs') '--engine=expo'
+if ($LASTEXITCODE -ne 0) { throw 'Original Expo dependency preparation failed' }
+& node (Join-Path $repo 'Scripts\Expo\prepare-types.mjs')
+if ($LASTEXITCODE -ne 0) { throw 'Original Expo type preparation failed' }
+& node (Join-Path $repo 'Scripts\MiniApps\stage-sdk.mjs') "--output=$sdk" '--engines=expo,scriptwidget'
+if ($LASTEXITCODE -ne 0) { throw 'Host-matching Expo SDK preparation failed' }
+$previousCompiler = $env:HANLIN_AUTHORING_TYPESCRIPT
 try {
-  & '.\node_modules\.bin\tsc6.cmd' --noEmit -p '.\miniapps\modular-text-search\tsconfig.json'
-  if ($LASTEXITCODE -ne 0) { throw "TypeScript check failed" }
-  & '.\node_modules\.bin\react-native.cmd' bundle --entry-file '.\miniapps\modular-text-search\index.ts' --platform ios --dev false --bundle-output (Join-Path $dist 'bundle.js') --config '.\metro.config.cjs'
-  if ($LASTEXITCODE -ne 0) { throw "Metro bundling failed" }
+  $env:HANLIN_AUTHORING_TYPESCRIPT = Join-Path $repo 'Scripts\Expo\node_modules\typescript\lib\typescript.js'
+  & node (Join-Path $repo 'Scripts\MiniApps\miniapp.mjs') build --sdk $sdk --engine expo --project $PSScriptRoot --report $report
+  if ($LASTEXITCODE -ne 0) { throw "MiniApp compilation failed. Diagnostics: $report" }
 } finally {
-  Pop-Location
+  $env:HANLIN_AUTHORING_TYPESCRIPT = $previousCompiler
 }
-$stage = Join-Path $dist 'stage'
-New-Item -ItemType Directory -Path $stage -Force | Out-Null
-Copy-Item (Join-Path $dist 'bundle.js') (Join-Path $stage 'bundle.js') -Force
-Copy-Item (Join-Path $local 'script.json') (Join-Path $stage 'script.json') -Force
-Copy-Item (Join-Path $local 'package.json') (Join-Path $stage 'package.json') -Force
-$zip = Join-Path $dist 'ModularTextSearch.zip'
+$result = Get-Content -LiteralPath $report -Raw | ConvertFrom-Json
+if (-not $result.succeeded -or -not $result.archivePath) { throw 'The compiler returned no successful archive' }
+New-Item -ItemType Directory -Path $dist -Force | Out-Null
 $out = Join-Path $dist 'ModularTextSearch.hanlinExpo'
-Compress-Archive -LiteralPath (Join-Path $stage 'bundle.js'),(Join-Path $stage 'script.json'),(Join-Path $stage 'package.json') -DestinationPath $zip -Force
-Move-Item $zip $out -Force
-Write-Host "Built $out"
+Copy-Item -LiteralPath $result.archivePath -Destination $out -Force
+Write-Host "Built $out with editable sources, original SDK identity and compiler diagnostics"
 Get-FileHash $out -Algorithm SHA256

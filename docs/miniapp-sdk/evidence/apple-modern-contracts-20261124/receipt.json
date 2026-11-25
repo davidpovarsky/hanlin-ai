@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-24T08:37:54.070952+00:00",
+  "runID": 45356338624,
+  "jobID": 138314994806,
+  "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45356338624",
+  "sourceCommit": "25b14790e5c79b8ddd821984ed97d37e6af0bfa4",
+  "result": "EXECUTED_PASS_APPLE",
+  "executedMethods": 8,
+  "passed": 8,
+  "failed": 0,
+  "skipped": 0,
+  "durationSeconds": 0.079,
+  "selected": [
+    {
+      "method": "expoMainMustMatchTheInspectedForegroundEntrypoint",
+      "displayName": "Expo import main matches the manifest entry and cannot redirect launch elsewhere",
+      "result": "PASS",
+      "row": {
+        "line": 905,
+        "text": "Verify MiniApp import contracts / Compile and test isolated Scripting runtime\tUNKNOWN STEP\t2026-11-24T08:34:31.0212560Z \u2714 Test \"Expo import main matches the manifest entry and cannot redirect launch elsewhere\" passed after 0.079 seconds."
+      }
+    },
+    {
+      "method": "nativeScriptPreparedEntrypointIsAlwaysTheCanonicalBundle",
+      "displayName": "Prepared NativeScript entry metadata uses the canonical bundle across sessions",
+      "result": "PASS",
+      "row": {
+        "line": 904,
+        "text": "Verify MiniApp import contracts / Compile and test isolated Scripting runtime\tUNKNOWN STEP\t2026-11-24T08:34:31.0211440Z \u2714 Test \"Prepared NativeScript entry metadata uses the canonical bundle across sessions\" passed after 0.058 seconds."
+      }
+    },
+    {
+      "method": "nativeScriptSwiftUIContract",
+      "displayName": "Validates the embedded NativeScript SwiftUI plugin contract without changing ordinary Scripting",
+      "result": "PASS",
+      "row": {
+        "line": 901,
+        "text": "Verify MiniApp import contracts / Compile and test isolated Scripting runtime\tUNKNOWN STEP\t2026-11-24T08:34:31.0207660Z \u2714 Test \"Validates the embedded NativeScript SwiftUI plugin contract without changing ordinary Scripting\" passed after 0.056 seconds."
+      }
+    },
+    {
+      "method": "nativeScriptCoreContract",
+      "displayName": "Validates declared @nativescript/core dependency compatibility",
+      "result": "PASS",
+      "row": {
+        "line": 902,
+        "text": "Verify MiniApp import contracts / Compile and test isolated Scripting runtime\tUNKNOWN STEP\t2026-11-24T08:34:31.0209020Z \u2714 Test \"Validates declared @nativescript/core dependency compatibility\" passed after 0.056 seconds."
+      }
+    },
+    {
+      "method": "expoSwiftUIContract",
+      "displayName": "Validates the embedded Expo SwiftUI plugin contract",
+      "result": "PASS",
+      "row": {
+        "line": 899,
+        "text": "Verify MiniApp import contracts / Compile and test isolated Scripting runtime\tUNKNOWN STEP\t2026-11-24T08:34:31.0202850Z \u2714 Test \"Validates the embedded Expo SwiftUI plugin contract\" passed after 0.056 seconds."
+      }
+    },
+    {
+      "method": "expoMultiExposureMatrix",
+      "displayName": "Expo import evaluates foreground app and multi-exposure support fail-closed",
+      "result": "PASS",
+      "row": {
+        "line": 898,
+        "text": "Verify MiniApp import contracts / Compile and test isolated Scripting runtime\tUNKNOWN STEP\t2026-11-24T08:34:31.0201780Z \u2714 Test \"Expo import evaluates foreground app and multi-exposure support fail-closed\" passed after 0.056 seconds."
+      }
+    },
+    {
+      "method": "malformedPreparedEntrypointsFailWithStableDiagnostic",
+      "displayName": "Malformed and duplicate prepared entrypoints are visible import failures",
+      "result": "PASS",
+      "row": {
+        "line": 900,
+        "text": "Verify MiniApp import contracts / Compile and test isolated Scripting runtime\tUNKNOWN STEP\t2026-11-24T08:34:31.0206220Z \u2714 Test \"Malformed and duplicate prepared entrypoints are visible import failures\" passed after 0.056 seconds."
+      }
+    },
+    {
+      "method": "unavailableModernNativePluginsFailBeforeImport",
+      "displayName": "Unavailable native plugins fail before Expo and NativeScript import",
+      "result": "PASS",
+      "row": {
+        "line": 903,
+        "text": "Verify MiniApp import contracts / Compile and test isolated Scripting runtime\tUNKNOWN STEP\t2026-11-24T08:34:31.0210240Z \u2714 Test \"Unavailable native plugins fail before Expo and NativeScript import\" passed after 0.056 seconds."
+      }
+    }
+  ],
+  "toolchain": {
+    "xcode": "27.2",
+    "build": "27B52",
+    "appleSwift": "6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)"
+  },
+  "rawLog": {
+    "path": "job-138314994806.log",
+    "bytes": 160756,
+    "sha256": "2e1f484475db1d257309968272177f9e61f19db4fbaf6b5ec5bbcebd170ef188"
+  },
+  "testedInputs": {
+    "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift": "a8b4b96df4fb0782e78e0c48132def346f63436b9cff96286088f52b5889da54",
+    "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinMiniAppHostVersions.swift": "a31357ce803c24ba80aed6f4c81b7e31f82abde1ec6c2ef00c6ee4a57c272717",
+    "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinScriptAnalyzerTests.swift": "3f3b3565384b7e8a66948d6be67ee95f2f735f038dc69ea07d287e1c6a3cfca2"
+  },
+  "currentSourceMatches": true,
+  "prior7Pass1FailProof": "../native-runtime-message-authority-20261124/receipt.json",
+  "boundary": [
+    "Actual Mac Analyzer contracts, not iOS app/UI or physical device acceptance.",
+    "Core and iOS runtime version authorities remain distinct.",
+    "No wrong-entry, unsupported exposure, absent-plugin or malformed-entry rejection was weakened."
+  ]
+}

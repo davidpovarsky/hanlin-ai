@@ -20,7 +20,7 @@ private typealias Widget = HanlinScriptExtensions.HanlinScriptWidgetSnapshot
 
 @Suite("Pass 3 installed widget programs, actions and transactions")
 struct HanlinDualWidgetEnginesTests {
-    @Test func scriptWidgetBoundsFlattenedChildrenAndAggregatePreparedMaterials() throws {
+    @Test func scriptWidgetUsesOriginalElementLimitsWithoutExtraMaterialQuotas() throws {
         func run(_ source: String) throws -> HanlinScriptWidgetExecution {
             try HanlinScriptWidgetRuntime.shared.run(program: .init(engine: .scriptwidget,
                 sourceSHA256: String(repeating: "a", count: 64), compilerSHA256: String(repeating: "b", count: 64),
@@ -31,21 +31,25 @@ struct HanlinDualWidgetEnginesTests {
             "$render(ScriptWidget.createElement('vstack', {}, Array.from({length:250}, () => ScriptWidget.createElement('text', {title:'x'.repeat(1100)}, 'x'))));",
             "const props = {}; for (let i=0;i<120;i++) props['key'+i] = 'x'.repeat(2300); $render(ScriptWidget.createElement('text', props, 'x'));"
         ] {
-            #expect(throws: HanlinScriptWidgetError.self) { _ = try run(source) }
+            #expect(try run(source).node.tag != "")
         }
-        let valid = try run("$render(ScriptWidget.createElement('text', {}, Array(500).fill('x')));")
-        #expect(valid.node.children.count == 500)
+        let valid = try run("$render(ScriptWidget.createElement('text', {}, Array(1100).fill('x'.repeat(1024))));")
+        #expect(valid.node.children.count == 1100)
+        #expect(try JSONEncoder().encode(valid.node).count > 1_048_576)
+        #expect(throws: HanlinScriptWidgetError.self) {
+            _ = try run("$render(ScriptWidget.createElement('vstack', {}, Array.from({length:1001}, () => ScriptWidget.createElement('text',{},'x'))));")
+        }
         let root = try temporary()
         defer { try? FileManager.default.removeItem(at: root) }
         let store = Store(root: root)
         let identity = Identity(installedPackageID: try .init(validating: "installed.budget"), packageID: try .init(validating: "package.budget"), generation: 1, entrypointID: "widget")
-        let program = HanlinWidgetProgram(engine: .scriptwidget, sourceSHA256: String(repeating: "a", count: 64), compilerSHA256: String(repeating: "b", count: 64), javaScript: "async function $main() { $storage.set('staged',true); $render(ScriptWidget.createElement('text',{},Array(1001).fill('x'))); }", actions: [], families: ["systemMedium"])
+        let program = HanlinWidgetProgram(engine: .scriptwidget, sourceSHA256: String(repeating: "a", count: 64), compilerSHA256: String(repeating: "b", count: 64), javaScript: "async function $main() { $storage.set('staged',true); $render(ScriptWidget.createElement('vstack',{},Array.from({length:1001},()=>ScriptWidget.createElement('text',{},'x')))); }", actions: [], families: ["systemMedium"])
         let artifact = try store.storeArtifact(data: JSONEncoder().encode(program), installedPackageID: identity.installedPackageID, generation: 1)
         let widget = Widget(identity: identity, displayName: "Budget failure", validUntil: .distantFuture, engine: .scriptwidget,
             payload: .scriptwidget(.init(script: "", scriptRef: artifact.ref, scriptSHA256: artifact.sha256)), root: .init(kind: .text))
         try store.publishWidgetTemplates([widget], intentEntities: [], translationApps: [], installedPackageIDs: [identity.installedPackageID])
         let entityID = try #require(try store.load()?.widgetInstances.first?.entityID)
-        guard case .failure = HanlinWidgetPreparation.prepare(store: store, entityID: entityID, family: "systemMedium") else { Issue.record("Oversized native tree was published"); return }
+        guard case .failure = HanlinWidgetPreparation.prepare(store: store, entityID: entityID, family: "systemMedium") else { Issue.record("An invalid original element tree was published"); return }
         #expect(try store.load()?.widgetStates.isEmpty == true, "Failed preparation committed staged script storage")
     }
     @Test func sameSourceActionTargetAcrossInstalledPackagesAndVariantsIsIsolated() async throws {

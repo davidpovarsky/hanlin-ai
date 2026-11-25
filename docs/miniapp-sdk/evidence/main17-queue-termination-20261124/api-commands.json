@@ -1,0 +1,32 @@
+[
+  {
+    "observedAtUTC": "2026-11-24T17:21:42.045976+00:00",
+    "argv": [
+      "sudo",
+      "-u",
+      "ubuntu",
+      "gh",
+      "api",
+      "repos/davidpovarsky/hanlin-ai/check-runs/138612265040"
+    ],
+    "exitCode": 0,
+    "stdout": "check-run.json",
+    "stdoutSHA256": "04b697f592c5d16b1afca139c4050b25ea6f4e942a7486fa2d66bb8153dac066",
+    "stderr": "check-run.stderr.txt"
+  },
+  {
+    "observedAtUTC": "2026-11-24T17:21:42.656997+00:00",
+    "argv": [
+      "sudo",
+      "-u",
+      "ubuntu",
+      "gh",
+      "api",
+      "repos/davidpovarsky/hanlin-ai/check-runs/138612265040/annotations?per_page=100"
+    ],
+    "exitCode": 0,
+    "stdout": "annotations.json",
+    "stdoutSHA256": "5a0a074080fc605830416f578e57a7154fa260975166ede132398c102ea5a158",
+    "stderr": "annotations.stderr.txt"
+  }
+]

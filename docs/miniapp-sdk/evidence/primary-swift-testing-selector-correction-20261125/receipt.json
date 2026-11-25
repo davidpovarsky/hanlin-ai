@@ -1,0 +1,128 @@
+{
+  "schema": 1,
+  "capturedAt": "2026-11-25T10:28:12.545956+00:00",
+  "author": "/root/native_execution",
+  "baselineSource": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+  "productionChange": "Add the declared empty parameter list only to six original method-level Swift Testing selectors. All test bodies, suite/XCTest selectors, expected27, command/case deadlines and strict actual-node verifier remain unchanged.",
+  "sourceBindings": [
+    {
+      "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+      "beforeSHA256": "014a10ca33badfc036a3713d4715423a361c6c9fea2e76c24411b5725ac2719f",
+      "afterSHA256": "a99b6194f8dd20bc30998ff2ad9e86ec219415a00615b250c65670f7dfcdba7d",
+      "beforeBytes": 47859,
+      "afterBytes": 47871
+    },
+    {
+      "path": "Scripts/ProductSplit/test_run_paired_acceptance.py",
+      "beforeSHA256": "6682d0983f3d031939bba98225b57056ced9a64a1f661f8fd636926bc352152f",
+      "afterSHA256": "3791b4178c5cc49b64c38ead6f913284f29fc990c7223953aa74f2075f3771f1",
+      "beforeBytes": 17731,
+      "afterBytes": 19171
+    }
+  ],
+  "unchangedAuthority": [
+    {
+      "path": "AI_HLYTests/HanlinOrganizerDockParityTests.swift",
+      "sha256": "5dc4ca52a85f45daf9640834b0a224df902b6648e72437b9bd4ceb64a7491f3a",
+      "bytes": 94119
+    },
+    {
+      "path": "AI_HLYTests/HanlinScriptingPlatformCompositionTests.swift",
+      "sha256": "6d71ccfbb6018696de27ccaf014162ee470f8148c5fd30733e5bf5d89e2763e9",
+      "bytes": 10722
+    },
+    {
+      "path": "AI_HLYTests/MiniAppAuthoringToolTests.swift",
+      "sha256": "e516af0f7ecfa920cbb4e226224934fdbb389bbd43b063cdfaacd1a2d909f750",
+      "bytes": 9383
+    },
+    {
+      "path": "Scripts/CI/verify_selected_tests.py",
+      "sha256": "4ae4a28934341461b364a9b83fb891ca214da64cf3046635278fb4e6837caad5",
+      "bytes": 2000
+    },
+    {
+      "path": "PROJECT_BOARD.md",
+      "sha256": "2375382ea3d5d9070ba8c0ed7d9db6d9ede9518e4ed085194ae42e15dd058eb1",
+      "bytes": 65314
+    }
+  ],
+  "actualFailure": {
+    "source": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+    "expectedTests": 27,
+    "executedTests": 21,
+    "passed": 19,
+    "failed": 2,
+    "skipped": 0,
+    "missingMethods": 6,
+    "rawPacketReceiptSHA256": "4de255af777d3cdaedbae706651c13bf16af748f175d63dc7db19c81f1f28baa",
+    "preservedNativeStatus": "FAILED_DIAGNOSTIC_NOT_ORIGINAL52"
+  },
+  "portableProof": {
+    "baseline": {
+      "exitCode": 1,
+      "testFunctions": 1,
+      "failedSubtests": 6
+    },
+    "candidate": {
+      "exitCode": 0,
+      "testFunctions": 7,
+      "failures": 0,
+      "skipped": 0
+    },
+    "meaning": "The new regression compares configured filters to original Swift @Test function declarations; existing tests retain rejection of omitted/empty/skipped executed-case evidence."
+  },
+  "correctedNativeExecution": "NOT_RUN; requires actual final native acceptance after combined source integration",
+  "members": [
+    {
+      "path": "raw/actual-native-nodes.json",
+      "bytes": 18626,
+      "sha256": "c50f0a371d0bbbe07b2a90eb4d95158b85485a4bcd388c3542f5a3bfb610d674"
+    },
+    {
+      "path": "raw/actual-native-state.json",
+      "bytes": 2301,
+      "sha256": "9ce14c6e9b7370652b2658c681f7c0b8810235eece6c77d77883ab90f6dc4626"
+    },
+    {
+      "path": "raw/actual-native-summary.json",
+      "bytes": 2929,
+      "sha256": "7abe74639707e83dc1cb5927ffb823a437943f21671bfbba61c7955976eb33b4"
+    },
+    {
+      "path": "raw/actual-selected-command.json",
+      "bytes": 3781,
+      "sha256": "5012b7caeece82c5340dea10ca44293878af4c442db7869929105bbad4b5dd05"
+    },
+    {
+      "path": "raw/actual-selector-verifier.log",
+      "bytes": 575,
+      "sha256": "22fb978e34009bed2c9ff3c80c7b021501b9cb6ca1ad314362a9be282faf601e"
+    },
+    {
+      "path": "raw/baseline.json",
+      "bytes": 655,
+      "sha256": "4f0568aa26fdf268253aaf8ed3924da6ea408d92eee12026b8851b1ecb9efea2"
+    },
+    {
+      "path": "raw/baseline.log",
+      "bytes": 8810,
+      "sha256": "07be3372545a093c7f55a304e3977a3d3daa5dfe0e16881b01938ca586cff0df"
+    },
+    {
+      "path": "raw/candidate.json",
+      "bytes": 682,
+      "sha256": "78274390be94fd7d09f2eefe2bb48ed626daad51c471c71f4c480646c5f7478f"
+    },
+    {
+      "path": "raw/candidate.log",
+      "bytes": 1583,
+      "sha256": "ef2a19265a31263c9d24daa8c9d405da278f2193167df769e4d593fe35e00b7d"
+    },
+    {
+      "path": "raw/source.diff",
+      "bytes": 3863,
+      "sha256": "f2171bfae4326f6090f1aa896175751cff263fab2bfa18e8b560b1041af96db8"
+    }
+  ]
+}

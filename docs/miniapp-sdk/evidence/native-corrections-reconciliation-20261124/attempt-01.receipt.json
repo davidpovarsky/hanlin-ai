@@ -1,0 +1,20 @@
+{
+  "recordedAtUTC": "2026-11-24T09:17:47.787031+00:00",
+  "baseCommit": "01d08ed453040d74a76211e7fb51a611b0d1e2cc",
+  "status": "FAILED_SOURCE_RECONCILIATION",
+  "purpose": "Single combined source/reference/reachability regeneration and drift check after reviewed native presentation namespace and ScriptWidget validator corrections. No component tests repeated.",
+  "commands": [
+    {
+      "command": [
+        "node",
+        "Scripts/Audit/audit-miniapp-sdk.mjs",
+        "--write"
+      ],
+      "startedAtUTC": "2026-11-24T09:17:47.321471+00:00",
+      "returncode": 1,
+      "stdout": "docs/miniapp-sdk/evidence/native-corrections-reconciliation-20261124/1.stdout.log",
+      "stderr": "docs/miniapp-sdk/evidence/native-corrections-reconciliation-20261124/1.stderr.log"
+    }
+  ],
+  "boundary": "Source reconciliation only; actual corrected Apple2 and full app42 pending."
+}

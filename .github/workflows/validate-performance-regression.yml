@@ -121,10 +121,18 @@ jobs:
           device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
+      - name: Resolve current original MiniApp sources before native preparation
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p "$LOG_DIR" build/acceptance/miniapp-upstreams
+          trap 'cp build/acceptance/miniapp-upstreams/resolution.json "$LOG_DIR/miniapp-upstream-resolution.json" 2>/dev/null || true; git diff --binary > "$LOG_DIR/miniapp-upstream-inputs.patch"' EXIT
+          node Scripts/MiniApps/resolve-upstreams.mjs --apply --cache="$RUNNER_TEMP/hanlin-miniapp-upstreams" 2>&1 | tee "$LOG_DIR/miniapp-upstream-resolution.log"
+
       - name: Prepare pinned NativeScript iOS dependency closure
         run: |
           set -euxo pipefail
-          npm ci --ignore-scripts --no-audit --no-fund --prefix Scripts/NativeScript
+          node Scripts/MiniApps/install-tooling.mjs --engine=nativescript --ignore-scripts
           npm run prepare:ios-dependencies --prefix Scripts/NativeScript
           node Scripts/NativeScript/prepare-fixture.mjs
           npm run prepare:production-package --prefix Scripts/NativeScript
@@ -149,6 +157,13 @@ jobs:
           device_id: ${{ secrets.NOTIFY_DEVICE_ID }}
           token: ${{ secrets.NOTIFY_DEVICE_TOKEN }}
           github_token: ${{ github.token }}
+      - name: Prepare matching current Expo native inputs and declaration environment
+        run: |
+          set -euxo pipefail
+          node Scripts/MiniApps/install-tooling.mjs --engine=expo --ignore-scripts
+          node Scripts/Expo/prepare-ios-dependencies.mjs
+          node Scripts/Expo/prepare-types.mjs
+
       - name: Prepare verified embedded RuntimeCore
         env:
           GH_TOKEN: ${{ github.token }}

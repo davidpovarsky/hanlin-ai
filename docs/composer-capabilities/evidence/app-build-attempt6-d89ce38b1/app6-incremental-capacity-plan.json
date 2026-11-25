@@ -1,0 +1,14 @@
+{
+  "sourceCommit": "d89ce38b170bc9af4734cd11e30ca793b16698d0",
+  "scheme": "AI_HLY",
+  "incrementalBuildEstimateGiB": 2,
+  "concurrentGrowthAllowanceGiB": 4,
+  "OSMarginGiB": 2,
+  "basis": "Only test scheme and three Node checker/fixture files differ from full successful app5; no Swift/ObjC/linker/project/pin/native inputs change. Warm existing same-scheme products retained. 2GiB allows graph/result/metadata/link temporary writes; 4GiB accounts for active other app/UI owner growth; 2GiB OS margin with normal memory pressure. Observed free space recovered from8.239 to13.953GiB. No CPU/load/job-count gate.",
+  "changedPathsSinceSuccessfulBuild": [
+    "AI_HLY.xcodeproj/xcshareddata/xcschemes/AI_HLY.xcscheme",
+    "Scripts/NativeScript/Tests/app-binary-preflight.test.mjs",
+    "Scripts/NativeScript/app-binary-preflight.mjs",
+    "Scripts/NativeScript/preflight-ios-dependencies.mjs"
+  ]
+}

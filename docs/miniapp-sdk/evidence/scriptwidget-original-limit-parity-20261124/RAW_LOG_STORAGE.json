@@ -1,0 +1,19 @@
+{
+  "reason": "Raw diagnostic output contains trailing whitespace. Gzip preserves exact bytes without normalization; all other raw logs remain plain files.",
+  "files": [
+    {
+      "originalName": "compile-budget-red.stdout.log",
+      "storedAs": "compile-budget-red.stdout.log.gz",
+      "originalBytes": 1548,
+      "originalSHA256": "2bf72a4bcbcf083a005def136e62985b987f28240b6c70f1fc6af572afb7a497",
+      "storedSHA256": "5c948ad238e219393bca680d67dc57513e66ea3be63abfc3e4067617481b826d"
+    },
+    {
+      "originalName": "raw-log-whitespace.stdout.log",
+      "storedAs": "raw-log-whitespace.stdout.log.gz",
+      "originalBytes": 258,
+      "originalSHA256": "516ee4652e1391cb63f1fc9ab9a90983152ec57e35b0a34238228a28cb9c5c0f",
+      "storedSHA256": "fd84eb83e79425cfaeaf979613a69f24e2408a62c58bc57e4aa38b704fc9f774"
+    }
+  ]
+}

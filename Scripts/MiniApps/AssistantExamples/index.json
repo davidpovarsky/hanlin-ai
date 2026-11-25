@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "projects": [
+    {
+      "id": "assistant-map-places",
+      "engine": "nativescript",
+      "level": "assistant-tool",
+      "title": "Map pin and places (local fixtures)",
+      "directory": "map-places"
+    }
+  ]
+}

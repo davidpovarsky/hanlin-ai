@@ -1,4 +1,5 @@
 import AppIntents
+import ExpoWidgets
 import HanlinExtensionContracts
 import HanlinWidgetUI
 import SwiftUI
@@ -9,11 +10,16 @@ struct HanlinScriptingWidgetBundle: WidgetBundle {
     var body: some Widget {
         HanlinScriptingWidget(kind: HanlinExtensionHostConfiguration.hanlinWidgetKind)
         HanlinScriptingLiveActivityWidget()
+        HanlinOriginalScriptWidgetLiveActivityWidget()
+        HanlinOriginalExpoWidget()
+        ExpoWidgets.WidgetLiveActivity()
+        ScriptWidgetButtonControlWidget()
+        ScriptWidgetControlWidget()
     }
 }
 
 struct HanlinScriptingWidgetIntents: AppIntentsPackage {
     static var includedPackages: [any AppIntentsPackage.Type] {
-        [HanlinWidgetIntentsPackage.self]
+        [HanlinWidgetIntentsPackage.self, HanlinExpoWidgetsIntentsPackage.self]
     }
 }

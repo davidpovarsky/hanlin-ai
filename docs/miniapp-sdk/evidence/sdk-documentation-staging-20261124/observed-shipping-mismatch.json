@@ -1,0 +1,48 @@
+{
+  "runID": 45343362337,
+  "sdkInputPolicy": "inputReceipt excludes every evidence directory",
+  "actualShippedEvidenceFiles": 197,
+  "actualShippedEvidenceBytes": 2669873,
+  "examples": [
+    {
+      "path": "docs/miniapp-sdk/evidence/2026-11-23-authoring-integration/artifact-identity.json",
+      "sha256": "6fbe47724d2a41c59d7dc0e73f5edfbec5db3022587013cc4385768c176f99ec",
+      "bytes": 1614
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/2026-11-23-authoring-integration/expo-fresh-assets-build.json",
+      "sha256": "f1b80075ad472f4d0e66ef8c7c2a3406727bf1634f9d324450579dfc549cfc5d",
+      "bytes": 1425
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/2026-11-23-authoring-integration/expo-fresh-assets-build.log",
+      "sha256": "4ac5db77e8790180e0295b987b0e39f6a125604ce06de9eb840ba80821e72e73",
+      "bytes": 2444
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/2026-11-23-authoring-integration/expo-native-config-validation.json",
+      "sha256": "5ed8665e3b95644d025c71d76329f008be37c22d91aeb88732cf0075308f6afd",
+      "bytes": 1140
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/2026-11-23-authoring-integration/expo-search-build.json",
+      "sha256": "1b9cd36d385f059b160548fc15e34c5fe108984441b42093062cc129497cfe43",
+      "bytes": 1428
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/2026-11-23-authoring-integration/expo-search-build.log",
+      "sha256": "fbb7ef471a962fe182110c6fd025df0434b6af738d223968fc0ea25ccbd3b9bf",
+      "bytes": 3770
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/2026-11-23-authoring-integration/native-repair-fixture.json",
+      "sha256": "254d10d87e1767a2aaf02f1e88ec1a36a9c3945e676f41210e4e5666d3b4b011",
+      "bytes": 3395
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/2026-11-23-authoring-integration/native-repair-fixture.log",
+      "sha256": "d6590bbe8fba3b60eb8211f4510c58d4e749183ea77bc9c12c4d72b20d651fa5",
+      "bytes": 2711
+    }
+  ]
+}

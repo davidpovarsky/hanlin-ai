@@ -1,0 +1,270 @@
+{
+  "schemaVersion": 1,
+  "run": {
+    "conclusion": "failure",
+    "createdAt": "2026-11-24T00:52:13Z",
+    "headSha": "2536c1c5a02c4b528b277d252d9d34fc93af69d5",
+    "jobs": [
+      {
+        "completedAt": "2026-11-24T01:08:37Z",
+        "conclusion": "failure",
+        "databaseId": 138131981626,
+        "name": "miniapps",
+        "startedAt": "2026-11-24T01:07:37Z",
+        "status": "completed",
+        "steps": [
+          {
+            "completedAt": "2026-11-24T01:07:38Z",
+            "conclusion": "success",
+            "name": "Set up job",
+            "number": 1,
+            "startedAt": "2026-11-24T01:07:37Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-24T01:07:45Z",
+            "conclusion": "success",
+            "name": "Run actions/checkout@v7.0.1",
+            "number": 2,
+            "startedAt": "2026-11-24T01:07:38Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-24T01:07:53Z",
+            "conclusion": "success",
+            "name": "Run actions/setup-node@v7.1.0",
+            "number": 3,
+            "startedAt": "2026-11-24T01:07:45Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-24T01:07:53Z",
+            "conclusion": "skipped",
+            "name": "Validate requested signing preflight scope",
+            "number": 4,
+            "startedAt": "2026-11-24T01:07:53Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-24T01:08:07Z",
+            "conclusion": "success",
+            "name": "Verify actual Mac toolchain, disk and installed simulator tooling",
+            "number": 5,
+            "startedAt": "2026-11-24T01:07:53Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-24T01:08:32Z",
+            "conclusion": "failure",
+            "name": "Resolve current original MiniApp sources and exact build graph",
+            "number": 6,
+            "startedAt": "2026-11-24T01:08:07Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-24T01:08:32Z",
+            "conclusion": "skipped",
+            "name": "Restore existing Swift package dependency cache",
+            "number": 7,
+            "startedAt": "2026-11-24T01:08:32Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-24T01:08:32Z",
+            "conclusion": "skipped",
+            "name": "Restore compatible standalone compiler state",
+            "number": 8,
+            "startedAt": "2026-11-24T01:08:32Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-24T01:08:32Z",
+            "conclusion": "skipped",
+            "name": "Validate authentic unchanged Host and foreground proofs before reuse",
+            "number": 9,
+            "startedAt": "2026-11-24T01:08:32Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-24T01:08:32Z",
+            "conclusion": "skipped",
+            "name": "Execute strict foreground route and ledger cases on the actual Mac",
+            "number": 10,
+            "startedAt": "2026-11-24T01:08:32Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-24T01:08:32Z",
+            "conclusion": "skipped",
+            "name": "Reproduce and verify affected package lifecycle on the actual Mac first",
+            "number": 11,
+            "startedAt": "2026-11-24T01:08:32Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-24T01:08:32Z",
+            "conclusion": "skipped",
+            "name": "Prepare the existing pinned metadata tool",
+            "number": 12,
+            "startedAt": "2026-11-24T01:08:32Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-24T01:08:32Z",
+            "conclusion": "skipped",
+            "name": "Prepare existing native dependencies and Runtime host",
+            "number": 13,
+            "startedAt": "2026-11-24T01:08:32Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-24T01:08:32Z",
+            "conclusion": "skipped",
+            "name": "Export exact prepared native artifacts for reuse",
+            "number": 14,
+            "startedAt": "2026-11-24T01:08:32Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-24T01:08:32Z",
+            "conclusion": "skipped",
+            "name": "Restore verified input timestamps for incremental compilation",
+            "number": 15,
+            "startedAt": "2026-11-24T01:08:32Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-24T01:08:32Z",
+            "conclusion": "skipped",
+            "name": "Capture exact standalone compiler inputs",
+            "number": 16,
+            "startedAt": "2026-11-24T01:08:32Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-24T01:08:32Z",
+            "conclusion": "skipped",
+            "name": "Execute actual standalone target XCUITests",
+            "number": 17,
+            "startedAt": "2026-11-24T01:08:32Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-24T01:08:32Z",
+            "conclusion": "skipped",
+            "name": "Exercise actual request, return, cancellation and transfer across both products",
+            "number": 18,
+            "startedAt": "2026-11-24T01:08:32Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-24T01:08:32Z",
+            "conclusion": "skipped",
+            "name": "Prepare isolated signing inspection dependencies",
+            "number": 19,
+            "startedAt": "2026-11-24T01:08:32Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-24T01:08:32Z",
+            "conclusion": "skipped",
+            "name": "Build original device archives and export with the existing distribution identity",
+            "number": 20,
+            "startedAt": "2026-11-24T01:08:32Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-24T01:08:32Z",
+            "conclusion": "success",
+            "name": "Keep original logs, status and xcresult even after early failure",
+            "number": 21,
+            "startedAt": "2026-11-24T01:08:32Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-24T01:08:33Z",
+            "conclusion": "success",
+            "name": "Upload evidence",
+            "number": 22,
+            "startedAt": "2026-11-24T01:08:32Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-24T01:08:33Z",
+            "conclusion": "skipped",
+            "name": "Save changed compiler state without treating it as test evidence",
+            "number": 23,
+            "startedAt": "2026-11-24T01:08:33Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-24T01:08:33Z",
+            "conclusion": "skipped",
+            "name": "Save changed Swift package dependency cache",
+            "number": 24,
+            "startedAt": "2026-11-24T01:08:33Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-24T01:08:33Z",
+            "conclusion": "skipped",
+            "name": "Post Run actions/setup-node@v7.1.0",
+            "number": 47,
+            "startedAt": "2026-11-24T01:08:33Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-24T01:08:34Z",
+            "conclusion": "success",
+            "name": "Post Run actions/checkout@v7.0.1",
+            "number": 48,
+            "startedAt": "2026-11-24T01:08:33Z",
+            "status": "completed"
+          },
+          {
+            "completedAt": "2026-11-24T01:08:34Z",
+            "conclusion": "success",
+            "name": "Complete job",
+            "number": 49,
+            "startedAt": "2026-11-24T01:08:34Z",
+            "status": "completed"
+          }
+        ],
+        "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45300633012/job/138131981626"
+      },
+      {
+        "completedAt": "2026-11-24T00:52:15Z",
+        "conclusion": "skipped",
+        "databaseId": 138131983526,
+        "name": "register-original-product",
+        "startedAt": "2026-11-24T00:52:15Z",
+        "status": "completed",
+        "steps": [],
+        "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45300633012/job/138131983526"
+      },
+      {
+        "completedAt": "2026-11-24T00:52:15Z",
+        "conclusion": "skipped",
+        "databaseId": 138131983665,
+        "name": "release-resource-audit",
+        "startedAt": "2026-11-24T00:52:15Z",
+        "status": "completed",
+        "steps": [],
+        "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45300633012/job/138131983665"
+      }
+    ],
+    "status": "completed",
+    "updatedAt": "2026-11-24T01:08:38Z",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45300633012"
+  },
+  "sourceBuildLogSHA256": "67a50af8535b59400e63e792a20f446107d55e08131b9c864a66fbe8a471df3f",
+  "originalLogExcerpts": [
+    "miniapps\tResolve current original MiniApp sources and exact build graph\t2026-11-24T01:08:31.8095660Z Error: Original source fetch failed (403): https://api.github.com/repos/everettjf/scriptwidget/git/trees/4da256d58247bbafb9a5cd443a285250b97b3c4b?recursive=1",
+    "miniapps\tResolve current original MiniApp sources and exact build graph\t2026-11-24T01:08:31.8099040Z     at source (file:///Users/runner/work/hanlin-ai/hanlin-ai/Scripts/MiniApps/refresh-original-sources.mjs:17:25)",
+    "miniapps\tResolve current original MiniApp sources and exact build graph\t2026-11-24T01:08:31.8101970Z     at async refreshOriginalSources (file:///Users/runner/work/hanlin-ai/hanlin-ai/Scripts/MiniApps/refresh-original-sources.mjs:319:26)",
+    "miniapps\tResolve current original MiniApp sources and exact build graph\t2026-11-24T01:08:32.2914140Z ##[error]Process completed with exit code 1."
+  ],
+  "interpretation": "The actual Mac failed during original upstream source retrieval. Native dependency compilation, both host app builds and all selected native tests were not reached. The old helper omitted the HTTP response message and rate headers; the precise reason for the GitHub 403 was not retained. Source review confirmed that GitHub API requests were anonymous despite GH_TOKEN being available in this job.",
+  "nextRequiredEvidence": "Correct original-source HTTP authentication/diagnostics using the existing job identity, then repeat the unchanged native scope on the integrated source.",
+  "fixCommit": "10dad31003abcba90aa67e63f30f86fb14d3dd9b"
+}

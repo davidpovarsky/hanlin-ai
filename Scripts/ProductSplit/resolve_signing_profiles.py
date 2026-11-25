@@ -1,4 +1,4 @@
-"""Resolve profiles for the six original targets and the existing distribution key.
+"""Resolve profiles for the source-declared original targets and the existing distribution key.
 
 The only permitted Apple mutation is creating a missing compatible App Store
 profile. Never create/revoke a certificate, change capabilities, register a device,
@@ -21,7 +21,7 @@ import urllib.request
 import uuid
 
 from audit_release_resources import (
-    ROLES, ROOT, AppleReadFailure, apple_get, decode, evaluate_profile, exact_bundles,
+    ROLES, ROOT, AppleReadFailure, apple_get, decode, evaluate_profile, exact_bundles, product_roles,
 )
 
 
@@ -115,11 +115,23 @@ def decode_cms(encoded, private_directory):
         return content, plistlib.loads(result.stdout)
 
 
+def local_release_context(source_sha, build_number):
+    """Validate explicit local naming without borrowing or inventing a GitHub run."""
+    if not isinstance(source_sha, str) or not re.fullmatch(r"[0-9a-f]{40}", source_sha):
+        raise ValueError("Local Mac profile naming requires a full lowercase source SHA")
+    if not isinstance(build_number, str) or not re.fullmatch(r"[1-9][0-9]{0,17}", build_number):
+        raise ValueError("Local Mac profile naming requires a positive numeric build number")
+    return {"provider": "local-mac", "source_sha": source_sha, "build_number": build_number}
+
+
 def resolve_profile(role, bundle, required, certificate_sha, certificate_id, team,
                     private_directory, *, get=apple_get, create=create_profile,
-                    decode_content=decode_cms):
+                    decode_content=decode_cms, local_source_sha=None, local_build_number=None):
     if (role, bundle) not in {(r, b) for r, b, _, _ in ROLES}:
-        raise ValueError("Profile preparation is scoped to the six original targets")
+        raise ValueError("Profile preparation is scoped to the source-declared original targets")
+    local_context = None
+    if local_source_sha is not None or local_build_number is not None:
+        local_context = local_release_context(local_source_sha, local_build_number)
     response = get("/v1/bundleIds", {
         "filter[identifier]": bundle, "fields[bundleIds]": "identifier,platform", "limit": 200,
     })
@@ -135,6 +147,8 @@ def resolve_profile(role, bundle, required, certificate_sha, certificate_id, tea
                   if item.get("attributes", {}).get("profileType") == "IOS_APP_STORE"
                   and item.get("attributes", {}).get("profileState") == "ACTIVE"]
     facts = {"role": role, "bundle_id": bundle, "examined_existing_profiles": []}
+    if local_context is not None:
+        facts["local_release_context"] = local_context
 
     def assess(profile_id):
         response = get("/v1/profiles/" + resource_id(profile_id), {
@@ -154,16 +168,22 @@ def resolve_profile(role, bundle, required, certificate_sha, certificate_id, tea
         facts["examined_existing_profiles"].append(check)
         if check["status"] == "READY_RESOURCE":
             selected = raw, profile, check
+            selected_id = resource_id(candidate["id"])
             facts["source"] = "REUSED_COMPATIBLE_APPLE_PROFILE"
             break
     if selected is None:
-        run_id = os.environ.get("GITHUB_RUN_ID", "")
-        if not re.fullmatch(r"[1-9][0-9]*", run_id):
-            raise ValueError("A concrete original GitHub run is required to create a profile")
-        name = "Hanlin " + role + " App Store " + run_id
+        if local_context is None:
+            run_id = os.environ.get("GITHUB_RUN_ID", "")
+            if not re.fullmatch(r"[1-9][0-9]*", run_id):
+                raise ValueError("A concrete original GitHub run is required to create a profile")
+            name = "Hanlin " + role + " App Store " + run_id
+        else:
+            name = ("Hanlin " + role + " App Store Mac " + local_context["build_number"]
+                    + " " + local_context["source_sha"][:12])
         response = create(bundle_id, resource_id(certificate_id), name)
         # Read the newly created object back and evaluate the actual CMS data.
-        selected = assess(response["data"]["id"])
+        selected_id = resource_id(response["data"]["id"])
+        selected = assess(selected_id)
         facts["source"] = "CREATED_AND_READ_BACK_APPLE_PROFILE"
     raw, profile, check = selected
     if check["status"] != "READY_RESOURCE":
@@ -171,7 +191,10 @@ def resolve_profile(role, bundle, required, certificate_sha, certificate_id, tea
                          ",".join(check["missing_or_mismatched_entitlement_keys"]))
     profile_uuid = str(uuid.UUID(profile["UUID"])).upper()
     facts.update(check)
-    return {"bundle": bundle, "uuid": profile_uuid, "content": raw}, facts
+    # This return value is private, like the CMS bytes it already contains.
+    # Only the sanitized facts dictionary belongs in public receipts.
+    return {"bundle": bundle, "uuid": profile_uuid, "content": raw,
+            "profile_id": selected_id, "decoded": profile}, facts
 
 
 def resolve_original_profiles(certificate_sha, private_directory, facts):
@@ -185,6 +208,67 @@ def resolve_original_profiles(certificate_sha, private_directory, facts):
             role, bundle, plistlib.loads((ROOT / source).read_bytes()),
             certificate_sha, certificate_id, os.environ["APPLE_TEAM_ID"], private_directory,
         )
+        resolved.append(profile)
+        facts.append(result)
+    return resolved
+
+
+def resolve_local_distribution_profiles(certificate_sha, private_directory, facts, *,
+                                        source_sha, build_number, source_root=ROOT,
+                                        get=apple_get, create=create_profile,
+                                        decode_content=decode_cms):
+    """Resolve only the original main/Widgets pair; never install or alter capabilities.
+
+    The coordinator binds source_root and source_sha to its exact release input.
+    Existing candidates are assessed first; each role has at most one creation
+    attempt per call. An uncertain POST is never retried by this helper.
+    """
+    return _resolve_local_profiles(
+        [row for row in ROLES if row[0] in {"ai", "widgets"}],
+        certificate_sha, private_directory, facts, source_sha=source_sha,
+        build_number=build_number, source_root=source_root,
+        get=get, create=create, decode_content=decode_content,
+    )
+
+
+def resolve_local_miniapps_profiles(certificate_sha, private_directory, facts, *,
+                                    source_sha, build_number, source_root=ROOT,
+                                    get=apple_get, create=create_profile,
+                                    decode_content=decode_cms):
+    """Resolve the original MiniApps main app and all four source extensions.
+
+    Call only after actual App Group/iCloud associations have been reconciled.
+    Enabling a capability alone is not evidence that a profile grants its data.
+    Every source entitlement file is loaded before any Apple request is made.
+    """
+    return _resolve_local_profiles(
+        product_roles("miniapps"), certificate_sha, private_directory, facts,
+        source_sha=source_sha, build_number=build_number, source_root=source_root,
+        get=get, create=create, decode_content=decode_content,
+    )
+
+
+def _resolve_local_profiles(roles, certificate_sha, private_directory, facts, *,
+                            source_sha, build_number, source_root,
+                            get, create, decode_content):
+    local_release_context(source_sha, build_number)
+    team = os.environ["APPLE_TEAM_ID"]
+    sources = []
+    for role, bundle, _, source in roles:
+        content = (Path(source_root) / source).read_bytes()
+        sources.append((role, bundle, source, content, plistlib.loads(content)))
+    certificate_id = original_certificate_id(get("/v1/certificates", {
+        "filter[certificateType]": "DISTRIBUTION,IOS_DISTRIBUTION",
+        "fields[certificates]": "certificateType,certificateContent", "limit": 200,
+    }), certificate_sha)
+    resolved = []
+    for role, bundle, source, content, required in sources:
+        profile, result = resolve_profile(
+            role, bundle, required, certificate_sha, certificate_id, team, private_directory,
+            get=get, create=create, decode_content=decode_content,
+            local_source_sha=source_sha, local_build_number=build_number,
+        )
+        result.update(entitlements_path=source, entitlements_sha256=hashlib.sha256(content).hexdigest())
         resolved.append(profile)
         facts.append(result)
     return resolved

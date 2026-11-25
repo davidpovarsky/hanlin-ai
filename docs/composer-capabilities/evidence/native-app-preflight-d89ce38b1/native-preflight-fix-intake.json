@@ -1,0 +1,11 @@
+{
+  "sourceCommit": "59838a47979f8d875618687708e0334fb63454a5",
+  "parentCommit": "eefe96321c9d83cdb300fbf84fd1da3977f5362e",
+  "atUTC": "2026-11-25T03:17:16.614172+00:00",
+  "bundleSHA256": "5bbfe41226bc2c71f9598ebd176d0f13838fba9e8ac05c297a3a14775763ed81",
+  "retainedBuiltAppSource": "b739ada91aca115093e3511f9df58c15edcb5923",
+  "retainedBuildReceipt": "ai-hly-build-attempt5.json",
+  "runtimeHostArchiveSHA256": "8b05742603572e8b3309a647fc04880fa59d891beb13f4623fbd79a0cb9c49a1",
+  "priorIntakeAttempt": "Sentinel timeout; subsequent read verified old HEAD and absent new files before this resume",
+  "trackedChanges": ""
+}

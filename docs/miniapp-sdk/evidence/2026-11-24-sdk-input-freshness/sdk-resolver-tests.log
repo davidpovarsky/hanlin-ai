@@ -1,0 +1,25 @@
+✔ original declaration and JS bytes survive nested iOS trees and local package links (35.356682ms)
+✔ desktop native binaries and frameworks are omitted from mobile authoring closure (8.69053ms)
+✔ cycles in installed symlinks report a source problem rather than partially publishing (3.215898ms)
+✔ installed SDK graph must match the exact native build lock (6.012474ms)
+✔ compiler metadata distinguishes original npm alias version from real compiler version and retains its closure (11.728067ms)
+✔ Expo uses its published coherent matrix rather than unrelated latest React or Worklets (1.624249ms)
+✔ a package publication must contain its original integrity (0.316802ms)
+✔ native source identity changes for native versions, installed graph, Xcode, and producer (0.976246ms)
+✔ generated runtime metadata uses exact native and original ScriptWidget identities (0.714524ms)
+✔ three-way native refresh preserves host adaptations and applies upstream changes (17.47678ms)
+✔ conflicting native changes produce a repair diff and fail instead of discarding adaptations (8.174447ms)
+✔ original widget imports use the existing unified widget target namespace (0.713444ms)
+✔ actual native host ABI metadata changes with the original React Native and Hermes graph (0.358242ms)
+✔ prepared widget namespace keeps original universal layout without importing the React Yoga hook (0.486083ms)
+✔ public Native API metadata uses the same real Worklets and React Native versions (0.560364ms)
+✔ React declaration resolution intersects original Expo and RN ranges including disjunctions (3.281539ms)
+✔ an unconstrained original NativeScript compiler peer preserves the verified per-engine toolchains (0.240522ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 269.349142

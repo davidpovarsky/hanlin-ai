@@ -1,0 +1,19 @@
+{
+  "argv": [
+    "/usr/local/bin/node",
+    "/dev/shm/hanlin-sdk-only-kit-45335292541/Scripts/MiniApps/miniapp.mjs",
+    "validate",
+    "--sdk",
+    "/dev/shm/hanlin-sdk-only-kit-45335292541/AI_HLY/Downstream/RuntimeCore/Node/Host/MiniAppSDK",
+    "--engine",
+    "expo",
+    "--project",
+    "/mnt/development/projects/worktrees/hanlin-sdk04-manual-adapters-20261124/build/acceptance/sdk04-manual-adapters-sdk-project",
+    "--report",
+    "/mnt/development/projects/worktrees/hanlin-sdk04-manual-adapters-20261124/docs/miniapp-sdk/evidence/sdk04-manual-adapters-20261124/exported-sdk-validate-report.json"
+  ],
+  "exitCode": 0,
+  "utc": "2026-11-24T08:07:36.337973+00:00",
+  "stdoutSHA256": "551f3ad2061bc6c55bddf476e5dc864be5bc97faf88742be049d2f7c617b0ecd",
+  "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

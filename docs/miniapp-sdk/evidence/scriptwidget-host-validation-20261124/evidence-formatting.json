@@ -1,0 +1,21 @@
+{
+  "argv": [
+    "git",
+    "diff",
+    "--cached",
+    "--check"
+  ],
+  "initialExitCode": 2,
+  "initialStdout": "docs/miniapp-sdk/evidence/scriptwidget-host-validation-20261124/installed-manifest-semantic-source.txt:299: new blank line at EOF.\n",
+  "reason": "The exact fingerprint input ends with original source blank lines; evidence must retain them.",
+  "repair": "Store exact semantic input losslessly compressed, without trimming source bytes.",
+  "semanticSource": {
+    "file": "installed-manifest-semantic-source.txt.gz",
+    "originalBytes": 18280,
+    "originalSHA256": "2ba51a3d9c899d0e0145a88030f358944a374622782d10a0d3e116e963a6c16d",
+    "compressedSHA256": "bd1bd70d62bdd2bf35bd93a9a76fb5c5762a4c6f6dcbbab1d7529e47e2271fb3"
+  },
+  "finalExitCode": 0,
+  "finalStdout": "",
+  "finalStderr": ""
+}

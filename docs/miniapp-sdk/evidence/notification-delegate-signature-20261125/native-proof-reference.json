@@ -1,0 +1,23 @@
+{
+  "kind": "NATIVE_OWNER_REPORTED_ACTUAL_COMPILER_PROOF_PENDING_RAW_TRANSFER",
+  "reporter": "/root/native_execution",
+  "reportedResult": "PASS",
+  "completedAtReported": "2026-11-25T05:46:37Z",
+  "elapsedSecondsReported": 6.732447667,
+  "exitCodeReported": 0,
+  "diagnosticBytesReported": 0,
+  "probeSHA256Reported": "18dc51fa7d456ec89f653b83cd983f833e3788d901016caf4552b4a497afd22a",
+  "candidateSourceSHA256": "eacf5e748287603ef4e6796d2f2d0016b7563aa5de62bca4478a693d2b82eb83",
+  "actualReportedConfiguration": "Installed iOS 27 arm64 simulator target, Swift 6, C++ interoperability, warnings treated as errors",
+  "assertionsReported": [
+    "Async willPresent return Int accepted with exact previous optional forwarding and nil fallback 0",
+    "Explicit #selector(NotificationSignatureProbe.userNotificationCenter(_:willPresent:)) accepted",
+    "No near-match warning or diagnostic bytes"
+  ],
+  "baselineReported": [
+    "Actual SDK14 MiniApps build failed before the original 52 acceptance cases.",
+    "UNNotificationPresentationOptions implementation nearly matched an optional delegate requirement.",
+    "Forwarded optional imported return was Int?, producing the actual conversion error at line 42."
+  ],
+  "boundary": "This JSON preserves the native owner report without claiming independent raw-log verification. The immutable raw compiler packet will be retained separately. Full actual consumer build and OS callback behavior remain pending."
+}

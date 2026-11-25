@@ -83,6 +83,17 @@ struct MainTabView: View {
         .onChange(of: splitCoordinator.acceptedOrigin(forReceivingWindowID: receivingWindowID)?.id, initial: true) {
             if splitCoordinator.acceptedOrigin(forReceivingWindowID: receivingWindowID) != nil { selectedTab = 0 }
         }
+        .onChange(of: MiniAppRepairCoordinator.shared.destination(for: receivingWindowID), initial: true) {
+            if MiniAppRepairCoordinator.shared.destination(for: receivingWindowID) != nil { selectedTab = 0 }
+        }
+        .alert(Text("MiniApp repair unavailable", bundle: HanlinLocalization.bundle), isPresented: Binding(
+            get: { MiniAppRepairCoordinator.shared.failure(for: receivingWindowID) != nil },
+            set: { if !$0 { MiniAppRepairCoordinator.shared.dismissFailure(for: receivingWindowID) } }
+        )) {
+            Button(hanlin: "OK") { MiniAppRepairCoordinator.shared.dismissFailure(for: receivingWindowID) }
+        } message: {
+            Text(MiniAppRepairCoordinator.shared.failure(for: receivingWindowID) ?? "")
+        }
         .onChange(of: deepLinkTarget) {
             if deepLinkTarget == "vision" {
                 showsVision = true

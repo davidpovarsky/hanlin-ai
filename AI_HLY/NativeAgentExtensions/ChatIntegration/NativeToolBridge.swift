@@ -10,16 +10,24 @@ import HanlinPlatformContracts
 
 @MainActor
 enum NativeToolBridge {
-    static func canonicalSourcesForRequest() throws -> [
+    static func canonicalSourcesForRequest(explicitToolNames: Set<String> = [],
+                                           catalog: NativeToolCatalog = .shared) throws -> [
         HanlinCanonicalToolAuthority.NativeSource
     ] {
-        let catalog = NativeToolCatalog.shared
         catalog.ensureBuiltinsRegistered()
-        return try catalog.schemasForEnabledTools().map { schema in
+        var schemas = catalog.schemasForEnabledTools()
+        let alreadyIncluded = Set(schemas.compactMap { ToolSchemaDecorator.toolName(in: $0) })
+        for name in explicitToolNames.sorted() where !alreadyIncluded.contains(name) {
+            guard let tool = catalog.tool(named: name, enabledOnly: false),
+                  let entry = catalog.entry(named: name) else { continue }
+            schemas.append(ToolSchemaDecorator.decorate(schema: tool.openAIToolSchema(),
+                profile: entry.presentationProfile, progressSummaryRequired: false))
+        }
+        return try schemas.map { schema in
             guard let name = ToolSchemaDecorator.toolName(in: schema),
                   let entry = catalog.entry(named: name),
                   let tool = catalog.tool(named: name, enabledOnly: false),
-                  catalog.isEffectivelyEnabled(entry) else {
+                  catalog.isEffectivelyEnabled(entry) || explicitToolNames.contains(name) else {
                 throw HanlinCanonicalToolAuthorityError.invalidModelSchema(
                     ToolSchemaDecorator.toolName(in: schema) ?? "<missing-name>"
                 )
@@ -36,9 +44,10 @@ enum NativeToolBridge {
         providerInstanceID: HanlinProviderInstanceID,
         toolName: String,
         argumentsJSON: String,
-        context: NativeToolExecutionContext
+        context: NativeToolExecutionContext,
+        explicitlySelected: Bool = false,
+        catalog: NativeToolCatalog = .shared
     ) async -> NativeToolResult {
-        let catalog = NativeToolCatalog.shared
         catalog.ensureBuiltinsRegistered()
 
         NativeToolTraceLogger.shared.log(
@@ -75,8 +84,8 @@ enum NativeToolBridge {
             )
         }
 
-        guard catalog.isEnabled(entry),
-              let tool = catalog.tool(named: toolName) else {
+        guard explicitlySelected || catalog.isEnabled(entry),
+              let tool = catalog.tool(named: toolName, enabledOnly: !explicitlySelected) else {
             NativeToolTraceLogger.shared.log(
                 "disabled_tool_execution_rejected",
                 ["toolName": toolName, "sourceAppID": entry.sourceAppID as Any]

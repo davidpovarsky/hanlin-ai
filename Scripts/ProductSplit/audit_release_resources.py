@@ -19,6 +19,8 @@ import urllib.error
 import urllib.parse
 import urllib.request
 
+from miniapps_extensions import EXTENSIONS
+
 ROOT = Path(__file__).resolve().parents[2]
 ROLES = [
     ("ai", "com.itorah.chavrusachat", "APPLE_MAIN_PROVISIONING_PROFILE_B64", "AI_HLY/AI_HLY.entitlements"),
@@ -28,6 +30,21 @@ ROLES = [
     ("translation", "com.itorah.chavrusachat.translation-provider", "APPLE_TRANSLATION_PROVISIONING_PROFILE_B64", "ChavrusaChatTranslationProvider/ChavrusaChatTranslationProvider.entitlements"),
     ("notification", "com.itorah.chavrusachat.notification-service", "APPLE_NOTIFICATION_SERVICE_PROVISIONING_PROFILE_B64", "ChavrusaChatNotificationService/ChavrusaChatNotificationService.entitlements"),
 ]
+ROLES.extend(
+    ("miniapps_" + suffix.replace("-", "_"), "com.itorah.hanlinminiapps." + suffix,
+     "APPLE_MINIAPPS_" + suffix.replace("-", "_").upper() + "_PROVISIONING_PROFILE_B64",
+     "HanlinMiniAppsExtensions/" + folder + "/" + target + ".entitlements")
+    for target, _, folder, suffix in EXTENSIONS
+)
+
+
+def product_roles(product):
+    """Every original embedded extension belongs to exactly one application."""
+    if product not in {"ai", "miniapps"}:
+        raise ValueError("Unknown original product family")
+    return [row for row in ROLES
+            if (row[0] == "miniapps" or row[0].startswith("miniapps_")) == (product == "miniapps")]
+
 
 def utc(value):
     if not isinstance(value, datetime):
@@ -51,14 +68,35 @@ def entitlement_allows(granted, requested):
 
 def evaluate_profile(profile, required, bundle, team, certificate_sha, now):
     entitlements = profile.get("Entitlements", {})
+    prefixes = profile.get("ApplicationIdentifierPrefix")
+    app_prefix = None
+    if isinstance(prefixes, list) and len(prefixes) == 1:
+        prefix = prefixes[0]
+        if (isinstance(prefix, str) and prefix.isascii() and prefix.isalnum()
+                and entitlements.get("application-identifier") == prefix + "." + bundle):
+            app_prefix = prefix + "."
+
     def expand(value):
         if isinstance(value, str):
+            if "$(AppIdentifierPrefix)" in value:
+                if app_prefix is None:
+                    raise ValueError("Missing or inconsistent application identifier prefix")
+                value = value.replace("$(AppIdentifierPrefix)", app_prefix)
             return value.replace("$(APS_ENVIRONMENT)", "production").replace("$(TeamIdentifierPrefix)", team + ".")
         if isinstance(value, list):
             return [expand(item) for item in value]
         return value
-    unsupported = sorted(key for key, value in required.items()
-                         if not entitlement_allows(entitlements.get(key), expand(value)))
+
+    unsupported = []
+    for key, value in required.items():
+        try:
+            covered = entitlement_allows(entitlements.get(key), expand(value))
+        except ValueError:
+            # A wildcard grant must never hide an unresolved or inconsistent prefix.
+            covered = False
+        if not covered:
+            unsupported.append(key)
+    unsupported.sort()
     certificates = {hashlib.sha256(value).hexdigest() for value in profile.get("DeveloperCertificates", [])
                     if isinstance(value, bytes)}
     expiry = utc(profile.get("ExpirationDate"))

@@ -1,0 +1,17 @@
+{
+  "runID": 45350372512,
+  "jobID": 138295019905,
+  "sourceCommit": "a35cc1770e044f7b5388a8cfb0433bacb2782301",
+  "status": "FAILED_BEFORE_TESTS",
+  "requestedAnalyzerCases": 8,
+  "executedAnalyzerCases": 0,
+  "retainedLog": "failed-mac-build.log",
+  "logSHA256": "cc5f24a2875bf7e09197a6a0ba1003ee1c42ba9ecce675b85e27da87a874f77c",
+  "observedErrors": [
+    "ScriptWidgetElementTagStack.swift:100:23 sending element risks causing data races",
+    "ScriptWidgetElementTagStack.swift:96:52 sending item risks causing data races",
+    "ScriptWidgetElementTagStack.swift:96:52 non-Sendable AnyView result returned to nonisolated context"
+  ],
+  "clockCompileErrorPresent": false,
+  "nativeFixAcceptance": "NOT_RUN"
+}

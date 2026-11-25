@@ -9,16 +9,28 @@ import HanlinScriptUI
 public final class ExpoHostServicesAdapter: NSObject, @unchecked Sendable, HanlinExpoHostServicesProvider {
     public let sessionID: String
     public let context: HanlinHostCallContext
+    private let externalMiniAppOperation: HanlinMiniAppExternalOperation?
+    private let assistantService: (any HanlinMiniAppAssistantService)?
+    /// Bound by the platform that owns this actual Expo session, including an
+    /// independent external-invocation scene. Never resolves a global current app.
+    public typealias PreparedWidgetPublisher = @Sendable (String, String, [String: HanlinValue]) async throws -> String
+    private let preparedWidgetPublisher: PreparedWidgetPublisher?
+    let actionChannel = HanlinMiniAppActionChannel()
 
     public init(
         appID: HanlinAppID,
         installedPackageID: HanlinInstalledPackageID? = nil,
         grantedCapabilities: Set<String>,
-        sessionID: String = UUID().uuidString.lowercased()
+        sessionID: String = UUID().uuidString.lowercased(),
+        externalMiniAppOperation: HanlinMiniAppExternalOperation? = nil,
+        assistantServiceFactory: HanlinMiniAppAssistantServiceFactory? = nil,
+        preparedWidgetPublisher: PreparedWidgetPublisher? = nil
     ) {
         let validatedSessionID = (try? HanlinAppSessionID(validating: sessionID))
             ?? (try! HanlinAppSessionID(validating: UUID().uuidString.lowercased()))
         self.sessionID = validatedSessionID.rawValue
+        self.externalMiniAppOperation = externalMiniAppOperation
+        self.preparedWidgetPublisher = preparedWidgetPublisher
         self.context = HanlinHostCallContext.forMiniApp(
             appID: appID,
             installedPackageID: installedPackageID,
@@ -27,8 +39,13 @@ public final class ExpoHostServicesAdapter: NSObject, @unchecked Sendable, Hanli
             sessionID: validatedSessionID,
             canPresentUI: true
         )
+        self.assistantService = assistantServiceFactory?(self.context)
         super.init()
     }
+
+    public func invalidateAssistantRequests() { assistantService?.invalidate() }
+
+    deinit { assistantService?.invalidate() }
 
     public func hasCapability(_ capability: String) -> Bool {
         // Availability is not an internal grant. Native calls still report
@@ -54,8 +71,39 @@ public final class ExpoHostServicesAdapter: NSObject, @unchecked Sendable, Hanli
     }
 
     public func invoke(operation: String, payloadJSON: String) async throws -> String {
+        if operation.hasPrefix("assistant.") {
+            guard let assistantService else {
+                throw HanlinHostServiceError.unsupportedByPlatform("Assistant services are unavailable in this host.")
+            }
+            return try await assistantService.invoke(operation: operation, payloadJSON: payloadJSON)
+        }
+        if operation.hasPrefix("miniapps."), let externalMiniAppOperation {
+            return try await externalMiniAppOperation(operation, payloadJSON)
+        }
         let payloadData = Data(payloadJSON.utf8)
         switch operation {
+        case "actions.register":
+            let request = try JSONDecoder().decode(ActionRegistration.self, from: payloadData)
+            try await actionChannel.register(actions: Set(request.names))
+            return "{\"ok\":true}"
+
+        case "actions.next":
+            let request = try await actionChannel.next()
+            return String(decoding: try request.jsonData(), as: UTF8.self)
+
+        case "actions.complete":
+            guard case let .object(object) = try HanlinJSONValue.decodeCanonicalJSON(payloadData, limits: .unbounded),
+                  case let .string(rawID)? = object["id"], let id = UUID(uuidString: rawID) else {
+                throw HanlinHostServiceError.invalidRequest("Action completion requires a valid invocation id")
+            }
+            if case let .string(message)? = object["error"] {
+                try await actionChannel.complete(id: id, result: .failure(.executionFailed(message)))
+            } else {
+                let value = try HanlinValue(jsonValue: object["value"] ?? .null)
+                try await actionChannel.complete(id: id, result: .success(value))
+            }
+            return "{\"ok\":true}"
+
         case "capabilities.has":
             let request = try JSONDecoder().decode(CapabilityRequest.self, from: payloadData)
             return try Self.encode(["value": hasCapability(request.capability)])
@@ -102,6 +150,34 @@ public final class ExpoHostServicesAdapter: NSObject, @unchecked Sendable, Hanli
             )
             return try Self.encode(["files": files])
 
+        case "liveActivities.areEnabled", "liveActivities.list", "liveActivities.start", "liveActivities.update", "liveActivities.end":
+            return try await HanlinScriptingPlatform.shared.invokeLiveActivity(operation: operation, payloadJSON: payloadJSON, context: context)
+
+        case "widgets.publishPrepared":
+            guard case let .object(object) = try HanlinJSONValue.decodeCanonicalJSON(payloadData, limits: .unbounded),
+                  object["engine"] == .string("expo"),
+                  case let .string(entrypointID)? = object["entrypointID"],
+                  case let .object(rawProps)? = object["props"] else {
+                throw HanlinHostServiceError.invalidRequest("Prepared widget publication requires engine expo, entrypointID and a JSON props object")
+            }
+            let variantID: String
+            if let value = object["variantID"] {
+                guard case let .string(value) = value else {
+                    throw HanlinHostServiceError.invalidRequest("Widget variantID must be a string")
+                }
+                variantID = value
+            } else { variantID = "default" }
+            guard let preparedWidgetPublisher else {
+                throw HanlinHostServiceError.invalidRequest("Prepared widget publication has no active installed Expo session")
+            }
+            var props: [String: HanlinValue] = [:]
+            for (key, value) in rawProps {
+                guard props.updateValue(try HanlinValue(jsonValue: value), forKey: key) == nil else {
+                    throw HanlinContractError.duplicateObjectKey(key: key, path: "/props")
+                }
+            }
+            return try await preparedWidgetPublisher(entrypointID, variantID, props)
+
         case "widgets.publish":
             guard let installedPackageID = context.installedPackageID,
                   let appID = context.appID else {
@@ -134,7 +210,10 @@ public final class ExpoHostServicesAdapter: NSObject, @unchecked Sendable, Hanli
                 root: parsedRoot,
                 validUntil: validUntilDate
             )
-            return "{\"ok\":true}"
+            return String(decoding: try JSONSerialization.data(withJSONObject: [
+                "ok": true, "published": false, "storage": "legacy-widget-exposure",
+                "remediation": "This compatibility call only retains the legacy root. Use expo-widgets createWidget, or publishWidget({engine: 'expo', entrypointID, props}) for an explicitly declared Expo widget."
+            ]), as: UTF8.self)
 
         default:
             throw HanlinHostServiceError.invalidRequest("Unknown Expo Host Services operation: \(operation)")
@@ -418,4 +497,8 @@ extension ExpoHostServicesAdapter {
         var counter = 0
         return try parseUntaggedNodeInternal(dict, depth: depth, nodeCounter: &counter)
     }
+}
+
+private struct ActionRegistration: Decodable {
+    let names: [String]
 }

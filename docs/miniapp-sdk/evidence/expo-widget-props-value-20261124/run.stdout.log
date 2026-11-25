@@ -1,0 +1,4 @@
+REAL_PUBLICATION_CONSTRUCTION_PASS
+CANONICAL_ROUNDTRIP_PASS bytes=298
+{"type":"object","value":{"count":{"type":"integer","value":"9223372036854775807"},"é":{"type":"string","value":"exact UTF-8 key"},"nested":{"type":"object","value":{"enabled":{"type":"bool","value":true},"items":{"type":"array","value":[{"type":"null"},{"type":"string","value":"שלום"}]}}}}}
+NONFINITE_VALIDATION_PRESERVED

@@ -1,0 +1,32 @@
+[
+  {
+    "path": "Tools/SwiftUIBridge/configuration.json",
+    "beforeSHA256": "678d09bd72df34c3a09711aff689ad92daf6a58b5eb0f397026117da332ef2c6",
+    "afterSHA256": "a8711bcfc51ae85ee58cf8ebd5a5724c6a142994dcbe3d558e8644d9c48fda8a",
+    "onlyRuntimeIdentityChanged": true
+  },
+  {
+    "path": "Generated/SwiftUIBridge/bridge-manifest.ts",
+    "beforeSHA256": "a3665bd2a5d11204debc8123a4030dc03a60db22662a42778ac9d84344e0d406",
+    "afterSHA256": "a56c8a16334bfe76ebe6489fc1f018f25f28f7cadba6c1ef11a268e5336f3b37",
+    "onlyRuntimeIdentityChanged": true
+  },
+  {
+    "path": "Packages/HanlinExpoUI/src/generated/bridge-manifest.ts",
+    "beforeSHA256": "a3665bd2a5d11204debc8123a4030dc03a60db22662a42778ac9d84344e0d406",
+    "afterSHA256": "a56c8a16334bfe76ebe6489fc1f018f25f28f7cadba6c1ef11a268e5336f3b37",
+    "onlyRuntimeIdentityChanged": true
+  },
+  {
+    "path": "Generated/SwiftUIBridge/HanlinGeneratedViews.swift",
+    "beforeSHA256": "01c77d58cb3fe68963400f8b5b230d6255b175a495daa9659e1078f4250cf219",
+    "afterSHA256": "838154d4e8a44b07eb312dee19df283b217842633c6dbeb84bc369edba77699e",
+    "onlyRuntimeIdentityChanged": true
+  },
+  {
+    "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/Generated/HanlinGeneratedViews.swift",
+    "beforeSHA256": "01c77d58cb3fe68963400f8b5b230d6255b175a495daa9659e1078f4250cf219",
+    "afterSHA256": "838154d4e8a44b07eb312dee19df283b217842633c6dbeb84bc369edba77699e",
+    "onlyRuntimeIdentityChanged": true
+  }
+]

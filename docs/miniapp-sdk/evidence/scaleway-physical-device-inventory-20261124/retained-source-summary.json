@@ -1,0 +1,64 @@
+[
+  {
+    "path": "/dev/shm/hanlin-next-apple-route-20261124/mac.json",
+    "sha256": "1dbce9433feb9391967a1add3115e97690fef2f3f3fcc6e24f4c5db0db9d00e4",
+    "reportedAtUTC": "2026-11-24T11:43:35.279451+00:00",
+    "inventoryCommands": {
+      "os": [
+        "sw_vers"
+      ],
+      "xcode": [
+        "xcodebuild",
+        "-version"
+      ],
+      "swift": [
+        "xcrun",
+        "swiftc",
+        "--version"
+      ],
+      "sdks": [
+        "xcodebuild",
+        "-showsdks"
+      ],
+      "runtimes": [
+        "xcrun",
+        "simctl",
+        "list",
+        "runtimes",
+        "-j"
+      ],
+      "devices": [
+        "xcrun",
+        "simctl",
+        "list",
+        "devices",
+        "available",
+        "-j"
+      ],
+      "memory": [
+        "vm_stat"
+      ],
+      "resources": [
+        "sysctl",
+        "hw.ncpu",
+        "hw.memsize"
+      ]
+    },
+    "xcodeApps": null,
+    "selected": null
+  },
+  {
+    "path": "/dev/shm/hanlin-next-apple-route-20261124/mac-xcode-apps.json",
+    "sha256": "0917a0600d04a2772e5842166b285df43732cdc224303caae05ace29b62d0255",
+    "reportedAtUTC": null,
+    "inventoryCommands": {},
+    "xcodeApps": [
+      {
+        "path": "/Applications/Xcode.app",
+        "version": "27.0",
+        "build": null
+      }
+    ],
+    "selected": "/Applications/Xcode.app/Contents/Developer"
+  }
+]

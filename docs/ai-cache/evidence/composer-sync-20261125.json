@@ -1,0 +1,20 @@
+{
+  "observed_utc": "2026-11-25T02:00:50.373797+00:00",
+  "before": "33934e66eaea37a86cf2b1f37df54a75a5686843",
+  "incoming_composer": "801bb3f66cfe6d4d0ff9e49e0094ea2887525fbd",
+  "integrated": "02619cfab1a52519d436441abd1f732a7bbd91c5",
+  "production_changes": [
+    "NativeScriptHostServicesAdapter.ActionInvocationReply explicit optional Result closure type",
+    "HanlinCompactChatWorkspace private UIView focus storage rename"
+  ],
+  "retained_sdk": "abf0921c6e89e6521cc2b510ff11016b45a0ef08",
+  "incoming_sdk_baseline": "3f38f1302764635c9991d0d00fd7b12471a5373c",
+  "verified_github_compare": {
+    "status": "ahead",
+    "ahead_by": 3,
+    "behind_by": 0,
+    "url": "https://api.github.com/repos/davidpovarsky/swift-ai-sdk/compare/3f38f1302764635c9991d0d00fd7b12471a5373c...abf0921c6e89e6521cc2b510ff11016b45a0ef08"
+  },
+  "resolution": "Retained current exact canonical package/lock graph with LRU1.3/OTel2.6/requiredAtomics1.3.1. Preserved latest generated C6 docs, then refresh their real adapter source hash using original audits. Historical incoming qualification/evidence remains source-scoped and unchanged. No incoming active gate requires3f38.",
+  "host_followup": "Original SDK/reachability audits then original archive sync/validation are running on integrated02619cfab; priora489Hostproof remains separately attributed."
+}

@@ -1,0 +1,818 @@
+{
+  "status": "ACTUAL_EXPORTED_IDENTITIES_MATCH_AUTHENTIC_VALIDATION_REPORT",
+  "runtimeHost": {
+    "nodeVersion": "v24.5.0",
+    "archiveSha256": "3f8369a26f492aa0cb4c7ca63a03d33104993adad81223ba9b3ee7f0e46ada4c",
+    "sourceInputsHash": "765fa7931c248da3629959851f34997e6dd78d6d6940a2b5d7f86f55deeb9752",
+    "jitlessArchiveSmoke": "passed",
+    "npmInstall": "npm ci --omit=dev --ignore-scripts --workspaces=false --no-audit --no-fund",
+    "tests": "passed"
+  },
+  "installations": {
+    "expo": {
+      "inputs": {
+        "schemaVersion": 1,
+        "packageSHA256": "db6fd60dbc8f2b15eac5fee7029781cf14834ffbad53f0c8948fc4c2945c1e91",
+        "lockSHA256": "95d2a560d4eb01de64fcd0d43875a4ef2392e9747ed9fa79c2e0a0e58abececf",
+        "policySHA256": "6fb5f130d1a381d628ffa5042eff7ce36d48431ed7636a36c28fec20e5b79120",
+        "node": "24.5.0",
+        "platform": "darwin",
+        "architecture": "arm64"
+      },
+      "files": 19594,
+      "contentSHA256": "7e21449f47399a2048a93cbece2d090f24bfb0174b31135153451ab84d6fba27",
+      "command": [
+        "npm",
+        "ci",
+        "--ignore-scripts",
+        "--no-audit",
+        "--no-fund",
+        "--prefix",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/Scripts/Expo"
+      ]
+    },
+    "nativescript": {
+      "inputs": {
+        "schemaVersion": 1,
+        "packageSHA256": "08fc03bfa87cd78f4f21f80e9324a4840061105f6e9ab081ed794c569ca7324b",
+        "lockSHA256": "16f569f4bfa6f8806cfe72449866a0dc9a9331f33d2c67170d5292455c48b60b",
+        "policySHA256": "6fb5f130d1a381d628ffa5042eff7ce36d48431ed7636a36c28fec20e5b79120",
+        "node": "24.5.0",
+        "platform": "darwin",
+        "architecture": "arm64"
+      },
+      "files": 5966,
+      "contentSHA256": "9e83864b9618b6e7f4a7106ec78d5a290d2dfed6a317fc0cf6e7843a9126f616",
+      "command": [
+        "npm",
+        "ci",
+        "--ignore-scripts",
+        "--no-audit",
+        "--no-fund",
+        "--prefix",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/Scripts/NativeScript"
+      ]
+    }
+  },
+  "packageVersions": [
+    {
+      "engine": "expo",
+      "requestedName": "@expo/ui",
+      "actualName": "@expo/ui",
+      "version": "58.0.29",
+      "path": "expo/node_modules/@expo/ui/package.json",
+      "bytes": 6032,
+      "sha256": "5332dd3b83612fcc7e30f50cb2e137f1e0051b6b2032b0d006f5840a13cf5281"
+    },
+    {
+      "engine": "expo",
+      "requestedName": "@hanlin/expo-native-api",
+      "actualName": "@hanlin/expo-native-api",
+      "version": "1.0.0",
+      "path": "expo/node_modules/@hanlin/expo-native-api/package.json",
+      "bytes": 430,
+      "sha256": "7a46122e4b3ca8e9fb1caa54bb7bdd0a6e4c56226b6c3bdded20e6134bb5909e"
+    },
+    {
+      "engine": "expo",
+      "requestedName": "@hanlin/expo-ui",
+      "actualName": "@hanlin/expo-ui",
+      "version": "1.0.0",
+      "path": "expo/node_modules/@hanlin/expo-ui/package.json",
+      "bytes": 457,
+      "sha256": "18dbddebb3c641742ca5f83d0492cec1cbbc7bb1affbefe641477b7481110568"
+    },
+    {
+      "engine": "expo",
+      "requestedName": "@nativescript/react-native",
+      "actualName": "@nativescript/react-native",
+      "version": "9.1.2",
+      "path": "expo/node_modules/@nativescript/react-native/package.json",
+      "bytes": 1834,
+      "sha256": "f9a2782902877c9d966fa81d37b09469a33b5dc8855a808fc47ec83e2fe86b9c"
+    },
+    {
+      "engine": "expo",
+      "requestedName": "expo",
+      "actualName": "expo",
+      "version": "58.0.26",
+      "path": "expo/node_modules/expo/package.json",
+      "bytes": 8187,
+      "sha256": "d31ae95bbfa77080c46056d92209b2f613855ffc81f1de6f0df8e63bcb279e09"
+    },
+    {
+      "engine": "expo",
+      "requestedName": "expo-brownfield",
+      "actualName": "expo-brownfield",
+      "version": "58.0.20",
+      "path": "expo/node_modules/expo-brownfield/package.json",
+      "bytes": 2453,
+      "sha256": "99e2d9a35cb6c0cbf5f59ebad82fd790a913ffed39d629ea8ed0a9fb1f81d502"
+    },
+    {
+      "engine": "expo",
+      "requestedName": "expo-modules-core",
+      "actualName": "expo-modules-core",
+      "version": "58.1.0",
+      "path": "expo/node_modules/expo-modules-core/package.json",
+      "bytes": 2845,
+      "sha256": "285de31be98571eea2a85f8eac1d30fce6a1474e2dc4b1772dd4465333762004"
+    },
+    {
+      "engine": "expo",
+      "requestedName": "expo-modules-jsi",
+      "actualName": "expo-modules-jsi",
+      "version": "58.0.23",
+      "path": "expo/node_modules/expo-modules-jsi/package.json",
+      "bytes": 1687,
+      "sha256": "9a5e38bb71634e1cf9bfe8bc2c47ee8a46e0469a34043ca4f6138f4515557311"
+    },
+    {
+      "engine": "expo",
+      "requestedName": "react",
+      "actualName": "react",
+      "version": "19.3.0",
+      "path": "expo/node_modules/react/package.json",
+      "bytes": 1242,
+      "sha256": "6e003e4e9ed25afa7fdd55613f8aa877cefa9b359d9c13f81ee704030248e24e"
+    },
+    {
+      "engine": "expo",
+      "requestedName": "react-native",
+      "actualName": "react-native",
+      "version": "0.88.1",
+      "path": "expo/node_modules/react-native/package.json",
+      "bytes": 6286,
+      "sha256": "3f2bf69ed883e97a295b1de43f5a2d75d112ab45495153360c2fb521023c7f3f"
+    },
+    {
+      "engine": "expo",
+      "requestedName": "react-native-worklets",
+      "actualName": "react-native-worklets",
+      "version": "0.13.0",
+      "path": "expo/node_modules/react-native-worklets/package.json",
+      "bytes": 7265,
+      "sha256": "aa8f3e796568bedf9b72b8cac0b1935a2356a5cd5ba5bd7735e75e1bad7e9ead"
+    },
+    {
+      "engine": "expo",
+      "requestedName": "expo-widgets",
+      "actualName": "expo-widgets",
+      "version": "58.0.29",
+      "path": "expo/node_modules/expo-widgets/package.json",
+      "bytes": 1571,
+      "sha256": "645f89606fd11556371840926d3b07b7ec302a25ccc5709b6413ec508ec2f9ee"
+    },
+    {
+      "engine": "expo",
+      "requestedName": "@babel/core",
+      "actualName": "@babel/core",
+      "version": "7.29.7",
+      "path": "expo/node_modules/@babel/core/package.json",
+      "bytes": 2744,
+      "sha256": "6c2893db41b54a1c03ba68e676aa3ea987db9a5c9b9a3a3aa2e8d0d9a63066c4"
+    },
+    {
+      "engine": "expo",
+      "requestedName": "@react-native-community/cli",
+      "actualName": "@react-native-community/cli",
+      "version": "20.2.0",
+      "path": "expo/node_modules/@react-native-community/cli/package.json",
+      "bytes": 1541,
+      "sha256": "0d88a325a8e0139c7e3571debd6b170a85811b7016ac17736cc870deda8e5c35"
+    },
+    {
+      "engine": "expo",
+      "requestedName": "@react-native/codegen",
+      "actualName": "@react-native/codegen",
+      "version": "0.88.1",
+      "path": "expo/node_modules/@react-native/codegen/package.json",
+      "bytes": 1562,
+      "sha256": "c0ffa28d0fe95aa8d5ff0fb011e773b6cdbfc49690ed3cc7f5d27d9c16bb7329"
+    },
+    {
+      "engine": "expo",
+      "requestedName": "@react-native/metro-config",
+      "actualName": "@react-native/metro-config",
+      "version": "0.88.1",
+      "path": "expo/node_modules/@react-native/metro-config/package.json",
+      "bytes": 948,
+      "sha256": "f19e7fd81bbef1f026ace95bdb81280b06ea9ad474978e1b2bbeea9740e6d6a8"
+    },
+    {
+      "engine": "expo",
+      "requestedName": "@types/react",
+      "actualName": "@types/react",
+      "version": "19.3.0",
+      "path": "expo/node_modules/@types/react/package.json",
+      "bytes": 6108,
+      "sha256": "505c0df4cd73d6a02c946bd9b81451584bd9c83ea72d75cff9b826efceaa19c2"
+    },
+    {
+      "engine": "expo",
+      "requestedName": "babel-preset-expo",
+      "actualName": "babel-preset-expo",
+      "version": "58.0.26",
+      "path": "expo/node_modules/babel-preset-expo/package.json",
+      "bytes": 4348,
+      "sha256": "c32d700465a4bc29ad1bf79552b7060132049fc1311c3930dd58a58f824d1949"
+    },
+    {
+      "engine": "expo",
+      "requestedName": "esbuild",
+      "actualName": "esbuild",
+      "version": "0.25.12",
+      "path": "expo/node_modules/esbuild/package.json",
+      "bytes": 1490,
+      "sha256": "cb7d5b1fe478f8cbaae566a86031b6fdf5f7d444354f35d1cb3cba9adf6d2935"
+    },
+    {
+      "engine": "expo",
+      "requestedName": "typescript",
+      "actualName": "@typescript/typescript6",
+      "version": "6.0.2",
+      "path": "expo/node_modules/typescript/package.json",
+      "bytes": 841,
+      "sha256": "d9b8fb53c67c947fece83bcb73fa8512227ea6a12b110e096fdab8ecdc02b655"
+    },
+    {
+      "engine": "nativescript",
+      "requestedName": "@nativescript/core",
+      "actualName": "@nativescript/core",
+      "version": "9.1.4",
+      "path": "nativescript/node_modules/@nativescript/core/package.json",
+      "bytes": 2152,
+      "sha256": "c9ee2195d3902aa8ab891d672e24140ffc01e1cb17d7be971e8938182fc5211b"
+    },
+    {
+      "engine": "nativescript",
+      "requestedName": "@nativescript/swift-ui",
+      "actualName": "@nativescript/swift-ui",
+      "version": "4.0.2",
+      "path": "nativescript/node_modules/@nativescript/swift-ui/package.json",
+      "bytes": 774,
+      "sha256": "57c8a6769bfe5fa3d18c147e45b83884a427aa9324a22bc24e152ce6d5423865"
+    },
+    {
+      "engine": "nativescript",
+      "requestedName": "@nativescript/ios",
+      "actualName": "@nativescript/ios",
+      "version": "9.1.1",
+      "path": "nativescript/node_modules/@nativescript/ios/package.json",
+      "bytes": 1482,
+      "sha256": "bbc55b3d0cc17d107b5bff330f33ec99c3b7d38c57aae4f23ceca8a2ca2e7bda"
+    },
+    {
+      "engine": "nativescript",
+      "requestedName": "@nativescript/types",
+      "actualName": "@nativescript/types",
+      "version": "9.1.4",
+      "path": "nativescript/node_modules/@nativescript/types/package.json",
+      "bytes": 435,
+      "sha256": "2cccdbfe5224a25bb58d9648ade31272499a30da927162112276fb559df52b20"
+    },
+    {
+      "engine": "nativescript",
+      "requestedName": "@nativescript/vite",
+      "actualName": "@nativescript/vite",
+      "version": "8.0.24",
+      "path": "nativescript/node_modules/@nativescript/vite/package.json",
+      "bytes": 6297,
+      "sha256": "f2ecf551a0c94fc26db1f9f5aef5cdde547a86c0e296b55c05c3d1c38f9cdffb"
+    },
+    {
+      "engine": "nativescript",
+      "requestedName": "typescript",
+      "actualName": "typescript",
+      "version": "5.9.3",
+      "path": "nativescript/node_modules/typescript/package.json",
+      "bytes": 3620,
+      "sha256": "822ef7ca6452205657b6288b066481ecf508bfbf43455d715cf7d3ec457561e6"
+    },
+    {
+      "engine": "nativescript",
+      "requestedName": "vite",
+      "actualName": "vite",
+      "version": "8.0.0",
+      "path": "nativescript/node_modules/vite/package.json",
+      "bytes": 5091,
+      "sha256": "36ee225a470be66379bdfb1f42d882867418771e3c43a45c4553e67da98665cc"
+    },
+    {
+      "engine": "nativescript",
+      "requestedName": "@hanlin/host-services",
+      "actualName": "@hanlin/host-services",
+      "version": "1.0.0",
+      "path": "nativescript/node_modules/@hanlin/host-services/package.json",
+      "bytes": 147,
+      "sha256": "ebe6634d2e019c9da759ac280c1269d721e2105681fdbc8a1796f464d0b9ee9e"
+    }
+  ],
+  "compilers": [
+    {
+      "engine": "expo",
+      "declaredIdentity": {
+        "packageName": "@typescript/typescript6",
+        "packageVersion": "6.0.2",
+        "compilerVersion": "6.0.3"
+      },
+      "loader": {
+        "path": "expo/node_modules/typescript/lib/typescript.js",
+        "bytes": 45,
+        "sha256": "d3f3cd2b04b7f466f4484df921b744223f7bd1f3e353ec9110bdf52695b983d5"
+      },
+      "implementation": {
+        "path": "expo/node_modules/@typescript/old/lib/typescript.js",
+        "bytes": 9144216,
+        "sha256": "569177652966bd528c319171c7dd22860dbf72bde116cbc4f644f1d02bb12e39"
+      },
+      "implementationPackage": {
+        "path": "expo/node_modules/@typescript/old/package.json",
+        "bytes": 3527,
+        "sha256": "9332e97c30d3e53ed54910b89207ed657fb444066484df6e5b6965bf130865e9"
+      },
+      "implementationVersion": "6.0.3",
+      "executedVersion": "6.0.3"
+    },
+    {
+      "engine": "nativescript",
+      "declaredIdentity": {
+        "packageName": "typescript",
+        "packageVersion": "5.9.3",
+        "compilerVersion": "5.9.3"
+      },
+      "loader": {
+        "path": "nativescript/node_modules/typescript/lib/typescript.js",
+        "bytes": 9112572,
+        "sha256": "3ae902c92cc44dace175c0e69e13a4b0899f6983c6121d76b9ab8dd5795e7675"
+      },
+      "implementation": {
+        "path": "nativescript/node_modules/typescript/lib/typescript.js",
+        "bytes": 9112572,
+        "sha256": "3ae902c92cc44dace175c0e69e13a4b0899f6983c6121d76b9ab8dd5795e7675"
+      },
+      "implementationPackage": {
+        "path": "nativescript/node_modules/typescript/package.json",
+        "bytes": 3620,
+        "sha256": "822ef7ca6452205657b6288b066481ecf508bfbf43455d715cf7d3ec457561e6"
+      },
+      "implementationVersion": "5.9.3",
+      "executedVersion": "5.9.3"
+    }
+  ],
+  "scriptwidgetCompilerSharedWithExpo": true,
+  "configuration": {
+    "expo": {
+      "config": {
+        "compilerOptions": {
+          "target": "ES2023",
+          "module": "ESNext",
+          "moduleResolution": "Bundler",
+          "strict": true,
+          "skipLibCheck": false,
+          "noEmit": true,
+          "allowJs": true,
+          "checkJs": false,
+          "resolveJsonModule": true,
+          "allowSyntheticDefaultImports": true,
+          "esModuleInterop": true,
+          "jsx": "react-jsx",
+          "lib": [
+            "ES2023"
+          ],
+          "types": [
+            "react",
+            "react-native"
+          ],
+          "customConditions": [
+            "react-native"
+          ]
+        }
+      },
+      "manifestPolicy": {
+        "strictSource": true,
+        "checkOriginalDeclarationBodies": true,
+        "explanation": "Original declarations and source are checked."
+      }
+    },
+    "nativescript": {
+      "config": {
+        "compilerOptions": {
+          "target": "ES2023",
+          "module": "ESNext",
+          "moduleResolution": "Bundler",
+          "strict": true,
+          "skipLibCheck": true,
+          "noEmit": true,
+          "allowJs": true,
+          "checkJs": false,
+          "resolveJsonModule": true,
+          "allowSyntheticDefaultImports": true,
+          "esModuleInterop": true,
+          "lib": [
+            "ES2023"
+          ],
+          "types": [
+            "@nativescript/core/global-types",
+            "@nativescript/types"
+          ],
+          "experimentalDecorators": true
+        }
+      },
+      "manifestPolicy": {
+        "strictSource": true,
+        "checkOriginalDeclarationBodies": false,
+        "explanation": "Original NativeScript consumer mode: source is strict; original declaration bodies are not revalidated. Set skipLibCheck:false for SDK declaration diagnostics."
+      }
+    },
+    "scriptwidget": {
+      "config": {
+        "compilerOptions": {
+          "target": "ES2023",
+          "module": "ESNext",
+          "moduleResolution": "Bundler",
+          "jsx": "preserve",
+          "lib": [
+            "ES2023"
+          ],
+          "strict": true,
+          "skipLibCheck": false,
+          "noEmit": true,
+          "allowJs": true,
+          "checkJs": true,
+          "types": []
+        },
+        "files": [
+          "components.d.ts",
+          "host-globals.d.ts"
+        ]
+      },
+      "manifestPolicy": null
+    }
+  },
+  "hostContract": {
+    "runtimeVersion": "58.0.29",
+    "expoSDKVersion": "58.0.26",
+    "bridgeVersion": "3.0.0",
+    "nativeApiContractVersion": "1.0.0",
+    "nativeApiAbiIdentity": "rn0.88.1-hermes260318099.0.5",
+    "plugins": {
+      "@expo/ui": "58.0.29",
+      "expo-widgets": "58.0.29",
+      "@hanlin/expo-ui": "3.0.0",
+      "@nativescript/react-native": "9.1.2",
+      "react-native-worklets": "0.13.0"
+    }
+  },
+  "scriptwidgetNativeAPISummary": {
+    "globals": 41,
+    "objects": 24,
+    "methods": 118
+  },
+  "localFacadeFiles": [
+    {
+      "path": "expo/node_modules/@hanlin/expo-native-api/package.json",
+      "bytes": 430,
+      "sha256": "7a46122e4b3ca8e9fb1caa54bb7bdd0a6e4c56226b6c3bdded20e6134bb5909e",
+      "sourcePath": "Packages/HanlinExpoNativeAPIJS/package.json"
+    },
+    {
+      "path": "expo/node_modules/@hanlin/expo-native-api/src/index.ts",
+      "bytes": 1783,
+      "sha256": "000de857839c76e86a426123d4bce30f0b56854f7655d4021342b2d932b98390",
+      "sourcePath": "Packages/HanlinExpoNativeAPIJS/src/index.ts"
+    },
+    {
+      "path": "expo/node_modules/@hanlin/expo-ui/package.json",
+      "bytes": 457,
+      "sha256": "18dbddebb3c641742ca5f83d0492cec1cbbc7bb1affbefe641477b7481110568",
+      "sourcePath": "Packages/HanlinExpoUI/package.json"
+    },
+    {
+      "path": "expo/node_modules/@hanlin/expo-ui/src/generated/bridge-manifest.ts",
+      "bytes": 39972,
+      "sha256": "a56c8a16334bfe76ebe6489fc1f018f25f28f7cadba6c1ef11a268e5336f3b37",
+      "sourcePath": "Packages/HanlinExpoUI/src/generated/bridge-manifest.ts"
+    },
+    {
+      "path": "expo/node_modules/@hanlin/expo-ui/src/generated/modifiers.ts",
+      "bytes": 14525,
+      "sha256": "fee40e3a17dd3466ad2a97301e877501832f044968360684af8e473fe6055483",
+      "sourcePath": "Packages/HanlinExpoUI/src/generated/modifiers.ts"
+    },
+    {
+      "path": "expo/node_modules/@hanlin/expo-ui/src/generated/views.tsx",
+      "bytes": 2798,
+      "sha256": "7c3bf97da0a680dc80d1a1d19f915b67778e17f42021355c5d99ea4f99c85c74",
+      "sourcePath": "Packages/HanlinExpoUI/src/generated/views.tsx"
+    },
+    {
+      "path": "expo/node_modules/@hanlin/expo-ui/src/host-services.ts",
+      "bytes": 8965,
+      "sha256": "010488e8c6aae2635f67d45cefebb9fdb2d4f97af71161af011a83d626ad60e7",
+      "sourcePath": "Packages/HanlinExpoUI/src/host-services.ts"
+    },
+    {
+      "path": "expo/node_modules/@hanlin/expo-ui/src/index.ts",
+      "bytes": 185,
+      "sha256": "d0907d0fd364c9b0621f48099d98ece640ba25d8d40f53cb60aabb3b1dbd3922",
+      "sourcePath": "Packages/HanlinExpoUI/src/index.ts"
+    },
+    {
+      "path": "expo/node_modules/@hanlin/expo-ui/src/manual-components.tsx",
+      "bytes": 11311,
+      "sha256": "23315409689a8fb0f1a652a3d62428eade12822a4626224d0080046f08a80fe2",
+      "sourcePath": "Packages/HanlinExpoUI/src/manual-components.tsx"
+    },
+    {
+      "path": "expo/node_modules/@hanlin/expo-ui/src/miniapp-actions.ts",
+      "bytes": 2996,
+      "sha256": "d5d38fc209d8d8dedb2832ffd037e53d4eabd8b8c92320bd79e791fdfef2c607",
+      "sourcePath": "Packages/HanlinExpoUI/src/miniapp-actions.ts"
+    },
+    {
+      "path": "expo/node_modules/@hanlin/expo-ui/src/modifiers.ts",
+      "bytes": 472,
+      "sha256": "56b1efa29241c519d325682828e944becae6b516887908777661b3a574821782",
+      "sourcePath": "Packages/HanlinExpoUI/src/modifiers.ts"
+    },
+    {
+      "path": "expo/node_modules/@hanlin/expo-ui/src/system-surfaces.ts",
+      "bytes": 3395,
+      "sha256": "3a2c4424ce074056ef76d62a4502fb16c389e10a46967fcde15835efde94543f",
+      "sourcePath": "Packages/HanlinExpoUI/src/system-surfaces.ts"
+    },
+    {
+      "path": "expo/node_modules/@hanlin/expo-ui/tests/generated-views.test.mjs",
+      "bytes": 3522,
+      "sha256": "03c46a995205ca0b1730fc8aa26bac97771c1f4cd3951665c13f7c2fa2c046fa",
+      "sourcePath": "Packages/HanlinExpoUI/tests/generated-views.test.mjs"
+    },
+    {
+      "path": "expo/node_modules/@hanlin/expo-ui/tests/host-services-publication.test.mjs",
+      "bytes": 3304,
+      "sha256": "84a995d298fd75a7959a63083fb6bdd0c3db65c16850d1571c456c32309ffb1e",
+      "sourcePath": "Packages/HanlinExpoUI/tests/host-services-publication.test.mjs"
+    },
+    {
+      "path": "expo/node_modules/@hanlin/expo-ui/tests/miniapp-actions.test.mjs",
+      "bytes": 2053,
+      "sha256": "566e95d9b0ba53fdf576de2000c6e97707fb3b85e6fb014445f1c96546eea4bc",
+      "sourcePath": "Packages/HanlinExpoUI/tests/miniapp-actions.test.mjs"
+    },
+    {
+      "path": "nativescript/node_modules/@hanlin/host-services/index.d.ts",
+      "bytes": 3985,
+      "sha256": "75f055c7067c2497b64f64714ca175fc09a323236e236b1d57621d4a07c3f7c1",
+      "sourcePath": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.d.ts"
+    },
+    {
+      "path": "nativescript/node_modules/@hanlin/host-services/index.mjs",
+      "bytes": 4512,
+      "sha256": "c6cc15960daeb071fc5adc8daf3f041c3e990ee8ce285a0b6c945667763a7dc5",
+      "sourcePath": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.mjs"
+    },
+    {
+      "path": "nativescript/node_modules/@hanlin/host-services/package.json",
+      "bytes": 147,
+      "sha256": "ebe6634d2e019c9da759ac280c1269d721e2105681fdbc8a1796f464d0b9ee9e",
+      "sourcePath": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/package.json"
+    },
+    {
+      "path": "nativescript/node_modules/@hanlin/host-services/system-surfaces.d.ts",
+      "bytes": 3692,
+      "sha256": "04a07d066efe992bc4a421e7a8aadd5e555ac82478dcf4fc613703da3ca417f8",
+      "sourcePath": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/system-surfaces.d.ts"
+    },
+    {
+      "path": "nativescript/node_modules/@hanlin/host-services/system-surfaces.mjs",
+      "bytes": 159,
+      "sha256": "ff92a9423fcfa566d4e00546e7a8e9fb0c8b206a361911225c1f67dddba68d19",
+      "sourcePath": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/system-surfaces.mjs"
+    }
+  ],
+  "scriptwidgetTypesAndContracts": [
+    {
+      "path": "scriptwidget/original-api.d.ts",
+      "bytes": 20966,
+      "sha256": "e7212325aa3eb7a8e10cd00de34ab3b09ff4acb7259b296114c8f26672934a7c",
+      "sourcePath": "Scripts/MiniApps/scriptwidget/original-api.d.ts",
+      "disposition": "EXACT_GIT_SOURCE",
+      "sourceBeforeSHA256": "e7212325aa3eb7a8e10cd00de34ab3b09ff4acb7259b296114c8f26672934a7c",
+      "generatedProvenanceChanges": []
+    },
+    {
+      "path": "scriptwidget/service-types.d.ts",
+      "bytes": 6583,
+      "sha256": "51bd5d47d2190ebb8e0f8ddc5ab031b7007dcedaef1213de0c0ef4c4e7d7e446",
+      "sourcePath": "Scripts/MiniApps/scriptwidget/service-types.d.ts",
+      "disposition": "EXACT_GIT_SOURCE",
+      "sourceBeforeSHA256": "51bd5d47d2190ebb8e0f8ddc5ab031b7007dcedaef1213de0c0ef4c4e7d7e446",
+      "generatedProvenanceChanges": []
+    },
+    {
+      "path": "scriptwidget/host-globals.d.ts",
+      "bytes": 2528,
+      "sha256": "603148dada2fd81794f8bd2953e6da8aa3f4aaf8bed1176d50435c31b1136c7a",
+      "sourcePath": "Scripts/MiniApps/scriptwidget/host-globals.d.ts",
+      "disposition": "EXACT_GIT_SOURCE",
+      "sourceBeforeSHA256": "603148dada2fd81794f8bd2953e6da8aa3f4aaf8bed1176d50435c31b1136c7a",
+      "generatedProvenanceChanges": []
+    },
+    {
+      "path": "scriptwidget/native-api.json",
+      "bytes": 73769,
+      "sha256": "97c0827f21a5470fc08238d3477a5dd0328651d6d814249d165c5a6cd3872b09",
+      "sourcePath": "Scripts/MiniApps/scriptwidget/native-api.json",
+      "disposition": "ACTUAL_STAGING_REFRESHED_SOURCE_PROVENANCE_ONLY",
+      "sourceBeforeSHA256": "e8ec69ede5ef8b3deaa74767b4c473d7c97733e13dcef6feb063c9aa2973ce96",
+      "generatedProvenanceChanges": [
+        {
+          "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/HanlinScriptWidgetRuntime.swift",
+          "beforeSHA256": "425396c929e63ec2dd766189bf77bf8a057e6e42fbaf02f45c7736b30cd1c4c4",
+          "actualSourceSHA256": "d3735e19e7e2603d17449acd0c57c22bc676ee022bfe3152a20d2d846dd58afd"
+        }
+      ]
+    },
+    {
+      "path": "scriptwidget/widget-manifest.schema.json",
+      "bytes": 13230,
+      "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2",
+      "sourcePath": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
+      "disposition": "EXACT_GIT_SOURCE",
+      "sourceBeforeSHA256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2",
+      "generatedProvenanceChanges": []
+    },
+    {
+      "path": "scriptwidget/manifest-validation.mjs",
+      "bytes": 13070,
+      "sha256": "f84c8dfbe6c86a862c87c4bc6423b30003620fae4d1a7a826cd8c02ae4410289",
+      "sourcePath": "Scripts/MiniApps/scriptwidget/manifest-validation.mjs",
+      "disposition": "EXACT_GIT_SOURCE",
+      "sourceBeforeSHA256": "f84c8dfbe6c86a862c87c4bc6423b30003620fae4d1a7a826cd8c02ae4410289",
+      "generatedProvenanceChanges": []
+    }
+  ],
+  "actualValidationProjects": [
+    {
+      "name": "expo-guide",
+      "engine": "expo",
+      "validation": {
+        "schemaVersion": 1,
+        "engine": "expo",
+        "operation": "validate",
+        "succeeded": true,
+        "diagnostics": [],
+        "sourceRoot": "/private/var/folders/5n/5t77mfb93jd7q8v9s6f0dn0m0000gn/T/hanlin-guide-check-RVunRS/expo-guide",
+        "sdk": {
+          "packageVersions": {
+            "@expo/ui": "58.0.29",
+            "@hanlin/expo-native-api": "1.0.0",
+            "@hanlin/expo-ui": "1.0.0",
+            "@nativescript/react-native": "9.1.2",
+            "expo": "58.0.26",
+            "expo-brownfield": "58.0.20",
+            "expo-modules-core": "58.1.0",
+            "expo-modules-jsi": "58.0.23",
+            "react": "19.3.0",
+            "react-native": "0.88.1",
+            "react-native-worklets": "0.13.0",
+            "expo-widgets": "58.0.29",
+            "@babel/core": "7.29.7",
+            "@react-native-community/cli": "20.2.0",
+            "@react-native/codegen": "0.88.1",
+            "@react-native/metro-config": "0.88.1",
+            "@types/react": "19.3.0",
+            "babel-preset-expo": "58.0.26",
+            "esbuild": "0.25.12",
+            "typescript": "6.0.2"
+          },
+          "manifestSHA256": "1b66e9111586a764617a47fafe8f71ac677c14743fc1d0df79290e3ac994cebc",
+          "compilerVersion": "6.0.3"
+        },
+        "typecheck": {
+          "strict": true,
+          "checkJs": false,
+          "skipLibCheck": false,
+          "dependencyDeclarationsChecked": true
+        }
+      }
+    },
+    {
+      "name": "nativescript-guide",
+      "engine": "nativescript",
+      "validation": {
+        "schemaVersion": 1,
+        "engine": "nativescript",
+        "operation": "validate",
+        "succeeded": true,
+        "diagnostics": [],
+        "sourceRoot": "/private/var/folders/5n/5t77mfb93jd7q8v9s6f0dn0m0000gn/T/hanlin-guide-check-RVunRS/nativescript-guide",
+        "sdk": {
+          "packageVersions": {
+            "@nativescript/core": "9.1.4",
+            "@nativescript/swift-ui": "4.0.2",
+            "@nativescript/ios": "9.1.1",
+            "@nativescript/types": "9.1.4",
+            "@nativescript/vite": "8.0.24",
+            "typescript": "5.9.3",
+            "vite": "8.0.0",
+            "@hanlin/host-services": "1.0.0"
+          },
+          "manifestSHA256": "1b66e9111586a764617a47fafe8f71ac677c14743fc1d0df79290e3ac994cebc",
+          "compilerVersion": "5.9.3"
+        },
+        "typecheck": {
+          "strict": true,
+          "checkJs": true,
+          "skipLibCheck": true,
+          "dependencyDeclarationsChecked": false
+        }
+      }
+    },
+    {
+      "name": "scriptwidget-guide",
+      "engine": "scriptwidget",
+      "validation": {
+        "schemaVersion": 1,
+        "engine": "scriptwidget",
+        "operation": "validate",
+        "succeeded": true,
+        "diagnostics": [],
+        "sourceRoot": "/private/var/folders/5n/5t77mfb93jd7q8v9s6f0dn0m0000gn/T/hanlin-guide-check-RVunRS/scriptwidget-guide",
+        "sdk": {
+          "packageVersions": {
+            "everettjf/scriptwidget": "4da256d58247bbafb9a5cd443a285250b97b3c4b,68f04194f00222558c44d5a832e7617a96f62574"
+          },
+          "manifestSHA256": "1b66e9111586a764617a47fafe8f71ac677c14743fc1d0df79290e3ac994cebc",
+          "compilerVersion": "6.0.3"
+        },
+        "typecheck": {
+          "strict": true,
+          "checkJs": true,
+          "skipLibCheck": false,
+          "dependencyDeclarationsChecked": true
+        }
+      }
+    },
+    {
+      "name": "scriptwidget-controls",
+      "engine": "scriptwidget",
+      "validation": {
+        "schemaVersion": 1,
+        "engine": "scriptwidget",
+        "operation": "validate",
+        "succeeded": true,
+        "diagnostics": [],
+        "sourceRoot": "/private/var/folders/5n/5t77mfb93jd7q8v9s6f0dn0m0000gn/T/hanlin-guide-check-RVunRS/scriptwidget-controls",
+        "sdk": {
+          "packageVersions": {
+            "everettjf/scriptwidget": "4da256d58247bbafb9a5cd443a285250b97b3c4b,68f04194f00222558c44d5a832e7617a96f62574"
+          },
+          "manifestSHA256": "1b66e9111586a764617a47fafe8f71ac677c14743fc1d0df79290e3ac994cebc",
+          "compilerVersion": "6.0.3"
+        },
+        "manifestValidation": {
+          "schemaPath": "scriptwidget/widget-manifest.schema.json",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptMetadata.swift",
+              "upstream": "Shared/ScriptWidgetRuntime/Common/ScriptMetadata.swift",
+              "commit": "4da256d58247bbafb9a5cd443a285250b97b3c4b",
+              "sha256": "f1b202b4caef78877cad69700ff698350066066c12f7fcc5bf557810aa1234f9"
+            },
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptWidgetPackage.swift",
+              "upstream": "Shared/ScriptWidgetRuntime/Common/ScriptWidgetPackage.swift",
+              "commit": "4da256d58247bbafb9a5cd443a285250b97b3c4b",
+              "sha256": "3aa2274d41edd3e7e87edd91697a4a204489d0efc6a2efaa00ea82d517af16fd"
+            },
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeFetch.swift",
+              "upstream": "Shared/ScriptWidgetRuntime/Widget/API/ScriptWidgetRuntimeFetch.swift",
+              "commit": "4da256d58247bbafb9a5cd443a285250b97b3c4b",
+              "sha256": "8a7bb65bffe0390ac719e33b0ece71e19b20e9be96841e422a3a4c37f09352b3"
+            }
+          ]
+        },
+        "typecheck": {
+          "strict": true,
+          "checkJs": true,
+          "skipLibCheck": false,
+          "dependencyDeclarationsChecked": true
+        }
+      }
+    }
+  ],
+  "appleSDKVersionFromRetainedBuildMetadata": "27.2",
+  "foregroundToolchainRetained": {
+    "path": "raw/app-split-evidence/foreground-toolchain.stdout.log.gz",
+    "bytes": 106,
+    "sha256": "d37402113ddb76212b6ee4e98792dec8d8a25152909d4e70e8400596d241d64f",
+    "originalBytes": 98,
+    "originalSHA256": "4b59da256292ae42e3f04ef6d06ea3e139678613a3cd3d0dc37a6757c0bd290a",
+    "compression": "gzip",
+    "mtime": 0
+  },
+  "boundary": "Source/identity reconciliation of actual original compiler/type inputs and prior executed guide checks. No compiler, typecheck, app or OS operation was executed by this proof."
+}

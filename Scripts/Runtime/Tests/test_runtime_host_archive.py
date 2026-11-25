@@ -6,6 +6,7 @@ from pathlib import Path
 import tempfile
 import unittest
 import zipfile
+from unittest.mock import patch
 
 SPEC = importlib.util.spec_from_file_location("host_archive", Path(__file__).parents[1] / "runtime_host_archive.py")
 archive_module = importlib.util.module_from_spec(SPEC)
@@ -166,6 +167,35 @@ class RuntimeHostArchiveTests(unittest.TestCase):
         with zipfile.ZipFile(self.archive, "a") as packed:
             packed.writestr("../outside.txt", "invalid")
         self.assertTrue(archive_module.validate_archive(self.archive, self.source))
+
+
+    def test_miniapp_sdk_missing_from_authoring_host_is_an_archive_error(self):
+        self.write_archive(self.archive)
+        with patch.object(archive_module, "miniapp_sdk_inputs", return_value={"sha256":"current"}):
+            self.assertTrue(archive_module.validate_archive(self.archive, self.source))
+
+    def test_miniapp_sdk_requires_current_inputs_and_original_declaration_bytes(self):
+        self.write_archive(self.archive)
+        data = b"export declare const original: number;"
+        files = [{"path":"expo/types.d.ts","sha256":hashlib.sha256(data).hexdigest()}]
+        engine = {"tsconfigPath":"expo/tsconfig.json","typescriptPath":"expo/compiler.js"}
+        sdk = {"schemaVersion":1,"inputSHA256":"current","engines":{name:engine for name in ["expo","nativescript","scriptwidget"]},"files":files}
+        with zipfile.ZipFile(self.archive,"a") as packed:
+            packed.writestr("MiniAppSDK/miniapp-sdk.json",json.dumps(sdk))
+            packed.writestr("MiniAppSDK/expo/types.d.ts",data)
+            packed.writestr("MiniAppSDK/expo/tsconfig.json","{}")
+            packed.writestr("MiniAppSDK/expo/compiler.js","original compiler")
+        with patch.object(archive_module, "miniapp_sdk_inputs", return_value={"sha256":"current"}):
+            self.assertEqual(archive_module.validate_archive(self.archive,self.source),[])
+        with patch.object(archive_module, "miniapp_sdk_inputs", return_value={"sha256":"updated"}):
+            self.assertTrue(any("SDK differs" in e for e in archive_module.validate_archive(self.archive,self.source)))
+        tampered = self.root/"changed-sdk.zip"
+        with zipfile.ZipFile(self.archive) as old, zipfile.ZipFile(tampered,"w") as new:
+            for entry in old.infolist():
+                new.writestr(entry,b"export declare const original: any;" if entry.filename=="MiniAppSDK/expo/types.d.ts" else old.read(entry))
+        with patch.object(archive_module, "miniapp_sdk_inputs", return_value={"sha256":"current"}):
+            self.assertTrue(any("SDK source digest mismatch" in e for e in archive_module.validate_archive(tampered,self.source)))
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "status": "EXECUTED_PASS",
+  "command": [
+    "python3",
+    "Scripts/MiniApps/Tests/test_archive_import_policy.py",
+    "--filter",
+    "HanlinArchiveDirectoryTests/realArchiveWithoutPackageManifestIsRejected",
+    "--output",
+    "docs/miniapp-sdk/evidence/sdk02-sdk06-contracts-20261124/missing-manifest"
+  ],
+  "exit": 0,
+  "seconds": 17.191702662035823,
+  "selectedMethod": "HanlinArchiveDirectoryTests/realArchiveWithoutPackageManifestIsRejected",
+  "executedMethods": 1,
+  "priorArchiveMethodsRerun": 0,
+  "rawLog": "missing-manifest/archive-import-policy.txt",
+  "rawLogSHA256": "627e93dc9c5e41efddbf7461320f4e16d97fa36d8fe3fc9dacfbf31aa798566d",
+  "fixture": "missing-manifest/missing-manifest.zip",
+  "fixtureMetadata": "missing-manifest/missing-manifest.json",
+  "scope": "Actual production ZIP directory parser and ArchivePolicy, with a real two-entry Expo-shaped archive lacking script.json. ZIPFoundation extraction and Apple execution are not claimed."
+}

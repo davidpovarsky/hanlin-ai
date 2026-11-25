@@ -24,7 +24,7 @@ import tempfile
 import time
 import zipfile
 
-from audit_release_resources import ROLES, certificate, decode, evaluate_profile
+from audit_release_resources import ROLES, certificate, decode, evaluate_profile, product_roles
 from resolve_signing_profiles import (
     resolve_original_profiles, install_profile, remove_installed_profiles,
 )
@@ -35,9 +35,33 @@ from signing_profile_preflight import (
 )
 
 ROOT = Path(__file__).resolve().parents[2]
-OUT = Path(os.environ["SPLIT_EVIDENCE"]) / "signed-products"
+
+
+def exported_bundle_targets(app: Path, expected: set[str]) -> dict[str, Path]:
+    """Require every original app/extension identity exactly once in the IPA."""
+    targets = [app]
+    for container in ("PlugIns", "Extensions"):
+        targets.extend(sorted((app / container).glob("*.appex")))
+    observed = {}
+    for target in targets:
+        info = plistlib.loads((target / "Info.plist").read_bytes())
+        identity = info.get("CFBundleIdentifier")
+        if not isinstance(identity, str) or not identity:
+            raise RuntimeError("Exported app or extension has no bundle identity")
+        if identity in observed:
+            raise RuntimeError("Duplicate signed bundle identity: " + identity)
+        observed[identity] = target
+    if set(observed) != expected:
+        missing = sorted(expected - set(observed))
+        unexpected = sorted(set(observed) - expected)
+        raise RuntimeError(
+            f"Exported bundle identities do not match original product: "
+            f"missing={missing}, unexpected={unexpected}")
+    return observed
+
 
 def main():
+    OUT = Path(os.environ["SPLIT_EVIDENCE"]) / "signed-products"
     OUT.mkdir(parents=True, exist_ok=False)
     state = {"sha": os.environ["GITHUB_SHA"], "run_id": os.environ["GITHUB_RUN_ID"],
              "status": "NOT_RUN", "products": [], "physical_device": "NOT_RUN",
@@ -191,8 +215,7 @@ def main():
                 product = {"role": role, "bundle_id": bundle, "archive": "NOT_RUN", "export": "NOT_RUN",
                            "entitlements": "NOT_RUN"}
                 state["products"].append(product)
-                selected_bundles = {b for r, b, _, _ in ROLES
-                                    if (r == "miniapps") == (role == "miniapps")}
+                selected_bundles = {bundle for _, bundle, _, _ in product_roles(role)}
                 options["provisioningProfiles"] = {b: profile_mapping[b] for b in selected_bundles}
                 export_options.write_bytes(plistlib.dumps(options))
                 export_options.chmod(0o600)
@@ -240,15 +263,10 @@ def main():
                 if len(apps) != 1:
                     raise RuntimeError("Exported product has an ambiguous app payload")
                 run(["codesign", "--verify", "--deep", "--strict", apps[0]], role + "-signature")
-                targets = [apps[0], *apps[0].glob("PlugIns/*.appex")]
-                expected = {b: (name, path) for name, b, _, path in ROLES if name != "miniapps"} if role == "ai" else {
-                    b: (name, path) for name, b, _, path in ROLES if name == "miniapps"}
+                expected = {bundle: (name, path) for name, bundle, _, path in product_roles(role)}
+                targets = exported_bundle_targets(apps[0], set(expected))
                 observed = {}
-                for target in targets:
-                    bundle_info = plistlib.loads((target / "Info.plist").read_bytes())
-                    identity = bundle_info["CFBundleIdentifier"]
-                    if identity not in expected:
-                        raise RuntimeError("Unexpected signed extension or product")
+                for identity, target in targets.items():
                     name, source = expected[identity]
                     decoded = subprocess.run(["security", "cms", "-D", "-i", str(target / "embedded.mobileprovision")],
                                              capture_output=True, timeout=20, check=True)

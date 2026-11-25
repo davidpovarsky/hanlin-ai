@@ -1,0 +1,271 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS_MAIN15_SHIPPING_PROVENANCE_DELTA",
+  "recordedAtUTC": "2026-11-24T15:16:42.512942+00:00",
+  "scope": "Bounded actual MAIN15 SDK05 shipping reconciliation against MAIN14. Exact tested source e222 is authoritative; later README/reachability/test edits are separately recorded.",
+  "run": {
+    "id": 45412939674,
+    "artifactID": 14933389929,
+    "testedSource": "e2227ccdfe0c3111d1c17ef2b4bb1653ac24bb9c",
+    "laterEvidenceBase": "788354f8e9e863eb5e4c9007a8b58ea71d028b19",
+    "outerArtifact": {
+      "path": "/tmp/hanlin-native-gate-evidence-45412939674/app-split-45412939674.zip",
+      "artifactID": 14933389929,
+      "bytes": 333459051,
+      "sha256": "1c7b453087a1bb7d2e1a07fa2ec94898afc0e0b2dbee6f3ac2dc5d691c80d574"
+    },
+    "nestedRuntimeHost": {
+      "member": "runtime-host/RuntimeHostResources.zip",
+      "bytes": 81812095,
+      "sha256": "e5f72fd3c01dccc81c080e7469c0dbe7eb30052963363aa03e7272a2f15af806"
+    },
+    "authentication": "Parent downloaded/authenticated the supplied artifact once. This lane independently rehashed that exact retained local archive; no network or download."
+  },
+  "actualSDK": {
+    "manifestSHA256": "ab7900fbb6009606800a7d4beda2bef2cee6ef8492928bea90ad5d0460abff8b",
+    "previousManifestSHA256": "17df84a3ea5121d8b6362a03d095114ff3ce7702ad605a97b91f21666480a7e6",
+    "manifestBytes": 5219260,
+    "manifestByteIdentical": false,
+    "inputSHA256": "91128b0831f2d90374bc7889acb9cbbd695d49187520ee23a7a75e3c2bcef6fc",
+    "computedInputSHA256": "91128b0831f2d90374bc7889acb9cbbd695d49187520ee23a7a75e3c2bcef6fc",
+    "previousInputSHA256": "2613c6ccdeb2ea17dd5268b5a0eb90f0f7e136f3c46e39faeb94c7fb0777848a",
+    "sourceInputs": 222,
+    "unchangedInputCount": 219,
+    "changedInputs": 3,
+    "fileRows": 25661,
+    "unchangedFileRows": 25658,
+    "changedFileRows": 3,
+    "sameOrderedPaths": true,
+    "engineMetadataIdentical": true,
+    "upstreamMetadataIdentical": true
+  },
+  "sourceApplicability": {
+    "priorSource": "cf9c18903c03264265557efb446207efa7226912",
+    "testedSource": "e2227ccdfe0c3111d1c17ef2b4bb1653ac24bb9c",
+    "laterEvidenceBase": "788354f8e9e863eb5e4c9007a8b58ea71d028b19",
+    "gitChangedInputPaths": [
+      "docs/miniapp-sdk/extension-reachability.json",
+      "docs/miniapp-sdk/extension-reachability.md",
+      "docs/miniapp-sdk/source-inventory.json"
+    ],
+    "postDispatchSDKInputPaths": [
+      "docs/miniapp-sdk/README.md",
+      "docs/miniapp-sdk/extension-reachability.json",
+      "docs/miniapp-sdk/extension-reachability.md"
+    ]
+  },
+  "changedShippingDocuments": [
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.json",
+      "bytes": 147521,
+      "sha256": "e51ed2435da117bdb77900c5643f1b2c72456d4dda094cffcd1b38e311a34571",
+      "matchesExactTestedSource": true,
+      "matchesLaterEvidenceBase": false
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.md",
+      "bytes": 21494,
+      "sha256": "961d8d49d036182f7abe167b6b97a1fc473724c6a546d2459af58dea1d35ca8d",
+      "matchesExactTestedSource": true,
+      "matchesLaterEvidenceBase": false
+    },
+    {
+      "path": "docs/miniapp-sdk/source-inventory.json",
+      "bytes": 493266,
+      "sha256": "7a9def87c5bf71226b1d120c6f8bd9856732828e8bcdfd7d36a4633d8c9b6b45",
+      "matchesExactTestedSource": true,
+      "matchesLaterEvidenceBase": true
+    }
+  ],
+  "adapterProvenance": {
+    "source": "e2227ccdfe0c3111d1c17ef2b4bb1653ac24bb9c",
+    "path": "AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift",
+    "sha256": "024bd8bcb47d43ace64fb410938f393effb3c6e8bd327506cf9065851de8073c",
+    "inventoryMatches": true,
+    "reachabilitySourceAndBothRefsMatch": true,
+    "generatorExecuted": false
+  },
+  "reusedProof": {
+    "main14Receipt": "../sdk05-shipping-main14-20261124/receipt.json",
+    "main14ReceiptSHA256": "70c9b295242b238cb02ffcccd9c92b29e850d18705789f2542e3c66637fe7458",
+    "originalCurrentShippingReceipt": "../sdk05-current-shipping-20261124/receipt.json",
+    "originalCurrentShippingReceiptSHA256": "f8c940f0ae15dd3ec5a8778a5028c937da4e6ef3f7c3b37ed8a095eb9b623ecf",
+    "manifestRowCoverage": {
+      "docs": 25,
+      "unchangedDocs": 22,
+      "changedDocsFreshlyRead": 3,
+      "examplesIncludingIndex": 29,
+      "exampleRowsIdentical": true,
+      "declarations": 5210,
+      "declarationRowsIdentical": true
+    },
+    "sameWholeSDKManifestClaimed": false,
+    "previous112SelectedMemberChecksRepeated": false,
+    "allSDKFileBodiesRehashed": false,
+    "boundary": "Prior body/compiler/type/example checks are reused only for unchanged records. Exactly three changed documentation bodies were freshly verified. Earlier example CLI builds retain their original SDK attribution."
+  },
+  "actualSnippetCheck": {
+    "sha256": "595f1e77aa5b5c52417f238e185233ec0af477d78187325239502fa5b51d83bb",
+    "status": "EXECUTED_PASS",
+    "sourceBlocks": 14,
+    "jsonBlocks": 7,
+    "excluded": 8,
+    "projects": [
+      {
+        "name": "expo-guide",
+        "compilerVersion": "6.0.3",
+        "typecheck": {
+          "strict": true,
+          "checkJs": false,
+          "skipLibCheck": false,
+          "dependencyDeclarationsChecked": true
+        },
+        "succeeded": true,
+        "diagnosticCount": 0
+      },
+      {
+        "name": "nativescript-guide",
+        "compilerVersion": "5.9.3",
+        "typecheck": {
+          "strict": true,
+          "checkJs": true,
+          "skipLibCheck": true,
+          "dependencyDeclarationsChecked": false
+        },
+        "succeeded": true,
+        "diagnosticCount": 0
+      },
+      {
+        "name": "scriptwidget-guide",
+        "compilerVersion": "6.0.3",
+        "typecheck": {
+          "strict": true,
+          "checkJs": true,
+          "skipLibCheck": false,
+          "dependencyDeclarationsChecked": true
+        },
+        "succeeded": true,
+        "diagnosticCount": 0
+      },
+      {
+        "name": "scriptwidget-controls",
+        "compilerVersion": "6.0.3",
+        "typecheck": {
+          "strict": true,
+          "checkJs": true,
+          "skipLibCheck": false,
+          "dependencyDeclarationsChecked": true
+        },
+        "succeeded": true,
+        "diagnosticCount": 0
+      }
+    ],
+    "diagnostics": 0,
+    "documentationIdentityRowsIdentical": true,
+    "checkerInputsIdentical": true,
+    "registrationIdentical": true,
+    "totalFences": 29,
+    "differences": "Only updated SDK identities and four temporary validation sourceRoot paths; exact differences retained."
+  },
+  "postDispatchBoundary": {
+    "report": "post-dispatch-boundary.json",
+    "artifactREADME": {
+      "path": "docs/miniapp-sdk/README.md",
+      "sha256": "4427f49e5b729658d95d98eb6cdbb84ea08f2e4d2e33d7b7c480192914346637",
+      "bytes": 15776
+    },
+    "laterREADME_SHA256": "90068db0d87718cc9f995f9d45c1e2e8a7bd670aa8b8f3b324f0bf4cfc591d95",
+    "laterSDKInputChanges": [
+      "docs/miniapp-sdk/README.md",
+      "docs/miniapp-sdk/extension-reachability.json",
+      "docs/miniapp-sdk/extension-reachability.md"
+    ],
+    "laterTestSource": "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests.swift",
+    "allLaterEditsExcludedFromMAIN15Attribution": true,
+    "latestHEADDocumentationEqualityClaimed": false,
+    "testCorrectionIsNotActualMAIN15FailureDiagnosis": true
+  },
+  "nativeAcceptance": {
+    "build": "EXECUTED_FAIL",
+    "miniBuild": "EXECUTED_FAIL",
+    "aiBuild": "NOT_RUN",
+    "ui": "NOT_RUN",
+    "actualBuildExit": 65,
+    "error": "xcodebuild exit 65; inspect mini-build.log",
+    "applicationCasePassesClaimed": 0,
+    "plannedApplicationCases": 52,
+    "plannedCasesAuthority": "Parent-established miniapp_complete selection; no application case executed after first-build failure.",
+    "rootReportedBuildCause": "Missing original React/C++ headers, separately preserved by the owning native failure lane; not attributed to the later static test correction.",
+    "boundary": "Shipping/typecheck success does not establish application compilation, native rendering, publication, OS behavior, device or distribution acceptance.",
+    "pairedAcceptanceDurationSeconds": 1440.9512591362,
+    "durationSource": "Authentic acceptance.json duration_seconds covers the paired acceptance orchestration; it is not the isolated mini-build command duration."
+  },
+  "taskStatus": "SDK05 remains completed. This receipt maintains shipping evidence for exact MAIN15 source; it does not reopen the task or assert delivery of later documentation.",
+  "notPerformed": [
+    "production or documentation source edits",
+    "compiler execution",
+    "tests",
+    "SDK/application builds",
+    "generators",
+    "CI dispatch or polling",
+    "network requests",
+    "artifact download",
+    "Asana writes",
+    "frozen SDK-only kit mutation",
+    "broad 112-member inspection"
+  ],
+  "diskCheck": "disk-before-staging.json",
+  "cleanup": {
+    "ownedPath": "/tmp/hanlin-sdk05-main15-delta-hvb44ngz",
+    "removed": true,
+    "bytesBeforeRemoval": 81812095,
+    "tmpFreeBytesAfterRemoval": 1359482880
+  },
+  "artifacts": {
+    "shipping-reconciliation.json": {
+      "path": "shipping-reconciliation.json",
+      "bytes": 5482,
+      "sha256": "cb7b9a495caf2f5e55e5622799bf1a0e567624e36cb23a289413feaf2c40117b"
+    },
+    "declared-delta.json": {
+      "path": "declared-delta.json",
+      "bytes": 2694,
+      "sha256": "5b6577807955d002a8115fe61ece4e68966d4b15fe9255cb45d104f01ea3250b"
+    },
+    "changed-member-proof.json": {
+      "path": "changed-member-proof.json",
+      "bytes": 45585,
+      "sha256": "f598ff19ae79edbf695c0a5dab15a7e02ebeead10569450b0aef7ca175da3f46"
+    },
+    "adapter-provenance-binding.json": {
+      "path": "adapter-provenance-binding.json",
+      "bytes": 326,
+      "sha256": "86bac9d533d1801f75e2b06cf455ae77f27cbf28020e9d7adc0c222d5bbd4f05"
+    },
+    "post-dispatch-boundary.json": {
+      "path": "post-dispatch-boundary.json",
+      "bytes": 2241,
+      "sha256": "8794e5eac7bb5d2860bd8cc11f002a692b2a8b6c84c0687f7b06d1e18a42aa0e"
+    },
+    "inspect_shipping_delta.py": {
+      "path": "inspect_shipping_delta.py",
+      "bytes": 12452,
+      "sha256": "c48e475613a7982e291aa981c9a37637e3b6600825f607761900013ee1268cd7"
+    },
+    "inspection-command.json": {
+      "path": "inspection-command.json",
+      "bytes": 376,
+      "sha256": "30c78d480e566e5bae256160662579a1d727c41db16f68156f571a39a4884a79"
+    },
+    "miniapp-documentation-snippets.json": {
+      "path": "raw/app-split-evidence/miniapp-documentation-snippets.json",
+      "bytes": 20066,
+      "sha256": "595f1e77aa5b5c52417f238e185233ec0af477d78187325239502fa5b51d83bb"
+    },
+    "acceptance.json": {
+      "path": "raw/app-split-evidence/acceptance.json",
+      "bytes": 2621,
+      "sha256": "dfe438a266b40a02bef408951bbab671bed2705b17db9bace35552248e69c926"
+    }
+  }
+}

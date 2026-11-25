@@ -1,0 +1,58 @@
+{
+  "status": "PASS",
+  "source": "4eb1af2a625cddcf896e88edc54de7eb649ae7a2",
+  "generatedCommit": "ecfd3fd0768bba0c1be5a92be81f31775ee6ea3e",
+  "originalProducerRawLogSHA256": "d9017d3704fd5d51ac1726f4b5efd9cfa82bd36e28a1579389a01768686e5a81",
+  "actualHostTests": {
+    "tests": 178,
+    "pass": 177,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 1,
+    "todo": 0
+  },
+  "jitlessActualArchiveSmoke": {
+    "passed": true,
+    "fetchImplementation": "node-fetch@3.3.2+native-web-api",
+    "webAssemblyAvailable": false,
+    "nonce": "1dbb03b0-e777-4b77-948e-42e8b9e45ee6",
+    "contracts": [
+      "GET",
+      "Request POST Unicode",
+      "redirect",
+      "HTTP error",
+      "ReadableStream",
+      "clone",
+      "gzip",
+      "multipart File",
+      "abort",
+      "HEAD",
+      "204"
+    ]
+  },
+  "scope": "One original producer invocation via sync. The original opt-in long worker skip is retained; not a cache acceptance skip. No live provider proof.",
+  "generatedFiles": {
+    "docs/miniapp-sdk/MANIFEST_REFERENCE.md": {
+      "beforeSHA256": "8da08b17fda7f2edf632dac1d577347c05dfd1f9753bfa48827707a73c9f769e",
+      "afterSHA256": "81c965282111455f6f299b75078825204f0e0935361ed3c2d3e79b0de16aeaa4"
+    },
+    "docs/miniapp-sdk/extension-reachability.json": {
+      "beforeSHA256": "ce95c279320e9d70e6f0252208189118695d2b1af15ce2bd108cfad1fd7e1c4c",
+      "afterSHA256": "346e23886eb1ea0b2207b01ce112e7db9aa4d386076e2550f74d49f412eccc9f"
+    },
+    "docs/miniapp-sdk/extension-reachability.md": {
+      "beforeSHA256": "bb9228cc8600bd64d770cd232862e6124c0f02a4feaef2d7a54263e16053237a",
+      "afterSHA256": "44c9ab2f8edc92469bb9afa159c217b391d6f5036edc518f14c3bdd4711c574b"
+    },
+    "docs/miniapp-sdk/source-inventory.json": {
+      "beforeSHA256": "d17f15463b1fb291beddbd9be00aff172ba99adedf195a0b5c060bf7a3ca0dd1",
+      "afterSHA256": "604a5731a8d42d31f0e7b89f24549b4c7acb7c77a38c05a199d11b120f750898"
+    }
+  },
+  "sourceInputsHash": "2b4c7c0226d27c13d4acc20fe03ef5b4953a46379ff3615f927a58bd2f553949",
+  "archive": {
+    "path": "AI_HLY/RuntimeHostResources.zip",
+    "bytes": 81856643,
+    "sha256": "965d9d2b4e211305df01c6c3ed974f7dbf8df524bc4ad9950cae9d4f420fc5df"
+  }
+}

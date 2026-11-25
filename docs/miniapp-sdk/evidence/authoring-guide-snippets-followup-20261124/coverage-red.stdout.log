@@ -1,0 +1,25 @@
+✖ new or removed guide blocks and stale staged documentation fail closed (23.430741ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 423.776507
+
+✖ failing tests:
+
+test at Scripts/MiniApps/Tests/authoring-examples.test.mjs:62:1
+✖ new or removed guide blocks and stale staged documentation fail closed (23.430741ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection: A container/indented fence must not disappear from coverage: "> "
+      at async TestContext.<anonymous> (file:///mnt/development/projects/worktrees/hanlin-miniapps-version-audit-20261124/Scripts/MiniApps/Tests/authoring-examples.test.mjs:71:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: /unsupported Markdown fence form/,
+    operator: 'rejects',
+    diff: 'simple'
+  }

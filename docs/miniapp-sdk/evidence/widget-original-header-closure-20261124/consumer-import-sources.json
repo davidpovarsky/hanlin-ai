@@ -1,0 +1,214 @@
+{
+  "HanlinApp": [
+    {
+      "path": "AI_HLY/AI_HLY.swift",
+      "sha256": "11840d5e3f1dc0c87dba1dbe7380f8e761bdf3ed89e4d5a365d824045df72c51",
+      "imports": [
+        {
+          "line": 1,
+          "source": "import AI_Hanlin"
+        },
+        {
+          "line": 3,
+          "source": "import ExpoWidgets"
+        },
+        {
+          "line": 4,
+          "source": "import HanlinTranslationUI"
+        }
+      ]
+    }
+  ],
+  "HanlinMiniApps": [
+    {
+      "path": "HanlinMiniAppsApp/HanlinMiniAppsApp.swift",
+      "sha256": "d809d6a2e17fa989466c3c2a908884510d850d6a3070ddb691ab931af452a202",
+      "imports": [
+        {
+          "line": 2,
+          "source": "import ExpoWidgets"
+        },
+        {
+          "line": 3,
+          "source": "import HanlinTranslationUI"
+        },
+        {
+          "line": 4,
+          "source": "import HanlinScriptExtensions"
+        },
+        {
+          "line": 5,
+          "source": "import HanlinWidgetUI"
+        },
+        {
+          "line": 7,
+          "source": "import HanlinProductSplit"
+        },
+        {
+          "line": 8,
+          "source": "import HanlinMiniAppsBridge"
+        }
+      ]
+    }
+  ],
+  "AI_HLYTests": [
+    {
+      "path": "AI_HLYTests/HanlinOriginalExpoWidgetTests.swift",
+      "sha256": "23ac930c1db21b5e91cc80fd03c17bfd78521fa6d6e86d1cc76c05bc4c7356bf",
+      "imports": [
+        {
+          "line": 2,
+          "source": "import ExpoModulesCore"
+        },
+        {
+          "line": 3,
+          "source": "@testable import ExpoWidgets"
+        },
+        {
+          "line": 5,
+          "source": "import HanlinWidgetUI"
+        },
+        {
+          "line": 6,
+          "source": "import HanlinPlatformContracts"
+        }
+      ]
+    }
+  ],
+  "HanlinMiniAppsTests": [
+    {
+      "path": "HanlinMiniAppsTests/SplitAppStorageLayoutTests.swift",
+      "sha256": "e0c4ce7caf0bfacfcf9dd5a325904daed2c40664381b95c043d023da7a6f0418",
+      "imports": [
+        {
+          "line": 2,
+          "source": "import HanlinPlatformContracts"
+        },
+        {
+          "line": 3,
+          "source": "import HanlinProductSplit"
+        },
+        {
+          "line": 4,
+          "source": "import HanlinScriptExtensions"
+        },
+        {
+          "line": 6,
+          "source": "@testable import HanlinMiniApps"
+        }
+      ]
+    },
+    {
+      "path": "HanlinMiniAppsTests/CrossAppInvocationTests.swift",
+      "sha256": "22f91c12d0953f0d1e08ee1a1157bd595a6da01adb85ac8a104c069c4073b936",
+      "imports": [
+        {
+          "line": 5,
+          "source": "import HanlinTextStudioMiniApp"
+        },
+        {
+          "line": 6,
+          "source": "import HanlinMiniAppsBridge"
+        },
+        {
+          "line": 7,
+          "source": "@testable import HanlinMiniApps"
+        }
+      ]
+    },
+    {
+      "path": "HanlinMiniAppsTests/NativeScriptWindowOwnershipTests.swift",
+      "sha256": "54458a7424737807a43d3c0f0b4a3009a951c37343c40cdb17ca0fbe238cbff8",
+      "imports": [
+        {
+          "line": 3,
+          "source": "@testable import HanlinMiniApps"
+        }
+      ]
+    },
+    {
+      "path": "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests.swift",
+      "sha256": "fac1a7336a3b233a18015f56df18fe615c04f56064029af2d292a7f8ea9d4386",
+      "imports": [
+        {
+          "line": 3,
+          "source": "import HanlinPlatformContracts"
+        },
+        {
+          "line": 4,
+          "source": "import HanlinMiniAppCore"
+        },
+        {
+          "line": 5,
+          "source": "import HanlinNativeScriptCoreSupport"
+        },
+        {
+          "line": 6,
+          "source": "@testable import HanlinMiniApps"
+        }
+      ]
+    },
+    {
+      "path": "HanlinMiniAppsTests/SplitMailboxTests.swift",
+      "sha256": "f8dff9a2b9da80711f6d25fa022e5ad5fa7000452701a934cbf5cebefa0fde60",
+      "imports": [
+        {
+          "line": 2,
+          "source": "import HanlinPlatformContracts"
+        },
+        {
+          "line": 3,
+          "source": "import HanlinProductSplit"
+        },
+        {
+          "line": 4,
+          "source": "import HanlinScriptExtensions"
+        },
+        {
+          "line": 6,
+          "source": "@testable import HanlinMiniApps"
+        }
+      ]
+    }
+  ],
+  "HanlinScriptingWidgets": [
+    {
+      "path": "HanlinScriptingWidgets/HanlinScriptingWidgets.swift",
+      "sha256": "255babd7c6c72d7dfbc6ed6526dd17eabe38a60eed5763613a6bea0ba641f25b",
+      "imports": [
+        {
+          "line": 2,
+          "source": "import ExpoWidgets"
+        },
+        {
+          "line": 3,
+          "source": "import HanlinExtensionContracts"
+        },
+        {
+          "line": 4,
+          "source": "import HanlinWidgetUI"
+        }
+      ]
+    }
+  ],
+  "HanlinMiniAppsWidgets": [
+    {
+      "path": "HanlinMiniAppsExtensions/Widgets/HanlinMiniAppsWidgets.swift",
+      "sha256": "252cc058240975857840220406b287aebc8111a963de6d1f20c5c208b9477e91",
+      "imports": [
+        {
+          "line": 2,
+          "source": "import ExpoWidgets"
+        },
+        {
+          "line": 3,
+          "source": "import HanlinExtensionContracts"
+        },
+        {
+          "line": 4,
+          "source": "import HanlinWidgetUI"
+        }
+      ]
+    }
+  ]
+}

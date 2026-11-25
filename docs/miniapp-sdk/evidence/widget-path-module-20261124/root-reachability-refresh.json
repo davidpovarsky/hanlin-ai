@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-11-24T06:48:30.002067+00:00",
+  "sourceCommit": "f4cd9d4b14bcfb4927015ec99c35de43e32a84a1",
+  "reason": "The reviewed module correction changes the controlCompiler source hash in the existing reachability anchor. SDK source-inventory inputs and upstream sources are unchanged.",
+  "commands": [
+    {
+      "argv": [
+        "python3",
+        "Scripts/Audit/audit_miniapp_reachability.py"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 2.351,
+      "stdout": "Wrote 80 canonical Host-runtime reachability cells plus separate original-library surface records; no physical/E2E pass inferred.\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "python3",
+        "Scripts/Audit/audit_miniapp_reachability.py",
+        "--check"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 1.396,
+      "stdout": "PASS: 80 unique source-backed reachability cells; no E2E pass inferred.\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.017,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "files": [
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.json",
+      "beforeSHA256": "7f2ffa4ce5ed33d65d8ed1347b0c7e9f24eca87850b19168bcd1730cbe29a0af",
+      "afterSHA256": "0cc7750f89a67a644a65d7d898f6af32359b1d40c116ebb1839526c6c3add20e"
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.md",
+      "beforeSHA256": "3e9df426903d9929f69e1746965a61c118465622c9cb4219e3656c1dc9300f9b",
+      "afterSHA256": "394eb3e7b4c6c7697f5e97e35941f8187594ae371dd3f051bd4540b7e207af34"
+    }
+  ],
+  "evidenceBoundary": "Generated source reachability only, not native application or physical-device acceptance."
+}

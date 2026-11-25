@@ -1,0 +1,315 @@
+{
+  "observedAt": "2026-11-25T03:49:15.150060+00:00",
+  "files": [
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-launch-attempt12.json",
+      "path": "focused-launch-attempt12.json",
+      "bytes": 1139,
+      "sha256": "8d615b9f36e076d8132ab386bedae8147ff49c22511fe1bc5f70e91c4657796a"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-launch-attempt12-continuation.json",
+      "path": "focused-launch-attempt12-continuation.json",
+      "bytes": 2608,
+      "sha256": "c471e47e61c928a20ef2c407978238b8d19ef303ab56994e3d815f3346822fdd"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12.py",
+      "path": "focused-diagnostics-attempt12.py",
+      "bytes": 12562,
+      "sha256": "b8122500556429a554a1a63286e19e5af119c0f6b60d6b8c5f1ace64d54d3e8a"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/diagnostic-observer-attempt12.py",
+      "path": "diagnostic-observer-attempt12.py",
+      "bytes": 9924,
+      "sha256": "d36d818a02c5a9ddba660bf83e4827d96af75b38052f9eaa26bf3c7aab2a97e1"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/run-focused-diagnostics-attempt12.py",
+      "path": "run-focused-diagnostics-attempt12.py",
+      "bytes": 5543,
+      "sha256": "a534cb83aa824f5f1de7fc1e876e8023dbdeed70302bb35c4e694389c317a3a0"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/run-focused-diagnostics-attempt12-continuation.py",
+      "path": "run-focused-diagnostics-attempt12-continuation.py",
+      "bytes": 6565,
+      "sha256": "e49edb2a130e95a72f31dbda134826223bb374f36756af150bc6e2ac251acf45"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/state.json",
+      "path": "state.json",
+      "bytes": 53160,
+      "sha256": "4d312ebcda3f559ad6a31a5b6cc23cbeedc3354692596c6c018487836505358c"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/plan.json",
+      "path": "plan.json",
+      "bytes": 12757,
+      "sha256": "2a606014a86355e8a834bc7d8175969c8d19ce01fcc5b5ee859df514c32c524d"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/source-advance-1a611764/receipt.json",
+      "path": "source-advance-1a611764/receipt.json",
+      "bytes": 29369,
+      "sha256": "16f249374efdda379e8c0803f917c8d80598db377666c9b82f6c6b55f897c1df"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/storage-recovery-attempt12/attempt9-candidate.json",
+      "path": "storage-recovery-attempt12/attempt9-candidate.json",
+      "bytes": 5461,
+      "sha256": "f15da146c89397a417f9b292423fbb52d40fa075e69e9e097ce1df8c93bb3b99"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/storage-recovery-attempt12/attempt9-retirement.json",
+      "path": "storage-recovery-attempt12/attempt9-retirement.json",
+      "bytes": 1239,
+      "sha256": "547657935d800931528c18c3e5f940f73c3a3ff1af3b591ac64fe3bb905fd6c9"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/storage-recovery-attempt12/phase-space.jsonl",
+      "path": "storage-recovery-attempt12/phase-space.jsonl",
+      "bytes": 332,
+      "sha256": "b82f9c960b4831ea4627796044f4668cc1978fbd54aad0d3e30f9f11913dfa08"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12/state.json",
+      "path": "focused-diagnostics-attempt12/state.json",
+      "bytes": 8026,
+      "sha256": "6a4c11e60a7e8aff1130d274774f1ea12885937ffbe4c6019884de7b340836a3"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12/node-job-observations.jsonl",
+      "path": "focused-diagnostics-attempt12/node-job-observations.jsonl",
+      "bytes": 5404,
+      "sha256": "66cd128cf04e0b1b3c21c405ced291be1fcbcc527911e3a0db657c2664089c67"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12/host-ready-observations.jsonl",
+      "path": "focused-diagnostics-attempt12/host-ready-observations.jsonl",
+      "bytes": 3005,
+      "sha256": "d94ae3609453bef4168266e89cfa174c4d544863188e280eb4429b3ed8dae66e"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12/container-observations.jsonl",
+      "path": "focused-diagnostics-attempt12/container-observations.jsonl",
+      "bytes": 483,
+      "sha256": "05f6c916a4e578e97812587c4fb35b1a57bb929bbd9cc99f2bcca2d908ded69d"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12/job-observation-errors.jsonl",
+      "path": "focused-diagnostics-attempt12/job-observation-errors.jsonl",
+      "bytes": 434,
+      "sha256": "923dfa940b834f51ab47b2d85e4c0859b851930ef4156cc7878e5ec88e935338"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12/installed-metadata-binding.json",
+      "path": "focused-diagnostics-attempt12/installed-metadata-binding.json",
+      "bytes": 3018,
+      "sha256": "0a010b551bc1fcb234357975d7c36c484b6f03e21953d3e6e7ba009190359a63"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12/intercepted-original-command.json",
+      "path": "focused-diagnostics-attempt12/intercepted-original-command.json",
+      "bytes": 4290,
+      "sha256": "1edd40368d4a3f6711075d5e1d69d523263b364e24f5f997081d92c7449af4a6"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12/inputs/HanlinMiniAppsUITests.original.swift",
+      "path": "focused-diagnostics-attempt12/inputs/HanlinMiniAppsUITests.original.swift",
+      "bytes": 76913,
+      "sha256": "93db32b6af9af1eeba85070086c5d0eb6b9b80198dc161004d5729c7cc38d4d0"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12/runtime-logstream.stderr",
+      "path": "focused-diagnostics-attempt12/runtime-logstream.stderr",
+      "bytes": 91,
+      "sha256": "94fd1a5b55265199a9a6a67d888250b037e52f5788dd490d3721204d6132d8d0"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12/paired-prefix/commands.jsonl",
+      "path": "focused-diagnostics-attempt12/paired-prefix/commands.jsonl",
+      "bytes": 15108,
+      "sha256": "b5ba42722839abb4c909d9188855ca7380c645c785c3b75df903020368dd856d"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12/paired-prefix/command-events.jsonl",
+      "path": "focused-diagnostics-attempt12/paired-prefix/command-events.jsonl",
+      "bytes": 79411,
+      "sha256": "e9d50814381a6222b047bba90a3f78949a1a09728d76255f658811c5b744991f"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12/paired-prefix/active-command.json",
+      "path": "focused-diagnostics-attempt12/paired-prefix/active-command.json",
+      "bytes": 754,
+      "sha256": "b485f4ffeccdb4616e8ca911d1a4afd64af3d94ffa4fbd2171c577d85530fb4c"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12/paired-prefix/original-prefix-state.json",
+      "path": "focused-diagnostics-attempt12/paired-prefix/original-prefix-state.json",
+      "bytes": 19196,
+      "sha256": "837eb596b1f39575799672a5b068722d5bc5c627f4df8fc0d41fda1e21e0387c"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12/paired-prefix/source-sha.txt",
+      "path": "focused-diagnostics-attempt12/paired-prefix/source-sha.txt",
+      "bytes": 41,
+      "sha256": "2171f24c3946e20b0251d815a86c1b3be38de8950cc7782cce25c1cca21f3cc0"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12/paired-prefix/created-simulator.txt",
+      "path": "focused-diagnostics-attempt12/paired-prefix/created-simulator.txt",
+      "bytes": 37,
+      "sha256": "1a6f08ec6fe82e98cf693aa5efeeeafd8c28908de49c620705f278ba9a7be680"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12/paired-prefix/ModularFocusedDiagnostic-summary.json",
+      "path": "focused-diagnostics-attempt12/paired-prefix/ModularFocusedDiagnostic-summary.json",
+      "bytes": 1741,
+      "sha256": "70c45c3463e90788c357e869560da21efdd90dfc40963315ac7ff6d834f06373"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12/paired-prefix/ModularFocusedDiagnostic-nodes.json",
+      "path": "focused-diagnostics-attempt12/paired-prefix/ModularFocusedDiagnostic-nodes.json",
+      "bytes": 2545,
+      "sha256": "753a3bd0be54edd31119426a5dd28d3b3b70dd9e0a8789003a52b931bd9a501e"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12/paired-prefix/ModularFocusedDiagnostic.log",
+      "path": "focused-diagnostics-attempt12/paired-prefix/ModularFocusedDiagnostic.log",
+      "bytes": 49364,
+      "sha256": "3f21d43bad9ed2869dd146669a92167379c1b8e2048f5d95b4b6e62f21b99e6b"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12/paired-prefix/ModularFocusedDiagnostic-selected-tests.log",
+      "path": "focused-diagnostics-attempt12/paired-prefix/ModularFocusedDiagnostic-selected-tests.log",
+      "bytes": 57,
+      "sha256": "df5ef130980769b652356a28c34429171445d43d45f5ac7fa0ca4cc9ff1c5e96"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12/paired-prefix/ModularFocusedDiagnostic-attachments-export.log",
+      "path": "focused-diagnostics-attempt12/paired-prefix/ModularFocusedDiagnostic-attachments-export.log",
+      "bytes": 4066,
+      "sha256": "dae7ac28d24a35fe24705a7e1e217a47a6c6c4d36a4bc7041e7c0a7b1913f501"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12/paired-prefix/modular-search-build.json",
+      "path": "focused-diagnostics-attempt12/paired-prefix/modular-search-build.json",
+      "bytes": 1615,
+      "sha256": "4cc6726b8349cbdd3586244a8b0a6eb62e5fa905813ceacc7b120f6a4028cde0"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12/paired-prefix/modular-search-build.log",
+      "path": "focused-diagnostics-attempt12/paired-prefix/modular-search-build.log",
+      "bytes": 1615,
+      "sha256": "4cc6726b8349cbdd3586244a8b0a6eb62e5fa905813ceacc7b120f6a4028cde0"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12/paired-prefix/authoring-fixture-provenance.json",
+      "path": "focused-diagnostics-attempt12/paired-prefix/authoring-fixture-provenance.json",
+      "bytes": 4147,
+      "sha256": "a27a8b1c14cee74af66b79ca6bffd43aac73271dd485b9539ccd8ab1b12b97b3"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12/paired-prefix/sdk-only-package-provenance.json",
+      "path": "focused-diagnostics-attempt12/paired-prefix/sdk-only-package-provenance.json",
+      "bytes": 2573,
+      "sha256": "83337b844e1ff4bb79e9d2e2bc531a937f3f2f6ceebcf8a7a8e2d260a21cf118"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12/paired-prefix/sample-package-hashes.json",
+      "path": "focused-diagnostics-attempt12/paired-prefix/sample-package-hashes.json",
+      "bytes": 443,
+      "sha256": "171dd618ebc9f79126ca1a0998f6e352a52f56022b7da14183e5706abe0049a9"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12/paired-prefix/ModularTextSearch.hanlinExpo",
+      "path": "focused-diagnostics-attempt12/paired-prefix/ModularTextSearch.hanlinExpo",
+      "bytes": 2203330,
+      "sha256": "3f4dc26706ded3590674eceaa4314554e1564e4bf4ab7a46d57bb1bf2e50b33e"
+    },
+    {
+      "source": "/Users/m1/Library/Developer/CoreSimulator/Devices/4EC498EF-82B7-4FC1-B1CF-20AB8BD5CB25/data/Containers/Data/Application/B0C1A48D-686E-43E5-A70C-DB601A943625/Library/Application Support/HanlinRuntime/v1/jobs/node/30f75bb6-e894-48ed-97cf-ee567f9e4619/job.json",
+      "path": "actual-import-job/30f75bb6-e894-48ed-97cf-ee567f9e4619/job.json",
+      "bytes": 3825,
+      "sha256": "34d24cb3a06e7072c728b5d7ce9f1f2a81fabd2b3841486b47ded7b73b6626a4"
+    },
+    {
+      "source": "/Users/m1/Library/Developer/CoreSimulator/Devices/4EC498EF-82B7-4FC1-B1CF-20AB8BD5CB25/data/Containers/Data/Application/B0C1A48D-686E-43E5-A70C-DB601A943625/Library/Application Support/HanlinRuntime/v1/jobs/node/30f75bb6-e894-48ed-97cf-ee567f9e4619/stdout.log",
+      "path": "actual-import-job/30f75bb6-e894-48ed-97cf-ee567f9e4619/stdout.log",
+      "bytes": 1267,
+      "sha256": "4b259e0b5337ad34a0fa4b84ef60f0951e10efbcec0f68e3b49854b45d1db746"
+    },
+    {
+      "source": "/Users/m1/Library/Developer/CoreSimulator/Devices/4EC498EF-82B7-4FC1-B1CF-20AB8BD5CB25/data/Containers/Data/Application/B0C1A48D-686E-43E5-A70C-DB601A943625/Library/Application Support/HanlinRuntime/v1/jobs/node/30f75bb6-e894-48ed-97cf-ee567f9e4619/stderr.log",
+      "path": "actual-import-job/30f75bb6-e894-48ed-97cf-ee567f9e4619/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/Users/m1/Library/Developer/CoreSimulator/Devices/4EC498EF-82B7-4FC1-B1CF-20AB8BD5CB25/data/Containers/Data/Application/B0C1A48D-686E-43E5-A70C-DB601A943625/Library/Application Support/HanlinRuntime/v1/jobs/node/30f75bb6-e894-48ed-97cf-ee567f9e4619/main.mjs",
+      "path": "actual-import-job/30f75bb6-e894-48ed-97cf-ee567f9e4619/main.mjs",
+      "bytes": 1315,
+      "sha256": "8a7951a41f9cdb166105c233d75a535aea741fd8bc0a1641206abf5dac5f05ce"
+    }
+  ],
+  "compressed": [
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12/runtime-logstream.jsonl",
+      "path": "focused-diagnostics-attempt12/runtime-logstream.jsonl.gz",
+      "rawBytes": 7581366,
+      "rawSHA256": "89382dccef8997e875a15ad22c5423c92fa6a2d5c13b223ae96fd975b5fe610a",
+      "bytes": 804356,
+      "sha256": "b8e340f5536a10b8583af46967e27b3c44f689b4fe4272e0894c76b2097df011"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12/paired-prefix/mini-build.log",
+      "path": "focused-diagnostics-attempt12/paired-prefix/mini-build.log.gz",
+      "rawBytes": 979669,
+      "rawSHA256": "4dd6ebaf2fc23dc431cdb3fa81b77fc1d849eb45bdba6bbfa7c0eea2f57c0429",
+      "bytes": 66989,
+      "sha256": "14f06bccc86add1a55a86cf0df977eaed9a720ce12e1d0bcf2b2f895c2cec349"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12/paired-prefix/ai-build.log",
+      "path": "focused-diagnostics-attempt12/paired-prefix/ai-build.log.gz",
+      "rawBytes": 949110,
+      "rawSHA256": "ccd11eb826ba72c2d35b20e838829f3c0daf6605cdc1ea32c97cb5db8ba639e8",
+      "bytes": 49558,
+      "sha256": "0cd227e1e05753d586a0872d5f08124a2c210ec777d7338b7f6307810105dfa3"
+    }
+  ],
+  "sourceBindings": [
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/App.tsx",
+      "bytes": 25786,
+      "sha256": "4e8389eb6a232e6ed5db8273dd2686e45ab04edabd2e86bfea74cbdf862e5b7c"
+    },
+    {
+      "path": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+      "bytes": 76913,
+      "sha256": "93db32b6af9af1eeba85070086c5d0eb6b9b80198dc161004d5729c7cc38d4d0"
+    },
+    {
+      "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+      "bytes": 47460,
+      "sha256": "6e3abbb16c9b55b048b69c2391784510d8c143c7ed00e760a73ecb903cdbb61d"
+    },
+    {
+      "path": "DemoMiniApps/hanlin-script-parity.hanlinNativeScript",
+      "bytes": 7512,
+      "sha256": "2e48509336edba2b301490422102dbf25cb7f1b894430d52994febdc1c33c199"
+    },
+    {
+      "path": "AI_HLY/RuntimeHostResources.zip",
+      "bytes": 81813686,
+      "sha256": "86733eba5d80156edf52da87f0f371c208122d6e60f618f182990330514984c3"
+    }
+  ],
+  "budget": {
+    "accrued": 9411.875027748993,
+    "maximum": 12600,
+    "remaining": 3188.1249722510074
+  }
+}

@@ -9,6 +9,7 @@ const repositoryRoot = resolve(scriptRoot, '..', '..');
 // Verify the checked-in JS and declarations with the pinned compiler before
 // the shared-runtime replacement can discard or stage any facade bytes.
 execFileSync(process.execPath, [resolve(scriptRoot, 'build-host-services.mjs'), '--check'], {stdio: 'inherit'});
+execFileSync(process.execPath, [resolve(scriptRoot, 'build-window-factory.mjs'), '--check'], {stdio: 'inherit'});
 const coreRoot = resolve(scriptRoot, 'node_modules', '@nativescript', 'core');
 const iosRuntimeRoot = resolve(scriptRoot, 'node_modules', '@nativescript', 'ios');
 const swiftUIRoot = resolve(scriptRoot, 'node_modules', '@nativescript', 'swift-ui');
@@ -213,6 +214,7 @@ async function stageSharedCoreRuntime(destinationRoot) {
   await mkdir(sharedStaging, { recursive: true });
   await mkdir(resolve(sharedStaging, '@hanlin'), {recursive: true});
   await cp(resolve(destinationRoot, '@hanlin', 'host-services'), resolve(sharedStaging, '@hanlin', 'host-services'), {recursive: true});
+  await cp(resolve(destinationRoot, '@hanlin', 'window-factory'), resolve(sharedStaging, '@hanlin', 'window-factory'), {recursive: true});
 
   const coreDest = resolve(sharedStaging, '@nativescript', 'core');
   await mkdir(coreDest, { recursive: true });
@@ -798,11 +800,9 @@ export default { SourceMapConsumer, SourceMapGenerator, SourceNode };
     } catch {}
   }
 
-  // Normalize all package.json files across the shared runtime to ensure
-  // "type": "module" is declared as the first property. This prevents NativeScript's
-  // V8 module loader (v8-module-loader.cpp) from misclassifying nested ESM subpackages
-  // (such as @nativescript/core/globals, css, css-value, easysax, or dependencies with
-  // funding/repository "type" properties) as CommonJS and wrapping them into functions.
+  // Preserve explicit package types and their existing bytes, including generated
+  // facade manifests. Only packages without their own type need the shared ESM
+  // runtime's module default inserted as the first property.
   async function normalizePackageJsons(dir) {
     const entries = await readdir(dir, { withFileTypes: true });
     for (const entry of entries) {
@@ -813,6 +813,7 @@ export default { SourceMapConsumer, SourceMapGenerator, SourceNode };
         try {
           const content = await readFile(full, 'utf8');
           const data = JSON.parse(content);
+          if (data !== null && Object.hasOwn(data, 'type')) continue;
           const normalized = { type: 'module', ...data };
           await writeFile(full, JSON.stringify(normalized, null, 2) + '\n');
         } catch {}

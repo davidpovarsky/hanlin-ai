@@ -1,0 +1,46 @@
+{
+  "utc": "2026-11-25T07:22:26.306287+00:00",
+  "base_source": "4b772b5a7f0eb826c9b9204122bba516af777592",
+  "only_existing_source_changes": [
+    "HanlinMiniAppsUITests/MiniAppsNativeScriptWindowUITests.swift",
+    "HanlinMiniAppsUITests/MiniAppsNativeScriptPackageWindowUITests.swift"
+  ],
+  "all_other_existing_tracked_inputs_byte_identical": true,
+  "verification_command": [
+    "git",
+    "-c",
+    "safe.directory=/mnt/development/projects/worktrees/hanlin-notification-codegen-20261125",
+    "-C",
+    "/mnt/development/projects/worktrees/hanlin-notification-codegen-20261125",
+    "diff",
+    "4b772b5a7f0eb826c9b9204122bba516af777592",
+    "--exit-code",
+    "--",
+    ".",
+    ":(exclude)HanlinMiniAppsUITests/MiniAppsNativeScriptWindowUITests.swift",
+    ":(exclude)HanlinMiniAppsUITests/MiniAppsNativeScriptPackageWindowUITests.swift"
+  ],
+  "files": {
+    "HanlinMiniAppsUITests/MiniAppsNativeScriptWindowUITests.swift": {
+      "original_sha256": "29cdaeed1141124d7367a975df3f32e6432af972555880e93cb563b72eab18f0",
+      "updated_sha256": "6962b69652361e6f936630a60a98b7688746e716667fc33b7e49b80240988f74",
+      "test_methods_identical": [
+        "testTwoNativeWindowsCompleteInReverseOrderWithoutContextMixing",
+        "testCancellingOneNativeWindowKeepsOtherWindowAndPreparedCallbackAlive"
+      ],
+      "assertion_count_preserved": 26
+    },
+    "HanlinMiniAppsUITests/MiniAppsNativeScriptPackageWindowUITests.swift": {
+      "original_sha256": "b67ef09103d96d694c46d52be6c6325a331250d5fd07ebdf03d9cdd5f91a746d",
+      "updated_sha256": "65f71dee63d05336659d700c2596280d9029ccd44ca624f9fcdef78837813a91",
+      "test_methods_identical": [
+        "testDifferentPackagesKeepModulesResourcesAndCallbacksWhenCompletingInReverseOrder",
+        "testCancellingOnePackageKeepsOtherPackageAndItsPreparedCallbackAlive"
+      ],
+      "assertion_count_preserved": 26
+    }
+  },
+  "compiled_producer_manifest_sha256": "f7aa30fb4e2a05de7bc974aef1d23869cfd9ac1e654eb9843acd34542fd92782",
+  "compiled_producer_archive_sha256": "215379d42016bfe9119b6f5c61b410c232de300e11f58fcfdfa2e9a8f78a0cdc",
+  "reuse_boundary": "Existing app/SDK/build graph unchanged; original compiled app remains source4b772. After rebuilding UI bundle, compare actual complete app-file inventory against frozen producer manifest before accepting reuse. No current native case success is implied by typecheck."
+}

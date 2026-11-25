@@ -1,0 +1,50 @@
+{
+  "status": "BUILD_FAILED",
+  "ui": "NOT_RUN",
+  "build": "TIMED_OUT",
+  "mini_build": "TIMED_OUT",
+  "ai_build": "NOT_RUN",
+  "physical_device": "NOT_RUN",
+  "provisioned_distribution": "NOT_RUN",
+  "scope": "Original SDK/tools, source diagnostics, native repair sheet, durable AI handoff, actual build/install and NativeScript/Expo runtime controls in both shipping products",
+  "model_boundary": "Only the HTTP model response sequence and the native adapter image fixture resources are deterministic. All source edits, TypeScript diagnostics, Metro/ESM production, imports, receipts, native rendering and UI events are original production code.",
+  "started_at": 1795517509.2139158,
+  "test_scope": "miniapp_complete",
+  "selected_tests": [
+    "AI_HLYTests/PendingFirstTurnTests/importedMiniAppRepairDispatchesOnceAndPreservesDraftAndSettings",
+    "AI_HLYTests/PendingFirstTurnTests/cancelledMiniAppRepairPreservesHomeDraft",
+    "AI_HLYTests/HanlinScriptingPlatformCompositionTests/malformedImportedArchiveRetainsOriginalAndStructuredDiagnostic",
+    "AI_HLYTests/MiniAppAuthoringToolTests/originalSDKWriteValidateBuildAndRepair",
+    "AI_HLYTests/MiniAppAuthoringToolTests/sourceWritePreservesUnrelatedFilesAndTargetsRetainedSource",
+    "AI_HLYTests/MiniAppAuthoringToolTests/originalExpoMetroBuildOnEmbeddedNode",
+    "AI_HLYTests/HanlinOriginalScriptWidgetAPITests",
+    "AI_HLYTests/HanlinNativePresentationTests",
+    "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests",
+    "AI_HLYTests/HanlinOriginalScriptWidgetControlTests",
+    "AI_HLYTests/HanlinMiniAppStorageCapacityTests",
+    "AI_HLYTests/HanlinOriginalExpoWidgetTests",
+    "AI_HLYUITests/MiniAppAuthoringUITests",
+    "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testInstalledExpoActionsReturnActualReplyAndFailure",
+    "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testPreparedExpoWidgetPublicationReachesExistingConsumer"
+  ],
+  "sha": "999599c242c064564c40866a1979c463f1d0e95f",
+  "simulator": "9375039A-3B96-4392-A4EF-10466C69578D",
+  "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-27-2",
+  "device": "iPad mini (A20 Pro)",
+  "app_intents_metadata": {},
+  "error": "xcodebuild exit -1; inspect mini-build.log",
+  "diagnostic_errors": [],
+  "attachment_exports": [],
+  "build_commands": {
+    "mini_build": {
+      "log": "mini-build.log",
+      "command_id": "e163ce2f4f4044228291140964b28d79",
+      "status": "timed_out",
+      "completion_recorded": true,
+      "exit": -1,
+      "observed_returncode": -9
+    }
+  },
+  "result_bundles": [],
+  "duration_seconds": 2502.716448068619
+}

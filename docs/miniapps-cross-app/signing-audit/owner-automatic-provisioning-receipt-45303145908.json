@@ -1,0 +1,438 @@
+{
+  "source_sha": "091cc3b57371926aeb611772b1b77bfe87833cfb",
+  "run_id": 45303145908,
+  "run_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45303145908",
+  "job_id": 138140387699,
+  "result": "CROSS_APP_OWNER_GROUPS_INCOMPLETE",
+  "scope": "ACTUAL_XCODE_AUTOMATIC_DEVELOPMENT_ARCHIVES_AND_DISTRIBUTION_EXPORT_OF_TINY_PROBES",
+  "artifact": {
+    "id": 14880668127,
+    "name": "app-split-45303145908",
+    "zip_sha256": "5cf20226060c9979447f7886c34fb286da7719137bea3170d7869ee4530288f2"
+  },
+  "owner_team": "NA6HPWARQ2",
+  "shared_group": "group.com.itorah.shared",
+  "registered_devices": {
+    "source": "APP_STORE_CONNECT_REGISTERED_DEVICES_API",
+    "inventory_complete": true,
+    "registered_device_count": 1,
+    "status_counts": {
+      "ENABLED": 1
+    },
+    "platform_counts": {
+      "IOS": 1
+    },
+    "enabled_platform_counts": {
+      "IOS": 1
+    },
+    "device_names_and_identifiers_retained": false,
+    "registration": "NOT_REQUESTED"
+  },
+  "resolved_native_storage_families": {
+    "anytype_owner": {
+      "group": "group.io.anytype.app.NA6HPWARQ2",
+      "source": "NEW_OWNER_PRIVATE_GROUP_REQUESTED",
+      "observed_groups": []
+    }
+  },
+  "documented_api_development_identity": {
+    "status": "TASK_DEVELOPMENT_IDENTITY_READY",
+    "public_key_sha256": "044be0e5428c2dd592261a8f00147e5841fb06fcd887fee00d01a394e70d3226",
+    "private_key_export": "NOT_REQUESTED",
+    "existing_certificate_ids_preserved": [
+      "4463XN2M8B",
+      "5GW6H43S3X",
+      "5KB3B562BF",
+      "5NN7H8WKW4",
+      "677T64NRZW",
+      "H7R943HC42",
+      "K8SLGSH78Z",
+      "SU3BZ54R4A",
+      "UX9K878SMM",
+      "VK5UM266KA",
+      "VML26TFJR2",
+      "YUKY93WZX6"
+    ],
+    "source": "DOCUMENTED_POST_V1_CERTIFICATES_CURRENT_DEVELOPMENT_TYPE",
+    "resource_id": "5V9T43RR7C",
+    "certificate_type": "DEVELOPMENT",
+    "public_certificate_sha256": "ca3c94e3c5df44be0468995bd0575b9b50e4c4410e02d8592a371aa430edbfe7",
+    "public_certificate_sha1": "BFC91FA32902F4FB07DBFDCCAAFB882111F89D76",
+    "expiration": "2027-11-24T01:23:32+00:00",
+    "created_after_probe_started": true,
+    "owner_team_matches": true,
+    "public_key_matches_task_owned_private_key": true,
+    "private_key_in_owned_temporary_keychain": true,
+    "certificate_cleanup": "REVOKED_EXACT_TASK_CREATED_CERTIFICATE",
+    "private_key_cleanup": "REMOVED_EXACT_TASK_KEY"
+  },
+  "temporary_development_identity_cleanup": "PASS",
+  "products": [
+    {
+      "role": "otzaria",
+      "bundle_id": "com.davidpovarsky.chavrusatext",
+      "status": "XCODE_AUTOMATIC_PROVISIONING_FAILED",
+      "requested_app_groups": [
+        "group.com.davidpovarsky.chavrusatext",
+        "group.com.davidpovarsky.itorah",
+        "group.com.itorah.shared"
+      ],
+      "required_distribution_entitlement_keys": [
+        "aps-environment",
+        "com.apple.developer.icloud-container-identifiers",
+        "com.apple.developer.icloud-services",
+        "com.apple.developer.ubiquity-container-identifiers",
+        "com.apple.developer.ubiquity-kvstore-identifier",
+        "com.apple.security.application-groups"
+      ],
+      "requested_entitlements_sha256": "f058f59e7cd47b0f20afe760af7161b0f35b0b9d73b5c920e7700f254b7974a8",
+      "fresh_profile_after_failed_archive": {
+        "name": "MiniApps owner readback otzaria 45303145908",
+        "uuid": "10798dc8-7501-4d09-b3d6-fe8876c6f08d",
+        "team_ids": [
+          "NA6HPWARQ2"
+        ],
+        "app_identifier_prefixes": [
+          "NA6HPWARQ2"
+        ],
+        "application_identifier": "NA6HPWARQ2.com.davidpovarsky.chavrusatext",
+        "app_groups": [
+          "group.com.davidpovarsky.chavrusatext",
+          "group.com.davidpovarsky.itorah"
+        ],
+        "expiration": "2027-09-07T07:25:00+00:00",
+        "checks": {
+          "owner_team_matches": true,
+          "bundle_matches": true,
+          "not_expired": true,
+          "shared_group_granted": false,
+          "existing_distribution_certificate_matches": true
+        },
+        "signed_profile_supports_shared_group": false,
+        "compatible_with_existing_certificate": false,
+        "distribution": true,
+        "resource_id": "25UUC38SXM",
+        "source": "CREATED_FRESH_PROFILE_WITHOUT_APP_ID_OR_GROUP_MUTATION",
+        "profile_sha256": "70d804f3d1d7ed613d8d3076d304f7920e31546c3972dcdc97206aa9fa05a874",
+        "creation": "2026-11-24T01:34:24"
+      },
+      "actual_required_key_grants_after_failed_archive": {
+        "aps-environment": "production",
+        "com.apple.developer.icloud-container-identifiers": [
+          "iCloud.com.davidpovarsky.chavrusatext"
+        ],
+        "com.apple.developer.icloud-services": "*",
+        "com.apple.developer.ubiquity-container-identifiers": [
+          "iCloud.com.davidpovarsky.chavrusatext"
+        ],
+        "com.apple.developer.ubiquity-kvstore-identifier": "NA6HPWARQ2.*",
+        "com.apple.security.application-groups": [
+          "group.com.davidpovarsky.itorah",
+          "group.com.davidpovarsky.chavrusatext"
+        ]
+      },
+      "missing_required_entitlement_keys_after_failed_archive": [
+        "com.apple.security.application-groups"
+      ],
+      "capabilities_after_failed_archive": [
+        "APP_GROUPS",
+        "ICLOUD",
+        "ICLOUD_EXTENDED_SHARE_ACCESS",
+        "IN_APP_PURCHASE",
+        "PUSH_NOTIFICATIONS"
+      ],
+      "tiny_probe_only": true,
+      "archive_error_lines": [
+        "/Users/runner/work/_temp/hanlin-authorized-signing-43hfrfss/cross-app-owner/ProfileDiscovery.xcodeproj: error: Provisioning profile \"iOS Team Provisioning Profile: com.davidpovarsky.chavrusatext\" doesn't match the entitlements file's value for the com.apple.security.application-groups entitlement. (in target 'ProfileDiscovery' from project 'ProfileDiscovery')"
+      ],
+      "archive_log_sha256": "da57cfe1fe553b0c89e45df737481f21275a72e5498295115ccc8d426eca0f2e"
+    },
+    {
+      "role": "anytype",
+      "bundle_id": "io.anytype.app.NA6HPWARQ2",
+      "status": "XCODE_AUTOMATIC_PROVISIONING_FAILED",
+      "requested_app_groups": [
+        "group.com.itorah.shared",
+        "group.io.anytype.app.NA6HPWARQ2"
+      ],
+      "required_distribution_entitlement_keys": [
+        "aps-environment",
+        "com.apple.developer.associated-domains",
+        "com.apple.developer.networking.multicast",
+        "com.apple.developer.usernotifications.communication",
+        "com.apple.security.application-groups"
+      ],
+      "requested_entitlements_sha256": "3f6fc1b4bec8e2f8f63d0b6e38898a6141f6c6be694dd04e800e18c07dcf9663",
+      "fresh_profile_after_failed_archive": {
+        "name": "MiniApps owner readback anytype 45303145908",
+        "uuid": "556c9906-e1ba-4e3e-a7ce-f969eed40ac8",
+        "team_ids": [
+          "NA6HPWARQ2"
+        ],
+        "app_identifier_prefixes": [
+          "NA6HPWARQ2"
+        ],
+        "application_identifier": "NA6HPWARQ2.io.anytype.app.NA6HPWARQ2",
+        "app_groups": [],
+        "expiration": "2027-09-07T07:25:00+00:00",
+        "checks": {
+          "owner_team_matches": true,
+          "bundle_matches": true,
+          "not_expired": true,
+          "shared_group_granted": false,
+          "existing_distribution_certificate_matches": true
+        },
+        "signed_profile_supports_shared_group": false,
+        "compatible_with_existing_certificate": false,
+        "distribution": true,
+        "resource_id": "H7L55M2V4B",
+        "source": "CREATED_FRESH_PROFILE_WITHOUT_APP_ID_OR_GROUP_MUTATION",
+        "profile_sha256": "f9cb81ab8275ee5c0dde4adbf3ee706b5bfbdb8c1410bbb9bac473f25b5b5112",
+        "creation": "2026-11-24T01:35:17"
+      },
+      "actual_required_key_grants_after_failed_archive": {
+        "aps-environment": "production",
+        "com.apple.developer.associated-domains": "*",
+        "com.apple.developer.networking.multicast": null,
+        "com.apple.developer.usernotifications.communication": true,
+        "com.apple.security.application-groups": []
+      },
+      "missing_required_entitlement_keys_after_failed_archive": [
+        "com.apple.developer.networking.multicast",
+        "com.apple.security.application-groups"
+      ],
+      "capabilities_after_failed_archive": [
+        "APP_GROUPS",
+        "ASSOCIATED_DOMAINS",
+        "IN_APP_PURCHASE",
+        "PUSH_NOTIFICATIONS",
+        "USERNOTIFICATIONS_COMMUNICATION"
+      ],
+      "tiny_probe_only": true,
+      "archive_error_lines": [
+        "/Users/runner/work/_temp/hanlin-authorized-signing-43hfrfss/cross-app-owner/ProfileDiscovery.xcodeproj: error: Provisioning profile \"iOS Team Provisioning Profile: io.anytype.app.[REDACTED]\" doesn't include the Multicast Networking capability. Multicast Networking capability needs to be assigned to your team and bundle identifier by Apple in order to be included in a profile. (in target 'ProfileDiscovery' from project 'ProfileDiscovery')",
+        "/Users/runner/work/_temp/hanlin-authorized-signing-43hfrfss/cross-app-owner/ProfileDiscovery.xcodeproj: error: Entitlement com.apple.developer.networking.multicast requires approval from Apple to include in a profile. Please request access to the associated capability. To continue building for device during request processing, remove entitlement and add upon approval. (in target 'ProfileDiscovery' from project 'ProfileDiscovery')",
+        "/Users/runner/work/_temp/hanlin-authorized-signing-43hfrfss/cross-app-owner/ProfileDiscovery.xcodeproj: error: Provisioning profile \"iOS Team Provisioning Profile: io.anytype.app.[REDACTED]\" doesn't match the entitlements file's value for the com.apple.security.application-groups entitlement. (in target 'ProfileDiscovery' from project 'ProfileDiscovery')"
+      ],
+      "archive_log_sha256": "14d1e63653c2a65839a15b6af4224a6e6442c399c990ce0e6853437b02ba5173"
+    },
+    {
+      "role": "anytype_share",
+      "bundle_id": "io.anytype.app.NA6HPWARQ2.AnytypeShareExtension",
+      "status": "XCODE_AUTOMATIC_PROVISIONING_FAILED",
+      "requested_app_groups": [
+        "group.io.anytype.app.NA6HPWARQ2"
+      ],
+      "required_distribution_entitlement_keys": [
+        "com.apple.security.application-groups"
+      ],
+      "requested_entitlements_sha256": "6eb7c211d8a3cec300aab141632c262a0b379824598ef77aeef17a38310221a6",
+      "fresh_profile_after_failed_archive": {
+        "name": "MiniApps owner readback anytype_share 45303145908",
+        "uuid": "6c9a47ee-ea18-492d-8a13-a1570683e662",
+        "team_ids": [
+          "NA6HPWARQ2"
+        ],
+        "app_identifier_prefixes": [
+          "NA6HPWARQ2"
+        ],
+        "application_identifier": "NA6HPWARQ2.io.anytype.app.NA6HPWARQ2.AnytypeShareExtension",
+        "app_groups": [],
+        "expiration": "2027-09-07T07:25:00+00:00",
+        "checks": {
+          "owner_team_matches": true,
+          "bundle_matches": true,
+          "not_expired": true,
+          "shared_group_granted": false,
+          "existing_distribution_certificate_matches": true
+        },
+        "signed_profile_supports_shared_group": false,
+        "compatible_with_existing_certificate": false,
+        "distribution": true,
+        "resource_id": "VX63Z2GFAD",
+        "source": "CREATED_FRESH_PROFILE_WITHOUT_APP_ID_OR_GROUP_MUTATION",
+        "profile_sha256": "e8e98ba46ad595f8409dab1fa63989fb70a282acf1332566853911c50d899df2",
+        "creation": "2026-11-24T01:36:01"
+      },
+      "actual_required_key_grants_after_failed_archive": {
+        "com.apple.security.application-groups": []
+      },
+      "missing_required_entitlement_keys_after_failed_archive": [
+        "com.apple.security.application-groups"
+      ],
+      "capabilities_after_failed_archive": [
+        "APP_GROUPS",
+        "IN_APP_PURCHASE"
+      ],
+      "tiny_probe_only": true,
+      "archive_error_lines": [
+        "/Users/runner/work/_temp/hanlin-authorized-signing-43hfrfss/cross-app-owner/ProfileDiscovery.xcodeproj: error: Provisioning profile \"iOS Team Provisioning Profile: io.anytype.app.[REDACTED].AnytypeShareExtension\" doesn't match the entitlements file's value for the com.apple.security.application-groups entitlement. (in target 'ProfileDiscovery' from project 'ProfileDiscovery')"
+      ],
+      "archive_log_sha256": "c92dc72599442448906a38838ce9d240e571cbcbd6908fc89f730cc0115af4da"
+    },
+    {
+      "role": "anytype_notification",
+      "bundle_id": "io.anytype.app.NA6HPWARQ2.AnytypeNotificationExtension",
+      "status": "XCODE_AUTOMATIC_PROVISIONING_FAILED",
+      "requested_app_groups": [
+        "group.io.anytype.app.NA6HPWARQ2"
+      ],
+      "required_distribution_entitlement_keys": [
+        "com.apple.security.application-groups"
+      ],
+      "requested_entitlements_sha256": "6eb7c211d8a3cec300aab141632c262a0b379824598ef77aeef17a38310221a6",
+      "fresh_profile_after_failed_archive": {
+        "name": "MiniApps owner readback anytype_notification 45303145908",
+        "uuid": "e32428e4-585e-4c44-bf53-39648b3fd3ac",
+        "team_ids": [
+          "NA6HPWARQ2"
+        ],
+        "app_identifier_prefixes": [
+          "NA6HPWARQ2"
+        ],
+        "application_identifier": "NA6HPWARQ2.io.anytype.app.NA6HPWARQ2.AnytypeNotificationExtension",
+        "app_groups": [],
+        "expiration": "2027-09-07T07:25:00+00:00",
+        "checks": {
+          "owner_team_matches": true,
+          "bundle_matches": true,
+          "not_expired": true,
+          "shared_group_granted": false,
+          "existing_distribution_certificate_matches": true
+        },
+        "signed_profile_supports_shared_group": false,
+        "compatible_with_existing_certificate": false,
+        "distribution": true,
+        "resource_id": "8Q62S7C8BW",
+        "source": "CREATED_FRESH_PROFILE_WITHOUT_APP_ID_OR_GROUP_MUTATION",
+        "profile_sha256": "58bec8f40094d91acf4352277525eaab8ec6a1e52fbe255fdc2c1200521d7948",
+        "creation": "2026-11-24T01:36:43"
+      },
+      "actual_required_key_grants_after_failed_archive": {
+        "com.apple.security.application-groups": []
+      },
+      "missing_required_entitlement_keys_after_failed_archive": [
+        "com.apple.security.application-groups"
+      ],
+      "capabilities_after_failed_archive": [
+        "APP_GROUPS",
+        "IN_APP_PURCHASE"
+      ],
+      "tiny_probe_only": true,
+      "archive_error_lines": [
+        "/Users/runner/work/_temp/hanlin-authorized-signing-43hfrfss/cross-app-owner/ProfileDiscovery.xcodeproj: error: Provisioning profile \"iOS Team Provisioning Profile: io.anytype.app.[REDACTED].AnytypeNotificationExtension\" doesn't match the entitlements file's value for the com.apple.security.application-groups entitlement. (in target 'ProfileDiscovery' from project 'ProfileDiscovery')"
+      ],
+      "archive_log_sha256": "5b248f84ed4230838c5b500aa56b1a375d8361a6a881ff8f2037f858fd4ef6ce"
+    },
+    {
+      "role": "anytype_widget",
+      "bundle_id": "io.anytype.app.NA6HPWARQ2.homewidget",
+      "status": "SIGNED_GROUP_PROBE_PASS",
+      "requested_app_groups": [],
+      "required_distribution_entitlement_keys": [],
+      "requested_entitlements_sha256": "97704a8960b4facceef54397a08fb5d0a456247c3627359215aa2a27df22656c",
+      "development_archive_readback": {
+        "status": "DEVELOPMENT_ARCHIVE_READBACK_PASS",
+        "checks": {
+          "binary_bundle_matches": true,
+          "signed_application_identifier_matches": true,
+          "profile_application_identifier_matches": true,
+          "profile_owner_team_matches": true,
+          "profile_not_expired": true,
+          "profile_includes_actual_leaf": true,
+          "selected_development_certificate_matches": true,
+          "development_profile_has_registered_devices": true,
+          "development_profile_allows_debugging": true,
+          "signed_entitlements_cover_plan": true,
+          "profile_entitlements_cover_plan": true
+        },
+        "public_certificate_sha256": "ca3c94e3c5df44be0468995bd0575b9b50e4c4410e02d8592a371aa430edbfe7",
+        "selected_public_certificate_sha256": "ca3c94e3c5df44be0468995bd0575b9b50e4c4410e02d8592a371aa430edbfe7",
+        "profile_uuid": "f5bd0eeb-1556-4cbc-9e75-664e2d8a2275",
+        "app_groups": [],
+        "missing_signed_entitlement_keys": [],
+        "missing_profile_entitlement_keys": [],
+        "native_codesign_verify_passed": true
+      },
+      "development_archive_app_groups": [],
+      "tiny_probe_only": true,
+      "archive_error_lines": [],
+      "archive_log_sha256": "ecd0c9156d79908af4e1768ea2d1c2173adaf9264534a00c60cfb944798cc88d",
+      "native_group_requirement": false,
+      "interpretation": "Signed owner widget-identity probe passed; no application group was required or proved.",
+      "xcode_archive_exit": 0,
+      "xcode_export_exit": 0,
+      "probe_ipa_sha256": "d482a528d5ba75ff2ef434e80fa812a83c71113999bc762ab97fd87df9e36226",
+      "checks": {
+        "binary_bundle_matches": true,
+        "binary_uses_existing_distribution_certificate": true,
+        "profile_owner_bundle_and_certificate_match": true,
+        "signed_entitlements_cover_plan": true,
+        "profile_entitlements_cover_plan": true,
+        "source_shared_group_requirement_satisfied": true,
+        "native_codesign_verify_passed": true
+      },
+      "profile": {
+        "name": "MiniApps owner readback anytype_widget 45295665951",
+        "uuid": "db8b8459-7ea4-45e6-a089-e367660735c3",
+        "team_ids": [
+          "NA6HPWARQ2"
+        ],
+        "app_identifier_prefixes": [
+          "NA6HPWARQ2"
+        ],
+        "application_identifier": "NA6HPWARQ2.io.anytype.app.NA6HPWARQ2.homewidget",
+        "app_groups": [],
+        "expiration": "2027-09-07T07:25:00+00:00",
+        "checks": {
+          "owner_team_matches": true,
+          "bundle_matches": true,
+          "not_expired": true,
+          "shared_group_granted": false,
+          "existing_distribution_certificate_matches": true
+        },
+        "signed_profile_supports_shared_group": false,
+        "compatible_with_existing_certificate": false,
+        "distribution": true
+      },
+      "signed_app_groups": [],
+      "missing_signed_entitlement_keys": [],
+      "missing_profile_entitlement_keys": [],
+      "existing_capabilities_preserved": true
+    }
+  ],
+  "capability_metadata_review": {
+    "basis": "Read-only reconstruction of the exact frozen source generator; generated project was not retained in the workflow artifact.",
+    "source_sha": "091cc3b57371926aeb611772b1b77bfe87833cfb",
+    "generator": "Scripts/ProductSplit/signing_profile_preflight.py:_write_probe_project",
+    "configuration": "Scripts/ProductSplit/cross_app_owner_provisioning.py:run_cross_app_owner_provisioning",
+    "exact_replacement_match_count": 1,
+    "target_id": "A10000000000000000000009",
+    "target_id_matches_PBXNativeTarget": true,
+    "SystemCapabilities": {
+      "com.apple.ApplicationGroups.iOS": {
+        "enabled": 1
+      }
+    },
+    "ProvisioningStyle": "Automatic",
+    "CODE_SIGN_ENTITLEMENTS": "Exact per-product source entitlement plan; no required capability removed",
+    "REGISTER_APP_GROUPS": "YES; present in each actual archive log",
+    "reconstructed_project_sha256": "d862100d01ce395bf9ad5bf6bfb46ffac679e79075f37f85ca84459e5836f5b5",
+    "missing_project_capability_metadata": "RULED_OUT",
+    "app_group_assignment_authorization_denial": "NOT_EXPLICIT_IN_XCODE_DIAGNOSTICS",
+    "interpretation": "The actual automatic-signing invocation did not assign the requested groups. This does not prove that all supported Xcode/account assignment routes are unavailable."
+  },
+  "remaining_requirements": [
+    "Otzaria profile must add existing group.com.itorah.shared while preserving both original groups and all cloud/push claims.",
+    "Anytype owner family must receive its private group; the main app must also receive group.com.itorah.shared.",
+    "Anytype main multicast capability explicitly requires Apple approval. It remains required by the owner source entitlements.",
+    "Physical installation and cross-app container read/write have not been proved by these signing probes."
+  ],
+  "apple_assignment_documentation": [
+    "https://developer.apple.com/documentation/xcode/configuring-app-groups",
+    "https://developer.apple.com/help/account/identifiers/enable-app-capabilities"
+  ],
+  "unchanged_retry": "NOT_REQUESTED",
+  "asana_actual_outcome_story": "1220836767270571",
+  "physical_cross_app_sharing": "NOT_PROVEN"
+}

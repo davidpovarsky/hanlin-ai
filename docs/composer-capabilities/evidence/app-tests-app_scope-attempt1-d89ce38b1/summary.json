@@ -1,0 +1,49 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "F1D52257-55E0-4927-8029-E19D47B51AC0",
+        "deviceName" : "Hanlin-Composer-iPhone-20261124",
+        "modelName" : "iPhone 17 Pro Max",
+        "osBuildNumber" : "24A434",
+        "osVersion" : "27.0",
+        "platform" : "iOS Simulator"
+      },
+      "expectedFailures" : 0,
+      "failedTests" : 0,
+      "passedTests" : 13,
+      "skippedTests" : 0,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "AI_HLY · Built with macOS 27.0",
+  "expectedFailures" : 0,
+  "failedTests" : 0,
+  "finishTime" : 1795578690.443,
+  "passedTests" : 13,
+  "result" : "Passed",
+  "runtimeWarnings" : [
+
+  ],
+  "skippedTests" : 0,
+  "startTime" : 1795578592.839,
+  "statistics" : [
+
+  ],
+  "testFailures" : [
+
+  ],
+  "title" : "Test - AI_HLY",
+  "topInsights" : [
+    {
+      "category" : "Longest Test Runs",
+      "impact" : "96% of duration",
+      "text" : "1 longest test run with outlier durations exceeding 36.42s (three standard deviations)"
+    }
+  ],
+  "totalTestCount" : 13
+}

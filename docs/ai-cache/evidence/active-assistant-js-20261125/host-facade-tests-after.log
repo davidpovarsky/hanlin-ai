@@ -1,0 +1,16 @@
+✔ file bytes roundtrip without browser globals, including empty and all byte values (198.81468ms)
+✔ native rejection is preserved; absent Base64 stays distinct from empty data (135.736632ms)
+✔ Expo assistant uses the actual shared facade through the bound native module (27.184799ms)
+✔ assistant reaches the original captured NativeScript session through host-services (2.051852ms)
+✔ Live Activity operations stay bound to their owning native session and return its actual values (2.615176ms)
+✔ The typed facade propagates an actual native failure without a fabricated activity id (1.902011ms)
+✔ cross-app facade keeps each captured native session and all payload bytes (2.897777ms)
+✔ native errors and invalid replies reject without inventing completion (1.953131ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 995.160766

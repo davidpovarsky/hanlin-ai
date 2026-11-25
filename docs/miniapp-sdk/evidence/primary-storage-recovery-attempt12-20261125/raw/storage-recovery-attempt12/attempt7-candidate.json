@@ -1,0 +1,108 @@
+{
+  "observedAt": "2026-11-25T03:52:22.614402+00:00",
+  "scope": "Retire only completed owned attempt7 simulator if actual next fresh-device requirement does not fit",
+  "uid": "D45E88A7-3C07-4227-86C4-D3B2E61C251A",
+  "device": "/Users/m1/Library/Developer/CoreSimulator/Devices/D45E88A7-3C07-4227-86C4-D3B2E61C251A",
+  "priorAuthorization": "Root explicit secondary candidate authorization during attempt12 storage recovery; preserve all raw results, control logs, source, SDK10, DerivedData, current devices and other owners.",
+  "actualDevice": {
+    "dataPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/D45E88A7-3C07-4227-86C4-D3B2E61C251A/data",
+    "dataPathSize": 5411581952,
+    "logPath": "/Users/m1/Library/Logs/CoreSimulator/D45E88A7-3C07-4227-86C4-D3B2E61C251A",
+    "udid": "D45E88A7-3C07-4227-86C4-D3B2E61C251A",
+    "lastUsedAt": "2026-11-24T22:25:20Z",
+    "isAvailable": true,
+    "logPathSize": 262144,
+    "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro-13-inch-M5-16GB",
+    "state": "Shutdown",
+    "name": "HanlinPaired-primary-ce49e30d-20261124"
+  },
+  "matchingProcesses": [],
+  "lsofReturncode": 0,
+  "matchingOpenFiles": [],
+  "retainedCriticalFiles": [
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired-product-attempt7/created-simulator.txt",
+      "bytes": 37,
+      "sha256": "a697b8016286386a7f00825bb696fd40a4cb9146f48a1a0544db6737dda8374e"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired-product-attempt7/acceptance.json",
+      "bytes": 19282,
+      "sha256": "b7dcbd1ee12535733dfe6e10ce74550d45cdfc0d55e1d2e01251ab65a227bbe1"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired-product-attempt7/commands.jsonl",
+      "bytes": 17849,
+      "sha256": "57a279024649e9ac7f77a2139c8efc83aec75b297b5a02dc34b4612c7804386f"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired-product-attempt7/original-runtimes.log",
+      "bytes": 449538,
+      "sha256": "7f8502707abf70e72a59825606cfce29c3fc4dfe3334a43dd15ee8dcadd35d78"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired-product-attempt7/original-runtimes-summary.json",
+      "bytes": 394,
+      "sha256": "7a917aa47d11b331c28f84ce76a831fb4a134c68a5966860defbea50a12e1220"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt7/split-paired-acceptance.log",
+      "bytes": 17455,
+      "sha256": "dcadc961387ecbd4bba2a50de3114b8801ed2db13ef1b048ba6c99bd1199db0c"
+    }
+  ],
+  "retainedFullResults": [
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired-product-attempt7/OriginalRuntimes.xcresult",
+      "duKiB": 1127656,
+      "InfoPlistExists": false,
+      "topLevel": [
+        "Staging",
+        "Data"
+      ]
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired-product-attempt7/MiniBuild.xcresult",
+      "duKiB": 112,
+      "InfoPlistExists": true,
+      "topLevel": [
+        "Data",
+        "Info.plist"
+      ]
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired-product-attempt7/AIBuild.xcresult",
+      "duKiB": 112,
+      "InfoPlistExists": true,
+      "topLevel": [
+        "Data",
+        "Info.plist"
+      ]
+    }
+  ],
+  "sealedEvidence": [
+    {
+      "source": "1a611764779b0a57cc57d71b26d2cd6449895d8d",
+      "path": "docs/miniapp-sdk/evidence/primary-runtime-diagnostics-attempt7-20261124/receipt.json",
+      "sha256": "bd5fd9664fa5365f4d97828e1f7f873fd142ff2509d472ca95550c633c78807b"
+    },
+    {
+      "source": "1a611764779b0a57cc57d71b26d2cd6449895d8d",
+      "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt7-20261124/receipt.json",
+      "sha256": "20dba9410ca9fec99fd680cf7c3a80ec28f3fed06485418b1bd91c80ab9abbf8"
+    }
+  ],
+  "candidateDUKiB": 5536264,
+  "df": "Filesystem   1024-blocks      Used Available Capacity iused    ifree %iused  Mounted on\n/dev/disk3s5   482797652 431731064   7181812    99% 5846439 71818120    8%   /System/Volumes/Data\n",
+  "freeBytes": 7354175488,
+  "nextFreshDeviceEstimate": {
+    "device": 6244032512,
+    "incrementalProducts": 1073741824,
+    "evidence": 536870912,
+    "concurrentGrowthAndOSAllowance": 4294967296,
+    "total": 12149612544,
+    "basis": "Previously measured completed-device sizes and actual >4GB concurrent growth while this owner was idle; no fixed storage admission threshold. Full52 evidence growth is assessed separately before launch."
+  },
+  "retirementNeededForKnownNextPhase": true,
+  "status": "ELIGIBLE_OWNED_INACTIVE"
+}

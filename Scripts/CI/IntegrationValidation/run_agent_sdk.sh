@@ -29,7 +29,7 @@ python3 "$(git rev-parse --show-toplevel)/Scripts/CI/verify_exact_json_vendor.py
 root="$(git rev-parse --show-toplevel)"
 cd "$root"
 source_sha="$(git rev-parse HEAD)"
-producer_sha=07431abccbfb151ca2dab67bca6cf86fcb2bd3b8
+producer_sha="$(python3 Scripts/CI/IntegrationValidation/swift_ai_sdk_pin.py "$root")"
 evidence="$root/build/agent-sdk-validation-evidence"
 mkdir -p "$evidence"
 if [[ "${HANLIN_SDK_CORE_AND_SESSION:-0}" == 1 ]]; then
@@ -82,22 +82,22 @@ PY
 python3 - <<'PY' > "$evidence/workflow-sha256.json"
 import hashlib,json,subprocess
 from pathlib import Path
-paths=['.github/workflows/build-ios26-unsigned-ipa.yml','Scripts/CI/IntegrationValidation/run_agent_sdk.sh','Scripts/CI/IntegrationValidation/verify_agent_sdk.py','Scripts/CI/IntegrationValidation/xcresult_to_xunit.py']
+paths=['.github/workflows/build-ios26-unsigned-ipa.yml','Scripts/CI/IntegrationValidation/run_agent_sdk.sh','Scripts/CI/IntegrationValidation/verify_agent_sdk.py','Scripts/CI/IntegrationValidation/xcresult_to_xunit.py','Scripts/CI/IntegrationValidation/swift_ai_sdk_pin.py']
 for path in paths:assert Path(path).read_bytes()==subprocess.check_output(['git','show',f'HEAD:{path}'])
 print(json.dumps({p:hashlib.sha256(Path(p).read_bytes()).hexdigest() for p in paths},indent=2))
 PY
 sdk="$scratch/Packages/HanlinAgentSDK"
 core="$scratch/Packages/HanlinPlatform"
 retain_locks() {
-  python3 - "$scratch" "$evidence" <<'PY'
+  python3 - "$scratch" "$evidence" "$producer_sha" <<'PY'
 import hashlib,json,sys
 from pathlib import Path
-root,evidence=map(Path,sys.argv[1:]);records=[];folder=evidence/'raw-locks';folder.mkdir(exist_ok=True)
+root,evidence=map(Path,sys.argv[1:3]);producer_sha=sys.argv[3];records=[];folder=evidence/'raw-locks';folder.mkdir(exist_ok=True)
 for p in root.rglob('Package.resolved'):
     if any(s in ['checkouts','.build','DerivedData'] for s in p.relative_to(root).parts):continue
     b=p.read_bytes();data=json.loads(b);pins=[x for x in data['pins'] if x['identity']=='swift-ai-sdk']
     if not p.is_relative_to(root/'Producer'):
-        assert len(pins)==1 and pins[0]['state']['revision']=='07431abccbfb151ca2dab67bca6cf86fcb2bd3b8',str(p)
+        assert len(pins)==1 and pins[0]['state']['revision']==producer_sha,str(p)
     dest=folder/f'{len(records):02d}-Package.resolved';dest.write_bytes(b)
     records.append({'source_path':str(p),'raw_file':str(dest.relative_to(evidence)),'sha256':hashlib.sha256(b).hexdigest(),'resolved':data})
 (evidence/'resolution.json').write_text(json.dumps(records,indent=2))

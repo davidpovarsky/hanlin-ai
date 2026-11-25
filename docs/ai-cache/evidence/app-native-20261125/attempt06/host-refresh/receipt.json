@@ -1,0 +1,88 @@
+{
+  "status": "PASS",
+  "sourceSHA": "6fbcf703dd9f40f5b1d42592d58a0a69573dcdfa",
+  "startedAtUTC": "2026-11-25T04:36:37.377505+00:00",
+  "commands": [
+    {
+      "argv": [
+        "bash",
+        "Scripts/Runtime/prepare-runtime-host.sh"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-ai-cache-native-20261125",
+      "startedAtUTC": "2026-11-25T04:36:37.377999+00:00",
+      "log": "01-command.log",
+      "exitCode": 0,
+      "finishedAtUTC": "2026-11-25T04:38:27.034482+00:00",
+      "logSHA256": "af65af7873cae6353035b4b01053d256d5d1ddbf6d4e48f0c2ea56754f8bc6f2"
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/python3.12",
+        "Scripts/Runtime/runtime_host_archive.py",
+        "sync",
+        "AI_HLY/RuntimeHostResources.zip"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-ai-cache-native-20261125",
+      "startedAtUTC": "2026-11-25T04:38:27.034882+00:00",
+      "log": "02-command.log",
+      "exitCode": 0,
+      "finishedAtUTC": "2026-11-25T04:38:40.568897+00:00",
+      "logSHA256": "3419e4e0a67a900c68670492d5db6002fdc14957bf974083d7999d9131bd3286"
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/python3.12",
+        "Scripts/Runtime/runtime_host_archive.py",
+        "validate",
+        "AI_HLY/RuntimeHostResources.zip"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-ai-cache-native-20261125",
+      "startedAtUTC": "2026-11-25T04:38:40.569282+00:00",
+      "log": "03-command.log",
+      "exitCode": 0,
+      "finishedAtUTC": "2026-11-25T04:38:41.454333+00:00",
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "node",
+        "Scripts/Runtime/generate-runtime-manifest.mjs",
+        "RuntimeDependencies.lock.json",
+        "AI_HLY/Downstream/RuntimeCore/Resources/RuntimeManifest.json"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-ai-cache-native-20261125",
+      "startedAtUTC": "2026-11-25T04:38:41.454764+00:00",
+      "log": "04-command.log",
+      "exitCode": 0,
+      "finishedAtUTC": "2026-11-25T04:38:41.482293+00:00",
+      "logSHA256": "e0300c6a4ee73c2d65c9f67597ea4adcb0f6f627c0c7d1e9a7e3d1231d5441f0"
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/python3.12",
+        "Scripts/SDK/native_artifacts.py",
+        "inventory",
+        "--root",
+        "."
+      ],
+      "cwd": "/Users/m1/builds/hanlin-ai-cache-native-20261125",
+      "startedAtUTC": "2026-11-25T04:38:41.482601+00:00",
+      "log": "05-command.log",
+      "exitCode": 0,
+      "finishedAtUTC": "2026-11-25T04:38:41.560326+00:00",
+      "logSHA256": "7508a7853f31951cf96f73cf5a4d2a0392e6acc3d6b3e682e6119451b674f42e"
+    }
+  ],
+  "freeBytesBefore": 7278211072,
+  "python": "/opt/homebrew/opt/python@3.12/bin/python3.12",
+  "originalProducer": "Scripts/Runtime/prepare-runtime-host.sh",
+  "archive": {
+    "path": "AI_HLY/RuntimeHostResources.zip",
+    "bytes": 81846754,
+    "sha256": "b912c83f4fcad09c8c97721d2a95276f4cbcbd2c2df7035a648f3be46b417c5d"
+  },
+  "trackedStatus": " M docs/miniapp-sdk/MANIFEST_REFERENCE.md\n M docs/miniapp-sdk/extension-reachability.json\n M docs/miniapp-sdk/extension-reachability.md\n M docs/miniapp-sdk/source-inventory.json\n",
+  "sourceAfter": "6fbcf703dd9f40f5b1d42592d58a0a69573dcdfa",
+  "finishedAtUTC": "2026-11-25T04:38:41.758579+00:00",
+  "freeBytesAfter": 7241846784
+}

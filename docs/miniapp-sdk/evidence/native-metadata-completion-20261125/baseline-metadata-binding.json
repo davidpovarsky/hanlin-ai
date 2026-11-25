@@ -1,0 +1,30 @@
+{
+  "observedAt": "2026-11-25T02:27:57.853232+00:00",
+  "boundary": "Read-only collector parsing check against retained pre-fix build products; no new compilation or runtime test.",
+  "rows": [
+    {
+      "binary": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/HanlinMiniApps.debug.dylib",
+      "offset": 47193384,
+      "bytes": 3204694,
+      "sha256": "255704a01b47cfa2b590cb99e9a729d360441f4f3f003b1788a7748540321bc5",
+      "requiredNames": {
+        "TNSLabel": false,
+        "NSCCrypto": false,
+        "UIView": true,
+        "HanlinNativeServicesBridge": true
+      }
+    },
+    {
+      "binary": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/AI_Hanlin.debug.dylib",
+      "offset": 50280,
+      "bytes": 3201167,
+      "sha256": "c7f33324a1b0d2e4ccd57b7ae982d02fa3b748074d84767259d4e12bb1e07ccc",
+      "requiredNames": {
+        "TNSLabel": false,
+        "NSCCrypto": false,
+        "UIView": true,
+        "HanlinNativeServicesBridge": true
+      }
+    }
+  ]
+}

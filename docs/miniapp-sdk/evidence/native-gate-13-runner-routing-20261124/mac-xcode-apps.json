@@ -1,0 +1,20 @@
+{
+  "command": [
+    "sudo",
+    "-u",
+    "ubuntu",
+    "ssh",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "ConnectTimeout=10",
+    "-o",
+    "StrictHostKeyChecking=yes",
+    "scaleway-mac",
+    "python3",
+    "-"
+  ],
+  "exit": 0,
+  "stdout": "{\n  \"xcodeApps\": [\n    {\n      \"path\": \"/Applications/Xcode.app\",\n      \"version\": \"27.0\",\n      \"build\": null\n    }\n  ],\n  \"selected\": \"/Applications/Xcode.app/Contents/Developer\"\n}\n",
+  "stderr": ""
+}

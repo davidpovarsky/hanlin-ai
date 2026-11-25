@@ -1,0 +1,137 @@
+{
+  "schemaVersion": 1,
+  "atUTC": "2026-11-24T14:14:12.626545+00:00",
+  "reviewer": "entrypoints",
+  "rootCheck": "Exact referenced raw rows read back; no tests or builds",
+  "runID": 45398772829,
+  "sourceCommit": "cf9c18903c03264265557efb446207efa7226912",
+  "log": {
+    "bytes": 8294813,
+    "lines": 94509,
+    "sha256": "052c16cb8d1ba5ba804f11eba671f997b9a7760a668c28e9b83df9d6d39c4a3e",
+    "retainedRawGzip": "mini-build.log.gz"
+  },
+  "command": [
+    {
+      "line": 1,
+      "text": "Command line invocation:"
+    },
+    {
+      "line": 2,
+      "text": "    /Applications/Xcode_27.2.app/Contents/Developer/usr/bin/xcodebuild -project AI_HLY.xcodeproj -destination \"platform=iOS Simulator,id=75BDBBFE-B1B3-4A95-B886-74A8B3A6F934\" -parallel-testing-enabled NO -derivedDataPath /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData -clonedSourcePackagesDirPath /Users/runner/work/hanlin-ai/hanlin-ai/build/SourcePackages -skipPackagePluginValidation -skipMacroValidation CODE_SIGNING_ALLOWED=YES CODE_SIGNING_REQUIRED=YES CODE_SIGN_IDENTITY=- -scheme HanlinMiniApps build-for-testing -resultBundlePath /Users/runner/work/hanlin-ai/hanlin-ai/build/app-split-evidence/paired-product/MiniBuild.xcresult"
+    }
+  ],
+  "publication": {
+    "status": "BODY_COMPILATION_AND_OBJECT_LINK_TASK_RECORDED",
+    "source": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinExpoWidgetPublication.swift",
+    "sourceSHA256": "ce2b136f95d1eccfd27fc876e10307133602d673fd42d860816559510b5a5960",
+    "evidence": [
+      {
+        "line": 92660,
+        "text": "SwiftCompile normal arm64 /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinExpoWidgetPublication.swift (in target 'HanlinScriptExtensions' from project 'HanlinSDK')"
+      },
+      {
+        "line": 92662,
+        "text": "    builtin-SwiftPerFileCompile HanlinExpoWidgetPublication.swift"
+      },
+      {
+        "line": 93105,
+        "text": "SwiftDriverJobDiscovery normal arm64 Compiling resource_bundle_accessor.swift, HanlinExpoWidgetsDynamicView.swift, HanlinExpoWidgetsRuntime.swift, HanlinExpoWidgetsViewRenderer.swift, HanlinCompactAgentContracts.swift, HanlinExpoWidgetPublication.swift, HanlinExtensionNodeView.swift, HanlinGenericWidgetActionIntent.swift, HanlinInvocationDelivery.swift, HanlinInvocationExecutor.swift, HanlinInvocationQueue.swift, HanlinInvocationSnippet.swift, HanlinKeychainCredentialStore.swift, HanlinLiveActivityUILayout.swift, HanlinManagedStateTransaction.swift, HanlinMiniAppCardView.swift, HanlinNativePresentation.swift, HanlinPreparedWidget.swift, HanlinScriptAppIntentBridge.swift, HanlinScriptExtensionContracts.swift, HanlinScriptExtensionStore.swift, HanlinScriptLiveActivityController.swift, HanlinScriptWidgetControls.swift, HanlinScriptWidgetDynamicIsland.swift, HanlinScriptWidgetLiveActivity.swift (in target 'HanlinScriptExtensions' from project 'HanlinSDK')"
+      },
+      {
+        "line": 93147,
+        "text": "SwiftDriver\\ Compilation HanlinScriptExtensions normal arm64 com.apple.xcode.tools.swift.compiler (in target 'HanlinScriptExtensions' from project 'HanlinSDK')"
+      },
+      {
+        "line": 94481,
+        "text": "Ld /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/HanlinScriptExtensions.o normal (in target 'HanlinScriptExtensions' from project 'HanlinSDK')"
+      },
+      {
+        "line": 94482,
+        "text": "    cd /Users/runner/work/hanlin-ai/hanlin-ai"
+      },
+      {
+        "line": 94483,
+        "text": "    /Applications/Xcode_27.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Xlinker -reproducible -target arm64-apple-ios27.0-simulator -r -isysroot /Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk -O0 -Xlinker -no_warn_duplicate_libraries -F/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/EagerLinkingTBDs/Debug-iphonesimulator -F/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks -F/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator -iframework /Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -iframework /Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk/Developer/Library/Frameworks -filelist /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinScriptExtensions-t.build/Objects-normal/arm64/HanlinScriptExtensions.LinkFileList -nostdlib -Xlinker -object_path_lto -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinScriptExtensions-t.build/Objects-normal/arm64/HanlinScriptExtensions_lto.o -Xlinker -no_deduplicate -Xlinker -objc_abi_version -Xlinker 2 -Xlinker -dependency_info -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinScriptExtensions-t.build/Objects-normal/arm64/HanlinScriptExtensions_dependency_info.dat -fobjc-link-runtime -L/Applications/Xcode_27.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator -L/usr/lib/swift -Xlinker -add_ast_path -Xlinker /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinScriptExtensions-t.build/Objects-normal/arm64/HanlinScriptExtensions.swiftmodule -o /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/HanlinScriptExtensions.o"
+      }
+    ],
+    "boundary": "Previous property-construction diagnostic resolved in actual Apple body compilation. Relocatable object-link command is recorded; its final linked artifact was not independently inspected. No runtime/widget rendering/application PASS implied."
+  },
+  "HanlinScriptingWidgets": {
+    "status": "MODULE_EMITTED_BODY_FAILED",
+    "evidence": [
+      {
+        "line": 94345,
+        "text": "SwiftEmitModule normal arm64 Emitting\\ module\\ for\\ HanlinScriptingWidgets (in target 'HanlinScriptingWidgets' from project 'HanlinSDK')"
+      },
+      {
+        "line": 94391,
+        "text": "SwiftCompile normal arm64 Compiling\\ HanlinOriginalExpoWidget.swift,\\ HanlinOriginalExpoWidgetOptions.swift,\\ HanlinScriptingAppIntents.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinOriginalExpoWidget.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinOriginalExpoWidgetOptions.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinScriptingAppIntents.swift (in target 'HanlinScriptingWidgets' from project 'HanlinSDK')"
+      },
+      {
+        "line": 94392,
+        "text": "/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinOriginalExpoWidgetOptions.swift:45:51: error: cannot use optional chaining on non-optional value of type 'Optional<HanlinOriginalExpoWidgetEntity>.UnwrappedType' (aka 'HanlinOriginalExpoWidgetEntity')"
+      },
+      {
+        "line": 94400,
+        "text": "/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinOriginalExpoWidgetOptions.swift:129:16: error: cannot convert return expression of type 'HanlinObject<HanlinValue>' to return type '[String : HanlinValue]'"
+      },
+      {
+        "line": 94428,
+        "text": "SwiftDriverJobDiscovery normal arm64 Emitting module for HanlinScriptingWidgets (in target 'HanlinScriptingWidgets' from project 'HanlinSDK')"
+      },
+      {
+        "line": 94438,
+        "text": "Copy /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/HanlinScriptingWidgets.swiftmodule/arm64-apple-ios-simulator.swiftmodule /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinScriptingWidgets-t.build/Objects-normal/arm64/HanlinScriptingWidgets.swiftmodule (in target 'HanlinScriptingWidgets' from project 'HanlinSDK')"
+      },
+      {
+        "line": 94439,
+        "text": "    cd /Users/runner/work/hanlin-ai/hanlin-ai"
+      },
+      {
+        "line": 94440,
+        "text": "    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks -rename /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinScriptingWidgets-t.build/Objects-normal/arm64/HanlinScriptingWidgets.swiftmodule /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/HanlinScriptingWidgets.swiftmodule/arm64-apple-ios-simulator.swiftmodule"
+      },
+      {
+        "line": 94505,
+        "text": "\tSwiftCompile normal arm64 /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinOriginalExpoWidgetOptions.swift (in target 'HanlinScriptingWidgets' from project 'HanlinSDK')"
+      },
+      {
+        "line": 94506,
+        "text": "\tSwiftCompile normal arm64 Compiling\\ HanlinOriginalExpoWidget.swift,\\ HanlinOriginalExpoWidgetOptions.swift,\\ HanlinScriptingAppIntents.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinOriginalExpoWidget.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinOriginalExpoWidgetOptions.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinScriptingAppIntents.swift (in target 'HanlinScriptingWidgets' from project 'HanlinSDK')"
+      }
+    ],
+    "boundary": "Required Cxx consumer progresses through real module emission, but source-body failure prevents a complete target PASS."
+  },
+  "HanlinWidgetUI": {
+    "status": "DRIVER_ONLY_BODY_COMPILATION_NOT_OBSERVED",
+    "evidence": [
+      {
+        "line": 94465,
+        "text": "SwiftDriver HanlinWidgetUI normal arm64 com.apple.xcode.tools.swift.compiler (in target 'HanlinWidgetUI' from project 'HanlinSDK')"
+      },
+      {
+        "line": 94466,
+        "text": "    cd /Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY.xcodeproj"
+      },
+      {
+        "line": 94467,
+        "text": "    builtin-SwiftDriver -- /Applications/Xcode_27.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -parse-as-library -module-name HanlinWidgetUI -Onone @/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinWidgetUI-t.build/Objects-normal/arm64/HanlinWidgetUI.SwiftFileList -DSWIFT_PACKAGE -DDEBUG -DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE -DXcode -cxx-interoperability-mode\\=default -Xcc -std\\=gnu++20 -Xcc -std\\=gnu++20 -Xcc -DREACT_NATIVE_PRODUCTION\\=1 -Xcc -DRN_DEBUG_STRING_CONVERTIBLE\\=0 -Xcc -Wno-quoted-include-in-framework-header -Xcc -Wno-non-modular-include-in-framework-module -Xcc -I/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/../HanlinExpoRuntime/../HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/include -Xcc -I/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/../HanlinExpoRuntime/../HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/bridge -Xcc -F/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/../HanlinExpoRuntime/Artifacts/ModularFrameworks -Xcc -F../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks -Xcc -FArtifacts/ModularFrameworks -Xcc -FPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks -Xcc -I/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/../HanlinExpoRuntime/Artifacts/ReactModularHeaders -Xcc -I../Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders -Xcc -IArtifacts/ReactModularHeaders -Xcc -IPackages/HanlinExpoRuntime/Artifacts/ReactModularHeaders -Xcc -I/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/../HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers -Xcc -I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers -Xcc -IArtifacts/ModularFrameworks/react.framework/Headers -Xcc -IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers -Xcc -I/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/../HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react -Xcc -I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react -Xcc -IArtifacts/ModularFrameworks/react.framework/Headers/react -Xcc -IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react -Xcc -I/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/../HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers -Xcc -I../Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers -Xcc -IArtifacts/ReactNativeDependencies.xcframework/Headers -Xcc -IPackages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers -plugin-path /Applications/Xcode_27.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk -target arm64-apple-ios27.0-simulator -g -module-cache-path /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Index.noindex/DataStore -Xcc -D_LIBCPP_HARDENING_MODE\\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 6 -I /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator -Isystem /Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator -F /Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -F /Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk/Developer/Library/Frameworks -emit-localized-strings -emit-localized-strings-path /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinWidgetUI-t.build/Objects-normal/arm64 -c -j3 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/SDKStatCaches.noindex/iphonesimulator27.2-24B8118-9aa026f88bf9ed31cff8761912ac5bd1414ec6ff3c837c3a1760e1fb4ff3fe25.sdkstatcache -output-file-map /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinWidgetUI-t.build/Objects-normal/arm64/HanlinWidgetUI-OutputFileMap.json -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/SDKExplicitPrecompiledModules -emit-dependencies -emit-module -emit-module-path /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinWidgetUI-t.build/Objects-normal/arm64/HanlinWidgetUI.swiftmodule -serialize-diagnostics -dependency-scan-serialize-diagnostics-path /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinWidgetUI-t.build/Objects-normal/arm64/HanlinWidgetUI-dependency-scan.dia -validate-clang-modules-once -clang-build-session-file /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -fmodules-prune-interval\\=86400 -Xcc -fmodules-prune-after\\=345600 -package-name hanlin_ai -emit-const-values -const-gather-protocols-list /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinWidgetUI-t.build/Objects-normal/arm64/HanlinWidgetUI_const_extract_protocols.json -Xcc -I/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinWidgetUI-t.build/DerivedSources-normal/arm64 -Xcc -I/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinWidgetUI-t.build/DerivedSources/arm64 -Xcc -I/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinWidgetUI-t.build/DerivedSources -Xcc -DSWIFT_PACKAGE -Xcc -DDEBUG\\=1 -emit-objc-header -emit-objc-header-path /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinWidgetUI-t.build/Objects-normal/arm64/HanlinWidgetUI-Swift.h -working-directory /Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY.xcodeproj -experimental-emit-module-separately -disable-cmo"
+      }
+    ],
+    "boundary": "No SwiftEmitModule/per-file compilation/module-output record. Driver flags alone are not a successful compiler result."
+  },
+  "overall": {
+    "status": "TEST_BUILD_FAILED",
+    "evidence": [
+      {
+        "line": 94501,
+        "text": "** TEST BUILD FAILED **"
+      }
+    ],
+    "AI": "NOT_RUN",
+    "applicationCases": "ALL52_NOT_RUN",
+    "physicalDevice": "NOT_RUN"
+  },
+  "finalReviewClarification": "entrypoints final handoff distinguishes recorded linker command from independent final-artifact verification"
+}

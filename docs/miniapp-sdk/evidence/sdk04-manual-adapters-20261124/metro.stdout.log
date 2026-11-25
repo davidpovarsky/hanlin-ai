@@ -1,0 +1,29 @@
+Error: Unable to resolve module @hanlin/expo-ui from /mnt/development/projects/worktrees/hanlin-sdk04-manual-adapters-20261124/Fixtures/ExpoSwiftUIProbe/App.tsx: @hanlin/expo-ui could not be found within the project or in these directories:
+  ../../../../../../../dev/shm/hanlin-expo-widgets-sdk-20261124/Scripts/Expo/node_modules
+[0m [90m 22 |[39m   [33mEmptyView[39m[33m,[39m
+ [90m 23 |[39m   hostServices[33m,[39m
+[31m[1m>[22m[39m[90m 24 |[39m } [36mfrom[39m [32m'@hanlin/expo-ui'[39m[33m;[39m
+ [90m    |[39m         [31m[1m^[22m[39m
+ [90m 25 |[39m [36mimport[39m { renderWidget } [36mfrom[39m [32m'./widget'[39m[33m;[39m
+ [90m 26 |[39m [36mimport[39m { [33mManualAdapterProbe[39m } [36mfrom[39m [32m'./ManualAdapterProbe'[39m[33m;[39m
+ [90m 27 |[39m [36mimport[39m {[0m
+    at ModuleResolver.resolveDependency (/dev/shm/hanlin-expo-widgets-sdk-20261124/Scripts/Expo/node_modules/metro/src/node-haste/DependencyGraph/ModuleResolution.js:184:15)
+    at DependencyGraph.resolveDependency (/dev/shm/hanlin-expo-widgets-sdk-20261124/Scripts/Expo/node_modules/metro/src/node-haste/DependencyGraph.js:203:43)
+    at /dev/shm/hanlin-expo-widgets-sdk-20261124/Scripts/Expo/node_modules/metro/src/lib/transformHelpers.js:165:21
+    at resolveDependencies (/dev/shm/hanlin-expo-widgets-sdk-20261124/Scripts/Expo/node_modules/metro/src/DeltaBundler/buildSubgraph.js:43:25)
+    at visit (/dev/shm/hanlin-expo-widgets-sdk-20261124/Scripts/Expo/node_modules/metro/src/DeltaBundler/buildSubgraph.js:81:30)
+    at async Promise.all (index 2)
+    at async visit (/dev/shm/hanlin-expo-widgets-sdk-20261124/Scripts/Expo/node_modules/metro/src/DeltaBundler/buildSubgraph.js:90:5)
+    at async Promise.all (index 0)
+    at async buildSubgraph (/dev/shm/hanlin-expo-widgets-sdk-20261124/Scripts/Expo/node_modules/metro/src/DeltaBundler/buildSubgraph.js:105:3)
+    at async Graph._buildDelta (/dev/shm/hanlin-expo-widgets-sdk-20261124/Scripts/Expo/node_modules/metro/src/DeltaBundler/Graph.js:163:22)
+    at async Graph.initialTraverseDependencies (/dev/shm/hanlin-expo-widgets-sdk-20261124/Scripts/Expo/node_modules/metro/src/DeltaBundler/Graph.js:146:19)
+    at async DeltaCalculator._getChangedDependencies (/dev/shm/hanlin-expo-widgets-sdk-20261124/Scripts/Expo/node_modules/metro/src/DeltaBundler/DeltaCalculator.js:165:25)
+    at async DeltaCalculator.getDelta (/dev/shm/hanlin-expo-widgets-sdk-20261124/Scripts/Expo/node_modules/metro/src/DeltaBundler/DeltaCalculator.js:75:16)
+    at async DeltaBundler.buildGraph (/dev/shm/hanlin-expo-widgets-sdk-20261124/Scripts/Expo/node_modules/metro/src/DeltaBundler.js:42:5)
+    at async IncrementalBundler.buildGraphForEntries (/dev/shm/hanlin-expo-widgets-sdk-20261124/Scripts/Expo/node_modules/metro/src/IncrementalBundler.js:94:19)
+    at async IncrementalBundler.buildGraph (/dev/shm/hanlin-expo-widgets-sdk-20261124/Scripts/Expo/node_modules/metro/src/IncrementalBundler.js:178:19)
+    at async Server.build (/dev/shm/hanlin-expo-widgets-sdk-20261124/Scripts/Expo/node_modules/metro/src/Server.js:250:32)
+    at async runBuild (/dev/shm/hanlin-expo-widgets-sdk-20261124/Scripts/Expo/node_modules/metro/src/index.flow.js:362:25)
+    at async buildBundleWithConfig (/dev/shm/hanlin-expo-widgets-sdk-20261124/Scripts/Expo/node_modules/@react-native/community-cli-plugin/dist/commands/bundle/buildBundle.js:65:18)
+    at async Command.handleAction (/dev/shm/hanlin-expo-widgets-sdk-20261124/Scripts/Expo/node_modules/@react-native-community/cli/build/index.js:139:9)

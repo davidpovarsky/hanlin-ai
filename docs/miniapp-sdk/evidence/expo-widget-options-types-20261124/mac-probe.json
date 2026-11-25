@@ -1,0 +1,54 @@
+{
+  "cwd": "/Users/m1/builds/hanlin-ai-dc518aa3-widget-options-20261124",
+  "moduleCache": "/Users/m1/caches/DerivedData/hanlin-ai-dc518aa3-widget-options-20261124",
+  "reusedContractArtifacts": {
+    "HanlinPlatformContracts.swiftmodule": "4b0d374909b2ab2c2693bf25578d611205058725120ae10bb0e7907d8c5b47f7",
+    "libHanlinPlatformContracts.dylib": "43293615a3f535e94fe975fcf7db5336d1a9e09eb9ac82fd602a415da007ef4e",
+    "HanlinPlatformContracts.swiftdoc": "5d60da4407b4de1ebc0e963c0952a74ce56cddd6357e2cab62c329125c5d4306",
+    "HanlinPlatformContracts.swiftsourceinfo": "2ca7919b2b2c316f2ceb069a5c301bd995b78d84041b9527634f8681e6391915"
+  },
+  "results": [
+    {
+      "name": "compile",
+      "argv": [
+        "xcrun",
+        "swiftc",
+        "-swift-version",
+        "6",
+        "-cxx-interoperability-mode=default",
+        "-parse-as-library",
+        "-module-cache-path",
+        "/Users/m1/caches/DerivedData/hanlin-ai-dc518aa3-widget-options-20261124",
+        "-I",
+        "/Users/m1/builds/hanlin-ai-ce2eceeb-expo-widget-props-20261124",
+        "-L",
+        "/Users/m1/builds/hanlin-ai-ce2eceeb-expo-widget-props-20261124",
+        "-lHanlinPlatformContracts",
+        "-Xlinker",
+        "-rpath",
+        "-Xlinker",
+        "/Users/m1/builds/hanlin-ai-ce2eceeb-expo-widget-props-20261124",
+        "ProductionProjection.swift",
+        "Probe.swift",
+        "-o",
+        "/Users/m1/builds/hanlin-ai-dc518aa3-widget-options-20261124/Probe"
+      ],
+      "startedAt": "2026-11-24T14:14:36.949561+00:00",
+      "elapsedSeconds": 7.300047666999999,
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "name": "run",
+      "argv": [
+        "/Users/m1/builds/hanlin-ai-dc518aa3-widget-options-20261124/Probe"
+      ],
+      "startedAt": "2026-11-24T14:14:44.249720+00:00",
+      "elapsedSeconds": 0.2438780420000004,
+      "exit": 0,
+      "stdout": "REAL_OPTIONS_VALUES_AND_OVERRIDE_PASS\nCANONICAL_EQUIVALENT_KEYS_REJECTED\nSELECTED_PARAMETER_CANONICAL_ALIAS_REJECTED\nCONFLICTING_OPTIONS_PRESERVED\nOTHER_WIDGET_OPTION_REJECTED\nNONOBJECT_JSON_REJECTED\nREAL_ADAPTER_CONVERSION_AND_CALLBACK_PASS\nADAPTER_COLLISION_REJECTED_BEFORE_CALLBACK\n",
+      "stderr": ""
+    }
+  ]
+}

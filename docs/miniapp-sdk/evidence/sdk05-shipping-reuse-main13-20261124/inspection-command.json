@@ -1,0 +1,10 @@
+{
+  "argv": [
+    "python3",
+    "docs/miniapp-sdk/evidence/sdk05-shipping-reuse-main13-20261124/inspect_shipping_reuse.py"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-sdk05-current-shipping-20261124",
+  "exitCode": 0,
+  "durationSeconds": 5.305875,
+  "scope": "Artifact identity/data inspection only; no product test or build"
+}

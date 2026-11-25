@@ -1,0 +1,7 @@
+{
+  "scope": "Evidence collection only; no product/test execution involved.",
+  "initialCheck": "A broad failed-row match counted the aggregate 'Test run with 8 tests' summary as a second failed test and stopped with AssertionError.",
+  "correction": "Count only quoted individual Test names, retain the aggregate row separately, and verify exactly seven passed and one failed method.",
+  "rawLogChanged": false,
+  "productionChanged": false
+}

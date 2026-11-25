@@ -1,0 +1,11 @@
+{
+  "baseCommit": "2f1cfa6e4a702475acfe80ad68bf82c5320902f5",
+  "status": "EXECUTED_PASS",
+  "runnerAST": "Exactly one semantic delta: mini-build.log command timeout 2400→3600; all native argv/order, test selectors/counts, helper/reporting, timeout classification, input preparation and remaining timeouts are identical.",
+  "portableCaseAST": "Only existing main/finally case expected timeout 2400→3600; all execution and failure assertions unchanged.",
+  "workflowYAML": "Exactly one semantic delta: paired whole-job 150→210 min; signed 150/nonpaired 90, routing/concurrency/permissions/10 inputs/preflight/cache/evidence steps unchanged.",
+  "runnerNormalizedASTSHA256": "a59322b5bc44a19e23300e512e8cb6f82ac700762012c46b8fb27c0f5663aafe",
+  "workflowOldJobTimeout": "${{ inputs.signed_release_archives && 150 || inputs.paired_product_acceptance && 150 || 90 }}",
+  "workflowNewJobTimeout": "${{ inputs.signed_release_archives && 150 || inputs.paired_product_acceptance && 210 || 90 }}",
+  "scope": "Portable source equality only; no Apple build or test execution"
+}

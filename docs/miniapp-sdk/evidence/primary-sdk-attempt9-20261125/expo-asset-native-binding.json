@@ -1,0 +1,95 @@
+{
+  "status": "ORIGINAL_PRODUCER_AND_CATALOG_BOUND",
+  "sourceBuildReceiptSHA256": "78a6b4b85330189dd162c09ae250cb280bf7dbe62608ca6438e6f3fabde6ee3b",
+  "sourceBuildInputSHA256": "a85fc86c413d87679e62878cc4b7b512e925c36806a9b383daf095dab9c55159",
+  "originalNpmTarballSHA256": "2bfbb115da9111702530e5df550eac7e2a074aa12b6297fcc332744767623126",
+  "originalPackage": {
+    "name": "expo-asset",
+    "version": "58.0.21",
+    "sha256": "2bfbb115da9111702530e5df550eac7e2a074aa12b6297fcc332744767623126",
+    "integrity": "sha512-qaJmuTtswggXdBQfiUdpxrVGM7l+tH8iEDHwVDMuxyCF/kAau8sUGVuWrDKYNW4yAx7Z8ncgsT8s27pXjRH5GA=="
+  },
+  "artifactManifest": {
+    "name": "ExpoAsset",
+    "version": "58.0.21",
+    "sha256": "2bfbb115da9111702530e5df550eac7e2a074aa12b6297fcc332744767623126",
+    "sourceBuildInputSHA256": "a85fc86c413d87679e62878cc4b7b512e925c36806a9b383daf095dab9c55159"
+  },
+  "catalogArtifact": {
+    "archive": "ExpoAsset.xcframework.zip",
+    "bytes": 236835,
+    "checksum": "5786adf1e037e948ec74cc722bb4eb4f59089aad839e7abc8c254196c143d53e",
+    "installPath": "Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework",
+    "kind": "xcframework",
+    "libraries": [
+      {
+        "architectures": [
+          "arm64"
+        ],
+        "binary": "ios-arm64/ExpoAsset.framework/ExpoAsset",
+        "binarySHA256": "bc4ec32879fe696af9246f6d2280c75f95ac7a136b712ba4e823d7e9c8e5c90e",
+        "identifier": "ios-arm64",
+        "platform": "ios",
+        "variant": null
+      },
+      {
+        "architectures": [
+          "arm64",
+          "x86_64"
+        ],
+        "binary": "ios-arm64_x86_64-simulator/ExpoAsset.framework/ExpoAsset",
+        "binarySHA256": "61fb7c7abb126eb34b1b7c5ce7cd99b6d0c0ba22bc1767f19da38a9a191bbd94",
+        "identifier": "ios-arm64_x86_64-simulator",
+        "platform": "ios",
+        "variant": "simulator"
+      }
+    ],
+    "root": "ExpoAsset.xcframework",
+    "target": "ExpoAsset",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/releases/download/sdk-native-v1-9b3b714bf5a29ac92472e5ffe530ec0c2f6ebf79f65faa506ad0d7f8ce88e37b/ExpoAsset.xcframework.zip"
+  },
+  "stagedToPreparedMemberComparison": {
+    "actualOwnerReceiptSHA256": "299f617ecc8909c16d2a2776488181b5d399a25abed4f255f6b526f8b78ece52",
+    "members": 23,
+    "allMatch": true,
+    "binaryMatchesCatalog": true
+  },
+  "sourceReceipt": {
+    "schemaVersion": 1,
+    "inputSHA256": "a85fc86c413d87679e62878cc4b7b512e925c36806a9b383daf095dab9c55159",
+    "xcode": "Xcode 27.0\nBuild version 27A266a",
+    "cocoaPods": "1.17.0",
+    "podLockSHA256": "c012c6f8ee2ca782aea7788349d75a3a57e6e4be8d324037a8b9dce573e4d8e6",
+    "originalPackage": {
+      "name": "expo-asset",
+      "version": "58.0.21",
+      "sha256": "2bfbb115da9111702530e5df550eac7e2a074aa12b6297fcc332744767623126",
+      "integrity": "sha512-qaJmuTtswggXdBQfiUdpxrVGM7l+tH8iEDHwVDMuxyCF/kAau8sUGVuWrDKYNW4yAx7Z8ncgsT8s27pXjRH5GA=="
+    },
+    "nativeBuild": "original Expo CLI prebuild + original CocoaPods podspec + Xcode device/simulator frameworks",
+    "swiftModuleDistribution": "same-Xcode internal build input; exact compiler identity is part of inputSHA256",
+    "slices": [
+      {
+        "LibraryPath": "ExpoAsset.framework",
+        "SupportedPlatform": "ios",
+        "BinaryPath": "ExpoAsset.framework/ExpoAsset",
+        "LibraryIdentifier": "ios-arm64",
+        "SupportedArchitectures": [
+          "arm64"
+        ]
+      },
+      {
+        "LibraryPath": "ExpoAsset.framework",
+        "SupportedPlatformVariant": "simulator",
+        "SupportedPlatform": "ios",
+        "BinaryPath": "ExpoAsset.framework/ExpoAsset",
+        "LibraryIdentifier": "ios-arm64_x86_64-simulator",
+        "SupportedArchitectures": [
+          "arm64",
+          "x86_64"
+        ]
+      }
+    ]
+  },
+  "boundary": "Original completed Mac source products, owner-observed23member stage/target comparison and catalog binary hashes are bound. Full native export binaries were not downloaded/extracted again; no native application pass inferred."
+}

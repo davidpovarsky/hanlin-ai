@@ -1,5 +1,6 @@
 import HanlinLocalization
 import HanlinChatUI
+import HanlinPlatformContracts
 //
 //  HanlinComposerSessionBridge.swift
 //  AI_HLY
@@ -73,6 +74,7 @@ struct HanlinChatDraftSnapshot {
     var selectedImageSize: String
     var imageReversePrompt: String
     var temporaryRecord: Bool = false
+    var capabilityAttachments: [HanlinCapabilityAttachment] = []
 }
 
 // MARK: - Active Composer Session Bridge
@@ -146,6 +148,7 @@ final class HanlinActiveComposerSessionBridge {
         // value during a native edit. This getter reads the very same draft
         // owner synchronously; it does not keep a second copy of the text.
         var readCurrentMessageState: (() -> NativeMultilineTextEditor.TextState?)? = nil
+        var capabilityDraft: HanlinComposerDraft? = nil
 
         var currentMessage: String {
             readCurrentMessageState?()?.text ?? message.wrappedValue
@@ -269,6 +272,9 @@ final class HanlinActiveComposerSessionBridge {
         if endpoint.selectedPrompts.wrappedValue.isEmpty && !cached.selectedPrompts.isEmpty {
             endpoint.selectedPrompts.wrappedValue = cached.selectedPrompts
         }
+        if endpoint.capabilityDraft?.capabilityAttachments.isEmpty == true {
+            endpoint.capabilityDraft?.capabilityAttachments = cached.capabilityAttachments
+        }
         endpoint.ifKnowledge.wrappedValue = cached.ifKnowledge
         endpoint.ifSearch.wrappedValue = cached.ifSearch
         endpoint.ifToolUse.wrappedValue = cached.ifToolUse
@@ -349,7 +355,8 @@ final class HanlinActiveComposerSessionBridge {
             thinkingLength: endpoint.thinkingLength.wrappedValue,
             selectedImageSize: endpoint.selectedImageSize.wrappedValue,
             imageReversePrompt: endpoint.imageReversePrompt.wrappedValue,
-            temporaryRecord: endpoint.temporaryRecord
+            temporaryRecord: endpoint.temporaryRecord,
+            capabilityAttachments: endpoint.capabilityDraft?.capabilitySnapshot ?? []
         )
     }
 
@@ -374,6 +381,7 @@ final class HanlinActiveComposerSessionBridge {
             selectedImagesCount: endpoint.selectedImages.wrappedValue.count,
             selectedDocumentsCount: endpoint.selectedDocumentURLs.wrappedValue.count,
             selectedPromptsCount: endpoint.selectedPrompts.wrappedValue.count,
+            selectedCapabilitiesCount: endpoint.capabilityDraft?.capabilityAttachments.count ?? 0,
             isResponding: endpoint.isResponding.wrappedValue
         ) else {
             return false
@@ -426,6 +434,7 @@ final class HanlinActiveComposerSessionBridge {
             selectedImagesCount: homeSelectedImages.count,
             selectedDocumentsCount: homeSelectedDocumentURLs.count,
             selectedPromptsCount: homeSelectedPrompts.count,
+            selectedCapabilitiesCount: homeDraft.capabilityAttachments.count,
             isResponding: false
         ) else {
             return nil
@@ -460,6 +469,7 @@ final class HanlinActiveComposerSessionBridge {
             maxMessagesNum: homeMaxMessagesNum,
             status: .created
         )
+        submission.capabilityAttachments = homeDraft.capabilitySnapshot
 
         // 3. Invoke canonical new-chat creator once; if it fails, preserve Home draft and attachments
         guard let createdRecord = createAuthorizedChat(),
@@ -480,8 +490,34 @@ final class HanlinActiveComposerSessionBridge {
         return targetID
     }
 
+
+    /// Uses the original first-turn state machine without modifying the user's
+    /// unsent Home draft. The repair button is the explicit send action.
+    @discardableResult
+    func beginImportedFirstTurn(submissionID: UUID, text: String, documentURLs: [URL],
+                                targetChatID: UUID, selectedModelIndex: Int) -> Bool {
+        if completedSubmissionIDs.contains(submissionID) { return true }
+        if let current = pendingFirstTurn, current.isPendingHandoff {
+            return current.submissionID == submissionID
+        }
+        var submission = HanlinPendingFirstTurn(
+            submissionID: submissionID, text: text, images: [], documentURLs: documentURLs,
+            selectedURLs: [], prompts: [], selectedModelIndex: selectedModelIndex,
+            ifSearch: false, ifKnowledge: false, ifToolUse: true, ifThink: false,
+            thinkingLength: 0, ifPlanning: false, ifAudio: false,
+            selectedImageSize: "square", imageReversePrompt: "", temperature: 0.8,
+            topP: 0.9, maxTokens: 2048, maxMessagesNum: 20,
+            status: .awaitingEndpoint(targetChatID: targetChatID))
+        submission.restoresHomeDraft = false
+        submission.preservesConversationSettings = true
+        pendingFirstTurn = submission
+        fulfillPendingFirstTurnIfReady()
+        return true
+    }
+
     private func clearHomeDraftFields() {
         homeMessage = ""
+        homeDraft.clearCapabilities()
         homeSelectedImages.removeAll()
         homeSelectedDocumentURLs.removeAll()
         homeSelectedURLs.removeAll()
@@ -489,6 +525,8 @@ final class HanlinActiveComposerSessionBridge {
     }
 
     private func restoreHomeDraft(from pending: HanlinPendingFirstTurn) {
+        guard pending.restoresHomeDraft else { return }
+        if homeDraft.capabilityAttachments.isEmpty { homeDraft.capabilityAttachments = pending.capabilityAttachments }
         if homeMessage.isEmpty {
             homeMessage = pending.text
         }
@@ -559,25 +597,28 @@ final class HanlinActiveComposerSessionBridge {
         if endpoint.selectedModelIndex.wrappedValue != resolvedModelIndex {
             endpoint.onSelectModel(resolvedModelIndex)
         }
-        endpoint.ifSearch.wrappedValue = pending.ifSearch
-        endpoint.ifKnowledge.wrappedValue = pending.ifKnowledge
         endpoint.ifToolUse.wrappedValue = pending.ifToolUse
-        endpoint.ifThink.wrappedValue = pending.ifThink
-        endpoint.thinkingLength.wrappedValue = pending.thinkingLength
-        endpoint.ifPlanning.wrappedValue = pending.ifPlanning
-        endpoint.ifAudio.wrappedValue = pending.ifAudio
-        endpoint.selectedImageSize.wrappedValue = pending.selectedImageSize
-        endpoint.imageReversePrompt.wrappedValue = pending.imageReversePrompt
-        endpoint.temperature.wrappedValue = pending.temperature
-        endpoint.topP.wrappedValue = pending.topP
-        endpoint.maxTokens.wrappedValue = pending.maxTokens
-        endpoint.maxMessagesNum.wrappedValue = pending.maxMessagesNum
+        if !pending.preservesConversationSettings {
+            endpoint.ifSearch.wrappedValue = pending.ifSearch
+            endpoint.ifKnowledge.wrappedValue = pending.ifKnowledge
+            endpoint.ifThink.wrappedValue = pending.ifThink
+            endpoint.thinkingLength.wrappedValue = pending.thinkingLength
+            endpoint.ifPlanning.wrappedValue = pending.ifPlanning
+            endpoint.ifAudio.wrappedValue = pending.ifAudio
+            endpoint.selectedImageSize.wrappedValue = pending.selectedImageSize
+            endpoint.imageReversePrompt.wrappedValue = pending.imageReversePrompt
+            endpoint.temperature.wrappedValue = pending.temperature
+            endpoint.topP.wrappedValue = pending.topP
+            endpoint.maxTokens.wrappedValue = pending.maxTokens
+            endpoint.maxMessagesNum.wrappedValue = pending.maxMessagesNum
+        }
 
         endpoint.message.wrappedValue = pending.text
         endpoint.selectedImages.wrappedValue = pending.images
         endpoint.selectedDocumentURLs.wrappedValue = pending.documentURLs
         endpoint.selectedURLs.wrappedValue = pending.selectedURLs
         endpoint.selectedPrompts.wrappedValue = pending.prompts
+        endpoint.capabilityDraft?.capabilityAttachments = pending.capabilityAttachments
 
         let previousUserMessageCount = endpoint.chatTemps.wrappedValue.filter { $0.role == "user" }.count
 

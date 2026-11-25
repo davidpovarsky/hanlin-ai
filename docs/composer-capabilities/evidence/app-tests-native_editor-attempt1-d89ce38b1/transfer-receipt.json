@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 1,
+  "transferredAtUTC": "2026-11-25T04:03:14.472502+00:00",
+  "transport": "Oracle pinned scaleway-mac SSH alias, BatchMode=yes, StrictHostKeyChecking=yes",
+  "sourceReadOnly": true,
+  "allSourceSHA256Verified": true,
+  "noBuildsTestsGeneratorsDevicesCacheActionsOrMacWrites": true,
+  "files": [
+    {
+      "path": "docs/composer-capabilities/evidence/app-tests-native_editor-attempt1-d89ce38b1/receipt.json",
+      "bytes": 10903,
+      "sha256": "71c0cabcfd83518768fc0f670a3a17818554a45c234c231c9cce52b3fc2b28bb",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/app-tests-native_editor-attempt1/receipt.json",
+      "sourceBytes": 10903,
+      "sourceSHA256": "71c0cabcfd83518768fc0f670a3a17818554a45c234c231c9cce52b3fc2b28bb",
+      "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-tests-native_editor-attempt1-d89ce38b1/case-identities.json",
+      "bytes": 3841,
+      "sha256": "ffddbeebc0f1436701b2fcf5ba41ad72dca0921feb3c2b39f60c7e859c83fc7f",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/app-tests-native_editor-attempt1/case-identities.json",
+      "sourceBytes": 3841,
+      "sourceSHA256": "ffddbeebc0f1436701b2fcf5ba41ad72dca0921feb3c2b39f60c7e859c83fc7f",
+      "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-tests-native_editor-attempt1-d89ce38b1/source-inputs.json",
+      "bytes": 507,
+      "sha256": "3e38b15bc320f754e1637d5d63c16de77a93678cef200654386d5f1781559bf5",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/app-tests-native_editor-attempt1/source-inputs.json",
+      "sourceBytes": 507,
+      "sourceSHA256": "3e38b15bc320f754e1637d5d63c16de77a93678cef200654386d5f1781559bf5",
+      "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-tests-native_editor-attempt1-d89ce38b1/summary.json",
+      "bytes": 1113,
+      "sha256": "2bb57c4df5718ffdcaa435f0ffee4e5cd9b5ac79bada53c342207628a8165803",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/app-tests-native_editor-attempt1/summary.json",
+      "sourceBytes": 1113,
+      "sourceSHA256": "2bb57c4df5718ffdcaa435f0ffee4e5cd9b5ac79bada53c342207628a8165803",
+      "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-tests-native_editor-attempt1-d89ce38b1/summary.stderr.log.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/app-tests-native_editor-attempt1/summary.stderr.log",
+      "sourceBytes": 0,
+      "sourceSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compressedForRepository": true,
+      "uncompressedLogSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "uncompressedLogBytes": 0
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-tests-native_editor-attempt1-d89ce38b1/test.log.gz",
+      "bytes": 3951,
+      "sha256": "23bc8ed512e69d9869ed416e3f37743ea5f21ab6c62eff2909caebbb648b9f44",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/app-tests-native_editor-attempt1/test.log",
+      "sourceBytes": 23408,
+      "sourceSHA256": "b019158e6422e3824ea03db27b9613df747e666222a317df04492d44d02517a2",
+      "compressedForRepository": true,
+      "uncompressedLogSHA256": "b019158e6422e3824ea03db27b9613df747e666222a317df04492d44d02517a2",
+      "uncompressedLogBytes": 23408
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-tests-native_editor-attempt1-d89ce38b1/tests.json",
+      "bytes": 4807,
+      "sha256": "4eb1c7cdc47490874df8cd827efdf0a50217b588c0e5f6419876b518d9c228ff",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/app-tests-native_editor-attempt1/tests.json",
+      "sourceBytes": 4807,
+      "sourceSHA256": "4eb1c7cdc47490874df8cd827efdf0a50217b588c0e5f6419876b518d9c228ff",
+      "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-tests-native_editor-attempt1-d89ce38b1/tests.stderr.log.gz",
+      "bytes": 20,
+      "sha256": "9ceffb7310338057cfe71a4ae1e2c98d2c485d81cdef906532a801f457a38d64",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/app-tests-native_editor-attempt1/tests.stderr.log",
+      "sourceBytes": 0,
+      "sourceSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compressedForRepository": true,
+      "uncompressedLogSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "uncompressedLogBytes": 0
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-tests-native_editor-attempt1-d89ce38b1/xcresult-files.json",
+      "bytes": 6441,
+      "sha256": "a87a8ba63d3b2dd88154f602e29035ab95035bbe1aae014b2617c97e7b1f3c09",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/app-tests-native_editor-attempt1/xcresult-files.json",
+      "sourceBytes": 6441,
+      "sourceSHA256": "a87a8ba63d3b2dd88154f602e29035ab95035bbe1aae014b2617c97e7b1f3c09",
+      "compressedForRepository": false
+    }
+  ]
+}

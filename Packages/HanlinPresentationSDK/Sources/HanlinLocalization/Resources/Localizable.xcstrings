@@ -1,6 +1,1702 @@
 {
   "sourceLanguage" : "zh-Hans",
   "strings" : {
+    "Use selected base model policy": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use selected base model policy"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שימוש במדיניות של מודל הבסיס שנבחר"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "使用所选基础模型的策略"
+          }
+        }
+      }
+    },
+    "Keep the policy currently saved on this model or agent.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keep the policy currently saved on this model or agent."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שמירת המדיניות הקיימת במודל או בסוכן הזה."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保留当前模型或智能体已保存的策略。"
+          }
+        }
+      }
+    },
+    "Use the selected base model's saved cache policy.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use the selected base model's saved cache policy."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שימוש במדיניות המטמון השמורה במודל הבסיס שנבחר."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "使用所选基础模型已保存的缓存策略。"
+          }
+        }
+      }
+    },
+    "Cache policy": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cache policy"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מדיניות מטמון"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "缓存策略"
+          }
+        }
+      }
+    },
+    "Custom policy (unchanged)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Custom policy (unchanged)"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מדיניות מותאמת אישית (ללא שינוי)"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "自定义策略（保持不变）"
+          }
+        }
+      }
+    },
+    "Saved policy (unchanged)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saved policy (unchanged)"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "המדיניות השמורה (ללא שינוי)"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已保存的策略（保持不变）"
+          }
+        }
+      }
+    },
+    "Automatic (recommended)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automatic (recommended)"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אוטומטי (מומלץ)"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "自动（推荐）"
+          }
+        }
+      }
+    },
+    "Provider defaults": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Provider defaults"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ברירות המחדל של הספק"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "提供商默认设置"
+          }
+        }
+      }
+    },
+    "No explicit cache controls": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No explicit cache controls"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ללא הנחיות מפורשות למטמון"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "不发送显式缓存控制"
+          }
+        }
+      }
+    },
+    "Anthropic: 1 hour": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anthropic: 1 hour"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anthropic: שעה אחת"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anthropic：1 小时"
+          }
+        }
+      }
+    },
+    "OpenAI: up to 24 hours": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OpenAI: up to 24 hours"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OpenAI: עד 24 שעות"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OpenAI：最长 24 小时"
+          }
+        }
+      }
+    },
+    "Explicit cache: 30 minutes": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Explicit cache: 30 minutes"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מטמון מפורש: 30 דקות"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "显式缓存：30 分钟"
+          }
+        }
+      }
+    },
+    "Explicit cache: 12 hours": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Explicit cache: 12 hours"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מטמון מפורש: 12 שעות"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "显式缓存：12 小时"
+          }
+        }
+      }
+    },
+    "Use Hanlin's automatic caching policy for this provider.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use Hanlin's automatic caching policy for this provider."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שימוש במדיניות המטמון האוטומטית של Hanlin עבור הספק הזה."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "对该提供商使用 Hanlin 的自动缓存策略。"
+          }
+        }
+      }
+    },
+    "Use the provider's defaults without Hanlin's cache hints.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use the provider's defaults without Hanlin's cache hints."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שימוש בברירות המחדל של הספק, ללא הנחיות מטמון של Hanlin."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "使用提供商默认设置，不发送 Hanlin 的缓存提示。"
+          }
+        }
+      }
+    },
+    "Send no explicit cache controls. The provider may still use automatic caching.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Send no explicit cache controls. The provider may still use automatic caching."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "לא יישלחו הנחיות מפורשות למטמון. הספק עדיין עשוי להשתמש במטמון אוטומטי."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "不发送显式缓存控制。提供商仍可能使用自动缓存。"
+          }
+        }
+      }
+    },
+    "Request this cache lifetime for reusable context. Availability and billing follow the provider's rules.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Request this cache lifetime for reusable context. Availability and billing follow the provider's rules."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בקשת משך השמירה הזה עבור הקשר שניתן להשתמש בו שוב. הזמינות והחיוב כפופים לכללי הספק."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "为可复用的上下文请求此缓存时长。可用性和计费以提供商规则为准。"
+          }
+        }
+      }
+    },
+    "Your saved custom policy will be kept unless you choose another option.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your saved custom policy will be kept unless you choose another option."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "המדיניות המותאמת האישית השמורה תישאר ללא שינוי, אלא אם תיבחר אפשרות אחרת."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "除非选择其他选项，否则将保留已保存的自定义策略。"
+          }
+        }
+      }
+    },
+    "Only supported options are shown. Cache writes and longer lifetimes may have different costs; the provider decides whether a request can be reused.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Only supported options are shown. Cache writes and longer lifetimes may have different costs; the provider decides whether a request can be reused."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מוצגות רק אפשרויות נתמכות. כתיבה למטמון ומשך שמירה ארוך יותר עשויים להיות מתומחרים אחרת; הספק מחליט אם ניתן לעשות שימוש חוזר בבקשה."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "仅显示支持的选项。缓存写入和更长的保留时间可能采用不同计费；提供商决定请求能否复用缓存。"
+          }
+        }
+      }
+    },
+    "This cache option is no longer available for this provider and model. Choose another option.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This cache option is no longer available for this provider and model. Choose another option."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אפשרות המטמון הזו אינה זמינה עוד לספק ולמודל האלה. יש לבחור אפשרות אחרת."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "该提供商和模型已不再支持此缓存选项。请选择其他选项。"
+          }
+        }
+      }
+    },
+    "Could not save model": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Could not save model"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "לא ניתן לשמור את המודל"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "无法保存模型"
+          }
+        }
+      }
+    },
+    "Prompt cache" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prompt cache"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "מטמון ההנחיות"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "提示缓存"
+          }
+        }
+      }
+    },
+    "Reported cache read tokens" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reported cache read tokens"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "טוקנים שנקראו מהמטמון לפי דיווח הספק"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "供应商报告的缓存读取令牌"
+          }
+        }
+      }
+    },
+    "Reported cache write tokens" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reported cache write tokens"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "טוקנים שנכתבו למטמון לפי דיווח הספק"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "供应商报告的缓存写入令牌"
+          }
+        }
+      }
+    },
+    "Cache read fraction of input" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cache read fraction of input"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "שיעור הקלט שנקרא מהמטמון"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "输入中的缓存读取比例"
+          }
+        }
+      }
+    },
+    "Rounds with cache read data" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rounds with cache read data"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "סבבים עם נתוני קריאה מהמטמון"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "含缓存读取数据的轮次"
+          }
+        }
+      }
+    },
+    "Rounds with cache write data" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rounds with cache write data"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "סבבים עם נתוני כתיבה למטמון"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "含缓存写入数据的轮次"
+          }
+        }
+      }
+    },
+    "Cache tokens are provider-reported input tokens. Missing data is unavailable, not zero. These counts are not a price or a cost estimate." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cache tokens are provider-reported input tokens. Missing data is unavailable, not zero. These counts are not a price or a cost estimate."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "נתוני המטמון הם טוקני קלט שהספק דיווח עליהם. נתון חסר אינו אפס. הספירות אינן מחיר או אומדן עלות."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "缓存令牌是供应商报告的输入令牌。缺失数据表示不可用，而不是零。这些计数不是价格或费用估算。"
+          }
+        }
+      }
+    },
+    "Search settings" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search settings"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "הגדרות חיפוש"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "搜索设置"
+          }
+        }
+      }
+    },
+    "Maximum results" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maximum results"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "מספר תוצאות מרבי"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最多结果数"
+          }
+        }
+      }
+    },
+    "hanlin.composer.capabilities.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Attached capabilities"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "יכולות מצורפות"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已附加的能力"
+          }
+        }
+      }
+    },
+    "hanlin.composer.capabilities.search" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Find a tool, app or skill"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "חיפוש כלי, יישום או מיומנות"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "查找工具、应用或技能"
+          }
+        }
+      }
+    },
+    "hanlin.composer.capabilities.attach" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Attach a tool, app or skill"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "צירוף כלי, יישום או מיומנות"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "附加工具、应用或技能"
+          }
+        }
+      }
+    },
+    "hanlin.composer.capabilities.attachToMessage" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Attach to this message"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "צירוף להודעה הזו"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "附加到此消息"
+          }
+        }
+      }
+    },
+    "hanlin.composer.capabilities.catalogAvailability" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Available to the assistant"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "זמין לעוזר"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "助手可用的能力"
+          }
+        }
+      }
+    },
+    "hanlin.composer.capabilities.chooseActionAutomatically" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Let the assistant choose an action"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "העוזר יבחר פעולה"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "让助手选择操作"
+          }
+        }
+      }
+    },
+    "hanlin.composer.capabilities.action" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Action"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "פעולה"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "操作"
+          }
+        }
+      }
+    },
+    "hanlin.composer.capabilities.options" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Options"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "אפשרויות"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选项"
+          }
+        }
+      }
+    },
+    "hanlin.composer.capabilities.tool" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tool"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "כלי"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "工具"
+          }
+        }
+      }
+    },
+    "hanlin.composer.capabilities.miniApp" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mini app"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "מיני־אפליקציה"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "小应用"
+          }
+        }
+      }
+    },
+    "hanlin.composer.capabilities.skill" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skill"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "מיומנות"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "技能"
+          }
+        }
+      }
+    },
+    "hanlin.composer.capabilities.mcp" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connected tools"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "כלים מחוברים"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已连接的工具"
+          }
+        }
+      }
+    },
+    "hanlin.composer.capabilities.remove" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Remove"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "הסרה"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "移除"
+          }
+        }
+      }
+    },
+    "hanlin.composer.capabilities.on" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "On"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "פעיל"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "开启"
+          }
+        }
+      }
+    },
+    "hanlin.composer.capabilities.off" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Off"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "כבוי"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "关闭"
+          }
+        }
+      }
+    },
+    "hanlin.composer.capabilities.attachedExplanation" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This capability will be included with your next message."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "יכולת זו תצורף להודעה הבאה שלך."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此能力将随下一条消息发送。"
+          }
+        }
+      }
+    },
+    "hanlin.composer.capabilities.done" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Use these settings"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "שימוש בהגדרות האלה"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用这些设置"
+          }
+        }
+      }
+    },
+    "hanlin.composer.capabilities.customUnavailable" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This app does not provide this tool’s configuration view."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ממשק ההגדרות של הכלי הזה אינו זמין באפליקציה הזו."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此应用未提供该工具的配置视图。"
+          }
+        }
+      }
+    },
+    "hanlin.composer.capabilities.noSelection" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No selection"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ללא בחירה"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未选择"
+          }
+        }
+      }
+    },
+    "hanlin.composer.capabilities.mapHint" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap to place a pin, or move the map and choose its center."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "אפשר להקיש להצבת סמן, או להזיז את המפה ולבחור את המרכז."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "轻点以放置标记，或移动地图并选择中心。"
+          }
+        }
+      }
+    },
+    "hanlin.composer.capabilities.useMapCenter" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Use map center"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "בחירת מרכז המפה"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用地图中心"
+          }
+        }
+      }
+    },
+    "hanlin.composer.capabilities.latitude" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Latitude"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "קו רוחב"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "纬度"
+          }
+        }
+      }
+    },
+    "hanlin.composer.capabilities.longitude" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Longitude"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "קו אורך"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "经度"
+          }
+        }
+      }
+    },
+    "hanlin.composer.capabilities.radius" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Radius (meters)"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "רדיוס (מטרים)"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "半径（米）"
+          }
+        }
+      }
+    },
+    "hanlin.composer.capabilities.unavailable" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This capability is no longer available. Remove it and choose an available tool."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "היכולת הזו אינה זמינה עוד. יש להסיר אותה ולבחור כלי זמין."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此能力已不可用。请移除并选择可用工具。"
+          }
+        }
+      }
+    },
+    "hanlin.composer.capabilities.reviewSettings" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Review the attached capabilities before sending."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "יש לבדוק את הגדרות היכולות המצורפות לפני השליחה."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "发送前请检查附加能力的设置。"
+          }
+        }
+      }
+    },
+    "Start Live Activity" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start Live Activity"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "הפעל פעילות חיה"
+          }
+        }
+      }
+    },
+    "End Live Activities" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "End Live Activities"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "סיים פעילויות חיות"
+          }
+        }
+      }
+    },
+    "Live Activities" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Live Activities"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "פעילויות חיות"
+          }
+        }
+      }
+    },
+    "Live Activity started." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Live Activity started."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "הפעילות החיה הופעלה."
+          }
+        }
+      }
+    },
+    "Live Activities ended." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Live Activities ended."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "הפעילויות החיות הסתיימו."
+          }
+        }
+      }
+    },
+    "Services and Data": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Services and Data"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שירותים ונתונים"
+          }
+        }
+      }
+    },
+    "Imported package": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Imported package"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "חבילה מיובאת"
+          }
+        }
+      }
+    },
+    "Errors": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Errors"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שגיאות"
+          }
+        }
+      }
+    },
+    "Warnings": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Warnings"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אזהרות"
+          }
+        }
+      }
+    },
+    "TypeScript validation": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TypeScript validation"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בדיקת טיפוסי TypeScript"
+          }
+        }
+      }
+    },
+    "Passed": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Passed"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "עבר בהצלחה"
+          }
+        }
+      }
+    },
+    "Needs correction": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Needs correction"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "נדרש תיקון"
+          }
+        }
+      }
+    },
+    "TypeScript validation has not run because a complete authoring project was not recognized. Package compatibility was inspected. If only compiled JavaScript is available, original TypeScript types cannot be reconstructed.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TypeScript validation has not run because a complete authoring project was not recognized. Package compatibility was inspected. If only compiled JavaScript is available, original TypeScript types cannot be reconstructed."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "לא בוצעה בדיקת טיפוסי TypeScript, כי לא זוהה פרויקט מקור מלא. נבדקה תאימות החבילה. אם זמין רק קוד JavaScript שכבר קומפל, אי אפשר לשחזר ממנו את טיפוסי TypeScript המקוריים."
+          }
+        }
+      }
+    },
+    "TypeScript validation has not run. The original package is kept with the import diagnostic.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TypeScript validation has not run. The original package is kept with the import diagnostic."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בדיקת טיפוסי TypeScript טרם הורצה. החבילה המקורית נשמרה יחד עם שגיאת הייבוא."
+          }
+        }
+      }
+    },
+    "Send to Hanlin AI to fix": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Send to Hanlin AI to fix"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שליחה לתיקון ב־Hanlin AI"
+          }
+        }
+      }
+    },
+    "Diagnostic report copied.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Diagnostic report copied."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "דוח השגיאות הועתק."
+          }
+        }
+      }
+    },
+    "Copy diagnostic report": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copy diagnostic report"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "העתקת דוח השגיאות"
+          }
+        }
+      }
+    },
+    "The original package and this report are sent together. Hanlin AI opens a dedicated repair conversation and can rebuild, validate, and return the corrected package.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The original package and this report are sent together. Hanlin AI opens a dedicated repair conversation and can rebuild, validate, and return the corrected package."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "החבילה המקורית והדוח נשלחים יחד. Hanlin AI פותח שיחה ייעודית לתיקון ויכול לבנות, לבדוק ולהחזיר את החבילה המתוקנת."
+          }
+        }
+      }
+    },
+    "Package diagnostics": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Package diagnostics"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בדיקת החבילה"
+          }
+        }
+      }
+    },
+    "Repair request saved and Hanlin AI opened.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Repair request saved and Hanlin AI opened."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בקשת התיקון נשמרה ו־Hanlin AI נפתח."
+          }
+        }
+      }
+    },
+    "Hanlin AI could not be opened. The repair request is saved; retry after opening Hanlin AI.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hanlin AI could not be opened. The repair request is saved; retry after opening Hanlin AI."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "לא ניתן לפתוח את Hanlin AI. בקשת התיקון נשמרה; אפשר לנסות שוב לאחר פתיחת האפליקציה."
+          }
+        }
+      }
+    },
+    "Line %lld, column %lld": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Line %lld, column %lld"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שורה %lld, עמודה %lld"
+          }
+        }
+      }
+    },
+    "Review package diagnostics": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Review package diagnostics"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הצגת דוח השגיאות"
+          }
+        }
+      }
+    },
+    "MiniApp repair unavailable": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MiniApp repair unavailable"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "לא ניתן להתחיל בתיקון החבילה"
+          }
+        }
+      }
+    },
     "Actions requiring your approval": {
       "extractionState": "manual",
       "localizations": {
@@ -17900,6 +19596,213 @@
           "stringUnit": {
             "state": "translated",
             "value": "启用通知"
+          }
+        }
+      }
+    },
+    "Choose an Expo widget registered by a MiniApp.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose an Expo widget registered by a MiniApp."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בחרו וידג׳ט Expo שמיני־אפליקציה רשמה."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "选择迷你应用注册的 Expo 小组件。"
+          }
+        }
+      }
+    },
+    "This Expo widget has no timeline.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This Expo widget has no timeline."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "לווידג׳ט Expo הזה אין ציר זמן."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "此 Expo 小组件没有时间线。"
+          }
+        }
+      }
+    },
+    "Choose a current Expo widget from this app.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose a current Expo widget from this app."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בחרו וידג׳ט Expo פעיל מהאפליקציה הזו."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "选择此应用当前可用的 Expo 小组件。"
+          }
+        }
+      }
+    },
+    "Expo widget unavailable": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Expo widget unavailable"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "וידג׳ט Expo אינו זמין"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Expo 小组件不可用"
+          }
+        }
+      }
+    },
+    "Expo MiniApp": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Expo MiniApp"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מיני־אפליקציית Expo"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Expo 迷你应用"
+          }
+        }
+      }
+    },
+    "Original Expo widget layouts and timelines registered by your MiniApps.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Original Expo widget layouts and timelines registered by your MiniApps."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "תצוגות וצירי זמן מקוריים של Expo שנרשמו באמצעות המיני־אפליקציות שלכם."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "由迷你应用注册的原生 Expo 小组件布局和时间线。"
+          }
+        }
+      }
+    },
+    "Configuration JSON must contain an object.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Configuration JSON must contain an object."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "הגדרות ה־JSON חייבות להכיל אובייקט."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "配置 JSON 必须包含一个对象。"
+          }
+        }
+      }
+    },
+    "Select this widget's current options again.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Select this widget's current options again."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בחרו מחדש את האפשרויות העדכניות של הווידג׳ט הזה."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "请重新选择此小组件当前可用的选项。"
+          }
+        }
+      }
+    },
+    "Choose one option for each widget parameter.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose one option for each widget parameter."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בחרו אפשרות אחת לכל הגדרה של הווידג׳ט."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "请为小组件的每个参数选择一个选项。"
           }
         }
       }
