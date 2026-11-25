@@ -101,6 +101,76 @@ final class HanlinChatPresentationTests: XCTestCase {
         XCTAssertTrue(state.launcherIsVisible(usesZoom: true))
     }
 
+    func testCompactUsesExistingSheetForEveryConfiguredPolicy() {
+        for modes: Set<HanlinChatPresentationMode> in [[.sheet], [.inspector], [.sheet, .inspector]] {
+            for initial in HanlinChatPresentationMode.allCases {
+                let policy = HanlinChatPresentationPolicy(modes: modes, initialMode: initial)
+                var state = HanlinChatPresentationState(policy: policy, isInspectorAvailable: false)
+                XCTAssertEqual(state.effectivePolicy.modes, [.sheet])
+                XCTAssertEqual(state.effectivePolicy.initialMode, .sheet)
+                XCTAssertNil(state.effectivePolicy.alternative(to: .sheet))
+                state.open()
+                XCTAssertEqual(state.mode, .sheet)
+                state.request(.inspector)
+                XCTAssertEqual(state.mode, .sheet)
+                state.close()
+                state.finishDismissal(.sheet)
+                if modes.contains(.inspector) {
+                    state.open(.inspector)
+                    XCTAssertEqual(state.mode, .sheet)
+                    state.close()
+                    state.finishDismissal(.sheet)
+                }
+                state.updateInspectorAvailability(true)
+                XCTAssertEqual(state.effectivePolicy, policy)
+                state.open()
+                XCTAssertEqual(state.mode, policy.initialMode)
+            }
+        }
+    }
+
+    func testLiveInspectorNarrowsThroughExistingHandoff() {
+        var state = HanlinChatPresentationState()
+        state.open(.inspector)
+        state.updateInspectorAvailability(false)
+        XCTAssertEqual(state.phase, .dismissing(.inspector, next: .sheet))
+        XCTAssertFalse(state.showsLauncher)
+        XCTAssertFalse(state.launcherIsVisible(usesZoom: true))
+        state.finishDismissal(.sheet)
+        XCTAssertTrue(state.isTransitioning)
+        state.finishDismissal(.inspector)
+        XCTAssertEqual(state.mode, .sheet)
+        XCTAssertNil(state.effectivePolicy.alternative(to: .sheet))
+        state.updateInspectorAvailability(true)
+        XCTAssertEqual(state.mode, .sheet)
+        XCTAssertEqual(state.effectivePolicy.alternative(to: .sheet), .inspector)
+    }
+
+    func testPendingInspectorIsRedirectedAndCloseDoesNotReopen() {
+        var state = HanlinChatPresentationState()
+        state.open(.sheet)
+        state.request(.inspector)
+        state.updateInspectorAvailability(false)
+        XCTAssertEqual(state.phase, .dismissing(.sheet, next: .sheet))
+        state.finishDismissal(.sheet)
+        XCTAssertEqual(state.mode, .sheet)
+        state.close()
+        state.updateInspectorAvailability(true)
+        state.finishDismissal(.sheet)
+        XCTAssertTrue(state.showsLauncher)
+    }
+
+    func testInspectorOnlyPolicyRestoresWhenRegular() {
+        var state = HanlinChatPresentationState(policy: .init(modes: [.inspector]), isInspectorAvailable: false)
+        state.open()
+        XCTAssertEqual(state.mode, .sheet)
+        state.updateInspectorAvailability(true)
+        XCTAssertEqual(state.phase, .dismissing(.sheet, next: .inspector))
+        state.finishDismissal(.sheet)
+        XCTAssertEqual(state.mode, .inspector)
+        XCTAssertNil(state.effectivePolicy.alternative(to: .inspector))
+    }
+
     func testEmptyPolicyAndActiveReconfiguration() {
         var state = HanlinChatPresentationState(policy: .init(modes: [], initialMode: .inspector))
         XCTAssertEqual(state.policy.initialMode, .sheet)

@@ -36,8 +36,35 @@ public struct HanlinChatPresentationState: Equatable, Sendable {
 
     public private(set) var phase: Phase = .closed
     public private(set) var policy: HanlinChatPresentationPolicy
+    /// Host window size class, not the presented panel's own width.
+    public private(set) var isInspectorAvailable: Bool
 
-    public init(policy: HanlinChatPresentationPolicy = .init()) { self.policy = policy }
+    public init(policy: HanlinChatPresentationPolicy = .init(), isInspectorAvailable: Bool = true) {
+        self.policy = policy
+        self.isInspectorAvailable = isInspectorAvailable
+    }
+
+    /// Compact/unknown hosts use our existing Sheet, never an adaptive Inspector.
+    /// Preserve the configured policy so it is restored when regular width returns.
+    public var effectivePolicy: HanlinChatPresentationPolicy {
+        isInspectorAvailable ? policy : .init(modes: [.sheet], initialMode: .sheet)
+    }
+
+    /// If a live surface or pending target is no longer allowed, reuse the
+    /// existing dismissal handoff rather than create a second presentation.
+    public mutating func updateInspectorAvailability(_ available: Bool) {
+        guard isInspectorAvailable != available else { return }
+        isInspectorAvailable = available
+        let effective = effectivePolicy
+        switch phase {
+        case let .presented(current) where !effective.modes.contains(current):
+            phase = .dismissing(current, next: effective.initialMode)
+        case let .dismissing(outgoing, next?) where !effective.modes.contains(next):
+            phase = .dismissing(outgoing, next: effective.initialMode)
+        default:
+            break
+        }
+    }
 
     public var mode: HanlinChatPresentationMode? {
         if case let .presented(mode) = phase { return mode }
@@ -73,13 +100,16 @@ public struct HanlinChatPresentationState: Equatable, Sendable {
 
     public mutating func open(_ mode: HanlinChatPresentationMode? = nil) {
         guard phase == .closed else { return }
-        let target = mode ?? policy.initialMode
-        guard policy.modes.contains(target) else { return }
+        let requested = mode ?? effectivePolicy.initialMode
+        let target: HanlinChatPresentationMode =
+            !isInspectorAvailable && requested == .inspector && policy.modes.contains(.inspector)
+            ? .sheet : requested
+        guard effectivePolicy.modes.contains(target) else { return }
         phase = .presented(target)
     }
 
     public mutating func request(_ target: HanlinChatPresentationMode) {
-        guard policy.modes.contains(target) else { return }
+        guard effectivePolicy.modes.contains(target) else { return }
         switch phase {
         case .closed: open(target)
         case let .presented(current) where current != target:

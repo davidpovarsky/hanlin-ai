@@ -94,6 +94,23 @@ public final class HanlinChatPresentationController {
     public var showsLauncher: Bool { state.showsLauncher }
     public var isTransitioning: Bool { state.isTransitioning }
 
+    /// Updated from the presentation owner's SwiftUI horizontalSizeClass.
+    fileprivate func updateInspectorAvailability(_ available: Bool) {
+        guard state.isInspectorAvailable != available else { return }
+        if state.mode == .inspector && !available {
+            withAnimation(.default, completionCriteria: .removed) {
+                state.updateInspectorAvailability(available)
+            } completion: { [weak self] in
+                Task { @MainActor [weak self] in
+                    await Task.yield()
+                    self?.finish(.inspector)
+                }
+            }
+        } else {
+            state.updateInspectorAvailability(available)
+        }
+    }
+
     @discardableResult
     public func configure(_ configuration: HanlinChatPresentationConfiguration) -> Bool {
         guard state.configure(configuration.policy) else { return false }
@@ -110,7 +127,7 @@ public final class HanlinChatPresentationController {
     }
 
     public func switchTo(_ mode: HanlinChatPresentationMode) {
-        guard !isTransitioning, configuration.policy.modes.contains(mode), self.mode != mode else { return }
+        guard !isTransitioning, state.effectivePolicy.modes.contains(mode), self.mode != mode else { return }
         if state.mode == .inspector {
             withAnimation(.default, completionCriteria: .removed) {
                 state.request(mode)
@@ -165,6 +182,12 @@ public struct HanlinLauncherTransition {
 
 @MainActor
 private struct HanlinPresentationModifier<Chat: View>: ViewModifier {
+    // Read the environment of the host owning both presentations, not the
+    // potentially compact content inside an already presented panel.
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+
+    private var hostAllowsInspector: Bool { horizontalSizeClass == .regular }
+
     let controller: HanlinChatPresentationController
     let labels: HanlinLauncherLabels
     let transition: HanlinLauncherTransition?
@@ -176,7 +199,7 @@ private struct HanlinPresentationModifier<Chat: View>: ViewModifier {
                    onDismiss: { controller.finish(.sheet) }) {
                 sheet
             }
-            .inspector(isPresented: controller.binding(.inspector)) {
+            .inspector(isPresented: inspectorBinding) {
                 panel(.inspector)
                     .inspectorColumnWidth(min: controller.configuration.inspectorMinimumWidth,
                                           ideal: controller.configuration.inspectorIdealWidth,
@@ -188,6 +211,25 @@ private struct HanlinPresentationModifier<Chat: View>: ViewModifier {
                         }
                     }
             }
+            .onChange(of: hostAllowsInspector, initial: true) { _, available in
+                controller.updateInspectorAvailability(available)
+            }
+    }
+
+    /// Gate the native presentation immediately with the same system trait.
+    /// Never let the Inspector adapt itself into a second Sheet in compact.
+    private var inspectorBinding: Binding<Bool> {
+        Binding(
+            get: { hostAllowsInspector && controller.state.isShowing(.inspector) },
+            set: { visible in
+                guard !visible else { return }
+                if hostAllowsInspector {
+                    controller.binding(.inspector).wrappedValue = false
+                } else {
+                    controller.updateInspectorAvailability(false)
+                }
+            }
+        )
     }
 
     @ViewBuilder
@@ -215,7 +257,8 @@ private struct HanlinPresentationModifier<Chat: View>: ViewModifier {
                     .font(.headline)
                     .lineLimit(1)
                 Spacer(minLength: 0)
-                if let alternative = controller.configuration.policy.alternative(to: mode) {
+                if hostAllowsInspector,
+                   let alternative = controller.state.effectivePolicy.alternative(to: mode) {
                     Button {
                         controller.switchTo(alternative)
                     } label: {
