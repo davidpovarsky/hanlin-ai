@@ -39,7 +39,15 @@ private final class HanlinNotificationCenterDelegate: NSObject, UNUserNotificati
         await receive(notification.request.content.userInfo)
         // No original delegate meant no foreground presentation. Preserve that
         // behavior and any installed delegate's actual presentation decision.
-        return await previous?.userNotificationCenter?(center, willPresent: notification) ?? 0
+        guard let previous,
+              previous.responds(to: #selector(UNUserNotificationCenterDelegate.userNotificationCenter(_:willPresent:withCompletionHandler:))) else { return 0 }
+        // Use the original Objective-C callback; Swift 6.4 cannot lower the
+        // optional synthesized async forwarding thunk with C++ interoperability.
+        return await withCheckedContinuation { continuation in
+            previous.userNotificationCenter?(center, willPresent: notification, withCompletionHandler: { options in
+                continuation.resume(returning: options)
+            })
+        }
     }
 
     func userNotificationCenter(_ center: UNUserNotificationCenter,
@@ -47,7 +55,13 @@ private final class HanlinNotificationCenterDelegate: NSObject, UNUserNotificati
         if response.actionIdentifier != UNNotificationDismissActionIdentifier {
             await receive(response.notification.request.content.userInfo)
         }
-        await previous?.userNotificationCenter?(center, didReceive: response)
+        guard let previous,
+              previous.responds(to: #selector(UNUserNotificationCenterDelegate.userNotificationCenter(_:didReceive:withCompletionHandler:))) else { return }
+        await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
+            previous.userNotificationCenter?(center, didReceive: response, withCompletionHandler: {
+                continuation.resume()
+            })
+        }
     }
 
     func userNotificationCenter(_ center: UNUserNotificationCenter,
