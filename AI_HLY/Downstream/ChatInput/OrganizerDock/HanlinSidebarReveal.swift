@@ -45,14 +45,17 @@ struct HanlinSidebarReveal<Sidebar: View, Content: View>: View {
                                  anchor: UnitPoint(x: 1, y: 0.5))
                     .offset(x: reduceMotion ? 0 : 22 * (1 - progress))
                     .opacity(reduceMotion ? 1 : 0.72 + 0.28 * progress)
+                    .disabled(!isPresented)
                     .allowsHitTesting(isPresented)
                     .accessibilityHidden(!isPresented)
+                    .zIndex(0)
 
                 ZStack {
                     content
                         .environment(\.layoutDirection, contentDirection)
                         // Keep the original subtree mounted while preventing a
                         // tap on the exposed strip from sending or editing a chat.
+                        .disabled(isPresented)
                         .allowsHitTesting(!isPresented)
                         .accessibilityHidden(isPresented)
                     if isPresented {
@@ -64,10 +67,15 @@ struct HanlinSidebarReveal<Sidebar: View, Content: View>: View {
                 }
                 .frame(width: width, height: geometry.size.height)
                 .background(Color(uiColor: .systemBackground))
+                // Native navigation controls behind the retained workspace must
+                // share its explicit front-to-back interaction boundary.
+                .accessibilityElement(children: .contain)
+                .contentShape(Rectangle())
                 .clipShape(RoundedRectangle(cornerRadius: reduceMotion ? 0 : 20 * progress))
                 .shadow(color: .black.opacity(reduceMotion ? 0 : 0.13 * progress),
                         radius: 18, x: -4)
                 .offset(x: sidebarWidth * progress)
+                .zIndex(1)
             }
             .frame(width: width, height: geometry.size.height, alignment: .leading)
             .contentShape(Rectangle())
