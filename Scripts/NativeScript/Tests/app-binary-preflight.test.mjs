@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtemp, mkdir, rm, symlink, writeFile } from 'node:fs/promises';
+import { mkdtemp, mkdir, realpath, rm, symlink, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { collectHostImages, requireHostMetadata } from '../app-binary-preflight.mjs';
@@ -23,7 +23,7 @@ const fat = (slices) => ({
 });
 
 async function fixture(t, files, aliases = {}) {
-  const directory = await mkdtemp(join(tmpdir(), 'hanlin-host-preflight-'));
+  const directory = await realpath(await mkdtemp(join(tmpdir(), 'hanlin-host-preflight-')));
   t.after(() => rm(directory, { recursive: true, force: true }));
   const app = join(directory, 'Host.app');
   const inspections = new Map();
