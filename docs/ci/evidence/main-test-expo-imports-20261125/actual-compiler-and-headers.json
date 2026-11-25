@@ -1,0 +1,293 @@
+{
+  "actualCommands": {
+    "AI_HLYTests": {
+      "commandSha256": "b8d2547e6d4983fe86cd01a8074c774b6a98852d80d0712d9426644bc2368d9f",
+      "compiler": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "expoArtifactTokens": [],
+      "logLine": 4613,
+      "moduleModeTokens": [],
+      "selectedFlags": [
+        [
+          "-Xcc",
+          "-fmodule-map-file=/Users/m1/builds/hanlin-wave2-a146bc7a-20261125/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/include/module.modulemap"
+        ],
+        [
+          "-Xcc",
+          "-fmodule-map-file=/Users/m1/builds/hanlin-wave2-a146bc7a-20261125/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoWorklets/include/module.modulemap"
+        ],
+        [
+          "-sdk",
+          "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk"
+        ],
+        [
+          "-target",
+          "arm64-apple-ios27.0-simulator"
+        ],
+        [
+          "-Xcc",
+          "-std=gnu++20"
+        ],
+        [
+          "-swift-version",
+          "6"
+        ],
+        [
+          "-I",
+          "/Users/m1/caches/DerivedData/hanlin-three-waves-wave2-sidebar-sim-a146bc7a-20261125/Build/Products/Debug-iphonesimulator"
+        ],
+        [
+          "-F",
+          "/Users/m1/caches/DerivedData/hanlin-three-waves-wave2-sidebar-sim-a146bc7a-20261125/Build/Products/Debug-iphonesimulator/PackageFrameworks"
+        ],
+        [
+          "-F",
+          "/Users/m1/caches/DerivedData/hanlin-three-waves-wave2-sidebar-sim-a146bc7a-20261125/Build/Products/Debug-iphonesimulator"
+        ],
+        [
+          "-F",
+          "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks"
+        ],
+        [
+          "-F",
+          "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/Developer/Library/Frameworks"
+        ],
+        [
+          "-Xcc",
+          "-I/Users/m1/builds/hanlin-wave2-a146bc7a-20261125/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/include"
+        ],
+        [
+          "-Xcc",
+          "-I/Users/m1/builds/hanlin-wave2-a146bc7a-20261125/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoWorklets/include"
+        ],
+        [
+          "-working-directory",
+          "/Users/m1/builds/hanlin-wave2-a146bc7a-20261125"
+        ]
+      ]
+    },
+    "AI_Hanlin": {
+      "commandSha256": "868cb45103f30248a1aa791e51a8a3586f0cf9bea367b928f02d5a74cd380dca",
+      "compiler": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "expoArtifactTokens": [],
+      "logLine": 1279,
+      "moduleModeTokens": [
+        "-explicit-module-build"
+      ],
+      "selectedFlags": [
+        [
+          "-Xcc",
+          "-fmodule-map-file=/Users/m1/builds/hanlin-wave2-a146bc7a-20261125/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/include/module.modulemap"
+        ],
+        [
+          "-Xcc",
+          "-fmodule-map-file=/Users/m1/builds/hanlin-wave2-a146bc7a-20261125/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoWorklets/include/module.modulemap"
+        ],
+        [
+          "-Xcc",
+          "-std=gnu++20"
+        ],
+        [
+          "-sdk",
+          "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk"
+        ],
+        [
+          "-target",
+          "arm64-apple-ios27.0-simulator"
+        ],
+        [
+          "-swift-version",
+          "6"
+        ],
+        [
+          "-I",
+          "/Users/m1/caches/DerivedData/hanlin-three-waves-wave2-sidebar-sim-a146bc7a-20261125/Build/Products/Debug-iphonesimulator"
+        ],
+        [
+          "-F",
+          "/Users/m1/caches/DerivedData/hanlin-three-waves-wave2-sidebar-sim-a146bc7a-20261125/Build/Products/Debug-iphonesimulator/PackageFrameworks"
+        ],
+        [
+          "-F",
+          "/Users/m1/caches/DerivedData/hanlin-three-waves-wave2-sidebar-sim-a146bc7a-20261125/Build/Products/Debug-iphonesimulator"
+        ],
+        [
+          "-F",
+          "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks"
+        ],
+        [
+          "-F",
+          "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/Developer/Library/Frameworks"
+        ],
+        [
+          "-Xcc",
+          "-I/Users/m1/builds/hanlin-wave2-a146bc7a-20261125/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/include"
+        ],
+        [
+          "-Xcc",
+          "-I/Users/m1/builds/hanlin-wave2-a146bc7a-20261125/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoWorklets/include"
+        ],
+        [
+          "-working-directory",
+          "/Users/m1/builds/hanlin-wave2-a146bc7a-20261125/AI_HLY.xcodeproj"
+        ]
+      ]
+    },
+    "HanlinApp": {
+      "commandSha256": "4deb16bff122c4de756255f04127c59eb3fd8a3278a2e89aa96bd0a401682b67",
+      "compiler": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "expoArtifactTokens": [
+        "/Users/m1/builds/hanlin-wave2-a146bc7a-20261125/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks"
+      ],
+      "logLine": 4376,
+      "moduleModeTokens": [],
+      "selectedFlags": [
+        [
+          "-Xcc",
+          "-fmodule-map-file=/Users/m1/builds/hanlin-wave2-a146bc7a-20261125/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/include/module.modulemap"
+        ],
+        [
+          "-Xcc",
+          "-fmodule-map-file=/Users/m1/builds/hanlin-wave2-a146bc7a-20261125/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoWorklets/include/module.modulemap"
+        ],
+        [
+          "-sdk",
+          "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk"
+        ],
+        [
+          "-target",
+          "arm64-apple-ios27.0-simulator"
+        ],
+        [
+          "-Xcc",
+          "-std=gnu++20"
+        ],
+        [
+          "-swift-version",
+          "6"
+        ],
+        [
+          "-I",
+          "/Users/m1/caches/DerivedData/hanlin-three-waves-wave2-sidebar-sim-a146bc7a-20261125/Build/Products/Debug-iphonesimulator"
+        ],
+        [
+          "-F",
+          "/Users/m1/caches/DerivedData/hanlin-three-waves-wave2-sidebar-sim-a146bc7a-20261125/Build/Products/Debug-iphonesimulator/PackageFrameworks"
+        ],
+        [
+          "-F",
+          "/Users/m1/caches/DerivedData/hanlin-three-waves-wave2-sidebar-sim-a146bc7a-20261125/Build/Products/Debug-iphonesimulator"
+        ],
+        [
+          "-F",
+          "/Users/m1/builds/hanlin-wave2-a146bc7a-20261125/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks"
+        ],
+        [
+          "-Xcc",
+          "-I/Users/m1/builds/hanlin-wave2-a146bc7a-20261125/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/include"
+        ],
+        [
+          "-Xcc",
+          "-I/Users/m1/builds/hanlin-wave2-a146bc7a-20261125/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoWorklets/include"
+        ],
+        [
+          "-working-directory",
+          "/Users/m1/builds/hanlin-wave2-a146bc7a-20261125"
+        ]
+      ]
+    }
+  },
+  "actualConfig": [
+    {
+      "path": "/Users/m1/builds/hanlin-wave2-a146bc7a-20261125/Config.xcconfig",
+      "selectedLines": [
+        {
+          "line": 1,
+          "text": "SWIFT_ENABLE_EXPLICIT_MODULES = NO"
+        },
+        {
+          "line": 2,
+          "text": "SWIFT_OBJC_INTEROP_MODE = objcxx"
+        },
+        {
+          "line": 3,
+          "text": "CLANG_CXX_LANGUAGE_STANDARD = gnu++20"
+        }
+      ]
+    }
+  ],
+  "capturedAt": "2026-11-25T12:27:36.222521+00:00",
+  "compilerVersionCascade": [
+    {
+      "diagnostic": "/Users/m1/caches/DerivedData/hanlin-three-waves-wave2-sidebar-sim-a146bc7a-20261125/Build/Products/Debug-iphonesimulator/PackageFrameworks/ExpoModulesCore.framework/Modules/ExpoModulesCore.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface:1:1: error: failed to build module 'ExpoModulesCore'; this SDK is not supported by the compiler (the SDK is built with 'Apple Swift version 6.3.1 (swiftlang-6.3.1.1.2 clang-2100.0.123.102)', while this compiler is 'Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)'). Please select a toolchain which matches the SDK.",
+      "line": 4759
+    },
+    {
+      "diagnostic": "     | `- error: failed to build module 'ExpoModulesCore'; this SDK is not supported by the compiler (the SDK is built with 'Apple Swift version 6.3.1 (swiftlang-6.3.1.1.2 clang-2100.0.123.102)', while this compiler is 'Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)'). Please select a toolchain which matches the SDK.",
+      "line": 4761
+    }
+  ],
+  "control": "/Users/m1/caches/HanlinThreeWaves/main-sidebar-403076f1-native-20261125",
+  "errorFirstOccurrences": [
+    {
+      "diagnostic": "/Users/m1/caches/DerivedData/hanlin-three-waves-wave2-sidebar-sim-a146bc7a-20261125/Build/Products/Debug-iphonesimulator/PackageFrameworks/ExpoModulesCore.framework/Headers/BridgelessJSCallInvoker.h:7:10: error: 'ReactCommon/CallInvoker.h' file not found",
+      "include": "ReactCommon/CallInvoker.h",
+      "line": 4620
+    },
+    {
+      "diagnostic": "/Users/m1/caches/DerivedData/hanlin-three-waves-wave2-sidebar-sim-a146bc7a-20261125/Build/Products/Debug-iphonesimulator/PackageFrameworks/React.framework/Headers/RCTBridgeModule.h:14:9: error: 'RCTDeprecation/RCTDeprecation.h' file not found with <angled> include; use \"quotes\" instead",
+      "include": "RCTDeprecation/RCTDeprecation.h",
+      "line": 4666
+    },
+    {
+      "diagnostic": "/Users/m1/caches/DerivedData/hanlin-three-waves-wave2-sidebar-sim-a146bc7a-20261125/Build/Products/Debug-iphonesimulator/PackageFrameworks/React.framework/Headers/RCTConvert.h:19:9: error: 'yoga/Yoga.h' file not found with <angled> include; use \"quotes\" instead",
+      "include": "yoga/Yoga.h",
+      "line": 4704
+    },
+    {
+      "diagnostic": "/Users/m1/caches/DerivedData/hanlin-three-waves-wave2-sidebar-sim-a146bc7a-20261125/Build/Products/Debug-iphonesimulator/PackageFrameworks/React.framework/Headers/yoga/Yoga.h:14:10: error: 'yoga/YGConfig.h' file not found",
+      "include": "yoga/YGConfig.h",
+      "line": 4743
+    }
+  ],
+  "lookupProof": [
+    {
+      "include": "ReactCommon/CallInvoker.h",
+      "isRegular": true,
+      "path": "/Users/m1/builds/hanlin-wave2-a146bc7a-20261125/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders/ReactCommon/CallInvoker.h",
+      "searchRoot": "/Users/m1/builds/hanlin-wave2-a146bc7a-20261125/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders",
+      "sha256": "6f8f8bcc7aec8f5496d9c4845131101c90adc37c847c01de8cba5152a4846037",
+      "size": 1688
+    },
+    {
+      "include": "RCTDeprecation/RCTDeprecation.h",
+      "isRegular": true,
+      "path": "/Users/m1/builds/hanlin-wave2-a146bc7a-20261125/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders/RCTDeprecation/RCTDeprecation.h",
+      "searchRoot": "/Users/m1/builds/hanlin-wave2-a146bc7a-20261125/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders",
+      "sha256": "aca1219fb0e4d1264722a84eaff59e67ef370123fb3f2bb5020169ebf085748c",
+      "size": 392
+    },
+    {
+      "include": "yoga/Yoga.h",
+      "isRegular": true,
+      "path": "/Users/m1/builds/hanlin-wave2-a146bc7a-20261125/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders/yoga/Yoga.h",
+      "searchRoot": "/Users/m1/builds/hanlin-wave2-a146bc7a-20261125/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders",
+      "sha256": "25de158823dab078a6a1e2e2b43e97a9a33e27cf3621b396ce1abe83fd605892",
+      "size": 687
+    },
+    {
+      "include": "yoga/YGConfig.h",
+      "isRegular": true,
+      "path": "/Users/m1/builds/hanlin-wave2-a146bc7a-20261125/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders/yoga/YGConfig.h",
+      "searchRoot": "/Users/m1/builds/hanlin-wave2-a146bc7a-20261125/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders",
+      "sha256": "677af8e4f68ce75801cf04dafbd3697c095a1881dbe37dc4d9c055ea520eeb64",
+      "size": 4297
+    }
+  ],
+  "operation": "READ_ONLY_NO_NATIVE_NO_MAC_WRITES",
+  "pins": {
+    "logs/original-ai-build.log": "f77fe3ffaecf30c69da26d0c9e93888d03e6d984cc657d9e7483ad27f0504d7d",
+    "receipt.json": "59606bb85639eb7fe657dcaa572ada2143062b3cb8c8d6f4263243e6e1fcc490"
+  },
+  "repo": "/Users/m1/builds/hanlin-wave2-a146bc7a-20261125",
+  "source": "403076f1da0c61752e7950911cd9edffd9ad8d3b"
+}

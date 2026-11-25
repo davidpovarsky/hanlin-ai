@@ -64,17 +64,21 @@ class WidgetCxxImportTests(unittest.TestCase):
         objects = parse_project(project_text)["objects"]
         expected_flags = ["$(inherited)"] + [
             flag.replace(str(ROOT), "$(SRCROOT)") for flag in expected[1]]
+        consumers = {"HanlinScriptingWidgets", "HanlinMiniAppsWidgets", "AI_HLYTests"}
+        configurations = set()
         for value in objects.values():
-            if value.get("isa") != "PBXNativeTarget" or value.get("name") not in {
-                "HanlinScriptingWidgets", "HanlinMiniAppsWidgets"}:
+            if value.get("isa") != "PBXNativeTarget" or value.get("name") not in consumers:
                 continue
             for key in objects[value["buildConfigurationList"]]["buildConfigurations"]:
                 settings = objects[key]["buildSettings"]
+                configurations.add((value["name"], objects[key]["name"]))
                 with self.subTest(host=value["name"], config=objects[key]["name"]):
                     self.assertEqual(settings["SWIFT_OBJC_INTEROP_MODE"], "objcxx")
-                    self.assertEqual(settings["SWIFT_ENABLE_EXPLICIT_MODULES"], "YES",
-                                     "The widget host must preserve the producer's explicit module import context.")
+                    self.assertEqual(settings.get("SWIFT_ENABLE_EXPLICIT_MODULES"), "YES",
+                                     "The consumer must preserve the producer's explicit module import context.")
                     self.assertEqual(settings["OTHER_SWIFT_FLAGS"], expected_flags)
+        self.assertEqual(configurations, {(name, config) for name in consumers
+                                          for config in ("Debug", "Release")})
         # Use the actual project producer, including the real MiniApps extension
         # cloning path. Neither this source contract nor dump-package runs Xcode.
         with tempfile.TemporaryDirectory(prefix="hanlin-widget-cxx-project-") as folder:
