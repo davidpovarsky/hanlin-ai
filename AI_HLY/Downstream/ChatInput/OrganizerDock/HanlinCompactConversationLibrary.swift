@@ -17,6 +17,7 @@ import SwiftData
 struct HanlinCompactConversationLibrary: View {
     @State private var showsSavedMessages = false
     @FocusState private var searchFocused: Bool
+    @State private var searchPresented = false
     let chatRecords: [ChatRecords]
     @Binding var searchText: String
     let matchedSnippets: [UUID: (AttributedString, UUID)]
@@ -65,14 +66,15 @@ struct HanlinCompactConversationLibrary: View {
         .toolbarVisibility(.visible, for: .navigationBar)
         .searchable(
             text: $searchText,
+            isPresented: $searchPresented,
             placement: .navigationBarDrawer(displayMode: .always),
             prompt: Text("搜索聊天与消息内容", bundle: HanlinLocalization.bundle)
         )
         .searchFocused($searchFocused)
         .onChange(of: isPresented) { _, presented in
-            if !presented { searchFocused = false }
+            if !presented { endSearch() }
         }
-        .onDisappear { searchFocused = false }
+        .onDisappear(perform: endSearch)
         .background {
             if let keyboardOwner {
                 HanlinCompactSearchFocusRegistration(
@@ -92,7 +94,10 @@ struct HanlinCompactConversationLibrary: View {
                 .accessibilityIdentifier("hanlin-saved-messages-open")
             }
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button(action: onAddNewChat) {
+                Button {
+                    endSearch()
+                    onAddNewChat()
+                } label: {
                     Label(hanlin: "New chat", systemImage: "plus.bubble")
                 }
                 .accessibilityIdentifier("hanlin-new-chat-button")
@@ -103,6 +108,13 @@ struct HanlinCompactConversationLibrary: View {
         .accessibilityIdentifier("hanlin-compact-conversation-library")
     }
 
+    private func endSearch() {
+        // Focus and search presentation are distinct native states. End both
+        // before routing away from this retained searchable navigation stack.
+        searchFocused = false
+        searchPresented = false
+    }
+
     @ViewBuilder
     private func libraryRow(for record: ChatRecords) -> some View {
         let snippetPair = matchedSnippets[record.id ?? UUID()]
@@ -110,6 +122,7 @@ struct HanlinCompactConversationLibrary: View {
         let messageID = snippetPair?.1
 
         Button {
+            endSearch()
             onSelectConversation(record, messageID)
         } label: {
             ChatRowView(

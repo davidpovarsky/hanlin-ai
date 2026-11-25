@@ -335,6 +335,7 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
         textView.onSendMessage = onSendMessage
         textView.accessibilityIdentifier = "hanlin-chat-input"
         textView.isAccessibilityElement = true
+        textView.isUserInteractionEnabled = context.environment.isEnabled
 
         let initialText = currentText
         if initialText.isEmpty {
@@ -350,6 +351,8 @@ public struct NativeMultilineTextEditor: UIViewRepresentable {
     }
 
     public func updateUIView(_ uiView: MultilineInnerTextView, context: Context) {
+        // Honor SwiftUI interaction ownership even while an IME composition is active.
+        uiView.isUserInteractionEnabled = context.environment.isEnabled
         context.coordinator.rebind(to: self, in: uiView)
         onLifecycleEvent?(uiView, .attached)
         uiView.onPasteImage = onPasteImage
