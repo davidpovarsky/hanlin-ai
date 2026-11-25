@@ -1,0 +1,82 @@
+{
+  "recorded_utc": "2026-11-25T06:29:38.199475+00:00",
+  "execution_origin": "local-mac",
+  "github_run_id": null,
+  "native_affected_cases": 23,
+  "native_previous_passes_reused": 0,
+  "current_source_sha": "9ef80a6ddfc997724360a9a34bb1d05cbf7cad40",
+  "runtime_host": {
+    "tests": 170,
+    "passed": 169,
+    "failed": 0,
+    "skipped": 1,
+    "scope": "Host controls, not application acceptance",
+    "sdk_archive_sha256": "348a6ced57fc2619bd63f2cf09e5de00267b40a7547289048225f3f9871ebe76"
+  },
+  "attempts": [
+    {
+      "attempt": "571a1ab7-01",
+      "source_sha": "571a1ab79171d59415c85cfeea6e8e01c74596db",
+      "build_exit": 74,
+      "cause": "SwiftPM refused unused copied telemetry checkout with untracked generated Artifacts; tracked checkout unchanged.",
+      "repair": "Preserved 14652 artifact entries with hashes; moved only copied generated directory; original resolver reconciled current lock.",
+      "native_tests_executed": 0,
+      "native_test_status": "NOT_RUN",
+      "compiled_producer_export": "NOT_CREATED"
+    },
+    {
+      "attempt": "571a1ab7-02",
+      "source_sha": "571a1ab79171d59415c85cfeea6e8e01c74596db",
+      "build_exit": -15,
+      "cause": "Owned build deliberately interrupted to integrate published original notification delegate signature correction c259.",
+      "repair": "Root integrated as9ef80; actual source and Host SDK preparation refreshed.",
+      "native_tests_executed": 0,
+      "native_test_status": "NOT_RUN",
+      "compiled_producer_export": "NOT_CREATED"
+    },
+    {
+      "attempt": "9ef80a6d-01",
+      "source_sha": "9ef80a6ddfc997724360a9a34bb1d05cbf7cad40",
+      "build_exit": 65,
+      "cause": "Inherited Clang PCM embedded donor absolute cache path; real SwiftShims import rejected relocation.",
+      "repair": "2010 plaintext-marker matching PCMs preserved and invalidated; 16 copied local Config framework/header paths rebased with before/after hashes.",
+      "native_tests_executed": 0,
+      "native_test_status": "NOT_RUN",
+      "compiled_producer_export": "NOT_CREATED"
+    },
+    {
+      "attempt": "9ef80a6d-02",
+      "source_sha": "9ef80a6ddfc997724360a9a34bb1d05cbf7cad40",
+      "build_exit": 65,
+      "cause": "Compressed metadata in inherited SwiftShims did not contain plaintext donor marker; selective byte search missed it.",
+      "repair": "Entire copied implicit ModuleCache preserved with SHA inventory and replaced with empty owned cache. Real current compiler/package products retained at this step.",
+      "native_tests_executed": 0,
+      "native_test_status": "NOT_RUN",
+      "compiled_producer_export": "NOT_CREATED"
+    },
+    {
+      "attempt": "9ef80a6d-03",
+      "source_sha": "9ef80a6ddfc997724360a9a34bb1d05cbf7cad40",
+      "build_exit": 65,
+      "cause": "Linker exposed inherited local TextStudio object requesting donor-only5argument HanlinEntryPointDescriptor initializer; current source exports4arguments.",
+      "repair": "Exact API diff confirmed. Sole cleanup owner is invalidating all borrowed local Hanlin SDK/app compiler products, preserving original third-party binary inputs/source/evidence. No unrelated donor feature import.",
+      "native_tests_executed": 0,
+      "native_test_status": "NOT_RUN",
+      "compiled_producer_export": "NOT_CREATED"
+    }
+  ],
+  "durable_original_evidence": [
+    {
+      "path": "/mnt/development/projects/artifacts/hanlin-native-actual-20261125/attempts-571a-admission-and-interruption.tar.gz",
+      "bytes": 17070080,
+      "sha256": "6d20ce7096ed29539c93a9cdcd471f8f3041285868dede6e08f940a3a8c2306b"
+    },
+    {
+      "path": "/mnt/development/projects/artifacts/hanlin-native-actual-20261125/attempts-9ef80-cache-diagnostics.tar.gz",
+      "bytes": 25733120,
+      "sha256": "6338f5803f49edbbb1c314c22446f360134b0c96139d26ceb887eac7910d243b"
+    }
+  ],
+  "native_boundary": "Cooperating original NativeWindow/module namespaces share one main NativeScript JavaScript context; arbitrary globalThis or native singleton isolation is not claimed.",
+  "resource_incident": "Actual ENOSPC observed during diagnosis; no new full native build dispatched until exact owned cache invalidation and actual phase-fit admission."
+}

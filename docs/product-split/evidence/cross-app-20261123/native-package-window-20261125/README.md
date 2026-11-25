@@ -23,3 +23,18 @@ The complete source hashes and commands are retained in
 real producer acceptance was subsequently dispatched on integrated571a1ab7;
 its separate original app result is still pending. The original 45325776062 artifact evidence remains historical,
 not a pass for this changed source.
+
+
+## Actual integrated Mac attempts through 9ef80-03
+
+The original native helper was executed on integrated571a and9ef80. No
+application test case has executed yet: dependency/cache admission and local ABI
+contamination prevented a complete app build. The real compiler logs, xcresults,
+source identities, screenshots and preserved-cache inventories are archived on
+Oracle with exact hashes in `native-build-attempts-through-9ef80-03.json`.
+
+The169 passing Host controls and successful SDK example/source-graph checks do
+not replace the23 required native cases. No producer export, distribution
+signing success or TestFlight delivery is claimed by this checkpoint. A new
+exact-source run is required after the owned local compiler products are
+invalidated. Original third-party binaries and source work remain preserved.
