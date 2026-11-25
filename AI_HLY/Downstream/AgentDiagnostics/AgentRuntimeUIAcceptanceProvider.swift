@@ -1227,7 +1227,7 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
         let response = HTTPURLResponse(url: request.url!, statusCode: 200,
             httpVersion: "HTTP/1.1", headerFields: ["Content-Type": "text/event-stream"])!
         client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
-        let task = Task { [weak self] in
+        let task = Task { @Sendable [weak self] in
             guard let self else { return }
             func emit(_ delta: [String: Any], final: Bool = false) {
                 guard !self.isStopped else { return }
