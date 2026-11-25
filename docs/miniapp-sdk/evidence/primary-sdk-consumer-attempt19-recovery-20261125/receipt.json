@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "kind": "EVIDENCE_ONLY_RETAINED_ACTUAL_OUTPUT_RECONCILIATION",
+  "createdAt": "2026-11-25T11:38:38.280482+00:00",
+  "consumerSource": "62dfff9aebd0a272486c7770d4f77ba603d535ab",
+  "sdkProducerSource": "a2c8a1b1be746461272ba77254603304567c309d",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 2872,
+      "sha256": "d87dc08745283bb51fc21ee1e98f7513b2aff0004e8db7374af2876f6a1ea4d5"
+    },
+    {
+      "path": "raw/AI_Hanlin.app/NotificationService-Info.plist",
+      "bytes": 1220,
+      "sha256": "cf22dfcabc37e0108e7d7a24ed8f7566d0934e60290d16e8427b2370532ae32c"
+    },
+    {
+      "path": "raw/AI_Hanlin.app/notification-codesign.stderr",
+      "bytes": 1145,
+      "sha256": "b43514867d0ad158a5a96c05c37adf891f37dde9cc75cd4282b3419527067732"
+    },
+    {
+      "path": "raw/AI_Hanlin.app/notification-codesign.stdout",
+      "bytes": 184,
+      "sha256": "00491886daae07a5296c8bad50f116bf006b0004d7bf7338ad46669fbd903a4a"
+    },
+    {
+      "path": "raw/HanlinMiniApps.app/NotificationService-Info.plist",
+      "bytes": 1278,
+      "sha256": "176d667ec09408832340ae438a7e26886a9f080625c445c3f192850a7b9a467b"
+    },
+    {
+      "path": "raw/HanlinMiniApps.app/notification-codesign.stderr",
+      "bytes": 1156,
+      "sha256": "f640531b47ba9e17e650cb677fa9a67f46746014c942f73e4211c84e3faf2167"
+    },
+    {
+      "path": "raw/HanlinMiniApps.app/notification-codesign.stdout",
+      "bytes": 184,
+      "sha256": "00491886daae07a5296c8bad50f116bf006b0004d7bf7338ad46669fbd903a4a"
+    },
+    {
+      "path": "raw/built-input-bindings.json",
+      "bytes": 15177,
+      "sha256": "f63dc050246a3887ab4d64a632235e88db94f618748d336eeb8aa0ec90b12faf"
+    },
+    {
+      "path": "raw/receipt.json",
+      "bytes": 22112,
+      "sha256": "c19ffc746a122b373e56313e4c6a05ec9c46fa893864e18c80bcc67cf77e1244"
+    },
+    {
+      "path": "verification.json",
+      "bytes": 5139,
+      "sha256": "b945bcd923859aa82b2ececab18984b5e779b1989405510698569aaaa08f82f0"
+    }
+  ],
+  "fileCount": 10,
+  "totalBytes": 50467,
+  "sourceMutation": false,
+  "nativeExecution": false
+}

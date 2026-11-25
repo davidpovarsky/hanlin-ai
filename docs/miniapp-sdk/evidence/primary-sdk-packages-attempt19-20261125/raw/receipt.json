@@ -1,0 +1,158 @@
+{
+  "schema": 1,
+  "observedAt": "2026-11-25T11:31:13.392145+00:00",
+  "consumerSource": "62dfff9aebd0a272486c7770d4f77ba603d535ab",
+  "sdkProducerSource": "a2c8a1b1be746461272ba77254603304567c309d",
+  "hostArchiveSHA256": "7a426675109c5ebc4c8b5824565547f8aea10584785932280fdb623128530ecc",
+  "sdkManifestSHA256": "4505c28495d8b6ecd1073254e0e395adcc898cc02dd1d40699591f51db4dee92",
+  "sdkInputSHA256": "ba8f3f1f09054887eed62532fa1d5ca2ac3bd60e6aa99a98ab1035c7653882a2",
+  "simulator": "E742FBCD-8FF0-4130-B143-7F8328637138",
+  "actualCurrentContainer": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/A977193C-753D-454C-97BE-544917CAE71C",
+  "originalStagingContainer": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/4AB09E58-6099-47DC-B2F2-2D0AF4B6B8D8",
+  "files": [
+    {
+      "path": "ModularTextSearch.hanlinExpo",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v2/native-result/paired-prefix/ModularTextSearch.hanlinExpo",
+      "bytes": 2203953,
+      "sha256": "40ade14cf7ebcaa96d0f7bf71757d92a243236f682227c9683ebf06bc8255f6f"
+    },
+    {
+      "path": "modular-search-build.json",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v2/native-result/paired-prefix/modular-search-build.json",
+      "bytes": 1658,
+      "sha256": "abf044a94e372eec27a1cbd2b267d2f4ca02e3a25c66d0fbe1cc9195510f4bca"
+    },
+    {
+      "path": "SDKOnlyDepartureBudget.hanlinExpo",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v2/native-result/paired-prefix/SDKOnlyDepartureBudget.hanlinExpo",
+      "bytes": 1956567,
+      "sha256": "dda4e3b1536426156d2695209736186f4d804895f0a04fb3741bbe24c5a4df1f"
+    },
+    {
+      "path": "sdk-only-departure-budget-build.json",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v2/native-result/paired-prefix/sdk-only-departure-budget-build.json",
+      "bytes": 1683,
+      "sha256": "34c5a6bab071a8f3a8a70a26cea0f5c0e71f1a2bd61cf7dea54a5c008746f91a"
+    },
+    {
+      "path": "SDKOnlyTableShare.hanlinNativeScript",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v2/native-result/paired-prefix/SDKOnlyTableShare.hanlinNativeScript",
+      "bytes": 12933,
+      "sha256": "4d817ba5dd1c84fce5c0ae4b3d281929520dfaebbbe1dd41465d1ebe6305c4b3"
+    },
+    {
+      "path": "sdk-only-table-share-build.json",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v2/native-result/paired-prefix/sdk-only-table-share-build.json",
+      "bytes": 1227,
+      "sha256": "5ceac27b3a05a1f4a35cfc84b9b3d3b5bd598b822e222dc7ba2055e89c7d80a8"
+    },
+    {
+      "path": "sdk-only-package-provenance.json",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v2/native-result/paired-prefix/sdk-only-package-provenance.json",
+      "bytes": 2573,
+      "sha256": "3a5fb5e20e9d3adaae56cdef3065555e9213fd72eb307b74a46e12a7fdba09e9"
+    },
+    {
+      "path": "sample-package-hashes.json",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v2/native-result/paired-prefix/sample-package-hashes.json",
+      "bytes": 443,
+      "sha256": "85a9d20da00f78cb67dc6742184f96c493f8159fc91eeb538bb601b68cfc81de"
+    },
+    {
+      "path": "authoring-fixture-provenance.json",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v2/native-result/paired-prefix/authoring-fixture-provenance.json",
+      "bytes": 4274,
+      "sha256": "2e151fec31f0ff114f43cc9743c60c736665716d1ee7e0e800a5bf79dd981796"
+    },
+    {
+      "path": "authoring-mini-data-container.txt",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v2/native-result/paired-prefix/authoring-mini-data-container.txt",
+      "bytes": 157,
+      "sha256": "0fd53dc414bd607caa75ed25ba6b37f420c1b61c229c09ad1199a25319ecf2ef"
+    },
+    {
+      "path": "MiniAppTypeError.hanlinNativeScript",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/A977193C-753D-454C-97BE-544917CAE71C/Documents/MiniAppTypeError.hanlinNativeScript",
+      "bytes": 4399,
+      "sha256": "9a2a14be4ad24565bad66a98fc53522229de903acfb8a41b3df18006e81b51c9"
+    }
+  ],
+  "originalProducerCommands": [
+    {
+      "argv": [
+        "node",
+        "Scripts/ProductSplit/prepare_authoring_fixture.mjs",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v2/native-result/paired-prefix/original-authoring-sdk/MiniAppSDK",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v2/native-result/paired-prefix/authoring-fixture"
+      ],
+      "exit": 0,
+      "seconds": 8.199015375008457,
+      "log": "authoring-fixture-build.log",
+      "sha256": "3561bf604c84d5bb9959941a4ccacd7b0b109e046d77361cbf8489a410c6c39e"
+    },
+    {
+      "argv": [
+        "node",
+        "Scripts/MiniApps/miniapp.mjs",
+        "build",
+        "--sdk",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v2/native-result/paired-prefix/original-authoring-sdk/MiniAppSDK",
+        "--engine",
+        "expo",
+        "--project",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/Expo/miniapps/modular-text-search",
+        "--archive",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v2/native-result/paired-prefix/ModularTextSearch.hanlinExpo",
+        "--report",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v2/native-result/paired-prefix/modular-search-build.json"
+      ],
+      "exit": 0,
+      "seconds": 17.819495416988502,
+      "log": "modular-search-build.log",
+      "sha256": "abf044a94e372eec27a1cbd2b267d2f4ca02e3a25c66d0fbe1cc9195510f4bca"
+    },
+    {
+      "argv": [
+        "node",
+        "Scripts/MiniApps/miniapp.mjs",
+        "build",
+        "--sdk",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v2/native-result/paired-prefix/original-authoring-sdk/MiniAppSDK",
+        "--engine",
+        "expo",
+        "--project",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/MiniApps/Examples/sdk-only-departure-budget",
+        "--archive",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v2/native-result/paired-prefix/SDKOnlyDepartureBudget.hanlinExpo",
+        "--report",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v2/native-result/paired-prefix/sdk-only-departure-budget-build.json"
+      ],
+      "exit": 0,
+      "seconds": 11.668237040998065,
+      "log": "sdk-only-departure-budget-build.log",
+      "sha256": "34c5a6bab071a8f3a8a70a26cea0f5c0e71f1a2bd61cf7dea54a5c008746f91a"
+    },
+    {
+      "argv": [
+        "node",
+        "Scripts/MiniApps/miniapp.mjs",
+        "build",
+        "--sdk",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v2/native-result/paired-prefix/original-authoring-sdk/MiniAppSDK",
+        "--engine",
+        "nativescript",
+        "--project",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/MiniApps/Examples/sdk-only-table-share",
+        "--archive",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v2/native-result/paired-prefix/SDKOnlyTableShare.hanlinNativeScript",
+        "--report",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v2/native-result/paired-prefix/sdk-only-table-share-build.json"
+      ],
+      "exit": 0,
+      "seconds": 4.32180416698975,
+      "log": "sdk-only-table-share-build.log",
+      "sha256": "5ceac27b3a05a1f4a35cfc84b9b3d3b5bd598b822e222dc7ba2055e89c7d80a8"
+    }
+  ],
+  "boundary": "Actual unchanged original CLI producer archives/reports and currently installed source-bearing negative fixture. Current app container is read from the OS after XCTest installation; original staging path remains retained separately. No runtime acceptance is inferred."
+}
