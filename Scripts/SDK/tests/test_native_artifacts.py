@@ -202,10 +202,15 @@ class NativeArtifactsTests(unittest.TestCase):
             # The fixture now also carries pinned sources and a valid Host ZIP.
             with patch.object(native, "download", side_effect=get), patch.object(native, "framework_libraries"):
                 native.install(fixture.catalog, sdk, root / "cache", ["NodeMobile"], True)
-            self.assertEqual(requested, ["NodeMobile", "HanlinNodeHostSupport"])
+            self.assertEqual(requested, ["NodeMobile", "HanlinExpoWidgetRuntimeSupport", "HanlinNodeHostSupport"])
             self.assertTrue((sdk / "AI_HLY/RuntimeHostResources.zip").is_file())
             self.assertFalse((sdk / "Vendor/Python").exists())
-            self.assertFalse((sdk / "Packages/HanlinExpoRuntime").exists())
+            # Node's canonical SDK fingerprint needs this small resource
+            # carrier, but no Expo framework, headers or other source payload.
+            expo_root = sdk / "Packages/HanlinExpoRuntime"
+            self.assertEqual({str(path.relative_to(sdk)) for path in expo_root.rglob("*") if path.is_file()},
+                             native.PREPARED_WIDGET_FILES)
+            self.assertFalse((expo_root / "Artifacts").exists())
 
     def test_catalog_rejects_retargeted_url_and_changed_content_identity(self):
         with tempfile.TemporaryDirectory() as directory:
