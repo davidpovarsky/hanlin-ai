@@ -39,10 +39,11 @@
       "react-native": "0.88.1",
       "react-native-worklets": "0.13.0",
       "expo-modules-core": "58.1.0",
+      "expo-asset": "58.0.21",
       "expo-modules-jsi": "58.0.23",
       "expo-widgets": "58.0.29",
       "@nativescript/react-native": "9.1.2",
-      "@types/react": "19.3.0",
+      "@types/react": "19.3.1",
       "@react-native/codegen": "0.88.1",
       "@react-native/metro-config": "0.88.1",
       "babel-preset-expo": "58.0.26"
@@ -73,6 +74,13 @@
       "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
       "integrity": "sha512-+zeaoDU1zS1rKe1afVsH8sh7+b+HNZyq93ZL0BRJ03RtrxZyYxKljqOcl78Q9NkX1oOO8CdQxzhFa8Dl6o52ug==",
       "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c"
+    },
+    "expo-asset": {
+      "package": "expo-asset",
+      "version": "58.0.21",
+      "tarball": "https://registry.npmjs.org/expo-asset/-/expo-asset-58.0.21.tgz",
+      "integrity": "sha512-qaJmuTtswggXdBQfiUdpxrVGM7l+tH8iEDHwVDMuxyCF/kAau8sUGVuWrDKYNW4yAx7Z8ncgsT8s27pXjRH5GA==",
+      "sha256": "2bfbb115da9111702530e5df550eac7e2a074aa12b6297fcc332744767623126"
     },
     "expo-brownfield": {
       "package": "expo-brownfield",
@@ -212,6 +220,19 @@
       "sourceBuild": {
         "producer": "original-cocoapods",
         "packageIntegrity": "sha512-+zeaoDU1zS1rKe1afVsH8sh7+b+HNZyq93ZL0BRJ03RtrxZyYxKljqOcl78Q9NkX1oOO8CdQxzhFa8Dl6o52ug=="
+      }
+    },
+    {
+      "name": "ExpoAsset",
+      "source": "npm-source",
+      "package": "expo-asset",
+      "version": "58.0.21",
+      "tarball": "https://registry.npmjs.org/expo-asset/-/expo-asset-58.0.21.tgz",
+      "sha256": "2bfbb115da9111702530e5df550eac7e2a074aa12b6297fcc332744767623126",
+      "target": "Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework",
+      "sourceBuild": {
+        "producer": "original-cocoapods",
+        "packageIntegrity": "sha512-qaJmuTtswggXdBQfiUdpxrVGM7l+tH8iEDHwVDMuxyCF/kAau8sUGVuWrDKYNW4yAx7Z8ncgsT8s27pXjRH5GA=="
       }
     },
     {
