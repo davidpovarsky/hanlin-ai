@@ -23,8 +23,7 @@
       "kind": "remoteSourceControl",
       "location": "https://github.com/CoreOffice/CoreXLSX.git",
       "state": {
-        "revision": "1391f3832ea2eeee5186ea8abb81ea49ed0609cc",
-        "version": "0.14.2"
+        "revision": "1391f3832ea2eeee5186ea8abb81ea49ed0609cc"
       }
     },
     {
@@ -83,8 +82,7 @@
       "kind": "remoteSourceControl",
       "location": "https://github.com/colinc86/LaTeXSwiftUI",
       "state": {
-        "revision": "c45e0fd45f64923c49c5904a9f9626bc8939f05f",
-        "version": "1.5.0"
+        "revision": "c45e0fd45f64923c49c5904a9f9626bc8939f05f"
       }
     },
     {
@@ -92,8 +90,7 @@
       "kind": "remoteSourceControl",
       "location": "https://github.com/eastriverlee/LLM.swift/",
       "state": {
-        "revision": "4b2517839f24498bea0695bae8967b359b9a35c4",
-        "version": "1.8.0"
+        "revision": "4b2517839f24498bea0695bae8967b359b9a35c4"
       }
     },
     {
@@ -101,8 +98,7 @@
       "kind": "remoteSourceControl",
       "location": "https://github.com/gonzalezreal/MarkdownUI.git",
       "state": {
-        "revision": "5f613358148239d0292c0cef674a3c2314737f9e",
-        "version": "2.4.1"
+        "revision": "5f613358148239d0292c0cef674a3c2314737f9e"
       }
     },
     {
@@ -128,8 +124,7 @@
       "kind": "remoteSourceControl",
       "location": "https://github.com/danielsaidi/RichTextKit.git",
       "state": {
-        "revision": "8aa44cfa645404ad84e52e3ab7723ecf4b82f92b",
-        "version": "1.2.0"
+        "revision": "8aa44cfa645404ad84e52e3ab7723ecf4b82f92b"
       }
     },
     {
@@ -137,8 +132,7 @@
       "kind": "remoteSourceControl",
       "location": "https://github.com/tsolomko/SWCompression.git",
       "state": {
-        "revision": "c729f0baa49e91bafef3921fea663db2b75acc46",
-        "version": "4.9.0"
+        "revision": "c729f0baa49e91bafef3921fea663db2b75acc46"
       }
     },
     {
@@ -208,8 +202,7 @@
       "kind": "remoteSourceControl",
       "location": "https://github.com/apple/swift-log.git",
       "state": {
-        "revision": "96a2f8a0fa41e9e09af4585e2724c4e825410b91",
-        "version": "1.6.2"
+        "revision": "96a2f8a0fa41e9e09af4585e2724c4e825410b91"
       }
     },
     {
@@ -235,8 +228,7 @@
       "kind": "remoteSourceControl",
       "location": "https://github.com/modelcontextprotocol/swift-sdk.git",
       "state": {
-        "revision": "a0ae212ebf6eab5f754c3129608bc5557637e605",
-        "version": "0.12.1"
+        "revision": "a0ae212ebf6eab5f754c3129608bc5557637e605"
       }
     },
     {
@@ -279,8 +271,7 @@
       "kind": "remoteSourceControl",
       "location": "https://github.com/scinfu/SwiftSoup.git",
       "state": {
-        "revision": "bba848db50462894e7fc0891d018dfecad4ef11e",
-        "version": "2.8.7"
+        "revision": "bba848db50462894e7fc0891d018dfecad4ef11e"
       }
     },
     {
