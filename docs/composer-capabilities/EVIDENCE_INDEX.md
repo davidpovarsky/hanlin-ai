@@ -1,6 +1,6 @@
 # Composer capabilities: validation evidence
 
-This evidence packet includes the completed native preparation at `7b7f7e4460200d7e98162dd525d67f8ca1860911`, RuntimeHost preparation at `cd795e378afed5c7556a71e26e5247da9ff22869`, generated inventory freeze `20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91`, and the first application build failure at that same source. It was assembled in an isolated documentation branch based on `189ca0d73a8f9b92451d343ca84b4b7074c57c6c`. Overall completion is **pending**. Each receipt retains its original execution source; assembling this packet did not run a compiler, tests, or a simulator.
+This evidence packet includes native preparation at `7b7f7e4460200d7e98162dd525d67f8ca1860911`, RuntimeHost preparation at `cd795e378afed5c7556a71e26e5247da9ff22869`, and two failed application builds at `20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91`. It also records the focus-property correction integrated at `e5a3e6d9216a69552b2b25a096fd3f3fcf8e2876`, without a successful build after that correction. The isolated documentation branch is based on `189ca0d73a8f9b92451d343ca84b4b7074c57c6c`. Overall completion is **pending**. Original execution sources and results remain unchanged; this packaging work ran no compiler, tests, or simulator.
 
 The [validation plan](VALIDATION_PLAN.json) records the remaining gates. The [machine index](EVIDENCE_INDEX.json) lists results and their receipt paths. [Packaging metadata](evidence/package-20261125.json) maps copied files to their original paths and checksums; [SHA256SUMS](evidence/SHA256SUMS-20261125) covers the packaged evidence.
 
@@ -23,6 +23,7 @@ The dedicated manifest regression, native artifact preparation, and completed Ru
 | Original native preparation | `7b7f7e4460200d7e98162dd525d67f8ca1860911` | Original preparer exit 0; 15 frameworks and four support groups validated; consumer acceptance tests remain pending | [preparer receipt](evidence/native-preparation-7b7f7e446/expo-current-cached-preparation.json), [validation receipt](evidence/native-preparation-7b7f7e446/native-preparation-final.json) |
 | Final manifest-contract regression | `7b7f7e4460200d7e98162dd525d67f8ca1860911` | One passed, zero failed/skipped; exit 0 in 0.618s at 2026-11-25 00:35:34.980179 UTC, including changed embedded-plugin identity and new source-authority rejection cases | [receipt](evidence/manifest-final-7b7f7e446/manifest-final-test.json), [complete compressed log](evidence/manifest-final-7b7f7e446/manifest-final-test.log.gz) |
 | AI_HLY build-for-testing attempt 1 | `20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91` | Exit 65 after 330.678s; copied SwiftShims PCM retained the producer ModuleCache path. No acceptance tests executed by this build command | [receipt](evidence/app-build-attempt1-20fb9f711/ai-hly-build-attempt1.json), [xcresult errors](evidence/app-build-attempt1-20fb9f711/ai-hly-build-attempt1-errors.json), [complete compressed log](evidence/app-build-attempt1-20fb9f711/ai-hly-build-attempt1.log.gz) |
+| AI_HLY build-for-testing attempt 2 | `20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91` | Exit 65 after 261.208s; two compiler errors reject the private stored `focused` property. No acceptance tests executed by this build command | [receipt](evidence/app-build-attempt2-20fb9f711/ai-hly-build-attempt2.json), [xcresult errors](evidence/app-build-attempt2-20fb9f711/ai-hly-build-attempt2-errors.json), [complete compressed log](evidence/app-build-attempt2-20fb9f711/ai-hly-build-attempt2.log.gz) |
 | App preparation / A2UI | `f54aebbb35169ea63eca146a1ba3ef4e8bf4f84d` | Both original source generators passed their checks; original A2UI schema generator executed successfully | [receipt](evidence/mac-validation-20261125/app-preparation.json), [A2UI result](evidence/mac-validation-20261125/a2ui-schemas.json/result.json) |
 
 ### Platform coverage is aggregated
@@ -89,6 +90,22 @@ The complete 13,619,832-byte attempt-1 raw log is losslessly compressed; its unc
 
 The original `.xcresult` remains at the Mac path recorded in the build receipt. A [seven-file bundle hash inventory](evidence/app-build-attempt1-20fb9f711/xcresult-sha256.json) and original exported issue summaries are preserved here. Packaging this evidence performed no native compilation, test or simulator operation, cache repair, or application-source mutation.
 
+### Application build attempt 2 and integrated focus correction
+
+Attempt 2 completed at **01:27:39.070284 UTC**, with **exit 65 after 261.208 seconds**, on the same `20fb9f711` source. The earlier admission/start snapshot above remains a historical record; the completed [attempt-2 receipt](evidence/app-build-attempt2-20fb9f711/ai-hly-build-attempt2.json) now supplies its result.
+
+The raw log has exactly two compiler error lines, both at `HanlinCompactChatWorkspace.swift:613:21`: the overriding property must be accessible, and a stored property named `focused` cannot override the inherited property. The same diagnostics appear in the exported xcresult issues. No `SwiftShims` diagnostic appears in these raw error lines or issue summaries. The build therefore reached a separate source error after the cache correction; it did not complete successfully.
+
+The [cache-retirement receipt](evidence/app-build-attempt2-20fb9f711/isolated-stale-module-cache-retirement.json) records removal of only the inactive, reproducible copied ModuleCache after the working cache was regenerated. It records no active open files in that detached copy. This maintenance action is preserved as orchestration, with no build or test pass inferred.
+
+The [focus-fix provenance](evidence/app-build-attempt2-20fb9f711/focus-fix-provenance.json) records the ownership check and exact correction: original commit `8cf5b3e3023852ab41fec7d9db1592218c1bcfd1` was integrated as `e5a3e6d9216a69552b2b25a096fd3f3fcf8e2876`. Their source diffs are byte-identical. Only the private Anchor backing Bool and three uses change from `focused` to `searchIsFocused`; initializer/update labels and focus publication behavior remain unchanged. The [original patch and ownership rationale](evidence/app-build-attempt2-20fb9f711/focus-fix-8cf5b3e30.patch.gz) are preserved. **Compilation after this correction is not verified by this packet.**
+
+The complete 4,608,783-byte raw attempt-2 log is losslessly compressed; its uncompressed SHA-256 is:
+
+`49e8df8a70597ca6f0f36f5974976ac0f51420ed5771f763cf90f5ffbc14b933`
+
+The original xcresult remains on the Mac; its [seven-file hash inventory](evidence/app-build-attempt2-20fb9f711/xcresult-sha256.json) is included. Subsequent SDK-pin integration, RuntimeHost preparation and application validation are outside this packet's recorded results.
+
 ## Required work still pending
 
 | Gate | Exact pending scope |
@@ -100,7 +117,7 @@ The original `.xcresult` remains at the Mac path recorded in the build receipt. 
 | iPhone UI | Three composer-capability UI methods plus the existing model-picker/draft regression |
 | iPad UI | The same three composer-capability UI methods |
 
-This packet records the failed first `AI_HLY` build, isolated ModuleCache repair, admission-policy refresh and actual retry start. It contains no successful application build or application/native/editor/UI test result. The pending gates above remain open.
+This packet records two failed `AI_HLY` builds, the isolated cache repair and retirement, and the integrated focus-property correction. It contains no successful application build or application/native/editor/UI test result. The pending gates above remain open.
 
 The UI inventory is **seven executions across two devices**, comprising four distinct methods. The catalog/map fixture supplies UI metadata only; it does not provide a tool executor or a fabricated model response.
 

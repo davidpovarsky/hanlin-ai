@@ -4,7 +4,7 @@
   "asanaTask": "1220882717750164",
   "sourceBase": "0929e07a6a6adae3a27cab5c514623c7cc0f157c",
   "sourceSnapshot": "8a67e7aee83c6b12673db1348b7f550a2805de50",
-  "finalSource": "PENDING application and native/UI validation. AI_HLY build attempt 1 failed at 20fb9f711 because of relocated SwiftShims module-cache paths. Isolated cache repair and measured-admission policy refresh are recorded; actual attempt 2 has started without a completed result in this packet. Completed native preparation and RuntimeHost archive freshness retain their actual sources.",
+  "finalSource": "PENDING application and native/UI validation. AI_HLY attempts 1 and 2 failed at 20fb9f711. Attempt 2 no longer reported the SwiftShims cache failure and exposed the inherited focused-property collision. The minimal rename is integrated at e5a3e6d92, with compilation after the fix not verified by this packet. Completed native preparation and RuntimeHost archive freshness retain their actual sources.",
   "runner": {
     "host": "scaleway-mac",
     "transport": "SentinelX direct",
@@ -227,15 +227,13 @@
       "pending": true,
       "expectedBuilds": 2,
       "progress": {
-        "status": "STARTED_NO_COMPLETED_RESULT",
-        "source": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91",
-        "attempt": 2,
-        "scheme": "AI_HLY",
-        "jobReportedByOwner": "job_e9db205b711d",
-        "startedAtUTC": "2026-11-25T01:23:17.863531+00:00",
-        "observedAtUTC": "2026-11-25T01:25:39.507812+00:00",
-        "processReceipt": "evidence/app-build-attempt1-20fb9f711/ai-hly-build-attempt2-process.json",
-        "capacityPolicyRefresh": "evidence/app-build-attempt1-20fb9f711/app-build-capacity-policy-refresh.json",
+        "status": "CORRECTION_INTEGRATED_AWAITING_VALIDATION",
+        "latestCompletedAttempt": 2,
+        "latestCompletedBuildSource": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91",
+        "latestCompletedBuildStatus": "FAILED",
+        "originalFocusFixCommit": "8cf5b3e3023852ab41fec7d9db1592218c1bcfd1",
+        "integratedFocusFixCommit": "e5a3e6d9216a69552b2b25a096fd3f3fcf8e2876",
+        "fixProvenance": "evidence/app-build-attempt2-20fb9f711/focus-fix-provenance.json",
         "completedSuccessfulBuildInThisPacket": false
       },
       "attempts": [
@@ -255,19 +253,33 @@
         {
           "id": "AI_HLY attempt2",
           "source": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91",
-          "status": "STARTED_NO_COMPLETED_RESULT",
+          "status": "FAILED",
           "startedAtUTC": "2026-11-25T01:23:17.863531+00:00",
           "processReceipt": "evidence/app-build-attempt1-20fb9f711/ai-hly-build-attempt2-process.json",
-          "observedAtUTC": "2026-11-25T01:25:39.507812+00:00",
-          "completedReceiptExistsAtCapture": false
+          "exitCode": 65,
+          "durationSeconds": 261.208,
+          "finishedAtUTC": "2026-11-25T01:27:39.070284+00:00",
+          "receipt": "evidence/app-build-attempt2-20fb9f711/ai-hly-build-attempt2.json",
+          "diagnostics": "evidence/app-build-attempt2-20fb9f711/ai-hly-build-attempt2-errors.json",
+          "assessment": "evidence/app-build-attempt2-20fb9f711/build-assessment.json",
+          "rawLogSHA256": "49e8df8a70597ca6f0f36f5974976ac0f51420ed5771f763cf90f5ffbc14b933",
+          "failureClassification": "INHERITED_FOCUSED_PROPERTY_COLLISION",
+          "acceptanceTestsExecuted": 0
         }
       ],
       "moduleCacheRepair": {
-        "status": "RECORDED_RETRY_RESULT_PENDING",
+        "status": "PREVIOUS_CACHE_DIAGNOSTIC_NOT_REPORTED_IN_ATTEMPT2",
         "source": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91",
         "receipt": "evidence/app-build-attempt1-20fb9f711/app-build-attempt1-cache-repair.json",
         "sourceFilesChanged": false,
-        "otherOwnerCachesChanged": false
+        "otherOwnerCachesChanged": false,
+        "followupEvidence": "evidence/app-build-attempt2-20fb9f711/build-assessment.json"
+      },
+      "staleModuleCacheRetirement": {
+        "status": "REMOVED_OWN_INACTIVE_GENERATED_CACHE_ONLY",
+        "source": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91",
+        "receipt": "evidence/app-build-attempt2-20fb9f711/isolated-stale-module-cache-retirement.json",
+        "classification": "ORCHESTRATION_NOT_ACCEPTANCE"
       }
     },
     {
@@ -1025,7 +1037,7 @@
     "completionDocumentationOnly": "635bc66274436d21236500cda4c2e873b1abe1bd",
     "activeDraftExcluded": "PR18 remains with original owner"
   },
-  "updatedAtUTC": "2026-11-25T01:26:38.515858+00:00",
+  "updatedAtUTC": "2026-11-25T01:36:37.138996+00:00",
   "failureCorrections": [
     {
       "boundary": "manifest ordinary JSON",
@@ -1046,7 +1058,16 @@
     {
       "boundary": "isolated application ModuleCache relocation",
       "reason": "Actual AI_HLY build-for-testing exit 65 reports a SwiftShims PCM compiled with the original producer cache path. Root moved only the isolated ModuleCache aside without source, dependency-pin or other-owner cache changes. Successful recompilation remains pending.",
-      "evidence": "docs/composer-capabilities/evidence/app-build-attempt1-20fb9f711/build-assessment.json"
+      "evidence": "docs/composer-capabilities/evidence/app-build-attempt1-20fb9f711/build-assessment.json",
+      "followup": "The completed attempt 2 no longer reported SwiftShims errors. Its separate source compiler error and the recorded retirement of only the inactive copied cache are preserved; successful application compilation remains pending."
+    },
+    {
+      "boundary": "integrated sidebar search-anchor stored property",
+      "reason": "Actual attempt-2 compiler diagnostics reject the private stored focused property inherited from UIView. Ownership and completed branches were checked; four substitutions rename the private backing Bool and three uses to searchIsFocused without API-label or behavior changes.",
+      "originalFixCommit": "8cf5b3e3023852ab41fec7d9db1592218c1bcfd1",
+      "integratedFixCommit": "e5a3e6d9216a69552b2b25a096fd3f3fcf8e2876",
+      "compilationAfterFix": "NOT_VERIFIED_BY_THIS_PACKET",
+      "evidence": "docs/composer-capabilities/evidence/app-build-attempt2-20fb9f711/focus-fix-provenance.json"
     }
   ],
   "latestUpstreamIntegration": {
@@ -1056,7 +1077,7 @@
     "taskWorkspaceEquivalent": "6ceb07447 changes already included by identical merge-tree"
   },
   "overallStatus": "PENDING",
-  "evidenceCheckpoint": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91",
+  "evidenceCheckpoint": "e5a3e6d9216a69552b2b25a096fd3f3fcf8e2876",
   "evidenceIndex": "docs/composer-capabilities/EVIDENCE_INDEX.json",
   "pendingRequiredGates": [
     "Two actual application build-for-testing schemes",
@@ -1073,7 +1094,8 @@
     "RuntimeHost attempts 2/3 retain their actual historical 177-pass proof. Attempt 4 executed 177 passes after native resource generation at cd795e378, with one unchanged opt-in skip and a new verified archive hash.",
     "Guarded or prerequisite-blocked artifact transfers are preserved as preparation outcomes, never counted as failing or passing acceptance tests.",
     "Native preparer exit 0, verified framework bytes, codegen and metadata checks do not establish successful consumer app builds or native-engine/editor/UI execution.",
-    "The failed build-for-testing attempt and recorded ModuleCache repair are not acceptance test results. Stopping a waiting admission runner with no compiler is orchestration, not a build/test failure. An actual retry process start is not a completed build."
+    "The failed build-for-testing attempt and recorded ModuleCache repair are not acceptance test results. Stopping a waiting admission runner with no compiler is orchestration, not a build/test failure. An actual retry process start is not a completed build.",
+    "Attempt 2 is a completed compilation failure, not a passing build or acceptance-test run. The exact source correction is integrated, but this packet provides no successful compilation after that correction. Inactive cache retirement is orchestration only."
   ],
   "documentationBranchBase": "189ca0d73a8f9b92451d343ca84b4b7074c57c6c",
   "latestRecordedExecutionSource": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91"

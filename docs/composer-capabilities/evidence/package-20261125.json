@@ -977,9 +977,94 @@
       "sourcePath": "Derived assessment of original build/xcresult/cache-repair evidence and actual retry orchestration receipts",
       "compressedForRepository": false,
       "derived": true
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt2-20fb9f711/ai-hly-build-attempt2.json",
+      "bytes": 1459,
+      "sha256": "b87c01e761c6fa976ef11f7da67985c10bcd6e7424e2a9883aaed1da56ac285f",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/ai-hly-build-attempt2.json",
+      "sourceBytes": 1459,
+      "sourceSHA256": "b87c01e761c6fa976ef11f7da67985c10bcd6e7424e2a9883aaed1da56ac285f",
+      "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt2-20fb9f711/ai-hly-build-attempt2-errors.json",
+      "bytes": 2244,
+      "sha256": "37694da14a535ccf01f858466bb0d41a1bc543898e0ec52061577a2039c761ea",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/ai-hly-build-attempt2-errors.json",
+      "sourceBytes": 2244,
+      "sourceSHA256": "37694da14a535ccf01f858466bb0d41a1bc543898e0ec52061577a2039c761ea",
+      "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt2-20fb9f711/ai-hly-build-attempt2.log.gz",
+      "bytes": 194448,
+      "sha256": "c5f0951a8113f0d9979c07842230e888ce184e1fecd562de274d2614f898e944",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/ai-hly-build-attempt2.log",
+      "sourceBytes": 4608783,
+      "sourceSHA256": "49e8df8a70597ca6f0f36f5974976ac0f51420ed5771f763cf90f5ffbc14b933",
+      "compressedForRepository": true,
+      "uncompressedLogSHA256": "49e8df8a70597ca6f0f36f5974976ac0f51420ed5771f763cf90f5ffbc14b933",
+      "uncompressedLogBytes": 4608783
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt2-20fb9f711/isolated-stale-module-cache-retirement.json",
+      "bytes": 677,
+      "sha256": "a7b275b526ed7d25d38c474e736585c3f6b5f32e31927d50880bc9e7f1042951",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/isolated-stale-module-cache-retirement.json",
+      "sourceBytes": 677,
+      "sourceSHA256": "a7b275b526ed7d25d38c474e736585c3f6b5f32e31927d50880bc9e7f1042951",
+      "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt2-20fb9f711/xcresult-sha256.json",
+      "bytes": 1962,
+      "sha256": "24e42e8e1ee5ff0b2654c4803005f3bb9610077dfc0f156b5fd1a381b3058202",
+      "sourcePath": "Read-only Mac xcresult file hashes",
+      "compressedForRepository": false,
+      "derived": true
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt2-20fb9f711/transfer-receipt.json",
+      "bytes": 3581,
+      "sha256": "420d4db0b0291e182cbe3d1624b8d49ba01772ff70b871937c5033bbae7f5af5",
+      "sourcePath": "Read-only transfer verification of exact original build evidence",
+      "compressedForRepository": false,
+      "derived": true
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt2-20fb9f711/focus-fix-8cf5b3e30.patch.gz",
+      "bytes": 1147,
+      "sha256": "34957afc3180d042422c742d897a45411b608e1b11b6c792fc0ff0f7b80cd924",
+      "sourcePath": "Oracle Git object: git show --format=fuller --no-ext-diff --no-renames 8cf5b3e3023852ab41fec7d9db1592218c1bcfd1",
+      "sourceBytes": 2828,
+      "sourceSHA256": "1248acb1b8f485c2bc7f863c01a8996d35268e79e1cd32e8cc4905435751744b",
+      "compressedForRepository": true,
+      "uncompressedLogSHA256": "1248acb1b8f485c2bc7f863c01a8996d35268e79e1cd32e8cc4905435751744b",
+      "uncompressedLogBytes": 2828
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt2-20fb9f711/focus-fix-provenance.json",
+      "bytes": 1377,
+      "sha256": "8bedb9627c1b3c489141f652b2e28e6cb27a06f25bb6348c040f21433225ab7b",
+      "sourcePath": "Read-only exact Git-object comparison of original and integrated focus fix",
+      "compressedForRepository": false,
+      "derived": true
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt2-20fb9f711/build-assessment.json",
+      "bytes": 2410,
+      "sha256": "d958e9d88864f048c7c0e201209eaeb739f7f067e905819964663cda100ca1ed",
+      "sourcePath": "Derived assessment from original completed attempt2 receipt, raw diagnostics, cache retirement and exact source-fix commits",
+      "compressedForRepository": false,
+      "derived": true
     }
   ],
-  "updatedAtUTC": "2026-11-25T01:26:38.515858+00:00",
-  "latestEvidenceCheckpoint": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91",
+  "updatedAtUTC": "2026-11-25T01:36:37.138996+00:00",
+  "latestEvidenceCheckpoint": "e5a3e6d9216a69552b2b25a096fd3f3fcf8e2876",
   "latestRecordedExecutionSource": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91"
 }

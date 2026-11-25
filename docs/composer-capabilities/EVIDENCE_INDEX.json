@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "createdAtUTC": "2026-11-25T00:28:39.148294+00:00",
-  "documentationCheckpoint": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91",
+  "documentationCheckpoint": "e5a3e6d9216a69552b2b25a096fd3f3fcf8e2876",
   "overallStatus": "PENDING",
   "sdk": {
     "source": "a3aae0b952b0518cb8c40ed4a511d4cffadab99f",
@@ -124,7 +124,7 @@
   },
   "applicability": "evidence/applicability-37a788a4a.json",
   "documentationBranchBase": "189ca0d73a8f9b92451d343ca84b4b7074c57c6c",
-  "updatedAtUTC": "2026-11-25T01:26:38.515858+00:00",
+  "updatedAtUTC": "2026-11-25T01:36:37.138996+00:00",
   "latestRecordedExecutionSource": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91",
   "manifestAudit": {
     "status": "EXECUTED_PASS",
@@ -152,15 +152,13 @@
     "acceptanceTests": "NOT_INFERRED"
   },
   "applicationBuildProgress": {
-    "status": "STARTED_NO_COMPLETED_RESULT",
-    "source": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91",
-    "attempt": 2,
-    "scheme": "AI_HLY",
-    "jobReportedByOwner": "job_e9db205b711d",
-    "startedAtUTC": "2026-11-25T01:23:17.863531+00:00",
-    "observedAtUTC": "2026-11-25T01:25:39.507812+00:00",
-    "processReceipt": "evidence/app-build-attempt1-20fb9f711/ai-hly-build-attempt2-process.json",
-    "capacityPolicyRefresh": "evidence/app-build-attempt1-20fb9f711/app-build-capacity-policy-refresh.json",
+    "status": "CORRECTION_INTEGRATED_AWAITING_VALIDATION",
+    "latestCompletedAttempt": 2,
+    "latestCompletedBuildSource": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91",
+    "latestCompletedBuildStatus": "FAILED",
+    "originalFocusFixCommit": "8cf5b3e3023852ab41fec7d9db1592218c1bcfd1",
+    "integratedFocusFixCommit": "e5a3e6d9216a69552b2b25a096fd3f3fcf8e2876",
+    "fixProvenance": "evidence/app-build-attempt2-20fb9f711/focus-fix-provenance.json",
     "completedSuccessfulBuildInThisPacket": false
   },
   "applicationBuildAttempts": [
@@ -180,18 +178,32 @@
     {
       "id": "AI_HLY attempt2",
       "source": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91",
-      "status": "STARTED_NO_COMPLETED_RESULT",
+      "status": "FAILED",
       "startedAtUTC": "2026-11-25T01:23:17.863531+00:00",
       "processReceipt": "evidence/app-build-attempt1-20fb9f711/ai-hly-build-attempt2-process.json",
-      "observedAtUTC": "2026-11-25T01:25:39.507812+00:00",
-      "completedReceiptExistsAtCapture": false
+      "exitCode": 65,
+      "durationSeconds": 261.208,
+      "finishedAtUTC": "2026-11-25T01:27:39.070284+00:00",
+      "receipt": "evidence/app-build-attempt2-20fb9f711/ai-hly-build-attempt2.json",
+      "diagnostics": "evidence/app-build-attempt2-20fb9f711/ai-hly-build-attempt2-errors.json",
+      "assessment": "evidence/app-build-attempt2-20fb9f711/build-assessment.json",
+      "rawLogSHA256": "49e8df8a70597ca6f0f36f5974976ac0f51420ed5771f763cf90f5ffbc14b933",
+      "failureClassification": "INHERITED_FOCUSED_PROPERTY_COLLISION",
+      "acceptanceTestsExecuted": 0
     }
   ],
   "moduleCacheRepair": {
-    "status": "RECORDED_RETRY_RESULT_PENDING",
+    "status": "PREVIOUS_CACHE_DIAGNOSTIC_NOT_REPORTED_IN_ATTEMPT2",
     "source": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91",
     "receipt": "evidence/app-build-attempt1-20fb9f711/app-build-attempt1-cache-repair.json",
     "sourceFilesChanged": false,
-    "otherOwnerCachesChanged": false
+    "otherOwnerCachesChanged": false,
+    "followupEvidence": "evidence/app-build-attempt2-20fb9f711/build-assessment.json"
+  },
+  "staleModuleCacheRetirement": {
+    "status": "REMOVED_OWN_INACTIVE_GENERATED_CACHE_ONLY",
+    "source": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91",
+    "receipt": "evidence/app-build-attempt2-20fb9f711/isolated-stale-module-cache-retirement.json",
+    "classification": "ORCHESTRATION_NOT_ACCEPTANCE"
   }
 }
