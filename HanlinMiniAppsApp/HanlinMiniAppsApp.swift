@@ -88,6 +88,14 @@ struct HanlinMiniAppsWindow: View {
         }
     }
 
+    private var preferredExternalEvents: Set<String> {
+        guard let externalRequestID else { return [] }
+        // SwiftUI matches URL absolute strings case-insensitively. Prefer the
+        // request already owned by this scene, including an inline root request,
+        // so a repeated URL focuses it instead of rebinding another window.
+        return ["request=" + externalRequestID.uuidString]
+    }
+
     private var alertMessage: String {
         let base = foreground.error ?? ""
         #if DEBUG || HANLIN_TESTING
@@ -133,6 +141,7 @@ struct HanlinMiniAppsWindow: View {
             .task {
                 if bootstrap.phase == .idle { await bootstrap.prepare() }
             }
+            .handlesExternalEvents(preferring: preferredExternalEvents, allowing: ["*"])
             .onOpenURL { url in
                 if !incomingURLs.contains(url) { incomingURLs.append(url) }
             }
