@@ -11,6 +11,7 @@ import argparse
 import hashlib
 import json
 import os
+import re
 from pathlib import Path
 import shlex
 import subprocess
@@ -60,10 +61,31 @@ def sha256(path: Path) -> str:
         return hashlib.file_digest(stream, "sha256").hexdigest()
 
 
-def preparation_commands(root: Path, node_bin: Path) -> str:
+def host_node_requirement(root: Path) -> tuple[str, dict]:
+    # Read the original generator's gate without executing its patch generation.
+    relative = "Scripts/Runtime/generate-yarn-unicode-patch.mjs"
+    gate = root / relative
+    matches = dict(re.findall(r"process\.versions\.(node|unicode) !== '([^']+)'", gate.read_text()))
+    if set(matches) != {"node", "unicode"}:
+        raise ValueError("Original Host Node/Unicode gate changed; review " + relative)
+    script = """const required = %s;
+const actual = {executable: process.execPath, node: process.versions.node,
+  unicode: process.versions.unicode, icu: process.versions.icu,
+  fullICU: process.config.variables.icu_small === false};
+if (actual.node !== required.node || actual.unicode !== required.unicode ||
+    !actual.icu || !actual.fullICU) {
+  throw new Error("Original Runtime Host generator requires full-ICU Node " +
+    required.node + " / Unicode " + required.unicode + "; observed " + JSON.stringify(actual));
+}
+console.log(JSON.stringify(actual));""" % json.dumps(matches)
+    return script, {"required": matches, "requiredBy": relative, "gateSHA256": sha256(gate)}
+
+
+def preparation_commands(root: Path, node_bin: Path, node_preflight: str) -> str:
     quoted_root, quoted_node = shlex.quote(str(root)), shlex.quote(str(node_bin))
     return f"""# Execute separately on the Mac after reviewing the plan.
 # These are the original producers; Expo preparation does invoke native Xcode builds.
+# This combined sequence also requires the Host generator's exact Node/Unicode pin and full ICU.
 set -euo pipefail
 cd {quoted_root}
 HANLIN_PREP_TEMP="$(mktemp -d /Users/m1/builds/hanlin-ai-cache-prep.XXXXXX)"
@@ -71,7 +93,7 @@ mkdir -p "$HANLIN_PREP_TEMP/bin"
 ln -s /opt/homebrew/bin/python3.12 "$HANLIN_PREP_TEMP/bin/python3"
 export RUNNER_TEMP="$HANLIN_PREP_TEMP"
 export PATH="$HANLIN_PREP_TEMP/bin":{quoted_node}:/Users/m1/.gem/ruby/3.3.0/bin:/opt/homebrew/bin:"$PATH"
-node --version
+node -e {shlex.quote(node_preflight)}
 python3 --version
 pod --version
 node Scripts/MiniApps/install-tooling.mjs --engine=expo --ignore-scripts
@@ -91,7 +113,8 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source", type=Path, required=True)
     parser.add_argument("--destination", type=Path, required=True)
-    parser.add_argument("--node-bin", type=Path, required=True)
+    parser.add_argument("--node-bin", type=Path, required=True,
+                        help="Already installed full-ICU Node bin directory matching the original Host generator's exact Node/Unicode pin")
     parser.add_argument("--apply-clones", action="store_true")
     parser.add_argument("--derived-data-source", type=Path)
     parser.add_argument("--derived-data-destination", type=Path)
@@ -101,14 +124,21 @@ def main() -> int:
         raise ValueError("Source and destination must be independent checkouts")
     if bool(args.derived_data_source) != bool(args.derived_data_destination):
         raise ValueError("Both DerivedData paths must be supplied together")
+    node_bin = args.node_bin.resolve(strict=True)
+    if not (node_bin / "node").is_file():
+        raise ValueError("--node-bin must contain the already installed host Node executable")
+    node_preflight, requirement = host_node_requirement(target)
+    probe = subprocess.run([str(node_bin / "node"), "-e", node_preflight],
+                           capture_output=True, text=True, timeout=15)
+    if probe.returncode:
+        raise ValueError("Host Node preflight failed: " + probe.stderr.strip())
+    host_node = {**requirement, **json.loads(probe.stdout)}
     inputs = []
     for relative in MATCHED_INPUTS:
         original, current = sha256(source / relative), sha256(target / relative)
         if original != current:
             raise ValueError("Donor input differs; reassess before reuse: " + relative)
         inputs.append({"path": relative, "sha256": current})
-    if not (args.node_bin / "node").is_file():
-        raise ValueError("--node-bin must contain the already installed host Node executable")
     paths = [(source / relative, target / relative) for relative in CLONE_PATHS]
     if args.derived_data_source:
         cache_source = args.derived_data_source.resolve(strict=True)
@@ -125,6 +155,7 @@ def main() -> int:
         "donor": str(source),
         "destination": str(target),
         "matchedNativeAndNPMLockInputs": inputs,
+        "hostNode": host_node,
         "clones": [{"source": str(a), "destination": str(b)} for a, b in paths],
         "preservedExistingDestinations": occupied,
         "pendingCloneCount": len(paths) - len(occupied),
@@ -139,7 +170,7 @@ def main() -> int:
             "New ExpoAsset changes the source producer identity, including ExpoUI.",
             "Current Expo preparation also invokes the original ExpoModulesJSI producer.",
             "Original npm graph validation may reinstall stale local packages or preparation changes.",
-            "NodeMobile runtime ABI and host Node CLI fingerprints remain separate.",
+            "The combined producer recipe checks the original Host generator's exact Node/Unicode pin and full ICU before reuse.",
             "An inventory or clone is not native compilation or test evidence.",
         ],
     }
@@ -154,7 +185,7 @@ def main() -> int:
             destination.parent.mkdir(parents=True, exist_ok=True)
             subprocess.run(["/bin/cp", "-cR", str(original), str(destination)], check=True)
             print("CLONED " + str(destination), flush=True)
-    print("\n" + preparation_commands(target, args.node_bin.resolve(strict=True)))
+    print("\n" + preparation_commands(target, node_bin, node_preflight))
     return 0
 
 
@@ -163,5 +194,5 @@ if __name__ == "__main__":
         raise SystemExit("Use /opt/homebrew/bin/python3.12; Python >=3.11 is required")
     try:
         raise SystemExit(main())
-    except (OSError, ValueError, subprocess.CalledProcessError) as error:
+    except (OSError, ValueError, subprocess.CalledProcessError, subprocess.TimeoutExpired) as error:
         raise SystemExit(str(error))
