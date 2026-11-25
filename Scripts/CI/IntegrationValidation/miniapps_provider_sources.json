@@ -76,7 +76,8 @@
     "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsAddSheet.swift",
     "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsCatalogView.swift",
     "AI_HLY/NativeAppPlatform/BuiltinApps/BuiltinCanonicalRegistrations.swift",
-    "AI_HLY/NativeAppPlatform/Support/NativeAppColor.swift"
+    "AI_HLY/NativeAppPlatform/Support/NativeAppColor.swift",
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinNotificationApplicationDelegate.swift"
   ],
   "native_sources": [
     "AI_HLY/Downstream/RuntimeCore/Node/Native/NodeRunner.mm",
