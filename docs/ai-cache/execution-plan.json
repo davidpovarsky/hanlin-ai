@@ -190,9 +190,15 @@
         "reason": "AssistantToolBridge.Executors.live factory is not implicitly MainActor-isolated by its enclosing type; NativeTool.name access fails Swift6isolation check.",
         "receipt": "evidence/app-native-20261125/attempt02-factory-isolation/test/receipt.json"
       }
-    ]
+    ],
+    "future_runner_lock_correction": {
+      "source": "2d2d0a396848b97338dce62f57d8334462afc362",
+      "fixture_tests_passed": 7,
+      "receipt": "evidence/active-lock-snapshot-20261125/receipt.json",
+      "scope": "Only validation tooling; full tracked source hashing retained, historical-proof mutation rejected; nine actual tracked locks copied. App03 remains sealed at5b69bbb5 and is not relabeled."
+    }
   },
-  "updated_at": "2026-11-25T03:10:02.709509+00:00",
+  "updated_at": "2026-11-25T03:17:12.613266+00:00",
   "latest_integrated_source": "94a929a26355e4a586238a31e3a4fc2628e8e548",
   "synchronized_heads": {
     "composer": "b739ada91aca115093e3511f9df58c15edcb5923",
