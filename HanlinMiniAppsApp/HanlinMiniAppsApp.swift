@@ -13,16 +13,36 @@ import HanlinMiniAppsBridge
 struct HanlinMiniAppsApplication: App {
     @UIApplicationDelegateAdaptor(HanlinNotificationApplicationDelegate.self) private var notificationDelegate
     var body: some Scene {
-        WindowGroup { HanlinMiniAppsWindow() }
+        WindowGroup(id: "miniapps-root", for: HanlinMiniAppsRootScene.self) { $scene in
+            HanlinMiniAppsWindow(requestID: Binding(
+                get: { scene.requestID },
+                set: { scene = $0.map(HanlinMiniAppsRootScene.request) ?? .catalog }
+            ))
+        } defaultValue: {
+            .catalog
+        }
         WindowGroup("MiniApp", id: "miniapp-invocation", for: UUID.self) { $requestID in
             HanlinMiniAppsWindow(requestID: $requestID)
         }
     }
 }
 
+/// A catalog has its own value so returning to Apps can focus an existing
+/// catalog without replacing another root window's in-flight request.
+private enum HanlinMiniAppsRootScene: Codable, Hashable {
+    case catalog
+    case request(UUID)
+
+    var requestID: UUID? {
+        if case let .request(id) = self { return id }
+        return nil
+    }
+}
+
 struct HanlinMiniAppsWindow: View {
     @Environment(\.openURL) private var openURL
     @Environment(\.openWindow) private var openWindow
+    @Environment(\.dismissWindow) private var dismissWindow
     @Environment(\.supportsMultipleWindows) private var supportsMultipleWindows
     @Binding private var sceneRequestID: UUID?
     @SceneStorage("hanlin.miniapps.inlineRequestID") private var inlineRequestID = ""
@@ -51,6 +71,20 @@ struct HanlinMiniAppsWindow: View {
     private func openReturnURL(_ url: URL) async -> Bool {
         await withCheckedContinuation { continuation in
             openURL(url) { continuation.resume(returning: $0) }
+        }
+    }
+
+    private func closeRequest(_ requestID: UUID) {
+        guard externalRequestID == requestID else { return }
+        if hasSceneIdentity, supportsMultipleWindows {
+            // Replacing a value window's content with nil leaves its scene
+            // alive. A process exit can restore its previous request before
+            // SwiftUI flushes the updated presentation value. Close this actual
+            // scene, and focus a catalog without touching other requests.
+            openWindow(id: "miniapps-root", value: HanlinMiniAppsRootScene.catalog)
+            dismissWindow()
+        } else {
+            externalRequestID = nil
         }
     }
 
@@ -88,7 +122,8 @@ struct HanlinMiniAppsWindow: View {
                     .accessibilityIdentifier("hanlin-miniapps-bootstrap-failure")
                 case .ready:
                     if let externalRequestID {
-                        HanlinExternalMiniAppView(requestID: externalRequestID, onClose: { self.externalRequestID = nil })
+                        HanlinExternalMiniAppView(requestID: externalRequestID,
+                            onClose: { closeRequest(externalRequestID) })
                             .id(externalRequestID)
                     } else {
                         HanlinMiniAppsReadyRoot()
