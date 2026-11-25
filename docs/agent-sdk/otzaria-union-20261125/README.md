@@ -95,3 +95,15 @@ invocations, and refuses a skipped/missing/duplicate/failing case.
 
 Final Maktabah UI, live provider, device, signing and TestFlight acceptance remain
 separate obligations owned by the application integration.
+
+## Prepared incremental continuation
+
+resume-core7.py verifies the retained interrupted receipt, original full Core source inventory,
+unchanged exact package/test files and resolved pins before reusing the paid cache. It leaves
+all prior evidence intact and uses a fresh evidence-resume child. The remaining estimate is
+512 MiB; the storage owner must separately admit actual concurrent growth and OS margin.
+The installed Swift 6.4 Xcode backend emits SwiftAISDKTests.xctest, which the bounded actual
+product census observed without an executable before continuation. This exact declared
+target replaces the unexecuted old package-binary-name postprocessing assumption; all six
+original methods, both parameter invocations, raw XML, source equality and binary hash/UUID
+remain required. Status at authoring: NOT RUN.
