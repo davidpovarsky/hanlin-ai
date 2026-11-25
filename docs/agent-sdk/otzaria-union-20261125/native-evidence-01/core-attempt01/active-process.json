@@ -1,0 +1,20 @@
+{
+  "argv": [
+    "xcrun",
+    "swift",
+    "test",
+    "--package-path",
+    "/Users/m1/builds/otzaria-core7-abf-union-20261125",
+    "--scratch-path",
+    "/Users/m1/caches/DerivedData/otzaria-core7-abf-union-20261125",
+    "--jobs",
+    "2",
+    "--disable-automatic-resolution",
+    "--filter",
+    "StreamTextThoughtSignatureContinuationTests|StreamTextToolResultContinuationTests",
+    "--xunit-output",
+    "/Users/m1/builds/otzaria-core7-abf-union-20261125/evidence/focused-suite.xml"
+  ],
+  "name": "original-core7",
+  "pid": 34395
+}

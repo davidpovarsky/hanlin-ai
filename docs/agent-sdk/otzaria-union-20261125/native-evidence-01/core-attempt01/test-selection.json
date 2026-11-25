@@ -1,0 +1,36 @@
+{
+  "fixture": "Original provider fetch fixture and original public MockLanguageModelV3",
+  "identities": [
+    [
+      "SwiftAISDKTests.StreamTextThoughtSignatureContinuationTests",
+      "signedSequentialContinuation()"
+    ],
+    [
+      "SwiftAISDKTests.StreamTextToolResultContinuationTests",
+      "budgetStopsContinuation()"
+    ],
+    [
+      "SwiftAISDKTests.StreamTextToolResultContinuationTests",
+      "missingToolOutputStopsContinuation()"
+    ],
+    [
+      "SwiftAISDKTests.StreamTextToolResultContinuationTests",
+      "textCompletionStopsNormally()"
+    ],
+    [
+      "SwiftAISDKTests.StreamTextToolResultContinuationTests",
+      "toolErrorContinuesWithoutReexecution()"
+    ],
+    [
+      "SwiftAISDKTests.StreamTextToolResultContinuationTests",
+      "twoToolConversation(reason:)"
+    ]
+  ],
+  "original_source": "abf0921c6e89e6521cc2b510ff11016b45a0ef08",
+  "original_tests_changed": false,
+  "production_source_copied": false,
+  "test_files": [
+    "Tests/SwiftAISDKTests/GenerateText/StreamTextThoughtSignatureContinuationTests.swift",
+    "Tests/SwiftAISDKTests/GenerateText/StreamTextToolResultContinuationTests.swift"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "status": "BLOCKED_BEFORE_NATIVE_VALIDATION",
+  "graph_check_started": false,
+  "swift_compile_started": false,
+  "source_extraction_started": false,
+  "required_free_bytes": 13958643712,
+  "observed_free_bytes": 8697040896,
+  "sentinel_result": {
+    "job_id": "job_5911ae8b89ea",
+    "type": "job_result",
+    "tool": "script_run",
+    "host": "host_4b47bdb65d00e49d",
+    "host_name": "109bcd84-6a7a-475f-9c53-0cf427912d04",
+    "status": "failed",
+    "exit_code": 1,
+    "duration_s": 4.67,
+    "severity": "warning",
+    "summary": "Traceback (most recent call last):\n  File \"/Users/m1/sentinelx/uploads/.sentinelx_uploads/script_job_7ed9952fb8564e70b86227a24de37d6e/script.py\", line 7, in <module>\n    assert free>13*1024**3,('joint storage admission',free,13*1024**3)\nAssertionError: ('joint storage admission', 8697040896, 13958643712)",
+    "output_truncated": false,
+    "error": null
+  }
+}

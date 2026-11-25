@@ -1,0 +1,135 @@
+[
+  {
+    "original_bytes": 653,
+    "original_path": "core-attempt01/Package.resolved",
+    "original_sha256": "e7835d040a26a13a9c278e405e62b18412207fb20bc6458bc76970f89f692a1b",
+    "stored_path": "core-attempt01/Package.resolved",
+    "stored_sha256": "e7835d040a26a13a9c278e405e62b18412207fb20bc6458bc76970f89f692a1b"
+  },
+  {
+    "original_bytes": 919,
+    "original_path": "core-attempt01/Package.swift",
+    "original_sha256": "af4c215ba0691b9742b2bc34069c1c4093de37d6eddb43ebbec1c51b4ed05973",
+    "stored_path": "core-attempt01/Package.swift",
+    "stored_sha256": "af4c215ba0691b9742b2bc34069c1c4093de37d6eddb43ebbec1c51b4ed05973"
+  },
+  {
+    "original_bytes": 543,
+    "original_path": "core-attempt01/active-process.json",
+    "original_sha256": "7ea253b5f73f1c698abf17c54e31667abfde7cca7ded8e0b548d412b0c7cc311",
+    "stored_path": "core-attempt01/active-process.json",
+    "stored_sha256": "7ea253b5f73f1c698abf17c54e31667abfde7cca7ded8e0b548d412b0c7cc311"
+  },
+  {
+    "original_bytes": 0,
+    "original_path": "core-attempt01/clone-compatible-cache.log",
+    "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stored_path": "core-attempt01/clone-compatible-cache.log",
+    "stored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "original_bytes": 241,
+    "original_path": "core-attempt01/cloned-cache-quarantine.json",
+    "original_sha256": "9985491e6a9739bdb727c1dfcac7a3afa1cfbe1cf3f0872b6de11a58988e204e",
+    "stored_path": "core-attempt01/cloned-cache-quarantine.json",
+    "stored_sha256": "9985491e6a9739bdb727c1dfcac7a3afa1cfbe1cf3f0872b6de11a58988e204e"
+  },
+  {
+    "original_bytes": 442,
+    "original_path": "core-attempt01/failure.txt",
+    "original_sha256": "f857fa8ece62d24f706a8dc71324277dfd1e66548b30b27a9c88b84d4038d5a0",
+    "stored_path": "core-attempt01/failure.txt",
+    "stored_sha256": "f857fa8ece62d24f706a8dc71324277dfd1e66548b30b27a9c88b84d4038d5a0"
+  },
+  {
+    "original_bytes": 250354,
+    "original_path": "core-attempt01/original-checkout-after.json",
+    "original_sha256": "7373e51e659fb08f14127b7c54192bfc7bda184a9c3638a94557a8cae4213689",
+    "stored_path": "core-attempt01/original-checkout-after.json",
+    "stored_sha256": "7373e51e659fb08f14127b7c54192bfc7bda184a9c3638a94557a8cae4213689"
+  },
+  {
+    "original_bytes": 250354,
+    "original_path": "core-attempt01/original-core-inputs-before.json",
+    "original_sha256": "7373e51e659fb08f14127b7c54192bfc7bda184a9c3638a94557a8cae4213689",
+    "stored_path": "core-attempt01/original-core-inputs-before.json",
+    "stored_sha256": "7373e51e659fb08f14127b7c54192bfc7bda184a9c3638a94557a8cae4213689"
+  },
+  {
+    "original_bytes": 306886,
+    "original_path": "core-attempt01/original-core7.log",
+    "original_sha256": "6d0d8860262c050ca627f40cde0b1d2c3fe26dc4da8fa44c4dd0788639f1ee9a",
+    "stored_path": "core-attempt01/original-core7.log.gz",
+    "stored_sha256": "5c70594d6a97377fce1ea64296cdbf9250a281cecc7c585f45d7e246251e5422"
+  },
+  {
+    "original_bytes": 64,
+    "original_path": "core-attempt01/os-version.log",
+    "original_sha256": "98ec1edfdd0153a7f67baccc3fc2481b06de7a75d245263efaab2412ee753e57",
+    "stored_path": "core-attempt01/os-version.log",
+    "stored_sha256": "98ec1edfdd0153a7f67baccc3fc2481b06de7a75d245263efaab2412ee753e57"
+  },
+  {
+    "original_bytes": 3797,
+    "original_path": "core-attempt01/receipt.json",
+    "original_sha256": "9c91a94345466f2efc5659f853f309147f34f2370d5ee89f0645c8122b1cf065",
+    "stored_path": "core-attempt01/receipt.json",
+    "stored_sha256": "9c91a94345466f2efc5659f853f309147f34f2370d5ee89f0645c8122b1cf065"
+  },
+  {
+    "original_bytes": 86,
+    "original_path": "core-attempt01/resolve.log",
+    "original_sha256": "0ee832500c29ac51013fa44722972295c4052d5c64d9f6ef016ddf81abe9afaf",
+    "stored_path": "core-attempt01/resolve.log",
+    "stored_sha256": "0ee832500c29ac51013fa44722972295c4052d5c64d9f6ef016ddf81abe9afaf"
+  },
+  {
+    "original_bytes": 5,
+    "original_path": "core-attempt01/sdk-version.log",
+    "original_sha256": "7b01c549928398a045692f24bcac7803b348524cdd76f21265b02984b2ba556a",
+    "stored_path": "core-attempt01/sdk-version.log",
+    "stored_sha256": "7b01c549928398a045692f24bcac7803b348524cdd76f21265b02984b2ba556a"
+  },
+  {
+    "original_bytes": 128,
+    "original_path": "core-attempt01/swift-version.log",
+    "original_sha256": "30bb0d72a580e8e936ab32e24cab2876f82fa6b06d66fef876fe21a47e828acc",
+    "stored_path": "core-attempt01/swift-version.log",
+    "stored_sha256": "30bb0d72a580e8e936ab32e24cab2876f82fa6b06d66fef876fe21a47e828acc"
+  },
+  {
+    "original_bytes": 1152,
+    "original_path": "core-attempt01/test-selection.json",
+    "original_sha256": "13891b585822191d51f6d2d7a0d3a94deeeaad0b956462d39b7be90494bc9371",
+    "stored_path": "core-attempt01/test-selection.json",
+    "stored_sha256": "13891b585822191d51f6d2d7a0d3a94deeeaad0b956462d39b7be90494bc9371"
+  },
+  {
+    "original_bytes": 33,
+    "original_path": "core-attempt01/xcode-version.log",
+    "original_sha256": "694b44731d0b415c5b11d844151e466d7f5e200a95627efda377f232f1a6ab77",
+    "stored_path": "core-attempt01/xcode-version.log",
+    "stored_sha256": "694b44731d0b415c5b11d844151e466d7f5e200a95627efda377f232f1a6ab77"
+  },
+  {
+    "original_bytes": 4794,
+    "original_path": "manifest/RESULT.json",
+    "original_sha256": "fec337b2f8ed915e2571718cf23f3e95f9ec2b535c40fac64be444358d600d0d",
+    "stored_path": "manifest/RESULT.json",
+    "stored_sha256": "fec337b2f8ed915e2571718cf23f3e95f9ec2b535c40fac64be444358d600d0d"
+  },
+  {
+    "original_bytes": 0,
+    "original_path": "manifest/canonical-manifest.stderr.log",
+    "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stored_path": "manifest/canonical-manifest.stderr.log",
+    "stored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "original_bytes": 3605,
+    "original_path": "manifest/canonical-manifest.stdout.log",
+    "original_sha256": "6a3adc34271cba4ee688071b7aec9eb7f0ee9731bedf3e215a77efb8648947f0",
+    "stored_path": "manifest/canonical-manifest.stdout.log",
+    "stored_sha256": "6a3adc34271cba4ee688071b7aec9eb7f0ee9731bedf3e215a77efb8648947f0"
+  }
+]

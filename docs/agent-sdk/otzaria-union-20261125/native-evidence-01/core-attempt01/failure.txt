@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Users/m1/builds/otzaria-core7-union-20261125.py", line 217, in main
+    raw = run("original-core7", [
+  File "/Users/m1/builds/otzaria-core7-union-20261125.py", line 166, in run
+    require(code == 0, "Actual command failed: " + name)
+  File "/Users/m1/builds/otzaria-core7-union-20261125.py", line 66, in require
+    raise RuntimeError(message)
+RuntimeError: Actual command failed: original-core7

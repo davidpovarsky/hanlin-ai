@@ -1,0 +1,126 @@
+{
+  "commands": [
+    {
+      "argv": [
+        "cp",
+        "-c",
+        "-R",
+        "/Users/m1/caches/DerivedData/hanlin-ai-cache-20261125/core-proof",
+        "/Users/m1/caches/DerivedData/otzaria-core7-abf-union-20261125"
+      ],
+      "exit_code": 0,
+      "log": "clone-compatible-cache.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "name": "clone-compatible-cache",
+      "seconds": 5.22
+    },
+    {
+      "argv": [
+        "xcrun",
+        "swift",
+        "--version"
+      ],
+      "exit_code": 0,
+      "log": "swift-version.log",
+      "log_sha256": "30bb0d72a580e8e936ab32e24cab2876f82fa6b06d66fef876fe21a47e828acc",
+      "name": "swift-version",
+      "seconds": 0.271
+    },
+    {
+      "argv": [
+        "xcodebuild",
+        "-version"
+      ],
+      "exit_code": 0,
+      "log": "xcode-version.log",
+      "log_sha256": "694b44731d0b415c5b11d844151e466d7f5e200a95627efda377f232f1a6ab77",
+      "name": "xcode-version",
+      "seconds": 0.1
+    },
+    {
+      "argv": [
+        "xcrun",
+        "--sdk",
+        "macosx",
+        "--show-sdk-version"
+      ],
+      "exit_code": 0,
+      "log": "sdk-version.log",
+      "log_sha256": "7b01c549928398a045692f24bcac7803b348524cdd76f21265b02984b2ba556a",
+      "name": "sdk-version",
+      "seconds": 1.125
+    },
+    {
+      "argv": [
+        "sw_vers"
+      ],
+      "exit_code": 0,
+      "log": "os-version.log",
+      "log_sha256": "98ec1edfdd0153a7f67baccc3fc2481b06de7a75d245263efaab2412ee753e57",
+      "name": "os-version",
+      "seconds": 0.066
+    },
+    {
+      "argv": [
+        "xcrun",
+        "swift",
+        "package",
+        "--package-path",
+        "/Users/m1/builds/otzaria-core7-abf-union-20261125",
+        "--scratch-path",
+        "/Users/m1/caches/DerivedData/otzaria-core7-abf-union-20261125",
+        "--skip-update",
+        "resolve"
+      ],
+      "exit_code": 0,
+      "log": "resolve.log",
+      "log_sha256": "0ee832500c29ac51013fa44722972295c4052d5c64d9f6ef016ddf81abe9afaf",
+      "name": "resolve",
+      "seconds": 2.586
+    },
+    {
+      "argv": [
+        "xcrun",
+        "swift",
+        "test",
+        "--package-path",
+        "/Users/m1/builds/otzaria-core7-abf-union-20261125",
+        "--scratch-path",
+        "/Users/m1/caches/DerivedData/otzaria-core7-abf-union-20261125",
+        "--jobs",
+        "2",
+        "--disable-automatic-resolution",
+        "--filter",
+        "StreamTextThoughtSignatureContinuationTests|StreamTextToolResultContinuationTests",
+        "--xunit-output",
+        "/Users/m1/builds/otzaria-core7-abf-union-20261125/evidence/focused-suite.xml"
+      ],
+      "exit_code": 125,
+      "log": "original-core7.log",
+      "log_sha256": "6d0d8860262c050ca627f40cde0b1d2c3fe26dc4da8fa44c4dd0788639f1ee9a",
+      "name": "original-core7",
+      "seconds": 101.342
+    }
+  ],
+  "core_source": "abf0921c6e89e6521cc2b510ff11016b45a0ef08",
+  "disk_admission": {
+    "anticipated_concurrent_growth_gib": 9.0,
+    "free_bytes": 13327015936,
+    "os_margin_gib": 2.0,
+    "own_incremental_budget_bytes": 1073741824,
+    "required_free_bytes": 12884901888
+  },
+  "error": "Actual command failed: original-core7",
+  "expected_scenario_invocations": 7,
+  "finished_utc": "2026-11-25T03:49:39.674124+00:00",
+  "free_bytes_after": 10722357248,
+  "hanlin_source": "c92c3f904872b37287861dfafa9cc668d5dc44c3",
+  "live_provider_test": false,
+  "original_full_suite_reexecuted": false,
+  "original_test_methods": 6,
+  "owned_command_stopped_reason": "concurrent growth consumed the recorded remaining disk reserve",
+  "prior_core48_reexecuted": false,
+  "runner_sha256": "a28aecadd9a30e58fe0a99bbea230e0e362f70bf4c3d3e2c6b90e6bf2e6de3b2",
+  "started_utc": "2026-11-25T03:47:16.591632+00:00",
+  "status": "FAILED"
+}
