@@ -176,6 +176,7 @@ public enum ToolPresentationProfileRegistry {
             // Preserve provider/MCP authority. Refine only the exact built-in
             // legacy profile, retaining its result and embedded presentation.
             if let argumentsJSON,
+               toolName.lowercased() == "manage_calendar",
                explicitProfile.identity == "legacy.\(toolName.lowercased())",
                let invocation = LegacyToolPresentationAdapter.profile(for: toolName, argumentsJSON: argumentsJSON) {
                 var refined = explicitProfile
