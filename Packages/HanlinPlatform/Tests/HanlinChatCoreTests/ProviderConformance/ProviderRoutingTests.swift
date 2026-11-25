@@ -29,25 +29,17 @@ struct ProviderRoutingTests {
         #expect(desc.headers.isEmpty)
     }
 
-    @Test("OpenAI-Response routing characterization (Section 6 mandatory test)")
-    func testOpenAIResponseRoutingCharacterization() {
-        // Characterization finding:
-        // APIType "openAIResponse" / "openai-response" pointing to api.openai.com
-        // currently routes through the OpenAI Chat completions provider because
-        // HanlinAISDKProviderFactory resolves company == "OPENAI" to .openAI,
-        // and normalizeBaseURL trims /responses.
-        // It does NOT yet route to a dedicated Responses API adapter.
-        let config = HanlinChatModelConfiguration(
-            modelID: "gpt-4o",
-            displayName: "GPT-4o",
-            company: "OpenAI",
-            apiType: "openAIResponse",
-            endpoint: "https://api.openai.com/v1/responses",
-            credential: "sk-test"
-        )
-        let desc = HanlinAISDKProviderFactory.descriptor(for: config)
-        #expect(desc.kind == .openAI, "Characterization finding: openAIResponse routes to .openAI chatModel rather than dedicated Responses adapter.")
-        #expect(desc.baseURL.absoluteString == "https://api.openai.com/v1")
+    @Test("Native and historical Responses spellings select the original Responses adapter")
+    func testOpenAIResponseRouting() {
+        for apiType in ["OpenAI-Response", "openAIResponse", "openai-responses"] {
+            let config = HanlinChatModelConfiguration(
+                modelID: "gpt-4o", displayName: "GPT-4o", company: "OpenAI",
+                apiType: apiType, endpoint: "https://api.openai.com/v1/responses", credential: "fixture-only"
+            )
+            let descriptor = HanlinAISDKProviderFactory.descriptor(for: config)
+            #expect(descriptor.kind == .openAIResponses)
+            #expect(descriptor.baseURL.absoluteString == "https://api.openai.com/v1")
+        }
     }
 
     @Test("OpenAI with custom host routes to openAICompatible")

@@ -1,6 +1,650 @@
 {
   "sourceLanguage" : "zh-Hans",
   "strings" : {
+    "Use selected base model policy": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use selected base model policy"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שימוש במדיניות של מודל הבסיס שנבחר"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "使用所选基础模型的策略"
+          }
+        }
+      }
+    },
+    "Keep the policy currently saved on this model or agent.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keep the policy currently saved on this model or agent."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שמירת המדיניות הקיימת במודל או בסוכן הזה."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保留当前模型或智能体已保存的策略。"
+          }
+        }
+      }
+    },
+    "Use the selected base model's saved cache policy.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use the selected base model's saved cache policy."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שימוש במדיניות המטמון השמורה במודל הבסיס שנבחר."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "使用所选基础模型已保存的缓存策略。"
+          }
+        }
+      }
+    },
+    "Cache policy": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cache policy"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מדיניות מטמון"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "缓存策略"
+          }
+        }
+      }
+    },
+    "Custom policy (unchanged)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Custom policy (unchanged)"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מדיניות מותאמת אישית (ללא שינוי)"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "自定义策略（保持不变）"
+          }
+        }
+      }
+    },
+    "Saved policy (unchanged)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saved policy (unchanged)"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "המדיניות השמורה (ללא שינוי)"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已保存的策略（保持不变）"
+          }
+        }
+      }
+    },
+    "Automatic (recommended)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automatic (recommended)"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אוטומטי (מומלץ)"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "自动（推荐）"
+          }
+        }
+      }
+    },
+    "Provider defaults": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Provider defaults"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ברירות המחדל של הספק"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "提供商默认设置"
+          }
+        }
+      }
+    },
+    "No explicit cache controls": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No explicit cache controls"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ללא הנחיות מפורשות למטמון"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "不发送显式缓存控制"
+          }
+        }
+      }
+    },
+    "Anthropic: 1 hour": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anthropic: 1 hour"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anthropic: שעה אחת"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anthropic：1 小时"
+          }
+        }
+      }
+    },
+    "OpenAI: up to 24 hours": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OpenAI: up to 24 hours"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OpenAI: עד 24 שעות"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OpenAI：最长 24 小时"
+          }
+        }
+      }
+    },
+    "Explicit cache: 30 minutes": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Explicit cache: 30 minutes"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מטמון מפורש: 30 דקות"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "显式缓存：30 分钟"
+          }
+        }
+      }
+    },
+    "Explicit cache: 12 hours": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Explicit cache: 12 hours"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מטמון מפורש: 12 שעות"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "显式缓存：12 小时"
+          }
+        }
+      }
+    },
+    "Use Hanlin's automatic caching policy for this provider.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use Hanlin's automatic caching policy for this provider."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שימוש במדיניות המטמון האוטומטית של Hanlin עבור הספק הזה."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "对该提供商使用 Hanlin 的自动缓存策略。"
+          }
+        }
+      }
+    },
+    "Use the provider's defaults without Hanlin's cache hints.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use the provider's defaults without Hanlin's cache hints."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שימוש בברירות המחדל של הספק, ללא הנחיות מטמון של Hanlin."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "使用提供商默认设置，不发送 Hanlin 的缓存提示。"
+          }
+        }
+      }
+    },
+    "Send no explicit cache controls. The provider may still use automatic caching.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Send no explicit cache controls. The provider may still use automatic caching."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "לא יישלחו הנחיות מפורשות למטמון. הספק עדיין עשוי להשתמש במטמון אוטומטי."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "不发送显式缓存控制。提供商仍可能使用自动缓存。"
+          }
+        }
+      }
+    },
+    "Request this cache lifetime for reusable context. Availability and billing follow the provider's rules.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Request this cache lifetime for reusable context. Availability and billing follow the provider's rules."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בקשת משך השמירה הזה עבור הקשר שניתן להשתמש בו שוב. הזמינות והחיוב כפופים לכללי הספק."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "为可复用的上下文请求此缓存时长。可用性和计费以提供商规则为准。"
+          }
+        }
+      }
+    },
+    "Your saved custom policy will be kept unless you choose another option.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your saved custom policy will be kept unless you choose another option."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "המדיניות המותאמת האישית השמורה תישאר ללא שינוי, אלא אם תיבחר אפשרות אחרת."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "除非选择其他选项，否则将保留已保存的自定义策略。"
+          }
+        }
+      }
+    },
+    "Only supported options are shown. Cache writes and longer lifetimes may have different costs; the provider decides whether a request can be reused.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Only supported options are shown. Cache writes and longer lifetimes may have different costs; the provider decides whether a request can be reused."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מוצגות רק אפשרויות נתמכות. כתיבה למטמון ומשך שמירה ארוך יותר עשויים להיות מתומחרים אחרת; הספק מחליט אם ניתן לעשות שימוש חוזר בבקשה."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "仅显示支持的选项。缓存写入和更长的保留时间可能采用不同计费；提供商决定请求能否复用缓存。"
+          }
+        }
+      }
+    },
+    "This cache option is no longer available for this provider and model. Choose another option.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This cache option is no longer available for this provider and model. Choose another option."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "אפשרות המטמון הזו אינה זמינה עוד לספק ולמודל האלה. יש לבחור אפשרות אחרת."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "该提供商和模型已不再支持此缓存选项。请选择其他选项。"
+          }
+        }
+      }
+    },
+    "Could not save model": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Could not save model"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "לא ניתן לשמור את המודל"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "无法保存模型"
+          }
+        }
+      }
+    },
+    "Prompt cache" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prompt cache"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "מטמון ההנחיות"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "提示缓存"
+          }
+        }
+      }
+    },
+    "Reported cache read tokens" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reported cache read tokens"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "טוקנים שנקראו מהמטמון לפי דיווח הספק"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "供应商报告的缓存读取令牌"
+          }
+        }
+      }
+    },
+    "Reported cache write tokens" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reported cache write tokens"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "טוקנים שנכתבו למטמון לפי דיווח הספק"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "供应商报告的缓存写入令牌"
+          }
+        }
+      }
+    },
+    "Cache read fraction of input" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cache read fraction of input"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "שיעור הקלט שנקרא מהמטמון"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "输入中的缓存读取比例"
+          }
+        }
+      }
+    },
+    "Rounds with cache read data" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rounds with cache read data"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "סבבים עם נתוני קריאה מהמטמון"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "含缓存读取数据的轮次"
+          }
+        }
+      }
+    },
+    "Rounds with cache write data" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rounds with cache write data"
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "סבבים עם נתוני כתיבה למטמון"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "含缓存写入数据的轮次"
+          }
+        }
+      }
+    },
+    "Cache tokens are provider-reported input tokens. Missing data is unavailable, not zero. These counts are not a price or a cost estimate." : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cache tokens are provider-reported input tokens. Missing data is unavailable, not zero. These counts are not a price or a cost estimate."
+          }
+        },
+        "he" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "נתוני המטמון הם טוקני קלט שהספק דיווח עליהם. נתון חסר אינו אפס. הספירות אינן מחיר או אומדן עלות."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "缓存令牌是供应商报告的输入令牌。缺失数据表示不可用，而不是零。这些计数不是价格或费用估算。"
+          }
+        }
+      }
+    },
     "Search settings" : {
       "extractionState" : "manual",
       "localizations" : {

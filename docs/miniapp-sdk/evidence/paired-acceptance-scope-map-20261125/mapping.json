@@ -1,0 +1,543 @@
+{
+  "schemaVersion": 1,
+  "createdAtUTC": "2026-11-25T03:41:49.634919+00:00",
+  "method": "Read-only original Git source/contract mapping; no compiler, generator, native test, Mac query or execution result created.",
+  "sourceCommit": "1a611764779b0a57cc57d71b26d2cd6449895d8d",
+  "sourceTree": "032432920c093a561a6b2cc6ff61c908d02705a6",
+  "comparisonCommit": "9875fecdbf85e643a084e4936aa6a4cd51d0f77b",
+  "evidenceBaseCommit": "1e7c5b2923c2a3396491519ec83c5b4b46049602",
+  "checkpoint": {
+    "completeOriginal52": "NOT_RUN",
+    "selectedSDK03OwnershipLifetime3": "NOT_RUN",
+    "taskClosureChanged": false,
+    "note": "The complete original 25+27 route has not passed. Previously retained focused actual passes and failures stay separately identified; this map does not change or aggregate their result bundles."
+  },
+  "originalPairedContract": {
+    "scopeEnvironment": "PAIRED_TEST_SCOPE=miniapp_complete",
+    "miniAppsExpected": 25,
+    "aiExpected": 27,
+    "totalExpected": 52,
+    "sourceReferences": {
+      "aiPlan": [
+        24,
+        53
+      ],
+      "miniAppsPlan": [
+        54,
+        64,
+        600,
+        628
+      ],
+      "nativeVerifier": [
+        342,
+        353
+      ],
+      "aiVerifier": [
+        668,
+        691
+      ],
+      "attachments": [
+        716,
+        732
+      ]
+    },
+    "miniAppsSelectors": [
+      {
+        "id": "M01",
+        "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch",
+        "selectedBy": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch",
+        "sourcePath": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+        "methodLine": 225
+      },
+      {
+        "id": "M02",
+        "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents",
+        "selectedBy": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents",
+        "sourcePath": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+        "methodLine": 298
+      },
+      {
+        "id": "M03",
+        "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualInputLayoutAndDataAdapters",
+        "selectedBy": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualInputLayoutAndDataAdapters",
+        "sourcePath": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+        "methodLine": 529
+      },
+      {
+        "id": "M04",
+        "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualPresentationAdaptersAndDismissalEvents",
+        "selectedBy": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualPresentationAdaptersAndDismissalEvents",
+        "sourcePath": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+        "methodLine": 649
+      },
+      {
+        "id": "M05",
+        "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoNativeAPIUsesActualUIKitAndWorklets",
+        "selectedBy": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoNativeAPIUsesActualUIKitAndWorklets",
+        "sourcePath": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+        "methodLine": 464
+      },
+      {
+        "id": "M06",
+        "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoWidgetsUsesOriginalTimelinesAndLiveActivities",
+        "selectedBy": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoWidgetsUsesOriginalTimelinesAndLiveActivities",
+        "sourcePath": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+        "methodLine": 422
+      },
+      {
+        "id": "M07",
+        "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneModularSearchLoadsActualSefariaText",
+        "selectedBy": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneModularSearchLoadsActualSefariaText",
+        "sourcePath": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+        "methodLine": 1132
+      },
+      {
+        "id": "M08",
+        "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyExpoPackageImportsRendersAndHandlesEvents",
+        "selectedBy": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyExpoPackageImportsRendersAndHandlesEvents",
+        "sourcePath": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+        "methodLine": 1044
+      },
+      {
+        "id": "M09",
+        "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyNativeScriptPackageImportsRendersAndHandlesEvents",
+        "selectedBy": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyNativeScriptPackageImportsRendersAndHandlesEvents",
+        "sourcePath": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+        "methodLine": 1078
+      },
+      {
+        "id": "M10",
+        "selector": "HanlinMiniAppsTests/CrossAppInvocationTests/testCancelAndDisplayDoneReturnNoDocumentMutation",
+        "selectedBy": "HanlinMiniAppsTests/CrossAppInvocationTests/testCancelAndDisplayDoneReturnNoDocumentMutation",
+        "sourcePath": "HanlinMiniAppsTests/CrossAppInvocationTests.swift",
+        "methodLine": 62
+      },
+      {
+        "id": "M11",
+        "selector": "HanlinMiniAppsTests/CrossAppInvocationTests/testReusingValueWindowKeepsItsInvocationBindingCurrent",
+        "selectedBy": "HanlinMiniAppsTests/CrossAppInvocationTests/testReusingValueWindowKeepsItsInvocationBindingCurrent",
+        "sourcePath": "HanlinMiniAppsTests/CrossAppInvocationTests.swift",
+        "methodLine": 137
+      },
+      {
+        "id": "M12",
+        "selector": "HanlinMiniAppsTests/CrossAppInvocationTests/testRemovingInvocationOwnerCancelsWhileSessionIsStillRetained",
+        "selectedBy": "HanlinMiniAppsTests/CrossAppInvocationTests/testRemovingInvocationOwnerCancelsWhileSessionIsStillRetained",
+        "sourcePath": "HanlinMiniAppsTests/CrossAppInvocationTests.swift",
+        "methodLine": 151
+      },
+      {
+        "id": "M13",
+        "selector": "HanlinMiniAppsTests/CrossAppInvocationTests/testActualIncomingRequestsCreateDistinctIPadScenes",
+        "selectedBy": "HanlinMiniAppsTests/CrossAppInvocationTests/testActualIncomingRequestsCreateDistinctIPadScenes",
+        "sourcePath": "HanlinMiniAppsTests/CrossAppInvocationTests.swift",
+        "methodLine": 169
+      },
+      {
+        "id": "M14",
+        "selector": "HanlinMiniAppsTests/NativeScriptWindowOwnershipTests/testUnrelatedAndLateWindowCleanupPreservesNativeScriptOwner",
+        "selectedBy": "HanlinMiniAppsTests/NativeScriptWindowOwnershipTests/testUnrelatedAndLateWindowCleanupPreservesNativeScriptOwner",
+        "sourcePath": "HanlinMiniAppsTests/NativeScriptWindowOwnershipTests.swift",
+        "methodLine": 7
+      },
+      {
+        "id": "M15",
+        "selector": "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests/testInvalidationReleasesHandlersAndRejectsLateActions",
+        "selectedBy": "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests/testInvalidationReleasesHandlersAndRejectsLateActions",
+        "sourcePath": "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests.swift",
+        "methodLine": 59
+      },
+      {
+        "id": "M16",
+        "selector": "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests/testBridgeInvalidationReleasesPendingCallbacksBeforeProviderCancellation",
+        "selectedBy": "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests/testBridgeInvalidationReleasesPendingCallbacksBeforeProviderCancellation",
+        "sourcePath": "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests.swift",
+        "methodLine": 10
+      },
+      {
+        "id": "M17",
+        "selector": "HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests/testExternalInvocationSurvivesNestedFullScreenModal",
+        "selectedBy": "HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests/testExternalInvocationSurvivesNestedFullScreenModal",
+        "sourcePath": "HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests.swift",
+        "methodLine": 31
+      },
+      {
+        "id": "M18",
+        "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedGroupBoxSlotsAndInstalledMetadata",
+        "selectedBy": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedGroupBoxSlotsAndInstalledMetadata",
+        "sourcePath": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+        "methodLine": 702
+      },
+      {
+        "id": "M19",
+        "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEditButtonEditsOriginalList",
+        "selectedBy": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEditButtonEditsOriginalList",
+        "sourcePath": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+        "methodLine": 745
+      },
+      {
+        "id": "M20",
+        "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEmptyViewReportsNativeLayout",
+        "selectedBy": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEmptyViewReportsNativeLayout",
+        "sourcePath": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+        "methodLine": 781
+      },
+      {
+        "id": "M21",
+        "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierAccessibilityAndGeometry",
+        "selectedBy": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierAccessibilityAndGeometry",
+        "sourcePath": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+        "methodLine": 805
+      },
+      {
+        "id": "M22",
+        "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierHitTestingAndSubmitScope",
+        "selectedBy": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierHitTestingAndSubmitScope",
+        "sourcePath": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+        "methodLine": 842
+      },
+      {
+        "id": "M23",
+        "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierNativeContainerContexts",
+        "selectedBy": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierNativeContainerContexts",
+        "sourcePath": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+        "methodLine": 879
+      },
+      {
+        "id": "M24",
+        "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoHostServicesUseRealStorageRuntimeAndWidgetPublication",
+        "selectedBy": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoHostServicesUseRealStorageRuntimeAndWidgetPublication",
+        "sourcePath": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+        "methodLine": 962
+      },
+      {
+        "id": "M25",
+        "selector": "HanlinMiniAppsTests/CrossAppInvocationTests/testUnavailableCallbackRetainsResultForSourceRecovery",
+        "selectedBy": "HanlinMiniAppsTests/CrossAppInvocationTests/testUnavailableCallbackRetainsResultForSourceRecovery",
+        "sourcePath": "HanlinMiniAppsTests/CrossAppInvocationTests.swift",
+        "methodLine": 93
+      }
+    ],
+    "aiOriginalSelectionArguments": [
+      "AI_HLYTests/PendingFirstTurnTests/importedMiniAppRepairDispatchesOnceAndPreservesDraftAndSettings",
+      "AI_HLYTests/PendingFirstTurnTests/cancelledMiniAppRepairPreservesHomeDraft",
+      "AI_HLYTests/HanlinScriptingPlatformCompositionTests/malformedImportedArchiveRetainsOriginalAndStructuredDiagnostic",
+      "AI_HLYTests/MiniAppAuthoringToolTests/originalSDKWriteValidateBuildAndRepair",
+      "AI_HLYTests/MiniAppAuthoringToolTests/sourceWritePreservesUnrelatedFilesAndTargetsRetainedSource",
+      "AI_HLYTests/MiniAppAuthoringToolTests/originalExpoMetroBuildOnEmbeddedNode",
+      "AI_HLYTests/HanlinOriginalScriptWidgetAPITests",
+      "AI_HLYTests/HanlinNativePresentationTests",
+      "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests",
+      "AI_HLYTests/HanlinOriginalScriptWidgetControlTests",
+      "AI_HLYTests/HanlinMiniAppStorageCapacityTests",
+      "AI_HLYTests/HanlinOriginalExpoWidgetTests",
+      "AI_HLYUITests/MiniAppAuthoringUITests",
+      "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testInstalledExpoActionsReturnActualReplyAndFailure",
+      "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testPreparedExpoWidgetPublicationReachesExistingConsumer"
+    ],
+    "aiExpandedCases": [
+      {
+        "id": "A01",
+        "selector": "AI_HLYTests/PendingFirstTurnTests/importedMiniAppRepairDispatchesOnceAndPreservesDraftAndSettings",
+        "selectedBy": "AI_HLYTests/PendingFirstTurnTests/importedMiniAppRepairDispatchesOnceAndPreservesDraftAndSettings",
+        "sourcePath": "AI_HLYTests/HanlinOrganizerDockParityTests.swift",
+        "methodLine": 1001
+      },
+      {
+        "id": "A02",
+        "selector": "AI_HLYTests/PendingFirstTurnTests/cancelledMiniAppRepairPreservesHomeDraft",
+        "selectedBy": "AI_HLYTests/PendingFirstTurnTests/cancelledMiniAppRepairPreservesHomeDraft",
+        "sourcePath": "AI_HLYTests/HanlinOrganizerDockParityTests.swift",
+        "methodLine": 1091
+      },
+      {
+        "id": "A03",
+        "selector": "AI_HLYTests/HanlinScriptingPlatformCompositionTests/malformedImportedArchiveRetainsOriginalAndStructuredDiagnostic",
+        "selectedBy": "AI_HLYTests/HanlinScriptingPlatformCompositionTests/malformedImportedArchiveRetainsOriginalAndStructuredDiagnostic",
+        "sourcePath": "AI_HLYTests/HanlinScriptingPlatformCompositionTests.swift",
+        "methodLine": 137
+      },
+      {
+        "id": "A04",
+        "selector": "AI_HLYTests/MiniAppAuthoringToolTests/originalSDKWriteValidateBuildAndRepair",
+        "selectedBy": "AI_HLYTests/MiniAppAuthoringToolTests/originalSDKWriteValidateBuildAndRepair",
+        "sourcePath": "AI_HLYTests/MiniAppAuthoringToolTests.swift",
+        "methodLine": 11
+      },
+      {
+        "id": "A05",
+        "selector": "AI_HLYTests/MiniAppAuthoringToolTests/sourceWritePreservesUnrelatedFilesAndTargetsRetainedSource",
+        "selectedBy": "AI_HLYTests/MiniAppAuthoringToolTests/sourceWritePreservesUnrelatedFilesAndTargetsRetainedSource",
+        "sourcePath": "AI_HLYTests/MiniAppAuthoringToolTests.swift",
+        "methodLine": 60
+      },
+      {
+        "id": "A06",
+        "selector": "AI_HLYTests/MiniAppAuthoringToolTests/originalExpoMetroBuildOnEmbeddedNode",
+        "selectedBy": "AI_HLYTests/MiniAppAuthoringToolTests/originalExpoMetroBuildOnEmbeddedNode",
+        "sourcePath": "AI_HLYTests/MiniAppAuthoringToolTests.swift",
+        "methodLine": 79
+      },
+      {
+        "id": "A07",
+        "selector": "AI_HLYTests/HanlinOriginalScriptWidgetAPITests/originalNativeProvidersAreRegisteredAndExposeRealDeviceValues",
+        "selectedBy": "AI_HLYTests/HanlinOriginalScriptWidgetAPITests",
+        "sourcePath": "AI_HLYTests/HanlinOriginalScriptWidgetAPITests.swift",
+        "methodLine": 16
+      },
+      {
+        "id": "A08",
+        "selector": "AI_HLYTests/HanlinOriginalScriptWidgetAPITests/originalAsyncDocumentsProviderSettlesBeforeRenderingAndStateCommit",
+        "selectedBy": "AI_HLYTests/HanlinOriginalScriptWidgetAPITests",
+        "sourcePath": "AI_HLYTests/HanlinOriginalScriptWidgetAPITests.swift",
+        "methodLine": 44
+      },
+      {
+        "id": "A09",
+        "selector": "AI_HLYTests/HanlinOriginalScriptWidgetAPITests/upstreamPromiseRejectionIsCatchableWithoutUnsupportedAsyncFailure",
+        "selectedBy": "AI_HLYTests/HanlinOriginalScriptWidgetAPITests",
+        "sourcePath": "AI_HLYTests/HanlinOriginalScriptWidgetAPITests.swift",
+        "methodLine": 68
+      },
+      {
+        "id": "A10",
+        "selector": "AI_HLYTests/HanlinOriginalScriptWidgetAPITests/originalStorageAndHanlinCompatibilityValuesShareOneTransaction",
+        "selectedBy": "AI_HLYTests/HanlinOriginalScriptWidgetAPITests",
+        "sourcePath": "AI_HLYTests/HanlinOriginalScriptWidgetAPITests.swift",
+        "methodLine": 89
+      },
+      {
+        "id": "A11",
+        "selector": "AI_HLYTests/HanlinNativePresentationTests/testNativeSnippetHasIndependentDurableSessionsWithoutWidgetInstances",
+        "selectedBy": "AI_HLYTests/HanlinNativePresentationTests",
+        "sourcePath": "AI_HLYTests/HanlinNativePresentationTests.swift",
+        "methodLine": 13
+      },
+      {
+        "id": "A12",
+        "selector": "AI_HLYTests/HanlinNativePresentationTests/testTranslationUsesOriginalAsyncAPIAndReturnsNativeFinishEffect",
+        "selectedBy": "AI_HLYTests/HanlinNativePresentationTests",
+        "sourcePath": "AI_HLYTests/HanlinNativePresentationTests.swift",
+        "methodLine": 65
+      },
+      {
+        "id": "A13",
+        "selector": "AI_HLYTests/HanlinNativePresentationTests/testOriginalDynamicIslandCapturesAllSevenNativeRegionsAndFunctionComponents",
+        "selectedBy": "AI_HLYTests/HanlinNativePresentationTests",
+        "sourcePath": "AI_HLYTests/HanlinNativePresentationTests.swift",
+        "methodLine": 86
+      },
+      {
+        "id": "A14",
+        "selector": "AI_HLYTests/HanlinNativePresentationTests/testNativePresentationRejectsRemovedGenerationAndDifferentProductStore",
+        "selectedBy": "AI_HLYTests/HanlinNativePresentationTests",
+        "sourcePath": "AI_HLYTests/HanlinNativePresentationTests.swift",
+        "methodLine": 148
+      },
+      {
+        "id": "A15",
+        "selector": "AI_HLYTests/HanlinNativePresentationTests/testExpoLayoutEntryUsesItsDeclaredFormatRegardlessOfFileExtension",
+        "selectedBy": "AI_HLYTests/HanlinNativePresentationTests",
+        "sourcePath": "AI_HLYTests/HanlinNativePresentationTests.swift",
+        "methodLine": 164
+      },
+      {
+        "id": "A16",
+        "selector": "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests/originalRegionsPersistOutsideActivityContentAndActionsProduceFreshSnapshots",
+        "selectedBy": "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests",
+        "sourcePath": "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests.swift",
+        "methodLine": 52
+      },
+      {
+        "id": "A17",
+        "selector": "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests/inactiveWidgetCannotProduceOrLoadALiveActivitySnapshot",
+        "selectedBy": "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests",
+        "sourcePath": "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests.swift",
+        "methodLine": 89
+      },
+      {
+        "id": "A18",
+        "selector": "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests/actualActivityKitStartsUpdatesAndEndsTheOriginalProgram",
+        "selectedBy": "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests",
+        "sourcePath": "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests.swift",
+        "methodLine": 107
+      },
+      {
+        "id": "A19",
+        "selector": "AI_HLYTests/HanlinOriginalScriptWidgetControlTests/originalControlsCompileAndRunNativeActionsWithoutRendering",
+        "selectedBy": "AI_HLYTests/HanlinOriginalScriptWidgetControlTests",
+        "sourcePath": "AI_HLYTests/HanlinOriginalScriptWidgetControlTests.swift",
+        "methodLine": 98
+      },
+      {
+        "id": "A20",
+        "selector": "AI_HLYTests/HanlinOriginalScriptWidgetControlTests/controlSelectionPreservesProductInstallationAndGenerationOwnership",
+        "selectedBy": "AI_HLYTests/HanlinOriginalScriptWidgetControlTests",
+        "sourcePath": "AI_HLYTests/HanlinOriginalScriptWidgetControlTests.swift",
+        "methodLine": 130
+      },
+      {
+        "id": "A21",
+        "selector": "AI_HLYTests/HanlinOriginalScriptWidgetControlTests/originalControlEntitiesProvidersAndNativeIntentsUseThePublishedHostStore",
+        "selectedBy": "AI_HLYTests/HanlinOriginalScriptWidgetControlTests",
+        "sourcePath": "AI_HLYTests/HanlinOriginalScriptWidgetControlTests.swift",
+        "methodLine": 161
+      },
+      {
+        "id": "A22",
+        "selector": "AI_HLYTests/HanlinMiniAppStorageCapacityTests/largeArtifactsResourcesAndSnapshotsRetainIntegrity",
+        "selectedBy": "AI_HLYTests/HanlinMiniAppStorageCapacityTests",
+        "sourcePath": "AI_HLYTests/HanlinMiniAppStorageCapacityTests.swift",
+        "methodLine": 7
+      },
+      {
+        "id": "A23",
+        "selector": "AI_HLYTests/HanlinOriginalExpoWidgetTests/testOriginalWidgetRegistrationTimelineAndPickerKeepProductAndInstallationIdentity",
+        "selectedBy": "AI_HLYTests/HanlinOriginalExpoWidgetTests",
+        "sourcePath": "AI_HLYTests/HanlinOriginalExpoWidgetTests.swift",
+        "methodLine": 14
+      },
+      {
+        "id": "A24",
+        "selector": "AI_HLYUITests/MiniAppAuthoringUITests/testMalformedArchiveShowsOriginalImportDiagnostic",
+        "selectedBy": "AI_HLYUITests/MiniAppAuthoringUITests",
+        "sourcePath": "AI_HLYUITests/MiniAppAuthoringUITests.swift",
+        "methodLine": 33
+      },
+      {
+        "id": "A25",
+        "selector": "AI_HLYUITests/MiniAppAuthoringUITests/testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport",
+        "selectedBy": "AI_HLYUITests/MiniAppAuthoringUITests",
+        "sourcePath": "AI_HLYUITests/MiniAppAuthoringUITests.swift",
+        "methodLine": 45
+      },
+      {
+        "id": "A26",
+        "selector": "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testInstalledExpoActionsReturnActualReplyAndFailure",
+        "selectedBy": "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testInstalledExpoActionsReturnActualReplyAndFailure",
+        "sourcePath": "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests.swift",
+        "methodLine": 20
+      },
+      {
+        "id": "A27",
+        "selector": "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testPreparedExpoWidgetPublicationReachesExistingConsumer",
+        "selectedBy": "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testPreparedExpoWidgetPublicationReachesExistingConsumer",
+        "sourcePath": "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests.swift",
+        "methodLine": 49
+      }
+    ],
+    "staticEnumerationLimit": "Suite expansion identifies the 27 current source methods, including the original iOS ActivityKit case. This is source enumeration, not runtime test discovery or evidence of execution.",
+    "runtimeAcceptance": "Actual completed driver exit0, exact selected identities, expected25/27 passed, zero failed/skipped. The selector verifier confirms execution, while summary/driver checks establish success.",
+    "additionalPairedEvidence": [
+      "Actual original image transport requests /pixel.png=200 and /missing.png=404 (lines629-633).",
+      "Original external-modal fixture stage and actual result verification (lines593-599,634-635).",
+      "Actual repair/import/render test attachments from both native result bundles; a final simulator screenshot is insufficient (lines716-732).",
+      "Existing nonempty installedPackageID assertion and exact consumer/source/runtime bindings remain required by SDK07 scope reconciliation."
+    ],
+    "aggregationInput": "NONE: the runner reads one actual OriginalRuntimes.xcresult and one Paired.xcresult. verify_selected_tests.py accepts one original nodes file. No synthetic result merge or --reuse-report path is supported."
+  },
+  "evidenceReuse": {
+    "currentGuide": {
+      "path": "docs/product-split/CURRENT_BUILD_AND_RUN.md",
+      "lines": [
+        28,
+        43
+      ],
+      "permission": "Reuse passing evidence only for demonstrably unchanged dependencies, retaining its actual SHA, platform and scope. Earlier literal artifact references in this historical guide do not replace the recorded current primary route."
+    },
+    "currentSDK07Map": {
+      "path": "docs/miniapp-sdk/evidence/acceptance-criteria-map-20261124.json",
+      "permission": "Existing applicable receipts from another established owner may be linked after exact source/toolchain/input verification."
+    },
+    "separateCore56": {
+      "path": "docs/runtime/CORE_ACCEPTANCE_EVIDENCE_POLICY_2026-11-13.md",
+      "lines": [
+        3,
+        25,
+        44,
+        49
+      ],
+      "scope": "Explicit authenticated per-case aggregation applies only to that different Core56 contract; it does not amend this paired52 runner or turn a failed run green."
+    },
+    "decision": "The repository permits bounded unchanged-dependency evidence reuse, but supplies no paired52 aggregate collector. Do not invent a blanket all52-one-new-run task rule, and do not report paired EXECUTED_PASS without its original actual result requirements. Any separate criterion-level reuse needs its actual result identity, source/helper/fixture/runtime/native/toolchain/platform closure and absence of an affected newer failure; this record accepts no reuse candidate.",
+    "parentExecutionPlanReported": "After the ongoing Modular case, prefer the unchanged original25+27 route if the actual remaining execution budget allows. This includes the three SDK03 methods once, avoiding a duplicate focused3 run."
+  },
+  "sdk03": {
+    "taskID": "1220373608755846",
+    "scopeReceipt": "docs/miniapp-sdk/evidence/task-scope-reconciliation-20261124.json",
+    "directPendingCases": [
+      {
+        "selector": "HanlinMiniAppsTests/NativeScriptWindowOwnershipTests/testUnrelatedAndLateWindowCleanupPreservesNativeScriptOwner",
+        "lines": [
+          7,
+          49
+        ],
+        "status": "NOT_RUN_AT_THIS_CHECKPOINT",
+        "boundary": "Unrelated close cannot clear the current bridge/provider/data paths; stale predecessor cleanup cannot revoke a successor; the correct owner clears both bindings."
+      },
+      {
+        "selector": "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests/testInvalidationReleasesHandlersAndRejectsLateActions",
+        "lines": [
+          59,
+          110
+        ],
+        "status": "NOT_RUN_AT_THIS_CHECKPOINT",
+        "boundary": "Session invalidation releases JS handler captures, rejects late registration and both old/new actions with routeNotFound, and remains idempotent."
+      },
+      {
+        "selector": "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests/testBridgeInvalidationReleasesPendingCallbacksBeforeProviderCancellation",
+        "lines": [
+          10,
+          56
+        ],
+        "status": "NOT_RUN_AT_THIS_CHECKPOINT",
+        "boundary": "Fourteen pending completions across seven native APIs/two bridges release JS captures before synchronous provider cancellation; retained late completions invoke no closed-session JS."
+      }
+    ],
+    "differentAlreadyProvenBoundaries": [
+      {
+        "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch",
+        "actual": "Attempt11 finalized1PASS/0FAIL/0SKIP on318b251b; nonce-bound JSC/Node/CPython, real network/inter-app/private storage/relaunch.",
+        "evidencePath": "docs/miniapp-sdk/evidence/primary-parity-startup-pass-attempt11-20261125/receipt.json",
+        "sha256": "12d173a6218698f371290ce6d21f68c1e9ac31331865f9c4fbeef13d3d20acba",
+        "limit": "Does not exercise ownership/lifetime3. Reuse at a later source requires the unchanged relevant execution closure."
+      },
+      {
+        "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyNativeScriptPackageImportsRendersAndHandlesEvents",
+        "actual": "Attempt10 independently authored SDK-only NativeScript import/render/event case passed66.491s onfda6948; its batch retained2PASS/1FAIL because Modular failed.",
+        "evidencePath": "docs/miniapp-sdk/evidence/primary-remaining-focused-diagnostics-attempt10-20261125/receipt.json",
+        "sha256": "aa57f9de88843b2eff3634a0fea34fe4b0a5cb9f48c8e8c71d287b0f1039eaad",
+        "limit": "Does not exercise ownership/lifetime3; do not call its failed overall batch green."
+      }
+    ],
+    "minimumExistingFocusIfNeeded": {
+      "scheme": "HanlinMiniApps",
+      "action": "test-without-building",
+      "selection": [
+        "HanlinMiniAppsTests/NativeScriptWindowOwnershipTests/testUnrelatedAndLateWindowCleanupPreservesNativeScriptOwner",
+        "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests/testInvalidationReleasesHandlersAndRejectsLateActions",
+        "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests/testBridgeInvalidationReleasesPendingCallbacksBeforeProviderCancellation"
+      ],
+      "existingCommandLines": [
+        479,
+        491,
+        623,
+        628
+      ],
+      "verification": "Original verify_native_result and verify_selected_tests with actual expected3, exit0,3PASS,0FAIL,0SKIP; preserve original methods/assertions and actual source/native/SDK/platform/result bindings.",
+      "fixtures": "These three hosted methods require neither the Expo image server, external-modal imported package nor deterministic agent model responses.",
+      "scope": "Can establish only the pending SDK03 ownership/lifetime boundary alongside its independently satisfied original type/source/shipping/runtime requirements; never a complete52 pass."
+    },
+    "broaderCasesNotAdditionalSDK03Gates": [
+      "HanlinMiniAppsTests/CrossAppInvocationTests/testReusingValueWindowKeepsItsInvocationBindingCurrent",
+      "HanlinMiniAppsTests/CrossAppInvocationTests/testRemovingInvocationOwnerCancelsWhileSessionIsStillRetained",
+      "HanlinMiniAppsTests/CrossAppInvocationTests/testActualIncomingRequestsCreateDistinctIPadScenes",
+      "HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests/testExternalInvocationSurvivesNestedFullScreenModal"
+    ],
+    "excludedInventedGates": [
+      "Optional full Apple SDK generator expansion remains user-deferred.",
+      "No new physical-device requirement is created for this narrow task.",
+      "Original strict source/skipLibCheck=true policy remains explicit; do not claim complete upstream declaration-body checking."
+    ]
+  }
+}

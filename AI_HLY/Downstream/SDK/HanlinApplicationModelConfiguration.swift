@@ -1,4 +1,5 @@
 import Foundation
+import HanlinChatCore
 import HanlinScriptExtensions
 import SwiftData
 
@@ -160,6 +161,14 @@ public extension HanlinApplicationContext {
                                     isHidden: isHidden, position: position)
     }
 
+    /// Persists provider cache preferences in the original model row. Passing nil
+    /// restores automatic behavior. Conversation-bound resources are rejected.
+    @discardableResult
+    func setModelPromptCachePolicy(_ policy: HanlinPromptCachePolicy?,
+                                   forModel id: UUID) throws -> HanlinApplicationModel {
+        try modelAccess.setPromptCachePolicy(policy, forModel: id)
+    }
+
     func deleteModel(_ id: UUID) throws { try modelAccess.deleteModel(id) }
 
     private var modelAccess: HanlinApplicationModelAccess {
@@ -280,6 +289,16 @@ struct HanlinApplicationModelAccess {
             row.supportReasoningChange = capabilities.adjustableReasoning; row.supportsMultimodal = capabilities.imageInput
             row.supportsImageGen = capabilities.imageGeneration; row.supportsVoiceGen = capabilities.voice
         }
+        do { try context.save() } catch { context.rollback(); throw error }
+        return .init(row)
+    }
+
+    func setPromptCachePolicy(_ policy: HanlinPromptCachePolicy?,
+                              forModel id: UUID) throws -> HanlinApplicationModel {
+        let encoded = try HanlinModelPromptCachePreferences.encode(policy)
+        let row = try model(id)
+        if context.hasChanges { try context.save() }
+        row.promptCachePolicyJSON = encoded
         do { try context.save() } catch { context.rollback(); throw error }
         return .init(row)
     }

@@ -6,7 +6,7 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/davidpovarsky/swift-ai-sdk.git",
       "state" : {
-        "revision" : "3f38f1302764635c9991d0d00fd7b12471a5373c"
+        "revision" : "abf0921c6e89e6521cc2b510ff11016b45a0ef08"
       }
     },
     {

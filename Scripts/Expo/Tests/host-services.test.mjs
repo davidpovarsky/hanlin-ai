@@ -6,19 +6,30 @@ import vm from 'node:vm';
 import ts from '../node_modules/typescript/lib/typescript.js';
 
 const require = createRequire(new URL('../package.json', import.meta.url));
-const source = await readFile(new URL('../../../Packages/HanlinExpoUI/src/host-services.ts', import.meta.url), 'utf8');
+const moduleSources = new Map(await Promise.all(
+  ['host-services', 'miniapp-actions', 'miniapp-assistant'].map(async name => [
+    './' + name,
+    await readFile(new URL('../../../Packages/HanlinExpoUI/src/' + name + '.ts', import.meta.url), 'utf8'),
+  ])));
 function facade(native) {
-  const compiled = ts.transpileModule(source, {reportDiagnostics: true,
-    compilerOptions: {strict: true, target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.CommonJS}});
-  assert.equal(compiled.diagnostics.length, 0);
-  const exports = {};
-  // Deliberately no browser atob/btoa and no Node Buffer in the JS context.
-  vm.runInNewContext(compiled.outputText, {exports, Uint8Array, Date, require(name) {
+  const modules = new Map();
+  function load(name) {
     if (name === 'base64-js') return require(name);
-    assert.equal(name, 'expo');
-    return {requireNativeModule(name) { assert.equal(name, 'HanlinHostServices'); return native; }};
-  }});
-  return exports.hostServices;
+    if (name === 'expo') return {requireNativeModule(name) {
+      assert.equal(name, 'HanlinHostServices'); return native;
+    }};
+    if (modules.has(name)) return modules.get(name);
+    assert.ok(moduleSources.has(name), 'Unexpected facade dependency: ' + name);
+    const compiled = ts.transpileModule(moduleSources.get(name), {reportDiagnostics: true,
+      compilerOptions: {strict: true, target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.CommonJS}});
+    assert.equal(compiled.diagnostics.length, 0);
+    const exports = {};
+    modules.set(name, exports);
+    // Load the real shared facade modules. Deliberately no browser atob/btoa or Node Buffer.
+    vm.runInNewContext(compiled.outputText, {exports, Uint8Array, Date, require: load});
+    return exports;
+  }
+  return load('./host-services').hostServices;
 }
 
 test('file bytes roundtrip without browser globals, including empty and all byte values', async () => {
@@ -44,4 +55,20 @@ test('native rejection is preserved; absent Base64 stays distinct from empty dat
   await assert.rejects(facade({async invoke() { throw expected; }}).writeFile('x', new Uint8Array()), error => error === expected);
   assert.equal(await facade({async invoke() { return '{}'; }}).readFile('missing'), null);
   assert.deepEqual([...await facade({async invoke() { return '{"base64":""}'; }}).readFile('empty')], []);
+});
+
+test('Expo assistant uses the actual shared facade through the bound native module', async () => {
+  const calls = [];
+  const events = [{type: 'text', text: 'native reply'},
+    {type: 'finish', finishReason: 'stop', usage: {cachedInputTokens: 8, cacheWriteTokens: 3}}];
+  const host = facade({async invoke(operation, json) {
+    calls.push({operation, payload: JSON.parse(json)});
+    return JSON.stringify(operation === 'assistant.start' ? {requestID: 'expo-owned'} : {event: events.shift()});
+  }});
+  const result = await host.assistant.generate({messages: [{role: 'user', content: 'hello'}]});
+  assert.equal(result.text, 'native reply');
+  assert.equal(result.usage.cachedInputTokens, 8);
+  assert.equal(result.usage.cacheWriteTokens, 3);
+  assert.deepEqual(calls.map(call => call.operation), ['assistant.start', 'assistant.next', 'assistant.next']);
+  assert.ok(calls.slice(1).every(call => call.payload.requestID === 'expo-owned'));
 });

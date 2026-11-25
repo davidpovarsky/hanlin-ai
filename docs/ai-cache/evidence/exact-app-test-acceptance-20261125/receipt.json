@@ -1,0 +1,58 @@
+{
+  "scope": "Oracle Python source/xcresult-shaped acceptance fixtures only; no native execution",
+  "baseSourceSHA": "8ec309c0e800baf537c349e6fa66d60c499dff49",
+  "timeUTC": "2026-11-25T02:46:48.018120+00:00",
+  "commands": [
+    {
+      "argv": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "Scripts/CI/Tests",
+        "-p",
+        "test_cache_app_native_acceptance.py",
+        "-v"
+      ],
+      "exitCode": 0,
+      "outputSHA256": "a1c8ba24fab5fb7fb805e95669dc32caebac770290cd6cce520339d90a536a4d"
+    },
+    {
+      "argv": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "Scripts/CI/Tests",
+        "-p",
+        "test_native_tool_candidate_report.py",
+        "-v"
+      ],
+      "exitCode": 0,
+      "outputSHA256": "e7c3af5f7fe77c754722d91f98c3528e8147c852e239b00e689d70022f257218"
+    },
+    {
+      "argv": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "Scripts/CI/Tests",
+        "-p",
+        "test_verify_selected_tests.py",
+        "-v"
+      ],
+      "exitCode": 0,
+      "outputSHA256": "8ba94604f8d25db8cd36629d9da5128ac4b8daabb7ed277b2f40410475950658"
+    }
+  ],
+  "sourceHashes": {
+    "Scripts/CI/IntegrationValidation/run_cache_app_native.py": "8ef92a7429b55272deb7b501b53140758d59fe83fb8a9c84af3683b7ec2c8d9a",
+    "Scripts/CI/IntegrationValidation/verify_cache_app_tests.py": "01edc92789d141e29ad88d4826809b648bd4c95357973f97699944e8c8d8a90c",
+    "Scripts/CI/Tests/test_cache_app_native_acceptance.py": "50c424106fb3b2f5750ce6bf410dcf8cb41dd61aa4554d33a76532ad1d76a344"
+  },
+  "syntax": "PASS"
+}

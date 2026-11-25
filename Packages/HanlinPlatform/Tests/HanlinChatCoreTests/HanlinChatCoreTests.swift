@@ -213,8 +213,10 @@ struct HanlinChatCoreTests {
         #expect(model == "claude-3-5-sonnet-20241022")
         let maxTokens = json?["max_tokens"] as? Int
         #expect(maxTokens == 2048)
-        let system = json?["system"] as? String
-        #expect(system == "You are an expert Torah scholar.")
+        let system = json?["system"] as? [[String: Any]]
+        #expect(system?.count == 1)
+        #expect(system?.first?["text"] as? String == "You are an expert Torah scholar.")
+        #expect((system?.first?["cache_control"] as? [String: Any])?["type"] as? String == "ephemeral")
         let stream = json?["stream"] as? Bool
         #expect(stream == true)
 

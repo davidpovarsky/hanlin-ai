@@ -1,0 +1,73 @@
+{
+  "owner": "/root/native_execution",
+  "scope": "Four original production dependency targets and one focused regression suite; no application/UI acceptance claim.",
+  "status": "FAIL",
+  "preparedAt": "2026-11-24T23:11:48.904314+00:00",
+  "sourceBase": "fd81d602d3b25f09162a659e1e0cf0582e91a93a",
+  "baselineSHA256": "426509862e4b67d755c6e466356da1418fbaf7246277100779aab768ceba3258",
+  "candidateSHA256": "7901c51ea32046e57ad49a41f7252b488941a2d6ede7bb0f0634e86fe8b634b2",
+  "testSHA256": "6f9813f2f632e226803715de511676c43eff9de558722db6e2bd723ec9b8526c",
+  "inputCount": 47,
+  "inputsSHA256": "1672a8fee7c6c73eae1c7f81ed49243e63edd12059f0b31066c7f5ee4fb1135d",
+  "manifestSHA256": "2ca705e0f8460a9ac91fb3e505b963a7d65eea20adeb5701d272b4aa63e6ccf5",
+  "runnerSHA256": "289fe1e6c8ddf62ce7a368674dd54c0dd7ab85f254fbb657cd214fbe18c1137f",
+  "expected": "Baseline fails actual stored duplicate canonical kind; candidate passes same fixture and all three conflict cases.",
+  "testBudgetSecondsPerVersion": 300,
+  "jobs": 1,
+  "startedAt": "2026-11-24T23:11:48.935461+00:00",
+  "controllerPID": 38070,
+  "commands": [
+    {
+      "label": "baseline",
+      "argv": [
+        "/usr/bin/xcrun",
+        "swift",
+        "test",
+        "--package-path",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/projection-regression-attempt7/package",
+        "--jobs",
+        "1",
+        "--filter",
+        "HanlinCanonicalEntrypointProjectionTests"
+      ],
+      "startedAt": "2026-11-24T23:11:48.935978+00:00",
+      "expectedExitCode": 1,
+      "pid": 37417,
+      "exitCode": 1,
+      "finishedAt": "2026-11-24T23:12:17.511114+00:00",
+      "elapsedSeconds": 28.57525516700116,
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/projection-regression-attempt7/baseline.log",
+      "logBytes": 3860,
+      "logSHA256": "f9eb870a191515467122c237a90daf0a2ba615a6ed153328c75d299ed14c42f6"
+    },
+    {
+      "label": "candidate",
+      "argv": [
+        "/usr/bin/xcrun",
+        "swift",
+        "test",
+        "--package-path",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/projection-regression-attempt7/package",
+        "--jobs",
+        "1",
+        "--filter",
+        "HanlinCanonicalEntrypointProjectionTests"
+      ],
+      "startedAt": "2026-11-24T23:13:05.010129+00:00",
+      "expectedExitCode": 0,
+      "pid": 38073,
+      "exitCode": 1,
+      "finishedAt": "2026-11-24T23:13:08.015636+00:00",
+      "elapsedSeconds": 3.0051836660059053,
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/projection-regression-attempt7/candidate.log",
+      "logBytes": 2511,
+      "logSHA256": "aac3c526835b0f996baa8aed7ce9d5c2f5460fe7f397373f452433962110bb9a"
+    }
+  ],
+  "phase": "candidate",
+  "resumedAt": "2026-11-24T23:13:05.009141+00:00",
+  "collectorCorrection": "Expected Swift Testing display title was retained; the original baseline raw diagnostic and conflict cases were verified without rerun.",
+  "candidateAppliedAt": "2026-11-24T23:13:05.009887+00:00",
+  "error": "candidate: expected exit 0, got 1",
+  "finishedAt": "2026-11-24T23:13:08.016055+00:00"
+}

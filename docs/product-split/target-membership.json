@@ -11,6 +11,7 @@
     "AI_HLY/Downstream/HostServices/Core/HanlinHostCallContext.swift",
     "AI_HLY/Downstream/HostServices/Core/HanlinHostServiceError.swift",
     "AI_HLY/Downstream/HostServices/Core/HanlinHostServicesBroker.swift",
+    "AI_HLY/Downstream/HostServices/Core/HanlinMiniAppAssistantService.swift",
     "AI_HLY/Downstream/HostServices/Data/HanlinFileService.swift",
     "AI_HLY/Downstream/HostServices/Data/HanlinSQLiteHostAdapter.swift",
     "AI_HLY/Downstream/HostServices/Runtime/HanlinRuntimeBroker.swift",
@@ -90,7 +91,8 @@
     "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform+AIConfiguration.swift",
     "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatformAIIntegration.swift",
     "AI_HLY/Model/APIKeys.swift",
-    "AI_HLY/Model/AllModels.swift"
+    "AI_HLY/Model/AllModels.swift",
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppAssistantAIService.swift"
   ],
   "data_policy": "AI stores remain in place. No automatic live migration.",
   "shared_resources": [

@@ -1,0 +1,79 @@
+{
+  "archive": {
+    "path": "build/runtime-host/RuntimeHostResources.zip",
+    "snapshotPath": "files/build/runtime-host/RuntimeHostResources.zip",
+    "bytes": 81813086,
+    "sha256": "c4e85e967f873ffbe907990c5d9d612b5b6f95871b4e85c736ec0799f09cb1af",
+    "mode": "0o644",
+    "actualSHA256": "c4e85e967f873ffbe907990c5d9d612b5b6f95871b4e85c736ec0799f09cb1af",
+    "verified": true
+  },
+  "embeddedAuthoringModule": {
+    "archiveMember": "miniapp-authoring.mjs",
+    "bytes": 48630,
+    "sha256": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9",
+    "appSourceArchiveSHA256": "c4e85e967f873ffbe907990c5d9d612b5b6f95871b4e85c736ec0799f09cb1af"
+  },
+  "sourceAuthoringSHA256": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9",
+  "sourceRegression": {
+    "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-sdk-resolution.test.mjs",
+    "sha256": "958d0e0a71f47fa7677e412cd1a0ed40da43feb898b182df84e63256a05e5865",
+    "includedInProducerSourceFingerprint": true,
+    "shippedInArchive": false
+  },
+  "producerSource": {
+    "path": "Scripts/Runtime/runtime_host_archive.py",
+    "sha256": "c446a8bcd0bebb30193eab35e6588662d9c989c4e656be020259a94428c0c8c6",
+    "inputHashSourceWalkLines": [
+      143,
+      148
+    ],
+    "sourceWalk": "Original producer walks all Host source paths except node_modules/.git; Tests are included in fingerprint but excluded from shipped archive."
+  },
+  "hostMetadata": {
+    "nodeVersion": "v24.5.0",
+    "archiveSha256": "c4e85e967f873ffbe907990c5d9d612b5b6f95871b4e85c736ec0799f09cb1af",
+    "sourceInputsHash": "20016188e7a94a589b9bb0a4faa1fff844e0ce8e62456f56d91001a59a879852",
+    "jitlessArchiveSmoke": "passed",
+    "npmInstall": "npm ci --omit=dev --ignore-scripts --workspaces=false --no-audit --no-fund",
+    "tests": "passed"
+  },
+  "hostMetadataSHA256": "b8540c390547715d3010ceefe8856587bc159d69f8e00ba0fd023a7c3e103ce0",
+  "outsideSDKMembers": {
+    "count": 3102,
+    "unchanged": 3101,
+    "changed": [
+      {
+        "path": "miniapp-authoring.mjs",
+        "bytes": 48630,
+        "sha256": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9",
+        "priorBytes": 44312,
+        "priorSHA256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
+        "unchanged": false
+      }
+    ],
+    "fullRows": "host-member-comparison.json",
+    "fullRowsSHA256": "64c2eedeccc1778749f993b0fa5365686cc61018ecd81332c30a7bc3d9c17825",
+    "method": "Hash actual uncompressed bytes of all 3102 outside-SDK members in both immutable archives; no extraction or product execution."
+  },
+  "actualHostTestLog": {
+    "path": "raw/build/primary-control/logs-attempt7/split-native-preparation.log",
+    "sha256": "89de966b4bd071efec1bb3fcab4a69421d82a6874d1d6f9853fb2e41c56bfb9e",
+    "counts": {
+      "tests": 169,
+      "pass": 168,
+      "fail": 0,
+      "skipped": 1
+    },
+    "newResolverCases": [
+      "✔ canonical module and type references use the supplied SDK while retaining its nested dependency (617.944167ms)",
+      "✔ NativeScript emission and copied bodies agree with canonical types and preserve project aliases and extra dependencies (1301.984209ms)",
+      "✔ missing canonical exports, configs and SDK dependencies never resolve from ancestor packages (1454.065625ms)"
+    ],
+    "skipLines": [
+      "﹣ actual Node job crosses 300 seconds with no hidden deadline (0.165209ms) # SKIP"
+    ],
+    "boundary": "Host verification contains one existing long-duration test skip. The three new resolver cases actually passed. These Host counts are distinct from the selected52 application acceptance cases."
+  },
+  "boundary": "Actual top-level Host module equals final published source. App-source ZIP identity comes from producer capture; actual built resources are separately bound below."
+}

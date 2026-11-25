@@ -1,0 +1,142 @@
+{
+  "status": "PLANNED",
+  "createdAt": "2026-11-25T03:43:13.102374+00:00",
+  "sourceSHA": "1710bc6119983799f7d22cb723659ac274fe96b1",
+  "sourceTree": "5e6e9fb059a26f27d96ec4042f4702f32f3b0629",
+  "worktree": "/mnt/development/projects/worktrees/hanlin-ai-cache-incoming-fixtures-20261125",
+  "evidenceRoot": "/mnt/development/projects/artifacts/hanlin-ai-cache-incoming-fixtures-20261125",
+  "platform": "Linux-6.17.0-1020-oracle-aarch64-with-glibc2.39",
+  "machine": "aarch64",
+  "toolchains": {
+    "node": {
+      "path": "/usr/local/bin/node",
+      "realpath": "/opt/chatgpt-skills/node/bin/node",
+      "version": "v24.22.0",
+      "sha256": "719a43d185f3b6a59d8fcbba1ff06b93c75f76fb0bb9916f81d33921615d4cb5"
+    },
+    "python3": {
+      "path": "/usr/bin/python3",
+      "realpath": "/usr/bin/python3.12",
+      "version": "Python 3.12.3",
+      "sha256": "c86f21d0da9290ece2d7d49a3f7ed52aed59cb029abdf0ea25c79634f6cbe960"
+    }
+  },
+  "sourceInputs": [
+    {
+      "path": "DemoMiniApps/hanlin-script-parity.hanlinNativeScript",
+      "bytes": 7512,
+      "sha256": "2e48509336edba2b301490422102dbf25cb7f1b894430d52994febdc1c33c199",
+      "gitBlob": "f2d4f5a93a9131286b7322fba45ab2b554cc0df5"
+    },
+    {
+      "path": "DemoMiniApps/hanlin-script-parity/intent.json",
+      "bytes": 212,
+      "sha256": "2bc31c09891193ee5cf04a2ba55cc7fa831d20583ce60dd755a4f2d9b888de06",
+      "gitBlob": "6a0f650514b711dc02219580321926d704a6cf0e"
+    },
+    {
+      "path": "DemoMiniApps/hanlin-script-parity/nativescript/app/bundle.mjs",
+      "bytes": 25868,
+      "sha256": "5f21796994e3880ba5d5c9f0e6d23b3fa12a667ff6082183f604d214a61284b1",
+      "gitBlob": "8d4871deeaf559381f9fc8a5b92b767bcc2778cf"
+    },
+    {
+      "path": "DemoMiniApps/hanlin-script-parity/nativescript/app/package.json",
+      "bytes": 222,
+      "sha256": "264c767b3bd3c172741ab4ea9ffc6ad65b373270c898b69d1085a3d4813e3534",
+      "gitBlob": "2fd5c787ecd3a2589bd20e4862e7e24017f91a97"
+    },
+    {
+      "path": "DemoMiniApps/hanlin-script-parity/script.json",
+      "bytes": 989,
+      "sha256": "2275afdd4700ea93436a114ce03ae5fe56e2e3f2f54bc9a3412daf2c933034f5",
+      "gitBlob": "f1d686021f9b6f862c3e5fd88a7f2b251b4db674"
+    },
+    {
+      "path": "DemoMiniApps/hanlin-script-parity/translation.json",
+      "bytes": 882,
+      "sha256": "e2244f2725cace1b90d717caf2612d8265c1b44a545b83d585d6b47308a368eb",
+      "gitBlob": "41601e3657d67954b20bbe6b4b13a0083d88f9ab"
+    },
+    {
+      "path": "DemoMiniApps/hanlin-script-parity/widget.json",
+      "bytes": 401,
+      "sha256": "ced0519ad3ce1d7794d3fdc8ff78c544c5d8abfed2600f5463cb496c7e986167",
+      "gitBlob": "52974d3c3bb66da41488fc3a68e90758e44a3c16"
+    },
+    {
+      "path": "Scripts/CI/Tests/nativescript_parity_async_startup.test.mjs",
+      "bytes": 4301,
+      "sha256": "a7bd2ebc42afc8942ba43d7abecac80921469fde70e51bee896874deb14a18e9",
+      "gitBlob": "adc201cb2016ce6239e4650e95313c37a70d82e6"
+    },
+    {
+      "path": "Scripts/CI/Tests/test_nativescript_parity_fixture.py",
+      "bytes": 3588,
+      "sha256": "3332ba2adf3c9e180eaecdcaeac8f23c4545f5887adaafe70650ad6f4e39414e",
+      "gitBlob": "7a29436ab9e5a4fe0f1808119e122e6d88f659be"
+    },
+    {
+      "path": "Scripts/NativeScript/Tests/app-binary-preflight.test.mjs",
+      "bytes": 5779,
+      "sha256": "85d9896cb61759d17081bd851e626c6c1148eb07e797209892ec7bdf07699ebb",
+      "gitBlob": "2267d53e25a2f6df7b607772e42cde19979e917f"
+    },
+    {
+      "path": "Scripts/NativeScript/app-binary-preflight.mjs",
+      "bytes": 6387,
+      "sha256": "f7aa0390c863534688b71df86437b0f5583489d6c5e54b2cc097730603216f87",
+      "gitBlob": "ffce10f7ba83a4dfca47e525adca4540762a66ba"
+    },
+    {
+      "path": "Scripts/NativeScript/build-step-metadata-generator-wrapper.py",
+      "bytes": 11566,
+      "sha256": "71bf1d521abff7cc29c1e8d397a9ef2a55b09f758afb36f0a148be12350b664f",
+      "gitBlob": "25f8477169b7ec030d25d32d957a877403b4f4d7"
+    },
+    {
+      "path": "Scripts/NativeScript/preflight-ios-dependencies.mjs",
+      "bytes": 9406,
+      "sha256": "80b6abe07b87aa3a44dbf16d73c79a5ff1c001cd29ff09cd13af038ab6b54c60",
+      "gitBlob": "4b304755d34e345179eed065a775fc1b2383266e"
+    }
+  ],
+  "impact": "New composer host-image preflight implementation and new MiniSDK parity async startup/source archive; these are the specifically assigned affected original source fixtures. No app/native/UI suite execution.",
+  "checkoutMaterialization": "Inherited sparse checkout omitted DemoMiniApps; added DemoMiniApps through this isolated worktree-specific sparse configuration, then verified each input against original1710 Git bytes. No root checkout/config edit.",
+  "runs": [
+    {
+      "id": "preflight",
+      "argv": [
+        "node",
+        "--test",
+        "--test-reporter=tap",
+        "Scripts/NativeScript/Tests/app-binary-preflight.test.mjs"
+      ],
+      "expectedTests": 9
+    },
+    {
+      "id": "parity",
+      "originalUnittestArgv": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "Scripts/CI/Tests",
+        "-p",
+        "test_nativescript_parity_fixture.py",
+        "-v"
+      ],
+      "expectedTests": 5,
+      "nestedOriginalCommand": [
+        "node",
+        "--test",
+        "--test-reporter=tap",
+        "/mnt/development/projects/worktrees/hanlin-ai-cache-incoming-fixtures-20261125/Scripts/CI/Tests/nativescript_parity_async_startup.test.mjs"
+      ],
+      "expectedNestedTests": 15,
+      "observation": "External runpy observer passively records the return value of the original subprocess.run; does not replace subprocess.run, alter arguments/results, edit assertions, or repeat nested cases."
+    }
+  ],
+  "dependencies": "Node and Python standard libraries only; no package installation, network or Apple tools required. Preflight uses original fixture-supplied Mach-O inspection output; parity runs actual shipped helper source in Node VM with explicit bridge fixtures."
+}

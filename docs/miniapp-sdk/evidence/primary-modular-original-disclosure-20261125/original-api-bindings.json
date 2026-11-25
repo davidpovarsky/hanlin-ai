@@ -1,0 +1,64 @@
+{
+  "originalPackage": "@expo/ui",
+  "version": "58.0.29",
+  "packageJSONSHA256": "5332dd3b83612fcc7e30f50cb2e137f1e0051b6b2032b0d006f5840a13cf5281",
+  "sourceBindings": [
+    {
+      "path": "ios/UIBaseView.swift",
+      "bytes": 4053,
+      "sha256": "654fcc032fd3fa219ddb21ad2789659076571b256f699f9371bafd128de95b0a"
+    },
+    {
+      "path": "ios/Modifiers/View+AccessibilityModifiers.swift",
+      "bytes": 313,
+      "sha256": "482f5e43c90f5749ce38551827ae7dea0f4be15d56d07a1623098ec1d4c1796a"
+    },
+    {
+      "path": "ios/TextView.swift",
+      "bytes": 2267,
+      "sha256": "a8650dcb51411168b514f3007adc17e90c14410a07906f5b55610f23409b4a2a"
+    },
+    {
+      "path": "ios/ExpoUIModule.swift",
+      "bytes": 6167,
+      "sha256": "c5c872cb159afa181d1be0cff72c1501f05d7959c7547863eef0815b8834aa2d"
+    },
+    {
+      "path": "ios/DisclosureGroupView.swift",
+      "bytes": 1483,
+      "sha256": "b5a8dca4d93a2c9048dc465ae10179a7632a2ba36bc303103786c1bab74b9728"
+    },
+    {
+      "path": "ios/Modifiers/ViewModifierRegistry.swift",
+      "bytes": 72010,
+      "sha256": "4cb49138695127b562e79727299068b0652172ba50d0752e35e281a6a4cd914b"
+    },
+    {
+      "path": "src/swift-ui/types.ts",
+      "bytes": 2482,
+      "sha256": "505ce61719c22634f9361f10fa430107d89486b49165eecb73debd63cd905806"
+    },
+    {
+      "path": "src/swift-ui/Text/index.tsx",
+      "bytes": 3750,
+      "sha256": "6d76773f5cc3f9127561ccab114044929e6f48caf1811eca614f9575392db4f3"
+    },
+    {
+      "path": "src/swift-ui/Button/index.tsx",
+      "bytes": 2571,
+      "sha256": "8f24283751dd46193e07c17937101c444fc19d4b65f721639bb219c4b5938fcf"
+    },
+    {
+      "path": "src/swift-ui/DisclosureGroup/index.tsx",
+      "bytes": 1753,
+      "sha256": "6583e7db1f26c58e3a998352282938f3d719221389be34269a39480c45473ef0"
+    },
+    {
+      "path": "src/swift-ui/modifiers/index.ts",
+      "bytes": 83567,
+      "sha256": "dedd0bd33f560f4c9d56589400b2a2faa9c67bf7ab962e0a5186312ba4c920e6"
+    }
+  ],
+  "sourceObservation": "Button and DisclosureGroup use ExpoUIView with common testID mapping. Text uses raw TextView and applies original modifiers; its body identifier therefore uses the original accessibilityIdentifier modifier. DisclosureGroupProps.isExpanded defaults to true.",
+  "nativeIdentifierEmission": "PENDING actual next Modular case"
+}

@@ -1,0 +1,48 @@
+{
+  "status": "PLANNED",
+  "createdAt": "2026-11-25T03:56:55.083140+00:00",
+  "bundleSourceSHA": "1710bc6119983799f7d22cb723659ac274fe96b1",
+  "integrationReviewedSHA": "48f05d8adf803101b4d3262906abcd1a7fdf2ea5",
+  "originalTestSourceSHA": "12d25da36451acc72b65144df79bedae878ba8ec",
+  "worktree": "/mnt/development/projects/worktrees/hanlin-ai-cache-incoming-fixtures-20261125",
+  "sourceInputs": [
+    {
+      "path": "DemoMiniApps/hanlin-script-parity/nativescript/app/bundle.mjs",
+      "sourceSHA": "1710bc6119983799f7d22cb723659ac274fe96b1",
+      "gitBlob": "8d4871deeaf559381f9fc8a5b92b767bcc2778cf",
+      "bytes": 25868,
+      "sha256": "5f21796994e3880ba5d5c9f0e6d23b3fa12a667ff6082183f604d214a61284b1"
+    },
+    {
+      "path": "DemoMiniApps/hanlin-script-parity.hanlinNativeScript",
+      "sourceSHA": "1710bc6119983799f7d22cb723659ac274fe96b1",
+      "gitBlob": "f2d4f5a93a9131286b7322fba45ab2b554cc0df5",
+      "bytes": 7512,
+      "sha256": "2e48509336edba2b301490422102dbf25cb7f1b894430d52994febdc1c33c199"
+    },
+    {
+      "path": "Scripts/NativeScript/Tests/parity-async-startup.test.mjs",
+      "sourceSHA": "12d25da36451acc72b65144df79bedae878ba8ec",
+      "gitBlob": "dbc188b371798049a848618690e7628cc29b8551",
+      "bytes": 3741,
+      "sha256": "48af264952dd3ac25729d8ad00df45fa31c8c29499cddc064228a1ec60d440f2"
+    }
+  ],
+  "command": [
+    "node",
+    "--test",
+    "--test-reporter=tap",
+    "Scripts/NativeScript/Tests/parity-async-startup.test.mjs"
+  ],
+  "expectedTests": 15,
+  "toolchain": {
+    "path": "/usr/local/bin/node",
+    "realpath": "/opt/chatgpt-skills/node/bin/node",
+    "version": "v24.22.0",
+    "sha256": "719a43d185f3b6a59d8fcbba1ff06b93c75f76fb0bb9916f81d33921615d4cb5"
+  },
+  "platform": "Linux-6.17.0-1020-oracle-aarch64-with-glibc2.39",
+  "machine": "aarch64",
+  "scope": "Execute the new original whole-bundle VM test from wave12 unchanged against the retained original1710 bundle; explicit composed test inputs, not a claim of whole wave12/current native app execution. Only the new15 cases execute. No existing9+5+15 rerun.",
+  "method": "Read original Git blob for the incoming test into its same relative path in an isolated detached1710 worktree. Existing production/test/assertion files unchanged; only new test file is untracked. Uses Node standard libraries and explicit bridge fixtures, no native engine or network."
+}

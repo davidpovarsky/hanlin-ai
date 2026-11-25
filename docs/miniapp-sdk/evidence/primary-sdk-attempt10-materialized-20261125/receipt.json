@@ -1,0 +1,131 @@
+{
+  "schema": 1,
+  "materializedAt": "2026-11-25T03:14:35.079294+00:00",
+  "integrationBase": "15647db0c5143836a4b31c51a8217b16228863d0",
+  "producerSource": "fda6948ca6a1f541293a1a1dd20e97f75eb0a527",
+  "producerSnapshotReceiptSHA256": "20ee3233d5094aec1e3f476fecfa66dd43c9b64129f8e235a96529a6e9cfbb35",
+  "sourcePlanSHA256": "5468ecf7211e2778cc823722e2a4008130aac9d3db00932e3382293dbd6063d2",
+  "retainedCanonicalBinding": {
+    "algorithm": "SHA256 of compact UTF-8 JSON rows sorted by path; keys path,beforeSHA256,afterSHA256,bytes,contentFrom",
+    "sha256": "2ede76e578db6102b726978de94fbd15507028644926cf5404af7cd0f8734834"
+  },
+  "status": "EXACT_PREPARED_OUTPUTS_MATERIALIZED",
+  "pathCount": 9,
+  "payloadBytes": 1150910,
+  "beforeAndAfterModes": "100644",
+  "protectedAGENTSSHA256": "f27d4554d8dda88996d1511b361e8b8e5520cb08e8198c5fbc7816b1fbc9aa9f",
+  "hostArchiveSHA256": "86733eba5d80156edf52da87f0f371c208122d6e60f618f182990330514984c3",
+  "sdkManifestSHA256": "19726b5eecc1459e30dae9e7ec4ca6761001de92b22055ac41b9a96aabdd7a88",
+  "regenerationPerformed": false,
+  "nativeExecutionPerformed": false,
+  "rows": [
+    {
+      "path": "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "beforeSHA256": "08fe8608ac946c2759a05389b69c5601039cff61f41ad24fa55cee8d222cc2c2",
+      "afterSHA256": "610bcbb9a7f90c27e3bd3ecd3b1d139fe3ff72ed18086327d1d96c437de932f5",
+      "bytes": 9960,
+      "contentFrom": "tracked-delta/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "beforeMode": "100644",
+      "afterMode": "100644",
+      "samePreparedBytesAsSDK9": true,
+      "reason": "Previously verified prepared output preserved byte-for-byte.",
+      "classification": "Serialization only; parsed JSON, all 39 pins/revisions and originHash remain identical."
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/original-runtime-receipt.json",
+      "beforeSHA256": "f7ad6d7bf5841f5a0be2f722a1b2735620aa06dcf4801cb73210688a7a135e64",
+      "afterSHA256": "3d619674297acb22ae4d0a97f5e7d8a878b0eccbc3bfc49769cfdb5a05248a0b",
+      "bytes": 6085,
+      "contentFrom": "tracked-delta/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/original-runtime-receipt.json",
+      "beforeMode": "100644",
+      "afterMode": "100644",
+      "samePreparedBytesAsSDK9": true,
+      "reason": "Previously verified prepared output preserved byte-for-byte.",
+      "classification": "Existing prepared receipt updates its input and package-lock hashes; exact SDK9 output retained."
+    },
+    {
+      "path": "Scripts/Expo/package-lock.json",
+      "beforeSHA256": "9ee1d2babe6266148d8f969b25f542c00897c569969e5aae6dd6f744e2a0c53c",
+      "afterSHA256": "c08757cf46ac4d5c86a873f676af4a3be585db64ae2e1aa1e8288277d4eb63b8",
+      "bytes": 336324,
+      "contentFrom": "tracked-delta/Scripts/Expo/package-lock.json",
+      "beforeMode": "100644",
+      "afterMode": "100644",
+      "samePreparedBytesAsSDK9": true,
+      "reason": "Previously verified prepared output preserved byte-for-byte.",
+      "classification": "Original @types/react 19.3.1 resolution; four JSON values changed: root pin, package version, original tarball URL and SRI."
+    },
+    {
+      "path": "Scripts/Expo/package.json",
+      "beforeSHA256": "da083105462f40368adb89acba0dbc1b623d2249b26b2ac1cbe1d326edc2bd3d",
+      "afterSHA256": "e2b50fae013276229c78619bbbe0b63d8c29b00fefde3afeccea98af117aa206",
+      "bytes": 1759,
+      "contentFrom": "tracked-delta/Scripts/Expo/package.json",
+      "beforeMode": "100644",
+      "afterMode": "100644",
+      "samePreparedBytesAsSDK9": true,
+      "reason": "Previously verified prepared output preserved byte-for-byte.",
+      "classification": "Original @types/react development dependency 19.3.0 to 19.3.1; same prepared bytes as SDK9."
+    },
+    {
+      "path": "Scripts/MiniApps/upstream-resolution.json",
+      "beforeSHA256": "2bf8f371f06949fbe56858c38addeb417a07f9b598fc38ff72aedb39d5f364eb",
+      "afterSHA256": "e0c2944ea24c09330825dee58badedcec58606ba603ccdedc888abf1a63a13cb",
+      "bytes": 15092,
+      "contentFrom": "tracked-delta/Scripts/MiniApps/upstream-resolution.json",
+      "beforeMode": "100644",
+      "afterMode": "100644",
+      "samePreparedBytesAsSDK9": true,
+      "reason": "Previously verified prepared output preserved byte-for-byte.",
+      "classification": "Existing original resolver records ExpoAsset and current React types; same prepared bytes as SDK9."
+    },
+    {
+      "path": "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+      "beforeSHA256": "ad9c59d1962d516cd480de78cf5ee01fad11159cc0a73ee1a9cb3ea2f324b8a1",
+      "afterSHA256": "768731f0c748276aeab4d34f57ad3ad89fd38aa30f562ff0cc9b5ad9a3767368",
+      "bytes": 118804,
+      "contentFrom": "tracked-delta/docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+      "beforeMode": "100644",
+      "afterMode": "100644",
+      "samePreparedBytesAsSDK9": true,
+      "reason": "Previously verified prepared output preserved byte-for-byte.",
+      "classification": "Original generated field reference includes ExpoAsset and current action-ID contract; exact SDK9 output retained."
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.json",
+      "beforeSHA256": "152806a609b662c373eedd382758f1298bf945883f0c467dc5595050f8f0fa29",
+      "afterSHA256": "9a9843d277a3e76ad64fc7589029801960c5c98b9aba09f3ed7746552ee3d42d",
+      "bytes": 147521,
+      "contentFrom": "tracked-delta/docs/miniapp-sdk/extension-reachability.json",
+      "beforeMode": "100644",
+      "afterMode": "100644",
+      "samePreparedBytesAsSDK9": false,
+      "reason": "Current source provenance only; exact updated source hashes and commit bound by shipped-provenance-binding.json.",
+      "classification": "Current fda source commit and metadata-wrapper hash; the 80-cell matrix and all nonprovenance data remain identical to SDK9."
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.md",
+      "beforeSHA256": "f2cd972c7366043028bbaea078291717ae363b288d29ecf242fd358103f7a9b1",
+      "afterSHA256": "cae21720cab9b31211796a5d82309d6e779f46ddb1d946d1ec1e322f4cf952cb",
+      "bytes": 21494,
+      "contentFrom": "tracked-delta/docs/miniapp-sdk/extension-reachability.md",
+      "beforeMode": "100644",
+      "afterMode": "100644",
+      "samePreparedBytesAsSDK9": false,
+      "reason": "Current source provenance only; exact updated source hashes and commit bound by shipped-provenance-binding.json.",
+      "classification": "Generated current source-commit provenance; all other text remains the same as SDK9."
+    },
+    {
+      "path": "docs/miniapp-sdk/source-inventory.json",
+      "beforeSHA256": "b126e18f8a228e2235ef8ef324a31f0b9b6e3384e6af0f82755e35c4bcccaeef",
+      "afterSHA256": "856bc8aca1473f8f4255b324e840ef2ebcdf5eb7352d1041d2433391e9f4bfd8",
+      "bytes": 493871,
+      "contentFrom": "tracked-delta/docs/miniapp-sdk/source-inventory.json",
+      "beforeMode": "100644",
+      "afterMode": "100644",
+      "samePreparedBytesAsSDK9": false,
+      "reason": "Current source provenance only; exact updated source hashes and commit bound by shipped-provenance-binding.json.",
+      "classification": "Current source commit and metadata-wrapper hash; 93 sources, 335 fields and all nonprovenance semantics remain identical to SDK9."
+    }
+  ]
+}

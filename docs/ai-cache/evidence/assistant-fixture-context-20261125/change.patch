@@ -1,0 +1,13 @@
+diff --git a/AI_HLYTests/HanlinMiniAppAssistantIntegrationTests.swift b/AI_HLYTests/HanlinMiniAppAssistantIntegrationTests.swift
+index b99c63570..1dcaa57da 100644
+--- a/AI_HLYTests/HanlinMiniAppAssistantIntegrationTests.swift
++++ b/AI_HLYTests/HanlinMiniAppAssistantIntegrationTests.swift
+@@ -8,7 +8,7 @@ import Testing
+ struct HanlinMiniAppAssistantIntegrationTests {
+     private static func host(_ id: String = "test.assistant") throws -> HanlinHostCallContext {
+         .forMiniApp(appID: try HanlinAppID(validating: id), origin: .nativeModule,
+-                    capabilities: ["assistant"])
++                    capabilities: ["assistant"], canPresentUI: false)
+     }
+ 
+     private static func service(events: [HanlinAISDKStreamEvent]) throws -> HanlinMiniAppAssistantAIService {

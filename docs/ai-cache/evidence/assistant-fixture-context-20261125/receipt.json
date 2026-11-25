@@ -1,0 +1,19 @@
+{
+  "scope": "Oracle source validation only; native app retry owned by root",
+  "baseSourceSHA": "1cbeb644716c766f6d993d65fd5388f36a9fe5f4",
+  "commit": "4f2bc9864a4fefa62f69ca54fb9f6b33351ba1df",
+  "timeUTC": "2026-11-25T03:23:29.838358+00:00",
+  "sourceFile": "AI_HLYTests/HanlinMiniAppAssistantIntegrationTests.swift",
+  "beforeSHA256": "7fef2682984be958ce2caba95c39966e567927a2bd56c169c2d84db80f4e3564",
+  "afterSHA256": "b1244b4e53b4cda305bda25382d43cccd4b1b60bc8c02c9c15f2d0649c70976a",
+  "factorySource": "AI_HLY/Downstream/HostServices/Core/HanlinHostCallContext.swift",
+  "factoryRequirement": "forMiniApp(..., canPresentUI: Bool) has no default",
+  "chosenValue": false,
+  "reason": "Controlled injected assistant stream/model fixtures do not present UI",
+  "methodAndArgumentIdentitiesUnchanged": true,
+  "onlyRequiredArgumentAdded": true,
+  "selectedDeclaredMethods": 46,
+  "selectedExpectedInvocations": 48,
+  "nativeExecution": "NOT_RUN",
+  "diffCheck": "PASS"
+}

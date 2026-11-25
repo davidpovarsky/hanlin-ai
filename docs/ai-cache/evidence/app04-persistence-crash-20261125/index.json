@@ -1,0 +1,34 @@
+{
+  "capturedAtUTC": "2026-11-25T04:05:16.970441+00:00",
+  "sourceSHA": "1710bc6119983799f7d22cb723659ac274fe96b1",
+  "simulator": "34B2DB02-626B-4393-81A2-45AB371865C8",
+  "crashedPID": 42140,
+  "restartedPID": 43811,
+  "scope": "Read-only original crash and in-progress evidence snapshot; not a final test receipt. No Mac mutation or execution.",
+  "files": [
+    {
+      "path": "AI_Hanlin-2026-11-25-050144.ips",
+      "remotePath": "/Library/Logs/DiagnosticReports/AI_Hanlin-2026-11-25-050144.ips",
+      "bytes": 99877,
+      "sha256": "79928c4e87b1c42ce20a2eacd8007c9e46489d464890f8ce57b8aeaf611c876e"
+    },
+    {
+      "path": "08-test-without-building.log",
+      "remotePath": "/Users/m1/builds/hanlin-ai-cache-native-20261125/build/cache-app-native-evidence-04-20261125/test/08-test-without-building.log",
+      "bytes": 45809,
+      "sha256": "e8798c7b94a18ed42923249a83df8803fa2188001ed43d015391b592d815cf9a"
+    },
+    {
+      "path": "receipt.json",
+      "remotePath": "/Users/m1/builds/hanlin-ai-cache-native-20261125/build/cache-app-native-evidence-04-20261125/test/receipt.json",
+      "bytes": 11944,
+      "sha256": "2599dc97d39a52a036e47ae783ab48714c2ddce86284704eb203418e00029d3f"
+    },
+    {
+      "path": "current-generated.xctestrun",
+      "remotePath": "/Users/m1/builds/hanlin-ai-cache-native-20261125/build/cache-app-native-evidence-04-20261125/test/current-generated.xctestrun",
+      "bytes": 10516,
+      "sha256": "df0a5eec8eda3908b94e57e3f5ed3d78e6c45e7c8c8b3042db373445b53904e9"
+    }
+  ]
+}

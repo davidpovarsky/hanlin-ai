@@ -1,0 +1,134 @@
+{
+  "capturedAt": "2026-11-25T00:56:43.209626+00:00",
+  "source": "1812bff50571c9907d15cd8b4bfbe4874be24756",
+  "sourceTree": "d06c5752c33c787df957a01d33461889cf5d7f4e",
+  "files": [
+    {
+      "path": "state.json",
+      "bytes": 3985,
+      "sha256": "a5a8b15075bc5f68836e37114d4ea29225a1e7d161312c8550e9a148ebd52d84"
+    },
+    {
+      "path": "state-before-output-parser-correction.json",
+      "bytes": 2875,
+      "sha256": "5a4082d589474a76c032ed464473daee60f706234f47cf591694497549c1e9ef"
+    },
+    {
+      "path": "output-parser-reconciliation.json",
+      "bytes": 1066,
+      "sha256": "39577f2e203bd123593ec206949b46558993fcea838f953c8457e31c43ddc123"
+    },
+    {
+      "path": "node-manifest-upstream.log",
+      "bytes": 5944,
+      "sha256": "b99faf1f46d7725b0e0ab08914b77f9ea5c46bf704f45667c3a2592b4bd5a37f"
+    },
+    {
+      "path": "swift-expo-asset-analyzer.log",
+      "bytes": 29188,
+      "sha256": "8a83d834e1416aa086dc61cb65837878e7fc17e1051627cd436d8f1913a675ee"
+    },
+    {
+      "path": "run-companion-gates-attempt9.py",
+      "bytes": 5764,
+      "sha256": "c3be79b119482f7f9a4bcbb649b0bf0861e8aeed01b3e4ae184a1d19b1a09ace"
+    }
+  ],
+  "sources": [
+    {
+      "path": "Scripts/Audit/Tests/manifest-contracts.test.mjs",
+      "sha256": "eaf8b67004a39c559254a10178971913c3b334d185fad64680fd1726e4331336",
+      "bytes": 10067,
+      "matchesExecutionHEAD": true
+    },
+    {
+      "path": "Scripts/MiniApps/Tests/upstream-resolution.test.mjs",
+      "sha256": "2b8ab415f6343b2cdf33cf9029aa5b39f52b5a9959f6d52dd31a3fd7e3cea16e",
+      "bytes": 9882,
+      "matchesExecutionHEAD": true
+    },
+    {
+      "path": "Scripts/Audit/miniapp-manifest-contracts.mjs",
+      "sha256": "9f592ef1d6d280923c473041a078e7f63757633ff55c3ee08f80af6d80b057e3",
+      "bytes": 39276,
+      "matchesExecutionHEAD": true
+    },
+    {
+      "path": "Scripts/MiniApps/resolve-upstreams.mjs",
+      "sha256": "7973977cf986cbee14fd147fd8b10c1d54a6f1a1c790511d2df5cf054063e7a2",
+      "bytes": 29048,
+      "matchesExecutionHEAD": true
+    },
+    {
+      "path": "Scripts/Expo/build-original-expo-source.mjs",
+      "sha256": "855a9a79f1c27a2ba2f3796cf784ebb66a4a48df928b2ea8f6ca1ffd9e886c03",
+      "bytes": 9828,
+      "matchesExecutionHEAD": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinScriptAnalyzerTests.swift",
+      "sha256": "e71673cd27ee0b780bc9ca254ee62e2da1a38eb45250bdae8983ab0e5443633c",
+      "bytes": 40125,
+      "matchesExecutionHEAD": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
+      "sha256": "7c58f10cc6a5f89c452842490b8ee6eb2378066929c8db27c5dfe6139d441527",
+      "bytes": 52059,
+      "matchesExecutionHEAD": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinMiniAppHostVersions.swift",
+      "sha256": "8e99e562bacbe6354bc23caf6a1233930a1e0d61c3abe0444195dd36164f747d",
+      "bytes": 825,
+      "matchesExecutionHEAD": true
+    }
+  ],
+  "commands": [
+    {
+      "name": "node-manifest-upstream",
+      "argv": [
+        "node",
+        "--test",
+        "Scripts/Audit/Tests/manifest-contracts.test.mjs",
+        "Scripts/MiniApps/Tests/upstream-resolution.test.mjs"
+      ],
+      "startedAt": "2026-11-25T00:46:54.044069+00:00",
+      "status": "PASS",
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/companion-gates-attempt9/node-manifest-upstream.log",
+      "timeout": 90,
+      "pid": 86737,
+      "exitCode": 0,
+      "finishedAt": "2026-11-25T00:46:54.238079+00:00",
+      "elapsedSeconds": 0.19376079200446839,
+      "logBytes": 5944,
+      "logSHA256": "b99faf1f46d7725b0e0ab08914b77f9ea5c46bf704f45667c3a2592b4bd5a37f"
+    },
+    {
+      "name": "swift-expo-asset-analyzer",
+      "argv": [
+        "xcrun",
+        "swift",
+        "test",
+        "--package-path",
+        "Packages/HanlinPlatform",
+        "--jobs",
+        "1",
+        "--filter",
+        "HanlinScriptAnalyzerTests/expoAssetPluginRequiresItsActualEmbeddedVersion"
+      ],
+      "startedAt": "2026-11-25T00:46:54.241103+00:00",
+      "status": "PASS",
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/companion-gates-attempt9/swift-expo-asset-analyzer.log",
+      "timeout": 1200,
+      "pid": 86749,
+      "elapsedSeconds": 318.16765787499753,
+      "logBytes": 29188,
+      "exitCode": 0,
+      "finishedAt": "2026-11-25T00:52:12.408266+00:00",
+      "logSHA256": "8a83d834e1416aa086dc61cb65837878e7fc17e1051627cd436d8f1913a675ee"
+    }
+  ],
+  "scope": "14 original Node tests; one original Swift analyzer test exercises three version cases. No app/runtime acceptance inferred.",
+  "collectorCorrection": "Initial collector failed on Swift Testing wording in1suite; raw named test and aggregate passed. Existing result reconciled without rerun."
+}

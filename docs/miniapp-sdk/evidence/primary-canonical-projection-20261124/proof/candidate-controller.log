@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/projection-regression-attempt7/resume-candidate.py", line 44, in <module>
+    run('candidate',0)
+  File "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/projection-regression-attempt7/resume-candidate.py", line 29, in run
+    if event.get('timedOut') or code!=expected:raise RuntimeError(f'{label}: expected exit {expected}, got {code}')
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: candidate: expected exit 0, got 1

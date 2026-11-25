@@ -10,6 +10,7 @@ public final class ExpoHostServicesAdapter: NSObject, @unchecked Sendable, Hanli
     public let sessionID: String
     public let context: HanlinHostCallContext
     private let externalMiniAppOperation: HanlinMiniAppExternalOperation?
+    private let assistantService: (any HanlinMiniAppAssistantService)?
     /// Bound by the platform that owns this actual Expo session, including an
     /// independent external-invocation scene. Never resolves a global current app.
     public typealias PreparedWidgetPublisher = @Sendable (String, String, [String: HanlinValue]) async throws -> String
@@ -22,6 +23,7 @@ public final class ExpoHostServicesAdapter: NSObject, @unchecked Sendable, Hanli
         grantedCapabilities: Set<String>,
         sessionID: String = UUID().uuidString.lowercased(),
         externalMiniAppOperation: HanlinMiniAppExternalOperation? = nil,
+        assistantServiceFactory: HanlinMiniAppAssistantServiceFactory? = nil,
         preparedWidgetPublisher: PreparedWidgetPublisher? = nil
     ) {
         let validatedSessionID = (try? HanlinAppSessionID(validating: sessionID))
@@ -37,8 +39,13 @@ public final class ExpoHostServicesAdapter: NSObject, @unchecked Sendable, Hanli
             sessionID: validatedSessionID,
             canPresentUI: true
         )
+        self.assistantService = assistantServiceFactory?(self.context)
         super.init()
     }
+
+    public func invalidateAssistantRequests() { assistantService?.invalidate() }
+
+    deinit { assistantService?.invalidate() }
 
     public func hasCapability(_ capability: String) -> Bool {
         // Availability is not an internal grant. Native calls still report
@@ -64,6 +71,12 @@ public final class ExpoHostServicesAdapter: NSObject, @unchecked Sendable, Hanli
     }
 
     public func invoke(operation: String, payloadJSON: String) async throws -> String {
+        if operation.hasPrefix("assistant.") {
+            guard let assistantService else {
+                throw HanlinHostServiceError.unsupportedByPlatform("Assistant services are unavailable in this host.")
+            }
+            return try await assistantService.invoke(operation: operation, payloadJSON: payloadJSON)
+        }
         if operation.hasPrefix("miniapps."), let externalMiniAppOperation {
             return try await externalMiniAppOperation(operation, payloadJSON)
         }

@@ -1,0 +1,216 @@
+diff --git a/Scripts/CI/IntegrationValidation/run_cache_app_native.py b/Scripts/CI/IntegrationValidation/run_cache_app_native.py
+index 062010ae1..5e03fb1a6 100644
+--- a/Scripts/CI/IntegrationValidation/run_cache_app_native.py
++++ b/Scripts/CI/IntegrationValidation/run_cache_app_native.py
+@@ -53,6 +53,27 @@ def git(*arguments):
+     return subprocess.check_output(["git", "-C", str(ROOT), *arguments])
+ 
+ 
++def is_active_package_lock(name, files):
++    """Classify live lock locations using this same captured source inventory."""
++    if name in {"Package.resolved",
++                "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved"}:
++        return True
++    path = Path(name)
++    return (len(path.parts) == 3 and path.parts[0] == "Packages"
++            and path.name == "Package.resolved"
++            and str(path.with_name("Package.swift")) in files)
++
++
++def compare_sources(before, after, phase):
++    changed = sorted(name for name in before["files"].keys() | after["files"].keys()
++                     if before["files"].get(name) != after["files"].get(name))
++    inventory = before["files"] | after["files"]
++    changed_locks = [name for name in changed if is_active_package_lock(name, inventory)]
++    allowed = set(changed_locks) | {"Config.xcconfig"} if phase == "prepare" else set()
++    unexpected = before["sourceSHA"] != after["sourceSHA"] or bool(set(changed) - allowed)
++    return changed, changed_locks, unexpected
++
++
+ def snapshot(folder, label):
+     tracked = {os.fsdecode(name) for name in git("ls-files", "-z").split(b"\0") if name}
+     extra = {ROOT / "Config.xcconfig", ROOT / "Package.resolved"}
+@@ -69,7 +90,7 @@ def snapshot(folder, label):
+             missing.append(name)
+     if missing:
+         raise RuntimeError("Tracked inputs are not materialized: " + ", ".join(missing[:12]))
+-    locks = {name: digest for name, digest in files.items() if Path(name).name == "Package.resolved"}
++    locks = {name: digest for name, digest in files.items() if is_active_package_lock(name, files)}
+     for name in locks:
+         destination = folder / (label + "-locks") / name
+         destination.parent.mkdir(parents=True, exist_ok=True)
+@@ -121,7 +142,8 @@ def original_import_settings():
+ 
+ def preparation_inputs(files):
+     return {name: digest for name, digest in files.items()
+-            if Path(name).name in {"Package.swift", "Package.resolved", "project.pbxproj",
++            if is_active_package_lock(name, files)
++            or Path(name).name in {"Package.swift", "project.pbxproj",
+                                    "Config.xcconfig", "RuntimeDependencies.lock.json"}
+             or name.endswith(".xcscheme")
+             or name in {str(WORKFLOW.relative_to(ROOT)),
+@@ -324,12 +346,10 @@ def main():
+             after = snapshot(run.folder, "after")
+             run.state["sourceSHAAfter"] = after["sourceSHA"]
+             if before:
+-                changed = sorted(name for name in before["files"].keys() | after["files"].keys()
+-                                 if before["files"].get(name) != after["files"].get(name))
++                changed, changed_locks, unexpected = compare_sources(before, after, args.phase)
+                 run.state["changedSourcePaths"] = changed
+-                run.state["changedLockPaths"] = [name for name in changed if Path(name).name == "Package.resolved"]
+-                allowed = set(run.state["changedLockPaths"]) | {"Config.xcconfig"} if args.phase == "prepare" else set()
+-                if before["sourceSHA"] != after["sourceSHA"] or set(changed) - allowed:
++                run.state["changedLockPaths"] = changed_locks
++                if unexpected:
+                     error = error or "Source inputs changed during this phase"
+         except Exception as caught:
+             error = error or "Cannot retain final source evidence: " + str(caught)
+diff --git a/Scripts/CI/Tests/test_cache_app_native_locks.py b/Scripts/CI/Tests/test_cache_app_native_locks.py
+new file mode 100644
+index 000000000..e2676c898
+--- /dev/null
++++ b/Scripts/CI/Tests/test_cache_app_native_locks.py
+@@ -0,0 +1,143 @@
++"""Prevent recursive lock evidence while retaining full source immutability."""
++import hashlib
++from pathlib import Path
++import subprocess
++import sys
++import tempfile
++import unittest
++from unittest import mock
++
++REPOSITORY = Path(__file__).resolve().parents[3]
++sys.path.insert(0, str(REPOSITORY / "Scripts/CI/IntegrationValidation"))
++import run_cache_app_native as subject
++
++WORKSPACE_LOCK = "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved"
++PACKAGE_LOCK = "Packages/Fixture/Package.resolved"
++HISTORICAL_LOCK = "docs/evidence/before-locks/docs/old/after-locks/Packages/Fixture/Package.resolved"
++
++
++class ActiveLockClassificationTests(unittest.TestCase):
++    def test_actual_tracked_graph_has_exactly_nine_active_locks(self):
++        raw = subprocess.check_output([
++            "git", "-c", "safe.directory=" + str(REPOSITORY), "-C", str(REPOSITORY),
++            "ls-files", "-z"])
++        inventory = dict.fromkeys(raw.decode().rstrip("\0").split("\0"), "tracked")
++        selected = {name for name in inventory if subject.is_active_package_lock(name, inventory)}
++        packages = ("HanlinAgentSDK", "HanlinParityMiniApp", "HanlinPlatform",
++                    "HanlinSefariaMiniApp", "HanlinSkillFormat", "HanlinSwiftUIBridgeGenerator",
++                    "HanlinTextStudioMiniApp", "HanlinWikipediaMiniApp")
++        self.assertEqual(selected, {WORKSPACE_LOCK} | {
++            "Packages/" + package + "/Package.resolved" for package in packages})
++        historical = {name for name in inventory if name.startswith("docs/")
++                      and Path(name).name == "Package.resolved"}
++        self.assertTrue(historical, "The actual historical evidence must exercise this regression")
++        self.assertTrue(selected.isdisjoint(historical))
++
++    def test_only_original_locations_with_captured_package_manifests_are_active(self):
++        inventory = {
++            "Package.resolved": "root",
++            WORKSPACE_LOCK: "app",
++            "Packages/Fixture/Package.swift": "manifest",
++            PACKAGE_LOCK: "package",
++            "Packages/NoManifest/Package.resolved": "orphan",
++            "Packages/Fixture/Nested/Package.swift": "nested-manifest",
++            "Packages/Fixture/Nested/Package.resolved": "nested",
++            "Other.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved": "other",
++            HISTORICAL_LOCK: "historical",
++        }
++        selected = {name for name in inventory if subject.is_active_package_lock(name, inventory)}
++        self.assertEqual(selected, {"Package.resolved", WORKSPACE_LOCK, PACKAGE_LOCK})
++
++
++class FullSourceSnapshotTests(unittest.TestCase):
++    def setUp(self):
++        self.temporary = tempfile.TemporaryDirectory()
++        self.addCleanup(self.temporary.cleanup)
++        base = Path(self.temporary.name)
++        self.repository, self.evidence = base / "repository", base / "evidence"
++        self.repository.mkdir()
++        self.evidence.mkdir()
++        self.contents = {
++            "Config.xcconfig": "unchanged original configuration\n",
++            "Sources/Original.swift": "struct Original {}\n",
++            WORKSPACE_LOCK: '{"pins":["app"]}\n',
++            "Packages/Fixture/Package.swift": "// actual package manifest\n",
++            PACKAGE_LOCK: '{"pins":["package"]}\n',
++            "Packages/NoManifest/Package.resolved": '{"pins":["not-an-active-package"]}\n',
++            HISTORICAL_LOCK: '{"pins":["historical-proof"]}\n',
++        }
++        for name, content in self.contents.items():
++            path = self.repository / name
++            path.parent.mkdir(parents=True, exist_ok=True)
++            path.write_text(content)
++        # The original snapshot also captures a present untracked root lock.
++        (self.repository / "Package.resolved").write_text('{"pins":["root"]}\n')
++        self.addCleanup(mock.patch.stopall)
++        mock.patch.object(subject, "ROOT", self.repository).start()
++        mock.patch.object(subject, "WORKFLOW",
++                          self.repository / ".github/workflows/build-ios26-unsigned-ipa.yml").start()
++        mock.patch.object(subject, "git", side_effect=self.git).start()
++
++    def git(self, *arguments):
++        if arguments == ("ls-files", "-z"):
++            return ("\0".join(self.contents) + "\0").encode()
++        if arguments == ("rev-parse", "HEAD"):
++            return b"same-sealed-source\n"
++        if arguments == ("diff", "--binary", "HEAD", "--", "."):
++            return b""
++        self.fail("Unexpected external command in snapshot fixture: " + repr(arguments))
++
++    def snapshot(self, label):
++        return subject.snapshot(self.evidence, label)
++
++    def test_all_tracked_bytes_stay_hashed_but_historical_locks_are_not_recopied(self):
++        before = self.snapshot("before")
++        self.assertEqual(set(before["files"]), set(self.contents) | {"Package.resolved"})
++        for name, content in self.contents.items():
++            self.assertEqual(before["files"][name], hashlib.sha256(content.encode()).hexdigest())
++        expected = {"Package.resolved", WORKSPACE_LOCK, PACKAGE_LOCK}
++        self.assertEqual(set(before["locks"]), expected)
++        copies = {str(path.relative_to(self.evidence / "before-locks"))
++                  for path in (self.evidence / "before-locks").rglob("Package.resolved")}
++        self.assertEqual(copies, expected)
++
++    def test_historical_proof_mutation_fails_both_phases_even_though_it_is_not_a_graph_input(self):
++        before = self.snapshot("before")
++        (self.repository / HISTORICAL_LOCK).write_text('{"pins":["changed-historical-proof"]}\n')
++        after = self.snapshot("after")
++        self.assertEqual(subject.preparation_inputs(before["files"]),
++                         subject.preparation_inputs(after["files"]))
++        for phase in ("prepare", "test"):
++            with self.subTest(phase=phase):
++                changed, changed_locks, unexpected = subject.compare_sources(before, after, phase)
++                self.assertEqual(changed, [HISTORICAL_LOCK])
++                self.assertEqual(changed_locks, [])
++                self.assertTrue(unexpected, "Historical proof changes must never receive the resolver allowance")
++
++    def test_active_lock_change_invalidates_prepared_inputs_and_remains_immutable_during_test(self):
++        before = self.snapshot("before")
++        (self.repository / PACKAGE_LOCK).write_text('{"pins":["new-canonical-revision"]}\n')
++        after = self.snapshot("after")
++        self.assertNotEqual(subject.preparation_inputs(before["files"]),
++                            subject.preparation_inputs(after["files"]))
++        self.assertEqual(subject.compare_sources(before, after, "prepare"),
++                         ([PACKAGE_LOCK], [PACKAGE_LOCK], False))
++        self.assertEqual(subject.compare_sources(before, after, "test"),
++                         ([PACKAGE_LOCK], [PACKAGE_LOCK], True))
++
++    def test_other_source_and_source_head_changes_are_still_rejected(self):
++        before = self.snapshot("before")
++        (self.repository / "Sources/Original.swift").write_text("struct Changed {}\n")
++        after = self.snapshot("after")
++        self.assertTrue(subject.compare_sources(before, after, "prepare")[2])
++        same_files_new_commit = dict(before, sourceSHA="different-source-commit")
++        self.assertTrue(subject.compare_sources(before, same_files_new_commit, "prepare")[2])
++
++    def test_missing_historical_tracked_file_is_still_an_error(self):
++        (self.repository / HISTORICAL_LOCK).unlink()
++        with self.assertRaisesRegex(RuntimeError, "Tracked inputs are not materialized"):
++            self.snapshot("missing")
++
++
++if __name__ == "__main__":
++    unittest.main()

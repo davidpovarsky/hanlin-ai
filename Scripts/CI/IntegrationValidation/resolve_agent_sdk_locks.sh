@@ -3,6 +3,7 @@
 set -euo pipefail
 root="$(git rev-parse --show-toplevel)"
 cd "$root"
+producer_sha="$(python3 Scripts/CI/IntegrationValidation/swift_ai_sdk_pin.py "$root")"
 evidence="$root/build/agent-sdk-lock-evidence"
 mkdir -p "$evidence"
 scratch="$(mktemp -d "${RUNNER_TEMP:-/tmp}/hanlin-sdk-locks.XXXXXXXX")"
@@ -25,7 +26,7 @@ for path in sorted(root.rglob('*')):
     rel=path.relative_to(root).as_posix();raw=path.read_bytes()
     assert raw==subprocess.check_output(['git','show','HEAD:'+rel]),rel
     records[rel]=hashlib.sha256(raw).hexdigest()
-for rel in ['.github/workflows/build-ios26-unsigned-ipa.yml','Scripts/CI/IntegrationValidation/resolve_agent_sdk_locks.sh']:
+for rel in ['.github/workflows/build-ios26-unsigned-ipa.yml','Scripts/CI/IntegrationValidation/resolve_agent_sdk_locks.sh','Scripts/CI/IntegrationValidation/swift_ai_sdk_pin.py']:
     raw=Path(rel).read_bytes();assert raw==subprocess.check_output(['git','show','HEAD:'+rel]),rel
     records[rel]=hashlib.sha256(raw).hexdigest()
 print(json.dumps(records,indent=2))
@@ -33,10 +34,10 @@ PY
 for package in "${packages[@]}"; do
   xcrun swift package --package-path "$scratch/Packages/$package" resolve > "$evidence/$package-resolve.log" 2>&1
 done
-python3 - "$scratch" "$evidence" <<'PY'
+python3 - "$scratch" "$evidence" "$producer_sha" <<'PY'
 import hashlib,json,subprocess,sys
 from pathlib import Path
-root,evidence=map(Path,sys.argv[1:]);records=[]
+root,evidence=map(Path,sys.argv[1:3]);producer_sha=sys.argv[3];records=[]
 names=['HanlinPlatform','HanlinAgentSDK','HanlinParityMiniApp','HanlinTextStudioMiniApp','HanlinSefariaMiniApp','HanlinWikipediaMiniApp']
 for name in names:
     rel=f'Packages/{name}/Package.resolved';dest=evidence/rel
@@ -56,12 +57,12 @@ for name in names:
     assert not added or name.endswith('MiniApp') and added=={'swiftyjson'},(name,'unexpected identity addition',added)
     for identity,pin in after.items():
         if identity=='swift-ai-sdk':
-            assert pin['state']['revision']=='07431abccbfb151ca2dab67bca6cf86fcb2bd3b8'
+            assert pin['state']['revision']==producer_sha
             assert pin['kind']==before[identity]['kind'] and pin['location']==before[identity]['location']
         elif identity in before:assert pin==before[identity],(name,'unrelated pin changed',identity)
         else:assert pin==platform[identity] and pin['state']['version']=='5.0.1',(name,'inherited existing SwiftyJSON pin mismatch')
     dest=evidence/rel;dest.parent.mkdir(parents=True,exist_ok=True);dest.write_bytes(raw)
     records.append({'source_path':rel,'raw_file':rel,'sha256':hashlib.sha256(raw).hexdigest(),'resolved':new,'previously_unlocked_existing_dependencies':sorted(added)})
 (evidence/'resolution.json').write_text(json.dumps(records,indent=2))
-(evidence/'summary.json').write_text(json.dumps({'status':'RESOLUTION_PASS','graphs':len(records),'builds':0,'tests':0,'producer':'07431abccbfb151ca2dab67bca6cf86fcb2bd3b8','unrelated_pins_changed':False},indent=2))
+(evidence/'summary.json').write_text(json.dumps({'status':'RESOLUTION_PASS','graphs':len(records),'builds':0,'tests':0,'producer':producer_sha,'unrelated_pins_changed':False},indent=2))
 PY

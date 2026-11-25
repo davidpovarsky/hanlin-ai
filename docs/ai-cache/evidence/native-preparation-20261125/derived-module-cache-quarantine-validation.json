@@ -1,0 +1,30 @@
+{
+  "base": "01c0357287d56d9244bdf79f3ef78adc26202f18",
+  "pythonSyntax": "PASS",
+  "diffCheck": "PASS",
+  "isolatedOracleFilesystemChecks": [
+    {
+      "scenario": "directory",
+      "status": "PASS",
+      "donorUnchanged": true,
+      "otherProductsPreserved": true
+    },
+    {
+      "scenario": "absent",
+      "status": "PASS",
+      "donorUnchanged": true,
+      "otherProductsPreserved": true
+    },
+    {
+      "scenario": "symlink",
+      "status": "PASS",
+      "donorUnchanged": true,
+      "otherProductsPreserved": true
+    }
+  ],
+  "sourceSHA256": "66977886bfe275628675bacd057a29c392d7c900a38fa229d181554c516c13a4",
+  "nativeBuildsRun": false,
+  "macWrites": false,
+  "scope": "Only newly cloned DerivedData; existing destinations remain untouched",
+  "commit": "4b7e98b8f31a597f41e16db2d26ca92aa496b84d"
+}

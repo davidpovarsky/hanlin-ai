@@ -65,9 +65,10 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/SwiftyJSON/SwiftyJSON.git", exact: "5.0.1"),
+        .package(url: "https://github.com/open-telemetry/opentelemetry-swift-core.git", exact: "2.6.0"),
         .package(
             url: "https://github.com/davidpovarsky/swift-ai-sdk.git",
-            revision: "3f38f1302764635c9991d0d00fd7b12471a5373c"
+            revision: "abf0921c6e89e6521cc2b510ff11016b45a0ef08"
         ),
         .package(
             url: "https://github.com/weichsel/ZIPFoundation.git",
@@ -199,6 +200,8 @@ let package = Package(
         .target(
             name: "HanlinChatCore",
             dependencies: [
+                .product(name: "OpenTelemetryApi", package: "opentelemetry-swift-core"),
+                .product(name: "OpenTelemetrySdk", package: "opentelemetry-swift-core"),
                 "HanlinPlatformContracts",
                 .product(name: "SwiftAISDK", package: "swift-ai-sdk"),
                 .product(name: "AISDKProvider", package: "swift-ai-sdk"),
@@ -212,6 +215,8 @@ let package = Package(
         .testTarget(
             name: "HanlinChatCoreTests",
             dependencies: [
+                .product(name: "OpenTelemetryApi", package: "opentelemetry-swift-core"),
+                .product(name: "OpenTelemetrySdk", package: "opentelemetry-swift-core"),
                 "HanlinChatCore",
                 .product(name: "SwiftAISDK", package: "swift-ai-sdk"),
                 .product(name: "AISDKProvider", package: "swift-ai-sdk"),

@@ -1,0 +1,64 @@
+TAP version 13
+# Subtest: accepts metadata in the normal main executable
+ok 1 - accepts metadata in the normal main executable
+  ---
+  duration_ms: 16.820539
+  type: 'test'
+  ...
+# Subtest: accepts the linked debug dylib and exposes it for the provider checks
+ok 2 - accepts the linked debug dylib and exposes it for the provider checks
+  ---
+  duration_ms: 10.081539
+  type: 'test'
+  ...
+# Subtest: rejects missing, empty and wrong-segment host metadata
+ok 3 - rejects missing, empty and wrong-segment host metadata
+  ---
+  duration_ms: 12.093791
+  type: 'test'
+  ...
+# Subtest: rejects two metadata owners in the same loaded architecture
+ok 4 - rejects two metadata owners in the same loaded architecture
+  ---
+  duration_ms: 5.559352
+  type: 'test'
+  ...
+# Subtest: does not admit framework metadata or an unlinked app-local dylib
+ok 5 - does not admit framework metadata or an unlinked app-local dylib
+  ---
+  duration_ms: 7.313843
+  type: 'test'
+  ...
+# Subtest: resolves actual rpath order without substituting an app-local shadow
+ok 6 - resolves actual rpath order without substituting an app-local shadow
+  ---
+  duration_ms: 4.858068
+  type: 'test'
+  ...
+# Subtest: deduplicates linked aliases of the same direct host image
+ok 7 - deduplicates linked aliases of the same direct host image
+  ---
+  duration_ms: 5.29171
+  type: 'test'
+  ...
+# Subtest: checks metadata ownership per architecture instead of counting fat slices as images
+ok 8 - checks metadata ownership per architecture instead of counting fat slices as images
+  ---
+  duration_ms: 3.803462
+  type: 'test'
+  ...
+# Subtest: does not let one fat slice satisfy another architecture without metadata
+ok 9 - does not let one fat slice satisfy another architecture without metadata
+  ---
+  duration_ms: 4.760028
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 153.150335

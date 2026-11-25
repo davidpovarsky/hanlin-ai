@@ -1,0 +1,266 @@
+[
+  {
+    "path": "raw/snapshot-receipt.json",
+    "bytes": 12716,
+    "sha256": "20ee3233d5094aec1e3f476fecfa66dd43c9b64129f8e235a96529a6e9cfbb35",
+    "originalBytes": 12716,
+    "originalSHA256": "20ee3233d5094aec1e3f476fecfa66dd43c9b64129f8e235a96529a6e9cfbb35",
+    "compression": null
+  },
+  {
+    "path": "raw/tracked-delta.json",
+    "bytes": 3722,
+    "sha256": "0d97b8de1b354c375d5d47b4405f3cd10aa83d2cd6cf5c8ca5901b5796ad9e9a",
+    "originalBytes": 3722,
+    "originalSHA256": "0d97b8de1b354c375d5d47b4405f3cd10aa83d2cd6cf5c8ca5901b5796ad9e9a",
+    "compression": null
+  },
+  {
+    "path": "raw/miniapp-sdk.json.gz",
+    "bytes": 1301376,
+    "sha256": "8df9128c1290c9ec438f2c8f28660361f11442164ec218af454f744f69fe5535",
+    "originalBytes": 5219389,
+    "originalSHA256": "19726b5eecc1459e30dae9e7ec4ca6761001de92b22055ac41b9a96aabdd7a88",
+    "compression": "gzip"
+  },
+  {
+    "path": "raw/expo-asset-produced-bindings.json",
+    "bytes": 9116,
+    "sha256": "299f617ecc8909c16d2a2776488181b5d399a25abed4f255f6b526f8b78ece52",
+    "originalBytes": 9116,
+    "originalSHA256": "299f617ecc8909c16d2a2776488181b5d399a25abed4f255f6b526f8b78ece52",
+    "compression": null
+  },
+  {
+    "path": "raw/RuntimeDependencies.lock.json",
+    "bytes": 7925,
+    "sha256": "6cdbc18a474febbfc912b35ecbf5b0b55438a6a3e6daf2c33a43792cd04bd50a",
+    "originalBytes": 7925,
+    "originalSHA256": "6cdbc18a474febbfc912b35ecbf5b0b55438a6a3e6daf2c33a43792cd04bd50a",
+    "compression": null
+  },
+  {
+    "path": "raw/Scripts/Expo/package-lock.json",
+    "bytes": 336324,
+    "sha256": "c08757cf46ac4d5c86a873f676af4a3be585db64ae2e1aa1e8288277d4eb63b8",
+    "originalBytes": 336324,
+    "originalSHA256": "c08757cf46ac4d5c86a873f676af4a3be585db64ae2e1aa1e8288277d4eb63b8",
+    "compression": null
+  },
+  {
+    "path": "raw/Scripts/Expo/package.json",
+    "bytes": 1759,
+    "sha256": "e2b50fae013276229c78619bbbe0b63d8c29b00fefde3afeccea98af117aa206",
+    "originalBytes": 1759,
+    "originalSHA256": "e2b50fae013276229c78619bbbe0b63d8c29b00fefde3afeccea98af117aa206",
+    "compression": null
+  },
+  {
+    "path": "raw/Scripts/Expo/dependency-lock.json",
+    "bytes": 5375,
+    "sha256": "b9e3ad6d863e3e5136ad93924ce4edcb37da87578b113523640110af347eec65",
+    "originalBytes": 5375,
+    "originalSHA256": "b9e3ad6d863e3e5136ad93924ce4edcb37da87578b113523640110af347eec65",
+    "compression": null
+  },
+  {
+    "path": "raw/Scripts/MiniApps/upstream-resolution.json",
+    "bytes": 15092,
+    "sha256": "e0c2944ea24c09330825dee58badedcec58606ba603ccdedc888abf1a63a13cb",
+    "originalBytes": 15092,
+    "originalSHA256": "e0c2944ea24c09330825dee58badedcec58606ba603ccdedc888abf1a63a13cb",
+    "compression": null
+  },
+  {
+    "path": "raw/Scripts/NativeScript/package-lock.json",
+    "bytes": 110219,
+    "sha256": "16f569f4bfa6f8806cfe72449866a0dc9a9331f33d2c67170d5292455c48b60b",
+    "originalBytes": 110219,
+    "originalSHA256": "16f569f4bfa6f8806cfe72449866a0dc9a9331f33d2c67170d5292455c48b60b",
+    "compression": null
+  },
+  {
+    "path": "raw/Scripts/NativeScript/package.json",
+    "bytes": 851,
+    "sha256": "08fc03bfa87cd78f4f21f80e9324a4840061105f6e9ab081ed794c569ca7324b",
+    "originalBytes": 851,
+    "originalSHA256": "08fc03bfa87cd78f4f21f80e9324a4840061105f6e9ab081ed794c569ca7324b",
+    "compression": null
+  },
+  {
+    "path": "raw/build/runtime-host/host-metadata.json",
+    "bytes": 358,
+    "sha256": "698ab149ecf0a558a1db478908692f0dff2dac4e62456a88894cdda94cad9d8d",
+    "originalBytes": 358,
+    "originalSHA256": "698ab149ecf0a558a1db478908692f0dff2dac4e62456a88894cdda94cad9d8d",
+    "compression": null
+  },
+  {
+    "path": "raw/build/app-split-evidence/miniapp-documentation-snippets.json",
+    "bytes": 20103,
+    "sha256": "8be33b2bd2fb07424bd156bbbf97f55705b15ed8776317669ecb44d0d880423d",
+    "originalBytes": 20103,
+    "originalSHA256": "8be33b2bd2fb07424bd156bbbf97f55705b15ed8776317669ecb44d0d880423d",
+    "compression": null
+  },
+  {
+    "path": "raw/build/app-split-evidence/prepared-native/native-artifacts.json",
+    "bytes": 29897,
+    "sha256": "d13aed210768d84475c28201a973e3d59645c3e27f69e7069a30fb9b685e91dc",
+    "originalBytes": 29897,
+    "originalSHA256": "d13aed210768d84475c28201a973e3d59645c3e27f69e7069a30fb9b685e91dc",
+    "compression": null
+  },
+  {
+    "path": "raw/build/primary-control/logs-attempt10/split-native-preparation.log",
+    "bytes": 32759,
+    "sha256": "705a7914142f86d7912d3ad0e349975e0d311e15f3168a3cb9eb3a293cae5968",
+    "originalBytes": 32759,
+    "originalSHA256": "705a7914142f86d7912d3ad0e349975e0d311e15f3168a3cb9eb3a293cae5968",
+    "compression": null
+  },
+  {
+    "path": "raw/build/primary-control/logs-attempt10/split-native-artifacts.log",
+    "bytes": 1604,
+    "sha256": "6ba90756cd5ae1a7ee915af12e22160528b0ceb7d8065409f71ea5d5ffa96f27",
+    "originalBytes": 1604,
+    "originalSHA256": "6ba90756cd5ae1a7ee915af12e22160528b0ceb7d8065409f71ea5d5ffa96f27",
+    "compression": null
+  },
+  {
+    "path": "raw/build/primary-control/plan.json",
+    "bytes": 12303,
+    "sha256": "c1d7588482b30e6c21d52f1e0b6bff779be6f0d5ba398a11da5fdbd233fe62a3",
+    "originalBytes": 12303,
+    "originalSHA256": "c1d7588482b30e6c21d52f1e0b6bff779be6f0d5ba398a11da5fdbd233fe62a3",
+    "compression": null
+  },
+  {
+    "path": "raw/build/primary-control/source-advance-fda6948c/receipt.json",
+    "bytes": 26173,
+    "sha256": "5499cadcf68adccc03b35c9c9e5d6683c6e38b8f18886a9782f1719d644a3d3a",
+    "originalBytes": 26173,
+    "originalSHA256": "5499cadcf68adccc03b35c9c9e5d6683c6e38b8f18886a9782f1719d644a3d3a",
+    "compression": null
+  },
+  {
+    "path": "raw/build/primary-control/admission-attempt10.json",
+    "bytes": 1107,
+    "sha256": "1b3db25eda94ed3900924c481a221e9423fc9294ce9df2ffd2bae42b80bdbabc",
+    "originalBytes": 1107,
+    "originalSHA256": "1b3db25eda94ed3900924c481a221e9423fc9294ce9df2ffd2bae42b80bdbabc",
+    "compression": null
+  },
+  {
+    "path": "raw/build/acceptance/expo-type-declarations/corrections.json",
+    "bytes": 3600,
+    "sha256": "c5e5322a6177f36a713380134006d4beb3a0ebd275e435e66b7de93a4cb60f82",
+    "originalBytes": 3600,
+    "originalSHA256": "c5e5322a6177f36a713380134006d4beb3a0ebd275e435e66b7de93a4cb60f82",
+    "compression": null
+  },
+  {
+    "path": "raw/Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/.source-build-receipt.json",
+    "bytes": 1355,
+    "sha256": "78a6b4b85330189dd162c09ae250cb280bf7dbe62608ca6438e6f3fabde6ee3b",
+    "originalBytes": 1355,
+    "originalSHA256": "78a6b4b85330189dd162c09ae250cb280bf7dbe62608ca6438e6f3fabde6ee3b",
+    "compression": null
+  },
+  {
+    "path": "raw/Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/.artifact-manifest.json",
+    "bytes": 226,
+    "sha256": "80afcbce26c01da5a63f951e04c6fea5959d3b3a51271d6a24002c35c07ceb47",
+    "originalBytes": 226,
+    "originalSHA256": "80afcbce26c01da5a63f951e04c6fea5959d3b3a51271d6a24002c35c07ceb47",
+    "compression": null
+  },
+  {
+    "path": "raw/Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/Info.plist",
+    "bytes": 1196,
+    "sha256": "b239db0645c42fb07b6dd21e54c6012289f62593186b64b880c419d293da984d",
+    "originalBytes": 1196,
+    "originalSHA256": "b239db0645c42fb07b6dd21e54c6012289f62593186b64b880c419d293da984d",
+    "compression": null
+  },
+  {
+    "path": "raw/build/miniapp-upstreams/expo-native-source/ios/Podfile.lock",
+    "bytes": 76498,
+    "sha256": "c012c6f8ee2ca782aea7788349d75a3a57e6e4be8d324037a8b9dce573e4d8e6",
+    "originalBytes": 76498,
+    "originalSHA256": "c012c6f8ee2ca782aea7788349d75a3a57e6e4be8d324037a8b9dce573e4d8e6",
+    "compression": null
+  },
+  {
+    "path": "raw/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+    "bytes": 9960,
+    "sha256": "610bcbb9a7f90c27e3bd3ecd3b1d139fe3ff72ed18086327d1d96c437de932f5",
+    "originalBytes": 9960,
+    "originalSHA256": "610bcbb9a7f90c27e3bd3ecd3b1d139fe3ff72ed18086327d1d96c437de932f5",
+    "compression": null
+  },
+  {
+    "path": "raw/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/original-runtime-receipt.json",
+    "bytes": 6085,
+    "sha256": "3d619674297acb22ae4d0a97f5e7d8a878b0eccbc3bfc49769cfdb5a05248a0b",
+    "originalBytes": 6085,
+    "originalSHA256": "3d619674297acb22ae4d0a97f5e7d8a878b0eccbc3bfc49769cfdb5a05248a0b",
+    "compression": null
+  },
+  {
+    "path": "raw/docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+    "bytes": 118804,
+    "sha256": "768731f0c748276aeab4d34f57ad3ad89fd38aa30f562ff0cc9b5ad9a3767368",
+    "originalBytes": 118804,
+    "originalSHA256": "768731f0c748276aeab4d34f57ad3ad89fd38aa30f562ff0cc9b5ad9a3767368",
+    "compression": null
+  },
+  {
+    "path": "raw/docs/miniapp-sdk/extension-reachability.json",
+    "bytes": 147521,
+    "sha256": "9a9843d277a3e76ad64fc7589029801960c5c98b9aba09f3ed7746552ee3d42d",
+    "originalBytes": 147521,
+    "originalSHA256": "9a9843d277a3e76ad64fc7589029801960c5c98b9aba09f3ed7746552ee3d42d",
+    "compression": null
+  },
+  {
+    "path": "raw/docs/miniapp-sdk/extension-reachability.md",
+    "bytes": 21494,
+    "sha256": "cae21720cab9b31211796a5d82309d6e779f46ddb1d946d1ec1e322f4cf952cb",
+    "originalBytes": 21494,
+    "originalSHA256": "cae21720cab9b31211796a5d82309d6e779f46ddb1d946d1ec1e322f4cf952cb",
+    "compression": null
+  },
+  {
+    "path": "raw/docs/miniapp-sdk/source-inventory.json",
+    "bytes": 493871,
+    "sha256": "856bc8aca1473f8f4255b324e840ef2ebcdf5eb7352d1041d2433391e9f4bfd8",
+    "originalBytes": 493871,
+    "originalSHA256": "856bc8aca1473f8f4255b324e840ef2ebcdf5eb7352d1041d2433391e9f4bfd8",
+    "compression": null
+  },
+  {
+    "path": "raw/controller-state-at-capture.json",
+    "bytes": 44396,
+    "sha256": "e70af8102445c975a82d716b1f862eaa30507be892604d107a57b776703ca549",
+    "originalBytes": 44396,
+    "originalSHA256": "e70af8102445c975a82d716b1f862eaa30507be892604d107a57b776703ca549",
+    "compression": null
+  },
+  {
+    "path": "raw/embedded-host-binding-attempt10.json",
+    "bytes": 4710,
+    "sha256": "d40cec6574c779f8e7dd191b28f5f11eeb57ef7c7d2a436ecb76ca330f63496e",
+    "originalBytes": 4710,
+    "originalSHA256": "d40cec6574c779f8e7dd191b28f5f11eeb57ef7c7d2a436ecb76ca330f63496e",
+    "compression": null
+  },
+  {
+    "path": "raw/installed-metadata-binding-attempt10.json",
+    "bytes": 3018,
+    "sha256": "d58a79c7815fc9e7a14ae0c9d11bea492b1d08449aab761f2ee5ea6fd0c98234",
+    "originalBytes": 3018,
+    "originalSHA256": "d58a79c7815fc9e7a14ae0c9d11bea492b1d08449aab761f2ee5ea6fd0c98234",
+    "compression": null
+  }
+]

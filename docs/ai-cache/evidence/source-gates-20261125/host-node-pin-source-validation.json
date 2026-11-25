@@ -1,0 +1,27 @@
+{
+  "base": "972035205a153669126255f3e4a22dbb88281630",
+  "pythonSyntax": "PASS",
+  "syntaxChecks": {
+    "nodeAssertionSyntax": {
+      "exitCode": 0,
+      "stderr": ""
+    },
+    "printedShellSyntax": {
+      "exitCode": 0,
+      "stderr": ""
+    }
+  },
+  "originalHostRequirement": {
+    "required": {
+      "node": "24.5.0",
+      "unicode": "16.0"
+    },
+    "requiredBy": "Scripts/Runtime/generate-yarn-unicode-patch.mjs",
+    "gateSHA256": "fb738ab65d09f2a90ad0561994b7e7802653140f8adc38c486af2dab3a9335b7"
+  },
+  "sourceSHA256": "c65994a4725fc3ce5ce20ce2b4d2113f68183adafb28a2c37f6b8ca055de3846",
+  "nativeBuildsRun": false,
+  "testsRun": false,
+  "macWrites": false,
+  "commit": "ce50967a519f8bdd8c3278c1708aec8cef0f9ca4"
+}
