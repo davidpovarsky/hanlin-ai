@@ -4,6 +4,8 @@
 The donor is read-only. Existing destinations are never replaced. Original
 preparation scripts remain responsible for current provenance, source production,
 SDK generation, and Runtime Host tests. A successful clone is not a build pass.
+New DerivedData clones quarantine their nonportable ModuleCache.noindex with a
+receipt while preserving the donor and all other copied products/artifacts.
 """
 from __future__ import annotations
 
@@ -16,6 +18,7 @@ from pathlib import Path
 import shlex
 import subprocess
 import sys
+import tempfile
 
 MATCHED_INPUTS = (
     "RuntimeDependencies.lock.json",
@@ -81,6 +84,29 @@ console.log(JSON.stringify(actual));""" % json.dumps(matches)
     return script, {"required": matches, "requiredBy": relative, "gateSHA256": sha256(gate)}
 
 
+def quarantine_cloned_module_cache(donor: Path, destination: Path) -> dict:
+    # Clang PCM files retain the absolute ModuleCache.noindex path they used.
+    # Move only the newly cloned cache; Xcode recreates its original cache path.
+    module_cache = destination / "ModuleCache.noindex"
+    record = {
+        "action": "quarantine-relocated-module-cache",
+        "donor": str(donor / "ModuleCache.noindex"),
+        "destination": str(module_cache),
+        "reason": "Clang precompiled modules embed the donor's absolute module cache path",
+        "donorModified": False,
+    }
+    if not os.path.lexists(module_cache):
+        return {**record, "status": "ABSENT"}
+    quarantine = Path(tempfile.mkdtemp(prefix=destination.name + "-module-cache-quarantine-",
+                                     dir=destination.parent))
+    retained = quarantine / "ModuleCache.noindex"
+    module_cache.rename(retained)
+    record.update({"status": "QUARANTINED", "retainedAt": str(retained),
+                   "receipt": str(quarantine / "receipt.json")})
+    (quarantine / "receipt.json").write_text(json.dumps(record, indent=2) + "\n")
+    return record
+
+
 def preparation_commands(root: Path, node_bin: Path, node_preflight: str) -> str:
     quoted_root, quoted_node = shlex.quote(str(root)), shlex.quote(str(node_bin))
     return f"""# Execute separately on the Mac after reviewing the plan.
@@ -140,12 +166,22 @@ def main() -> int:
             raise ValueError("Donor input differs; reassess before reuse: " + relative)
         inputs.append({"path": relative, "sha256": current})
     paths = [(source / relative, target / relative) for relative in CLONE_PATHS]
+    cache_target = None
+    module_cache_plan = None
     if args.derived_data_source:
         cache_source = args.derived_data_source.resolve(strict=True)
         cache_target = args.derived_data_destination.resolve()
         if cache_source == cache_target or cache_source in cache_target.parents or cache_target in cache_source.parents:
             raise ValueError("DerivedData paths must be independent")
         paths.append((cache_source, cache_target))
+        module_cache_plan = {
+            "path": str(cache_target / "ModuleCache.noindex"),
+            "action": ("preserve-existing-destination; owner must review any relocated module cache"
+                       if os.path.lexists(cache_target)
+                       else "quarantine copied ModuleCache.noindex in a unique sibling directory after cloning"),
+            "reason": "Clang precompiled modules contain absolute module cache paths",
+            "preserved": "Donor contents and all other cloned DerivedData products/artifacts",
+        }
     missing = [str(path) for path, _ in paths if not path.exists()]
     if missing:
         raise ValueError("Donor paths are missing: " + ", ".join(missing))
@@ -156,6 +192,7 @@ def main() -> int:
         "destination": str(target),
         "matchedNativeAndNPMLockInputs": inputs,
         "hostNode": host_node,
+        "derivedDataModuleCache": module_cache_plan,
         "clones": [{"source": str(a), "destination": str(b)} for a, b in paths],
         "preservedExistingDestinations": occupied,
         "pendingCloneCount": len(paths) - len(occupied),
@@ -184,6 +221,8 @@ def main() -> int:
                 continue
             destination.parent.mkdir(parents=True, exist_ok=True)
             subprocess.run(["/bin/cp", "-cR", str(original), str(destination)], check=True)
+            if destination == cache_target:
+                print(json.dumps(quarantine_cloned_module_cache(original, destination)), flush=True)
             print("CLONED " + str(destination), flush=True)
     print("\n" + preparation_commands(target, node_bin, node_preflight))
     return 0
