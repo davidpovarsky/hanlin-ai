@@ -86,8 +86,18 @@ final class MiniAppAuthoringUITests: XCTestCase {
         // installer, native result and actual receipt assertion below.
         XCTAssertTrue(mini.wait(for: .runningForeground, timeout: 420))
         let importer = mini.buttons["hanlin-file-importer"].firstMatch
-        XCTAssertTrue(importer.waitForExistence(timeout: 90),
-                      "The real companion installer did not finish the corrected archive.")
+        // The picker is present while preview is nil, including during the
+        // receiver's original TypeScript validation. Keep this presentation open
+        // through inspection, preview and installation before navigating to the
+        // real installed catalog; returning to the foreground is not completion.
+        let importProgress = mini.descendants(matching: .any).matching(NSPredicate(
+            format: "label IN %@", ["Inspecting…", "Installing…"])).firstMatch
+        let install = mini.buttons["hanlin-package-install"].firstMatch
+        let receiverReady = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+            importer.exists && !importProgress.exists && !install.exists && !sheet.exists
+        }, object: nil)
+        XCTAssertEqual(XCTWaiter.wait(for: [receiverReady], timeout: 120), .completed,
+                       "The receiver must finish inspection and installation before navigation.")
         XCTAssertFalse(item(mini, "hanlin-import-error-message").exists)
         XCTAssertFalse(item(mini, "hanlin-import-diagnostics-sheet").exists)
         if mini.buttons["hanlin-package-import-done"].exists {
@@ -99,7 +109,8 @@ final class MiniAppAuthoringUITests: XCTestCase {
         XCTAssertTrue(search.waitForExistence(timeout: 15))
         tap(search); search.typeText("MiniApp Authoring Acceptance")
         let card = mini.buttons["hanlin-package-card-MiniApp Authoring Acceptance"].firstMatch
-        XCTAssertTrue(card.waitForExistence(timeout: 30))
+        XCTAssertTrue(card.waitForExistence(timeout: 90),
+                      "The corrected package must exist in the actual installed catalog.")
         tap(card)
         XCTAssertTrue(mini.staticTexts["miniapp-authoring-result"].waitForExistence(timeout: 45))
         XCTAssertEqual(mini.staticTexts["miniapp-authoring-result"].label, "MiniApp repair result 42")
