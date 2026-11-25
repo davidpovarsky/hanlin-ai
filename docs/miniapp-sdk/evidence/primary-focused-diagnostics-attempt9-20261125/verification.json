@@ -1,0 +1,170 @@
+{
+  "schema": 1,
+  "verifiedAt": "2026-11-25T02:19:49.214286+00:00",
+  "source": "1812bff50571c9907d15cd8b4bfbe4874be24756",
+  "originalPacketCount": 2,
+  "originalMemberCount": 29,
+  "originalMemberBytes": 3303173,
+  "frozenReceiptCount": 2,
+  "verifiedStoredObjects": 31,
+  "losslessGzipCount": 4,
+  "checks": [
+    {
+      "path": "raw/focused-triage-attempt9/receipt.json",
+      "storedIdentity": "PASS",
+      "decodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/focused-triage-attempt9/triage/focused-application-markers.json",
+      "storedIdentity": "PASS",
+      "decodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/focused-triage-attempt9/triage/focused-xcode14268-sample-0132.txt.gz",
+      "storedIdentity": "PASS",
+      "decodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/focused-triage-attempt9/triage/focused-process-tree-0132.txt",
+      "storedIdentity": "PASS",
+      "decodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/focused-triage-attempt9/triage/bridge-binary-initial-binding.json",
+      "storedIdentity": "PASS",
+      "decodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/focused-triage-attempt9/triage/object-symbols.txt",
+      "storedIdentity": "PASS",
+      "decodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/focused-triage-attempt9/triage/object-disassembly.txt.gz",
+      "storedIdentity": "PASS",
+      "decodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/focused-triage-attempt9/triage/installed-bridge-delivery-disassembly.txt",
+      "storedIdentity": "PASS",
+      "decodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/focused-triage-attempt9/triage/installed-bridge-delivery-observation.json",
+      "storedIdentity": "PASS",
+      "decodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/focused-triage-attempt9/triage/installed-bridge-cf-stubs.txt",
+      "storedIdentity": "PASS",
+      "decodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/focused-triage-attempt9/triage/xcodebuild-diagnostics-help.txt",
+      "storedIdentity": "PASS",
+      "decodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/focused-triage-attempt9/triage/node-runtime-current.log",
+      "storedIdentity": "PASS",
+      "decodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/focused-triage-attempt9/node-job-observations.jsonl",
+      "storedIdentity": "PASS",
+      "decodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/focused-triage-attempt9/container-observations.jsonl",
+      "storedIdentity": "PASS",
+      "decodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/focused-triage-attempt9/paired-prefix/FocusedOriginal.log.gz",
+      "storedIdentity": "PASS",
+      "decodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/focused-triage-attempt9/paired-prefix/FocusedOriginal-summary.json",
+      "storedIdentity": "PASS",
+      "decodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/focused-terminal-attempt9/receipt.json",
+      "storedIdentity": "PASS",
+      "decodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/focused-terminal-attempt9/state.json",
+      "storedIdentity": "PASS",
+      "decodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/focused-terminal-attempt9/node-job-observations.jsonl",
+      "storedIdentity": "PASS",
+      "decodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/focused-terminal-attempt9/container-observations.jsonl",
+      "storedIdentity": "PASS",
+      "decodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/focused-terminal-attempt9/ModularDiagnostic-runtime-markers.json",
+      "storedIdentity": "PASS",
+      "decodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/focused-terminal-attempt9/paired-prefix/ModularDiagnostic.log",
+      "storedIdentity": "PASS",
+      "decodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/focused-terminal-attempt9/paired-prefix/ModularDiagnostic-summary.json",
+      "storedIdentity": "PASS",
+      "decodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/focused-terminal-attempt9/triage/nativescript-core-metadata-baseline.json",
+      "storedIdentity": "PASS",
+      "decodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/focused-terminal-attempt9/triage/host-ready-observation-terminal.json",
+      "storedIdentity": "PASS",
+      "decodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/focused-terminal-attempt9/triage/modular-final-stdout-tail.txt.gz",
+      "storedIdentity": "PASS",
+      "decodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/focused-terminal-attempt9/FocusedOriginal-attachments/manifest.json",
+      "storedIdentity": "PASS",
+      "decodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/focused-terminal-attempt9/FocusedOriginal-attachments/0DB3555F-E488-4281-BDCA-0AF7EED9B90C.txt",
+      "storedIdentity": "PASS",
+      "decodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/focused-terminal-attempt9/FocusedOriginal-attachments/BE4030DB-BED7-4109-AF2B-352F03E87E47.png",
+      "storedIdentity": "PASS",
+      "decodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/focused-terminal-attempt9/FocusedOriginal-attachments/5C4A2BC8-C5E4-4207-A156-145DC5487AC8.txt",
+      "storedIdentity": "PASS",
+      "decodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/focused-terminal-attempt9/FocusedOriginal-attachments/8B33B950-A758-4695-92C8-159CD2B1287E.txt",
+      "storedIdentity": "PASS",
+      "decodedIdentity": "PASS"
+    }
+  ],
+  "result": "PASS",
+  "verificationScope": "Identity preservation of existing evidence and bounded read-only source bindings; no native tests or SDK regeneration."
+}

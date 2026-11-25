@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-24T17:38:31.777483+00:00",
+  "sourceCommit": "ce49e30d69466e44b0aa26582beaa57ee7a91a9b",
+  "status": "READY_PREBUILT_TOOLS_ONLY",
+  "owner": "/root/entrypoints",
+  "nativePreparationOwner": "/root/control_authoring",
+  "macTaskRoot": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools",
+  "pathPrefix": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/bin",
+  "environmentScript": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/env.sh",
+  "versions": {
+    "nodeVersion": "v24.5.0",
+    "npmVersion": "11.5.1",
+    "pythonVersion": "Python 3.12.16",
+    "cmakeVersion": "cmake version 4.5.1\n\nCMake suite maintained and supported by Kitware (kitware.com/cmake)."
+  },
+  "completedCommands": 12,
+  "commandResults": [
+    {
+      "name": "node-official-checksums",
+      "pid": 45318,
+      "exitCode": 0
+    },
+    {
+      "name": "node-official-archive",
+      "pid": 45319,
+      "exitCode": 0
+    },
+    {
+      "name": "node-extract",
+      "pid": 45320,
+      "exitCode": 0
+    },
+    {
+      "name": "node-version",
+      "pid": 45321,
+      "exitCode": 0
+    },
+    {
+      "name": "npm-version",
+      "pid": 45323,
+      "exitCode": 0
+    },
+    {
+      "name": "python-version",
+      "pid": 45324,
+      "exitCode": 0
+    },
+    {
+      "name": "cmake-homebrew-metadata",
+      "pid": 45325,
+      "exitCode": 0
+    },
+    {
+      "name": "cmake-official-checksums",
+      "pid": 45384,
+      "exitCode": 0
+    },
+    {
+      "name": "cmake-official-archive",
+      "pid": 45385,
+      "exitCode": 0
+    },
+    {
+      "name": "cmake-extract",
+      "pid": 45386,
+      "exitCode": 0
+    },
+    {
+      "name": "cmake-version",
+      "pid": 45387,
+      "exitCode": 0
+    },
+    {
+      "name": "tool-binary-types",
+      "pid": 45388,
+      "exitCode": 0
+    }
+  ],
+  "globalToolChanges": false,
+  "nativeBuilds": 0,
+  "tests": 0,
+  "capacityBoundary": "The retained17:29:53UTC preflight is a bootstrap observation, not final heavy-build admission. Its broad process-name filter included unrelated ColorSync rows; load averages were127/165/191. The sole native owner must use current capacity for its full preparation.",
+  "evidence": {
+    "receipt.json": "8c86c2bab57535581c3474c64e0b9a5421f40f39ed232fed664cf8ee4f3c9b88",
+    "tool-bootstrap-evidence.tar.gz": "5cb9f93052b97d60499cde8364ad7fda209c632d6f9cf181ce5bcad7e9002181"
+  },
+  "bundleContents": "Verbatim Mac bootstrap script, preflight, receipt, env.sh, bootstrap log/PID, twelve stdout/stderr command pairs and both official checksum manifests. The large downloaded tool archives/binaries remain only in the owned Mac tools directory; their exact official URLs and verified hashes are recorded in receipt.json."
+}

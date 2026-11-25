@@ -444,12 +444,7 @@ export class Page extends PageBase {
             }
         }
         if (nativeParent && nativeChild) {
-            if (typeof atIndex !== 'number' || atIndex >= nativeParent.subviews.count) {
-                nativeParent.addSubview(nativeChild);
-            }
-            else {
-                nativeParent.insertSubviewAtIndex(nativeChild, atIndex);
-            }
+            IOSHelper.insertNativeSubview(nativeParent, nativeChild, atIndex);
             return true;
         }
         return false;

@@ -7,6 +7,7 @@ import {createRequire} from 'node:module';
 import {spawnSync} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
 import {pathToFileURL} from 'node:url';
+import {runInNewContext} from 'node:vm';
 import {runMiniAppOperation, readMiniAppSDK} from '../miniapp-authoring.mjs';
 
 const compilerLocation = process.env.HANLIN_AUTHORING_TYPESCRIPT ?? 'typescript';
@@ -77,7 +78,7 @@ test('validation uses actual original package declarations from the supplied SDK
 
 test('NativeScript package emits a runnable ESM graph and retains exact editable sources', async t => {
   const f = await fixture(t);
-  const source = 'import {sum} from "./helper";\nexport const answer: number = sum(40, 2);\nexport const later = () => import("./helper");\n';
+  const source = 'import {sum} from "./helper";\nexport {sum} from "./helper";\nexport const answer: number = sum(40, 2);\nexport const later = () => import("./helper");\n';
   await fs.writeFile(f.entry, source);
   await fs.writeFile(path.join(f.project, 'helper.ts'), 'export function sum(a: number, b: number): number { return a + b; }\n');
   const report = await f.run('build');
@@ -93,10 +94,49 @@ test('NativeScript package emits a runnable ESM graph and retains exact editable
   const authoring = JSON.parse(await fs.readFile(path.join(stage, 'hanlin.authoring.json')));
   assert.equal(authoring.sourceRoot, 'source');
   assert.equal(authoring.sourceHashes['index.ts'].length, 64);
-  const module = await import(pathToFileURL(path.join(stage, 'nativescript/app/modules/index.js')).href);
+  const app = path.join(stage, 'nativescript/app');
+  assert.equal(await fs.readFile(path.join(app, 'bundle.mjs'), 'utf8'), 'import "./modules/index.mjs";\n');
+  const emitted = await fs.readFile(path.join(app, 'modules/index.mjs'), 'utf8');
+  assert.match(emitted, /import \{ sum \} from "\.\/helper.mjs"/);
+  assert.match(emitted, /export \{ sum \} from "\.\/helper.mjs"/);
+  assert.match(emitted, /import\("\.\/helper.mjs"\)/);
+  assert.match(emitted, /sourceMappingURL=index.mjs.map/);
+  await assert.rejects(fs.stat(path.join(app, 'modules/index.js')), {code: 'ENOENT'});
+  const module = await import(pathToFileURL(path.join(app, 'modules/index.mjs')).href);
   assert.equal(module.answer, 42);
+  assert.equal(module.sum(20, 22), 42);
   assert.equal((await module.later()).sum(1, 2), 3);
-  const map = JSON.parse(await fs.readFile(path.join(stage, 'nativescript/app/modules/index.js.map')));
+  const map = JSON.parse(await fs.readFile(path.join(app, 'modules/index.mjs.map')));
+  assert.equal(map.file, 'index.mjs');
+  assert.equal(map.sourcesContent[0], source);
+});
+
+test('NativeScript preserves authored CommonJS JavaScript and its source-map mode', async t => {
+  const f = await fixture(t);
+  await fs.rm(f.entry);
+  const source = 'module.exports = {answer: 42};\n';
+  await fs.writeFile(path.join(f.project, 'index.js'), source);
+  await fs.writeFile(path.join(f.project, 'globals.d.ts'), 'declare const module: {exports: {answer: number}};\n');
+  const authoringPath = path.join(f.project, 'hanlin.authoring.json');
+  const authoring = JSON.parse(await fs.readFile(authoringPath));
+  authoring.entry = 'index.js';
+  await fs.writeFile(authoringPath, JSON.stringify(authoring));
+  const configPath = path.join(f.project, 'tsconfig.json');
+  const config = JSON.parse(await fs.readFile(configPath));
+  Object.assign(config.compilerOptions, {allowJs: true, checkJs: true});
+  config.include = ['*.ts', '*.js'];
+  await fs.writeFile(configPath, JSON.stringify(config));
+  const report = await f.run('build');
+  assert.equal(report.succeeded, true, JSON.stringify(report.diagnostics));
+  const app = path.join(report.preparedPackagePath, 'nativescript/app');
+  assert.equal(await fs.readFile(path.join(app, 'bundle.mjs'), 'utf8'), 'import "./modules/index.js";\n');
+  const emitted = await fs.readFile(path.join(app, 'modules/index.js'), 'utf8');
+  const context = {module: {exports: {}}};
+  runInNewContext(emitted, context);
+  assert.equal(context.module.exports.answer, 42);
+  await assert.rejects(fs.stat(path.join(app, 'modules/index.mjs')), {code: 'ENOENT'});
+  const map = JSON.parse(await fs.readFile(path.join(app, 'modules/index.js.map')));
+  assert.equal(map.file, 'index.js');
   assert.equal(map.sourcesContent[0], source);
 });
 
@@ -205,7 +245,7 @@ test('the real CLI archives and revalidates retained source, diagnostics and out
     '--sdk', f.sdk, '--project', extracted], {encoding: 'utf8', env: ordinaryEnvironment});
   assert.equal(validate.status, 0, validate.stderr + validate.stdout);
   assert.equal(JSON.parse(validate.stdout).sdk.compilerVersion, ts.version);
-  const map = JSON.parse(await fs.readFile(path.join(extracted, 'nativescript/app/modules/index.js.map')));
+  const map = JSON.parse(await fs.readFile(path.join(extracted, 'nativescript/app/modules/index.mjs.map')));
   assert.equal(map.sourcesContent[0], await fs.readFile(f.entry, 'utf8'));
 });
 
@@ -235,7 +275,61 @@ test('NativeScript preserves the original npm runtime package rather than leavin
   const app = path.join(report.preparedPackagePath, 'nativescript/app');
   const copied = await fs.readFile(path.join(app, 'node_modules/typescript/lib/typescript.js'));
   assert.deepEqual(copied, await fs.readFile(path.join(compilerPackage, 'lib/typescript.js')));
-  const module = await import(pathToFileURL(path.join(app, 'modules/index.js')).href);
+  const module = await import(pathToFileURL(path.join(app, 'modules/index.mjs')).href);
   assert.equal(module.actualVersion, ts.version);
   await assert.rejects(fs.stat(path.join(app, 'node_modules/@nativescript/core')), {code: 'ENOENT'});
+});
+
+test('dedicated assistant build preserves the app entry without executing it and validates named exports', async t => {
+  const f = await fixture(t);
+  await fs.writeFile(f.entry, 'throw new Error("APP_ENTRYPOINT_MUST_NOT_RUN");\nexport {};\n');
+  await fs.writeFile(path.join(f.project, 'echo.ts'),
+    'export function echo(args: {query: string}, context: {configuration: {scope: string}; actionID: string; caller: string}) {\n'
+    + '  return {query: args.query, configuration: context.configuration, actionID: context.actionID, caller: context.caller};\n}\n');
+  const script = JSON.parse(await fs.readFile(path.join(f.project, 'script.json'), 'utf8'));
+  script.entrypoints.push({id: 'echo-tool', kind: 'assistantTool', sourcePath: 'assistant/echo/bundle.mjs',
+    assistantTool: {title: 'Echo', summary: 'Echo the configured request', actions: [
+      {id: 'echo', title: 'Echo', summary: 'Echo args and context',
+        inputSchema: {type: 'object', properties: {query: {type: 'string'}}, required: ['query']}}
+    ]}});
+  await fs.writeFile(path.join(f.project, 'script.json'), JSON.stringify(script));
+  const author = JSON.parse(await fs.readFile(path.join(f.project, 'hanlin.authoring.json'), 'utf8'));
+  author.assistantTools = {'echo-tool': 'echo.ts'};
+  await fs.writeFile(path.join(f.project, 'hanlin.authoring.json'), JSON.stringify(author));
+  const report = await f.run('build');
+  assert.equal(report.succeeded, true, JSON.stringify(report));
+  const stage = report.preparedPackagePath;
+  const prepared = JSON.parse(await fs.readFile(path.join(stage, 'assistant/echo/package.json'), 'utf8'));
+  assert.equal(prepared.main, 'bundle.mjs');
+  assert.equal(prepared.hanlinRuntime, 'hanlin-nativescript');
+  const toolBundle = await fs.readFile(path.join(stage, 'assistant/echo/bundle.mjs'), 'utf8');
+  assert.match(toolBundle, /import \* as tool from "\.\/modules\/echo\.mjs"/);
+  await assert.rejects(fs.stat(path.join(stage, 'assistant/echo/modules/echo.js')), {code: 'ENOENT'});
+  const toolMap = JSON.parse(await fs.readFile(path.join(stage, 'assistant/echo/modules/echo.mjs.map'), 'utf8'));
+  assert.equal(toolMap.file, 'echo.mjs');
+  assert.match(await fs.readFile(path.join(stage, 'source/echo.ts'), 'utf8'), /context.configuration/);
+  const registered = new Map(), previous = globalThis.HanlinNativeServicesBridge;
+  globalThis.HanlinNativeServicesBridge = {activeSessionBridge: () => ({
+    registerRequestHandlerCapabilityHandler: (id, capability, callback) => {
+      assert.equal(capability, 'assistant-tool'); registered.set(id, callback);
+    }
+  })};
+  try {
+    // This validates the actual generated JS wrapper in Node. The separate
+    // native integration suite owns original NativeScript VM execution.
+    await import(pathToFileURL(path.join(stage, 'assistant/echo/bundle.mjs')).href);
+    assert.deepEqual([...registered.keys()], ['echo']);
+    const response = await new Promise((resolve, reject) => registered.get('echo')('caller',
+      JSON.stringify({arguments: {query: 'hello'}, configuration: {scope: 'chosen'}}),
+      (value, error) => error ? reject(new Error(error)) : resolve(JSON.parse(value))));
+    assert.deepEqual(response, {query: 'hello', configuration: {scope: 'chosen'}, actionID: 'echo', caller: 'caller'});
+  } finally {
+    if (previous === undefined) delete globalThis.HanlinNativeServicesBridge;
+    else globalThis.HanlinNativeServicesBridge = previous;
+  }
+  script.entrypoints.at(-1).assistantTool.actions[0].exportedSymbol = 'missing';
+  await fs.writeFile(path.join(f.project, 'script.json'), JSON.stringify(script));
+  const invalid = await f.run('validate');
+  assert.equal(invalid.succeeded, false);
+  assert.ok(invalid.diagnostics.some(item => item.code === 'MINIAPP_ASSISTANT_EXPORT_MISSING'));
 });

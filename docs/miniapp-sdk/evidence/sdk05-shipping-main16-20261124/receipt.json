@@ -1,0 +1,308 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS_MAIN16_ACTUAL_SHIPPING_DOCUMENTATION_DELTA",
+  "recordedAtUTC": "2026-11-24T16:38:49.400204+00:00",
+  "scope": "Actual MAIN16 SDK05 shipping proof, independent of the distinct native build phases and unexecuted application cases.",
+  "run": {
+    "id": 45430463243,
+    "artifactID": 14942495736,
+    "testedSource": "7d1efaa6ada43dd80c57133c09e6a8fb327075cf",
+    "evidenceBase": "1bc0360cb204796a092c9101df980028f2963459",
+    "outerArtifact": {
+      "path": "/tmp/hanlin-native-gate-evidence-45430463243/app-split-45430463243.zip",
+      "artifactID": 14942495736,
+      "bytes": 335922163,
+      "sha256": "ad546a720f976eef8d7af40c8187a287b56382af6caba614ad9e35aa5491b95f"
+    },
+    "nestedRuntimeHost": {
+      "member": "runtime-host/RuntimeHostResources.zip",
+      "bytes": 81812157,
+      "sha256": "c3705e8c98c66f9664004ea87236fb62eb7133cec854709f3071b034de2d4ed0"
+    },
+    "authentication": "Parent downloaded/authenticated the artifact once. This lane independently rehashed the exact retained local ZIP; no network or download."
+  },
+  "actualSDK": {
+    "manifestSHA256": "f84b79a3d9c4f7dc541d6912753cd1be95bfa3ed1876cc4d0ead365aadab12fc",
+    "previousManifestSHA256": "ab7900fbb6009606800a7d4beda2bef2cee6ef8492928bea90ad5d0460abff8b",
+    "manifestBytes": 5219260,
+    "manifestByteIdentical": false,
+    "inputSHA256": "307f689d68445cae8cb4f049f015c9bf55904d0de40a96e69fb59fa622d0a863",
+    "computedInputSHA256": "307f689d68445cae8cb4f049f015c9bf55904d0de40a96e69fb59fa622d0a863",
+    "previousInputSHA256": "91128b0831f2d90374bc7889acb9cbbd695d49187520ee23a7a75e3c2bcef6fc",
+    "sourceInputs": 222,
+    "unchangedInputCount": 219,
+    "changedInputs": 3,
+    "fileRows": 25661,
+    "unchangedFileRows": 25658,
+    "changedFileRows": 3,
+    "sameOrderedPaths": true,
+    "engineMetadataIdentical": true,
+    "upstreamMetadataIdentical": true
+  },
+  "sourceApplicability": {
+    "priorSource": "e2227ccdfe0c3111d1c17ef2b4bb1653ac24bb9c",
+    "testedSource": "7d1efaa6ada43dd80c57133c09e6a8fb327075cf",
+    "evidenceBase": "1bc0360cb204796a092c9101df980028f2963459",
+    "gitChangedInputPaths": [
+      "docs/miniapp-sdk/README.md",
+      "docs/miniapp-sdk/extension-reachability.json",
+      "docs/miniapp-sdk/extension-reachability.md"
+    ],
+    "gitChangedInputPathsAfterTestedSource": []
+  },
+  "changedShippingDocuments": [
+    {
+      "path": "docs/miniapp-sdk/README.md",
+      "bytes": 15957,
+      "sha256": "90068db0d87718cc9f995f9d45c1e2e8a7bd670aa8b8f3b324f0bf4cfc591d95",
+      "matchesExactTestedSource": true,
+      "matchesEvidenceBase": true
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.json",
+      "bytes": 147521,
+      "sha256": "ec572302a10f97d59007a121d53382a9b80e4fd7b33817a8cdad61e64f3eb7db",
+      "matchesExactTestedSource": true,
+      "matchesEvidenceBase": true
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.md",
+      "bytes": 21494,
+      "sha256": "d7db7ef02feb948b836b55d069dd6766a9fb8c9d560120ac72c703bd227e2c7c",
+      "matchesExactTestedSource": true,
+      "matchesEvidenceBase": true
+    }
+  ],
+  "READMEBinding": {
+    "source": "7d1efaa6ada43dd80c57133c09e6a8fb327075cf",
+    "path": "docs/miniapp-sdk/README.md",
+    "actualSHA256": "90068db0d87718cc9f995f9d45c1e2e8a7bd670aa8b8f3b324f0bf4cfc591d95",
+    "previousSHA256": "4427f49e5b729658d95d98eb6cdbb84ea08f2e4d2e33d7b7c480192914346637",
+    "changedLines": [
+      109
+    ],
+    "allOtherLinesByteIdentical": true,
+    "actualExecutedSnippetDocument": {
+      "path": "docs/miniapp-sdk/README.md",
+      "sha256": "90068db0d87718cc9f995f9d45c1e2e8a7bd670aa8b8f3b324f0bf4cfc591d95",
+      "stagedSDKMatches": true,
+      "stagedSDKSHA256": "90068db0d87718cc9f995f9d45c1e2e8a7bd670aa8b8f3b324f0bf4cfc591d95"
+    },
+    "scope": "Previously post-MAIN15 scope clarification is now actually shipped in MAIN16. The one prose line does not change the inventoried descriptor or any executable snippet."
+  },
+  "reachabilityProvenance": {
+    "source": "7d1efaa6ada43dd80c57133c09e6a8fb327075cf",
+    "project": {
+      "path": "AI_HLY.xcodeproj/project.pbxproj",
+      "sha256": "24206ae0f0f66d3669cae5ccd4ffcff25ae582ec4620359a2becca7ad8e16780",
+      "actualReference": {
+        "file": "AI_HLY.xcodeproj/project.pbxproj",
+        "line": 2693,
+        "anchor": "/* Begin PBXNativeTarget section */",
+        "sha256": "24206ae0f0f66d3669cae5ccd4ffcff25ae582ec4620359a2becca7ad8e16780"
+      }
+    },
+    "READMEReference": {
+      "file": "docs/miniapp-sdk/README.md",
+      "line": 82,
+      "anchor": "## Entry points and native surfaces",
+      "sha256": "90068db0d87718cc9f995f9d45c1e2e8a7bd670aa8b8f3b324f0bf4cfc591d95"
+    },
+    "unchangedSourceInventorySHA256": "7a9def87c5bf71226b1d120c6f8bd9856732828e8bcdfd7d36a4633d8c9b6b45",
+    "generatorExecuted": false
+  },
+  "reusedProof": {
+    "MAIN15Receipt": "../sdk05-shipping-main15-20261124/receipt.json",
+    "MAIN15ReceiptSHA256": "65ac606bcd61a04f6a04a932d6a0e135b76b82be7e2ffdd0372d38f7e3311708",
+    "originalCurrentShippingReceipt": "../sdk05-current-shipping-20261124/receipt.json",
+    "originalCurrentShippingReceiptSHA256": "f8c940f0ae15dd3ec5a8778a5028c937da4e6ef3f7c3b37ed8a095eb9b623ecf",
+    "manifestRowCoverage": {
+      "docs": 25,
+      "unchangedDocs": 22,
+      "changedDocsFreshlyRead": 3,
+      "examplesIncludingIndex": 29,
+      "exampleRowsIdentical": true,
+      "declarations": 5210,
+      "declarationRowsIdentical": true,
+      "sourceInventoryRowIdentical": true
+    },
+    "sameWholeSDKManifestClaimed": false,
+    "previous112SelectedMemberChecksRepeated": false,
+    "allSDKFileBodiesRehashed": false,
+    "boundary": "Prior original compiler/type/facade/example body checks are reused only by unchanged manifest records. Exactly three changed documentation bodies were freshly read and verified. Earlier independent package CLI builds retain their original SDK attribution."
+  },
+  "actualSnippetCheck": {
+    "sha256": "072bc4f6838752f542fe140e95fd04267d55967826dbadbdbcb7e635f92b644f",
+    "status": "EXECUTED_PASS",
+    "sourceBlocks": 14,
+    "jsonBlocks": 7,
+    "excluded": 8,
+    "projects": [
+      {
+        "name": "expo-guide",
+        "compilerVersion": "6.0.3",
+        "typecheck": {
+          "strict": true,
+          "checkJs": false,
+          "skipLibCheck": false,
+          "dependencyDeclarationsChecked": true
+        },
+        "succeeded": true,
+        "diagnosticCount": 0
+      },
+      {
+        "name": "nativescript-guide",
+        "compilerVersion": "5.9.3",
+        "typecheck": {
+          "strict": true,
+          "checkJs": true,
+          "skipLibCheck": true,
+          "dependencyDeclarationsChecked": false
+        },
+        "succeeded": true,
+        "diagnosticCount": 0
+      },
+      {
+        "name": "scriptwidget-guide",
+        "compilerVersion": "6.0.3",
+        "typecheck": {
+          "strict": true,
+          "checkJs": true,
+          "skipLibCheck": false,
+          "dependencyDeclarationsChecked": true
+        },
+        "succeeded": true,
+        "diagnosticCount": 0
+      },
+      {
+        "name": "scriptwidget-controls",
+        "compilerVersion": "6.0.3",
+        "typecheck": {
+          "strict": true,
+          "checkJs": true,
+          "skipLibCheck": false,
+          "dependencyDeclarationsChecked": true
+        },
+        "succeeded": true,
+        "diagnosticCount": 0
+      }
+    ],
+    "diagnostics": 0,
+    "changedDocumentationRows": [
+      "docs/miniapp-sdk/README.md"
+    ],
+    "checkerInputsIdentical": true,
+    "registrationIdentical": true,
+    "totalFences": 29,
+    "differences": "Expected README whole-document hash, new SDK identities and temporary validation sourceRoot paths only; all exact differences retained."
+  },
+  "nativeAcceptance": {
+    "aggregateBuild": "EXECUTED_FAIL",
+    "buildPhases": {
+      "mini_build": {
+        "status": "EXECUTED_PASS",
+        "exit": 0,
+        "seconds": 785.0861333329999,
+        "commandID": "eca9fe4e30094ca0bf1737fc8c29547c",
+        "log": "mini-build.log",
+        "recordedLogSHA256": "df41b19a856863c4dbf4e82ed960bf907f4727052ebc9f4c4e4be782fe490228",
+        "receiptSource": "build-phase-command-receipts.json",
+        "rawLogIndependentlyRehashedInThisLane": false
+      },
+      "ai_build": {
+        "status": "EXECUTED_FAIL",
+        "exit": 65,
+        "seconds": 488.93014395800014,
+        "commandID": "e580678e168540089c47940d9ddf2b73",
+        "log": "ai-build.log",
+        "recordedLogSHA256": "7cb76a022c9feca202ce48dbbbe2815a2d1ec6df5bc2ca6aefe80d6727685b96",
+        "receiptSource": "build-phase-command-receipts.json",
+        "rawLogIndependentlyRehashedInThisLane": false
+      }
+    },
+    "ui": "NOT_RUN",
+    "plannedApplicationCases": 52,
+    "applicationCaseExecution": "NOT_RUN",
+    "applicationCasePassesClaimed": 0,
+    "caseCountAuthority": "Existing miniapp_complete selection previously reconciled from source; no test execution inferred from build-for-testing.",
+    "pairedAcceptanceDurationSeconds": 1341.632806301117,
+    "durationBoundary": "Paired orchestration duration is distinct from the two per-command build durations retained above.",
+    "error": "xcodebuild exit 65; inspect ai-build.log",
+    "rootReportedCause": "Two specific AI test-target compilation errors. Their diagnostic analysis and test-only source fixes belong to the parent/control lane.",
+    "boundary": "MiniApps build-for-testing succeeded. AI build-for-testing failed before application tests. SDK/snippet success and MiniApps compilation do not establish runtime/UI/publication/OS/device/distribution behavior."
+  },
+  "attribution": "README scope clarification and project reachability refresh that were outside MAIN15 are now verified shipped in exact MAIN16. Any later test-only fixes are not claimed as executed here.",
+  "taskStatus": "SDK05 remains completed; current shipping receipt is updated without converting pending native application acceptance into PASS.",
+  "notPerformed": [
+    "production/documentation source edits",
+    "compiler execution",
+    "product tests",
+    "SDK/application builds",
+    "generators",
+    "CI dispatch or polling",
+    "network requests",
+    "artifact download",
+    "Asana writes",
+    "frozen SDK-only kit mutation",
+    "broad112-member inspection"
+  ],
+  "diskCheck": "disk-before-staging.json",
+  "cleanup": {
+    "ownedPath": "/tmp/hanlin-sdk05-main16-delta-9cse1zvv",
+    "removed": true,
+    "bytesBeforeRemoval": 81812157,
+    "tmpFreeBytesAfterRemoval": 727113728
+  },
+  "artifacts": {
+    "shipping-reconciliation.json": {
+      "path": "shipping-reconciliation.json",
+      "bytes": 5872,
+      "sha256": "406077f0dd29d07e3790db287c9fe1b4c076efe43b9ef9e8542f33ef8e763b43"
+    },
+    "declared-delta.json": {
+      "path": "declared-delta.json",
+      "bytes": 2620,
+      "sha256": "cfd02a21db13c44928676a789d159ee7da89fa49c1272a99da4d855c9aa642fd"
+    },
+    "changed-member-proof.json": {
+      "path": "changed-member-proof.json",
+      "bytes": 76989,
+      "sha256": "b477d15b9e543289c58f8e58f214a8a6fd9da22c24c8a229480f87ee4728ad3d"
+    },
+    "reachability-provenance-binding.json": {
+      "path": "reachability-provenance-binding.json",
+      "bytes": 802,
+      "sha256": "a16cec0ddf891b8e3d8980698fdba743e98e8fcd990b0f7c12d0f0fb3b9ba560"
+    },
+    "readme-shipping-binding.json": {
+      "path": "readme-shipping-binding.json",
+      "bytes": 811,
+      "sha256": "25118576ccc295da01190d181c8c7e012656d8a351db4da3f050daa561d4865f"
+    },
+    "build-phase-command-receipts.json": {
+      "path": "build-phase-command-receipts.json",
+      "bytes": 4462,
+      "sha256": "c36a3b69927eaf8c16777ca2a3754bcb01fcb959078738fbba27297a77965c63"
+    },
+    "inspect_shipping_delta.py": {
+      "path": "inspect_shipping_delta.py",
+      "bytes": 12393,
+      "sha256": "0986d6cb9a88d975c2f4b077136a3ea86b1ea79f4170e506910ab2e8c6663a32"
+    },
+    "inspection-command.json": {
+      "path": "inspection-command.json",
+      "bytes": 364,
+      "sha256": "c72bdbcd7f8b63d9674677b9edac739a0054ec7701bd03b4a3d7e010ff3fc78b"
+    },
+    "miniapp-documentation-snippets.json": {
+      "path": "raw/app-split-evidence/miniapp-documentation-snippets.json",
+      "bytes": 20066,
+      "sha256": "072bc4f6838752f542fe140e95fd04267d55967826dbadbdbcb7e635f92b644f"
+    },
+    "acceptance.json": {
+      "path": "raw/app-split-evidence/acceptance.json",
+      "bytes": 6851,
+      "sha256": "755b3ab43442233c730630903401667281d195b880b611b8376f7b6fc112cc9f"
+    }
+  }
+}

@@ -1,6 +1,5 @@
-var Label_1;
 import { Background } from '../styling/background';
-import { borderTopWidthProperty, borderRightWidthProperty, borderBottomWidthProperty, borderLeftWidthProperty, directionProperty, paddingInternalProperty, paddingTopProperty, paddingRightProperty, paddingBottomProperty, paddingLeftProperty, _hasPaddingSetNativeOverrides } from '../styling/style-properties';
+import { borderTopWidthProperty, borderRightWidthProperty, borderBottomWidthProperty, borderLeftWidthProperty, directionProperty, paddingInternalProperty } from '../styling/style-properties';
 import { booleanConverter } from '../core/view-base';
 import { View, CSSType } from '../core/view';
 import { CoreTypes } from '../../core-types';
@@ -14,7 +13,7 @@ var FixedSize;
     FixedSize[FixedSize["HEIGHT"] = 2] = "HEIGHT";
     FixedSize[FixedSize["BOTH"] = 3] = "BOTH";
 })(FixedSize || (FixedSize = {}));
-let Label = Label_1 = class Label extends TextBase {
+let Label = class Label extends TextBase {
     createNativeView() {
         const view = TNSLabel.new();
         view.userInteractionEnabled = true;
@@ -186,83 +185,16 @@ let Label = Label_1 = class Label extends TextBase {
             left: layout.toDeviceIndependentPixels(this.effectiveBorderLeftWidth),
         });
     }
-    [paddingTopProperty.setNative](_value) {
-        if (this._pendingPadding) {
-            this._pendingPadding.top = layout.toDeviceIndependentPixels(this.effectivePaddingTop);
-        }
-        else if (_hasPaddingSetNativeOverrides(this, Label_1.prototype)) {
-            const nativeView = this.nativeTextViewProtected;
-            const inset = nativeView.padding;
-            nativeView.padding = new UIEdgeInsets({
-                top: layout.toDeviceIndependentPixels(this.effectivePaddingTop),
-                right: inset.right,
-                bottom: inset.bottom,
-                left: inset.left,
-            });
-        }
-    }
-    [paddingRightProperty.setNative](_value) {
-        if (this._pendingPadding) {
-            this._pendingPadding.right = layout.toDeviceIndependentPixels(this.effectivePaddingRight);
-        }
-        else if (_hasPaddingSetNativeOverrides(this, Label_1.prototype)) {
-            const nativeView = this.nativeTextViewProtected;
-            const inset = nativeView.padding;
-            nativeView.padding = new UIEdgeInsets({
-                top: inset.top,
-                right: layout.toDeviceIndependentPixels(this.effectivePaddingRight),
-                bottom: inset.bottom,
-                left: inset.left,
-            });
-        }
-    }
-    [paddingBottomProperty.setNative](_value) {
-        if (this._pendingPadding) {
-            this._pendingPadding.bottom = layout.toDeviceIndependentPixels(this.effectivePaddingBottom);
-        }
-        else if (_hasPaddingSetNativeOverrides(this, Label_1.prototype)) {
-            const nativeView = this.nativeTextViewProtected;
-            const inset = nativeView.padding;
-            nativeView.padding = new UIEdgeInsets({
-                top: inset.top,
-                right: inset.right,
-                bottom: layout.toDeviceIndependentPixels(this.effectivePaddingBottom),
-                left: inset.left,
-            });
-        }
-    }
-    [paddingLeftProperty.setNative](_value) {
-        if (this._pendingPadding) {
-            this._pendingPadding.left = layout.toDeviceIndependentPixels(this.effectivePaddingLeft);
-        }
-        else if (_hasPaddingSetNativeOverrides(this, Label_1.prototype)) {
-            const nativeView = this.nativeTextViewProtected;
-            const inset = nativeView.padding;
-            nativeView.padding = new UIEdgeInsets({
-                top: inset.top,
-                right: inset.right,
-                bottom: inset.bottom,
-                left: layout.toDeviceIndependentPixels(this.effectivePaddingLeft),
-            });
-        }
-    }
     [paddingInternalProperty.setNative](_value) {
-        if (_hasPaddingSetNativeOverrides(this, Label_1.prototype)) {
-            // An override owns padding application; each side applies through its own handler.
-            return;
-        }
-        const nativeView = this.nativeTextViewProtected;
-        const padding = nativeView.padding;
-        this._pendingPadding = { top: padding.top, right: padding.right, bottom: padding.bottom, left: padding.left };
-        this[paddingTopProperty.setNative](this.style.paddingTop);
-        this[paddingRightProperty.setNative](this.style.paddingRight);
-        this[paddingBottomProperty.setNative](this.style.paddingBottom);
-        this[paddingLeftProperty.setNative](this.style.paddingLeft);
-        nativeView.padding = new UIEdgeInsets(this._pendingPadding);
-        this._pendingPadding = null;
+        this.nativeTextViewProtected.padding = new UIEdgeInsets({
+            top: layout.toDeviceIndependentPixels(this.effectivePaddingTop),
+            right: layout.toDeviceIndependentPixels(this.effectivePaddingRight),
+            bottom: layout.toDeviceIndependentPixels(this.effectivePaddingBottom),
+            left: layout.toDeviceIndependentPixels(this.effectivePaddingLeft),
+        });
     }
 };
-Label = Label_1 = __decorate([
+Label = __decorate([
     CSSType('Label')
 ], Label);
 export { Label };

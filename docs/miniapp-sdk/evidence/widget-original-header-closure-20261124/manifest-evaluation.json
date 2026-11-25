@@ -1,0 +1,65 @@
+{
+  "timestamp": "2026-11-24T15:35:35.076361+00:00",
+  "remoteRoot": "/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs",
+  "sourceSHA256": {
+    "Package.swift": "24fdf091f56e1c6766730f9cb4eac5e2ce4925919a1e7cb52c020cf37fb54a16",
+    "Packages/HanlinExpoRuntime/Package.swift": "116a910cffe061ff3eea0e289402bc51769d3268daedc94ea5b1e043e6d109a4",
+    "Packages/HanlinWidgetSDK/Package.swift": "970610b13278a21fad358fa9c6f19b15789c6c7cb219fc2984f2aa92298502e6"
+  },
+  "results": [
+    {
+      "label": "unified",
+      "command": [
+        "/usr/bin/xcrun",
+        "swift",
+        "package",
+        "--package-path",
+        "/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs",
+        "dump-package"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 1.558480417
+    },
+    {
+      "label": "expo",
+      "command": [
+        "/usr/bin/xcrun",
+        "swift",
+        "package",
+        "--package-path",
+        "/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinExpoRuntime",
+        "dump-package"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.6569526660000002
+    },
+    {
+      "label": "widgets",
+      "command": [
+        "/usr/bin/xcrun",
+        "swift",
+        "package",
+        "--package-path",
+        "/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/manifest-inputs/Packages/HanlinWidgetSDK",
+        "dump-package"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.641118708
+    }
+  ],
+  "oracleStartedAt": "2026-11-24T15:35:31.124858+00:00",
+  "sshCommand": [
+    "sudo",
+    "-u",
+    "ubuntu",
+    "ssh",
+    "-o",
+    "BatchMode=yes",
+    "-o",
+    "StrictHostKeyChecking=yes",
+    "scaleway-mac",
+    "python3 -"
+  ],
+  "canonicalRoot": "/mnt/development/projects/worktrees/hanlin-miniapps-host-services-20261124",
+  "scope": "Actual Swift manifest evaluation only; no dependency resolution, target compilation, native tests or repeated import probe."
+}

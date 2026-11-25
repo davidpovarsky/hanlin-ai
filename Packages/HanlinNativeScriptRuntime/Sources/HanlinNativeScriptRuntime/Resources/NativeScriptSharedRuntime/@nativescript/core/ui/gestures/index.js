@@ -269,7 +269,7 @@ function _getUIGestureRecognizerType(type) {
         case GestureTypes.pinch:
             return UIPinchGestureRecognizer;
         case GestureTypes.pan:
-            return UIPanGestureRecognizer;
+            return PanGestureRecognizer;
         case GestureTypes.swipe:
             return UISwipeGestureRecognizer;
         case GestureTypes.rotation:
@@ -360,6 +360,8 @@ function _getPanData(args, view) {
         view: args.view,
         ios: args.ios,
         android: undefined,
+        startX: recognizer.getStartX(),
+        startY: recognizer.getStartY(),
         deltaX: recognizer.translationInView(view).x,
         deltaY: recognizer.translationInView(view).y,
         object: args.view,
@@ -430,6 +432,33 @@ var TouchGestureRecognizer = (function (_super) {
     };
     return TouchGestureRecognizer;
 }(UIGestureRecognizer));
+var PanGestureRecognizer = (function (_super) {
+    __extends(PanGestureRecognizer, _super);
+    function PanGestureRecognizer() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this._startX = 0;
+        _this._startY = 0;
+        return _this;
+    }
+    PanGestureRecognizer.prototype.touchesBeganWithEvent = function (touches, event) {
+        _super.prototype.touchesBeganWithEvent.call(this, touches, event);
+        var viewPoint = this.locationInView(this.view);
+        this._startX = viewPoint.x;
+        this._startY = viewPoint.y;
+    };
+    PanGestureRecognizer.prototype.reset = function () {
+        _super.prototype.reset.call(this);
+        this._startX = 0;
+        this._startY = 0;
+    };
+    PanGestureRecognizer.prototype.getStartX = function () {
+        return this._startX;
+    };
+    PanGestureRecognizer.prototype.getStartY = function () {
+        return this._startY;
+    };
+    return PanGestureRecognizer;
+}(UIPanGestureRecognizer));
 class Pointer {
     get location() {
         if (!this._location) {

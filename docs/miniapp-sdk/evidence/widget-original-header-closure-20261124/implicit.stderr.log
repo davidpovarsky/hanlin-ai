@@ -1,0 +1,209 @@
+Module import search paths:
+  [0] (non-system) /Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks
+Framework search paths:
+  [0] (non-system) /Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks
+Implicit framework search paths:
+  [0] /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/System/Library/Frameworks
+  [1] /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/System/Library/SubFrameworks
+  [2] /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/Library/Frameworks
+Runtime library import search paths:
+  [0] /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator
+  [1] /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/usr/lib/swift
+(End of search path lists.)
+<unknown>:0: remark: 'Swift' has a required transitive dependency on 'SwiftShims'
+<unknown>:0: remark: loaded module 'SwiftShims'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/usr/lib/swift/shims/module.modulemap', loaded: '/Users/m1/caches/DerivedData/hanlin-ai-788354f8-headers-implicit-20261124/1TULI2FD3XLA7/SwiftShims-ETMZL06LU75E.pcm'
+<unknown>:0: remark: loaded module 'Swift'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/usr/lib/swift/Swift.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/Swift.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+<unknown>:0: remark: loaded module 'CxxShim'; source: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/libcxxshim.modulemap', loaded: '/Users/m1/caches/DerivedData/hanlin-ai-788354f8-headers-implicit-20261124/1TULI2FD3XLA7/CxxShim-1A1JVY1XWBQUX.pcm'
+<unknown>:0: remark: 'Cxx' has an ignored transitive dependency on 'CxxShim'
+<unknown>:0: remark: 'Cxx' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: loaded module 'Cxx'; source: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/Cxx.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Users/m1/caches/DerivedData/hanlin-ai-788354f8-headers-implicit-20261124/Cxx-TFHYPEZBV1XT.swiftmodule'
+<unknown>:0: remark: '_StringProcessing' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: loaded module '_StringProcessing'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/usr/lib/swift/_StringProcessing.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/_StringProcessing.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+<unknown>:0: remark: loaded module '_SwiftConcurrencyShims'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/usr/lib/swift/shims/module.modulemap', loaded: '/Users/m1/caches/DerivedData/hanlin-ai-788354f8-headers-implicit-20261124/1TULI2FD3XLA7/_SwiftConcurrencyShims-ETMZL06LU75E.pcm'
+<unknown>:0: remark: '_Concurrency' has a required transitive dependency on 'Swift'
+<unknown>:0: remark: '_Concurrency' has a required transitive dependency on 'SwiftShims'
+<unknown>:0: remark: loaded module '_Concurrency'; source: '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/usr/lib/swift/_Concurrency.swiftmodule/arm64-apple-ios-simulator.swiftinterface', loaded: '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphonesimulator/prebuilt-modules/27.0/_Concurrency.swiftmodule/arm64-apple-ios-simulator.swiftmodule'
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/BridgelessJSCallInvoker.h:7:10: error: 'ReactCommon/CallInvoker.h' file not found
+ 5 | #ifdef __cplusplus
+ 6 | 
+ 7 | #include <ReactCommon/CallInvoker.h>
+   |          `- error: 'ReactCommon/CallInvoker.h' file not found
+ 8 | #include <ReactCommon/RuntimeExecutor.h>
+ 9 | 
+
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/ContentOriginRegistry.h:11:10: note: while building module 'React' imported from /Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/ContentOriginRegistry.h:11:
+ 9 | #include <unordered_map>
+10 | 
+11 | #include <react/renderer/core/ReactPrimitives.h>
+   |          `- note: while building module 'React' imported from /Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/ContentOriginRegistry.h:11:
+12 | #include <react/renderer/graphics/Point.h>
+13 | 
+
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+1 | #import "Headers/React-umbrella.h"
+  |         `- note: in file included from <module-includes>:1:
+2 | #import "Headers/RCTBridge+Private.h"
+3 | 
+
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/react.framework/Headers/React-umbrella.h:4:9: note: in file included from /Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/react.framework/Headers/React-umbrella.h:4:
+  2 | #import <React/FBXXHashUtils.h>
+  3 | #import <React/RCTAccessibilityElement.h>
+  4 | #import <React/RCTAccessibilityManager.h>
+    |         `- note: in file included from /Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/react.framework/Headers/React-umbrella.h:4:
+  5 | #import <React/RCTActionSheetManager.h>
+  6 | #import <React/RCTAdditionAnimatedNode.h>
+
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/React.framework/Headers/RCTAccessibilityManager.h:10:9: note: in file included from /Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/React.framework/Headers/RCTAccessibilityManager.h:10:
+ 8 | #import <Foundation/Foundation.h>
+ 9 | 
+10 | #import <React/RCTBridge.h>
+   |         `- note: in file included from /Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/React.framework/Headers/RCTAccessibilityManager.h:10:
+11 | #import <React/RCTBridgeModule.h>
+12 | #import <React/RCTBridgeProxy.h>
+
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/React.framework/Headers/RCTBridge.h:11:9: note: in file included from /Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/React.framework/Headers/RCTBridge.h:11:
+  9 | 
+ 10 | #import <React/RCTBridgeDelegate.h>
+ 11 | #import <React/RCTBridgeModule.h>
+    |         `- note: in file included from /Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/React.framework/Headers/RCTBridge.h:11:
+ 12 | #import <React/RCTBridgeModuleDecorator.h>
+ 13 | #import <React/RCTDefines.h>
+
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/React.framework/Headers/RCTBridgeModule.h:14:9: error: 'RCTDeprecation/RCTDeprecation.h' file not found with <angled> include; use "quotes" instead
+ 12 | #import <React/RCTJSThread.h>
+ 13 | 
+ 14 | #import <RCTDeprecation/RCTDeprecation.h>
+    |         `- error: 'RCTDeprecation/RCTDeprecation.h' file not found with <angled> include; use "quotes" instead
+ 15 | 
+ 16 | #import "RCTBundleManager.h"
+
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/ContentOriginRegistry.h:11:10: note: while building module 'React' imported from /Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/ContentOriginRegistry.h:11:
+ 9 | #include <unordered_map>
+10 | 
+11 | #include <react/renderer/core/ReactPrimitives.h>
+   |          `- note: while building module 'React' imported from /Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/ContentOriginRegistry.h:11:
+12 | #include <react/renderer/graphics/Point.h>
+13 | 
+
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+1 | #import "Headers/React-umbrella.h"
+  |         `- note: in file included from <module-includes>:1:
+2 | #import "Headers/RCTBridge+Private.h"
+3 | 
+
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/react.framework/Headers/React-umbrella.h:16:9: note: in file included from /Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/react.framework/Headers/React-umbrella.h:16:
+ 14 | #import <React/RCTAnimationUtils.h>
+ 15 | #import <React/RCTAppState.h>
+ 16 | #import <React/RCTAppearance.h>
+    |         `- note: in file included from /Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/react.framework/Headers/React-umbrella.h:16:
+ 17 | #import <React/RCTAssert.h>
+ 18 | #import <React/RCTAutoInsetsProtocol.h>
+
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/React.framework/Headers/RCTAppearance.h:11:9: note: in file included from /Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/React.framework/Headers/RCTAppearance.h:11:
+ 9 | 
+10 | #import <React/RCTBridgeModule.h>
+11 | #import <React/RCTConvert.h>
+   |         `- note: in file included from /Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/React.framework/Headers/RCTAppearance.h:11:
+12 | #import <React/RCTEventEmitter.h>
+13 | 
+
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/React.framework/Headers/RCTConvert.h:19:9: error: 'yoga/Yoga.h' file not found with <angled> include; use "quotes" instead
+ 17 | #import <React/RCTPointerEvents.h>
+ 18 | #import <React/RCTTextDecorationLineType.h>
+ 19 | #import <yoga/Yoga.h>
+    |         |- error: 'yoga/Yoga.h' file not found with <angled> include; use "quotes" instead
+    |         `- note: in file included from /Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/React.framework/Headers/RCTConvert.h:19:
+ 20 | 
+ 21 | typedef NS_ENUM(NSInteger, RCTColorSpace) {
+
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/ContentOriginRegistry.h:11:10: note: while building module 'React' imported from /Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/ContentOriginRegistry.h:11:
+ 9 | #include <unordered_map>
+10 | 
+11 | #include <react/renderer/core/ReactPrimitives.h>
+   |          `- note: while building module 'React' imported from /Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/ContentOriginRegistry.h:11:
+12 | #include <react/renderer/graphics/Point.h>
+13 | 
+
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+1 | #import "Headers/React-umbrella.h"
+  |         `- note: in file included from <module-includes>:1:
+2 | #import "Headers/RCTBridge+Private.h"
+3 | 
+
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/react.framework/Headers/React-umbrella.h:16:9: note: in file included from /Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/react.framework/Headers/React-umbrella.h:16:
+ 14 | #import <React/RCTAnimationUtils.h>
+ 15 | #import <React/RCTAppState.h>
+ 16 | #import <React/RCTAppearance.h>
+    |         `- note: in file included from /Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/react.framework/Headers/React-umbrella.h:16:
+ 17 | #import <React/RCTAssert.h>
+ 18 | #import <React/RCTAutoInsetsProtocol.h>
+
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/React.framework/Headers/RCTAppearance.h:11:9: note: in file included from /Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/React.framework/Headers/RCTAppearance.h:11:
+ 9 | 
+10 | #import <React/RCTBridgeModule.h>
+11 | #import <React/RCTConvert.h>
+   |         `- note: in file included from /Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/React.framework/Headers/RCTAppearance.h:11:
+12 | #import <React/RCTEventEmitter.h>
+13 | 
+
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/React.framework/Headers/yoga/Yoga.h:14:10: error: 'yoga/YGConfig.h' file not found
+12 |  */
+13 | 
+14 | #include <yoga/YGConfig.h> // IWYU pragma: export
+   |          `- error: 'yoga/YGConfig.h' file not found
+15 | #include <yoga/YGEnums.h> // IWYU pragma: export
+16 | #include <yoga/YGMacros.h> // IWYU pragma: export
+
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Modules/ExpoModulesCore.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface:11:19: error: could not build Objective-C module 'ExpoModulesCore'
+   9 | import CryptoKit
+  10 | import Dispatch
+  11 | @_exported import ExpoModulesCore
+     |                   `- error: could not build Objective-C module 'ExpoModulesCore'
+  12 | @_exported import ExpoModulesCore
+  13 | @_exported @_spi(Internal) import ExpoModulesJSI
+
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Probe.swift:1:24: error: failed to build module 'ExpoModulesCore'; this SDK is not supported by the compiler (the SDK is built with 'Apple Swift version 6.3.1 (swiftlang-6.3.1.1.2 clang-2100.0.123.102)', while this compiler is 'Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)'). Please select a toolchain which matches the SDK.
+1 | @preconcurrency import ExpoModulesCore
+  |                        `- error: failed to build module 'ExpoModulesCore'; this SDK is not supported by the compiler (the SDK is built with 'Apple Swift version 6.3.1 (swiftlang-6.3.1.1.2 clang-2100.0.123.102)', while this compiler is 'Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)'). Please select a toolchain which matches the SDK.
+2 | 
+
+<module-includes>:1:9: note: in file included from <module-includes>:1:
+1 | #import "Headers/ExpoModulesCore_umbrella.h"
+  |         `- note: in file included from <module-includes>:1:
+2 | #import "Headers/ExpoModulesCore-Swift.h"
+3 | 
+
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/ExpoModulesCore_umbrella.h:27:9: note: in file included from /Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/ExpoModulesCore_umbrella.h:27:
+25 | #import "EXFaceDetectorManagerInterface.h"
+26 | #import "EXFaceDetectorManagerProviderInterface.h"
+27 | #import "EXFilePermissionModuleInterface.h"
+   |         `- note: in file included from /Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/ExpoModulesCore_umbrella.h:27:
+28 | #import "EXFileSystemInterface.h"
+29 | #import "EXGyroscopeInterface.h"
+
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/EXFilePermissionModuleInterface.h:3:9: note: in file included from /Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/EXFilePermissionModuleInterface.h:3:
+ 1 | // Copyright 2018-present 650 Industries. All rights reserved.
+ 2 | 
+ 3 | #import <ExpoModulesCore/EXFileSystemInterface.h>
+   |         `- note: in file included from /Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/EXFilePermissionModuleInterface.h:3:
+ 4 | 
+ 5 | @protocol EXFilePermissionModuleInterface
+
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/BridgelessJSCallInvoker.h: 0:
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/ContentOriginRegistry.h: 0:
+<module-includes>: 0:
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/react.framework/Headers/React-umbrella.h: 0:
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/React.framework/Headers/RCTAccessibilityManager.h: 0:
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/React.framework/Headers/RCTBridge.h: 0:
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/React.framework/Headers/RCTBridgeModule.h: 0:
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/ContentOriginRegistry.h: 0:
+<module-includes>: 0:
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/react.framework/Headers/React-umbrella.h: 0:
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/React.framework/Headers/RCTAppearance.h: 0:
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/React.framework/Headers/RCTConvert.h: 0:
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Headers/ContentOriginRegistry.h: 0:
+<module-includes>: 0:
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/react.framework/Headers/React-umbrella.h: 0:
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/React.framework/Headers/RCTAppearance.h: 0:
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/React.framework/Headers/yoga/Yoga.h: 0:
+/Users/m1/builds/hanlin-ai-788354f8-header-closure-main15/Frameworks/ExpoModulesCore.framework/Modules/ExpoModulesCore.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface: 0:

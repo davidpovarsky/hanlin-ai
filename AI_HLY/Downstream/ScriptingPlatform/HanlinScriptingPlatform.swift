@@ -27,15 +27,24 @@ import WidgetKit
 /// Permission checks remain in the existing SDK and broker admission paths.
 @MainActor
 protocol HanlinScriptingApplicationServices: AnyObject {
+    var assistantServiceFactory: HanlinMiniAppAssistantServiceFactory? { get }
     func publishCompactAgentConfig() throws
     func loadAssistant(
         _ request: HanlinScriptingAssistantRequest
     ) async throws -> AsyncThrowingStream<HanlinScriptingAssistantChunk, Error>
 }
 
+extension HanlinScriptingApplicationServices {
+    var assistantServiceFactory: HanlinMiniAppAssistantServiceFactory? { nil }
+}
+
 @MainActor
 @Observable
 final class HanlinScriptingPlatform {
+    var assistantServiceFactory: HanlinMiniAppAssistantServiceFactory? {
+        applicationServices?.assistantServiceFactory
+    }
+
     /// Production defaults preserve bootstrap behavior; unit fixtures own their store and queue.
     @MainActor
     struct Initialization {
@@ -407,6 +416,23 @@ final class HanlinScriptingPlatform {
         } catch {
             bootstrapError = Self.safeMessage(error)
         }
+    }
+
+    /// Share the established store/transfer lifetime with request-owned tool sessions.
+    func withAssistantToolExecution(
+        _ operation: @MainActor () async throws -> HanlinValue
+    ) async throws -> HanlinValue {
+        guard !isTransferringProductData else { throw HanlinProductTransferError.busy }
+        activeStoreOperations += 1
+        defer { activeStoreOperations -= 1 }
+        return try await operation()
+    }
+
+    /// Read-only admission snapshot; unlike restore(), this never processes queued actions.
+    func assistantToolPackages() async throws -> [HanlinStoredPackageSnapshot] {
+        guard !isTransferringProductData else { throw HanlinProductTransferError.busy }
+        guard let store else { throw HanlinMiniAppRequestError.routeNotFound }
+        return try await store.snapshots()
     }
 
     func activeArtifactURL(for package: HanlinStoredPackageSnapshot) -> URL? {
@@ -926,7 +952,8 @@ final class HanlinScriptingPlatform {
                     installedPackageID: package.record.installedPackageID,
                     grantedCapabilities: Set(package.grantedCapabilities.map(\.rawValue)),
                     sessionID: sessionID,
-                    externalMiniAppOperation: externalMiniAppOperation
+                    externalMiniAppOperation: externalMiniAppOperation,
+                    assistantServiceFactory: assistantServiceFactory
                 )
                 // The pinned NativeScript main VM is process-wide. Check before
                 // changing a legacy provider belonging to another scene.
@@ -979,6 +1006,7 @@ final class HanlinScriptingPlatform {
                     grantedCapabilities: Set(package.grantedCapabilities.map(\.rawValue)),
                     sessionID: sessionID,
                     externalMiniAppOperation: externalMiniAppOperation,
+                    assistantServiceFactory: assistantServiceFactory,
                     preparedWidgetPublisher: { [weak self] entrypointID, variantID, props in
                         guard let self else { throw HanlinWidgetActionError.inactiveInstance }
                         return try await self.publishPreparedExpoWidget(
@@ -1122,6 +1150,7 @@ final class HanlinScriptingPlatform {
         if expoSession != nil {
             NSLog("HANLIN_EXPO_PRODUCTION_SHUTDOWN_OK")
         }
+        expoHostServices?.invalidateAssistantRequests()
         expoSession?.shutdown()
         if let session = expoSession {
             HanlinExpoNativeAPIManager.revokeSession(sessionID: session.sessionID)
@@ -1263,7 +1292,8 @@ final class HanlinScriptingPlatform {
             installedPackageID: package.record.installedPackageID,
             grantedCapabilities: Set(package.grantedCapabilities.map(\.rawValue)),
             sessionID: session.sessionID,
-            canPresentUI: false
+            canPresentUI: false,
+            assistantServiceFactory: assistantServiceFactory
         )
 
         HanlinNativeServicesBridge.register(adapter, forSessionID: session.sessionID)

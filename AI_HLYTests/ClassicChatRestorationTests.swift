@@ -1239,10 +1239,13 @@ struct ClassicChatRestorationTests {
         ]
 
         let converted = APIManager.convertFormattedMessagesToSDKMessages(formattedMessages)
-        #expect(converted.baseSystemPrompt == "Developer system instructions")
-        #expect(converted.messages.count == 2)
+        #expect(converted.baseSystemPrompt == nil)
+        #expect(converted.messages.count == 3)
+        #expect(converted.messages[0].role == .system)
+        #expect(converted.messages[0].parts == [.text("Developer system instructions")])
+        #expect(converted.messages[0].cacheBreakpoint)
 
-        let userMsg = converted.messages[0]
+        let userMsg = converted.messages[1]
         #expect(userMsg.role == .user)
         #expect(userMsg.parts.count == 3)
 

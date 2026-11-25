@@ -1,0 +1,182 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-24T17:31:30.807381+00:00",
+  "kind": "CORRECTION_OF_TOOLCHAIN_REQUIREMENT_INTERPRETATION",
+  "sourceCommitReviewed": "ce49e30d69466e44b0aa26582beaa57ee7a91a9b",
+  "correction": "Xcode27.2 is an observed previous hosted-runner toolchain, not a discovered hard acceptance requirement. Existing guidance requires primary Mac first with Xcode27/Swift6.4; original paired runner requires simulator SDK major27.",
+  "supersedes": "Earlier evidence/PR/Asana wording that called27.2 required or excluded primary solely for27.0. Prior raw actual toolchain/build evidence remains unchanged.",
+  "requirements": {
+    "xcodeMajor": 27,
+    "swift": "6.4 per primary guidance",
+    "pairedSimulatorSDKMajor": 27,
+    "hostedSelection": "Latest installed stable Xcode_27*.app; hosted path discovery does not match primary Xcode.app layout",
+    "primaryDeveloperDirectory": "/Applications/Xcode.app/Contents/Developer"
+  },
+  "authorities": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "f27d4554d8dda88996d1511b361e8b8e5520cb08e8198c5fbc7816b1fbc9aa9f",
+      "localGuidanceNotStaged": true,
+      "excerpts": [
+        {
+          "firstLine": 118,
+          "lines": [
+            "- For Apple SDKs, Swift/Xcode compilation, iOS/macOS builds, simulator runs/tests, archives, signing and authorized TestFlight uploads, use the dedicated Scaleway M2 Pro runner FIRST: `ssh -o BatchMode=yes scaleway-mac` (Xcode 27, Swift 6.4). GitHub-hosted macOS is fallback only if the Mac cannot meet the actual requirement or a required CI gate specifically needs GitHub. Preserve all existing project-specific release/approval gates."
+          ]
+        }
+      ]
+    },
+    {
+      "path": ".github/workflows/validate-app-split.yml",
+      "sha256": "677ba19c3a2e281e850b182b3bef8bcde709ee167f58d601c1c3aa6ade665982",
+      "localGuidanceNotStaged": false,
+      "excerpts": [
+        {
+          "firstLine": 108,
+          "lines": [
+            "concurrency:",
+            "  # Separate acceptance scopes use distinct job checkouts and owned simulators.",
+            "  # A paired run must not cancel standalone storage/UI evidence still being collected.",
+            "  group: standalone-miniapps-${{ github.ref }}-${{ inputs.prepare_miniapps_registration && 'registration' || inputs.audit_release_resources && 'release-audit' || inputs.signing_preflight_only && 'signing-preflight' || inputs.signed_release_archives && 'signed-archives' || inputs.paired_product_acceptance && format('paired-{0}', inputs.paired_test_scope || 'cross_product') || format('standalone-{0}', inputs.native_test_scope || 'baseline') }}",
+            "  cancel-in-progress: ${{ !inputs.prepare_miniapps_registration }}"
+          ]
+        },
+        {
+          "firstLine": 211,
+          "lines": [
+            "  miniapps:",
+            "    if: ${{ !inputs.audit_release_resources && !inputs.prepare_miniapps_registration && !(inputs.paired_product_acceptance && (inputs.paired_test_scope == 'miniapp_contracts' || inputs.paired_test_scope == 'miniapp_lifecycle' || inputs.paired_test_scope == 'miniapp_scriptwidget')) }}",
+            "    runs-on: xcode-27",
+            "    # Paired: observed ~23 min prep + 60/30 min builds + 20/35 min tests + 6 min generator;"
+          ]
+        },
+        {
+          "firstLine": 245,
+          "lines": [
+            "          selected_xcode=\"$(find /Applications -maxdepth 1 -type d -name 'Xcode_27*.app' -print | grep -E '/Xcode_27([._][0-9]+)*\\.app$' | sort -V | tail -1)\"",
+            "          test -n \"$selected_xcode\"",
+            "          export DEVELOPER_DIR=\"$selected_xcode/Contents/Developer\"",
+            "          echo \"DEVELOPER_DIR=$DEVELOPER_DIR\" >> \"$GITHUB_ENV\"",
+            "          {"
+          ]
+        },
+        {
+          "firstLine": 265,
+          "lines": [
+            "          test \"$(df -Pk . | awk 'NR==2 {print $4}')\" -gt 15000000",
+            "          test \"$(xcrun --sdk iphonesimulator --show-sdk-version | cut -d. -f1)\" -ge 27",
+            "          echo \"arch=$(uname -m)\" >> \"$GITHUB_OUTPUT\"",
+            "          echo \"xcode_build=$(xcodebuild -version | sed -n '2s/^Build version //p')\" >> \"$GITHUB_OUTPUT\"",
+            "          echo \"sdk=$(xcrun --sdk iphonesimulator --show-sdk-version)\" >> \"$GITHUB_OUTPUT\""
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+      "sha256": "b27ca38423d3d0eb179f2b8bb7f25568d8ee9a7a70a36da7dd9e57e243ca004c",
+      "localGuidanceNotStaged": false,
+      "excerpts": [
+        {
+          "firstLine": 443,
+          "lines": [
+            "        state[\"sha\"] = raw.strip()",
+            "        _, sdk = command([\"xcrun\", \"--sdk\", \"iphonesimulator\", \"--show-sdk-version\"], \"sdk.txt\")",
+            "        sdk = sdk.strip()",
+            "        if int(sdk.split(\".\")[0]) != 27:",
+            "            raise RuntimeError(\"Acceptance requires the installed stable iOS 27 SDK\")"
+          ]
+        },
+        {
+          "firstLine": 496,
+          "lines": [
+            "        # The original full-app workflow uses this exact pinned upstream generator:",
+            "        # Xcode 27.2 advertises its outputs but can omit the generator build commands.",
+            "        # The helper verifies every input against the resolved commit before running it."
+          ]
+        }
+      ]
+    },
+    {
+      "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+      "sha256": "814cb0ff5b5aa4575c0daaced0014e461d51d108059f4cccb396f9c1d5c6e5a5",
+      "localGuidanceNotStaged": false,
+      "excerpts": [
+        {
+          "firstLine": 63,
+          "lines": [
+            "if (process.platform === 'darwin') {",
+            "  const toolRoot = resolve(repositoryRoot, 'build/nativescript-metadata-tool');",
+            "  let toolReady = false;",
+            "  try {",
+            "    const proof = await readJSON(resolve(toolRoot, 'provenance.json'));",
+            "    toolReady = proof.patchSourceSHA256 === sha256(await readFile(resolve(scriptRoot, 'build-metadata-tool.py')))",
+            "      && proof.generatorSHA256 === sha256(await readFile(resolve(toolRoot, 'bin/objc-metadata-generator')))",
+            "      && proof.architecture === (process.arch === 'x64' ? 'x86_64' : process.arch)",
+            "      && proof.xcode === execFileSync('xcodebuild', ['-version'], {encoding: 'utf8'}).trim();",
+            "  } catch { /* A missing/stale build tool must be built from the pinned inputs. */ }",
+            "  if (!toolReady) execFileSync('python3', [resolve(scriptRoot, 'build-metadata-tool.py')], {stdio: 'inherit'});"
+          ]
+        }
+      ]
+    }
+  ],
+  "primaryCapacityObservations": [
+    {
+      "atUTC": "2026-11-24T16:45:08.789870+00:00",
+      "evidence": "docs/miniapp-sdk/evidence/seventeenth-native-gate-mac-route-20261124.json",
+      "observed": "Xcode27.0/27A266a, simulatorSDK27.0, two other active xcodebuild processes",
+      "boundary": "Capacity was a separate actual blocker at that instant; toolchain minor alone was not."
+    },
+    {
+      "atUTC": "2026-11-24T17:06:17.728095+00:00",
+      "observer": "control_authoring",
+      "observed": "No active xcodebuild/swift/clang build processes; Xcode27.0,Swift6.4.0.34.1,SDK27.0,16GiB RAM and288.58GBfree",
+      "boundary": "Snapshot only; execution owner rechecks before heavy work."
+    }
+  ],
+  "preparationRules": {
+    "nativeScriptMetadataTool": "Exact selected Xcode version/build, architecture, builder hash and generator hash must match; original producer rebuilds on mismatch",
+    "nativeScriptGeneratedMetadata": "Original build phase derives metadata from current SDKROOT and actual generated Swift header/search view",
+    "originalExpoUI": "Producer cache includes exact Xcode identity; compiled private Swift modules must be rebuilt when switching toolchains",
+    "originalExpoModulesJSI": "Original Darwin preparation rebuilds and records selected Xcode",
+    "originalPublishedExpoReactHermes": "Keep original locked authenticated publications; no invented blanket recompile requirement",
+    "runtimeCore": "Original verified release/native-input identity reuse applies; no consumer-Xcode equality gate",
+    "runtimeHost": "Current source+SDK fingerprint, Node process.versions/platform/architecture, hash, Host tests andJITless archive smoke govern reuse",
+    "tools": "Task-local Node24.5.0, existingPython3.12 and requiredCMake; CocoaPods not treated as blocker without actual invocation"
+  },
+  "main17": {
+    "status": "COMPLETED_INFRASTRUCTURE_FAILURE",
+    "receipt": {
+      "path": "docs/miniapp-sdk/evidence/main17-queue-termination-20261124/receipt.json",
+      "sha256": "9ea2f8a06ad2eaf1553539fa803b24bd0c1a1cb8614b6b0c696b7e5279786a0f"
+    },
+    "miniBuild": "NOT_RUN",
+    "aiBuild": "NOT_RUN",
+    "cases": "ALL52_NOT_RUN",
+    "watcherToolResult": {
+      "id": "job_2a8ab62e9c86",
+      "status": "failed",
+      "exit_code": 1,
+      "duration_s": 879.4,
+      "created_at": 1795538874.0994806,
+      "started_at": "2026-11-24T16:47:54.178807+00:00",
+      "finished_at": "2026-11-24T17:02:33.575944+00:00",
+      "error": null,
+      "output": "Traceback (most recent call last):\n  File \"/var/lib/sentinelx/uploads/.sentinelx_uploads/script_job_9998dd16cdea4631b2ac3e8025557656/script.py\", line 35, in <module>\n    gh([\"run\",\"view\",str(run_id),\"--repo\",repo,\"--job\",str(j[\"databaseId\"]),\"--log\"],out/(\"job-\"+str(j[\"databaseId\"])+\".log\"))\n  File \"/var/lib/sentinelx/uploads/.sentinelx_uploads/script_job_9998dd16cdea4631b2ac3e8025557656/script.py\", line 24, in gh\n    if p.returncode:raise RuntimeError(str(args)+\": \"+p.stderr[:1800])\n                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: ['run', 'view', '45441138261', '--repo', 'davidpovarsky/hanlin-ai', '--job', '138612265040', '--log']: log not found: 138612265040"
+    },
+    "watcherBoundary": "Terminal metadata was saved before log retrieval failed because an unassigned job has no log; stale WATCHING marker does not override completed run/check metadata."
+  },
+  "nextExecution": {
+    "owner": "control_authoring",
+    "location": "primary Scaleway M2Pro",
+    "sourceCommit": "ce49e30d69466e44b0aa26582beaa57ee7a91a9b",
+    "state": "SOURCE_AND_TOOLS_PREPARATION_IN_PROGRESS",
+    "sourceStageJob": "job_9b1c1e4cca8e",
+    "sourceStageState": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/source-stage.json",
+    "destination": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete",
+    "scope": "Original miniapp_complete52 cases; no app/test/selector/budget changes",
+    "nativePass": "NOT_CLAIMED"
+  },
+  "unchanged": "No instructions, workflow criteria, application source, SDK inputs, permissions, test assertions or source selection were changed to make this correction."
+}

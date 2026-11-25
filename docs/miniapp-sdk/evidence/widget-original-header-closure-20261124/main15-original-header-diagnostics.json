@@ -1,0 +1,186 @@
+[
+  {
+    "line": 3769,
+    "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/ExpoModulesCore.framework/Headers/BridgelessJSCallInvoker.h:7:10: error: 'ReactCommon/CallInvoker.h' file not found"
+  },
+  {
+    "line": 3773,
+    "text": "   |          `- error: 'ReactCommon/CallInvoker.h' file not found"
+  },
+  {
+    "line": 3815,
+    "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/React.framework/Headers/RCTBridgeModule.h:14:9: error: 'RCTDeprecation/RCTDeprecation.h' file not found with <angled> include; use \"quotes\" instead"
+  },
+  {
+    "line": 3819,
+    "text": "    |         `- error: 'RCTDeprecation/RCTDeprecation.h' file not found with <angled> include; use \"quotes\" instead"
+  },
+  {
+    "line": 3853,
+    "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/React.framework/Headers/RCTConvert.h:19:9: error: 'yoga/Yoga.h' file not found with <angled> include; use \"quotes\" instead"
+  },
+  {
+    "line": 3857,
+    "text": "    |         |- error: 'yoga/Yoga.h' file not found with <angled> include; use \"quotes\" instead"
+  },
+  {
+    "line": 3892,
+    "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/React.framework/Headers/yoga/Yoga.h:14:10: error: 'yoga/YGConfig.h' file not found"
+  },
+  {
+    "line": 3896,
+    "text": "   |          `- error: 'yoga/YGConfig.h' file not found"
+  },
+  {
+    "line": 3939,
+    "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/React.framework/Headers/RCTConvert.h:19:9: error: 'yoga/Yoga.h' file not found with <angled> include; use \"quotes\" instead"
+  },
+  {
+    "line": 3943,
+    "text": "    |         |- error: 'yoga/Yoga.h' file not found with <angled> include; use \"quotes\" instead"
+  },
+  {
+    "line": 3961,
+    "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/ExpoModulesCore.framework/Headers/BridgelessJSCallInvoker.h:7:10: error: 'ReactCommon/CallInvoker.h' file not found"
+  },
+  {
+    "line": 3965,
+    "text": "   |          `- error: 'ReactCommon/CallInvoker.h' file not found"
+  },
+  {
+    "line": 4007,
+    "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/React.framework/Headers/RCTBridgeModule.h:14:9: error: 'RCTDeprecation/RCTDeprecation.h' file not found with <angled> include; use \"quotes\" instead"
+  },
+  {
+    "line": 4011,
+    "text": "    |         `- error: 'RCTDeprecation/RCTDeprecation.h' file not found with <angled> include; use \"quotes\" instead"
+  },
+  {
+    "line": 4045,
+    "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/React.framework/Headers/RCTConvert.h:19:9: error: 'yoga/Yoga.h' file not found with <angled> include; use \"quotes\" instead"
+  },
+  {
+    "line": 4049,
+    "text": "    |         |- error: 'yoga/Yoga.h' file not found with <angled> include; use \"quotes\" instead"
+  },
+  {
+    "line": 4084,
+    "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/React.framework/Headers/yoga/Yoga.h:14:10: error: 'yoga/YGConfig.h' file not found"
+  },
+  {
+    "line": 4088,
+    "text": "   |          `- error: 'yoga/YGConfig.h' file not found"
+  },
+  {
+    "line": 4119,
+    "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/React.framework/Headers/RCTBridgeModule.h:14:9: error: 'RCTDeprecation/RCTDeprecation.h' file not found with <angled> include; use \"quotes\" instead"
+  },
+  {
+    "line": 4123,
+    "text": "    |         `- error: 'RCTDeprecation/RCTDeprecation.h' file not found with <angled> include; use \"quotes\" instead"
+  },
+  {
+    "line": 4161,
+    "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/ExpoModulesCore.framework/Headers/BridgelessJSCallInvoker.h:7:10: error: 'ReactCommon/CallInvoker.h' file not found"
+  },
+  {
+    "line": 4165,
+    "text": "   |          `- error: 'ReactCommon/CallInvoker.h' file not found"
+  },
+  {
+    "line": 4207,
+    "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/React.framework/Headers/RCTBridgeModule.h:14:9: error: 'RCTDeprecation/RCTDeprecation.h' file not found with <angled> include; use \"quotes\" instead"
+  },
+  {
+    "line": 4211,
+    "text": "    |         `- error: 'RCTDeprecation/RCTDeprecation.h' file not found with <angled> include; use \"quotes\" instead"
+  },
+  {
+    "line": 4245,
+    "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/React.framework/Headers/RCTConvert.h:19:9: error: 'yoga/Yoga.h' file not found with <angled> include; use \"quotes\" instead"
+  },
+  {
+    "line": 4249,
+    "text": "    |         |- error: 'yoga/Yoga.h' file not found with <angled> include; use \"quotes\" instead"
+  },
+  {
+    "line": 4284,
+    "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/React.framework/Headers/yoga/Yoga.h:14:10: error: 'yoga/YGConfig.h' file not found"
+  },
+  {
+    "line": 4288,
+    "text": "   |          `- error: 'yoga/YGConfig.h' file not found"
+  },
+  {
+    "line": 4358,
+    "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/React.framework/Headers/RCTConvert.h:19:9: error: 'yoga/Yoga.h' file not found with <angled> include; use \"quotes\" instead"
+  },
+  {
+    "line": 4362,
+    "text": "    |         |- error: 'yoga/Yoga.h' file not found with <angled> include; use \"quotes\" instead"
+  },
+  {
+    "line": 4380,
+    "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/ExpoModulesCore.framework/Headers/BridgelessJSCallInvoker.h:7:10: error: 'ReactCommon/CallInvoker.h' file not found"
+  },
+  {
+    "line": 4384,
+    "text": "   |          `- error: 'ReactCommon/CallInvoker.h' file not found"
+  },
+  {
+    "line": 4426,
+    "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/React.framework/Headers/RCTBridgeModule.h:14:9: error: 'RCTDeprecation/RCTDeprecation.h' file not found with <angled> include; use \"quotes\" instead"
+  },
+  {
+    "line": 4430,
+    "text": "    |         `- error: 'RCTDeprecation/RCTDeprecation.h' file not found with <angled> include; use \"quotes\" instead"
+  },
+  {
+    "line": 4464,
+    "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/React.framework/Headers/RCTConvert.h:19:9: error: 'yoga/Yoga.h' file not found with <angled> include; use \"quotes\" instead"
+  },
+  {
+    "line": 4468,
+    "text": "    |         |- error: 'yoga/Yoga.h' file not found with <angled> include; use \"quotes\" instead"
+  },
+  {
+    "line": 4503,
+    "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/React.framework/Headers/yoga/Yoga.h:14:10: error: 'yoga/YGConfig.h' file not found"
+  },
+  {
+    "line": 4507,
+    "text": "   |          `- error: 'yoga/YGConfig.h' file not found"
+  },
+  {
+    "line": 4578,
+    "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/ExpoModulesCore.framework/Headers/BridgelessJSCallInvoker.h:7:10: error: 'ReactCommon/CallInvoker.h' file not found"
+  },
+  {
+    "line": 4582,
+    "text": "   |          `- error: 'ReactCommon/CallInvoker.h' file not found"
+  },
+  {
+    "line": 4624,
+    "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/React.framework/Headers/RCTBridgeModule.h:14:9: error: 'RCTDeprecation/RCTDeprecation.h' file not found with <angled> include; use \"quotes\" instead"
+  },
+  {
+    "line": 4628,
+    "text": "    |         `- error: 'RCTDeprecation/RCTDeprecation.h' file not found with <angled> include; use \"quotes\" instead"
+  },
+  {
+    "line": 4662,
+    "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/React.framework/Headers/RCTConvert.h:19:9: error: 'yoga/Yoga.h' file not found with <angled> include; use \"quotes\" instead"
+  },
+  {
+    "line": 4666,
+    "text": "    |         |- error: 'yoga/Yoga.h' file not found with <angled> include; use \"quotes\" instead"
+  },
+  {
+    "line": 4701,
+    "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/React.framework/Headers/yoga/Yoga.h:14:10: error: 'yoga/YGConfig.h' file not found"
+  },
+  {
+    "line": 4705,
+    "text": "   |          `- error: 'yoga/YGConfig.h' file not found"
+  }
+]

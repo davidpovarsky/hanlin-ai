@@ -1,0 +1,79 @@
+{
+  "owner": "ChatGPT /root/sdk_completion",
+  "baseCommit": "bea35c3c2a435d1cc5f7ce93b08a649b104bc10f",
+  "branch": "codex/hanlin-three-waves-sdk-20261124",
+  "source": "explicit scoped dirty source, SHA256-bound",
+  "runner": "scaleway-mac",
+  "timeUTC": "2026-11-24T18:17:35.384904+00:00",
+  "node": "v24.5.0",
+  "npm": "11.5.1",
+  "commands": [
+    {
+      "name": "npm-ci",
+      "argv": [
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/node-v24.5.0-darwin-arm64/bin/npm",
+        "ci",
+        "--ignore-scripts",
+        "--no-audit",
+        "--no-fund"
+      ],
+      "exit": 0,
+      "seconds": 3.889,
+      "logSHA256": "913157c65e78d8ea0ef16a98805fee320795225eec5a9ff70b37611e378b160b"
+    },
+    {
+      "name": "host-wire-tests",
+      "argv": [
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/node-v24.5.0-darwin-arm64/bin/node",
+        "--test",
+        "tool-wire.test.mjs"
+      ],
+      "exit": 0,
+      "seconds": 0.099,
+      "logSHA256": "9116200016f63fa563675de65166155a3e3088b22390a9a43bb139ca1d406170"
+    },
+    {
+      "name": "build-assets",
+      "argv": [
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/node-v24.5.0-darwin-arm64/bin/node",
+        "build.mjs"
+      ],
+      "exit": 0,
+      "seconds": 2.265,
+      "logSHA256": "7ee9c1003f5192ee40ca6d1d2d8484c85122228d0ab50b255ca116cfae1d1678"
+    }
+  ],
+  "inputs": {
+    "Scripts/OpenUI/.gitignore": "ad819a44e934dc3b2ae077907fb21635117d9c08c5192a71454837ffd43451e1",
+    "Scripts/OpenUI/bridge.css": "bfe8da03bd7cd28ad1135128a4647d528182afaaecf3db69b66c78af2ef8fee3",
+    "Scripts/OpenUI/bridge.jsx": "972d1b00fa1c9a2f6a374a5b1a1b86fabe45e087c917b7549cd44088e7cbc1f0",
+    "Scripts/OpenUI/bridge.test.mjs": "2d2ab20154b7d582c7e9f625c070659dcdb5f4e61cbd5c8558e98a68d59d330a",
+    "Scripts/OpenUI/build.mjs": "3e3a7e421f290cb4174814bf586dad7ef7ac1637a27a5d84a42c876b98c33e73",
+    "Scripts/OpenUI/catalogs.jsx": "2170d2da41897ffc95f73c0e7c6c0f7182ce9a9051e11a37159911af35b57c05",
+    "Scripts/OpenUI/native-runtime.mjs": "546b05bdbca62843f0b23866ec129a50e8b3e2d90eeec072490421058403ec28",
+    "Scripts/OpenUI/package-lock.json": "be4f037a6b2030605906d348606b18687d65034c0bae43c51e2022800397e3d9",
+    "Scripts/OpenUI/package.json": "104f7f18fc61cfd58c59bf380e7df0c800dccb48f1a4317bea59bff9fedf7572",
+    "Scripts/OpenUI/state-wire.mjs": "9c36e2c2a85980a423fa2bf8ae7648c87dc86fe3be60f4717871e2a5b58adb98",
+    "Scripts/OpenUI/tool-wire.mjs": "779a678549f13984b6230e7f22b1d3ec3819e764d8910a85bd540f2f14b10d55",
+    "Scripts/OpenUI/tool-wire.test.mjs": "20eb4664d5b610a64c19aa2beeca3799ba37915f9ab27556e71584ae40d58112"
+  },
+  "inputsUnchanged": true,
+  "outputs": {
+    "Packages/HanlinPresentationSDK/Sources/HanlinRichUI/Resources/OpenUI/THIRD_PARTY_NOTICES.md": "84f847d0d98c2956481dafbfa2f42f47e3d2a3e15c1c376fd6a4ab802cca9b56",
+    "Packages/HanlinPresentationSDK/Sources/HanlinRichUI/Resources/OpenUI/bridge.css": "cab51495b9923c124d303b80f64aee322eaad5133f07cf34fcb02ac7cc1b9a1d",
+    "Packages/HanlinPresentationSDK/Sources/HanlinRichUI/Resources/OpenUI/bridge.js": "a1e800746e8281f6e487a0dc279e502bda9d2ae35c5a910a19a28375f9b1c9de",
+    "Packages/HanlinPresentationSDK/Sources/HanlinRichUI/Resources/OpenUI/bridge.js.LEGAL.txt": "cc72edf544f42b902a91e479860f87404d8408e74e7908b33ff2b78173bc81df",
+    "Packages/HanlinPresentationSDK/Sources/HanlinRichUI/Resources/OpenUI/catalog-manifest.json": "f0c755d157dd18c5503ddf84710b58f6f7b38c6ba2b65a7cf3810d4d43fcc3df",
+    "Packages/HanlinPresentationSDK/Sources/HanlinRichUI/Resources/OpenUI/index.html": "460c6bdfd6dd964f251954900bbbb34481e3c0f0b25ca3165031fafd643d1b54",
+    "Packages/HanlinPresentationSDK/Sources/HanlinRichUI/Resources/OpenUI/original-prompt.txt": "aad61ab2488e864b43169df4be7710bea6524efed01df5bf86c7d2172f41e03c",
+    "Packages/HanlinPresentationSDK/Sources/HanlinRichUI/Resources/OpenUI/torah-prompt.txt": "abc486ddfe23182bbe6f967296645a448a3b2f45e5e7b65a0c30ca8480f59fd9"
+  },
+  "nativeCompile": "NOT_RUN",
+  "originalAppUI": "NOT_RUN",
+  "liveHost": "NOT_RUN",
+  "limits": {
+    "nodeMaxOldSpaceMB": 256,
+    "UV_THREADPOOL_SIZE": 2,
+    "GOMAXPROCS": 2
+  }
+}

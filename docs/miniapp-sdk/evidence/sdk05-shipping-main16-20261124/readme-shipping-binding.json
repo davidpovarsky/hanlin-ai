@@ -1,0 +1,17 @@
+{
+  "source": "7d1efaa6ada43dd80c57133c09e6a8fb327075cf",
+  "path": "docs/miniapp-sdk/README.md",
+  "actualSHA256": "90068db0d87718cc9f995f9d45c1e2e8a7bd670aa8b8f3b324f0bf4cfc591d95",
+  "previousSHA256": "4427f49e5b729658d95d98eb6cdbb84ea08f2e4d2e33d7b7c480192914346637",
+  "changedLines": [
+    109
+  ],
+  "allOtherLinesByteIdentical": true,
+  "actualExecutedSnippetDocument": {
+    "path": "docs/miniapp-sdk/README.md",
+    "sha256": "90068db0d87718cc9f995f9d45c1e2e8a7bd670aa8b8f3b324f0bf4cfc591d95",
+    "stagedSDKMatches": true,
+    "stagedSDKSHA256": "90068db0d87718cc9f995f9d45c1e2e8a7bd670aa8b8f3b324f0bf4cfc591d95"
+  },
+  "scope": "Previously post-MAIN15 scope clarification is now actually shipped in MAIN16. The one prose line does not change the inventoried descriptor or any executable snippet."
+}

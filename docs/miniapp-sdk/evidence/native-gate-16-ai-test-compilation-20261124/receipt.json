@@ -1,0 +1,379 @@
+{
+  "schemaVersion": 1,
+  "atUTC": "2026-11-24T16:35:28.965839+00:00",
+  "runID": 45430463243,
+  "jobID": 138574020621,
+  "sourceCommit": "7d1efaa6ada43dd80c57133c09e6a8fb327075cf",
+  "publishedHeadAtCollection": "1bc0360cb204796a092c9101df980028f2963459",
+  "runURL": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45430463243",
+  "nativeConclusion": "failure",
+  "testScope": "miniapp_complete",
+  "artifact": {
+    "artifactID": 14942495736,
+    "artifactName": "app-split-45430463243",
+    "bytes": 335922163,
+    "sha256": "ad546a720f976eef8d7af40c8187a287b56382af6caba614ad9e35aa5491b95f",
+    "verifiedGitHubDigest": true
+  },
+  "builds": {
+    "mini_build": {
+      "status": "EXECUTED_PASS",
+      "command": {
+        "argv": [
+          "xcodebuild",
+          "-project",
+          "AI_HLY.xcodeproj",
+          "-destination",
+          "platform=iOS Simulator,id=F522200D-EAF6-4DA1-9B4B-B077D2894A0C",
+          "-parallel-testing-enabled",
+          "NO",
+          "-derivedDataPath",
+          "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData",
+          "-clonedSourcePackagesDirPath",
+          "/Users/runner/work/hanlin-ai/hanlin-ai/build/SourcePackages",
+          "-skipPackagePluginValidation",
+          "-skipMacroValidation",
+          "CODE_SIGNING_ALLOWED=YES",
+          "CODE_SIGNING_REQUIRED=YES",
+          "CODE_SIGN_IDENTITY=-",
+          "-scheme",
+          "HanlinMiniApps",
+          "build-for-testing",
+          "-resultBundlePath",
+          "/Users/runner/work/hanlin-ai/hanlin-ai/build/app-split-evidence/paired-product/MiniBuild.xcresult"
+        ],
+        "exit": 0,
+        "seconds": 785.0861333329999,
+        "log": "mini-build.log",
+        "sha256": "df41b19a856863c4dbf4e82ed960bf907f4727052ebc9f4c4e4be782fe490228"
+      }
+    },
+    "ai_build": {
+      "status": "EXECUTED_FAIL",
+      "command": {
+        "argv": [
+          "xcodebuild",
+          "-project",
+          "AI_HLY.xcodeproj",
+          "-destination",
+          "platform=iOS Simulator,id=F522200D-EAF6-4DA1-9B4B-B077D2894A0C",
+          "-parallel-testing-enabled",
+          "NO",
+          "-derivedDataPath",
+          "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData",
+          "-clonedSourcePackagesDirPath",
+          "/Users/runner/work/hanlin-ai/hanlin-ai/build/SourcePackages",
+          "-skipPackagePluginValidation",
+          "-skipMacroValidation",
+          "CODE_SIGNING_ALLOWED=YES",
+          "CODE_SIGNING_REQUIRED=YES",
+          "CODE_SIGN_IDENTITY=-",
+          "-scheme",
+          "AI_HLY",
+          "build-for-testing",
+          "-resultBundlePath",
+          "/Users/runner/work/hanlin-ai/hanlin-ai/build/app-split-evidence/paired-product/AIBuild.xcresult"
+        ],
+        "exit": 65,
+        "seconds": 488.93014395800014,
+        "log": "ai-build.log",
+        "sha256": "7cb76a022c9feca202ce48dbbbe2815a2d1ec6df5bc2ca6aefe80d6727685b96"
+      }
+    }
+  },
+  "pairedStepDurationSeconds": 1341.632806301117,
+  "applicationCases": {
+    "total": 52,
+    "miniApps": 25,
+    "ai": 27,
+    "status": "NOT_RUN",
+    "basis": [
+      "acceptance.ui == NOT_RUN",
+      "no test-without-building invocation in command journal",
+      "AI build failed before either product test stage"
+    ]
+  },
+  "errors": [
+    {
+      "log": "ai-build.log",
+      "line": 102885,
+      "text": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYTests/HanlinNativePresentationTests.swift:231:27: error: type 'Void' cannot conform to 'Sequence' [#ProtocolTypeNonConformance]"
+    },
+    {
+      "log": "ai-build.log",
+      "line": 102957,
+      "text": "/Users/runner/work/hanlin-ai/hanlin-ai/AI_HLYTests/HanlinOriginalExpoWidgetTests.swift:16:39: error: reference to static property 'appGroupIdentifier' is not concurrency-safe because it involves shared mutable state"
+    }
+  ],
+  "previousCorrection": {
+    "result": "MiniApps full build/link PASS on actual required Xcode27.2",
+    "evidence": "miniapps-full-build-proof.json",
+    "doesNotProve": "AI full build or application execution"
+  },
+  "appIntentsMetadata": {
+    "status": "CAPTURED",
+    "product": "com.itorah.hanlinminiapps",
+    "intentExecution": "NOT_RUN",
+    "receipt": "miniapps-captured-app-intents-metadata.json"
+  },
+  "steps": [
+    {
+      "completedAt": "2026-11-24T15:53:23Z",
+      "conclusion": "success",
+      "name": "Set up job",
+      "number": 1,
+      "startedAt": "2026-11-24T15:53:23Z",
+      "status": "completed"
+    },
+    {
+      "completedAt": "2026-11-24T15:53:33Z",
+      "conclusion": "success",
+      "name": "Run actions/checkout@v7.0.1",
+      "number": 2,
+      "startedAt": "2026-11-24T15:53:23Z",
+      "status": "completed"
+    },
+    {
+      "completedAt": "2026-11-24T15:53:38Z",
+      "conclusion": "success",
+      "name": "Run actions/setup-node@v7.1.0",
+      "number": 3,
+      "startedAt": "2026-11-24T15:53:33Z",
+      "status": "completed"
+    },
+    {
+      "completedAt": "2026-11-24T15:53:38Z",
+      "conclusion": "skipped",
+      "name": "Validate requested signing preflight scope",
+      "number": 4,
+      "startedAt": "2026-11-24T15:53:38Z",
+      "status": "completed"
+    },
+    {
+      "completedAt": "2026-11-24T15:53:49Z",
+      "conclusion": "success",
+      "name": "Verify actual Mac toolchain, disk and installed simulator tooling",
+      "number": 5,
+      "startedAt": "2026-11-24T15:53:38Z",
+      "status": "completed"
+    },
+    {
+      "completedAt": "2026-11-24T15:54:41Z",
+      "conclusion": "success",
+      "name": "Resolve current original MiniApp sources and exact build graph",
+      "number": 6,
+      "startedAt": "2026-11-24T15:53:49Z",
+      "status": "completed"
+    },
+    {
+      "completedAt": "2026-11-24T15:55:09Z",
+      "conclusion": "success",
+      "name": "Restore existing Swift package dependency cache",
+      "number": 7,
+      "startedAt": "2026-11-24T15:54:41Z",
+      "status": "completed"
+    },
+    {
+      "completedAt": "2026-11-24T15:55:11Z",
+      "conclusion": "success",
+      "name": "Restore compatible standalone compiler state",
+      "number": 8,
+      "startedAt": "2026-11-24T15:55:09Z",
+      "status": "completed"
+    },
+    {
+      "completedAt": "2026-11-24T15:55:11Z",
+      "conclusion": "success",
+      "name": "Validate authentic unchanged Host and foreground proofs before reuse",
+      "number": 9,
+      "startedAt": "2026-11-24T15:55:11Z",
+      "status": "completed"
+    },
+    {
+      "completedAt": "2026-11-24T15:55:29Z",
+      "conclusion": "success",
+      "name": "Execute strict foreground route and ledger cases on the actual Mac",
+      "number": 10,
+      "startedAt": "2026-11-24T15:55:11Z",
+      "status": "completed"
+    },
+    {
+      "completedAt": "2026-11-24T15:55:36Z",
+      "conclusion": "success",
+      "name": "Reproduce and verify affected package lifecycle on the actual Mac first",
+      "number": 11,
+      "startedAt": "2026-11-24T15:55:29Z",
+      "status": "completed"
+    },
+    {
+      "completedAt": "2026-11-24T15:55:38Z",
+      "conclusion": "success",
+      "name": "Prepare the existing pinned metadata tool",
+      "number": 12,
+      "startedAt": "2026-11-24T15:55:36Z",
+      "status": "completed"
+    },
+    {
+      "completedAt": "2026-11-24T16:04:02Z",
+      "conclusion": "success",
+      "name": "Prepare existing native dependencies and Runtime host",
+      "number": 13,
+      "startedAt": "2026-11-24T15:55:38Z",
+      "status": "completed"
+    },
+    {
+      "completedAt": "2026-11-24T16:04:27Z",
+      "conclusion": "success",
+      "name": "Export exact prepared native artifacts for reuse",
+      "number": 14,
+      "startedAt": "2026-11-24T16:04:02Z",
+      "status": "completed"
+    },
+    {
+      "completedAt": "2026-11-24T16:04:28Z",
+      "conclusion": "success",
+      "name": "Restore verified input timestamps for incremental compilation",
+      "number": 15,
+      "startedAt": "2026-11-24T16:04:27Z",
+      "status": "completed"
+    },
+    {
+      "completedAt": "2026-11-24T16:04:34Z",
+      "conclusion": "success",
+      "name": "Capture exact standalone compiler inputs",
+      "number": 16,
+      "startedAt": "2026-11-24T16:04:28Z",
+      "status": "completed"
+    },
+    {
+      "completedAt": "2026-11-24T16:04:34Z",
+      "conclusion": "skipped",
+      "name": "Execute actual standalone target XCUITests",
+      "number": 17,
+      "startedAt": "2026-11-24T16:04:34Z",
+      "status": "completed"
+    },
+    {
+      "completedAt": "2026-11-24T16:26:59Z",
+      "conclusion": "failure",
+      "name": "Exercise actual request, return, cancellation and transfer across both products",
+      "number": 18,
+      "startedAt": "2026-11-24T16:04:34Z",
+      "status": "completed"
+    },
+    {
+      "completedAt": "2026-11-24T16:26:59Z",
+      "conclusion": "skipped",
+      "name": "Prepare isolated signing inspection dependencies",
+      "number": 19,
+      "startedAt": "2026-11-24T16:26:59Z",
+      "status": "completed"
+    },
+    {
+      "completedAt": "2026-11-24T16:26:59Z",
+      "conclusion": "skipped",
+      "name": "Build original device archives and export with the existing distribution identity",
+      "number": 20,
+      "startedAt": "2026-11-24T16:26:59Z",
+      "status": "completed"
+    },
+    {
+      "completedAt": "2026-11-24T16:27:00Z",
+      "conclusion": "success",
+      "name": "Keep original logs, status and xcresult even after early failure",
+      "number": 21,
+      "startedAt": "2026-11-24T16:26:59Z",
+      "status": "completed"
+    },
+    {
+      "completedAt": "2026-11-24T16:27:01Z",
+      "conclusion": "success",
+      "name": "Upload MiniApp authoring UI attachments",
+      "number": 22,
+      "startedAt": "2026-11-24T16:27:00Z",
+      "status": "completed"
+    },
+    {
+      "completedAt": "2026-11-24T16:27:12Z",
+      "conclusion": "success",
+      "name": "Upload evidence",
+      "number": 23,
+      "startedAt": "2026-11-24T16:27:01Z",
+      "status": "completed"
+    },
+    {
+      "completedAt": "2026-11-24T16:27:52Z",
+      "conclusion": "success",
+      "name": "Save changed compiler state without treating it as test evidence",
+      "number": 24,
+      "startedAt": "2026-11-24T16:27:12Z",
+      "status": "completed"
+    },
+    {
+      "completedAt": "2026-11-24T16:27:52Z",
+      "conclusion": "skipped",
+      "name": "Save changed Swift package dependency cache",
+      "number": 25,
+      "startedAt": "2026-11-24T16:27:52Z",
+      "status": "completed"
+    },
+    {
+      "completedAt": "2026-11-24T16:27:52Z",
+      "conclusion": "skipped",
+      "name": "Post Run actions/setup-node@v7.1.0",
+      "number": 49,
+      "startedAt": "2026-11-24T16:27:52Z",
+      "status": "completed"
+    },
+    {
+      "completedAt": "2026-11-24T16:27:53Z",
+      "conclusion": "success",
+      "name": "Post Run actions/checkout@v7.0.1",
+      "number": 50,
+      "startedAt": "2026-11-24T16:27:52Z",
+      "status": "completed"
+    },
+    {
+      "completedAt": "2026-11-24T16:27:58Z",
+      "conclusion": "success",
+      "name": "Complete job",
+      "number": 51,
+      "startedAt": "2026-11-24T16:27:53Z",
+      "status": "completed"
+    }
+  ],
+  "logs": [
+    {
+      "path": "mini-build.log",
+      "bytes": 12234945,
+      "sha256": "df41b19a856863c4dbf4e82ed960bf907f4727052ebc9f4c4e4be782fe490228",
+      "lines": 145904,
+      "retainedGzip": "mini-build.log.gz",
+      "gzipSHA256": "94b3d4b218724211c1c23ff4adc3c4dace0fd1a838b09ce9632084139dce7562",
+      "diagnosticHeaderCount": 0
+    },
+    {
+      "path": "ai-build.log",
+      "bytes": 9688898,
+      "sha256": "7cb76a022c9feca202ce48dbbbe2815a2d1ec6df5bc2ca6aefe80d6727685b96",
+      "lines": 103597,
+      "retainedGzip": "ai-build.log.gz",
+      "gzipSHA256": "afcfd97dbce53061edefe1fe3c4fa97b25a3ef5e7d514a7fdefd31a740eaa1e6",
+      "diagnosticHeaderCount": 2
+    },
+    {
+      "path": "job-138574020621.log",
+      "bytes": 5323308,
+      "sha256": "61ca49bd7751c10637d91be7647102b72fb41c8575471d112a332907af578dcb",
+      "retainedGzip": "job-138574020621.log.gz",
+      "gzipSHA256": "1fdde747da6eebc2de255112341d347ffa5c4e20196d846d11237cada305a4bb"
+    }
+  ],
+  "sdkStatus": "Actual MAIN16 SDK reconciliation is independently in progress; no MAIN15 SDK identity substituted",
+  "boundaries": [
+    "No application test execution",
+    "No physical-device verification",
+    "No main merge or release",
+    "Separate passed components retain prior authentic run/source attribution"
+  ]
+}

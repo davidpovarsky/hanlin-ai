@@ -1,0 +1,182 @@
+{
+  "actions": [],
+  "changedLockPaths": [],
+  "changedSourcePaths": [],
+  "commands": [
+    {
+      "argv": [
+        "xcodebuild",
+        "-version"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-ai-cache-native-20261125",
+      "exitCode": 0,
+      "finishedAtUTC": "2026-11-25T02:04:14.022743+00:00",
+      "name": "xcode-version",
+      "startedAtUTC": "2026-11-25T02:04:13.947254+00:00",
+      "stderr": "01-xcode-version.stderr.log",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "01-xcode-version.log",
+      "stdoutSHA256": "694b44731d0b415c5b11d844151e466d7f5e200a95627efda377f232f1a6ab77"
+    },
+    {
+      "argv": [
+        "xcrun",
+        "swift",
+        "--version"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-ai-cache-native-20261125",
+      "exitCode": 0,
+      "finishedAtUTC": "2026-11-25T02:04:14.152945+00:00",
+      "name": "swift-version",
+      "startedAtUTC": "2026-11-25T02:04:14.023331+00:00",
+      "stderr": "02-swift-version.stderr.log",
+      "stderrSHA256": "bbc8b176d3c74d4c5a7fd00b40280f98168e116d5272273bfe8e71407625540e",
+      "stdout": "02-swift-version.log",
+      "stdoutSHA256": "04630ab8fa201f57c63c59730e638135e32584a97e16e004a417eb8ed283dc83"
+    },
+    {
+      "argv": [
+        "node",
+        "--version"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-ai-cache-native-20261125",
+      "exitCode": 0,
+      "finishedAtUTC": "2026-11-25T02:04:14.169704+00:00",
+      "name": "node-version",
+      "startedAtUTC": "2026-11-25T02:04:14.153663+00:00",
+      "stderr": "03-node-version.stderr.log",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "03-node-version.log",
+      "stdoutSHA256": "2f30156cd7f9137514ea68d53554f583cf6541fd107dbc8ae8a19253379a735a"
+    },
+    {
+      "argv": [
+        "/opt/homebrew/opt/python@3.12/bin/python3.12",
+        "Scripts/SDK/generate_manifest.py",
+        "--check"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-ai-cache-native-20261125",
+      "exitCode": 0,
+      "finishedAtUTC": "2026-11-25T02:04:23.204550+00:00",
+      "name": "manifest-check",
+      "startedAtUTC": "2026-11-25T02:04:14.170238+00:00",
+      "stderr": "04-manifest-check.stderr.log",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "04-manifest-check.log",
+      "stdoutSHA256": "6a3adc34271cba4ee688071b7aec9eb7f0ee9731bedf3e215a77efb8648947f0"
+    },
+    {
+      "argv": [
+        "/opt/homebrew/opt/python@3.12/bin/python3.12",
+        "Scripts/SDK/update_project.py",
+        "--check"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-ai-cache-native-20261125",
+      "exitCode": 0,
+      "finishedAtUTC": "2026-11-25T02:04:25.416915+00:00",
+      "name": "project-check",
+      "startedAtUTC": "2026-11-25T02:04:23.205489+00:00",
+      "stderr": "05-project-check.stderr.log",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "05-project-check.log",
+      "stdoutSHA256": "7b205399ea53f72db8afa2fe3d77370cd6f0ac3d9ea8d19cea47a806236d4d18"
+    },
+    {
+      "argv": [
+        "xcodebuild",
+        "-project",
+        "AI_HLY.xcodeproj",
+        "-scheme",
+        "AI_HLY",
+        "-resolvePackageDependencies",
+        "-clonedSourcePackagesDirPath",
+        "/Users/m1/builds/hanlin-ai-cache-native-20261125/build/SourcePackages",
+        "-skipPackagePluginValidation",
+        "-skipMacroValidation"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-ai-cache-native-20261125",
+      "exitCode": 0,
+      "finishedAtUTC": "2026-11-25T02:04:54.406450+00:00",
+      "name": "resolve-packages",
+      "startedAtUTC": "2026-11-25T02:04:25.417844+00:00",
+      "stderr": "06-resolve-packages.stderr.log",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "06-resolve-packages.log",
+      "stdoutSHA256": "4d50947c16903e0031bfd4669a38b2210708f91f5d42da5441614742659f1ac9"
+    },
+    {
+      "argv": [
+        "/opt/homebrew/opt/python@3.12/bin/python3.12",
+        "Scripts/CI/stage_modular_headers.py",
+        "--source-packages-path",
+        "/Users/m1/builds/hanlin-ai-cache-native-20261125/build/SourcePackages",
+        "--expo-artifacts-path",
+        "/Users/m1/builds/hanlin-ai-cache-native-20261125/Packages/HanlinExpoRuntime/Artifacts",
+        "--derived-data-path",
+        "/Users/m1/caches/DerivedData/hanlin-ai-cache-app-20261125",
+        "--configuration",
+        "Debug"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-ai-cache-native-20261125",
+      "exitCode": 0,
+      "finishedAtUTC": "2026-11-25T02:05:19.152710+00:00",
+      "name": "modular-headers",
+      "startedAtUTC": "2026-11-25T02:04:54.407210+00:00",
+      "stderr": "07-modular-headers.stderr.log",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "07-modular-headers.log",
+      "stdoutSHA256": "d7d6d2a16644f367f63446838fa2f262f515c6f49e7a7c47a631aca9d42f6642"
+    },
+    {
+      "argv": [
+        "/opt/homebrew/opt/python@3.12/bin/python3.12",
+        "Scripts/CI/stage_a2ui_schemas.py",
+        "--source-packages-path",
+        "/Users/m1/builds/hanlin-ai-cache-native-20261125/build/SourcePackages",
+        "--derived-data-path",
+        "/Users/m1/caches/DerivedData/hanlin-ai-cache-app-20261125",
+        "--evidence",
+        "/Users/m1/builds/hanlin-ai-cache-native-20261125/build/cache-app-native-evidence-02-20261125/prepare/a2ui-generation"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-ai-cache-native-20261125",
+      "exitCode": 0,
+      "finishedAtUTC": "2026-11-25T02:05:20.499585+00:00",
+      "name": "a2ui-schemas",
+      "startedAtUTC": "2026-11-25T02:05:19.153471+00:00",
+      "stderr": "08-a2ui-schemas.stderr.log",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "08-a2ui-schemas.log",
+      "stdoutSHA256": "07b2ec26f92141378186e29ef0cff391e04cde9dae1e63587dc8b8ca023c3685"
+    }
+  ],
+  "declaredTestCounts": {
+    "ClassicChatRestorationTests": 32,
+    "HanlinMiniAppAssistantIntegrationTests": 7,
+    "HanlinModelPromptCachePersistenceTests": 3,
+    "HanlinPromptCachingIntegrationTests": 4
+  },
+  "derivedData": "/Users/m1/caches/DerivedData/hanlin-ai-cache-app-20261125",
+  "developerDirectory": "/Applications/Xcode.app/Contents/Developer",
+  "executables": {
+    "node": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/node-v24.5.0-darwin-arm64/bin/node",
+    "npm": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/node-v24.5.0-darwin-arm64/bin/npm",
+    "xcodebuild": "/usr/bin/xcodebuild",
+    "xcrun": "/usr/bin/xcrun"
+  },
+  "finishedAtUTC": "2026-11-25T02:05:21.340778+00:00",
+  "phase": "prepare",
+  "python": "/opt/homebrew/opt/python@3.12/bin/python3.12",
+  "recipe": ".github/workflows/build-ios26-unsigned-ipa.yml",
+  "recipeSHA256": "8db985018d69ed5879533028f8f6d15b4d40bd6a2c49abf866cc2930603ba838",
+  "repository": "/Users/m1/builds/hanlin-ai-cache-native-20261125",
+  "selectors": [
+    "AI_HLYTests/HanlinPromptCachingIntegrationTests",
+    "AI_HLYTests/ClassicChatRestorationTests",
+    "AI_HLYTests/HanlinMiniAppAssistantIntegrationTests",
+    "AI_HLYTests/HanlinModelPromptCachePersistenceTests"
+  ],
+  "sourceSHA": "c3d154551d377e5a6155507df09d9817b41aaa9c",
+  "sourceSHAAfter": "c3d154551d377e5a6155507df09d9817b41aaa9c",
+  "startedAtUTC": "2026-11-25T02:04:12.399435+00:00",
+  "status": "PREPARED"
+}

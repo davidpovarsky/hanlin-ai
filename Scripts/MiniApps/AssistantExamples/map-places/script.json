@@ -1,0 +1,93 @@
+{
+  "name": "Map places — local demo",
+  "version": "1.0.0",
+  "description": "Demonstrates explicit map selection against clearly labelled local fixture places.",
+  "hanlinRuntime": "hanlin-nativescript",
+  "entry": "nativescript/app/bundle.mjs",
+  "runInApp": true,
+  "entrypoints": [
+    {
+      "id": "nearby-places",
+      "kind": "assistantTool",
+      "sourcePath": "assistant/places/bundle.mjs",
+      "assistantTool": {
+        "title": "Nearby places — local demo",
+        "summary": "Search local example places around the map pin selected by the user. This demo does not query a real places provider.",
+        "actions": [
+          {
+            "id": "search",
+            "title": "Find demo places",
+            "summary": "Filter local fixture places by text, selected categories and distance from the user's pin.",
+            "inputSchema": {
+              "type": "object",
+              "properties": {
+                "query": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "query"
+              ],
+              "additionalProperties": false
+            }
+          }
+        ],
+        "configuration": {
+          "schemaVersion": 1,
+          "panels": [
+            {
+              "id": "location",
+              "title": "Search area",
+              "fields": [
+                {
+                  "key": "area",
+                  "title": "Map pin and radius",
+                  "kind": "location",
+                  "required": true,
+                  "defaultValue": {
+                    "latitude": 31.77835,
+                    "longitude": 35.23388,
+                    "radiusMeters": 1500
+                  },
+                  "minimum": 100,
+                  "maximum": 50000
+                }
+              ]
+            },
+            {
+              "id": "categories",
+              "title": "Place categories",
+              "fields": [
+                {
+                  "key": "categories",
+                  "title": "Categories",
+                  "kind": "multiChoice",
+                  "required": true,
+                  "defaultValue": [
+                    "restaurant",
+                    "museum",
+                    "park"
+                  ],
+                  "options": [
+                    {
+                      "id": "restaurant",
+                      "title": "Restaurants"
+                    },
+                    {
+                      "id": "museum",
+                      "title": "Museums"
+                    },
+                    {
+                      "id": "park",
+                      "title": "Parks"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

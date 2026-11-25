@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-primary-sdk-preparation-20261124/docs/miniapp-sdk/evidence/primary-sdk-preparation-20261124/inspect_primary_sdk.py", line 283, in <module>
+    other=overlay[mirror]
+          ~~~~~~~^^^^^^^^
+KeyError: 'AI_HLYUITests/Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIMalformed.hanlinExpo'

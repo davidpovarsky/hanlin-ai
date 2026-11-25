@@ -1,0 +1,73 @@
+{
+  "source": "53593c3749dbd2be1e56739576fcdd5ea2c1cf06",
+  "status": "PASS",
+  "host_tests": {
+    "passed": 177,
+    "failed": 0,
+    "skipped": 1
+  },
+  "archive_sha256": "9fb7998ee48fe913e98f865d5b962e8a46dce9c836ff2efd295598206741b2cd",
+  "native_preparer": "Original prepare-ios-dependencies.mjs installs latest shared metadata wrapper; original binary provenance retained.",
+  "files": [
+    {
+      "stored": "06-archive-sync.log.gz",
+      "raw_sha256": "0faa78a6842290cb2823e10ac2801e68bb0352bb5be52c5ce48c8aa85302e5cc",
+      "raw_bytes": 20061
+    },
+    {
+      "stored": "07-archive-validate.log.gz",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0
+    },
+    {
+      "stored": "02-sdk-audit-write.log.gz",
+      "raw_sha256": "c08cc7d202d4343fa2dac7a3d70605c9d4ad13ccc8bd28896cf2f4afe5abd83b",
+      "raw_bytes": 80
+    },
+    {
+      "stored": "04-reachability-write.log.gz",
+      "raw_sha256": "25235e2042af248e065488522e1e5aba9995de6ebb75ade7cbcfbd507c1d271e",
+      "raw_bytes": 130
+    },
+    {
+      "stored": "05-reachability-check.log.gz",
+      "raw_sha256": "bc234237931951c0e0e70dc212b9f47da2f6c76a61109e41c235f0f7f0eabcef",
+      "raw_bytes": 72
+    },
+    {
+      "stored": "host-metadata.json",
+      "raw_sha256": "1a14a1244adee5b55f9982285bcf49bc17b89c412df1ec972ac7ef95893134b0",
+      "raw_bytes": 358
+    },
+    {
+      "stored": "01-nativescript-prepare.log.gz",
+      "raw_sha256": "1c6bc9bd180147cb61d38dc56c18c45cfaee3c541d9c12725e8c0ca6b0b09e87",
+      "raw_bytes": 687
+    },
+    {
+      "stored": "08-runtime-manifest.log.gz",
+      "raw_sha256": "e0300c6a4ee73c2d65c9f67597ea4adcb0f6f627c0c7d1e9a7e3d1231d5441f0",
+      "raw_bytes": 72
+    },
+    {
+      "stored": "03-sdk-audit-check.log.gz",
+      "raw_sha256": "f9392dbc1f4415decb9bc390be9f49d5b7e6f3fbd636c72710ef278e45b31783",
+      "raw_bytes": 76
+    },
+    {
+      "stored": "10-diff-check.log.gz",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0
+    },
+    {
+      "stored": "09-native-inventory.log.gz",
+      "raw_sha256": "d83e4e592aa377615b3ac9437d1f0c2f6748cd7dd3590d8bebc24dddbca26707",
+      "raw_bytes": 3572
+    },
+    {
+      "stored": "receipt.json",
+      "raw_sha256": "1921c3fabb591e08af96517ef55bedf8c40d26c54ba78c44533ced97d3611db1",
+      "raw_bytes": 6055
+    }
+  ]
+}

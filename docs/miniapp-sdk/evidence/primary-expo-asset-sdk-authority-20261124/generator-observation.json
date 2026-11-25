@@ -1,0 +1,22 @@
+{
+  "operation": "Existing exported generatedHostVersions helper only",
+  "startedAtUTC": "2026-11-24T23:46:24.781792+00:00",
+  "elapsedSeconds": 0.056599169969558716,
+  "command": [
+    "/usr/local/bin/node",
+    "/mnt/development/projects/worktrees/hanlin-primary-sdk-preparation-20261124/docs/miniapp-sdk/evidence/primary-expo-asset-sdk-authority-20261124/generate-host-version-constant.mjs",
+    "/mnt/development/projects/worktrees/hanlin-primary-sdk-preparation-20261124/Scripts/MiniApps/resolve-upstreams.mjs",
+    "/mnt/development/projects/worktrees/hanlin-primary-sdk-preparation-20261124/docs/miniapp-sdk/evidence/primary-expo-asset-sdk-authority-20261124/generator-input-versions.json"
+  ],
+  "exitCode": 0,
+  "nodeVersion": "v24.22.0",
+  "producerSHA256": "7973977cf986cbee14fd147fd8b10c1d54a6f1a1c790511d2df5cf054063e7a2",
+  "inputSHA256": "983e6f2b6bcff69c8438f0b4f343bba2fb1b438b4228a274ace7e21fbc6315d1",
+  "outputSHA256": "8e99e562bacbe6354bc23caf6a1233930a1e0d61c3abe0444195dd36164f747d",
+  "outputPath": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinMiniAppHostVersions.swift",
+  "selection": "Retained original upstream-resolution.versions plus current native/npm/package-locked expo-asset58.0.21",
+  "networkResolution": false,
+  "nativeCompilation": false,
+  "tests": false,
+  "allOtherGeneratedBytesUnchanged": true
+}

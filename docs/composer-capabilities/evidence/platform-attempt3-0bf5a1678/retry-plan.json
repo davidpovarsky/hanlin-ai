@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "status": "PREPARED_NOT_RUN_AWAITING_FINAL_MERGED_SHA",
+  "sourceCommit": null,
+  "priorEvidenceSource": "0bf5a16789952cdd07a2a6431ae010211679466a",
+  "expectedMethodCount": 6,
+  "targetExpandedSuiteTotal": 51,
+  "priorPassesToReexecute": 2,
+  "unaffectedPriorPassesCandidateForVerifiedReuse": 45,
+  "registrationFixtureRetry": [
+    "preparedAssistantEntrypointsRemainDistinctInCatalog",
+    "assistantEntrypointResolutionRequiresExactHandler",
+    "duplicateAssistantHandlersRemainInvalid"
+  ],
+  "expoPluginImpactScope": [
+    "expoAssetPluginRequiresItsActualEmbeddedVersion",
+    "expoSwiftUIContract",
+    "unavailableModernNativePluginsFailBeforeImport"
+  ],
+  "filter": "HanlinScriptMiniAppRegistrationTests.*(preparedAssistantEntrypointsRemainDistinctInCatalog|assistantEntrypointResolutionRequiresExactHandler|duplicateAssistantHandlersRemainInvalid)|HanlinScriptAnalyzerTests.*(expoAssetPluginRequiresItsActualEmbeddedVersion|expoSwiftUIContract|unavailableModernNativePluginsFailBeforeImport)",
+  "command": [
+    "nice",
+    "-n",
+    "10",
+    "xcrun",
+    "swift",
+    "test",
+    "--package-path",
+    "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/Packages/HanlinPlatform",
+    "--scratch-path",
+    "/Users/m1/caches/DerivedData/hanlin-composer-platform-spm",
+    "--cache-path",
+    "/Users/m1/caches/DerivedData/hanlin-composer-platform-spm-cache",
+    "--force-resolved-versions",
+    "--skip-update",
+    "--jobs",
+    "1",
+    "--filter",
+    "HanlinScriptMiniAppRegistrationTests.*(preparedAssistantEntrypointsRemainDistinctInCatalog|assistantEntrypointResolutionRequiresExactHandler|duplicateAssistantHandlersRemainInvalid)|HanlinScriptAnalyzerTests.*(expoAssetPluginRequiresItsActualEmbeddedVersion|expoSwiftUIContract|unavailableModernNativePluginsFailBeforeImport)",
+    "--xunit-output",
+    "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/composer-platform-attempt4-tests.xml"
+  ],
+  "notes": [
+    "No build was launched by this preparation.",
+    "Final source SHA and changed dependency impact must be verified before execution.",
+    "NativeScript ESM changes affect original Node authoring/SDK resolution tests, not NativeScript analyzer branches.",
+    "Use new attempt4 evidence names and preserve prior attempts."
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "sourceCache": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete",
+  "isolatedCache": "/Users/m1/caches/DerivedData/hanlin-composer-app-20261124",
+  "copy": "APFS clone independent writable files",
+  "sourceBranch": "0d3b614ea34e01fb381f2289130fff83323c8f4f",
+  "createdAtUTC": "2026-11-24T23:03:53.568746+00:00",
+  "testStatus": "NOT_A_TEST_PASS",
+  "reason": "Same verified native dependency bytes, exact original package pins; changed sources are rebuilt by Xcode"
+}

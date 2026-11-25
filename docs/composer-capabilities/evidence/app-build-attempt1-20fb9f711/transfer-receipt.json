@@ -1,0 +1,120 @@
+{
+  "schemaVersion": 1,
+  "transferredAtUTC": "2026-11-25T01:22:06.188208+00:00",
+  "transport": "Oracle pinned scaleway-mac SSH alias, BatchMode=yes, StrictHostKeyChecking=yes",
+  "sourceReadOnly": true,
+  "allSourceSHA256Verified": true,
+  "noBuildsTestsGeneratorsDevicesOrMacWrites": true,
+  "files": [
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt1-20fb9f711/ai-hly-build-attempt1.json",
+      "bytes": 1459,
+      "sha256": "edff700eb8131dcc5d7064798f38fcf9f533f7990f308af850be97f1cb33f60d",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/ai-hly-build-attempt1.json",
+      "sourceBytes": 1459,
+      "sourceSHA256": "edff700eb8131dcc5d7064798f38fcf9f533f7990f308af850be97f1cb33f60d",
+      "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt1-20fb9f711/ai-hly-build-attempt1.log.gz",
+      "bytes": 432936,
+      "sha256": "499c335ef1ab1c5a398bde824184f1e87dcc6d70654ad6f8e93ee3f30a46fdc4",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/ai-hly-build-attempt1.log",
+      "sourceBytes": 13619832,
+      "sourceSHA256": "8638ebde19ff53fbd8564aa1613d726a06bf4503f96a30f4ca09ea94924e61fe",
+      "compressedForRepository": true,
+      "uncompressedLogSHA256": "8638ebde19ff53fbd8564aa1613d726a06bf4503f96a30f4ca09ea94924e61fe",
+      "uncompressedLogBytes": 13619832
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt1-20fb9f711/ai-hly-build-attempt1-process.json",
+      "bytes": 1096,
+      "sha256": "718fb19f73cc9a0df10a1bae27965cd25aebc98b66aeb05a07e30f3810d0fff4",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/ai-hly-build-attempt1-process.json",
+      "sourceBytes": 1096,
+      "sourceSHA256": "718fb19f73cc9a0df10a1bae27965cd25aebc98b66aeb05a07e30f3810d0fff4",
+      "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt1-20fb9f711/ai-hly-build-attempt1-errors.json",
+      "bytes": 979,
+      "sha256": "5c14a49a3628619b1e0be69adb463b463796b3e96d2488a61fae0391c63e706c",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/ai-hly-build-attempt1-errors.json",
+      "sourceBytes": 979,
+      "sourceSHA256": "5c14a49a3628619b1e0be69adb463b463796b3e96d2488a61fae0391c63e706c",
+      "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt1-20fb9f711/app-build-attempt1-cache-repair.json",
+      "bytes": 556,
+      "sha256": "e8c856ebccb897738d89f1cf9f59eb0f4c97b4dcf7b7c472ec7361eddc66965c",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/app-build-attempt1-cache-repair.json",
+      "sourceBytes": 556,
+      "sourceSHA256": "e8c856ebccb897738d89f1cf9f59eb0f4c97b4dcf7b7c472ec7361eddc66965c",
+      "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt1-20fb9f711/derived-cache-reuse.json",
+      "bytes": 490,
+      "sha256": "3f154412a2bb31dc27f3f134094200de5475845c4f8106f893c6dcc8b6e1254f",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/derived-cache-reuse.json",
+      "sourceBytes": 490,
+      "sourceSHA256": "3f154412a2bb31dc27f3f134094200de5475845c4f8106f893c6dcc8b6e1254f",
+      "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt1-20fb9f711/app-build-admission.json",
+      "bytes": 530,
+      "sha256": "ea28716eecf4c0d1a08d82d4eb70e30702d524ca7b3777a883f2ad893b4bc8a8",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/app-build-admission.json",
+      "sourceBytes": 530,
+      "sourceSHA256": "ea28716eecf4c0d1a08d82d4eb70e30702d524ca7b3777a883f2ad893b4bc8a8",
+      "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt1-20fb9f711/app-build-admission-race-resolution.json",
+      "bytes": 311,
+      "sha256": "e4d98a4436e1a3c2f039d0b12ac1234767c3f593d29f9e0c939948735835bd92",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/app-build-admission-race-resolution.json",
+      "sourceBytes": 311,
+      "sourceSHA256": "e4d98a4436e1a3c2f039d0b12ac1234767c3f593d29f9e0c939948735835bd92",
+      "compressedForRepository": false
+    }
+  ],
+  "additionalTransfers": [
+    {
+      "transferredAtUTC": "2026-11-25T01:25:39.507812+00:00",
+      "files": [
+        {
+          "path": "docs/composer-capabilities/evidence/app-build-attempt1-20fb9f711/app-build-capacity-policy-refresh.json",
+          "bytes": 1114,
+          "sha256": "fd7ddd873b6dac109c46c6e6c2863c15fe4cdb70f90fd34f251fe74b63897491",
+          "sourceHost": "scaleway-mac",
+          "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/app-build-capacity-policy-refresh.json",
+          "sourceBytes": 1114,
+          "sourceSHA256": "fd7ddd873b6dac109c46c6e6c2863c15fe4cdb70f90fd34f251fe74b63897491",
+          "compressedForRepository": false
+        },
+        {
+          "path": "docs/composer-capabilities/evidence/app-build-attempt1-20fb9f711/ai-hly-build-attempt2-process.json",
+          "bytes": 1096,
+          "sha256": "63acf20797c3cc7c3a001cd5ba704bebe706b614fb0c7a3ac269888965e3a976",
+          "sourceHost": "scaleway-mac",
+          "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/ai-hly-build-attempt2-process.json",
+          "sourceBytes": 1096,
+          "sourceSHA256": "63acf20797c3cc7c3a001cd5ba704bebe706b614fb0c7a3ac269888965e3a976",
+          "compressedForRepository": false
+        }
+      ],
+      "attempt2CompletedReceiptExistsAtCapture": false
+    }
+  ]
+}

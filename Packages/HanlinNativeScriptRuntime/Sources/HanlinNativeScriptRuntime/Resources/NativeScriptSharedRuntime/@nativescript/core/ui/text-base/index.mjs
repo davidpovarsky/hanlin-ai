@@ -97,6 +97,7 @@ export class TextBase extends TextBaseCommon {
     constructor() {
         super(...arguments);
         this._tappable = false;
+        this._deferNativeText = false;
     }
     get nativeTextViewProtected() {
         return super.nativeTextViewProtected;
@@ -274,7 +275,26 @@ export class TextBase extends TextBaseCommon {
             UIView.performWithoutAnimation(fn);
         }
     }
+    onResumeNativeUpdates() {
+        // Each text setter rebuilds the native text; the initial apply needs it once.
+        this._deferNativeText = true;
+        try {
+            super.onResumeNativeUpdates();
+        }
+        finally {
+            this._deferNativeText = false;
+        }
+        const reset = this._pendingNativeTextReset;
+        if (reset !== undefined) {
+            this._pendingNativeTextReset = undefined;
+            this._setNativeText(reset);
+        }
+    }
     _setNativeText(reset = false) {
+        if (this._deferNativeText) {
+            this._pendingNativeTextReset = reset;
+            return;
+        }
         this._animationWrap(() => {
             if (reset) {
                 const nativeView = this.nativeTextViewProtected;

@@ -18,10 +18,14 @@ class MainScreen {
         return this.screen.scale;
     }
     get widthDIPs() {
-        return this.screen.bounds.size.width;
+        return this.currentScreen.bounds.size.width;
     }
     get heightDIPs() {
-        return this.screen.bounds.size.height;
+        return this.currentScreen.bounds.size.height;
+    }
+    get currentScreen() {
+        const window = getWindow();
+        return window ? window.screen : this.screen;
     }
     _updateMetrics() {
         // UIScreen handles the update on iOS

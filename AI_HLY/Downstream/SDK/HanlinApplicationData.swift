@@ -55,9 +55,11 @@ class AppDataManager: ObservableObject {
         || ProcessInfo.processInfo.environment["HANLIN_SCRIPTUI_E2E"] != nil
     let nativeAcceptance = HanlinNativeA2UIAcceptanceProvider.isEnabled
     let config: ModelConfiguration
-    if let fixtureID = AgentRuntimeUIAcceptanceProvider.phase2StoreID {
+    let nativeFixtureID = HanlinNativeA2UIAcceptanceProvider.persistentStoreID
+    if let fixtureID = nativeFixtureID ?? AgentRuntimeUIAcceptanceProvider.phase2StoreID {
+        let fixtureDirectory = nativeFixtureID == nil ? "Phase2Acceptance/" : "NativeA2UIAcceptance/"
         let root = try FileManager.default.url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-            .appending(path: "Phase2Acceptance/" + fixtureID.uuidString, directoryHint: .isDirectory)
+            .appending(path: fixtureDirectory + fixtureID.uuidString, directoryHint: .isDirectory)
         try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
         config = ModelConfiguration(url: root.appending(path: "Chat.store"), cloudKitDatabase: .none)
     } else {

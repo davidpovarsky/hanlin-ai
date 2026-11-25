@@ -1,0 +1,68 @@
+{
+  "source": "02619cfab1a52519d436441abd1f732a7bbd91c5",
+  "status": "PASS",
+  "host_tests": {
+    "passed": 177,
+    "failed": 0,
+    "skipped": 1
+  },
+  "note": "Original full Host suite repeated because latest adapter correction changes audited SDK input identity; not177additionalunique cases.",
+  "archive_sha256": "7971c8c9fb9e8269c6798cd8e0f6679b67e735095cd399552e2a9d99824d32f6",
+  "files": [
+    {
+      "stored": "01-sdk-audit-write.log.gz",
+      "raw_sha256": "c08cc7d202d4343fa2dac7a3d70605c9d4ad13ccc8bd28896cf2f4afe5abd83b",
+      "raw_bytes": 80
+    },
+    {
+      "stored": "03-reachability-write.log.gz",
+      "raw_sha256": "25235e2042af248e065488522e1e5aba9995de6ebb75ade7cbcfbd507c1d271e",
+      "raw_bytes": 130
+    },
+    {
+      "stored": "06-archive-validate.log.gz",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0
+    },
+    {
+      "stored": "09-diff-check.log.gz",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0
+    },
+    {
+      "stored": "08-native-inventory.log.gz",
+      "raw_sha256": "b31decebb75da947ae0710f633fe778f7a2141a4e71ee3e3c4a277e01f9e4795",
+      "raw_bytes": 3572
+    },
+    {
+      "stored": "host-metadata.json",
+      "raw_sha256": "974a15b20cef5b2a4c7bc50e15dfc0c447d644d7ba68ee2bad73943741b145ee",
+      "raw_bytes": 358
+    },
+    {
+      "stored": "07-runtime-manifest.log.gz",
+      "raw_sha256": "e0300c6a4ee73c2d65c9f67597ea4adcb0f6f627c0c7d1e9a7e3d1231d5441f0",
+      "raw_bytes": 72
+    },
+    {
+      "stored": "02-sdk-audit-check.log.gz",
+      "raw_sha256": "f9392dbc1f4415decb9bc390be9f49d5b7e6f3fbd636c72710ef278e45b31783",
+      "raw_bytes": 76
+    },
+    {
+      "stored": "05-archive-sync.log.gz",
+      "raw_sha256": "20abb2ab57d5fe6c4db8a8655f74a5e8496cf691c6ffd858d4d1b772f82a8b97",
+      "raw_bytes": 20047
+    },
+    {
+      "stored": "receipt.json",
+      "raw_sha256": "cbbb330df32a893316f3c4f962e59eb9f2689ffabd2f5510dcaa124481cd8147",
+      "raw_bytes": 5620
+    },
+    {
+      "stored": "04-reachability-check.log.gz",
+      "raw_sha256": "bc234237931951c0e0e70dc212b9f47da2f6c76a61109e41c235f0f7f0eabcef",
+      "raw_bytes": 72
+    }
+  ]
+}

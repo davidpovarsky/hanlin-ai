@@ -268,14 +268,30 @@ export var resources;
     resources_1.getPaletteColor = getPaletteColor;
 })(resources || (resources = {}));
 export function isRealDevice() {
-    const fingerprint = android.os.Build.FINGERPRINT;
-    return fingerprint != null && (fingerprint.indexOf('vbox') > -1 || fingerprint.indexOf('generic') > -1);
+    const { FINGERPRINT, HARDWARE } = android.os.Build;
+    const fingerprint = FINGERPRINT || '';
+    const hardware = HARDWARE || '';
+    // goldfish/ranchu are the Android Emulator's virtual boards; vbox is Genymotion.
+    const isEmulator = hardware === 'goldfish' || hardware === 'ranchu' || fingerprint.startsWith('generic') || fingerprint.includes('vbox');
+    return !isEmulator;
 }
 const DefaultLightScrim = new Color(0xe6, 0xff, 0xff, 0xff);
 const DefaultDarkScrim = new Color(0x80, 0x1b, 0x1b, 0x1b);
 const DefaultStatusBarLight = new Color(0);
 const DefaultStatusBarDark = new Color(0);
 const systemColors = new WeakMap();
+export function refreshEdgeToEdge(activity) {
+    if (!activity) {
+        return;
+    }
+    const existingColors = systemColors.get(activity);
+    if (existingColors) {
+        setEnableEdgeToEdge(activity, existingColors);
+    }
+    else {
+        enableEdgeToEdge(activity);
+    }
+}
 function setEnableEdgeToEdge(activity, existingColors) {
     enableEdgeToEdge(activity, {
         statusBarLightColor: existingColors.statusBarLight,
@@ -296,9 +312,9 @@ export function setStatusBarColor(options) {
             statusBarLight: DefaultStatusBarLight,
             statusBarDark: DefaultStatusBarDark,
         };
-        existingColors.statusBarLight ?? (existingColors.statusBarLight = statusBarLightColor);
-        existingColors.statusBarDark ?? (existingColors.statusBarDark = statusBarDarkColor);
-        systemColors.set(getCurrentActivity(), existingColors);
+        existingColors.statusBarLight = statusBarLightColor ?? existingColors.statusBarLight;
+        existingColors.statusBarDark = statusBarDarkColor ?? existingColors.statusBarDark;
+        systemColors.set(activity, existingColors);
         setEnableEdgeToEdge(activity, existingColors);
     }
 }
@@ -313,9 +329,9 @@ export function setNavigationBarColor(options) {
             statusBarLight: DefaultStatusBarLight,
             statusBarDark: DefaultStatusBarDark,
         };
-        existingColors.navigationBarLight ?? (existingColors.navigationBarLight = navigationBarLightColor);
-        existingColors.navigationBarDark ?? (existingColors.navigationBarDark = navigationBarDarkColor);
-        systemColors.set(getCurrentActivity(), existingColors);
+        existingColors.navigationBarLight = navigationBarLightColor ?? existingColors.navigationBarLight;
+        existingColors.navigationBarDark = navigationBarDarkColor ?? existingColors.navigationBarDark;
+        systemColors.set(activity, existingColors);
         setEnableEdgeToEdge(activity, existingColors);
     }
 }
@@ -329,8 +345,8 @@ export function setDarkModeHandler(options) {
             statusBarLight: DefaultStatusBarLight,
             statusBarDark: DefaultStatusBarDark,
         };
-        existingColors.handler ?? (existingColors.handler = darkModeHandler);
-        systemColors.set(getCurrentActivity(), existingColors);
+        existingColors.handler = darkModeHandler;
+        systemColors.set(activity, existingColors);
         setEnableEdgeToEdge(activity, existingColors);
     }
 }

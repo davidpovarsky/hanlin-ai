@@ -1,0 +1,607 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-24T22:38:25.023386+00:00",
+  "status": "ACTUAL_SDK_AND_EMBEDDED_RESOURCE_IDENTITIES_RECONCILED",
+  "executionSource": "fd81d602d3b25f09162a659e1e0cf0582e91a93a",
+  "executionSourceTree": "c143ef6bba91db06182175fca88ca192ef102fe8",
+  "evidenceIntegrationBase": "1fb9d62ae048ff895d5b3d26f71c62163ace4bf6",
+  "snapshotRoot": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/prepared-snapshot-attempt7",
+  "snapshotReceiptSHA256": "84ecaace9bd43f9e275047e28ba5755f7a2551ec5decc726940293cd1bd296aa",
+  "archive": {
+    "archivePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/prepared-snapshot-attempt7/files/build/runtime-host/RuntimeHostResources.zip",
+    "archiveBytes": 81813086,
+    "archiveSHA256": "c4e85e967f873ffbe907990c5d9d612b5b6f95871b4e85c736ec0799f09cb1af",
+    "manifestSHA256": "6a5ce216ab722741314a893f8bb226773da27c9d6151f6cbc28f46901b8fcb94",
+    "manifestBytes": 5219288,
+    "inputSHA256": "7073ff408de405da0fc2e992993588529a6271f1c41d87dea520b10fcdf62db0",
+    "sourceInputCount": 222,
+    "fileCount": 25661
+  },
+  "comparison": {
+    "prior": {
+      "executionSource": "bd6da170da7936fe3c5353ddaf8b25c97477a380",
+      "receiptPath": "docs/miniapp-sdk/evidence/primary-sdk-attempt6-20261124/receipt.json",
+      "receiptSHA256": "2ce330eafec2788a46d184ed4c40bb1dcd281fbc54a7a570da65abc437ca9f4b",
+      "manifestSHA256": "c9491455251124a82a7ca5721cc2fcd78e424670eeac53fdf8b1fc07abd4c325",
+      "inputSHA256": "78a8ffd73b3f96d984237e7866a723fb876a35d91f6bb16627373d92a6ef1fd9"
+    },
+    "changedSourceInputs": 4,
+    "unchangedSourceInputs": 218,
+    "changedMembers": 4,
+    "unchangedMembers": 25657,
+    "reuseGroups": {
+      "declarations": {
+        "members": 5210,
+        "unchanged": 5210,
+        "changed": []
+      },
+      "examples": {
+        "members": 29,
+        "unchanged": 29,
+        "changed": []
+      },
+      "public-docs": {
+        "members": 25,
+        "unchanged": 21,
+        "changed": [
+          "docs/miniapp-sdk/extension-reachability.json",
+          "docs/miniapp-sdk/extension-reachability.md",
+          "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+          "docs/miniapp-sdk/source-inventory.json"
+        ]
+      },
+      "original-compiler-entrypoints": {
+        "members": 2,
+        "unchanged": 2,
+        "changed": []
+      }
+    },
+    "engineAndUpstreamMetadataUnchanged": true,
+    "outsideSDKHostMembers": {
+      "changed": 1,
+      "unchanged": 3101,
+      "changedPaths": [
+        "miniapp-authoring.mjs"
+      ],
+      "report": "host-member-comparison.json"
+    }
+  },
+  "preparedSource": {
+    "paths": 4,
+    "payloadBytes": 780842,
+    "contentChanges": 4,
+    "modeChanges": 0,
+    "ledgerSHA256": "b4d82aae8e71de76b30d01e73e4364db76e8131c4aef48833ececff6e4ac6207",
+    "canonicalBinding": {
+      "algorithm": "SHA256 of compact UTF-8 JSON rows sorted by path; keys path,beforeSHA256,afterSHA256,bytes,contentFrom",
+      "sha256": "f291a4588bcfd8a8317ed94bd97c41eab97cc4d2fdd6252214622cffeabaf753"
+    },
+    "materializedByThisLane": false
+  },
+  "documentation": {
+    "status": "EXECUTED_PASS",
+    "projects": 4,
+    "diagnostics": 0,
+    "sourceFences": 14,
+    "jsonFences": 7,
+    "nonAuthoringExclusions": 8,
+    "actualReportSHA256": "2a1f6965444ab15758810d9ece587c18426d6026765f58a8156e97f1e02f9748",
+    "checkerAuthoringSHA256": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9",
+    "report": "documentation-execution-binding.json",
+    "execution": "Actual original attempt7 preparation; no compiler/checker rerun in this inspection"
+  },
+  "compilerAliasEvidence": {
+    "path": "docs/miniapp-sdk/evidence/primary-typescript-alias-identity-20261124/receipt.json",
+    "sha256": "20a4f5c5abf3c294e3a6f522ca3e840b73d869755b26f3935f04b27079eb9043",
+    "allFourActualMembersAndSourceLockMatch": true,
+    "report": "compiler-identity-binding.json"
+  },
+  "host": {
+    "moduleSHA256": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9",
+    "testSHA256": "958d0e0a71f47fa7677e412cd1a0ed40da43feb898b182df84e63256a05e5865",
+    "sourceInputsHash": "20016188e7a94a589b9bb0a4faa1fff844e0ce8e62456f56d91001a59a879852",
+    "testIncludedInSourceFingerprint": true,
+    "testShippedInArchive": false,
+    "actualHostTestCounts": {
+      "tests": 169,
+      "pass": 168,
+      "fail": 0,
+      "skipped": 1
+    },
+    "actualNewResolverCasesPassed": 3,
+    "report": "host-archive-binding.json"
+  },
+  "nativeCatalog": {
+    "sha256": "b7bf734b3bd35595f90c3d3a841fa57ad63f0529dc0a5b6b2bee942e747022a6",
+    "contentSHA256": "7069f72279c75b1de81b513dff24be86421f5056807d19cd858486113cafe99f",
+    "inputCount": 16,
+    "changedInputsFromAttempt6": [],
+    "requiredTargets": 14,
+    "missingTargets": 0,
+    "onlyChangedContentArtifact": "HanlinNodeHostSupport",
+    "report": "native-catalog-binding.json",
+    "boundary": "The actual producer catalog and all direct source inputs are bound. All artifact metadata except release URL is compared, without downloading or re-extracting the full native export. Catalog state alone does not prove application cases."
+  },
+  "nativeCheckpoint": {
+    "capturedAtUTC": "2026-11-24T22:26:16.906412+00:00",
+    "executionSource": "fd81d602d3b25f09162a659e1e0cf0582e91a93a",
+    "sourceTree": "c143ef6bba91db06182175fca88ca192ef102fe8",
+    "attempt": 7,
+    "sourceAdvanceAtUTC": "2026-11-24T21:59:06.434280+00:00",
+    "firstControllerObservationAtUTC": "2026-11-24T22:14:13.861020+00:00",
+    "firstControllerPhase": "split-host-lifecycle",
+    "firstPrefixControllerStartUTC": "2026-11-24T22:14:11.171735+00:00",
+    "prefix": {
+      "source": "fd81d602d3b25f09162a659e1e0cf0582e91a93a",
+      "through": "split-host-lifecycle",
+      "scope": "ORIGINAL_HOST_PREFIX_ONLY",
+      "startedAt": "2026-11-24T22:14:10.908955+00:00",
+      "wrapperPID": 9356,
+      "status": "HOST_PREFIX_PASS_HEAVY_WORK_PENDING",
+      "nativePreparationStarted": false,
+      "fullAcceptancePass": false,
+      "admissionPID": 335,
+      "admissionStartedAt": "2026-11-24T22:00:01.606668+00:00",
+      "maximumWaitSeconds": 3500,
+      "activeElapsedBefore": 2329.728348708002,
+      "admissionSHA256Before": "408d4527eb8a9b3532beb6aca06090fb75f7d92377c451d9a5fc89b679a05fe8",
+      "controllerPID": 9360,
+      "controllerArgv": [
+        "/opt/homebrew/bin/python3.12",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/controller-attempt7.py",
+        "split-host-lifecycle"
+      ],
+      "controllerStartedAt": "2026-11-24T22:14:10.955622+00:00",
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/controller-host-prefix-attempt7.log",
+      "admissionTemporarilyPaused": false,
+      "exitCode": 0,
+      "controllerFinishedAt": "2026-11-24T22:14:19.181906+00:00",
+      "controllerStateStatus": "PAUSED_AFTER_PHASE",
+      "phase": "split-host-lifecycle",
+      "phaseResult": {
+        "status": "PASS",
+        "startedAt": "2026-11-24T22:14:11.174688+00:00",
+        "argv": [
+          "/bin/bash",
+          "-e",
+          "-o",
+          "pipefail",
+          "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-host-lifecycle.sh"
+        ],
+        "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt7/split-host-lifecycle.log",
+        "scriptSHA256": "956541d15f45f12b7777b8ebeb800fe14e1686db5fc7ceae397835547953d7bc",
+        "pid": 9364,
+        "exitCode": 0,
+        "elapsedSeconds": 7.998473999999987,
+        "finishedAt": "2026-11-24T22:14:19.174056+00:00",
+        "logBytes": 2345,
+        "logSHA256": "4685988e182745ba00a11ed63a51dc8277d01ead7ab96c24f4960af9aea2c155"
+      },
+      "activeElapsedAfter": 2337.726822708002,
+      "logSHA256": "babf832618ef658d4dc457cbec49b1a686528b1afdbcf4327b319457cf867177",
+      "finishedAt": "2026-11-24T22:14:19.181997+00:00",
+      "admissionResumedAt": "2026-11-24T22:14:19.182379+00:00"
+    },
+    "capacityAdmission": {
+      "owner": "/root/native_execution",
+      "source": "fd81d602d3b25f09162a659e1e0cf0582e91a93a",
+      "startedAt": "2026-11-24T22:00:01.606668+00:00",
+      "status": "ADMITTED_CONTROLLER_STARTED",
+      "pid": 335,
+      "maximumWaitSeconds": 3500,
+      "observedAt": "2026-11-24T22:22:35.127958+00:00",
+      "elapsedSeconds": 1353.5247828329957,
+      "blockers": [],
+      "admission": {
+        "toolchain": "Xcode 27.0\nBuild version 27A266a",
+        "sdk": "27.0",
+        "freeDiskBytes": 96584548352,
+        "memory": "Mach Virtual Memory Statistics: (page size of 16384 bytes)\nPages free:                                   272518.\nPages active:                                 240293.\nPages inactive:                               344063.\nPages speculative:                              5946.\nPages throttled:                                   0.\nPages wired down:                             103635.\nPages purgeable:                                1587.\n\"Translation faults\":                     2867237144.\nPages copy-on-write:                        40527927.\nPages zero filled:                        2065849975.\nPages reactivated:                          40503434.\nPages purged:                                2095617.\nFile-backed pages:                            550944.\nAnonymous pages:                               39358.\nPages stored in compressor:                    95797.\nPages occupied by compressor:                  48593.\nDecompressions:                             21093688.\nCompressions:                               36812687.\nPageins:                                    63558507.\nPageouts:                                      55227.\nSwapins:                                          16.\nSwapouts:                                        120.\n",
+        "uptime": "23:22  up 11:53, 1 user, load averages: 13.04 57.46 77.09"
+      },
+      "controllerPID": 12399,
+      "finishedAt": "2026-11-24T22:22:35.226338+00:00"
+    },
+    "heavyContinuationStartedAtUTC": "2026-11-24T22:22:35.324575+00:00",
+    "heavyControllerResumedAtUTC": "2026-11-24T22:22:35.323026+00:00",
+    "controllerPID": 12399,
+    "controllerStatusAtCapture": "RUNNING",
+    "controllerPhaseAtCapture": "split-paired-acceptance",
+    "phaseReceipts": {
+      "split-host-lifecycle": {
+        "status": "PASS",
+        "startedAt": "2026-11-24T22:14:11.174688+00:00",
+        "argv": [
+          "/bin/bash",
+          "-e",
+          "-o",
+          "pipefail",
+          "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-host-lifecycle.sh"
+        ],
+        "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt7/split-host-lifecycle.log",
+        "scriptSHA256": "956541d15f45f12b7777b8ebeb800fe14e1686db5fc7ceae397835547953d7bc",
+        "pid": 9364,
+        "exitCode": 0,
+        "elapsedSeconds": 7.998473999999987,
+        "finishedAt": "2026-11-24T22:14:19.174056+00:00",
+        "logBytes": 2345,
+        "logSHA256": "4685988e182745ba00a11ed63a51dc8277d01ead7ab96c24f4960af9aea2c155"
+      },
+      "split-native-preparation": {
+        "status": "PASS",
+        "startedAt": "2026-11-24T22:22:35.324575+00:00",
+        "argv": [
+          "/bin/bash",
+          "-e",
+          "-o",
+          "pipefail",
+          "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-native-preparation.sh"
+        ],
+        "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt7/split-native-preparation.log",
+        "scriptSHA256": "47635289bc9238f28f65b6f72d4980b5cf0aa6def2cf146cd236261260f65a3e",
+        "pid": 12403,
+        "elapsedSeconds": 131.9982550420027,
+        "logBytes": 32324,
+        "exitCode": 0,
+        "finishedAt": "2026-11-24T22:24:47.323201+00:00",
+        "logSHA256": "89de966b4bd071efec1bb3fcab4a69421d82a6874d1d6f9853fb2e41c56bfb9e"
+      },
+      "split-native-artifacts": {
+        "status": "PASS",
+        "startedAt": "2026-11-24T22:24:47.326572+00:00",
+        "argv": [
+          "/bin/bash",
+          "-e",
+          "-o",
+          "pipefail",
+          "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-native-artifacts.sh"
+        ],
+        "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt7/split-native-artifacts.log",
+        "scriptSHA256": "eb0405f89f5da3d48e1591650d42e2f7a8ff8f86eebac9b82ded2e5c70cefebd",
+        "pid": 13304,
+        "exitCode": 0,
+        "elapsedSeconds": 20.907183957999223,
+        "finishedAt": "2026-11-24T22:25:08.234358+00:00",
+        "logBytes": 1504,
+        "logSHA256": "4bcb3412ad77315881450fb4bb11693e9f50b3fb27967b3e228c4d62c82727ae"
+      },
+      "split-restore-inputs": {
+        "status": "PASS",
+        "startedAt": "2026-11-24T22:25:08.235451+00:00",
+        "argv": [
+          "/bin/bash",
+          "-e",
+          "-o",
+          "pipefail",
+          "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-restore-inputs.sh"
+        ],
+        "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt7/split-restore-inputs.log",
+        "scriptSHA256": "f848273286ad9fdcecc9635ee01148c5f54b45230a5199938ef3d362a709f39a",
+        "pid": 13336,
+        "exitCode": 0,
+        "elapsedSeconds": 5.731358541997906,
+        "finishedAt": "2026-11-24T22:25:13.967371+00:00",
+        "logBytes": 224,
+        "logSHA256": "edec507a8f0e7a4cd33d91dc1ac21170247eff3dc3a089c5d00525a782bad14e"
+      },
+      "split-inputs": {
+        "status": "PASS",
+        "startedAt": "2026-11-24T22:25:13.969851+00:00",
+        "argv": [
+          "/bin/bash",
+          "-e",
+          "-o",
+          "pipefail",
+          "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-inputs.sh"
+        ],
+        "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt7/split-inputs.log",
+        "scriptSHA256": "03a05318e9c17e6b2a3fc91dc40ee908b81ee204fb961cda64687179778621bc",
+        "pid": 13360,
+        "exitCode": 0,
+        "elapsedSeconds": 4.831666166996001,
+        "finishedAt": "2026-11-24T22:25:18.802229+00:00",
+        "logBytes": 103,
+        "logSHA256": "d48fac1570f401cbbb7b00ec5e27ff27068863ecd767d71eacd7962580a278c8"
+      }
+    },
+    "pairedPhase": {
+      "status": "RUNNING",
+      "startedAt": "2026-11-24T22:25:18.803467+00:00",
+      "argv": [
+        "/bin/bash",
+        "-e",
+        "-o",
+        "pipefail",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-paired-acceptance.sh"
+      ],
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt7/split-paired-acceptance.log",
+      "scriptSHA256": "f271e6f1b95bb261417cee5fc13104e41df44f8ec35d2ab565b1f6135191c0c8",
+      "pid": 13365,
+      "elapsedSeconds": 30.00970149999921,
+      "logBytes": 3537
+    },
+    "applicationAcceptance": "Not established by prepared snapshot; paired phase running at capture. Later built-resource proof is retained separately; selected52 outcomes remain separate.",
+    "boundary": "Distinct source advance, bounded Host prefix and heavy continuation are preserved. Later observations supersede this immutable running checkpoint without rewriting raw proof."
+  },
+  "laterBuiltResources": {
+    "capturedAtUTC": "2026-11-24T22:29:29.034744+00:00",
+    "receiptSHA256": "ab377226d4312c5cccbdaa20bf9dc6bc236250df35868ad98878729e67fb8067",
+    "status": "BOTH_BUILT_PRODUCTS_BOUND",
+    "MiniAppsCopies": 1,
+    "AICopies": 4,
+    "allCopiesMatchPreparedArchiveAndFinalModule": true,
+    "bothBuildCommandsCompletedWithExitZero": true,
+    "report": "built-resource-binding.json",
+    "boundary": "Actual owner-observed built app/test/framework resource bytes and completed build commands are retained and compared to this exact prepared archive. This inspector did not query or rerun native builds. Five resource copies are not five application test passes; selected52/physical/screenshots remain separate."
+  },
+  "inspection": {
+    "script": "inspect_attempt7.py",
+    "scriptSHA256": "abe5b8dae790f7ec64c5e77abc4651c1e5b42e348735f8086380e1fe07ad89f0",
+    "summary": {
+      "status": "PASS",
+      "recordedAtUTC": "2026-11-24T22:34:13.393910+00:00",
+      "inspectionStartedAtUTC": "2026-11-24T22:34:10.715549+00:00",
+      "elapsedSeconds": 2.6783273899927735,
+      "executionSource": "fd81d602d3b25f09162a659e1e0cf0582e91a93a",
+      "archiveSHA256": "c4e85e967f873ffbe907990c5d9d612b5b6f95871b4e85c736ec0799f09cb1af",
+      "manifestSHA256": "6a5ce216ab722741314a893f8bb226773da27c9d6151f6cbc28f46901b8fcb94",
+      "inputSHA256": "7073ff408de405da0fc2e992993588529a6271f1c41d87dea520b10fcdf62db0",
+      "changedInputs": 4,
+      "unchangedInputs": 218,
+      "changedMembers": 4,
+      "unchangedMembers": 25657,
+      "hostMembersChanged": 1,
+      "hostMembersUnchanged": 3101,
+      "documentProjects": 4,
+      "diagnostics": 0,
+      "preparedSourcePaths": 4,
+      "preparedSourceBytes": 780842,
+      "sourceDeltaCanonicalSHA256": "f291a4588bcfd8a8317ed94bd97c41eab97cc4d2fdd6252214622cffeabaf753",
+      "nativePreparation": "EXECUTED_PASS",
+      "nativeExport": "EXECUTED_PASS",
+      "bothBuiltProductResources": "OWNER_OBSERVED_AND_EXACT_IDENTITY_BOUND",
+      "applicationAcceptance": "NOT_ESTABLISHED; paired phase RUNNING at prepared capture, separate later build/resource evidence retained",
+      "reuseGroups": {
+        "declarations": {
+          "members": 5210,
+          "unchanged": 5210,
+          "changed": []
+        },
+        "examples": {
+          "members": 29,
+          "unchanged": 29,
+          "changed": []
+        },
+        "public-docs": {
+          "members": 25,
+          "unchanged": 21,
+          "changed": [
+            "docs/miniapp-sdk/extension-reachability.json",
+            "docs/miniapp-sdk/extension-reachability.md",
+            "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+            "docs/miniapp-sdk/source-inventory.json"
+          ]
+        },
+        "original-compiler-entrypoints": {
+          "members": 2,
+          "unchanged": 2,
+          "changed": []
+        }
+      }
+    },
+    "method": "Read-only comparison of retained actual outputs and exact Git sources; no product execution or native query."
+  },
+  "boundaries": [
+    "SDK/preparation and built-resource evidence is separate from selected52 application acceptance, physical-device outcomes and screenshots.",
+    "Raw prepared-snapshot RUNNING state is historical at 22:26:16 UTC; later UI outcomes may supersede it without changing raw proof.",
+    "Actual Host run:168 pass,0 fail,1 existing long-duration skip; three new resolver cases passed. This is not selected52 acceptance.",
+    "No production materialization, package download, full native export extraction, repeated112-member audit, product compiler/generator/test, native query or CI run by this lane."
+  ],
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 5178,
+      "sha256": "4cc0122a32449b8345636fc68849970854ec5ac49ef084aa2c365ebe75a0a4ac"
+    },
+    {
+      "path": "built-resource-binding.json",
+      "bytes": 4523,
+      "sha256": "0c33aa0b3378d9e5793b93739619c225ea048aa1149507f11eda681d74cae135"
+    },
+    {
+      "path": "compiler-identity-binding.json",
+      "bytes": 1507,
+      "sha256": "af2dc6d7a119e178d2816b34e6d0a90ea40fea956fb5b6a5dc0b90b7a66506d4"
+    },
+    {
+      "path": "documentation-execution-binding.json",
+      "bytes": 6636,
+      "sha256": "f2e0f0ece94021481acee8af2aefec370a1748eb462e55ca18971552735829bc"
+    },
+    {
+      "path": "execution-checkpoint.json",
+      "bytes": 9959,
+      "sha256": "a90731cb36074d7f497df3c39f9133ffbf4999be1427ea1de2980b8f9380c241"
+    },
+    {
+      "path": "host-archive-binding.json",
+      "bytes": 3838,
+      "sha256": "e9f7567e6350f5d3db0eb413eddb97bf5254a28d598e8af3f1cc3db058adee83"
+    },
+    {
+      "path": "host-member-comparison.json",
+      "bytes": 942759,
+      "sha256": "64c2eedeccc1778749f993b0fa5365686cc61018ecd81332c30a7bc3d9c17825"
+    },
+    {
+      "path": "inspect_attempt7.py",
+      "bytes": 28102,
+      "sha256": "abe5b8dae790f7ec64c5e77abc4651c1e5b42e348735f8086380e1fe07ad89f0"
+    },
+    {
+      "path": "inspection-stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "inspection-stdout.txt",
+      "bytes": 1783,
+      "sha256": "57c745a4d6915828792aee93b9b183a262a2a9b90bd03a600a134b52a600fb0f"
+    },
+    {
+      "path": "inspection-summary.json",
+      "bytes": 1783,
+      "sha256": "57c745a4d6915828792aee93b9b183a262a2a9b90bd03a600a134b52a600fb0f"
+    },
+    {
+      "path": "native-catalog-binding.json",
+      "bytes": 7801,
+      "sha256": "ed9d9b3bd1df1d1b2faa197052a796753036354390af60d0d42394adad2a819d"
+    },
+    {
+      "path": "prepared-provenance.diff",
+      "bytes": 41839,
+      "sha256": "ca0ac1ea5f3689b8e257b03208ee3a8cf515ad25e2a5bc00775c8b5308370ad7"
+    },
+    {
+      "path": "prepared-source-delta.json",
+      "bytes": 23085,
+      "sha256": "f6a6fbcb761da3380a43c62d87cf2275019fbe47a09dd3752725565c3142790f"
+    },
+    {
+      "path": "raw/build/app-split-evidence/miniapp-documentation-snippets.json",
+      "bytes": 20066,
+      "sha256": "2a1f6965444ab15758810d9ece587c18426d6026765f58a8156e97f1e02f9748"
+    },
+    {
+      "path": "raw/build/app-split-evidence/prepared-native/native-artifacts.json",
+      "bytes": 28574,
+      "sha256": "b7bf734b3bd35595f90c3d3a841fa57ad63f0529dc0a5b6b2bee942e747022a6"
+    },
+    {
+      "path": "raw/build/primary-control/capacity-admission-attempt7.json",
+      "bytes": 1915,
+      "sha256": "9bc2b1c273bdd744acd99194a8284b49668836cdfa9082e39f09fb386ba733f6"
+    },
+    {
+      "path": "raw/build/primary-control/host-prefix-attempt7.json",
+      "bytes": 2172,
+      "sha256": "1a00256211a4abf55a3da6d1c996c9739dcbe4e0ee9d2c071d4c0b20dbba2202"
+    },
+    {
+      "path": "raw/build/primary-control/logs-attempt7/split-host-lifecycle.log",
+      "bytes": 2345,
+      "sha256": "4685988e182745ba00a11ed63a51dc8277d01ead7ab96c24f4960af9aea2c155"
+    },
+    {
+      "path": "raw/build/primary-control/logs-attempt7/split-native-artifacts.log",
+      "bytes": 1504,
+      "sha256": "4bcb3412ad77315881450fb4bb11693e9f50b3fb27967b3e228c4d62c82727ae"
+    },
+    {
+      "path": "raw/build/primary-control/logs-attempt7/split-native-preparation.log",
+      "bytes": 32324,
+      "sha256": "89de966b4bd071efec1bb3fcab4a69421d82a6874d1d6f9853fb2e41c56bfb9e"
+    },
+    {
+      "path": "raw/build/primary-control/observation-attempt7/first-controller-state.json",
+      "bytes": 24502,
+      "sha256": "2e0150155f8fe91854c7869672809bc34bfe5fcca05eb6f070b29c1b9ae9bc93"
+    },
+    {
+      "path": "raw/build/primary-control/plan.json",
+      "bytes": 12076,
+      "sha256": "3bb8675ff52d1a4b9d48915f968e22e44f1353e86425557349c8100a628abc89"
+    },
+    {
+      "path": "raw/build/primary-control/reuse-closure-attempt7.json",
+      "bytes": 12508,
+      "sha256": "69983927a4585e6b9f81faa9adc0e79005a55453151b16051804166f7ad6dfd7"
+    },
+    {
+      "path": "raw/build/primary-control/run-host-prefix-attempt7.py",
+      "bytes": 4161,
+      "sha256": "6b48a328c992c3e4299901eb95c4e34cb5ccd1f4099858a83b2908fb6d913472"
+    },
+    {
+      "path": "raw/build/primary-control/source-advance-fd81d602/receipt.json",
+      "bytes": 4302,
+      "sha256": "92cc12addcbe4cbdad99b28ef1bf1d3b76cd051b3f5408e180f39d7ea7a990fa"
+    },
+    {
+      "path": "raw/build/runtime-host/host-metadata.json",
+      "bytes": 358,
+      "sha256": "b8540c390547715d3010ceefe8856587bc159d69f8e00ba0fd023a7c3e103ce0"
+    },
+    {
+      "path": "raw/controller-state-at-capture.json",
+      "bytes": 24512,
+      "sha256": "ee8a67764cda65a0a5a874973db5e49b5ce7d1a6b5e57a5c9cafa252af1f6a47"
+    },
+    {
+      "path": "raw/docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+      "bytes": 118561,
+      "sha256": "54b154ffd2d74328ad849b521d7d3940184e8771cf2adb03f5b0acc8587a8e96"
+    },
+    {
+      "path": "raw/docs/miniapp-sdk/extension-reachability.json",
+      "bytes": 147521,
+      "sha256": "855ce12c168cc258cd202b1bf436dc7849901a71e189c2d4d49201b7f5da062b"
+    },
+    {
+      "path": "raw/docs/miniapp-sdk/extension-reachability.md",
+      "bytes": 21494,
+      "sha256": "5499b31720ac284d264768ba3416ed032d5a3d37f821350a06c3a3f3625e75c2"
+    },
+    {
+      "path": "raw/docs/miniapp-sdk/source-inventory.json",
+      "bytes": 493266,
+      "sha256": "b0d3426a1238df51009a1c2b124f2d4dfa98f1ac6a75540e5a3a4f8578bd9c95"
+    },
+    {
+      "path": "raw/embedded-host-binding-attempt7.json",
+      "bytes": 4006,
+      "sha256": "ab377226d4312c5cccbdaa20bf9dc6bc236250df35868ad98878729e67fb8067"
+    },
+    {
+      "path": "raw/miniapp-sdk.json.gz",
+      "bytes": 1301352,
+      "sha256": "b71e94aabb5a75186c4cb914bb75a4955f8989ff9f0823af5d2af20e8037fb0a"
+    },
+    {
+      "path": "raw/snapshot-receipt.json",
+      "bytes": 11744,
+      "sha256": "84ecaace9bd43f9e275047e28ba5755f7a2551ec5decc726940293cd1bd296aa"
+    },
+    {
+      "path": "raw/tracked-delta.json",
+      "bytes": 1594,
+      "sha256": "b4d82aae8e71de76b30d01e73e4364db76e8131c4aef48833ececff6e4ac6207"
+    },
+    {
+      "path": "retained-raw-files.json",
+      "bytes": 3127,
+      "sha256": "a2acf0c6cfb339317a9ea270d779488252d7060dea9032cb96ba259d44526df2"
+    },
+    {
+      "path": "sdk-reconciliation.json",
+      "bytes": 6202,
+      "sha256": "a9336b96c84c254aca3b32c002cd73327c235a9df94361822d6b933eb1d96c21"
+    },
+    {
+      "path": "sdk-source-binding.json",
+      "bytes": 60746,
+      "sha256": "bb5edafb0e102d0def639bd0ca910d767a13c32be9a1d61f2e2e12a8c0667968"
+    },
+    {
+      "path": "shipped-provenance-binding.json",
+      "bytes": 157282,
+      "sha256": "9baee92ca81781982e875f725f7d7e18843ff998e86f2811344e9b3aac7ef4a3"
+    },
+    {
+      "path": "transfer-verification.json",
+      "bytes": 9982,
+      "sha256": "b5d1296e47f7c041aa04f04522779fcab2471c5bbb58a5886dbc6e632e57be92"
+    }
+  ]
+}

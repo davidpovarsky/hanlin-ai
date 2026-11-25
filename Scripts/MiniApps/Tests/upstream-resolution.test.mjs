@@ -9,9 +9,10 @@ import {sourceBuildIdentity} from '../../Expo/build-original-expo-source.mjs';
 
 test('Expo uses its published coherent matrix rather than unrelated latest React or Worklets',()=>{
   const matrix={'@expo/ui':'~58.0.29','expo-brownfield':'~58.0.20',react:'19.3.0','react-native':'0.88.1','react-native-worklets':'0.13.0'};
-  const ranges=expoRanges({version:'58.0.26',dependencies:{'expo-modules-core':'~58.1.0'}},matrix);
-  assert.equal(ranges.react,'19.3.0');assert.equal(ranges['react-native-worklets'],'0.13.0');assert.equal(ranges['expo-modules-core'],'~58.1.0');
+  const ranges=expoRanges({version:'58.0.26',dependencies:{'expo-modules-core':'~58.1.0','expo-asset':'~58.0.21'}},matrix);
+  assert.equal(ranges.react,'19.3.0');assert.equal(ranges['react-native-worklets'],'0.13.0');assert.equal(ranges['expo-modules-core'],'~58.1.0');assert.equal(ranges['expo-asset'],'~58.0.21');
   assert.throws(()=>expoRanges({version:'58.0.26',dependencies:{}},{}),/does not specify/);
+  assert.throws(()=>expoRanges({version:'58.0.26',dependencies:{'expo-modules-core':'~58.1.0'}},matrix),/does not specify expo-asset/);
 });
 test('a package publication must contain its original integrity',()=>{
   assert.throws(()=>latestMetadata({name:'expo',version:'58.0.26',dist:{tarball:'https://registry.npmjs.org/expo.tgz'}}),/Incomplete/);
@@ -25,8 +26,8 @@ test('native source identity changes for native versions, installed graph, Xcode
   assert.notEqual(identity,sourceBuildIdentity({...lock,expo:{uiVersion:'58.0.30'}},'graph','Xcode27','original producer'));
 });
 test('generated runtime metadata uses exact native and original ScriptWidget identities',()=>{
-  const text=generatedHostVersions({expo:{expo:'58.0.26','@expo/ui':'58.0.29','expo-widgets':'58.0.29','react-native':'0.88.1','@nativescript/react-native':'9.1.2','react-native-worklets':'0.13.0'},nativescript:{'@nativescript/ios':'9.1.1','@nativescript/core':'9.1.4','@nativescript/swift-ui':'4.0.2'},scriptwidget:{revision:'4da256d58247bbafb9a5cd443a285250b97b3c4b'}});
-  assert.match(text,/expoSDKVersion = "58\.0\.26"/);assert.match(text,/reactNativeWorkletsVersion = "0\.13\.0"/);assert.match(text,/nativeApiVersion = "9\.1\.2"/);assert.match(text,/nativeScriptCoreVersion = "9\.1\.4"/);assert.match(text,/scriptWidgetRevision = "4da256/);
+  const text=generatedHostVersions({expo:{expo:'58.0.26','@expo/ui':'58.0.29','expo-asset':'58.0.21','expo-widgets':'58.0.29','react-native':'0.88.1','@nativescript/react-native':'9.1.2','react-native-worklets':'0.13.0'},nativescript:{'@nativescript/ios':'9.1.1','@nativescript/core':'9.1.4','@nativescript/swift-ui':'4.0.2'},scriptwidget:{revision:'4da256d58247bbafb9a5cd443a285250b97b3c4b'}});
+  assert.match(text,/expoSDKVersion = "58\.0\.26"/);assert.match(text,/expoAssetVersion = "58\.0\.21"/);assert.match(text,/reactNativeWorkletsVersion = "0\.13\.0"/);assert.match(text,/nativeApiVersion = "9\.1\.2"/);assert.match(text,/nativeScriptCoreVersion = "9\.1\.4"/);assert.match(text,/scriptWidgetRevision = "4da256/);
 });
 test('three-way native refresh preserves host adaptations and applies upstream changes',async()=>{
   const cache=await mkdtemp(path.join(tmpdir(),'hanlin-original-merge-'));

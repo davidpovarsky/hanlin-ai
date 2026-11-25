@@ -222,8 +222,8 @@ export class FlexboxLayout extends FlexboxLayoutBase {
             if (FlexBasisPercent.DEFAULT /*lp.flexBasisPercent*/ !== FlexBasisPercent.DEFAULT && widthMode === EXACTLY) {
                 childWidth = Math.round(widthSize * FlexBasisPercent.DEFAULT /*lp.flexBasisPercent*/);
             }
-            const childWidthMeasureSpec = FlexboxLayout.getChildMeasureSpec(widthMeasureSpec, lp.effectivePaddingLeft + lp.effectivePaddingRight + lp.effectiveMarginLeft + lp.effectiveMarginRight, childWidth < 0 ? WRAP_CONTENT : childWidth);
-            const childHeightMeasureSpec = FlexboxLayout.getChildMeasureSpec(heightMeasureSpec, lp.effectivePaddingTop + lp.effectivePaddingBottom + lp.effectiveMarginTop + lp.effectiveMarginBottom, lp.effectiveHeight < 0 ? WRAP_CONTENT : lp.effectiveHeight);
+            const childWidthMeasureSpec = FlexboxLayout.getChildMeasureSpec(widthMeasureSpec, this.effectivePaddingLeft + this.effectivePaddingRight + lp.effectiveMarginLeft + lp.effectiveMarginRight, childWidth < 0 ? WRAP_CONTENT : childWidth);
+            const childHeightMeasureSpec = FlexboxLayout.getChildMeasureSpec(heightMeasureSpec, this.effectivePaddingTop + this.effectivePaddingBottom + lp.effectiveMarginTop + lp.effectiveMarginBottom, lp.effectiveHeight < 0 ? WRAP_CONTENT : lp.effectiveHeight);
             child.measure(childWidthMeasureSpec, childHeightMeasureSpec);
             this._checkSizeConstraints(child);
             childState = View.combineMeasuredStates(childState, child.getMeasuredState());
@@ -547,7 +547,7 @@ export class FlexboxLayout extends FlexboxLayoutBase {
                     // might result in increased height e.g. text that could be shown on one line for larger
                     // width needs to be wrapped in two when width is reduced.
                     // As a result we cannot unconditionally measure with EXACTLY the current measured height
-                    const childHeightMeasureSpec = FlexboxLayout.getChildMeasureSpec(this._currentHeightMeasureSpec, lp.effectivePaddingTop + lp.effectivePaddingBottom + lp.effectiveMarginTop + lp.effectiveMarginBottom, lp.effectiveHeight < 0 ? WRAP_CONTENT : lp.effectiveHeight);
+                    const childHeightMeasureSpec = FlexboxLayout.getChildMeasureSpec(this._currentHeightMeasureSpec, this.effectivePaddingTop + this.effectivePaddingBottom + lp.effectiveMarginTop + lp.effectiveMarginBottom, lp.effectiveHeight < 0 ? WRAP_CONTENT : lp.effectiveHeight);
                     child.measure(childWidthMeasureSpec, childHeightMeasureSpec);
                     child.effectiveMinWidth = minWidth;
                     // make sure crossSize is up-to-date as child calculated height might have increased
@@ -758,7 +758,7 @@ export class FlexboxLayout extends FlexboxLayoutBase {
         let newHeight = crossSize - view.effectiveMarginTop - view.effectiveMarginBottom;
         newHeight = Math.max(newHeight, 0);
         const originalMeasuredWidth = view.getMeasuredWidth();
-        let childWidthMeasureSpec = FlexboxLayout.getChildMeasureSpec(this._currentWidthMeasureSpec, view.effectivePaddingLeft + view.effectivePaddingRight + view.effectiveMarginLeft + view.effectiveMarginRight, view.effectiveWidth < 0 ? WRAP_CONTENT : Math.min(view.effectiveWidth, originalMeasuredWidth));
+        let childWidthMeasureSpec = FlexboxLayout.getChildMeasureSpec(this._currentWidthMeasureSpec, this.effectivePaddingLeft + this.effectivePaddingRight + view.effectiveMarginLeft + view.effectiveMarginRight, view.effectiveWidth < 0 ? WRAP_CONTENT : Math.min(view.effectiveWidth, originalMeasuredWidth));
         view.measure(childWidthMeasureSpec, makeMeasureSpec(newHeight, EXACTLY));
         if (originalMeasuredWidth > view.getMeasuredWidth()) {
             childWidthMeasureSpec = makeMeasureSpec(originalMeasuredWidth, EXACTLY);

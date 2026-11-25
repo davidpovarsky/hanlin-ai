@@ -184,6 +184,7 @@ public struct HanlinPackageEntrypointDescriptor: Codable, Hashable, Sendable {
     public let artifactDigest: String?
     public let compatibility: HanlinCompatibilityState
     public let widgetEngine: HanlinWidgetEngine?
+    public let assistantTool: HanlinAssistantToolDeclaration?
 
     public init(
         id: String,
@@ -196,7 +197,8 @@ public struct HanlinPackageEntrypointDescriptor: Codable, Hashable, Sendable {
         runtimeProfile: HanlinRuntimeProfile = .scriptingJSC,
         artifactDigest: String? = nil,
         compatibility: HanlinCompatibilityState,
-        widgetEngine: HanlinWidgetEngine? = nil
+        widgetEngine: HanlinWidgetEngine? = nil,
+        assistantTool: HanlinAssistantToolDeclaration? = nil
     ) {
         self.id = id
         self.kind = kind
@@ -209,11 +211,12 @@ public struct HanlinPackageEntrypointDescriptor: Codable, Hashable, Sendable {
         self.artifactDigest = artifactDigest
         self.compatibility = compatibility
         self.widgetEngine = widgetEngine
+        self.assistantTool = assistantTool
     }
 
     private enum CodingKeys: String, CodingKey {
         case id, kind, sourcePath, exportedSymbol, supportedContexts, requiredCapabilities
-        case runtimePolicyID, runtimeProfile, artifactDigest, compatibility, widgetEngine
+        case runtimePolicyID, runtimeProfile, artifactDigest, compatibility, widgetEngine, assistantTool
     }
 
     public init(from decoder: Decoder) throws {
@@ -230,6 +233,7 @@ public struct HanlinPackageEntrypointDescriptor: Codable, Hashable, Sendable {
         artifactDigest = try container.decodeIfPresent(String.self, forKey: .artifactDigest)
         compatibility = try container.decode(HanlinCompatibilityState.self, forKey: .compatibility)
         widgetEngine = try container.decodeIfPresent(HanlinWidgetEngine.self, forKey: .widgetEngine)
+        assistantTool = try container.decodeIfPresent(HanlinAssistantToolDeclaration.self, forKey: .assistantTool)
     }
 }
 

@@ -1,0 +1,17 @@
+{
+  "atUTC": "2026-11-25T00:11:40.585044+00:00",
+  "availableGiB": 6.584,
+  "loadAverage": "{ 202.22 79.90 47.41 }",
+  "cpu": "CPU usage: 61.90% user, 35.23% sys, 2.85% idle ",
+  "memoryPressure": "The system has 17179869184 (1048576 pages with a page size of 16384).\nSystem-wide memory free percentage: 83%",
+  "reportExists": true,
+  "stoppedOwnProcess": true,
+  "testStatus": "RUNNING",
+  "pid": 63653,
+  "casePasses": null,
+  "ownCommand": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-test --package-path /Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/Packages/HanlinPlatform --scratch-path /Users/m1/caches/DerivedData/hanlin-composer-platform-spm --cache-path /Users/m1/caches/DerivedData/hanlin-composer-platform-spm-cache --force-resolved-versions --skip-update --jobs 1 --filter HanlinScriptMiniAppRegistrationTests.*(preparedAssistantEntrypointsRemainDistinctInCatalog|assistantEntrypointResolutionRequiresExactHandler|duplicateAssistantHandlersRemainInvalid)|HanlinScriptAnalyzerTests.*(expoAssetPluginRequiresItsActualEmbeddedVersion|expoSwiftUIContract|unavailableModernNativePluginsFailBeforeImport) --xunit-output /Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/composer-platform-attempt4-tests.xml",
+  "reason": "Concurrent owner compilation removed available CPU or memory headroom.",
+  "compilerProcesses": [
+    "63497 63071  46.8 210928 /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild"
+  ]
+}

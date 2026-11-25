@@ -1,0 +1,121 @@
+{
+  "status": "SOURCE_READY_NATIVE_NOT_STARTED",
+  "utc": "2026-11-25T00:09:39.415445+00:00",
+  "sourceBase": "fd81d602d3b25f09162a659e1e0cf0582e91a93a",
+  "target": "2b3271824e0338f0d7f5239e3b3a14c2b8c9f3b0",
+  "targetTree": "13017941590143dcce0df3112d1bc1c21a496a83",
+  "packSHA256": "2776325273e276625275aa6dee7f9091d86167d39d7e41dcf5cb935290aa9690",
+  "workingFiles": [
+    {
+      "path": "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+      "kind": "file",
+      "oldHEADSHA256": "ad9c59d1962d516cd480de78cf5ee01fad11159cc0a73ee1a9cb3ea2f324b8a1",
+      "workingSHA256": "54b154ffd2d74328ad849b521d7d3940184e8771cf2adb03f5b0acc8587a8e96",
+      "newHEADSHA256": "ad9c59d1962d516cd480de78cf5ee01fad11159cc0a73ee1a9cb3ea2f324b8a1",
+      "restoreWorkingAfterCheckout": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.json",
+      "kind": "file",
+      "oldHEADSHA256": "152806a609b662c373eedd382758f1298bf945883f0c467dc5595050f8f0fa29",
+      "workingSHA256": "855ce12c168cc258cd202b1bf436dc7849901a71e189c2d4d49201b7f5da062b",
+      "newHEADSHA256": "152806a609b662c373eedd382758f1298bf945883f0c467dc5595050f8f0fa29",
+      "restoreWorkingAfterCheckout": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.md",
+      "kind": "file",
+      "oldHEADSHA256": "f2cd972c7366043028bbaea078291717ae363b288d29ecf242fd358103f7a9b1",
+      "workingSHA256": "5499b31720ac284d264768ba3416ed032d5a3d37f821350a06c3a3f3625e75c2",
+      "newHEADSHA256": "f2cd972c7366043028bbaea078291717ae363b288d29ecf242fd358103f7a9b1",
+      "restoreWorkingAfterCheckout": true,
+      "workingMode": 33188
+    },
+    {
+      "path": "docs/miniapp-sdk/source-inventory.json",
+      "kind": "file",
+      "oldHEADSHA256": "b126e18f8a228e2235ef8ef324a31f0b9b6e3384e6af0f82755e35c4bcccaeef",
+      "workingSHA256": "b0d3426a1238df51009a1c2b124f2d4dfa98f1ac6a75540e5a3a4f8578bd9c95",
+      "newHEADSHA256": "b126e18f8a228e2235ef8ef324a31f0b9b6e3384e6af0f82755e35c4bcccaeef",
+      "restoreWorkingAfterCheckout": true,
+      "workingMode": 33188
+    }
+  ],
+  "workingArchiveSHA256": "5c24d46c0f8e5f9c7ed64f018733005749ed3732b1149d7def7f83e5ca445a1e",
+  "sourceHashes": {
+    "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-authoring.test.mjs": "41f4df51d49ebf48e8ecda9c205372281b2bce2b4e865f1b343474ca8f38b853",
+    "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-sdk-resolution.test.mjs": "5feff98ed62727330f2a64abedff0d4a3af9f71d5a8b1f7c8e39396c90e7d65f",
+    "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs": "fa5121902e231d5d44ad08bf47699784fd4d0bc2a98102f3a156e6e4ae79b9b9",
+    "HanlinMiniAppsTests/NativeScriptMainRunLoopCallbackTests.swift": "ad4b516db151867a80413646be9dfed9313f3f356d972c112fdf0f0d5806fd99",
+    "Package.swift": "2238e4db391c3460cd81d6bfaf972ad7fa6683828e105de4e7df234d14ab3b0c",
+    "Packages/HanlinExpoRuntime/Package.swift": "d4157d16c1d505b408cf4b78f7ab59f53ff607ea94e0c4e51a4e2c088a691f37",
+    "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoSession.swift": "852828b5e9548de003195cef2253b892a5b4a1c039e71946bb0e7fb0b61d7107",
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeServicesBridge.m": "e36a9d2ba06dd7878d17df7c9e8f17df8952ac67f087c0a43174742c1c0ebe0c",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinIdentifiers.swift": "de5af069d3fd9483cd5d5d16f7d4c81b46704072e1c968c435df3cbd253e4601",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json": "690edfb30aca14647b39c8d6f53273558700943051699893ee3ef052c9349a97",
+    "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinMiniAppHostVersions.swift": "8e99e562bacbe6354bc23caf6a1233930a1e0d61c3abe0444195dd36164f747d",
+    "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift": "7c58f10cc6a5f89c452842490b8ee6eb2378066929c8db27c5dfe6139d441527",
+    "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift": "7901c51ea32046e57ad49a41f7252b488941a2d6ede7bb0f0634e86fe8b634b2",
+    "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinScriptAnalyzerTests.swift": "e71673cd27ee0b780bc9ca254ee62e2da1a38eb45250bdae8983ab0e5443633c",
+    "Packages/HanlinPlatform/Tests/HanlinScriptStoreTests/HanlinCanonicalEntrypointProjectionTests.swift": "5babc16bfe0a33eaa723f8915f4b64eb4292fefd075da0a047201fca09722d70",
+    "Scripts/Expo/build-original-expo-source.mjs": "855a9a79f1c27a2ba2f3796cf784ebb66a4a48df928b2ea8f6ca1ffd9e886c03",
+    "Scripts/Expo/dependency-lock.json": "b9e3ad6d863e3e5136ad93924ce4edcb37da87578b113523640110af347eec65",
+    "Scripts/Expo/package-lock.json": "9ee1d2babe6266148d8f969b25f542c00897c569969e5aae6dd6f744e2a0c53c",
+    "Scripts/Expo/package.json": "da083105462f40368adb89acba0dbc1b623d2249b26b2ac1cbe1d326edc2bd3d",
+    "Scripts/Expo/prepare-ios-dependencies.mjs": "97069b0e1ec619d906f4b6d196e38e6527790c3661f798abcca6258dacf18163",
+    "Scripts/MiniApps/Tests/upstream-resolution.test.mjs": "2b8ab415f6343b2cdf33cf9029aa5b39f52b5a9959f6d52dd31a3fd7e3cea16e",
+    "Scripts/MiniApps/resolve-upstreams.mjs": "7973977cf986cbee14fd147fd8b10c1d54a6f1a1c790511d2df5cf054063e7a2",
+    "Scripts/MiniApps/stage-sdk.mjs": "b1b0a3bd2c560fcf93eca064053aba7bcbf7786fb800e083bb7f297a0a300c40",
+    "Scripts/SDK/native_artifacts.py": "6c11725c13a7ba9a47ac1c6e2e6056606ef9f5da4899b265daaf62e326f2574b"
+  },
+  "toolchain": "Xcode 27.0\nBuild version 27A266a",
+  "metadataUnchangedInputs": [
+    {
+      "path": "Scripts/NativeScript/build-metadata-tool.py",
+      "sha256": "f4318f38b1c6a9c56ba54edb0d270a6374178fa5a8e024ebfddb9790f7ae3cf5"
+    },
+    {
+      "path": "Scripts/NativeScript/package.json",
+      "sha256": "08fc03bfa87cd78f4f21f80e9324a4840061105f6e9ab081ed794c569ca7324b"
+    },
+    {
+      "path": "Scripts/NativeScript/package-lock.json",
+      "sha256": "16f569f4bfa6f8806cfe72449866a0dc9a9331f33d2c67170d5292455c48b60b"
+    },
+    {
+      "path": ".github/actions/prepare-nativescript-metadata-tool/action.yml",
+      "sha256": "c02a5ef45e1ee1de883aedbd1d8a8bbfb5b508b3f41530868600d6158bab99af"
+    }
+  ],
+  "invalidatedPhaseIDs": [
+    "split-platform",
+    "split-upstreams",
+    "host-proof",
+    "split-foreground",
+    "split-host-lifecycle",
+    "split-native-preparation",
+    "split-native-artifacts",
+    "split-restore-inputs",
+    "split-inputs",
+    "split-paired-acceptance"
+  ],
+  "retainedPhaseIDs": [
+    "split-metadata"
+  ],
+  "runtimeCoreArtifactRunID": "42926628418",
+  "runtimeCoreLocalArchive": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-inputs/runtime-core/hanlin-runtime-2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194.zip",
+  "newPlanSHA256": "80df8f5c70c1ab7b7389b183921f0c1d98d50c270d46bb4618d8677fdd644a74",
+  "controllerAttempt8SHA256": "b88eef59349a7290d6cd7dadf027765af789a7e270638503345463c8e4c3b963",
+  "admissionAttempt8SHA256": "3e83bbec30ab839d86c2d31e28b1a1d4cd0013737b1f07c8d54591192547beaa",
+  "admissionBoundary": "One finite3500s admission, excludes zombies and idle Runner.Worker names, waits for actual native work and measured physical headroom. Original preparation through split-inputs only; diagnostics and original52 remain pending.",
+  "maximumActiveSeconds": 12600,
+  "preservedActiveElapsedSeconds": 3956.920209750995,
+  "archivedEvidence": {
+    "paired-product": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired-product-attempt7",
+    "foreground": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/foreground-attempt7",
+    "prepared-native": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/prepared-native-attempt7"
+  },
+  "nativeStarted": false
+}

@@ -1,0 +1,27 @@
+{
+  "source_sha": "0c243d6cf20a702239a645c2f5c4b0f65d955702",
+  "command": [
+    "npm",
+    "install",
+    "--package-lock-only",
+    "--ignore-scripts",
+    "--no-audit",
+    "--no-fund",
+    "--prefix",
+    "/Users/m1/builds/hanlin-ai-cache-native-20261125/Scripts/NativeScript"
+  ],
+  "npm_version": "11.19.1",
+  "started_at": "2026-11-25T00:38:09.092256+00:00",
+  "exit_code": 0,
+  "finished_at": "2026-11-25T00:38:09.474539+00:00",
+  "root_manifest_unchanged": true,
+  "added": {
+    "node_modules/@emnapi/core": "1.11.3",
+    "node_modules/@emnapi/runtime": "1.11.3",
+    "node_modules/@emnapi/wasi-threads": "1.2.3"
+  },
+  "removed": {},
+  "changed_versions": {},
+  "before_sha256": "16f569f4bfa6f8806cfe72449866a0dc9a9331f33d2c67170d5292455c48b60b",
+  "after_sha256": "fccc5039c760759c5a5751b2056300cd23204f897e5d1ce26408c4a108e4de78"
+}

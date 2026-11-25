@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "dc56cea1f4910cea131c6e3afc7c818e4595cabb",
+  "status": "BOTH_EXISTING_REACHABILITY_COMMANDS_EXIT0",
+  "commands": [
+    {
+      "argv": [
+        "python3",
+        "Scripts/Audit/audit_miniapp_reachability.py"
+      ],
+      "atUTC": "2026-11-24T15:48:13.550712+00:00",
+      "seconds": 3.9366354076191783,
+      "exit": 0,
+      "stdout": "1.stdout.log",
+      "stderr": "1.stderr.log"
+    },
+    {
+      "argv": [
+        "python3",
+        "Scripts/Audit/audit_miniapp_reachability.py",
+        "--check"
+      ],
+      "atUTC": "2026-11-24T15:48:17.487378+00:00",
+      "seconds": 1.926031700335443,
+      "exit": 0,
+      "stdout": "2.stdout.log",
+      "stderr": "2.stderr.log"
+    }
+  ],
+  "changedShippingDocuments": [
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.json",
+      "beforeSHA256": "677b3cd271dea49659eccfe960baeda45aec7a504aaecb7c4da3d07635007876",
+      "afterSHA256": "ec572302a10f97d59007a121d53382a9b80e4fd7b33817a8cdad61e64f3eb7db"
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.md",
+      "beforeSHA256": "868414b6948afd557b713477c3132088028881c58b913c2b6c285759f02a9d8a",
+      "afterSHA256": "d7db7ef02feb948b836b55d069dd6766a9fb8c9d560120ac72c703bd227e2c7c"
+    }
+  ],
+  "projectTargets": {
+    "file": "AI_HLY.xcodeproj/project.pbxproj",
+    "line": 2693,
+    "anchor": "/* Begin PBXNativeTarget section */",
+    "sha256": "24206ae0f0f66d3669cae5ccd4ffcff25ae582ec4620359a2becca7ad8e16780"
+  },
+  "unchangedProtectedFiles": {
+    "docs/miniapp-sdk/source-inventory.json": "7a9def87c5bf71226b1d120c6f8bd9856732828e8bcdfd7d36a4633d8c9b6b45",
+    "docs/miniapp-sdk/MANIFEST_REFERENCE.md": "ad9c59d1962d516cd480de78cf5ee01fad11159cc0a73ee1a9cb3ea2f324b8a1"
+  },
+  "scope": "Project full-file hash changed after original-header consumer settings; workflow/test/updater introduce no independent SDK/source-inventory input. Existing post-MAIN15 README delta remains separate. No new SDK stage, native compilation, application test or CI dispatch performed."
+}

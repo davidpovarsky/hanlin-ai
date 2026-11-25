@@ -44,7 +44,15 @@ struct AgentTokenUsage: Codable, Hashable, Sendable {
         self.toolResultEstimatedTokens = toolResultEstimatedTokens
         self.systemPromptEstimatedTokens = systemPromptEstimatedTokens
         self.conversationHistoryEstimatedTokens = conversationHistoryEstimatedTokens
-        self.totalTokens = totalTokens ?? [inputTokens, outputTokens].compactMap { $0 }.reduce(0, +)
+        if let totalTokens {
+            self.totalTokens = totalTokens
+        } else if let inputTokens, let outputTokens {
+            self.totalTokens = inputTokens + outputTokens
+        } else {
+            // A missing provider measurement is not a measured zero or a
+            // partial input/output count presented as a complete total.
+            self.totalTokens = nil
+        }
         self.source = source
     }
 
@@ -70,6 +78,52 @@ struct AgentTokenUsage: Codable, Hashable, Sendable {
             totalTokens: sum(lhs.totalTokens, rhs.totalTokens),
             source: source
         )
+    }
+}
+
+/// Provider cache accounting is a subset of input tokens, not an additional
+/// amount to add to token totals. Missing measurements remain unavailable.
+struct AgentPromptCacheSummary: Sendable, Equatable {
+    let roundCount: Int
+    let readReportedRoundCount: Int
+    let writeReportedRoundCount: Int
+    let cachedInputTokens: Int?
+    let cacheWriteTokens: Int?
+    let cacheReadFraction: Double?
+
+    init(usages: [AgentTokenUsage]) {
+        roundCount = usages.count
+        let providerUsages = usages.filter { $0.source == .providerReported }
+        let reads = providerUsages.compactMap(\.cachedInputTokens).filter { $0 >= 0 }
+        let writes = providerUsages.compactMap(\.cacheWriteTokens).filter { $0 >= 0 }
+        readReportedRoundCount = reads.count
+        writeReportedRoundCount = writes.count
+        cachedInputTokens = reads.isEmpty ? nil : reads.reduce(0, +)
+        cacheWriteTokens = writes.isEmpty ? nil : writes.reduce(0, +)
+
+        // Do not report an apparently precise aggregate percentage if even one
+        // round lacks provider measurements or contains inconsistent counts.
+        let hasCompleteValidReads = !usages.isEmpty && providerUsages.count == usages.count
+            && providerUsages.allSatisfy { usage in
+                guard let input = usage.inputTokens, let read = usage.cachedInputTokens else { return false }
+                return input >= 0 && read >= 0 && read <= input
+            }
+        if hasCompleteValidReads {
+            let input = providerUsages.compactMap(\.inputTokens).reduce(0, +)
+            cacheReadFraction = input > 0 ? Double(reads.reduce(0, +)) / Double(input) : nil
+        } else {
+            cacheReadFraction = nil
+        }
+    }
+
+    var readableLines: [String] {
+        [
+            "Reported cache read input tokens: \(cachedInputTokens.map(String.init) ?? "unavailable")",
+            "Reported cache write input tokens: \(cacheWriteTokens.map(String.init) ?? "unavailable")",
+            "Cache read measurement coverage: \(readReportedRoundCount)/\(roundCount) rounds",
+            "Cache write measurement coverage: \(writeReportedRoundCount)/\(roundCount) rounds",
+            "Cache read fraction of input: \(cacheReadFraction.map { String(format: "%.1f%%", $0 * 100) } ?? "unavailable")"
+        ]
     }
 }
 

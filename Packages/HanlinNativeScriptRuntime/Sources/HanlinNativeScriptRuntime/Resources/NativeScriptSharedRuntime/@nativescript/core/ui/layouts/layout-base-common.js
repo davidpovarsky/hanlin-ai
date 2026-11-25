@@ -121,7 +121,8 @@ export class LayoutBaseCommon extends CustomLayoutView {
         for (let i = 0; i < index && i < this._subViews.length; i++) {
             result += this._subViews[i]._getNativeViewsCount();
         }
-        return result;
+        // The platform base accounts for native subviews that are not children.
+        return super._childIndexToNativeChildIndex(result);
     }
     eachChildView(callback) {
         for (let i = 0, length = this._subViews.length; i < length; i++) {

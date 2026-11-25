@@ -9,6 +9,7 @@
     "AI_HLY/Downstream/HostServices/Core/HanlinHostCallContext.swift",
     "AI_HLY/Downstream/HostServices/Core/HanlinHostServiceError.swift",
     "AI_HLY/Downstream/HostServices/Core/HanlinHostServicesBroker.swift",
+    "AI_HLY/Downstream/HostServices/Core/HanlinMiniAppAssistantService.swift",
     "AI_HLY/Downstream/HostServices/Data/HanlinFileService.swift",
     "AI_HLY/Downstream/HostServices/Data/HanlinSQLiteHostAdapter.swift",
     "AI_HLY/Downstream/HostServices/Runtime/HanlinRuntimeBroker.swift",
@@ -151,6 +152,7 @@
     "AI_HLY/Model/AllModels.swift",
     "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingAssistantProviderAdapter.swift",
     "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatformAIIntegration.swift",
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppAssistantAIService.swift",
     "AI_HLY/Downstream/ChatCore/HanlinDefaultChatPolicy.swift"
   ],
   "application_services_cut": "6837d0aef974a3c763b4d1ef878d63715ebb47cb",

@@ -275,7 +275,8 @@ public struct HanlinScriptAnalyzer: Sendable {
                 runtimeProfile: descriptor.runtimeProfile,
                 artifactDigest: descriptor.artifactDigest,
                 compatibility: descriptor.compatibility,
-                widgetEngine: descriptor.widgetEngine
+                widgetEngine: descriptor.widgetEngine,
+                assistantTool: descriptor.assistantTool
             )
         }
         let approvalState = HanlinCapabilityApprovalState(
@@ -317,10 +318,10 @@ public struct HanlinScriptAnalyzer: Sendable {
             ))
             return
         }
-        let packageJSONPath = URL(filePath: entrypoint.sourcePath)
-            .deletingLastPathComponent()
-            .appending(path: "package.json")
-            .relativePath
+        // Manifest paths are archive-relative, including a bundle at its root.
+        // A filesystem URL would resolve a root entry against the process directory.
+        let entryDirectory = entrypoint.sourcePath.split(separator: "/").dropLast().joined(separator: "/")
+        let packageJSONPath = entryDirectory.isEmpty ? "package.json" : entryDirectory + "/package.json"
         guard let packageJSONData = files[packageJSONPath],
               let packageJSON = try? JSONSerialization.jsonObject(with: packageJSONData) as? [String: Any],
               URL(filePath: entrypoint.sourcePath).lastPathComponent == "bundle.mjs",
@@ -451,6 +452,14 @@ public struct HanlinScriptAnalyzer: Sendable {
                     sourcePath: candidate.sourcePath,
                     message: "Expo widget exposure '\(candidate.sourcePath)' is supported via host services bridge."
                 ))
+            case .assistantTool:
+                let dedicated = candidate.assistantTool != nil && appEntrypoints.first?.sourcePath != candidate.sourcePath
+                findings.append(.init(state: dedicated ? .supported : .unsupported,
+                    severity: dedicated ? .information : .error, sourcePath: candidate.sourcePath,
+                    message: dedicated
+                        ? "Assistant tools use their dedicated prepared program only when an explicit model tool call is dispatched."
+                        : "An assistantTool requires its own prepared source and action declarations.",
+                    code: dedicated ? "MINIAPP_ASSISTANT_TOOL_READY" : "MINIAPP_ASSISTANT_TOOL_INVALID"))
             case .appIntent, .share:
                 let prepared = appEntrypoints.first?.sourcePath == candidate.sourcePath
                 findings.append(.init(state: prepared ? .supported : .unsupported,
@@ -493,7 +502,7 @@ public struct HanlinScriptAnalyzer: Sendable {
                 ))
             }
         }
-        let entryDir = URL(filePath: entrypoint.sourcePath).deletingLastPathComponent().relativePath
+        let entryDir = entrypoint.sourcePath.split(separator: "/").dropLast().joined(separator: "/")
         let candidateA = entryDir.isEmpty || entryDir == "." ? "package.json" : "\(entryDir)/package.json"
         let packageJSONPath = files[candidateA] != nil ? candidateA : "package.json"
         guard let packageJSONData = files[packageJSONPath],
@@ -617,6 +626,7 @@ public struct HanlinScriptAnalyzer: Sendable {
                 }
                 let supported = switch name {
                 case "@expo/ui": isExpoVersionCompatible(version)
+                case "expo-asset": version == HanlinMiniAppHostVersions.expoAssetVersion
                 case "expo-widgets": HanlinPreparedRuntimeVersion.supportsMinimum(version, installed: HanlinMiniAppHostVersions.expoWidgetsVersion)
                 case "@hanlin/expo-ui": isVersion(version, atMost: expoUIBridgeVersion)
                 default: false
@@ -626,14 +636,16 @@ public struct HanlinScriptAnalyzer: Sendable {
                         state: .unsupported,
                         severity: .error,
                         sourcePath: packageJSONPath,
-                        message: "This Hanlin build supports @expo/ui \(expoUIVersion), expo-widgets \(HanlinMiniAppHostVersions.expoWidgetsVersion), and @hanlin/expo-ui \(expoUIBridgeVersion), but the package requires \(name) \(version)."
+                        message: "This Hanlin build supports @expo/ui \(expoUIVersion), expo-asset \(HanlinMiniAppHostVersions.expoAssetVersion), expo-widgets \(HanlinMiniAppHostVersions.expoWidgetsVersion), and @hanlin/expo-ui \(expoUIBridgeVersion), but the package requires \(name) \(version)."
                     ))
                 } else {
                     findings.append(.init(
                         state: .supported,
                         severity: .information,
                         sourcePath: packageJSONPath,
-                        message: "Expo plugin \(name) \(version) has embedded native SwiftUI support."
+                        message: name == "expo-asset"
+                            ? "Expo plugin \(name) \(version) has embedded original native asset support."
+                            : "Expo plugin \(name) \(version) has embedded native SwiftUI support."
                     ))
                 }
             }
@@ -759,14 +771,48 @@ public struct HanlinScriptAnalyzer: Sendable {
                   case let .string(id)? = fields["id"], !id.isEmpty,
                   case let .string(rawKind)? = fields["kind"],
                   let kind = HanlinPackageEntrypointKind(rawValue: rawKind),
-                  [.appIntent, .embeddedResult, .share, .translationUI, .liveActivity].contains(kind),
+                  [.assistantTool, .appIntent, .embeddedResult, .share, .translationUI, .liveActivity].contains(kind),
                   case let .string(path)? = fields["sourcePath"],
                   HanlinArchivePolicy.normalizedRelativePath(path) == path, files[path] != nil,
                   (kind != .embeddedResult || discovered.contains(where: { $0.kind == .app && $0.sourcePath == path })),
                   identifiers.insert(id).inserted, id != "app", id != "widget" else {
                 findings.append(.init(state: .unsupported, severity: .error, sourcePath: "script.json",
-                    message: "entrypoints[\(index)] requires a unique id, supported kind (appIntent, embeddedResult, share, translationUI, liveActivity), and existing package-relative sourcePath. embeddedResult must reference the prepared foreground app bundle.",
+                    message: "entrypoints[\(index)] requires a unique id, supported kind (assistantTool, appIntent, embeddedResult, share, translationUI, liveActivity), and existing package-relative sourcePath. embeddedResult must reference the prepared foreground app bundle.",
                     code: "MINIAPP_ENTRYPOINT_DECLARATION_INVALID"))
+                continue
+            }
+            var assistantTool: HanlinAssistantToolDeclaration?
+            if kind == .assistantTool {
+                do {
+                    guard let metadata = fields["assistantTool"],
+                          !discovered.contains(where: { $0.kind == .app && $0.sourcePath == path }) else {
+                        throw HanlinContractError.invalidSchema(reason: "assistantTool requires metadata and a dedicated source, separate from the foreground app")
+                    }
+                    let declaration = try JSONDecoder().decode(
+                        HanlinAssistantToolDeclaration.self, from: metadata.canonicalJSONData(limits: .unbounded)
+                    )
+                    try declaration.validateDefinition()
+                    let directory = path.split(separator: "/").dropLast().joined(separator: "/")
+                    let packagePath = directory.isEmpty ? "package.json" : directory + "/package.json"
+                    let expectedMain = runtime == .hanlinNativeScript ? "bundle.mjs" : "bundle.js"
+                    guard URL(filePath: path).lastPathComponent == expectedMain,
+                          let packageData = files[packagePath],
+                          let package = try JSONSerialization.jsonObject(with: packageData) as? [String: Any],
+                          package["main"] as? String == expectedMain,
+                          package["hanlinRuntime"] as? String == runtime.rawValue else {
+                        throw HanlinContractError.invalidSchema(reason: "assistantTool requires its own prepared folder with matching package.json, runtime and canonical bundle")
+                    }
+                    assistantTool = declaration
+                } catch {
+                    findings.append(.init(state: .unsupported, severity: .error, sourcePath: "script.json",
+                        message: "entrypoints[\(index)].assistantTool is invalid: \(error)",
+                        code: "MINIAPP_ASSISTANT_TOOL_INVALID"))
+                    continue
+                }
+            } else if fields["assistantTool"] != nil {
+                findings.append(.init(state: .unsupported, severity: .error, sourcePath: "script.json",
+                    message: "assistantTool metadata is only valid on an assistantTool entrypoint.",
+                    code: "MINIAPP_ASSISTANT_TOOL_INVALID"))
                 continue
             }
             let context: HanlinExecutionContext = switch kind {
@@ -779,15 +825,27 @@ public struct HanlinScriptAnalyzer: Sendable {
             let policy: String = switch kind {
             case .liveActivity: "prepared-system-surface-v1"
             case .embeddedResult: "embedded-result-v1"
+            case .assistantTool: "prepared-assistant-tool-v1"
             default: "prepared-foreground-action-v1"
             }
             declared.append(.init(id: id, kind: kind, sourcePath: path, exportedSymbol: symbol,
                 supportedContexts: [context, .mainApplication], runtimePolicyID: policy,
-                runtimeProfile: runtime, compatibility: .partial))
+                runtimeProfile: runtime, compatibility: .partial, assistantTool: assistantTool))
         }
         let declaredKinds = Set(declared.map(\.kind))
         let retained = discovered.filter { !declaredKinds.contains($0.kind) }
-        return (retained + declared).sorted { ($0.kind.rawValue, $0.id) < ($1.kind.rawValue, $1.id) }
+        let result = (retained + declared).sorted { ($0.kind.rawValue, $0.id) < ($1.kind.rawValue, $1.id) }
+        for entry in declared {
+            for action in entry.assistantTool?.actions ?? [] {
+                if let rendererID = action.embeddedResultID,
+                   !result.contains(where: { $0.id == rendererID && $0.kind == .embeddedResult }) {
+                    findings.append(.init(state: .unsupported, severity: .error, sourcePath: "script.json",
+                        message: "assistantTool action '\(action.id)' references missing embeddedResult '\(rendererID)'.",
+                        code: "MINIAPP_ASSISTANT_TOOL_INVALID"))
+                }
+            }
+        }
+        return result
     }
 
     private func discoverEntrypoints(
@@ -836,6 +894,7 @@ public struct HanlinScriptAnalyzer: Sendable {
         var kinds = Set(candidates.map { $0.1 })
         for (path, kind, context, policy, defaultEngine) in conventions
             where available.contains(path)
+                && !(kind == .assistantTool && [HanlinRuntimeProfile.hanlinExpo.rawValue, HanlinRuntimeProfile.hanlinNativeScript.rawValue].contains(manifest.hanlinRuntime ?? ""))
                 && !(path == "widget.json" && manifest.declaredWidgetEngine == .scriptwidget)
                 && kinds.insert(kind).inserted
         {

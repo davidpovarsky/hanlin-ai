@@ -1,0 +1,502 @@
+{
+  "schemaVersion": 1,
+  "status": "BLOCKED_CAPACITY",
+  "sourceCommit": "6a3c194a1951aa8394c76efcb6e100e76ade56c2",
+  "command": [
+    "nice",
+    "-n",
+    "10",
+    "xcrun",
+    "swift",
+    "test",
+    "--package-path",
+    "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/Packages/HanlinPlatform",
+    "--scratch-path",
+    "/Users/m1/caches/DerivedData/hanlin-composer-platform-spm",
+    "--cache-path",
+    "/Users/m1/caches/DerivedData/hanlin-composer-platform-spm-cache",
+    "--force-resolved-versions",
+    "--skip-update",
+    "--jobs",
+    "1",
+    "--filter",
+    "HanlinScriptMiniAppRegistrationTests.*(preparedAssistantEntrypointsRemainDistinctInCatalog|assistantEntrypointResolutionRequiresExactHandler|duplicateAssistantHandlersRemainInvalid)|HanlinScriptAnalyzerTests.*(expoAssetPluginRequiresItsActualEmbeddedVersion|expoSwiftUIContract|unavailableModernNativePluginsFailBeforeImport)",
+    "--xunit-output",
+    "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/composer-platform-attempt4-tests.xml"
+  ],
+  "startedAtUTC": "2026-11-25T00:10:55.971534+00:00",
+  "expectedTests": [
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "expoAssetPluginRequiresItsActualEmbeddedVersion",
+      "displayName": "Prepared Expo packages preserve the embedded original asset version contract",
+      "status": "NOT_RUN",
+      "durationSeconds": 0.0
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "expoSwiftUIContract",
+      "displayName": "Validates the embedded Expo SwiftUI plugin contract",
+      "status": "NOT_RUN",
+      "durationSeconds": 0.0
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "unavailableModernNativePluginsFailBeforeImport",
+      "displayName": "Unavailable native plugins fail before Expo and NativeScript import",
+      "status": "NOT_RUN",
+      "durationSeconds": 0.0
+    },
+    {
+      "suite": "HanlinScriptMiniAppRegistrationTests",
+      "method": "preparedAssistantEntrypointsRemainDistinctInCatalog",
+      "displayName": "Several dedicated assistant tools preserve their sources, configuration and installed identities",
+      "status": "NOT_RUN",
+      "durationSeconds": 0.0
+    },
+    {
+      "suite": "HanlinScriptMiniAppRegistrationTests",
+      "method": "assistantEntrypointResolutionRequiresExactHandler",
+      "displayName": "Ambiguous assistant kinds need an exact registered handler without foreground fallback",
+      "status": "NOT_RUN",
+      "durationSeconds": 0.0
+    },
+    {
+      "suite": "HanlinScriptMiniAppRegistrationTests",
+      "method": "duplicateAssistantHandlersRemainInvalid",
+      "displayName": "Different assistant identities cannot alias the same dedicated handler",
+      "status": "NOT_RUN",
+      "durationSeconds": 0.0
+    }
+  ],
+  "expectedCount": 6,
+  "expandedLogicalScopeCount": 51,
+  "priorPassedUnchangedTestBodies": [
+    {
+      "suite": "HanlinCapabilityAttachmentTests",
+      "method": "identityIncludesProviderButRevisionRemainsSeparate",
+      "displayName": "Provider-scoped identities cannot collide through separators or titles",
+      "priorSourceCommit": "0bf5a16789952cdd07a2a6431ae010211679466a",
+      "priorStatus": "EXECUTED_PASS",
+      "testBodySHA256": "0ce86c9eac77208aafd8542897298011c51e10a80d27e6c1b281ab9a72ae1609"
+    },
+    {
+      "suite": "HanlinCapabilityAttachmentTests",
+      "method": "draftConfigurationDoesNotMutateDescriptorOrSentSnapshot",
+      "displayName": "Default configuration is a value snapshot, independent between drafts",
+      "priorSourceCommit": "0bf5a16789952cdd07a2a6431ae010211679466a",
+      "priorStatus": "EXECUTED_PASS",
+      "testBodySHA256": "64c592da62ca89113ab9ec2efdb5f9b00a6bebc5abd4d9decf0f73b67fd594fe"
+    },
+    {
+      "suite": "HanlinCapabilityAttachmentTests",
+      "method": "catalogAndMapValidation",
+      "displayName": "Catalog and map input cannot silently carry invalid or undeclared values",
+      "priorSourceCommit": "0bf5a16789952cdd07a2a6431ae010211679466a",
+      "priorStatus": "EXECUTED_PASS",
+      "testBodySHA256": "10a267cdc382664843ed5c2a225410c5c6db0687cf6a79f2bf5f3cbf677e98dc"
+    },
+    {
+      "suite": "HanlinCapabilityAttachmentTests",
+      "method": "staleAttachmentRequiresReselection",
+      "displayName": "Stale versions and actions are rejected independently of catalog display labels",
+      "priorSourceCommit": "0bf5a16789952cdd07a2a6431ae010211679466a",
+      "priorStatus": "EXECUTED_PASS",
+      "testBodySHA256": "55c9fac85a11618598c531cefe91a5a63a44f59d5c68284f0f228e3e60a4a6aa"
+    },
+    {
+      "suite": "HanlinCapabilityAttachmentTests",
+      "method": "minimalManifestDecoding",
+      "displayName": "Configuration decoder defaults support minimal author manifests",
+      "priorSourceCommit": "0bf5a16789952cdd07a2a6431ae010211679466a",
+      "priorStatus": "EXECUTED_PASS",
+      "testBodySHA256": "3dfeb12a3c44b234242b18ffefb5308ae313f47b699eca559bc18e095b26730d"
+    },
+    {
+      "suite": "HanlinCapabilityAttachmentTests",
+      "method": "declarationValidation",
+      "displayName": "Duplicate fields across panels and invalid defaults fail declaration validation",
+      "priorSourceCommit": "0bf5a16789952cdd07a2a6431ae010211679466a",
+      "priorStatus": "EXECUTED_PASS",
+      "testBodySHA256": "39b7b8bbf9a108d52a81739a4514e6dfdef7bcf3c9cde13802cf0e866e5acac1"
+    },
+    {
+      "suite": "HanlinCapabilityAttachmentTests",
+      "method": "assistantDeclarationRoundTrip",
+      "displayName": "Assistant metadata preserves raw schemas and declared rich result IDs",
+      "priorSourceCommit": "0bf5a16789952cdd07a2a6431ae010211679466a",
+      "priorStatus": "EXECUTED_PASS",
+      "testBodySHA256": "00494f2a78ec930f987cf364e577c558e5eb27cc8aa8f81b2e8c8b859eea7ecb"
+    },
+    {
+      "suite": "HanlinCapabilityAttachmentTests",
+      "method": "rawManifestDefaultsRoundTrip",
+      "displayName": "Author defaults use ordinary JSON while preserving absent and explicit null values",
+      "priorSourceCommit": "0bf5a16789952cdd07a2a6431ae010211679466a",
+      "priorStatus": "EXECUTED_PASS",
+      "testBodySHA256": "0535f602f1ffd24e567701ec5bb56011406ece67dc4f8f6e874108e589bcda21"
+    },
+    {
+      "suite": "HanlinCapabilityAttachmentTests",
+      "method": "assistantMetadataOmissionsMatchManifestContract",
+      "displayName": "Required metadata and optional omissions agree with the author manifest schema",
+      "priorSourceCommit": "0bf5a16789952cdd07a2a6431ae010211679466a",
+      "priorStatus": "EXECUTED_PASS",
+      "testBodySHA256": "7a1f60df4abc4759c45223c9b0c776045d10d3e620b50d77deb9e4c2db7bae87"
+    },
+    {
+      "suite": "HanlinCapabilityAttachmentTests",
+      "method": "assistantActionIDsPreserveCase",
+      "displayName": "Assistant action IDs preserve case and reject only exact duplicates",
+      "priorSourceCommit": "0bf5a16789952cdd07a2a6431ae010211679466a",
+      "priorStatus": "EXECUTED_PASS",
+      "testBodySHA256": "127dcfdce020d906d4d94cce281c91a09e4265cc4742b298ebe5a9e3fa2d9ecc"
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "preparedAssistantToolMetadataSurvivesInstallation",
+      "displayName": "Dedicated prepared assistant tools survive analysis and installed entrypoint mapping",
+      "priorSourceCommit": "0bf5a16789952cdd07a2a6431ae010211679466a",
+      "priorStatus": "EXECUTED_PASS",
+      "testBodySHA256": "164850903499f737f10c1f8e49aea8321beff805b9bca60c6f3733ce3536664b"
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "invalidAssistantEntrypointsCannotInstall",
+      "displayName": "Assistant selection cannot fall back to the foreground app or malformed metadata",
+      "priorSourceCommit": "0bf5a16789952cdd07a2a6431ae010211679466a",
+      "priorStatus": "EXECUTED_PASS",
+      "testBodySHA256": "241b790a793a5d095070d01b5d34f06aee2bdeaca3b8361ea8442f4400070ca2"
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "modernAssistantNeedsExplicitManifestMetadata",
+      "displayName": "Modern filename convention does not create an undeclared assistant capability",
+      "priorSourceCommit": "0bf5a16789952cdd07a2a6431ae010211679466a",
+      "priorStatus": "EXECUTED_PASS",
+      "testBodySHA256": "5f15dc6b777548b27a9dc1636ca71191d1b8a43fa88aa276b6c03f1d2cc7bdd7"
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "expoMainMustMatchTheInspectedForegroundEntrypoint",
+      "displayName": "Expo import main matches the manifest entry and cannot redirect launch elsewhere",
+      "priorSourceCommit": "0bf5a16789952cdd07a2a6431ae010211679466a",
+      "priorStatus": "EXECUTED_PASS",
+      "testBodySHA256": "a80a8d82b99cdc7777240471569176fe0599f719cd042989878417ca96ec16ae"
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "preparedRuntimeVersionsUseTheActualReleasedSemverBoundary",
+      "displayName": "Prepared runtimes reject malformed, wildcard and future required versions",
+      "priorSourceCommit": "0bf5a16789952cdd07a2a6431ae010211679466a",
+      "priorStatus": "EXECUTED_PASS",
+      "testBodySHA256": "cc8268e6f72d985197123a5ec8e49875ca3551a0e93a8f2826722eef15709926"
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "malformedBridgeVersionsNeverBypassPreparedPackageValidation",
+      "displayName": "Bridge version types and complete semantic versions are validated before import",
+      "priorSourceCommit": "0bf5a16789952cdd07a2a6431ae010211679466a",
+      "priorStatus": "EXECUTED_PASS",
+      "testBodySHA256": "a2466dd86f4db6ab26211b9e758b481ffc6f961db385b9c6c1b79a4e309970c0"
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "legacyCompatibilityFindingsDecodeWithoutInventingACode",
+      "displayName": "Legacy finding JSON remains readable without a diagnostic code",
+      "priorSourceCommit": "0bf5a16789952cdd07a2a6431ae010211679466a",
+      "priorStatus": "EXECUTED_PASS",
+      "testBodySHA256": "c6159bd571a609afa52d3b8eaf44cdcfee646419a0ee7a101c8deeef0394ee4c"
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "malformedPreparedDependenciesAreRejectedWithTheirSourcePath",
+      "displayName": "Malformed dependency maps cannot bypass version validation",
+      "priorSourceCommit": "0bf5a16789952cdd07a2a6431ae010211679466a",
+      "priorStatus": "EXECUTED_PASS",
+      "testBodySHA256": "66e6a709be4d45a7051d7072305f6eafd58df99e55490f5c19624be7e0a751ee"
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "preview",
+      "displayName": "Discovers entrypoints, resolves modules, and derives capabilities deterministically",
+      "priorSourceCommit": "0bf5a16789952cdd07a2a6431ae010211679466a",
+      "priorStatus": "EXECUTED_PASS",
+      "testBodySHA256": "c4c258c373fbe8558747c8f7bc031e37dc2b853cd23d184745038dbbb9a0fe83"
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "pythonProfile",
+      "displayName": "Routes original Python entrypoint deterministically without engine fallback",
+      "priorSourceCommit": "0bf5a16789952cdd07a2a6431ae010211679466a",
+      "priorStatus": "EXECUTED_PASS",
+      "testBodySHA256": "e199893cb9b08fd181f24e92f14e086944d1633307da2db3c07c24054d5aa3aa"
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "nativeScriptProfile",
+      "displayName": "Routes only explicitly declared NativeScript packages to the native runtime",
+      "priorSourceCommit": "0bf5a16789952cdd07a2a6431ae010211679466a",
+      "priorStatus": "EXECUTED_PASS",
+      "testBodySHA256": "c0b9f3eef29a169d0bf600acd55d76796e6cb16125e16109816d2ca3fccc29af"
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "nativeScriptPreparedEntrypointIsAlwaysTheCanonicalBundle",
+      "displayName": "Prepared NativeScript entry metadata uses the canonical bundle across sessions",
+      "priorSourceCommit": "0bf5a16789952cdd07a2a6431ae010211679466a",
+      "priorStatus": "EXECUTED_PASS",
+      "testBodySHA256": "f8b2c70bb977ac5b5630dc625b19fde29bfe53c05aafa55b097ed2739bbae0ed"
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "nativeScriptSwiftUIContract",
+      "displayName": "Validates the embedded NativeScript SwiftUI plugin contract without changing ordinary Scripting",
+      "priorSourceCommit": "0bf5a16789952cdd07a2a6431ae010211679466a",
+      "priorStatus": "EXECUTED_PASS",
+      "testBodySHA256": "8e34357dc4b1d98362243992922583ad3882d22118c2dde9f6b019815f5662d6"
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "nativeScriptCoreContract",
+      "displayName": "Validates declared @nativescript/core dependency compatibility",
+      "priorSourceCommit": "0bf5a16789952cdd07a2a6431ae010211679466a",
+      "priorStatus": "EXECUTED_PASS",
+      "testBodySHA256": "bd87692efcafac6c4b3538ffd68981cf10a6cbb2e6fc0c2e531152f71cebd585"
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "ambientGlobals",
+      "displayName": "Detects capability-bearing ambient Scripting globals",
+      "priorSourceCommit": "0bf5a16789952cdd07a2a6431ae010211679466a",
+      "priorStatus": "EXECUTED_PASS",
+      "testBodySHA256": "3192fa1e3f8eaa8fd18cd9d4b9936bb860fcd0abd1f90cf701161ef9a3af507b"
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "forbiddenModules",
+      "displayName": "Rejects dynamic imports, eval, unresolved paths, and arbitrary bare modules",
+      "priorSourceCommit": "0bf5a16789952cdd07a2a6431ae010211679466a",
+      "priorStatus": "EXECUTED_PASS",
+      "testBodySHA256": "1b8fc0c0379224485801380a350b70607ffc508ae4a74ede18e046b549dfb493"
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "declaredCapabilitiesInManifest",
+      "displayName": "Extracts declared capabilities from script.json manifest",
+      "priorSourceCommit": "0bf5a16789952cdd07a2a6431ae010211679466a",
+      "priorStatus": "EXECUTED_PASS",
+      "testBodySHA256": "5028087f2c8460e322c89d4ad8d0b7954dd47bed5d891bdf489ce1083a1b63fe"
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "expoMultiExposureMatrix",
+      "displayName": "Expo import evaluates foreground app and multi-exposure support fail-closed",
+      "priorSourceCommit": "0bf5a16789952cdd07a2a6431ae010211679466a",
+      "priorStatus": "EXECUTED_PASS",
+      "testBodySHA256": "e4d983283abb0b3ae8fbb13a0227845ae8166c06a86814abcf46bdbc74323bff"
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "explicitPreparedEntrypointsPreserveAllIDs",
+      "displayName": "Prepared Expo and NativeScript exposures retain independent action and embedded identities",
+      "priorSourceCommit": "0bf5a16789952cdd07a2a6431ae010211679466a",
+      "priorStatus": "EXECUTED_PASS",
+      "testBodySHA256": "3ed8344db68ae6821e03ca67e6af801a3f8fdc11c2fb78f7c3c637e066911c84"
+    },
+    {
+      "suite": "HanlinScriptAnalyzerTests",
+      "method": "malformedPreparedEntrypointsFailWithStableDiagnostic",
+      "displayName": "Malformed and duplicate prepared entrypoints are visible import failures",
+      "priorSourceCommit": "0bf5a16789952cdd07a2a6431ae010211679466a",
+      "priorStatus": "EXECUTED_PASS",
+      "testBodySHA256": "92dc58949bf7856b84301c9ac5576aa72d3aa3b1210b4e32055bcebd3f2a3886"
+    },
+    {
+      "suite": "HanlinScriptMiniAppRegistrationTests",
+      "method": "storedPackageProducesValidDescriptor",
+      "displayName": "Stored package snapshot conforms to HanlinMiniAppRegistration and validates",
+      "priorSourceCommit": "0bf5a16789952cdd07a2a6431ae010211679466a",
+      "priorStatus": "EXECUTED_PASS",
+      "testBodySHA256": "2a0ec5ef1c9b5985947535877191afe397d7f368bd0c8d777a42a9e75a393495"
+    },
+    {
+      "suite": "HanlinScriptMiniAppRegistrationTests",
+      "method": "entrypointKindBridging",
+      "displayName": "Package entrypoint kinds bridge bidirectionally to canonical kinds",
+      "priorSourceCommit": "0bf5a16789952cdd07a2a6431ae010211679466a",
+      "priorStatus": "EXECUTED_PASS",
+      "testBodySHA256": "ba7670024bc6af356c7dbc5faf3c9b6ed00bce141063d588f8ff27a9252d2c28"
+    },
+    {
+      "suite": "HanlinScriptMiniAppRegistrationTests",
+      "method": "scriptPackageDiscovery",
+      "displayName": "HanlinScriptPackageDiscovery discovers registrations and builds catalog snapshot",
+      "priorSourceCommit": "0bf5a16789952cdd07a2a6431ae010211679466a",
+      "priorStatus": "EXECUTED_PASS",
+      "testBodySHA256": "3e12adb4e7492b3b3f4ed0c8e516fad443c634069d225aafb2909b4422f6d610"
+    },
+    {
+      "suite": "HanlinScriptMiniAppRegistrationTests",
+      "method": "nativeScriptPreservesExecutionIdentityAndExposures",
+      "displayName": "NativeScript package preserves nativeScript implementation, runtimeProfile, and exposures",
+      "priorSourceCommit": "0bf5a16789952cdd07a2a6431ae010211679466a",
+      "priorStatus": "EXECUTED_PASS",
+      "testBodySHA256": "08ea2a76fb331795884ff5a5c3043990e6e703c820f8ee35f8a0fc2deaa75349"
+    },
+    {
+      "suite": "HanlinScriptMiniAppRegistrationTests",
+      "method": "exposureOnlyPackageDoesNotFabricateApp",
+      "displayName": "Exposure-only package does not get fake .app entrypoint and retains declared exposures in catalog snapshot",
+      "priorSourceCommit": "0bf5a16789952cdd07a2a6431ae010211679466a",
+      "priorStatus": "EXECUTED_PASS",
+      "testBodySHA256": "6d7084940fb2bc5c12a6941e70869aadf0c2f75aa0f224127f7c26c83d3a9797"
+    },
+    {
+      "suite": "HanlinScriptMiniAppRegistrationTests",
+      "method": "legacyForegroundScriptPackageGetsDefaultApp",
+      "displayName": "Normal legacy foreground script package gets expected app/index.tsx behavior",
+      "priorSourceCommit": "0bf5a16789952cdd07a2a6431ae010211679466a",
+      "priorStatus": "EXECUTED_PASS",
+      "testBodySHA256": "cc33631ec17e4c0c927653d2b1f0f4fa83c369055f76f70ab890e5c8afe018b4"
+    },
+    {
+      "suite": "HanlinScriptMiniAppRegistrationTests",
+      "method": "unknownExposureRawValueSurvivesCodable",
+      "displayName": "Unknown and future exposure raw values survive Codable round-trip",
+      "priorSourceCommit": "0bf5a16789952cdd07a2a6431ae010211679466a",
+      "priorStatus": "EXECUTED_PASS",
+      "testBodySHA256": "12e9373561b51a52828414aaceb455b09665981d6ce93de45966827982229218"
+    },
+    {
+      "suite": "HanlinScriptMiniAppRegistrationTests",
+      "method": "legacyDescriptorWithoutSupportedExposuresDecodes",
+      "displayName": "Legacy descriptor JSON without supportedExposures decodes seamlessly with default derivation",
+      "priorSourceCommit": "0bf5a16789952cdd07a2a6431ae010211679466a",
+      "priorStatus": "EXECUTED_PASS",
+      "testBodySHA256": "a8dfa445fc67bdd117a0402943dabd8b32f7b76040d8c8bfe0f5bd997d9f3715"
+    },
+    {
+      "suite": "HanlinScriptMiniAppRegistrationTests",
+      "method": "legacyFormatNativeScriptPackageResolvesProperly",
+      "displayName": "Legacy-format NativeScript package with hanlinRuntime manifest field resolves to .nativeScript",
+      "priorSourceCommit": "0bf5a16789952cdd07a2a6431ae010211679466a",
+      "priorStatus": "EXECUTED_PASS",
+      "testBodySHA256": "0fae7fa44ab96a5e71eae75c1e175be5c888834bdce3e4918f4d7a206b13be55"
+    },
+    {
+      "suite": "HanlinScriptMiniAppRegistrationTests",
+      "method": "manifestDeclaredSupportedExposures",
+      "displayName": "Manifest declared supportedExposures (translation_ui, widget, app_intent) are exposed in appDescriptor",
+      "priorSourceCommit": "0bf5a16789952cdd07a2a6431ae010211679466a",
+      "priorStatus": "EXECUTED_PASS",
+      "testBodySHA256": "a79bd3f9c77c62f1727e6f02504f50b62e32f35e1039272e72a69ff525306789"
+    },
+    {
+      "suite": "HanlinScriptMiniAppRegistrationTests",
+      "method": "preparedActionHandlersUseInstalledEntrypointPath",
+      "displayName": "Prepared action handlers resolve to the installed bundle without a second source prefix",
+      "priorSourceCommit": "0bf5a16789952cdd07a2a6431ae010211679466a",
+      "priorStatus": "EXECUTED_PASS",
+      "testBodySHA256": "ec30902a3a892a74db82e9c9087aee028c254bb96c56eb237ccf0a821f6d802b"
+    },
+    {
+      "suite": "HanlinScriptMiniAppRegistrationTests",
+      "method": "preparedActionExportsShareCanonicalBridge",
+      "displayName": "Prepared action exports retain their identities behind one canonical App Intent bridge",
+      "priorSourceCommit": "0bf5a16789952cdd07a2a6431ae010211679466a",
+      "priorStatus": "EXECUTED_PASS",
+      "testBodySHA256": "831acb59cc841bb1a27894c4945e96b71237fb4cd67b57d9b4a990dcac435368"
+    },
+    {
+      "suite": "HanlinScriptMiniAppRegistrationTests",
+      "method": "conflictingAppIntentBridgesRemainInvalid",
+      "displayName": "Different App Intent handlers, runtimes and context sets remain conflicting canonical routes",
+      "priorSourceCommit": "0bf5a16789952cdd07a2a6431ae010211679466a",
+      "priorStatus": "EXECUTED_PASS",
+      "testBodySHA256": "9c39a2de2b1a07941175bdd6665c7237b6fa4ba7505804d29dbb7952dd6cd407"
+    },
+    {
+      "suite": "HanlinScriptMiniAppRegistrationTests",
+      "method": "duplicateForegroundEntrypointsRemainInvalid",
+      "displayName": "Identical foreground entries still violate the canonical unique-kind contract",
+      "priorSourceCommit": "0bf5a16789952cdd07a2a6431ae010211679466a",
+      "priorStatus": "EXECUTED_PASS",
+      "testBodySHA256": "b6b7e593dfe4da2d9b751b85b564182774b5a1c9d98344626e7d90c858d6dc90"
+    },
+    {
+      "suite": "HanlinScriptMiniAppRegistrationTests",
+      "method": "preparedActionIdentifiersPreserveCaseAndRejectMalformedValues",
+      "displayName": "Prepared action identifiers preserve export case, round trip, and reject malformed values",
+      "priorSourceCommit": "0bf5a16789952cdd07a2a6431ae010211679466a",
+      "priorStatus": "EXECUTED_PASS",
+      "testBodySHA256": "6cd6fa387d4e0c48af2945fbc8e7b67be29f0a145ff56446c8a45e5aa8f12c2a"
+    }
+  ],
+  "priorEvidenceSourceCommit": "0bf5a16789952cdd07a2a6431ae010211679466a",
+  "dependencyImpact": {
+    "changedPlatformFiles": [
+      "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinMiniAppHostVersions.swift",
+      "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
+      "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinScriptAnalyzerTests.swift",
+      "Packages/HanlinPlatform/Tests/HanlinScriptStoreTests/HanlinScriptMiniAppRegistrationTests.swift"
+    ],
+    "fullDiff": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/composer-platform-attempt4-impact.diff",
+    "diffSHA256": "6ca8cbba5daca4792c32dfe3675b1c2b21867bdfc870e5fa621a1abebd9043ff",
+    "rationale": "Only the three failed fixture consumers and the changed Expo plugin switch/diagnostic consumers are selected. All other 45 previously passed test bodies are byte-identical; the full source diff is preserved for final evidence review."
+  },
+  "lockSHA256Before": "8f67ee59e5ba54c1d9bdd312efff89ddc946e00443fef8faddfeb4e7eb5387c8",
+  "log": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/composer-platform-attempt4-tests.log",
+  "requestedNativeXML": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/composer-platform-attempt4-tests.xml",
+  "sourceInputs": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/composer-platform-attempt4-inputs.json",
+  "sourceInputsSHA256": "7eb71e33b27e43db41726d5bc417e49482f159fe7c90fe3c829e2b7109a08152",
+  "toolchain": "Xcode 27.0\nBuild version 27A266a",
+  "resourcePreflight": {
+    "atUTC": "2026-11-25T00:10:52.789029+00:00",
+    "availableGiB": 7.658,
+    "memoryPressureFreePercent": 84,
+    "diskFreeGiB": 46.692
+  },
+  "resourceSamples": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/composer-platform-attempt4-resources.jsonl",
+  "preservedPriorLogHashes": {
+    "composer-platform-tests.log": "71ddc57409d22f718dd69c356d887304808812d814d0dd62639454c8dc1abb4b",
+    "composer-platform-attempt2-tests.log": "5ec770300eddafb8cbdc1085bf7b31bf6057fe1a567b1b60d33560269cc887be",
+    "composer-platform-attempt3-tests.log": "b9cced5cdf95e36b12777a6de9b6a38f047ac7789aaca7d2f4ee1b5c00074f81"
+  },
+  "pid": 63653,
+  "exitCode": -15,
+  "timedOut": false,
+  "stopReason": "Own low-priority process group was cancelled after a fresh check measured 2.85% CPU idle during concurrent owner compilation; no tests executed.",
+  "durationSeconds": 41.611,
+  "finishedAtUTC": "2026-11-25T00:11:40.761504+00:00",
+  "executedPassCount": 0,
+  "failureNames": [],
+  "skipRows": [],
+  "unexpectedPasses": [],
+  "lockUnchanged": true,
+  "lockSHA256After": "8f67ee59e5ba54c1d9bdd312efff89ddc946e00443fef8faddfeb4e7eb5387c8",
+  "logSHA256": "ceec8da6e6a670896dc4f2f8c0e99abec2e2098598f5239986bb53d879349d6f",
+  "nativeXMLProduced": false,
+  "priorLogsUnchanged": true,
+  "sourceInputsUnchangedDuringRun": true,
+  "postRunSourceCommit": "6a3c194a1951aa8394c76efcb6e100e76ade56c2",
+  "summaryRows": [],
+  "derivedJUnitXML": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/composer-platform-attempt4-tests.derived.junit.xml",
+  "derivedJUnitSHA256": "a93d8e87033d9d2905c04bbd6f200683adda75af396513729aa9b8f5fe61e238",
+  "initialAutomationStatus": "FAILED",
+  "actualExecutedCount": 0,
+  "actualFailedCount": 0,
+  "actualSkippedCount": 0,
+  "notRunCount": 6,
+  "capacityInterruption": {
+    "receipt": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/composer-platform-attempt4-capacity-check.json",
+    "atUTC": "2026-11-25T00:11:40.585044+00:00",
+    "availableGiB": 6.584,
+    "cpu": "CPU usage: 61.90% user, 35.23% sys, 2.85% idle ",
+    "loadAverage": "{ 202.22 79.90 47.41 }",
+    "onlyOwnProcessGroupStopped": 63653
+  },
+  "originalExecutionReport": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/composer-platform-attempt4-original-execution-report.json",
+  "originalExecutionReportSHA256": "a769eed29936e5f43d783f557c0c9073f88d978a7143fbc567bf99d4866c6ebf",
+  "classificationUpdatedAtUTC": "2026-11-25T00:13:44.516404+00:00"
+}

@@ -38,6 +38,12 @@ let ListViewBase = class ListViewBase extends ContainerView {
         this._itemTemplatesInternal = new Array(this._defaultTemplate);
         this._effectiveRowHeight = autoEffectiveRowHeight;
     }
+    addScrollEdgeContainer(view, edge) {
+        // iOS 26+ only; see the iOS implementation.
+    }
+    removeScrollEdgeContainer(view) {
+        // iOS 26+ only; see the iOS implementation.
+    }
     get separatorColor() {
         return this.style.separatorColor;
     }
@@ -314,4 +320,9 @@ export const iosSearchInsetBehaviorProperty = new Property({
     name: 'iosSearchInsetBehavior',
 });
 iosSearchInsetBehaviorProperty.register(ListViewBase);
+export const iosScrollEdgeEffectProperty = new Property({
+    name: 'iosScrollEdgeEffect',
+    defaultValue: 'automatic',
+});
+iosScrollEdgeEffectProperty.register(ListViewBase);
 //# sourceMappingURL=list-view-common.js.map

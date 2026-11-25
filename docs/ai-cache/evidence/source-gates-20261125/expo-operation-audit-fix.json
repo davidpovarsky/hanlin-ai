@@ -1,0 +1,23 @@
+{
+  "commit": "a8148aecd5293d4e20571e59ace02ce8f808f67f",
+  "baseline": "5f5c0e7c26ea4cc2e8ed6f314742acc76266c3b2",
+  "beforeTests": {
+    "passed": 0,
+    "failed": 2
+  },
+  "afterTests": {
+    "passed": 3,
+    "failed": 0
+  },
+  "originalFullAuditWrite": 0,
+  "originalFullAuditCheck": 0,
+  "sourceCount": 97,
+  "publicExports": 189,
+  "nodeVersion": "v24.22.0",
+  "sourceSHA256": {
+    "Scripts/Audit/miniapp-expo-operations.mjs": "0dd499b70871f464d60d076c3ff4231cb2d6d64da529743361bc415c295d3913",
+    "Scripts/Audit/Tests/expo-operation-contract.test.mjs": "db8ff869f38f9147260b75f314805cb5acc1701ad9ad52079b69d65123676a87"
+  },
+  "nativeBuildsRun": false,
+  "macMutations": false
+}

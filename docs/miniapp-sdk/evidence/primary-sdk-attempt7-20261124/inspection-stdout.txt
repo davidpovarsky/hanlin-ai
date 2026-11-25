@@ -1,0 +1,52 @@
+{
+  "status": "PASS",
+  "recordedAtUTC": "2026-11-24T22:34:13.393910+00:00",
+  "inspectionStartedAtUTC": "2026-11-24T22:34:10.715549+00:00",
+  "elapsedSeconds": 2.6783273899927735,
+  "executionSource": "fd81d602d3b25f09162a659e1e0cf0582e91a93a",
+  "archiveSHA256": "c4e85e967f873ffbe907990c5d9d612b5b6f95871b4e85c736ec0799f09cb1af",
+  "manifestSHA256": "6a5ce216ab722741314a893f8bb226773da27c9d6151f6cbc28f46901b8fcb94",
+  "inputSHA256": "7073ff408de405da0fc2e992993588529a6271f1c41d87dea520b10fcdf62db0",
+  "changedInputs": 4,
+  "unchangedInputs": 218,
+  "changedMembers": 4,
+  "unchangedMembers": 25657,
+  "hostMembersChanged": 1,
+  "hostMembersUnchanged": 3101,
+  "documentProjects": 4,
+  "diagnostics": 0,
+  "preparedSourcePaths": 4,
+  "preparedSourceBytes": 780842,
+  "sourceDeltaCanonicalSHA256": "f291a4588bcfd8a8317ed94bd97c41eab97cc4d2fdd6252214622cffeabaf753",
+  "nativePreparation": "EXECUTED_PASS",
+  "nativeExport": "EXECUTED_PASS",
+  "bothBuiltProductResources": "OWNER_OBSERVED_AND_EXACT_IDENTITY_BOUND",
+  "applicationAcceptance": "NOT_ESTABLISHED; paired phase RUNNING at prepared capture, separate later build/resource evidence retained",
+  "reuseGroups": {
+    "declarations": {
+      "members": 5210,
+      "unchanged": 5210,
+      "changed": []
+    },
+    "examples": {
+      "members": 29,
+      "unchanged": 29,
+      "changed": []
+    },
+    "public-docs": {
+      "members": 25,
+      "unchanged": 21,
+      "changed": [
+        "docs/miniapp-sdk/extension-reachability.json",
+        "docs/miniapp-sdk/extension-reachability.md",
+        "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+        "docs/miniapp-sdk/source-inventory.json"
+      ]
+    },
+    "original-compiler-entrypoints": {
+      "members": 2,
+      "unchanged": 2,
+      "changed": []
+    }
+  }
+}

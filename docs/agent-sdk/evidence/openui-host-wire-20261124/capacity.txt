@@ -1,0 +1,39 @@
+Filesystem   1024-blocks      Used Available Capacity iused      ifree %iused  Mounted on
+/dev/disk3s5   482797652 217780952 221131004    50% 2519791 2211310040    0%   /System/Volumes/Data
+Mach Virtual Memory Statistics: (page size of 16384 bytes)
+Pages free:                                     4038.
+Pages active:                                 306375.
+Pages inactive:                               303932.
+Pages speculative:                              1616.
+Pages throttled:                                   0.
+Pages wired down:                             151696.
+Pages purgeable:                                 245.
+"Translation faults":                     1697388557.
+Pages copy-on-write:                        21470532.
+Pages zero filled:                        1312887126.
+Pages reactivated:                          19398095.
+Pages purged:                                1169603.
+File-backed pages:                            212234.
+Anonymous pages:                              399689.
+Pages stored in compressor:                   553312.
+Pages occupied by compressor:                 247391.
+Decompressions:                              9902698.
+Compressions:                               18252876.
+Pageins:                                    35093660.
+Pageouts:                                      33757.
+Swapins:                                           0.
+Swapouts:                                        120.
+17179869184
+63940 /Users/m1/builds  98.8  9.0
+63776 /Users/m1/builds  98.5  9.3
+63814 /Users/m1/builds  98.4  9.1
+  405 /usr/libexec/aud  74.7  0.0
+64166 /System/Library/  48.0  0.1
+  109 /usr/libexec/con  39.9  0.0
+64148 /System/Library/  36.5  0.1
+  125 /System/Library/  35.6  0.2
+64147 /System/Library/  25.2  0.1
+64164 /System/Library/  21.9  0.1
+64158 /System/Library/  18.5  0.1
+  276 /System/Library/   9.0  2.5
+v24.5.0

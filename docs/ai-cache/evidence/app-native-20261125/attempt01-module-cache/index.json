@@ -1,0 +1,425 @@
+{
+  "source": "72bff522e6a13bff60c16d7a82e7c12f86abf8f9",
+  "prepare_status": "PREPARED",
+  "test_build_status": "FAILED",
+  "tests_executed": 0,
+  "reason": "Nonportable cloned Xcode ModuleCache SwiftShims PCM embeds former absolute path; owned cache quarantined, retry required.",
+  "mac_result_bundle": "/Users/m1/builds/hanlin-ai-cache-native-20261125/build/cache-app-native-evidence-20261125/test/AppBuild.xcresult",
+  "files": [
+    {
+      "path": "prepare/01-xcode-version.log.gz",
+      "raw_sha256": "694b44731d0b415c5b11d844151e466d7f5e200a95627efda377f232f1a6ab77",
+      "raw_bytes": 33
+    },
+    {
+      "path": "prepare/04-manifest-check.log.gz",
+      "raw_sha256": "6a3adc34271cba4ee688071b7aec9eb7f0ee9731bedf3e215a77efb8648947f0",
+      "raw_bytes": 3605
+    },
+    {
+      "path": "prepare/04-manifest-check.stderr.log.gz",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0
+    },
+    {
+      "path": "prepare/02-swift-version.stderr.log.gz",
+      "raw_sha256": "bbc8b176d3c74d4c5a7fd00b40280f98168e116d5272273bfe8e71407625540e",
+      "raw_bytes": 30
+    },
+    {
+      "path": "prepare/03-node-version.log.gz",
+      "raw_sha256": "2f30156cd7f9137514ea68d53554f583cf6541fd107dbc8ae8a19253379a735a",
+      "raw_bytes": 8
+    },
+    {
+      "path": "prepare/06-resolve-packages.log.gz",
+      "raw_sha256": "f20fa0f05614daa974c28899c116c01eb69240215b4ff3ba03f73b753f4bdc19",
+      "raw_bytes": 6784
+    },
+    {
+      "path": "prepare/03-node-version.stderr.log.gz",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0
+    },
+    {
+      "path": "prepare/before-sources.json",
+      "raw_sha256": "b78a790c7665808619563897b6906a9e0aa3a823d70abdac2d9ce5290a720e87",
+      "raw_bytes": 1729956
+    },
+    {
+      "path": "prepare/05-project-check.log.gz",
+      "raw_sha256": "7b205399ea53f72db8afa2fe3d77370cd6f0ac3d9ea8d19cea47a806236d4d18",
+      "raw_bytes": 88
+    },
+    {
+      "path": "prepare/08-a2ui-schemas.log.gz",
+      "raw_sha256": "68675d423c994dfb3eea248f0a59cb701a9a0658e8590ff1bc681011a4df741f",
+      "raw_bytes": 2608
+    },
+    {
+      "path": "prepare/05-project-check.stderr.log.gz",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0
+    },
+    {
+      "path": "prepare/after-sources.json",
+      "raw_sha256": "cfd257c2c516a0cbead9e300cfd28f7bc19813e59de10f35ca94425020b219f1",
+      "raw_bytes": 1730047
+    },
+    {
+      "path": "prepare/06-resolve-packages.stderr.log.gz",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0
+    },
+    {
+      "path": "prepare/07-modular-headers.stderr.log.gz",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0
+    },
+    {
+      "path": "prepare/01-xcode-version.stderr.log.gz",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0
+    },
+    {
+      "path": "prepare/02-swift-version.log.gz",
+      "raw_sha256": "04630ab8fa201f57c63c59730e638135e32584a97e16e004a417eb8ed283dc83",
+      "raw_bytes": 98
+    },
+    {
+      "path": "prepare/08-a2ui-schemas.stderr.log.gz",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0
+    },
+    {
+      "path": "prepare/07-modular-headers.log.gz",
+      "raw_sha256": "f7cc45e992dcee3834fa1d933e00315f9f7c1eb5a06aff22109cfefe013becd7",
+      "raw_bytes": 273
+    },
+    {
+      "path": "prepare/receipt.json",
+      "raw_sha256": "76089ad843f238da1b11318ae21151138f4d8f155ace62a44f1c14e7fb46224e",
+      "raw_bytes": 7854
+    },
+    {
+      "path": "prepare/before-locks/Packages/HanlinPlatform/Package.resolved",
+      "raw_sha256": "3e20591d1ac1c23db5258e6fbaee9386e94a58546e814fd5dfad6bf910551c0b",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/before-locks/Packages/HanlinParityMiniApp/Package.resolved",
+      "raw_sha256": "e0a1d86319347dd23c139babb2864cfc7da0e7365419eef82da71ce354b25fde",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/before-locks/Packages/HanlinAgentSDK/Package.resolved",
+      "raw_sha256": "2acb720310279d62c48a54d2a856f25937a9abed054b5a2661b03c548fee457f",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/before-locks/Packages/HanlinSkillFormat/Package.resolved",
+      "raw_sha256": "0ce944410a619261329435970fb8f81509687140af7dff3a134e8aa1efae6d9a",
+      "raw_bytes": 374
+    },
+    {
+      "path": "prepare/before-locks/Packages/HanlinWikipediaMiniApp/Package.resolved",
+      "raw_sha256": "c31e1e6bd9f3b22b5046ab6e776bd0ebf9ac1804ff857dac9742ddc9be5c8094",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/before-locks/Packages/HanlinSefariaMiniApp/Package.resolved",
+      "raw_sha256": "6252f1f037cf0d5514ad4f8d04ae5391eeb074a837bbc562148b7858bd946210",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/before-locks/Packages/HanlinSwiftUIBridgeGenerator/Package.resolved",
+      "raw_sha256": "572f5b827187c0042186b44ee30fd3ec72e205fb202ea398882a64bc5bb74953",
+      "raw_bytes": 396
+    },
+    {
+      "path": "prepare/before-locks/Packages/HanlinTextStudioMiniApp/Package.resolved",
+      "raw_sha256": "43ef7974e3631a0534bc85aa462b2396c052d8e991043ee28a31941db3869f5c",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/before-locks/docs/ai-cache/evidence/native-core-20261125/attempts/02-producer-fixture/Package.resolved",
+      "raw_sha256": "94eb561e694958712c602d2d7f7b5a949fea87c4b26c06aa79dc066f8e75e54e",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "prepare/before-locks/docs/ai-cache/evidence/native-core-20261125/attempts/01-swift64-isolation/Package.resolved",
+      "raw_sha256": "94eb561e694958712c602d2d7f7b5a949fea87c4b26c06aa79dc066f8e75e54e",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "prepare/before-locks/docs/ai-cache/evidence/native-core-20261125/attempts/03-swift-testing-macros/Package.resolved",
+      "raw_sha256": "bdfe7cfba5c6ce68cc073216155d55021a76ea1a37750b8aafc0882d61e711c4",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "prepare/before-locks/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "raw_sha256": "5fb194bd119570e81b7a51c3227ea10ecd3ab0c543ea2b258c9fac1103330bcd",
+      "raw_bytes": 10180
+    },
+    {
+      "path": "prepare/after-locks/Packages/HanlinPlatform/Package.resolved",
+      "raw_sha256": "3e20591d1ac1c23db5258e6fbaee9386e94a58546e814fd5dfad6bf910551c0b",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/after-locks/Packages/HanlinParityMiniApp/Package.resolved",
+      "raw_sha256": "e0a1d86319347dd23c139babb2864cfc7da0e7365419eef82da71ce354b25fde",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/after-locks/Packages/HanlinAgentSDK/Package.resolved",
+      "raw_sha256": "2acb720310279d62c48a54d2a856f25937a9abed054b5a2661b03c548fee457f",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/after-locks/Packages/HanlinSkillFormat/Package.resolved",
+      "raw_sha256": "0ce944410a619261329435970fb8f81509687140af7dff3a134e8aa1efae6d9a",
+      "raw_bytes": 374
+    },
+    {
+      "path": "prepare/after-locks/Packages/HanlinWikipediaMiniApp/Package.resolved",
+      "raw_sha256": "c31e1e6bd9f3b22b5046ab6e776bd0ebf9ac1804ff857dac9742ddc9be5c8094",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/after-locks/Packages/HanlinSefariaMiniApp/Package.resolved",
+      "raw_sha256": "6252f1f037cf0d5514ad4f8d04ae5391eeb074a837bbc562148b7858bd946210",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/after-locks/Packages/HanlinSwiftUIBridgeGenerator/Package.resolved",
+      "raw_sha256": "572f5b827187c0042186b44ee30fd3ec72e205fb202ea398882a64bc5bb74953",
+      "raw_bytes": 396
+    },
+    {
+      "path": "prepare/after-locks/Packages/HanlinTextStudioMiniApp/Package.resolved",
+      "raw_sha256": "43ef7974e3631a0534bc85aa462b2396c052d8e991043ee28a31941db3869f5c",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/after-locks/docs/ai-cache/evidence/native-core-20261125/attempts/02-producer-fixture/Package.resolved",
+      "raw_sha256": "94eb561e694958712c602d2d7f7b5a949fea87c4b26c06aa79dc066f8e75e54e",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "prepare/after-locks/docs/ai-cache/evidence/native-core-20261125/attempts/01-swift64-isolation/Package.resolved",
+      "raw_sha256": "94eb561e694958712c602d2d7f7b5a949fea87c4b26c06aa79dc066f8e75e54e",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "prepare/after-locks/docs/ai-cache/evidence/native-core-20261125/attempts/03-swift-testing-macros/Package.resolved",
+      "raw_sha256": "bdfe7cfba5c6ce68cc073216155d55021a76ea1a37750b8aafc0882d61e711c4",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "prepare/after-locks/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "raw_sha256": "0dd6abbd4f31d4187a4a69caf97f92aa6d3cf19b241d300be5d19cd32e3aa037",
+      "raw_bytes": 10750
+    },
+    {
+      "path": "prepare/a2ui-generation/compiler.log.gz",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0
+    },
+    {
+      "path": "prepare/a2ui-generation/result.json",
+      "raw_sha256": "cdaa3e8bc0ec570fde1f9e3b2bc6030e55f05bc5201f74e25f0b83fabfa81bc8",
+      "raw_bytes": 2607
+    },
+    {
+      "path": "test/01-xcode-version.log.gz",
+      "raw_sha256": "694b44731d0b415c5b11d844151e466d7f5e200a95627efda377f232f1a6ab77",
+      "raw_bytes": 33
+    },
+    {
+      "path": "test/04-build-for-testing.stderr.log.gz",
+      "raw_sha256": "d94b92c1bde5cb09f5435ea0e4f6ac6c792e8fee192b4603aab851d872e9fd52",
+      "raw_bytes": 380
+    },
+    {
+      "path": "test/02-swift-version.stderr.log.gz",
+      "raw_sha256": "bbc8b176d3c74d4c5a7fd00b40280f98168e116d5272273bfe8e71407625540e",
+      "raw_bytes": 30
+    },
+    {
+      "path": "test/03-node-version.log.gz",
+      "raw_sha256": "2f30156cd7f9137514ea68d53554f583cf6541fd107dbc8ae8a19253379a735a",
+      "raw_bytes": 8
+    },
+    {
+      "path": "test/03-node-version.stderr.log.gz",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0
+    },
+    {
+      "path": "test/before-sources.json",
+      "raw_sha256": "ab1bc63dd8b1633359857d7281f3e346385426063dc01ed8bffeb27a1f159483",
+      "raw_bytes": 1730047
+    },
+    {
+      "path": "test/after-sources.json",
+      "raw_sha256": "ab1bc63dd8b1633359857d7281f3e346385426063dc01ed8bffeb27a1f159483",
+      "raw_bytes": 1730047
+    },
+    {
+      "path": "test/module-cache-repair.json",
+      "raw_sha256": "d63658c3504db3b520a1dc987a787239d203ecaf2e13dd75628aed7c97f6dad3",
+      "raw_bytes": 804
+    },
+    {
+      "path": "test/04-build-for-testing.log.gz",
+      "raw_sha256": "10ce0156c2843f086c33e472a8adeae42d1bd92c287856e6d826d21b8f998064",
+      "raw_bytes": 11892429
+    },
+    {
+      "path": "test/01-xcode-version.stderr.log.gz",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0
+    },
+    {
+      "path": "test/02-swift-version.log.gz",
+      "raw_sha256": "04630ab8fa201f57c63c59730e638135e32584a97e16e004a417eb8ed283dc83",
+      "raw_bytes": 98
+    },
+    {
+      "path": "test/receipt.json",
+      "raw_sha256": "fcbe11cff630e62e5cc6107dd52cb49df09d297abb8c005e0b64182b5a9682b8",
+      "raw_bytes": 8857
+    },
+    {
+      "path": "test/before-locks/Packages/HanlinPlatform/Package.resolved",
+      "raw_sha256": "3e20591d1ac1c23db5258e6fbaee9386e94a58546e814fd5dfad6bf910551c0b",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/before-locks/Packages/HanlinParityMiniApp/Package.resolved",
+      "raw_sha256": "e0a1d86319347dd23c139babb2864cfc7da0e7365419eef82da71ce354b25fde",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/before-locks/Packages/HanlinAgentSDK/Package.resolved",
+      "raw_sha256": "2acb720310279d62c48a54d2a856f25937a9abed054b5a2661b03c548fee457f",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/before-locks/Packages/HanlinSkillFormat/Package.resolved",
+      "raw_sha256": "0ce944410a619261329435970fb8f81509687140af7dff3a134e8aa1efae6d9a",
+      "raw_bytes": 374
+    },
+    {
+      "path": "test/before-locks/Packages/HanlinWikipediaMiniApp/Package.resolved",
+      "raw_sha256": "c31e1e6bd9f3b22b5046ab6e776bd0ebf9ac1804ff857dac9742ddc9be5c8094",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/before-locks/Packages/HanlinSefariaMiniApp/Package.resolved",
+      "raw_sha256": "6252f1f037cf0d5514ad4f8d04ae5391eeb074a837bbc562148b7858bd946210",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/before-locks/Packages/HanlinSwiftUIBridgeGenerator/Package.resolved",
+      "raw_sha256": "572f5b827187c0042186b44ee30fd3ec72e205fb202ea398882a64bc5bb74953",
+      "raw_bytes": 396
+    },
+    {
+      "path": "test/before-locks/Packages/HanlinTextStudioMiniApp/Package.resolved",
+      "raw_sha256": "43ef7974e3631a0534bc85aa462b2396c052d8e991043ee28a31941db3869f5c",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/before-locks/docs/ai-cache/evidence/native-core-20261125/attempts/02-producer-fixture/Package.resolved",
+      "raw_sha256": "94eb561e694958712c602d2d7f7b5a949fea87c4b26c06aa79dc066f8e75e54e",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "test/before-locks/docs/ai-cache/evidence/native-core-20261125/attempts/01-swift64-isolation/Package.resolved",
+      "raw_sha256": "94eb561e694958712c602d2d7f7b5a949fea87c4b26c06aa79dc066f8e75e54e",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "test/before-locks/docs/ai-cache/evidence/native-core-20261125/attempts/03-swift-testing-macros/Package.resolved",
+      "raw_sha256": "bdfe7cfba5c6ce68cc073216155d55021a76ea1a37750b8aafc0882d61e711c4",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "test/before-locks/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "raw_sha256": "0dd6abbd4f31d4187a4a69caf97f92aa6d3cf19b241d300be5d19cd32e3aa037",
+      "raw_bytes": 10750
+    },
+    {
+      "path": "test/prior-xctestrun/AI_HLY_iphonesimulator27.0-arm64.xctestrun",
+      "raw_sha256": "b2cc79f4b3780daec837e119cc5e4a07d5ecccd618ab793b88bb0b80dbfa2062",
+      "raw_bytes": 10920
+    },
+    {
+      "path": "test/prior-xctestrun/HanlinMiniApps_iphonesimulator27.0-arm64.xctestrun",
+      "raw_sha256": "160d6ecd19bda79dafeeeb5de4dbd1e2c6d3241cefffa4cf78691fa95e83ebe5",
+      "raw_bytes": 16089
+    },
+    {
+      "path": "test/after-locks/Packages/HanlinPlatform/Package.resolved",
+      "raw_sha256": "3e20591d1ac1c23db5258e6fbaee9386e94a58546e814fd5dfad6bf910551c0b",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/after-locks/Packages/HanlinParityMiniApp/Package.resolved",
+      "raw_sha256": "e0a1d86319347dd23c139babb2864cfc7da0e7365419eef82da71ce354b25fde",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/after-locks/Packages/HanlinAgentSDK/Package.resolved",
+      "raw_sha256": "2acb720310279d62c48a54d2a856f25937a9abed054b5a2661b03c548fee457f",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/after-locks/Packages/HanlinSkillFormat/Package.resolved",
+      "raw_sha256": "0ce944410a619261329435970fb8f81509687140af7dff3a134e8aa1efae6d9a",
+      "raw_bytes": 374
+    },
+    {
+      "path": "test/after-locks/Packages/HanlinWikipediaMiniApp/Package.resolved",
+      "raw_sha256": "c31e1e6bd9f3b22b5046ab6e776bd0ebf9ac1804ff857dac9742ddc9be5c8094",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/after-locks/Packages/HanlinSefariaMiniApp/Package.resolved",
+      "raw_sha256": "6252f1f037cf0d5514ad4f8d04ae5391eeb074a837bbc562148b7858bd946210",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/after-locks/Packages/HanlinSwiftUIBridgeGenerator/Package.resolved",
+      "raw_sha256": "572f5b827187c0042186b44ee30fd3ec72e205fb202ea398882a64bc5bb74953",
+      "raw_bytes": 396
+    },
+    {
+      "path": "test/after-locks/Packages/HanlinTextStudioMiniApp/Package.resolved",
+      "raw_sha256": "43ef7974e3631a0534bc85aa462b2396c052d8e991043ee28a31941db3869f5c",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/after-locks/docs/ai-cache/evidence/native-core-20261125/attempts/02-producer-fixture/Package.resolved",
+      "raw_sha256": "94eb561e694958712c602d2d7f7b5a949fea87c4b26c06aa79dc066f8e75e54e",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "test/after-locks/docs/ai-cache/evidence/native-core-20261125/attempts/01-swift64-isolation/Package.resolved",
+      "raw_sha256": "94eb561e694958712c602d2d7f7b5a949fea87c4b26c06aa79dc066f8e75e54e",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "test/after-locks/docs/ai-cache/evidence/native-core-20261125/attempts/03-swift-testing-macros/Package.resolved",
+      "raw_sha256": "bdfe7cfba5c6ce68cc073216155d55021a76ea1a37750b8aafc0882d61e711c4",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "test/after-locks/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "raw_sha256": "0dd6abbd4f31d4187a4a69caf97f92aa6d3cf19b241d300be5d19cd32e3aa037",
+      "raw_bytes": 10750
+    }
+  ]
+}

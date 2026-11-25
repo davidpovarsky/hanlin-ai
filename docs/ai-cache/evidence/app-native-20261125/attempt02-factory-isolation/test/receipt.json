@@ -1,0 +1,139 @@
+{
+  "actions": [
+    {
+      "archivedPriorDescriptors": []
+    }
+  ],
+  "changedLockPaths": [],
+  "changedSourcePaths": [],
+  "commands": [
+    {
+      "argv": [
+        "xcodebuild",
+        "-version"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-ai-cache-native-20261125",
+      "exitCode": 0,
+      "finishedAtUTC": "2026-11-25T02:06:23.923580+00:00",
+      "name": "xcode-version",
+      "startedAtUTC": "2026-11-25T02:06:23.719799+00:00",
+      "stderr": "01-xcode-version.stderr.log",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "01-xcode-version.log",
+      "stdoutSHA256": "694b44731d0b415c5b11d844151e466d7f5e200a95627efda377f232f1a6ab77"
+    },
+    {
+      "argv": [
+        "xcrun",
+        "swift",
+        "--version"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-ai-cache-native-20261125",
+      "exitCode": 0,
+      "finishedAtUTC": "2026-11-25T02:06:24.053371+00:00",
+      "name": "swift-version",
+      "startedAtUTC": "2026-11-25T02:06:23.924183+00:00",
+      "stderr": "02-swift-version.stderr.log",
+      "stderrSHA256": "bbc8b176d3c74d4c5a7fd00b40280f98168e116d5272273bfe8e71407625540e",
+      "stdout": "02-swift-version.log",
+      "stdoutSHA256": "04630ab8fa201f57c63c59730e638135e32584a97e16e004a417eb8ed283dc83"
+    },
+    {
+      "argv": [
+        "node",
+        "--version"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-ai-cache-native-20261125",
+      "exitCode": 0,
+      "finishedAtUTC": "2026-11-25T02:06:24.070176+00:00",
+      "name": "node-version",
+      "startedAtUTC": "2026-11-25T02:06:24.054083+00:00",
+      "stderr": "03-node-version.stderr.log",
+      "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout": "03-node-version.log",
+      "stdoutSHA256": "2f30156cd7f9137514ea68d53554f583cf6541fd107dbc8ae8a19253379a735a"
+    },
+    {
+      "argv": [
+        "xcodebuild",
+        "-project",
+        "AI_HLY.xcodeproj",
+        "-scheme",
+        "AI_HLY",
+        "-configuration",
+        "Debug",
+        "-destination",
+        "generic/platform=iOS Simulator",
+        "-derivedDataPath",
+        "/Users/m1/caches/DerivedData/hanlin-ai-cache-app-20261125",
+        "-clonedSourcePackagesDirPath",
+        "/Users/m1/builds/hanlin-ai-cache-native-20261125/build/SourcePackages",
+        "-resultBundlePath",
+        "/Users/m1/builds/hanlin-ai-cache-native-20261125/build/cache-app-native-evidence-02-20261125/test/AppBuild.xcresult",
+        "-jobs",
+        "2",
+        "-showBuildTimingSummary",
+        "-skipPackagePluginValidation",
+        "-skipMacroValidation",
+        "CLANG_CXX_LANGUAGE_STANDARD=gnu++20",
+        "FRAMEWORK_SEARCH_PATHS=/Users/m1/builds/hanlin-ai-cache-native-20261125/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks /Users/m1/builds/hanlin-ai-cache-native-20261125/Artifacts/ModularFrameworks $(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks $(SRCROOT)/Artifacts/ModularFrameworks $(inherited)",
+        "HEADER_SEARCH_PATHS=/Users/m1/builds/hanlin-ai-cache-native-20261125/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders /Users/m1/builds/hanlin-ai-cache-native-20261125/Artifacts/ReactModularHeaders /Users/m1/builds/hanlin-ai-cache-native-20261125/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers /Users/m1/builds/hanlin-ai-cache-native-20261125/Artifacts/ReactNativeDependencies.xcframework/Headers /Users/m1/builds/hanlin-ai-cache-native-20261125/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers /Users/m1/builds/hanlin-ai-cache-native-20261125/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react $(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders $(SRCROOT)/Artifacts/ReactModularHeaders $(inherited) $(BUILT_PRODUCTS_DIR)/React.framework/Headers $(BUILT_PRODUCTS_DIR)/react.framework/Headers $(BUILT_PRODUCTS_DIR)/ExpoModulesCore.framework/Headers $(BUILT_PRODUCTS_DIR)/Python.framework/Headers",
+        "CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES=YES",
+        "CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER=NO",
+        "WARNING_CFLAGS=$(inherited) -Wno-quoted-include-in-framework-header -Wno-non-modular-include-in-framework-module",
+        "OTHER_CFLAGS=$(inherited) -Wno-quoted-include-in-framework-header -Wno-non-modular-include-in-framework-module",
+        "OTHER_SWIFT_FLAGS=-Xcc -F/Users/m1/builds/hanlin-ai-cache-native-20261125/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks -Xcc -F/Users/m1/builds/hanlin-ai-cache-native-20261125/Artifacts/ModularFrameworks -Xcc -I/Users/m1/builds/hanlin-ai-cache-native-20261125/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders -Xcc -I/Users/m1/builds/hanlin-ai-cache-native-20261125/Artifacts/ReactModularHeaders -Xcc -I/Users/m1/builds/hanlin-ai-cache-native-20261125/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers -Xcc -I/Users/m1/builds/hanlin-ai-cache-native-20261125/Artifacts/ReactNativeDependencies.xcframework/Headers -Xcc -I/Users/m1/builds/hanlin-ai-cache-native-20261125/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers -Xcc -I/Users/m1/builds/hanlin-ai-cache-native-20261125/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react -Xcc -F$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks -Xcc -F$(SRCROOT)/Artifacts/ModularFrameworks $(inherited) -Xcc -Wno-quoted-include-in-framework-header -Xcc -Wno-non-modular-include-in-framework-module -Xcc -I$(BUILT_PRODUCTS_DIR)/React.framework/Headers -Xcc -I$(BUILT_PRODUCTS_DIR)/react.framework/Headers -Xcc -I$(BUILT_PRODUCTS_DIR)/React.framework/Headers/react -Xcc -I$(BUILT_PRODUCTS_DIR)/ExpoModulesCore.framework/Headers",
+        "ENABLE_TESTABILITY=YES",
+        "IPHONEOS_DEPLOYMENT_TARGET=27.0",
+        "ARCHS=arm64",
+        "ONLY_ACTIVE_ARCH=YES",
+        "SWIFT_ACTIVE_COMPILATION_CONDITIONS=$(inherited) HANLIN_TESTING",
+        "-only-testing:AI_HLYTests/HanlinPromptCachingIntegrationTests",
+        "-only-testing:AI_HLYTests/ClassicChatRestorationTests",
+        "-only-testing:AI_HLYTests/HanlinMiniAppAssistantIntegrationTests",
+        "-only-testing:AI_HLYTests/HanlinModelPromptCachePersistenceTests",
+        "build-for-testing"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-ai-cache-native-20261125",
+      "exitCode": 65,
+      "finishedAtUTC": "2026-11-25T02:14:22.984574+00:00",
+      "name": "build-for-testing",
+      "startedAtUTC": "2026-11-25T02:06:24.525982+00:00",
+      "stderr": "04-build-for-testing.stderr.log",
+      "stderrSHA256": "94660785e9f52d10a7bab79016e8eb7fe7dbf31ef4dbb31b8c9cee706fc45219",
+      "stdout": "04-build-for-testing.log",
+      "stdoutSHA256": "e586f5e226692869cdf0c970a0a06f6cfb28c6a6096e03005b5710529544a42f"
+    }
+  ],
+  "declaredTestCounts": {
+    "ClassicChatRestorationTests": 32,
+    "HanlinMiniAppAssistantIntegrationTests": 7,
+    "HanlinModelPromptCachePersistenceTests": 3,
+    "HanlinPromptCachingIntegrationTests": 4
+  },
+  "derivedData": "/Users/m1/caches/DerivedData/hanlin-ai-cache-app-20261125",
+  "developerDirectory": "/Applications/Xcode.app/Contents/Developer",
+  "error": "build-for-testing exited 65; see /Users/m1/builds/hanlin-ai-cache-native-20261125/build/cache-app-native-evidence-02-20261125/test/04-build-for-testing.log",
+  "executables": {
+    "node": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/node-v24.5.0-darwin-arm64/bin/node",
+    "npm": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/node-v24.5.0-darwin-arm64/bin/npm",
+    "xcodebuild": "/usr/bin/xcodebuild",
+    "xcrun": "/usr/bin/xcrun"
+  },
+  "finishedAtUTC": "2026-11-25T02:14:24.956068+00:00",
+  "phase": "test",
+  "python": "/opt/homebrew/opt/python@3.12/bin/python3.12",
+  "recipe": ".github/workflows/build-ios26-unsigned-ipa.yml",
+  "recipeSHA256": "8db985018d69ed5879533028f8f6d15b4d40bd6a2c49abf866cc2930603ba838",
+  "repository": "/Users/m1/builds/hanlin-ai-cache-native-20261125",
+  "selectors": [
+    "AI_HLYTests/HanlinPromptCachingIntegrationTests",
+    "AI_HLYTests/ClassicChatRestorationTests",
+    "AI_HLYTests/HanlinMiniAppAssistantIntegrationTests",
+    "AI_HLYTests/HanlinModelPromptCachePersistenceTests"
+  ],
+  "sourceSHA": "b2b17ca2078c632c87b95d6f766ec13b09b344d7",
+  "sourceSHAAfter": "b2b17ca2078c632c87b95d6f766ec13b09b344d7",
+  "startedAtUTC": "2026-11-25T02:06:23.059856+00:00",
+  "status": "FAILED"
+}

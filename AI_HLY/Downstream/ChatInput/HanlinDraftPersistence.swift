@@ -1,5 +1,6 @@
 import SwiftData
 import SwiftUI
+import HanlinPlatformContracts
 
 /// This small view is the only observer that persists draft keystrokes. Keeping
 /// its dependency below ChatView prevents each edit rebuilding the transcript,
@@ -15,6 +16,7 @@ struct HanlinDraftPersistence: View {
         let revision: UUID
         let conversationID: UUID?
         let temporary: Bool
+        let attachments: [HanlinCapabilityAttachment]
     }
 
     var body: some View {
@@ -22,9 +24,11 @@ struct HanlinDraftPersistence: View {
             .frame(width: 0, height: 0)
             .accessibilityHidden(true)
             .task(id: SaveKey(revision: draft.snapshot.revision,
-                              conversationID: record.id, temporary: temporary)) {
+                              conversationID: record.id, temporary: temporary,
+                              attachments: draft.capabilitySnapshot)) {
                 guard !temporary else { return }
                 let snapshot = draft.snapshot
+                let attachments = draft.capabilitySnapshot
                 let conversationID = record.id
                 do { try await Task.sleep(for: .milliseconds(500)) }
                 catch { return }
@@ -32,9 +36,14 @@ struct HanlinDraftPersistence: View {
                       record.modelContext === context,
                       record.id == conversationID,
                       draft.snapshot.revision == snapshot.revision,
-                      record.input != snapshot.text else { return }
-                record.input = snapshot.text
-                do { try context.save() }
+                      draft.capabilitySnapshot == attachments else { return }
+                do {
+                    let data = attachments.isEmpty ? nil : try JSONEncoder().encode(attachments)
+                    guard record.input != snapshot.text || record.capabilityDraftData != data else { return }
+                    record.input = snapshot.text
+                    record.capabilityDraftData = data
+                    try context.save()
+                }
                 catch { print("Failed to save chat draft: \(error)") }
             }
     }

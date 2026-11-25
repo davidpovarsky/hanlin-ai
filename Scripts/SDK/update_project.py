@@ -164,34 +164,40 @@ def wire_widget_cxx_imports(text, package):
     if len(flags) % 2 or any(flags[index] != "-Xcc" for index in range(0, len(flags), 2)):
         raise ValueError("Unexpected ExpoWidgets Clang import flag shape")
     objects = parse_project(text)["objects"]
-    host = next(value for value in objects.values()
-                if value.get("isa") == "PBXNativeTarget" and value.get("name") == "HanlinScriptingWidgets")
-    for key in objects[host["buildConfigurationList"]]["buildConfigurations"]:
-        current = objects[key]["buildSettings"].get("OTHER_SWIFT_FLAGS", ["$(inherited)"])
-        values = shlex.split(current) if isinstance(current, str) else list(current)
-        for index in range(0, len(flags), 2):
-            pair = flags[index:index + 2]
-            if not any(values[offset:offset + 2] == pair for offset in range(len(values) - 1)):
-                values.extend(pair)
-        def settings(block):
-            replacements = {
-                "SWIFT_OBJC_INTEROP_MODE": "objcxx",
-                # Match the original SwiftPM producer's explicit dependency scan.
-                # Implicit .swiftinterface loading drops the producer's -Xcc
-                # header/framework paths when importing ExpoModulesCore.
-                "SWIFT_ENABLE_EXPLICIT_MODULES": "YES",
-                "OTHER_SWIFT_FLAGS": "(" + ", ".join(json.dumps(value) for value in values) + ",)",
-            }
-            for name, value in replacements.items():
-                line = name + " = " + value + ";"
-                pattern = r'"?' + name + r'"? = [^;]+;'
-                if re.search(pattern, block):
-                    block = re.sub(pattern, lambda _: line, block, count=1)
-                else:
-                    block = re.sub(r'("?buildSettings"? = \{)',
-                                   lambda match: match[1] + "\n\t\t\t\t" + line, block, count=1)
-            return block
-        text = edit_object(text, key, settings)
+    # These native targets directly import ExpoWidgets/Core or import an app
+    # module that does. Keep unrelated extensions and UI runners unchanged.
+    consumers = {"HanlinApp", "HanlinMiniApps", "AI_HLYTests", "HanlinMiniAppsTests",
+                 "HanlinScriptingWidgets", "HanlinMiniAppsWidgets"}
+    hosts = [value for value in objects.values()
+             if value.get("isa") == "PBXNativeTarget" and value.get("name") in consumers]
+    if {host["name"] for host in hosts} != consumers:
+        raise ValueError("Missing native consumer of the original Expo import contract")
+    for host in hosts:
+        for key in objects[host["buildConfigurationList"]]["buildConfigurations"]:
+            current = objects[key]["buildSettings"].get("OTHER_SWIFT_FLAGS", ["$(inherited)"])
+            values = shlex.split(current) if isinstance(current, str) else list(current)
+            for index in range(0, len(flags), 2):
+                pair = flags[index:index + 2]
+                if not any(values[offset:offset + 2] == pair for offset in range(len(values) - 1)):
+                    values.extend(pair)
+            def settings(block):
+                replacements = {
+                    "SWIFT_OBJC_INTEROP_MODE": "objcxx",
+                    # The original Core interface fails to resolve its React
+                    # framework headers through the inherited implicit loader.
+                    "SWIFT_ENABLE_EXPLICIT_MODULES": "YES",
+                    "OTHER_SWIFT_FLAGS": "(" + ", ".join(json.dumps(value) for value in values) + ",)",
+                }
+                for name, value in replacements.items():
+                    line = name + " = " + value + ";"
+                    pattern = r'"?' + name + r'"? = [^;]+;'
+                    if re.search(pattern, block):
+                        block = re.sub(pattern, lambda _: line, block, count=1)
+                    else:
+                        block = re.sub(r'("?buildSettings"? = \{)',
+                                       lambda match: match[1] + "\n\t\t\t\t" + line, block, count=1)
+                return block
+            text = edit_object(text, key, settings)
     return text
 
 
@@ -385,10 +391,10 @@ def update(package=None):
     text=edit_object(text,group,lambda b:replace_list(b,"children",children))
     sys.path.insert(0, str(ROOT / "Scripts/ProductSplit"))
     from miniapps_extensions import wire_miniapps_extensions
-    # The original widget host is configured first; its real standalone
-    # MiniApps counterpart is then cloned with the same import contract.
-    text = wire_widget_cxx_imports(text, package)
+    # Create/update standalone extension clones before applying the original
+    # import contract to every real native consumer, including new clones.
     text = wire_miniapps_extensions(text, edit_object, replace_list, insert_object)
+    text = wire_widget_cxx_imports(text, package)
     parse_project(text)
     return text
 

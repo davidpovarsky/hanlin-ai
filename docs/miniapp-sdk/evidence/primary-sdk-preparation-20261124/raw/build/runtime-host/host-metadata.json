@@ -1,0 +1,8 @@
+{
+  "nodeVersion": "v24.5.0",
+  "archiveSha256": "5d6d60076fc95165b7c3d330d4202388dc88c3084899291918c69fef3ba92c53",
+  "sourceInputsHash": "15b6e0c2af8c3447bd6a04f201dd11b7d655b9ba90399f7ebcf60445a7999903",
+  "jitlessArchiveSmoke": "passed",
+  "npmInstall": "npm ci --omit=dev --ignore-scripts --workspaces=false --no-audit --no-fund",
+  "tests": "passed"
+}

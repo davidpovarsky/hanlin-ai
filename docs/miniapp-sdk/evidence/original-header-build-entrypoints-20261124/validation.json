@@ -1,0 +1,92 @@
+{
+  "baseCommit": "ce876c32a9dd0f3c324222f549c4642c13f8a700",
+  "path": ".github/workflows/build-ios26-unsigned-ipa.yml",
+  "beforeSHA256": "826fae0402f057955529b0fb626993256c28c3e28e37b87b8f1eeab8f14f0500",
+  "afterSHA256": "8db985018d69ed5879533028f8f6d15b4d40bd6a2c49abf866cc2930603ba838",
+  "yamlParsed": true,
+  "exactFourLineRemoval": true,
+  "allOtherWorkflowFieldsUnchanged": true,
+  "changedCommands": [
+    {
+      "job": "build-ios26-unsigned-ipa",
+      "stepIndex": 34,
+      "stepName": "Build unsigned iOS 26 app",
+      "project": "AI_HLY.xcodeproj",
+      "scheme": "AI_HLY",
+      "configuration": "Release",
+      "beforeSHA256": "ad65e5dc184c4dcafef27b7bdc279ad32a7de894db828f14298cb7287a883e91",
+      "afterSHA256": "70ca630c8b7f1599c8f121c7fb8b238b5f028523f0b7e03cb58f8e80af9bb29d",
+      "removedArgument": "SWIFT_ENABLE_EXPLICIT_MODULES=NO",
+      "allOtherRunBytesUnchanged": true,
+      "syntaxCommand": [
+        "bash",
+        "--noprofile",
+        "--norc",
+        "-n",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-host-services-20261124/docs/miniapp-sdk/evidence/original-header-build-entrypoints-20261124/1-syntax.sh"
+      ],
+      "syntaxExitCode": 0
+    },
+    {
+      "job": "build-ios26-unsigned-ipa",
+      "stepIndex": 35,
+      "stepName": "Measure same-run device no-op rebuild",
+      "project": "AI_HLY.xcodeproj",
+      "scheme": "AI_HLY",
+      "configuration": "Release",
+      "beforeSHA256": "5996b4892d87c27a53d6db3b0fc3e68cb065c88f6f84511feeca14f37282e2e6",
+      "afterSHA256": "594b034cfa97c55dac1d20fb352351a2df16e8bec5abdf4bccb1fd86c97fe867",
+      "removedArgument": "SWIFT_ENABLE_EXPLICIT_MODULES=NO",
+      "allOtherRunBytesUnchanged": true,
+      "syntaxCommand": [
+        "bash",
+        "--noprofile",
+        "--norc",
+        "-n",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-host-services-20261124/docs/miniapp-sdk/evidence/original-header-build-entrypoints-20261124/2-syntax.sh"
+      ],
+      "syntaxExitCode": 0
+    },
+    {
+      "job": "full-app-simulator-smoke",
+      "stepIndex": 30,
+      "stepName": "Build full arm64 simulator app",
+      "project": "AI_HLY.xcodeproj",
+      "scheme": "AI_HLY",
+      "configuration": "${{ needs.plan-affected-validation.outputs.simulator_configuration || ((inputs.fast_validation_only || inputs.nativescript_poc_only) && 'Debug' || 'Release') }}",
+      "beforeSHA256": "ed19f47f14d1a3bc5d22f603cca567e3d710b7671d70e6ae90ccecc77eba43a7",
+      "afterSHA256": "4a05cbfd9269aedf0cf106aaa34702aa1e31d7a5ed83f566cccfa878fe679f4e",
+      "removedArgument": "SWIFT_ENABLE_EXPLICIT_MODULES=NO",
+      "allOtherRunBytesUnchanged": true,
+      "syntaxCommand": [
+        "bash",
+        "--noprofile",
+        "--norc",
+        "-n",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-host-services-20261124/docs/miniapp-sdk/evidence/original-header-build-entrypoints-20261124/3-syntax.sh"
+      ],
+      "syntaxExitCode": 0
+    },
+    {
+      "job": "full-app-simulator-smoke",
+      "stepIndex": 31,
+      "stepName": "Measure same-run simulator no-op rebuild",
+      "project": "AI_HLY.xcodeproj",
+      "scheme": "AI_HLY",
+      "configuration": "${{ needs.plan-affected-validation.outputs.simulator_configuration || ((inputs.fast_validation_only || inputs.nativescript_poc_only) && 'Debug' || 'Release') }}",
+      "beforeSHA256": "c130ef53825ecd5f3363eb860e33fe8bcc27f7ac98f9b3510e65b3c1daa11b80",
+      "afterSHA256": "a73ff27b431fe5c143aeccd3ac3fa43fd860c77aa1c63efa08b4806ef0bfc4b9",
+      "removedArgument": "SWIFT_ENABLE_EXPLICIT_MODULES=NO",
+      "allOtherRunBytesUnchanged": true,
+      "syntaxCommand": [
+        "bash",
+        "--noprofile",
+        "--norc",
+        "-n",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-host-services-20261124/docs/miniapp-sdk/evidence/original-header-build-entrypoints-20261124/4-syntax.sh"
+      ],
+      "syntaxExitCode": 0
+    }
+  ],
+  "executionBoundary": "YAML parse, exact source/parsed-workflow delta, and four Bash syntax checks only. No workflow body, Xcode command, compiler probe, app build or native test executed."
+}

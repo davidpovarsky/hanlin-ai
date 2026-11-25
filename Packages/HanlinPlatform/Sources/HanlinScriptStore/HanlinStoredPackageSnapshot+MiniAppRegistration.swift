@@ -116,7 +116,8 @@ extension HanlinStoredPackageSnapshot: HanlinMiniAppRegistration {
                 kind: canonicalKind,
                 handler: ep.sourcePath,
                 allowedContexts: contexts,
-                runtimeProfile: ep.runtimeProfile
+                runtimeProfile: ep.runtimeProfile,
+                assistantTool: ep.assistantTool
             )
             // Distinct prepared action exports can share one canonical bridge.
             // Their IDs and symbols remain in the installed entrypoints/actions.
@@ -129,7 +130,10 @@ extension HanlinStoredPackageSnapshot: HanlinMiniAppRegistration {
 
         let finalEntryPoints: [HanlinEntryPointDescriptor]
         if !mappedEntryPoints.isEmpty {
-            finalEntryPoints = mappedEntryPoints
+            // Distinct package action IDs may expose the same canonical handler.
+            // Preserve differing descriptors so validation still rejects conflicts.
+            var seenEntryPoints = Set<HanlinEntryPointDescriptor>()
+            finalEntryPoints = mappedEntryPoints.filter { seenEntryPoints.insert($0).inserted }
         } else if entrypoints.isEmpty {
             // Legacy script package with no explicit entrypoints.
             // Synthesize foreground app entrypoint when the legacy manifest represents an app.

@@ -1,0 +1,44 @@
+[
+  {
+    "path": "raw/snapshot-receipt.json",
+    "bytes": 26980,
+    "sha256": "fbcae6ab65a1d090bf9470c81c8208ec44b38c36d4116433ad4944517e0121a4"
+  },
+  {
+    "path": "raw/tracked-delta.json",
+    "bytes": 102955,
+    "sha256": "b4381014062cca249740e1ff83c6d78d07680c2b27b51ac0569f2ea96e1a20ff"
+  },
+  {
+    "path": "raw/miniapp-sdk.json.gz",
+    "bytes": 1301353,
+    "sha256": "33d2554a75977cb78bf450c1565e38a8193259606bf4f43ef4058e095b55da37",
+    "uncompressedSHA256": "1d51c86e55ca79792b6b31176de6363008e5874dec4f919e5ef96c789a6d53f9",
+    "uncompressedBytes": 5219288
+  },
+  {
+    "path": "raw/build/app-split-evidence/miniapp-documentation-snippets.json",
+    "bytes": 20066,
+    "sha256": "60376f77aa0e85a5004eca4ac0b31eeb81012d65ceebb48108797bec656f8bdf"
+  },
+  {
+    "path": "raw/build/app-split-evidence/prepared-native/native-artifacts.json",
+    "bytes": 28573,
+    "sha256": "c97c1b62bbcc2af159642b7c91b0984ef677a8752bf283009f51f71cae81dc2c"
+  },
+  {
+    "path": "raw/build/primary-control/logs-attempt5/split-native-preparation.log",
+    "bytes": 31023,
+    "sha256": "935c498bc535025d0857e3851bc85d19a20e63de0b7c25a927f26baea66aa7d1"
+  },
+  {
+    "path": "raw/build/primary-control/logs-attempt5/split-native-artifacts.log",
+    "bytes": 1504,
+    "sha256": "620451222f385a197c57758b6ac4021f2c7419c27929669129a3f544ce1397bc"
+  },
+  {
+    "path": "raw/build/runtime-host/host-metadata.json",
+    "bytes": 358,
+    "sha256": "5255b7dfb26b0f86d687813bc2ebfea87e1f9931acf0f991b1ae0e9f612fd1ab"
+  }
+]
