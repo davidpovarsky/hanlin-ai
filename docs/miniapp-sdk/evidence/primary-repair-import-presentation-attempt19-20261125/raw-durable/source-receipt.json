@@ -1,0 +1,505 @@
+{
+  "capturedAt": "2026-11-25T14:53:10.970427+00:00",
+  "source": "7bf0c2fdc2f7168d6b98dda66f443ae032fe1c11",
+  "appData": {
+    "com.itorah.hanlinminiapps": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/B1FAED6C-ECFE-48FB-9C95-846B3BA75BFD",
+    "com.itorah.chavrusachat": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/1CB4DAE0-2652-4BEA-9F29-08A40E7362AF"
+  },
+  "transfers": [
+    {
+      "id": "2e2f8047-2f41-430b-af05-b3bb78707908",
+      "request": {
+        "archiveSHA256": "9a2a14be4ad24565bad66a98fc53522229de903acfb8a41b3df18006e81b51c9",
+        "createdAt": 817310577.973001,
+        "id": "2E2F8047-2F41-430B-AF05-B3BB78707908",
+        "originalFileName": "MiniAppTypeError.hanlinNativeScript",
+        "purpose": "repair",
+        "schemaVersion": 1
+      },
+      "receipt": {
+        "conversationID": "3F3B9233-6715-429C-AA70-EB596EFF4A9D",
+        "status": "submitted",
+        "transferID": "2E2F8047-2F41-430B-AF05-B3BB78707908",
+        "updatedAt": 817310581.708272,
+        "userMessageID": "6D66BEE3-529A-4E66-AB63-58AF030B2714"
+      }
+    },
+    {
+      "id": "56f463ee-f2a6-4f6c-ad43-7614f7dcf2b1",
+      "request": {
+        "archiveSHA256": "02d9e28ece89f212f18f65924a29bc43bdec3025d40122f0c070f02cded19396",
+        "createdAt": 817310878.86575,
+        "id": "56F463EE-F2A6-4F6C-AD43-7614F7DCF2B1",
+        "originalFileName": "MiniApp.hanlinNativeScript",
+        "purpose": "install",
+        "schemaVersion": 1
+      },
+      "receipt": {
+        "installedPackageID": "install-script-d7e81598bd3fabb072c5e57c",
+        "status": "installed",
+        "transferID": "56F463EE-F2A6-4F6C-AD43-7614F7DCF2B1",
+        "updatedAt": 817310916.843681
+      }
+    }
+  ],
+  "jobs": [
+    {
+      "appID": "com.itorah.hanlinminiapps",
+      "executionID": "567cd014-f0ba-42cf-b24d-4ac59c86352c",
+      "state": "completed",
+      "startedAt": 1795618079811,
+      "completedAt": 1795618114417,
+      "operation": "validate",
+      "succeeded": true,
+      "exitCode": 0,
+      "durationMilliseconds": 34605
+    },
+    {
+      "appID": "com.itorah.hanlinminiapps",
+      "executionID": "5936716b-55a6-470a-966c-496490d0304a",
+      "state": "failed",
+      "startedAt": 1795617735189,
+      "completedAt": 1795617771255,
+      "operation": "validate",
+      "succeeded": false,
+      "exitCode": 1,
+      "durationMilliseconds": 36066
+    },
+    {
+      "appID": "com.itorah.chavrusachat",
+      "executionID": "11b1271f-fc32-43c5-b21b-00950d9afa8a",
+      "state": "failed",
+      "startedAt": 1795617801584,
+      "completedAt": 1795617853924,
+      "operation": "validate",
+      "succeeded": false,
+      "exitCode": 1,
+      "durationMilliseconds": 52340
+    },
+    {
+      "appID": "com.itorah.chavrusachat",
+      "executionID": "c1dedc75-8fa5-4a46-b310-eb63f76cd438",
+      "state": "completed",
+      "startedAt": 1795617786975,
+      "completedAt": 1795617787132,
+      "operation": null,
+      "succeeded": null,
+      "exitCode": 0,
+      "durationMilliseconds": 157
+    },
+    {
+      "appID": "com.itorah.chavrusachat",
+      "executionID": "74b7afb4-c245-480a-9333-f0986a1ec05b",
+      "state": "completed",
+      "startedAt": 1795617958984,
+      "completedAt": 1795618063468,
+      "operation": "build",
+      "succeeded": true,
+      "exitCode": 0,
+      "durationMilliseconds": 104485
+    },
+    {
+      "appID": "com.itorah.chavrusachat",
+      "executionID": "0ea7b235-c354-489e-80df-27faa3e09ce5",
+      "state": "completed",
+      "startedAt": 1795617871265,
+      "completedAt": 1795617950984,
+      "operation": "validate",
+      "succeeded": true,
+      "exitCode": 0,
+      "durationMilliseconds": 79718
+    }
+  ],
+  "members": [
+    {
+      "path": "authoring-transfer/2e2f8047-2f41-430b-af05-b3bb78707908/request.json",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Shared/AppGroup/0AE57B5E-8263-4826-A629-EA76C9076428/HanlinSplit/v1/Authoring/v1/2e2f8047-2f41-430b-af05-b3bb78707908/request.json",
+      "bytes": 251,
+      "sha256": "90e371b9ad6e4dd5ccf3d43f8c99aae68a8ea17a7c21b70b4458539b87dd38ab"
+    },
+    {
+      "path": "authoring-transfer/2e2f8047-2f41-430b-af05-b3bb78707908/MiniAppTypeError.hanlinNativeScript",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Shared/AppGroup/0AE57B5E-8263-4826-A629-EA76C9076428/HanlinSplit/v1/Authoring/v1/2e2f8047-2f41-430b-af05-b3bb78707908/MiniAppTypeError.hanlinNativeScript",
+      "bytes": 4399,
+      "sha256": "9a2a14be4ad24565bad66a98fc53522229de903acfb8a41b3df18006e81b51c9"
+    },
+    {
+      "path": "authoring-transfer/2e2f8047-2f41-430b-af05-b3bb78707908/diagnostics.json",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Shared/AppGroup/0AE57B5E-8263-4826-A629-EA76C9076428/HanlinSplit/v1/Authoring/v1/2e2f8047-2f41-430b-af05-b3bb78707908/diagnostics.json",
+      "bytes": 1973,
+      "sha256": "9ef33606b60d76373873d1e0ecd87bf3384a13774190c9d7f2d8f15949e8bf4a"
+    },
+    {
+      "path": "authoring-transfer/2e2f8047-2f41-430b-af05-b3bb78707908/receipt.json",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Shared/AppGroup/0AE57B5E-8263-4826-A629-EA76C9076428/HanlinSplit/v1/Authoring/v1/2e2f8047-2f41-430b-af05-b3bb78707908/receipt.json",
+      "bytes": 214,
+      "sha256": "9c2d2a87bd89a03a4af14a549d405c30746206a425aa9a83d473bc2c6476b246"
+    },
+    {
+      "path": "authoring-transfer/56f463ee-f2a6-4f6c-ad43-7614f7dcf2b1/request.json",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Shared/AppGroup/0AE57B5E-8263-4826-A629-EA76C9076428/HanlinSplit/v1/Authoring/v1/56f463ee-f2a6-4f6c-ad43-7614f7dcf2b1/request.json",
+      "bytes": 242,
+      "sha256": "6f29597df4ccbe7122584c9ba583886c41db72b89ca7069b08431a1af309eadb"
+    },
+    {
+      "path": "authoring-transfer/56f463ee-f2a6-4f6c-ad43-7614f7dcf2b1/MiniApp.hanlinNativeScript",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Shared/AppGroup/0AE57B5E-8263-4826-A629-EA76C9076428/HanlinSplit/v1/Authoring/v1/56f463ee-f2a6-4f6c-ad43-7614f7dcf2b1/MiniApp.hanlinNativeScript",
+      "bytes": 7247,
+      "sha256": "02d9e28ece89f212f18f65924a29bc43bdec3025d40122f0c070f02cded19396"
+    },
+    {
+      "path": "authoring-transfer/56f463ee-f2a6-4f6c-ad43-7614f7dcf2b1/diagnostics.json",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Shared/AppGroup/0AE57B5E-8263-4826-A629-EA76C9076428/HanlinSplit/v1/Authoring/v1/56f463ee-f2a6-4f6c-ad43-7614f7dcf2b1/diagnostics.json",
+      "bytes": 2,
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    {
+      "path": "authoring-transfer/56f463ee-f2a6-4f6c-ad43-7614f7dcf2b1/receipt.json",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Shared/AppGroup/0AE57B5E-8263-4826-A629-EA76C9076428/HanlinSplit/v1/Authoring/v1/56f463ee-f2a6-4f6c-ad43-7614f7dcf2b1/receipt.json",
+      "bytes": 166,
+      "sha256": "2dea9f53e15c9f031a8ca0da56d733afbe71ffbe5c2e575852a5339c1067c90d"
+    },
+    {
+      "path": "mini-runtime/jobs/node/567cd014-f0ba-42cf-b24d-4ac59c86352c/stderr.log",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/B1FAED6C-ECFE-48FB-9C95-846B3BA75BFD/Library/Application Support/HanlinRuntime/v1/jobs/node/567cd014-f0ba-42cf-b24d-4ac59c86352c/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "mini-runtime/jobs/node/567cd014-f0ba-42cf-b24d-4ac59c86352c/stdout.log",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/B1FAED6C-ECFE-48FB-9C95-846B3BA75BFD/Library/Application Support/HanlinRuntime/v1/jobs/node/567cd014-f0ba-42cf-b24d-4ac59c86352c/stdout.log",
+      "bytes": 960,
+      "sha256": "cdb7d0a98d3d0b9fcce38721cd715d18968d750910ad0087bb2ea68593df0e62"
+    },
+    {
+      "path": "mini-runtime/jobs/node/567cd014-f0ba-42cf-b24d-4ac59c86352c/job.json",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/B1FAED6C-ECFE-48FB-9C95-846B3BA75BFD/Library/Application Support/HanlinRuntime/v1/jobs/node/567cd014-f0ba-42cf-b24d-4ac59c86352c/job.json",
+      "bytes": 3161,
+      "sha256": "54cc193f8cfb7f81217efb490feef474d35992b85988b771a9a4e4d2c3ad7cc9"
+    },
+    {
+      "path": "mini-runtime/jobs/node/567cd014-f0ba-42cf-b24d-4ac59c86352c/main.mjs",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/B1FAED6C-ECFE-48FB-9C95-846B3BA75BFD/Library/Application Support/HanlinRuntime/v1/jobs/node/567cd014-f0ba-42cf-b24d-4ac59c86352c/main.mjs",
+      "bytes": 1323,
+      "sha256": "44e272ca4c9da5a38a53a8ce85be226258dce9dfa87b5fd6ab7a5f1143772a25"
+    },
+    {
+      "path": "mini-runtime/jobs/node/5936716b-55a6-470a-966c-496490d0304a/stderr.log",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/B1FAED6C-ECFE-48FB-9C95-846B3BA75BFD/Library/Application Support/HanlinRuntime/v1/jobs/node/5936716b-55a6-470a-966c-496490d0304a/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "mini-runtime/jobs/node/5936716b-55a6-470a-966c-496490d0304a/stdout.log",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/B1FAED6C-ECFE-48FB-9C95-846B3BA75BFD/Library/Application Support/HanlinRuntime/v1/jobs/node/5936716b-55a6-470a-966c-496490d0304a/stdout.log",
+      "bytes": 1368,
+      "sha256": "7a5b79d51138550f99361666ca174fa1d31c9f61e89ce91c26a4c5c49d25aa9e"
+    },
+    {
+      "path": "mini-runtime/jobs/node/5936716b-55a6-470a-966c-496490d0304a/job.json",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/B1FAED6C-ECFE-48FB-9C95-846B3BA75BFD/Library/Application Support/HanlinRuntime/v1/jobs/node/5936716b-55a6-470a-966c-496490d0304a/job.json",
+      "bytes": 4020,
+      "sha256": "ae0d0d97845de0ee125d26f522e2d224598c047a289c02283d09f2dd03422aac"
+    },
+    {
+      "path": "mini-runtime/jobs/node/5936716b-55a6-470a-966c-496490d0304a/main.mjs",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/B1FAED6C-ECFE-48FB-9C95-846B3BA75BFD/Library/Application Support/HanlinRuntime/v1/jobs/node/5936716b-55a6-470a-966c-496490d0304a/main.mjs",
+      "bytes": 1323,
+      "sha256": "3ac8f0e88c95a273d2e32af2c93bc106e381d40b011f457b2eecbb6bcb793322"
+    },
+    {
+      "path": "ai-runtime/jobs/node/11b1271f-fc32-43c5-b21b-00950d9afa8a/stderr.log",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/1CB4DAE0-2652-4BEA-9F29-08A40E7362AF/Library/Application Support/HanlinRuntime/v1/jobs/node/11b1271f-fc32-43c5-b21b-00950d9afa8a/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "ai-runtime/jobs/node/11b1271f-fc32-43c5-b21b-00950d9afa8a/stdout.log",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/1CB4DAE0-2652-4BEA-9F29-08A40E7362AF/Library/Application Support/HanlinRuntime/v1/jobs/node/11b1271f-fc32-43c5-b21b-00950d9afa8a/stdout.log",
+      "bytes": 1357,
+      "sha256": "aa82dda41d12823f10355e65877464099a55b91bd38557411e38c08a0d7f1845"
+    },
+    {
+      "path": "ai-runtime/jobs/node/11b1271f-fc32-43c5-b21b-00950d9afa8a/job.json",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/1CB4DAE0-2652-4BEA-9F29-08A40E7362AF/Library/Application Support/HanlinRuntime/v1/jobs/node/11b1271f-fc32-43c5-b21b-00950d9afa8a/job.json",
+      "bytes": 3998,
+      "sha256": "eaddad139c74c05528518071f224521250426e091952eb54bfe6ff9ca69a29d0"
+    },
+    {
+      "path": "ai-runtime/jobs/node/11b1271f-fc32-43c5-b21b-00950d9afa8a/main.mjs",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/1CB4DAE0-2652-4BEA-9F29-08A40E7362AF/Library/Application Support/HanlinRuntime/v1/jobs/node/11b1271f-fc32-43c5-b21b-00950d9afa8a/main.mjs",
+      "bytes": 1313,
+      "sha256": "81cc444516cdcb10dd6f0616cdf7e36fb4cf3fe973af53175d2ae97ddeec6542"
+    },
+    {
+      "path": "ai-runtime/jobs/node/c1dedc75-8fa5-4a46-b310-eb63f76cd438/stderr.log",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/1CB4DAE0-2652-4BEA-9F29-08A40E7362AF/Library/Application Support/HanlinRuntime/v1/jobs/node/c1dedc75-8fa5-4a46-b310-eb63f76cd438/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "ai-runtime/jobs/node/c1dedc75-8fa5-4a46-b310-eb63f76cd438/stdout.log",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/1CB4DAE0-2652-4BEA-9F29-08A40E7362AF/Library/Application Support/HanlinRuntime/v1/jobs/node/c1dedc75-8fa5-4a46-b310-eb63f76cd438/stdout.log",
+      "bytes": 13936,
+      "sha256": "5a1d1b77618404dda1cdd222a89c52b920a977b2a0d7f65580e8ec6b2c4b193e"
+    },
+    {
+      "path": "ai-runtime/jobs/node/c1dedc75-8fa5-4a46-b310-eb63f76cd438/job.json",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/1CB4DAE0-2652-4BEA-9F29-08A40E7362AF/Library/Application Support/HanlinRuntime/v1/jobs/node/c1dedc75-8fa5-4a46-b310-eb63f76cd438/job.json",
+      "bytes": 30283,
+      "sha256": "16fd49f6000b65a79e32be5c47a97159cdb0ab4b0ff9dec9bbb0ac8fbaffad2b"
+    },
+    {
+      "path": "ai-runtime/jobs/node/c1dedc75-8fa5-4a46-b310-eb63f76cd438/main.mjs",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/1CB4DAE0-2652-4BEA-9F29-08A40E7362AF/Library/Application Support/HanlinRuntime/v1/jobs/node/c1dedc75-8fa5-4a46-b310-eb63f76cd438/main.mjs",
+      "bytes": 995,
+      "sha256": "4166f5f980e70f2a09e90422e6c53ba7be2f8f423f9a1863dda373f5031facaf"
+    },
+    {
+      "path": "ai-runtime/jobs/node/74b7afb4-c245-480a-9333-f0986a1ec05b/stderr.log",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/1CB4DAE0-2652-4BEA-9F29-08A40E7362AF/Library/Application Support/HanlinRuntime/v1/jobs/node/74b7afb4-c245-480a-9333-f0986a1ec05b/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "ai-runtime/jobs/node/74b7afb4-c245-480a-9333-f0986a1ec05b/stdout.log",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/1CB4DAE0-2652-4BEA-9F29-08A40E7362AF/Library/Application Support/HanlinRuntime/v1/jobs/node/74b7afb4-c245-480a-9333-f0986a1ec05b/stdout.log",
+      "bytes": 1313,
+      "sha256": "676c38cb72c4bb6bf108c795341252fa2604248c52bf5300191563a4dc6c6603"
+    },
+    {
+      "path": "ai-runtime/jobs/node/74b7afb4-c245-480a-9333-f0986a1ec05b/job.json",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/1CB4DAE0-2652-4BEA-9F29-08A40E7362AF/Library/Application Support/HanlinRuntime/v1/jobs/node/74b7afb4-c245-480a-9333-f0986a1ec05b/job.json",
+      "bytes": 3874,
+      "sha256": "c95cf3f801ed7e33961abcb31ec43e8e5673961b7ee154a813c31de096b6e447"
+    },
+    {
+      "path": "ai-runtime/jobs/node/74b7afb4-c245-480a-9333-f0986a1ec05b/main.mjs",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/1CB4DAE0-2652-4BEA-9F29-08A40E7362AF/Library/Application Support/HanlinRuntime/v1/jobs/node/74b7afb4-c245-480a-9333-f0986a1ec05b/main.mjs",
+      "bytes": 1318,
+      "sha256": "7090715ee0e4d6156ff754ff1890d67eb7a60b006745dab5f1d178e11b56f698"
+    },
+    {
+      "path": "ai-runtime/jobs/node/0ea7b235-c354-489e-80df-27faa3e09ce5/stderr.log",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/1CB4DAE0-2652-4BEA-9F29-08A40E7362AF/Library/Application Support/HanlinRuntime/v1/jobs/node/0ea7b235-c354-489e-80df-27faa3e09ce5/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "ai-runtime/jobs/node/0ea7b235-c354-489e-80df-27faa3e09ce5/stdout.log",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/1CB4DAE0-2652-4BEA-9F29-08A40E7362AF/Library/Application Support/HanlinRuntime/v1/jobs/node/0ea7b235-c354-489e-80df-27faa3e09ce5/stdout.log",
+      "bytes": 949,
+      "sha256": "5794f8f8e7e77083ae1cac19e71bffc39e8f3839a48e5ffadebe7bd4fd5c2f75"
+    },
+    {
+      "path": "ai-runtime/jobs/node/0ea7b235-c354-489e-80df-27faa3e09ce5/job.json",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/1CB4DAE0-2652-4BEA-9F29-08A40E7362AF/Library/Application Support/HanlinRuntime/v1/jobs/node/0ea7b235-c354-489e-80df-27faa3e09ce5/job.json",
+      "bytes": 3139,
+      "sha256": "9f1429bdebc5b35307cecb12c711c0345090694196158f4f1f1184a60f72e03c"
+    },
+    {
+      "path": "ai-runtime/jobs/node/0ea7b235-c354-489e-80df-27faa3e09ce5/main.mjs",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/1CB4DAE0-2652-4BEA-9F29-08A40E7362AF/Library/Application Support/HanlinRuntime/v1/jobs/node/0ea7b235-c354-489e-80df-27faa3e09ce5/main.mjs",
+      "bytes": 1321,
+      "sha256": "5eae1a17b2920a7619edf0f49561597aedbfe0a8e621a8c0e55b8ee487e20a4a"
+    },
+    {
+      "path": "ai-runtime/clients/agents/miniapp-repair-2e2f8047-2f41-430b-af05-b3bb78707908/MiniAppTypeError.hanlinNativeScript",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/1CB4DAE0-2652-4BEA-9F29-08A40E7362AF/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-2e2f8047-2f41-430b-af05-b3bb78707908/MiniAppTypeError.hanlinNativeScript",
+      "bytes": 4399,
+      "sha256": "9a2a14be4ad24565bad66a98fc53522229de903acfb8a41b3df18006e81b51c9"
+    },
+    {
+      "path": "ai-runtime/clients/agents/miniapp-repair-2e2f8047-2f41-430b-af05-b3bb78707908/diagnostics.json",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/1CB4DAE0-2652-4BEA-9F29-08A40E7362AF/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-2e2f8047-2f41-430b-af05-b3bb78707908/diagnostics.json",
+      "bytes": 1973,
+      "sha256": "9ef33606b60d76373873d1e0ecd87bf3384a13774190c9d7f2d8f15949e8bf4a"
+    },
+    {
+      "path": "ai-runtime/clients/agents/miniapp-repair-2e2f8047-2f41-430b-af05-b3bb78707908/project/hanlin.validation.json",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/1CB4DAE0-2652-4BEA-9F29-08A40E7362AF/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-2e2f8047-2f41-430b-af05-b3bb78707908/project/hanlin.validation.json",
+      "bytes": 774,
+      "sha256": "a59ff01c18c3a992b45cb055a5af4deca5d1893b3a7b38000e65a77f2c6f30ba"
+    },
+    {
+      "path": "ai-runtime/clients/agents/miniapp-repair-2e2f8047-2f41-430b-af05-b3bb78707908/project/hanlin.authoring.json",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/1CB4DAE0-2652-4BEA-9F29-08A40E7362AF/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-2e2f8047-2f41-430b-af05-b3bb78707908/project/hanlin.authoring.json",
+      "bytes": 1643,
+      "sha256": "e642cc15f45d70c606097c3b62cca6534b9bd53a659b8a28bd8175f7a3e40019"
+    },
+    {
+      "path": "ai-runtime/clients/agents/miniapp-repair-2e2f8047-2f41-430b-af05-b3bb78707908/project/script.json",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/1CB4DAE0-2652-4BEA-9F29-08A40E7362AF/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-2e2f8047-2f41-430b-af05-b3bb78707908/project/script.json",
+      "bytes": 171,
+      "sha256": "acd6800ca8220fa14546ed28eab6dd1e8676ec8f107d13ccf8535f467bd6b39f"
+    },
+    {
+      "path": "ai-runtime/clients/agents/miniapp-repair-2e2f8047-2f41-430b-af05-b3bb78707908/project/nativescript/app/package.json",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/1CB4DAE0-2652-4BEA-9F29-08A40E7362AF/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-2e2f8047-2f41-430b-af05-b3bb78707908/project/nativescript/app/package.json",
+      "bytes": 299,
+      "sha256": "9afb516e7e0301554d6dc122a33651d5b15af29e134879f6e616d4da29903345"
+    },
+    {
+      "path": "ai-runtime/clients/agents/miniapp-repair-2e2f8047-2f41-430b-af05-b3bb78707908/project/nativescript/app/bundle.mjs",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/1CB4DAE0-2652-4BEA-9F29-08A40E7362AF/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-2e2f8047-2f41-430b-af05-b3bb78707908/project/nativescript/app/bundle.mjs",
+      "bytes": 30,
+      "sha256": "77326621f8ddcf98a2eccfc7deb128f535b962f1969f914b562a8d3823a7d049"
+    },
+    {
+      "path": "ai-runtime/clients/agents/miniapp-repair-2e2f8047-2f41-430b-af05-b3bb78707908/project/nativescript/app/modules/index.mjs.map",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/1CB4DAE0-2652-4BEA-9F29-08A40E7362AF/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-2e2f8047-2f41-430b-af05-b3bb78707908/project/nativescript/app/modules/index.mjs.map",
+      "bytes": 1005,
+      "sha256": "75817b5a5e3fcef325906ef4e6609c122cb17692e83fa94f55a161acfbf72507"
+    },
+    {
+      "path": "ai-runtime/clients/agents/miniapp-repair-2e2f8047-2f41-430b-af05-b3bb78707908/project/nativescript/app/modules/index.mjs",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/1CB4DAE0-2652-4BEA-9F29-08A40E7362AF/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-2e2f8047-2f41-430b-af05-b3bb78707908/project/nativescript/app/modules/index.mjs",
+      "bytes": 473,
+      "sha256": "385f77fdbb936605a555084d36db281e8b0c81914de51815927a47595bca1844"
+    },
+    {
+      "path": "ai-runtime/clients/agents/miniapp-repair-2e2f8047-2f41-430b-af05-b3bb78707908/project/source/hanlin.authoring.json",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/1CB4DAE0-2652-4BEA-9F29-08A40E7362AF/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-2e2f8047-2f41-430b-af05-b3bb78707908/project/source/hanlin.authoring.json",
+      "bytes": 76,
+      "sha256": "fcd55704f81de3ab56c92484d1c59bb3e5efe8dd9383ee791e61a58429314e0c"
+    },
+    {
+      "path": "ai-runtime/clients/agents/miniapp-repair-2e2f8047-2f41-430b-af05-b3bb78707908/project/source/script.json",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/1CB4DAE0-2652-4BEA-9F29-08A40E7362AF/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-2e2f8047-2f41-430b-af05-b3bb78707908/project/source/script.json",
+      "bytes": 171,
+      "sha256": "acd6800ca8220fa14546ed28eab6dd1e8676ec8f107d13ccf8535f467bd6b39f"
+    },
+    {
+      "path": "ai-runtime/clients/agents/miniapp-repair-2e2f8047-2f41-430b-af05-b3bb78707908/project/source/package.json",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/1CB4DAE0-2652-4BEA-9F29-08A40E7362AF/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-2e2f8047-2f41-430b-af05-b3bb78707908/project/source/package.json",
+      "bytes": 94,
+      "sha256": "5832acb1bde65c8cac7e628b64902291ee2aa2a20c23962524b0ea5e7ae933eb"
+    },
+    {
+      "path": "ai-runtime/clients/agents/miniapp-repair-2e2f8047-2f41-430b-af05-b3bb78707908/project/source/tsconfig.json",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/1CB4DAE0-2652-4BEA-9F29-08A40E7362AF/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-2e2f8047-2f41-430b-af05-b3bb78707908/project/source/tsconfig.json",
+      "bytes": 188,
+      "sha256": "91961a73001983b248169b1544e7ef30f96334bfa5528aaad3c24429a1d92af0"
+    },
+    {
+      "path": "ai-runtime/clients/agents/miniapp-repair-2e2f8047-2f41-430b-af05-b3bb78707908/project/source/index.ts",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/1CB4DAE0-2652-4BEA-9F29-08A40E7362AF/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-2e2f8047-2f41-430b-af05-b3bb78707908/project/source/index.ts",
+      "bytes": 397,
+      "sha256": "9ca13f866936891fd664e0001e366632c94fe2f069308ae6cca0cc09149a6101"
+    },
+    {
+      "path": "ai-runtime/clients/agents/miniapp-repair-2e2f8047-2f41-430b-af05-b3bb78707908/project/source/.hanlin-build/2690acd9-e2ed-43ed-9acd-9b6e3bed3236/MiniApp.hanlinNativeScript",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/1CB4DAE0-2652-4BEA-9F29-08A40E7362AF/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-2e2f8047-2f41-430b-af05-b3bb78707908/project/source/.hanlin-build/2690acd9-e2ed-43ed-9acd-9b6e3bed3236/MiniApp.hanlinNativeScript",
+      "bytes": 7247,
+      "sha256": "02d9e28ece89f212f18f65924a29bc43bdec3025d40122f0c070f02cded19396"
+    },
+    {
+      "path": "ai-runtime/clients/agents/miniapp-repair-2e2f8047-2f41-430b-af05-b3bb78707908/project/source/.hanlin-build/2690acd9-e2ed-43ed-9acd-9b6e3bed3236/package/hanlin.validation.json",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/1CB4DAE0-2652-4BEA-9F29-08A40E7362AF/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-2e2f8047-2f41-430b-af05-b3bb78707908/project/source/.hanlin-build/2690acd9-e2ed-43ed-9acd-9b6e3bed3236/package/hanlin.validation.json",
+      "bytes": 774,
+      "sha256": "a59ff01c18c3a992b45cb055a5af4deca5d1893b3a7b38000e65a77f2c6f30ba"
+    },
+    {
+      "path": "ai-runtime/clients/agents/miniapp-repair-2e2f8047-2f41-430b-af05-b3bb78707908/project/source/.hanlin-build/2690acd9-e2ed-43ed-9acd-9b6e3bed3236/package/hanlin.authoring.json",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/1CB4DAE0-2652-4BEA-9F29-08A40E7362AF/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-2e2f8047-2f41-430b-af05-b3bb78707908/project/source/.hanlin-build/2690acd9-e2ed-43ed-9acd-9b6e3bed3236/package/hanlin.authoring.json",
+      "bytes": 1643,
+      "sha256": "e642cc15f45d70c606097c3b62cca6534b9bd53a659b8a28bd8175f7a3e40019"
+    },
+    {
+      "path": "ai-runtime/clients/agents/miniapp-repair-2e2f8047-2f41-430b-af05-b3bb78707908/project/source/.hanlin-build/2690acd9-e2ed-43ed-9acd-9b6e3bed3236/package/script.json",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/1CB4DAE0-2652-4BEA-9F29-08A40E7362AF/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-2e2f8047-2f41-430b-af05-b3bb78707908/project/source/.hanlin-build/2690acd9-e2ed-43ed-9acd-9b6e3bed3236/package/script.json",
+      "bytes": 171,
+      "sha256": "acd6800ca8220fa14546ed28eab6dd1e8676ec8f107d13ccf8535f467bd6b39f"
+    },
+    {
+      "path": "ai-runtime/clients/agents/miniapp-repair-2e2f8047-2f41-430b-af05-b3bb78707908/project/source/.hanlin-build/2690acd9-e2ed-43ed-9acd-9b6e3bed3236/package/nativescript/app/package.json",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/1CB4DAE0-2652-4BEA-9F29-08A40E7362AF/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-2e2f8047-2f41-430b-af05-b3bb78707908/project/source/.hanlin-build/2690acd9-e2ed-43ed-9acd-9b6e3bed3236/package/nativescript/app/package.json",
+      "bytes": 299,
+      "sha256": "9afb516e7e0301554d6dc122a33651d5b15af29e134879f6e616d4da29903345"
+    },
+    {
+      "path": "ai-runtime/clients/agents/miniapp-repair-2e2f8047-2f41-430b-af05-b3bb78707908/project/source/.hanlin-build/2690acd9-e2ed-43ed-9acd-9b6e3bed3236/package/nativescript/app/bundle.mjs",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/1CB4DAE0-2652-4BEA-9F29-08A40E7362AF/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-2e2f8047-2f41-430b-af05-b3bb78707908/project/source/.hanlin-build/2690acd9-e2ed-43ed-9acd-9b6e3bed3236/package/nativescript/app/bundle.mjs",
+      "bytes": 30,
+      "sha256": "77326621f8ddcf98a2eccfc7deb128f535b962f1969f914b562a8d3823a7d049"
+    },
+    {
+      "path": "ai-runtime/clients/agents/miniapp-repair-2e2f8047-2f41-430b-af05-b3bb78707908/project/source/.hanlin-build/2690acd9-e2ed-43ed-9acd-9b6e3bed3236/package/nativescript/app/modules/index.mjs.map",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/1CB4DAE0-2652-4BEA-9F29-08A40E7362AF/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-2e2f8047-2f41-430b-af05-b3bb78707908/project/source/.hanlin-build/2690acd9-e2ed-43ed-9acd-9b6e3bed3236/package/nativescript/app/modules/index.mjs.map",
+      "bytes": 1005,
+      "sha256": "75817b5a5e3fcef325906ef4e6609c122cb17692e83fa94f55a161acfbf72507"
+    },
+    {
+      "path": "ai-runtime/clients/agents/miniapp-repair-2e2f8047-2f41-430b-af05-b3bb78707908/project/source/.hanlin-build/2690acd9-e2ed-43ed-9acd-9b6e3bed3236/package/nativescript/app/modules/index.mjs",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/1CB4DAE0-2652-4BEA-9F29-08A40E7362AF/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-2e2f8047-2f41-430b-af05-b3bb78707908/project/source/.hanlin-build/2690acd9-e2ed-43ed-9acd-9b6e3bed3236/package/nativescript/app/modules/index.mjs",
+      "bytes": 473,
+      "sha256": "385f77fdbb936605a555084d36db281e8b0c81914de51815927a47595bca1844"
+    },
+    {
+      "path": "ai-runtime/clients/agents/miniapp-repair-2e2f8047-2f41-430b-af05-b3bb78707908/project/source/.hanlin-build/2690acd9-e2ed-43ed-9acd-9b6e3bed3236/package/source/hanlin.authoring.json",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/1CB4DAE0-2652-4BEA-9F29-08A40E7362AF/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-2e2f8047-2f41-430b-af05-b3bb78707908/project/source/.hanlin-build/2690acd9-e2ed-43ed-9acd-9b6e3bed3236/package/source/hanlin.authoring.json",
+      "bytes": 76,
+      "sha256": "fcd55704f81de3ab56c92484d1c59bb3e5efe8dd9383ee791e61a58429314e0c"
+    },
+    {
+      "path": "ai-runtime/clients/agents/miniapp-repair-2e2f8047-2f41-430b-af05-b3bb78707908/project/source/.hanlin-build/2690acd9-e2ed-43ed-9acd-9b6e3bed3236/package/source/script.json",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/1CB4DAE0-2652-4BEA-9F29-08A40E7362AF/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-2e2f8047-2f41-430b-af05-b3bb78707908/project/source/.hanlin-build/2690acd9-e2ed-43ed-9acd-9b6e3bed3236/package/source/script.json",
+      "bytes": 171,
+      "sha256": "acd6800ca8220fa14546ed28eab6dd1e8676ec8f107d13ccf8535f467bd6b39f"
+    },
+    {
+      "path": "ai-runtime/clients/agents/miniapp-repair-2e2f8047-2f41-430b-af05-b3bb78707908/project/source/.hanlin-build/2690acd9-e2ed-43ed-9acd-9b6e3bed3236/package/source/package.json",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/1CB4DAE0-2652-4BEA-9F29-08A40E7362AF/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-2e2f8047-2f41-430b-af05-b3bb78707908/project/source/.hanlin-build/2690acd9-e2ed-43ed-9acd-9b6e3bed3236/package/source/package.json",
+      "bytes": 94,
+      "sha256": "5832acb1bde65c8cac7e628b64902291ee2aa2a20c23962524b0ea5e7ae933eb"
+    },
+    {
+      "path": "ai-runtime/clients/agents/miniapp-repair-2e2f8047-2f41-430b-af05-b3bb78707908/project/source/.hanlin-build/2690acd9-e2ed-43ed-9acd-9b6e3bed3236/package/source/tsconfig.json",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/1CB4DAE0-2652-4BEA-9F29-08A40E7362AF/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-2e2f8047-2f41-430b-af05-b3bb78707908/project/source/.hanlin-build/2690acd9-e2ed-43ed-9acd-9b6e3bed3236/package/source/tsconfig.json",
+      "bytes": 188,
+      "sha256": "91961a73001983b248169b1544e7ef30f96334bfa5528aaad3c24429a1d92af0"
+    },
+    {
+      "path": "ai-runtime/clients/agents/miniapp-repair-2e2f8047-2f41-430b-af05-b3bb78707908/project/source/.hanlin-build/2690acd9-e2ed-43ed-9acd-9b6e3bed3236/package/source/index.ts",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/1CB4DAE0-2652-4BEA-9F29-08A40E7362AF/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-2e2f8047-2f41-430b-af05-b3bb78707908/project/source/.hanlin-build/2690acd9-e2ed-43ed-9acd-9b6e3bed3236/package/source/index.ts",
+      "bytes": 397,
+      "sha256": "9ca13f866936891fd664e0001e366632c94fe2f069308ae6cca0cc09149a6101"
+    },
+    {
+      "path": "tool-results/chat-7575981745cb5374a373332bee7c438561c8809a8be6f8256f4dcd7d7fe89120/ref_21909e22c1fd47f58f20d1b55c0ba663.json",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/1CB4DAE0-2652-4BEA-9F29-08A40E7362AF/Library/Application Support/Hanlin/ToolResults/chat-7575981745cb5374a373332bee7c438561c8809a8be6f8256f4dcd7d7fe89120/ref_21909e22c1fd47f58f20d1b55c0ba663.json",
+      "bytes": 139,
+      "sha256": "9c49d6f54e74a0026ee71a31c08e72a6dee80309cb89410a6de7267f7db5a209"
+    },
+    {
+      "path": "tool-results/chat-7575981745cb5374a373332bee7c438561c8809a8be6f8256f4dcd7d7fe89120/ref_21909e22c1fd47f58f20d1b55c0ba663.payload",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/1CB4DAE0-2652-4BEA-9F29-08A40E7362AF/Library/Application Support/Hanlin/ToolResults/chat-7575981745cb5374a373332bee7c438561c8809a8be6f8256f4dcd7d7fe89120/ref_21909e22c1fd47f58f20d1b55c0ba663.payload",
+      "bytes": 1674,
+      "sha256": "0962672e8858172c62c91173c09dd082ab1562212119c532639ee891bff3b25e"
+    },
+    {
+      "path": "tool-results/chat-7575981745cb5374a373332bee7c438561c8809a8be6f8256f4dcd7d7fe89120/ref_3d2c64da2a224f0ba16885c682528494.json",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/1CB4DAE0-2652-4BEA-9F29-08A40E7362AF/Library/Application Support/Hanlin/ToolResults/chat-7575981745cb5374a373332bee7c438561c8809a8be6f8256f4dcd7d7fe89120/ref_3d2c64da2a224f0ba16885c682528494.json",
+      "bytes": 140,
+      "sha256": "7ce719b3c8d7cb7c537209cbefb564f040ca577327ae1121e6b11a6e9bf198d0"
+    },
+    {
+      "path": "tool-results/chat-7575981745cb5374a373332bee7c438561c8809a8be6f8256f4dcd7d7fe89120/ref_ee0a90754a6545239953b15fae752e18.payload",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/1CB4DAE0-2652-4BEA-9F29-08A40E7362AF/Library/Application Support/Hanlin/ToolResults/chat-7575981745cb5374a373332bee7c438561c8809a8be6f8256f4dcd7d7fe89120/ref_ee0a90754a6545239953b15fae752e18.payload",
+      "bytes": 1340,
+      "sha256": "d99bb16bdfa66afbcbf756d17cab2568e69c121f666866a51ece755cae493496"
+    },
+    {
+      "path": "tool-results/chat-7575981745cb5374a373332bee7c438561c8809a8be6f8256f4dcd7d7fe89120/ref_3d2c64da2a224f0ba16885c682528494.payload",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/1CB4DAE0-2652-4BEA-9F29-08A40E7362AF/Library/Application Support/Hanlin/ToolResults/chat-7575981745cb5374a373332bee7c438561c8809a8be6f8256f4dcd7d7fe89120/ref_3d2c64da2a224f0ba16885c682528494.payload",
+      "bytes": 13935,
+      "sha256": "5239c7ea5427b96716722342584c3a097954e77ea3198b2ac20af8a74b4b5b9e"
+    },
+    {
+      "path": "tool-results/chat-7575981745cb5374a373332bee7c438561c8809a8be6f8256f4dcd7d7fe89120/ref_ee0a90754a6545239953b15fae752e18.json",
+      "originalPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/1CB4DAE0-2652-4BEA-9F29-08A40E7362AF/Library/Application Support/Hanlin/ToolResults/chat-7575981745cb5374a373332bee7c438561c8809a8be6f8256f4dcd7d7fe89120/ref_ee0a90754a6545239953b15fae752e18.json",
+      "bytes": 139,
+      "sha256": "1f8cadac0ea21ad3d8c990568c11d8fbebc499f10ce9ac1a88625ad48082ca6e"
+    }
+  ]
+}
