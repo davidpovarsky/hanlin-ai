@@ -1,6 +1,75 @@
 {
   "sourceLanguage" : "zh-Hans",
   "strings" : {
+    "Use selected base model policy": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use selected base model policy"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שימוש במדיניות של מודל הבסיס שנבחר"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "使用所选基础模型的策略"
+          }
+        }
+      }
+    },
+    "Keep the policy currently saved on this model or agent.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keep the policy currently saved on this model or agent."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שמירת המדיניות הקיימת במודל או בסוכן הזה."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "保留当前模型或智能体已保存的策略。"
+          }
+        }
+      }
+    },
+    "Use the selected base model's saved cache policy.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use the selected base model's saved cache policy."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שימוש במדיניות המטמון השמורה במודל הבסיס שנבחר."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "使用所选基础模型已保存的缓存策略。"
+          }
+        }
+      }
+    },
     "Cache policy": {
       "extractionState": "manual",
       "localizations": {
