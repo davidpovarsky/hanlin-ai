@@ -1,0 +1,266 @@
+[
+  {
+    "path": "raw/snapshot-receipt.json",
+    "bytes": 13139,
+    "sha256": "74663345cae2bb65b7de8b1eb6981bfeeb3319288de6b89a7f15bf8aa7ffb608",
+    "originalBytes": 13139,
+    "originalSHA256": "74663345cae2bb65b7de8b1eb6981bfeeb3319288de6b89a7f15bf8aa7ffb608",
+    "compression": null
+  },
+  {
+    "path": "raw/tracked-delta.json",
+    "bytes": 3722,
+    "sha256": "d46ba9bfc67d9dc002defe61a624a1b4e0b1ec4543c138917a268928bd6d8234",
+    "originalBytes": 3722,
+    "originalSHA256": "d46ba9bfc67d9dc002defe61a624a1b4e0b1ec4543c138917a268928bd6d8234",
+    "compression": null
+  },
+  {
+    "path": "raw/miniapp-sdk.json.gz",
+    "bytes": 1301392,
+    "sha256": "67fe3e02f619a0b8cabf2f1c36c4d7b774d3b5f6f621549287852f734c8785c0",
+    "originalBytes": 5219389,
+    "originalSHA256": "6fbba77d588e292b291864f0cae9e5eb5d602a4e2f208379ce1c331dedf412c9",
+    "compression": "gzip"
+  },
+  {
+    "path": "raw/expo-asset-produced-bindings.json",
+    "bytes": 9116,
+    "sha256": "299f617ecc8909c16d2a2776488181b5d399a25abed4f255f6b526f8b78ece52",
+    "originalBytes": 9116,
+    "originalSHA256": "299f617ecc8909c16d2a2776488181b5d399a25abed4f255f6b526f8b78ece52",
+    "compression": null
+  },
+  {
+    "path": "raw/RuntimeDependencies.lock.json",
+    "bytes": 7925,
+    "sha256": "6cdbc18a474febbfc912b35ecbf5b0b55438a6a3e6daf2c33a43792cd04bd50a",
+    "originalBytes": 7925,
+    "originalSHA256": "6cdbc18a474febbfc912b35ecbf5b0b55438a6a3e6daf2c33a43792cd04bd50a",
+    "compression": null
+  },
+  {
+    "path": "raw/Scripts/Expo/package-lock.json",
+    "bytes": 336324,
+    "sha256": "c08757cf46ac4d5c86a873f676af4a3be585db64ae2e1aa1e8288277d4eb63b8",
+    "originalBytes": 336324,
+    "originalSHA256": "c08757cf46ac4d5c86a873f676af4a3be585db64ae2e1aa1e8288277d4eb63b8",
+    "compression": null
+  },
+  {
+    "path": "raw/Scripts/Expo/package.json",
+    "bytes": 1759,
+    "sha256": "e2b50fae013276229c78619bbbe0b63d8c29b00fefde3afeccea98af117aa206",
+    "originalBytes": 1759,
+    "originalSHA256": "e2b50fae013276229c78619bbbe0b63d8c29b00fefde3afeccea98af117aa206",
+    "compression": null
+  },
+  {
+    "path": "raw/Scripts/Expo/dependency-lock.json",
+    "bytes": 5375,
+    "sha256": "b9e3ad6d863e3e5136ad93924ce4edcb37da87578b113523640110af347eec65",
+    "originalBytes": 5375,
+    "originalSHA256": "b9e3ad6d863e3e5136ad93924ce4edcb37da87578b113523640110af347eec65",
+    "compression": null
+  },
+  {
+    "path": "raw/Scripts/MiniApps/upstream-resolution.json",
+    "bytes": 15092,
+    "sha256": "e0c2944ea24c09330825dee58badedcec58606ba603ccdedc888abf1a63a13cb",
+    "originalBytes": 15092,
+    "originalSHA256": "e0c2944ea24c09330825dee58badedcec58606ba603ccdedc888abf1a63a13cb",
+    "compression": null
+  },
+  {
+    "path": "raw/Scripts/NativeScript/package-lock.json",
+    "bytes": 110219,
+    "sha256": "16f569f4bfa6f8806cfe72449866a0dc9a9331f33d2c67170d5292455c48b60b",
+    "originalBytes": 110219,
+    "originalSHA256": "16f569f4bfa6f8806cfe72449866a0dc9a9331f33d2c67170d5292455c48b60b",
+    "compression": null
+  },
+  {
+    "path": "raw/Scripts/NativeScript/package.json",
+    "bytes": 851,
+    "sha256": "08fc03bfa87cd78f4f21f80e9324a4840061105f6e9ab081ed794c569ca7324b",
+    "originalBytes": 851,
+    "originalSHA256": "08fc03bfa87cd78f4f21f80e9324a4840061105f6e9ab081ed794c569ca7324b",
+    "compression": null
+  },
+  {
+    "path": "raw/build/runtime-host/host-metadata.json",
+    "bytes": 358,
+    "sha256": "21579e6ccd76b518940d4b6f4cf1ab469d97919c13fd993ac218af18af47b241",
+    "originalBytes": 358,
+    "originalSHA256": "21579e6ccd76b518940d4b6f4cf1ab469d97919c13fd993ac218af18af47b241",
+    "compression": null
+  },
+  {
+    "path": "raw/build/app-split-evidence/miniapp-documentation-snippets.json",
+    "bytes": 20103,
+    "sha256": "5dce747063a1ffcd7af752f6ee52980093cf140ab5ff1f371e7becfae2747460",
+    "originalBytes": 20103,
+    "originalSHA256": "5dce747063a1ffcd7af752f6ee52980093cf140ab5ff1f371e7becfae2747460",
+    "compression": null
+  },
+  {
+    "path": "raw/build/app-split-evidence/prepared-native/native-artifacts.json",
+    "bytes": 29897,
+    "sha256": "c2c8a3624236d252ad82fd42db967cbf76902c54c89f8cfb39a0f7be77fb710b",
+    "originalBytes": 29897,
+    "originalSHA256": "c2c8a3624236d252ad82fd42db967cbf76902c54c89f8cfb39a0f7be77fb710b",
+    "compression": null
+  },
+  {
+    "path": "raw/build/primary-control/logs-attempt8/split-native-preparation.log.gz",
+    "bytes": 419589,
+    "sha256": "8f0dd8cd1536bd578186f0f93337d5f93b5d7304966f448360e07edd17eff462",
+    "originalBytes": 4019345,
+    "originalSHA256": "9451f196a79ec7de542b05d86d75ecb75825ee993f02c60a92ff3876a157dbbc",
+    "compression": "gzip"
+  },
+  {
+    "path": "raw/build/primary-control/logs-attempt9/split-native-preparation.log",
+    "bytes": 32702,
+    "sha256": "c991c2be959c41940445dc2bad2123f2782793ab4f6c8b56f862b2e7c70d5658",
+    "originalBytes": 32702,
+    "originalSHA256": "c991c2be959c41940445dc2bad2123f2782793ab4f6c8b56f862b2e7c70d5658",
+    "compression": null
+  },
+  {
+    "path": "raw/build/primary-control/logs-attempt9/split-native-artifacts.log",
+    "bytes": 1604,
+    "sha256": "6ba90756cd5ae1a7ee915af12e22160528b0ceb7d8065409f71ea5d5ffa96f27",
+    "originalBytes": 1604,
+    "originalSHA256": "6ba90756cd5ae1a7ee915af12e22160528b0ceb7d8065409f71ea5d5ffa96f27",
+    "compression": null
+  },
+  {
+    "path": "raw/build/primary-control/plan.json",
+    "bytes": 12076,
+    "sha256": "769db2496c2960b2e3064ceb29f06795ccd4f1f1473f50cbdf0b352bcecd5d65",
+    "originalBytes": 12076,
+    "originalSHA256": "769db2496c2960b2e3064ceb29f06795ccd4f1f1473f50cbdf0b352bcecd5d65",
+    "compression": null
+  },
+  {
+    "path": "raw/build/primary-control/source-advance-1812bff5/receipt.json",
+    "bytes": 6144,
+    "sha256": "aa4219c950de0a184fb0c0dce502feb9224ada501feef118890aca7164c8ecfe",
+    "originalBytes": 6144,
+    "originalSHA256": "aa4219c950de0a184fb0c0dce502feb9224ada501feef118890aca7164c8ecfe",
+    "compression": null
+  },
+  {
+    "path": "raw/build/primary-control/source-advance-2b327182/receipt.json",
+    "bytes": 7861,
+    "sha256": "55b6bce47a6ff59228c1558fab1178d9feabb41c10ea270fd0a74be04a3daaa1",
+    "originalBytes": 7861,
+    "originalSHA256": "55b6bce47a6ff59228c1558fab1178d9feabb41c10ea270fd0a74be04a3daaa1",
+    "compression": null
+  },
+  {
+    "path": "raw/build/primary-control/capacity-admission-attempt9.json",
+    "bytes": 2851,
+    "sha256": "6916bb7fa4fc087001d09f00e940fa9657d696f925dcc20f62aaf15452eb5980",
+    "originalBytes": 2851,
+    "originalSHA256": "6916bb7fa4fc087001d09f00e940fa9657d696f925dcc20f62aaf15452eb5980",
+    "compression": null
+  },
+  {
+    "path": "raw/build/acceptance/expo-type-declarations/corrections.json",
+    "bytes": 3600,
+    "sha256": "c5e5322a6177f36a713380134006d4beb3a0ebd275e435e66b7de93a4cb60f82",
+    "originalBytes": 3600,
+    "originalSHA256": "c5e5322a6177f36a713380134006d4beb3a0ebd275e435e66b7de93a4cb60f82",
+    "compression": null
+  },
+  {
+    "path": "raw/Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/.source-build-receipt.json",
+    "bytes": 1355,
+    "sha256": "78a6b4b85330189dd162c09ae250cb280bf7dbe62608ca6438e6f3fabde6ee3b",
+    "originalBytes": 1355,
+    "originalSHA256": "78a6b4b85330189dd162c09ae250cb280bf7dbe62608ca6438e6f3fabde6ee3b",
+    "compression": null
+  },
+  {
+    "path": "raw/Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/.artifact-manifest.json",
+    "bytes": 226,
+    "sha256": "80afcbce26c01da5a63f951e04c6fea5959d3b3a51271d6a24002c35c07ceb47",
+    "originalBytes": 226,
+    "originalSHA256": "80afcbce26c01da5a63f951e04c6fea5959d3b3a51271d6a24002c35c07ceb47",
+    "compression": null
+  },
+  {
+    "path": "raw/Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/Info.plist",
+    "bytes": 1196,
+    "sha256": "b239db0645c42fb07b6dd21e54c6012289f62593186b64b880c419d293da984d",
+    "originalBytes": 1196,
+    "originalSHA256": "b239db0645c42fb07b6dd21e54c6012289f62593186b64b880c419d293da984d",
+    "compression": null
+  },
+  {
+    "path": "raw/build/miniapp-upstreams/expo-native-source/ios/Podfile.lock",
+    "bytes": 76498,
+    "sha256": "c012c6f8ee2ca782aea7788349d75a3a57e6e4be8d324037a8b9dce573e4d8e6",
+    "originalBytes": 76498,
+    "originalSHA256": "c012c6f8ee2ca782aea7788349d75a3a57e6e4be8d324037a8b9dce573e4d8e6",
+    "compression": null
+  },
+  {
+    "path": "raw/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+    "bytes": 9960,
+    "sha256": "610bcbb9a7f90c27e3bd3ecd3b1d139fe3ff72ed18086327d1d96c437de932f5",
+    "originalBytes": 9960,
+    "originalSHA256": "610bcbb9a7f90c27e3bd3ecd3b1d139fe3ff72ed18086327d1d96c437de932f5",
+    "compression": null
+  },
+  {
+    "path": "raw/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/original-runtime-receipt.json",
+    "bytes": 6085,
+    "sha256": "3d619674297acb22ae4d0a97f5e7d8a878b0eccbc3bfc49769cfdb5a05248a0b",
+    "originalBytes": 6085,
+    "originalSHA256": "3d619674297acb22ae4d0a97f5e7d8a878b0eccbc3bfc49769cfdb5a05248a0b",
+    "compression": null
+  },
+  {
+    "path": "raw/docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+    "bytes": 118804,
+    "sha256": "768731f0c748276aeab4d34f57ad3ad89fd38aa30f562ff0cc9b5ad9a3767368",
+    "originalBytes": 118804,
+    "originalSHA256": "768731f0c748276aeab4d34f57ad3ad89fd38aa30f562ff0cc9b5ad9a3767368",
+    "compression": null
+  },
+  {
+    "path": "raw/docs/miniapp-sdk/extension-reachability.json",
+    "bytes": 147521,
+    "sha256": "854dd9133f9de88d62912273c16d11df484c357fb8cd309826e13c1f98fa7885",
+    "originalBytes": 147521,
+    "originalSHA256": "854dd9133f9de88d62912273c16d11df484c357fb8cd309826e13c1f98fa7885",
+    "compression": null
+  },
+  {
+    "path": "raw/docs/miniapp-sdk/extension-reachability.md",
+    "bytes": 21494,
+    "sha256": "39e0f358f0597cdcc890d716a2b3631a72e751b4096296bd0d35543d03639ba6",
+    "originalBytes": 21494,
+    "originalSHA256": "39e0f358f0597cdcc890d716a2b3631a72e751b4096296bd0d35543d03639ba6",
+    "compression": null
+  },
+  {
+    "path": "raw/docs/miniapp-sdk/source-inventory.json",
+    "bytes": 493871,
+    "sha256": "104df0d315f5ddd5b8897e305d20d37c667dd43b6f7d788a3fc872692a13300e",
+    "originalBytes": 493871,
+    "originalSHA256": "104df0d315f5ddd5b8897e305d20d37c667dd43b6f7d788a3fc872692a13300e",
+    "compression": null
+  },
+  {
+    "path": "raw/controller-state-at-capture.json",
+    "bytes": 35377,
+    "sha256": "0602ae1b4362df11262dbc039f6559d80850a8f070fd0acb030cdd7c2d3b1d73",
+    "originalBytes": 35377,
+    "originalSHA256": "0602ae1b4362df11262dbc039f6559d80850a8f070fd0acb030cdd7c2d3b1d73",
+    "compression": null
+  }
+]
