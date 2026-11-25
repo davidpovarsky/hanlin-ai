@@ -1,0 +1,52 @@
+{
+  "utc": "2026-11-25T07:06:31.186499+00:00",
+  "scope": "READ_ONLY_ORIGINAL_ASC_APP_ASSOCIATION_NOT_UPLOAD_OR_GLOBAL_ACCOUNT_ABSENCE",
+  "records": [
+    {
+      "path": "/v1/bundleIds/KTRM7V4TCD/relationships/app",
+      "http_status": 404,
+      "errors": [
+        {
+          "code": "PATH_ERROR_REALTIONSHIP",
+          "title": "The URL path is not valid"
+        }
+      ]
+    },
+    {
+      "path": "/v1/bundleIds/KTRM7V4TCD/app",
+      "http_status": 404,
+      "errors": [
+        {
+          "code": "PATH_ERROR_REALTIONSHIP",
+          "title": "The URL path is not valid"
+        }
+      ]
+    },
+    {
+      "path": "/v1/apps",
+      "http_status": 200,
+      "data": [],
+      "response_sha256": "83ee43d6f8248c2c76e933c4091654527ff9ecc6fbf75dcfa60e25e532e811bc",
+      "has_next": false
+    },
+    {
+      "path": "/v1/apps",
+      "http_status": 200,
+      "data": [
+        {
+          "type": "apps",
+          "id": "6836449016",
+          "attributes": {
+            "name": "Hanlin MiniApps",
+            "bundleId": "com.itorah.hanlinminiapps"
+          },
+          "links": {
+            "self": "https://api.appstoreconnect.apple.com/v1/apps/6836449016"
+          }
+        }
+      ],
+      "response_sha256": "791059e44b4dd44cd95de55502e0ed0da13f098ad6fed2b9a12a7f01b2067b5b",
+      "has_next": false
+    }
+  ]
+}
