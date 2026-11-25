@@ -135,12 +135,13 @@
     },
     "reuse_receipt": "evidence/reuse-receipt-20261125.json",
     "current_app_result": {
-      "source": "4efe8d95f5fd6b9368cf1a8f33cc3ff57acb3688",
-      "status": "FIXED_RETRY_PREPARATION_PENDING",
+      "source": "2ece1c684626eb2a65b815bedcc013af873aef8c",
+      "status": "PREPARING_RETRY",
       "declared_cases": 46,
       "executed": 0,
       "latest_attempt": "evidence/app-native-20261125/attempt02-factory-isolation/index.json",
-      "fix": "Explicit MainActor isolation of both existing live tool factory entrypoints, no body/order/tool-set change"
+      "fix": "Explicit MainActor isolation of both existing live tool factory entrypoints, no body/order/tool-set change",
+      "preparation_reason": "Latest shared NativeScript metadata wrapper requires original dependency preparation, source audits and Host refresh; actor factory fix retained once."
     },
     "runtime_host_result": {
       "source": "04c1942bc88cd4de7deafda7dd342b9b6c401dcf",
@@ -187,11 +188,11 @@
       }
     ]
   },
-  "updated_at": "2026-11-25T02:18:22.822062+00:00",
-  "latest_integrated_source": "4efe8d95f5fd6b9368cf1a8f33cc3ff57acb3688",
+  "updated_at": "2026-11-25T02:23:08.499775+00:00",
+  "latest_integrated_source": "2ece1c684626eb2a65b815bedcc013af873aef8c",
   "synchronized_heads": {
-    "composer": "801bb3f66cfe6d4d0ff9e49e0094ea2887525fbd",
-    "miniapps_sdk": "05a40d39a8b28ec3fd3741800ebf079834a00070",
+    "composer": "aea6d31e311a3f3096014ea2f1c39432371e3ecc",
+    "miniapps_sdk": "fda6948ca6a1f541293a1a1dd20e97f75eb0a527",
     "wave3": "bad6e68df21d4ecfe11f3b6fc3f4242eba5b23ed"
   }
 }
