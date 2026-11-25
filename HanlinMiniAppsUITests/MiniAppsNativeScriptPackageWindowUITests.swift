@@ -154,25 +154,18 @@ final class MiniAppsNativeScriptPackageWindowUITests: XCTestCase {
     private func selectExistingWindowUsingAppExpose(_ name: String) throws -> XCUIElement {
         let title = "NativeScript package " + name
         let system = XCUIApplication(bundleIdentifier: "com.apple.springboard")
-        XCUIDevice.shared.press(.home)
-        let icon = system.icons["Hanlin MiniApps"].firstMatch
-        for _ in 0..<4 {
-            if icon.exists && icon.isHittable { break }
-            system.swipeLeft()
-        }
-        XCTAssertTrue(icon.waitForExistence(timeout: 10))
-        XCTAssertTrue(icon.isHittable)
-        icon.press(forDuration: 1)
-        captureSystemWindowPicker(system, name: "native-open-windows-menu")
 
-        // The real iPadOS menu can list a named window directly. Otherwise use
-        // Apple's Show All Windows surface and select its actual named preview.
-        let titlePredicate = NSPredicate(format: "label CONTAINS[c] %@", title)
-        func namedWindow() -> XCUIElement {
-            let button = system.buttons.matching(titlePredicate).firstMatch
-            return button.exists ? button : system.menuItems.matching(titlePredicate).firstMatch
-        }
-        if !(namedWindow().exists && namedWindow().isHittable) {
+        func showExistingWindows() {
+            XCUIDevice.shared.press(.home)
+            let icon = system.icons["Hanlin MiniApps"].firstMatch
+            for _ in 0..<4 {
+                if icon.exists && icon.isHittable { break }
+                system.swipeLeft()
+            }
+            XCTAssertTrue(icon.waitForExistence(timeout: 10))
+            XCTAssertTrue(icon.isHittable)
+            icon.press(forDuration: 1)
+            captureSystemWindowPicker(system, name: "native-open-windows-menu")
             let button = system.buttons["Show All Windows"].firstMatch
             let showAll = button.exists ? button : system.menuItems["Show All Windows"].firstMatch
             XCTAssertTrue(showAll.waitForExistence(timeout: 10))
@@ -180,13 +173,60 @@ final class MiniAppsNativeScriptPackageWindowUITests: XCTestCase {
             showAll.tap()
             captureSystemWindowPicker(system, name: "native-app-expose-existing-windows")
         }
-        let choice = namedWindow()
-        XCTAssertTrue(choice.waitForExistence(timeout: 15),
-                      "App Exposé must expose the still-pending named original window.")
-        XCTAssertTrue(choice.isHittable)
-        choice.tap()
-        let window = app.windows.containing(.navigationBar, identifier: title).firstMatch
-        XCTAssertTrue(window.waitForExistence(timeout: 20))
+
+        showExistingWindows()
+        // iPadOS exposes these actual previews as Other elements named after
+        // the application, not the request title visible inside each preview.
+        // Capture the real scene-card identifiers, then select existing cards
+        // through the system UI until the original request is in the foreground.
+        let cardPredicate = NSPredicate(
+            format: "identifier BEGINSWITH %@",
+            "card:com.itorah.hanlinminiapps:sceneID:"
+        )
+        let cards = system.otherElements.matching(cardPredicate)
+        XCTAssertTrue(cards.firstMatch.waitForExistence(timeout: 15),
+                      "App Exposé must expose existing MiniApps window previews.")
+        let cardIDs = cards.allElementsBoundByIndex.map { $0.identifier }
+        XCTAssertEqual(Set(cardIDs).count, cardIDs.count,
+                       "Each existing system window card must have a unique scene identity.")
+        let inventory = XCTAttachment(string: cardIDs.joined(separator: "\n"))
+        inventory.name = "native-existing-window-card-identifiers"
+        inventory.lifetime = .keepAlways
+        add(inventory)
+
+        var selectedWindow: XCUIElement?
+        for (index, cardID) in cardIDs.enumerated() {
+            if index > 0 { showExistingWindows() }
+            let choice = system.otherElements[cardID].firstMatch
+            XCTAssertTrue(choice.waitForExistence(timeout: 10))
+            XCTAssertTrue(choice.isHittable)
+            let attempt = XCTAttachment(string: cardID)
+            attempt.name = "native-existing-window-card-attempt-\(index)"
+            attempt.lifetime = .keepAlways
+            add(attempt)
+            choice.tap()
+            try NativeScriptWindowUIInteractions.assertSameProcess(
+                in: app, expected: &nativeProcessID, requestID: try XCTUnwrap(requests[name])
+            )
+            capture("native-existing-window-card-opened-\(index)")
+            let window = app.windows.containing(.navigationBar, identifier: title).firstMatch
+            let increment = window.buttons["hanlin-ns-window-increment"]
+            let foreground = XCTNSPredicateExpectation(
+                predicate: NSPredicate(format: "exists == true AND hittable == true"),
+                object: increment
+            )
+            if XCTWaiter.wait(for: [foreground], timeout: 5) == .completed,
+               app.state == .runningForeground {
+                let selected = XCTAttachment(string: cardID)
+                selected.name = "native-existing-window-card-selected"
+                selected.lifetime = .keepAlways
+                add(selected)
+                selectedWindow = window
+                break
+            }
+        }
+        let window = try XCTUnwrap(selectedWindow,
+            "An actual existing window preview must reopen the still-pending original request.")
         XCTAssertTrue(window.buttons["hanlin-ns-window-increment"].isHittable)
         try NativeScriptWindowUIInteractions.assertSameProcess(
             in: app, expected: &nativeProcessID, requestID: try XCTUnwrap(requests[name])
