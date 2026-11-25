@@ -1,6 +1,6 @@
 # Composer capabilities: validation evidence
 
-This packet records the successful original `HanlinApplication` library compilation at `aea6d31e311a3f3096014ea2f1c39432371e3ecc`, NativeScript fixture/preflight recovery, the actual Host7 failure followed by the successful unchanged-source Host8 retry, and native artifact export/verification at generated freeze `b739ada91aca115093e3511f9df58c15edcb5923`. Four failed full application build attempts remain preserved. The library build does not establish a successful full application build or runtime/UI acceptance. The isolated documentation branch is based on `189ca0d73a8f9b92451d343ca84b4b7074c57c6c`. Overall completion is **pending**. This packaging work ran no compiler, tests, native preparer or simulator.
+The full `AI_HLY` Debug build-for-testing passed at `b739ada91aca115093e3511f9df58c15edcb5923`, with exit 0 after 1040.388 seconds. This packet preserves its original receipt, complete log, xcresult file hashes and generated NativeScript metadata evidence, alongside the prior library, preparation, Host and artifact proofs. The four earlier full application build failures remain preserved. Functional, native-engine, editor and UI tests have not been inferred from the successful build; the subsequent generated test-manifest guard requires an environment correction before those tests begin. The companion application build remains pending. The isolated documentation branch is based on `189ca0d73a8f9b92451d343ca84b4b7074c57c6c`. Overall completion is **pending**. This packaging work ran no compiler, tests, native preparer or simulator.
 
 The [validation plan](VALIDATION_PLAN.json) records the remaining gates. The [machine index](EVIDENCE_INDEX.json) lists results and their receipt paths. [Packaging metadata](evidence/package-20261125.json) maps copied files to their original paths and checksums; [SHA256SUMS](evidence/SHA256SUMS-20261125) covers the packaged evidence.
 
@@ -29,6 +29,7 @@ The dedicated manifest regression, native artifact preparation, and completed Ru
 | AI_HLY build-for-testing attempt 2 | `20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91` | Exit 65 after 261.208s; two compiler errors reject the private stored `focused` property. No acceptance tests executed by this build command | [receipt](evidence/app-build-attempt2-20fb9f711/ai-hly-build-attempt2.json), [xcresult errors](evidence/app-build-attempt2-20fb9f711/ai-hly-build-attempt2-errors.json), [complete compressed log](evidence/app-build-attempt2-20fb9f711/ai-hly-build-attempt2.log.gz) |
 | AI_HLY build-for-testing attempt 3 | `91ac2c3868d9a056815bca56448e0cfcabd54eed` | Exit 65 after 134.632s; optional `Result` inference error in the NativeScript host-services adapter. No acceptance tests executed | [receipt](evidence/app-build-attempt3-91ac2c386/ai-hly-build-attempt3.json), [xcresult errors](evidence/app-build-attempt3-91ac2c386/ai-hly-build-attempt3-errors.json), [complete compressed log](evidence/app-build-attempt3-91ac2c386/ai-hly-build-attempt3.log.gz) |
 | AI_HLY build-for-testing attempt 4 | `712fc49fe656e0b9a4c7e691752377b879fd6e24` | Exit 65 after 175.793s; actor-isolated tool-name access in the live executor factory. No acceptance tests executed | [receipt](evidence/app-build-attempt4-712fc49fe/ai-hly-build-attempt4.json), [log-derived diagnostic](evidence/app-build-attempt4-712fc49fe/derived-compiler-errors.json), [complete compressed log](evidence/app-build-attempt4-712fc49fe/ai-hly-build-attempt4.log.gz) |
+| AI_HLY build-for-testing attempt 5 | `b739ada91aca115093e3511f9df58c15edcb5923` | **Exit 0 / TEST BUILD SUCCEEDED** in 1040.388s; lock unchanged and no tracked changes; acceptance tests not executed by the build | [receipt](evidence/app-build-attempt5-b739ada91/ai-hly-build-attempt5.json), [complete compressed log](evidence/app-build-attempt5-b739ada91/ai-hly-build-attempt5.log.gz), [assessment](evidence/app-build-attempt5-b739ada91/build-and-metadata-assessment.json) |
 | HanlinApplication library build | `aea6d31e311a3f3096014ea2f1c39432371e3ecc` | Exit 0 in 571.716s; original library compilation only, with stable Host6 resource; no acceptance tests | [receipt](evidence/application-library-aea6d31e3/application-module-build-attempt1.json), [complete compressed log](evidence/application-library-aea6d31e3/application-module-build-attempt1.log.gz) |
 | NativeScript metadata preparation | `aea6d31e311a3f3096014ea2f1c39432371e3ecc` | Original preparer exit 0 in 6.674s; installed wrapper hash matches exact owner source | [receipt](evidence/native-script-preparation-199da0f9e/native-script-metadata-preparation.json) |
 | NativeScript initial preflight | `aea6d31e311a3f3096014ea2f1c39432371e3ecc` | Exit 1 in 0.307s; original SwiftUI fixture package.json absent | [receipt](evidence/native-script-preparation-199da0f9e/native-script-metadata-preflight.json), [raw log](evidence/native-script-preparation-199da0f9e/native-script-metadata-preflight.log.gz) |
@@ -198,18 +199,47 @@ The authorized parent and M5 milestone descriptions were updated in a single suc
 
 The first milestone reports the library-only pass, actual fixture/preflight recovery and open full-app/native/UI gates. A subsequent authorized combined milestone was written in one successful 2-of-2 batch at **02:52:54 UTC**, covering Host7/8 and the native catalog export/verify with qualified reuse. Its [acknowledgement and read-back](evidence/asana-milestone-20261125-025254.json) confirm that both tasks remain incomplete and all prior rich/plain descriptions are byte-identical. Asana normalized only the new heading markup. Both complete new summaries were verified, with no repeated write or read-back retry. Full application and native/editor/UI gates remain open.
 
+### Full AI_HLY build-for-testing PASS
+
+The original fifth `AI_HLY` Debug build-for-testing ran at `b739ada91aca115093e3511f9df58c15edcb5923`, from **02:40:52.964773 to 02:58:13.349471 UTC**, and completed with **exit 0 in 1040.388 seconds**. The original log contains `TEST BUILD SUCCEEDED`. The [receipt](evidence/app-build-attempt5-b739ada91/ai-hly-build-attempt5.json) records the task's iPhone simulator destination, isolated DerivedData, exact pinned package graph, an unchanged resolved lock and no tracked source changes.
+
+This is an actual full `AI_HLY` application and test-product build. It is separate from the prior library-only pass. The build-for-testing command does not execute the functional, native-engine, editor or UI cases, and it does not complete the companion `HanlinMiniApps` build gate.
+
+The complete **7,383,108-byte** raw build log is preserved with lossless compression. Its SHA-256 is `164cdd23b48d96255b7200b129b8b73a4e3ff001bf53c2ea7d4cda94846c0ecc`. The original xcresult remains on the Mac, with its [seven-file hash inventory](evidence/app-build-attempt5-b739ada91/xcresult-sha256.json) retained. The [build and metadata assessment](evidence/app-build-attempt5-b739ada91/build-and-metadata-assessment.json) binds these records to their actual source.
+
+### NativeScript metadata generated during attempt 5
+
+The original [visibility result](evidence/app-build-attempt5-b739ada91/metadata/visibility.json) records **all twelve required strings present** and **zero clang errors** for arm64 iOS Simulator metadata. It explicitly declares `HOST_BASELINE_ONLY` and a build-time completeness check. The required names include `TNSLabel`, `NSCCrypto`, the NativeScript services/session bridges, SwiftUI fixture/provider and WebKit classes/delegate.
+
+The visibility file was modified at **02:49:35.178945 UTC**, within the recorded attempt-5 build interval. Its SHA-256 is `ee2499dca17090de31c058652ca6e22e6df9fb87b0ff7e73c8d7c65910a3ee01`. The actual metadata binary remained on the Mac and was read-only hashed as `5a3385b02b9f1c626301a326d32068aadc5d6ef6ceb4fa5bae486a978321fbba`. The original 2,207,738-byte [compiler stderr log](evidence/app-build-attempt5-b739ada91/metadata/metadata-generation-stderr-arm64.txt.gz), hash `9518b950dd8d66ddec4588cd2f52552330b306ad93de0578f135e1b493192220`, is preserved without loss.
+
+The original headers and compressed framework/header inventories are retained with the [eight-file source hash manifest](evidence/app-build-attempt5-b739ada91/metadata/source-files-sha256.json). Each output hash declared in the visibility result matches the actual observed file. The [original compiler provenance](evidence/app-build-attempt5-b739ada91/metadata/provenance.json) identifies reused metadata-compiler source `5d4569c197810cdd4c1e02e7c16d42a01a77d5c0`; this is **the build tool's origin**, separately from application source `b739ada91`. Its original tool-only boundary has not been relabeled as an application or VM result.
+
+Metadata completeness establishes the recorded build-time baseline. Actual NativeScript VM behavior and the selected engine tests remain pending.
+
+### Generated test-manifest prerequisite
+
+The original [built-products guard](evidence/app-build-attempt5-b739ada91/built-products-preflight-attempt1.json), checked at **03:00:05.269599 UTC**, confirms the successful build and identifies a separate prerequisite: the fresh `.xctestrun` manifest has no `HANLIN_UNIT_TEST_HOST` entry in either inspected environment map for either `AI_HLYTests` or `AI_HLYUITests`.
+
+The manifest was generated at **02:58:11.389953 UTC**, with SHA-256 `b2cc79f4b3780daec837e119cc5e4a07d5ecccd618ab793b88bb0b80dbfa2062`. The original guard states that no application tests were launched. Source ownership and the correction were under investigation when this packet was captured. This is a blocked test prerequisite, **not a failed application build or an executed test failure**.
+
+### Verified full-build Asana milestone
+
+The parent and M5 descriptions were updated in one successful **2-of-2** batch at **02:59:20 UTC**. The [acknowledgement and read-back](evidence/asana-milestone-20261125-025920.json) confirm both tasks remain incomplete, the new summaries are exact, and all previous rich/plain content is byte-identical. The milestone records the full build PASS and twelve-string/zero-clang metadata boundary while keeping companion compilation and functional/native/editor/UI gates open. It preceded the separately retained 03:00 test-manifest guard.
+
 ## Required work still pending
 
 | Gate | Exact pending scope |
 |---|---|
-| Application compilation | Two Debug `build-for-testing` schemes: `AI_HLY` and `HanlinMiniApps` |
+| Companion application compilation | Remaining Debug `build-for-testing` scheme: `HanlinMiniApps`; `AI_HLY` passed in attempt 5 |
+| Test launch prerequisite | Correct and verify the explicit test-host environment in the generated test manifest before actual test execution |
 | App selection / storage / policy integration | 13 methods: six composer integration, five MiniApp assistant-tool, one original Skill policy and one prepared Expo discovery method |
 | Original native engines | Four `HanlinUnifiedHostServicesE2ETests` methods |
 | Native UIKit editor regressions | Four selected `NativeComposerLineSizingTests` methods |
 | iPhone UI | Three composer-capability UI methods plus the existing model-picker/draft regression |
 | iPad UI | The same three composer-capability UI methods |
 
-This packet records four failed `AI_HLY` builds, successful library-only compilation, actual NativeScript preparation/fixture/preflight recovery, the retained Host7 failure and successful Host8 retry, and native artifact export/verification at `b739ada91`. It contains no successful full application build or application/native/editor/UI test result. The pending gates above remain open.
+This packet records the successful fifth full `AI_HLY` build, the four earlier failed attempts, the prior library-only pass, actual NativeScript preparation/fixture/preflight recovery, Host7 failure and Host8 pass, and native artifact export/verification. `HanlinMiniApps` compilation and application/native/editor/UI test results remain pending. The generated test-manifest environment guard is a recorded prerequisite issue; it does not reverse the actual build PASS.
 
 The UI inventory is **seven executions across two devices**, comprising four distinct methods. The catalog/map fixture supplies UI metadata only; it does not provide a tool executor or a fabricated model response.
 

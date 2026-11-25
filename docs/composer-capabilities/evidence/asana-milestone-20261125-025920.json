@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "updatedAtUTC": "2026-11-25 02:59:20 UTC",
+  "mutationFields": [
+    "html_notes"
+  ],
+  "writeAttempts": 1,
+  "readBackRetries": 0,
+  "completionChanged": false,
+  "acknowledgement": {
+    "data": [
+      {
+        "gid": "1220882717750164",
+        "name": "[HANLIN-COMPOSER-CAPABILITIES][P0] צירוף מפורש לכל הודעה + assistantTool + ממשק הגדרות בבועה"
+      },
+      {
+        "gid": "1220882600644494",
+        "name": "[M5][רוני | QA] שילוב עדכני ובדיקות Mac ממוקדות"
+      }
+    ],
+    "failed": [],
+    "summary": "Updated 2 of 2 tasks."
+  },
+  "verification": [
+    {
+      "id": "1220882717750164",
+      "readBackSucceeded": true,
+      "completed": false,
+      "completionUnchanged": true,
+      "modifiedAt": "2026-11-25T02:59:22.601Z",
+      "originalPlainNotesExact": true,
+      "originalRichNotesExact": true,
+      "expectedHTMLExact": true,
+      "newPlainSummaryExact": true,
+      "permalinkURL": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1220882717750164"
+    },
+    {
+      "id": "1220882600644494",
+      "readBackSucceeded": true,
+      "completed": false,
+      "completionUnchanged": true,
+      "modifiedAt": "2026-11-25T02:59:22.347Z",
+      "originalPlainNotesExact": true,
+      "originalRichNotesExact": true,
+      "expectedHTMLExact": true,
+      "newPlainSummaryExact": true,
+      "permalinkURL": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1220882600644494"
+    }
+  ],
+  "newMilestoneSummary": "עדכון אבן דרך — בניית AI_HLY מלאה עברה — 2026-11-25 02:59:20 UTC\n\nניסיון 5 של בניית האפליקציה המלאה AI_HLY מסוג Debug build-for-testing הושלם בפועל בהצלחה על שרת המק דרך SentinelX: ‏exit 0 ו-TEST BUILD SUCCEEDED. מקור מדויק: b739ada91aca115093e3511f9df58c15edcb5923; התחלה 02:40:52.964773 UTC, סיום 02:58:13.349471 UTC, משך 1040.388 שניות.\nההרצה השתמשה ביעד iPhone Simulator של המשימה, בגרף החבילות הנעול וב-DerivedData המבודד. הקבלה המקורית מאשרת resolvedLockUnchanged=true וללא שינויים בקבצי המקור המנוהלים. SHA-256 של יומן הקמפול המקורי: 164cdd23b48d96255b7200b129b8b73a4e3ff001bf53c2ea7d4cda94846c0ecc. הקבלה, היומן המלא ו-xcresult נשמרו; ניסיונות 1–4 שנכשלו נשארים מתועדים עם מקורם ונסיבותיהם.\nזהו כעת PASS של בניית AI_HLY המלאה, מעבר ל-PASS הקודם של ספריית HanlinApplication בלבד. build-for-testing בונה את האפליקציה ואת מוצרי הבדיקות; הוא אינו הוכחה שהבדיקות או התרחישים הפונקציונליים כבר רצו.\n\nגם בדיקת השלמות של מטא-דאטת NativeScript שנוצרה בזמן הבנייה עברה: כל 12 מחרוזות ה-API הנדרשות קיימות, כולל TNSLabel ו-NSCCrypto, ומספר שגיאות clang הוא 0. קובץ visibility.json מגדיר במפורש HOST_BASELINE_ONLY ובדיקת build-time, ולא קבלת VM.\nSHA-256 של visibility.json: ‏ee2499dca17090de31c058652ca6e22e6df9fb87b0ff7e73c8d7c65910a3ee01; של metadata-arm64.bin: ‏5a3385b02b9f1c626301a326d32068aadc5d6ef6ceb4fa5bae486a978321fbba; של יומן stderr המקורי: ‏9518b950dd8d66ddec4588cd2f52552330b306ad93de0578f135e1b493192220.\nה-sourceCommit ‏5d4569c1… בקובץ provenance של כלי המטא-דאטה מציין את מקור קומפיילר המטא-דאטה המקורי שנעשה בו שימוש חוזר. הוא אינו מקור האפליקציה, שנותר b739ada91; אין ממנו הסקת הצלחת runtime.\n\nנותר לביצוע ולאימות: בדיקות הקבלה הפונקציונליות/מדיניות/שימור, ארבע בדיקות מנוע native, ארבע בדיקות העורך, בדיקות UI באייפון ובאייפד, ובניית HanlinMiniApps לאחר קבוצות הבדיקות של AI_HLY. הסוכן הראשי מנהל את קדם-הבדיקות העדכניות ואת חמש קבוצות הבדיקות על המק; מקור המק נשאר קפוא ב-b739ada91. שום שער פונקציונלי/UI אינו נסגר על בסיס הבנייה בלבד, והמשימות נשארות לא הושלמו.\npacket הראיות הבא יתעד את ההצלחה הזו ואת גבולות המטא-דאטה ב-docs/composer-capabilities, תוך שמירת כל הראיות והכישלונות הקודמים וללא הרצת קמפול כפולה.",
+  "originalTaskBodiesIncluded": false,
+  "applicationSourceCommit": "b739ada91aca115093e3511f9df58c15edcb5923",
+  "acceptanceTestsInferred": false
+}

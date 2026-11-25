@@ -1740,9 +1740,157 @@
       "sourcePath": "Original Asana batch acknowledgement and verified task read-backs at 2026-11-25 02:52:54 UTC; prior task bodies excluded",
       "compressedForRepository": false,
       "derived": true
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt5-b739ada91/ai-hly-build-attempt5.json",
+      "bytes": 1459,
+      "sha256": "df7b5a4dad356d88dbe735342423742c9e86377355e0e9926b7de5ac599053fc",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/ai-hly-build-attempt5.json",
+      "sourceBytes": 1459,
+      "sourceSHA256": "df7b5a4dad356d88dbe735342423742c9e86377355e0e9926b7de5ac599053fc",
+      "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt5-b739ada91/ai-hly-build-attempt5.log.gz",
+      "bytes": 239245,
+      "sha256": "f58708af64fe7defd08176dad8a637925910cc2ef15633308739973c726bd1f1",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/ai-hly-build-attempt5.log",
+      "sourceBytes": 7383108,
+      "sourceSHA256": "164cdd23b48d96255b7200b129b8b73a4e3ff001bf53c2ea7d4cda94846c0ecc",
+      "compressedForRepository": true,
+      "uncompressedLogSHA256": "164cdd23b48d96255b7200b129b8b73a4e3ff001bf53c2ea7d4cda94846c0ecc",
+      "uncompressedLogBytes": 7383108
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt5-b739ada91/metadata/visibility.json",
+      "bytes": 973,
+      "sha256": "ee2499dca17090de31c058652ca6e22e6df9fb87b0ff7e73c8d7c65910a3ee01",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/acceptance/nativescript-metadata/iphonesimulator-arm64/visibility.json",
+      "sourceBytes": 973,
+      "sourceSHA256": "ee2499dca17090de31c058652ca6e22e6df9fb87b0ff7e73c8d7c65910a3ee01",
+      "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt5-b739ada91/metadata/provenance.json",
+      "bytes": 935,
+      "sha256": "f83479c7a5cdf9014fb7b5f2bf8425ecf9809c4de9680666ca255706022b9696",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/acceptance/nativescript-metadata/iphonesimulator-arm64/provenance.json",
+      "sourceBytes": 935,
+      "sourceSHA256": "f83479c7a5cdf9014fb7b5f2bf8425ecf9809c4de9680666ca255706022b9696",
+      "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt5-b739ada91/metadata/metadata-generation-stderr-arm64.txt.gz",
+      "bytes": 192944,
+      "sha256": "fa142fdae7372b572689cbf4330215dbee25a84d353e2ada2e67131d98642ef7",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/acceptance/nativescript-metadata/iphonesimulator-arm64/metadata-generation-stderr-arm64.txt",
+      "sourceBytes": 2207738,
+      "sourceSHA256": "9518b950dd8d66ddec4588cd2f52552330b306ad93de0578f135e1b493192220",
+      "compressedForRepository": true,
+      "uncompressedLogSHA256": "9518b950dd8d66ddec4588cd2f52552330b306ad93de0578f135e1b493192220",
+      "uncompressedLogBytes": 2207738
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt5-b739ada91/metadata/HanlinMetadataInput.h",
+      "bytes": 4056,
+      "sha256": "4b2eeb938c104bfda51cccc496200a27dcd125c7e8fbe0cc35e8cc80ef22ca50",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/acceptance/nativescript-metadata/iphonesimulator-arm64/HanlinMetadataInput.h",
+      "sourceBytes": 4056,
+      "sourceSHA256": "4b2eeb938c104bfda51cccc496200a27dcd125c7e8fbe0cc35e8cc80ef22ca50",
+      "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt5-b739ada91/metadata/umbrella-arm64.h",
+      "bytes": 4056,
+      "sha256": "4b2eeb938c104bfda51cccc496200a27dcd125c7e8fbe0cc35e8cc80ef22ca50",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/acceptance/nativescript-metadata/iphonesimulator-arm64/umbrella-arm64.h",
+      "sourceBytes": 4056,
+      "sourceSHA256": "4b2eeb938c104bfda51cccc496200a27dcd125c7e8fbe0cc35e8cc80ef22ca50",
+      "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt5-b739ada91/metadata/HanlinMetadataInput.inventory.json.gz",
+      "bytes": 52757,
+      "sha256": "247b25ff6a7d905ae5fea1b77122d7f073b14257623e3a672946b5dfb0143315",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/acceptance/nativescript-metadata/iphonesimulator-arm64/HanlinMetadataInput.inventory.json",
+      "sourceBytes": 127914,
+      "sourceSHA256": "70d32cb9bad7740f567ed6b3be73314a55dbcf5a2e85accd36af6686271a48eb",
+      "compressedForRepository": true,
+      "uncompressedSHA256": "70d32cb9bad7740f567ed6b3be73314a55dbcf5a2e85accd36af6686271a48eb",
+      "uncompressedBytes": 127914
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt5-b739ada91/metadata/FrameworkSearchView.inventory.json.gz",
+      "bytes": 569245,
+      "sha256": "f2025259789affed4e6b42180bf571c766ef834026c4e06fd80264c46c6bffbd",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/acceptance/nativescript-metadata/iphonesimulator-arm64/FrameworkSearchView.inventory.json",
+      "sourceBytes": 1526259,
+      "sourceSHA256": "72d8d2420ea42faa0bbe3a62262586627d7f699b26fe3a077417363ce4083bbf",
+      "compressedForRepository": true,
+      "uncompressedSHA256": "72d8d2420ea42faa0bbe3a62262586627d7f699b26fe3a077417363ce4083bbf",
+      "uncompressedBytes": 1526259
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt5-b739ada91/xcresult-sha256.json",
+      "bytes": 1964,
+      "sha256": "dd7e53f6f0435cbe3599da873a591c656bc4b3e67132be0226e73ac09385f171",
+      "sourcePath": "Read-only original Mac build-for-testing xcresult file hashes",
+      "compressedForRepository": false,
+      "derived": true
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt5-b739ada91/metadata/source-files-sha256.json",
+      "bytes": 2920,
+      "sha256": "a123b061785de8abd6e8466057581a4ef020f53ddccfc11cd153b4844d282105",
+      "sourcePath": "Read-only exact generated metadata inventory including unmodified Mac binary",
+      "compressedForRepository": false,
+      "derived": true
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt5-b739ada91/transfer-receipt.json",
+      "bytes": 7084,
+      "sha256": "cb2d57e0ac6fb001ce04261a211c03f2dba4a09b6d69ed1cb1e1bd0f84c87699",
+      "sourcePath": "Read-only verified transfer of completed AI_HLY attempt5 and build-time metadata evidence",
+      "compressedForRepository": false,
+      "derived": true
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt5-b739ada91/built-products-preflight-attempt1.json",
+      "bytes": 1323,
+      "sha256": "0a1d93cc3e724bc7058c6478dd3b3e8ab2026f635d495eb26fc13bc920975f2e",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/built-products-preflight-attempt1.json",
+      "sourceBytes": 1323,
+      "sourceSHA256": "0a1d93cc3e724bc7058c6478dd3b3e8ab2026f635d495eb26fc13bc920975f2e",
+      "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt5-b739ada91/build-and-metadata-assessment.json",
+      "bytes": 3598,
+      "sha256": "0a829ed7346f21798cf22ffed92e4d3b5c229e243b4aaf1700e28690615bd80b",
+      "sourcePath": "Derived exact-source assessment of original successful AI_HLY build, generated metadata and subsequent test-manifest prerequisite guard",
+      "compressedForRepository": false,
+      "derived": true
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/asana-milestone-20261125-025920.json",
+      "bytes": 4883,
+      "sha256": "ddd74364495939529a3e619d17420779fc265c6c98c71b3c323c42b347bd20f9",
+      "sourcePath": "Original Asana batch acknowledgement and verified full-build milestone read-backs; prior task bodies excluded",
+      "compressedForRepository": false,
+      "derived": true
     }
   ],
-  "updatedAtUTC": "2026-11-25T02:54:29.691177+00:00",
+  "updatedAtUTC": "2026-11-25T03:04:38.309734+00:00",
   "latestEvidenceCheckpoint": "b739ada91aca115093e3511f9df58c15edcb5923",
   "latestRecordedExecutionSource": "b739ada91aca115093e3511f9df58c15edcb5923"
 }

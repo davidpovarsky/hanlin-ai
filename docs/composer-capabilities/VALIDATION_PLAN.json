@@ -4,7 +4,7 @@
   "asanaTask": "1220882717750164",
   "sourceBase": "0929e07a6a6adae3a27cab5c514623c7cc0f157c",
   "sourceSnapshot": "8a67e7aee83c6b12673db1348b7f550a2805de50",
-  "finalSource": "PENDING full application and native/editor/UI validation. Original HanlinApplication library compilation passed at aea6d31e3. NativeScript preparation, fixture production and second preflight passed at their recorded sources, retaining the initial failure. Host7 failed 174/3/1 and Host8 passed 177/0/1 on unchanged bcd44d23 source; generated inventory freeze and native artifact export/verification are recorded at b739ada91. Four completed full application builds remain failed.",
+  "finalSource": "Full AI_HLY Debug build-for-testing passed at b739ada91: exit 0 in 1040.388s, unchanged lock and no tracked changes. Generated NativeScript metadata has all 12 required strings and zero clang errors; this is build-time HOST_BASELINE_ONLY evidence. The subsequent fresh test-manifest guard requires the explicit test-host environment correction before application tests launch. Companion HanlinMiniApps compilation and functional/native/editor/UI acceptance remain pending. Earlier four failed app attempts and Host7 failure remain preserved.",
   "runner": {
     "host": "scaleway-mac",
     "transport": "SentinelX direct",
@@ -92,7 +92,7 @@
       "status": "EXECUTED_PASS",
       "executionSource": "f54aebbb35169ea63eca146a1ba3ef4e8bf4f84d",
       "evidence": "docs/composer-capabilities/evidence/mac-validation-20261125/app-preparation.json",
-      "finalSourceFreshness": "Original metadata/fixture preparation and Host8 archive freshness passed at their recorded sources, generated freeze b739ada91. Full consumer application validation remains pending."
+      "finalSourceFreshness": "Original generated sources and Host8 archive are recorded at b739ada91. Full AI_HLY consumer compilation passed there; companion compilation and actual runtime/UI acceptance remain pending."
     },
     {
       "id": "native_preparation",
@@ -419,15 +419,23 @@
       "pending": true,
       "expectedBuilds": 2,
       "progress": {
-        "status": "APPLICATION_LIBRARY_PASSED_FULL_APPLICATION_VALIDATION_PENDING",
-        "latestCompletedAttempt": 4,
-        "latestCompletedBuildSource": "712fc49fe656e0b9a4c7e691752377b879fd6e24",
-        "latestCompletedBuildStatus": "FAILED",
+        "status": "AI_HLY_BUILD_PASSED_COMPANION_AND_ACCEPTANCE_PENDING",
+        "latestCompletedAttempt": 5,
+        "latestCompletedBuildSource": "b739ada91aca115093e3511f9df58c15edcb5923",
+        "latestCompletedBuildStatus": "PASSED",
         "actorCorrectionIntegratedCommit": "aea6d31e311a3f3096014ea2f1c39432371e3ecc",
         "metadataIntakeIntegratedCommit": "e08a77146a6bef97a0be8cd90dfdf1d30e2255ba",
         "provenance": "evidence/runtime-host-final-attempt6-801bb3f66/source-and-build-assessment.json",
-        "completedSuccessfulBuildInThisPacket": false,
-        "libraryCompilation": "evidence/application-library-aea6d31e3/application-module-build-attempt1.json"
+        "completedSuccessfulBuildInThisPacket": true,
+        "libraryCompilation": "evidence/application-library-aea6d31e3/application-module-build-attempt1.json",
+        "successfulBuildSchemes": [
+          "AI_HLY"
+        ],
+        "pendingBuildSchemes": [
+          "HanlinMiniApps"
+        ],
+        "latestBuildReceipt": "evidence/app-build-attempt5-b739ada91/ai-hly-build-attempt5.json",
+        "testsExecutedByLatestBuild": 0
       },
       "attempts": [
         {
@@ -488,6 +496,21 @@
           "rawLogSHA256": "565d4477238385a062ad2ece425960abfa5e40b1edba10f0412dd2d30a3bbf87",
           "failureClassification": "MAINACTOR_NATIVE_TOOL_NAME_ACCESS",
           "acceptanceTestsExecuted": 0
+        },
+        {
+          "id": "AI_HLY attempt5",
+          "source": "b739ada91aca115093e3511f9df58c15edcb5923",
+          "status": "PASSED",
+          "startedAtUTC": "2026-11-25T02:40:52.964773+00:00",
+          "finishedAtUTC": "2026-11-25T02:58:13.349471+00:00",
+          "exitCode": 0,
+          "durationSeconds": 1040.388,
+          "receipt": "evidence/app-build-attempt5-b739ada91/ai-hly-build-attempt5.json",
+          "assessment": "evidence/app-build-attempt5-b739ada91/build-and-metadata-assessment.json",
+          "rawLogSHA256": "164cdd23b48d96255b7200b129b8b73a4e3ff001bf53c2ea7d4cda94846c0ecc",
+          "resolvedLockUnchanged": true,
+          "trackedChangesEmpty": true,
+          "acceptanceTestsExecuted": 0
         }
       ],
       "moduleCacheRepair": {
@@ -503,7 +526,30 @@
         "source": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91",
         "receipt": "evidence/app-build-attempt2-20fb9f711/isolated-stale-module-cache-retirement.json",
         "classification": "ORCHESTRATION_NOT_ACCEPTANCE"
-      }
+      },
+      "completedBuilds": 1,
+      "completedSchemes": [
+        "AI_HLY"
+      ],
+      "remainingSchemes": [
+        "HanlinMiniApps"
+      ]
+    },
+    {
+      "id": "test_manifest_preflight",
+      "why": "Actual generated xctestrun environment must select the intended unit-test host mode before the original test suites launch.",
+      "status": "BLOCKED_TEST_ENVIRONMENT",
+      "source": "b739ada91aca115093e3511f9df58c15edcb5923",
+      "receipt": "evidence/app-build-attempt5-b739ada91/built-products-preflight-attempt1.json",
+      "checkedAtUTC": "2026-11-25T03:00:05.269599+00:00",
+      "manifestSHA256": "b2cc79f4b3780daec837e119cc5e4a07d5ecccd618ab793b88bb0b80dbfa2062",
+      "missingVariable": "HANLIN_UNIT_TEST_HOST",
+      "affectedTargets": [
+        "AI_HLYTests",
+        "AI_HLYUITests"
+      ],
+      "appTestsLaunched": false,
+      "successfulBuildRetained": true
     },
     {
       "id": "app_scope",
@@ -522,6 +568,20 @@
         "HanlinMiniAppAssistantToolTests": 5,
         "SkillOpenClawPolicyTests/currentOriginalPolicyControlsLoadReadAndActualSDKContinuation": 1,
         "HanlinMiniAppHostDiscoveryTests/preparedExpoActionExportsKeepTheirInstalledAppInTheCatalog": 1
+      },
+      "launchPrerequisite": {
+        "status": "BLOCKED_TEST_ENVIRONMENT",
+        "source": "b739ada91aca115093e3511f9df58c15edcb5923",
+        "receipt": "evidence/app-build-attempt5-b739ada91/built-products-preflight-attempt1.json",
+        "checkedAtUTC": "2026-11-25T03:00:05.269599+00:00",
+        "manifestSHA256": "b2cc79f4b3780daec837e119cc5e4a07d5ecccd618ab793b88bb0b80dbfa2062",
+        "missingVariable": "HANLIN_UNIT_TEST_HOST",
+        "affectedTargets": [
+          "AI_HLYTests",
+          "AI_HLYUITests"
+        ],
+        "appTestsLaunched": false,
+        "successfulBuildRetained": true
       }
     },
     {
@@ -1260,7 +1320,7 @@
     "completionDocumentationOnly": "635bc66274436d21236500cda4c2e873b1abe1bd",
     "activeDraftExcluded": "PR18 remains with original owner"
   },
-  "updatedAtUTC": "2026-11-25T02:50:06.741981+00:00",
+  "updatedAtUTC": "2026-11-25T03:04:38.309734+00:00",
   "failureCorrections": [
     {
       "boundary": "manifest ordinary JSON",
@@ -1282,32 +1342,50 @@
       "boundary": "isolated application ModuleCache relocation",
       "reason": "Actual AI_HLY build-for-testing exit 65 reports a SwiftShims PCM compiled with the original producer cache path. Root moved only the isolated ModuleCache aside without source, dependency-pin or other-owner cache changes. The original attempt-1 checkpoint had no successful recompilation; the later library-only result is recorded separately.",
       "evidence": "docs/composer-capabilities/evidence/app-build-attempt1-20fb9f711/build-assessment.json",
-      "followup": "The completed attempt 2 no longer reported SwiftShims errors. Its separate source compiler error and the recorded retirement of only the inactive copied cache are preserved; successful application compilation remains pending."
+      "followup": "The completed attempt 2 no longer reported SwiftShims errors. Its separate source compiler error and the recorded retirement of only the inactive copied cache are preserved; successful application compilation remains pending.",
+      "subsequentFullAIHLYCompilation": {
+        "status": "EXECUTED_PASS",
+        "source": "b739ada91aca115093e3511f9df58c15edcb5923",
+        "receipt": "docs/composer-capabilities/evidence/app-build-attempt5-b739ada91/ai-hly-build-attempt5.json",
+        "runtimeAndUIAcceptance": "NOT_INFERRED"
+      }
     },
     {
       "boundary": "integrated sidebar search-anchor stored property",
       "reason": "Actual attempt-2 compiler diagnostics reject the private stored focused property inherited from UIView. Ownership and completed branches were checked; four substitutions rename the private backing Bool and three uses to searchIsFocused without API-label or behavior changes.",
       "originalFixCommit": "8cf5b3e3023852ab41fec7d9db1592218c1bcfd1",
       "integratedFixCommit": "e5a3e6d9216a69552b2b25a096fd3f3fcf8e2876",
-      "compilationAfterFix": "LIBRARY_ONLY_PASS_FULL_APPLICATION_PENDING",
+      "compilationAfterFix": "AI_HLY_BUILD_PASS_COMPANION_AND_ACCEPTANCE_PENDING",
       "evidence": "docs/composer-capabilities/evidence/app-build-attempt2-20fb9f711/focus-fix-provenance.json",
       "subsequentLibraryCompilation": {
         "status": "EXECUTED_PASS",
         "source": "aea6d31e311a3f3096014ea2f1c39432371e3ecc",
         "receipt": "docs/composer-capabilities/evidence/application-library-aea6d31e3/application-module-build-attempt1.json",
         "fullApplicationBuildOrTestResultInferred": false
+      },
+      "subsequentFullAIHLYCompilation": {
+        "status": "EXECUTED_PASS",
+        "source": "b739ada91aca115093e3511f9df58c15edcb5923",
+        "receipt": "docs/composer-capabilities/evidence/app-build-attempt5-b739ada91/ai-hly-build-attempt5.json",
+        "runtimeAndUIAcceptance": "NOT_INFERRED"
       }
     },
     {
       "boundary": "NativeScript continuation optional result inference",
       "integratedFixCommit": "801bb3f66cfe6d4d0ff9e49e0094ea2887525fbd",
       "reason": "Explicit optional Result return type on the existing lock closure; original source patch and resulting Host6 inventory hashes preserved.",
-      "applicationCompilePass": "NOT_CLAIMED",
+      "applicationCompilePass": "AI_HLY_BUILD_PASS_B739ADA91",
       "subsequentLibraryCompilation": {
         "status": "EXECUTED_PASS",
         "source": "aea6d31e311a3f3096014ea2f1c39432371e3ecc",
         "receipt": "docs/composer-capabilities/evidence/application-library-aea6d31e3/application-module-build-attempt1.json",
         "fullApplicationBuildOrTestResultInferred": false
+      },
+      "subsequentFullAIHLYCompilation": {
+        "status": "EXECUTED_PASS",
+        "source": "b739ada91aca115093e3511f9df58c15edcb5923",
+        "receipt": "docs/composer-capabilities/evidence/app-build-attempt5-b739ada91/ai-hly-build-attempt5.json",
+        "runtimeAndUIAcceptance": "NOT_INFERRED"
       }
     },
     {
@@ -1315,12 +1393,18 @@
       "originalFixCommit": "4c18f43cabad800e6069d601b39ca534e720e8a0",
       "integratedFixCommit": "aea6d31e311a3f3096014ea2f1c39432371e3ecc",
       "reason": "Two explicit @MainActor annotations on live factories; exact source diff verified, no unsafe actor escape.",
-      "applicationCompilePass": "NOT_CLAIMED",
+      "applicationCompilePass": "AI_HLY_BUILD_PASS_B739ADA91",
       "subsequentLibraryCompilation": {
         "status": "EXECUTED_PASS",
         "source": "aea6d31e311a3f3096014ea2f1c39432371e3ecc",
         "receipt": "docs/composer-capabilities/evidence/application-library-aea6d31e3/application-module-build-attempt1.json",
         "fullApplicationBuildOrTestResultInferred": false
+      },
+      "subsequentFullAIHLYCompilation": {
+        "status": "EXECUTED_PASS",
+        "source": "b739ada91aca115093e3511f9df58c15edcb5923",
+        "receipt": "docs/composer-capabilities/evidence/app-build-attempt5-b739ada91/ai-hly-build-attempt5.json",
+        "runtimeAndUIAcceptance": "NOT_INFERRED"
       }
     },
     {
@@ -1340,7 +1424,8 @@
   "evidenceCheckpoint": "b739ada91aca115093e3511f9df58c15edcb5923",
   "evidenceIndex": "docs/composer-capabilities/EVIDENCE_INDEX.json",
   "pendingRequiredGates": [
-    "Two actual application build-for-testing schemes",
+    "Remaining HanlinMiniApps application build-for-testing scheme",
+    "Generated test-manifest environment correction before actual test execution",
     "Thirteen app integration methods",
     "Four actual native-engine methods",
     "Four native editor regression methods",
@@ -1363,8 +1448,24 @@
     "Original NativeScript preparation, fixture production, second preflight and Host8 freshness are now executed passes at their actual sources. The first missing-fixture preflight remains a failed prerequisite outcome.",
     "The native exporter/verifier passed at b739ada91 with 15 framework records and five support records; its original catalog explicitly validates existing binaries and does not claim native runtime acceptance.",
     "The read-only prebuild audit retains its 02:33:51 fetch cutoff and actual bcd44d23 source, separately from the later generated-only b739ada91 freeze.",
-    "Native reuse is qualified: all 16 inputs match the captured owner catalog, 14 of 15 framework slice maps and 34 of 36 slices match. ExpoModulesJSI was rebuilt by the original producer, and two header ZIP differences are proven directory permissions only. Four of five support archives match; NodeHostSupport changes with Host8. No all-15-identical binary claim is made."
+    "Native reuse is qualified: all 16 inputs match the captured owner catalog, 14 of 15 framework slice maps and 34 of 36 slices match. ExpoModulesJSI was rebuilt by the original producer, and two header ZIP differences are proven directory permissions only. Four of five support archives match; NodeHostSupport changes with Host8. No all-15-identical binary claim is made.",
+    "AI_HLY attempt5 is an actual full build-for-testing PASS at b739ada91, with TEST BUILD SUCCEEDED, exit 0, unchanged lock and no tracked changes. This closes only the AI_HLY build portion, not companion compilation or any acceptance test.",
+    "The generated NativeScript visibility result is HOST_BASELINE_ONLY build-time evidence: 12 required strings present and zero clang errors. The reused metadata-compiler origin 5d4569c1 is separate from application source b739ada91; no VM result is inferred.",
+    "The fresh xctestrun guard after the passing build found missing HANLIN_UNIT_TEST_HOST entries in both inspected environment maps for both test targets. No app tests launched. This is a prerequisite correction, not a failed build or an executed test failure."
   ],
   "documentationBranchBase": "189ca0d73a8f9b92451d343ca84b4b7074c57c6c",
-  "latestRecordedExecutionSource": "b739ada91aca115093e3511f9df58c15edcb5923"
+  "latestRecordedExecutionSource": "b739ada91aca115093e3511f9df58c15edcb5923",
+  "buildTimeMetadata": {
+    "status": "EXECUTED_PASS",
+    "source": "b739ada91aca115093e3511f9df58c15edcb5923",
+    "scope": "HOST_BASELINE_ONLY",
+    "requiredStringsPresent": 12,
+    "clangErrorCount": 0,
+    "visibility": "evidence/app-build-attempt5-b739ada91/metadata/visibility.json",
+    "assessment": "evidence/app-build-attempt5-b739ada91/build-and-metadata-assessment.json",
+    "visibilitySHA256": "ee2499dca17090de31c058652ca6e22e6df9fb87b0ff7e73c8d7c65910a3ee01",
+    "metadataBinarySHA256": "5a3385b02b9f1c626301a326d32068aadc5d6ef6ceb4fa5bae486a978321fbba",
+    "compilerOriginSource": "5d4569c197810cdd4c1e02e7c16d42a01a77d5c0",
+    "nativeVMAcceptance": "NOT_INFERRED"
+  }
 }
