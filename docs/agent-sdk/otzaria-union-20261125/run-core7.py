@@ -135,16 +135,29 @@ def main():
             process = subprocess.Popen(list(map(str, argv)), cwd=args.proof_root,
                                        stdout=output, stderr=subprocess.STDOUT, start_new_session=True)
             write(evidence / "active-process.json", dict(name=name, pid=process.pid, argv=list(map(str, argv))))
-            try:
-                code = process.wait(timeout=timeout)
-            except subprocess.TimeoutExpired:
-                os.killpg(process.pid, signal.SIGTERM)
+            deadline = time.monotonic() + timeout
+            minimum_remaining = int((args.anticipated_concurrent_growth_gib + args.os_margin_gib) * 1024**3)
+            while True:
                 try:
-                    process.wait(timeout=10)
+                    code = process.wait(timeout=min(10, max(0.1, deadline - time.monotonic())))
+                    break
                 except subprocess.TimeoutExpired:
-                    os.killpg(process.pid, signal.SIGKILL)
-                    process.wait()
-                code = 124
+                    reason = None
+                    if time.monotonic() >= deadline:
+                        reason = "owned command exceeded its bound"
+                    elif shutil.disk_usage(args.proof_root).free < minimum_remaining:
+                        reason = "concurrent growth consumed the recorded remaining disk reserve"
+                    if reason is None:
+                        continue
+                    result["owned_command_stopped_reason"] = reason
+                    os.killpg(process.pid, signal.SIGTERM)
+                    try:
+                        process.wait(timeout=10)
+                    except subprocess.TimeoutExpired:
+                        os.killpg(process.pid, signal.SIGKILL)
+                        process.wait()
+                    code = 124 if time.monotonic() >= deadline else 125
+                    break
         entry = dict(name=name, argv=list(map(str, argv)), exit_code=code,
                      seconds=round(time.monotonic() - start, 3),
                      log=log.name, log_sha256=sha(log.read_bytes()))
