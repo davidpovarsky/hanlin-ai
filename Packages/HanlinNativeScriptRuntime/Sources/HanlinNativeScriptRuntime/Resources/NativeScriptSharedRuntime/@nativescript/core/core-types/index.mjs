@@ -254,6 +254,20 @@ export var CoreTypes;
         LayoutDirection.ltr = 'ltr';
         LayoutDirection.rtl = 'rtl';
     })(LayoutDirection = CoreTypes.LayoutDirection || (CoreTypes.LayoutDirection = {}));
+    let ScrollEdgeEffect;
+    (function (ScrollEdgeEffect) {
+        ScrollEdgeEffect.automatic = 'automatic';
+        ScrollEdgeEffect.soft = 'soft';
+        ScrollEdgeEffect.hard = 'hard';
+        ScrollEdgeEffect.none = 'none';
+    })(ScrollEdgeEffect = CoreTypes.ScrollEdgeEffect || (CoreTypes.ScrollEdgeEffect = {}));
+    let ScrollEdge;
+    (function (ScrollEdge) {
+        ScrollEdge.top = 'top';
+        ScrollEdge.bottom = 'bottom';
+        ScrollEdge.left = 'left';
+        ScrollEdge.right = 'right';
+    })(ScrollEdge = CoreTypes.ScrollEdge || (CoreTypes.ScrollEdge = {}));
 })(CoreTypes || (CoreTypes = {}));
 /**
  * @deprecated Use `CoreTypes.AnimationCurve` instead.
@@ -282,6 +296,8 @@ export const Enums = {
     NavigationBarVisibility: CoreTypes.NavigationBarVisibility,
     Orientation: CoreTypes.Orientation,
     ReturnKeyType: CoreTypes.ReturnKeyType,
+    ScrollEdge: CoreTypes.ScrollEdge,
+    ScrollEdgeEffect: CoreTypes.ScrollEdgeEffect,
     StatusBarStyle: CoreTypes.StatusBarStyle,
     Stretch: CoreTypes.ImageStretch,
     SystemAppearance: CoreTypes.SystemAppearance,

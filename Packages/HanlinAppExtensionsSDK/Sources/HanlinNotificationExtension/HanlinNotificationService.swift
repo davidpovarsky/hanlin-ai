@@ -1,5 +1,7 @@
 import HanlinExtensionContracts
 import Foundation
+import HanlinScriptExtensions
+import OSLog
 import UserNotifications
 
 open class HanlinNotificationService: UNNotificationServiceExtension, @unchecked Sendable {
@@ -19,6 +21,7 @@ open class HanlinNotificationService: UNNotificationServiceExtension, @unchecked
         super.init()
     }
 
+    private static let logger = Logger(subsystem: "com.hanlin.ai", category: "NotificationIngress")
     private let stateLock = NSLock()
     private var contentHandler: ((UNNotificationContent) -> Void)?
     private var bestAttemptContent: UNMutableNotificationContent?
@@ -39,6 +42,8 @@ open class HanlinNotificationService: UNNotificationServiceExtension, @unchecked
             bestAttemptContent = content
         }
 
+        persistMiniAppEvent(in: content)
+
         guard let value = content.userInfo["media-url"] as? String,
               let remoteURL = URL(string: value) else {
             deliverBestAttempt()
@@ -57,6 +62,32 @@ open class HanlinNotificationService: UNNotificationServiceExtension, @unchecked
 
     open override func serviceExtensionTimeWillExpire() {
         deliverBestAttempt()
+    }
+
+    private func persistMiniAppEvent(in content: UNMutableNotificationContent) {
+        guard content.userInfo[HanlinNotificationEvent.userInfoKey] != nil else { return }
+        let delivery: [String: String]
+        do {
+            guard let event = try HanlinNotificationEvent.decode(userInfo: content.userInfo) else { return }
+            let store = try HanlinScriptExtensionStore(hostConfiguration: hostConfiguration)
+            let receipt = try HanlinNotificationInvocation.enqueue(event, in: store)
+            delivery = ["invocationID": receipt.invocationID.uuidString.lowercased(),
+                        "status": receipt.status.rawValue]
+        } catch {
+            let reason: String
+            switch error {
+            case HanlinInvocationQueueError.duplicateIdentity: reason = "duplicateIdentity"
+            case HanlinInvocationQueueError.invalidEnvelope, is DecodingError: reason = "invalidEnvelope"
+            case let failure as HanlinInvocationDispatchError: reason = failure.failure.rawValue
+            default: reason = "storageUnavailable"
+            }
+            // An ingress rejection is not an invented action-result receipt.
+            delivery = ["ingressStatus": "rejected", "reason": reason]
+            Self.logger.error("notification_event_rejected: \(reason, privacy: .public)")
+        }
+        stateLock.withLock {
+            bestAttemptContent?.userInfo[HanlinNotificationEvent.deliveryInfoKey] = delivery
+        }
     }
 
     private func attachment(from remoteURL: URL) async throws -> UNNotificationAttachment {

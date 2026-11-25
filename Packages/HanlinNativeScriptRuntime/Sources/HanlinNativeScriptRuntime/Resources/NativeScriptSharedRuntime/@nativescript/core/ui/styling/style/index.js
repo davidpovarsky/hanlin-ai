@@ -64,4 +64,5 @@ export class Style extends Observable {
 }
 Style.prototype.PropertyBag = class {
 };
+Style.prototype._localValueVersion = 0;
 //# sourceMappingURL=index.js.map
