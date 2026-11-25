@@ -57,7 +57,8 @@ public enum NativeScriptEmbeddedResultAdapter {
                 appID: package.appID,
                 installedPackageID: package.record.installedPackageID,
                 grantedCapabilities: Set(package.grantedCapabilities.map(\.rawValue)),
-                sessionID: sessionID
+                sessionID: sessionID,
+                assistantServiceFactory: platform.assistantServiceFactory
             )
             // Own only this renderer's environment keys. Explicit empty values
             // prevent a missing field from inheriting another session's payload.

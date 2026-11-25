@@ -81,7 +81,11 @@ jobs:
           xcrun xcresulttool get test-results tests --path ../diagnostics-evidence/Capture.xcresult --format json > ../diagnostics-evidence/tests.json
           python3 - <<'PY'
           from pathlib import Path
-          import json, shutil
+          import json, os, shutil, sys
+          repository = Path(os.environ['GITHUB_WORKSPACE'])
+          sys.path.insert(0, str(repository / 'Scripts/CI/IntegrationValidation'))
+          from swift_ai_sdk_pin import canonical_revision
+          expected_producer = canonical_revision(repository)
           locks = list(Path('.').rglob('Package.resolved'))
           if not locks:
               raise SystemExit('Resolved dependency evidence is missing')
@@ -90,7 +94,7 @@ jobs:
               data = json.loads(lock.read_text())
               pins = data.get('pins', data.get('object', {}).get('pins', []))
               states = {p.get('identity', p.get('package', '')).lower(): p['state'] for p in pins}
-              if states.get('swift-ai-sdk', {}).get('revision') != '43ebcfaae67ca2c47ea1ce940d66b581e60ca7f6':
+              if states.get('swift-ai-sdk', {}).get('revision') != expected_producer:
                   raise SystemExit('The resolved Swift AI SDK revision differs from the production package')
               if states.get('zipfoundation', {}).get('version') != '0.9.19':
                   raise SystemExit('The resolved ZIPFoundation version differs from production')

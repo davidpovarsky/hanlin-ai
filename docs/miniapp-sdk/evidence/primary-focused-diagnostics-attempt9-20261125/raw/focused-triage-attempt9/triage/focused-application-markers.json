@@ -1,0 +1,151 @@
+{
+  "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt9/paired-prefix/FocusedOriginal.xcresult/Staging/1_Test/Diagnostics/HanlinMiniAppsUITests-212C47C5-A293-4991-9DAD-A9A3437F6E43-Configuration-Test Scheme Action-Iteration-1/HanlinMiniAppsUITests-9CE92FC7-63D1-4A94-AA6A-407C93043773/StandardOutputAndStandardError-com.itorah.hanlinminiapps.txt",
+  "sourceSHA256": "f130c3f117c78a6a11094b113841f0f14877c3c3556846a8c2712ee0a599401f",
+  "sourceBytes": 122230978,
+  "rows": [
+    {
+      "line": 20690,
+      "text": "HANLIN_IMPORT_PACKAGE_TAPPED url=ExpoNativeAPIProbeA.hanlinExpo"
+    },
+    {
+      "line": 20691,
+      "text": "HANLIN_IMPORT_PACKAGE_STARTED: url=/Users/m1/Library/Developer/CoreSimulator/Devices/80E29B83-02CF-4481-B1AF-80A85CDE0247/data/Containers/Data/Application/2AB7C313-84D5-40A5-B1D9-07B02FC876E4/Documents/ExpoNativeAPIProbeA.hanlinExpo"
+    },
+    {
+      "line": 20693,
+      "text": "HANLIN_IMPORT_PACKAGE_PREVIEW: canInstall=true entrypoints=1"
+    },
+    {
+      "line": 117191,
+      "text": "HANLIN_IMPORT_PACKAGE_TAPPED url=ExpoSwiftUIProbeA.hanlinExpo"
+    },
+    {
+      "line": 117192,
+      "text": "HANLIN_IMPORT_PACKAGE_STARTED: url=/Users/m1/Library/Developer/CoreSimulator/Devices/80E29B83-02CF-4481-B1AF-80A85CDE0247/data/Containers/Data/Application/2AB7C313-84D5-40A5-B1D9-07B02FC876E4/Documents/ExpoSwiftUIProbeA.hanlinExpo"
+    },
+    {
+      "line": 117200,
+      "text": "HANLIN_IMPORT_PACKAGE_PREVIEW: canInstall=true entrypoints=5"
+    },
+    {
+      "line": 254179,
+      "text": "HANLIN_IMPORT_PACKAGE_TAPPED url=ExpoWidgetsProbeA.hanlinExpo"
+    },
+    {
+      "line": 254180,
+      "text": "HANLIN_IMPORT_PACKAGE_STARTED: url=/Users/m1/Library/Developer/CoreSimulator/Devices/80E29B83-02CF-4481-B1AF-80A85CDE0247/data/Containers/Data/Application/2AB7C313-84D5-40A5-B1D9-07B02FC876E4/Documents/ExpoWidgetsProbeA.hanlinExpo"
+    },
+    {
+      "line": 254182,
+      "text": "HANLIN_IMPORT_PACKAGE_PREVIEW: canInstall=true entrypoints=1"
+    },
+    {
+      "line": 365854,
+      "text": "HANLIN_IMPORT_PACKAGE_TAPPED url=ExpoWidgetsProbeB.hanlinExpo"
+    },
+    {
+      "line": 365855,
+      "text": "HANLIN_IMPORT_PACKAGE_STARTED: url=/Users/m1/Library/Developer/CoreSimulator/Devices/80E29B83-02CF-4481-B1AF-80A85CDE0247/data/Containers/Data/Application/2AB7C313-84D5-40A5-B1D9-07B02FC876E4/Documents/ExpoWidgetsProbeB.hanlinExpo"
+    },
+    {
+      "line": 365857,
+      "text": "HANLIN_IMPORT_PACKAGE_PREVIEW: canInstall=true entrypoints=1"
+    },
+    {
+      "line": 507948,
+      "text": "HANLIN_IMPORT_PACKAGE_TAPPED url=hanlin-script-parity.hanlinNativeScript"
+    },
+    {
+      "line": 507949,
+      "text": "HANLIN_IMPORT_PACKAGE_STARTED: url=/Users/m1/Library/Developer/CoreSimulator/Devices/80E29B83-02CF-4481-B1AF-80A85CDE0247/data/Containers/Data/Application/2AB7C313-84D5-40A5-B1D9-07B02FC876E4/Documents/hanlin-script-parity.hanlinNativeScript"
+    },
+    {
+      "line": 507951,
+      "text": "HANLIN_IMPORT_PACKAGE_PREVIEW: canInstall=true entrypoints=4"
+    },
+    {
+      "line": 553409,
+      "text": "2026-11-25 02:26:46.479337+0100 HanlinMiniApps[17147:2765954] HANLIN_NS_RUNTIME_CREATED"
+    },
+    {
+      "line": 553410,
+      "text": "2026-11-25 02:26:46.479410+0100 HanlinMiniApps[17147:2765954] HANLIN_NS_CONTEXT_READY"
+    },
+    {
+      "line": 553411,
+      "text": "2026-11-25 02:26:46.479460+0100 HanlinMiniApps[17147:2765954] HANLIN_NS_HOST_SERVICES_BIND_BEGIN"
+    },
+    {
+      "line": 553412,
+      "text": "2026-11-25 02:26:46.479524+0100 HanlinMiniApps[17147:2765954] HANLIN_NS_HOST_SERVICES_BIND_OK"
+    },
+    {
+      "line": 553413,
+      "text": "2026-11-25 02:26:46.479570+0100 HanlinMiniApps[17147:2765954] HANLIN_NS_RUN_MAIN_BEGIN"
+    },
+    {
+      "line": 626931,
+      "text": "HANLIN_IMPORT_PACKAGE_TAPPED url=SDKOnlyDepartureBudget.hanlinExpo"
+    },
+    {
+      "line": 626932,
+      "text": "HANLIN_IMPORT_PACKAGE_STARTED: url=/Users/m1/Library/Developer/CoreSimulator/Devices/80E29B83-02CF-4481-B1AF-80A85CDE0247/data/Containers/Data/Application/2AB7C313-84D5-40A5-B1D9-07B02FC876E4/Documents/SDKOnlyDepartureBudget.hanlinExpo"
+    },
+    {
+      "line": 831623,
+      "text": "HANLIN_IMPORT_PACKAGE_TAPPED url=SDKOnlyTableShare.hanlinNativeScript"
+    },
+    {
+      "line": 831624,
+      "text": "HANLIN_IMPORT_PACKAGE_STARTED: url=/Users/m1/Library/Developer/CoreSimulator/Devices/80E29B83-02CF-4481-B1AF-80A85CDE0247/data/Containers/Data/Application/2AB7C313-84D5-40A5-B1D9-07B02FC876E4/Documents/SDKOnlyTableShare.hanlinNativeScript"
+    },
+    {
+      "line": 926577,
+      "text": "HANLIN_IMPORT_PACKAGE_PREVIEW: canInstall=true entrypoints=1"
+    },
+    {
+      "line": 973540,
+      "text": "2026-11-25 02:28:45.014320+0100 HanlinMiniApps[18162:2771267] HANLIN_NS_RUNTIME_CREATED"
+    },
+    {
+      "line": 973541,
+      "text": "2026-11-25 02:28:45.014397+0100 HanlinMiniApps[18162:2771267] HANLIN_NS_CONTEXT_READY"
+    },
+    {
+      "line": 973542,
+      "text": "2026-11-25 02:28:45.014440+0100 HanlinMiniApps[18162:2771267] HANLIN_NS_HOST_SERVICES_BIND_BEGIN"
+    },
+    {
+      "line": 973543,
+      "text": "2026-11-25 02:28:45.014488+0100 HanlinMiniApps[18162:2771267] HANLIN_NS_HOST_SERVICES_BIND_OK"
+    },
+    {
+      "line": 973544,
+      "text": "2026-11-25 02:28:45.014526+0100 HanlinMiniApps[18162:2771267] HANLIN_NS_RUN_MAIN_BEGIN"
+    },
+    {
+      "line": 973550,
+      "text": "ReferenceError: TNSLabel is not defined"
+    },
+    {
+      "line": 973551,
+      "text": "2026-11-25 02:28:45.428143+0100 HanlinMiniApps[18162:2771267] [HanlinNativeScript] NativeScript script execution failed: Module evaluation promise rejected: /Users/m1/Library/Developer/CoreSimulator/Devices/80E29B83-02CF-4481-B1AF-80A85CDE0247/data/Containers/Data/Application/2AB7C313-84D5-40A5-B1D9-07B02FC876E4/Library/Application Support/Hanlin/ScriptingPlatform/Installed/packages/install-script-f742f5767a7a47f8f8d51efd/generations/1/source/nativescript/app/bundle.mjs \u2014 TNSLabel is not defined"
+    },
+    {
+      "line": 973552,
+      "text": "ReferenceError: TNSLabel is not defined"
+    },
+    {
+      "line": 973554,
+      "text": "ReferenceError: TNSLabel is not defined"
+    },
+    {
+      "line": 973565,
+      "text": "2026-11-25 02:28:45.440455+0100 HanlinMiniApps[18162:2771267] [HanlinScriptingPlatform] NativeScript launch failed for install-script-f742f5767a7a47f8f8d51efd: bootstrapFailed(\"NativeScript script execution failed: Module evaluation promise rejected: /Users/m1/Library/Developer/CoreSimulator/Devices/80E29B83-02CF-4481-B1AF-80A85CDE0247/data/Containers/Data/Application/2AB7C313-84D5-40A5-B1D9-07B02FC876E4/Library/Application Support/Hanlin/ScriptingPlatform/Installed/packages/install-script-f742f5767a7a47f8f8d51efd/generations/1/source/nativescript/app/bundle.mjs \u2014 TNSLabel is not defined\\nReferenceError: TNSLabel is not defined\\nStack:\\nReferenceError: TNSLabel is not defined\\n    at Label.createNativeView (file:///Users/m1/Library/Developer/CoreSimulator/Devices/80E29B83-02CF-4481-B1AF-80A85CDE0247/data/Containers/Bundle/Application/5CD68A54-53C4-41DE-87EA-B12B4AA1FBF9/HanlinMiniApps.app/HanlinSDK_HanlinNativeScriptRuntime.bundle/NativeScriptSharedRuntime/@nativescript/core/ui/label/index.mjs:18:22)\\n    at Label._setupUI (file:///Users/m1/Library/Developer/CoreSimu"
+    },
+    {
+      "line": 973566,
+      "text": "2026-11-25 02:28:45.440729+0100 HanlinMiniApps[18162:2771267] HANLIN_NS_PRODUCTION_SHUTDOWN_OK"
+    }
+  ]
+}

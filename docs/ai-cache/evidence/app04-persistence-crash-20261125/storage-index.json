@@ -1,0 +1,17 @@
+{
+  "method": "Lossless gzip for raw logs and original patch payloads; original receipts/index retain original uncompressed names and hashes. Decompress corresponding retained files to inspect byte-identical originals.",
+  "files": [
+    {
+      "original": "fixture-fix.patch.txt",
+      "retained": "fixture-fix.patch.txt.gz",
+      "originalSHA256": "1cb046d494bfce4527173705d8c782cd2b8e07a8d92cf162f2c346ef9ec0cc57",
+      "storedSHA256": "ea21698e477a170ff5d077a3791c6e2a66b74cd9e7518f3ebf3c62f286cca259"
+    },
+    {
+      "original": "08-test-without-building.log",
+      "retained": "08-test-without-building.log.gz",
+      "originalSHA256": "e8798c7b94a18ed42923249a83df8803fa2188001ed43d015391b592d815cf9a",
+      "storedSHA256": "7afe504b1f01c071799a8d5cf17312851fa5dbfc50651cef4054b35b5bb5b15e"
+    }
+  ]
+}

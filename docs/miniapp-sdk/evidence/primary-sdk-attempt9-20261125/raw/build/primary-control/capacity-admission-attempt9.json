@@ -1,0 +1,29 @@
+{
+  "owner": "/root/native_execution",
+  "source": "1812bff50571c9907d15cd8b4bfbe4874be24756",
+  "startedAt": "2026-11-25T00:28:43.295691+00:00",
+  "status": "ADMITTED_CONTROLLER_STARTED",
+  "pid": 75838,
+  "maximumWaitSeconds": 3500,
+  "through": "split-inputs",
+  "scope": "Original changed preparation prefix; original paired52 not started by this admission.",
+  "observedAt": "2026-11-25T00:32:14.174627+00:00",
+  "elapsedSeconds": 210.8795215420032,
+  "blockers": [],
+  "headroom": {
+    "top": "Processes: 264 total, 2 running, 262 sleeping, 1348 threads \n2026/11/25 01:32:14\nLoad Avg: 196.02, 152.22, 96.72 \nCPU usage: 10.0% user, 14.0% sys, 76.0% idle \nSharedLibs: 330M resident, 65M data, 102M linkedit.\nMemRegions: 24589 total, 510M resident, 71M private, 2316M shared.\nPhysMem: 8857M used (1654M wired, 448M compressor), 7003M unused.\nVM: 120T vsize, 57G framework vsize, 6997(0) swapins, 43700(0) swapouts.\nNetworks: packets: 96890977/132G in, 13631407/6985M out.\nDisks: 36002119/2215G read, 26094192/854G written.\n\n\n",
+    "cpuIdlePercent": 76.0,
+    "physicalUnusedMiB": 7003.0,
+    "diskFreeBytes": 61020241920,
+    "predicate": "No live native compiler/build/test runner; >=20% CPU idle, >=2048MiB physically unused, original15GB disk minimum."
+  },
+  "admission": {
+    "toolchain": "Xcode 27.0\nBuild version 27A266a",
+    "sdk": "27.0",
+    "freeDiskBytes": 61020241920,
+    "memory": "Mach Virtual Memory Statistics: (page size of 16384 bytes)\nPages free:                                   436384.\nPages active:                                 222305.\nPages inactive:                               209931.\nPages speculative:                             11914.\nPages throttled:                                   0.\nPages wired down:                             105833.\nPages purgeable:                                1941.\n\"Translation faults\":                     3421526490.\nPages copy-on-write:                        48507064.\nPages zero filled:                        2456324858.\nPages reactivated:                          43070601.\nPages purged:                                2390027.\nFile-backed pages:                            383577.\nAnonymous pages:                               60573.\nPages stored in compressor:                    51241.\nPages occupied by compressor:                  28681.\nDecompressions:                             23865937.\nCompressions:                               41687287.\nPageins:                                    72565400.\nPageouts:                                      56951.\nSwapins:                                        6997.\nSwapouts:                                      43700.\n",
+    "uptime": "1:32  up 14:02, 1 user, load averages: 196.02 152.22 96.72"
+  },
+  "controllerPID": 77588,
+  "finishedAt": "2026-11-25T00:32:14.331380+00:00"
+}

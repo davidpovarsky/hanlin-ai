@@ -1,0 +1,17 @@
+{
+  "owner": "/root/native_execution",
+  "source": "fda6948ca6a1f541293a1a1dd20e97f75eb0a527",
+  "observedAt": "2026-11-25T02:19:37.314826+00:00",
+  "df": "Filesystem   1024-blocks      Used Available Capacity iused     ifree %iused  Mounted on\n/dev/disk3s5   482797652 396897984  42014892    91% 5205631 420148920    1%   /System/Volumes/Data\n",
+  "freeBytes": 43023249408,
+  "decision": "ADMITTED",
+  "reason": "Preserved mutable cache has one owner. Existing original dependency artifacts reuse verified fingerprints; preparation working ZIP/native catalog are below1GiB retained, with <=4GiB estimated regeneration and4GiB concurrent growth/OS allowance. No fixed disk target, CPU-idle or process-count gate.",
+  "maximumEstimatedIncrementalBytes": 4294967296,
+  "concurrentGrowthAndOSAllowanceBytes": 4294967296,
+  "through": "split-inputs",
+  "original52": "NOT_RUN",
+  "status": "CONTROLLER_STARTED",
+  "controllerPID": 48263,
+  "startedAt": "2026-11-25T02:19:37.320295+00:00",
+  "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/controller-prefix-attempt10.log"
+}

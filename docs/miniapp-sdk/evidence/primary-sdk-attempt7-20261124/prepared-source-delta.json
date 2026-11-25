@@ -1,0 +1,629 @@
+{
+  "executionSource": "fd81d602d3b25f09162a659e1e0cf0582e91a93a",
+  "snapshotRoot": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/prepared-snapshot-attempt7",
+  "ledgerSHA256": "b4d82aae8e71de76b30d01e73e4364db76e8131c4aef48833ececff6e4ac6207",
+  "paths": 4,
+  "payloadBytes": 780842,
+  "contentChanges": 4,
+  "modeChanges": 0,
+  "canonicalBinding": {
+    "algorithm": "SHA256 of compact UTF-8 JSON rows sorted by path; keys path,beforeSHA256,afterSHA256,bytes,contentFrom",
+    "sha256": "f291a4588bcfd8a8317ed94bd97c41eab97cc4d2fdd6252214622cffeabaf753"
+  },
+  "rows": [
+    {
+      "path": "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+      "beforeSHA256": "ad9c59d1962d516cd480de78cf5ee01fad11159cc0a73ee1a9cb3ea2f324b8a1",
+      "afterSHA256": "54b154ffd2d74328ad849b521d7d3940184e8771cf2adb03f5b0acc8587a8e96",
+      "bytes": 118561,
+      "beforeMode": "100644",
+      "afterMode": "100644",
+      "contentFrom": "tracked-delta/docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+      "classification": "Only 36 authoring source line anchors changed; manifest field descriptions and contracts unchanged",
+      "semanticDelta": [
+        {
+          "occurrence": 1,
+          "before": "miniapp-authoring.mjs:543",
+          "after": "miniapp-authoring.mjs:586"
+        },
+        {
+          "occurrence": 2,
+          "before": "miniapp-authoring.mjs:545",
+          "after": "miniapp-authoring.mjs:588"
+        },
+        {
+          "occurrence": 3,
+          "before": "miniapp-authoring.mjs:618",
+          "after": "miniapp-authoring.mjs:676"
+        },
+        {
+          "occurrence": 4,
+          "before": "miniapp-authoring.mjs:615",
+          "after": "miniapp-authoring.mjs:673"
+        },
+        {
+          "occurrence": 5,
+          "before": "miniapp-authoring.mjs:615",
+          "after": "miniapp-authoring.mjs:673"
+        },
+        {
+          "occurrence": 6,
+          "before": "miniapp-authoring.mjs:615",
+          "after": "miniapp-authoring.mjs:673"
+        },
+        {
+          "occurrence": 7,
+          "before": "miniapp-authoring.mjs:148",
+          "after": "miniapp-authoring.mjs:150"
+        },
+        {
+          "occurrence": 8,
+          "before": "miniapp-authoring.mjs:148",
+          "after": "miniapp-authoring.mjs:150"
+        },
+        {
+          "occurrence": 9,
+          "before": "miniapp-authoring.mjs:118",
+          "after": "miniapp-authoring.mjs:120"
+        },
+        {
+          "occurrence": 10,
+          "before": "miniapp-authoring.mjs:122",
+          "after": "miniapp-authoring.mjs:124"
+        },
+        {
+          "occurrence": 11,
+          "before": "miniapp-authoring.mjs:381",
+          "after": "miniapp-authoring.mjs:415"
+        },
+        {
+          "occurrence": 12,
+          "before": "miniapp-authoring.mjs:107",
+          "after": "miniapp-authoring.mjs:109"
+        },
+        {
+          "occurrence": 13,
+          "before": "miniapp-authoring.mjs:715",
+          "after": "miniapp-authoring.mjs:773"
+        },
+        {
+          "occurrence": 14,
+          "before": "miniapp-authoring.mjs:687",
+          "after": "miniapp-authoring.mjs:745"
+        },
+        {
+          "occurrence": 15,
+          "before": "miniapp-authoring.mjs:715",
+          "after": "miniapp-authoring.mjs:773"
+        },
+        {
+          "occurrence": 16,
+          "before": "miniapp-authoring.mjs:687",
+          "after": "miniapp-authoring.mjs:745"
+        },
+        {
+          "occurrence": 17,
+          "before": "miniapp-authoring.mjs:715",
+          "after": "miniapp-authoring.mjs:773"
+        },
+        {
+          "occurrence": 18,
+          "before": "miniapp-authoring.mjs:687",
+          "after": "miniapp-authoring.mjs:745"
+        },
+        {
+          "occurrence": 19,
+          "before": "miniapp-authoring.mjs:715",
+          "after": "miniapp-authoring.mjs:773"
+        },
+        {
+          "occurrence": 20,
+          "before": "miniapp-authoring.mjs:687",
+          "after": "miniapp-authoring.mjs:745"
+        },
+        {
+          "occurrence": 21,
+          "before": "miniapp-authoring.mjs:147",
+          "after": "miniapp-authoring.mjs:149"
+        },
+        {
+          "occurrence": 22,
+          "before": "miniapp-authoring.mjs:147",
+          "after": "miniapp-authoring.mjs:149"
+        },
+        {
+          "occurrence": 23,
+          "before": "miniapp-authoring.mjs:108",
+          "after": "miniapp-authoring.mjs:110"
+        },
+        {
+          "occurrence": 24,
+          "before": "miniapp-authoring.mjs:177",
+          "after": "miniapp-authoring.mjs:181"
+        },
+        {
+          "occurrence": 25,
+          "before": "miniapp-authoring.mjs:488",
+          "after": "miniapp-authoring.mjs:524"
+        },
+        {
+          "occurrence": 26,
+          "before": "miniapp-authoring.mjs:488",
+          "after": "miniapp-authoring.mjs:524"
+        },
+        {
+          "occurrence": 27,
+          "before": "miniapp-authoring.mjs:481",
+          "after": "miniapp-authoring.mjs:517"
+        },
+        {
+          "occurrence": 28,
+          "before": "miniapp-authoring.mjs:481",
+          "after": "miniapp-authoring.mjs:517"
+        },
+        {
+          "occurrence": 29,
+          "before": "miniapp-authoring.mjs:481",
+          "after": "miniapp-authoring.mjs:517"
+        },
+        {
+          "occurrence": 30,
+          "before": "miniapp-authoring.mjs:489",
+          "after": "miniapp-authoring.mjs:525"
+        },
+        {
+          "occurrence": 31,
+          "before": "miniapp-authoring.mjs:489",
+          "after": "miniapp-authoring.mjs:525"
+        },
+        {
+          "occurrence": 32,
+          "before": "miniapp-authoring.mjs:488",
+          "after": "miniapp-authoring.mjs:524"
+        },
+        {
+          "occurrence": 33,
+          "before": "miniapp-authoring.mjs:488",
+          "after": "miniapp-authoring.mjs:524"
+        },
+        {
+          "occurrence": 34,
+          "before": "miniapp-authoring.mjs:490",
+          "after": "miniapp-authoring.mjs:526"
+        },
+        {
+          "occurrence": 35,
+          "before": "miniapp-authoring.mjs:491",
+          "after": "miniapp-authoring.mjs:527"
+        },
+        {
+          "occurrence": 36,
+          "before": "miniapp-authoring.mjs:480",
+          "after": "miniapp-authoring.mjs:516"
+        }
+      ]
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.json",
+      "beforeSHA256": "152806a609b662c373eedd382758f1298bf945883f0c467dc5595050f8f0fa29",
+      "afterSHA256": "855ce12c168cc258cd202b1bf436dc7849901a71e189c2d4d49201b7f5da062b",
+      "bytes": 147521,
+      "beforeMode": "100644",
+      "afterMode": "100644",
+      "contentFrom": "tracked-delta/docs/miniapp-sdk/extension-reachability.json",
+      "classification": "sourceCommit and exact authoring source hash; reachability/API matrix unchanged",
+      "semanticDelta": [
+        {
+          "pointer": "/sdkSources/9/sha256",
+          "before": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
+          "after": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9"
+        },
+        {
+          "pointer": "/sourceCommit",
+          "before": "340018ddc9ea2395ffabedbf179369b5bdb791af",
+          "after": "fd81d602d3b25f09162a659e1e0cf0582e91a93a"
+        }
+      ]
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.md",
+      "beforeSHA256": "f2cd972c7366043028bbaea078291717ae363b288d29ecf242fd358103f7a9b1",
+      "afterSHA256": "5499b31720ac284d264768ba3416ed032d5a3d37f821350a06c3a3f3625e75c2",
+      "bytes": 21494,
+      "beforeMode": "100644",
+      "afterMode": "100644",
+      "contentFrom": "tracked-delta/docs/miniapp-sdk/extension-reachability.md",
+      "classification": "Only sourceCommit substitution",
+      "semanticDelta": [
+        {
+          "field": "rendered source commit",
+          "before": "340018ddc9ea2395ffabedbf179369b5bdb791af",
+          "after": "fd81d602d3b25f09162a659e1e0cf0582e91a93a"
+        }
+      ]
+    },
+    {
+      "path": "docs/miniapp-sdk/source-inventory.json",
+      "beforeSHA256": "b126e18f8a228e2235ef8ef324a31f0b9b6e3384e6af0f82755e35c4bcccaeef",
+      "afterSHA256": "b0d3426a1238df51009a1c2b124f2d4dfa98f1ac6a75540e5a3a4f8578bd9c95",
+      "bytes": 493266,
+      "beforeMode": "100644",
+      "afterMode": "100644",
+      "contentFrom": "tracked-delta/docs/miniapp-sdk/source-inventory.json",
+      "classification": "sourceCommit, authoring source hash, and 36 existing manifest source anchors/hashes; contract fields and values unchanged",
+      "semanticDelta": [
+        {
+          "pointer": "/manifests/1/fields/0/sources/0/line",
+          "before": 543,
+          "after": 586
+        },
+        {
+          "pointer": "/manifests/1/fields/0/sources/0/sha256",
+          "before": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
+          "after": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9"
+        },
+        {
+          "pointer": "/manifests/1/fields/13/sources/0/line",
+          "before": 545,
+          "after": 588
+        },
+        {
+          "pointer": "/manifests/1/fields/13/sources/0/sha256",
+          "before": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
+          "after": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9"
+        },
+        {
+          "pointer": "/manifests/2/fields/0/sources/0/line",
+          "before": 618,
+          "after": 676
+        },
+        {
+          "pointer": "/manifests/2/fields/0/sources/0/sha256",
+          "before": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
+          "after": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9"
+        },
+        {
+          "pointer": "/manifests/2/fields/9/sources/0/line",
+          "before": 615,
+          "after": 673
+        },
+        {
+          "pointer": "/manifests/2/fields/9/sources/0/sha256",
+          "before": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
+          "after": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9"
+        },
+        {
+          "pointer": "/manifests/2/fields/10/sources/0/line",
+          "before": 615,
+          "after": 673
+        },
+        {
+          "pointer": "/manifests/2/fields/10/sources/0/sha256",
+          "before": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
+          "after": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9"
+        },
+        {
+          "pointer": "/manifests/2/fields/11/sources/0/line",
+          "before": 615,
+          "after": 673
+        },
+        {
+          "pointer": "/manifests/2/fields/11/sources/0/sha256",
+          "before": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
+          "after": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9"
+        },
+        {
+          "pointer": "/manifests/3/fields/0/sources/0/line",
+          "before": 148,
+          "after": 150
+        },
+        {
+          "pointer": "/manifests/3/fields/0/sources/0/sha256",
+          "before": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
+          "after": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9"
+        },
+        {
+          "pointer": "/manifests/3/fields/1/sources/0/line",
+          "before": 148,
+          "after": 150
+        },
+        {
+          "pointer": "/manifests/3/fields/1/sources/0/sha256",
+          "before": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
+          "after": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9"
+        },
+        {
+          "pointer": "/manifests/3/fields/2/sources/0/line",
+          "before": 118,
+          "after": 120
+        },
+        {
+          "pointer": "/manifests/3/fields/2/sources/0/sha256",
+          "before": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
+          "after": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9"
+        },
+        {
+          "pointer": "/manifests/3/fields/3/sources/0/line",
+          "before": 122,
+          "after": 124
+        },
+        {
+          "pointer": "/manifests/3/fields/3/sources/0/sha256",
+          "before": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
+          "after": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9"
+        },
+        {
+          "pointer": "/manifests/3/fields/4/sources/0/line",
+          "before": 381,
+          "after": 415
+        },
+        {
+          "pointer": "/manifests/3/fields/4/sources/0/sha256",
+          "before": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
+          "after": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9"
+        },
+        {
+          "pointer": "/manifests/3/fields/5/sources/0/line",
+          "before": 107,
+          "after": 109
+        },
+        {
+          "pointer": "/manifests/3/fields/5/sources/0/sha256",
+          "before": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
+          "after": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9"
+        },
+        {
+          "pointer": "/manifests/3/fields/6/sources/0/line",
+          "before": 715,
+          "after": 773
+        },
+        {
+          "pointer": "/manifests/3/fields/6/sources/0/sha256",
+          "before": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
+          "after": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9"
+        },
+        {
+          "pointer": "/manifests/3/fields/6/sources/1/line",
+          "before": 687,
+          "after": 745
+        },
+        {
+          "pointer": "/manifests/3/fields/6/sources/1/sha256",
+          "before": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
+          "after": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9"
+        },
+        {
+          "pointer": "/manifests/3/fields/7/sources/0/line",
+          "before": 715,
+          "after": 773
+        },
+        {
+          "pointer": "/manifests/3/fields/7/sources/0/sha256",
+          "before": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
+          "after": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9"
+        },
+        {
+          "pointer": "/manifests/3/fields/7/sources/1/line",
+          "before": 687,
+          "after": 745
+        },
+        {
+          "pointer": "/manifests/3/fields/7/sources/1/sha256",
+          "before": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
+          "after": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9"
+        },
+        {
+          "pointer": "/manifests/3/fields/8/sources/0/line",
+          "before": 715,
+          "after": 773
+        },
+        {
+          "pointer": "/manifests/3/fields/8/sources/0/sha256",
+          "before": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
+          "after": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9"
+        },
+        {
+          "pointer": "/manifests/3/fields/8/sources/1/line",
+          "before": 687,
+          "after": 745
+        },
+        {
+          "pointer": "/manifests/3/fields/8/sources/1/sha256",
+          "before": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
+          "after": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9"
+        },
+        {
+          "pointer": "/manifests/3/fields/9/sources/0/line",
+          "before": 715,
+          "after": 773
+        },
+        {
+          "pointer": "/manifests/3/fields/9/sources/0/sha256",
+          "before": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
+          "after": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9"
+        },
+        {
+          "pointer": "/manifests/3/fields/9/sources/1/line",
+          "before": 687,
+          "after": 745
+        },
+        {
+          "pointer": "/manifests/3/fields/9/sources/1/sha256",
+          "before": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
+          "after": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9"
+        },
+        {
+          "pointer": "/manifests/3/fields/10/sources/0/line",
+          "before": 147,
+          "after": 149
+        },
+        {
+          "pointer": "/manifests/3/fields/10/sources/0/sha256",
+          "before": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
+          "after": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9"
+        },
+        {
+          "pointer": "/manifests/3/fields/11/sources/0/line",
+          "before": 147,
+          "after": 149
+        },
+        {
+          "pointer": "/manifests/3/fields/11/sources/0/sha256",
+          "before": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
+          "after": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9"
+        },
+        {
+          "pointer": "/manifests/3/fields/12/sources/0/line",
+          "before": 108,
+          "after": 110
+        },
+        {
+          "pointer": "/manifests/3/fields/12/sources/0/sha256",
+          "before": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
+          "after": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9"
+        },
+        {
+          "pointer": "/manifests/3/fields/13/sources/0/line",
+          "before": 177,
+          "after": 181
+        },
+        {
+          "pointer": "/manifests/3/fields/13/sources/0/sha256",
+          "before": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
+          "after": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9"
+        },
+        {
+          "pointer": "/manifests/4/fields/0/sources/0/line",
+          "before": 488,
+          "after": 524
+        },
+        {
+          "pointer": "/manifests/4/fields/0/sources/0/sha256",
+          "before": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
+          "after": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9"
+        },
+        {
+          "pointer": "/manifests/4/fields/1/sources/0/line",
+          "before": 488,
+          "after": 524
+        },
+        {
+          "pointer": "/manifests/4/fields/1/sources/0/sha256",
+          "before": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
+          "after": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9"
+        },
+        {
+          "pointer": "/manifests/4/fields/2/sources/0/line",
+          "before": 481,
+          "after": 517
+        },
+        {
+          "pointer": "/manifests/4/fields/2/sources/0/sha256",
+          "before": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
+          "after": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9"
+        },
+        {
+          "pointer": "/manifests/4/fields/3/sources/0/line",
+          "before": 481,
+          "after": 517
+        },
+        {
+          "pointer": "/manifests/4/fields/3/sources/0/sha256",
+          "before": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
+          "after": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9"
+        },
+        {
+          "pointer": "/manifests/4/fields/4/sources/0/line",
+          "before": 481,
+          "after": 517
+        },
+        {
+          "pointer": "/manifests/4/fields/4/sources/0/sha256",
+          "before": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
+          "after": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9"
+        },
+        {
+          "pointer": "/manifests/4/fields/5/sources/0/line",
+          "before": 489,
+          "after": 525
+        },
+        {
+          "pointer": "/manifests/4/fields/5/sources/0/sha256",
+          "before": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
+          "after": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9"
+        },
+        {
+          "pointer": "/manifests/4/fields/6/sources/0/line",
+          "before": 489,
+          "after": 525
+        },
+        {
+          "pointer": "/manifests/4/fields/6/sources/0/sha256",
+          "before": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
+          "after": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9"
+        },
+        {
+          "pointer": "/manifests/4/fields/7/sources/0/line",
+          "before": 488,
+          "after": 524
+        },
+        {
+          "pointer": "/manifests/4/fields/7/sources/0/sha256",
+          "before": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
+          "after": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9"
+        },
+        {
+          "pointer": "/manifests/4/fields/8/sources/0/line",
+          "before": 488,
+          "after": 524
+        },
+        {
+          "pointer": "/manifests/4/fields/8/sources/0/sha256",
+          "before": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
+          "after": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9"
+        },
+        {
+          "pointer": "/manifests/4/fields/9/sources/0/line",
+          "before": 490,
+          "after": 526
+        },
+        {
+          "pointer": "/manifests/4/fields/9/sources/0/sha256",
+          "before": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
+          "after": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9"
+        },
+        {
+          "pointer": "/manifests/4/fields/10/sources/0/line",
+          "before": 491,
+          "after": 527
+        },
+        {
+          "pointer": "/manifests/4/fields/10/sources/0/sha256",
+          "before": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
+          "after": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9"
+        },
+        {
+          "pointer": "/manifests/4/fields/11/sources/0/line",
+          "before": 480,
+          "after": 516
+        },
+        {
+          "pointer": "/manifests/4/fields/11/sources/0/sha256",
+          "before": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
+          "after": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9"
+        },
+        {
+          "pointer": "/sourceCommit",
+          "before": "340018ddc9ea2395ffabedbf179369b5bdb791af",
+          "after": "fd81d602d3b25f09162a659e1e0cf0582e91a93a"
+        },
+        {
+          "pointer": "/sources/9/sha256",
+          "before": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
+          "after": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9"
+        }
+      ]
+    }
+  ],
+  "materializedByThisLane": false
+}

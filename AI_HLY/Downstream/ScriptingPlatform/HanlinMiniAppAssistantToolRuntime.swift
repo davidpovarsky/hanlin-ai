@@ -130,7 +130,8 @@ enum HanlinMiniAppAssistantToolRuntime {
         let sessionID = UUID().uuidString.lowercased()
         let adapter = NativeScriptHostServicesAdapter(
             appID: current.appID, installedPackageID: current.record.installedPackageID,
-            grantedCapabilities: Set(current.grantedCapabilities.map(\.rawValue)), sessionID: sessionID)
+            grantedCapabilities: Set(current.grantedCapabilities.map(\.rawValue)), sessionID: sessionID,
+            assistantServiceFactory: HanlinScriptingPlatform.shared.assistantServiceFactory)
         let session = try HanlinNativeScriptSession(
             applicationRoot: sourceURL.deletingLastPathComponent(), environment: [
                 "HANLIN_APP_ID": current.appID.rawValue,
@@ -165,7 +166,8 @@ enum HanlinMiniAppAssistantToolRuntime {
         let sessionID = UUID().uuidString.lowercased()
         let adapter = ExpoHostServicesAdapter(
             appID: package.appID, installedPackageID: package.record.installedPackageID,
-            grantedCapabilities: Set(package.grantedCapabilities.map(\.rawValue)), sessionID: sessionID)
+            grantedCapabilities: Set(package.grantedCapabilities.map(\.rawValue)), sessionID: sessionID,
+            assistantServiceFactory: HanlinScriptingPlatform.shared.assistantServiceFactory)
         let session = try HanlinExpoSession(
             applicationRoot: sourceURL.deletingLastPathComponent(), sessionID: sessionID,
             packageID: package.record.packageID.rawValue,
@@ -173,6 +175,7 @@ enum HanlinMiniAppAssistantToolRuntime {
             packageGeneration: package.record.activeGeneration, isNativeAPIGranted: true)
         HanlinExpoHostServicesBridge.register(provider: adapter, forSessionID: sessionID)
         defer {
+            adapter.invalidateAssistantRequests()
             HanlinExpoHostServicesBridge.unregister(sessionID: sessionID)
             session.shutdown()
         }

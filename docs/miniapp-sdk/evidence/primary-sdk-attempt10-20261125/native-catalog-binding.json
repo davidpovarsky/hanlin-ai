@@ -1,0 +1,309 @@
+{
+  "catalogSHA256": "d13aed210768d84475c28201a973e3d59645c3e27f69e7069a30fb9b685e91dc",
+  "source": "fda6948ca6a1f541293a1a1dd20e97f75eb0a527",
+  "contentSHA256": "f6f54e9dce4755f0ee2067516e5bf42d0da6399aa8c74c70983bc25e620f5404",
+  "inputs": [
+    {
+      "path": "RuntimeDependencies.lock.json",
+      "sha256": "6cdbc18a474febbfc912b35ecbf5b0b55438a6a3e6daf2c33a43792cd04bd50a",
+      "unchangedFromSDK9": true
+    },
+    {
+      "path": "Scripts/Expo/babel.config.cjs",
+      "sha256": "62581fd5caf7b97cb36290093b7bbf7103e1c1b1300e0e11a1b3eaaf96c998ba",
+      "unchangedFromSDK9": true
+    },
+    {
+      "path": "Scripts/Expo/build-original-expo-source.mjs",
+      "sha256": "855a9a79f1c27a2ba2f3796cf784ebb66a4a48df928b2ea8f6ca1ffd9e886c03",
+      "unchangedFromSDK9": true
+    },
+    {
+      "path": "Scripts/Expo/build-original-widget-runtime.mjs",
+      "sha256": "5928bb12ed2fd2f6b2ecfeb6d8fc309d46e5837c58dcc4272d73af13434eb549",
+      "unchangedFromSDK9": true
+    },
+    {
+      "path": "Scripts/Expo/dependency-lock.json",
+      "sha256": "b9e3ad6d863e3e5136ad93924ce4edcb37da87578b113523640110af347eec65",
+      "unchangedFromSDK9": true
+    },
+    {
+      "path": "Scripts/Expo/package-lock.json",
+      "sha256": "c08757cf46ac4d5c86a873f676af4a3be585db64ae2e1aa1e8288277d4eb63b8",
+      "unchangedFromSDK9": true
+    },
+    {
+      "path": "Scripts/Expo/prepare-ios-dependencies.mjs",
+      "sha256": "97069b0e1ec619d906f4b6d196e38e6527790c3661f798abcca6258dacf18163",
+      "unchangedFromSDK9": true
+    },
+    {
+      "path": "Scripts/ExpoNativeAPI/dependency-lock.json",
+      "sha256": "08657d657c1f4efa36149075b632cfc75685fc1ca9af0397fc1168fe9253b768",
+      "unchangedFromSDK9": true
+    },
+    {
+      "path": "Scripts/ExpoNativeAPI/multiscene-patch.mjs",
+      "sha256": "cafa8348a764155789169c411eb59555c6c7a2d3ef363b870e36f8d6b52c7cbd",
+      "unchangedFromSDK9": true
+    },
+    {
+      "path": "Scripts/ExpoNativeAPI/prepare-ios-dependencies.mjs",
+      "sha256": "950a2eb6e8713bdd1a395eee6df1779d91f63864af95c33658efa6d090676f66",
+      "unchangedFromSDK9": true
+    },
+    {
+      "path": "Scripts/NativeScript/build-metadata-tool.py",
+      "sha256": "f4318f38b1c6a9c56ba54edb0d270a6374178fa5a8e024ebfddb9790f7ae3cf5",
+      "unchangedFromSDK9": true
+    },
+    {
+      "path": "Scripts/NativeScript/build-step-metadata-generator-wrapper.py",
+      "sha256": "71bf1d521abff7cc29c1e8d397a9ef2a55b09f758afb36f0a148be12350b664f",
+      "unchangedFromSDK9": false
+    },
+    {
+      "path": "Scripts/NativeScript/dependency-lock.json",
+      "sha256": "8499976a4ea0a069ed654b09b597d8fabede4bbbfb62227451a68707b851e8e5",
+      "unchangedFromSDK9": true
+    },
+    {
+      "path": "Scripts/NativeScript/package-lock.json",
+      "sha256": "16f569f4bfa6f8806cfe72449866a0dc9a9331f33d2c67170d5292455c48b60b",
+      "unchangedFromSDK9": true
+    },
+    {
+      "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+      "sha256": "b5114a3be1fc846e288128af08cef9f38b0cac8e34923780325c4edc2976ebd9",
+      "unchangedFromSDK9": true
+    },
+    {
+      "path": "Scripts/Runtime/prepare-runtime-core.sh",
+      "sha256": "1ff99fabcbf8f40d515f3f1b944299286c1094a19520f9892a97f99cf8b64540",
+      "unchangedFromSDK9": true
+    }
+  ],
+  "requiredTargets": [
+    "ReactNativeHeaders",
+    "React",
+    "ReactNativeDependencies",
+    "hermesvm",
+    "ExpoModulesJSI",
+    "ExpoModulesCore",
+    "ExpoModulesWorklets",
+    "ExpoUI",
+    "ExpoAsset",
+    "ExpoBrownfield",
+    "Libffi",
+    "TNSWidgets",
+    "NSCWinterTC",
+    "NodeMobile",
+    "Python"
+  ],
+  "missingTargets": [],
+  "comparison": {
+    "artifacts": [
+      {
+        "target": "ExpoAsset",
+        "libraryRecordsAndBinaryHashesUnchanged": true,
+        "libraryCount": 2,
+        "metadataDifferences": [],
+        "libraryRecordScope": "Actual framework library records"
+      },
+      {
+        "target": "ExpoBrownfield",
+        "libraryRecordsAndBinaryHashesUnchanged": true,
+        "libraryCount": 2,
+        "metadataDifferences": [],
+        "libraryRecordScope": "Actual framework library records"
+      },
+      {
+        "target": "ExpoModulesCore",
+        "libraryRecordsAndBinaryHashesUnchanged": true,
+        "libraryCount": 2,
+        "metadataDifferences": [],
+        "libraryRecordScope": "Actual framework library records"
+      },
+      {
+        "target": "ExpoModulesJSI",
+        "libraryRecordsAndBinaryHashesUnchanged": true,
+        "libraryCount": 2,
+        "metadataDifferences": [],
+        "libraryRecordScope": "Actual framework library records"
+      },
+      {
+        "target": "ExpoModulesWorklets",
+        "libraryRecordsAndBinaryHashesUnchanged": true,
+        "libraryCount": 2,
+        "metadataDifferences": [],
+        "libraryRecordScope": "Actual framework library records"
+      },
+      {
+        "target": "ExpoUI",
+        "libraryRecordsAndBinaryHashesUnchanged": true,
+        "libraryCount": 2,
+        "metadataDifferences": [],
+        "libraryRecordScope": "Actual framework library records"
+      },
+      {
+        "target": "Libffi",
+        "libraryRecordsAndBinaryHashesUnchanged": true,
+        "libraryCount": 2,
+        "metadataDifferences": [],
+        "libraryRecordScope": "Actual framework library records"
+      },
+      {
+        "target": "NSCWinterTC",
+        "libraryRecordsAndBinaryHashesUnchanged": true,
+        "libraryCount": 5,
+        "metadataDifferences": [],
+        "libraryRecordScope": "Actual framework library records"
+      },
+      {
+        "target": "NodeMobile",
+        "libraryRecordsAndBinaryHashesUnchanged": true,
+        "libraryCount": 2,
+        "metadataDifferences": [],
+        "libraryRecordScope": "Actual framework library records"
+      },
+      {
+        "target": "Python",
+        "libraryRecordsAndBinaryHashesUnchanged": true,
+        "libraryCount": 2,
+        "metadataDifferences": [],
+        "libraryRecordScope": "Actual framework library records"
+      },
+      {
+        "target": "React",
+        "libraryRecordsAndBinaryHashesUnchanged": true,
+        "libraryCount": 2,
+        "metadataDifferences": [],
+        "libraryRecordScope": "Actual framework library records"
+      },
+      {
+        "target": "ReactNativeDependencies",
+        "libraryRecordsAndBinaryHashesUnchanged": true,
+        "libraryCount": 2,
+        "metadataDifferences": [],
+        "libraryRecordScope": "Actual framework library records"
+      },
+      {
+        "target": "ReactNativeHeaders",
+        "libraryRecordsAndBinaryHashesUnchanged": true,
+        "libraryCount": 2,
+        "metadataDifferences": [],
+        "libraryRecordScope": "Actual framework library records"
+      },
+      {
+        "target": "TNSWidgets",
+        "libraryRecordsAndBinaryHashesUnchanged": true,
+        "libraryCount": 5,
+        "metadataDifferences": [],
+        "libraryRecordScope": "Actual framework library records"
+      },
+      {
+        "target": "hermesvm",
+        "libraryRecordsAndBinaryHashesUnchanged": true,
+        "libraryCount": 2,
+        "metadataDifferences": [],
+        "libraryRecordScope": "Actual framework library records"
+      }
+    ],
+    "supportArtifacts": [
+      {
+        "target": "HanlinExpoHeaderSupport",
+        "libraryRecordsAndBinaryHashesUnchanged": null,
+        "libraryCount": 0,
+        "metadataDifferences": [],
+        "libraryRecordScope": "No library records in support archive; checksum changes are reported separately"
+      },
+      {
+        "target": "HanlinExpoWidgetRuntimeSupport",
+        "libraryRecordsAndBinaryHashesUnchanged": null,
+        "libraryCount": 0,
+        "metadataDifferences": [],
+        "libraryRecordScope": "No library records in support archive; checksum changes are reported separately"
+      },
+      {
+        "target": "HanlinNativeScriptHostSupport",
+        "libraryRecordsAndBinaryHashesUnchanged": null,
+        "libraryCount": 0,
+        "metadataDifferences": [
+          {
+            "pointer": "/bytes",
+            "before": 12837341,
+            "after": 12837746
+          },
+          {
+            "pointer": "/checksum",
+            "before": "e5e2e937e033ac46558c4de29113f0fd964a7098fe817d4f74a386b615a0fb10",
+            "after": "ad834de0754731a8dfa1b13177189ce7a1abe83215786065c95ccc6621304be7"
+          }
+        ],
+        "libraryRecordScope": "No library records in support archive; checksum changes are reported separately"
+      },
+      {
+        "target": "HanlinNodeHostSupport",
+        "libraryRecordsAndBinaryHashesUnchanged": null,
+        "libraryCount": 0,
+        "metadataDifferences": [
+          {
+            "pointer": "/bytes",
+            "before": 76269863,
+            "after": 76269179
+          },
+          {
+            "pointer": "/checksum",
+            "before": "6b70979d06b7ad2418dcbe0a5ea8c47971299c4bf91d5db027bee7348ae872f0",
+            "after": "b0960b3549d39482f425abaec88cb66f784a141cf0395438f5dd25c8f34a9e8b"
+          }
+        ],
+        "libraryRecordScope": "No library records in support archive; checksum changes are reported separately"
+      },
+      {
+        "target": "HanlinPythonHostSupport",
+        "libraryRecordsAndBinaryHashesUnchanged": null,
+        "libraryCount": 0,
+        "metadataDifferences": [],
+        "libraryRecordScope": "No library records in support archive; checksum changes are reported separately"
+      }
+    ]
+  },
+  "asset": {
+    "sourceReceiptSHA256": "78a6b4b85330189dd162c09ae250cb280bf7dbe62608ca6438e6f3fabde6ee3b",
+    "sourceBuildInputSHA256": "a85fc86c413d87679e62878cc4b7b512e925c36806a9b383daf095dab9c55159",
+    "originalNpmTarballSHA256": "2bfbb115da9111702530e5df550eac7e2a074aa12b6297fcc332744767623126",
+    "ownerStageTargetBindingSHA256": "299f617ecc8909c16d2a2776488181b5d399a25abed4f255f6b526f8b78ece52",
+    "members": 23,
+    "allStageTargetAndCatalogBinariesMatch": true,
+    "slices": [
+      {
+        "LibraryPath": "ExpoAsset.framework",
+        "SupportedPlatform": "ios",
+        "BinaryPath": "ExpoAsset.framework/ExpoAsset",
+        "LibraryIdentifier": "ios-arm64",
+        "SupportedArchitectures": [
+          "arm64"
+        ]
+      },
+      {
+        "LibraryPath": "ExpoAsset.framework",
+        "SupportedPlatformVariant": "simulator",
+        "SupportedPlatform": "ios",
+        "BinaryPath": "ExpoAsset.framework/ExpoAsset",
+        "LibraryIdentifier": "ios-arm64_x86_64-simulator",
+        "SupportedArchitectures": [
+          "arm64",
+          "x86_64"
+        ]
+      }
+    ]
+  },
+  "acceptance": {
+    "appleBuild": "reuse-producer-evidence; this exporter does not build or test runtimes",
+    "nativeSlices": "validated-existing-binaries",
+    "ordinaryVersionDependency": "requires original host acceptance; prepared Expo header paths and host build phases need integration"
+  },
+  "boundary": "Retained actual producer/exporter bindings; no new binary download or native execution by inspector. Framework library bytes are unchanged while wrapper/catalog input identity changes."
+}

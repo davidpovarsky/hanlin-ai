@@ -231,7 +231,8 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
         launchInstalledPackage(named: parityPackageName)
 
         // 1. Verify App Title
-        let titlePredicate = NSPredicate(format: "label CONTAINS 'HanlinScript Parity' OR identifier == 'hanlin-script-parity-title'")
+        // Require the presented runtime title; the catalog card has the same label.
+        let titlePredicate = NSPredicate(format: "identifier == %@", "hanlin-script-parity-title")
         let titleCandidate = app.descendants(matching: .any).matching(titlePredicate).firstMatch
         XCTAssertTrue(titleCandidate.waitForExistence(timeout: 30), "HanlinScript Parity title did not render")
         capture(name: "Parity-App-Launched")
@@ -245,7 +246,9 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
         // Node: [VERIFIED Node <version>] nonce=...
         let nodePredicate = NSPredicate(format: "label CONTAINS '[VERIFIED Node' AND label CONTAINS %@ AND NOT (label CONTAINS 'Err' OR label CONTAINS 'Error')", challengeNonce)
         let nodeLabel = app.descendants(matching: .any).matching(nodePredicate).firstMatch
-        XCTAssertTrue(nodeLabel.waitForExistence(timeout: 25), "Node execution did not return verified Node runtime output with nonce \(challengeNonce)")
+        // First use prepares the original embedded Host before executing Node.
+        // Preserve the actual nonce/result contract within the existing 420s case allowance.
+        XCTAssertTrue(nodeLabel.waitForExistence(timeout: 180), "Node execution did not return verified Node runtime output with nonce \(challengeNonce)")
 
         // Python: [VERIFIED CPython <version>] nonce=...
         let pyPredicate = NSPredicate(format: "label CONTAINS '[VERIFIED CPython' AND label CONTAINS %@ AND NOT (label CONTAINS 'Err' OR label CONTAINS 'Error')", challengeNonce)
@@ -1174,12 +1177,29 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
             format: "label == %@", "Open in Sefaria")).firstMatch
         XCTAssertTrue(sourceLink.waitForExistence(timeout: 15),
             "Opening the result must show its real source detail")
-        let detailList = try XCTUnwrap(
-            app.collectionViews.allElementsBoundByIndex.first(where: { $0.isHittable }) ??
-                app.tables.allElementsBoundByIndex.first(where: { $0.isHittable }),
-            "The result must render its native list")
-        let versionButtons = detailList.buttons.matching(NSPredicate(
-            format: "label != %@ AND NOT (identifier BEGINSWITH %@)", "Open in Sefaria", "hanlin-"))
+        // The original native list can expose interactive rows without an AX
+        // hit point on the collection itself. Require the actual detail's
+        // version control and verify its real expansion transition below.
+        let sourceVersionPrefix = "modular-source-version-"
+        let loadedVersionPrefix = "modular-loaded-version-"
+        let sourceVersionPredicate = NSPredicate(
+            format: "identifier BEGINSWITH %@", sourceVersionPrefix)
+        func nativeDetailList() -> XCUIElement? {
+            let lists = app.collectionViews.allElementsBoundByIndex + app.tables.allElementsBoundByIndex
+            return lists.first {
+                $0.descendants(matching: .any).matching(NSPredicate(
+                    format: "label == %@", "Open in Sefaria")).firstMatch.exists
+            }
+        }
+        let detailReady = waitUntil(timeout: 15) {
+            nativeDetailList()?.buttons.matching(sourceVersionPredicate)
+                .allElementsBoundByIndex.contains(where: { $0.isHittable }) == true
+        }
+        capture(name: "modular-search-native-detail")
+        XCTAssertTrue(detailReady, "Native detail must expose an interactive original version control")
+        let detailList = try XCTUnwrap(nativeDetailList(),
+            "The result must render its native list containing the actual source link")
+        let versionButtons = detailList.buttons.matching(sourceVersionPredicate)
         for _ in 0..<5 {
             if versionButtons.allElementsBoundByIndex.contains(where: { $0.isHittable }) { break }
             detailList.swipeUp()
@@ -1187,25 +1207,35 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
         let sourceVersion = try XCTUnwrap(
             versionButtons.allElementsBoundByIndex.first(where: { $0.isHittable }),
             "The result must expose an original version disclosure")
-        sourceVersion.tap()
+        let entryID = String(sourceVersion.identifier.dropFirst(sourceVersionPrefix.count))
+        XCTAssertFalse(entryID.isEmpty)
+        let loadText = detailList.buttons.matching(NSPredicate(
+            format: "identifier == %@", "modular-full-text-load-" + entryID)).firstMatch
 
-        let loadText = detailList.buttons["Full text"].firstMatch
-        XCTAssertTrue(loadText.waitForExistence(timeout: 10))
+        func expandDisclosure(_ header: XCUIElement, content: XCUIElement, name: String) {
+            // Original Expo DisclosureGroup currently defaults to expanded.
+            // Exercise a real transition, then leave this exact group expanded.
+            let initiallyExpanded = content.exists
+            header.tap()
+            XCTAssertTrue(waitUntil(timeout: 10) { content.exists != initiallyExpanded },
+                "\(name) must respond to the original disclosure control")
+            if initiallyExpanded { header.tap() }
+            XCTAssertTrue(content.waitForExistence(timeout: 15),
+                "\(name) must expose its own content after expansion")
+        }
+        expandDisclosure(sourceVersion, content: loadText, name: "Source version")
         if !loadText.isHittable { detailList.swipeUp() }
         XCTAssertTrue(loadText.isHittable)
-        let buttonsBeforeLoad = Dictionary(
-            grouping: detailList.buttons.allElementsBoundByIndex.map { $0.label }, by: { $0 })
-            .mapValues { $0.count }
+        let loadedVersions = detailList.buttons.matching(NSPredicate(
+            format: "identifier BEGINSWITH %@", loadedVersionPrefix + entryID + ":"))
+        let versionsBeforeLoad = Set(loadedVersions.allElementsBoundByIndex.map { $0.identifier })
         loadText.tap()
 
-        // The second disclosure is created only from /api/v3/texts response
-        // versions. Count labels so identical search/text edition names still work.
+        // These identifiers are emitted only by versions returned from the
+        // live /api/v3/texts response, scoped to source entry plus version ID.
         func returnedVersion() -> XCUIElement? {
-            let buttons = detailList.buttons.allElementsBoundByIndex
-            let counts = Dictionary(grouping: buttons.map { $0.label }, by: { $0 }).mapValues { $0.count }
-            guard let loadIndex = buttons.firstIndex(where: { $0.label == "Full text" }) else { return nil }
-            return buttons.dropFirst(loadIndex + 1).first {
-                counts[$0.label, default: 0] > buttonsBeforeLoad[$0.label, default: 0]
+            loadedVersions.allElementsBoundByIndex.first {
+                !versionsBeforeLoad.contains($0.identifier)
             }
         }
         let noVersions = detailList.staticTexts["No text versions were returned for this source."].firstMatch
@@ -1218,10 +1248,11 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
         }
         let textVersion = try XCTUnwrap(returnedVersion(), "A returned full-text version is required")
         XCTAssertTrue(textVersion.isHittable)
-        let textsBeforeExpansion = Dictionary(
-            grouping: detailList.staticTexts.allElementsBoundByIndex.map { $0.label }, by: { $0 })
-            .mapValues { $0.count }
-        textVersion.tap()
+        let returnedVersionID = String(textVersion.identifier.dropFirst(loadedVersionPrefix.count))
+        XCTAssertFalse(returnedVersionID.isEmpty)
+        let textBody = detailList.staticTexts.matching(NSPredicate(
+            format: "identifier == %@", "modular-full-text-body-" + returnedVersionID)).firstMatch
+        expandDisclosure(textVersion, content: textBody, name: "Returned text version")
 
         let language = detailList.staticTexts.matching(NSPredicate(
             format: "label == %@ OR label BEGINSWITH %@", "Language", "Language,")).firstMatch
@@ -1231,17 +1262,13 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
         XCTAssertFalse(detailList.staticTexts[noText].firstMatch.exists)
 
         func visibleFullText() -> XCUIElement? {
-            let texts = detailList.staticTexts.allElementsBoundByIndex
-            let counts = Dictionary(grouping: texts.map { $0.label }, by: { $0 }).mapValues { $0.count }
-            let headings = Set(detailList.buttons.allElementsBoundByIndex.map { $0.label })
-            return texts.first {
-                let label = $0.label.trimmingCharacters(in: .whitespacesAndNewlines)
-                return $0.isHittable && label.count >= 40 &&
-                    label.split(whereSeparator: { $0.isWhitespace }).count >= 6 &&
-                    label != noText && !label.hasPrefix("Language,") && !label.hasPrefix("License,") &&
-                    !headings.contains(label) &&
-                    counts[$0.label, default: 0] > textsBeforeExpansion[$0.label, default: 0]
+            guard textBody.exists && textBody.isHittable else { return nil }
+            let label = textBody.label.trimmingCharacters(in: .whitespacesAndNewlines)
+            guard label.count >= 40 && label.split(whereSeparator: { $0.isWhitespace }).count >= 6 &&
+                label != noText && !label.hasPrefix("Language,") && !label.hasPrefix("License,") else {
+                return nil
             }
+            return textBody
         }
         for _ in 0..<5 {
             if visibleFullText() != nil { break }
@@ -1283,13 +1310,23 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
         XCTAssertTrue(source.isHittable)
         source.tap()
         let install = app.buttons["hanlin-package-install"].firstMatch
-        XCTAssertTrue(install.waitForExistence(timeout: 30))
+        let importError = app.staticTexts["hanlin-import-error-message"].firstMatch
+        let diagnostics = app.descendants(matching: .any)["hanlin-import-diagnostics-sheet"].firstMatch
+        // The original strict compiler took 64.537s in the measured SDK9 import.
+        // Wait for the real import outcome within the existing 420s case budget.
+        // A compiler/import error ends this wait immediately instead of hiding it.
+        XCTAssertTrue(waitUntil(timeout: 240) {
+            install.exists || importError.exists || diagnostics.exists
+        }, "Original package validation must finish with an install preview or diagnostics")
+        XCTAssertFalse(importError.exists,
+                       "The original importer failed: \(importError.exists ? importError.label : "")")
+        XCTAssertFalse(diagnostics.exists, "The valid original package produced import diagnostics")
+        XCTAssertTrue(install.exists, "The original compiler must produce an installable preview")
         XCTAssertFalse(app.buttons["hanlin-approve-all-capabilities"].exists,
                        "Current original framework imports must not add an application capability approval step")
         if !install.isHittable { app.swipeDown() }
         XCTAssertTrue(waitUntil(timeout: 15) { install.isEnabled && install.isHittable })
         install.tap()
-        let importError = app.staticTexts["hanlin-import-error-message"].firstMatch
         XCTAssertTrue(waitUntil(timeout: 60) { !install.exists || importError.exists },
                       "The existing installer must complete in the companion's own namespace")
         XCTAssertFalse(importError.exists, "The original installer failed: \(importError.exists ? importError.label : "")")

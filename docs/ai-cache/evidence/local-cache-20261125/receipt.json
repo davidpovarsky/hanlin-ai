@@ -1,0 +1,68 @@
+{
+  "sourceSHA": "1bb4bdb08bf860f123803e48871a401ef165ab82",
+  "sourceFiles": {
+    "AI_HLY/Services/ChatServices/WebSearchTool.swift": "435a550ab05ef7785113fb8849a0e8019e32427338591a8fd53428a8c19a854b",
+    "AI_HLY/Downstream/AgentDiagnostics/AgentTokenUsage.swift": "ea9473749962a6c078d36a6972abe2ce30ecf38cd23dffa92231a02b53b7c665",
+    "AI_HLY/Services/ChatServices/AutomaticSearch/AutomaticWebSearchCoordinator.swift": "51196278174564c14b1568c21fcaf0b95adcb31bbcea07a57fe3c045075240fb",
+    "AI_HLY/Services/ChatServices/AutomaticSearch/KeenablePublicSearchAdapter.swift": "96c88b7fcc0de48e6b30570850fbd80f82a679499eb339fcf53cd363d4de9c54",
+    "AI_HLY/Services/ChatServices/AutomaticSearch/TavilyKeylessSearchAdapter.swift": "8143549a517e6717c85fb64e903a27958fd61cba875899ec38d7fb10a1154a68",
+    "AI_HLY/Services/ChatServices/AutomaticSearch/WebSearchProviderProtocol.swift": "2cb061ddfdd1536a417d630c6f776cf3bb9ec95328452afbbf20dc08337ef537",
+    "AI_HLY/Services/ChatServices/AutomaticSearch/WebSearchRelevanceEvaluator.swift": "2ec1352dcce9a19ede76148c540caf98a36dc076f7c2740015395656192a4158",
+    "AI_HLY/Services/ChatServices/AutomaticSearch/WebSearchResult.swift": "d3b69274d06eb3403c44a2ec1d2a78399baef65bc875b8888bd8af1e3887e751",
+    "AI_HLY/Services/ChatServices/AutomaticSearch/YouKeylessSearchAdapter.swift": "d07f829a5896928f43bbbf4b49fa16e10f98f4d76cd6a6862525cf4d02305520",
+    "AI_HLYTests/AutomaticWebSearchCacheTests.swift": "faa0342db6fe61bac1eb65da32622e47284b00e669ca1ff1d3ebd276f105438c",
+    "AI_HLYTests/AgentTokenUsageCacheTests.swift": "622fa32878079e11c3f3dcd502b216f270d22ad3a0c277e021b0aa77a3afa33f"
+  },
+  "sources": [
+    "AI_HLY/Services/ChatServices/WebSearchTool.swift",
+    "AI_HLY/Downstream/AgentDiagnostics/AgentTokenUsage.swift",
+    "AI_HLY/Services/ChatServices/AutomaticSearch/AutomaticWebSearchCoordinator.swift",
+    "AI_HLY/Services/ChatServices/AutomaticSearch/KeenablePublicSearchAdapter.swift",
+    "AI_HLY/Services/ChatServices/AutomaticSearch/TavilyKeylessSearchAdapter.swift",
+    "AI_HLY/Services/ChatServices/AutomaticSearch/WebSearchProviderProtocol.swift",
+    "AI_HLY/Services/ChatServices/AutomaticSearch/WebSearchRelevanceEvaluator.swift",
+    "AI_HLY/Services/ChatServices/AutomaticSearch/WebSearchResult.swift",
+    "AI_HLY/Services/ChatServices/AutomaticSearch/YouKeylessSearchAdapter.swift"
+  ],
+  "tests": [
+    "AI_HLYTests/AutomaticWebSearchCacheTests.swift",
+    "AI_HLYTests/AgentTokenUsageCacheTests.swift"
+  ],
+  "package": "LRUCache",
+  "exactVersion": "1.3.0",
+  "purpose": "C4/C5 changed source checks; no substitute for UI or live-provider acceptance",
+  "command": [
+    "swift",
+    "test",
+    "--package-path",
+    "/Users/m1/builds/hanlin-ai-cache-1bb4bdb0-20261125/local-proof",
+    "--scratch-path",
+    "/Users/m1/caches/DerivedData/hanlin-ai-cache-20261125/local-proof",
+    "--jobs",
+    "2"
+  ],
+  "status": "EXECUTED_PASS",
+  "startedAtUTC": "2026-11-24T23:32:50Z",
+  "owner": "root",
+  "proofRoot": "/Users/m1/builds/hanlin-ai-cache-1bb4bdb0-20261125/local-proof",
+  "toolchain": "Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)\nTarget: arm64-apple-macosx27.0.0\n",
+  "capacity": " 0:32  up 13:03, 1 user, load averages: 15.64 74.76 74.84\n",
+  "exitCode": 0,
+  "durationSeconds": 13.91,
+  "logSHA256": "90d1ce95dde3db51280b07e098e95f373bbb9ef16d3d173c925cc86231a85ccb",
+  "resolved": {
+    "originHash": "90f371dcdaf89a9786ad35d5b9802332bf6bd014106354b21553bbacc6e063d4",
+    "pins": [
+      {
+        "identity": "lrucache",
+        "kind": "remoteSourceControl",
+        "location": "https://github.com/nicklockwood/LRUCache.git",
+        "state": {
+          "revision": "f0570e943ea4445d258113ba73f50cb2b7e564ac",
+          "version": "1.3.0"
+        }
+      }
+    ],
+    "version": 3
+  }
+}

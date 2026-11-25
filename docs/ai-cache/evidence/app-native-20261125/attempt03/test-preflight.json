@@ -1,0 +1,13 @@
+{
+  "timeUTC": "2026-11-25T02:56:55.677955+00:00",
+  "source": "5b69bbb52013686922efa7c4e7d9f2d44b774f94",
+  "freeBytes": 26136735744,
+  "loadAverage": [
+    315.80859375,
+    186.56298828125,
+    248.67724609375
+  ],
+  "remainingIncrementalEstimateBytes": 8589934592,
+  "concurrentGrowthAndOSMarginBytes": 8589934592,
+  "sourceAndLocksUnchangedAfterPrepare": true
+}

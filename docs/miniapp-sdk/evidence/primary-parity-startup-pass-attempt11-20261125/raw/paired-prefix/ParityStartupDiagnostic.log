@@ -1,0 +1,396 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project AI_HLY.xcodeproj -destination "platform=iOS Simulator,id=AAC01BF1-49E2-4804-9766-BFB53194EBAA" -parallel-testing-enabled NO -derivedDataPath /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete -clonedSourcePackagesDirPath /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/SourcePackages -skipPackagePluginValidation -skipMacroValidation CODE_SIGNING_ALLOWED=YES CODE_SIGNING_REQUIRED=YES CODE_SIGN_IDENTITY=- -collect-test-diagnostics never -scheme HanlinMiniApps test-without-building -resultBundlePath /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt11/paired-prefix/ParityStartupDiagnostic.xcresult "-only-testing:HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch"
+
+Build settings from command line:
+    CODE_SIGN_IDENTITY = -
+    CODE_SIGNING_ALLOWED = YES
+    CODE_SIGNING_REQUIRED = YES
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  swift-atomics: https://github.com/apple/swift-atomics.git @ 1.3.0
+  swift-json-schema: https://github.com/ajevans99/swift-json-schema @ 0.13.2
+  swift-markdown-ui: https://github.com/gonzalezreal/MarkdownUI.git @ 5f61335
+  BitByteData: https://github.com/tsolomko/BitByteData @ 2.1.0
+  SwiftAISDK: https://github.com/davidpovarsky/swift-ai-sdk.git @ 07431ab
+  SwiftStreamingMarkdown: https://github.com/davidpovarsky/hanlin-streaming-markdown @ 5cbb4b6
+  swift-nio: https://github.com/apple/swift-nio.git @ 2.94.0
+  iosMath: https://github.com/junyan72/iosMath @ ba9ab77
+  SwiftSoup: https://github.com/scinfu/SwiftSoup @ bba848d
+  ZIPFoundation: https://github.com/weichsel/ZIPFoundation @ 0.9.19
+  LaTeXSwiftUI: https://github.com/colinc86/LaTeXSwiftUI @ c45e0fd
+  HanlinSDK: /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete @ local
+  HTMLEntities: https://github.com/Kitura/swift-html-entities @ 4.0.1
+  TreeSitterBash: https://github.com/tree-sitter/tree-sitter-bash @ a06c2e4
+  swift-syntax: https://github.com/swiftlang/swift-syntax.git @ 603.0.2
+  swift-system: https://github.com/apple/swift-system.git @ 1.4.0
+  A2UISwiftCore: https://github.com/a2ui-project/a2ui @ 3ed9601
+  SwiftTreeSitter: https://github.com/tree-sitter/swift-tree-sitter @ 08ef81e
+  RichTextKit: https://github.com/danielsaidi/RichTextKit.git @ 8aa44cf
+  XMLCoder: https://github.com/maxdesiatov/XMLCoder.git @ 0.14.0
+  MathJaxSwift: https://github.com/colinc86/MathJaxSwift @ 3.4.0
+  LLM: https://github.com/eastriverlee/LLM.swift/ @ 4b25178
+  swift-argument-parser: https://github.com/apple/swift-argument-parser @ 1.8.2
+  SwiftyJSON: https://github.com/SwiftyJSON/SwiftyJSON.git @ 5.0.1
+  swift-log: https://github.com/apple/swift-log.git @ 96a2f8a
+  HighlightSwift: https://github.com/appstefan/highlightswift @ 99c431b
+  Equatable: https://github.com/ordo-one/equatable @ 1.4.1
+  mcp-swift-sdk: https://github.com/modelcontextprotocol/swift-sdk.git @ a0ae212
+  SWCompression: https://github.com/tsolomko/SWCompression.git @ c729f0b
+  NetworkImage: https://github.com/gonzalezreal/NetworkImage @ 6.0.1
+  SwiftDraw: https://github.com/swhitty/SwiftDraw @ 0.21.0
+  Yams: https://github.com/jpsim/Yams.git @ 6.2.2
+  SwiftUI-Shimmer: https://github.com/markiv/SwiftUI-Shimmer @ 1.5.1
+  EventSource: https://github.com/mattt/eventsource.git @ 1.1.0
+  swift-collections: https://github.com/apple/swift-collections.git @ 1.3.0
+  CoreXLSX: https://github.com/CoreOffice/CoreXLSX @ 1391f38
+  NativeScriptSDK: https://github.com/NativeScript/ios-spm.git @ 9.1.1
+  cmark-gfm: https://github.com/swiftlang/swift-cmark @ 0.9.0
+  swift-markdown: https://github.com/swiftlang/swift-markdown.git @ 0.7.3
+  TreeSitter: https://github.com/tree-sitter/tree-sitter @ da6fe9b
+
+Writing result bundle at path:
+	/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt11/paired-prefix/ParityStartupDiagnostic.xcresult
+
+Resolve Package Graph
+2026-11-25 04:11:03.140955+0100 HanlinMiniAppsUITests-Runner[95309:3254205] [Default] Running tests...
+2026-11-25 04:11:03.188704+0100 HanlinMiniAppsUITests-Runner[95309:3254205] [UIKit App Config] Update the Info.plist: Launch screens will soon be required.
+
+Resolve Package Graph
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-11-25 04:11:06.809.
+Test Suite 'HanlinMiniAppsUITests.xctest' started at 2026-11-25 04:11:06.809.
+Test Suite 'MiniAppsProductionRuntimeUITests' started at 2026-11-25 04:11:06.809.
+Test Case '-[HanlinMiniAppsUITests.MiniAppsProductionRuntimeUITests testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch]' started.
+    t =     0.00s Start Test at 2026-11-25 04:11:06.814
+    t =     0.27s Set Up
+
+    t =     0.27s     Open com.itorah.hanlinminiapps
+    t =     0.27s         Launch com.itorah.hanlinminiapps
+objc[95309]: Class UIAccessibilityLoaderWebShared is implemented in both /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.dmYYVr/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x1073d8398) and /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.dmYYVr/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x10a828310). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+2026-11-25 04:11:07.489 xcodebuild[94988:3251407] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-25 04:11:07.489 xcodebuild[94988:3251407] [MT] IDELaunchParametersSnapshot: no debugger version
+Resolve Package Graph
+
+Resolve Package Graph
+
+Resolve Package Graph
+    t =    12.57s             Setting up automation session
+
+    t =    15.95s             Wait for com.itorah.hanlinminiapps to idle
+<unknown>:0: warning: -[HanlinMiniAppsUITests.MiniAppsProductionRuntimeUITests testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch] : Update the Info.plist: Support for all orientations will soon be required.
+    t =    17.83s Waiting 30.0s for "hanlin-apps-add" Button to exist
+    t =    18.90s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-apps-add" Button`
+    t =    18.90s         Checking existence of `"hanlin-apps-add" Button`
+    t =    19.01s Waiting 30.0s for "hanlin-apps-add" Button to exist
+    t =    20.08s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-apps-add" Button`
+    t =    20.08s         Checking existence of `"hanlin-apps-add" Button`
+    t =    20.13s Tap "hanlin-apps-add" Button
+    t =    20.13s     Wait for com.itorah.hanlinminiapps to idle
+    t =    20.14s     Find the "hanlin-apps-add" Button
+    t =    20.23s     Check for interrupting elements affecting "hanlin-apps-add" Button
+    t =    20.32s         Wait for com.apple.springboard to idle
+    t =    20.40s     Synthesize event
+    t =    20.86s     Wait for com.itorah.hanlinminiapps to idle
+    t =    21.40s Waiting 15.0s for "hanlin-import-script-package" Button to exist
+    t =    22.48s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-script-package" Button`
+    t =    22.48s         Checking existence of `"hanlin-import-script-package" Button`
+    t =    22.63s Tap "hanlin-import-script-package" Button
+    t =    22.63s     Wait for com.itorah.hanlinminiapps to idle
+    t =    22.63s     Find the "hanlin-import-script-package" Button
+    t =    22.77s     Check for interrupting elements affecting "hanlin-import-script-package" Button
+    t =    22.86s         Wait for com.apple.springboard to idle
+    t =    22.88s     Synthesize event
+    t =    23.17s     Wait for com.itorah.hanlinminiapps to idle
+    t =    23.66s Waiting 15.0s for "hanlin-package-import-list" CollectionView to exist
+    t =    24.74s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-import-list" CollectionView`
+    t =    24.74s         Checking existence of `"hanlin-package-import-list" CollectionView`
+    t =    24.83s Checking existence of `"hanlin-script-parity" Button`
+    t =    24.97s Find the "hanlin-script-parity" Button
+    t =    25.11s Swipe up "hanlin-package-import-list" CollectionView
+    t =    25.11s     Wait for com.itorah.hanlinminiapps to idle
+    t =    25.11s     Find the "hanlin-package-import-list" CollectionView
+    t =    25.19s     Check for interrupting elements affecting "hanlin-package-import-list" CollectionView
+    t =    25.28s         Wait for com.apple.springboard to idle
+    t =    25.30s     Synthesize event
+    t =    25.76s     Wait for com.itorah.hanlinminiapps to idle
+    t =    26.31s Checking existence of `"hanlin-script-parity" Button`
+    t =    26.46s Find the "hanlin-script-parity" Button
+    t =    26.62s Waiting 15.0s for "hanlin-script-parity" Button to exist
+    t =    27.70s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-script-parity" Button`
+    t =    27.70s         Checking existence of `"hanlin-script-parity" Button`
+    t =    27.86s Find the "hanlin-script-parity" Button
+    t =    28.03s Tap "hanlin-script-parity" Button
+    t =    28.03s     Wait for com.itorah.hanlinminiapps to idle
+    t =    28.04s     Find the "hanlin-script-parity" Button
+    t =    28.20s     Check for interrupting elements affecting "hanlin-script-parity" Button
+    t =    28.31s         Wait for com.apple.springboard to idle
+    t =    28.32s     Synthesize event
+    t =    28.62s     Wait for com.itorah.hanlinminiapps to idle
+    t =    28.62s Checking existence of `"hanlin-package-install" Button`
+    t =    28.79s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    28.96s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    29.26s Checking existence of `"hanlin-package-install" Button`
+    t =    29.42s Checking existence of `"hanlin-approve-all-capabilities" Button`
+    t =    29.51s Find the "hanlin-package-install" Button
+    t =    29.67s Find the "hanlin-package-install" Button
+    t =    29.83s Find the "hanlin-package-install" Button
+    t =    30.00s Tap "hanlin-package-install" Button
+    t =    30.00s     Wait for com.itorah.hanlinminiapps to idle
+    t =    30.00s     Find the "hanlin-package-install" Button
+    t =    30.16s     Check for interrupting elements affecting "hanlin-package-install" Button
+    t =    30.25s         Wait for com.apple.springboard to idle
+    t =    30.27s     Synthesize event
+    t =    30.56s     Wait for com.itorah.hanlinminiapps to idle
+    t =    30.57s Checking existence of `"hanlin-package-install" Button`
+    t =    30.78s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    31.00s Checking existence of `"hanlin-package-install" Button`
+    t =    31.21s Waiting 10.0s for "Done" Button to exist
+    t =    32.29s     Checking `Expect predicate `existsNoRetry == 1` for object "Done" Button`
+    t =    32.29s         Checking existence of `"Done" Button`
+    t =    32.37s Tap "Done" Button
+    t =    32.37s     Wait for com.itorah.hanlinminiapps to idle
+    t =    32.37s     Find the "Done" Button
+    t =    32.43s     Check for interrupting elements affecting "hanlin-package-import-done" Button
+    t =    32.53s         Wait for com.apple.springboard to idle
+    t =    32.55s     Synthesize event
+    t =    32.85s     Wait for com.itorah.hanlinminiapps to idle
+    t =    33.19s Waiting 10.0s for "hanlin-apps-add-done" Button to exist
+    t =    34.26s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-apps-add-done" Button`
+    t =    34.26s         Checking existence of `"hanlin-apps-add-done" Button`
+    t =    34.35s Tap "hanlin-apps-add-done" Button
+    t =    34.35s     Wait for com.itorah.hanlinminiapps to idle
+    t =    34.35s     Find the "hanlin-apps-add-done" Button
+    t =    34.42s     Check for interrupting elements affecting "hanlin-apps-add-done" Button
+    t =    34.51s         Wait for com.apple.springboard to idle
+    t =    34.53s     Synthesize event
+    t =    34.82s     Wait for com.itorah.hanlinminiapps to idle
+    t =    35.22s Waiting 30.0s for "hanlin-apps-add" Button to exist
+    t =    36.29s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-apps-add" Button`
+    t =    36.29s         Checking existence of `"hanlin-apps-add" Button`
+    t =    36.35s Find the Target Application 'com.itorah.hanlinminiapps'
+    t =    36.60s Added attachment named 'companion-import-hanlin-script-parity'
+    t =    36.61s Requesting snapshot of accessibility hierarchy for app with pid 95508
+    t =    36.83s Requesting snapshot of accessibility hierarchy for app with pid 95508
+    t =    36.96s Added attachment named 'companion-import-hanlin-script-parity-accessibility'
+    t =    36.96s Checking existence of `"hanlin-package-card-HanlinScript Parity" Button`
+    t =    37.04s Find the "hanlin-package-card-HanlinScript Parity" Button
+    t =    37.12s Waiting 30.0s for "hanlin-package-card-HanlinScript Parity" Button to exist
+    t =    38.20s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-card-HanlinScript Parity" Button`
+    t =    38.20s         Checking existence of `"hanlin-package-card-HanlinScript Parity" Button`
+    t =    38.28s Find the "hanlin-package-card-HanlinScript Parity" Button
+    t =    38.36s Tap "hanlin-package-card-HanlinScript Parity" Button
+    t =    38.36s     Wait for com.itorah.hanlinminiapps to idle
+    t =    38.36s     Find the "hanlin-package-card-HanlinScript Parity" Button
+    t =    38.44s     Check for interrupting elements affecting "hanlin-package-card-HanlinScript Parity" Button
+    t =    38.51s         Wait for com.apple.springboard to idle
+    t =    38.52s     Synthesize event
+    t =    38.82s     Wait for com.itorah.hanlinminiapps to idle
+    t =    38.92s Waiting 30.0s for Any (First Match) to exist
+    t =    40.00s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    40.00s         Checking existence of `Any (First Match)`
+    t =    40.08s Find the Target Application 'com.itorah.hanlinminiapps'
+    t =    40.31s Added attachment named 'Parity-App-Launched'
+    t =    40.31s Requesting snapshot of accessibility hierarchy for app with pid 95508
+Resolve Package Graph
+    t =    40.63s Requesting snapshot of accessibility hierarchy for app with pid 95508
+    t =    40.77s Added attachment named 'Parity-App-Launched-accessibility'
+    t =    40.77s Waiting 25.0s for Any (First Match) to exist
+    t =    41.84s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    41.84s         Checking existence of `Any (First Match)`
+    t =    41.92s Waiting 180.0s for Any (First Match) to exist
+    t =    42.98s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+
+    t =    42.98s         Checking existence of `Any (First Match)`
+    t =    43.33s         Capturing element debug description
+    t =    43.98s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    43.98s         Checking existence of `Any (First Match)`
+    t =    44.09s         Capturing element debug description
+    t =    44.95s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    44.95s         Checking existence of `Any (First Match)`
+    t =    45.06s         Capturing element debug description
+    t =    45.93s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    45.93s         Checking existence of `Any (First Match)`
+    t =    46.03s         Capturing element debug description
+    t =    46.99s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    46.99s         Checking existence of `Any (First Match)`
+    t =    47.10s         Capturing element debug description
+    t =    47.96s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    47.96s         Checking existence of `Any (First Match)`
+    t =    48.08s         Capturing element debug description
+    t =    48.93s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    48.93s         Checking existence of `Any (First Match)`
+    t =    49.03s         Capturing element debug description
+    t =    49.98s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    49.98s         Checking existence of `Any (First Match)`
+    t =    50.09s         Capturing element debug description
+    t =    50.92s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    50.92s         Checking existence of `Any (First Match)`
+    t =    51.03s         Capturing element debug description
+    t =    51.99s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    51.99s         Checking existence of `Any (First Match)`
+    t =    52.11s         Capturing element debug description
+    t =    52.96s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    52.96s         Checking existence of `Any (First Match)`
+    t =    53.07s         Capturing element debug description
+    t =    54.01s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    54.01s         Checking existence of `Any (First Match)`
+    t =    54.13s         Capturing element debug description
+    t =    54.99s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    54.99s         Checking existence of `Any (First Match)`
+    t =    55.10s         Capturing element debug description
+    t =    55.93s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    55.93s         Checking existence of `Any (First Match)`
+    t =    56.03s         Capturing element debug description
+    t =    56.98s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    56.98s         Checking existence of `Any (First Match)`
+    t =    57.10s         Capturing element debug description
+    t =    57.95s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    57.95s         Checking existence of `Any (First Match)`
+    t =    58.06s         Capturing element debug description
+    t =    58.98s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    58.98s         Checking existence of `Any (First Match)`
+    t =    59.09s         Capturing element debug description
+    t =    59.93s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    59.93s         Checking existence of `Any (First Match)`
+    t =    60.04s         Capturing element debug description
+    t =    60.96s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    60.96s         Checking existence of `Any (First Match)`
+    t =    61.07s         Capturing element debug description
+    t =    61.99s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    61.99s         Checking existence of `Any (First Match)`
+    t =    62.10s         Capturing element debug description
+    t =    62.92s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    62.92s         Checking existence of `Any (First Match)`
+    t =    63.03s         Capturing element debug description
+    t =    63.95s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    63.95s         Checking existence of `Any (First Match)`
+    t =    64.07s         Capturing element debug description
+    t =    64.99s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    64.99s         Checking existence of `Any (First Match)`
+    t =    65.09s         Capturing element debug description
+    t =    65.93s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    65.93s         Checking existence of `Any (First Match)`
+    t =    66.04s         Capturing element debug description
+    t =    66.97s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    66.97s         Checking existence of `Any (First Match)`
+    t =    67.08s         Capturing element debug description
+    t =    68.01s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    68.01s         Checking existence of `Any (First Match)`
+    t =    68.10s Waiting 25.0s for Any (First Match) to exist
+    t =    69.12s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    69.12s         Checking existence of `Any (First Match)`
+    t =    69.20s Waiting 25.0s for Any (First Match) to exist
+Resolve Package Graph
+    t =    70.23s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    70.23s         Checking existence of `Any (First Match)`
+    t =    70.32s Waiting 25.0s for Any (First Match) to exist
+    t =    71.34s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    71.34s         Checking existence of `Any (First Match)`
+    t =    71.42s Find the Target Application 'com.itorah.hanlinminiapps'
+    t =    71.66s Added attachment named 'Parity-Runtimes-Verified'
+    t =    71.66s Requesting snapshot of accessibility hierarchy for app with pid 95508
+    t =    71.92s Requesting snapshot of accessibility hierarchy for app with pid 95508
+    t =    72.07s Added attachment named 'Parity-Runtimes-Verified-accessibility'
+    t =    72.07s Waiting 20.0s for Any (First Match) to exist
+
+    t =    73.12s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    73.12s         Checking existence of `Any (First Match)`
+    t =    73.20s Waiting 15.0s for "hanlin-script-app-close" Button to exist
+    t =    74.27s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-script-app-close" Button`
+    t =    74.27s         Checking existence of `"hanlin-script-app-close" Button`
+    t =    74.34s Find the "hanlin-script-app-close" Button
+    t =    74.41s Tap "hanlin-script-app-close" Button
+    t =    74.41s     Wait for com.itorah.hanlinminiapps to idle
+    t =    74.42s     Find the "hanlin-script-app-close" Button
+    t =    74.48s     Check for interrupting elements affecting "hanlin-script-app-close" Button
+    t =    74.56s         Wait for com.apple.springboard to idle
+    t =    74.57s     Synthesize event
+    t =    74.87s     Wait for com.itorah.hanlinminiapps to idle
+    t =    75.63s Waiting 15.0s for "hanlin-script-app-close" Button to not exist
+    t =    76.70s     Checking `Expect predicate `existsNoRetry == 0` for object "hanlin-script-app-close" Button`
+    t =    76.70s         Checking existence of `"hanlin-script-app-close" Button`
+    t =    76.80s Waiting 15.0s for "hanlin-apps-add" Button to exist
+    t =    77.87s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-apps-add" Button`
+    t =    77.87s         Checking existence of `"hanlin-apps-add" Button`
+    t =    77.92s Terminate com.itorah.hanlinminiapps:95508
+    t =    78.93s Open com.itorah.hanlinminiapps
+    t =    78.93s     Launch com.itorah.hanlinminiapps
+2026-11-25 04:12:25.742 xcodebuild[94988:3251407] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-25 04:12:25.742 xcodebuild[94988:3251407] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =    79.14s         Setting up automation session
+    t =    82.18s         Wait for com.itorah.hanlinminiapps to idle
+    t =    83.73s Waiting 30.0s for "hanlin-apps-add" Button to exist
+    t =    84.80s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-apps-add" Button`
+    t =    84.81s         Checking existence of `"hanlin-apps-add" Button`
+    t =    84.90s Waiting 10.0s for Any (First Match) to exist
+    t =    85.94s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    85.94s         Checking existence of `Any (First Match)`
+    t =    86.02s Checking existence of `"hanlin-package-card-HanlinScript Parity" Button`
+    t =    86.10s Find the "hanlin-package-card-HanlinScript Parity" Button
+    t =    86.19s Waiting 30.0s for "hanlin-package-card-HanlinScript Parity" Button to exist
+    t =    87.26s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-card-HanlinScript Parity" Button`
+    t =    87.26s         Checking existence of `"hanlin-package-card-HanlinScript Parity" Button`
+    t =    87.35s Find the "hanlin-package-card-HanlinScript Parity" Button
+    t =    87.44s Tap "hanlin-package-card-HanlinScript Parity" Button
+    t =    87.44s     Wait for com.itorah.hanlinminiapps to idle
+    t =    87.44s     Find the "hanlin-package-card-HanlinScript Parity" Button
+    t =    87.52s     Check for interrupting elements affecting "hanlin-package-card-HanlinScript Parity" Button
+    t =    87.58s         Wait for com.apple.springboard to idle
+    t =    87.60s     Synthesize event
+    t =    87.90s     Wait for com.itorah.hanlinminiapps to idle
+    t =    87.97s Waiting 30.0s for Any (First Match) to exist
+    t =    88.99s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    88.99s         Checking existence of `Any (First Match)`
+    t =    89.08s Find the Target Application 'com.itorah.hanlinminiapps'
+Resolve Package Graph
+    t =    89.34s Added attachment named 'Parity-Relaunched-Successfully'
+    t =    89.34s Requesting snapshot of accessibility hierarchy for app with pid 96108
+    t =    89.64s Requesting snapshot of accessibility hierarchy for app with pid 96108
+    t =    89.78s Added attachment named 'Parity-Relaunched-Successfully-accessibility'
+    t =    89.78s Waiting 15.0s for "hanlin-script-app-close" Button to exist
+    t =    90.82s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-script-app-close" Button`
+    t =    90.82s         Checking existence of `"hanlin-script-app-close" Button`
+    t =    90.88s Find the "hanlin-script-app-close" Button
+    t =    90.96s Tap "hanlin-script-app-close" Button
+    t =    90.96s     Wait for com.itorah.hanlinminiapps to idle
+    t =    90.96s     Find the "hanlin-script-app-close" Button
+    t =    91.03s     Check for interrupting elements affecting "hanlin-script-app-close" Button
+    t =    91.10s         Wait for com.apple.springboard to idle
+    t =    91.12s     Synthesize event
+    t =    91.42s     Wait for com.itorah.hanlinminiapps to idle
+
+Resolve Package Graph
+    t =    92.16s Waiting 15.0s for "hanlin-script-app-close" Button to not exist
+    t =    93.19s     Checking `Expect predicate `existsNoRetry == 0` for object "hanlin-script-app-close" Button`
+    t =    93.19s         Checking existence of `"hanlin-script-app-close" Button`
+    t =    93.29s Waiting 15.0s for "hanlin-apps-add" Button to exist
+    t =    94.34s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-apps-add" Button`
+
+    t =    94.34s         Checking existence of `"hanlin-apps-add" Button`
+    t =    94.47s Tear Down
+    t =    94.47s     Find the Target Application 'com.itorah.hanlinminiapps'
+    t =    94.74s     Added attachment named 'companion-runtime-failure'
+    t =    94.74s     Requesting snapshot of accessibility hierarchy for app with pid 96108
+    t =    94.96s     Requesting snapshot of accessibility hierarchy for app with pid 96108
+    t =    95.09s     Added attachment named 'companion-runtime-failure-accessibility'
+    t =    95.09s     Terminate com.itorah.hanlinminiapps:96108
+Test Case '-[HanlinMiniAppsUITests.MiniAppsProductionRuntimeUITests testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch]' passed (96.358 seconds).
+Test Suite 'MiniAppsProductionRuntimeUITests' passed at 2026-11-25 04:12:43.172.
+	 Executed 1 test, with 0 failures (0 unexpected) in 96.358 (96.363) seconds
+Test Suite 'HanlinMiniAppsUITests.xctest' passed at 2026-11-25 04:12:43.172.
+	 Executed 1 test, with 0 failures (0 unexpected) in 96.358 (96.363) seconds
+Test Suite 'Selected tests' passed at 2026-11-25 04:12:43.173.
+	 Executed 1 test, with 0 failures (0 unexpected) in 96.358 (96.364) seconds
+2026-11-25 04:12:43.486 xcodebuild[94988:3251407] [MT] IDETestOperationsObserverDebug: 103.693 elapsed -- Testing started completed.
+2026-11-25 04:12:43.486 xcodebuild[94988:3251407] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-25 04:12:43.486 xcodebuild[94988:3251407] [MT] IDETestOperationsObserverDebug: 103.693 sec, +103.693 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt11/paired-prefix/ParityStartupDiagnostic.xcresult
+
+** TEST EXECUTE SUCCEEDED **
+
+Testing started

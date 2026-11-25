@@ -1,0 +1,17 @@
+{
+  "published_commit": "abf0921c6e89e6521cc2b510ff11016b45a0ef08",
+  "parent": "95b14823d3a19529f4704ad98698d44fb345814a",
+  "tree": "f094f58f7956903e740a5188cf1e9d43c126248e",
+  "equivalent_local_commit": "06cd98dc874a12e56ba8864a2baa20c22363d6c0",
+  "branch": "codex/swift-ai-sdk-cache-controls-20261125",
+  "pull_request": "https://github.com/davidpovarsky/swift-ai-sdk/pull/1",
+  "base_branch": "codex/otzaria-tool-result-continuation-20261123",
+  "base_commit": "3f38f1302764635c9991d0d00fd7b12471a5373c",
+  "publication": "Non-force compare-and-swap from expected parent; tree verified through fresh GitHub GET. API author/committer metadata differs; source tree is exact.",
+  "validation": "4 original producer tests plus 44 Hanlin core integration tests passed at f5a192f8; final fixture hashes match published content. This final commit changes tests only.",
+  "unrelated_main_review": [
+    "d620cd49: 2026-10-06 project board only",
+    "0b40aa18: 2026-10-07 Live Activity Bridge workflow only",
+    "12a0ad31: 2026-10-07 same workflow lifecycle only"
+  ]
+}

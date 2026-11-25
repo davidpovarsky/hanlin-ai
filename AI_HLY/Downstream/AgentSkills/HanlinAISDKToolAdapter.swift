@@ -197,7 +197,7 @@ final class HanlinAISDKToolAdapter {
         // 4. Active skill preferred tool hints and remaining exposed tools
         var prioritizedCandidates: [String] = []
         prioritizedCandidates.append(contentsOf: session.explicitlySelectedToolAliases.sorted())
-        for alias in preparedTools.mcpAliases where session.exposedToolAliases.contains(alias) {
+        for alias in preparedTools.mcpAliases.sorted() where session.exposedToolAliases.contains(alias) {
             if !prioritizedCandidates.contains(alias) {
                 prioritizedCandidates.append(alias)
             }
@@ -207,12 +207,12 @@ final class HanlinAISDKToolAdapter {
                 prioritizedCandidates.append(alias)
             }
         }
-        for alias in session.activeSkillToolHints where session.exposedToolAliases.contains(alias) {
+        for alias in session.activeSkillToolHints.sorted() where session.exposedToolAliases.contains(alias) {
             if !prioritizedCandidates.contains(alias) {
                 prioritizedCandidates.append(alias)
             }
         }
-        for alias in session.exposedToolAliases {
+        for alias in session.exposedToolAliases.sorted() {
             if !prioritizedCandidates.contains(alias) {
                 prioritizedCandidates.append(alias)
             }

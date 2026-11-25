@@ -26,6 +26,10 @@ struct AgentDiagnosticsSession: Codable, Identifiable, Sendable, Equatable {
     var totals: AgentTokenUsage
     var efficiency: AgentEfficiencyReport
 
+    var promptCacheSummary: AgentPromptCacheSummary {
+        AgentPromptCacheSummary(usages: rounds.map(\.usage))
+    }
+
     /// Read files produced by the short-lived numeric-latency redaction bug.
     /// Only its exact placeholders at these two known paths can be omitted.
     /// Preserve the original file and never invent a missing measurement.

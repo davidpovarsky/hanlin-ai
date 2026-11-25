@@ -1,0 +1,1391 @@
+{
+  "source": "b2b17ca2078c632c87b95d6f766ec13b09b344d7",
+  "prepare_status": "PREPARED",
+  "test_build_status": "FAILED",
+  "tests_executed": 0,
+  "reason": "AssistantToolBridge.Executors.live factory is not implicitly MainActor-isolated by its enclosing type; NativeTool.name access fails Swift6isolation check.",
+  "source_and_locks_unchanged": true,
+  "mac_result_bundle": "/Users/m1/builds/hanlin-ai-cache-native-20261125/build/cache-app-native-evidence-02-20261125/test/AppBuild.xcresult",
+  "files": [
+    {
+      "path": "prepare/01-xcode-version.log.gz",
+      "raw_sha256": "694b44731d0b415c5b11d844151e466d7f5e200a95627efda377f232f1a6ab77",
+      "raw_bytes": 33
+    },
+    {
+      "path": "prepare/04-manifest-check.log.gz",
+      "raw_sha256": "6a3adc34271cba4ee688071b7aec9eb7f0ee9731bedf3e215a77efb8648947f0",
+      "raw_bytes": 3605
+    },
+    {
+      "path": "prepare/04-manifest-check.stderr.log.gz",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0
+    },
+    {
+      "path": "prepare/02-swift-version.stderr.log.gz",
+      "raw_sha256": "bbc8b176d3c74d4c5a7fd00b40280f98168e116d5272273bfe8e71407625540e",
+      "raw_bytes": 30
+    },
+    {
+      "path": "prepare/03-node-version.log.gz",
+      "raw_sha256": "2f30156cd7f9137514ea68d53554f583cf6541fd107dbc8ae8a19253379a735a",
+      "raw_bytes": 8
+    },
+    {
+      "path": "prepare/06-resolve-packages.log.gz",
+      "raw_sha256": "4d50947c16903e0031bfd4669a38b2210708f91f5d42da5441614742659f1ac9",
+      "raw_bytes": 3881
+    },
+    {
+      "path": "prepare/03-node-version.stderr.log.gz",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0
+    },
+    {
+      "path": "prepare/before-sources.json",
+      "raw_sha256": "2469a28a6d7fbcfb5c0f2385a541570b0d186996b6027bb5b6f8fc2a807accd6",
+      "raw_bytes": 1779803
+    },
+    {
+      "path": "prepare/05-project-check.log.gz",
+      "raw_sha256": "7b205399ea53f72db8afa2fe3d77370cd6f0ac3d9ea8d19cea47a806236d4d18",
+      "raw_bytes": 88
+    },
+    {
+      "path": "prepare/08-a2ui-schemas.log.gz",
+      "raw_sha256": "07b2ec26f92141378186e29ef0cff391e04cde9dae1e63587dc8b8ca023c3685",
+      "raw_bytes": 2608
+    },
+    {
+      "path": "prepare/05-project-check.stderr.log.gz",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0
+    },
+    {
+      "path": "prepare/after-sources.json",
+      "raw_sha256": "2469a28a6d7fbcfb5c0f2385a541570b0d186996b6027bb5b6f8fc2a807accd6",
+      "raw_bytes": 1779803
+    },
+    {
+      "path": "prepare/06-resolve-packages.stderr.log.gz",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0
+    },
+    {
+      "path": "prepare/07-modular-headers.stderr.log.gz",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0
+    },
+    {
+      "path": "prepare/01-xcode-version.stderr.log.gz",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0
+    },
+    {
+      "path": "prepare/02-swift-version.log.gz",
+      "raw_sha256": "04630ab8fa201f57c63c59730e638135e32584a97e16e004a417eb8ed283dc83",
+      "raw_bytes": 98
+    },
+    {
+      "path": "prepare/08-a2ui-schemas.stderr.log.gz",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0
+    },
+    {
+      "path": "prepare/07-modular-headers.log.gz",
+      "raw_sha256": "d7d6d2a16644f367f63446838fa2f262f515c6f49e7a7c47a631aca9d42f6642",
+      "raw_bytes": 270
+    },
+    {
+      "path": "prepare/receipt.json",
+      "raw_sha256": "7ae3070d48f194101283690b9ad62959e69eaa34eb13953dc728f6ba0fc8c608",
+      "raw_bytes": 7532
+    },
+    {
+      "path": "prepare/before-locks/Packages/HanlinPlatform/Package.resolved",
+      "raw_sha256": "3e20591d1ac1c23db5258e6fbaee9386e94a58546e814fd5dfad6bf910551c0b",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/before-locks/Packages/HanlinParityMiniApp/Package.resolved",
+      "raw_sha256": "e0a1d86319347dd23c139babb2864cfc7da0e7365419eef82da71ce354b25fde",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/before-locks/Packages/HanlinAgentSDK/Package.resolved",
+      "raw_sha256": "2acb720310279d62c48a54d2a856f25937a9abed054b5a2661b03c548fee457f",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/before-locks/Packages/HanlinSkillFormat/Package.resolved",
+      "raw_sha256": "0ce944410a619261329435970fb8f81509687140af7dff3a134e8aa1efae6d9a",
+      "raw_bytes": 374
+    },
+    {
+      "path": "prepare/before-locks/Packages/HanlinWikipediaMiniApp/Package.resolved",
+      "raw_sha256": "c31e1e6bd9f3b22b5046ab6e776bd0ebf9ac1804ff857dac9742ddc9be5c8094",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/before-locks/Packages/HanlinSefariaMiniApp/Package.resolved",
+      "raw_sha256": "6252f1f037cf0d5514ad4f8d04ae5391eeb074a837bbc562148b7858bd946210",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/before-locks/Packages/HanlinSwiftUIBridgeGenerator/Package.resolved",
+      "raw_sha256": "572f5b827187c0042186b44ee30fd3ec72e205fb202ea398882a64bc5bb74953",
+      "raw_bytes": 396
+    },
+    {
+      "path": "prepare/before-locks/Packages/HanlinTextStudioMiniApp/Package.resolved",
+      "raw_sha256": "43ef7974e3631a0534bc85aa462b2396c052d8e991043ee28a31941db3869f5c",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/before-locks/Packages/HanlinPlatform/Package.resolved",
+      "raw_sha256": "3e20591d1ac1c23db5258e6fbaee9386e94a58546e814fd5dfad6bf910551c0b",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/before-locks/Packages/HanlinParityMiniApp/Package.resolved",
+      "raw_sha256": "e0a1d86319347dd23c139babb2864cfc7da0e7365419eef82da71ce354b25fde",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/before-locks/Packages/HanlinAgentSDK/Package.resolved",
+      "raw_sha256": "2acb720310279d62c48a54d2a856f25937a9abed054b5a2661b03c548fee457f",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/before-locks/Packages/HanlinSkillFormat/Package.resolved",
+      "raw_sha256": "0ce944410a619261329435970fb8f81509687140af7dff3a134e8aa1efae6d9a",
+      "raw_bytes": 374
+    },
+    {
+      "path": "prepare/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/before-locks/Packages/HanlinWikipediaMiniApp/Package.resolved",
+      "raw_sha256": "c31e1e6bd9f3b22b5046ab6e776bd0ebf9ac1804ff857dac9742ddc9be5c8094",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/before-locks/Packages/HanlinSefariaMiniApp/Package.resolved",
+      "raw_sha256": "6252f1f037cf0d5514ad4f8d04ae5391eeb074a837bbc562148b7858bd946210",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/before-locks/Packages/HanlinSwiftUIBridgeGenerator/Package.resolved",
+      "raw_sha256": "572f5b827187c0042186b44ee30fd3ec72e205fb202ea398882a64bc5bb74953",
+      "raw_bytes": 396
+    },
+    {
+      "path": "prepare/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/before-locks/Packages/HanlinTextStudioMiniApp/Package.resolved",
+      "raw_sha256": "43ef7974e3631a0534bc85aa462b2396c052d8e991043ee28a31941db3869f5c",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/before-locks/docs/ai-cache/evidence/native-core-20261125/attempts/02-producer-fixture/Package.resolved",
+      "raw_sha256": "94eb561e694958712c602d2d7f7b5a949fea87c4b26c06aa79dc066f8e75e54e",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "prepare/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/before-locks/docs/ai-cache/evidence/native-core-20261125/attempts/01-swift64-isolation/Package.resolved",
+      "raw_sha256": "94eb561e694958712c602d2d7f7b5a949fea87c4b26c06aa79dc066f8e75e54e",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "prepare/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/before-locks/docs/ai-cache/evidence/native-core-20261125/attempts/03-swift-testing-macros/Package.resolved",
+      "raw_sha256": "bdfe7cfba5c6ce68cc073216155d55021a76ea1a37750b8aafc0882d61e711c4",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "prepare/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/before-locks/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "raw_sha256": "5fb194bd119570e81b7a51c3227ea10ecd3ab0c543ea2b258c9fac1103330bcd",
+      "raw_bytes": 10180
+    },
+    {
+      "path": "prepare/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/after-locks/Packages/HanlinPlatform/Package.resolved",
+      "raw_sha256": "3e20591d1ac1c23db5258e6fbaee9386e94a58546e814fd5dfad6bf910551c0b",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/after-locks/Packages/HanlinParityMiniApp/Package.resolved",
+      "raw_sha256": "e0a1d86319347dd23c139babb2864cfc7da0e7365419eef82da71ce354b25fde",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/after-locks/Packages/HanlinAgentSDK/Package.resolved",
+      "raw_sha256": "2acb720310279d62c48a54d2a856f25937a9abed054b5a2661b03c548fee457f",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/after-locks/Packages/HanlinSkillFormat/Package.resolved",
+      "raw_sha256": "0ce944410a619261329435970fb8f81509687140af7dff3a134e8aa1efae6d9a",
+      "raw_bytes": 374
+    },
+    {
+      "path": "prepare/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/after-locks/Packages/HanlinWikipediaMiniApp/Package.resolved",
+      "raw_sha256": "c31e1e6bd9f3b22b5046ab6e776bd0ebf9ac1804ff857dac9742ddc9be5c8094",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/after-locks/Packages/HanlinSefariaMiniApp/Package.resolved",
+      "raw_sha256": "6252f1f037cf0d5514ad4f8d04ae5391eeb074a837bbc562148b7858bd946210",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/after-locks/Packages/HanlinSwiftUIBridgeGenerator/Package.resolved",
+      "raw_sha256": "572f5b827187c0042186b44ee30fd3ec72e205fb202ea398882a64bc5bb74953",
+      "raw_bytes": 396
+    },
+    {
+      "path": "prepare/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/after-locks/Packages/HanlinTextStudioMiniApp/Package.resolved",
+      "raw_sha256": "43ef7974e3631a0534bc85aa462b2396c052d8e991043ee28a31941db3869f5c",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/after-locks/docs/ai-cache/evidence/native-core-20261125/attempts/02-producer-fixture/Package.resolved",
+      "raw_sha256": "94eb561e694958712c602d2d7f7b5a949fea87c4b26c06aa79dc066f8e75e54e",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "prepare/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/after-locks/docs/ai-cache/evidence/native-core-20261125/attempts/01-swift64-isolation/Package.resolved",
+      "raw_sha256": "94eb561e694958712c602d2d7f7b5a949fea87c4b26c06aa79dc066f8e75e54e",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "prepare/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/after-locks/docs/ai-cache/evidence/native-core-20261125/attempts/03-swift-testing-macros/Package.resolved",
+      "raw_sha256": "bdfe7cfba5c6ce68cc073216155d55021a76ea1a37750b8aafc0882d61e711c4",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "prepare/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/after-locks/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "raw_sha256": "0dd6abbd4f31d4187a4a69caf97f92aa6d3cf19b241d300be5d19cd32e3aa037",
+      "raw_bytes": 10750
+    },
+    {
+      "path": "prepare/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/before-locks/Packages/HanlinPlatform/Package.resolved",
+      "raw_sha256": "3e20591d1ac1c23db5258e6fbaee9386e94a58546e814fd5dfad6bf910551c0b",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/before-locks/Packages/HanlinParityMiniApp/Package.resolved",
+      "raw_sha256": "e0a1d86319347dd23c139babb2864cfc7da0e7365419eef82da71ce354b25fde",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/before-locks/Packages/HanlinAgentSDK/Package.resolved",
+      "raw_sha256": "2acb720310279d62c48a54d2a856f25937a9abed054b5a2661b03c548fee457f",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/before-locks/Packages/HanlinSkillFormat/Package.resolved",
+      "raw_sha256": "0ce944410a619261329435970fb8f81509687140af7dff3a134e8aa1efae6d9a",
+      "raw_bytes": 374
+    },
+    {
+      "path": "prepare/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/before-locks/Packages/HanlinWikipediaMiniApp/Package.resolved",
+      "raw_sha256": "c31e1e6bd9f3b22b5046ab6e776bd0ebf9ac1804ff857dac9742ddc9be5c8094",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/before-locks/Packages/HanlinSefariaMiniApp/Package.resolved",
+      "raw_sha256": "6252f1f037cf0d5514ad4f8d04ae5391eeb074a837bbc562148b7858bd946210",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/before-locks/Packages/HanlinSwiftUIBridgeGenerator/Package.resolved",
+      "raw_sha256": "572f5b827187c0042186b44ee30fd3ec72e205fb202ea398882a64bc5bb74953",
+      "raw_bytes": 396
+    },
+    {
+      "path": "prepare/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/before-locks/Packages/HanlinTextStudioMiniApp/Package.resolved",
+      "raw_sha256": "43ef7974e3631a0534bc85aa462b2396c052d8e991043ee28a31941db3869f5c",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/before-locks/docs/ai-cache/evidence/native-core-20261125/attempts/02-producer-fixture/Package.resolved",
+      "raw_sha256": "94eb561e694958712c602d2d7f7b5a949fea87c4b26c06aa79dc066f8e75e54e",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "prepare/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/before-locks/docs/ai-cache/evidence/native-core-20261125/attempts/01-swift64-isolation/Package.resolved",
+      "raw_sha256": "94eb561e694958712c602d2d7f7b5a949fea87c4b26c06aa79dc066f8e75e54e",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "prepare/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/before-locks/docs/ai-cache/evidence/native-core-20261125/attempts/03-swift-testing-macros/Package.resolved",
+      "raw_sha256": "bdfe7cfba5c6ce68cc073216155d55021a76ea1a37750b8aafc0882d61e711c4",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "prepare/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/before-locks/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "raw_sha256": "0dd6abbd4f31d4187a4a69caf97f92aa6d3cf19b241d300be5d19cd32e3aa037",
+      "raw_bytes": 10750
+    },
+    {
+      "path": "prepare/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/after-locks/Packages/HanlinPlatform/Package.resolved",
+      "raw_sha256": "3e20591d1ac1c23db5258e6fbaee9386e94a58546e814fd5dfad6bf910551c0b",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/after-locks/Packages/HanlinParityMiniApp/Package.resolved",
+      "raw_sha256": "e0a1d86319347dd23c139babb2864cfc7da0e7365419eef82da71ce354b25fde",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/after-locks/Packages/HanlinAgentSDK/Package.resolved",
+      "raw_sha256": "2acb720310279d62c48a54d2a856f25937a9abed054b5a2661b03c548fee457f",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/after-locks/Packages/HanlinSkillFormat/Package.resolved",
+      "raw_sha256": "0ce944410a619261329435970fb8f81509687140af7dff3a134e8aa1efae6d9a",
+      "raw_bytes": 374
+    },
+    {
+      "path": "prepare/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/after-locks/Packages/HanlinWikipediaMiniApp/Package.resolved",
+      "raw_sha256": "c31e1e6bd9f3b22b5046ab6e776bd0ebf9ac1804ff857dac9742ddc9be5c8094",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/after-locks/Packages/HanlinSefariaMiniApp/Package.resolved",
+      "raw_sha256": "6252f1f037cf0d5514ad4f8d04ae5391eeb074a837bbc562148b7858bd946210",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/after-locks/Packages/HanlinSwiftUIBridgeGenerator/Package.resolved",
+      "raw_sha256": "572f5b827187c0042186b44ee30fd3ec72e205fb202ea398882a64bc5bb74953",
+      "raw_bytes": 396
+    },
+    {
+      "path": "prepare/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/after-locks/Packages/HanlinTextStudioMiniApp/Package.resolved",
+      "raw_sha256": "43ef7974e3631a0534bc85aa462b2396c052d8e991043ee28a31941db3869f5c",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/after-locks/docs/ai-cache/evidence/native-core-20261125/attempts/02-producer-fixture/Package.resolved",
+      "raw_sha256": "94eb561e694958712c602d2d7f7b5a949fea87c4b26c06aa79dc066f8e75e54e",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "prepare/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/after-locks/docs/ai-cache/evidence/native-core-20261125/attempts/01-swift64-isolation/Package.resolved",
+      "raw_sha256": "94eb561e694958712c602d2d7f7b5a949fea87c4b26c06aa79dc066f8e75e54e",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "prepare/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/after-locks/docs/ai-cache/evidence/native-core-20261125/attempts/03-swift-testing-macros/Package.resolved",
+      "raw_sha256": "bdfe7cfba5c6ce68cc073216155d55021a76ea1a37750b8aafc0882d61e711c4",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "prepare/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/after-locks/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "raw_sha256": "0dd6abbd4f31d4187a4a69caf97f92aa6d3cf19b241d300be5d19cd32e3aa037",
+      "raw_bytes": 10750
+    },
+    {
+      "path": "prepare/before-locks/docs/ai-cache/evidence/native-core-20261125/attempts/02-producer-fixture/Package.resolved",
+      "raw_sha256": "94eb561e694958712c602d2d7f7b5a949fea87c4b26c06aa79dc066f8e75e54e",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "prepare/before-locks/docs/ai-cache/evidence/native-core-20261125/attempts/01-swift64-isolation/Package.resolved",
+      "raw_sha256": "94eb561e694958712c602d2d7f7b5a949fea87c4b26c06aa79dc066f8e75e54e",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "prepare/before-locks/docs/ai-cache/evidence/native-core-20261125/attempts/03-swift-testing-macros/Package.resolved",
+      "raw_sha256": "bdfe7cfba5c6ce68cc073216155d55021a76ea1a37750b8aafc0882d61e711c4",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "prepare/before-locks/docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/raw/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "raw_sha256": "610bcbb9a7f90c27e3bd3ecd3b1d139fe3ff72ed18086327d1d96c437de932f5",
+      "raw_bytes": 9960
+    },
+    {
+      "path": "prepare/before-locks/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "raw_sha256": "0dd6abbd4f31d4187a4a69caf97f92aa6d3cf19b241d300be5d19cd32e3aa037",
+      "raw_bytes": 10750
+    },
+    {
+      "path": "prepare/after-locks/Packages/HanlinPlatform/Package.resolved",
+      "raw_sha256": "3e20591d1ac1c23db5258e6fbaee9386e94a58546e814fd5dfad6bf910551c0b",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/after-locks/Packages/HanlinParityMiniApp/Package.resolved",
+      "raw_sha256": "e0a1d86319347dd23c139babb2864cfc7da0e7365419eef82da71ce354b25fde",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/after-locks/Packages/HanlinAgentSDK/Package.resolved",
+      "raw_sha256": "2acb720310279d62c48a54d2a856f25937a9abed054b5a2661b03c548fee457f",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/after-locks/Packages/HanlinSkillFormat/Package.resolved",
+      "raw_sha256": "0ce944410a619261329435970fb8f81509687140af7dff3a134e8aa1efae6d9a",
+      "raw_bytes": 374
+    },
+    {
+      "path": "prepare/after-locks/Packages/HanlinWikipediaMiniApp/Package.resolved",
+      "raw_sha256": "c31e1e6bd9f3b22b5046ab6e776bd0ebf9ac1804ff857dac9742ddc9be5c8094",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/after-locks/Packages/HanlinSefariaMiniApp/Package.resolved",
+      "raw_sha256": "6252f1f037cf0d5514ad4f8d04ae5391eeb074a837bbc562148b7858bd946210",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/after-locks/Packages/HanlinSwiftUIBridgeGenerator/Package.resolved",
+      "raw_sha256": "572f5b827187c0042186b44ee30fd3ec72e205fb202ea398882a64bc5bb74953",
+      "raw_bytes": 396
+    },
+    {
+      "path": "prepare/after-locks/Packages/HanlinTextStudioMiniApp/Package.resolved",
+      "raw_sha256": "43ef7974e3631a0534bc85aa462b2396c052d8e991043ee28a31941db3869f5c",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/before-locks/Packages/HanlinPlatform/Package.resolved",
+      "raw_sha256": "3e20591d1ac1c23db5258e6fbaee9386e94a58546e814fd5dfad6bf910551c0b",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/before-locks/Packages/HanlinParityMiniApp/Package.resolved",
+      "raw_sha256": "e0a1d86319347dd23c139babb2864cfc7da0e7365419eef82da71ce354b25fde",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/before-locks/Packages/HanlinAgentSDK/Package.resolved",
+      "raw_sha256": "2acb720310279d62c48a54d2a856f25937a9abed054b5a2661b03c548fee457f",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/before-locks/Packages/HanlinSkillFormat/Package.resolved",
+      "raw_sha256": "0ce944410a619261329435970fb8f81509687140af7dff3a134e8aa1efae6d9a",
+      "raw_bytes": 374
+    },
+    {
+      "path": "prepare/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/before-locks/Packages/HanlinWikipediaMiniApp/Package.resolved",
+      "raw_sha256": "c31e1e6bd9f3b22b5046ab6e776bd0ebf9ac1804ff857dac9742ddc9be5c8094",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/before-locks/Packages/HanlinSefariaMiniApp/Package.resolved",
+      "raw_sha256": "6252f1f037cf0d5514ad4f8d04ae5391eeb074a837bbc562148b7858bd946210",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/before-locks/Packages/HanlinSwiftUIBridgeGenerator/Package.resolved",
+      "raw_sha256": "572f5b827187c0042186b44ee30fd3ec72e205fb202ea398882a64bc5bb74953",
+      "raw_bytes": 396
+    },
+    {
+      "path": "prepare/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/before-locks/Packages/HanlinTextStudioMiniApp/Package.resolved",
+      "raw_sha256": "43ef7974e3631a0534bc85aa462b2396c052d8e991043ee28a31941db3869f5c",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/before-locks/docs/ai-cache/evidence/native-core-20261125/attempts/02-producer-fixture/Package.resolved",
+      "raw_sha256": "94eb561e694958712c602d2d7f7b5a949fea87c4b26c06aa79dc066f8e75e54e",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "prepare/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/before-locks/docs/ai-cache/evidence/native-core-20261125/attempts/01-swift64-isolation/Package.resolved",
+      "raw_sha256": "94eb561e694958712c602d2d7f7b5a949fea87c4b26c06aa79dc066f8e75e54e",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "prepare/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/before-locks/docs/ai-cache/evidence/native-core-20261125/attempts/03-swift-testing-macros/Package.resolved",
+      "raw_sha256": "bdfe7cfba5c6ce68cc073216155d55021a76ea1a37750b8aafc0882d61e711c4",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "prepare/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/before-locks/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "raw_sha256": "5fb194bd119570e81b7a51c3227ea10ecd3ab0c543ea2b258c9fac1103330bcd",
+      "raw_bytes": 10180
+    },
+    {
+      "path": "prepare/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/after-locks/Packages/HanlinPlatform/Package.resolved",
+      "raw_sha256": "3e20591d1ac1c23db5258e6fbaee9386e94a58546e814fd5dfad6bf910551c0b",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/after-locks/Packages/HanlinParityMiniApp/Package.resolved",
+      "raw_sha256": "e0a1d86319347dd23c139babb2864cfc7da0e7365419eef82da71ce354b25fde",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/after-locks/Packages/HanlinAgentSDK/Package.resolved",
+      "raw_sha256": "2acb720310279d62c48a54d2a856f25937a9abed054b5a2661b03c548fee457f",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/after-locks/Packages/HanlinSkillFormat/Package.resolved",
+      "raw_sha256": "0ce944410a619261329435970fb8f81509687140af7dff3a134e8aa1efae6d9a",
+      "raw_bytes": 374
+    },
+    {
+      "path": "prepare/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/after-locks/Packages/HanlinWikipediaMiniApp/Package.resolved",
+      "raw_sha256": "c31e1e6bd9f3b22b5046ab6e776bd0ebf9ac1804ff857dac9742ddc9be5c8094",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/after-locks/Packages/HanlinSefariaMiniApp/Package.resolved",
+      "raw_sha256": "6252f1f037cf0d5514ad4f8d04ae5391eeb074a837bbc562148b7858bd946210",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/after-locks/Packages/HanlinSwiftUIBridgeGenerator/Package.resolved",
+      "raw_sha256": "572f5b827187c0042186b44ee30fd3ec72e205fb202ea398882a64bc5bb74953",
+      "raw_bytes": 396
+    },
+    {
+      "path": "prepare/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/after-locks/Packages/HanlinTextStudioMiniApp/Package.resolved",
+      "raw_sha256": "43ef7974e3631a0534bc85aa462b2396c052d8e991043ee28a31941db3869f5c",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/after-locks/docs/ai-cache/evidence/native-core-20261125/attempts/02-producer-fixture/Package.resolved",
+      "raw_sha256": "94eb561e694958712c602d2d7f7b5a949fea87c4b26c06aa79dc066f8e75e54e",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "prepare/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/after-locks/docs/ai-cache/evidence/native-core-20261125/attempts/01-swift64-isolation/Package.resolved",
+      "raw_sha256": "94eb561e694958712c602d2d7f7b5a949fea87c4b26c06aa79dc066f8e75e54e",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "prepare/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/after-locks/docs/ai-cache/evidence/native-core-20261125/attempts/03-swift-testing-macros/Package.resolved",
+      "raw_sha256": "bdfe7cfba5c6ce68cc073216155d55021a76ea1a37750b8aafc0882d61e711c4",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "prepare/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/after-locks/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "raw_sha256": "0dd6abbd4f31d4187a4a69caf97f92aa6d3cf19b241d300be5d19cd32e3aa037",
+      "raw_bytes": 10750
+    },
+    {
+      "path": "prepare/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/before-locks/Packages/HanlinPlatform/Package.resolved",
+      "raw_sha256": "3e20591d1ac1c23db5258e6fbaee9386e94a58546e814fd5dfad6bf910551c0b",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/before-locks/Packages/HanlinParityMiniApp/Package.resolved",
+      "raw_sha256": "e0a1d86319347dd23c139babb2864cfc7da0e7365419eef82da71ce354b25fde",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/before-locks/Packages/HanlinAgentSDK/Package.resolved",
+      "raw_sha256": "2acb720310279d62c48a54d2a856f25937a9abed054b5a2661b03c548fee457f",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/before-locks/Packages/HanlinSkillFormat/Package.resolved",
+      "raw_sha256": "0ce944410a619261329435970fb8f81509687140af7dff3a134e8aa1efae6d9a",
+      "raw_bytes": 374
+    },
+    {
+      "path": "prepare/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/before-locks/Packages/HanlinWikipediaMiniApp/Package.resolved",
+      "raw_sha256": "c31e1e6bd9f3b22b5046ab6e776bd0ebf9ac1804ff857dac9742ddc9be5c8094",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/before-locks/Packages/HanlinSefariaMiniApp/Package.resolved",
+      "raw_sha256": "6252f1f037cf0d5514ad4f8d04ae5391eeb074a837bbc562148b7858bd946210",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/before-locks/Packages/HanlinSwiftUIBridgeGenerator/Package.resolved",
+      "raw_sha256": "572f5b827187c0042186b44ee30fd3ec72e205fb202ea398882a64bc5bb74953",
+      "raw_bytes": 396
+    },
+    {
+      "path": "prepare/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/before-locks/Packages/HanlinTextStudioMiniApp/Package.resolved",
+      "raw_sha256": "43ef7974e3631a0534bc85aa462b2396c052d8e991043ee28a31941db3869f5c",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/before-locks/docs/ai-cache/evidence/native-core-20261125/attempts/02-producer-fixture/Package.resolved",
+      "raw_sha256": "94eb561e694958712c602d2d7f7b5a949fea87c4b26c06aa79dc066f8e75e54e",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "prepare/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/before-locks/docs/ai-cache/evidence/native-core-20261125/attempts/01-swift64-isolation/Package.resolved",
+      "raw_sha256": "94eb561e694958712c602d2d7f7b5a949fea87c4b26c06aa79dc066f8e75e54e",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "prepare/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/before-locks/docs/ai-cache/evidence/native-core-20261125/attempts/03-swift-testing-macros/Package.resolved",
+      "raw_sha256": "bdfe7cfba5c6ce68cc073216155d55021a76ea1a37750b8aafc0882d61e711c4",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "prepare/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/before-locks/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "raw_sha256": "0dd6abbd4f31d4187a4a69caf97f92aa6d3cf19b241d300be5d19cd32e3aa037",
+      "raw_bytes": 10750
+    },
+    {
+      "path": "prepare/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/after-locks/Packages/HanlinPlatform/Package.resolved",
+      "raw_sha256": "3e20591d1ac1c23db5258e6fbaee9386e94a58546e814fd5dfad6bf910551c0b",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/after-locks/Packages/HanlinParityMiniApp/Package.resolved",
+      "raw_sha256": "e0a1d86319347dd23c139babb2864cfc7da0e7365419eef82da71ce354b25fde",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/after-locks/Packages/HanlinAgentSDK/Package.resolved",
+      "raw_sha256": "2acb720310279d62c48a54d2a856f25937a9abed054b5a2661b03c548fee457f",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/after-locks/Packages/HanlinSkillFormat/Package.resolved",
+      "raw_sha256": "0ce944410a619261329435970fb8f81509687140af7dff3a134e8aa1efae6d9a",
+      "raw_bytes": 374
+    },
+    {
+      "path": "prepare/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/after-locks/Packages/HanlinWikipediaMiniApp/Package.resolved",
+      "raw_sha256": "c31e1e6bd9f3b22b5046ab6e776bd0ebf9ac1804ff857dac9742ddc9be5c8094",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/after-locks/Packages/HanlinSefariaMiniApp/Package.resolved",
+      "raw_sha256": "6252f1f037cf0d5514ad4f8d04ae5391eeb074a837bbc562148b7858bd946210",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/after-locks/Packages/HanlinSwiftUIBridgeGenerator/Package.resolved",
+      "raw_sha256": "572f5b827187c0042186b44ee30fd3ec72e205fb202ea398882a64bc5bb74953",
+      "raw_bytes": 396
+    },
+    {
+      "path": "prepare/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/after-locks/Packages/HanlinTextStudioMiniApp/Package.resolved",
+      "raw_sha256": "43ef7974e3631a0534bc85aa462b2396c052d8e991043ee28a31941db3869f5c",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "prepare/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/after-locks/docs/ai-cache/evidence/native-core-20261125/attempts/02-producer-fixture/Package.resolved",
+      "raw_sha256": "94eb561e694958712c602d2d7f7b5a949fea87c4b26c06aa79dc066f8e75e54e",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "prepare/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/after-locks/docs/ai-cache/evidence/native-core-20261125/attempts/01-swift64-isolation/Package.resolved",
+      "raw_sha256": "94eb561e694958712c602d2d7f7b5a949fea87c4b26c06aa79dc066f8e75e54e",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "prepare/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/after-locks/docs/ai-cache/evidence/native-core-20261125/attempts/03-swift-testing-macros/Package.resolved",
+      "raw_sha256": "bdfe7cfba5c6ce68cc073216155d55021a76ea1a37750b8aafc0882d61e711c4",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "prepare/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/after-locks/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "raw_sha256": "0dd6abbd4f31d4187a4a69caf97f92aa6d3cf19b241d300be5d19cd32e3aa037",
+      "raw_bytes": 10750
+    },
+    {
+      "path": "prepare/after-locks/docs/ai-cache/evidence/native-core-20261125/attempts/02-producer-fixture/Package.resolved",
+      "raw_sha256": "94eb561e694958712c602d2d7f7b5a949fea87c4b26c06aa79dc066f8e75e54e",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "prepare/after-locks/docs/ai-cache/evidence/native-core-20261125/attempts/01-swift64-isolation/Package.resolved",
+      "raw_sha256": "94eb561e694958712c602d2d7f7b5a949fea87c4b26c06aa79dc066f8e75e54e",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "prepare/after-locks/docs/ai-cache/evidence/native-core-20261125/attempts/03-swift-testing-macros/Package.resolved",
+      "raw_sha256": "bdfe7cfba5c6ce68cc073216155d55021a76ea1a37750b8aafc0882d61e711c4",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "prepare/after-locks/docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/raw/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "raw_sha256": "610bcbb9a7f90c27e3bd3ecd3b1d139fe3ff72ed18086327d1d96c437de932f5",
+      "raw_bytes": 9960
+    },
+    {
+      "path": "prepare/after-locks/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "raw_sha256": "0dd6abbd4f31d4187a4a69caf97f92aa6d3cf19b241d300be5d19cd32e3aa037",
+      "raw_bytes": 10750
+    },
+    {
+      "path": "prepare/a2ui-generation/compiler.log.gz",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0
+    },
+    {
+      "path": "prepare/a2ui-generation/result.json",
+      "raw_sha256": "03ec2b5f14da0b514a0e0964362f54a407e9e9746389366a18269b9bbd75d053",
+      "raw_bytes": 2607
+    },
+    {
+      "path": "test/01-xcode-version.log.gz",
+      "raw_sha256": "694b44731d0b415c5b11d844151e466d7f5e200a95627efda377f232f1a6ab77",
+      "raw_bytes": 33
+    },
+    {
+      "path": "test/04-build-for-testing.stderr.log.gz",
+      "raw_sha256": "94660785e9f52d10a7bab79016e8eb7fe7dbf31ef4dbb31b8c9cee706fc45219",
+      "raw_bytes": 3816
+    },
+    {
+      "path": "test/02-swift-version.stderr.log.gz",
+      "raw_sha256": "bbc8b176d3c74d4c5a7fd00b40280f98168e116d5272273bfe8e71407625540e",
+      "raw_bytes": 30
+    },
+    {
+      "path": "test/03-node-version.log.gz",
+      "raw_sha256": "2f30156cd7f9137514ea68d53554f583cf6541fd107dbc8ae8a19253379a735a",
+      "raw_bytes": 8
+    },
+    {
+      "path": "test/03-node-version.stderr.log.gz",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0
+    },
+    {
+      "path": "test/before-sources.json",
+      "raw_sha256": "633ee9c236e33a135c663e9bbc217176982aa02049444d80902920969374797e",
+      "raw_bytes": 1781959
+    },
+    {
+      "path": "test/after-sources.json",
+      "raw_sha256": "633ee9c236e33a135c663e9bbc217176982aa02049444d80902920969374797e",
+      "raw_bytes": 1781959
+    },
+    {
+      "path": "test/04-build-for-testing.log.gz",
+      "raw_sha256": "e586f5e226692869cdf0c970a0a06f6cfb28c6a6096e03005b5710529544a42f",
+      "raw_bytes": 6063174
+    },
+    {
+      "path": "test/01-xcode-version.stderr.log.gz",
+      "raw_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "raw_bytes": 0
+    },
+    {
+      "path": "test/02-swift-version.log.gz",
+      "raw_sha256": "04630ab8fa201f57c63c59730e638135e32584a97e16e004a417eb8ed283dc83",
+      "raw_bytes": 98
+    },
+    {
+      "path": "test/receipt.json",
+      "raw_sha256": "4f2c001f2806f54b0894ce2f6a2b90e953ffdb19abe2cc405e5f683a0e13c213",
+      "raw_bytes": 8505
+    },
+    {
+      "path": "test/before-locks/Packages/HanlinPlatform/Package.resolved",
+      "raw_sha256": "3e20591d1ac1c23db5258e6fbaee9386e94a58546e814fd5dfad6bf910551c0b",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/before-locks/Packages/HanlinParityMiniApp/Package.resolved",
+      "raw_sha256": "e0a1d86319347dd23c139babb2864cfc7da0e7365419eef82da71ce354b25fde",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/before-locks/Packages/HanlinAgentSDK/Package.resolved",
+      "raw_sha256": "2acb720310279d62c48a54d2a856f25937a9abed054b5a2661b03c548fee457f",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/before-locks/Packages/HanlinSkillFormat/Package.resolved",
+      "raw_sha256": "0ce944410a619261329435970fb8f81509687140af7dff3a134e8aa1efae6d9a",
+      "raw_bytes": 374
+    },
+    {
+      "path": "test/before-locks/Packages/HanlinWikipediaMiniApp/Package.resolved",
+      "raw_sha256": "c31e1e6bd9f3b22b5046ab6e776bd0ebf9ac1804ff857dac9742ddc9be5c8094",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/before-locks/Packages/HanlinSefariaMiniApp/Package.resolved",
+      "raw_sha256": "6252f1f037cf0d5514ad4f8d04ae5391eeb074a837bbc562148b7858bd946210",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/before-locks/Packages/HanlinSwiftUIBridgeGenerator/Package.resolved",
+      "raw_sha256": "572f5b827187c0042186b44ee30fd3ec72e205fb202ea398882a64bc5bb74953",
+      "raw_bytes": 396
+    },
+    {
+      "path": "test/before-locks/Packages/HanlinTextStudioMiniApp/Package.resolved",
+      "raw_sha256": "43ef7974e3631a0534bc85aa462b2396c052d8e991043ee28a31941db3869f5c",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/before-locks/Packages/HanlinPlatform/Package.resolved",
+      "raw_sha256": "3e20591d1ac1c23db5258e6fbaee9386e94a58546e814fd5dfad6bf910551c0b",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/before-locks/Packages/HanlinParityMiniApp/Package.resolved",
+      "raw_sha256": "e0a1d86319347dd23c139babb2864cfc7da0e7365419eef82da71ce354b25fde",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/before-locks/Packages/HanlinAgentSDK/Package.resolved",
+      "raw_sha256": "2acb720310279d62c48a54d2a856f25937a9abed054b5a2661b03c548fee457f",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/before-locks/Packages/HanlinSkillFormat/Package.resolved",
+      "raw_sha256": "0ce944410a619261329435970fb8f81509687140af7dff3a134e8aa1efae6d9a",
+      "raw_bytes": 374
+    },
+    {
+      "path": "test/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/before-locks/Packages/HanlinWikipediaMiniApp/Package.resolved",
+      "raw_sha256": "c31e1e6bd9f3b22b5046ab6e776bd0ebf9ac1804ff857dac9742ddc9be5c8094",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/before-locks/Packages/HanlinSefariaMiniApp/Package.resolved",
+      "raw_sha256": "6252f1f037cf0d5514ad4f8d04ae5391eeb074a837bbc562148b7858bd946210",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/before-locks/Packages/HanlinSwiftUIBridgeGenerator/Package.resolved",
+      "raw_sha256": "572f5b827187c0042186b44ee30fd3ec72e205fb202ea398882a64bc5bb74953",
+      "raw_bytes": 396
+    },
+    {
+      "path": "test/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/before-locks/Packages/HanlinTextStudioMiniApp/Package.resolved",
+      "raw_sha256": "43ef7974e3631a0534bc85aa462b2396c052d8e991043ee28a31941db3869f5c",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/before-locks/docs/ai-cache/evidence/native-core-20261125/attempts/02-producer-fixture/Package.resolved",
+      "raw_sha256": "94eb561e694958712c602d2d7f7b5a949fea87c4b26c06aa79dc066f8e75e54e",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "test/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/before-locks/docs/ai-cache/evidence/native-core-20261125/attempts/01-swift64-isolation/Package.resolved",
+      "raw_sha256": "94eb561e694958712c602d2d7f7b5a949fea87c4b26c06aa79dc066f8e75e54e",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "test/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/before-locks/docs/ai-cache/evidence/native-core-20261125/attempts/03-swift-testing-macros/Package.resolved",
+      "raw_sha256": "bdfe7cfba5c6ce68cc073216155d55021a76ea1a37750b8aafc0882d61e711c4",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "test/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/before-locks/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "raw_sha256": "5fb194bd119570e81b7a51c3227ea10ecd3ab0c543ea2b258c9fac1103330bcd",
+      "raw_bytes": 10180
+    },
+    {
+      "path": "test/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/after-locks/Packages/HanlinPlatform/Package.resolved",
+      "raw_sha256": "3e20591d1ac1c23db5258e6fbaee9386e94a58546e814fd5dfad6bf910551c0b",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/after-locks/Packages/HanlinParityMiniApp/Package.resolved",
+      "raw_sha256": "e0a1d86319347dd23c139babb2864cfc7da0e7365419eef82da71ce354b25fde",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/after-locks/Packages/HanlinAgentSDK/Package.resolved",
+      "raw_sha256": "2acb720310279d62c48a54d2a856f25937a9abed054b5a2661b03c548fee457f",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/after-locks/Packages/HanlinSkillFormat/Package.resolved",
+      "raw_sha256": "0ce944410a619261329435970fb8f81509687140af7dff3a134e8aa1efae6d9a",
+      "raw_bytes": 374
+    },
+    {
+      "path": "test/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/after-locks/Packages/HanlinWikipediaMiniApp/Package.resolved",
+      "raw_sha256": "c31e1e6bd9f3b22b5046ab6e776bd0ebf9ac1804ff857dac9742ddc9be5c8094",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/after-locks/Packages/HanlinSefariaMiniApp/Package.resolved",
+      "raw_sha256": "6252f1f037cf0d5514ad4f8d04ae5391eeb074a837bbc562148b7858bd946210",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/after-locks/Packages/HanlinSwiftUIBridgeGenerator/Package.resolved",
+      "raw_sha256": "572f5b827187c0042186b44ee30fd3ec72e205fb202ea398882a64bc5bb74953",
+      "raw_bytes": 396
+    },
+    {
+      "path": "test/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/after-locks/Packages/HanlinTextStudioMiniApp/Package.resolved",
+      "raw_sha256": "43ef7974e3631a0534bc85aa462b2396c052d8e991043ee28a31941db3869f5c",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/after-locks/docs/ai-cache/evidence/native-core-20261125/attempts/02-producer-fixture/Package.resolved",
+      "raw_sha256": "94eb561e694958712c602d2d7f7b5a949fea87c4b26c06aa79dc066f8e75e54e",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "test/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/after-locks/docs/ai-cache/evidence/native-core-20261125/attempts/01-swift64-isolation/Package.resolved",
+      "raw_sha256": "94eb561e694958712c602d2d7f7b5a949fea87c4b26c06aa79dc066f8e75e54e",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "test/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/after-locks/docs/ai-cache/evidence/native-core-20261125/attempts/03-swift-testing-macros/Package.resolved",
+      "raw_sha256": "bdfe7cfba5c6ce68cc073216155d55021a76ea1a37750b8aafc0882d61e711c4",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "test/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/after-locks/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "raw_sha256": "0dd6abbd4f31d4187a4a69caf97f92aa6d3cf19b241d300be5d19cd32e3aa037",
+      "raw_bytes": 10750
+    },
+    {
+      "path": "test/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/before-locks/Packages/HanlinPlatform/Package.resolved",
+      "raw_sha256": "3e20591d1ac1c23db5258e6fbaee9386e94a58546e814fd5dfad6bf910551c0b",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/before-locks/Packages/HanlinParityMiniApp/Package.resolved",
+      "raw_sha256": "e0a1d86319347dd23c139babb2864cfc7da0e7365419eef82da71ce354b25fde",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/before-locks/Packages/HanlinAgentSDK/Package.resolved",
+      "raw_sha256": "2acb720310279d62c48a54d2a856f25937a9abed054b5a2661b03c548fee457f",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/before-locks/Packages/HanlinSkillFormat/Package.resolved",
+      "raw_sha256": "0ce944410a619261329435970fb8f81509687140af7dff3a134e8aa1efae6d9a",
+      "raw_bytes": 374
+    },
+    {
+      "path": "test/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/before-locks/Packages/HanlinWikipediaMiniApp/Package.resolved",
+      "raw_sha256": "c31e1e6bd9f3b22b5046ab6e776bd0ebf9ac1804ff857dac9742ddc9be5c8094",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/before-locks/Packages/HanlinSefariaMiniApp/Package.resolved",
+      "raw_sha256": "6252f1f037cf0d5514ad4f8d04ae5391eeb074a837bbc562148b7858bd946210",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/before-locks/Packages/HanlinSwiftUIBridgeGenerator/Package.resolved",
+      "raw_sha256": "572f5b827187c0042186b44ee30fd3ec72e205fb202ea398882a64bc5bb74953",
+      "raw_bytes": 396
+    },
+    {
+      "path": "test/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/before-locks/Packages/HanlinTextStudioMiniApp/Package.resolved",
+      "raw_sha256": "43ef7974e3631a0534bc85aa462b2396c052d8e991043ee28a31941db3869f5c",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/before-locks/docs/ai-cache/evidence/native-core-20261125/attempts/02-producer-fixture/Package.resolved",
+      "raw_sha256": "94eb561e694958712c602d2d7f7b5a949fea87c4b26c06aa79dc066f8e75e54e",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "test/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/before-locks/docs/ai-cache/evidence/native-core-20261125/attempts/01-swift64-isolation/Package.resolved",
+      "raw_sha256": "94eb561e694958712c602d2d7f7b5a949fea87c4b26c06aa79dc066f8e75e54e",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "test/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/before-locks/docs/ai-cache/evidence/native-core-20261125/attempts/03-swift-testing-macros/Package.resolved",
+      "raw_sha256": "bdfe7cfba5c6ce68cc073216155d55021a76ea1a37750b8aafc0882d61e711c4",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "test/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/before-locks/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "raw_sha256": "0dd6abbd4f31d4187a4a69caf97f92aa6d3cf19b241d300be5d19cd32e3aa037",
+      "raw_bytes": 10750
+    },
+    {
+      "path": "test/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/after-locks/Packages/HanlinPlatform/Package.resolved",
+      "raw_sha256": "3e20591d1ac1c23db5258e6fbaee9386e94a58546e814fd5dfad6bf910551c0b",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/after-locks/Packages/HanlinParityMiniApp/Package.resolved",
+      "raw_sha256": "e0a1d86319347dd23c139babb2864cfc7da0e7365419eef82da71ce354b25fde",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/after-locks/Packages/HanlinAgentSDK/Package.resolved",
+      "raw_sha256": "2acb720310279d62c48a54d2a856f25937a9abed054b5a2661b03c548fee457f",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/after-locks/Packages/HanlinSkillFormat/Package.resolved",
+      "raw_sha256": "0ce944410a619261329435970fb8f81509687140af7dff3a134e8aa1efae6d9a",
+      "raw_bytes": 374
+    },
+    {
+      "path": "test/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/after-locks/Packages/HanlinWikipediaMiniApp/Package.resolved",
+      "raw_sha256": "c31e1e6bd9f3b22b5046ab6e776bd0ebf9ac1804ff857dac9742ddc9be5c8094",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/after-locks/Packages/HanlinSefariaMiniApp/Package.resolved",
+      "raw_sha256": "6252f1f037cf0d5514ad4f8d04ae5391eeb074a837bbc562148b7858bd946210",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/after-locks/Packages/HanlinSwiftUIBridgeGenerator/Package.resolved",
+      "raw_sha256": "572f5b827187c0042186b44ee30fd3ec72e205fb202ea398882a64bc5bb74953",
+      "raw_bytes": 396
+    },
+    {
+      "path": "test/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/after-locks/Packages/HanlinTextStudioMiniApp/Package.resolved",
+      "raw_sha256": "43ef7974e3631a0534bc85aa462b2396c052d8e991043ee28a31941db3869f5c",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/after-locks/docs/ai-cache/evidence/native-core-20261125/attempts/02-producer-fixture/Package.resolved",
+      "raw_sha256": "94eb561e694958712c602d2d7f7b5a949fea87c4b26c06aa79dc066f8e75e54e",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "test/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/after-locks/docs/ai-cache/evidence/native-core-20261125/attempts/01-swift64-isolation/Package.resolved",
+      "raw_sha256": "94eb561e694958712c602d2d7f7b5a949fea87c4b26c06aa79dc066f8e75e54e",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "test/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/after-locks/docs/ai-cache/evidence/native-core-20261125/attempts/03-swift-testing-macros/Package.resolved",
+      "raw_sha256": "bdfe7cfba5c6ce68cc073216155d55021a76ea1a37750b8aafc0882d61e711c4",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "test/before-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/after-locks/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "raw_sha256": "0dd6abbd4f31d4187a4a69caf97f92aa6d3cf19b241d300be5d19cd32e3aa037",
+      "raw_bytes": 10750
+    },
+    {
+      "path": "test/before-locks/docs/ai-cache/evidence/native-core-20261125/attempts/02-producer-fixture/Package.resolved",
+      "raw_sha256": "94eb561e694958712c602d2d7f7b5a949fea87c4b26c06aa79dc066f8e75e54e",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "test/before-locks/docs/ai-cache/evidence/native-core-20261125/attempts/01-swift64-isolation/Package.resolved",
+      "raw_sha256": "94eb561e694958712c602d2d7f7b5a949fea87c4b26c06aa79dc066f8e75e54e",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "test/before-locks/docs/ai-cache/evidence/native-core-20261125/attempts/03-swift-testing-macros/Package.resolved",
+      "raw_sha256": "bdfe7cfba5c6ce68cc073216155d55021a76ea1a37750b8aafc0882d61e711c4",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "test/before-locks/docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/raw/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "raw_sha256": "610bcbb9a7f90c27e3bd3ecd3b1d139fe3ff72ed18086327d1d96c437de932f5",
+      "raw_bytes": 9960
+    },
+    {
+      "path": "test/before-locks/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "raw_sha256": "0dd6abbd4f31d4187a4a69caf97f92aa6d3cf19b241d300be5d19cd32e3aa037",
+      "raw_bytes": 10750
+    },
+    {
+      "path": "test/after-locks/Packages/HanlinPlatform/Package.resolved",
+      "raw_sha256": "3e20591d1ac1c23db5258e6fbaee9386e94a58546e814fd5dfad6bf910551c0b",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/after-locks/Packages/HanlinParityMiniApp/Package.resolved",
+      "raw_sha256": "e0a1d86319347dd23c139babb2864cfc7da0e7365419eef82da71ce354b25fde",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/after-locks/Packages/HanlinAgentSDK/Package.resolved",
+      "raw_sha256": "2acb720310279d62c48a54d2a856f25937a9abed054b5a2661b03c548fee457f",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/after-locks/Packages/HanlinSkillFormat/Package.resolved",
+      "raw_sha256": "0ce944410a619261329435970fb8f81509687140af7dff3a134e8aa1efae6d9a",
+      "raw_bytes": 374
+    },
+    {
+      "path": "test/after-locks/Packages/HanlinWikipediaMiniApp/Package.resolved",
+      "raw_sha256": "c31e1e6bd9f3b22b5046ab6e776bd0ebf9ac1804ff857dac9742ddc9be5c8094",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/after-locks/Packages/HanlinSefariaMiniApp/Package.resolved",
+      "raw_sha256": "6252f1f037cf0d5514ad4f8d04ae5391eeb074a837bbc562148b7858bd946210",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/after-locks/Packages/HanlinSwiftUIBridgeGenerator/Package.resolved",
+      "raw_sha256": "572f5b827187c0042186b44ee30fd3ec72e205fb202ea398882a64bc5bb74953",
+      "raw_bytes": 396
+    },
+    {
+      "path": "test/after-locks/Packages/HanlinTextStudioMiniApp/Package.resolved",
+      "raw_sha256": "43ef7974e3631a0534bc85aa462b2396c052d8e991043ee28a31941db3869f5c",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/before-locks/Packages/HanlinPlatform/Package.resolved",
+      "raw_sha256": "3e20591d1ac1c23db5258e6fbaee9386e94a58546e814fd5dfad6bf910551c0b",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/before-locks/Packages/HanlinParityMiniApp/Package.resolved",
+      "raw_sha256": "e0a1d86319347dd23c139babb2864cfc7da0e7365419eef82da71ce354b25fde",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/before-locks/Packages/HanlinAgentSDK/Package.resolved",
+      "raw_sha256": "2acb720310279d62c48a54d2a856f25937a9abed054b5a2661b03c548fee457f",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/before-locks/Packages/HanlinSkillFormat/Package.resolved",
+      "raw_sha256": "0ce944410a619261329435970fb8f81509687140af7dff3a134e8aa1efae6d9a",
+      "raw_bytes": 374
+    },
+    {
+      "path": "test/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/before-locks/Packages/HanlinWikipediaMiniApp/Package.resolved",
+      "raw_sha256": "c31e1e6bd9f3b22b5046ab6e776bd0ebf9ac1804ff857dac9742ddc9be5c8094",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/before-locks/Packages/HanlinSefariaMiniApp/Package.resolved",
+      "raw_sha256": "6252f1f037cf0d5514ad4f8d04ae5391eeb074a837bbc562148b7858bd946210",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/before-locks/Packages/HanlinSwiftUIBridgeGenerator/Package.resolved",
+      "raw_sha256": "572f5b827187c0042186b44ee30fd3ec72e205fb202ea398882a64bc5bb74953",
+      "raw_bytes": 396
+    },
+    {
+      "path": "test/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/before-locks/Packages/HanlinTextStudioMiniApp/Package.resolved",
+      "raw_sha256": "43ef7974e3631a0534bc85aa462b2396c052d8e991043ee28a31941db3869f5c",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/before-locks/docs/ai-cache/evidence/native-core-20261125/attempts/02-producer-fixture/Package.resolved",
+      "raw_sha256": "94eb561e694958712c602d2d7f7b5a949fea87c4b26c06aa79dc066f8e75e54e",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "test/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/before-locks/docs/ai-cache/evidence/native-core-20261125/attempts/01-swift64-isolation/Package.resolved",
+      "raw_sha256": "94eb561e694958712c602d2d7f7b5a949fea87c4b26c06aa79dc066f8e75e54e",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "test/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/before-locks/docs/ai-cache/evidence/native-core-20261125/attempts/03-swift-testing-macros/Package.resolved",
+      "raw_sha256": "bdfe7cfba5c6ce68cc073216155d55021a76ea1a37750b8aafc0882d61e711c4",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "test/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/before-locks/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "raw_sha256": "5fb194bd119570e81b7a51c3227ea10ecd3ab0c543ea2b258c9fac1103330bcd",
+      "raw_bytes": 10180
+    },
+    {
+      "path": "test/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/after-locks/Packages/HanlinPlatform/Package.resolved",
+      "raw_sha256": "3e20591d1ac1c23db5258e6fbaee9386e94a58546e814fd5dfad6bf910551c0b",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/after-locks/Packages/HanlinParityMiniApp/Package.resolved",
+      "raw_sha256": "e0a1d86319347dd23c139babb2864cfc7da0e7365419eef82da71ce354b25fde",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/after-locks/Packages/HanlinAgentSDK/Package.resolved",
+      "raw_sha256": "2acb720310279d62c48a54d2a856f25937a9abed054b5a2661b03c548fee457f",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/after-locks/Packages/HanlinSkillFormat/Package.resolved",
+      "raw_sha256": "0ce944410a619261329435970fb8f81509687140af7dff3a134e8aa1efae6d9a",
+      "raw_bytes": 374
+    },
+    {
+      "path": "test/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/after-locks/Packages/HanlinWikipediaMiniApp/Package.resolved",
+      "raw_sha256": "c31e1e6bd9f3b22b5046ab6e776bd0ebf9ac1804ff857dac9742ddc9be5c8094",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/after-locks/Packages/HanlinSefariaMiniApp/Package.resolved",
+      "raw_sha256": "6252f1f037cf0d5514ad4f8d04ae5391eeb074a837bbc562148b7858bd946210",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/after-locks/Packages/HanlinSwiftUIBridgeGenerator/Package.resolved",
+      "raw_sha256": "572f5b827187c0042186b44ee30fd3ec72e205fb202ea398882a64bc5bb74953",
+      "raw_bytes": 396
+    },
+    {
+      "path": "test/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/after-locks/Packages/HanlinTextStudioMiniApp/Package.resolved",
+      "raw_sha256": "43ef7974e3631a0534bc85aa462b2396c052d8e991043ee28a31941db3869f5c",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/after-locks/docs/ai-cache/evidence/native-core-20261125/attempts/02-producer-fixture/Package.resolved",
+      "raw_sha256": "94eb561e694958712c602d2d7f7b5a949fea87c4b26c06aa79dc066f8e75e54e",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "test/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/after-locks/docs/ai-cache/evidence/native-core-20261125/attempts/01-swift64-isolation/Package.resolved",
+      "raw_sha256": "94eb561e694958712c602d2d7f7b5a949fea87c4b26c06aa79dc066f8e75e54e",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "test/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/after-locks/docs/ai-cache/evidence/native-core-20261125/attempts/03-swift-testing-macros/Package.resolved",
+      "raw_sha256": "bdfe7cfba5c6ce68cc073216155d55021a76ea1a37750b8aafc0882d61e711c4",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "test/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/prepare/after-locks/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "raw_sha256": "0dd6abbd4f31d4187a4a69caf97f92aa6d3cf19b241d300be5d19cd32e3aa037",
+      "raw_bytes": 10750
+    },
+    {
+      "path": "test/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/before-locks/Packages/HanlinPlatform/Package.resolved",
+      "raw_sha256": "3e20591d1ac1c23db5258e6fbaee9386e94a58546e814fd5dfad6bf910551c0b",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/before-locks/Packages/HanlinParityMiniApp/Package.resolved",
+      "raw_sha256": "e0a1d86319347dd23c139babb2864cfc7da0e7365419eef82da71ce354b25fde",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/before-locks/Packages/HanlinAgentSDK/Package.resolved",
+      "raw_sha256": "2acb720310279d62c48a54d2a856f25937a9abed054b5a2661b03c548fee457f",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/before-locks/Packages/HanlinSkillFormat/Package.resolved",
+      "raw_sha256": "0ce944410a619261329435970fb8f81509687140af7dff3a134e8aa1efae6d9a",
+      "raw_bytes": 374
+    },
+    {
+      "path": "test/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/before-locks/Packages/HanlinWikipediaMiniApp/Package.resolved",
+      "raw_sha256": "c31e1e6bd9f3b22b5046ab6e776bd0ebf9ac1804ff857dac9742ddc9be5c8094",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/before-locks/Packages/HanlinSefariaMiniApp/Package.resolved",
+      "raw_sha256": "6252f1f037cf0d5514ad4f8d04ae5391eeb074a837bbc562148b7858bd946210",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/before-locks/Packages/HanlinSwiftUIBridgeGenerator/Package.resolved",
+      "raw_sha256": "572f5b827187c0042186b44ee30fd3ec72e205fb202ea398882a64bc5bb74953",
+      "raw_bytes": 396
+    },
+    {
+      "path": "test/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/before-locks/Packages/HanlinTextStudioMiniApp/Package.resolved",
+      "raw_sha256": "43ef7974e3631a0534bc85aa462b2396c052d8e991043ee28a31941db3869f5c",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/before-locks/docs/ai-cache/evidence/native-core-20261125/attempts/02-producer-fixture/Package.resolved",
+      "raw_sha256": "94eb561e694958712c602d2d7f7b5a949fea87c4b26c06aa79dc066f8e75e54e",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "test/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/before-locks/docs/ai-cache/evidence/native-core-20261125/attempts/01-swift64-isolation/Package.resolved",
+      "raw_sha256": "94eb561e694958712c602d2d7f7b5a949fea87c4b26c06aa79dc066f8e75e54e",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "test/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/before-locks/docs/ai-cache/evidence/native-core-20261125/attempts/03-swift-testing-macros/Package.resolved",
+      "raw_sha256": "bdfe7cfba5c6ce68cc073216155d55021a76ea1a37750b8aafc0882d61e711c4",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "test/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/before-locks/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "raw_sha256": "0dd6abbd4f31d4187a4a69caf97f92aa6d3cf19b241d300be5d19cd32e3aa037",
+      "raw_bytes": 10750
+    },
+    {
+      "path": "test/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/after-locks/Packages/HanlinPlatform/Package.resolved",
+      "raw_sha256": "3e20591d1ac1c23db5258e6fbaee9386e94a58546e814fd5dfad6bf910551c0b",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/after-locks/Packages/HanlinParityMiniApp/Package.resolved",
+      "raw_sha256": "e0a1d86319347dd23c139babb2864cfc7da0e7365419eef82da71ce354b25fde",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/after-locks/Packages/HanlinAgentSDK/Package.resolved",
+      "raw_sha256": "2acb720310279d62c48a54d2a856f25937a9abed054b5a2661b03c548fee457f",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/after-locks/Packages/HanlinSkillFormat/Package.resolved",
+      "raw_sha256": "0ce944410a619261329435970fb8f81509687140af7dff3a134e8aa1efae6d9a",
+      "raw_bytes": 374
+    },
+    {
+      "path": "test/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/after-locks/Packages/HanlinWikipediaMiniApp/Package.resolved",
+      "raw_sha256": "c31e1e6bd9f3b22b5046ab6e776bd0ebf9ac1804ff857dac9742ddc9be5c8094",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/after-locks/Packages/HanlinSefariaMiniApp/Package.resolved",
+      "raw_sha256": "6252f1f037cf0d5514ad4f8d04ae5391eeb074a837bbc562148b7858bd946210",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/after-locks/Packages/HanlinSwiftUIBridgeGenerator/Package.resolved",
+      "raw_sha256": "572f5b827187c0042186b44ee30fd3ec72e205fb202ea398882a64bc5bb74953",
+      "raw_bytes": 396
+    },
+    {
+      "path": "test/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/after-locks/Packages/HanlinTextStudioMiniApp/Package.resolved",
+      "raw_sha256": "43ef7974e3631a0534bc85aa462b2396c052d8e991043ee28a31941db3869f5c",
+      "raw_bytes": 1198
+    },
+    {
+      "path": "test/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/after-locks/docs/ai-cache/evidence/native-core-20261125/attempts/02-producer-fixture/Package.resolved",
+      "raw_sha256": "94eb561e694958712c602d2d7f7b5a949fea87c4b26c06aa79dc066f8e75e54e",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "test/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/after-locks/docs/ai-cache/evidence/native-core-20261125/attempts/01-swift64-isolation/Package.resolved",
+      "raw_sha256": "94eb561e694958712c602d2d7f7b5a949fea87c4b26c06aa79dc066f8e75e54e",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "test/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/after-locks/docs/ai-cache/evidence/native-core-20261125/attempts/03-swift-testing-macros/Package.resolved",
+      "raw_sha256": "bdfe7cfba5c6ce68cc073216155d55021a76ea1a37750b8aafc0882d61e711c4",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "test/after-locks/docs/ai-cache/evidence/app-native-20261125/attempt01-module-cache/test/after-locks/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "raw_sha256": "0dd6abbd4f31d4187a4a69caf97f92aa6d3cf19b241d300be5d19cd32e3aa037",
+      "raw_bytes": 10750
+    },
+    {
+      "path": "test/after-locks/docs/ai-cache/evidence/native-core-20261125/attempts/02-producer-fixture/Package.resolved",
+      "raw_sha256": "94eb561e694958712c602d2d7f7b5a949fea87c4b26c06aa79dc066f8e75e54e",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "test/after-locks/docs/ai-cache/evidence/native-core-20261125/attempts/01-swift64-isolation/Package.resolved",
+      "raw_sha256": "94eb561e694958712c602d2d7f7b5a949fea87c4b26c06aa79dc066f8e75e54e",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "test/after-locks/docs/ai-cache/evidence/native-core-20261125/attempts/03-swift-testing-macros/Package.resolved",
+      "raw_sha256": "bdfe7cfba5c6ce68cc073216155d55021a76ea1a37750b8aafc0882d61e711c4",
+      "raw_bytes": 1226
+    },
+    {
+      "path": "test/after-locks/docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/raw/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "raw_sha256": "610bcbb9a7f90c27e3bd3ecd3b1d139fe3ff72ed18086327d1d96c437de932f5",
+      "raw_bytes": 9960
+    },
+    {
+      "path": "test/after-locks/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "raw_sha256": "0dd6abbd4f31d4187a4a69caf97f92aa6d3cf19b241d300be5d19cd32e3aa037",
+      "raw_bytes": 10750
+    }
+  ]
+}

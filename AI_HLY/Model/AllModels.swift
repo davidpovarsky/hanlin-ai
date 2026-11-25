@@ -7,11 +7,14 @@ import HanlinLocalization
 //
 
 import Foundation
+import HanlinChatCore
 import SwiftData
 
 @Model
 class AllModels {
     var catalogMetadataJSON: String? = nil
+    /// Optional original SwiftData column; existing model rows keep automatic caching.
+    var promptCachePolicyJSON: String? = nil
     var id = UUID()
     var name: String?
     var displayName: String?
@@ -83,6 +86,17 @@ class AllModels {
 }
 
 extension AllModels {
+    var promptCachePolicy: HanlinPromptCachePolicy? {
+        guard let data = promptCachePolicyJSON?.data(using: .utf8) else { return nil }
+        return try? JSONDecoder().decode(HanlinPromptCachePolicy.self, from: data)
+    }
+
+    /// Model preferences must never persist another conversation's cache resource
+    /// or comparison response. Those belong to explicitly scoped requests.
+    func setPromptCachePolicy(_ policy: HanlinPromptCachePolicy?) throws {
+        promptCachePolicyJSON = try HanlinModelPromptCachePreferences.encode(policy)
+    }
+
     var presentationName: String {
         HanlinModelDisplayName.resolve(displayName: displayName, modelName: name)
     }

@@ -15,6 +15,7 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
     public let sessionID: String
     public let context: HanlinHostCallContext
     private let externalMiniAppOperation: HanlinMiniAppExternalOperation?
+    private let assistantService: (any HanlinMiniAppAssistantService)?
 
     private struct RegisteredActionHandler {
         typealias InvokeFn = (String, String, @escaping (String?, String?) -> Void) -> Void
@@ -65,7 +66,8 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
         grantedCapabilities: Set<String>,
         sessionID: String = UUID().uuidString.lowercased(),
         canPresentUI: Bool = true,
-        externalMiniAppOperation: HanlinMiniAppExternalOperation? = nil
+        externalMiniAppOperation: HanlinMiniAppExternalOperation? = nil,
+        assistantServiceFactory: HanlinMiniAppAssistantServiceFactory? = nil
     ) {
         self.sessionID = sessionID
         self.externalMiniAppOperation = externalMiniAppOperation
@@ -78,8 +80,11 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
             sessionID: appSession,
             canPresentUI: canPresentUI
         )
+        self.assistantService = assistantServiceFactory?(self.context)
         super.init()
     }
+
+    deinit { assistantService?.invalidate() }
 
     // MARK: - Directory Resolution
 
@@ -164,6 +169,7 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
 
     @objc(invalidateRuntimeRequests)
     public func invalidateRuntimeRequests() {
+        assistantService?.invalidate()
         let retired = lock.withLock {
             runtimeRequestsInvalidated = true
             let handlers = registeredActionHandlers
@@ -368,6 +374,34 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
         completion: @escaping (String?, String?) -> Void
     ) {
         nonisolated(unsafe) let safeCompletion = completion
+        if targetID == "hanlin.host-services", action.hasPrefix("assistant.") {
+            guard let assistantService else {
+                safeCompletion(nil, "Assistant services are unavailable in this host.")
+                return
+            }
+            let requestID = UUID().uuidString.lowercased()
+            let accepted = lock.withLock {
+                guard !runtimeRequestsInvalidated else { return false }
+                runtimeRequests[requestID] = Task { @MainActor [weak self] in
+                    guard let self else { return }
+                    defer { _ = self.lock.withLock { self.runtimeRequests.removeValue(forKey: requestID) } }
+                    do {
+                        try Task.checkCancellation()
+                        let response = try await assistantService.invoke(operation: action, payloadJSON: payloadJSON)
+                        guard !Task.isCancelled,
+                              self.lock.withLock({ !self.runtimeRequestsInvalidated }) else { return }
+                        safeCompletion(response, nil)
+                    } catch {
+                        guard !Task.isCancelled,
+                              self.lock.withLock({ !self.runtimeRequestsInvalidated }) else { return }
+                        safeCompletion(nil, error.localizedDescription)
+                    }
+                }
+                return true
+            }
+            if !accepted { safeCompletion(nil, "NativeScript Host Services session is no longer active.") }
+            return
+        }
         if targetID == "hanlin.host-services", action.hasPrefix("liveActivities.") {
             let ctx = context
             let requestID = UUID().uuidString.lowercased()

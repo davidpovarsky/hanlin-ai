@@ -1,0 +1,5 @@
+Query chain:
+ →Find: Target Application 'com.itorah.hanlinminiapps'
+  ↪︎Find: Descendants matching type Any
+    ↪︎Find: Elements matching predicate 'label CONTAINS "[VERIFIED JSC]" AND label CONTAINS "companion-4f673d96-d41b-448f-86da-e8bca94b21a5" AND (NOT (label CONTAINS "Err" OR label CONTAINS "Error"))'
+      ↪︎Find: First Match

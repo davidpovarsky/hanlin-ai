@@ -1,0 +1,92 @@
+Building for debugging...
+[Pre-planning 1 / 211]
+[Planning deferred tasks]
+[12 / 121]
+[65 / 122]
+[68 / 167]
+[71 / 167]
+[74 / 167]
+[76 / 167]
+[79 / 167]
+[82 / 167] HanlinCanonicalProjectionProof_HanlinScriptContracts
+[84 / 167]
+[86 / 167]
+[88 / 167]
+[91 / 167]
+[94 / 167] HanlinCanonicalProjectionProof_HanlinScriptContracts
+[95 / 167]
+[96 / 167]
+[98 / 167]
+[100 / 167] HanlinCanonicalProjectionProof_HanlinScriptContracts
+[101 / 167]
+[103 / 167] HanlinPlatformContracts
+[105 / 167] HanlinPlatformContracts
+[111 / 167] HanlinPlatformContracts
+[112 / 167] HanlinScriptContracts
+[113 / 167] HanlinPlatformContracts
+[115 / 167] HanlinPlatformContracts
+[116 / 167] HanlinPlatformContracts
+[117 / 167] HanlinPlatformContracts
+[118 / 167] HanlinPlatformContracts
+[118 / 167] HanlinMiniAppCore
+[123 / 168]
+[125 / 179]
+[128 / 180] HanlinMiniAppCore
+[130 / 221] HanlinScriptContracts
+[137 / 221]
+[139 / 221]
+[141 / 221]
+[143 / 221]
+[145 / 221]
+[147 / 221]
+[148 / 221]
+[150 / 221]
+[152 / 221]
+[154 / 221]
+[156 / 221]
+[158 / 221]
+[160 / 221]
+[163 / 221] HanlinScriptContracts
+[165 / 221]
+[166 / 221]
+[168 / 221] HanlinScriptContracts
+[169 / 221] HanlinMiniAppCore
+[170 / 221] HanlinScriptContracts
+[172 / 221] HanlinScriptContracts
+[179 / 221] HanlinScriptContracts
+[180 / 221] HanlinMiniAppCore
+[183 / 221] HanlinMiniAppCore
+[184 / 221] HanlinMiniAppCore
+[185 / 221] HanlinMiniAppCore
+[186 / 221] HanlinMiniAppCore
+[188 / 221] HanlinMiniAppCore
+[189 / 221] HanlinMiniAppCore
+[192 / 222]
+[194 / 229] HanlinScriptStore
+[196 / 229] HanlinScriptStore
+[202 / 229] HanlinScriptStore
+[203 / 229] HanlinScriptStoreTests-product
+[204 / 229] HanlinScriptStoreTests-product
+[205 / 229] HanlinScriptStore
+[217 / 230] HanlinScriptStoreTests-product
+[219 / 235]
+[223 / 235] HanlinScriptStoreTests-product
+[225 / 235] HanlinScriptStoreTests-product
+[231 / 235] AllIncludingTests
+Build complete! (26,79 secs)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite "Canonical projection of installed package entrypoints" started.
+◇ Test "Conflicting canonical exposures remain validation errors" started.
+◇ Test "Stored Expo package keeps every action while equivalent exposures share a canonical descriptor" started.
+◇ Test case passing 1 argument field → "handler" to "Conflicting canonical exposures remain validation errors" started.
+◇ Test case passing 1 argument field → "runtime" to "Conflicting canonical exposures remain validation errors" started.
+◇ Test case passing 1 argument field → "contexts" to "Conflicting canonical exposures remain validation errors" started.
+✔ Test "Conflicting canonical exposures remain validation errors" with 3 test cases passed after 0.004 seconds.
+✘ Test "Stored Expo package keeps every action while equivalent exposures share a canonical descriptor" recorded an issue at HanlinCanonicalEntrypointProjectionTests.swift:9:6: Caught error: .invalidManifest([HanlinPlatformContracts.HanlinManifestIssue(code: HanlinPlatformContracts.HanlinManifestIssueCode.duplicateEntryPoint, path: "entryPoints", message: "Duplicate canonical identifiers are not allowed.")])
+✘ Test "Stored Expo package keeps every action while equivalent exposures share a canonical descriptor" failed after 0.005 seconds with 1 issue.
+✘ Suite "Canonical projection of installed package entrypoints" failed after 0.005 seconds with 1 issue.
+✘ Test run with 2 tests in 1 suite failed after 0.005 seconds with 1 issue.
+Note: Some test targets reported failures:
+  - HanlinScriptStoreTests (Swift Testing)

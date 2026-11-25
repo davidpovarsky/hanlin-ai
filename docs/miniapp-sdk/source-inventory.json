@@ -1,5 +1,5 @@
 {
-  "sourceCommit": "bcd44d23a0d2fc2804fa34f3cc5407e51b0adc2f",
+  "sourceCommit": "53593c3749dbd2be1e56739576fcdd5ea2c1cf06",
   "uncommittedSourcePaths": [],
   "schemaVersion": 1,
   "auditParser": {
@@ -121,21 +121,21 @@
     "publicExports": [
       {
         "source": "Scripts/NativeScript/host-services.ts",
-        "line": 4,
+        "line": 6,
         "name": "HanlinRuntimeKind",
         "kind": "TypeAliasDeclaration",
         "type": "'node' | 'typeScript' | 'localPython' | 'javaScriptCore' | 'shell'"
       },
       {
         "source": "Scripts/NativeScript/host-services.ts",
-        "line": 5,
+        "line": 7,
         "name": "RuntimeJSONValue",
         "kind": "TypeAliasDeclaration",
         "type": "null | boolean | number | string | RuntimeJSONValue[] | { [key: string]: RuntimeJSONValue }"
       },
       {
         "source": "Scripts/NativeScript/host-services.ts",
-        "line": 6,
+        "line": 8,
         "name": "RuntimeExecutionLimits",
         "kind": "InterfaceDeclaration",
         "members": [
@@ -155,7 +155,7 @@
       },
       {
         "source": "Scripts/NativeScript/host-services.ts",
-        "line": 11,
+        "line": 13,
         "name": "RuntimeOutputArtifact",
         "kind": "InterfaceDeclaration",
         "members": [
@@ -181,7 +181,7 @@
       },
       {
         "source": "Scripts/NativeScript/host-services.ts",
-        "line": 12,
+        "line": 14,
         "name": "RuntimeExecutionResult",
         "kind": "InterfaceDeclaration",
         "members": [
@@ -249,7 +249,7 @@
       },
       {
         "source": "Scripts/NativeScript/host-services.ts",
-        "line": 24,
+        "line": 26,
         "name": "RuntimeExecutionOptions",
         "kind": "InterfaceDeclaration",
         "members": [
@@ -275,7 +275,7 @@
       },
       {
         "source": "Scripts/NativeScript/host-services.ts",
-        "line": 29,
+        "line": 31,
         "name": "RuntimeRequestHandle",
         "kind": "InterfaceDeclaration",
         "members": [
@@ -301,14 +301,14 @@
       },
       {
         "source": "Scripts/NativeScript/host-services.ts",
-        "line": 36,
+        "line": 38,
         "name": "MiniAppOperation",
         "kind": "TypeAliasDeclaration",
         "type": "'display' | 'insert' | 'replaceSelection' | 'replaceDocument' | 'custom'"
       },
       {
         "source": "Scripts/NativeScript/host-services.ts",
-        "line": 37,
+        "line": 39,
         "name": "MiniAppContent",
         "kind": "InterfaceDeclaration",
         "members": [
@@ -352,7 +352,7 @@
       },
       {
         "source": "Scripts/NativeScript/host-services.ts",
-        "line": 41,
+        "line": 43,
         "name": "MiniAppSharedContext",
         "kind": "InterfaceDeclaration",
         "members": [
@@ -402,7 +402,7 @@
       },
       {
         "source": "Scripts/NativeScript/host-services.ts",
-        "line": 51,
+        "line": 53,
         "name": "MiniAppOutput",
         "kind": "InterfaceDeclaration",
         "members": [
@@ -440,7 +440,7 @@
       },
       {
         "source": "Scripts/NativeScript/host-services.ts",
-        "line": 58,
+        "line": 60,
         "name": "MiniAppSharing",
         "kind": "InterfaceDeclaration",
         "members": [
@@ -478,7 +478,7 @@
       },
       {
         "source": "Scripts/NativeScript/host-services.ts",
-        "line": 77,
+        "line": 79,
         "name": "createHostServices",
         "kind": "FunctionDeclaration"
       }
@@ -5159,7 +5159,7 @@
       },
       {
         "source": "Packages/HanlinExpoUI/src/host-services.ts",
-        "line": 15,
+        "line": 17,
         "name": "HanlinExpoRootProps",
         "kind": "InterfaceDeclaration",
         "members": [
@@ -5173,21 +5173,21 @@
       },
       {
         "source": "Packages/HanlinExpoUI/src/host-services.ts",
-        "line": 27,
+        "line": 29,
         "name": "HanlinRuntimeKind",
         "kind": "TypeAliasDeclaration",
         "type": "'node' | 'typeScript' | 'localPython' | 'javaScriptCore' | 'shell'"
       },
       {
         "source": "Packages/HanlinExpoUI/src/host-services.ts",
-        "line": 28,
+        "line": 30,
         "name": "MiniAppOperation",
         "kind": "TypeAliasDeclaration",
         "type": "'display' | 'insert' | 'replaceSelection' | 'replaceDocument' | 'custom'"
       },
       {
         "source": "Packages/HanlinExpoUI/src/host-services.ts",
-        "line": 29,
+        "line": 31,
         "name": "MiniAppContent",
         "kind": "InterfaceDeclaration",
         "members": [
@@ -5231,7 +5231,7 @@
       },
       {
         "source": "Packages/HanlinExpoUI/src/host-services.ts",
-        "line": 33,
+        "line": 35,
         "name": "MiniAppSharedContext",
         "kind": "InterfaceDeclaration",
         "members": [
@@ -5281,7 +5281,7 @@
       },
       {
         "source": "Packages/HanlinExpoUI/src/host-services.ts",
-        "line": 43,
+        "line": 45,
         "name": "MiniAppOutput",
         "kind": "InterfaceDeclaration",
         "members": [
@@ -5319,7 +5319,7 @@
       },
       {
         "source": "Packages/HanlinExpoUI/src/host-services.ts",
-        "line": 50,
+        "line": 52,
         "name": "MiniAppSharing",
         "kind": "InterfaceDeclaration",
         "members": [
@@ -5357,14 +5357,14 @@
       },
       {
         "source": "Packages/HanlinExpoUI/src/host-services.ts",
-        "line": 58,
+        "line": 60,
         "name": "HanlinDataArea",
         "kind": "TypeAliasDeclaration",
         "type": "'data' | 'documents' | 'state' | 'cache'"
       },
       {
         "source": "Packages/HanlinExpoUI/src/host-services.ts",
-        "line": 60,
+        "line": 62,
         "name": "RuntimeExecutionLimits",
         "kind": "InterfaceDeclaration",
         "members": [
@@ -5384,7 +5384,7 @@
       },
       {
         "source": "Packages/HanlinExpoUI/src/host-services.ts",
-        "line": 67,
+        "line": 69,
         "name": "RuntimeOutputArtifact",
         "kind": "InterfaceDeclaration",
         "members": [
@@ -5410,7 +5410,7 @@
       },
       {
         "source": "Packages/HanlinExpoUI/src/host-services.ts",
-        "line": 73,
+        "line": 75,
         "name": "RuntimeExecutionResult",
         "kind": "InterfaceDeclaration",
         "members": [
@@ -5478,7 +5478,7 @@
       },
       {
         "source": "Packages/HanlinExpoUI/src/host-services.ts",
-        "line": 94,
+        "line": 96,
         "name": "ExpoWidgetPublicationRequest",
         "kind": "InterfaceDeclaration",
         "members": [
@@ -5510,7 +5510,7 @@
       },
       {
         "source": "Packages/HanlinExpoUI/src/host-services.ts",
-        "line": 103,
+        "line": 105,
         "name": "ExpoWidgetPublicationReceipt",
         "kind": "InterfaceDeclaration",
         "members": [
@@ -5620,7 +5620,7 @@
       },
       {
         "source": "Packages/HanlinExpoUI/src/host-services.ts",
-        "line": 124,
+        "line": 126,
         "name": "LegacyWidgetStorageReceipt",
         "kind": "InterfaceDeclaration",
         "members": [
@@ -5652,10 +5652,15 @@
       },
       {
         "source": "Packages/HanlinExpoUI/src/host-services.ts",
-        "line": 155,
+        "line": 157,
         "name": "hostServices",
         "kind": "variable",
         "members": [
+          {
+            "name": "assistant",
+            "kind": "PropertyAssignment",
+            "optional": false
+          },
           {
             "name": "actions",
             "kind": "PropertyAssignment",
@@ -6300,6 +6305,333 @@
         "type": "Promise<void>"
       },
       {
+        "source": "Packages/HanlinExpoUI/src/miniapp-assistant.ts",
+        "line": 2,
+        "name": "MiniAppAssistantJSON",
+        "kind": "TypeAliasDeclaration",
+        "type": "| null | boolean | number | string | MiniAppAssistantJSON[]\n  | { [key: string]: MiniAppAssistantJSON }"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/miniapp-assistant.ts",
+        "line": 6,
+        "name": "MiniAppAssistantModel",
+        "kind": "InterfaceDeclaration",
+        "members": [
+          {
+            "name": "id",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "string"
+          },
+          {
+            "name": "modelID",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "string"
+          },
+          {
+            "name": "displayName",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "string"
+          },
+          {
+            "name": "provider",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "string"
+          },
+          {
+            "name": "imageInput",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "boolean"
+          },
+          {
+            "name": "structuredOutput",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "boolean"
+          },
+          {
+            "name": "onDevice",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "boolean"
+          }
+        ]
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/miniapp-assistant.ts",
+        "line": 16,
+        "name": "MiniAppAssistantPart",
+        "kind": "TypeAliasDeclaration",
+        "type": "| {type: 'text'; text: string}\n  | {type: 'image'; url: string; mediaType?: string}\n  | {type: 'image'; base64: string; mediaType: string}"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/miniapp-assistant.ts",
+        "line": 20,
+        "name": "MiniAppAssistantRequest",
+        "kind": "InterfaceDeclaration",
+        "members": [
+          {
+            "name": "model",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "string"
+          },
+          {
+            "name": "conversationID",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "string"
+          },
+          {
+            "name": "system",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "string"
+          },
+          {
+            "name": "messages",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "{role: 'user' | 'assistant'; content: string | MiniAppAssistantPart[]}[]"
+          },
+          {
+            "name": "temperature",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "number"
+          },
+          {
+            "name": "maxOutputTokens",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "number"
+          },
+          {
+            "name": "reasoning",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "boolean"
+          },
+          {
+            "name": "responseSchema",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "{[key: string]: MiniAppAssistantJSON}"
+          }
+        ]
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/miniapp-assistant.ts",
+        "line": 33,
+        "name": "MiniAppAssistantUsage",
+        "kind": "InterfaceDeclaration",
+        "members": [
+          {
+            "name": "inputTokens",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "number"
+          },
+          {
+            "name": "outputTokens",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "number"
+          },
+          {
+            "name": "reasoningTokens",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "number"
+          },
+          {
+            "name": "cachedInputTokens",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "number"
+          },
+          {
+            "name": "cacheWriteTokens",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "number"
+          },
+          {
+            "name": "totalTokens",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "number"
+          }
+        ]
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/miniapp-assistant.ts",
+        "line": 41,
+        "name": "MiniAppAssistantEvent",
+        "kind": "TypeAliasDeclaration",
+        "type": "| {type: 'text'; text: string}\n  | {type: 'reasoning'; text: string}\n  | {type: 'source'; id: string; url: string; title?: string}\n  | {type: 'structured'; value: MiniAppAssistantJSON}\n  | {type: 'finish'; finishReason: string; usage: MiniAppAssistantUsage}"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/miniapp-assistant.ts",
+        "line": 47,
+        "name": "MiniAppAssistantRun",
+        "kind": "InterfaceDeclaration",
+        "members": [
+          {
+            "name": "requestID",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "string"
+          },
+          {
+            "name": "events",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "AsyncIterable<MiniAppAssistantEvent>"
+          },
+          {
+            "name": "cancel",
+            "kind": "MethodSignature",
+            "optional": false,
+            "type": "Promise<void>"
+          }
+        ]
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/miniapp-assistant.ts",
+        "line": 53,
+        "name": "MiniAppAssistantResult",
+        "kind": "InterfaceDeclaration",
+        "members": [
+          {
+            "name": "text",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "string"
+          },
+          {
+            "name": "reasoning",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "string"
+          },
+          {
+            "name": "value",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "MiniAppAssistantJSON"
+          },
+          {
+            "name": "sources",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "Extract<MiniAppAssistantEvent, {type: 'source'}>[]"
+          },
+          {
+            "name": "finishReason",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "string"
+          },
+          {
+            "name": "usage",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "MiniAppAssistantUsage"
+          }
+        ]
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/miniapp-assistant.ts",
+        "line": 62,
+        "name": "MiniAppAssistantAbortSignal",
+        "kind": "InterfaceDeclaration",
+        "members": [
+          {
+            "name": "aborted",
+            "kind": "PropertySignature",
+            "optional": false,
+            "type": "boolean"
+          },
+          {
+            "name": "addEventListener",
+            "kind": "MethodSignature",
+            "optional": false,
+            "type": "void"
+          },
+          {
+            "name": "removeEventListener",
+            "kind": "MethodSignature",
+            "optional": false,
+            "type": "void"
+          }
+        ]
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/miniapp-assistant.ts",
+        "line": 67,
+        "name": "MiniAppAssistantOptions",
+        "kind": "InterfaceDeclaration",
+        "members": [
+          {
+            "name": "signal",
+            "kind": "PropertySignature",
+            "optional": true,
+            "type": "MiniAppAssistantAbortSignal"
+          }
+        ]
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/miniapp-assistant.ts",
+        "line": 68,
+        "name": "MiniAppAssistant",
+        "kind": "InterfaceDeclaration",
+        "members": [
+          {
+            "name": "models",
+            "kind": "MethodSignature",
+            "optional": false,
+            "type": "Promise<MiniAppAssistantModel[]>"
+          },
+          {
+            "name": "start",
+            "kind": "MethodSignature",
+            "optional": false,
+            "type": "Promise<MiniAppAssistantRun>"
+          },
+          {
+            "name": "stream",
+            "kind": "MethodSignature",
+            "optional": false,
+            "type": "AsyncIterable<MiniAppAssistantEvent>"
+          },
+          {
+            "name": "generate",
+            "kind": "MethodSignature",
+            "optional": false,
+            "type": "Promise<MiniAppAssistantResult>"
+          }
+        ]
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/miniapp-assistant.ts",
+        "line": 74,
+        "name": "MiniAppAssistantInvoke",
+        "kind": "TypeAliasDeclaration",
+        "type": "<T>(operation: string, payload: unknown) => Promise<T>"
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/miniapp-assistant.ts",
+        "line": 83,
+        "name": "createMiniAppAssistant",
+        "kind": "FunctionDeclaration",
+        "type": "MiniAppAssistant"
+      },
+      {
         "source": "Packages/HanlinExpoUI/src/system-surfaces.ts",
         "line": 3,
         "name": "NativeSurfaceJSON",
@@ -6783,6 +7115,25 @@
       {
         "source": "Packages/HanlinExpoUI/src/host-services.ts",
         "line": 2,
+        "module": "./miniapp-assistant",
+        "names": [
+          "MiniAppAssistant",
+          "MiniAppAssistantRequest",
+          "MiniAppAssistantPart",
+          "MiniAppAssistantModel",
+          "MiniAppAssistantEvent",
+          "MiniAppAssistantUsage",
+          "MiniAppAssistantRun",
+          "MiniAppAssistantResult",
+          "MiniAppAssistantOptions",
+          "MiniAppAssistantAbortSignal",
+          "MiniAppAssistantJSON"
+        ],
+        "typeOnly": true
+      },
+      {
+        "source": "Packages/HanlinExpoUI/src/host-services.ts",
+        "line": 4,
         "module": "./system-surfaces",
         "names": [
           "NativeSurfaceJSON",
@@ -6800,7 +7151,7 @@
       },
       {
         "source": "Packages/HanlinExpoUI/src/host-services.ts",
-        "line": 6,
+        "line": 8,
         "module": "./miniapp-actions",
         "names": [
           "MiniAppActionInvocation",
@@ -6888,6 +7239,25 @@
       {
         "source": "Scripts/NativeScript/host-services.ts",
         "line": 2,
+        "module": "../../Packages/HanlinExpoUI/src/miniapp-assistant",
+        "names": [
+          "MiniAppAssistant",
+          "MiniAppAssistantRequest",
+          "MiniAppAssistantPart",
+          "MiniAppAssistantModel",
+          "MiniAppAssistantEvent",
+          "MiniAppAssistantUsage",
+          "MiniAppAssistantRun",
+          "MiniAppAssistantResult",
+          "MiniAppAssistantOptions",
+          "MiniAppAssistantAbortSignal",
+          "MiniAppAssistantJSON"
+        ],
+        "typeOnly": true
+      },
+      {
+        "source": "Scripts/NativeScript/host-services.ts",
+        "line": 4,
         "module": "../../Packages/HanlinExpoUI/src/system-surfaces",
         "names": [
           "NativeSurfaceJSON",
@@ -6957,8 +7327,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "0a60c0e0a273d9a0ab2217e041759bb472f42a3789b2bb73950ba91fae26f2b8",
-              "line": 246
+              "sha256": "74186c563bdf25cd1666f7283a4ca54f9fc5ae46a9776713b23716a7fa4646b5",
+              "line": 249
             }
           ]
         },
@@ -6971,8 +7341,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "0a60c0e0a273d9a0ab2217e041759bb472f42a3789b2bb73950ba91fae26f2b8",
-              "line": 257
+              "sha256": "74186c563bdf25cd1666f7283a4ca54f9fc5ae46a9776713b23716a7fa4646b5",
+              "line": 260
             }
           ]
         },
@@ -6985,8 +7355,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "0a60c0e0a273d9a0ab2217e041759bb472f42a3789b2bb73950ba91fae26f2b8",
-              "line": 265
+              "sha256": "74186c563bdf25cd1666f7283a4ca54f9fc5ae46a9776713b23716a7fa4646b5",
+              "line": 268
             }
           ]
         },
@@ -6999,8 +7369,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "0a60c0e0a273d9a0ab2217e041759bb472f42a3789b2bb73950ba91fae26f2b8",
-              "line": 264
+              "sha256": "74186c563bdf25cd1666f7283a4ca54f9fc5ae46a9776713b23716a7fa4646b5",
+              "line": 267
             }
           ]
         },
@@ -7013,8 +7383,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "0a60c0e0a273d9a0ab2217e041759bb472f42a3789b2bb73950ba91fae26f2b8",
-              "line": 250
+              "sha256": "74186c563bdf25cd1666f7283a4ca54f9fc5ae46a9776713b23716a7fa4646b5",
+              "line": 253
             }
           ]
         },
@@ -7027,8 +7397,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "0a60c0e0a273d9a0ab2217e041759bb472f42a3789b2bb73950ba91fae26f2b8",
-              "line": 253
+              "sha256": "74186c563bdf25cd1666f7283a4ca54f9fc5ae46a9776713b23716a7fa4646b5",
+              "line": 256
             }
           ]
         },
@@ -7115,8 +7485,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "0a60c0e0a273d9a0ab2217e041759bb472f42a3789b2bb73950ba91fae26f2b8",
-              "line": 202
+              "sha256": "74186c563bdf25cd1666f7283a4ca54f9fc5ae46a9776713b23716a7fa4646b5",
+              "line": 205
             }
           ]
         },
@@ -7772,7 +8142,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "0a60c0e0a273d9a0ab2217e041759bb472f42a3789b2bb73950ba91fae26f2b8",
+              "sha256": "74186c563bdf25cd1666f7283a4ca54f9fc5ae46a9776713b23716a7fa4646b5",
               "line": 66
             }
           ]
@@ -7995,13 +8365,13 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "0a60c0e0a273d9a0ab2217e041759bb472f42a3789b2bb73950ba91fae26f2b8",
-              "line": 211
+              "sha256": "74186c563bdf25cd1666f7283a4ca54f9fc5ae46a9776713b23716a7fa4646b5",
+              "line": 214
             },
             {
               "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-              "sha256": "3821b5ff6657b75895b66e56ac366186717c32fd128aa852dbaf99b49318b473",
-              "line": 1543
+              "sha256": "46d3674d1d8f2d1013fa4563b10ed3266143f067aeda92c65ddb796f4c334934",
+              "line": 1556
             }
           ]
         },
@@ -8343,8 +8713,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "0a60c0e0a273d9a0ab2217e041759bb472f42a3789b2bb73950ba91fae26f2b8",
-              "line": 291
+              "sha256": "74186c563bdf25cd1666f7283a4ca54f9fc5ae46a9776713b23716a7fa4646b5",
+              "line": 294
             }
           ]
         },
@@ -8357,8 +8727,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "0a60c0e0a273d9a0ab2217e041759bb472f42a3789b2bb73950ba91fae26f2b8",
-              "line": 303
+              "sha256": "74186c563bdf25cd1666f7283a4ca54f9fc5ae46a9776713b23716a7fa4646b5",
+              "line": 306
             }
           ]
         },
@@ -8371,8 +8741,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "0a60c0e0a273d9a0ab2217e041759bb472f42a3789b2bb73950ba91fae26f2b8",
-              "line": 337
+              "sha256": "74186c563bdf25cd1666f7283a4ca54f9fc5ae46a9776713b23716a7fa4646b5",
+              "line": 340
             }
           ]
         },
@@ -8385,8 +8755,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "0a60c0e0a273d9a0ab2217e041759bb472f42a3789b2bb73950ba91fae26f2b8",
-              "line": 295
+              "sha256": "74186c563bdf25cd1666f7283a4ca54f9fc5ae46a9776713b23716a7fa4646b5",
+              "line": 298
             }
           ]
         },
@@ -8399,8 +8769,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "0a60c0e0a273d9a0ab2217e041759bb472f42a3789b2bb73950ba91fae26f2b8",
-              "line": 312
+              "sha256": "74186c563bdf25cd1666f7283a4ca54f9fc5ae46a9776713b23716a7fa4646b5",
+              "line": 315
             }
           ]
         },
@@ -8413,8 +8783,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "0a60c0e0a273d9a0ab2217e041759bb472f42a3789b2bb73950ba91fae26f2b8",
-              "line": 316
+              "sha256": "74186c563bdf25cd1666f7283a4ca54f9fc5ae46a9776713b23716a7fa4646b5",
+              "line": 319
             }
           ]
         },
@@ -8427,8 +8797,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "0a60c0e0a273d9a0ab2217e041759bb472f42a3789b2bb73950ba91fae26f2b8",
-              "line": 319
+              "sha256": "74186c563bdf25cd1666f7283a4ca54f9fc5ae46a9776713b23716a7fa4646b5",
+              "line": 322
             }
           ]
         },
@@ -8441,8 +8811,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "0a60c0e0a273d9a0ab2217e041759bb472f42a3789b2bb73950ba91fae26f2b8",
-              "line": 319
+              "sha256": "74186c563bdf25cd1666f7283a4ca54f9fc5ae46a9776713b23716a7fa4646b5",
+              "line": 322
             }
           ]
         },
@@ -8455,8 +8825,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "0a60c0e0a273d9a0ab2217e041759bb472f42a3789b2bb73950ba91fae26f2b8",
-              "line": 330
+              "sha256": "74186c563bdf25cd1666f7283a4ca54f9fc5ae46a9776713b23716a7fa4646b5",
+              "line": 333
             }
           ]
         },
@@ -8469,8 +8839,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "0a60c0e0a273d9a0ab2217e041759bb472f42a3789b2bb73950ba91fae26f2b8",
-              "line": 344
+              "sha256": "74186c563bdf25cd1666f7283a4ca54f9fc5ae46a9776713b23716a7fa4646b5",
+              "line": 347
             }
           ]
         },
@@ -8483,8 +8853,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "0a60c0e0a273d9a0ab2217e041759bb472f42a3789b2bb73950ba91fae26f2b8",
-              "line": 344
+              "sha256": "74186c563bdf25cd1666f7283a4ca54f9fc5ae46a9776713b23716a7fa4646b5",
+              "line": 347
             }
           ]
         },
@@ -8497,8 +8867,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "0a60c0e0a273d9a0ab2217e041759bb472f42a3789b2bb73950ba91fae26f2b8",
-              "line": 323
+              "sha256": "74186c563bdf25cd1666f7283a4ca54f9fc5ae46a9776713b23716a7fa4646b5",
+              "line": 326
             }
           ]
         },
@@ -8511,8 +8881,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "0a60c0e0a273d9a0ab2217e041759bb472f42a3789b2bb73950ba91fae26f2b8",
-              "line": 302
+              "sha256": "74186c563bdf25cd1666f7283a4ca54f9fc5ae46a9776713b23716a7fa4646b5",
+              "line": 305
             }
           ]
         },
@@ -8525,8 +8895,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "0a60c0e0a273d9a0ab2217e041759bb472f42a3789b2bb73950ba91fae26f2b8",
-              "line": 298
+              "sha256": "74186c563bdf25cd1666f7283a4ca54f9fc5ae46a9776713b23716a7fa4646b5",
+              "line": 301
             }
           ]
         },
@@ -8539,8 +8909,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "0a60c0e0a273d9a0ab2217e041759bb472f42a3789b2bb73950ba91fae26f2b8",
-              "line": 337
+              "sha256": "74186c563bdf25cd1666f7283a4ca54f9fc5ae46a9776713b23716a7fa4646b5",
+              "line": 340
             }
           ]
         },
@@ -8553,7 +8923,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "0a60c0e0a273d9a0ab2217e041759bb472f42a3789b2bb73950ba91fae26f2b8",
+              "sha256": "74186c563bdf25cd1666f7283a4ca54f9fc5ae46a9776713b23716a7fa4646b5",
               "line": 66
             }
           ]
@@ -14810,11 +15180,11 @@
   "sources": [
     {
       "path": "AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift",
-      "sha256": "024bd8bcb47d43ace64fb410938f393effb3c6e8bd327506cf9065851de8073c"
+      "sha256": "01fdf45041eb8f11e4e7d990a758424e8581a6686e4588edd4586d3adcf9c239"
     },
     {
       "path": "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
-      "sha256": "2fb653e99c97bd3f252e88cb8c507d4a55f4fc4d994cf0dfe526dc2df6b21b90"
+      "sha256": "22f719a227998e889d04c31ef0a624bccec750614e0eb5436975c52b8d4c8cfb"
     },
     {
       "path": "AI_HLY/Downstream/HostServices/Core/HanlinHostCallContext.swift",
@@ -14854,7 +15224,7 @@
     },
     {
       "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-      "sha256": "3821b5ff6657b75895b66e56ac366186717c32fd128aa852dbaf99b49318b473"
+      "sha256": "46d3674d1d8f2d1013fa4563b10ed3266143f067aeda92c65ddb796f4c334934"
     },
     {
       "path": "Fixtures/ExpoNativeAPIProbe/tsconfig.json",
@@ -14942,7 +15312,7 @@
     },
     {
       "path": "Packages/HanlinExpoUI/src/host-services.ts",
-      "sha256": "010488e8c6aae2635f67d45cefebb9fdb2d4f97af71161af011a83d626ad60e7"
+      "sha256": "7055a22e3aa4a685b970c1eaaf66f538eeb34f560bb2c345446c55305a045d21"
     },
     {
       "path": "Packages/HanlinExpoUI/src/index.ts",
@@ -14955,6 +15325,10 @@
     {
       "path": "Packages/HanlinExpoUI/src/miniapp-actions.ts",
       "sha256": "d5d38fc209d8d8dedb2832ffd037e53d4eabd8b8c92320bd79e791fdfef2c607"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/miniapp-assistant.ts",
+      "sha256": "2e0e25875906f15876b8035d0863482510163ae4a82865eb376b788ff95e3c2c"
     },
     {
       "path": "Packages/HanlinExpoUI/src/modifiers.ts",
@@ -14990,11 +15364,11 @@
     },
     {
       "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.d.ts",
-      "sha256": "75f055c7067c2497b64f64714ca175fc09a323236e236b1d57621d4a07c3f7c1"
+      "sha256": "4200223f5be97ee12ddd5ffc05479fa7be99748998a716b3e2eb6197c14bc8cc"
     },
     {
       "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.mjs",
-      "sha256": "c6cc15960daeb071fc5adc8daf3f041c3e990ee8ce285a0b6c945667763a7dc5"
+      "sha256": "832169736b6d84a6caa983192ceb3d9e9947a8cbda029093eba269c065e8f033"
     },
     {
       "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/package.json",
@@ -15058,7 +15432,7 @@
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-      "sha256": "0a60c0e0a273d9a0ab2217e041759bb472f42a3789b2bb73950ba91fae26f2b8"
+      "sha256": "74186c563bdf25cd1666f7283a4ca54f9fc5ae46a9776713b23716a7fa4646b5"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/HanlinOriginalScriptWidgetControls.swift",
@@ -15090,7 +15464,7 @@
     },
     {
       "path": "Scripts/Audit/miniapp-expo-operations.mjs",
-      "sha256": "3d5cf558193e92f1e30884c4c4edd4405827414988d0ac79228212c3ac6fb84d"
+      "sha256": "0dd499b70871f464d60d076c3ff4231cb2d6d64da529743361bc415c295d3913"
     },
     {
       "path": "Scripts/Audit/miniapp-manifest-contracts.mjs",
@@ -15154,7 +15528,7 @@
     },
     {
       "path": "Scripts/NativeScript/build-host-services.mjs",
-      "sha256": "b46fcc461ad34fcf49140e4fd0e11e0dcb8f47a8523a15116029435289ee7003"
+      "sha256": "1ca742df46a70d3ee838de98d4ac128eebeeea99d93c9cfa6475e388fee28cc3"
     },
     {
       "path": "Scripts/NativeScript/build-metadata-tool.py",
@@ -15170,7 +15544,7 @@
     },
     {
       "path": "Scripts/NativeScript/host-services.ts",
-      "sha256": "efe0a28483fa36dbb3745f380b2ddd1bc6348af3b12c41ef10f19c2dd9a486a6"
+      "sha256": "e405a962b090e5786466ef0be2509cd629b16ba2d6d70f40f83dd92fb1e5f442"
     },
     {
       "path": "Scripts/NativeScript/metadata_public_headers.py",

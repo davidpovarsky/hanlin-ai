@@ -1,0 +1,76 @@
+{
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "test_project_graph.ProjectGraphTests.test_registered_graph",
+    "test_project_graph.ProjectGraphTests.test_agent_sdk_does_not_leak_into_miniapps",
+    "test_project_graph.ProjectGraphTests.test_reject_whole_app_source_membership",
+    "test_project_graph.ProjectGraphTests.test_reject_declared_but_unlinked_product",
+    "test_project_graph.ProjectGraphTests.test_reject_duplicate_project_key",
+    "test_project_graph.ProjectGraphTests.test_extraction_keeps_target_and_real_source",
+    "-v"
+  ],
+  "cwd": "Scripts/CI/IntegrationValidation",
+  "exitCode": 0,
+  "selectedTests": [
+    "test_registered_graph",
+    "test_agent_sdk_does_not_leak_into_miniapps",
+    "test_reject_whole_app_source_membership",
+    "test_reject_declared_but_unlinked_product",
+    "test_reject_duplicate_project_key",
+    "test_extraction_keeps_target_and_real_source"
+  ],
+  "graph": {
+    "miniapps_products": [
+      "HanlinA2UI",
+      "HanlinAgentActivityCore",
+      "HanlinExpoNativeAPI",
+      "HanlinExpoRuntime",
+      "HanlinExpoWidgetsOriginal",
+      "HanlinExtensionContracts",
+      "HanlinLocalization",
+      "HanlinMiniAppCore",
+      "HanlinMiniAppsBridge",
+      "HanlinMiniAppsPicker",
+      "HanlinMiniAppsUI",
+      "HanlinNativeScriptRuntime",
+      "HanlinParityMiniApp",
+      "HanlinPlatformContracts",
+      "HanlinPresentationKit",
+      "HanlinProductSplit",
+      "HanlinScriptCompiler",
+      "HanlinScriptContracts",
+      "HanlinScriptDeviceServices",
+      "HanlinScriptExtensions",
+      "HanlinScriptStore",
+      "HanlinScriptUI",
+      "HanlinScriptingApplicationRuntime",
+      "HanlinScriptingSDK",
+      "HanlinSefariaMiniApp",
+      "HanlinTextStudioMiniApp",
+      "HanlinTranslationUI",
+      "HanlinWidgetUI",
+      "HanlinWikipediaMiniApp",
+      "IOSSystemLite",
+      "SWCompression",
+      "TorahLibraryKit",
+      "ZIPFoundation"
+    ],
+    "miniapps_source_groups": [
+      "HanlinMiniAppsApp"
+    ],
+    "deployment_target": "27.0",
+    "signed_or_install_proof": false
+  },
+  "nativeBuild": "NOT_RUN",
+  "sdkManifestGeneration": "ROOT_OWNER_PENDING",
+  "sharedProtocol": "AI_HLY/Downstream/HostServices/Core/HanlinMiniAppAssistantService.swift",
+  "excludedAIImplementation": "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppAssistantAIService.swift",
+  "inputs": {
+    "AI_HLY.xcodeproj/project.pbxproj": "10819a4f6bf488683e088c5dfae07c632cf744a4236430afe604d1b592f3b874",
+    "Scripts/CI/IntegrationValidation/miniapps_provider_sources.json": "c7dfd1d41b4f1aa2fef4e156f13d4d6114774d99717d5fe9c3e46a5edff67612",
+    "docs/product-split/target-membership.json": "7e5e5bf0f46dd4601bc4b0c7815040bd907fc571205af4495b48246590756948"
+  },
+  "commit": "03977c08cf3306fb241b1d5bd03aabd0de1cc39e"
+}

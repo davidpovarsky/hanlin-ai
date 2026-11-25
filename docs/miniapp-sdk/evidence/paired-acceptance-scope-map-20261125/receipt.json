@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "createdAtUTC": "2026-11-25T03:41:49.634919+00:00",
+  "kind": "READ_ONLY_SOURCE_CONTRACT_MAPPING",
+  "sourceCommit": "1a611764779b0a57cc57d71b26d2cd6449895d8d",
+  "evidenceBaseCommit": "1e7c5b2923c2a3396491519ec83c5b4b46049602",
+  "members": [
+    {
+      "path": "README.md",
+      "bytes": 6087,
+      "sha256": "a0b72e19ae6e47223755a417b5124f5b01a36fe55cc70ae2e6d3de4b4361523a"
+    },
+    {
+      "path": "mapping.json",
+      "bytes": 30387,
+      "sha256": "00b1b022a27104b32943e70efe1c7e4efa8a1a7ab6aa4b4284531205317204e7"
+    },
+    {
+      "path": "source-bindings.json",
+      "bytes": 5549,
+      "sha256": "860a87c9d67950f7e49bba504868ca3341427c22f4485ea8f6178387e988d821"
+    }
+  ],
+  "totalMemberBytes": 42023,
+  "sourceFilesBound": 24,
+  "selectedCounts": {
+    "MiniApps": 25,
+    "AI": 27,
+    "total": 52
+  },
+  "nativeExecutionPerformed": false,
+  "complete52Status": "NOT_RUN",
+  "scopedSDK03ThreeStatus": "NOT_RUN",
+  "taskClosuresChanged": false
+}

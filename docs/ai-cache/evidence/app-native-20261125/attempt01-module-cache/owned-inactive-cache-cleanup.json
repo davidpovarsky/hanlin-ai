@@ -1,0 +1,34 @@
+{
+  "timeUTC": "2026-11-25T03:49:53.635244+00:00",
+  "candidate": "/Users/m1/caches/DerivedData/hanlin-ai-cache-app-20261125-retained-modulecache-01",
+  "ownerUID": 501,
+  "canonicalAndNotSymlink": true,
+  "allocatedKiB": 1174524,
+  "openFileCheck": {
+    "exitCode": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  "processReferenceCount": 0,
+  "sample": {
+    "relativeOriginal": "1DMYBG2U74F55/SwiftShims-ETMZL06LU75E.pcm",
+    "retained": "/Users/m1/builds/hanlin-ai-cache-native-20261125/build/failed-modulecache-retention-20261125/SwiftShims-invalid-relocated.pcm",
+    "sha256": "7d92cfbfe3b2d38841cf8c39cfa226404db2d2edd2344390f4a6ba3d6dec5b99",
+    "bytes": 189912
+  },
+  "freeBytes": 10588827648,
+  "action": "REMOVED_ONLY_VERIFIED_INACTIVE_UNUSABLE_OWNED_MODULE_CACHE",
+  "reason": "Unusable relocated Clang module cache quarantined after app01; current build uses distinct ModuleCache.noindex. Original failure logs/repair receipt already retained in git.",
+  "deletionPreflightUTC": "2026-11-25T03:51:29.258209+00:00",
+  "freeBytesBeforeDeletion": 9190105088,
+  "privateOracleSample": "/mnt/development/projects/artifacts/hanlin-ai-cache-app-final-20261125/failed-modulecache-sample/SwiftShims-invalid-relocated.pcm",
+  "oracleSampleVerifiedBeforeDeletion": true,
+  "treeLatestMTimeUTC": "2026-11-25T01:45:57.943664+00:00",
+  "repeatOpenFileProbe": "Second lsof probe timed out after20s without deleting anything; reuse confirmed empty observation less than10minutes old, fresh zero process references and no tree changes since that observation.",
+  "fileCount": 10577,
+  "candidateAbsentAfter": true,
+  "freeBytesAfterDeletion": 10411409408,
+  "finishedAtUTC": "2026-11-25T03:51:33.101256+00:00",
+  "measuredFreeDeltaBytes": 1221304320,
+  "spaceCaveat": "System-wide free-space difference includes concurrent writers and APFS shared blocks; du did not guarantee reclaim."
+}

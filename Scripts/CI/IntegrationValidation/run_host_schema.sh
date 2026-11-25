@@ -2,9 +2,11 @@
 set -euo pipefail
 root="$(git rev-parse --show-toplevel)"
 cd "$root"
+producer_sha="$(python3 Scripts/CI/IntegrationValidation/swift_ai_sdk_pin.py "$root")"
 python3 Scripts/CI/verify_exact_json_vendor.py
 evidence="$root/build/agent-sdk-validation-evidence"
 mkdir -p "$evidence"
+printf '%s\n' "$producer_sha" > "$evidence/producer-commit.txt"
 started=$SECONDS
 finish_host_schema() {
   local rc="$?"
@@ -57,17 +59,18 @@ export DEVELOPER_DIR="$selected_xcode/Contents/Developer"
 { xcodebuild -version; xcrun swift --version; xcrun --sdk macosx --show-sdk-version; xcrun --sdk iphonesimulator --show-sdk-version; uname -m; sw_vers; } > "$evidence/toolchain.txt"
 sdk="$scratch/Packages/HanlinAgentSDK"
 xcrun swift package --package-path "$sdk" resolve > "$evidence/resolve.log" 2>&1
-python3 - "$scratch" "$evidence" <<'PY_DEPS'
+python3 - "$scratch" "$evidence" "$producer_sha" <<'PY_DEPS'
 import hashlib,json,subprocess,sys
 from pathlib import Path
-scratch,evidence=map(Path,sys.argv[1:]);records=[]
+scratch,evidence=map(Path,sys.argv[1:3]);producer_sha=sys.argv[3];records=[]
 for p in scratch.rglob('Package.resolved'):
     if any(s in ['checkouts','repositories'] for s in p.relative_to(scratch).parts):continue
     raw=p.read_bytes();name='raw-'+str(len(records))+'-Package.resolved';(evidence/name).write_bytes(raw)
     records.append({'path':str(p.relative_to(scratch)),'raw_file':name,'sha256':hashlib.sha256(raw).hexdigest(),'resolved':json.loads(raw)})
 (evidence/'resolution.json').write_text(json.dumps(records,indent=2))
 pins=json.loads((scratch/'Packages/HanlinAgentSDK/Package.resolved').read_text())['pins']
-assert next(p for p in pins if p['identity']=='swift-ai-sdk')['state']['revision']=='07431abccbfb151ca2dab67bca6cf86fcb2bd3b8'
+producer_pins=[p for p in pins if p['identity']=='swift-ai-sdk']
+assert len(producer_pins)==1 and producer_pins[0]['state']['revision']==producer_sha
 vendor=scratch/'Packages/HanlinAgentSDK/Vendor/Swift-JSON'
 provenance=json.loads((vendor/'PROVENANCE.json').read_text())
 assert provenance['revision']=='f2a0d12da7028edfbcb0cb307f19a921a3a12d03'

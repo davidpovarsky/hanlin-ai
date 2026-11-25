@@ -1,0 +1,240 @@
+{
+  "catalogSHA256": "b7bf734b3bd35595f90c3d3a841fa57ad63f0529dc0a5b6b2bee942e747022a6",
+  "state": "prepared",
+  "sourceCommit": "fd81d602d3b25f09162a659e1e0cf0582e91a93a",
+  "contentSHA256": "7069f72279c75b1de81b513dff24be86421f5056807d19cd858486113cafe99f",
+  "inputBindings": [
+    {
+      "path": "RuntimeDependencies.lock.json",
+      "sha256": "6cdbc18a474febbfc912b35ecbf5b0b55438a6a3e6daf2c33a43792cd04bd50a",
+      "sameAsAttempt6": true
+    },
+    {
+      "path": "Scripts/Expo/babel.config.cjs",
+      "sha256": "62581fd5caf7b97cb36290093b7bbf7103e1c1b1300e0e11a1b3eaaf96c998ba",
+      "sameAsAttempt6": true
+    },
+    {
+      "path": "Scripts/Expo/build-original-expo-source.mjs",
+      "sha256": "5a446cd0e1701a91f4eed5d5a3c5d5ea41be05d15cec668ca36edca3a38b2488",
+      "sameAsAttempt6": true
+    },
+    {
+      "path": "Scripts/Expo/build-original-widget-runtime.mjs",
+      "sha256": "5928bb12ed2fd2f6b2ecfeb6d8fc309d46e5837c58dcc4272d73af13434eb549",
+      "sameAsAttempt6": true
+    },
+    {
+      "path": "Scripts/Expo/dependency-lock.json",
+      "sha256": "549d100eca28b6b5f59b0cc6bb55d64c27e7bb88f02fd58eb8f1b2f6097be64f",
+      "sameAsAttempt6": true
+    },
+    {
+      "path": "Scripts/Expo/package-lock.json",
+      "sha256": "95d2a560d4eb01de64fcd0d43875a4ef2392e9747ed9fa79c2e0a0e58abececf",
+      "sameAsAttempt6": true
+    },
+    {
+      "path": "Scripts/Expo/prepare-ios-dependencies.mjs",
+      "sha256": "072c3432d299e4081d11d052b4bfe74d195e5775ace19362aaaea25652137dbb",
+      "sameAsAttempt6": true
+    },
+    {
+      "path": "Scripts/ExpoNativeAPI/dependency-lock.json",
+      "sha256": "08657d657c1f4efa36149075b632cfc75685fc1ca9af0397fc1168fe9253b768",
+      "sameAsAttempt6": true
+    },
+    {
+      "path": "Scripts/ExpoNativeAPI/multiscene-patch.mjs",
+      "sha256": "cafa8348a764155789169c411eb59555c6c7a2d3ef363b870e36f8d6b52c7cbd",
+      "sameAsAttempt6": true
+    },
+    {
+      "path": "Scripts/ExpoNativeAPI/prepare-ios-dependencies.mjs",
+      "sha256": "950a2eb6e8713bdd1a395eee6df1779d91f63864af95c33658efa6d090676f66",
+      "sameAsAttempt6": true
+    },
+    {
+      "path": "Scripts/NativeScript/build-metadata-tool.py",
+      "sha256": "f4318f38b1c6a9c56ba54edb0d270a6374178fa5a8e024ebfddb9790f7ae3cf5",
+      "sameAsAttempt6": true
+    },
+    {
+      "path": "Scripts/NativeScript/build-step-metadata-generator-wrapper.py",
+      "sha256": "0c053414f573ff2f88498099d7f1ae591d289ca3029390cd421dd938bf089ba3",
+      "sameAsAttempt6": true
+    },
+    {
+      "path": "Scripts/NativeScript/dependency-lock.json",
+      "sha256": "8499976a4ea0a069ed654b09b597d8fabede4bbbfb62227451a68707b851e8e5",
+      "sameAsAttempt6": true
+    },
+    {
+      "path": "Scripts/NativeScript/package-lock.json",
+      "sha256": "16f569f4bfa6f8806cfe72449866a0dc9a9331f33d2c67170d5292455c48b60b",
+      "sameAsAttempt6": true
+    },
+    {
+      "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+      "sha256": "b5114a3be1fc846e288128af08cef9f38b0cac8e34923780325c4edc2976ebd9",
+      "sameAsAttempt6": true
+    },
+    {
+      "path": "Scripts/Runtime/prepare-runtime-core.sh",
+      "sha256": "1ff99fabcbf8f40d515f3f1b944299286c1094a19520f9892a97f99cf8b64540",
+      "sameAsAttempt6": true
+    }
+  ],
+  "requiredTargets": [
+    "ReactNativeHeaders",
+    "React",
+    "ReactNativeDependencies",
+    "hermesvm",
+    "ExpoModulesJSI",
+    "ExpoModulesCore",
+    "ExpoModulesWorklets",
+    "ExpoUI",
+    "ExpoBrownfield",
+    "Libffi",
+    "TNSWidgets",
+    "NSCWinterTC",
+    "NodeMobile",
+    "Python"
+  ],
+  "missingTargets": [],
+  "acceptance": {
+    "appleBuild": "reuse-producer-evidence; this exporter does not build or test runtimes",
+    "nativeSlices": "validated-existing-binaries",
+    "ordinaryVersionDependency": "requires original host acceptance; prepared Expo header paths and host build phases need integration"
+  },
+  "priorCatalogContentSHA256": "48492bd5a2945c3e2e7fa2ac2aa8cef91d1631798f46a5bf35495519bc4c08c4",
+  "comparison": {
+    "artifacts": [
+      {
+        "target": "ReactNativeHeaders",
+        "sameContentMetadata": true,
+        "changesExcludingReleaseURL": []
+      },
+      {
+        "target": "React",
+        "sameContentMetadata": true,
+        "changesExcludingReleaseURL": []
+      },
+      {
+        "target": "ReactNativeDependencies",
+        "sameContentMetadata": true,
+        "changesExcludingReleaseURL": []
+      },
+      {
+        "target": "hermesvm",
+        "sameContentMetadata": true,
+        "changesExcludingReleaseURL": []
+      },
+      {
+        "target": "ExpoModulesJSI",
+        "sameContentMetadata": true,
+        "changesExcludingReleaseURL": []
+      },
+      {
+        "target": "ExpoModulesCore",
+        "sameContentMetadata": true,
+        "changesExcludingReleaseURL": []
+      },
+      {
+        "target": "ExpoModulesWorklets",
+        "sameContentMetadata": true,
+        "changesExcludingReleaseURL": []
+      },
+      {
+        "target": "ExpoUI",
+        "sameContentMetadata": true,
+        "changesExcludingReleaseURL": []
+      },
+      {
+        "target": "ExpoBrownfield",
+        "sameContentMetadata": true,
+        "changesExcludingReleaseURL": []
+      },
+      {
+        "target": "Libffi",
+        "sameContentMetadata": true,
+        "changesExcludingReleaseURL": []
+      },
+      {
+        "target": "TNSWidgets",
+        "sameContentMetadata": true,
+        "changesExcludingReleaseURL": []
+      },
+      {
+        "target": "NSCWinterTC",
+        "sameContentMetadata": true,
+        "changesExcludingReleaseURL": []
+      },
+      {
+        "target": "NodeMobile",
+        "sameContentMetadata": true,
+        "changesExcludingReleaseURL": []
+      },
+      {
+        "target": "Python",
+        "sameContentMetadata": true,
+        "changesExcludingReleaseURL": []
+      }
+    ],
+    "supportArtifacts": [
+      {
+        "target": "HanlinExpoHeaderSupport",
+        "sameContentMetadata": true,
+        "changesExcludingReleaseURL": []
+      },
+      {
+        "target": "HanlinExpoWidgetRuntimeSupport",
+        "sameContentMetadata": true,
+        "changesExcludingReleaseURL": []
+      },
+      {
+        "target": "HanlinNativeScriptHostSupport",
+        "sameContentMetadata": true,
+        "changesExcludingReleaseURL": []
+      },
+      {
+        "target": "HanlinNodeHostSupport",
+        "sameContentMetadata": false,
+        "changesExcludingReleaseURL": [
+          {
+            "pointer": "/bytes",
+            "before": 76267633,
+            "after": 76268587
+          },
+          {
+            "pointer": "/checksum",
+            "before": "ce63ded345f1c786163f434022f4d669001cfdb0503458867583c655b53b5c5d",
+            "after": "b9c821667d38021aa7bf621f7d262d3288a680124ded3f1c247f34ee2973a3f6"
+          }
+        ]
+      },
+      {
+        "target": "HanlinPythonHostSupport",
+        "sameContentMetadata": true,
+        "changesExcludingReleaseURL": []
+      }
+    ]
+  },
+  "currentNodeHostSupport": {
+    "archive": "HanlinNodeHostSupport.zip",
+    "bytes": 76268587,
+    "checksum": "b9c821667d38021aa7bf621f7d262d3288a680124ded3f1c247f34ee2973a3f6",
+    "installPaths": [
+      "AI_HLY/RuntimeHostResources.zip"
+    ],
+    "kind": "host-support",
+    "metadataTool": null,
+    "requiredBy": [
+      "NodeMobile"
+    ],
+    "root": "HanlinNodeHostSupport",
+    "target": "HanlinNodeHostSupport",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/releases/download/sdk-native-v1-7069f72279c75b1de81b513dff24be86421f5056807d19cd858486113cafe99f/HanlinNodeHostSupport.zip"
+  },
+  "boundary": "The actual producer catalog and all direct source inputs are bound. All artifact metadata except release URL is compared, without downloading or re-extracting the full native export. Catalog state alone does not prove application cases."
+}

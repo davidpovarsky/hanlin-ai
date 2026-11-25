@@ -1,0 +1,307 @@
+{
+  "capturedAt": "2026-11-25T02:26:38.857016+00:00",
+  "sourceHEAD": "fda6948ca6a1f541293a1a1dd20e97f75eb0a527",
+  "sourceTree": "a1fe06e442f36f104adca116eab14892674452ed",
+  "phaseReceipts": {
+    "split-host-lifecycle": {
+      "status": "PASS",
+      "startedAt": "2026-11-25T00:15:34.754856+00:00",
+      "argv": [
+        "/bin/bash",
+        "-e",
+        "-o",
+        "pipefail",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-host-lifecycle.sh"
+      ],
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt8/split-host-lifecycle.log",
+      "scriptSHA256": "956541d15f45f12b7777b8ebeb800fe14e1686db5fc7ceae397835547953d7bc",
+      "pid": 68751,
+      "exitCode": 0,
+      "elapsedSeconds": 5.057574375001423,
+      "finishedAt": "2026-11-25T00:15:39.813081+00:00",
+      "logBytes": 2340,
+      "logSHA256": "e66440f84f6eed352cf4d938479fc365a17c54ff8f76036952ae123a3da9de8e",
+      "reusedAfterSourceAdvance": "Metadata wrapper is a declared native artifact and SDK inventory input. Original preparation refreshes inventory, Host/SDK, catalog and cache input identities; unchanged original frameworks/tool producers may reuse their fingerprint. UI and runner changes require fresh test products. Platform/upstream/foreground/Host lifecycle/tool-producer input closures are unchanged."
+    },
+    "split-native-preparation": {
+      "status": "PASS",
+      "startedAt": "2026-11-25T02:19:37.626468+00:00",
+      "argv": [
+        "/bin/bash",
+        "-e",
+        "-o",
+        "pipefail",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-native-preparation.sh"
+      ],
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt10/split-native-preparation.log",
+      "scriptSHA256": "47635289bc9238f28f65b6f72d4980b5cf0aa6def2cf146cd236261260f65a3e",
+      "pid": 48270,
+      "elapsedSeconds": 249.80130991699843,
+      "logBytes": 32759,
+      "exitCode": 0,
+      "finishedAt": "2026-11-25T02:23:47.430000+00:00",
+      "logSHA256": "705a7914142f86d7912d3ad0e349975e0d311e15f3168a3cb9eb3a293cae5968"
+    },
+    "split-native-artifacts": {
+      "status": "PASS",
+      "startedAt": "2026-11-25T02:23:47.432188+00:00",
+      "argv": [
+        "/bin/bash",
+        "-e",
+        "-o",
+        "pipefail",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-native-artifacts.sh"
+      ],
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt10/split-native-artifacts.log",
+      "scriptSHA256": "eb0405f89f5da3d48e1591650d42e2f7a8ff8f86eebac9b82ded2e5c70cefebd",
+      "pid": 50744,
+      "exitCode": 0,
+      "elapsedSeconds": 23.24067391599965,
+      "finishedAt": "2026-11-25T02:24:10.673745+00:00",
+      "logBytes": 1604,
+      "logSHA256": "6ba90756cd5ae1a7ee915af12e22160528b0ceb7d8065409f71ea5d5ffa96f27"
+    },
+    "split-restore-inputs": {
+      "status": "PASS",
+      "startedAt": "2026-11-25T02:24:10.675124+00:00",
+      "argv": [
+        "/bin/bash",
+        "-e",
+        "-o",
+        "pipefail",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-restore-inputs.sh"
+      ],
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt10/split-restore-inputs.log",
+      "scriptSHA256": "f848273286ad9fdcecc9635ee01148c5f54b45230a5199938ef3d362a709f39a",
+      "pid": 51014,
+      "exitCode": 0,
+      "elapsedSeconds": 7.440325707997545,
+      "finishedAt": "2026-11-25T02:24:18.116296+00:00",
+      "logBytes": 223,
+      "logSHA256": "c40b416cd0105c9a2be993082e7439110468ef9fc69292667c32f0c8cf767995"
+    },
+    "split-inputs": {
+      "status": "PASS",
+      "startedAt": "2026-11-25T02:24:18.117882+00:00",
+      "argv": [
+        "/bin/bash",
+        "-e",
+        "-o",
+        "pipefail",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-inputs.sh"
+      ],
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt10/split-inputs.log",
+      "scriptSHA256": "03a05318e9c17e6b2a3fc91dc40ee908b81ee204fb961cda64687179778621bc",
+      "pid": 51032,
+      "exitCode": 0,
+      "elapsedSeconds": 5.3877318750019185,
+      "finishedAt": "2026-11-25T02:24:23.506611+00:00",
+      "logBytes": 103,
+      "logSHA256": "32f7fee63ff0070613d40b5771077ba0d634a6999305392b585690ed08722438"
+    }
+  },
+  "controllerStatusAtCapture": "PAUSED_AFTER_PHASE",
+  "controllerPhaseAtCapture": "split-inputs",
+  "files": [
+    {
+      "path": "RuntimeDependencies.lock.json",
+      "snapshotPath": "files/RuntimeDependencies.lock.json",
+      "bytes": 7925,
+      "sha256": "6cdbc18a474febbfc912b35ecbf5b0b55438a6a3e6daf2c33a43792cd04bd50a",
+      "mode": "0o644"
+    },
+    {
+      "path": "Scripts/Expo/package-lock.json",
+      "snapshotPath": "files/Scripts/Expo/package-lock.json",
+      "bytes": 336324,
+      "sha256": "c08757cf46ac4d5c86a873f676af4a3be585db64ae2e1aa1e8288277d4eb63b8",
+      "mode": "0o644"
+    },
+    {
+      "path": "Scripts/Expo/package.json",
+      "snapshotPath": "files/Scripts/Expo/package.json",
+      "bytes": 1759,
+      "sha256": "e2b50fae013276229c78619bbbe0b63d8c29b00fefde3afeccea98af117aa206",
+      "mode": "0o644"
+    },
+    {
+      "path": "Scripts/Expo/dependency-lock.json",
+      "snapshotPath": "files/Scripts/Expo/dependency-lock.json",
+      "bytes": 5375,
+      "sha256": "b9e3ad6d863e3e5136ad93924ce4edcb37da87578b113523640110af347eec65",
+      "mode": "0o644"
+    },
+    {
+      "path": "Scripts/MiniApps/upstream-resolution.json",
+      "snapshotPath": "files/Scripts/MiniApps/upstream-resolution.json",
+      "bytes": 15092,
+      "sha256": "e0c2944ea24c09330825dee58badedcec58606ba603ccdedc888abf1a63a13cb",
+      "mode": "0o644"
+    },
+    {
+      "path": "Scripts/NativeScript/package-lock.json",
+      "snapshotPath": "files/Scripts/NativeScript/package-lock.json",
+      "bytes": 110219,
+      "sha256": "16f569f4bfa6f8806cfe72449866a0dc9a9331f33d2c67170d5292455c48b60b",
+      "mode": "0o644"
+    },
+    {
+      "path": "Scripts/NativeScript/package.json",
+      "snapshotPath": "files/Scripts/NativeScript/package.json",
+      "bytes": 851,
+      "sha256": "08fc03bfa87cd78f4f21f80e9324a4840061105f6e9ab081ed794c569ca7324b",
+      "mode": "0o644"
+    },
+    {
+      "path": "build/runtime-host/RuntimeHostResources.zip",
+      "snapshotPath": "files/build/runtime-host/RuntimeHostResources.zip",
+      "bytes": 81813686,
+      "sha256": "86733eba5d80156edf52da87f0f371c208122d6e60f618f182990330514984c3",
+      "mode": "0o644"
+    },
+    {
+      "path": "build/runtime-host/host-metadata.json",
+      "snapshotPath": "files/build/runtime-host/host-metadata.json",
+      "bytes": 358,
+      "sha256": "698ab149ecf0a558a1db478908692f0dff2dac4e62456a88894cdda94cad9d8d",
+      "mode": "0o644"
+    },
+    {
+      "path": "build/app-split-evidence/miniapp-documentation-snippets.json",
+      "snapshotPath": "files/build/app-split-evidence/miniapp-documentation-snippets.json",
+      "bytes": 20103,
+      "sha256": "8be33b2bd2fb07424bd156bbbf97f55705b15ed8776317669ecb44d0d880423d",
+      "mode": "0o644"
+    },
+    {
+      "path": "build/app-split-evidence/prepared-native/native-artifacts.json",
+      "snapshotPath": "files/build/app-split-evidence/prepared-native/native-artifacts.json",
+      "bytes": 29897,
+      "sha256": "d13aed210768d84475c28201a973e3d59645c3e27f69e7069a30fb9b685e91dc",
+      "mode": "0o644"
+    },
+    {
+      "path": "build/primary-control/logs-attempt10/split-native-preparation.log",
+      "snapshotPath": "files/build/primary-control/logs-attempt10/split-native-preparation.log",
+      "bytes": 32759,
+      "sha256": "705a7914142f86d7912d3ad0e349975e0d311e15f3168a3cb9eb3a293cae5968",
+      "mode": "0o644"
+    },
+    {
+      "path": "build/primary-control/logs-attempt10/split-native-artifacts.log",
+      "snapshotPath": "files/build/primary-control/logs-attempt10/split-native-artifacts.log",
+      "bytes": 1604,
+      "sha256": "6ba90756cd5ae1a7ee915af12e22160528b0ceb7d8065409f71ea5d5ffa96f27",
+      "mode": "0o644"
+    },
+    {
+      "path": "build/primary-control/plan.json",
+      "snapshotPath": "files/build/primary-control/plan.json",
+      "bytes": 12303,
+      "sha256": "c1d7588482b30e6c21d52f1e0b6bff779be6f0d5ba398a11da5fdbd233fe62a3",
+      "mode": "0o644"
+    },
+    {
+      "path": "build/primary-control/source-advance-fda6948c/receipt.json",
+      "snapshotPath": "files/build/primary-control/source-advance-fda6948c/receipt.json",
+      "bytes": 26173,
+      "sha256": "5499cadcf68adccc03b35c9c9e5d6683c6e38b8f18886a9782f1719d644a3d3a",
+      "mode": "0o644"
+    },
+    {
+      "path": "build/primary-control/admission-attempt10.json",
+      "snapshotPath": "files/build/primary-control/admission-attempt10.json",
+      "bytes": 1107,
+      "sha256": "1b3db25eda94ed3900924c481a221e9423fc9294ce9df2ffd2bae42b80bdbabc",
+      "mode": "0o644"
+    },
+    {
+      "path": "build/acceptance/expo-type-declarations/corrections.json",
+      "snapshotPath": "files/build/acceptance/expo-type-declarations/corrections.json",
+      "bytes": 3600,
+      "sha256": "c5e5322a6177f36a713380134006d4beb3a0ebd275e435e66b7de93a4cb60f82",
+      "mode": "0o644"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/.source-build-receipt.json",
+      "snapshotPath": "files/Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/.source-build-receipt.json",
+      "bytes": 1355,
+      "sha256": "78a6b4b85330189dd162c09ae250cb280bf7dbe62608ca6438e6f3fabde6ee3b",
+      "mode": "0o644"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/.artifact-manifest.json",
+      "snapshotPath": "files/Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/.artifact-manifest.json",
+      "bytes": 226,
+      "sha256": "80afcbce26c01da5a63f951e04c6fea5959d3b3a51271d6a24002c35c07ceb47",
+      "mode": "0o644"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/Info.plist",
+      "snapshotPath": "files/Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/Info.plist",
+      "bytes": 1196,
+      "sha256": "b239db0645c42fb07b6dd21e54c6012289f62593186b64b880c419d293da984d",
+      "mode": "0o644"
+    },
+    {
+      "path": "build/miniapp-upstreams/expo-native-source/ios/Podfile.lock",
+      "snapshotPath": "files/build/miniapp-upstreams/expo-native-source/ios/Podfile.lock",
+      "bytes": 76498,
+      "sha256": "c012c6f8ee2ca782aea7788349d75a3a57e6e4be8d324037a8b9dce573e4d8e6",
+      "mode": "0o644"
+    }
+  ],
+  "trackedDeltaCount": 9,
+  "trackedDeltaPath": "tracked-delta.json",
+  "hostModule": {
+    "archiveMember": "miniapp-authoring.mjs",
+    "bytes": 50327,
+    "sha256": "fa5121902e231d5d44ad08bf47699784fd4d0bc2a98102f3a156e6e4ae79b9b9",
+    "appSourceArchiveSHA256": "86733eba5d80156edf52da87f0f371c208122d6e60f618f182990330514984c3"
+  },
+  "sdkManifest": {
+    "archiveMember": "MiniAppSDK/miniapp-sdk.json",
+    "snapshotPath": "extracted-sdk/miniapp-sdk.json",
+    "bytes": 5219389,
+    "sha256": "19726b5eecc1459e30dae9e7ec4ca6761001de92b22055ac41b9a96aabdd7a88"
+  },
+  "sdkIdentity": {
+    "schemaVersion": 1,
+    "inputSHA256": "998e474dfeb225185e91ac4886d4b3aec517dfc55cd16cac0f46366b55494d56",
+    "sourceInputCount": 222,
+    "fileCount": 25661
+  },
+  "documentationSummary": {
+    "status": "EXECUTED_PASS",
+    "sdk": {
+      "manifestSHA256": "19726b5eecc1459e30dae9e7ec4ca6761001de92b22055ac41b9a96aabdd7a88",
+      "inputSHA256": "998e474dfeb225185e91ac4886d4b3aec517dfc55cd16cac0f46366b55494d56"
+    },
+    "projects": [
+      {
+        "name": "expo-guide",
+        "succeeded": true,
+        "diagnosticCount": 0
+      },
+      {
+        "name": "nativescript-guide",
+        "succeeded": true,
+        "diagnosticCount": 0
+      },
+      {
+        "name": "scriptwidget-guide",
+        "succeeded": true,
+        "diagnosticCount": 0
+      },
+      {
+        "name": "scriptwidget-controls",
+        "succeeded": true,
+        "diagnosticCount": 0
+      }
+    ]
+  },
+  "boundary": "Read-only snapshot of completed native preparation and native artifact export; application acceptance status remains separately recorded in actual controller state.",
+  "trackedDeltaSHA256": "0d97b8de1b354c375d5d47b4405f3cd10aa83d2cd6cf5c8ca5901b5796ad9e9a",
+  "expoAssetBindingsSHA256": "299f617ecc8909c16d2a2776488181b5d399a25abed4f255f6b526f8b78ece52",
+  "expoAssetBindingsPath": "expo-asset-produced-bindings.json"
+}

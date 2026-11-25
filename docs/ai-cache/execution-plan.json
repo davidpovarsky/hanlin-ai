@@ -1,0 +1,242 @@
+{
+  "date": "2026-11-25",
+  "timezone": "Asia/Hebron",
+  "repository": "davidpovarsky/hanlin-ai",
+  "branch": "codex/hanlin-ai-cache-integration-20261125",
+  "baseline": "a6738f1ebbaec4a767c790c7842a0168ef4b93ee",
+  "parents": [
+    "d65c6ab6ccd4fc535f32ffac1f9ad095f6d514b1",
+    "a27e1a36e1272e17413c283ad928916f0489c1b5",
+    "635bc66274436d21236500cda4c2e873b1abe1bd"
+  ],
+  "task": "1220884079387447",
+  "phases": [
+    {
+      "id": "C0",
+      "title": "בסיס עדכני ובעלות",
+      "owner": "איתן + תומר",
+      "contract": "לאתר ראשים מרוחקים ומקומיים, dirty state וקומיטים פעילים; להתחיל מהראש העדכני ולאחד את composer/wave/SDK הרלוונטיים בעותק מבודד. לשמור SHA מלא, תוכנית בעלות ומפת קבצים. קבלה: בסיס משולב נקי, אין דריסה/force-push של עבודת אחרים, נקודות סנכרון מתועדות.",
+      "asana": "1220884041271966",
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "id": "C1",
+      "title": "הכרעת ספריות, גרסאות ומפת יכולות מקוריות",
+      "owner": "יעל + איתן",
+      "contract": "לאמת מה מתוחזק ונדרש בפועל: Swift AI SDK, MCP, OTel; להחליט מפורשות על Vercel/LRUCache/NSCache/GRDB/Redis/Valkey/RediStack/LiteLLM/Langfuse/SwiftMetrics. למפות capabilities נגישים, ממשקי מוצר, מגבלות ומניעת כפילות; לעדכן pin רק בהיקף נחוץ עם הבדלי source. קבלה: ADR ומטריצה עם primary sources, צרכן לכל dependency שנוספה.",
+      "asana": "1220884041330206",
+      "status": "EXECUTED_PASS",
+      "evidence": [
+        "CACHE_AND_OBSERVABILITY_ADR.md",
+        "evidence/canonical-graph-20261125/graph-tests-receipt.json"
+      ]
+    },
+    {
+      "id": "C2",
+      "title": "מדיניות מטמון וכל אפשרויות הספקים",
+      "owner": "נועם",
+      "contract": "HanlinChatModelConfiguration/ProviderFactory/AgentEngine/RequestBuilder/Parser: חוזה טיפוסי, options merging עם reasoning, scope יציב שאינו כולל סודות, OpenAI controls נתמכים, Anthropic TTL/breakpoints, Google reference. SIWC ו-compatible לא מקבלים שדות לא נתמכים. לעדכן פורק SDK המקורי אם serializer חסר. קבלה: wire + stream tests ב-Mac, מסלול רגיל וכלים/structured, unknown/zero והגדרות לא נתמכות.",
+      "asana": "1220884143828951",
+      "status": "EXECUTED_PASS",
+      "evidence": [
+        "evidence/native-core-20261125/final-pin/receipt.json",
+        "evidence/producer-publication-20261125.json"
+      ]
+    },
+    {
+      "id": "C3",
+      "title": "קידומת יציבה ושימור ההקשר הדינמי",
+      "owner": "נועם",
+      "contract": "לסדר identity/guidelines/presentation/skills/tools לפני time/query memory; להבטיח סדר דטרמיניסטי ושימור מלוא המשמעות. להעביר cacheScope מהשיחה המקורית; לא להוסיף cache של תשובות משתנות. קבלה: prompt invariants, שינוי clock/query אינו משנה prefix קבוע, עדכון skill/tool/policy כן מבטל זהות מתאימה.",
+      "asana": "1220884194759247",
+      "status": "IN_PROGRESS"
+    },
+    {
+      "id": "C4",
+      "title": "מדידת קריאה וכתיבה במטמון ואבחון",
+      "owner": "נועם + רוני",
+      "contract": "cache-read/cache-write לאורך SDK→APIManager→AgentTokenUsage→Recorder→JSON/readable/UI; תיקון unavailable≠0; יחס hit עם מכנה תקין ומידע מסופק בלבד. לחבר telemetry מקורי לפי החלטת C1 ללא prompts/keys או ייצוא אוטומטי. קבלה: decoding ישן, aggregation, export, privacy והצגה, בלי טענת חסכון שאינה מדודה.",
+      "asana": "1220884041034869",
+      "status": "IN_PROGRESS"
+    },
+    {
+      "id": "C5",
+      "title": "מטמון חיפוש מקומי: TTL, LRU, coalescing וביטול",
+      "owner": "נועם",
+      "contract": "שיפור AutomaticWebSearchCoordinator המקורי: TTL מתחילת השלמה, LRU מוגבל, איחוד בקשות זהות, per-waiter cancellation, כשל לא נשמר, bypass/invalidation וסטטיסטיקה לא רגישה. מאגרי תוצאות כלים נשארים עמידים. קבלה: בדיקות התנהגות עם provider נשלט/clock מוזרק, בלי sleep, כולל ביטול ושינוי generation תוך כדי בקשה.",
+      "asana": "1220884013934618",
+      "status": "EXECUTED_PASS",
+      "evidence": [
+        "evidence/local-cache-20261125/receipt.json"
+      ],
+      "acceptance_note": "11 actual original local cache lifecycle tests passed; 7 accounting tests in same run are recorded separately for C4."
+    },
+    {
+      "id": "C6",
+      "title": "מסלול AI מקורי ל־Expo ול־NativeScript",
+      "owner": "נועם",
+      "contract": "למפות בפועל את ה-Host services של שני המנועים הפעילים; לחבר שירות assistant משותף ל-Swift AI SDK/ChatCore המקורי לפי מנגנוני invoke/sendRequest הקיימים, עם session-bound context, הרשאות, ביטול/streaming ושגיאות. לעדכן declarations והמקור הקנוני, לא להרחיב legacy ScriptUI. קבלה: native host routing + public contract tests, סוכן/consumer לא עוקף credential/tool policy; הוכחת reachability בשני המנועים או חסימה מפורשת.",
+      "asana": "1220884013885908",
+      "status": "IN_PROGRESS"
+    },
+    {
+      "id": "C7",
+      "title": "מחזור חיים מפורש ל־Google cachedContent",
+      "owner": "נועם",
+      "contract": "מנהל native מצומצם דרך API המקורי התומך create/get/updateTTL/delete; model eligibility, קשירת endpoint/model/scope, reference expiry, ביטול ושגיאות. רק explicit opt-in; implicit נשאר ברירת מחדל. הגנה ממידע stale ומסכמת tools/system לא תואמת. קבלה: חוזה REST ובדיקות lifecycle; live provider receipt כאשר חשבון מורשה זמין.",
+      "asana": "1220884013901248",
+      "status": "EXECUTED_PASS",
+      "evidence": [
+        "USAGE.md",
+        "evidence/native-core-20261125/final-pin/receipt.json",
+        "evidence/native-core-20261125/final-pin/raw.log.gz"
+      ],
+      "acceptance_note": "9 Google native lifecycle cases passed in final48/48native run. Public Swift API is documented and opt-in; no automatic paid app/JS manager. Full application acceptance remains C8.",
+      "live_status": "NOT_RUN: no authorized live provider account configured in isolated validation environment; no actual-hit or billing claim."
+    },
+    {
+      "id": "C8",
+      "title": "אינטגרציה ובדיקות Native במק",
+      "owner": "תומר + רוני",
+      "contract": "לרענן ראשים ולשלב קומיטים שהושלמו, לפתור קונפליקטים סמנטית, לעדכן source graphs/pins. להריץ פעם אחת בדיקות מושפעות על SHA מדויק במרחב Mac נפרד ובהתאם לעומס; reuse רק לפי ראיות מקור עם dependency closure. קבלה: build/tests, commands/raw logs/hashes, כיסוי failure/cancellation/isolation/streaming וכל קבלה חיה בנפרד. אין כפילות suite של סוכן אחר.",
+      "asana": "1220884040998180",
+      "status": "IN_PROGRESS"
+    },
+    {
+      "id": "C9",
+      "title": "סנכרון אחרון, פרסום וקבלת התוכנית",
+      "owner": "תומר",
+      "contract": "לבדוק שוב latest branches ועבודת הסוכנים, לפרסם normal push/PR עם תיאור scope, שינויים, בדיקות ומגבלות; לעדכן תיעוד שימוש, rollback/config ומטריצת קבלה. לעדכן Asana אחרי כל שלב; לסגור רק שלבים שקבלתם מולאה. קבלה מלאה דורשת כל תנאי תוכנית; blocker נשאר פתוח עם ראיה ופעולה ברורה.",
+      "asana": "1220884144031583",
+      "status": "IN_PROGRESS"
+    }
+  ],
+  "ownership": {
+    "provider_cache": "HanlinChatCore policy/config/Factory/Engine/RequestBuilder/Parser; original Swift AI SDK serializer changes",
+    "native_bridge": "APIManager prompts/scopes/usage mapping; HanlinAgentSession; active Expo/NativeScript assistant Host service and declarations",
+    "cache_observability": "AutomaticWebSearchCoordinator; AgentDiagnostics; OpenTelemetry adapter; dependency ADR",
+    "root": "Google explicit resource lifecycle; manifest/dependency/lock updates; integration; all Native validation; Asana; publication"
+  },
+  "validation": {
+    "runner": "Scaleway Mac, Xcode 27.0 / Swift 6.4; inspect capacity before dispatch",
+    "policy": "Execute affected/new/unknown checks; reuse only authenticated unchanged evidence; fixtures are not live provider hits",
+    "live": "No existing account credential has been accessed; locate intended runtime channel before live calls; never expose credentials",
+    "other_work": "Preserve other active branches/worktrees and running jobs; synchronize completed source changes after each stage",
+    "publication": "Normal push only; no main force/rewrite; exact reviewable commits",
+    "current_core_result": {
+      "source": "04c1942bc88cd4de7deafda7dd342b9b6c401dcf",
+      "executed": 48,
+      "passed": 48,
+      "failed_tests": 0,
+      "status": "EXECUTED_PASS",
+      "swift_ai_sdk": "abf0921c6e89e6521cc2b510ff11016b45a0ef08",
+      "receipt": "evidence/native-core-20261125/final-pin/receipt.json",
+      "source_unchanged": true
+    },
+    "reuse_receipt": "evidence/reuse-receipt-20261125.json",
+    "current_app_result": {
+      "source": "7ef4795083ce559de64366d42c3c0c9495d739b6",
+      "status": "PREPARING_RETRY05",
+      "declared_cases": 46,
+      "executed": 0,
+      "latest_attempt": "evidence/app04-persistence-crash-20261125/index.json",
+      "fix": "4f2bc9864a4fefa62f69ca54fb9f6b33351ba1df",
+      "preparation_reason": "Latest source synchronized; exact source-declared invocation gate installed; current original Host and fixtures remain valid.",
+      "expected_invocations": 48,
+      "prepare_status": "REUSE_CANDIDATE_UNCHANGED_PREPARATION_INPUTS",
+      "prepare_receipt": "evidence/app-native-20261125/attempt04/prepare/receipt.json",
+      "expected_methods": 46,
+      "fixes": [
+        "a48ba95d351374de3f70189a9a7d6bd61670b2f1",
+        "36d97c5a2b9fde92bbbc480adcff473dcb66698e"
+      ]
+    },
+    "runtime_host_result": {
+      "source": "04c1942bc88cd4de7deafda7dd342b9b6c401dcf",
+      "status": "EXECUTED_PASS",
+      "passed": 177,
+      "failed": 0,
+      "skipped": 1,
+      "skip": "Original opt-in >300-second worker duration test; not a cache/assistant acceptance case.",
+      "evidence": "evidence/native-preparation-20261125/host-final/index.json"
+    },
+    "latest_sync_receipt": "evidence/latest-sync-during-app04-20261125.json",
+    "current_host_refresh": {
+      "source": "53593c3749dbd2be1e56739576fcdd5ea2c1cf06",
+      "status": "EXECUTED_PASS",
+      "evidence": "evidence/native-preparation-20261125/retry3-native/receipt.json",
+      "archive_sha256": "9fb7998ee48fe913e98f865d5b962e8a46dce9c836ff2efd295598206741b2cd"
+    },
+    "app_attempts": [
+      {
+        "source": "72bff522e6a13bff60c16d7a82e7c12f86abf8f9",
+        "status": "FAILED_RETRY_PENDING",
+        "declared_cases": 46,
+        "prepare_status": "PREPARED",
+        "actual_resolved": {
+          "swift-ai-sdk": "abf0921c6e89e6521cc2b510ff11016b45a0ef08",
+          "lrucache": "1.3.0",
+          "opentelemetry-swift-core": "2.6.0",
+          "swift-atomics": "1.3.1"
+        },
+        "atomics_reason": "Original OpenTelemetry core2.6.0 manifest requires swift-atomics from1.3.1; all other existing pins unchanged.",
+        "executed": 0,
+        "build_exit_code": 65,
+        "reason": "Cloned Clang ModuleCache retained donor absolute path; owned nonportable cache quarantined.",
+        "receipt": "evidence/app-native-20261125/attempt01-module-cache/test/receipt.json",
+        "repair": "evidence/app-native-20261125/attempt01-module-cache/test/module-cache-repair.json"
+      },
+      {
+        "source": "b2b17ca2078c632c87b95d6f766ec13b09b344d7",
+        "status": "FAILED_RETRY_PENDING",
+        "executed": 0,
+        "build_exit_code": 65,
+        "reason": "AssistantToolBridge.Executors.live factory is not implicitly MainActor-isolated by its enclosing type; NativeTool.name access fails Swift6isolation check.",
+        "receipt": "evidence/app-native-20261125/attempt02-factory-isolation/test/receipt.json"
+      },
+      {
+        "source": "5b69bbb52013686922efa7c4e7d9f2d44b774f94",
+        "status": "BUILD_FAILED_BEFORE_TESTS",
+        "executed": 0,
+        "build_exit_code": 65,
+        "receipt": "evidence/app-native-20261125/attempt03/test/receipt.json",
+        "reason": "HanlinMiniAppAssistantIntegrationTests.swift:11 missing requiredcanPresentUI argument",
+        "fix": "4f2bc9864a4fefa62f69ca54fb9f6b33351ba1df"
+      },
+      {
+        "source": "1710bc6119983799f7d22cb723659ac274fe96b1",
+        "status": "BUILD_PASS_RUNTIME_FAILED",
+        "build_exit_code": 0,
+        "executed": null,
+        "runtime_failures": [
+          "ClassicChatRestoration case25: three obsolete pre-policy UI expectations",
+          "SwiftData round-trip case: NSInternalInconsistencyException No eligible connection available at context.save; process abort"
+        ],
+        "failure_evidence": "evidence/app04-persistence-crash-20261125/index.json",
+        "fixture_fixes": [
+          "a48ba95d351374de3f70189a9a7d6bd61670b2f1",
+          "36d97c5a2b9fde92bbbc480adcff473dcb66698e"
+        ],
+        "complete_xcresult": "Unavailable: after crash/restart completion, idle xcodebuild required scoped SIGINT thenSIGTERM; xcresulttool exited64 on partialbundle. RawfailuresandIPSretained.",
+        "receipt": "evidence/app-native-20261125/attempt04/test/receipt.json",
+        "evidence_index": "evidence/app-native-20261125/attempt04/test-index.json",
+        "test_process_exit_code": -15,
+        "simulator_shutdown_exit_code": 0,
+        "source_unchanged": true
+      }
+    ],
+    "future_runner_lock_correction": {
+      "source": "2d2d0a396848b97338dce62f57d8334462afc362",
+      "fixture_tests_passed": 7,
+      "receipt": "evidence/active-lock-snapshot-20261125/receipt.json",
+      "scope": "Only validation tooling; full tracked source hashing retained, historical-proof mutation rejected; nine actual tracked locks copied. App03 remains sealed at5b69bbb5 and is not relabeled."
+    }
+  },
+  "updated_at": "2026-11-25T04:13:11.913774+00:00",
+  "latest_integrated_source": "74b4946ce229e43ed2908e41691840e6eb3bd6d8",
+  "synchronized_heads": {
+    "composer": "d89ce38b170bc9af4734cd11e30ca793b16698d0",
+    "miniapps_sdk": "97bab5394e206133d1fefa797b85fa2deffc1012",
+    "wave3": "12d25da36451acc72b65144df79bedae878ba8ec"
+  }
+}

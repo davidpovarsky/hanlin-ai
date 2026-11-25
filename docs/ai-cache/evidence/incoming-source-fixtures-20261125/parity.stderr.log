@@ -1,0 +1,10 @@
+test_actions_and_intent_use_the_same_declared_handler (test_nativescript_parity_fixture.NativeScriptParityFixtureTests.test_actions_and_intent_use_the_same_declared_handler) ... ok
+test_archive_matches_source_byte_for_byte (test_nativescript_parity_fixture.NativeScriptParityFixtureTests.test_archive_matches_source_byte_for_byte) ... ok
+test_async_host_service_helpers_do_not_block_or_execute_twice (test_nativescript_parity_fixture.NativeScriptParityFixtureTests.test_async_host_service_helpers_do_not_block_or_execute_twice) ... ok
+test_bundle_contains_no_synthetic_fallbacks_or_literal_successes (test_nativescript_parity_fixture.NativeScriptParityFixtureTests.test_bundle_contains_no_synthetic_fallbacks_or_literal_successes) ... ok
+test_bundle_uses_exported_bridge_and_canonical_roots (test_nativescript_parity_fixture.NativeScriptParityFixtureTests.test_bundle_uses_exported_bridge_and_canonical_roots) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.176s
+
+OK
