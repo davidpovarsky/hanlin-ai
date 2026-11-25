@@ -148,3 +148,57 @@ test('Expo UI public runtime metadata follows the installed original runtime acr
   }
   await assert.rejects(upstreamResolver.updatedExpoBridgeRuntimeMetadata(read, {expo: {}}), /Missing exact Expo UI runtime/);
 });
+
+
+test('Worklets native compiler flags must match the resolved original JS graph in both manifests', async () => {
+  const input = await fixture(), selected = versions(input);
+  const expected = selected.expo['react-native-worklets'];
+  const packagePaths = ['Packages/HanlinExpoNativeAPI/Package.swift', 'Package.swift'];
+  // Only these two manifest bytes are supplied as candidate inputs. No native
+  // compile, npm resolution or canonical manifest generation is simulated here.
+  const overrides = new Map(await Promise.all(packagePaths.map(async file => [
+    file, upstreamResolver.updatedWorkletsPackageVersion((await input.source(file)).text, selected),
+  ])));
+  const result = await auditPreparedRuntimeContract(await fixture(overrides));
+  assert.equal(result.nativeAPI.workletsVersion, expected);
+  const definition = version => JSON.stringify('-DWORKLETS_VERSION=' + version);
+  for (const file of packagePaths) {
+    const candidate = overrides.get(file);
+    for (const [kind, broken] of [
+      ['stale', candidate.replace(definition(expected), definition('999.0.0'))],
+      ['quoted', candidate.replace(definition(expected), JSON.stringify('-DWORKLETS_VERSION="' + expected + '"'))],
+      ['missing', candidate.replace(definition(expected), '')],
+      ['duplicate', candidate.replace(definition(expected), definition(expected) + ', ' + definition(expected))],
+    ]) {
+      assert.notEqual(broken, candidate);
+      const mismatch = await fixture(new Map([...overrides, [file, broken]]));
+      await assert.rejects(auditPreparedRuntimeContract(mismatch),
+        kind === 'stale' ? /versions disagree for Expo Worklets native compiler/ : /Unreviewed Worklets compiler version/,
+        file + ': ' + kind);
+    }
+  }
+});
+
+test('Worklets native compiler definition follows future exact resolver selection without changing other settings', async () => {
+  const input = await fixture();
+  const original = (await input.source('Packages/HanlinExpoNativeAPI/Package.swift')).text;
+  const current = input.tooling.dependencies['react-native-worklets'];
+  const future = {expo: {'react-native-worklets': '0.14.2'}};
+  const updated = upstreamResolver.updatedWorkletsPackageVersion(original, future);
+  const definition = version => JSON.stringify('-DWORKLETS_VERSION=' + version);
+  assert.equal(updated.replace(definition('0.14.2'), definition(current)), original,
+    'all other target, source and compiler settings are preserved');
+  assert.equal(upstreamResolver.updatedWorkletsPackageVersion(updated, future), updated);
+  const legacy = original.replace(definition(current), JSON.stringify('-DWORKLETS_VERSION="0.13.1"'));
+  assert.notEqual(legacy, original);
+  assert.equal(upstreamResolver.updatedWorkletsPackageVersion(legacy, future), updated,
+    'the legacy quoted macro is repaired to the original bare podspec definition');
+  assert.throws(() => upstreamResolver.updatedWorkletsPackageVersion(original, {expo: {}}),
+    /Missing exact Worklets compiler version/);
+  assert.throws(() => upstreamResolver.updatedWorkletsPackageVersion(original, {expo: {'react-native-worklets': '^0.14.2'}}),
+    /Missing exact Worklets compiler version/);
+  assert.throws(() => upstreamResolver.updatedWorkletsPackageVersion(original.replace(definition(current), ''), future),
+    /Expected one literal Worklets compiler version/);
+  assert.throws(() => upstreamResolver.updatedWorkletsPackageVersion(original.replace(definition(current),
+    definition(current) + ', ' + definition(current)), future), /Expected one literal Worklets compiler version/);
+});

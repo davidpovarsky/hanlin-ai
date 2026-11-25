@@ -201,6 +201,46 @@ def wire_widget_cxx_imports(text, package):
     return text
 
 
+
+def wire_miniapps_ios_system_resources(text):
+    """Copy the original ios_system main-bundle dictionaries into MiniApps."""
+    project = parse_project(text)
+    objects = project["objects"]
+    targets = [objects[key] for key in objects[project["rootObject"]]["targets"]
+               if objects[key].get("isa") == "PBXNativeTarget"
+               and objects[key].get("name") == "HanlinMiniApps"
+               and objects[key].get("productType") == "com.apple.product-type.application"]
+    if len(targets) != 1:
+        raise ValueError("Expected one HanlinMiniApps application target")
+    phases = [key for key in targets[0]["buildPhases"]
+              if objects[key].get("isa") == "PBXResourcesBuildPhase"]
+    if len(phases) != 1:
+        raise ValueError("Expected one HanlinMiniApps resource phase")
+    files = list(objects[phases[0]]["files"])
+    for name, build_id in [("commandDictionary.plist", "AC1900000000000000000140"),
+                           ("extraCommandsDictionary.plist", "AC1900000000000000000141")]:
+        path = "Packages/IOSSystemLite/Sources/IOSSystemLite/Resources/" + name
+        references = [key for key, value in objects.items()
+                      if value.get("isa") == "PBXFileReference" and value.get("path") == path]
+        if len(references) != 1:
+            raise ValueError("Expected one canonical ios_system resource reference: " + name)
+        reference = objects[references[0]]
+        if reference.get("sourceTree") != "SOURCE_ROOT" or reference.get("explicitFileType") != "text":
+            raise ValueError("ios_system dictionaries must retain canonical raw source bytes")
+        copies = [key for key in files if objects[key].get("fileRef") == references[0]]
+        if len(copies) > 1:
+            raise ValueError("Duplicate MiniApps ios_system resource: " + name)
+        if not copies:
+            if build_id in objects and (objects[build_id].get("isa") != "PBXBuildFile"
+                                        or objects[build_id].get("fileRef") != references[0]):
+                raise ValueError("MiniApps ios_system build ID is already owned by another resource")
+            text = insert_object(text, "PBXBuildFile", build_id,
+                "\t\t\tisa = PBXBuildFile;\n\t\t\tfileRef = " + references[0] + ";\n")
+            objects[build_id] = {"isa": "PBXBuildFile", "fileRef": references[0]}
+            files.append(build_id)
+    return edit_object(text, phases[0], lambda block: replace_list(block, "files", files))
+
+
 def update(package=None):
     if package is None:
         package = json.loads(subprocess.check_output(
@@ -396,6 +436,7 @@ def update(package=None):
     # import contract to every real native consumer, including new clones.
     text = wire_miniapps_extensions(text, edit_object, replace_list, insert_object)
     text = wire_widget_cxx_imports(text, package)
+    text = wire_miniapps_ios_system_resources(text)
     parse_project(text)
     return text
 

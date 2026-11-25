@@ -1,0 +1,17 @@
+test_generator_repairs_missing_miniapps_membership_without_changing_ai_and_is_idempotent (Scripts.Runtime.Tests.test_ios_system_project_resources.IOSSystemProjectResourceValidationTests.test_generator_repairs_missing_miniapps_membership_without_changing_ai_and_is_idempotent) ... ok
+test_missing_miniapps_membership_is_rejected_even_when_ai_has_both_resources (Scripts.Runtime.Tests.test_ios_system_project_resources.IOSSystemProjectResourceValidationTests.test_missing_miniapps_membership_is_rejected_even_when_ai_has_both_resources) ... ok
+test_plist_conversion_is_still_rejected (Scripts.Runtime.Tests.test_ios_system_project_resources.IOSSystemProjectResourceValidationTests.test_plist_conversion_is_still_rejected) ... ok
+test_stale_comments_cannot_replace_actual_app_membership (Scripts.Runtime.Tests.test_ios_system_project_resources.IOSSystemProjectResourceValidationTests.test_stale_comments_cannot_replace_actual_app_membership) ... ok
+test_valid_target_resources_do_not_require_pbx_comments (Scripts.Runtime.Tests.test_ios_system_project_resources.IOSSystemProjectResourceValidationTests.test_valid_target_resources_do_not_require_pbx_comments) ... ok
+test_widget_membership_does_not_supply_the_application_resource (Scripts.Runtime.Tests.test_ios_system_project_resources.IOSSystemProjectResourceValidationTests.test_widget_membership_does_not_supply_the_application_resource) ... ok
+test_missing_root_dictionary_fails (Scripts.Runtime.Tests.test_validate_ios_system_resources.IOSSystemAppResourceValidationTests.test_missing_root_dictionary_fails) ... ok
+test_nonempty_extra_dictionary_fails (Scripts.Runtime.Tests.test_validate_ios_system_resources.IOSSystemAppResourceValidationTests.test_nonempty_extra_dictionary_fails) ... ok
+test_package_bundle_only_dictionary_fails (Scripts.Runtime.Tests.test_validate_ios_system_resources.IOSSystemAppResourceValidationTests.test_package_bundle_only_dictionary_fails) ... ok
+test_semantically_equal_binary_plist_fails_canonical_byte_check (Scripts.Runtime.Tests.test_validate_ios_system_resources.IOSSystemAppResourceValidationTests.test_semantically_equal_binary_plist_fails_canonical_byte_check) ... ok
+test_unexpected_command_fails (Scripts.Runtime.Tests.test_validate_ios_system_resources.IOSSystemAppResourceValidationTests.test_unexpected_command_fails) ... ok
+test_valid_root_resources_pass (Scripts.Runtime.Tests.test_validate_ios_system_resources.IOSSystemAppResourceValidationTests.test_valid_root_resources_pass) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.671s
+
+OK

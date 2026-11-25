@@ -1,0 +1,113 @@
+{
+  "schema": 1,
+  "owner": "/root/native_execution",
+  "id": "final-prefix-continuation-attempt18",
+  "source": "1d5e598614f2bc7c689f34f5d7b364f67e1d5ae1",
+  "status": "FAILED",
+  "controllerPID": 27428,
+  "allowanceSeconds": 600,
+  "originalPlanMaximumActiveSeconds": 12600,
+  "activeBaselineSeconds": 12875.891307207046,
+  "decisionSHA256": "b5a5615a3e962ae8034421d7ab55e2ead27639eca87fba2251c47524d90706ec",
+  "original52": "NOT_RUN",
+  "steps": [
+    {
+      "id": "split-upstreams",
+      "argv": [
+        "/bin/bash",
+        "-e",
+        "-o",
+        "pipefail",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-upstreams.sh"
+      ],
+      "originalPhase": true,
+      "status": "PASS",
+      "startedAt": "2026-11-25T08:52:38.526665+00:00",
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/final-prefix-continuation-attempt18/logs/split-upstreams.log",
+      "scriptSHA256": "890c8ac2b02ff5a5909c71789e639e333cbc78c687797f2a060a7dd2591cfa84",
+      "pid": 27435,
+      "exitCode": 0,
+      "elapsedSeconds": 22.97102941699268,
+      "finishedAt": "2026-11-25T08:53:01.499022+00:00",
+      "logBytes": 7885,
+      "logSHA256": "0bd3d45fd013bc4cd51cbd54b10f71add41aff73fd97a974d7c11211b3564d26"
+    },
+    {
+      "id": "generate-manifest",
+      "argv": [
+        "python3",
+        "Scripts/SDK/generate_manifest.py"
+      ],
+      "status": "PASS",
+      "startedAt": "2026-11-25T08:53:01.501313+00:00",
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/final-prefix-continuation-attempt18/logs/generate-manifest.log",
+      "pid": 28742,
+      "exitCode": 0,
+      "elapsedSeconds": 6.662224416999379,
+      "finishedAt": "2026-11-25T08:53:08.164982+00:00",
+      "logBytes": 3605,
+      "logSHA256": "11ffb997c112dd4c5954bd29a572fb89d05c9048e373d844133bf0580cca034c"
+    },
+    {
+      "id": "generate-project",
+      "argv": [
+        "python3",
+        "Scripts/SDK/update_project.py"
+      ],
+      "status": "PASS",
+      "startedAt": "2026-11-25T08:53:08.167187+00:00",
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/final-prefix-continuation-attempt18/logs/generate-project.log",
+      "pid": 29156,
+      "exitCode": 0,
+      "elapsedSeconds": 1.8725974169938127,
+      "finishedAt": "2026-11-25T08:53:10.041090+00:00",
+      "logBytes": 88,
+      "logSHA256": "7b205399ea53f72db8afa2fe3d77370cd6f0ac3d9ea8d19cea47a806236d4d18"
+    },
+    {
+      "id": "verify-targets",
+      "argv": [
+        "python3",
+        "Scripts/ProductSplit/verify_targets.py"
+      ],
+      "status": "FAIL",
+      "startedAt": "2026-11-25T08:53:10.043175+00:00",
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/final-prefix-continuation-attempt18/logs/verify-targets.log",
+      "pid": 29181,
+      "exitCode": 1,
+      "elapsedSeconds": 0.1122660410037497,
+      "finishedAt": "2026-11-25T08:53:10.156658+00:00",
+      "logBytes": 807,
+      "logSHA256": "e67a4b6f4cef0bb1043e4e3b9196b3368827b21cdb86083e1686b1d141b1d966"
+    }
+  ],
+  "resourceAtLaunch": {
+    "freeBytes": 11145441280,
+    "df": "Filesystem   1024-blocks      Used Available Capacity iused     ifree %iused  Mounted on\n/dev/disk3s5   482797652 428028656  10884220    98% 6430996 108842200    6%   /System/Volumes/Data"
+  },
+  "startedAt": "2026-11-25T08:52:38.524292+00:00",
+  "currentStep": "verify-targets",
+  "currentPID": null,
+  "commandResult": {
+    "id": "verify-targets",
+    "argv": [
+      "python3",
+      "Scripts/ProductSplit/verify_targets.py"
+    ],
+    "status": "FAIL",
+    "startedAt": "2026-11-25T08:53:10.043175+00:00",
+    "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/final-prefix-continuation-attempt18/logs/verify-targets.log",
+    "pid": 29181,
+    "exitCode": 1,
+    "elapsedSeconds": 0.1122660410037497,
+    "finishedAt": "2026-11-25T08:53:10.156658+00:00",
+    "logBytes": 807,
+    "logSHA256": "e67a4b6f4cef0bb1043e4e3b9196b3368827b21cdb86083e1686b1d141b1d966"
+  },
+  "error": "RuntimeError: Original prefix command failed: verify-targets exit 1",
+  "cleanupErrors": [],
+  "chargedSeconds": 31.645607708996977,
+  "cumulativeActiveSeconds": 12907.536914916043,
+  "finishedAt": "2026-11-25T08:53:10.169810+00:00",
+  "allowanceExceededDuringCleanup": false
+}

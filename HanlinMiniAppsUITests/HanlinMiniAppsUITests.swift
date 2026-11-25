@@ -756,23 +756,26 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
         XCTAssertTrue(waitUntil(timeout: 10) { edit.label == "Done" },
                       "The generated SwiftUI EditButton must change the actual native edit mode.")
 
-        let row = app.cells.containing(.staticText, identifier: "Generated Alpha").firstMatch
+        // Native edit mode combines the removal action and row text in one label.
+        let row = app.cells.containing(NSPredicate(
+            format: "label == %@ OR label ENDSWITH %@", "Generated Alpha", ", Generated Alpha")).firstMatch
         XCTAssertTrue(row.waitForExistence(timeout: 10))
-        let delete = row.buttons.matching(NSPredicate(format: "label BEGINSWITH[c] 'Delete'")).firstMatch
-        XCTAssertTrue(delete.waitForExistence(timeout: 10),
-                      "The original List.ForEach onDelete must expose native editing controls.")
-        XCTAssertTrue(delete.isHittable)
-        delete.tap()
+        let remove = row.images["minus.circle.fill"].firstMatch
+        XCTAssertTrue(remove.waitForExistence(timeout: 10),
+                      "The original List.ForEach onDelete must expose its native removal control.")
+        XCTAssertTrue(remove.isHittable)
+        remove.tap()
         let event = sdkOnlyText("EDIT_DELETE_EVENTS:1")
         let confirm = row.buttons.matching(NSPredicate(format: "label == 'Delete'")).firstMatch
         XCTAssertTrue(waitUntil(timeout: 10) { event.exists || (confirm.exists && confirm.isHittable) })
         if !event.exists { confirm.tap() }
         expectAdapterText("EDIT_DELETE_EVENTS:1")
         expectAdapterText("EDIT_ROWS:beta")
-        XCTAssertFalse(sdkOnlyText("Generated Alpha").exists)
-        XCTAssertTrue(sdkOnlyText("Generated Beta").exists)
+        XCTAssertFalse(row.exists, "The deleted Alpha row must leave the native list.")
         edit.tap()
         XCTAssertTrue(waitUntil(timeout: 10) { edit.label == "Edit" })
+        XCTAssertFalse(sdkOnlyText("Generated Alpha").exists)
+        XCTAssertTrue(sdkOnlyText("Generated Beta").exists)
         capture(name: "generated-edit-button-original-delete-event")
         tapAdapterButton("Generated view menu")
         tapAdapterButton("Close generated views")
@@ -844,6 +847,11 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
         openAdditionalExpoProbe("Open Generated Modifiers Probe")
         tapAdapterButton("Modifiers: Input")
         expectAdapterText("MODIFIER_NATIVE_CONTEXT:Input:appeared")
+        let affinityEditor = app.textViews["generated-modifier-affinity-editor"].firstMatch
+        XCTAssertTrue(affinityEditor.waitForExistence(timeout: 10),
+                      "The selection-affinity modifier must mount its actual native TextEditor context.")
+        XCTAssertTrue(affinityEditor.isHittable)
+        XCTAssertEqual(affinityEditor.value as? String, "Affinity example: hello مرحبا")
         expectAdapterText("MODIFIER_HIT_COUNTS:front=0;back=0")
         let back = app.buttons["Generated back target"].firstMatch
         XCTAssertTrue(back.waitForExistence(timeout: 10))
@@ -1352,6 +1360,14 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
         evidence.lifetime = .keepAlways
         add(evidence)
         capture(name: "modular-search-live-sefaria-full-text")
+        let back = app.navigationBars.buttons["BackButton"].firstMatch
+        XCTAssertTrue(back.waitForExistence(timeout: 10),
+                      "The native detail must expose its navigation back control.")
+        XCTAssertTrue(back.isHittable)
+        back.tap()
+        let rootClose = app.buttons["hanlin-script-app-close"].firstMatch
+        XCTAssertTrue(waitUntil(timeout: 10) { rootClose.exists && rootClose.isHittable },
+                      "Returning from the native detail must reveal the original miniapp close control.")
         closeExpoApp()
     }
 

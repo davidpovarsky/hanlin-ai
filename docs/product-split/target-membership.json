@@ -111,7 +111,9 @@
     "AI_HLY/Downstream/RuntimeCore/Resources/RuntimeManifest.json",
     "AI_HLY/RuntimeHostResources.zip",
     "AI_HLY/Assets.xcassets",
-    "Packages/HanlinWidgetSDK/HostResources/HanlinAppIntents.xcstrings"
+    "Packages/HanlinWidgetSDK/HostResources/HanlinAppIntents.xcstrings",
+    "Packages/IOSSystemLite/Sources/IOSSystemLite/Resources/commandDictionary.plist",
+    "Packages/IOSSystemLite/Sources/IOSSystemLite/Resources/extraCommandsDictionary.plist"
   ],
   "integration_base": "16934250",
   "sdk_resources": {

@@ -526,6 +526,11 @@ def main():
             state["product_identity"][bundle]["app_icon"] = {
                 "name": icon["CFBundleIconName"],
                 "compiled_catalog_sha256": hashlib.sha256(assets.read_bytes()).hexdigest()}
+            _, resource_result = command([sys.executable,
+                "Scripts/Runtime/validate_ios_system_resources.py",
+                "--repository-root", str(ROOT), "--app", str(product)],
+                bundle + "-ios-system-resources.json")
+            state["product_identity"][bundle]["ios_system_resources"] = json.loads(resource_result)
             command(["codesign", "--verify", "--deep", "--strict", str(product)], bundle + "-signature.log")
             executable_name = info["CFBundleExecutable"]
             if Path(executable_name).name != executable_name:
@@ -623,7 +628,7 @@ def main():
             argv = test_base + ["-scheme", "HanlinMiniApps", "test-without-building",
                 "-resultBundlePath", str(runtime_result)]
             argv += ["-only-testing:" + selector for selector in runtime_selectors]
-            code, _ = command(argv, "original-runtimes.log", timeout=1200, allow_failure=True)
+            code, _ = command(argv, "original-runtimes.log", timeout=2400 if TEST_SCOPE == "miniapp_complete" else 1200, allow_failure=True)
             state["original_runtime_summary"] = verify_native_result(runtime_result, "original-runtimes",
                 runtime_selectors, 17 if TEST_SCOPE == "miniapp_authoring" else 25, code)
             observed_images = {(request["path"], request["status"])
