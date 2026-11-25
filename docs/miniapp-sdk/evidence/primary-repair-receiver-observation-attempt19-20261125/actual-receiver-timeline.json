@@ -1,0 +1,246 @@
+{
+  "schemaVersion": 1,
+  "executedSource": "f6bb035f2828ec24a683bb2f5f1dddb27143dc4a",
+  "fixSource": "7bf0c2fdc2f7168d6b98dda66f443ae032fe1c11",
+  "scope": "Historical retained observations; no V8 result or live process claim",
+  "packets": [
+    {
+      "directory": "focused19-v7-repair-first-packet",
+      "sourceReceiptSHA256": "c14d1359261a314f1108993fd7dc8749ad383836a84a42fcc9b28a474e889b7d",
+      "memberCount": 40,
+      "memberBytes": 2659337
+    },
+    {
+      "directory": "focused19-v7-repair-durable-packet",
+      "sourceReceiptSHA256": "6b3c9b1547c7f0aae5ad5640cdc6b94f59e6d910a4a5eedbfd66e83a91011a21",
+      "memberCount": 66,
+      "memberBytes": 128359
+    },
+    {
+      "directory": "focused19-v7-built-inputs",
+      "sourceReceiptSHA256": "11a4d2c24d4e209f9744dadbf9f484933e597fdf138dd6914c51353d44ad3678",
+      "memberCount": 4,
+      "memberBytes": 404259
+    }
+  ],
+  "originalAIHostBuild": {
+    "argv": [
+      "xcodebuild",
+      "-project",
+      "AI_HLY.xcodeproj",
+      "-destination",
+      "platform=iOS Simulator,id=E742FBCD-8FF0-4130-B143-7F8328637138",
+      "-parallel-testing-enabled",
+      "NO",
+      "-derivedDataPath",
+      "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete",
+      "-clonedSourcePackagesDirPath",
+      "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/SourcePackages",
+      "-skipPackagePluginValidation",
+      "-skipMacroValidation",
+      "CODE_SIGNING_ALLOWED=YES",
+      "CODE_SIGNING_REQUIRED=YES",
+      "CODE_SIGN_IDENTITY=-",
+      "-scheme",
+      "AI_HLY",
+      "build-for-testing",
+      "-resultBundlePath",
+      "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v7/native-result/paired-prefix/AIBuild.xcresult"
+    ],
+    "exit": 0,
+    "seconds": 121.2856520839996,
+    "log": "ai-build.log",
+    "sha256": "eac9e35e7857e68b2bb3dbaed022640908511f4daa0d8e4dd4a73669bb4f6f29"
+  },
+  "originalRepairCase": {
+    "status": "FAILED",
+    "passed": 0,
+    "failed": 1,
+    "skipped": 0,
+    "caseSeconds": 251.326,
+    "failureSource": "AI_HLYUITests/MiniAppAuthoringUITests.swift",
+    "failureLine": 92,
+    "xcodeExitCode": 65,
+    "startedAt": "2026-11-25T14:04:14.146721+00:00",
+    "finishedAt": "2026-11-25T14:08:52.534379+00:00",
+    "summaryPath": "focused19-v7-repair-first-packet/native-result/paired-prefix/FocusedRepair1-summary.json",
+    "summarySHA256": "f9a88171e3bf163c8d24724068137fe05547ca7dd38a7694a60f9307eb6408c4"
+  },
+  "buildJob": {
+    "path": "focused19-v7-repair-durable-packet/ai-runtime/jobs/node/1e001f77-4723-4156-a822-c7684af03869/job.json",
+    "startedAt": "2026-11-25T14:07:27.805+00:00",
+    "completedAt": "2026-11-25T14:08:19.477+00:00",
+    "durationMilliseconds": 51672,
+    "state": "completed",
+    "exitCode": 0,
+    "succeeded": true,
+    "diagnostics": [],
+    "didTimeOut": false,
+    "wasCancelled": false
+  },
+  "archive": {
+    "path": "focused19-v7-repair-durable-packet/authoring-transfer/7d064eea-d625-4262-a770-56d6a52573a8/MiniApp.hanlinNativeScript",
+    "bytes": 7247,
+    "sha256": "74db9d447035e1b8e000394a515093094b99f18a5587be54048a766232306727",
+    "zipEntries": 16,
+    "CRC": "PASS",
+    "descriptorSourceAndCompiledHashes": "PASS",
+    "buildValidation": {
+      "schemaVersion": 1,
+      "engine": "nativescript",
+      "operation": "build",
+      "succeeded": true,
+      "diagnostics": [],
+      "sourceRoot": "source",
+      "sdk": {
+        "packageVersions": {
+          "@nativescript/core": "9.1.4",
+          "@nativescript/swift-ui": "4.0.2",
+          "@nativescript/ios": "9.1.1",
+          "@nativescript/types": "9.1.4",
+          "@nativescript/vite": "8.0.24",
+          "typescript": "5.9.3",
+          "vite": "8.0.0",
+          "@hanlin/notification-events": "1.0.0",
+          "@hanlin/host-services": "1.0.0"
+        },
+        "manifestSHA256": "4505c28495d8b6ecd1073254e0e395adcc898cc02dd1d40699591f51db4dee92",
+        "compilerVersion": "5.9.3"
+      },
+      "typecheck": {
+        "strict": true,
+        "checkJs": false,
+        "skipLibCheck": true,
+        "dependencyDeclarationsChecked": false
+      }
+    }
+  },
+  "transfer": {
+    "id": "7D064EEA-D625-4262-A770-56D6A52573A8",
+    "status": "received",
+    "updatedAt": "2026-11-25T14:08:34.434519+00:00",
+    "installedPackageID": null,
+    "path": "focused19-v7-repair-durable-packet/authoring-transfer/7d064eea-d625-4262-a770-56d6a52573a8/receipt.json"
+  },
+  "receiverJob": {
+    "id": "aebbeb51-27bb-4b40-9948-e1104a72b855",
+    "startedAt": "2026-11-25T14:08:35.008+00:00",
+    "persistedState": "running",
+    "stdoutBytes": 0,
+    "stderrBytes": 0,
+    "result": null,
+    "currentLiveProcessClaim": false,
+    "path": "focused19-v7-repair-durable-packet/mini-runtime/jobs/node/aebbeb51-27bb-4b40-9948-e1104a72b855/job.json"
+  },
+  "UIObservation": {
+    "path": "focused19-v7-repair-first-packet/native-result/FocusedRepair1-attachments/3F601E97-4BD9-4E91-AAAC-35F71A511DA7.txt",
+    "sha256": "853a0febffd778bba29944b8a6ed60dcb1584bf5c7c81f52ac47257d793e0e06",
+    "underlyingState": "Inspecting…",
+    "diagnosticSheetVisible": true,
+    "errors": 0,
+    "warnings": 0,
+    "validationPendingText": true,
+    "previousRepairSubmittedMessage": true,
+    "newCompilerRejectionEstablished": false,
+    "productionLifecycleDefectEstablished": false
+  },
+  "accounting": {
+    "sixHistoricalCharges": [
+      {
+        "id": "focused19-v1",
+        "source": "a2c8a1b1be746461272ba77254603304567c309d",
+        "status": "FOCUSED_FAILED",
+        "elapsedSeconds": 366.7222996670025,
+        "statePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v1/state.json",
+        "decisionSHA256": "77eef76303d4df1ac274a6cbf3db71b8f7efc4ee7f4e9b623334d565dd3297a3",
+        "logSHA256": "50e1e8e69dc605e6e1b848865df43258820bffe759fce30baafddb4f1e1466aa",
+        "exitCode": 1,
+        "expectedGroups": {
+          "FocusedMini3": 3,
+          "FocusedAI8": 8
+        }
+      },
+      {
+        "id": "focused19-v2",
+        "source": "62dfff9aebd0a272486c7770d4f77ba603d535ab",
+        "status": "FOCUSED_FAILED",
+        "elapsedSeconds": 977.134837125006,
+        "statePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v2/state.json",
+        "decisionSHA256": "72608e39bc0987c619ea24b0eeea53b18cd5cca6f86c4a3dab688699580a315c",
+        "logSHA256": "342ef196929155502518e95854d07595b7d804ae635c8393e0800a028e6a97e4",
+        "exitCode": 1,
+        "expectedGroups": {
+          "FocusedMini3": 3,
+          "FocusedAI8": 8
+        }
+      },
+      {
+        "id": "focused19-v3",
+        "source": "6c006c948f0a6f371f7fc68b90e393f43734f8dd",
+        "status": "FOCUSED_FAILED",
+        "elapsedSeconds": 39.67624695900304,
+        "statePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v3/state.json",
+        "decisionSHA256": "e5317f244c6cf6cecb4b9a9c1b3043b1921fbe646d922f332d7bdcd103fea86a",
+        "logSHA256": "5c3085ba2ea41118eae72f8f33666d910d72dc64ca42f8a873f24b23ed8e755a",
+        "exitCode": 1,
+        "expectedGroups": {
+          "FocusedManual1": 1,
+          "FocusedRepair1": 1
+        }
+      },
+      {
+        "id": "focused19-v5",
+        "source": "6c006c948f0a6f371f7fc68b90e393f43734f8dd",
+        "status": "FOCUSED_FAILED",
+        "elapsedSeconds": 713.0760274589993,
+        "statePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v5/state.json",
+        "decisionSHA256": "288fff0babef0edb6cf02f392285a194d9707a79af6214fe4d1e1396a3dff51b",
+        "logSHA256": "d1ad80a8abe2aaae22be3cf0a654497d8de0f9b6ac2433ef28c2259d6897ca82",
+        "exitCode": 1,
+        "expectedGroups": {
+          "FocusedManual1": 1,
+          "FocusedRepair1": 1
+        }
+      },
+      {
+        "id": "focused19-v6",
+        "source": "958cf666da7be83b9b63e46e3013e3344fb31585",
+        "status": "FOCUSED_FAILED",
+        "elapsedSeconds": 544.1797895409982,
+        "statePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v6/state.json",
+        "decisionSHA256": "39b1aad0ac110ac97a638b08ec1d9c22b3efa4723cce1378e87a7028a056ce4f",
+        "logSHA256": "d76584f27bd51ae5865d743a6fb6982464fdc95a6e8f6d07e6b73838fbc51671",
+        "exitCode": 1,
+        "expectedGroups": {
+          "FocusedRepair1": 1
+        }
+      },
+      {
+        "id": "focused19-v7",
+        "source": "f6bb035f2828ec24a683bb2f5f1dddb27143dc4a",
+        "status": "FOCUSED_FAILED",
+        "elapsedSeconds": 443.2465754169971,
+        "statePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v7/state.json",
+        "decisionSHA256": "51e5f719fc302d9e55dc5da77069b03cd33f1e2eae9def2c59a7c48a819abbb6",
+        "logSHA256": "69f3e934134df2a854674ffbc3dc6cb9fd7e64f5ee6929338bb2af4b0864aaeb",
+        "exitCode": 1,
+        "expectedGroups": {
+          "FocusedRepair1": 1
+        }
+      }
+    ],
+    "cumulativeFocusedSeconds": 3084.035776168006,
+    "originalFocusedAllowanceSeconds": 3600,
+    "originalRemainingSeconds": 515.9642238319939,
+    "primaryCumulativeSeconds": 18556.947548752043,
+    "postV7AdditionalGrants": "NOT_PART_OF_THIS_IMMUTABLE_RUN"
+  },
+  "cleanup": {
+    "outerErrors": [],
+    "childErrors": [],
+    "outerSourceErrors": [],
+    "childSourceErrors": [],
+    "ownedSimulatorObservedState": "Shutdown",
+    "remainingOwnedGroup": []
+  }
+}
