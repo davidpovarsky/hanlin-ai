@@ -1,0 +1,36 @@
+{
+  "scope": "Oracle source diagnosis and fixture repair; no native test execution",
+  "baseSourceSHA": "8562a7a15d04d9380052265982d0ec891d629093",
+  "commit": "a48ba95d351374de3f70189a9a7d6bd61670b2f1",
+  "timeUTC": "2026-11-25T04:08:55.776297+00:00",
+  "sourceFile": "AI_HLYTests/ClassicChatRestorationTests.swift",
+  "beforeSHA256": "3d0f24079cc17099153c4a78be62fdca17fe32c8fda65994d3d5160a13cbdb0e",
+  "afterSHA256": "e6055f2196de6afee93d27ac56449e0c5db8edbb902f0987f4925c9c40aa4261",
+  "policyIntroductionCommit": "641d2c72d0d4811860606be270cae5c565edd49c",
+  "diagnosis": "Three old assertions expected the obsolete pre-Nov22 two-tool legacy UI badge/headers; the canonical visibility policy intentionally hides internal load_skill while retaining the original per-call audit.",
+  "repair": "Drive original AgentEventAccumulator -> syncAgentRunProjection -> serialized ChatMessages.agentRunJSON -> restored projection and actual AgentActivityComposer. Require both exact call identities, statuses, outputs and labels in canonical audit; only MCP call in visible activity and legacy badge; no raw Instructions or skill output under the domain tool.",
+  "oldExpectCount": 7,
+  "newExpectCount": 24,
+  "newRequireCount": 2,
+  "expectedMethodCount": 46,
+  "expectedInvocationCount": 48,
+  "productionClosureSHA256": {
+    "AI_HLY/Downstream/AgentActivity/AgentEventAccumulator.swift": "316798c38f2325e05d367ba1bd1cfb75b18bfde3215518d1e02b6c454da8af32",
+    "AI_HLY/Downstream/AgentActivity/AgentActivityPersistence.swift": "6fd77b744c5468823842663329dd1f29ef2201560e40cf553d0a16e037ad5034",
+    "AI_HLY/Downstream/ChatPresentation/ClassicChatAgentProjection.swift": "202da0fe6bfbe7294e0be3091fa6036134a066289c4f65da9663bb942bac88ad",
+    "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentActivityComposer.swift": "b0f4572edd3e2db44af09acd6553e12fdf0c342cb224f15e943221c0c60da0fa",
+    "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentActivityCompositionPolicy.swift": "fa90e0684d06e52ca4490370aa17d616294176e9e60325d8a1339e5401ac7e18",
+    "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentActivityVisibilityPolicy.swift": "a6f740e5b4f513eae994ef0e95f8f3c1ea4fa5c4c315a7817bac08eac50c31d6",
+    "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Projection/AgentActivityToolProjection.swift": "34636442e01a2b5a579129eb1f2ef768adad60b2280252b7dc09a4e64e3e5bb3",
+    "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Projection/ClassicProjectedToolCallEntry.swift": "163d8718dfe66fce21fe365ec53f8180c142dc982a991b2da6b7194c8cd5cd87"
+  },
+  "sourceChecks": [
+    "PASS only existing ClassicChatRestorationTests case25 and its description changed",
+    "PASS exact selected method/argument identities unchanged: 46 methods / 48 required invocations",
+    "PASS canonical event, persistence, projection and renderer production source bytes unchanged",
+    "PASS original skill model/user-summary assertions retained",
+    "PASS source diff whitespace check",
+    "NOT_RUN native compile/runtime test; root owns actual retry"
+  ],
+  "nativeExecution": "NOT_RUN"
+}
