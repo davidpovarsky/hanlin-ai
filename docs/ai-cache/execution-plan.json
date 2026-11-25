@@ -155,7 +155,7 @@
     },
     "reuse_receipt": "evidence/final-reuse-20261125/reuse-receipt.json",
     "current_app_result": {
-      "source": "1ae93941a34cf555f8a7293106efeff80978ebfa",
+      "source": "40a778f5faf9df99e692033a2c762d4664d6d8f8",
       "status": "BUILD_FAILED_TESTS_NOT_RUN",
       "expected_methods": 46,
       "expected_invocations": 48,
@@ -163,11 +163,11 @@
       "build_exit_code": 65,
       "source_unchanged": true,
       "locks_unchanged": true,
-      "receipt": "evidence/app-native-20261125/attempt08/test/receipt.json",
-      "summary": "evidence/app-native-20261125/attempt08/native-acceptance-summary.json",
-      "raw_log_sha256": "93ab30a42855a01db0f2dcaf674d5deccdc2c64969437fb53393bdeec1b86b95",
-      "next_attempt": "09",
-      "repair_commit": "5c51b3f2a5c97ae374a8dfbbb0be73ecba7908fc"
+      "receipt": "evidence/app-native-20261125/attempt09/test/receipt.json",
+      "summary": "evidence/app-native-20261125/attempt09/native-acceptance-summary.json",
+      "raw_log_sha256": "82922b730b7c33c14224bc6ea7d160bac25d6e6e962175528431d2183c233211",
+      "next_attempt": "10",
+      "repair_commit": "5a0351f7e452789fd41c715c1ccb7f020cff44c5"
     },
     "runtime_host_result": {
       "source": "c05d8de55d5a38c0365581c297bc5b70bb34513a",
@@ -351,15 +351,33 @@
       "result_bundle_manifest_sha256": "798725b1c5e427b69f87a84c5cd3a5ca6304e772f8cd106669f9771ad4a52747"
     },
     "notification_delegate_repair": {
-      "source": "5c51b3f2a5c97ae374a8dfbbb0be73ecba7908fc",
+      "source": "5a0351f7e452789fd41c715c1ccb7f020cff44c5",
       "status": "SOURCE_REVIEWED_NATIVE_PENDING",
-      "receipt": "evidence/notification-delegate-fix-20261125/receipt.json"
+      "receipt": "evidence/notification-witness-20261125/receipt.json",
+      "required_gate": "Original build and strict48 invocations, with no optional delegate near-match warning."
     },
     "latest_head_observation": "evidence/final-head-observation-app08-20261125/observation.json",
-    "next_app_source": "40a778f5faf9df99e692033a2c762d4664d6d8f8"
+    "next_app_source": "40a778f5faf9df99e692033a2c762d4664d6d8f8",
+    "app_failure_history": [
+      {
+        "source": "1ae93941a34cf555f8a7293106efeff80978ebfa",
+        "status": "BUILD_FAILED_TESTS_NOT_RUN",
+        "expected_methods": 46,
+        "expected_invocations": 48,
+        "executed": 0,
+        "build_exit_code": 65,
+        "source_unchanged": true,
+        "locks_unchanged": true,
+        "receipt": "evidence/app-native-20261125/attempt08/test/receipt.json",
+        "summary": "evidence/app-native-20261125/attempt08/native-acceptance-summary.json",
+        "raw_log_sha256": "93ab30a42855a01db0f2dcaf674d5deccdc2c64969437fb53393bdeec1b86b95",
+        "next_attempt": "09",
+        "repair_commit": "5c51b3f2a5c97ae374a8dfbbb0be73ecba7908fc"
+      }
+    ]
   },
-  "updated_at": "2026-11-25T05:48:17.923342+00:00",
-  "latest_integrated_source": "40a778f5faf9df99e692033a2c762d4664d6d8f8",
+  "updated_at": "2026-11-25T06:05:51.549614+00:00",
+  "latest_integrated_source": "5a0351f7e452789fd41c715c1ccb7f020cff44c5",
   "synchronized_heads": {
     "composer": "f39142d3d14ae1bbbb81febceeef61fdc605f2a0",
     "miniapps_sdk": "b0cf26a668a698682f5307252f14cf0af8c6d00a",

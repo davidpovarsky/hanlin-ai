@@ -1,0 +1,17 @@
+{
+  "status": "SOURCE_REVIEWED_NATIVE_PENDING",
+  "atUTC": "2026-11-25T05:58:25.762877+00:00",
+  "base": "0311a002819104a2569b5cb7f5461715a2ee2959",
+  "fix": "5a0351f7e452789fd41c715c1ccb7f020cff44c5",
+  "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinNotificationApplicationDelegate.swift",
+  "beforeSHA256": "8690dd60fb98da89ab4f289919fb3faf52306a2d8551703b873cbc03b9bd4efe",
+  "afterSHA256": "917e53aa616fe54cf75370feca5276c02c53eace57cd3b169ccb3414dc893e97",
+  "patchSHA256": "91beb433d1bc40e05bac1771c8de0bcbc2248207ffe203a756213a51701dca63",
+  "actualCompilerFinding": "App09 optional callback parameter is Int. Typed async return also emits nearly-matches-optional-requirement warning, so a conversion-only fix would not implement the actual delegate witness.",
+  "mapping": "Exact private objcxx witness async -> Int; checked continuation<Int,Never>; forward raw options unchanged; missing optional selector returns0. Existing original completion bridge and receive/response/settings behavior retained.",
+  "supersedesBeforeNativeRun": "0311a002 normalization helpers removed before any native acceptance claim. No test invocation used that intermediate source.",
+  "review": "Root and native_bridge header/importer/semantic review; both actual consumers owned by original objcxx generator; no unsafe attributes or compiler setting changes.",
+  "requiredNativeGate": "Original application build and48 strict invocations, plus absence of this delegate near-match warning and compiler errors.",
+  "testsExecuted": 0,
+  "assertionsChanged": false
+}

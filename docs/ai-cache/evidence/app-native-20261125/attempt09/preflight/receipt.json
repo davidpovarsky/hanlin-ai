@@ -1,0 +1,46 @@
+{
+  "status": "PASS",
+  "sourceSHA": "40a778f5faf9df99e692033a2c762d4664d6d8f8",
+  "startedAtUTC": "2026-11-25T05:45:59.683344+00:00",
+  "commands": [
+    {
+      "argv": [
+        "node",
+        "Scripts/Audit/audit-miniapp-sdk.mjs",
+        "--check"
+      ],
+      "startedAtUTC": "2026-11-25T05:45:59.683520+00:00",
+      "log": "01-check.log",
+      "exitCode": 0,
+      "finishedAtUTC": "2026-11-25T05:45:59.967945+00:00",
+      "logSHA256": "f9392dbc1f4415decb9bc390be9f49d5b7e6f3fbd636c72710ef278e45b31783"
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/python3.12",
+        "Scripts/Audit/audit_miniapp_reachability.py",
+        "--check"
+      ],
+      "startedAtUTC": "2026-11-25T05:45:59.968598+00:00",
+      "log": "02-check.log",
+      "exitCode": 0,
+      "finishedAtUTC": "2026-11-25T05:46:00.835995+00:00",
+      "logSHA256": "bc234237931951c0e0e70dc212b9f47da2f6c76a61109e41c235f0f7f0eabcef"
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/python3.12",
+        "Scripts/Runtime/runtime_host_archive.py",
+        "validate",
+        "AI_HLY/RuntimeHostResources.zip"
+      ],
+      "startedAtUTC": "2026-11-25T05:46:00.836439+00:00",
+      "log": "03-check.log",
+      "exitCode": 0,
+      "finishedAtUTC": "2026-11-25T05:46:01.780041+00:00",
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "freeBytesBefore": 6319636480,
+  "finishedAtUTC": "2026-11-25T05:46:01.780648+00:00"
+}
