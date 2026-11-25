@@ -15,8 +15,11 @@ Lightweight validation performed on Oracle:
 - ast.parse on four modified preparation/export/acceptance Python scripts: pass.
 - All three prepared NativeScript archives exactly match their source trees.
 
-Actual Swift/UIKit parsing and Objective-C++ syntax from the preceding lane
-were reported before the lifecycle correction. Fresh Apple verification and
-the full 23-case real producer acceptance remain to execute after current
-PR19 integration. The original 45325776062 artifact evidence remains historical,
+Fresh Apple syntax verification on commit8557d605c passed at2026-11-25T05:17:12Z:
+nine Swift files parsed, and the actual Objective-C++ lifecycle implementation
+passed clang syntax against iOSSimulator27.0, using Xcode27.0(27A266a).
+The complete source hashes and commands are retained in
+`apple-syntax-8557d605c.json`. This is syntax-only evidence. The full23-case
+real producer acceptance was subsequently dispatched on integrated571a1ab7;
+its separate original app result is still pending. The original 45325776062 artifact evidence remains historical,
 not a pass for this changed source.

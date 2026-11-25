@@ -286,6 +286,31 @@ def main():
             destination = app_product/source.name
             if not destination.is_file() or hashlib.sha256(destination.read_bytes()).digest() != hashlib.sha256(source.read_bytes()).digest():
                 raise RuntimeError('Built app is missing or changed an existing Runtime resource: '+resource)
+        if TEST_SCOPE in {'cross_app', 'production_runtimes'}:
+            # Publish only the already verified original build, never a native UI
+            # pass. Consumers may start their own acceptance while this gate runs.
+            # The separate evidence directory is immutable once its manifest hashes
+            # the frozen receipt; later updates to acceptance.json cannot alter it.
+            state['status'] = 'NATIVE_ACCEPTANCE_RUNNING'
+            checkpoint = EVIDENCE/'build-checkpoint.json'
+            with checkpoint.open('x', encoding='utf-8') as output:
+                output.write(json.dumps(state, indent=2)+'\n')
+            consumer_evidence = EVIDENCE/'consumer-build'
+            try:
+                consumer_evidence.mkdir()
+                shutil.copy2(checkpoint, consumer_evidence/'acceptance.json')
+                for filename in ('commands.jsonl', 'build.log', 'source-identity.json',
+                                 'source-preparation.diff', 'simulator-embedded-entitlements.json'):
+                    shutil.copy2(EVIDENCE/filename, consumer_evidence/filename)
+                export_environment = dict(os.environ, SPLIT_EVIDENCE=str(consumer_evidence))
+                command([sys.executable, 'Scripts/ProductSplit/export_cross_app_simulator.py'],
+                        'consumer-build-export.log', timeout=300, env=export_environment)
+                state['consumer_build_export'] = 'EXECUTED_PASS_BUILD_ONLY_NATIVE_ACCEPTANCE_RUNNING'
+            except Exception as export_error:
+                # A delivery failure must not cancel the independent native cases.
+                # The final exporter still has to pass before this gate can close.
+                state['consumer_build_export'] = 'FAILED'
+                state['consumer_build_export_error'] = str(export_error)
         state['status'] = 'INFRA_ERROR'
         devices = json.loads(command(['xcrun','simctl','list','devices','-j'], 'device-state.json'))['devices']
         device_state = next(d for group in devices.values() for d in group if d['udid'] == simulator)['state']

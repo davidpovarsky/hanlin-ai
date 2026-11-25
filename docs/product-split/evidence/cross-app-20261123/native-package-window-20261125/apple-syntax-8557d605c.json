@@ -1,0 +1,137 @@
+{
+  "commit": "8557d605ce7c5e5cad330c6cbe047cfc05387c7c",
+  "checked_at": "2026-11-25T05:17:12.389675+00:00",
+  "xcode": "Xcode 27.0\nBuild version 27A266a\n",
+  "sdk": "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk",
+  "kind": "APPLE_SYNTAX_ONLY_NOT_APPLICATION_ACCEPTANCE",
+  "results": [
+    {
+      "file": "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
+      "file_sha256": "5408beeeb5b8ac60827fd5427a8e884cee792ffc92988a5af306cb58e01fa501",
+      "command": [
+        "xcrun",
+        "swiftc",
+        "-parse",
+        "/Users/m1/builds/hanlin-miniapps-8557d605c-syntax-20261125/AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift"
+      ],
+      "exit": 0,
+      "diagnostic": ""
+    },
+    {
+      "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+      "file_sha256": "f4bb678f482c0a0fc4b52c4b15fc949e760422a6d7a8fb2dc1dede5eca4cbae8",
+      "command": [
+        "xcrun",
+        "swiftc",
+        "-parse",
+        "/Users/m1/builds/hanlin-miniapps-8557d605c-syntax-20261125/AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift"
+      ],
+      "exit": 0,
+      "diagnostic": ""
+    },
+    {
+      "file": "HanlinMiniAppsTests/NativeScriptWindowOwnershipTests.swift",
+      "file_sha256": "fdb3f0d3a54e8c25e437ce97faeb728d1f6b904ad9f73516dd5118a15eac1396",
+      "command": [
+        "xcrun",
+        "swiftc",
+        "-parse",
+        "/Users/m1/builds/hanlin-miniapps-8557d605c-syntax-20261125/HanlinMiniAppsTests/NativeScriptWindowOwnershipTests.swift"
+      ],
+      "exit": 0,
+      "diagnostic": ""
+    },
+    {
+      "file": "HanlinMiniAppsUITests/MiniAppsNativeScriptPackageWindowUITests.swift",
+      "file_sha256": "b67ef09103d96d694c46d52be6c6325a331250d5fd07ebdf03d9cdd5f91a746d",
+      "command": [
+        "xcrun",
+        "swiftc",
+        "-parse",
+        "/Users/m1/builds/hanlin-miniapps-8557d605c-syntax-20261125/HanlinMiniAppsUITests/MiniAppsNativeScriptPackageWindowUITests.swift"
+      ],
+      "exit": 0,
+      "diagnostic": ""
+    },
+    {
+      "file": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptSession.swift",
+      "file_sha256": "669bf8cd0d83fd17e8c9b6a07fdb4723d8c506ba1f6c5c8466d7796c24681c76",
+      "command": [
+        "xcrun",
+        "swiftc",
+        "-parse",
+        "/Users/m1/builds/hanlin-miniapps-8557d605c-syntax-20261125/Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptSession.swift"
+      ],
+      "exit": 0,
+      "diagnostic": ""
+    },
+    {
+      "file": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptWindowPackage.swift",
+      "file_sha256": "c3dcbebc91c63f666134670a3900deee0a9d41381808abd6770496e673bb34e5",
+      "command": [
+        "xcrun",
+        "swiftc",
+        "-parse",
+        "/Users/m1/builds/hanlin-miniapps-8557d605c-syntax-20261125/Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptWindowPackage.swift"
+      ],
+      "exit": 0,
+      "diagnostic": ""
+    },
+    {
+      "file": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptWindowSession.swift",
+      "file_sha256": "81b8b115425110d47302d646e816d5c64d3074ff6ff88a83ac69cb49c6d6584b",
+      "command": [
+        "xcrun",
+        "swiftc",
+        "-parse",
+        "/Users/m1/builds/hanlin-miniapps-8557d605c-syntax-20261125/Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptWindowSession.swift"
+      ],
+      "exit": 0,
+      "diagnostic": ""
+    },
+    {
+      "file": "Scripts/ProductSplit/NativeScriptPackageWindowBridgeFixture.swift",
+      "file_sha256": "9546b90e84b6cd21b5822bb238eb8e63b7ac14e1cefc150306485a4d64ab752c",
+      "command": [
+        "xcrun",
+        "swiftc",
+        "-parse",
+        "/Users/m1/builds/hanlin-miniapps-8557d605c-syntax-20261125/Scripts/ProductSplit/NativeScriptPackageWindowBridgeFixture.swift"
+      ],
+      "exit": 0,
+      "diagnostic": ""
+    },
+    {
+      "file": "Scripts/ProductSplit/NativeScriptWindowBridgeFixture.swift",
+      "file_sha256": "4dbb360ad3f832631b910e10f198490590a61e1ed6af2f9b78c0b56967911a09",
+      "command": [
+        "xcrun",
+        "swiftc",
+        "-parse",
+        "/Users/m1/builds/hanlin-miniapps-8557d605c-syntax-20261125/Scripts/ProductSplit/NativeScriptWindowBridgeFixture.swift"
+      ],
+      "exit": 0,
+      "diagnostic": ""
+    },
+    {
+      "file": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeScriptWindowFactory.mm",
+      "file_sha256": "286ed63b4e4fcefc1512cfd1c8e504e720e225649fa4118fb47babc544cb33d2",
+      "command": [
+        "xcrun",
+        "clang++",
+        "-fsyntax-only",
+        "-fobjc-arc",
+        "-std=c++17",
+        "-target",
+        "arm64-apple-ios27.0-simulator",
+        "-isysroot",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk",
+        "-I",
+        "/Users/m1/builds/hanlin-miniapps-8557d605c-syntax-20261125/Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include",
+        "/Users/m1/builds/hanlin-miniapps-8557d605c-syntax-20261125/Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeScriptWindowFactory.mm"
+      ],
+      "exit": 0,
+      "diagnostic": ""
+    }
+  ]
+}
