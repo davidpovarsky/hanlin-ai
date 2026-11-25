@@ -1,0 +1,16 @@
+{
+  "testedSource": "dc53a6c8ff1bb68bfbc52a64667e14ce688055b0",
+  "publishedCorrectionSource": "4cde88df07a2f3cd86cc99ad87786c79ae207390",
+  "publishedCorrectionTree": "2d825c811d1bdd543d1473f718ce08381209e605",
+  "receiverPath": "AI_HLY/Downstream/SDK/MiniAppRepairCoordinator.swift",
+  "receiverBeforeSHA256": "87aa64b4a110b7dd0c549400ea246f693d2c7e341c8cfbed33395cc0a769b1ce",
+  "receiverAfterSHA256": "8b705812d607cded83ba5c3b96768307af88e388aaea16fcc9ff8fb9678c6c64",
+  "originalUITestSHA256": "60a786ea3864a118710f8814a41f52cc454d35c71e4fb911b611a70ba5c2f565",
+  "SDKProducer": "a2c8a1b1be746461272ba77254603304567c309d",
+  "correctedNativeAcceptance": "NOT_RUN_AT_CAPTURE",
+  "reviewers": [
+    "/root",
+    "/root/status_reporting"
+  ],
+  "publicationReadbackAt": "2026-11-25T15:54:35.450180+00:00"
+}

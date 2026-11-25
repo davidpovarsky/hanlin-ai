@@ -1,0 +1,59 @@
+{
+  "capturedAt": "2026-11-25T15:49:00.268020+00:00",
+  "members": [
+    {
+      "path": "0_Test_HanlinPaired-local_Diagnostics/AI_HLYUITests-BE679FBC-A2EA-4F61-95D1-EB4D3BF3A890-Configuration-Test Scheme Action-Iteration-1/AI_HLYUITests-C1032E1D-C829-42C3-B939-87C2BD5AE581/Session-AI_HLYUITests-2026-11-25_163717-TQgaqj.log",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v9-diagnostics-export/0_Test_HanlinPaired-local_Diagnostics/AI_HLYUITests-BE679FBC-A2EA-4F61-95D1-EB4D3BF3A890-Configuration-Test Scheme Action-Iteration-1/AI_HLYUITests-C1032E1D-C829-42C3-B939-87C2BD5AE581/Session-AI_HLYUITests-2026-11-25_163717-TQgaqj.log",
+      "bytes": 1601216,
+      "sha256": "57ad9a19fbef68cee159ad770c23fd91672708ebab03ef5ac98c6ec47358d52d",
+      "storedPath": "Session-AI_HLYUITests-2026-11-25_163717-TQgaqj.log.gz",
+      "storedBytes": 107273,
+      "storedSHA256": "4cfed49f5086a060acb54179a8127d039a7dddb634537c88d5e15fdadca126a9"
+    },
+    {
+      "path": "0_Test_HanlinPaired-local_Diagnostics/AI_HLYUITests-BE679FBC-A2EA-4F61-95D1-EB4D3BF3A890-Configuration-Test Scheme Action-Iteration-1/AI_HLYUITests-C1032E1D-C829-42C3-B939-87C2BD5AE581/StandardOutputAndStandardError-com.itorah.chavrusachat.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v9-diagnostics-export/0_Test_HanlinPaired-local_Diagnostics/AI_HLYUITests-BE679FBC-A2EA-4F61-95D1-EB4D3BF3A890-Configuration-Test Scheme Action-Iteration-1/AI_HLYUITests-C1032E1D-C829-42C3-B939-87C2BD5AE581/StandardOutputAndStandardError-com.itorah.chavrusachat.txt",
+      "bytes": 6169272,
+      "sha256": "bd7ecb3405998d934de6f4e330e144e04c3c77534394066d712091384e315ecd",
+      "storedPath": "StandardOutputAndStandardError-com.itorah.chavrusachat.txt.gz",
+      "storedBytes": 377752,
+      "storedSHA256": "a376243d3c4942423c6a9864c81501c110f4b6dcf6c47c53b737f09bb81719a6"
+    },
+    {
+      "path": "0_Test_HanlinPaired-local_Diagnostics/AI_HLYUITests-BE679FBC-A2EA-4F61-95D1-EB4D3BF3A890-Configuration-Test Scheme Action-Iteration-1/AI_HLYUITests-C1032E1D-C829-42C3-B939-87C2BD5AE581/StandardOutputAndStandardError-com.itorah.hanlinminiapps.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v9-diagnostics-export/0_Test_HanlinPaired-local_Diagnostics/AI_HLYUITests-BE679FBC-A2EA-4F61-95D1-EB4D3BF3A890-Configuration-Test Scheme Action-Iteration-1/AI_HLYUITests-C1032E1D-C829-42C3-B939-87C2BD5AE581/StandardOutputAndStandardError-com.itorah.hanlinminiapps.txt",
+      "bytes": 32859249,
+      "sha256": "27e73356908c2324b7704200c981659af824508234b40e54f18604a055fce571",
+      "storedPath": "StandardOutputAndStandardError-com.itorah.hanlinminiapps.txt.gz",
+      "storedBytes": 1694484,
+      "storedSHA256": "a1cb878b94845c96a94eee581dbebe83930665888c56490b9cf5cf036bd99753"
+    },
+    {
+      "path": "0_Test_HanlinPaired-local_Diagnostics/AI_HLYUITests-BE679FBC-A2EA-4F61-95D1-EB4D3BF3A890-Configuration-Test Scheme Action-Iteration-1/AI_HLYUITests-C1032E1D-C829-42C3-B939-87C2BD5AE581/StandardOutputAndStandardError.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v9-diagnostics-export/0_Test_HanlinPaired-local_Diagnostics/AI_HLYUITests-BE679FBC-A2EA-4F61-95D1-EB4D3BF3A890-Configuration-Test Scheme Action-Iteration-1/AI_HLYUITests-C1032E1D-C829-42C3-B939-87C2BD5AE581/StandardOutputAndStandardError.txt",
+      "bytes": 26518,
+      "sha256": "f65682fb45c7c1d92839478c2f87e3da5000a3b06e1044cbec2f3670a7b94751",
+      "storedPath": "StandardOutputAndStandardError.txt.gz",
+      "storedBytes": 2902,
+      "storedSHA256": "c602fb9740a756d413a20b1af7909a56c1b5e2cf267c2a63c0bfd789c1bcab16"
+    },
+    {
+      "path": "0_Test_HanlinPaired-local_Diagnostics/AI_HLYUITests-BE679FBC-A2EA-4F61-95D1-EB4D3BF3A890-Configuration-Test Scheme Action-Iteration-1/scheduling.log",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v9-diagnostics-export/0_Test_HanlinPaired-local_Diagnostics/AI_HLYUITests-BE679FBC-A2EA-4F61-95D1-EB4D3BF3A890-Configuration-Test Scheme Action-Iteration-1/scheduling.log",
+      "bytes": 665,
+      "sha256": "2674ce3fcb33fa21a58fb382107be5801e2798ca0277cc1567904ba5cfb85047",
+      "storedPath": "scheduling.log.gz",
+      "storedBytes": 297,
+      "storedSHA256": "a41d824eb2c901fd32311b7de5e2acb801f9db13e61a58706dc8d27865d258a8"
+    },
+    {
+      "path": "0_Test_HanlinPaired-local_Diagnostics/HanlinPaired-local_E742FBCD-8FF0-4130-B143-7F8328637138/testmanagerd.log",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v9-diagnostics-export/0_Test_HanlinPaired-local_Diagnostics/HanlinPaired-local_E742FBCD-8FF0-4130-B143-7F8328637138/testmanagerd.log",
+      "bytes": 2352,
+      "sha256": "88272d84a250dad2990e5973a8f7dcb51d200de6edf14c1a0a16e62d1ab864bf",
+      "storedPath": "testmanagerd.log.gz",
+      "storedBytes": 840,
+      "storedSHA256": "f457353f3f136abb976fcd14bbf8784ad48a122f3b3579c07502814af50e32d0"
+    }
+  ]
+}

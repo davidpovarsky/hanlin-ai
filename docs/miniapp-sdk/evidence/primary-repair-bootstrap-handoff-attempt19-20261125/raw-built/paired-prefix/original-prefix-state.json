@@ -1,0 +1,529 @@
+{
+  "status": "INFRA_ERROR",
+  "ui": "NOT_RUN",
+  "build": "PASS_WITH_AUTHENTICATED_MINI_REUSE",
+  "mini_build": "REUSED_EXECUTED_PASS",
+  "ai_build": "EXECUTED_PASS",
+  "physical_device": "NOT_RUN",
+  "provisioned_distribution": "NOT_RUN",
+  "scope": "Original SDK/tools, source diagnostics, native repair sheet, durable AI handoff, actual build/install and NativeScript/Expo runtime controls in both shipping products",
+  "model_boundary": "Only the HTTP model response sequence and the native adapter image fixture resources are deterministic. All source edits, TypeScript diagnostics, Metro/ESM production, imports, receipts, native rendering and UI events are original production code.",
+  "started_at": 1795605827.342539,
+  "test_scope": "miniapp_complete",
+  "selected_tests": [
+    "AI_HLYTests/PendingFirstTurnTests/importedMiniAppRepairDispatchesOnceAndPreservesDraftAndSettings()",
+    "AI_HLYTests/PendingFirstTurnTests/cancelledMiniAppRepairPreservesHomeDraft()",
+    "AI_HLYTests/HanlinScriptingPlatformCompositionTests/malformedImportedArchiveRetainsOriginalAndStructuredDiagnostic()",
+    "AI_HLYTests/MiniAppAuthoringToolTests/originalSDKWriteValidateBuildAndRepair()",
+    "AI_HLYTests/MiniAppAuthoringToolTests/sourceWritePreservesUnrelatedFilesAndTargetsRetainedSource()",
+    "AI_HLYTests/MiniAppAuthoringToolTests/originalExpoMetroBuildOnEmbeddedNode()",
+    "AI_HLYTests/HanlinOriginalScriptWidgetAPITests",
+    "AI_HLYTests/HanlinNativePresentationTests",
+    "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests",
+    "AI_HLYTests/HanlinOriginalScriptWidgetControlTests",
+    "AI_HLYTests/HanlinMiniAppStorageCapacityTests",
+    "AI_HLYTests/HanlinOriginalExpoWidgetTests",
+    "AI_HLYUITests/MiniAppAuthoringUITests",
+    "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testInstalledExpoActionsReturnActualReplyAndFailure",
+    "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testPreparedExpoWidgetPublicationReachesExistingConsumer"
+  ],
+  "sha": "62dfff9aebd0a272486c7770d4f77ba603d535ab",
+  "simulator": "E742FBCD-8FF0-4130-B143-7F8328637138",
+  "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-27-0",
+  "device": "iPad Pro 13-inch (M5) (16GB)",
+  "app_intents_metadata": {
+    "com.itorah.hanlinminiapps": {
+      "source_app": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app",
+      "status": "CAPTURED",
+      "directories": [
+        {
+          "path": "Extensions/HanlinMiniAppsTranslationProvider.appex/Metadata.appintents",
+          "evidence_path": "app-intents-metadata/HanlinMiniApps.app/Extensions/HanlinMiniAppsTranslationProvider.appex/Metadata.appintents",
+          "files": [
+            {
+              "path": "Extensions/HanlinMiniAppsTranslationProvider.appex/Metadata.appintents/extract.actionsdata",
+              "bytes": 23657,
+              "sha256": "09a5f730662d5a78f689b8665d72e1d455931c4ce80cafb9680b2f3ed8f05c9d"
+            },
+            {
+              "path": "Extensions/HanlinMiniAppsTranslationProvider.appex/Metadata.appintents/extract.packagedata",
+              "bytes": 82,
+              "sha256": "f56a41ca37c3d6ca101ceccc79c5ab8de590e77f34b141686da5182521de2def"
+            },
+            {
+              "path": "Extensions/HanlinMiniAppsTranslationProvider.appex/Metadata.appintents/version.json",
+              "bytes": 53,
+              "sha256": "dd4247d69cd8c750931505420148b52da7955333be2932b866fef83e3c713ac4"
+            }
+          ]
+        },
+        {
+          "path": "Metadata.appintents",
+          "evidence_path": "app-intents-metadata/HanlinMiniApps.app/Metadata.appintents",
+          "files": [
+            {
+              "path": "Metadata.appintents/extract.actionsdata",
+              "bytes": 53865,
+              "sha256": "8b2648e8233c01cae263f8ee5eb87c2b5b4b772180fa47f41050bcb51a704b0d"
+            },
+            {
+              "path": "Metadata.appintents/extract.packagedata",
+              "bytes": 182,
+              "sha256": "d107516fb19fed8468a85436908bb01736ecc033a8150be4ebd5ccc439f65226"
+            },
+            {
+              "path": "Metadata.appintents/version.json",
+              "bytes": 53,
+              "sha256": "dd4247d69cd8c750931505420148b52da7955333be2932b866fef83e3c713ac4"
+            }
+          ]
+        },
+        {
+          "path": "PlugIns/HanlinMiniAppsNotificationService.appex/Metadata.appintents",
+          "evidence_path": "app-intents-metadata/HanlinMiniApps.app/PlugIns/HanlinMiniAppsNotificationService.appex/Metadata.appintents",
+          "files": [
+            {
+              "path": "PlugIns/HanlinMiniAppsNotificationService.appex/Metadata.appintents/extract.actionsdata",
+              "bytes": 13884,
+              "sha256": "ee8f09c62ae5bbd68f6b4750448df3fd85354af2150cebbdd9f803d85db81c91"
+            },
+            {
+              "path": "PlugIns/HanlinMiniAppsNotificationService.appex/Metadata.appintents/version.json",
+              "bytes": 53,
+              "sha256": "dd4247d69cd8c750931505420148b52da7955333be2932b866fef83e3c713ac4"
+            }
+          ]
+        },
+        {
+          "path": "PlugIns/HanlinMiniAppsTests.xctest/Metadata.appintents",
+          "evidence_path": "app-intents-metadata/HanlinMiniApps.app/PlugIns/HanlinMiniAppsTests.xctest/Metadata.appintents",
+          "files": [
+            {
+              "path": "PlugIns/HanlinMiniAppsTests.xctest/Metadata.appintents/extract.actionsdata",
+              "bytes": 53865,
+              "sha256": "6bc9d31ff4c1b41ad2ff75d767d9e5bdc851c51214e28194be501b9260055fed"
+            },
+            {
+              "path": "PlugIns/HanlinMiniAppsTests.xctest/Metadata.appintents/version.json",
+              "bytes": 53,
+              "sha256": "dd4247d69cd8c750931505420148b52da7955333be2932b866fef83e3c713ac4"
+            }
+          ]
+        },
+        {
+          "path": "PlugIns/HanlinMiniAppsWidgets.appex/Metadata.appintents",
+          "evidence_path": "app-intents-metadata/HanlinMiniApps.app/PlugIns/HanlinMiniAppsWidgets.appex/Metadata.appintents",
+          "files": [
+            {
+              "path": "PlugIns/HanlinMiniAppsWidgets.appex/Metadata.appintents/extract.actionsdata",
+              "bytes": 44090,
+              "sha256": "c74c78f311bcd2c73d355f0f0e9ac4c657ffa1a624339aa1162687553f5600c9"
+            },
+            {
+              "path": "PlugIns/HanlinMiniAppsWidgets.appex/Metadata.appintents/extract.packagedata",
+              "bytes": 121,
+              "sha256": "851ac970b3ae3c06a3b8eb67710fde306f5e867ab3f7c0fe90ef71736d4f0add"
+            },
+            {
+              "path": "PlugIns/HanlinMiniAppsWidgets.appex/Metadata.appintents/version.json",
+              "bytes": 53,
+              "sha256": "dd4247d69cd8c750931505420148b52da7955333be2932b866fef83e3c713ac4"
+            }
+          ]
+        }
+      ],
+      "intent_execution": "NOT_RUN",
+      "receipt": "app-intents-metadata/HanlinMiniApps.app.json"
+    },
+    "com.itorah.chavrusachat": {
+      "source_app": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app",
+      "status": "CAPTURED",
+      "directories": [
+        {
+          "path": "Extensions/ChavrusaChatTranslationProvider.appex/Metadata.appintents",
+          "evidence_path": "app-intents-metadata/AI_Hanlin.app/Extensions/ChavrusaChatTranslationProvider.appex/Metadata.appintents",
+          "files": [
+            {
+              "path": "Extensions/ChavrusaChatTranslationProvider.appex/Metadata.appintents/extract.actionsdata",
+              "bytes": 23657,
+              "sha256": "ab984bc507bd1585c34d4f63f2ffaa3ffdea7d17cadde253bfdd266bffea0cfa"
+            },
+            {
+              "path": "Extensions/ChavrusaChatTranslationProvider.appex/Metadata.appintents/extract.packagedata",
+              "bytes": 82,
+              "sha256": "3caaeef1eadde6faf21bc3ef37b2b2080b4c67f13112d9120b71c62b6fedd2a7"
+            },
+            {
+              "path": "Extensions/ChavrusaChatTranslationProvider.appex/Metadata.appintents/version.json",
+              "bytes": 53,
+              "sha256": "dd4247d69cd8c750931505420148b52da7955333be2932b866fef83e3c713ac4"
+            }
+          ]
+        },
+        {
+          "path": "Metadata.appintents",
+          "evidence_path": "app-intents-metadata/AI_Hanlin.app/Metadata.appintents",
+          "files": [
+            {
+              "path": "Metadata.appintents/extract.actionsdata",
+              "bytes": 59304,
+              "sha256": "2c64e0931008677b118f1aad11a53b1a80a9ffd2690de661d49331d13f8c796c"
+            },
+            {
+              "path": "Metadata.appintents/extract.packagedata",
+              "bytes": 173,
+              "sha256": "bbb702d646345d416c2224a2c6e89e4a2a24eb28a360b7cda0d36180efb1faf0"
+            },
+            {
+              "path": "Metadata.appintents/version.json",
+              "bytes": 53,
+              "sha256": "dd4247d69cd8c750931505420148b52da7955333be2932b866fef83e3c713ac4"
+            }
+          ]
+        },
+        {
+          "path": "PlugIns/AI_HLYTests.xctest/Metadata.appintents",
+          "evidence_path": "app-intents-metadata/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/Metadata.appintents",
+          "files": [
+            {
+              "path": "PlugIns/AI_HLYTests.xctest/Metadata.appintents/extract.actionsdata",
+              "bytes": 59304,
+              "sha256": "636f585a2a7a249401ec00140ca87a9928dc52c824eda69c2ba3c6e5a52c113c"
+            },
+            {
+              "path": "PlugIns/AI_HLYTests.xctest/Metadata.appintents/version.json",
+              "bytes": 53,
+              "sha256": "dd4247d69cd8c750931505420148b52da7955333be2932b866fef83e3c713ac4"
+            }
+          ]
+        },
+        {
+          "path": "PlugIns/ChavrusaChatNotificationService.appex/Metadata.appintents",
+          "evidence_path": "app-intents-metadata/AI_Hanlin.app/PlugIns/ChavrusaChatNotificationService.appex/Metadata.appintents",
+          "files": [
+            {
+              "path": "PlugIns/ChavrusaChatNotificationService.appex/Metadata.appintents/extract.actionsdata",
+              "bytes": 13884,
+              "sha256": "367314ccfeedec17c2c302c23965fff87f41038d1a7db39e96289d9c86ed0697"
+            },
+            {
+              "path": "PlugIns/ChavrusaChatNotificationService.appex/Metadata.appintents/version.json",
+              "bytes": 53,
+              "sha256": "dd4247d69cd8c750931505420148b52da7955333be2932b866fef83e3c713ac4"
+            }
+          ]
+        },
+        {
+          "path": "PlugIns/HanlinScriptingWidgets.appex/Metadata.appintents",
+          "evidence_path": "app-intents-metadata/AI_Hanlin.app/PlugIns/HanlinScriptingWidgets.appex/Metadata.appintents",
+          "files": [
+            {
+              "path": "PlugIns/HanlinScriptingWidgets.appex/Metadata.appintents/extract.actionsdata",
+              "bytes": 44090,
+              "sha256": "a528b707ec4aa7e381a4c9870f9cee5f0915e5b02ede520f7971ceccbed1f92f"
+            },
+            {
+              "path": "PlugIns/HanlinScriptingWidgets.appex/Metadata.appintents/extract.packagedata",
+              "bytes": 121,
+              "sha256": "f093c1b7cb57ce68e8cb28828b3d69a14e0b43ea2cf7cdae9dc2ffb3353b4c51"
+            },
+            {
+              "path": "PlugIns/HanlinScriptingWidgets.appex/Metadata.appintents/version.json",
+              "bytes": 53,
+              "sha256": "dd4247d69cd8c750931505420148b52da7955333be2932b866fef83e3c713ac4"
+            }
+          ]
+        }
+      ],
+      "intent_execution": "NOT_RUN",
+      "receipt": "app-intents-metadata/AI_Hanlin.app.json"
+    }
+  },
+  "product_identity": {
+    "com.itorah.chavrusachat": {
+      "display_name": "Hanlin AI",
+      "info_plist_sha256": "2f8fe3fe0643a2fb10cbb032155ff0956612eb1f745899ad7b0c0202015c61ed",
+      "app_icon": {
+        "name": "AppIcon",
+        "compiled_catalog_sha256": "e4bf56c9f87c44c585a5100afd013f62e023339662667f576a3c7aa4fdbe7905"
+      },
+      "ios_system_resources": {
+        "appPath": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app",
+        "approvedCommandCount": 23,
+        "approvedCommands": [
+          "awk",
+          "cat",
+          "cp",
+          "curl",
+          "grep",
+          "head",
+          "ln",
+          "ls",
+          "mkdir",
+          "mv",
+          "readlink",
+          "rm",
+          "rmdir",
+          "sed",
+          "sort",
+          "stat",
+          "tail",
+          "tar",
+          "touch",
+          "tr",
+          "uniq",
+          "unlink",
+          "wc"
+        ],
+        "commandDictionarySHA256": "bc70ee9fce71b624c9f80c55be93d8a7c7d67bd06d48902ebe9fef32a906173b",
+        "extraDictionarySHA256": "97704a8960b4facceef54397a08fb5d0a456247c3627359215aa2a27df22656c",
+        "unexpectedCommands": []
+      }
+    },
+    "com.itorah.hanlinminiapps": {
+      "display_name": "Hanlin MiniApps",
+      "info_plist_sha256": "b62620a3005aa50f80052859b4d47183f9e4dec8cee463949a7e62fedae813c0",
+      "app_icon": {
+        "name": "AppIcon",
+        "compiled_catalog_sha256": "db0ecc89aa8c7a921f2912fb998e832f989edf2835039a69ae826239c8d62ba9"
+      },
+      "ios_system_resources": {
+        "appPath": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app",
+        "approvedCommandCount": 23,
+        "approvedCommands": [
+          "awk",
+          "cat",
+          "cp",
+          "curl",
+          "grep",
+          "head",
+          "ln",
+          "ls",
+          "mkdir",
+          "mv",
+          "readlink",
+          "rm",
+          "rmdir",
+          "sed",
+          "sort",
+          "stat",
+          "tail",
+          "tar",
+          "touch",
+          "tr",
+          "uniq",
+          "unlink",
+          "wc"
+        ],
+        "commandDictionarySHA256": "bc70ee9fce71b624c9f80c55be93d8a7c7d67bd06d48902ebe9fef32a906173b",
+        "extraDictionarySHA256": "97704a8960b4facceef54397a08fb5d0a456247c3627359215aa2a27df22656c",
+        "unexpectedCommands": []
+      }
+    }
+  },
+  "app_group": {
+    "status": "EXECUTED_PASS",
+    "containers": {
+      "com.itorah.chavrusachat": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Shared/AppGroup/EAE213D3-0A61-4500-9D46-E8F08D94D8F2",
+      "com.itorah.hanlinminiapps": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Shared/AppGroup/EAE213D3-0A61-4500-9D46-E8F08D94D8F2"
+    }
+  },
+  "runtime_inputs": [
+    {
+      "source": "DemoMiniApps/hanlin-script-parity.hanlinNativeScript",
+      "sha256": "2e48509336edba2b301490422102dbf25cb7f1b894430d52994febdc1c33c199"
+    },
+    {
+      "source": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo",
+      "sha256": "6475c3f5d37620ad5882040c2906924df4cf2dd9f627e17a47d360a58ced5b4b"
+    },
+    {
+      "source": "AI_HLYUITests/Fixtures/ExpoNativeAPIProbeA.hanlinExpo",
+      "sha256": "c050720db91ffb2c32a9723d8b42a960f126cfed3192e14ccd67a1a8472d93c6"
+    },
+    {
+      "source": "AI_HLYUITests/Fixtures/ExpoWidgetsProbeA.hanlinExpo",
+      "sha256": "26f1309c3851a6c5af30b24ce62d94b9dd28501b0075673ffdfadb53bd800eee"
+    },
+    {
+      "source": "AI_HLYUITests/Fixtures/ExpoWidgetsProbeB.hanlinExpo",
+      "sha256": "af76fc6c37297bddc7e70bc2499694edb92d5d6ee18a51a584dca9feca8e0385"
+    },
+    {
+      "source": "build/primary-control/focused19-v2/native-result/paired-prefix/ModularTextSearch.hanlinExpo",
+      "sha256": "40ade14cf7ebcaa96d0f7bf71757d92a243236f682227c9683ebf06bc8255f6f"
+    },
+    {
+      "source": "build/primary-control/focused19-v2/native-result/paired-prefix/SDKOnlyDepartureBudget.hanlinExpo",
+      "sha256": "dda4e3b1536426156d2695209736186f4d804895f0a04fb3741bbe24c5a4df1f"
+    },
+    {
+      "source": "build/primary-control/focused19-v2/native-result/paired-prefix/SDKOnlyTableShare.hanlinNativeScript",
+      "sha256": "4d817ba5dd1c84fce5c0ae4b3d281929520dfaebbbe1dd41465d1ebe6305c4b3"
+    }
+  ],
+  "external_modal_fixture": {
+    "status": "REAL_IMPORT_AND_INCOMING_REQUEST_STAGED",
+    "simulator_udid": "E742FBCD-8FF0-4130-B143-7F8328637138",
+    "bundle_id": "com.itorah.hanlinminiapps",
+    "source_sha": "62dfff9aebd0a272486c7770d4f77ba603d535ab",
+    "fixture_sources": {
+      "Scripts/ProductSplit/Fixtures/ExternalModal/script.json": "c70a875eec94bc9173993def1cf9d17e98dab5d5ea07f5f317b3f7f57b897433",
+      "Scripts/ProductSplit/Fixtures/ExternalModal/index.tsx": "d03ae8f4c78fb3f7e75a359215dfd0147b0da1b143e2f6ca167266334d97c2fb"
+    },
+    "archive_sha256": "5e9b0eadbcb91e8a01c2c993be6f50356bf94c345940ec86bae25ce3c2127ba1",
+    "archive": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/4AB09E58-6099-47DC-B2F2-2D0AF4B6B8D8/Documents/MiniAppsExternalModal.zip",
+    "shared_group": "group.com.itorah.shared",
+    "shared_group_container": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Shared/AppGroup/0AE57B5E-8263-4826-A629-EA76C9076428",
+    "seeder": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v2/native-result/paired-prefix/external-modal-fixture/external-modal-bridge-fixture",
+    "request": {
+      "app_group_container": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Shared/AppGroup/0AE57B5E-8263-4826-A629-EA76C9076428",
+      "launch_url": "hanlinminiapps://x-callback-url/run?request=4f2ecda0-9c21-46a2-b2e1-8cd4f017c623&x-source=Modal%20fixture%20source",
+      "request_id": "4f2ecda0-9c21-46a2-b2e1-8cd4f017c623",
+      "result_synthesized": false,
+      "status": "INCOMING_REQUEST_STAGED"
+    },
+    "verify_command": [
+      "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v2/native-result/paired-prefix/external-modal-fixture/external-modal-bridge-fixture",
+      "verify",
+      "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Shared/AppGroup/0AE57B5E-8263-4826-A629-EA76C9076428"
+    ],
+    "runtime_result_synthesized": false
+  },
+  "native_adapter_assets": {
+    "origin": "http://localhost:49173",
+    "source": "Fixtures/ExpoSwiftUIProbe/native-adapter-assets/pixel.png",
+    "bytes": 82,
+    "sha256": "7713482a5fab3ae135193484df75f4d0a7ce5c8ee50f6b5c33f7aacef5c5ea45",
+    "scope": "Exact PNG and real HTTP404 only; no mocked renderer, adapter or event.",
+    "requests": [
+      {
+        "path": "/health",
+        "status": 200,
+        "bytes": 5,
+        "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+        "at": 1795606046.709059
+      }
+    ],
+    "native_request_proof": "NOT_RUN"
+  },
+  "original_runtime_selectors": [
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualInputLayoutAndDataAdapters",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualPresentationAdaptersAndDismissalEvents",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoNativeAPIUsesActualUIKitAndWorklets",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoWidgetsUsesOriginalTimelinesAndLiveActivities",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneModularSearchLoadsActualSefariaText",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyExpoPackageImportsRendersAndHandlesEvents",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyNativeScriptPackageImportsRendersAndHandlesEvents",
+    "HanlinMiniAppsTests/CrossAppInvocationTests/testCancelAndDisplayDoneReturnNoDocumentMutation",
+    "HanlinMiniAppsTests/CrossAppInvocationTests/testReusingValueWindowKeepsItsInvocationBindingCurrent",
+    "HanlinMiniAppsTests/CrossAppInvocationTests/testRemovingInvocationOwnerCancelsWhileSessionIsStillRetained",
+    "HanlinMiniAppsTests/CrossAppInvocationTests/testActualIncomingRequestsCreateDistinctIPadScenes",
+    "HanlinMiniAppsTests/NativeScriptWindowOwnershipTests/testUnrelatedAndLateWindowCleanupPreservesNativeScriptOwner",
+    "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests/testInvalidationReleasesHandlersAndRejectsLateActions",
+    "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests/testBridgeInvalidationReleasesPendingCallbacksBeforeProviderCancellation",
+    "HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests/testExternalInvocationSurvivesNestedFullScreenModal",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedGroupBoxSlotsAndInstalledMetadata",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEditButtonEditsOriginalList",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEmptyViewReportsNativeLayout",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierAccessibilityAndGeometry",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierHitTestingAndSubmitScope",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierNativeContainerContexts",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoHostServicesUseRealStorageRuntimeAndWidgetPublication",
+    "HanlinMiniAppsTests/CrossAppInvocationTests/testUnavailableCallbackRetainsResultForSourceRecovery"
+  ],
+  "attachment_exports": [],
+  "build_commands": {
+    "ai_build": {
+      "log": "ai-build.log",
+      "command_id": "8385ab7c110d4200ae5f131b6fc8abde",
+      "status": "completed",
+      "completion_recorded": true,
+      "exit": 0,
+      "observed_returncode": 0
+    },
+    "mini_build": {
+      "name": "mini-build.log",
+      "requestedOriginalArgv": [
+        "xcodebuild",
+        "-project",
+        "AI_HLY.xcodeproj",
+        "-destination",
+        "platform=iOS Simulator,id=E742FBCD-8FF0-4130-B143-7F8328637138",
+        "-parallel-testing-enabled",
+        "NO",
+        "-derivedDataPath",
+        "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete",
+        "-clonedSourcePackagesDirPath",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/SourcePackages",
+        "-skipPackagePluginValidation",
+        "-skipMacroValidation",
+        "CODE_SIGNING_ALLOWED=YES",
+        "CODE_SIGNING_REQUIRED=YES",
+        "CODE_SIGN_IDENTITY=-",
+        "-scheme",
+        "HanlinMiniApps",
+        "build-for-testing",
+        "-resultBundlePath",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v2/native-result/paired-prefix/MiniBuild.xcresult"
+      ],
+      "executed": false,
+      "status": "REUSED_EXECUTED_PASS",
+      "observedAt": "2026-11-25T11:24:05.281196+00:00",
+      "authority": {
+        "observation": {
+          "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-mini-reuse-observation.json",
+          "sha256": "81dbdacfebf83dd80c2e5c108c3e8284e041f396ec7c8358e533fb5e564ef3da"
+        },
+        "command": {
+          "command_id": "8f9e0905002e43c086a2de20e4acd677",
+          "argv": [
+            "xcodebuild",
+            "-project",
+            "AI_HLY.xcodeproj",
+            "-destination",
+            "platform=iOS Simulator,id=E742FBCD-8FF0-4130-B143-7F8328637138",
+            "-parallel-testing-enabled",
+            "NO",
+            "-derivedDataPath",
+            "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete",
+            "-clonedSourcePackagesDirPath",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/SourcePackages",
+            "-skipPackagePluginValidation",
+            "-skipMacroValidation",
+            "CODE_SIGNING_ALLOWED=YES",
+            "CODE_SIGNING_REQUIRED=YES",
+            "CODE_SIGN_IDENTITY=-",
+            "-scheme",
+            "HanlinMiniApps",
+            "build-for-testing",
+            "-resultBundlePath",
+            "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v1/native-result/paired-prefix/MiniBuild.xcresult"
+          ],
+          "log": "mini-build.log",
+          "runner_pid": 88350,
+          "pid": 88611,
+          "started_at": 1795604620.692555,
+          "timeout": 3600,
+          "status": "completed",
+          "observed_at": 1795604782.638967,
+          "seconds": 161.94691724999575,
+          "log_bytes": 1119438,
+          "completion_recorded": true,
+          "exit": 0,
+          "observed_returncode": 0
+        },
+        "producerSource": "a2c8a1b1be746461272ba77254603304567c309d"
+      }
+    }
+  },
+  "simulator_creation": "REUSED_AUTHENTICATED_OWNED_DEVICE",
+  "result_bundles": [
+    "AIBuild.xcresult",
+    "FocusedAI8.xcresult",
+    "FocusedMini3.xcresult"
+  ],
+  "duration_seconds": 970.6147248744965
+}
