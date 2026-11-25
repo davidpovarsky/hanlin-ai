@@ -160,7 +160,7 @@
   },
   "applicability": "evidence/applicability-37a788a4a.json",
   "documentationBranchBase": "189ca0d73a8f9b92451d343ca84b4b7074c57c6c",
-  "updatedAtUTC": "2026-11-25T02:50:06.741981+00:00",
+  "updatedAtUTC": "2026-11-25T02:54:29.691177+00:00",
   "latestRecordedExecutionSource": "b739ada91aca115093e3511f9df58c15edcb5923",
   "manifestAudit": {
     "status": "EXECUTED_PASS",
@@ -476,14 +476,29 @@
   },
   "asanaMilestone": {
     "status": "UPDATED_AND_READ_BACK",
-    "updatedAtUTC": "2026-11-25T02:31:11Z",
+    "updatedAtUTC": "2026-11-25T02:52:54Z",
     "taskIDs": [
       "1220882717750164",
       "1220882600644494"
     ],
     "updatedTasks": 2,
     "taskCompletionChanged": false,
-    "allOriginalContentPreserved": true,
-    "receipt": "evidence/asana-milestone-20261125-023111.json"
-  }
+    "allOriginalPlainAndRichNotesByteIdentical": true,
+    "receipt": "evidence/asana-milestone-20261125-025254.json",
+    "scope": "Combined Host8 and native artifact export/verify/qualified-reuse milestone; full application and acceptance gates remain open."
+  },
+  "asanaMilestoneHistory": [
+    {
+      "status": "UPDATED_AND_READ_BACK",
+      "updatedAtUTC": "2026-11-25T02:31:11Z",
+      "taskIDs": [
+        "1220882717750164",
+        "1220882600644494"
+      ],
+      "updatedTasks": 2,
+      "taskCompletionChanged": false,
+      "allOriginalContentPreserved": true,
+      "receipt": "evidence/asana-milestone-20261125-023111.json"
+    }
+  ]
 }

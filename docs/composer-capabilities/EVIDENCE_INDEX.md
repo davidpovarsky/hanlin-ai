@@ -196,7 +196,7 @@ Two additional framework ZIP differences concern only Header directory modes cha
 
 The authorized parent and M5 milestone descriptions were updated in a single successful **2-of-2** write at **02:31:11 UTC**. Both remained incomplete. The [write acknowledgement and read-back assessment](evidence/asana-milestone-20261125-023111.json) preserve the new summary and verification metadata without copying the prior task descriptions. M5 retained its prior rich/plain notes byte-for-byte; the parent retained all content with only six existing Asana URLs canonicalized to include `/f/`. One transient parent read-back failure was resolved by a bounded read-only retry, without a repeated write.
 
-The milestone reports the library-only pass, actual fixture/preflight recovery and open full-app/native/UI gates. Host7/8 results occurred after that write and are not represented as already written to Asana by this packet.
+The first milestone reports the library-only pass, actual fixture/preflight recovery and open full-app/native/UI gates. A subsequent authorized combined milestone was written in one successful 2-of-2 batch at **02:52:54 UTC**, covering Host7/8 and the native catalog export/verify with qualified reuse. Its [acknowledgement and read-back](evidence/asana-milestone-20261125-025254.json) confirm that both tasks remain incomplete and all prior rich/plain descriptions are byte-identical. Asana normalized only the new heading markup. Both complete new summaries were verified, with no repeated write or read-back retry. Full application and native/editor/UI gates remain open.
 
 ## Required work still pending
 

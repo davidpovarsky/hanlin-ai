@@ -1732,9 +1732,17 @@
       "sourceBytes": 4477,
       "sourceSHA256": "848f5349987571f4bd81e80b5b56c8585d9b3ca8461000a5abd3a0fa35bf06eb",
       "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/asana-milestone-20261125-025254.json",
+      "bytes": 6518,
+      "sha256": "7f836828d1e57dbf1d0f3495155491639ad3f37a0aa492e1e6752457609bf08b",
+      "sourcePath": "Original Asana batch acknowledgement and verified task read-backs at 2026-11-25 02:52:54 UTC; prior task bodies excluded",
+      "compressedForRepository": false,
+      "derived": true
     }
   ],
-  "updatedAtUTC": "2026-11-25T02:51:25.970163+00:00",
+  "updatedAtUTC": "2026-11-25T02:54:29.691177+00:00",
   "latestEvidenceCheckpoint": "b739ada91aca115093e3511f9df58c15edcb5923",
   "latestRecordedExecutionSource": "b739ada91aca115093e3511f9df58c15edcb5923"
 }
